@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B29CCA463
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 659D6CCA465
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWPE-0004n1-Ri; Thu, 15 Oct 2026 21:06:45 -0400
+	id 1xHWQE-00070R-7F; Thu, 15 Oct 2026 21:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWM3-0000ML-Cz
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:35 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1xHWN9-0001TR-2j
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:41 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWM1-0004GR-8j
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:27 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2e985106c0cso1402655ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:22 -0700 (PDT)
+ id 1xHWN2-0004NP-7B
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:33 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2e942864693so10294785ad.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112602; x=1792717402; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112664; x=1792717464; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=biZpLD2mSeTueWSj0jCfd+LF2VBKiGzybXAhVFEakoU=;
- b=JaAzw7Ts4mLHB9K764YxGEBh27nKSBzpIHhnlfL2l3MNXrieBaPsM9sRwXc4NrOa8w
- 7tjp/bOqllMRO/MFqW6Pq1PJkBCu4yHB00RQt1e/ltlH8S2t6fHxLVp4KfSsITFpSLNk
- l53EPrYimqaz58eXsN70ZmnQnD54wz6h19B5tnWN2rx8R+8AD8Mb7idwRZfR31dsDVRu
- ESdjsIMT5Gd/KLpVJtQ3MJaJVVAVK7SUohKQ3TtieYXiOJFBY8rvoqLiuWLp8xQXLQXP
- gvhg/dOpCOTC1DlA2B3NlHpc59agodU1XhCBHrJTVm1/fc8mT80oLkx6Rb9DeEE2TiLM
- z3zg==
+ bh=KQjiTzatNJCJQkGwAPuBoHRcCXFWmljf4WQq/JCwzHo=;
+ b=NSE3hv7308sU47NfAJMfeypUBUzixyvP8Px4kfftwj8kIMQ07iawxhivVQj75CU6HQ
+ rfF3yIUuKgk4tmkx8aiTkF0I+w++zyzPzb7hg8tFQcSuyUDEXNaWiWwVoHExdYf4a9ld
+ I4M/PsnI8N+tizdu0MG1F+Hp6dWCaI8mSKjFXQyTPRKK2xivAXswgKob61o7a8RbTIZM
+ 8umIVqcyiix6raYa/m012SZGxtNgnuIAzmTvPcngBQ5+uegJb4Aanem5N9AL8iyZdl6Z
+ IvADRjqWK7f30EoH6VyL28mO1vGpjhod8+ucLNLVB+SZawgCsrb8POF6ehs7NhxEvY14
+ GZYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112602; x=1792717402;
+ d=1e100.net; s=20260707; t=1792112664; x=1792717464;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=biZpLD2mSeTueWSj0jCfd+LF2VBKiGzybXAhVFEakoU=;
- b=0MzcFpE2RIzK8HFBPPDvBG8KPwMKAHDP9DENtmWMft47G1mqMsmNlv4WZILUScOM5n
- fINFWcypkyg0VOesZhTG8gkT/YVNkP0jVVSyajI2E5sh8m7taZlAOoqWdxKd+Nb1BzLN
- 9DsZ+sCyLryPh7XhIuwxhnZUskxEMYH6a8KPiG9+7LnbiYAh9SpOlbmF1meDNoJb7Zk3
- 0t2JM6LJAg5pPrD+pSjqyLYBnGnvljSxNSm2ab6xA9SzTW6f6doXQgQcRup4fG8RT65H
- 3sk11MXqOVKO5hpv2JyNoHJVntVdjfEE2yx+LjIMWFMeeVevzNiDxt5COCVt3R9kkGr1
- j+NA==
-X-Gm-Message-State: AFq9FYJjZACpn3xgLjO9Ns4OJ/QogJtVsXCjjLg3B0H/4Kzu8m3xIaNo
- cdpm5bP4Zffy2mZgmRjO6hHSzdKxzdSOIOnhlV6exXl6ENKXwHJKRpEwSmhglA==
-X-Gm-Gg: AYBFou0jj1YRC/6dD95cCRrAHKbabOB2vzCqIaKfJkWWzvbjJnvFVNj5mWpTv3B4V8M
- CckhA2HYQDyaiKf/YjwB/2MfyDrH61W1CJgMNFQlVfM+BZfJf82sRhJUZRSipD8O9Gorj3PHeld
- 4E9+hp21DrXgFlgktkWFnrfEyS9KQaY+choTfLcMYCeCBxv4ZudKOoOt8B3qQU59KnL1TNRvjPz
- R0I7D0n6J+sdvSdIOGIkTd+/YUSQAsYBx0YahQTvmJgEAf8OCJCeYBRSuHyxPzAiH5aJtDQUu/v
- GSBPwhd09b+VhFe18Vt7F0hBsjP5YcS0NCpWvXxP1Es62t2Fxeb9erVhpucCJ1AJ/seWic3IQGe
- YdLAB27dc12pAtFqEW9oWFlnyaSriOJKkpazUcli7JERDLYbV5LBBqXnHbuiio7JHgeHaXmp7BF
- SmOhXFDy0+oaIoDl/5lA+dJzeQdZYyJ6Iqjt+4B0T+9hZ5sLKEdQkEE6X8x+Uv9PIkIlhC+AneH
- 1RgewqAB40v/hu8
-X-Received: by 2002:a17:902:f789:b0:2e8:3534:eeab with SMTP id
- d9443c01a7336-2e842aa60c0mr192999265ad.14.1792112601813; 
- Thu, 15 Oct 2026 18:03:21 -0700 (PDT)
+ bh=KQjiTzatNJCJQkGwAPuBoHRcCXFWmljf4WQq/JCwzHo=;
+ b=MAxcH2pHaGZT5h8xMv2jgUxswPV1cX+gpHLa/HeIlnoFSxiLn9eNN3cFAKCvqnGlor
+ Zt7z+6v4QMogrx0S09Dz64mRQlRIch4AHLC0eodE80nkaLTfyihub5WI1xZ5oFfQ847h
+ TjtiR2keu7loSymNbuLDEt/fdn0fzsLszyYrPtTGwt1+ijH7c7MpXhxI++98ttXV1SQ7
+ ODtyaG6J/Imvcc2anpZWmzB1cqX0SFY/I3+DIZlmv/Ek6EDrKlCL22fd2uKuoIDvDRo5
+ RqyFv9unxeotyIJQTNMKHXlQ1ysenopCz/9002GHiAGMmMchnJ4eaLcAwFjupsYUaVmW
+ IJBQ==
+X-Gm-Message-State: AFq9FYI7zgz+jCXslBglbpv6jho9+S2TZhzEA5QNoOZDFzBXK8lAMbWC
+ LN/zN2O+v9YyhQi1zZp/gsGVhPpI/2nO0wEY+YEAw43Y5EdQQC0KwnKOrFAQYw==
+X-Gm-Gg: AYBFou0t66ptSpD4ySxoHzN1ROHfSTTOg/qFj3CoBwHlNloF3OixRjbn7tNzJQFjhLD
+ rXuk4Ch5SpbtNfAd+VHUSkvRTT4/dzkF/vEc/AbuwtUP0xlA6pB7c7IXgrUM02+4T37qd5hB5CO
+ VKMrpnimeSJFo1SOcFDxJk2ANFIjSXJrt5iGVniwdcf/CmP4nItmDQSWUSSPPoCgsGhcEoBi8bd
+ yD7RH7Loqb3J0S8d3GvKd9y4QFXsvvtQSoVM/0mwGRO27xqX0SVRqib8n8T+3DNcWlWGwm+5lWZ
+ HIIbio479jsHm/MpcoEoYQ5ZWIG9Dcg1xAsppiofIpelB6g59+nDv7j/Y8GvyJSjUctruiGxgoK
+ z7uwNXGzRl6lwlxr7UcO2Zjwxo4sMudNKeF0nzRpAujdGAC8gCDsoBa3v4bUSSVYNRXtjGmmq/4
+ Q095/o7pEU/OvOoaVKZbjGGZeKfTOze1w1CKWOCyjnvEcbADTgGjv4JfWS2vdGHLVDbdCyfZxqn
+ /6F4nsIZ3ixAkv7
+X-Received: by 2002:a17:902:ce08:b0:2e9:776f:66b3 with SMTP id
+ d9443c01a7336-2e9776f76ffmr16172755ad.2.1792112663919; 
+ Thu, 15 Oct 2026 18:04:23 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.19
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.04.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:21 -0700 (PDT)
+ Thu, 15 Oct 2026 18:04:23 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
+Cc: Max Chou <max.chou@sifive.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL v2 12/50] hw/riscv: Add Milk-V Duo board support
-Date: Fri, 16 Oct 2026 11:01:59 +1000
-Message-ID: <20261016010237.1102834-13-alistair.francis@wdc.com>
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PULL v2 34/50] tests/tcg/riscv64: Add tests for SiFive int8 matmul
+ extensions
+Date: Fri, 16 Oct 2026 11:02:21 +1000
+Message-ID: <20261016010237.1102834-35-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,209 +106,325 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Max Chou <max.chou@sifive.com>
 
-Add support for the Milk-V Duo development board, which is powered by
-the Sophgo CV1800B SoC.
+Add a test that exercises all SiFive int8 matrix-multiply instructions
+from the Xsfvqmaccqoq and Xsfvqmaccdod extensions.
 
-The implementation includes:
-- Board-level machine initialization with 64mb of default ram.
-- Integration of the CV1800B SoC.
-- Support for loading external FDT, kernel, and initrd images.
-- Proper setup of the reset vector to match the CV1800B's boot flow.
+For each tile shape the test covers the four signedness variants
+(sf.vqmaccu / sf.vqmacc / sf.vqmaccus / sf.vqmaccsu) and the
+reserved-encoding path: with vl set to a value that is not a multiple
+of the tile size the helper raises an illegal-instruction exception.
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260927201326.650943-5-visitorckw@gmail.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20260927082534.3228237-7-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS                                 |   9 ++
- configs/devices/riscv64-softmmu/default.mak |   1 +
- hw/riscv/milkv_duo.c                        | 118 ++++++++++++++++++++
- hw/riscv/Kconfig                            |   6 +
- hw/riscv/meson.build                        |   1 +
- 5 files changed, 135 insertions(+)
- create mode 100644 hw/riscv/milkv_duo.c
+ MAINTAINERS                          |   1 +
+ tests/tcg/riscv64/system/meson.build |   7 +
+ tests/tcg/riscv64/test-xsfvqmacc.S   | 260 +++++++++++++++++++++++++++
+ 3 files changed, 268 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 3a3c3701a5..5a615ecf95 100644
+index de47c4a879..cceefb4cb9 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1871,6 +1871,15 @@ F: tests/qtest/k230-wdt-test.c
- F: tests/qtest/k230-gsdma-test.c
- F: tests/qtest/k230-decomp-gzip-test.c
+@@ -406,6 +406,7 @@ F: target/riscv/xsf.decode
+ F: target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ F: target/riscv/tcg/xsf_helper.c
+ F: disas/riscv-xsf*
++F: tests/tcg/riscv64/test-xsfvqmacc.S
  
-+Milk-V Duo
-+M: Kuan-Wei Chiu <visitorckw@gmail.com>
-+S: Maintained
-+F: hw/misc/cv1800b_clk.c
-+F: hw/riscv/cv1800b.c
-+F: hw/riscv/milkv_duo.c
-+F: include/hw/misc/cv1800b_clk.h
-+F: include/hw/riscv/cv1800b.h
+ RENESAS RX CPUs
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index a7478b4219..3e1c970382 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -70,6 +70,13 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'test-xsfvqmacc.S': {
++    'cflags': cflags,
++    'qemu_args': ['-cpu', 'rv64,v=true,vlen=256,xsfvqmaccdod=true,xsfvqmaccqoq=true', qemu_args],
++  }
++}
 +
- RX Machines
- -----------
- rx-gdbsim
-diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
-index a8e4d0ab33..2ba91b14d4 100644
---- a/configs/devices/riscv64-softmmu/default.mak
-+++ b/configs/devices/riscv64-softmmu/default.mak
-@@ -13,3 +13,4 @@
- # CONFIG_SHAKTI_C=n
- # CONFIG_XIANGSHAN_KUNMINGHU=n
- # CONFIG_MIPS_BOSTON_AIA=n
-+# CONFIG_MILKV_DUO=n
-diff --git a/hw/riscv/milkv_duo.c b/hw/riscv/milkv_duo.c
+ if 'qemu-system-riscv64' in emulators
+   tcg_tests += {
+     'riscv64-softmmu': {
+diff --git a/tests/tcg/riscv64/test-xsfvqmacc.S b/tests/tcg/riscv64/test-xsfvqmacc.S
 new file mode 100644
-index 0000000000..1285c8d34f
+index 0000000000..a116712e50
 --- /dev/null
-+++ b/hw/riscv/milkv_duo.c
-@@ -0,0 +1,118 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++++ b/tests/tcg/riscv64/test-xsfvqmacc.S
+@@ -0,0 +1,260 @@
 +/*
-+ * Milk-V Duo board
++ * Test the SiFive Xsfvqmaccqoq/Xsfvqmaccdod custom int8 matrix-multiply
++ * extensions.
 + *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ * The eight instructions widen 8-bit integer inputs to 32 bits and perform
++ * a matrix-multiply-accumulate into a vector of int32 accumulators:
++ *
++ *   C[j] += A * B[j]
++ *
++ * Xsfvqmaccqoq (4x8x4): A is 4x8, B[j] is 8x4, C[j] is 4x4 int32. One matrix
++ * operation is performed per 32 elements of vl (TILE_SIZE = 32).
++ * Xsfvqmaccdod (2x8x2): A is 2x8, B[j] is 8x2, C[j] is 2x2 int32. One matrix
++ * operation is performed per 16 elements of vl (TILE_SIZE = 16).
++ *
++ * The input tiles below contain bytes >= 0x80 so that each signedness
++ * variant produces a distinct result; the expected int32 tiles were computed
++ * with an independent reference model of the specification. The accumulators
++ * are cleared before every operation, so the expected value is the pure
++ * matrix product.
++ *
++ * Test exits via semihosting with status 0 on success, or the 1-based index
++ * of the first failing operation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/core/boards.h"
-+#include "hw/riscv/cv1800b.h"
-+#include "hw/riscv/boot.h"
-+#include "target/riscv/cpu-qom.h"
-+#include "system/system.h"
-+#include "system/device_tree.h"
-+#include "qemu/error-report.h"
-+#include "hw/core/loader.h"
-+#include <libfdt.h>
++	.option arch, +v
++	.option norvc
 +
-+struct MilkVDuoState {
-+    MachineState parent_obj;
-+    CV1800BSoCState soc;
-+};
++	.text
 +
-+#define TYPE_MILK_V_DUO MACHINE_TYPE_NAME("milkv-duo")
-+OBJECT_DECLARE_SIMPLE_TYPE(MilkVDuoState, MILK_V_DUO)
++/*
++ * Run one 4x8x4 operation: load the 32-byte A and B tiles, clear the 4x4
++ * int32 accumulator (vd = v4:v5, EMUL = 2), execute the op, then compare the
++ * 16 int32 results against the expected tile.
++ */
++.macro RUN_QOQ id, word, exp
++	li	a2, 32
++	vsetvli	t0, a2, e8, m1, ta, ma
++	la	t1, a_qoq
++	vle8.v	v1, (t1)
++	la	t1, b_qoq
++	vle8.v	v2, (t1)
++	vsetvli	t0, x0, e32, m2, ta, ma
++	vmv.v.i	v4, 0
++	li	a2, 32
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	\word
++	vsetvli	t0, x0, e32, m2, ta, ma
++	la	t1, result
++	vse32.v	v4, (t1)
++	la	a0, result
++	la	a1, \exp
++	li	a2, 16
++	li	t6, \id
++	call	check_words
++.endm
 +
-+static void milkv_duo_init(MachineState *machine)
-+{
-+    MilkVDuoState *s = MILK_V_DUO(machine);
-+    MemoryRegion *system_memory = get_system_memory();
-+    RISCVBootInfo boot_info;
-+    const char *firmware_name;
-+    hwaddr firmware_load_addr, firmware_end_addr;
-+    hwaddr fdt_load_addr = 0;
-+    int fdt_size = 0;
-+    uint64_t kernel_entry = 0;
++/*
++ * Run one 2x8x2 operation: load the 16-byte A and B tiles, clear the 2x2
++ * int32 accumulator (vd = v4, EMUL = 1), execute the op, then compare the
++ * 4 int32 results against the expected tile.
++ */
++.macro RUN_DOD id, word, exp
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	la	t1, a_dod
++	vle8.v	v1, (t1)
++	la	t1, b_dod
++	vle8.v	v2, (t1)
++	vsetvli	t0, x0, e32, m1, ta, ma
++	vmv.v.i	v4, 0
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	\word
++	vsetvli	t0, x0, e32, m1, ta, ma
++	la	t1, result
++	vse32.v	v4, (t1)
++	la	a0, result
++	la	a1, \exp
++	li	a2, 4
++	li	t6, \id
++	call	check_words
++.endm
 +
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_CV1800B_SOC);
-+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
++	.global _start
++_start:
++	/* Enable the vector unit (mstatus.VS = Initial). */
++	li	t0, 1 << 9
++	csrs	mstatus, t0
 +
-+    memory_region_add_subregion(system_memory,
-+                                cv1800b_memmap[CV1800B_DEV_DRAM].base,
-+                                machine->ram);
++	/* Route synchronous traps to trap_handler (mtvec direct mode). */
++	la	t0, trap_handler
++	csrw	mtvec, t0
 +
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
++	RUN_QOQ	1, 0xF220A25B, exp_qoq_u	/* sf.vqmaccu.4x8x4  */
++	RUN_QOQ	2, 0xF620A25B, exp_qoq_s	/* sf.vqmacc.4x8x4   */
++	RUN_QOQ	3, 0xFA20A25B, exp_qoq_us	/* sf.vqmaccus.4x8x4 */
++	RUN_QOQ	4, 0xFE20A25B, exp_qoq_su	/* sf.vqmaccsu.4x8x4 */
++	RUN_DOD	5, 0xB220A25B, exp_dod_u	/* sf.vqmaccu.2x8x2  */
++	RUN_DOD	6, 0xB620A25B, exp_dod_s	/* sf.vqmacc.2x8x2   */
++	RUN_DOD	7, 0xBA20A25B, exp_dod_us	/* sf.vqmaccus.2x8x2 */
++	RUN_DOD	8, 0xBE20A25B, exp_dod_su	/* sf.vqmaccsu.2x8x2 */
 +
-+    firmware_name = riscv_default_firmware_name(&s->soc.cpus);
-+    firmware_load_addr = cv1800b_memmap[CV1800B_DEV_DRAM].base;
-+    firmware_end_addr = riscv_find_and_load_firmware(machine, &boot_info,
-+                                                     firmware_name,
-+                                                     &firmware_load_addr, NULL);
++	/*
++	 * Illegal-instruction reporting test (op 9).
++	 *
++	 * When vl is not a multiple of the tile size the instruction is
++	 * reserved and the helper raises an illegal-instruction exception at
++	 * runtime.
++	 */
++	la	t1, trap_mtval
++	sd	zero, 0(t1)
++	la	t1, trap_mcause
++	sd	zero, 0(t1)
++	/* vl = 16 is not a multiple of the 4x8x4 tile size (32 elements). */
++	li	a2, 16
++	vsetvli	t0, a2, e8, m1, ta, ma
++	.word	0xF220A25B		/* sf.vqmaccu.4x8x4, traps */
++	/* The handler skips the faulting insn, so control resumes here. */
++	li	a0, 9			/* fail code for this check */
++	la	t1, trap_mcause
++	ld	t2, 0(t1)
++	li	t3, 2			/* RISCV_EXCP_ILLEGAL_INST */
++	bne	t2, t3, _exit
++	la	t1, trap_mtval
++	ld	t2, 0(t1)
++	li	t3, 0xF220A25B
++	bne	t2, t3, _exit
 +
-+    if (machine->dtb) {
-+        machine->fdt = load_device_tree(machine->dtb, &fdt_size);
-+        if (!machine->fdt) {
-+            error_report("Failed to load device tree");
-+            exit(1);
-+        }
++	li	a0, 0
++	j	_exit
 +
-+        if (machine->kernel_cmdline && *machine->kernel_cmdline) {
-+            if (fdt_path_offset(machine->fdt, "/chosen") < 0) {
-+                qemu_fdt_add_subnode(machine->fdt, "/chosen");
-+            }
-+            qemu_fdt_setprop_string(machine->fdt, "/chosen", "bootargs",
-+                                    machine->kernel_cmdline);
-+        }
-+    }
++/*
++ * Machine-mode trap handler: record mcause and mtval, then advance mepc
++ * past the 4-byte faulting instruction and return.
++ */
++	.balign	4
++trap_handler:
++	csrr	t4, mcause
++	la	t5, trap_mcause
++	sd	t4, 0(t5)
++	csrr	t4, mtval
++	la	t5, trap_mtval
++	sd	t4, 0(t5)
++	csrr	t4, mepc
++	addi	t4, t4, 4
++	csrw	mepc, t4
++	mret
 +
-+    if (machine->kernel_filename) {
-+        hwaddr kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-+                                                                firmware_end_addr);
-+        riscv_load_kernel(machine, &boot_info, kernel_start_addr, true, NULL);
-+        kernel_entry = boot_info.image_low_addr;
-+    }
++/*
++ * check_words(a0 = result, a1 = expected, a2 = word count).
++ * Returns to the caller if every word matches; otherwise exits with the
++ * operation index held in t6.
++ */
++check_words:
++1:	beqz	a2, 2f
++	lw	t2, 0(a0)
++	lw	t3, 0(a1)
++	bne	t2, t3, 3f
++	addi	a0, a0, 4
++	addi	a1, a1, 4
++	addi	a2, a2, -1
++	j	1b
++2:	ret
++3:	mv	a0, t6
++	j	_exit
 +
-+    if (machine->dtb) {
-+        fdt_load_addr = riscv_compute_fdt_addr(cv1800b_memmap[CV1800B_DEV_DRAM].base,
-+                                               machine->ram_size, machine, &boot_info);
-+        riscv_load_fdt(fdt_load_addr, machine->fdt);
-+    }
++/* Exit through the semihosting SYS_EXIT_EXTENDED call with a0 as the code. */
++_exit:
++	la	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
 +
-+    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
-+                              firmware_load_addr,
-+                              cv1800b_memmap[CV1800B_DEV_ROM].base,
-+                              cv1800b_memmap[CV1800B_DEV_ROM].size,
-+                              kernel_entry,
-+                              fdt_load_addr);
-+}
++	.data
++	.balign	8
++semiargs:
++	.space	16
++result:
++	.space	64
++trap_mcause:
++	.space	8
++trap_mtval:
++	.space	8
 +
-+static void milkv_duo_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    static const char *const valid_cpu_types[] = {
-+        TYPE_RISCV_CPU_THEAD_C906,
-+        NULL
-+    };
++/*
++ * A (4x8, row-major) in bytes [0, 32) of vs1.
++ */
++a_qoq:
++	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
++	.byte	0xFF, 0x01, 0x00, 0x02, 0x7F, 0x03, 0x04, 0x05
++	.byte	0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x08
++	.byte	0x00, 0x00, 0x81, 0x00, 0x00, 0x02, 0x00, 0x03
++/*
++ * B (8x4, row-major) in bytes [0, 32) of vs2.
++ */
++b_qoq:
++	.byte	0x01, 0x02, 0x03, 0x04
++	.byte	0x05, 0x06, 0x07, 0x08
++	.byte	0x80, 0x7F, 0xFF, 0x01
++	.byte	0x00, 0x10, 0x20, 0x30
++	.byte	0x02, 0x02, 0x02, 0x02
++	.byte	0xFE, 0x01, 0x00, 0x7F
++	.byte	0x03, 0x00, 0x81, 0x04
++	.byte	0x40, 0x50, 0x60, 0x70
++/*
++ * A (2x8, row-major) in bytes [0, 16) of vs1.
++ */
++a_dod:
++	.byte	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x80
++	.byte	0xFF, 0x7F, 0x00, 0x02, 0x81, 0x03, 0x04, 0x05
++/*
++ * B (8x2, row-major) in bytes [0, 16) of vs2.
++ */
++b_dod:
++	.byte	0x01, 0x02
++	.byte	0x80, 0x7F
++	.byte	0x03, 0xFF
++	.byte	0x00, 0x10
++	.byte	0x02, 0xFE
++	.byte	0x7F, 0x01
++	.byte	0x81, 0x04
++	.byte	0x40, 0x50
 +
-+    mc->desc = "Milk-V Duo Board (CV1800B)";
-+    mc->init = milkv_duo_init;
-+    mc->max_cpus = 2;
-+    mc->default_cpu_type = TYPE_RISCV_CPU_THEAD_C906;
-+    mc->valid_cpu_types = valid_cpu_types;
-+    mc->default_ram_size = 64 * MiB;
-+    mc->default_ram_id = "riscv.milkv_duo.ram";
-+}
-+
-+static const TypeInfo milkv_duo_machine_type_infos[] = {
-+    {
-+        .name = TYPE_MILK_V_DUO,
-+        .parent = TYPE_MACHINE,
-+        .instance_size = sizeof(MilkVDuoState),
-+        .class_init = milkv_duo_machine_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(milkv_duo_machine_type_infos)
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index b7c0871c67..70a331f7ae 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -172,3 +172,9 @@ config SOPHGO_CV1800B
-     select SIFIVE_PLIC
-     select SOPHGO_CV1800B_CLK
-     select DW8250
-+
-+config MILKV_DUO
-+    bool
-+    depends on RISCV64
-+    default y
-+    select SOPHGO_CV1800B
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index 45895486d4..a40e80645b 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -23,5 +23,6 @@ riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
- riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
- 
- riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
-+riscv_ss.add(when: 'CONFIG_MILKV_DUO', if_true: files('milkv_duo.c'))
- 
- hw_arch += {'riscv': riscv_ss}
++	.balign	4
++exp_qoq_u:
++	.word	0x0000279e, 0x000029db, 0x0000371f, 0x00003bf7
++	.word	0x00000648, 0x000004b5, 0x00000826, 0x0000091f
++	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
++	.word	0x0000433c, 0x000040f1, 0x0000819f, 0x000002cf
++exp_qoq_s:
++	.word	0xffffde9e, 0xffffd9db, 0xffffcd1f, 0xffffcbf7
++	.word	0x00000248, 0x000002b5, 0x00000126, 0x0000051f
++	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
++	.word	0x0000403c, 0xffffc1f1, 0x0000019f, 0x000001cf
++exp_qoq_us:
++	.word	0x00001e9e, 0x000029db, 0x00002d1f, 0x00003bf7
++	.word	0x00000348, 0x000004b5, 0x00000426, 0x0000091f
++	.word	0xffffebe0, 0x00002030, 0xffffd4f0, 0x000042f0
++	.word	0xffffc03c, 0x000040f1, 0x0000009f, 0x000002cf
++exp_qoq_su:
++	.word	0xffffe79e, 0xffffd9db, 0xffffd71f, 0xffffcbf7
++	.word	0x00000548, 0x000002b5, 0x00000526, 0x0000051f
++	.word	0x00007be0, 0x00002030, 0x000074f0, 0x000042f0
++	.word	0xffffc33c, 0xffffc1f1, 0xffff829f, 0x000001cf
++exp_dod_u:
++	.word	0x00002795, 0x00003155, 0x00004642, 0x0000c2c0
++exp_dod_s:
++	.word	0xffffde95, 0xffffd955, 0xffffc042, 0x000041c0
++exp_dod_us:
++	.word	0x00001e95, 0x00002955, 0xffffc342, 0x000041c0
++exp_dod_su:
++	.word	0xffffe795, 0xffffe155, 0x00004342, 0xffffc2c0
 -- 
 2.55.0
 
