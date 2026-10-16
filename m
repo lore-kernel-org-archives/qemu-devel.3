@@ -4,134 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC33CCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 16:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7161FCC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 16:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHkdd-00060q-U0; Fri, 16 Oct 2026 12:18:39 -0400
+	id 1xHkkO-0007pg-Uf; Fri, 16 Oct 2026 12:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHkdL-0005xH-BH
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:18:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xHkkM-0007oP-Jj
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:25:30 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xHkdJ-0001t3-GY
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:18:15 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xHkkJ-0002dI-FJ
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:25:30 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69GG3ZcD3260325
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:18:12 GMT
+ 69GE5jwJ3506108
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:25:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xZUCpfXZo09mTnn5zLXMgj+2RxJu+fhP9zLWRsAdO8s=; b=UxKzNoBg9HgzVGM1
- tHWUUPuZb7aIPvWDKvtnvdokrheNffsB4wQQWAsO4n0GQgnb6W4+SLLMHZOHiAKb
- JJBYdj0mU8Sqv+CPNePeP+FIQ7qWbkejP6W/viiDHlZQh3m4IZFfWbunm9ukVQgi
- AGzC1ePw6l5F2hSGFJ5GrA/1Ve/IFO3IsWeoejIVWh5fJFgUHF19IIY/gwAJHGa5
- lqcQJ4BtXQ5asCTZ6iITCE/ypcHZoEfCHnUR8aQv63OuqxD26Rq+Er/J99gdLPgk
- iU4Fg5cIlRRCOLkm8mi9LogbN6xzm0/rA8j1UdZ2fkXVGnX3T6PNv8KNFPVxtN6+
- RA7yyw==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbq4501sk-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=ZyoEVCOEZAx
+ RA5S0ipJNw+uw+xZwEpxCTt1XfwzYEdM=; b=cdTGep5gfQJx3/EP6ZEWIBg9sy0
+ JBxsKZrDAlZM1C04ZyFKyP7urJye6h5HIauamS8iKKE3aaWTGEn+5XJUXKHKlgUf
+ 5xjAgX7SvFyCCEyRBAvFu/wfirj0MW9BFieQTDHKTsA7e5Hgjw/deB9NAuTTQ8hl
+ pGVRti3AYke5lY9vKem3UUGACrq/YgtlFPBMeQikRzfwLUM/PswAhoIMh4m7dGz0
+ ymPtpD6Xf9aVENhRc2sdpr70NxrVU2zQvTap5ahcTH4v6vrVnIwuCY10DTqIixYU
+ UnPJ8pxQEcUb71WJ+v0TFBXP2kK7Y9fVEMgKuQ6y0M/J5EpsebKaXb96x0w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hb8r13efp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:18:11 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-341eff9e381so69761eec.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:18:11 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:25:19 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3ab67ff8ec3so136407a91.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792167491; x=1792772291; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xZUCpfXZo09mTnn5zLXMgj+2RxJu+fhP9zLWRsAdO8s=;
- b=UA0zQGS/8+wy4U5q4MArqHbD/8r7eJPlSBgse7pYBjghE/lk7O+V9JiLPrAOLeMgpX
- LLnYj4595i1VwA1qSUMM8pdgA/ni+KOwEmVy7HFgtSVmGI9Q69Aow5LkMovDbfKWNS5A
- Rc8K2+TfkuW3QAVyfkR9JQpIrWaBagNz7DhaFYfJoH8W8fwZ5tumdQQdgFPN6wuP8UFI
- qT+0GlAjlIF1XVaSjy/gjrM2st1i6QlyPCfHeJMIE0+jxD8XCYVu+gNJ1K0Pm7eXtfjy
- QqaHYRRPuT0JI0G9VJOw4v9C94heT0iyy2/R94daJA9YtZEzqhKFzGt0T7DJVlpxzUqt
- +XAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792167491; x=1792772291;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1792167919; x=1792772719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xZUCpfXZo09mTnn5zLXMgj+2RxJu+fhP9zLWRsAdO8s=;
- b=lprefPnPyXCE6jh+si3kQxqWWBjjRFjFMz2ztg773UP/+st3w8p51NvDBv4zCUwlwz
- jP/li/tR5uwGDGXjZRn4+tMzEF8dXO9f2cFOsv6RqKqvC29fLoTbqyb950BSD2O60s1S
- NdGBI7VI1q5yoXQJohVcC23JPopUNkIAJUKSA6Bc+sqpeVyIGm/oJZRvXGJ8a/B8sas4
- 74p6j9OdatY6xHXmbjqP0u3gA+0iaITGf7XFT3c/3elSCfESjRdZukdw5alUQ8mM4yi9
- XT7dAdfThDw3whgMBS9cyEN2kpLrm02Zpuj2eXzarnIp81DiErnZp60r3cfcKKZeyjLm
- tUTw==
-X-Gm-Message-State: AFq9FYIz4Vixt67vBVTldBqkgYpk7SebJetuw9XXjj59gFIF3z/vOyYs
- 08nr9loN+N4l/LCP87mfiJ3hxbnp4dn7K0LtxT1hCCsRR1bwQTZbxuLnNTPDcVpZyV5WHb9VilY
- XwCAUtS8qXEZelySPSLwWMyTSH+42PiVdGCNeJxPQm1upiLa2yyh5/34nyqzES/hguw==
-X-Gm-Gg: AYBFou0wSw9/CxbHIMvuzRlqkrOWTRiRIL2j/6/iTUBvT7g4RQAcnrfJPESs2Hh/oUU
- TA4LuMknQenDhAoSOChIPQZbpnUkNm6qHQKSih6ipcJbsJnai/XfD0nthbY+/gQkBLusuWNJsD9
- 7K6FCEOV0rJBOLFl6SC8LdJB866/ljnqNEmNgVceoGKU9NlHfbHXrHxEISHHFNw0cuEiKLm0sz0
- 5a3+qVANAl53Cu72NWXVpegvihWFs/fSMtXNMXiJysTCtxlrSO/7K2/ZANb6qo66GvLKY0M07+g
- VX5gpU0WESSR+q7bstuiOQFn6zErRKFYI0zlVOvJhua3jDl1iZpp+1acupd62bhdpBs5mBUNJqG
- 58u+a+q9pZuPD+xpL/2VgSkdEdDRAascARpHaA4G5J1jj1gYp1yXjPKmCfsuDSoDq1ZTzSw==
-X-Received: by 2002:a05:7300:a209:b0:34e:3ce1:39f8 with SMTP id
- 5a478bee46e88-361a19608b8mr293909eec.18.1792167490881; 
- Fri, 16 Oct 2026 09:18:10 -0700 (PDT)
-X-Received: by 2002:a05:7300:a209:b0:34e:3ce1:39f8 with SMTP id
- 5a478bee46e88-361a19608b8mr293845eec.18.1792167489906; 
- Fri, 16 Oct 2026 09:18:09 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ bh=ZyoEVCOEZAxRA5S0ipJNw+uw+xZwEpxCTt1XfwzYEdM=;
+ b=NpYR60b75Q0UPpx/75cqauV+saOcqGPfs2H+EYUv1FvmqqHsJQmRCPuXslIQMhMIjN
+ pkPBUawSkYimaKfU1xGg8yq1pXL9rjtXXs0pnsU3unux5hnYyRtW4vi/Nip4CdDM0iCf
+ V2gwyv+tPEKf2nZejIbV5FQF/xeGxUlzYMUVDIgrsepyQQbDyZqrM2g5xqICgvyKq8jG
+ b+k1g2BpOS9wPejkMwSOT417MReQMdPYfaO5uH3OfwrImmI4Q7xReOJeFIxGqONE6YME
+ wcnQlJv22EjfW0O+BL8t9MlrXHQ3B1PJoIvQx8KhhSmfPZ6jNweL00iqC4H2lK29KdKr
+ BTYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792167919; x=1792772719;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ZyoEVCOEZAxRA5S0ipJNw+uw+xZwEpxCTt1XfwzYEdM=;
+ b=1wm4rx3IW6r78UBZr9gyKYpkET7YJgCFE//vMo00gIViZwoKNRZnz22SAODHELVIqw
+ 2RFPZYdPnPhl7VMoM9xMXKByzjgQh6YCuoBZNFcQdQWmyrjcPFgqOKHahbZlLpy1o29R
+ cQqw/15qAuiLWK71tPApV9TDvQMraVu6OoCQ0xCPgBNMqrTkxOmYWp/PO8KcEngjWF2L
+ 33VaqgY/SJBYXCaRIVQBPt/w5AKq4Ih0O9khhRzcuVSH0FBKipQdRZ3u+MCtQTWk3ulN
+ JsE2rhjwi1YnvL8A696kZwI/SYahiHQf5s3lQ+0MWU4zeqfZgSlLZIRLc6RNx2rFsXXl
+ iTzQ==
+X-Gm-Message-State: AFq9FYKS4+3eNVIegVWTiO/y52x34ZjrK1sBjcpHHZH64nJNq1pv9+7l
+ Kd3W22EDWjicRwEhsdBAxRsSt6Cl8gQMTQWNgkJK8sKDaeUMNP1/yi1JxaOGhjoriqiMM19bZz2
+ Z9UsQGubPFNavlJI0vHAg0QdJi9D0oHSnDgzYB54to3lqtn2vFKnk1mGHvqEUF21RFw==
+X-Gm-Gg: AYBFou0241vT0cnQKn2bSVvUh2Vxnauq1VxJP7AQ9oln02vNUPEb8M+ZQaJiZA65tIS
+ ZkKuaTje2/FyZPLBylhfTnofyJ9QvpZAYp8jpmVqWb9g1NTKA38kfqEJeOSD21P9l+isdujA0rS
+ O2Vv3RQpXKYK0HWb011Wt2XcSf5gGAua7YYTE4PqcEmY5tt6vqGuecmNp2ryKw/JWMavIDRbnBm
+ AEm3p3DyA+mAaaWBsDGr7ZtJgYJY7u7aY8DREF2dVXnhGePntvQWyXjFKU9p+Q2BD3BuYeMxhOO
+ V733umUmcPCgHgBXvYuC5G0hciVxxuuyMFmkewdIz3bc2v0wtHhib3HMi2XhRnOu9EhyjqBTqb/
+ TuZN286UPkWLEiH1Cwi9xzdbSdL+bB1Z3nFGKjtcqvwwwTwsMWLEV/9JBE5w+m3A=
+X-Received: by 2002:a17:90b:3a4d:b0:3a4:9a7a:360 with SMTP id
+ 98e67ed59e1d1-3acef29e7d9mr306066a91.29.1792167918427; 
+ Fri, 16 Oct 2026 09:25:18 -0700 (PDT)
+X-Received: by 2002:a17:90b:3a4d:b0:3a4:9a7a:360 with SMTP id
+ 98e67ed59e1d1-3acef29e7d9mr306044a91.29.1792167917900; 
+ Fri, 16 Oct 2026 09:25:17 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-360820a79c7sm7776309eec.18.2026.10.16.09.18.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 09:18:08 -0700 (PDT)
-Message-ID: <2c8624cd-93ce-41f0-a897-6528e2927808@oss.qualcomm.com>
-Date: Fri, 16 Oct 2026 09:18:07 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] multi-target: remove qmp_query_cpu_definitions
- duplication
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
+ 98e67ed59e1d1-3acc4872861sm5246143a91.7.2026.10.16.09.25.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Oct 2026 09:25:17 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: USzOB7Oxe75W023OKnmdScoU8tWXbMUh
-X-Proofpoint-GUID: USzOB7Oxe75W023OKnmdScoU8tWXbMUh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2MyBTYWx0ZWRfX7Hntxv1lv5Gg
- w7O9hPrioLvSMy6GeehM0oWRZw4A9h09QmUH7gTKJJtDkDYWOo9A1fN+gF4Uyg7VZ9FlH3EScxK
- gR73mNVgr+YSJgOfuswZOKUUSG27kN2OVeiWWL/i75r1wR8+cL/Bcr0J/APofZfwA60XnHuMdeF
- JwZIHV+MIvIiY4wfJvtxEaDsSVx6S6drAAZQXnCncybuA+9EaJGUobIl0VZaXYyqi6kivuxdYEk
- 65Y0vG3UJ3wB/BWNVlJr+3/ba9HqD4hnLh4pUOnB4hdO3RWhj9kR9O0NO1kCKc9tURQUDWTvPz9
- 67vrfruhUP3oGMZ46JNx5siRuEL3V6SFPysq99FfNN9JoPNvSIoLb3Zi7yxcIqLgrSJH1yjPsOZ
- 3NphoQHlJbmhuEkl+oiEOwxHNAuU7EpibY9OSUCG2oXaEFSfYuTU413pL6mJSkMWsGXWYE4BPEr
- xP4VcLV+weBWs1bDqCA==
-X-Authority-Analysis: v=2.4 cv=e4GT2qp/ c=1 sm=1 tr=0 ts=6ad24e43 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=BlMTy-l3T-2bcndAHQ4A:9 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2MyBTYWx0ZWRfX+GfWIEwupnRg
- SnCAYLGnEVIuUw9F5e9nuTH8q0+dLzYGYP1j+fSV+4f75FyoRI9yzjKZ0Y5BIa0wF9YiWS3MwY9
- mlLjP03PsxH1Xdg7YoA2qcZOJn6TjuQ=
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH 2/6] target/i386: rename qmp_query_cpu_model_expansion to
+ qmp_query_i386_cpu_model_expansion
+Date: Fri, 16 Oct 2026 16:25:05 +0000
+Message-ID: <20261016162509.24854-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: I1gV3sslkImvoVX30jqZhr5-ZZjefCML
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2NSBTYWx0ZWRfX3mCIy9RdIL2M
+ UU9THflDCXcElzHzhpUJzDXKHpe/HyhRw5x15ve9PK4iW+TExjtGwikq8KvqQ9qon68pTrDb8iI
+ Ur1Tn/zk6WCqW7JKHc1v63hE7FBISv0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2NSBTYWx0ZWRfX+h2e15kMbjrY
+ K2jmMxmoBSMw4csaZb0/O3wDV3jlmd8+2REsZZmhTRDzWVdNF855wVaJuYPWrANjvnshLxRc2vM
+ eAculCNVYhPkV4nbGVhJ1J0ue/ePLafOY2YCVZ8hQxQLA5+qAW9Oh5qzWYRKvp8Hp/iw19I+sUg
+ O0i/liE4WiRvPxzORAczT4aASpAzwzoOdgaEio0+/EZaNnXOb0sVmW3+mu9IU2sJvNXnnYZMPu4
+ amSMOGdB+JUuv7zuMf4LDZvq/lyXSSbDKhGzT0caY6KkMetHKPhIg14OjxHX4GaMAVlLjglayeU
+ xkEQkHblOYgpHlueGKWNzYNt2iVWz+NfE82SFjGGal6iKSZT6E+caraHRwSlVDItinmt/oDlZyT
+ 4RGqv2ABuedf6w2Hg6AfYkzPr9vzs4iEfmStS9a0uTpkUgj1dVGiyT99ptdhN6wAS9OA8xDi8ul
+ ScPCcxVQhVQCv09HmSQ==
+X-Proofpoint-GUID: I1gV3sslkImvoVX30jqZhr5-ZZjefCML
+X-Authority-Analysis: v=2.4 cv=L/CI0OT8 c=1 sm=1 tr=0 ts=6ad24fef cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=nTQWxAd7QHvWKPlqegIA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 phishscore=0 adultscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160063
-Received-SPF: pass client-ip=205.220.180.131;
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160065
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,66 +153,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/14/2026 5:53 PM, Pierrick Bouvier wrote:
-> This series allows to link multiple targets that define
-> qmp_query_cpu_definitions. It simply replaces the duplicated definitions with
-> target-specific ones and a single dispatcher. We didn't use yet the dispatcher
-> pattern, and it's the first situation where it appears to be a good fit.
-> 
-> A possible alternative would be to introduce this callback directly at
-> target-info level, which I think is a less desirable solution, since it would
-> ties this API to monitor.
-> 
-> If the approach here is accepted, I'll extend this series with
-> qmp_query_cpu_model_expansion which follows the same pattern.
-> With this, we'll be free to link together almost all the base architectures.
-> 
-> Pierrick Bouvier (8):
->   target/arm: rename qmp_query_cpu_definitions to
->     qmp_query_arm_cpu_definitions
->   target/i386: rename qmp_query_cpu_definitions to
->     qmp_query_i386_cpu_definitions
->   target/loongarch: rename to qmp_query_loongarch_cpu_definitions
->   target/mips: rename qmp_query_cpu_definitions to
->     qmp_query_mips_cpu_definitions
->   target/ppc: rename qmp_query_cpu_definitions to
->     qmp_query_ppc_cpu_definitions
->   target/riscv: rename to qmp_query_cpu_definitions to
->     qmp_query_riscv_cpu_definitions
->   target/s390x: rename qmp_query_cpu_definitions to
->     qmp_query_s390x_cpu_definitions
->   qmp: reimplement qmp_query_cpu_definitions as a dispatcher function
-> 
->  hw/core/machine-qmp-cmds.c            | 32 +++++++++++++++++++++++++++
->  include/system/qmp-cpu.h              | 20 +++++++++++++++++
->  stubs/meson.build                     |  6 +++++
->  stubs/qmp-cpu-arm.c                   |  9 ++++++++
->  stubs/qmp-cpu-i386.c                  |  9 ++++++++
->  stubs/qmp-cpu-loongarch.c             |  9 ++++++++
->  stubs/qmp-cpu-mips.c                  |  9 ++++++++
->  stubs/qmp-cpu-ppc.c                   |  9 ++++++++
->  stubs/qmp-cpu-riscv.c                 |  9 ++++++++
->  stubs/qmp-cpu-s390x.c                 |  6 +++++
->  stubs/qmp-cpu.c                       |  7 ------
->  target/arm/arm-qmp-cmds.c             |  3 ++-
->  target/i386/cpu.c                     |  3 ++-
->  target/loongarch/loongarch-qmp-cmds.c |  3 ++-
->  target/mips/system/mips-qmp-cmds.c    |  3 ++-
->  target/ppc/ppc-qmp-cmds.c             |  3 ++-
->  target/riscv/riscv-qmp-cmds.c         |  3 ++-
->  target/s390x/cpu_models_system.c      |  3 ++-
->  18 files changed, 132 insertions(+), 14 deletions(-)
->  create mode 100644 include/system/qmp-cpu.h
->  create mode 100644 stubs/qmp-cpu-arm.c
->  create mode 100644 stubs/qmp-cpu-i386.c
->  create mode 100644 stubs/qmp-cpu-loongarch.c
->  create mode 100644 stubs/qmp-cpu-mips.c
->  create mode 100644 stubs/qmp-cpu-ppc.c
->  create mode 100644 stubs/qmp-cpu-riscv.c
->
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ include/system/qmp-cpu.h |  4 ++++
+ target/i386/cpu-system.c | 15 ++++++++++++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-This was merged into master (2cab0c10632960c01972727608196984d52c93bf).
+diff --git a/include/system/qmp-cpu.h b/include/system/qmp-cpu.h
+index d2e7c76ca25..cbf8ae7867a 100644
+--- a/include/system/qmp-cpu.h
++++ b/include/system/qmp-cpu.h
+@@ -21,5 +21,9 @@ CpuModelExpansionInfo *
+ qmp_query_arm_cpu_model_expansion(CpuModelExpansionType type,
+                                   CpuModelInfo *model,
+                                   Error **errp);
++CpuModelExpansionInfo *
++qmp_query_i386_cpu_model_expansion(CpuModelExpansionType type,
++                                   CpuModelInfo *model,
++                                   Error **errp);
+ 
+ #endif
+diff --git a/target/i386/cpu-system.c b/target/i386/cpu-system.c
+index c8bbf0cbafd..f85dc4a7036 100644
+--- a/target/i386/cpu-system.c
++++ b/target/i386/cpu-system.c
+@@ -27,6 +27,7 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qom/qom-qobject.h"
+ #include "qapi/qapi-commands-machine.h"
++#include "system/qmp-cpu.h"
+ 
+ #include "cpu-internal.h"
+ 
+@@ -189,9 +190,9 @@ out:
+ }
+ 
+ CpuModelExpansionInfo *
+-qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+-                                                      CpuModelInfo *model,
+-                                                      Error **errp)
++qmp_query_i386_cpu_model_expansion(CpuModelExpansionType type,
++                                   CpuModelInfo *model,
++                                   Error **errp)
+ {
+     X86CPU *xc = NULL;
+     Error *err = NULL;
+@@ -241,6 +242,14 @@ out:
+     return ret;
+ }
+ 
++CpuModelExpansionInfo *
++qmp_query_cpu_model_expansion(CpuModelExpansionType type,
++                              CpuModelInfo *model,
++                              Error **errp)
++{
++    return qmp_query_i386_cpu_model_expansion(type, model, errp);
++}
++
+ void cpu_clear_apic_feature(CPUX86State *env)
+ {
+     env->features[FEAT_1_EDX] &= ~CPUID_APIC;
+-- 
+2.43.0
 
-Regards,
-Pierrick
 
