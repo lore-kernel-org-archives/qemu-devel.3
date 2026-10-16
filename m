@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C352BCC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24403CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWOD-0002ui-IB; Thu, 15 Oct 2026 21:05:43 -0400
+	id 1xHWQG-0007DF-Hs; Thu, 15 Oct 2026 21:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMc-0000kL-3I
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:05 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1xHWNU-0001iI-3Q
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:58 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMa-0004Kj-09
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:01 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2e977109392so4902085ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:59 -0700 (PDT)
+ id 1xHWNS-0004QS-EB
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:55 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2e985106c0cso1409315ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112638; x=1792717438; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112693; x=1792717493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZPYm8qrhqsjaEWvJSiJ04ZVBdUZxvZ2CM271CGNTmcY=;
- b=qlmPf1b6Dn4mEKv1EgD2yDd7+/bbPBOGryIYXL67bn08NF3lVEA23BJX/X0JRaI7go
- eXfkZPPExz8JLI5zvhObT45vhuhNfIS0iMO01z4jSReQvGab6KF3NlelY0LsctCTYhpS
- QHT+as5ev3tpaH59WhWU8ZlKU9BlaH+uPtBJ/i25uXOFjki3V5AKD4JUCLPRz26NLefZ
- aiGAGnSc4eWA0tWXtdbX0f3vrV+WK0P+zn6gZIuVHVeccJ2K4LfNPgb714pH+U/bP1Bk
- Na82in5qPPtvVNqMNQpST4CDz0STK9owAYOsD+kV1YaqOmjAUosiTX+WVKfLVnc7xcRQ
- Y6Pw==
+ bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
+ b=iCatMH1bqpdjFyApQiCMY54NM+IpbHj6Jqx4eJKQnvKC5DC7YzZjfQ9CS5pTDFXuFC
+ GqfDP68lbpbHXT+CwjGKLOLzcTCsrnvnehZ4SBb6Ac7aYGgvFQ3/fHT/6rRmWn+tkdT/
+ OeuihG3v/sbYoKhhXSYiQ8H8VHy7jnjYfoIvMUc2z8828sY28v7Rq0alF0OEcSZ4aEMj
+ gdeJH2rl/pzhlSGsC/GopDRMpmiw2knnlRlB2GQOb3+OvMdQY0aL8pTd6tM+WWBgnGfL
+ rIi2sLPcLTmdGhrB2SyP0d7Vb1fG7RciQn+h9Hh9+6BtPHMgqIyAZNvKt+uLN7qgJWAu
+ F3TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112638; x=1792717438;
+ d=1e100.net; s=20260707; t=1792112693; x=1792717493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZPYm8qrhqsjaEWvJSiJ04ZVBdUZxvZ2CM271CGNTmcY=;
- b=xzhBhm5Ln6V9nDRBb9FingF7cb2RxJrjUPl1NClTL3Y8xYSAo0TQRUMLc8nYANG35u
- yQOJUJOVfLAZhsmLMeo2AACCwAeGn91VYFNa7Dn2ubuVvhYdQxSlBdZYZrBuCemMmAjS
- 8T/2YCbVUsDMjNuVLjK0iGEz4tNjgyUqryQMUdwmscVnDlTUz0YIn/aNdi5+plYsOIYJ
- hHV5PYDbJqO2eoBHdTh27vRciGLp0YYZmApfBHeIAzC3d21xpo7bDqrE7wk6arXVr3Bo
- gSB0CrjOVP0KkPxGZyfivQ9MuyF06sbMFC4TXECjhY6d3V5yRkPGBaH12vntXohpcOEU
- cBzQ==
-X-Gm-Message-State: AFq9FYJxYJAkqf5hiMSYpcS5nNKOUz8pq1QaAz5KKjI/PNVuZPjYnCo0
- uGL0iDbqwHNNxvK09nhSsQkKhm20BcshUVtNYJoTw98IYulzt0w0G+DucDD1iA==
-X-Gm-Gg: AYBFou3G1rQfNWnjrYokvIVMd1Mw/XxzWsBe33h02e/b8IN6uj/i0HHi02OayimswLu
- AYP/CEZn9lcNlCwbz816EjJpyy8DWAj/6FF6uHqxhxVWYkGOVWzWfeOGXccPT/LL2g/ljXotmU9
- D0nSOGjnDkd1j4mZzPLmC1ORDtZi21D2GhSuVy2Q1DS3vvBWLlHDyR423RlZoO/F6UeYqd48Gvq
- rl6JL/mPvmgT9vK9Xt1w1ieoWEIQS9JUBt9tqc2O0N3efqVXjhSS4sgQ8tQYJaFNDHHZET3ka0k
- OX/D5hUQHvgybOhKawWuGcdWxjgwL+CDFoG+Ws33mFuLfuUk6mF/CZBkj8dTEglIFj2kaLYG6wT
- 8Wurc+3I5zw6HDd9xo2KxraAEOYblDh+hBxx4LQfPmkaBu+4YWLFN6/gL/poqY0r7ijLQPt/1Rt
- Djdn6K8dwIoWLUIArSWf4CnZLiGWYU+36/IAjUGOagYcid/W4ok2vhy64HWUhGy+FxwUPUO1iPu
- zXx3lf7UG8TULTGTNq/3WcFatg=
-X-Received: by 2002:a17:902:e806:b0:2e9:787c:8e68 with SMTP id
- d9443c01a7336-2e9787c8f08mr14941945ad.0.1792112638270; 
- Thu, 15 Oct 2026 18:03:58 -0700 (PDT)
+ bh=xdvPWuv8zxakG1FAo70OqA0FhB4rWKcTdR7oA6UwWSU=;
+ b=iu2oTb4yRGRndujeSJIdPf7KyWb6TnEhOCE7e48zbauE/DewabjMugZGMhPV4mBNlY
+ pVc4YBg/QnfhcJaWsBCGm0RICGQZyrA3gLlw1kaSw86sYsQ0emLqqmTbNddKUegf+K1n
+ ZmzfY3GEExCxycauuKMYgkNp7Bhg3HRoVe/qc+1kYVMTXQDbdvtiJkaChbcHjXZaIPkl
+ Dvd19Bo0EQHEe+jg243RVbegjy5/iebQwVI7V/8qoSU73Yq+aVeEN2m1oSa0H7SXIpps
+ 6fYMTua4xzmjZDPx7hvoxK4aWbgn4JRqz0guaijKjeb/Pl+bKfe2elcGSIcQCl9seplx
+ hEEQ==
+X-Gm-Message-State: AFq9FYKNHZqHXFHfMjWBJN8OK3QTRtspm6JJHdtQ9C0DLAv1kpn1BnFC
+ PTJ9oqRzkUZvB7IWZ/N0eAFRny7xjKWV/0OxQ2wSAqdSMVa0Zcorvk3uiADamw==
+X-Gm-Gg: AYBFou0CsjAEGIi1YOQIW/ikV6TIJKDtoJAdKXdrFbOBWj+D7Us61HS41JKiQMpA3Tz
+ EYTyR6ntODixb1/jBZadmFGM2hScYz6x4sbFFA7vbHowi15LXhTjGbsrneYdsjAKI9L98JjLULe
+ wyfZK09ueLBNTXJKD2m9o5A8SIlJciwmbokDISOef9T0u2uElWjVULN2mmaEtOzQaR4pSpv7nSz
+ bTesSCC00HajDhFQC2DLFBRaSsdWT8iikMY/laLdFc4ygaItJ7DmIm8iZI+u8+UGRH29zUfxgSz
+ S+TwUM6uESMCrGZ1gB7cV71psye7SF5bNL1pS3quXyNu3Qo/tSM4e8uXRTfafCU0vnWU9lamMME
+ zrm5jhe2mOBdnkZhdTz2J8n1tbdHgtUAm0bhcpV68SmW2gHBJ9LSosJPlJRnx13GUQEaUSigMFa
+ fDYYwB746T1F05kYDHih2NMfcMMHao0NmLRwD3IDEBt5udm2mo+07aTHAT/yqOMnLDB/jvCOd5v
+ CBlrUcjXUJLFB0U
+X-Received: by 2002:a17:903:2b07:b0:2e5:a350:34f8 with SMTP id
+ d9443c01a7336-2e84280a507mr195698905ad.3.1792112693009; 
+ Thu, 15 Oct 2026 18:04:53 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.55
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.04.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:57 -0700 (PDT)
+ Thu, 15 Oct 2026 18:04:52 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+Cc: Rick Richard <rick@sloservers.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL v2 25/50] target/riscv: add sdext enter Debug Mode on ebreak
-Date: Fri, 16 Oct 2026 11:02:12 +1000
-Message-ID: <20261016010237.1102834-26-alistair.francis@wdc.com>
+ qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 43/50] tests/qtest/bios-tables-test: Update riscv64 virt
+ SPCR golden reference
+Date: Fri, 16 Oct 2026 11:02:30 +1000
+Message-ID: <20261016010237.1102834-44-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,106 +105,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu.zevorn@gmail.com>
+From: Rick Richard <rick@sloservers.com>
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+Update the riscv64 virt SPCR golden reference file to have the fix for
+the UART register width.
 
-Route EBREAK via helper_sdext_ebreak. If Sdext is enabled and the
-matching dcsr.ebreak* bit is set, enter Debug Mode with cause=ebreak
-and stop with EXCP_DEBUG. Otherwise keep the normal breakpoint trap.
+Diffs from iasl:
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+@@ -1,58 +1,58 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20230628 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
+
+ [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
+ [004h 0004 004h]                Table Length : 0000005A
+ [008h 0008 001h]                    Revision : 04
+-[009h 0009 001h]                    Checksum : 13
++[009h 0009 001h]                    Checksum : 2B
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
+
+ [024h 0036 001h]              Interface Type : 12
+ [025h 0037 003h]                    Reserved : 000000
+
+ [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
+ [028h 0040 001h]                    Space ID : 00 [SystemMemory]
+-[029h 0041 001h]                   Bit Width : 20
++[029h 0041 001h]                   Bit Width : 08
+ [02Ah 0042 001h]                  Bit Offset : 00
+ [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044 008h]                     Address : 0000000010000000
+
+ [034h 0052 001h]              Interrupt Type : 10
+ [035h 0053 001h]         PCAT-compatible IRQ : 00
+ [036h 0054 004h]                   Interrupt : 0000000A
+ [03Ah 0058 001h]                   Baud Rate : 07
+ [03Bh 0059 001h]                      Parity : 00
+ [03Ch 0060 001h]                   Stop Bits : 01
+ [03Dh 0061 001h]                Flow Control : 00
+ [03Eh 0062 001h]               Terminal Type : 03
+ [04Ch 0076 001h]                    Reserved : 00
+ [040h 0064 002h]               PCI Device ID : FFFF
+ [042h 0066 002h]               PCI Vendor ID : FFFF
+ [044h 0068 001h]                     PCI Bus : 00
+ [045h 0069 001h]                  PCI Device : 00
+ [046h 0070 001h]                PCI Function : 00
+ [047h 0071 004h]                   PCI Flags : 00000000
+ [04Bh 0075 001h]                 PCI Segment : 00
+ [04Ch 0076 004h]                    Reserved : 00000000
+
+ Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
+Signed-off-by: Rick Richard <rick@sloservers.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260928195902.2045235-5-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261005104008.214588-4-rick@sloservers.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/helper.h                         |  1 +
- target/riscv/tcg/op_helper.c                  | 34 +++++++++++++++++++
- .../tcg/insn_trans/trans_privileged.c.inc     |  6 ++++
- 3 files changed, 41 insertions(+)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 90 -> 90 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index a790595b40..533dee1765 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -142,6 +142,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
- DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
- /* Native Debug */
- DEF_HELPER_1(itrigger_match, void, env)
-+DEF_HELPER_2(sdext_ebreak, void, env, tl)
- #endif
- 
- /* Hypervisor functions */
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index dbdaa64f5e..53e9eb445f 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -526,6 +526,40 @@ target_ulong helper_dret(CPURISCVState *env)
- #endif
- }
- 
-+void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
-+{
-+    CPUState *cs = env_cpu(env);
-+    bool enter_debug = false;
-+
-+    if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode) {
-+        if (env->virt_enabled) {
-+            if (env->priv == PRV_S) {
-+                enter_debug = env->dcsr & DCSR_EBREAKVS;
-+            } else if (env->priv == PRV_U) {
-+                enter_debug = env->dcsr & DCSR_EBREAKVU;
-+            }
-+        } else {
-+            if (env->priv == PRV_M) {
-+                enter_debug = env->dcsr & DCSR_EBREAKM;
-+            } else if (env->priv == PRV_S) {
-+                enter_debug = env->dcsr & DCSR_EBREAKS;
-+            } else if (env->priv == PRV_U) {
-+                enter_debug = env->dcsr & DCSR_EBREAKU;
-+            }
-+        }
-+    }
-+
-+    env->badaddr = pc;
-+
-+    if (enter_debug) {
-+        riscv_cpu_enter_debug_mode(env, pc, DCSR_CAUSE_EBREAK);
-+        cs->exception_index = EXCP_DEBUG;
-+        cpu_loop_exit_restore(cs, GETPC());
-+    }
-+
-+    riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, GETPC());
-+}
-+
- target_ulong helper_mnret(CPURISCVState *env)
- {
-     target_ulong retpc = env->mnepc;
-diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-index f1a042d57f..e22df6fbe7 100644
---- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-@@ -68,9 +68,15 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
-+#ifndef CONFIG_USER_ONLY
-+        gen_update_pc(ctx, 0);
-+        gen_helper_sdext_ebreak(tcg_env, tcg_constant_tl(ebreak_addr));
-+        ctx->base.is_jmp = DISAS_NORETURN;
-+#else
-         tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
-                       offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-+#endif
-     }
-     return true;
- }
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index aae973048a..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 59d2c8f7f2..6003c230b1 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
 -- 
 2.55.0
 
