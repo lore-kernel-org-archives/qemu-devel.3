@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD4FCC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40853CCA463
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWPL-00056r-7x; Thu, 15 Oct 2026 21:06:52 -0400
+	id 1xHWPL-00056k-75; Thu, 15 Oct 2026 21:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMB-0000Qe-3i
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:39 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1xHWNj-0002BB-IO
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:05:13 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWM9-0004Hr-B3
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:34 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2db80fcdf8bso34399655ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:32 -0700 (PDT)
+ id 1xHWNg-0004de-6T
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:05:11 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2e987a2ba0cso1068055ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:05:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112612; x=1792717412; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CmyD6lY57V+HOwn6C0x+f/UFPrshUSJ5Ppnc/XtHel4=;
- b=OCQz0U162tiyOgn7XbQoiNz3O65JiVZspQ4/cBBLzn9WBzBXCmPMRLGA4w0+Lk+1iA
- qk1kGEOelE6k604ui0OMwuZgNoNlo7BvHbqeC+VfdbanEIYCJCfMLzsrdcq1WgA8/qOQ
- EsOM20ZuQOJzi8epRaSsERNpB3WryogdqOGxco4u0I6ejbvkLQE6mFyoASqHFka0xnWV
- n3GEGgdXRBozNqmESsthQd/9RfFZtgYIEooZndI2+32asdF9BsJfpuBE+fB7XtWtpRWy
- qRMz8HiTFvBWXL8HzGjHnjL6wYsKtnMAGr73LyZrAK3PshxHiUMxrDNeH5bQxrdVSpLC
- cYAw==
+ d=gmail.com; s=20251104; t=1792112706; x=1792717506; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=vEsPkFkLUyA1NU56nP525qgRMdEHY/E8F4lp51ZoNeY=;
+ b=GiZspCq2UwsVzEst8pJBIE0u0iTK6RCp6R3ECAzF8kfJWPPuFeGEwpjcEkmFttZC1z
+ vJFioourBfIOnv98J6TrTe6js4aEShTsJMZX4A6sHzonyL3pYUEwfcC74mHCh6z9HDEy
+ vg9fdn2okfNAPyR6FTmCZxTOGOCcf5lwsWWSJkaGh1Jr6hM1nz1/GnWdDQeNdWvietXd
+ DPmnJTSXHtox4nlcwi872kB/Q4mTdZcIUrRJ9vJnIu/K1fKGV058tFflFGNEdtdT1y6E
+ rSs15xpfefN/iz9zqVyb/jZV0ZKD4yZzTK3/yD+vJpiYwjbIN4vwEynVN3Ok0vU4WSNV
+ Cy/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112612; x=1792717412;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CmyD6lY57V+HOwn6C0x+f/UFPrshUSJ5Ppnc/XtHel4=;
- b=YKZrK1JtVB6Q6JZmhhwqoETINkE4BtvW/7GGw1RxdIRLhmAl66Peptqgw3heQh9x/t
- hA0Xn1HkNUzObNtqX8Y5j22RelCjCdLnxC21ILup1jhR2ioEo4p4ZVUOcpgdcqtPs5Sr
- GyZMGHtkbWnHJjvjKwLkcv/MVplVMIMV1rWrSLWDLnBKRtWej2Qmfh7y1ULjyBWsActl
- x7MAwM/t74dsltX7r7a847fWEutXLKbwbczP3agOKZLjc8j8o3ajNOBxt439wh+okihZ
- NHf62y+j+lvcKoV+lsDb82RcbPAaaTziGoCcTpJFpwg7WLMOMyTzhxEYpAxxS2lCb2vX
- XQsQ==
-X-Gm-Message-State: AFq9FYLp5ZQB+H80SIg/cchJBG21tXyqrQl/6qoFC/1pOlZSi9tdQ0oX
- VZNDHSs4+Ic2J5Zaj/c+GhcRLuERKodK73er47Ux34vul5xwlYrqgfoROg5DdA==
-X-Gm-Gg: AYBFou2NTX8w2wl8da5vSkFJFENHM6ZYysD06rAkEcvBGyXR68xhVGV02wj708d5o5X
- 7w5t3xs6q3S3QzvejmUfdP/chBbvuOj6XK4WZW95kicq2XD2lbcZAqgiLiIZUpXZX+teb6INBgx
- e6uE/tQkORUgQU8S2n7CAQbR9SKHvY4JVE1IqP6gXxXOh7HcUOZ0dxQWamqzHmsU4ja1/PPHrFD
- +rVH8B/RA6oOqP33hnJGQafMdXGsVKKuLFqaszCzpRrgiYCxea7jsIJlI3tIbSSwB48ohjZVJyx
- SYt8AUkOdOdlRcxxypgmG27EJVS7t4SSJH6XrqSj9uK+iWz/Ph4Ln8WrscmL7vdnopULGgpqDza
- +4q3Lox9SNdSXGRvsUBoNbI3oDN8ZKOa7kIlKZiupcILLvjc1dWBUeplG4UR6fjEoFXsw+Zw0Ph
- GvapbtrGn+AROcpA1KWYr0qZergcypLurDUuNy7MZz3fD0v6bNZrnWWW5FElVpTUQ/LHtrWRC64
- kB/k1zVdCfU2mtftwPczdgZ3/o=
-X-Received: by 2002:a17:903:1b63:b0:2e7:ff72:203f with SMTP id
- d9443c01a7336-2e842bd0f74mr164673695ad.61.1792112611849; 
- Thu, 15 Oct 2026 18:03:31 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792112706; x=1792717506;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=vEsPkFkLUyA1NU56nP525qgRMdEHY/E8F4lp51ZoNeY=;
+ b=FUtfo1jTOqxhg40DqNsGrKb5F4C/wSQbzvtxt8p3NSjwngT6u0pELwEXQSvDvhyTB7
+ y2Y9Kja5hY8OyTWFNeDdysM0XyIQVwogXVAym1of4aOlEcUR3MBuO+kJvJpFHjRACv8i
+ H4c1ETxrYVMN1VoAUip5tK2C6j91CDUUsKOebbQkyLZLiJSsjjo1+xpB2kGGSFCMjv5l
+ 9IcTUR9Oh2BCuKtD2k+L4QeTeGQjgvFsQwBZwGlXmyW8usJ2eQmemr7IUK6ZeFT2erlo
+ KJJrt4W0t9cj3J7yhphSYICW6GdFsLGzudTbugwNXy2bvRJEDpo4tp82uFTQiD0SX48Q
+ ONQg==
+X-Gm-Message-State: AFq9FYI7C+xwWmSrSYOssO5z1zicS2aHjyhfiCkkPw+zM80d3r4WAYeX
+ fd4ox+fIqqaaP2vqwltWyWj5Yn894RhCYWtck8In5dWzytl7Xj3XJdcBbquyQA==
+X-Gm-Gg: AYBFou3EO4N5+pPX0t7WnptOs3QVom5Fai0udUb9mjUGvT/J17Zym8aFv9mAVFmukKl
+ KxzmLH2yYV/N+9v3ZMtlhnmTOAWEJGMhD9jsnlnf+KnpRb1oS3uNsefggy66ouOhbJe3HLmscTz
+ 92SbSlbaK+tbA2B7v3aYSNuionw6v85ux1LCKltVVq9EBr3aoQq8iJgQ/WAZcnzDaFXNRa0HZkl
+ UGVy0GSir0HIrlIzImAUctXFP3xrCy5ya/DWG5spnjf1Ki+HxTThXyZU7aKxqkUNcu6aRCClxJF
+ 2EoxcrPxso233LUyzfNckMzAavMuZHhetG72LZR+QoHJxYida4IVR6jBBTKwuAn3V1igIqi6+SN
+ Kk0Jt13hXzsWQUJIZUEUIXbQZA8gLmByz167JaOgM6vdGShB7CfzEI0+2xZRqwOe6zfMAQ8ZIuH
+ R9YEPUc2jmFakiUPr6gfcnhPQz+0JmRmlF8bMAicIwe1UA0C/vENxRb6Vrvu2JL+izuETxNPZfO
+ 7H2TSkt6apfQqKO
+X-Received: by 2002:a17:902:f650:b0:2e9:5507:b538 with SMTP id
+ d9443c01a7336-2e95507b924mr45356965ad.3.1792112705511; 
+ Thu, 15 Oct 2026 18:05:05 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.29
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.05.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:30 -0700 (PDT)
+ Thu, 15 Oct 2026 18:05:05 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 16/50] target/riscv: Document riscv_cpu_update_mip()
-Date: Fri, 16 Oct 2026 11:02:03 +1000
-Message-ID: <20261016010237.1102834-17-alistair.francis@wdc.com>
+Subject: [PULL v2 47/50] hw/riscv/tt-atlantis: Update UART and I2C to use clk
+ from PRCM
+Date: Fri, 16 Oct 2026 11:02:34 +1000
+Message-ID: <20261016010237.1102834-48-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,41 +104,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260930174508.81497-2-philmd@oss.qualcomm.com>
+Now that we have the PRCM modelled, update the DT nodes for UART1 and
+the 5 I2C controllers to use the rcpu_prcm as a clock provider. This
+also allows us to eliminate the periph_clk that was added to the DT
+previously.
+
+Signed-off-by: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20261001-atlantis_prcm-v4-3-95d33c470eeb@oss.tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/hw/riscv/tt_atlantis.h |  6 ++++++
+ hw/riscv/tt_atlantis.c         | 23 ++++++++++++++---------
+ 2 files changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5489c564ae..24b22032e1 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -688,6 +688,20 @@ bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
- bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
- void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
- int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
-+/**
-+ * riscv_cpu_update_mip:
-+ * @env: CPURISCVState
-+ * @mask: Mask of the MIP bits to update
-+ * @value: New values for the bits set in @mask.
-+ *         Use BOOL_TO_MASK() for boolean values.
-+ *
-+ * Set or clear the Machine Interrupt Pending register (MIP)
-+ * bits selected by @mask.
-+ *
-+ * Note: VSTIP is not maintained in MIP, so it is ignored here.
-+ *
-+ * Returns: the value of mip before the update.
-+ */
- uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,
-                               uint64_t value);
- void riscv_cpu_set_rnmi(RISCVCPU *cpu, uint32_t irq, bool level);
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index db1dfed157..577c867d71 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -99,6 +99,12 @@ enum {
+     TT_ATL_CLK_RCPU_ROOT = 1,
+     TT_ATL_CLK_NOC_PLL = 25,
+     TT_ATL_CLK_NOCC_CLK = 26,
++    TT_ATL_CLK_I2C0_PCLK = 33,
++    TT_ATL_CLK_I2C1_PCLK = 34,
++    TT_ATL_CLK_I2C2_PCLK = 35,
++    TT_ATL_CLK_I2C3_PCLK = 36,
++    TT_ATL_CLK_I2C4_PCLK = 37,
++    TT_ATL_CLK_UART1_PCLK = 39,
+     TT_ATL_CLK_HSIO_PLL = 54,
+     TT_ATL_CLK_PCIE_PLL = 55,
+     TT_ATL_CLK_MM_PLL0 = 56,
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index 10ae3c2850..4e6c39982c 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -265,7 +265,8 @@ static void create_fdt_cpu(void *fdt, TTAtlantisSoCState *s,
+ }
+ 
+ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
+-                            int irqchip_phandle)
++                            int irqchip_phandle, uint32_t clk_parent_phandle,
++                            uint32_t clk_phandle)
+ {
+     g_autofree char *name = g_strdup_printf("/soc/serial@%"HWADDR_PRIX,
+                                             mem->base);
+@@ -275,6 +276,8 @@ static void create_fdt_uart(void *fdt, const MemMapEntry *mem, int irq,
+     qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
+     qemu_fdt_setprop_cell(fdt, name, "reg-shift", 2);
+     qemu_fdt_setprop_cell(fdt, name, "reg-io-width", 4);
++    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
++                           clk_phandle);
+     qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 3686400);
+     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
+     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
+@@ -305,7 +308,9 @@ static void create_fdt_clk(void *fdt, const char *clock_name,
+ }
+ 
+ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
+-                           uint32_t irqchip_phandle, uint32_t clk_phandle)
++                           uint32_t irqchip_phandle,
++                           uint32_t clk_parent_phandle,
++                           uint32_t clk_phandle)
+ {
+     g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX, mem->base);
+ 
+@@ -314,7 +319,8 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
+     qemu_fdt_setprop_sized_cells(fdt, name, "reg", 2, mem->base, 2, mem->size);
+     qemu_fdt_setprop_cell(fdt, name, "interrupt-parent", irqchip_phandle);
+     qemu_fdt_setprop_cells(fdt, name, "interrupts", irq, 0x4);
+-    qemu_fdt_setprop_cell(fdt, name, "clocks", clk_phandle);
++    qemu_fdt_setprop_cells(fdt, name, "clocks", clk_parent_phandle,
++                           clk_phandle);
+     qemu_fdt_setprop_cell(fdt, name, "clock-frequency", 100000);
+     qemu_fdt_setprop_cell(fdt, name, "#address-cells", 1);
+     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+@@ -356,7 +362,6 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+ {
+     uint32_t aplic_s_phandle = next_phandle();
+     uint32_t imsic_s_phandle = next_phandle();
+-    uint32_t periph_clk_phandle = next_phandle();
+     uint32_t osc_24m_phandle = next_phandle();
+     uint32_t prcm_rcpu_phandle;
+     g_autofree char *rcpu_name, *hsio_name, *pcie_name, *mm_name;
+@@ -372,10 +377,6 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+      *                       aplic_s_phandle);
+      */
+ 
+-    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
+-                    aplic_s_phandle);
+-
+-    create_fdt_clk(fdt, "periph-clk", 100000000, periph_clk_phandle);
+     create_fdt_clk(fdt, "osc-24m", 24000000, osc_24m_phandle);
+ 
+     rcpu_name = create_fdt_prcm(fdt, &s->memmap[TT_ATL_PRCM_RCPU], "rcpu");
+@@ -401,11 +402,15 @@ static void finalize_fdt(void *fdt, TTAtlantisSoCState *s)
+                            prcm_rcpu_phandle, TT_ATL_CLK_MM_PLL0,
+                            prcm_rcpu_phandle, TT_ATL_CLK_MM_PLL1);
+ 
++    create_fdt_uart(fdt, &s->memmap[TT_ATL_UART1], TT_ATL_UART1_IRQ,
++                    aplic_s_phandle, prcm_rcpu_phandle, TT_ATL_CLK_UART1_PCLK);
++
+     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
+         create_fdt_i2c(fdt,
+                        &s->memmap[TT_ATL_I2C0 + i],
+                        TT_ATL_I2C0_IRQ + i,
+-                       aplic_s_phandle, periph_clk_phandle);
++                       aplic_s_phandle, prcm_rcpu_phandle,
++                       TT_ATL_CLK_I2C0_PCLK + i);
+     }
+ 
+     /* I2C peripherals: qemu specific */
 -- 
 2.55.0
 
