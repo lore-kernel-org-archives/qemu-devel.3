@@ -4,94 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453AACC6B2D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 04:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D037CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 04:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHZFd-0004O9-Ex; Fri, 16 Oct 2026 00:09:01 -0400
+	id 1xHZNw-0005LG-Qi; Fri, 16 Oct 2026 00:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHZFW-0004Nd-2x
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 00:08:55 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHZFU-0003Pa-3q
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 00:08:53 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-48e00eee27dso8020f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 21:08:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792123729; x=1792728529; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8KeO8JEBd/exSJ0KYLxbB77/RVV2kWhOnOQ8IPgKBXo=;
- b=kcU9VzZu65if+MvYsHM/vwtMS7vDkRxI2MBOmsFehfwkjnRkxf4Z9H7xSu42JidtaZ
- SQ28bSBKCpLb+WN14HNWc1NUvGi7XtHVJyZVlJZDly7HEP3y2cQi3fbJHJsqdyJ1Zmta
- phg/XbE6VCWcKCDsrmQm5Lx/AMgUBcKEkrUPfa9uUFt/WeO5LIg+if04sZIe/2Xe376z
- 1KJjtAUd+VHQoR+lTqUn4SRL+2DZB0V6WCyNz3kQRsBLDZpnm9vDeXU1ZQq+ZmZ16G1H
- 9fzDvrwt6o/NYmihXLgvC8FfmxWxxo/iWL0KcXajF8TE1igISU6v0oNixAm7EdAiWSC/
- fpCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792123729; x=1792728529;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=8KeO8JEBd/exSJ0KYLxbB77/RVV2kWhOnOQ8IPgKBXo=;
- b=JltRSxH7jIMJTWA4FM6AD1WiWnUR+JYXHV8cZgNaKGGeP345y8F/KNfR2IhvZ2EK6+
- YPUch3ABvnFaObyjeFYynWFhC+5y6DScSlPYR6U+g4fREUSvBuOe/yiNzm8PXBK+vEaD
- 8Z4jY1bmbOW5j5OyyBGDGueL8ns9dDMhEvlG6nflIdzyKIMtP8/FGf/pvVXe8uOJhGP7
- mtBNHZEpEPEpUYVp/DJ7cDa+ijZqs0iyO2hnBsnWHfIJB3i/pQpPRZvVHe8ylb6ezzce
- nhSrk9rxaXuppF/wX1VOKejzzzqvHby1N3vDDGliIMan2o49FHyDH0RD1ip9H/kehTec
- nUlA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxtrk2Tzw5rDtMAbjXRZMwdr4qbM57oKrSXCkVifkLZz3EdPH9E8Ds+57Qk9kEkPzMAWjXoSX83Abrw@nongnu.org
-X-Gm-Message-State: AFq9FYISMoFaCZjBwLuJKJUcpLQMtV4G7bGu3PXRbflHnHetvhZpZNTI
- PwCS9XB7Bf8aakTtxR60MZxbyHOYY4ygW52rp+y9RBrhPgawDvtdCclYdHg4ib8PLCs=
-X-Gm-Gg: AYBFou0P7P9Jd5gxWZfp6viCOjzzvkw9EDa41Z0BlRIWMz6C3PYBv3WGIm57KwxZVNE
- RveIYIkaFsMLPWg6ZLW1Cw9YJbVnWMat0VDrQsCakyi5BSoJ1ynoW6Mq3vEElpeydldXtFC4W2s
- a3yto9vLS79NQsQVuvtjJrY+hhNV+Rde3gxaZTuY0ykfXv6NAoGqOOW7RflHdQ5Lc/876zZaeIJ
- hOeYWkJJ780hRE7sOVKgk+qVh2iS5j4JVn005skCIiCzGERWg0VHqVeL09MlNBRs+IihUgZE3bt
- EhdBKvn5Twf0wiYfJky5h2uYXwFBqpEEx31ENvEAUQBsx0dLuo0GS0TMwN5/kL9fqZ5olJyohiC
- 6mBJxUC47vxpy62npV0uT002b3I9ijMB26OOtchkfhZUw89XxXX3z9MRGz0q89L9+pv4lkQQxse
- KsM9Y4zq6YnuIhSMV7z5ofQ3doeyBnclmAToabfkswa69eJL1AAHqEr0dqzpz1K3Ni5U9qbfUV6
- 64AZMJPDrMApSo50st+rJ29c3lV9XGCzBt6iYn5pz1cXccOeedr/HkzuisUd/+CEXStBvndO/oT
- Jp8WMqUquI7S4R8xqzfm/0X76NGK0egtx7pXYgl/YfeC2FRuZg==
-X-Received: by 2002:a5d:5d12:0:b0:48d:ff71:dd8e with SMTP id
- ffacd0b85a97d-48dff71e2d8mr899056f8f.3.1792123728945; 
- Thu, 15 Oct 2026 21:08:48 -0700 (PDT)
-Received: from ?IPV6:2003:ca:3f0f:8b00:2224:251d:1d2:b25d?
- (p200300ca3f0f8b002224251d01d2b25d.dip0.t-ipconnect.de.
- [2003:ca:3f0f:8b00:2224:251d:1d2:b25d])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4c575esm1982044f8f.10.2026.10.15.21.08.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Oct 2026 21:08:48 -0700 (PDT)
-Message-ID: <4640eccd-d19d-4aca-b5b7-2614963a39fb@linaro.org>
-Date: Fri, 16 Oct 2026 06:08:45 +0200
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHZNr-0005Kf-HT; Fri, 16 Oct 2026 00:17:32 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
+ id 1xHZNo-00041G-31; Fri, 16 Oct 2026 00:17:30 -0400
+Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
+ by APP-01 (Coremail) with SMTP id qwCowABXLfFMpdFqv24BCw--.1154S2;
+ Fri, 16 Oct 2026 12:17:17 +0800 (CST)
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+Subject: [PATCH 0/1] tests/tcg/riscv: add Zcmt jvt WARL tests
+Date: Fri, 16 Oct 2026 12:17:14 +0800
+Message-ID: <20261016041715.749-1-wangyang25@otcaix.iscas.ac.cn>
+X-Mailer: git-send-email 2.55.0.windows.2
+In-Reply-To: <20261016034759.54-1-wangyang25@otcaix.iscas.ac.cn>
+References: <20261016034759.54-1-wangyang25@otcaix.iscas.ac.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20261015180858.1863407-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261015180858.1863407-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowABXLfFMpdFqv24BCw--.1154S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZFWUtFyftFy5Aw15Jr45GFg_yoWfXwc_tr
+ 1kJr97Gay8Aa4DJa48G3WrArW5trZYyrWUJF47trZxWr45ZFW7Ja4kJr1DGFW8Wrs8XrZI
+ y3ykJry8Jw1jyjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUbakYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
+ 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
+ 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
+ cI8IcVCY1x0267AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z2
+ 80aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28I
+ cVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx
+ 0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY
+ 1x0262kKe7AKxVWUAVWUtwCY02Avz4vE14v_Gryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
+ kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+ WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+ 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+ JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
+ IYCTnIWIevJa73UjIFyTuYvjxUxxR6UUUUU
+X-Originating-IP: [124.16.137.194]
+X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=wangyang25@otcaix.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,35 +75,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/26 20:08, Peter Maydell wrote:
-> Smaller pullreq this time around; FEAT_IDTE3 plus a scattering
-> of bug fixes.
-> 
-> -- PMM
-> 
-> The following changes since commit 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269:
-> 
->    Merge tag 'pull-aspeed-20261015' ofhttps://github.com/legoater/qemu into staging (2026-10-15 14:58:28 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20261015
-> 
-> for you to fetch changes up to c595a87dc3e318532460c654c36dea08e6ac993a:
-> 
->    target/arm/tcg/gicv5-cpuif: Fix typo in ICC_PPI_SPENDR1_EL1 name (2026-10-15 17:38:38 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * fix user-mode emulation of ID_AA64MMFR0_EL1
->   * Fix handling of 52-bit TTBRs
->   * Emulate FEAT_IDTE3
->   * hw/arm/virt: Use TAG_GRANULE when creating tag memory
->   * hw/timer/stm32f2xx_timer: fix periodic mode and CEN handling
->   * hw/misc/stm32_rcc: Mirror clock ready and switch status bits
->   * hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual value, not 0
->   * target/arm/tcg/gicv5-cpuif: Fix typo in ICC_PPI_SPENDR1_EL1 name
-Applied, thanks.
+The CSR fix for #4408 is already queued in Alistair's
+riscv-to-apply.next branch at
+bfdd4f6a918ffad4f013d4f53a9adca1adc0aa3b. This follow-up contains only the
+RV32/RV64 TCG system tests.
 
-r~
+Sorry for repeating the CSR hunk in v4 after it had been queued. The
+tests check normalized jvt readback and cm.jt dispatch. The same two
+tests passed in the Docker TCG build (2/2).
+
+wangyang (1):
+  tests/tcg/riscv: test jvt.mode WARL normalization
+
+ tests/tcg/riscv32/system/meson.build |  9 +++++
+ tests/tcg/riscv32/test-jvt-warl.S    | 49 ++++++++++++++++++++++++++++
+ tests/tcg/riscv64/system/meson.build |  7 ++++
+ tests/tcg/riscv64/test-jvt-warl.S    | 49 ++++++++++++++++++++++++++++
+ 4 files changed, 114 insertions(+)
+ create mode 100644 tests/tcg/riscv32/test-jvt-warl.S
+ create mode 100644 tests/tcg/riscv64/test-jvt-warl.S
+
+-- 
+2.55.0.windows.2
+
 
