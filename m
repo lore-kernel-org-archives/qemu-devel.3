@@ -4,132 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B85CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 20:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E25CCF2C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 20:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHoQu-0004W7-EV; Fri, 16 Oct 2026 16:21:40 -0400
+	id 1xHoRj-0004cy-Ei; Fri, 16 Oct 2026 16:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xHoQr-0004Vq-0I
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 16:21:38 -0400
+ id 1xHoRh-0004cb-8Y
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 16:22:29 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xHoQl-0008U6-Gu
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 16:21:36 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xHoRf-00006H-NX
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 16:22:29 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69GJf16N3179349
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 20:21:28 GMT
+ 69GJeroG3725853
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 20:22:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KMilIGKE9c3UY1XmkCtOYC69VKsut1+Uxtkbx4CyM1A=; b=kiE7dZ49No+xr+Tb
- xgINCzkM9UjxGiIF3ca0LzV0eYy9BFpob9Gcw5tA7v58F+Oh+EcjkZLsrsCaFvJn
- aKWWP8QB20A1uLL1ENups9FXZ3H37nOfkDACUo/h1xfmo/aRFz1y9d8VmJgm6crg
- wQITPs1S/mTFv/yFbXVmoOjfZn8WedxChVLuiiUtsbFCry3nFkmaSfldpnsobk7E
- NFDYs+tTdJGDSEdc9gwpas0XXMDRKol0yHWOkCRpGEzDfaKtsVvxeleuooBqhGk/
- 6vBPoUpserkrJ4dcp9uLnFhBrQvOdRth3gK0zjQt7c1vrrnTJHR87DHuPLCs1DjA
- +yU2Qg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbg5ytqbp-1
+ KvXYv7GcmWIwYWAsDb4/AEiWkn9y5BzYG82yxLb+XV8=; b=QIvnoBqKYWHvbdOY
+ PL/4XkUdeStnw3l0nDl7Kjjrzjw5aZHrwQXYMP9CmFQG98MzTdHriLpl91ycfeJn
+ RjqsRNyX1u7/2rahOuIahDAUfG7m/2keYUALV/fVC2yL3rrYyQ+NJCXMomvdKHI3
+ UVeKqluOvdbru5QlbtWZiXNEpOCxDYMxEThT4DFNgBGC59MGqL7bTjq0AabSa5zD
+ 1cw50oDaX9XR1BDx8UMZMimEQaRMgacJ2n6YfbEKQdc7FXIFMRMIN+OFzfPF3uQV
+ 2bu6QGxtxUr3FhkzdyCT6h+sebZaPHZHWgEE4Nuqh1aCHSMcIBU3S7LW1vBhcbqz
+ cSG1QA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbq450wa5-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 20:21:27 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-9179a556c43so6644946d6.3
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 13:21:27 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 20:22:26 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-9179a556c43so6659726d6.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 13:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792182087; x=1792786887; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792182146; x=1792786946; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=KMilIGKE9c3UY1XmkCtOYC69VKsut1+Uxtkbx4CyM1A=;
- b=Qz5xBBydWxDr66IqUYvcQKjbzzLG5LllrevBUUJM6BWDe2y+E0LkGrKHKXgOpx9tIt
- KOXXk09l9jWl5xRn0VNp8gP/n/H8d7ZP4aEnwvqFMOFfJ0ptECCcndoubP04retNj2Qy
- awbCTfmZQaDCju9pl+oavjQEbhqV8jeGKopLmHmU0YUOsgEWHqW8fSglq1rxQQqqMnnE
- VlkWmHmUHjDt0iPhIOwUsccnNOPMqD0DpAP2h0yRiPoMt/NQ2wr5sTq8c9ehjXFlEa6B
- f1Fj9yD4RzU/sCJo/4/ffcSUwcizq5dEy0QLnPYOKpZBvVmXDbwL0/asFeedEuYxia0r
- Wppg==
+ bh=KvXYv7GcmWIwYWAsDb4/AEiWkn9y5BzYG82yxLb+XV8=;
+ b=ZBvGx3L7T2U3VVQ8DyFwWHcW5xBr5ZdqqCdaoh4p7QduHhqcBUs+RbQUY7iFK8TERq
+ /qGwKLpAnCp1klQnzMfbF3I5CCzJROqoK8dhbqbtx6VaAR99EIbXgrgakvYPQhgCOG3Z
+ UI8lQ3tpegr/TVnEmJCgIBC6/dyXz95NvwMS2/4ODjLDlvM7H1OZJ+3dzCstpxesVE14
+ 0PLRy2EetMCFzF4Wtc4qcAiRjAs5WlPRjaDpSXYS5HL9Nmy363zordoa58wact9RjXC9
+ GXy2m7MLqmNmHiN0WN2ys/6+BANH4hG0tplFhqyr2uVyqIXO5YcgiwgW2FTmKG/clWU/
+ dRfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792182087; x=1792786887;
+ d=1e100.net; s=20260707; t=1792182146; x=1792786946;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KMilIGKE9c3UY1XmkCtOYC69VKsut1+Uxtkbx4CyM1A=;
- b=S9wpWhgd0tQsKXfyrBaWQqd4E6zqNoJD/aAgHv+iauMOyjOgeyzAKQIvoFR06+7Vj8
- ZbKUkQETSEv5guJu95GeJREkGSOW5M/HVsUziEAEe03VWx8DbNo2o7rTcH2ahPKBrbnG
- pf0D6HIb86XIf5gRD5L6OdC2u1+bBFniGtSWGPEZaobQ3YS/Tc0nmYNEwACHVxo2NvPx
- cJ/w8l5JZX4mZ5bmCPESgNx7k02M/ftX3/gvd7nA+g+ErCte78Og+BvlISIWHV7ZdxKi
- sccci0UrH2A0sqZ2Kn3n9RZ5R8IJiqupgQq5DTbNups93wiRsfH/QuCxxjRFP/SZI2zx
- JaFQ==
+ bh=KvXYv7GcmWIwYWAsDb4/AEiWkn9y5BzYG82yxLb+XV8=;
+ b=PU0UzgbN9aEF8vuZxZ4z9o1VaZgQ1DuBJAgGWtrZfWGAY+CphtppWXUNYdypyurRan
+ Jmocd80tgDJ/oS3ZJX9NlX4iJ+8CUJvVQpVNXlsJJePLPqoag5ue4fCMLX8Fthf+sQw9
+ vq+zp9HIyb76xSW4qF0mPgL2IBoO/3oNs3tuOTFG09hHLZwkWCtTJoX4zm/sx3c5IfU6
+ 0br5RWq//T6W3PD1Ix0kTRa1hcDXxF8X3Excs1t1fbLe758TCTJXLRUdarblErSMMJo9
+ 7RyhpGdiJE/QG+YMWwNdgAGnw7sme+8x9dK8h808sDqxBIdeRAmCasiV00ECWlgLryZH
+ R4Ig==
 X-Forwarded-Encrypted: i=1;
- AKwUvBySEhF//9W6NqObul9cFrxcqWHYr38TpE0atV3mSyliZK2HMU1r/LZ9+9OrbesNWfN3zmoTr3sQGPEi@nongnu.org
-X-Gm-Message-State: AFq9FYJ+EK0+xk6YKxyDp2YxK4F0SIx/RVHK/QaWxx/OyVLbj/UYNhxS
- pEHyIIHvpe/mwEKlbyWjrE8STEwzjlUsUQ9nktwlT2QHIUBH9tEk7y/ZlGyl3rT7MdZRHGRospz
- PXG9eAksiZx7e6w6LYotGKHMm+UPEQEvl6wa9ee3DDDq5h4SoIgTUbtKe7lIVDQZ9yw==
-X-Gm-Gg: AYBFou2RVB3yaGpOMO0Vd0p/tfRjnV++oTMgJKXhN47rlrcX5gZACFk6cP3ih0teSkG
- d1+kmByuPqHW8NlOVPi3mGp1O2VJYCpcNsyyQlUhutuq8lqpulXLgPv7kVl0w7kSJz1VGk4Fov0
- P1fHpi9GkWaQ8eFOfBX+eJ91WvUoh2kPDELNSXsDPgZ/9NoBR7MPQ2UzgUJwvq54j+Z129Zt2uN
- raThRn1s6uEY8Pn7SLXoa58tWpIACo9fuc+EwzEgnrl87nu7Vjr0mYscq8BhCr+GVKoo1vOz3Hk
- ieUuI1+9Uu2zIPDqiWeA1PPdYLlxC64b77i5RXJnN2swPvU/7Dpx5koEykzNnPAHAlmyFQgbiTP
- m5nXEvVrsAuk51c77og3yvmLSkKb3WCaaQAg=
-X-Received: by 2002:a05:620a:4547:b0:93e:6ff1:b67c with SMTP id
- af79cd13be357-93f29cc8320mr177551885a.20.1792182087216; 
- Fri, 16 Oct 2026 13:21:27 -0700 (PDT)
-X-Received: by 2002:a05:620a:4547:b0:93e:6ff1:b67c with SMTP id
- af79cd13be357-93f29cc8320mr177548085a.20.1792182086715; 
- Fri, 16 Oct 2026 13:21:26 -0700 (PDT)
+ AKwUvBxibDyaMZKhRX1yCOOI8fZ60LQt7HMMrLuHcWTt2bWdt+V1XWiSY5a6ri+QWmy6aZJp7IA6Ds/9Ge9W@nongnu.org
+X-Gm-Message-State: AFq9FYKCyfdfnqKtw5dHdEPeTTIn3iWqhzsYG9Lr+T9vlu/Ttl5oxxzg
+ TicScy1p39kz8EJsHm487YT9ceGjeKtgj60FMn6CsG+7h+NwZJ8fMRIQUJW/kwpJfOjB9AuuApK
+ W4NfEDxn58nLpbSgVqAPoq6gp9wIfeuVzPBkpsWWuHLABziSDnLBr+tXi/Q==
+X-Gm-Gg: AYBFou0YTb9gm4FYUU4qsX+a+V3GlwWH6KQ+6nAuosQk05JBQ+Tywlrd4wT25lXkF2c
+ dxpTI0GAvDIm8YDTQ/PbrXI4PhTUhE/shq0wM3qlv81/J5X5rlJssEkOtMh0CFae6iG09f5PpIQ
+ Gy2VscFXl8evzXVSYCda62DQyX5uP/yz86DjJiPp7cwrGbLDFtvzLaoAQLT/zeqOdwKYi/HcZoS
+ orOLmhWhC4Cyi7zd+oAVgErqZGzfmP4VXZBaOVP5g8S2US3A/1X9XNBZdx3L/h8qehZCrm1cGIN
+ OeiDRVzsKkp4Hdq1bVfnmE1A/2OcGpIRkUmyYtrGZLZnJtIitsvJ0EzhMQhD6tMJI/lmU2Eoghy
+ DanGhWHYORkTatvig2Vv2nu+66B4n+mnmxC0=
+X-Received: by 2002:a05:620a:4609:b0:93f:258e:502d with SMTP id
+ af79cd13be357-93f29da1202mr169608485a.63.1792182146051; 
+ Fri, 16 Oct 2026 13:22:26 -0700 (PDT)
+X-Received: by 2002:a05:620a:4609:b0:93f:258e:502d with SMTP id
+ af79cd13be357-93f29da1202mr169604385a.63.1792182145580; 
+ Fri, 16 Oct 2026 13:22:25 -0700 (PDT)
 Received: from [192.168.68.103] ([152.234.126.58])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93f1a16c21esm298141185a.16.2026.10.16.13.21.24
+ 6a1803df08f44-91bd276eec4sm22389686d6.2.2026.10.16.13.22.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 13:21:26 -0700 (PDT)
-Message-ID: <0078a7dc-f7a5-47ad-b4df-5cd210ef7b99@oss.qualcomm.com>
-Date: Fri, 16 Oct 2026 17:21:22 -0300
+ Fri, 16 Oct 2026 13:22:24 -0700 (PDT)
+Message-ID: <52ec25c7-b992-4371-83f4-f30a133819f3@oss.qualcomm.com>
+Date: Fri, 16 Oct 2026 17:22:20 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/riscv/virt: restrict scope of virt_is_acpi_enabled
- to this file
+Subject: Re: [PATCH 2/6] target/riscv: rename virt_acpi_setup to
+ riscv_virt_acpi_setup
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>
 References: <20261016182751.264704-1-pierrick.bouvier@oss.qualcomm.com>
- <20261016182751.264704-2-pierrick.bouvier@oss.qualcomm.com>
+ <20261016182751.264704-3-pierrick.bouvier@oss.qualcomm.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261016182751.264704-2-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261016182751.264704-3-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: EOcyqdtxZ30oCpKLU1BdN4nyitRZbUdD
-X-Authority-Analysis: v=2.4 cv=M+HYuCws c=1 sm=1 tr=0 ts=6ad28747 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=XIBTAJF/fpiF5bhQ2IRv1g==:17
+X-Proofpoint-ORIG-GUID: VZgTDPIZ9AOi-mCph-VJuB4dskDnV2jO
+X-Proofpoint-GUID: VZgTDPIZ9AOi-mCph-VJuB4dskDnV2jO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA4MSBTYWx0ZWRfXxPr8va1kUgR9
+ LRhk5POQloMeOeX9zfLGlym/wvxl5yAc1kdaJWUokTFzMRje8TRdK5ZWqduo81XDpHiPq8sqOg0
+ W/R7qigdmATJ9IBnu2k2k/anESIRkVNBznllv55bm/Oj0wdDorDg/dGCbAxjbMJCsvJUiFlh/kp
+ UkJYruQ93Gq1/Jlodz8JoOQyR+3OVWwTt5N/2EP9En1WH1Gd6b0VpFeXZgap8n9uVpj1vIyQwiH
+ /tUYwhHYaF4mBaaZn88K2A2DfOY1S/wWURTNpoZc0pLPXXWysVYmTPqb0UDkny/x4HzFJQVAOUT
+ 4sYpXIqtyPVd0DmYv07cm+90qyqgBhIWY4Fo0KxDs5q/Oc6Tw0QT01SWGm2+3tqpe6xyCiD6Uv9
+ 36iDqqeSsOTR4hfXjD2aT4tA7VX68dqZUWXXjooZXBpq04CIZmggDmInpp1PyTmczUQnXcKDy+a
+ kweGN6cI8FqxWYSZGVQ==
+X-Authority-Analysis: v=2.4 cv=e4GT2qp/ c=1 sm=1 tr=0 ts=6ad28782 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=XIBTAJF/fpiF5bhQ2IRv1g==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=WDSYQnpEfCFHCtFydvYA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA4MSBTYWx0ZWRfX+HYjXsPaKSPt
- isYrIMwXMljSgJF59gUA3+MZj8d97EG9J5Gspeu+k90i5n9B3aMqzSSPWRHcMDL0qGoUWowx5hh
- lMGOj5z8IrWlW8U9GPSqJDt2GLzmouQ=
-X-Proofpoint-GUID: EOcyqdtxZ30oCpKLU1BdN4nyitRZbUdD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA4MSBTYWx0ZWRfXycjllzb4sWcA
- j0FbM1qXz3LclbaVLswxlXKvdm109JaRviUBTHlNwsYt/uTO50zO0EizxrLMYPqCYWOpabxwVOY
- v1kdN/WZuQuL8MOd4Citq9DESV3iPhH++Do9diPZGEGGV/cnKkQYliK7LRHGJN0perj/RkPewBf
- qIBhhu5/lU2wTJnMA/BfoKFjaQa4ho93Bhmo7bY4evwpqTcnlostnC/UNMwuTmzbevm9H6Sp7kJ
- NtzIY0ktN27F2P1EaptzaflYYYbTw5hRXXuz7NUTb6ibI69on6orrSld9/r5RZEcksnougWOZaA
- aeXDh8k5C2K4zIkWq+tjpn+ECPNCuksb//PRD1QTMtwPX8pcLWCVPyyhYpDG1RIcqUE5BnWqOod
- QvjcrOQG+wQgCG/bicSUoolEbCdc1uUALER5whQyzqyi2L86DpuW9X7sPEliePENgADfr/aUEN+
- jaoO/RObH3vS4sHnMJA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KfKdc_6-5s6LhNpCYkMA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA4MSBTYWx0ZWRfXzg4ocBz/wmUE
+ RRiDBtjDJf615DVlufcL0TSN/q0Scf+unGcWP2pYvcsrQusmrc6obhOG4FW/jiOimiACagwKONu
+ Tse4sJJP3Pdlfc3CtrDtuhUdMnUdc2g=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-16_03,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160081
 Received-SPF: pass client-ip=205.220.180.131;
@@ -159,61 +159,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 10/16/2026 3:27 PM, Pierrick Bouvier wrote:
-> This removes conflict with the same function from target/arm. To the
-> opposite of arm target, there is no external caller for this function.
+> This removes conflict with same function from target/arm.
 > 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
 
-Not sure why virt_is_acpi_enabled() is public.  Probably something that
-we did in the past and never revisited it.
-
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   hw/riscv/virt.c         | 10 +++++-----
->   include/hw/riscv/virt.h |  1 -
->   2 files changed, 5 insertions(+), 6 deletions(-)
+>   hw/riscv/virt-acpi-build.c | 2 +-
+>   hw/riscv/virt.c            | 2 +-
+>   include/hw/riscv/virt.h    | 2 +-
+>   3 files changed, 3 insertions(+), 3 deletions(-)
 > 
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index 0475dcb5c60..4565359e908 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -1021,7 +1021,7 @@ static const VMStateDescription vmstate_virt_acpi_build = {
+>       },
+>   };
+>   
+> -void virt_acpi_setup(RISCVVirtState *s)
+> +void riscv_virt_acpi_setup(RISCVVirtState *s)
+>   {
+>       AcpiBuildTables tables;
+>       AcpiBuildState *build_state;
 > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index d4b501802f6..b53ae07f9b9 100644
+> index b53ae07f9b9..220f125d56b 100644
 > --- a/hw/riscv/virt.c
 > +++ b/hw/riscv/virt.c
-> @@ -71,6 +71,11 @@ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
->       return riscv_is_kvm_aia_aplic_imsic(msimode);
+> @@ -711,7 +711,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
+>       virt_build_smbios(s);
+>   
+>       if (virt_is_acpi_enabled(s)) {
+> -        virt_acpi_setup(s);
+> +        riscv_virt_acpi_setup(s);
+>       }
 >   }
 >   
-> +static bool virt_is_acpi_enabled(RISCVVirtState *s)
-> +{
-> +    return s->acpi != ON_OFF_AUTO_OFF;
-> +}
-> +
->   static bool virt_use_emulated_aplic(RISCVVirtAIAType aia_type)
->   {
->       bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
-> @@ -1066,11 +1071,6 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
->       visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
->   }
->   
-> -bool virt_is_acpi_enabled(RISCVVirtState *s)
-> -{
-> -    return s->acpi != ON_OFF_AUTO_OFF;
-> -}
-> -
->   static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
->                             void *opaque, Error **errp)
->   {
 > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index e516898f9ad..16d86edfcfc 100644
+> index 16d86edfcfc..6e4fbf4b647 100644
 > --- a/include/hw/riscv/virt.h
 > +++ b/include/hw/riscv/virt.h
-> @@ -121,7 +121,6 @@ enum {
->   #define VIRT_PLIC_SIZE(__num_context) \
+> @@ -122,7 +122,7 @@ enum {
 >       (VIRT_PLIC_CONTEXT_BASE + (__num_context) * VIRT_PLIC_CONTEXT_STRIDE)
 >   
-> -bool virt_is_acpi_enabled(RISCVVirtState *s);
 >   bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
->   void virt_acpi_setup(RISCVVirtState *vms);
+> -void virt_acpi_setup(RISCVVirtState *vms);
+> +void riscv_virt_acpi_setup(RISCVVirtState *vms);
 >   
+>   /*
+>    * The virt machine physical address space used by some of the devices
 
 
