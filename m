@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4AFCCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F15CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWMp-0001D9-Tm; Thu, 15 Oct 2026 21:04:16 -0400
+	id 1xHWO9-0002rB-V1; Thu, 15 Oct 2026 21:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWM9-0000QY-HR
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:39 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1xHWLy-0000LT-2F
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:23 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWM7-0004Hc-F9
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:33 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2e987a2ba0cso1060255ad.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:30 -0700 (PDT)
+ id 1xHWLu-0004Fl-CA
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:21 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2e86dce4510so30385415ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112609; x=1792717409; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112597; x=1792717397; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KYL6HhtyFA793JPbUapslYIHVg6uGysVF9mZvXC7FuI=;
- b=GWjA0Nod86B+DzywHAvF8aKPROaLTaMe9U3AFftqWHaa7j3N/YZZcsS8OhS1vPVG27
- J8yMsqBMpU/sZRCDN5/Cq7wmyz7Wd0iFTcvvpwXdylsqxVGkIFltAii7fd5DIiyJJnmQ
- /KWZnBlpM+wBfIDXN3+J6g13LWUjQSZ8HdIsvs6h/JvOkISXWy2U0iRfv5cTDIwuJI3u
- lvM7eA4QgHbVWmslfZCQFZ9ETbcMQuYO0FCpN5utpaIofbRZrl4ls+VwrN301vqH1fz7
- yWKeTqoBcT/LCbVkyzAhLPHflh/UrYmvBBAZuw7sR8I95dKnYKAWu27oqKxAzqQUtAdt
- jcEg==
+ bh=8X0yxGerdE0RY1WCD8YB2wnCtyi8HfUekHqNKEcpC0A=;
+ b=UwN9Qi/7CNBd+V2uBYPfGSTVihcxVtjRZxQX/jSe9ubBbCkypJZTZMZF1w/NLB1h/z
+ 61fHvrPkhxjCkbjdYtMut9aJiojYNXRT87u4NaJ+ZlMCw1RZHQNIPMYWIzQlCMQKN2Kk
+ 7rdM2P4DgMr4bnHWQZtdUIpCFSON+eEYbDt+tCyvWE75+PG/wCA4kdIMuoYc2l8AjQ2q
+ fOkY/iKbJxhuOVZo/GRYRlXIdrqFooXq3+lVPyJ8diRVhq56aAWeZHjtxbYIgj9M2wAj
+ zfWTdbNsQly+Br4sSYv/bqtv2aR3b31jNzg3TfbGFgGeerFsn1KslKjS7+f4XbmRGPhp
+ srLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112609; x=1792717409;
+ d=1e100.net; s=20260707; t=1792112597; x=1792717397;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=KYL6HhtyFA793JPbUapslYIHVg6uGysVF9mZvXC7FuI=;
- b=bVSVPqAQuVLdKjeD50CJr815BhH3j4a2E9AeVy5TrkzxioeWAtKoqTnoLT+idE6Dny
- HW6l+HPlYzQKRheCNfKEaj2Y0mHD5jISIS//bpI6kGz87rWaMDu3iZpMzZslxyaRPMqy
- e41x/RZlL0SaW+ITdbb4liI+8j3tsxGIemuQoQooswjcmWmuoAwm3xt4RVJCA0r2cl9i
- KmTYwy8rLKjJNBjSKY4eivSxk3o1PwtebsyRqBsQPpS00HrIi7EQ0h3DNxVXtfJA86fU
- hVn2r8uPLQ6dlyGG47FLXbkWCBf1ZFJqKL08FZOpiYQNse33Xri9LQbKCNqoeghpdeuf
- gSew==
-X-Gm-Message-State: AFq9FYLDo7yDLld7WFD/ft5zx8EBxc2iJJc9G72ig2vs5Bg5pNRDQaDY
- BU55jCX2lU45xeXwTJsX0p07JxtqTQOK4E5o91jVhGOvzbGgLF3Yy6wb7SZc7A==
-X-Gm-Gg: AYBFou1gpalsr7tE9+R204/z2cr502xkeYUi8ctu9hjEYIhrptsDse+TSug5bikxx0m
- otX13dJvP69z6x8mIQ39LdTaTo5nn9TFoOor6H3Yq6SbSghDDV3+KTiLLH6+WOZDBUd/h5moruT
- RjJjxXhxEr/cz8IiHncDL+UgSTgtwXB1/AsrwsThtKM/3cdJf86cQIz5BrclTXxo+6Of3OVfpg1
- V+Vq+b7kzYhlZIqb/iJrZpa9lJQuR0+nYne1Q67ygWufhgtKSRa/U6KpcIxfvvhCw+xdV9cYIgY
- cKj8O6XU4YIzlIR2uRIbCbGEHTLaoLYqTJGIg5po3nDY8c51yiZcmeL9gjJ7JDcJ+HfNnWVQ1J+
- I7mXFmSu7hSbcgzo99mg4Bt/WyX9mizjQBfyBmxZ5o1AS/LkUbUp9WCs9iO7KD/Nw38m1L/C0EU
- xbUFoaGmWdEfGQ+YOVwVqIupzC2KU+mau/dZzcSsaqSGXm3ISlw3xC7xAvDyR5qvFcUv2NuXMrJ
- W4xCG5DMcMwA1Oc
-X-Received: by 2002:a17:902:ecd0:b0:2e4:4eed:5cc5 with SMTP id
- d9443c01a7336-2e842cd23b1mr193985115ad.38.1792112609199; 
- Thu, 15 Oct 2026 18:03:29 -0700 (PDT)
+ bh=8X0yxGerdE0RY1WCD8YB2wnCtyi8HfUekHqNKEcpC0A=;
+ b=bw+RSCbJW1SFjAfvHIT3z1QbfCyA7cvO1LErZuKLpI7ZattfiAFe75Mw+tteimwOBQ
+ LuKp4N51u1fRpO5jG/ksgcozpxgWW6xuorIpany/vYg6gmbg2P37Zg4aeOGrcvmorWim
+ UqIdHl5j23RZx4PsyUbsi7SrezHwzuXej0z91FAtP70xJ2xGz+eDCkYolswwedyvpiJB
+ P+ED5cR3OU3C/HGM8WTXDFxrEtswqqJimKUTh1J0XHPfk//mhZNpUOgEBoCpncaoKbNt
+ +aep4YrGnMngwoZH5C8ip18VHPqpMWuFAYwQ2nEC2qi3oJVHw5hhcaBgmLAFS/qZhi1L
+ sguA==
+X-Gm-Message-State: AFq9FYJ3YLWiF88DDh4yOWA3EZ/nZb/P6YK+QmIuAnpN4cC+nI0EUI4o
+ 9ouESZCl0/nEY9/LkIwOiQGOigigDwHgbqxq/WMa25mxiqg1Kp858/XEnOiMDA==
+X-Gm-Gg: AYBFou1VIhQbpwXv00+OwqhSgMjijivGLcz0ViGGsw54EVy+eVT9ciK++SdmdSiBBrL
+ gN0f17g6l/N/NhPHgUByyP83ToOESEEaBe87RNakDoeW5kU5ROs8iNXIV3vxAPPllsKf4BAgdy6
+ A97QhA+42Dg9o0HSuevQ/0MYMpGR2xDb40HLmzWjk+Mhu3iuB7Tn2kf0GwsJ340twChtMJ22Y0d
+ wTOON4CQTKrR5a9AkvylEcW3ZorEtfqyn+bdVNMPAS6Rj5BL0KV9QmWDSvnk8HplaJa+S9lC1hD
+ 50G4s1zusy6pPR0XxgrgvCdqGzpl4gJ8VGJUeHBONXxEjoxnF+bTe37MbA4C0nr9QNHQ9i+Ir8P
+ VQ+cC5KIkFXBuofUf72zSTLQrNLH5nAeuoXZR9aNhN3Wg+XDx9plCUkR8g8+AParJpEVPFkuAAb
+ Na2vyOzhyfWuIdeMwdtGhc966WEPdGaaLMxTD9VUQWpa7PSbCiajs8fVHEKul/aBT0dg1ua+Agq
+ VLrrXH7gE9sanoM1Q==
+X-Received: by 2002:a17:902:ce03:b0:2e9:723a:cf30 with SMTP id
+ d9443c01a7336-2e9723ad86bmr21712635ad.2.1792112596926; 
+ Thu, 15 Oct 2026 18:03:16 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.27
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:28 -0700 (PDT)
+ Thu, 15 Oct 2026 18:03:16 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: Kuan-Wei Chiu <visitorckw@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 15/50] docs/system/riscv: Add Milk-V Duo board documentation
-Date: Fri, 16 Oct 2026 11:02:02 +1000
-Message-ID: <20261016010237.1102834-16-alistair.francis@wdc.com>
+Subject: [PULL v2 10/50] hw/misc: Add Sophgo CV1800B clock controller
+Date: Fri, 16 Oct 2026 11:01:57 +1000
+Message-ID: <20261016010237.1102834-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,101 +105,191 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-Add documentation for the Milk-V Duo board. This includes a brief
-overview of the hardware, a list of supported devices, and practical
-instructions on how to boot the machine using OpenSBI and a Linux
-kernel with an emulated SD card.
+Add a stub for the CV1800B clock controller. This is specifically
+required for the SDHCI controller to function correctly under Linux.
+
+The Linux 'sophgo,cv1800-clk' driver probes this device to determine
+the clock tree configuration. This implementation sets the bypass
+registers (CLK_BYP_0 and CLK_BYP_1) to 0xFFFFFFFF during reset,
+matching the POR default state. This bypasses the PLLs and allows the
+SDHCI and other peripherals to operate using the 25MHz reference clock.
+
+Without this device, the SD card driver fails to initialize, preventing
+the system from mounting the root filesystem from the SD card.
 
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260927201326.650943-8-visitorckw@gmail.com>
+Message-ID: <20260927201326.650943-3-visitorckw@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS                     |  1 +
- docs/system/riscv/milkv-duo.rst | 49 +++++++++++++++++++++++++++++++++
- docs/system/target-riscv.rst    |  1 +
- 3 files changed, 51 insertions(+)
- create mode 100644 docs/system/riscv/milkv-duo.rst
+ include/hw/misc/cv1800b_clk.h | 26 ++++++++++
+ hw/misc/cv1800b_clk.c         | 98 +++++++++++++++++++++++++++++++++++
+ hw/misc/Kconfig               |  3 ++
+ hw/misc/meson.build           |  1 +
+ 4 files changed, 128 insertions(+)
+ create mode 100644 include/hw/misc/cv1800b_clk.h
+ create mode 100644 hw/misc/cv1800b_clk.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a8751210ac..b912e4b8d8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1874,6 +1874,7 @@ F: tests/qtest/k230-decomp-gzip-test.c
- Milk-V Duo
- M: Kuan-Wei Chiu <visitorckw@gmail.com>
- S: Maintained
-+F: docs/system/riscv/milkv-duo.rst
- F: hw/misc/cv1800b_clk.c
- F: hw/riscv/cv1800b.c
- F: hw/riscv/milkv_duo.c
-diff --git a/docs/system/riscv/milkv-duo.rst b/docs/system/riscv/milkv-duo.rst
+diff --git a/include/hw/misc/cv1800b_clk.h b/include/hw/misc/cv1800b_clk.h
 new file mode 100644
-index 0000000000..1758db2c1e
+index 0000000000..4d03d887c6
 --- /dev/null
-+++ b/docs/system/riscv/milkv-duo.rst
-@@ -0,0 +1,49 @@
-+Milk-V Duo board (``milkv-duo``)
-+================================
++++ b/include/hw/misc/cv1800b_clk.h
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Sophgo CV1800B Clock Controller
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
 +
-+The ``milkv-duo`` machine is compatible with the Milk-V Duo development board.
++#ifndef HW_MISC_CV1800B_CLK_H
++#define HW_MISC_CV1800B_CLK_H
 +
-+The Milk-V Duo is an ultra-compact embedded development platform based on the
-+Sophgo CV1800B SoC. The CV1800B features T-Head C906 RISC-V processing cores
-+along with integrated peripherals.
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
 +
-+For more information, see <https://milkv.io/duo>
++#define TYPE_CV1800B_CLK "cv1800b-clk"
++OBJECT_DECLARE_SIMPLE_TYPE(CV1800BClkState, CV1800B_CLK)
 +
-+Supported devices
-+-----------------
-+The ``milkv-duo`` machine supports the following devices:
++#define CV1800B_CLK_IOSIZE 0x1000
 +
-+* T-Head C906 cores
-+* Core Local Interruptor (CLINT)
-+* Platform-Level Interrupt Controller (PLIC)
-+* DesignWare APB UART (dw8250)
-+* SDHCI controller
-+* CV1800B clock controller
++struct CV1800BClkState {
++    SysBusDevice parent_obj;
 +
-+Boot options
-+------------
-+The ``milkv-duo`` machine supports direct boot using a generic RISC-V OpenSBI
-+firmware and a Linux kernel. The root filesystem can be provided via the
-+emulated SD card.
++    MemoryRegion iomem;
++    uint32_t regs[CV1800B_CLK_IOSIZE / sizeof(uint32_t)];
++};
 +
-+Running
-+-------
-+To boot the machine, you need a Linux kernel (built with CV1800B support), a
-+device tree blob (DTB), and a root filesystem image (e.g., built via BusyBox
-+or Buildroot).
++#endif
+diff --git a/hw/misc/cv1800b_clk.c b/hw/misc/cv1800b_clk.c
+new file mode 100644
+index 0000000000..38807995ac
+--- /dev/null
++++ b/hw/misc/cv1800b_clk.c
+@@ -0,0 +1,98 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Sophgo CV1800B Clock Controller
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
 +
-+Use the following command to boot the system directly to the Linux shell:
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/misc/cv1800b_clk.h"
 +
-+.. code-block:: bash
++#define REG_BYTE_WIDTH    (sizeof(uint32_t))
++#define REG_CLK_BYP_0     (0x030 / REG_BYTE_WIDTH)
++#define REG_CLK_BYP_1     (0x034 / REG_BYTE_WIDTH)
 +
-+   $ qemu-system-riscv64 -M milkv-duo -nographic \
-+      -bios pc-bios/opensbi-riscv64-generic-fw_dynamic.bin \
-+      -dtb /path/to/linux/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dtb \
-+      -kernel /path/to/linux/arch/riscv/boot/Image \
-+      -drive file=/path/to/rootfs.ext4,format=raw,id=sd-card \
-+      -device sd-card,drive=sd-card \
-+      -append "console=ttyS0,115200 root=/dev/mmcblk0 rootwait earlycon"
++static uint64_t cv1800b_clk_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    CV1800BClkState *s = opaque;
++    uint32_t val = 0;
 +
-+This command boots the generic OpenSBI firmware, loads the Linux Image and the
-+specified DTB, and mounts the ext4 root filesystem from the emulated SD card.
-+The console output is routed to the ``ttyS0`` serial port.
-diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index 2639866a3e..1e49055e29 100644
---- a/docs/system/target-riscv.rst
-+++ b/docs/system/target-riscv.rst
-@@ -69,6 +69,7 @@ undocumented; you can get a complete list by running
-    riscv/k230
-    riscv/microblaze-v-generic
-    riscv/microchip-icicle-kit
-+   riscv/milkv-duo
-    riscv/mips
-    riscv/shakti-c
-    riscv/sifive_u
++    if (addr < CV1800B_CLK_IOSIZE) {
++        val = s->regs[addr / REG_BYTE_WIDTH];
++    } else {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++    }
++
++    return val;
++}
++
++static void cv1800b_clk_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
++{
++    CV1800BClkState *s = opaque;
++
++    if (addr < CV1800B_CLK_IOSIZE) {
++        s->regs[addr / REG_BYTE_WIDTH] = val;
++    } else {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++    }
++}
++
++static const MemoryRegionOps cv1800b_clk_ops = {
++    .read = cv1800b_clk_read,
++    .write = cv1800b_clk_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void cv1800b_clk_reset_hold(Object *obj, ResetType type)
++{
++    CV1800BClkState *s = CV1800B_CLK(obj);
++
++    memset(s->regs, 0, sizeof(s->regs));
++
++    /*
++     * TODO: Implement proper PLL state machines.
++     * For now, use POR default to bypass PLLs and boot via 25MHz XTAL.
++     */
++    s->regs[REG_CLK_BYP_0] = 0xFFFFFFFF;
++    s->regs[REG_CLK_BYP_1] = 0xFFFFFFFF;
++}
++
++static void cv1800b_clk_init(Object *obj)
++{
++    CV1800BClkState *s = CV1800B_CLK(obj);
++
++    memory_region_init_io(&s->iomem, obj, &cv1800b_clk_ops, s,
++                            TYPE_CV1800B_CLK, CV1800B_CLK_IOSIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void cv1800b_clk_class_init(ObjectClass *klass, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->phases.hold = cv1800b_clk_reset_hold;
++}
++
++static const TypeInfo cv1800b_clk_info = {
++    .name = TYPE_CV1800B_CLK,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(CV1800BClkState),
++    .instance_init = cv1800b_clk_init,
++    .class_init = cv1800b_clk_class_init,
++};
++
++static void cv1800b_clk_register_types(void)
++{
++    type_register_static(&cv1800b_clk_info);
++}
++
++type_init(cv1800b_clk_register_types)
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 46e3c03cc8..7abd22869a 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -263,4 +263,7 @@ config AXIADO_CLK
+ config K230_DECOMP_GZIP
+     bool
+ 
++config SOPHGO_CV1800B_CLK
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 9790afa104..244bf278a9 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -39,6 +39,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
+ system_ss.add(when: 'CONFIG_K230_DECOMP_GZIP', if_true: files('k230_decomp_gzip.c'))
++system_ss.add(when: 'CONFIG_SOPHGO_CV1800B_CLK', if_true: files('cv1800b_clk.c'))
+ 
+ subdir('macio')
+ 
 -- 
 2.55.0
 
