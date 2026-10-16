@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30075CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51974CCA463
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWMl-0000n4-At; Thu, 15 Oct 2026 21:04:11 -0400
+	id 1xHWMH-0000MM-MM; Thu, 15 Oct 2026 21:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLu-0000KR-3j
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:21 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1xHWLp-0000Jx-VC
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:17 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLs-0004Fa-5V
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:17 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2e901e114fdso25571105ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:15 -0700 (PDT)
+ id 1xHWLm-0004Eg-4O
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:13 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2e5fb79ce82so33917775ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112595; x=1792717395; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112588; x=1792717388; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=iQPAGyk/nm9VQjMk8UPhdVAI9U2BURPPGABZtifKqV8=;
- b=QcFaT3Oi451vpjV5vSKFUTykzsZGDxjsE2ps6S2HNdsF3A/z0GjljxrLMhskNVsuus
- TqNoLXwL6gCa2Lhx9lgsK1/vpGu/mqs1qMup8JnzcEFLz86byOCH9KyFqq63QQfRX8Ks
- hEF6AsNPfUxET4wtUlaK235YGWy9ovy1MbU5H93Rk8TSGOAAday/nGoIP6Xc3RTwv8k/
- o/UexkMc6TcAFZg6rl0wXg9uNv4PXjkY7zpGTeaPJL3xDA3qszRyeWjVB2wHLndfjU9z
- wbOBrH09umLecctHuAqr7rBlzjnb782CP82G5hhox7EpAsMLvJVHRROEKLmAv5ZbhKw0
- Wkvw==
+ bh=Ae/F+1F479Gr7OFX9NWEPgT7rC5OzvDZ2GzLfQE5Bs8=;
+ b=WcKRyTrELEHcIBAMOMvwdmhr+vGEJ5veqEUXZ8JNB+GQ+WFbufjQeGhW0NpbG8HSc8
+ lWqEuZMN/GyCpySd74wXtOR0cAU7eIB05ztmgVpRdkeqoS6+0JtRAjZNnxngX22ho0q8
+ 4hxTfJS6waqCRTo+WcaJIW4jIUURVcYW6dSkaWm0YACq7omVFftO/8e4/Kb4WtPgfSm+
+ 4FKl1h3Fu7KZThpS7c+McA+WH+zQeuw1lVzfSRy5DwGVgBrFyy4TJbEYj+RrYFKaxj6O
+ TCkcTEpVCh80z9Fjlh/GeLzkQkT4xJ7KqN5ekc0zKMUF2adpPx+RGLorAH5IOeTAsooi
+ 627w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112595; x=1792717395;
+ d=1e100.net; s=20260707; t=1792112588; x=1792717388;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=iQPAGyk/nm9VQjMk8UPhdVAI9U2BURPPGABZtifKqV8=;
- b=Sxdm87e29j67GjlDRqHN592ZgCOoyODHkekB0twgn/k8M5DsYqUaKviIayrgi1JV4a
- K+hx98uY129vGeZ/2YH/B1olGupbuHS8U9a75FdNowI9/+2DhuzxFdoqX2vUgYtxTDLu
- wiGFAtziq+nCxWkXdxTnC00cOhG4EgnB2jdDGRGE/ZtMoPEzINsY8ZqMTq0QwfA/yQxe
- ttVm2jwOM2oUB0Rj6PBLt2nwaJaaRWvPruVO1lvW8tT/2U19PJXtpMNq/o5h5sVm8jKl
- brK+fPKHX2ofQ0Iz4lBzPhvaaRrIDXOSIoFhOqjHp2ZucslHFb0xvbXoEzLjoJZyL/BA
- p3LA==
-X-Gm-Message-State: AFq9FYLi5NyOm/nuJwcpk08WZgGwot7O239hbrFlew8dfWHwFiIY55k7
- 7aMpgPRDeuvRx5dC58XVehcoxfr843lRvi8bTCGPkQTR8jpfbqGmVlftJUkZFw==
-X-Gm-Gg: AYBFou0Ll7BSQjcDTLMq3OXKspG81EtbN7s1N4+YTFrmWIcgEVPoyvNOI1nKuJU82Rm
- 5KpD+tZGW9phf5K8Yqq+OFCitt/s1IIg+HL+p5VShaj6G+9bzraJs7EnTkXc6tr+y+EMjNBmSvc
- LThA9YpnucZpaq4jtV6r1AaIEfmYH47cOdqMqFA5a19G7P0pr4tC1McrEuo+kyRQsBCDOepa4Gc
- Jjxf8WgrdPH/G4/ERL/ldMjEiYfK9B9NjcFrVaexBSQ6Wg4e3mAQI5GzfK+dSpIZQX15c5nj+if
- qPrGtSfy8BKgFdpl7k0oC99Vr5m9mVd9ivimj+mrFDPXtASlKy3YL6DARuiejAu0E8zPf6qQlmY
- un3GgSm6F4Wzvh95m0Ccr09QeX+Tq83LVoxK8XUeRs7cIZrxlyHJt5uZg2hoWC6Rwp8u1+vErzO
- zPHR+LR1bOqkNNKUZCyly2h3zM1/HUKifNPLib2HQhYknMORzvJcslltw8A3CEy1SR/O4nRJkjY
- Gt0nR3S55UIwXlt
-X-Received: by 2002:a17:903:19e7:b0:2e6:1a6c:abcd with SMTP id
- d9443c01a7336-2e84280a68fmr206247305ad.3.1792112594634; 
- Thu, 15 Oct 2026 18:03:14 -0700 (PDT)
+ bh=Ae/F+1F479Gr7OFX9NWEPgT7rC5OzvDZ2GzLfQE5Bs8=;
+ b=S3Oghy0z3HThFUSXoxtAOXVPSUTy6FjtEDF3O0I/so+akYx4WY5Qp6sf/Eug/xdm1o
+ bwtVzOkNXXDtAMaqZfHNa2A+yBab9QBk725ek3CD7NIr0ptyt+xdYn/YcNjVKxrnY3Is
+ AeTLo6g2a9s1pNa/GUMTHyg2eeRddiKeN40lLLVIQ7dcl9Ka1TxPiNfNv8qruIUwgRmR
+ krvXGcwWltiSVekDHM5zHAJeiZOjHzwVMVALgHlEUI9WlbuQHtGSwqFcGGzGUNLfJzr/
+ I+mYXJIduHt3mZGGSS9ev7uvXc8vBvr5G/g2FnqpY2qha0kOZ9f1A66g+to3GTRXcSg6
+ hRBQ==
+X-Gm-Message-State: AFq9FYIQfpN4XY4pEebt5yn3woDjWJMl1GayBebPqB/c1kXzOSOM+pJN
+ Kd4YOmjFydj2dKQPTg0t9Z+XMct8DR2E73tpC5ezaFweA/lN7FHLAavqyPfFMg==
+X-Gm-Gg: AYBFou1E1So83RkTl6QVIVacRMR6DgpMpQJLj52z15ObfPBfuv5cQPdXehHG0DYtYGs
+ 589HyAwnZu+fzrd7yNxGN6kMnN2TDYHKJ+PYHmZqcqEX7ls8Cj8WKJxIPVOinwLE24Q1Sfkwn8X
+ wXpzUl7kjizjh5sFy0AMCVXbI4l9XAtRLcGjL3nWM+BZUKXSq4bTyZkUB7J1lRLC4S0TdwGzCoe
+ XLUEtKgYM/wpdmsK20W9zzUztLQwiqVEa735/5l7bixPbUP3wUQgv4cPRMj8zvxYnQ0NeuZtHDj
+ 2aymtBUimG00el5J5lMFPnqmtVBYHs4voFrdJi8qnu4rTBZ3fDkUKClG0gOOs6PjNV8LNrAVolE
+ ysX49vI+zCplmZJY0cfi5Dck7kDJ9j19VDKuv+ZQa3q3myAJTMUGcZuTFWcXnCKDm3aC2SmyjFW
+ ZGhto7LRTKXvSsX7RCZqHxOPRT2+kMGVTSviUOH+tCji5ATZevZZ0DnNI3fOiYFHZuPjFFTmlwj
+ G5Csxo2+lezrFdB
+X-Received: by 2002:a17:902:d492:b0:2e9:3d96:7e83 with SMTP id
+ d9443c01a7336-2e93d9680b3mr66544025ad.50.1792112587981; 
+ Thu, 15 Oct 2026 18:03:07 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.11
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:13 -0700 (PDT)
+ Thu, 15 Oct 2026 18:03:07 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Kuan-Wei Chiu <visitorckw@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Portia Stephens <portias@oss.tenstorrent.com>
-Subject: [PULL v2 09/50] hw/char: Add dw8250 UART
-Date: Fri, 16 Oct 2026 11:01:56 +1000
-Message-ID: <20261016010237.1102834-10-alistair.francis@wdc.com>
+Cc: Xie Bo <xb@ultrarisc.com>, qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 07/50] target/riscv/kvm: Reject migration with a different
+ timer frequency
+Date: Fri, 16 Oct 2026 11:01:54 +1000
+Message-ID: <20261016010237.1102834-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,245 +105,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Xie Bo <xb@ultrarisc.com>
 
-Add the dw8250 uart support. This hardware is a widely used 16550A
-derivative that includes additional registers.
+The timer frequency check is currently in kvm_riscv_put_regs_timer()
+and guarded by migration_is_running().  That condition is false on the
+incoming side, and the source frequency is not part of the migration
+stream, so migration between hosts with different frequencies completes.
 
-Without this specific device support, the Linux 8250_dw driver fails to
-probe the extended registers (UCV, CPR, etc.), which are essential for
-correct feature detection.
+Add the source frequency to a KVM-only subsection.  Its post_load checks
+the destination frequency before the timer registers are restored and
+rejects a mismatch.  When loading an older stream without the subsection,
+skip the check and retain the old behavior.
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260927201326.650943-2-visitorckw@gmail.com>
-[ Changes by Portia Stephens <portias@oss.tenstorrent.com>:
- - hw/char/dw8250: Fix leak when creating child device
-]
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+Fixes: 27abe66f31ef ("target/riscv: Add kvm_riscv_get/put_regs_timer")
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260831074106.1798671-3-xb@ultrarisc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- MAINTAINERS              |   6 ++
- include/hw/char/dw8250.h |  28 +++++++++
- hw/char/dw8250.c         | 130 +++++++++++++++++++++++++++++++++++++++
- hw/char/Kconfig          |   4 ++
- hw/char/meson.build      |   1 +
- 5 files changed, 169 insertions(+)
- create mode 100644 include/hw/char/dw8250.h
- create mode 100644 hw/char/dw8250.c
+ target/riscv/cpu.h           |  1 +
+ target/riscv/kvm/kvm_riscv.h |  1 +
+ target/riscv/kvm/kvm-cpu.c   | 40 +++++++++++++++++++++++-------------
+ target/riscv/machine.c       | 31 ++++++++++++++++++++++++++++
+ 4 files changed, 59 insertions(+), 14 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1ee661cc23..3a3c3701a5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2848,6 +2848,12 @@ S: Maintained
- F: hw/i2c/designware_i2c.c
- F: include/hw/i2c/designware_i2c.h
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 25f8ec00a9..5489c564ae 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -544,6 +544,7 @@ struct CPUArchState {
+     uint64_t kvm_timer_compare;
+     uint64_t kvm_timer_state;
+     uint64_t kvm_timer_frequency;
++    bool kvm_timer_frequency_loaded;
  
-+DesignWare 8250 UART
-+M: Kuan-Wei Chiu <visitorckw@gmail.com>
-+S: Maintained
-+F: hw/char/dw8250.c
-+F: include/hw/char/dw8250.h
-+
- Generic Loader
- M: Alistair Francis <alistair@alistair23.me>
- S: Maintained
-diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
-new file mode 100644
-index 0000000000..ce0b97715b
---- /dev/null
-+++ b/include/hw/char/dw8250.h
-@@ -0,0 +1,28 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Synopsys DesignWare APB UART (DW 8250)
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#ifndef HW_CHAR_DW8250_H
-+#define HW_CHAR_DW8250_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+#include "hw/char/serial-mm.h"
-+
-+#define TYPE_DW8250 "dw8250"
-+OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
-+
-+struct DW8250State {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion container;
-+    MemoryRegion ext_iomem;
-+    SerialMM serial_mm;
-+
-+    uint8_t regshift;
-+};
-+
-+#endif
-diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
-new file mode 100644
-index 0000000000..50baeae62c
---- /dev/null
-+++ b/hw/char/dw8250.c
-@@ -0,0 +1,130 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Synopsys DesignWare APB UART (DW 8250)
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/char/dw8250.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
-+
-+#define DW_UART_REGION_SIZE 0x100
-+
-+#define DW_UART_RE_EN (0xB4 >> 2) /* Receiver Output Enable Register */
-+#define DW_UART_DLF   (0xC0 >> 2) /* Divisor Latch Fraction Register */
-+#define DW_UART_CPR   (0xF4 >> 2) /* Component Parameter Register */
-+#define DW_UART_UCV   (0xF8 >> 2) /* UART Component Version */
-+#define DW_UART_CTR   (0xFC >> 2) /* Component Type Register */
-+
-+#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
-+#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
-+
-+static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
+     /* KVM multiprocessor state */
+     uint32_t kvm_mp_state;
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index 61eaa12443..0e27ce8bf3 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -29,6 +29,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+                           uint64_t guest_num);
+ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+ bool kvm_riscv_has_mp_state(void);
++int kvm_riscv_check_timer_frequency(RISCVCPU *cpu);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
+ 
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index c8ccd9124e..1993bd446b 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -45,7 +45,6 @@
+ #include "kvm_riscv.h"
+ #include "sbi_ecall_interface.h"
+ #include "chardev/char-fe.h"
+-#include "migration/misc.h"
+ #include "system/runstate.h"
+ #include "hw/riscv/numa.h"
+ 
+@@ -822,9 +821,34 @@ static void kvm_riscv_get_regs_timer(CPUState *cs)
+     env->kvm_timer_dirty = true;
+ }
+ 
++int kvm_riscv_check_timer_frequency(RISCVCPU *cpu)
 +{
-+    DW8250State *s = opaque;
++    CPUState *cs = CPU(cpu);
++    CPURISCVState *env = &cpu->env;
++    int ret;
++    uint64_t frequency;
 +
-+    switch (addr >> s->regshift) {
-+    case DW_UART_UCV:
-+        return DW_UART_UCV_VALUE;
-+    case DW_UART_CPR:
-+        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
-+    case DW_UART_CTR:
-+        return DW_UART_CTR_VALUE;
-+
-+    case DW_UART_RE_EN:
-+    case DW_UART_DLF:
-+        /*
-+         * Return 0 to indicate these optional features
-+         * (RS485 and Fractional Divisor) are not implemented.
-+         */
-+        return 0x00000000;
-+
-+    default:
++    if (!env->kvm_timer_frequency_loaded) {
 +        return 0;
 +    }
-+}
 +
-+static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
-+{
-+    qemu_log_mask(LOG_UNIMP, "%s: Unimplemented write to address 0x%" HWADDR_PRIx "\n",
-+                  __func__, addr);
-+}
-+
-+static const MemoryRegionOps dw8250_ext_ops = {
-+    .read = dw8250_ext_read,
-+    .write = dw8250_ext_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void dw8250_instance_init(Object *obj)
-+{
-+    DW8250State *s = DW8250(obj);
-+
-+    object_initialize_child(obj, "serial-mm", &s->serial_mm, TYPE_SERIAL_MM);
-+    object_property_add_alias(obj, "chardev", OBJECT(&s->serial_mm), "chardev");
-+}
-+
-+static void dw8250_realize(DeviceState *dev, Error **errp)
-+{
-+    DW8250State *s = DW8250(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(&s->serial_mm);
-+
-+    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
-+                       DW_UART_REGION_SIZE);
-+    sysbus_init_mmio(sbd, &s->container);
-+
-+    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "regshift", s->regshift);
-+    qdev_prop_set_uint8(DEVICE(&s->serial_mm), "endianness", DEVICE_LITTLE_ENDIAN);
-+    if (!sysbus_realize(serial_sbd, errp)) {
-+        return;
++    ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(frequency), &frequency);
++    if (ret) {
++        return ret;
 +    }
 +
-+    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
-+                          "dw8250-ext", DW_UART_REGION_SIZE);
-+    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
++    if (frequency != env->kvm_timer_frequency) {
++        error_report("KVM timer frequency mismatch: source %" PRIu64
++                     " Hz, destination %" PRIu64 " Hz",
++                     env->kvm_timer_frequency, frequency);
++        return -EINVAL;
++    }
 +
-+    memory_region_add_subregion_overlap(&s->container, 0,
-+                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
-+
-+    sysbus_pass_irq(sbd, serial_sbd);
++    return 0;
 +}
 +
-+static const Property dw8250_properties[] = {
-+    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
-+};
-+
-+static void dw8250_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = dw8250_realize;
-+    device_class_set_props(dc, dw8250_properties);
-+}
-+
-+static const TypeInfo dw8250_info = {
-+    .name          = TYPE_DW8250,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(DW8250State),
-+    .instance_init = dw8250_instance_init,
-+    .class_init    = dw8250_class_init,
-+};
-+
-+static void dw8250_register_types(void)
-+{
-+    type_register_static(&dw8250_info);
-+}
-+
-+type_init(dw8250_register_types)
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 020c0a84bb..7040040641 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -95,3 +95,7 @@ config IP_OCTAL_232
-     bool
-     default y
-     depends on IPACK
-+
-+config DW8250
-+    bool
-+    select SERIAL_MM
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index fc3d7ee506..b2250ee6ae 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
- system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
-+system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
+ static void kvm_riscv_put_regs_timer(CPUState *cs)
+ {
+-    uint64_t reg;
+     CPURISCVState *env = &RISCV_CPU(cs)->env;
  
- specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
+     if (!env->kvm_timer_dirty) {
+@@ -844,18 +868,6 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+         KVM_RISCV_SET_TIMER(cs, state, env->kvm_timer_state);
+     }
+ 
+-    /*
+-     * For now, migration will not work between Hosts with different timer
+-     * frequency. Therefore, we should check whether they are the same here
+-     * during the migration.
+-     */
+-    if (migration_is_running()) {
+-        KVM_RISCV_GET_TIMER(cs, frequency, reg);
+-        if (reg != env->kvm_timer_frequency) {
+-            error_report("Dst Hosts timer frequency != Src Hosts");
+-        }
+-    }
+-
+     env->kvm_timer_dirty = false;
+ }
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 3238912b63..ed10e65259 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -197,6 +197,35 @@ static const VMStateDescription vmstate_rv128 = {
+ };
+ 
+ #ifdef CONFIG_KVM
++static bool kvm_timer_frequency_needed(void *opaque)
++{
++    return kvm_enabled();
++}
++
++static int kvm_timer_frequency_post_load(void *opaque, int version_id)
++{
++    RISCVCPU *cpu = opaque;
++
++    if (!kvm_enabled()) {
++        return -ENOTSUP;
++    }
++
++    cpu->env.kvm_timer_frequency_loaded = true;
++    return kvm_riscv_check_timer_frequency(cpu);
++}
++
++static const VMStateDescription vmstate_kvm_timer_frequency = {
++    .name = "cpu/kvm-timer-frequency",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = kvm_timer_frequency_needed,
++    .post_load = kvm_timer_frequency_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(env.kvm_timer_frequency, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool kvm_fcsr_needed(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -255,6 +284,7 @@ static int riscv_cpu_kvm_pre_load(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+ 
++    cpu->env.kvm_timer_frequency_loaded = false;
+     cpu->env.kvm_mp_state_loaded = false;
+     return 0;
+ }
+@@ -591,6 +621,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_rv128,
+ #ifdef CONFIG_KVM
+         &vmstate_kvm_fcsr,
++        &vmstate_kvm_timer_frequency,
+         &vmstate_kvmtimer,
+         &vmstate_kvm_mp_state,
+ #endif
 -- 
 2.55.0
 
