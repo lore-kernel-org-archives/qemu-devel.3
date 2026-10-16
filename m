@@ -4,137 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D75DCCA46C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1B3CCA46C
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 14:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHiZg-0006zt-Rj; Fri, 16 Oct 2026 10:06:21 -0400
+	id 1xHidU-0008AS-3r; Fri, 16 Oct 2026 10:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xHiZU-0006yn-5x
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:06:12 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHidP-0008A9-Ek
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:10:11 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xHiZS-0004ji-Cs
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:06:07 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6af9a9451daso2530505a12.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 07:06:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792159565; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xHidN-0005TW-TG
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 10:10:11 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8565d77c277so50339367b3.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 07:10:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792159807; cv=none;
  d=google.com; s=arc-20260327;
- b=oj6/O1SimApxGd6jXmKVRct39yQgdrilAonRt2DZEkohNKiRanZm2u17xL6Rvg+RwL
- 6O8lcEV2miJmQR0y3iY6lJYTWKaTrwF2S7KObHPYdoq3DAUI1jTRgh1zq1D7WfSNedOK
- fuT+8oXIELNoldAtWn9flQmGugnqEJNALkE2kBVD7owoDaqmaqYWTCvISUj6C7TT1IQF
- XlCm0Hf5HY03iAW6OfW+51GlcW16oIHY8PVXSVRcST2+iqs9VNplz5tojM9IdHcdWM2i
- smHE4cqEbzh63BSE//q+6qAxGAhBh4PyQH/p2ishHMgPC2eqvO3oC35wKOhjIXUZeQNd
- ruJw==
+ b=EYw6zslbdkEbDzxx87hHcPeHEIOHt/oRICV8+frZ46+wFxazXWWefn5vhexMMAX5s5
+ uFPVo1Zjdk59heLxOO/7elOzYe5/uX2MOU9w2F4R+heyoqHgxrXYeE/8XLbZwbTerhJs
+ 2H4EiFBg7ig0IxBMzU71E4iH8rqpO1XA9XSkDXrbkqa+MY/qpDtJibA2A1KRJvw+HT/Q
+ 4IG6rP6pGGXuK4mLZM+TbVWaRS4PKc9aQR/FkstTtjZlYdyicOc8a3aWYUvT29R4MzOb
+ DzIP42sImu9UUCHhbjEqb/ogjqnxTnwo4eaDYO2MXwRGhQFA6attJwYIjiY1Ucv5v4NP
+ ox6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=J9IImW9GgYpIi/RCk8fzQ0zy4Zwv383B/5op/lAYV24=;
- fh=63CrkvNni3mSJ2GwEPafmfW7IgrzmJMRQEJ9UzvvWq0=;
- b=TWhnXShItUmpo53SDPewKwtECo84VeuRCk+J9Bn+3+FLBr7XLtZdBBrpESqRjSi2HE
- PqCG92YmC/vyOr92pmXPJldD3Oht2uAvufwMp61ZswQe1KcO8RakZkGlkcqVIgj9lHLP
- CWS8aRlwSUB00+1hAq2MCeEgQcGtE2r8+iAwMioOtAp6J6pAGrzUlonl12QY0vy1QhvF
- ILG8kZKQc5jzNSQ4rMgAt/J3qYIqLu0ofGiQmgsW3BliqWpGlTf+0wHscuGFpIBDX2Wa
- A0T4fBRmuwGNs6H8UurODeBBdG+ZFWyjVdL0VAmC6nhL60BtkRSSxbKQqEM2h9x1ppF2
- eK7Q==; darn=nongnu.org
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
+ fh=W/JhvAlf9kvTQdSfT2vqiKAkNO4YiRVg8H2M8w9SXbQ=;
+ b=h1vpxqG7VPUeYRYZjRHzuZkDUWmRjwzu0vbYwIfqgB2p6iVkHteJRn5njVIMwUXg3l
+ VKQ3PntHxK5txO569QgMh49RsqJHIEXa6ZN8p7qWo0RH4XsIwcL1nIXBtf5mD0B/meZD
+ 5co//ldHPxZDMV6kAAw1zXAwP54E1aXh3C/VSv2v9yxEFT8TyWroQLMfYtEULKadSErb
+ Mcek+VHsQOc0B4s1kwiKig2T4IqzPmVqPe8F4ELiWp3aagm69cuKRMIxeGPM1ugeNycn
+ q7mHfC07UsIIR5+3NA1lPPOccgdh1VoRn21AhG8RO4BQFqSwXdc1svfoFKL742Nlz8Ep
+ h+ww==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792159565; x=1792764365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792159807; x=1792764607; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=J9IImW9GgYpIi/RCk8fzQ0zy4Zwv383B/5op/lAYV24=;
- b=OIMtTIZwfQ4ORk6ygTzGEIE7Lv64oLpfsBmb0TUzXL0Mk4Z/4xe8oOusxdqwn+WaXw
- UhQkVmP1lTCRrtVtZhITTu2zQ73ShlD5HjgD8QFqjYegS1fCUPG+BU8TQt6aC0T/o+0g
- efSiOswEzolnz9tFp9rh3r+ito3t6917GU/H4NjYvvij/X8GRU+pAJzq2BAcpkdE8HmI
- en7UowcDJSVfwm4Lrs/mxRBg/XNehu0lzovPDIXBm6ZNxWuJuMkxj17vfdWekeiQ1R9z
- uVUWcmjKrSiGsnzoAt6p8zRbw8LsGeBusuqOPJz1/Mmqcx6VKKYzwDzzWe6nrBI/ZTuH
- qokA==
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
+ b=VHUZpAGjFk1cwJIoQTZbP+KRbUFndKc8vusFFHcxWKd6QGBuhFvn8rly4mJTiMoGFB
+ dxLZuBruX6lq3mzOeE/HEEWIOp6AlrawtgMgdASnaIaDSO/1km6ijgWbstPaYNX+xMDe
+ hJCf3+wP2QETgW9avt/phyYwh4/Eo7AD65dT1bKIHCG7YL/H+qrvCIcwZvH1Dla4O2oC
+ prIEG+Qo84IBe/CarWN1yNctoBeLYVm5ZjYs0n/lNGak1RtqMpocNR7JR/zd5qulgy1R
+ NIjbc9Q6UKpVVpfhO3F+Y8my7D74w4anwaF9rnbGgsyTPI0s4B7AYn6nPzDfaAf/P0YX
+ d4xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792159565; x=1792764365;
+ d=1e100.net; s=20260707; t=1792159807; x=1792764607;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=J9IImW9GgYpIi/RCk8fzQ0zy4Zwv383B/5op/lAYV24=;
- b=CsEcVCtutMv3B7MFSB2Bvn68kyXBi/2PJb4IwrWp3cSBS50QZbHzy/JC4HkBggce6W
- XHUBuScJ75TOBIDwbHtifLPGD6n8pxXdsFgM63sAv6ZMcYGtca9Rt/c3FvH0RbdXmCe9
- A0eFu9upfQYkRfJWT9bDIA3IoypaaopzeVMhjta7+95PyjtGeRy1QSXOAX4aYzR5issF
- VwDvWriFrHMA3l8rs6OLDLQAjO3ZBw+K9Nu8IoCsepwrUbUOvv0jFfYhCp2wJGMV0IoU
- 5cKz/70VgS3yU+rAkk/OmM46vGMVwu4OrxwUYiceYxi1jpbldVCNiBH7fxzRyQfo2bpr
- XG8Q==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzidgnCvTtFWuLIKmjWo/ucgHuhiZTklPCACpyOi7OpXs2JcesijHsv/JLxXVhgX3SHjxraLaaCDF91@nongnu.org
-X-Gm-Message-State: AFq9FYI4bE1oXjbaajFVbAFUcTyLWMjqOO23RRsUGiGuTm47pkvAN/R6
- JLCbhtjBsgL85Ab7jmT1W6mGNlAByWGaJ18LwRJbqduFFGoYFuItOMXfAtq31gu0kXNM4yh2pz3
- mHXGthTXCca8jnfVzpMG13yzImtrLZGI=
-X-Gm-Gg: AYBFou0LUFnc4NyanZiPbDyXUGqOuBox6wd37QGVkp6jitKjowZ4tXyo6mQWJu46eQW
- GQKjMh0ehqrsYKS+r7gATZ02wbnHmlXhBHJrAr+z/GqL3dmE7DwFnHKQ0cUZBVETAwhnpILF+qz
- 4mo/Ap7MPb9MqWtlBJLOhDxPHuP8+lsRyOt3QX8GBgd+SCqd99WB2nhwtsOITIkHvNJ56xMfIfO
- x8dLIGAD9RBaQNv33jLxvlKDA0VRauU8+3Ng7YOXfrpyYpNzW27zMUxKUj+EYlZUlPz560+1xJd
- 0HLxh9D/p4TFdhbWGAlS1BGBe0/7x+UvKrDWn3iwiOFJ9SSHPiVQveM=
-X-Received: by 2002:a05:6402:400f:b0:6b1:c526:afa8 with SMTP id
- 4fb4d7f45d1cf-6b1c526b70fmr10556282a12.9.1792159564415; Fri, 16 Oct 2026
- 07:06:04 -0700 (PDT)
+ bh=ugz2s4+8GXJV9icY9SJ1KjWat3hJ+B/MkHwGm3qoxTM=;
+ b=XIo+bsYj6BOdXcPdtVL1L4rL0g6vyn080P3NOZhqfhvdhOHtUkJmTABonHIfoFMFDy
+ 06V6suYlFbEEgm1I8AZR4+KR/jSwUJCMbbUZQg/7zB8qb+6SFbi0He++3igBY3SzCjKQ
+ KheY8ySqizK5sEo6rcvbLiMezFrWuMpMr/7jQlyGCQEpKfLDMTod/osWbsCzdzyXbubV
+ /pJGqKvlPClaRWQXya39xahNtcCIw+wjzS5pXvz4Nm8quH+zIaaiL+9vbdNmCb7aaEPr
+ YCjc8RkLT3nCPSEFfvWUFAhwqLoravODoq759zjxQWOzDdhRl4n58JdPe7arWPnwRUkC
+ 8oLg==
+X-Gm-Message-State: AFq9FYIjdTiCKj8kT1RWCviAzmqtcOhkLFqNRbTH9bOnafeIHD4ctJiB
+ 6/4768gD87GhlBeJpDO7V4XKlZFNrWRXKs6m/2K+XALjePkF/WVqOmoFVAzBbeeKWaImV2R4jd/
+ aElQjHOlWUzDmmVV1WThwtrp4Pofvrxh8MKSs8XjsxQ==
+X-Gm-Gg: AYBFou1Bvz8gb6kO/UJJWXxsMeV1sxX3MQgGGXYcrRzIZeIxJxbSklTkV5NCnOHTTIT
+ xWr9x3S1aSsAqqgEhwk0j2OSbQuGg11wCbtCwo6HfOo1GO69nVb0wlZMd7qzMW9RuGImeUv4ckI
+ 7/lRjmoSbO/vXSJkxXRD+OW+6AkrYQdOYv/QkT1FrQ7mv3/qDfLWEUXEGuvUxcjGVp7xustq5by
+ 07DEtTig0hzUQ2mVgp0esTeoS0dKNQ5esAw1sCBUPC4mn6pdS71lgUUVzg0cKsPxZsBkR0vUsSV
+ nT6sxu4cCPIhGODzZIFJ4iqhUbL6Dfh3fiifuli5Euvia/9JCeUNkp7Vb11PloqM1uJiQQsAGPD
+ Tty8gxFRQnxpmVwpzheLoQGEad9w5zkUwoZjFdpG4yIE9Y0rjGw==
+X-Received: by 2002:a05:690c:4006:b0:8b0:eb21:e762 with SMTP id
+ 00721157ae682-8b0f22024f6mr285217b3.65.1792159807167; Fri, 16 Oct 2026
+ 07:10:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261015044104.879-1-luoyonggang@gmail.com>
- <CAFEAcA8n9E1jpcOCat0kzv0Q++x7YwK_MNJBJ0qGdtX1-As4zg@mail.gmail.com>
- <CAE2XoE-fgq_c9qONyvfbNi3Ys_hv7yKvGCkk+Wz+rHPW0p65Eg@mail.gmail.com>
- <077274ba-002e-4241-9158-13a3270bddaa@oss.qualcomm.com>
- <CAFEAcA-mii9S1NvhKOt=pMha6-OQKheYj7FuMaDVbV2Eoi-3bQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA-mii9S1NvhKOt=pMha6-OQKheYj7FuMaDVbV2Eoi-3bQ@mail.gmail.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Fri, 16 Oct 2026 22:05:51 +0800
-X-Gm-Features: AclHuK-LdFdTnzXiy5jqe912RkVRxxCOyAwgNKxP22ZmT1O2AJBfnTBnW-lNw90
-Message-ID: <CAE2XoE9W+vohRokJ=ePFesJpiTg7hfjSH3c4ptAibFPxAtv8oQ@mail.gmail.com>
-Subject: Re: [PATCH] target-info: dispatch CPU QMP, dump, monitor,
- and Angel semihosting
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
- David Hildenbrand <david@kernel.org>, Glenn Miles <milesg@linux.ibm.com>,
- Zhao Liu <zhao1.liu@intel.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org, qemu-ppc@nongnu.org, 
- Cornelia Huck <cohuck@redhat.com>, Weiwei Li <liwei1518@gmail.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Bibo Mao <maobibo@loongson.cn>, Artyom Tarasenko <atar4qemu@gmail.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Song Gao <17746591750@163.com>, 
- Chinmay Rath <rathc@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Eric Farman <farman@linux.ibm.com>, Philippe Mathieu-Daude <philmd@mailo.com>, 
- Xianglai Li <lixianglai@loongson.cn>, Chao Liu <chao.liu@processmission.com>, 
- qemu-s390x@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ <atEC-pIGhLYLXVmC@redhat.com>
+ <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
+ <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
+ <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
+ <atICMoFG2gkoHWJ-@redhat.com>
+In-Reply-To: <atICMoFG2gkoHWJ-@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 16 Oct 2026 15:09:55 +0100
+X-Gm-Features: AclHuK-mwJ0hkB9nSRWo73LLt1WyfFFZKkOPiEgQdiNxT7lDLPvT-a4jLC3HEgo
+Message-ID: <CAFEAcA8hJ_WK+4itRtQiJBtDnd5TfA5jrtrcF2qPAj0cnJ+U9Q@mail.gmail.com>
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,66 +121,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 16, 2026 at 9:56=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+On Fri, 16 Oct 2026 at 11:53, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> On Fri, 16 Oct 2026 at 14:51, Brian Cain <brian.cain@oss.qualcomm.com> wr=
-ote:
+> On Fri, Oct 16, 2026 at 11:14:16AM +0100, Peter Maydell wrote:
+> > On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrang=C3=A9 <berrange@redhat.=
+com> wrote:
+
+> > > +#define qdev_realize_chain_parent(dev, dc, errp) \
+> > > +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize=
+(dev, errp)
 > >
+> > I'm tempted to suggest that we drop the 'dc' argument here and
+> > have the macro get the class from the dev:
+> >     DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev)))=
+)->realize(dev,
+> > errp)
 > >
-> > On 10/15/2026 4:38 AM, Yonggang Luo wrote:
-> > > On Thu, Oct 15, 2026 at 5:20=E2=80=AFPM Peter Maydell <peter.maydell@=
-linaro.org> wrote:
-> > >> On Thu, 15 Oct 2026 at 05:41, Yonggang Luo <luoyonggang@gmail.com> w=
-rote:
-> > >>> Put query-cpu-definitions, dump notes, monitor, and Angel semihosti=
-ng on
-> > >>> TargetOps[SYS_EMU_TARGET__MAX] and look up by target_arch().
-> > >>> Keep the table in target-ops.c and with a stub
-> > >>>
-> > >>> - Register with a QEMU_ARCH_* bitmask so shared base-arch objects
-> > >>>    can fill both slots (e.g. QEMU_ARCH_ARM is ARM|AARCH64).
-> > >>> - TARGET_INFO_CPU_OP is type_init. A NULL member means no handler.
-> > >>> - Drop stubs/qmp-cpu.c
-> > >>>         stubs/hmp-cmd-info_tlb.c
-> > >>>         stubs/hmp-cmd-info_mem.c
-> > >>>         stubs/dump.c
-> > >>>
-> > >>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
->
-> > >> Too big a patch touching stuff all over the place with
-> > >> insufficient explanation of what it's doing or why.
-> > > Oh, sorry, I post is just for demo(DRAFT) for other place to
-> > > reference, but git-publish have no way
-> > > to title it(maybe because I use it wrongly).
+> > because I think almost all realize methods wanting to chain back up
+> > won't have the class pointer to hand.
 > >
-> > git publish has `--subject-prefix=3DPREFIX` - that will let you qualify
-> > this as DRAFT/RFC.
+> > We could maybe have an extra layer of abstraction here such that
+> > you write something like:
+> >
+> >    parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
+> >
+> > Or is that trying to be too clever?
 >
-> It's also helpful to edit the commit message for a single-patch
-> RFC so it's clear about the purpose of posting it (or to provide
-> a suitable cover letter on a multi-patch RFC). "Just a draft
-> to go with this other discussion" is totally fine, as long as
-> the commit message says so. (More generally, an RFC should say
-> what you are asking for comments about :-))
+> This won't work if we have multiple levels in the class hierarchy
+> that need chaining up, as object_class_get_parent(object_get_class(dev))
+> will always just get the first level parent class of 'dev'.
 
-Thanks, I'll take care of it next time.
+Isn't that always what you want, though? In a class hierarchy
+Object->Device->A->B->C, C's realize method always wants to
+chain to B's realize method, and more generally "invoke the
+superclass method" from C wants B's implementation, not A's
+(assuming B actually implemented it).
 
+> Somewhere/how we need to identify the current class level we're
+> calling from, so we know what parent to ask for.
 >
-> thanks
-> -- PMM
+> Another option is to do what GObject does and provide a simple
+> helper for getting the parent class, from OBJECT_DEFINE_TYPE*
+> macros:
+>
+>     ...
+>     static inline ObjectClass * \
+>     module_obj_name##_parent_class() { \
+>         return object_class_by_name(TYPE_##PARENT_MODULE_OBJ_NAME); \
+>     } \
+>     ...
+>
+> which would be used
+>
+>     DeviceClass *dc =3D DEVICE_CLASS(pl050_kbd_parent_class());
+>
+>     dc->realize(dev, errp);
+>
+> but many (most) of qdev impls don't use the relatively new
+> OBJECT_DEFINE_TYPE macros. They would have to instead explicitly
+> reference the parent type name:
+>
+>     DeviceClass *dc =3D DEVICE_CLASS(object_class_by_name(TYPE_PL050));
+>     dc->realize(dev, errp);
 
+I still don't understand why we need to get the parent's
+object class by name here, rather than saying "give me
+the parent class of this object's class".
 
-
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+thanks
+-- PMM
 
