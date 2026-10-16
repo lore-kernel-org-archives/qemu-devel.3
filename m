@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D037CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 04:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE27BCC6B2D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 04:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHZNw-0005LG-Qi; Fri, 16 Oct 2026 00:17:36 -0400
+	id 1xHZNx-0005Lj-8l; Fri, 16 Oct 2026 00:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xHZNr-0005Kf-HT; Fri, 16 Oct 2026 00:17:32 -0400
+ id 1xHZNr-0005Kg-HU; Fri, 16 Oct 2026 00:17:32 -0400
 Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <wangyang25@otcaix.iscas.ac.cn>)
- id 1xHZNo-00041G-31; Fri, 16 Oct 2026 00:17:30 -0400
+ id 1xHZNn-00041F-SM; Fri, 16 Oct 2026 00:17:30 -0400
 Received: from DESKTOP-7FLBREN (unknown [124.16.137.194])
- by APP-01 (Coremail) with SMTP id qwCowABXLfFMpdFqv24BCw--.1154S2;
+ by APP-01 (Coremail) with SMTP id qwCowABXLfFMpdFqv24BCw--.1154S3;
  Fri, 16 Oct 2026 12:17:17 +0800 (CST)
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
-Subject: [PATCH 0/1] tests/tcg/riscv: add Zcmt jvt WARL tests
-Date: Fri, 16 Oct 2026 12:17:14 +0800
-Message-ID: <20261016041715.749-1-wangyang25@otcaix.iscas.ac.cn>
+Subject: [PATCH 1/1] tests/tcg/riscv: test jvt.mode WARL normalization
+Date: Fri, 16 Oct 2026 12:17:15 +0800
+Message-ID: <20261016041715.749-2-wangyang25@otcaix.iscas.ac.cn>
 X-Mailer: git-send-email 2.55.0.windows.2
-In-Reply-To: <20261016034759.54-1-wangyang25@otcaix.iscas.ac.cn>
+In-Reply-To: <20261016041715.749-1-wangyang25@otcaix.iscas.ac.cn>
 References: <20261016034759.54-1-wangyang25@otcaix.iscas.ac.cn>
+ <20261016041715.749-1-wangyang25@otcaix.iscas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowABXLfFMpdFqv24BCw--.1154S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrZFWUtFyftFy5Aw15Jr45GFg_yoWfXwc_tr
- 1kJr97Gay8Aa4DJa48G3WrArW5trZYyrWUJF47trZxWr45ZFW7Ja4kJr1DGFW8Wrs8XrZI
- y3ykJry8Jw1jyjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUbakYjsxI4VWDJwAYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I
- 6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM2
- 8CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0
- cI8IcVCY1x0267AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z2
- 80aVCY1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28I
- cVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx
- 0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY
- 1x0262kKe7AKxVWUAVWUtwCY02Avz4vE14v_Gryl42xK82IYc2Ij64vIr41l4I8I3I0E4I
- kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
- WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
- 0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
- JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
- IYCTnIWIevJa73UjIFyTuYvjxUxxR6UUUUU
+X-CM-TRANSID: qwCowABXLfFMpdFqv24BCw--.1154S3
+X-Coremail-Antispam: 1UD129KBjvJXoWxZw1kKFWxZw1fGrW5Aw4xWFg_yoW5KFy5pr
+ 1UGwn0kFWSv3W3Jw43Gr17GF1rGw4F93W8W34xAw1rZrW7GryUuFn3K3y3tw4fGrW8uryS
+ v3Za9r1rCr4DJ3JanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUmIb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
+ 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI
+ 8067AKxVWUGwA2048vs2IY020Ec7CjxVAFwI0_JFI_Gr1l8cAvFVAK0II2c7xJM28CjxkF
+ 64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcV
+ CY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4j6F4UM28EF7xvwVC2z280aVCY
+ 1x0267AKxVW8JVW8Jr1lnxkEFVAIw20F6cxK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2
+ xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2
+ jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCY1x0262
+ kKe7AKxVWUAVWUtwCY02Avz4vE14v_Gryl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Y
+ z7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zV
+ AF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4l
+ IxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCw
+ CI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnI
+ WIevJa73UjIFyTuYvjxUkrMaDUUUU
 X-Originating-IP: [124.16.137.194]
 X-CM-SenderInfo: 5zdqw5xdqjjk46rwut1l0ox2xfdvhtffof0/
 Received-SPF: pass client-ip=159.226.251.21;
@@ -75,18 +77,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CSR fix for #4408 is already queued in Alistair's
-riscv-to-apply.next branch at
-bfdd4f6a918ffad4f013d4f53a9adca1adc0aa3b. This follow-up contains only the
-RV32/RV64 TCG system tests.
+Check that RV32 and RV64 read back the implemented mode after
 
-Sorry for repeating the CSR hunk in v4 after it had been queued. The
-tests check normalized jvt readback and cm.jt dispatch. The same two
-tests passed in the Docker TCG build (2/2).
+writing reserved mode bits, then execute cm.jt through the table.
 
-wangyang (1):
-  tests/tcg/riscv: test jvt.mode WARL normalization
-
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4408
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+---
  tests/tcg/riscv32/system/meson.build |  9 +++++
  tests/tcg/riscv32/test-jvt-warl.S    | 49 ++++++++++++++++++++++++++++
  tests/tcg/riscv64/system/meson.build |  7 ++++
@@ -95,6 +92,154 @@ wangyang (1):
  create mode 100644 tests/tcg/riscv32/test-jvt-warl.S
  create mode 100644 tests/tcg/riscv64/test-jvt-warl.S
 
+diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
+index f8e55ad3d4..31c285c6f6 100644
+--- a/tests/tcg/riscv32/system/meson.build
++++ b/tests/tcg/riscv32/system/meson.build
+@@ -22,6 +22,15 @@ tests += {
+   },
+ }
+ 
++tests += {
++  'test-jvt-warl.S': {
++    'cflags': cflags,
++    'qemu_args': [
++      '-cpu', 'rv32i,h=false,zcd=false,zca=true,zcmt=true,zicsr=true', qemu_args,
++    ],
++  },
++}
++
+ if 'qemu-system-riscv32' in emulators
+   tcg_tests += {
+     'riscv32-softmmu': {
+diff --git a/tests/tcg/riscv32/test-jvt-warl.S b/tests/tcg/riscv32/test-jvt-warl.S
+new file mode 100644
+index 0000000000..b9e42bc7a0
+--- /dev/null
++++ b/tests/tcg/riscv32/test-jvt-warl.S
+@@ -0,0 +1,49 @@
++/*
++ * Verify jvt.mode WARL normalization and cm.jt dispatch.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option norvc
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	lla	t0, jvt_table
++	ori	t1, t0, 0x3f
++	csrw	0x017, t1
++	csrr	t2, 0x017
++	bne	t0, t2, fail
++	.2byte	0xa002		/* cm.jt index 0 */
++
++fail:
++	li	a0, 1
++	j	_exit
++
++target:
++	li	a0, 0
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sw	t0, 0(a1)
++	sw	a0, 4(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++trap:
++	li	a0, 1
++	j	_exit
++
++	.balign	64
++jvt_table:
++	.word	target
++
++	.data
++	.balign	8
++semiargs:
++	.space	8
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 3e1c970382..ce5e710288 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -77,6 +77,13 @@ tests += {
+   }
+ }
+ 
++tests += {
++  'test-jvt-warl.S': {
++    'cflags': cflags + ['-march=rv64gc_zicsr'],
++    'qemu_args': ['-cpu', 'rv64,zcmt=true,zcd=false', qemu_args],
++  }
++}
++
+ if 'qemu-system-riscv64' in emulators
+   tcg_tests += {
+     'riscv64-softmmu': {
+diff --git a/tests/tcg/riscv64/test-jvt-warl.S b/tests/tcg/riscv64/test-jvt-warl.S
+new file mode 100644
+index 0000000000..2ac28e6951
+--- /dev/null
++++ b/tests/tcg/riscv64/test-jvt-warl.S
+@@ -0,0 +1,49 @@
++/*
++ * Verify jvt.mode WARL normalization and cm.jt dispatch.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option norvc
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++	lla	t0, jvt_table
++	ori	t1, t0, 0x3f
++	csrw	0x017, t1
++	csrr	t2, 0x017
++	bne	t0, t2, fail
++	.2byte	0xa002		/* cm.jt index 0 */
++
++fail:
++	li	a0, 1
++	j	_exit
++
++target:
++	li	a0, 0
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026		/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20		/* TARGET_SYS_EXIT_EXTENDED */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++trap:
++	li	a0, 1
++	j	_exit
++
++	.balign	64
++jvt_table:
++	.dword	target
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.55.0.windows.2
 
