@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75294CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 15:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A5ECCF2C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 15:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHjTz-00032G-6i; Fri, 16 Oct 2026 11:04:31 -0400
+	id 1xHjV5-0003TO-Tc; Fri, 16 Oct 2026 11:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHjTw-00031q-U7
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 11:04:28 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1xHjV3-0003SL-Os
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 11:05:37 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xHjTv-0002eR-AF
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 11:04:28 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-888cbacf70eso71841457b3.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 08:04:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792163066; cv=none;
+ id 1xHjV2-0002uX-6N
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 11:05:37 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-8b0c5a64de8so10414217b3.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 08:05:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792163135; cv=none;
  d=google.com; s=arc-20260327;
- b=JccmN8SJwKAyBIvFAs4Lkv1M/NwebVsQLyt2jct4CnjdqTMSk4kjVv6xLVSxQwtTDc
- t/WW42V3VNMn+R7qMpeypGJonLeceJeS6w47/DLnGTFVBmYyGOIEv1XNWbzO24X+aavH
- YHeDUcFFxN+oYyzeA14BcaKp8JRCkM/dPLWX6W2cTsj51rEZ3zM63ME6I4IPbv7ItP0p
- Y5H0V3BIFO1Vqb5zL9zxV13KzI9uaK74Juf/Ha2TRp0sMWAEcgJLH/7fg494potMd5E5
- W319fnTp+7SgYVHqmvJjOHkzTvJTcptLmoCBxX4u6E376g6Kl1hpCexzjz/hc7RVt4rN
- KNuQ==
+ b=FJblZch9eoo2haAJNDYKQFSW2Y2KkecenXer/1Wr0GompyANtqjbXkoFOTC+HVAk4n
+ +luU4IXhZTTGxNmYGrfmyG2+kzU1BfZvOn7PBF9+xXVGe0z54DZnmoRGU29GR1G1xx3+
+ 6nqGYo0zLZeT610M9eiYawbicKeuR6S4qGNFqaurybaBIsYxpMFvhoI4TqTYY1yoY/7U
+ OwWJuXikwYCCV8vCKRHKVWmIKqXeMp0lh4QE7mm4meUHrVZelIMw0smdan3UOaZfDP1c
+ Vh8ekFor4ZTc+MSWXJ+DUW1QAT8MJs2gxexsW/zNAt9XulLTozdFHkKwgKMVb4NtQCII
+ xCAg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=us2H0RfAYX0Sq/XufmuHMW3vO4usHejrCTKmhwDtjqw=;
+ bh=CBjVv1D6vmDpoQMIQgdUQT2reraa2p7SDTCCwForFs8=;
  fh=Lo6rZgc3RKiqxSP/Q7XwHPdPl4aEFi3KMChg+BxIXfc=;
- b=W8A+pSBnXT70EBNbjjeZTESbcMWK6wteji9hM1Nj+m0J6jRxYw1S9ft3rhDU5Ye/58
- 3DDcGnsNxioWg6AiM5Pd5L+OVUjs7fztQB0dSntbr1uTHiPZneriVzSpYVkDJLE7F3T2
- wCrPy4ch4bp2FFXeWDq8AGVopVwMvTmstldn0hL+0xMBy4CpbZwDgndy863TBWwr789J
- 2+1p9zp9s9W1q7rt1hZPtiUq0I66S5NOIQ+/WfOVOp4e3ulvzSQ3G6+ekpIWxGdlhbDM
- DBBENOoBMazLL1vcehEvNQZffWEgIev00hu34ggCjrbTK18u5/afVhWbV1RHpG4sVA1D
- BDgQ==; darn=nongnu.org
+ b=sjeKdScCuQk4I6rBiuo7xq/K/+eIVU/VL7khTWnPWLQISqOYNccVjWa0WytiZf1ngK
+ 0BR1XvbAk5ieGkjBMsUzNmpUF5zerbq/2Xr94Fid5+gXlUDo5speLs8JkmrrwytCKAOQ
+ eiYerbWjl0BxNOdoWJ4/vvCdKlCy9isQLcuNeiZ3CAIwYfy4ss4lqQkocAKIgxW3I53L
+ sqWqcopl+Wy0wR+eYrHZlT9Hui9CJQ9wTm5nP4GFESqLYm2vt/yeaDmHnqW85olkIP2I
+ eNr8aipml/cIY8ny9akT/7AAHQoAMA8YnJlwYbjAUVYccOGbGdL5s1sY6HN/ogdsFbIO
+ NqXw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792163066; x=1792767866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792163135; x=1792767935; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=us2H0RfAYX0Sq/XufmuHMW3vO4usHejrCTKmhwDtjqw=;
- b=ViVQxHPllA5qJ0TSSyrjw3dsMggNUp/xBUzLGft5o8UNXpwp6p9XRzjhuBBtD6KbF8
- ZOMbm28BN9O4WYSflBZSJqcE6YxmIbtZCksTJWkxMPxFXqLYk+/V6NSuzSrTXjcFGaxm
- RtS512brfJRj+OTLx2GVZZHzeWNZForwdb742VAgbUEOe11+5Zvcco5MBXpZuSZcyKd2
- XpJ4UVncj4BdAvS/YKqnJcTm8SFGGqT+4TuSRoVyFpUrZyLJVjAWZgUwQcMtO0mEm6On
- CpQQ8LWN/MXEnO0fPXqUApSacLnFySvaLqTSHlXgAjoLo/MmxSiBaROhLcGZ2egvBeQY
- 9CyQ==
+ :content-type; bh=CBjVv1D6vmDpoQMIQgdUQT2reraa2p7SDTCCwForFs8=;
+ b=ctw1+ujZ9tZrFZk0sxxVZdeivo5yTgDEiHENIFepY7bDQ6YIQfQ3i9DvXsHqvb1+8y
+ 4e/zpVSSsYBPGuSUjmHiup1pAN2vDNoEX8t8kctJ7/jmjl8bo7oxC4G3UGgriphOfpjj
+ pBr707qH9czfhwpwBwaiPfyAc6Jjd3uX9/7fEkyl0sA7hjkD6+p+nPp5Jxz2xXju9sJC
+ Dx/u3OzPGaGfDEcWABTHQ6QuXVVkAz6PEv9yzLpVKc9J5mwS6lbESAFLHTHrswabeeD7
+ FMqO62JICO+nR2nlQ6Qmskey2FF4YCtEqdTVz3DktvOOyo+8mHK5pTuwJtvHSpGr+kfU
+ xXMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792163066; x=1792767866;
+ d=1e100.net; s=20260707; t=1792163135; x=1792767935;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=us2H0RfAYX0Sq/XufmuHMW3vO4usHejrCTKmhwDtjqw=;
- b=JSVBPOLuLtKQfiOGeVtNoaMnDlmvBu3w+JcmHIiE//ODz0eVaXhS2LUh48xW5gfoGP
- 1CE4SZrwUASm80lEjN6UeR6nV60EVoSvUwkv43k5iJYluADPMN71UPW7lftUmPYQ4BsW
- UVS87uUuiXju4VErZtHmnNdHzmdwSSM5avZSXFPsuvHN2XIdCoGQ04wvVZJ0JZxYO7kI
- ULH3jdjD5MjTv6eWLPu6JU0kXLreSnrRD9NQTbkMZxWAQ6FZRaHltQggVU1HP1OL17zv
- 6HtKzs5UEAxEpsxQThngBi9qAqjWlxVDngnNdKacTZqoYSCHgvZPLs3+O+z+deGabwqi
- QNQw==
-X-Gm-Message-State: AFq9FYLdnfH0RY7wvnpnDoDU6RgTXr22J7O5gmU8SOD9cDwnDIweRdse
- cUCpHTL19JTEesXYFtBbv+LO+5/VBjXtxuDg+/8gN6oLR8QdZUJnSdP4OJJ0MJqES4gDv2QfEtr
- VL/Cd/NGhquNP2+wbx4zvp+n7Pi1BJQ8VQ+kVVR/0kA==
-X-Gm-Gg: AYBFou3h9ke0W//GZqg7cS8+Gd6RTwERP3Zg+/2g/+xaUFmG9yQ5TtrdzpD6XUPp8J+
- ImqJ3+/PYfJn6mpAfyhhErNJY0BG7bNndjKeR4ptN1RLzyU0c8eEYue6eG4mzFMs4oc7jMnrXrO
- XVCQhCZUFWg1/aUu/XJtpm3zVff0oPAqHCV0884du6AckZvoGj0QP+ddK+rW0MIKlVmdBc7o7fs
- ulOBJXucWPecJDUk0Zqf6BLjkCzuKysUSJizUPDwMN9sQ8G/ZrveoJA3MOK78bwvTKiSR34bw0i
- NA/5L8B0VXI9bJmU82jFV6izHlHJyU674nHPSa+tBlErJ0ogwV480asCGkHHfHSXARY+sS4vyi1
- dmYfchRP5l1JrC5QPf9XLTAmMDAoqpSZBa57aWJ/ncVIU8mNLLA==
-X-Received: by 2002:a05:690c:d91:b0:8a8:8945:c423 with SMTP id
- 00721157ae682-8b0f21ed5c3mr820167b3.56.1792163065526; Fri, 16 Oct 2026
- 08:04:25 -0700 (PDT)
+ bh=CBjVv1D6vmDpoQMIQgdUQT2reraa2p7SDTCCwForFs8=;
+ b=1JZi2DvIUGfDuJAcYibL3aeYpJt6BKt4olg3wwvascjPehQfyQOLM4E6vnaVJ4RYPe
+ BppVnWznsgpQuCIzBegtme1m5+J7i2JNLw0B2XvDbzCfu1sCi54TZAOjQEXPo8+4qTHg
+ rRMPwLm6R9XLjCNJtQtIkIjqx/nqjxzsPf0itpxjvzrsueCw6X8xYmbYRzl2S+05ORVs
+ Wii/qo00ZvCDYN9s2nDANtPKqJEtoUmvUn0q+W8qe7WDwXPUIuu5wBQZGR4wMUvsOtPl
+ GRLfhiTmBdf4a4IgNtGwuEBrK7cE5Z4360lE2//Dm55mtIqcH4seTZGQR7wCZCTSpNUy
+ s/mw==
+X-Gm-Message-State: AFq9FYKp0sMIOrovc4R/4YCGMid9VFobDej99uBdZtCbafOV0oAp9/X+
+ RFyWRwRUTC1sOSXQ0cNZoi1dm8x2C8V6dJX6C0Rba3fuDkbUA1llm17zyFoLOgQrefK+QKYpvCp
+ PvTBzA71BPc/lPfBWSR7wO/GE0tOaP/9tvpHWt4N+XA==
+X-Gm-Gg: AYBFou14bSp6IALlikZjlMf0MjC9MmKCv+vw+TuF5N6gUE8z05viAZUnflnf4lFbr0w
+ 9UGEj6CqF1j7m32swqmOqZySU1EzwiRTWrI/6DWwGXKlq3al6JmVaxuycgdeuk5E43gMYp9lN8n
+ FmUPQLmvyePMmPxy6V7E/3Mnlm3oGVQBk+VHjgN7NOtNkebldCm0H0ORTgLTRXjfWQQIF+hTbX7
+ fa0BQeTYRt+Gc6yeStubouL44b8q3PF2e9VEG3l/pcVjOtw30zhTe7EO3zf6sV57I/d2xCI2Cai
+ ipAxbv7UNy0Ih/2IxxNo3IXdRdoQq1oyifPE3ScJVsSNxhYn7gnEHHforssYYOR3hcn5LFK4eTE
+ wUFi8RKysFeNmlfCdtooyglrVKIUkTN243J/3QEE=
+X-Received: by 2002:a05:690c:399:b0:8b0:d206:16c1 with SMTP id
+ 00721157ae682-8b0f216a0d5mr778727b3.24.1792163134507; Fri, 16 Oct 2026
+ 08:05:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261016143007.3474704-1-brian.cain@oss.qualcomm.com>
- <20261016143007.3474704-2-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261016143007.3474704-2-brian.cain@oss.qualcomm.com>
+ <20261016143007.3474704-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261016143007.3474704-3-brian.cain@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Oct 2026 16:04:12 +0100
-X-Gm-Features: AclHuK83Sa3ZyhNRQde2_80tmsTfo0oJeZcdOsq5YIo9dkDcGaDtgAyeZ1IIFy8
-Message-ID: <CAFEAcA-faTUOChuACJyaysNU3Kap6W8v6zWkwR8BYzb_-W-jPg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] target/hexagon: use get_user*() for semihosting
- arguments
+Date: Fri, 16 Oct 2026 16:05:22 +0100
+X-Gm-Features: AclHuK_PDthCLcEGt5loNC-b9kzEK8KG9WJYD7ate6U-zhb3OfXVHmvTerVLFCc
+Message-ID: <CAFEAcA93YbtzhDpuK+R=2OZzuvarHvGpse+Vhcd2udB0CQsyzA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/4] target/hexagon: fix semihosting OPEN filename
+ handling
 To: Brian Cain <brian.cain@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,29 +119,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 16 Oct 2026 at 15:30, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
-> Link: https://lore.kernel.org/qemu-devel/CAFEAcA9EL10xpPx_0YD-q6YcWWP9-iwcyG8x0s1yQhKB-XQGXQ@mail.gmail.com/
+> HEX_SYS_OPEN copied guest bytes into a fixed-size buffer until it found a
+> NUL. A missing terminator could overrun that buffer. Use lock_user() with
+> the ABI filename length and validate its terminating NUL before opening it.
+>
+> Fixes: 7711fdba88b ("target/hexagon: add main arch-specific semihosting operations")
+> Link: https://lore.kernel.org/all/CAFEAcA9MOs6VfHf2UHZ8z4cdvaB+7DY6hJb2emYZ2aLSe-t6iw@mail.gmail.com/
 > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/cpu_helper.h |  2 -
->  target/hexagon/cpu_helper.c | 48 ++------------------
->  target/hexagon/hexswi.c     | 90 ++++++++++++++++++++++++-------------
->  3 files changed, 64 insertions(+), 76 deletions(-)
+>  target/hexagon/hexswi.c | 29 ++++++++++++-----------------
+>  1 file changed, 12 insertions(+), 17 deletions(-)
+>
+
+With the unlock call from patch 1 moved into here
 
 
-
-> @@ -513,6 +524,7 @@ static void sim_handle_trap0(CPUHexagonState *env)
->                  ret = guestfd;
->              }
->          }
-> +        unlock_user(filename, physical_filename_addr, 0);
->          semi_cb(cs, ret, err);
->      }
->      break;
-
-This piece should be in patch 2, I think?
-
-Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
