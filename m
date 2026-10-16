@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2AACC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2F7CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhsk-000265-9C; Fri, 16 Oct 2026 09:21:58 -0400
+	id 1xHhui-0002gL-8B; Fri, 16 Oct 2026 09:24:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHhsg-00025P-Pc
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:21:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xHhug-0002fs-Kq
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:23:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHhse-0007mS-Ef
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:21:54 -0400
+ id 1xHhud-0007qH-Dp
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:23:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792156910;
+ s=mimecast20190719; t=1792157034;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nvNMJKy5hEsNmX3h2yw6AJYeXfgIvjlosnD74UtrqYM=;
- b=BrYRlfG7yJWVI5E0AdZYF550nXh/arP88upDLRpoRC4iunxcw+wtFHbPGqQoW3D1qWqKM7
- gFEWjm2zpJog2LAU5YLEgb7ETQTv2zF7P97dbqbIVqvBf4MPblumu77pI8W5ELM8m3aQEb
- L1AU/XYxHCrDJ69mGQ4A+UCJqvTgZVc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SE9V4G/G/hYgWtus+HDIk8cYxijfE4z5gZCyCIy9Vw4=;
+ b=PkVDstdOS301iYWVEYiaK60QDnr3IYgxRLrTxZgAnpX4DCJIaxLUn37A9Ay9HJ9lpoqCbW
+ 27opKFhFs0rxd1mkCmnDSE/7PfFEClzsMXr+74NIinBsW4LHOTd30jtvdBxcRCieagl34Z
+ rBDoR7wPi1qDP79CcwTNEhuKUi1Cd48=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-jFkG6yp2PT-tnB862yAp3w-1; Fri, 16 Oct 2026 13:21:48 +0000
-X-MC-Unique: jFkG6yp2PT-tnB862yAp3w-1
-X-Mimecast-MFC-AGG-ID: jFkG6yp2PT-tnB862yAp3w_1792156908
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48dfdc0f491so364873f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:21:48 -0700 (PDT)
+ us-mta-145-31LaIH8INZqcQmq_T2PHRQ-1; Fri, 16 Oct 2026 13:23:53 +0000
+X-MC-Unique: 31LaIH8INZqcQmq_T2PHRQ-1
+X-Mimecast-MFC-AGG-ID: 31LaIH8INZqcQmq_T2PHRQ_1792157032
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a1d15e7bfaso4272705e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:23:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792156907; x=1792761707;
+ d=1e100.net; s=20260707; t=1792157032; x=1792761832;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:reply-to:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nvNMJKy5hEsNmX3h2yw6AJYeXfgIvjlosnD74UtrqYM=;
- b=san3YykmE2w/GMA1tXaW4JtD9pAcE8sXZU/H0GBz87XLhIO2+r8RDchtORuVNYYcSn
- s19LK/d3PDdU6wuKKW+6LaPcVVvMWRSWuOh3rdNK/thpuSuBpjwpYGRfZRmg/YIJwFPs
- COxVy7A/KsTspzTLg3uesdsdAbE+gd5VQ62F5GiN9cktqpzI8fFAwhCc8awfLc2/N6mM
- ORCFGF0/PuOJcx3cBK8iWVVzWnPnMa4bvxxBnGoc9jpP2sSyQbsH7xJe588JnNHyefWw
- XGeIa0cujNAuE7eESnel7JI/C1W0/ACPUYXAdtsusOCMnk/CuKi2nmTyeS46Ty5iGB7C
- P5pg==
+ bh=SE9V4G/G/hYgWtus+HDIk8cYxijfE4z5gZCyCIy9Vw4=;
+ b=zE1lKMgNAS8k2U5w2RQ75OAV+2iNzXYp+/dyggZ6u/6I4B20nQ8TlqycJC9cRiOvBL
+ +nuLmPK/7+A7PQFQBin7/dJIKE7MMytTI1YTTZz0wKsN7IzKBQ6ruTQeX5LnAk9+2RC3
+ I5MTsJBAQbJ1JPioeZUyJioOIUZHUdMAqVsS6NMrbjWN5fk72YVeKsxmLRA1EBeV4QHc
+ 2ypx4fEtdWrjwhFEMu4OZlc+0T3uq2uBDfyycRotiHO8UWfjYELjmzZsck+SaSWPPIMW
+ dZVPkTUEAL8RFt8lRMDSvbUli/zUKW2r3dZvCIIHljkt04YpXxNwaurxhjiMRlSpkMaM
+ /bEg==
 X-Forwarded-Encrypted: i=1;
- AKwUvByQxxXmRm87ldljtG+hXWPixACyqg0ipQHtAGotiuGu7tLnBoDzL9homPx0/o45Mu01ADfoi2TJ/UgT@nongnu.org
-X-Gm-Message-State: AFq9FYLXQtcqgeZ9nVQHBACSgkcqb3drgABrqV6Ww1Hn3H++tKNWRr5U
- aY+CtTSRP0VnZUAff6l/1RTake9zZZXYvauDGvxvECrEQw/zV2kcX7FqjWVn+OjWZR+LdCmLzvV
- ATh7wQK/0FoD6M8r9pjGxTc3GSemWTzE7WWaOBPZEVWDHHsXbGq2KyqF4
-X-Gm-Gg: AYBFou3zf6OmvU4l4Q7bboYEQu1Zrsf2p2rL9X979wxK6SUF4ynGz+UnHFHXT0PeuY3
- SsTn66InK+j1nwwrv0XaMhO/eKTMfwQaE9cjc0k8I2qNduSkyN8+mEcPbuSXmNwxrw+OGmsFFlY
- kVYo2OdR/ilFchR1datBV8Fc6mi2p0W5jrOFAG8fnq+p09+hLyhZ7vYoDDH80f7xEcGgEyYwAs5
- XslnAWnIdbQ9Ak0ueIfQCWLT6BWXJdQrWfdyJ7jP9OgmljDs9kzh9iv2LzbgsKjaU9N8LypnPtE
- 5k1QNucgjfOXl1McT17sfNswYI6AmVA8unKr8/J3F/zazLl5FKy4ULQyy2XVQ1hZsG3ZDtyGsWi
- eagwrR59ckkmRUnpto8/nveGayvfRq1AQPpXSrZbxY7o1sxDX
-X-Received: by 2002:a05:6000:4b15:b0:48d:fbee:3dec with SMTP id
- ffacd0b85a97d-48dfbee3fa9mr5402019f8f.29.1792156907527; 
- Fri, 16 Oct 2026 06:21:47 -0700 (PDT)
-X-Received: by 2002:a05:6000:4b15:b0:48d:fbee:3dec with SMTP id
- ffacd0b85a97d-48dfbee3fa9mr5401985f8f.29.1792156907098; 
- Fri, 16 Oct 2026 06:21:47 -0700 (PDT)
+ AKwUvBztE4ux0Rj9VqN8El8ABE87s/V1s+t9kiPXtxw4AMxk2bOZ8rJSATda9hQGMZ+wnBDYp4wdaNJ/tA+o@nongnu.org
+X-Gm-Message-State: AFq9FYLgWyVj5f/8vIow13FP3x9OZLF4EJK8VyDiAfxnQ10y+oScsIE2
+ eTDj4nM6majfOOe1pTrli6/+nZ47LWsLpZXpRpks1FcVegRdEaWyEmygH8JOBbaTgrQ2OIpZb84
+ 7/ZNgUH9S9FuqgyZzxkyB//SVTtYPM6BKvxMjJ1mEzpTvWyS4LSkmYR2g
+X-Gm-Gg: AYBFou2FJRGRkEVZiAqfQZmI6+SCydMdcOMzwU/JFAqiEFJjaDj5brIP+ySg5/Zk89A
+ LUMEyK8bXYPsZepKVuQNpQ+f1hpc97m2aB6lpt6G2Lcnxd5fmUpniGGtX+2MiPSQX8ohhcEdAEi
+ lWInQf2FfZd2HB5c/PxiMisOZ46b9NsYYafatisY+7UM3+WYBp7rd2z6q1OCfNIq1J7yDiL8XHV
+ fNfpdW3nvuWtmPqpQJ5k9J1WJ4owxv23ymhSe6Emy3R0n9laGN3Uuyc+n8qWgo6C22UEospSDoZ
+ NrRbtC6kdGOQT3swzWgMYrzPKAFuiyGsPZoaud0EgkzKAdmX94Tq3Sl6HFBbq1smTWqFBoc0oWi
+ fAxaSO+bW4YR6T72ITLEJWDTGXIsO8GKbUidg4DEta4iRJ1rM
+X-Received: by 2002:a05:600c:c113:b0:4a1:985b:83a9 with SMTP id
+ 5b1f17b1804b1-4a1985b87f5mr280530235e9.4.1792157031795; 
+ Fri, 16 Oct 2026 06:23:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:c113:b0:4a1:985b:83a9 with SMTP id
+ 5b1f17b1804b1-4a1985b87f5mr280529705e9.4.1792157031375; 
+ Fri, 16 Oct 2026 06:23:51 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfe4d2321sm5067555f8f.19.2026.10.16.06.21.45
+ 5b1f17b1804b1-4a1bd9b8b5fsm164077725e9.9.2026.10.16.06.23.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 06:21:46 -0700 (PDT)
-Message-ID: <4c9d85b0-4dac-40f8-8541-d79bb3670f12@redhat.com>
-Date: Fri, 16 Oct 2026 15:21:44 +0200
+ Fri, 16 Oct 2026 06:23:50 -0700 (PDT)
+Message-ID: <1dcb8628-2b99-4af1-92f4-08dcae197e82@redhat.com>
+Date: Fri, 16 Oct 2026 15:23:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v4 24/25] target/arm/qmp: implement
@@ -98,15 +98,15 @@ From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <20260921123249.1708067-25-khushit.shah@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,24 +123,19 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
+
 
 On 9/21/26 2:32 PM, Khushit Shah wrote:
 > Implement query-cpu-props-info for ARM64/KVM by creating and finalizing
 > a temporary "host" CPU object and then walking its QOM properties.
+side note: the new qmp command shall be documented in
+docs/system/arm/cpu-features.rst
+
+Eric
 >
 > For numeric SYSREG_ properties, report the host-supported value ranges
 > computed by kvm_arm_field_get_supported_values(). For boolean
 > properties, report false as always supported and true as supported when
-I am not sure false shall be always permitted. for instance iirc
-aarch64=off requires a special KVM capability which is not tested here.
-
-it is worth to emphasize those are the theoretical values that can be
-easily guessed, this does not check cross feature consistency which can
-only be tested when applying the values at KVM level I guess. So let's
-do not pretend that this is fully reliable. I think the only way to
-double check the chosen values is to do a full expansion for this models
-featuring the new values
 > the QOM property value is true.
 >
 > Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
@@ -243,8 +238,5 @@ featuring the new values
 >  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
 >                                                       CpuModelInfo *model,
 >                                                       Error **errp)
-Thanks
-
-Eric
 
 
