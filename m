@@ -4,102 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B7ACCA490
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA58CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 23:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHrW4-0007bY-2i; Fri, 16 Oct 2026 19:39:12 -0400
+	id 1xHrXj-0008I9-Gn; Fri, 16 Oct 2026 19:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1xHrVy-0007ar-PL
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:39:08 -0400
-Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
+ (Exim 4.90_1) (envelope-from <oliveriandrea@gmail.com>)
+ id 1xHrXZ-0008HL-QY
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:40:47 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1xHrVx-0002ma-Cx
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:39:06 -0400
-Received: by mail-dy1-x132d.google.com with SMTP id
- 5a478bee46e88-35cd4e8bdbdso923829eec.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:39:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792193943; cv=none;
- d=google.com; s=arc-20260327;
- b=Y8T0qmEpwSAHU9WA8HjvJzS0YSB14xxtf09vMS/nfdgupBS0Qs73EWU/ZyYGb3ytLv
- MOQKr+irTjy4gJ9U0y5UzXUA9Tp0y/v2amkHBgezSQ0Ni1XRSnKqYfa9ejYlMQxjU7CA
- LMHYf4IAj/S31DR1cZcEYJWkwmV6gxWgwO7wzvLkdRRPzzHgiOUS9Qw+7Yy+7yBDEuYr
- cNeVAxJv6cjXQ1FjyqRfcrZGD4C+yv08Pxh3WeMsQ+3Yh57GhM//mqXq7kKupUUC7Iah
- mMjZp8ed6w5cPCfRfk5QcWhMR1UQSpF7oPhy1nB852l2BsDsnF9cuwmCcl065Kk/u+kp
- pRWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zUNYiJ5KKGGCqSXh0YCkaYhE+czP5NWG0MMnZ8F+bCw=;
- fh=qAX0oJxOOYE5IQsixN1XiS6rs9CNjF4Qy4Pvsd2Byrs=;
- b=M2yBJMXbvoDQxRy8F8jlysAp2A5JyOo3mn+OscFPLhNjn86AT8jk11vwdVyLrUi2yg
- rJMRjNIOPVP6d+CIGVKDDMyr14oNd5XZpugxQS91Bt4h6FehoRLsx/+MasHymkiAAmex
- w0XbAlORRvrR/iQAs7DBiLBC3xeGAG5ALNX4hlUuZQz9xhC45m91l8blTaCVj9nmvBeG
- 2/6Vj7sF0HGrMCabzFW75M52S5Rhx22+ZOoEbsP8g/ncst9FQG4qLPTINW4DcUHDhUd1
- GUGbLOzuTX/aUJ/pmyAB6P5QQ9t39yRBpgfRLERAfEZZHXk5z+7Ei7iwBjOlmQxICl9Z
- p3+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <oliveriandrea@gmail.com>)
+ id 1xHrXX-00033b-6T
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 19:40:44 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a16aaf2067so5528585e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:40:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792193943; x=1792798743; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zUNYiJ5KKGGCqSXh0YCkaYhE+czP5NWG0MMnZ8F+bCw=;
- b=Lk2xENzWiWNkGv0UKRdTDt1e687fsKZfQ/7U45D6JOKXQ5r1Qh9hQXc4AxpSi+mENL
- sJZfLDaFZxbWb/fozN/+0gXjxAsK02xkcIVPTihJlSENZLAtE4OWz3i89ve0ldGqKozo
- 1TEF5n6XoeSIh+l2gx+JCbVoGidDwMcjC9KM3HBmTl/RE0h/nG3QmVvQWCbZ/Nj55/jA
- EieN8ujMAOcUDRVgiYHwuom3x7mdRsBwGrbnHylTmwi4Rw7KQtWTBCMVBZiZV+SKJb9f
- O+C8lEmSMYaC9tyDJomJUodHNChquAvvYoE2kWWsmcWHlY9sTCvnc7RFmGHSC4+man1K
- W+ew==
+ d=gmail.com; s=20251104; t=1792194041; x=1792798841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=r1UFcyolx2df8n1PgORmj6GbMSmQ7olQG3p8HzmWRdU=;
+ b=N/72F84L2X7RLwftPpsaj5CGvKZoUa83a95WsdgiSSfKXNl2BjX4hSOa4cYWPlAN9n
+ mPHPNZnI4ytuFovPJdDy10NqILzi+DpKnsPCMMULgB1RWDJblVrz6aiPQoc8gawzE9bq
+ WgMp95MOYyQVZmoX1fYib2sOQMK9KrdaigPOccxqelvdlFU8IspZ1f4zHHp/EQ32K3D2
+ Y/ROtI7mXRp9QXO3GXPv6Csdb7A8C9AhVQSm37opF5ba9y6lyoz0ftevtw681/344enX
+ ogE/Ya89RHPbSOM3JnUlPNsjn2XbH6DVo2y29bA9Fm5p5yv5RdgwnJW9g0qrr6Nt9YJZ
+ QxMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792193943; x=1792798743;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zUNYiJ5KKGGCqSXh0YCkaYhE+czP5NWG0MMnZ8F+bCw=;
- b=1feXy1Cb18YP5QmoxBNSX2kWN3vcDmjrPVkdw9AYDzKZiGaF2KTvmSV24kTgwWaYdL
- 8ZEa/XvDIFTMsX4f5N6yi54K6WZnjUXxttMsctK81IBqox9cuDDnB8vNnicaXdZ881vO
- ovubPmZEhVULhsQCnTWmAgVdDCoSNOdjQeOWmErAYkT3ibr1loH+5gIqs0i4dQkxlbvQ
- YlyztZTJ/bxp1TQAXLom2GMw/fhKlYiRPHfAnqXRVSHEjwioCmuMP8BEpTjQNce7eTUU
- ZK8oY5F2TVsRHjf4CZX2JdRx+axn6KrwdgEtVvm2h+hTgyzK/e5TuljEjDpQyVrMyAPn
- I8RQ==
-X-Gm-Message-State: AFq9FYJ2QAL+x4crxxUcTr+VxnPQie6aOkNvbwuPFAboKveMsHougFrn
- eRJZ7fBzrIgCjw+c1FB0mg/LEwM45icECuJx6SJK2yASZPa0soKilh1I13qdiWM/LRlfqgsL7g4
- DcMLlH1K8la/5Jo+fH+yH/TUdT9PaiLTbBMb3kryGuQ==
-X-Gm-Gg: AYBFou23hg9a+N3XWggu+KKYs23gfa6MBRmoAWGm/v+x/Q+GQjMjwZBHoPNX3WVq7t4
- xfaw0oXbA12o49qyN2J3tknZE6dHBIyYq2dz+bF6PMf1pnBgoRjRJZ3moVEel4mqQ3dKThwSFHK
- 3IABa8JuEytOYbfNE4g6pDND7Eu9adRkFIHwuR8njOO4v37wD/NPa5teRF29FPNzlW5Y6a3mUuC
- msT9dCeBigIgDnJWbqosvJSyXyAd64eiBdV607+MGWFrvzd6omqUAxQxSAKJLCpxVCZrzgws0BZ
- oTduokhIzCM/X9pQ6ymR2ZaBWGWtE/kc7WCcYjW66qxwn+LLXWxZhXXuhr8QZGxrMig2gp87zdg
- vnLtC37/hvqwP
-X-Received: by 2002:a05:7301:fc09:b0:359:2f0b:aa89 with SMTP id
- 5a478bee46e88-361a16681bemr1541832eec.10.1792193943112; Fri, 16 Oct 2026
- 16:39:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <20261016122113.226920-1-apolivodaa433@gmail.com>
- <CAGscdFvtLkFsLaTzWLPd=J757ioWyFmBKds_yb467WY7RrqhJA@mail.gmail.com>
-In-Reply-To: <CAGscdFvtLkFsLaTzWLPd=J757ioWyFmBKds_yb467WY7RrqhJA@mail.gmail.com>
-From: Andrey Polivoda <apolivodaa433@gmail.com>
-Date: Sat, 17 Oct 2026 09:38:51 +1000
-X-Gm-Features: AclHuK8dfC8MV1gDQwz7cwS3H0RMBGhdVrMwGyaH6rp081sQlOOxMRdktMUT_ys
-Message-ID: <CAGscdFuxDUWVsNOsLCwHjqT4KYGp0aoBzrUjp9svjLyofi1uoQ@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: Reject VPINSRW with VEX.pp != 0b01
+ d=1e100.net; s=20260707; t=1792194041; x=1792798841;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=r1UFcyolx2df8n1PgORmj6GbMSmQ7olQG3p8HzmWRdU=;
+ b=q2wQJI+lvHy3LaBfO/R5HqNgVQ44GTplS5E+Lr+sQwwmwWln0Zh7eZAxG1Ibl2ak9T
+ rw+MoJnEaHFvchWbWoMhtR3BZETy+OFfkJLHw0Rcbk7TG2f8keEoVrKhmXcPYIIzCTwC
+ hrD82M4e2JVNjtT3G4C4L8YoGILqiIdx649w0h0Dd5ZEDppxmJSGlGRMZEnTR/5XyF80
+ cgkD0bXnaTANsD2qALMpixOLg3KaOjwGjUJBH8yWrtjXWNMgj07f67I2X9qoNO84XimF
+ y6bje2o4sooDuhZg7S8/sgSLiuusFdmNOQEuMx0rBsekFeQl2ldjR1rMw8Pbezcq/7fm
+ VVKg==
+X-Gm-Message-State: AFq9FYIxWTobVVaFoJFZXR52fkyLwik9PnNkg38LBNr41OrIXWKPJ260
+ b5mipBsRsGCgttdtnHRYrWKMTX+CAtQZf6gLn4FGK+ZJQS+idlQk7UArYOMZXOVk9NE=
+X-Gm-Gg: AYBFou1hx97paVusu8itzNZbrpUXRHsVWzyBt7NEk57yaNhczzCipUIN5qN8VWBIuLf
+ 0MTj18uiUu0D/U66uVERhiOkfM+Zm82o9DCC8g/vzncU4XDADcmaMD8doTb4eDVL62/ppn56ujh
+ IC9P76sxfl14GuuEk3ZRBeOWkRW/1PN9b7cGRfIr8r2vNURR1+wWOZAYnvKWebcO1vYleGM3+ND
+ 5UwULEbRb9rwKa2rj7U4qCMGiQpeTmAupOQMkSd+5EYHx3+XWAzbTBxymqSJ9vpVO5HfJGnjh/a
+ BST+hxTYFdhO99pnHQ35wFW3bWH5lGhCKVaeqK/8lyW1INIws1+ucNFFAkkcCt7bVJYYtJ5H2tL
+ dKj7esrfTPXpKHygULuHytYB4AoLFmHasIqM+JNAkpugZpS2giz439KeZ7vloJWu9B4mP7BlIWE
+ LZ0ASGu99HbmwkygFmmFAhRaha5K3KKOg3t/6ifvFg5iQx9kk+ez41MO4TzxBM3dpg0+PG3hp94
+ nzz3fXAx9hDb1jItAQ=
+X-Received: by 2002:a05:600c:4ec8:b0:49b:9202:6f80 with SMTP id
+ 5b1f17b1804b1-4a1d76001acmr30283065e9.6.1792194040695; 
+ Fri, 16 Oct 2026 16:40:40 -0700 (PDT)
+Received: from rio (145.176.116.78.rev.sfr.net. [78.116.176.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48dfd4c0894sm7172224f8f.12.2026.10.16.16.40.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Oct 2026 16:40:40 -0700 (PDT)
+From: Andrea Oliveri <oliveriandrea@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
- envelope-from=apolivodaa433@gmail.com; helo=mail-dy1-x132d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, kvm@vger.kernel.org,
+ Andrea Oliveri <oliveriandrea@gmail.com>
+Subject: [PATCH] i386: Hyper-V nested sleep states enlightenment
+Date: Sat, 17 Oct 2026 01:40:27 +0200
+Message-ID: <20261016234027.1002275-1-oliveriandrea@gmail.com>
+X-Mailer: git-send-email 2.56.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=oliveriandrea@gmail.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,11 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Somehow messed up the commands twice...
+Hyper-V running nested on KVM (e.g. Windows with Virtualization-Based
+Security) allows hibernation of its root partition only if the parent
+hypervisor sets bit 20 of HV_CPUID_ENLIGHTMENT_INFO.EAX. KVM never sets
+it, so such guests report "The hypervisor does not support hibernation".
 
-```bash
-$ nasm -f elf64 vpinsrw_test.asm
-$ ld.lld -o vpinsrw_test vpinsrw_test.o
-$ ./qemu-x86_64 ./vpinsrw_test
-```
+Add a "hv-nested-sleep" property that sets the bit. It is a hint
+only and needs no KVM support. With it, Windows 11 26H2 with VBS,
+HVCI and Credential Guard hibernates and resumes.
+
+The nested hypervisor uses the bit for one more thing, on resume:
+instead of writing IA32_TSC itself, it issues hypercall 0x103 with the
+TSC and the parent reference time saved at suspend, asking the parent
+to restore its TSC. KVM returns HV_STATUS_INVALID_HYPERCALL_CODE;
+the nested hypervisor ignores the status and already compensates the
+TSC jump in software, so the guest clock stays correct.
+
+Signed-off-by: Andrea Oliveri <oliveriandrea@gmail.com>
+---
+ docs/system/i386/hyperv.rst    | 10 ++++++++++
+ target/i386/cpu.c              |  1 +
+ target/i386/cpu.h              |  1 +
+ target/i386/kvm/hyperv-proto.h |  1 +
+ target/i386/kvm/kvm.c          |  5 +++++
+ 5 files changed, 18 insertions(+)
+
+diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+index e1babffb0f..4b37d5536b 100644
+--- a/docs/system/i386/hyperv.rst
++++ b/docs/system/i386/hyperv.rst
+@@ -187,6 +187,16 @@ Existing enlightenments
+   Note: enabling this feature on old hardware (without APICv/AVIC support) may
+   have negative effect on guest's performance.
+ 
++``hv-nested-sleep``
++  Tells a guest that runs its own Hyper-V (Windows with Virtualization-Based
++  Security, or with the Hyper-V role) that sleep states are supported for a
++  nested hypervisor (CPUID 0x40000004.EAX bit 20). Without it, Hyper-V running
++  on top of KVM disables hibernation (S4) for its root partition: Windows
++  reports "The hypervisor does not support hibernation", and an S4 attempt
++  makes the nested hypervisor reset the machine. No KVM support is needed: the
++  bit is a hint only. On resume the nested hypervisor issues a hypercall that
++  KVM does not implement; the nested hypervisor ignores the failure.
++
+ ``hv-no-nonarch-coresharing`` = on/off/auto
+   This enlightenment tells guest OS that virtual processors will never share a
+   physical core unless they are reported as sibling SMT threads. This information
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5da80ade70..9df628ed2a 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10797,6 +10797,7 @@ static const Property x86_cpu_properties[] = {
+                       HYPERV_FEAT_TLBFLUSH_DIRECT, 0),
+     DEFINE_PROP_ON_OFF_AUTO("hv-no-nonarch-coresharing", X86CPU,
+                             hyperv_no_nonarch_cs, ON_OFF_AUTO_OFF),
++    DEFINE_PROP_BOOL("hv-nested-sleep", X86CPU, hyperv_nested_sleep, false),
+ #ifdef CONFIG_SYNDBG
+     DEFINE_PROP_BIT64("hv-syndbg", X86CPU, hyperv_features,
+                       HYPERV_FEAT_SYNDBG, 0),
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e7a88074c0..bff8b1d192 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2374,6 +2374,7 @@ struct ArchCPU {
+     uint64_t hyperv_features;
+     bool hyperv_passthrough;
+     OnOffAuto hyperv_no_nonarch_cs;
++    bool hyperv_nested_sleep;
+     uint32_t hyperv_vendor_id[3];
+     uint32_t hyperv_interface_id[4];
+     uint32_t hyperv_limits[3];
+diff --git a/target/i386/kvm/hyperv-proto.h b/target/i386/kvm/hyperv-proto.h
+index a9f056f2f3..df6ce6ae42 100644
+--- a/target/i386/kvm/hyperv-proto.h
++++ b/target/i386/kvm/hyperv-proto.h
+@@ -81,6 +81,7 @@
+ #define HV_EX_PROCESSOR_MASKS_RECOMMENDED   (1u << 11)
+ #define HV_ENLIGHTENED_VMCS_RECOMMENDED     (1u << 14)
+ #define HV_NO_NONARCH_CORESHARING           (1u << 18)
++#define HV_NESTED_SLEEP_SUPPORTED           (1u << 20)
+ 
+ /*
+  * HV_CPUID_SYNDBG_PLATFORM_CAPABILITIES.EAX bits
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index da922f72d7..76f1a37ea5 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1630,6 +1630,11 @@ static int hyperv_fill_cpuids(CPUState *cs,
+             HV_NO_NONARCH_CORESHARING;
+     }
+ 
++    /* Only a hint for a nested Hyper-V: no KVM support is needed */
++    if (cpu->hyperv_nested_sleep) {
++        c->eax |= HV_NESTED_SLEEP_SUPPORTED;
++    }
++
+     c = &cpuid_ent[cpuid_i++];
+     c->function = HV_CPUID_IMPLEMENT_LIMITS;
+     c->eax = cpu->hv_max_vps;
+-- 
+2.56.0
+
 
