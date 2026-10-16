@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39381CCA462
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724CECCF2C1
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhaM-0007aN-47; Fri, 16 Oct 2026 09:02:58 -0400
+	id 1xHhaH-0007VD-Hb; Fri, 16 Oct 2026 09:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHev7-0001aV-Fa; Fri, 16 Oct 2026 06:12:13 -0400
-Received: from out203-205-221-164.mail.qq.com ([203.205.221.164])
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>) id 1xHeY0-00069u-IV
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:48:20 -0400
+Received: from out203-205-221-235.mail.qq.com ([203.205.221.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHev4-0001zM-OD; Fri, 16 Oct 2026 06:12:13 -0400
+ (Exim 4.90_1) (envelope-from <2118537295@qq.com>) id 1xHeXx-0007mI-BE
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:48:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792145524; bh=Ya5tqjBgZhnAuHGiFuAXbgQ5Ff0e+cdVNdUEh01SWZU=;
+ t=1792144093; bh=ZpVtpu4SyxPHs2h9wzmVMCToxxxyMwqpsBIIR9UlNYs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E1bTzFYOV7TlrywSbxv0WOGQ9LcBrj1oC6vC522YAdMZf/c2c/0n1Kg1yzgSvFea7
- Y2OdXPUw7mrP5EZdXWQ71RReYlBWPE3J2uOzQVgh6Ug6tTEZvSXhdPDMpxdTpk3bl5
- 3un/4gLrzPwZENS7KFltZaZjOxXwaly+FL0nqQjA=
+ b=ko7e2+8p9Xm2P+44l9bkQp/gJKofW4bHDkA34cEgPa7gPdQ0sNr4gkMul1cjcBYsN
+ /PVJT90Ro7G15JtaxSStHYvFgyssTxK6EUQ4Rg/qUsFmKbjNiofxB89fniOhkKwlrH
+ J1BsE0eDRJiIYmOPE9kDzVBwBrGT2jii1gEjXGg8=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
- by newxmesmtplogicsvrszb51-1.qq.com (NewEsmtp) with SMTP
- id 301876B0; Fri, 16 Oct 2026 18:12:01 +0800
-X-QQ-mid: xmsmtpt1792145521tfflccdv7
-Message-ID: <tencent_1CD3EC276A11AB6E43A57A66C08F31561809@qq.com>
-X-QQ-XMAILINFO: NGZp1yYNf7Y+o1QKNDfqQgv8Ytnyj1LZDwy0t76kAW6Z8rtboENnu8dhhrKfE/
- l3pn8SY+qWmctzu4Ns+2DzQf6C84YzTprpkSs7x54X6fUdmpe+zjk756IBJyFWCdVeaUqgb1MwOW
- +UbD4+UrfrR0fO4qDKWzTsyDlFG91mhP2vnhKOkbxGizKrKB6No8UVKzP5eW40iHaGzN4zNmu7v5
- lcLPd1TUwsC34iO4VBYr7BMa67phEYt4ml3EB2GiYfrYqecLEJD/M1R48l9JYg7PHZlVketx5BlK
- D5FSQd4x4IWj/EUsldSVjSRJIlmV5bnk/ESmeJLSqFCM7KRJFwDxFKfIOvrgebFSLgfLRLh8Zw1g
- djDRnGYgsZ8cJI7lpMKrTTNhhdv3h8eCpi9Ow8jPmiAgnoyEGwHpIgcuyLHU3FnuduQ13G3jJ4Px
- jxByBYJlI/811CX5FRAaNEO+KdSXxxwot5f+xDSM8mR/6HtgY49H5N4cHhG7NNKIh9YScVDE9duH
- p7RPwIZ1L35ZjK+zljCvVdt+0vJGEMuYLNfTlwPlYzUqL0p34woD+8WYLY6JUubP+mcsd70n/GiR
- sCTHEbwpmm+7cWmJPq+clXhgpx3DzJsV+W2IUhNh3IXe3vnFff08N7oLmD7i+6GRDX6JZiXyTYEG
- tUXTCpl9av5mZUuvsMCKYTS97gTzxkl6m14ru+75BmMhpyKnSOAZsvmhzfoeZ13BcTXt0zH0tDON
- gofa+82t0+4aeZW5ABuMAb+ND5Y01OPefQAC/Ru2ZmCgNZwgMADCUCIZrNkGav+552wG4/fxtTn2
- 0GaPS3Fk3dbWEmDOlWClNwGJWMpYkoMlhQvc6uF9UVnFmAjq/IbTNv/OvVQnphOAimo/5VZvg9Ab
- lW9/ITitzrrtML58aok3HWoSJbGlzGqE8uAT+2pCDNayEQO06tfCLoN68TpPnJUhGmT7HlEXZIao
- v2Gk92DJfgZVkICUU2g39I1OP+qqLG0RS4dzbubg5Cvp+Tr7EqgbY4vxa9Wpt2ADI0REon/ep5fE
- ES1HgrsDvKC58/TMWsKh1s3XAko8n5DSI79wNtfmDJ3MOlloZp
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+ by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
+ id BF4A1837; Fri, 16 Oct 2026 17:47:52 +0800
+X-QQ-mid: xmsmtpt1792144090tmmvax2w2
+Message-ID: <tencent_5414CB4CE9B1F60A7E9AC6041DE2F22D9B06@qq.com>
+X-QQ-XMAILINFO: OATpkVjS499uvP4r/eUtmqYI7Ja4clC0vXXOiaJA4kjBNc4AFhGkx7ABMDGxHx
+ ruRkppUhZj8PeEUFuj6Uk9fOGLLQVBcQDRDrcZKHxjG8vgx2Kib7xPeY7u7VW86ztAsPasno8sla
+ 7d7p5DCBzC3eUZzrTIX9QAfizL4IQ309aJAmEFvKYFZbbwRc44J8HM17687WX5VNTmZvfucicDn4
+ 4hxkuNuD4L30iOi6MM6SREnzZxjPLbmTB0knJpZwd/xNRVx3kFqbI71m+0ZIOnZhRbC+ST30QBCK
+ iXSdpkcE3oLtEv+rv+d9srt1pIoI9a7Ji17VnrYUqExprPM16MNcA/9GmvwQ+XAl3sixuwxgxkiw
+ TfaMuCS+We0TR6QRWoJb3OwLuofBwZLPISlknAilHVCQFON0j6r5N4NFxPMVuk49UEZgIltkRUVg
+ rpBQt8hTCM+RdzWqaV1VHhjU/DwIaIKZXnJ8TFTtOVWKsdEt6LH2DlkPv9x6vJCIWP6kCNCeJ2X2
+ 4eLEHCkuhKryaayMPfGZC+paNgzOqHotzefmUiGPCunJwbxcaKqEfQttai/g5/5Wx9WLYu63RTi8
+ gAGAhKfeOFm5EORfu1Ps1lKZ5WyCB5GsJaY5C95bGZuBAHzff9qDy1nhsXifjlSk+PzTqYl7mmsX
+ HQ4oj2s6lojSeC2WBTuqojWlUb7gqThHeV6e1HtY6HtXF57av6baXzxvzrH1bI7IWglA3HtGsxDr
+ cGJWtRPiyOZvBjxBQmoXaXDPbqjhF9bl7+QLuFwyClZOXagdQjvvqh66Tzk+Ntu0mremsrrNCNl4
+ kHADlXFPEOx3h1RTPvrWvMZvKIqIEs4LlOUCdFfOjR/yOiltzNJYMGqnWzXmL1hpw4VkaaIubZdQ
+ SEfMAb9noOZIjbg5zXJ37LF5ZmgNoKfGu7xlAkfou7OoOlf1uKxJNUuN6wSRfY9kxh4P1EfuZm8F
+ CMdZWdi3bSjxWrShjobcAB9ioIB7K7LtY2NAPM4zblax7KMYmWNyMmFbjJSKAz/USXeUXqkKk3KG
+ DTrWJhfxTvD7arIIK6uAcq8tDUPoR9Ai+8kMbo60p4uZTn1UYCOkc5Uzy4RcWYKtfkxuVpH4eq4w
+ Rl7MYv
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 18/37] hw/arm/virt: Reserve the MPAM MSC MMIO window
-Date: Fri, 16 Oct 2026 18:10:36 +0800
-X-OQ-MSGID: <20261016101058.1900808-2-2118537295@qq.com>
+Subject: [PATCH 16/37] hw/arm/mpam: Implement PARTID narrowing
+Date: Fri, 16 Oct 2026 17:47:10 +0800
+X-OQ-MSGID: <20261016094733.1898485-17-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
-References: <20261016101058.1900808-1-2118537295@qq.com>
+In-Reply-To: <20261016094733.1898485-1-2118537295@qq.com>
+References: <20261016094733.1898485-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.164; envelope-from=2118537295@qq.com;
- helo=out203-205-221-164.mail.qq.com
+Received-SPF: pass client-ip=203.205.221.235; envelope-from=2118537295@qq.com;
+ helo=out203-205-221-235.mail.qq.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -70,7 +71,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:42 -0400
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,49 +88,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Reserve a 1 MiB MMIO window at 0x0b006000 for the MPAM MSCs
-(MPAM_SIZE * 256 slots, right above the virtio MMIO transports)
-and add the VIRT_MPAM_MSC memmap entry the creation code uses.
+The MPAMCFG_INTPARTID register (0x600) was defined but never handled,
+so a guest could not program the request PARTID to internal PARTID
+mapping that PARTID narrowing is based on. Add read/write support:
+
+- Writing MPAMCFG_INTPARTID stores the mapping for the request PARTID
+  selected by MPAMCFG_PART_SEL; reads return the stored mapping.
+- At realize, initialise the map to partid % num_int_partid so the
+  indirection is always in range before a driver programs it,
+  mirroring the Linux driver's fallback mapping. MBW_MAX also resets
+  to 0xffff (full bandwidth) for every internal PARTID, matching
+  hardware: an unprogrammed PARTID must not read as zero bandwidth.
+- Clamp the narrowing indirection lookup to num_int_partid, and wrap
+  MPAMCFG_PART_SEL writes into the supported PARTID space (the
+  narrowed space for INTERNAL selectors) so a guest cannot trigger
+  out-of-bounds accesses on the emulated arrays.
+
+A guest driver can now exercise PARTID narrowing: several request
+PARTIDs share one internal PARTID's configuration, and the guest can
+re-map them at runtime.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/arm/virt.c         | 3 +++
- include/hw/arm/virt.h | 1 +
- 2 files changed, 4 insertions(+)
+ hw/arm/mpam.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index aaadff6..3ad7de8 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -90,6 +90,7 @@
- #include "hw/virtio/virtio-md-pci.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/char/pl011.h"
-+#include "hw/arm/mpam.h"
- #include "hw/core/cpu.h"
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_host.h"
-@@ -211,6 +212,8 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
-     [VIRT_ACPI_PCIHP] =         { 0x090c0000, ACPI_PCIHP_SIZE },
-     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-+    /* MPAM MSC MMIO windows: MPAM_SIZE (16 KiB) each, 256 slots (1 MiB). */
-+    [VIRT_MPAM_MSC] =           { 0x0b006000, MPAM_SIZE * 256 },
-     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
-     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
-     [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c847136..56bee15 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -81,6 +81,7 @@ enum {
-     VIRT_SMMU,
-     VIRT_UART0,
-     VIRT_MMIO,
-+    VIRT_MPAM_MSC,
-     VIRT_RTC,
-     VIRT_FW_CFG,
-     VIRT_PCIE,
+diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+index 441356e..91d1c31 100644
+--- a/hw/arm/mpam.c
++++ b/hw/arm/mpam.c
+@@ -285,14 +285,18 @@ typedef struct MPAMMSCState {
+ static uint32_t mpam_get_nrw_id(MPAMMSCState *s)
+ {
+     Mpamf *mpamf = &s->mpamf[s->ris];
++    uint32_t intpartid;
+ 
+     if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW)) {
+         return s->part_sel;
+     }
+     if (s->internal_part_sel) {
+-        return s->part_sel;
++        intpartid = s->part_sel;
++    } else {
++        intpartid = mpamf->cfg_intpartid[s->part_sel];
+     }
+-    return mpamf->cfg_intpartid[s->part_sel];
++
++    return intpartid % s->num_int_partid;
+ }
+ 
+ typedef struct MPAMMSCMemState {
+@@ -404,6 +408,17 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+         return mpamf->esr;
+     case A_MPAMF_CFG_PART_SEL:
+         return mpamf->cfg_part_sel;
++    case A_MPAMF_MPAMCFG_INTPARTID: {
++        /*
++         * The map is only meaningful for resources that implement
++         * narrowing; others read as zero.
++         */
++        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW)) {
++            return 0;
++        }
++
++        return mpamf->cfg_intpartid[s->part_sel];
++    }
+     case A_MPAMF_MPAMCFG_CMAX:
+         if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
+             qemu_log_mask(LOG_UNIMP,
+@@ -482,12 +497,38 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+                           s->num_ris);
+             return;
+         }
++        {
++            /*
++             * IHI 0099 7.2.1: the MSC does not check PARTID_SEL on write
++             * (the first IMPLEMENTATION DEFINED behaviour); the selector
++             * wraps into the supported PARTID space instead.
++             */
++            uint32_t limit = FIELD_EX32(value, MPAMF_CFG_PART_SEL, INTERNAL) ?
++                             s->num_int_partid : s->num_partid;
++
++            s->part_sel = FIELD_EX32(value, MPAMF_CFG_PART_SEL,
++                                     PARTID_SEL) % limit;
++        }
+         s->ris = FIELD_EX32(value, MPAMF_CFG_PART_SEL, RIS);
+-        s->part_sel = FIELD_EX32(value, MPAMF_CFG_PART_SEL, PARTID_SEL);
+         s->internal_part_sel = FIELD_EX32(value, MPAMF_CFG_PART_SEL, INTERNAL);
+         mpamf = &s->mpamf[s->ris];
+         mpamf->cfg_part_sel = value;
+         return;
++    case A_MPAMF_MPAMCFG_INTPARTID:
++        if (value & ~MPAMF_MPAMCFG_INTPARTID_WRITE_MASK) {
++            qemu_log_mask(LOG_UNIMP,
++                          "MPAM: Unexpected write to INTPARTID Mask=%x Value=%lx\n",
++                          MPAMF_MPAMCFG_INTPARTID_WRITE_MASK, value);
++        }
++        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_PARTID_NRW)) {
++            qemu_log_mask(LOG_UNIMP,
++                          "MPAM: Unexpected write to INTPARTID when !HAS_PARTID_NRW\n");
++            return;
++        }
++
++        mpamf->cfg_intpartid[s->part_sel] =
++            FIELD_EX32(value, MPAMF_MPAMCFG_INTPARTID, INTPARTID);
++        return;
+     case A_MPAMF_MPAMCFG_CMAX:
+         if (value & ~MPAMF_MPAMCFG_CMAX_WRITE_MASK) {
+             qemu_log_mask(LOG_UNIMP,
+@@ -619,8 +660,25 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+ 
+     s->mpamf = g_new0(Mpamf, s->num_ris);
+     for (i = 0; i < s->num_ris; i++) {
++        int p;
++
+         s->mpamf[i].per_nrw_id = g_new0(MpamfPerNrwId, s->num_int_partid);
+         s->mpamf[i].cfg_intpartid = g_new0(uint32_t, s->num_partid);
++        /*
++         * Until resctrl programs the map, wrap each request PARTID onto an
++         * internal PARTID so the narrowing indirection is always in range.
++         */
++        for (p = 0; p < s->num_partid; p++) {
++            s->mpamf[i].cfg_intpartid[p] = p % s->num_int_partid;
++        }
++        /*
++         * per_nrw_id is indexed by INTERNAL PARTID: it has num_int_partid
++         * entries, not num_partid.
++         */
++        for (p = 0; p < s->num_int_partid; p++) {
++            /* MBW_MAX resets to full bandwidth on real hardware */
++            s->mpamf[i].per_nrw_id[p].cfg_mbw_max = 0xffff;
++        }
+     }
+ 
+     memory_region_init_io(&s->mr, OBJECT(s), &mpam_msc_ops, s, "mpam_msc",
 -- 
 2.43.0
 
