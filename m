@@ -4,85 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C2ECCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CE6CCF2C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhaN-0007ea-UN; Fri, 16 Oct 2026 09:03:00 -0400
+	id 1xHhin-0007A0-4l; Fri, 16 Oct 2026 09:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kostas@chatzi.org>) id 1xHdcV-0007b4-1V
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 04:48:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kostas@chatzi.org>) id 1xHdcR-0001FW-MX
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 04:48:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a1b07c3c5fso25806555e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 01:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chatzi.org; s=google; t=1792140528; x=1792745328; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=l1o0gCPAeLV88aY/vi1MiqwUhijzqHBxf1YsMgCHU1g=;
- b=BO1jiwq+Mc7lyTuQZl9EA18auYfLUpPuaeiOAPslM8ln3I2i+LaKyo1IZhs4A08bwQ
- 0y52yI+PmYhyEBsbpRPcApiq53m3c4A3mo2+XM4JUgk0FmcPiYkFyg2GskbKpnwsjCEA
- zoded5kfd4ppgB7y1N23WXpALVfqk1zjVyo7I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792140528; x=1792745328;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=l1o0gCPAeLV88aY/vi1MiqwUhijzqHBxf1YsMgCHU1g=;
- b=q8in/wntDyVCuHmGkJPr4Z+LZqjiuHopFOXqwdA3Syxv3XN+3xSU2ixanEw1VvZqu1
- gG9g1jXykELOG8Yh2R+jmrOsa5e/2jbtpQShBuyGEzL6s5tuNTquDzk+j0FHNG8lf5Qg
- 5tLlD/HKwBrsncVFOp+EqirV1+XcfTaKembMnkCFLkNvDB9yZXyCCmGqxJstvXMtPbop
- jiMz0UTZY5NMNbSdB6pujJ+jH0qRIcRsT22mJABdF7DcDxK5Rmqk4AANrEkOAZktQMIU
- 4UlYT/L5yHF9CxBjPBXGrYcy9ni1iMldenqDu1v7N66h3AtbhBjCP5RojUHqPUnbv0Pa
- kPKQ==
-X-Gm-Message-State: AFq9FYI4u1ZujqcMBtNe3dvEdQEcEfqKsOAxjnyWkerI1r42IucNrahG
- wgi5eRKFwfuR5gkN1F5hhkJpYV1M3PpZqYg0aa/VrbHTf58VmjME8mk27rMWJ36KK3Mr/soWF3Q
- qNuvB
-X-Gm-Gg: AYBFou108gDjUqYrs/0AW1ihZ3e0/OfYeK0DUxu+u4Ic6m8bqfT3NTyNQH2+YEQIzyt
- mofZ91A9CezKvS6dfe+cmRv2OqXeeiIXl1B8luQAf8SW0jKenyNVvZypWX8uz1lhcD83quGXPP2
- NGpgvFXXBgXloA0fKjiktKPeQvFV2ES76Vo9NKPwVIzOdrRxzeFa8/p+VWwUbwOKunhRiHp2MHx
- dbIkWRT2PjVUpaRc/jK2mElNfkO92r+mpG/0qB/Cv/Z115IPUy8fy2Yu744YELyZAG2aJwa/PqD
- UFoGQM6hWk/mye913tObkGEeDidabdnAYXj+Qr813wXBU8oWgyiWj4Qi3I0IFV/mEFiGL6yuPla
- 68vmo0V2YkG9I0/81Eb3qZ3Ol/ZiWb4uTn4nYpEDgyyol2lQR0lN2otS06/JiILYs66bBHmOQD4
- ma+NwTZBXcAP92sLHLwc+wqQQ+ez+4SQxY8/BzWJRwyClIoA1WV42Mr2v8lOTPIVS7Uq+om04Kt
- AYH5LktiSRM9laDMvDelBcCBItMHJkaFKwLoMwnh0516EhR626ZfngSL3E+hdwx2iqJZE46Lxca
- jzgJ7hI2DJ2aiJ6Iuh4HW/Gx
-X-Received: by 2002:a05:600c:8b09:b0:4a1:6f78:842f with SMTP id
- 5b1f17b1804b1-4a18e4987b8mr451888015e9.11.1792140528486; 
- Fri, 16 Oct 2026 01:48:48 -0700 (PDT)
-Received: from brie.home.chatzi.org ([88.197.86.190])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1c8de7230sm40781015e9.14.2026.10.16.01.48.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 01:48:47 -0700 (PDT)
-From: Kostas Chatzikokolakis <kostas@chatzi.org>
-To: qemu-devel@nongnu.org
-Cc: mohamed@unpredictable.fr, pbarbuda@microsoft.com, pbonzini@redhat.com,
- Kostas Chatzikokolakis <kostas@chatzi.org>
-Subject: [PATCH] whpx: i386: forward the dynamic EBX of CPUID[0xD] sub-leaves
- 0 and 1, not 1 and 2
-Date: Fri, 16 Oct 2026 11:48:13 +0300
-Message-ID: <20261016084813.755278-1-kostas@chatzi.org>
-X-Mailer: git-send-email 2.54.0
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xHhil-00073w-7v
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:11:39 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1xHhii-0006rX-KO
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:11:38 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69GAAK4X2708556; Fri, 16 Oct 2026 06:11:24 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=BMnU6qDU/16KVsRWKCl6RrKVFguDJIGjS7N6Q4eZT
+ DM=; b=RStWpkRspVKJrjzXQNAGtzYILw+gUnXBsOtlrnUskrMq+9Xb4ji5r9f6Z
+ QL+JaRpCEtBHl9C2ezqlj/Q6VLJlfRLD0KqF9yhCFlm13bSLnaPxypdCx7CEuXfA
+ CqG0S0mgrRuFvahmXpvF0Gg7lWd3Y4QEap6Sc4D8vVFrMouw/aalxSYsvbrtjKEn
+ /LGPhd7VPshQ5qSztZtf0hqGk3ShZiw32TH2Vv3kp0goIn5e0V1i4oFmmLmKWgLo
+ FG6lBSmrptmHKEz+ITN0xFDzJizeOSW+MpBWor1z/FZ79ybqVAmPDRcBNM504lbY
+ clR/ONankG1SVhJR/AWwcjSULN6wQ==
+Received: from ch4pr04cu002.outbound.protection.outlook.com
+ (mail-northcentralusazon11023091.outbound.protection.outlook.com
+ [40.107.201.91])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4hb045jvp2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 16 Oct 2026 06:11:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vErnfX/hTuypWl6UkFFsh3P1hZEhkmKwG/ioQ+wTFlPURJmFWhdGyW1m+2uB+Fgm7DhPjNcNcovs6CaGED/JytK9Y6SiplovvbZcsKt+Yaz5Mxbgybokk04EylvJXzhLDbP8l+FZXKXu80gA9FC3dayjq0+gAnSbLXODdSkVpHfKG6AmuJBFcRDLjztPgC0gjimA98dMF1lfHkDSmgKuJ7Clm+Xv6OLPi7mAfVCgsrzY42cJGryH8GQ+GxIGVCQ4KF9xCHaIDOu/PaWMQPXqQQMXTxGih8ZSqfT/LQjkbqn18LEyMNRJ8a2VrDEBbnXp5KpiHayuYZ4QBhS/I5A5Fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BMnU6qDU/16KVsRWKCl6RrKVFguDJIGjS7N6Q4eZTDM=;
+ b=tOniXhPER+1OuXcLGrL6Jn0HbYJ85ps9onfleTLpL5eiY3cs5kHgw+qkRYJUOiZ0bSXxanN4CQBGhVwr/gnxdLh6Q8duf92n9d4KqRZmjeBp+9c6w9+FmnY7Ei58tJ3yMswd3Y1sEbPYgsIz3cpMr5rEWE45m6I94/SW9PHIIsHO3FYqagfgBMkBUCL5wH0djOSf/L4SChdU2G81wA/Tnkp4pa0iSGXUER8xZla17oUdbWM1Xqfq4x0W1Qkab7u64VmqqqzDvHyYj4IS9aeaqZy6za01DF1ODnMJqR2jYSKnpM8aq9Thcrqb7dNCNTkO+NDiw3r+2LDy7wxiiu1mxg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BMnU6qDU/16KVsRWKCl6RrKVFguDJIGjS7N6Q4eZTDM=;
+ b=zHHnoq6UZa37TgNf+gCz6HdBXH4Yi9aBXbIpwLbIm7l0cuQ3EkPQjGNBH4jIfhcGYi/50Sv8JDOJAbm4uVVMqm+El1qRnXxaJ/BLQR+3N9Itb7muORgklgpQ4Yuoa+QJS+7ZRYGxEZZiPdJoQCui54mZmsvfDKr33CT+H2p+TCnThlW5rxIg/saSinEM2ZIhXnhko2WBAQ1UVBAfc5cUn7gFKqK92FcHIJoRqku1UpLFD6qH6Szhb3niHMmVblJ2knZoUDAn0X1Yyib7HzLVZEbFOED4iFnFMNq0NpefI8Tu2QTVfbNnmq8aNKqIfwBgXh/g5Mii3VwnTQZiFH7u3A==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nutanix.com;
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DS7PR02MB10964.namprd02.prod.outlook.com (2603:10b6:8:258::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Fri, 16 Oct
+ 2026 13:11:22 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%4]) with mapi id 15.21.0522.016; Fri, 16 Oct 2026
+ 13:11:22 +0000
+Message-ID: <e8e3be79-23e5-40d0-8843-6ecf2c82e196@nutanix.com>
+Date: Fri, 16 Oct 2026 14:11:19 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ <atEC-pIGhLYLXVmC@redhat.com>
+ <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
+ <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
+ <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=kostas@chatzi.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-ClientProxiedBy: SJ0PR05CA0011.namprd05.prod.outlook.com
+ (2603:10b6:a03:33b::16) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DS7PR02MB10964:EE_
+X-MS-Office365-Filtering-Correlation-Id: e51d5009-6bca-49d3-4add-08df2b86f9bf
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|366016|1800799024|6133799003|22082099003|18002099003|10067099003|5023799004|261009223027099003|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: rCMW7sNOZcpeVgnuBdOdCUO4IflxQkv/j8bqbxJmR9b3yaDAKwi7UZBeyPTwwAxcXUFvKv2qsFcNZx9UxF49n81jGDaqztKI39yOi8wM21a/emxdLggUCbUoWiqDFZGYZBUlaCLP/yZb+7B6S2M3ZKYANmA/Fp3JxnWnu74q8iG8UXDPelHYVAlcDQKVdtDaSqvnkprttVaMd40I4g8D6u3mvy4VyV/xOuOdX7tamPIAChUboFoOmn5EwWmRuUe+1BELU0sYgVhn/5zfopLstFH2tL0G+QWRgWD+vNIiZSrPb1H3nXfCwq8T14th0rgGC5rzqg0QWTR5DZKPpYfeWzLHAsjG5xZ5AhM9JYUXiID8ij/2P969UDIPhiu3NSms8N2ZKa2T6Vy3sFwn3Qdti4bhBvCAT1wM09LCSUgze4sPNC+JsQwHpnvFnRzBZEvQ8sXGPMwQxKl5PHL+/09okGBdL1iFY+Is5Xscuhwg2AwqdVdKt67IB/7Kv2+bT+EtfjncBZY+0Z8/mnZ5pu/mjlnIB/tJwnxeKahQIWBGSU42ZMIDQbbfroH5frkbwv6koMfmQJimdQqJh6NN4PvkT8T6Jf4TEq79pfjlDE5oiEXjttqzBjPQgluTFO9/1oEQ3Hs/YKHxXs8Gzap6jBGec8fkQ5pryd0i9LwddHH2khc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(6133799003)(22082099003)(18002099003)(10067099003)(5023799004)(261009223027099003)(4143699003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NlFHRGgrclFleGREcTdHUzRvbGZNMW1Lemg4by80VWpHZG00T3pLMTlmYWU2?=
+ =?utf-8?B?ciszQWxOdkJJeW1jcUMwdDJYdGNQT3JmM2pKbVJYeGdSSHRaSklEVDJtSHI3?=
+ =?utf-8?B?aG9VMEVaMFhlY0FUMjhYc2ZJc1FxS09uRUwvdGZwL05wdzdVY3liNG0rVG82?=
+ =?utf-8?B?WFRmQ3U5QVRyRWkyUVhxVjNoV21GZ0RrcE5iSjVMakQ3akFqeUpmTnR6b2Yy?=
+ =?utf-8?B?ODNvQVNTUUNNUFdSTS9aYnlyaVNEQm1VVTZxa09ta053eEhvT3VlQVN1QkE4?=
+ =?utf-8?B?Zm12VWoxQkdjRlhjMGVrODZYblBUZGsrUlJxZkQ4US8zY0MxOUh6cHVtc28r?=
+ =?utf-8?B?Z1dIcHhPUnZ6UXFURzhpYWg1MW05ZlFiZ0JTQlhpc3RxcHNPMHVjR0hFVlpB?=
+ =?utf-8?B?ZVhBcUwxRFpaWXdwbndSMWsxd24xTXg0QTNyNHg0UGZ5NFR1VjBxZkFWdmZ5?=
+ =?utf-8?B?NHF1cG1FYnZNaVFqZDF3SExqeGM2MC9jNW10aXg0TEJjMFAzaHA0Z1FVWmdD?=
+ =?utf-8?B?d1ZLSzd1dWUycTgyS0g4L1NZZUk0WTNlZjZ0djZETUhjNllIRW52cWxucnAv?=
+ =?utf-8?B?Z0EzOEtqV2ZKdjR1ZU96cnVFRjJjSlgxMC85bjdSWnloTmg3YWtpTFpkemFD?=
+ =?utf-8?B?M3pHQjVnbklER3FWcjdxYnJDL3FqdWhGaVJLVHB4aE9wUTczNkRwcFVrWjBQ?=
+ =?utf-8?B?ZjhLTDVMUGVQczFzbm5kYy8rdWFnS000ZHdjMVBvSmhLV3Zhd3huTjNzRlNx?=
+ =?utf-8?B?d3ZvZUl6TkVDWHE3WENXeUc0Um9peUp6dDZFOWZ1ZTFrVTdKS1BEOE1UWnNq?=
+ =?utf-8?B?Uk9yYitDeXBPYVUrVFZya0lGNFhSYyt1NWFhTGlSV2hiL0d4dVZKRE1QN0VY?=
+ =?utf-8?B?ZVpsLzJ0MEkvSFlQSTlnd2xzZS9zUUFTdHRpenI5UHJubEhsZG9xbDJHTmhJ?=
+ =?utf-8?B?amREOVhnYmhFWWptVG4vQ2FSYzFUa283MmFlaEpXSU5Femg4N29wMi82SDJZ?=
+ =?utf-8?B?bk4zQlhJQzlYbXRxYTZtMXE1Q0Q3N2o4eWxETDdXWXdBTVk1bHlIblNmM29l?=
+ =?utf-8?B?eHU2M0hncUdtdUFEbnNzUWVZME1hRHpXMmNjQ00vZVpEWkI0VWFUWnZaUVRk?=
+ =?utf-8?B?dUtJM0t5SkxURVhnWmwybEF2cmFSb3dEbFBwUmlOM05TcWc5bUlscEtMb3Fq?=
+ =?utf-8?B?YjlkVXNWOGprNGtRZllicEYzVHFGNTcwY1dONmYwZXJLd0p0RFVobGJabzdl?=
+ =?utf-8?B?Tlk2ditXYllJdTVUTzE4cHdjNDFYVWF6ZTYvWGd0UGE2YWZHd3lyK1AxV0Nm?=
+ =?utf-8?B?d0pFNFMrcHpNZitHbkJWZER5Q0llK243Z3ZCU3VJYk9ZMnhiY0lhdmowSndv?=
+ =?utf-8?B?RVhYOWdNTU9OR0kxczlCTHVtajVySUNaSUVicGpqRW5ZQmRHaXoyVW12bFRS?=
+ =?utf-8?B?Ly9yOS9Oa0RMYzFCWVBIb2FveThDcUVRb2dTdG0vNDhsR01Fc1RrQUJBVGpl?=
+ =?utf-8?B?V01Rb2M4dDJUTTNXblY1anUyOUh1ZEJ5MWhCU212R1BRSEJoUmJBZGZiMGFz?=
+ =?utf-8?B?NlpHTmxiNW1GbnkvQVBBQ0ovZGhJUVpGWlBDK0JyZTBuR0NaYlVMY09QckFN?=
+ =?utf-8?B?bi8yTGRwNWhGeU9FUmE0ZDBkRlB5QmpBZG1JNjRoQk55OFlKRjE2SGRzell0?=
+ =?utf-8?B?RVhtbUJ4ZzYydmhmVU9OY1VEcGxhWGxCeGM4bjd1MWROR0VLNnJLbTBjaU9H?=
+ =?utf-8?B?Q3NURzV5M3FyM1lvZ3Z5SHdmQUNLTGxYOXp2SG9nTC92V3QyUis0WkhEcFpT?=
+ =?utf-8?B?eWoyR0JsekRuVnNQUUR5eDIxZTlTZDJIY0xJVTFhRDIrdmwvUThFT3ZQb3JW?=
+ =?utf-8?B?bG1zTXlHSnlscmxzSlZwUHYwVmdKKzNSc2x3cVdPN1BRRDg1YVNGL0tPeURt?=
+ =?utf-8?B?c0NNU1NEWmtXSEEzd3NVa0FZTVREN054emlJNTc5SCs0dCtLa2FsWVpGQksr?=
+ =?utf-8?B?ZzBQVCtROHJDV0IwK1BVdXFxQXozK0JZdGhmSVA2OHoyeWFQbnFJcURqcjN6?=
+ =?utf-8?B?blI3T2lSR3NLOGY3WDY0N0E4bHJDQzcrUExuOXd0YVhwNWJ6S2puKzEyNGNV?=
+ =?utf-8?B?dFBja3BNSGtyc2pLbWhSUmVEaFpRRjdnRXZUV056b2padjJVeFFaMGxkUGIv?=
+ =?utf-8?B?THN4RHVtZGl1TWZxWklqUFhaS2dLallIbWdSa2crRHF6bW44Y3ZLVkVia2p4?=
+ =?utf-8?B?TytJY0J6UGNBRWViWHFoSVNVSVBuVURHZUlLZTlVOVlHMHZzb1M1ck1tSzNp?=
+ =?utf-8?B?QnlNcWd1Slp4OG5lZXg3VnFhaXFHcS9CSXJJZXZTMFRhMG5CM0FGc21tamwx?=
+ =?utf-8?Q?QFuUVc/aDOmMfMB4=3D?=
+X-Exchange-RoutingPolicyChecked: JyT2slswZATOsxoNXFyiIhr/ki8kaOHkoOpa2uwNppFgZnHZyPh0sMD5MjnQa7NO9ZoF857CtKpMVglsmrD5aty40mHAYAG50gpRvG+++XO67AeCOxo6BdP9wLpq6C3lOLNLlmw2dMIxrrOOrEosEEbKTm1YwDZnea8VDjYqCCoumQFQU9m2LEwIM/HfmbSKzm/Eq4+xzLaEH+Ns5eVat9UTHfEAZ1JgGDGmhS+DBzDfWD+gNzX/8bqtjvkgzX0QtGxtj6Kj9c0hMwAb2ulTls/gnkLlOu3/+huA9XLW0WTHcMP0J65zxweGl3I5rv9kOSJIDyp2EdmwfGrq49Mcog==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e51d5009-6bca-49d3-4add-08df2b86f9bf
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Oct 2026 13:11:22.6488 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lxWWg2N/2eQv7vUdWNaAq+2/uBYr4WiBMiEEH5O65ZbQh53kpxbyZVBE5g48u2ggHjpM4ylaz7X8anVw3NCWR7NGpLhOLtjmfY5Yf1MboVs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR02MB10964
+X-Proofpoint-ORIG-GUID: czKWUi0bFXj7u2eVMO2CVbwBz7HBpGTX
+X-Proofpoint-GUID: czKWUi0bFXj7u2eVMO2CVbwBz7HBpGTX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA1MiBTYWx0ZWRfXwKZ1dOpkd35g
+ Tchgojz5lQsCTHNZzzPsN22TIsmcyp1qIVm/RuW6uDo/2qqhiydwdMgbKiT5jj1HSnsS76MS8+q
+ zPyXu1sFVeQEnMWmhkn5YpQrUGWbWqTo5+4EbyXfaMyj257jaCQ83MV42EMFjqQI/JLeJTRa3ap
+ mKF8Ey5pVPc+3bUKr/1r8Knnq/4X5weUn6NjqltLwz/E0RZBkCS/0OzR3I4cR4aBSJyXfM3IvoJ
+ //gZak2iCWMipwys/9rDA63m7dLKULbvXxYSBn9aeantC01etcZIK+KPsb+00LtRv6ii3mPKopk
+ EXDRISzGOe+2bN/qVz+rsdD+Q375nl06YH1QGoLQgxrXZ/MNPUtR5XLywcdn+iLTXnxsv34mAuR
+ wg8nFtZp43qsSTlbe4wqjJ/iKlHl2Wl83gyMsJd5FKipXUBbrAd4PA2kFxW7CCFsjF2VMLy73Sb
+ KJQA7fHdPdyAbAVo/yA==
+X-Authority-Analysis: v=2.4 cv=V/ToQuni c=1 sm=1 tr=0 ts=6ad2227b cx=c_pps
+ a=yYYKAKAKl8D9GxIYT1WzoA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22
+ a=20KFwNOVAAAA:8 a=5n5VLQebN_n3QGx3QTYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA1MiBTYWx0ZWRfX6LGhFZ/2AM/B
+ aFQFw/Zk6AJbxtcJQOg5yBpKKJ2H2xxXv4V1L8qNCo2nm6gRFNQJoS37JH0JKccR05aV7p7AHE5
+ G4Yy1zXiIz2jmpAHQv2Lk8m79vMWF3Y=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,70 +199,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPUID[0xD,0].EBX is the size of the XSAVE area for the guest's current
-XCR0, and CPUID[0xD,1].EBX the size for XCR0 | IA32_XSS: those are the
-two values that depend on guest state. For sub-leaf 2 and up, EBX is the
-component's offset in the standard format, a constant.
+On 16/10/2026 11:14, Peter Maydell wrote:
 
-whpx_vcpu_run() forwards Hyper-V's DefaultResultRbx for sub-leaves 1 and
-2 instead. Sub-leaf 2 is harmless: QEMU's own offset was read from
-Hyper-V at vCPU init. Sub-leaf 0 is not: QEMU computes it from
-env->xcr0, which WHPX refreshes only in whpx_get_registers(), never on
-a CPUID exit, so after the guest's XSETBV the leaf still reports the
-size for the reset XCR0, 576 bytes.
+> On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>
+>> On Fri, Oct 16, 2026 at 10:15:01AM +0100, Daniel P. Berrangé wrote:
+>>> We're overwriting the DeviceClass::realize field in the class
+>>> struct instance for "pl050_keyboard". We still have the completely
+>>> independent class struct instance for "pl050" (which is what
+>>> object_class_get_parent() returns) that contains the 'realize'
+>>> field value set by the parent class.
+>>>
+>>> eg if I put a break on pl050_kbd_realize():
+>>>
+>>>    (gdb) print pdc->parent_class->parent_class->parent_class->type->name
+>>>    $5 = 0x555557de40a0 "pl050_keyboard"
+>>>    (gdb) print pdc->parent_class->parent_class->realize
+>>>    $6 = (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
+>>>
+>>> and separately
+>>>
+>>>    (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_class->type->name
+>>>    $7 = 0x555557de3ee0 "pl050"
+>>>    (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
+>>>    $8 = (DeviceRealize) 0x55555585daf4 <pl050_realize>
+> 
+> Ah. I didn't realize you could get at the parent's class
+> struct like this.
+> 
+>> We can make it a little less ugly in the callers with a macro in
+>> qdev.h thus:
+>>
+>> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+>> index 8e91e2fcb08..18e85850c31 100644
+>> --- a/include/hw/core/qdev.h
+>> +++ b/include/hw/core/qdev.h
+>> @@ -461,6 +461,9 @@ static inline bool qdev_is_realized(const DeviceState *dev)
+>>    */
+>>   bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
+>>
+>> +#define qdev_realize_chain_parent(dev, dc, errp) \
+>> +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev, errp)
+> 
+> I'm tempted to suggest that we drop the 'dc' argument here and
+> have the macro get the class from the dev:
+>      DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev))))->realize(dev,
+> errp)
 
-A Linux guest on a host without XSAVES takes that as its kernel XSAVE
-size, fails the consistency check against the size it computed from the
-component offsets, disables XSAVE and panics on the fallback path:
+Even better! So then we could just do:
 
-  XSAVE consistency problem: size 832 != kernel_size 576
-  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/fpu/xstate.c:638 fpu__init_system_xstate
-  x86/fpu: XSAVE disabled
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: 0010:fpstate_reset+0x1a/0x90
-  Kernel panic - not syncing: Attempted to kill the idle task!
+   qdev_realize_chain_parent(dev, errp);
 
-Every CPU model with XSAVE is affected there (-cpu max, Haswell,
-SandyBridge); models without it (Westmere, Nehalem, qemu64) boot. A host
-with XSAVES boots because Linux takes the compacted size from sub-leaf 1,
-which is forwarded; sub-leaf 0 is stale there too.
+in the child class? I can see this would make adapting existing users to 
+make use of the new macro really easy.
+> because I think almost all realize methods wanting to chain back up
+> won't have the class pointer to hand.
+> 
+> We could maybe have an extra layer of abstraction here such that
+> you write something like:
+> 
+>     parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
+> 
+> Or is that trying to be too clever?
 
-Reproduced on an Intel Core i5-4440 (Haswell) under Windows 11 Home
-build 26300 with QEMU 11.1.2 (the code is unchanged on master), guest
-Linux 6.18. With this patch the guest enables xstate 0x7 at 832 bytes
-and boots with -cpu max. An AMD Ryzen 9 7900X under build 26100, not
-affected before, still boots with the patch, enabling 0xe7 (compacted,
-2432 bytes).
+I'm certainly leaning towards a simple-is-better approach from the ideas 
+being suggested here.
 
-Fixes: 79b3cb1f0145 ("whpx: i386: introduce proper cpuid support")
-Signed-off-by: Kostas Chatzikokolakis <kostas@chatzi.org>
----
- target/i386/whpx/whpx-all.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+>> +
+>>   /**
+>>    * qdev_realize_and_unref: Realize @dev and drop a reference
+>>    * @dev: device to realize
+>>
+>>
+>> which would be used thus:
+>>
+>>
+>> diff --git a/hw/input/pl050.c b/hw/input/pl050.c
+>> index 48df2734e26..abe939171f2 100644
+>> --- a/hw/input/pl050.c
+>> +++ b/hw/input/pl050.c
+>> @@ -168,7 +168,7 @@ static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+>>       }
+>>
+>>       ps->ps2dev = PS2_DEVICE(&s->kbd);
+>> -    pdc->parent_realize(dev, errp);
+>> +    qdev_realize_chain_parent(dev, pdc, errp);
+>>   }
+>>
+>>   static void pl050_kbd_init(Object *obj)
+>> @@ -191,7 +191,8 @@ static void pl050_mouse_realize(DeviceState *dev, Error **errp)
+>>       }
+>>
+>>       ps->ps2dev = PS2_DEVICE(&s->mouse);
+>> -    pdc->parent_realize(dev, errp);
+>> +
+>> +    qdev_realize_chain_parent(dev, pdc, errp);
+>>   }
+>>
+>>   static void pl050_mouse_init(Object *obj)
+>> @@ -206,10 +207,8 @@ static void pl050_mouse_init(Object *obj)
+>>   static void pl050_kbd_class_init(ObjectClass *oc, const void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(oc);
+>> -    PL050DeviceClass *pdc = PL050_CLASS(oc);
+>>
+>> -    device_class_set_parent_realize(dc, pl050_kbd_realize,
+>> -                                    &pdc->parent_realize);
+>> +    dc->realize = pl050_kbd_realize;
+>>   }
+>>
+>>   static const TypeInfo pl050_kbd_info = {
+>> @@ -223,10 +222,8 @@ static const TypeInfo pl050_kbd_info = {
+>>   static void pl050_mouse_class_init(ObjectClass *oc, const void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(oc);
+>> -    PL050DeviceClass *pdc = PL050_CLASS(oc);
+>>
+>> -    device_class_set_parent_realize(dc, pl050_mouse_realize,
+>> -                                    &pdc->parent_realize);
+>> +    dc->realize = pl050_mouse_realize;
+>>   }
+>>
+>>   static const TypeInfo pl050_mouse_info = {
+>> diff --git a/include/hw/input/pl050.h b/include/hw/input/pl050.h
+>> index 2cdfa74f73c..7169afc151f 100644
+>> --- a/include/hw/input/pl050.h
+>> +++ b/include/hw/input/pl050.h
+>> @@ -17,8 +17,6 @@
+>>
+>>   struct PL050DeviceClass {
+>>       SysBusDeviceClass parent_class;
+>> -
+>> -    DeviceRealize parent_realize;
+>>   };
+> 
+> Yes, this is clearly vastly better than we have at the moment.
+> device_class_set_parent_unrealize() can do similarly.
+> 
+> Does something similar work when QOM interfaces are involved?
+> We have resettable_class_set_parent_phases() which deals with
+> updating the methods of ResettableClass, which is an interface
+> declared by TYPE_DEVICE.
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 113f79af..b51e9dfc 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2618,10 +2618,14 @@ int whpx_vcpu_run(CPUState *cpu)
-                 }
-             }
- 
--            /* CPUID[0xD,{1,2}].EBX are dynamic depending on guest features. */
-+            /*
-+             * CPUID[0xD,{0,1}].EBX are dynamic: the XSAVE area size for the
-+             * guest's current XCR0, resp. XCR0 | IA32_XSS. For sub-leaf >= 2,
-+             * EBX is the component's fixed offset, which QEMU already reports.
-+             */
-             if (vcpu->exit_ctx.CpuidAccess.Rax == 0xd) {
--                if (vcpu->exit_ctx.CpuidAccess.Rcx == 1
--                    || vcpu->exit_ctx.CpuidAccess.Rcx == 2) {
-+                if (vcpu->exit_ctx.CpuidAccess.Rcx == 0
-+                    || vcpu->exit_ctx.CpuidAccess.Rcx == 1) {
-                     reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-                 }
-             }
--- 
-2.54.0
+ATB,
+
+Mark.
 
 
