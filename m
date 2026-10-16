@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A617CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BAE1CCF2C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhb1-0008Ci-Ed; Fri, 16 Oct 2026 09:03:39 -0400
+	id 1xHhbI-0000XY-Lk; Fri, 16 Oct 2026 09:03:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf45-0004IP-W4; Fri, 16 Oct 2026 06:21:30 -0400
-Received: from out162-62-57-137.mail.qq.com ([162.62.57.137])
+ id 1xHf50-0004ft-Sf; Fri, 16 Oct 2026 06:22:26 -0400
+Received: from out203-205-221-149.mail.qq.com ([203.205.221.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf42-0002u5-7T; Fri, 16 Oct 2026 06:21:29 -0400
+ id 1xHf4y-00033c-4m; Fri, 16 Oct 2026 06:22:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792146077; bh=RtkL6YEY12RdvEo3e18aXy7KhJJTC8uWBeG3mPS7ZXI=;
+ t=1792146139; bh=y/RBAlSCh9zMEN28g7qg1jlC0rjSzUH/G7Hw96xdDRs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uRTkw9aTAdC7X+O/xhvq1iuJIBGRAcKO9oK2hG4Ezev1NSuRhil8KrsmlkO26bWfu
- Twtfz4oMhBRmINHJrUHUxOIvN1Tomt+yyKLPFNie3rNHhhAD6/Ts7mx8OHi09i3Ujp
- zHfUVfzRz9sMDKUfajx9XeI3c8W5OuVgTU43x8Vk=
+ b=dVumTicQ4Uq5tW70uhfel5vsl6OTa2xmed/UqE+e++/Idx0hVWRRJkLtjwn6+eQxB
+ 4FaiRQ89gmx010cDeMhRDd3VcMSZr52nTTWznzP6i0QVAJEo94MRknEHaIGTYw0zGk
+ Q4qxhDvfHBhNF13Z72Q0O0uC+HVbR5fiZQpc7N10=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
- by newxmesmtplogicsvrszc56-0.qq.com (NewEsmtp) with SMTP
- id 54EB0C9E; Fri, 16 Oct 2026 18:21:14 +0800
-X-QQ-mid: xmsmtpt1792146074t5h5bnr16
-Message-ID: <tencent_289D63BC15D4B4B4096744A65B7929B41907@qq.com>
-X-QQ-XMAILINFO: MyzM/wvJS/656++GEj0F+2WCuEqf6u+Ne/sEwdfiEr9FieJvyjcODQMgqbtx5U
- TnhxTXOuV6/GDAe9zFV0ddJPfePZRYm26xDpO3H1/Mn0zp6WHs3oOjsaIaUhhrVI0mDvJ75BR5Gt
- W/loa56lvd38qIsOfHgEc2GuCwFsG97QK28TzDAdEXK3uUQSa7GCw7uKk19B9B/yF/vXq0+I1j8I
- Pp9CvPGMS1NA3SbejMVMnbHy7uDmHPrp5ltzfKh9q3YlhJT5ilWMYYR1uW/JKpfXYyi4OjoSpAP0
- vaXrUW4e5nKvejz7OtywfEmSyz4KUmvEI7iCZb0MSxI2ihd5wRzqFgpoTq9G9ikuhRCp9fNtJm4Y
- WoVGq9kVeDp/eJ4bFHpP8JotxNLTtMtRuT/fwEh6VP7SHX8c5jAUzrK/GNSY42cUzhfUfmoIWZRk
- A+xd3Osd/4zJXi5LzBsE9z286ze6h3Fjcj6aFHfp0JrYbXR5vCpVW/n3oqbEXCGpYPUrwD0BgEBw
- VwvLkZbaDU8QryDkPvTiRDQGrvJoOeIE/DdSYrqj/GSpYlNWOQXIQmNSM81684iqSSvSnVBoxGoL
- 3VkvB2ozK3iUScQyIRWWLvmV5aiGo4HYSoID7wlVDR+sQ9Y4o9Frns8I4GT8uj4/+T39BzoWCStj
- Q7Hnzw2T0FGk7Vh0MkPmIpBzJ0SXVtwJ7OQKoEWTKxXotklzGPXwLNs/cKNHNy3kZqjOu/6Ip8XH
- OAixBRrR0eLkw1rfpX3xhdd2XDgGTs+rT4yqEex3Mvyc422VSr9LLx0fub88USS+4XKkAZTVLmea
- Lz7tMPl44zgrBWrv2P26W9OoAZtxvVnHtLoezmAIVAn3bQWcqheS2v3nr9zUAqdnN20gRbVvSQ1O
- li8IFwwIPp4AZXDnqKKQKg+Qh67BgyBfGVDCQnrFSgumWuTzGK5vTmypkPraahKfH5ggLhBR+pAb
- SrlgvDm0lXPLkYoOhq1KDynGnweHNEObOE3Eo9ccVwtY5zPXtxIgLjg7BXY/ovAeo/gMDGMl5nNE
- EALHCHmB4Chn/u8aCbtRZFnIVFlC2j9Ux29cgOanlzIcwkgbc7ItR+CoDM9T0g27IwWa2wcIoBh+
- QaK4Us
+ by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
+ id 5902369E; Fri, 16 Oct 2026 18:22:16 +0800
+X-QQ-mid: xmsmtpt1792146136twqecr64s
+Message-ID: <tencent_F831FACA6B5AD20402E2C3ED9594C28CD806@qq.com>
+X-QQ-XMAILINFO: OXZEp4Z5NI29ihMuTY6xOYMu/8lQAzXlTwUxEVy+cJQvQa57Iayp7LP94K+ODU
+ 8u53urp3da8976D5JM0tBfHazbRqIrMFHFsUcF/pXOPjvajOLOTH8MuMT5BNHUcY7VbXpLYm8rfg
+ UgEZhr2t76/cV9wAa3NIjjfOnEOEboOQF0T5kRfUzX9THJgMzyrBLCjU453XL8BwSTRQY5qrPaYW
+ MO6gKZqOulbXbFUDm6FRUOFE3h7CP4o4glziUq6f8GwPxDlhDhYmO4XW9fpZELctX9oxOvG5XI6l
+ yzmYwHHC3itH38GvtzaFG5auH/tB01ZoNh1K67r3fDep8zR17YPWDYUp76clWAGsH5QVj6r2NTss
+ XMoFY3/ZsQDpRQlO8soAsDEhwdNNCDPlPCVyeBed1oOOk0OYgnpYMrjz//J+UnxERc0AeAB0UStV
+ PPfKoW1xfQIIzf78Kb4P9C0X8dCav2iYzBzcf0bVr+f5uAQWTvTjIIjq1t11H1gUlKpc7SkTL9Cm
+ Oe1Yl005au1CzhX+P067Q2IaaCssB4bzv6jenwZSu1drzbj63UX8EqFeBraz1T2h8E1Dz32cKnyf
+ aJG7I4+UDYDLeqhqcpYQHzCiPyRxx1y5BzsPDVYzdJGamkzK20y03kqd6AawugYEkG7WUl1oOJFl
+ EFxIqxQsteQJJFxHXkFseyTCtHCc7uvahSqIycxGztmPyVMsHkhMfP5lIBYVv92+jUEIWSiDFfZ4
+ 6D7V5bx7ZpTKrjeXR/HixsMSqax36ztHXaQ9cTYKrCUoMWHJue3F3mUyVAe0+IjW+9SYbEESVlKl
+ P7b11KJ4ehrpheQhgCLyLpn99TZAe2qfgkBApx91IO7Is/xLVy4utWOSe6pWLpq0l/fLsPKliaog
+ Jjhu20A1OJ6imuBiAZzfq3lRKf5xnsOZmUYy8JqwKaeEG03oyyX/awubfkkPtKJAIFQZYUk+myuo
+ +g2U+ISsCXIzxzlVyfq5lQ3RxfmPf9QhLbYZIPwvV729pu4FWGN6U4xXzwGvg4DzInAjwAdbHn08
+ eC5KGjNz9MRM2w/3SrvvCLVPdayFLpdR13Nyqic07zmMZB2Ivnzj+FBk86kSeAMCL83CElDQ==
 X-QQ-XMRINFO: MFuljud3PUW4Hy49K308V+nvGr8SioTB3Q==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
@@ -52,24 +51,24 @@ To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 25/37] hw/arm/mpam: Emulate MBWU bandwidth monitoring
-Date: Fri, 16 Oct 2026 18:10:45 +0800
-X-OQ-MSGID: <20261016101058.1900808-11-2118537295@qq.com>
+Subject: [PATCH 26/37] hw/arm/mpam: Implement CMIN/CASSOC storage
+Date: Fri, 16 Oct 2026 18:10:46 +0800
+X-OQ-MSGID: <20261016101058.1900808-12-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
 References: <20261016101058.1900808-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.62.57.137; envelope-from=2118537295@qq.com;
- helo=out162-62-57-137.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=203.205.221.149; envelope-from=2118537295@qq.com;
+ helo=out203-205-221-149.mail.qq.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:44 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,208 +87,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Add the MBWU monitor: per monitor a lazily accumulated 64-bit
-counter (value = base + rate x elapsed), where the rate is the
-nominal bandwidth scaled by the bandwidth fraction of the filtered
-PARTID.  The fraction follows whichever control the guest drives:
-MBW_MAX, or the MBW_PBM bitmap (popcount over its width) that the
-openEuler MBA resource programs instead, so monitor readings track
-the configured bandwidth control.  The counter wraps at 48 bits,
-latching the overflow status, and writing any counter register
-resets it.
+MPAMF_CCAP_IDR advertised HAS_CMIN/HAS_CASSOC (since the CCAP
+patch) but the MPAMCFG_CMIN and MPAMCFG_CASSOC registers had no
+storage or read/write cases, so L2MIN/L3MIN schemata values were
+dropped and read back as 0.  Add the per-internal-PARTID storage
+and read/write handling, both guarded on CCAP support.
 
-MSMON_IDR/MBWUMON_IDR now advertise the feature (num-mbwu-mon
-monitors, 64-bit counters with read/write bandwidth) and
-MPAMF_IDR reports HAS_MSMON on both subtypes, which lets resctrl
-mount the MBM counters.
+Also fix the MBW_MIN write mask check, which referenced the CMIN
+mask (and logged it as "CMAX") since the device model was
+introduced.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/arm/mpam.c | 129 +++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 127 insertions(+), 2 deletions(-)
+ hw/arm/mpam.c | 36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
 diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-index 77e0277..610ae88 100644
+index 610ae88..1bd76ba 100644
 --- a/hw/arm/mpam.c
 +++ b/hw/arm/mpam.c
-@@ -8,6 +8,9 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
-+#include "qemu/timer.h"
-+#include "qemu/host-utils.h"
-+#include "qemu/bitops.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/registerfields.h"
-@@ -404,6 +407,65 @@ static MpamMbwuMon *mpam_mbwu_mon(MPAMMSCState *s, Mpamf *mf)
-     return &mf->mbwu_mons[mon];
- }
- 
-+/*
-+ * Lazily advance the monitor's counter.  While enabled it accumulates
-+ * the nominal bandwidth scaled by the MBW_MAX fraction of the PARTID
-+ * the filter selects, so monitor readings track the configured
-+ * bandwidth control.
-+ */
-+static uint64_t mpam_mbwu_value(MPAMMSCState *s, Mpamf *mf, MpamMbwuMon *m)
-+{
-+    uint64_t v = m->base;
-+    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_HOST);
-+    int64_t delta;
-+
-+    if (m->t0 == 0) {
-+        m->t0 = now;
-+    }
-+    delta = now - m->t0;
-+
-+    if (FIELD_EX32(m->ctl, MSMON_CFG_MBWU_CTL, EN) && delta > 0) {
-+        /* bw_nominal_bps is bytes/s; MBWU is modelled in bytes. */
-+        uint64_t rate_mbs = s->bw_nominal_bps / 1000000;
-+
-+        if (FIELD_EX32(m->ctl, MSMON_CFG_MBWU_CTL, MATCH_PARTID)) {
-+            uint32_t partid = FIELD_EX32(m->flt, MSMON_CFG_MBWU_FLT,
-+                                         PARTID);
-+            uint32_t nrw = mpam_nrw_id_for(s, mf, partid);
-+            MpamfPerNrwId *cfg = &mf->per_nrw_id[nrw];
-+            uint64_t frac_num, frac_den;
-+
-+            /*
-+             * The kernel drives bandwidth through either MBW_MAX or,
-+             * on classes that advertise MBW_PBM, the PBM bitmap
-+             * (popcount of the programmed bits over its width).
-+             */
-+            if (cfg->cfg_mbw_pbm[0]) {
-+                frac_num = __builtin_popcount(cfg->cfg_mbw_pbm[0] &
-+                                     ((1u << MPAM_MBW_PART) - 1));
-+                frac_den = MPAM_MBW_PART;
-+            } else {
-+                /* MBW_MAX is a 16-bit fraction; 0xffff = full bandwidth. */
-+                frac_num = cfg->cfg_mbw_max & 0xffff;
-+                frac_den = 0xffff;
-+            }
-+            rate_mbs = muldiv64(rate_mbs, frac_num, frac_den);
-+        }
-+
-+        /* rate_mbs is MB/s; delta is ns, so /1000 yields bytes. */
-+        v += muldiv64(delta, rate_mbs, 1000);
-+        /* 48-bit counter wraps (MSMON_MBWU_L is 48 bits of value). */
-+        if (v > (1ULL << 48)) {
-+            m->oflow = true;
-+            v &= (1ULL << 48) - 1;
-+        }
-+    }
-+    m->base = v;
-+    m->t0 = now;
-+
-+    return v;
-+}
-+
- typedef struct MPAMMSCMemState {
-     MPAMMSCState parent;
- } MPAMMSCMemState;
-@@ -511,6 +573,34 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+@@ -260,6 +260,8 @@ typedef struct MpamfPerNrwId {
+         uint32_t cfg_mbw_pbm[(MPAM_MBW_PART + 31) / 32];
+         uint32_t cfg_pri;
+         uint32_t cfg_cmax;
++        uint32_t cfg_cmin;
++        uint32_t cfg_cassoc;
+         uint32_t cfg_mbw_min;
+         uint32_t cfg_mbw_max;
+         uint32_t cfg_mbw_prop;
+@@ -635,6 +637,20 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
+             return 0;
          }
-         return ctl;
-     }
-+    case A_MSMON_MBWU ... (A_MSMON_MBWU + 3):
-+    {
-+        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
-+                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
-+
-+        return extract64(v, (offset - A_MSMON_MBWU) * 8, 32);
-+    }
-+    case A_MSMON_MBWU_L ... (A_MSMON_MBWU_L + 7):
-+    {
-+        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
-+                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
-+
-+        return extract64(v, (offset - A_MSMON_MBWU_L) * 8, 32);
-+    }
-+    case A_MSMON_MBWU_CAPTURE ... (A_MSMON_MBWU_CAPTURE + 3):
-+    {
-+        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
-+                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
-+
-+        return (uint32_t)v;
-+    }
-+    case A_MSMON_MBWU_CAPTURE_L ... (A_MSMON_MBWU_CAPTURE_L + 7):
-+    {
-+        uint64_t v = mpam_mbwu_value(s, mpam_mon_ris(s),
-+                                     mpam_mbwu_mon(s, mpam_mon_ris(s)));
-+
-+        return extract64(v, (offset - A_MSMON_MBWU_CAPTURE_L) * 8, 32);
-+    }
-     case A_MPAMF_ERR_MSI_MPAM:
-         return mpamf->err_msi_mpam;
-     case A_MPAMF_ERR_MSI_ADDR_L:
-@@ -746,6 +836,17 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
+         return mpamf->per_nrw_id[nrw_part_sel].cfg_cmax;
++    case A_MPAMF_MPAMCFG_CMIN:
++        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
++            qemu_log_mask(LOG_UNIMP,
++                "MPAM: Unexpected read of CMIN with no CCAP support\n");
++            return 0;
++        }
++        return mpamf->per_nrw_id[nrw_part_sel].cfg_cmin;
++    case A_MPAMF_MPAMCFG_CASSOC:
++        if (!FIELD_EX32(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART)) {
++            qemu_log_mask(LOG_UNIMP,
++                "MPAM: Unexpected read of CASSOC with no CCAP support\n");
++            return 0;
++        }
++        return mpamf->per_nrw_id[nrw_part_sel].cfg_cassoc;
+     case A_MPAMF_MPAMCFG_MBW_MIN:
+         return mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min;
+     case A_MPAMF_MPAMCFG_MBW_MAX:
+@@ -746,12 +762,28 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
          }
+         mpamf->per_nrw_id[nrw_part_sel].cfg_cmax = value;
          return;
-     }
-+    case A_MSMON_MBWU:
-+    case A_MSMON_MBWU_L:
-+    case A_MSMON_MBWU_CAPTURE:
-+    case A_MSMON_MBWU_CAPTURE_L:
-+    {
-+        MpamMbwuMon *m = mpam_mbwu_mon(s, mpam_mon_ris(s));
-+
-+        m->base = 0;
-+        m->t0 = qemu_clock_get_ns(QEMU_CLOCK_HOST);
+-    case A_MPAMF_MPAMCFG_MBW_MIN:
++    case A_MPAMF_MPAMCFG_CMIN:
+         if (value & ~MPAMF_MPAMCFG_CMIN_WRITE_MASK) {
+             qemu_log_mask(LOG_UNIMP,
+-                          "MPAM: Unexpected write to CMAX Mask=%x Value=%lx\n",
++                          "MPAM: Unexpected write to CMIN Mask=%x Value=%lx\n",
+                           MPAMF_MPAMCFG_CMIN_WRITE_MASK, value);
+         }
++        mpamf->per_nrw_id[nrw_part_sel].cfg_cmin = value;
 +        return;
-+    }
-     case A_MSMON_CAPT_EVNT:
-     case A_MSMON_CFG_CSU_FLT:
-     case A_MSMON_CFG_CSU_CTL:
-@@ -855,10 +956,22 @@ static void mpam_msc_mem_realize(DeviceState *dev, Error **errp)
- 
-         /* We won't implement any implementation specific stuff */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_PART, 1);
--        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_MSMON, 1);
-+        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MSMON, 1);
-         /* Memory specific bit */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MBW_PART, 1);
- 
-+        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
-+                                      MPAMF_MSMON_IDR, MSMON_MBWU, 1);
-+        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
-+                                      MPAMF_MSMON_IDR, HAS_OFLOW_SR, 1);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, NUM_MON,
-+                                        s->num_mbwu_mon);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, HAS_LONG, 1);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, HAS_RWBW, 1);
-+
-         mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, IMPLEMENTER,
-                                  MPAM_IIDR_IMPLEMENTER);
-         mpamf->iidr = FIELD_DP64(mpamf->iidr, MPAMF_IIDR, REVISION, 0);
-@@ -914,11 +1027,23 @@ static void mpam_msc_cache_realize(DeviceState *dev, Error **errp)
- 
-         /* We won't implement any implementation specific stuff */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_PART, 1);
--        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, NO_IMPL_MSMON, 1);
-+        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MSMON, 1);
- 
-         /* Need to implement for RME */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, SP4, 0);
- 
-+        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
-+                                      MPAMF_MSMON_IDR, MSMON_MBWU, 1);
-+        mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
-+                                      MPAMF_MSMON_IDR, HAS_OFLOW_SR, 1);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, NUM_MON,
-+                                        s->num_mbwu_mon);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, HAS_LONG, 1);
-+        mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-+                                        MPAMF_MBWUMON_IDR, HAS_RWBW, 1);
-+
-         /* Cache specific bit */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART, 1);
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART, 1);
++    case A_MPAMF_MPAMCFG_CASSOC:
++        if (value & ~MPAMF_MPAMCFG_CASSOC_WRITE_MASK) {
++            qemu_log_mask(LOG_UNIMP,
++                          "MPAM: Unexpected write to CASSOC Mask=%x Value=%lx\n",
++                          MPAMF_MPAMCFG_CASSOC_WRITE_MASK, value);
++        }
++        mpamf->per_nrw_id[nrw_part_sel].cfg_cassoc = value;
++        return;
++    case A_MPAMF_MPAMCFG_MBW_MIN:
++        if (value & ~MPAMF_MPAMCFG_MBW_MIN_WRITE_MASK) {
++            qemu_log_mask(LOG_UNIMP,
++                          "MPAM: Unexpected write to MBW_MIN Mask=%x Value=%lx\n",
++                          MPAMF_MPAMCFG_MBW_MIN_WRITE_MASK, value);
++        }
+         mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_min = value;
+         return;
+     case A_MPAMF_MPAMCFG_MBW_MAX:
 -- 
 2.43.0
 
