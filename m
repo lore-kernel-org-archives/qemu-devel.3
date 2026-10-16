@@ -4,109 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB35ECCF2C1
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A229BCCF2C1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhjQ-0007nU-5W; Fri, 16 Oct 2026 09:12:20 -0400
+	id 1xHhli-0000aa-NY; Fri, 16 Oct 2026 09:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHhjG-0007kA-LY
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:12:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xHhlc-0000a9-Qj
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:14:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xHhjE-0006uL-Tn
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:12:10 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xHhlb-0006yi-4W
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 09:14:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792156327;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1792156474;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NqAlwmurey0eGwhQI19UUFnkpSWK92NIkqItN6DRKHs=;
- b=AYiHtoDIKBBMzSfAcrmQ4vcfZ05Zyz/+gAsBxLN+mO/vci1NjxO5/HimCkMgrixBIlU2tk
- qt7BaB80DpiHrFRXqNArguXdxvxmm6P9PmwKnFqX+qaH3h0jFblMNm/Dlo4DqksR78J7Ld
- PnA3cT/fViDhAJHByBA1liVsksl40wU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
+ b=GnR4yR3VG1gVlb14WbxVHHCh6ux5ru+DgkToR4ObI//5LhL+GBrisXT/1PflOPfO2ddp5h
+ ns9VfEK+my56GGvyJxfq/HXEYyqgIeBV7aKPQ9i9yvKnzKy3O7R0Fq/4AY5rvvU91q/VXd
+ l7M/1pkggYCLp7FFUJtGCp3Yrqadi6A=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-nWUqr0VkPnqdmU5V8xDp_w-1; Fri, 16 Oct 2026 13:12:06 +0000
-X-MC-Unique: nWUqr0VkPnqdmU5V8xDp_w-1
-X-Mimecast-MFC-AGG-ID: nWUqr0VkPnqdmU5V8xDp_w_1792156325
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a16db51147so41549855e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:12:06 -0700 (PDT)
+ us-mta-629-zmO3AG_AMbeF8J5zGO2mkw-1; Fri, 16 Oct 2026 13:14:32 +0000
+X-MC-Unique: zmO3AG_AMbeF8J5zGO2mkw-1
+X-Mimecast-MFC-AGG-ID: zmO3AG_AMbeF8J5zGO2mkw_1792156470
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-487038bc9b8so5141893f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 06:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792156470; x=1792761270; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
+ b=e8QWYqmA1k4rHrnyUzpfL3yTIR5JlRhuL1xU4MMnrubexaj2m1ZmTA4X+DAX0lwgYI
+ +3NJh/Q8hUuJX+KpO5s6RrJjyPZHdotxvohcsaxzVQSx3VTlaq9M5CDljSPjnDZwKP91
+ LyfKPDG7RAkKjuHqF4rL/KNq/659AXAA1fFq1AQzF8WETdCLM9ZhbdYzz1OmdfoDFZd4
+ B+G8pFHiBhVhfcdOpHan/4GoBWDQwPgo3I8uBUYXdc//weVXu8jmem3h2FbIZZ58nhsY
+ UwnTfz+HKjuBX6Ynr+tV+BY6h+CaSZRI2CPLjNRwmlkUA+Xq7L2wKetYWUVvDDTMQIm+
+ yVSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792156325; x=1792761125;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ d=1e100.net; s=20260707; t=1792156470; x=1792761270;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=NqAlwmurey0eGwhQI19UUFnkpSWK92NIkqItN6DRKHs=;
- b=e7utCxmbGxdUkB/zhHw8eTnwqmBXTmLDYoV9iJLOXNSew78NGCAeUiMDVd9MA8+qvV
- b8nOYIGskgfGQHqfa3nijgvNvfY+bg5kgoIC62fx4tMEitxXIGko3H7KJauvS9S5DoH1
- F9GPpkzXetMr3wOeHWt5HJLpNdLVY79Ax/57zB1oX5+Wb3BJ7q94vhfNa4qvZtfd6tK5
- 854yemNGSwLLLhhFaY8pN+DAsdUBmHrWgALg1HNgbT++q8X6w5l7/67KrVr7bpQ2SeTZ
- hQn2yoszs1/F7jwiZssrdW68P1lyrTN9wk1ec60XiITPgmK4AWaLfdauG2MdL27yfLBM
- JwsQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvByedqgUfxYQqHDR+m1TjTtsdBeATd6sXaiXM+gh/O5xu3vJRHR+0+a9CxDTgrGcurFE50qbEWFyVhcK@nongnu.org
-X-Gm-Message-State: AFq9FYLu3q4MsZCA7QKdwt54vxe4yfwMBc7fYAKwRtqXoGEjJyMh+WG9
- 7idnIL8U3rbs7U5L2YOuNWrcYOuQLdhzQ+i+V8aCL/Vx+7+VN6CnleENr1rXQ5AWOjwU8rx52bN
- 5cPCrYVupptnRxzVeXH0GLbSMK9nYNzFpBJOtv6VbZfjWmQjUMSoob3xO
-X-Gm-Gg: AYBFou1NjSL8BwMHEGoIu8crj6Jvm0I1wvCmhAPm4d9x26lttxsxqfriSKlnQHpp8i1
- yjxKPSP15aqOjBCRVm4o1jZUBdJ0g9T8ushyndbomrbFDWdJjw/xUvK6SYcImMldP1qA1oMa72R
- ykHvqeg8/SI70aG/OKalCQ6tfPx+g/XjOwleFneqvdLia0RSA+PrlpozsHPXYj1zQ6FkjTzcgEF
- FiMm0li1c1Heu8Q2q2pkD6QPtmeR59f10tjuXf1c6u0QnN4QH0IkXUIjIoIWKpNhiWDtUYQ0aYW
- AeRLqgxunSjPsyM3FfL3uNtLB3BHEwNu3MgRXGa8T1shdqSBVkbuc16HECL7ga+frW9007X5Wwb
- TJvkiZ3zJGbZw3aQ+csXxINYN5b5O3vDY/Q==
-X-Received: by 2002:a05:600c:3e07:b0:4a1:a009:9724 with SMTP id
- 5b1f17b1804b1-4a1a00997f1mr285782605e9.7.1792156324954; 
- Fri, 16 Oct 2026 06:12:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:3e07:b0:4a1:a009:9724 with SMTP id
- 5b1f17b1804b1-4a1a00997f1mr285782155e9.7.1792156324572; 
- Fri, 16 Oct 2026 06:12:04 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=cnO4Wg8vQU/yK/TG7plWtl6Ci/8TUrfJJ+HL0fgZK3k=;
+ b=mQcJYdsOFd6b5KK2l9jw9gpa+k39RhjimceVbjtpj3UiAJNrwMhJl1uVbBQYtE79f/
+ HECKKCWmZO4hDN4HD8HaGSEfG+kxbVL2W/LdEvFWjU1I6fy90Dv4gEWnOPvVSQqggF77
+ k9aVktZyOqu2MwrwWizgvdGiFwesWlZrCV1Xlpc+OhfiLZ+kAePTz+R8jpuJuOeNR3nV
+ 3JI+0qqB5nnkJ6b9OVKPTXs/k5IKfIy5fVkrJFOwORjGCmsiLzhPNrfRmaxm+attAAO0
+ dEScBPwg0PAD/ICRGrbJZuqa3SUYC+OCqTygle6zyZvrJrb8oaOV/qUti/on2jTaHu2i
+ 5qlw==
+X-Gm-Message-State: AFq9FYI6Nphzv5Tv7jSQ/Cl5YVIM7FvJ24kGjrQdiuK8vVtEnTg5D0om
+ UhBZ04U5bWUGpUs80Ji5ke2BjxFRZjK0JULVjHS/jWBgQV69snQbFoxW1Sc3pE/v30HErV+PoNp
+ hrFGt+2mF16AUpiFWWyZbp9fhVqVYZdDRXljqrbxMKG3IZOBHyGOp9SZ4QNaLTWsf
+X-Gm-Gg: AYBFou39ZhgENSW4l+EoNaVDC6f8+2ET3CyIyNXuLSegKEuFiArC3XlRO2a6OM1SHUK
+ SLtXM83du4NsdoeXbuVnYHqmK1L6x3ezmSqTogWCc5X3xHakz2cDBPusFCxz8HGrHo/54r82gC+
+ jZ357VtUNvNyYoIy/wZwS7rUJwGYuiptEiiu7lmTH/9i/3Y+/mf7SW5eMr5OR/IQuapAw5Yzq/Y
+ oIbqHZf6rg70jPf0+WS3ySD8OpCmpj7xH6XgffVG6sLvSoCz47bM9t73E6gAS9bY4TlKgMw1EPX
+ h7AmvVgWz1fz6nhRLHQX0wgja5lX56DIaUOKZu4buHzJ7rBPEPx91qNQ4eTpXZOi8o7rYLL68g=
+ =
+X-Received: by 2002:a5d:64ee:0:b0:48d:f877:3349 with SMTP id
+ ffacd0b85a97d-48e019e9d97mr2618875f8f.42.1792156470406; 
+ Fri, 16 Oct 2026 06:14:30 -0700 (PDT)
+X-Received: by 2002:a5d:64ee:0:b0:48d:f877:3349 with SMTP id
+ ffacd0b85a97d-48e019e9d97mr2618819f8f.42.1792156469979; 
+ Fri, 16 Oct 2026 06:14:29 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.244])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4c5957sm4960343f8f.9.2026.10.16.06.12.03
+ ffacd0b85a97d-48dfd503d78sm4805007f8f.50.2026.10.16.06.14.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 06:12:04 -0700 (PDT)
-Message-ID: <0a1a763d-c95d-413c-ac11-384d5db599c2@redhat.com>
-Date: Fri, 16 Oct 2026 15:12:02 +0200
+ Fri, 16 Oct 2026 06:14:29 -0700 (PDT)
+Message-ID: <1fa765e7-064a-4d50-bdb7-893e52557857@redhat.com>
+Date: Fri, 16 Oct 2026 15:14:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 21/25] target/arm: report 0 as supported for ID
- fields gated by vCPU init flags
+Subject: Re: [PATCH 0/2] usb-host: fix use-after-free issues
+To: "sundayjiang(sundayjiang)" <sundayjiang@tencent.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+References: <tencent_05C1CBE16E1B8D920F523A75@qq.com>
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev
-Cc: cohuck@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- gshan@redhat.com, skolothumtho@nvidia.com, sebott@redhat.com,
- armbru@redhat.com, philmd@linaro.org, yangjinqian1@huawei.com,
- shaju.abraham@nutanix.com, mark.caveayland@nutanix.com,
- ping@khushitshah.com, sandesh.patel@nutanix.com
-References: <20260921123249.1708067-1-khushit.shah@nutanix.com>
- <20260921123249.1708067-22-khushit.shah@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260921123249.1708067-22-khushit.shah@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <tencent_05C1CBE16E1B8D920F523A75@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,75 +158,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 16/10/2026 09.37, sundayjiang(sundayjiang) wrote:
+> Fix two independent use-after-free issues in the libusb usb-host
+> backend.
+> 
+> The first patch frees USBHostRequest objects when
+> libusb_submit_transfer() fails, preventing stale USBPacket pointers
+> from remaining on the request queue.
+> 
+> The second patch deletes the lazily allocated bottom halves during
+> device unrealize, preventing callbacks from accessing a freed
+> USBHostDevice.
+> 
+> Tommaso Califano tested the original combined patch and reported that
+> it looks correct.  This series splits the two fixes so that each change
+> has its own logical scope and Fixes tag.
+> 
+> Haotian Jiang (2):
+>    usb-host: free request on libusb submit failure
+>    usb-host: delete bottom halves during unrealize
+> 
+>   hw/usb/host-libusb.c | 29 +++++++++++++++++++++++++++++
+>   1 file changed, 29 insertions(+)
+Thanks for the fixes. I'll queue these for my next pull request.
 
+But if you could do me a favor: The next time you send patches, please don't 
+send them as mime-encoded e-mails. I had to apply these patches manually 
+since "git am" refused to parse your mail. I.e. try to use "git send-email" 
+the next time, this will make sure that your patches can be processed more 
+easily. Thanks!
 
-On 9/21/26 2:32 PM, Khushit Shah wrote:
-> When QEMU queries the host ISAR via KVM, it uses a scratch vCPU
-> initialized with all host-supported features (like SVE and PAuth).
-
-So I expect this patch is not needed anymore after rebase on v9/v10
-
-Eric
->
-> KVM exposes the corresponding ID register fields (e.g.,
-> ID_AA64ISAR1_EL1.APA) as read-only. The supported-values list only
-> shows the enabled host value (e.g., 5). This falsely flags a model as
-> blocked, even though the features can be masked by omitting those flags
-> during vCPU initialization. For these fields, even if KVM reports them as
-> non-writable, we explicitly append "0" to the list of supported values
-> if the host value is non-zero.
->
-> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
-> ---
->  target/arm/kvm.c | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
->
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 77b1bcdf55..0b5fb49dff 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -1346,6 +1346,24 @@ static void ranges_add(GArray *ranges, uint64_t min, uint64_t max)
->      g_array_append_val(ranges, r);
->  }
->  
-> +/*
-> + * Some fields are reported as non-writable by KVM but can still be
-> + * disabled by not requesting the corresponding vCPU init feature flag
-> + * (SVE, pauth). The supported values are derived from a scratch vCPU
-> + * whose init flags may differ from the real vCPU, so for these fields
-> + * "off" (0) is a supported value in addition to the host value.
-> + */
-> +static bool kvm_arm_field_off_via_vcpu_flags(const ARM64SysRegField *field)
-> +{
-> +    return field_matches(field, ID_AA64PFR0_EL1_IDX, "SVE")   ||
-> +           field_matches(field, ID_AA64ISAR1_EL1_IDX, "APA")  ||
-> +           field_matches(field, ID_AA64ISAR1_EL1_IDX, "API")  ||
-> +           field_matches(field, ID_AA64ISAR1_EL1_IDX, "GPA")  ||
-> +           field_matches(field, ID_AA64ISAR1_EL1_IDX, "GPI")  ||
-> +           field_matches(field, ID_AA64ISAR2_EL1_IDX, "APA3") ||
-> +           field_matches(field, ID_AA64ISAR2_EL1_IDX, "GPA3");
-> +}
-> +
->  void kvm_arm_field_get_supported_values(const ARM64SysRegField *field,
->                                          const ARMISARegisters *host_isar,
->                                          ArmFieldValueSet **value_set)
-> @@ -1358,6 +1376,13 @@ void kvm_arm_field_get_supported_values(const ARM64SysRegField *field,
->      /* A non-writable field can only ever hold the host value. */
->      if (!arm_field_is_writable(field)) {
->          ranges_add(ranges, host, host);
-> +        /*
-> +         * ...unless it is one of the fields that can still be turned off
-> +         * via vCPU init flags, in which case "off" (0) is also supported.
-> +         */
-> +        if (host != 0 && kvm_arm_field_off_via_vcpu_flags(field)) {
-> +            ranges_add(ranges, 0, 0);
-> +        }
->          goto done;
->      }
->  
+  Thomas
 
 
