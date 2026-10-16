@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19D8CCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 08:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524E1CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 08:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHcwt-0002fr-5j; Fri, 16 Oct 2026 04:05:55 -0400
+	id 1xHcza-0003rO-LK; Fri, 16 Oct 2026 04:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHcwr-0002fX-F4
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 04:05:54 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xHcwp-0005lT-QC
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 04:05:53 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-8198a3a54d7so854713a34.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 01:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792137947; x=1792742747; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Yl2o6oH9pgHW5w4EQt8urPqJ5vJjKlljPMIDWG8380M=;
- b=GF3VqMtreJEGsvO30eRLbdV7/PBnLO0GRpPR24ig+Htl9oi+1BfGPXNjgGaU4MvnZf
- T9j1dZoRD8K8AaJayhl6Al6qfGvjS9HUV+R/GWhihgzDRAlTHzLcjmHQTmn02otdpdu9
- pNedGL9jhICU81Yh5fIRdNIMScMhOl0czyMYW6QEbBD37wrwjjVfLj7lO9ncc9VCqDEh
- XGDh9T+EUO5WDbwlkGzipSPdZaPXPXxAbThUlRhP/W01XQDmo5W0zK7UwXlTQJifXMkC
- OQfMEuc6B6AHyneJy9DgdmYLnQvtB7wEH5UozSix3HRuR5REVDoY6MGRLwtFJtBMi/l9
- +Q3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792137947; x=1792742747;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Yl2o6oH9pgHW5w4EQt8urPqJ5vJjKlljPMIDWG8380M=;
- b=2K+y22mDF4tproU8kJAw6i543RwjzoZKBoiqifA7jHZ5vpUD9Oatedy5UvRhFaJTRr
- VAfxf/wNOF9XOu1nso4f/n4ADISLmUDEVfKs4w2OnhFfkkvP8ew0Rfynj9qFbOnV0IY1
- 8eHUbkjALjY29tIcsDc90aknsTqgCUy9JiAsUhS/9oC2lm7GYu4YhmCOuNANFc/sySlb
- USpWjEvuqz7tBHVbDrRDgtOMTcUP4kyvJJddck/kZUnV6zAuoWGfZbBY+A5UJvHxmPWW
- jz+G9MU3qgA10Nk9NQ9QvjMLO0HAazaDGoopI4WOpb+wQrq0zTWWFb9BGDoy6OVp5MNO
- MzXA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy+QNY9A0gvLc4BQDThZv3fzSh5g+5YP/bT4r406d0J8iF9Y2J3xynO5nMA7KbFbqLkMtn9s0eIRxs3@nongnu.org
-X-Gm-Message-State: AFq9FYIyqgezIEGeB63QWvA671GuLTCLHEACVm7LeOD0KiTI4N+YFzRs
- LrMwzkSwsmTtp9zjnc9GZ5sp7ZOjkrJW2hf1Caz/mus+XCyBC3nnWPXWFJd28SAwKQ4=
-X-Gm-Gg: AYBFou0ObNoijwqicdaLGP/hN4twAg3mWwnr/taRmDFn+0mhWvVVyTDFLvLIgfGD0TI
- 4lIDQ9fdsgt+5O1lW9CnxfOGfMHbtnTjpDdSXeU/aSPV2Jxue+Yiy7KbnFZss8AwWwwC/IvM7Y4
- 4SXamvBSslxqkeqad4nAP6HQbdrAXciHuOd/hbCWk8Nem2TaSKVzj87DS0POjpTIpXnRYytsvlB
- HeboQG5/FYK+5hJErJkl6HOt3lIT6+ukvl92i/339he0IcxQ4zmwfHT6QIeqhc7WXTuyZTbwcuv
- RB0Vjeqbqyh0BopZ0/SJOQR48MdEem2kA8Fndng2K9240z5mMdZCX/v7JMfkEgFznOr+2FZQs36
- xBBQKsXDZvAmHLFtNDA9zYmIN9vTkXhRx86VEclBr1FGo+a6Ao4BFtVw+GD6nAjdgSWZLSpvuNM
- zbbApErlPIyzThALXH3goE6CfGYKvfdqXT+InZeL4TUs8b5EjwObtw1jDVzm1agZyhb684z4EW6
- W8vQAN1F0gSHZCejbi+SmjdxegFxxxjY7vRuDzX
-X-Received: by 2002:a05:6808:11c8:b0:4f1:a3ac:a637 with SMTP id
- 5614622812f47-536f85181a7mr1561799b6e.27.1792137946834; 
- Fri, 16 Oct 2026 01:05:46 -0700 (PDT)
-Received: from [10.233.235.227] ([172.56.182.215])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-5397b4ac6c6sm594423b6e.14.2026.10.16.01.05.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Oct 2026 01:05:46 -0700 (PDT)
-Message-ID: <04a53751-2ca0-46db-a597-032d38a41388@linaro.org>
-Date: Fri, 16 Oct 2026 10:05:41 +0200
+ (Exim 4.90_1) (envelope-from <karthika.b@cdac.in>)
+ id 1xHczK-0003oc-II; Fri, 16 Oct 2026 04:08:29 -0400
+Received: from mailsender.cdac.in ([196.1.113.117]
+ helo=mailsender-core1.pune.cdac.in)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <karthika.b@cdac.in>)
+ id 1xHczG-0005xE-Pm; Fri, 16 Oct 2026 04:08:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cdac.in; s=default;
+ t=1792138086; bh=gk3HZKAxOpyO5yJT8ekYuu2NFizbkjOTQwvrWEecYeo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=VNQPxLT/5aqhQVBgwYAhx6iW7N9MaTLXt+hWw67L44lOWr1qFkXnzvhvTSqh/ppGN
+ PYOdFyReZkOb2ZnGGSvDg4NCjAQ/dAxFy8UQo1M0bFr8s0diF8+xD9JuEF1tyLhQHH
+ +gORC2DXF3eB03V6nKjJOCtO16OPmUcIYPT7CJSA=
+Received: from mscr-int2.pune.cdac.in (mscr-int2.pune.cdac.in [10.208.193.12])
+ by mailsender.cdac.in (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTP id
+ 69G885BH3825273; Fri, 16 Oct 2026 13:38:06 +0530
+Received: from mailgw-cip.pune.cdac.in (mscr-haproxy.pune.cdac.in
+ [10.208.193.46])
+ by mscr-int2.pune.cdac.in (Postfix) with ESMTP id B7E4F100234DC;
+ Fri, 16 Oct 2026 13:37:55 +0530 (IST)
+X-Auth: karthika.b@cdac.in
+Received: from hdg164.tvm.cdac.in (hd_hdg164.tvm.cdac.in [10.176.18.107])
+ (Authenticated sender: karthika.b@cdac.in)
+ by mailgw-cip.pune.cdac.in (Postfix) with ESMTPSA id 5684914E17D2;
+ Fri, 16 Oct 2026 13:37:55 +0530 (IST)
+From: Karthika B <karthika.b@cdac.in>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, sreenadh@cdac.in, raokk@cdac.in,
+ Karthika B <karthika.b@cdac.in>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH 5/7] docs/system/riscv: Add VEGA machine documentation
+Date: Fri, 16 Oct 2026 13:37:05 +0530
+Message-ID: <20261016080709.17331-6-karthika.b@cdac.in>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261016080709.17331-1-karthika.b@cdac.in>
+References: <385625713.441366.1761727810206@webmail2.cdac.in>
+ <20261016080709.17331-1-karthika.b@cdac.in>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] hex queue
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org
-References: <20261015200306.1602540-1-brian.cain@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261015200306.1602540-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CDAC-PUNE-MailScanner-Information: Please contact the ISP for more
+ information
+X-CDAC-PUNE-MailScanner-ID: B7E4F100234DC.A27E0
+X-CDAC-PUNE-MailScanner: Found to be clean
+X-CDAC-PUNE-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,
+ score=-0.999, required 6, ALL_TRUSTED -1.00, URIBL_BLOCKED 0.00)
+X-CDAC-PUNE-MailScanner-From: karthika.b@cdac.in
+Received-SPF: pass client-ip=196.1.113.117; envelope-from=karthika.b@cdac.in;
+ helo=mailsender-core1.pune.cdac.in
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,23 +88,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/15/26 22:02, Brian Cain wrote:
-> The following changes since commit 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269:
-> 
->    Merge tag 'pull-aspeed-20261015' ofhttps://github.com/legoater/qemu into staging (2026-10-15 14:58:28 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/qualcomm/qemu tags/pull-hex-20261015
-> 
-> for you to fetch changes up to 34c91feed0817d3aae6c6beddc9446ccd2f78602:
-> 
->    tests/functional/hexagon: add MiniVM, lock tests (2026-10-15 13:01:32 -0700)
-> 
-> ----------------------------------------------------------------
-> Hexagon: bugfixes + pcycle support
+Signed-off-by: Karthika B <karthika.b@cdac.in>
+---
+ docs/system/riscv/vega.rst   | 219 +++++++++++++++++++++++++++++++++++
+ docs/system/target-riscv.rst |   1 +
+ 2 files changed, 220 insertions(+)
+ create mode 100644 docs/system/riscv/vega.rst
 
-Applied, thanks.
+diff --git a/docs/system/riscv/vega.rst b/docs/system/riscv/vega.rst
+new file mode 100644
+index 0000000000..78656682d0
+--- /dev/null
++++ b/docs/system/riscv/vega.rst
+@@ -0,0 +1,219 @@
++CDAC VEGA series RISC-V SoC (``vega``)
++=======================================
++
++VEGA is a series of 32-bit and 64-bit processors based on the RISC-V ISA, developed by C-DAC (Centre for Development of Advanced Computing, India) under the DIR-V program. The vega QEMU machine model supports both the 32-bit and 64-bit VEGA variants.
++
++As with other QEMU RISC-V machine models, vega provides functional emulation of the VEGA SoC’s memory map, interrupt controllers, and peripherals.
++
++For more details on the VEGA processor series, please see:
++https://vegaprocessors.in/
++
++For VEGA documentation, please see:
++https://cdac-vega.gitlab.io/
++
++Supported devices
++------------------
++
++The ``vega`` machine supports the following devices:
++
++ * Up to 4 RISC-V cores, RV32 or RV64
++ * Platform-Level Interrupt Controller (PLIC)
++ * Core Level Interruptor (CLINT)
++ * 1 UART
++ * 4 virtio-mmio transports
++
++Boot options
++------------
++
++The ``vega`` machine supports two boot modes.
++
++Bare-metal
++~~~~~~~~~~
++
++Bare-metal payloads are loaded via ``-bios`` (not ``-kernel``). No
++device tree is generated or loaded in this mode; the UART is always
++accessed with a fixed 4-byte register stride (shift=2, io-width=4).
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega,dram-base=0x80000000 \
++       -smp 1 -m 2G \
++       -display none -serial stdio \
++       -bios path/to/baremetal.elf
++
++VEGA SDK
++^^^^^^^^
++
++VEGA SDK can be used to build baremetal example applications, such as
++a "hello world" UART program, for both the Thejas32 (``vega32``, RV32)
++and Thejas64 (``vega64``, RV64) SoCs.
++
++Install VEGA tools
++''''''''''''''''''
++
++For Thejas32 SoC (Aries boards):
++
++.. code-block:: bash
++
++   $ git clone https://gitlab.com/cdac-vega/vega-tools-rv32.git
++   $ cd vega-tools-rv32
++   $ ./setup-env.sh
++   $ cd ..
++
++For Thejas64 SoC:
++
++.. code-block:: bash
++
++   $ git clone https://gitlab.com/cdac-vega/vega-tools-rv64.git
++   $ cd vega-tools-rv64
++   $ ./setup-env.sh
++   $ cd ..
++
++Install VEGA SDK
++''''''''''''''''
++
++For Thejas32 SoC (Aries boards):
++
++.. code-block:: bash
++
++   $ git clone https://gitlab.com/cdac-vega/vega-sdk.git
++   $ cd vega-sdk
++   $ git checkout aries
++   $ ./setup.sh
++
++For Thejas64 SoC:
++
++.. code-block:: bash
++
++   $ git clone https://gitlab.com/cdac-vega/vega-sdk.git
++   $ cd vega-sdk
++   $ ./setup-thejas64.sh
++
++Build and run the hello world example
++''''''''''''''''''''''''''''''''''''''
++.. code-block:: bash
++
++   $ cd vega-sdk
++   $ cd examples/uart/hello_world
++   $ make
++
++
++.. note::
++
++   The ``dram-base`` value must match the address the payload was
++   actually linked for; it is not a fixed VEGA default. The examples
++   below use ``dram-base=0x20000``, matching this SDK's hello-world
++   build for both Thejas32 and Thejas64 -- other payloads (e.g. a
++   Linux boot via BBL) are linked for a different address and need
++   their own matching ``dram-base`` value.
++
++.. code-block:: bash
++
++   $ qemu-system-riscv32 -M vega,dram-base=0x20000 \
++       -smp 1 -m 2G \
++       -display none -serial stdio \
++       -bios hello.elf
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega,dram-base=0x20000 \
++       -smp 1 -m 2G \
++       -display none -serial stdio \
++       -bios hello.elf
++
++Both should print::
++
++   Hello World
++
++
++Linux / BBL
++~~~~~~~~~~~
++
++Linux boot requires a user-supplied device tree via ``-dtb``. The
++``vega`` machine does not generate a device tree internally; passing
++``-kernel`` without ``-dtb`` (and without ``-bios``) is a
++configuration error and QEMU will refuse to start.
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega,dram-base=0x400000000 \
++       -smp 4 -m 2G \
++       -display none -serial stdio -bios none \
++       -kernel bbl -dtb vega.dtb -initrd rootfs.cpio
++
++Networking (virtio-net) can be attached the same way as on other
++virtio-mmio boards:
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega,dram-base=0x400000000 \
++       -smp 4 -m 2G \
++       -display none -serial stdio -bios none \
++       -kernel bbl -dtb vega.dtb -initrd rootfs.cpio \
++       -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
++       -device virtio-net-device,netdev=net0
++
++.. note::
++
++   VEGA's PLIC uses the ``cdac,plic-1.0.0`` compatible string,
++   recognized by CDAC's own PLIC driver bundled in CDAC's
++   Buildroot-based BBL/Linux builds. The CLINT is addressed as a
++   standard ``riscv,clint0``, which CDAC's firmware uses directly
++   without a vendor-specific driver; all CDAC-produced VEGA firmware
++   variants use this generic CLINT compatible string.
++
++CPU defaults
++------------
++
++The ``vega`` machine supports both RV32 and RV64 harts, matching the
++VEGA processor series. The CPU type defaults automatically to the
++correct width for the binary in use (``qemu-system-riscv32`` selects
++``vega32``, ``qemu-system-riscv64`` selects ``vega64``) and bakes in
++VEGA's fixed baseline: I, M, A, S and U, Zicsr, and Zifencei, with the
++current RISC-V privileged architecture specification and SV32/SV39
++paging respectively. No ``-cpu`` argument is required to boot.
++Additional extensions (e.g. F/D/C) can still be enabled explicitly if
++needed:
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega -cpu vega64,f=true,d=true,c=true ...
++   $ qemu-system-riscv32 -M vega -cpu vega32,f=true,d=true,c=true ...
++
++.. note::
++
++   ``TYPE_RISCV_CPU_VEGA32``/``TYPE_RISCV_CPU_VEGA64`` are parented on
++   ``TYPE_RISCV_CPU_SIFIVE_U`` rather than the generic base CPU type,
++   since the generic type's default ISA extensions cannot be fully
++   narrowed for VEGA's actual silicon (QEMU's CPU-class extension
++   merge is additive only). One consequence worth documenting: SiFive
++   U's default privileged specification version (1.10.0) is explicitly
++   overridden back to the current version in both VEGA CPU types,
++   since firmware built against the modern privileged spec can hang
++   early in boot (in CLINT/timer setup) against the older version. If
++   you build a custom CPU subtype from a similar parent, do not assume
++   privileged spec version propagates the way ISA extension bits
++   might.
++
++dram-base option
++-----------------
++
++VEGA silicon can be configured with DRAM at different base addresses.
++This is exposed as a machine property:
++
++.. code-block:: bash
++
++   $ qemu-system-riscv64 -M vega,dram-base=0x400000000 ...
++
++If ``dram-base`` is not specified, QEMU falls back to a default
++address and prints a warning.
++
++PLIC and CLINT address overlap
++-------------------------------
++
++On real VEGA silicon, the PLIC and CLINT are mapped at the same base
++address but are distinguished by non-overlapping register offset
++ranges, decoded internally by the SoC's interconnect. This is a
++genuine hardware characteristic, not a QEMU modelling error; compiling
++a VEGA device tree will produce a ``dtc`` ``unique_unit_address``
++warning for this reason, which is expected and can be ignored.
+diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+index 3ad5d1ddaf..cf056011d5 100644
+--- a/docs/system/target-riscv.rst
++++ b/docs/system/target-riscv.rst
+@@ -71,6 +71,7 @@ undocumented; you can get a complete list by running
+    riscv/mips
+    riscv/shakti-c
+    riscv/sifive_u
++   riscv/vega
+    riscv/virt
+    riscv/xiangshan-kunminghu
+ 
+-- 
+2.43.0
 
-r~
+
+------------------------------------------------------------------------------------------------------------
+[ C-DAC is on Social-Media too. Kindly follow us at:
+Facebook: https://www.facebook.com/CDACINDIA & Twitter: @cdacindia ]
+
+This e-mail is for the sole use of the intended recipient(s) and may
+contain confidential and privileged information. If you are not the
+intended recipient, please contact the sender by reply e-mail and destroy
+all copies and the original message. Any unauthorized review, use,
+disclosure, dissemination, forwarding, printing or copying of this email
+is strictly prohibited and appropriate legal action will be taken.
+------------------------------------------------------------------------------------------------------------
+
 
