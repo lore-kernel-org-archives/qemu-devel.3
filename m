@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E52FCCF2C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3B3CCA462
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhaN-0007eg-O3; Fri, 16 Oct 2026 09:02:59 -0400
+	id 1xHhbN-0000iP-Ke; Fri, 16 Oct 2026 09:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf6y-0004x7-HR; Fri, 16 Oct 2026 06:24:28 -0400
-Received: from out203-205-221-155.mail.qq.com ([203.205.221.155])
+ id 1xHf9x-0005nQ-Jj; Fri, 16 Oct 2026 06:27:37 -0400
+Received: from out203-205-221-239.mail.qq.com ([203.205.221.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHf6v-0003FR-4p; Fri, 16 Oct 2026 06:24:27 -0400
+ id 1xHf9u-0003nt-4A; Fri, 16 Oct 2026 06:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792146261; bh=rDp79DioD8mPAcJkEzO0Z8e3MQ/4i7VYX3lWbxivnV8=;
+ t=1792146445; bh=HJBSNhy30ysWNl8lFPWtNESXuXw0iirx7WNezPjoAwU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AFIVt4uhRzCc/QnjTkQ9edFYEHVB/taCORQGnLJGVt/CGxvfocc7L/khZtqXoYujL
- Ry8hX/ktxb+fM98J4XkIo1Y9iHngUvD0cHSnEfwTVReEDXLCLSEmll9Eo2IZVYYbhW
- A4MANWqtLIYOMRDalEqkyOJX4sbyCRIr83T0Id58=
+ b=qI0p5ky7EVtzl4bqpFOYH0UDUQvYiL70P+yy/fmJ16lxJINJFmgvzXzl7PcQ7d5Gn
+ ZdBxB0AOF5jI59CavwMXlKQijDsGuuFha3wj0xGvTWd2aG3MDlGKwiGPaY4AyIbRBT
+ LbCUGHfYRWjL9H3gZwJkoy/cl1V06e2h97maJdCk=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
- by newxmesmtplogicsvrsza53-0.qq.com (NewEsmtp) with SMTP
- id 6129AC57; Fri, 16 Oct 2026 18:24:18 +0800
-X-QQ-mid: xmsmtpt1792146258tdukgaghi
-Message-ID: <tencent_AC3DAD6EC21E11ED96534A7C86F518684505@qq.com>
-X-QQ-XMAILINFO: NbgegmlEc3JunKES9qXhP8bm1PIEm8RG3WZ+NwU+RjUbNDeLCeOKJSQ3bgfQVX
- kIJeGxRLHS3oJw+xUou/tJ7h2mciZS+rojq1gzS2X6rGMLtRSNGttDBJ7NJT7bECYGXIxJOVXdAx
- f+bCG4aTGVyHc3IqmHTQWkGg1EgH8dchqTq4EGo2YyzmAt2MsUzyW13/zrE+qMWyrHP3FnsXk6Pt
- JZ6lv/6WQpVI74Imco4VhHrN0pWRkBv7tbt6LOH/yNmmcDr5YU8582Dd0ZyK0Sjd79SWB24N+8NV
- SDRdijXc9XV5VRCYdxo8XOyLYI31EU7d/mVbhUvZJKMLkOL84SVBrWWxUF2vMDarBpc4Jkcer6Ut
- rRN12M/9TV5NNMPU1nUCWFmmV/GjQ4ytyfAS/xu/WqQFS+gxnRIP+PrF16oPhk5ZCDWdD2IyXhN5
- 4iZh1czstAGjULgzwaHSM7R3tPOlnYmGe1nuKrsD7s9Fr9SZ6g6pRhnmTrWzlVnAMg35Rjb7La1H
- 6TyAAE6yxGV/fuHos+pzrKX25G/06xef2KlohBKFlF52QqxYUf9DSOjroZNDfI10u+tEJzaYdDnH
- SqEi5biCwVOfNFfMdu9uMpFkidonAHXJezjZfEzCWAqnt8m3FxmLESrkL0ZKFfBD6zJ6TFzbB1dK
- Ciuoi4PbE36Ax4CFgKxY5Dz6GDqSiEo4fnfJeUksddqVA/deXS7z0mStapV8u9b9CfSQX29LkeOd
- +TC2rWelbF6tPotLdUu0p9Pxp9ZoT4KuzdPo8CExUH75IQ+rF6hzHPNklyeFGLV2z9Lmez5GzRyz
- DXJVUutxN7ICRV8Hp5n0PQwykZ7h9r+Jg3T99V9YCAqT3LIBlzodOfHau1BSO12quGABIPJKU3Fs
- WWrgsOwEe4F+kRXT7tnUxP0GuAGJ5o85RZLYQ/CNfgcSBQHloPmAiE08eGsqg8QJodNTRLFlnxhq
- hrLricKR4C+gT5v7N5+NQAWKez7+Mr3mr64uBVgz9LLEIdFSl3Ystfl2LgOdI8w1GBSN9c+GlAMO
- ovNKwRZbhmFzT3lFje7Mok2sjH+kTiWzdrQxgBARkoICVvEyQTyOLNWAhlom+NGcrGqXE7K10T0R
- KfWFCp
-X-QQ-XMRINFO: Mgo7HCA7/T7wIX0t4ApVT043Ha8Jni9z/A==
+ by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
+ id 6D696459; Fri, 16 Oct 2026 18:27:22 +0800
+X-QQ-mid: xmsmtpt1792146442tvnvsqu9n
+Message-ID: <tencent_A847C7182BCA69DC138B882EB70852E13308@qq.com>
+X-QQ-XMAILINFO: M84Ob7gbJGBW758zOf2+QdbF/xGFXbc91ouTVNx+etWcPwedY34Nc3dtgO/IjC
+ 8Lo0zwHhZeGnucfWWztGb3I/tQUVDr1UqiAChm7fD57RRHbU2qeECOnLbbvMh2NRcPKEueJtsBRt
+ YWcjvYYUCzWWAFpHo+3kS8GejOdkzAUNzrv3cOZEdpODYamAq4Sh0nyV6pu8F3FIkjeSNI2/CiHW
+ NfSQxzyub25Lbqn36BFCcJXSWlFGjjiGOZiB1TV/NvMRGzei5IcECK7PiXpppdkKj2EYLUxOHT+L
+ /QJ5FbLtDlTGgnonAq8czIz52+70RX5Q3/KP+N2bq6HGaKlxIcPwTf41zdSKpmkHC8r2qpYyjTnk
+ n1N/e174rao2uVDPKjzHljCES9V+b6E0ErriwoM1ay76b64Zfiaaf/lj3vGl4m5lwTvFJBG4/NZX
+ n3XhxafbN14cTWQruWERNpaFItuYyVVlsBk8JBlq2VFyZ8xraRr5vzNoZD6nmhGRNBWsjFP6wL0X
+ 3ESBcMRtNxZ6Yv4PDFOjflhypiXMMeC8rgWKnFs4NVIrcoMvytJsDAYuqRD5DvVcVmwxvc0RBKr5
+ Y0MmmvGASdRkZPomrfqYnugjezj0d/artqzoe6MRGEIElYt0z5Vvq+tILofMP0UyHQCTx/anIW9D
+ y+AcDzD/tPNsUtu4Q+kEpazTbLNocbuSaELQYVkkY1lZ4xauwDWB29zavCdp+4rubVjf5ugoNE+p
+ FXW9A2CPtR+ui9T4UHi/reEIMlCccdLUgrN1jJv12UcBIdo9FmxSHZgRoq4XuxNODseghTerTDk4
+ NHLFMktOzW7jvOyE4Ybirruu2/FzWd+07roKeZ3GC9DjIa+34kG70xOS1TERZHOjRjCxiY9tGqrS
+ 941n2nZzaDiuQuVvB/xf1Dn6A3klqzt0SdIOgcX/aUToPpJF8dZYNkWNPapTI0tHdDEE00C3dJG2
+ Gf/nqV+yOsETfSlrgJ2Wu83rsw747cliRujvA7T8N3/eaR/aw2PWPZzj+CYPYL/F2VWrAGdvhfYu
+ EuvNUyzr7ZoKEa5PYUm0ZU3n7GwHSa5SlVvG1deTl9zujNilXjdusLLRcgjeW3oWHj6NkBrFpcJR
+ fW2dVa
+X-QQ-XMRINFO: MFuljud3PUW4Hy49K308V+nvGr8SioTB3Q==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 28/37] hw/arm/mpam: Emulate CSU cache-usage monitoring
-Date: Fri, 16 Oct 2026 18:10:48 +0800
-X-OQ-MSGID: <20261016101058.1900808-14-2118537295@qq.com>
+Subject: [PATCH 31/37] hw/arm/mpam: Add device reset and power-on state
+ initialisation
+Date: Fri, 16 Oct 2026 18:10:51 +0800
+X-OQ-MSGID: <20261016101058.1900808-17-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
 References: <20261016101058.1900808-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.155; envelope-from=2118537295@qq.com;
- helo=out203-205-221-155.mail.qq.com
+Received-SPF: pass client-ip=203.205.221.239; envelope-from=2118537295@qq.com;
+ helo=out203-205-221-239.mail.qq.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -88,208 +89,137 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Add the CSU monitor: MSMON_CFG_CSU_FLT/CTL window configuration
-(replacing the unimplemented-monitor placeholder), the MSMON_CSU
-and MSMON_CSU_CAPTURE reads, and the per-RIS monitor array with
-the num-csu-mon and csu-capacity-bytes properties.  Occupancy is
-modelled as a snapshot: csu-capacity-bytes scaled by the CPBM
-portion fraction of the filtered PARTID, so cache-usage readings
-track the configured CBM.  Writes to the CSU counters are ignored
-(they probe NRDY; the snapshot is always ready) and CSU
-monitoring is advertised in MSMON_IDR/CSUMON_IDR on the cache
-subtype, which lets the driver pick QOS_L2/L3_OCCUP
-(llc_occupancy).
+Move the power-on initialisation out of realize into
+mpam_msc_state_init() (shared with the new legacy reset callback):
+selection state and ECR/ESR cleared, per-RIS partition and monitor
+storage zeroed, the PARTID narrowing map identity-wrapped so the
+indirection is always in range before the driver programs it, and
+MBW_MAX reset to 0xffff (full bandwidth) -- an unprogrammed PARTID
+must not read as zero bandwidth.
+
+Also fix the realize error message for num-partid == 0, which
+repeated the num-ris text.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/arm/mpam.c | 99 +++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 97 insertions(+), 2 deletions(-)
+ hw/arm/mpam.c | 78 +++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 60 insertions(+), 18 deletions(-)
 
 diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
-index 50c8a8e..6c93ead 100644
+index fe78adb..c4a7567 100644
 --- a/hw/arm/mpam.c
 +++ b/hw/arm/mpam.c
-@@ -11,6 +11,7 @@
- #include "qemu/timer.h"
- #include "qemu/host-utils.h"
- #include "qemu/bitops.h"
-+#include "qemu/units.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/registerfields.h"
-@@ -139,8 +140,20 @@ REG32(MSMON_MBWU_L, 0x0880)         /* 64-bit counter */
- REG32(MSMON_MBWU_CAPTURE, 0x0868)
- REG32(MSMON_MBWU_CAPTURE_L, 0x0890)
- REG32(MSMON_CAPT_EVNT, 0x0808)
-+
- REG32(MSMON_CFG_CSU_FLT, 0x0810)
-+    FIELD(MSMON_CFG_CSU_FLT, PARTID, 0, 16)
-+    FIELD(MSMON_CFG_CSU_FLT, PMG, 16, 8)
-+    FIELD(MSMON_CFG_CSU_FLT, XCL, 31, 1)
-+
- REG32(MSMON_CFG_CSU_CTL, 0x0818)
-+    FIELD(MSMON_CFG_CSU_CTL, TYPE, 0, 8)
-+    FIELD(MSMON_CFG_CSU_CTL, MATCH_PARTID, 16, 1)
-+    FIELD(MSMON_CFG_CSU_CTL, MATCH_PMG, 17, 1)
-+    FIELD(MSMON_CFG_CSU_CTL, EN, 31, 1)
-+
-+REG32(MSMON_CSU, 0x0840)             /* 31-bit value, bit31 NRDY */
-+REG32(MSMON_CSU_CAPTURE, 0x0848)
+@@ -1041,6 +1041,63 @@ static const MemoryRegionOps mpam_msc_ops = {
+     },
+ };
  
- REG32(MPAMF_ERR_MSI_MPAM, 0x00dc)
- REG32(MPAMF_ERR_MSI_ADDR_L, 0x00e0)
-@@ -282,6 +295,16 @@ typedef struct MpamMbwuMon {
-     bool oflow;
- } MpamMbwuMon;
- 
-+/*
-+ * One CSU monitor instance.  Occupancy is modelled as a snapshot: the
-+ * cache capacity scaled by the CPBM portion fraction of the filtered
-+ * PARTID, so cache-usage readings track the configured CBM.
-+ */
-+typedef struct MpamCsuMon {
-+    uint32_t flt;
-+    uint32_t ctl;
-+} MpamCsuMon;
-+
- typedef struct Mpamf {
-     uint64_t idr;
-     uint32_t iidr;
-@@ -308,6 +331,7 @@ typedef struct Mpamf {
-     MpamfPerNrwId *per_nrw_id;
- 
-     MpamMbwuMon *mbwu_mons;
-+    MpamCsuMon *csu_mons;
- 
- } Mpamf;
- 
-@@ -326,6 +350,8 @@ typedef struct MPAMMSCState {
-     uint8_t num_ris;
-     uint32_t num_mbwu_mon;
-     uint64_t bw_nominal_bps;
-+    uint32_t num_csu_mon;
-+    uint64_t csu_capacity;
- 
-     /*
-      * Wired-interrupt GSIVs the board assigned (INTID = SPI + 32).  Zero
-@@ -468,6 +494,36 @@ static uint64_t mpam_mbwu_value(MPAMMSCState *s, Mpamf *mf, MpamMbwuMon *m)
-     return v;
- }
- 
-+static MpamCsuMon *mpam_csu_mon(MPAMMSCState *s, Mpamf *mf)
-+{
-+    unsigned mon = FIELD_EX32(s->mon_sel, MSMON_CFG_MON_SEL, MON_SEL);
-+
-+    if (mon >= s->num_csu_mon) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "MPAM: MON_SEL %d out of range (num-csu-mon %d)\n",
-+                      mon, s->num_csu_mon);
-+        mon = 0;
-+    }
-+    return &mf->csu_mons[mon];
-+}
 +
 +/*
-+ * Snapshot occupancy: the cache capacity scaled by the fraction of CPBM
-+ * portions the filtered PARTID is allowed to occupy.
++ * Power-on state of the MSC, shared between realize and reset: ID narrowing
++ * map identity-wrapped, partition config at reset values, monitors off.
 + */
-+static uint32_t mpam_csu_value(MPAMMSCState *s, Mpamf *mf, MpamCsuMon *m)
++static void mpam_msc_state_init(MPAMMSCState *s)
 +{
-+    if (FIELD_EX32(m->ctl, MSMON_CFG_CSU_CTL, EN) &&
-+        FIELD_EX32(m->ctl, MSMON_CFG_CSU_CTL, MATCH_PARTID)) {
-+        uint32_t partid = FIELD_EX32(m->flt, MSMON_CFG_CSU_FLT, PARTID);
-+        uint32_t nrw = mpam_nrw_id_for(s, mf, partid);
-+        uint32_t cpbm = mf->per_nrw_id[nrw].cfg_cpbm[0];
++    int i;
 +
-+        return muldiv64(s->csu_capacity, ctpop32(cpbm), MPAM_CACHE_PART);
++    s->ris = 0;
++    s->part_sel = 0;
++    s->internal_part_sel = false;
++    s->mon_sel = 0;
++    s->ecr = 0;
++    s->esr = 0;
++
++    for (i = 0; i < s->num_ris; i++) {
++        Mpamf *mpamf = &s->mpamf[i];
++        int p;
++
++        mpamf->ecr = 0;
++        mpamf->esr = 0;
++        memset(mpamf->per_nrw_id, 0,
++               sizeof(MpamfPerNrwId) * s->num_int_partid);
++        memset(mpamf->cfg_intpartid, 0,
++               sizeof(uint32_t) * s->num_partid);
++        memset(mpamf->mbwu_mons, 0,
++               sizeof(MpamMbwuMon) * s->num_mbwu_mon);
++        memset(mpamf->csu_mons, 0, sizeof(MpamCsuMon) * s->num_csu_mon);
++
++        /*
++         * Until resctrl programs the map, wrap each request PARTID onto an
++         * internal PARTID so the narrowing indirection is always in range.
++         */
++        for (p = 0; p < s->num_partid; p++) {
++            mpamf->cfg_intpartid[p] = p % s->num_int_partid;
++        }
++        /*
++         * per_nrw_id is indexed by INTERNAL PARTID: it has
++         * num_int_partid entries, not num_partid.  Writing it with the
++         * request-PARTID count overflowed the allocation by 224 entries
++         * (malloc(): corrupted top size once the struct grew).
++         */
++        for (p = 0; p < s->num_int_partid; p++) {
++            /* MBW_MAX resets to full bandwidth on real hardware */
++            mpamf->per_nrw_id[p].cfg_mbw_max = 0xffff;
++        }
 +    }
-+    return 0;
 +}
 +
- typedef struct MPAMMSCMemState {
-     MPAMMSCState parent;
- } MPAMMSCMemState;
-@@ -563,6 +619,21 @@ static uint64_t mpam_msc_read_reg(void *opaque, hwaddr offset,
-         return mpamf->mbwumon_idr;
-     case A_MSMON_CFG_MON_SEL:
-         return s->mon_sel;
-+    case A_MSMON_CFG_CSU_FLT:
-+        return mpam_csu_mon(s, mpam_mon_ris(s))->flt;
-+    case A_MSMON_CFG_CSU_CTL:
-+        return mpam_csu_mon(s, mpam_mon_ris(s))->ctl;
-+    case A_MSMON_CSU ... (A_MSMON_CSU + 3):
-+    case A_MSMON_CSU_CAPTURE ... (A_MSMON_CSU_CAPTURE + 3):
-+    {
-+        uint32_t v = mpam_csu_value(s, mpam_mon_ris(s),
-+                                    mpam_csu_mon(s, mpam_mon_ris(s)));
-+        hwaddr off = (offset >= A_MSMON_CSU_CAPTURE) ?
-+                     offset - A_MSMON_CSU_CAPTURE : offset - A_MSMON_CSU;
++static void mpam_msc_reset(DeviceState *dev)
++{
++    MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
 +
-+        /* NRDY (bit 31) is never set: the snapshot is always ready */
-+        return extract32(v, off * 8, 32 - off * 8);
-+    }
-     case A_MSMON_CFG_MBWU_FLT:
-         return mpam_mbwu_mon(s, mpam_mon_ris(s))->flt;
-     case A_MSMON_CFG_MBWU_CTL:
-@@ -879,11 +950,23 @@ static void mpam_msc_write_reg(void *opaque, hwaddr offset, uint64_t value,
-         m->t0 = qemu_clock_get_ns(QEMU_CLOCK_HOST);
++    mpam_msc_state_init(s);
++}
++
+ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+ {
+     MPAMMSCState *s = MPAM_MSC_DEVICE(dev);
+@@ -1052,7 +1109,7 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
          return;
      }
--    case A_MSMON_CAPT_EVNT:
-     case A_MSMON_CFG_CSU_FLT:
-+        mpam_csu_mon(s, mpam_mon_ris(s))->flt = value;
-+        return;
-     case A_MSMON_CFG_CSU_CTL:
-+        mpam_csu_mon(s, mpam_mon_ris(s))->ctl = value;
-+        return;
-+    case A_MSMON_CSU:
-+    case A_MSMON_CSU_CAPTURE:
-+        /*
-+         * The driver pokes these with MSMON___NRDY to probe whether the
-+         * counter needs polling.  Ignoring the write leaves the snapshot
-+         * permanently ready, which is what the emulation models.
-+         */
-+        return;
-+    case A_MSMON_CAPT_EVNT:
-         qemu_log_mask(LOG_UNIMP,
--                      "MPAM: cache-usage monitoring not implemented (write %lx)\n",
-+                      "MPAM: capture events not implemented (write %lx)\n",
-                       offset);
+     if (s->num_partid == 0) {
+-        error_setg(errp, "num-ris must be <= 16");
++        error_setg(errp, "num-partid must be nonzero");
          return;
-     case A_MPAMF_ECR:
-@@ -941,6 +1024,7 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+     }
+     if (s->num_int_partid == 0) {
+@@ -1061,28 +1118,12 @@ static void mpam_msc_realize(DeviceState *dev, Error **errp)
+ 
+     s->mpamf = g_new0(Mpamf, s->num_ris);
+     for (i = 0; i < s->num_ris; i++) {
+-        int p;
+-
          s->mpamf[i].per_nrw_id = g_new0(MpamfPerNrwId, s->num_int_partid);
          s->mpamf[i].cfg_intpartid = g_new0(uint32_t, s->num_partid);
          s->mpamf[i].mbwu_mons = g_new0(MpamMbwuMon, s->num_mbwu_mon);
-+        s->mpamf[i].csu_mons = g_new0(MpamCsuMon, s->num_csu_mon);
-         /*
-          * Until resctrl programs the map, wrap each request PARTID onto an
-          * internal PARTID so the narrowing indirection is always in range.
-@@ -1088,6 +1172,14 @@ static void mpam_msc_cache_realize(DeviceState *dev, Error **errp)
-         mpamf->mbwumon_idr = FIELD_DP32(mpamf->mbwumon_idr,
-                                         MPAMF_MBWUMON_IDR, HAS_RWBW, 1);
+         s->mpamf[i].csu_mons = g_new0(MpamCsuMon, s->num_csu_mon);
+-        /*
+-         * Until resctrl programs the map, wrap each request PARTID onto an
+-         * internal PARTID so the narrowing indirection is always in range.
+-         */
+-        for (p = 0; p < s->num_partid; p++) {
+-            s->mpamf[i].cfg_intpartid[p] = p % s->num_int_partid;
+-        }
+-        /*
+-         * per_nrw_id is indexed by INTERNAL PARTID: it has num_int_partid
+-         * entries, not num_partid.
+-         */
+-        for (p = 0; p < s->num_int_partid; p++) {
+-            /* MBW_MAX resets to full bandwidth on real hardware */
+-            s->mpamf[i].per_nrw_id[p].cfg_mbw_max = 0xffff;
+-        }
+     }
++    mpam_msc_state_init(s);
  
-+        if (s->num_csu_mon) {
-+            mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
-+                                          MPAMF_MSMON_IDR, MSMON_CSU, 1);
-+            mpamf->csumon_idr = FIELD_DP32(mpamf->csumon_idr,
-+                                           MPAMF_CSUMON_IDR, NUM_MON,
-+                                           s->num_csu_mon);
-+        }
-+
-         /* Cache specific bit */
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CPOR_PART, 1);
-         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_CCAP_PART, 1);
-@@ -1148,6 +1240,9 @@ static const Property mpam_msc_props[] = {
-     DEFINE_PROP_UINT32("num-mbwu-mon", MPAMMSCState, num_mbwu_mon, 8),
-     DEFINE_PROP_UINT64("bw-nominal-bps", MPAMMSCState, bw_nominal_bps,
-                        10000000000ULL),  /* 10 GB/s default bandwidth */
-+    DEFINE_PROP_UINT32("num-csu-mon", MPAMMSCState, num_csu_mon, 4),
-+    DEFINE_PROP_UINT64("csu-capacity-bytes", MPAMMSCState, csu_capacity,
-+                       32 * MiB),
-     DEFINE_PROP_UINT32("err-gsiv", MPAMMSCState, err_gsiv, 0),
-     DEFINE_PROP_UINT32("oflow-gsiv", MPAMMSCState, oflow_gsiv, 0),
-     DEFINE_PROP_UINT16("node", MPAMMSCState, node, UINT16_MAX),
+     memory_region_init_io(&s->mr, OBJECT(s), &mpam_msc_ops, s, "mpam_msc",
+                           MPAM_SIZE);
+@@ -1301,6 +1342,7 @@ static void mpam_msc_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     device_class_set_props(dc, mpam_msc_props);
++    device_class_set_legacy_reset(dc, mpam_msc_reset);
+ }
+ 
+ static void mpam_msc_mem_init(ObjectClass *klass, const void *data)
 -- 
 2.43.0
 
