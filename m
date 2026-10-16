@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D95CCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584D5CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeFq-00005f-7e; Fri, 16 Oct 2026 05:29:34 -0400
+	id 1xHeHQ-0000yh-Vz; Fri, 16 Oct 2026 05:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xHeFm-00004w-JA
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:29:30 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xHeFk-00050i-Ng
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:29:30 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2e9995ce866so1514455ad.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 02:29:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792142967; x=1792747767; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=T8lP2QnyTKqKvsF5AqU2c4smyw5OlXHzVafdJExpjpc=;
- b=eSd2rGvEWZv6k58S+ekbEoJXj10t2U1y5n+Z+jF/bWnL7RvyOkGqOOA7NHKdRtDnj5
- 43hr4kt7aBLX5t2uYFHVKjh6QvmtpNtu4pCg93VDVtGAInKAg5Jq9jxBTmfALygwOQPc
- 2jdAuK1UcUCcQjORp+WM/oScEEFjNl3W/3A+JAfdnazGuVj6rntPNg681e9PqWaKBv8B
- tdnIRm7p++lqUxBRIqNzeSK4W86ZEjhIM/QiqehAinwwfXe+qv0nSU2WbdKVxs2tfvkn
- euYD4F77E//Mz1tTI8kMliBq+cG6g2F3Y67B5d3BnFa6qNBPvGY2boUIFVV4bOK+pegX
- KMuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792142967; x=1792747767;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=T8lP2QnyTKqKvsF5AqU2c4smyw5OlXHzVafdJExpjpc=;
- b=NKX2D4PQXrXviaSCncntpC8GcQkeWcCV8WryLaK3amNGILSI+e0lHYUxdnZNu7LDJK
- AhgoEOPozW99835+vO29u3k7chD89d0Po+t2lL3/iFkf/kPT2Rtt8GhNERWStLPZZD4Q
- FfR14RafiiAPInjlx3TGGcLhmVK7T7ca9riB2K64YMS4u9YjvB23kvDAFwJsDT8KI71Q
- MadzUq7tRQXq6SQFST0VqvteapzbUtux9DEOemYcQD7Klt78fdvozJuB/oKwcBgv5Qlh
- cGip0x/AG4X2UV9BOsNK2qArWLyJOHUhXq7PBUkbShncMPOhb6/5QGzkTv3vSYAWkotS
- oJ/A==
-X-Gm-Message-State: AFq9FYK18XP+nVwzwE7Bt4syYiGEpRJpe+C5zG6dyoHYlYF8iNRPVUZH
- I652KFyw8apSq+ycR14MIGu+aAy4XRthiDtLWwVULU9eUXyE8kQoT7vL
-X-Gm-Gg: AYBFou1k9FguT1d0Ea8UGaaq+ykp3yCMIXR0WMCheRahdZq2fUvvtHyhmqGLqCHV42x
- ozvxQKAvG7uHqNuubl27ZWrxzV3b9DRXpi1jTX9Gr+OlP3NnHvg8HA7qeudwNJP5R6CY7uyQ5Pk
- OGgxL2TpPX3z4sUpL5tdMp+z1L+mvvupkmNbDYcOP8i8UMhOuZ5/bXccsjEUO7+RZ2rorNN+V5e
- xZsjSW1UXNqOv2zEGR+8C4Gj0rGnn+hs55iDmo1JUpswhuFDtKPuoVO0qxeO1RhGP27ae8i/9/r
- ze691I9ZN/LxR7d/mf7i1YRJ7OuhmtB0+MekYjv+kR4jxyILfTG5mAhPM6jEpv1Xj7QyQAOJeWI
- ev69LLXx49DS5agoIMZsopjlKNMT0d99B9gosc5W3X9wLfpnez6iXVcuO5zKaKFiXpsDQvUahdl
- mJL7roKTUaultLK1yb84s5WP5hRMGLQMsoE5hPPU/AbgAQnir/6AdW7EqnxcryDFk361Lq11R2X
- xcKQEHazFB6I2g=
-X-Received: by 2002:a17:902:d50a:b0:2cc:6018:f030 with SMTP id
- d9443c01a7336-2e8429a6f7cmr198821215ad.14.1792142966700; 
- Fri, 16 Oct 2026 02:29:26 -0700 (PDT)
-Received: from JaminLin-PC.aspeed.com ([118.99.183.121])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e8b1d82sm7218235ad.70.2026.10.16.02.29.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 02:29:25 -0700 (PDT)
-Date: Fri, 16 Oct 2026 17:29:21 +0800
-From: Jamin Lin <jaminlin1207@gmail.com>
-To: Emmanuel Blot <emmanuel.blot@free.fr>
-Cc: qemu-devel@nongnu.org, =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-arm@nongnu.org, Patrick Leis <venture@google.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v3 50/50] tests/functional/arm: minerva: add BMC boot test
-Message-ID: <atHucTPkBkcPoMRu@JaminLin-PC.aspeed.com>
-References: <20261015-bmc-minerva-v3-0-7d50c8a108e5@free.fr>
- <20261015-bmc-minerva-v3-50-7d50c8a108e5@free.fr>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xHeHP-0000y7-DK
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:31:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xHeHM-0005NI-Tw
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:31:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792143066;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LMfn7NvvZIVwC55HyfXbXcSAjkVcuSNp2L/fNtLYZs0=;
+ b=PXV8huga45imkR4BuDHSxnEhdwGC0vQ5xIt4B8j/4SbZ9lZMvF5/XbqO//0wDkrzs7wSwG
+ FJjFeO/jwPsbINdazlJ8QB+Ui2gg3u0Vg/7QDtwy71mSBZmBKU/dMtTrgx5hmDrQg5Mh+r
+ RpCpUF/GnW156uL5yy0ztc14VfLUi5A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-bo3uSIlyNB6cCWpBmUHS_Q-1; Fri,
+ 16 Oct 2026 09:31:04 +0000
+X-MC-Unique: bo3uSIlyNB6cCWpBmUHS_Q-1
+X-Mimecast-MFC-AGG-ID: bo3uSIlyNB6cCWpBmUHS_Q_1792143063
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 188781954B04; Fri, 16 Oct 2026 09:31:03 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97D5B1800677; Fri, 16 Oct 2026 09:31:01 +0000 (UTC)
+Date: Fri, 16 Oct 2026 10:30:58 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+Message-ID: <atHu0kCSQTD9E34p@redhat.com>
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ <atEC-pIGhLYLXVmC@redhat.com>
+ <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
+ <atHrFXxyIl3Nbvht@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261015-bmc-minerva-v3-50-7d50c8a108e5@free.fr>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=jaminlin1207@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <atHrFXxyIl3Nbvht@redhat.com>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,83 +90,215 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 11:28:37AM +0200, Emmanuel Blot via qemu development wrote:
-> Add a functional test booting the Facebook Minerva BMC machine.
+On Fri, Oct 16, 2026 at 10:15:01AM +0100, Daniel P. Berrangé wrote:
+> On Thu, Oct 15, 2026 at 07:16:58PM +0100, Peter Maydell wrote:
+> > On Thu, 15 Oct 2026 at 17:44, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > >
+> > > On Thu, Oct 15, 2026 at 05:33:52PM +0100, Peter Maydell wrote:
+> > > > The documentation for device_class_set_parent_realize() suggests that
+> > > > the parent realize function pointer is "usually in the instance
+> > > > structure".  This is definitely wrong, because the function pointer
+> > > > is a class thing, and should live in a class struct, not an instance
+> > > > struct.  Update the documentation to correct this, instead
+> > > > recommending that it should be placed in the class struct for the
+> > > > child class.
+> > > >
+> > > > At time of writing, of the 75 or so uses of this function, about 50
+> > > > put the parent_realize pointer in the child class struct, and about
+> > > > 25 in the parent class struct.  We recommend the former both because
+> > > > it is the more common choice, and also because it makes more logical
+> > > > sense: it's the child that knows (a) that it exists at all and that
+> > > > (b) it wants to have a realize method that will mean it needs to
+> > > > chain back to the parent, and we shouldn't need to edit the parent's
+> > > > class struct because we want to add a child class that chains to its
+> > > > realize method.
+> > >
+> > > I'm confused why we need to store a copy of the parent's
+> > > realize method at all, when we can just reference it from
+> > > the parent class struct ?
+> > >
+> > > Taking one example
+> > >
+> > >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+> > >   {
+> > >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
+> > >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
+> > >       PL050State *ps = PL050(dev);
+> > >
+> > >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
+> > >           return;
+> > >       }
+> > >
+> > >       ps->ps2dev = PS2_DEVICE(&s->kbd);
+> > >       pdc->parent_realize(dev, errp);
+> > >   }
+> > >
+> > > why wouldn't we rewrite that as
+> > >
+> > >   static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+> > >   {
+> > >       PL050DeviceClass *pdc = PL050_GET_CLASS(dev);
+> > >       DeviceClass *parent = DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(pdc)));
+> > >       PL050KbdState *s = PL050_KBD_DEVICE(dev);
+> > >       PL050State *ps = PL050(dev);
+> > >
+> > >       if (!sysbus_realize(SYS_BUS_DEVICE(&s->kbd), errp)) {
+> > >           return;
+> > >       }
+> > >
+> > >       ps->ps2dev = PS2_DEVICE(&s->kbd);
+> > >       parent->realize(dev, errp);
+> > >   }
+> > >
+> > > am I missing a reason we need to store the parent's
+> > > realize method pointer ?
+> > 
+> > Because the parent class's struct doesn't have a pointer to
+> > its realize method. pl050_class_init() does this to set
+> > up its realize method:
+> > 
+> >     DeviceClass *dc = DEVICE_CLASS(oc);
+> > 
+> >     dc->realize = pl050_realize;
+> > 
+> > and that's the only place where pl050_realize is pointed to.
+> > 
+> > To put the child class's realize method into place we need
+> > to overwrite the DeviceClass::realize field, which means we
+> > need somewhere to put the old value.
 > 
-> Note: The boot image currently lives on a personal fork; a TODO in the
-> test notes it should be relocated under legoater/qemu-aspeed-boot before
-> upstreaming.
+> We're overwriting the DeviceClass::realize field in the class
+> struct instance for "pl050_keyboard". We still have the completely
+> independent class struct instance for "pl050" (which is what
+> object_class_get_parent() returns) that contains the 'realize'
+> field value set by the parent class.
 > 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->  tests/functional/arm/meson.build            |  2 ++
->  tests/functional/arm/test_aspeed_minerva.py | 30 +++++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+)
+> eg if I put a break on pl050_kbd_realize():
 > 
-> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-> index 61b00932db..dd1ddf7f6f 100644
-> --- a/tests/functional/arm/meson.build
-> +++ b/tests/functional/arm/meson.build
-> @@ -16,6 +16,7 @@ test_arm_timeouts = {
->    'aspeed_bletchley' : 480,
->    'aspeed_catalina' : 480,
->    'aspeed_gb200nvl_bmc' : 480,
-> +  'aspeed_minerva' : 480,
->    'aspeed_rainier' : 480,
->    'bpim2u' : 500,
->    'collie' : 180,
-> @@ -51,6 +52,7 @@ tests_arm_system_thorough = [
->    'aspeed_bletchley',
->    'aspeed_catalina',
->    'aspeed_gb200nvl_bmc',
-> +  'aspeed_minerva',
->    'aspeed_rainier',
->    'bpim2u',
->    'canona1100',
-> diff --git a/tests/functional/arm/test_aspeed_minerva.py b/tests/functional/arm/test_aspeed_minerva.py
-> new file mode 100644
-> index 0000000000..925a82b139
-> --- /dev/null
-> +++ b/tests/functional/arm/test_aspeed_minerva.py
-> @@ -0,0 +1,30 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED machines
-> +#
-> +# Copyright (c) 2026 Meta Platforms, Inc. and affiliates.
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import Asset
-> +from aspeed import AspeedTest
-> +
-> +
-> +class MinervaMachine(AspeedTest):
-> +
-> +    # TODO: the boot image currently lives on a personal fork; move it under
-> +    # legoater/qemu-aspeed-boot before upstreaming.
-> +    ASSET_MINERVA_FLASH = Asset(
-> +        'https://github.com/eblot/qemu-aspeed-boot/raw/refs/heads/minerva-bmc/images/minerva-bmc/openbmc-20260720025047/'
-> +            'obmc-phosphor-image-minerva-20260720025047.static.mtd.xz',
-> +        'bd713df39d3c09846299a2377315465187a4dcd33c29d3b3d683ef13b59f36bb')
-> +
-> +    def test_arm_ast2600_minerva_openbmc(self):
-> +        image_path = self.uncompress(self.ASSET_MINERVA_FLASH)
-> +
-> +        self.do_test_arm_aspeed_openbmc('minerva-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0xf00',
-> +                                        soc='AST2600 rev A3')
-> +
-> +if __name__ == '__main__':
-> +    AspeedTest.main()
+>   (gdb) print pdc->parent_class->parent_class->parent_class->type->name
+>   $5 = 0x555557de40a0 "pl050_keyboard"
+>   (gdb) print pdc->parent_class->parent_class->realize
+>   $6 = (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
 > 
-> -- 
-> 2.53.0-Meta
+> and separately
 > 
+>   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_class->type->name
+>   $7 = 0x555557de3ee0 "pl050"
+>   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
+>   $8 = (DeviceRealize) 0x55555585daf4 <pl050_realize>
 > 
-LGTM
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
+> > We could alternatively solve this by saying:
+> >  (a) every class struct must have a "realize" field,
+> >      and the class init sets both DeviceClass::realize and
+> >      MyClass::realize (perhaps restrict this to only "every
+> >      class that has or might need to have subclasses")
+> >  (b) to chain to the superclass realize, get the MyParentClass
+> >      class pointer and call MyParentClass::realize
+> > 
+> > The support (or lack thereof) in QOM for methods like realize,
+> > unrealize and reset which should pretty much always chain to
+> > their parent class implementation is pretty terrible, so if
+> > we can come up with something more ergonomic I'd be happy to
+> > throw out the hacks we have today.
+> 
+> AFAICT, we can already do everything we need with the parent class
+> to chain up parent virtual methods without having  to keep extra
+> pointers around.
+
+We can make it a little less ugly in the callers with a macro in
+qdev.h thus:
+
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 8e91e2fcb08..18e85850c31 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -461,6 +461,9 @@ static inline bool qdev_is_realized(const DeviceState *dev)
+  */
+ bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
+ 
++#define qdev_realize_chain_parent(dev, dc, errp) \
++    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev, errp)
++
+ /**
+  * qdev_realize_and_unref: Realize @dev and drop a reference
+  * @dev: device to realize
+
+
+which would be used thus:
+
+
+diff --git a/hw/input/pl050.c b/hw/input/pl050.c
+index 48df2734e26..abe939171f2 100644
+--- a/hw/input/pl050.c
++++ b/hw/input/pl050.c
+@@ -168,7 +168,7 @@ static void pl050_kbd_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     ps->ps2dev = PS2_DEVICE(&s->kbd);
+-    pdc->parent_realize(dev, errp);
++    qdev_realize_chain_parent(dev, pdc, errp);
+ }
+ 
+ static void pl050_kbd_init(Object *obj)
+@@ -191,7 +191,8 @@ static void pl050_mouse_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     ps->ps2dev = PS2_DEVICE(&s->mouse);
+-    pdc->parent_realize(dev, errp);
++
++    qdev_realize_chain_parent(dev, pdc, errp);
+ }
+ 
+ static void pl050_mouse_init(Object *obj)
+@@ -206,10 +207,8 @@ static void pl050_mouse_init(Object *obj)
+ static void pl050_kbd_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+-    PL050DeviceClass *pdc = PL050_CLASS(oc);
+ 
+-    device_class_set_parent_realize(dc, pl050_kbd_realize,
+-                                    &pdc->parent_realize);
++    dc->realize = pl050_kbd_realize;
+ }
+ 
+ static const TypeInfo pl050_kbd_info = {
+@@ -223,10 +222,8 @@ static const TypeInfo pl050_kbd_info = {
+ static void pl050_mouse_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+-    PL050DeviceClass *pdc = PL050_CLASS(oc);
+ 
+-    device_class_set_parent_realize(dc, pl050_mouse_realize,
+-                                    &pdc->parent_realize);
++    dc->realize = pl050_mouse_realize;
+ }
+ 
+ static const TypeInfo pl050_mouse_info = {
+diff --git a/include/hw/input/pl050.h b/include/hw/input/pl050.h
+index 2cdfa74f73c..7169afc151f 100644
+--- a/include/hw/input/pl050.h
++++ b/include/hw/input/pl050.h
+@@ -17,8 +17,6 @@
+ 
+ struct PL050DeviceClass {
+     SysBusDeviceClass parent_class;
+-
+-    DeviceRealize parent_realize;
+ };
+ 
+ #define TYPE_PL050 "pl050"
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
