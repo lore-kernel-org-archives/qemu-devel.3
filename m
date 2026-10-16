@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A40ACCF2C3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7138CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 13:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHhdF-0001i9-4L; Fri, 16 Oct 2026 09:06:00 -0400
+	id 1xHheE-00030T-6A; Fri, 16 Oct 2026 09:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHeXq-00060A-Bu; Fri, 16 Oct 2026 05:48:10 -0400
-Received: from xmbghk7.mail.qq.com ([43.163.128.54])
+ id 1xHf62-0004kW-5u; Fri, 16 Oct 2026 06:23:30 -0400
+Received: from out203-205-221-240.mail.qq.com ([203.205.221.240])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <2118537295@qq.com>)
- id 1xHeXl-0007jz-Gf; Fri, 16 Oct 2026 05:48:10 -0400
+ id 1xHf5z-00037d-RD; Fri, 16 Oct 2026 06:23:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792144077; bh=YI1uTqwk6PgPa+hxwugkU+IJlKdvsHWkdlHjHmZxlKA=;
+ t=1792146200; bh=P4QEWHWxu3smbmXGTdRl4D3hYj1Tmc5JUeNQNVV/GXo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WCpwYVeMYzsXDnoTvP2iC7aGJu96dKV8F1iutBeZ7v4STAQ6LHJLBr2KYtIFxDEwl
- pjySy6LAr8EvwjbQEXR5BdnTlDQnPc5rv0qj0wJF2yk+EZ9XLSTFReNdElF2RUi2oL
- kX574cTyngqhsCyg5l7QTW9SXaoh7WHIu+T8V0Gs=
+ b=j2J0iqwoonXmQB6Y/HE/iFugjNNhIWa2QPZr5YQsiOw6Dsn5w6dwKbNu79KfctO9m
+ c9u4WcTb6QZhLbBIiEAqG1fFG6HJxP4LqJ2T5kzAD0JqHZulrELKmouV4AAxsLMc8y
+ Gv1G/sI4GeQL3xS090lYMIczQbjKuuSrIXRj/Gas=
 Received: from r00799764-ThinkCentre-M920t-N000.. ([139.159.170.67])
- by newxmesmtplogicsvrszc43-0.qq.com (NewEsmtp) with SMTP
- id BF4A1837; Fri, 16 Oct 2026 17:47:52 +0800
-X-QQ-mid: xmsmtpt1792144075t6er0iz2l
-Message-ID: <tencent_44485284331CC7902B6C69F413CC882EB708@qq.com>
-X-QQ-XMAILINFO: OKOirRU4nj6hIs9I8I91mvScjlibRL7iyLA5H5Jmq8YxBn417PVsbQ1PmBlFqS
- VJxjPlHFupsmfei7LvVa3Vb5i+tKtJ4L2IfxpgvXRNZmGvr50Q6SQ5Q+p7IpC2XSdPiyCXkb6G1J
- ObyO9OfA7lZUhbeDOzNYYo9UcGO9B/HR4yuptAThEPcKztEHV/aPY/2+RH7RzaPqQYwPHqIx+cQG
- iVU8kPkn9ErAbG1TZ816DgX1yN/UU7PT8PYQF/WIHvB1iXEbQXH9i3bIGnRXlVRlH0neR4wbxPLd
- 4awh8xqLVFa0cTZMTKTQkw90g5pMRSIQnjeuYyDYmJjgh9J0ETkaVh5R7AvoNjZYeAwANk7rhU/r
- KS8cR87qO85GN+9PB5vLk+Nu14EpSk94Wlu02bP1fjfbGVT8baPiZ94oWPV+EoXBuB1ZeJS5BZqE
- b5lBE6HiMcptFMR2Xx7l7HxG40Pu99nPJl3R7+9rjIP/wE05UYT8P+wgJiZBTNroEPnoPRyjotOz
- yQb+FcKmbuDkQ/FPSaxUnL+CFrC7v7LDfUx+jAge1XhgsKaev9PqerCktHOMGI/CHUHy4TKTWR5w
- a1EEPo2zUfzoy0VJbh2RuWSuqnoxmtxAXHuP77C4Vkd3gaHemAyV5P+sg8YngFv7VrCSH+M6kM65
- f4Xb9tlrEQBSR9cpxyyZ2IqMykG5q6rbifYXtSUvqsyWyyTwdae2HnjVvOzr6ctffSo+Ok0H2jo5
- aZ9xBLeNg2RZpqqSi7FNEg55QQO8ozzTjsuU2FjXP2ZrtjHtAHrqDdUQbIYHdycxprvE7nmvD5Gx
- 3g1Pe4eZQfK/42H08xpUDmjshL48ChGUIE+rNgiyNRmKWrxI3qv0Tz0zu/+ncpAWr7l6Lt8CACg9
- A72172wY4h0/z74v1KUIWvuSqiZhwApd8BubDmTax8oQDH7vOWEwUsR2FNmMhKpkufUqRUiNZaVq
- l3JHm68HcvFNJ/3hKbbcC8WgbSZnNjyjiy9pRDQhumSg04fxsnttjDXQC2yRJ8SxpXvvhDjJTabU
- V2Q1P3jDcfMEgO06icEK5XzqrSGZWqyy9kQfrS2A==
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
+ by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
+ id 5D1998CC; Fri, 16 Oct 2026 18:23:17 +0800
+X-QQ-mid: xmsmtpt1792146197ts5j1n7n3
+Message-ID: <tencent_E465298E19C263CF95CFB481097FC4B25B07@qq.com>
+X-QQ-XMAILINFO: NXatl/9/kmcOe3wy+VEszbEf28EQsUO76bs7lfNvwF/s4DlVU1VEFAnJOLzA+g
+ 3ndxsNDY+Nzcit8hkJdYkjHGwY3H9s8RQNdhviT0ag64eMT0v8c3OnSA71v8VSkPxC6PxwkE7FcH
+ dGquo31YR8GolO/pa6S3A47wCO6xNZZ2E/9is1DH+2XIqAqfmmUuSgeT75Qkh5fg+rRy103KRxHh
+ FTJilC64i9kIxVTZee5JBsKDwUKX/HD8dHhwrhXyMB3CJYs4cCh8XSMoaK7nnW3V4Mj0cZ6Bqklu
+ oB0k7m4jGhGuJ+QXf/Vbz+i6Xs6pcl+1u405LgLDlXGmHH7o+mo3oAQOqbK+AdD1B5/KtCGVBaTd
+ HHka+7xRNCtriD6OpMLzDVj0n/nJZ1QgeT+PIHIN9qUdNYxarmGJeyYIP7ZkOSjVEqzUtraXMQGs
+ im1avYLGLM+LdjcuW/ENrJVVF8jMTviH1RCB3Vtbyu19MFVpbuZF2ILZmQOolhtW68+5s2NSkQ75
+ nwdGuhkjMMLzIQzF/R58CzBL0YThbgYzh4WqtoKqtjmDE/dGu1cMytNwaPgsTpxA/s2ZdXNIwUpJ
+ u214w/QsLQxezRDRZH1Y4riEMrw+8k0xUVWNwf6iA7zgoZtzfEZlVX0erglwnk03zGRgYCihC4zD
+ Cpd9MaqGBSLhJYOp6Nrqnnxm9xBQWW0sBQXA8RxW0woevKRuXF0pgmWt5Y5tOcgNHQPDuT2wI82l
+ ajsXIqQRJlwPZSi1Q8/1oHC2EZG2WixJSg3mCuAsbyfpyQgEdlH90CH/osLFEHip+t6lCtqCs5sL
+ O/GsJlJYK6+doCo0bDOmMRC2JXwQUX8FIvc5cHcM0t0fWLojuVSddrt5c+0G9A7oLHwJHSy/mYfH
+ 1M0rZvxgRaFZWqCWyPh+ZM0IUoVS24/UlcHlz54LIRhEKtE1OCXwVJR7C2EysB9GBNWFr5wQ8pjM
+ LM/hgQNbOM5r8GFYCxCmPWzsXbMi4cDcd2gftIEhaWFB7WxfaJz+9YNRMO6kBhHfHhxGjidMf8np
+ eK8v+s/aOQUeUYC4C77S26BOJd76h9ewYQFZJG6lK6rOMYu43w+wqGM9vSKOfTTQEClgNoclFVNK
+ ud/d3z
+X-QQ-XMRINFO: NV153Ut7BKVGEBPxNGBppa2DJCr1urzIPw==
 From: Jinjie Ruan <2118537295@qq.com>
 To: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
  imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
  pbonzini@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
 Cc: ruanjinjie@huawei.com
-Subject: [PATCH 02/37] target/arm: Add MPAM2_EL2 and MPAMHCR_EL2 registers
-Date: Fri, 16 Oct 2026 17:46:56 +0800
-X-OQ-MSGID: <20261016094733.1898485-3-2118537295@qq.com>
+Subject: [PATCH 27/37] hw/arm/mpam: Advertise PRI on memory-side MSCs
+Date: Fri, 16 Oct 2026 18:10:47 +0800
+X-OQ-MSGID: <20261016101058.1900808-13-2118537295@qq.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261016094733.1898485-1-2118537295@qq.com>
-References: <20261016094733.1898485-1-2118537295@qq.com>
+In-Reply-To: <20261016101058.1900808-1-2118537295@qq.com>
+References: <20261016101058.1900808-1-2118537295@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=43.163.128.54; envelope-from=2118537295@qq.com;
- helo=xmbghk7.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=203.205.221.240; envelope-from=2118537295@qq.com;
+ helo=out203-205-221-240.mail.qq.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:22 -0400
+X-Mailman-Approved-At: Fri, 16 Oct 2026 09:02:45 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,53 +88,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-FEAT_MPAM's EL2 registers were missing, so a guest kernel that owns
-or drops out of EL2 takes an UNDEFINED exception the first time it
-runs its MPAM capability enable callback, which unconditionally
-clears MPAM2_EL2 (and MPAMHCR_EL2 when HAS_HCR is present).
-
-Register both as normal EL2 read/write registers backed by CPU state.
+The arm_mpam driver picks the MBA-backing class for the MBPRI
+pseudo-resource, which requires the memory-side MSC to advertise
+HAS_PRI_PART -- without it the driver never exposes MBPRI even
+though the register is handled.  Assemble the same PRI_IDR view
+(INTPRI, 2 bits, 0 = low) as the cache subtype.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- target/arm/cpu.h    |  2 ++
- target/arm/helper.c | 10 ++++++++++
- 2 files changed, 12 insertions(+)
+ hw/arm/mpam.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 51a36fa..218923a 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -759,6 +759,8 @@ typedef struct CPUArchState {
+diff --git a/hw/arm/mpam.c b/hw/arm/mpam.c
+index 1bd76ba..50c8a8e 100644
+--- a/hw/arm/mpam.c
++++ b/hw/arm/mpam.c
+@@ -991,6 +991,18 @@ static void mpam_msc_mem_realize(DeviceState *dev, Error **errp)
+         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MSMON, 1);
+         /* Memory specific bit */
+         mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_MBW_PART, 1);
++        /*
++         * Priority partitioning on the memory side too: the driver exposes
++         * the MBPRI pseudo-resource from the class backing MBA, which
++         * requires the memory-side MSC to advertise HAS_PRI_PART.
++         */
++        mpamf->idr = FIELD_DP64(mpamf->idr, MPAMF_IDR, HAS_PRI_PART, 1);
++        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
++                                    HAS_INTPRI, 1);
++        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
++                                    INTPRI_0_IS_LOW, 1);
++        mpamf->pri_idr = FIELD_DP32(mpamf->pri_idr, MPAMF_PRI_IDR,
++                                    INTPRI_WD, 2);
  
-     uint64_t mpam0_el1;
-     uint64_t mpam1_el1;
-+    uint64_t mpam2_el2;
-+    uint64_t mpamhcr_el2;
-     /* Optional fault info across tlb lookup. */
-     ARMMMUFaultInfo *tlb_fi;
- 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 896ac0e..d5d96d5 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6924,6 +6924,16 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .accessfn = access_tid3,
-               .fieldoffset = offsetof(CPUARMState, mpam1_el1),
-             },
-+            { .name = "MPAM2_EL2", .state = ARM_CP_STATE_AA64,
-+              .opc0 = 3, .opc1 = 4, .crn = 0xa, .crm = 5, .opc2 = 0,
-+              .access = PL2_RW, .type = ARM_CP_ALIAS,
-+              .fieldoffset = offsetof(CPUARMState, mpam2_el2),
-+            },
-+            { .name = "MPAMHCR_EL2", .state = ARM_CP_STATE_AA64,
-+              .opc0 = 3, .opc1 = 4, .crn = 0xa, .crm = 4, .opc2 = 0,
-+              .access = PL2_RW, .type = ARM_CP_ALIAS,
-+              .fieldoffset = offsetof(CPUARMState, mpamhcr_el2),
-+            },
-             { .name = "MVFR1_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_CONST,
+         mpamf->msmon_idr = FIELD_DP32(mpamf->msmon_idr,
+                                       MPAMF_MSMON_IDR, MSMON_MBWU, 1);
 -- 
 2.43.0
 
