@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1632CCA462
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF9ACC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWNv-0002R0-H0; Thu, 15 Oct 2026 21:05:23 -0400
+	id 1xHWPC-0004ll-Vv; Thu, 15 Oct 2026 21:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLq-0000K6-Td
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:17 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1xHWMQ-0000Vh-Mk
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:56 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLo-0004Eu-9d
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:14 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2e940d5d2beso10060885ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:11 -0700 (PDT)
+ id 1xHWMM-0004Ix-07
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:48 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3acb11973c3so762786a91.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112591; x=1792717391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YNC9KovvsCcPFhw1oKBW9JKFDxmX8NTxlxV0Y0y94Tk=;
- b=quwKf8UpeWlsK5IT478K5wSFxMPJAnSSCPA5enErQYzG6S0HJKz8m1mAEo9dvdUhGt
- H14RID+/z9gp2uPIkTVD9wAyJwUiMhZhZL3JMLiKOypgkqH+OaHiP3/WOAFeRAGj1ByU
- vMjFxLaJqnTyxAeBE6tlAsmZLSz+yEAxuwbZszQ1EGXZspYZa7s3eQnv87XDfaMXTgD6
- EEprjak5FO/2RFHYB7igDZoSSWYzQ6kbXqG4e1Uh/dkFdE+a71apx84GwAYINLVXmdzC
- FstRnF5lvsUm87T1B0KM2l9TAcgT1WAGsjsc+L1KmsGmg02Q90fkk67jGxhLNlvhmXOB
- I66A==
+ d=gmail.com; s=20251104; t=1792112624; x=1792717424; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tJfLxSrZH/zEvQTCiw5doUQIpEANR5hXpDeQCyBhDV8=;
+ b=osc4b5H+GyhGVMoNN6BgSih5waDh+MfeM3LRwV84RsO/ItY7uv2F5GU+HHsnN7r4/Y
+ 8/k1QqzyX/voTgZ0g+t1upWHHNA+ES43mHjWFfEvwosTbzNME6xGcipAATEK2U1sfSx8
+ 6UGaFgTlZ0uTeWFv97OqhBvkFsLEAcc7bBzs5OAcS2TrOCLmbonSZ9rHIbRi4kdWOV0u
+ zJG3/2mohbtSY4A+1zzkwfUb1ybE7QhdEkGZwDZ3cJ5GtFPu9qgY4nPgAKf2MkaPIFmF
+ V5nlxBNMoc28nPvR75P4W1vGtmWyQClvngS/2IYPF0JLzhAVCfl2nNS6YC0+yrUmFazK
+ qPaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112591; x=1792717391;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=YNC9KovvsCcPFhw1oKBW9JKFDxmX8NTxlxV0Y0y94Tk=;
- b=PBHnTYew00h2oK3inycJ90j5+B9zSLWOBiYETgRP/ukHVmrGqRFqcazxt2ASLk+36e
- FY8r8PMeeWp7xZGM8BMQKBzdSBezkpLe8EQ8bM19/Y69KVTlfwtUGqHPfHh62kZJ+qDD
- mJtDOHNuaNcBl4XzI0YO3qxJGz1LDGgG44VOBm4jMvQ/8zJFYAPuGSemAWxLH0bI0gKe
- yOagUYd0GIcnIy5JZ9Q+TPfX9/wAoWsUkqPlfXcVZTB8BuLvcjSNORxJ0if5w9VpoYg6
- 1C+ffQJJ4JkcEfW86kZAqICrzTbyJIOyRhAY+K9xwpSbMj8b2UQuuNSyEOkJxbRP7Z5c
- Aefg==
-X-Gm-Message-State: AFq9FYJGGQaqcbGUpeRZ1yHtdSjsPV8jCMOx20Wj7k1pgfQs1+NS4l8J
- mW15hoWDIuLyAFofOFq3haa7sE2+XCWvudAt8bcMFy0ut8HUbfNacvuWLqkXzg==
-X-Gm-Gg: AYBFou2Ksq4TyOFz7AeAz+L68mBbUFYQBQlUzdv5ZzLsIDRkFE74u7lD1hwgEht2ogI
- VjS0USK1HORN7Xk8AAcryfMkuHKha5O4bLDFf6Jk6zhdTwGiBcxFEPxwBfrAUrzyJTBfdXPpUw5
- HkfCQwKknZOnkO4nyfVkTgwyXcGbkh3lwRgOYvEhNiQ5aZGCOKDggKpxvApOvN3U9PUUKq1yaQ5
- wX6PINHsvDudEmjeW+bCWkRLGwbXBWrdhPhif4fwTP55eZZOggD0f9rX1j7AALCohZrHYHKTwB8
- +QxIx3ONoyDCmn+ku5zHMCcNKyTcZQu03h0MRIIE8/8/xefpH4jbYsCY1f4YkQSoUGtN4GTRHk/
- VCWNleynXMdSoaHR3EWEsdUNfv20lGDLlwHhSJqEthTJ3AN65IeiN61UkRQnQrBYosdZOa+2ebt
- kq4AaosSsNPNgsQ7kxUIHNr3J/7NoMadrozuH+HuTz7gzP5HeqZ0O7ezV0GkNH630oBZD+BKM7d
- F+BOBSxwKzfXfj5
-X-Received: by 2002:a17:902:ce91:b0:2e2:e0f8:e57c with SMTP id
- d9443c01a7336-2e842f20970mr172447905ad.70.1792112590800; 
- Thu, 15 Oct 2026 18:03:10 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792112624; x=1792717424;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tJfLxSrZH/zEvQTCiw5doUQIpEANR5hXpDeQCyBhDV8=;
+ b=O2NvIbiogTV56dPv99aKuYpBYOqwxGWu9Tq9Do2IEgBZahIH7TUbUcsYqj21wvDh0e
+ ojmuWerUONeaYqmQN7TQDBMWTI6xCkuCckigqcFXwp5EdTDmKBHxOWnp4h2MmOwMh5d3
+ I4Y4R4JNINyxEUEhwiwd+GgyQtVPuu/cE6VBueoIIoBJTAGnxe/MNXojRUBfdEauo2ja
+ uatLj+uC9F8gzHLyIXqxaQyBW0gn8HzK1Y1YV5toc1z1fSvwWHXLUfnLBdFhOzZUnX9c
+ MiWTTxgaqhWlOYXHIC0yhciFfPqQ9YquTlUzLHd6ZKw91yfqNeuKJuX2NjKCNfNSO3bJ
+ 48aw==
+X-Gm-Message-State: AFq9FYL8kKBzXRlEcdm5L4uSNbW2HsTyfcpI+izzvdCaXyyQTfks6QPE
+ i0sV+5FrXLc8HqK6ZwKFEDunVQcEKvxrWp2n1hoTJsNHtrFUX7f5IW4zNb+B8g==
+X-Gm-Gg: AYBFou0qh7ptrXtYyLhl+ITWoPvLWLVHqhr2S3YidhFvxPxBLVVNfyUK6FtlBTExR/f
+ a9BncWapY+VhdWEIXeCOAHmLfq2h9/JFuv0xMi2vol7cZ2eJ+0Sk9qPxe7H7x/FXoY6Z9vpJfqi
+ 1ogVMNAK6rXIXx2drnHq/KaGxaGkcfJeaApoorSLUuJKt+jYtImPYCoSCMAaLE8DOyz3wrRgwxX
+ GbvXHDmcUHFqDVG9xcU38q17oh02e2CPQup+wvEhzFVMHIN992b2LbQU6zzptOFH3g1qtws/X6j
+ 8YK1/elgkyRl4YCPI1EgGWO0d+W+/uLQU7tU0hxl443vcJYR/nWdVyi2Rs2QUaCRYbuoMJnPDa0
+ uO45XxJ+5bHep9msU+W8iujrp/7rBCzELmiYSkDRmQltS8edx7xFxLSGStm3ZFQQipoYD4pcJrb
+ dpQBLBAgow/Hbf6wc9BM6CocyvVZ6jT0qEsm17RRllV16b6Uw+GF6jbpBEosuQWWNfbHJPkiPBT
+ MM+EAZR/uNE4igy
+X-Received: by 2002:a17:90b:17c4:b0:3ac:adce:60bb with SMTP id
+ 98e67ed59e1d1-3acadce6700mr2369193a91.23.1792112623953; 
+ Thu, 15 Oct 2026 18:03:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.08
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:10 -0700 (PDT)
+ Thu, 15 Oct 2026 18:03:43 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Xie Bo <xb@ultrarisc.com>, qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 08/50] target/riscv/kvm: Preserve VCSR across migration
-Date: Fri, 16 Oct 2026 11:01:55 +1000
-Message-ID: <20261016010237.1102834-9-alistair.francis@wdc.com>
+Subject: [PULL v2 20/50] target/riscv: Add riscv_cpu_get_mip()
+Date: Fri, 16 Oct 2026 11:02:07 +1000
+Message-ID: <20261016010237.1102834-21-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,57 +105,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-The vector state sync handles vstart, vl and vtype, but leaves vcsr
-behind.  vxrm and vxsat in the migration stream are therefore stale,
-and the destination does not restore the values held by KVM.
+Route MIP reads in the interrupt, CSR, ACLINT and pending-IRQ
+code through a single riscv_cpu_get_mip() accessor, so the
+implementation can change in one place.
 
-Read vcsr when collecting vector state and split it into vxrm and
-vxsat.  Rebuild it from those fields when writing vector state back.
+riscv_cpu_update_mip() now reads the old value under the BQL,
+so the returned value matches the one written.
 
-Fixes: 3ca78c0689d5 ("target/riscv/kvm: add RVV and Vector CSR regs")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260831074106.1798671-4-xb@ultrarisc.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260930174508.81497-6-philmd@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ target/riscv/cpu.h            |  7 +++++++
+ hw/intc/riscv_aclint.c        |  2 +-
+ target/riscv/cpu.c            |  8 +++++++-
+ target/riscv/tcg/cpu_helper.c | 12 +++++++-----
+ target/riscv/tcg/csr.c        |  6 ++++--
+ 5 files changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 1993bd446b..45ad5e1525 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -910,6 +910,13 @@ static int kvm_riscv_get_regs_vector(CPUState *cs)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 24b22032e1..f9f0146f56 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -688,6 +688,13 @@ bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
+ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
+ int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
++/**
++ * riscv_cpu_get_mip:
++ * @env: CPURISCVState
++ *
++ * Returns: the current value of the Machine Interrupt Pending (MIP) register.
++ */
++uint64_t riscv_cpu_get_mip(const CPURISCVState *env);
+ /**
+  * riscv_cpu_update_mip:
+  * @env: CPURISCVState
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 2d133d0dcf..4bd359c338 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -438,7 +438,7 @@ static uint64_t riscv_aclint_swi_read(void *opaque, hwaddr addr,
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "aclint-swi: invalid hartid: %zu", hartid);
+         } else if ((addr & 0x3) == 0) {
+-            return (swi->sswi) ? 0 : ((env->mip & MIP_MSIP) > 0);
++            return (swi->sswi) ? 0 : ((riscv_cpu_get_mip(env) & MIP_MSIP) > 0);
+         }
      }
-     env->vtype = reg;
  
-+    ret = kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vcsr), &reg);
-+    if (ret) {
-+        return ret;
-+    }
-+    env->vxrm = (reg & VCSR_VXRM) >> VCSR_VXRM_SHIFT;
-+    env->vxsat = (reg & VCSR_VXSAT) >> VCSR_VXSAT_SHIFT;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index da4c1a090b..b8d6f992ba 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -916,8 +916,9 @@ uint64_t riscv_cpu_all_pending(CPURISCVState *env)
+     uint32_t gein = get_field(env->hstatus, HSTATUS_VGEIN);
+     uint64_t vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
+     uint64_t vstip = (env->vstime_irq) ? MIP_VSTIP : 0;
++    uint64_t mip = riscv_cpu_get_mip(env);
+ 
+-    return (env->mip | vsgein | vstip) & env->mie;
++    return (mip | vsgein | vstip) & env->mie;
+ }
+ 
+ int riscv_cpu_mirq_pending(CPURISCVState *env)
+@@ -953,6 +954,11 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
+                                     (irqs | irqs_f_vs), env->hviprio);
+ }
+ 
++uint64_t riscv_cpu_get_mip(const CPURISCVState *env)
++{
++    return env->mip;
++}
 +
-     if (kvm_v_vlenb.supported) {
-         ret = kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
-         if (ret) {
-@@ -966,6 +973,13 @@ static int kvm_riscv_put_regs_vector(CPUState *cs)
-         return ret;
+ bool riscv_cpu_has_work(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 6a8533ee31..f03f149a66 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -567,7 +567,7 @@ void riscv_cpu_interrupt(CPURISCVState *env)
+ 
+     vstip = env->vstime_irq ? MIP_VSTIP : 0;
+ 
+-    if (env->mip | vsgein | vstip | irqf) {
++    if (riscv_cpu_get_mip(env) | vsgein | vstip | irqf) {
+         cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+     } else {
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+@@ -576,14 +576,15 @@ void riscv_cpu_interrupt(CPURISCVState *env)
+ 
+ uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask, uint64_t value)
+ {
+-    uint64_t old = env->mip;
++    uint64_t old;
+ 
+     /* No need to update mip for VSTIP */
+     mask = ((mask == MIP_VSTIP) && env->vstime_irq) ? 0 : mask;
+ 
+     BQL_LOCK_GUARD();
+ 
+-    env->mip = (env->mip & ~mask) | (value & mask);
++    old = riscv_cpu_get_mip(env);
++    env->mip = (old & ~mask) | (value & mask);
+ 
+     riscv_cpu_interrupt(env);
+ 
+@@ -2085,10 +2086,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
+     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
+     uint64_t deleg = async ? env->mideleg : env->medeleg;
++    uint64_t mip = riscv_cpu_get_mip(env);
+     bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
+-        !(env->mip & (1ULL << cause));
++                                   !(mip & (1ULL << cause));
+     bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
+-        !(env->mip & (1ULL << cause));
++                                    !(mip & (1ULL << cause));
+     bool smode_double_trap = false;
+     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+     const bool prev_virt = env->virt_enabled;
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index a3351428cb..a030614434 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3861,7 +3861,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+     if (mask) {
+         old_mip = riscv_cpu_update_mip(env, mask, (new_val & mask));
+     } else {
+-        old_mip = env->mip;
++        old_mip = riscv_cpu_get_mip(env);
      }
  
-+    reg = (env->vxrm << VCSR_VXRM_SHIFT) |
-+          (env->vxsat << VCSR_VXSAT_SHIFT);
-+    ret = kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vcsr), &reg);
-+    if (ret) {
-+        return ret;
-+    }
+     if (csrno != CSR_HVIP) {
+@@ -4604,8 +4604,10 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+     hviprio = get_field(env->hvictl, HVICTL_IPRIO);
+ 
+     if (gein) {
++        uint64_t mip = riscv_cpu_get_mip(env);
 +
-     if (kvm_v_vlenb.supported) {
-         reg = cpu->cfg.vlenb;
-         ret = kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
+         vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
+-        vseip = env->mie & (env->mip | vsgein) & MIP_VSEIP;
++        vseip = env->mie & (mip | vsgein) & MIP_VSEIP;
+         if (gein <= env->geilen && vseip) {
+             siid[scount] = IRQ_S_EXT;
+             siprio[scount] = IPRIO_MMAXIPRIO + 1;
 -- 
 2.55.0
 
