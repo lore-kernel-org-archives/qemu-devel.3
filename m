@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF9ACC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409CCCC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWPC-0004ll-Vv; Thu, 15 Oct 2026 21:06:44 -0400
+	id 1xHWOt-0003ki-Ee; Thu, 15 Oct 2026 21:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMQ-0000Vh-Mk
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:56 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1xHWMV-0000Ws-Gc
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:00 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMM-0004Ix-07
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:48 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3acb11973c3so762786a91.3
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:45 -0700 (PDT)
+ id 1xHWMS-0004Jk-BP
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:03:54 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2e6038cebefso44430675ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112624; x=1792717424; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tJfLxSrZH/zEvQTCiw5doUQIpEANR5hXpDeQCyBhDV8=;
- b=osc4b5H+GyhGVMoNN6BgSih5waDh+MfeM3LRwV84RsO/ItY7uv2F5GU+HHsnN7r4/Y
- 8/k1QqzyX/voTgZ0g+t1upWHHNA+ES43mHjWFfEvwosTbzNME6xGcipAATEK2U1sfSx8
- 6UGaFgTlZ0uTeWFv97OqhBvkFsLEAcc7bBzs5OAcS2TrOCLmbonSZ9rHIbRi4kdWOV0u
- zJG3/2mohbtSY4A+1zzkwfUb1ybE7QhdEkGZwDZ3cJ5GtFPu9qgY4nPgAKf2MkaPIFmF
- V5nlxBNMoc28nPvR75P4W1vGtmWyQClvngS/2IYPF0JLzhAVCfl2nNS6YC0+yrUmFazK
- qPaQ==
+ d=gmail.com; s=20251104; t=1792112630; x=1792717430; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=//Kbiv/WZOTuvCQMoSvCMpxgv9DhMObNoP2MrZFSf7I=;
+ b=D5j55/wPa8jRef/dihp5PTByi32XQU9Bcu1PFYupZGCczhDAH0615wx5g5cSE5VN3n
+ jkvl9dlejIYxEE2wpUGxjWM+HpL+G7m4GOeOCRso9WNtCi5Sar1CjKVTlVIo3VzSI07S
+ Ns+w4qdclGf/E58xxzt+Od0uu6LmGIWYL4/O3pPAPv7mCBMHNQPvS2fF6lXq+Sp80lio
+ sMqpWfo6mShU5wV4jwj3v2nxpydmWiM3jxzwid3lmI4CpHFoUsBCBo5Z7+YRS9KQbcjZ
+ Wvfq3SsjUbCh6f0whGrtry7kgEMnAVYZZajx/LchVWxiGjvZemsepsRMt7Bm7tGo/5AY
+ fefg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112624; x=1792717424;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tJfLxSrZH/zEvQTCiw5doUQIpEANR5hXpDeQCyBhDV8=;
- b=O2NvIbiogTV56dPv99aKuYpBYOqwxGWu9Tq9Do2IEgBZahIH7TUbUcsYqj21wvDh0e
- ojmuWerUONeaYqmQN7TQDBMWTI6xCkuCckigqcFXwp5EdTDmKBHxOWnp4h2MmOwMh5d3
- I4Y4R4JNINyxEUEhwiwd+GgyQtVPuu/cE6VBueoIIoBJTAGnxe/MNXojRUBfdEauo2ja
- uatLj+uC9F8gzHLyIXqxaQyBW0gn8HzK1Y1YV5toc1z1fSvwWHXLUfnLBdFhOzZUnX9c
- MiWTTxgaqhWlOYXHIC0yhciFfPqQ9YquTlUzLHd6ZKw91yfqNeuKJuX2NjKCNfNSO3bJ
- 48aw==
-X-Gm-Message-State: AFq9FYL8kKBzXRlEcdm5L4uSNbW2HsTyfcpI+izzvdCaXyyQTfks6QPE
- i0sV+5FrXLc8HqK6ZwKFEDunVQcEKvxrWp2n1hoTJsNHtrFUX7f5IW4zNb+B8g==
-X-Gm-Gg: AYBFou0qh7ptrXtYyLhl+ITWoPvLWLVHqhr2S3YidhFvxPxBLVVNfyUK6FtlBTExR/f
- a9BncWapY+VhdWEIXeCOAHmLfq2h9/JFuv0xMi2vol7cZ2eJ+0Sk9qPxe7H7x/FXoY6Z9vpJfqi
- 1ogVMNAK6rXIXx2drnHq/KaGxaGkcfJeaApoorSLUuJKt+jYtImPYCoSCMAaLE8DOyz3wrRgwxX
- GbvXHDmcUHFqDVG9xcU38q17oh02e2CPQup+wvEhzFVMHIN992b2LbQU6zzptOFH3g1qtws/X6j
- 8YK1/elgkyRl4YCPI1EgGWO0d+W+/uLQU7tU0hxl443vcJYR/nWdVyi2Rs2QUaCRYbuoMJnPDa0
- uO45XxJ+5bHep9msU+W8iujrp/7rBCzELmiYSkDRmQltS8edx7xFxLSGStm3ZFQQipoYD4pcJrb
- dpQBLBAgow/Hbf6wc9BM6CocyvVZ6jT0qEsm17RRllV16b6Uw+GF6jbpBEosuQWWNfbHJPkiPBT
- MM+EAZR/uNE4igy
-X-Received: by 2002:a17:90b:17c4:b0:3ac:adce:60bb with SMTP id
- 98e67ed59e1d1-3acadce6700mr2369193a91.23.1792112623953; 
- Thu, 15 Oct 2026 18:03:43 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792112630; x=1792717430;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=//Kbiv/WZOTuvCQMoSvCMpxgv9DhMObNoP2MrZFSf7I=;
+ b=e8Z6O4BGFr4GKN2aTTiH9yUuZPXZoLWVfqEdKNt8Mkyyzt3Usca1CfidherF8ou5Me
+ XwMOxYdsy2cceRmtTA/a+ghO8FlcRsDRsFTlX2vpJMtZKnPjFeuOxPLUl7kIjRlfAnK5
+ Kb1iucYDFr5eeeRcSdjO1yG9aeZuckbTTMvsheYK3Xx0+l9p/1atxHmbO21Xx/kwMwmL
+ JFF1MwZito3cT/BKGgyK5LBDc+uyLSMhSNbainPFmaoDlGTrQNGRWp38doVIlt9EE1hG
+ 6HSoXhT0LGBcASqPPOLPGjGcLWYjdW5qDRZZhNuBE3ZH1ITX6Rl/LwuKC4e9+HkaaWUK
+ c5WQ==
+X-Gm-Message-State: AFq9FYKS7gcm80DQ09hTeImqHUDpXPOgwnlaIKOdcPX5d+bTYdF5LjBy
+ OEpJk88rMqWd2gKYsIEmnzx70FUeCA1IbbziDoOvRFhqdu3a0/g98DMIBamAsQ==
+X-Gm-Gg: AYBFou2pXWxknlbt3W1egY/GtARijXD6hKsr7NR2JtBuIpXyOskm0dvCrZnyY/2I4jF
+ Q1ap6XRcSkezpPFrtuKzqOkeYMS1CURBZMkUzh0k2NPEKcSDmDZUro0saqFaxNUrIhJgZjal31n
+ er6XW4lRffT4ktU60fj3b+U8FaKdjU/rACWq3MXurZXiNo9i/U+sqVoYRqX0xzSuPa4L+xTdnMM
+ +Cu/VVXvcUCFAOZOnEUntN5X4PrBHqgBpkXSpCXvveTEortP03JvgN+00L6gAPCYsTzFOxKDL1S
+ zBez9jFuZDjdVpnAjbpj4aVjaBQCSarRJJHxpA3nKZM180X5vh28+l5LmvJAJBukq8/UX7sW7mh
+ B9lnndDd0YG8yGJNoS7tr6CBoyCDaQJvfxZWjYkj5DNkjF7eGTqVKxrAax9BmArnbbUJKFiryuM
+ 4T9xHLiQIM9fRK6UvrchpN7+9Lrg+BydctiqfrhggyhGh3vpDFoKTMBnssPmPy9/smTxE+t8nn5
+ ug8B78vkTqFIAKb
+X-Received: by 2002:a17:903:2987:b0:2e4:b37a:d583 with SMTP id
+ d9443c01a7336-2e842cf5aadmr168379905ad.61.1792112629762; 
+ Thu, 15 Oct 2026 18:03:49 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.42
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:03:43 -0700 (PDT)
+ Thu, 15 Oct 2026 18:03:49 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>, Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 20/50] target/riscv: Add riscv_cpu_get_mip()
-Date: Fri, 16 Oct 2026 11:02:07 +1000
-Message-ID: <20261016010237.1102834-21-alistair.francis@wdc.com>
+Subject: [PULL v2 22/50] target/riscv: add sdext debug CSRs state
+Date: Fri, 16 Oct 2026 11:02:09 +1000
+Message-ID: <20261016010237.1102834-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,155 +105,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Route MIP reads in the interrupt, CSR, ACLINT and pending-IRQ
-code through a single riscv_cpu_get_mip() accessor, so the
-implementation can change in one place.
+RISC-V Debug Specification:
+https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
 
-riscv_cpu_update_mip() now reads the old value under the BQL,
-so the returned value matches the one written.
+Add architectural state for Sdext Debug Mode: debug_mode, dcsr, dpc
+and dscratch0/1. Wire up CSR access for dcsr/dpc/dscratch and gate
+them to Debug Mode (or host debugger access).
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260930174508.81497-6-philmd@oss.qualcomm.com>
+The Sdext is not fully implemented, so it is disabled by default.
+
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260928195902.2045235-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h            |  7 +++++++
- hw/intc/riscv_aclint.c        |  2 +-
- target/riscv/cpu.c            |  8 +++++++-
- target/riscv/tcg/cpu_helper.c | 12 +++++++-----
- target/riscv/tcg/csr.c        |  6 ++++--
- 5 files changed, 26 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h                |   4 +
+ target/riscv/cpu_bits.h           |  33 ++++++++
+ target/riscv/cpu_cfg_fields.h.inc |   1 +
+ target/riscv/cpu.c                |   7 ++
+ target/riscv/machine.c            |  22 ++++++
+ target/riscv/tcg/csr.c            | 126 ++++++++++++++++++++++++++++++
+ 6 files changed, 193 insertions(+)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 24b22032e1..f9f0146f56 100644
+index f9f0146f56..3b0d5e8aad 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -688,6 +688,13 @@ bool riscv_cpu_translate_for_debug(CPUState *cs, vaddr addr,
- bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
- void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
- int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
-+/**
-+ * riscv_cpu_get_mip:
-+ * @env: CPURISCVState
-+ *
-+ * Returns: the current value of the Machine Interrupt Pending (MIP) register.
-+ */
-+uint64_t riscv_cpu_get_mip(const CPURISCVState *env);
- /**
-  * riscv_cpu_update_mip:
-  * @env: CPURISCVState
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index 2d133d0dcf..4bd359c338 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -438,7 +438,7 @@ static uint64_t riscv_aclint_swi_read(void *opaque, hwaddr addr,
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "aclint-swi: invalid hartid: %zu", hartid);
-         } else if ((addr & 0x3) == 0) {
--            return (swi->sswi) ? 0 : ((env->mip & MIP_MSIP) > 0);
-+            return (swi->sswi) ? 0 : ((riscv_cpu_get_mip(env) & MIP_MSIP) > 0);
-         }
-     }
+@@ -510,6 +510,10 @@ struct CPUArchState {
  
+     /* True if in debugger mode.  */
+     bool debugger;
++    bool debug_mode;
++    uint32_t dcsr;
++    target_ulong dpc;
++    target_ulong dscratch[2];
+ 
+     uint64_t mstateen[SMSTATEEN_MAX_COUNT];
+     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index c01050ce2b..3579789a1f 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -467,6 +467,39 @@
+ #define CSR_DCSR            0x7b0
+ #define CSR_DPC             0x7b1
+ #define CSR_DSCRATCH        0x7b2
++#define CSR_DSCRATCH1       0x7b3
++
++/* DCSR fields */
++#define DCSR_XDEBUGVER_SHIFT    28
++#define DCSR_XDEBUGVER_MASK     (0xfu << DCSR_XDEBUGVER_SHIFT)
++#define DCSR_DEBUGVER(val)      ((val) << DCSR_XDEBUGVER_SHIFT)
++#define DCSR_EXTCAUSE_SHIFT     24
++#define DCSR_EXTCAUSE_MASK      (0x7u << DCSR_EXTCAUSE_SHIFT)
++#define DCSR_CETRIG             BIT(19)
++#define DCSR_PELP               BIT(18)
++#define DCSR_EBREAKVS           BIT(17)
++#define DCSR_EBREAKVU           BIT(16)
++#define DCSR_EBREAKM            BIT(15)
++#define DCSR_EBREAKS            BIT(13)
++#define DCSR_EBREAKU            BIT(12)
++#define DCSR_STEPIE             BIT(11)
++#define DCSR_STOPCOUNT          BIT(10)
++#define DCSR_STOPTIME           BIT(9)
++#define DCSR_CAUSE_SHIFT        6
++#define DCSR_CAUSE_MASK         (0x7u << DCSR_CAUSE_SHIFT)
++#define DCSR_V                  BIT(5)
++#define DCSR_MPRVEN             BIT(4)
++#define DCSR_NMIP               BIT(3)
++#define DCSR_STEP               BIT(2)
++#define DCSR_PRV_MASK           0x3u
++
++#define DCSR_CAUSE_EBREAK       1
++#define DCSR_CAUSE_TRIGGER      2
++#define DCSR_CAUSE_HALTREQ      3
++#define DCSR_CAUSE_STEP         4
++#define DCSR_CAUSE_RESET        5
++#define DCSR_CAUSE_GROUP        6
++#define DCSR_CAUSE_OTHER        7
+ 
+ /* Performance Counters */
+ #define CSR_MHPMCOUNTER3    0xb03
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index f91c780299..24f3606f94 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -105,6 +105,7 @@ BOOL_FIELD(ext_zvfbfmin)
+ BOOL_FIELD(ext_zvfbfwma)
+ BOOL_FIELD(ext_zvfh)
+ BOOL_FIELD(ext_zvfhmin)
++BOOL_FIELD(ext_sdext)
+ BOOL_FIELD(ext_sdtrig)
+ BOOL_FIELD(ext_smaia)
+ BOOL_FIELD(ext_ssaia)
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b..b8d6f992ba 100644
+index 45e82fc30c..c0837c6c55 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -916,8 +916,9 @@ uint64_t riscv_cpu_all_pending(CPURISCVState *env)
-     uint32_t gein = get_field(env->hstatus, HSTATUS_VGEIN);
-     uint64_t vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
-     uint64_t vstip = (env->vstime_irq) ? MIP_VSTIP : 0;
-+    uint64_t mip = riscv_cpu_get_mip(env);
+@@ -249,6 +249,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
++    ISA_EXT_DATA_ENTRY(sdext, PRIV_VERSION_1_12_0, ext_sdext),
+     ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
+     ISA_INTERNAL_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0,
+                                 has_priv_1_12),
+@@ -1101,6 +1102,12 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
  
--    return (env->mip | vsgein | vstip) & env->mie;
-+    return (mip | vsgein | vstip) & env->mie;
+ #ifndef CONFIG_USER_ONLY
+ #ifdef CONFIG_TCG
++    env->debug_mode = false;
++    env->dcsr = DCSR_DEBUGVER(4);
++    env->dpc = 0;
++    env->dscratch[0] = 0;
++    env->dscratch[1] = 0;
++
+     if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+         riscv_trigger_reset_hold(env);
+     }
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index ed10e65259..0de06e9588 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -327,6 +327,13 @@ static bool debug_needed(void *opaque)
+     return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
  }
  
- int riscv_cpu_mirq_pending(CPURISCVState *env)
-@@ -953,6 +954,11 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
-                                     (irqs | irqs_f_vs), env->hviprio);
- }
- 
-+uint64_t riscv_cpu_get_mip(const CPURISCVState *env)
++static bool sdext_needed(void *opaque)
 +{
-+    return env->mip;
++    RISCVCPU *cpu = opaque;
++
++    return cpu->cfg.ext_sdext;
 +}
 +
- bool riscv_cpu_has_work(CPUState *cs)
+ static int debug_post_load(void *opaque, int version_id)
  {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 6a8533ee31..f03f149a66 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -567,7 +567,7 @@ void riscv_cpu_interrupt(CPURISCVState *env)
+     RISCVCPU *cpu = opaque;
+@@ -361,6 +368,20 @@ static const VMStateDescription vmstate_debug = {
+     }
+ };
  
-     vstip = env->vstime_irq ? MIP_VSTIP : 0;
- 
--    if (env->mip | vsgein | vstip | irqf) {
-+    if (riscv_cpu_get_mip(env) | vsgein | vstip | irqf) {
-         cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-     } else {
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-@@ -576,14 +576,15 @@ void riscv_cpu_interrupt(CPURISCVState *env)
- 
- uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask, uint64_t value)
++static const VMStateDescription vmstate_sdext = {
++    .name = "cpu/sdext",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sdext_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(env.debug_mode, RISCVCPU),
++        VMSTATE_UINT32(env.dcsr, RISCVCPU),
++        VMSTATE_UINTTL(env.dpc, RISCVCPU),
++        VMSTATE_UINTTL_ARRAY(env.dscratch, RISCVCPU, 2),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static int riscv_cpu_post_load(void *opaque, int version_id)
  {
--    uint64_t old = env->mip;
-+    uint64_t old;
- 
-     /* No need to update mip for VSTIP */
-     mask = ((mask == MIP_VSTIP) && env->vstime_irq) ? 0 : mask;
- 
-     BQL_LOCK_GUARD();
- 
--    env->mip = (env->mip & ~mask) | (value & mask);
-+    old = riscv_cpu_get_mip(env);
-+    env->mip = (old & ~mask) | (value & mask);
- 
-     riscv_cpu_interrupt(env);
- 
-@@ -2085,10 +2086,11 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     bool async = !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
-     target_ulong cause = cs->exception_index & RISCV_EXCP_INT_MASK;
-     uint64_t deleg = async ? env->mideleg : env->medeleg;
-+    uint64_t mip = riscv_cpu_get_mip(env);
-     bool s_injected = env->mvip & (1ULL << cause) & env->mvien &&
--        !(env->mip & (1ULL << cause));
-+                                   !(mip & (1ULL << cause));
-     bool vs_injected = env->hvip & (1ULL << cause) & env->hvien &&
--        !(env->mip & (1ULL << cause));
-+                                    !(mip & (1ULL << cause));
-     bool smode_double_trap = false;
-     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
-     const bool prev_virt = env->virt_enabled;
+     RISCVCPU *cpu = opaque;
+@@ -634,6 +655,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_ctr,
+         &vmstate_sstc,
+         &vmstate_mseccfg,
++        &vmstate_sdext,
+         NULL
+     }
+ };
 diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index a3351428cb..a030614434 100644
+index a030614434..2ad66239ae 100644
 --- a/target/riscv/tcg/csr.c
 +++ b/target/riscv/tcg/csr.c
-@@ -3861,7 +3861,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     if (mask) {
-         old_mip = riscv_cpu_update_mip(env, mask, (new_val & mask));
-     } else {
--        old_mip = env->mip;
-+        old_mip = riscv_cpu_get_mip(env);
-     }
+@@ -3252,6 +3252,126 @@ static RISCVException write_mtval(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
  
-     if (csrno != CSR_HVIP) {
-@@ -4604,8 +4604,10 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-     hviprio = get_field(env->hvictl, HVICTL_IPRIO);
- 
-     if (gein) {
-+        uint64_t mip = riscv_cpu_get_mip(env);
++#if !defined(CONFIG_USER_ONLY)
++static RISCVException sdext(CPURISCVState *env, int csrno)
++{
++    if (!riscv_cpu_cfg(env)->ext_sdext) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
 +
-         vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
--        vseip = env->mie & (env->mip | vsgein) & MIP_VSEIP;
-+        vseip = env->mie & (mip | vsgein) & MIP_VSEIP;
-         if (gein <= env->geilen && vseip) {
-             siid[scount] = IRQ_S_EXT;
-             siprio[scount] = IPRIO_MMAXIPRIO + 1;
++    if (!env->debug_mode && !env->debugger) {
++        return RISCV_EXCP_ILLEGAL_INST;
++    }
++
++    return RISCV_EXCP_NONE;
++}
++
++static target_ulong dcsr_visible_mask(CPURISCVState *env)
++{
++    target_ulong mask = (target_ulong)-1;
++    RISCVCPU *cpu = env_archcpu(env);
++
++    if (!riscv_has_ext(env, RVH)) {
++        mask &= ~(DCSR_EBREAKVS | DCSR_EBREAKVU | DCSR_V);
++    }
++    if (!riscv_has_ext(env, RVS)) {
++        mask &= ~DCSR_EBREAKS;
++    }
++    if (!riscv_has_ext(env, RVU)) {
++        mask &= ~DCSR_EBREAKU;
++    }
++    if (!cpu->cfg.ext_zicfilp) {
++        mask &= ~DCSR_PELP;
++    }
++    if (!cpu->cfg.ext_smdbltrp) {
++        mask &= ~DCSR_CETRIG;
++    }
++
++    return mask;
++}
++
++static RISCVException read_dcsr(CPURISCVState *env, int csrno,
++                                target_ulong *val)
++{
++    *val = env->dcsr & dcsr_visible_mask(env);
++    return RISCV_EXCP_NONE;
++}
++
++static target_ulong dcsr_writable_mask(CPURISCVState *env)
++{
++    target_ulong mask = DCSR_EBREAKM | DCSR_EBREAKS | DCSR_EBREAKU |
++                        DCSR_STEPIE | DCSR_STOPCOUNT | DCSR_STOPTIME |
++                        DCSR_STEP | DCSR_PRV_MASK;
++    RISCVCPU *cpu = env_archcpu(env);
++
++    mask |= DCSR_MPRVEN;
++
++    if (riscv_has_ext(env, RVH)) {
++        mask |= DCSR_EBREAKVS | DCSR_EBREAKVU | DCSR_V;
++    }
++    if (riscv_has_ext(env, RVS)) {
++        mask |= DCSR_EBREAKS;
++    }
++    if (riscv_has_ext(env, RVU)) {
++        mask |= DCSR_EBREAKU;
++    }
++    if (cpu->cfg.ext_zicfilp) {
++        mask |= DCSR_PELP;
++    }
++    if (cpu->cfg.ext_smdbltrp) {
++        mask |= DCSR_CETRIG;
++    }
++
++    return mask;
++}
++
++static RISCVException write_dcsr(CPURISCVState *env, int csrno,
++                                 target_ulong val, uintptr_t ra)
++{
++    target_ulong mask = dcsr_writable_mask(env);
++    target_ulong new_val = env->dcsr;
++
++    new_val &= ~mask;
++    new_val |= val & mask;
++    new_val &= ~DCSR_XDEBUGVER_MASK;
++    new_val |= DCSR_DEBUGVER(4);
++    env->dcsr = new_val;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException read_dpc(CPURISCVState *env, int csrno,
++                               target_ulong *val)
++{
++    *val = env->dpc & get_xepc_mask(env);
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_dpc(CPURISCVState *env, int csrno,
++                                target_ulong val, uintptr_t ra)
++{
++    env->dpc = val & get_xepc_mask(env);
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException read_dscratch(CPURISCVState *env, int csrno,
++                                    target_ulong *val)
++{
++    int index = (csrno == CSR_DSCRATCH1) ? 1 : 0;
++
++    *val = env->dscratch[index];
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_dscratch(CPURISCVState *env, int csrno,
++                                     target_ulong val, uintptr_t ra)
++{
++    int index = (csrno == CSR_DSCRATCH1) ? 1 : 0;
++
++    env->dscratch[index] = val;
++    return RISCV_EXCP_NONE;
++}
++#endif /* !CONFIG_USER_ONLY */
++
+ /* Execution environment configuration setup */
+ static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+@@ -6498,6 +6618,12 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     [CSR_TDATA3]    =  { "tdata3",   debug, read_tdata,    write_tdata    },
+     [CSR_TINFO]     =  { "tinfo",    debug, read_tinfo,    write_ignore   },
+     [CSR_MCONTEXT]  =  { "mcontext", debug, read_mcontext, write_mcontext },
++#if !defined(CONFIG_USER_ONLY)
++    [CSR_DCSR]      =  { "dcsr",      sdext, read_dcsr,     write_dcsr },
++    [CSR_DPC]       =  { "dpc",       sdext, read_dpc,      write_dpc },
++    [CSR_DSCRATCH]  =  { "dscratch0", sdext, read_dscratch, write_dscratch },
++    [CSR_DSCRATCH1] =  { "dscratch1", sdext, read_dscratch, write_dscratch },
++#endif
+ 
+     [CSR_MCTRCTL]    = { "mctrctl",    ctr_mmode,  NULL, NULL, rmw_xctrctl    },
+     [CSR_SCTRCTL]    = { "sctrctl",    ctr_smode,  NULL, NULL, rmw_xctrctl    },
 -- 
 2.55.0
 
