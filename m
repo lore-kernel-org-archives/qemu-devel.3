@@ -4,101 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF77CC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3334CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 09:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHeLE-0004FE-Tc; Fri, 16 Oct 2026 05:35:09 -0400
+	id 1xHeLt-0005Ht-4y; Fri, 16 Oct 2026 05:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xHeL2-00046K-3j
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:34:57 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jaminlin1207@gmail.com>)
- id 1xHeKu-0006Bs-MZ
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:34:55 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-885cd98d226so454273b3a.1
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 02:34:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792143287; x=1792748087; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2LHfSIvPOwnOctgQomh3z6+Sr1Dv6u891lc2zcm9z0I=;
- b=Aj3+C476OBXf5MXX+GLCnYHnfWK1iV/6v5JjzLIslamSaJfwehMY9skIQFMXWQm5mP
- qdHi2MIbohPIijQTkqtQLnrOJIFyCgBCG7JB2JMeyjy8tIGsEE1lJoUs3C/Yub6mqKIt
- YclTksyT4TnNZtrsj7Zt1sC77xO4y4gEIlewSytdmD8+PD46sNzui4jtduyxJhwQfgsI
- E7rNvXJhryT4dgM3s1OdK69R3VnqFoQpKQDczUtWYJa0goEskiVu+WkiGEMDsS1X1vEV
- f0hJfCUWE9R1sPflEnyHfAuiMAU/Qyyc+BSL53UwXr3mTBm3KIsH1uYU1yHwrIkh0BXg
- hsPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792143287; x=1792748087;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2LHfSIvPOwnOctgQomh3z6+Sr1Dv6u891lc2zcm9z0I=;
- b=nREUpzMEVhEbaqFUvgUPtR2o3wVW34JZlOA7dNf+Kon+octoqgoQsnZvGFeGIg90OB
- p01gaenspXjMCY9XHler6FW70oX6Yq0JHGAB/MkXYxMjyVtjmgydflP/XdTUrEg5ovG7
- C6zf1Pjj1LYmspQGRhCK+cGaLQWgML9RQNOBrpVXKAEb3at9ocOsvPAbp5q6+Q2cVJoZ
- a0INCwDM/ZYi5Io8izyZ3Peh3klcinAPAbvy4rAsYULu3I8yG2bDJDL0K8LekvEt21l2
- tg/Hu21o4B7LRPzmEzqVjoEwz5jauINtwMGREs+37YnJ3PdXTMl1G07Qxke1+oP/pYir
- aw4Q==
-X-Gm-Message-State: AFq9FYLR4TyqAHNi/OJJCMdxP+rhlUyAcK9qma+ikFaOyMvh48e0woVX
- pjRuAnjUiq1MYMhsmS2N/lcaEUV9g4iA1W/VtMHzhMAV2SpnJ+RE5FPj
-X-Gm-Gg: AYBFou0sUUZP55uI7Pd3hR3Z0Q4NYgm9Rm1iOVeWTXHC084YE4pWAv0EtQ8JqQZ6xst
- xAkF9dcmD/NYdRAadfM/4ksWmzVXTK6+qoz9jwbY1tgJTCLGa+qmqJx0L0SK/ew0VzC1hZyWuM5
- sMkyh3FKa2v2DxekhZalE14qaqibRm3Zsu6ySDVq98JiQql1s886rLWg+jj3USlcUgBoPGnwMd/
- nHIOIKZC086pHFC+yqOANNnIdz2Jo72zn992sTGIKZu373uOz9e+3d8vZ7C4OPQ/iFEf8EpnVbk
- Maf7DfWuyNMjP+xfZl4hl6eyNRF3VqR0LYBmQrwR56qjuqU8/tBURPN13cFH4PD6NdScS+iAuV7
- RERhKOq2f+uTPaqyylEkyu7opgHjcmj7+OuHj1BwSVp5pkMLBh9v1AvRNX+bnJ0mNaEjXjirgzL
- +wRUOxtVuG1UbggGFE3JG829KGy6QArzX0UxgqnqujrKGWzEjnryyQPHO/p/jUiyJ7VKF7+9td7
- UHHVpozm9RJaDY=
-X-Received: by 2002:a05:6a00:2d87:b0:89f:e9a9:4ff2 with SMTP id
- d2e1a72fcca58-89fe9a9519emr393371b3a.22.1792143286633; 
- Fri, 16 Oct 2026 02:34:46 -0700 (PDT)
-Received: from JaminLin-PC.aspeed.com ([118.99.183.121])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-89f54b30d7asm839473b3a.5.2026.10.16.02.34.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 02:34:45 -0700 (PDT)
-Date: Fri, 16 Oct 2026 17:34:40 +0800
-From: Jamin Lin <jaminlin1207@gmail.com>
-To: Emmanuel Blot <emmanuel.blot@free.fr>
-Cc: qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH 22/22] hw/arm: clemente: populate the FRU EEPROMs
-Message-ID: <atHvsHf-v6WO6HgK@JaminLin-PC.aspeed.com>
-References: <20261015-bmc-clemente-v1-0-bf591886b5b6@free.fr>
- <20261015-bmc-clemente-v1-22-bf591886b5b6@free.fr>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261015-bmc-clemente-v1-22-bf591886b5b6@free.fr>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=jaminlin1207@gmail.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
+ id 1xHeLm-00058t-CW
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:35:42 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
+ id 1xHeLe-0006U9-Vs
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 05:35:41 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20261016093530epoutp04eee02dc2000afd426773c658ed10686d~e_N0LYMIw3039230392epoutp04X
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:35:30 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20261016093530epoutp04eee02dc2000afd426773c658ed10686d~e_N0LYMIw3039230392epoutp04X
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1792143330;
+ bh=OceVVUGjs0RrwDx66uQH2XhSVhUMq1g4mq0H+qkuTqo=;
+ h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+ b=HobePQgZ6ScYfiBqDUdNA9MspjWi7r6v24PPGa/accm9EZ1D8h3JrLO29ToN74q9g
+ tFdmClNH+iGzndIFtLaHuf1gX6PwtQ0auJvqjgwFNrBdFIP17QMa1O+nPj0Istaek5
+ wpJE1oCKUlqbjfo7Utck56I8E7fEhTt4bQioPo+4=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas2p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20261016093529epcas2p2332b52b0457afcb6428f53c5af609b8a~e_NzmLFI82854328543epcas2p2p;
+ Fri, 16 Oct 2026 09:35:29 +0000 (GMT)
+Received: from epcas2p1.samsung.com (unknown [182.195.38.205]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4j5ftn056Yz3hhT3; Fri, 16 Oct
+ 2026 09:35:29 +0000 (GMT)
+Mime-Version: 1.0
+Subject: [PATCH v2 6/6] tests/qtest: Add tests for Zoned UFS
+From: Daejun Park <daejun7.park@samsung.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
+ "lvivier@redhat.com" <lvivier@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
+ "hreitz@redhat.com" <hreitz@redhat.com>, "qemu-block@nongnu.org"
+ <qemu-block@nongnu.org>, "pierrick.bouvier@oss.qualcomm.com"
+ <pierrick.bouvier@oss.qualcomm.com>, Daejun Park <daejun7.park@samsung.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20261016093528epcms2p456d7c535220a0c6a2a63e880e30c75ba@epcms2p4>
+Date: Fri, 16 Oct 2026 18:35:28 +0900
+X-CMS-MailID: 20261016093528epcms2p456d7c535220a0c6a2a63e880e30c75ba
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+X-CPGSPASS: Y
+X-CPGSPASS: Y
+cpgsPolicy: CPGSC10-223,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306
+References: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
+ <CGME20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p4>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=daejun7.park@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,1120 +93,1070 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: daejun7.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Oct 15, 2026 at 01:58:00PM +0200, Emmanuel Blot via wrote:
-> Back 24 of the 27 FRU EEPROMs with images read from hardware, so guest
-> firmware can identify the boards, the compute and management modules,
-> the network adapters, the I/O mezzanines and the drive backplanes
-> instead of finding them blank. Two EEPROMs were erased on the sampled
-> chassis and one was absent, so those three stay blank.
-> 
-> The drive backplane and I/O mezzanine helpers each serve two instances
-> carrying different images, so both now take a descriptor naming the
-> EEPROMs they install.
-> 
-> The content is sanitized: part and serial numbers masked, dates fixed,
-> asset tags replaced, distinct originals kept distinct. Several images
-> carry OEM MultiRecords whose contents are undocumented; the records are
-> kept and their bodies zeroed.
-> 
-> Signed-off-by: Emmanuel Blot <emmanuel.blot@free.fr>
-> ---
->  hw/arm/aspeed_ast2600_clemente.c | 974 +++++++++++++++++++++++++++++++++++++--
->  1 file changed, 948 insertions(+), 26 deletions(-)
-> 
-> diff --git a/hw/arm/aspeed_ast2600_clemente.c b/hw/arm/aspeed_ast2600_clemente.c
-> index bf5a13bc49..7937097c5b 100644
-> --- a/hw/arm/aspeed_ast2600_clemente.c
-> +++ b/hw/arm/aspeed_ast2600_clemente.c
-> @@ -32,34 +32,937 @@
->  #define CLEMENTE_BMC_HW_STRAP2 0x00000800
->  #define CLEMENTE_BMC_RAM_SIZE (2 * GiB)
->  
-> +/*
-> + * FRU images read back from hardware and sanitized: part and serial
-> + * numbers are masked, manufacturing dates fixed and asset tags replaced,
-> + * so the layout stays faithful while the identifying data is not real.
-> + *
-> + * Names are kept as programmed. The Board Info Area names the board, the
-> + * Product Info Area the system it is installed in, so the boards sourced
-> + * from a third party name their own vendor rather than the platform.
-> + */
-> +
-> +/*
-> + * FRU: i2c1 @0x50 (PDB)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente PDB PVT2
-> + *   Board part:      0A00AA000-001-A
-> + *   Board serial:    0A00AA00A0000A001
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_1_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd1,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x50, 0x44, 0x42,
-> +    0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41,
-> +    0x30, 0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x41, 0x30, 0x30, 0x31, 0xcf,
-> +    0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x31, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20, 0x56, 0x65, 0x72, 0x2e,
-> +    0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0x00, 0x00, 0x00, 0x00, 0xbd,
-> +    0x01, 0x09, 0x19, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x89,
-> +};
-> +
-> +/*
-> + * FRU: i2c9 @0x50 (SCM)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente SCM PVT2
-> + *   Board part:      0A00AA000-002-A
-> + *   Board serial:    0A00AA00A000002AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_9_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd1,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x53, 0x43, 0x4d,
-> +    0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41,
-> +    0x30, 0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x32, 0x41, 0x41, 0xcf,
-> +    0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x32, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20, 0x56, 0x65, 0x72, 0x2e,
-> +    0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x9d,
-> +    0x01, 0x09, 0x00, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c9 @0x56 (BSM)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   BMC Storage Module PVT2
-> + *   Board part:      0A00AAA00-003-A
-> + *   Board serial:    0A00AAA0A0000A003
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_9_0056[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd7,
-> +    0x42, 0x4d, 0x43, 0x20, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x20,
-> +    0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x20, 0x50, 0x56, 0x54, 0x32, 0xd1,
-> +    0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x41, 0x30, 0x41, 0x30, 0x30, 0x30,
-> +    0x30, 0x41, 0x30, 0x30, 0x33, 0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41,
-> +    0x41, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x33, 0x2d, 0x41, 0xce, 0x46, 0x52,
-> +    0x55, 0x20, 0x56, 0x65, 0x72, 0x2e, 0x20, 0x30, 0x2e, 0x30, 0x35, 0x41,
-> +    0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x66, 0x01, 0x09, 0x00, 0xc8,
-> +    0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xcb, 0x43, 0x49, 0x2d,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0xcf, 0x30, 0x41, 0x30,
-> +    0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0x2d, 0x41,
-> +    0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xc1,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c10 @0x50 (OCP NIC0)
-> + *   Board mfg:       Nvidia
-> + *   Board product:   Nvidia ConnectX-7 OCP3.0
-> + *   Board part:      AA00004AAA-AAAA_AA
-> + *   Board serial:    AA0000A004AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver 0.01
-> + *   Product mfg:     Nvidia
-> + *   Product name:    Nvidia ConnectX-7 OCP3.0
-> + *   Product part:    AA00002AAA-AAAA_AA
-> + *   Product version: A2
-> + *   Product serial:  AA0000A002AA
-> + *   Product asset:   QEMU
-> + *   OEM records:     1 (53 bytes, zeroed)
-> + */
-> +static const uint8_t fru_10_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0e, 0x1c, 0x00, 0xd4, 0x01, 0x0d, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd8, 0x4e, 0x76,
-> +    0x69, 0x64, 0x69, 0x61, 0x20, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
-> +    0x58, 0x2d, 0x37, 0x20, 0x4f, 0x43, 0x50, 0x33, 0x2e, 0x30, 0xd8, 0x41,
-> +    0x41, 0x30, 0x30, 0x30, 0x30, 0x41, 0x30, 0x30, 0x34, 0x41, 0x41, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xd5,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x34, 0x41, 0x41, 0x41, 0x2d, 0x41,
-> +    0x41, 0x41, 0x41, 0x5f, 0x41, 0x41, 0x20, 0x20, 0x20, 0xcc, 0x46, 0x52,
-> +    0x55, 0x20, 0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x00,
-> +    0x00, 0x00, 0x00, 0xbf, 0x01, 0x0e, 0x19, 0xc6, 0x4e, 0x76, 0x69, 0x64,
-> +    0x69, 0x61, 0xd8, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x43, 0x6f,
-> +    0x6e, 0x6e, 0x65, 0x63, 0x74, 0x58, 0x2d, 0x37, 0x20, 0x4f, 0x43, 0x50,
-> +    0x33, 0x2e, 0x30, 0xd5, 0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x32, 0x41,
-> +    0x41, 0x41, 0x2d, 0x41, 0x41, 0x41, 0x41, 0x5f, 0x41, 0x41, 0x20, 0x20,
-> +    0x20, 0xd3, 0x41, 0x32, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xd8, 0x41, 0x41,
-> +    0x30, 0x30, 0x30, 0x30, 0x41, 0x30, 0x30, 0x32, 0x41, 0x41, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc0, 0xc1, 0x00, 0x00, 0xfb, 0xc0, 0x82, 0x35, 0x00,
-> +    0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c12 @0x50 (HPM 1)
-> + *   Board mfg:       NVIDIA
-> + *   Board product:   PG548
-> + *   Board part:      000-0A000-0000-A05
-> + *   Board serial:    0000000000005
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Product mfg:     NVIDIA
-> + *   Product name:    GB300 1CPU:2GPU Board PC
-> + *   Product part:    000-0A000-0000-003
-> + *   Product version: C07
-> + *   Product serial:  0000000000003
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_12_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x56, 0x49, 0x44, 0x49, 0x41, 0xc5, 0x50, 0x47,
-> +    0x35, 0x34, 0x38, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x35, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x41, 0x30, 0x35,
-> +    0xc0, 0xc1, 0x00, 0xd8, 0x01, 0x0c, 0x19, 0xc6, 0x4e, 0x56, 0x49, 0x44,
-> +    0x49, 0x41, 0xd8, 0x47, 0x42, 0x33, 0x30, 0x30, 0x20, 0x31, 0x43, 0x50,
-> +    0x55, 0x3a, 0x32, 0x47, 0x50, 0x55, 0x20, 0x42, 0x6f, 0x61, 0x72, 0x64,
-> +    0x20, 0x50, 0x43, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41, 0x30, 0x30,
-> +    0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x33, 0xc3, 0x43,
-> +    0x30, 0x37, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x33, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xcc, 0x46, 0x52,
-> +    0x55, 0x5f, 0x56, 0x65, 0x72, 0x5f, 0x30, 0x2e, 0x30, 0x33, 0xc1, 0x00,
-> +    0x00, 0x00, 0x00, 0x0d,
-> +};
-> +
-> +/*
-> + * FRU: i2c12 @0x54 (CBC 2)
-> + *   Chassis type:    Blade Enclosure
-> + *   Chassis part:    000-00000-0000-001
-> + *   Chassis serial:  000AAAA000001
-> + *   Board mfg:       Nvidia
-> + *   Board product:   18x1RU CBL Cartridge
-> + *   Board part:      000-0000-006
-> + *   Board serial:    0000000000006
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   HS33172S03
-> + *   Product name:    18x1RU CBL Cartridge
-> + *   Product part:    000-00000-0000-004
-> + *   Product version: E.4
-> + *   Product serial:  0000000000004
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_12_0054[] = {
-> +    0x01, 0x00, 0x01, 0x07, 0x11, 0x00, 0x00, 0xe6, 0x01, 0x06, 0x1d, 0xd2,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0xcd, 0x30, 0x30, 0x30, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x08, 0x02, 0x00, 0x03,
-> +    0x02, 0x80, 0x12, 0x02, 0x00, 0xc1, 0x00, 0xcc, 0x01, 0x0a, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd4, 0x31, 0x38,
-> +    0x78, 0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72,
-> +    0x74, 0x72, 0x69, 0x64, 0x67, 0x65, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x36, 0xcc, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x36, 0xca, 0x48, 0x53,
-> +    0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0xe7, 0x01, 0x0a, 0x19, 0xc0, 0xd4, 0x31, 0x38, 0x78,
-> +    0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72, 0x74,
-> +    0x72, 0x69, 0x64, 0x67, 0x65, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x34,
-> +    0xc3, 0x45, 0x2e, 0x34, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x34, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xca,
-> +    0x48, 0x53, 0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x39,
-> +};
-> +
-> +/*
-> + * FRU: i2c12 @0x55 (CBC 3)
-> + *   Chassis type:    Blade Enclosure
-> + *   Chassis part:    000-00000-0000-001
-> + *   Chassis serial:  000AAAA000001
-> + *   Board mfg:       Nvidia
-> + *   Board product:   18x1RU CBL Cartridge
-> + *   Board part:      000-0000-006
-> + *   Board serial:    0000000000007
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   HS33172S03
-> + *   Product name:    18x1RU CBL Cartridge
-> + *   Product part:    000-00000-0000-004
-> + *   Product version: E.4
-> + *   Product serial:  0000000000005
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_12_0055[] = {
-> +    0x01, 0x00, 0x01, 0x07, 0x11, 0x00, 0x00, 0xe6, 0x01, 0x06, 0x1d, 0xd2,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0xcd, 0x30, 0x30, 0x30, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x08, 0x02, 0x00, 0x03,
-> +    0x02, 0x80, 0x12, 0x02, 0x00, 0xc1, 0x00, 0xcc, 0x01, 0x0a, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd4, 0x31, 0x38,
-> +    0x78, 0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72,
-> +    0x74, 0x72, 0x69, 0x64, 0x67, 0x65, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x37, 0xcc, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x36, 0xca, 0x48, 0x53,
-> +    0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0xe6, 0x01, 0x0a, 0x19, 0xc0, 0xd4, 0x31, 0x38, 0x78,
-> +    0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72, 0x74,
-> +    0x72, 0x69, 0x64, 0x67, 0x65, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x34,
-> +    0xc3, 0x45, 0x2e, 0x34, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x35, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xca,
-> +    0x48, 0x53, 0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x38,
-> +};
-> +
-> +/*
-> + * FRU: i2c13 @0x50 (HPM)
-> + *   Board mfg:       NVIDIA
-> + *   Board product:   PG548
-> + *   Board part:      000-0A000-0000-A05
-> + *   Board serial:    0000000000008
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Product mfg:     NVIDIA
-> + *   Product name:    GB300 1CPU:2GPU Board PC
-> + *   Product part:    000-0A000-0000-003
-> + *   Product version: C07
-> + *   Product serial:  0000000000006
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_13_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x56, 0x49, 0x44, 0x49, 0x41, 0xc5, 0x50, 0x47,
-> +    0x35, 0x34, 0x38, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x38, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x41, 0x30, 0x35,
-> +    0xc0, 0xc1, 0x00, 0xd5, 0x01, 0x0c, 0x19, 0xc6, 0x4e, 0x56, 0x49, 0x44,
-> +    0x49, 0x41, 0xd8, 0x47, 0x42, 0x33, 0x30, 0x30, 0x20, 0x31, 0x43, 0x50,
-> +    0x55, 0x3a, 0x32, 0x47, 0x50, 0x55, 0x20, 0x42, 0x6f, 0x61, 0x72, 0x64,
-> +    0x20, 0x50, 0x43, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41, 0x30, 0x30,
-> +    0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x33, 0xc3, 0x43,
-> +    0x30, 0x37, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x36, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xcc, 0x46, 0x52,
-> +    0x55, 0x5f, 0x56, 0x65, 0x72, 0x5f, 0x30, 0x2e, 0x30, 0x33, 0xc1, 0x00,
-> +    0x00, 0x00, 0x00, 0x0a,
-> +};
-> +
-> +/*
-> + * FRU: i2c13 @0x54 (CBC 0)
-> + *   Chassis type:    Blade Enclosure
-> + *   Chassis part:    000-00000-0000-001
-> + *   Chassis serial:  000AAAA000001
-> + *   Board mfg:       Nvidia
-> + *   Board product:   18x1RU CBL Cartridge
-> + *   Board part:      000-0000-006
-> + *   Board serial:    0000000000009
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   HS33172S03
-> + *   Product name:    18x1RU CBL Cartridge
-> + *   Product part:    000-00000-0000-004
-> + *   Product version: E.4
-> + *   Product serial:  0000000000007
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_13_0054[] = {
-> +    0x01, 0x00, 0x01, 0x07, 0x11, 0x00, 0x00, 0xe6, 0x01, 0x06, 0x1d, 0xd2,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0xcd, 0x30, 0x30, 0x30, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x08, 0x02, 0x00, 0x03,
-> +    0x02, 0x80, 0x12, 0x02, 0x00, 0xc1, 0x00, 0xcc, 0x01, 0x0a, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd4, 0x31, 0x38,
-> +    0x78, 0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72,
-> +    0x74, 0x72, 0x69, 0x64, 0x67, 0x65, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x39, 0xcc, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x36, 0xca, 0x48, 0x53,
-> +    0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0xe4, 0x01, 0x0a, 0x19, 0xc0, 0xd4, 0x31, 0x38, 0x78,
-> +    0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72, 0x74,
-> +    0x72, 0x69, 0x64, 0x67, 0x65, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x34,
-> +    0xc3, 0x45, 0x2e, 0x34, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x37, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xca,
-> +    0x48, 0x53, 0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x36,
-> +};
-> +
-> +/*
-> + * FRU: i2c13 @0x55 (CBC 1)
-> + *   Chassis type:    Blade Enclosure
-> + *   Chassis part:    000-00000-0000-001
-> + *   Chassis serial:  000AAAA000001
-> + *   Board mfg:       Nvidia
-> + *   Board product:   18x1RU CBL Cartridge
-> + *   Board part:      000-0000-006
-> + *   Board serial:    0000000000010
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   HS33172S03
-> + *   Product name:    18x1RU CBL Cartridge
-> + *   Product part:    000-00000-0000-004
-> + *   Product version: E.4
-> + *   Product serial:  0000000000008
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_13_0055[] = {
-> +    0x01, 0x00, 0x01, 0x07, 0x11, 0x00, 0x00, 0xe6, 0x01, 0x06, 0x1d, 0xd2,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0xcd, 0x30, 0x30, 0x30, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x08, 0x02, 0x00, 0x03,
-> +    0x02, 0x80, 0x15, 0x01, 0x00, 0xc1, 0x00, 0xca, 0x01, 0x0a, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd4, 0x31, 0x38,
-> +    0x78, 0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72,
-> +    0x74, 0x72, 0x69, 0x64, 0x67, 0x65, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x30, 0xcc, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x36, 0xca, 0x48, 0x53,
-> +    0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0xec, 0x01, 0x0a, 0x19, 0xc0, 0xd4, 0x31, 0x38, 0x78,
-> +    0x31, 0x52, 0x55, 0x20, 0x43, 0x42, 0x4c, 0x20, 0x43, 0x61, 0x72, 0x74,
-> +    0x72, 0x69, 0x64, 0x67, 0x65, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x34,
-> +    0xc3, 0x45, 0x2e, 0x34, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x38, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xca,
-> +    0x48, 0x53, 0x33, 0x33, 0x31, 0x37, 0x32, 0x53, 0x30, 0x33, 0xc1, 0x35,
-> +};
-> +
-> +/*
-> + * FRU: i2c13 @0x57 (HMC)
-> + *   Board mfg:       NVIDIA
-> + *   Board product:   P4764-A02
-> + *   Board part:      000-00000-0000-007
-> + *   Board serial:    0000000000011
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Product mfg:     NVIDIA
-> + *   Product name:    HMC for GB200 NVL72
-> + *   Product part:    000-00000-0000-005
-> + *   Product version: A1
-> + *   Product serial:  0000000000009
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_13_0057[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x09, 0x00, 0x00, 0xf5, 0x01, 0x08, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x56, 0x49, 0x44, 0x49, 0x41, 0xc9, 0x50, 0x34,
-> +    0x37, 0x36, 0x34, 0x2d, 0x41, 0x30, 0x32, 0xcd, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x31, 0xd2, 0x30, 0x30,
-> +    0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x30, 0x37, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x39,
-> +    0x01, 0x0b, 0x19, 0xc6, 0x4e, 0x56, 0x49, 0x44, 0x49, 0x41, 0xd3, 0x48,
-> +    0x4d, 0x43, 0x20, 0x66, 0x6f, 0x72, 0x20, 0x47, 0x42, 0x32, 0x30, 0x30,
-> +    0x20, 0x4e, 0x56, 0x4c, 0x37, 0x32, 0xd2, 0x30, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x35, 0xc2, 0x41, 0x31, 0xcd, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x39, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xcc,
-> +    0x46, 0x52, 0x55, 0x5f, 0x56, 0x65, 0x72, 0x5f, 0x30, 0x2e, 0x30, 0x32,
-> +    0xc1, 0x00, 0x00, 0xcb,
-> +};
-> +
-> +/*
-> + * FRU: i2c15 @0x52 (OCP NIC1)
-> + *   Board mfg:       Nvidia
-> + *   Board product:   Nvidia ConnectX-7 OCP3.0
-> + *   Board part:      AA00004AAA-AAAA_AA
-> + *   Board serial:    AA0000A0012A
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver 0.01
-> + *   Product mfg:     Nvidia
-> + *   Product name:    Nvidia ConnectX-7 OCP3.0
-> + *   Product part:    AA00002AAA-AAAA_AA
-> + *   Product version: A2
-> + *   Product serial:  AA0000A0010A
-> + *   Product asset:   QEMU
-> + *   OEM records:     1 (53 bytes, zeroed)
-> + */
-> +static const uint8_t fru_15_0052[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0e, 0x1c, 0x00, 0xd4, 0x01, 0x0d, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc6, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0xd8, 0x4e, 0x76,
-> +    0x69, 0x64, 0x69, 0x61, 0x20, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
-> +    0x58, 0x2d, 0x37, 0x20, 0x4f, 0x43, 0x50, 0x33, 0x2e, 0x30, 0xd8, 0x41,
-> +    0x41, 0x30, 0x30, 0x30, 0x30, 0x41, 0x30, 0x30, 0x31, 0x32, 0x41, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xd5,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x34, 0x41, 0x41, 0x41, 0x2d, 0x41,
-> +    0x41, 0x41, 0x41, 0x5f, 0x41, 0x41, 0x20, 0x20, 0x20, 0xcc, 0x46, 0x52,
-> +    0x55, 0x20, 0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x00,
-> +    0x00, 0x00, 0x00, 0xd1, 0x01, 0x0e, 0x19, 0xc6, 0x4e, 0x76, 0x69, 0x64,
-> +    0x69, 0x61, 0xd8, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x43, 0x6f,
-> +    0x6e, 0x6e, 0x65, 0x63, 0x74, 0x58, 0x2d, 0x37, 0x20, 0x4f, 0x43, 0x50,
-> +    0x33, 0x2e, 0x30, 0xd5, 0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x32, 0x41,
-> +    0x41, 0x41, 0x2d, 0x41, 0x41, 0x41, 0x41, 0x5f, 0x41, 0x41, 0x20, 0x20,
-> +    0x20, 0xd3, 0x41, 0x32, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xd8, 0x41, 0x41,
-> +    0x30, 0x30, 0x30, 0x30, 0x41, 0x30, 0x30, 0x31, 0x30, 0x41, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc0, 0xc1, 0x00, 0x00, 0x0d, 0xc0, 0x82, 0x35, 0x00,
-> +    0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c21 @0x54 (interposer)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente Interposer PVT2
-> + *   Board part:      0A00AA000-008-A
-> + *   Board serial:    0A00AA00A0001A3AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_21_0054[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0d, 0x00, 0x00, 0xf1, 0x01, 0x0c, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd8,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x49, 0x6e, 0x74,
-> +    0x65, 0x72, 0x70, 0x6f, 0x73, 0x65, 0x72, 0x20, 0x50, 0x56, 0x54, 0x32,
-> +    0xd1, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x30,
-> +    0x30, 0x31, 0x41, 0x33, 0x41, 0x41, 0xcf, 0x30, 0x41, 0x30, 0x30, 0x41,
-> +    0x41, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x38, 0x2d, 0x41, 0xce, 0x46,
-> +    0x52, 0x55, 0x20, 0x56, 0x65, 0x72, 0x2e, 0x20, 0x30, 0x2e, 0x30, 0x35,
-> +    0x41, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x34, 0x01, 0x09, 0x00, 0xc8,
-> +    0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xcb, 0x43, 0x49, 0x2d,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0xcf, 0x30, 0x41, 0x30,
-> +    0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30, 0x30, 0x31, 0x2d, 0x41,
-> +    0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xc1,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c23 @0x51 (FIO)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente FIO PVT2
-> + *   Board part:      0A00A0A00-009-A
-> + *   Board serial:    0A00A0A0A0000A14A
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_23_0051[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd1,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x46, 0x49, 0x4f,
-> +    0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30,
-> +    0x41, 0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x41, 0x31, 0x34, 0x41, 0xcf,
-> +    0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30, 0x30,
-> +    0x39, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20, 0x56, 0x65, 0x72, 0x2e,
-> +    0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x98,
-> +    0x01, 0x09, 0x00, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c25 @0x56 (E1.S backplane 0)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente E1.S BP PVT2
-> + *   Board part:      0A00AA000-010-A
-> + *   Board serial:    0A00AA00A0001A5AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_25_0056[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd5,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x45, 0x31, 0x2e,
-> +    0x53, 0x20, 0x42, 0x50, 0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41,
-> +    0x30, 0x30, 0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x30, 0x30, 0x31, 0x41,
-> +    0x35, 0x41, 0x41, 0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x2d, 0x30, 0x31, 0x30, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20,
-> +    0x56, 0x65, 0x72, 0x2e, 0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0xbf,
-> +    0x01, 0x09, 0x00, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c29 @0x50 (IO mezzanine 0)
-> + *   Board mfg:       Nvidia
-> + *   Board product:   ConnectX-8 800GE 2P NIC
-> + *   Board part:      000-0A00A-A1AA-AA1
-> + *   Board serial:    AA0000001AA6
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver 0.01
-> + *   Product mfg:     Nvidia
-> + *   Product name:    ConnectX-8 800GE 2P NIC
-> + *   Product part:    000-0A00A-A0AA-AA6
-> + *   Product version: A1
-> + *   Product serial:  AA0000001AA1
-> + *   Product asset:   QEMU
-> + *   OEM records:     1 (25 bytes, zeroed)
-> + */
-> +static const uint8_t fru_29_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x15, 0x2a, 0x00, 0xbf, 0x01, 0x14, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xd9, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0xf2, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
-> +    0x58, 0x2d, 0x38, 0x20, 0x38, 0x30, 0x30, 0x47, 0x45, 0x20, 0x32, 0x50,
-> +    0x20, 0x4e, 0x49, 0x43, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x30, 0x31, 0x41, 0x41, 0x36, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0xdd, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41, 0x30, 0x30, 0x41, 0x2d,
-> +    0x41, 0x31, 0x41, 0x41, 0x2d, 0x41, 0x41, 0x31, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xcc, 0x46, 0x52, 0x55, 0x20,
-> +    0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x00, 0x00, 0xd4,
-> +    0x01, 0x15, 0x19, 0xd9, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0xf2, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-> +    0x74, 0x58, 0x2d, 0x38, 0x20, 0x38, 0x30, 0x30, 0x47, 0x45, 0x20, 0x32,
-> +    0x50, 0x20, 0x4e, 0x49, 0x43, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x41, 0x30, 0x30, 0x41, 0x2d, 0x41, 0x30, 0x41, 0x41, 0x2d,
-> +    0x41, 0x41, 0x36, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0xc7, 0x41, 0x31, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x41,
-> +    0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x41, 0x41, 0x31, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xcc, 0x46, 0x52,
-> +    0x55, 0x20, 0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x75,
-> +    0xd0, 0x82, 0x19, 0x00, 0x95, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c29 @0x52 (IO mezzanine 0 OSFP)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente OSFP PVT2
-> + *   Board part:      0A00AAA00-012-A
-> + *   Board serial:    0A00AAA0A000017AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_29_0052[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd2,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x4f, 0x53, 0x46,
-> +    0x50, 0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41, 0x30, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x37, 0x41, 0x41,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x31, 0x32, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20, 0x56, 0x65, 0x72,
-> +    0x2e, 0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0x00, 0x00, 0x00, 0x1e,
-> +    0x01, 0x09, 0x00, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c37 @0x56 (E1.S backplane 1)
-> + *   Board mfg:       Ingrasys
-> + *   Board product:   Clemente E1.S BP PVT2
-> + *   Board part:      0A00AA000-010-A
-> + *   Board serial:    0A00AA00A0001A8AA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver. 0.05A
-> + *   Product mfg:     Ingrasys
-> + *   Product name:    CI-Clemente
-> + *   Product part:    0A00A0A00-001-A
-> + *   Product version: PVT2
-> + *   Product serial:  0AAA00000001
-> + *   Product asset:   QEMU
-> + */
-> +static const uint8_t fru_37_0056[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x0c, 0x00, 0x00, 0xf2, 0x01, 0x0b, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73, 0xd5,
-> +    0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65, 0x20, 0x45, 0x31, 0x2e,
-> +    0x53, 0x20, 0x42, 0x50, 0x20, 0x50, 0x56, 0x54, 0x32, 0xd1, 0x30, 0x41,
-> +    0x30, 0x30, 0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x30, 0x30, 0x31, 0x41,
-> +    0x38, 0x41, 0x41, 0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x2d, 0x30, 0x31, 0x30, 0x2d, 0x41, 0xce, 0x46, 0x52, 0x55, 0x20,
-> +    0x56, 0x65, 0x72, 0x2e, 0x20, 0x30, 0x2e, 0x30, 0x35, 0x41, 0xc1, 0xbc,
-> +    0x01, 0x09, 0x00, 0xc8, 0x49, 0x6e, 0x67, 0x72, 0x61, 0x73, 0x79, 0x73,
-> +    0xcb, 0x43, 0x49, 0x2d, 0x43, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x65,
-> +    0xcf, 0x30, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x30, 0x30, 0x2d, 0x30,
-> +    0x30, 0x31, 0x2d, 0x41, 0xc4, 0x50, 0x56, 0x54, 0x32, 0xcc, 0x30, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0xc4, 0x51,
-> +    0x45, 0x4d, 0x55, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x62,
-> +};
-> +
-> +/*
-> + * FRU: i2c41 @0x50 (IO mezzanine 1)
-> + *   Board mfg:       Nvidia
-> + *   Board product:   ConnectX-8 800GE 2P NIC
-> + *   Board part:      000-0A00A-A1AA-AA1
-> + *   Board serial:    AA0000019AAA
-> + *   Board mfg date:  2026-01-01T00:00:00Z
-> + *   Board file ID:   FRU Ver 0.01
-> + *   Product mfg:     Nvidia
-> + *   Product name:    ConnectX-8 800GE 2P NIC
-> + *   Product part:    000-0A00A-A0AA-AA6
-> + *   Product version: A1
-> + *   Product serial:  AA0000012AAA
-> + *   Product asset:   QEMU
-> + *   OEM records:     1 (25 bytes, zeroed)
-> + */
-> +static const uint8_t fru_41_0050[] = {
-> +    0x01, 0x00, 0x00, 0x01, 0x15, 0x2a, 0x00, 0xbf, 0x01, 0x14, 0x19, 0xc0,
-> +    0xc6, 0xf0, 0xd9, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0xf2, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
-> +    0x58, 0x2d, 0x38, 0x20, 0x38, 0x30, 0x30, 0x47, 0x45, 0x20, 0x32, 0x50,
-> +    0x20, 0x4e, 0x49, 0x43, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x41, 0x41, 0x30, 0x30,
-> +    0x30, 0x30, 0x30, 0x31, 0x39, 0x41, 0x41, 0x41, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0xdd, 0x30, 0x30, 0x30, 0x2d, 0x30, 0x41, 0x30, 0x30, 0x41, 0x2d,
-> +    0x41, 0x31, 0x41, 0x41, 0x2d, 0x41, 0x41, 0x31, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xcc, 0x46, 0x52, 0x55, 0x20,
-> +    0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x00, 0x00, 0xc0,
-> +    0x01, 0x15, 0x19, 0xd9, 0x4e, 0x76, 0x69, 0x64, 0x69, 0x61, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0xf2, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-> +    0x74, 0x58, 0x2d, 0x38, 0x20, 0x38, 0x30, 0x30, 0x47, 0x45, 0x20, 0x32,
-> +    0x50, 0x20, 0x4e, 0x49, 0x43, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x30, 0x30, 0x30,
-> +    0x2d, 0x30, 0x41, 0x30, 0x30, 0x41, 0x2d, 0x41, 0x30, 0x41, 0x41, 0x2d,
-> +    0x41, 0x41, 0x36, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0xc7, 0x41, 0x31, 0x20, 0x20, 0x20, 0x20, 0x20, 0xdd, 0x41,
-> +    0x41, 0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x32, 0x41, 0x41, 0x41, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,
-> +    0x20, 0x20, 0x20, 0x20, 0xc4, 0x51, 0x45, 0x4d, 0x55, 0xcc, 0x46, 0x52,
-> +    0x55, 0x20, 0x56, 0x65, 0x72, 0x20, 0x30, 0x2e, 0x30, 0x31, 0xc1, 0x63,
-> +    0xd0, 0x82, 0x19, 0x00, 0x95, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c45 @0x53 (boot drive)
-> + *   Product mfg:     Samsung
-> + *   Product name:    PM9D3a
-> + *   Product part:    AAAA00A0AAAA-07AAA
-> + *   Product version:
-> + *   Product serial:  A0AAAA0A000013
-> + *   OEM records:     3 (91 bytes, zeroed)
-> + */
-> +static const uint8_t fru_45_0053[] = {
-> +    0x01, 0x00, 0x00, 0x00, 0x01, 0x0f, 0x00, 0xef, 0x01, 0x0e, 0x19, 0xc8,
-> +    0x53, 0x61, 0x6d, 0x73, 0x75, 0x6e, 0x67, 0x00, 0xd8, 0x50, 0x4d, 0x39,
-> +    0x44, 0x33, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe8, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41, 0x2d, 0x30,
-> +    0x37, 0x41, 0x41, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0xc2, 0x00, 0x00, 0xd4, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41,
-> +    0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x33, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x33,
-> +    0x0b, 0x02, 0x3b, 0x00, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x0c, 0x02, 0x0b, 0x00, 0xe7, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x82, 0x15, 0x00,
-> +    0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c48 @0x53 (E1.S backplane 0 drive 0)
-> + *   Product mfg:     Samsung
-> + *   Product name:    PM9D3a
-> + *   Product part:    AAAA00A0AAAA-08AAA
-> + *   Product version:
-> + *   Product serial:  A0A0AA0A000014
-> + *   OEM records:     3 (91 bytes, zeroed)
-> + */
-> +static const uint8_t fru_48_0053[] = {
-> +    0x01, 0x00, 0x00, 0x00, 0x01, 0x0f, 0x00, 0xef, 0x01, 0x0e, 0x19, 0xc8,
-> +    0x53, 0x61, 0x6d, 0x73, 0x75, 0x6e, 0x67, 0x00, 0xd8, 0x50, 0x4d, 0x39,
-> +    0x44, 0x33, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe8, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41, 0x2d, 0x30,
-> +    0x38, 0x41, 0x41, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0xc2, 0x00, 0x00, 0xd4, 0x41, 0x30, 0x41, 0x30, 0x41, 0x41,
-> +    0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x34, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42,
-> +    0x0b, 0x02, 0x3b, 0x00, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x0c, 0x02, 0x0b, 0x00, 0xe7, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x82, 0x15, 0x00,
-> +    0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c50 @0x53 (E1.S backplane 0 drive 2)
-> + *   Product mfg:     Samsung
-> + *   Product name:    PM9D3a
-> + *   Product part:    AAAA00A0AAAA-08AAA
-> + *   Product version:
-> + *   Product serial:  A0A0AA0A000015
-> + *   OEM records:     3 (91 bytes, zeroed)
-> + */
-> +static const uint8_t fru_50_0053[] = {
-> +    0x01, 0x00, 0x00, 0x00, 0x01, 0x0f, 0x00, 0xef, 0x01, 0x0e, 0x19, 0xc8,
-> +    0x53, 0x61, 0x6d, 0x73, 0x75, 0x6e, 0x67, 0x00, 0xd8, 0x50, 0x4d, 0x39,
-> +    0x44, 0x33, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe8, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41, 0x2d, 0x30,
-> +    0x38, 0x41, 0x41, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0xc2, 0x00, 0x00, 0xd4, 0x41, 0x30, 0x41, 0x30, 0x41, 0x41,
-> +    0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x35, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x41,
-> +    0x0b, 0x02, 0x3b, 0x00, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x0c, 0x02, 0x0b, 0x00, 0xe7, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x82, 0x15, 0x00,
-> +    0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c52 @0x53 (E1.S backplane 1 drive 0)
-> + *   Product mfg:     Samsung
-> + *   Product name:    PM9D3a
-> + *   Product part:    AAAA00A0AAAA-08AAA
-> + *   Product version:
-> + *   Product serial:  A0A0AA0A000016
-> + *   OEM records:     3 (91 bytes, zeroed)
-> + */
-> +static const uint8_t fru_52_0053[] = {
-> +    0x01, 0x00, 0x00, 0x00, 0x01, 0x0f, 0x00, 0xef, 0x01, 0x0e, 0x19, 0xc8,
-> +    0x53, 0x61, 0x6d, 0x73, 0x75, 0x6e, 0x67, 0x00, 0xd8, 0x50, 0x4d, 0x39,
-> +    0x44, 0x33, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe8, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41, 0x2d, 0x30,
-> +    0x38, 0x41, 0x41, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0xc2, 0x00, 0x00, 0xd4, 0x41, 0x30, 0x41, 0x30, 0x41, 0x41,
-> +    0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x36, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40,
-> +    0x0b, 0x02, 0x3b, 0x00, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x0c, 0x02, 0x0b, 0x00, 0xe7, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x82, 0x15, 0x00,
-> +    0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +/*
-> + * FRU: i2c54 @0x53 (E1.S backplane 1 drive 2)
-> + *   Product mfg:     Samsung
-> + *   Product name:    PM9D3a
-> + *   Product part:    AAAA00A0AAAA-08AAA
-> + *   Product version:
-> + *   Product serial:  A0A0AA0A000017
-> + *   OEM records:     3 (91 bytes, zeroed)
-> + */
-> +static const uint8_t fru_54_0053[] = {
-> +    0x01, 0x00, 0x00, 0x00, 0x01, 0x0f, 0x00, 0xef, 0x01, 0x0e, 0x19, 0xc8,
-> +    0x53, 0x61, 0x6d, 0x73, 0x75, 0x6e, 0x67, 0x00, 0xd8, 0x50, 0x4d, 0x39,
-> +    0x44, 0x33, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xe8, 0x41, 0x41,
-> +    0x41, 0x41, 0x30, 0x30, 0x41, 0x30, 0x41, 0x41, 0x41, 0x41, 0x2d, 0x30,
-> +    0x38, 0x41, 0x41, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0xc2, 0x00, 0x00, 0xd4, 0x41, 0x30, 0x41, 0x30, 0x41, 0x41,
-> +    0x30, 0x41, 0x30, 0x30, 0x30, 0x30, 0x31, 0x37, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x3f,
-> +    0x0b, 0x02, 0x3b, 0x00, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x0c, 0x02, 0x0b, 0x00, 0xe7, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0d, 0x82, 0x15, 0x00,
-> +    0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-> +};
-> +
-> +typedef struct ClementeFru {
-> +    const uint8_t *data;
-> +    size_t size;
-> +} ClementeFru;
-> +
-> +/* The images an E1.S backplane needs: its own FRU and its two drives. */
-> +typedef struct ClementeE1sFru {
-> +    ClementeFru backplane;   /* @0x56 */
-> +    ClementeFru drive0;      /* mux channel 0 @0x53 */
-> +    ClementeFru drive2;      /* mux channel 2 @0x53 */
-> +} ClementeE1sFru;
-> +
-> +static const ClementeE1sFru clemente_e1s_fru[] = {
-> +    {
-> +        .backplane = { fru_25_0056, sizeof(fru_25_0056) },
-> +        .drive0    = { fru_48_0053, sizeof(fru_48_0053) },
-> +        .drive2    = { fru_50_0053, sizeof(fru_50_0053) },
-> +    },
-> +    {
-> +        .backplane = { fru_37_0056, sizeof(fru_37_0056) },
-> +        .drive0    = { fru_52_0053, sizeof(fru_52_0053) },
-> +        .drive2    = { fru_54_0053, sizeof(fru_54_0053) },
-> +    },
-> +};
-> +
-> +/* The images an IO mezzanine needs: its own FRU and the OSFP one. */
-> +typedef struct ClementeIoMezzFru {
-> +    ClementeFru mezzanine;   /* @0x50 */
-> +    ClementeFru osfp;        /* @0x52 */
-> +} ClementeIoMezzFru;
-> +
-> +static const ClementeIoMezzFru clemente_io_mezz_fru[] = {
-> +    {
-> +        .mezzanine = { fru_29_0050, sizeof(fru_29_0050) },
-> +        .osfp      = { fru_29_0052, sizeof(fru_29_0052) },
-> +    },
-> +    {
-> +        .mezzanine = { fru_41_0050, sizeof(fru_41_0050) },
-> +        /* the OSFP FRU was absent from the sampled chassis */
-> +    },
-> +};
-> +
->  /*
->   * E1.S backplane hanging off a PCA9546 channel: an FRU EEPROM plus a
->   * second PCA9546 fronting per-drive NVMe SSD FRU EEPROMs.
->   */
-> -static void clemente_e1s_backplane_init(I2CBus *bus)
-> +static void clemente_e1s_backplane_init(I2CBus *bus,
-> +                                        const ClementeE1sFru *fru)
->  {
->      /* eeprom@56 - atmel,24c128 */
-> -    at24c_eeprom_init(bus, 0x56, 16 * KiB);
-> +    at24c_eeprom_init_rom(bus, 0x56, 16 * KiB,
-> +                          fru->backplane.data, fru->backplane.size);
->  
->      /* i2c-mux@74 - PCA9546 */
->      I2CSlave *mux = i2c_slave_create_simple(bus, TYPE_PCA9546, 0x74);
->      /* eeprom@53 - atmel,24c02, channels 0 and 2 */
-> -    at24c_eeprom_init(pca954x_i2c_get_bus(mux, 0), 0x53, 256);
-> -    at24c_eeprom_init(pca954x_i2c_get_bus(mux, 2), 0x53, 256);
-> +    at24c_eeprom_init_rom(pca954x_i2c_get_bus(mux, 0), 0x53, 256,
-> +                          fru->drive0.data, fru->drive0.size);
-> +    at24c_eeprom_init_rom(pca954x_i2c_get_bus(mux, 2), 0x53, 256,
-> +                          fru->drive2.data, fru->drive2.size);
->  }
->  
->  /*
->   * IO Mezzanine hanging off a PCA9546 channel: an I/O expander plus the
->   * mezzanine and OSFP FRU EEPROMs.
->   */
-> -static void clemente_io_mezz_init(I2CBus *bus, uint8_t exp_addr)
-> +static void clemente_io_mezz_init(I2CBus *bus, uint8_t exp_addr,
-> +                                  const ClementeIoMezzFru *fru)
->  {
->      /* gpio@20/21 - nxp,pca9535 */
->      i2c_slave_create_simple(bus, TYPE_PCA9535, exp_addr);
->      /* eeprom@50 - atmel,24c64 (mezzanine FRU) */
-> -    at24c_eeprom_init(bus, 0x50, 8 * KiB);
-> +    at24c_eeprom_init_rom(bus, 0x50, 8 * KiB,
-> +                          fru->mezzanine.data, fru->mezzanine.size);
->      /* eeprom@52 - atmel,24c128 (OSFP FRU) */
-> -    at24c_eeprom_init(bus, 0x52, 16 * KiB);
-> +    at24c_eeprom_init_rom(bus, 0x52, 16 * KiB,
-> +                          fru->osfp.data, fru->osfp.size);
->  }
->  
->  static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
-> @@ -78,12 +981,14 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* i2c-mux@71 (PCA9546) */
->      i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
->      /* channel 1 - HDD FRU eeprom@56 and E1.S backplane */
-> -    clemente_e1s_backplane_init(pca954x_i2c_get_bus(i2c_mux, 1));
-> +    clemente_e1s_backplane_init(pca954x_i2c_get_bus(i2c_mux, 1),
-> +                                &clemente_e1s_fru[0]);
->  
->      /* i2c-mux@72 (PCA9546) */
->      i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
->      /* channel 1 - IO Mezz 0 (io_expander7 @20) */
-> -    clemente_io_mezz_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x20);
-> +    clemente_io_mezz_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x20,
-> +                          &clemente_io_mezz_fru[0]);
->  
->      /* i2c-mux@73 (PCA9546) - channels empty */
->      i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
-> @@ -91,17 +996,20 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* i2c-mux@75 (PCA9546) */
->      i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
->      /* channel 1 - HDD FRU eeprom@56 and E1.S backplane */
-> -    clemente_e1s_backplane_init(pca954x_i2c_get_bus(i2c_mux, 1));
-> +    clemente_e1s_backplane_init(pca954x_i2c_get_bus(i2c_mux, 1),
-> +                                &clemente_e1s_fru[1]);
->  
->      /* i2c-mux@76 (PCA9546) */
->      i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
->      /* channel 1 - IO Mezz 1 (io_expander8 @21) */
-> -    clemente_io_mezz_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x21);
-> +    clemente_io_mezz_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x21,
-> +                          &clemente_io_mezz_fru[1]);
->  
->      /* i2c-mux@77 (PCA9546) */
->      i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x77);
->      /* channel 1 - boot drive FRU eeprom@53 */
-> -    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x53, 256);
-> +    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x53, 256,
-> +                          fru_45_0053, sizeof(fru_45_0053));
->  
->      /* &i2c1 */
->      /* power-monitor@12/14 - ti,lm5066i (no model) */
-> @@ -110,7 +1018,8 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* temperature-sensor@4e - ti,tmp1075 */
->      i2c_slave_create_simple(i2c[1], TYPE_TMP1075, 0x4e);
->      /* eeprom@50 - atmel,24c02 (PDB FRU) */
-> -    at24c_eeprom_init(i2c[1], 0x50, 256);
-> +    at24c_eeprom_init_rom(i2c[1], 0x50, 256, fru_1_0050,
-> +                          sizeof(fru_1_0050));
->      /* vrm@60/61 - renesas,raa228004 (no model) */
->      /* i2c-mux@70 (PCA9548) - interposer */
->      i2c_mux = i2c_slave_create_simple(i2c[1], TYPE_PCA9548, 0x70);
-> @@ -118,7 +1027,8 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* temperature-sensor@4f - ti,tmp75 */
->      i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
->      /* eeprom@54 - atmel,24c64 */
-> -    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
-> +    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x54,
-> +                          8 * KiB, fru_21_0054, sizeof(fru_21_0054));
->      /* channel 6 - io_expander5 gpio@27 - nxp,pca9554 */
->      i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
->                              TYPE_PCA9554, 0x27);
-> @@ -126,7 +1036,8 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* temperature-sensor@4b - ti,tmp75 */
->      i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
->      /* eeprom@51 - atmel,24c64 */
-> -    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 7), 0x51, 8 * KiB);
-> +    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 7), 0x51,
-> +                          8 * KiB, fru_23_0051, sizeof(fru_23_0051));
->  
->      /* &i2c2 */
->      /* gpio@20/21/27 - nxp,pca9555 */
-> @@ -156,35 +1067,45 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* gpio@4f - nxp,pca9555 */
->      i2c_slave_create_simple(i2c[9], TYPE_PCA9555, 0x4f);
->      /* eeprom@50 - atmel,24c64 (SCM FRU) */
-> -    at24c_eeprom_init(i2c[9], 0x50, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[9], 0x50, 8 * KiB, fru_9_0050,
-> +                          sizeof(fru_9_0050));
->      /* eeprom@56 - atmel,24c64 (BSM FRU) */
-> -    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[9], 0x56, 8 * KiB, fru_9_0056,
-> +                          sizeof(fru_9_0056));
->  
->      /* &i2c10 */
->      /* mctp@10 - mctp-i2c-controller (no model) */
->      /* temperature-sensor@1f - ti,tmp421 (OCP NIC0) */
->      i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x1f);
->      /* eeprom@50 - atmel,24c64 (OCP NIC0 FRU) */
-> -    at24c_eeprom_init(i2c[10], 0x50, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[10], 0x50, 8 * KiB, fru_10_0050,
-> +                          sizeof(fru_10_0050));
->  
->      /* &i2c11 */
->      /* ssif-bmc@10 - ssif-bmc (no model) */
->  
->      /* &i2c12 */
->      /* eeprom@50 - atmel,24c64 (HPM 1 FRU) */
-> -    at24c_eeprom_init(i2c[12], 0x50, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[12], 0x50, 8 * KiB, fru_12_0050,
-> +                          sizeof(fru_12_0050));
->      /* eeprom@54/55 - atmel,24c02 (CBC 2/3 FRU) */
-> -    at24c_eeprom_init(i2c[12], 0x54, 256);
-> -    at24c_eeprom_init(i2c[12], 0x55, 256);
-> +    at24c_eeprom_init_rom(i2c[12], 0x54, 256, fru_12_0054,
-> +                          sizeof(fru_12_0054));
-> +    at24c_eeprom_init_rom(i2c[12], 0x55, 256, fru_12_0055,
-> +                          sizeof(fru_12_0055));
->  
->      /* &i2c13 */
->      /* eeprom@50 - atmel,24c64 (HPM FRU) */
-> -    at24c_eeprom_init(i2c[13], 0x50, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[13], 0x50, 8 * KiB, fru_13_0050,
-> +                          sizeof(fru_13_0050));
->      /* eeprom@54/55 - atmel,24c02 (CBC 0/1 FRU) */
-> -    at24c_eeprom_init(i2c[13], 0x54, 256);
-> -    at24c_eeprom_init(i2c[13], 0x55, 256);
-> +    at24c_eeprom_init_rom(i2c[13], 0x54, 256, fru_13_0054,
-> +                          sizeof(fru_13_0054));
-> +    at24c_eeprom_init_rom(i2c[13], 0x55, 256, fru_13_0055,
-> +                          sizeof(fru_13_0055));
->      /* eeprom@57 - atmel,24c02 (HMC FRU) */
-> -    at24c_eeprom_init(i2c[13], 0x57, 256);
-> +    at24c_eeprom_init_rom(i2c[13], 0x57, 256, fru_13_0057,
-> +                          sizeof(fru_13_0057));
->  
->      /* &i2c14 */
->      /* gpio@10/11/12/13/14 - nxp,pca9555 (PDB CPLD) */
-> @@ -199,7 +1120,8 @@ static void clemente_bmc_i2c_init(AspeedMachineState *bmc)
->      /* temperature-sensor@1f - ti,tmp421 (OCP NIC1) */
->      i2c_slave_create_simple(i2c[15], TYPE_TMP421, 0x1f);
->      /* eeprom@52 - atmel,24c64 (OCP NIC1 FRU) */
-> -    at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
-> +    at24c_eeprom_init_rom(i2c[15], 0x52, 8 * KiB, fru_15_0052,
-> +                          sizeof(fru_15_0052));
->  }
->  
->  static void aspeed_machine_clemente_class_init(ObjectClass *oc,
-> 
-> -- 
-> 2.53.0-Meta
-> 
-> 
-Reviewed-by: Jamin Lin <jaminlin1207@gmail.com>
+Add ten qtests for zoned logical units. They use four zoned logical
+units: one with 2 MiB zones, one whose capacity is not a multiple of its
+3 MiB zones, one on blkdebug with a single open zone, where the first
+write at LBA 0 and the first write at the start of zone 2 fail with an
+I/O error, and one on null-co that is larger than 8 TiB.
+
+zufs-init checks the INQUIRY device type, the supported VPD pages with
+full and short allocation lengths, the ZBC device characteristics page,
+that UNMAP is advertised nowhere, the caching mode page, REPORT ZONES,
+and an INQUIRY without a PRDT.
+
+zufs-write, also run with MCQ as zufs-mcq-write, checks write pointer
+handling, SYNCHRONIZE CACHE(16), resets of open zones, finishing an
+empty zone, writing to more zones than max_open allows, LBAs past the
+end of the logical unit, and a REPORT ZONES allocation length larger
+than the data buffer. Without the bound on that length, QEMU writes past
+its own buffer; a debug build without sanitizers aborted with "double
+free or corruption".
+
+zufs-write-cmds checks that WRITE(6), WRITE(10) and WRITE SAME(16) move
+the write pointer, a zero length WRITE SAME, the sense codes for writes
+crossing a zone and writes to a full zone, and that a WRITE(10) at an
+LBA above 2^31 is checked against the zone it addresses.
+
+zufs-open-zones checks explicit opens up to the limit, closing an
+implicitly open zone to make room, OPEN ALL with and without enough
+resources, FINISH ALL and RESET ALL.
+
+zufs-unit-attention checks that a zone operation is not performed while
+a unit attention is pending. zufs-io-error checks that a write failed
+by the drive moves the write pointer back.
+
+zufs-write-in-flight, with MCQ, holds writes in flight with a blkdebug
+breakpoint. It checks that a failed write moves the write pointer back
+also when a write to another zone closed its zone implicitly in the
+meantime, and that a zone stays full when FINISH ZONE completed while a
+write that filled it was in flight and then failed.
+
+zufs-report-zones checks a start LBA inside a zone, PARTIAL, the
+reporting options 3Eh, 06h and 3Fh, and the smaller last zone.
+
+zufs-more-cmds checks WRITE(12), WRITE AND VERIFY(16), CLOSE ALL,
+finishing a closed zone, ZONE COUNT with and without the ALL bit, zone
+IDs that do not start a zone, a write without a PRDT, and UNMAP.
+
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+---
+ tests/qtest/ufs-test.c | 984 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 984 insertions(+)
+
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 4e0c2aee5f..0b3e764b19 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -1832,6 +1832,966 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
++#define ZONE_SIZE (2 * 1024 * 1024)
++#define ZONE_BLOCKS (ZONE_SIZE / 4096)
++#define MAX_OPEN_ZONE 6
++#define NUM_ZONES (TEST_IMAGE_SIZE / ZONE_SIZE)
++#define REPORT_ZONES_DESC_SIZE 64
++#define ZONED_TEST_LUN 2
++/* A second zoned LU whose capacity is not a multiple of the zone size */
++#define ODD_ZONED_TEST_LUN 3
++#define ODD_ZONE_SIZE (3 * 1024 * 1024)
++#define ODD_NUM_ZONES DIV_ROUND_UP(TEST_IMAGE_SIZE, ODD_ZONE_SIZE)
++/*
++ * A zoned LU on blkdebug with one open zone: the first write at LBA 0 and the
++ * first write at the start of zone 2 fail with an I/O error, and a breakpoint
++ * can hold a write in flight. It is a -drive with an id because
++ * qtest_qemu_io() needs a BlockBackend name: for a node name, x-qemu-io
++ * attaches a temporary BlockBackend, and detaching it drains the node, which
++ * never returns while a breakpoint holds a write.
++ */
++#define EIO_ZONED_TEST_LUN 4
++#define EIO_ZONED_TEST_DRIVE "drv4"
++#define EIO_ZONE2_SECTOR (2 * ZONE_SIZE / 512)
++/* A zoned LU of more than 8 TiB with 128 MiB zones, for LBAs of 2^31 and up */
++#define BIG_ZONED_TEST_LUN 5
++#define BIG_ZONED_TEST_SIZE ((8ULL << 40) + 128 * 1024 * 1024)
++
++static void ufs_zufs_build_write16(uint8_t *cdb, uint64_t lba, uint32_t blocks)
++{
++    memset(cdb, 0, UFS_CDB_SIZE);
++    cdb[0] = WRITE_16;
++    stq_be_p(&cdb[2], lba);
++    stl_be_p(&cdb[10], blocks);
++}
++
++static void ufs_zufs_build_zbc_out(uint8_t *cdb, uint8_t action, uint64_t lba,
++                                   bool all)
++{
++    memset(cdb, 0, UFS_CDB_SIZE);
++    cdb[0] = UFS_ZBC_OUT;
++    cdb[1] = action;
++    stq_be_p(&cdb[2], lba);
++    cdb[14] = all ? 0x01 : 0x00;
++}
++
++static void ufs_zufs_build_report_zones(uint8_t *cdb, uint8_t rep_opts,
++                                        uint32_t alloc_len)
++{
++    memset(cdb, 0, UFS_CDB_SIZE);
++    cdb[0] = UFS_ZBC_IN;
++    cdb[1] = UFS_ZBC_REPORT_ZONES;
++    stl_be_p(&cdb[10], alloc_len);
++    cdb[14] = rep_opts;
++}
++
++static void ufs_zufs_clear_unit_attention(QUfs *ufs)
++{
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    uint8_t buf[4096];
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
++
++    ocs = ufs_send_scsi_command(ufs, ZONED_TEST_LUN, request_sense_cdb, NULL, 0,
++                                buf, sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++}
++
++static uint8_t ufs_zufs_send(QUfs *ufs, const uint8_t *cdb,
++                             const uint8_t *data_in, size_t data_in_len,
++                             uint8_t *data_out, size_t data_out_len,
++                             UtpUpiuRsp *rsp_upiu)
++{
++    enum UtpOcsCodes ocs;
++
++    ocs = ufs_send_scsi_command(ufs, ZONED_TEST_LUN, cdb, data_in, data_in_len,
++                                data_out, data_out_len, rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    return rsp_upiu->header.scsi_status;
++}
++
++static void ufs_zufs_assert_sense(UtpUpiuRsp *rsp_upiu, uint8_t key,
++                                  uint8_t asc, uint8_t ascq)
++{
++    g_assert_cmpuint(rsp_upiu->header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu->sr.sense_data[2] & 0xf, ==, key);
++    g_assert_cmpuint(rsp_upiu->sr.sense_data[12], ==, asc);
++    g_assert_cmpuint(rsp_upiu->sr.sense_data[13], ==, ascq);
++}
++
++static uint32_t ufs_zufs_count_zones(QUfs *ufs, uint8_t rep_opts)
++{
++    uint8_t buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++
++    ufs_zufs_build_report_zones(cdb, rep_opts, sizeof(buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    return ldl_be_p(&buf[0]) / REPORT_ZONES_DESC_SIZE;
++}
++
++static uint64_t ufs_zufs_write_pointer(QUfs *ufs, uint64_t zone_start)
++{
++    uint8_t buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    stq_be_p(&cdb[2], zone_start);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, zone_start);
++    return ldq_be_p(&buf[64 + 24]);
++}
++
++static void ufstest_zufs_init(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t buf[4096] = { 0 };
++    const uint8_t inquiry_cdb[UFS_CDB_SIZE] = {
++        INQUIRY, 0x00, 0x00, 0x00, 0x60,
++    };
++    const uint8_t inquiry_vpd_00_cdb[UFS_CDB_SIZE] = {
++        INQUIRY, 0x01 /* EVPD */, 0x00 /* page code */, 0x00, 0x40,
++    };
++    const uint8_t inquiry_vpd_b6_cdb[UFS_CDB_SIZE] = {
++        INQUIRY, 0x01 /* EVPD */, 0xb6 /* page code */, 0x00, 0x40,
++    };
++    const uint8_t mode_sense_caching_cdb[UFS_CDB_SIZE] = {
++        MODE_SENSE_10, 0x08 /* DBD */, MODE_PAGE_CACHING, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0xff,
++    };
++    const uint8_t read_capacity_cdb[UFS_CDB_SIZE] = {
++        SERVICE_ACTION_IN_16, SAI_READ_CAPACITY_16, 0x00, 0x00, 0x00, 0x00,
++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20,
++    };
++    uint8_t report_zones_cdb[UFS_CDB_SIZE];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    uint32_t zone_list_len;
++    uint8_t vpd_00_len;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++
++    /* Standard INQUIRY: host-managed zoned block device */
++    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_cdb, NULL, 0, buf, 0x60,
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[0] & 0x1f, ==, TYPE_ZBC);
++
++    /* Supported VPD pages include the ZBC device characteristics page */
++    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_vpd_00_cdb, NULL, 0, buf, 0x40,
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
++    g_assert_nonnull(memchr(&buf[4], 0xb6, buf[3]));
++    g_assert_cmpuint(buf[4 + buf[3] - 1], ==, 0xb6);
++    vpd_00_len = buf[3];
++
++    /* ZBC device characteristics VPD page */
++    g_assert_cmpuint(ufs_zufs_send(ufs, inquiry_vpd_b6_cdb, NULL, 0, buf, 0x40,
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
++    g_assert_cmpuint(buf[1], ==, 0xb6);
++    g_assert_cmpuint(lduw_be_p(&buf[2]), ==, 0x3c);
++    /* URSWRZ */
++    g_assert_cmpuint(buf[4] & 0x1, ==, 1);
++    g_assert_cmpuint(ldl_be_p(&buf[16]), ==, MAX_OPEN_ZONE);
++
++    /* Allocation length 4: only the header, whose page length counts 0xb6 */
++    memset(cdb, 0, sizeof(cdb));
++    memcpy(cdb, inquiry_vpd_00_cdb, 5);
++    cdb[4] = 4;
++    memset(buf, 0, sizeof(buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
++    g_assert_cmpuint(buf[3], ==, vpd_00_len);
++    g_assert_cmpuint(buf[4], ==, 0);
++
++    /* Allocation length of the scsi-hd list: 0xb6 does not fit */
++    cdb[4] = 4 + vpd_00_len - 1;
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[3], ==, vpd_00_len);
++    g_assert_cmpuint(buf[4 + vpd_00_len - 2], !=, 0xb6);
++    g_assert_cmpuint(buf[4 + vpd_00_len - 2], !=, 0);
++    g_assert_cmpuint(buf[4 + vpd_00_len - 1], ==, 0);
++
++    /* UNMAP is not advertised in the Block Limits and LBP pages */
++    cdb[2] = 0xb0;
++    cdb[4] = 0x40;
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[0], ==, TYPE_ZBC);
++    g_assert_cmpuint(ldl_be_p(&buf[20]), ==, 0);
++    g_assert_cmpuint(ldl_be_p(&buf[24]), ==, 0);
++    cdb[2] = 0xb2;
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[5] & 0x80, ==, 0);
++
++    /* An INQUIRY without a PRDT fails like on a regular LU */
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, ZONED_TEST_LUN, inquiry_cdb,
++                                           NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
++
++    /* No logical block provisioning: the guest gets no UNMAP */
++    g_assert_cmpuint(ufs_zufs_send(ufs, read_capacity_cdb, NULL, 0, buf,
++                                   sizeof(buf), &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[14] & 0x80, ==, 0);
++
++    /* MODE SENSE takes the scsi-hd disk path: caching page, WCE and DPOFUA */
++    g_assert_cmpuint(ufs_zufs_send(ufs, mode_sense_caching_cdb, NULL, 0, buf,
++                                   0xff, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(buf[3] & 0x10, ==, 0x10);
++    g_assert_cmpuint(buf[8] & 0x3f, ==, MODE_PAGE_CACHING);
++    g_assert_cmpuint(buf[10] & 0x04, ==, 0x04);
++
++    /* Report zones */
++    ufs_zufs_build_report_zones(report_zones_cdb, 0x00, sizeof(buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, report_zones_cdb, NULL, 0, buf,
++                                   sizeof(buf), &rsp_upiu), ==, GOOD);
++    zone_list_len = ldl_be_p(&buf[0]);
++    g_assert_cmpuint(zone_list_len, ==, REPORT_ZONES_DESC_SIZE * NUM_ZONES);
++    g_assert_cmpuint(ldq_be_p(&buf[8]), ==, TEST_IMAGE_SIZE / 4096 - 1);
++    /* First zone: sequential write required, empty */
++    g_assert_cmpuint(buf[64] & 0xf, ==, 0x2);
++    g_assert_cmpuint(buf[65] >> 4, ==, 0x1);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 8]), ==, ZONE_BLOCKS);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_write(void *obj, void *data, QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t read_buf[4096] = { 0 };
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    int i;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++    memset(write_buf, 0xab, sizeof(write_buf));
++
++    /* Write at the write pointer of zone 0 */
++    ufs_zufs_build_write16(cdb, 0, 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++
++    /* Unaligned write error */
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, CHECK_CONDITION);
++    g_assert_cmpint(rsp_upiu.sr.sense_data[12], ==, 0x21);
++    g_assert_cmpint(rsp_upiu.sr.sense_data[13], ==, 0x04);
++
++    /* Linux flushes zoned disks with SYNCHRONIZE CACHE(16) */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = SYNCHRONIZE_CACHE_16;
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++
++    /* Zone 0 is implicitly open */
++    ufs_zufs_build_report_zones(cdb, 0x02, sizeof(read_buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
++                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
++    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 24]), ==, 1);
++
++    /* Resetting an open zone empties it */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, false);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    ufs_zufs_build_write16(cdb, 0, 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++
++    /*
++     * Writing to one zone more than MAX_OPEN_ZONE closes an implicitly open
++     * zone instead of failing.
++     */
++    for (i = 1; i <= MAX_OPEN_ZONE; i++) {
++        ufs_zufs_build_write16(cdb, (uint64_t)i * ZONE_BLOCKS, 1);
++        g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                       NULL, 0, &rsp_upiu), ==, GOOD);
++    }
++    ufs_zufs_build_report_zones(cdb, 0x04, sizeof(read_buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
++                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
++
++    /* Finishing an empty zone makes it full */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE,
++                           (uint64_t)(NUM_ZONES - 1) * ZONE_BLOCKS, false);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    ufs_zufs_build_report_zones(cdb, 0x05, sizeof(read_buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
++                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==, REPORT_ZONES_DESC_SIZE);
++
++    /* Write and zone management beyond the last LBA: LBA OUT OF RANGE */
++    ufs_zufs_build_write16(cdb, TEST_IMAGE_SIZE / 4096, 1);
++    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, TEST_IMAGE_SIZE / 4096,
++                           false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER,
++                           TEST_IMAGE_SIZE / 4096, false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(read_buf));
++    stq_be_p(&cdb[2], TEST_IMAGE_SIZE / 4096);
++    ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, sizeof(read_buf), &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
++
++    /* Unknown reporting option and zone operation: INVALID FIELD IN CDB */
++    ufs_zufs_build_report_zones(cdb, 0x08, sizeof(read_buf));
++    ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, sizeof(read_buf), &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++    ufs_zufs_build_zbc_out(cdb, 0x05, 0, false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++
++    /*
++     * An allocation length above the data buffer stays in bounds: QEMU must
++     * not fill its buffer beyond the data buffer size.
++     */
++    ufs_zufs_build_report_zones(cdb, 0x00, 1024 * 1024);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf, 256,
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==,
++                     REPORT_ZONES_DESC_SIZE * NUM_ZONES);
++
++    /* Reset all zones */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, true);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    ufs_zufs_build_report_zones(cdb, 0x01, sizeof(read_buf));
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, read_buf,
++                                   sizeof(read_buf), &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&read_buf[0]), ==,
++                     REPORT_ZONES_DESC_SIZE * NUM_ZONES);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_write_cmds(void *obj, void *data,
++                                   QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t read_buf[4096];
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    const uint64_t zone1 = ZONE_BLOCKS, zone2 = 2 * ZONE_BLOCKS,
++                   zone3 = 3 * ZONE_BLOCKS;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++    memset(write_buf, 0xcd, sizeof(write_buf));
++
++    /* WRITE(10) and WRITE(6) move the write pointer like WRITE(16) */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_10;
++    stl_be_p(&cdb[2], 0);
++    stw_be_p(&cdb[7], 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 1);
++
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_6;
++    cdb[1] = (zone3 >> 16) & 0x1f;
++    cdb[2] = (zone3 >> 8) & 0xff;
++    cdb[3] = zone3 & 0xff;
++    cdb[4] = 1;
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone3), ==, zone3 + 1);
++
++    /* WRITE SAME(16) of two blocks at the write pointer */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_SAME_16;
++    stq_be_p(&cdb[2], 1);
++    stl_be_p(&cdb[10], 2);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 3);
++
++    /* scsi-hd reports WSNZ=1 and fails a zero length WRITE SAME */
++    stq_be_p(&cdb[2], 3);
++    stl_be_p(&cdb[10], 0);
++    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 3);
++
++    /* A write crossing the end of its zone: WRITE BOUNDARY VIOLATION */
++    ufs_zufs_build_write16(cdb, zone1, ZONE_BLOCKS + 1);
++    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x05);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone1), ==, zone1);
++
++    /* A write to a full zone: INVALID FIELD IN CDB */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone2, false);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    ufs_zufs_build_write16(cdb, zone2, 1);
++    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++
++    /* A WRITE(10) at an LBA above 2^31 is checked like a WRITE(16) */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = REQUEST_SENSE;
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb, NULL,
++                                           0, read_buf, sizeof(read_buf),
++                                           &rsp_upiu), ==, UFS_OCS_SUCCESS);
++    cdb[0] = WRITE_10;
++    stl_be_p(&cdb[2], 0x80000001);
++    stw_be_p(&cdb[7], 1);
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb,
++                                           write_buf, sizeof(write_buf), NULL,
++                                           0, &rsp_upiu), ==, UFS_OCS_SUCCESS);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x04);
++    /* ... and one at the zone start moves that zone's write pointer */
++    stl_be_p(&cdb[2], 0x80000000);
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb,
++                                           write_buf, sizeof(write_buf), NULL,
++                                           0, &rsp_upiu), ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(read_buf));
++    stq_be_p(&cdb[2], 0x80000000);
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, BIG_ZONED_TEST_LUN, cdb, NULL,
++                                           0, read_buf, sizeof(read_buf),
++                                           &rsp_upiu), ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 16]), ==, 0x80000000);
++    g_assert_cmpuint(ldq_be_p(&read_buf[64 + 24]), ==, 0x80000001);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_open_zones(void *obj, void *data,
++                                    QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    int i;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++    memset(write_buf, 0xef, sizeof(write_buf));
++
++    /* Open MAX_OPEN_ZONE zones explicitly */
++    for (i = 0; i < MAX_OPEN_ZONE; i++) {
++        ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE,
++                               (uint64_t)i * ZONE_BLOCKS, false);
++        g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu),
++                         ==, GOOD);
++    }
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x03), ==, MAX_OPEN_ZONE);
++
++    /* No implicitly open zone to close: INSUFFICIENT ZONE RESOURCES */
++    ufs_zufs_build_write16(cdb, (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, 1);
++    ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf), NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE,
++                           (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
++
++    /* Closing an open zone with nothing written empties it */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, false);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==, NUM_ZONES - 5);
++
++    /*
++     * Fill the freed resource with an implicitly open zone, then write to
++     * one more zone: the implicitly open zone is closed.
++     */
++    ufs_zufs_build_write16(cdb, (uint64_t)MAX_OPEN_ZONE * ZONE_BLOCKS, 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    ufs_zufs_build_write16(cdb, (uint64_t)(MAX_OPEN_ZONE + 1) * ZONE_BLOCKS,
++                           1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 1);
++
++    /* OPEN ALL: 5 explicit + 1 closed fit, the implicit one is closed */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_OPEN_ZONE, 0, true);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x03), ==, MAX_OPEN_ZONE);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 0);
++
++    /* OPEN ALL again: 6 explicit + 1 closed do not fit, nothing changes */
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, DATA_PROTECT, 0x55, 0x0e);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
++
++    /* FINISH ALL fills open and closed zones, empty ones stay empty */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, 0, true);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x05), ==, MAX_OPEN_ZONE + 1);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==,
++                     NUM_ZONES - MAX_OPEN_ZONE - 1);
++
++    /* RESET ALL */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, 0, true);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x01), ==, NUM_ZONES);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_unit_attention(void *obj, void *data,
++                                        QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++
++    ufs_init(ufs, alloc);
++    memset(write_buf, 0x5a, sizeof(write_buf));
++
++    /*
++     * After the reset in ufs_init(), the first command that scsi-hd does not
++     * exempt gets UNIT ATTENTION and is not performed, zone commands too:
++     * the zone stays empty and the write pointer stays put, so that the
++     * guest can retry.
++     */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, 0, false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0xf, ==, UNIT_ATTENTION);
++    ufs_zufs_build_write16(cdb, 0, 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, 0), ==, 1);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_io_error(void *obj, void *data,
++                                  QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    uint8_t buf[4096];
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
++
++    ufs_init(ufs, alloc);
++    memset(write_buf, 0xa5, sizeof(write_buf));
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, request_sense_cdb,
++                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++
++    /* scsi-hd fails the first write at LBA 0: the write pointer moves back */
++    ufs_zufs_build_write16(cdb, 0, 1);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
++                                sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(buf[64 + 1] >> 4, ==, 0x1);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 24]), ==, 0);
++
++    /* The retry succeeds */
++    ufs_zufs_build_write16(cdb, 0, 1);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
++                                sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 24]), ==, 1);
++
++    ufs_exit(ufs, alloc);
++}
++
++/* Submit a SCSI command that writes data_in through MCQ, without waiting */
++static int ufs_zufs_send_write_async(QUfs *ufs, uint8_t lun,
++                                     const uint8_t *cdb,
++                                     const uint8_t *data_in,
++                                     size_t data_in_len)
++{
++    QTestState *qts = ufs->dev.bus->qts;
++    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
++    uint64_t req_upiu_addr =
++        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++    UfshcdSgEntry entry = { 0 };
++    UtpUpiuReq req_upiu = { 0 };
++    UtpTransferReqDesc utrd;
++
++    g_assert_true(ufs->support_mcq);
++    g_assert_cmpuint(data_in_len, <=, PRD_ENTRY_DATA_SIZE);
++    qtest_memwrite(qts, ufs->data_buffer_addr, data_in, data_in_len);
++    entry.addr = cpu_to_le64(ufs->data_buffer_addr);
++    entry.size = cpu_to_le32(data_in_len - 1);
++    qtest_memwrite(qts, req_upiu_addr + UTP_PRDT_UPIU_OFFSET, &entry,
++                   sizeof(entry));
++
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_COMMAND;
++    req_upiu.header.flags = UFS_UPIU_CMD_FLAGS_WRITE;
++    req_upiu.header.lun = lun;
++    req_upiu.header.task_tag = cmd_desc_slot;
++    req_upiu.sc.exp_data_transfer_len = cpu_to_be32(data_in_len);
++    memcpy(req_upiu.sc.cdb, cdb, UFS_CDB_SIZE);
++    qtest_memwrite(qts, req_upiu_addr, &req_upiu, sizeof(req_upiu));
++
++    utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_HOST_TO_DEVICE, 1);
++    __ufs_send_transfer_request_mcq_async(ufs, lun, &utrd);
++    return cmd_desc_slot;
++}
++
++/* Wait for the request of ufs_zufs_send_write_async(); returns its status */
++static uint8_t ufs_zufs_wait_async(QUfs *ufs, int cmd_desc_slot,
++                                   UtpUpiuRsp *rsp_upiu)
++{
++    uint64_t rsp_upiu_addr = ufs->cmd_desc_addr +
++                             cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE +
++                             UTP_RESPONSE_UPIU_OFFSET;
++    uint64_t end_time;
++    UfsCqEntry cqe;
++    int n_cqe;
++
++    end_time = g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
++    do {
++        qtest_clock_step(ufs->dev.bus->qts, 100);
++        n_cqe = ufs_mcq_poll_cq(ufs, &cqe, 1);
++    } while (!n_cqe && g_get_monotonic_time() < end_time);
++    g_assert_cmpint(n_cqe, ==, 1);
++    g_assert_cmpuint(cqe.status, ==, UFS_OCS_SUCCESS);
++    ufs_wreg(ufs, A_IS, FIELD_DP32(0, IS, CQES, 1));
++
++    qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, rsp_upiu,
++                  sizeof(*rsp_upiu));
++    g_assert_cmpuint(rsp_upiu->header.task_tag, ==, cmd_desc_slot);
++    release_cmd_desc_slot(ufs, cmd_desc_slot);
++    return rsp_upiu->header.scsi_status;
++}
++
++/* Condition and write pointer of the zone at zone_start of the EIO LU */
++static uint8_t ufs_zufs_eio_zone(QUfs *ufs, uint64_t zone_start, uint64_t *wp)
++{
++    uint8_t buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
++
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    stq_be_p(&cdb[2], zone_start);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, buf,
++                                sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, zone_start);
++    *wp = ldq_be_p(&buf[64 + 24]);
++    return buf[64 + 1] >> 4;
++}
++
++static void ufstest_zufs_write_in_flight(void *obj, void *data,
++                                         QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    QTestState *qts = ufs->dev.bus->qts;
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    const uint64_t zone1 = ZONE_BLOCKS, zone2 = 2 * ZONE_BLOCKS;
++    uint8_t buf[4096];
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
++    uint64_t wp;
++    int slot;
++
++    ufs_init(ufs, alloc);
++    g_assert_true(ufs->support_mcq);
++    memset(write_buf, 0x5a, sizeof(write_buf));
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, request_sense_cdb,
++                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++
++    /*
++     * A write to zone 1 takes the only open resource and closes zone 0,
++     * which a write in flight opened. That write fails and still moves the
++     * write pointer back.
++     */
++    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "break write_aio A");
++    ufs_zufs_build_write16(cdb, 0, 1);
++    slot = ufs_zufs_send_write_async(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                     sizeof(write_buf));
++    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x2);
++    g_assert_cmpuint(wp, ==, 1);
++
++    ufs_zufs_build_write16(cdb, zone1, 1);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x4);
++    g_assert_cmpuint(wp, ==, 1);
++
++    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "resume A");
++    g_assert_cmpuint(ufs_zufs_wait_async(ufs, slot, &rsp_upiu), ==,
++                     CHECK_CONDITION);
++    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, 0, &wp), ==, 0x1);
++    g_assert_cmpuint(wp, ==, 0);
++
++    ufs_zufs_build_write16(cdb, 0, 1);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    /*
++     * FINISH ZONE completes while a write that filled zone 2 is in flight.
++     * When the write fails, the zone stays full.
++     */
++    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "break write_aio B");
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_SAME_16;
++    stq_be_p(&cdb[2], zone2);
++    stl_be_p(&cdb[10], ZONE_BLOCKS);
++    slot = ufs_zufs_send_write_async(ufs, EIO_ZONED_TEST_LUN, cdb, write_buf,
++                                     sizeof(write_buf));
++    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, zone2, &wp), ==, 0xe);
++
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone2, false);
++    ocs = ufs_send_scsi_command(ufs, EIO_ZONED_TEST_LUN, cdb, NULL, 0, NULL, 0,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    qtest_qemu_io(qts, EIO_ZONED_TEST_DRIVE, "resume B");
++    g_assert_cmpuint(ufs_zufs_wait_async(ufs, slot, &rsp_upiu), ==,
++                     CHECK_CONDITION);
++    g_assert_cmpuint(ufs_zufs_eio_zone(ufs, zone2, &wp), ==, 0xe);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_report_zones(void *obj, void *data,
++                                      QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    uint8_t buf[4096];
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    uint64_t last_start;
++    enum UtpOcsCodes ocs;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++    memset(write_buf, 0x3c, sizeof(write_buf));
++
++    /* A start LBA inside a zone reports from that zone on */
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    stq_be_p(&cdb[2], 2 * ZONE_BLOCKS + 5);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&buf[0]), ==,
++                     (NUM_ZONES - 2) * REPORT_ZONES_DESC_SIZE);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 16]), ==, 2 * ZONE_BLOCKS);
++
++    /* PARTIAL: the zone list length counts only the returned zones */
++    ufs_zufs_build_report_zones(cdb, 0x80, 64 + 3 * REPORT_ZONES_DESC_SIZE);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, 3 * REPORT_ZONES_DESC_SIZE);
++    ufs_zufs_build_report_zones(cdb, 0x00, 64 + 3 * REPORT_ZONES_DESC_SIZE);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, buf, sizeof(buf),
++                                   &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, NUM_ZONES * REPORT_ZONES_DESC_SIZE);
++
++    /* All zones except gap zones; no read-only or conventional zones */
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x3e), ==, NUM_ZONES);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x06), ==, 0);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x3f), ==, 0);
++
++    /* A capacity that is not a multiple of the zone size: a smaller zone */
++    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, request_sense_cdb,
++                                NULL, 0, buf, sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    last_start = (uint64_t)(ODD_NUM_ZONES - 1) * (ODD_ZONE_SIZE / 4096);
++    ufs_zufs_build_report_zones(cdb, 0x00, sizeof(buf));
++    stq_be_p(&cdb[2], last_start);
++    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, NULL, 0, buf,
++                                sizeof(buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(ldl_be_p(&buf[0]), ==, REPORT_ZONES_DESC_SIZE);
++    g_assert_cmpuint(ldq_be_p(&buf[64 + 8]), ==,
++                     TEST_IMAGE_SIZE / 4096 - last_start);
++
++    /* A write crossing the end of that zone and of the logical unit */
++    ufs_zufs_build_write16(cdb, last_start, 1);
++    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    ufs_zufs_build_write16(cdb, last_start + 1,
++                           TEST_IMAGE_SIZE / 4096 - last_start);
++    ocs = ufs_send_scsi_command(ufs, ODD_ZONED_TEST_LUN, cdb, write_buf,
++                                sizeof(write_buf), NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x21, 0x00);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void ufstest_zufs_more_cmds(void *obj, void *data,
++                                   QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    uint8_t write_buf[4096];
++    uint8_t cdb[UFS_CDB_SIZE];
++    UtpUpiuRsp rsp_upiu;
++    const uint64_t zone4 = 4 * ZONE_BLOCKS, zone5 = 5 * ZONE_BLOCKS;
++
++    ufs_init(ufs, alloc);
++    ufs_zufs_clear_unit_attention(ufs);
++    memset(write_buf, 0x96, sizeof(write_buf));
++
++    /* WRITE(12) and WRITE AND VERIFY(16) move the write pointer */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_12;
++    stl_be_p(&cdb[2], zone4);
++    stl_be_p(&cdb[6], 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = WRITE_VERIFY_16;
++    stq_be_p(&cdb[2], zone4 + 1);
++    stl_be_p(&cdb[10], 1);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, write_buf, sizeof(write_buf),
++                                   NULL, 0, &rsp_upiu), ==, GOOD);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone4), ==, zone4 + 2);
++
++    /* CLOSE ALL closes it, FINISH ZONE fills the closed zone */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, true);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x04), ==, 1);
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone4, false);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x05), ==, 1);
++
++    /* A zone operation on a range of zones is not supported */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_FINISH_ZONE, zone5, false);
++    stw_be_p(&cdb[12], 2);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++
++    /* With the ALL bit, ZONE COUNT does not matter */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_CLOSE_ZONE, 0, true);
++    stw_be_p(&cdb[12], 2);
++    g_assert_cmpuint(ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu), ==,
++                     GOOD);
++
++    /* A zone ID that is not the start of a zone */
++    ufs_zufs_build_zbc_out(cdb, UFS_ZBC_RESET_WRITE_POINTER, zone5 + 1, false);
++    ufs_zufs_send(ufs, cdb, NULL, 0, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x24, 0x00);
++
++    /* A write without a PRDT fails and leaves the write pointer alone */
++    ufs_zufs_build_write16(cdb, zone5, 1);
++    g_assert_cmpuint(ufs_send_scsi_command(ufs, ZONED_TEST_LUN, cdb, NULL, 0,
++                                           NULL, 0, &rsp_upiu), ==,
++                     UFS_OCS_INVALID_CMD_TABLE_ATTR);
++    g_assert_cmpuint(ufs_zufs_write_pointer(ufs, zone5), ==, zone5);
++    g_assert_cmpuint(ufs_zufs_count_zones(ufs, 0x02), ==, 0);
++
++    /* UNMAP would bypass the write pointers */
++    memset(cdb, 0, sizeof(cdb));
++    cdb[0] = UNMAP;
++    stw_be_p(&cdb[7], 24);
++    memset(write_buf, 0, 24);
++    stw_be_p(&write_buf[0], 22);
++    stw_be_p(&write_buf[2], 16);
++    stq_be_p(&write_buf[8], zone4);
++    stl_be_p(&write_buf[16], 1);
++    ufs_zufs_send(ufs, cdb, write_buf, 24, NULL, 0, &rsp_upiu);
++    ufs_zufs_assert_sense(&rsp_upiu, ILLEGAL_REQUEST, 0x20, 0x00);
++
++    ufs_exit(ufs, alloc);
++}
++
++static void *ufs_zufs_test_setup(GString *cmd_line, void *arg)
++{
++    char *tmp_path = drive_create();
++    char *odd_path = drive_create();
++    char *eio_path = drive_create();
++
++    g_string_append_printf(cmd_line,
++                           " -blockdev file,filename=%s,node-name=drv2 "
++                           "-device ufs-lu,bus=ufs0,drive=drv2,lun=%d,"
++                           "zoned=on,zoned.max_open=%d,zoned.zone_size=%d "
++                           "-blockdev file,filename=%s,node-name=drv3 "
++                           "-device ufs-lu,bus=ufs0,drive=drv3,lun=%d,"
++                           "zoned=on,zoned.zone_size=%d "
++                           "-drive if=none,id=%s,driver=raw,"
++                           "file.driver=blkdebug,file.image.filename=%s,"
++                           "file.inject-error.0.event=none,"
++                           "file.inject-error.0.iotype=write,"
++                           "file.inject-error.0.errno=5,"
++                           "file.inject-error.0.sector=0,"
++                           "file.inject-error.0.once=on,"
++                           "file.inject-error.1.event=none,"
++                           "file.inject-error.1.iotype=write,"
++                           "file.inject-error.1.errno=5,"
++                           "file.inject-error.1.sector=%d,"
++                           "file.inject-error.1.once=on "
++                           "-device ufs-lu,bus=ufs0,drive=%s,lun=%d,"
++                           "zoned=on,zoned.zone_size=%d,zoned.max_open=1 "
++                           "-blockdev null-co,node-name=drv5,read-zeroes=on,"
++                           "size=%" PRIu64 " "
++                           "-device ufs-lu,bus=ufs0,drive=drv5,lun=%d,"
++                           "zoned=on ",
++                           tmp_path, ZONED_TEST_LUN, MAX_OPEN_ZONE, ZONE_SIZE,
++                           odd_path, ODD_ZONED_TEST_LUN, ODD_ZONE_SIZE,
++                           EIO_ZONED_TEST_DRIVE, eio_path, EIO_ZONE2_SECTOR,
++                           EIO_ZONED_TEST_DRIVE, EIO_ZONED_TEST_LUN, ZONE_SIZE,
++                           (uint64_t)BIG_ZONED_TEST_SIZE, BIG_ZONED_TEST_LUN);
++
++    return arg;
++}
++
+ static void ufs_register_nodes(void)
+ {
+     const char *arch;
+@@ -1854,6 +2814,12 @@ static void ufs_register_nodes(void)
+                                              "mcq=false,nutrs=32,nutmrs=8,"
+                                              "wb-max-size=1024,"
+                                              "wb-min-size=256" };
++    QOSGraphTestOptions zufs_test_opts = { .before = ufs_zufs_test_setup,
++                                           .edge.extra_device_opts =
++                                               "mcq=false,nutrs=32,nutmrs=8" };
++    QOSGraphTestOptions zufs_mcq_test_opts = { .before = ufs_zufs_test_setup,
++                                               .edge.extra_device_opts =
++                                                   "mcq=true,mcq-maxq=1" };
+     QOSGraphTestOptions acpi_eject_test_opts = { .subprocess = true };
+ 
+     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
+@@ -1894,6 +2860,24 @@ static void ufs_register_nodes(void)
+     qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
+     qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
+     qos_add_test("hid", "ufs", ufstest_hid, &io_test_opts);
++    qos_add_test("zufs-init", "ufs", ufstest_zufs_init, &zufs_test_opts);
++    qos_add_test("zufs-write", "ufs", ufstest_zufs_write, &zufs_test_opts);
++    qos_add_test("zufs-mcq-write", "ufs", ufstest_zufs_write,
++                 &zufs_mcq_test_opts);
++    qos_add_test("zufs-write-cmds", "ufs", ufstest_zufs_write_cmds,
++                 &zufs_test_opts);
++    qos_add_test("zufs-open-zones", "ufs", ufstest_zufs_open_zones,
++                 &zufs_test_opts);
++    qos_add_test("zufs-unit-attention", "ufs", ufstest_zufs_unit_attention,
++                 &zufs_test_opts);
++    qos_add_test("zufs-io-error", "ufs", ufstest_zufs_io_error,
++                 &zufs_test_opts);
++    qos_add_test("zufs-write-in-flight", "ufs", ufstest_zufs_write_in_flight,
++                 &zufs_mcq_test_opts);
++    qos_add_test("zufs-report-zones", "ufs", ufstest_zufs_report_zones,
++                 &zufs_test_opts);
++    qos_add_test("zufs-more-cmds", "ufs", ufstest_zufs_more_cmds,
++                 &zufs_test_opts);
+ }
+ 
+ libqos_init(ufs_register_nodes);
+
+-- 
+2.43.0
 
