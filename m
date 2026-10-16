@@ -4,81 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AC7CCA464
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 10:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7656FCC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 11:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHfZU-0001wP-Il; Fri, 16 Oct 2026 06:53:56 -0400
+	id 1xHff8-00038s-UE; Fri, 16 Oct 2026 06:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHfZR-0001wC-ER
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:53:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xHff7-00038R-A7
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:59:45 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xHfZO-0006cU-UX
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:53:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792148029;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gO0mFHqr1TT7BEPJZxeYyv83H3+2VOt4PWQn/RTcMOo=;
- b=ARcDYMtC3Qvcm0WzuPkhKspQitmn4evQISBKos+x5Wk04PqscZ9sqbdeWdVKK/K5RO+6OF
- TcQkHbDmi7O0yn9tWj1mr7+phdIO3Ygi/e3Wk2clxI/Adr96HkkG2fH88RoF9ExB7wVFDh
- XdIg16wN0WfFoimKykyKUS+XNnmOT3E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-TFBOFUguO7S4bdMh0MRa9A-1; Fri,
- 16 Oct 2026 10:53:44 +0000
-X-MC-Unique: TFBOFUguO7S4bdMh0MRa9A-1
-X-Mimecast-MFC-AGG-ID: TFBOFUguO7S4bdMh0MRa9A_1792148023
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 06E5F195608E; Fri, 16 Oct 2026 10:53:43 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C945546C; Fri, 16 Oct 2026 10:53:41 +0000 (UTC)
-Date: Fri, 16 Oct 2026 11:53:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-Message-ID: <atICMoFG2gkoHWJ-@redhat.com>
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <atEC-pIGhLYLXVmC@redhat.com>
- <CAFEAcA-wEB15afO4Na8+8cF_Ja3v-8ewd8EdPavxJbfTmrL9GA@mail.gmail.com>
- <atHrFXxyIl3Nbvht@redhat.com> <atHu0kCSQTD9E34p@redhat.com>
- <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xHff5-0007Cl-5W
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 06:59:45 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69GAA6E71983107
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 10:59:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RRFToM0ma4CDmnuwQUVbq2Jg4BaRCdz7dffemXt+eYE=; b=iVqTiCaRDHXAnQTl
+ 3aSix0qIUP02/T0U38oileFkR4KG+0u9ockf35NBZjRBsumaRxgM6E2zkObTYfQh
+ zA1t5WEdJUKRUq/LEDgmWbhe/4T8qoeB7DcLmh9ruNz913OnkMqJS4o5HJpICPKZ
+ q/RMGFtpApwk8ATYwVbzyrJyDGleFpyiIScwUYSUL1NoD/rZnboH+YEzCWxBYCQn
+ GZRP/OmPj+uMBddPQdZYjM7b1vUQWZixwr+wYV9S1lTtdq1LpHZlsVds5p7uzqj8
+ VuMolTOGoAoCGCLlTzWH3xgi26YFTSdC9jXn3P0nwfqwtda2t7y5HuwLNQyGTwhF
+ PM4BSg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hb8a8aa2k-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 10:59:40 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93f2005ce21so55996985a.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 03:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792148379; x=1792753179; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=RRFToM0ma4CDmnuwQUVbq2Jg4BaRCdz7dffemXt+eYE=;
+ b=XlqRtMsVElHkkMNg6FtbEUNs42+VVhFDcwDQlurpFICA1vxGH9hpH1u8E5WOO3tiYx
+ gDBr0M0s3mXkpC/AlDK+Bx+xK4VsTdcdwzqDWMWWucKYR3LaaORw884nOHhxCw2OB+1S
+ 1KAVLG2mx3SZoHXTt3ROpGemFDhQjI2I1RzM+dq2aHfdtI5HEzfUlNb3PXXF8UB8ncDN
+ YIWBQv01md7WzI4x/MMWLyo/LdnFwdacmgJIoeTEvW3xfoskcaJlVp6po7M84EfJtRQk
+ pPXxklT7yqVuCtaIS60QVAzPCuRPTS2WporldvDtuAtewfSIol76ILBZHTJk4vjb6Sro
+ MXAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792148379; x=1792753179;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RRFToM0ma4CDmnuwQUVbq2Jg4BaRCdz7dffemXt+eYE=;
+ b=x46plRrnysUv2HgMDOK1S7Snw3iYT2Z7huLybDauJIvHrmU/HTWPYmVXnwgcNR6dJo
+ e8NmTmmnFZZPEDHl5x0oBmOthQ7OChbr+wANhoql8k3sQX1kOwuBJ6kObQs9eplx367F
+ hqi4SSLYlmLDWsCNRZYGjWc2hRBtvxlQTF5QaMkUKqkJ+PKqivk5P5eOxK2wOLC1Hrnw
+ zi27id3pRcaTruBdKXEByopBpJBdifmlzqOyVyyWdiwscR4b8cz1IGXqB1mTRB/YL1WL
+ qFWDy/O5rV5bPv1XQvgK9qc9tSovlOu4O5vdLST8xiD9pOde0GJFqtT5ei3xL83wfTB0
+ 2GvA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxfXafMZNQEFFnP1DilTIPspUdQ0gt9fb4Pd8hFrYObEG+0cG014VuCSoaswyy4Xl8klIy7MH9daN7v@nongnu.org
+X-Gm-Message-State: AFq9FYI2kZ0QlzWNuBrM61rNT3AIJ0nYWhq7VMV1SQLlfwRtmvoFcPzK
+ OmVKdFNnL/Hyp9KfGOQHvXJNuwqxux+b1lf9cGa9+Ydg04mehJgTIG14TgdktsobPzGlfXN8wYb
+ ni3AATrpOZBZj1N0SrPeuKsuu0RXisfl0DH0z06t07O6yzAqca83UUjfRRQ==
+X-Gm-Gg: AYBFou2hDFfgrt3Qosaz8okVfL5z9mv4Jqqp2jUMfHcu8shp5FoIGXzffXHKFXfUAje
+ PBANM6EjhI6+mVG1Pt/lLlM8KBxXx+XETBbDUvQpKRQOPp7K/AvaCrhw8cRDwS38Q+SbcrZUjzs
+ h4E2jyJkpKo3ZxhzSYOhF8uvcrFK23JlLaQAchGtvd3pUZQIKjUSdTPNdQIudvNPpV9MxiHKsjp
+ QoP4KbKxROESTxhiaP+5zh4xvNTm5kqE/sXYjUUILTVVokl6wenOjP69Kq5/AY2H/h7esLoz+1G
+ 9nAMAMXocGsvQMKGNbwnZFkQZs+j7lzXFqFCOreJIM6OLZo8EJZ0jjOfeftIgka7Ukb9XCHDBOk
+ nN1FmcA0PBF44XgY66v6fDFS71TB+rCYWDg==
+X-Received: by 2002:a05:620a:1a0b:b0:93f:216f:f404 with SMTP id
+ af79cd13be357-93f216ff565mr97181685a.40.1792148379264; 
+ Fri, 16 Oct 2026 03:59:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a0b:b0:93f:216f:f404 with SMTP id
+ af79cd13be357-93f216ff565mr97180085a.40.1792148378821; 
+ Fri, 16 Oct 2026 03:59:38 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1c8af2fcesm53644595e9.8.2026.10.16.03.59.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Oct 2026 03:59:38 -0700 (PDT)
+Message-ID: <d3d9ba30-e28e-44a4-8531-52b88a8b5943@oss.qualcomm.com>
+Date: Fri, 16 Oct 2026 12:59:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/19] multi-target: remove dump functions duplication
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ anjo@rev.ng, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20261015213236.157767-1-pierrick.bouvier@oss.qualcomm.com>
+ <5aa90efa-5bbd-47b2-86d8-8e1552161668@oss.qualcomm.com>
+ <faa22811-7a04-4077-8e26-b89be0a0c972@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <faa22811-7a04-4077-8e26-b89be0a0c972@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9PTB=1V_hV1P0xpEW4aY+4LajYyzKzyTOJj=bb9=oPvA@mail.gmail.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA0MyBTYWx0ZWRfX1H7NxcUEoSNw
+ ltjtUc96pboaCO4lLkIzUCZpWbrGde4olCjCF60HA5MxD3lnSIxppQweAdbbdxOeuEyYDrG+adY
+ JnReb2nvrO3dMITARhLx1/CG/On+yxk=
+X-Proofpoint-ORIG-GUID: aZjuNaWp8-4cSOt1hmH_YLEC20x-MVIa
+X-Authority-Analysis: v=2.4 cv=GJadgeNK c=1 sm=1 tr=0 ts=6ad2039c cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=vAcAjI9A3QUpiSO3UmcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA0MyBTYWx0ZWRfXzdRKnIbuO2nK
+ AG/a2L6YXgbKUSiv/o1h2BWrrZMYAJgS3U3JxxwjqZN+XSAL8xUrRYZ7+SQvbV5TOC4VHCPiLz4
+ 3f9Zpb9C0CB+/vRcak4nGWI6dTh1shTj3X4PnQk0PXO4HuhxcgS401O6gSIxwdGwnLb34CtwYhv
+ JAMTFa/JZD7C7lERWRo4lFiOJ+JwTXqotNTRYL4YCv0zCkeOGBuoCfVeDXqi9SfaMks48jxKyJy
+ Pxya23DlNSaLrhzyIrwFyjEXClnkhnxfb06H/XoN9Yz/y2Xx13ePeGPyMsTjHUZryASCp/lAyyn
+ gOetSmh3JYMZDPWv29dmIGL57jRcV6Vr3viVuxPhQKvZjKyLuBeJOsSPhDobC7P/m3uOSs/wvhh
+ b4z68JTGf5tzKbfUnyGxGlpwVv7alHyG8LM7OFCz1mxlp5KdQK8t1KMbKp+zZM74ljLy/g1dnxs
+ CsYnPfhtPeJJJGoFlHg==
+X-Proofpoint-GUID: aZjuNaWp8-4cSOt1hmH_YLEC20x-MVIa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_01,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160043
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,127 +153,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Oct 16, 2026 at 11:14:16AM +0100, Peter Maydell wrote:
-> On Fri, 16 Oct 2026 at 10:31, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Fri, Oct 16, 2026 at 10:15:01AM +0100, Daniel P. Berrangé wrote:
-> > > We're overwriting the DeviceClass::realize field in the class
-> > > struct instance for "pl050_keyboard". We still have the completely
-> > > independent class struct instance for "pl050" (which is what
-> > > object_class_get_parent() returns) that contains the 'realize'
-> > > field value set by the parent class.
-> > >
-> > > eg if I put a break on pl050_kbd_realize():
-> > >
-> > >   (gdb) print pdc->parent_class->parent_class->parent_class->type->name
-> > >   $5 = 0x555557de40a0 "pl050_keyboard"
-> > >   (gdb) print pdc->parent_class->parent_class->realize
-> > >   $6 = (DeviceRealize) 0x55555585db67 <pl050_kbd_realize>
-> > >
-> > > and separately
-> > >
-> > >   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->parent_class->type->name
-> > >   $7 = 0x555557de3ee0 "pl050"
-> > >   (gdb) print ((DeviceClass*)(object_class_get_parent(pdc)))->realize
-> > >   $8 = (DeviceRealize) 0x55555585daf4 <pl050_realize>
+On 16/10/26 08:42, Pierrick Bouvier wrote:
+> On 10/15/26 10:59 PM, Philippe Mathieu-Daudé wrote:
+>> On 15/10/26 23:32, Pierrick Bouvier wrote:
+>>> This series removes duplication of cpu_get_note_size and 
+>>> cpu_get_dump_info per
+>>> target. For this, we define a new set of Dump operations for a given 
+>>> cpu, and
+>>> implement it per target.
+>>>
+>>> Existing implementations were using first_cpu, which is what we 
+>>> continue to do.
+>>> When we'll work on heterogeneous later, we can revisit this to either 
+>>> forbid a
+>>> dump, or perform a dump for each target active.
+>>
+>> Make sense but this must be documented, in the code, and commits
+>> description.
+>>
+>> Maybe we can self-document adding '#define qemu_heterogeneous() false'
+>> in a core header and asserting !qemu_heterogeneous() in the dump API?
 > 
-> Ah. I didn't realize you could get at the parent's class
-> struct like this.
+> I can add a new function target_heterogenenous in target_info, which 
+> returns false for now. And add this check in the if for those dump 
+> operations, saying it's not supported in this case.
 > 
-> > We can make it a little less ugly in the callers with a macro in
-> > qdev.h thus:
-> >
-> > diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-> > index 8e91e2fcb08..18e85850c31 100644
-> > --- a/include/hw/core/qdev.h
-> > +++ b/include/hw/core/qdev.h
-> > @@ -461,6 +461,9 @@ static inline bool qdev_is_realized(const DeviceState *dev)
-> >   */
-> >  bool qdev_realize(DeviceState *dev, BusState *bus, Error **errp);
-> >
-> > +#define qdev_realize_chain_parent(dev, dc, errp) \
-> > +    DEVICE_CLASS(object_class_get_parent(OBJECT_CLASS(dc)))->realize(dev, errp)
-> 
-> I'm tempted to suggest that we drop the 'dc' argument here and
-> have the macro get the class from the dev:
->     DEVICE_CLASS(object_class_get_parent(object_get_class(OBJECT(dev))))->realize(dev,
-> errp)
-> 
-> because I think almost all realize methods wanting to chain back up
-> won't have the class pointer to hand.
->
-> We could maybe have an extra layer of abstraction here such that
-> you write something like:
-> 
->    parent_invoke(DEVICE_CLASS, dev)->realize(dev, errp);
-> 
-> Or is that trying to be too clever?
+> What do you think?
 
-This won't work if we have multiple levels in the class hierarchy
-that need chaining up, as object_class_get_parent(object_get_class(dev))
-will always just get the first level parent class of 'dev'.
-
-Somewhere/how we need to identify the current class level we're
-calling from, so we know what parent to ask for.
-
-Another option is to do what GObject does and provide a simple
-helper for getting the parent class, from OBJECT_DEFINE_TYPE*
-macros:
-
-    ...
-    static inline ObjectClass * \
-    module_obj_name##_parent_class() { \
-        return object_class_by_name(TYPE_##PARENT_MODULE_OBJ_NAME); \
-    } \
-    ...
-
-which would be used
-
-    DeviceClass *dc = DEVICE_CLASS(pl050_kbd_parent_class());
-
-    dc->realize(dev, errp);
-
-but many (most) of qdev impls don't use the relatively new
-OBJECT_DEFINE_TYPE macros. They would have to instead explicitly
-reference the parent type name:
-
-    DeviceClass *dc = DEVICE_CLASS(object_class_by_name(TYPE_PL050));
-    dc->realize(dev, errp);
-
-which isn't too terrible.
-
-> > diff --git a/include/hw/input/pl050.h b/include/hw/input/pl050.h
-> > index 2cdfa74f73c..7169afc151f 100644
-> > --- a/include/hw/input/pl050.h
-> > +++ b/include/hw/input/pl050.h
-> > @@ -17,8 +17,6 @@
-> >
-> >  struct PL050DeviceClass {
-> >      SysBusDeviceClass parent_class;
-> > -
-> > -    DeviceRealize parent_realize;
-> >  };
-> 
-> Yes, this is clearly vastly better than we have at the moment.
-> device_class_set_parent_unrealize() can do similarly.
-> 
-> Does something similar work when QOM interfaces are involved?
-> We have resettable_class_set_parent_phases() which deals with
-> updating the methods of ResettableClass, which is an interface
-> declared by TYPE_DEVICE.
-
-Yes, each QOM interface has a ObjectClass associated with it,
-so you can chase the parent class links upto ResettableClass.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Yes please it is cheap and that'd make us safer IMHO.
 
