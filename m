@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1C64CCA463
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8817FCC6B38
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWLf-0000HA-0T; Thu, 15 Oct 2026 21:03:04 -0400
+	id 1xHWLT-0000Es-5T; Thu, 15 Oct 2026 21:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLX-0000G6-F2
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:55 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1xHWLS-0000Ej-5Z
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:50 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWLV-0004Cp-Bt
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:55 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2e8246b13cbso43549585ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:02:53 -0700 (PDT)
+ id 1xHWLP-0004Br-QZ
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:02:49 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2e86dce4510so30383625ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112572; x=1792717372; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8YFPhT6aOCuG9UYnv1AULvKlN1lwEIlGrbq+GhNIGTo=;
- b=CfkUeXeBsS1/DmXqjInR/yu+7oAXSUJZ/EKm4xkuEdwAGUppspwHp34B5bMrXqjsMN
- DEtGN57ppJlLBNDDJkJkqLMfLXtBR2CUANRsWbjvBCRIoDV5DmIYBO/V7YQ/eTMTbcJk
- B4sgFi6u10CGG1Ca+ww9Ma5JGDb6XEKL0DMHdCQp+DxpEWYlopLNxUr0BsjzqVV+MN07
- A2cbaNrVAv/7KUqwmWqXirCknznWLzEdOTwlAhwsoak9mKoNXebfL4XBPVhodlfA87v/
- 0gaODCsbpXC/xJuD2xlWbwkVetj0L8NHbwANkExO9TW0MWAHmAz9VTxlbFAmSb5SyqJ3
- TOew==
+ d=gmail.com; s=20251104; t=1792112566; x=1792717366; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=CvTv9r0tZj6PfssqiJ1v1eqmrslaM+3Hwcy8B0ocDeI=;
+ b=crUVY/3+Y26ELaASJ4z7PoKNtPw70ZsWqL/ynVphFkGpDszrQLNtcVRhu0+jyYdSV+
+ zboI2eRWdhw41mTo6cQkJTkLcWxlCYwUW7WQnl4P/l5E9f0Nto/GMap2gfXzScyMN5/L
+ 5+VS41GxS0GiwY8pDx2f2RDIJy4OokCsdbdb/8wVTs7k5af0O+8Ly39bBWhtMdrl2PxU
+ QNV8jFgA+bYUwmvTOL1+h53xtW1BBrQ3PwcKqh384gqIrnidbrQrhRz55Ko2LFVPFliQ
+ 5oHf5/qZqDFTe9ksYVe/k/EPBDmtwjZNQlEFy6vVjcRc1/y7xjL8LplMXGsDjBmEKcEH
+ MiSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112572; x=1792717372;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8YFPhT6aOCuG9UYnv1AULvKlN1lwEIlGrbq+GhNIGTo=;
- b=t67d5+fWnWnRPNd1YiHjWrhXuFXmnRrtV8a3aq87C1dY0U5TFdKaBLrCZnXNJ8D9NF
- S5q9FhyzPkg/1Gy8Qdz6cu1G2FqHZ93iMcQ2mA5jBCaPWW4zbRWPCt58bvoh9I64GLTD
- E4SfZpOHblklR0mLFWl7ce3FlA9FOc3+soUJUFl7GkKZaL7FdfQ9rDrnwH50eLEg4qhN
- hyZIWaZ3+3/jkFjPpLVVi3uW8fkLwkf1jOzraFRcN0itZEg1Lb8PDBSqkiVCbzHU7wkO
- hH8YeijJ0+/04/aNDgfIhfkUsphOwwwIgZ0X+KKFhg+Xqwd7nV9EWyPlYsv7G7KEAFBF
- oDrA==
-X-Gm-Message-State: AFq9FYJepfSHMKG4sNePWqg2WVRrTxvlVExYqGPdp24dvu08IbI6lB6o
- nIixfF2OhR2W6vczGWQk4XOyLtr7N2Ak66nNNbJ2COQViyufZA7GphQ0mhgr5w==
-X-Gm-Gg: AYBFou0S43TVba5oMT6zwxrFiiLG6L8ll9Um5TdYdPX+/CHgrRBHk2kchEuNkqwz63h
- OjMv8Cilg7N93kYWbM/hmYplkWoRXuywbQjSD2gd429XSiHeDLOMQI07uWDPaDNuqi269E0Cowa
- ycbeRs6V98a8Jo1dAlSU36D4K92//IBzliuNRL0G/4pkYxEQSb76D0vMB0xnvJxDZblnZEPEU94
- oSdSMfO2eUITUmm+Is6vC7CjQq+qP3bxE4+U/i1tpQ9g6Pfyu5sPLt/7cVfSkB6zJ6nigPZBNv7
- uHxvh6YByxUFa3Zbx+bOEiSmlcVG/NITjVjyGalhC6OxLdwIGbTgSpvyemKmic1F9f3VevPqAV9
- WXcxBPjvKdLvaTdA+GiXsS0TuVu7ygUQTS0cjwaPehQFmYFOrwR0A5qNhB1tT0JUSrC+pS8zDrz
- NTbJpzYSTckRcWChSgu28QTMLh9sb9ueac+a1jktq7YhbP2Tz3xn/16QUZeeu06g16SPFd9eMWQ
- AJK211Mp1cFMJDWcg==
-X-Received: by 2002:a17:903:15c7:b0:2e6:1a6c:abd4 with SMTP id
- d9443c01a7336-2e84280e026mr192298985ad.2.1792112571567; 
- Thu, 15 Oct 2026 18:02:51 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792112566; x=1792717366;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=CvTv9r0tZj6PfssqiJ1v1eqmrslaM+3Hwcy8B0ocDeI=;
+ b=tyrHT3ZEurPtd7HNDPGToel/X4NEYll9lKVBWOyZLlJlhbzDXTGZ/6MQ4WBOyu3Dwp
+ lW2fWjWDrXa6XjckhUl5ihF5vrxb+N8uvB8ezRynnJcXkNMeu8hhTO+SQnNMD6oZR2g2
+ 5AjRS99TtL3IumkHZO3UNU30s4hDqfEnGBwPpARhCwZafAKFmOWRk+Z1CFua/9RO/aSS
+ kJVp1ujhk1ZkssSx3o42cEqL/ZV9H/Y/n3OKYeX2Bxi49JjukwAjrRP9tKU56ytNa0F3
+ y2JabLuMgEZP2sAbzJ0cwD/1uL61icmllNpsKf53BwQige24xlixxDXlk7W0RiXZnGYT
+ xf+g==
+X-Gm-Message-State: AFq9FYLWQ+ytyhZNir9T4izRb/6rsI4MYZZ2+7Ei/VWLKoAWEWGnHCls
+ iryr9DU0QUYXs5wbNsEL0rHiWssLNR1T7odTaJ9AK8tqj3VixQV/jAnd93a/fQ==
+X-Gm-Gg: AYBFou3pboCWjQKHzCKR4Y8bZOEXBxna+19To2BfOYlAWDGghv+bxt9lGR9t8R0S3jK
+ m54gQBXNh5lIhEoWe8yEhCAbNzjYP7FJAMIv3GyDQb8Hyvgf9E5dL/KZutwhVTvR1HcjKeUKtKA
+ 5emS4qDlllJN3r2f0YScJH+zi96Fpifr7bLoYe2M5mq2tPgZXRcQstYJHHpvIiA1KCSqhHHxylJ
+ 1YyQjehWBNLvGmzzcFAbLzxvo9BKBh3dFPaBqmugKVnhdYRzw7xUO2iZIivSAqA+U50nsRNivGj
+ uca+9MTUYHXkWCxlOn6TW8JOW9DHnz2UF5tHydIz5HSJsnkzxpD4TQ4LcHfvAhNxyjnXwP+onEu
+ gqWCvD8eVDp9u0MAbK/HWMPb4Hu9Mr597/u3HHpJ6ZHV52uPocjS/v9GDkS6hSkBVvUrwBtTa4g
+ SgVjdlxAp+06UM/ok6oqSUwg9y1zGeMwgCnVz6BrMciBVc4+DilukezSWK3858Cg0tcgVRKKTe3
+ mz4np/mB3OBKNro
+X-Received: by 2002:a17:902:dac9:b0:2e3:1d30:8658 with SMTP id
+ d9443c01a7336-2e842836264mr183097255ad.10.1792112565628; 
+ Thu, 15 Oct 2026 18:02:45 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.02.48
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.02.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:02:50 -0700 (PDT)
+ Thu, 15 Oct 2026 18:02:44 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>,
- qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Gong Shuai <gsh517025@gmail.com>,
- TianCheng TANG <lyndra@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 02/50] target/riscv: Restore LCOFI handling in interrupt CSRs
-Date: Fri, 16 Oct 2026 11:01:49 +1000
-Message-ID: <20261016010237.1102834-3-alistair.francis@wdc.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 00/50] riscv-to-apply queue
+Date: Fri, 16 Oct 2026 11:01:47 +1000
+Message-ID: <20261016010237.1102834-1-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
-References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -91,7 +84,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,257 +100,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Commit 27f9566dcd98 dropped bits 13-15 from the LOCAL_INTERRUPTS
-macro and hence also from individual masks such as all_ints,
-sip_writable_mask etc.
+The following changes since commit 7e8d3c7fc460fe7cd28a3e423d7466fa292bc269:
 
-As a result, even with sscofpmf and ssaia enabled, the LCOFI never got
-delivered to the host OS and guest OS respectively.
+  Merge tag 'pull-aspeed-20261015' of https://github.com/legoater/qemu into staging (2026-10-15 14:58:28 +0200)
 
-Add back bit 13 in all the affected masks, but gate it on Sscofpmf being
-implemented. For the virtual interrupt paths, i.e., mvip/mvien,
-hvip/hvien/vsip/vsie registers, bit 13 is additionally gated on Smaia
-and Ssaia respectively. Bits 14, 15 can be added when those interrupt
-sources get defined.
+are available in the Git repository at:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 27f9566dcd98 ("target/riscv: Update the local interrupt mask")
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Suggested-by: Gong Shuai <gsh517025@gmail.com>
-Suggested-by: TianCheng TANG <lyndra@linux.alibaba.com>
-Signed-off-by: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
-Message-ID: <20260921145334.419651-1-mayuresh.chitale@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/tcg/csr.c | 88 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 73 insertions(+), 15 deletions(-)
+  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20261016
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 061bc9db77..a3351428cb 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -1815,7 +1815,7 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
- #define LOCAL_INTERRUPTS   (~0xFFFFULL)
- 
- static const uint64_t delegable_ints =
--    S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
-+    S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS;
- static const uint64_t vs_delegable_ints =
-     (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
- static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-@@ -1877,6 +1877,42 @@ static const uint64_t hvien_writable_mask = LOCAL_INTERRUPTS;
- 
- static const uint64_t vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
- 
-+/*
-+ * Selects the extensions that need to be checked when accessing various
-+ * interrupt registers.
-+ */
-+typedef enum {
-+    /* Accessing mideleg, mie, mip, and alias paths  */
-+    AIA_NONE,
-+    /* Accessing mvien, mvip non-alias path */
-+    AIA_SMAIA,
-+    /* Accessing hvien, hvip, vsie, vsip paths */
-+    AIA_SSAIA,
-+} AIAExt;
-+
-+/*
-+ * This function can be extended later to configure mask for standard local
-+ * interrupt bits 14 and 15, once those get defined in the Priv Spec.
-+ */
-+static uint64_t std_impl_intr_mask(CPURISCVState *env, AIAExt ext)
-+{
-+    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
-+
-+    if (ext == AIA_SMAIA && !cfg->ext_smaia) {
-+        return 0;
-+    }
-+
-+    if (ext == AIA_SSAIA && !cfg->ext_ssaia) {
-+        return 0;
-+    }
-+
-+    if (!cfg->ext_sscofpmf) {
-+        return 0;
-+    }
-+
-+    return MIP_LCOFIP;
-+}
-+
- /* Machine Information Registers */
- static RISCVException read_zero(CPURISCVState *env, int csrno,
-                                 target_ulong *val)
-@@ -2249,8 +2285,10 @@ static RISCVException rmw_mideleg64(CPURISCVState *env, int csrno,
-                                     uint64_t *ret_val,
-                                     uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t mask = wr_mask & delegable_ints;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mideleg;
-     }
-@@ -2300,8 +2338,10 @@ static RISCVException rmw_mie64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t mask = wr_mask & all_ints;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mie;
-     }
-@@ -2350,8 +2390,10 @@ static RISCVException rmw_mvien64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SMAIA);
-     uint64_t mask = wr_mask & mvien_writable_mask;
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->mvien;
-     }
-@@ -3784,9 +3826,12 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-     uint64_t old_mip, mask = wr_mask & delegable_ints;
-     uint32_t gin;
- 
-+    mask |= wr_mask & std_mask;
-+
-     /*
-      * When mvien[9]=1, mip.SEIP is read-only and reflects only
-      * the external interrupt signal from the interrupt controller.
-@@ -3900,9 +3945,12 @@ static RISCVException rmw_mvip64(CPURISCVState *env, int csrno,
-      *  alias_mask denotes the bits that come from mip nalias_mask denotes bits
-      *  that come from hvip.
-      */
--    uint64_t alias_mask = ((S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    AIAExt intr_virt = ((csrno == CSR_MVIP) || (csrno == CSR_MVIPH)) ?
-+                          AIA_SMAIA : AIA_NONE;
-+    uint64_t std_mask = std_impl_intr_mask(env, intr_virt);
-+    uint64_t alias_mask = ((S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (env->mideleg | ~env->mvien)) | MIP_STIP;
--    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    uint64_t nalias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (~env->mideleg & env->mvien);
-     uint64_t wr_mask_mvip;
-     uint64_t wr_mask_mip;
-@@ -3931,8 +3979,8 @@ static RISCVException rmw_mvip64(CPURISCVState *env, int csrno,
-         alias_mask &= ~MIP_STIP;
-     }
- 
--    wr_mask_mip = wr_mask & alias_mask & mvip_writable_mask;
--    wr_mask_mvip = wr_mask & nalias_mask & mvip_writable_mask;
-+    wr_mask_mip = wr_mask & alias_mask & (mvip_writable_mask | std_mask);
-+    wr_mask_mvip = wr_mask & nalias_mask & (mvip_writable_mask | std_mask);
- 
-     /*
-      * For bits set in alias_mask, mvip needs to be alias of mip, so forward
-@@ -4065,9 +4113,11 @@ static RISCVException rmw_vsie64(CPURISCVState *env, int csrno,
-                                  uint64_t *ret_val,
-                                  uint64_t new_val, uint64_t wr_mask)
- {
--    uint64_t alias_mask = (LOCAL_INTERRUPTS | VS_MODE_INTERRUPTS) &
--                            env->hideleg;
--    uint64_t nalias_mask = LOCAL_INTERRUPTS & (~env->hideleg & env->hvien);
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-+    uint64_t alias_mask = (LOCAL_INTERRUPTS | VS_MODE_INTERRUPTS |
-+                           std_mask) & env->hideleg;
-+    uint64_t nalias_mask = (LOCAL_INTERRUPTS | std_mask) &
-+                           (~env->hideleg & env->hvien);
-     uint64_t rval, rval_vs, vsbits;
-     uint64_t wr_mask_vsie;
-     uint64_t wr_mask_mie;
-@@ -4135,9 +4185,11 @@ static RISCVException rmw_sie64(CPURISCVState *env, int csrno,
-                                 uint64_t *ret_val,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
--    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-+    uint64_t nalias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-         (~env->mideleg & env->mvien);
--    uint64_t alias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & env->mideleg;
-+    uint64_t alias_mask = (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS) &
-+        env->mideleg;
-     uint64_t sie_mask = wr_mask & nalias_mask;
-     RISCVException ret;
- 
-@@ -4320,6 +4372,7 @@ static RISCVException rmw_vsip64(CPURISCVState *env, int csrno,
-                                  uint64_t new_val, uint64_t wr_mask)
- {
-     RISCVException ret;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-     uint64_t rval, mask = env->hideleg & VS_MODE_INTERRUPTS;
-     uint64_t vsbits;
- 
-@@ -4335,7 +4388,7 @@ static RISCVException rmw_vsip64(CPURISCVState *env, int csrno,
-     wr_mask |= vsbits << 1;
- 
-     ret = rmw_hvip64(env, csrno, &rval, new_val,
--                     wr_mask & mask & vsip_writable_mask);
-+                     wr_mask & mask & (vsip_writable_mask | std_mask));
-     if (ret_val) {
-         rval &= mask;
-         vsbits = rval & VS_MODE_INTERRUPTS;
-@@ -4382,7 +4435,9 @@ static RISCVException rmw_sip64(CPURISCVState *env, int csrno,
-                                 uint64_t new_val, uint64_t wr_mask)
- {
-     RISCVException ret;
--    uint64_t mask = (env->mideleg | env->mvien) & sip_writable_mask;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_NONE);
-+    uint64_t mask = (env->mideleg | env->mvien) &
-+                    (sip_writable_mask | std_mask);
- 
-     if (env->virt_enabled) {
-         if (env->hvictl & HVICTL_VTI) {
-@@ -4395,7 +4450,7 @@ static RISCVException rmw_sip64(CPURISCVState *env, int csrno,
- 
-     if (ret_val) {
-         *ret_val &= (env->mideleg | env->mvien) &
--            (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS);
-+            (S_MODE_INTERRUPTS | std_mask | LOCAL_INTERRUPTS);
-     }
- 
-     return ret;
-@@ -4737,7 +4792,9 @@ static RISCVException rmw_hvien64(CPURISCVState *env, int csrno,
-                                     uint64_t new_val, uint64_t wr_mask)
- {
-     uint64_t mask = wr_mask & hvien_writable_mask;
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
- 
-+    mask |= wr_mask & std_mask;
-     if (ret_val) {
-         *ret_val = env->hvien;
-     }
-@@ -4861,6 +4918,7 @@ static RISCVException rmw_hvip64(CPURISCVState *env, int csrno,
-      */
-     uint64_t alias_mask = (env->hideleg | ~env->hvien) | VS_MODE_INTERRUPTS;
-     uint64_t nalias_mask = (~env->hideleg & env->hvien);
-+    uint64_t std_mask = std_impl_intr_mask(env, AIA_SSAIA);
-     uint64_t wr_mask_hvip;
-     uint64_t wr_mask_mip;
- 
-@@ -4882,8 +4940,8 @@ static RISCVException rmw_hvip64(CPURISCVState *env, int csrno,
-         alias_mask &= (env->hideleg | env->hvien);
-     }
- 
--    wr_mask_hvip = wr_mask & nalias_mask & hvip_writable_mask;
--    wr_mask_mip = wr_mask & alias_mask & hvip_writable_mask;
-+    wr_mask_hvip = wr_mask & nalias_mask & (hvip_writable_mask | std_mask);
-+    wr_mask_mip = wr_mask & alias_mask & (hvip_writable_mask | std_mask);
- 
-     /* Aliased bits, bits 10, 6, 2 need to come from mip. */
-     ret = rmw_mip64(env, csrno, &ret_mip, new_val, wr_mask_mip);
--- 
-2.55.0
+for you to fetch changes up to bfdd4f6a918ffad4f013d4f53a9adca1adc0aa3b:
 
+  target/riscv: normalize Zcmt jvt.mode on writes (2026-10-16 10:40:39 +1000)
+
+----------------------------------------------------------------
+RISC-V PR for 11.2
+
+* Check G-stage write permission for VS-stage A/D updates
+* Restore LCOFI handling in interrupt CSRs
+* Fix csrrs disasembly decoding
+* Stop translating after WFI
+* Raise virtual instruction exception on svinval instructions
+* Fix some KVM migration issues
+* Add support for Milk-V Duo board
+* Make MIP accesses atomic and BQL-safe
+* Add initial sdext support
+* Add SiFive Xsfvqmaccdod/Xsfvqmaccqoq int8 matmul extensions
+* Add the Server Platform Reference Board
+* Revert invalidate reservations after stores for linux user
+* Fix the UART register width in SPCR
+* Check Svnapot PTE before updating A/D bits
+* Add Tenstorrent Atlantis PRCM model
+* Fix RV32 fixed counter accesses
+* Write back fsgnjn.h and fsgnjx.h results
+* Ensure Zcmt jvt.mode is WARL
+
+----------------------------------------------------------------
+Alistair Francis (1):
+      Revert "linux-user/riscv: invalidate reservations after stores"
+
+Anirudh Srinivasan (3):
+      hw/misc: Add Tenstorrent Atlantis PRCM model
+      hw/riscv/tt-atlantis: Add PRCMs to tt-atlantis model
+      hw/riscv/tt-atlantis: Update UART and I2C to use clk from PRCM
+
+Chao Liu (6):
+      target/riscv: add sdext debug CSRs state
+      target/riscv: add sdext Debug Mode helpers
+      target/riscv: add dret instruction
+      target/riscv: add sdext enter Debug Mode on ebreak
+      target/riscv: add sdext single-step support
+      target/riscv: add sdtrig trigger action=debug mode
+
+Christian S. Lima (1):
+      targetriscv: svinval instructions raise virtual instruction exception
+
+Daniel Henrique Barboza (6):
+      tests/tcg/riscv64: add sdext "not on Debug mode" sigill tests
+      target/riscv/cpu.c: remove 'bare' condition for .profile
+      target/riscv: add riscv-server-ref CPU
+      hw/riscv: server platform reference machine
+      tests/functional/riscv64: add riscv-server-ref tests
+      docs: add riscv-server-ref.rst
+
+Frank Chang (2):
+      target/riscv/cpu: Add SiFive custom int8 matmul extension implied rules
+      target/riscv: rvv: Add SiFive custom int8 matmul instructions
+
+Jason Chien (1):
+      disas/riscv: Add disassembler support for Xsfvqmaccdod/Xsfvqmaccqoq
+
+Kuan-Wei Chiu (7):
+      hw/char: Add dw8250 UART
+      hw/misc: Add Sophgo CV1800B clock controller
+      hw/riscv: Add Sophgo CV1800B SoC support
+      hw/riscv: Add Milk-V Duo board support
+      tests/qtest: Add qtest for Milk-V Duo board
+      tests/functional/riscv64: Add boot test for Milk-V Duo board
+      docs/system/riscv: Add Milk-V Duo board documentation
+
+Max Chou (3):
+      target/riscv: Add cfg property for SiFive int8 matmul extensions
+      target/riscv/cpu: List one implied-ext rule per line
+      tests/tcg/riscv64: Add tests for SiFive int8 matmul extensions
+
+Mayuresh Chitale (1):
+      target/riscv: Restore LCOFI handling in interrupt CSRs
+
+Philippe Mathieu-Daudé (6):
+      target/riscv: Document riscv_cpu_update_mip()
+      target/riscv: Document kvm_riscv_set_irq()
+      target/riscv: Clarify riscv_accel_set_irq() arguments
+      target/riscv: Have riscv_cpu_set_mode() call riscv_cpu_interrupt()
+      target/riscv: Add riscv_cpu_get_mip()
+      target/riscv: Access MIP atomically
+
+Richard Henderson (1):
+      disas/riscv: Fix csrrs decode
+
+Rick Richard (3):
+      tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
+      hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
+      tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden reference
+
+Xie Bo (3):
+      target/riscv/kvm: Preserve FCSR across migration
+      target/riscv/kvm: Reject migration with a different timer frequency
+      target/riscv/kvm: Preserve VCSR across migration
+
+Zephyr Li (2):
+      target/riscv: stop translating after WFI
+      target/riscv: fix RV32 fixed counter accesses
+
+dodochicha (1):
+      target/riscv: Check Svnapot PTE before updating A/D bits
+
+imaginos (1):
+      target/riscv: check G-stage write permission for VS-stage A/D updates
+
+wangyang (2):
+      target/riscv: write back fsgnjn.h and fsgnjx.h results
+      target/riscv: normalize Zcmt jvt.mode on writes
+
+ MAINTAINERS                                        |  31 +
+ docs/system/riscv/milkv-duo.rst                    |  49 ++
+ docs/system/riscv/riscv-server-ref.rst             |  65 ++
+ docs/system/riscv/tt_atlantis.rst                  |   1 +
+ docs/system/target-riscv.rst                       |   2 +
+ configs/devices/riscv64-softmmu/default.mak        |   2 +
+ disas/riscv-xsf.h                                  |  16 +
+ disas/riscv.h                                      |   1 +
+ include/exec/translation-block.h                   |   4 +-
+ include/hw/char/dw8250.h                           |  28 +
+ include/hw/misc/cv1800b_clk.h                      |  26 +
+ include/hw/misc/tt_atlantis_prcm.h                 |  51 ++
+ include/hw/riscv/cv1800b.h                         |  56 ++
+ include/hw/riscv/tt_atlantis.h                     |  28 +
+ linux-user/riscv/target_cpu.h                      |   2 -
+ target/riscv/cpu-qom.h                             |   1 +
+ target/riscv/cpu.h                                 |  37 +-
+ target/riscv/cpu_bits.h                            |  33 +
+ target/riscv/cpu_cfg.h                             |   5 +
+ target/riscv/helper.h                              |  16 +-
+ target/riscv/kvm/kvm_riscv.h                       |   7 +
+ target/riscv/cpu_cfg_fields.h.inc                  |   3 +
+ target/riscv/insn32.decode                         |   1 +
+ target/riscv/xsf.decode                            |  30 +
+ disas/riscv-xsf.c                                  |  49 ++
+ disas/riscv.c                                      |   5 +-
+ hw/char/dw8250.c                                   | 130 ++++
+ hw/intc/riscv_aclint.c                             |   2 +-
+ hw/misc/cv1800b_clk.c                              |  98 +++
+ hw/misc/tt_atlantis_prcm.c                         | 428 ++++++++++++
+ hw/riscv/cv1800b.c                                 | 177 +++++
+ hw/riscv/milkv_duo.c                               | 118 ++++
+ hw/riscv/server_platform_ref.c                     | 776 +++++++++++++++++++++
+ hw/riscv/tt_atlantis.c                             | 125 +++-
+ hw/riscv/virt-acpi-build.c                         |   2 +-
+ target/riscv/cpu.c                                 | 134 +++-
+ target/riscv/kvm/kvm-cpu.c                         |  74 +-
+ target/riscv/machine.c                             |  80 +++
+ target/riscv/tcg/cpu_helper.c                      | 148 +++-
+ target/riscv/tcg/csr.c                             | 254 ++++++-
+ target/riscv/tcg/debug.c                           |  59 +-
+ target/riscv/tcg/op_helper.c                       | 107 ++-
+ target/riscv/tcg/tcg-cpu.c                         |  36 +
+ target/riscv/tcg/translate.c                       |  56 +-
+ target/riscv/tcg/xsf_helper.c                      |  87 +++
+ target/riscv/time_helper.c                         |  12 +-
+ tests/qtest/milkv-duo-test.c                       |  70 ++
+ disas/riscv-xsf-op.c.inc                           |  11 +
+ target/riscv/tcg/insn_trans/trans_privileged.c.inc |  25 +
+ target/riscv/tcg/insn_trans/trans_rva.c.inc        |  24 -
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc        |  11 -
+ target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc    |   3 -
+ target/riscv/tcg/insn_trans/trans_rvzfh.c.inc      |   2 +
+ target/riscv/tcg/insn_trans/trans_svinval.c.inc    |   3 +
+ target/riscv/tcg/insn_trans/trans_xsf.c.inc        |  98 +++
+ target/riscv/tcg/insn_trans/trans_xthead.c.inc     |  12 +-
+ disas/meson.build                                  |   3 +-
+ hw/char/Kconfig                                    |   4 +
+ hw/char/meson.build                                |   1 +
+ hw/misc/Kconfig                                    |   3 +
+ hw/misc/meson.build                                |   2 +
+ hw/misc/trace-events                               |   4 +
+ hw/riscv/Kconfig                                   |  31 +
+ hw/riscv/meson.build                               |   4 +
+ meson_options.txt                                  |   4 +
+ scripts/meson-buildoptions.sh                      |   2 +
+ target/riscv/meson.build                           |   1 +
+ target/riscv/tcg/meson.build                       |   1 +
+ tests/data/acpi/riscv64/virt/SPCR                  | Bin 90 -> 90 bytes
+ tests/functional/riscv64/meson.build               |   3 +
+ tests/functional/riscv64/test_milkv_duo.py         |  53 ++
+ tests/functional/riscv64/test_opensbi.py           |   4 +
+ tests/functional/riscv64/test_server_ref.py        |  90 +++
+ tests/qtest/meson.build                            |   3 +-
+ tests/tcg/meson.build                              |   1 +
+ tests/tcg/riscv32/meson.build                      |   6 +
+ tests/tcg/riscv32/semihost.ld                      |  23 +
+ tests/tcg/riscv32/system/meson.build               |  36 +
+ tests/tcg/riscv32/test-mcycle.S                    |  45 ++
+ tests/tcg/riscv64/system/meson.build               |  16 +
+ tests/tcg/riscv64/test-minstret-wfi.S              | 100 +++
+ tests/tcg/riscv64/test-sdext-sigill.S              |  83 +++
+ tests/tcg/riscv64/test-xsfvqmacc.S                 | 260 +++++++
+ 83 files changed, 4263 insertions(+), 231 deletions(-)
+ create mode 100644 docs/system/riscv/milkv-duo.rst
+ create mode 100644 docs/system/riscv/riscv-server-ref.rst
+ create mode 100644 disas/riscv-xsf.h
+ create mode 100644 include/hw/char/dw8250.h
+ create mode 100644 include/hw/misc/cv1800b_clk.h
+ create mode 100644 include/hw/misc/tt_atlantis_prcm.h
+ create mode 100644 include/hw/riscv/cv1800b.h
+ create mode 100644 target/riscv/xsf.decode
+ create mode 100644 disas/riscv-xsf.c
+ create mode 100644 hw/char/dw8250.c
+ create mode 100644 hw/misc/cv1800b_clk.c
+ create mode 100644 hw/misc/tt_atlantis_prcm.c
+ create mode 100644 hw/riscv/cv1800b.c
+ create mode 100644 hw/riscv/milkv_duo.c
+ create mode 100644 hw/riscv/server_platform_ref.c
+ create mode 100644 target/riscv/tcg/xsf_helper.c
+ create mode 100644 tests/qtest/milkv-duo-test.c
+ create mode 100644 disas/riscv-xsf-op.c.inc
+ create mode 100644 target/riscv/tcg/insn_trans/trans_xsf.c.inc
+ create mode 100755 tests/functional/riscv64/test_milkv_duo.py
+ create mode 100755 tests/functional/riscv64/test_server_ref.py
+ create mode 100644 tests/tcg/riscv32/meson.build
+ create mode 100644 tests/tcg/riscv32/semihost.ld
+ create mode 100644 tests/tcg/riscv32/system/meson.build
+ create mode 100644 tests/tcg/riscv32/test-mcycle.S
+ create mode 100644 tests/tcg/riscv64/test-minstret-wfi.S
+ create mode 100644 tests/tcg/riscv64/test-sdext-sigill.S
+ create mode 100644 tests/tcg/riscv64/test-xsfvqmacc.S
 
