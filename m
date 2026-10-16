@@ -4,92 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B773ECC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47818CCA463
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWNx-0002UP-Lq; Thu, 15 Oct 2026 21:05:27 -0400
+	id 1xHWTi-000704-80; Thu, 15 Oct 2026 21:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMf-0000oi-S1
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:09 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWMc-0004LB-R8
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:04 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2df8c28a0b1so26934585ad.1
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:04:02 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=742cbab99=Alistair.Francis@wdc.com>)
+ id 1xHWTL-0006qw-Sm; Thu, 15 Oct 2026 21:11:03 -0400
+Received: from esa3.hgst.iphmx.com ([216.71.153.141])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=742cbab99=Alistair.Francis@wdc.com>)
+ id 1xHWTI-0005LM-Nk; Thu, 15 Oct 2026 21:10:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1792113057; x=1823649057;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=go5Ap/qHd5KTppGV77oj83R/K340TBe+XLlWr5amAoI=;
+ b=hwXWhlOMt6GeEbaSRucXsKzRQDPb2GB+cP5F8ewwjwfBDoJxkqVHo+KW
+ SUQGjjUXTkXSVF/hk9oqLcL8n8A7ClIgXP493Gbi4xSNFQ1ijzi4roQt7
+ Hgu7SqPxBsNQ5JPosjGSG2Kp0tWNsBeKW1+haJ2L9Ub+Ai16szpfZ1l21
+ iJK68dAPsMHO1lut7lVNnZpmh0EtHkXq3E6m9QuXXqEItZDyEYLSsatvU
+ 1afx71Qp3Ql7GhasyO9aZw+2TxiND3CL4+JHn+S6ZUpeuI7iQuUyXtgMG
+ scBLBbIByIlYYwpsmuFtgzKBilXU4CN5MZRFN9wKHufQOeKW22gEeEEkq w==;
+X-CSE-ConnectionGUID: l3Xh+PitQEyOHNfci743Yg==
+X-CSE-MsgGUID: lhXnCHIBQcSOQnUi2QGHug==
+X-IronPort-AV: E=Sophos;i="6.27,160,1786982400"; d="scan'208";a="158227576"
+Received: from mail-westus2azon11010056.outbound.protection.outlook.com (HELO
+ CO1PR03CU002.outbound.protection.outlook.com) ([52.101.46.56])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 16 Oct 2026 09:10:55 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I6LatFHEg3MS+oF60guEmgO8dWsa2mjuqwzlmGCEREXyx/4mv5woEgPFJRhOGeLjkhSqU2BTw3V9VqgWO66FNIVoEKSkkW50Y6kYMwatiuBGo1XM9zLD/13WdXFCvsrdchhnvVgr9aQUPAmQ4ySKYH7jSzxNntHL/iEOnjZqeBTy539irxIyXF3Hmd98CnRvEqSVJE6n03Ad2HOCzcHvm4s11ukHTCtJ7Cj5OBfyeGlukIX57/qv0m/Tf3G67GWROa0gtQgBtmbx4SQn/WwX3l2feNhblDYKkM4eeczwexvaLA4zQXlhncUCQE6UnvL6V+24FG1tlVKPX1bvNqZ35w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=go5Ap/qHd5KTppGV77oj83R/K340TBe+XLlWr5amAoI=;
+ b=J6OQG4qvSq2U9VagmDc1o3B5Dc/G8X3nmBxwn/FP64NN2hU01FIhEAsn4Mf95kZ+1AqB94ilRv8udhwfiF5pLCj4tCEmPsuSajK95rMG1cSEFqCaVK67dqmbGHvnals0DKiKglTWDXVq7wqxejZJM6ICGciBu561gEEl7ck4TY5y8gqvpd+m6PsFQ13H3qj7dyf0JPVEQOyXGfW7LjWxvYddD+zME2oq/oWZXnS+0SVLmX6p8Vq39oDqqBYmQ/zE6/tJQba3LoF7U4Qu/tzkt7LnBzqAJQbytO60QkvJ3HIB/3XmIvMY+7/yQJh3gNMEQKg/vbcZPyFQTrHi8oCdKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112641; x=1792717441; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+V4iRZlJw4CccrbGUKwyZVrpHwBtaPELmw8lxtTJrWY=;
- b=hFtN5TKSkhOkQl1TeThflG8U/fZDeGn/TKaV2qXHK9C7eKo/3qWfxlFJsUMWW+eWe3
- S/BG3de1iKbCvQBLKcjN3qs4L5/rOff6o3trN8yRfCa4l2S0CYlb4dgPbOLnrpiT7QJZ
- FiGOE2FmGh/Bd0C0v9edB37IeibMVsUha0Bt2Lx0grpiSE1fY2fMv+CQuMDMR+/TBjdz
- nsxbVvU+qI3pdqT/Pr0YnYa/uXzNM8jrlQ0WE1idRuQKlM3EOCXCUSk4a+FRchlxQoZ4
- w9jj1D6phiab8XilNxKTAKjJG2zLOZIsi8O0fwwpycpy4tLHSHzV0BwxhM1YZs/nKrYC
- xokQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112641; x=1792717441;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+V4iRZlJw4CccrbGUKwyZVrpHwBtaPELmw8lxtTJrWY=;
- b=x/SFnXjmHH52JpdHY4FzUDza+NkKaDvD3xOiZfwlTxsNKy55WIf466hLg20w4VNjCP
- bBPBcn/a0isk5q3MVwasciPpfJ9dw8W5+28bJRegDQYK/z8gEtArXpOCTGWcJRxxTQoY
- J2lbuT71nWwUG9OQslC1YLcY5kzPWwCK7+JmgZ3YSRykCPFSdTpNzITmnlh7Egc9IDpG
- 5gfJOWz5ggyCgw4lnXiEhGdKuU4qoy/ujHGpOtZjSv3NoTICoOjeQphG6nDU+2n4Bo1O
- QgjbVJPPkA6Lf4SuhbE7DV5/oEIptJLawqCAjOA8QW52kV7jmPc7T1+3lVKB8ZdJY1Ln
- /34A==
-X-Gm-Message-State: AFq9FYJLvI7W0txTkXinmcZ2olLjr+HON/F5oM+AtCXCkWJom9fjXJdO
- otMmyke1G1Wt0s9aBtHJ6hGkOZA6Lkf1H5t+bvaxFqBa3SOraR1sIKPx0s2+Ow==
-X-Gm-Gg: AYBFou3C2IdKL9Gc969E94eQpigfozFySC5+DaASwMsPnyb6zJ7B1W3VyWob9bpNJws
- /s65lnQZVSQuMjwPMwdFa9tKl2vmnoTdxcaRWqMi1RYaqR/AGDYsQ/P0vqg5YsYZs3HeoQMRe+i
- 5qhZ99NA/evGEMkvgGf5UeALV5PQENGCyJKtLNt2SdLniWFOvA7z1OEGHfWFMSFO3FvCSM8Yjpw
- 05lRZxkJ4+QySYMWgiLElyJNFcl1StPjZtA/R1hQPBpULhD7e4EPvfbS8sPL5xgbX32/ScRFQ5P
- HOoEevrAm7faS3ga7/655p2CFDXi148vOplLao0pUnqUJ8Q+SlBcVc6hs5EpSZ3SswdEKmL25lp
- qcgQdIOQYSuwDE8rM/ZM1Qualv5QXAi+KtP3vKkxf739wRYXf8QqRsl/kMHeXd9gaLqJ62a60y+
- /p8fFFx5WLcRjKrYQ81O20HbyH3Q9C2zmSUP6kvQYAAoE2SSPx6osMnp7YZgxPQH/76TG5X6LX9
- AxwvEsWtASJsDcr
-X-Received: by 2002:a17:903:2a85:b0:2e8:9d8c:d1ac with SMTP id
- d9443c01a7336-2e89d8cd30emr140974465ad.62.1792112641239; 
- Thu, 15 Oct 2026 18:04:01 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.03.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:04:00 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL v2 26/50] target/riscv: add sdext single-step support
-Date: Fri, 16 Oct 2026 11:02:13 +1000
-Message-ID: <20261016010237.1102834-27-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
-References: <20261016010237.1102834-1-alistair.francis@wdc.com>
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=go5Ap/qHd5KTppGV77oj83R/K340TBe+XLlWr5amAoI=;
+ b=M/EJGpydCMg612t2DuT7dUGXOyvrK7iYKDrW0pAfN/yuKdMU+CS/i34b1+eqS0E588cTnhJFbQrr3EoTy8DdG8G+GbrF4rXXVZPeRSrvGEEDW9UROcJSGJBCITmkaPFWry/zbQs3yKgD+f3rynbI4g8ohUrzD5u/M8CStakyHvk=
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
+ by CO6PR04MB7476.namprd04.prod.outlook.com (2603:10b6:303:ac::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.13; Fri, 16 Oct
+ 2026 01:10:51 +0000
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0522.013; Fri, 16 Oct 2026
+ 01:10:51 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "liumingliang.dev@bytedance.com" <liumingliang.dev@bytedance.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "palmer@dabbelt.com"
+ <palmer@dabbelt.com>, "daniel.barboza@oss.qualcomm.com"
+ <daniel.barboza@oss.qualcomm.com>, "chao.liu@processmission.com"
+ <chao.liu@processmission.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "zhiwei_liu@linux.alibaba.com"
+ <zhiwei_liu@linux.alibaba.com>, "liwei1518@gmail.com" <liwei1518@gmail.com>
+Subject: Re: [PATCH v4 0/3] target/riscv: Add experimental Zvabd extension
+ support
+Thread-Topic: [PATCH v4 0/3] target/riscv: Add experimental Zvabd extension
+ support
+Thread-Index: AQHdXKtL14piVa9c/0mcDxSXLXTdpbb/XQWA
+Date: Fri, 16 Oct 2026 01:10:51 +0000
+Message-ID: <9522dd9fcb7f364c5b587377b0b8f9c03e6ef732.camel@wdc.com>
+References: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
+In-Reply-To: <20261015134337.3354723-1-liumingliang.dev@bytedance.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.62.0 (by Flathub.org) 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|CO6PR04MB7476:EE_
+x-ms-office365-filtering-correlation-id: e50fd677-9fd5-41c3-6596-08df2b2251de
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|10070799003|23010399003|19092799006|38070700021|56012099006|11063799006|261009223027099003|18002099003|22082099003|10067099003|3023799007;
+x-microsoft-antispam-message-info: ompgERNOViPNNUzrZYCXlcQGKto22eRJ6WIjMTXFyvaTfDdxGjea3cJj+SzfPFtfFi2rTaE5Vf20LQXilwVkBDIvPCDqmGXBoDvM/1oXMERcNwgnc08jSI771pkHBeJMgq3C6DOB6AN25LkPzVXRnzRp5n7XYAr5ydSpGSl8kU89UKFN8jaaxLT9tYRs+DSZ3nEmTovYvNVjq64R2zS4UWitbExwJOrRqZsdGZyVEJZsgHsmvSGfvfbCHxp+TBOU//VbMDIPR65nuiP9Mu+0LclMknHjg9lkI/xDarDp6Rtmewqc45r3SraOuakstKsZCpvGjDTbiKs4lb2dfGfNyaSSXUbnzwn6VF/XlE05pMd1s/nzflqquARxuBbH/ozo/Om5hzt6B6TG6IvhnuxMkN6tK61khdu4G1kPn0FvU7u2KJSF8Wr9Pwl5CezT+cIO0JgyzxSGN/uZWVzC719Zi+s5TKX8z3AGb0PiaGnab0O/D8PbOoe4YURzcUdAG42GBt2j+BOCvYtpMU9LAfRowpIOPmLWRT2e3S2Ybif+YgubxAmgc9RXDsUC1igmXvlscZ46eV/6QMwfzfu4VNf9uXFU2WZsbVG5ZI0Pud8Ig8By11Q4eIbBvFJBh3DwHfTZ+Ma/qJKLFO7oHrFWd+TO2EBR0Ix+2pPuh9Zlw6QJioNB8yFlrVLgmL/BBiiDYRk7D+NCgVWbFAFfoQ2040x71zlaix2n2g+qPh2TcPfWfpc=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(10070799003)(23010399003)(19092799006)(38070700021)(56012099006)(11063799006)(261009223027099003)(18002099003)(22082099003)(10067099003)(3023799007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cnZjMmRzdFNTaXBPYUt2UlAyWE1Vd1MwNUt2QVdmbnBlN0txTjkrdUxWYmY3?=
+ =?utf-8?B?WVhOaHJ0RWZ4Q2tueVFOQ2s4Vm1ib3JJS05QSjFJSzZSNXpEM1M0UkJ1WXk0?=
+ =?utf-8?B?SDhGbTFPTHl5Q1N5K3BSVENSUXZ5YjkwNXNLdHB6V0lSaDBkS1pXV2RGYzM2?=
+ =?utf-8?B?d2pLMURYTGRCcHBHdEZmN05OdTJLMUs1R25xQVlDdHNOTG1MMGl2UjYyZGJB?=
+ =?utf-8?B?aXZZb2svNnUvNnk3Z0YyWjN6aHJDa050aUhTUCtMcm9XU1dQbHdyVEdVSmRm?=
+ =?utf-8?B?WXBlZ2l5UWZyMzFsSFFmZUlyRkw3bFppSjJHeEdZbTZuL2ZnK1VnSlRpWXFN?=
+ =?utf-8?B?YmFkMEppQk8vV1ErRVZkY2pxUUsySXl1ZHZQZS9nTk5LcTl5VjhMa0JCcHdV?=
+ =?utf-8?B?UEpoK1c4Z1dQMUxHMC9JdzhiQ0pNSXR3cUlXYTJpeXdmUExsUnNrQjVKS0hC?=
+ =?utf-8?B?UnIwMUtLTklGb21XUXVFSHYwTG1lWEc4U2QxMmF4MXZLbFFpSkxHUjQvRDJX?=
+ =?utf-8?B?MkdURlNoZURsU2ZHYnhzcTRhZU92QWV5S0JGRXdiaStXc3hGNkswRHNUd2tl?=
+ =?utf-8?B?a1I3ckNURjdmQTd2cWoxV0hXK0NDVFM3Nnp6WURIYXcxUGlBdzhtZkhDcStR?=
+ =?utf-8?B?bWkwakg1dVlFRE14VWczR2ZrYUYrdXE2dWtRbTdMV0ZXMzdObzNVMnVqODJy?=
+ =?utf-8?B?SkhFdTZaVzBXaU1BalFFOGJ4K3NUNnNqUjMwdjRYMHVBNnA1c2N4SjVRZEEy?=
+ =?utf-8?B?NnZXdVZSeUhYSnNoRVdvR1piTWtrcXZpQmQ3OGkvdDlla3pIOGR5WFdFL3FS?=
+ =?utf-8?B?N05aY3RlUHEyR045TFh4bzRSQWNISmZkVVJXaTZQRThDNXJycmsxamR6WjNj?=
+ =?utf-8?B?bnNDNTJhbnptMnpXbDgrcjJjTUlXMnRtSjRGaWtNNngzQU80WFdGNVFieGt6?=
+ =?utf-8?B?U3l5dDRoRTZMSG0zd0VwT25kcWRncVV0RU1MZmpSMFUzcFNaaVJOM1F1REdL?=
+ =?utf-8?B?MzduNW1tR28zRi96YzQzbXFSQ2JwSmtKWVBTNkxjVU1rQVFUcEYyU05reVY2?=
+ =?utf-8?B?T0FwaUZYMFk4OUR4NzNFTzBDWnpBZUI1YTVySThzL2hSNDNIQkNPSHN6ZlNt?=
+ =?utf-8?B?aU1zbUtidzR6dkJadlI5MnhtdUswMVNaZXVPVHlDeXE5RS9kZGJzdlB4Y2xq?=
+ =?utf-8?B?TjFoMzlDQzBoajZTUVM5b2JKUGRWaGgvbVE0bVRleUk3VzdQL1JQZVQ0Z2FT?=
+ =?utf-8?B?TWhMTUZaTjlKODkzeXFRdUlkYytSUDAvK3VRWm9Fb2dFb3dRWlR1UGE1dWxh?=
+ =?utf-8?B?U2VScHRHL2NkSkJCcjRPZEtFN3JmN1VIeVdmeEROYU5zcXBFQVIzeCtLcU1G?=
+ =?utf-8?B?YStWOVFTRy9OR1JRajlvR3pyNUFXZVFxOHc4OFpwLzRqMWt2bDM0dzFmMnFN?=
+ =?utf-8?B?VDVPb3ZPNmlOVlk2SlQrejdiRHRRU0RNMHhodG1remxkOUxSQ3BPUzBIRkdW?=
+ =?utf-8?B?QnlBRjhXTXZSZWFlUUYvODFUWHNXWVRKcTNROWRubmdXVmNLd3NCcy9aN1N6?=
+ =?utf-8?B?cGswYjc4SE5seENGcDYrRUpoN05QQklTMDFrWU9BYzU1OEpSRXY2UVRVRFNo?=
+ =?utf-8?B?RGh6dHlWS3QzYWhWYmc3SXlyWVlqNXZzeTVoWFhQOTNpV29DY0dFeEZUVUtr?=
+ =?utf-8?B?cjFBRFc1dUJqR1JMTjBWNHZkcGMzcWNqcFd5eUJxcGVwTzVwU2xjVjlVQXB3?=
+ =?utf-8?B?bUovOTRidTJicVlvYVpFVTRsQXBBWXhNREFaUkVCNGR3WkdKMG5KZnN3VUJP?=
+ =?utf-8?B?ZzhFQ0lBUzRHMlgzaHdmZGUySU5XZzV4ZHc1WTVaM3ZHelVSWWRYUXROaVBu?=
+ =?utf-8?B?dkp0aTRselJ6ODA1TFlaR1pUdGNlTXlDbFA1U0h3TG1oR2J6djZKR3pGdC9F?=
+ =?utf-8?B?eE5uWi9CeU9iZVZLNkdxWU1GRU9DTTVnV3FzV09RWThkK3lZUDluaTE4NFNp?=
+ =?utf-8?B?R1UvYkxueXM1ZjcxZXJUZWNYZzBRY09OMkJvem85eTErdXc2T2I4blczN2dk?=
+ =?utf-8?B?dGNkVndpNTFHMEpqdG55OWhNRkUxUFprQ1ZaVC8xV2VGT2JrOFZNTUtUUXN2?=
+ =?utf-8?B?YllEcDh3M1UxbjNXU3Jyd0FlVk9TTEx5NDJid3hGcHUrWWJJa2NWSjlyUnJC?=
+ =?utf-8?B?aW8rMEdmN01IMmYyTktIOHd2a3VqRTVjQWttajNEVDNkZG9TbG5PM1VpSnpj?=
+ =?utf-8?B?V0I5NmJmWDBxdHJSUUVDL3pHc2hVMjNkN2c0ajZ1S0MwR1F0NTZXc1cyeHcv?=
+ =?utf-8?B?eUxhNVBOOEJtOG9YaTFMem01a3BoQ2Y4K29HWXYrenFJeDJoL1FDL0owdFlu?=
+ =?utf-8?Q?fkvDEoCr2VeMLO7XBK3w1oyRMB9eXGofLBkz+wf0OkJB6?=
+x-ms-exchange-antispam-messagedata-1: 03//RaEeiKZY6F415a0TEC7Xhb7bB154oaU=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <63EBA1C5DDC3E24CB0EC88D992DCC1E4@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Exchange-RoutingPolicyChecked: sD2Dm08fI+ZgM1iRiAZWEGKHcH52SiMeKm1sEuAkQaIZRcICmOhn3ILOZ+KIFg+di9QQJCfOsIk9906yG2XHwwMubZsKbpjLM6dUaptF8r2zQWeuUKSNd+my4GcJr/Mn5Mo5ABptH5VcVhgYLBnD5PFhKaiW2TT6lU/uOhPdg794UaEUd9VHOKA6LcvsbDc/X+bMckdHjcebzgwWI7HZriffk/1egSVWlyr+3D4KUUrFK4e4AyEttUEAsSm+cBNCQSpMe6mU/UCdL5Hz5UmzQOlN1lJ4pPrPceVOMSRlidKbuZsVO5VGYIOtJ1TeQ5Q8uRDEyNscv4/b2A87/UnWbg==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Gco4U2hgyNP9NSECTieoMkHGmEgI3VDG3FNEuyqMShsQO3NJfHUZKGW9DXKWoY3Um++0wI+0cU0YWEqgyXBG8BXKnhgFaa1zVhjelZepONhEV7euJg29Qk1oAuz5p9I60ALl4zx/++mUSpFPjN/7Gi7KuvHuWvNn7osio4QlUbF3KSs2N43FIDnABGM2qW5p/7IYuNIFWr+LT5RYRKECx/MmQBCQ1Vl0zytiqn1dddhoaPSzxrsP3qo2KfaPsUMtyAz2n8BaD/SdGQKQuD9KWRCZQo/u3XpI4lPVDsOsQoNty9/2I5USP0b/K5Jt/wiblYRaQ9RuxfF5hSduu7S1zwcjoMNML3Jzpv2JSyLbQyF1afGtYDhwAvwhOVAKq8pjiI882NeFHfgGXlUgWNBQsNZ3ANHAVw0ckVunC78dJKPoaK6rRHz4ywWCezAA7JwpW2vZm6qrHhNS6ZVJyvJe2qIGXdL9gQGRrOntvu+8TJESGEspEgYYvMYsA0b4T/MmeVQ8RCKRJNGEpS6IhRnTM3HxA60s4Xc/WHeG8ERamfC/SURfd/AizRXWls4LqKFvQ9oiFm3GMHADtcOtNHRQtv0SRK501pHKbrT6PplemPRZZMz2/QJEjGvfQA1Z1a60
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e50fd677-9fd5-41c3-6596-08df2b2251de
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Oct 2026 01:10:51.1714 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: bFTf8Uty6g2/eqIThNJbzBeqCMDgdZ6hJZh+ay4C3u7IhrjgoWIDVS3c0x50FykbZ4/aOOxrKWaLMeP0DrpqDqNzbWPkERzZLwPxxn/nqEM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR04MB7476
+Received-SPF: pass client-ip=216.71.153.141;
+ envelope-from=prvs=742cbab99=Alistair.Francis@wdc.com;
+ helo=esa3.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,213 +185,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
-
-Use a TB flag when dcsr.step is set (and we are not in Debug Mode).
-When the flag is on, build 1-insn TBs and do not chain to the next TB.
-Add a TB-exit helper that enters Debug Mode with cause=step and sets
-dpc to the next pc, then stops with EXCP_DEBUG.
-
-If dcsr.stepie is 0, do not take interrupts while stepping. Treat WFI
-as a nop so the hart does not sleep during a step.
-
-PS: This patch references Max Chou's handling of ext_tb_flags.
-https://lore.kernel.org/qemu-devel/20260108132631.9429-6-max.chou@sifive.com/
-
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260928195902.2045235-6-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- include/exec/translation-block.h |  4 ++--
- target/riscv/cpu.h               |  2 ++
- target/riscv/helper.h            |  1 +
- target/riscv/tcg/cpu_helper.c    |  6 ++++++
- target/riscv/tcg/op_helper.c     | 20 ++++++++++++++++++++
- target/riscv/tcg/tcg-cpu.c       |  5 +++++
- target/riscv/tcg/translate.c     | 15 +++++++++++++--
- 7 files changed, 49 insertions(+), 4 deletions(-)
-
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index 7c42c57cca..5a7a638b08 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -64,8 +64,8 @@ struct TranslationBlock {
-      * x86: the original user, the Code Segment virtual base,
-      * arm: an extension of tb->flags,
-      * s390x: instruction data for EXECUTE,
--     * sparc: the next pc of the instruction queue (for delay slots).
--     * riscv: an extension of tb->flags,
-+     * sparc: the next pc of the instruction queue (for delay slots),
-+     * riscv: an extension of tb->flags.
-      */
-     uint64_t cs_base;
- 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index b0a0e5d51a..bbef354354 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -783,6 +783,8 @@ FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
- FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
- FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
- FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
-+/* sdext single-step needs a TB flag to build 1-insn TBs */
-+FIELD(EXT_TB_FLAGS, SDEXT_STEP, 34, 1)
- 
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 533dee1765..32225471bc 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -142,6 +142,7 @@ DEF_HELPER_1(tlb_flush_all, void, env)
- DEF_HELPER_4(ctr_add_entry, void, env, tl, tl, tl)
- /* Native Debug */
- DEF_HELPER_1(itrigger_match, void, env)
-+DEF_HELPER_1(sdext_step, void, env)
- DEF_HELPER_2(sdext_ebreak, void, env, tl)
- #endif
- 
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index a79efb2748..b22ecc2eeb 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -501,6 +501,12 @@ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
-     if (interrupt_request & mask) {
-         RISCVCPU *cpu = RISCV_CPU(cs);
-         CPURISCVState *env = &cpu->env;
-+
-+        if (cpu->cfg.ext_sdext && !env->debug_mode &&
-+            (env->dcsr & DCSR_STEP) && !(env->dcsr & DCSR_STEPIE)) {
-+            return false;
-+        }
-+
-         int interruptno = riscv_cpu_local_irq_pending(env);
-         if (interruptno >= 0) {
-             cs->exception_index = RISCV_EXCP_INT_FLAG | interruptno;
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 53e9eb445f..dc76055b80 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -526,6 +526,22 @@ target_ulong helper_dret(CPURISCVState *env)
- #endif
- }
- 
-+void helper_sdext_step(CPURISCVState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    CPUState *cs = env_cpu(env);
-+
-+    if (!riscv_cpu_cfg(env)->ext_sdext || env->debug_mode ||
-+        !(env->dcsr & DCSR_STEP)) {
-+        return;
-+    }
-+
-+    riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_STEP);
-+    cs->exception_index = EXCP_DEBUG;
-+    cpu_loop_exit_restore(cs, GETPC());
-+#endif
-+}
-+
- void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
- {
-     CPUState *cs = env_cpu(env);
-@@ -658,6 +674,10 @@ void helper_wfi(CPURISCVState *env)
-                (prv_u || (prv_s && get_field(env->hstatus, HSTATUS_VTW)))) {
-         riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-     } else {
-+        if (riscv_cpu_cfg(env)->ext_sdext && !env->debug_mode &&
-+            (env->dcsr & DCSR_STEP)) {
-+            return;
-+        }
-         cs->halted = 1;
-         cs->exception_index = EXCP_HLT;
-         cpu_loop_exit(cs);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 5729112201..edc530525f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -196,6 +196,11 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
-     ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
-     ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, BIG_ENDIAN,
-                            mo_endian_env(env) == MO_BE);
-+#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.ext_sdext && !env->debug_mode && (env->dcsr & DCSR_STEP)) {
-+        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, SDEXT_STEP, 1);
-+    }
-+#endif
- 
-     return (TCGTBCPUState){
-         .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
-diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
-index cce3b6dc72..d6b1f9bfee 100644
---- a/target/riscv/tcg/translate.c
-+++ b/target/riscv/tcg/translate.c
-@@ -115,6 +115,8 @@ typedef struct DisasContext {
-     bool ztso;
-     /* Use icount trigger for native debug */
-     bool itrigger;
-+    /* Enter Debug Mode after next instruction (sdext single-step). */
-+    bool sdext_step;
-     /* FRM is known to contain a valid value. */
-     bool frm_valid;
-     bool insn_start_updated;
-@@ -289,6 +291,9 @@ static void lookup_and_goto_ptr(DisasContext *ctx)
-     if (ctx->itrigger) {
-         gen_helper_itrigger_match(tcg_env);
-     }
-+    if (ctx->sdext_step) {
-+        gen_helper_sdext_step(tcg_env);
-+    }
- #endif
-     tcg_gen_lookup_and_goto_ptr();
- }
-@@ -299,6 +304,9 @@ static void exit_tb(DisasContext *ctx)
-     if (ctx->itrigger) {
-         gen_helper_itrigger_match(tcg_env);
-     }
-+    if (ctx->sdext_step) {
-+        gen_helper_sdext_step(tcg_env);
-+    }
- #endif
-     tcg_gen_exit_tb(NULL, 0);
- }
-@@ -312,7 +320,8 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx,
-       * Under itrigger, instruction executes one by one like singlestep,
-       * direct block chain benefits will be small.
-       */
--    if (translator_use_goto_tb(&ctx->base, dest) && !ctx->itrigger) {
-+    if (translator_use_goto_tb(&ctx->base, dest) &&
-+        !ctx->itrigger && !ctx->sdext_step) {
-         /*
-          * For pcrel, the pc must always be up-to-date on entry to
-          * the linked TB, so that it can use simple additions for all
-@@ -1380,6 +1389,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->bcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, BCFI_ENABLED);
-     ctx->fcfi_lp_expected = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_EXPECTED);
-     ctx->fcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_ENABLED);
-+    ctx->sdext_step = FIELD_EX64(ext_tb_flags, EXT_TB_FLAGS, SDEXT_STEP);
-     ctx->zero = tcg_constant_tl(0);
-     ctx->virt_inst_excp = false;
-     ctx->decoders = cpu->decoders;
-@@ -1432,7 +1442,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
- 
-     /* Only the first insn within a TB is allowed to cross a page boundary. */
-     if (ctx->base.is_jmp == DISAS_NEXT) {
--        if (ctx->itrigger || !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
-+        if (ctx->itrigger || ctx->sdext_step ||
-+            !translator_is_same_page(&ctx->base, ctx->base.pc_next)) {
-             ctx->base.is_jmp = DISAS_TOO_MANY;
-         } else {
-             unsigned page_ofs = ctx->base.pc_next & ~TARGET_PAGE_MASK;
--- 
-2.55.0
-
+T24gVGh1LCAyMDI2LTEwLTE1IGF0IDIxOjQzICswODAwLCBNaW5nbGlhbmcgTGl1IHdyb3RlOgo+
+IFRoaXMgc2VyaWVzIGFkZHMgc3VwcG9ydCBmb3IgdmVyc2lvbiAwLjkgb2YgdGhlIGRyYWZ0IFJJ
+U0MtViBadmFiZAo+IGV4dGVuc2lvbi4gVGhlIGV4dGVuc2lvbiBwcm92aWRlcyB2ZWN0b3IgaW50
+ZWdlciBhYnNvbHV0ZS1kaWZmZXJlbmNlCj4gaW5zdHJ1Y3Rpb25zIGZvciBpbWFnZSwgdmlkZW8s
+IGFuZCBvdGhlciBkYXRhLXByb2Nlc3Npbmcgd29ya2xvYWRzLgo+IEl0IGludHJvZHVjZXMgZWln
+aHQgbmV3IGluc3RydWN0aW9uczoKPiAKPiDCoCAtIHZhYmQudnYsIHZhYmQudngsIHZhYmR1LnZ2
+LCBhbmQgdmFiZHUudnggc3VwcG9ydCBTRVcgdmFsdWVzIGZyb20KPiDCoMKgwqAgOCB0aHJvdWdo
+IEVMRU4sIHdpdGggU0VXIDY0IHJlcXVpcmluZyBadmU2NHguCj4gwqAgLSB2d2FiZGEudnYsIHZ3
+YWJkYS52eCwgdndhYmRhdS52diwgYW5kIHZ3YWJkYXUudnggc3VwcG9ydCBTRVcgOAo+IMKgwqDC
+oCBhbmQgMTYgYW5kIGFjY3VtdWxhdGUgaW50byBhIGRvdWJsZS13aWR0aCBkZXN0aW5hdGlvbi4K
+PiAKPiBUaGUgc3BlY2lmaWNhdGlvbiBpcyBjdXJyZW50bHkgdW5kZXIgcmV2aWV3IGF0Ogo+IGh0
+dHBzOi8vZ2l0aHViLmNvbS9yaXNjdi9yaXNjdi1pc2EtbWFudWFsL3B1bGwvMzI3OQo+IAo+IFRo
+ZSBzZXJpZXMgaW1wbGVtZW50cyB0aGlzIGluc3RydWN0aW9uIGV4dGVuc2lvbiwgaW5jbHVkaW5n
+Cj4gaW5zdHJ1Y3Rpb24KPiBkZWNvZGVyLCBUQ0cgdHJhbnNsYXRpb24sIGhlbHBlcnMsIGFuZCB0
+ZXN0cy4KPiAKPiBDaGFuZ2VzIGluIHYyOgo+IMKgIC0gQWRkZWQgc3VwcG9ydCBmb3IgcmVjb2du
+aXppbmcgdGhlIHZhYnMudiBwc2V1ZG8taW5zdHJ1Y3Rpb24gaW4KPiB0aGUKPiDCoMKgwqAgZGlz
+YXNzZW1ibGVyLgo+IMKgIC0gQWRkZWQgdGVzdHMgZm9yIHRoZSBlaWdodCBadmFiZCBpbnN0cnVj
+dGlvbnMgYmFzZWQgb24gRGFuaWVsJ3MKPiB0ZXN0cy4KPiAKPiBDaGFuZ2VzIGluIHYzOgo+IMKg
+IC0gT3JkZXIgdGhlIHN3aXRjaCBjYXNlcyBudW1lcmljYWxseSBpbiBwYXRjaCAxLgo+IMKgIC0g
+VXNlIC5pbnNuIGluc3RlYWQgb2YgLndvcmQgdG8gZW5jb2RlIGluc3RydWN0aW9ucyBpbiBwYXRj
+aCAzLgo+IMKgIC0gUmVmaW5lIHRoZSBjb21taXQgbWVzc2FnZXMgZm9yIHBhdGNoZXMgMSBhbmQg
+My4KPiAKPiBDaGFuZ2VzIGluIHY0Ogo+IMKgIC0gRml4IHRoZSBjb25mbGljdCBpbiBwYXRjaCAz
+LzMgZW5jb3VudGVyZWQgZHVyaW5nIHRoZSBQVUxMIHN0YWdlCj4gwqDCoMKgIGJ5IGJ1aWxkaW5n
+IGB0ZXN0cy90Y2cvcmlzY3Y2NC90ZXN0LXp2YWJkLlNgIHdpdGggTWVzb24gaW5zdGVhZAo+IMKg
+wqDCoCBvZiBNYWtlLgo+IAo+IE1pbmdsaWFuZyBMaXUgKDIpOgo+IMKgIGRpc2FzL3Jpc2N2OiBT
+dXBwb3J0IHZhYnMudiBwc2V1ZG8taW5zdHJ1Y3Rpb24KPiDCoCB0ZXN0cy90Y2cvcmlzY3Y2NDog
+QWRkIFp2YWJkIGV4dGVuc2lvbiB0ZXN0cwo+IAo+IFpoaWJvIEhvbmcgKDEpOgo+IMKgIHRhcmdl
+dC9yaXNjdjogQWRkIHN1cHBvcnQgZm9yIHRoZSBadmFiZCBleHRlbnNpb24KClRoYW5rcyEKCkFw
+cGxpZWQgdG8gcmlzY3YtdG8tYXBwbHkubmV4dAoKQWxpc3RhaXIKCj4gCj4gwqBkaXNhcy9yaXNj
+di1vcC5jLmluY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+fMKgwqAgOSArCj4gwqBkaXNhcy9yaXNjdi5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxNCArCj4gwqB0YXJnZXQvcmlzY3Yv
+Y3B1LmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8
+wqDCoCAxICsKPiDCoHRhcmdldC9yaXNjdi9jcHVfY2ZnX2ZpZWxkcy5oLmluY8KgwqDCoMKgwqDC
+oMKgwqDCoMKgIHzCoMKgIDEgKwo+IMKgdGFyZ2V0L3Jpc2N2L2hlbHBlci5owqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDI2ICsKPiDCoHRhcmdldC9yaXNj
+di9pbnNuMzIuZGVjb2RlwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAg
+Kwo+IMKgdGFyZ2V0L3Jpc2N2L3RjZy9pbnNuX3RyYW5zL3RyYW5zX3J2di5jLmluYyB8wqAgNDUg
+KysKPiDCoHRhcmdldC9yaXNjdi90Y2cvdGNnLWNwdS5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCB8wqDCoCA2ICsKPiDCoHRhcmdldC9yaXNjdi90Y2cvdmVjdG9yX2hlbHBlci5j
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgNTYgKysKPiDCoHRlc3RzL3RjZy9yaXNjdjY0L3N5
+c3RlbS9tZXNvbi5idWlsZMKgwqDCoMKgwqDCoMKgIHzCoMKgIDEgKwo+IMKgdGVzdHMvdGNnL3Jp
+c2N2NjQvdGVzdC16dmFiZC5TwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCA2NTkKPiArKysr
+KysrKysrKysrKysrKysrKwo+IMKgMTEgZmlsZXMgY2hhbmdlZCwgODI4IGluc2VydGlvbnMoKykK
+PiDCoGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0cy90Y2cvcmlzY3Y2NC90ZXN0LXp2YWJkLlMK
 
