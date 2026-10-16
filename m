@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29ABDCC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 05:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7174CCC6B2D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 05:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHaDf-0005e6-3z; Fri, 16 Oct 2026 01:11:03 -0400
+	id 1xHaGj-0007K3-UF; Fri, 16 Oct 2026 01:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xHaDc-0005dp-F7; Fri, 16 Oct 2026 01:11:00 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xHaGc-0007Jc-DV
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 01:14:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xHaDZ-0008Uo-W0; Fri, 16 Oct 2026 01:11:00 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xHaGa-00007F-GS
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 01:14:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792127453; bh=q8LDdL0U74fnzBau7W+KXIawrBzTiUSE18qHVKVDLzM=;
+ t=1792127642; bh=JJpP+iVUuXsm6yftLNtNxL1iUjdindA7hs+Mf6+CwnU=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=sFQQobIXHfdshCCnYN9Tx/3gsMY40f1bSlc49GDwFbNd8No8j+Z0kMSu+OMI54onA
- f2oz/GyleFqGhRIUg/qXapm5wSDAnt0ykC+ZSpLyrTmo5Lo4T2yy3OMt3CvTetaZm3
- f5JF9kP+iTnhSFhH559JkqYwazMI+TrL+6OotPrnC2sMEDHcsbItob5HaLDQFK9uA2
- ZQMbFgUCOx6t0WLBl6MFtY39hR9rTwlp+1t8oNh4MzfyDVgsYnJYEUhDP52usV/faQ
- MNunCuBNm6fta2SdJpoCq8p9Nu0GRwYxbZMo70fhsHxKW0WeHn9mFaZzqRQ8iZDwyC
- SLn8Y31ZwH3eA==
+ b=QEOxf6+VIlqx1olN28WTnOb3bDEEzpfV89EVvcQ6BY8IV5S1oSL0mD0L1lUe8QDd/
+ +wQhXKwY+JRYgpsZfm9NINYO0s167dB8T1zQdoDOTlVNyOCPDe0AYbRTia0kBKEmgN
+ Ryq5/58SvhzGO/rEocVuDFvmSU5GLgiv/8bAlE6ETNHsQQ+VQcJ/JSR4IC4+xnyL9n
+ VmlvyQEg35t2mTi6Vipo+ltmaOvj1Ek6iR8wNNj2kraA45w6GW4/2R0RWeyLNRiFDs
+ InaFAIfF0Su/jvJK+cajuHeWSixcyFRtJ2SB5KTNCARsVBo4hDIxL/vOdsraTroYBl
+ 4J1+4labMn5iQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 3CB251DDFA0;
- Fri, 16 Oct 2026 08:10:53 +0300 (MSK)
-Message-ID: <8b2927d2-4bbf-4bbb-9660-04244541de89@tls.msk.ru>
-Date: Fri, 16 Oct 2026 08:10:52 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id BB5BD1DDFA5;
+ Fri, 16 Oct 2026 08:14:01 +0300 (MSK)
+Message-ID: <1eaf03d1-01d8-41dc-ad5a-032982d3feac@tls.msk.ru>
+Date: Fri, 16 Oct 2026 08:14:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
+Subject: Re: [PATCH] target/i386: fix immediate stack adjustment for RET and
+ RETF
 To: Artemii Mashanov <ralerrdirsardx@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260826171655.117679-1-ralerrdirsardx@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260924200420.21068-1-ralerrdirsardx@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260826171655.117679-1-ralerrdirsardx@gmail.com>
+In-Reply-To: <20260924200420.21068-1-ralerrdirsardx@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -110,36 +111,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.08.2026 20:16, Artemii Mashanov wrote:
-> TCG's do_xsave_fpu() omitted writing the FOP field and the reserved
-> bytes (10..15) of each x87 register slot. Those parts of
-> the destination buffer retained their previous contents.
+On 24.09.2026 23:04, Artemii Mashanov wrote:
+> The imm16 operand of RET and RETF specifies an unsigned 16-bit count
+> of additional bytes to release from the stack.
 > 
-> The reserved bytes of all eight slots are zeroed. TCG does not
-> yet track the actual FOP value, this patch stores a fixed zero instead.
+> Previously, gen_RET() and gen_RETF() stored this operand in an int16_t.
+> For example, 0xcaf5 was interpreted as -13579 instead of 51957.
 > 
-> Add a regression test in tests/tcg/x86_64/fxsave.c. It fills the
-> FXSAVE area with 0xcc, executes FNINIT and FXSAVE64, then verifies that
-> FOP and all reserved slot bytes are zero.
+> Use uint16_t for the adjustment in both functions to preserve the
+> immediate's unsigned value.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3522
+> Tested locally with near and far returns in both 32-bit and 64-bit
+> modes. Each combination covered the form without an immediate and
+> immediate values 0x0000, 0x0001, 0x7fff, 0x8000, 0xcaf5, and 0xffff.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2599
 > 
 > Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
 > ---
->   target/i386/tcg/fpu_helper.c     |  3 ++
->   tests/tcg/x86_64/Makefile.target |  1 +
->   tests/tcg/x86_64/fxsave.c        | 66 ++++++++++++++++++++++++++++++++
->   3 files changed, 70 insertions(+)
->   create mode 100644 tests/tcg/x86_64/fxsave.c
+>   target/i386/tcg/emit.c.inc | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Hi!
 
-This looks like qemu-stable material, is it not?
+I'm picking this one up for the current qemu stable series too.
+Please let me know if I shouldn't.
 
-I'm picking it up for 10.0.x and 11.1.x series,
-please let me know if I should not.
-
-Thanks!
+Thanks,
 
 /mjt
 
