@@ -4,89 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7486DCC6B38
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 16:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F69CC6B38
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 16:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHktB-0003f1-01; Fri, 16 Oct 2026 12:34:37 -0400
+	id 1xHl3D-0005wD-7T; Fri, 16 Oct 2026 12:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xHkt9-0003b1-99
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:34:35 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xHkt7-0003Si-02
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:34:34 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c3f10d2f255so10010166b.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:34:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xHl3B-0005w1-Eh
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:44:57 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xHl39-0004Xc-4v
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 12:44:56 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69GG3hNP3260540
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:44:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ hATlBp6wB5t3ja95MsamNs9F/2R+ONqq7T0HhVz6oRU=; b=hk+6qou0Dz+cdfYc
+ yp2RlxoG2Yky3EEakqOu/mG6DJiYjZTtJogD/ywNIkY7U9H+H94wY3hCm0I1hvs5
+ wlxRjvpg2zHIi44bMwuNBeL6sYCnQsBPoxYjRD5UgT5PrUZmKWpw0PV8crhm62oI
+ TbebJ9nr4a+eiVkpFIFrfg0AtyFadI0F7bS/KirJenFFIXwzsnhXtHzOzbBE0bXE
+ aF595oNkVoPHSAHvbZKm7nKglOZ6X4gMgDKi14H6Z5r5y4I+jhFB7lFFSRgqsVyk
+ ytt7WRTzpi/USY4On9gzF5K0BCdl+vJ7VAOOFSeCPmXHqC2waZyOSPVvqdKmPwjy
+ C4N/eQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbq4505pu-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 16:44:52 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93a082c014aso41769785a.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 09:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792168471; x=1792773271; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=4FLoEJWG8j1hbHYpC3s/KLg42Ui3wRgsVUWImn/8ap0=;
- b=X4krydAtIlauFYlr57WRsCcpB93PKFrxR68EwxPWKNDUxIpQh4749heauIo6vmKwhN
- i0sqoJLxp6cXteeHaIfizSIGimQPvvaO6h30vXMwHbGey/oKJlgzKNoTPnf14mC+kN0g
- Ya7O84d+thHweu50F+qW/Nml4KVIqXW+nEmfPpeplQyLuEJETmv9a1+z59IWkmo08SQG
- ulbqj8pqkyiP5k/m77Da0lHWdYXXnCJ40S0vFWnZTm16ujGO7VxDJ5bslfFQ0erORoUv
- 0zR9ZW/GZNgNWiZV0TZAsoDu0DysOdNmI9NosGRyurkDRqk3kA2XgMwl31K6BPIhG/+S
- ynIQ==
+ d=oss.qualcomm.com; s=google; t=1792169092; x=1792773892; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=hATlBp6wB5t3ja95MsamNs9F/2R+ONqq7T0HhVz6oRU=;
+ b=Zhnwau240LLjgyGStk2TP9PphcSArABd+1VxgZyycJYW4gg/wtn7Yn+xBXyrMJ7xsL
+ 2fiDN/Ageu9YVTep25vXzpfML4y4iS7rYOaVX5oqcLpRrkP+G19w6Cto59/Jn87CokS+
+ kIawYTqrcCTDtg+WnYM4atWkBkXTFoZ8i8rwJLSw3vjYWwubBNk+fkMddr1W4+kdHagL
+ 9SdnxhONLXNeWZvAvq5yFCKhp5f4mhOwcyoAxw4bYQRQMoP2N/iNjuLGi1f8hhYZCPuz
+ 3fMxh4liEP6X+Zz9NTKx2k8dcXyF2zRgPII3agC9fpQq9vLyKtKP7spTGS0iWfH0XD5w
+ XOVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792168471; x=1792773271;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792169092; x=1792773892;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4FLoEJWG8j1hbHYpC3s/KLg42Ui3wRgsVUWImn/8ap0=;
- b=K1giaemNAvL/q6DpcntQ41DNdpKWEGrnqX1paxR7dvBIheBA3tp9ZEIrAyx2zCeWDt
- N243bqVpZqOfl9OysZADwFxhQj4z2WqAPQkSi1Py2u0KkY6xCONAwLgFdLO+SZWtOISO
- oCZzN4hW0ENMYgaB+VhjNDYhFsFaTlcTZmSjJtVol5Wkekaa/CR8L1Vo/8J0O58DetqC
- BWiBTlMizfAzfRa51bJWFEf+2nAKB9thfV6+JE5pDThe561Fls95en4zpjLvEfWm0GBo
- 13I/Vp4kxXlNsNb+DNN6NY5S73C27CZrnWxwSlz1YULEag1f6r0tIb6F5RbCZQbKBSlt
- LtbA==
-X-Gm-Message-State: AFq9FYJ9ptZ+Lx3ZoT2rOMuWwsQz19VFXrltS4VauianVAX7lvbU7n6T
- RwELOKCQZxBKmY4W1zp8bSEygMW8qCMAFOhaK7lFFLiXU/AvNmh9+v6dDbiU9QoVzcY=
-X-Gm-Gg: AYBFou0y52/d7clBkUQS66lwdKhyw3KAUoQNVIxnhzIqI5NuplwlU+FcXDhVMf3vyB/
- kHdbP48pELq391Hy58evCaZlR0UgCPpMj4vB6qiTi42Y8xhRBRFsBDtImXT6v1CNSTGZgpp569f
- lfYcsXzUHfM3elZd2qI9Am7UxDcvTFBzEvpGi693W7I+hylSUiVXi58jCDBm6gm4DRtot0guWFj
- mQ8ziWGpQW0EM77aPv/+vz3oW8dKzG+8hu1L3Vsmg8sqS1onLsIjdaBJ6SGRvlJFnZ4ZOav11kv
- ha5Vh7iI/UKAX8Jy8anl370KoYKZmY/vr1Aw0U+cwm6txgpZJEzVvBq060g7cJu4Lsl0Gd+pM2c
- 4N+F+QjXe+TIyDGSW2IEVO37Ke4V/eVu1pz6/Gh6tL2l1P8pQzP/MlJ0ls1bR6Io+tKtil02W9D
- xQLE02jD8Cojv0UU32toMhXMYVwcZQzlRd+KTywoPaC9QTDp//LJJAlY4qEK7vWNu13okNjXKuO
- K4duqVjn8n5kvN8NChlo0wtaHBOdngPKr5vbbKJf9wT3/MJ838+S+1UgY2TEYY1pDZoDcFaLD3E
- YjDAIhEXxg==
-X-Received: by 2002:a17:907:ea8a:b0:c34:cf13:a930 with SMTP id
- a640c23a62f3a-c419f9ffa42mr29361466b.34.1792168470412; 
- Fri, 16 Oct 2026 09:34:30 -0700 (PDT)
-Received: from tulp.my.domain
- (2001-1c02-1a15-3000-2727-f7d1-9628-aa81.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c40913c4c5dsm90151866b.39.2026.10.16.09.34.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 09:34:29 -0700 (PDT)
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>,
- Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH] qga: implement 'guest-network-get-route' for FreeBSD
-Date: Fri, 16 Oct 2026 18:33:45 +0200
-Message-ID: <20261016163345.15303-1-bogorodskiy@gmail.com>
-X-Mailer: git-send-email 2.55.0
+ bh=hATlBp6wB5t3ja95MsamNs9F/2R+ONqq7T0HhVz6oRU=;
+ b=YZxMFdToPgEAm1mA/nRwognilN29VSNHm38G64gYpfSEfRa9AZ4OET9ECHBiOFcipZ
+ DM2nJPOgcFQYjPNapUF0PGV+/iVCh5EUUXkujSpe/I3xZmA9CBp3CIvljmwgWNexM4sf
+ qQWwM1m08s23sOo4+XqbuUgPfPjzFJQRHHcJwbA3weSmQyTL3iwoj7xwxXk/OHdXOjBm
+ sz8ltE/LQKHqOGWjCSFmEa7lntcukJQdcy/m3YyK5+Z+610Y5ElzPsYWj7Ub5/IVsRBN
+ lNmN+PTBH8oh4TCfjcFh1vwBAK3doJADQnWue2GtZ0vgdNw5qma8ThRdi55FSxdDTjB9
+ lLfw==
+X-Gm-Message-State: AFq9FYKeiHc8sCQSovQnVUUkx7PKJMVQYl8nc0ZbGyu2l+H01ofaWCku
+ L1NIDEYZFbYD6QXFRJdx1IB9h44Glzza8DSYt1f9IFbL4wDes8/IJAJSvTh6Sl9Q7hJ2WR4vzte
+ Nr+Oq7XCkyRNaYouNIeC8O21Yiey7I1Uyn83IKX5abbXj6awmesKYh7YlBw==
+X-Gm-Gg: AYBFou2k+tznlBbjYltcZlnSIflpRZ87OgGYJtoO9tA3/5wdTxi3vFp7KWnL6bIIDSo
+ /MG2sMZP7xreW9Kpevyp1PdMh10ySvt052SkrvqV1RdEewnpbXUICTbIFtESs/vNlUdBdYgTrPy
+ BeUFqFBIfGwCaJrjoyqGuYGZ/LEcu0mLHqpTXa7ajaLsCVydI+Wz9K0/Dps7imYdHuNM7kSXOkp
+ 6aZL4qEhu6I/6dVjFk47jMoRAze0RNcKZyrmJRyvMbpQJEbyqKL0B1vv4qKs0ORKFfnI6uBemtW
+ jnS3Q9Vds7nB3Ahq8yvOMDMQL/YOh0nIsWcwtyh3wrNTOCjj3XWCQRqyxkJjWgoErfUqMRrRZlY
+ kDcDUSHCflpx7jWpajMdnlK+Hjg4bzce3Od9EgajK5EcWQkJ7b+teysi4OZA7CT+g
+X-Received: by 2002:a05:620a:290e:b0:939:2b7c:34d1 with SMTP id
+ af79cd13be357-93f29cc75afmr71934085a.15.1792169091553; 
+ Fri, 16 Oct 2026 09:44:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:290e:b0:939:2b7c:34d1 with SMTP id
+ af79cd13be357-93f29cc75afmr71929685a.15.1792169090902; 
+ Fri, 16 Oct 2026 09:44:50 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93f1a0cf98bsm252858685a.4.2026.10.16.09.44.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Oct 2026 09:44:50 -0700 (PDT)
+Message-ID: <98f45c19-ddbb-4a64-a58d-56c7f31d649b@oss.qualcomm.com>
+Date: Fri, 16 Oct 2026 11:44:48 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/12] Hexagon: Add support for v83, v85
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Alessandro Di Federico <ale@rev.ng>,
+ Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
+References: <20261014195223.3233623-1-brian.cain@oss.qualcomm.com>
+ <CAJ+KCYOhsLckWC0sazhOx=Tf21pEYesasuE=tutjrK6fXCUnSg@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAJ+KCYOhsLckWC0sazhOx=Tf21pEYesasuE=tutjrK6fXCUnSg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: 9ZRad18xalbEOz_S7TJRrxCK1UfzfBkg
+X-Proofpoint-GUID: 9ZRad18xalbEOz_S7TJRrxCK1UfzfBkg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE2MDA2NiBTYWx0ZWRfXxoWY/9QF2mT7
+ z51UxS7Zsak4Z5t+DO5FDZpEF6ixqiThU+0DVvJG6KyJOAGsGG4pZeacsAnhSVcFuDBHCBgf3Rp
+ CAAXAnn1TcnF/dZquICkiuEu86KIZKA56N5GHPBaKN/oxJjt8UhUdpcwlElIxGuqcL8Q/lyUmp1
+ VuJliewAarwMuptj+q7znoYxd0XQPYxJc2xq1biZpJfxmpvAIZhzvvQk0Nmr6nlgZ+f9M5bdF7h
+ VlUy6QmX4qn/mAuzvYM4dfEVfDjX0LbMZlhlWu66AwBg2bb3hhbUWbwNDxxjKzjrwpBcMXvpI81
+ xYdhNC8KwyNhFdrvI3aNJoqXBkVxYE2+NrWKbZSNZcwfwNpHNWOYQTvy0Ov1yR+h8IkUZnwFdv8
+ iI9SivBIl5VGdJrE8kvMVnamdcEF9Vu+aEXezK5niIeTUm1ItvxId+D7/xuVxudkFbfxsWHXXxN
+ bZleRWSxaq5sI7iMgiQ==
+X-Authority-Analysis: v=2.4 cv=e4GT2qp/ c=1 sm=1 tr=0 ts=6ad25484 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=dbqDgaQTMc-M4OkzAdIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE2MDA2NiBTYWx0ZWRfX0W6DDUqUpSsq
+ pfi5K7vq7wG3tf4W4eM7I7IXoa7bAdIALYqT3YvpQituUReH1fwWDrE+KWibINnJFXSrN0HVW9V
+ bO7Um6V2eDiHzSnI10/PkXZ3S8My8ZI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-16_02,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610160066
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,294 +155,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement 'guest-network-get-route' for FreeBSD. This
-implementation uses the sysctl(3) interface to get
-the routing table.
 
-Limitations:
+On 10/16/2026 10:58 AM, Marco Liebel wrote:
+> On Wed, Oct 14, 2026 at 2:52 PM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> v83 and v85 introduce new ISA extensions:
+>> - CFI/restricted branches
+>> - scalar atomic operations
+>> - scalar float operations
+>> - trap2 instruction
+>> - vector stack, used by HLX
+>>
+>> The HLX vector coprocessor, also introduced by these new revisions, is
+>> not included in this series.
+>>
+>> The cross-toolchain doesn't yet support these opcodes.  So in our tests,
+>> we've manually encoded the instructions using ".word" directives and we
+>> invoke the tests with the explicit '-cpu'.  The directives will be replaced
+>> with the mnemonics and explicit '-cpu' removed once the assembler has the
+>> necessary support.  I expect LLVM 24.x will include these instructions.
+>>
+>> Brian Cain (12):
+>>    target/hexagon: sort tag_rev_info entries by version
+>>    Hexagon: add v85 CPU model
+>>    hw/hexagon: add v85 machines
+>>    linux-user/hexagon: report ISA HWCAP through v85
+>>    target/hexagon: add v85 scalar atomics
+>>    target/hexagon: add v83 trap2 and vector stack instructions
+>>    target/hexagon: generate vector frame instructions with IDEF parser
+>>    target/hexagon: reject reserved L4_loadw_phys encoding from v83
+>>    target/hexagon: preserve callr target when Rs is LR
+>>    target/hexagon: implement control flow integrity (CFI)
+>>    target/hexagon: add vsf* instructions
+>>    tests/tcg/hexagon: add v85 scalar tests
+>>
+>>   docs/system/hexagon/emulation.rst           |   2 +-
+>>   include/hw/hexagon/hexagon.h                |   6 +-
+>>   linux-user/hexagon/target_elf.h             |   2 +
+>>   target/hexagon/cpu-qom.h                    |   4 +
+>>   target/hexagon/cpu.h                        |   3 +
+>>   target/hexagon/cpu_bits.h                   |   2 +
+>>   target/hexagon/gen_tcg.h                    |  93 +++++++++++-
+>>   target/hexagon/gen_tcg_sys.h                |   6 +
+>>   target/hexagon/genptr.h                     |  12 ++
+>>   target/hexagon/helper.h                     |   5 +
+>>   target/hexagon/hex_regs.h                   |   2 +
+>>   target/hexagon/idef-parser/parser-helpers.h |   1 +
+>>   target/hexagon/macros.h                     |  12 ++
+>>   target/hexagon/translate.h                  |   4 +
+>>   tests/tcg/hexagon/cfi_tgts.h                |  16 ++
+>>   hw/hexagon/machine_cfg_v85na_1.h.inc        |  50 +++++++
+>>   hw/hexagon/machine_cfg_v85qa_1.h.inc        |  51 +++++++
+>>   target/hexagon/attribs_def.h.inc            |   2 +
+>>   target/hexagon/reg_fields_def.h.inc         |   1 +
+>>   hw/hexagon/hexagon_dsp.c                    |  48 +++++-
+>>   linux-user/hexagon/cpu_loop.c               |  10 ++
+>>   linux-user/hexagon/elfload.c                |  10 ++
+>>   target/hexagon/cpu.c                        |  10 +-
+>>   target/hexagon/decode.c                     |   5 +
+>>   target/hexagon/genptr.c                     |  95 +++++++++++-
+>>   target/hexagon/hex_interrupts.c             |   3 +
+>>   target/hexagon/hexswi.c                     |  16 ++
+>>   target/hexagon/idef-parser/parser-helpers.c |  14 ++
+>>   target/hexagon/machine.c                    |   3 +-
+>>   target/hexagon/op_helper.c                  |  73 +++++++++
+>>   target/hexagon/translate.c                  |  53 ++++++-
+>>   tests/tcg/hexagon/atomics.c                 | 102 +++++++++++++
+>>   tests/tcg/hexagon/cfi_user.c                |  63 ++++++++
+>>   tests/tcg/hexagon/check_rev_gating.c        |  10 ++
+>>   tests/tcg/hexagon/invalid-encoding.c        |  20 +++
+>>   tests/tcg/hexagon/trap2.c                   |  34 +++++
+>>   tests/tcg/hexagon/v83_scalar_fp.c           |  98 ++++++++++++
+>>   tests/tcg/hexagon/vallocframe.c             | 111 ++++++++++++++
+>>   target/hexagon/tag_rev_info.c.inc           |  82 ++++++++--
+>>   target/hexagon/gen_idef_parser_funcs.py     |   4 +-
+>>   target/hexagon/idef-parser/idef-parser.lex  |   8 +
+>>   target/hexagon/idef-parser/idef-parser.y    |   9 +-
+>>   target/hexagon/imported/alu.idef            |   3 +
+>>   target/hexagon/imported/branch.idef         |  38 +++++
+>>   target/hexagon/imported/encode_pp.def       |  43 +++++-
+>>   target/hexagon/imported/encode_subinsn.def  |   1 +
+>>   target/hexagon/imported/float.idef          |  49 ++++++
+>>   target/hexagon/imported/ldst.idef           |  15 ++
+>>   target/hexagon/imported/macros.def          |  10 ++
+>>   target/hexagon/imported/subinsns.idef       |   2 +
+>>   target/hexagon/imported/system.idef         |   9 ++
+>>   tests/tcg/hexagon/cfi_tgts.S                | 157 ++++++++++++++++++++
+>>   tests/tcg/hexagon/meson.build               |  19 ++-
+>>   53 files changed, 1470 insertions(+), 31 deletions(-)
+>>   create mode 100644 tests/tcg/hexagon/cfi_tgts.h
+>>   create mode 100644 hw/hexagon/machine_cfg_v85na_1.h.inc
+>>   create mode 100644 hw/hexagon/machine_cfg_v85qa_1.h.inc
+>>   create mode 100644 tests/tcg/hexagon/cfi_user.c
+>>   create mode 100644 tests/tcg/hexagon/trap2.c
+>>   create mode 100644 tests/tcg/hexagon/v83_scalar_fp.c
+>>   create mode 100644 tests/tcg/hexagon/vallocframe.c
+>>   create mode 100644 tests/tcg/hexagon/cfi_tgts.S
+>>
+>> --
+>> 2.34.1
+>>
+> General notes:
+>
+> 1. The series does not bisect (Patches 5-9):
+> A_RESTRICT_TARGET is undeclared. Patch 5 adds
+> S2_allocframe_rb to ldst.idef, but the attribute comes in patch 10.
+> Moving those two lines to patch 10 fixes it.
 
- - This implementation does not populate irtt, refcnt, use,
-   window, source, and srcprefixlen fields.
- - The implementation uses the default FIB (routing table) 0.
-   Selecting QGA's active FIB is left for the follow-up patch.
+I'll make that change, thanks.
 
-Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
----
- qga/commands-bsd.c   | 178 +++++++++++++++++++++++++++++++++++++++++++
- qga/qapi-schema.json |  27 +++----
- 2 files changed, 192 insertions(+), 13 deletions(-)
 
-diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
-index 1c51d099eb..87c749a4c5 100644
---- a/qga/commands-bsd.c
-+++ b/qga/commands-bsd.c
-@@ -21,6 +21,11 @@
- #include <sys/mount.h>
- #include <net/if_dl.h>
- #include <sys/statvfs.h>
-+#if defined(__FreeBSD__)
-+#include <sys/sysctl.h>
-+#include <net/route.h>
-+#include <net/if.h>
-+#endif
- #if defined(__NetBSD__) || defined(__OpenBSD__)
- #include <net/if_arp.h>
- #include <netinet/if_ether.h>
-@@ -228,4 +233,177 @@ GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-     free_fs_mount_list(&mounts);
-     return ret;
- }
-+
-+GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
-+{
-+    GuestNetworkRouteList *head = NULL, **tail = &head;
-+    int mib[] = { CTL_NET, PF_ROUTE, 0, AF_UNSPEC, NET_RT_DUMP, 0, 0 };
-+    g_autofree char *buf = NULL;
-+    size_t len;
-+
-+    if (sysctl(mib, nitems(mib), NULL, &len, NULL, 0) == -1) {
-+        error_setg_errno(errp, errno, "sysctl size");
-+        return NULL;
-+    }
-+
-+    buf = g_malloc0(len);
-+
-+    if (sysctl(mib, nitems(mib), buf, &len, NULL, 0) == -1) {
-+        error_setg_errno(errp, errno, "sysctl routes");
-+        return NULL;
-+    }
-+
-+    for (char *p = buf, *end = buf + len; p < end; ) {
-+        struct rt_msghdr *rtm = (struct rt_msghdr *)p;
-+        struct sockaddr *addresses[RTAX_MAX] = { NULL };
-+        struct sockaddr *sa;
-+        char destination[NI_MAXHOST];
-+        char gateway[NI_MAXHOST];
-+        char ifname[IFNAMSIZ] = "?";
-+        const struct sockaddr *dst = NULL;
-+        const struct sockaddr *gw = NULL;
-+        const struct sockaddr *netmask = NULL;
-+        struct sockaddr_in normalized_mask = { 0 };
-+        char netmask_buf[INET_ADDRSTRLEN];
-+
-+        g_autoptr(GuestNetworkRoute) route = g_new0(GuestNetworkRoute, 1);
-+
-+        if ((size_t)(end - p) < sizeof(*rtm) ||
-+            rtm->rtm_msglen < sizeof(*rtm) ||
-+            rtm->rtm_msglen > (size_t)(end - p)) {
-+            break;
-+        }
-+
-+        p += rtm->rtm_msglen;
-+
-+        if (rtm->rtm_version != RTM_VERSION) {
-+            continue;
-+        }
-+
-+        sa = (struct sockaddr *)(rtm + 1);
-+        for (int i = 0; i < RTAX_MAX; i++) {
-+            if (rtm->rtm_addrs & (1U << i)) {
-+                addresses[i] = sa;
-+                sa = (struct sockaddr *)((char *)sa + SA_SIZE(sa));
-+            }
-+        }
-+
-+        if_indextoname(rtm->rtm_index, ifname);
-+
-+        route->iface = g_strdup(ifname);
-+        route->metric = rtm->rtm_rmx.rmx_metric;
-+
-+        dst = addresses[RTAX_DST];
-+        if (!dst) {
-+            continue;
-+        }
-+
-+        if (dst->sa_family == AF_INET) {
-+            if (inet_ntop(AF_INET,
-+                          &((const struct sockaddr_in *)dst)->sin_addr,
-+                          destination, NI_MAXHOST) == NULL) {
-+                continue;
-+            }
-+            route->version = 4;
-+        } else if (dst->sa_family == AF_INET6) {
-+            if (getnameinfo(dst, dst->sa_len,
-+                            destination, NI_MAXHOST,
-+                            NULL, 0, NI_NUMERICHOST) != 0)
-+                continue;
-+            route->version = 6;
-+        } else {
-+            continue;
-+        }
-+        route->destination = g_strdup(destination);
-+
-+        gw = addresses[RTAX_GATEWAY];
-+        if (gw) {
-+            if (gw->sa_family == AF_INET) {
-+                if (inet_ntop(AF_INET,
-+                              &((const struct sockaddr_in *)gw)->sin_addr,
-+                              gateway, NI_MAXHOST) == NULL) {
-+                    continue;
-+                }
-+                route->gateway = g_strdup(gateway);
-+            } else if (gw->sa_family == AF_INET6) {
-+                if (getnameinfo(gw, gw->sa_len,
-+                                gateway, NI_MAXHOST,
-+                                NULL, 0, NI_NUMERICHOST) != 0) {
-+                    continue;
-+                }
-+                route->nexthop = g_strdup(gateway);
-+            }
-+        }
-+
-+        netmask = addresses[RTAX_NETMASK];
-+        if (dst->sa_family == AF_INET) {
-+            if (netmask && netmask->sa_len != 0) {
-+                memcpy(&normalized_mask, netmask,
-+                       MIN(netmask->sa_len, sizeof(normalized_mask)));
-+            } else if (rtm->rtm_flags & RTF_HOST) {
-+                normalized_mask.sin_addr.s_addr = 0xFFFFFFFF;
-+            }
-+
-+            if (inet_ntop(AF_INET, &normalized_mask.sin_addr,
-+                          netmask_buf, sizeof(netmask_buf)) != NULL) {
-+                route->mask = g_strdup(netmask_buf);
-+            } else {
-+                route->mask = NULL;
-+            }
-+        } else if (dst->sa_family == AF_INET6) {
-+            struct sockaddr_in6 normalized_mask6;
-+            memset(&normalized_mask6, 0, sizeof(normalized_mask6));
-+
-+            if (netmask && netmask->sa_len != 0) {
-+                int prefix_len = 0;
-+                bool valid_mask = true;
-+                bool zero_found = false;
-+
-+                memcpy(&normalized_mask6, netmask,
-+                       MIN(netmask->sa_len, sizeof(normalized_mask6)));
-+
-+                for (int i = 0; i < sizeof(normalized_mask6.sin6_addr); i++) {
-+                    uint8_t byte = normalized_mask6.sin6_addr.s6_addr[i];
-+                    for (int bit = 7; bit >= 0; bit--) {
-+                        if ((byte >> bit) & 1) {
-+                            if (zero_found) {
-+                                valid_mask = false;
-+                                break;
-+                            }
-+                            prefix_len++;
-+                        } else {
-+                            zero_found = true;
-+                        }
-+                    }
-+                    if (!valid_mask) {
-+                        break;
-+                    }
-+                }
-+
-+                if (valid_mask) {
-+                    route->desprefixlen = g_strdup_printf("%d", prefix_len);
-+                } else {
-+                    route->desprefixlen = NULL;
-+                }
-+            } else if (rtm->rtm_flags & RTF_HOST) {
-+                route->desprefixlen = g_strdup("128");
-+            } else {
-+                route->desprefixlen = g_strdup("0");
-+            }
-+        }
-+
-+        if (rtm->rtm_rmx.rmx_mtu) {
-+            route->mtu = rtm->rtm_rmx.rmx_mtu;
-+            route->has_mtu = true;
-+        }
-+
-+        route->flags = (uint32_t)rtm->rtm_flags;
-+        route->has_flags = true;
-+
-+        QAPI_LIST_APPEND(tail, route);
-+        route = NULL;
-+    }
-+
-+    return head;
-+}
- #endif /* __FreeBSD__ */
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 05fe4ea484..2f9d9f13a0 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -1823,8 +1823,8 @@
- 
- ##
- # @GuestNetworkRoute:
--#     Route information.  Supported on Linux (since 9.1) and Windows
--#     (since 11.0).
-+#     Route information.  Supported on Linux (since 9.1), Windows
-+#     (since 11.0), and FreeBSD (since 11.2).
- #
- # @iface: The destination network or host's egress network interface
- #     in the routing table
-@@ -1838,30 +1838,31 @@
- #
- # @mask: Subnet Mask (IPv4 only)
- #
--# @irtt: Initial round-trip delay (not for windows, IPv4 only)
-+# @irtt: Initial round-trip delay (not for windows and freebsd,
-+#     IPv4 only)
- #
- # @flags: Route flags (not for windows)
- #
--# @refcnt: The route's reference count (not for windows)
-+# @refcnt: The route's reference count (not for windows and freebsd)
- #
--# @use: Route usage count (not for windows)
-+# @use: Route usage count (not for windows and freebsd)
- #
--# @window: TCP window size, used for flow control (not for windows,
--#     IPv4 only)
-+# @window: TCP window size, used for flow control (not for windows
-+#     and freebsd, IPv4 only)
- #
- # @mtu: Data link layer maximum packet size (not for windows)
- #
- # @desprefixlen: Destination prefix length (for IPv6)
- #
--# @source: Source IP address (for IPv6)
-+# @source: Source IP address (not for freebsd, IPv6 only)
- #
--# @srcprefixlen: Source prefix length (for IPv6)
-+# @srcprefixlen: Source prefix length (not for freebsd, IPv6 only)
- #
- # @nexthop: Next hop IP address (for IPv6)
- #
- # @version: IP version (4 or 6)
- #
--# Since: 9.1 (Linux only); 11.0 (Windows)
-+# Since: 9.1 (Linux only); 11.0 (Windows); 11.2 (FreeBSD)
- ##
- { 'struct': 'GuestNetworkRoute',
-   'data': {'iface': 'str',
-@@ -1881,7 +1882,7 @@
-            '*nexthop': 'str',
-            'version': 'int'
-            },
--  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] } }
-+  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32', 'CONFIG_FREEBSD'] } }
- 
- ##
- # @guest-network-get-route:
-@@ -1889,9 +1890,9 @@
- #
- # Returns: List of route info of guest.
- #
--# Since: 9.1 (Linux only); 11.0 (Windows)
-+# Since: 9.1 (Linux only); 11.0 (Windows); 11.2 (FreeBSD)
- ##
- { 'command': 'guest-network-get-route',
-   'returns': ['GuestNetworkRoute'],
--  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
-+  'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32', 'CONFIG_FREEBSD'] }
- }
--- 
-2.55.0
-
+> 2. The no idef parser build is broken after commit 7 (Patches 7-12):
+> patch 7 drops the fGEN_TCG_V2_v{,de}allocframe_* overrides, and
+> patch 10 adds S2/SS2_allocframe_rb without overrides. Should we
+> keep the ones in commit 7 and add some for the additions in commit 10?
+Yes, that probably makes sense - I'll take a closer look and send a v2.
 
