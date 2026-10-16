@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFAFCC6B38
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE453CCA462
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Oct 2026 01:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHWO7-0002kL-Ui; Thu, 15 Oct 2026 21:05:37 -0400
+	id 1xHWP8-0004S6-Gl; Thu, 15 Oct 2026 21:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWNP-0001cf-JI
+ id 1xHWNR-0001dT-HR
  for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:55 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xHWNE-0004Ov-Gq
- for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:43 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2e901e114fdso25575385ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:04:38 -0700 (PDT)
+ id 1xHWNN-0004PP-Ha
+ for qemu-devel@nongnu.org; Thu, 15 Oct 2026 21:04:53 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2e987a2ba0cso1066385ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Oct 2026 18:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792112678; x=1792717478; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792112684; x=1792717484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5bTAGSooV44eiWCdfd0Toi5qLge+YpB1WmcD4tXPp7o=;
- b=b61NUvp0fBmLPB8gTarKVXu7nMI/1GbKT4bUv97nO192uoaRMjXBj4I1OyD/cZjWFZ
- 8IiXImNkMxaheIVEM5XXGKXTQmKgtr1qfiyMB3QoMS2AIELnNr+GiqrdXpO5VuVrXILx
- K7kYUuTsRLqi9D8U384TWHkAJP7JlzdaK4vfkf0dTFV+270axWBrhSLftIeWNw0V194s
- yiF3/YtXqwxcAzD392p3mKfZma+dBAA2mB0cXhZGgXMm8nULZ4VIh6jPrybR5NiXCkyZ
- TMs25zcnBcECuRvFQwNfa6bq7W5Z+LF1sduW0s27P3vDEVNv5wBG+G8jFXQ9M082+7Fc
- dYtQ==
+ bh=GJDH3aSi3iEtRA88pW8B4KmdXCuQtrrTuHGaM2V6WJs=;
+ b=CyV0eJBC1NhuXi0/fLIYnPfSB8vydnwtHjXROl9tydFv4cK9HAx/UNLSiBqRk1VZ2b
+ YFd3sOqIUe3FS2mlxvhPhuBGXz6DHIhtitX4R/dTlXQgXcqxFmUBOolAuw0Sj3Xzm3GN
+ yaj4T5XHzGoEb/XeFZtD9fO1+8Fl334M95INb2jfpnAeeJpN1P2PXATioPdXucsLLXV7
+ R/Rcpr7Cl3acfU9+pLcwb9AyHUDuTDk2GQQQsih6hMurZm1wt1uf0iAVW94UbZ5vKoc2
+ 8ZxnU+VSXTvWBrS3WMUrriGLKlViyeC0l7ixhtqHQByVqLW1efjX9rx3VdosNw6KE26A
+ B8JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792112678; x=1792717478;
+ d=1e100.net; s=20260707; t=1792112684; x=1792717484;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5bTAGSooV44eiWCdfd0Toi5qLge+YpB1WmcD4tXPp7o=;
- b=rP73SzM3IfGNaQebNYFffDtELFKGnnAmH0xfvKApHShZYP+5HeECJTBPbHZYv21q88
- jHRutWGicXV95kXORcFR6wlnobeaBlZgcGpUzNZBXnZ/LoKSBYDuDB2a8T68K0Nh38PL
- xpVD2OYr0iZ/Pms7tCW7UanZRJxIG2V7IWIEXQggxFf5AOctBHv6jRFkk1v1FIr4NnQ5
- Lk0rQuxgIXsb4u0MqekDj5YTcv9xjOAxoXcc9Phn8/Kr/79Y1OumoP+g5uirodkJ+aAs
- fF0Jga1q2Uho73YfgG6dNKyiDSWFeuNrc0ONVB620GIlVvXFA3HqemxN42OKePDQCjcN
- PWvg==
-X-Gm-Message-State: AFq9FYJMX9+3kNwM5/wDvL0iskdDe5l5yNp2ZcD4RqztDzzRRkxnzwjY
- 8seVaD5rKK6gNCX23JYXkr50GVHL7z6QXN7OHecsCq6v1A9JYVC4Ja+apz7SBg==
-X-Gm-Gg: AYBFou2kLBE9G4HKhGLoAk1F0zUSP/y07damIVHYmiTaX9CAigZoJ6mUJXtBDX5ngUg
- g99bAWIab/W6ht2hEFHOvw62tebiCAg63X/83eqmPg2qKky9nJv9JLu2XW5onuLKjUhiwMr3V9O
- CT9RtTQI7hr9eU2EqZJxGbWdVv0Lf/P3lLRYdtYkAFrtrQIQofH/fTHqOAKurAuePYA2w5xYZHQ
- DyZ30Rvy4r8gIC9Wgs5yYgZB0xtCvDvBE/oH3sZJQKNBy5lJVEqiyub455QtMAl6gybUqkTmIBl
- MEum43kGP3IMbtUmjqMwkGTB6aLBQQrLrjTBaK7CFHIhtDtdgYsFfnRCgzncch2N+56ZQQB8gBd
- WJyXVVZMoL45GMJsLLrv6CrpmmsabX7QSTcK5B3a/xMNvfPVfff6+kc0VJQDkSe6jP3srDTqIdx
- L1KALfu0dOtXNBmRe+0V5rqF8mF4vK4WmLS8TXtXlqt+AthyaekiijVe0UgxArVxxOObVJ/Q0+t
- bWFWrMj1a8u42+K
-X-Received: by 2002:a17:903:2449:b0:2e6:913:57ed with SMTP id
- d9443c01a7336-2e8429a83cdmr188890335ad.14.1792112677799; 
- Thu, 15 Oct 2026 18:04:37 -0700 (PDT)
+ bh=GJDH3aSi3iEtRA88pW8B4KmdXCuQtrrTuHGaM2V6WJs=;
+ b=N1SZZWNkaSQIM1pyn6A2gbBXtdK0n+196qY3DrAnKeEbYyrlp6u/HtCB+kr0xhBSyq
+ dMkDcGFc7Xkabk0XcjPwap7wEodVCzc45fXm6mQ1Ej+kAD+tkbOfwCMm7JF8D5RXrGYu
+ sQ2Y7GvwYS4Ca4XY4ffXq/zv6gkWsDGfz2WjSJSfM5CU6ez07wGj16teb7nqXEI2Vl0Z
+ jtJQfvicWzCNfUyk4rcA68xjrwta1sm3HOyjzIN179cbQ7GbCVmVUwsLGlt+FsYK9+D2
+ JFvgfo/JTSn1Zle6jUzhTbrzsAOPchkhIkiK0GBuBwMY234h11IVCFJF2vuSeqH40UmL
+ CZ7Q==
+X-Gm-Message-State: AFq9FYJCrfzDf9DozPUDfaZMBeRNhH0kKiP8Ct5jLcw88uAejIPyvBqQ
+ dtdA9XY/KdED6fAoa4szm586knkXrF1gJ5FVJTNn7XIGN/T/fWn4+U2YMGzGHQ==
+X-Gm-Gg: AYBFou1Rm4n/8kXRjnGQm3iayLWR+yVlCtHvOKY3tURzKmU+qfk/deRhfpy1wGnWi5I
+ s6qt9WW/B52fTqfoJm3LyPDiVqvfUsj0txMKZAJAqSyosI0Sr9jcb2Npkp5UiCL7yj3+0RE3cBp
+ PM2Tx+25eXrejpMJxNGIUpWT7cXvBYglwCn8j/OKDlwQmMdgBl+UFjTVoLIjG1nHVasxayDM0gb
+ R16eDJ/ccs2p/m1Qe66kzfq7+eQYoX028IQDi2purkAJgXsBXKVoT22/7zXJ5X8M5XqeQB73vcg
+ KPBr6LZEolx3i8tFwvsL8jNAyjMEZ+D7ozP+touATpKmdhDH3bJxIqerebQwWLggrecoO3OvWOU
+ mhcT4jSl9wRbVvu7ikziYKw6wJ0lYT2tXujJrMDqPxHOOvwlO3WqD7L9QsnmbhoX1QyGca/xqJJ
+ Oqa2RFnG+P3n2ypcAS2gtIld8s5E79j93/Q/1BxmGmplCf2bhKuE2/dCBm9ztumj8iWIIFuZALU
+ lZj8d641mQynOzM
+X-Received: by 2002:a17:902:e892:b0:2e8:18ca:5f46 with SMTP id
+ d9443c01a7336-2e842aadfa1mr195315635ad.14.1792112683820; 
+ Thu, 15 Oct 2026 18:04:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.04.34
+ d9443c01a7336-2e97e833f1asm2513995ad.43.2026.10.15.18.04.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Oct 2026 18:04:37 -0700 (PDT)
+ Thu, 15 Oct 2026 18:04:43 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Sunil V L <sunilvl@oss.qualcomm.com>
-Subject: [PULL v2 38/50] tests/functional/riscv64: add riscv-server-ref tests
-Date: Fri, 16 Oct 2026 11:02:25 +1000
-Message-ID: <20261016010237.1102834-39-alistair.francis@wdc.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>, Rick <rick@sloservers.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PULL v2 40/50] Revert "linux-user/riscv: invalidate reservations
+ after stores"
+Date: Fri, 16 Oct 2026 11:02:27 +1000
+Message-ID: <20261016010237.1102834-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261016010237.1102834-1-alistair.francis@wdc.com>
 References: <20261016010237.1102834-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,161 +104,346 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Add tests for the recently added riscv-server-ref machine:
+This reverts commit 5089493e45d3be2bae9ffd2a22186f57b0cabe3f.
 
-- a new test_opensbi.py test.  The idea is to have a quick test that can
-catch trivial regressions that would prevent OpenSBI to finish;
-- a new Linux boot "thorough" test that will boot the machine up to the
-buildroot prompt.
-- a TPM specific selftest for the riscv-server-ref board.  The test
-will be skipped if there's no 'swtpm' in the host.
+Rick reported that this patch results in large slowdowns when using
+multiple threads. The original patch serialises all stores, resulting in
+all vCPUs stopping for every store, which would explain the slowdown.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Sunil V L <sunilvl@oss.qualcomm.com>
-Message-ID: <20260928201107.2049458-5-daniel.barboza@oss.qualcomm.com>
+The results from Rick show
+
+xz compressing 2 MB at -6, without and with the patch:
+
+                 without patch    with patch
+   xz -T1        5 s              122 s   (identical output)
+   xz -T8        1 s              no output after 600 s
+
+That is too large of an overhead, so let's revert this patch until a
+better solution is found.
+
+Reported-by: Rick <rick@sloservers.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261001232119.1765494-1-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/functional/riscv64/meson.build        |  2 +
- tests/functional/riscv64/test_opensbi.py    |  4 +
- tests/functional/riscv64/test_server_ref.py | 90 +++++++++++++++++++++
- 3 files changed, 96 insertions(+)
- create mode 100755 tests/functional/riscv64/test_server_ref.py
+ linux-user/riscv/target_cpu.h                 |  2 -
+ target/riscv/cpu.h                            |  3 --
+ target/riscv/helper.h                         |  5 ---
+ target/riscv/cpu.c                            |  3 --
+ target/riscv/tcg/op_helper.c                  | 35 -----------------
+ target/riscv/tcg/translate.c                  | 38 -------------------
+ target/riscv/tcg/insn_trans/trans_rva.c.inc   | 24 ------------
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc   | 11 ------
+ .../riscv/tcg/insn_trans/trans_rvzawrs.c.inc  |  3 --
+ 9 files changed, 124 deletions(-)
 
-diff --git a/tests/functional/riscv64/meson.build b/tests/functional/riscv64/meson.build
-index 8a4f1d00f9..211ea9acfc 100644
---- a/tests/functional/riscv64/meson.build
-+++ b/tests/functional/riscv64/meson.build
-@@ -3,6 +3,7 @@
- test_riscv64_timeouts = {
-   'boston' : 120,
-   'k230' : 120,
-+  'server_ref' : 120,
-   'tuxrun' : 120,
+diff --git a/linux-user/riscv/target_cpu.h b/linux-user/riscv/target_cpu.h
+index eff18b37ba..9c642367a3 100644
+--- a/linux-user/riscv/target_cpu.h
++++ b/linux-user/riscv/target_cpu.h
+@@ -9,8 +9,6 @@ static inline void cpu_clone_regs_child(CPURISCVState *env, target_ulong newsp,
+     }
+ 
+     env->gpr[xA0] = 0;
+-    env->load_res = -1;
+-    env->load_res_size = 0;
  }
  
-@@ -15,6 +16,7 @@ tests_riscv64_system_thorough = [
-   'endianness',
-   'boston',
-   'k230',
-+  'server_ref',
-   'sifive_u',
-   'tt_atlantis',
-   'tuxrun',
-diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/riscv64/test_opensbi.py
-index 0f8beb7e7a..367e131164 100755
---- a/tests/functional/riscv64/test_opensbi.py
-+++ b/tests/functional/riscv64/test_opensbi.py
-@@ -36,5 +36,9 @@ def test_riscv_virt(self):
-         self.set_machine('virt')
-         self.boot_opensbi()
+ static inline void cpu_clone_regs_parent(CPURISCVState *env, unsigned flags)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index bbef354354..61dc25e209 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -264,9 +264,6 @@ struct CPUArchState {
  
-+    def test_riscv_server_ref(self):
-+        self.set_machine('riscv-server-ref')
-+        self.boot_opensbi()
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
-diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
-new file mode 100755
-index 0000000000..ad29094dbe
---- /dev/null
-+++ b/tests/functional/riscv64/test_server_ref.py
-@@ -0,0 +1,90 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+"""
-+riscv-server-ref board test
-+"""
-+
-+import os
-+import tempfile
-+import subprocess
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import skipIfMissingCommands
-+
-+class RiscvServerRefTest(QemuSystemTest):
-+    """
-+    Test the riscv-server-ref board
-+    """
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-+         'master/riscv/images/virt64/buildroot/Image'),
-+        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a36')
-+
-+    ASSET_ROOTFS = Asset(
-+        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
-+         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
-+        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a8')
-+
-+    def do_test_boot_linux_test(self, tpmstate_dir=None):
-+        self.set_machine('riscv-server-ref')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.ASSET_ROOTFS.fetch()
-+
-+        self.vm.add_args('-kernel', kernel_path)
-+        self.vm.add_args('-append', 'rw rootwait root=/dev/sda')
-+        self.vm.add_args('-drive',
-+            f'file={rootfs_path},format=raw,id=hd0,snapshot=on,if=none')
-+        self.vm.add_args('-device', 'ich9-ahci,id=ahci0')
-+        self.vm.add_args('-device', 'ide-hd,drive=hd0,bus=ahci0.0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-device', 'e1000e,netdev=net0')
-+
-+        if tpmstate_dir is not None:
-+            # Note: code taken verbatim from
-+            # tests/functional/arm/test_aspeed_ast2600_buildroot_tpm.py
-+
-+            # We must put the TPM state dir in /tmp/, not the build dir,
-+            # because some distros use AppArmor to lock down swtpm and
-+            # restrict the set of locations it can access files in.
-+            socket = os.path.join(tpmstate_dir, 'swtpm-socket')
-+            subprocess.run(['swtpm', 'socket', '-d', '--tpm2',
-+                            '--tpmstate', f'dir={tpmstate_dir}',
-+                            '--ctrl', f'type=unixio,path={socket}'],
-+                           check=True)
-+            self.vm.add_args('-chardev', f'socket,id=chrtpm,path={socket}')
-+            self.vm.add_args('-tpmdev', 'emulator,id=tpm0,chardev=chrtpm')
-+            self.vm.add_args('-device', 'tpm-tis-device,tpmdev=tpm0')
-+
-+        self.vm.set_console()
-+        self.vm.launch()
-+
-+        # Wait for OpenSBI
-+        wait_for_console_pattern(self, 'OpenSBI')
-+
-+        # Wait for Linux kernel boot
-+        wait_for_console_pattern(self, 'Linux version')
-+        wait_for_console_pattern(self, 'Machine model: RISC-V Server Platform')
-+
-+        # Test e1000e network card functionality
-+        wait_for_console_pattern(self, 'e1000e')
-+        wait_for_console_pattern(self, 'Network Connection')
-+
-+        # Wait for boot to complete - system reaches login prompt
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process')
-+
-+    def test_boot_linux_test(self):
-+        self.do_test_boot_linux_test()
-+
-+    @skipIfMissingCommands('swtpm')
-+    def test_boot_linux_test_tpm(self):
-+        with tempfile.TemporaryDirectory(prefix="qemu_") as tpmstate_dir:
-+            self.do_test_boot_linux_test(tpmstate_dir)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+     uint64_t pc;
+     uint64_t load_res;
+-#ifdef CONFIG_USER_ONLY
+-    uint64_t load_res_size;
+-#endif
+     uint64_t load_val;
+ 
+     /* Floating-Point state */
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 0e22210377..372f104972 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1361,11 +1361,6 @@ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ /* Zalrsc SC write probe */
+ DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
+ 
+-#ifdef CONFIG_USER_ONLY
+-/* Invalidate reservations overlapping a completed linux-user store. */
+-DEF_HELPER_3(riscv_invalidate_reservations, void, env, tl, tl)
+-#endif
+-
+ /* SiFive Custom int8 Matrix-Multiply */
+ DEF_HELPER_5(sf_vqmaccu_4x8x4, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(sf_vqmacc_4x8x4, void, ptr, ptr, ptr, env, i32)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 306be10d10..4a92dfdee7 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1094,9 +1094,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+     env->xl = riscv_cpu_mxl(env);
+     cs->exception_index = RISCV_EXCP_NONE;
+     env->load_res = -1;
+-#ifdef CONFIG_USER_ONLY
+-    env->load_res_size = 0;
+-#endif
+     set_default_nan_mode(1, &env->fp_status);
+     /* Default NaN value: sign bit clear, frac msb set */
+     set_float_default_nan_pattern(0b01000000, &env->fp_status);
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index dc76055b80..b8b3e43ccd 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -19,9 +19,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#ifdef CONFIG_USER_ONLY
+-#include "qemu/rcu.h"
+-#endif
+ #include "cpu.h"
+ #include "target/riscv/tcg/csr.h"
+ #ifndef CONFIG_USER_ONLY
+@@ -301,38 +298,6 @@ void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
+     probe_write(env, addr, size, mmu_idx, ra);
+ }
+ 
+-#ifdef CONFIG_USER_ONLY
+-
+-void helper_riscv_invalidate_reservations(CPURISCVState *env,
+-                                          target_ulong addr,
+-                                          target_ulong size)
+-{
+-    CPUState *cpu;
+-
+-    /* EXCP_ATOMIC keeps other guest harts out while this list is updated. */
+-    WITH_RCU_READ_LOCK_GUARD() {
+-        CPU_FOREACH(cpu) {
+-            CPURISCVState *other_env = cpu_env(cpu);
+-            target_ulong reservation = other_env->load_res;
+-            target_ulong reservation_size = other_env->load_res_size;
+-            bool overlap;
+-
+-            if (other_env == env || reservation == (target_ulong)-1) {
+-                continue;
+-            }
+-            overlap = reservation < addr
+-                ? addr - reservation < reservation_size
+-                : reservation - addr < size;
+-            if (overlap) {
+-                other_env->load_res = -1;
+-                other_env->load_res_size = 0;
+-            }
+-        }
+-    }
+-}
+-
+-#endif
+-
+ #ifndef CONFIG_USER_ONLY
+ 
+ target_ulong helper_sret(CPURISCVState *env)
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index 470a5e71b2..ede9c2563f 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -42,9 +42,6 @@ static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
+ static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
+ static TCGv_i32 cpu_vl, cpu_vstart;
+ static TCGv load_res;
+-#ifdef CONFIG_USER_ONLY
+-static TCGv load_res_size;
+-#endif
+ static TCGv load_val;
+ 
+ /*
+@@ -1153,34 +1150,10 @@ static bool gen_unary_per_ol(DisasContext *ctx, arg_r2 *a, DisasExtend ext,
+     return gen_unary(ctx, a, ext, f_tl);
+ }
+ 
+-#ifdef CONFIG_USER_ONLY
+-static bool gen_riscv_reservation_serialize(DisasContext *ctx)
+-{
+-    /* Keep the memory operation and reservation update in one guest step. */
+-    if (tb_cflags(ctx->base.tb) & CF_PARALLEL) {
+-        gen_helper_exit_atomic(tcg_env);
+-        ctx->base.is_jmp = DISAS_NORETURN;
+-        return false;
+-    }
+-    return true;
+-}
+-
+-static void gen_riscv_invalidate_reservations(TCGv addr, MemOp mop)
+-{
+-    gen_helper_riscv_invalidate_reservations(tcg_env, addr,
+-                                             tcg_constant_tl(memop_size(mop)));
+-}
+-#endif
+-
+ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+                     void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
+                     MemOp mop)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    if (!gen_riscv_reservation_serialize(ctx)) {
+-        return false;
+-    }
+-#endif
+     TCGv dest = dest_gpr(ctx, a->rd);
+     TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
+     MemOp size = mop & MO_SIZE;
+@@ -1195,9 +1168,6 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     src1 = get_address(ctx, a->rs1, 0);
+     func(dest, src1, src2, ctx->mem_idx, mop);
+-#ifdef CONFIG_USER_ONLY
+-    gen_riscv_invalidate_reservations(src1, mop);
+-#endif
+ 
+     gen_set_gpr(ctx, a->rd, dest);
+     return true;
+@@ -1526,10 +1496,6 @@ void riscv_translate_init(void)
+     size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
+     size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
+     size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
+-#ifdef CONFIG_USER_ONLY
+-    size_t res_size_offset = offsetof(CPURISCVState, load_res_size)
+-                             + field_offset;
+-#endif
+ 
+     for (i = 1; i < 32; i++) {
+         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
+@@ -1549,9 +1515,5 @@ void riscv_translate_init(void)
+     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
+     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
+     load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
+-#ifdef CONFIG_USER_ONLY
+-    load_res_size = tcg_global_mem_new(tcg_env, res_size_offset,
+-                                       "load_res_size");
+-#endif
+     load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
+ }
+diff --git a/target/riscv/tcg/insn_trans/trans_rva.c.inc b/target/riscv/tcg/insn_trans/trans_rva.c.inc
+index 248a8c60d7..44c1696fe4 100644
+--- a/target/riscv/tcg/insn_trans/trans_rva.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rva.c.inc
+@@ -32,11 +32,6 @@
+ 
+ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    if (!gen_riscv_reservation_serialize(ctx)) {
+-        return false;
+-    }
+-#endif
+     TCGv src1;
+ 
+     mop |= MO_ALIGN;
+@@ -58,9 +53,6 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ 
+     /* Put addr in load_res, data in load_val.  */
+     tcg_gen_mov_tl(load_res, src1);
+-#ifdef CONFIG_USER_ONLY
+-    tcg_gen_movi_tl(load_res_size, memop_size(mop));
+-#endif
+     gen_set_gpr(ctx, a->rd, load_val);
+ 
+     return true;
+@@ -68,17 +60,9 @@ static bool gen_lr(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ 
+ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    if (!gen_riscv_reservation_serialize(ctx)) {
+-        return false;
+-    }
+-#endif
+     TCGv dest, src1, src2;
+     TCGLabel *l1 = gen_new_label();
+     TCGLabel *l2 = gen_new_label();
+-#ifdef CONFIG_USER_ONLY
+-    TCGLabel *l3 = gen_new_label();
+-#endif
+ 
+     mop |= MO_ALIGN;
+     mop |= ctx->mo_endianness;
+@@ -95,11 +79,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     src2 = get_gpr(ctx, a->rs2, EXT_NONE);
+     tcg_gen_atomic_cmpxchg_tl(dest, load_res, load_val, src2,
+                               ctx->mem_idx, mop);
+-#ifdef CONFIG_USER_ONLY
+-    tcg_gen_brcond_tl(TCG_COND_NE, dest, load_val, l3);
+-    gen_riscv_invalidate_reservations(src1, mop);
+-    gen_set_label(l3);
+-#endif
+     tcg_gen_setcond_tl(TCG_COND_NE, dest, dest, load_val);
+     gen_set_gpr(ctx, a->rd, dest);
+     tcg_gen_br(l2);
+@@ -125,9 +104,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+      * an SC to any address, in between an LR and SC pair.
+      */
+     tcg_gen_movi_tl(load_res, -1);
+-#ifdef CONFIG_USER_ONLY
+-    tcg_gen_movi_tl(load_res_size, 0);
+-#endif
+ 
+     return true;
+ }
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index 40b4c9aa4a..cc1b5dbbad 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -489,9 +489,6 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
+     }
+ 
+     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
+-#ifdef CONFIG_USER_ONLY
+-    gen_riscv_invalidate_reservations(addr, memop);
+-#endif
+     return true;
+ }
+ 
+@@ -521,19 +518,11 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+         }
+         tcg_gen_qemu_st_i128(t16, addrl, ctx->mem_idx, memop);
+     }
+-#ifdef CONFIG_USER_ONLY
+-    gen_riscv_invalidate_reservations(addrl, memop);
+-#endif
+     return true;
+ }
+ 
+ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+ {
+-#ifdef CONFIG_USER_ONLY
+-    if (!gen_riscv_reservation_serialize(ctx)) {
+-        return false;
+-    }
+-#endif
+     memop |= ctx->mo_endianness;
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+diff --git a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
+index 1831bbcfc0..0eef033838 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
+@@ -32,9 +32,6 @@ static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
+ 
+     /* Clear the load reservation  (if any).  */
+     tcg_gen_movi_tl(load_res, -1);
+-#ifdef CONFIG_USER_ONLY
+-    tcg_gen_movi_tl(load_res_size, 0);
+-#endif
+ 
+     gen_update_pc(ctx, ctx->cur_insn_len);
+     tcg_gen_exit_tb(NULL, 0);
 -- 
 2.55.0
 
