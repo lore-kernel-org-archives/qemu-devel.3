@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9088ACCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8787CCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB6K-0007jP-TT; Sat, 17 Oct 2026 16:33:58 -0400
+	id 1xIB6P-0007ph-T8; Sat, 17 Oct 2026 16:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB50-00054b-VX; Sat, 17 Oct 2026 16:32:43 -0400
+ id 1xIB4Y-00046q-8o; Sat, 17 Oct 2026 16:32:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB4y-0004Zp-EG; Sat, 17 Oct 2026 16:32:34 -0400
+ id 1xIB4V-0004Xh-SK; Sat, 17 Oct 2026 16:32:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268886; bh=/hjim3sGpvPu2nrQDft9ddD+RnfP1NBkRSf+ev50goA=;
+ t=1792268881; bh=UrXTE5BaIuAnGRluAn2NzCAIcxhE3i68oCLLihba3nU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aa5gRF93PeaQUbheXqdhCp05CvqnJ33ViQwRjR0FftjDuJvuPu9FGPeNrQzCsPq/6
- mWBhJrRfbIXW29WlXmEc28WVd/ZG9Ci1hptLZQJdatTqc2RqRo3e9cZzuOoN0mmlMH
- IiqrYOy1WrDV9EbjNSitkvl3u6nlwU5ZScrD7No8E5iV+G7gPfgiy7pDUYXTGvRd5x
- Reo/u7kqjsEEqkCTtkGHOjbOwRJRzZhWHiXkJ6SiNOsWB/fzjq9NAVO9wTymHOpX+g
- JqEE9zUk1rh8tfM72O46rZALKaSjwle8VOR33SLSc9eO/YXXh4Is2dPPbxqHzs+hRM
- tichjA1jCuCBw==
+ b=usSsokeizNHfHS9/lBYa157NUjUgfxv8FPcvwdLP6IqkVyDoUP7yTEpLJGwmNfBdU
+ evsKml+ii1LCumV93Vf4iRlw3DPbNnIktN7d633dEerKPXZQOQq9yczYqkg1DMhPcD
+ CKlEbx5j4u+WzvWw/P6TWwREMQibfmGthKDHUKDjUwPZQwpf6xCotHpXrtZO6ct6JB
+ TQdgwSmZz2ohz9TFzmMiMIoYn68rjJiVSQVtDyOzevQUFEkXcNmcdE+WLXA59Gervx
+ Egpjq3A3CwSEPyqONQLzGqszLIVO9J9BBz8Dh/nyNtGLRyYchpIm6wA9yj4+FQi3Cg
+ 628zQut6ub9EA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1ED781DE778;
- Sat, 17 Oct 2026 23:28:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 65D471DE773;
+ Sat, 17 Oct 2026 23:28:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3162B44344B;
- Sat, 17 Oct 2026 23:28:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C5EE443447;
+ Sat, 17 Oct 2026 23:28:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
+Cc: qemu-stable@nongnu.org, Dominic P <gcc@gcc.dp11.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 57/73] tcg/riscv64: Remove vector min/max ops with
- immediates
-Date: Sat, 17 Oct 2026 23:26:15 +0300
-Message-ID: <20261017202638.728621-57-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 53/73] tcg/optimize: Do not derive s_mask from rotated
+ s_mask
+Date: Sat, 17 Oct 2026 23:26:11 +0300
+Message-ID: <20261017202638.728621-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,84 +70,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Dominic P <gcc@gcc.dp11.uk>
 
-RVV 1.0 only defines vmin, vminu, vmax and vmaxu instructions for the
-vector-vector and vector-scalar case, not the for vector-immediate case.
-Remove the immediate variant from TCG code generation.
+fold_shift computes s_mask for a rotate by a constant by rotating the
+input s_mask.  The result is not a sign mask.  For TCG_TYPE_I32,
+fold_masks_zosa_int then ORs in INT32_MIN, which can make it look like
+one: after sextract_i32 x,0,8 (s_mask ...ffffff80), rotr_i32 by 1 gives
+0x7fffffc0, which becomes ...ffffffc0.  A following sextract_i32 0,8
+is then folded to a mov.  rotl_i32 by 31 fails the same way.
 
-Fixes: 1631f19b04fe ("tcg/riscv: Implement vector min/max ops")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+ARM, qemu-arm exits 255 instead of 7 (correct with -one-insn-per-tb):
+
+    ldr   r1, [r2]        @ *r2 == 3
+    sxtb  r1, r1
+    ror   r1, r1, #1
+    sxtb  r1, r1          @ dropped
+    cmp   r1, #0
+    movle r0, #255
+    movgt r0, #7
+
+i386, the same with rotl_i32:
+
+    movsbl %al, %eax
+    roll   $31, %eax
+    movsbl %al, %eax      # dropped
+
+Handle rotates like the logical right shift and let fold_masks_zo
+recompute s_mask from z_mask and o_mask.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261008181611.3015838-1-aurelien@aurel32.net>
-(cherry picked from commit 306d9ab85fdbbc626c067777cea70dccec22dae9)
+Message-ID: <20260930185124.3036980-2-gcc@gcc.dp11.uk>
+(cherry picked from commit d228536a5142cdd4b28e4feda74fa4859290787f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 86baf5a213..9e9c1e9622 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -299,13 +299,9 @@ typedef enum {
-     OPC_VSSUBU_VI = 0x88000057 | V_OPIVI,
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 2dc6e32b53..cc5488ae85 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2659,17 +2659,26 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
  
-     OPC_VMAX_VV = 0x1c000057 | V_OPIVV,
--    OPC_VMAX_VI = 0x1c000057 | V_OPIVI,
-     OPC_VMAXU_VV = 0x18000057 | V_OPIVV,
--    OPC_VMAXU_VI = 0x18000057 | V_OPIVI,
-     OPC_VMIN_VV = 0x14000057 | V_OPIVV,
--    OPC_VMIN_VI = 0x14000057 | V_OPIVI,
-     OPC_VMINU_VV = 0x10000057 | V_OPIVV,
--    OPC_VMINU_VI = 0x10000057 | V_OPIVI,
+-        if (op->opc == INDEX_op_shr) {
++        switch (op->opc) {
++        case INDEX_op_shr:
++        case INDEX_op_rotl:
++        case INDEX_op_rotr:
+             /*
+-             * Logical right shift will force the sign bit zero.
++             * Logical right shift will force the sign bit zero, and
++             * a rotate may move bits unrelated to the sign into it.
+              * Don't bother computing s_mask and let fold_masks
+              * recompute from z_mask.
+              */
+             return fold_masks_zo(ctx, op, z_mask, o_mask);
+-        }
  
-     OPC_VMSEQ_VV = 0x60000057 | V_OPIVV,
-     OPC_VMSEQ_VI = 0x60000057 | V_OPIVI,
-@@ -2731,19 +2727,19 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         break;
-     case INDEX_op_smax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAX_VV, OPC_VMAX_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAX_VV, a0, a1, a2);
-         break;
-     case INDEX_op_smin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMIN_VV, OPC_VMIN_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMIN_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAXU_VV, OPC_VMAXU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAXU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMINU_VV, OPC_VMINU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMINU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_shls_vec:
-         set_vtype_len_sew(s, type, vece);
-@@ -2895,10 +2891,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sssub_vec:
-     case INDEX_op_usadd_vec:
-     case INDEX_op_ussub_vec:
--    case INDEX_op_smax_vec:
--    case INDEX_op_smin_vec:
--    case INDEX_op_umax_vec:
--    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, vK);
-     case INDEX_op_sub_vec:
-         return C_O1_I2(v, vK, v);
-@@ -2908,6 +2900,10 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sarv_vec:
-     case INDEX_op_rotlv_vec:
-     case INDEX_op_rotrv_vec:
-+    case INDEX_op_smax_vec:
-+    case INDEX_op_smin_vec:
-+    case INDEX_op_umax_vec:
-+    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, v);
-     case INDEX_op_shls_vec:
-     case INDEX_op_shrs_vec:
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+-        return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
++        case INDEX_op_sar:
++        case INDEX_op_shl:
++            s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
++            return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
++
++        default:
++            g_assert_not_reached();
++        }
+     }
+ 
+     switch (op->opc) {
 -- 
 2.47.3
 
