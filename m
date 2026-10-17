@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D694ECCF2C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B36CCF2C4
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB6t-0000sx-O9; Sat, 17 Oct 2026 16:34:32 -0400
+	id 1xIB6X-00004q-AX; Sat, 17 Oct 2026 16:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB5V-0005VH-Go; Sat, 17 Oct 2026 16:33:05 -0400
+ id 1xIB45-0003iY-Bo; Sat, 17 Oct 2026 16:31:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB5S-0004be-Jw; Sat, 17 Oct 2026 16:33:05 -0400
+ id 1xIB43-0004WS-AT; Sat, 17 Oct 2026 16:31:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268891; bh=FXzr5fLZUvw+pZqQK2VFOPfwNcrD8X1apSacBXHdOXI=;
+ t=1792268876; bh=36nKkE72KvI9/Nlyu/MCAbWEQJl1GLh+2mG6EJFmwxU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gtbXGoR9+8clWQtcOpLLz/H4W1qVV/RKKN7WYOYTCTlQMSrKdiUL3lcYN7OdgW/U6
- T8999Ts3KO78NB1ziT1DzXegFNVAgx7T5wX0uDYgaDuEQMHNfn9Cj244WvLTA9M+Pn
- QRRIXc0pCPg0MwpY6vmBc1oRZsSJqq9jxmQTUa8+eiafvFMuzTSoRd8Ng+v1BNRwJ7
- IkwY1QjUCL0BJ+1VNhxu9Tl2GPiquHKheTUAXOs0jf43KPF1KGmCcRpzEaZKd43dzr
- gWq/MNTnlMpyAue0OahEOP8bYha3asVTs9raJliPWGH9JKqjuUsmDIjb/ICy01n359
- CuqRgUlPLrwQQ==
+ b=X49SJURJQuHLMOlxxk0hR02LG9rWORE/HCD0YsHA4okDwv1qUj8lctG4UBrp9Vbdk
+ t6Vr9KcbjhB+WIjFkH3jVnckn814L5si7Zph7uPkZCw8eF8rYQNlvvAuDsrPkIfdMc
+ rALaQc9gsaemwxqWiepVoNFUa713+DgcOcTnREIJrEmS0cSH7R1uACyaY/if8aAbxI
+ 8eLXXId26CjaIUlx+wRqt0s56hxSJbruWXFOZrUuWqvMhzt1K9Jzmc29yQhEaQvLUT
+ C1vIMeSiy9NMffuL+dP6fPEdClGVw4v3V1z3rbZTMKawUrqil4YpV4pCDM0eSdCIsH
+ A/OwZ49cwQ6sA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BCD81DE77C;
- Sat, 17 Oct 2026 23:28:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E64AE1DE76F;
+ Sat, 17 Oct 2026 23:27:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 069D244344F;
- Sat, 17 Oct 2026 23:28:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1BC59443443;
+ Sat, 17 Oct 2026 23:27:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
- Gustavo Romero <gromero@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 61/73] tests/tcg/aarch64: Test the TTBR layout with
- TCR.DS and a 48-bit OA
-Date: Sat, 17 Oct 2026 23:26:19 +0300
-Message-ID: <20261017202638.728621-61-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 49/73] io: cork TLS writes to avoid small TLS records
+Date: Sat, 17 Oct 2026 23:26:07 +0300
+Message-ID: <20261017202638.728621-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,144 +71,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Extend the TTBR base address test to check that, with TCR.DS or VTCR.DS
-and a 48-bit OA, setting TTBR[5:2] is a level 0 Address size fault.
+The migration code caches vmstate/ram writes into an iovec and
+flushes this periodically. The total amount of data to sent
+may be 100's of KB, but split across many iovec, each of which
+is potentially quite small.
 
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-5-fuad.tabba@linux.dev
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2579771a28a200cba27d843fbda549def09f421d)
+The QIOChannelTLS receives the iovec, but since GNUTLS cannot
+accept iovec data, it iterates calling send for each element.
+
+As a result of the migration data pattern, this results in
+GNUTLS putting lots of small TLS records on the wire. This
+has shown writes alternate between about 4k and 30 bytes
+in some tests.
+
+This is triggering the nagle algorithm on migration-test for
+many of the TLS test cases, resulting in a "go slow" for I/O
+that eventually hits the migration timeout configured by the
+test.
+
+Not every contributor reports seeing the "go slow" but for
+those who do see it, it hits >= 95% of the time for at least
+one of the migration TLS test cases run by 'make check'.
+
+While we could disable the nagle algorithm (and multifd
+channels already do this), that would stil result in lots
+of small TLS records hitting the wire which is not good for
+throughput. The migration code flushes in batches because
+it wants large writes for high throughput.
+
+To achieve this we must tell GNUTLS to encrypt data but not
+immediately sent TLS records by "corking" its output. Once
+the complete iovec has been written to GNUTLS, it can be
+uncorked allowing it to hit the wire.
+
+There is added complexity with uncorking on non-blocking
+channels as not all encrypted data can be sent at once.
+qio_channel_write() will return what was sent, but some
+data might remain pending inside GNUTLS buffers. A later
+call to qio_channel_write() will provide the same plain
+text data buffers that have already been cached. Thus the
+code must attempt to uncork GNUTLS again to clear pending
+data and then deduct the equivalent amount of plain text.
+
+Overall this corking action fixes the test suite timeouts,
+but more importantly, it also improves the performance of
+TLS protection migrations in the real world. Tests with
+one workload show at 36% increase in throughput.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 99a8b5a0dda91e3cdabbf3fec47a504197af63c7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
-index b29c9e1ab0..20a240410d 100644
---- a/tests/tcg/aarch64/system/ttbr-baddr.c
-+++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-@@ -4,6 +4,8 @@
-  * With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-  * bit 50 set, which stage 2 maps back onto the table, so the walk
-  * succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-+ * With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
-+ * is a level 0 Address size fault.
-  *
-  * Copyright (c) 2026 Google LLC
-  * Author: Fuad Tabba <fuad.tabba@linux.dev>
-@@ -42,10 +44,13 @@
-  * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-  * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-  * again at HIGH_IPA.
-+ * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
-  */
- static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
- static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
- static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
- static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-@@ -54,20 +59,27 @@ static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
- #define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
- #define TCR_TG0_16K     (2UL << 14)
- #define TCR_TG1_16K     (1UL << 30)
-+#define TCR_IPS_48      (5UL << 32)
- #define TCR_IPS_52      (6UL << 32)
- #define TCR_DS          (1UL << 59)
- 
- #define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
- #define VTCR_SL0_L1     (2UL << 6)
-+#define VTCR_TG0_16K    (2UL << 14)
- #define VTCR_TG0_64K    (1UL << 14)
-+#define VTCR_PS_48      (5UL << 16)
- #define VTCR_PS_52      (6UL << 16)
- #define VTCR_RES1       (1UL << 31)
-+#define VTCR_DS         (1UL << 32)
- 
- #define HCR_VM          (1UL << 0)
- #define HCR_RW          (1UL << 31)
- 
- #define PAR_F           (1UL << 0)
-+#define PAR_FST(par)    (((par) >> 1) & 0x3f)
- #define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-+#define FST_ADDR_SIZE_L0    0x00
-+
- #define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
- 
- static void tlb_flush(void)
-@@ -86,6 +98,17 @@ static uint64_t at(uint64_t ttbr1)
-     return par;
+diff --git a/crypto/tlssession.c b/crypto/tlssession.c
+index 314e3e96ba..b343d1a595 100644
+--- a/crypto/tlssession.c
++++ b/crypto/tlssession.c
+@@ -513,6 +513,39 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
  }
  
-+static uint64_t at_s1(uint64_t ttbr1)
+ 
++void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess)
 +{
-+    uint64_t par;
-+
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
++    gnutls_record_cork(sess->handle);
 +}
 +
- static void setup_tables(void)
- {
-     /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-@@ -93,6 +116,10 @@ static void setup_tables(void)
-     s1_l1[0] = (uint64_t)s1_l2 | 3;
-     s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
- 
-+    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
-+    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
-+    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
 +
-     /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-     s2_l1[0] = (uint64_t)s2_l2 | 3;
-     s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-@@ -108,6 +135,15 @@ static int check(const char *name, uint64_t par)
-     return !ok;
++ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
++                                         Error **errp)
++{
++    int ret;
++    ret = gnutls_record_uncork(sess->handle, 0);
++    if (ret == GNUTLS_E_AGAIN ||
++        ret == GNUTLS_E_INTERRUPTED) {
++        ret = gnutls_record_check_corked(sess->handle);
++        if (ret < 0) {
++            error_setg(errp,
++                       "Cannot query pending TLS output: %s",
++                       gnutls_strerror(ret));
++            return -1;
++        }
++
++        return ret;
++    } else if (ret < 0) {
++        error_setg(errp,
++                   "Cannot uncork TLS output: %s",
++                   gnutls_strerror(ret));
++        return -1;
++    }
++
++    return 0;
++}
++
++
+ size_t
+ qcrypto_tls_session_check_pending(QCryptoTLSSession *session)
+ {
+@@ -757,4 +790,16 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess)
+     return NULL;
  }
  
-+/* A level 0 Address size fault */
-+static int check_fault(const char *name, uint64_t par)
++void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess)
 +{
-+    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
-+
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
 +}
 +
- int main(void)
- {
-     uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-@@ -135,6 +171,25 @@ int main(void)
-     write_sysreg(mair_el1, 0xff);
-     write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
++
++ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
++                                         Error **errp)
++{
++    error_setg(errp, "TLS requires GNUTLS support");
++    return -1;
++}
++
+ #endif
+diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
+index 28e419681e..5415503eba 100644
+--- a/include/crypto/tlssession.h
++++ b/include/crypto/tlssession.h
+@@ -208,6 +208,31 @@ typedef ssize_t (*QCryptoTLSSessionReadFunc)(void *buf,
+                                              void *opaque,
+                                              Error **errp);
  
++/**
++ * qcrypto_tls_session_write_cork:
++ * @sess: the TLS session object
++ *
++ * Causes future qcrypto_tls_session_write() calls to encrypt
++ * and queue data, without sending on the wire.
++ */
++void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess);
++
++/**
++ * qcrypto_tls_session_write_uncork:
++ * @sess: the TLS session object
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Attempt to send previously queued data. If the underlying
++ * stream is non-blocking, then only a subset of data (if any)
++ * may be written. To process outstanding data, this method
++ * must be called again until it returns 0.
++ *
++ * Returns: the number of bytes remaining to be sent,
++ * or -1 on error.
++ */
++ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
++                                         Error **errp);
++
+ /**
+  * qcrypto_tls_session_set_callbacks:
+  * @sess: the TLS session object
+diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
+index 7e9023570d..9e9b00c034 100644
+--- a/include/io/channel-tls.h
++++ b/include/io/channel-tls.h
+@@ -50,6 +50,7 @@ struct QIOChannelTLS {
+     QIOChannelShutdown shutdown;
+     guint hs_ioc_tag;
+     guint bye_ioc_tag;
++    size_t corked;
+ };
+ 
+ /**
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index 31ec4d236d..05317ed5a3 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/module.h"
++#include "qemu/iov.h"
+ #include "io/channel-tls.h"
+ #include "trace.h"
+ #include "qemu/atomic.h"
+@@ -448,12 +449,24 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
+     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
+     size_t i;
+     ssize_t done = 0;
++    ssize_t remain;
++    g_autofree struct iovec *tmpiov = NULL;
++    size_t ntmpiov = 0;
+ 
+-    for (i = 0 ; i < niov ; i++) {
+-        ssize_t ret = qcrypto_tls_session_write(tioc->session,
+-                                                iov[i].iov_base,
+-                                                iov[i].iov_len,
+-                                                errp);
 +    /*
-+     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
-+     * so setting any of them is a level 0 Address size fault.
++     * The previous write encrypted all the data, but some
++     * was not able to be sent on the wire when uncorked,
++     * so we returned a short write. The encrypted data
++     * will still be cached by GNUTLS and the session will
++     * be in a corked state.
++     *
++     * This write call will be trying to write the remaining
++     * plain text data again, but we must avoid sending that
++     * into GNUTLS. Instead flush the previously encrypted
++     * pending data.
 +     */
-+    write_sysreg(hcr_el2, HCR_RW);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
-+    ret |= check("ips48", at_s1(base));
-+    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
-+    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
++    while (tioc->corked) {
++        ssize_t ret = qcrypto_tls_session_write_uncork(tioc->session, errp);
+         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
+             if (done) {
+                 return done;
+@@ -463,12 +476,74 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
+         } else if (ret < 0) {
+             return -1;
+         }
++        done += (tioc->corked - ret);
++        tioc->corked = ret;
++    }
 +
-+    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
-+                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
-+    ret |= check("ps48", at(base));
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
-+    ret |= check_fault("ps48 vttbr[2]", at(base));
++    /*
++     * If we flushed pending data, we must discard an
++     * equivalent amount of plain text data from this
++     * write call, and then process what's left over,
++     * if any.
++     */
++    if (done) {
++        ssize_t total = iov_size(iov, niov);
++        if (done == total) {
++            return done;
++        }
 +
-     /*
-      * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
-      * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
++        tmpiov = g_new0(struct iovec, niov);
++        ntmpiov = iov_copy(tmpiov, niov, iov, niov,
++                           done, total - done);
++
++        iov = tmpiov;
++        niov = ntmpiov;
++    }
++
++    /*
++     * At this point we should ony be processing "new"
++     * data, not seen by a previous write call so we
++     * send to GNUTLS as normal.
++     */
++    qcrypto_tls_session_write_cork(tioc->session);
++    for (i = 0 ; i < niov ; i++) {
++        ssize_t ret = qcrypto_tls_session_write(tioc->session,
++                                                iov[i].iov_base,
++                                                iov[i].iov_len,
++                                                errp);
++        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
++            error_setg(errp, "Unexpected TLS blocking I/O while corked");
++            return -1;
++        } else if (ret < 0) {
++            return -1;
++        }
+         done += ret;
+         if (ret < iov[i].iov_len) {
+             break;
+         }
+     }
+-    return done;
++
++    /*
++     * On non-blocking sockets, uncorking may not succeed
++     * in sending all encrypted data, so we have to check
++     * what was actually sent to see if GNUTLS remains in
++     * the corked state with pending data.
++     */
++    remain = qcrypto_tls_session_write_uncork(tioc->session, errp);
++    if (remain < 0) {
++        return -1;
++    } else if (remain) {
++        tioc->corked = remain;
++    }
++    /*
++     * done == what we sent to GNUTLS for encryption & sending
++     * remain == subset of 'done' that was encrypted but not sent
++     */
++    if (done && (remain == done)) {
++        return QIO_CHANNEL_ERR_BLOCK;
++    } else {
++        return done - remain;
++    }
+ }
+ 
+ static int qio_channel_tls_set_blocking(QIOChannel *ioc,
 -- 
 2.47.3
 
