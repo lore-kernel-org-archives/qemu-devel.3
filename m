@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2CCCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8C1CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2n-0001cI-Gj; Sat, 17 Oct 2026 16:30:17 -0400
+	id 1xIB2R-0008Oz-Sr; Sat, 17 Oct 2026 16:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2F-00087U-G6; Sat, 17 Oct 2026 16:29:48 -0400
+ id 1xIB1L-0006Si-RH; Sat, 17 Oct 2026 16:28:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2D-00045J-Q5; Sat, 17 Oct 2026 16:29:43 -0400
+ id 1xIB1J-00040N-4W; Sat, 17 Oct 2026 16:28:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268856; bh=KrG1b4APP6QPHE6ELPpAwTWi5YrV4AhaQMaoKa0pOUY=;
+ t=1792268847; bh=90l4FSbKSxO4aioR3FVx5nKY+NaGJtqLHUMex6TowdM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZKXWRQNw45WAFL/3Tti0ra0zOMYbZjsYn1I8qhIpkMLyqBscnAjTjBENamF+GiZdt
- TxGY5/Mlbf8rRb88qIhHyMNEWHQ5kTHprdI6Q4beR5G6rORCMpljIHvTgyp+Gk5TxF
- 5TziG2Lb61nJSVlJMJWr13edOV9y+41Ei3GFWjuRwrzOewyC65HG4wSX8Ym9JnEwnJ
- nQAuM7laIGz+h+var5TjDVa7OGm507hPuJW/kbBMfxilPerruTceekyFWkFwyvolSs
- K3UOm8MiFX+LFuueH0sbqFYfCcjhxkD9EvQLjbw8EYddOZsP/Q4exsbnxUTkQB92mn
- SfIs/6LBxTJOw==
+ b=sNOu+OTCh9arLlvM0T0jfJ9WXMpVKlpks0nneZS8EvGPk46Sy+ndGrk/5m+Rt2GWl
+ Ii1//fQ5sHtFiXuSr7nCSJthYrzNEwK1Cr5PN41OQUQdukMUktgd+fCSkHH9P1q+GO
+ Y1xBTikmUOipzOdx8fscAWCS0WqHcJDX+hMYNXU/UCHDCsH9eUyqv4y6xQH7rS4ezL
+ pinWOhYdaWaxtl7oP36t/Cx0JwWQJAzmrXfzIFTqD8xM+X9qLjDW2/oRobm28oEcXU
+ TWmj4mEQUOqzN4ZcZjq5Lak3grEf6aSi6if6kGivp6AfH/ivBbxS7vooaqe3X3dTow
+ /MA8mh9n7UxRg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B4AB1DE75B;
- Sat, 17 Oct 2026 23:27:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 703B11DE753;
+ Sat, 17 Oct 2026 23:27:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AD47D443431;
- Sat, 17 Oct 2026 23:27:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B4724443429;
+ Sat, 17 Oct 2026 23:27:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 31/73] target/i386/tcg: raise #GP(0) on null SS load
- with RPL != CPL
-Date: Sat, 17 Oct 2026 23:25:49 +0300
-Message-ID: <20261017202638.728621-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 23/73] hw/display/qxl: validate replayed commands in
+ qxl_post_load
+Date: Sat, 17 Oct 2026 23:25:41 +0300
+Message-ID: <20261017202638.728621-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -71,52 +71,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jakub Lipový <lipovyjakub@tillia.cz>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
-or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
-first case: the null-selector path never examined the selector's RPL, so
-a null selector with non-zero RPL (such as 0x0003) loaded successfully at
-CPL < 3.
+On incoming migration qxl_post_load() replays the tracked cursor and
+surface commands by handing their guest addresses straight to spice,
+without revalidating them. Those addresses were checked when the guest
+submitted them, but the guest may have freed or reused that memory
+before migration, so qxl's tracked pointer can be stale. spice-server
+then re-parses the command from that memory and, for a stale cursor,
+reads a garbage shape pointer -- aborting the target in memslot_get_virt()
+(again, spice-server function) and failing the migration.
 
-This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
-additionally fails its subsequent non-null check because the wrongly
-succeeded load leaves 3 in SS.
+Validate each replayed command with qxl_guest_phys2virt(report_bug=false)
+before adding it to the replay list, and for a cursor also validate the
+nested shape pointer. Commands that no longer resolve are skipped rather
+than replayed. report_bug is false so a stale pointer is not mistaken for
+a live guest error, which would needlessly disable a healthy guest's
+display.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
-Link: https://lore.kernel.org/r/20260818164414.245189-1-lipovyjakub@tillia.cz
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8d496d8f9fcea2199f6dc32f700d13b1d9ed3358)
+Message-ID: <20260825172051.435372-3-andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+(cherry picked from commit 95bc45193bbebcb11a45fa40c5642712cd4401bc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 6d424349a5..cad19f9ca6 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1411,11 +1411,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b6bc182fc2..fb77f217b1 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2390,6 +2390,37 @@ static void qxl_create_memslots(PCIQXLDevice *d)
+     }
+ }
  
-     selector &= 0xffff;
-     cpl = env->hflags & HF_CPL_MASK;
-+    rpl = selector & 3;
-     if ((selector & 0xfffc) == 0) {
-         /* null selector case */
-         if (seg_reg == R_SS
- #ifdef TARGET_X86_64
--            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
-+            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
- #endif
-             ) {
-             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-@@ -1439,7 +1440,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
-         if (!(e2 & DESC_S_MASK)) {
-             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
++/*
++ * Validate a command tracked for loadvm replay before handing its guest
++ * address to spice-server.
++ */
++static bool qxl_loadvm_cmd_valid(PCIQXLDevice *d, QXLPHYSICAL data,
++                                 uint32_t type)
++{
++    switch (type) {
++    case QXL_CMD_SURFACE:
++        return qxl_guest_phys2virt(d, data,
++                                   sizeof(QXLSurfaceCmd), false) != NULL;
++
++    case QXL_CMD_CURSOR: {
++        QXLCursorCmd *cmd = qxl_guest_phys2virt(d, data, sizeof(QXLCursorCmd),
++                                                false);
++
++        if (!cmd) {
++            return false;
++        }
++        if (le32_to_cpu(cmd->type) == QXL_CURSOR_SET) {
++            return qxl_guest_phys2virt(d, le64_to_cpu(cmd->u.set.shape),
++                                       sizeof(QXLCursor), false) != NULL;
++        }
++        return true;
++    }
++
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static int qxl_post_load(void *opaque, int version)
+ {
+     PCIQXLDevice* d = opaque;
+@@ -2428,12 +2459,17 @@ static int qxl_post_load(void *opaque, int version)
+             if (d->guest_surfaces.cmds[in] == 0) {
+                 continue;
+             }
++            if (!qxl_loadvm_cmd_valid(d, d->guest_surfaces.cmds[in],
++                                      QXL_CMD_SURFACE)) {
++                continue;
++            }
+             cmds[out].cmd.data = d->guest_surfaces.cmds[in];
+             cmds[out].cmd.type = QXL_CMD_SURFACE;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
+             out++;
          }
--        rpl = selector & 3;
-         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
-         if (seg_reg == R_SS) {
-             /* must be writable segment */
+-        if (d->guest_cursor) {
++        if (d->guest_cursor &&
++            qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
+             cmds[out].cmd.data = d->guest_cursor;
+             cmds[out].cmd.type = QXL_CMD_CURSOR;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
 -- 
 2.47.3
 
