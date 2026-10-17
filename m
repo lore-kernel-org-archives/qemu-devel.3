@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535AFCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2CCCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB74-0001wA-GL; Sat, 17 Oct 2026 16:34:42 -0400
+	id 1xIB2n-0001cI-Gj; Sat, 17 Oct 2026 16:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB66-0007NG-Iu; Sat, 17 Oct 2026 16:33:42 -0400
+ id 1xIB2F-00087U-G6; Sat, 17 Oct 2026 16:29:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB65-0004jE-0D; Sat, 17 Oct 2026 16:33:42 -0400
+ id 1xIB2D-00045J-Q5; Sat, 17 Oct 2026 16:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268905; bh=3La8O217d/gdcCxqbkLIFDHF7mCZGs4qh1z2HSADoAI=;
+ t=1792268856; bh=KrG1b4APP6QPHE6ELPpAwTWi5YrV4AhaQMaoKa0pOUY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rmtT8Kfb39Rp9JJ5zk0ozQ3yGFnL/hX/07dYweXQ45DkgVicy9QSazFgvtw3sV3bx
- 9NGOqn3ibivXeeYeJpLZrrWt7tbzHeAHj1xkDf+bJbRofo+7MlmIYPGMYd4/nEOrl7
- w1qj217w3iEFC/UXVM65lGtoAwHhK94SdLsxDvJxyZlEPrTsKeVpgSI6lzsA5Y9zsJ
- i2krwyQzFZyY+9MgXG7mhM9wGIxL2iSwqvGrZviGR/p8nI9gkK5HEKAfbZHabe/LuG
- xrEniPhVZ+pzLQMeeJt3V+Ceg/dXuAEn/Du1kwlUtVY3RM6kOOIy3IH2dcy26IsKxE
- O+4lUuSB3FN7Q==
+ b=ZKXWRQNw45WAFL/3Tti0ra0zOMYbZjsYn1I8qhIpkMLyqBscnAjTjBENamF+GiZdt
+ TxGY5/Mlbf8rRb88qIhHyMNEWHQ5kTHprdI6Q4beR5G6rORCMpljIHvTgyp+Gk5TxF
+ 5TziG2Lb61nJSVlJMJWr13edOV9y+41Ei3GFWjuRwrzOewyC65HG4wSX8Ym9JnEwnJ
+ nQAuM7laIGz+h+var5TjDVa7OGm507hPuJW/kbBMfxilPerruTceekyFWkFwyvolSs
+ K3UOm8MiFX+LFuueH0sbqFYfCcjhxkD9EvQLjbw8EYddOZsP/Q4exsbnxUTkQB92mn
+ SfIs/6LBxTJOw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 18AD71DE788;
- Sat, 17 Oct 2026 23:28:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B4AB1DE75B;
+ Sat, 17 Oct 2026 23:27:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BB098443459;
- Sat, 17 Oct 2026 23:28:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD47D443431;
+ Sat, 17 Oct 2026 23:27:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Rick Richard <rick@sloservers.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 71/73] hw/riscv/virt-acpi-build: Fix the UART register
- width in SPCR
-Date: Sat, 17 Oct 2026 23:26:29 +0300
-Message-ID: <20261017202638.728621-71-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 31/73] target/i386/tcg: raise #GP(0) on null SS load
+ with RPL != CPL
+Date: Sat, 17 Oct 2026 23:25:49 +0300
+Message-ID: <20261017202638.728621-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,35 +71,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rick Richard <rick@sloservers.com>
+From: Jakub Lipový <lipovyjakub@tillia.cz>
 
-The riscv virt board uses a 16550 UART with an 8-bit register stride,
-but the SPCR table reports 32, which looks to have been copied from
-arm virt, whose PL011 has a 32-bit stride.  Change it to the correct
-stride for a 16550.
+In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
+or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
+first case: the null-selector path never examined the selector's RPL, so
+a null selector with non-zero RPL (such as 0x0003) loaded successfully at
+CPL < 3.
 
-Fixes: 3e6f1e61b4 ("hw/riscv/virt-acpi-build.c: Generate SPCR table")
-Signed-off-by: Rick Richard <rick@sloservers.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20261005104008.214588-3-rick@sloservers.com>
+This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
+additionally fails its subsequent non-null check because the wrongly
+succeeded load leaves 3 in SS.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ee23f530e99d1091f31585dd0ca1b948d4873939)
+Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
+Link: https://lore.kernel.org/r/20260818164414.245189-1-lipovyjakub@tillia.cz
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 8d496d8f9fcea2199f6dc32f700d13b1d9ed3358)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 59c454f4f9..95aeb1f3a1 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -246,7 +246,7 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
-     AcpiSpcrData serial = {
-         .interface_type = 0x12,       /* 16550 compatible */
-         .base_addr.id = AML_AS_SYSTEM_MEMORY,
--        .base_addr.width = 32,
-+        .base_addr.width = 8,
-         .base_addr.offset = 0,
-         .base_addr.size = 1,
-         .base_addr.addr = s->memmap[VIRT_UART0].base,
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 6d424349a5..cad19f9ca6 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1411,11 +1411,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+ 
+     selector &= 0xffff;
+     cpl = env->hflags & HF_CPL_MASK;
++    rpl = selector & 3;
+     if ((selector & 0xfffc) == 0) {
+         /* null selector case */
+         if (seg_reg == R_SS
+ #ifdef TARGET_X86_64
+-            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
++            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
+ #endif
+             ) {
+             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
+@@ -1439,7 +1440,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+         if (!(e2 & DESC_S_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
+         }
+-        rpl = selector & 3;
+         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         if (seg_reg == R_SS) {
+             /* must be writable segment */
 -- 
 2.47.3
 
