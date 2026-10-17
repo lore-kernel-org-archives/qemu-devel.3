@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8C1CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0D0CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2R-0008Oz-Sr; Sat, 17 Oct 2026 16:29:56 -0400
+	id 1xIB6H-0007gw-8J; Sat, 17 Oct 2026 16:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1L-0006Si-RH; Sat, 17 Oct 2026 16:28:52 -0400
+ id 1xIB4V-00046a-3g; Sat, 17 Oct 2026 16:32:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1J-00040N-4W; Sat, 17 Oct 2026 16:28:47 -0400
+ id 1xIB4S-0004X3-2l; Sat, 17 Oct 2026 16:32:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268847; bh=90l4FSbKSxO4aioR3FVx5nKY+NaGJtqLHUMex6TowdM=;
+ t=1792268880; bh=hkwaHLCbqA7jNmpW0lit0Xcyd/8SKKHfNeNt/64r/lQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sNOu+OTCh9arLlvM0T0jfJ9WXMpVKlpks0nneZS8EvGPk46Sy+ndGrk/5m+Rt2GWl
- Ii1//fQ5sHtFiXuSr7nCSJthYrzNEwK1Cr5PN41OQUQdukMUktgd+fCSkHH9P1q+GO
- Y1xBTikmUOipzOdx8fscAWCS0WqHcJDX+hMYNXU/UCHDCsH9eUyqv4y6xQH7rS4ezL
- pinWOhYdaWaxtl7oP36t/Cx0JwWQJAzmrXfzIFTqD8xM+X9qLjDW2/oRobm28oEcXU
- TWmj4mEQUOqzN4ZcZjq5Lak3grEf6aSi6if6kGivp6AfH/ivBbxS7vooaqe3X3dTow
- /MA8mh9n7UxRg==
+ b=XHkt9NIxP6J0h4DOSyfnFlV6r9Vu4ljBqUmOIDz1UlCrHuHtk539EujPuazuN1eOo
+ mqbsjBhZw/FTbHEW1oYs7zrXDhDiy5VpRhihPGgtD9zdGltJyLUCxIJLk30AtyB3Cw
+ +ES8C3srBR5aw0ZAmucG9r+lCDBi9AHj1906Cg996p9HmV+d2TnttQ8LQKqkelfjQG
+ S2IHJiPqJ0mrA7RZNii2YZx3DbRYvzIdmQGkBj4YyPNtKtWoU3HcUHPOGR7RZjIRTe
+ y7d3eBo28PDdBvLFtS4X9W3A1xW1SCni7uhsXR+4slzMmpYHwdh/NjBPd8TZ8LdaU7
+ p4eq63m1Hq9jA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 703B11DE753;
- Sat, 17 Oct 2026 23:27:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 53D1A1DE772;
+ Sat, 17 Oct 2026 23:28:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B4724443429;
- Sat, 17 Oct 2026 23:27:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 965E1443446;
+ Sat, 17 Oct 2026 23:27:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 23/73] hw/display/qxl: validate replayed commands in
- qxl_post_load
-Date: Sat, 17 Oct 2026 23:25:41 +0300
-Message-ID: <20261017202638.728621-23-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 52/73] hw/display/vga: fix OOB writes after external
+ surface resize
+Date: Sat, 17 Oct 2026 23:26:10 +0300
+Message-ID: <20261017202638.728621-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -71,91 +72,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-On incoming migration qxl_post_load() replays the tracked cursor and
-surface commands by handing their guest addresses straight to spice,
-without revalidating them. Those addresses were checked when the guest
-submitted them, but the guest may have freed or reused that memory
-before migration, so qxl's tracked pointer can be stale. spice-server
-then re-parses the command from that memory and, for a stale cursor,
-reads a garbage shape pointer -- aborting the target in memslot_get_virt()
-(again, spice-server function) and failing the migration.
+virtio-vga has two renderers (VGA core and virtio-gpu) sharing a single
+QemuConsole, with no invalidation protocol between them. When virtio-gpu
+replaces the surface (SET_SCANOUT) or destroys it (reset via
+qemu_console_set_surface(con, NULL)), the VGA renderer's cached geometry
+(last_scr_width, last_height, last_depth, etc.) is never cleared:
+vga_common_reset() does not run during a virtio-gpu reset.
 
-Validate each replayed command with qxl_guest_phys2virt(report_bug=false)
-before adding it to the replay list, and for a cursor also validate the
-nested shape pointer. Commands that no longer resolve are skipped rather
-than replayed. report_bug is false so a stale pointer is not mistaken for
-a live guest error, which would needlessly disable a healthy guest's
-display.
+The text draw path was fixed by 418396be80 (CVE-2026-77913), but
+vga_draw_blank() and vga_draw_graphic() still trust stale cache against
+a foreign surface:
 
-Message-ID: <20260825172051.435372-3-andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-(cherry picked from commit 95bc45193bbebcb11a45fa40c5642712cd4401bc)
+vga_draw_blank() uses last_scr_width/height to memset the display
+surface. When the surface has been replaced by a smaller one (e.g.
+after a text-to-graphics mode switch, or a virtio-gpu reset installing
+a 16x16 placeholder), the memset writes past the surface buffer. Use
+the actual surface dimensions for the memset bounds instead of the
+cached last_scr values.
+
+vga_draw_graphic() decides whether to recreate the DisplaySurface based
+solely on VGA register state (line_offset, width, height, depth,
+byteswap, allocated). When virtio-gpu replaces the surface with a
+smaller one, the predicate sees no change and the drawing loop writes a
+full VGA-geometry frame into the undersized surface. Add surface
+dimension checks to the predicate so that a foreign surface whose size
+does not match the VGA geometry triggers a resize before drawing.
+
+Ideally the two renderers could coordinate through a console-level
+invalidation callback, but these defensive checks are needed regardless
+as a safety net against any path that replaces the surface.
+
+Fixes: CVE-2026-97889
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4579
+Reported-by: david korczynski (@david1766)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261001104112.2167807-2-marcandre.lureau@redhat.com>
+(cherry picked from commit 35164929cfa33b9f5001de72c0f3e37e9a4612c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index b6bc182fc2..fb77f217b1 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -2390,6 +2390,37 @@ static void qxl_create_memslots(PCIQXLDevice *d)
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index cb0e28b79b..b9b8c52941 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1641,7 +1641,9 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
+         height != s->last_height ||
+         s->last_depth != depth ||
+         s->last_byteswap != byteswap ||
+-        allocate_surface != surface_is_allocated(surface)) {
++        allocate_surface != surface_is_allocated(surface) ||
++        disp_width != surface_width(surface) ||
++        height != surface_height(surface)) {
+         /* display parameters changed -> need new display surface */
+         s->last_scr_width = disp_width;
+         s->last_scr_height = height;
+@@ -1789,9 +1791,9 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
+         qemu_console_set_surface(s->con, surface);
      }
- }
  
-+/*
-+ * Validate a command tracked for loadvm replay before handing its guest
-+ * address to spice-server.
-+ */
-+static bool qxl_loadvm_cmd_valid(PCIQXLDevice *d, QXLPHYSICAL data,
-+                                 uint32_t type)
-+{
-+    switch (type) {
-+    case QXL_CMD_SURFACE:
-+        return qxl_guest_phys2virt(d, data,
-+                                   sizeof(QXLSurfaceCmd), false) != NULL;
-+
-+    case QXL_CMD_CURSOR: {
-+        QXLCursorCmd *cmd = qxl_guest_phys2virt(d, data, sizeof(QXLCursorCmd),
-+                                                false);
-+
-+        if (!cmd) {
-+            return false;
-+        }
-+        if (le32_to_cpu(cmd->type) == QXL_CURSOR_SET) {
-+            return qxl_guest_phys2virt(d, le64_to_cpu(cmd->u.set.shape),
-+                                       sizeof(QXLCursor), false) != NULL;
-+        }
-+        return true;
-+    }
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
- static int qxl_post_load(void *opaque, int version)
- {
-     PCIQXLDevice* d = opaque;
-@@ -2428,12 +2459,17 @@ static int qxl_post_load(void *opaque, int version)
-             if (d->guest_surfaces.cmds[in] == 0) {
-                 continue;
-             }
-+            if (!qxl_loadvm_cmd_valid(d, d->guest_surfaces.cmds[in],
-+                                      QXL_CMD_SURFACE)) {
-+                continue;
-+            }
-             cmds[out].cmd.data = d->guest_surfaces.cmds[in];
-             cmds[out].cmd.type = QXL_CMD_SURFACE;
-             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
-             out++;
-         }
--        if (d->guest_cursor) {
-+        if (d->guest_cursor &&
-+            qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
-             cmds[out].cmd.data = d->guest_cursor;
-             cmds[out].cmd.type = QXL_CMD_CURSOR;
-             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
+-    w = s->last_scr_width * surface_bytes_per_pixel(surface);
++    w = surface_width(surface) * surface_bytes_per_pixel(surface);
+     d = surface_data(surface);
+-    for(i = 0; i < s->last_scr_height; i++) {
++    for (i = 0; i < surface_height(surface); i++) {
+         memset(d, 0, w);
+         d += surface_stride(surface);
+     }
 -- 
 2.47.3
 
