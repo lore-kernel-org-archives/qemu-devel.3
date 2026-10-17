@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADB2CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 12:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09591CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 12:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI3X3-0005Mn-RY; Sat, 17 Oct 2026 08:29:01 -0400
+	id 1xI3h5-0006iT-C2; Sat, 17 Oct 2026 08:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI3X1-0005M1-Aa
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:28:59 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1xI3gx-0006i2-JD
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:39:17 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI3X0-00032M-08
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:28:59 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-8b0d5ddafbcso5875137b3.1
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 05:28:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792240136; cv=none;
+ id 1xI3gv-0003sW-KW
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:39:14 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-67992884b02so416836d50.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 05:39:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792240752; cv=none;
  d=google.com; s=arc-20260327;
- b=fIU1bHdYf7595uhNlt2y1QvRui46ZVvpVUJejaTWPI6e/Xdgb5L+6EM0KZ5n18izBg
- u8qCB6FGQyLoYhHnHSQowYjepBpNnPuk1Q7HvYq40otS1srYqo37oO9x7Dj9enW7vovn
- Gz4Uq3m5AqHhM5ZEa32YvgTmUdcGhysb23AWDE0jOahMh6t1RPzhuBrMWZGv+/cjb5LK
- TUn/hmi8WxJj1kcxJHGT9520hTcAVy2L79Pn9VeFg/tnWUi0ieDcdJE0YlaVJ9vqdcWn
- Db6cchnmFIWHdLJth5586WQfZOYBhP2rYPS76iC6hH5P7bEsw3bF8eIYgJaRrITJcj7O
- pntw==
+ b=DsC8jeCP/JFjrnWebDycCm8eyXRnr2qqcNwXfyDJ5DRHguu5+NpcRpq3XkINBIJOPn
+ f3bUALIGMMoSRgKCAHaLF4LjrJIMT6y3/1WBV+ClPjrCPp4ibwqBRCl4W8jmTjq8yamj
+ Jj2hbQqqwd8QUqHolINaRJTvsF9Y1HMI3qaWwhs5iBE29HhMQyQjV/pmK4PTcTE1z3/y
+ T7EJJMgHgmY+2h8wmN9yFbcGTstMa38fag3hGtiLTBpFa0rFUP+mFNW9kLWhboiqeDfW
+ 5s8YuvPX5p/3TY93mMnkRercDI9IiA5BVV11wc4EW2yKN/ilRz4oswMLfB1URBXRUwB5
+ jihQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
- fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
- b=nt1yVQ7CB42vEUmNLUrCisKXALB0r0ZUl3T31Ht4+dt1QLcnyQ4a4oyvusDlhillyK
- zZDS5x4c5AtrzYa5IqTZ3p4jyhUv4Rs2LwV51NS5RAgjMeFik5kZC0+aqV5ROUFoAeaN
- 7hhDJ6G0nrKRlStjErSvrOnkiD1ZFBOf+pjuF0R41Svc2HinfmKjxFznUG2brpGjNZzY
- c52GuCQN5hSKMKh1DnLbpcSgbLgChXCBQWuy+n8ui5HnncjrjBuV2YUWcsyAo/yOHMYc
- ZRY4HbKgqebdMPbL0fSaeK0NhXKgCJC98Q1ECaqTLmVXfGoVrRWOT1kSqOVhMvhEEXuN
- nAew==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fkIRji0WXt92EPvWP8XtmleqjeC013dlE5jwP2dXmLo=;
+ fh=TUfzxw1B/DFEA1jNT0iQFdzEda/YXFE68WBEXYJToV4=;
+ b=kQYdh2rbbr0yoXwrCM2qV4/92dnMmCX0pS59ffpHhsFq8OJIuUMl+p+EKmOtSLoWEU
+ hX0jTdZt1h+Yvzyyktzt/Ab7zcZGANqwkDwPgRwNPrV5rT6sIgkNa0/vXRS2eTEPzdfQ
+ nyt0QQWOfFEEKW2bdj78zpqUYndW1bsQZpt20+d97dqRZSFStdDlqlS5rO8jadQfXTLW
+ p3T18INE+jyDDEdX6+y+HWl2nvpbMPmhArucZ+Zm/WAn8Q1/TNujaHiOVtEvgBgwfY0E
+ dXAmMrMzL4WrLI+PtSCzaNFv/jgoWQgAAjVEnxHQ8aEC65ZvMR/4f8lgAfDQrJPn5Gg0
+ 5NVQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792240136; x=1792844936; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
- b=yOJcKpa1B0tb+la+qENdrKVasm9mgB8U3t8r00j+PkrxdvN5X7RqtgWYwtWUhmXMcY
- d3gD0RpxLryQVoBTBAhogoXda5gkAuILh85piyK30jsjJys9jeTSJRBXzNJKFbgMOduw
- J+iPL/8cRfAlNOq6kf4px7Os4twqCn7LNwhKW0NxLM4IYeVhGRhKdRTve980VSdLcWHC
- ydWF9mZynsa7lDX1MWEuSKIqb7Q3iCllmgAzQklCdyQ+bMp9ZQZdM6ne5BCxWWT5bp+E
- wtqrhRM/5Rn3dlde/7gd2daNux0msSk1LIeqaqlfnOp7S3XVwaO6HSjjMzSwWOTDw3Mg
- inKQ==
+ d=linaro.org; s=google; t=1792240752; x=1792845552; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fkIRji0WXt92EPvWP8XtmleqjeC013dlE5jwP2dXmLo=;
+ b=GGy1/KcMQPE5c1PdCojZmBfRNXbF0yYSo+Pj5PQUYos1R2FQmtkQ4uRwtCU3D8P29F
+ fYZNyEK1ZGLfyOFuiHSI6g+WpYVU9yyEA1VlTYItm0CiQSoBtVixTwDmpz+gDAGYJ1F9
+ vm3IPMr4SIJIgx5+4wuqm/7F0cvL7M+d4QtciqebelmnfzQZ6LPDSax1yllRYaGyOTz1
+ G6d2XF8ThK6kGvLmdiWyWaRBbqr8jbvsAnH3FjDPtjYkl5a/XDo6dH9FPnYUh4fpYkIf
+ GBgftiblaeuH1ZW0AxgzAIcEkq9Hw1CNzm8TT+asGUne470GWKvZa2kyV+PukJTLvNS2
+ gfJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792240136; x=1792844936;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
- b=FCY7F5l/FQ7IUGDtVoDptIcM/cgfQq5zrKk+f1UQ2qE7vRcIlp0zlGVFnaTXKTLYRp
- JRPUakBGvJ2XYAnszBmQ1tSSfHk8imF/kKEi0lnccsDgFC++s+zIWX3A63HL8r1Yc961
- GH8OsbGqJsniSP3BsWZztVu7aCt69vc8orSrhTngQYKY6CB9tANG4DhuEcunqluPA5QB
- XqxDykERPWMBdnixP3ANEmbAq0Tnod0P51OHUcjtBhnqiZV6iLAbZbdUKu2Gd6mHFAKd
- QZvD2ZrMh4vrYEPopym2LpWWCARdctT+SJ3ZUn2c8q+uLNr+f4+8ld4z5OyyPv8qUVNs
- kyVg==
-X-Gm-Message-State: AFq9FYLTb92MrU+aVCc0IKOb2LZz9UQR4Aa2IwiVaQcSjuiK6b+NrIAb
- tmRyKklWyJkn34ValUDWvLbPQMuqVoGj3An+5J93zkEnZu1EBZsV1mIjS4/HZqKbsvW9G9W1kM3
- LjBZACGlRck/AuZ7HN7tAVJ4iCXPO+JIc6A4biuxnaw==
-X-Gm-Gg: AYBFou2l5B6BQGPcRJLpd73OxLPLWEYfqPemZeQAQpJiodxG41ER3YC3f6tMiyp4iR6
- s7QAt40E8d9lglbZ7Qp4w+Kp56fOdTpCdUAgpHbPpVBkpCM6LSqkvixmodIrJ6gkDl9HgNybc8W
- UzuwW+Hjyjq7CCdiOuI5TMX/VDy5jRRhu0vrlaJO7YpVz1ijEIGUguSdsdDcQCjkGZOB78yOLxu
- agVPbk0j+6R/RT6E4ztSxQBAez5T/4JZ2r2hwrd7hxbJUeJMF1nn/hHs4YBEam/0mVE2UM425cm
- 25KaEwCDkf6fhw4VAxCEGypjb46Bq6cqNXGEIlkjHuXZd+oy6awys2IIDr8rzwlq9qpa24EKMHn
- I4l+b0BABwz7Ohbozb/G7gsFxv8f5sp6vDFx8Qsg=
-X-Received: by 2002:a05:690c:e3e4:b0:8b0:cfe6:29b2 with SMTP id
- 00721157ae682-8b0f21f18e5mr10117717b3.41.1792240135798; Sat, 17 Oct 2026
- 05:28:55 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792240752; x=1792845552;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fkIRji0WXt92EPvWP8XtmleqjeC013dlE5jwP2dXmLo=;
+ b=nvCnMlCOIOchCg46gizXfWANBglZmubCZ5xJfzLIbqc9VED1aM+u35vpK3AhS9+N7/
+ 6rqk2QH1jZwakaeXYnBnRgCtZgGj/WwXxShOkbxWo8Ce9Py7VTji10OqVJmWKSsfR5Ra
+ CTAB/RwviQxpgNWzgYMVoVoqCVOFAJ+rqbKkQ9G49+K0TWnS2pQWdq3SkGA+PdyTPSXa
+ koJL39l09gXgJhwO5nNbU99zTY/ZAwRpxAKMoRq2dtYaLUAMDlSWAWDkJFJh4pgs5Tj5
+ HTkZwkM1T/i9oFiuP+v1lWejpCBzrci6VaDE/Atz/YUq/kyzdOQkd4z6+Ji/SMgAbO+N
+ 2wUA==
+X-Gm-Message-State: AFq9FYK2SNRDXiIn2+FeSXfw/MR3B385/yLI0VSXc8e/4iAYvvl2C+Qg
+ z3z8VaWe6jVNklaCAb1F7I5iSTCxzq4hNF8IuAhDlBb+/8httc9GqKWLLMejgk513nRdj2rJvmL
+ LY8qXXPt7qE2I7XUbXDeDdqy6qHlA5peEY+aEgoiaCQ==
+X-Gm-Gg: AYBFou1ceIsWdNyZQvBWtMzYetMikYHYZBrWKRk7jrfwx4gE/XMdikmYlisHvjBDwtz
+ xED99TaAkPak8ddV1mi86JO6lbXPAYX4z2DSqw3OGFuyWFHiVevdvA1W22RrG1GQXYB1dOPRzXr
+ 1Spwrs3E1iRJUrPA9zTehi291wv3fmN/cysTOdXA4aiz1FfpHohDZDTScmf06ZIMriYRKKzoSrd
+ Q4dIncLS+aQO3HYoCLSj9++9iud0tAPqelDfVl51p4giUv6muhikoFt5+iPWQyxlQqhVyazENSY
+ Ggid98+jMTEZoYPc+6R8YbM3bgb2V6dxehU9DXG2O2Q1Yp7jfQreR0i46+rQYGCfEXkjbHA8EAW
+ 1ZX+fMX7vTySfMFQnn4bBV1uttVM13XP7WnnfFJ4=
+X-Received: by 2002:a05:690c:294:b0:8b0:cc70:f54b with SMTP id
+ 00721157ae682-8b0f21df262mr9713597b3.83.1792240751835; Sat, 17 Oct 2026
+ 05:39:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261015181111.60491-1-marcelomanzo@gmail.com>
-In-Reply-To: <20261015181111.60491-1-marcelomanzo@gmail.com>
+References: <20261015181122.60608-1-marcelomanzo@gmail.com>
+ <20261015181122.60608-12-marcelomanzo@gmail.com>
+In-Reply-To: <20261015181122.60608-12-marcelomanzo@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 17 Oct 2026 13:28:44 +0100
-X-Gm-Features: AclHuK9WBB_vtuGtSl_k2-oNO_-dZMEfrgROiKsejIYp08Qd3q_CGI7Wc-ADTTc
-Message-ID: <CAFEAcA9A-hU8bVJdN3c_k4D_dPds2VOgMV1qnHq8LUBJQkfW2w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] hw/arm/raspi4b: RNG200 and thermal sensor
+Date: Sat, 17 Oct 2026 13:39:00 +0100
+X-Gm-Features: AclHuK98Sr1n_yS3ZKvEpagjnMVUWjfsxfrHJXJ_0FRxHCqx9UzvJccZWfozVgE
+Message-ID: <CAFEAcA99AobP34UsChN82U9Yh6oazdV9vL8s6Fi2Wm3PkL+NXA@mail.gmail.com>
+Subject: Re: [PATCH v3 11/16] hw/net/bcm2838_genet: implement GENET MDIO
 To: Marcelo Manzo <marcelomanzo@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Sergey Kambalin <serg.oker@gmail.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>, 
+ Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,21 +124,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 15 Oct 2026 at 19:11, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-> This series adds the BCM2711 RNG200 hardware random number generator
-> and the dummy thermal sensor to raspi4b, carrying forward two more
-> patches from Sergey Kambalin's stalled Raspberry Pi 4B series
-> (patchwork series 829638). Patches 1 and 3 are Kambalin's code with
-> his authorship and Signed-off-by kept, adapted only for API drift
-> since 2024; patches 2 and 4 wire the devices into the SoC, and patch
-> 5 extends the existing functional test.
+> From: Sergey Kambalin <serg.oker@gmail.com>
 >
-> v2: thanks to Peter for the review. Now based directly on current
-> master -- v1 was written on top of the "working PCIe and GENET" series
-> and so did not apply to master; it no longer depends on that series.
+> Implement the MDIO command register handling used to read/write the
+> BCM54213PE PHY's standard MII registers (BMCR, BMSR, LPA, ...) plus
+> its vendor "shadow" register blocks reached through the AUX_CTL/
+> EXP_SHD indirection scheme, and a simple link-state model (PHY
+> starts down, comes up once BMCR is programmed and autonegotiation
+> is (re)started).
+>
+> Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
+> networking series (patchwork series 829638, posted to qemu-devel in
+> 2024, never merged). Carried forward and completed by Marcelo Manzo.
+>
+> While carrying this forward, fix the autonegotiation-restart handling
+> in bcm2838_genet_mdio_cmd(): the guest PHY driver sets BMCR.ANRESTART
+> and polls BMCR until it reads back as cleared, but the result of
+> FIELD_DP16() (which returns a new value rather than modifying its
+> argument) was discarded, so the bit never cleared and the guest
+> spun forever at boot. Also refresh the link state once the restart
+> has been handled.
+>
+> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 
+This doesn't compile at this point in the patchseries, because
+this function:
 
+> +static void bcm2838_genet_phy_update_link(BCM2838GenetState *s);
 
-Applied to target-arm.next, thanks.
+is prototyped and called, but never defined:
 
+../../hw/net/bcm2838_genet.c:23:13: error:
+=E2=80=98bcm2838_genet_phy_update_link=E2=80=99 used but never defined [-We=
+rror]
+   23 | static void bcm2838_genet_phy_update_link(BCM2838GenetState *s);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+The patchset has to be able to compile at all points, to
+avoid breaking future 'git bisect' operations. Moving the
+callsite and the prototype from here to the "RX path" patch
+that adds the function is probably the simplest fix.
+
+thanks
 -- PMM
 
