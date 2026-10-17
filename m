@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B21ACCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE4CCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9bT-0001sm-0L; Sat, 17 Oct 2026 14:57:59 -0400
+	id 1xI9aK-0008VJ-LX; Sat, 17 Oct 2026 14:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bF-0001IX-FS; Sat, 17 Oct 2026 14:57:46 -0400
+ id 1xI9Zs-0008FQ-1f; Sat, 17 Oct 2026 14:56:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bD-0003nU-7G; Sat, 17 Oct 2026 14:57:45 -0400
+ id 1xI9Zq-0003cq-Cy; Sat, 17 Oct 2026 14:56:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263386; bh=YraBQF2Z/9JeBp9y5eXG82G+r6IyQysyjIQjfoPjd4E=;
+ t=1792263367; bh=y33UjaNmeodbvgW+vvTu/Qo/QJ3QIrjbmPwUOXWxO4g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wJ0YTRU8f4pyxPLPaiHORMnX/5vgIcuv2MNwxWPg2mVoH+1SZOrJwjOTCkJoVpUCD
- OzrNckUvImHP65O3qbBTi2SJUTF2faFOs1yXgA48E9ntnIxKLRHDijwFolJqNZGM7s
- B7wWErtjKiU8GwtpngY7vZEnwlSy75lSW/X18u3dUkiPbgBDUTciwT2FjHL+eCFKYF
- /jP4lHYjLboL6C8ktrMAau8MgzpUu632wIY9b6GXZ9mGXYbBcqVzC2kuvb3LmVOLBB
- Kuiu4AAC2vnED+cMrYfevKRrKIK3ph++jFEhy/Vxjh3/iLRxxpEvh1rbJvoNJgBbeZ
- Qts2YLrmnI3JA==
+ b=J5nb7hBYbCoJiLax45FIZTp9EUPNjmVef6I17hNtBqJifY2QitM2YgZChAXeHRn6g
+ qu2krfKpF6Gc4pvnGQ3cGBlHzUnBfdjFCakVYbKzsLUzIUQny2ESoSRvojr6vOOxrp
+ cZrn2JZUwfSmup0q+sf0Kj9TZ1+4lVHzeRhE6uJapbUGun5bEMjcIblTAikFzcPrm8
+ GJc9aShmG0J63iFrjqkLg4IqUYCuUV4P6RqEaAdIRBV1oPr4HJWkhQ85P6JwIcJ7K/
+ 9oL9xX2MeKAhbWFBMxSUlXgZQR/L5BskGTUnUCKlav0rCT5t8EXt9wanmgdFGeJrwi
+ nFY1gqojd6l3g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C44221DE6B9;
- Sat, 17 Oct 2026 21:56:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DA7971DE6AB;
+ Sat, 17 Oct 2026 21:56:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BF63443384;
- Sat, 17 Oct 2026 21:56:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B1D49443376;
+ Sat, 17 Oct 2026 21:56:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 25/63] block/nbd: clear reply.cookie under
- receive_mutex
-Date: Sat, 17 Oct 2026 21:54:41 +0300
-Message-ID: <20261017185528.722197-25-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 11/63] s390x/sclp: Reject short headers in PV case
+Date: Sat, 17 Oct 2026 21:54:27 +0300
+Message-ID: <20261017185528.722197-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,107 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Eric Farman <farman@linux.ibm.com>
 
-s->reply is documented as protected by s->receive_mutex, but the cookie
-is cleared without it once the owning request has consumed its chunk.
-A waiter in nbd_receive_replies() inspects the very same field under
-the mutex, and does so with two separate loads:
+An invalid length in an SCCB header correctly generates a specification
+exception for the regular (non-PV) codepath that processes an SCLP
+instruction intercept. The PV case doesn't, because the UV enforces
+a valid length before getting to this point. The length is used to
+allocate storage later down the line, so doublecheck the length here
+in the (unlikely) case it is too short.
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
-
-Nothing keeps those two loads consistent. If the owner clears the
-cookie in between, the second one reads 0, COOKIE_TO_INDEX() turns it
-into an index of -1, and s->requests[] is accessed out of bounds:
-
-  Assertion `!s->requests[ind2].receiving' failed.
-
-  (gdb) p cookie
-  $1 = 8
-  (gdb) p s->reply.cookie
-  $2 = 0
-  (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
-  $3 = (_Bool *) 0x5555558416c0
-  (gdb) p &s->in_flight
-  $4 = (unsigned int *) 0x5555558416c0
-  (gdb) p s->in_flight
-  $5 = 8
-
-The cookie we wait for is 8, yet reply.cookie reads 0 one line after it
-was found non-zero, so the index is -1. requests[-1].receiving lands on
-in_flight, which is non-zero while requests are outstanding, and that is
-what the assertion trips over.
-
-Hitting this requires two coroutines of one NBD node to run in
-different threads, as there is no yield point between the two loads
-for the owner to squeeze into. A multiqueue configuration provides
-exactly that, with the virtqueues of one disk spread over several
-iothreads. Note that a compiler is free to merge the two loads into
-one, in which case the race is invisible, so builds with reduced
-optimization are much more likely to trip over it.
-
-Accessing s->reply without the mutex is fine for the coroutine that
-owns the reply: a non-zero cookie makes the field private to it.
-Releasing that ownership is not, as it races with the waiters which
-are explicitly allowed to look at the cookie. Clear it under the
-mutex, in the same critical section as the wakeup, and make
-nbd_recv_coroutines_wake() caller-locked, as CoMutex is not
-recursive. It has a single caller.
-
-The added acquisition cannot block behind the header read in
-nbd_receive_replies(), because that path is only reachable with
-reply.cookie == 0 while we still own a non-zero cookie. Merging the
-clear with the wakeup also keeps a newcomer from starting a header
-read in between, which would stall this already completed request for
-the duration of that read.
-
-There is no cookie to own when we get here after an error, and then a
-newcomer can indeed be inside that read. It does not hold us for long
-either, as the channel has been shut down before the error was
-reported, so the read it sits in returns right away.
-
-Fixes: 4ddb5d2fde ("block/nbd: drop connection_co")
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-4-den@openvz.org>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit cd3be3bd96c0e86f683c210a2c8f46b7da161807)
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: c1db53a591 ("s390/sclp: read sccb from mem based on provided length")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-10-farman@linux.ibm.com
+[farman@linux.ibm.com: Updated commit/comment text, per Janosch]
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 119860f15cd239dced773de9375f741db255652d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nbd.c b/block/nbd.c
-index 8b4bf57610..1f03270aed 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -161,11 +161,11 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
-     return false;
- }
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index 977b8f5907..ed7481ba4f 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -279,6 +279,11 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
  
-+/* Called with s->receive_mutex taken. */
- static void coroutine_fn nbd_recv_coroutines_wake(BDRVNBDState *s)
- {
-     int i;
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, &header, sizeof(SCCBHeader));
  
--    QEMU_LOCK_GUARD(&s->receive_mutex);
-     for (i = 0; i < MAX_NBD_REQUESTS; i++) {
-         if (nbd_recv_coroutine_wake_one(&s->requests[i])) {
-             return;
-@@ -972,9 +972,11 @@ static coroutine_fn int nbd_co_receive_one_chunk(
-         /* For assert at loop start in nbd_connection_entry */
-         *reply = s->reply;
-     }
--    s->reply.cookie = 0;
- 
--    nbd_recv_coroutines_wake(s);
-+    WITH_QEMU_LOCK_GUARD(&s->receive_mutex) {
-+        s->reply.cookie = 0;
-+        nbd_recv_coroutines_wake(s);
++    /* We should never end up here due to UV checks, but lets be sure */
++    if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
++        goto out_no_write;
 +    }
- 
-     return ret;
++
+     work_sccb = g_malloc0(be16_to_cpu(header.length));
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, work_sccb,
+                          be16_to_cpu(header.length));
+@@ -292,6 +297,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+                           be16_to_cpu(header.length));
++out_no_write:
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
  }
 -- 
 2.47.3
