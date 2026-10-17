@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA18CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96BF6CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9eX-0007RP-Ap; Sat, 17 Oct 2026 15:01:09 -0400
+	id 1xI9eQ-0006fq-Ma; Sat, 17 Oct 2026 15:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dR-0005Yu-8E; Sat, 17 Oct 2026 15:00:04 -0400
+ id 1xI9d2-0005Jn-9T; Sat, 17 Oct 2026 14:59:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dN-000403-R8; Sat, 17 Oct 2026 15:00:00 -0400
+ id 1xI9d0-0003zS-D5; Sat, 17 Oct 2026 14:59:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263412; bh=89Xk3cst3xlBoAObjfSiAUTAt07Ma4hw6vkcXvBpLfQ=;
+ t=1792263410; bh=Dg8HAUdamYBN061rFx5Tmq0LNxTmZA2/5JFRg3UBEok=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=j5p4OGdf1lMIvU2IA+tXyEOV0poQ7GPTxxPqK+2qKo2fIRR208KDCQnh8i2q2S/U0
- ZnxuYqO7EyS+Z7kT/zwR6z5Iyf0yTscbrwMmDY1zKOUkesHb+O1jlxywaFFcnY5ZfU
- WtUxZUrVxyOtrFJQT+kIWzlCzokqbc4mEzLkBLz47P+Z/NZSqZVa3r4h9mhiXfNoy0
- TRtL7eqVBE1/CniVC9F9YCR4arl/LXD74TQJpBC3OsC3lTmYsRxbWIu52Jk2e45Tgw
- jfytshvGsGNPuGej3MxhbGX89PpQzfgoGvGCadFlfJ8ryUaHlYqzzNpe+U+oP/MKxU
- WLLcK4aHST7Ww==
+ b=CfB8BImLU524ZNZNjjAYwSLlqBPLMIEhtHwoZHHvt9Me9PYvHj4fyrDEWvhKhs5/6
+ pFf21yWz2DgQm+e0Y+VCLERankAtUG6dFfgAKSz24nCH3wVV7iv12Ox+8S46Ih1ygx
+ znEy+ZaTdKKuViZ/CRt1r3jFS6rW2t3NPqYimSutHrrrpjifX+vUJDKhxmJre+1BRI
+ qGPlU4FZvq48pi9WvttYkAKv6VMRr2kWmLcZsOadvy/O8sU8EclILbT6u7NOHA9LFs
+ ur0VJAWcPtdOSzWLRbuFd/SPobeURgrDO1uqV5N4tW87W5IQiENgdEM/ZThc4/sz9y
+ MFogFKzq2rVhA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7BA4E1DE6CF;
- Sat, 17 Oct 2026 21:56:52 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 55C271DE6CC;
+ Sat, 17 Oct 2026 21:56:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A38B9443397;
- Sat, 17 Oct 2026 21:56:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3CBFB443395;
+ Sat, 17 Oct 2026 21:56:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 44/63] accel/kvm: coalesced mmio: check lenght of the
- MMIO write entry
-Date: Sat, 17 Oct 2026 21:55:00 +0300
-Message-ID: <20261017185528.722197-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 42/63] block: Remove now redundant
+ bdrv_wait_serialising_requests() calls
+Date: Sat, 17 Oct 2026 21:54:58 +0300
+Message-ID: <20261017185528.722197-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -69,54 +69,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-KVM's coalesced mmio ring buffer has entries that contain deffered MMIO
-writes.
+All callers of bdrv_wait_serialising_requests() (as opposed to
+bdrv_wait_serialising_requests_locked()) are just duplicating the check
+that tracked_request_begin() already performs now. After removing them,
+bdrv_wait_serialising_requests() has no callers left and can go as well.
 
-Each such entry contains the length, an 8 byte value and a guest address.
-
-While the length value comes from the kernel, it is still possible for
-an attacker to corrupt the length field using another exploit.
-
-The attacker can then invoke kvm_flush_coalesced_mmio_buffer, which blindly
-trusts the length and can be used to inflict further damage.
-
-Add a sanity check on the length field to prevent this.
-
-This patch was only compile tested.
-
-Reported by: "Labs, STAR" <info@starlabs.sg>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3863
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260923004631.100997-1-mlevitsk@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 12916d64b78ec5dd0171e607ad2ffcc34537f3cf)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20261002132135.93345-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit cf4f672c11d663f87462cfd99a92124b30804e99)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 13d44abb31..9edd64fac7 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2854,9 +2854,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
-             AddressSpace *as;
+diff --git a/block/io.c b/block/io.c
+index ae28a0ada1..6ffbe26d4c 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -806,20 +806,6 @@ void bdrv_dec_in_flight(BlockDriverState *bs)
+     bdrv_wakeup(bs);
+ }
  
-             ent = &ring->coalesced_mmio[ring->first];
--            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
--            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
--                                ent->data, ent->len);
-+            if (ent->len > sizeof(ent->data)) {
-+                warn_report("coalesced MMIO entry has invalid len %u",
-+                            ent->len);
-+            } else {
-+                as = ent->pio == 1 ? &address_space_io : &address_space_memory;
-+                address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
-+                                    ent->data, ent->len);
-+            }
-+
-             smp_wmb();
-             ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
+-static void coroutine_fn
+-bdrv_wait_serialising_requests(BdrvTrackedRequest *self)
+-{
+-    BlockDriverState *bs = self->bs;
+-
+-    if (!qatomic_read(&bs->serialising_in_flight)) {
+-        return;
+-    }
+-
+-    qemu_mutex_lock(&bs->reqs_lock);
+-    bdrv_wait_serialising_requests_locked(self);
+-    qemu_mutex_unlock(&bs->reqs_lock);
+-}
+-
+ void coroutine_fn bdrv_make_request_serialising(BdrvTrackedRequest *req,
+                                                 uint64_t align)
+ {
+@@ -1387,8 +1373,6 @@ bdrv_aligned_preadv(BdrvChild *child, BdrvTrackedRequest *req,
+          * it ensures that the CoR read and write operations are atomic and
+          * guest writes cannot interleave between them. */
+         bdrv_make_request_serialising(req, bdrv_get_cluster_size(bs));
+-    } else {
+-        bdrv_wait_serialising_requests(req);
+     }
+ 
+     if (flags & BDRV_REQ_COPY_ON_READ) {
+@@ -2025,8 +2009,6 @@ bdrv_co_write_req_prepare(BdrvChild *child, int64_t offset, int64_t bytes,
          }
+ 
+         bdrv_wait_serialising_requests_locked(req);
+-    } else {
+-        bdrv_wait_serialising_requests(req);
+     }
+ 
+     assert(req->overlap_offset <= offset);
+@@ -3476,7 +3458,6 @@ static int coroutine_fn GRAPH_RDLOCK bdrv_co_copy_range_internal(
+ 
+         /* BDRV_REQ_SERIALISING is only for write operation */
+         assert(!(read_flags & BDRV_REQ_SERIALISING));
+-        bdrv_wait_serialising_requests(&req);
+ 
+         ret = src->bs->drv->bdrv_co_copy_range_from(src->bs,
+                                                     src, src_offset,
 -- 
 2.47.3
 
