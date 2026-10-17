@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE57CCF2CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCE4CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9e1-00060u-MR; Sat, 17 Oct 2026 15:00:39 -0400
+	id 1xI9gH-0003o5-Hd; Sat, 17 Oct 2026 15:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9d4-0005LB-8L; Sat, 17 Oct 2026 14:59:40 -0400
+ id 1xI9fI-0001Wg-KK; Sat, 17 Oct 2026 15:01:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9d2-0003zr-Ia; Sat, 17 Oct 2026 14:59:37 -0400
+ id 1xI9fF-0004Ls-5L; Sat, 17 Oct 2026 15:01:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263411; bh=i/cnUT9s/y34O8nVZIBrK2DSVdUZg+RaPsRGjem2qgs=;
+ t=1792263438; bh=Yt/8Q2QUuv0Ett89CgtDv/9I7FrcG+4VUWUHlrUzq2c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=m/EJwWvIsCqLCnrCEmXZz8Sv7XpkQnRdDGkZdZZWQFlvHD8rK1hkf/gpXzMHPdsUa
- bX3WUoZyX9h4LaAtrBigveRJCuPm36fBQ2dOLRyWBN3FXi1cdT6RSEx36Gsf2zvqNW
- qH5f6x5CpFKXS3Kvbx3Jknf2WkxsPmhtTsL0wDH41DeWFsyRsjA0sFaMsfAMql0/fA
- 3WSlHq3pReBCuZF96BZgivAeP6t3HnsysaS8SjLn09h6/eiZm+62EMFi9bapLF1xA0
- PzVXLBjwRslFQggDdYbn0gKkUc2xlheeey2cKWzhZTlwtuktvRLRNatDeAZslybzmT
- TWilLnqH90CkQ==
+ b=C66idgr5QknYqSKlTyMyHqna7DbnCNCA1wRhaV8O+f83975vl4gGg1v9CscnW/VtH
+ 8MLw32WWHfq/OPyfrjU3jjWebT3823pEb5V8DiW2CBppCKHtTDfpwHVeC6lW3APwVK
+ BVj2GoZ1gjdhIPsJvezDgbbNAddZw3cNfvY1YQieFtULznumgxq2vkRMmVRrdx58wZ
+ cVv0Zmw+iPMnCnNLPH+57XjEfXp2s2W2kUCY4jqrCJ70cTeGA8hk9pCeC7YyzN77Mg
+ FeifzXb81FklVV1+SGIZiE1buzcQoPHSjHek0zIRKFZSHBzQGN4oF1UltZZI37IJBu
+ VbW0nE69UjWCA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6CEA61DE6CE;
- Sat, 17 Oct 2026 21:56:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4B9EE1DE6E2;
+ Sat, 17 Oct 2026 21:57:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 89FF0443396;
- Sat, 17 Oct 2026 21:56:50 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B7114433AA;
+ Sat, 17 Oct 2026 21:57:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, dodochicha <kevincheng60303@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 43/63] accel/kvm: Replace legacy
- cpu_physical_memory_write() call
-Date: Sat, 17 Oct 2026 21:54:59 +0300
-Message-ID: <20261017185528.722197-43-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 63/63] target/riscv: Check Svnapot PTE before
+ updating A/D bits
+Date: Sat, 17 Oct 2026 21:55:19 +0300
+Message-ID: <20261017185528.722197-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,49 +70,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From: dodochicha <kevincheng60303@gmail.com>
 
-cpu_physical_memory_write() is legacy (see commit b7ecba0f6f6),
-replace it by address_space_write(). Both if() ladders only
-differ in the address space argument: rework to have a single
-address_space_write() call. No logical change intended.
+Reserved Svnapot PTE encodings must raise a page fault without
+modifying the PTE. Currently the A/D bits may be updated before
+the Svnapot encoding is validated.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260616020839.19104-3-philmd@oss.qualcomm.com>
-(cherry picked from commit c08b84cd6e55b7dde247a396450d49a069775235)
-(Mjt: pick this one up so the next commit, which modifies this
- place again, applies cleanly)
-(Mjt: drop `const' from `const AddressSpace *as' across v11.0.0-2179-g77293ecc95db
- "system/memory: Constify various MemoryRegionCache arguments")
+Move the Svnapot validation before the A/D update so reserved
+PTEs fault without changing the PTE.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: dodochicha <kevincheng60303@gmail.com>
+Message-ID: <20261005115916.21196-1-kevincheng60303@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit cb82463fa9bf46d90e6a1779bb20aff2bf76a1a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 66783fcf11..13d44abb31 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2851,16 +2851,12 @@ void kvm_flush_coalesced_mmio_buffer(void)
-         struct kvm_coalesced_mmio_ring *ring = s->coalesced_mmio_ring;
-         while (ring->first != ring->last) {
-             struct kvm_coalesced_mmio *ent;
-+            AddressSpace *as;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e407c1b6df..fafcad75b8 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1682,6 +1682,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
+     }
  
-             ent = &ring->coalesced_mmio[ring->first];
++    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
++        napot_bits = ctzl(ppn) + 1;
++        if ((i != (levels - 1)) || (napot_bits != 4)) {
++            return TRANSLATE_FAIL;
++        }
++    }
++
+     target_ulong updated_pte = pte;
+ 
+     /*
+@@ -1769,13 +1776,6 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
+     target_ulong vpn = addr >> PGSHIFT;
+ 
+-    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+-        napot_bits = ctzl(ppn) + 1;
+-        if ((i != (levels - 1)) || (napot_bits != 4)) {
+-            return TRANSLATE_FAIL;
+-        }
+-    }
 -
--            if (ent->pio == 1) {
--                address_space_write(&address_space_io, ent->phys_addr,
--                                    MEMTXATTRS_UNSPECIFIED, ent->data,
--                                    ent->len);
--            } else {
--                cpu_physical_memory_write(ent->phys_addr, ent->data, ent->len);
--            }
-+            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
-+            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
-+                                ent->data, ent->len);
-             smp_wmb();
-             ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
-         }
+     napot_mask = (1 << napot_bits) - 1;
+     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
+                   (vpn & (((target_ulong)1 << ptshift) - 1))
 -- 
 2.47.3
 
