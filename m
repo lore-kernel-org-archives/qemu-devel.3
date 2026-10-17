@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70590CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A900BCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB35-0002nY-PH; Sat, 17 Oct 2026 16:30:38 -0400
+	id 1xIB2q-0001l7-HL; Sat, 17 Oct 2026 16:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2g-0001FQ-H9; Sat, 17 Oct 2026 16:30:10 -0400
+ id 1xIB2D-000879-R4; Sat, 17 Oct 2026 16:29:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2e-0004LJ-IM; Sat, 17 Oct 2026 16:30:10 -0400
+ id 1xIB2B-00043Y-Tf; Sat, 17 Oct 2026 16:29:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268861; bh=w6xqnxLBSVo6lOldPIc/C34Vg/LntVbPmhyW420qdmo=;
+ t=1792268855; bh=vs4q4+dnsHZ4gThLVN7SNRSHjlqUmrqJTENefJWFLQg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qNf4XuT72f8MWI6y/FlYnzU8rttNh+JHEIpEkXisexkshgEdc9g/Krqeg8NuU+ySN
- r6asQ1Q0Tx+ifWiRm4KzYFua/14nCFEmlt34aSQARfBfw79PEAcr5TXM1ncvgxQ0Y7
- aAbvaHSVDlwKIjIruLRyYpM37GxNz6jkVa5RSu6Jfs0/Prj8Onh52U2GomLJUjWklM
- MccoR54a6sESauP1HJoJ4a+suDV/GTj8XQV58DKRtKnFU+oBATHMXxYN3yUl/u+GOf
- k0netgfh2ReasR0ZUtuxGCGe8yP+Z+KLr3sAwAtBODvQM1Vj7uQzBFgd4FQ7ODlhBP
- aqvGl+B6qlbSw==
+ b=I9/ptCAoBs7lrjWnohjvgWpAgdOaep3BITcYs3v2ahQgKN/oPhF2NI2d5gXGE6jSN
+ bLnFEgzu/jvW2DWFrqlWVCEdMVeOIFOpT8zvWUPvzU+Y9rSQt7KWdn2rWjQJKGEK+3
+ +8ehR7w8netq1kb0iQhFRWAikWbICeWjL5MNau9vw4j+R6liYQW5QZXRWfpr28XLVt
+ Tpw3Nb4r6xvMvl3fdI/OP3SbWnGebI/iq5Z5ByYfDcyqv9s/FemTOlpt8fPlGy6YWT
+ XfSSinX+HA6Waly+FkMwiCY8ZT6c9JVMM6GMcrHXWdryIMJzstsLFF2Wi96HSzJCFy
+ VpkMW5SR6yIGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1249C1DE761;
- Sat, 17 Oct 2026 23:27:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 76C121DE75A;
+ Sat, 17 Oct 2026 23:27:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3DCFC443435;
- Sat, 17 Oct 2026 23:27:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5D626443430;
+ Sat, 17 Oct 2026 23:27:34 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
- Jordy Zomer <jordyzomer@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 35/73] system: fix buffer overflow in
- tdx_parse_panic_message
-Date: Sat, 17 Oct 2026 23:25:53 +0300
-Message-ID: <20261017202638.728621-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, y zhou <yzhou.dev@outlook.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 30/73] plugins: fix register handle encoding to
+ reserve NULL as invalid
+Date: Sat, 17 Oct 2026 23:25:48 +0300
+Message-ID: <20261017202638.728621-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,100 +72,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: y zhou <yzhou.dev@outlook.com>
 
-tdx_parse_panic_message has code that detects if the guest supplied
-message contains some unprintable characters and in this case prints a hex dump.
+The opaque register handles returned by qemu_plugin_get_registers()
+are currently encoded as:
 
-The code has a bug: it allocates 3 bytes for 'sprintf("%02x ")',
-but sprintf in this case actually writes at least 4 bytes, because it adds the NULL
-terminator, or even 9 bytes if the char type is signed and the MSB is set.
+    handle = (gdb_reg << 1) | read_only_bit
 
-To fix this, just use qemu_hexdump_line instead.
+For the first core register of every target -- gdb_reg 0, not
+read-only -- this encodes to GINT_TO_POINTER(0), i.e. NULL. That is
+x86_64 "rax", aarch64 "x0" and ppc "r0", among others.
 
-Reported-by: Jordy Zomer <jordyzomer@google.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3905
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260923004553.100732-1-mlevitsk@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit b7f51182c08123eda612db553e2cded6e536ff49)
+A NULL handle is indistinguishable from an invalid one, so any plugin
+that defensively checks its handles silently loses access to the
+first core register (where the Linux syscall number lives on x86_64,
+for example). Passing NULL to qemu_plugin_write_register() instead of
+being rejected silently writes register 0.
+
+Restore the invariant that NULL is never a valid handle by keeping an
+offset on the gdb register number, as was already done before the
+read-only property was packed into the handle (see v10.0.0, where
+handles were encoded as GINT_TO_POINTER(gdb_reg + 1)):
+
+    handle = ((gdb_reg + 1) << 1) | read_only_bit
+
+Also assert in tests/tcg/plugins/registers.c that every descriptor
+carries a non-NULL handle: the current test passes the handles
+straight to read/write without checking them, and a handle encoding
+that maps a valid register to NULL goes unnoticed for that reason.
+
+Found while writing a system-mode syscall tracing plugin, which could
+read neither the syscall number on x86_64 nor the first argument on
+aarch64 (both handles came back NULL). Auditing every
+GINT_TO_POINTER/GPOINTER_TO_INT site in the tree shows this is the
+only place where a valid entity encodes to NULL.
+
+Fixes: 55327b85ce32c ("plugins: prohibit writing to read-only registers")
+Signed-off-by: y zhou <yzhou.dev@outlook.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Alexandre Iooss <erdnaxe@crans.org>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20261005181817.403766-1-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+(cherry picked from commit 46a8b8b378259a4ddb4bc4b79f88eba7640ad899)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/runstate.c b/system/runstate.c
-index 08acf801b0..3c8693ccf3 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -50,6 +50,7 @@
- #include "qemu/sockets.h"
- #include "qemu/timer.h"
- #include "qemu/thread.h"
-+#include "qemu/cutils.h"
- #include "qom/object.h"
- #include "qom/object_interfaces.h"
- #include "system/cpus.h"
-@@ -606,10 +607,9 @@ static void qemu_system_wakeup(void)
-     }
- }
- 
--static char *tdx_parse_panic_message(char *message)
-+static GString *tdx_parse_panic_message(char *message)
- {
-     bool printable = false;
--    char *buf = NULL;
-     int len = 0, i;
- 
-     /*
-@@ -630,32 +630,11 @@ static char *tdx_parse_panic_message(char *message)
+diff --git a/plugins/api.c b/plugins/api.c
+index eb982f9aad..0d02a4f7ad 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -453,7 +453,7 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+             desc.is_readonly = true;
+             plugin_ro_bit = 1;
          }
+-        desc.handle = GINT_TO_POINTER((grd->gdb_reg << 1) | plugin_ro_bit);
++        desc.handle = GINT_TO_POINTER(((grd->gdb_reg + 1) << 1) | plugin_ro_bit);
+         desc.feature = g_intern_string(grd->feature_name);
+         g_array_append_val(find_data, desc);
+     }
+@@ -478,7 +478,7 @@ bool qemu_plugin_read_register(struct qemu_plugin_register *reg,
+         return false;
      }
  
--    if (len == 0) {
--        buf = g_malloc(1);
--        buf[0] = '\0';
-+    if (printable) {
-+        return g_string_new(message);
-     } else {
--        if (!printable) {
--            /* 3 = length of "%02x " */
--            buf = g_malloc(len * 3);
--            for (i = 0; i < len; i++) {
--                if (message[i] == '\0') {
--                    break;
--                } else {
--                    sprintf(buf + 3 * i, "%02x ", message[i]);
--                }
--            }
--            if (i > 0) {
--                /* replace the last ' '(space) to NULL */
--                buf[i * 3 - 1] = '\0';
--            } else {
--                buf[0] = '\0';
--            }
--        } else {
--            buf = g_strdup(message);
--        }
-+        return qemu_hexdump_line(NULL, message, len, 1, 0);
-     }
--
--    return buf;
+-    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) >> 1) > 0);
++    return (gdb_read_register(current_cpu, buf, (GPOINTER_TO_INT(reg) >> 1) - 1) > 0);
  }
  
- void qemu_system_guest_panicked(GuestPanicInformation *info)
-@@ -700,12 +679,11 @@ void qemu_system_guest_panicked(GuestPanicInformation *info)
-                           info->u.s390.psw_mask,
-                           info->u.s390.psw_addr);
-         } else if (info->type == GUEST_PANIC_INFORMATION_TYPE_TDX) {
--            char *message = tdx_parse_panic_message(info->u.tdx.message);
-+            g_autoptr(GString) message = tdx_parse_panic_message(info->u.tdx.message);
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "\nTDX guest reports fatal error."
-                           " error code: 0x%" PRIx32 " error message:\"%s\"\n",
--                          info->u.tdx.error_code, message);
--            g_free(message);
-+                          info->u.tdx.error_code, message->str);
-             if (info->u.tdx.has_gpa) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "Additional error information "
-                               "can be found at gpa page: 0x%" PRIx64 "\n",
+ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+@@ -495,7 +495,8 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
+         return false;
+     }
+ 
+-    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) >> 1) > 0);
++    return (gdb_write_register(current_cpu, buf->data,
++                               (GPOINTER_TO_INT(reg) >> 1) - 1) > 0);
+ }
+ 
+ void qemu_plugin_set_pc(uint64_t vaddr)
+diff --git a/tests/tcg/plugins/registers.c b/tests/tcg/plugins/registers.c
+index 0e41734435..02058fe8a8 100644
+--- a/tests/tcg/plugins/registers.c
++++ b/tests/tcg/plugins/registers.c
+@@ -29,6 +29,14 @@ static void vcpu_init_cb(unsigned int vcpu_index, void *userdata)
+     qemu_plugin_reg_descriptor *reg_desc = NULL;
+     bool success = false;
+ 
++    /* NULL must never be a valid register handle */
++    for (size_t i = 0; i < regs->len; i++) {
++        qemu_plugin_reg_descriptor *desc =
++            &g_array_index(regs, qemu_plugin_reg_descriptor, i);
++
++        g_assert(desc->handle != NULL);
++    }
++
+     /* Make sure we can read and write a register not marked as readonly */
+     for (size_t i = 0; i < regs->len; i++) {
+         reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
 -- 
 2.47.3
 
