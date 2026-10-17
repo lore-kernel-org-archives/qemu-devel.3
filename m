@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755A8CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5389ECCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2X-0000a8-Da; Sat, 17 Oct 2026 16:30:01 -0400
+	id 1xIB4w-0004mM-Mw; Sat, 17 Oct 2026 16:32:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1g-0006cC-4x; Sat, 17 Oct 2026 16:29:11 -0400
+ id 1xIB3D-00034Z-QR; Sat, 17 Oct 2026 16:30:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1e-00040Y-I7; Sat, 17 Oct 2026 16:29:07 -0400
+ id 1xIB3C-0004QN-1V; Sat, 17 Oct 2026 16:30:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268848; bh=1zHwW4WwoHU5qLd69mI83pMRaWYA96zbDsVK4o30ErU=;
+ t=1792268868; bh=OgsVklhjDNXPnxKmHk392UVfmei76G0ZLO49VF26qg8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sR+VLy1gV8oRb1UPo0aw0G/i9eqhzJm8TlL3cXQCSbQuklLflyRqJEZglhI1gUgdi
- 6ejEwWlICes3m786lsjOP68/I9h4CHQL2gYAVZ8RuQhJxV2GO5aNMoxz3U979qmq30
- FL3CmJ0SeJgZFjHuY7icxyaKJ1C1BHhyH3n7TjfthvxmYsRHs+9I6PkSGwzvNKDATV
- 7vshaJymVK1n0s9zStxSNjDitWR8J5STz03ADIRWMU46SVqysB6vK53R8QUKIj0Atk
- +ZRftmHUQ2Ubr2uSYuur3Rw8Hs65WvhFYMEtZRtgX4ZMZmyZaWcpQKGlbQhVB/Y5z+
- 4ykGgImuOKu5Q==
+ b=hUe8TAdrlqx7EAQ3OR7i/UfqWXMsTnd5klansv2J8PamSGbTfdfxkeQVEE3ryHGeA
+ aQJHM5H3cVbgO4/PCOVVBsB+lkrpMg4mPqL86uPTkKuvu3+XPc3cKuSuYObjuCbne7
+ JAzHlU56fISW5xy6IxAnWoUdCnWE44tKRIUG76AkBaJXxjUChGuhXqQf5Pj8cejjzM
+ KyZBc3wiz19cTKaQ/9UXvfdzlzPgmbrNHmLmnnW8F2TVuhesOhdg0LlypNPmNiak1O
+ RwzFB5mJynyM7r5PqfHSzgjKgnRzNjz3A6fi1VG1Vm7SmUxGKPUUlWuyWybK1IWyq8
+ 2dG9F4dEk+LXA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A2B3A1DE754;
- Sat, 17 Oct 2026 23:27:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C915F1DE768;
+ Sat, 17 Oct 2026 23:27:48 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0DAF44342A;
- Sat, 17 Oct 2026 23:27:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 18C2D44343C;
+ Sat, 17 Oct 2026 23:27:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 24/73] hw/display/qxl: trace skipped stale loadvm
- commands
-Date: Sat, 17 Oct 2026 23:25:42 +0300
-Message-ID: <20261017202638.728621-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 42/73] iotests: cover inactivating a read-only node
+Date: Sat, 17 Oct 2026 23:26:00 +0300
+Message-ID: <20261017202638.728621-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,65 +68,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Emit a trace event when qxl_post_load() drops a cursor or surface
-command whose guest address no longer resolves, so a migration that
-lands on a stale tracked pointer is visible instead of silent.
+A driver which writes something out on .bdrv_inactivate has nothing to
+write for a node it can not write to, and has to answer such a request
+with success rather than with the error its refused write produces.
+The test inactivates nodes in several ways and never a read-only one,
+so nothing caught that.
 
-Message-ID: <20260825172051.435372-4-andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-(cherry picked from commit 7e429d3624c4ad911af533e2f8f914b12f36dadc)
+Add a read-only node and take it through a deactivation and back. The
+case is generic, as every driver implementing the handler has to answer
+the same way.
+
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit 2910b995f6c8afd3eaa950e24432a0e044274ac5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index fb77f217b1..d5f9771f5a 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -2461,6 +2461,8 @@ static int qxl_post_load(void *opaque, int version)
-             }
-             if (!qxl_loadvm_cmd_valid(d, d->guest_surfaces.cmds[in],
-                                       QXL_CMD_SURFACE)) {
-+                trace_qxl_post_load_stale_cmd(d->id, "surface",
-+                                              d->guest_surfaces.cmds[in]);
-                 continue;
-             }
-             cmds[out].cmd.data = d->guest_surfaces.cmds[in];
-@@ -2468,12 +2470,15 @@ static int qxl_post_load(void *opaque, int version)
-             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
-             out++;
-         }
--        if (d->guest_cursor &&
--            qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
--            cmds[out].cmd.data = d->guest_cursor;
--            cmds[out].cmd.type = QXL_CMD_CURSOR;
--            cmds[out].group_id = MEMSLOT_GROUP_GUEST;
--            out++;
-+        if (d->guest_cursor) {
-+            if (qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
-+                cmds[out].cmd.data = d->guest_cursor;
-+                cmds[out].cmd.type = QXL_CMD_CURSOR;
-+                cmds[out].group_id = MEMSLOT_GROUP_GUEST;
-+                out++;
-+            } else {
-+                trace_qxl_post_load_stale_cmd(d->id, "cursor", d->guest_cursor);
-+            }
-         }
-         qxl_spice_loadvm_commands(d, cmds, out);
-         g_free(cmds);
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index 4bfc457fba..c5e7e42af2 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -82,6 +82,7 @@ qxl_io_unexpected_vga_mode(int qid, uint64_t addr, uint64_t val, const char *des
- qxl_io_write(int qid, const char *mode, uint64_t addr, const char *aname, uint64_t val, unsigned size, int async) "%d %s addr=%"PRIu64 " (%s) val=%"PRIu64" size=%u async=%d"
- qxl_memslot_add_guest(int qid, uint32_t slot_id, uint64_t guest_start, uint64_t guest_end) "%d %u: guest phys 0x%"PRIx64 " - 0x%" PRIx64
- qxl_post_load(int qid, const char *mode) "%d %s"
-+qxl_post_load_stale_cmd(int qid, const char *kind, uint64_t data) "%d skip stale %s cmd 0x%"PRIx64
- qxl_pre_load(int qid) "%d"
- qxl_pre_save(int qid) "%d"
- qxl_reset_surfaces(int qid) "%d"
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+index 664157bfd0..24242265b1 100755
+--- a/tests/qemu-iotests/tests/inactive-node-nbd
++++ b/tests/qemu-iotests/tests/inactive-node-nbd
+@@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
+     return node['active']
+ 
+ with iotests.FilePath('disk.img') as path, \
++     iotests.FilePath('ro.img') as ro_path, \
+      iotests.FilePath('snap.qcow2') as snap_path, \
+      iotests.FilePath('snap2.qcow2') as snap2_path, \
+      iotests.FilePath('target.img') as target_path, \
+@@ -58,6 +59,7 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('Preparing disk...')
+     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
++    iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
+ 
+     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+                             snap_path)
+@@ -70,6 +72,9 @@ with iotests.FilePath('disk.img') as path, \
+                      'active=off')
+     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
++    vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
++    vm.add_blockdev(f'{iotests.imgfmt},file=ro-file,node-name=ro-fmt,'
++                     'read-only=on')
+     vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
+     vm.add_blockdev(f'file,node-name=snap2-file,filename={snap2_path}')
+ 
+@@ -289,6 +294,15 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log(qemu_io.cmd('map'), filters=[filter_qemu_io])
+     qemu_io.close()
+ 
++    iotests.log('\n=== Inactivating a read-only node ===')
++
++    # A driver which writes something out on inactivation has nothing to
++    # write for a node it can not write to, and must not fail the request
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=False)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=True)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
++
+     iotests.log('\n=== Resuming VM activates all images ===')
+     vm.qmp_log('cont')
+ 
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index a458b4fc05..3c43020053 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -227,6 +227,14 @@ discard failed: Operation not permitted
+ qemu-io: Failed to get allocation status: Operation not permitted
+ 
+ 
++=== Inactivating a read-only node ===
++{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: False
++{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: True
++
+ === Resuming VM activates all images ===
+ {"execute": "cont", "arguments": {}}
+ {"return": {}}
 -- 
 2.47.3
 
