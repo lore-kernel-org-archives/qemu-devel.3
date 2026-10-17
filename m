@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C61ECCF2C7
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 09:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3544FCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 09:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI0Wb-0004Or-8f; Sat, 17 Oct 2026 05:16:21 -0400
+	id 1xI0hf-000758-2c; Sat, 17 Oct 2026 05:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1xI0WM-0004Mc-LZ
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:16:09 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1xI0WJ-0001fq-OJ
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:16:06 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-3ab27b4924aso3863841fa.2
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 02:16:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792228561; x=1792833361; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=2PJr6/o4UWvxEIOosKJE71cINqojrzw0er7aFPFz+ZE=;
- b=R+0vRTObgwaS1PJb5sH683arsqGXBY3iLxgYrjjL+99wRmfwvqUcp1b8DIICfcBBI3
- SijWw/Kba33QhcYxg4UIVx96xInh2UilX6gMImQftrxJCDG1d0TITThcv8YJ0G0GojJc
- n/6+54OVoPIbBCi/peZGtWv5iKiF1CJ8iGxcHPt8275k+vO3at3iiYqc8zexPbmTDS+g
- MNTOe0sk2FdTuNveMrCEFG3tGO7mnrzzIQtS7wqZwTgc5Y+tMjwPE1mAikkNhECiQeGN
- rXwLX7lJ7zFMmKN12n3ntU1y4ceXfU5G8aVPEydm/BpZ38pZEaD8cjq4F5Kx3QI49Rg7
- pmOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792228561; x=1792833361;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2PJr6/o4UWvxEIOosKJE71cINqojrzw0er7aFPFz+ZE=;
- b=pdmixKj61AdLHbYQodyX7xOdDcNt4SqwIT1Wp22QBPHclhcQn2CR3hXBqdM0pC3Nk/
- 3EiZZxkIcVYU4OZ6pRPSYeGa5IF93cbX3yPNmrOF6v+Fzcn7vHhxnsagXQxunHZf6duu
- qGIUwWL6aYQrUkF1f4IybW2qpoLjgBQrnCaMOco673E/2mWvMymsU2QGu9hEfX+BRZ9L
- cc1lcUM0+tdbSGuDuaGRTlIG5VTKlZU+Bfdp52HInb54wwqchj18hXaNWYhQioDD0Xa/
- dJ9DRmQQu1EKnWdfzREO/Lxc354/vATXq2SXnwEaz1cTIs2Ysl9A1kgjtW9KTs//JhgB
- AYWw==
-X-Gm-Message-State: AFq9FYIkN0A/RXHgHpienKSRh3yxcv5yJVL1MjklO8yCXqPocfOH2QxN
- Bpg5jgfMF3IfoBtjPydlNqjJNcArsqH0QaAyppSDxSnNWnZfnKnobRLJ
-X-Gm-Gg: AYBFou3qDpm2+GpPF6xI7QcmBy6Jdgt4elFVDiEOO5nILARHClP4aBQ/+S3Pn0kqHbS
- WmoRZKWWZj83+IUey38/S47tfEtj1EOVJ++1subdzi8TAYlWFkGPFSdS87lJXxzD6g23BBqbLsN
- 9g0dLaUffOSTMsBoREuf11rjc9gGKQkt67o/INnrs9sj1xCDy46anBqOO8jirlUkGnQVa2R4OPZ
- bWRlIj8sTpdxgX6NuJfDEvO1v5LyCrGWmnxuinzwq89zLg+6V0UvtffvLszrlOqiXRuKmdXvx68
- eNG6JgOCsa+mUr3K5BV1b94cnjlhhtIM5t10NG//mgsNqaLpjb4+JouYKC71d+x+tvCBw5pS5Ub
- mWFc+/DWMvXO/6OhSoqsgqRtCxhowQHmzOfwnGzyk2vnBRcf0TCATfu9ofzl/r5K5Gb34XP4pj0
- rSqqifQlxfmx6ocpe54hiP4GA/8IxW9wRJoJdDYaBxVcY8xdMXIKMq7tCbPo2Ekvzu/de+hel7q
- dhTzYodxFu34v98DgrSSpItvnXsC4ElKVItuZ5UgkCF/AeRbR0BFy2FylD0CF82HriVOA==
-X-Received: by 2002:a05:651c:1986:b0:39c:7d57:a3ae with SMTP id
- 38308e7fff4ca-3ab28e5b213mr5423131fa.0.1792228561305; 
- Sat, 17 Oct 2026 02:16:01 -0700 (PDT)
-Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
- [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5be4a633f54sm853132e87.60.2026.10.17.02.16.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 17 Oct 2026 02:16:00 -0700 (PDT)
-From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Date: Sat, 17 Oct 2026 11:15:33 +0200
-Subject: [PATCH v2 2/2] tests/qtest: Add Allwinner GPIO input test
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xI0hc-00074y-MW
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:27:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xI0ha-0002d8-TI
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:27:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792229261;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xt926C8AeEj2cckg5KQ/de+sevSYeaqaP0xXL+60zU8=;
+ b=aeCgxBV38ARziip1cxM2x+t7rbY2lBj3uUOnoQFW7pCQqlCenZtgdKupPWDlFsZlIPf10O
+ ynjAJ8kc9SVOg9SkzJH+Snoy/dBdtkLqjcu54MyXgizLrsAzkaT7Vjsc2EWDgZRgiIkcVC
+ qPxcSQ/AijqR6TTVoPkMiqrsmwdVDY4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684--ylSg_fMOZSIUzkI0oxoNg-1; Sat,
+ 17 Oct 2026 09:27:33 +0000
+X-MC-Unique: -ylSg_fMOZSIUzkI0oxoNg-1
+X-Mimecast-MFC-AGG-ID: -ylSg_fMOZSIUzkI0oxoNg_1792229252
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABE5A1955DD9; Sat, 17 Oct 2026 09:27:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B4ED7C6; Sat, 17 Oct 2026 09:27:32 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CE20721E6A04; Sat, 17 Oct 2026 11:27:29 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v5 05/62] qapi: add type-infos generator
+In-Reply-To: <20260911-qom-qapi-v5-5-7732a55b7760@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Fri, 11 Sep 2026 20:34:39 +0400")
+References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
+ <20260911-qom-qapi-v5-5-7732a55b7760@redhat.com>
+Date: Sat, 17 Oct 2026 11:27:29 +0200
+Message-ID: <87bj8s4qym.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261017-allwinner-gpio-eint-v2-2-82906f440378@gmail.com>
-References: <20261017-allwinner-gpio-eint-v2-0-82906f440378@gmail.com>
-In-Reply-To: <20261017-allwinner-gpio-eint-v2-0-82906f440378@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,63 +92,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test that configures pin to input mode and validates that
-manipulating input pin changed value in DAT register.
-This was previously tested in the interrupt handling tests, but now is
-moved into a separate test.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
----
- tests/qtest/allwinner-gpio-test.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+> New QAPISchemaGenTypeInfoVisitor produces per-module
+> qapi-type-infos-*.h/c files. Each file declares QAPITypeInfo constants
+> pairing the QAPI type name with its masked introspection name.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/tests/qtest/allwinner-gpio-test.c b/tests/qtest/allwinner-gpio-test.c
-index 7ad89f6e0a..5c4a148d82 100644
---- a/tests/qtest/allwinner-gpio-test.c
-+++ b/tests/qtest/allwinner-gpio-test.c
-@@ -238,6 +238,32 @@ static void test_set_input_pins(const void *data)
-     qtest_quit(s);
- }
- 
-+/*
-+ * Set pin to input, check that the value is written to DAT register
-+ */
-+static void test_get_input_pins(const void *data)
-+{
-+    PortPinTestParam *param = (PortPinTestParam *)data;
-+    g_autofree char *in_name = portname_in(param->port);
-+
-+    QTestState *s = qtest_init("-machine cubieboard");
-+
-+    /* Configure pin as input */
-+    update_cfg_reg(s, param->port, param->pin, AW_GPIO_CFG_IN);
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, param->pin,
-+                     AW_GPIO_LEVEL_LOW);
-+    assert_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_LOW);
-+
-+    /* Change input value */
-+    qtest_set_irq_in(s,
-+                     "/machine/soc/gpio", in_name, param->pin,
-+                     AW_GPIO_LEVEL_HIGH);
-+    assert_data_reg(s, param->port, param->pin, AW_GPIO_LEVEL_HIGH);
-+
-+    qtest_quit(s);
-+}
-+
- /* Test rising edge interrupt */
- static void test_irq_pin_rising(const void *data)
- {
-@@ -518,6 +544,7 @@ int main(int argc, char **argv)
-         const PortPinTestParam *p = &in_out_test_parameters[i];
-         add_test("set_output_pins", p, test_set_output_pins);
-         add_test("set_input_pins", p, test_set_input_pins);
-+        add_test("get_input_pins", p, test_get_input_pins);
-     }
-     qtest_add_func("/allwinner-cubieboard/gpio/reset_values",
-                         test_reset_values);
+Per-module is a bit problematic due to type masking.
 
--- 
-2.56.0
+To create a QOM property of QAPI type, we need the declaration of its
+QAPITypeInfo, and we include the modular type-infos header to get it.
+
+For instance, crypto/secret_common.c includes
+qapi/qapi-type-infos-crypto.h for QCryptoSecretFormat_type_info.  Adding
+or removing types in qapi/crypto.json will change
+qapi/qapi-type-infos-crypto.h and trigger recompilation of
+crypto/secret_common.c.  Adding or removing types elswhere won't.  Good.
+
+However, messing with types *anywhere* almost always changes the masked
+names *everywhere*, triggering recompilation of all qapi/*type-infos*.c.
+Not so good.
+
+A slow build is commonly death by a thousand cuts.  This is yet another
+cut.  I'm sure we could figure out how to avoid it, but the series is
+big and I don't want to delay it more than I have to.  Let's note the
+issue in the commit message.
+
+Aside: existing qapi/qapi-introspect.c is monolithic, which is
+differently problematic.  Only qapi/qapi-introspect.c changes.  Good.
+It's ~1.2MiB.  Not so good.
+
+> ---
+>  docs/devel/qapi-code-gen.rst |  92 +++++++++++++++++++++++
+>  meson.build                  |   1 +
+>  scripts/qapi/backend.py      |   2 +
+>  scripts/qapi/type_infos.py   | 175 +++++++++++++++++++++++++++++++++++++=
+++++++
+>  4 files changed, 270 insertions(+)
+>
+> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+> index b697aab930d1..69d5c4af9874 100644
+> --- a/docs/devel/qapi-code-gen.rst
+> +++ b/docs/devel/qapi-code-gen.rst
+> @@ -1250,6 +1250,9 @@ JSON array of strings.
+>  To examine a type, start with a command or event using it, then follow
+>  references by name.
+>=20=20
+> +.. TODO document QOM introspection (qom-list, qom-list-properties,
+> +   qom-get) and how it relates to QAPI type information.
+> +
+>  .. TODO document QOM introspection (qom-list, qom-list-properties,
+>     qom-get) and how it relates to QAPI type information.
+>=20=20
+
+Duplicate.  The first copy is from PATCH 04.  I believe it's an accident
+there.
+
+Out of time for today, intend to look at the remainder as soon as I can.
+
+[...]
 
 
