@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8826CCF2C1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 912B7CCF2C7
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 14:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI5fo-0003dJ-DF; Sat, 17 Oct 2026 10:46:12 -0400
+	id 1xI5fq-0003dN-Jy; Sat, 17 Oct 2026 10:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xI5fS-0003cF-6k; Sat, 17 Oct 2026 10:45:59 -0400
+ id 1xI5fR-0003cD-QW; Sat, 17 Oct 2026 10:45:59 -0400
 Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
- id 1xI5fP-0006Bd-Ob; Sat, 17 Oct 2026 10:45:49 -0400
+ id 1xI5fP-0006Bb-EV; Sat, 17 Oct 2026 10:45:49 -0400
 Received: from k3-03 (unknown [159.226.43.8])
- by APP-05 (Coremail) with SMTP id zQCowAC3JUAWitNq++SwCw--.2946S2;
- Sat, 17 Oct 2026 22:45:43 +0800 (CST)
+ by APP-05 (Coremail) with SMTP id zQCowABHsTsPitNqkeSwCw--.43652S2;
+ Sat, 17 Oct 2026 22:45:40 +0800 (CST)
 From: Tan Chi <tanchi25@mails.ucas.ac.cn>
 To: qemu-devel@nongnu.org
 Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
  chao.liu@processmission.com, qemu-riscv@nongnu.org,
  Tan Chi <tanchi25@mails.ucas.ac.cn>
-Subject: [PATCH v2 2/2] hw/riscv/riscv-iommu: reclaim invalidated IOATC entries
-Date: Sat, 17 Oct 2026 22:45:33 +0800
-Message-ID: <20261017144533.15610-2-tanchi25@mails.ucas.ac.cn>
+Subject: [PATCH v2 1/2] hw/riscv/riscv-iommu: serialize IOATC accesses
+Date: Sat, 17 Oct 2026 22:45:32 +0800
+Message-ID: <20261017144533.15610-1-tanchi25@mails.ucas.ac.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261017143943.15521-1-tanchi25@mails.ucas.ac.cn>
 References: <20261017143943.15521-1-tanchi25@mails.ucas.ac.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAC3JUAWitNq++SwCw--.2946S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxtFWrtw1rAFy8JrW5tw43Jrb_yoWDJw4Upr
- 4Sgr4akryUJF17tr4rt3Z7CF40g397WFZ8W3s8G3ykA3ZFkrWIqFs8Ja4rZ398CFyxZ34j
- yw4Yqa1jyr1UtFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+X-CM-TRANSID: zQCowABHsTsPitNqkeSwCw--.43652S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3Wr4fKr1kur4rJr4rXFWDurg_yoWxGr1Dpr
+ W3WrZIvr1rXF17XF43Jwn7CF1vg3Wvgay3X34akanakF4jqrWUXFnxJa4jvrZ8tFWxua42
+ yw40g3Z8AF40yF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
  9KBjDU0xBIdaVrnRJUUU9m14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
  rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
  1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
@@ -76,294 +76,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IOTINVAL currently walks the IOATC hash table and invalidates matching
-entries by setting iot->perm to IOMMU_NONE. The invalidated entries remain
-in the hash table afterwards.
+The IOATC currently keeps references to the hash table while cached
+entries are being used. The following change will remove matching
+entries during invalidation, which requires cached entry lifetime to be
+protected explicitly.
 
-Under workloads with frequent DMA map/unmap activity, invalid entries can
-accumulate while only a smaller number of entries remain valid. Subsequent
-IOTINVAL operations continue to scan these entries. They are also included
-in g_hash_table_size(), causing the IOATC to reach iot_limit earlier and
-the entire cache to be flushed more frequently.
+Add an iot_lock to serialize IOATC lookup, update, invalidation, and
+reset operations. Copy the fields needed by the translation path while
+holding the lock, then release it before updating the IOMMUTLBEntry.
 
-Remove matching entries during invalidation instead of leaving them in the
-hash table with IOMMU_NONE.
-
-The measurements use a Linux 7.3-rc5 guest based on linux-iommu/next
-commit cec2dc7663e7 with v6 of the "iommu/riscv: Enable MSI remapping,
-IOMMU_DMA and VFIO" series applied. The QEMU behavior is not specific to
-this guest kernel; this configuration makes it easier to exercise through
-normal DMA map/unmap activity.
-
-In a high-churn NVMe workload with frequent DMA map/unmap activity, runtime
-drops from 168 seconds to 35 seconds, a 4.8x speedup.
-
-A short fio workload with a small working set remains within measurement
-noise. Across three runs for each version of a 300-second fio workload with
-a 4 GiB working set, median throughput improves from 68.6 MiB/s to
-75.0 MiB/s, an increase of 9.3%.
+Keep the page-table walk outside the critical section so the lock is not
+held across potentially expensive memory accesses.
 
 Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
 ---
- hw/riscv/riscv-iommu.c | 122 +++++++++++++++++++----------------------
- 1 file changed, 56 insertions(+), 66 deletions(-)
+ hw/riscv/riscv-iommu.c | 53 ++++++++++++++++++++++++------------------
+ hw/riscv/riscv-iommu.h |  1 +
+ 2 files changed, 32 insertions(+), 22 deletions(-)
 
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index bd34c72868..c217a428de 100644
+index 323a041b4a..bd34c72868 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -1582,104 +1582,93 @@ static guint riscv_iommu_iot_hash(gconstpointer v)
- /* GV: 0 AV: 0 PSCV: 0 GVMA: 0 */
- /* GV: 0 AV: 0 GVMA: 1 */
- static
--void riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer data)
-+gboolean riscv_iommu_iot_inval_all(gpointer key, gpointer value, gpointer data)
+@@ -1682,7 +1682,7 @@ static void riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key, gpointer value,
+     }
+ }
+ 
+-/* caller should keep ref-count for iot_cache object */
++/* caller must hold iot_lock */
+ static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+     GHashTable *iot_cache, hwaddr iova, RISCVIOMMUTransTag transtag)
  {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag;
+@@ -1695,27 +1695,26 @@ static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
+     return g_hash_table_lookup(iot_cache, &key);
  }
  
- /* GV: 0 AV: 0 PSCV: 1 GVMA: 0 */
- static
--void riscv_iommu_iot_inval_pscid(gpointer key, gpointer value, gpointer data)
-+gboolean riscv_iommu_iot_inval_pscid(gpointer key, gpointer value,
-+                                     gpointer data)
+-/* caller should keep ref-count for iot_cache object */
+-static void riscv_iommu_iot_update(RISCVIOMMUState *s,
+-    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
++/* caller must hold iot_lock */
++static void riscv_iommu_iot_update(RISCVIOMMUState *s, RISCVIOMMUEntry *iot)
  {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->pscid == arg->pscid) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->pscid == arg->pscid;
+     if (!s->iot_limit) {
+         return;
+     }
+ 
+     if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
+-        iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
+-                                          riscv_iommu_iot_equal,
+-                                          g_free, NULL);
+-        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
++        GHashTable *old_cache = s->iot_cache;
++        s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
++                                             riscv_iommu_iot_equal,
++                                             g_free, NULL);
++        g_hash_table_unref(old_cache);
+     }
+-    g_hash_table_add(iot_cache, iot);
++    g_hash_table_add(s->iot_cache, iot);
  }
  
- /* GV: 0 AV: 1 PSCV: 0 GVMA: 0 */
- static
--void riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer data)
-+gboolean riscv_iommu_iot_inval_iova(gpointer key, gpointer value, gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->iova == arg->iova) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->iova == arg->iova;
- }
- 
- /* GV: 0 AV: 1 PSCV: 1 GVMA: 0 */
--static void riscv_iommu_iot_inval_pscid_iova(gpointer key, gpointer value,
--                                             gpointer data)
-+static gboolean riscv_iommu_iot_inval_pscid_iova(gpointer key,
-+                                                 gpointer value,
-+                                                 gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->pscid == arg->pscid &&
--        iot->iova == arg->iova) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->pscid == arg->pscid &&
-+           iot->iova == arg->iova;
- }
- 
- /* GV: 1 AV: 0 PSCV: 0 GVMA: 0 */
- /* GV: 1 AV: 0 GVMA: 1 */
--static
--void riscv_iommu_iot_inval_gscid(gpointer key, gpointer value, gpointer data)
-+static gboolean riscv_iommu_iot_inval_gscid(gpointer key, gpointer value,
-+                                            gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->gscid == arg->gscid) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->gscid == arg->gscid;
- }
- 
- /* GV: 1 AV: 0 PSCV: 1 GVMA: 0 */
--static void riscv_iommu_iot_inval_gscid_pscid(gpointer key, gpointer value,
--                                              gpointer data)
-+static gboolean riscv_iommu_iot_inval_gscid_pscid(gpointer key,
-+                                                  gpointer value,
-+                                                  gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->gscid == arg->gscid &&
--        iot->pscid == arg->pscid) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->gscid == arg->gscid &&
-+           iot->pscid == arg->pscid;
- }
- 
- /* GV: 1 AV: 1 PSCV: 0 GVMA: 0 */
- /* GV: 1 AV: 1 GVMA: 1 */
--static void riscv_iommu_iot_inval_gscid_iova(gpointer key, gpointer value,
--                                             gpointer data)
-+static gboolean riscv_iommu_iot_inval_gscid_iova(gpointer key,
-+                                                 gpointer value,
-+                                                 gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->gscid == arg->gscid &&
--        iot->iova == arg->iova) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->gscid == arg->gscid &&
-+           iot->iova == arg->iova;
- }
- 
- /* GV: 1 AV: 1 PSCV: 1 GVMA: 0 */
--static void riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key, gpointer value,
--                                                   gpointer data)
-+static gboolean riscv_iommu_iot_inval_gscid_pscid_iova(gpointer key,
-+                                                       gpointer value,
-+                                                       gpointer data)
- {
-     RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
-     RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
--    if (iot->tag == arg->tag &&
--        iot->gscid == arg->gscid &&
--        iot->pscid == arg->pscid &&
--        iot->iova == arg->iova) {
--        iot->perm = IOMMU_NONE;
--    }
-+    return iot->tag == arg->tag &&
-+           iot->gscid == arg->gscid &&
-+           iot->pscid == arg->pscid &&
-+           iot->iova == arg->iova;
- }
- 
- /* caller must hold iot_lock */
-@@ -1712,7 +1701,7 @@ static void riscv_iommu_iot_update(RISCVIOMMUState *s, RISCVIOMMUEntry *iot)
-     g_hash_table_add(s->iot_cache, iot);
- }
- 
--static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
-+static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHRFunc func,
+ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
      uint32_t gscid, uint32_t pscid, hwaddr iova, RISCVIOMMUTransTag transtag)
  {
+-    GHashTable *iot_cache;
      RISCVIOMMUEntry key = {
-@@ -1723,7 +1712,7 @@ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+         .tag = transtag,
+         .gscid = gscid,
+@@ -1723,9 +1722,9 @@ static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
+         .iova  = PPN_DOWN(iova),
      };
  
-     qemu_mutex_lock(&s->iot_lock);
--    g_hash_table_foreach(s->iot_cache, func, &key);
-+    g_hash_table_foreach_remove(s->iot_cache, func, &key);
-     qemu_mutex_unlock(&s->iot_lock);
+-    iot_cache = g_hash_table_ref(s->iot_cache);
+-    g_hash_table_foreach(iot_cache, func, &key);
+-    g_hash_table_unref(iot_cache);
++    qemu_mutex_lock(&s->iot_lock);
++    g_hash_table_foreach(s->iot_cache, func, &key);
++    qemu_mutex_unlock(&s->iot_lock);
  }
  
-@@ -1972,7 +1961,8 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-     dma_addr_t addr;
-     uint32_t tail, head, ctrl;
-     uint64_t cmd_opcode;
--    GHFunc func;
-+    GHRFunc iot_func;
-+    GHFunc ctx_func;
+ static RISCVIOMMUTransTag riscv_iommu_get_transtag(RISCVIOMMUContext *ctx)
+@@ -1747,15 +1746,14 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+ {
+     RISCVIOMMUTransTag transtag = riscv_iommu_get_transtag(ctx);
+     RISCVIOMMUEntry *iot;
+-    IOMMUAccessFlags perm;
++    IOMMUAccessFlags perm = IOMMU_NONE;
+     bool enable_pid;
+     bool enable_pri;
+-    GHashTable *iot_cache;
++    hwaddr phys = 0;
+     int fault;
  
-     ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
-     tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQT) & s->cq_mask;
-@@ -2035,18 +2025,18 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-                 goto cmd_ill;
-             }
+     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
  
--            func = riscv_iommu_iot_inval_all;
-+            iot_func = riscv_iommu_iot_inval_all;
- 
-             if (gv) {
--                func = (av) ? riscv_iommu_iot_inval_gscid_iova :
-+                iot_func = (av) ? riscv_iommu_iot_inval_gscid_iova :
-                               riscv_iommu_iot_inval_gscid;
-             }
- 
-             riscv_iommu_iot_inval(
--                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
-+                s, iot_func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VG);
- 
-             riscv_iommu_iot_inval(
--                s, func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
-+                s, iot_func, gscid, pscid, iova, RISCV_IOMMU_TRANS_TAG_VN);
-             break;
+-    iot_cache = g_hash_table_ref(s->iot_cache);
+     enable_pri = (iotlb->perm == IOMMU_NONE) &&
+                  (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
+     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+@@ -1771,10 +1769,15 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
          }
+     }
  
-@@ -2066,24 +2056,24 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-             if (gv) {
-                 transtag = RISCV_IOMMU_TRANS_TAG_VN;
-                 if (pscv) {
--                    func = (av) ? riscv_iommu_iot_inval_gscid_pscid_iova :
-+                    iot_func = (av) ? riscv_iommu_iot_inval_gscid_pscid_iova :
-                                   riscv_iommu_iot_inval_gscid_pscid;
-                 } else {
--                    func = (av) ? riscv_iommu_iot_inval_gscid_iova :
-+                    iot_func = (av) ? riscv_iommu_iot_inval_gscid_iova :
-                                   riscv_iommu_iot_inval_gscid;
-                 }
-             } else {
-                 transtag = RISCV_IOMMU_TRANS_TAG_SS;
-                 if (pscv) {
--                    func = (av) ? riscv_iommu_iot_inval_pscid_iova :
-+                    iot_func = (av) ? riscv_iommu_iot_inval_pscid_iova :
-                                   riscv_iommu_iot_inval_pscid;
-                 } else {
--                    func = (av) ? riscv_iommu_iot_inval_iova :
-+                    iot_func = (av) ? riscv_iommu_iot_inval_iova :
-                                   riscv_iommu_iot_inval_all;
-                 }
-             }
+-    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova, transtag);
+-    perm = iot ? iot->perm : IOMMU_NONE;
++    qemu_mutex_lock(&s->iot_lock);
++    iot = riscv_iommu_iot_lookup(ctx, s->iot_cache, iotlb->iova, transtag);
++    if (iot) {
++        perm = iot->perm;
++        phys = iot->phys;
++    }
++    qemu_mutex_unlock(&s->iot_lock);
+     if (perm != IOMMU_NONE) {
+-        iotlb->translated_addr = PPN_PHYS(iot->phys);
++        iotlb->translated_addr = PPN_PHYS(phys);
+         iotlb->addr_mask = ~TARGET_PAGE_MASK;
+         iotlb->perm = perm;
+         fault = 0;
+@@ -1805,12 +1808,12 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
+         iot->perm = iotlb->perm;
+         iot->tag = transtag;
+-        riscv_iommu_iot_update(s, iot_cache, iot);
++        qemu_mutex_lock(&s->iot_lock);
++        riscv_iommu_iot_update(s, iot);
++        qemu_mutex_unlock(&s->iot_lock);
+     }
  
--            riscv_iommu_iot_inval(s, func, gscid, pscid, iova, transtag);
-+            riscv_iommu_iot_inval(s, iot_func, gscid, pscid, iova, transtag);
-             break;
-         }
+ done:
+-    g_hash_table_unref(iot_cache);
+-
+     if (enable_pri && fault) {
+         struct riscv_iommu_pq_record pr = {0};
+         if (enable_pid) {
+@@ -2674,6 +2677,7 @@ static void riscv_iommu_instance_init(Object *obj)
+     s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
+                                          riscv_iommu_iot_equal,
+                                          g_free, NULL);
++    qemu_mutex_init(&s->iot_lock);
  
-@@ -2091,12 +2081,12 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-                              RISCV_IOMMU_CMD_IODIR_OPCODE):
-             if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
-                 /* invalidate all device context cache mappings */
--                func = riscv_iommu_ctx_inval_all;
-+                ctx_func = riscv_iommu_ctx_inval_all;
-             } else {
-                 /* invalidate all device context matching DID */
--                func = riscv_iommu_ctx_inval_devid;
-+                ctx_func = riscv_iommu_ctx_inval_devid;
-             }
--            riscv_iommu_ctx_inval(s, func,
-+            riscv_iommu_ctx_inval(s, ctx_func,
-                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID), 0);
-             break;
+     s->iommus.le_next = NULL;
+     s->iommus.le_prev = NULL;
+@@ -2690,6 +2694,8 @@ static void riscv_iommu_instance_finalize(Object *obj)
  
-@@ -2106,9 +2096,9 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
-                 /* illegal command arguments IODIR_PDT & DV == 0 */
-                 goto cmd_ill;
-             } else {
--                func = riscv_iommu_ctx_inval_devid_procid;
-+                ctx_func = riscv_iommu_ctx_inval_devid_procid;
-             }
--            riscv_iommu_ctx_inval(s, func,
-+            riscv_iommu_ctx_inval(s, ctx_func,
-                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID),
-                 get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
-             break;
+     g_hash_table_unref(s->ctx_cache);
+     g_hash_table_unref(s->iot_cache);
++
++    qemu_mutex_destroy(&s->iot_lock);
+ }
+ 
+ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+@@ -2850,7 +2856,10 @@ void riscv_iommu_reset(RISCVIOMMUState *s)
+     riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_IPSR, 0);
+ 
+     g_hash_table_remove_all(s->ctx_cache);
++
++    qemu_mutex_lock(&s->iot_lock);
+     g_hash_table_remove_all(s->iot_cache);
++    qemu_mutex_unlock(&s->iot_lock);
+ }
+ 
+ static const Property riscv_iommu_properties[] = {
+diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+index 7c470ba084..403d10b321 100644
+--- a/hw/riscv/riscv-iommu.h
++++ b/hw/riscv/riscv-iommu.h
+@@ -73,6 +73,7 @@ struct RISCVIOMMUState {
+ 
+     GHashTable *iot_cache;          /* IO Translated Address Cache */
+     unsigned iot_limit;             /* IO Translation Cache size limit */
++    QemuMutex iot_lock;
+ 
+     /* MMIO Hardware Interface */
+     MemoryRegion regs_mr;
 -- 
 2.53.0
 
