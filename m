@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D238CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C96CCF2CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9cI-0003vU-9T; Sat, 17 Oct 2026 14:58:50 -0400
+	id 1xI9Zz-0008KR-DU; Sat, 17 Oct 2026 14:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c5-0003Uw-Ro; Sat, 17 Oct 2026 14:58:38 -0400
+ id 1xI9Zg-0008Bt-BR; Sat, 17 Oct 2026 14:56:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c3-0003rr-Rf; Sat, 17 Oct 2026 14:58:37 -0400
+ id 1xI9Ze-0003bQ-9m; Sat, 17 Oct 2026 14:56:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263396; bh=JG2OZB0G7bDBx1Eg8+jX2hzX482Ryji3SBhBjSQ2CmA=;
+ t=1792263359; bh=VizHhZ8is8WAjfuxExgoMd5lQnEZNAOVdpL1b1WDjpo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ITLsLqEEb+joet+Xr7UqLiUJgTFKv2xOIPcgXqd37J+ETryFdBToh2ki/ibGf45HM
- zQvJ0qOLV9h+LtPmOxqWxEr5IXuJ0lOLSmfdQDKpmUPmBBg32PVlVz2blRe85g7WG/
- Ger5DLNFiUnWdUseHDuhUwZxbvLoe/diLf7wtq7pWDMkmMlWKT9crCZPz7NNmaSUBd
- 5wwX8YWYfUifYdeTc6W/nYTeoeGv/mF9QvWfgw6tzSrbwFg27sWn8jPwDg7wBMTp0I
- myNePdsHYCR98XkNSG64/FEYcqnAC6+F4hVhl14chlOi/zDMtnelDvojPqmJ+7byfV
- tj2vwLagQz92w==
+ b=VYRBeAl8eedi7YOWloGFThKpkieyK7sd+4TApO9gCfduWy4NsaupqHPRX1AI0c8rb
+ V6xqaY7bnwCosHYYjDnt/Zn5FXx+/+WTT5XyIxHMvuKrU2bwHDRFA/Ok6WcLPTaO23
+ FqhgRWQJU9oK7/a+ehgwsa5LWkYIlhMf7ZavO4t1c6QVP1i26GMJMaNk0uMmd9MoME
+ y9UupNrrZ6jbVhduv5I3555A/K8IC/UmmxAqzrdJ4sBvGxMDc8XHGTR2Qrk+H5a7Nr
+ g4iuTntbu+5VT/n1ExaDx99/SZyMpBSsT1wDNjDCMseSGi9ySabgl1kXE22DHCrqou
+ XrdB3NxRgHpcA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8278D1DE6C0;
- Sat, 17 Oct 2026 21:56:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 204E31DE6A5;
+ Sat, 17 Oct 2026 21:55:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B0CDF44338B;
- Sat, 17 Oct 2026 21:56:35 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B97C443370;
+ Sat, 17 Oct 2026 21:55:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Andrey Polivoda <apolivodaa433@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 32/63] target/i386/tcg: ignore VEX.L for unary scalar
- instructions
-Date: Sat, 17 Oct 2026 21:54:48 +0300
-Message-ID: <20261017185528.722197-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 05/63] virtio-ccw: Limit ISC to MAX_ISC
+Date: Sat, 17 Oct 2026 21:54:21 +0300
+Message-ID: <20261017185528.722197-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -69,101 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-According to both Volume 2 of Intel 64 and IA-32 Architectures Software
-Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
-VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
+The interrupt subclass is often defined as a uint8, though in practice
+it will be within the range of just 0-7. Ensure that a guest-supplied
+subclass does not extend beyond its expected range, especially when
+used as an array index.
 
-Currently, QEMU handles VEX.L with these instructions differently:
-- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
-  (XMM or YMM), leading to differences between QEMU and the real hardware.
-- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
-  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
-  bit set, the QEMU process crashes with an assertion failure.
-
-These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
-it also allows unprivileged guest userspace to crash the QEMU process itself.
-Instead, always handle the instructions as if VEX.L=0.
-
-Reported-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a5b4837a253ed3944dd7d4419c52830079e221ec)
+Cc: qemu-stable@nongnu.org
+Fixes: 25a08b8ded ("s390x/css: update css_adapter_interrupt")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-2-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 92b935de2709cdbb1c4ee2b48814640a71e8a438)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 704858ff57..b3989e07b4 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -260,6 +260,7 @@
- #define svm(a) .intercept = SVM_EXIT_##a, .has_intercept = true,
- 
- #define avx2_256 .vex_special = X86_VEX_AVX2_256,
-+#define vex_lig .vex_special = X86_VEX_LIG,
- 
- #define P_00          1
- #define P_66          (1 << PREFIX_DATA)
-@@ -887,8 +888,8 @@ static const X86OpEntry opcodes_0F3A[256] = {
-      * For other unary operations such as VSQRTSx this is hidden by the "REPScalar"
-      * value of vex_special, because the table lists the operand types of VSQRTPx.
-      */
--    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 cpuid(SSE41) p_66),
--    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 cpuid(SSE41) p_66),
-+    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 vex_lig cpuid(SSE41) p_66),
-+    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 vex_lig cpuid(SSE41) p_66),
-     [0x0c] = X86_OP_ENTRY4(VBLENDPS,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0d] = X86_OP_ENTRY4(VBLENDPD,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
-@@ -944,8 +945,8 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F10_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5),
--        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5),
-+        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5 vex_lig),
-     };
- 
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -967,8 +968,8 @@ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F11_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
--        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
-+        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5 vex_lig), /* MOVSD */
-     };
- 
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -2401,6 +2402,10 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-     case X86_VEX_None:
-         break;
- 
-+    case X86_VEX_LIG:
-+        s->vex_l = 0;
-+        break;
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 991fc12608..79a6c90175 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -680,8 +680,13 @@ void css_adapter_interrupt(CssIoAdapterType type, uint8_t isc)
+     S390FLICState *fs = s390_get_flic();
+     S390FLICStateClass *fsc = s390_get_flic_class(fs);
+     uint32_t io_int_word = (isc << 27) | IO_INT_WORD_AI;
+-    IoAdapter *adapter = channel_subsys.io_adapters[type][isc];
++    IoAdapter *adapter;
 +
-     case X86_VEX_REPScalar:
-         /*
-          * Instructions which differ between 00/66 and F2/F3 in the
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 9282296900..25f7d2215e 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -263,6 +263,12 @@ typedef enum X86VEXSpecial {
-      * operands, and thus handled by decode_op_size.
-      */
-     X86_VEX_AVX2_256,
++    if (type >= CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
++        return;
++    }
+ 
++    adapter = channel_subsys.io_adapters[type][isc];
+     if (!adapter) {
+         return;
+     }
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index 43f3b162c8..5d7112b028 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -44,6 +44,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
+     CcwDevice *ccw_dev = CCW_DEVICE(dev);
+     CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
+ 
++    if (dev->thinint_isc > MAX_ISC) {
++        return -EINVAL;
++    }
 +
-+    /*
-+     * Instructions that do not care about VEX.L; used for scalar operands, because
-+     * they *should* be used only with VEX.L=0 but may accept VEX.L=1 on some machines.
-+     */
-+    X86_VEX_LIG,
- } X86VEXSpecial;
- 
- 
+     ccw_dev->sch->driver_data = dev;
+     if (ccw_dev->sch->thinint_active) {
+         dev->routes.adapter.adapter_id = css_get_adapter_id(
+@@ -657,6 +661,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+         } else {
+             if (ccw_dstream_read(&sch->cds, thinint)) {
+                 ret = -EFAULT;
++            } else if (thinint.isc > MAX_ISC) {
++                ret = -ENOSYS;
+             } else {
+                 thinint.ind_bit = be64_to_cpu(thinint.ind_bit);
+                 thinint.summary_indicator =
 -- 
 2.47.3
 
