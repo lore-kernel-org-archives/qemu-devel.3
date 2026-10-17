@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37160CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE0FCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9aQ-00008s-6A; Sat, 17 Oct 2026 14:56:54 -0400
+	id 1xI9aC-0008Pw-VZ; Sat, 17 Oct 2026 14:56:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9aI-0008Ud-NI; Sat, 17 Oct 2026 14:56:46 -0400
+ id 1xI9Zl-0008DN-76; Sat, 17 Oct 2026 14:56:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9aG-0003eS-W2; Sat, 17 Oct 2026 14:56:46 -0400
+ id 1xI9Zi-0003bn-Cu; Sat, 17 Oct 2026 14:56:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263373; bh=GNvFlSvRYQx1Z0kpH1RH2RJMqbL+Qv5NB/rcxSmHl3M=;
+ t=1792263362; bh=nLdVmRNqxssAPbTGCImmjqx3OHFVRNYQnUorSN86MNI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZjOqg/EtDTHIJsNSZm0/s93u79MX+2VCotzxlG0h5v0VhftLIyzsj7Iabxn0Fm/qT
- 6ck0FgiPhlxJIoY6kt8kbJyn6KNIAib3fN06pfLXMslfhwzD/KrX12nITXxS7Bzf8W
- 3Qig8mH3UuSvlTarD6yU2yyFidT07grNf0EhQ2ot0+zfE/7SKW/LxMrP8K47ujqt36
- 4lzO+9RQyLoR0YBSRdAtOwrhnawUTPh8Yp6s+465HPDPePKv+EC8nl1hhwv2wiyPRd
- 3HsZbcQ3PmKd2XY9Bldtdo3SWiaXUhJmTtv0VL8vgdvSU2Oedy8uQmVybYbrB8bo30
- JHz+g5VQMdgIg==
+ b=gArOteBDsYigXg2MAMwWedNuh+wracU8P0m4wbRV/EZA6Vw6ekBQAHmW5b7u35a1j
+ KWMWYD9tUOVNgslWJpahrmODsYl/6mBdM+ckDeWXTm7BQulleMyrbs3/VCRm0g5B2+
+ acXt+cCkLC7Os/5frvZRdyrcCNwziexI+w0HCXFcmd7oc1VAxEkvN37oMe1jR434zx
+ hwTBzAOxDU0WlJyoe4RxF2p5yaq6rMg+xNc44wAtpjpOLzhn0ZhC+iI3V8pa+B+i3t
+ J/uIqf+iEMtO1n/aYhyEBo6kIcNNE6RN7LqhUTXt1jMlvBoYHjQW5vLukb7kzBZSih
+ gffkyjygYDjKA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 28A3E1DE6AF;
- Sat, 17 Oct 2026 21:56:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0798E1DE6A7;
+ Sat, 17 Oct 2026 21:56:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 489FC44337A;
- Sat, 17 Oct 2026 21:56:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 14831443372;
+ Sat, 17 Oct 2026 21:56:00 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 15/63] hw/usb/dev-smartcard-reader: validate
- interrupt transfer length
-Date: Sat, 17 Oct 2026 21:54:31 +0300
-Message-ID: <20261017185528.722197-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 07/63] virtio-ccw: Fix rc check in read configuration
+ path
+Date: Sat, 17 Oct 2026 21:54:23 +0300
+Message-ID: <20261017185528.722197-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,44 +69,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-A guest can submit an interrupt IN transfer shorter than the 2-byte
-RDR_to_PC_NotifySlotChange message. usb_packet_copy() asserts that
-the packet has enough space, so a zero- or one-byte request triggers
-an assertion failure, crashing QEMU.
+Both the read and write config paths use wrappers around cds->op_handler,
+depending on the direction the I/O is flowing. But they expect opposite
+values in the returned variable to indicate success.
 
-Check the transfer length before copying and stall the endpoint when
-it is too short. The notification is preserved for a subsequent
-properly-sized transfer.
+Fix this by unifying those checks, where CCW_CMD_READ_CONF needs to
+see !ret as success. The end result is some erroneous data in the
+SCSW response data, but the overall success/failure is correct.
 
-Note: a later refactoring patch will switch to usb_packet_size(), but
-this patch open-code p->iov.size for consistency with the rest of the
-code.
-
-Fixes: CVE-2026-18609
-Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4128
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 1847dcd96d7dbb7d4478b61e1bd7a5ca563d910c)
+Cc: qemu-stable@nongnu.org
+Fixes: d895d25ae2 ("s390x: css: report errors from ccw_dstream_read/write")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-4-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit bd5bc2861fb6b5ba74137ed263465780894ec432)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 73deb3ce83..6206ea7834 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -1123,6 +1123,10 @@ static void ccid_handle_data(USBDevice *dev, USBPacket *p)
-             break;
-         case CCID_INT_IN_EP:
-             if (s->notify_slot_change) {
-+                if (p->iov.size < 2) {
-+                    p->status = USB_RET_STALL;
-+                    break;
-+                }
-                 /* page 56, RDR_to_PC_NotifySlotChange */
-                 buf[0] = CCID_MESSAGE_TYPE_RDR_to_PC_NotifySlotChange;
-                 buf[1] = s->bmSlotICCState;
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index b2887a1443..04ac7de5d5 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -473,7 +473,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+         } else {
+             virtio_bus_get_vdev_config(&dev->bus, vdev->config);
+             ret = ccw_dstream_write_buf(&sch->cds, vdev->config, len);
+-            if (ret) {
++            if (!ret) {
+                 sch->curr_status.scsw.count = ccw.count - len;
+             }
+         }
 -- 
 2.47.3
 
