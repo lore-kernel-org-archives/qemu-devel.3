@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E202DCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC68CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9b4-0000uc-LW; Sat, 17 Oct 2026 14:57:35 -0400
+	id 1xI9aN-00005C-Ex; Sat, 17 Oct 2026 14:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ak-0000YK-A7; Sat, 17 Oct 2026 14:57:14 -0400
+ id 1xI9aH-0008T1-5P; Sat, 17 Oct 2026 14:56:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ai-0003gI-Pp; Sat, 17 Oct 2026 14:57:14 -0400
+ id 1xI9aF-0003e9-EL; Sat, 17 Oct 2026 14:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263378; bh=RCLJBtu4un76A2/PxUP84DT7XnR+7pgRtnzWN4ApPLw=;
+ t=1792263372; bh=ITnnyncWib2x191MC0zn0HdualC3ggSRiq0YHZ6cAEg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EhKEFjcPHJM1dAxdpp5bXcNn8dIx4Iqvd0PlX6XMawwZ/CSZJnGd/1Eua9q/Hnz+M
- 52RXzQllZZDWCJ0KeiUsR0WnHqjkrYwpZIJtpt0dzkTjiCAkY743genXG/zgI8RN9r
- 1OusBBdcZAiIiKpdObcDKO3OGXAn9dR5K4gxPqCelDMOYVuRBGwL8MBMVoBFLazojq
- BF5ZB6Rrb94MWpt4S1XYa6uA47F9z4+fPDx1AxVD/5Hl7ghsERWNDQoDkMAEXvo6Cr
- K2VJFOyrb+3DYokZlN22KLqVBqhyARtEIg5l4dREbiIXbGUUeUvKoZe6i4gRYprKXd
- tTJQijaH+Z+nQ==
+ b=WnH3R1rf688Ak6Z2qfR0sowhA6/1nxrg22L3F0KvafmXN9cFe9cMvA+KjrXgx+iyX
+ JUax8GO8gyCbDRYwCdTl+UhfxuaiZUBEFLstRp4Qe54Tspjkpzvo7aVo/8MDk9q5YE
+ mzmy+1PFcrL66oaCBGWl+vOuFhY3leci3geWIEIg3ibvXWr3PdY9k9ieG/KMlFTMua
+ Z7KzEVZaDIeMfWUeD2/3x/6zQW18sl/DSfUoyRPP/CU5yJU1P8ZL/zY+V3fpMbrnHX
+ AXj0ckjMrgJXhFjf9LEosP2IwtT5bQLPRoGbg6Ynb7/7emB9j3RZe653D1p1z3qfka
+ +Pm5T3Cnqfgvw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CD21A1DE6B3;
- Sat, 17 Oct 2026 21:56:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 131AF1DE6AE;
+ Sat, 17 Oct 2026 21:56:12 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8BD644337E;
- Sat, 17 Oct 2026 21:56:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 256BF443379;
+ Sat, 17 Oct 2026 21:56:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 19/63] hw/usb/dev-smartcard-reader: validate migrated
- fields in post_load
-Date: Sat, 17 Oct 2026 21:54:35 +0300
-Message-ID: <20261017185528.722197-19-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 14/63] s390x/pci: Reject apertures beyond IOAT
+ capacity in translation mode
+Date: Sat, 17 Oct 2026 21:54:30 +0300
+Message-ID: <20261017185528.722197-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,47 +70,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Validate fields loaded from the migration stream to reject crafted or
-corrupt data before it can cause harm.
+In order to support direct mapping (which is only bound by the aperture
+size of the underlying host EDMA reported via vfio) QEMU reports the
+host-provided EDMA to the guest.  However, when using translation mode
+QEMU only supports up to 4 TiB currently (the size of a single RT
+table).
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 665494c3ac0737e8067b6365f99c237bd5e5356a)
+Reject attempts by a guest to register a translation aperture that
+would exceed what QEMU can support by giving an operand exception on
+the MPCIFC instruction that requested the large aperture.  This
+restriction can be removed in the future if/when support for additional
+IOAT regions is added.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260929153012.774530-4-mjrosato@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit d818e2b0e6317fe5685ce3671bdb566402ff00e9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 81b2905526..9d3e60e32e 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -1360,6 +1360,26 @@ static void ccid_realize(USBDevice *dev, Error **errp)
- static int ccid_post_load(void *opaque, int version_id)
- {
-     USBCCIDState *s = opaque;
-+    int i;
-+
-+    if (s->bulk_in_pending_end - s->bulk_in_pending_start > BULK_IN_PENDING_NUM) {
-+        return -EINVAL;
-+    }
-+
-+    if (s->pending_answers_num > PENDING_ANSWERS_NUM) {
-+        return -EINVAL;
-+    }
-+
-+    if (s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
-+        return -EINVAL;
-+    }
-+
-+    for (i = 0; i < BULK_IN_PENDING_NUM; i++) {
-+        if (s->bulk_in_pending[i].len > BULK_IN_BUF_SIZE ||
-+            s->bulk_in_pending[i].pos > s->bulk_in_pending[i].len) {
-+            return -EINVAL;
-+        }
-+    }
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index 1be3bc0f46..f93c48842e 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
+@@ -1052,6 +1052,21 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+         return -EINVAL;
+     }
  
-     /*
-      * This must be done after usb_device_attach, which sets state to ATTACHED,
++    /*
++     * We report an EDMA that may exceed what QEMU can handle in support
++     * of direct-mapping.  If the guest attempts to register an IOAT that
++     * is too large, reject it with an informative message.  Only direct
++     * mapping can be used for guests of this size until support is added
++     * to QEMU for additional IOAT regions.
++     */
++    if (t && pal >= ZPCI_TABLE_SIZE_RT) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "ioat pal 0x%"PRIx64" exceeds max translatable address\n",
++                      pal);
++        s390_program_interrupt(env, PGM_OPERAND, ra);
++        return -EINVAL;
++    }
++
+     iommu->pba = pba;
+     iommu->pal = pal;
+     iommu->g_iota = g_iota;
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index 04944d4fed..afe205959f 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -140,6 +140,7 @@ enum ZpciIoatDtype {
+ #define ZPCI_PT_BITS            8
+ #define ZPCI_ST_SHIFT           (ZPCI_PT_BITS + TARGET_PAGE_BITS)
+ #define ZPCI_RT_SHIFT           (ZPCI_ST_SHIFT + ZPCI_TABLE_BITS)
++#define ZPCI_TABLE_SIZE_RT      (1ULL << (ZPCI_RT_SHIFT + ZPCI_TABLE_BITS))
+ 
+ #define ZPCI_RTE_FLAG_MASK      0x3fffULL
+ #define ZPCI_RTE_ADDR_MASK      (~ZPCI_RTE_FLAG_MASK)
 -- 
 2.47.3
 
