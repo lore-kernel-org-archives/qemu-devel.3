@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C6BCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D75CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2u-00024n-Sp; Sat, 17 Oct 2026 16:30:25 -0400
+	id 1xIB4U-0003xT-U1; Sat, 17 Oct 2026 16:32:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2e-0001AH-Hh; Sat, 17 Oct 2026 16:30:08 -0400
+ id 1xIB37-0002yT-9L; Sat, 17 Oct 2026 16:30:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2c-00045p-KB; Sat, 17 Oct 2026 16:30:08 -0400
+ id 1xIB34-0004Nb-NK; Sat, 17 Oct 2026 16:30:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268860; bh=kSy8qByZo5EpHZO7ddzsJPghDf9UBDQl6HJfLiE4c6g=;
+ t=1792268864; bh=CvLwwi4uvgQSvPkmItryGMf44tdYIJRG1Qv8MSrgFZ0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w2TT3chkvHTnjPaRiNfEAWVPwV0debw/BgQG93SYhIEeeaHneVykn5WOzmA/ydowI
- gUOYXfjcM1//b2s2UcxGLWTdHX7hEOXBLM34bPk6XVlZvWvm4nj4hDufQkX1XcYWR6
- 1VTtOPOplSIJtWHO1lRSXjXNQCFsCE2KdcnBrmhTsWJGm/m3lVzdPrkzOr4LnPeoiZ
- Mp+cRpJnKpzlhuCCQ+nL72mFnsOTVAxn7unU19HQOiEnm+Rvdqr3jZz1YKQBPX5b4y
- DaQaRF+1whN3N1vKkZ83lFiLCA9zG8fMMxVA8jCKpH/3TIIGP9oFk4jf4ffilAvN4i
- guSCH0PLRVcJw==
+ b=Aas7y+MJqmBR+udfR4/y4hhubeT7PRUDc7xVaUU7Nr0ymhRfbhjdSJdWY8gOMFmty
+ 2EPe2Tn4sauHjMPON+UKIiVBQ0XY+JgFCSZGOJ0Mb9Jz+dmqlUFZ81rXCYB1VejGTF
+ QV9AQEMcLCZbyyygi8kwA/XnanoA4OVEpk5joDQKplt0AuYn7DgtILyTtY/8Px5Nkn
+ tm+XYuKrNaczQJTnHpz5IlcBiz9TFNi09qmb7pPlmYFl7YkQP+sD5/X0pjQmD6l+lS
+ wXPW5dfof/kgvFfv5YNCVRxnIdWFXNRlclMSB1bKIly9C0BNZyMwLV4LvAz9KuME4K
+ Aa5Es65F4vQWQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C4A51DE760;
- Sat, 17 Oct 2026 23:27:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5A97E1DE764;
+ Sat, 17 Oct 2026 23:27:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 21AF5443434;
- Sat, 17 Oct 2026 23:27:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6287B443438;
+ Sat, 17 Oct 2026 23:27:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 34/73] target/i386: Don't clear C1 for
- FCOMI/FCOMIP/FUCOMI/FUCOMIP
-Date: Sat, 17 Oct 2026 23:25:52 +0300
-Message-ID: <20261017202638.728621-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Andrey Polivoda <apolivodaa433@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 38/73] target/i386/tcg: ignore VEX.L for unary scalar
+ instructions
+Date: Sat, 17 Oct 2026 23:25:56 +0300
+Message-ID: <20261017202638.728621-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -69,47 +69,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit 6802a4b23919 ("target/i386: clear C1 for all x87 compare
-instructions") added an unconditional C1 clear to helper_fcomi_ST0_FT0()
-and helper_fucomi_ST0_FT0(), based on the SDM listing "C1 Set to 0" under
-FPU Flags Affected for FCOMI/FCOMIP/FUCOMI/FUCOMIP.
+According to both Volume 2 of Intel 64 and IA-32 Architectures Software
+Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
+VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
 
-Testing on real x86-64 Intel and AMD hardware shows these instructions leave
-C1 unchanged, unlike FCOM/FUCOM/FICOM. The SDM text appears to have been
-carried over from the FCOM/FUCOM description.
+Currently, QEMU handles VEX.L with these instructions differently:
+- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
+  (XMM or YMM), leading to differences between QEMU and the real hardware.
+- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
+  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
+  bit set, the QEMU process crashes with an assertion failure.
 
-Revert that part of the commit. The FCOM/FUCOM/FICOM changes are kept.
+These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
+it also allows unprivileged guest userspace to crash the QEMU process itself.
+Instead, always handle the instructions as if VEX.L=0.
 
-Fixes: 6802a4b23919 ("target/i386: clear C1 for all x87 compare instructions")
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260911105811.16854-1-scherer.simon89@gmail.com
+Reported-by: Andrey Polivoda <apolivodaa433@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6d5fb14d36a6d11e88f04878021b2d99ce6c07e9)
+(cherry picked from commit a5b4837a253ed3944dd7d4419c52830079e221ec)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 2149f4b1d2..62f1c110e2 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -565,8 +565,6 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
--    /* C1 is unconditionally cleared to 0 */
--    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index da41c97e57..ebd2905cf4 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -260,6 +260,7 @@
+ #define svm(a) .intercept = SVM_EXIT_##a, .has_intercept = true,
  
-@@ -579,8 +577,6 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
--    /* C1 is unconditionally cleared to 0 */
--    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
+ #define avx2_256 .vex_special = X86_VEX_AVX2_256,
++#define vex_lig .vex_special = X86_VEX_LIG,
+ 
+ #define P_00          1
+ #define P_66          (1 << PREFIX_DATA)
+@@ -996,8 +997,8 @@ static const X86OpEntry opcodes_0F3A[256] = {
+      * For other unary operations such as VSQRTSx this is hidden by the "REPScalar"
+      * value of vex_special, because the table lists the operand types of VSQRTPx.
+      */
+-    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 cpuid(SSE41) p_66),
+-    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 cpuid(SSE41) p_66),
++    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 vex_lig cpuid(SSE41) p_66),
++    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 vex_lig cpuid(SSE41) p_66),
+     [0x0c] = X86_OP_ENTRY4(VBLENDPS,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
+     [0x0d] = X86_OP_ENTRY4(VBLENDPD,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
+     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
+@@ -1053,8 +1054,8 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+     static const X86OpEntry opcodes_0F10_mem[4] = {
+         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPS */
+         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPD */
+-        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5),
+-        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5),
++        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5 vex_lig),
++        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5 vex_lig),
+     };
+ 
+     if ((get_modrm(s, env) >> 6) == 3) {
+@@ -1076,8 +1077,8 @@ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+     static const X86OpEntry opcodes_0F11_mem[4] = {
+         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
+         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
+-        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
+-        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
++        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5 vex_lig),
++        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5 vex_lig), /* MOVSD */
+     };
+ 
+     if ((get_modrm(s, env) >> 6) == 3) {
+@@ -2611,6 +2612,10 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+     case X86_VEX_None:
+         break;
+ 
++    case X86_VEX_LIG:
++        s->vex_l = 0;
++        break;
++
+     case X86_VEX_REPScalar:
+         /*
+          * Instructions which differ between 00/66 and F2/F3 in the
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 9282296900..25f7d2215e 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -263,6 +263,12 @@ typedef enum X86VEXSpecial {
+      * operands, and thus handled by decode_op_size.
+      */
+     X86_VEX_AVX2_256,
++
++    /*
++     * Instructions that do not care about VEX.L; used for scalar operands, because
++     * they *should* be used only with VEX.L=0 but may accept VEX.L=1 on some machines.
++     */
++    X86_VEX_LIG,
+ } X86VEXSpecial;
+ 
  
 -- 
 2.47.3
