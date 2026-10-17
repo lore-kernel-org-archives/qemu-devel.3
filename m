@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C00ECCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27C5CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB0C-0005Co-As; Sat, 17 Oct 2026 16:27:37 -0400
+	id 1xIB0R-0005V8-FM; Sat, 17 Oct 2026 16:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzl-00057k-Ip; Sat, 17 Oct 2026 16:27:12 -0400
+ id 1xIB05-0005Aj-MV; Sat, 17 Oct 2026 16:27:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzd-0003t3-L6; Sat, 17 Oct 2026 16:27:04 -0400
+ id 1xIB02-0003uQ-A0; Sat, 17 Oct 2026 16:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268817; bh=5szADkSqt+Y+KJByQCD4jhduzE0A1PK/3Wrx2/eB+rs=;
+ t=1792268829; bh=zDfY0jDVIJEScbQkYChOCCOZdJu7kmri3YOwtAgm5yc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MQhrL91WZSqol8lTRVuwnw0EtoThdtaPicbZdPcjY9UZfq442fHY2tIBvO8XeBg9u
- klqt9EpnnZfsv4HpjzRMA2sKzIMnP91M5JSuhwD1pvAwL2Zzg9gm/7W5X1a1NiA/9F
- 4Uvv9GvMV6unppQja40sHIhKumQPzXc6Hd9+j/5nZU8caDOlZ0E7sLkg7UbhoNNHVa
- rMkoHEYdjSP4wqk25N7XrrkIDLp8rBU4NOM9eRsOgICiS0uhgQoI5sjVNe5XYXwAPu
- SN/GkJ0Z2CSeTDXWzaACmY6WWUgj82PPva+xBjBFqlvNQfUDpsMam8oz/i+qQSeVPx
- 2ecGeZD9w66LQ==
+ b=FjzQg6ltRY5kNL9vbYPZUxqcvSM3ISNhOzVoKh+fmGVO/UfcNJz38+/XRwaWSq6n7
+ i5A16fUQnGo+bXIXy83q8sc4SJvgVRfL1PN69ZRd0rBUC7iFVRXAM4D4+7nHJvVtIb
+ sdpWkArla0po25gK3WVQKAVpeWQYnw+T2A0nKlF3YExZAXeO9+YKSa8XhpDjIRWfX5
+ V84lZXNqrgdNbk8aP2jYCS247dgMG6svGouaXPJwSFfEWmAqEjii0UpBSClVaFtJuD
+ bpd8ThOn0ZLYMf2N7W3n2Eczs85RxM5B0uGQ7JxbSb0JLT4SeR7rVXa39QpjX49A8u
+ JcdC8qAbNuGsw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E3B571DE73C;
- Sat, 17 Oct 2026 23:26:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 398641DE742;
+ Sat, 17 Oct 2026 23:27:09 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 01262443413;
- Sat, 17 Oct 2026 23:26:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 72A7D443419;
+ Sat, 17 Oct 2026 23:27:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jean-Francois Bortolotti <jeff@borto.fr>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 01/73] target/arm: Fix PMSAv8 shareability decode for
- R-profile MPU regions
-Date: Sat, 17 Oct 2026 23:25:19 +0300
-Message-ID: <20261017202638.728621-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 07/73] virtio-ccw: Fix rc check in read configuration
+ path
+Date: Sat, 17 Oct 2026 23:25:25 +0300
+Message-ID: <20261017202638.728621-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -69,42 +69,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Francois Bortolotti <jeff@borto.fr>
+From: Eric Farman <farman@linux.ibm.com>
 
-In Armv8-R AArch32 the shareability field of an MPU region lives in
-PRBAR, not PRLAR:
+Both the read and write config paths use wrappers around cds->op_handler,
+depending on the direction the I/O is flowing. But they expect opposite
+values in the returned variable to indicate success.
 
-  PRBAR: [31:6] BASE  [5] RES0  [4:3] SH  [2:1] AP  [0] XN
-  PRLAR: [31:6] LIMIT [5:4] RES0  [3:1] AttrIndx  [0] EN
-
-(Arm Cortex-R52 TRM 100026_0103_00_en: Tables 3-80 and 3-83 for
-HPRBAR/HPRLAR, Tables 3-124 and 3-127 for PRBAR/PRLAR.)
-
-Without this fix, address translation instructions like ATS1HR
-will return wrong value for PAR.SH.
+Fix this by unifying those checks, where CCW_CMD_READ_CONF needs to
+see !ret as success. The end result is some erroneous data in the
+SCSW response data, but the overall success/failure is correct.
 
 Cc: qemu-stable@nongnu.org
-Fixes: fca45e3467f7 ("target/arm: Add PMSAv8r functionality")
-Signed-off-by: Jean-Francois Bortolotti <jeff@borto.fr>
-Message-id: 20260925234136.1182108-1-jeff@borto.fr
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 653b0c06c83d761667474b29ebfb8a312f317c3a)
+Fixes: d895d25ae2 ("s390x: css: report errors from ccw_dstream_read/write")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-4-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit bd5bc2861fb6b5ba74137ed263465780894ec432)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index a29de0385f..663a4862a4 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3085,7 +3085,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
-         if (!arm_feature(env, ARM_FEATURE_M)) {
-             uint8_t attrindx = extract32(matched_rlar, 1, 3);
-             uint64_t mair = env->cp15.mair_el[regime_el(mmu_idx)];
--            uint8_t sh = extract32(matched_rlar, 3, 2);
-+            uint8_t sh = extract32(matched_rbar, 3, 2);
- 
-             if (regime_sctlr(env, mmu_idx) & SCTLR_WXN &&
-                 result->f.prot & PAGE_WRITE && mmu_idx != ARMMMUIdx_Stage2) {
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index a28fac97a4..c27e49c865 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -475,7 +475,7 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+         } else {
+             virtio_bus_get_vdev_config(&dev->bus, vdev->config);
+             ret = ccw_dstream_write_buf(&sch->cds, vdev->config, len);
+-            if (ret) {
++            if (!ret) {
+                 sch->curr_status.scsw.count = ccw.count - len;
+             }
+         }
 -- 
 2.47.3
 
