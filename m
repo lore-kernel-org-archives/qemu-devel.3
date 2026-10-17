@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAD4CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EECACCF2D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB0P-0005QI-Dr; Sat, 17 Oct 2026 16:27:49 -0400
+	id 1xIB0R-0005Uz-F0; Sat, 17 Oct 2026 16:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzp-00058H-DV; Sat, 17 Oct 2026 16:27:18 -0400
+ id 1xIB03-0005A0-FP; Sat, 17 Oct 2026 16:27:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzi-0003tJ-VV; Sat, 17 Oct 2026 16:27:10 -0400
+ id 1xIAzw-0003u0-EB; Sat, 17 Oct 2026 16:27:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268823; bh=bhA7/owrdMCemIZRffjaxMC93SSySjrJpqFeY4Bc/x4=;
+ t=1792268828; bh=aseanVXaJ8+l8u+z0m2VZ+uGWZ0vXLlTPQNEV8iyFZw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AJpNW/eRSvH1Wc0D1IpkE215i+dT3UnMOTrvHfTKspWtXrrU4K5Rnyg4H773dkA3Q
- em192x2DdKpdoY/H3nBHdf5aewMtFJ8wpuV+/wK9+nO0V2w2a+4EtvW1zTkyajJQCU
- cWgNNqFoXMQYfxh2qi215X0OyFYM3EzLtZhCjis5C9yyqPdQoDOycGuhPU5lSlmc9K
- LzzcQXCzrRf9yKPJQZMCkhKB0tG7irkFZ55HR3doU//T+N/aV/+QWgcS7g6gqWxKY8
- EYQWIB356IIi6f2B6OfVNcd4ix4WCxzw+b8fedtdusntIvvXuvklgyzpQJyLWlPxaA
- zJXs/Zlvqkn7w==
+ b=GoZYo4eN1GTELkCbtxBGjE2ROgTQk0/zMEfixpLjMpPPr3IPGFdlF1ImZI97xDSQu
+ ZAf0wAZFgXevtgVgW31Qr0OPi5oZia+JwlgQO1F9zBZPI3qPA2E+HJL5uFGTYwjaZl
+ m069DW9KYGbAiLDP5TBaF+C2EGYHlF7ZqFx1gX6ssuN5aCki4GMtrYjTuNZzl8i7FN
+ sP8MlRcJ+aw4pWDGWOeG7VFIWoZonqDbm93WpndgpeT1fNQ0STnXvd0+hh5uPmDc6p
+ h79iLtL4kAEpl8wLFfu/NO3b0sPO3W/mkTkbCBhziiza4YK19zFN/Huogv76V9xn/d
+ HLI+ga1aWubOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B55E71DE73D;
- Sat, 17 Oct 2026 23:27:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 40F301DE741;
+ Sat, 17 Oct 2026 23:27:08 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0102D443414;
- Sat, 17 Oct 2026 23:27:02 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 87561443418;
+ Sat, 17 Oct 2026 23:27:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 02/73] target/arm: Fix next timer tick when the offset
- puts the count ahead
-Date: Sat, 17 Oct 2026 23:25:20 +0300
-Message-ID: <20261017202638.728621-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 06/73] virtio-ccw: Do not overwrite existing indicators
+Date: Sat, 17 Oct 2026 23:25:24 +0300
+Message-ID: <20261017202638.728621-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -69,104 +68,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Eric Farman <farman@linux.ibm.com>
 
-gt_recalc_timer() arms the timer for the ISTATUS 0->1 transition at
-count == cval + offset, treating an overflow of that sum as "beyond
-the counter's wrap" and arming at INT64_MAX. That reading is valid
-only when offset <= count. When offset > count (a CNTVOFF_EL2 or
-CNTPOFF_EL2 that puts the timer's counter ahead of the physical
-count), the sum overflows for every cval still in the future and the
-wrapped value is the correct next tick, which is what the code used
-before commit 8d37a1425b99. The timer then never fires on its own.
+The various indicators pointers allow them to be overwritten,
+but leak any existing structs that might be there. If indicators
+exist, ensure that they are released before setting the new ones.
 
-A KVM guest whose counter is set ahead of the host's, as the
-arch_timer_edge_cases selftest does via KVM_REG_ARM_TIMER_CNT, gets
-its timer interrupt only when the vCPU is next loaded and KVM
-rewrites the timer registers, so a guest polling for the interrupt
-hangs.
-Reproduced with VHE, nVHE and pKVM hosts on QEMU 11.0.0. The test
-passes on hardware.
+Both the regular and adapter interrupt paths check that they
+aren't being asked to enable interrupts when the other one is
+enabled, so just do this release once all the potential checks
+are completed.
 
-Test count + (cval - (count - offset)) for overflow instead, so only a
-physical count past 2^64 is "never", and add a vtimer test case with
-an offset that puts the count ahead.
-
-Fixes: 8d37a1425b99 ("target/arm: Handle overflow in calculation of next timer tick")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20260921074451.3158645-2-fuad.tabba@linux.dev
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 66d4ea65a064421057f10c4a26d727beedbd1971)
+Fixes: 7bca3892cb ("s390x/virtio-ccw: reference-counted indicators")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-3-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 13c7ba5e0f14aa4c711ba7fc92cddceeafcb1e3f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index af45234ad2..4ed91ac85a 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1531,11 +1531,12 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
-         } else {
-             /*
-              * Next transition is when (count - offset) == cval, i.e.
--             * when count == (cval + offset).
--             * If that would overflow, then again we set up the next interrupt
--             * for "as far in the future as possible" for the code below.
-+             * cval - (count - offset) ticks from now. If count plus that
-+             * overflows, set up "as far in the future as possible" below.
-              */
--            if (uadd64_overflow(gt->cval, offset, &nexttick)) {
-+            uint64_t remaining = gt->cval - (count - offset);
-+
-+            if (uadd64_overflow(count, remaining, &nexttick)) {
-                 nexttick = UINT64_MAX;
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index c422444015..a28fac97a4 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -582,6 +582,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+             if (ret) {
+                 break;
              }
-         }
-diff --git a/tests/tcg/aarch64/system/vtimer.c b/tests/tcg/aarch64/system/vtimer.c
-index 7d725eced3..e1cfad36be 100644
---- a/tests/tcg/aarch64/system/vtimer.c
-+++ b/tests/tcg/aarch64/system/vtimer.c
-@@ -27,6 +27,7 @@
- 
- int main(void)
- {
-+    uint64_t freq, now;
-     int i;
- 
-     ml_printf("VTimer Test\n");
-@@ -44,5 +45,32 @@ int main(void)
-         ml_printf("%d: cntv_cval_el0=%lx\n", i, read_sysreg(cntv_cval_el0));
-     }
- 
-+    /*
-+     * An offset that puts the virtual count ahead of the physical one,
-+     * so cval + cntvoff wraps for every future cval. The timer must
-+     * still fire. ISTATUS is set by the expiry, so poll it with a bound.
-+     */
-+    write_sysreg(cntv_ctl_el0, 0);
-+    write_sysreg(cntvoff_el2, -(1ULL << 60));
-+    asm volatile("isb");
-+
-+    freq = read_sysreg(cntfrq_el0);
-+    now = read_sysreg(cntvct_el0);
-+    write_sysreg(cntv_cval_el0, now + freq / 100);
-+    write_sysreg(cntv_ctl_el0, 1);
-+
-+    ml_printf("cntvoff_el2=%lx\n", read_sysreg(cntvoff_el2));
-+    ml_printf("cntvct_el0=%lx\n", now);
-+    ml_printf("cntv_cval_el0=%lx\n", read_sysreg(cntv_cval_el0));
-+
-+    while (!(read_sysreg(cntv_ctl_el0) & 4)) {
-+        if (read_sysreg(cntvct_el0) - now > freq) {
-+            ml_printf("FAIL: ISTATUS not set within 1s: cntv_ctl_el0=%lx\n",
-+                      read_sysreg(cntv_ctl_el0));
-+            return 1;
-+        }
-+    }
-+    ml_printf("ISTATUS set at cntvct_el0=%lx\n", read_sysreg(cntvct_el0));
-+
-     return 0;
- }
++            if (dev->indicators) {
++                /* Need to remove existing indicators first */
++                release_indicator(&dev->routes.adapter, dev->indicators);
++                dev->indicators = NULL;
++            }
+             indicators = be64_to_cpu(indicators);
+             dev->indicators = get_indicator(indicators, sizeof(uint64_t));
+             sch->curr_status.scsw.count = ccw.count - sizeof(indicators);
+@@ -606,6 +611,11 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+             if (ret) {
+                 break;
+             }
++            if (dev->indicators2) {
++                /* Need to remove existing indicators first */
++                release_indicator(&dev->routes.adapter, dev->indicators2);
++                dev->indicators2 = NULL;
++            }
+             indicators = be64_to_cpu(indicators);
+             dev->indicators2 = get_indicator(indicators, sizeof(uint64_t));
+             sch->curr_status.scsw.count = ccw.count - sizeof(indicators);
+@@ -666,6 +676,17 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+             } else if (thinint.isc > MAX_ISC) {
+                 ret = -ENOSYS;
+             } else {
++                if (dev->indicators) {
++                    /* Need to remove existing indicators first */
++                    release_indicator(&dev->routes.adapter, dev->indicators);
++                    dev->indicators = NULL;
++                }
++                if (dev->summary_indicator) {
++                    /* Need to remove existing indicators first */
++                    release_indicator(&dev->routes.adapter,
++                                      dev->summary_indicator);
++                    dev->summary_indicator = NULL;
++                }
+                 thinint.ind_bit = be64_to_cpu(thinint.ind_bit);
+                 thinint.summary_indicator =
+                     be64_to_cpu(thinint.summary_indicator);
 -- 
 2.47.3
 
