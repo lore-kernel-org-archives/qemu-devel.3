@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D0DCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485E2CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9ed-00087c-Rn; Sat, 17 Oct 2026 15:01:16 -0400
+	id 1xI9fd-0001zz-Ih; Sat, 17 Oct 2026 15:02:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dz-0006Dk-MS; Sat, 17 Oct 2026 15:00:37 -0400
+ id 1xI9eP-0006bU-0y; Sat, 17 Oct 2026 15:01:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dy-0004Gi-0h; Sat, 17 Oct 2026 15:00:35 -0400
+ id 1xI9eN-0004Il-BL; Sat, 17 Oct 2026 15:01:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263422; bh=BZJu4URBLdBr7Z7aHjzSCqrfILnRF6fUTjCqT4kRgfY=;
+ t=1792263427; bh=xBLK8b3uWjjwdYJKq9VXmqgziRyyn4QZInBmirGy5bI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lNS2QzBqHmynN6S91ajkLm07M8v4dkYQ+xo62YM0LupG0wev9dR+wCxRhnvYK492V
- Wu6RAPatLvC29vjHPde0Y31pYEf8iee00BUrUIh+LSrg1c/CCASCEHgtSfmvkdID2r
- qLxtqeOOteRtMpqnSa02OZahy+WISyXc0VA97A8g4znyVU/d7lncvg6yqSu+IiCEav
- o4WsEwUf5baxuBIbzhvakMeaxqdRD0BXMEBw+d4s8pjeYu9N1Aqmf/umN2JFLRoTFR
- DLL3Mj7ND13LuQW8Qob3inwcyyxqnkE1rY2qfGjVZUJ7rnDMhFn63JBcMaVgh8n3NL
- iSjcSvrgKBc/g==
+ b=hgr3Ux2gWoeGmsenYHPMEovmYaBWWcSkqZDwXdYuWvCb9WSkCGz6OnHemiB1qV3pl
+ E0Knsj0hRcFl9eiODRS1Et8LqAGiA/opmNED+WL9tirxfJ/PwZ/2xYTjN1gWYc76dG
+ ZD16HeSekRdYPgebThglYSUhJm8WvXahsLdPgaMMDEoSoqgCmHxdWUo8V7v7PxI3TO
+ yW1nPVWIdITD3KtwW/zq83GroEOel1y/YreIJ2VOXCW+z6HRRbNDWIdlXrfgYs73yp
+ z5NIpCBkWWxE8mCajPTx124aqYq3u2TCCda2A0U3ceWsmlOu/pn/DMfl7VxSZEhu2Q
+ aNauFvTlk0cDA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A04CF1DE6D7;
- Sat, 17 Oct 2026 21:57:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 618ED1DE6DA;
+ Sat, 17 Oct 2026 21:57:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7D83044339F;
- Sat, 17 Oct 2026 21:57:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3AC434433A2;
+ Sat, 17 Oct 2026 21:57:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 52/63] tcg/riscv64: Remove vector min/max ops with
- immediates
-Date: Sat, 17 Oct 2026 21:55:08 +0300
-Message-ID: <20261017185528.722197-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Gustavo Romero <gromero@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 55/63] target/arm: Use the 52-bit TTBR base address
+ layout when TCR.DS is set
+Date: Sat, 17 Oct 2026 21:55:11 +0300
+Message-ID: <20261017185528.722197-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,84 +70,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-RVV 1.0 only defines vmin, vminu, vmax and vmaxu instructions for the
-vector-vector and vector-scalar case, not the for vector-immediate case.
-Remove the immediate variant from TCG code generation.
+With TCR.DS set, TTBR[5:2] hold bits [51:48] of the translation table
+base address, whatever the OA size. If the effective OA size is below
+52 bits, setting any of them is a level 0 Address size fault
+(AArch64_S1TTBaseAddress(), AArch64_S1Walk()).
 
-Fixes: 1631f19b04fe ("tcg/riscv: Implement vector min/max ops")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20261008181611.3015838-1-aurelien@aurel32.net>
-(cherry picked from commit 306d9ab85fdbbc626c067777cea70dccec22dae9)
+get_phys_addr_lpae() uses the 52-bit layout only when the OA size is
+over 48 bits. With TCR.DS set and an IPS of 48 bits, it takes TTBR[5:2]
+as base address bits [5:2] instead. A guest that sets them gets no
+fault: the walk either succeeds with TTBR[5:2] ignored, or reads its
+first descriptor from the wrong address. VTTBR walks with VTCR.DS take
+the same path.
+
+Use the 52-bit layout whenever TCR.DS is set, and check the whole base
+address against the OA size.
+
+Fixes: ef56c2425e5f ("target/arm: Implement FEAT_LPA2")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Gustavo Romero <gromero@redhat.com>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20261009115728.1299384-4-fuad.tabba@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 2c372119465e14f26c094bdcca58e4b1fca84afd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index 4e2cc24a86..9a6662948c 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -301,13 +301,9 @@ typedef enum {
-     OPC_VSSUBU_VI = 0x88000057 | V_OPIVI,
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index e34b4bb9ab..da96a1df09 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1797,18 +1797,21 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr = extract64(ttbr, 0, 48);
  
-     OPC_VMAX_VV = 0x1c000057 | V_OPIVV,
--    OPC_VMAX_VI = 0x1c000057 | V_OPIVI,
-     OPC_VMAXU_VV = 0x18000057 | V_OPIVV,
--    OPC_VMAXU_VI = 0x18000057 | V_OPIVI,
-     OPC_VMIN_VV = 0x14000057 | V_OPIVV,
--    OPC_VMIN_VI = 0x14000057 | V_OPIVI,
-     OPC_VMINU_VV = 0x10000057 | V_OPIVV,
--    OPC_VMINU_VI = 0x10000057 | V_OPIVI,
- 
-     OPC_VMSEQ_VV = 0x60000057 | V_OPIVV,
-     OPC_VMSEQ_VI = 0x60000057 | V_OPIVI,
-@@ -2492,19 +2488,19 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         break;
-     case INDEX_op_smax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAX_VV, OPC_VMAX_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAX_VV, a0, a1, a2);
-         break;
-     case INDEX_op_smin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMIN_VV, OPC_VMIN_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMIN_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umax_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMAXU_VV, OPC_VMAXU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMAXU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_umin_vec:
-         set_vtype_len_sew(s, type, vece);
--        tcg_out_opc_vv_vi(s, OPC_VMINU_VV, OPC_VMINU_VI, a0, a1, a2, c2);
-+        tcg_out_opc_vv(s, OPC_VMINU_VV, a0, a1, a2);
-         break;
-     case INDEX_op_shls_vec:
-         set_vtype_len_sew(s, type, vece);
-@@ -2792,10 +2788,6 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sssub_vec:
-     case INDEX_op_usadd_vec:
-     case INDEX_op_ussub_vec:
--    case INDEX_op_smax_vec:
--    case INDEX_op_smin_vec:
--    case INDEX_op_umax_vec:
--    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, vK);
-     case INDEX_op_sub_vec:
-         return C_O1_I2(v, vK, v);
-@@ -2805,6 +2797,10 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_sarv_vec:
-     case INDEX_op_rotlv_vec:
-     case INDEX_op_rotrv_vec:
-+    case INDEX_op_smax_vec:
-+    case INDEX_op_smin_vec:
-+    case INDEX_op_umax_vec:
-+    case INDEX_op_umin_vec:
-         return C_O1_I2(v, v, v);
-     case INDEX_op_shls_vec:
-     case INDEX_op_shrs_vec:
+     /*
+-     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
+-     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
+-     * under 64 bytes is still 64-byte aligned (R_KBLCR).
++     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), or with TCR.DS set at any OA
++     * size, bits [51:48] of descaddr are in [5:2] of TTBR, and bits [5:0] of
++     * the base address are zero: a table under 64 bytes is still 64-byte
++     * aligned (R_KBLCR).
+      *
+-     * Otherwise, if the base address is out of range, raise AddressSizeFault.
+-     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
+-     * but we've just cleared the bits above 47, so simplify the test.
++     * If the base address is out of range, raise AddressSizeFault.
++     * In the pseudocode, this is !IsZero(address<NUM_PABITS-1:outputsize>)
++     * in AArch64_OAOutOfRange(), but descaddr has no bits set above 51,
++     * so simplify the test.
+      */
+-    if (outputsize > 48) {
++    if (outputsize > 48 || param.ds) {
+         descaddr &= ~MAKE_64BIT_MASK(0, 6);
+         descaddr |= extract64(ttbr, 2, 4) << 48;
+-    } else if (descaddr >> outputsize) {
++    }
++    if (descaddr >> outputsize) {
+         level = 0;
+         fi->type = ARMFault_AddressSize;
+         goto do_fault;
 -- 
 2.47.3
 
