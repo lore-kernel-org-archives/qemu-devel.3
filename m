@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92606CCF2C1
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 15:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B0ECCF2C1
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 15:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI69R-0001xV-4a; Sat, 17 Oct 2026 11:16:49 -0400
+	id 1xI6V5-0004Xw-8M; Sat, 17 Oct 2026 11:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xI69L-0001wh-CZ
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:16:43 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xI6V2-0004XD-P2
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:39:08 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xI69I-0000Ea-Bj
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:16:42 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-8b06c0794cfso7266877b3.0
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 08:16:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792250198; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xI6V0-0001zT-KQ
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:39:08 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-8ab38a051aaso6796647b3.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 08:39:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792251545; cv=none;
  d=google.com; s=arc-20260327;
- b=CJQ10HFlasvI6AnkOmb/FTdr/GQ2mBdS4np7CHtNOL4m2MBvEOufQzF8KWE0HjKJQX
- kBWV2ZyDLusjjMq2AW7+yO8bQdwcHFhP6KIUAXHCnO5eLbJWByopfJd/+l4SNMAoEYZ/
- YAWrHQben3KjfgSElkcK1ZTj4xZ+p9ljvHuFaT7+jlW4RIwcWYmmF21U487qPgVRhocH
- NTuqfw3GhGC5xwv3Dzz/YOkkfTeta1iMJfyZqR/6QORMeM+EVX2Qw83fO+0Wf+CBGvIW
- CE2QSjZI1STOwxY+2GceX03DvNMNM1OkS82osdltq9/tP2pBY5h8k80JGCMUi3TdaY0c
- CNTg==
+ b=rGAtgrbmSnsXeUL+JPwDee3uY3jEeEqRstpCLr/FfYMqWO8Clt09PzYuC0691S1aH7
+ dUNrWD4L12LcxdW7BMXAeB7+scaQTSsh69hVYpoaXQTdHnPhu+8alyaGa4lBTJKHzJER
+ hYV5WenDwf6iK1B/QryNyQDOEKEdBayn90XtzQncCjn+EiPU9jVolDbKWx9pD2mvnLsX
+ oNHMO6ur7SLmAsYzB+7Stp/Tte8vrHcR0fX3BElvWVs9FrAv1J5kj62W3vp3VkgDFBzz
+ KJbWwfqzEpm1KPSaATSXgRY430ZzZ3c8VwCGrIiuwUIupyUsF9DF+okqGfQNUZ5UOEjb
+ qUeA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:dkim-signature;
- bh=maaAqlgh83vcmnpfx6TsWNN/WbZcgj0cRWJY5xLvsdQ=;
- fh=T0BmtHEnqzHnQTPxynHCv4aBPliOhUPZ7/s8eOvS4E0=;
- b=hgVy8ioNwTtmbWzP8flxE12GMqchBH2D29q9yMfw44HQeS8B7/j8DYsWg1mQGGFysc
- Qp27ZXDhHwQnwI4jAzTCYxNWhlDmzlapFgt+RNnnaAOzI/QTRjFqyNibQ9buXy1Eqw2c
- L4jFCaHWMyxPqvGlIoft47w3rUbLJf+qa/AUciu+k/piZyXFNhFX+pnK5LvU4ql0qgXi
- moPU/QdknkFER1GEJkf4+ZGIEm2Mo+bDHwGgwVrJEiJ/YHQRCIQw6nUCj4K/ij+AoKc9
- d8hcm55ZuW0j1A0WV1mlei8FjtJEcnyxQMxW2Wb2rezMyktuaJlQKFie5CTMu3o/7ibk
- 1LzA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xH9Ow/YbPdzqpaddQqmZkDKhcR9h1zYKMdW6/JuC33M=;
+ fh=TUfzxw1B/DFEA1jNT0iQFdzEda/YXFE68WBEXYJToV4=;
+ b=CcNaBc09lN1Tu/fVIZxuJBwnlV4dd65zoR5HzN5tsRQpWRDS6J/dmdybLbtwpTPndj
+ zBOZQ9qDCAta4DeoZC6cKMMaADWqHxMgFGGGekVeRkDjtNod6nIOJCPm3AHLeGwtpVHO
+ Tpe/zPsqH7BkwV6fs6k6IUTbFpFw6op7jjJ/Unrmy56H2y2+BfOoCtMF85mdZxAKd4Nb
+ S6RqMlvj2ti6diSkpn5hTQibj9YZLFsp3GtuWUTmVL5tBNYjDrZAkPaaw/SUj8xQwpNs
+ 31GjQA/LJRiNW5MYNmUqglLo4zK/FCp08frIqm90x0hUC68zskKUlqTbGIHWfQFkF5Fe
+ TWyQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792250198; x=1792854998; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=maaAqlgh83vcmnpfx6TsWNN/WbZcgj0cRWJY5xLvsdQ=;
- b=eaCqrZDtNNR07euLHrEgZtO17BLN/hDDrhCQtaGCdRAy+VlvH9l+gemsy1ppDJZMLw
- MKdsrv0O4wtjr9y6WoFKVZbzsSJH62EGE9+czJ8W/8DjiSp9fPiCsGys5ne+OPO/bHL6
- 7fuw46gDAsU6gq0H/9Wx7rmDQkmcm+++Ew6f0IVma887v4hMYSXesbdGlIfur/+hN98d
- 6W+bepA9CrcHHDnBiUOqc9LQ+JdR5blBVfM/C3LZSae1lFOC5l6XR1UWJ7KfkX2Su55X
- b2r/rFgc+esRxu6cFwGCqMKy0TcUrCZOth5Mng7G4+UDKj9YC3rJ/4+gIoSpAK+DGAtK
- 5K3A==
+ d=linaro.org; s=google; t=1792251545; x=1792856345; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xH9Ow/YbPdzqpaddQqmZkDKhcR9h1zYKMdW6/JuC33M=;
+ b=lXwL7eJH04KOBFswOQcYZBjIfPhVUqyZu5EoInfDC9LVQ8gGXfB0C2FUbtEj2/CnDq
+ lOLd1E+DsCnFxaePb2b1SOuldrGz6c5eHTqoA9n/GPlr4bRspAGWAreBNq+5tfKDDB/p
+ 4JqOHZ/Hh9XWMfP1piNe64G3kB8SY9eTvk5kUrKZj57RBt2gt8wWac6RMKNiGlxXzC1k
+ /2fSyRIy2oH21FY4CYce+xo4FJHLcJr9eljrtFxN1Avu0hqS9xNvS+KbCS2OQ7IofAL9
+ t/IAv2UkQchwP4JckpMCXxcYBIbQIXWwrkX/J0CLgPfgppDy+aixv4flQ+Y7fWfgNy/y
+ WvWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792250198; x=1792854998;
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=maaAqlgh83vcmnpfx6TsWNN/WbZcgj0cRWJY5xLvsdQ=;
- b=mtDMtd8nmX/LBQwkcbj6RRLY76zRDnXpDzpH3+Lgn8v3PKL8aR5d7gQPjX3P8nqUNr
- mQZg+QzDxHC2tFXH0AACWZ5lHd+qBzPwq8t5IPbXJM/ZIQzJfXg6+IxaxmsxQ7E3AuJ+
- m7kEtWp91DSmSQsl3RA4JNvLNVMjOcWQOps3OGK+PkbsXdemedECuDzOjTSu3aGetB+w
- mQvRiPf3Sgy3Z/dIvmyhSi8JPHx9kwRroqW/Qvx0K4SOe0qtxx0o8bzTtxT5DFsohkw7
- y002CZFf6invyP48xtXdNxILrH+FrFOyEsabMR46VPuOQ24iOce10mhTNTQL9aT512eE
- YZIQ==
-X-Gm-Message-State: AFq9FYI9GPOfGc7jNeaEMrWqhRV6kNDp0V+g9/LY4NW8XA7eF3mKypIN
- rxHOSr08Wn4PK7z2F7l/PbjGjT/tI99UvEHrY2URcCUZc/fLL8CACN5+QZk6IRy5DfY7fYr1WgC
- yS0eOdDNHW0EarNnmd3sygnPeiucuTdQ=
-X-Gm-Gg: AYBFou0JRuWSjllNcyWmx8JEWpoDwwRx9CrMC8WtiSJ7qtsk0NVHOoxiNt6ZrtadDSI
- y/lwC31XQdgmvL8d9R6uQvnVDizk6AOKchPkFzh8lHlFZEqheAlFPvr6FXui+s6h7sAQLhIqtQ+
- /dz73ffQJYsNpZ8+m5l9HHhphuXDrBDxHwNJ/Ib6jTPjmqa8Sd6ozWohkyycugUTjcLX5d2+Ueo
- x1RLGdb0+exT6Fj1E/jC09IYKyAFiu5RG29jaQ9SwnzYp5d2XEEXgP6ZtO/kTYrwZvvPNCiBFFr
- 7V5htEdqAd0K81iras5y5KlXPyohdUN+JlHQTi0uuvRBJ9qEOE5z7b7zgMRNTJ52pJ5MmgMpzpZ
- LUxJ0HqKq9nH6XS3QA4N/t+78iUq/GRZ4EF1RIao0S995EMl8uw==
-X-Received: by 2002:a05:690c:c512:b0:8b0:e030:8999 with SMTP id
- 00721157ae682-8b0f2140293mr12299287b3.19.1792250198367; Sat, 17 Oct 2026
- 08:16:38 -0700 (PDT)
-Received: from 101988054943 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 17 Oct 2026 08:16:37 -0700
-Received: from 101988054943 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 17 Oct 2026 10:16:36 -0500
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-In-Reply-To: <CAFEAcA85iTUU=Pf8h-Ojc3jiBbW44V-1XRheVW=JqN-4xNLc=Q@mail.gmail.com>
-References: <CAFEAcA85iTUU=Pf8h-Ojc3jiBbW44V-1XRheVW=JqN-4xNLc=Q@mail.gmail.com>
+ d=1e100.net; s=20260707; t=1792251545; x=1792856345;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xH9Ow/YbPdzqpaddQqmZkDKhcR9h1zYKMdW6/JuC33M=;
+ b=hR/eFHZB2pNj1FqRU5qLErB0d5qC0JX1IXAAl01yMml46QlErHqyhwdxLlla50aTMj
+ dQj1HGy1dyDujpWp8ZOUzSsNVLgVXYmSR5zGKKABI2FsFF4k8TlfAh1e7QubG9e1aY0O
+ ntnAEnc8E4OlpmzucjBuxPiut9XCkOUnJFLcABppJiDConPNHxN0TTPbcFekpiYOBaZo
+ vzSBDxXs4h6LUQL9Mj7I9Wpir4vyhee4Fc9iOEvLxbJG0BPTEIjtx5VwdIiDsVy8SwTW
+ Xyjoq0SoXGP9C6UgRES7jsGwHnxKAvOt8brwTXniAQ8cCBDb08jLcWAV2Ih58gjKxV/j
+ FDcw==
+X-Gm-Message-State: AFq9FYKn0EVhOa50r6731U1o1cP1p+OGV/0wsorPJX9IYMAy1bCALcoq
+ y7HqLQ2IOX6FxxPhZOmMwSTf1784OqXrov7JZs6c6E6cZ/t5PYQ7iK1zSHxRvbvMXaz+S4lRBrp
+ ehiP7ctD9OYfpJFHa7ibY9S9KgrSEm9cWo8qKJIKj+g==
+X-Gm-Gg: AYBFou1ncIFdzvSk7+/7q6+206AV5t0QPxd9m3mOwE0q+Zporfl6Nj1+HjyulXlKRI5
+ EJT/XmZPmvVEAZMuH1JOkJUHQC+hBd2z3/qw/2TUwTJfEIb7ceMRIJEwap9SCMHnEJpTThacWMZ
+ dBeJCeY6ZUxQGd5VaINz4c7FER3SkevQJeYK29R0Lq40FS4tyRMLXUtcsGemYVfNaDkjEXRJ34C
+ 2fySpSnBUjHhTIBtD6fUo+IEWcQlf8Lybubt0EVVI5ODanMIRtIthdJEtTYv/vaD/p9iENi07yA
+ 0Z4ghOykFnUJLS+wLxsQDv+dTcfm9Sny0kapQxujyPGqbpYdxLtBY5e1ak0Kao8h1MLnnvntt21
+ PcDuV8ng582WGjmSRgaNveBcMdfcj/MnuJYIHEy2e77JegYYdNg==
+X-Received: by 2002:a05:690c:6903:b0:8ac:c329:67e6 with SMTP id
+ 00721157ae682-8b0f21ae8a2mr11292217b3.16.1792251545026; Sat, 17 Oct 2026
+ 08:39:05 -0700 (PDT)
 MIME-Version: 1.0
-Date: Sat, 17 Oct 2026 08:16:37 -0700
-X-Gm-Features: AclHuK97vYZWIUo4wythsN_IAmCNHFzwyBOrTwm2dZXqnRhE1JpkdOaZzM1a314
-Message-ID: <CAGaQodL0CNKahvtmSj3ssbZpVdXZEEZ_oR=Pcbr=Gnh-jUmaWw@mail.gmail.com>
-Subject: Re: Re: Re: [PATCH v3 15/16] docs/system/arm/raspi: move PCIe/GENET
- from missing to implemented
-To: peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, philmd@oss.qualcomm.com, 
- pierrick.bouvier@oss.qualcomm.com
-Content-Type: multipart/alternative; boundary="0000000000006c21de065e0ac499"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=marcelomanzo@gmail.com; helo=mail-yw1-x112e.google.com
+References: <20261015181122.60608-1-marcelomanzo@gmail.com>
+ <20261015181122.60608-13-marcelomanzo@gmail.com>
+In-Reply-To: <20261015181122.60608-13-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 17 Oct 2026 16:38:53 +0100
+X-Gm-Features: AclHuK8TmQtBDBKUkeLVXbSUdlXDH9bUFF0pDmh40JjGV_pvwgP-byOi4_z9ngo
+Message-ID: <CAFEAcA8fkUuyz7HDEEnhZ1RZRZjzrNeyw9tbV5+fTczRmxSDSg@mail.gmail.com>
+Subject: Re: [PATCH v3 12/16] hw/net/bcm2838_genet: implement GENET TX path
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Sergey Kambalin <serg.oker@gmail.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,162 +119,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006c21de065e0ac499
-Content-Type: text/plain; charset="UTF-8"
-
-On 17 Oct 2026, Peter Maydell wrote:
+On Thu, 15 Oct 2026 at 19:11, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-> Does the system end up with the "msi_nonbroken" global set to
-> "false" or "true" ?
-
-It ends up true. aspeed_pcie_rc_class_init() sets msi_nonbroken, and
-class_init runs for every class at startup, so any qemu-system-aarch64
-has it set whichever machine is selected. That's why qemu-xhci ends up
-with MSI-X enabled and needs msix=off.
-
-thanks for the R-b
--- Marcelo
-
-On Sat, Oct 17, 2026 10:24 AM, Peter Maydell <peter.maydell@linaro.org>
-wrote:
-
-> On Sat, 17 Oct 2026 at 14:31, Marcelo Manzo <marcelomanzo@gmail.com>
-> wrote:
-> >
-> > On 17 Oct 2026, Peter Maydell wrote:
-> > >
-> > > Do you know what's missing for the MSI support to work?
-> >
-> > I think it's the controller's built-in MSI receiver, which we don't
-> > model.
-> >
-> > From the Linux driver (drivers/pci/controller/pcie-brcmstb.c): the guest
-> > programs an MSI target address into PCIE_MISC_MSI_BAR_CONFIG_LO/HI
-> > (0x4044/0x4048, bit 0 = enable) and the message data into
-> > PCIE_MISC_MSI_DATA_CONFIG (0x404c). A device's MSI write then goes to
-> > that target address (0xfffffffc, or 0xffffffffc if the inbound window
-> > extends above 4GB) with data 0x6540 | vector. The controller is supposed
-> > to catch that write, set bit <vector> in its MSI_INTR2 block at 0x4500
-> > (STATUS 0x4500, CLR 0x4508, MASK_SET 0x4510, MASK_CLR 0x4514), and
-> > assert the second interrupt of the pcie DT node ("msi") towards the GIC.
-> >
-> > Right now none of that exists: the MSI_INTR2 registers are plain backing
-> > bytes in regs[] with no status/clear/mask behaviour, nothing in the PCI
-> > bus address space claims the target address so the device's write goes
-> > nowhere, and the "msi" interrupt isn't wired to the GIC.
-> >
-> > I think it needs a small doorbell MemoryRegion in the PCI address space
-> > at the target address, the INTR2 register semantics, and one more SPI --
-> > on the order of 100-150 lines. I left it out of this series since INTx
-> > covers what I've needed, but I'm happy to do it as a follow-up if you'd
-> > like.
+> From: Sergey Kambalin <serg.oker@gmail.com>
 >
-> So if I understand right this is because the SoC doesn't implement
-> MSI interrupts by having a GICv3 ITS or a GICv2m, but it does it
-> in the PCIe controller ? Let's get the base support in before we
-> think about implementing that. (The aspeed pcie controller also
-> handles MSI interrupts, so we have some existing code models to
-> look at if necessary.)
+> Implement the transmit DMA ring handling: walk TX descriptors
+> between the consumer and producer index for a ring, pull frame data
+> out of guest memory, and hand completed frames to the netdev peer
+> via qemu_send_packet(), advancing the consumer index and raising the
+> TXDMA_MBDONE interrupt as descriptors complete.
 >
-> Does the system end up with the "msi_nonbroken" global set to
-> "false" or "true" ? I think since we don't have a gicv3 or gicv2m
-> we ought to have it still at its default "false" value, but if it's
-> false I'm not sure why we need to explicitly turn off MSIs
-> with msi=off,msix=off.  (This isn't worth spending too much time
-> investigating, though.)
+> Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
+> networking series (patchwork series 829638, posted to qemu-devel in
+> 2024, never merged). Carried forward and completed by Marcelo Manzo.
 >
-> Anyway for this patch
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> While carrying this forward, fix bcm2838_genet_tdma_ring_active():
+> it extracted the per-ring enable bit using the DMA_CTRL register's
+> 1-bit EN field definition instead of DMA_RING_CFG's 17-bit EN field
+> (one bit per ring), so only ring 0 ever appeared active and TX
+> traffic hashed onto any other queue was silently dropped, eventually
+> tripping the guest's qdisc watchdog ("NETDEV WATCHDOG: transmit
+> queue N timed out") and breaking DHCP.
 >
-> thanks
-> -- PMM
+> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+> ---
+>  hw/net/bcm2838_genet.c         | 219 ++++++++++++++++++++++++++++++++-
+>  include/hw/net/bcm2838_genet.h |  17 +++
+>  2 files changed, 235 insertions(+), 1 deletion(-)
 >
+> diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+> index fe2a3cf890..7eba0edbb6 100644
+> --- a/hw/net/bcm2838_genet.c
+> +++ b/hw/net/bcm2838_genet.c
+> @@ -239,6 +239,13 @@ REG16(GENET_PHY_EXP_SEL,           0)
+>  FIELD(GENET_PHY_EXP_SEL, REG_ID,   0, 8)
+>  FIELD(GENET_PHY_EXP_SEL, BLOCK_ID, 8, 8)
+>
+> +REG32(GENET_TX_CSUM_INFO,            0)
+> +FIELD(GENET_TX_CSUM_INFO, OFFSET,    0, 15)
+> +FIELD(GENET_TX_CSUM_INFO, PROTO_UDP, 15, 1)
+> +FIELD(GENET_TX_CSUM_INFO, START,     16, 15)
+> +FIELD(GENET_TX_CSUM_INFO, LV,        30, 1)
+> +
+> +
+>  static void bcm2838_genet_set_qemu_mac(BCM2838GenetState *s)
+>  {
+>      const MACAddr *addr = &s->nic_conf.macaddr;
+> @@ -403,6 +410,216 @@ static uint64_t bcm2838_genet_mdio_cmd(BCM2838GenetState *s, uint64_t cmd)
+>      return cmd;
+>  }
+>
+> +static void bcm2838_genet_xmit_packet(NetClientState *s, void *packet,
+> +                                      size_t size)
+> +{
+> +    uint8_t *buf = packet + sizeof(BCM2838GenetXmitStatus);
 
---0000000000006c21de065e0ac499
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Do we know that the size is always big enough for this
+(and for the accesses to buf + 12 and buf + 13 below) ?
 
-<html><body><div dir=3D"auto">On 17 Oct 2026, Peter Maydell wrote:<br>&gt;<=
-br>&gt; Does the system end up with the &quot;msi_nonbroken&quot; global se=
-t to<br>&gt; &quot;false&quot; or &quot;true&quot; ?<br><br>It ends up true=
-. aspeed_pcie_rc_class_init() sets msi_nonbroken, and<br>class_init runs fo=
-r every class at startup, so any qemu-system-aarch64<br>has it set whicheve=
-r machine is selected. That&#39;s why qemu-xhci ends up<br>with MSI-X enabl=
-ed and needs msix=3Doff.<br><br>thanks for the R-b<br>-- Marcelo<br></div><=
-/body></html><br><div class=3D"gmail_extra"><div>On Sat, Oct 17, 2026 10:24=
- AM, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.ma=
-ydell@linaro.org</a>&gt; wrote:<br><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Sat, =
-17 Oct 2026 at 14:31, Marcelo Manzo &lt;<a href=3D"mailto:marcelomanzo@gmai=
-l.com" target=3D"_blank">marcelomanzo@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; On 17 Oct 2026, Peter Maydell wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; Do you know what&#39;s missing for the MSI support to work?<br>
-&gt;<br>
-&gt; I think it&#39;s the controller&#39;s built-in MSI receiver, which we =
-don&#39;t<br>
-&gt; model.<br>
-&gt;<br>
-&gt; From the Linux driver (drivers/pci/controller/pcie-b<wbr>rcmstb.c): th=
-e guest<br>
-&gt; programs an MSI target address into PCIE_MISC_MSI_BAR_CONFIG_LO/HI<br>
-&gt; (0x4044/0x4048, bit 0 =3D enable) and the message data into<br>
-&gt; PCIE_MISC_MSI_DATA_CONFIG (0x404c). A device&#39;s MSI write then goes=
- to<br>
-&gt; that target address (0xfffffffc, or 0xffffffffc if the inbound window<=
-br>
-&gt; extends above 4GB) with data 0x6540 | vector. The controller is suppos=
-ed<br>
-&gt; to catch that write, set bit &lt;vector&gt; in its MSI_INTR2 block at =
-0x4500<br>
-&gt; (STATUS 0x4500, CLR 0x4508, MASK_SET 0x4510, MASK_CLR 0x4514), and<br>
-&gt; assert the second interrupt of the pcie DT node (&quot;msi&quot;) towa=
-rds the GIC.<br>
-&gt;<br>
-&gt; Right now none of that exists: the MSI_INTR2 registers are plain backi=
-ng<br>
-&gt; bytes in regs[] with no status/clear/mask behaviour, nothing in the PC=
-I<br>
-&gt; bus address space claims the target address so the device&#39;s write =
-goes<br>
-&gt; nowhere, and the &quot;msi&quot; interrupt isn&#39;t wired to the GIC.=
-<br>
-&gt;<br>
-&gt; I think it needs a small doorbell MemoryRegion in the PCI address spac=
-e<br>
-&gt; at the target address, the INTR2 register semantics, and one more SPI =
---<br>
-&gt; on the order of 100-150 lines. I left it out of this series since INTx=
-<br>
-&gt; covers what I&#39;ve needed, but I&#39;m happy to do it as a follow-up=
- if you&#39;d<br>
-&gt; like.<br>
-<br>
-So if I understand right this is because the SoC doesn&#39;t implement<br>
-MSI interrupts by having a GICv3 ITS or a GICv2m, but it does it<br>
-in the PCIe controller ? Let&#39;s get the base support in before we<br>
-think about implementing that. (The aspeed pcie controller also<br>
-handles MSI interrupts, so we have some existing code models to<br>
-look at if necessary.)<br>
-<br>
-Does the system end up with the &quot;msi_nonbroken&quot; global set to<br>
-&quot;false&quot; or &quot;true&quot; ? I think since we don&#39;t have a g=
-icv3 or gicv2m<br>
-we ought to have it still at its default &quot;false&quot; value, but if it=
-&#39;s<br>
-false I&#39;m not sure why we need to explicitly turn off MSIs<br>
-with msi=3Doff,msix=3Doff.=C2=A0 (This isn&#39;t worth spending too much ti=
-me<br>
-investigating, though.)<br>
-<br>
-Anyway for this patch<br>
-Reviewed-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" =
-target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div></div>
+> +    size_t len = size;
+> +    uint16_t len_type = 0;
+> +
+> +    len -= sizeof(BCM2838GenetXmitStatus);
+> +    net_checksum_calculate(buf, len, CSUM_ALL);
+> +
+> +    memcpy(&len_type, &buf[12], sizeof(len_type));
+> +    len_type = ntohs(len_type);
 
---0000000000006c21de065e0ac499--
+This can be more clearly written as
+    len_type = lduw_be_p(buf + 12);
+rather than manual memcpy-and-swap
+
+> +    if (len_type < MAX_PAYLOAD_SIZE) {
+> +        len_type = len;
+> +        len_type = htons(len_type);
+> +        memcpy(&buf[12], &len_type, sizeof(len_type));
+
+and this is
+    stw_be_p(buf + 12, len);
+
+> +    }
+> +
+> +    qemu_send_packet(s, buf, len);
+> +}
+> +
+> +static uint64_t bcm2838_genet_tx(BCM2838GenetState *s, unsigned int ring_index,
+> +                                 uint32_t prod_index,
+> +                                 uint32_t cons_index)
+> +{
+> +    const unsigned int DESC_SIZE_WORDS
+> +        = sizeof(BCM2838GenetTdmaDesc) / sizeof(uint32_t);
+> +    const uint64_t RING_START_ADDR
+> +        = ((uint64_t)s->regs.tdma.rings[ring_index].start_addr_hi << 32)
+> +            + s->regs.tdma.rings[ring_index].start_addr;
+> +    const uint64_t RING_END_ADDR
+> +        = ((uint64_t)s->regs.tdma.rings[ring_index].end_addr_hi << 32)
+> +            + s->regs.tdma.rings[ring_index].end_addr;
+
+Use lower case for variables please, upper case is for preprocessor macros.
+
+This "construct the 64 bit value from the two 32 bit halves" is awkward
+enough and happens often enough in this function that maybe it would
+read more clearly if abstracted out somehow?
+
+> +
+> +    hwaddr data_addr;
+> +    uint64_t desc_index;
+> +    uint32_t desc_status = 0;
+> +    uint32_t buflength = 0;
+> +    uint64_t num_descs = 0;
+> +    uint64_t read_ptr
+> +        = ((uint64_t)s->regs.tdma.rings[ring_index].read_ptr_hi << 32)
+> +            + s->regs.tdma.rings[ring_index].read_ptr;
+> +    off_t packet_off = 0;
+> +
+> +    uint32_t prod_index_fld = FIELD_EX32(prod_index,
+> +                                         GENET_DMA_PROD_INDEX, INDEX);
+> +    uint32_t cons_index_fld = FIELD_EX32(cons_index,
+> +                                        GENET_DMA_CONS_INDEX, INDEX);
+> +
+> +    while (cons_index_fld != prod_index_fld) {
+> +        desc_index = read_ptr / DESC_SIZE_WORDS;
+> +        if (desc_index >= BCM2838_GENET_DMA_DESC_CNT) {
+> +            qemu_log_mask(
+> +                LOG_GUEST_ERROR,
+> +                "%s: invalid TX descriptor index %" PRIu64 " (exceeds %u)\n",
+> +                __func__, desc_index, BCM2838_GENET_DMA_DESC_CNT - 1);
+> +            break;
+> +        }
+> +        desc_status = s->regs.tdma.descs[desc_index].length_status;
+> +        data_addr = ((uint64_t)s->regs.tdma.descs[desc_index].address_hi << 32)
+> +            + s->regs.tdma.descs[desc_index].address_lo;
+> +        trace_bcm2838_genet_tx(ring_index, desc_index, desc_status,
+> +                               data_addr);
+> +
+> +        if (FIELD_EX32(desc_status, GENET_RDMA_LENGTH_STATUS, SOP) != 0) {
+> +            packet_off = 0;
+> +        }
+> +
+> +        buflength = FIELD_EX32(desc_status,
+> +                               GENET_RDMA_LENGTH_STATUS, BUFLENGTH);
+> +
+> +        /* TODO: Add address_space_read() return value check */
+
+That would be a good idea :-)
+
+> +        address_space_read(&s->dma_as, data_addr,
+> +                                        MEMTXATTRS_UNSPECIFIED,
+> +                                        s->tx_packet + packet_off,
+> +                                        buflength);
+
+There doesn't seem to be a check here that this isn't going to read
+more data than we can fit without running off the end of tx_packet[].
+
+> +        packet_off += buflength;
+> +
+> +        if (FIELD_EX32(desc_status, GENET_RDMA_LENGTH_STATUS, EOP) != 0) {
+> +            bcm2838_genet_xmit_packet(qemu_get_queue(s->nic), s->tx_packet,
+> +                                                     packet_off);
+> +            packet_off = 0;
+> +        }
+> +
+> +        num_descs++;
+> +        cons_index_fld++;
+> +        s->regs.tdma.descs[desc_index].length_status =
+> +            FIELD_DP32(s->regs.tdma.descs[desc_index].length_status,
+> +                       GENET_RDMA_LENGTH_STATUS, OWN, 1);
+> +        read_ptr = read_ptr == RING_END_ADDR + 1 - DESC_SIZE_WORDS
+> +            ? RING_START_ADDR : read_ptr + DESC_SIZE_WORDS;
+> +    }
+> +
+> +    s->regs.tdma.rings[ring_index].read_ptr = read_ptr;
+> +    s->regs.tdma.rings[ring_index].read_ptr_hi = read_ptr >> 32;
+> +
+> +    return num_descs;
+> +}
+> +
+> +static bool bcm2838_genet_tdma_ring_active(BCM2838GenetState *s,
+> +                                           unsigned int ring_index)
+> +{
+> +    uint32_t ctrl_reg = s->regs.tdma.ctrl;
+> +    uint32_t ring_cfg_reg = s->regs.tdma.ring_cfg;
+> +    uint32_t ring_mask = 1 << ring_index;
+> +    bool dma_en = FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, EN) != 0;
+
+You don't need the != 0 when you're assigning to a bool;
+  dma_en = FIELD_EX32(....);
+is sufficient.
+
+> +    bool ring_en =
+> +        (FIELD_EX32(ring_cfg_reg, GENET_DMA_RING_CFG, EN) & ring_mask) != 0;
+
+> +    bool ring_buf_en =
+> +        (FIELD_EX32(ctrl_reg, GENET_DMA_CTRL, RING_BUF_EN) & ring_mask) != 0;
+> +    bool active = dma_en && ring_en && ring_buf_en;
+> +
+> +    trace_bcm2838_genet_tx_dma_ring_active(ring_index,
+> +                                           active ? "active" : "halted");
+> +    return active;
+> +}
+> +
+> +static void bcm2838_genet_tdma(BCM2838GenetState *s, hwaddr offset,
+> +                               uint64_t value)
+> +{
+> +    hwaddr ring_offset;
+> +    uint64_t num_descs_tx;
+> +    unsigned int ring_index;
+> +     uint32_t tx_intrs;
+
+Misaligned indent.
+
+> +    uint32_t cons_index;
+> +    uint32_t prod_index = value;
+> +    uint32_t ring_cfg = value;
+> +    uint32_t dma_ctrl = value;
+> +
+> +    uint32_t cons_index_fld;
+> +    uint32_t prod_index_fld =
+> +        FIELD_EX32(prod_index, GENET_DMA_PROD_INDEX, INDEX);
+> +
+> +    uint32_t exst_tdma_en =
+> +        FIELD_EX32(s->regs.tdma.ctrl, GENET_DMA_CTRL, EN);
+> +    uint32_t exst_ring_en =
+> +        FIELD_EX32(s->regs.tdma.ring_cfg, GENET_DMA_RING_CFG, EN);
+> +    uint32_t incm_tdma_en =
+> +        FIELD_EX32(dma_ctrl, GENET_DMA_CTRL, EN);
+> +    uint32_t incm_ring_en =
+> +        FIELD_EX32(ring_cfg, GENET_DMA_RING_CFG, EN);
+> +    uint32_t incm_ring_buf_en =
+> +        FIELD_EX32(dma_ctrl, GENET_DMA_CTRL, RING_BUF_EN);
+> +
+> +    switch (offset) {
+> +    case BCM2838_GENET_TDMA_RINGS
+> +        ... BCM2838_GENET_TDMA_RINGS + sizeof(s->regs.tdma.rings) - 1:
+> +        ring_index = (offset - BCM2838_GENET_TDMA_RINGS)
+> +            / sizeof(BCM2838GenetTdmaRing);
+> +        if (bcm2838_genet_tdma_ring_active(s, ring_index)) {
+> +            ring_offset = offset - BCM2838_GENET_TDMA_RINGS
+> +                - ring_index * sizeof(BCM2838GenetTdmaRing);
+> +            switch (ring_offset) {
+> +            case BCM2838_GENET_TRING_PROD_INDEX:
+> +                cons_index = s->regs.tdma.rings[ring_index].cons_index;
+> +                cons_index_fld = FIELD_EX32(cons_index,
+> +                                            GENET_DMA_CONS_INDEX, INDEX);
+> +                if (cons_index_fld != prod_index_fld) {
+> +                    trace_bcm2838_genet_tx_request(ring_index,
+> +                                                   prod_index_fld,
+> +                                                   cons_index_fld);
+> +                    num_descs_tx = bcm2838_genet_tx(s, ring_index, prod_index,
+> +                                                    cons_index);
+> +                    if (num_descs_tx > 0) {
+> +                        s->regs.tdma.rings[ring_index].cons_index =
+> +                            FIELD_DP32(s->regs.tdma.rings[ring_index].cons_index,
+> +                                       GENET_DMA_CONS_INDEX, INDEX,
+> +                                       cons_index + num_descs_tx);
+> +
+> +                        if (ring_index == BCM2838_GENET_DMA_RING_DEFAULT) {
+> +                            s->regs.intrl0.stat =
+> +                                FIELD_DP32(s->regs.intrl0.stat, GENET_INTRL_0,
+> +                                           TXDMA_MBDONE, 1);
+> +                        } else {
+> +                            tx_intrs =  FIELD_EX32(s->regs.intrl1.stat,
+> +                                                   GENET_INTRL_1, TX_INTRS);
+> +                            s->regs.intrl1.stat =
+> +                                FIELD_DP32(s->regs.intrl1.stat,
+> +                                           GENET_INTRL_1, TX_INTRS,
+> +                                           tx_intrs | 1 << ring_index);
+> +                        }
+> +                    }
+> +                }
+
+This is quite awkward to read because it indents in a lot and a
+lot of the lines end up heavily wrapped as a consequence. Abstracting
+some of the inner bit out into a function might help.
+
+> +                break;
+> +            default:
+> +                break;
+> +            }
+> +        }
+> +        break;
+> +    case BCM2838_GENET_TDMA_RING_CFG:
+> +        if (exst_ring_en != incm_ring_en) {
+> +            trace_bcm2838_genet_tx_dma_ring(incm_ring_en);
+> +        }
+> +        break;
+> +    case BCM2838_GENET_TDMA_CTRL:
+> +        s->regs.tdma.status = (~dma_ctrl) & GENET_DMA_ENABLE_MASK;
+> +        if (exst_tdma_en != incm_tdma_en) {
+> +            trace_bcm2838_genet_tx_dma(incm_tdma_en == 1
+> +                                       ? "enabled"
+> +                                       : "disabled");
+> +        }
+> +        if (exst_ring_en != incm_ring_buf_en) {
+> +            trace_bcm2838_genet_tx_dma_ring_buf(incm_ring_buf_en);
+> +        }
+> +        break;
+> +    default:
+> +        break;
+> +    }
+
+thanks
+-- PMM
 
