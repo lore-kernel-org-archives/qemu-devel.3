@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C147CCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50C8CCF2CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB8O-0003ae-Rb; Sat, 17 Oct 2026 16:36:05 -0400
+	id 1xIB3R-0003FQ-ID; Sat, 17 Oct 2026 16:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB6T-0008NQ-OA; Sat, 17 Oct 2026 16:34:06 -0400
+ id 1xIB2j-0001PJ-V7; Sat, 17 Oct 2026 16:30:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB6S-0004jd-0I; Sat, 17 Oct 2026 16:34:05 -0400
+ id 1xIB2i-0004Mv-2o; Sat, 17 Oct 2026 16:30:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268907; bh=ysuUAH0hzUmMmYIYi6wZp/+zDmPbz/HAW6uwi0NnuwU=;
+ t=1792268863; bh=RRSkN6dmkYkm6sMTLPdZFn+BI7d5/T+OeuYo4GeinyE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B+E7HB9LBYL6c6S+DMFgC33UDJ7/VTviM6FxPeKqJKWyj9gAdKNPOo+VVr1LEeaO+
- 2ZfYTJc0abhZRwdU0PSaRENVzueatMMUwY1nBQlKEvkIUJyKEkUn2phQPwMXEk9Qf9
- fXUrErNE4DeNiMR+RrMLR7MDCjt9CA0vQvZ0IHeDSGEsDZTGcTpDiIjq5UnXhua5Hq
- VhoIs67Oyo4Mmj2oT6STE+4pIdqOTURLvY06+hcp+39s78arSTOcXAx/IAOu5yqomA
- QHwBVIWgXqWRX3ZKY7d5ETq6nCvr667Bv1mXPLEEwwMYJrNtRC7GaB1zgVScSI/GAB
- fCacFKMy3neCA==
+ b=cTYcHVovotm+BGO0DR87mMYbY5pHNgLOOaGywLIt0VBUYMeRMQJgSViwEdTdOzrXA
+ qlkkKMGtbhefKSl1DSy9DzuOc6jA7ayuWlLCiKipkzY7K2rOm5BvU9eXTpPCm3nIz/
+ ubAbotW8ndJM1mGQSFAe/2MJ/L8b07HawLKwBzaSIXaLsqedu9plTs2Dza1y9Z8EVX
+ eyXr3+HI0i5/JZdzOmTWr1q13L1ALMLZbKAs/z+YemiPeyPHV88XDRwyfoYB/1KXph
+ BYgxjR/9SmUo4ulWRpFcNwQMJV/qchR01L7vHZFpqeH0d1efxgSZIsQ91o3gR/Fgd9
+ YPRn2tBr6kNpw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3D691DE78A;
- Sat, 17 Oct 2026 23:28:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 30BB51DE763;
+ Sat, 17 Oct 2026 23:27:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E080944345B;
- Sat, 17 Oct 2026 23:28:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4AAEC443437;
+ Sat, 17 Oct 2026 23:27:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, dodochicha <kevincheng60303@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 73/73] target/riscv: Check Svnapot PTE before updating
- A/D bits
-Date: Sat, 17 Oct 2026 23:26:31 +0300
-Message-ID: <20261017202638.728621-73-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 37/73] accel/kvm: coalesced mmio: check lenght of the
+ MMIO write entry
+Date: Sat, 17 Oct 2026 23:25:55 +0300
+Message-ID: <20261017202638.728621-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,55 +69,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: dodochicha <kevincheng60303@gmail.com>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-Reserved Svnapot PTE encodings must raise a page fault without
-modifying the PTE. Currently the A/D bits may be updated before
-the Svnapot encoding is validated.
+KVM's coalesced mmio ring buffer has entries that contain deffered MMIO
+writes.
 
-Move the Svnapot validation before the A/D update so reserved
-PTEs fault without changing the PTE.
+Each such entry contains the length, an 8 byte value and a guest address.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: dodochicha <kevincheng60303@gmail.com>
-Message-ID: <20261005115916.21196-1-kevincheng60303@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit cb82463fa9bf46d90e6a1779bb20aff2bf76a1a7)
+While the length value comes from the kernel, it is still possible for
+an attacker to corrupt the length field using another exploit.
+
+The attacker can then invoke kvm_flush_coalesced_mmio_buffer, which blindly
+trusts the length and can be used to inflict further damage.
+
+Add a sanity check on the length field to prevent this.
+
+This patch was only compile tested.
+
+Reported by: "Labs, STAR" <info@starlabs.sg>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3863
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20260923004631.100997-1-mlevitsk@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 12916d64b78ec5dd0171e607ad2ffcc34537f3cf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 6115f65adb..8f1c84f05f 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -1405,6 +1405,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         return sstack_page ? TRANSLATE_PMP_FAIL : TRANSLATE_FAIL;
-     }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index da3afdc68d..5433a223e3 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3185,9 +3185,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
+             const AddressSpace *as;
  
-+    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-+        napot_bits = ctzl(ppn) + 1;
-+        if ((i != (levels - 1)) || (napot_bits != 4)) {
-+            return TRANSLATE_FAIL;
-+        }
-+    }
+             ent = &ring->coalesced_mmio[ring->first];
+-            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
+-            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
+-                                ent->data, ent->len);
++            if (ent->len > sizeof(ent->data)) {
++                warn_report("coalesced MMIO entry has invalid len %u",
++                            ent->len);
++            } else {
++                as = ent->pio == 1 ? &address_space_io : &address_space_memory;
++                address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
++                                    ent->data, ent->len);
++            }
 +
-     target_ulong updated_pte = pte;
- 
-     /*
-@@ -1497,13 +1504,6 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     /* For superpage mappings, make a fake leaf PTE for the TLB's benefit. */
-     target_ulong vpn = addr >> PGSHIFT;
- 
--    if (riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
--        napot_bits = ctzl(ppn) + 1;
--        if ((i != (levels - 1)) || (napot_bits != 4)) {
--            return TRANSLATE_FAIL;
--        }
--    }
--
-     napot_mask = (1 << napot_bits) - 1;
-     *physical = (((ppn & ~napot_mask) | (vpn & napot_mask) |
-                   (vpn & (((target_ulong)1 << ptshift) - 1))
+             smp_wmb();
+             ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
+         }
 -- 
 2.47.3
 
