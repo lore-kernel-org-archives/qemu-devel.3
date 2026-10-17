@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 712CECCF2CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED63CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB6R-000812-Pz; Sat, 17 Oct 2026 16:34:03 -0400
+	id 1xIB5r-0006mI-I9; Sat, 17 Oct 2026 16:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB56-00059f-Iw; Sat, 17 Oct 2026 16:32:47 -0400
+ id 1xIB4c-00047q-Vf; Sat, 17 Oct 2026 16:32:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB52-0004bD-EI; Sat, 17 Oct 2026 16:32:37 -0400
+ id 1xIB4Z-0004ZP-Pt; Sat, 17 Oct 2026 16:32:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268889; bh=VKUnSP4MIXl2/yGJYq9auI1KCGTNRfkDaSvnnfePFpI=;
+ t=1792268883; bh=BZ7RBmb5WhcAgkBggiI5IidmdW4xw8utdBJQ/DY1vsw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fcA/7kZbIRrEL4SxkQpmJriwqgXeAJLqm7R3QpWXirffgMZoRwFdqVXs8Cwahi7Z1
- Ax7WoyMt8pJDfTgCuNNE2c/+PtKT2JzN/YI6oe7nInjnnVfa+rHPTMKX9p9EWJXHTs
- 6g5ST2b9CLJk7dgfpXDsdg4X5xYWYpOPs1BD0QzclPLFryBNWr6lNawpFsK1Wl4jkp
- ocKb4uhEVp6LyhhWS9k8md8wP4sjwcqHXiFgd3eq/3JdnBS531vXwMGV/5Rd+YMjq8
- UrnOGPnahFpQHDPKr+vPjcNanMJx+TOwR+V67dhIvI89MxNNxCJrFasBgYBZSEjtP1
- 2L2jAQtyztkug==
+ b=nPHdMxT1pLJ7J6YXAn1q67NXDayEho6/+gYzYgSt0mcAVK7TO62cW5vsFxGH4gK8Y
+ svgmjoW5clr/hKnhc2Hhmw/hiv8EJls4sQJ9BbrF1tbt/rB9NVZ38vgqSUT6ZjHJio
+ 3jklw5DcCPHqhfY0SY6wqy2S5rCoruJWkPVmVcYVZOmyQIg4E3XSuch8B4lgUJOqPm
+ NjEqzSFJVZE+vSvdFiQiA6/N31DmtMBIiGfzoTCesrhC3F4navZqh8xhLjrMeQGZuI
+ REQr4Z9YdxkBdTu98c+ylM8v8LdshcYBdMCMl7VOzOuPPh71ytAtlkOkOnTYgLC463
+ 8FWHVeCzhpOsw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C6FD41DE77B;
- Sat, 17 Oct 2026 23:28:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C18D21DE775;
+ Sat, 17 Oct 2026 23:28:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A636444344E;
- Sat, 17 Oct 2026 23:28:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0E846443449;
+ Sat, 17 Oct 2026 23:28:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
- Gustavo Romero <gromero@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 60/73] target/arm: Use the 52-bit TTBR base address
- layout when TCR.DS is set
-Date: Sat, 17 Oct 2026 23:26:18 +0300
-Message-ID: <20261017202638.728621-60-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Artemii Mashanov <ralerrdirsardx@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 55/73] target/i386/tcg: zero FXSAVE FOP and reserved
+ slot bytes
+Date: Sat, 17 Oct 2026 23:26:13 +0300
+Message-ID: <20261017202638.728621-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,67 +69,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Artemii Mashanov <ralerrdirsardx@gmail.com>
 
-With TCR.DS set, TTBR[5:2] hold bits [51:48] of the translation table
-base address, whatever the OA size. If the effective OA size is below
-52 bits, setting any of them is a level 0 Address size fault
-(AArch64_S1TTBaseAddress(), AArch64_S1Walk()).
+TCG's do_xsave_fpu() omitted writing the FOP field and the reserved
+bytes (10..15) of each x87 register slot. Those parts of
+the destination buffer retained their previous contents.
 
-get_phys_addr_lpae() uses the 52-bit layout only when the OA size is
-over 48 bits. With TCR.DS set and an IPS of 48 bits, it takes TTBR[5:2]
-as base address bits [5:2] instead. A guest that sets them gets no
-fault: the walk either succeeds with TTBR[5:2] ignored, or reads its
-first descriptor from the wrong address. VTTBR walks with VTCR.DS take
-the same path.
+The reserved bytes of all eight slots are zeroed. TCG does not
+yet track the actual FOP value, this patch stores a fixed zero instead.
 
-Use the 52-bit layout whenever TCR.DS is set, and check the whole base
-address against the OA size.
+Add a regression test in tests/tcg/x86_64/fxsave.c. It fills the
+FXSAVE area with 0xcc, executes FNINIT and FXSAVE64, then verifies that
+FOP and all reserved slot bytes are zero.
 
-Fixes: ef56c2425e5f ("target/arm: Implement FEAT_LPA2")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-4-fuad.tabba@linux.dev
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2c372119465e14f26c094bdcca58e4b1fca84afd)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3522
+
+Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+Link: https://lore.kernel.org/r/20260826171655.117679-1-ralerrdirsardx@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 0dd9fb43ea221260969be449b596e7252abbca80)
+(Mjt: fixup for make=>meson test conversion)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index f1f8f5cdc0..ce256fc87c 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2107,18 +2107,21 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     descaddr = extract64(ttbr, 0, 48);
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 62f1c110e2..470061e2c4 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -2617,6 +2617,7 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
+     access_stw(ac, ptr + XO(legacy.fcw), env->fpuc);
+     access_stw(ac, ptr + XO(legacy.fsw), fpus);
+     access_stw(ac, ptr + XO(legacy.ftw), fptag ^ 0xff);
++    access_stw(ac, ptr + XO(legacy.fpop), 0);
  
-     /*
--     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
--     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
--     * under 64 bytes is still 64-byte aligned (R_KBLCR).
-+     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), or with TCR.DS set at any OA
-+     * size, bits [51:48] of descaddr are in [5:2] of TTBR, and bits [5:0] of
-+     * the base address are zero: a table under 64 bytes is still 64-byte
-+     * aligned (R_KBLCR).
-      *
--     * Otherwise, if the base address is out of range, raise AddressSizeFault.
--     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
--     * but we've just cleared the bits above 47, so simplify the test.
-+     * If the base address is out of range, raise AddressSizeFault.
-+     * In the pseudocode, this is !IsZero(address<NUM_PABITS-1:outputsize>)
-+     * in AArch64_OAOutOfRange(), but descaddr has no bits set above 51,
-+     * so simplify the test.
-      */
--    if (outputsize > 48) {
-+    if (outputsize > 48 || param.ds) {
-         descaddr &= ~MAKE_64BIT_MASK(0, 6);
-         descaddr |= extract64(ttbr, 2, 4) << 48;
--    } else if (descaddr >> outputsize) {
+     /* In 32-bit mode this is eip, sel, dp, sel.
+        In 64-bit mode this is rip, rdp.
+@@ -2629,6 +2630,8 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
+     for (i = 0; i < 8; i++) {
+         floatx80 tmp = ST(i);
+         do_fstt(ac, addr, tmp);
++        access_stw(ac, addr + 10, 0);
++        access_stl(ac, addr + 12, 0);
+         addr += 16;
+     }
+ }
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index c48767fef8..0f8f48b1a5 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -20,6 +20,7 @@ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+ X86_64_TESTS += fma
++X86_64_TESTS += fxsave
+ TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
+ else
+ TESTS=$(MULTIARCH_TESTS)
+diff --git a/tests/tcg/x86_64/fxsave.c b/tests/tcg/x86_64/fxsave.c
+new file mode 100644
+index 0000000000..d08a4e8a0e
+--- /dev/null
++++ b/tests/tcg/x86_64/fxsave.c
+@@ -0,0 +1,66 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * See https://gitlab.com/qemu-project/qemu/-/issues/3522
++ */
++
++#include <stdint.h>
++#include <stdio.h>
++#include <string.h>
++
++#define FXSAVE_FOP_OFFSET      6
++#define FXSAVE_X87_OFFSET      32
++#define FXSAVE_SLOT_SIZE       16
++#define FXSAVE_RESERVED_START  10
++#define FXSAVE_NUM_SLOTS       8
++
++struct fxsave_area {
++    uint8_t raw[512];
++} __attribute__((aligned(16)));
++
++_Static_assert(sizeof(struct fxsave_area) == 512,
++                "FXSAVE area must be exactly 512 bytes");
++
++static uint16_t u16_le(const uint8_t *p)
++{
++    uint16_t v;
++    memcpy(&v, p, sizeof(v));
++    return v;
++}
++
++int main(void)
++{
++    struct fxsave_area area;
++    uint16_t fop;
++
++    memset(&area, 0xcc, sizeof(area));
++
++    __asm__ volatile(
++        "fninit\n\t"
++        "fxsave64 %0"
++        : "+m" (area)
++        :
++        : "memory"
++    );
++
++    fop = u16_le(&area.raw[FXSAVE_FOP_OFFSET]);
++    if (fop != 0) {
++        fprintf(stderr, "FOP: expected 0, got 0x%04x\n", (unsigned)fop);
++        return 1;
 +    }
-+    if (descaddr >> outputsize) {
-         level = 0;
-         fi->type = ARMFault_AddressSize;
-         goto do_fault;
++
++    for (int slot = 0; slot < FXSAVE_NUM_SLOTS; slot++) {
++        int base = FXSAVE_X87_OFFSET + slot * FXSAVE_SLOT_SIZE;
++        for (int b = FXSAVE_RESERVED_START; b < FXSAVE_SLOT_SIZE; b++) {
++            uint8_t val = area.raw[base + b];
++            if (val != 0) {
++                fprintf(stderr,
++                        "Slot %d byte %d (offset %d): expected 0x00, "
++                        "got 0x%02x\n",
++                        slot, b, base + b, (unsigned)val);
++                return 1;
++            }
++        }
++    }
++
++    return 0;
++}
 -- 
 2.47.3
 
