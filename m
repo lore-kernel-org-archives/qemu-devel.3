@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1345FCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 12:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED21CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 13:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI3wD-0002zs-OG; Sat, 17 Oct 2026 08:55:01 -0400
+	id 1xI48o-0004h8-L4; Sat, 17 Oct 2026 09:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI3wB-0002zI-J0
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:54:59 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1xI48f-0004fS-5T
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 09:07:53 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI3w9-0005a4-RN
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:54:59 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8ab43af5e97so8423527b3.1
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 05:54:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792241696; cv=none;
+ id 1xI48V-0006ZI-Ek
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 09:07:44 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-8b0cf2c0785so5926797b3.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 06:07:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792242461; cv=none;
  d=google.com; s=arc-20260327;
- b=q/7BG43DNUkslmlwGxYAYPfue6f5V9ScCCpK6sDswTgUE03PQ7M0ihFh7uDDGkoTzW
- VrmjFVWgUB5dUzuh0XXpkbSUcKtYpCd5ifx5v7Yx4fUF+17FLC1KmLSyiY7rBO/EkV/u
- tHhgUn9B570jPGfm7LnzrvDh/gXz1JzcDmrDraupcaM4vpGn5SkwEj3G+b1wn2Stl9xn
- ZAnCb7EZLeYhWB2xk4n2WsVWszKgPyd7fSJuRI0WGaTa/TMJKE2Rid617PKckoEl80DW
- fxnLGGSkOYeSxGhxcckpRL4B7jpAEa6bX+gg+ASMcVlHKYkNwlam4b5YGQlwQyN1FqlK
- K1pw==
+ b=YrGpv2mzgFFJhEH4+eUj7vg8sg90+2L8yCE4e5MeANypUk0GQ/I4QkcnlJk7AguRLC
+ HbigMqFbeKDpDJ/kYv7dge07+/itvHMp/jl+LGt9zM51/UuN6B9AXe+Bbva5bDIZ4hw6
+ sYX1W/O/g4+CGQUWfq3n74J4lDpk2fbDd66dafXoumGvt5Rr8eD1hdDsaA9HtpJ0eRvY
+ MqH48h51zZz/AC8HrbQoFq/o6Ai0FZI5nW6gQkuRgID0Ffcd/4xuVe4Zec5MGIMOcOP1
+ suTgz5v7QGJIdgrKQZ8tlr8hBcgBW4x6YUIB9LTy2iaUbmeRMlmqbiLY13zcEr2ih9AP
+ hnRQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=c4h/k0zYSPigK6KUfZ3N41/XzKXVybJXmD03MwaLw7E=;
- fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
- b=opmqdTODvshtnN9YrkrV3VVag3e3Yua2/wYxDYm9sngfxgdfswxmvShZn65+pFJxP3
- YVdLIKMLNFoMvKcJEieiy/TS7RrVQZrOHcNINpwx02lYPww11PzhssH9GEpa03EVcrjs
- R6ROEVnrcoEDFINfEkyN518fWzQ3nWP7vZvWjQpJtf06OCYGlKkIf8MvdFi+31zo4Ofe
- 9AIHAQYZatzpaFy7pTck98kLEYSQtkPcczTnlmZ1LuemuIaqViXddkz5NVLTE/9pJPuu
- OqBflBZwebJPvwlg9d1y2Ko120OdJKREFH9LxLKs7B1/Dqilsg0VOpyg5G1J1brS5GEe
- aWCQ==; darn=nongnu.org
+ bh=gmiTC2ovd1haOAXnrjVhMpjmF2lXclW91wqNhe8idaE=;
+ fh=8VldRI43Zxe8UDb9MDzujuH/Zt0ZtvHfMTS/gIMI0Fo=;
+ b=F02/BPSlQar6bcXfEiy8ITrcsrcWfCRY1sV6BUhwkCHOytGIb8CH8OEHiSkB77S3ZV
+ g5i82w1uRit+Wv3pi+6kTHNrHwoA/VSRwrrEPg7CCoMgHKucLbM4y7OPF3dFvSkWIBwR
+ AguaFbdLT/vJQcRMAfAN5DnDjxjSN8F7fpiKcI5Rz98cEYSzSQIrz/5rt62PtI8BIu0j
+ blyZXXQ51Gr5wbG5WwruwLrSBck8f0XCtCoDVJv6wsCDG92j3nP3Vxh72KAJSEsZjFN3
+ zAckKOFGG6u2PD3KH/P3ssvvLs6SiQ2FaQYxClVIfBA/TKwvschPQXunvRHjP0IFUkJm
+ 7MEg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792241696; x=1792846496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792242461; x=1792847261; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=c4h/k0zYSPigK6KUfZ3N41/XzKXVybJXmD03MwaLw7E=;
- b=JZtXq1NjaRELNTeUJduDMXHNzVaAejb89IoDvq80FZfmiXSOAeSYyUl/OTQaCb78T3
- LpmBLy88OzpBnuhXBns6/HSnxqF2n03d9o8EYmmau6rwx9ivSX5KXGBSt/fi5XBnNjmj
- pBjIAO1p/zZhJsY02HMMf8fWxWstDc9yakU4l9tdidsUBI9bUo8Z/Uj8AhHbkqeoM+EU
- 22eGkkS1MENTlmkT5if+x1yO8UPhDj9X+yGk/kZBxbv8C2GUkF2FEveNn5CyCh0vBcvL
- 7oYXpRjDEeDjsa7P78We9V9b5QIvMjFQXvicOOFliJSJUnWLkiEGjhC/RhgqTfeym8B1
- t2MQ==
+ :content-type; bh=gmiTC2ovd1haOAXnrjVhMpjmF2lXclW91wqNhe8idaE=;
+ b=NV8n1sNqd5cxOf2seg7/NJD8P13/kJ6q5qMKzuvK3J9AOwbnHmZkLJiOJBzwET3qlq
+ nOf1NzR0KlsPCBIvEVdkwBQCn2yyJRHUeBKR1jnLq6nJNwEA68GqtsQFWb2dFKe7KQZ5
+ tQpg5IhI/2bw++ur4lpg3YdW5fUQsz79Able7Ma8rFqZIo00Z2aNAFTMD1jKuT1pZjz2
+ dLzn0HLb4ao04oIFRuxGzTyhE/bkPF66Mn+2tKjuggSiJ/2yQk9FLfH+LEBFxunhmMdj
+ oLtgfpWhqBVzGWtpVc/2qjVnA8ZrCTPSCI9DqjisQ3lXM9iyzgOdd9llwk6BM7L/PA58
+ NEZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792241696; x=1792846496;
+ d=1e100.net; s=20260707; t=1792242461; x=1792847261;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=c4h/k0zYSPigK6KUfZ3N41/XzKXVybJXmD03MwaLw7E=;
- b=ZGJJwus24s7SWreCgF5so+/ePHUVeqhwVTVpCsgfqNFfsCbJC77buSoTcsu22yChq3
- P7/Iiy2mHQJ0npPgvtRLPSPM6Pa+PDQVz6Zl/a+OB7Dk/Dg7JkwfWd1achtCvvcH1OYo
- ebaT4sZwi8FUtjrOv+Z9/oRQ2LBMkzfb1XJgABFLD1zXDtDrIcmiZm97sZlTm/whvgki
- PTJfKRy5JNUrgMpXwS7mDJBwWdwJBG2Y7BqWxb1d1Jg7n3h0lrytjbianHAe0P+5jJPe
- VLtcbm1VYolog9gMR5T1Q51qi9fksabIEnmevTikqwKD+OA/djnUBBCYPLyCseeusU0i
- 4j+w==
-X-Gm-Message-State: AFq9FYJTqoyXZFZPNdXtwjcOlKIF1c2yvatnrozYD3zsWsJcPedVb50E
- J2Pu4F2IURyA5X+h9l/Zppy/8L+hMFtB85I2TlBzK3rxabmjTz6CKLnni00amE7kXLs1GMTz8TZ
- qa25VBQW89nXCLzLPSamS829vlXVHrZS1QA8zWR3WBg==
-X-Gm-Gg: AYBFou3TwTZkKYBbW8mgewk9Pt32r+5G3gP7VZhhUpALiS2CzGemdeK7ydSF1K27xC4
- 8zNNVHk0AQVqgfTMv62luK1koXcKmHwu2AWaTfXWWDmHVd2YIdeoesyxqT27CqkFFFhTSa/uIrQ
- A0xlxhMYKtuvu8sJAaxermPRbtq+fRZRDB3M0T3Jy8Lwxg6XpG66IKwvK1/SXunxBSaFeGL4FLx
- 7YBU6rTu/M8KzxsxVWKQ005e5foGEAtsG4l9rvPWvt2f7aVH+qPO3izJTTM86WxHi+WDS/YZ9jA
- FUKDVn69Wj3tyS8+CUPB2OXwPPC9dFF+kErRrv2tuvQV/t1+UNDQ5o9NmTMh7kdcT0hzonQ3Ie5
- ql0y4/NQrw9Is2zGVucUdG5cckv9NVPZaZ4fWs8s=
-X-Received: by 2002:a05:690c:4902:b0:8a9:8744:c07d with SMTP id
- 00721157ae682-8b0e2dbee67mr21206177b3.18.1792241696397; Sat, 17 Oct 2026
- 05:54:56 -0700 (PDT)
+ bh=gmiTC2ovd1haOAXnrjVhMpjmF2lXclW91wqNhe8idaE=;
+ b=ForI7mB0yiIDQ4ZtY06SoWZOdfoCzn8ZMpXz/Z1y81N5DYsSvZ/IyfsRnpVgTsNATG
+ 7un9BXHTE5nuJpK2e0AyPqSYgzIJTirlzRnoiXnY+lWRK3wqmTUE0oJSJNZ7TR7jNqbE
+ lOFxQJANQy/C2ifcHedBXOdFh+f+VfTi6Qg6Ijwt2jSbLYqt+lQKDATyW0qJEjyEKWXq
+ Z6D5Wpo1tjk2lgJ31DNTRIv9/y3f0G8eavmf5jBPf9BUhDQHfFv1Hjxm7QSkDaEiYUB1
+ LyS92wfXsA6D6AehM0CFhDGsVwIR1+sh73rEVueVlQ6VgaIQigLzxHBXAaXGUVisOCs1
+ ZGgA==
+X-Gm-Message-State: AFq9FYIvC+W5yCapk3WTBPTnBmc17UcpNLkH9yZNM/k5EUyabouqDWOH
+ CvfEVvp/dzV/fJENjN+BchAjjwhZ3G+yZ+KFaQEY6K33axdsOzYXOPgT2pOnIFB05lnZud8QAhl
+ KXZocL2qwamSC6IAKMwGOOaRH7VeOFpybY5oWLa1Rhg==
+X-Gm-Gg: AYBFou1+Cr0JPfDSQrSDU4A59k71xs6DkbZBUCU0jQ8ijc3ha8ndLsITOG4EAOT77xn
+ LohrkHBKw4pJQA4lT7qJOeQY3ufqlj2HqYds7U8ixKwN7CfbGG2ukOiR5haEtJKFFCHn8AaNUW6
+ tJMcNWfSLECJ72lIZbjX5Vdfjc4tgXC0T52rPddNk+EW+lfdkvDu/+edeMVBc2hOHiMfoxyxm7i
+ V610pqEBylkctHlhWcG9YuntANQVuwtN4XQWu0S63CzG/BnQOguWo86jPmUOZf4OxjEYlALEp1M
+ HqsmyIVhnVFn/G3XEYLyPqzEiGvD2SZBSrW7AOuPdPtCOfatqN22GbUUJ8XZDU6ivM/TbEmnYwP
+ mz4TW3Wu0ktqhGNqpzp7WQMBK02g8e6xkd9CQf8Y=
+X-Received: by 2002:a05:690c:348a:b0:89a:63da:fab2 with SMTP id
+ 00721157ae682-8b0f2433c1dmr9391057b3.109.1792242461296; Sat, 17 Oct 2026
+ 06:07:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20261015181122.60608-1-marcelomanzo@gmail.com>
- <20261015181122.60608-2-marcelomanzo@gmail.com>
-In-Reply-To: <20261015181122.60608-2-marcelomanzo@gmail.com>
+ <20261015181122.60608-3-marcelomanzo@gmail.com>
+In-Reply-To: <20261015181122.60608-3-marcelomanzo@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 17 Oct 2026 13:54:45 +0100
-X-Gm-Features: AclHuK89gsivALYZyQoZU2dGrjxzWXbVXXVLuGcI-1x7xzbSHwLa8ohVELMMXLU
-Message-ID: <CAFEAcA-r5n6X-eEcnnHUaVrwg9EKmLHJOxPjnuodOtmS4Xq8=w@mail.gmail.com>
-Subject: Re: [PATCH v3 01/16] hw/arm/bcm2838_pcie: add BCM2838 PCIe Root
- Complex
+Date: Sat, 17 Oct 2026 14:07:29 +0100
+X-Gm-Features: AclHuK_o_kC6Ybzm-ij6RkeeMdvqbPyCIBbx1uZ08x_m1GRYzgIfvCT2WANZdzc
+Message-ID: <CAFEAcA9rc=7CYSeq1AL240WjO47=t_1OJDEnfD_FU0NkHKUM-g@mail.gmail.com>
+Subject: Re: [PATCH v3 02/16] hw/arm/bcm2838_pcie: add BCM2838 PCIe host
 To: Marcelo Manzo <marcelomanzo@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Eric Auger <eric.auger@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,71 +119,110 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 15 Oct 2026 at 19:11, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-> Add the PCI-facing "root" part (D0:F0) of the BCM2838 (Raspberry Pi
-> 4B / BCM2711) PCIe Root Complex: a PCIe root port with the vendor's
-> device/vendor IDs and capability offsets, not usable on its own
-> without the host-facing part added in the next patch.
+> Add the BCM2838 PCIe host bridge model: config space, MMIO window,
+> and register access for the root port.
 >
-> Adapted from patch 13/41 of Sergey Kambalin's "Raspberry Pi 4B
-> machine" series (patchwork series 829638, posted to qemu-devel in
-> 2024 but never merged) against current QEMU master; the surrounding
-> PCIe/GENET networking support for raspi4b was left unmerged upstream
-> (base scaffolding aside), so this and the following patches complete
-> and debug that series to get real networking working under
-> raspi4b.
+> Per Peter Maydell's review of a later follow-up series, fold in what
+> was originally a separate bugfix here, since this device isn't in
+> upstream git yet and the bug was in code this patch itself introduces.
+> Four defects fixed, all on the enumeration path (none of this was
+> exercised until a later patch actually attaches a PCI device):
+>
+> 1. bcm2838_pcie_host_read/write computed
+>    "offset - PCIE_CONFIG_SPACE_SIZE" on an unsigned hwaddr, which
+>    underflows for every offset below 4KB. The root port's own config
+>    space -- including vendor/device ID at offset 0 -- therefore always
+>    fell into the out-of-range branch and read back as all-ones, i.e.
+>    "no device present", so the guest stopped scanning immediately.
+>
+> 2. pcie_host_mmcfg_init() was never called, yet both accessors
+>    dereference pcie_hb->mmio.ops to service EXT_CFG_DATA. Once (1) was
+>    fixed and the guest actually reached that path, it touched an
+>    uninitialised MemoryRegion.
+>
+> 3. The root port overrode PCIDeviceClass::config_read/config_write with
+>    plain pci_default_*_config(). That bypasses rp_write_config() ->
+>    pci_bridge_write_config(), so programming the bridge's memory window
+>    never updated the bridge's address space and BARs behind the root
+>    port stayed unreachable. Drop the overrides and dispatch through
+>    pci_host_config_{read,write}_common() so the device's real handlers
+>    run.
 >
 > Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
-> ---
->  hw/arm/bcm2838_pcie.c         | 82 +++++++++++++++++++++++++++++++++++
->  hw/arm/meson.build            |  4 +-
->  include/hw/arm/bcm2838_pcie.h | 53 ++++++++++++++++++++++
->  3 files changed, 138 insertions(+), 1 deletion(-)
->  create mode 100644 hw/arm/bcm2838_pcie.c
->  create mode 100644 include/hw/arm/bcm2838_pcie.h
 
+> +static uint64_t bcm2838_pcie_host_read(void *opaque, hwaddr offset,
+> +                                       unsigned size) {
+> +    hwaddr mmcfg_addr;
+> +    uint64_t value = ~0;
+> +    BCM2838PcieHostState *s = opaque;
+> +    PCIExpressHost *pcie_hb = PCIE_HOST_BRIDGE(s);
+> +    uint8_t *root_regs = s->root_port.regs;
+> +    uint32_t *cfg_idx = (uint32_t *)(root_regs + BCM2838_PCIE_EXT_CFG_INDEX
+> +                                     - PCIE_CONFIG_SPACE_SIZE);
 
+I think these read and write functions have endianness issues.
+In a read/write function the values are host-order, but we are
+updating the regs[] array by simple memcpy(), which means that
+on a big-endian host the guest will see the wrong thing if it
+writes as 32-bits and then reads back as 8-bits.
 
-> +static void bcm2838_pcie_root_class_init(ObjectClass *class, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(class);
-> +    PCIDeviceClass *k = PCI_DEVICE_CLASS(class);
-> +    ResettableClass *rc = RESETTABLE_CLASS(class);
-> +    PCIERootPortClass *rpc = PCIE_ROOT_PORT_CLASS(class);
-> +
-> +    dc->desc = "BCM2711 PCIe Bridge";
-> +    /*
-> +     * PCI-facing part of the host bridge, not usable without the host-facing
-> +     * part, which can't be device_add'ed.
-> +     */
-
-This comment is supposed to be next to the line that
-sets dc->user_creatable = false, because it is the rationale
-for why we do that, but it's got separated from it.
+You probably want to define that the regs[] array is bytes
+to be treated as little-endian order, and then use
+ldn_le_p()/stn_le_p() to write an arbitrary sized value into
+it, or lduw_le_p()/stw_le_p() for fixed-sized accesses, etc.
+(pci.h wraps the latter into pci_{set,get}_{word,long,...}
+accessors for this kind of "access config space" purpose, but
+has no equivalent wrapper of the ldn/stn fns for "N byte access".)
 
 > +
-> +    resettable_class_set_parent_phases(rc, NULL,
-> +                                       bcm2838_pcie_root_port_reset_hold,
-> +                                       NULL, &rpc->parent_phases);
+> +    if (offset < PCIE_CONFIG_SPACE_SIZE) {
+> +        /*
+> +         * The first 4KB of the window is the root port's own PCI config
+> +         * space (vendor/device ID, BARs, capabilities). Serve it from the
+> +         * real PCIDevice, not from the raw regs[] shadow buffer, which is
+> +         * only backing store for the controller registers above 4KB.
+> +         */
+> +        value = pci_host_config_read_common(PCI_DEVICE(&s->root_port),
+> +                                            offset, PCIE_CONFIG_SPACE_SIZE,
+> +                                            size);
+> +    } else if (offset - PCIE_CONFIG_SPACE_SIZE + size
+> +               <= sizeof(s->root_port.regs)) {
+> +        switch (offset) {
+> +        case BCM2838_PCIE_EXT_CFG_DATA
+> +            ... BCM2838_PCIE_EXT_CFG_DATA + PCIE_CONFIG_SPACE_SIZE - 1:
+> +            mmcfg_addr = *cfg_idx
+> +                | PCIE_MMCFG_CONFOFFSET(offset - BCM2838_PCIE_EXT_CFG_DATA);
+> +            value = pcie_hb->mmio.ops->read(opaque, mmcfg_addr, size);
+> +            break;
+> +        default:
+> +            memcpy(&value, root_regs + offset - PCIE_CONFIG_SPACE_SIZE, size);
+> +        }
+> +    } else {
+> +        qemu_log_mask(
+> +            LOG_GUEST_ERROR,
+> +            "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
+> +            __func__, size, offset);
+> +    }
 > +
-> +    dc->user_creatable = false;
-> +    k->vendor_id = BCM2838_PCIE_VENDOR_ID;
-> +    k->device_id = BCM2838_PCIE_DEVICE_ID;
-> +    k->revision = BCM2838_PCIE_REVISION;
-> +
-> +    rpc->exp_offset = BCM2838_PCIE_EXP_CAP_OFFSET;
-> +    rpc->aer_offset = BCM2838_PCIE_AER_CAP_OFFSET;
+> +    trace_bcm2838_pcie_host_read(size, offset, value);
+> +    return value;
 > +}
 
-> +struct BCM2838PcieRootState {
-> +    /*< private >*/
-> +    PCIESlot parent_obj;
+> +static PCIINTxRoute bcm2838_pcie_host_route_intx_pin_to_irq(void *opaque,
+> +                                                            int pin)
+> +{
+> +    PCIINTxRoute route;
+> +    BCM2838PcieHostState *s = opaque;
 > +
-> +    /*< public >*/
-> +    uint8_t regs[BCM2838_PCIE_REGS_SIZE - PCIE_CONFIG_SPACE_SIZE];
-> +};
+> +    route.irq = s->irq_num[pin];
+> +    route.mode = route.irq < 0 ? PCI_INTX_DISABLED : PCI_INTX_ENABLED;
+> +
+> +    return route;
+> +}
 
-If this is register state doesn't it need to be in a vmstate
-struct, or does it get migrated some other way by the PCI core code ?
+It's not clear to me if we need this -- most PCI controllers don't
+seem to call pci_bus_set_route_irq_fn(). I have a feeling this is
+only relevant for PCI passthrough. Eric, do you know ?
 
 thanks
 -- PMM
