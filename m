@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 000BBCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C98CCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:09:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9dp-0005mK-CW; Sat, 17 Oct 2026 15:00:25 -0400
+	id 1xI9eg-0008L4-He; Sat, 17 Oct 2026 15:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cv-0005IT-Qz; Sat, 17 Oct 2026 14:59:36 -0400
+ id 1xI9dx-00067M-Il; Sat, 17 Oct 2026 15:00:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ct-0003xD-B6; Sat, 17 Oct 2026 14:59:28 -0400
+ id 1xI9dv-0004GT-Sj; Sat, 17 Oct 2026 15:00:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263406; bh=jCSsbYm8DAsppID2FPzEXBfhxFllFwpdgjpTmV+qdkI=;
+ t=1792263421; bh=t3Y7hPWOb7S5GvmzRzlZql2w9QrWwtr+vAgksoJgcdY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=i28m0zCRM4lshGsjAd7XoehHUGTdNmT9l4E6ls1zFifazK1GLUC83ZywniVCWJDpt
- V+BCnbUw9s6woHJugS30HJWDMexdKY3NobCwSwVh8OmtDESOjwZXSYqqj9q2xSc3Bj
- C0d3wyBkI+4HbcWSAfVT30Zqo66BWGhaIT0LGA0lzdBIIqaw6zeS6/Im2mih3EKeB3
- /UEh0z4iKWXCsFbUVQfnZdaqM08p0ka4oDooD1GIEK/GxES0nZP29kNSI6o5P77svT
- nCFbve069HclrcnVLpic787N1/mujbyyd6wiEdPyGX0vGtcbBrLywv7B2gGKRGzsr6
- 6fCOVK+T2L1NA==
+ b=A5GeMqH0N8aOVHJ9JnHZlAFDeNYrjJzohfk+hqXUTbFcwEEk//PqMHYVKOrtq1i/q
+ UPuBO3rWb9ddHSzXBUoFUMXYiGWQ64sgSmQAGgpvdOdNsyBQ9xIAt30bWqf+UMM8qB
+ L0kpED1bkbHV0VCx6W2HUrlRoUkILXMHkEyGgJnw2gyHN9Dzhag00mqRGLCjziTgEr
+ oQ0nl0Y+KFJOAkwiW3uXZxvISXLbIoxQaltZOvl3n6lSvwB4lZXCI43XceUy6bypgS
+ kBtQ2Oc1KNqQlX4WTRUJk7LC5RPlXHyJsT0yG9Ipz4CPqo59/NW1mtiAdInj0MtsCR
+ zlPjkbOs1RAOw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D1CBE1DE6C8;
- Sat, 17 Oct 2026 21:56:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 37ACC1DE6D6;
+ Sat, 17 Oct 2026 21:57:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6A34D443392;
- Sat, 17 Oct 2026 21:56:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 12E3C44339E;
+ Sat, 17 Oct 2026 21:56:59 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 39/63] qcow2: do not clear the dirty bit when
- reopening a read-only node
-Date: Sat, 17 Oct 2026 21:54:55 +0300
-Message-ID: <20261017185528.722197-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Artemii Mashanov <ralerrdirsardx@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 51/63] target/i386: fix immediate stack adjustment
+ for RET and RETF
+Date: Sat, 17 Oct 2026 21:55:07 +0300
+Message-ID: <20261017185528.722197-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,162 +69,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Artemii Mashanov <ralerrdirsardx@gmail.com>
 
-qcow2_reopen_prepare() clears the dirty bit whenever the node is
-reopened read-only, with an unguarded header write. A read-only node
-can still be dirty, inherited from an earlier writable session, and it
-holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
-reopen of a dirty image therefore fails outright:
+The imm16 operand of RET and RETF specifies an unsigned 16-bit count
+of additional bytes to release from the stack.
 
-  $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
-  qemu-io: failed while preparing to reopen image 'dirty.qcow2'
+Previously, gen_RET() and gen_RETF() stored this operand in an int16_t.
+For example, 0xcaf5 was interpreted as -13579 instead of 51957.
 
-Where the file node below is writable the write is not refused early,
-and bdrv_co_write_req_prepare() aborts on its BLK_PERM_WRITE assertion
-instead.
+Use uint16_t for the adjustment in both functions to preserve the
+immediate's unsigned value.
 
-Clear it only for a node that is writable now, the predicate
-qcow2_do_open() already uses for the repair. bdrv_is_writable() also
-excludes an inactive node, whose header must not be touched either.
+Tested locally with near and far returns in both 32-bit and 64-bit
+modes. Each combination covered the form without an immediate and
+immediate values 0x0000, 0x0001, 0x7fff, 0x8000, 0xcaf5, and 0xffff.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-stable@nongnu.org
-Message-ID: <20260824133729.1141990-2-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit af28b65fae6fcbc22efdbcd4d71b37fd0c8adf89)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2599
+
+Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+Link: https://lore.kernel.org/r/20260924200420.21068-1-ralerrdirsardx@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 21b6c3e5bccfc07d2719f6de27c40df5af283748)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 6f495c97d5..14dddd6273 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -2016,9 +2016,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
-             goto fail;
-         }
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index af1cea92be..4b657500ec 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3585,7 +3585,7 @@ static void gen_RDxxBASE(DisasContext *s, X86DecodedInsn *decode)
  
--        ret = qcow2_mark_clean(state->bs);
--        if (ret < 0) {
--            goto fail;
-+        if (bdrv_is_writable(state->bs)) {
-+            ret = qcow2_mark_clean(state->bs);
-+            if (ret < 0) {
-+                goto fail;
-+            }
-         }
-     }
+ static void gen_RET(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    int16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
++    uint16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
  
-diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
-index 94a8bfe754..3d0c073d65 100755
---- a/tests/qemu-iotests/039
-+++ b/tests/qemu-iotests/039
-@@ -95,6 +95,40 @@ $QEMU_IMG info --image-opts \
- # The dirty bit must still be set: this open never wrote any guest data
- _qcow2_dump_header | grep incompatible_features
+     MemOp ot = gen_pop_T0(s);
+     gen_stack_update(s, adjust + (1 << ot));
+@@ -3596,7 +3596,7 @@ static void gen_RET(DisasContext *s, X86DecodedInsn *decode)
  
-+echo
-+echo "== Read-only reopen must not clear the dirty bit =="
-+
-+# A read-only node cannot write the header, and must keep the dirty bit
-+$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
-+    | _filter_qemu_io
-+
-+# The dirty bit must still be set
-+_qcow2_dump_header | grep incompatible_features
-+
-+echo
-+echo "== Read-only reopen must not write through a writable file node =="
-+
-+# The write the header update needs is refused by the permission system
-+echo "{'execute': 'qmp_capabilities'}
-+      {'execute': 'blockdev-reopen',
-+       'arguments': {'options': [{'node-name': 'drive',
-+                                  'driver': 'qcow2',
-+                                  'read-only': true,
-+                                  'file': 'prot'}]}}
-+      {'execute': 'quit'}" \
-+    | $QEMU -qmp stdio -nographic -nodefaults \
-+            -blockdev "{'node-name': 'prot',
-+                        'driver': 'file',
-+                        'filename': '$TEST_IMG'}" \
-+            -blockdev "{'node-name': 'drive',
-+                        'driver': 'qcow2',
-+                        'file': 'prot',
-+                        'read-only': true}" \
-+    | _filter_qmp
-+
-+# The dirty bit must still be set
-+_qcow2_dump_header | grep incompatible_features
-+
- echo
- echo "== Repairing the image file must succeed =="
+ static void gen_RETF(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    int16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
++    uint16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
  
-@@ -108,6 +142,22 @@ echo "== Data should still be accessible after repair =="
- 
- $QEMU_IO -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
- 
-+echo
-+echo "== A read-write to read-only reopen must clear the dirty bit =="
-+
-+_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
-+
-+# The kill keeps the close from clearing the bit, so the header shows what
-+# the reopen did with it
-+_NO_VALGRIND \
-+$QEMU_IO -c "write -P 0x5a 0 512" \
-+         -c "reopen -r" \
-+         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
-+    | _filter_qemu_io
-+
-+# The dirty bit must not be set
-+_qcow2_dump_header | grep incompatible_features
-+
- echo
- echo "== Opening a dirty image read/write should repair it =="
- 
-diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
-index c66361128f..ce8ee57721 100644
---- a/tests/qemu-iotests/039.out
-+++ b/tests/qemu-iotests/039.out
-@@ -27,6 +27,19 @@ incompatible_features     [0]
- == Read-only open must not crash on close ==
- incompatible_features     [0]
- 
-+== Read-only reopen must not clear the dirty bit ==
-+read 512/512 bytes at offset 0
-+512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+incompatible_features     [0]
-+
-+== Read-only reopen must not write through a writable file node ==
-+QMP_VERSION
-+{"return": {}}
-+{"return": {}}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
-+incompatible_features     [0]
-+
- == Repairing the image file must succeed ==
- ERROR cluster 5 refcount=0 reference=1
- Rebuilding refcount structure
-@@ -45,6 +58,13 @@ incompatible_features     []
- read 512/512 bytes at offset 0
- 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
-+== A read-write to read-only reopen must clear the dirty bit ==
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
-+wrote 512/512 bytes at offset 0
-+512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
-+incompatible_features     []
-+
- == Opening a dirty image read/write should repair it ==
- Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
- wrote 512/512 bytes at offset 0
+     if (!PE(s) || VM86(s)) {
+         gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], 0);
 -- 
 2.47.3
 
