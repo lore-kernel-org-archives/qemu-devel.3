@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B616CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3A2CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9aM-00004s-Bi; Sat, 17 Oct 2026 14:56:50 -0400
+	id 1xI9bv-0002mw-8O; Sat, 17 Oct 2026 14:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9aD-0008Rn-Sp; Sat, 17 Oct 2026 14:56:41 -0400
+ id 1xI9be-0002US-2P; Sat, 17 Oct 2026 14:58:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9aC-0003d3-5I; Sat, 17 Oct 2026 14:56:41 -0400
+ id 1xI9bc-0003pH-C2; Sat, 17 Oct 2026 14:58:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263369; bh=BrXGxebFoozm8n7AzRscwsHaYJwlpio6lCZ/hQOMtRY=;
+ t=1792263390; bh=btOADbjU4ohHDsx/av2aQjrK/0woUKACSy5djYFM2u4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JfywOwe0ChY9ivDbcXWACrfNTRal7Kgo9GmNvLi3WaCoFVKMk2sYIaqhMGGb37swp
- 4g0wozv+Bzl/WVSlIiQsc7sgMqv0YD5q05lJYJLC9Kfy/LCn4ip795WVLuqjUFBShW
- K6VArr7WyMegCo0/OjxVBKrU+XymaN941EmBYaPR8LaCyojXBy7+jMiCkMnmgZHbF1
- XdFRjAH8DI6BcfHVFyGLc+OVT3DYaIQfrMxT0ASlR/MQ4n1/Hi7GU+XEZ5x4ash1Ot
- NOCxmiyJkSrOn46iusiDFd59suUV/JUaQGiP+817QRZLvYVGgdLfxm+Aw4HUjzLNch
- sjQlCRIkufbZw==
+ b=wlOxCr9LUrdoLf2cTRvXkmo22VSnZ8pn3zzYeU83NMhv/+4nLEmJLhBtxroLjxyFL
+ Gr7jlAF05zBg2YIpN2v8XPr8M3s+USVVfAcMiMHVM1QNNR04ZN1tlbOH7Bcfo9JFfM
+ 2i4wGy2dC+l/wmPEIWhQrTQI1wgpMZ6Cmy7nNkbfCiqHKpWxGPMzz6YATcHhmkF+iL
+ fYB9pcfsb6Vv5fM03Eq3mycgvxWBMtiSfqBDucraomuzmS9fBFk35doiF3kNcOrR+I
+ jNb030NzvmUbGlNIwRuGTE62LBVjLpBHhlsCm/MxC+j2JxOVb/lG+pVNrUCnA6P00R
+ ncbPioiupnqpg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 031F11DE6AC;
- Sat, 17 Oct 2026 21:56:09 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A73881DE6BC;
+ Sat, 17 Oct 2026 21:56:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1BCF9443377;
- Sat, 17 Oct 2026 21:56:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89ECF443387;
+ Sat, 17 Oct 2026 21:56:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 12/63] s390x/pci: Fix frame stepping in
- rpcit_service_call()
-Date: Sat, 17 Oct 2026 21:54:28 +0300
-Message-ID: <20261017185528.722197-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 28/63] target/i386/tcg: raise #GP(0) on null SS load
+ with RPL != CPL
+Date: Sat, 17 Oct 2026 21:54:44 +0300
+Message-ID: <20261017185528.722197-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,43 +71,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Jakub Lipový <lipovyjakub@tillia.cz>
 
-When walking the guest IO address table, an invalid segment or region
-entry causes table_translate() to return entry.len equal to the frame
-size for that table level (1 MiB for ST, 2 GiB for RT).  Adding
-entry.len directly to start only advances to the correct next frame
-boundary if start is already frame-aligned at that level -- which is
-true for a well-behaved Linux guest but not a general requirement.
+In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
+or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
+first case: the null-selector path never examined the selector's RPL, so
+a null selector with non-zero RPL (such as 0x0003) loaded successfully at
+CPL < 3.
 
-Add logic to advance start to the next frame boundary rather than
-simply adding entry.len.  For a frame-aligned start (the typical,
-well-behaved case) the result is identical.
+This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
+additionally fails its subsequent non-null check because the wrongly
+succeeded load leaves 3 in SS.
 
-Fixes: 0125861eacc3 ("s390x/pci: fixup the code walking IOMMU tables")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929153012.774530-2-mjrosato@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit e57ad36701886404baaf5216bacfa9a21f98fd6e)
+Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
+Link: https://lore.kernel.org/r/20260818164414.245189-1-lipovyjakub@tillia.cz
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 8d496d8f9fcea2199f6dc32f700d13b1d9ed3358)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index d9eb9c9efa..f01cdeae61 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -806,7 +806,8 @@ int rpcit_service_call(S390CPU *cpu, uint8_t r1, uint8_t r2, uintptr_t ra)
-             coalesce = 0;
-         }
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 8158d6175e..85fe6e8008 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1382,11 +1382,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
  
--        start += entry.len;
-+        /* Advance to next frame boundary if start was not frame-aligned */
-+        start = QEMU_ALIGN_UP(start + 1, entry.len);
-         while (entry.iova < start && entry.iova < end) {
-             if (dma_avail > 0 || entry.perm == IOMMU_NONE) {
-                 dma_avail = s390_pci_update_iotlb(iommu, &entry);
+     selector &= 0xffff;
+     cpl = env->hflags & HF_CPL_MASK;
++    rpl = selector & 3;
+     if ((selector & 0xfffc) == 0) {
+         /* null selector case */
+         if (seg_reg == R_SS
+ #ifdef TARGET_X86_64
+-            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
++            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
+ #endif
+             ) {
+             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
+@@ -1410,7 +1411,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+         if (!(e2 & DESC_S_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
+         }
+-        rpl = selector & 3;
+         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         if (seg_reg == R_SS) {
+             /* must be writable segment */
 -- 
 2.47.3
 
