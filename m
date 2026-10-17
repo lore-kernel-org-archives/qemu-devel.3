@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21BF0CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95B7CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2V-0000Oe-FM; Sat, 17 Oct 2026 16:29:59 -0400
+	id 1xIB0f-0005y7-R4; Sat, 17 Oct 2026 16:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1n-0006hG-7Y; Sat, 17 Oct 2026 16:29:15 -0400
+ id 1xIB0E-0005H8-8f; Sat, 17 Oct 2026 16:27:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1i-00041E-FW; Sat, 17 Oct 2026 16:29:13 -0400
+ id 1xIB0C-0003vN-Dr; Sat, 17 Oct 2026 16:27:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268849; bh=lVz8zWps2N/zWKLDoW+1L3mbLfbs78tIwDnPGFwcXi8=;
+ t=1792268834; bh=YvudTu1TjQ7XzZhzWIPBrU8F7GjFpeEV26Ryt+HR480=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NUj4rhEsStcYQqFDXdodR5tV3NwtIbP7VTDgZCvTRgA/anu5GiHV1FJfX3Bzei7Cr
- kXAxET2UW95nY8QfrHKTTNksUAvhnl8icoJeLURWq1q0ClQFtirMs7IYcBu7rmPl30
- jrrIeanLk80gcDozlIxhxJSTLjEBHgFhGqwhvSAbeSrdVxo7inTDu1l7jXixfygehm
- dhMYgu5BX0VZu5mmBNtqvtXUNHL+ZYwgqsPinGRX4IrgpQPAP8uaiQl0FnCDEPVaoX
- 7fQ96Zm0MdDGH3B1lrOF8B2sjwaI5DxlmSMZO9+jC+0p4GTxz9ffl4y3gA1aEb1xJz
- CUudF0+h/5bZA==
+ b=Z1vmyPlTyJ1PuGObCczViDc9j8ipIVoEH+LUa7oS1AAEZEKAHpsgyqq2XXHi4AbCh
+ +LmqEju1I7awpKThXEWUI0l1kcdZVKfOWuxb3Ra7CxSBcdU7X0iQmqjfXRUMUt7m5O
+ ghA1j7oTgbhlV2lR8XvJS682kEFIymFxnNK+oOIaPQ0ZoyAreo3OyuMOKlIOyayhML
+ UIK/rlzpVkZfpHQ2Z2Y1NqLJahoEzBIM9oe5jnMnbqLfUgGqDoySIbHC6u3dMNl9vd
+ YzXpp0uCV0+hS6qoxmEG3mtI1CZGleEROdBq3l9KclSOK8x4s6x3AmmLvhuFbYuyxE
+ mMIz0Z5EKOO7A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3CC81DE755;
- Sat, 17 Oct 2026 23:27:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5623B1DE746;
+ Sat, 17 Oct 2026 23:27:14 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4AF844342B;
- Sat, 17 Oct 2026 23:27:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C5A0444341D;
+ Sat, 17 Oct 2026 23:27:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 25/73] block/nbd: clear reply.cookie when the reply is
- rejected
-Date: Sat, 17 Oct 2026 23:25:43 +0300
-Message-ID: <20261017202638.728621-25-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 11/73] s390x/sclp: Reject short headers in PV case
+Date: Sat, 17 Oct 2026 23:25:29 +0300
+Message-ID: <20261017202638.728621-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -71,91 +71,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Eric Farman <farman@linux.ibm.com>
 
-nbd_receive_replies() reads a reply header into s->reply and, when the
-header turns out to be unusable, reports a channel error and returns
-without touching it. The cookie stays there until the request which
-owns the reply clears it, and until then the waiters are explicitly
-allowed to look at a cookie which is not theirs:
+An invalid length in an SCCB header correctly generates a specification
+exception for the regular (non-PV) codepath that processes an SCLP
+instruction intercept. The PV case doesn't, because the UV enforces
+a valid length before getting to this point. The length is used to
+allocate storage later down the line, so doublecheck the length here
+in the (unlikely) case it is too short.
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
-
-Two of the error paths leave a value chosen by the server behind: one
-returns before the cookie is validated at all, the other returns
-because that validation has failed. A waiter which picks such a cookie
-up turns it into an index which is not in requests[] and accesses the
-array out of bounds, at an offset the server controls.
-
-The reply is of no use to anybody at this point, so clear the cookie
-before the mutex is released and keep the invariant that a non-zero
-s->reply.cookie is always an index of a live request.
-
-Observing the stale cookie takes a second thread, which a multiqueue
-configuration provides. Within one AioContext there is no yield point
-between the failed read and the clearing done by the owner in
-nbd_co_receive_one_chunk(), so nothing else of this node runs in
-between. The parked waiters cannot see it either, as they are woken
-only after the cookie has been cleared. What can get in is a request
-entering nbd_receive_replies() afresh, one just sent or one back for
-its next reply chunk, because that path takes the mutex without
-looking at the state.
-
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-2-den@openvz.org>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 9998d225bb95c0baa17d51f760e46a51886ccfdf)
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: c1db53a591 ("s390/sclp: read sccb from mem based on provided length")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-10-farman@linux.ibm.com
+[farman@linux.ibm.com: Updated commit/comment text, per Janosch]
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 119860f15cd239dced773de9375f741db255652d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nbd.c b/block/nbd.c
-index 5d231d5c4e..d9b776283f 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -466,20 +466,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-             error_setg(errp, "server dropped connection");
-         }
-         if (ret < 0) {
--            nbd_channel_error(s, ret);
--            return ret;
-+            goto err;
-         }
-         if (nbd_reply_is_structured(&s->reply) &&
-             s->info.mode < NBD_MODE_STRUCTURED) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected structured reply");
--            return -EINVAL;
-+            goto err;
-         }
-         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected cookie value");
--            return -EINVAL;
-+            goto err;
-         }
-         if (s->reply.cookie == cookie) {
-             /* We are done */
-@@ -487,6 +486,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-         }
-         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
-     }
-+
-+err:
-+    /* Waiters look at this cookie, so do not leave a rejected one behind. */
-+    s->reply.cookie = 0;
-+    nbd_channel_error(s, ret);
-+
-+    return ret;
- }
+diff --git a/hw/s390x/sclp.c b/hw/s390x/sclp.c
+index b452f2ce54..8e5bd21f03 100644
+--- a/hw/s390x/sclp.c
++++ b/hw/s390x/sclp.c
+@@ -275,6 +275,11 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
  
- static int coroutine_fn GRAPH_RDLOCK
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, &header, sizeof(SCCBHeader));
+ 
++    /* We should never end up here due to UV checks, but lets be sure */
++    if (be16_to_cpu(header.length) < sizeof(SCCBHeader)) {
++        goto out_no_write;
++    }
++
+     work_sccb = g_malloc0(be16_to_cpu(header.length));
+     s390_cpu_pv_mem_read(env_archcpu(env), 0, work_sccb,
+                          be16_to_cpu(header.length));
+@@ -288,6 +293,7 @@ int sclp_service_call_protected(S390CPU *cpu, uint64_t sccb, uint32_t code)
+ out_write:
+     s390_cpu_pv_mem_write(env_archcpu(env), 0, work_sccb,
+                           be16_to_cpu(header.length));
++out_no_write:
+     sclp_c->service_interrupt(sclp, SCLP_PV_DUMMY_ADDR);
+     return 0;
+ }
 -- 
 2.47.3
 
