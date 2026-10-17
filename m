@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A170CCF2C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B07DCCF2C4
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9fg-000295-ER; Sat, 17 Oct 2026 15:02:20 -0400
+	id 1xI9fh-0002IT-Lc; Sat, 17 Oct 2026 15:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ev-0000xg-Oh; Sat, 17 Oct 2026 15:01:34 -0400
+ id 1xI9eR-0006le-1Q; Sat, 17 Oct 2026 15:01:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9et-0004LT-OA; Sat, 17 Oct 2026 15:01:33 -0400
+ id 1xI9eO-0004J5-So; Sat, 17 Oct 2026 15:01:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263436; bh=qRvolJ5qa/tOZOHlXgDhJ4v57RaF5JF67FPon2iMbWw=;
+ t=1792263428; bh=FXzr5fLZUvw+pZqQK2VFOPfwNcrD8X1apSacBXHdOXI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nSejjSQaCUeZ+pc9fEEGMvxgwcZV1HZ0nyGV/uVvDxjMy6w8cRmzDDVPqJ0YLWETf
- YoC8UhB7C+ULU3R/BQSrKm3H8pKHfAeiq+5f7gt4DYmydD4eZ/fCdMivIVh0RUc//3
- G6Y6JiGt+uT5AuTYr/FQ0g8bIQoWZyG0Glfp+bntJvN0GI9FHCU1y+z3YV09Q0G5+O
- KKN9/noi6JIGwQVZiUjY++Hba2C4J7tGb5FOmq3OyxWSiwZuIYbUM6u7esLBmivOW2
- 5IIfgJOIpo168HgXKHdK9oV01bddd5sWIDVslI8TgbPWkA5RIUQKJOJmWv74jIWluR
- 02t01ktP7zClA==
+ b=epZmkYVTwGdN3Kg+ZStauQU5UQOdrGoA4jW6dkmsbyg0917zkgSKr+nzKDoz9nb20
+ 0LV1S+LCQntLRdKyXFekZUdC849LUaTk6m1CY4sA9YdEYn28JrBQLn5mmao8wzy7i+
+ xuAXl3wuB311fn6VxVljFKfik2whDkIQWwxwD4XX6cvuDVp+HI6U4Cz0D8zSXQjWY6
+ FOO8/zZXJ3DFjsRR04/oP6CxNfXz+tr9YRiqqYmk8jacAhEs3c8CXavbWzmpEXqHjO
+ cNj3Z4aR9uf7jb8RgUqKp00O8DbF1i1zamnWRFA5czazA1S3g2UQGmUe8FxjmbqhoG
+ YocKopwp6ultQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BC4141DE6E1;
- Sat, 17 Oct 2026 21:57:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 76B021DE6DB;
+ Sat, 17 Oct 2026 21:57:08 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6D30E4433A9;
- Sat, 17 Oct 2026 21:57:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 96CF84433A3;
+ Sat, 17 Oct 2026 21:57:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Rick Richard <rick@sloservers.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 62/63] tests/qtest/bios-tables-test: Update riscv64
- virt SPCR golden reference
-Date: Sat, 17 Oct 2026 21:55:18 +0300
-Message-ID: <20261017185528.722197-62-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Gustavo Romero <gromero@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 56/63] tests/tcg/aarch64: Test the TTBR layout with
+ TCR.DS and a 48-bit OA
+Date: Sat, 17 Oct 2026 21:55:12 +0300
+Message-ID: <20261017185528.722197-56-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,95 +70,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rick Richard <rick@sloservers.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-Update the riscv64 virt SPCR golden reference file to have the fix for
-the UART register width.
+Extend the TTBR base address test to check that, with TCR.DS or VTCR.DS
+and a 48-bit OA, setting TTBR[5:2] is a level 0 Address size fault.
 
-Diffs from iasl:
-
-@@ -1,58 +1,58 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
-  *
-  * ACPI Data Table [SPCR]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
-  */
-
- [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
- [004h 0004 004h]                Table Length : 0000005A
- [008h 0008 001h]                    Revision : 04
--[009h 0009 001h]                    Checksum : 13
-+[009h 0009 001h]                    Checksum : 2B
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
-
- [024h 0036 001h]              Interface Type : 12
- [025h 0037 003h]                    Reserved : 000000
-
- [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
- [028h 0040 001h]                    Space ID : 00 [SystemMemory]
--[029h 0041 001h]                   Bit Width : 20
-+[029h 0041 001h]                   Bit Width : 08
- [02Ah 0042 001h]                  Bit Offset : 00
- [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
- [02Ch 0044 008h]                     Address : 0000000010000000
-
- [034h 0052 001h]              Interrupt Type : 10
- [035h 0053 001h]         PCAT-compatible IRQ : 00
- [036h 0054 004h]                   Interrupt : 0000000A
- [03Ah 0058 001h]                   Baud Rate : 07
- [03Bh 0059 001h]                      Parity : 00
- [03Ch 0060 001h]                   Stop Bits : 01
- [03Dh 0061 001h]                Flow Control : 00
- [03Eh 0062 001h]               Terminal Type : 03
- [04Ch 0076 001h]                    Reserved : 00
- [040h 0064 002h]               PCI Device ID : FFFF
- [042h 0066 002h]               PCI Vendor ID : FFFF
- [044h 0068 001h]                     PCI Bus : 00
- [045h 0069 001h]                  PCI Device : 00
- [046h 0070 001h]                PCI Function : 00
- [047h 0071 004h]                   PCI Flags : 00000000
- [04Bh 0075 001h]                 PCI Segment : 00
- [04Ch 0076 004h]                    Reserved : 00000000
-
- Raw Table Data: Length 90 (0x5A)
-
--    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
-+    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
-+    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
-     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
-     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
-
-Signed-off-by: Rick Richard <rick@sloservers.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20261005104008.214588-4-rick@sloservers.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 71041ce05c95fe47fd24175bb2b974bb14f3d029)
+Reviewed-by: Gustavo Romero <gromero@redhat.com>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20261009115728.1299384-5-fuad.tabba@linux.dev
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 2579771a28a200cba27d843fbda549def09f421d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index 59d2c8f7f2..6003c230b1 100644
-Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index aae973048a..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
+index b29c9e1ab0..20a240410d 100644
+--- a/tests/tcg/aarch64/system/ttbr-baddr.c
++++ b/tests/tcg/aarch64/system/ttbr-baddr.c
+@@ -4,6 +4,8 @@
+  * With a 52-bit OA, walk a two-entry level 0 table through an IPA with
+  * bit 50 set, which stage 2 maps back onto the table, so the walk
+  * succeeds only if TTBR[4] is cleared from bit 4 of the base address.
++ * With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
++ * is a level 0 Address size fault.
+  *
+  * Copyright (c) 2026 Google LLC
+  * Author: Fuad Tabba <fuad.tabba@linux.dev>
+@@ -42,10 +44,13 @@
+  * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
+  * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
+  * again at HIGH_IPA.
++ * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
+  */
+ static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
+ static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
+ static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
++static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
++static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
+ static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
+ static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
+ static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
+@@ -54,20 +59,27 @@ static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
+ #define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
+ #define TCR_TG0_16K     (2UL << 14)
+ #define TCR_TG1_16K     (1UL << 30)
++#define TCR_IPS_48      (5UL << 32)
+ #define TCR_IPS_52      (6UL << 32)
+ #define TCR_DS          (1UL << 59)
+ 
+ #define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
+ #define VTCR_SL0_L1     (2UL << 6)
++#define VTCR_TG0_16K    (2UL << 14)
+ #define VTCR_TG0_64K    (1UL << 14)
++#define VTCR_PS_48      (5UL << 16)
+ #define VTCR_PS_52      (6UL << 16)
+ #define VTCR_RES1       (1UL << 31)
++#define VTCR_DS         (1UL << 32)
+ 
+ #define HCR_VM          (1UL << 0)
+ #define HCR_RW          (1UL << 31)
+ 
+ #define PAR_F           (1UL << 0)
++#define PAR_FST(par)    (((par) >> 1) & 0x3f)
+ #define PAR_PA(par)     ((par) & 0xfffffffff000UL)
++#define FST_ADDR_SIZE_L0    0x00
++
+ #define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
+ 
+ static void tlb_flush(void)
+@@ -86,6 +98,17 @@ static uint64_t at(uint64_t ttbr1)
+     return par;
+ }
+ 
++static uint64_t at_s1(uint64_t ttbr1)
++{
++    uint64_t par;
++
++    write_sysreg(ttbr1_el1, ttbr1);
++    tlb_flush();
++    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
++                 : "=r" (par) : "r" (TEST_VA));
++    return par;
++}
++
+ static void setup_tables(void)
+ {
+     /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
+@@ -93,6 +116,10 @@ static void setup_tables(void)
+     s1_l1[0] = (uint64_t)s1_l2 | 3;
+     s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
+ 
++    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
++    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
++    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
++
+     /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
+     s2_l1[0] = (uint64_t)s2_l2 | 3;
+     s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
+@@ -108,6 +135,15 @@ static int check(const char *name, uint64_t par)
+     return !ok;
+ }
+ 
++/* A level 0 Address size fault */
++static int check_fault(const char *name, uint64_t par)
++{
++    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
++
++    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
++    return !ok;
++}
++
+ int main(void)
+ {
+     uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
+@@ -135,6 +171,25 @@ int main(void)
+     write_sysreg(mair_el1, 0xff);
+     write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
+ 
++    /*
++     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
++     * so setting any of them is a level 0 Address size fault.
++     */
++    write_sysreg(hcr_el2, HCR_RW);
++    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
++    ret |= check("ips48", at_s1(base));
++    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
++    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
++
++    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
++    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
++                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
++    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
++    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
++    ret |= check("ps48", at(base));
++    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
++    ret |= check_fault("ps48 vttbr[2]", at(base));
++
+     /*
+      * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
+      * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
 -- 
 2.47.3
 
