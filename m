@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C85A1CCF2C4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95FDCCF2CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB71-0001fZ-Sj; Sat, 17 Oct 2026 16:34:40 -0400
+	id 1xIB1u-0007Xl-Es; Sat, 17 Oct 2026 16:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB63-0007DQ-Gw; Sat, 17 Oct 2026 16:33:40 -0400
+ id 1xIB19-0006ME-HU; Sat, 17 Oct 2026 16:28:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB61-0004is-VU; Sat, 17 Oct 2026 16:33:39 -0400
+ id 1xIB13-0003xu-Dm; Sat, 17 Oct 2026 16:28:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268902; bh=1QFUAT0Ks7/wzkVRF8wGIcYv/akZSw5nk46VFWm/oTk=;
+ t=1792268843; bh=TvfbHBj8LQynFjroYhLJLapXU5bv3tTKrvXqbKgJewg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H+CWwalz4sqwu018I26DT20RQceG3xGeyMPhAZxRYyfG3DSEnvlvxvphAkUuYf18G
- xQcvGQja/umYTiVT1dBIuXhxczCLXTRdDhQqHcQAMA8qCxGJRpOj47awll/72bHBcP
- DtGq8MvLz5aHJtBcnsLZAXVewx2SuGeJg70rCyeBkZYaoiJX0Crf4ZJ5PXbiRRNVau
- 8NyJJ2OoKbqBAgj/7iw5o24VwH6D5P6tCkLzIHRvpSv3QkWXnnk7BIg4hxPe27bsEK
- unU6uvaEXRuYDyjFL2oJSCxPaCEaHy8MeI6izU/ruqU6selCnrx/9IFWJbUlZbRYtd
- ttc02AUX5S6BQ==
+ b=QmvlWTrLaNYacy+Uv73OKmGNHwu/pVkX+6JR0E/M9BlqTFufGmlZsETWRFhIXboZm
+ TFCsTprr7Fx6Gi180R/GCdyP8Vk5PvmFchy/SDD3tIaNWKk1N0Bh8zsnaAx7ANXq1B
+ 8yMvqPehlp0EFXtvI0YRaUPJOxY7LCVJvHUmrApyGrPFuS4C1T1I2opjq3mjNVp3GD
+ kbY0XJhr9gR8bT2kkFF8DO+4K//OsNNMOhBY+j831DewFMqq2HC8jn+Pcr6Xrfueru
+ K7n7wQw/cmUmEgWLwRIx9rg/bYZ2k24cSspAwfceB9osQyFsEhhXu53YnEfX9rIkyP
+ LAu3e2orc13aA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 25DAF1DE786;
- Sat, 17 Oct 2026 23:28:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1EA6F1DE74E;
+ Sat, 17 Oct 2026 23:27:23 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 44310443457;
- Sat, 17 Oct 2026 23:28:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 634C9443425;
+ Sat, 17 Oct 2026 23:27:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xie Bo <xb@ultrarisc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 69/73] target/riscv/kvm: Preserve VCSR across migration
-Date: Sat, 17 Oct 2026 23:26:27 +0300
-Message-ID: <20261017202638.728621-69-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 19/73] hw/usb/dev-smartcard-reader: validate migrated
+ fields in post_load
+Date: Sat, 17 Oct 2026 23:25:37 +0300
+Message-ID: <20261017202638.728621-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,56 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The vector state sync handles vstart, vl and vtype, but leaves vcsr
-behind.  vxrm and vxsat in the migration stream are therefore stale,
-and the destination does not restore the values held by KVM.
+Validate fields loaded from the migration stream to reject crafted or
+corrupt data before it can cause harm.
 
-Read vcsr when collecting vector state and split it into vxrm and
-vxsat.  Rebuild it from those fields when writing vector state back.
-
-Fixes: 3ca78c0689d5 ("target/riscv/kvm: add RVV and Vector CSR regs")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260831074106.1798671-4-xb@ultrarisc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f20acdba2a960689cc7adb179e96b0441cb83e25)
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit 665494c3ac0737e8067b6365f99c237bd5e5356a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index aa19c69dd3..0a27744d6b 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -910,6 +910,13 @@ static int kvm_riscv_get_regs_vector(CPUState *cs)
-     }
-     env->vtype = reg;
- 
-+    ret = kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vcsr), &reg);
-+    if (ret) {
-+        return ret;
-+    }
-+    env->vxrm = (reg & VCSR_VXRM) >> VCSR_VXRM_SHIFT;
-+    env->vxsat = (reg & VCSR_VXSAT) >> VCSR_VXSAT_SHIFT;
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index 4cb5f6e1a4..b68f371f24 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -1359,6 +1359,26 @@ static void ccid_realize(USBDevice *dev, Error **errp)
+ static int ccid_post_load(void *opaque, int version_id)
+ {
+     USBCCIDState *s = opaque;
++    int i;
 +
-     if (kvm_v_vlenb.supported) {
-         ret = kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
-         if (ret) {
-@@ -966,6 +973,13 @@ static int kvm_riscv_put_regs_vector(CPUState *cs)
-         return ret;
-     }
- 
-+    reg = (env->vxrm << VCSR_VXRM_SHIFT) |
-+          (env->vxsat << VCSR_VXSAT_SHIFT);
-+    ret = kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vcsr), &reg);
-+    if (ret) {
-+        return ret;
++    if (s->bulk_in_pending_end - s->bulk_in_pending_start > BULK_IN_PENDING_NUM) {
++        return -EINVAL;
 +    }
 +
-     if (kvm_v_vlenb.supported) {
-         reg = cpu->cfg.vlenb;
-         ret = kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
++    if (s->pending_answers_num > PENDING_ANSWERS_NUM) {
++        return -EINVAL;
++    }
++
++    if (s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
++        return -EINVAL;
++    }
++
++    for (i = 0; i < BULK_IN_PENDING_NUM; i++) {
++        if (s->bulk_in_pending[i].len > BULK_IN_BUF_SIZE ||
++            s->bulk_in_pending[i].pos > s->bulk_in_pending[i].len) {
++            return -EINVAL;
++        }
++    }
+ 
+     /*
+      * This must be done after usb_device_attach, which sets state to ATTACHED,
 -- 
 2.47.3
 
