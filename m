@@ -4,47 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96BF6CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48AF7CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9eQ-0006fq-Ma; Sat, 17 Oct 2026 15:01:02 -0400
+	id 1xI9aP-00007A-6C; Sat, 17 Oct 2026 14:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9d2-0005Jn-9T; Sat, 17 Oct 2026 14:59:38 -0400
+ id 1xI9aK-0008Vd-J1; Sat, 17 Oct 2026 14:56:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9d0-0003zS-D5; Sat, 17 Oct 2026 14:59:36 -0400
+ id 1xI9aI-0003ej-KX; Sat, 17 Oct 2026 14:56:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263410; bh=Dg8HAUdamYBN061rFx5Tmq0LNxTmZA2/5JFRg3UBEok=;
+ t=1792263375; bh=3lx4x7V98BCb9blSP8MfpfClQ8EmEau2vjwkgGHQIpU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CfB8BImLU524ZNZNjjAYwSLlqBPLMIEhtHwoZHHvt9Me9PYvHj4fyrDEWvhKhs5/6
- pFf21yWz2DgQm+e0Y+VCLERankAtUG6dFfgAKSz24nCH3wVV7iv12Ox+8S46Ih1ygx
- znEy+ZaTdKKuViZ/CRt1r3jFS6rW2t3NPqYimSutHrrrpjifX+vUJDKhxmJre+1BRI
- qGPlU4FZvq48pi9WvttYkAKv6VMRr2kWmLcZsOadvy/O8sU8EclILbT6u7NOHA9LFs
- ur0VJAWcPtdOSzWLRbuFd/SPobeURgrDO1uqV5N4tW87W5IQiENgdEM/ZThc4/sz9y
- MFogFKzq2rVhA==
+ b=OYIpxyucAZ795giULI+wAJ/8rW2owNzE++9hzlU8cYfegwcdniu62ZoOJfIbdzQHf
+ eS+V1G9Aru5Neq6hzn8n2oDyMi6H0Ep39Zt6A3Dp9nt9Q1YGenHRuwR3eWlkSpelsu
+ 6f2vNEQNxP2bqbc/W3JIWVyEpNxBwD3g4QSnt3rs59d/v5K39rC4qgK1sZTSmOHg64
+ 78NKHp7Soe8wkNtt46x9cBZpC2SwweaNA3cfTrFzp1Arbb6MVD9A0YuooltjP0Alj3
+ eowXNDCR28gglcmHetaJBKD1FJXCBCaThJyz60afrCiSf5iig2LbLQVywRaryTSqUB
+ oN+U6b1u/B6XQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 55C271DE6CC;
- Sat, 17 Oct 2026 21:56:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 06D0F1DE6B0;
+ Sat, 17 Oct 2026 21:56:15 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3CBFB443395;
- Sat, 17 Oct 2026 21:56:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 779A144337B;
+ Sat, 17 Oct 2026 21:56:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Warisjeet Singh <sinxx198@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 42/63] block: Remove now redundant
- bdrv_wait_serialising_requests() calls
-Date: Sat, 17 Oct 2026 21:54:58 +0300
-Message-ID: <20261017185528.722197-42-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 16/63] hw/usb/dev-smartcard-reader: fix OOB read from
+ pending bulk-in ring
+Date: Sat, 17 Oct 2026 21:54:32 +0300
+Message-ID: <20261017185528.722197-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,70 +73,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-All callers of bdrv_wait_serialising_requests() (as opposed to
-bdrv_wait_serialising_requests_locked()) are just duplicating the check
-that tracked_request_begin() already performs now. After removing them,
-bdrv_wait_serialising_requests() has no callers left and can go as well.
+ccid_bulk_in_get() decrements bulk_in_pending_num when a slot becomes
+active, but the slot is only truly free after ccid_bulk_in_release().
+A guest can fill all 8 ring slots, partially read one (leaving pos
+non-zero), then send another command whose response reuses the active
+slot. The stale pos > new len makes the uint32_t subtraction in
+ccid_bulk_in_copy_to_guest() wrap, reading past data[].
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20261002132135.93345-3-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit cf4f672c11d663f87462cfd99a92124b30804e99)
+Move the decrement to ccid_bulk_in_release() so the slot stays busy
+until then. Add an assert(pos <= len) before the subtraction.
+
+Resetting or removing the card must also discard the active slot so
+that its stale position and pointer cannot be reused.
+
+In practice, the device advertises bMaxCCIDBusySlots=1, so a conforming
+host never has more than one command in flight and the ring never fills.
+
+Fixes: CVE-2026-18204
+Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4086
+Reported-by: Warisjeet Singh <sinxx198@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 49851e859506c6326288162718573c1e22ab9bf4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/io.c b/block/io.c
-index ae28a0ada1..6ffbe26d4c 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -806,20 +806,6 @@ void bdrv_dec_in_flight(BlockDriverState *bs)
-     bdrv_wakeup(bs);
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index 6206ea7834..f91eda1a14 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -570,6 +570,10 @@ static void ccid_remove_pending_answer(USBCCIDState *s,
+ 
+ static void ccid_bulk_in_clear(USBCCIDState *s)
+ {
++    if (s->current_bulk_in != NULL) {
++        s->current_bulk_in->pos = 0;
++        s->current_bulk_in = NULL;
++    }
+     s->bulk_in_pending_start = 0;
+     s->bulk_in_pending_end = 0;
+     s->bulk_in_pending_num = 0;
+@@ -580,6 +584,7 @@ static void ccid_bulk_in_release(USBCCIDState *s)
+     assert(s->current_bulk_in != NULL);
+     s->current_bulk_in->pos = 0;
+     s->current_bulk_in = NULL;
++    s->bulk_in_pending_num--;
  }
  
--static void coroutine_fn
--bdrv_wait_serialising_requests(BdrvTrackedRequest *self)
--{
--    BlockDriverState *bs = self->bs;
--
--    if (!qatomic_read(&bs->serialising_in_flight)) {
--        return;
--    }
--
--    qemu_mutex_lock(&bs->reqs_lock);
--    bdrv_wait_serialising_requests_locked(self);
--    qemu_mutex_unlock(&bs->reqs_lock);
--}
--
- void coroutine_fn bdrv_make_request_serialising(BdrvTrackedRequest *req,
-                                                 uint64_t align)
- {
-@@ -1387,8 +1373,6 @@ bdrv_aligned_preadv(BdrvChild *child, BdrvTrackedRequest *req,
-          * it ensures that the CoR read and write operations are atomic and
-          * guest writes cannot interleave between them. */
-         bdrv_make_request_serialising(req, bdrv_get_cluster_size(bs));
--    } else {
--        bdrv_wait_serialising_requests(req);
+ static void ccid_bulk_in_get(USBCCIDState *s)
+@@ -587,8 +592,6 @@ static void ccid_bulk_in_get(USBCCIDState *s)
+     if (s->current_bulk_in != NULL || s->bulk_in_pending_num == 0) {
+         return;
      }
+-    assert(s->bulk_in_pending_num > 0);
+-    s->bulk_in_pending_num--;
+     s->current_bulk_in =
+         &s->bulk_in_pending[(s->bulk_in_pending_start++) % BULK_IN_PENDING_NUM];
+ }
+@@ -1079,6 +1082,7 @@ static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
  
-     if (flags & BDRV_REQ_COPY_ON_READ) {
-@@ -2025,8 +2009,6 @@ bdrv_co_write_req_prepare(BdrvChild *child, int64_t offset, int64_t bytes,
-         }
- 
-         bdrv_wait_serialising_requests_locked(req);
--    } else {
--        bdrv_wait_serialising_requests(req);
-     }
- 
-     assert(req->overlap_offset <= offset);
-@@ -3476,7 +3458,6 @@ static int coroutine_fn GRAPH_RDLOCK bdrv_co_copy_range_internal(
- 
-         /* BDRV_REQ_SERIALISING is only for write operation */
-         assert(!(read_flags & BDRV_REQ_SERIALISING));
--        bdrv_wait_serialising_requests(&req);
- 
-         ret = src->bs->drv->bdrv_co_copy_range_from(src->bs,
-                                                     src, src_offset,
+     ccid_bulk_in_get(s);
+     if (s->current_bulk_in != NULL) {
++        assert(s->current_bulk_in->pos <= s->current_bulk_in->len);
+         len = MIN(s->current_bulk_in->len - s->current_bulk_in->pos,
+                   p->iov.size);
+         if (len) {
 -- 
 2.47.3
 
