@@ -4,58 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E54CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 06:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F13CCA463
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 06:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHxnt-0003QP-I7; Sat, 17 Oct 2026 02:22:01 -0400
+	id 1xHyCs-0007CL-S0; Sat, 17 Oct 2026 02:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xHxns-0003QF-Ki
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:22:00 -0400
-Received: from out-7.mta0.migadu.com ([2001:41d0:1004:224b::7]
- helo=mta0.migadu.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
- id 1xHxnr-0002vn-B4
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:22:00 -0400
-X-Envelope-To: qemu-devel@nongnu.org
-DKIM-Signature: a=rsa-sha256; bh=zzke8iSUXVexgdpVBjiBzSm98jNaIYwvsCpi7zeX+oM=; 
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792218117; v=1; x=1792822917;
- b=EukhoslzmNjgWr+s5bScUJhpTmZSSbY5MjKAWbiXWj9pdF4vVzq+23m/xsjfsHqwcZ773TOq
- C5bSRN0LH/QkrR5Sqxr+1cBDD+AnRgZxqIIWKSkD1QyYmqDQnkIPlhoVttL8oD1fzPaSKQ/cwpQ
- 6qjSAQePZ71g2uC3KZVFFieQ=
-X-Envelope-To: qemu-devel@nongnu.org
-Received: by smtp.migadu.com with ESMTPS id 9583a17527554ff0;
- Sat, 17 Oct 2026 06:21:57 +0000
-X-Mizu-Trace-ID: 9583a17527554ff0
-X-Migadu-Flow: FLOW_OUT
-From: Junjie Cao <junjie.cao@linux.dev>
-To: thuth@redhat.com
-Cc: peter.maydell@linaro.org, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com, philmd@oss.qualcomm.com, qemu-devel@nongnu.org,
- junjie.cao@intel.com
-Subject: Re: [PATCH] tests/qtest: Cover OHCI endpoint type mismatches
-Date: Sat, 17 Oct 2026 06:21:48 +0000
-Message-ID: <20261017062148.610962-1-junjie.cao@linux.dev>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <c5fab461-2645-489e-ba72-5ee7b51a2507@redhat.com>
-References: <20261016093011.521951-1-junjie.cao@linux.dev>
- <c5fab461-2645-489e-ba72-5ee7b51a2507@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHyCm-0007By-A6
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:47:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1xHyCj-0004x9-T2
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:47:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792219659;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/Oa4F7t0+0NDXxalX71XAymg9taDjr1JExEQgwq3otA=;
+ b=EEjk7igSjlmBBjy8Q/fEskrclJPQblQoMONtzqFsMHdVWnVmwtGx6f/ItSzOa3XlbZtRxk
+ bzsSd+tKWw0IPjOrO6qxCmYG1jx+8rYPEH2PzATnDtDqaDRDx8r2OcRiqgWagk/n69C0/j
+ /MOxlaB9Alygwq85f8k4ksbqw5bN8e8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-NGdJZHomM3KP7CpweHORug-1; Sat,
+ 17 Oct 2026 06:47:32 +0000
+X-MC-Unique: NGdJZHomM3KP7CpweHORug-1
+X-Mimecast-MFC-AGG-ID: NGdJZHomM3KP7CpweHORug_1792219650
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5052F1956065; Sat, 17 Oct 2026 06:47:30 +0000 (UTC)
+Received: from [100.90.56.12] (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A97E11800495; Sat, 17 Oct 2026 06:47:26 +0000 (UTC)
+Message-ID: <866179b6-8303-4c30-aa59-005fa4554362@redhat.com>
+Date: Sat, 17 Oct 2026 08:47:24 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:41d0:1004:224b::7;
- envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/19] accel/kvm: Add CGS flag to control in-place
+ conversion support
+To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, berrange@redhat.com, armbru@redhat.com,
+ pankaj.gupta@amd.com, xiaoyao.li@intel.com, chao.p.peng@linux.intel.com,
+ david@kernel.org, ashish.kalra@amd.com, ackerleytng@google.com,
+ lpieralisi@kernel.org
+References: <20261007134323.1606088-1-michael.roth@amd.com>
+ <20261007134323.1606088-8-michael.roth@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20261007134323.1606088-8-michael.roth@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,12 +127,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the review, Thomas. I've merged the duplicate checks and
-moved expected[] as suggested.
+On 10/7/26 15:41, Michael Roth wrote:
+> For confidential guests, guest_memfd is currently used only for private
+> guest memory, and normal guest memory comes from the configured memory
+> backend just as it does for a non-confidential guest. It is now possible
+> to use the same physical memory to back a particular GPA regardless of
+> whether it is in a shared or private state. This avoids the need to
+> rely on discarding memory between shared/private conversions (to avoid
+> doubled memory usage), and is intended to be the primary mode of using
+> guest_memfd for confidential guests moving forward, and future features
+> like hugepage support will likely require it.
+> 
+> Add an internal flag to enable this support. Since
+> ConfidentialGuestSupport is already used to track some
+> guest_memfd-related functionality (e.g.  whether it is required for the
+> configured machine), similarly introduce this flag as a member of
+> the ConfidentialGuestSupport object.
+> 
+> Also add the KVM-specific checks to enable this support, but leave the
+> option disabled so that required changes can first be implemented for
+> CGS variants that intend to make use of KVM's in-place conversion
+> support.
 
-v2 also removes the x86 restriction, with little-endian DMA accesses
-and PCI host bridge IOMMU bypass. The tests pass on aarch64 and
-ppc64 as well as x86.
+I would make this on (either by default, or by removing the option 
+altogether) if KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES is available, 
+otherwise you need a special option to run confidential guests on kernel 
+that disable the "private" attribute *on the VM* file descriptor.
 
-Junjie
+In fact, I think that since migration is not supported by either SNP or 
+TDX, the extra complication of being able to toggle it is not worth the 
+effort.  The old code path can still be tested by changing the 
+gmem_in_place_conversion module parameter for KVM.
+
+Thanks,
+
+Paolo
+
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> ---
+>   accel/kvm/kvm-all.c                         | 18 ++++++++++++++++++
+>   hw/core/machine.c                           |  5 +++++
+>   include/hw/core/boards.h                    |  1 +
+>   include/system/confidential-guest-support.h | 12 ++++++++++++
+>   4 files changed, 36 insertions(+)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index f1deb458ec..862539aed4 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3074,6 +3074,24 @@ static int kvm_init(AccelState *as, MachineState *ms)
+>       kvm_guest_memfd_flags_supported =
+>           kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
+>   
+> +    if (machine_require_guest_memfd_convert_in_place(ms)) {
+> +        uint64_t guest_memfd_supported_memory_attributes;
+> +
+> +        guest_memfd_supported_memory_attributes =
+> +            kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES);
+> +
+> +        if (!(guest_memfd_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE)) {
+> +            ret = -EINVAL;
+> +            error_report("In-place conversion is only supported if private "
+> +                         "memory attributes can be set via guest_memfd. "
+> +                         "Please ensure the 'gmem_in_place_conversion' KVM "
+> +                         "module parameter is set to 1.");
+> +            goto err;
+> +        }
+> +
+> +        kvm_supported_memory_attributes = guest_memfd_supported_memory_attributes;
+> +    }
+> +
+>       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+>           s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>       }
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index d9ac4b419a..e9cc6c2420 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1346,6 +1346,11 @@ bool machine_require_guest_memfd_private(MachineState *machine)
+>       return machine->cgs && machine->cgs->require_guest_memfd;
+>   }
+>   
+> +bool machine_require_guest_memfd_convert_in_place(MachineState *machine)
+> +{
+> +    return machine->cgs && machine->cgs->convert_in_place;
+> +}
+> +
+>   static char *cpu_slot_to_string(const CPUArchId *cpu)
+>   {
+>       GString *s = g_string_new(NULL);
+> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+> index d0e4ad9820..9ea124b224 100644
+> --- a/include/hw/core/boards.h
+> +++ b/include/hw/core/boards.h
+> @@ -44,6 +44,7 @@ int machine_phandle_start(MachineState *machine);
+>   bool machine_dump_guest_core(MachineState *machine);
+>   bool machine_mem_merge(MachineState *machine);
+>   bool machine_require_guest_memfd_private(MachineState *machine);
+> +bool machine_require_guest_memfd_convert_in_place(MachineState *machine);
+>   HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
+>   void machine_set_cpu_numa_node(MachineState *machine,
+>                                  const CpuInstanceProperties *props,
+> diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
+> index 5dca717308..2c9a9ff217 100644
+> --- a/include/system/confidential-guest-support.h
+> +++ b/include/system/confidential-guest-support.h
+> @@ -92,6 +92,18 @@ struct ConfidentialGuestSupport {
+>        * so 'ready' is not set, we'll abort.
+>        */
+>       bool ready;
+> +
+> +    /*
+> +     * CGS implementations will use this to indicate whether or not
+> +     * to enable in-place conversion for guest-memfd.
+> +     *
+> +     * If set, the machine re-uses physical pages when converting
+> +     * between shared/private (as opposed to using different
+> +     * physical pages depending on the access type, which is the
+> +     * default mode when 'require_guest_memfd' is set without
+> +     * additionally setting this flag).
+> +     */
+> +    bool convert_in_place;
+>   };
+>   
+>   typedef struct ConfidentialGuestSupportClass {
+
 
