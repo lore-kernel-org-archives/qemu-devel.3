@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3A2CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BC1CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9bv-0002mw-8O; Sat, 17 Oct 2026 14:58:27 -0400
+	id 1xI9Zt-0008FL-0t; Sat, 17 Oct 2026 14:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9be-0002US-2P; Sat, 17 Oct 2026 14:58:10 -0400
+ id 1xI9Za-0008B3-AZ; Sat, 17 Oct 2026 14:56:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bc-0003pH-C2; Sat, 17 Oct 2026 14:58:09 -0400
+ id 1xI9ZX-0003ap-PC; Sat, 17 Oct 2026 14:56:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263390; bh=btOADbjU4ohHDsx/av2aQjrK/0woUKACSy5djYFM2u4=;
+ t=1792263355; bh=wFkHxyhR169SE3chauQHfiLVvhY1OZkz35c0gV/+EMc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wlOxCr9LUrdoLf2cTRvXkmo22VSnZ8pn3zzYeU83NMhv/+4nLEmJLhBtxroLjxyFL
- Gr7jlAF05zBg2YIpN2v8XPr8M3s+USVVfAcMiMHVM1QNNR04ZN1tlbOH7Bcfo9JFfM
- 2i4wGy2dC+l/wmPEIWhQrTQI1wgpMZ6Cmy7nNkbfCiqHKpWxGPMzz6YATcHhmkF+iL
- fYB9pcfsb6Vv5fM03Eq3mycgvxWBMtiSfqBDucraomuzmS9fBFk35doiF3kNcOrR+I
- jNb030NzvmUbGlNIwRuGTE62LBVjLpBHhlsCm/MxC+j2JxOVb/lG+pVNrUCnA6P00R
- ncbPioiupnqpg==
+ b=EHmp6NbrsnHvPuwu8QaSG5kbiII6biG0lcP7MZuhuAXj32lwMrDDjTNxEyFAzszck
+ mzDTagxN4ITrHM85zalhICy5+N475OaZHp7+IPKcbYo26vnnqmf7YsJgOvSgAKhxcD
+ cVI4avlxc62rKeNKxk9CUoGMwuHBv6Lw5w5kxMItKmlYmPb2RUokLaHKjsVV+w96qn
+ PYm1OYRTcwjx47vNVYBSWnq656uEc9l2OnN4JFVOz3m3VrkGYPTZTWzPC1rrZbs/pJ
+ 5H039RE6peM2ltmyo6izOtKVHHKw89sG8g7Mlcjm15rqaqezdaGEpdH+1VUPo4CYTM
+ GaJb0aSJHaXuw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A73881DE6BC;
- Sat, 17 Oct 2026 21:56:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 910261DE6A2;
+ Sat, 17 Oct 2026 21:55:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 89ECF443387;
- Sat, 17 Oct 2026 21:56:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D59544336D;
+ Sat, 17 Oct 2026 21:55:54 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 28/63] target/i386/tcg: raise #GP(0) on null SS load
- with RPL != CPL
-Date: Sat, 17 Oct 2026 21:54:44 +0300
-Message-ID: <20261017185528.722197-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 02/63] target/arm: Fix next timer tick when the
+ offset puts the count ahead
+Date: Sat, 17 Oct 2026 21:54:18 +0300
+Message-ID: <20261017185528.722197-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,52 +69,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jakub Lipový <lipovyjakub@tillia.cz>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
-or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
-first case: the null-selector path never examined the selector's RPL, so
-a null selector with non-zero RPL (such as 0x0003) loaded successfully at
-CPL < 3.
+gt_recalc_timer() arms the timer for the ISTATUS 0->1 transition at
+count == cval + offset, treating an overflow of that sum as "beyond
+the counter's wrap" and arming at INT64_MAX. That reading is valid
+only when offset <= count. When offset > count (a CNTVOFF_EL2 or
+CNTPOFF_EL2 that puts the timer's counter ahead of the physical
+count), the sum overflows for every cval still in the future and the
+wrapped value is the correct next tick, which is what the code used
+before commit 8d37a1425b99. The timer then never fires on its own.
 
-This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
-additionally fails its subsequent non-null check because the wrongly
-succeeded load leaves 3 in SS.
+A KVM guest whose counter is set ahead of the host's, as the
+arch_timer_edge_cases selftest does via KVM_REG_ARM_TIMER_CNT, gets
+its timer interrupt only when the vCPU is next loaded and KVM
+rewrites the timer registers, so a guest polling for the interrupt
+hangs.
+Reproduced with VHE, nVHE and pKVM hosts on QEMU 11.0.0. The test
+passes on hardware.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
+Test count + (cval - (count - offset)) for overflow instead, so only a
+physical count past 2^64 is "never", and add a vtimer test case with
+an offset that puts the count ahead.
+
+Fixes: 8d37a1425b99 ("target/arm: Handle overflow in calculation of next timer tick")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
-Link: https://lore.kernel.org/r/20260818164414.245189-1-lipovyjakub@tillia.cz
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 8d496d8f9fcea2199f6dc32f700d13b1d9ed3358)
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20260921074451.3158645-2-fuad.tabba@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 66d4ea65a064421057f10c4a26d727beedbd1971)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 8158d6175e..85fe6e8008 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1382,11 +1382,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
- 
-     selector &= 0xffff;
-     cpl = env->hflags & HF_CPL_MASK;
-+    rpl = selector & 3;
-     if ((selector & 0xfffc) == 0) {
-         /* null selector case */
-         if (seg_reg == R_SS
- #ifdef TARGET_X86_64
--            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
-+            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
- #endif
-             ) {
-             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-@@ -1410,7 +1411,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
-         if (!(e2 & DESC_S_MASK)) {
-             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index e607f4a458..b2b5faa550 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2607,11 +2607,12 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+         } else {
+             /*
+              * Next transition is when (count - offset) == cval, i.e.
+-             * when count == (cval + offset).
+-             * If that would overflow, then again we set up the next interrupt
+-             * for "as far in the future as possible" for the code below.
++             * cval - (count - offset) ticks from now. If count plus that
++             * overflows, set up "as far in the future as possible" below.
+              */
+-            if (uadd64_overflow(gt->cval, offset, &nexttick)) {
++            uint64_t remaining = gt->cval - (count - offset);
++
++            if (uadd64_overflow(count, remaining, &nexttick)) {
+                 nexttick = UINT64_MAX;
+             }
          }
--        rpl = selector & 3;
-         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
-         if (seg_reg == R_SS) {
-             /* must be writable segment */
+diff --git a/tests/tcg/aarch64/system/vtimer.c b/tests/tcg/aarch64/system/vtimer.c
+index 7d725eced3..e1cfad36be 100644
+--- a/tests/tcg/aarch64/system/vtimer.c
++++ b/tests/tcg/aarch64/system/vtimer.c
+@@ -27,6 +27,7 @@
+ 
+ int main(void)
+ {
++    uint64_t freq, now;
+     int i;
+ 
+     ml_printf("VTimer Test\n");
+@@ -44,5 +45,32 @@ int main(void)
+         ml_printf("%d: cntv_cval_el0=%lx\n", i, read_sysreg(cntv_cval_el0));
+     }
+ 
++    /*
++     * An offset that puts the virtual count ahead of the physical one,
++     * so cval + cntvoff wraps for every future cval. The timer must
++     * still fire. ISTATUS is set by the expiry, so poll it with a bound.
++     */
++    write_sysreg(cntv_ctl_el0, 0);
++    write_sysreg(cntvoff_el2, -(1ULL << 60));
++    asm volatile("isb");
++
++    freq = read_sysreg(cntfrq_el0);
++    now = read_sysreg(cntvct_el0);
++    write_sysreg(cntv_cval_el0, now + freq / 100);
++    write_sysreg(cntv_ctl_el0, 1);
++
++    ml_printf("cntvoff_el2=%lx\n", read_sysreg(cntvoff_el2));
++    ml_printf("cntvct_el0=%lx\n", now);
++    ml_printf("cntv_cval_el0=%lx\n", read_sysreg(cntv_cval_el0));
++
++    while (!(read_sysreg(cntv_ctl_el0) & 4)) {
++        if (read_sysreg(cntvct_el0) - now > freq) {
++            ml_printf("FAIL: ISTATUS not set within 1s: cntv_ctl_el0=%lx\n",
++                      read_sysreg(cntv_ctl_el0));
++            return 1;
++        }
++    }
++    ml_printf("ISTATUS set at cntvct_el0=%lx\n", read_sysreg(cntvct_el0));
++
+     return 0;
+ }
 -- 
 2.47.3
 
