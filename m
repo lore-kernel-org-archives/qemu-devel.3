@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E8AFCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0353ACCF2CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9a6-0008Ll-HU; Sat, 17 Oct 2026 14:56:35 -0400
+	id 1xI9aI-0008UM-FL; Sat, 17 Oct 2026 14:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9Zq-0008F8-L9; Sat, 17 Oct 2026 14:56:20 -0400
+ id 1xI9Zo-0008Ep-SP; Sat, 17 Oct 2026 14:56:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9Zp-0003ca-0H; Sat, 17 Oct 2026 14:56:18 -0400
+ id 1xI9Zm-0003cM-Kl; Sat, 17 Oct 2026 14:56:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263366; bh=tSb0Tqwf4A9fdsaISwiIaIBvnw7/aaR7Lo2gyb4UNkE=;
+ t=1792263364; bh=S4KO3HMtJ47zu/nn5ta7t0PN4/lDWBv5KmMbCgFVme4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HgKfHGJkiPaEc077pn2EQj5tpmvAQaXM/K9B8sIuSxJ+EbC0hnpfHcKeOzsp0SRw0
- bWwFnX4lhKWe6QTqWCLnwWeciat2lKpbMBLIryMElGY2b2qA9xFoyk81lsIfk5nkgp
- 6WngcQOR4rPgZoN3LTp0TiNTu+AlG7e7bof+c0bloyy/8AbmM7GhX1s8lbUxgEcE0S
- yN0vO75zGSTNuO6PqAZmKn/oQjmOh1yxn83R8t1MYP4isrEk8x/aUMrmY3/ttME+d9
- 3N0bm7CIKX3telqaaiM1ZwXXw0EXJEGpG6TbBpcVoO36PEHyGD4zFsOkIGg3CuM/5l
- j0NTVzF05XYnA==
+ b=WcQopw2vleHdRTtsRDueUoXuwAzXpMSn5qFZhn3vMXFv7S/4TmoYfx1yqKsGElisb
+ dgONzuoGA+efCeF8fLmwtEAgugPTIK24eS8rGA2jD/gtnnhhdI4ldaz5mIMRp0PFzl
+ NQVfwzD35xtNRGaOueKlve+pQrffGP7AcJenAlhyR0EyhlYNCRhaM8ofGtbvQOtqk8
+ 92c3i1sCpypegOobTGe1dIoI3sxRFvlT1s/zPgQb08y6xRa+d9KfWbn5OoeEc/Hzlk
+ +Zg1e0rS/bGjTlV2/J4qt5Or+5mu1N+g+pcizmXwTLSdUlroMbX9pwPK8S14c0vG+9
+ GdzA+83ZGvtaw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 60EBB1DE6AA;
- Sat, 17 Oct 2026 21:56:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E8F711DE6A9;
+ Sat, 17 Oct 2026 21:56:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D727443375;
- Sat, 17 Oct 2026 21:56:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 13271443374;
+ Sat, 17 Oct 2026 21:56:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 10/63] s390x/css: Use datastream pointer for checking
- no-data CCWs
-Date: Sat, 17 Oct 2026 21:54:26 +0300
-Message-ID: <20261017185528.722197-10-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 09/63] hw/intc/s390x: Fix check after g_try_realloc
+Date: Sat, 17 Oct 2026 21:54:25 +0300
+Message-ID: <20261017185528.722197-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,62 +71,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Farman <farman@linux.ibm.com>
 
-The channel subsystem will reject channel programs that incorporate
-256 CCWs without a data transfer, but the existing check to account
-for this only does so for CCWs with a data address of zero. Other
-valid CCWs that wouldn't transfer data are not accounted for.
+The loop to store pending IRQs uses g_try_realloc() to expand the
+buffer being used, but the returned address is stored in a
+pointer-to-pointer, thus the check is supposed to be examining
+the contents of the pointer, and not the pointer itself.
 
-Rather than re-inventing the wheel, use the output of the datastream
-at the end of the entire CCW parsing tree to indicate whether data
-was moved or not.
+Define a temporary variable to catch and test the returned pointer.
+If it's NULL, return to the caller to perform the free on the
+unmodified buffer. If it's not NULL, store it in the caller's
+pointer and restart the loop against the new struct.
 
 Cc: qemu-stable@nongnu.org
-Fixes: e8601dd5d0 ("s390x/css: catch ccw sequence errors")
+Fixes: 3a553fc658 ("s390x/kvm: implement floating-interrupt controller device")
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-9-farman@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-8-farman@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 930a188edbbcbd68aadaa1db22e4db1b785a2171)
+(cherry picked from commit 77cc481c23118d0fc3711525dd64373c6797ceed)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 79a6c90175..c480f04d0a 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -1042,13 +1042,6 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
+diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
+index 10aaafbb31..421b993c69 100644
+--- a/hw/intc/s390_flic_kvm.c
++++ b/hw/intc/s390_flic_kvm.c
+@@ -254,6 +254,7 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+                           void **buf, int len)
+ {
+     int r;
++    void *new_buf = NULL;
  
-     check_len = !((ccw.flags & CCW_FLAG_SLI) && !(ccw.flags & CCW_FLAG_DC));
+     do {
+         /* returns -ENOMEM if buffer is too small and number
+@@ -263,10 +264,11 @@ static int __get_all_irqs(KVMS390FLICState *flic,
+             break;
+         }
+         len *= 2;
+-        *buf = g_try_realloc(*buf, len);
+-        if (!buf) {
++        new_buf = g_try_realloc(*buf, len);
++        if (!new_buf) {
+             return -ENOMEM;
+         }
++        *buf = new_buf;
+     } while (r == -ENOMEM && len <= KVM_S390_FLIC_MAX_BUFFER);
  
--    if (!ccw.cda) {
--        if (sch->ccw_no_data_cnt == 255) {
--            return -EINVAL;
--        }
--        sch->ccw_no_data_cnt++;
--    }
--
-     /* Look at the command. */
-     ccw_dstream_init(&sch->cds, &ccw, &(sch->orb));
-     switch (ccw.cmd_code) {
-@@ -1129,6 +1122,20 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
-     }
-     sch->last_cmd = ccw;
-     sch->last_cmd_valid = true;
-+
-+    /*
-+     * A CCW that transfers no data is allowed, but ensure an upper limit
-+     * is established to prevent long-running channel programs that don't
-+     * move actual data.
-+     */
-+    if (ret == 0 && sch->cds.at_byte == 0) {
-+        if (sch->ccw_no_data_cnt == 255) {
-+            ret = -EINVAL;
-+        } else {
-+            sch->ccw_no_data_cnt++;
-+        }
-+    }
-+
-     if (ret == 0) {
-         if (ccw.flags & CCW_FLAG_CC) {
-             sch->channel_prog += 8;
+     return r;
 -- 
 2.47.3
 
