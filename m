@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D7CCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F204CCF2CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9Zq-0008EY-K4; Sat, 17 Oct 2026 14:56:20 -0400
+	id 1xI9ar-0000Zg-Le; Sat, 17 Oct 2026 14:57:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9Ze-0008Bi-6T; Sat, 17 Oct 2026 14:56:11 -0400
+ id 1xI9aj-0000Wu-2M; Sat, 17 Oct 2026 14:57:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9Zc-0003bD-A4; Sat, 17 Oct 2026 14:56:05 -0400
+ id 1xI9ag-0003fK-1c; Sat, 17 Oct 2026 14:57:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263357; bh=wA+KhyBMs+RKXWJU3ZnVQbYQ2/0rJTuGF9AIcTvrnG0=;
+ t=1792263377; bh=zreQw6wX3nc1zr12UdNGFLvv+qXzGfCTY0NEFlRquCA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WxBk5MAbn5h25/Z85KSm+LmECCXnlAKldanRUTMmjf9UffRc/60+2aC6+dmmsCUAQ
- htzipdyYeXLqQ6mnPdpJrekbvMLvfSF5jB8wn7Z7oFTUl7XPBCto8XFmf/HE3OmA/d
- ly2kFadFygRlGG9TE3FZlAkY3J1nm2l3axgbjvW2sMh4ialr8pwIBq0hvbwuMSs4yr
- Cf+Q1wxm/tqGN3tAYiLB58aRBT22rIO4vpd0RRIWHcETu/jXNev2DbdEo/P2Gv33/G
- aIvdC1oPransA1e2IEV9Aaifce51X4QwEnjqGtZjrBCH41R+Cwxxs7NI1nT8VegQ05
- lJLHeh3N6Vujw==
+ b=o5gmxnIj6KDkwuHjZRL9AkbQ8aAbVCZBVnVeNt+SCuIa3Zd+u/8lzZpE8EDl4Uy4U
+ yl4uIH6U4pWa75gm1gXCtLSpu7PdzUw8wo+LMb97j/HIMnLAen7cRZ4H0Yn/znFL91
+ gUJJ+botgHr4tgtVZ9Euxr7A9jeqNqejaU5aoM5NywMnObC9MS5sxEKv6N3aSo+Jec
+ 1FBEMRHzHyfDiGgVKGqAIpwj+AFCTueeGgN7vzJ76b3v0dAFExQULICcg3mRumnu5y
+ 7f1yLB9tz1sniXbB6iqcZaRUHONhvoYtPwCvX4v35g9DoP60OotCJ9tuQKVc27NPb7
+ YeeD+svYlw5eg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BBF401DE6A4;
- Sat, 17 Oct 2026 21:55:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E9251DE6B2;
+ Sat, 17 Oct 2026 21:56:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C827344336F;
- Sat, 17 Oct 2026 21:55:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3F20B44337D;
+ Sat, 17 Oct 2026 21:56:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 04/63] hw/usb/hcd-xhci: Limit DMA transfers to plain
- memory
-Date: Sat, 17 Oct 2026 21:54:20 +0300
-Message-ID: <20261017185528.722197-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 18/63] hw/usb/dev-smartcard-reader: decode bulk-out
+ length as little-endian
+Date: Sat, 17 Oct 2026 21:54:34 +0300
+Message-ID: <20261017185528.722197-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,85 +72,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-XHCI is a complex controller, involving lots of descriptors that
-are written and read via DMA transfers. As some recent bugs like
-https://gitlab.com/qemu-project/qemu/-/work_items/3926 revealed,
-this can sometimes be exploited from the guest side to crash or
-stall QEMU.
+The CCID Rev 1.1 specification states in section 1.3, Document
+Conventions, that fields larger than one byte are stored in
+little-endian format. The bulk message header's dwLength field is a
+four-byte field described in section 6, CCID Messages.
 
-The code currently does DMA writes with the MEMTXATTRS_UNSPECIFIED
-attribute, i.e. the controller is allowed to write to other MMIO
-regions, too. However, in normal operation, this should not be
-necessary, all descriptors should reside in normal memory. So let's
-decrease the attack surface a little bit and limit the DMA writes
-to normal memory here.
+Decode dwLength with le32_to_cpu() before using it to assemble and
+validate Bulk-OUT messages. This fixes message handling on big-endian
+hosts.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260915123242.549150-1-thuth@redhat.com>
-(cherry picked from commit 89e653b77369ad2d3e579139b1fa2567daa86a79)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 069dcc103be7600f2197ecb202c8276022fc35d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index 88937683aa..fd0a88f961 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -520,6 +520,7 @@ static inline void xhci_dma_write_u32s(XHCIState *xhci, dma_addr_t addr,
-     int i;
-     uint32_t tmp[5];
-     uint32_t n = len / sizeof(uint32_t);
-+    const MemTxAttrs memtx_attrs = { .memory = true };
- 
-     assert((len % sizeof(uint32_t)) == 0);
-     assert(n <= ARRAY_SIZE(tmp));
-@@ -527,8 +528,7 @@ static inline void xhci_dma_write_u32s(XHCIState *xhci, dma_addr_t addr,
-     for (i = 0; i < n; i++) {
-         tmp[i] = cpu_to_le32(buf[i]);
-     }
--    if (dma_memory_write(xhci->as, addr, tmp, len,
--                         MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+    if (dma_memory_write(xhci->as, addr, tmp, len, memtx_attrs) != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA memory access failed!\n",
-                       __func__);
-         xhci_die(xhci);
-@@ -615,6 +615,7 @@ static void xhci_write_event(XHCIState *xhci, XHCIEvent *event, int v)
-     XHCIInterrupter *intr = &xhci->intr[v];
-     XHCITRB ev_trb;
-     dma_addr_t addr;
-+    const MemTxAttrs memtx_attrs = { .memory = true };
- 
-     ev_trb.parameter = cpu_to_le64(event->ptr);
-     ev_trb.status = cpu_to_le32(event->length | (event->ccode << 24));
-@@ -631,7 +632,7 @@ static void xhci_write_event(XHCIState *xhci, XHCIEvent *event, int v)
- 
-     addr = intr->er_start + TRB_SIZE*intr->er_ep_idx;
-     if (dma_memory_write(xhci->as, addr, &ev_trb, TRB_SIZE,
--                         MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+                         memtx_attrs) != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA memory access failed!\n",
-                       __func__);
-         xhci_die(xhci);
-@@ -2442,6 +2443,7 @@ static void xhci_detach_slot(XHCIState *xhci, USBPort *uport)
- static TRBCCode xhci_get_port_bandwidth(XHCIState *xhci, uint64_t pctx)
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index 6298464a22..81b2905526 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -993,6 +993,7 @@ static const char *ccid_message_type_to_str(uint8_t type)
+ static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
  {
-     dma_addr_t ctx;
-+    const MemTxAttrs memtx_attrs = { .memory = true };
+     CCID_Header *ccid_header;
++    uint32_t payload_len;
  
-     DPRINTF("xhci_get_port_bandwidth()\n");
+     if (p->iov.size + s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
+         goto err;
+@@ -1005,17 +1006,18 @@ static void ccid_handle_bulk_out(USBCCIDState *s, USBPacket *p)
+     }
  
-@@ -2450,9 +2452,9 @@ static TRBCCode xhci_get_port_bandwidth(XHCIState *xhci, uint64_t pctx)
-     DPRINTF("xhci: bandwidth context at "DMA_ADDR_FMT"\n", ctx);
+     ccid_header = (CCID_Header *)s->bulk_out_data;
+-    if ((s->bulk_out_pos - 10 < ccid_header->dwLength) &&
++    payload_len = le32_to_cpu(ccid_header->dwLength);
++    if ((s->bulk_out_pos - 10 < payload_len) &&
+         (p->iov.size == CCID_MAX_PACKET_SIZE)) {
+         DPRINTF(s, D_VERBOSE,
+                 "usb-ccid: bulk_in: expecting more packets (%u/%u)\n",
+-                s->bulk_out_pos - 10, ccid_header->dwLength);
++                s->bulk_out_pos - 10, payload_len);
+         return;
+     }
+-    if (s->bulk_out_pos - 10 != ccid_header->dwLength) {
++    if (s->bulk_out_pos - 10 != payload_len) {
+         DPRINTF(s, 1,
+                 "usb-ccid: bulk_in: message size mismatch (got %u, expected %u)\n",
+-                s->bulk_out_pos - 10, ccid_header->dwLength);
++                s->bulk_out_pos - 10, payload_len);
+         goto err;
+     }
  
-     /* TODO: actually implement real values here. This is 80% for all ports. */
--    if (stb_dma(xhci->as, ctx, 0, MEMTXATTRS_UNSPECIFIED) != MEMTX_OK ||
-+    if (stb_dma(xhci->as, ctx, 0, memtx_attrs) != MEMTX_OK ||
-         dma_memory_set(xhci->as, ctx + 1, 80, xhci->numports,
--                       MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+                       memtx_attrs) != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DMA memory write failed!\n",
-                       __func__);
-         return CC_TRB_ERROR;
 -- 
 2.47.3
 
