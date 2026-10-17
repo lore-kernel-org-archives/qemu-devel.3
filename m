@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA91CCF2C7
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 08:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B7FCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 09:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI01v-0002OM-2k; Sat, 17 Oct 2026 04:44:39 -0400
+	id 1xI0Wa-0004Ob-Nv; Sat, 17 Oct 2026 05:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xI01Z-00024y-VG
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:44:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xI01Y-0007D1-Jn
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:44:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792226654;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nQRrtNUp/COCkyT/S0/Lf0ib6YVTzGi86Na95jRKHco=;
- b=d75Em9e8++FvWB5yfn1V96AjKOZ0tMHKt1qVcGgMDI7IS4eFD1NX2QK4VGNjLPfdenbhbZ
- Zn4z8o8wMevUFxMbuHHXXtufI0vZOjuilcEOk6zZh/dZ5cj0fzeAyrwhml72KK0meemPNS
- mif2e4ypDSQvOwCyOmyjKw+V4vdvDbg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-_Pzlv3WsO2CWrJSPKnNvTA-1; Sat,
- 17 Oct 2026 08:44:10 +0000
-X-MC-Unique: _Pzlv3WsO2CWrJSPKnNvTA-1
-X-Mimecast-MFC-AGG-ID: _Pzlv3WsO2CWrJSPKnNvTA_1792226649
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4382C1955E82; Sat, 17 Oct 2026 08:44:09 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 49A491956089; Sat, 17 Oct 2026 08:44:07 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1xI0WL-0004MV-7I
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:16:05 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
+ id 1xI0WH-0001fQ-Vq
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:16:04 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-5b8b3c8c4bbso1748131e87.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 02:16:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792228559; x=1792833359; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PtUbuTloeT9ul5nMXsXKZ7kxIu4l9dLwOXJxJ1CdXz4=;
+ b=T0YL0APn01vmW5n1YD/R+uuoiU0N+OT5rO95qLdzIWQp3p4CO9L74HtjVKW5vrYcdZ
+ spDaGMCqL0jcrLrGoZm4uZnwalpyIbvKIzG+MK4hIwLRpNnAdBM7EnVq1SXI38w68wk8
+ nwDyNsuNuUDmmPz41VLgSwlCfMW0qRPSj3ptLHAuI2z9TXy8CA1sE+vIHVfq3wV0Uedj
+ FDscmux/Aw8Ojx3QySQdCCoy9+s5QmW6PE2Lck64tcyX9DsuOcJt9qjbHpbJtm66NneL
+ ohEIQwBUA+pOn1ms9Uri3xs2rIfQ3vDroa3EfWySLAbRzNUSZKW40soj59n6g8aYGvjt
+ xZ6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792228559; x=1792833359;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:sender:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PtUbuTloeT9ul5nMXsXKZ7kxIu4l9dLwOXJxJ1CdXz4=;
+ b=FBozV7zV+H23IXxAOOUYSYA7wzHk2WD7PATNxR8Sbs/UexgnXy0JnmnW9aagf6rP4v
+ z3tddRteV/Ef/CiPn1c2EbJNCCOw2xLf1ExtdhtrJN1JtURsq7i0059B/VSJw4ZhxCtc
+ +unVZBca50OD/d4GFhfJdxlgSTUHR+eZo94mVY6ShgtOr6NQgLZ756Ixgt+wvHmejPg+
+ fatQfcpXVC7RyQtYn6mpMo5W9hPgcO+TKhAetkIjzQ+xV/AISRVxvv0FrpwtZtPHvOI2
+ HQynoVZcMCBI7k67EuSfA1uDulOzUh/wibldsKPagNBYbr67mRknzVlyKTDhyscTlZJZ
+ HKDw==
+X-Gm-Message-State: AFq9FYJqgqgH3HAWOJYdCuIkEMrqOg4vJ5qLJ3xDmHrJ9xgi/fq5kNLa
+ pgxW0pNNE0Z3ZfoYOMUEc037hudcsK+OxhhO+VB3inHoP1g2vqcD1L6A
+X-Gm-Gg: AYBFou3n5dmYBZjczDySkbdV78DgvoM4FlXw2Q727wY/OEVyQHDYDTUnhbTHK6HfCiv
+ q291It8Zn1lL6xxaLTObAiAXSlyw/Gm9PgyNFPFLGm3ARkauVynbLI5Hb69KwR3uWr0LcqbZOJn
+ TcvG1QGzNgpkvSOIHkfhalkEE12c47+//UAMWtlNx9RQBlsOpVHtWN8j2EOy8bmLK3YTtYM4FjQ
+ Z9BOTeid3ZGjr1YVmGH2dXrKKjWWHdqajYY0OYVtPY7IyTLrvIJG+JbsG/zWgdEGSfJeo4bjRuJ
+ RtuaxlfantR1sW9Bxkv6WjlP4rcc3EGzw9fStxYWq9mJP1oMSRAvWOgqzW4KBJcA4Y86ix7z6Qx
+ w8/O1jf1xoqXVgTPUnE77PzeMIxCxYDc+rUZGtZRGdx/eqogxebdbPmnzycFbQaKhqZBG7Xwjv8
+ l+l5ZVCV7krQ+4mumdMoAm5iTjR8mgImbO8W/0uhZ1qQ3PJOnFTcxRzUZ9YGDrevLtH19QOTZxr
+ JNLKrmX0WugK9P8GUvXVGzhazKsyvPJsgek7X0dg1DOHfRPvclItHJFdp8=
+X-Received: by 2002:a05:6512:3d17:b0:5be:41da:5c68 with SMTP id
+ 2adb3069b0e04-5be4793ec7amr1822990e87.39.1792228558613; 
+ Sat, 17 Oct 2026 02:15:58 -0700 (PDT)
+Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
+ [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5be4a633f54sm853132e87.60.2026.10.17.02.15.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 17 Oct 2026 02:15:57 -0700 (PDT)
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH v2 0/2] fix: Allwinner GPIO interrupt handling
+Date: Sat, 17 Oct 2026 11:15:31 +0200
+Message-Id: <20261017-allwinner-gpio-eint-v2-0-82906f440378@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 21/23] target/loongarch: implement get_note_size
- sysemu op
-From: marcandre.lureau@redhat.com
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- anjo@rev.ng, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261016181410.191743-22-pierrick.bouvier@oss.qualcomm.com>
-References: <20261016181410.191743-1-pierrick.bouvier@oss.qualcomm.com>
- <20261016181410.191743-22-pierrick.bouvier@oss.qualcomm.com>
-Date: Sat, 17 Oct 2026 12:42:49 +0400
-Message-Id: <179222656911.1619676.1843951032763605797.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=284;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=mDR1RlqTN74bPfsvUxyiYzIhOiD4Rh2v6cbV2ZeIESY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq0zUN3Ko+nJHzQM1cylb+q2zKoEOEpYDflCySx
- 4BtVE7GgTKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatM1DQAKCRDa6OEJdZac
- 5THqEACLYxMXWByF3H1nqksAcp3b/y3tC75SiL+j5JEORaoQurkAGb10LyH9Ihw+qrWIcxLfHmS
- LHG16erWRPePrVIN7m+jwDH6vrCwZi/RWaOrWXEDjtChFhKzazd+QxpdV/9ASPsLa1rAnbhgYGe
- Jop37gxykERrF6ae1rSSMoopL1t4g+jmwx0TLTkIBtRtnXS7j5DufASO6qUfhuQfhVcjFpKQbHx
- tbWU73/vhX6bTtLgg2DPPKoUtGLqOCOENYhnU4HWR9Hs9mkfA7gDFlkcyZsHfXG+YWez6tP+UhL
- 7bgmfNsPJSrdmhizz5tNv8jArNVRTbRtO3LHA2cGYKbUQFkb3c3GcXztsP9iocE0NteBGusTa1y
- 9+WMK9mdlxixEfuZbKRFszsskf3E3ETS/an1vWHSg9uBPkYdvLDPmwz3Y8hx8rehh6c6lBzyHeB
- LX+0ja6P+XJr6UiRQtcs22fAa84ezdvVF4wr/QAeYyBslqXwtaNMewzpSV333VVicO5oFbdU+9e
- eAIdgN1Un346NvR4fMh7WLznZO0h+FD40C+fVMZP/LS0y0U54sZtSnQpQTbiZ3Cl4EXs2j4epAs
- NEsXlyjjmxCiXU0m8JFYNG7eBLWvzpAIUETGfc2+sHZc38gH0rLAajjHdzyGAtDBcNBLtoBjRDh
- nYVfK8SS/lWCXeA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NQQ6CMBBFr0Jm7Zi2sQquuIdhUctQJoGWtKRqC
+ He3cgCX7yX//Q0SRaYE92qDSJkTB19AnSqwo/GOkPvCoIS6SiEaNNP0Yu8pols4ILFfUdayHtT
+ F0K3XUJZLpIHfR/XRFR45rSF+jpMsf/Z/L0sUaLXuVaNrQ+LZutnwdLZhhm7f9y8FgQwxtgAAA
+ A==
+X-Change-ID: 20261009-allwinner-gpio-eint-1818f24ae7d5
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,12 +107,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 11:14:08 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
-> For now, we keep the global cpu_get_note_size symbol defined.
+The original patches assumed that pin had to be configured as input in
+order to be able to receive interrupt. However, after additional testing
+with libgpiod and gpiomon, the pin is actually supposed to be configured
+as EINT (0x06). In the following example with PH1
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+root@cubieboard-ng:~# gpioget -c 0 224
+allwinner_gpio_read [PH:CFG0] -> 0x1061061
+allwinner_gpio_write [PH:CFG0] <- 0x1061060
+allwinner_gpio_read [PH:DAT] -> 0x49
+"224"=active
+root@cubieboard-ng:~# gpiomon -c 0 224
+allwinner_gpio_read [PH:CFG0] -> 0x1061060
+allwinner_gpio_write [PH:CFG0] <- 0x1061066
+...
 
+The CFG0 value on the lowest nibble changes from 0 to 6.
+
+This patch set fixes that behavior to expect that pin is configured as
+EINT in order to allow interrupt-related functionality.
+
+Tests are also updated to reflect this change, and a new test for pins
+configured as input is added.
+
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+---
+Changes in v2:
+- Moved changes to the interrupt handling tests to the first commit, so
+  tests still pass once the commit is applied.
+- Kept new GPIO input test as a separate commit.
+- Link to v1: https://lore.kernel.org/qemu-devel/20261009-allwinner-gpio-eint-v1-0-c55d2958ae0b@gmail.com
+
+---
+Strahinja Jankovic (2):
+      hw/gpio: Add EINT CFG to Allwinner GPIO, fix interrupt handling
+      tests/qtest: Add Allwinner GPIO input test
+
+ hw/gpio/allwinner-gpio.c              | 19 +++++++++---
+ include/hw/gpio/allwinner-gpio-regs.h |  5 +--
+ tests/qtest/allwinner-gpio-test.c     | 57 ++++++++++++++++++++++++++---------
+ 3 files changed, 57 insertions(+), 24 deletions(-)
+---
+base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414
+change-id: 20261009-allwinner-gpio-eint-1818f24ae7d5
+
+Best regards,
 -- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
 
