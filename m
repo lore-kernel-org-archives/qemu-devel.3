@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAF0CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A170CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9e6-0006FX-JG; Sat, 17 Oct 2026 15:00:44 -0400
+	id 1xI9fg-000295-ER; Sat, 17 Oct 2026 15:02:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cy-0005J8-V0; Sat, 17 Oct 2026 14:59:36 -0400
+ id 1xI9ev-0000xg-Oh; Sat, 17 Oct 2026 15:01:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cw-0003xc-FR; Sat, 17 Oct 2026 14:59:31 -0400
+ id 1xI9et-0004LT-OA; Sat, 17 Oct 2026 15:01:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263408; bh=OQ8OS3/3dwMvofshuWTyn5iO3Zh/dIugLRLHB8hUGB4=;
+ t=1792263436; bh=qRvolJ5qa/tOZOHlXgDhJ4v57RaF5JF67FPon2iMbWw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O5N47WNBfPzqIjtWimHy44MaOaidgnuT3v7Y5OP/d6x1uf7sk8zkC/WlSmHr6rNCp
- BpGPEY08kLMCOxELS5tXpyWccl/c2dSoePgWZC101XGP6xACCJ1kvqgE2Vs+VoRaCF
- GrGCsq4jN9bIUdlrXmwHF6xPQLO+00sS2cYqr5wmInVdJ5KbnRhdFA+O6vfKJnrNiN
- gHuC8kZa0sdVMbHWFe0bYjcDDqfJp4lajuXyKjdhUEuiszUAYDGBw7/c3cfAixsJlU
- btTHn4tvf3D0MTwCf2HTyXcBKwGj2dBYMeqjg73REGTXwPq8VO/pkowE3B04TXuAIF
- uKnqQBpmSvziw==
+ b=nSejjSQaCUeZ+pc9fEEGMvxgwcZV1HZ0nyGV/uVvDxjMy6w8cRmzDDVPqJ0YLWETf
+ YoC8UhB7C+ULU3R/BQSrKm3H8pKHfAeiq+5f7gt4DYmydD4eZ/fCdMivIVh0RUc//3
+ G6Y6JiGt+uT5AuTYr/FQ0g8bIQoWZyG0Glfp+bntJvN0GI9FHCU1y+z3YV09Q0G5+O
+ KKN9/noi6JIGwQVZiUjY++Hba2C4J7tGb5FOmq3OyxWSiwZuIYbUM6u7esLBmivOW2
+ 5IIfgJOIpo168HgXKHdK9oV01bddd5sWIDVslI8TgbPWkA5RIUQKJOJmWv74jIWluR
+ 02t01ktP7zClA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BE051DE6C9;
- Sat, 17 Oct 2026 21:56:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BC4141DE6E1;
+ Sat, 17 Oct 2026 21:57:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 120D3443393;
- Sat, 17 Oct 2026 21:56:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D30E4433A9;
+ Sat, 17 Oct 2026 21:57:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+Cc: qemu-stable@nongnu.org, Rick Richard <rick@sloservers.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 40/63] block: reject a reopen of an unusable node
- instead of crashing
-Date: Sat, 17 Oct 2026 21:54:56 +0300
-Message-ID: <20261017185528.722197-40-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 62/63] tests/qtest/bios-tables-test: Update riscv64
+ virt SPCR golden reference
+Date: Sat, 17 Oct 2026 21:55:18 +0300
+Message-ID: <20261017185528.722197-62-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,139 +71,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Rick Richard <rick@sloservers.com>
 
-qcow2_signal_corruption() drops bs->drv, so a node can lose its driver
-at any time and a reopen has to expect that. Both ends of the path
-assume otherwise:
+Update the riscv64 virt SPCR golden reference file to have the fix for
+the UART register width.
 
-  $ qemu-io -c "read 0 64k" -c "reopen -r" corrupt.qcow2
-  qcow2: Marking image as corrupt: Cluster allocation offset 0x1200
-  unaligned (L2 offset: 0x40000, L2 index: 0); ...
-  Segmentation fault
+Diffs from iasl:
 
-bdrv_reopen_queue_child() dereferences bs->drv while descending into
-the children the node opened itself, and bdrv_reopen_prepare() asserts
-on it. commit_clean() reopens the base of a commit job back to
-read-only, so a base which goes corrupt under the job arrives here too.
+@@ -1,58 +1,58 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20230628 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Sat Oct  3 08:44:51 2026
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
 
-There is nothing to reopen for such a node, so stop descending into its
-children and let bdrv_reopen_prepare() report what every caller of
-bdrv_reopen() already handles. bdrv_reopen_commit() and
-bdrv_reopen_abort() keep their assertion, only a prepared entry reaches
-them.
+ [000h 0000 004h]                   Signature : "SPCR"    [Serial Port Console Redirection Table]
+ [004h 0004 004h]                Table Length : 0000005A
+ [008h 0008 001h]                    Revision : 04
+-[009h 0009 001h]                    Checksum : 13
++[009h 0009 001h]                    Checksum : 2B
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+ [024h 0036 001h]              Interface Type : 12
+ [025h 0037 003h]                    Reserved : 000000
+
+ [028h 0040 00Ch]        Serial Port Register : [Generic Address Structure]
+ [028h 0040 001h]                    Space ID : 00 [SystemMemory]
+-[029h 0041 001h]                   Bit Width : 20
++[029h 0041 001h]                   Bit Width : 08
+ [02Ah 0042 001h]                  Bit Offset : 00
+ [02Bh 0043 001h]        Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044 008h]                     Address : 0000000010000000
+
+ [034h 0052 001h]              Interrupt Type : 10
+ [035h 0053 001h]         PCAT-compatible IRQ : 00
+ [036h 0054 004h]                   Interrupt : 0000000A
+ [03Ah 0058 001h]                   Baud Rate : 07
+ [03Bh 0059 001h]                      Parity : 00
+ [03Ch 0060 001h]                   Stop Bits : 01
+ [03Dh 0061 001h]                Flow Control : 00
+ [03Eh 0062 001h]               Terminal Type : 03
+ [04Ch 0076 001h]                    Reserved : 00
+ [040h 0064 002h]               PCI Device ID : FFFF
+ [042h 0066 002h]               PCI Vendor ID : FFFF
+ [044h 0068 001h]                     PCI Bus : 00
+ [045h 0069 001h]                  PCI Device : 00
+ [046h 0070 001h]                PCI Function : 00
+ [047h 0071 004h]                   PCI Flags : 00000000
+ [04Bh 0075 001h]                 PCI Segment : 00
+ [04Ch 0076 004h]                    Reserved : 00000000
+
+ Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 2B 42 4F 43 48 53 20  // SPCRZ....+BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 08 00 01 00 00 00 10  // ................
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 03 00  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
+     0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
+Signed-off-by: Rick Richard <rick@sloservers.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261005104008.214588-4-rick@sloservers.com>
 Cc: qemu-stable@nongnu.org
-Message-ID: <20260824133729.1141990-3-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit efe98c2a0932c09ada26b8afac3606a66f561933)
-(Mjt: fixup iotest output accross v11.1.0-800-g3c0c7bfeba92
- "qemu-io: propagate errors through Error API instead of printf")
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 71041ce05c95fe47fd24175bb2b974bb14f3d029)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block.c b/block.c
-index 1c1c19d04a..0875e92536 100644
---- a/block.c
-+++ b/block.c
-@@ -4476,6 +4476,11 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
-             !qdict_haskey(options, "backing.driver");
-     }
- 
-+    /* An unusable node is rejected by bdrv_reopen_prepare(), do not descend */
-+    if (!bs->drv) {
-+        return bs_queue;
-+    }
-+
-     QLIST_FOREACH(child, &bs->children, next) {
-         QDict *new_child_options = NULL;
-         bool child_keep_old = keep_old_opts;
-@@ -4859,9 +4864,16 @@ bdrv_reopen_prepare(BDRVReopenState *reopen_state, BlockReopenQueue *queue,
-     bool drv_prepared = false;
- 
-     assert(reopen_state != NULL);
--    assert(reopen_state->bs->drv != NULL);
-     GLOBAL_STATE_CODE();
-+
-     drv = reopen_state->bs->drv;
-+    if (drv == NULL) {
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+        error_setg(errp, "Block node '%s' has no driver left to reopen",
-+                   bdrv_get_device_or_node_name(reopen_state->bs));
-+        return -ENOMEDIUM;
-+    }
- 
-     /* This function and each driver's bdrv_reopen_prepare() remove
-      * entries from reopen_state->options as they are processed, so
-diff --git a/tests/qemu-iotests/060 b/tests/qemu-iotests/060
-index 5cd21a6f68..ce49fc34ec 100755
---- a/tests/qemu-iotests/060
-+++ b/tests/qemu-iotests/060
-@@ -486,6 +486,36 @@ echo
- # Image should not have been marked corrupt
- _img_info --format-specific | grep 'corrupt:'
- 
-+echo
-+echo "=== Testing the reopen of an image corrupted at runtime ==="
-+echo
-+
-+_make_test_img 64M
-+poke_file "$TEST_IMG" "$l1_offset" "\x00\x00\x00\x00\x2a\x2a\x2a\x2a"
-+
-+# The read leaves the node unusable, the reopen must report that
-+echo "{'execute': 'qmp_capabilities'}
-+      {'execute': 'human-monitor-command',
-+       'arguments': {'command-line': 'qemu-io drive \"read 0 512\"'}}
-+      {'execute': 'blockdev-reopen',
-+       'arguments': {'options': [{'node-name': 'drive',
-+                                  'driver': 'qcow2',
-+                                  'read-only': true,
-+                                  'file': {
-+                                      'driver': 'file',
-+                                      'filename': '$TEST_IMG'
-+                                  }}]}}
-+      {'execute': 'quit'}" \
-+    | $QEMU -qmp stdio -nographic -nodefaults \
-+            -blockdev "{'node-name': 'drive',
-+                        'driver': 'qcow2',
-+                        'file': {
-+                            'driver': 'file',
-+                            'filename': '$TEST_IMG'
-+                        }}" \
-+            2>&1 \
-+    | _filter_qmp | _filter_qemu_io
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/060.out b/tests/qemu-iotests/060.out
-index a37bf446e9..ad1912a43b 100644
---- a/tests/qemu-iotests/060.out
-+++ b/tests/qemu-iotests/060.out
-@@ -436,4 +436,17 @@ qcow2: Image is corrupt: L2 table offset 0x2a2a2a00 unaligned (L1 index: 0); fur
- {"return": {}}
- 
-     corrupt: false
-+
-+=== Testing the reopen of an image corrupted at runtime ===
-+
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
-+QMP_VERSION
-+{"return": {}}
-+qcow2: Marking image as corrupt: L2 table offset 0x2a2a2a00 unaligned (L1 index: 0); further corruption events will be suppressed
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_IMAGE_CORRUPTED", "data": {"device": "", "msg": "L2 table offset 0x2a2a2a00 unaligned (L1 index: 0)", "node-name": "drive", "fatal": true}}
-+read failed: Input/output error
-+{"return": ""}
-+{"error": {"class": "GenericError", "desc": "Block node 'drive' has no driver left to reopen"}}
-+{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
-+{"return": {}}
- *** done
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 59d2c8f7f2..6003c230b1 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index aae973048a..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/SPCR",
 -- 
 2.47.3
 
