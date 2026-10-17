@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43152CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434F2CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9cC-0003Z7-KU; Sat, 17 Oct 2026 14:58:46 -0400
+	id 1xI9cZ-00051A-Ry; Sat, 17 Oct 2026 14:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c2-0003Sc-Aa; Sat, 17 Oct 2026 14:58:34 -0400
+ id 1xI9cX-0004sy-C7; Sat, 17 Oct 2026 14:59:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c0-0003pr-DS; Sat, 17 Oct 2026 14:58:34 -0400
+ id 1xI9cV-0003tT-Ij; Sat, 17 Oct 2026 14:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263393; bh=awy2pZ56vk4336K7Be9QQz9699or3lJ1eeqRWZW4KK0=;
+ t=1792263402; bh=ZafvBSm/LhoxM26OS3duVotEFaFUdHJv5VXNEI0wyNo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pV/gLdMdV3uVVDK+Uu/Dft5PoRXD2q9UEUONkj8y7dZXQRmLHW94slFURFJnjGGYD
- f6HOaM7FyqoeLRU3EEPddLAhVm7yE1IuGj4M7LYNi7Al2o+bD6mw67vCfMq21TZ5XK
- l2tvxgF59iu+tul+uHAa53H/E2UAqvuScsBpmZhhwj+yEt9YS07uVY1wMaVaz2g9cV
- 7bHtXdZveDR3jUWouZeMLoG5WopPRK+nzIDY3xgHnPxEbz2iZk5JprwfH3QXNXeV6x
- Siu+/HHF9lyzHhYzLc4ejaixC3NP+SXc9z2JWuvzrbXII7EcvAquyuE8vLeI6+nhX5
- OW9oIu3fwnqug==
+ b=MQNGdnxtoHIWa394YVEFGfJMcmDEGLpU7rc+Kxrb8nBhDuIX37PTXaBlJ7cU9ncD3
+ pD3EQpgNuykVTpTBWXCM3dxlwqRvaoAi6c6I/N08GqhASOkI20uSA85mxMR4EHGaMo
+ J0cUAJ8GKe1S5J4Ke5TKPbx0EsUhEnlup6iIos3KS6H7hrRMWmz8LVRE97AhgPXjH/
+ 66W8rlHuTiUQUrYCq8iD81c7+Im5DEiWAMiS5ox/nqPG2E9JLaVK3y6LpGjYS1Rilu
+ HSlDNTeCDqgBL6mE3TtbTDdX+lfQ3L6KNEd866MPR6BWEvxUX3OMIJRDHfxVQIA5Oj
+ Ubv2qlfmczRbQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A999E1DE6BE;
- Sat, 17 Oct 2026 21:56:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 732011DE6C4;
+ Sat, 17 Oct 2026 21:56:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DC2C443389;
- Sat, 17 Oct 2026 21:56:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1E2C644338F;
+ Sat, 17 Oct 2026 21:56:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 30/63] target/i386: Don't clear C1 for
- FCOMI/FCOMIP/FUCOMI/FUCOMIP
-Date: Sat, 17 Oct 2026 21:54:46 +0300
-Message-ID: <20261017185528.722197-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 36/63] iotests: cover inactivating a read-only node
+Date: Sat, 17 Oct 2026 21:54:52 +0300
+Message-ID: <20261017185528.722197-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -69,48 +68,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Commit 6802a4b23919 ("target/i386: clear C1 for all x87 compare
-instructions") added an unconditional C1 clear to helper_fcomi_ST0_FT0()
-and helper_fucomi_ST0_FT0(), based on the SDM listing "C1 Set to 0" under
-FPU Flags Affected for FCOMI/FCOMIP/FUCOMI/FUCOMIP.
+A driver which writes something out on .bdrv_inactivate has nothing to
+write for a node it can not write to, and has to answer such a request
+with success rather than with the error its refused write produces.
+The test inactivates nodes in several ways and never a read-only one,
+so nothing caught that.
 
-Testing on real x86-64 Intel and AMD hardware shows these instructions leave
-C1 unchanged, unlike FCOM/FUCOM/FICOM. The SDM text appears to have been
-carried over from the FCOM/FUCOM description.
+Add a read-only node and take it through a deactivation and back. The
+case is generic, as every driver implementing the handler has to answer
+the same way.
 
-Revert that part of the commit. The FCOM/FUCOM/FICOM changes are kept.
-
-Fixes: 6802a4b23919 ("target/i386: clear C1 for all x87 compare instructions")
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260911105811.16854-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6d5fb14d36a6d11e88f04878021b2d99ce6c07e9)
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+(cherry picked from commit 2910b995f6c8afd3eaa950e24432a0e044274ac5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 184cf8b4e8..02da4d0b26 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -565,8 +565,6 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
--    /* C1 is unconditionally cleared to 0 */
--    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+index a95b37e796..52c63fdf26 100755
+--- a/tests/qemu-iotests/tests/inactive-node-nbd
++++ b/tests/qemu-iotests/tests/inactive-node-nbd
+@@ -46,6 +46,7 @@ def node_is_active(_vm, node_name):
+     return node['active']
  
-@@ -579,8 +577,6 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
--    /* C1 is unconditionally cleared to 0 */
--    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
+ with iotests.FilePath('disk.img') as path, \
++     iotests.FilePath('ro.img') as ro_path, \
+      iotests.FilePath('snap.qcow2') as snap_path, \
+      iotests.FilePath('snap2.qcow2') as snap2_path, \
+      iotests.FilePath('target.img') as target_path, \
+@@ -57,6 +58,7 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('Preparing disk...')
+     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
++    iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
  
+     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+                             snap_path)
+@@ -69,6 +71,9 @@ with iotests.FilePath('disk.img') as path, \
+                      'active=off')
+     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
++    vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
++    vm.add_blockdev(f'{iotests.imgfmt},file=ro-file,node-name=ro-fmt,'
++                     'read-only=on')
+     vm.add_blockdev(f'file,node-name=snap-file,filename={snap_path}')
+     vm.add_blockdev(f'file,node-name=snap2-file,filename={snap2_path}')
+ 
+@@ -288,6 +293,15 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log(qemu_io.cmd('map'), filters=[filter_qemu_io])
+     qemu_io.close()
+ 
++    iotests.log('\n=== Inactivating a read-only node ===')
++
++    # A driver which writes something out on inactivation has nothing to
++    # write for a node it can not write to, and must not fail the request
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=False)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
++    vm.qmp_log('blockdev-set-active', node_name='ro-fmt', active=True)
++    iotests.log('ro-fmt active: %s' % node_is_active(vm, 'ro-fmt'))
++
+     iotests.log('\n=== Resuming VM activates all images ===')
+     vm.qmp_log('cont')
+ 
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index a458b4fc05..3c43020053 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -227,6 +227,14 @@ discard failed: Operation not permitted
+ qemu-io: Failed to get allocation status: Operation not permitted
+ 
+ 
++=== Inactivating a read-only node ===
++{"execute": "blockdev-set-active", "arguments": {"active": false, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: False
++{"execute": "blockdev-set-active", "arguments": {"active": true, "node-name": "ro-fmt"}}
++{"return": {}}
++ro-fmt active: True
++
+ === Resuming VM activates all images ===
+ {"execute": "cont", "arguments": {}}
+ {"return": {}}
 -- 
 2.47.3
 
