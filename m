@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5790ACCF2D1
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185AFCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2b-0000uW-Rd; Sat, 17 Oct 2026 16:30:06 -0400
+	id 1xIB2y-0002Ks-2C; Sat, 17 Oct 2026 16:30:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1l-0006f3-BK; Sat, 17 Oct 2026 16:29:15 -0400
+ id 1xIB2d-00015W-0p; Sat, 17 Oct 2026 16:30:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1i-00041p-EZ; Sat, 17 Oct 2026 16:29:12 -0400
+ id 1xIB2b-00045g-18; Sat, 17 Oct 2026 16:30:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268850; bh=ssXstQFJQqCeotDgKaZFU6wQkt7iat7NMhOe6v/S63g=;
+ t=1792268858; bh=fSGSx8+sMifZVc8DXLLOrWvCeChwcb9AWdbXfn6wqg0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jzAK7p+lqh/G9r4QojsN8aETjUYvn6WN8MbINaJJ6dCYexXsx3yRnYpdqBrScoPG6
- VnVXaPbTro2uog1/e9NBj0p20tKpYW1pk05cHzFTC+cHmkxyCl9aufhr+ANuey/WOA
- vD5i7t65HHC0do/sixmGl5f+0dZgAa+E2LWbGsbpk1UuBwqbuY/NW5oQHgq1vtl9TW
- 5qx3TU8cpOhxdgq7xv62ybr7ZA5Q58x3PsXP0fN0ZGndPpht9IxGE5IadS97099Iby
- zdqmBJQPdzxKd+D3bkgol5faaTTt2uEJDHYjqcAGWSPnp5uV0K5qtrRJ63MsHAtj5f
- lajbZPqiSUONw==
+ b=qZH/xL8c3PRqQln6VFe7tbShefT7/iXSx6qlN7t8R2iKg5Rm7d530oJDrmhkL8+PX
+ Hk5zniRr0lBWnGAlTTVOXcwn4yl3E0i1g46PKVVO79FBZ9j+zAX1jp2Re7DSRzAHJa
+ 3SCrNtzLv4PYqSi3TKDFHnbX62OXzOap2264rcVuU9qgd/FUWIHBYjTbpwzHncJtBl
+ KpxyG+lyCiVbZNfcMPE3j2dljv5A1gahBjVdofzxbn3uMzLSvx8y6OwVk+FJ1Zpmpz
+ +0cMzaxWscO4XQGjIo1+CJOLSELScMmRUAb3pm064rDEYSMishOuf6LdVs43zhkoqR
+ 24LYCb3USt0iA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA5EE1DE756;
- Sat, 17 Oct 2026 23:27:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D3E481DE75F;
+ Sat, 17 Oct 2026 23:27:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1071B44342C;
- Sat, 17 Oct 2026 23:27:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 213CF443433;
+ Sat, 17 Oct 2026 23:27:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 26/73] block/nbd: never index requests[] with an
- unchecked cookie
-Date: Sat, 17 Oct 2026 23:25:44 +0300
-Message-ID: <20261017202638.728621-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 33/73] target/i386: clear C1 for all x87 compare
+ instructions
+Date: Sat, 17 Oct 2026 23:25:51 +0300
+Message-ID: <20261017202638.728621-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -71,150 +69,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Cookies are converted into indices of s->requests[] in several places
-and the result is used right away, without any check:
+The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP/
+FCOMI/FCOMIP/FUCOMI/FUCOMIP unconditionally clear C1 in the FPU status word,
+regardless of the comparison result.
 
-    int i = COOKIE_TO_INDEX(cookie);
-    ...
-    return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
+helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
+0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
+whatever value it already had. FICOM/FICOMP dispatch through the same
+helpers after converting their integer operand, so they inherited the
+same bug.
 
-COOKIE_TO_INDEX() subtracts one, so a zero cookie becomes an index of
--1 and the access lands in front of the array. This is undefined and,
-depending on the type of the index and on what the compiler has put
-there, it can as well pass silently: at the site above i is signed, so
-even a plain i < MAX_NBD_REQUESTS check would happily let -1 through.
+helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 never touched the FPU status
+word at all, so C1 was left untouched by those too.
 
-Route every conversion through a helper which hands out the slot only
-for a cookie in range and owned by a request in flight, so that the
-check can not be forgotten again. The helper reports through an Error,
-as the one cookie which is not ours to trust, the one taken from the
-wire in nbd_receive_replies(), is a protocol error rather than an
-internal inconsistency and has to stay a channel error. Every other
-cookie is one we have issued and still own, so a bad value there is a
-bug in this file, which is what &error_abort spells out.
+This patch clears C1 explicitly in all four helpers, adding the clear
+into the existing fpus mask for fcom/fucom since fcom_ccval never sets
+bit 9. For fcomi/fucomi add a new separate clear.
 
-The cookie of the reply in flight goes through the helper as well. It
-is not an unchecked value either: it has passed the check on the wire
-path, or it has been cleared by the previous commit.
-
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-3-den@openvz.org>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 75b0a993dacbd5f8579e8f8c228f9bae80541e42)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260828082235.128360-1-scherer.simon89@gmail.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 6802a4b2391936ccb2ea0f76851bd1a43413b0b5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nbd.c b/block/nbd.c
-index d9b776283f..d0a7097034 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -136,6 +136,19 @@ static void nbd_clear_bdrvstate(BlockDriverState *bs)
-     s->x_dirty_bitmap = NULL;
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 58e46d8f5f..2149f4b1d2 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -538,7 +538,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
+ 
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
  }
  
-+static NBDClientRequest *nbd_request_by_cookie(BDRVNBDState *s, uint64_t cookie,
-+                                               Error **errp)
-+{
-+    uint64_t ind = COOKIE_TO_INDEX(cookie);
-+
-+    if (ind >= MAX_NBD_REQUESTS || !s->requests[ind].coroutine) {
-+        error_setg(errp, "unexpected cookie value");
-+        return NULL;
-+    }
-+
-+    return &s->requests[ind];
-+}
-+
- /* Called with s->receive_mutex taken.  */
- static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
- {
-@@ -422,7 +435,8 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-                                             Error **errp)
- {
-     int ret;
--    uint64_t ind = COOKIE_TO_INDEX(cookie), ind2;
-+    NBDClientRequest *req = nbd_request_by_cookie(s, cookie, &error_abort);
-+    NBDClientRequest *owner;
-     QEMU_LOCK_GUARD(&s->receive_mutex);
+@@ -548,7 +549,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
+     FloatRelation ret;
  
-     while (true) {
-@@ -437,10 +451,10 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-              * woken by whoever set s->reply.cookie (or never wait in this
-              * yield). So, we should not wake it here.
-              */
--            ind2 = COOKIE_TO_INDEX(s->reply.cookie);
--            assert(!s->requests[ind2].receiving);
-+            owner = nbd_request_by_cookie(s, s->reply.cookie, &error_abort);
-+            assert(!owner->receiving);
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
+     merge_exception_flags(env, old_flags);
+ }
  
--            s->requests[ind].receiving = true;
-+            req->receiving = true;
-             qemu_co_mutex_unlock(&s->receive_mutex);
+@@ -563,6 +565,8 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
+ }
  
-             qemu_coroutine_yield();
-@@ -454,7 +468,7 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-              */
+@@ -575,6 +579,8 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
+     /* OF, SF, and AF are unconditionally cleared to 0 */
+     CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
++    /* C1 is unconditionally cleared to 0 */
++    env->fpus &= ~0x0200;
+     merge_exception_flags(env, old_flags);
+ }
  
-             qemu_co_mutex_lock(&s->receive_mutex);
--            assert(!s->requests[ind].receiving);
-+            assert(!req->receiving);
-             continue;
-         }
- 
-@@ -474,17 +488,16 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-             error_setg(errp, "unexpected structured reply");
-             goto err;
-         }
--        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
--        if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
-+        owner = nbd_request_by_cookie(s, s->reply.cookie, errp);
-+        if (!owner) {
-             ret = -EINVAL;
--            error_setg(errp, "unexpected cookie value");
-             goto err;
-         }
-         if (s->reply.cookie == cookie) {
-             /* We are done */
-             return 0;
-         }
--        nbd_recv_coroutine_wake_one(&s->requests[ind2]);
-+        nbd_recv_coroutine_wake_one(owner);
-     }
- 
- err:
-@@ -861,7 +874,6 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
- {
-     ERRP_GUARD();
-     int ret;
--    int i = COOKIE_TO_INDEX(cookie);
-     void *local_payload = NULL;
-     NBDStructuredReplyChunk *chunk;
- 
-@@ -919,8 +931,9 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
-             return -EINVAL;
-         }
- 
--        return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
--                                                  qiov, errp);
-+        return nbd_co_receive_offset_data_payload(
-+                s, nbd_request_by_cookie(s, cookie, &error_abort)->offset,
-+                qiov, errp);
-     }
- 
-     if (nbd_reply_type_is_error(chunk->type)) {
-@@ -1067,7 +1080,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
- 
- break_loop:
-     qemu_mutex_lock(&s->requests_lock);
--    s->requests[COOKIE_TO_INDEX(cookie)].coroutine = NULL;
-+    nbd_request_by_cookie(s, cookie, &error_abort)->coroutine = NULL;
-     s->in_flight--;
-     qemu_co_queue_next(&s->free_sema);
-     qemu_mutex_unlock(&s->requests_lock);
 -- 
 2.47.3
 
