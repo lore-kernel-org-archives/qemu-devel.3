@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26708CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0BFCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB5i-0006QH-19; Sat, 17 Oct 2026 16:33:18 -0400
+	id 1xIB5S-0005LJ-5Q; Sat, 17 Oct 2026 16:33:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB4Y-00046v-Nf; Sat, 17 Oct 2026 16:32:12 -0400
+ id 1xIB3b-0003RW-Q5; Sat, 17 Oct 2026 16:31:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB4X-0004ZB-3S; Sat, 17 Oct 2026 16:32:06 -0400
+ id 1xIB3Z-0004VM-Ns; Sat, 17 Oct 2026 16:31:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268882; bh=TWBxVKz82Up+sx4uZne6YUeNc6ojmMAxAlQXgNEi9Ds=;
+ t=1792268872; bh=Ty0WGoM3aAosY55JIlBDUv6MO9fpFcFW0udf45XpbJA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=g4Iej4Qt/Th8oLhSfcN2jG84H8CUPU811covLqSmiPBMJXmlL143qXPT09a8uYMDz
- 0IHfG+Y77zxEpOcupjObLKDIBwag3WNq9UoZGKTw6tsvdYECk2PSojj0VorAZn3w44
- ysbv3ULyBZYdPmrbz1XgzKa0/lJuZ67F09G2viOilKotS+uzdRSmazyJ+riDOKhjNB
- 51A0uqxii3fniqr6IgQsS9bmNT4H+XJa6ZSFrptP9gs7P+pvNytkuFV39oDon0PC1K
- wlQSmWvPYY8h+/kA3vaLP1bJ6vKg0WRW1sflmwRivHH5WfJQqgcWodCYcgCiqlmCNx
- mSpXsXuj8MNFA==
+ b=vcLV7NWHRpzOTaIcEp4C9OX6DwwhD5xtxVK7UT6QK/xJEzmSUQivR4cpJK058kAti
+ JMkQhagbvnkB7Epw/i/VP92De+avw01624mBvQWsX894c8ZiUlHUPHJaZC9An4ezal
+ 5lE+yOCpUwbbcZNPYD/RftU07i6Vc8gbEFxW7QcQdy1DszeMuVv8MCoLutWBSfCgzb
+ AAYCL7jxzBryocioNeO2lXC6plKLoFOS42ARmhkXvlMzsQ51Pcq+RyBwEYXTxG/yk1
+ cytwI8m2K/cYVjaXwTAZ+XWwR3AstKlvib4w454eszvkXMryNzlZNK6I+JlN5qhyKI
+ OV/sxjXIi+f8w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0CA91DE774;
- Sat, 17 Oct 2026 23:28:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B05351DE76B;
+ Sat, 17 Oct 2026 23:27:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CA556443448;
- Sat, 17 Oct 2026 23:28:01 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2EA744343F;
+ Sat, 17 Oct 2026 23:27:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dominic P <gcc@gcc.dp11.uk>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 54/73] tests/tcg: Add tests for sign extension after
- rotate
-Date: Sat, 17 Oct 2026 23:26:12 +0300
-Message-ID: <20261017202638.728621-54-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 45/73] qcow2: do not clear the dirty bit when
+ reopening a read-only node
+Date: Sat, 17 Oct 2026 23:26:03 +0300
+Message-ID: <20261017202638.728621-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,86 +71,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominic P <gcc@gcc.dp11.uk>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Cover the rotr_i32 (ARM ror) and rotl_i32 (i386 roll) forms fixed by
-the previous patch.  Both tests fail without it.
+qcow2_reopen_prepare() clears the dirty bit whenever the node is
+reopened read-only, with an unguarded header write. A read-only node
+can still be dirty, inherited from an earlier writable session, and it
+holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
+reopen of a dirty image therefore fails outright:
 
-Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260930185124.3036980-3-gcc@gcc.dp11.uk>
-(cherry picked from commit f9ca6b19acb1b935e7abc920410c993b059a8b4d)
-(Mjt: back-port across Makefile=>meson conversion for tests)
+  $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
+  qemu-io: failed while preparing to reopen image 'dirty.qcow2'
+
+Where the file node below is writable the write is not refused early,
+and bdrv_co_write_req_prepare() aborts on its BLK_PERM_WRITE assertion
+instead.
+
+Clear it only for a node that is writable now, the predicate
+qcow2_do_open() already uses for the repair. bdrv_is_writable() also
+excludes an inactive node, whose header must not be touched either.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20260824133729.1141990-2-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit af28b65fae6fcbc22efdbcd4d71b37fd0c8adf89)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-index 51a3ed76a8..1e5b32ccfe 100644
---- a/tests/tcg/arm/Makefile.target
-+++ b/tests/tcg/arm/Makefile.target
-@@ -34,6 +34,9 @@ pcalign-a32: CFLAGS+=-marm
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 7292dd036c..1543255eba 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2102,9 +2102,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
+             goto fail;
+         }
  
- ARM_TESTS += issue4448
+-        ret = qcow2_mark_clean(state->bs);
+-        if (ret < 0) {
+-            goto fail;
++        if (bdrv_is_writable(state->bs)) {
++            ret = qcow2_mark_clean(state->bs);
++            if (ret < 0) {
++                goto fail;
++            }
+         }
+     }
  
-+ARM_TESTS += test-arm-opt-ror
-+test-arm-opt-ror: CFLAGS+=-marm
-+
- ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index 94a8bfe754..3d0c073d65 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -95,6 +95,40 @@ $QEMU_IMG info --image-opts \
+ # The dirty bit must still be set: this open never wrote any guest data
+ _qcow2_dump_header | grep incompatible_features
  
- # Semihosting smoke test for linux-user
-diff --git a/tests/tcg/arm/test-arm-opt-ror.c b/tests/tcg/arm/test-arm-opt-ror.c
-new file mode 100644
-index 0000000000..2579168a13
---- /dev/null
-+++ b/tests/tcg/arm/test-arm-opt-ror.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
++echo
++echo "== Read-only reopen must not clear the dirty bit =="
 +
-+#include <assert.h>
++# A read-only node cannot write the header, and must keep the dirty bit
++$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
++    | _filter_qemu_io
 +
-+int main(void)
-+{
-+    /* Load from memory so that TCG does not see a constant. */
-+    volatile int v = 3;
-+    int x = v, gt;
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
 +
-+    asm("sxtb %1, %1\n\t"
-+        "ror %1, %1, #1\n\t"
-+        "sxtb %1, %1\n\t"
-+        "cmp %1, #0\n\t"
-+        "movle %0, #0\n\t"
-+        "movgt %0, #1"
-+        : "=r"(gt), "+r"(x) : : "cc");
-+    assert(gt);
-+    return 0;
-+}
-diff --git a/tests/tcg/i386/test-i386-opt-rol.c b/tests/tcg/i386/test-i386-opt-rol.c
-new file mode 100644
-index 0000000000..e0393147e1
---- /dev/null
-+++ b/tests/tcg/i386/test-i386-opt-rol.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
++echo
++echo "== Read-only reopen must not write through a writable file node =="
 +
-+#include <assert.h>
++# The write the header update needs is refused by the permission system
++echo "{'execute': 'qmp_capabilities'}
++      {'execute': 'blockdev-reopen',
++       'arguments': {'options': [{'node-name': 'drive',
++                                  'driver': 'qcow2',
++                                  'read-only': true,
++                                  'file': 'prot'}]}}
++      {'execute': 'quit'}" \
++    | $QEMU -qmp stdio -nographic -nodefaults \
++            -blockdev "{'node-name': 'prot',
++                        'driver': 'file',
++                        'filename': '$TEST_IMG'}" \
++            -blockdev "{'node-name': 'drive',
++                        'driver': 'qcow2',
++                        'file': 'prot',
++                        'read-only': true}" \
++    | _filter_qmp
 +
-+int main(void)
-+{
-+    /* Load from memory so that TCG does not see a constant. */
-+    volatile int v = 3;
-+    int x = v;
-+    char test;
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
 +
-+    asm("movsbl %b1, %1\n\t"
-+        "roll $31, %1\n\t"
-+        "movsbl %b1, %1\n\t"
-+        "testl %1, %1\n\t"
-+        "setg %0"
-+        : "=q"(test), "+q"(x));
-+    assert(test);
-+    return 0;
-+}
+ echo
+ echo "== Repairing the image file must succeed =="
+ 
+@@ -108,6 +142,22 @@ echo "== Data should still be accessible after repair =="
+ 
+ $QEMU_IO -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
+ 
++echo
++echo "== A read-write to read-only reopen must clear the dirty bit =="
++
++_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
++
++# The kill keeps the close from clearing the bit, so the header shows what
++# the reopen did with it
++_NO_VALGRIND \
++$QEMU_IO -c "write -P 0x5a 0 512" \
++         -c "reopen -r" \
++         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
++    | _filter_qemu_io
++
++# The dirty bit must not be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Opening a dirty image read/write should repair it =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index c66361128f..ce8ee57721 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -27,6 +27,19 @@ incompatible_features     [0]
+ == Read-only open must not crash on close ==
+ incompatible_features     [0]
+ 
++== Read-only reopen must not clear the dirty bit ==
++read 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++incompatible_features     [0]
++
++== Read-only reopen must not write through a writable file node ==
++QMP_VERSION
++{"return": {}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
++incompatible_features     [0]
++
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
+@@ -45,6 +58,13 @@ incompatible_features     []
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
++== A read-write to read-only reopen must clear the dirty bit ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
++wrote 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++incompatible_features     []
++
+ == Opening a dirty image read/write should repair it ==
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
 -- 
 2.47.3
 
