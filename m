@@ -4,79 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3544FCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 09:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADB2CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 12:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI0hf-000758-2c; Sat, 17 Oct 2026 05:27:47 -0400
+	id 1xI3X3-0005Mn-RY; Sat, 17 Oct 2026 08:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xI0hc-00074y-MW
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:27:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xI0ha-0002d8-TI
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 05:27:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792229261;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Xt926C8AeEj2cckg5KQ/de+sevSYeaqaP0xXL+60zU8=;
- b=aeCgxBV38ARziip1cxM2x+t7rbY2lBj3uUOnoQFW7pCQqlCenZtgdKupPWDlFsZlIPf10O
- ynjAJ8kc9SVOg9SkzJH+Snoy/dBdtkLqjcu54MyXgizLrsAzkaT7Vjsc2EWDgZRgiIkcVC
- qPxcSQ/AijqR6TTVoPkMiqrsmwdVDY4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684--ylSg_fMOZSIUzkI0oxoNg-1; Sat,
- 17 Oct 2026 09:27:33 +0000
-X-MC-Unique: -ylSg_fMOZSIUzkI0oxoNg-1
-X-Mimecast-MFC-AGG-ID: -ylSg_fMOZSIUzkI0oxoNg_1792229252
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABE5A1955DD9; Sat, 17 Oct 2026 09:27:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B4ED7C6; Sat, 17 Oct 2026 09:27:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CE20721E6A04; Sat, 17 Oct 2026 11:27:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v5 05/62] qapi: add type-infos generator
-In-Reply-To: <20260911-qom-qapi-v5-5-7732a55b7760@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Fri, 11 Sep 2026 20:34:39 +0400")
-References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
- <20260911-qom-qapi-v5-5-7732a55b7760@redhat.com>
-Date: Sat, 17 Oct 2026 11:27:29 +0200
-Message-ID: <87bj8s4qym.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xI3X1-0005M1-Aa
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:28:59 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xI3X0-00032M-08
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 08:28:59 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-8b0d5ddafbcso5875137b3.1
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 05:28:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792240136; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fIU1bHdYf7595uhNlt2y1QvRui46ZVvpVUJejaTWPI6e/Xdgb5L+6EM0KZ5n18izBg
+ u8qCB6FGQyLoYhHnHSQowYjepBpNnPuk1Q7HvYq40otS1srYqo37oO9x7Dj9enW7vovn
+ Gz4Uq3m5AqHhM5ZEa32YvgTmUdcGhysb23AWDE0jOahMh6t1RPzhuBrMWZGv+/cjb5LK
+ TUn/hmi8WxJj1kcxJHGT9520hTcAVy2L79Pn9VeFg/tnWUi0ieDcdJE0YlaVJ9vqdcWn
+ Db6cchnmFIWHdLJth5586WQfZOYBhP2rYPS76iC6hH5P7bEsw3bF8eIYgJaRrITJcj7O
+ pntw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
+ fh=ltWIwVsWDzxKvEG7jBnlBXPrQvIjQc+HOgvPossf/dc=;
+ b=nt1yVQ7CB42vEUmNLUrCisKXALB0r0ZUl3T31Ht4+dt1QLcnyQ4a4oyvusDlhillyK
+ zZDS5x4c5AtrzYa5IqTZ3p4jyhUv4Rs2LwV51NS5RAgjMeFik5kZC0+aqV5ROUFoAeaN
+ 7hhDJ6G0nrKRlStjErSvrOnkiD1ZFBOf+pjuF0R41Svc2HinfmKjxFznUG2brpGjNZzY
+ c52GuCQN5hSKMKh1DnLbpcSgbLgChXCBQWuy+n8ui5HnncjrjBuV2YUWcsyAo/yOHMYc
+ ZRY4HbKgqebdMPbL0fSaeK0NhXKgCJC98Q1ECaqTLmVXfGoVrRWOT1kSqOVhMvhEEXuN
+ nAew==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792240136; x=1792844936; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
+ b=yOJcKpa1B0tb+la+qENdrKVasm9mgB8U3t8r00j+PkrxdvN5X7RqtgWYwtWUhmXMcY
+ d3gD0RpxLryQVoBTBAhogoXda5gkAuILh85piyK30jsjJys9jeTSJRBXzNJKFbgMOduw
+ J+iPL/8cRfAlNOq6kf4px7Os4twqCn7LNwhKW0NxLM4IYeVhGRhKdRTve980VSdLcWHC
+ ydWF9mZynsa7lDX1MWEuSKIqb7Q3iCllmgAzQklCdyQ+bMp9ZQZdM6ne5BCxWWT5bp+E
+ wtqrhRM/5Rn3dlde/7gd2daNux0msSk1LIeqaqlfnOp7S3XVwaO6HSjjMzSwWOTDw3Mg
+ inKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792240136; x=1792844936;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=/sNTgQFv/eKcm5zHjeu8YQV6xL+v8MGYv1wNELBXuA0=;
+ b=FCY7F5l/FQ7IUGDtVoDptIcM/cgfQq5zrKk+f1UQ2qE7vRcIlp0zlGVFnaTXKTLYRp
+ JRPUakBGvJ2XYAnszBmQ1tSSfHk8imF/kKEi0lnccsDgFC++s+zIWX3A63HL8r1Yc961
+ GH8OsbGqJsniSP3BsWZztVu7aCt69vc8orSrhTngQYKY6CB9tANG4DhuEcunqluPA5QB
+ XqxDykERPWMBdnixP3ANEmbAq0Tnod0P51OHUcjtBhnqiZV6iLAbZbdUKu2Gd6mHFAKd
+ QZvD2ZrMh4vrYEPopym2LpWWCARdctT+SJ3ZUn2c8q+uLNr+f4+8ld4z5OyyPv8qUVNs
+ kyVg==
+X-Gm-Message-State: AFq9FYLTb92MrU+aVCc0IKOb2LZz9UQR4Aa2IwiVaQcSjuiK6b+NrIAb
+ tmRyKklWyJkn34ValUDWvLbPQMuqVoGj3An+5J93zkEnZu1EBZsV1mIjS4/HZqKbsvW9G9W1kM3
+ LjBZACGlRck/AuZ7HN7tAVJ4iCXPO+JIc6A4biuxnaw==
+X-Gm-Gg: AYBFou2l5B6BQGPcRJLpd73OxLPLWEYfqPemZeQAQpJiodxG41ER3YC3f6tMiyp4iR6
+ s7QAt40E8d9lglbZ7Qp4w+Kp56fOdTpCdUAgpHbPpVBkpCM6LSqkvixmodIrJ6gkDl9HgNybc8W
+ UzuwW+Hjyjq7CCdiOuI5TMX/VDy5jRRhu0vrlaJO7YpVz1ijEIGUguSdsdDcQCjkGZOB78yOLxu
+ agVPbk0j+6R/RT6E4ztSxQBAez5T/4JZ2r2hwrd7hxbJUeJMF1nn/hHs4YBEam/0mVE2UM425cm
+ 25KaEwCDkf6fhw4VAxCEGypjb46Bq6cqNXGEIlkjHuXZd+oy6awys2IIDr8rzwlq9qpa24EKMHn
+ I4l+b0BABwz7Ohbozb/G7gsFxv8f5sp6vDFx8Qsg=
+X-Received: by 2002:a05:690c:e3e4:b0:8b0:cfe6:29b2 with SMTP id
+ 00721157ae682-8b0f21f18e5mr10117717b3.41.1792240135798; Sat, 17 Oct 2026
+ 05:28:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261015181111.60491-1-marcelomanzo@gmail.com>
+In-Reply-To: <20261015181111.60491-1-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 17 Oct 2026 13:28:44 +0100
+X-Gm-Features: AclHuK9WBB_vtuGtSl_k2-oNO_-dZMEfrgROiKsejIYp08Qd3q_CGI7Wc-ADTTc
+Message-ID: <CAFEAcA9A-hU8bVJdN3c_k4D_dPds2VOgMV1qnHq8LUBJQkfW2w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] hw/arm/raspi4b: RNG200 and thermal sensor
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,66 +115,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
-
-> New QAPISchemaGenTypeInfoVisitor produces per-module
-> qapi-type-infos-*.h/c files. Each file declares QAPITypeInfo constants
-> pairing the QAPI type name with its masked introspection name.
+On Thu, 15 Oct 2026 at 19:11, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-Per-module is a bit problematic due to type masking.
-
-To create a QOM property of QAPI type, we need the declaration of its
-QAPITypeInfo, and we include the modular type-infos header to get it.
-
-For instance, crypto/secret_common.c includes
-qapi/qapi-type-infos-crypto.h for QCryptoSecretFormat_type_info.  Adding
-or removing types in qapi/crypto.json will change
-qapi/qapi-type-infos-crypto.h and trigger recompilation of
-crypto/secret_common.c.  Adding or removing types elswhere won't.  Good.
-
-However, messing with types *anywhere* almost always changes the masked
-names *everywhere*, triggering recompilation of all qapi/*type-infos*.c.
-Not so good.
-
-A slow build is commonly death by a thousand cuts.  This is yet another
-cut.  I'm sure we could figure out how to avoid it, but the series is
-big and I don't want to delay it more than I have to.  Let's note the
-issue in the commit message.
-
-Aside: existing qapi/qapi-introspect.c is monolithic, which is
-differently problematic.  Only qapi/qapi-introspect.c changes.  Good.
-It's ~1.2MiB.  Not so good.
-
-> ---
->  docs/devel/qapi-code-gen.rst |  92 +++++++++++++++++++++++
->  meson.build                  |   1 +
->  scripts/qapi/backend.py      |   2 +
->  scripts/qapi/type_infos.py   | 175 +++++++++++++++++++++++++++++++++++++=
-++++++
->  4 files changed, 270 insertions(+)
+> This series adds the BCM2711 RNG200 hardware random number generator
+> and the dummy thermal sensor to raspi4b, carrying forward two more
+> patches from Sergey Kambalin's stalled Raspberry Pi 4B series
+> (patchwork series 829638). Patches 1 and 3 are Kambalin's code with
+> his authorship and Signed-off-by kept, adapted only for API drift
+> since 2024; patches 2 and 4 wire the devices into the SoC, and patch
+> 5 extends the existing functional test.
 >
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index b697aab930d1..69d5c4af9874 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -1250,6 +1250,9 @@ JSON array of strings.
->  To examine a type, start with a command or event using it, then follow
->  references by name.
->=20=20
-> +.. TODO document QOM introspection (qom-list, qom-list-properties,
-> +   qom-get) and how it relates to QAPI type information.
-> +
->  .. TODO document QOM introspection (qom-list, qom-list-properties,
->     qom-get) and how it relates to QAPI type information.
->=20=20
+> v2: thanks to Peter for the review. Now based directly on current
+> master -- v1 was written on top of the "working PCIe and GENET" series
+> and so did not apply to master; it no longer depends on that series.
 
-Duplicate.  The first copy is from PATCH 04.  I believe it's an accident
-there.
 
-Out of time for today, intend to look at the remainder as soon as I can.
 
-[...]
+Applied to target-arm.next, thanks.
 
+-- PMM
 
