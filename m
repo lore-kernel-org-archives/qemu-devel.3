@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190BACCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12915CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9eS-0006v0-Ue; Sat, 17 Oct 2026 15:01:05 -0400
+	id 1xI9dR-0005T7-1b; Sat, 17 Oct 2026 15:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dV-0005fz-0O; Sat, 17 Oct 2026 15:00:10 -0400
+ id 1xI9cX-0004wh-TP; Sat, 17 Oct 2026 14:59:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dS-00041f-Ul; Sat, 17 Oct 2026 15:00:04 -0400
+ id 1xI9cW-0003wD-16; Sat, 17 Oct 2026 14:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263415; bh=dUujO7ZkXn6wFZ4Eq+BHDBZZLoaQWT8D2WtWl8q53Ow=;
+ t=1792263403; bh=XySdoke8VI/HQlJG18mz7u8dZBLFrbe8di+XMwBRHj0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RjCiw4ysMPxLcKMZWNamd5X3CPTjn1ONrx9L+Brz6gFlagGQRIsJNF90mhs5BDj5s
- e67TXRVKP+2er9eRNaLfWgHmiyQT+v5mJ5kZl9QC65rlhua1c2+T2+JEULMggDgN0h
- IcgdWRJmDlBm5oYhEbdvysNG6pwKaJuYuActmlIRyH6WAdXFp1deXbvVFL3JwGaplW
- pVrGrNgq81rpoeFQ8QjTw0IcEpcQqX5S2np+tvqX8Gk6kx1KMFoSu69XvgD98DHRcC
- oSmMLMdfwLnPMhGErlSSt84P4UjMQiQCnz+R7O4beSiK3jgEvLGdDeOiCg79QFAQeU
- 3a/CjVYO7uLrQ==
+ b=B0SU870Q3UYfbBmDtCtvNS+lR+ZpcBUUzm2UoeAGvvVREhcBk3OarUVeQn4TnRDm0
+ mPn+03NKpYt5/I58vFSqZChnEZmEvalL3kY0/mBHQg21F5jOrqaBC7wdGvH4144FyE
+ GuvA3iPiiSM//JoVuhDrFA+l9+rdNv5NcBvCqCauFzYgqDi7v1iydLaHiqSgPY7Bao
+ Jlffo+RKJtsJvVck8FagTdSpmwYqIWl8bjf/AE+IXK1YTqxNI1l5ccn5aFuEkv5P75
+ Y0PHwbJfbox+NhMiTZC58NYFzqjncR1TYGIkYoal37kFt2s3Z+JV8hFAoEpymdh/L7
+ GMnCtijRE0sXQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 275AF1DE6D1;
- Sat, 17 Oct 2026 21:56:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BCF3D1DE6C6;
+ Sat, 17 Oct 2026 21:56:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 58850443399;
- Sat, 17 Oct 2026 21:56:54 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D51B6443390;
+ Sat, 17 Oct 2026 21:56:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 46/63] tpm_emulator: Reject sending commands smaller
- than the request header
-Date: Sat, 17 Oct 2026 21:55:02 +0300
-Message-ID: <20261017185528.722197-46-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 37/63] block: fix bdrv_next() skipping monitor-owned
+ nodes
+Date: Sat, 17 Oct 2026 21:54:53 +0300
+Message-ID: <20261017185528.722197-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,34 +70,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Reject any TPM request from being sent to the TPM emulator that is shorter
-than the size of the request header.
+it->bs is the cursor into monitor_bdrv_states for the second phase of
+bdrv_next(), so it has to be NULL when that phase starts. Commit
+f6d38c9f6d made the first phase store the node it returns there, to
+unreference the right one when the graph changes underneath. The cursor
+is now left pointing at the last BlockBackend root, so the second phase
+resumes from there instead of from the head of the list and never
+returns a node added before it.
 
-Fixes: f4ede81eed29 ("tpm: Added support for TPM emulator")
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-4-stefanb@linux.ibm.com
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-(cherry picked from commit 6728170d2d081d8aad46807bc5e64520650f2795)
+A skipped node drops out of the vm_stop and migration handover paths:
+not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
+still reports success, so the node keeps its image lock and the
+migration target cannot open the image. Only detached nodes are hit in
+practice, as these callers also recurse into children.
+
+Reset the cursor when the second phase starts. old_bs is taken at the
+top of the function, so f6d38c9f6d keeps working.
+
+Cc: qemu-stable@nongnu.org
+Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260828222005.2888213-1-den@openvz.org>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 8daaf8d3b1c5f2ef98e526e036277083bc5fe34b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 00fe015a94..1d9c6735e8 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -179,6 +179,11 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
-     ssize_t ret;
-     bool is_selftest = false;
+diff --git a/block/block-backend.c b/block/block-backend.c
+index cfa8a30e9e..f1886572a3 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -625,6 +625,7 @@ BlockDriverState *bdrv_next(BdrvNextIterator *it)
+             return bs;
+         }
+         it->phase = BDRV_NEXT_MONITOR_OWNED;
++        it->bs = NULL;
+     }
  
-+    if (in_len < sizeof(struct tpm_req_hdr)) {
-+        error_setg(errp, "tpm-emulator: invalid request size %u", in_len);
-+        return -1;
-+    }
+     /* Then return the monitor-owned BDSes without a BB attached. Ignore all
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
+index 52c63fdf26..405c8cce59 100755
+--- a/tests/qemu-iotests/tests/inactive-node-nbd
++++ b/tests/qemu-iotests/tests/inactive-node-nbd
+@@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
+ 
+ with iotests.FilePath('disk.img') as path, \
+      iotests.FilePath('ro.img') as ro_path, \
++     iotests.FilePath('detached.img') as detached_path, \
+      iotests.FilePath('snap.qcow2') as snap_path, \
+      iotests.FilePath('snap2.qcow2') as snap2_path, \
+      iotests.FilePath('target.img') as target_path, \
+@@ -59,6 +60,7 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
+     iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
++    iotests.qemu_img_create('-f', iotests.imgfmt, detached_path, img_size)
+ 
+     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
+                             snap_path)
+@@ -69,6 +71,9 @@ with iotests.FilePath('disk.img') as path, \
+     vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
+                      'active=off')
++    vm.add_blockdev(f'file,node-name=detached-file,filename={detached_path}')
++    vm.add_blockdev(f'{iotests.imgfmt},file=detached-file,'
++                     'node-name=detached-fmt')
+     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
+     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
+     vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
+@@ -310,6 +315,17 @@ with iotests.FilePath('disk.img') as path, \
+     iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
+     iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
+ 
++    iotests.log('\n=== Inactivating all nodes at once ===')
 +
-     if (selftest_done) {
-         *selftest_done = false;
-         is_selftest = tpm_util_is_selftest(in, in_len);
++    # detached-fmt has no parent and no BlockBackend, so nothing can reach it
++    # by recursion. It is only inactivated if bdrv_next() actually returns it.
++    vm.qmp_log('stop')
++    vm.qmp_log('blockdev-set-active', active=False)
++
++    iotests.log('detached-fmt active: %s' % node_is_active(vm, 'detached-fmt'))
++    iotests.log('detached-file active: %s'
++                % node_is_active(vm, 'detached-file'))
++
+     iotests.log('\nShutting down...')
+     vm.shutdown()
+     log = vm.get_log()
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index 3c43020053..28b1322554 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -243,5 +243,13 @@ snap-fmt active: True
+ snap2-fmt active: True
+ target-fmt active: True
+ 
++=== Inactivating all nodes at once ===
++{"execute": "stop", "arguments": {}}
++{"return": {}}
++{"execute": "blockdev-set-active", "arguments": {"active": false}}
++{"return": {}}
++detached-fmt active: False
++detached-file active: False
++
+ Shutting down...
+ 
 -- 
 2.47.3
 
