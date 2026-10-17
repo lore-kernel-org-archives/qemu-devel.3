@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D75CCF2C4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E93CCF2CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB4U-0003xT-U1; Sat, 17 Oct 2026 16:32:13 -0400
+	id 1xIB2p-0001hH-2w; Sat, 17 Oct 2026 16:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB37-0002yT-9L; Sat, 17 Oct 2026 16:30:39 -0400
+ id 1xIB2C-00086O-EW; Sat, 17 Oct 2026 16:29:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB34-0004Nb-NK; Sat, 17 Oct 2026 16:30:36 -0400
+ id 1xIB2A-000433-Qn; Sat, 17 Oct 2026 16:29:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268864; bh=CvLwwi4uvgQSvPkmItryGMf44tdYIJRG1Qv8MSrgFZ0=;
+ t=1792268854; bh=9NDgEE8t1v7348s0DR+seIO037vmOXrzLG9QZtTV99Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Aas7y+MJqmBR+udfR4/y4hhubeT7PRUDc7xVaUU7Nr0ymhRfbhjdSJdWY8gOMFmty
- 2EPe2Tn4sauHjMPON+UKIiVBQ0XY+JgFCSZGOJ0Mb9Jz+dmqlUFZ81rXCYB1VejGTF
- QV9AQEMcLCZbyyygi8kwA/XnanoA4OVEpk5joDQKplt0AuYn7DgtILyTtY/8Px5Nkn
- tm+XYuKrNaczQJTnHpz5IlcBiz9TFNi09qmb7pPlmYFl7YkQP+sD5/X0pjQmD6l+lS
- wXPW5dfof/kgvFfv5YNCVRxnIdWFXNRlclMSB1bKIly9C0BNZyMwLV4LvAz9KuME4K
- Aa5Es65F4vQWQ==
+ b=dbRhlK6dYItAcimqmMqROK9gqnX/ms02kqLSkFzggSNbRuUu9DE93dx+Iodw1r9yV
+ jUJpXfF3V2GwkUtTnD3oWJwfjK6jqoN7pgmk7yEp4FvYFA2HsSF+cGAJHqJ/1xkc1h
+ uTDXtsob/DTKAK1CaZZZQu6jNpABZU0O4wHyl1iwsBe2IWxNGv2A6d5wqT6qgj/fDC
+ Pu6g8qRyEuOGSTV2Si6Vgwil/RP/gmxpSgL6PcIsI591+k6imqWvBDEKVKWkD08D/2
+ yitX3DzJAkmY/JxRJxmpMz+fMjqemjVCtWhsV8iBYufaA9OjwGxh2HWySnHLFtei8+
+ RqaT7JxEw0yJg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A97E1DE764;
- Sat, 17 Oct 2026 23:27:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2AF241DE759;
+ Sat, 17 Oct 2026 23:27:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6287B443438;
- Sat, 17 Oct 2026 23:27:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6E7E744342F;
+ Sat, 17 Oct 2026 23:27:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Andrey Polivoda <apolivodaa433@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 38/73] target/i386/tcg: ignore VEX.L for unary scalar
- instructions
-Date: Sat, 17 Oct 2026 23:25:56 +0300
-Message-ID: <20261017202638.728621-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Daniel Paziyski <danielpaziyski@gmail.com>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 29/73] hw/nvme: fix memory leak on sr-iov capable nvme
+ controller removal
+Date: Sat, 17 Oct 2026 23:25:47 +0300
+Message-ID: <20261017202638.728621-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -69,101 +69,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
 
-According to both Volume 2 of Intel 64 and IA-32 Architectures Software
-Developer's Manual and Volume 4 of AMD64 Architecture Programmer's Manual,
-VEX.L is a "don't care" bit for `VROUNDSS`, `VROUNDSD`, `VMOVSS`, `VMOVSD`.
+If a nvme controller is SR-IOV capable, its list of secondary controllers
+(virtual functions) is stored in the sec_ctrl_list dynamically allocated
+array, located in the NvmeCtrl struct.
 
-Currently, QEMU handles VEX.L with these instructions differently:
-- In the VMOVSS and VMOVSD case, VEX.L allows to select the register size
-  (XMM or YMM), leading to differences between QEMU and the real hardware.
-- In `gen_VROUNDSS()` and `gen_VROUNDSD()`, there is an assert which checks
-  that `s->vex_l` is not set. When either instruction is encountered with VEX.L
-  bit set, the QEMU process crashes with an assertion failure.
+Free the secondary controller list after destroying the virtual functions and
+freeing their controller IDs.
 
-These behaviors deviate from real hardware, and in VROUNDSS/VROUNDSD case,
-it also allows unprivileged guest userspace to crash the QEMU process itself.
-Instead, always handle the instructions as if VEX.L=0.
+QEMU command line (boot with a hotunplug-aware OS, such as Linux):
 
-Reported-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a5b4837a253ed3944dd7d4419c52830079e221ec)
+    qemu-system-x86_64 -M q35 -device pcie-root-port,id=rp -monitor stdio \
+    -device nvme-subsys,id=subsys0 \
+    -device nvme,subsys=subsys0,serial=ctrl0,sriov_max_vfs=1,\
+sriov_vq_flexible=2,sriov_vi_flexible=1,max_ioqpairs=4,msix_qsize=2,bus=rp,id=ctrl0
+
+In the QEMU monitor:
+
+    device_del ctrl0
+    quit
+
+ASAN splat:
+
+==78982==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x7fcbab32bea9 in calloc (/usr/lib/libasan.so.8+0x12bea9) (BuildId: 7f2845989b820f536270e19ec47df085ae89a675)
+    #1 0x7fcbaa2a34b2 in g_malloc0 (/usr/lib/libglib-2.0.so.0+0x694b2) (BuildId: cb17d184459352a7985a010f1cd3acef4a4f90d8)
+    #2 0x559c531fff4b in nvme_subsys_register_ctrl ../hw/nvme/subsys.c:65
+    #3 0x559c531d715e in nvme_init_subsys ../hw/nvme/ctrl.c:9582
+    #4 0x559c531d7a7d in nvme_realize ../hw/nvme/ctrl.c:9637
+    #5 0x559c5323c0da in pci_qdev_realize ../hw/pci/pci.c:2316
+    #6 0x559c54001e88 in device_set_realized ../hw/core/qdev.c:514
+    #7 0x559c5402462e in property_set_bool ../qom/object.c:2484
+    #8 0x559c5401dbd2 in object_property_set ../qom/object.c:1548
+    #9 0x559c5402b76c in object_property_set_qobject ../qom/qom-qobject.c:28
+    #10 0x559c5401e24c in object_property_set_bool ../qom/object.c:1618
+    #11 0x559c53fffd77 in qdev_realize ../hw/core/qdev.c:277
+    #12 0x559c53934166 in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+    #13 0x559c53934272 in qdev_device_add ../system/qdev-monitor.c:758
+    #14 0x559c538867c8 in device_init_func ../system/vl.c:1217
+    #15 0x559c5487236a in qemu_opts_foreach ../util/qemu-option.c:1148
+    #16 0x559c53891205 in qemu_create_cli_devices ../system/vl.c:2762
+    #17 0x559c53891968 in qmp_x_exit_preconfig ../system/vl.c:2822
+    #18 0x559c53898108 in qemu_init ../system/vl.c:3862
+    #19 0x559c545efabf in main ../system/main.c:71
+    #20 0x7fcba7627780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #21 0x7fcba76278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+    #22 0x559c524df1f4 in _start (BuildId: 35402cb4fc46114b7a4102258726bbdec82cd9bc)
+
+Cc: qemu-stable@nongnu.org
+Fixes: c6159d0e384f ("hw/nvme: Allocate sec-ctrl-list as a dynamic array")
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit 6ee626e34979eae2d3e2318b00f0c340a474dd23)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index da41c97e57..ebd2905cf4 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -260,6 +260,7 @@
- #define svm(a) .intercept = SVM_EXIT_##a, .has_intercept = true,
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 3040cb1760..76ff92c9eb 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9708,6 +9708,10 @@ static void nvme_exit(PCIDevice *pci_dev)
  
- #define avx2_256 .vex_special = X86_VEX_AVX2_256,
-+#define vex_lig .vex_special = X86_VEX_LIG,
+     nvme_subsys_unregister_ctrl(n->subsys, n);
  
- #define P_00          1
- #define P_66          (1 << PREFIX_DATA)
-@@ -996,8 +997,8 @@ static const X86OpEntry opcodes_0F3A[256] = {
-      * For other unary operations such as VSQRTSx this is hidden by the "REPScalar"
-      * value of vex_special, because the table lists the operand types of VSQRTPx.
-      */
--    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 cpuid(SSE41) p_66),
--    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 cpuid(SSE41) p_66),
-+    [0x0a] = X86_OP_ENTRY4(VROUNDSS,   V,x,  H,x, W,ss, vex3 vex_lig cpuid(SSE41) p_66),
-+    [0x0b] = X86_OP_ENTRY4(VROUNDSD,   V,x,  H,x, W,sd, vex3 vex_lig cpuid(SSE41) p_66),
-     [0x0c] = X86_OP_ENTRY4(VBLENDPS,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0d] = X86_OP_ENTRY4(VBLENDPD,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) p_66),
-     [0x0e] = X86_OP_ENTRY4(VPBLENDW,   V,x,  H,x,  W,x,  vex4 cpuid(SSE41) avx2_256 p_66),
-@@ -1053,8 +1054,8 @@ static void decode_0F10(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F10_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      V,x,  None,None, W,x,  vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5),
--        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5),
-+        X86_OP_ENTRY3(VMOVSS_ld,  V,x,  H,x,       M,ss, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVSD_ld,  V,x,  H,x,       M,sd, vex5 vex_lig),
-     };
- 
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -1076,8 +1077,8 @@ static void decode_0F11(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     static const X86OpEntry opcodes_0F11_mem[4] = {
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPS */
-         X86_OP_ENTRY3(MOVDQ,      W,x,  None,None, V,x, vex4_unal), /* MOVUPD */
--        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5),
--        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5), /* MOVSD */
-+        X86_OP_ENTRY3(VMOVSS_st,  M,ss, None,None, V,x, vex5 vex_lig),
-+        X86_OP_ENTRY3(VMOVLPx_st, M,sd, None,None, V,x, vex5 vex_lig), /* MOVSD */
-     };
- 
-     if ((get_modrm(s, env) >> 6) == 3) {
-@@ -2611,6 +2612,10 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
-     case X86_VEX_None:
-         break;
- 
-+    case X86_VEX_LIG:
-+        s->vex_l = 0;
-+        break;
++    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
++        g_free(n->sec_ctrl_list);
++    }
 +
-     case X86_VEX_REPScalar:
-         /*
-          * Instructions which differ between 00/66 and F2/F3 in the
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 9282296900..25f7d2215e 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -263,6 +263,12 @@ typedef enum X86VEXSpecial {
-      * operands, and thus handled by decode_op_size.
-      */
-     X86_VEX_AVX2_256,
-+
-+    /*
-+     * Instructions that do not care about VEX.L; used for scalar operands, because
-+     * they *should* be used only with VEX.L=0 but may accept VEX.L=1 on some machines.
-+     */
-+    X86_VEX_LIG,
- } X86VEXSpecial;
- 
- 
+     g_free(n->cq);
+     g_free(n->sq);
+     g_free(n->aer_reqs);
 -- 
 2.47.3
 
