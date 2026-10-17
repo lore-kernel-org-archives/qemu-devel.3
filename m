@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC31CCF2CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5790ACCF2D1
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB0V-0005Zv-O3; Sat, 17 Oct 2026 16:27:55 -0400
+	id 1xIB2b-0000uW-Rd; Sat, 17 Oct 2026 16:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB09-0005Cm-Lc; Sat, 17 Oct 2026 16:27:35 -0400
+ id 1xIB1l-0006f3-BK; Sat, 17 Oct 2026 16:29:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB05-0003uc-Dt; Sat, 17 Oct 2026 16:27:30 -0400
+ id 1xIB1i-00041p-EZ; Sat, 17 Oct 2026 16:29:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268830; bh=KHePKfogxeS8j3nlAq9JkImMvLuEe70YBvA2vP9BZHk=;
+ t=1792268850; bh=ssXstQFJQqCeotDgKaZFU6wQkt7iat7NMhOe6v/S63g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XaQ7uDTTgpggwwD33FUQY1jQgV8q+aepLa6e5aEtAaJ+FkipznF7Rx57Z3PFWaFwb
- eL7nDDTNKlnzV2s2LOKNvS5qZSC6hwJA9pLd60xiIAWR/wT7u6Gk377gnZNy9judqz
- mScr5yZJcoPFDfD20u2PBgfr1MhulbRwBo6s4G3vgjfe0YGQFWiwk/1CaJ9tG9rF+g
- 72kdtuyjjqs8ahLJs2xIivxTYQUEBJ49XuPcJKU6V8WX4Zu3aUfyoVVRkaI7SYi/MN
- fXmRDySrBfsLRv4UTyGlY7oyC6KQA3SkS9tZrKq2Iavu5JdHpXHqPNiGGovkr0o5ZP
- r18NkIXmGf3vQ==
+ b=jzAK7p+lqh/G9r4QojsN8aETjUYvn6WN8MbINaJJ6dCYexXsx3yRnYpdqBrScoPG6
+ VnVXaPbTro2uog1/e9NBj0p20tKpYW1pk05cHzFTC+cHmkxyCl9aufhr+ANuey/WOA
+ vD5i7t65HHC0do/sixmGl5f+0dZgAa+E2LWbGsbpk1UuBwqbuY/NW5oQHgq1vtl9TW
+ 5qx3TU8cpOhxdgq7xv62ybr7ZA5Q58x3PsXP0fN0ZGndPpht9IxGE5IadS97099Iby
+ zdqmBJQPdzxKd+D3bkgol5faaTTt2uEJDHYjqcAGWSPnp5uV0K5qtrRJ63MsHAtj5f
+ lajbZPqiSUONw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 73E0C1DE743;
- Sat, 17 Oct 2026 23:27:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DA5EE1DE756;
+ Sat, 17 Oct 2026 23:27:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6B58B44341A;
- Sat, 17 Oct 2026 23:27:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1071B44342C;
+ Sat, 17 Oct 2026 23:27:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Anthony Krowiak <akrowiak@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 08/73] vfio/ap: Clear error object pointer after
- non-fatal errors
-Date: Sat, 17 Oct 2026 23:25:26 +0300
-Message-ID: <20261017202638.728621-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 26/73] block/nbd: never index requests[] with an
+ unchecked cookie
+Date: Sat, 17 Oct 2026 23:25:44 +0300
+Message-ID: <20261017202638.728621-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,54 +71,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Registering a new IRQ notifier will allocate an error object if needed,
-and warn_report_err() will release that memory once it's finished.
-The pointer remains, however, so subsequent errors after the non-fatal
-errors in vfio_ap_realize() would cause an assertion failure for a
-non-NULL pointer.
+Cookies are converted into indices of s->requests[] in several places
+and the result is used right away, without any check:
 
-Fix this by clearing the pointer once the warning has been reported,
-to reset the state of the error objects.
+    int i = COOKIE_TO_INDEX(cookie);
+    ...
+    return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
 
-Cc: Anthony Krowiak <akrowiak@linux.ibm.com>
-Cc: qemu-stable@nongnu.org
-Fixes: 1360b2ad1f ("s390x/ap: Wire up the device request notifier interface")
-Fixes: 0fb8a62fe4 ("hw/vfio/ap: notification handler for AP config changed event")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-5-farman@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 057ca01937b75d772da5a0f8c0282e7c9dbdfb63)
+COOKIE_TO_INDEX() subtracts one, so a zero cookie becomes an index of
+-1 and the access lands in front of the array. This is undefined and,
+depending on the type of the index and on what the compiler has put
+there, it can as well pass silently: at the site above i is signed, so
+even a plain i < MAX_NBD_REQUESTS check would happily let -1 through.
+
+Route every conversion through a helper which hands out the slot only
+for a cookie in range and owned by a request in flight, so that the
+check can not be forgotten again. The helper reports through an Error,
+as the one cookie which is not ours to trust, the one taken from the
+wire in nbd_receive_replies(), is a protocol error rather than an
+internal inconsistency and has to stay a channel error. Every other
+cookie is one we have issued and still own, so a bad value there is a
+bug in this file, which is what &error_abort spells out.
+
+The cookie of the reply in flight goes through the helper as well. It
+is not an unchecked value either: it has passed the check on the wire
+path, or it has been cleared by the previous commit.
+
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <20260820115228.587427-3-den@openvz.org>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 75b0a993dacbd5f8579e8f8c228f9bae80541e42)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 6e2a1223ea..2926e04ad4 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -247,8 +247,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operation.
-+         * Clear the pointer, since the warning will release it.
-          */
-         warn_report_err(err);
-+        err = NULL;
+diff --git a/block/nbd.c b/block/nbd.c
+index d9b776283f..d0a7097034 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -136,6 +136,19 @@ static void nbd_clear_bdrvstate(BlockDriverState *bs)
+     s->x_dirty_bitmap = NULL;
+ }
+ 
++static NBDClientRequest *nbd_request_by_cookie(BDRVNBDState *s, uint64_t cookie,
++                                               Error **errp)
++{
++    uint64_t ind = COOKIE_TO_INDEX(cookie);
++
++    if (ind >= MAX_NBD_REQUESTS || !s->requests[ind].coroutine) {
++        error_setg(errp, "unexpected cookie value");
++        return NULL;
++    }
++
++    return &s->requests[ind];
++}
++
+ /* Called with s->receive_mutex taken.  */
+ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
+ {
+@@ -422,7 +435,8 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+                                             Error **errp)
+ {
+     int ret;
+-    uint64_t ind = COOKIE_TO_INDEX(cookie), ind2;
++    NBDClientRequest *req = nbd_request_by_cookie(s, cookie, &error_abort);
++    NBDClientRequest *owner;
+     QEMU_LOCK_GUARD(&s->receive_mutex);
+ 
+     while (true) {
+@@ -437,10 +451,10 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+              * woken by whoever set s->reply.cookie (or never wait in this
+              * yield). So, we should not wake it here.
+              */
+-            ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+-            assert(!s->requests[ind2].receiving);
++            owner = nbd_request_by_cookie(s, s->reply.cookie, &error_abort);
++            assert(!owner->receiving);
+ 
+-            s->requests[ind].receiving = true;
++            req->receiving = true;
+             qemu_co_mutex_unlock(&s->receive_mutex);
+ 
+             qemu_coroutine_yield();
+@@ -454,7 +468,7 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+              */
+ 
+             qemu_co_mutex_lock(&s->receive_mutex);
+-            assert(!s->requests[ind].receiving);
++            assert(!req->receiving);
+             continue;
+         }
+ 
+@@ -474,17 +488,16 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+             error_setg(errp, "unexpected structured reply");
+             goto err;
+         }
+-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+-        if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
++        owner = nbd_request_by_cookie(s, s->reply.cookie, errp);
++        if (!owner) {
+             ret = -EINVAL;
+-            error_setg(errp, "unexpected cookie value");
+             goto err;
+         }
+         if (s->reply.cookie == cookie) {
+             /* We are done */
+             return 0;
+         }
+-        nbd_recv_coroutine_wake_one(&s->requests[ind2]);
++        nbd_recv_coroutine_wake_one(owner);
      }
  
-     if (!vfio_ap_register_irq_notifier(vapdev, VFIO_AP_CFG_CHG_IRQ_INDEX, &err))
-@@ -256,8 +258,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
-         /*
-          * Report this error, but do not make it a failing condition.
-          * Lack of this IRQ in the host does not prevent normal operation.
-+         * Clear the pointer, since the warning will release it.
-          */
-         warn_report_err(err);
-+        err = NULL;
+ err:
+@@ -861,7 +874,6 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
+ {
+     ERRP_GUARD();
+     int ret;
+-    int i = COOKIE_TO_INDEX(cookie);
+     void *local_payload = NULL;
+     NBDStructuredReplyChunk *chunk;
+ 
+@@ -919,8 +931,9 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
+             return -EINVAL;
+         }
+ 
+-        return nbd_co_receive_offset_data_payload(s, s->requests[i].offset,
+-                                                  qiov, errp);
++        return nbd_co_receive_offset_data_payload(
++                s, nbd_request_by_cookie(s, cookie, &error_abort)->offset,
++                qiov, errp);
      }
  
-     return;
+     if (nbd_reply_type_is_error(chunk->type)) {
+@@ -1067,7 +1080,7 @@ static bool coroutine_fn nbd_reply_chunk_iter_receive(BDRVNBDState *s,
+ 
+ break_loop:
+     qemu_mutex_lock(&s->requests_lock);
+-    s->requests[COOKIE_TO_INDEX(cookie)].coroutine = NULL;
++    nbd_request_by_cookie(s, cookie, &error_abort)->coroutine = NULL;
+     s->in_flight--;
+     qemu_co_queue_next(&s->free_sema);
+     qemu_mutex_unlock(&s->requests_lock);
 -- 
 2.47.3
 
