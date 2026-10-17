@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB27CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E60B5CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB52-00050b-LO; Sat, 17 Oct 2026 16:32:48 -0400
+	id 1xIB79-0002VX-Hf; Sat, 17 Oct 2026 16:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB3Y-0003Qw-8L; Sat, 17 Oct 2026 16:31:09 -0400
+ id 1xIB5Z-0005l5-Nc; Sat, 17 Oct 2026 16:33:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB3W-0004QS-A6; Sat, 17 Oct 2026 16:31:04 -0400
+ id 1xIB5X-0004bz-Ld; Sat, 17 Oct 2026 16:33:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268869; bh=T9z8T1gpQIEuWmR14yqYEY/a+QPXaJdnyRekXUMSJoA=;
+ t=1792268893; bh=hIHywtbUhj0ylWeXACvYLsl62EhfvI5bfzg5tTlaYiM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=N6LP6Od84LqaR6bmkFUQ6hDyvC2dlv4Z2WadmEmXS3w/hQ/gIJDAzvGL49zqPL0UE
- ishM+Sx4Uk3lAjKIRHASht3ROYwcfxq2hiz9ARmfXeiD+Sw9lMsfyk1PkoxaOGXlUZ
- mGPiKDGH/uwXAQkrW5uNEn2LyWYeIfT7cmKYRM+Txpiu+ULx1ZebKsVW9XImwe51U9
- R+xQea+xbJ6JpFLsGzelPYaG/PlP4WS8BasgsS6NPQi+FSpvfrxOzAx5CgJTtd/4YH
- It5UthVQpoagO7bPr1mD62r+jg0KJ4I/Cz5j6mjwOQdjqvRHkvTYR9ycjPjDkZetz2
- 3V4s2p7Jkjleg==
+ b=roCT70pqwr8ePbcKL4owuocRc0zqOde8Bn9tvs1hdEOOD+dWqT7Mc6b0DpxCZe934
+ dfYm8n4Lf6cdNHfDHET7srhlKS0/7SQWSUvmvJeEbzXE9RgIc9jC+hX0jfavAbn9s+
+ g5LwaqnWpBbH5/QyuP3VmA/tkQJ/j/vih5EfjJcHWtpgnhcdn/lDMjdu2Lsy3PUFFv
+ 9V2NE9trNtwO/vBaQOUxs3K9o51258our2HZcLrsSG/hsaAuWmwscvOYYPEVduwfdk
+ p7SyZwsMiNVvelOfRwVe5bL51xoTHKujYYM0fO6/mV1aL/hiBkpormV11WLjXv3uHP
+ ScYVqtca+00Jw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CEBF11DE769;
- Sat, 17 Oct 2026 23:27:49 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC9D51DE77F;
+ Sat, 17 Oct 2026 23:28:13 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0790444343D;
- Sat, 17 Oct 2026 23:27:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8E9B9443451;
+ Sat, 17 Oct 2026 23:28:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, imaginos <imaginos32@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 43/73] block: fix bdrv_next() skipping monitor-owned
- nodes
-Date: Sat, 17 Oct 2026 23:26:01 +0300
-Message-ID: <20261017202638.728621-43-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 63/73] target/riscv: check G-stage write permission
+ for VS-stage A/D updates
+Date: Sat, 17 Oct 2026 23:26:21 +0300
+Message-ID: <20261017202638.728621-63-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,116 +70,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: imaginos <imaginos32@gmail.com>
 
-it->bs is the cursor into monitor_bdrv_states for the second phase of
-bdrv_next(), so it has to be NULL when that phase starts. Commit
-f6d38c9f6d made the first phase store the node it returns there, to
-unreference the right one when the graph changes underneath. The cursor
-is now left pointing at the last BlockBackend root, so the second phase
-resumes from there instead of from the head of the list and never
-returns a node added before it.
+During a two-stage (VS-stage + G-stage) page-table walk with hardware
+A/D updating enabled (Svadu / menvcfg.ADUE), a store that reaches a
+VS-stage leaf PTE whose accessed or dirty bit is clear triggers a
+hardware write-back of those bits into the PTE. That write-back is an
+implicit store to the PTE's guest-physical address, so it must be
+permitted by G-stage.
 
-A skipped node drops out of the vm_stop and migration handover paths:
-not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
-still reports success, so the node keeps its image lock and the
-migration target cannot open the image. Only detached nodes are hit in
-practice, as these callers also recurse into children.
-
-Reset the cursor when the second phase starts. old_bs is taken at the
-top of the function, so f6d38c9f6d keeps working.
+Fix this by re-running the G-stage translation of the guest PTE's
+address with store semantics. get_physical_address() then also checks
+that G-stage permits the guest PTE to be written, and raises a
+guest-page store fault when it does not.
 
 Cc: qemu-stable@nongnu.org
-Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260828222005.2888213-1-den@openvz.org>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 8daaf8d3b1c5f2ef98e526e036277083bc5fe34b)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3426
+Signed-off-by: imaginos <imaginos32@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260705140508.17692-1-imaginos32@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 366b4fba0fae0d9425b230e06c38842d72273d88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 5e59bac1a3..ab837fac92 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -625,6 +625,7 @@ BlockDriverState *bdrv_next(BdrvNextIterator *it)
-             return bs;
+diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
+index 07d9222652..6115f65adb 100644
+--- a/target/riscv/tcg/cpu_helper.c
++++ b/target/riscv/tcg/cpu_helper.c
+@@ -1133,6 +1133,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     int ptshift;
+     target_ulong pte;
+     hwaddr pte_addr;
++    hwaddr pte_gpa = 0;
+     const hwaddr base_root = base;
+     const bool be = mo_endian_env(env) == MO_BE;
+     int i;
+@@ -1170,6 +1171,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             }
+ 
+             pte_addr = vbase + idx * ptesize;
++            pte_gpa = base + idx * ptesize;
+         } else {
+             pte_addr = base + idx * ptesize;
          }
-         it->phase = BDRV_NEXT_MONITOR_OWNED;
-+        it->bs = NULL;
-     }
+@@ -1424,6 +1426,28 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             return TRANSLATE_FAIL;
+         }
  
-     /* Then return the monitor-owned BDSes without a BB attached. Ignore all
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
-index 24242265b1..bb6ee5c75a 100755
---- a/tests/qemu-iotests/tests/inactive-node-nbd
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd
-@@ -48,6 +48,7 @@ def node_is_active(_vm, node_name):
- 
- with iotests.FilePath('disk.img') as path, \
-      iotests.FilePath('ro.img') as ro_path, \
-+     iotests.FilePath('detached.img') as detached_path, \
-      iotests.FilePath('snap.qcow2') as snap_path, \
-      iotests.FilePath('snap2.qcow2') as snap2_path, \
-      iotests.FilePath('target.img') as target_path, \
-@@ -60,6 +61,7 @@ with iotests.FilePath('disk.img') as path, \
-     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
-     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
-     iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
-+    iotests.qemu_img_create('-f', iotests.imgfmt, detached_path, img_size)
- 
-     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
-                             snap_path)
-@@ -70,6 +72,9 @@ with iotests.FilePath('disk.img') as path, \
-     vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
-     vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
-                      'active=off')
-+    vm.add_blockdev(f'file,node-name=detached-file,filename={detached_path}')
-+    vm.add_blockdev(f'{iotests.imgfmt},file=detached-file,'
-+                     'node-name=detached-fmt')
-     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
-     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
-     vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
-@@ -311,6 +316,17 @@ with iotests.FilePath('disk.img') as path, \
-     iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-     iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
- 
-+    iotests.log('\n=== Inactivating all nodes at once ===')
++        /*
++         * The implicit store that writes updated A/D bits back to a VS-stage
++         * (first-stage) PTE must itself be permitted by G-stage. Re-run the
++         * second-stage translation of the PTE's guest-physical address with
++         * store semantics. If G-stage denies write, raise G-stage store fault
++         * against the PTE address.
++         */
++        if (two_stage && first_stage) {
++            int gpa_prot;
++            hwaddr gpa_paddr;
++            int gpa_ret = get_physical_address(env, &gpa_paddr, &gpa_prot,
++                                               pte_gpa, NULL, MMU_DATA_STORE,
++                                               MMUIdx_U, false, true,
++                                               is_debug, false);
++            if (gpa_ret != TRANSLATE_SUCCESS) {
++                if (fault_pte_addr) {
++                    *fault_pte_addr = pte_gpa >> 2;
++                }
++                return TRANSLATE_G_STAGE_FAIL;
++            }
++        }
 +
-+    # detached-fmt has no parent and no BlockBackend, so nothing can reach it
-+    # by recursion. It is only inactivated if bdrv_next() actually returns it.
-+    vm.qmp_log('stop')
-+    vm.qmp_log('blockdev-set-active', active=False)
+         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
+                                            sxlen_bytes, MMU_DATA_STORE, PRV_S);
+         if (pmp_ret != TRANSLATE_SUCCESS) {
+@@ -2114,6 +2138,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+                  * doing VS-stage page table walk.
+                  */
+                 tinst = (riscv_cpu_xlen(env) == 32) ? 0x00002000 : 0x00003000;
 +
-+    iotests.log('detached-fmt active: %s' % node_is_active(vm, 'detached-fmt'))
-+    iotests.log('detached-file active: %s'
-+                % node_is_active(vm, 'detached-file'))
-+
-     iotests.log('\nShutting down...')
-     vm.shutdown()
-     log = vm.get_log()
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
-index 3c43020053..28b1322554 100644
---- a/tests/qemu-iotests/tests/inactive-node-nbd.out
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
-@@ -243,5 +243,13 @@ snap-fmt active: True
- snap2-fmt active: True
- target-fmt active: True
- 
-+=== Inactivating all nodes at once ===
-+{"execute": "stop", "arguments": {}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false}}
-+{"return": {}}
-+detached-fmt active: False
-+detached-file active: False
-+
- Shutting down...
- 
++                if (cause == RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT) {
++                    tinst |= 0x20;
++                }
+             } else {
+                 /*
+                  * The "Addr. Offset" field in transformed instruction is
 -- 
 2.47.3
 
