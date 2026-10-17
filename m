@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F215CCF2CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAD4CCF2C9
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB0W-0005aj-DM; Sat, 17 Oct 2026 16:27:56 -0400
+	id 1xIB0P-0005QI-Dr; Sat, 17 Oct 2026 16:27:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB0A-0005D6-TR; Sat, 17 Oct 2026 16:27:35 -0400
+ id 1xIAzp-00058H-DV; Sat, 17 Oct 2026 16:27:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB09-0003ut-2b; Sat, 17 Oct 2026 16:27:34 -0400
+ id 1xIAzi-0003tJ-VV; Sat, 17 Oct 2026 16:27:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268831; bh=ujj/GZ/nl/OjvoV3hZONmCoWIDoQ1pNnvRBGWdinfmg=;
+ t=1792268823; bh=bhA7/owrdMCemIZRffjaxMC93SSySjrJpqFeY4Bc/x4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xRI2OpsbaCAG+pNGp/gzLp70gZu09YcHGJ3VHAoBRsuDVbMMzl2jiZ3oI8xQh+/O/
- WAvCFpKwE0YSxRtQKei3Fp7bWlmuCFVt0urPK1CHtNQPp4Dv5X1dnAG70KM4YobLMo
- KdAr0WsXOWOdP79J84xKRyXankxPS0Pd3R9ybwAV1go1JOkhXLUTmQDaam+IFZ5Mu3
- kPKIGUNy3H5jgTJfH+4Asnw6J+e8nE12mKiVoUWYfv00EBps29ZwlGO5PEhKmHeYMj
- 3bWy52rq6SSICcjObMPsjGFracpB7Y8IIeIOtplDCKOZNaPvAWqi+pLNt8KBXxOkr6
- IrL9aI4nRGy3g==
+ b=AJpNW/eRSvH1Wc0D1IpkE215i+dT3UnMOTrvHfTKspWtXrrU4K5Rnyg4H773dkA3Q
+ em192x2DdKpdoY/H3nBHdf5aewMtFJ8wpuV+/wK9+nO0V2w2a+4EtvW1zTkyajJQCU
+ cWgNNqFoXMQYfxh2qi215X0OyFYM3EzLtZhCjis5C9yyqPdQoDOycGuhPU5lSlmc9K
+ LzzcQXCzrRf9yKPJQZMCkhKB0tG7irkFZ55HR3doU//T+N/aV/+QWgcS7g6gqWxKY8
+ EYQWIB356IIi6f2B6OfVNcd4ix4WCxzw+b8fedtdusntIvvXuvklgyzpQJyLWlPxaA
+ zJXs/Zlvqkn7w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A3AF41DE744;
- Sat, 17 Oct 2026 23:27:11 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B55E71DE73D;
+ Sat, 17 Oct 2026 23:27:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CBB2744341B;
- Sat, 17 Oct 2026 23:27:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0102D443414;
+ Sat, 17 Oct 2026 23:27:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 09/73] hw/intc/s390x: Fix check after g_try_realloc
-Date: Sat, 17 Oct 2026 23:25:27 +0300
-Message-ID: <20261017202638.728621-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 02/73] target/arm: Fix next timer tick when the offset
+ puts the count ahead
+Date: Sat, 17 Oct 2026 23:25:20 +0300
+Message-ID: <20261017202638.728621-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -69,53 +69,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-The loop to store pending IRQs uses g_try_realloc() to expand the
-buffer being used, but the returned address is stored in a
-pointer-to-pointer, thus the check is supposed to be examining
-the contents of the pointer, and not the pointer itself.
+gt_recalc_timer() arms the timer for the ISTATUS 0->1 transition at
+count == cval + offset, treating an overflow of that sum as "beyond
+the counter's wrap" and arming at INT64_MAX. That reading is valid
+only when offset <= count. When offset > count (a CNTVOFF_EL2 or
+CNTPOFF_EL2 that puts the timer's counter ahead of the physical
+count), the sum overflows for every cval still in the future and the
+wrapped value is the correct next tick, which is what the code used
+before commit 8d37a1425b99. The timer then never fires on its own.
 
-Define a temporary variable to catch and test the returned pointer.
-If it's NULL, return to the caller to perform the free on the
-unmodified buffer. If it's not NULL, store it in the caller's
-pointer and restart the loop against the new struct.
+A KVM guest whose counter is set ahead of the host's, as the
+arch_timer_edge_cases selftest does via KVM_REG_ARM_TIMER_CNT, gets
+its timer interrupt only when the vCPU is next loaded and KVM
+rewrites the timer registers, so a guest polling for the interrupt
+hangs.
+Reproduced with VHE, nVHE and pKVM hosts on QEMU 11.0.0. The test
+passes on hardware.
 
+Test count + (cval - (count - offset)) for overflow instead, so only a
+physical count past 2^64 is "never", and add a vtimer test case with
+an offset that puts the count ahead.
+
+Fixes: 8d37a1425b99 ("target/arm: Handle overflow in calculation of next timer tick")
 Cc: qemu-stable@nongnu.org
-Fixes: 3a553fc658 ("s390x/kvm: implement floating-interrupt controller device")
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-8-farman@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 77cc481c23118d0fc3711525dd64373c6797ceed)
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20260921074451.3158645-2-fuad.tabba@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 66d4ea65a064421057f10c4a26d727beedbd1971)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
-index f833a3996a..e9e04ea70a 100644
---- a/hw/intc/s390_flic_kvm.c
-+++ b/hw/intc/s390_flic_kvm.c
-@@ -254,6 +254,7 @@ static int __get_all_irqs(KVMS390FLICState *flic,
-                           void **buf, int len)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index af45234ad2..4ed91ac85a 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1531,11 +1531,12 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+         } else {
+             /*
+              * Next transition is when (count - offset) == cval, i.e.
+-             * when count == (cval + offset).
+-             * If that would overflow, then again we set up the next interrupt
+-             * for "as far in the future as possible" for the code below.
++             * cval - (count - offset) ticks from now. If count plus that
++             * overflows, set up "as far in the future as possible" below.
+              */
+-            if (uadd64_overflow(gt->cval, offset, &nexttick)) {
++            uint64_t remaining = gt->cval - (count - offset);
++
++            if (uadd64_overflow(count, remaining, &nexttick)) {
+                 nexttick = UINT64_MAX;
+             }
+         }
+diff --git a/tests/tcg/aarch64/system/vtimer.c b/tests/tcg/aarch64/system/vtimer.c
+index 7d725eced3..e1cfad36be 100644
+--- a/tests/tcg/aarch64/system/vtimer.c
++++ b/tests/tcg/aarch64/system/vtimer.c
+@@ -27,6 +27,7 @@
+ 
+ int main(void)
  {
-     int r;
-+    void *new_buf = NULL;
++    uint64_t freq, now;
+     int i;
  
-     do {
-         /* returns -ENOMEM if buffer is too small and number
-@@ -263,10 +264,11 @@ static int __get_all_irqs(KVMS390FLICState *flic,
-             break;
-         }
-         len *= 2;
--        *buf = g_try_realloc(*buf, len);
--        if (!buf) {
-+        new_buf = g_try_realloc(*buf, len);
-+        if (!new_buf) {
-             return -ENOMEM;
-         }
-+        *buf = new_buf;
-     } while (r == -ENOMEM && len <= KVM_S390_FLIC_MAX_BUFFER);
+     ml_printf("VTimer Test\n");
+@@ -44,5 +45,32 @@ int main(void)
+         ml_printf("%d: cntv_cval_el0=%lx\n", i, read_sysreg(cntv_cval_el0));
+     }
  
-     return r;
++    /*
++     * An offset that puts the virtual count ahead of the physical one,
++     * so cval + cntvoff wraps for every future cval. The timer must
++     * still fire. ISTATUS is set by the expiry, so poll it with a bound.
++     */
++    write_sysreg(cntv_ctl_el0, 0);
++    write_sysreg(cntvoff_el2, -(1ULL << 60));
++    asm volatile("isb");
++
++    freq = read_sysreg(cntfrq_el0);
++    now = read_sysreg(cntvct_el0);
++    write_sysreg(cntv_cval_el0, now + freq / 100);
++    write_sysreg(cntv_ctl_el0, 1);
++
++    ml_printf("cntvoff_el2=%lx\n", read_sysreg(cntvoff_el2));
++    ml_printf("cntvct_el0=%lx\n", now);
++    ml_printf("cntv_cval_el0=%lx\n", read_sysreg(cntv_cval_el0));
++
++    while (!(read_sysreg(cntv_ctl_el0) & 4)) {
++        if (read_sysreg(cntvct_el0) - now > freq) {
++            ml_printf("FAIL: ISTATUS not set within 1s: cntv_ctl_el0=%lx\n",
++                      read_sysreg(cntv_ctl_el0));
++            return 1;
++        }
++    }
++    ml_printf("ISTATUS set at cntvct_el0=%lx\n", read_sysreg(cntvct_el0));
++
+     return 0;
+ }
 -- 
 2.47.3
 
