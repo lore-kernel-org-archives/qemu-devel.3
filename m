@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B19CCF2C4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75693CCF2CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9fV-0001pE-Sk; Sat, 17 Oct 2026 15:02:12 -0400
+	id 1xI9fY-0001u1-VA; Sat, 17 Oct 2026 15:02:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eL-0006bB-QR; Sat, 17 Oct 2026 15:01:01 -0400
+ id 1xI9es-0000v3-85; Sat, 17 Oct 2026 15:01:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eJ-0004Gs-25; Sat, 17 Oct 2026 15:00:56 -0400
+ id 1xI9eq-0004L3-MH; Sat, 17 Oct 2026 15:01:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263424; bh=w6bfGn+k7mNKlyOr7aaA0IZOkh2xDIo3g4pyqzQO3dY=;
+ t=1792263434; bh=4rQas78o2qic6KfRrpeVcUvakhKjmJVQYpZLa5rIvQE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VzYiCG1LR+tr+2IN9fNqFMkSm1TXc1/0+BBosCKyL1evy13EmBMEpcnP8GvLhDqkQ
- dU3TdB0RIJJj1aXaeITYfIOngvg0bcH9nENk9L4STKvVPB11cpFyrN9PIAe9eHpnSh
- dgJtCppvPtiXes0ESwZrY/Y/OZemFPFUkShp0Qy7kN20yk8E3SYCSKEzGcNHjhPw3f
- n+p5ynllBmkZBu0BzoBrvt25Am/IdL3GrB1dkJN4awtwdscdIhtDSoJReSCpZW3SYw
- LwzgICjLI5PW7kG/yTwDJMnQzYr0KWupewa88i/CGyLS0ZQtkKBNhx/8hzI4scDsJt
- ttkyZ7Nq9Gbcw==
+ b=jFDsTTFcrJ/jVoML+d8BO8436HFHJTz1IfLCeKnr7WDbOABqeOukCDwPEa1hcUjbR
+ gEWdVbvL3niOu7CkId6OH6VLAvqHjc/qIwz3U7SLj5B+ODyvyYrbLmdyDfTCKLR43U
+ IfMvV6AJs6HGUDoD9f2F/bKi8Id8218k+pNFlMNet5R23QvNiEuJdox7aZNaiCAsop
+ B9ZVg2KU9lbh1FT91fUIVShLn40YR6IKHheKIdDv1pdxx2TJlLHoYW/d1p/tWn8tTU
+ K6C0o5gREWSZbDnUhEZIYxE7xzhGvvMo/NS57r/BntGeOYiZmXr08gr+zpXpM3J+Ky
+ 7SLt9ZW59Ln8Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 249561DE6D8;
- Sat, 17 Oct 2026 21:57:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 114DE1DE6DF;
+ Sat, 17 Oct 2026 21:57:14 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D38C74433A0;
- Sat, 17 Oct 2026 21:57:02 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D636D4433A7;
+ Sat, 17 Oct 2026 21:57:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
- Itaru Kitayama <itaru.kitayama@linux.dev>,
- Gustavo Romero <gromero@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 53/63] target/arm: Clear TTBR[5:0] from a 52-bit
- table base address
-Date: Sat, 17 Oct 2026 21:55:09 +0300
-Message-ID: <20261017185528.722197-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Rick Richard <rick@sloservers.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 60/63] tests/qtest/bios-tables-test: Allow changes to
+ riscv64 virt SPCR
+Date: Sat, 17 Oct 2026 21:55:16 +0300
+Message-ID: <20261017185528.722197-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,64 +71,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Rick Richard <rick@sloservers.com>
 
-get_phys_addr_lpae() can read the first descriptor of a walk from the
-wrong address. This happens with a 52-bit OA when the initial lookup
-table has fewer than eight entries and its base address has bit 51 set,
-or bit 50 for a two-entry table. The walk then faults or translates
-through whatever that address holds. VTTBR walks for stage 2 take the
-same path.
+Allow changes to the riscv64 virt board SPCR -- we are going to fix
+an error in the UART description there.
 
-For example, the 16KB granule with a 48-bit VA has a two-entry level 0
-(FEAT_LPA2). The 64KB granule with a 44-bit VA has a four-entry level 1
-(FEAT_LPA). KVM's page_fault_test hangs on this in its 16KB, 52-bit PA
-guest mode under TCG, as reported on kvmarm.
-
-With a 52-bit OA, TTBR[5:2] hold bits [51:48] of the base address. Such
-a table is 64-byte aligned (R_KBLCR), so bits [5:0] of the base address
-are zero. get_phys_addr_lpae() ORs TTBR[5:2] into bits [51:48], but
-then clears only the bits in indexmask. For these tables indexmask
-covers fewer than six bits, so TTBR[5] stays in the address, and
-TTBR[4] too for a two-entry table.
-
-Clear TTBR[5:0] when forming a 52-bit table base address.
-
+Signed-off-by: Rick Richard <rick@sloservers.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261005104008.214588-2-rick@sloservers.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 7a928f43d872 ("target/arm: Implement FEAT_LPA")
-Reported-by: Itaru Kitayama <itaru.kitayama@linux.dev>
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-2-fuad.tabba@linux.dev
-Link: https://lore.kernel.org/kvmarm/B4C0AC3E-6A4F-4A7B-B7BC-81207539115E@linux.dev/
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 0dedeff9328d4d458dc849176e9bd4582b2b2bd8)
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit ba280c351011618d2e7f9c3773fb4cdf109e40f6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index fa6973adf1..e34b4bb9ab 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1797,13 +1797,16 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     descaddr = extract64(ttbr, 0, 48);
- 
-     /*
--     * For FEAT_LPA and PS=6, bits [51:48] of descaddr are in [5:2] of TTBR.
-+     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
-+     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
-+     * under 64 bytes is still 64-byte aligned (R_KBLCR).
-      *
-      * Otherwise, if the base address is out of range, raise AddressSizeFault.
-      * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
-      * but we've just cleared the bits above 47, so simplify the test.
-      */
-     if (outputsize > 48) {
-+        descaddr &= ~MAKE_64BIT_MASK(0, 6);
-         descaddr |= extract64(ttbr, 2, 4) << 48;
-     } else if (descaddr >> outputsize) {
-         level = 0;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..aae973048a 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/riscv64/virt/SPCR",
 -- 
 2.47.3
 
