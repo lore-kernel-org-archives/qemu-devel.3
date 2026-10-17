@@ -4,99 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD6A2CC6B2A
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 04:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55ABCCCA463
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 06:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHvZy-0001jL-Ki; Fri, 16 Oct 2026 23:59:31 -0400
+	id 1xHxn0-0003Km-7y; Sat, 17 Oct 2026 02:21:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hooyan2024@gmail.com>)
- id 1xHtnD-00012i-0m
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 22:05:03 -0400
-Received: from mail-ej2-x04.google.com ([2a00:1450:4864:34::4])
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xHxmy-0003KZ-5A
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:21:04 -0400
+Received: from out-244.mta0.migadu.com ([2001:41d0:1004:224b::f4]
+ helo=mta0.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hooyan2024@gmail.com>)
- id 1xHtnA-0006Lp-H3
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 22:05:02 -0400
-Received: by mail-ej2-x04.google.com with SMTP id
- a640c23a62f3a-c350e54b6ceso28244666b.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 19:04:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792202698; cv=none;
- d=google.com; s=arc-20260327;
- b=pHPY8+MBMSqq9/NgThyS1copjQ4RS4n1TGOMJ0GwMc+/25v0jljxbt1HX7JYBTCYzB
- PQVIR/EAgYUbjJR92jHTVkDCfq6eip/dN93wdt17buYHz433YmsltTBjkwXLNkcWanx6
- 1sueBqZy8x52SlbDpzQWaSCr7eV1TmVvZJS63UwPZg6pqnIK2s86rbyIEVHeW1SBqD0R
- ihCdFZHq+0G1NkI9nY6MDZXfNWsxRTSNYc45ydRU9g85zq5iNAM4GouOXe6z8brxqgXY
- LZejB+hSqs9TNOnr+8bxM4vYkldq8kHyKPGXncVUgxr8LUxotsUARgTgMoa6koBWwUKH
- EVaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=2QB6CHtPgeWxu8vcQikBm37clwMdTYgv9OW/qSjSv+0=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=XtbhQYY5qhTK/I28+EG5/UxMY7PMOPxpgLx5RSFdPpZUlH/20aozqvALnaL5ZX1/8W
- sFBcTgly9GXdNwcvHLJNYzwE4ZYqp97x9uUBiKpDyvY89AGF0szAPzrR4NzfEIfvCi6t
- Lg1MOHK0dISLv2u2e+YMAGKMVXXWsDNZc1depQl7TGLvvo8GI4rj4KyhH+tnx6XCYKia
- EZza0uTxVk9HJH+TzX8AOOXVXzjYNF7/wJb8XCpDjGEWeGTxOGV7UIMEUtRQP4cEWjZJ
- IZwcao7IECd8bOOmooFxF2iGzJLWFjorTPNWZohTkztGEZCJK8EvYJHhDlJpIfSlyJpl
- jHaA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792202698; x=1792807498; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:mime-version:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=2QB6CHtPgeWxu8vcQikBm37clwMdTYgv9OW/qSjSv+0=;
- b=Fycgk3AiG9WiYt+DPNS1VZFiyP0v932lVAUaEVWxQ0EGihgQ4/7GO3fd+91Wvp3eCm
- eBMeJyoXNYIOq+Xe0P88sXjAglFKDW3xevt/ZJiuDAj4RYCgxsvWoXGkCDBisTrFikNG
- RuJ7Q+IlWLoOuSGvlyJAY6/oXXnZ1E6becXJ7gB0HirPZqPeaq3yl4T5xv21pGnBKuJl
- 86kUpC+/JgYEHIAC9gUVkOi2z3lX23UNQkD+3DWVFvU+ssx6FaFLFE6t8Il4yovZ30hj
- 230zPB8Fk/Int/ne1FXitme8PQ9YEFPlh4Nk/mo0CAZtS5Z+DB4f/MWueg+J9zF5mzGN
- d9DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792202698; x=1792807498;
- h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2QB6CHtPgeWxu8vcQikBm37clwMdTYgv9OW/qSjSv+0=;
- b=aKnpkxi121VpAbpbMXLyalzLQiyJImXiwB3APTdsh3ivpMyHjl0iUaOFSnLNbwRoaT
- /FwHyhG+LYjJaygobmscZhL2wIVHPGp7bEqy64ubmvRnuUaW29GeD/T3sRr8whBJPqL3
- 0Rymbw2yS7YCp9yn7p02IHVzMiIXd74Itgge1I68JF16lljaRwbMgIbOq8SWKDtmB4LP
- 9GwNa5spNW7Gr+cuSOTh8waPmtH2NoM/flrT+n/IrZyAlRq6eYsiYFZX01jSkssTMWg3
- lQ0jNGLU/8wS73AltQzo2IIDT17pmgCRIiRC96ypHHPBtLqb8UR7KfGL3fGc2h8ggrni
- sa4g==
-X-Gm-Message-State: AFq9FYJKvT17vft2yXjPXrzDSlFYfzfM0wqecZTRJfRRbMgK6LQFiFoZ
- CpqSZasDx9MuhZSxphiVZes6M3/d6VjbAUW1ZpjSomd1OmCDApi6F8sHPlU/Vo8K7z1E9iLDSrG
- lUDiguwGr7vCqrScsNS2rgB1pVQU38fwE0zjfVX8=
-X-Gm-Gg: AYBFou1ZBrduBkOU/U/RmC085lnZKjd38iOjbugfHSd48X319EQZGT1rTg4G0eGFHAA
- 9/5XjPIUJBIlc/LjXfyFkaDwCuhl/iMuTMMX7u3kLZYWKJejRsV3bwPlREajHDBRTCPWQ7o2QqU
- yFmZFZ7SGPPXzMz2yQJjswqAsY9NitrotkL8Ff8IyEHuLHm9TeulbOKd/4iGJcYXiOgAiK5YwiN
- 0oxz18j2gsmq2Xtmu/nd2CawDNAOdHvq683pxNY7qMBvrVNCs+wYlWwPHOpinHXJVp0peqew1a7
- kukEHNWZt4bxHUOTRtmiL+D2lHvfV8F7p8M5fphjAgAvWX+ba8h9wlmCkfI77jy1JgUH
-X-Received: by 2002:a17:906:f583:b0:c2e:52d6:1fb7 with SMTP id
- a640c23a62f3a-c419e63d14fmr97608066b.22.1792202697806; Fri, 16 Oct 2026
- 19:04:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xHxmu-0002nJ-GW
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 02:21:03 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=AHAMZH7SfIPuDkLJLWKPGVkrBYVzjjf3VXIGdjeL3IY=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1792218057; v=1; x=1792822857;
+ b=OXCMeYmPvqvgRCK48bnkzKkQQEdLQfANWF972QigpBnwecMaRWti6mdsCtQeZAK5S2j0I/6Z
+ cWlR7RfX2rnDyboryEtURrMVd6S5EMpuGquY16zHOxiP/t/kGazjCeQwvCChZnDtLoeLldSqlMC
+ +PZdPW4DsQKBWNIhsgvj/GqM=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id 7a36c208f46c0b20;
+ Sat, 17 Oct 2026 06:20:57 +0000
+X-Mizu-Trace-ID: 7a36c208f46c0b20
+X-Migadu-Flow: FLOW_OUT
+From: Junjie Cao <junjie.cao@linux.dev>
+To: peter.maydell@linaro.org
+Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ philmd@oss.qualcomm.com, qemu-devel@nongnu.org, junjie.cao@intel.com,
+ thuth@redhat.com
+Subject: [PATCH v2] tests/qtest: Cover OHCI endpoint type mismatches
+Date: Sat, 17 Oct 2026 06:20:48 +0000
+Message-ID: <20261017062048.610930-1-junjie.cao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-From: Jiang Yuxuan <hooyan2024@gmail.com>
-Date: Fri, 16 Oct 2026 22:04:40 -0400
-X-Gm-Features: AclHuK8Wrtca9DCnRhJkep9hOqib77FUz9RvXY6udKiXUd3QqyTfYIAG-DVji2M
-Message-ID: <CAAt7E3+jVR+YHZC3996kdC_Xrh9aVJ4YLy8X7+1HyjvOQk09Ug@mail.gmail.com>
-Subject: [PATCH] target/i386: raise #DE for INT_MIN / -1 in IDIV helpers
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002b1865065dffb534"
-Received-SPF: pass client-ip=2a00:1450:4864:34::4;
- envelope-from=hooyan2024@gmail.com; helo=mail-ej2-x04.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:41d0:1004:224b::f4;
+ envelope-from=junjie.cao@linux.dev; helo=mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Oct 2026 23:59:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,271 +68,513 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002b1865065dffb534
-Content-Type: text/plain; charset="UTF-8"
+From: Junjie Cao <junjie.cao@intel.com>
 
-helper_idivw_AX() and helper_idivl_EAX() perform the division before
-checking whether the quotient fits in the destination.  If the dividend
-is the minimum value and the divisor is -1, the division overflows in
-the host: INT32_MIN / -1 and INT64_MIN / -1 are undefined behaviour in C
-and trap with SIGFPE on x86 hosts.  QEMU then dies of a host SIGFPE
-instead of raising #DE in the guest, taking down the emulator (or the
-whole VM under TCG).
+Check guest-visible state for OHCI transfers whose ED type disagrees with
+the endpoint type. Successful control and isochronous transfers exercise
+the same endpoint paths, ruling out inactive endpoints or an idle schedule.
 
-Reject the two overflowing cases before dividing.  The 8-bit form is not
-affected (it widens the dividend to int), and the 64-bit form already
-checks first.
-
-Add a regression test for both the 16-bit and 32-bit forms, run by the
-i386 and x86_64 linux-user test suites.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4687
-Signed-off-by: fujo <hooyan2024@gmail.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 ---
- target/i386/tcg/int_helper.c        |  4 +-
- tests/tcg/i386/meson.build          |  1 +
- tests/tcg/i386/test-idiv-overflow.c | 70 +++++++++++++++++++++++++++++
- tests/tcg/x86_64/meson.build        |  1 +
- 4 files changed, 74 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/i386/test-idiv-overflow.c
+Depends-on: <20261001194756.3003085-1-peter.maydell@linaro.org>
+https://lore.kernel.org/qemu-devel/20261001194756.3003085-1-peter.maydell@linaro.org/
 
-diff --git a/target/i386/tcg/int_helper.c b/target/i386/tcg/int_helper.c
-index 46741d9..45fa0a8 100644
---- a/target/i386/tcg/int_helper.c
-+++ b/target/i386/tcg/int_helper.c
-@@ -91,7 +91,7 @@ void helper_idivw_AX(CPUX86State *env, target_ulong t0)
+v1: https://lore.kernel.org/qemu-devel/20261016093011.521951-1-junjie.cao@linux.dev/
 
-     num = (env->regs[R_EAX] & 0xffff) | ((env->regs[R_EDX] & 0xffff) <<
-16);
-     den = (int16_t)t0;
--    if (den == 0) {
-+    if (den == 0 || (num == INT32_MIN && den == -1)) {
-         raise_exception_ra(env, EXCP00_DIVZ, GETPC());
-     }
-     q = (num / den);
-@@ -130,7 +130,7 @@ void helper_idivl_EAX(CPUX86State *env, target_ulong t0)
+Changes in v2 (Thomas Huth):
+- Merge the OHCI_TEST_GENERAL_TO_ISO branches.
+- Move expected[] to the beginning of the else block.
+- Drop the x86 restriction; use explicit little-endian DMA accesses and
+  bypass the PCI host bridge IOMMU for guest-physical DMA addresses.
 
-     num = ((uint32_t)env->regs[R_EAX]) |
-((uint64_t)((uint32_t)env->regs[R_EDX]) << 32);
-     den = t0;
--    if (den == 0) {
-+    if (den == 0 || (num == INT64_MIN && den == -1)) {
-         raise_exception_ra(env, EXCP00_DIVZ, GETPC());
-     }
-     q = (num / den);
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 84bd680..5d88858 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -38,6 +38,7 @@ tests += {
-     'cflags': [files('test-i386-code16.S'), files('test-i386-vm86.S'),
-                '-lm', '-fno-pie', '-Wl,--no-warn-rwx-segments'],
-   },
-+  'test-idiv-overflow.c': {},
-   '../multiarch/sha512.c': {
-      'exe_name': 'sha512-sse',
-      'cflags': ['-msse4.1', '-O3'],
-diff --git a/tests/tcg/i386/test-idiv-overflow.c
-b/tests/tcg/i386/test-idiv-overflow.c
-new file mode 100644
-index 0000000..e8fc55a
---- /dev/null
-+++ b/tests/tcg/i386/test-idiv-overflow.c
-@@ -0,0 +1,70 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Test that IDIV of the minimum dividend by -1 raises #DE, which Linux
-+ * delivers to the guest as SIGFPE with si_code == FPE_INTDIV.
-+ */
-+#define _GNU_SOURCE
-+#include <setjmp.h>
-+#include <signal.h>
-+#include <stdio.h>
-+#include <string.h>
+Based on origin/master a19f59a72d96 plus the above OHCI fix.
+Tested with usb-audio and -audiodev none on x86_64/pc, i386/pc,
+aarch64/virt and ppc64/pseries. All four cases and OHCI hotplug pass
+for three rounds on each target with the fix.
+On x86_64 and ppc64, both mismatches fail on that master and pass with
+the prerequisite; the normal cases pass in both.
+UHCI/EHCI/xHCI tests also pass on x86_64.
+These cases check transfer state, not the original USB_RET_ASYNC assert.
+
+ tests/qtest/usb-hcd-ohci-test.c | 439 ++++++++++++++++++++++++++++++++
+ 1 file changed, 439 insertions(+)
+
+diff --git a/tests/qtest/usb-hcd-ohci-test.c b/tests/qtest/usb-hcd-ohci-test.c
+index 19d760f3fb..20225528ab 100644
+--- a/tests/qtest/usb-hcd-ohci-test.c
++++ b/tests/qtest/usb-hcd-ohci-test.c
+@@ -8,6 +8,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "libqtest-single.h"
+ #include "qemu/module.h"
+ #include "libqos/usb.h"
+@@ -21,6 +22,422 @@ struct QOHCI_PCI {
+     QPCIDevice dev;
+ };
+ 
++#define HC_CONTROL          0x04
++#define HC_COMMAND_STATUS   0x08
++#define HC_INTERRUPT_STATUS 0x0c
++#define HC_HCCA             0x18
++#define HC_CONTROL_HEAD_ED  0x20
++#define HC_DONE_HEAD        0x30
++#define HC_FM_NUMBER        0x3c
++#define HC_RH_PORT_STATUS   0x54
++#define HC_CONTROL_PLE      (1 << 2)
++#define HC_CONTROL_IE       (1 << 3)
++#define HC_CONTROL_CLE      (1 << 4)
++#define HC_CONTROL_STATE    (3 << 6)
++#define HC_OPERATIONAL      (2 << 6)
++#define HC_CLF              (1 << 1)
++#define HC_UE               (1 << 4)
++#define HC_WD               (1 << 1)
++#define PORT_CCS            (1 << 0)
++#define PORT_PES            (1 << 1)
++#define PORT_RESET          (1 << 4)
++#define TD_CC_NA            (15U << 28)
++#define TD_CC(flags)        ((flags) >> 28)
++#define TD_DP_SETUP         (0 << 19)
++#define TD_DP_OUT           (1 << 19)
++#define TD_DP_IN            (2 << 19)
++#define ED_DIR_OUT          (1 << 11)
++#define ED_DIR_IN           (2 << 11)
++#define ED_ISO              (1 << 15)
++#define ED_HEAD_HALT        (1 << 0)
++#define CC_NOERROR          0
++#define CC_STALL            4
++#define CC_NOTACCESSED      15
++#define FRAME_NS            1000000
 +
-+static sigjmp_buf idiv_jmp;
-+static volatile sig_atomic_t idiv_si_code;
++typedef struct OHCITransferTest {
++    QTestState *qts;
++    QPCIDevice *pci;
++    QPCIBar bar;
++    uint64_t hcca;
++    uint64_t desc;
++    uint64_t data;
++} OHCITransferTest;
 +
-+static void idiv_sig_handler(int sig, siginfo_t *info, void *puc)
++enum OHCITransferScenario {
++    OHCI_TEST_CONTROL,
++    OHCI_TEST_ISO,
++    OHCI_TEST_ISO_TO_CONTROL,
++    OHCI_TEST_GENERAL_TO_ISO,
++};
++
++#define CTRL_ED(t)          ((t)->desc)
++#define CTRL_SETUP_TD(t)    ((t)->desc + 0x20)
++#define CTRL_DATA_TD(t)     ((t)->desc + 0x40)
++#define CTRL_STATUS_TD(t)   ((t)->desc + 0x60)
++#define CTRL_TAIL_TD(t)     ((t)->desc + 0x80)
++#define PERIODIC_ED(t)      ((t)->desc + 0x100)
++#define PERIODIC_TD(t)      ((t)->desc + 0x120)
++#define PERIODIC_TAIL(t)    ((t)->desc + 0x140)
++#define SETUP_BUF(t)        ((t)->data)
++#define CTRL_BUF(t)         ((t)->data + 0x100)
++#define ISO_BUF(t)          ((t)->data + 0x200)
++
++static uint32_t ohci_readl(OHCITransferTest *t, unsigned int reg)
 +{
-+    (void)sig;
-+    (void)puc;
-+    idiv_si_code = info->si_code;
-+    siglongjmp(idiv_jmp, 1);
++    return qpci_io_readl(t->pci, t->bar, reg);
 +}
 +
-+static int check_idiv_overflow(int width)
++static void ohci_writel(OHCITransferTest *t, unsigned int reg, uint32_t val)
 +{
-+    struct sigaction sa, old;
-+    int ret = 1;
++    qpci_io_writel(t->pci, t->bar, reg, val);
++}
 +
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_sigaction = idiv_sig_handler;
-+    sa.sa_flags = SA_SIGINFO | SA_NODEFER;
-+    sigemptyset(&sa.sa_mask);
-+    sigaction(SIGFPE, &sa, &old);
++/* OHCI DMA structures are little-endian, regardless of the guest CPU. */
++static uint32_t ohci_mem_readl(OHCITransferTest *t, uint64_t addr)
++{
++    uint32_t value;
 +
-+    idiv_si_code = 0;
-+    if (sigsetjmp(idiv_jmp, 1) == 0) {
-+        if (width == 16) {
-+            /* DX:AX = 0x8000:0x0000, divisor -1 */
-+            __asm__ volatile ("movl $0x8000, %%edx\n\t"
-+                              "xorl %%eax, %%eax\n\t"
-+                              "movl $-1, %%ecx\n\t"
-+                              "idivw %%cx"
-+                              : : : "eax", "ecx", "edx", "cc");
-+        } else {
-+            /* EDX:EAX = 0x80000000:0x00000000, divisor -1 */
-+            __asm__ volatile ("movl $0x80000000, %%edx\n\t"
-+                              "xorl %%eax, %%eax\n\t"
-+                              "movl $-1, %%ecx\n\t"
-+                              "idivl %%ecx"
-+                              : : : "eax", "ecx", "edx", "cc");
++    qtest_memread(t->qts, addr, &value, sizeof(value));
++    return le32_to_cpu(value);
++}
++
++static uint16_t ohci_mem_readw(OHCITransferTest *t, uint64_t addr)
++{
++    uint16_t value;
++
++    qtest_memread(t->qts, addr, &value, sizeof(value));
++    return le16_to_cpu(value);
++}
++
++static void ohci_mem_writel(OHCITransferTest *t, uint64_t addr, uint32_t value)
++{
++    value = cpu_to_le32(value);
++    qtest_memwrite(t->qts, addr, &value, sizeof(value));
++}
++
++static void ohci_mem_writew(OHCITransferTest *t, uint64_t addr, uint16_t value)
++{
++    value = cpu_to_le16(value);
++    qtest_memwrite(t->qts, addr, &value, sizeof(value));
++}
++
++static void ohci_write_td(OHCITransferTest *t, uint64_t addr, uint32_t flags,
++                          uint32_t cbp, uint32_t next, uint32_t be)
++{
++    ohci_mem_writel(t, addr, flags | TD_CC_NA);
++    ohci_mem_writel(t, addr + 4, cbp);
++    ohci_mem_writel(t, addr + 8, next);
++    ohci_mem_writel(t, addr + 12, be);
++}
++
++static void ohci_write_ed(OHCITransferTest *t, uint64_t addr, uint32_t flags,
++                          uint32_t head, uint32_t tail)
++{
++    ohci_mem_writel(t, addr, flags);
++    ohci_mem_writel(t, addr + 4, tail);
++    ohci_mem_writel(t, addr + 8, head);
++    ohci_mem_writel(t, addr + 12, 0);
++}
++
++static void ohci_step(OHCITransferTest *t)
++{
++    qtest_clock_step(t->qts, FRAME_NS);
++    g_assert_cmphex(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_UE, ==, 0);
++}
++
++static void ohci_drain_done(OHCITransferTest *t, const uint32_t *expected,
++                            unsigned int expected_count)
++{
++    bool seen[3] = { false };
++    unsigned int seen_count = 0;
++    unsigned int i;
++
++    g_assert_cmpuint(expected_count, <=, G_N_ELEMENTS(seen));
++    for (i = 0; i < 10; i++) {
++        uint32_t done = ohci_mem_readl(t, t->hcca + 0x84);
++
++        if (expected_count == 1 && (done & ~0xfU)) {
++            g_assert_cmphex(done & ~0xfU, ==, expected[0]);
 +        }
-+        printf("FAIL: idiv%d did not raise #DE\n", width);
-+    } else if (idiv_si_code != FPE_INTDIV) {
-+        printf("FAIL: idiv%d raised SIGFPE with si_code %d\n",
-+               width, (int)idiv_si_code);
-+    } else {
-+        ret = 0;
++
++        while (done & ~0xfU) {
++            uint32_t td = done & ~0xfU;
++            unsigned int j;
++
++            for (j = 0; j < expected_count; j++) {
++                if (expected[j] == td) {
++                    break;
++                }
++            }
++            g_assert_cmpuint(j, <, expected_count);
++            g_assert_false(seen[j]);
++            seen[j] = true;
++            seen_count++;
++            done = ohci_mem_readl(t, td + 8);
++        }
++
++        if (seen_count == expected_count &&
++            ohci_mem_readl(t, t->hcca + 0x84) == 0 &&
++            !(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_WD) &&
++            ohci_readl(t, HC_DONE_HEAD) == 0) {
++            break;
++        }
++
++        /* Consume this HCCA batch before allowing another writeback. */
++        ohci_mem_writel(t, t->hcca + 0x84, 0);
++        ohci_writel(t, HC_INTERRUPT_STATUS, HC_WD);
++        ohci_step(t);
 +    }
 +
-+    sigaction(SIGFPE, &old, NULL);
-+    return ret;
++    g_assert_cmpuint(i, <, 10);
++    g_assert_cmpuint(seen_count, ==, expected_count);
++    g_assert_cmphex(ohci_mem_readl(t, t->hcca + 0x84), ==, 0);
++    g_assert_cmphex(ohci_readl(t, HC_DONE_HEAD), ==, 0);
++    g_assert_cmphex(ohci_readl(t, HC_INTERRUPT_STATUS) & HC_WD, ==, 0);
 +}
 +
-+int main(void)
++static void ohci_transfer_init(OHCITransferTest *t, QOHCI_PCI *obj,
++                               QGuestAllocator *alloc)
 +{
-+    int ret = 0;
++    unsigned int i;
 +
-+    ret |= check_idiv_overflow(16);
-+    ret |= check_idiv_overflow(32);
-+    return ret;
++    t->qts = global_qtest;
++    t->pci = &obj->dev;
++    qpci_device_enable(t->pci);
++    t->bar = qpci_iomap(t->pci, 0, NULL);
++    t->hcca = guest_alloc(alloc, 0x1000);
++    t->desc = guest_alloc(alloc, 0x1000);
++    t->data = guest_alloc(alloc, 0x1000);
++    qtest_memset(t->qts, t->hcca, 0, 0x1000);
++    qtest_memset(t->qts, t->desc, 0, 0x1000);
++    qtest_memset(t->qts, t->data, 0, 0x1000);
++
++    g_assert_cmphex(ohci_readl(t, HC_RH_PORT_STATUS) & PORT_CCS, ==,
++                    PORT_CCS);
++    ohci_writel(t, HC_RH_PORT_STATUS, PORT_RESET);
++    g_assert_cmphex(ohci_readl(t, HC_RH_PORT_STATUS) & PORT_PES, ==,
++                    PORT_PES);
++    ohci_writel(t, HC_HCCA, t->hcca);
++    ohci_writel(t, HC_CONTROL_HEAD_ED, CTRL_ED(t));
++    ohci_writel(t, HC_CONTROL,
++                HC_OPERATIONAL | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                HC_CONTROL_IE);
++    g_assert_cmphex(ohci_readl(t, HC_CONTROL) &
++                    (HC_CONTROL_STATE | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                     HC_CONTROL_IE), ==,
++                    HC_OPERATIONAL | HC_CONTROL_CLE | HC_CONTROL_PLE |
++                    HC_CONTROL_IE);
++
++    for (i = 0; i < 32; i++) {
++        ohci_mem_writel(t, t->hcca + 4 * i, 0);
++    }
 +}
-diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-index 95c7ee6..4106d4d 100644
---- a/tests/tcg/x86_64/meson.build
-+++ b/tests/tcg/x86_64/meson.build
-@@ -52,6 +52,7 @@ tests += {
-   },
-   '../i386/test-i386-adcox.c': {'cflags': ['-O2']},
-   '../i386/test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
-+  '../i386/test-idiv-overflow.c': {},
++
++static void ohci_control(OHCITransferTest *t, const uint8_t setup[8],
++                         unsigned int data_len)
++{
++    uint64_t status = data_len ? CTRL_STATUS_TD(t) : CTRL_DATA_TD(t);
++    uint32_t done[3] = { CTRL_SETUP_TD(t), CTRL_DATA_TD(t), status };
++    unsigned int done_count = data_len ? 3 : 2;
++    unsigned int i;
++
++    qtest_memwrite(t->qts, SETUP_BUF(t), setup, 8);
++    qtest_memset(t->qts, CTRL_BUF(t), 0xa5, 64);
++    ohci_write_td(t, CTRL_SETUP_TD(t), TD_DP_SETUP,
++                  SETUP_BUF(t), data_len ? CTRL_DATA_TD(t) : status,
++                  SETUP_BUF(t) + 7);
++    if (data_len) {
++        ohci_write_td(t, CTRL_DATA_TD(t), TD_DP_IN | (3 << 24),
++                      CTRL_BUF(t), status, CTRL_BUF(t) + data_len - 1);
++    }
++    ohci_write_td(t, status, (data_len ? TD_DP_OUT : TD_DP_IN) | (3 << 24),
++                  0, CTRL_TAIL_TD(t), 0);
++    ohci_write_ed(t, CTRL_ED(t), 64 << 16, CTRL_SETUP_TD(t),
++                  CTRL_TAIL_TD(t));
++    ohci_writel(t, HC_COMMAND_STATUS, HC_CLF);
++
++    for (i = 0; i < 10; i++) {
++        ohci_step(t);
++        if ((ohci_mem_readl(t, CTRL_ED(t) + 8) & ~15U) ==
++            CTRL_TAIL_TD(t)) {
++            break;
++        }
++    }
++    g_assert_cmpuint(i, <, 10);
++    g_assert_cmphex(ohci_mem_readl(t, CTRL_ED(t) + 8) & ED_HEAD_HALT,
++                    ==, 0);
++    g_assert_cmpuint(TD_CC(ohci_mem_readl(t, CTRL_SETUP_TD(t))), ==,
++                     CC_NOERROR);
++    if (data_len) {
++        g_assert_cmpuint(TD_CC(ohci_mem_readl(t, CTRL_DATA_TD(t))), ==,
++                         CC_NOERROR);
++    }
++    g_assert_cmpuint(TD_CC(ohci_mem_readl(t, status)), ==, CC_NOERROR);
++    /* Do not reuse a TD while its NextTD still links the done queue. */
++    ohci_drain_done(t, done, done_count);
++}
++
++static void ohci_get_device_descriptor(OHCITransferTest *t)
++{
++    const uint8_t setup[8] = { 0x80, 6, 0, 1, 0, 0, 18, 0 };
++    uint8_t desc[18];
++
++    ohci_control(t, setup, sizeof(desc));
++    qtest_memread(t->qts, CTRL_BUF(t), desc, sizeof(desc));
++    g_assert_cmpuint(desc[0], ==, 18);
++    g_assert_cmpuint(desc[1], ==, 1);
++    g_assert_cmpuint(desc[7], ==, 64);
++    g_assert_cmpuint(desc[17], ==, 1);
++}
++
++static void ohci_enable_audio_stream(OHCITransferTest *t)
++{
++    const uint8_t configure[8] = { 0, 9, 1, 0, 0, 0, 0, 0 };
++    const uint8_t interface[8] = { 1, 11, 1, 0, 1, 0, 0, 0 };
++
++    ohci_control(t, configure, 0);
++    ohci_control(t, interface, 0);
++}
++
++static void ohci_periodic(OHCITransferTest *t, bool iso, unsigned int ep,
++                          bool in, unsigned int len)
++{
++    uint32_t flags = ep << 7 | len << 16 |
++                     (in ? ED_DIR_IN : ED_DIR_OUT) | (iso ? ED_ISO : 0);
++    uint32_t td = PERIODIC_TD(t);
++    uint32_t buf = ISO_BUF(t);
++    unsigned int i;
++
++    qtest_memset(t->qts, buf, 0, len);
++    if (iso) {
++        uint16_t frame = (ohci_readl(t, HC_FM_NUMBER) + 2) & 0xffff;
++
++        ohci_mem_writel(t, td, TD_CC_NA | frame);
++        ohci_mem_writel(t, td + 4, buf);
++        ohci_mem_writel(t, td + 8, PERIODIC_TAIL(t));
++        ohci_mem_writel(t, td + 12, buf + len - 1);
++        ohci_mem_writew(t, td + 16, 0xe000 | (buf & 0xfff));
++        for (i = 1; i < 8; i++) {
++            ohci_mem_writew(t, td + 16 + 2 * i, 0xe000);
++        }
++    } else {
++        ohci_write_td(t, td, in ? TD_DP_IN : TD_DP_OUT,
++                      buf, PERIODIC_TAIL(t), buf + len - 1);
++    }
++    ohci_write_ed(t, PERIODIC_ED(t), flags, td, PERIODIC_TAIL(t));
++    for (i = 0; i < 32; i++) {
++        ohci_mem_writel(t, t->hcca + 4 * i, PERIODIC_ED(t));
++    }
++}
++
++static void ohci_run_valid_iso(OHCITransferTest *t)
++{
++    uint32_t expected[] = { PERIODIC_TD(t) };
++    uint32_t frame;
++    uint32_t head;
++    uint32_t td_flags;
++    uint16_t psw;
++    unsigned int i;
++
++    ohci_periodic(t, true, 1, false, 192);
++    frame = ohci_readl(t, HC_FM_NUMBER) & 0xffff;
++    for (i = 0; i < 5; i++) {
++        ohci_step(t);
++    }
++    g_assert_cmpuint((ohci_readl(t, HC_FM_NUMBER) - frame) & 0xffff, >=, 5);
++    head = ohci_mem_readl(t, PERIODIC_ED(t) + 8);
++    td_flags = ohci_mem_readl(t, PERIODIC_TD(t));
++    g_assert_cmphex(head & ~15U, ==, PERIODIC_TAIL(t));
++    g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOERROR);
++    psw = ohci_mem_readw(t, PERIODIC_TD(t) + 16);
++    g_assert_cmpuint(psw >> 12, ==, CC_NOERROR);
++    g_assert_cmpuint(psw & 0xfff, ==, 0);
++    ohci_drain_done(t, expected, G_N_ELEMENTS(expected));
++}
++
++static void test_ohci_transfer(void *obj, void *data, QGuestAllocator *alloc)
++{
++    OHCITransferTest t;
++    unsigned int scenario = GPOINTER_TO_UINT(data);
++    uint32_t head, td_flags, psw, frame, done;
++    unsigned int i;
++
++    ohci_transfer_init(&t, obj, alloc);
++    ohci_get_device_descriptor(&t);
++    if (scenario == OHCI_TEST_CONTROL) {
++        qpci_iounmap(t.pci, t.bar);
++        guest_free(alloc, t.data);
++        guest_free(alloc, t.desc);
++        guest_free(alloc, t.hcca);
++        return;
++    }
++    if (scenario == OHCI_TEST_ISO_TO_CONTROL) {
++        const uint8_t setup[8] = { 0x80, 6, 0, 1, 0, 0, 18, 0 };
++        uint32_t expected[] = { CTRL_SETUP_TD(&t) };
++
++        qtest_memwrite(t.qts, SETUP_BUF(&t), setup, 8);
++        ohci_write_td(&t, CTRL_SETUP_TD(&t), TD_DP_SETUP,
++                      SETUP_BUF(&t), CTRL_TAIL_TD(&t), SETUP_BUF(&t) + 7);
++        ohci_write_ed(&t, CTRL_ED(&t), 64 << 16, CTRL_SETUP_TD(&t),
++                      CTRL_TAIL_TD(&t));
++        ohci_writel(&t, HC_COMMAND_STATUS, HC_CLF);
++        ohci_step(&t);
++        g_assert_cmpuint(TD_CC(ohci_mem_readl(&t, CTRL_SETUP_TD(&t))), ==,
++                         CC_NOERROR);
++        ohci_drain_done(&t, expected, G_N_ELEMENTS(expected));
++        ohci_periodic(&t, true, 0, true, 18);
++    } else {
++        ohci_enable_audio_stream(&t);
++        if (scenario == OHCI_TEST_GENERAL_TO_ISO) {
++            /* Prove this configured endpoint and periodic schedule work. */
++            ohci_run_valid_iso(&t);
++            g_assert_cmphex(ohci_mem_readl(&t, t.hcca + 0x84), ==, 0);
++            g_assert_cmphex(ohci_readl(&t, HC_DONE_HEAD), ==, 0);
++            g_assert_cmphex(ohci_readl(&t, HC_INTERRUPT_STATUS) & HC_WD, ==,
++                            0);
++            ohci_periodic(&t, false, 1, false, 192);
++        } else {
++            ohci_periodic(&t, true, 1, false, 192);
++        }
++    }
++
++    frame = ohci_readl(&t, HC_FM_NUMBER) & 0xffff;
++    done = ohci_mem_readl(&t, t.hcca + 0x84);
++    for (i = 0; i < 5; i++) {
++        ohci_step(&t);
++    }
++    g_assert_cmpuint((ohci_readl(&t, HC_FM_NUMBER) - frame) & 0xffff, >=, 5);
++    head = ohci_mem_readl(&t, PERIODIC_ED(&t) + 8);
++    td_flags = ohci_mem_readl(&t, PERIODIC_TD(&t));
++    if (scenario == OHCI_TEST_GENERAL_TO_ISO) {
++        g_assert_cmphex(ohci_mem_readl(&t, t.hcca + 0x84), ==, done);
++        g_assert_cmphex(ohci_readl(&t, HC_DONE_HEAD), ==, 0);
++        g_assert_cmphex(ohci_readl(&t, HC_INTERRUPT_STATUS) & HC_WD, ==, 0);
++        g_assert_cmphex(head & ~15U, ==, PERIODIC_TD(&t));
++        g_assert_cmphex(head & ED_HEAD_HALT, ==, 0);
++        g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOTACCESSED);
++        g_assert_cmphex(ohci_mem_readl(&t, PERIODIC_TD(&t) + 4), ==,
++                        ISO_BUF(&t));
++    } else {
++        uint32_t expected[] = { PERIODIC_TD(&t) };
++
++        g_assert_cmphex(head & ~15U, ==, PERIODIC_TAIL(&t));
++        /* The iTD CC does not report a packet-level STALL. */
++        g_assert_cmpuint(TD_CC(td_flags), ==, CC_NOERROR);
++        psw = ohci_mem_readw(&t, PERIODIC_TD(&t) + 16);
++        g_assert_cmpuint(psw >> 12, ==,
++                         scenario == OHCI_TEST_ISO_TO_CONTROL ? CC_STALL :
++                         CC_NOERROR);
++        g_assert_cmpuint(psw & 0xfff, ==, 0);
++        ohci_drain_done(&t, expected, G_N_ELEMENTS(expected));
++    }
++    qpci_iounmap(t.pci, t.bar);
++    guest_free(alloc, t.data);
++    guest_free(alloc, t.desc);
++    guest_free(alloc, t.hcca);
++}
++
+ static void test_ohci_hotplug(void *obj, void *data, QGuestAllocator *alloc)
+ {
+     usb_test_hotplug(global_qtest, "ohci", "1", NULL);
+@@ -41,6 +458,7 @@ static void *ohci_pci_get_driver(void *obj, const char *interface)
+ static void *ohci_pci_create(void *pci_bus, QGuestAllocator *alloc, void *addr)
+ {
+     QOHCI_PCI *ohci_pci = g_new0(QOHCI_PCI, 1);
++    qpci_device_init(&ohci_pci->dev, pci_bus, addr);
+     ohci_pci->obj.get_driver = ohci_pci_get_driver;
+ 
+     return &ohci_pci->obj;
+@@ -62,7 +480,28 @@ libqos_init(ohci_pci_register_nodes);
+ 
+ static void register_ohci_pci_test(void)
+ {
++    QOSGraphTestOptions opts = {
++        /* The descriptors and buffers use guest physical addresses for DMA. */
++        .edge.after_cmd_line = "-global pci-host-bridge.bypass-iommu=on "
++                               "-audiodev none,id=snd0 "
++                               "-device usb-audio,audiodev=snd0,"
++                               "bus=ohci.0,port=1",
++    };
++
+     qos_add_test("ohci_pci-test-hotplug", "pci-ohci", test_ohci_hotplug, NULL);
++    if (!qtest_has_device("usb-audio")) {
++        return;
++    }
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_CONTROL);
++    qos_add_test("ohci_pci-control", "pci-ohci", test_ohci_transfer, &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_ISO);
++    qos_add_test("ohci_pci-iso", "pci-ohci", test_ohci_transfer, &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_ISO_TO_CONTROL);
++    qos_add_test("ohci_pci-iso-to-control", "pci-ohci", test_ohci_transfer,
++                 &opts);
++    opts.arg = GUINT_TO_POINTER(OHCI_TEST_GENERAL_TO_ISO);
++    qos_add_test("ohci_pci-general-to-iso", "pci-ohci", test_ohci_transfer,
++                 &opts);
  }
+ 
+ libqos_init(register_ohci_pci_test);
 
- tests += {
+base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414
+prerequisite-patch-id: 3ed922e3f93cb343f72e1f54ad2b87e4381ce0b9
 -- 
-2.53.0
+2.43.0
 
---0000000000002b1865065dffb534
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">helper_idivw_AX() and helper_idivl_EAX() perform the divis=
-ion before<br>checking whether the quotient fits in the destination.=C2=A0 =
-If the dividend<br>is the minimum value and the divisor is -1, the division=
- overflows in<br>the host: INT32_MIN / -1 and INT64_MIN / -1 are undefined =
-behaviour in C<br>and trap with SIGFPE on x86 hosts.=C2=A0 QEMU then dies o=
-f a host SIGFPE<br>instead of raising #DE in the guest, taking down the emu=
-lator (or the<br>whole VM under TCG).<br><br>Reject the two overflowing cas=
-es before dividing.=C2=A0 The 8-bit form is not<br>affected (it widens the =
-dividend to int), and the 64-bit form already<br>checks first.<br><br>Add a=
- regression test for both the 16-bit and 32-bit forms, run by the<br>i386 a=
-nd x86_64 linux-user test suites.<br><br>Resolves: <a href=3D"https://gitla=
-b.com/qemu-project/qemu/-/issues/4687">https://gitlab.com/qemu-project/qemu=
-/-/issues/4687</a><br>Signed-off-by: fujo &lt;<a href=3D"mailto:hooyan2024@=
-gmail.com">hooyan2024@gmail.com</a>&gt;<br>---<br>=C2=A0target/i386/tcg/int=
-_helper.c =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A04 +-<br>=C2=A0tests/tcg/i386/m=
-eson.build =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A01 +<br>=C2=A0tests/tcg=
-/i386/test-idiv-overflow.c | 70 +++++++++++++++++++++++++++++<br>=C2=A0test=
-s/tcg/x86_64/meson.build =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A01 +<br>=C2=A04 =
-files changed, 74 insertions(+), 2 deletions(-)<br>=C2=A0create mode 100644=
- tests/tcg/i386/test-idiv-overflow.c<br><br>diff --git a/target/i386/tcg/in=
-t_helper.c b/target/i386/tcg/int_helper.c<br>index 46741d9..45fa0a8 100644<=
-br>--- a/target/i386/tcg/int_helper.c<br>+++ b/target/i386/tcg/int_helper.c=
-<br>@@ -91,7 +91,7 @@ void helper_idivw_AX(CPUX86State *env, target_ulong t=
-0)<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0num =3D (env-&gt;regs[R_EAX] &amp; 0xff=
-ff) | ((env-&gt;regs[R_EDX] &amp; 0xffff) &lt;&lt; 16);<br>=C2=A0 =C2=A0 =
-=C2=A0den =3D (int16_t)t0;<br>- =C2=A0 =C2=A0if (den =3D=3D 0) {<br>+ =C2=
-=A0 =C2=A0if (den =3D=3D 0 || (num =3D=3D INT32_MIN &amp;&amp; den =3D=3D -=
-1)) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0raise_exception_ra(env, EXCP00_D=
-IVZ, GETPC());<br>=C2=A0 =C2=A0 =C2=A0}<br>=C2=A0 =C2=A0 =C2=A0q =3D (num /=
- den);<br>@@ -130,7 +130,7 @@ void helper_idivl_EAX(CPUX86State *env, targe=
-t_ulong t0)<br>=C2=A0<br>=C2=A0 =C2=A0 =C2=A0num =3D ((uint32_t)env-&gt;reg=
-s[R_EAX]) | ((uint64_t)((uint32_t)env-&gt;regs[R_EDX]) &lt;&lt; 32);<br>=C2=
-=A0 =C2=A0 =C2=A0den =3D t0;<br>- =C2=A0 =C2=A0if (den =3D=3D 0) {<br>+ =C2=
-=A0 =C2=A0if (den =3D=3D 0 || (num =3D=3D INT64_MIN &amp;&amp; den =3D=3D -=
-1)) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0raise_exception_ra(env, EXCP00_D=
-IVZ, GETPC());<br>=C2=A0 =C2=A0 =C2=A0}<br>=C2=A0 =C2=A0 =C2=A0q =3D (num /=
- den);<br>diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.bu=
-ild<br>index 84bd680..5d88858 100644<br>--- a/tests/tcg/i386/meson.build<br=
->+++ b/tests/tcg/i386/meson.build<br>@@ -38,6 +38,7 @@ tests +=3D {<br>=C2=
-=A0 =C2=A0 =C2=A0&#39;cflags&#39;: [files(&#39;test-i386-code16.S&#39;), fi=
-les(&#39;test-i386-vm86.S&#39;),<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 &#39;-lm&#39;, &#39;-fno-pie&#39;, &#39;-Wl,--no-warn-rwx=
--segments&#39;],<br>=C2=A0 =C2=A0},<br>+ =C2=A0&#39;test-idiv-overflow.c&#3=
-9;: {},<br>=C2=A0 =C2=A0&#39;../multiarch/sha512.c&#39;: {<br>=C2=A0 =C2=A0=
- =C2=A0 &#39;exe_name&#39;: &#39;sha512-sse&#39;,<br>=C2=A0 =C2=A0 =C2=A0 &=
-#39;cflags&#39;: [&#39;-msse4.1&#39;, &#39;-O3&#39;],<br>diff --git a/tests=
-/tcg/i386/test-idiv-overflow.c b/tests/tcg/i386/test-idiv-overflow.c<br>new=
- file mode 100644<br>index 0000000..e8fc55a<br>--- /dev/null<br>+++ b/tests=
-/tcg/i386/test-idiv-overflow.c<br>@@ -0,0 +1,70 @@<br>+/* SPDX-License-Iden=
-tifier: GPL-2.0-or-later */<br>+/*<br>+ * Test that IDIV of the minimum div=
-idend by -1 raises #DE, which Linux<br>+ * delivers to the guest as SIGFPE =
-with si_code =3D=3D FPE_INTDIV.<br>+ */<br>+#define _GNU_SOURCE<br>+#includ=
-e &lt;setjmp.h&gt;<br>+#include &lt;signal.h&gt;<br>+#include &lt;stdio.h&g=
-t;<br>+#include &lt;string.h&gt;<br>+<br>+static sigjmp_buf idiv_jmp;<br>+s=
-tatic volatile sig_atomic_t idiv_si_code;<br>+<br>+static void idiv_sig_han=
-dler(int sig, siginfo_t *info, void *puc)<br>+{<br>+ =C2=A0 =C2=A0(void)sig=
-;<br>+ =C2=A0 =C2=A0(void)puc;<br>+ =C2=A0 =C2=A0idiv_si_code =3D info-&gt;=
-si_code;<br>+ =C2=A0 =C2=A0siglongjmp(idiv_jmp, 1);<br>+}<br>+<br>+static i=
-nt check_idiv_overflow(int width)<br>+{<br>+ =C2=A0 =C2=A0struct sigaction =
-sa, old;<br>+ =C2=A0 =C2=A0int ret =3D 1;<br>+<br>+ =C2=A0 =C2=A0memset(&am=
-p;sa, 0, sizeof(sa));<br>+ =C2=A0 =C2=A0sa.sa_sigaction =3D idiv_sig_handle=
-r;<br>+ =C2=A0 =C2=A0sa.sa_flags =3D SA_SIGINFO | SA_NODEFER;<br>+ =C2=A0 =
-=C2=A0sigemptyset(&amp;sa.sa_mask);<br>+ =C2=A0 =C2=A0sigaction(SIGFPE, &am=
-p;sa, &amp;old);<br>+<br>+ =C2=A0 =C2=A0idiv_si_code =3D 0;<br>+ =C2=A0 =C2=
-=A0if (sigsetjmp(idiv_jmp, 1) =3D=3D 0) {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0i=
-f (width =3D=3D 16) {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* DX:A=
-X =3D 0x8000:0x0000, divisor -1 */<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0__asm__ volatile (&quot;movl $0x8000, %%edx\n\t&quot;<br>+ =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0&quot;xorl %%eax, %%eax\n\t&quot;<br>+ =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0&quot;movl $-1, %%ecx\n\t&quot;<br>+ =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0&quot;idivw %%cx&quot;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: : : =
-&quot;eax&quot;, &quot;ecx&quot;, &quot;edx&quot;, &quot;cc&quot;);<br>+ =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0/* EDX:EAX =3D 0x80000000:0x00000000, divisor -1 */<br>+ =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__asm__ volatile (&quot;movl $0x80000000, %%=
-edx\n\t&quot;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;xorl %%eax, %%eax\n\t=
-&quot;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;movl $-1, %%ecx\n\t&quot;<br=
->+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;idivl %%ecx&quot;<br>+ =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0: : : &quot;eax&quot;, &quot;ecx&quot;, &quot;edx&quot;=
-, &quot;cc&quot;);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0printf(&quot;FAIL: idiv%d did not raise #DE\n&quot;, width);<br>+=
- =C2=A0 =C2=A0} else if (idiv_si_code !=3D FPE_INTDIV) {<br>+ =C2=A0 =C2=A0=
- =C2=A0 =C2=A0printf(&quot;FAIL: idiv%d raised SIGFPE with si_code %d\n&quo=
-t;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 width, (int)idiv_=
-si_code);<br>+ =C2=A0 =C2=A0} else {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0ret =
-=3D 0;<br>+ =C2=A0 =C2=A0}<br>+<br>+ =C2=A0 =C2=A0sigaction(SIGFPE, &amp;ol=
-d, NULL);<br>+ =C2=A0 =C2=A0return ret;<br>+}<br>+<br>+int main(void)<br>+{=
-<br>+ =C2=A0 =C2=A0int ret =3D 0;<br>+<br>+ =C2=A0 =C2=A0ret |=3D check_idi=
-v_overflow(16);<br>+ =C2=A0 =C2=A0ret |=3D check_idiv_overflow(32);<br>+ =
-=C2=A0 =C2=A0return ret;<br>+}<br>diff --git a/tests/tcg/x86_64/meson.build=
- b/tests/tcg/x86_64/meson.build<br>index 95c7ee6..4106d4d 100644<br>--- a/t=
-ests/tcg/x86_64/meson.build<br>+++ b/tests/tcg/x86_64/meson.build<br>@@ -52=
-,6 +52,7 @@ tests +=3D {<br>=C2=A0 =C2=A0},<br>=C2=A0 =C2=A0&#39;../i386/te=
-st-i386-adcox.c&#39;: {&#39;cflags&#39;: [&#39;-O2&#39;]},<br>=C2=A0 =C2=A0=
-&#39;../i386/test-i386-bmi2.c&#39;: {&#39;cflags&#39;: [&#39;-O2&#39;, &#39=
-;-fwrapv&#39;]},<br>+ =C2=A0&#39;../i386/test-idiv-overflow.c&#39;: {},<br>=
-=C2=A0}<br>=C2=A0<br>=C2=A0tests +=3D {<br>-- <br>2.53.0<br><br></div>
-
---0000000000002b1865065dffb534--
 
