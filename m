@@ -4,104 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E08CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 15:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB39ACCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 15:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI6WL-00056p-Ec; Sat, 17 Oct 2026 11:40:29 -0400
+	id 1xI6aw-00066m-1h; Sat, 17 Oct 2026 11:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI6WF-00053b-Dv
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:40:23 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1xI6au-00063y-7b
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:45:12 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xI6WD-0002G9-O0
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:40:23 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-8b0d126f631so6627777b3.2
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 08:40:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792251620; cv=none;
+ id 1xI6as-0002UQ-9J
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 11:45:11 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6798d4ab549so866163d50.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 08:45:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792251907; cv=none;
  d=google.com; s=arc-20260327;
- b=MGDsqRqXk18TW54cKDc0v5XVDiS/z04VXMw9GLLfHdvabjn9ea81qAm3tDT3UtPgEQ
- CrWNgs7zKaYqcuh4AaxJM4x/CFhFCMQz0tGuCRP9j6kCjI8a1LT+IH/yZe74QnrtU2Wj
- lhNsjyRxergMONeXqUfMxn1536VbhD9k7fbplKj8UTqCcWUBfO2AUvxNMNlSwtky6yRg
- oDhUB9GZdcy6ZCCkSkHY1mj/2pOPV0q27ScnL5DbMk61UCodZToxO1SlNFFl3VZ7KxbO
- xFhvO3x5spc5nwWBELNjRc483mL8gdfOjeFQtAjNMg6GUon5bJEwnaXCuSawrofTN9K9
- 4A2Q==
+ b=Xpd111c4V9zq8ZO3ZF+C9/OCLHZJ6fk21I/bPvQP5MeeUQWMS3yUM/9oSCts9m+aOf
+ gyU36k+qG3O0NgTNpEYtJP+YsGYjZlZcd2v56Llj9okqiRrWAjm5COJUrqvayjjl6DP+
+ +e8W1ypw/6+9ke0oVvT65n4xI4g9sXXsHrxpdQnbpGI1nz6O0QuFPdU6WVfOgrasRZZn
+ VOgB6cHvoRVXPHVaCOKGcOaCQrR9BwL+OiYmhvh1UdPi7qE90DbUb3x1MAwsAj8VbuKA
+ mhePplDHPu9ClEJ/F7gQcDae1J1T/nfPdKp+jnraprg0V3AUXMtqDiRaaihnWxP2BksY
+ OJQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=GTWxiZskUl0XXvZpBRWj60Fr6tzQkIOL7XZpEoquEAw=;
- fh=yKIEDAwticMq3mqvUy7ZmP7nebdPEU0OfrEgfwwE5Ds=;
- b=qEuyCosQilxkJJcxhqwxgxfg2OcxnmVftZyJHRdF3RqeWkXkqrKa4wFhKaL/zGAbVX
- Zj4/bh10CkwKq1yAmwrulIlNO9ZffTkkAKfdf2mwe0HHTxOFLQoYwzoASzuTSEHK/yq9
- SLwI/fSUAv06gBa21vXOAp0HPV82X4x2XCf5pg26zcCrTnTMU4v0tP9SvqZVf/AdnwBQ
- l5NuQY7oDy0J0k58IVqH6Kb8jMlcFNCfWK3E3F1oPTPj9pfDOYaPQgzKo3nAxsLv1hxz
- 6WDnFIptkjpoWaToXwUZxFOrt6DilVHnkdjbNAKvou5cTyZUAjC462Hwqv31JCB6NfGO
- Hynw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=c6ehgLiCBMPM9O9Qv2+tmYJA5l4Z62uEt1Nmq6PsrRM=;
+ fh=/K200KhdRibl9C3I1FrjZhAhyRRKNb6olOYm/zlvy20=;
+ b=oj7FSKnFpZKRDSyqvN6HyuLp7OzwrKLpcbhizUrqH2oSlSRQfGfj9OtmvCcC56DE+1
+ oss3AW8a+WgR74zpjCnnddi4jKt7SMrVh5pidwrW4dFPjbf7KMLzH36HMhFVqMOH60OH
+ 8hfFaFsE+nlYaRAGCy2crkf2iLC5RsE6cNawDAl8O1qeZqDR9dn7QL9yUCDL8MgVw5cf
+ DrP+VUgXA3tnUqAPaO5ysYt0E5VGXMsMnuF19pZBNkg4c7J61Y9/VFKboQASqgQj+Kj+
+ mS9Fd5AvWkiwqHUgLb6gNKSPkuR2VBTSlG2bQthPHv7kVWo2mnLjf0q/WQtbfn6yHF8V
+ oN9Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792251620; x=1792856420; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=GTWxiZskUl0XXvZpBRWj60Fr6tzQkIOL7XZpEoquEAw=;
- b=zKfyqy/3a8JoQpgr19C+GgSPrq8LoT5RlsuX7ERJm8wTnldvh/LRe81QX3E+SyMJTJ
- rUfkpTnfkzbRZhYgPt74TftjY65Ea2TkBzx/XxL8Rk3O96DpaxMNCkXsQy/NR3DDZeVU
- wiJb1xbTNaq13rwCcwl0uQu5qdYcMn+slFkpBQ4Qy/BFexs8SEOV8OJpkIl+Bijxg/BL
- Q9h8Aovtrs2D/OtsIVdK5C6IpEjQHjIVjhA+TmWTrk92zAVsfG178f/61hk+RhrfjXtG
- URUK9UE/PGQPC2dVV1czEmnT9lO/fT56PM/NODuYxMYhc5YwJ5j3NCQZeWfSy2OkPKzo
- NWpA==
+ d=linaro.org; s=google; t=1792251907; x=1792856707; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=c6ehgLiCBMPM9O9Qv2+tmYJA5l4Z62uEt1Nmq6PsrRM=;
+ b=EiXCip8z9YOAMq7p8YNuQsmO7C5kaHOuQGb/Ks5kqXRGEJvdJmsEcM4w/1BMtXj12s
+ iDV6Aeag1wsNo/OhI7YU1qYUuowq8woWzfhJnoJez9CV6p8KE1416PDMGJvjXohr15pB
+ HsWs0O3AonUuxMuRtPSH9bOs/NGolwiDLMoS6E3FSZHH8p2vuxdKWi+Un7UPAMitHOd9
+ /ikh3O4VXUBR+WTl3WdBrVLIL1xT+Ha3e/sVTVeBUH2OPVytTh0lB15S2woYsskTTZ+w
+ 6PYYqbYEySAv1NPCG9WNFzB0VYOb29j/PZxqy4F/9fjlaGH7TPclQ2SeslBhJC8/z/fy
+ TCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792251620; x=1792856420;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=GTWxiZskUl0XXvZpBRWj60Fr6tzQkIOL7XZpEoquEAw=;
- b=g1VehB5hOZmVjom7yueyM+et86MzW+gEimvKC4Ig7H0UbG+q9vcTYACw2Xp8D1Fk3/
- YWzBeFHLtxRNEl/34unToupCIQKiPJ5Stchmm1Ps/HxZ3iuEGvOIo6JHQqUpQKZWdt/E
- hDhOBY2hhe6uMQABCN9y5rtJ7yqEMIjKUL8TzTKZkMemFoPWwAD7WrdkeX77eaFRlu/Z
- ofDue0Z9jMhPiAx7RMpvow1zltyT9D2a39NVyNQ+YQazXPVVM3BWOAKy7sjPpqU6jLP4
- FU8pPXyennGlPyXigaunY/xz5YVumEDkTDVDO+vyurNfTc4VjOkfifRKbVi4ey10gkU5
- JdqQ==
-X-Gm-Message-State: AFq9FYJ2Fti670Ehy69gGeDF2wrHxRjGMwVy6jbEzj8luE3MXS3/4QRu
- FMv0whLBksbnTjMEV4S8JEofkjZSObRP5pf5n+AV1Dphyxkj4xCP4lu9m9tx2iREeiUA7QEYhTV
- n8eLdIP/oqXFcerQMnFakDWuRdWvT47V6du7vBgK0ig==
-X-Gm-Gg: AYBFou0mwxezmtKygsVvcJqJ3kKAs35IbxUaCeBa4k9+6yTEUgkei7HnaKhjoG1EnEV
- xR3LAGxh8/K/NLCsq/Qe5gsWSU+Qdv2L3Cn5j9/ULtTeWq3gShBkg3W/tqNuYR6lcqJeWTCBT6q
- NoCmzcWW5CF1985mnGljKE7NeteszCEUQz4d8sIf3qKQPtb1zguoL6TD3bl20Z+dpR4mfi07mDs
- /ZiF6BrEb2iGzSjKMpBhPPk5MEy/6idiRx6E6mwcb5Wt09HAfT5poHM8lmJZtV2F+M3YuqMC0ug
- RZgNrlg45d0FtAHktD3GU2HPzEg2pshb+V4qpE47Hu0pq1kYAwbH4WpPgZLyQ8+NIJHoUf1xI3K
- 9NCtwgomwjbkIlru7hwXKhNLo/LWEsmQyGOwAz3Q=
-X-Received: by 2002:a05:690c:e3c2:b0:8ae:58b9:f3f4 with SMTP id
- 00721157ae682-8b0f2183607mr11625197b3.31.1792251620406; Sat, 17 Oct 2026
- 08:40:20 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792251907; x=1792856707;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=c6ehgLiCBMPM9O9Qv2+tmYJA5l4Z62uEt1Nmq6PsrRM=;
+ b=CFoGTzeh399UKp3wnpSimUdrKb5AufaR84G0RUO6cqOnklilX4tPk/4FdslcZ/WUyP
+ Eji6JhpsacUtOffT9nzB9DrFYmDgq4S37mNaAtlhFzThfrH7qK/vToQ4wPNPOSI5xPXH
+ 4r2De0jQgqwRNPslDlHLoAx2dqfWRht/HM+fCy0aVsqAN7aNrF5ajso6KdbOOp9cGqxo
+ 0dpD3SXhD65DYHDzAZkFvW9OmhsvpC8Gnu0xprq0470bhy3mgfIy03X6MY4/sZVNH78n
+ dsHNcdxbTfnklS56ACBR/EmirR6tfT2OX7zRv1inx9G2ZaHQH1RnbAzQ1jf+fgKaO6Ku
+ aLnA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByKRI3817Gosriv0Sq5SqD3M+WEWACodxN/5QUQAtVHpgt0+4+VRR5lkrjJPW9l0AmkJbB8oOYas1IB@nongnu.org
+X-Gm-Message-State: AFq9FYLiTo9jwnxDX2c15pqyrL00HG+MxyQpDhT+zedisLQzd6ML/itI
+ x7qaId3uHYm59S5LW/Qy5Y3sDELGF5vI3CwY/Q3LgFJn7ORC08ZNtzhpVQBteYVipyB+8JrloiZ
+ bKRrIjAM9w0WogWH229B648aDbT2K4SLH2+BEubS4dQ==
+X-Gm-Gg: AYBFou0MyD3JnGgdoF7fe+IUCuvY1UtL/LfXlGMikGxFZhWR+9AUdms6GEEzI0TZIz4
+ yi+WkDghU7l4bq42vtlO97WIp8FIWNaU6cRHTzfm3PZGZPbmr5XDi56Xj4UqwHMUK/Tl/FBi67y
+ FPDhOD8R2AFqtDTorKe1TVCKqIlIRXdbnPuq4H+w+FahoooKuFmPSW/heeA2v0IJdIVySpzDhXN
+ N0bR7C7pk282jGmdb/f+V4aYGAmr64RI0lHATXwep5GrN8SObed9WbMLe6ZApvxWTJMJCzhwL/W
+ tQFBWidUblwSD7R2uc0s/2lst9AfwnyTMVWwqNev4KShc2f+sVLrioiEjNnBWradmbrnsxOEWHd
+ ax8RuYSCJq+6w2LEazL3LVpMdj6VLqiYt/qPfnrY=
+X-Received: by 2002:a05:690c:f08:b0:8ab:3d1d:af0f with SMTP id
+ 00721157ae682-8b0f21ae8ccmr13223277b3.44.1792251907392; Sat, 17 Oct 2026
+ 08:45:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFEAcA85iTUU=Pf8h-Ojc3jiBbW44V-1XRheVW=JqN-4xNLc=Q@mail.gmail.com>
- <CAGaQodL0CNKahvtmSj3ssbZpVdXZEEZ_oR=Pcbr=Gnh-jUmaWw@mail.gmail.com>
-In-Reply-To: <CAGaQodL0CNKahvtmSj3ssbZpVdXZEEZ_oR=Pcbr=Gnh-jUmaWw@mail.gmail.com>
+References: <20250929165230.797471-1-clg@redhat.com>
+ <20250929165230.797471-17-clg@redhat.com>
+In-Reply-To: <20250929165230.797471-17-clg@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 17 Oct 2026 16:40:09 +0100
-X-Gm-Features: AclHuK_xyOI897XYOdft3bXhz3GWO8j8TG5gBl_bdcl1qCnGHQ5ewaDpCiXuRl8
-Message-ID: <CAFEAcA_vL+z3pxHV1PViyVwraTUTT_H45QtWBsJ6d0tbD7-Okg@mail.gmail.com>
-Subject: Re: Re: Re: [PATCH v3 15/16] docs/system/arm/raspi: move PCIe/GENET
- from missing to implemented
-To: Marcelo Manzo <marcelomanzo@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, philmd@oss.qualcomm.com, 
- pierrick.bouvier@oss.qualcomm.com
+Date: Sat, 17 Oct 2026 16:44:56 +0100
+X-Gm-Features: AclHuK9E6vaOTj7kImr54MM0WYpFKQ-bnz8zOqwxViKhFvMMoBFKEFQspXT3Nws
+Message-ID: <CAFEAcA8OKABUH8S_F4HrWLKDC9XYqWGxD5_xMAPOPmc614u4UA@mail.gmail.com>
+Subject: Re: [PULL 16/32] hw/pci-host/aspeed: Add AST2600 PCIe config space
+ and host bridge
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Marcelo Manzo <marcelomanzo@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,20 +122,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 17 Oct 2026 at 16:16, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
+On Mon, 29 Sept 2025 at 17:54, C=C3=A9dric Le Goater <clg@redhat.com> wrote=
+:
 >
-> On 17 Oct 2026, Peter Maydell wrote:
-> >
-> > Does the system end up with the "msi_nonbroken" global set to
-> > "false" or "true" ?
+> From: Jamin Lin <jamin_lin@aspeedtech.com>
 >
-> It ends up true. aspeed_pcie_rc_class_init() sets msi_nonbroken, and
-> class_init runs for every class at startup, so any qemu-system-aarch64
-> has it set whichever machine is selected. That's why qemu-xhci ends up
-> with MSI-X enabled and needs msix=off.
+> Introduce PCIe config and host bridge model for the AST2600 platform.
 
-Whoops, that's a bug. It should be doing it on realize. I'll
-follow that up with the aspeed maintainer.
+> +static void aspeed_pcie_rc_class_init(ObjectClass *klass, const void *da=
+ta)
+> +{
+> +    PCIHostBridgeClass *hc =3D PCI_HOST_BRIDGE_CLASS(klass);
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    dc->desc =3D "ASPEED PCIe RC";
+> +    dc->realize =3D aspeed_pcie_rc_realize;
+> +    dc->fw_name =3D "pci";
+> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+> +
+> +    hc->root_bus_path =3D aspeed_pcie_rc_root_bus_path;
+> +    device_class_set_props(dc, aspeed_pcie_rc_props);
+> +
+> +    msi_nonbroken =3D true;
 
+This sets the msi_nonbroken global in the class init, which
+is run for every type compiled into QEMU at startup. That means
+it's effectively forcing it to 'true' for every machine type,
+whether it's aspeed or not.
+
+You're supposed to set this in your 'realize' method, so
+it only takes effect if your interrupt controller/PCI controller/etc
+is actually being used.
+
+Reported-by: Marcelo Manzo <marcelomanzo@gmail.com>
+
+thanks
 -- PMM
 
