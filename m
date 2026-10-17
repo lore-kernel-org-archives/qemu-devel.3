@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63895CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0973ACCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9cL-0004A5-GT; Sat, 17 Oct 2026 14:58:53 -0400
+	id 1xI9aH-0008T6-Ox; Sat, 17 Oct 2026 14:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c6-0003X5-SA; Sat, 17 Oct 2026 14:58:40 -0400
+ id 1xI9Zn-0008EX-47; Sat, 17 Oct 2026 14:56:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c5-0003sG-7O; Sat, 17 Oct 2026 14:58:38 -0400
+ id 1xI9Zl-0003by-Aj; Sat, 17 Oct 2026 14:56:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263398; bh=3c4dsn4vPTBlsQBOnxH6KKy/ZmaHzHTUNHtF6bjD/3U=;
+ t=1792263363; bh=+MXI3wIY5KUAYYaoBVe5VFV+DcUyibOYnh0uQj7gg8s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qRnjMgv5Ps9cpNeTLmteEJcnMG5FKfRJL5vYbn2ZZtQhBGNeBQXxLaQaESTvxJqn5
- E2vSPmqzCmb+aIPxdu0Ytq8EVzAAVKHtBp8hW+IagfLzWtg7aGazC0+bvWcuPRD/DR
- xsit4f71OE1uSeh+VlbL7R9weaKgxX+N/+/6AaGreqGmrUnm3NOIYFqzoz2/eo2/BJ
- 7fdKjRQSK/TZ3XwUTri4E0qTj3gI0guAmX1iqmBR1VzKxqQba9BjSrdLNVQlixUxC4
- 1/7EFjeckZ8Of66JG3ZaMJCthbAGhpS/CsjW+dsGh5SBi39tpyncDGuSJ52V5NTkwG
- 2C0SyaHYXR3pQ==
+ b=hEE2B6Bdae6Ju4nXVesjQCoX4IO4zuKJYNzEPFjp3+CQ8smU5hQl+2PVtaOBZ7rYn
+ +NifFs/upQZEK2dXogkzGHKNNNkvySTjf7TtFcZ3rzZCQ8AdcdUu5Z3YcSkYlRxlEk
+ 0LR4SsCeVGNt9UTtSXse+7jfwv4XuoCHaBTuRtpM0bVR0/P3wITnNcKGtnSuuaBRUv
+ NOqfxllDWhjPfvJNkOGuOt2BXesNwvksXMhcvgFcwSxq2dcNaeMlHXrUC2G5xonhMv
+ 4QioCqvP7oz+0GgCXH9+AnV5qFDWKzMBpLP+8/ZCYY1tNHAX5WiOebBFgFa68mHZ0v
+ R1PBjLld+EcQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 140291DE6C1;
- Sat, 17 Oct 2026 21:56:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D2F511DE6A8;
+ Sat, 17 Oct 2026 21:56:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4B7E44338C;
- Sat, 17 Oct 2026 21:56:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 68947443373;
+ Sat, 17 Oct 2026 21:56:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifan@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 33/63] hw/usb: Fix USB MTP Use-After-Free in
- usb_mtp_deletefn List Iteration
-Date: Sat, 17 Oct 2026 21:54:49 +0300
-Message-ID: <20261017185528.722197-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 08/63] vfio/ap: Clear error object pointer after
+ non-fatal errors
+Date: Sat, 17 Oct 2026 21:54:24 +0300
+Message-ID: <20261017185528.722197-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,45 +70,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tommaso Califano <tcalifan@redhat.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-In QEMU's USB MTP (Media Transfer Protocol) device emulation, the usb_mtp_deletefn()
-function in hw/usb/dev-mtp.c iterates over a child object list using QLIST_FOREACH
-while the recursive call may free the current element. After the free, the macro reads
-the le_next field from freed memory to advance the iterator.
+Registering a new IRQ notifier will allocate an error object if needed,
+and warn_report_err() will release that memory once it's finished.
+The pointer remains, however, so subsequent errors after the non-fatal
+errors in vfio_ap_realize() would cause an assertion failure for a
+non-NULL pointer.
 
-Replace QLIST_FOREACH with QLIST_FOREACH_SAFE, which saves the next pointer before the
-iteration body executes.
+Fix this by clearing the pointer once the warning has been reported,
+to reset the state of the error objects.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3991
-Signed-off-by: Tommaso Califano <tcalifan@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit d198957674b3c2cf8b9437ba91304cc421b219bb)
+Cc: Anthony Krowiak <akrowiak@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 1360b2ad1f ("s390x/ap: Wire up the device request notifier interface")
+Fixes: 0fb8a62fe4 ("hw/vfio/ap: notification handler for AP config changed event")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-5-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 057ca01937b75d772da5a0f8c0282e7c9dbdfb63)
+(Mjt: the second commit in Fixes is v10.0.0-1538-g0fb8a62fe46c, which is past 10.0, -
+ so pick up just the first half of the fix for 10.0.x series)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 326c92a43d..1ea97bf8b3 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1153,7 +1153,7 @@ enum {
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index c7ab4ff57a..0e6501efeb 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -171,8 +171,10 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+         /*
+          * Report this error, but do not make it a failing condition.
+          * Lack of this IRQ in the host does not prevent normal operation.
++         * Clear the pointer, since the warning will release it.
+          */
+         warn_report_err(err);
++        err = NULL;
+     }
  
- static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
- {
--    MTPObject *iter, *iter2;
-+    MTPObject *iter, *iter2, *iter2_next;
-     int ret = 0;
- 
-     /*
-@@ -1162,7 +1162,7 @@ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
- 
-     QLIST_FOREACH(iter, &o->children, list) {
-         if (iter->format == FMT_ASSOCIATION) {
--            QLIST_FOREACH(iter2, &iter->children, list) {
-+            QLIST_FOREACH_SAFE(iter2, &iter->children, list, iter2_next) {
-                 ret |= usb_mtp_deletefn(s, iter2, trans);
-             }
-         }
+     return;
 -- 
 2.47.3
 
