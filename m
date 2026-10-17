@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50C8CCF2CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C508DCCF2C9
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB3R-0003FQ-ID; Sat, 17 Oct 2026 16:30:57 -0400
+	id 1xIB5y-00073H-3v; Sat, 17 Oct 2026 16:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2j-0001PJ-V7; Sat, 17 Oct 2026 16:30:14 -0400
+ id 1xIB44-0003iT-V1; Sat, 17 Oct 2026 16:31:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2i-0004Mv-2o; Sat, 17 Oct 2026 16:30:13 -0400
+ id 1xIB43-0004WV-Ah; Sat, 17 Oct 2026 16:31:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268863; bh=RRSkN6dmkYkm6sMTLPdZFn+BI7d5/T+OeuYo4GeinyE=;
+ t=1792268878; bh=Yg1IL7YqpvXC+nby5VBGDMk9CnEPTbbgMQJYXxnF2LU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cTYcHVovotm+BGO0DR87mMYbY5pHNgLOOaGywLIt0VBUYMeRMQJgSViwEdTdOzrXA
- qlkkKMGtbhefKSl1DSy9DzuOc6jA7ayuWlLCiKipkzY7K2rOm5BvU9eXTpPCm3nIz/
- ubAbotW8ndJM1mGQSFAe/2MJ/L8b07HawLKwBzaSIXaLsqedu9plTs2Dza1y9Z8EVX
- eyXr3+HI0i5/JZdzOmTWr1q13L1ALMLZbKAs/z+YemiPeyPHV88XDRwyfoYB/1KXph
- BYgxjR/9SmUo4ulWRpFcNwQMJV/qchR01L7vHZFpqeH0d1efxgSZIsQ91o3gR/Fgd9
- YPRn2tBr6kNpw==
+ b=Vrl1ypUi3NDZLOx35wbwQ0duWqalzRmNDJTvOTP/+bevBtzbRAwhacUIgarFQ9Boz
+ TpRVHI0onITiTUAlZXHDFjQ7VEbdOOyujTDFcUOSL1yjXbSAUDT1eKrjRKUflDlZOG
+ TpIVsyMp3wMwSWKAOLD0hwSbwEayTA2lJCDvC4EWMQAqi2+uoOukRPz9azloDgTAy3
+ m63TVl9gFQG0pQcXJttyT2kO+TVX7MksCevze5O2aWpUST/QsQAyrsEc44rKY0Ybi1
+ 2tzc+w+KyHC8N43F0TH2MxJ8/0yfW6UiFDh5qes+zFd9RsuShQf7zeKc5Cowtv8DzU
+ 6czDGMdcK45EQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30BB51DE763;
- Sat, 17 Oct 2026 23:27:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 226C61DE770;
+ Sat, 17 Oct 2026 23:27:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4AAEC443437;
- Sat, 17 Oct 2026 23:27:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 240B9443444;
+ Sat, 17 Oct 2026 23:27:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 37/73] accel/kvm: coalesced mmio: check lenght of the
- MMIO write entry
-Date: Sat, 17 Oct 2026 23:25:55 +0300
-Message-ID: <20261017202638.728621-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Berger <stefanb@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 50/73] tpm_emulator: Reject sending commands smaller
+ than the request header
+Date: Sat, 17 Oct 2026 23:26:08 +0300
+Message-ID: <20261017202638.728621-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,54 +71,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-KVM's coalesced mmio ring buffer has entries that contain deffered MMIO
-writes.
+Reject any TPM request from being sent to the TPM emulator that is shorter
+than the size of the request header.
 
-Each such entry contains the length, an 8 byte value and a guest address.
-
-While the length value comes from the kernel, it is still possible for
-an attacker to corrupt the length field using another exploit.
-
-The attacker can then invoke kvm_flush_coalesced_mmio_buffer, which blindly
-trusts the length and can be used to inflict further damage.
-
-Add a sanity check on the length field to prevent this.
-
-This patch was only compile tested.
-
-Reported by: "Labs, STAR" <info@starlabs.sg>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3863
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260923004631.100997-1-mlevitsk@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 12916d64b78ec5dd0171e607ad2ffcc34537f3cf)
+Fixes: f4ede81eed29 ("tpm: Added support for TPM emulator")
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-4-stefanb@linux.ibm.com
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+(cherry picked from commit 6728170d2d081d8aad46807bc5e64520650f2795)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index da3afdc68d..5433a223e3 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3185,9 +3185,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
-             const AddressSpace *as;
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 95d2de2f48..5581f690e4 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -181,6 +181,11 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
+     uint32_t to_read;
+     ssize_t ret;
  
-             ent = &ring->coalesced_mmio[ring->first];
--            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
--            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
--                                ent->data, ent->len);
-+            if (ent->len > sizeof(ent->data)) {
-+                warn_report("coalesced MMIO entry has invalid len %u",
-+                            ent->len);
-+            } else {
-+                as = ent->pio == 1 ? &address_space_io : &address_space_memory;
-+                address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
-+                                    ent->data, ent->len);
-+            }
++    if (in_len < sizeof(struct tpm_req_hdr)) {
++        error_setg(errp, "tpm-emulator: invalid request size %u", in_len);
++        return -1;
++    }
 +
-             smp_wmb();
-             ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
-         }
+     if (selftest_done) {
+         *selftest_done = false;
+         is_selftest = tpm_util_is_selftest(in, in_len);
 -- 
 2.47.3
 
