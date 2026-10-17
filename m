@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB2DCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F5BCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9cW-0004rY-TH; Sat, 17 Oct 2026 14:59:05 -0400
+	id 1xI9g8-0003O2-7R; Sat, 17 Oct 2026 15:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cU-0004lq-H0; Sat, 17 Oct 2026 14:59:02 -0400
+ id 1xI9eq-0000ss-Jf; Sat, 17 Oct 2026 15:01:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cS-0003su-E7; Sat, 17 Oct 2026 14:59:02 -0400
+ id 1xI9eo-0004Ju-As; Sat, 17 Oct 2026 15:01:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263400; bh=HhIHdn5OOsvsF5pb7qu3RhyLKktjC6Ltc2bilV7sHzY=;
+ t=1792263432; bh=DDoRZW4I8GQsr16Jv7HTCFPdSNBE45iQP+pvSxLFFpU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sZjH8VAefqVnUjk38Wiy7Zqvze0UHAcHS9V61ugjL5SUmg2litw3B5FMLP82SluBb
- /Jd227se3KAXetPuZK9wNN/l93TlF5ogyrEqD7wnErfOvrmCyqL9hfPPgTlRR+mlSq
- IgqAg3rkXtFGMql8Ak7oCEqghJVGtt2CZihC14Kaf+6YrHy8UtJ523AR2Yp7UU1qU8
- reu1rnlBJOPBHOX4Y4YbGTaguJKMOgDHI75R8gw1iifsJ8nPsBHwTKKSjGibJWPsp3
- G7dU6UqBz7018DSbO4C8vefAsflg+8GgKPgzBbsSjsfImKCmNyh0l3ucfowLEVntNn
- nmTKfyc5FfMaw==
+ b=aEWfbcj1Yl/WdZlaaMoaGDUwY5g1Adynlb9F5qWcNqkWAy7D+ctlInixYHScpgroJ
+ /gu1SfFXSRqDo6tw7EddcwjHFw3lDeeFKvTVmBVIjS7Q10T8r3uscCxbPFguczDc/y
+ /ZI37+xRLJ71uHyrLBWALlVeC78hQ5Qfga+Wob8zGza5VaRJ2QuC1V1cn53/fJYUSt
+ 9MsmiN4Bsn67w8p3+EMfYXnfUwKbRUn99UNizP7xdD0vOsP0R5/11d6gM5YvtFsjGM
+ cj0PJWv/eZrQlMxUXVLivD13leXucM2QCBsBJVLTLPvECOfx2zz1p6xqpA6x3n/Dfk
+ /QJcbjjhKyERg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DCEBF1DE6C3;
- Sat, 17 Oct 2026 21:56:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 740431DE6DE;
+ Sat, 17 Oct 2026 21:57:12 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E338E44338E;
- Sat, 17 Oct 2026 21:56:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 616AE4433A6;
+ Sat, 17 Oct 2026 21:57:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Alberto Garcia <berto@igalia.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 35/63] block/throttle-groups: fix crash when enabling
- I/O limits on a busy disk
-Date: Sat, 17 Oct 2026 21:54:51 +0300
-Message-ID: <20261017185528.722197-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Xie Bo <xb@ultrarisc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 59/63] target/riscv/kvm: Preserve FCSR across
+ migration
+Date: Sat, 17 Oct 2026 21:55:15 +0300
+Message-ID: <20261017185528.722197-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,109 +71,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Xie Bo <xb@ultrarisc.com>
 
-throttle_group_register_tgm() stores tgm->throttle_state before it takes
-tg->lock, so the I/O path can see a member whose group still has NULL
-tokens[] and an empty member list. A request in an iothread then reaches
-throttle_group_co_io_limits_intercept(), wins tg->lock ahead of the
-registering thread, and next_throttle_token() passes the NULL token to
-throttle_group_next_tgm(), which dereferences it:
+kvm_riscv_get_regs_fp() and kvm_riscv_put_regs_fp() handle f0-f31
+but not FCSR.  KVM exposes FCSR as a separate 32-bit register in both
+the F and D register groups, so frm and fflags are lost after migration.
 
-  throttle_group_next_tgm (tgm=0x0) at block/throttle-groups.c:185
-  next_throttle_token (tgm=..., direction=THROTTLE_READ)
-  throttle_group_co_io_limits_intercept (tgm=..., bytes=8192, ...)
-  blk_co_do_preadv_part (blk=..., offset=..., bytes=8192, ...)
-  blk_aio_read_entry (opaque=...)
-  coroutine_trampoline (i0=..., i1=...)
+Read and write FCSR together with the FP registers and save it in a
+KVM-only subsection.  Older streams do not contain the subsection; in
+that case the destination keeps its reset value.
 
-blk_io_limits_enable() does not drain the BlockBackend, unlike its disable
-counterpart, so nothing keeps requests away while the group is built. A
-guest probing a disk that libvirt has just attached, at the moment the QoS
-settings for it are applied, is enough to hit this.
-
-Publish tgm->throttle_state with a release store once the member is
-linked into the group and its timers exist, and read it with an acquire
-load on the two unlocked I/O paths. A request that sees the new pointer
-then also sees a fully built group.
-
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Alberto Garcia <berto@igalia.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Message-ID: <20260908145554.3215221-2-den@openvz.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Acked-by: Alberto Garcia <berto@igalia.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 429bf66a1f235847af89f7ef91d71b9c47b73892)
+Fixes: 937f0b45120b ("target/riscv: Implement kvm_arch_get_registers")
+Fixes: 9997cc1e19d1 ("target/riscv: Implement kvm_arch_put_registers")
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260831074106.1798671-2-xb@ultrarisc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit e52de6b65f5fa584209a8c147d6170d8370ffdee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 8b39baea13..cfa8a30e9e 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1338,6 +1338,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-                       QEMUIOVector *qiov, size_t qiov_offset,
-                       BdrvRequestFlags flags)
- {
-+    ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
-     int ret;
-     BlockDriverState *bs;
-     IO_CODE();
-@@ -1357,9 +1358,8 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     bdrv_inc_in_flight(bs);
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 8fb1928681..00b97e54bb 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -487,6 +487,9 @@ struct CPUArchState {
+     hwaddr fdt_addr;
  
-     /* throttling disk I/O */
--    if (blk->public.throttle_group_member.throttle_state) {
--        throttle_group_co_io_limits_intercept(&blk->public.throttle_group_member,
--                bytes, THROTTLE_READ);
-+    if (qatomic_load_acquire(&tgm->throttle_state)) {
-+        throttle_group_co_io_limits_intercept(tgm, bytes, THROTTLE_READ);
-     }
- 
-     ret = bdrv_co_preadv_part(blk->root, offset, bytes, qiov, qiov_offset,
-@@ -1413,6 +1413,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-                        QEMUIOVector *qiov, size_t qiov_offset,
-                        BdrvRequestFlags flags)
- {
-+    ThrottleGroupMember *tgm = &blk->public.throttle_group_member;
-     int ret;
-     BlockDriverState *bs;
-     IO_CODE();
-@@ -1431,9 +1432,8 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
- 
-     bdrv_inc_in_flight(bs);
-     /* throttling disk I/O */
--    if (blk->public.throttle_group_member.throttle_state) {
--        throttle_group_co_io_limits_intercept(&blk->public.throttle_group_member,
--                bytes, THROTTLE_WRITE);
-+    if (qatomic_load_acquire(&tgm->throttle_state)) {
-+        throttle_group_co_io_limits_intercept(tgm, bytes, THROTTLE_WRITE);
-     }
- 
-     if (!blk->enable_write_cache) {
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index ee5dea9621..94a10c689a 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -581,7 +581,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-     ThrottleState *ts = throttle_group_incref(groupname);
-     ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
- 
--    tgm->throttle_state = ts;
-     tgm->aio_context = ctx;
-     qatomic_set(&tgm->restart_pending, 0);
- 
-@@ -602,6 +601,9 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-                          read_timer_cb,
-                          write_timer_cb,
-                          tgm);
+ #ifdef CONFIG_KVM
++    /* KVM floating-point state */
++    uint32_t kvm_fcsr;
 +
-+    /* The I/O path reads this without tg->lock, so publish it last */
-+    qatomic_store_release(&tgm->throttle_state, ts);
- }
+     /* kvm timer */
+     bool kvm_timer_dirty;
+     uint64_t kvm_timer_time;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 7b4a2aecbb..f9461e5611 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -110,6 +110,14 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu,
  
- /* Unregister a ThrottleGroupMember from its group, removing it from the list,
+ #define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, idx)
+ 
++#define RISCV_FP_F_FCSR_REG \
++    KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, \
++                         KVM_REG_RISCV_FP_F_REG(fcsr))
++
++#define RISCV_FP_D_FCSR_REG \
++    KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_D, \
++                         KVM_REG_RISCV_FP_D_REG(fcsr))
++
+ #define RISCV_VECTOR_CSR_REG(name) \
+     KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_VECTOR, \
+                            KVM_REG_RISCV_VECTOR_CSR_REG(name))
+@@ -722,7 +730,8 @@ static int kvm_riscv_get_regs_fp(CPUState *cs)
+             }
+             env->fpr[i] = reg;
+         }
+-        return ret;
++        return kvm_get_one_reg(cs, RISCV_FP_D_FCSR_REG,
++                               &env->kvm_fcsr);
+     }
+ 
+     if (riscv_has_ext(env, RVF)) {
+@@ -734,7 +743,8 @@ static int kvm_riscv_get_regs_fp(CPUState *cs)
+             }
+             env->fpr[i] = reg;
+         }
+-        return ret;
++        return kvm_get_one_reg(cs, RISCV_FP_F_FCSR_REG,
++                               &env->kvm_fcsr);
+     }
+ 
+     return ret;
+@@ -755,7 +765,8 @@ static int kvm_riscv_put_regs_fp(CPUState *cs)
+                 return ret;
+             }
+         }
+-        return ret;
++        return kvm_set_one_reg(cs, RISCV_FP_D_FCSR_REG,
++                               &env->kvm_fcsr);
+     }
+ 
+     if (riscv_has_ext(env, RVF)) {
+@@ -767,7 +778,8 @@ static int kvm_riscv_put_regs_fp(CPUState *cs)
+                 return ret;
+             }
+         }
+-        return ret;
++        return kvm_set_one_reg(cs, RISCV_FP_F_FCSR_REG,
++                               &env->kvm_fcsr);
+     }
+ 
+     return ret;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 3e52dab690..02cf06368e 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -188,6 +188,32 @@ static const VMStateDescription vmstate_rv128 = {
+ };
+ 
+ #ifdef CONFIG_KVM
++static bool kvm_fcsr_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++    CPURISCVState *env = &cpu->env;
++
++    return kvm_enabled() &&
++           (riscv_has_ext(env, RVF) || riscv_has_ext(env, RVD));
++}
++
++static int kvm_fcsr_post_load(void *opaque, int version_id)
++{
++    return kvm_enabled() ? 0 : -ENOTSUP;
++}
++
++static const VMStateDescription vmstate_kvm_fcsr = {
++    .name = "cpu/kvm-fcsr",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = kvm_fcsr_needed,
++    .post_load = kvm_fcsr_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(env.kvm_fcsr, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool kvmtimer_needed(void *opaque)
+ {
+     return kvm_enabled();
+@@ -510,6 +536,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_pointermasking,
+         &vmstate_rv128,
+ #ifdef CONFIG_KVM
++        &vmstate_kvm_fcsr,
+         &vmstate_kvmtimer,
+ #endif
+         &vmstate_envcfg,
 -- 
 2.47.3
 
