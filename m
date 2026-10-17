@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D68CCF2D1
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2167CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9bL-0001PF-0S; Sat, 17 Oct 2026 14:57:51 -0400
+	id 1xI9ec-00082c-Uh; Sat, 17 Oct 2026 15:01:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bB-00019s-JQ; Sat, 17 Oct 2026 14:57:41 -0400
+ id 1xI9dY-0005gL-JJ; Sat, 17 Oct 2026 15:00:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9b9-0003my-PY; Sat, 17 Oct 2026 14:57:41 -0400
+ id 1xI9dW-00043J-GU; Sat, 17 Oct 2026 15:00:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263384; bh=Q9VF8Y4bDhFUZY1LDExeEBGJXdcW1eIe32RT9tL5uWQ=;
+ t=1792263417; bh=L7lJBFASxJrLnWb8tTLuV3iuCk4R8ObHLAU5dp8ASMs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lxvMFxucmDJ5drb/ZqQBWn5GDSGrvQpo7DK7aaTHNuRyERv23t8s051La/MhrsK2k
- NswpARkEDhrrzc+mnlcO5dxlJ+UGkokw50aFWRtj71v7j7J9kythTrY+i+zgk5IO9S
- 7I+eTuZjzkfyUJRMa8YRyQsyutX9nQyM2GpF1fQsElfbJ5RyBAKm2yuwtXOiAKjkGY
- DK2KuSH35LnNqn2AjZVzwl3vsUhqYkXNZ+/jt+lEnptTbkn07aaloCNrU+aHkjiY1F
- 7/7dmv0EJcRkHSmPfVlMuOxEbu5iuaxGisA1UxFyl9WPHqZv6719lfMYPCLXokSUp8
- kCGqPCan7Rfkw==
+ b=HOAIT0o3/fHFcsI4yHF73/A7IfvQLB8Q96D4Ar33XjgT70DaeVRNMuFIFfNWQQlxU
+ fmZYS3Sbm6Hs83cS/CIiRMyqMNEeOTv9I6HibIg/mmwMsqYo2+PlEM5+YRm/oGRnEr
+ r2cUTleZB+uxE1Y8hbSRuujHGsqDQURr9CXzptnri/e8jUKZucqY/JTXA3hqLveBN4
+ py7geV2pUwrcWI9EFw7y+NnU6yER8StHDsDITRv/MQXQYc7930QKXF7UXH1N+kJ01e
+ aUNl1FaQ7lDStYEUXhlAH28WPG8Wx4uTB7Yd1Z6ZhOARajJ9zDawdu34LHaqQranCy
+ XoLGa5WItmK2Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 098C51DE6B7;
- Sat, 17 Oct 2026 21:56:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C9DBA1DE6D3;
+ Sat, 17 Oct 2026 21:56:57 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24C26443382;
- Sat, 17 Oct 2026 21:56:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 79BAB44339B;
+ Sat, 17 Oct 2026 21:56:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Dominic P <gcc@gcc.dp11.uk>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 23/63] block/nbd: clear reply.cookie when the reply
- is rejected
-Date: Sat, 17 Oct 2026 21:54:39 +0300
-Message-ID: <20261017185528.722197-23-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 48/63] tcg/optimize: Do not derive s_mask from
+ rotated s_mask
+Date: Sat, 17 Oct 2026 21:55:04 +0300
+Message-ID: <20261017185528.722197-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -71,91 +70,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Dominic P <gcc@gcc.dp11.uk>
 
-nbd_receive_replies() reads a reply header into s->reply and, when the
-header turns out to be unusable, reports a channel error and returns
-without touching it. The cookie stays there until the request which
-owns the reply clears it, and until then the waiters are explicitly
-allowed to look at a cookie which is not theirs:
+fold_shift computes s_mask for a rotate by a constant by rotating the
+input s_mask.  The result is not a sign mask.  For TCG_TYPE_I32,
+fold_masks_zosa_int then ORs in INT32_MIN, which can make it look like
+one: after sextract_i32 x,0,8 (s_mask ...ffffff80), rotr_i32 by 1 gives
+0x7fffffc0, which becomes ...ffffffc0.  A following sextract_i32 0,8
+is then folded to a mov.  rotl_i32 by 31 fails the same way.
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
+ARM, qemu-arm exits 255 instead of 7 (correct with -one-insn-per-tb):
 
-Two of the error paths leave a value chosen by the server behind: one
-returns before the cookie is validated at all, the other returns
-because that validation has failed. A waiter which picks such a cookie
-up turns it into an index which is not in requests[] and accesses the
-array out of bounds, at an offset the server controls.
+    ldr   r1, [r2]        @ *r2 == 3
+    sxtb  r1, r1
+    ror   r1, r1, #1
+    sxtb  r1, r1          @ dropped
+    cmp   r1, #0
+    movle r0, #255
+    movgt r0, #7
 
-The reply is of no use to anybody at this point, so clear the cookie
-before the mutex is released and keep the invariant that a non-zero
-s->reply.cookie is always an index of a live request.
+i386, the same with rotl_i32:
 
-Observing the stale cookie takes a second thread, which a multiqueue
-configuration provides. Within one AioContext there is no yield point
-between the failed read and the clearing done by the owner in
-nbd_co_receive_one_chunk(), so nothing else of this node runs in
-between. The parked waiters cannot see it either, as they are woken
-only after the cookie has been cleared. What can get in is a request
-entering nbd_receive_replies() afresh, one just sent or one back for
-its next reply chunk, because that path takes the mutex without
-looking at the state.
+    movsbl %al, %eax
+    roll   $31, %eax
+    movsbl %al, %eax      # dropped
 
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20260820115228.587427-2-den@openvz.org>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 9998d225bb95c0baa17d51f760e46a51886ccfdf)
+Handle rotates like the logical right shift and let fold_masks_zo
+recompute s_mask from z_mask and o_mask.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260930185124.3036980-2-gcc@gcc.dp11.uk>
+(cherry picked from commit d228536a5142cdd4b28e4feda74fa4859290787f)
+(Mjt: back-port to 10.0 across:
+ v10.0.0-1791-g03329e3ce460 "tcg/optimize: Build and use o_bits in fold_shift",
+ v10.0.0-430-g005a87e148dc "tcg: Merge INDEX_op_rot{l,r}_{i32,i64}",
+ v10.0.0-427-g3949f365eb6e "tcg: Merge INDEX_op_sar_{i32,i64}"
+ v10.0.0-425-g74dbd36f1f87 "tcg: Merge INDEX_op_shr_{i32,i64}")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nbd.c b/block/nbd.c
-index 887841bc81..ba9fb0103c 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -464,20 +464,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-             error_setg(errp, "server dropped connection");
-         }
-         if (ret < 0) {
--            nbd_channel_error(s, ret);
--            return ret;
-+            goto err;
-         }
-         if (nbd_reply_is_structured(&s->reply) &&
-             s->info.mode < NBD_MODE_STRUCTURED) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected structured reply");
--            return -EINVAL;
-+            goto err;
-         }
-         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
--            nbd_channel_error(s, -EINVAL);
-+            ret = -EINVAL;
-             error_setg(errp, "unexpected cookie value");
--            return -EINVAL;
-+            goto err;
-         }
-         if (s->reply.cookie == cookie) {
-             /* We are done */
-@@ -485,6 +484,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
-         }
-         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
-     }
-+
-+err:
-+    /* Waiters look at this cookie, so do not leave a rejected one behind. */
-+    s->reply.cookie = 0;
-+    nbd_channel_error(s, ret);
-+
-+    return ret;
- }
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index c7c16518f0..217c9187a6 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2603,17 +2603,26 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
  
- static int coroutine_fn GRAPH_RDLOCK
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+ 
+-        if (op->opc == INDEX_op_shr_i32 || op->opc == INDEX_op_shr_i64) {
++        switch (op->opc) {
++        CASE_OP_32_64(shr):
++        CASE_OP_32_64(rotl):
++        CASE_OP_32_64(rotr):
+             /*
+-             * Logical right shift will force the sign bit zero.
++             * Logical right shift will force the sign bit zero, and
++             * a rotate may move bits unrelated to the sign into it.
+              * Don't bother computing s_mask and let fold_masks
+              * recompute from z_mask.
+              */
+             return fold_masks_z(ctx, op, z_mask);
+-        }
+ 
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+-        return fold_masks_zs(ctx, op, z_mask, s_mask);
++        CASE_OP_32_64(sar):
++        CASE_OP_32_64(shl):
++            s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
++            return fold_masks_zs(ctx, op, z_mask, s_mask);
++
++        default:
++            g_assert_not_reached();
++        }
+     }
+ 
+     switch (op->opc) {
 -- 
 2.47.3
 
