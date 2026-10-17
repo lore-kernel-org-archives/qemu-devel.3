@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12915CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA18CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9dR-0005T7-1b; Sat, 17 Oct 2026 15:00:04 -0400
+	id 1xI9eX-0007RP-Ap; Sat, 17 Oct 2026 15:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cX-0004wh-TP; Sat, 17 Oct 2026 14:59:05 -0400
+ id 1xI9dR-0005Yu-8E; Sat, 17 Oct 2026 15:00:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9cW-0003wD-16; Sat, 17 Oct 2026 14:59:05 -0400
+ id 1xI9dN-000403-R8; Sat, 17 Oct 2026 15:00:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263403; bh=XySdoke8VI/HQlJG18mz7u8dZBLFrbe8di+XMwBRHj0=;
+ t=1792263412; bh=89Xk3cst3xlBoAObjfSiAUTAt07Ma4hw6vkcXvBpLfQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B0SU870Q3UYfbBmDtCtvNS+lR+ZpcBUUzm2UoeAGvvVREhcBk3OarUVeQn4TnRDm0
- mPn+03NKpYt5/I58vFSqZChnEZmEvalL3kY0/mBHQg21F5jOrqaBC7wdGvH4144FyE
- GuvA3iPiiSM//JoVuhDrFA+l9+rdNv5NcBvCqCauFzYgqDi7v1iydLaHiqSgPY7Bao
- Jlffo+RKJtsJvVck8FagTdSpmwYqIWl8bjf/AE+IXK1YTqxNI1l5ccn5aFuEkv5P75
- Y0PHwbJfbox+NhMiTZC58NYFzqjncR1TYGIkYoal37kFt2s3Z+JV8hFAoEpymdh/L7
- GMnCtijRE0sXQ==
+ b=j5p4OGdf1lMIvU2IA+tXyEOV0poQ7GPTxxPqK+2qKo2fIRR208KDCQnh8i2q2S/U0
+ ZnxuYqO7EyS+Z7kT/zwR6z5Iyf0yTscbrwMmDY1zKOUkesHb+O1jlxywaFFcnY5ZfU
+ WtUxZUrVxyOtrFJQT+kIWzlCzokqbc4mEzLkBLz47P+Z/NZSqZVa3r4h9mhiXfNoy0
+ TRtL7eqVBE1/CniVC9F9YCR4arl/LXD74TQJpBC3OsC3lTmYsRxbWIu52Jk2e45Tgw
+ jfytshvGsGNPuGej3MxhbGX89PpQzfgoGvGCadFlfJ8ryUaHlYqzzNpe+U+oP/MKxU
+ WLLcK4aHST7Ww==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BCF3D1DE6C6;
- Sat, 17 Oct 2026 21:56:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BA4E1DE6CF;
+ Sat, 17 Oct 2026 21:56:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D51B6443390;
- Sat, 17 Oct 2026 21:56:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A38B9443397;
+ Sat, 17 Oct 2026 21:56:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 37/63] block: fix bdrv_next() skipping monitor-owned
- nodes
-Date: Sat, 17 Oct 2026 21:54:53 +0300
-Message-ID: <20261017185528.722197-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 44/63] accel/kvm: coalesced mmio: check lenght of the
+ MMIO write entry
+Date: Sat, 17 Oct 2026 21:55:00 +0300
+Message-ID: <20261017185528.722197-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,116 +69,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-it->bs is the cursor into monitor_bdrv_states for the second phase of
-bdrv_next(), so it has to be NULL when that phase starts. Commit
-f6d38c9f6d made the first phase store the node it returns there, to
-unreference the right one when the graph changes underneath. The cursor
-is now left pointing at the last BlockBackend root, so the second phase
-resumes from there instead of from the head of the list and never
-returns a node added before it.
+KVM's coalesced mmio ring buffer has entries that contain deffered MMIO
+writes.
 
-A skipped node drops out of the vm_stop and migration handover paths:
-not flushed, not inactivated, not snapshotted. bdrv_inactivate_all()
-still reports success, so the node keeps its image lock and the
-migration target cannot open the image. Only detached nodes are hit in
-practice, as these callers also recurse into children.
+Each such entry contains the length, an 8 byte value and a guest address.
 
-Reset the cursor when the second phase starts. old_bs is taken at the
-top of the function, so f6d38c9f6d keeps working.
+While the length value comes from the kernel, it is still possible for
+an attacker to corrupt the length field using another exploit.
 
-Cc: qemu-stable@nongnu.org
-Fixes: f6d38c9f6d ("block-backend: fix edge case in bdrv_next() where BDS associated to BB changes")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260828222005.2888213-1-den@openvz.org>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 8daaf8d3b1c5f2ef98e526e036277083bc5fe34b)
+The attacker can then invoke kvm_flush_coalesced_mmio_buffer, which blindly
+trusts the length and can be used to inflict further damage.
+
+Add a sanity check on the length field to prevent this.
+
+This patch was only compile tested.
+
+Reported by: "Labs, STAR" <info@starlabs.sg>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3863
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20260923004631.100997-1-mlevitsk@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 12916d64b78ec5dd0171e607ad2ffcc34537f3cf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index cfa8a30e9e..f1886572a3 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -625,6 +625,7 @@ BlockDriverState *bdrv_next(BdrvNextIterator *it)
-             return bs;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 13d44abb31..9edd64fac7 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2854,9 +2854,15 @@ void kvm_flush_coalesced_mmio_buffer(void)
+             AddressSpace *as;
+ 
+             ent = &ring->coalesced_mmio[ring->first];
+-            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
+-            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
+-                                ent->data, ent->len);
++            if (ent->len > sizeof(ent->data)) {
++                warn_report("coalesced MMIO entry has invalid len %u",
++                            ent->len);
++            } else {
++                as = ent->pio == 1 ? &address_space_io : &address_space_memory;
++                address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
++                                    ent->data, ent->len);
++            }
++
+             smp_wmb();
+             ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
          }
-         it->phase = BDRV_NEXT_MONITOR_OWNED;
-+        it->bs = NULL;
-     }
- 
-     /* Then return the monitor-owned BDSes without a BB attached. Ignore all
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd b/tests/qemu-iotests/tests/inactive-node-nbd
-index 52c63fdf26..405c8cce59 100755
---- a/tests/qemu-iotests/tests/inactive-node-nbd
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd
-@@ -47,6 +47,7 @@ def node_is_active(_vm, node_name):
- 
- with iotests.FilePath('disk.img') as path, \
-      iotests.FilePath('ro.img') as ro_path, \
-+     iotests.FilePath('detached.img') as detached_path, \
-      iotests.FilePath('snap.qcow2') as snap_path, \
-      iotests.FilePath('snap2.qcow2') as snap2_path, \
-      iotests.FilePath('target.img') as target_path, \
-@@ -59,6 +60,7 @@ with iotests.FilePath('disk.img') as path, \
-     iotests.qemu_img_create('-f', iotests.imgfmt, path, img_size)
-     iotests.qemu_img_create('-f', iotests.imgfmt, target_path, img_size)
-     iotests.qemu_img_create('-f', iotests.imgfmt, ro_path, img_size)
-+    iotests.qemu_img_create('-f', iotests.imgfmt, detached_path, img_size)
- 
-     iotests.qemu_img_create('-f', 'qcow2', '-b', path, '-F', iotests.imgfmt,
-                             snap_path)
-@@ -69,6 +71,9 @@ with iotests.FilePath('disk.img') as path, \
-     vm.add_blockdev(f'file,node-name=disk-file,filename={path}')
-     vm.add_blockdev(f'{iotests.imgfmt},file=disk-file,node-name=disk-fmt,'
-                      'active=off')
-+    vm.add_blockdev(f'file,node-name=detached-file,filename={detached_path}')
-+    vm.add_blockdev(f'{iotests.imgfmt},file=detached-file,'
-+                     'node-name=detached-fmt')
-     vm.add_blockdev(f'file,node-name=target-file,filename={target_path}')
-     vm.add_blockdev(f'{iotests.imgfmt},file=target-file,node-name=target-fmt')
-     vm.add_blockdev(f'file,node-name=ro-file,filename={ro_path},read-only=on')
-@@ -310,6 +315,17 @@ with iotests.FilePath('disk.img') as path, \
-     iotests.log('snap2-fmt active: %s' % node_is_active(vm, 'snap2-fmt'))
-     iotests.log('target-fmt active: %s' % node_is_active(vm, 'target-fmt'))
- 
-+    iotests.log('\n=== Inactivating all nodes at once ===')
-+
-+    # detached-fmt has no parent and no BlockBackend, so nothing can reach it
-+    # by recursion. It is only inactivated if bdrv_next() actually returns it.
-+    vm.qmp_log('stop')
-+    vm.qmp_log('blockdev-set-active', active=False)
-+
-+    iotests.log('detached-fmt active: %s' % node_is_active(vm, 'detached-fmt'))
-+    iotests.log('detached-file active: %s'
-+                % node_is_active(vm, 'detached-file'))
-+
-     iotests.log('\nShutting down...')
-     vm.shutdown()
-     log = vm.get_log()
-diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
-index 3c43020053..28b1322554 100644
---- a/tests/qemu-iotests/tests/inactive-node-nbd.out
-+++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
-@@ -243,5 +243,13 @@ snap-fmt active: True
- snap2-fmt active: True
- target-fmt active: True
- 
-+=== Inactivating all nodes at once ===
-+{"execute": "stop", "arguments": {}}
-+{"return": {}}
-+{"execute": "blockdev-set-active", "arguments": {"active": false}}
-+{"return": {}}
-+detached-fmt active: False
-+detached-file active: False
-+
- Shutting down...
- 
 -- 
 2.47.3
 
