@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95FDCCF2CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 224D6CCF2D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB1u-0007Xl-Es; Sat, 17 Oct 2026 16:29:22 -0400
+	id 1xIB4r-0004D6-4D; Sat, 17 Oct 2026 16:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB19-0006ME-HU; Sat, 17 Oct 2026 16:28:39 -0400
+ id 1xIB37-0002yV-CJ; Sat, 17 Oct 2026 16:30:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB13-0003xu-Dm; Sat, 17 Oct 2026 16:28:31 -0400
+ id 1xIB35-0004No-Gl; Sat, 17 Oct 2026 16:30:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268843; bh=TvfbHBj8LQynFjroYhLJLapXU5bv3tTKrvXqbKgJewg=;
+ t=1792268865; bh=1H9UvdKFQ1LlgD4r2/lAWiiBPAGHHtfueMIQAT2Nk2E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QmvlWTrLaNYacy+Uv73OKmGNHwu/pVkX+6JR0E/M9BlqTFufGmlZsETWRFhIXboZm
- TFCsTprr7Fx6Gi180R/GCdyP8Vk5PvmFchy/SDD3tIaNWKk1N0Bh8zsnaAx7ANXq1B
- 8yMvqPehlp0EFXtvI0YRaUPJOxY7LCVJvHUmrApyGrPFuS4C1T1I2opjq3mjNVp3GD
- kbY0XJhr9gR8bT2kkFF8DO+4K//OsNNMOhBY+j831DewFMqq2HC8jn+Pcr6Xrfueru
- K7n7wQw/cmUmEgWLwRIx9rg/bYZ2k24cSspAwfceB9osQyFsEhhXu53YnEfX9rIkyP
- LAu3e2orc13aA==
+ b=ScO1i+Zj65pTovx7RqFctienyZJia74jm3IeQu38Y7y25NWLiSi00LcVLlCiWaTxU
+ jGfcM8n/KBE/AVUG6FDX1a+oItasMUnDWb8euHifS5XibkVCNFFXZa5i9F6x+jd3Rr
+ RPaQms7WcQwWnu4Tq0HOiYGY+9suCHtXyXTCTZ7K1VwrB1EdCjDM6Thi2btqQKDUlN
+ HoprVeUDVUFBSCARgSlLePpvFRceVkarHoAK6Ns8rN1FSKsEfrQ8cOxhvWgC3d0NmE
+ tghLpYjulNQB/oBoX3MKgNjWMh+vqQX/620rP9GyidPnFDW4T/P+69DMRIqXy1WlwH
+ +nd1KTkjh5a3g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1EA6F1DE74E;
- Sat, 17 Oct 2026 23:27:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4914A1DE765;
+ Sat, 17 Oct 2026 23:27:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 634C9443425;
- Sat, 17 Oct 2026 23:27:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C286443439;
+ Sat, 17 Oct 2026 23:27:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifan@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 19/73] hw/usb/dev-smartcard-reader: validate migrated
- fields in post_load
-Date: Sat, 17 Oct 2026 23:25:37 +0300
-Message-ID: <20261017202638.728621-19-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 39/73] hw/usb: Fix USB MTP Use-After-Free in
+ usb_mtp_deletefn List Iteration
+Date: Sat, 17 Oct 2026 23:25:57 +0300
+Message-ID: <20261017202638.728621-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -72,47 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Tommaso Califano <tcalifan@redhat.com>
 
-Validate fields loaded from the migration stream to reject crafted or
-corrupt data before it can cause harm.
+In QEMU's USB MTP (Media Transfer Protocol) device emulation, the usb_mtp_deletefn()
+function in hw/usb/dev-mtp.c iterates over a child object list using QLIST_FOREACH
+while the recursive call may free the current element. After the free, the macro reads
+the le_next field from freed memory to advance the iterator.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit 665494c3ac0737e8067b6365f99c237bd5e5356a)
+Replace QLIST_FOREACH with QLIST_FOREACH_SAFE, which saves the next pointer before the
+iteration body executes.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3991
+Signed-off-by: Tommaso Califano <tcalifan@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit d198957674b3c2cf8b9437ba91304cc421b219bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index 4cb5f6e1a4..b68f371f24 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -1359,6 +1359,26 @@ static void ccid_realize(USBDevice *dev, Error **errp)
- static int ccid_post_load(void *opaque, int version_id)
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 1d8cfd32dc..c2d36a73cf 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1152,7 +1152,7 @@ enum {
+ 
+ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
  {
-     USBCCIDState *s = opaque;
-+    int i;
-+
-+    if (s->bulk_in_pending_end - s->bulk_in_pending_start > BULK_IN_PENDING_NUM) {
-+        return -EINVAL;
-+    }
-+
-+    if (s->pending_answers_num > PENDING_ANSWERS_NUM) {
-+        return -EINVAL;
-+    }
-+
-+    if (s->bulk_out_pos > BULK_OUT_DATA_SIZE) {
-+        return -EINVAL;
-+    }
-+
-+    for (i = 0; i < BULK_IN_PENDING_NUM; i++) {
-+        if (s->bulk_in_pending[i].len > BULK_IN_BUF_SIZE ||
-+            s->bulk_in_pending[i].pos > s->bulk_in_pending[i].len) {
-+            return -EINVAL;
-+        }
-+    }
+-    MTPObject *iter, *iter2;
++    MTPObject *iter, *iter2, *iter2_next;
+     int ret = 0;
  
      /*
-      * This must be done after usb_device_attach, which sets state to ATTACHED,
+@@ -1161,7 +1161,7 @@ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
+ 
+     QLIST_FOREACH(iter, &o->children, list) {
+         if (iter->format == FMT_ASSOCIATION) {
+-            QLIST_FOREACH(iter2, &iter->children, list) {
++            QLIST_FOREACH_SAFE(iter2, &iter->children, list, iter2_next) {
+                 ret |= usb_mtp_deletefn(s, iter2, trans);
+             }
+         }
 -- 
 2.47.3
 
