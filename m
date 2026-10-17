@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA87CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26708CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB5i-0006Qd-30; Sat, 17 Oct 2026 16:33:18 -0400
+	id 1xIB5i-0006QH-19; Sat, 17 Oct 2026 16:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB49-0003oQ-7u; Sat, 17 Oct 2026 16:31:43 -0400
+ id 1xIB4Y-00046v-Nf; Sat, 17 Oct 2026 16:32:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB46-0004Ww-Ew; Sat, 17 Oct 2026 16:31:40 -0400
+ id 1xIB4X-0004ZB-3S; Sat, 17 Oct 2026 16:32:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268879; bh=7AfG7+RNL0V6vOz1vQPPug5lsrdDIr+Zd/HFDbU6mRI=;
+ t=1792268882; bh=TWBxVKz82Up+sx4uZne6YUeNc6ojmMAxAlQXgNEi9Ds=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xqBfo6WK9Ng5h24mKHZ92KwHCH0u6UWcDI4sudVEd8YM10l0M02EP/FQusmHwvMHk
- xgyW120MwNDjWs7ufkc00dpYzZ2SC/vzKQvMGMd3RAPeBIPMaMrnUAzxd6SDxTHErm
- LeToH7rfJhlNH9djE3PvqJNO15GpSZwVVLank36ruD5yDU187liYTllrYnjvLhguOA
- 5kv3BppCYEfQnOltgwU4xBn1d+UkjiUPo35bSwLZF7k4+p7YSSMRbG0GeTufbXNiks
- niPYXgQfcNhHjvKkCOgKBLDLfOjcEgi2p/VLEkLZw+thidprQ5wW9neJZ4cko5H3NY
- /W5DmNTkIKdgg==
+ b=g4Iej4Qt/Th8oLhSfcN2jG84H8CUPU811covLqSmiPBMJXmlL143qXPT09a8uYMDz
+ 0IHfG+Y77zxEpOcupjObLKDIBwag3WNq9UoZGKTw6tsvdYECk2PSojj0VorAZn3w44
+ ysbv3ULyBZYdPmrbz1XgzKa0/lJuZ67F09G2viOilKotS+uzdRSmazyJ+riDOKhjNB
+ 51A0uqxii3fniqr6IgQsS9bmNT4H+XJa6ZSFrptP9gs7P+pvNytkuFV39oDon0PC1K
+ wlQSmWvPYY8h+/kA3vaLP1bJ6vKg0WRW1sflmwRivHH5WfJQqgcWodCYcgCiqlmCNx
+ mSpXsXuj8MNFA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6413D1DE771;
- Sat, 17 Oct 2026 23:27:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0CA91DE774;
+ Sat, 17 Oct 2026 23:28:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 61DF9443445;
- Sat, 17 Oct 2026 23:27:58 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CA556443448;
+ Sat, 17 Oct 2026 23:28:01 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Berger <stefanb@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Arun Menon <armenon@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 51/73] hw/tpm: crb: Do not clear internal buffers when
- backend is busy
-Date: Sat, 17 Oct 2026 23:26:09 +0300
-Message-ID: <20261017202638.728621-51-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Dominic P <gcc@gcc.dp11.uk>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 54/73] tests/tcg: Add tests for sign extension after
+ rotate
+Date: Sat, 17 Oct 2026 23:26:12 +0300
+Message-ID: <20261017202638.728621-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,34 +70,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Dominic P <gcc@gcc.dp11.uk>
 
-While the backend (thread) is accessing the request and response buffers,
-do not clear those buffers upon a command cancellation. Also, per CRB spec
-the TPM is expected to either return a normal command response (command
-could not be cancelled) or an error response indicating TPM_RC_CANCELED.
-So the response buffer must be able to receive a response as normal.
+Cover the rotr_i32 (ARM ror) and rotl_i32 (i386 roll) forms fixed by
+the previous patch.  Both tests fail without it.
 
-Fixes: 29315d22b259 ("hw/tpm: Add internal buffer state for chunking")
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Arun Menon <armenon@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261002142516.2063735-7-stefanb@linux.ibm.com
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-(cherry picked from commit 9b206e52655044da7f639c193a6ff3cec21baa02)
+Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260930185124.3036980-3-gcc@gcc.dp11.uk>
+(cherry picked from commit f9ca6b19acb1b935e7abc920410c993b059a8b4d)
+(Mjt: back-port across Makefile=>meson conversion for tests)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 54fa2042b5..daf451aa56 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -219,7 +219,6 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
-             if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
-                 tpm_backend_cancel_cmd(s->tpmbe);
-             }
--            tpm_crb_clear_internal_buffers(s);
-         }
-         break;
-     case A_CRB_CTRL_START:
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 51a3ed76a8..1e5b32ccfe 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -34,6 +34,9 @@ pcalign-a32: CFLAGS+=-marm
+ 
+ ARM_TESTS += issue4448
+ 
++ARM_TESTS += test-arm-opt-ror
++test-arm-opt-ror: CFLAGS+=-marm
++
+ ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
+ 
+ # Semihosting smoke test for linux-user
+diff --git a/tests/tcg/arm/test-arm-opt-ror.c b/tests/tcg/arm/test-arm-opt-ror.c
+new file mode 100644
+index 0000000000..2579168a13
+--- /dev/null
++++ b/tests/tcg/arm/test-arm-opt-ror.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
++
++#include <assert.h>
++
++int main(void)
++{
++    /* Load from memory so that TCG does not see a constant. */
++    volatile int v = 3;
++    int x = v, gt;
++
++    asm("sxtb %1, %1\n\t"
++        "ror %1, %1, #1\n\t"
++        "sxtb %1, %1\n\t"
++        "cmp %1, #0\n\t"
++        "movle %0, #0\n\t"
++        "movgt %0, #1"
++        : "=r"(gt), "+r"(x) : : "cc");
++    assert(gt);
++    return 0;
++}
+diff --git a/tests/tcg/i386/test-i386-opt-rol.c b/tests/tcg/i386/test-i386-opt-rol.c
+new file mode 100644
+index 0000000000..e0393147e1
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-rol.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
++
++#include <assert.h>
++
++int main(void)
++{
++    /* Load from memory so that TCG does not see a constant. */
++    volatile int v = 3;
++    int x = v;
++    char test;
++
++    asm("movsbl %b1, %1\n\t"
++        "roll $31, %1\n\t"
++        "movsbl %b1, %1\n\t"
++        "testl %1, %1\n\t"
++        "setg %0"
++        : "=q"(test), "+q"(x));
++    assert(test);
++    return 0;
++}
 -- 
 2.47.3
 
