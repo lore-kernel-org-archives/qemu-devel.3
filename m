@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FDE9CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E8AFCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9Zh-0008AH-6Q; Sat, 17 Oct 2026 14:56:12 -0400
+	id 1xI9a6-0008Ll-HU; Sat, 17 Oct 2026 14:56:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ZM-000899-2q; Sat, 17 Oct 2026 14:55:48 -0400
+ id 1xI9Zq-0008F8-L9; Sat, 17 Oct 2026 14:56:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ZI-0003Zi-Gb; Sat, 17 Oct 2026 14:55:46 -0400
+ id 1xI9Zp-0003ca-0H; Sat, 17 Oct 2026 14:56:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263328; bh=2OLpClSdZUZXvU/DXDOMeA6s4oKZKZyJWryRBZH+RQI=;
- h=From:To:Cc:Subject:Date;
- b=SW714P+AUxYjGsb6A2qdS0jNQR4u3lawQSri2sJLbXWObM1zWDdoMGigcK/O7F8tT
- s06p/8AQhF02Xq5PYv5H09aGJ3NBqNovBwS1++Y/QxJtEUBiKnTWL6I8uEUnyPUIc6
- ShMmlEtkjroWqeaMR4CAT1LrPZxljlMUSpjZdtoiqyiFybgj0pdnYO+K/b/gvTHxBH
- x2YcyWaqG6QWf2IIQcudUfJEY95FSKGqAsiuFeSXB4BuWeECbyNMul+iriJBp9yAzC
- /FCUN+6BLpQpdCClmraiLQVwkDT6FoJAGFDR0naa/FxmYT71vuqasRHb/Ie0plNLiy
- jUxUQlGMLfC8Q==
+ t=1792263366; bh=tSb0Tqwf4A9fdsaISwiIaIBvnw7/aaR7Lo2gyb4UNkE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=HgKfHGJkiPaEc077pn2EQj5tpmvAQaXM/K9B8sIuSxJ+EbC0hnpfHcKeOzsp0SRw0
+ bWwFnX4lhKWe6QTqWCLnwWeciat2lKpbMBLIryMElGY2b2qA9xFoyk81lsIfk5nkgp
+ 6WngcQOR4rPgZoN3LTp0TiNTu+AlG7e7bof+c0bloyy/8AbmM7GhX1s8lbUxgEcE0S
+ yN0vO75zGSTNuO6PqAZmKn/oQjmOh1yxn83R8t1MYP4isrEk8x/aUMrmY3/ttME+d9
+ 3N0bm7CIKX3telqaaiM1ZwXXw0EXJEGpG6TbBpcVoO36PEHyGD4zFsOkIGg3CuM/5l
+ j0NTVzF05XYnA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66DBE1DE69F;
- Sat, 17 Oct 2026 21:55:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 60EBB1DE6AA;
+ Sat, 17 Oct 2026 21:56:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9759544336B;
- Sat, 17 Oct 2026 21:55:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D727443375;
+ Sat, 17 Oct 2026 21:56:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 00/63] Patch Round-up for stable 10.0.15,
- freeze on 2026-10-26
-Date: Sat, 17 Oct 2026 21:54:16 +0300
-Message-ID: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 10/63] s390x/css: Use datastream pointer for checking
+ no-data CCWs
+Date: Sat, 17 Oct 2026 21:54:26 +0300
+Message-ID: <20261017185528.722197-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
+References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,149 +69,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.15:
+From: Eric Farman <farman@linux.ibm.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+The channel subsystem will reject channel programs that incorporate
+256 CCWs without a data transfer, but the existing check to account
+for this only does so for CCWs with a data address of zero. Other
+valid CCWs that wouldn't transfer data are not accounted for.
 
-Patch freeze is 2026-10-26, and the release is planned for 2026-10-28:
+Rather than re-inventing the wheel, use the output of the datastream
+at the end of the entire CCW parsing tree to indicate whether data
+was moved or not.
 
-  https://wiki.qemu.org/Planning/10.0
+Cc: qemu-stable@nongnu.org
+Fixes: e8601dd5d0 ("s390x/css: catch ccw sequence errors")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-9-farman@linux.ibm.com
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+(cherry picked from commit 930a188edbbcbd68aadaa1db22e4db1b785a2171)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 79a6c90175..c480f04d0a 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -1042,13 +1042,6 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
+ 
+     check_len = !((ccw.flags & CCW_FLAG_SLI) && !(ccw.flags & CCW_FLAG_DC));
+ 
+-    if (!ccw.cda) {
+-        if (sch->ccw_no_data_cnt == 255) {
+-            return -EINVAL;
+-        }
+-        sch->ccw_no_data_cnt++;
+-    }
+-
+     /* Look at the command. */
+     ccw_dstream_init(&sch->cds, &ccw, &(sch->orb));
+     switch (ccw.cmd_code) {
+@@ -1129,6 +1122,20 @@ static int css_interpret_ccw(SubchDev *sch, hwaddr ccw_addr,
+     }
+     sch->last_cmd = ccw;
+     sch->last_cmd_valid = true;
++
++    /*
++     * A CCW that transfers no data is allowed, but ensure an upper limit
++     * is established to prevent long-running channel programs that don't
++     * move actual data.
++     */
++    if (ret == 0 && sch->cds.at_byte == 0) {
++        if (sch->ccw_no_data_cnt == 255) {
++            ret = -EINVAL;
++        } else {
++            sch->ccw_no_data_cnt++;
++        }
++    }
++
+     if (ret == 0) {
+         if (ccw.flags & CCW_FLAG_CC) {
+             sch->channel_prog += 8;
+-- 
+2.47.3
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 653b0c06c83d Jean-Francois Bortolotti:
-   target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
-02 66d4ea65a064 Fuad Tabba:
-   target/arm: Fix next timer tick when the offset puts the count ahead
-03 998b6db69e3e Fuad Tabba:
-   target/arm: Fix WFxT timeouts when the offset puts the count ahead
-04 89e653b77369 Thomas Huth:
-   hw/usb/hcd-xhci: Limit DMA transfers to plain memory
-05 92b935de2709 Eric Farman:
-   virtio-ccw: Limit ISC to MAX_ISC
-06 13c7ba5e0f14 Eric Farman:
-   virtio-ccw: Do not overwrite existing indicators
-07 bd5bc2861fb6 Eric Farman:
-   virtio-ccw: Fix rc check in read configuration path
-08 057ca01937b7 Eric Farman:
-   vfio/ap: Clear error object pointer after non-fatal errors
-09 77cc481c2311 Eric Farman:
-   hw/intc/s390x: Fix check after g_try_realloc
-10 930a188edbbc Eric Farman:
-   s390x/css: Use datastream pointer for checking no-data CCWs
-11 119860f15cd2 Eric Farman:
-   s390x/sclp: Reject short headers in PV case
-12 e57ad3670188 Matthew Rosato:
-   s390x/pci: Fix frame stepping in rpcit_service_call()
-13 10a81449a279 Matthew Rosato:
-   s390x/pci: Use qemu_log_mask() for guest-triggered errors in reg_ioat()
-14 d818e2b0e631 Matthew Rosato:
-   s390x/pci: Reject apertures beyond IOAT capacity in translation mode
-15 1847dcd96d7d Marc-André Lureau:
-   hw/usb/dev-smartcard-reader: validate interrupt transfer length
-16 49851e859506 Marc-André Lureau:
-   hw/usb/dev-smartcard-reader: fix OOB read from pending bulk-in ring
-17 d7f20657e756 Marc-André Lureau:
-   hw/usb/dev-smartcard-reader: fix assert on pending answers overflow
-18 069dcc103be7 Marc-André Lureau:
-   hw/usb/dev-smartcard-reader: decode bulk-out length as little-endian
-19 665494c3ac07 Marc-André Lureau:
-   hw/usb/dev-smartcard-reader: validate migrated fields in post_load
-20 050f5408bfcf Andrey Drobyshev:
-   hw/display/qxl: factor out qxl_guest_phys2virt()
-21 95bc45193bbe Andrey Drobyshev:
-   hw/display/qxl: validate replayed commands in qxl_post_load
-22 7e429d3624c4 Andrey Drobyshev:
-   hw/display/qxl: trace skipped stale loadvm commands
-23 9998d225bb95 Denis V. Lunev:
-   block/nbd: clear reply.cookie when the reply is rejected
-24 75b0a993dacb Denis V. Lunev:
-   block/nbd: never index requests[] with an unchecked cookie
-25 cd3be3bd96c0 Denis V. Lunev:
-   block/nbd: clear reply.cookie under receive_mutex
-26 90fcba23c526 Daniel Paziyski:
-   hw/nvme: fix assertion failure on sr-iov capable nvme controller removal
-27 6ee626e34979 Daniel Paziyski:
-   hw/nvme: fix memory leak on sr-iov capable nvme controller removal
-28 8d496d8f9fce Jakub Lipový:
-   target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
-29 6802a4b23919 Simon Scherer:
-   target/i386: clear C1 for all x87 compare instructions
-30 6d5fb14d36a6 Simon Scherer:
-   target/i386: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
-31 0f98b46846eb Maxim Levitsky:
-   accel/kvm: protect kvm_resample_fd_list with a mutex
-32 a5b4837a253e Paolo Bonzini:
-   target/i386/tcg: ignore VEX.L for unary scalar instructions
-33 d198957674b3 Tommaso Califano:
-   hw/usb: Fix USB MTP Use-After-Free in usb_mtp_deletefn List Iteration
-34 4668899d6615 Daniel P. Berrangé:
-   io: prevent unbounded read of websocket data from client
-35 429bf66a1f23 Denis V. Lunev:
-   block/throttle-groups: fix crash when enabling I/O limits on a busy disk
-36 2910b995f6c8 Denis V. Lunev:
-   iotests: cover inactivating a read-only node
-37 8daaf8d3b1c5 Denis V. Lunev:
-   block: fix bdrv_next() skipping monitor-owned nodes
-38 196a50b0902b Stefan Hajnoczi:
-   file-posix: add statx(STATX_DIOALIGN) support
-39 af28b65fae6f Denis V. Lunev:
-   qcow2: do not clear the dirty bit when reopening a read-only node
-40 efe98c2a0932 Denis V. Lunev:
-   block: reject a reopen of an unusable node instead of crashing
-41 0bd5a1b3d60c Kevin Wolf:
-   block: Fix corruption from broken RMW atomicity
-42 cf4f672c11d6 Kevin Wolf:
-   block: Remove now redundant bdrv_wait_serialising_requests() calls
-43 c08b84cd6e55 Philippe Mathieu-Daudé:
-   accel/kvm: Replace legacy cpu_physical_memory_write() call
-44 12916d64b78e Maxim Levitsky:
-   accel/kvm: coalesced mmio: check lenght of the MMIO write entry
-45 99a8b5a0dda9 Daniel P. Berrangé:
-   io: cork TLS writes to avoid small TLS records
-46 6728170d2d08 Stefan Berger:
-   tpm_emulator: Reject sending commands smaller than the request header
-47 35164929cfa3 Marc-André Lureau:
-   hw/display/vga: fix OOB writes after external surface resize
-48 d228536a5142 Dominic P:
-   tcg/optimize: Do not derive s_mask from rotated s_mask
-49 f9ca6b19acb1 Dominic P:
-   tests/tcg: Add tests for sign extension after rotate
-50 0dd9fb43ea22 Artemii Mashanov:
-   target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
-51 21b6c3e5bccf Artemii Mashanov:
-   target/i386: fix immediate stack adjustment for RET and RETF
-52 306d9ab85fdb Aurelien Jarno:
-   tcg/riscv64: Remove vector min/max ops with immediates
-53 0dedeff9328d Fuad Tabba:
-   target/arm: Clear TTBR[5:0] from a 52-bit table base address
-54 bb79850255c8 Fuad Tabba:
-   tests/tcg/aarch64: Add a test for a two-entry 52-bit TTBR table
-55 2c372119465e Fuad Tabba:
-   target/arm: Use the 52-bit TTBR base address layout when TCR.DS is set
-56 2579771a28a2 Fuad Tabba:
-   tests/tcg/aarch64: Test the TTBR layout with TCR.DS and a 48-bit OA
-57 366b4fba0fae imaginos:
-   target/riscv: check G-stage write permission for VS-stage A/D updates
-58 410166b550cc Zephyr Li:
-   target/riscv: stop translating after WFI
-59 e52de6b65f5f Xie Bo:
-   target/riscv/kvm: Preserve FCSR across migration
-60 ba280c351011 Rick Richard:
-   tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
-61 ee23f530e99d Rick Richard:
-   hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
-62 71041ce05c95 Rick Richard:
-   tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden reference
-63 cb82463fa9bf dodochicha:
-   target/riscv: Check Svnapot PTE before updating A/D bits
 
