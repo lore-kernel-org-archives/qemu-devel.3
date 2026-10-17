@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFDCFCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8127CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 18:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9bv-0002n5-8U; Sat, 17 Oct 2026 14:58:27 -0400
+	id 1xI9bE-0001Fl-Qa; Sat, 17 Oct 2026 14:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bc-0002UJ-Pv; Sat, 17 Oct 2026 14:58:10 -0400
+ id 1xI9b8-00014v-9L; Sat, 17 Oct 2026 14:57:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9bb-0003o5-05; Sat, 17 Oct 2026 14:58:08 -0400
+ id 1xI9b6-0003iT-Bt; Sat, 17 Oct 2026 14:57:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263389; bh=ckQ2TnRzgwn5Uso3kT+FWmC8W2ouGiGbkoqTHfgPbpU=;
+ t=1792263381; bh=qjpDxnfEm9cJ3vEgcmHzNJu+SLJ9x9KAe7d+Nn/yIrA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BNMjisxutYG5nt8yiyO8+rFhj3zo09CmLDRsbnNBIGKacQ1MhsnwLc7oSGwuS1Xu3
- NfB3hAMOTM1ls9ISPrpmu5Iq58IpXo3VRbjl6EDC4hqDyuNHQ0TnFkP6MgtxxaQ+Zd
- QEtwg3Ph2B+uvqb8I0jSqLqVRX3nZ4lJFMGLddLu2DbIxo1ghjy7X4++DW0dRBRSPd
- 8VcoQ94wMPJYaMF/tr17L93DftEgxht6rOZwpUXhV5T9qQxG3TFZVvl4LopeM0aDOs
- jzVLyXM4YAVYBH8NyrIV5k2FemWS+Hkx3mXMzgwEd7h/46FPnFT/BllsVTB2cZJsyD
- elsH5L2PpfXcw==
+ b=MIjBzDy16gf76/Eg/Baikk5TPUVcfXtU0qxNPFgkjpsVjBp0c0vpuTDqOfT9vDlxz
+ le6+IMbQIlSwqkc8KPM/yAW1BM3FJOCv4pgMYrD+suIiqFSiI009TF7Ixk1jCtcDvl
+ u9IGIER8jEcM4XBKeFoJgzHRyBzCxyFla2kTvIZejPwjTfobe5iAM93HU6Lw8ZMRMv
+ bQ2PTmmxC1sjVI+1D+G8j/FroxC3vHZECkBanwbW6FBI0GH23oZQ7lI/KpxTFWQaRj
+ JiZvQ/AYsMMBzy9HcjmPrgaxB6lpce/R+NPIzEcKl4O660Rz9V8EOwTtNwQ7EgewqS
+ EAEPzMkeOVJYA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2721D1DE6BB;
- Sat, 17 Oct 2026 21:56:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BFB1D1DE6B5;
+ Sat, 17 Oct 2026 21:56:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1CCC9443386;
- Sat, 17 Oct 2026 21:56:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6DEE3443380;
+ Sat, 17 Oct 2026 21:56:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Paziyski <danielpaziyski@gmail.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 27/63] hw/nvme: fix memory leak on sr-iov capable
- nvme controller removal
-Date: Sat, 17 Oct 2026 21:54:43 +0300
-Message-ID: <20261017185528.722197-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 21/63] hw/display/qxl: validate replayed commands in
+ qxl_post_load
+Date: Sat, 17 Oct 2026 21:54:37 +0300
+Message-ID: <20261017185528.722197-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,79 +71,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Paziyski <danielpaziyski@gmail.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-If a nvme controller is SR-IOV capable, its list of secondary controllers
-(virtual functions) is stored in the sec_ctrl_list dynamically allocated
-array, located in the NvmeCtrl struct.
+On incoming migration qxl_post_load() replays the tracked cursor and
+surface commands by handing their guest addresses straight to spice,
+without revalidating them. Those addresses were checked when the guest
+submitted them, but the guest may have freed or reused that memory
+before migration, so qxl's tracked pointer can be stale. spice-server
+then re-parses the command from that memory and, for a stale cursor,
+reads a garbage shape pointer -- aborting the target in memslot_get_virt()
+(again, spice-server function) and failing the migration.
 
-Free the secondary controller list after destroying the virtual functions and
-freeing their controller IDs.
+Validate each replayed command with qxl_guest_phys2virt(report_bug=false)
+before adding it to the replay list, and for a cursor also validate the
+nested shape pointer. Commands that no longer resolve are skipped rather
+than replayed. report_bug is false so a stale pointer is not mistaken for
+a live guest error, which would needlessly disable a healthy guest's
+display.
 
-QEMU command line (boot with a hotunplug-aware OS, such as Linux):
-
-    qemu-system-x86_64 -M q35 -device pcie-root-port,id=rp -monitor stdio \
-    -device nvme-subsys,id=subsys0 \
-    -device nvme,subsys=subsys0,serial=ctrl0,sriov_max_vfs=1,\
-sriov_vq_flexible=2,sriov_vi_flexible=1,max_ioqpairs=4,msix_qsize=2,bus=rp,id=ctrl0
-
-In the QEMU monitor:
-
-    device_del ctrl0
-    quit
-
-ASAN splat:
-
-==78982==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 32 byte(s) in 1 object(s) allocated from:
-    #0 0x7fcbab32bea9 in calloc (/usr/lib/libasan.so.8+0x12bea9) (BuildId: 7f2845989b820f536270e19ec47df085ae89a675)
-    #1 0x7fcbaa2a34b2 in g_malloc0 (/usr/lib/libglib-2.0.so.0+0x694b2) (BuildId: cb17d184459352a7985a010f1cd3acef4a4f90d8)
-    #2 0x559c531fff4b in nvme_subsys_register_ctrl ../hw/nvme/subsys.c:65
-    #3 0x559c531d715e in nvme_init_subsys ../hw/nvme/ctrl.c:9582
-    #4 0x559c531d7a7d in nvme_realize ../hw/nvme/ctrl.c:9637
-    #5 0x559c5323c0da in pci_qdev_realize ../hw/pci/pci.c:2316
-    #6 0x559c54001e88 in device_set_realized ../hw/core/qdev.c:514
-    #7 0x559c5402462e in property_set_bool ../qom/object.c:2484
-    #8 0x559c5401dbd2 in object_property_set ../qom/object.c:1548
-    #9 0x559c5402b76c in object_property_set_qobject ../qom/qom-qobject.c:28
-    #10 0x559c5401e24c in object_property_set_bool ../qom/object.c:1618
-    #11 0x559c53fffd77 in qdev_realize ../hw/core/qdev.c:277
-    #12 0x559c53934166 in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
-    #13 0x559c53934272 in qdev_device_add ../system/qdev-monitor.c:758
-    #14 0x559c538867c8 in device_init_func ../system/vl.c:1217
-    #15 0x559c5487236a in qemu_opts_foreach ../util/qemu-option.c:1148
-    #16 0x559c53891205 in qemu_create_cli_devices ../system/vl.c:2762
-    #17 0x559c53891968 in qmp_x_exit_preconfig ../system/vl.c:2822
-    #18 0x559c53898108 in qemu_init ../system/vl.c:3862
-    #19 0x559c545efabf in main ../system/main.c:71
-    #20 0x7fcba7627780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-    #21 0x7fcba76278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
-    #22 0x559c524df1f4 in _start (BuildId: 35402cb4fc46114b7a4102258726bbdec82cd9bc)
-
-Cc: qemu-stable@nongnu.org
-Fixes: c6159d0e384f ("hw/nvme: Allocate sec-ctrl-list as a dynamic array")
-Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 6ee626e34979eae2d3e2318b00f0c340a474dd23)
+Message-ID: <20260825172051.435372-3-andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+(cherry picked from commit 95bc45193bbebcb11a45fa40c5642712cd4401bc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index f5719372f9..60f67741f9 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -9088,6 +9088,10 @@ static void nvme_exit(PCIDevice *pci_dev)
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 7dc4da3d93..418c317158 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2412,6 +2412,37 @@ static void qxl_create_memslots(PCIQXLDevice *d)
+     }
+ }
  
-     nvme_subsys_unregister_ctrl(n->subsys, n);
- 
-+    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
-+        g_free(n->sec_ctrl_list);
++/*
++ * Validate a command tracked for loadvm replay before handing its guest
++ * address to spice-server.
++ */
++static bool qxl_loadvm_cmd_valid(PCIQXLDevice *d, QXLPHYSICAL data,
++                                 uint32_t type)
++{
++    switch (type) {
++    case QXL_CMD_SURFACE:
++        return qxl_guest_phys2virt(d, data,
++                                   sizeof(QXLSurfaceCmd), false) != NULL;
++
++    case QXL_CMD_CURSOR: {
++        QXLCursorCmd *cmd = qxl_guest_phys2virt(d, data, sizeof(QXLCursorCmd),
++                                                false);
++
++        if (!cmd) {
++            return false;
++        }
++        if (le32_to_cpu(cmd->type) == QXL_CURSOR_SET) {
++            return qxl_guest_phys2virt(d, le64_to_cpu(cmd->u.set.shape),
++                                       sizeof(QXLCursor), false) != NULL;
++        }
++        return true;
 +    }
 +
-     g_free(n->cq);
-     g_free(n->sq);
-     g_free(n->aer_reqs);
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ static int qxl_post_load(void *opaque, int version)
+ {
+     PCIQXLDevice* d = opaque;
+@@ -2450,12 +2481,17 @@ static int qxl_post_load(void *opaque, int version)
+             if (d->guest_surfaces.cmds[in] == 0) {
+                 continue;
+             }
++            if (!qxl_loadvm_cmd_valid(d, d->guest_surfaces.cmds[in],
++                                      QXL_CMD_SURFACE)) {
++                continue;
++            }
+             cmds[out].cmd.data = d->guest_surfaces.cmds[in];
+             cmds[out].cmd.type = QXL_CMD_SURFACE;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
+             out++;
+         }
+-        if (d->guest_cursor) {
++        if (d->guest_cursor &&
++            qxl_loadvm_cmd_valid(d, d->guest_cursor, QXL_CMD_CURSOR)) {
+             cmds[out].cmd.data = d->guest_cursor;
+             cmds[out].cmd.type = QXL_CMD_CURSOR;
+             cmds[out].group_id = MEMSLOT_GROUP_GUEST;
 -- 
 2.47.3
 
