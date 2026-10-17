@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3504CCF2D1
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0281ECCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIA1p-0002Me-L1; Sat, 17 Oct 2026 15:25:13 -0400
+	id 1xIAuF-0003Sh-Vs; Sat, 17 Oct 2026 16:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1xIA0l-00024S-9w
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 15:24:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1xIA0h-0006lq-J4
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 15:24:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792265042;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PmuuzImnXfpG0r46OGW2FySZ6Av94oCxbuE+orKEI08=;
- b=UP4GqyIJGK7RkhgR1eFOyIJ6Pa72lsfQJOKWPp0BAXggiKeAJKpi+PMGymCH1AbnWEdHHN
- lK2nfW1dMtvdxS5YvKWw0nlTKLbjc6ySA5l4ZyLCTmio40CJwA0IM7dyg+IDAUDVzCCcME
- JBUk7KO+31gapF6FEZAoLF77tOZhZ6w=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-A6coEPNnP_y7jWQsJhRF-g-1; Sat,
- 17 Oct 2026 19:22:44 +0000
-X-MC-Unique: A6coEPNnP_y7jWQsJhRF-g-1
-X-Mimecast-MFC-AGG-ID: A6coEPNnP_y7jWQsJhRF-g_1792264963
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3DF71956088; Sat, 17 Oct 2026 19:22:42 +0000 (UTC)
-Received: from kdutta-thinkpadp1gen7.bengluru.csb (unknown [10.74.64.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CDA218004D2; Sat, 17 Oct 2026 19:22:38 +0000 (UTC)
-From: Koushik Dutta <kdutta@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>, Jason Wang <jasowang@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-Subject: [PATCH v11 1/3] [PATCH 1/3] Introduce virtio_net_handle_tx_dispatch()
- to unify TX path handling. This dispatcher dynamically selects between
- timer-based and BH-based TX processing based on configuration.
-Date: Sun, 18 Oct 2026 00:52:30 +0530
-Message-ID: <20261017192232.1545578-2-kdutta@redhat.com>
-In-Reply-To: <20261017192232.1545578-1-kdutta@redhat.com>
-References: <20261017192232.1545578-1-kdutta@redhat.com>
+ (Exim 4.90_1) (envelope-from <aarnaarn2@gmail.com>)
+ id 1xI9qX-0000AT-Rc
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 15:13:33 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aarnaarn2@gmail.com>)
+ id 1xI9qU-0005Zq-T4
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 15:13:32 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4a1dede3c2cso5834665e9.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 12:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792264409; x=1792869209; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=o3AL/EqmkSj0Ht7RBWdIVuBsJTZwUu4cHBWJaC/CRl0=;
+ b=MWoHIyGtREuaYGV37r1tg6lY8e/DO7YDxwPWzu64zY20eoMpM5Cav6xeSfk4ESRp5L
+ RO/o4aGarZdHpQlAdAotz0rOyt/3CjSmX2u0/fahT+VDnJ0hTymiNfbqK8Voxor6uvZU
+ M3rbm9l2y8qdWmRX90P+At3/qzess+ZHfStkwuXuXkHckTsnn9/LFFMnaSPU2kAkHFAB
+ n96hNlpyWSujD6pl7rikzXusgzN9M2Vsb9ZWfb2FPuQbjmuCQyo5RYf85ZcFyq80w8j2
+ kkY4MbV0ZeEjEpP1axQ1c+HBw/sWm+6D7dooKdkYjD7BTejWJRgLEU1+31K30Ej4nt31
+ 0UQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792264409; x=1792869209;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:content-type:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=o3AL/EqmkSj0Ht7RBWdIVuBsJTZwUu4cHBWJaC/CRl0=;
+ b=C2F2cFA1wYTXsfhW03Vd+qhihP9/nYCLBPCI+dbQ33wXliknaeLusT+AsH4vrm8x4F
+ UA73jt9WX33U2mYtFjnNneM6iFady3c4j/PvhpfRFtdr9vUiXfwq/TRXsoCu9vo6keHY
+ P/y0SGnnYPypdmlJuLpjo2cVvr+bqiftYM7Em34pNE0hHMYfOMKrWZ4cVLEf02UENBl3
+ CbH11+nKV0BaYbggxPxiyliefOdFVEPg+hQcT5gwkqUZUa6P/lsleyve4TG3F7z903bb
+ hrCUuEA/utFN4uE9NnIWjAbB1gyc+v+qs6YuaiefVsJxGbdK67UcYCAci8CJqoCigKy8
+ Lc+Q==
+X-Gm-Message-State: AFq9FYImLvizcO5tAYRhcc/jIF2zVLqe3aAmuSon5P7Pa7FbUFldoYNn
+ ptjiwHzhW2iQQDI/UR3oraTKtbej0fy2PVyVNkg+ZSvbVhVTHL4hfsBE
+X-Gm-Gg: AYBFou1M9GJ2EZgHP+23wFda7VNPcWTvwX4l/bL5v9DB82Mo0nuwvdeszzokQ3mVUvq
+ 29ngEO9XqlvMYSw7R+efpTS6061jC3dnC5Os4XzwpTV5Q/YPP1iWCyVujlypOe8AKzN0Ry+LsiX
+ LR0dc4UI9DfrCvl7gXuV1eqov0i0isdDe6/nXgVCIwcnxOuSa9CGir0yFeGzLmTVjuqtjWG/RGg
+ aL0ki7UKl/laxEm7AqhBFfWgiMGy1gK5IExwonZhxz66jmtjeSdgZVVTL3pzzjnVI99Zr6bpmk/
+ hXgP2578+ZP2/HKqjS/AqejKI47CZ7c2aCHlLYM3Alg+oLq9ca79w2ryvjYmsqQWBtwbUUJasJA
+ IE0LWOtYHdFC57Csk71YHdY8zF2D3S7niBzm+P8sSp35Qq1VP0bxcr6gNADzRaGPayAx/H2JTsq
+ zAXGlPFq+qRzjMHKNN4qcMQOlKxhPcxNHEaUwY6iRpm41drPMGgelPC48GUo+DLXI=
+X-Received: by 2002:a05:600c:1f83:b0:4a0:27eb:49b with SMTP id
+ 5b1f17b1804b1-4a1d761b900mr65324415e9.30.1792264408211; 
+ Sat, 17 Oct 2026 12:13:28 -0700 (PDT)
+Received: from localhost ([31.7.57.58]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1d0e2bb8dsm121916705e9.2.2026.10.17.12.13.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 17 Oct 2026 12:13:27 -0700 (PDT)
+Date: Sat, 17 Oct 2026 22:13:26 +0300
+From: Alexander Epaneshnikov <aarnaarn2@gmail.com>
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: qemu-devel@nongnu.org, brltty@brltty.app
+Subject: Re: baum: NVDA does not detect usb-braille, and following the
+ input-linux grab
+Message-ID: <atPIRr46KvMoiCti@alex-pc>
+References: <atNoDNz0dQucxzFN@alex-pc>
+ <atNo9sk_7jCAi98u@end>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kdutta@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+In-Reply-To: <atNo9sk_7jCAi98u@end>
+User-Agent: NeoMutt/20260616-dirty
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=aarnaarn2@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: 28
+X-Spam_score: 2.8
+X-Spam_bar: ++
+X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 17 Oct 2026 16:21:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,99 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the tx=timer selected between two completely separate
-code paths at queue creation time. This refactoring introduces a
-runtime dispatch mechanism while maintaining identical behavior.
+On Sat, Oct 17, 2026 at 02:24:22PM +0200, Samuel Thibault wrote:
+> Hello,
+>
+> Please always keep some mailing list in Cc, so that I am not the only
+> recipient of the mail. Writing to me only means risking falling in
+> the middle of my vacations and thus not getting an answer for weeks,
+> or that I just don't have the time to answer and thus you would at
+> best get a terse answer, or worse, no answer at all... Conversely,
+> keeping the list in Cc means avoiding all these issues completely,
+> you'll involve all the community to help you, make the answers you
+> get available to everyone, and even archived for web crawlers to find
+> them whenever somebody has the same issue.
 
-This is a preparatory patch with no functional changes, making it
-easier to add dynamic TX notification coalescing in a subsequent patch.
+Sorry about that. I'm adding qemu-devel and the BRLTTY list now, and
+quoting my original message in full below for the lists. If anyone else
+on the lists is interested in picking this up, that would be welcome
+too.
 
-Signed-off-by: Koushik Dutta <kdutta@redhat.com>
----
- hw/net/virtio-net.c            | 42 ++++++++++++++++++++++------------
- include/hw/virtio/virtio-net.h |  1 +
- 2 files changed, 28 insertions(+), 15 deletions(-)
+> Samuel
+>
+> Alexander Epaneshnikov, le sam. 17 oct. 2026 15:23:14 +0300, a ecrit:
+> > Hi Samuel,
+> >
+> > I use a HumanWare Brailliant BI 40X with BRLTTY and Orca on the host, and a Windows guest under libvirt with NVDA. The keyboard and mouse go to the guest through input-linux with grab_all, toggled with left+right Ctrl. I wanted the braille display to follow that grab: NVDA's output while the guest has input, Orca's when it's back on the host. I have a local prototype working, and I'd like to ask whether you'd consider supporting this upstream.
+> >
+> > 1. NVDA can't detect the emulated display.
+> >
+> > NVDA's Baum driver treats 0403:FE72 as a serial device. For serial ports it detects the display by sending PROTOCOL_ONOFF (0x15) to turn the protocol off and then on, then waits for the cell count (0x01) and the device identity (0x84). chardev/baum.c reads the 0x15 request but never replies, so NVDA reports "No Baum display found", even with an FTDI COM-port driver that covers FE72. Replying to "protocol on" with the identity and the cell count fixes it. As far as I can tell, that's what real displays do.
+> >
+> > 2. Sharing the display between the host and the guest.
+> >
+> > My prototype adds a small grab notifier in ui/input.c. input-linux fires it when the grab toggles. baum then changes its BrlAPI client priority (BRLAPI_PARAM_CLIENT_PRIORITY, local): 80 while the guest holds the grab, which is above Orca's 50 and the 70 it uses in flat review, and 0 (disabled) when the grab is released. BRLTTY then switches between the two clients on the same tty without reconnecting, and each side's last content comes back straight away. Under libvirt, QEMU has no controlling tty, so I also set CONTROLVT in the environment.
+> >
+> > Questions:
+> >
+> > - Is client priority the right BrlAPI mechanism for this, or would you rather do it another way?
+> > - Should it be opt-in, for example a chardev option?
+> > - Should other grab sources (SDL, GTK) report to the same notifier, or should it stay limited to input-linux?
+> >
+> > One caveat: I built my local prototype with an AI assistant (Claude). Because of QEMU's code-provenance policy, I can't submit it, and I'm deliberately not sending you the code, so nothing you write is derived from it. I'm not able to write these patches myself without that kind of help.
+> >
+> > Would you be willing to write them? The first one, answering "protocol on", is a plain bug fix and should be small. The second is a feature request, so please do it whatever way you think is right; my version above is only to show what I'm after. I'm happy to test anything you send, and to provide NVDA and BRLTTY logs with my setup (Brailliant BI 40X, BRLTTY hw driver, Orca on GNOME Wayland, Windows guest with NVDA, libvirt, input-linux with grab_all).
+> >
+> > --
+> > Sincerely, Alexander
+> >
+>
+> --
+> Samuel
+> «Tiens, quand j'aurai un peu de temps et une partition libre, je crois
+>  que je vais essayer de remplacer mes scripts de démarrage par des
+>  programmes Windows lancés via Wine et binfmt_misc :-)»
+> -+- AGV in Guide du linuxien pervers - "J'sais pas quoi faire... (air connu)"
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 19f453fb7d..5ca011f890 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3022,6 +3022,22 @@ static void virtio_net_tx_bh(void *opaque)
-     }
- }
- 
-+static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue *vq)
-+{
-+    VirtIONet *n = VIRTIO_NET(vdev);
-+    VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
-+
-+    if (n->tx_timer_activate) {
-+        if (q->tx_timer == NULL) {
-+            q->tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-+                                       virtio_net_tx_timer, q);
-+        }
-+        virtio_net_handle_tx_timer(vdev, vq);
-+    } else {
-+        virtio_net_handle_tx_bh(vdev, vq);
-+    }
-+}
-+
- static void virtio_net_add_queue(VirtIONet *n, int index)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-@@ -3029,21 +3045,13 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
-     n->vqs[index].rx_vq = virtio_add_queue(vdev, n->net_conf.rx_queue_size,
-                                            virtio_net_handle_rx);
- 
--    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_timer);
--        n->vqs[index].tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                              virtio_net_tx_timer,
--                                              &n->vqs[index]);
--    } else {
--        n->vqs[index].tx_vq =
--            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
--                             virtio_net_handle_tx_bh);
--        n->vqs[index].tx_bh = virtio_bh_new_guarded(DEVICE(vdev),
--                                                    virtio_net_tx_bh,
--                                                    &n->vqs[index]);
--    }
-+    n->vqs[index].tx_vq =
-+        virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-+                         virtio_net_handle_tx_dispatch);
-+
-+    n->vqs[index].tx_bh =
-+        qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
-+                            &DEVICE(vdev)->mem_reentrancy_guard);
- 
-     n->vqs[index].tx_waiting = 0;
-     n->vqs[index].n = n;
-@@ -4107,6 +4115,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         error_printf("Defaulting to \"bh\"");
-     }
- 
-+    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") == 0) {
-+        n->tx_timer_activate = true;
-+    }
-+
-     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
-                                     n->net_conf.tx_queue_size);
- 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 8c967760c2..2e7bc29967 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -231,6 +231,7 @@ struct VirtIONet {
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-     bool peers_wait_incoming;
-+    bool tx_timer_activate;
- };
- 
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
--- 
-2.53.0
-
+--
+Sincerely, Alexander
 
