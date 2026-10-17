@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 937DECCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BC6CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB27-00080I-Ah; Sat, 17 Oct 2026 16:29:39 -0400
+	id 1xIB6z-0001L5-Bx; Sat, 17 Oct 2026 16:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1F-0006Qq-UT; Sat, 17 Oct 2026 16:28:46 -0400
+ id 1xIB60-0007CM-I2; Sat, 17 Oct 2026 16:33:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB1E-00040A-16; Sat, 17 Oct 2026 16:28:41 -0400
+ id 1xIB5y-0004hY-Fd; Sat, 17 Oct 2026 16:33:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268846; bh=/ILOQd/M8FwF35Uq6itv0TONqfJkBHBNThJfrD3Mu+8=;
+ t=1792268900; bh=rLbfHVTP+cmsfgjneSQ/zxI6yD/5xhE6J4NzTt0BkHg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RsDLNFeTQ9cNLArg5Ajg/id9j5o+9Eq1yXSq6wiFlNJVJlO/yDf/neKUoU61moX9A
- G/N6fuzifp4UVzwKoj/CZESB5pjnyOFPU6hYV/UHd4yJzY1oEO6N5v+GPYm14ZmA5D
- exDVuDCQ9lMWedSGZctI6Lgc0KSlwLTBQ1E1tD9texxhDhxgv7hbLXO6OJ05yOEcyr
- EUYOMHE4+1PmMLppNGvRa2PLzrXVcK5PMkmq6bHcZQaocK1diff5EocUwPrHearp1F
- 8cxS/vH1cKv7iZxrfSC1bWvbt1YVWiOvbEvchp2oV8Xv0p5SSwKphbMzMluX0/G/0v
- pCP6iOBmDUwJw==
+ b=itLXvYFen5jl+EqZM+yTFvQKw/WhwX9LcmOBi3avxe6vGVWmU1mb5YlK3rlQhZi6Y
+ iNURxhumrhNrAQyF6sD4nyIv5d+8eAFfP49QeLG7MSgxIdqpxnZw7A2DSv5tJbDonA
+ psisePdtuLof2jGCfkuqMXPiQ3++jKaqy8xLDTRgE7oXjlsWATJVtg7ouzZvjYEEwR
+ 8V+EUcM83OGV+IXn4jIyeFYzJjXcCi7DvGKdmggVYhNJmIu+z2TDn/EPny1Muw5Y62
+ Nl1zt56kP44ruVy2Hq5LjOgmEbruRjz8g78tmPeyFrw4Tq2cWnaEcEE8aiWoxychHk
+ CslC8MURg/9wg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82F4B1DE752;
- Sat, 17 Oct 2026 23:27:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DB21D1DE784;
+ Sat, 17 Oct 2026 23:28:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C4FDF443428;
- Sat, 17 Oct 2026 23:27:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C518443456;
+ Sat, 17 Oct 2026 23:28:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Xie Bo <xb@ultrarisc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 22/73] hw/display/qxl: factor out qxl_guest_phys2virt()
-Date: Sat, 17 Oct 2026 23:25:40 +0300
-Message-ID: <20261017202638.728621-22-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 68/73] target/riscv/kvm: Reject migration with a
+ different timer frequency
+Date: Sat, 17 Oct 2026 23:26:26 +0300
+Message-ID: <20261017202638.728621-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,163 +71,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Xie Bo <xb@ultrarisc.com>
 
-Split the GROUP_GUEST half of qxl_phys2virt() into the helper
-qxl_guest_phys2virt().  Also add a bool 'report_bug' param to the
-qxl_get_check_slot_offset() called from it: when it's false, a failing
-check just returns false without calling qxl_set_guest_bug().  All
-existing callers pass true, so there's no functional change.  This
-is in preparation for a quiet caller that validates guest addresses
-which might be legitimately stale, when flagging a guest bug would be
-wrong.
+The timer frequency check is currently in kvm_riscv_put_regs_timer()
+and guarded by migration_is_running().  That condition is false on the
+incoming side, and the source frequency is not part of the migration
+stream, so migration between hosts with different frequencies completes.
 
-Message-ID: <20260825172051.435372-2-andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-(cherry picked from commit 050f5408bfcff56a65aed6d9ab81e35f4ba82631)
+Add the source frequency to a KVM-only subsection.  Its post_load checks
+the destination frequency before the timer registers are restored and
+rejects a mismatch.  When loading an older stream without the subsection,
+skip the check and retain the old behavior.
+
+Fixes: 27abe66f31ef ("target/riscv: Add kvm_riscv_get/put_regs_timer")
+Signed-off-by: Xie Bo <xb@ultrarisc.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260831074106.1798671-3-xb@ultrarisc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 0f9adcab46c08246f21c290bd0a9382c5b02bd6c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index c4f547e88b..b6bc182fc2 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -1409,7 +1409,7 @@ static void qxl_reset_surfaces(PCIQXLDevice *d)
- /* can be also called from spice server thread context */
- static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
-                                       uint32_t *s, uint64_t *o,
--                                      size_t size_requested)
-+                                      size_t size_requested, bool report_bug)
- {
-     uint64_t phys   = le64_to_cpu(pqxl);
-     uint32_t slot   = (phys >> (64 -  8)) & 0xff;
-@@ -1417,42 +1417,55 @@ static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
-     uint64_t size_available;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 592cbf3e71..a583f80b58 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -541,6 +541,7 @@ struct CPUArchState {
+     uint64_t kvm_timer_compare;
+     uint64_t kvm_timer_state;
+     uint64_t kvm_timer_frequency;
++    bool kvm_timer_frequency_loaded;
  
-     if (slot >= NUM_MEMSLOTS) {
--        qxl_set_guest_bug(qxl, "slot too large %d >= %d", slot,
--                          NUM_MEMSLOTS);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl, "slot too large %d >= %d", slot,
-+                              NUM_MEMSLOTS);
-+        }
-         return false;
-     }
-     if (!qxl->guest_slots[slot].active) {
--        qxl_set_guest_bug(qxl, "inactive slot %d\n", slot);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl, "inactive slot %d\n", slot);
-+        }
-         return false;
-     }
-     if (offset < qxl->guest_slots[slot].delta) {
--        qxl_set_guest_bug(qxl,
--                          "slot %d offset %"PRIu64" < delta %"PRIu64"\n",
--                          slot, offset, qxl->guest_slots[slot].delta);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl,
-+                              "slot %d offset %"PRIu64" < delta %"PRIu64"\n",
-+                              slot, offset, qxl->guest_slots[slot].delta);
-+        }
-         return false;
-     }
-     offset -= qxl->guest_slots[slot].delta;
-     if (offset > qxl->guest_slots[slot].size) {
--        qxl_set_guest_bug(qxl,
--                          "slot %d offset %"PRIu64" > size %"PRIu64"\n",
--                          slot, offset, qxl->guest_slots[slot].size);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl,
-+                              "slot %d offset %"PRIu64" > size %"PRIu64"\n",
-+                              slot, offset, qxl->guest_slots[slot].size);
-+        }
-         return false;
-     }
-     size_available = memory_region_size(qxl->guest_slots[slot].mr);
-     if (qxl->guest_slots[slot].offset + offset >= size_available) {
--        qxl_set_guest_bug(qxl,
--                          "slot %d offset %"PRIu64" > region size %"PRIu64"\n",
--                          slot, qxl->guest_slots[slot].offset + offset,
--                          size_available);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl,
-+                              "slot %d offset %"PRIu64" > region size %"PRIu64
-+                              "\n", slot,
-+                              qxl->guest_slots[slot].offset + offset,
-+                              size_available);
-+        }
-         return false;
-     }
-     size_available -= qxl->guest_slots[slot].offset + offset;
-     if (size_requested > size_available) {
--        qxl_set_guest_bug(qxl,
--                          "slot %d offset %"PRIu64" size %zu: "
--                          "overrun by %"PRIu64" bytes\n",
--                          slot, offset, size_requested,
--                          size_requested - size_available);
-+        if (report_bug) {
-+            qxl_set_guest_bug(qxl,
-+                              "slot %d offset %"PRIu64" size %zu: "
-+                              "overrun by %"PRIu64" bytes\n",
-+                              slot, offset, size_requested,
-+                              size_requested - size_available);
-+        }
-         return false;
-     }
+     /* KVM multiprocessor state */
+     uint32_t kvm_mp_state;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 45e12216ac..aa19c69dd3 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -45,7 +45,6 @@
+ #include "kvm_riscv.h"
+ #include "sbi_ecall_interface.h"
+ #include "chardev/char-fe.h"
+-#include "migration/misc.h"
+ #include "system/runstate.h"
+ #include "hw/riscv/numa.h"
  
-@@ -1462,25 +1475,31 @@ static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
+@@ -822,9 +821,34 @@ static void kvm_riscv_get_regs_timer(CPUState *cs)
+     env->kvm_timer_dirty = true;
  }
  
- /* can be also called from spice server thread context */
--void *qxl_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl, int group_id,
--                    size_t size)
-+static void *qxl_guest_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
-+                                 size_t size, bool report_bug)
- {
-     uint64_t offset;
-     uint32_t slot;
--    void *ptr;
-+    uint8_t *ptr;
- 
-+    if (!qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size,
-+                                   report_bug)) {
-+        return NULL;
++int kvm_riscv_check_timer_frequency(RISCVCPU *cpu)
++{
++    CPUState *cs = CPU(cpu);
++    CPURISCVState *env = &cpu->env;
++    int ret;
++    uint64_t frequency;
++
++    if (!env->kvm_timer_frequency_loaded) {
++        return 0;
 +    }
-+    ptr  = memory_region_get_ram_ptr(qxl->guest_slots[slot].mr);
-+    ptr += qxl->guest_slots[slot].offset;
-+    ptr += offset;
-+    return ptr;
++
++    ret = kvm_get_one_reg(cs, RISCV_TIMER_REG(frequency), &frequency);
++    if (ret) {
++        return ret;
++    }
++
++    if (frequency != env->kvm_timer_frequency) {
++        error_report("KVM timer frequency mismatch: source %" PRIu64
++                     " Hz, destination %" PRIu64 " Hz",
++                     env->kvm_timer_frequency, frequency);
++        return -EINVAL;
++    }
++
++    return 0;
 +}
 +
-+void *qxl_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl, int group_id,
-+                    size_t size)
-+{
-     switch (group_id) {
-     case MEMSLOT_GROUP_HOST:
--        offset = le64_to_cpu(pqxl) & 0xffffffffffff;
--        return (void *)(intptr_t)offset;
-+        return (void *)(intptr_t)(le64_to_cpu(pqxl) & 0xffffffffffff);
-     case MEMSLOT_GROUP_GUEST:
--        if (!qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size)) {
--            return NULL;
--        }
--        ptr = memory_region_get_ram_ptr(qxl->guest_slots[slot].mr);
--        ptr += qxl->guest_slots[slot].offset;
--        ptr += offset;
--        return ptr;
-+        return qxl_guest_phys2virt(qxl, pqxl, size, true);
-     }
-     return NULL;
- }
-@@ -2003,7 +2022,7 @@ static void qxl_dirty_one_surface(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
-     bool rc;
+ static void kvm_riscv_put_regs_timer(CPUState *cs)
+ {
+-    uint64_t reg;
+     CPURISCVState *env = &RISCV_CPU(cs)->env;
  
-     size = (uint64_t)height * abs(stride);
--    rc = qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size);
-+    rc = qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size, true);
-     assert(rc == true);
-     trace_qxl_surfaces_dirty(qxl->id, offset, size);
-     qxl_set_dirty(qxl->guest_slots[slot].mr,
+     if (!env->kvm_timer_dirty) {
+@@ -844,18 +868,6 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+         KVM_RISCV_SET_TIMER(cs, state, env->kvm_timer_state);
+     }
+ 
+-    /*
+-     * For now, migration will not work between Hosts with different timer
+-     * frequency. Therefore, we should check whether they are the same here
+-     * during the migration.
+-     */
+-    if (migration_is_running()) {
+-        KVM_RISCV_GET_TIMER(cs, frequency, reg);
+-        if (reg != env->kvm_timer_frequency) {
+-            error_report("Dst Hosts timer frequency != Src Hosts");
+-        }
+-    }
+-
+     env->kvm_timer_dirty = false;
+ }
+ 
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index 61eaa12443..0e27ce8bf3 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -29,6 +29,7 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+                           uint64_t guest_num);
+ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+ bool kvm_riscv_has_mp_state(void);
++int kvm_riscv_check_timer_frequency(RISCVCPU *cpu);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ uint64_t kvm_riscv_get_timebase_frequency(RISCVCPU *cpu);
+ 
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 2685338901..14a50f1d33 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -198,6 +198,35 @@ static const VMStateDescription vmstate_rv128 = {
+ };
+ 
+ #ifdef CONFIG_KVM
++static bool kvm_timer_frequency_needed(void *opaque)
++{
++    return kvm_enabled();
++}
++
++static int kvm_timer_frequency_post_load(void *opaque, int version_id)
++{
++    RISCVCPU *cpu = opaque;
++
++    if (!kvm_enabled()) {
++        return -ENOTSUP;
++    }
++
++    cpu->env.kvm_timer_frequency_loaded = true;
++    return kvm_riscv_check_timer_frequency(cpu);
++}
++
++static const VMStateDescription vmstate_kvm_timer_frequency = {
++    .name = "cpu/kvm-timer-frequency",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = kvm_timer_frequency_needed,
++    .post_load = kvm_timer_frequency_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(env.kvm_timer_frequency, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool kvm_fcsr_needed(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+@@ -256,6 +285,7 @@ static int riscv_cpu_kvm_pre_load(void *opaque)
+ {
+     RISCVCPU *cpu = opaque;
+ 
++    cpu->env.kvm_timer_frequency_loaded = false;
+     cpu->env.kvm_mp_state_loaded = false;
+     return 0;
+ }
+@@ -592,6 +622,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_rv128,
+ #ifdef CONFIG_KVM
+         &vmstate_kvm_fcsr,
++        &vmstate_kvm_timer_frequency,
+         &vmstate_kvmtimer,
+         &vmstate_kvm_mp_state,
+ #endif
 -- 
 2.47.3
 
