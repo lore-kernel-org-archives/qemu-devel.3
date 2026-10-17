@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B44CCF2C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D68CCF2D1
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9eT-000715-P8; Sat, 17 Oct 2026 15:01:06 -0400
+	id 1xI9bL-0001PF-0S; Sat, 17 Oct 2026 14:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dW-0005g7-OL; Sat, 17 Oct 2026 15:00:10 -0400
+ id 1xI9bB-00019s-JQ; Sat, 17 Oct 2026 14:57:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9dT-00041v-K9; Sat, 17 Oct 2026 15:00:06 -0400
+ id 1xI9b9-0003my-PY; Sat, 17 Oct 2026 14:57:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263416; bh=xUDaSs0dFvWdsRtn6qWHsTNkADKNx8vi3MO318Oj/x4=;
+ t=1792263384; bh=Q9VF8Y4bDhFUZY1LDExeEBGJXdcW1eIe32RT9tL5uWQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O/ySc/V5QftO2AMjNc38G2FQZhnINTtSJ3kRxMu6rV3dFjRK3XS/mIupd+UmTUogr
- 84ckjgk49iO8qYQjwBSw+qQRYDV3aB/pkVjCvFdRIIH1FjpPJtgzP/YLa7Rdkhp48e
- ju+JogoeVxhkSAjjCj2AK/g+MkWzRttGNT8sC80E8dE6Ggk3JynAfWf/SOZSbh+zJU
- q8RJJCdJJ6JseUvAYzar5EvmHIWEgCGhglgHmdDuJ4oCGjSwn5W9/4cjSxPo5NcdOF
- 7n4/JnXoJZ+S8tRf2BNQBVr8uhclUl2iMUgy0TePJhBczoVH0X82N6umbAZO/it0YG
- dXY3BmyU4sSqg==
+ b=lxvMFxucmDJ5drb/ZqQBWn5GDSGrvQpo7DK7aaTHNuRyERv23t8s051La/MhrsK2k
+ NswpARkEDhrrzc+mnlcO5dxlJ+UGkokw50aFWRtj71v7j7J9kythTrY+i+zgk5IO9S
+ 7I+eTuZjzkfyUJRMa8YRyQsyutX9nQyM2GpF1fQsElfbJ5RyBAKm2yuwtXOiAKjkGY
+ DK2KuSH35LnNqn2AjZVzwl3vsUhqYkXNZ+/jt+lEnptTbkn07aaloCNrU+aHkjiY1F
+ 7/7dmv0EJcRkHSmPfVlMuOxEbu5iuaxGisA1UxFyl9WPHqZv6719lfMYPCLXokSUp8
+ kCGqPCan7Rfkw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 309941DE6D2;
- Sat, 17 Oct 2026 21:56:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 098C51DE6B7;
+ Sat, 17 Oct 2026 21:56:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5A64F44339A;
- Sat, 17 Oct 2026 21:56:55 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24C26443382;
+ Sat, 17 Oct 2026 21:56:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 47/63] hw/display/vga: fix OOB writes after external
- surface resize
-Date: Sat, 17 Oct 2026 21:55:03 +0300
-Message-ID: <20261017185528.722197-47-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 23/63] block/nbd: clear reply.cookie when the reply
+ is rejected
+Date: Sat, 17 Oct 2026 21:54:39 +0300
+Message-ID: <20261017185528.722197-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,74 +71,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-virtio-vga has two renderers (VGA core and virtio-gpu) sharing a single
-QemuConsole, with no invalidation protocol between them. When virtio-gpu
-replaces the surface (SET_SCANOUT) or destroys it (reset via
-qemu_console_set_surface(con, NULL)), the VGA renderer's cached geometry
-(last_scr_width, last_height, last_depth, etc.) is never cleared:
-vga_common_reset() does not run during a virtio-gpu reset.
+nbd_receive_replies() reads a reply header into s->reply and, when the
+header turns out to be unusable, reports a channel error and returns
+without touching it. The cookie stays there until the request which
+owns the reply clears it, and until then the waiters are explicitly
+allowed to look at a cookie which is not theirs:
 
-The text draw path was fixed by 418396be80 (CVE-2026-77913), but
-vga_draw_blank() and vga_draw_graphic() still trust stale cache against
-a foreign surface:
+    if (s->reply.cookie != 0) {
+        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+        assert(!s->requests[ind2].receiving);
 
-vga_draw_blank() uses last_scr_width/height to memset the display
-surface. When the surface has been replaced by a smaller one (e.g.
-after a text-to-graphics mode switch, or a virtio-gpu reset installing
-a 16x16 placeholder), the memset writes past the surface buffer. Use
-the actual surface dimensions for the memset bounds instead of the
-cached last_scr values.
+Two of the error paths leave a value chosen by the server behind: one
+returns before the cookie is validated at all, the other returns
+because that validation has failed. A waiter which picks such a cookie
+up turns it into an index which is not in requests[] and accesses the
+array out of bounds, at an offset the server controls.
 
-vga_draw_graphic() decides whether to recreate the DisplaySurface based
-solely on VGA register state (line_offset, width, height, depth,
-byteswap, allocated). When virtio-gpu replaces the surface with a
-smaller one, the predicate sees no change and the drawing loop writes a
-full VGA-geometry frame into the undersized surface. Add surface
-dimension checks to the predicate so that a foreign surface whose size
-does not match the VGA geometry triggers a resize before drawing.
+The reply is of no use to anybody at this point, so clear the cookie
+before the mutex is released and keep the invariant that a non-zero
+s->reply.cookie is always an index of a live request.
 
-Ideally the two renderers could coordinate through a console-level
-invalidation callback, but these defensive checks are needed regardless
-as a safety net against any path that replaces the surface.
+Observing the stale cookie takes a second thread, which a multiqueue
+configuration provides. Within one AioContext there is no yield point
+between the failed read and the clearing done by the owner in
+nbd_co_receive_one_chunk(), so nothing else of this node runs in
+between. The parked waiters cannot see it either, as they are woken
+only after the cookie has been cleared. What can get in is a request
+entering nbd_receive_replies() afresh, one just sent or one back for
+its next reply chunk, because that path takes the mutex without
+looking at the state.
 
-Fixes: CVE-2026-97889
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4579
-Reported-by: david korczynski (@david1766)
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261001104112.2167807-2-marcandre.lureau@redhat.com>
-(cherry picked from commit 35164929cfa33b9f5001de72c0f3e37e9a4612c2)
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Message-ID: <20260820115228.587427-2-den@openvz.org>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 9998d225bb95c0baa17d51f760e46a51886ccfdf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 405ea89ed4..41ca1aa897 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1623,7 +1623,9 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         height != s->last_height ||
-         s->last_depth != depth ||
-         s->last_byteswap != byteswap ||
--        allocate_surface != surface_is_allocated(surface)) {
-+        allocate_surface != surface_is_allocated(surface) ||
-+        disp_width != surface_width(surface) ||
-+        height != surface_height(surface)) {
-         /* display parameters changed -> need new display surface */
-         s->last_scr_width = disp_width;
-         s->last_scr_height = height;
-@@ -1773,9 +1775,9 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
-         dpy_gfx_replace_surface(s->con, surface);
+diff --git a/block/nbd.c b/block/nbd.c
+index 887841bc81..ba9fb0103c 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -464,20 +464,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+             error_setg(errp, "server dropped connection");
+         }
+         if (ret < 0) {
+-            nbd_channel_error(s, ret);
+-            return ret;
++            goto err;
+         }
+         if (nbd_reply_is_structured(&s->reply) &&
+             s->info.mode < NBD_MODE_STRUCTURED) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected structured reply");
+-            return -EINVAL;
++            goto err;
+         }
+         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected cookie value");
+-            return -EINVAL;
++            goto err;
+         }
+         if (s->reply.cookie == cookie) {
+             /* We are done */
+@@ -485,6 +484,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+         }
+         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
      }
++
++err:
++    /* Waiters look at this cookie, so do not leave a rejected one behind. */
++    s->reply.cookie = 0;
++    nbd_channel_error(s, ret);
++
++    return ret;
+ }
  
--    w = s->last_scr_width * surface_bytes_per_pixel(surface);
-+    w = surface_width(surface) * surface_bytes_per_pixel(surface);
-     d = surface_data(surface);
--    for(i = 0; i < s->last_scr_height; i++) {
-+    for (i = 0; i < surface_height(surface); i++) {
-         memset(d, 0, w);
-         d += surface_stride(surface);
-     }
+ static int coroutine_fn GRAPH_RDLOCK
 -- 
 2.47.3
 
