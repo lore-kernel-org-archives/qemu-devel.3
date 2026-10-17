@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B36CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F16CCF2D1
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB6X-00004q-AX; Sat, 17 Oct 2026 16:34:09 -0400
+	id 1xIB5X-0005Y4-JP; Sat, 17 Oct 2026 16:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB45-0003iY-Bo; Sat, 17 Oct 2026 16:31:37 -0400
+ id 1xIB3e-0003Rr-OW; Sat, 17 Oct 2026 16:31:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB43-0004WS-AT; Sat, 17 Oct 2026 16:31:37 -0400
+ id 1xIB3c-0004VZ-Tv; Sat, 17 Oct 2026 16:31:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268876; bh=36nKkE72KvI9/Nlyu/MCAbWEQJl1GLh+2mG6EJFmwxU=;
+ t=1792268874; bh=M6KdwVpWdOu9X6qiFCVuIA5zPQmkk5QVPgRjN7msLP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=X49SJURJQuHLMOlxxk0hR02LG9rWORE/HCD0YsHA4okDwv1qUj8lctG4UBrp9Vbdk
- t6Vr9KcbjhB+WIjFkH3jVnckn814L5si7Zph7uPkZCw8eF8rYQNlvvAuDsrPkIfdMc
- rALaQc9gsaemwxqWiepVoNFUa713+DgcOcTnREIJrEmS0cSH7R1uACyaY/if8aAbxI
- 8eLXXId26CjaIUlx+wRqt0s56hxSJbruWXFOZrUuWqvMhzt1K9Jzmc29yQhEaQvLUT
- C1vIMeSiy9NMffuL+dP6fPEdClGVw4v3V1z3rbZTMKawUrqil4YpV4pCDM0eSdCIsH
- A/OwZ49cwQ6sA==
+ b=NK880zlbJpWkqCbUhdyrZp7nagBT9xDl764btUYhDm1FmeyMXQagMTG4noXr/wAfP
+ qbsZk5qyQQEY7bpaS/mpVIOZjzl1TOyXsZOH7geQr1WhATc69h9j4rpL+E9ZZMHut0
+ obqdXnuVu8vm0Mn9kXAGzboboxzwn7XVcTZlNrv8Ky3jsLJbhbMy/mPJvXIbJPLdKz
+ ehttdyx6Jx4rAZh2xtnT6Iap2pQYmK2l6gZfwG4GvxH8GL3POkHbblIAjd78i4jkUr
+ Ic9bk0vTL3bYzUlp0VoR0gcMwj5Yastsi1seUe0MnTyezFseS6A4duIRxaxlt9yYrS
+ wrJutzsFHCX0w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E64AE1DE76F;
- Sat, 17 Oct 2026 23:27:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0ACC71DE76C;
+ Sat, 17 Oct 2026 23:27:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1BC59443443;
- Sat, 17 Oct 2026 23:27:56 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E392B443440;
+ Sat, 17 Oct 2026 23:27:52 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, Juraj Marcin <jmarcin@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 49/73] io: cork TLS writes to avoid small TLS records
-Date: Sat, 17 Oct 2026 23:26:07 +0300
-Message-ID: <20261017202638.728621-49-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 46/73] block: reject a reopen of an unusable node
+ instead of crashing
+Date: Sat, 17 Oct 2026 23:26:04 +0300
+Message-ID: <20261017202638.728621-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,288 +71,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The migration code caches vmstate/ram writes into an iovec and
-flushes this periodically. The total amount of data to sent
-may be 100's of KB, but split across many iovec, each of which
-is potentially quite small.
+qcow2_signal_corruption() drops bs->drv, so a node can lose its driver
+at any time and a reopen has to expect that. Both ends of the path
+assume otherwise:
 
-The QIOChannelTLS receives the iovec, but since GNUTLS cannot
-accept iovec data, it iterates calling send for each element.
+  $ qemu-io -c "read 0 64k" -c "reopen -r" corrupt.qcow2
+  qcow2: Marking image as corrupt: Cluster allocation offset 0x1200
+  unaligned (L2 offset: 0x40000, L2 index: 0); ...
+  Segmentation fault
 
-As a result of the migration data pattern, this results in
-GNUTLS putting lots of small TLS records on the wire. This
-has shown writes alternate between about 4k and 30 bytes
-in some tests.
+bdrv_reopen_queue_child() dereferences bs->drv while descending into
+the children the node opened itself, and bdrv_reopen_prepare() asserts
+on it. commit_clean() reopens the base of a commit job back to
+read-only, so a base which goes corrupt under the job arrives here too.
 
-This is triggering the nagle algorithm on migration-test for
-many of the TLS test cases, resulting in a "go slow" for I/O
-that eventually hits the migration timeout configured by the
-test.
+There is nothing to reopen for such a node, so stop descending into its
+children and let bdrv_reopen_prepare() report what every caller of
+bdrv_reopen() already handles. bdrv_reopen_commit() and
+bdrv_reopen_abort() keep their assertion, only a prepared entry reaches
+them.
 
-Not every contributor reports seeing the "go slow" but for
-those who do see it, it hits >= 95% of the time for at least
-one of the migration TLS test cases run by 'make check'.
-
-While we could disable the nagle algorithm (and multifd
-channels already do this), that would stil result in lots
-of small TLS records hitting the wire which is not good for
-throughput. The migration code flushes in batches because
-it wants large writes for high throughput.
-
-To achieve this we must tell GNUTLS to encrypt data but not
-immediately sent TLS records by "corking" its output. Once
-the complete iovec has been written to GNUTLS, it can be
-uncorked allowing it to hit the wire.
-
-There is added complexity with uncorking on non-blocking
-channels as not all encrypted data can be sent at once.
-qio_channel_write() will return what was sent, but some
-data might remain pending inside GNUTLS buffers. A later
-call to qio_channel_write() will provide the same plain
-text data buffers that have already been cached. Thus the
-code must attempt to uncork GNUTLS again to clear pending
-data and then deduct the equivalent amount of plain text.
-
-Overall this corking action fixes the test suite timeouts,
-but more importantly, it also improves the performance of
-TLS protection migrations in the real world. Tests with
-one workload show at 36% increase in throughput.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Juraj Marcin <jmarcin@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 99a8b5a0dda91e3cdabbf3fec47a504197af63c7)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20260824133729.1141990-3-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit efe98c2a0932c09ada26b8afac3606a66f561933)
+(Mjt: fixup iotest output accross v11.1.0-800-g3c0c7bfeba92
+ "qemu-io: propagate errors through Error API instead of printf")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/crypto/tlssession.c b/crypto/tlssession.c
-index 314e3e96ba..b343d1a595 100644
---- a/crypto/tlssession.c
-+++ b/crypto/tlssession.c
-@@ -513,6 +513,39 @@ qcrypto_tls_session_read(QCryptoTLSSession *session,
- }
- 
- 
-+void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess)
-+{
-+    gnutls_record_cork(sess->handle);
-+}
-+
-+
-+ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
-+                                         Error **errp)
-+{
-+    int ret;
-+    ret = gnutls_record_uncork(sess->handle, 0);
-+    if (ret == GNUTLS_E_AGAIN ||
-+        ret == GNUTLS_E_INTERRUPTED) {
-+        ret = gnutls_record_check_corked(sess->handle);
-+        if (ret < 0) {
-+            error_setg(errp,
-+                       "Cannot query pending TLS output: %s",
-+                       gnutls_strerror(ret));
-+            return -1;
-+        }
-+
-+        return ret;
-+    } else if (ret < 0) {
-+        error_setg(errp,
-+                   "Cannot uncork TLS output: %s",
-+                   gnutls_strerror(ret));
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+
- size_t
- qcrypto_tls_session_check_pending(QCryptoTLSSession *session)
- {
-@@ -757,4 +790,16 @@ qcrypto_tls_session_get_peer_name(QCryptoTLSSession *sess)
-     return NULL;
- }
- 
-+void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess)
-+{
-+}
-+
-+
-+ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
-+                                         Error **errp)
-+{
-+    error_setg(errp, "TLS requires GNUTLS support");
-+    return -1;
-+}
-+
- #endif
-diff --git a/include/crypto/tlssession.h b/include/crypto/tlssession.h
-index 28e419681e..5415503eba 100644
---- a/include/crypto/tlssession.h
-+++ b/include/crypto/tlssession.h
-@@ -208,6 +208,31 @@ typedef ssize_t (*QCryptoTLSSessionReadFunc)(void *buf,
-                                              void *opaque,
-                                              Error **errp);
- 
-+/**
-+ * qcrypto_tls_session_write_cork:
-+ * @sess: the TLS session object
-+ *
-+ * Causes future qcrypto_tls_session_write() calls to encrypt
-+ * and queue data, without sending on the wire.
-+ */
-+void qcrypto_tls_session_write_cork(QCryptoTLSSession *sess);
-+
-+/**
-+ * qcrypto_tls_session_write_uncork:
-+ * @sess: the TLS session object
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Attempt to send previously queued data. If the underlying
-+ * stream is non-blocking, then only a subset of data (if any)
-+ * may be written. To process outstanding data, this method
-+ * must be called again until it returns 0.
-+ *
-+ * Returns: the number of bytes remaining to be sent,
-+ * or -1 on error.
-+ */
-+ssize_t qcrypto_tls_session_write_uncork(QCryptoTLSSession *sess,
-+                                         Error **errp);
-+
- /**
-  * qcrypto_tls_session_set_callbacks:
-  * @sess: the TLS session object
-diff --git a/include/io/channel-tls.h b/include/io/channel-tls.h
-index 7e9023570d..9e9b00c034 100644
---- a/include/io/channel-tls.h
-+++ b/include/io/channel-tls.h
-@@ -50,6 +50,7 @@ struct QIOChannelTLS {
-     QIOChannelShutdown shutdown;
-     guint hs_ioc_tag;
-     guint bye_ioc_tag;
-+    size_t corked;
- };
- 
- /**
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 31ec4d236d..05317ed5a3 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "qemu/iov.h"
- #include "io/channel-tls.h"
- #include "trace.h"
- #include "qemu/atomic.h"
-@@ -448,12 +449,24 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
-     size_t i;
-     ssize_t done = 0;
-+    ssize_t remain;
-+    g_autofree struct iovec *tmpiov = NULL;
-+    size_t ntmpiov = 0;
- 
--    for (i = 0 ; i < niov ; i++) {
--        ssize_t ret = qcrypto_tls_session_write(tioc->session,
--                                                iov[i].iov_base,
--                                                iov[i].iov_len,
--                                                errp);
-+    /*
-+     * The previous write encrypted all the data, but some
-+     * was not able to be sent on the wire when uncorked,
-+     * so we returned a short write. The encrypted data
-+     * will still be cached by GNUTLS and the session will
-+     * be in a corked state.
-+     *
-+     * This write call will be trying to write the remaining
-+     * plain text data again, but we must avoid sending that
-+     * into GNUTLS. Instead flush the previously encrypted
-+     * pending data.
-+     */
-+    while (tioc->corked) {
-+        ssize_t ret = qcrypto_tls_session_write_uncork(tioc->session, errp);
-         if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-             if (done) {
-                 return done;
-@@ -463,12 +476,74 @@ static ssize_t qio_channel_tls_writev(QIOChannel *ioc,
-         } else if (ret < 0) {
-             return -1;
-         }
-+        done += (tioc->corked - ret);
-+        tioc->corked = ret;
-+    }
-+
-+    /*
-+     * If we flushed pending data, we must discard an
-+     * equivalent amount of plain text data from this
-+     * write call, and then process what's left over,
-+     * if any.
-+     */
-+    if (done) {
-+        ssize_t total = iov_size(iov, niov);
-+        if (done == total) {
-+            return done;
-+        }
-+
-+        tmpiov = g_new0(struct iovec, niov);
-+        ntmpiov = iov_copy(tmpiov, niov, iov, niov,
-+                           done, total - done);
-+
-+        iov = tmpiov;
-+        niov = ntmpiov;
-+    }
-+
-+    /*
-+     * At this point we should ony be processing "new"
-+     * data, not seen by a previous write call so we
-+     * send to GNUTLS as normal.
-+     */
-+    qcrypto_tls_session_write_cork(tioc->session);
-+    for (i = 0 ; i < niov ; i++) {
-+        ssize_t ret = qcrypto_tls_session_write(tioc->session,
-+                                                iov[i].iov_base,
-+                                                iov[i].iov_len,
-+                                                errp);
-+        if (ret == QCRYPTO_TLS_SESSION_ERR_BLOCK) {
-+            error_setg(errp, "Unexpected TLS blocking I/O while corked");
-+            return -1;
-+        } else if (ret < 0) {
-+            return -1;
-+        }
-         done += ret;
-         if (ret < iov[i].iov_len) {
-             break;
-         }
+diff --git a/block.c b/block.c
+index f0a6042e61..e39f15816a 100644
+--- a/block.c
++++ b/block.c
+@@ -4486,6 +4486,11 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+             !qdict_haskey(options, "backing.driver");
      }
--    return done;
-+
-+    /*
-+     * On non-blocking sockets, uncorking may not succeed
-+     * in sending all encrypted data, so we have to check
-+     * what was actually sent to see if GNUTLS remains in
-+     * the corked state with pending data.
-+     */
-+    remain = qcrypto_tls_session_write_uncork(tioc->session, errp);
-+    if (remain < 0) {
-+        return -1;
-+    } else if (remain) {
-+        tioc->corked = remain;
-+    }
-+    /*
-+     * done == what we sent to GNUTLS for encryption & sending
-+     * remain == subset of 'done' that was encrypted but not sent
-+     */
-+    if (done && (remain == done)) {
-+        return QIO_CHANNEL_ERR_BLOCK;
-+    } else {
-+        return done - remain;
-+    }
- }
  
- static int qio_channel_tls_set_blocking(QIOChannel *ioc,
++    /* An unusable node is rejected by bdrv_reopen_prepare(), do not descend */
++    if (!bs->drv) {
++        return bs_queue;
++    }
++
+     QLIST_FOREACH(child, &bs->children, next) {
+         QDict *new_child_options = NULL;
+         bool child_keep_old = keep_old_opts;
+@@ -4881,9 +4886,16 @@ bdrv_reopen_prepare(BDRVReopenState *reopen_state, BlockReopenQueue *queue,
+     bool drv_prepared = false;
+ 
+     assert(reopen_state != NULL);
+-    assert(reopen_state->bs->drv != NULL);
+     GLOBAL_STATE_CODE();
++
+     drv = reopen_state->bs->drv;
++    if (drv == NULL) {
++        GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++        error_setg(errp, "Block node '%s' has no driver left to reopen",
++                   bdrv_get_device_or_node_name(reopen_state->bs));
++        return -ENOMEDIUM;
++    }
+ 
+     /* This function and each driver's bdrv_reopen_prepare() remove
+      * entries from reopen_state->options as they are processed, so
+diff --git a/tests/qemu-iotests/060 b/tests/qemu-iotests/060
+index 5cd21a6f68..ce49fc34ec 100755
+--- a/tests/qemu-iotests/060
++++ b/tests/qemu-iotests/060
+@@ -486,6 +486,36 @@ echo
+ # Image should not have been marked corrupt
+ _img_info --format-specific | grep 'corrupt:'
+ 
++echo
++echo "=== Testing the reopen of an image corrupted at runtime ==="
++echo
++
++_make_test_img 64M
++poke_file "$TEST_IMG" "$l1_offset" "\x00\x00\x00\x00\x2a\x2a\x2a\x2a"
++
++# The read leaves the node unusable, the reopen must report that
++echo "{'execute': 'qmp_capabilities'}
++      {'execute': 'human-monitor-command',
++       'arguments': {'command-line': 'qemu-io drive \"read 0 512\"'}}
++      {'execute': 'blockdev-reopen',
++       'arguments': {'options': [{'node-name': 'drive',
++                                  'driver': 'qcow2',
++                                  'read-only': true,
++                                  'file': {
++                                      'driver': 'file',
++                                      'filename': '$TEST_IMG'
++                                  }}]}}
++      {'execute': 'quit'}" \
++    | $QEMU -qmp stdio -nographic -nodefaults \
++            -blockdev "{'node-name': 'drive',
++                        'driver': 'qcow2',
++                        'file': {
++                            'driver': 'file',
++                            'filename': '$TEST_IMG'
++                        }}" \
++            2>&1 \
++    | _filter_qmp | _filter_qemu_io
++
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/060.out b/tests/qemu-iotests/060.out
+index a37bf446e9..ad1912a43b 100644
+--- a/tests/qemu-iotests/060.out
++++ b/tests/qemu-iotests/060.out
+@@ -436,4 +436,17 @@ qcow2: Image is corrupt: L2 table offset 0x2a2a2a00 unaligned (L1 index: 0); fur
+ {"return": {}}
+ 
+     corrupt: false
++
++=== Testing the reopen of an image corrupted at runtime ===
++
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
++QMP_VERSION
++{"return": {}}
++qcow2: Marking image as corrupt: L2 table offset 0x2a2a2a00 unaligned (L1 index: 0); further corruption events will be suppressed
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_IMAGE_CORRUPTED", "data": {"device": "", "msg": "L2 table offset 0x2a2a2a00 unaligned (L1 index: 0)", "node-name": "drive", "fatal": true}}
++read failed: Input/output error
++{"return": ""}
++{"error": {"class": "GenericError", "desc": "Block node 'drive' has no driver left to reopen"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
+ *** done
 -- 
 2.47.3
 
