@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C311CCF2C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 712CECCF2CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2o-0001fo-EA; Sat, 17 Oct 2026 16:30:19 -0400
+	id 1xIB6R-000812-Pz; Sat, 17 Oct 2026 16:34:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2H-00088W-2e; Sat, 17 Oct 2026 16:29:50 -0400
+ id 1xIB56-00059f-Iw; Sat, 17 Oct 2026 16:32:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2F-00045V-Ed; Sat, 17 Oct 2026 16:29:44 -0400
+ id 1xIB52-0004bD-EI; Sat, 17 Oct 2026 16:32:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268857; bh=mpHODwz6+bwjv1g0zbMEYxQSTqZPXb1z90BducaUvS4=;
+ t=1792268889; bh=VKUnSP4MIXl2/yGJYq9auI1KCGTNRfkDaSvnnfePFpI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kGoTxA1a9ugSIDa9mhu1SrMePeRGdIjYk+X9oR2eB9gqPfPBgYoyPykaBBMJ19Rkk
- W5hq7899Fn+GMaslHA+VlaPn2FSJjznbpeCqpxTVC0y1dv5peU/aNDjmCO4Qy3d/Mg
- O8IW5PpJ0OOj0RPAaUyCy8FI6PiYxZ2NHlV2+XPJj37JGWLNVVrPVPWi6jPayzz0i8
- B/DlqPhZ8Yh80l88ymr3cIIfW2LtMRhhemNSm7yQpT1fY+d8eAdmbzpq177HRv0fs1
- 6/UPqPL/q7GZufWdGLvpub6HUkTzuDUrRQbNUCq2+jZkhe7Vwg7SGb9eQSVlkdMOp5
- WVHbSppDxpybQ==
+ b=fcA/7kZbIRrEL4SxkQpmJriwqgXeAJLqm7R3QpWXirffgMZoRwFdqVXs8Cwahi7Z1
+ Ax7WoyMt8pJDfTgCuNNE2c/+PtKT2JzN/YI6oe7nInjnnVfa+rHPTMKX9p9EWJXHTs
+ 6g5ST2b9CLJk7dgfpXDsdg4X5xYWYpOPs1BD0QzclPLFryBNWr6lNawpFsK1Wl4jkp
+ ocKb4uhEVp6LyhhWS9k8md8wP4sjwcqHXiFgd3eq/3JdnBS531vXwMGV/5Rd+YMjq8
+ UrnOGPnahFpQHDPKr+vPjcNanMJx+TOwR+V67dhIvI89MxNNxCJrFasBgYBZSEjtP1
+ 2L2jAQtyztkug==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E29021DE75E;
- Sat, 17 Oct 2026 23:27:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C6FD41DE77B;
+ Sat, 17 Oct 2026 23:28:09 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CCA57443432;
- Sat, 17 Oct 2026 23:27:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A636444344E;
+ Sat, 17 Oct 2026 23:28:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yanfei Xu <yanfei.xu@bytedance.com>,
- Yuxuan Li <liyuxuan.darfux@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 32/73] target/i386: Migrate error code only with an
- exception
-Date: Sat, 17 Oct 2026 23:25:50 +0300
-Message-ID: <20261017202638.728621-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
+ Gustavo Romero <gromero@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 60/73] target/arm: Use the 52-bit TTBR base address
+ layout when TCR.DS is set
+Date: Sat, 17 Oct 2026 23:26:18 +0300
+Message-ID: <20261017202638.728621-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,80 +70,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yanfei Xu <yanfei.xu@bytedance.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-An exception that carries an error code must retain it across migration.
-Otherwise the destination reinjects it with error_code 0, which can make
-the guest panic. Do not suppress this required state for old machine
-types; an incompatible destination should abort migration instead.
+With TCR.DS set, TTBR[5:2] hold bits [51:48] of the translation table
+base address, whatever the OA size. If the effective OA size is below
+52 bits, setting any of them is a level 0 Address size fault
+(AArch64_S1TTBaseAddress(), AArch64_S1Walk()).
 
-The chance of stopping a vCPU while an exception is pending or injected
-is extremely low, so the cpu/error_code subsection should rarely be
-needed.
+get_phys_addr_lpae() uses the 52-bit layout only when the OA size is
+over 48 bits. With TCR.DS set and an IPS of 48 bits, it takes TTBR[5:2]
+as base address bits [5:2] instead. A guest that sets them gets no
+fault: the walk either succeeds with TTBR[5:2] ignored, or reads its
+first descriptor from the wrong address. VTTBR walks with VTCR.DS take
+the same path.
 
-It is currently emitted much more often because KVM does not clear
-has_error_code and error_code after completing exception injection.
-Require a valid exception_nr before sending the subsection. This filters
-stale KVM state while preserving the error code for a real exception.
+Use the 52-bit layout whenever TCR.DS is set, and check the whole base
+address against the OA size.
 
-Fixes: 1b80f1009d ("target/i386: add compat for migrating error code")
+Fixes: ef56c2425e5f ("target/arm: Implement FEAT_LPA2")
 Cc: qemu-stable@nongnu.org
-Reported-by: Yuxuan Li <liyuxuan.darfux@bytedance.com>
-Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-Message-Id: <20260914113817.2212058-1-yanfei.xu@bytedance.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit fb024800d6ddfbc1aea926fbbd43fed6b8676510)
+Reviewed-by: Gustavo Romero <gromero@redhat.com>
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Message-id: 20261009115728.1299384-4-fuad.tabba@linux.dev
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 2c372119465e14f26c094bdcca58e4b1fca84afd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index f064aa2b3e..862b4a45b4 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -82,7 +82,6 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index f1f8f5cdc0..ce256fc87c 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2107,18 +2107,21 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr = extract64(ttbr, 0, 48);
  
- GlobalProperty pc_compat_10_1[] = {
-     { "mch", "extended-tseg-mbytes", "16" },
--    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
- };
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5805d33ab9..2adc8c1b65 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10819,7 +10819,6 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
-     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
-                      true),
--    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
      /*
-      * lecacy_cache defaults to true unless the CPU model provides its
-      * own cache information (see x86_cpu_load_def()).
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e6a197602d..04ab0c84a3 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2367,7 +2367,6 @@ struct ArchCPU {
-     bool expose_tcg;
-     bool migratable;
-     bool migrate_smi_count;
--    bool migrate_error_code;
-     uint32_t apic_id;
- 
-     /* Enables publishing of TSC increment and Local APIC bus frequencies to
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index df0e0c178e..b7d2103b6c 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -465,7 +465,7 @@ static bool cpu_errcode_needed(void *opaque)
- {
-     X86CPU *cpu = opaque;
- 
--    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
-+    return cpu->env.exception_nr != -1 && cpu->env.has_error_code != 0;
- }
- 
- static const VMStateDescription vmstate_error_code = {
+-     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), bits [51:48] of descaddr are
+-     * in [5:2] of TTBR, and bits [5:0] of the base address are zero: a table
+-     * under 64 bytes is still 64-byte aligned (R_KBLCR).
++     * With a 52-bit OA (FEAT_LPA or FEAT_LPA2), or with TCR.DS set at any OA
++     * size, bits [51:48] of descaddr are in [5:2] of TTBR, and bits [5:0] of
++     * the base address are zero: a table under 64 bytes is still 64-byte
++     * aligned (R_KBLCR).
+      *
+-     * Otherwise, if the base address is out of range, raise AddressSizeFault.
+-     * In the pseudocode, this is !IsZero(baseregister<47:outputsize>),
+-     * but we've just cleared the bits above 47, so simplify the test.
++     * If the base address is out of range, raise AddressSizeFault.
++     * In the pseudocode, this is !IsZero(address<NUM_PABITS-1:outputsize>)
++     * in AArch64_OAOutOfRange(), but descaddr has no bits set above 51,
++     * so simplify the test.
+      */
+-    if (outputsize > 48) {
++    if (outputsize > 48 || param.ds) {
+         descaddr &= ~MAKE_64BIT_MASK(0, 6);
+         descaddr |= extract64(ttbr, 2, 4) << 48;
+-    } else if (descaddr >> outputsize) {
++    }
++    if (descaddr >> outputsize) {
+         level = 0;
+         fi->type = ARMFault_AddressSize;
+         goto do_fault;
 -- 
 2.47.3
 
