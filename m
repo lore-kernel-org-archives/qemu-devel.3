@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DEDCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE6BCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB0S-0005Vv-Kj; Sat, 17 Oct 2026 16:27:52 -0400
+	id 1xIB25-0007xN-EH; Sat, 17 Oct 2026 16:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzy-000599-84; Sat, 17 Oct 2026 16:27:29 -0400
+ id 1xIB0h-00062g-RL; Sat, 17 Oct 2026 16:28:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIAzu-0003tr-4n; Sat, 17 Oct 2026 16:27:21 -0400
+ id 1xIB0g-0003xQ-3M; Sat, 17 Oct 2026 16:28:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268827; bh=H3IVmotbB1n1kOi0CLoH5M1/W6hRgiychaDvbMuojFs=;
+ t=1792268841; bh=T29+x61vRVPGumRCB3fkn+sH97oemALwx2atp0ZP7x0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eUZ8YV2W4D0iAJl/kl4mbiyyv3V2s3YI+ShqcbIGs7JXpFW6tG8Oq/qN274WzVJdm
- YAu4XdykBVRI6bTQU+haiSGf/zn1OqT6TCP3t1TIRGT2XOMWachEBxo7tXRN/HAe7s
- kfWBahGarT/zTo+tyHowBknpLFBZf+hl4JrYZOXzHvBfGioA+rlTEIdioD2pwLeJXu
- 0WJSKjHQSvy6T6y2WS0w2uLQxUK6gS8ePZOpnYBR2f0h2drzT8t33mXSgpsoibdu4o
- 6rakf0yIXLzbFv2cSy4WBIz3tCrqKevLzEq/1w8LGtPhZvvYAZBSjSpmqxjIFixG1g
- vJgCbd9yvTxQg==
+ b=hfR07zX9oeDJxbhOTDus+yjXp4jg3wwjaUquDJoV5qqwSfhkx0iU9CIUOltJ8dDrq
+ nk9ZZ8BZ0YRXUSt0hvBgp9xcoTX7P4QaQ2vq2D0vJhrsj1yg+9Pk7KZuqXH+pVW4hD
+ HApfDDbIYSh8ik4pwlEmHsMUXYgqnKn5GwASrVPoMLIXDnXqEH+so/fDnJfy5Y9kNo
+ XEO4dowClumgD2/YIQ2CmdGIplAW23OpFeijhWTA9h1A4QBz3cgx/ijdGUMa87Up5A
+ cSg+FfKbeelsYNTylFnLk+qq8OcyVZEKInq/lFkJQu6dFR3vN22Fua+rYQryrJIEQm
+ 8oYBW0HQme6Fw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C4031DE740;
- Sat, 17 Oct 2026 23:27:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 115481DE74C;
+ Sat, 17 Oct 2026 23:27:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1C89A443417;
- Sat, 17 Oct 2026 23:27:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 29540443423;
+ Sat, 17 Oct 2026 23:27:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 05/73] virtio-ccw: Limit ISC to MAX_ISC
-Date: Sat, 17 Oct 2026 23:25:23 +0300
-Message-ID: <20261017202638.728621-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 17/73] hw/usb/dev-smartcard-reader: fix assert on
+ pending answers overflow
+Date: Sat, 17 Oct 2026 23:25:35 +0300
+Message-ID: <20261017202638.728621-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,64 +72,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The interrupt subclass is often defined as a uint8, though in practice
-it will be within the range of just 0-7. Ensure that a guest-supplied
-subclass does not extend beyond its expected range, especially when
-used as an array index.
+A guest can send PC_to_RDR_XfrBlock USB messages faster than the async
+card backend can process them. When the pending_answers ring buffer
+(128 entries) fills, ccid_add_pending_answer() hits an assert() and
+crashes QEMU.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 25a08b8ded ("s390x/css: update css_adapter_interrupt")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-2-farman@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 92b935de2709cdbb1c4ee2b48814640a71e8a438)
+The CCID spec (section 4) states that a slot can only accept one
+command at a time. A second command to a busy slot must be rejected
+with CMD_SLOT_BUSY (section 6.2.6).
+
+Enforce this by checking pending_answers_num before queuing a new
+APDU. When the slot is already busy, report ERROR_CMD_SLOT_BUSY and
+send a DataBlock error response back to the guest.
+
+Fixes: CVE-2026-18410
+Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3997
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+(cherry picked from commit d7f20657e756744fec8f84cd225a3b07cfb78526)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index 3a67b67053..9be895a797 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, uint8_t isc)
-     S390FLICState *fs = s390_get_flic();
-     S390FLICStateClass *fsc = s390_get_flic_class(fs);
-     uint32_t io_int_word = (isc << 27) | IO_INT_WORD_AI;
--    IoAdapter *adapter = channel_subsys.io_adapters[type][isc];
-+    IoAdapter *adapter;
-+
-+    if (type >= CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
-+        return;
-+    }
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index aee966c0c9..9cbacf08e7 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -166,6 +166,7 @@ enum {
+     ERROR_XFR_PARITY_ERROR  = -3,
+     ERROR_XFR_OVERRUN       = -4,
+     ERROR_HW_ERROR          = -5,
++    ERROR_CMD_SLOT_BUSY     = -32,
+ };
  
-+    adapter = channel_subsys.io_adapters[type][isc];
-     if (!adapter) {
+ /* 6.2.6 RDR_to_PC_SlotStatus definitions */
+@@ -949,6 +950,13 @@ static void ccid_on_apdu_from_guest(USBCCIDState *s, CCID_XferBlock *recv)
+         ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
          return;
      }
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index d82874ed27..c422444015 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -46,6 +46,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
-     CcwDevice *ccw_dev = CCW_DEVICE(dev);
-     CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
- 
-+    if (dev->thinint_isc > MAX_ISC) {
-+        return -EINVAL;
++    if (s->pending_answers_num > 0) {
++        DPRINTF(s, D_WARN,
++                "usb-ccid: slot already busy, rejecting apdu\n");
++        ccid_report_error_failed(s, ERROR_CMD_SLOT_BUSY);
++        ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
++        return;
 +    }
-+
-     ccw_dev->sch->driver_data = dev;
-     if (ccw_dev->sch->thinint_active) {
-         dev->routes.adapter.adapter_id = css_get_adapter_id(
-@@ -659,6 +663,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
-         } else {
-             if (ccw_dstream_read(&sch->cds, thinint)) {
-                 ret = -EFAULT;
-+            } else if (thinint.isc > MAX_ISC) {
-+                ret = -ENOSYS;
-             } else {
-                 thinint.ind_bit = be64_to_cpu(thinint.ind_bit);
-                 thinint.summary_indicator =
+     len = le32_to_cpu(recv->hdr.dwLength);
+     DPRINTF(s, 1, "%s: seq %d, len %u\n", __func__,
+                 recv->hdr.bSeq, len);
 -- 
 2.47.3
 
