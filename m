@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD21CCA462
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 08:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69573CCF2C7
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 08:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI01G-0001ab-1f; Sat, 17 Oct 2026 04:43:58 -0400
+	id 1xI01O-0001fa-NK; Sat, 17 Oct 2026 04:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xI01E-0001Zd-Rr
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:43:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xI01N-0001fR-7B
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:44:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xI01D-0007Bt-Fu
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:43:56 -0400
+ id 1xI01L-0007CV-T4
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 04:44:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792226634;
+ s=mimecast20190719; t=1792226643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xFV/DWAK0FXG5RoIJhQrhiOyK/7NUOHI033M1D7Rse8=;
- b=V79K8OTBkhxkGBTQ6XW3bUK7UNaUE1G5TajPqGk+j6BrIHObpGy+X1Wgz1nH4fDqeSHC/j
- Er8PWaCslCY7ALZHk4ieTUS9TZqYgtg/kcHxsspFe4LmpRMg58dATwbtk1q42SQmlOspy3
- e+vU4N/lrjpGH4+QYYsRv+mM8WHeuRk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EkGka5uqww9ppuf1o7wHVg7C+HpuOJAusFe96RQN8PI=;
+ b=DyEJHvL97a3kevD9j67LLeqY4WQP5Ax5CeozwYc0dtOpO9voto/pyLqz1aSm5RYGzrb2ug
+ 1kyBRkvMA4Jk8oFBJGSZErZw6T3RTRySkklohKI2vc+38DzejoMiRHBFBpLHpFJjmK4tN0
+ 7S9UCu2EtkmnC5wTJmZiagNnvDa60Wc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-148-Z6FAgTY7P261OKwYHVAObQ-1; Sat,
- 17 Oct 2026 08:43:49 +0000
-X-MC-Unique: Z6FAgTY7P261OKwYHVAObQ-1
-X-Mimecast-MFC-AGG-ID: Z6FAgTY7P261OKwYHVAObQ_1792226628
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-OfDPkiQwPRmSenFCn8-78A-1; Sat,
+ 17 Oct 2026 08:43:59 +0000
+X-MC-Unique: OfDPkiQwPRmSenFCn8-78A-1
+X-Mimecast-MFC-AGG-ID: OfDPkiQwPRmSenFCn8-78A_1792226638
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66CC21955E9A; Sat, 17 Oct 2026 08:43:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1FB01944AB4; Sat, 17 Oct 2026 08:43:58 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6EA4B30000E7; Sat, 17 Oct 2026 08:43:47 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A7B1E195608C; Sat, 17 Oct 2026 08:43:57 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 15/23] hw/core/sysemu-cpu-ops: add get_note_size
+Subject: Re: [PATCH v3 18/23] target/ppc: implement get_note_size sysemu op
 From: marcandre.lureau@redhat.com
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  anjo@rev.ng, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261016181410.191743-16-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261016181410.191743-19-pierrick.bouvier@oss.qualcomm.com>
 References: <20261016181410.191743-1-pierrick.bouvier@oss.qualcomm.com>
- <20261016181410.191743-16-pierrick.bouvier@oss.qualcomm.com>
+ <20261016181410.191743-19-pierrick.bouvier@oss.qualcomm.com>
 Date: Sat, 17 Oct 2026 12:42:49 +0400
-Message-Id: <179222656905.1619676.11571070421301562351.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=341;
+Message-Id: <179222656908.1619676.1407924276057874694.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=284;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bVNa6YzmWwzYLSJpOnDN/mJYKlXm0D3sLM/ZdrHAbsg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq0zUNJ5DHp87bY8B4cMvtBDh1eShbRMuYetCy2
- Px1GqYlVUGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatM1DQAKCRDa6OEJdZac
- 5dSLD/4xrwfzsigisKYCyKU5PEkIYvS5dnRNmjlByqS/n+H1YFqfrO9UnXHAkkubifiMX8MZHRJ
- TaJ8yvWZb1m72+CktdeM12fcFRIsWGA8JbUsUg9yoyP+UTM/LOWWGJzDCxiLdWYvNBgTMsxzGHL
- fMJjx7eK67JwDwcqTJU8mVCpqnB/JpHTPWctCMliMzSv5hxTNGmyEbH03p+LvSOsFFZrhQOBldV
- h/6C8wwu1mm54brmJKaYpbQClGg+HZaDHlXB1ts0/oDkuxw9i2M0ZJqWY3Khkn2u1ZRwmquBOu6
- RiDFgZSeCV8g+bLsvuMFEV1ZlOLvFytamCO2zTDRhgQ/DAgcP1A4F12NcssVr9vvu84v/bpavuj
- Azf3HvTlg6apknKVJLk/TwygyoB79RUqDB+fJYnUnEBRtUVUGGgTgwDPu1nw1kwMBWEyHrOBqyN
- iPdiBe2z3Heu1OdzRLre3ad0qGD+siQHDlLi8IctgzzfuJuDrxw1qamk0q8ukH/L1qi89vRzUy6
- jkFZts3iAGLf2LKe62ZmLbNFLNMtHeYQc4NrLfYBS53q0kRspNvnFJJv77Y6WTHdzShSORTl7eK
- 0P7Px9pv0Inv0fv6TQIA8bWGaE9GiqndwANiNzAApn1GGAvjkilFOF29UV7O6/Ud5rT/r8F8PVF
- u3UsESfr2cNOamQ==
+ bh=rc81V7mE2THuOd+uAhGl40WSin9cukVRFEh54EiVbns=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq0zUNxPFh/s52qQBv14lsdEVuPnt/9QwTYQ7Dj
+ gUGY8E9PXqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatM1DQAKCRDa6OEJdZac
+ 5SuJD/kB1ncqd59Vvo3pciPG/TS8SH0MfCRP6dXFW5CHwaNupOFd5iADjFi5TFPJD8XzEHgoGa3
+ 5KyPSaokBPu63XI9BhkDCeD7SsY5Im6yAAJvmnRhu8D0L2thrTFxjVCTfYRzfVnHcXZ5pOu0HpT
+ L1/Nv8aaAzzgmaFqg4rpbRUDhDAjpeO5e5A61oHYERMzMWHPM4QWj3dY1sUKcJ/fZObacB4xP2Z
+ JCwy8/NEJJX+mfdQbLZf9k35maJmd43vfIItMxxwPZ/T9k/dnsfpdWZymrrhsz00BiA/Szlqu/A
+ Yu0fj2fMLfGewfGQwoRa5mQ66XcdlqOfknGBuNumthAEqqHs3SXrgboE/3N3MmDb4qKyyzNmTg8
+ n8ySuKX7cyTxEcRcE2ZNaKYD2vHhgFwF1BBByr0MQGWMhh5nwZda/wrzuyI+TMnDHyg/O5OvJZj
+ Jza/zycQZB0osXHjWvch/rPR5WjUHTQb3rcRAzxuJ7h8AHChDEF6dfadtDQaXMRROQjLUg5Uqlp
+ Yo+qwdxgPvPLlQVzuIHLllZSLcnYGmWNCzQQ82ckK9wh3VaK/pFMI17c2bINzrRLlZJel8r8Ih8
+ NUXYM8FhanY5G5uHews3GGyDafQwLfXo4COFQgXGh9/nwjE9H9+3hMORdeFRw2I/rUyfWrTJRCy
+ 0WLtPYGvIrs/zmA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
@@ -89,8 +89,7 @@ X-Spam_score: 1.0
 X-Spam_bar: +
 X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.24,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,9 +106,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 11:14:02 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
-> This allows a specific cpu to report the size of the ELF notes it needs
-> to dump its state, alongside get_dump_info.
+On Fri, 16 Oct 2026 11:14:05 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+> For now, we keep the global cpu_get_note_size symbol defined.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
