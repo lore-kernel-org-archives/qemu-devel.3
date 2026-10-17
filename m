@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5DACCF2D1
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 553F7CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9cI-0003wT-Ez; Sat, 17 Oct 2026 14:58:50 -0400
+	id 1xI9Zv-0008IP-U3; Sat, 17 Oct 2026 14:56:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c3-0003TV-Nb; Sat, 17 Oct 2026 14:58:36 -0400
+ id 1xI9ZZ-0008Aw-1A; Sat, 17 Oct 2026 14:56:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9c1-0003qQ-OB; Sat, 17 Oct 2026 14:58:35 -0400
+ id 1xI9ZX-0003ai-Ey; Sat, 17 Oct 2026 14:56:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263395; bh=LK7pOWEmvXVNe1OtftuZdvx7LDJF7xQ5LtMBve5pgQk=;
+ t=1792263354; bh=fxET2QOjN+fT/CwIwNfkH5QJ6w6E85MB8X/jd0TrUkY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wKquG11kXRmO7y8B2KZRKx2IO7ZKMURsahTpweH4/p078FNDg4tYbnZ9NpTiiOR7T
- P2dbltF3N1daFg9xQydh/WOgfC3cC3PaajMUxHLWFgHQOq5Z9vCZqdwE9v4PeZLery
- ssHonqQ18+ItddjVBap/mVBqTMjVZv+amTwTvBmgnwu2i0raTibxTrSlYp5z+T93In
- vgbXmw6TDy0qhWmfG4Ui2srDytzUsygYwNwXjw7tUoo+VHcNHLAmRDa+gSoA65gmQN
- WIyk0LWNY2AS7LzRePSPtOxvAnm7f5/kLsGka9d7ipFBFAXNW8Q4ubNHs6w84gXOLn
- 91O4RNA6zu7UA==
+ b=Xkxcm9J4uOjFnfj92oQYkd0Y7JZhtFNhilK9eYASRta68tgYc5tEUNDk/8LNCGXFs
+ SvLakBwtyEqPTXBFBIT2QOMpJ3K39Y0eDDm72Xs4yxtIj/bXGmpaSnTXuZANpnctR0
+ VcRDs+Q29/+Fl3hPyn+mn+Nf9altwK7hQdyYR7aC/fW/hNvX8pZmg+g1MHqZ5mjrKn
+ u5G8minV80+dMyAcea4s4ULKoeelSQ5J1HwJz7vc2CESzEGxHKFAiSP23/1QVhOybi
+ vvKLidvT++JruZxTM+tEt6u1aPpExYNXNCOrBP/PulQ7rMOwYpVvcnIf53mYQI2YsN
+ sKxDQAO8fM1Ag==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6402E1DE6BF;
- Sat, 17 Oct 2026 21:56:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 561781DE6A1;
+ Sat, 17 Oct 2026 21:55:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1292144338A;
- Sat, 17 Oct 2026 21:56:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2DB2444336C;
+ Sat, 17 Oct 2026 21:55:53 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Maxim Levitsky <mlevitsk@redhat.com>,
- "Vulnerability Report" <vr@darknavy.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 31/63] accel/kvm: protect kvm_resample_fd_list with a
- mutex
-Date: Sat, 17 Oct 2026 21:54:47 +0300
-Message-ID: <20261017185528.722197-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jean-Francois Bortolotti <jeff@borto.fr>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 01/63] target/arm: Fix PMSAv8 shareability decode for
+ R-profile MPU regions
+Date: Sat, 17 Oct 2026 21:54:17 +0300
+Message-ID: <20261017185528.722197-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,133 +69,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Jean-Francois Bortolotti <jeff@borto.fr>
 
-Legacy PCI INTx interrupts are level triggered and can, in theory, be shared.
+In Armv8-R AArch32 the shareability field of an MPU region lives in
+PRBAR, not PRLAR:
 
-Upon receiving such an interrupt, VFIO kernel driver masks it in a generic way,
-using INTX_DISABLE bit in the PCI config space.
+  PRBAR: [31:6] BASE  [5] RES0  [4:3] SH  [2:1] AP  [0] XN
+  PRLAR: [31:6] LIMIT [5:4] RES0  [3:1] AttrIndx  [0] EN
 
-It then waits for the guest to signal completion (EOI) of the interrupt,
-upon which VFIO re-enables the interrupt.
+(Arm Cortex-R52 TRM 100026_0103_00_en: Tables 3-80 and 3-83 for
+HPRBAR/HPRLAR, Tables 3-124 and 3-127 for PRBAR/PRLAR.)
 
-The completion is signaled with another eventfd.
+Without this fix, address translation instructions like ATS1HR
+will return wrong value for PAR.SH.
 
-For split irqchip mode, KVM doesn't have a notion of EOI on IOAPIC level.
-Instead it signals EOI with a userspace VM exit, KVM_EXIT_IOAPIC_EOI.
-
-Upon receiving this VM exit, Qemu manually signals the above-mentioned eventfd.
-
-The problem that this patch resolves is that QEMU keeps these eventfds in
-a linked list without any locking to prevent the list from being corrupted by
-concurrent access.
-
-Such use is possible and guest triggerable if the guest rapidly toggles
-INTX mode of a VFIO device and at the same time signals EOI with an arbitrary
-vector.
-
-Fix this by protecting this list (kvm_resample_fd_list) with a mutex.
-
-This patch was only compile tested.
-
-Reported-by: "Vulnerability Report" <vr@darknavy.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3942
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260923004651.101197-1-mlevitsk@redhat.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0f98b46846eb04791f5f4c992d3441c8a8b48872)
+Cc: qemu-stable@nongnu.org
+Fixes: fca45e3467f7 ("target/arm: Add PMSAv8r functionality")
+Signed-off-by: Jean-Francois Bortolotti <jeff@borto.fr>
+Message-id: 20260925234136.1182108-1-jeff@borto.fr
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 653b0c06c83d761667474b29ebfb8a312f317c3a)
+(Mjt: context fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 57727b3fea..66783fcf11 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -127,6 +127,7 @@ typedef struct KVMResampleFd KVMResampleFd;
- static QLIST_HEAD(, KVMResampleFd) kvm_resample_fd_list =
-     QLIST_HEAD_INITIALIZER(kvm_resample_fd_list);
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 92d6bd9d40..fa6973adf1 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2720,7 +2720,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+         if (!arm_feature(env, ARM_FEATURE_M)) {
+             uint8_t attrindx = extract32(matched_rlar, 1, 3);
+             uint64_t mair = env->cp15.mair_el[regime_el(env, mmu_idx)];
+-            uint8_t sh = extract32(matched_rlar, 3, 2);
++            uint8_t sh = extract32(matched_rbar, 3, 2);
  
-+static QemuMutex kvm_resample_fd_list_lock;
- static QemuMutex kml_slots_lock;
- 
- #define kvm_slots_lock()    qemu_mutex_lock(&kml_slots_lock)
-@@ -138,6 +139,8 @@ static inline void kvm_resample_fd_remove(int gsi)
- {
-     KVMResampleFd *rfd;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-+
-     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
-         if (rfd->gsi == gsi) {
-             QLIST_REMOVE(rfd, node);
-@@ -145,6 +148,8 @@ static inline void kvm_resample_fd_remove(int gsi)
-             break;
-         }
-     }
-+
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
-@@ -154,20 +159,26 @@ static inline void kvm_resample_fd_insert(int gsi, EventNotifier *event)
-     rfd->gsi = gsi;
-     rfd->resample_event = event;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-     QLIST_INSERT_HEAD(&kvm_resample_fd_list, rfd, node);
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- void kvm_resample_fd_notify(int gsi)
- {
-     KVMResampleFd *rfd;
- 
-+    qemu_mutex_lock(&kvm_resample_fd_list_lock);
-+
-     QLIST_FOREACH(rfd, &kvm_resample_fd_list, node) {
-         if (rfd->gsi == gsi) {
-             event_notifier_set(rfd->resample_event);
-             trace_kvm_resample_fd_notify(gsi);
--            return;
-+            break;
-         }
-     }
-+
-+    qemu_mutex_unlock(&kvm_resample_fd_list_lock);
- }
- 
- /**
-@@ -2572,6 +2583,7 @@ static int kvm_init(MachineState *ms)
-     int type;
- 
-     qemu_mutex_init(&kml_slots_lock);
-+    qemu_mutex_init(&kvm_resample_fd_list_lock);
- 
-     s = KVM_STATE(ms->accelerator);
- 
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 8cd1d85e06..d29a579156 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -241,7 +241,6 @@ void ioapic_eoi_broadcast(int vector)
-                 continue;
-             }
- 
--#ifdef CONFIG_KVM
-             /*
-              * When IOAPIC is in the userspace while APIC is still in
-              * the kernel (i.e., split irqchip), we have a trick to
-@@ -257,8 +256,9 @@ void ioapic_eoi_broadcast(int vector)
-              * operations below because we don't know whether there're
-              * emulated devices that are using/sharing the same IRQ.
-              */
--            kvm_resample_fd_notify(n);
--#endif
-+            if (kvm_enabled()) {
-+                kvm_resample_fd_notify(n);
-+            }
- 
-             if (!(entry & IOAPIC_LVT_REMOTE_IRR)) {
-                 continue;
+             if (regime_sctlr(env, mmu_idx) & SCTLR_WXN &&
+                 result->f.prot & PAGE_WRITE && mmu_idx != ARMMMUIdx_Stage2) {
 -- 
 2.47.3
 
