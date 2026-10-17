@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9907BCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C311CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB1u-0007Y1-EJ; Sat, 17 Oct 2026 16:29:22 -0400
+	id 1xIB2o-0001fo-EA; Sat, 17 Oct 2026 16:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB0e-0005uV-OB; Sat, 17 Oct 2026 16:28:04 -0400
+ id 1xIB2H-00088W-2e; Sat, 17 Oct 2026 16:29:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB0c-0003wD-W6; Sat, 17 Oct 2026 16:28:04 -0400
+ id 1xIB2F-00045V-Ed; Sat, 17 Oct 2026 16:29:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268837; bh=nH0CvQP+rDYWKCBng+koUebVNeteBTGd0leESiXIIR4=;
+ t=1792268857; bh=mpHODwz6+bwjv1g0zbMEYxQSTqZPXb1z90BducaUvS4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oTRXbnCVymAupLOiK/Z8C/5jgS9aATxDD/qMehOHv4hpKkhBbSigjceZbWFMkJryl
- uZHul2+TwM0QdPOrLmtiKFyoJ9ir+Ov8FtRJR7YsgtCoSkGgPDTWwS5FJwaTCoizyN
- K5xIPk0RDeXShaxpA3MHtAUeb5IlnpteO9FLt3aLpmzoBp4AL1u+ejaQ057u22y6vs
- KFG4t2EqRVuPeLpkGYp5/0I2WppmMCrZIKAMVIAUQ87SKHeKZBxt9YrulMwEB1F6iG
- MBkjYQdjBhAB/BD55DM4KzA8IzrvzOsAWibKaTY35/wbJWZ9nOUgPZvIl+tD0yMPFg
- nODk856ajLQYw==
+ b=kGoTxA1a9ugSIDa9mhu1SrMePeRGdIjYk+X9oR2eB9gqPfPBgYoyPykaBBMJ19Rkk
+ W5hq7899Fn+GMaslHA+VlaPn2FSJjznbpeCqpxTVC0y1dv5peU/aNDjmCO4Qy3d/Mg
+ O8IW5PpJ0OOj0RPAaUyCy8FI6PiYxZ2NHlV2+XPJj37JGWLNVVrPVPWi6jPayzz0i8
+ B/DlqPhZ8Yh80l88ymr3cIIfW2LtMRhhemNSm7yQpT1fY+d8eAdmbzpq177HRv0fs1
+ 6/UPqPL/q7GZufWdGLvpub6HUkTzuDUrRQbNUCq2+jZkhe7Vwg7SGb9eQSVlkdMOp5
+ WVHbSppDxpybQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DCB541DE749;
- Sat, 17 Oct 2026 23:27:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E29021DE75E;
+ Sat, 17 Oct 2026 23:27:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D62F0443420;
- Sat, 17 Oct 2026 23:27:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CCA57443432;
+ Sat, 17 Oct 2026 23:27:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 14/73] s390x/pci: Reject apertures beyond IOAT
- capacity in translation mode
-Date: Sat, 17 Oct 2026 23:25:32 +0300
-Message-ID: <20261017202638.728621-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Yanfei Xu <yanfei.xu@bytedance.com>,
+ Yuxuan Li <liyuxuan.darfux@bytedance.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 32/73] target/i386: Migrate error code only with an
+ exception
+Date: Sat, 17 Oct 2026 23:25:50 +0300
+Message-ID: <20261017202638.728621-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,66 +70,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Yanfei Xu <yanfei.xu@bytedance.com>
 
-In order to support direct mapping (which is only bound by the aperture
-size of the underlying host EDMA reported via vfio) QEMU reports the
-host-provided EDMA to the guest.  However, when using translation mode
-QEMU only supports up to 4 TiB currently (the size of a single RT
-table).
+An exception that carries an error code must retain it across migration.
+Otherwise the destination reinjects it with error_code 0, which can make
+the guest panic. Do not suppress this required state for old machine
+types; an incompatible destination should abort migration instead.
 
-Reject attempts by a guest to register a translation aperture that
-would exceed what QEMU can support by giving an operand exception on
-the MPCIFC instruction that requested the large aperture.  This
-restriction can be removed in the future if/when support for additional
-IOAT regions is added.
+The chance of stopping a vCPU while an exception is pending or injected
+is extremely low, so the cpu/error_code subsection should rarely be
+needed.
 
+It is currently emitted much more often because KVM does not clear
+has_error_code and error_code after completing exception injection.
+Require a valid exception_nr before sending the subsection. This filters
+stale KVM state while preserving the error code for a real exception.
+
+Fixes: 1b80f1009d ("target/i386: add compat for migrating error code")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929153012.774530-4-mjrosato@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit d818e2b0e6317fe5685ce3671bdb566402ff00e9)
+Reported-by: Yuxuan Li <liyuxuan.darfux@bytedance.com>
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+Message-Id: <20260914113817.2212058-1-yanfei.xu@bytedance.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit fb024800d6ddfbc1aea926fbbd43fed6b8676510)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 73417edade..09026360d4 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1054,6 +1054,21 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
-         return -EINVAL;
-     }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f064aa2b3e..862b4a45b4 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -82,7 +82,6 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
  
-+    /*
-+     * We report an EDMA that may exceed what QEMU can handle in support
-+     * of direct-mapping.  If the guest attempts to register an IOAT that
-+     * is too large, reject it with an informative message.  Only direct
-+     * mapping can be used for guests of this size until support is added
-+     * to QEMU for additional IOAT regions.
-+     */
-+    if (t && pal >= ZPCI_TABLE_SIZE_RT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ioat pal 0x%"PRIx64" exceeds max translatable address\n",
-+                      pal);
-+        s390_program_interrupt(env, PGM_OPERAND, ra);
-+        return -EINVAL;
-+    }
-+
-     iommu->pba = pba;
-     iommu->pal = pal;
-     iommu->g_iota = g_iota;
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index 9228523ce8..f182bab246 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -140,6 +140,7 @@ enum ZpciIoatDtype {
- #define ZPCI_PT_BITS            8
- #define ZPCI_ST_SHIFT           (ZPCI_PT_BITS + TARGET_PAGE_BITS)
- #define ZPCI_RT_SHIFT           (ZPCI_ST_SHIFT + ZPCI_TABLE_BITS)
-+#define ZPCI_TABLE_SIZE_RT      (1ULL << (ZPCI_RT_SHIFT + ZPCI_TABLE_BITS))
+ GlobalProperty pc_compat_10_1[] = {
+     { "mch", "extended-tseg-mbytes", "16" },
+-    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
+ };
+ const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
  
- #define ZPCI_RTE_FLAG_MASK      0x3fffULL
- #define ZPCI_RTE_ADDR_MASK      (~ZPCI_RTE_FLAG_MASK)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5805d33ab9..2adc8c1b65 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10819,7 +10819,6 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
+     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
+                      true),
+-    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
+     /*
+      * lecacy_cache defaults to true unless the CPU model provides its
+      * own cache information (see x86_cpu_load_def()).
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e6a197602d..04ab0c84a3 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2367,7 +2367,6 @@ struct ArchCPU {
+     bool expose_tcg;
+     bool migratable;
+     bool migrate_smi_count;
+-    bool migrate_error_code;
+     uint32_t apic_id;
+ 
+     /* Enables publishing of TSC increment and Local APIC bus frequencies to
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index df0e0c178e..b7d2103b6c 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -465,7 +465,7 @@ static bool cpu_errcode_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+ 
+-    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
++    return cpu->env.exception_nr != -1 && cpu->env.has_error_code != 0;
+ }
+ 
+ static const VMStateDescription vmstate_error_code = {
 -- 
 2.47.3
 
