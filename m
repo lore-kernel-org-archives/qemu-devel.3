@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E56E3CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63895CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9aj-0000Ww-Ab; Sat, 17 Oct 2026 14:57:13 -0400
+	id 1xI9cL-0004A5-GT; Sat, 17 Oct 2026 14:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ag-0000TB-Ga; Sat, 17 Oct 2026 14:57:10 -0400
+ id 1xI9c6-0003X5-SA; Sat, 17 Oct 2026 14:58:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9ae-0003f2-AM; Sat, 17 Oct 2026 14:57:10 -0400
+ id 1xI9c5-0003sG-7O; Sat, 17 Oct 2026 14:58:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263375; bh=1ecRbq9letlyxM/bF+GswFVOddcm84SXj9vjz4pGFdw=;
+ t=1792263398; bh=3c4dsn4vPTBlsQBOnxH6KKy/ZmaHzHTUNHtF6bjD/3U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hIFZcU+Zug0UfUpjDtPSjefYiS5jftuGUgz+d4KyR3l4HLo7WkgGYjmFey3PYB3nR
- lwKlw5DPFlHDGFJ50iT7iSP9HDdPF5/7XmnCV6VwbTAT9LpvEL5KTeozsxmMmAjNAJ
- tgUUvnYY4Fj8u7K4HWKEdweltfVaeVq+E35MjVEmMINo4Zz4gbNhPYfmN8NXBcQJlE
- PmPiWh6GEhB5q+ZwjGWyEZ97xRt5UpfBQQpKnQbSAm8IGq7Mklf7+lZtV4MpKqfwiH
- LWWBew0g2oRDdMdFyHodjFylwdKZ4MNXmQRVJrWRkz0sNCTLiJK4S7CovTa9TYL9RC
- FwVdDJBQQ9tRQ==
+ b=qRnjMgv5Ps9cpNeTLmteEJcnMG5FKfRJL5vYbn2ZZtQhBGNeBQXxLaQaESTvxJqn5
+ E2vSPmqzCmb+aIPxdu0Ytq8EVzAAVKHtBp8hW+IagfLzWtg7aGazC0+bvWcuPRD/DR
+ xsit4f71OE1uSeh+VlbL7R9weaKgxX+N/+/6AaGreqGmrUnm3NOIYFqzoz2/eo2/BJ
+ 7fdKjRQSK/TZ3XwUTri4E0qTj3gI0guAmX1iqmBR1VzKxqQba9BjSrdLNVQlixUxC4
+ 1/7EFjeckZ8Of66JG3ZaMJCthbAGhpS/CsjW+dsGh5SBi39tpyncDGuSJ52V5NTkwG
+ 2C0SyaHYXR3pQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F36F61DE6B1;
- Sat, 17 Oct 2026 21:56:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 140291DE6C1;
+ Sat, 17 Oct 2026 21:56:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3BC3044337C;
- Sat, 17 Oct 2026 21:56:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4B7E44338C;
+ Sat, 17 Oct 2026 21:56:36 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifan@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 17/63] hw/usb/dev-smartcard-reader: fix assert on
- pending answers overflow
-Date: Sat, 17 Oct 2026 21:54:33 +0300
-Message-ID: <20261017185528.722197-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 33/63] hw/usb: Fix USB MTP Use-After-Free in
+ usb_mtp_deletefn List Iteration
+Date: Sat, 17 Oct 2026 21:54:49 +0300
+Message-ID: <20261017185528.722197-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -72,55 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Tommaso Califano <tcalifan@redhat.com>
 
-A guest can send PC_to_RDR_XfrBlock USB messages faster than the async
-card backend can process them. When the pending_answers ring buffer
-(128 entries) fills, ccid_add_pending_answer() hits an assert() and
-crashes QEMU.
+In QEMU's USB MTP (Media Transfer Protocol) device emulation, the usb_mtp_deletefn()
+function in hw/usb/dev-mtp.c iterates over a child object list using QLIST_FOREACH
+while the recursive call may free the current element. After the free, the macro reads
+the le_next field from freed memory to advance the iterator.
 
-The CCID spec (section 4) states that a slot can only accept one
-command at a time. A second command to a busy slot must be rejected
-with CMD_SLOT_BUSY (section 6.2.6).
+Replace QLIST_FOREACH with QLIST_FOREACH_SAFE, which saves the next pointer before the
+iteration body executes.
 
-Enforce this by checking pending_answers_num before queuing a new
-APDU. When the slot is already busy, report ERROR_CMD_SLOT_BUSY and
-send a DataBlock error response back to the guest.
-
-Fixes: CVE-2026-18410
-Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3997
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-(cherry picked from commit d7f20657e756744fec8f84cd225a3b07cfb78526)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3991
+Signed-off-by: Tommaso Califano <tcalifan@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit d198957674b3c2cf8b9437ba91304cc421b219bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
-index f91eda1a14..6298464a22 100644
---- a/hw/usb/dev-smartcard-reader.c
-+++ b/hw/usb/dev-smartcard-reader.c
-@@ -166,6 +166,7 @@ enum {
-     ERROR_XFR_PARITY_ERROR  = -3,
-     ERROR_XFR_OVERRUN       = -4,
-     ERROR_HW_ERROR          = -5,
-+    ERROR_CMD_SLOT_BUSY     = -32,
- };
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 326c92a43d..1ea97bf8b3 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1153,7 +1153,7 @@ enum {
  
- /* 6.2.6 RDR_to_PC_SlotStatus definitions */
-@@ -949,6 +950,13 @@ static void ccid_on_apdu_from_guest(USBCCIDState *s, CCID_XferBlock *recv)
-         ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
-         return;
-     }
-+    if (s->pending_answers_num > 0) {
-+        DPRINTF(s, D_WARN,
-+                "usb-ccid: slot already busy, rejecting apdu\n");
-+        ccid_report_error_failed(s, ERROR_CMD_SLOT_BUSY);
-+        ccid_write_data_block_error(s, recv->hdr.bSlot, recv->hdr.bSeq);
-+        return;
-+    }
-     len = le32_to_cpu(recv->hdr.dwLength);
-     DPRINTF(s, 1, "%s: seq %d, len %u\n", __func__,
-                 recv->hdr.bSeq, len);
+ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
+ {
+-    MTPObject *iter, *iter2;
++    MTPObject *iter, *iter2, *iter2_next;
+     int ret = 0;
+ 
+     /*
+@@ -1162,7 +1162,7 @@ static int usb_mtp_deletefn(MTPState *s, MTPObject *o, uint32_t trans)
+ 
+     QLIST_FOREACH(iter, &o->children, list) {
+         if (iter->format == FMT_ASSOCIATION) {
+-            QLIST_FOREACH(iter2, &iter->children, list) {
++            QLIST_FOREACH_SAFE(iter2, &iter->children, list, iter2_next) {
+                 ret |= usb_mtp_deletefn(s, iter2, trans);
+             }
+         }
 -- 
 2.47.3
 
