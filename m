@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F055CCA463
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 07:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6526CC6B2A
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 07:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHz1P-0006Km-04; Sat, 17 Oct 2026 03:40:03 -0400
+	id 1xHz3s-00073l-Eh; Sat, 17 Oct 2026 03:42:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHz1N-0006Jv-2w
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 03:40:01 -0400
+ id 1xHz3p-000730-Od
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 03:42:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xHz1K-0000Gb-V4
- for qemu-devel@nongnu.org; Sat, 17 Oct 2026 03:40:00 -0400
+ id 1xHz3o-0000Ws-28
+ for qemu-devel@nongnu.org; Sat, 17 Oct 2026 03:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792222797;
+ s=mimecast20190719; t=1792222951;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding;
- bh=HtljW4DmVGbgU/K5oim3BhKj8uBEOHaHFFbooZ/PVtA=;
- b=Rbx1oU4UK3PptJes2f030KYavjElZaxyyXqkNaDKOkOWdt64+yXRKyQKEkQKsouLhpfnFm
- a+Zcl7Z4AQAGjYIhv/ws3Ux9LIoEY0/LxGOyr4xadsUzaIlxx99wSOynLY2mOLKf5N9rPv
- 3IGIlVczfZVUtKxchhWj5Eer+HE/IcE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MYhA9Y2wSljZOhPLto4bwXslRzijsfuLGB01qwOkN0Y=;
+ b=BrNhvG4kj511clUTdUQcD/yFReuy2mkw+SASiiMUHjhk4CkctqqNjp4VEmg6pfNO8jy2iJ
+ Pra4gR0rINyYl6L2P3903K5kUuOG7oJ3zzkGDUeHeV3M+wf+tV7zKgOrBXoWv2ayJF1adS
+ qbpSemKNF/G4XlEViWtmTPlozInnL0M=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-O6nc-1pVN6G8XjqCYX1NZA-1; Sat, 17 Oct 2026 07:39:55 +0000
-X-MC-Unique: O6nc-1pVN6G8XjqCYX1NZA-1
-X-Mimecast-MFC-AGG-ID: O6nc-1pVN6G8XjqCYX1NZA_1792222794
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49cdc4080ddso3877805e9.1
- for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 00:39:55 -0700 (PDT)
+ us-mta-470-39fui9voOuO05z5_zSTpKA-1; Sat, 17 Oct 2026 07:42:29 +0000
+X-MC-Unique: 39fui9voOuO05z5_zSTpKA-1
+X-Mimecast-MFC-AGG-ID: 39fui9voOuO05z5_zSTpKA_1792222948
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a01d1fb07bso6354235e9.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Oct 2026 00:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792222794; x=1792827594; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792222948; x=1792827748; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HtljW4DmVGbgU/K5oim3BhKj8uBEOHaHFFbooZ/PVtA=;
- b=Qw7kbOA0luMshulpqHfB373J8uZbo12EI34yD/q16TRQxe/MRcjGd1UYxZU3pSrhVu
- bA4UxIifhvgylHEp6zpMjwBsKDv8Ei2IXxi2rg+zPiaM5Gynw42t5dXoh5wOrFriNQqh
- MHaiHjJwwMh/9MRF4mfwTV227cuVLJXxNQtkzhhcrputBDdvqz6w4UOfuPPT8TqqsBjF
- iSEa4iBoMXMBtjCERaDOrcgq40dJF2m46FRhVztnhvskIxiQW+RO1+of+9sK59mQZMQO
- VQngGG6dXq/PrgqnOfTvv/SS5ElJJzzpR7Y2xVXpO0WIcG3vtSpNd3sHfyICMAeW4PlZ
- O8Hg==
+ bh=MYhA9Y2wSljZOhPLto4bwXslRzijsfuLGB01qwOkN0Y=;
+ b=rt+dyC9kUvYYduNnbj6IAFwap9IeDVSURlDs15ytxjcZ5WYr3pTLdRo44stx0NCMK8
+ aVEU15Od8LbGfOyjq37PqbOGFennWlp0UV3g+1F5+Sg1awgKa5ngBYg0Wsq3AG+cbcv+
+ 8aB9ZhohpCNPrtiqsk2Mpqa702tRXuPa073o+jLi2VBtqwmV/AvA/1Xu0vC8HIO71TYi
+ fGD7VEoRdN679n4LvqkeyUlC0yAD3nR3Fq3hXqbEK2/VErn4XZazWD3qD6WNlI594czw
+ ohjmzzEmGS4fF/czGuYxeJa9e6qISTRwrzgOIpGonj9hWqFg4mKETxlNmT4vDBOR7DAa
+ M7MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792222794; x=1792827594;
+ d=1e100.net; s=20260707; t=1792222948; x=1792827748;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=HtljW4DmVGbgU/K5oim3BhKj8uBEOHaHFFbooZ/PVtA=;
- b=1sWXa5UDuRoezpi+sUafAeDp4jsyYiTL/fY48sZ89JtdCVK1qb8FOfAHvdiApL0Bjl
- jeT1Pr17qRUkYy/ZCzE7ilViDoN4e6FnaKC0iklzd0DrwreOzEMb8Fl4i+Ut9ucK2r64
- PT554q3BU4pQu8CRDhBdVM0isDZIepY671EWQpAHysfTM8L2kT9GpJuE3S1A5Teeqo9s
- 7DSWWTr4tZglUmuorkNaOCthdz6HZjb5t1oQg6BRU+Tp7eo3RfRydTmpjy6zO1H4lndR
- 61MG9Vu8yZQcwhxW7MhlbBXR2xlyFCbNKh/i1bYx3zVXezbf20UIgs3e0KAktp/pao/w
- mHfA==
-X-Gm-Message-State: AFq9FYKEkY+VU3Cl7t3+WMxzSybL1K63n+blnumt9X18a9tdIjTB8lQd
- V/C4ETspfxfsmDpcx6BoK2ygzLUOMcYkjOnzkNq/04ktf7G2dnhqOBYs5x49K1YrLJ7ny3wcZEb
- T0YXu5MtuUL1tsitFYuxlmqq+DuK011dBqIpjuSVU9tpTFIjRmtcr0RGqDtYQA0BJdoPEKgDqUP
- TZwQj4QVoJhMhF6ADqmU1LDjFkQo5r2AhZV8MnqUvp
-X-Gm-Gg: AYBFou1dzkBxDrNp9ZwQsZ8L/GAAFvx//IUWrlDzmzoIHGGjVRX9ixlMBIlowcE1BFA
- DfhD8oSC1jvs91Ic3tw10OUvL0DSevtZ/MLr+y/43HQTAYxy12a1QNv7yAqi6REEtLExdQ5536a
- qOQvEybdhSNx5g58LoRSPIxHtXvSRhvFCkM4JIAO1lib/K/xUBxAjtVmDbDDJSlPtx7mf23GhSb
- Ut15kxKr3jSk8c2otbZfEgxFxbqZMxAPjFVEXJoamq3XeI7OmJT1E2v7tK1HUOujbT/MpXTZW6d
- MCg+O9GP5yD2KyTaCoq51dbVuISetPPLf310C+NCgJz983dDafQdMeOI11MkAd1PJNPTs4LILLL
- yg+Br3bfkE16GSlWeLU23RA5COr44FEbVVujpXbctX79kcdHvvZziNuL/1v/oVSk3iN3gtBLVZ0
- f9BuQl
-X-Received: by 2002:a05:600c:c8d:b0:49e:63cc:6324 with SMTP id
- 5b1f17b1804b1-4a1d75f2bacmr47477705e9.6.1792222794275; 
- Sat, 17 Oct 2026 00:39:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:c8d:b0:49e:63cc:6324 with SMTP id
- 5b1f17b1804b1-4a1d75f2bacmr47477415e9.6.1792222793944; 
- Sat, 17 Oct 2026 00:39:53 -0700 (PDT)
+ bh=MYhA9Y2wSljZOhPLto4bwXslRzijsfuLGB01qwOkN0Y=;
+ b=ZWlEjLkSPn0MW1FLFdKVuOJ8XUXpOgmR64Pz8Fb6BYB0TEyz82xPZxnXEX64oJsR4u
+ Wq/qvoq8EiXkvd0UY/W7JpQYdj1f6KGVnLSI/CW081LzgSB3q3qwg+c31T7Pd03PXCix
+ l20OEzW700XCwUItJzXV97SIOjYvVx9zm+/JiY4XtLoQpiXjURoH998ULoTTqnqKAaAE
+ z4OSJRPq0nHIF7TgNFddTDMWYy0leCq/jv386x7WXQcbMnbcoJqatZ6Su3KmyodXi/5+
+ yPQJUF8cMranrjISZfmMGlK2rpeL837qwDmq3Yc+S3thLH7G6fvDFI3Z/t2kSybAodZ1
+ DfmA==
+X-Gm-Message-State: AFq9FYJ5V3vjA40rVGaDyABZhCGHwvwvFb0gkXSik4UhiUsKGV22tVuI
+ KGYuBwpkyomhdxqEWAdp7+1YM6+pk5f+WDJIXJmiBc02yyCj3PIh8g4DHPmKlvkGRqMYjPMBBS3
+ ygtLREQlm1E2SAihK4nVoDEsCHOAkZUMLKy68n+dg3x4OhtoPLrwuJmXNvErlxq4QtZ+vyauZEZ
+ RE1RJa6lOsQJTexoiCRDdoesBOeLqXfR3iHHQTnBWP
+X-Gm-Gg: AYBFou1UgmLPXIjUwG7baNZoApsjXGiwmw3RxWukt35WtD39goduUP6Sd2yz8FGFW+k
+ 8FtJAsiIAzPtOomBNCZUC7JBzDob7c3zwd4Eu/4CXWq8A2lNBoXgq0FPkr/KlL9sOlmncmytQKc
+ qmsq7knl79dYSvScZpDXndK+5yjMun39YcU9tG6B9PY2cIOvCyvkr/OfDrE+YopCMFYpLVtyp4X
+ X2Nyh7XsOyMSWLjhT5XhV3O57l0KD500x31pgVLBYzKvoS64O8V+MUO4NMTLNxZ7py3KqECngq9
+ d5T0Ce+FuazobdSHNkWl4cPzZXmDUQxLxHCITY8gMzqxUYxvI+6MeP0G7akAN29ZlwhbEaz/A+n
+ V4BgAybmgtCCTEZ+GGOTeRCggR4ikgoq4p/HY/IeIlB9sBsIqnH/ejPfoonFmeLgV4ARp3kxdxZ
+ y7bwTc
+X-Received: by 2002:a05:600c:1c09:b0:4a1:df2f:ae8f with SMTP id
+ 5b1f17b1804b1-4a1df2fb8abmr3639925e9.6.1792222948234; 
+ Sat, 17 Oct 2026 00:42:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c09:b0:4a1:df2f:ae8f with SMTP id
+ 5b1f17b1804b1-4a1df2fb8abmr3639635e9.6.1792222947914; 
+ Sat, 17 Oct 2026 00:42:27 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.82.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1c8de7230sm112672775e9.14.2026.10.17.00.39.53
+ 5b1f17b1804b1-4a1c8a81587sm224102745e9.1.2026.10.17.00.42.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 17 Oct 2026 00:39:53 -0700 (PDT)
+ Sat, 17 Oct 2026 00:42:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH] tcg/tests: add an alias for all TCG tests of a target
-Date: Sat, 17 Oct 2026 09:39:52 +0200
-Message-ID: <20261017073952.1346449-1-pbonzini@redhat.com>
+Subject: [PATCH] tests/tcg: match custom target name to executable name
+Date: Sat, 17 Oct 2026 09:42:26 +0200
+Message-ID: <20261017074226.1347492-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.56.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -116,69 +116,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow building (without running) all the TCG tests that are available
-for a target, so that they can be run manually.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/testing/main.rst | 6 ++++--
- tests/tcg/meson.build       | 8 +++++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ tests/tcg/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index fadb376eaf0..b0ca37fe2ba 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -1035,12 +1035,14 @@ See :ref:`container-ref` for more details.
- Running subset of tests
- ~~~~~~~~~~~~~~~~~~~~~~~
- 
--You can build the tcg tests using::
-+You can build and run the TCG tests using respectively::
- 
-   make tcg-tests
-+  make check-tcg-$TARGET
- 
--And run them for one target with::
-+Or for a single target::
- 
-+  make tcg-tests-$TARGET
-   make check-tcg-$TARGET
- 
- Adding ``V=1`` to the invocation will show the details of how to
 diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 4c0e30756d5..43886ac9269 100644
+index 43886ac9269..1ea218c7531 100644
 --- a/tests/tcg/meson.build
 +++ b/tests/tcg/meson.build
-@@ -197,6 +197,7 @@ image_targets = {}
- exe_targets = []
- # Finally, we can create all test executables and test targets
- foreach target, plan: tcg_tests
-+  target_exe_targets = []
-   if target.startswith('multiarch-')
-     # those tests are included by architecture files if needed
-     continue
-@@ -451,7 +452,7 @@ foreach target, plan: tcg_tests
-                             depends: exe_depends,
-                             depend_files: build_test_depend_files,
-                             build_by_default: false)
--        exe_targets += exe
-+        target_exe_targets += exe
-         built_tests += {exe_name: exe}
-       endif
+@@ -433,7 +433,7 @@ foreach target, plan: tcg_tests
  
-@@ -538,6 +539,11 @@ foreach target, plan: tcg_tests
-       added_tests += {test_name: true}
-     endforeach
-   endforeach
-+  if target_exe_targets.length() > 0
-+    # finally create a top level target to rebuild all tests for this target
-+    alias_target('tcg-tests-' + target, target_exe_targets)
-+  endif
-+  exe_targets += target_exe_targets
- endforeach
- 
- if exe_targets.length() > 0
+       # build executable if needed
+       if exe_name not in built_tests
+-        exe = custom_target(exe_name,
++        exe = custom_target(exe_name + '.test',
+                             input: file,
+                             command: [cc, '@INPUT@',
+                                       '-o', '@OUTPUT@', '-static',
 -- 
 2.56.0
 
