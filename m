@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D067FCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A255CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9fl-0002Z6-CZ; Sat, 17 Oct 2026 15:02:26 -0400
+	id 1xI9eY-0007YY-Qc; Sat, 17 Oct 2026 15:01:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eS-0006wQ-Mc; Sat, 17 Oct 2026 15:01:04 -0400
+ id 1xI9du-000616-6m; Sat, 17 Oct 2026 15:00:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eQ-0004JM-NK; Sat, 17 Oct 2026 15:01:04 -0400
+ id 1xI9ds-00043g-F2; Sat, 17 Oct 2026 15:00:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263430; bh=36KdazKZYk8egmIh6085uyxvohIyRpcxAwUdJB/IDVY=;
+ t=1792263418; bh=WPmq/gXtDSPH2oUP+8Lx/W76wasYeiTwsmanO0qP4FY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xdmOneCJYIAglr6pcI4+m++xwcim9JkhNQE875zc0qmqrXiHVIVloA5EMv/gdc9r9
- OImDUm4WkZvkHCSTCda8OXi16GJUXzZ1GbbHC6o8ZLCyliF/FxCLQfkiaNG6Nj6MyW
- bTuWaObtql1M6O/oqxZtQHK8QlE2bSUSOThetsS6Mk14fv7MUzaG247qPAN39DjjJV
- nyc6/Ieb2/We+KlY6SkLMZVNAqmTqj/XHicSAegr3T6ZExmGhvm+oYK8nUR6no/cpu
- VQSFecil7HmMWUOIZvtdcNJ02Dr0rCGx+MVI/zjlivseZxsYFwLKZDcghY59rwM8jn
- UYq+MQpinCQKw==
+ b=Kb4svJX0DQdUuZ30KzNf+eCR2hbDpBsMJaBbwsd4Ae2khUUx0mrMt0xSse5KiLjUH
+ kDkwrcocxiOyl/ArPWls4o2iuyp990lPVhjEKcy4CABwMsHJGzHjgfST27Dbh0fYmR
+ CU4KOqbVLJDLEWVFOCBjJLSwknnA4QiiHPGzL4ajC9H/ZnaUUMbTi1LXgziTJPOdDW
+ YFcIjVwhK/wsR7iuy++sM79Vji2teP8+DG+AGi7n9e76gGPw0BZ2OUDhl3V80Wc74a
+ 9UbCyTb1yq2iG23TnDkqInitdzvAXcA8fOCRDi8gm54mJPOXdEnMTyQcHobCTEipzo
+ NaguKsJqPSOFw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CA911DE6DC;
- Sat, 17 Oct 2026 21:57:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C21501DE6D4;
+ Sat, 17 Oct 2026 21:56:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BFA274433A4;
- Sat, 17 Oct 2026 21:57:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 08EDC44339C;
+ Sat, 17 Oct 2026 21:56:57 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, imaginos <imaginos32@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Dominic P <gcc@gcc.dp11.uk>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 57/63] target/riscv: check G-stage write permission
- for VS-stage A/D updates
-Date: Sat, 17 Oct 2026 21:55:13 +0300
-Message-ID: <20261017185528.722197-57-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 49/63] tests/tcg: Add tests for sign extension after
+ rotate
+Date: Sat, 17 Oct 2026 21:55:05 +0300
+Message-ID: <20261017185528.722197-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,89 +70,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: imaginos <imaginos32@gmail.com>
+From: Dominic P <gcc@gcc.dp11.uk>
 
-During a two-stage (VS-stage + G-stage) page-table walk with hardware
-A/D updating enabled (Svadu / menvcfg.ADUE), a store that reaches a
-VS-stage leaf PTE whose accessed or dirty bit is clear triggers a
-hardware write-back of those bits into the PTE. That write-back is an
-implicit store to the PTE's guest-physical address, so it must be
-permitted by G-stage.
+Cover the rotr_i32 (ARM ror) and rotl_i32 (i386 roll) forms fixed by
+the previous patch.  Both tests fail without it.
 
-Fix this by re-running the G-stage translation of the guest PTE's
-address with store semantics. get_physical_address() then also checks
-that G-stage permits the guest PTE to be written, and raises a
-guest-page store fault when it does not.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3426
-Signed-off-by: imaginos <imaginos32@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260705140508.17692-1-imaginos32@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 366b4fba0fae0d9425b230e06c38842d72273d88)
+Signed-off-by: Dominic P <gcc@gcc.dp11.uk>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260930185124.3036980-3-gcc@gcc.dp11.uk>
+(cherry picked from commit f9ca6b19acb1b935e7abc920410c993b059a8b4d)
+(Mjt: back-port across Makefile=>meson conversion for tests)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 0ac10835fe..e407c1b6df 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1413,6 +1413,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-     int ptshift;
-     target_ulong pte;
-     hwaddr pte_addr;
-+    hwaddr pte_gpa = 0;
-     const hwaddr base_root = base;
-     int i;
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 6189d7a0e2..da9fb7eca0 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -32,6 +32,9 @@ run-fcvt: fcvt
+ ARM_TESTS += pcalign-a32
+ pcalign-a32: CFLAGS+=-marm
  
-@@ -1449,6 +1450,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-             }
- 
-             pte_addr = vbase + idx * ptesize;
-+            pte_gpa = base + idx * ptesize;
-         } else {
-             pte_addr = base + idx * ptesize;
-         }
-@@ -1701,6 +1703,28 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-             return TRANSLATE_FAIL;
-         }
- 
-+        /*
-+         * The implicit store that writes updated A/D bits back to a VS-stage
-+         * (first-stage) PTE must itself be permitted by G-stage. Re-run the
-+         * second-stage translation of the PTE's guest-physical address with
-+         * store semantics. If G-stage denies write, raise G-stage store fault
-+         * against the PTE address.
-+         */
-+        if (two_stage && first_stage) {
-+            int gpa_prot;
-+            hwaddr gpa_paddr;
-+            int gpa_ret = get_physical_address(env, &gpa_paddr, &gpa_prot,
-+                                               pte_gpa, NULL, MMU_DATA_STORE,
-+                                               MMUIdx_U, false, true,
-+                                               is_debug, false);
-+            if (gpa_ret != TRANSLATE_SUCCESS) {
-+                if (fault_pte_addr) {
-+                    *fault_pte_addr = pte_gpa >> 2;
-+                }
-+                return TRANSLATE_G_STAGE_FAIL;
-+            }
-+        }
++ARM_TESTS += test-arm-opt-ror
++test-arm-opt-ror: CFLAGS+=-marm
 +
-         pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-                                            sxlen_bytes, MMU_DATA_STORE, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-@@ -2379,6 +2403,10 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                  * doing VS-stage page table walk.
-                  */
-                 tinst = (riscv_cpu_xlen(env) == 32) ? 0x00002000 : 0x00003000;
+ ifeq ($(CONFIG_ARM_COMPATIBLE_SEMIHOSTING),y)
+ 
+ # Semihosting smoke test for linux-user
+diff --git a/tests/tcg/arm/test-arm-opt-ror.c b/tests/tcg/arm/test-arm-opt-ror.c
+new file mode 100644
+index 0000000000..2579168a13
+--- /dev/null
++++ b/tests/tcg/arm/test-arm-opt-ror.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
 +
-+                if (cause == RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT) {
-+                    tinst |= 0x20;
-+                }
-             } else {
-                 /*
-                  * The "Addr. Offset" field in transformed instruction is
++#include <assert.h>
++
++int main(void)
++{
++    /* Load from memory so that TCG does not see a constant. */
++    volatile int v = 3;
++    int x = v, gt;
++
++    asm("sxtb %1, %1\n\t"
++        "ror %1, %1, #1\n\t"
++        "sxtb %1, %1\n\t"
++        "cmp %1, #0\n\t"
++        "movle %0, #0\n\t"
++        "movgt %0, #1"
++        : "=r"(gt), "+r"(x) : : "cc");
++    assert(gt);
++    return 0;
++}
+diff --git a/tests/tcg/i386/test-i386-opt-rol.c b/tests/tcg/i386/test-i386-opt-rol.c
+new file mode 100644
+index 0000000000..e0393147e1
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-rol.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetitions after rotate. */
++
++#include <assert.h>
++
++int main(void)
++{
++    /* Load from memory so that TCG does not see a constant. */
++    volatile int v = 3;
++    int x = v;
++    char test;
++
++    asm("movsbl %b1, %1\n\t"
++        "roll $31, %1\n\t"
++        "movsbl %b1, %1\n\t"
++        "testl %1, %1\n\t"
++        "setg %0"
++        : "=q"(test), "+q"(x));
++    assert(test);
++    return 0;
++}
 -- 
 2.47.3
 
