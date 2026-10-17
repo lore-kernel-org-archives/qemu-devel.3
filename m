@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88D85CCA46C
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 00:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1478CCF2C1
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 00:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xHskg-0001L7-V5; Fri, 16 Oct 2026 20:58:22 -0400
+	id 1xHskZ-0001KG-9j; Fri, 16 Oct 2026 20:58:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xHskf-0001Kk-Mz
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 20:58:21 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ id 1xHskX-0001Jw-En
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 20:58:13 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xHske-00010m-7i
- for qemu-devel@nongnu.org; Fri, 16 Oct 2026 20:58:21 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-6798d4ab549so572019d50.0
- for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 17:58:19 -0700 (PDT)
+ id 1xHskV-00010Y-T7
+ for qemu-devel@nongnu.org; Fri, 16 Oct 2026 20:58:13 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-8726acc5eadso4231797b3.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Oct 2026 17:58:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792198699; x=1792803499; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DkIunV21cUzVdGY+O6vqW5yMBXiu3QheTjcP4l9v15c=;
- b=e0tUeZlxPy83AOhAqtz9n+iyqwDSVp2mWsadC5E+j9PMTiuQvKtCnVtSX8u7cB4Gah
- q1lXp0WgJYSkD3kRgsz+eZIVdNA7PRnPdBAfJ3PX49trCGS6hY2Xz3nkXuqgsisE7kOf
- 8wN9/1k6MPismFfGSa0tXYzMEQMKVEu9urgOjXrNvCBHAp8xiSrDLj0+GL1ljGcDLJSt
- JyU16aZot2XACupWlueENnrTa4kzPYMFhTMEVBHlv6IzcdmFz5by2r+te6ctDtwHquYQ
- bD3KxedjShea9wKMcbpP+rXnJAphP/YS0rAir0BCs7Rh87G0W8AHJPB3RxgO7ODVRvT0
- hCOA==
+ d=gmail.com; s=20251104; t=1792198691; x=1792803491; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=lWgVav86QaAJScL1nTzmg3qob2drfE0FX0VClX3o3Fs=;
+ b=lj6IFtlaXq7dS16bMh60avnJv3tcZKhYPiFJ96+oNpl9S14nIfzIJ+aCBhZ8YmvVEj
+ FW6vOO5LL6UPAtqrAEEWFRE0/qcHr8PKAuy3A7uhMePTbzFEHVKShy4FRL+4+tc6C4Go
+ 10gnCLmnC1qWFy4HQQGQ5+Aqj4aDLq4Xpl/Xt8hr2b1jVSX5/tSc/xf8ZDauK1tplyVw
+ 4ilSN1JOL2AzOY3rkq8VLiOXQ5xUMeck9IAaoiejRSc2dwIznsqBE6NilREn0xn2P+1U
+ ScqQOSb1mqj+B3wsmrxSFWfSDsbCB/AyztN3B1aUw1r2XeTLWG4rq2lVAUS8LuXSbJo4
+ T8eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792198699; x=1792803499;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=DkIunV21cUzVdGY+O6vqW5yMBXiu3QheTjcP4l9v15c=;
- b=UY4NdQj5TAHGD3GiIbm6vnjiLDMHWf6YCFO8as4xRZoi27J1bpSKRUw+dE04Wv3P/L
- qaFYgOgsxzk7qqEDnnEZsVhHd8AsKXlZJ0cdVbu/sn8RHgoSOOAnY5rePzZQ3btp9SmY
- WJ6sFLrQl3H3Q+tPbhX3kYjJvedn9Ruq2gqRN88Ayxd5pOEfvyVGSDcahOGBQTEwuYK4
- lTikM+5iTsgBrqhlxCyz9ySa83wNBPrPaUItSr9uSq8xrRpfvBbC5X7EnXvkwcUhK+Tk
- 1STWkgPDjUb6JszIcxYtSBns+EONzLyL9A6KqNffLN5vgjOUULGMfuKRv2thPEdFPuQV
- mgjw==
-X-Gm-Message-State: AFq9FYIFJQ2i32uICeRtytd2FhR1T8XcE1yrT8BFksce+2cU/VRTgDKV
- 1G89xx/2hRphHa2ywaWlmslhgtdUNlHk64JWwWwLroka5KsICeP/cB5haqnTdQ==
-X-Gm-Gg: AYBFou1a7lni15L34+tZdEV9sfj3eUMsGB0ECWdL75//0NMPU5Qde0/mHhTsijiJ8K5
- JZryBq/nHp7YW088RkHUwaWhQkuPB7mXNkMRj5upbYnrwkf3MRuukv+XCSxhTuGLn7D12nxXL/U
- nx0QCS7K3g0AGvz7AWu3AU//fbmgliqq1GDy9/fgiWFpP3zT8zN1bgKVSxSyrpsjUBOBNs7D8tF
- SYpyMdcrVVvdZpSILgEHjZs1tWJqgdMOc3gRf4ME1RooZ4vgKnnBOwV+SBuEb2mt9oQdpQHx2eW
- qTqZ/Q9YRVrsndvfrid284wFkvWGzpARTtWMqjDnyVYe1ljooipldgRTqbiIHnG7sfJnLBRZaFW
- POnMFW+CrXpZGPW1xkbPuxkzGWrdO3JPeDhzDshetGn0wxLjULU1OdcECbhVlv76tviywCoe4mQ
- j1oQcBLo/+Oa8u2bqLk8ofIPnTM8GnFRB117av38NTYRCcJuUF6S5/KcXdnzogHUMK2H3PI05Jz
- fz+6KJPtN/G0UD862tEcADbnva/zNGGhCTT6DNlT2WvOdn9/C+oaevxv5UywAUDHcIBejUSRjAU
- rwkZGyBPaPHShQi2bDr1qnXg6pPFU9JptsSbGdnf
-X-Received: by 2002:a05:690e:191c:b0:679:a6c1:d70f with SMTP id
- 956f58d0204a3-679ca4c92f9mr385349d50.2.1792198698578; 
- Fri, 16 Oct 2026 17:58:18 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792198691; x=1792803491;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=lWgVav86QaAJScL1nTzmg3qob2drfE0FX0VClX3o3Fs=;
+ b=1cef4hfwpJL4ofeUMg8kh94miutRPtrmrGHe9UfaUJR6jl2zWijSdDDEuK8Cvk+O3J
+ sUIx8MD3fd4gDMMCQpcfb+wGf0riZB3zfaTYAcFrAJAdsxN0XiN9JWp8xG2yqWWX10sY
+ hMTm9LonfXFf53CEnKtjswZY8DgbcfjuPldaYkMh3PHz7R2FLI7RyxOu8Nzz/pU31rEV
+ kJ2x9dMFeT8nkLz4Y/kwnRfnT6U5afZqsJQBWC+wT7BUec7YXSCUfsL8oBwZ6Z+W2rUn
+ BAKSDtLfzhqHq6IMQRlqNmh9gGnFkx1iB0bQ9dkLrmM0RjgBSIvC9E7tYln/GeNnLtvW
+ L9cg==
+X-Gm-Message-State: AFq9FYLUfNvPImVIEiX8QYGzDbOUwo88+7PbAjnTSa52RFtoX3FaUT7Y
+ oMfx+SsJyvfTCpE42jDy5him+69py7cXwYiM5+qCaa4dUz/Gd1sgbeTnrIgBPQ==
+X-Gm-Gg: AYBFou2MuTvVcY0Zzcr0bSaxLfsSUgrkRiXdzs7w6pFV3OKLImjV9YzqNgRdnfiaN01
+ jaXXTyWGDEGjsKNSnMfp+7MhhfzJGp6o4C8sJRW5f8G/LlO9MTOoTxP4WKSxT9iA97q5Q9GHvNy
+ ecv8wi38p1PahZTRGKm4JrDKY3AgoN46+Y6NpVtMkFax2s6vrFJyVnQs+Ah6hFEgwTMP37PcGL4
+ DzIUC7xJWxlAbCJpu5ggAzQQeuz0swsWoP9GZRgHFTMCPqM3sNtzQQtKIesblQCcOQDx+xHEK0g
+ 1watFSujMuRdINQAE/cC6kFVHipMo7xZS5f1RapkbYImfwv2iWnitCdtBIoT1LOQEeK+sb8l2vT
+ vFIEO70yz7EF4NnnDThRhzVEpRN4qp3GJDU7kauwKggE5GmXozTF8DAYZo2NlrvuNcP6P/FAdsr
+ 9VTW+IvhjYbNy2z00qNvXo91saLNFigsxbnJDgg7PyRj+NB729ZRA1PxdtptmCEmj6KoD4m8Re0
+ KPt+9/KdpsjticH2rBy8hqmQgKyokjlHsEc8I5GknBUfr9Hw18osgGkCRPyE27OTEPojnUrEWTe
+ +MgKVVa4oSIZBtjjPy+Wl6kmm19i
+X-Received: by 2002:a05:690c:6c0e:b0:8b0:ac83:de9d with SMTP id
+ 00721157ae682-8b0f21e005emr6422387b3.38.1792198690571; 
+ Fri, 16 Oct 2026 17:58:10 -0700 (PDT)
 Received: from localhost (108-93-236-139.lightspeed.chtnsc.sbcglobal.net.
  [108.93.236.139]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-679b1f0784bsm1720484d50.19.2026.10.16.17.58.15
+ 00721157ae682-8b0e58892cfsm16056687b3.10.2026.10.16.17.58.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Oct 2026 17:58:17 -0700 (PDT)
+ Fri, 16 Oct 2026 17:58:08 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
-Date: Fri, 16 Oct 2026 20:58:02 -0400
-Subject: [PATCH v2 1/2] target/alpha: Record masked exceptions in FPCR for
- /S insns
+Subject: [PATCH v2 0/2] target/alpha: FPCR exception status fixes for
+ IEEE-mode code
+Date: Fri, 16 Oct 2026 20:58:01 -0400
+Message-Id: <20261016-alpha-fpcr-status-s-v2-0-4719bec02b3b@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261016-alpha-fpcr-status-s-v2-1-4719bec02b3b@gmail.com>
-References: <20261016-alpha-fpcr-status-s-v2-0-4719bec02b3b@gmail.com>
-In-Reply-To: <20261016-alpha-fpcr-status-s-v2-0-4719bec02b3b@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32NTQqDMBBGryKz7pQkNJF21XuIizgmOuAfGSst4
+ t2beoAu34PvfTtISBwEHsUOKWwsPE8ZzKUA6v3UBeQ2MxhlnFbaoB+W3mNcKKGsfn0JCtrG0s2
+ UylAkyMslhcjvs1rVmXuWdU6f82TTP/u/t2lU2FAZonetder+7EbPw5XmEerjOL5CIDlLtgAAA
+ A==
+X-Change-ID: 20261012-alpha-fpcr-status-s-5b5c42702cfc
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Matt Turner <mattst88@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2160; i=mattst88@gmail.com;
- h=from:subject:message-id; bh=0pkxiGBvdw6UTe1mcPDHBrjEdVtSijf+h4dRRHjaC3M=;
- b=owGbwMvMwCW25rVmCc8sv+mMp9WSGLIunZCapn/S/WKMCEfOkdANSyY+nHRK7rBOzfslrmF/O
- hRrax9M6PjIwiDGxTBTTJElbr0iy6y2HUt9Tkv/gpnDygQyRFqkgQEIWBj4chPzSo10jPRMtQ31
- DIEMHaN4iJweg0ZmcXFpapFuWkGRQ15+SWJJZn5esV5+QWpeQXqBXlpmWklGRn5RcSrQCL281BJ
- TV0c3I0MDE0tHCzMnC0dTE2dnJ0MnN0dHZ1cnI0tzEwNnS0cTV0tzBi5OAZhrdtxlZHj3SSbt79
- 2mxK+y3//bbHSaOZn1k3M/+5rjnlO28x/OmveE4Z/Zhx8l967PiC58NC/rcJSOUtJ9Z59aCa7PC
- +0fvpOQ5+cCAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2081; i=mattst88@gmail.com;
+ h=from:subject:message-id; bh=Yu8gNK/e/yU9u8B4VBbhPjnHNmakPtGSWhBeM0FODmo=;
+ b=owGbwMvMwCW25rVmCc8sv+mMp9WSGLIunZBMjPh89LL65Vkf3686OPOT3r+Hri8ld8yr7a9tf
+ HeYs9xUquMjC4MYF8NMMUWWuPWKLLPadiz1OS39C2YOKxPIEGmRBgYgYGHgy03MKzXSMdIz1TbU
+ MwQydIziIXJ6DBqZxcWlqUW6aQVFDnn5JYklmfl5xXr5Bal5BekFemmZaSUZGflFxalAI/TyUkt
+ MXR3djAwNTCwdLcycLBxNTZydnQyd3BwdnV2djCzNTQycLR1NXC3NGbg4BWCuYRFnZNi49NGUO2
+ pyFm9+S5/tuVHaoPb1nZPtlP/nRJTuPq0WlpzH8D8sMOKmlNWcvrykjO3VEXYtD277cK+/tqFze
+ XoX/3bXVZwA
 X-Developer-Key: i=mattst88@gmail.com; a=openpgp;
  fpr=3BB639E56F861FA2E86505690FDD682D974CA72A
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=mattst88@gmail.com; helo=mail-yx1-xb130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=mattst88@gmail.com; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -116,55 +118,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The trap qualifiers (/U, /V, /I) control whether an exception traps,
-but EV6 still records every exception in the FPCR status bits.  Commit
-471d493047 ("target-alpha: Set fpcr_exc_status even for disabled
-exceptions") made helper_fp_exc_raise follow this, but in
-helper_fp_exc_raise_s it only added a second "exc &= ~ignore" and left
-the mask in the initializer, so for insns with software completion the
-masked exceptions still never reached env->fpcr.
+Two fixes for the exception status that qemu-alpha reports to code
+built with gcc -mieee.  I found both running glibc's math tests under
+linux-user.
 
-The most visible effect is on inexact: the IEEE-mode code generated by
-gcc -mieee (e.g. ADDT/SU, DIVT/SUD) has no /I qualifier, so FE_INEXACT
-was never set.  Many of glibc's math tests fail because of that, and
-the narrowing functions such as f32addf64 return results 1ulp off
-because their round-to-odd step depends on inexact.
+Patch 1 fixes 471d493047, which was meant to record masked exceptions
+in the FPCR but had no effect for insns with software completion.
+Without it FE_INEXACT is never set for -mieee code.
 
-Record all exceptions first and only then apply the ignore mask, as
-helper_fp_exc_raise does.  Which exceptions trap is unchanged.
+Patch 2 makes underflow match the hardware for a result that rounds up
+to the smallest normal number.  Alpha raises no underflow there and
+softfloat does.
 
-Fixes: 471d493047 ("target-alpha: Set fpcr_exc_status even for disabled exceptions")
+Patch 1 does not depend on patch 2.
+
+Tested with linux-user only; system mode is untested.
+
+glibc's math tests (make check subdirs=math), run under linux-user:
+
+            PASS  FAIL  XFAIL
+  master    1400   110      1
+  series    1510     0      1
+
+Nearly all of the failures on master are 'Exception "Inexact" not
+set'.  The XFAIL is test-float32x-float64-div.  On master it fails for
+missing inexact; with the series it fails only the four
+div_{upward,downward}_double cases that glibc expects to fail on
+Alpha.
+
+The tcg-alpha-linux-user suite has six failures (float_convs,
+float_convd, float_madds and a plugin variant of each).  They fail the
+same way on master.
+
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/fpu_helper.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+Changes in v2:
+- Patch 2: fold the underflow check into soft_to_fpcr_exc, which now
+  takes whether the delivered result is normal, instead of adding
+  soft_to_fpcr_exc_tiny.
+- Patch 2: check float_flag_input_denormal_used for CONFIG_USER_ONLY
+  only.
+- Link to v1: https://lore.kernel.org/qemu-devel/20261012-alpha-fpcr-status-s-v1-0-bc7efa6d5609@gmail.com
 
-diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index 529eadca9f..643ce641e8 100644
---- a/target/alpha/fpu_helper.c
-+++ b/target/alpha/fpu_helper.c
-@@ -86,9 +86,17 @@ void helper_fp_exc_raise(CPUAlphaState *env, uint32_t ignore, uint32_t regno)
- /* Raise exceptions for ieee fp insns with software completion.  */
- void helper_fp_exc_raise_s(CPUAlphaState *env, uint32_t ignore, uint32_t regno)
- {
--    uint32_t exc = env->error_code & ~ignore;
-+    uint32_t exc = env->error_code;
-     if (exc) {
-+        /*
-+         * The qualifiers can suppress the raising of exceptions,
-+         * but real hardware still records that they occurred.
-+         */
-         env->fpcr |= exc;
-+        exc &= ~ignore;
-+        if (!exc) {
-+            return;
-+        }
-         exc &= env->fpcr_exc_enable;
-         /*
-          * In system mode, the software handler gets invoked
+---
+Matt Turner (2):
+      target/alpha: Record masked exceptions in FPCR for /S insns
+      target/alpha: Determine tininess from the delivered result
 
+ target/alpha/fpu_helper.c | 70 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 21 deletions(-)
+---
+base-commit: 615ece3c406b262996e569f29ea6eed0d81c4d8d
+change-id: 20261012-alpha-fpcr-status-s-5b5c42702cfc
+
+Best regards,
 -- 
-2.55.0
+Matt Turner <mattst88@gmail.com>
 
 
