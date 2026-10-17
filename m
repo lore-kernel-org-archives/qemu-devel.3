@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49656CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DEDCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB1q-0006wf-8L; Sat, 17 Oct 2026 16:29:18 -0400
+	id 1xIB0S-0005Vv-Kj; Sat, 17 Oct 2026 16:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB0b-0005kl-He; Sat, 17 Oct 2026 16:28:01 -0400
+ id 1xIAzy-000599-84; Sat, 17 Oct 2026 16:27:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB0Z-0003vp-Ni; Sat, 17 Oct 2026 16:28:01 -0400
+ id 1xIAzu-0003tr-4n; Sat, 17 Oct 2026 16:27:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268836; bh=oafjU6Mi33R4pVRatYjACDwsepVjxzZeaDUf/Pv4Jqk=;
+ t=1792268827; bh=H3IVmotbB1n1kOi0CLoH5M1/W6hRgiychaDvbMuojFs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fAcmHJ1WfcQptX2xhHLkabBUt0NSRuBJ20oj4FrZtx7kcriCWe2hLTM6iOike2oVL
- KLbSDy3FCFZoT55I1tOToCLqqeV4TV7gDOZ+yur6XyN0tRif/FYQzYjdyEI5c5nGTn
- 7+ANb+AwjoL2EM+1c0FW0coVKYM4sN3wALyGZbYPtNaCqNncF9A+NsLHa5aTXCLzdW
- IEimkZ5WeDooL9rolStu1W/6t6cNGFEV9ZQtEswGhe6gJg4j003Sjual6qDVJOSMQo
- pgAz8Bf3mm2z/lZqmluuqj5JDOuWUBDjhV4uqXoHfYTcekllTZtsbjcpIHxQGdxx3k
- 1Y7rBeDDo8vVw==
+ b=eUZ8YV2W4D0iAJl/kl4mbiyyv3V2s3YI+ShqcbIGs7JXpFW6tG8Oq/qN274WzVJdm
+ YAu4XdykBVRI6bTQU+haiSGf/zn1OqT6TCP3t1TIRGT2XOMWachEBxo7tXRN/HAe7s
+ kfWBahGarT/zTo+tyHowBknpLFBZf+hl4JrYZOXzHvBfGioA+rlTEIdioD2pwLeJXu
+ 0WJSKjHQSvy6T6y2WS0w2uLQxUK6gS8ePZOpnYBR2f0h2drzT8t33mXSgpsoibdu4o
+ 6rakf0yIXLzbFv2cSy4WBIz3tCrqKevLzEq/1w8LGtPhZvvYAZBSjSpmqxjIFixG1g
+ vJgCbd9yvTxQg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 770B81DE748;
- Sat, 17 Oct 2026 23:27:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C4031DE740;
+ Sat, 17 Oct 2026 23:27:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A0E6344341F;
- Sat, 17 Oct 2026 23:27:15 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1C89A443417;
+ Sat, 17 Oct 2026 23:27:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 13/73] s390x/pci: Use qemu_log_mask() for
- guest-triggered errors in reg_ioat()
-Date: Sat, 17 Oct 2026 23:25:31 +0300
-Message-ID: <20261017202638.728621-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 05/73] virtio-ccw: Limit ISC to MAX_ISC
+Date: Sat, 17 Oct 2026 23:25:23 +0300
+Message-ID: <20261017202638.728621-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
@@ -70,56 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+From: Eric Farman <farman@linux.ibm.com>
 
-The error paths in reg_ioat() that are triggered by a guest providing
-invalid MPCIFC arguments use error_report(), which writes unconditionally
-to stderr.  A misbehaving guest can exploit this to flood the host log
-by repeatedly issuing the instruction with bad arguments.
+The interrupt subclass is often defined as a uint8, though in practice
+it will be within the range of just 0-7. Ensure that a guest-supplied
+subclass does not extend beyond its expected range, especially when
+used as an array index.
 
-Replace these with qemu_log_mask(LOG_GUEST_ERROR, ...) so that the
-messages are suppressible.
-
-Fixes: 863f6f52b713 ("s390: implement pci instructions")
-Fixes: dfcee1ea4c52 ("s390x/pci: add support for guests that request direct mapping")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260929153012.774530-3-mjrosato@linux.ibm.com
+Fixes: 25a08b8ded ("s390x/css: update css_adapter_interrupt")
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260922201526.2383047-2-farman@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
-(cherry picked from commit 10a81449a279be0d5b46c3422b445ca3f42d3393)
+(cherry picked from commit 92b935de2709cdbb1c4ee2b48814640a71e8a438)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index bac813fb6a..73417edade 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -15,8 +15,8 @@
- #include "exec/memop.h"
- #include "exec/target_page.h"
- #include "system/memory.h"
--#include "qemu/error-report.h"
- #include "qemu/bswap.h"
-+#include "qemu/log.h"
- #include "system/hw_accel.h"
- #include "hw/core/boards.h"
- #include "hw/pci/pci_device.h"
-@@ -1044,11 +1044,12 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 3a67b67053..9be895a797 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -654,8 +654,13 @@ void css_adapter_interrupt(CssIoAdapterType type, uint8_t isc)
+     S390FLICState *fs = s390_get_flic();
+     S390FLICStateClass *fsc = s390_get_flic_class(fs);
+     uint32_t io_int_word = (isc << 27) | IO_INT_WORD_AI;
+-    IoAdapter *adapter = channel_subsys.io_adapters[type][isc];
++    IoAdapter *adapter;
++
++    if (type >= CSS_IO_ADAPTER_TYPE_NUMS || isc > MAX_ISC) {
++        return;
++    }
  
-     /* currently we only support designation type 1 with translation */
-     if (t && dt != ZPCI_IOTA_RTTO) {
--        error_report("unsupported ioat dt %d t %d", dt, t);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "unsupported ioat dt %d t %d\n", dt, t);
-         s390_program_interrupt(env, PGM_OPERAND, ra);
-         return -EINVAL;
-     } else if (!t && !pbdev->rtr_avail) {
--        error_report("relaxed translation not allowed");
-+        qemu_log_mask(LOG_GUEST_ERROR, "relaxed translation not allowed\n");
-         s390_program_interrupt(env, PGM_OPERAND, ra);
-         return -EINVAL;
++    adapter = channel_subsys.io_adapters[type][isc];
+     if (!adapter) {
+         return;
      }
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index d82874ed27..c422444015 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -46,6 +46,10 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
+     CcwDevice *ccw_dev = CCW_DEVICE(dev);
+     CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
+ 
++    if (dev->thinint_isc > MAX_ISC) {
++        return -EINVAL;
++    }
++
+     ccw_dev->sch->driver_data = dev;
+     if (ccw_dev->sch->thinint_active) {
+         dev->routes.adapter.adapter_id = css_get_adapter_id(
+@@ -659,6 +663,8 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+         } else {
+             if (ccw_dstream_read(&sch->cds, thinint)) {
+                 ret = -EFAULT;
++            } else if (thinint.isc > MAX_ISC) {
++                ret = -ENOSYS;
+             } else {
+                 thinint.ind_bit = be64_to_cpu(thinint.ind_bit);
+                 thinint.summary_indicator =
 -- 
 2.47.3
 
