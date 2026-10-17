@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B07DCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 000BBCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 19:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xI9fh-0002IT-Lc; Sat, 17 Oct 2026 15:02:21 -0400
+	id 1xI9dp-0005mK-CW; Sat, 17 Oct 2026 15:00:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eR-0006le-1Q; Sat, 17 Oct 2026 15:01:03 -0400
+ id 1xI9cv-0005IT-Qz; Sat, 17 Oct 2026 14:59:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xI9eO-0004J5-So; Sat, 17 Oct 2026 15:01:02 -0400
+ id 1xI9ct-0003xD-B6; Sat, 17 Oct 2026 14:59:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792263428; bh=FXzr5fLZUvw+pZqQK2VFOPfwNcrD8X1apSacBXHdOXI=;
+ t=1792263406; bh=jCSsbYm8DAsppID2FPzEXBfhxFllFwpdgjpTmV+qdkI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=epZmkYVTwGdN3Kg+ZStauQU5UQOdrGoA4jW6dkmsbyg0917zkgSKr+nzKDoz9nb20
- 0LV1S+LCQntLRdKyXFekZUdC849LUaTk6m1CY4sA9YdEYn28JrBQLn5mmao8wzy7i+
- xuAXl3wuB311fn6VxVljFKfik2whDkIQWwxwD4XX6cvuDVp+HI6U4Cz0D8zSXQjWY6
- FOO8/zZXJ3DFjsRR04/oP6CxNfXz+tr9YRiqqYmk8jacAhEs3c8CXavbWzmpEXqHjO
- cNj3Z4aR9uf7jb8RgUqKp00O8DbF1i1zamnWRFA5czazA1S3g2UQGmUe8FxjmbqhoG
- YocKopwp6ultQ==
+ b=i28m0zCRM4lshGsjAd7XoehHUGTdNmT9l4E6ls1zFifazK1GLUC83ZywniVCWJDpt
+ V+BCnbUw9s6woHJugS30HJWDMexdKY3NobCwSwVh8OmtDESOjwZXSYqqj9q2xSc3Bj
+ C0d3wyBkI+4HbcWSAfVT30Zqo66BWGhaIT0LGA0lzdBIIqaw6zeS6/Im2mih3EKeB3
+ /UEh0z4iKWXCsFbUVQfnZdaqM08p0ka4oDooD1GIEK/GxES0nZP29kNSI6o5P77svT
+ nCFbve069HclrcnVLpic787N1/mujbyyd6wiEdPyGX0vGtcbBrLywv7B2gGKRGzsr6
+ 6fCOVK+T2L1NA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 76B021DE6DB;
- Sat, 17 Oct 2026 21:57:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D1CBE1DE6C8;
+ Sat, 17 Oct 2026 21:56:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 96CF84433A3;
- Sat, 17 Oct 2026 21:57:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6A34D443392;
+ Sat, 17 Oct 2026 21:56:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fuad Tabba <fuad.tabba@linux.dev>,
- Gustavo Romero <gromero@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 56/63] tests/tcg/aarch64: Test the TTBR layout with
- TCR.DS and a 48-bit OA
-Date: Sat, 17 Oct 2026 21:55:12 +0300
-Message-ID: <20261017185528.722197-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 39/63] qcow2: do not clear the dirty bit when
+ reopening a read-only node
+Date: Sat, 17 Oct 2026 21:54:55 +0300
+Message-ID: <20261017185528.722197-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
 References: <qemu-stable-10.0.15-20261017215444@cover.tls.msk.ru>
@@ -70,144 +71,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Extend the TTBR base address test to check that, with TCR.DS or VTCR.DS
-and a 48-bit OA, setting TTBR[5:2] is a level 0 Address size fault.
+qcow2_reopen_prepare() clears the dirty bit whenever the node is
+reopened read-only, with an unguarded header write. A read-only node
+can still be dirty, inherited from an earlier writable session, and it
+holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
+reopen of a dirty image therefore fails outright:
 
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Message-id: 20261009115728.1299384-5-fuad.tabba@linux.dev
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 2579771a28a200cba27d843fbda549def09f421d)
+  $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
+  qemu-io: failed while preparing to reopen image 'dirty.qcow2'
+
+Where the file node below is writable the write is not refused early,
+and bdrv_co_write_req_prepare() aborts on its BLK_PERM_WRITE assertion
+instead.
+
+Clear it only for a node that is writable now, the predicate
+qcow2_do_open() already uses for the repair. bdrv_is_writable() also
+excludes an inactive node, whose header must not be touched either.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20260824133729.1141990-2-den@openvz.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit af28b65fae6fcbc22efdbcd4d71b37fd0c8adf89)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/aarch64/system/ttbr-baddr.c b/tests/tcg/aarch64/system/ttbr-baddr.c
-index b29c9e1ab0..20a240410d 100644
---- a/tests/tcg/aarch64/system/ttbr-baddr.c
-+++ b/tests/tcg/aarch64/system/ttbr-baddr.c
-@@ -4,6 +4,8 @@
-  * With a 52-bit OA, walk a two-entry level 0 table through an IPA with
-  * bit 50 set, which stage 2 maps back onto the table, so the walk
-  * succeeds only if TTBR[4] is cleared from bit 4 of the base address.
-+ * With TCR.DS or VTCR.DS and a 48-bit OA, check that setting TTBR[5:2]
-+ * is a level 0 Address size fault.
-  *
-  * Copyright (c) 2026 Google LLC
-  * Author: Fuad Tabba <fuad.tabba@linux.dev>
-@@ -42,10 +44,13 @@
-  * Stage 1: 16KB granule, 48-bit VA, so level 0 has two entries.
-  * Stage 2: 64KB granule, 52-bit IPA, mapping RAM at its own address and
-  * again at HIGH_IPA.
-+ * Stage 2 with VTCR.DS: 16KB granule, 47-bit IPA, mapping RAM flat.
-  */
- static uint64_t s1_l0[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l1[2048] __attribute__((aligned(16384)));
- static uint64_t s1_l2[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l1[2048] __attribute__((aligned(16384)));
-+static uint64_t s2ds_l2[2048] __attribute__((aligned(16384)));
- static uint64_t s2_l1[1024] __attribute__((aligned(65536)));
- static uint64_t s2_l2[8192] __attribute__((aligned(65536)));
- static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
-@@ -54,20 +59,27 @@ static uint64_t s2_l2_high[8192] __attribute__((aligned(65536)));
- #define TCR_T1SZ(x)     ((uint64_t)(x) << 16)
- #define TCR_TG0_16K     (2UL << 14)
- #define TCR_TG1_16K     (1UL << 30)
-+#define TCR_IPS_48      (5UL << 32)
- #define TCR_IPS_52      (6UL << 32)
- #define TCR_DS          (1UL << 59)
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 6f495c97d5..14dddd6273 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -2016,9 +2016,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
+             goto fail;
+         }
  
- #define VTCR_T0SZ(x)    ((uint64_t)(x) << 0)
- #define VTCR_SL0_L1     (2UL << 6)
-+#define VTCR_TG0_16K    (2UL << 14)
- #define VTCR_TG0_64K    (1UL << 14)
-+#define VTCR_PS_48      (5UL << 16)
- #define VTCR_PS_52      (6UL << 16)
- #define VTCR_RES1       (1UL << 31)
-+#define VTCR_DS         (1UL << 32)
+-        ret = qcow2_mark_clean(state->bs);
+-        if (ret < 0) {
+-            goto fail;
++        if (bdrv_is_writable(state->bs)) {
++            ret = qcow2_mark_clean(state->bs);
++            if (ret < 0) {
++                goto fail;
++            }
+         }
+     }
  
- #define HCR_VM          (1UL << 0)
- #define HCR_RW          (1UL << 31)
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index 94a8bfe754..3d0c073d65 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -95,6 +95,40 @@ $QEMU_IMG info --image-opts \
+ # The dirty bit must still be set: this open never wrote any guest data
+ _qcow2_dump_header | grep incompatible_features
  
- #define PAR_F           (1UL << 0)
-+#define PAR_FST(par)    (((par) >> 1) & 0x3f)
- #define PAR_PA(par)     ((par) & 0xfffffffff000UL)
-+#define FST_ADDR_SIZE_L0    0x00
++echo
++echo "== Read-only reopen must not clear the dirty bit =="
 +
- #define S2_BLOCK        ((1 << 10) | (3 << 6) | (0xf << 2) | 1)
++# A read-only node cannot write the header, and must keep the dirty bit
++$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
++    | _filter_qemu_io
++
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
++
++echo
++echo "== Read-only reopen must not write through a writable file node =="
++
++# The write the header update needs is refused by the permission system
++echo "{'execute': 'qmp_capabilities'}
++      {'execute': 'blockdev-reopen',
++       'arguments': {'options': [{'node-name': 'drive',
++                                  'driver': 'qcow2',
++                                  'read-only': true,
++                                  'file': 'prot'}]}}
++      {'execute': 'quit'}" \
++    | $QEMU -qmp stdio -nographic -nodefaults \
++            -blockdev "{'node-name': 'prot',
++                        'driver': 'file',
++                        'filename': '$TEST_IMG'}" \
++            -blockdev "{'node-name': 'drive',
++                        'driver': 'qcow2',
++                        'file': 'prot',
++                        'read-only': true}" \
++    | _filter_qmp
++
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Repairing the image file must succeed =="
  
- static void tlb_flush(void)
-@@ -86,6 +98,17 @@ static uint64_t at(uint64_t ttbr1)
-     return par;
- }
+@@ -108,6 +142,22 @@ echo "== Data should still be accessible after repair =="
  
-+static uint64_t at_s1(uint64_t ttbr1)
-+{
-+    uint64_t par;
-+
-+    write_sysreg(ttbr1_el1, ttbr1);
-+    tlb_flush();
-+    asm volatile("at s1e1r, %1; isb; mrs %0, par_el1"
-+                 : "=r" (par) : "r" (TEST_VA));
-+    return par;
-+}
-+
- static void setup_tables(void)
- {
-     /* Stage 1: TEST_VA -> RAM_BASE, 32MB block, AF */
-@@ -93,6 +116,10 @@ static void setup_tables(void)
-     s1_l1[0] = (uint64_t)s1_l2 | 3;
-     s1_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | (1 << 10) | 1;
+ $QEMU_IO -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
  
-+    /* Stage 2 with VTCR.DS: RAM_BASE -> RAM_BASE, 32MB block, AF, RW */
-+    s2ds_l1[0] = (uint64_t)s2ds_l2 | 3;
-+    s2ds_l2[(RAM_BASE >> 25) & 0x7ff] = RAM_BASE | S2_BLOCK;
++echo
++echo "== A read-write to read-only reopen must clear the dirty bit =="
 +
-     /* Stage 2: 512MB blocks at RAM_BASE and HIGH_IPA | RAM_BASE, AF, RW */
-     s2_l1[0] = (uint64_t)s2_l2 | 3;
-     s2_l1[HIGH_IPA >> 42] = (uint64_t)s2_l2_high | 3;
-@@ -108,6 +135,15 @@ static int check(const char *name, uint64_t par)
-     return !ok;
- }
++_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
++
++# The kill keeps the close from clearing the bit, so the header shows what
++# the reopen did with it
++_NO_VALGRIND \
++$QEMU_IO -c "write -P 0x5a 0 512" \
++         -c "reopen -r" \
++         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
++    | _filter_qemu_io
++
++# The dirty bit must not be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Opening a dirty image read/write should repair it =="
  
-+/* A level 0 Address size fault */
-+static int check_fault(const char *name, uint64_t par)
-+{
-+    int ok = (par & PAR_F) && PAR_FST(par) == FST_ADDR_SIZE_L0;
-+
-+    ml_printf("%s: PAR_EL1=%lx %s\n", name, par, ok ? "ok" : "FAIL");
-+    return !ok;
-+}
-+
- int main(void)
- {
-     uint64_t mmfr0 = read_sysreg(id_aa64mmfr0_el1);
-@@ -135,6 +171,25 @@ int main(void)
-     write_sysreg(mair_el1, 0xff);
-     write_sysreg(sctlr_el1, read_sysreg(sctlr_el1) | 1);
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index c66361128f..ce8ee57721 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -27,6 +27,19 @@ incompatible_features     [0]
+ == Read-only open must not crash on close ==
+ incompatible_features     [0]
  
-+    /*
-+     * TCR.DS with a 48-bit OA: TTBR[5:2] are base address bits [51:48],
-+     * so setting any of them is a level 0 Address size fault.
-+     */
-+    write_sysreg(hcr_el2, HCR_RW);
-+    write_sysreg(tcr_el1, tcr | TCR_IPS_48);
-+    ret |= check("ips48", at_s1(base));
-+    ret |= check_fault("ips48 ttbr[2]", at_s1(base | (1 << 2)));
-+    ret |= check_fault("ips48 ttbr[4]", at_s1(base | (1 << 4)));
++== Read-only reopen must not clear the dirty bit ==
++read 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++incompatible_features     [0]
 +
-+    /* The same for VTTBR, with VTCR.DS and a 48-bit PS */
-+    write_sysreg(vtcr_el2, VTCR_T0SZ(17) | VTCR_SL0_L1 | VTCR_TG0_16K |
-+                 VTCR_PS_48 | VTCR_RES1 | VTCR_DS);
-+    write_sysreg(hcr_el2, HCR_RW | HCR_VM);
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1);
-+    ret |= check("ps48", at(base));
-+    write_sysreg(vttbr_el2, (uint64_t)s2ds_l1 | (1 << 2));
-+    ret |= check_fault("ps48 vttbr[2]", at(base));
++== Read-only reopen must not write through a writable file node ==
++QMP_VERSION
++{"return": {}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
++incompatible_features     [0]
 +
-     /*
-      * 52-bit OA: TTBR[4] is base address bit 50, so with it set the
-      * level 0 table is at IPA HIGH_IPA | s1_l0. Stage 2 maps that IPA
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
+@@ -45,6 +58,13 @@ incompatible_features     []
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
++== A read-write to read-only reopen must clear the dirty bit ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
++wrote 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++incompatible_features     []
++
+ == Opening a dirty image read/write should repair it ==
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
 -- 
 2.47.3
 
