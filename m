@@ -4,47 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185AFCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C8DCCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Oct 2026 20:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIB2y-0002Ks-2C; Sat, 17 Oct 2026 16:30:28 -0400
+	id 1xIB1q-0006xM-8k; Sat, 17 Oct 2026 16:29:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2d-00015W-0p; Sat, 17 Oct 2026 16:30:07 -0400
+ id 1xIB0h-00062h-SQ; Sat, 17 Oct 2026 16:28:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xIB2b-00045g-18; Sat, 17 Oct 2026 16:30:06 -0400
+ id 1xIB0g-0003xP-3N; Sat, 17 Oct 2026 16:28:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1792268858; bh=fSGSx8+sMifZVc8DXLLOrWvCeChwcb9AWdbXfn6wqg0=;
+ t=1792268839; bh=68cmUY1QwDoYLeMIO9z89j05rrMVPbqlL9YaOcVbpoY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qZH/xL8c3PRqQln6VFe7tbShefT7/iXSx6qlN7t8R2iKg5Rm7d530oJDrmhkL8+PX
- Hk5zniRr0lBWnGAlTTVOXcwn4yl3E0i1g46PKVVO79FBZ9j+zAX1jp2Re7DSRzAHJa
- 3SCrNtzLv4PYqSi3TKDFHnbX62OXzOap2264rcVuU9qgd/FUWIHBYjTbpwzHncJtBl
- KpxyG+lyCiVbZNfcMPE3j2dljv5A1gahBjVdofzxbn3uMzLSvx8y6OwVk+FJ1Zpmpz
- +0cMzaxWscO4XQGjIo1+CJOLSELScMmRUAb3pm064rDEYSMishOuf6LdVs43zhkoqR
- 24LYCb3USt0iA==
+ b=KpMf5joagGIcj0qRaxIiiDQnu892bivqtByeIvzzcFFse1sRPejARObecYLVtQ8ko
+ O/NHSt6b2G7DXx4+NaVfkM09G0WEoBJACx8PhUJLheLJn/cI+kBDTtv5tch/bsLCIU
+ sHsUOgrYCefU8JxRQcvrScLBZ9Y5DK1M42Ktae3gVBgYb15LoSzVu5AfFpOutm9gST
+ nMllutlhwLYlai6qkuCncITBtv31G22KbC8ueueGY6aVoEacJpXTEawdLsNbAGv78O
+ YJrC9nwAZIAKKWqQ2MHQ9HPVvY3Dan0XeC0SUQIKKcZPCf9hpW8LXYHW23IRYqa1XN
+ Ie8ks/a/EzONg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3E481DE75F;
- Sat, 17 Oct 2026 23:27:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EC1A41DE74B;
+ Sat, 17 Oct 2026 23:27:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 213CF443433;
- Sat, 17 Oct 2026 23:27:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F9FF443422;
+ Sat, 17 Oct 2026 23:27:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 33/73] target/i386: clear C1 for all x87 compare
- instructions
-Date: Sat, 17 Oct 2026 23:25:51 +0300
-Message-ID: <20261017202638.728621-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Warisjeet Singh <sinxx198@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 16/73] hw/usb/dev-smartcard-reader: fix OOB read from
+ pending bulk-in ring
+Date: Sat, 17 Oct 2026 23:25:34 +0300
+Message-ID: <20261017202638.728621-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261017220607@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,74 +73,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The SDM specifies that FCOM/FCOMP/FCOMPP/FUCOM/FUCOMP/FUCOMPP/FICOM/FICOMP/
-FCOMI/FCOMIP/FUCOMI/FUCOMIP unconditionally clear C1 in the FPU status word,
-regardless of the comparison result.
+ccid_bulk_in_get() decrements bulk_in_pending_num when a slot becomes
+active, but the slot is only truly free after ccid_bulk_in_release().
+A guest can fill all 8 ring slots, partially read one (leaving pos
+non-zero), then send another command whose response reuses the active
+slot. The stale pos > new len makes the uint32_t subtraction in
+ccid_bulk_in_copy_to_guest() wrap, reading past data[].
 
-helper_fcom_ST0_FT0/helper_fucom_ST0_FT0 only cleared C3, C2, C0 (mask
-0x4500) before OR-ing in the comparison result, leaving C1 (bit 9) at
-whatever value it already had. FICOM/FICOMP dispatch through the same
-helpers after converting their integer operand, so they inherited the
-same bug.
+Move the decrement to ccid_bulk_in_release() so the slot stays busy
+until then. Add an assert(pos <= len) before the subtraction.
 
-helper_fcomi_ST0_FT0/helper_fucomi_ST0_FT0 never touched the FPU status
-word at all, so C1 was left untouched by those too.
+Resetting or removing the card must also discard the active slot so
+that its stale position and pointer cannot be reused.
 
-This patch clears C1 explicitly in all four helpers, adding the clear
-into the existing fpus mask for fcom/fucom since fcom_ccval never sets
-bit 9. For fcomi/fucomi add a new separate clear.
+In practice, the device advertises bMaxCCIDBusySlots=1, so a conforming
+host never has more than one command in flight and the ring never fills.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4378
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260828082235.128360-1-scherer.simon89@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6802a4b2391936ccb2ea0f76851bd1a43413b0b5)
+Fixes: CVE-2026-18204
+Fixes: 367071447ec5 ("usb-ccid: add CCID bus")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4086
+Reported-by: Warisjeet Singh <sinxx198@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 49851e859506c6326288162718573c1e22ab9bf4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 58e46d8f5f..2149f4b1d2 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -538,7 +538,8 @@ void helper_fcom_ST0_FT0(CPUX86State *env)
-     FloatRelation ret;
+diff --git a/hw/usb/dev-smartcard-reader.c b/hw/usb/dev-smartcard-reader.c
+index bba97a2b19..aee966c0c9 100644
+--- a/hw/usb/dev-smartcard-reader.c
++++ b/hw/usb/dev-smartcard-reader.c
+@@ -570,6 +570,10 @@ static void ccid_remove_pending_answer(USBCCIDState *s,
  
-     ret = floatx80_compare(ST0, FT0, &env->fp_status);
--    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
-     merge_exception_flags(env, old_flags);
+ static void ccid_bulk_in_clear(USBCCIDState *s)
+ {
++    if (s->current_bulk_in != NULL) {
++        s->current_bulk_in->pos = 0;
++        s->current_bulk_in = NULL;
++    }
+     s->bulk_in_pending_start = 0;
+     s->bulk_in_pending_end = 0;
+     s->bulk_in_pending_num = 0;
+@@ -580,6 +584,7 @@ static void ccid_bulk_in_release(USBCCIDState *s)
+     assert(s->current_bulk_in != NULL);
+     s->current_bulk_in->pos = 0;
+     s->current_bulk_in = NULL;
++    s->bulk_in_pending_num--;
  }
  
-@@ -548,7 +549,8 @@ void helper_fucom_ST0_FT0(CPUX86State *env)
-     FloatRelation ret;
- 
-     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
--    env->fpus = (env->fpus & ~0x4500) | fcom_ccval[ret + 1];
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus = (env->fpus & ~0x4700) | fcom_ccval[ret + 1];
-     merge_exception_flags(env, old_flags);
+ static void ccid_bulk_in_get(USBCCIDState *s)
+@@ -587,8 +592,6 @@ static void ccid_bulk_in_get(USBCCIDState *s)
+     if (s->current_bulk_in != NULL || s->bulk_in_pending_num == 0) {
+         return;
+     }
+-    assert(s->bulk_in_pending_num > 0);
+-    s->bulk_in_pending_num--;
+     s->current_bulk_in =
+         &s->bulk_in_pending[(s->bulk_in_pending_start++) % BULK_IN_PENDING_NUM];
  }
+@@ -1078,6 +1081,7 @@ static void ccid_bulk_in_copy_to_guest(USBCCIDState *s, USBPacket *p,
  
-@@ -563,6 +565,8 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
-@@ -575,6 +579,8 @@ void helper_fucomi_ST0_FT0(CPUX86State *env)
-     /* OF, SF, and AF are unconditionally cleared to 0 */
-     CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-+    /* C1 is unconditionally cleared to 0 */
-+    env->fpus &= ~0x0200;
-     merge_exception_flags(env, old_flags);
- }
- 
+     ccid_bulk_in_get(s);
+     if (s->current_bulk_in != NULL) {
++        assert(s->current_bulk_in->pos <= s->current_bulk_in->len);
+         len = MIN(s->current_bulk_in->len - s->current_bulk_in->pos,
+                   p->iov.size);
+         if (len) {
 -- 
 2.47.3
 
