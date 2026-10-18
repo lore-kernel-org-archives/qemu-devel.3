@@ -4,103 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50A1CCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC9BCCA490
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xINre-0001ro-PV; Sun, 18 Oct 2026 06:11:40 -0400
+	id 1xIOAw-0003uk-88; Sun, 18 Oct 2026 06:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xINrW-0001rR-V1
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:11:31 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1xIOAp-0003tz-9d
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:31:28 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xINrV-0007Jc-AQ
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:11:30 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-8b05bf699easo8903057b3.2
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:11:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792318286; cv=none;
+ id 1xIOAn-0000jo-If
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:31:26 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-8ab432273c5so8920127b3.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:31:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792319484; cv=none;
  d=google.com; s=arc-20260327;
- b=CK6n2IXjqPBzO/OXl8pWjLee0SfowWBNIYTAxxs5jfGQ4eWAT/FP/KdJLU/tcImuKy
- nbXFr5ZRGVUWII5xafzDxjGEf4gASbxC54QRwvXVfMp7ybGkFvq9LEMs5kLkiZ5YPOKF
- 1JYGow0nxZKsvYiQ+mEQxo1kERLorDpA914XSkEJuX2YCPWM7UXv3jqsaWd4RXBiPlfn
- JU79Wx3Z0YOQPZt3iohF3KfM7wDhL/mWg6VkOE7dGNRYAEHfp7WYcRnZG9xRBMD3od4I
- gIHDim0/bEVVaHeN93j49zkWTfP2nfb/1FaHcjcLx3xqq9iLccTXMmrqNsORRTBXet8Q
- 7ZUg==
+ b=BhvzX61zVdtIFU8h7rwL0V1hye4Tn/K6C4iQDlSs1dJ4zvyzN3+ylvVY3vLgO6tPUt
+ 5Wj1RDHAPaokeKuh/ZIK9f2+JySIhVgArx8nCsX2i3rt4kVcfARRtcDxpwSlkxikuK0M
+ P/9EPG6s/s+/brZMvUyh09QIGnqta2Pw6ZYkMyMBKDpwJJjHzhOZ7YWsNRMRjcQ3LNmo
+ TTL9YoSc9AwEltvJp6tLoH4Qoo6zItlJ5C9vrXJ6AZdg6xZUWOfWryg259NKZuOnZVZl
+ bMKJaE1qGYLj52fW4zX6aWTUX5T52WBmQCHNu7wOdDldu6lsZWHaVmK/mSTGFbEHYEQv
+ bbWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=A1mf/h4rs8yarG4cfrPSMjATG0zfwYsdn7iIaUhN85Q=;
- fh=MaPMZVROFfhGPd6Epx9Ku7CN+EKyDtJKTKzt6bmFhMc=;
- b=m0CZWGEp8p4NA9t+F62oF5uoGkJ8IUA6kmTQnyFVVr95XEk5llprlzKC+iXV0s+Ugs
- F6C1gZqfMlU8nCImBFtOj35DvVKPw+jQQVZhXptQbFeRzqLYp2OS8kTrunNArBA//I8e
- ItYfLphX+zo0zLjICdOqNM9On7wuoU9uhqP9L+wT9RCKkOMUoqi/Bk5S7NrxdCZpBEfh
- CaUAMPqJv4DHbwi6LUW3CAbnan//eoTPa0xc48ilk5XRHBb0FdzFamfREnLbwLg/mZUy
- Iw2/88lvC5K+b/OXBuunpWcQMqcY1THBrOEH5XI8pVctKhTMbP+D7rqJlnLyRaFZniNf
- khAQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
+ fh=dHN1FZJpb1BHRtRBDcpEyrvNB3hUuCjyQs5YK6bCL1Q=;
+ b=KNgPUnDKr+SfpHhtABP8HtzetDgyk8jb0NA3Orm89qtN4TLqQONBCY14atBfrOvvst
+ gJOvzbbtKYHu3AbxpCsy6doUIOfKyZaSeZfI9hUdebYLwPurAPxl6dsxiI4VWzGsbz69
+ FiFtQYiH6L4wd3/dbG0ZtX/VMtScc1CBTyrUvx++mRQsaqptAT7DPopCpQ1bC32XkDgl
+ BTN60QOXMvXDYb4fAQ/AKbmoSDajrTb2yRcINBj6OpfJIl/joJ9zw4shi+2rgr8wbQxN
+ rmmQnlJTbsSRCV639T6/Lqpfkxg9tgBKoyz9LBs9CsLDtCiqIr8yHp6dJ2bS9N1DkO11
+ OgSQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792318286; x=1792923086; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=A1mf/h4rs8yarG4cfrPSMjATG0zfwYsdn7iIaUhN85Q=;
- b=bir43h2SEhGtTZ3BGy7HXecijpnkwXB2QMzb4M5iLHE47102u/ZFxevMSwJHEqwG9r
- WhOcmH09frVkrEEy6424ktk0DeodGiWW07Chz3JlSvMXecFnUjPr/k0WlAV99E820Dbb
- eYEQEvl0c0ZOAVDoQ8091ZnC6VwsLeKtoBtOFWXoYLJQEZ+9lesJmlYryUbn3Bba3JD3
- TEtb0X9edC7tzBgpVB8SLJjn4aRS4DEB0X3ZGa/76oCybBIPmTk2QS0gjaKkPo9vdmxG
- X38ZW31/hAvUTfSvQ5z4nsHXcMex8Dn4NzvTkc4WpL7GUkcm1mXOe2NYjlQnfvLrYJhY
- HDiA==
+ d=linaro.org; s=google; t=1792319484; x=1792924284; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
+ b=eKop+5YMzPBjboLApuqlrgBE5yf/fkMA+4RZV0W1ecLHUITbCWnwJ1p/OpT3vTF230
+ mv6kHrMDY475JXvr2ypqIjENNIFRmtJlGSaZyYMpU5wKUsozwf0kf6ITHJdBEhX34AUy
+ t2dHIVqZWEWqZJ7QfAATfQI/bIQMSPCbHuwHyzXSCJnkRkO0p+dqGbK64E5I2/DR0YjL
+ yYZfvi5bJC2sk/NrEczsxWBjyP7Tyi9Bux2xTIPKXWyWJfGJMmtq2Rcy0ikfhELFICxU
+ 4NwIZkr+JfAb+uLhr2Y+ARIP3W87r8jlq5vcxajLaRixVzHxv9Khx3ixuXO27RJHf/UM
+ 3mkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792318286; x=1792923086;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=A1mf/h4rs8yarG4cfrPSMjATG0zfwYsdn7iIaUhN85Q=;
- b=Qa+DdUuCpXQtCeJPMoIIwS23CNE4QV9aWXKhT1bu1YwMe7wbmU+lRpxn4JnyWRk46v
- DajEOnB/KDGKvm+o8HneUtCFXOKKyFVD8UY60mKtoXSMSgCdfMk6p2PsSP8d7Vbk8ZS0
- uGXBHNngUV5O7hQTeFi2Pf5mLrs3mKyBLexsdc4FcbE/yn3xh6I0LPezs0Gt2acopAgP
- mxVjP45kaNbBDvtfS6jdpiVtKdpzwjaKRqiFdmT4K4YDFnzsXyOwwqeZfTVy8rN/KWFB
- EJTZL6JFbXpjD7mN2nI/lmsH6xU2JbvvROrWSVtkTmDmGVwzVFmnr2b+2dZU2fK2cMLX
- iaDw==
-X-Gm-Message-State: AFq9FYIG1sFh2njkAkdImoiDWT+N0xmkL16YfknMU8YEdaJoOVDLoNb+
- 9ZD9J0hxF5HCQs5cYxPp6yfkExNAq4blMQPpoyNL2CHgniwOCagWRJoCiqXdEFi6BsByTZ6rpFM
- GiW/0MzkgMW8hjJiMOkOhYCXsDngMZNxiVg31m6MFRQ==
-X-Gm-Gg: AYBFou2/g6VEZ/AVGrtf652h++fexPmbV6DBNqu3G0hIex/WoHi9E7Z4Ju9p5GkRk6q
- EklpbgULLcv3NNWG+abFqsWKJlzPjc4Z9+k6idHcwL4bssaNB49iIgT6ExT4cmIYqHn3gMqyt1z
- 7cRJO18V6TH2o0O0NZr/HJcHsmRowdTFwifFfoGOZK7aGUVCrsTP45PQeLupbiVFoHVsc+/mpYT
- tNO0QoQOMEJ+XoF3muy9I+X6SaTD12v8eoFgUPeKdoBxosc6mcTOrajk/pHc5QnVkOQnK/YYduD
- i/BYtQvujyYfcC/ZbcLF62w1CDDHHxITZ1FMm+tEzj+zmQnr15Sks/rCJuDicvqzKdJc3hJTUfu
- efS8atYNFgSfR6xsSCT2GZa+PpN1FdfIr0cpwyMQ=
-X-Received: by 2002:a05:690c:e20d:10b0:8b0:a1d3:3823 with SMTP id
- 00721157ae682-8b0f218aa63mr11066417b3.24.1792318286504; Sun, 18 Oct 2026
- 03:11:26 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792319484; x=1792924284;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
+ b=PMliE3a7fjLPT/Yx68sJoidhFzIiRRx8dOzSQq1jkmUiOJub6qvwHJC6sM3hsFrYwn
+ emGcvetsLWtWJtvpICeBz3+qri2P1zHlWsQPGR1TYkrM+wRqoFovt0dkA2p3RuYxUN0x
+ ZLn/0PavYGb06bLLhGC1ViIQZtN4V1FG0Lcjj6RuaXmuR8B0V2p3mHSJBruolfK4kLYO
+ /hRoI9eMvDDMQqeg7nKNaSI/dmJBR7pXCl6rMUQ5Qw9DNfX+HIH/3EZ2eFdw5SzZ5qIE
+ JYpr+3OW1t8WPXFiccStfXk4tSjBFil/5Z530Y/mOcITEDN0vwP0Z+nyaa9f//qCdlVw
+ Y4iw==
+X-Gm-Message-State: AFq9FYLPnZ3ZjqkGj7eYwYyGhf6UiSsPVLzaHYu2ZblZp4UlCdI4HSr7
+ 4ReZjoC7z+TBvUYFzZoVq2oZ+k2TVqgRLYAfnEIfAkKubRsZq68IF4hHRuGBJMrrqi1ea+9sGYB
+ N4lCdAOiVsuV0fWFvXI+oTi6b8WGi0owGPogatXlNYA==
+X-Gm-Gg: AYBFou1W2nLWQUgGQ+PwrIDkpJqLGitCAJ6IHE/y9osrx8kj3B8ajp4kwLZSNt0hxxp
+ +on6ua/5uu7ivIK6gzhzVgkZjEDq9YVzhA5/HpF6g66Dv9jGClmnL3zQptmKY7DioP/qaQulorf
+ BnhzJxKdUVKiLKjyvMv/h6AGv5saGI0umVR1Peor41A5vAVYc26fu6ujL1jIdNzEoSjbOvEwzEu
+ QfnDTOcP6sOTwW7EdU/gnN41v9m5fwuuZ003O2EE9c+OZCF9c9s8skjyjAbsUJcXjmgcygSz6Qe
+ 9TR1CcMmNL3VqgmK0peW9FYYF8oply+6CA3TaYiLxfKag0yaJyfnnb9R0FOOdpz6PyTHsUy56kd
+ iHwmk2U6+wcEra/TvqhCKSMjenoFZuwqxAKzffus=
+X-Received: by 2002:a05:690c:a594:b0:8ab:6374:561d with SMTP id
+ 00721157ae682-8b0f218beaamr12196817b3.30.1792319483742; Sun, 18 Oct 2026
+ 03:31:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261017-allwinner-gpio-eint-v2-0-82906f440378@gmail.com>
-In-Reply-To: <20261017-allwinner-gpio-eint-v2-0-82906f440378@gmail.com>
+References: <20260918101158.42101-1-corvin.koehne@gmail.com>
+ <20260918101158.42101-5-corvin.koehne@gmail.com>
+In-Reply-To: <20260918101158.42101-5-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 18 Oct 2026 11:11:14 +0100
-X-Gm-Features: AclHuK9ta7VjERKJ8di5c6DCthpbpeQis8bnLohayA6tZw3xKhpXZUNotMPw520
-Message-ID: <CAFEAcA-hLDE7k4jauuasJq=3XD44s7kbQ6iEQa5dxkZ8ROZJCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] fix: Allwinner GPIO interrupt handling
-To: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
+Date: Sun, 18 Oct 2026 11:31:11 +0100
+X-Gm-Features: AclHuK9Chsnsi4n-p4DxZpfHCJzNikDdBdMt9qgoTqFXQJiHn7JmA1NLY8iy380
+Message-ID: <CAFEAcA9GcQzUk1TUQaYydxRotyWNWSbqp_-bjHnfsrcE7jkzFA@mail.gmail.com>
+Subject: Re: [PATCH v8 4/7] hw/timer,
+ cpu: Add Clock API support to A9MPCore timers
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,44 +125,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 17 Oct 2026 at 10:15, Strahinja Jankovic
-<strahinja.p.jankovic@gmail.com> wrote:
+On Fri, 18 Sept 2026 at 11:12, Corvin K=C3=B6hne <corvin.koehne@gmail.com> =
+wrote:
 >
-> The original patches assumed that pin had to be configured as input in
-> order to be able to receive interrupt. However, after additional testing
-> with libgpiod and gpiomon, the pin is actually supposed to be configured
-> as EINT (0x06). In the following example with PH1
+> From: YannickV <Y.Vossen@beckhoff.com>
 >
-> root@cubieboard-ng:~# gpioget -c 0 224
-> allwinner_gpio_read [PH:CFG0] -> 0x1061061
-> allwinner_gpio_write [PH:CFG0] <- 0x1061060
-> allwinner_gpio_read [PH:DAT] -> 0x49
-> "224"=active
-> root@cubieboard-ng:~# gpiomon -c 0 224
-> allwinner_gpio_read [PH:CFG0] -> 0x1061060
-> allwinner_gpio_write [PH:CFG0] <- 0x1061066
-> ...
+> Add a clock input to a9gtimer, arm_mptimer and a9mpcore. a9mpcore
+> distributes the clock to the other timers. If no clock is
+> connected, falls back to 100 MHz for backward compatibility with
+> existing machine types.
 >
-> The CFG0 value on the lowest nibble changes from 0 to 6.
+> Frequency calculation now uses the input clock and prescaler
+> values according to ARM Cortex-A9 MPCore Technical Reference Manual.
 >
-> This patch set fixes that behavior to expect that pin is configured as
-> EINT in order to allow interrupt-related functionality.
+> More information about the A9MPCore timers can be found here:
+> https://developer.arm.com/documentation/ddi0407/c/timers-and-watchdog-reg=
+isters?lang=3Den
 >
-> Tests are also updated to reflect this change, and a new test for pins
-> configured as input is added.
->
-> Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 > ---
-> Changes in v2:
-> - Moved changes to the interrupt handling tests to the first commit, so
->   tests still pass once the commit is applied.
-> - Kept new GPIO input test as a separate commit.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20261009-allwinner-gpio-eint-v1-0-c55d2958ae0b@gmail.com
->
+>  hw/arm/xilinx_zynq.c           |  1 +
+>  hw/cpu/a9mpcore.c              | 12 ++++++++++
+>  hw/timer/a9gtimer.c            | 42 +++++++++++++++++++++++++++++-----
+>  hw/timer/arm_mptimer.c         | 19 +++++++++++----
+>  include/hw/cpu/a9mpcore.h      |  1 +
+>  include/hw/timer/a9gtimer.h    |  1 +
+>  include/hw/timer/arm_mptimer.h |  2 ++
+>  7 files changed, 67 insertions(+), 11 deletions(-)
 
+Where you add an input Clock to a device, you need to do something
+to handle migration -- see the section docs/devel/clocks.rst.
+For these devices, care will be required, as I think we would
+rather not break migration compatibility.
 
+This patch is also adding Clock handling in multiple places at once:
+ * a9gtimer
+ * arm_mptimer
+ * the wrapper a9mpcore object
+ * the zynq board
 
-Applied to target-arm.next, thanks.
+I think these would be clearer done separately.
+
+> +static inline uint64_t a9_gtimer_ns_to_ticks(A9GTimerState *s, uint64_t =
+ns)
+> +{
+> +    assert(!(s->control & R_CONTROL_TIMER_ENABLE) || clock_get(s->clk) !=
+=3D 0);
+
+It's not clear to me why you can assert this, or why it's an
+interesting thing to assert. Similarly below and with the
+equivalent-looking assert in a9mptimer.
+
+> +
+> +    return clock_ns_to_ticks(s->clk, ns) /
+> +           a9_gtimer_get_prescale(s);
+> +}
 
 -- PMM
 
