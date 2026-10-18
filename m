@@ -4,80 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C208CCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 20:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36D8CCF2D4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 23:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIXok-0006Ew-Qm; Sun, 18 Oct 2026 16:49:19 -0400
+	id 1xIZuN-0001Al-F3; Sun, 18 Oct 2026 19:03:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1xIXoh-0006EU-MQ
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 16:49:16 -0400
-Received: from sonata.ens-lyon.org ([140.77.166.138])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xIZuL-0001Ac-Hd
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:03:13 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1xIXof-0004zM-R8
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 16:49:15 -0400
-Received: from localhost (localhost [127.0.0.1])
- by sonata.ens-lyon.org (Postfix) with ESMTP id 4B868A021A;
- Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
- t=1792356551; bh=MyMx0oB7W58eUOjX+EmVHV1XlyBThltay5mQtEP3Rak=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=mnDH6dVLwOM76Gbw6YPC+mjHcZEprv4aOs3nGYosgjdQgGZgAT4Mi+tfJrI5plN0M
- x7T1yu4/xeqcsmSU3sttPJshNDncKuAOZ85hyj2Sps6/Yn9RJtLd69B9vohzoLxrXN
- MbDhtJLoq1aV9HlYJFyoojA0phJ1sUidQLyi/kniSIiKf8gFBrgovvlgKZAsB5rJ8X
- wb3wzGEuuXjxMHgTLFIIte9L0PwP3NMkThaOQRlsu5/qCA5L22yYylqDDxZByloeD/
- Wyqi0+NTzii1mUX7eAklil0LOTwDREq3OT6XU/rKoj8RKPIdA9HVEbbNmmfEtOI0b3
- NXIBfDMXLVs4g==
-Received: from sonata.ens-lyon.org ([127.0.0.1])
- by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id I8YbGj6jQMC4; Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
-Received: from end (lfbn-bor-1-980-210.w90-120.abo.wanadoo.fr [90.120.173.210])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by sonata.ens-lyon.org (Postfix) with ESMTPSA id 1AEF8A0185;
- Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
- t=1792356551; bh=MyMx0oB7W58eUOjX+EmVHV1XlyBThltay5mQtEP3Rak=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=mnDH6dVLwOM76Gbw6YPC+mjHcZEprv4aOs3nGYosgjdQgGZgAT4Mi+tfJrI5plN0M
- x7T1yu4/xeqcsmSU3sttPJshNDncKuAOZ85hyj2Sps6/Yn9RJtLd69B9vohzoLxrXN
- MbDhtJLoq1aV9HlYJFyoojA0phJ1sUidQLyi/kniSIiKf8gFBrgovvlgKZAsB5rJ8X
- wb3wzGEuuXjxMHgTLFIIte9L0PwP3NMkThaOQRlsu5/qCA5L22yYylqDDxZByloeD/
- Wyqi0+NTzii1mUX7eAklil0LOTwDREq3OT6XU/rKoj8RKPIdA9HVEbbNmmfEtOI0b3
- NXIBfDMXLVs4g==
-Received: from samy by end with local (Exim 4.100.1)
- (envelope-from <samuel.thibault@ens-lyon.org>)
- id 1xIXoc-00000002KoL-39OC; Sun, 18 Oct 2026 22:49:10 +0200
-Date: Sun, 18 Oct 2026 22:49:10 +0200
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
-To: Alexander Epaneshnikov <aarnaarn2@gmail.com>
-Cc: qemu-devel@nongnu.org, brltty@brltty.app
-Subject: Re: baum: NVDA does not detect usb-braille
-Message-ID: <atUwxiof87wlNm83@end>
-References: <atNoDNz0dQucxzFN@alex-pc> <atNo9sk_7jCAi98u@end>
- <atPIRr46KvMoiCti@alex-pc> <atTzTVaSxUy5r95x@end>
- <atUU4HpVVI59QcLJ@alex-pc> <atUZr1LP8k5b78I8@end>
- <atUfTcaPUHqBQdno@alex-pc>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xIZuK-0007rC-5r
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:03:13 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69ILjcOc840156
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:03:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=PRdRT3I+2Qr9zOeyTrt7HB
+ iOoRTC08GbSmLdcEwHXjU=; b=Ek1+WxZy7gYgdnFLlXXmv7v41letBJCsb5yogT
+ 3hxhBz2+kyOHmh+KCWeXHBXQi66ALDVegOYg1rJEpVsX5saS04n27yd5HVkxveGS
+ ZI6HE453w4OYlCuWv2PXlVncNglRPVuiddxLRhbkEwsCHkf9B3yFGtl8ImjaNZhx
+ 0XJamCXQCfT+dp0ef4lc78R8b0YdJNqDPC4ZiQpV9XLnxeA5sL/y427V/mtXmhP6
+ kf2Rxf/U1QF3CRiu0oHy6WzgB9Bs7RiGMsRP0/4tPeMUz1absPHwoTIycSBKW7cl
+ bZ2G9opfx2H0UObZW0jpW9iN31U4GVxTZlx2CMYfFhCWHBKg==
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
+ [209.85.221.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hd5w1854g-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:03:08 +0000 (GMT)
+Received: by mail-vk1-f200.google.com with SMTP id
+ 71dfb90a1353d-5c82cf2652dso701040e0c.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 16:03:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792364588; x=1792969388; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=PRdRT3I+2Qr9zOeyTrt7HBiOoRTC08GbSmLdcEwHXjU=;
+ b=hU6Qchxby3ifitAFveNasNK5ctz+tR77K39aFS1v05B6EVRSlsz9uj4imb0IguakLx
+ DeeTw2E86MvIfWI0X8aAcR1Ir6A19rmatILZG0pdWwo0QnOGZSfaWzKK4utUdnaBEBVr
+ UakRB21P9LhMi3cTV4Dzw4CrksFjYRfcCAwd16lK238U6kw1sTT+9EDLOs7UdeugqcIz
+ iKdjRj+HwL3k26/HCRt8RtHsIQm+SvpAFas5T3Ir0h2Nc3sgmT3PUSgndPKyZ6Bzbk/R
+ 3wXxAQjbSTYXh7HWpegtNXulY/oQcGW0cyEHB5wIb9NpuMMeZkqZPcUCojCE9d9/DGmg
+ 26DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792364588; x=1792969388;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=PRdRT3I+2Qr9zOeyTrt7HBiOoRTC08GbSmLdcEwHXjU=;
+ b=ElSsblEnYEbj939NbFIQ3sENSQXR2BatNFCvP/IVN+g0qo5JizKikmkub1FMLTYVgf
+ 50ysXGuOxaeJbVHauopjsWEgB56+uZWEsp5hNIT9zzmVdpOfX/sXNyRpLn9IQAGLsx3c
+ soaFL7G0Tt/KAh+8RmknBDRdFYMQCqOkdQgVnuijzIlBt30buSJaYjaS/KJKKGExptXw
+ TndsY9vc5Hh7ztFtBo0FSa5JggAq/lMFmE/q6cb131HVHLalGcIEGGFIO8wNpSpHeTvK
+ jNVqsX+LggECNVO0cpDhYPYvvsxv0B5fsiJAONf+n1Yt38732VdhTNtudC6OnnKHKMvR
+ ti4w==
+X-Gm-Message-State: AFq9FYLiEyztBo6lmQdQY2OqkCkAPIQQQpUTGbS1ar8IBi4pcUkoRqDw
+ ul4+Lknl9yWxyTidNPUzS2NkVxwFVOJNtciWTSxcJHEbESQnxk7W0WirFkIDbumL86fmn5++6iN
+ mdRe+6CXhBYrd4NOzqbNKoj7sVlXC3wQwfglhdrEgLjSm+/fHzRLTMV2v8XwiEyeong==
+X-Gm-Gg: AYBFou0RqJtE3FWk1r1PPIi65KhhUkelfiYWMzDz8sVEtEp5x+OrzDG+8vQX6nB09bn
+ UXgQpag8NDI0cDngigYdPKPJIXN3QnkvWGNpYUALpYWzcT2PzgILxEVQi67SyBVkXl3cOBZDDDr
+ gIoLjRYsQeHruxPoesN2TNODIOWmdz1o/HfT7ldl8VUA0weekKn6dctH4jNyzLI7XpJDq0L7Ewh
+ AiarpQN7+K2CjtbIEjTNcZ+HWRoa/1st4PTXWCKmsxFyIZ6R0RYLwI3RSyE7BzWODUMSShmiYiN
+ usEqrnr26e3ADna2wsDNKkC04S6iRwUpNoMoLn5/0psNp0CL8Tk79lccEKOPjbIN20N7vtjBRKT
+ hqg/upk3B7pc4NBofbQROtjt15wMDJoSfZ4uXZxUG
+X-Received: by 2002:a05:6102:3f8f:b0:7c8:1fd5:82b5 with SMTP id
+ ada2fe7eead31-7cc3697a7d4mr1431215137.14.1792364588334; 
+ Sun, 18 Oct 2026 16:03:08 -0700 (PDT)
+X-Received: by 2002:a05:6102:3f8f:b0:7c8:1fd5:82b5 with SMTP id
+ ada2fe7eead31-7cc3697a7d4mr1431212137.14.1792364587734; 
+ Sun, 18 Oct 2026 16:03:07 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1c8ddde4esm283444135e9.12.2026.10.18.16.03.06
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 18 Oct 2026 16:03:06 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ devel@lists.libvirt.org,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, kvm@vger.kernel.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] docs: Clarify 'query-kvm' deprecation release
+Date: Mon, 19 Oct 2026 01:03:05 +0200
+Message-ID: <20261018230305.6239-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="yM+iLrKY/J92yVGX"
-Content-Disposition: inline
-In-Reply-To: <atUfTcaPUHqBQdno@alex-pc>
-Organization: I am not organized
-Received-SPF: pass client-ip=140.77.166.138;
- envelope-from=SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
- helo=sonata.ens-lyon.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE4MDA5MSBTYWx0ZWRfXzongZCMK4UJ4
+ Qk0ZBbJur6JOJkFRebNnfxok2xE/EX1X8SD0JFnViFXyccIUtgi36vjjPAWNrQcbJc3+SHcF3Pe
+ b+Q9Io0C4V/BOBkC8CrcHCCs4AftD58=
+X-Authority-Analysis: v=2.4 cv=KuPYSmWN c=1 sm=1 tr=0 ts=6ad5502d cx=c_pps
+ a=wuOIiItHwq1biOnFUQQHKA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=uhKpQFyuRnTRNiYsaUQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=XD7yVLdPMpWraOa8Un9W:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE4MDA5MSBTYWx0ZWRfX5CjKdRx+iOVU
+ Yad9rn1TeiSzIs/YimzfrqX7nbfsN8gEbi4vjE+dJdFtjPqgD1bnjdXCRGjGk2rVEZ+M9ENWNjn
+ zXsnznZGjA/5R7xi7SW854H1MrTy8fvtWch2G2/Qc7pZDi1MlWUOP6Rvw5gT8VfAS7QGw9ktZWI
+ IwI2qTSrpU/uBsxp/6lJztWNOgeQmt6TbMCIYJLclIqWWucQpQ+kaluyq4iNUPySuFDbSVun7aS
+ W9GIqKFoW01jLj6czX7NygY3KR3OSNRGz3rmxLCEKs/P1a1K87giVHXoD9DX4Wl1tiEpJ69RnPt
+ hoF5R7gjWJjQCjW8fCRHwns2cD9CpgG8OaLgRYW5LXDN7tfc/uzgw7AvIEPc47cPhSdlmB360SA
+ kxHzUPQbEajg7G/eZOdvrmN3fMgwVoMj3mlKWS3OASwH1mYyzeSfDBCg8qMDiDrdY9HrGusEXvu
+ zUyKPl72Xm5x6YnGk+Q==
+X-Proofpoint-ORIG-GUID: 5hvoH8gdPpZs-jH6JWqtT8WosBNKhFnc
+X-Proofpoint-GUID: 5hvoH8gdPpZs-jH6JWqtT8WosBNKhFnc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-18_05,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610180091
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,105 +150,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---yM+iLrKY/J92yVGX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+'query-kvm' was deprecated in commit 824141dcf48, merged after
+the v11.1.0 release. Correct to prevent too early removal.
 
-Re,
+Fixes: 824141dcf48 ("hw/core: Deprecate query-kvm")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ docs/about/deprecated.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Alexander Epaneshnikov, le dim. 18 oct. 2026 22:35:58 +0300, a ecrit:
-> On Sun, Oct 18, 2026 at 09:10:39PM +0200, Samuel Thibault wrote:
-> > Does the device sends the cell count first or the device identity
-> > first?
-> 
-> I don't know for sure, as I don't have a real Baum display; mine is a
-> HumanWare Brailliant, which uses its own protocol. The comment in
-> NVDA's driver lists them as "device id, serial number and number of
-> cells", so the identity seems to come first, but that is the only hint
-> I have. BRLTTY's Baum driver doesn't use 0x15 at all, it asks for each
-> of them explicitly.
-> 
-> NVDA itself doesn't depend on the order: it stores the cell count and
-> the identity separately as they arrive and continues once it has both.
-> I tested sending the identity first and then the cell count, and NVDA
-> detected the display.
-
-Ok, could you check the attached patch?
-
-Thanks,
-Samuel
-
---yM+iLrKY/J92yVGX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=patch
-
-diff --git a/chardev/baum.c b/chardev/baum.c
-index 166d6f2f09..db0a4fff75 100644
---- a/chardev/baum.c
-+++ b/chardev/baum.c
-@@ -97,6 +97,7 @@ struct BaumChardev {
-     brlapi_fileDescriptor brlapi_fd;
-     unsigned int x, y;
-     bool deferred_init;
-+    bool protocol_on;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ccbc4219497..2507a86d1ee 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -168,7 +168,7 @@ Use ``job-dismiss`` instead.
  
-     uint8_t in_buf[BUF_SIZE];
-     uint8_t in_buf_used;
-@@ -337,13 +338,27 @@ static void baum_write_packet(BaumChardev *baum, const uint8_t *buf, int len)
-     }
- }
+ Use ``job-finalize`` instead.
  
-+static void baum_send_cell_count(BaumChardev *baum)
-+{
-+    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
-+    baum_write_packet(baum, cell_count, sizeof(cell_count));
-+}
-+
-+static void baum_send_device_identity(BaumChardev *baum)
-+{
-+    uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
-+        'B','a','u','m',' ','V','a','r','i','o' };
-+    identity[11] = '0' + baum->x / 10;
-+    identity[12] = '0' + baum->x % 10;
-+    baum_write_packet(baum, identity, sizeof(identity));
-+}
-+
- /* Called when the other end seems to have a wrong idea of our display size */
- static void baum_cellCount_timer_cb(void *opaque)
- {
-     BaumChardev *baum = BAUM_CHARDEV(opaque);
--    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
-     DPRINTF("Timeout waiting for DisplayData, sending cell count\n");
--    baum_write_packet(baum, cell_count, sizeof(cell_count));
-+    baum_send_cell_count(baum);
- }
+-``query-kvm`` (since 11.0)
++``query-kvm`` (since 11.1)
+ ''''''''''''''''''''''''''
  
- /* Try to interpret a whole incoming packet */
-@@ -441,17 +456,18 @@ static int baum_eat_packet(BaumChardev *baum, const uint8_t *buf, int len)
-         uint8_t protocol;
-         DPRINTF("SetProtocol\n");
-         EAT(protocol);
--        /* ignore */
-+        if (!baum->protocol_on && protocol) {
-+            /* Switching on, answer with device identity and cell count */
-+            baum_send_device_identity(baum);
-+            baum_send_cell_count(baum);
-+        }
-+        baum->protocol_on = protocol;
-         break;
-     }
-     case BAUM_REQ_GetDeviceIdentity:
-     {
--        uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
--            'B','a','u','m',' ','V','a','r','i','o' };
-         DPRINTF("GetDeviceIdentity\n");
--        identity[11] = '0' + baum->x / 10;
--        identity[12] = '0' + baum->x % 10;
--        baum_write_packet(baum, identity, sizeof(identity));
-+        baum_send_device_identity(baum);
-         break;
-     }
-     case BAUM_REQ_GetVersionNumber:
+ Use ``query-accelerators`` instead.
+-- 
+2.55.0
 
---yM+iLrKY/J92yVGX--
 
