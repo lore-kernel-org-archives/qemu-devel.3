@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC35FCCF2C4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 13:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCC4CCA490
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 13:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIR3v-0002Z0-7R; Sun, 18 Oct 2026 09:36:31 -0400
+	id 1xIR94-00017f-Ht; Sun, 18 Oct 2026 09:41:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xIR3q-0002Ti-NA
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:36:26 -0400
-Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
+ (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
+ id 1xIR92-00015U-Mv
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:41:48 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xIR3o-0002LG-EK
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:36:26 -0400
-Received: by mail-qk1-x72e.google.com with SMTP id
- af79cd13be357-93e6eb77f0bso129551485a.3
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 06:36:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
+ id 1xIR90-0002rT-MZ
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:41:48 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-8a058f74a54so125367b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 06:41:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792330583; x=1792935383; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=BTLX4E/wXPnRsvyWK12SwwoqMi9TXZxhEIuvci+/7pM=;
- b=C1CCEX4sorARda5BG+Hx6Sa5xScBfQqkUoKu2LwvXQK4aknIyWIp0lmAXrH1Czz6x8
- ovvkLPfpcJAbw8jH+t7iol3x0eApp9CXkA+uLxESBd8bVG8Y6mQGIZzuLyCdr3btXB8Q
- Vn5Lr6T/ePIzQHLuSPAn5DxdjlugeoO+FSpxtMOQERIPMccjF+0GsycNza+ePv5JBU4d
- jUIRm6kByEHaKqbnAnghdtaR1FopZ5a0QGonm68uEcJb6EXrM6gBbmhk1h0f/AiiH0A5
- CxO0PNhLMeb4Ufs0osdkyfbslpuVILphEO3QvsjMYRcRgSvJJLpxhElaqnqQqAhAx6TC
- JWhg==
+ d=gmail.com; s=20251104; t=1792330904; x=1792935704; darn=nongnu.org;
+ h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:content-type:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=WQhwK78wnfJ5eZGrDMcIglkMM9XjuGAgLzw8Lwnd6Vc=;
+ b=QEi69kZzU+K3dWox+3u5KMVsc5olGjBQ0E3BAZEEi3Ph+B8xXSwbLmyJDT0h+Tef80
+ IJ5LoPf5fPg8FTFzIj+FCwjB43TG1fi0j5A21wgcFxaX2EbpL/l1eGhdLG5AYcFoZmLO
+ F1XNRHLo2Xm5p5hvIiloVDTaSIrqNDa83U/52TJftcwe8FSTeEg/8JtMih0EXSE9eASq
+ bAj3w508Upq1kNd/Zy8Y8U7hHqv24mhrKd6uT1jb2y0NHiia47SFvO59e1SDnGYC0Miv
+ 7THTeQ9ZFBjOYs+Szw2eGiCvEo5/J678wEr6i6CZt5mLtwe2DZBPfH/aWParGYbtJsCr
+ hq4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792330583; x=1792935383;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=BTLX4E/wXPnRsvyWK12SwwoqMi9TXZxhEIuvci+/7pM=;
- b=v64dX40VanPbKk4IUFGMPhsahjP0+RPusQISbR3PBJN/sgKl8pibZGdOocMfjaHrZ5
- DtMBHqUaiZdGWnMJyAO76afGfqo9PAooVSqsgcUeYfxWMHvQfsaegbsAR1CDDA1lTqJt
- Dgq/lE9r8DkTk9s6GnBil6m20OD209f7TXHMZfF9+Zjs4ZSafkN7zIsH5xY3Ktv32FO+
- PnJdJ6be03aKPjz2eMSkIgFYWKgf0RVk/NWfgi6GH4ndwt9VDUNBqYLjv7YDaokFge7F
- 4P9MF6cQseAuOZsiQY+Q0LCKd2clInjMFhQp0BTlR54ALUi5T9kKE+hSZVF2y1fdoGyB
- xdzQ==
-X-Gm-Message-State: AFq9FYLY65hcl6tR6GFCimsZHsksdmWRXzPsQTYssIhF3jMyV8JK0nEr
- yzEx96aMXoezhHRNBhjsMy8ctnan9+BTyOeo7LwCxwDtTHOXsAv8amw6Qf2vvOHn
-X-Gm-Gg: AYBFou0GfxgaEkVloXO2wdJB0goXLiE7xQsaYYrHmb4viKnihbFr6RmMxnxSvXfpM9U
- DN1TwUuNIFWljPZyh8abmRna3dHmAywuPBJtDEILBGW+EIZclqkcibc+rOb3IvXhs3t2CrThMio
- ynRv4bX1vAbHUvtwHSYWoUcBmzmHYgC1yAiU1OJukiKDGAELwyVkBAnc1j/A5sU7pABCrtA091F
- AAwYfjB9qGwHzciOkbR1O4n6i9bD4MydnjiZealU5ex2fHLCqFCOELJ2gcY0eL5Yly7+HTqiiQV
- KARnYYWLjAmM9/1T25NrtlQdJowhT45t66vL8dMiJ6yCBaSV18dGpxergiJCXX8NOUaINIM1h26
- 8IcUQTOdd4SJZE4AoUZ4m9n2GNmWogSbw3FJnbfAoLs53Rk1t314KZXAQb8t09Tk5oz+tIHvb1j
- i+jLjEqEKUxP021onm76rtLUr8eSZE+aT32pdWNq5/35IYZAzakTqYkmOw2tyUYeXNlkAWXa+R9
- IfQYyCmkGOGZrkd0NFg8edhPLUAbrbGMVwjJk1rhtcCBek0RqdwURjpS7nHVyKMX1RQpdc=
-X-Received: by 2002:a05:620a:461e:b0:93b:6113:218 with SMTP id
- af79cd13be357-93f29b76073mr807100885a.12.1792330583280; 
- Sun, 18 Oct 2026 06:36:23 -0700 (PDT)
-Received: from localhost.localdomain ([2606:6d00:159:2900:ecfc:9d0d:b95b:11bf])
+ d=1e100.net; s=20260707; t=1792330904; x=1792935704;
+ h=in-reply-to:from:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:content-type:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=WQhwK78wnfJ5eZGrDMcIglkMM9XjuGAgLzw8Lwnd6Vc=;
+ b=xtLVVjk1ODcLt+tUqKqRCE3ClBmM55GF+EspRvxA/9HYlxWs8SBgUDVBZdR3IwjIeY
+ drlmr4La5SBjLGJZlygB4rUa6RozeV+unNNpHRIYGf5HHVK3dqOV/5tPfnNKGJppKRSf
+ YFrtSIkDZdd6rNbvomk9Sn2xGPm0QvbIBNmtKZMOwuailx3D6Eh2IzRTcaH79p+/BFP7
+ VwnPECHXIl+BqByxGBaAQg8zKdnCrUV6lsao5LZZNkPLjumGdG6d69lh5iIQqgua8NIU
+ 4z+fyHoV5e9NF2myjq169z8UoPdqe/hXWPkVoD0QiSgxQqnEMXNG5H1LLsW7TODBnZ5a
+ i6Jg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByPpgrSOdejdvnhn06RpjvIfHRLQbYYPRYd67490TQBigIuGsDcmxcpGRRS37BQHNeVTKp9vefV3+Ix@nongnu.org
+X-Gm-Message-State: AFq9FYIRO9dnsiiNbhl7c6OpJUWF6ay28o9/JVa6K8SbYntkXUDFAWF6
+ 433RdQvrsruml9nt/4fz6oFZUCSNo9pmUM62mJp6LG/JCOSvgaNgrrBY
+X-Gm-Gg: AYBFou3TVQRginVAonJSRCkZb1or0bjazvTQ8yHksZ6t50Fc9keuwkwpMXiGQUCKkyd
+ huDK6ahxM7hsQEBWCL5S/Fxd2uhjg+ot123Wzhxbli66QhKXN9S46+stcMkq1YyhHWdJoUc3iOu
+ CkizbCpw6X+4rtzBKpLb8/RT4fyF0UCskckdW0T0EZRqofP1P6KIPp3DdSeemGRtYZ9clRfu3Kq
+ tSh7khvABg7adnjRGw2MSG86LK7SzWgSF3zzPV2eHg5imlsi0eIKFCVgJKR5/E0dUJrZbj2RkPU
+ m1UtXeYHxr1j9+gf4K5PoQ80NPwzWIepoWPsGsR1gbM4B1EaAMTnIZiZFNdJul2AlqwzP7/OvUQ
+ kSVncgV78wkt6pKNTlWtb7cCZzJfhqDRDAJrMgC1+N7fp1guYjisoWelhKlLJD1tXEO8jeDZKzl
+ si6QQ4GK/b8ohZNqghDBB3YvklR7PU9BbNsDkpCq4BgT45FaXegc14QzTqZJ25jImgo4WRdMG5x
+ R0PCUWhfj1/Pxw=
+X-Received: by 2002:a05:6a00:3c91:b0:89e:261c:448b with SMTP id
+ d2e1a72fcca58-8a04cb24551mr3730201b3a.34.1792330903641; 
+ Sun, 18 Oct 2026 06:41:43 -0700 (PDT)
+Received: from [192.168.3.23] ([101.204.150.66])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93f2a854bb7sm459056485a.23.2026.10.18.06.36.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Oct 2026 06:36:22 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com,
- Marcelo Manzo <marcelomanzo@gmail.com>
-Subject: [PATCH v4 17/17] tests/functional/aarch64: add raspi4b GENET
- networking test
-Date: Sun, 18 Oct 2026 09:36:03 -0400
-Message-ID: <20261018133603.64323-18-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261018133603.64323-1-marcelomanzo@gmail.com>
-References: <20261018133603.64323-1-marcelomanzo@gmail.com>
+ d2e1a72fcca58-89f56c8b922sm2939138b3a.11.2026.10.18.06.41.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Oct 2026 06:41:42 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------uyKehUpbyQKH8SDP20PfNHxn"
+Message-ID: <b969dd01-6ed5-4a29-a112-b5f00dd78642@gmail.com>
+Date: Sun, 18 Oct 2026 21:41:37 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qk1-x72e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] hw/dma: fix k230_gsdma integer handling issues
+To: Alistair Francis <Alistair.Francis@wdc.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "dingtao0430@163.com" <dingtao0430@163.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "lvivier@redhat.com" <lvivier@redhat.com>
+References: <20261002140245.30214-1-dingtao0430@163.com>
+ <20261002140245.30214-6-dingtao0430@163.com>
+ <621efd0cf2f709dd9cc0491a7955d21bd0f7f09b.camel@wdc.com>
+From: Tao Ding <dingtaodtdt@gmail.com>
+In-Reply-To: <621efd0cf2f709dd9cc0491a7955d21bd0f7f09b.camel@wdc.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dingtaodtdt@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,69 +111,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add test_arm_raspi4_genet, exercising the raspi4b GENET controller
-end to end: boot with a -nic bcm2838-genet device attached, confirm
-the guest driver probes it ("GENET 5.0 EPHY" in the kernel log),
-reach a shell, and confirm the link actually comes up
-("ip link show eth0" reports LOWER_UP) rather than just that the
-device exists.
+This is a multi-part message in MIME format.
+--------------uyKehUpbyQKH8SDP20PfNHxn
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Verified locally against this series with the exact kernel/initrd
-assets this file already pins (raspberrypi-kernel_1.20230106-1 /
-groeck linux-build-test rootfs). The link only comes up because the
-MDIO patch handles the PHY autonegotiation-restart request (BMCR
-ANRESTART) correctly; without that the link never comes up and this
-test would hang at the "ip link show eth0" step, so it also serves
-as a regression test for it.
 
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+On 10/16/2026 10:05 AM, Alistair Francis wrote:
+
+> On Fri, 2026-10-02 at 22:02 +0800, Tao Ding wrote:
+>> Validate the address before subtracting the channel base and use
+>> hwaddr
+>> for channel calculations to prevent unsigned underflow and
+>> truncation.
+>>
+>> Resolves: Coverity CID 1685514
+>>
+>> Reported-by: Alistair Francis<Alistair.Francis@wdc.com>
+>> Signed-off-by: Tao Ding<dingtao0430@163.com>
+>> ---
+>> Compared to patchv1, the modification of ch has been removed.
+>> Because ch is an unsigned int, it is sufficient.
+>>
+>>   hw/dma/k230_gsdma.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/hw/dma/k230_gsdma.c b/hw/dma/k230_gsdma.c
+>> index 7635cd19e8..e422b436a2 100644
+>> --- a/hw/dma/k230_gsdma.c
+>> +++ b/hw/dma/k230_gsdma.c
+>> @@ -329,6 +329,9 @@ static uint64_t k230_gsdma_read(void *opaque,
+>> hwaddr addr, unsigned int size)
+>>           break;
+>>       }
+>>   
+>> +    if (addr < K230_GSDMA_CH_BASE) {
+>> +        goto out;
+>> +    }
+> This isn't right, you already have a `if (addr < K230_GSDMA_CH_BASE)`
+> check above, just use that but return.
+>
+> That way we don't log a read that doesn't actually happen, and can
+> avoid a goto
+>
+> Alistair
+
+Yes, we can return in the if in the default above.
+But some addresses arrive here through other branches of the switch, and these addresses are smaller than K230_SSDMA_CH_SASE.
+If there is no goto, overflow errors will occur when calculating "ch".
+The next patch will use conditional judgment to avoid using goto.
+
+>
+>>       ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
+>>       ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
+>>       if (ch < K230_GSDMA_NUM_SDMA_CHANNELS) {
+>> @@ -355,6 +358,7 @@ static uint64_t k230_gsdma_read(void *opaque,
+>> hwaddr addr, unsigned int size)
+>>           }
+>>       }
+>>   
+>> +out:
+>>       trace_k230_gsdma_read(addr, size, ret);
+>>       return ret;
+>>   }
+--------------uyKehUpbyQKH8SDP20PfNHxn
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <pre class="moz-cite-prefix">On 10/16/2026 10:05 AM, Alistair Francis wrote:
+</pre>
+    <blockquote type="cite"
+      cite="mid:621efd0cf2f709dd9cc0491a7955d21bd0f7f09b.camel@wdc.com">
+      <pre wrap="" class="moz-quote-pre">On Fri, 2026-10-02 at 22:02 +0800, Tao Ding wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">Validate the address before subtracting the channel base and use
+hwaddr 
+for channel calculations to prevent unsigned underflow and
+truncation.
+
+Resolves: Coverity CID 1685514
+
+Reported-by: Alistair Francis <a class="moz-txt-link-rfc2396E" href="mailto:Alistair.Francis@wdc.com">&lt;Alistair.Francis@wdc.com&gt;</a>
+Signed-off-by: Tao Ding <a class="moz-txt-link-rfc2396E" href="mailto:dingtao0430@163.com">&lt;dingtao0430@163.com&gt;</a>
 ---
- tests/functional/aarch64/test_raspi4.py | 31 +++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+Compared to patchv1, the modification of ch has been removed. 
+Because ch is an unsigned int, it is sufficient.
 
-diff --git a/tests/functional/aarch64/test_raspi4.py b/tests/functional/aarch64/test_raspi4.py
-index bacecbbe9c..748837d818 100755
---- a/tests/functional/aarch64/test_raspi4.py
-+++ b/tests/functional/aarch64/test_raspi4.py
-@@ -109,5 +109,36 @@ def test_arm_raspi4_initrd(self):
-         #self.vm.wait()
- 
- 
-+    def test_arm_raspi4_genet(self):
-+        self.require_netdev('user')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel8.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2711-rpi-4-b.dtb')
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
-+
-+        self.set_machine('raspi4b')
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'earlycon=pl011,mmio32,0xfe201000 ' +
-+                               'console=ttyAMA0,115200 ' +
-+                               'panic=-1 noreboot ' +
-+                               'dwc_otg.fiq_fsm_enable=0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-initrd', initrd_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot',
-+                         '-nic', 'user,model=bcm2838-genet')
-+        self.vm.launch()
-+        self.wait_for_console_pattern(
-+            'bcmgenet fd580000.ethernet: GENET 5.0 EPHY')
-+        self.wait_for_console_pattern('Boot successful.')
-+
-+        exec_command_and_wait_for_pattern(self, 'ip link show eth0',
-+                                                'LOWER_UP')
-+        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
-+
-+
- if __name__ == '__main__':
-     LinuxKernelTest.main()
--- 
-2.55.0
+ hw/dma/k230_gsdma.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
+diff --git a/hw/dma/k230_gsdma.c b/hw/dma/k230_gsdma.c
+index 7635cd19e8..e422b436a2 100644
+--- a/hw/dma/k230_gsdma.c
++++ b/hw/dma/k230_gsdma.c
+@@ -329,6 +329,9 @@ static uint64_t k230_gsdma_read(void *opaque,
+hwaddr addr, unsigned int size)
+         break;
+     }
+ 
++    if (addr &lt; K230_GSDMA_CH_BASE) {
++        goto out;
++    }
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This isn't right, you already have a `if (addr &lt; K230_GSDMA_CH_BASE)`
+check above, just use that but return.
+
+That way we don't log a read that doesn't actually happen, and can
+avoid a goto
+
+Alistair
+</pre>
+    </blockquote>
+    <pre>Yes, we can return in the if in the default above.
+But some addresses arrive here through other branches of the switch, and these addresses are smaller than K230_SSDMA_CH_SASE.
+If there is no goto, overflow errors will occur when calculating "ch".
+The next patch will use conditional judgment to avoid using goto.</pre>
+    <blockquote type="cite"
+      cite="mid:621efd0cf2f709dd9cc0491a7955d21bd0f7f09b.camel@wdc.com">
+      <pre wrap="" class="moz-quote-pre">
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">     ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
+     ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
+     if (ch &lt; K230_GSDMA_NUM_SDMA_CHANNELS) {
+@@ -355,6 +358,7 @@ static uint64_t k230_gsdma_read(void *opaque,
+hwaddr addr, unsigned int size)
+         }
+     }
+ 
++out:
+     trace_k230_gsdma_read(addr, size, ret);
+     return ret;
+ }
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------uyKehUpbyQKH8SDP20PfNHxn--
 
