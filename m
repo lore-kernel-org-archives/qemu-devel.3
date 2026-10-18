@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4C6CCF2C9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47E9CCF2C4
 	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 14:11:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIRb2-0005pr-OJ; Sun, 18 Oct 2026 10:10:44 -0400
+	id 1xIRam-0005lj-At; Sun, 18 Oct 2026 10:10:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xIRb1-0005pK-HG
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 10:10:43 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1xIRal-0005lS-0R
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 10:10:27 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dingtaodtdt@gmail.com>)
- id 1xIRaz-000513-Cl
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 10:10:43 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-8a05b210703so222532b3a.0
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 07:10:40 -0700 (PDT)
+ id 1xIRah-0004z5-TY
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 10:10:25 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-ccce6d9abfeso936858a12.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 07:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792332639; x=1792937439; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792332622; x=1792937422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IWmaGYAhUbRIolbD7GEvcJTHQYZVhBb4kKhSSqPzT48=;
- b=SNIC+QBnmXIHk5AWC0JtQ9NGVoZWUs1CJsiuagG1LT3Wx07qQFBnzYWPOpn9hk++wo
- 3ZJuVk5f/kdL+zfRCN15zhuN7iDg/j4LzjRttOnlF8OnYEChAxd58W/yMw48uk265Q6O
- 6cuyGqdsIYB+6EUYswfvpBgQ0fA8/iua6QJ/1MPKxy8NvvBG2fJMrp/kTjyXK7Ic0ucu
- faN8AHt7koyQcSBjg1zpPwkBaMCfn0GPZctaiW5Dj7H54+KcN+3wPChORDCGUt54obt0
- zjQeM9AV1J/mJ33u1DK8ZmDzLoBuzDwfmXgXT/1X1FPaYzHGXxIeQXOkhFBAXrEx5swg
- ABVg==
+ bh=K0UGJW5Rv06EbtkyisWOX7L9CvnlmTwxonH0Dbtr3Pk=;
+ b=EW0pKmN1iaL3/j3Eqrii+++eAn6tojJr5XbM50n3njxnv3vef0U7difU4DMUtSARAR
+ KV9TB9AUmCiH3ttFisxm1Umo6o+3OcLcWM0ectYVwPiivMhlvH7GLbWyVJf36NX7ZhwA
+ iG6YI0ZOxkoIPMCgAtTrWYSrtDz39d5n+3KqQVtWxYa6C9Yg/qsnS9Ofkyl12mq83o9u
+ HQRSWwK8R5lKi8L0FF7sbhnVaC1U/XkcDE1RlWSLuXwSttn0Rk5TCHpATHCisG9oGxC+
+ 1KuXMqasM+vZRqIcWVj9uhQ8WurkcgKaPGLNjgiIcD90//ybXMRBwnJjZtV6Fy76NKgJ
+ 98zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792332639; x=1792937439;
+ d=1e100.net; s=20260707; t=1792332622; x=1792937422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IWmaGYAhUbRIolbD7GEvcJTHQYZVhBb4kKhSSqPzT48=;
- b=MUenIAi/dSYdCV3UhPoobbYSLxG2SPvjVlUnqOsyiQ69uqDXvXOapXuKpyavkRihLT
- He5CIb2lLxkBDxE3LX9+FAY64xGdsL8aJ3R7xmCu5oTHFGr9DPV94Ws40iTXUPXT3cU5
- f2QTE8rhCtG4xeuksanJBmbok9pDnT8FfsaEpoTvpHQEp7OAj+R1cL818G1s6DP7Uf/6
- 0y0CbUsYXBu33BTaPaZPAjRYg5PM4dED42/2T0RJwl9ObQwZ0j+BQbZ3kanDPMQlfFjl
- fn2tnlX4tv31aEfFDxdPkB3JIagIeWIf29gguEdEW8Lbrq56GLasUwMGuCmGQZuMw5X9
- nK8g==
-X-Gm-Message-State: AFq9FYKDZl+2Iwz69osPgXe3puCZE3yzJ23r0qfZagySDeQ0TWuAZdQe
- PzhRxQrR2x58nIZd0mkiFu6jgurwIOiYDfcXdZxYYPMrqnX9gOABPBb7dsm0AwbH
-X-Gm-Gg: AYBFou1q9gDNbEhY2tck1Z5x8hsn7d3tRwjmevuj6hJCNF+FFtSGVO8dLVpOZOPuJ1W
- BOu2QjE7M9kxmacFarXKD8i801fzj3FVSwrtz/cZ/xYsQ9nNUW16AChj31fJHZou0nNG7+7wkjj
- eaXSB3ciMPt4rrUFZSWL1MUNkRWWNeAAoCllbQHPhziJQE8hTTI2RIbmQvpPoCeLRR3SKunca3g
- LF7jqkO8teZj1uzhijBBX+ufOT/PLN4Bi+OSvHPfUyQ0E813n/isit7VsM/IIbKhb/XnjFVJ7JD
- jWEf/krH7W0aDaTILwKEo40BoMwHVaPvwkZj7Lq8TLlEuZL5aBtkPJGa+APJc97o6F3IW2Zsb96
- 1UXzJ6cdg6DR/+4GmDOX1Cu3SCvVVCkbRlbCaU313w5flrSa6GKXUJh9tIVQ43dqCA9Rv2FrMTo
- M50268tq7N9t+p/lRJuVmC08muAMtdfXw5cXxwNqAt2tMJvtlozHILMYno+90GQp6VDGjNUWdtO
- knfjbY0gUhAmEEhVA==
-X-Received: by 2002:a05:6a20:c5aa:b0:3dd:a195:fa22 with SMTP id
- adf61e73a8af0-3e22606feebmr4232562637.71.1792332639458; 
- Sun, 18 Oct 2026 07:10:39 -0700 (PDT)
+ bh=K0UGJW5Rv06EbtkyisWOX7L9CvnlmTwxonH0Dbtr3Pk=;
+ b=w3gOpRbPqzS6+c6nu5Flc6NuiIFGg2GCbtYerTAKWCEmdhCTU5P1Zn8so2dBdugIbU
+ /7/OqWUryk8Xmsw1ZndaIW8JVAo2CJz0kAW1iytz/tLmqYvSgNZ+VH+65l4i4OhdX3I1
+ dz0pnbZjaxXrVmmuqJHSLMJQ6zlTmmFRVUgg4hyWK9UMPmTlFLEPY2kIkjaAmOc95ute
+ rCeUew4jlqcuDZ98eBKhWOomyCI948vq3G8mddWYyyFoOqcsrO5eMYFziLoSqBFWuQlm
+ mSlLXhSIoxJQuP+I3Lezbaa0LOKJfrL9S7jxsvqdNbapziO6gBN0Yd66weasgP+9BCgM
+ LTNw==
+X-Gm-Message-State: AFq9FYJW/8VR1bHGL2gmdguftUIomvw3MGzTGzWe/HT2HUKduVKRyMb1
+ 4aZfZKvNdrJIEbHQ0gxYGPTpWsg8P1PEHYXqnpSjIwvRMpCVBoBXB81baQ5mov1O
+X-Gm-Gg: AYBFou1lMn23c2oJRUf30cXEPKUPwMwYi6Jm3gMW3bdWBu04ZX6VvM8Hf2fbh7rtneW
+ qEepl3j7qOUg6RgTzcPoBiCHHIeli0sPvKfPEO+rZ8h150i0eiXyysrwlqU0H1MyqqAb2ro4HrD
+ Ns6QOlVt83g6DCefMjqZiWsgWSbg3MG+Uyo27zAzHCXhHTURq/B5dY/WH+ltgO1BcfCZ9zmpKw1
+ WSMhcoeFocrpzO0Jdvs4c8N9G4dE/hktNDfgj13B3gR0JZpDRgtrIJjsCn2+wq/ceC77LmC0Tt8
+ 6dMfDdFEEdGD53W347JSnrtxBRmUCpVDf2qJZ1mCStFEkDXNUikZbF2DK8AtpQyLVtn59JHZS54
+ egQZECcw9tJTYrlWr8Xzlb8obIl/R6iZYLhaY6gvuicoN0O3uH4ctya7wIIXOjjbYha8ZGsAnzN
+ 3chv9TolJDrYXeMQvNk5+rOI60OzMjS7N2U+ZZElb4Lr7zG+wdzhznhUhuEvh86MzOnlzXJAIEc
+ VyGxMDGrUvNqD0usg==
+X-Received: by 2002:a05:6a21:4683:b0:3dd:a196:53a7 with SMTP id
+ adf61e73a8af0-3e22614121emr3900144637.73.1792332622184; 
+ Sun, 18 Oct 2026 07:10:22 -0700 (PDT)
 Received: from dt-VM.localdomain ([101.204.150.66])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-89f57653ea9sm2949430b3a.32.2026.10.18.07.10.35
+ d2e1a72fcca58-89f57653ea9sm2949430b3a.32.2026.10.18.07.10.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Oct 2026 07:10:39 -0700 (PDT)
+ Sun, 18 Oct 2026 07:10:21 -0700 (PDT)
 From: Tao Ding <dingtaodtdt@gmail.com>
 X-Google-Original-From: Tao Ding <dingtao0430@163.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, chao.liu@processmission.com, farosas@suse.de,
  lvivier@redhat.com, pbonzini@redhat.com, Alistair.Francis@wdc.com,
- Tao Ding <dingtao0430@163.com>
-Subject: [PATCH v3 5/5] hw/dma: fix k230_gsdma integer handling issues
-Date: Sun, 18 Oct 2026 22:10:06 +0800
-Message-ID: <20261018141006.16398-6-dingtao0430@163.com>
+ Tao Ding <dingtao0430@163.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v3 1/5] hw/misc: fix calculating output address overflow in
+ k230_decomp_gzip
+Date: Sun, 18 Oct 2026 22:10:02 +0800
+Message-ID: <20261018141006.16398-2-dingtao0430@163.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261018141006.16398-1-dingtao0430@163.com>
 References: <20261018141006.16398-1-dingtao0430@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=dingtaodtdt@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=dingtaodtdt@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,117 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Separate global and channel register handling to prevent unsigned address underflow 
-when calculating GSDMA channel offsets.
+Use hwaddr for address calculations to avoid 32-bit overflow.
 
-Resolves: Coverity CID 1685514
+Resolves: Coverity CID 1685515
 
 Reported-by: Alistair Francis <Alistair.Francis@wdc.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Tao Ding <dingtao0430@163.com>
 ---
- hw/dma/k230_gsdma.c | 84 ++++++++++++++++++++++-----------------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ hw/misc/k230_decomp_gzip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/dma/k230_gsdma.c b/hw/dma/k230_gsdma.c
-index 7635cd19e8..bd6db9e64d 100644
---- a/hw/dma/k230_gsdma.c
-+++ b/hw/dma/k230_gsdma.c
-@@ -304,54 +304,54 @@ static uint64_t k230_gsdma_read(void *opaque, hwaddr addr, unsigned int size)
-     hwaddr ch_off;
-     uint64_t ret = 0;
- 
--    switch (addr) {
--    case K230_GSDMA_DMA_CH_EN:
--        ret = s->dma_ch_en;
--        break;
--    case K230_GSDMA_DMA_INT_MASK:
--        ret = s->dma_int_mask;
--        break;
--    case K230_GSDMA_DMA_INT_STAT:
--        ret = s->dma_int_stat;
--        break;
--    case K230_GSDMA_DMA_CFG:
--        ret = s->dma_cfg;
--        break;
--    case K230_GSDMA_DMA_WEIGHT:
--        ret = s->dma_weight;
--        break;
--    default:
--        if (addr < K230_GSDMA_CH_BASE) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                        "%s: not implement gdma at offset 0x%" HWADDR_PRIx
--                        "\n", __func__, addr);
--        }
--        break;
--    }
--
--    ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
--    ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
--    if (ch < K230_GSDMA_NUM_SDMA_CHANNELS) {
--        switch (ch_off) {
--        case K230_GSDMA_CH_CTL:
--            break;
--        case K230_GSDMA_CH_STATUS:
--            ret = s->channels[ch].status;
-+    if (addr < K230_GSDMA_CH_BASE) {
-+        switch (addr) {
-+        case K230_GSDMA_DMA_CH_EN:
-+            ret = s->dma_ch_en;
-             break;
--        case K230_GSDMA_CH_CFG:
--            ret = s->channels[ch].cfg;
-+        case K230_GSDMA_DMA_INT_MASK:
-+            ret = s->dma_int_mask;
-             break;
--        case K230_GSDMA_CH_USR_DATA:
--            ret = s->channels[ch].usr_data;
-+        case K230_GSDMA_DMA_INT_STAT:
-+            ret = s->dma_int_stat;
-             break;
--        case K230_GSDMA_CH_LLT_SADDR:
--            ret = s->channels[ch].llt_saddr;
-+        case K230_GSDMA_DMA_CFG:
-+            ret = s->dma_cfg;
-             break;
--        case K230_GSDMA_CH_CURRENT_LLT:
--            ret = s->channels[ch].current_llt;
-+        case K230_GSDMA_DMA_WEIGHT:
-+            ret = s->dma_weight;
-             break;
-         default:
--            break;
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                        "%s: not implement gdma at offset 0x%" HWADDR_PRIx
-+                        "\n", __func__, addr);
-+            return ret;
-+        }
-+    } else {
-+        ch = (addr - K230_GSDMA_CH_BASE) / K230_GSDMA_CH_STRIDE;
-+        ch_off = (addr - K230_GSDMA_CH_BASE) % K230_GSDMA_CH_STRIDE;
-+        if (ch < K230_GSDMA_NUM_SDMA_CHANNELS) {
-+            switch (ch_off) {
-+            case K230_GSDMA_CH_CTL:
-+                break;
-+            case K230_GSDMA_CH_STATUS:
-+                ret = s->channels[ch].status;
-+                break;
-+            case K230_GSDMA_CH_CFG:
-+                ret = s->channels[ch].cfg;
-+                break;
-+            case K230_GSDMA_CH_USR_DATA:
-+                ret = s->channels[ch].usr_data;
-+                break;
-+            case K230_GSDMA_CH_LLT_SADDR:
-+                ret = s->channels[ch].llt_saddr;
-+                break;
-+            case K230_GSDMA_CH_CURRENT_LLT:
-+                ret = s->channels[ch].current_llt;
-+                break;
-+            default:
-+                break;
-+            }
-         }
-     }
+diff --git a/hw/misc/k230_decomp_gzip.c b/hw/misc/k230_decomp_gzip.c
+index 0d8a3b2d2e..ac06cc1571 100644
+--- a/hw/misc/k230_decomp_gzip.c
++++ b/hw/misc/k230_decomp_gzip.c
+@@ -53,7 +53,7 @@ static bool k230_decomp_gzip_write_mem(K230DecompGzipState *s, hwaddr addr,
+ static hwaddr k230_decomp_gzip_output_addr(K230DecompGzipState *s)
+ {
+     return K230_DECOMP_GZIP_SRAM_OUT_BASE +
+-           s->output.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
++           (hwaddr) s->output.slot * K230_DECOMP_GZIP_BLOCK_SIZE +
+            s->output.current_offset;
+ }
  
 -- 
 2.43.0
