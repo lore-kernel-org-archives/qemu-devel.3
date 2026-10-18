@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5C90CCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 09:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AA6DCCA490
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 09:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIN0f-0002BL-Ir; Sun, 18 Oct 2026 05:16:53 -0400
+	id 1xIN6i-0002pT-KD; Sun, 18 Oct 2026 05:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIN0T-0002B2-Mi
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:16:44 -0400
+ id 1xIN6g-0002pH-R9
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:23:07 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIN0R-0002oI-Np
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:16:41 -0400
+ id 1xIN6e-0003KO-Jd
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:23:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=/jDOfMv3a5IgY91m0+AcPBXsgSHXQRHtTLgaKuub0NA=; b=gwPQs3qDpBRvn5F/H5uoJlMq6b
- wzmr68UvTL3hMIgGq+gZV5AYN0ULB1EN+gvjZQDzIWxP62S/snVXkL7YGs+lWKxn8p0hwcFs4cnxe
- 2m549/UmMArSzvrseCIwwSPI3DZ21mN+RUTJeWJvUKjeRN5hkyXuYyydrxGtpULM/dllVOZDbkses
- 3ypen6FconEl/TmICziONspX5SIC9cIUkrp2YV0h5x7CDBs2ceTx/VG4rw1KaQf5zAN/ubrLcGcje
- TNiFaT6aJYh7Mkb9QpbmA3vowjBbzI+k9RIv0AJ37B/POwVL31lb2tisaeTL9RZK07kWc/YTKgg4n
- ClTg53CRVeDhm3HvMIsTQpGF03bZHJUTQLWXTLD7x5CF/NlUoA7eRwslw7rLpo/gjGu+7d/lU5m54
- Y+J879mkLpaagYlxfRYG9hb4JlPtuf/Xp/Em07hl6WGb/yPV2XTkBNPogC+a0OYm2aeWAnNohgxAD
- KdR4eafW/mFtV+Jkv4HqAu87+4XKG1SWOCJ41mgtibWzj1kotFmY3VWASr636yi6Ugcz3DaS4A3xA
- jB0c9qWjwTTzyRG7ZX/K1o0nAZm+54JB7T+sVlwyY1JOlSL/BLvAkK6E+KpJlmrspBdnPfRiq8Ivn
- +m3NiNZAzecdFpwBthrXRh3VZCo6j+R+PRjGqbW/Q=;
+ bh=GCVMm/v4Vq3al+/l5H8Ge7Jj7TVmmlkd1M3on9e2MXU=; b=Vsdo00WoL4vEAuwfRNivxdPyvL
+ C7KC1IZeWNkSKAw0zIWcDLcLZ2JBTyhLEGfCUEGwDlQPIPZ5Bt5Sp+1Sr4C87QdXaU9U69eAMS72H
+ FRMRy9UGd09IOUzuRu8uWXhHzUwZHbhcYzbe03fjR1c0LZLDOMv7mMVvqLFxX8Mef0bvWNIUJRXIM
+ VfOXt0lJ+xMKkP+qPeHiQCrDnWK6DP62MDSHhiOhkcEIGa3B1rdEmQZemoySVlGaay9qL4g/xxJYM
+ Gwb6jQ3j0U8NqIgytvE5zAajxqy0ZkdAUlyURfiRask7EGWapj/PsZN8GfSW4/oHeGgtcoH7diXUH
+ Dw89M6STizhUNCQIlSkyYY6Df/yoerm69pSDNwHK/KpZDQWj5Yqq+VBWhAmSkeZloiyKIDdpoSCvp
+ 8nNAMlAUTRlggsRACjkrUtWFOTEVMnHSbD/l2oq0YOU2Ot+Kq9M6mlsmSPJQH1tCr4e9+8HG0VtlZ
+ 2WDdpuR69Q+sovSJmtJnn9lZ2NzAczIfP61KmO3pI09pHOg5hMu2zsmMyQeKrfS3/ebB6hFDlAvSO
+ VuR2OhWdXwe1LrimOKUXG24WXDGpW52piw8ZqSSjczT7WTP+J2dFu2pdzaM8MFdyb6UgOoVSQuony
+ pO0/+ALsybSB0Rw0reouWkMFOM7z0QQFWc54pgnUQ=;
 Received: from [2a02:8012:2f01:0:7620:997c:c9a4:6fba]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIMzf-002N1F-G7; Sun, 18 Oct 2026 10:15:51 +0100
-Message-ID: <1c31ff8b-4a61-434e-9c85-ca70194040fb@ilande.co.uk>
-Date: Sun, 18 Oct 2026 10:16:30 +0100
+ id 1xIN5y-002N37-6q; Sun, 18 Oct 2026 10:22:22 +0100
+Message-ID: <ebea4a0e-3a70-4f6a-bd4e-0ab80f810e31@ilande.co.uk>
+Date: Sun, 18 Oct 2026 10:23:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Stian Halseth <stian@itx.no>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Eric Biggers <ebiggers@kernel.org>
-References: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
- <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
- <0fe42d81618fc6e7a229c9c3efcbf9310987f89d.camel@itx.no>
+To: dpim <sun4qemu@gmail.com>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260918105705.433093-1-sun4qemu@gmail.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -76,12 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <0fe42d81618fc6e7a229c9c3efcbf9310987f89d.camel@itx.no>
+In-Reply-To: <20260918105705.433093-1-sun4qemu@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:7620:997c:c9a4:6fba
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [RFC] target/sparc: crypto instructions for Linux kernel testing
+Subject: Re: [PATCH v2] target/sparc: implement TTE page-size for 32M/256M
+ pages
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,61 +105,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/2026 09:30, Stian Halseth wrote:
+On 18/09/2026 11:57, dpim wrote:
 
-> Hi Richard,
+> Currently, the TTE's page-size field, Size, is 2 bits wide:
 > 
-> On Sat, 2026-10-10 at 09:30 +0200, Richard Henderson wrote:
->>
->> When I implemented the VIS{3,4} stuff a couple of years ago, I tried
->> to add a newer cpu (though I forget which model).  I couldn't get a
->> kernel to boot with that and sun4u, so in the end I left the cpu out
->> and left the extensions as plain cpu features.
->>
->> The biggest problem with sun4v is that it's incomplete.  It has the
->> most promise as an emulation platform because it is explicitly a
->> hyper<v<isor platform.  In the ideal case, QEMU would not faithfully
->> model the hardware, but would instead model the hypervisor
->> interface.  Which would make lots of stuff far easier and quicker to
->> emulate -- most notably the TLB.
+>      #define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
 > 
+> That is the TTE of every UltraSPARC before UltraSPARC IV+.
+> The JPS1 implementation supplements for UltraSPARC III and IV+
+> describe the TTE word in tables F-1 and F-1-4 respectively, and differ
+> in one bit:
+> Before IV+ bit 48 is reserved and reads as 0, Size is 2 bits at 62:61;
+> On IV+ bit 48 is Size<2>, which "is the most significant bit of the
+> page size and is concatenated with bits <62:61>"
+> On T1 the same split exists, szl at 62:61 and szh at 48 (T1 Supplement,
+> sec. 13.1.2).
 > 
-> I agree. I looked into the sun4v hypervisor first, as that sounded like
-> the ideal approach. I did however come to realize, as you say, that it
-> would be a lot of work. Also there is the requirement for bundling the
-> OpenSPARC firmware and building a boot image (no -kernel), which is a
-> bit overkill for kernel testing.
+> QEMU models parts on both sides of that change (UltraSPARC III/IIIi/IV,
+> IV+, T1, T2) with the III layout: Size<2> was never implemented.
+> Bit 48 gets lost in more than one place:
 > 
-> Based on that reasoning I've already done some experimenting, by
-> writing the crypto code for sun4u. Much of the code would be shared
-> either way, so if the sun4u approach was rejected, I would still be
-> able to use much of it.
-> I've managed to get it working well enough to exercise the crypto
-> tests. It's not in a upstreamable state yet, still work in progress. I
-> took some shortcuts just to get to a proof of concept, and I wasn't
-> sure it would every be finished with this approach.
+> On sun4u the raw TTE word is stored as the guest wrote it, bit 48
+> included, but TTE_PGSIZE() only reads bits 62:61: the bit survives in
+> the TLB, it is just never decoded.
 > 
->>
->> But it's a big packet of work and no one has done it.
->>
+> On sun4v, sun4v_tte_to_sun4u() converts the incoming three-bit code
+> (cpu.h defines TTE_PGSIZE_UA2005() for it, unused until now) but masked
+> it to two:
 > 
-> Indeed, and much more than what is needed to achieve the goal of
-> getting the crypto tests running, so would be out of scope for me, at
-> least.
+>      sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
 > 
-> If you would be willing to accept a contribution based on my described
-> sun4u approach, I could spend some time cleaning it up and run more
-> thorough tests to iron out any remaining issues (which I'm sure there
-> are).
+> so the third bit was dropped before it was stored.
 > 
-> Mark, for this to work Linux needs a hwcap-list property on the cpu
-> node before it uses the instructions.  What are your thougts about QEMU
-> passing the list in a fw_cfg file, with OpenBIOS adding the property in
-> cpu_generic_init()?
+> demap_tlb() duplicates the same 2-bit math instead of calling
+> TTE_PGSIZE(), so it misses bit 48 too, for a TTE from either origin.
+> 
+> Either way 256M decodes as 64K and 32M as 8K; the guest faults on the
+> first access past the truncated entry.
+> 
+> This patch implements Size<2> at bit 48, where the hardware keeps it.
+> 
+> TTE_PGSIZE() now reads bit 48 as the high bit; on parts that keep bit
+> 48 reserved it reads as zero, so they decode as before.
+> sun4v_tte_to_sun4u() stores the full three-bit code, and demap_tlb()
+> now calls TTE_PGSIZE() instead of its own copy. dump_mmu() gains 32M
+> and 256M labels.
+> 
+> Link: https://lore.kernel.org/qemu-devel/20260727233646.332875-1-sun4qemu@gmail.com/
+> AI-used-for: code, analysis
+> Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
+> ---
+> v2: described behaviour across sun4u/sun4v instead of the sun4v
+> conversion; no functional change. QEMU_BUILD_BUG_ON and comments in
+> cpu.h/ldst_helper.c are dropped.
+> 
+> This email's text -- beyond the code and analysis the trailer above
+> covers -- also had AI involvement: current policy (AGENTS.md)
+> declines AI-derived content outright, and even the not-yet-merged
+> llm-usage.rst RFC would require it to be human-written regardless of
+> any trailer. Sending as-is rather than silently -- happy to hear if
+> that's not acceptable here.
+> 
+> Happy to run more tests or provide more evidence if this isn't enough.
+> 
+> Guest is OpenSolaris snv_134 (osol-dev-134-ai-sparc.iso). Firmware is
+> the S10image/ set from OpenSPARCT1_Arch.1.5.tar.bz2, which
+> docs/system/target-sparc64.rst names for this machine, except the
+> MD/hv-config pair (1up-md.bin, 1up-hv.bin), from the repo below. The
+> archive's own config only boots disk.s10hw2, capped at 4M pages.
+> 
+> Observed on upstream 5f664cd37a, with and without this patch -- same
+> guest, firmware and RAM, plain `boot` at the `ok` prompt (occasionally
+> hits an unrelated, pre-existing trap in OBP's loader phase before the
+> kernel runs):
+> 
+>    pristine: hangs after "Loading: /platform/sun4v/kernel/sparcv9/unix";
+>              "info tlb" shows no 32M or 256M entry.
+>    patched:  boots to "Enter user name for system maintenance";
+>              "info tlb" shows 256M entries, e.g.
+>              [17] VA: 600108b8000, PA: 140000000, 256M, priv, RW, ...
+>    Full info tlb dumps:
+>      https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/pristine-plain-boot-tlb.txt
+>      https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/logs/patched-plain-boot-tlb.txt
+> 
+> The reproduction as a script, verify.sh (fetches firmware, MD and
+> ISO, checks their hashes, boots):
+>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/verify.sh
+> 
+> On sun4u the pre-extension page sizes are verified by
+> make check-qtest-sparc64 and make check-functional-sparc64 (sun4u,
+> tuxrun, migration), which pass on the patched build with logs:
+>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-qtest-sparc64.log
+>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-functional-sparc64.log
+> To check whether
+> Size<2> is exercised at all, I added a temporary log in
+> replace_tlb_entry() and ran both suites again: zero hits, as expected
+> -- IIi predates IV+ and doesn't implement Size<2>, so the guest
+> running under it never sets bit 48. Result:
+>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/sun4u-bit48-probe/RESULT
+> Probe and logs:
+>    https://github.com/unix0cc/qemu-experimental-patches/tree/967a037/verification/0002-tte-size2/sun4u-bit48-probe/
+> 32M/256M on sun4u stays untested by this suite; that would need a guest
+> running under Sun-UltraSparc-IV-plus.
+> 
+> Overview of everything above (scripts, logs, README):
+>    https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/README
+> 
+>   target/sparc/cpu.h         |  4 +++-
+>   target/sparc/ldst_helper.c |  9 +++++++--
+>   target/sparc/mmu_helper.c  | 12 ++++++++++++
+>   3 files changed, 22 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+> index 31a16c2af0..1ab420d831 100644
+> --- a/target/sparc/cpu.h
+> +++ b/target/sparc/cpu.h
+> @@ -307,7 +307,9 @@ enum {
+>   #define TTE_SET_USED(tte)   ((tte) |= TTE_USED_BIT)
+>   #define TTE_SET_UNUSED(tte) ((tte) &= ~TTE_USED_BIT)
+>   
+> -#define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
+> +#define TTE_PGSIZE_HI_BIT   (1ULL << 48)
+> +#define TTE_PGSIZE(tte)     ((((tte) >> 61) & 3ULL) | \
+> +                             (((tte) & TTE_PGSIZE_HI_BIT) >> 46))
+>   #define TTE_PGSIZE_UA2005(tte)     ((tte) & 7ULL)
+>   #define TTE_PA(tte)         ((tte) & 0x1ffffffe000ULL)
+>   
+> diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+> index 4ec8799d1f..142c1c24de 100644
+> --- a/target/sparc/ldst_helper.c
+> +++ b/target/sparc/ldst_helper.c
+> @@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulong demap_addr,
+>                   /* demap page
+>                      will remove any entry matching VA */
+>                   mask = 0xffffffffffffe000ULL;
+> -                mask <<= 3 * ((tlb[i].tte >> 61) & 3);
+> +                mask <<= 3 * TTE_PGSIZE(tlb[i].tte);
+>   
+>                   if (!compare_masked(demap_addr, tlb[i].tag, mask)) {
+>                       continue;
+> @@ -217,7 +217,12 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState *env, uint64_t tag,
+>           return sun4v_tte;
+>       }
+>       sun4u_tte = TTE_PA(sun4v_tte) | (sun4v_tte & TTE_VALID_BIT);
+> -    sun4u_tte |= (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
+> +    {
+> +        uint64_t pgsz = TTE_PGSIZE_UA2005(sun4v_tte);
+> +        sun4u_tte |= (pgsz & 3ULL) << 61; /* TTE_PGSIZE bits 61-62 */
+> +        sun4u_tte |= (pgsz & 4ULL) ?
+> +            TTE_PGSIZE_HI_BIT : 0; /* TTE_PGSIZE bit 48 */
+> +    }
+>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_NFO_BIT_UA2005, TTE_NFO_BIT);
+>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_USED_BIT_UA2005, TTE_USED_BIT);
+>       sun4u_tte |= CONVERT_BIT(sun4v_tte, TTE_W_OK_BIT_UA2005, TTE_W_OK_BIT);
+> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+> index 07ba25dfce..8544de097d 100644
+> --- a/target/sparc/mmu_helper.c
+> +++ b/target/sparc/mmu_helper.c
+> @@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)
+>               case 0x3:
+>                   mask = "  4M";
+>                   break;
+> +            case 0x4:
+> +                mask = " 32M";
+> +                break;
+> +            case 0x5:
+> +                mask = "256M";
+> +                break;
+>               }
+>               if (TTE_IS_VALID(env->dtlb[i].tte)) {
+>                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
+> @@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)
+>               case 0x3:
+>                   mask = "  4M";
+>                   break;
+> +            case 0x4:
+> +                mask = " 32M";
+> +                break;
+> +            case 0x5:
+> +                mask = "256M";
+> +                break;
+>               }
+>               if (TTE_IS_VALID(env->itlb[i].tte)) {
+>                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
 
-Sure, I think this seems a reasonable approach to allow people to exercise various 
-parts of the instruction set until someone manages to come up with a full sun4v 
-implementation.
+Hi,
+
+I've run this over a few sun4u test images and it doesn't seem to introduce any 
+regressions. I just need to make sure there is no conflict with our AI policy here, 
+otherwise I'll queue it.
 
 
 ATB,
