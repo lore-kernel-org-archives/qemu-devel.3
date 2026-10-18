@@ -4,41 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEF6CCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 20:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C208CCF2C4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 20:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIX6f-0000qB-Qw; Sun, 18 Oct 2026 16:03:46 -0400
+	id 1xIXok-0006Ew-Qm; Sun, 18 Oct 2026 16:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <martin@amutable.com>)
- id 1xIX4V-0000hG-MM; Sun, 18 Oct 2026 16:01:31 -0400
-Received: from www.mwellner.de ([2a03:4000:6:4019::4] helo=mail.piware.de)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <martin@amutable.com>)
- id 1xIX4T-0000xm-OI; Sun, 18 Oct 2026 16:01:31 -0400
-Received: from piware.de (localhost [127.0.0.1])
- by mail.piware.de (Postfix) with SMTP id D6294FF866;
- Sun, 18 Oct 2026 22:01:25 +0200 (CEST)
-Date: Sun, 18 Oct 2026 22:01:25 +0200
-From: Martin Pitt <martin@amutable.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-stable@nongnu.org
-Subject: [PATCH] hw/uefi: fix ContentInfo detection in wrap_pkcs7()
-Message-ID: <atUllV8bSaHylfKv@piware.de>
+ (Exim 4.90_1) (envelope-from
+ <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1xIXoh-0006EU-MQ
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 16:49:16 -0400
+Received: from sonata.ens-lyon.org ([140.77.166.138])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1xIXof-0004zM-R8
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 16:49:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by sonata.ens-lyon.org (Postfix) with ESMTP id 4B868A021A;
+ Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1792356551; bh=MyMx0oB7W58eUOjX+EmVHV1XlyBThltay5mQtEP3Rak=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=mnDH6dVLwOM76Gbw6YPC+mjHcZEprv4aOs3nGYosgjdQgGZgAT4Mi+tfJrI5plN0M
+ x7T1yu4/xeqcsmSU3sttPJshNDncKuAOZ85hyj2Sps6/Yn9RJtLd69B9vohzoLxrXN
+ MbDhtJLoq1aV9HlYJFyoojA0phJ1sUidQLyi/kniSIiKf8gFBrgovvlgKZAsB5rJ8X
+ wb3wzGEuuXjxMHgTLFIIte9L0PwP3NMkThaOQRlsu5/qCA5L22yYylqDDxZByloeD/
+ Wyqi0+NTzii1mUX7eAklil0LOTwDREq3OT6XU/rKoj8RKPIdA9HVEbbNmmfEtOI0b3
+ NXIBfDMXLVs4g==
+Received: from sonata.ens-lyon.org ([127.0.0.1])
+ by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id I8YbGj6jQMC4; Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
+Received: from end (lfbn-bor-1-980-210.w90-120.abo.wanadoo.fr [90.120.173.210])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id 1AEF8A0185;
+ Sun, 18 Oct 2026 22:49:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1792356551; bh=MyMx0oB7W58eUOjX+EmVHV1XlyBThltay5mQtEP3Rak=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=mnDH6dVLwOM76Gbw6YPC+mjHcZEprv4aOs3nGYosgjdQgGZgAT4Mi+tfJrI5plN0M
+ x7T1yu4/xeqcsmSU3sttPJshNDncKuAOZ85hyj2Sps6/Yn9RJtLd69B9vohzoLxrXN
+ MbDhtJLoq1aV9HlYJFyoojA0phJ1sUidQLyi/kniSIiKf8gFBrgovvlgKZAsB5rJ8X
+ wb3wzGEuuXjxMHgTLFIIte9L0PwP3NMkThaOQRlsu5/qCA5L22yYylqDDxZByloeD/
+ Wyqi0+NTzii1mUX7eAklil0LOTwDREq3OT6XU/rKoj8RKPIdA9HVEbbNmmfEtOI0b3
+ NXIBfDMXLVs4g==
+Received: from samy by end with local (Exim 4.100.1)
+ (envelope-from <samuel.thibault@ens-lyon.org>)
+ id 1xIXoc-00000002KoL-39OC; Sun, 18 Oct 2026 22:49:10 +0200
+Date: Sun, 18 Oct 2026 22:49:10 +0200
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+To: Alexander Epaneshnikov <aarnaarn2@gmail.com>
+Cc: qemu-devel@nongnu.org, brltty@brltty.app
+Subject: Re: baum: NVDA does not detect usb-braille
+Message-ID: <atUwxiof87wlNm83@end>
+References: <atNoDNz0dQucxzFN@alex-pc> <atNo9sk_7jCAi98u@end>
+ <atPIRr46KvMoiCti@alex-pc> <atTzTVaSxUy5r95x@end>
+ <atUU4HpVVI59QcLJ@alex-pc> <atUZr1LP8k5b78I8@end>
+ <atUfTcaPUHqBQdno@alex-pc>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed; boundary="yM+iLrKY/J92yVGX"
 Content-Disposition: inline
-Received-SPF: softfail client-ip=2a03:4000:6:4019::4;
- envelope-from=martin@amutable.com; helo=mail.piware.de
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.4,
- SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+In-Reply-To: <atUfTcaPUHqBQdno@alex-pc>
+Organization: I am not organized
+Received-SPF: pass client-ip=140.77.166.138;
+ envelope-from=SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
+ helo=sonata.ens-lyon.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 18 Oct 2026 16:03:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,42 +94,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix wrap_pkcs7()'s detection for an already present PKCS ContentInfo
-envelope: It previously compared byte 15 with 0x0a (ASN.1
-ENUMERATED) instead of 0xa0 (the [0] EXPLICIT context tag of
-ContentInfo.content). See the original edk2 function [1] where this was
-taken from.
+--yM+iLrKY/J92yVGX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Due to that typo, an already wrapped signature got wrapped a second
-time, and gnutls_pkcs7_import() rejected it. This breaks Secure Boot key
-enrollment with .auth files carrying the envelope, as created by
-systemd's "bootctl --secure-boot-auto-enroll".
+Re,
 
-[1] https://github.com/tianocore/edk2/blob/8f8372439d8ec5f565dbda1548c18deb068e0080/CryptoPkg/Library/BaseCryptLib/Pk/CryptPkcs7VerifyCommon.c#L68
+Alexander Epaneshnikov, le dim. 18 oct. 2026 22:35:58 +0300, a ecrit:
+> On Sun, Oct 18, 2026 at 09:10:39PM +0200, Samuel Thibault wrote:
+> > Does the device sends the cell count first or the device identity
+> > first?
+> 
+> I don't know for sure, as I don't have a real Baum display; mine is a
+> HumanWare Brailliant, which uses its own protocol. The comment in
+> NVDA's driver lists them as "device id, serial number and number of
+> cells", so the identity seems to come first, but that is the only hint
+> I have. BRLTTY's Baum driver doesn't use 0x15 at all, it asks for each
+> of them explicitly.
+> 
+> NVDA itself doesn't depend on the order: it stores the cell count and
+> the identity separately as they arrive and continues once it has both.
+> I tested sending the identity first and then the cell count, and NVDA
+> detected the display.
 
-Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Martin Pitt <martin@amutable.com>
----
- hw/uefi/var-service-pkcs7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok, could you check the attached patch?
 
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index 8a1f1395a2..a47f36492f 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -80,7 +80,7 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
-         pkcs7->data[4] == 0x06 &&
-         pkcs7->data[5] == 0x09 &&
-         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
--        pkcs7->data[15] == 0x0a &&
-+        pkcs7->data[15] == 0xa0 &&
-         pkcs7->data[16] == 0x82) {
-         return;
+Thanks,
+Samuel
+
+--yM+iLrKY/J92yVGX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=patch
+
+diff --git a/chardev/baum.c b/chardev/baum.c
+index 166d6f2f09..db0a4fff75 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -97,6 +97,7 @@ struct BaumChardev {
+     brlapi_fileDescriptor brlapi_fd;
+     unsigned int x, y;
+     bool deferred_init;
++    bool protocol_on;
+ 
+     uint8_t in_buf[BUF_SIZE];
+     uint8_t in_buf_used;
+@@ -337,13 +338,27 @@ static void baum_write_packet(BaumChardev *baum, const uint8_t *buf, int len)
      }
+ }
+ 
++static void baum_send_cell_count(BaumChardev *baum)
++{
++    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
++    baum_write_packet(baum, cell_count, sizeof(cell_count));
++}
++
++static void baum_send_device_identity(BaumChardev *baum)
++{
++    uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
++        'B','a','u','m',' ','V','a','r','i','o' };
++    identity[11] = '0' + baum->x / 10;
++    identity[12] = '0' + baum->x % 10;
++    baum_write_packet(baum, identity, sizeof(identity));
++}
++
+ /* Called when the other end seems to have a wrong idea of our display size */
+ static void baum_cellCount_timer_cb(void *opaque)
+ {
+     BaumChardev *baum = BAUM_CHARDEV(opaque);
+-    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
+     DPRINTF("Timeout waiting for DisplayData, sending cell count\n");
+-    baum_write_packet(baum, cell_count, sizeof(cell_count));
++    baum_send_cell_count(baum);
+ }
+ 
+ /* Try to interpret a whole incoming packet */
+@@ -441,17 +456,18 @@ static int baum_eat_packet(BaumChardev *baum, const uint8_t *buf, int len)
+         uint8_t protocol;
+         DPRINTF("SetProtocol\n");
+         EAT(protocol);
+-        /* ignore */
++        if (!baum->protocol_on && protocol) {
++            /* Switching on, answer with device identity and cell count */
++            baum_send_device_identity(baum);
++            baum_send_cell_count(baum);
++        }
++        baum->protocol_on = protocol;
+         break;
+     }
+     case BAUM_REQ_GetDeviceIdentity:
+     {
+-        uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
+-            'B','a','u','m',' ','V','a','r','i','o' };
+         DPRINTF("GetDeviceIdentity\n");
+-        identity[11] = '0' + baum->x / 10;
+-        identity[12] = '0' + baum->x % 10;
+-        baum_write_packet(baum, identity, sizeof(identity));
++        baum_send_device_identity(baum);
+         break;
+     }
+     case BAUM_REQ_GetVersionNumber:
 
-base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414
--- 
-2.56.0
-
+--yM+iLrKY/J92yVGX--
 
