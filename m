@@ -4,92 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4518CCCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D69CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIOOP-0006b2-3W; Sun, 18 Oct 2026 06:45:29 -0400
+	id 1xIOOS-0006cJ-1p; Sun, 18 Oct 2026 06:45:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frode@tennebo.com>) id 1xIOOM-0006ac-VJ
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:27 -0400
-Received: from cockroach.ash.relay.mailchannels.net ([23.83.222.37])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frode@tennebo.com>) id 1xIOOK-00020W-PS
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:26 -0400
-X-Sender-Id: hostpapa|x-authuser|frode@tennebo.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id C14A4401C3C
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 10:44:40 +0000 (UTC)
-Received: from sh-cp12.mia1.servername.online
- (100-96-9-235.trex-nlb.outbound.svc.cluster.local [100.96.9.235])
- (Authenticated sender: hostpapa)
- by relay.mailchannels.net (Postfix) with ESMTPA id 5C199401D9D
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 10:44:36 +0000 (UTC)
-X-Sender-Id: hostpapa|x-authuser|frode@tennebo.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: hostpapa|x-authuser|frode@tennebo.com
-X-MailChannels-Auth-Id: hostpapa
-X-Descriptive-Arch: 6358993e4c162341_1792320280711_179607897
-X-MC-Loop-Signature: 1792320280711:3129056381
-X-MC-Ingress-Time: 1792320280710
-Received: from sh-cp12.mia1.servername.online (sh-cp12.mia1.servername.online
- [199.204.250.122]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.96.9.235 (trex/8.0.2); Sun, 18 Oct 2026 10:44:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tennebo.com
- ; s=default;
- h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:
- Message-ID:Date:From:Reply-To:In-Reply-To:References:MIME-Version:Sender:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=wldW/mhHkcuGpQ76y8K/jFo/zjz/5pAwyQD8dKEOylg=; b=LoCbsDlHJCaEIqahPnZ1abqrEc
- ei0RfXV0cUwlTMHMiz0/D8U1uFxdKOPrCp0Oo8EIVpB/GSiFIQjLMK4VPZ43KFkbAsmPYQMek25Gr
- RaD2X3/2Vl1GjuIRxy/sCK9ZLooKYB03qLnPBfmaOB9Hw+EWX+OXSaobTyX9jtscvUO36/An7/w/2
- 0E9Fi8ER9oh/R/0zjfgrBgec68/DT0IwtSTQT/9CjjknYGxvJAkecp9wABiu8rlGQw1kbwwEsXNB7
- HsVGLR8A+l9kycYasjkmNzwJ/KbiLYSOkBsGb5oXGwVbWodvfh7hvVtxgYDVMY38dEdMMybPoTsjK
- PxU3H8PA==;
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:42000)
- by sh-cp12.mia1.servername.online with essmtpa (TLS1.3) tls
- TLS_AES_128_GCM_SHA256 (Exim 4.100.1)
- (envelope-from <frode@tennebo.com>) id 1xIONS-0000000CjSk-1SbZ
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:44:35 -0400
-Received: by mail-wm1-f49.google.com with SMTP id
- 5b1f17b1804b1-4a16c1608faso14712415e9.0
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:44:30 -0700 (PDT)
-X-Gm-Message-State: AFq9FYJsya6CquGzAs7o5WPF0K78rm8W1W8scy2YAiCm1pRRriIG5pJg
- T6QgEwDtstaqSmpvsm4ErhC9kwXlxpGBnjwV7sVm5utU5JhCz5AI2bsh3M1bYNoo87zlHb3HoE9
- E5HGuLeX8SZdz1EOmRu8G8K0j0vFdhkE=
-X-Received: by 2002:a05:600c:8709:b0:4a1:88df:8a2a with SMTP id
- 5b1f17b1804b1-4a1d760536cmr92136705e9.13.1792320269297; Sun, 18 Oct 2026
- 03:44:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIOOO-0006ax-Dg
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:28 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIOOL-0002A3-L1
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:28 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-8ab432273c5so8952357b3.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:45:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792320324; cv=none;
+ d=google.com; s=arc-20260327;
+ b=iQZ54B1jqBMLsQj6ik3GI7kxWzFxI+SJyo4q71F7aZcTeWcjhlBy+KRREg/95lBtwC
+ eiJVubm5dyI02B3VTCgNBtT7aOTftMtC2rZEmIeF7tOO/LLBN9Wp6cNyACrEJOZQ/VLr
+ doccV1VLsl69YqCbQuZKxzG0vo0jonwoC002PEeMEzdbRRNetCmFvd5xqKGrEJEpErGM
+ x6Ocvci92M82U90+Wc2Vh7NryLydYkBL1LWI6PIeC5DBFGNg0L0K41PAxSaRcr+FWwXi
+ TnKIQBnfKcI/NaQhCj88Toz68XHIk1f2fJ7u+cW9xfLC5y1lQPYo7XJtnDtjvxV6ZM6A
+ sjog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
+ fh=dHN1FZJpb1BHRtRBDcpEyrvNB3hUuCjyQs5YK6bCL1Q=;
+ b=SnbCPxiset2eDPhpodbe0F4OdmS5yhWZdj+O1Xe1dvGab6Dn4faBW2ZfsrmXLyfx0Z
+ u5/3pJ0G7HM9f5gmZXPKYnr9m9P64k4Cfft4WSvBs3AcEH5tvKs3QR6Ck5UN64vqJSlL
+ tAB2CrPHkeP9r52kNqWyfmuv/BrvbR+cuo/SDhonbCFT4VlWoDKVaIQTcSgkjH2tMia2
+ it/gqYq06gVIJY1NHoxc6Fo/F3E333oT+LW/EhtJ4gq8CMHmTG0shbwmibnww3ACILR0
+ jsJfMtn0MFokt+uWl1ySSL6ZJnrjabWCeCW+85Ssd9xsd8ve4aaCHZ6dHIJ5nlulRb/m
+ gDkQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792320324; x=1792925124; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
+ b=IVUGKFL82j5y2Y3OR6ofj2G/R9ERtR8KwYCFOtpjTT4jTPGQ+S82lM3bxGaXKvL+Ks
+ BzDah3a8g+C7RhyD3NA7uWTKzoJE23BKCXQ4FSo5+v2QC1W+nuBX5hJWp2SBZFoOheu/
+ RvijUHwudw3PDo3dGnLCmHuqCXXS585MKsBOOaeTeyQ+6vJlNNuFGUHyq7EJvZTMtuwl
+ 6zsNK096g4FMtRAUIEQzbONVE59B9KSGS3HEROWnDf+wmzdfmRZKOvWKxl8YJGI+TdI3
+ EMiiucgvFdci8KqR1ZcRPntIcVUvA5EN2xvgjYlGIXj2SitWTeCcKO25xJsxM0X0iVqr
+ D8+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792320324; x=1792925124;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
+ b=pZm2d2wXYY7z/YvO1EbKr2DvhJS3EtmMNmkzUoUhPknQssDVX84z/0cJqa6g9tS+os
+ oZjlpG6qgTjPJpvxmoXUBKdV6C+2LlPVMaeawS8np6vzYmOkIkcRHRUiGCkX5/z5mjbK
+ eWyFJPTiNQ+WGX3uh3v4FCMCDFU0vFOg/v2ZBlUUjabgvvQubzlEdAJXaaPf+5saDy1/
+ oy8mUGXnixXbtAN76mcLl6BP48uJQ9NDSPYosHGaH0KtMqV9lL62v8ghCflMu+JBv74K
+ 6AGC5H/UXJwLvb7wJJqgoBJExPtmvQku+PyEOrn4dA0b/D55VZcc2ahm/I47/vxS6VQ+
+ 6DEg==
+X-Gm-Message-State: AFq9FYIGNOtDn37tN/iOx51fNjc33q+BLTn4gHoCZXb74OCD6LKHCPzg
+ jZaUkwccBTgBehRPkuF2OLiTmbywtxrrZV8CR6dxqu9Urs+HohGukEfm0lsRoHXSYXIaLaD/fV6
+ 2XccnKSJX956SDYoO7is07znvX+9E+yvjfXRWtOUxxg==
+X-Gm-Gg: AYBFou0mKLN6SvSOI2Z3SoTN8yEWztUN3Ue5v/5ELkz0Zsk/eh8mrNJnBlEy5SmcKt6
+ hnfWQHz4Poda9dyvf1fX0ZKrZceJH1ySqWddMtcmJsLPCbIYyNy21W3a7SLU/vTcF14pz0m4ex8
+ 9rSC0rcKe5v4QG8SdrmwYW9SgVwGfmmqBUMjFFb28AkEXGtbNieHR1cyNnf4UpaXbtOnF/R3orZ
+ hS+T4QcAR2/VAKbOLK8cHL6KRQbTQw/A6nV0rXxwlD31scBjmRvElEsitdn3RvH4FC9r4Ls3++6
+ 2UVzCTvrlyysJK5cc/qV8W9EkHgWjgkN47BuFsQc+t+9z5WdCbv2Anvw9KvE0Jj0td//K5LNoS7
+ wf/RvX6FcWyEmkayoOuCJvXqgoY2k19b6xb3nnag=
+X-Received: by 2002:a05:690c:dd5:b0:87d:b776:c659 with SMTP id
+ 00721157ae682-8b0f214022emr14634037b3.11.1792320324161; Sun, 18 Oct 2026
+ 03:45:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260919-add_hostid_sub-properties-v1-0-cc1667c0a8ad@tennebo.com>
- <4d098749-fc9d-46c8-99f8-67d6414279e9@ilande.co.uk>
-In-Reply-To: <4d098749-fc9d-46c8-99f8-67d6414279e9@ilande.co.uk>
-From: =?UTF-8?Q?Frode_Tenneb=C3=B8?= <frode@tennebo.com>
-Date: Sun, 18 Oct 2026 12:44:17 +0200
-X-Gmail-Original-Message-ID: <CAGpFvKk3rS=AQxgismpcVBek7zR=axO0HL5mOEBKsOH+f=vG3A@mail.gmail.com>
-X-Gm-Features: AclHuK8XpnXDxxP_Z9BTm2byaKDbggtym-RmXMJhl0gsrwxnImGTivoFdAbzU8I
-Message-ID: <CAGpFvKk3rS=AQxgismpcVBek7zR=axO0HL5mOEBKsOH+f=vG3A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/sparc,
- hw/sparc64: add hostid=/machineid= -machine properties
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260918101158.42101-1-corvin.koehne@gmail.com>
+ <20260918101158.42101-2-corvin.koehne@gmail.com>
+In-Reply-To: <20260918101158.42101-2-corvin.koehne@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 18 Oct 2026 11:45:12 +0100
+X-Gm-Features: AclHuK8tuzheOpj_BLQlx4udrGn780m2i4dg_04pgAOQKjT5w-HjW_ngWY39jdU
+Message-ID: <CAFEAcA8jwp0OJO_8v_06hBm0nsWydxt1NuQ6b_0csKL4UkLf5Q@mail.gmail.com>
+Subject: Re: [PATCH v8 1/7] hw/misc: Add Beckhoff CCAT device
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-AuthUser: frode@tennebo.com
-Received-SPF: pass client-ip=23.83.222.37; envelope-from=frode@tennebo.com;
- helo=cockroach.ash.relay.mailchannels.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,129 +121,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: frode@tennebo.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mark,
-
-Thanks for getting back to me.
-
-On Sun, 18 Oct 2026 at 11:26, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
+On Fri, 18 Sept 2026 at 11:12, Corvin K=C3=B6hne <corvin.koehne@gmail.com> =
+wrote:
 >
-> On 19/09/2026 15:56, Frode Tenneb=C3=B8 wrote:
+> From: YannickV <Y.Vossen@beckhoff.com>
 >
-> > This series adds "hostid" and "machineid" as -machine sub-properties
-> > for the sun4m and sun4u/sun4v machine families:
-> >
-> >      qemu-system-sparc  -machine SS-20,hostid=3D0x352e09,machineid=3D0x=
-80
-> >      qemu-system-sparc64 -machine sun4u,hostid=3D0x352e09,machineid=3D0=
-x72
-> >
-> > Background: these machines report a classic 32-bit Sun "hostid" to
-> > the guest OS (as read by hostid(1), and historically use by some
-> > software for license checks), built from two independent pieces stored
-> > in the emulated NVRAM/IDPROM - a fixed per-model machine-type byte, and
-> > the low 24 bits of the machine's Ethernet MAC address. QEMU already
-> > reproduces this scheme, but until now neither half was settable from
-> > the command line: the machine-type byte was fixed per hwdef, and the
-> > low 24 bits always tracked whatever MAC ended up on the emulated NIC.
-> > Both properties default to that existing behaviour when left unset,
-> > so this series is fully backward compatible.
-> >
-> > Patch 1 adds a small shared helper (hw/sparc/sun_hostid.c) rather
-> > than duplicating the property getter/setter logic between the two
-> > machine families: a generic SunHostIDProps struct that a machine's
-> > own instance struct embeds anywhere, located via byte offset, plus
-> > two functions to register the properties on a class and initialise
-> > an instance.
-> >
-> > Patch 2 wires this into sun4m, via the existing sun4m-common
-> > abstract machine class.
-> >
-> > Patch 3 wires it into sun4u/sun4v. Since sun4u.c had no shared
-> > abstract machine class before this series, patch 3 introduces one
-> > (sun4u-common) as the parent of both "sun4u" and "sun4v", and
-> > registers the properties on it once - both machines pick them up
-> > through QOM's class-hierarchy property lookup. The "niagara" machine
-> > (hw/sparc64/niagara.c) is a separate machine family that does not
-> > use this NVRAM/IDPROM hostid mechanism and is unaffected.
-> >
-> > PS: This is my first patch set for QEMU.
-> >
-> > ---
-> > Frode Tenneb=C3=B8 (3):
-> >        hw/sparc: add shared sun_hostid helper for hostid/machineid prop=
-erties
-> >        hw/sparc: add hostid=3D and machineid=3D -machine sub-properties
-> >        hw/sparc64: add hostid=3D and machineid=3D -machine sub-properti=
-es
-> >
-> >   docs/system/target-sparc.rst   | 23 +++++++++++
-> >   docs/system/target-sparc64.rst | 22 +++++++++++
-> >   hw/sparc/meson.build           |  1 +
-> >   hw/sparc/sun4m.c               | 55 ++++++++++++++++++++++----
-> >   hw/sparc/sun_hostid.c          | 88 +++++++++++++++++++++++++++++++++=
-+++++++++
-> >   hw/sparc64/meson.build         |  1 +
-> >   hw/sparc64/sun4u.c             | 74 +++++++++++++++++++++++++++++++--=
---
-> >   include/hw/nvram/sun_nvram.h   | 11 ++++--
-> >   include/hw/sparc/sun_hostid.h  | 48 +++++++++++++++++++++++
-> >   9 files changed, 306 insertions(+), 17 deletions(-)
-> > ---
-> > base-commit: f8296b816fabd370307cd22b0270b610fc0fa279
-> > change-id: 20260917-add_hostid_sub-properties-473a0d2ea35e
-> >
-> > Best regards,
+> This adds the Beckhoff Communication Controller (CCAT). The information
+> block, EEPROM interface and DMA controller are currently  implemented.
 >
-> Thanks for the series. Just out of curiosity, what is the use case for th=
-is? Normally
-> people want to change the hostid for licensing reasons (i.e. so that the =
-virtual
-> machine matches a real one), but I'd expect that to be already possible?
+> The EEPROM provides production information for Beckhoff Devices.
+> An EEPORM binary must therefor be handed over. It should be aligned to
 
-The use case is indeed what you state.  QEMU today will set a fixed value f=
-or
-the 'machineid' byte based on the -M flag and copy the last three
-bytes from the MAC
-address to the 'hostid' bytes.  Both are returned using the hostid(1) comma=
-nd.
-However, for licensing reasons, you could have one software checking the MA=
-C-
-address and another checking the hostid(1), but due to historic replacement=
- of
-hardware, be completely unrelated.
+"EEPROM"
 
-What triggered this patch was a 'sun4u' machine running multiple
-licensed software,
-where the 'machineid' =3D 0x72 (i.e. SS-20, not possible to set in
-'sun4u') and the
-hostid !=3D MAC-address.  To get this emulated machine to run all the
-desired software
-was not possible to hack in any way with the existing QEMU SPARC implementa=
-tion
-and the most flexible fix I could think of is this set of patches.
+> a power of two. If no EEPROM binary is handed over an empty EEPROM of
+> size 4096 is initialized.
+>
+> This device is needed for the Beckhoff CX7200 board emulation.
+>
+> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 
-On "old" real hardware, you would update the persistent NVRAM/IDPROM in
-OpenBoot to reflect the machineid, hostid and MAC address to the desired va=
-lues,
-which is also what was originally done with my machine.  I think it is
-possible to
-change these values in an emulated OpenBoot environment, but OpenBoot
-support in
-sun4u is not complete.  Also, it is not possible to have a persistent
-NVRAM/IDPROM
-in QEMU for SPARC making this solution rather  clumsy as you need to reset =
-the
-values for each boot.  Also, in OpenBIOS I don't think it  is even
-possible to change
-the NVRAM as you can in OpenBoot.
+Any progress on availability of a manual/datasheet for this device?
 
-I hope this explains my reasoning.
 
-Regards,
- -Frode
+> +static void beckhoff_ccat_dma_write(void *opaque, hwaddr addr, uint64_t =
+val,
+> +                           unsigned size)
+> +{
+> +    BeckhoffCcat *s =3D opaque;
+> +    dma_addr_t dma_addr;
+> +    uint8_t len;
+> +    uint8_t *mem_buf;
+> +
+> +    switch (addr) {
+> +    case DMA_TRANSFER_OFFSET:
+> +        len =3D s->mem[DMA_TRANSFER_LENGTH_OFFSET];
+> +        mem_buf =3D &s->mem[DMA_BUFFER_OFFSET];
+> +        dma_addr =3D ldl_le_p(&s->mem[DMA_HOST_ADR_OFFSET]);
+
+If I'm reading the code correctly, the dma_memory_read/write
+accesses to mem_buf can't overflow the s->mem array because
+len is at most 255 and mem_buf isn't close enough to the end
+of s->mem for a 255 * 8 transfer to be able to overrun.
+But I think it would be helpful to add an assert() here for the
+benefit of readers and static analysers alike, e.g:
+
+    /*
+     * The DMA buffer is placed such that the worst case transfer
+     * cannot run off the end of the mem buffer.
+     */
+    assert((mem_buf + len * 8) <=3D (s->mem + sizeof(s->mem));
+
+> +        if (s->mem[DMA_DIRECTION_OFFSET] & DMA_DIRECTION_MASK) {
+> +            dma_memory_read(&address_space_memory, dma_addr,
+> +                            mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
+> +        } else {
+> +            /*
+> +             * The write transfer uses Host DMA Address + 8 as the targe=
+t
+> +             * offset, as described in the CCAT manual Version 0.0.41
+> +             * section 20.2.
+> +             */
+> +            dma_memory_write(&address_space_memory, dma_addr + 8,
+> +                                mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED=
+);
+> +        }
+> +        break;
+> +    }
+> +    stn_le_p(&s->mem[addr], size, val);
+> +}
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
