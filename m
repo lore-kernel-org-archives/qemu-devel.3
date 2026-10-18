@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC9BCCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B25BCCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIOAw-0003uk-88; Sun, 18 Oct 2026 06:31:34 -0400
+	id 1xIOBk-000446-NR; Sun, 18 Oct 2026 06:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIOAp-0003tz-9d
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:31:28 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1xIOBZ-00040v-Pr
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:32:15 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIOAn-0000jo-If
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:31:26 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-8ab432273c5so8920127b3.3
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:31:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792319484; cv=none;
+ id 1xIOBV-0000mu-Kf
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:32:11 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6740e7ae219so962687d50.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:32:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792319527; cv=none;
  d=google.com; s=arc-20260327;
- b=BhvzX61zVdtIFU8h7rwL0V1hye4Tn/K6C4iQDlSs1dJ4zvyzN3+ylvVY3vLgO6tPUt
- 5Wj1RDHAPaokeKuh/ZIK9f2+JySIhVgArx8nCsX2i3rt4kVcfARRtcDxpwSlkxikuK0M
- P/9EPG6s/s+/brZMvUyh09QIGnqta2Pw6ZYkMyMBKDpwJJjHzhOZ7YWsNRMRjcQ3LNmo
- TTL9YoSc9AwEltvJp6tLoH4Qoo6zItlJ5C9vrXJ6AZdg6xZUWOfWryg259NKZuOnZVZl
- bMKJaE1qGYLj52fW4zX6aWTUX5T52WBmQCHNu7wOdDldu6lsZWHaVmK/mSTGFbEHYEQv
- bbWA==
+ b=fG6uht52ibfAPkdhBi0OcVrr2DVs2n/ZGbLE8NbpgHQHBel+VQEBrP0GfbA5jHY3ok
+ vgx7BuzLCDHOIYlV2BSeNwVGd250COkxU1x8+AXn5Wueyf+KnSRRs8aMhIpX2WH/cKts
+ tLvxqM7zWPEK9npq1frivCkZNx2ywJktHaF6fedPM/C/gI9pYkaW92Aul7mqINWiXKHP
+ dmJ8FSbRIFjm9F1s9b1JaMjQBxTOf3z+R0ZyqHmlbSumQwrCp4PulwW8hymY2Y4/ubcN
+ aykEZwLLOVkQ8KHF9YKHvmyYiTxRLPM01zo/q1ZvH8aySob10VG9ZIjWZjgGOBUcx8Bz
+ 9R9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
+ bh=lcEW4VMJH7C14Mw21bAq04bF7/0PUzlQO6qT/Ox5pAo=;
  fh=dHN1FZJpb1BHRtRBDcpEyrvNB3hUuCjyQs5YK6bCL1Q=;
- b=KNgPUnDKr+SfpHhtABP8HtzetDgyk8jb0NA3Orm89qtN4TLqQONBCY14atBfrOvvst
- gJOvzbbtKYHu3AbxpCsy6doUIOfKyZaSeZfI9hUdebYLwPurAPxl6dsxiI4VWzGsbz69
- FiFtQYiH6L4wd3/dbG0ZtX/VMtScc1CBTyrUvx++mRQsaqptAT7DPopCpQ1bC32XkDgl
- BTN60QOXMvXDYb4fAQ/AKbmoSDajrTb2yRcINBj6OpfJIl/joJ9zw4shi+2rgr8wbQxN
- rmmQnlJTbsSRCV639T6/Lqpfkxg9tgBKoyz9LBs9CsLDtCiqIr8yHp6dJ2bS9N1DkO11
- OgSQ==; darn=nongnu.org
+ b=MgPWKqLd2glspMWLG7bRhzot940Vh5QsUH95G5Ss1qtiBoVzKFKKrIAS/xzVcu6lqD
+ 8fBnrvtBiFEVu8mXacJfD6zhZ4rbxaUK8GJvDpGVi2D4khHVUTuzNS01PUYeE/vX4w1g
+ XSCW56uE023SW1f58OkJWs2XEaz6iQ0XGbW45jPPu09+NHHEiPlxl06X4ZCiD38KtpVu
+ 2wtsWqEpP2VHzPKxKWgTR+g8uoWMFV05gwE9LipiAQl1qCGph3cIQSwYOAiqUPOwII4X
+ g8Ivfr1PaI+i9bSU+Emb/RCoH6/0q8CVumF19MPIMsDHDSOZSOliD2y1u1ptz5mDfJ8P
+ vsFg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792319484; x=1792924284; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792319527; x=1792924327; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
- b=eKop+5YMzPBjboLApuqlrgBE5yf/fkMA+4RZV0W1ecLHUITbCWnwJ1p/OpT3vTF230
- mv6kHrMDY475JXvr2ypqIjENNIFRmtJlGSaZyYMpU5wKUsozwf0kf6ITHJdBEhX34AUy
- t2dHIVqZWEWqZJ7QfAATfQI/bIQMSPCbHuwHyzXSCJnkRkO0p+dqGbK64E5I2/DR0YjL
- yYZfvi5bJC2sk/NrEczsxWBjyP7Tyi9Bux2xTIPKXWyWJfGJMmtq2Rcy0ikfhELFICxU
- 4NwIZkr+JfAb+uLhr2Y+ARIP3W87r8jlq5vcxajLaRixVzHxv9Khx3ixuXO27RJHf/UM
- 3mkQ==
+ bh=lcEW4VMJH7C14Mw21bAq04bF7/0PUzlQO6qT/Ox5pAo=;
+ b=so+M4oTLaazKjpZMd33L53osHIp0CqpbFPinn07h9elvs85OZlek/Xyc5hDlTypKVm
+ /+/dFfMDuHD6Vt6YA3rh1UYKhMmhXEBKwJs1uCdOFhjngWFVQbmBKrMMbd5M2OvKxhec
+ g3etXPWG6K1gdXKLqcEiJ/sKdzHsbT+q96D+Y18u8TOIcgpgfiseWrb4t7Rm0HcsKdh9
+ 3iaNGHJxB8tulAnX3Zb7O5iSR69QFTg5QW/wsVOHGMI7EkfM4o9Ll8ROjbncJg7Nv7ai
+ 91uiFpDCDIq1KMnk811JbzAnH2XGZmcjm6B3x4AI4ntMfVdn3razBR6RCXpUjYRSuzwr
+ BPNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792319484; x=1792924284;
+ d=1e100.net; s=20260707; t=1792319527; x=1792924327;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=HvCn8Yx+NAEkWiIUuKPGId2U8Jj/DfBOaVXjQg2pY+0=;
- b=PMliE3a7fjLPT/Yx68sJoidhFzIiRRx8dOzSQq1jkmUiOJub6qvwHJC6sM3hsFrYwn
- emGcvetsLWtWJtvpICeBz3+qri2P1zHlWsQPGR1TYkrM+wRqoFovt0dkA2p3RuYxUN0x
- ZLn/0PavYGb06bLLhGC1ViIQZtN4V1FG0Lcjj6RuaXmuR8B0V2p3mHSJBruolfK4kLYO
- /hRoI9eMvDDMQqeg7nKNaSI/dmJBR7pXCl6rMUQ5Qw9DNfX+HIH/3EZ2eFdw5SzZ5qIE
- JYpr+3OW1t8WPXFiccStfXk4tSjBFil/5Z530Y/mOcITEDN0vwP0Z+nyaa9f//qCdlVw
- Y4iw==
-X-Gm-Message-State: AFq9FYLPnZ3ZjqkGj7eYwYyGhf6UiSsPVLzaHYu2ZblZp4UlCdI4HSr7
- 4ReZjoC7z+TBvUYFzZoVq2oZ+k2TVqgRLYAfnEIfAkKubRsZq68IF4hHRuGBJMrrqi1ea+9sGYB
- N4lCdAOiVsuV0fWFvXI+oTi6b8WGi0owGPogatXlNYA==
-X-Gm-Gg: AYBFou1W2nLWQUgGQ+PwrIDkpJqLGitCAJ6IHE/y9osrx8kj3B8ajp4kwLZSNt0hxxp
- +on6ua/5uu7ivIK6gzhzVgkZjEDq9YVzhA5/HpF6g66Dv9jGClmnL3zQptmKY7DioP/qaQulorf
- BnhzJxKdUVKiLKjyvMv/h6AGv5saGI0umVR1Peor41A5vAVYc26fu6ujL1jIdNzEoSjbOvEwzEu
- QfnDTOcP6sOTwW7EdU/gnN41v9m5fwuuZ003O2EE9c+OZCF9c9s8skjyjAbsUJcXjmgcygSz6Qe
- 9TR1CcMmNL3VqgmK0peW9FYYF8oply+6CA3TaYiLxfKag0yaJyfnnb9R0FOOdpz6PyTHsUy56kd
- iHwmk2U6+wcEra/TvqhCKSMjenoFZuwqxAKzffus=
-X-Received: by 2002:a05:690c:a594:b0:8ab:6374:561d with SMTP id
- 00721157ae682-8b0f218beaamr12196817b3.30.1792319483742; Sun, 18 Oct 2026
- 03:31:23 -0700 (PDT)
+ bh=lcEW4VMJH7C14Mw21bAq04bF7/0PUzlQO6qT/Ox5pAo=;
+ b=DAGwRJBehO0jQFoV7MwD1AzbYoGTykRdDkYf0EczfHgFd6wO8yJH5cKqlYf0UFG9V1
+ py6wChTAeJaBhmNUVN7h219L9WP/Jf311GCrBkV+DifVZiFhOOy0WjgVRGbQiG+0n11D
+ H9lZNxoZiq8UM0hWYEIPvHME4Ms+yelfcjeXDJ7HwIrcW9goi09lL217U2IzqWfDxqcl
+ NGtQ4JZ8Y66+EW8k3wXP4Mo9xaViLeHfhFcdKNvxeraF8zp9JI/RRFQdtZwVWVXD91gZ
+ 5k+GPQYHEWBlkAg3VKftX/M909TBpVNRZYx8hBqCAqTAZwRGHWjhdzeBz+awAtU0aKOA
+ 0d0A==
+X-Gm-Message-State: AFq9FYIU0ApAyXWxduAk5TUTaZ2HKSTscMGOoPec/VNUqSXYPlQtt7Y9
+ Usj4fsp7OW3FK+YMFxtMQ6taehhiWjDDcbMMvlC8XYxVYpwSLJRDdSmYVW9PK0ZDwKMOcFwbRO6
+ JlZt5JSmpMzDFgegyqF0s4VzzjHpy/ULG7qmFw47ulA==
+X-Gm-Gg: AYBFou30zDjVDVJikwbXvivAEAXox7g2p/e/eXDPwG1JGl0VCpl8S9HB5K7SzbGOBbc
+ zYPEX+qJ+cy3Qzf2Z3ElVNxzPq8zwJcMGlCOwAImp0SXQ8x1CyFJ1nGBb/fOXpFE7kZV5Xavz6t
+ VoLY7Epg93a0AX0ENmcAWhPgGro0HHvfi3MMVswFFgnzFRYv19HlOwsQAJQqR/ovzUAUiCI4lDs
+ jCgoX+KjLo9sox4dKWJMApSmyZdkKdvZTZ709zOMQWNhJnavb5wiROCwl/LeX1HcVa/ZvUfpuk8
+ tQAN3QlmPqGN2+IxPB5lFeCz74m6vli/bMmeN+ue0t1lZhhtYm2hHgH5pm3zYI8/JCR9KMjrV3V
+ 6SahViNULN5hOSrnknl4jF4SWQvYIK5wLX2TXGXc=
+X-Received: by 2002:a05:690e:140d:b0:677:c29d:4fa8 with SMTP id
+ 956f58d0204a3-679ca93d449mr1197415d50.138.1792319527184; Sun, 18 Oct 2026
+ 03:32:07 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260918101158.42101-1-corvin.koehne@gmail.com>
- <20260918101158.42101-5-corvin.koehne@gmail.com>
-In-Reply-To: <20260918101158.42101-5-corvin.koehne@gmail.com>
+ <20260918101158.42101-6-corvin.koehne@gmail.com>
+In-Reply-To: <20260918101158.42101-6-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 18 Oct 2026 11:31:11 +0100
-X-Gm-Features: AclHuK9Chsnsi4n-p4DxZpfHCJzNikDdBdMt9qgoTqFXQJiHn7JmA1NLY8iy380
-Message-ID: <CAFEAcA9GcQzUk1TUQaYydxRotyWNWSbqp_-bjHnfsrcE7jkzFA@mail.gmail.com>
-Subject: Re: [PATCH v8 4/7] hw/timer,
- cpu: Add Clock API support to A9MPCore timers
+Date: Sun, 18 Oct 2026 11:31:55 +0100
+X-Gm-Features: AclHuK_ruOOP20mY6liXAyFeL6oD7GvtR3FA8ZLG4oIa-kBkFcwnwWIO2hWKTbM
+Message-ID: <CAFEAcA_92gWL-yJsPxswU94hENMYRowV5ZJ8mVGHxAbFYbacKw@mail.gmail.com>
+Subject: Re: [PATCH v8 5/7] hw/arm/xilinx_zynq: Make PS frequency configurable
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
  qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -101,15 +100,15 @@ Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,56 +129,18 @@ wrote:
 >
 > From: YannickV <Y.Vossen@beckhoff.com>
 >
-> Add a clock input to a9gtimer, arm_mptimer and a9mpcore. a9mpcore
-> distributes the clock to the other timers. If no clock is
-> connected, falls back to 100 MHz for backward compatibility with
-> existing machine types.
->
-> Frequency calculation now uses the input clock and prescaler
-> values according to ARM Cortex-A9 MPCore Technical Reference Manual.
->
-> More information about the A9MPCore timers can be found here:
-> https://developer.arm.com/documentation/ddi0407/c/timers-and-watchdog-reg=
-isters?lang=3Den
+> Add ps_clk_freq to ZynqMachineClass so derived machine types can set
+> their own PS clock frequency instead of using the hardcoded default.
 >
 > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 > ---
->  hw/arm/xilinx_zynq.c           |  1 +
->  hw/cpu/a9mpcore.c              | 12 ++++++++++
->  hw/timer/a9gtimer.c            | 42 +++++++++++++++++++++++++++++-----
->  hw/timer/arm_mptimer.c         | 19 +++++++++++----
->  include/hw/cpu/a9mpcore.h      |  1 +
->  include/hw/timer/a9gtimer.h    |  1 +
->  include/hw/timer/arm_mptimer.h |  2 ++
->  7 files changed, 67 insertions(+), 11 deletions(-)
+>  hw/arm/xilinx_zynq.c         | 3 ++-
+>  include/hw/arm/xilinx_zynq.h | 1 +
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+>
 
-Where you add an input Clock to a device, you need to do something
-to handle migration -- see the section docs/devel/clocks.rst.
-For these devices, care will be required, as I think we would
-rather not break migration compatibility.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-This patch is also adding Clock handling in multiple places at once:
- * a9gtimer
- * arm_mptimer
- * the wrapper a9mpcore object
- * the zynq board
-
-I think these would be clearer done separately.
-
-> +static inline uint64_t a9_gtimer_ns_to_ticks(A9GTimerState *s, uint64_t =
-ns)
-> +{
-> +    assert(!(s->control & R_CONTROL_TIMER_ENABLE) || clock_get(s->clk) !=
-=3D 0);
-
-It's not clear to me why you can assert this, or why it's an
-interesting thing to assert. Similarly below and with the
-equivalent-looking assert in a9mptimer.
-
-> +
-> +    return clock_ns_to_ticks(s->clk, ns) /
-> +           a9_gtimer_get_prescale(s);
-> +}
-
+thanks
 -- PMM
 
