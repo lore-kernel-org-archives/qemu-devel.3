@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B58CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 19:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58489CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 19:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIWHO-0002Xf-Rk; Sun, 18 Oct 2026 15:10:46 -0400
+	id 1xIWNb-0003SP-R8; Sun, 18 Oct 2026 15:17:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1xIWHM-0002XX-To
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 15:10:44 -0400
-Received: from sonata.ens-lyon.org ([140.77.166.138])
+ id 1xIWNX-0003Ro-FZ
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 15:17:08 -0400
+Received: from domu-toccata.ens-lyon.fr ([140.77.166.138]
+ helo=sonata.ens-lyon.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <SRS0=U7TD=II=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
- id 1xIWHL-0005MV-6F
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 15:10:44 -0400
+ id 1xIWNV-0005jb-VN
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 15:17:07 -0400
 Received: from localhost (localhost [127.0.0.1])
- by sonata.ens-lyon.org (Postfix) with ESMTP id 8F0CDA224F;
- Sun, 18 Oct 2026 21:10:40 +0200 (CEST)
+ by sonata.ens-lyon.org (Postfix) with ESMTP id 2E5CEA224F;
+ Sun, 18 Oct 2026 21:17:04 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
- t=1792350640; bh=tI7taOf2WllFIMxt0qDY8jf+bzzAgKREIKKq+JtGEsA=;
+ t=1792351024; bh=2AG+kDAVIyTdACMbq4q//oZ5M07NpbIAojZwBt59Xqc=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=m78U9z8b/iQH340n0zrmyI7IIrl/wRP3yXRSVeP2aGHS39xUAxa3GDBgWgaH7ngXh
- uWwWi0CuKZxnIUIJb8jOB+IpKl5U1IxbNblrOnnnwymPhK/5rU9BzCXQqistbhgV+X
- 1BR4EcfAmfscT9+yNXQvnyNQT/oesuBl5m8LyFVD7LzHj+5aA5SQ1iU38FK13RCAXB
- 5mu1cs6ZMGvM/odjDSG3Dg11M/7C99DmNwRXATI0K6ekqjwOkJdsDC2tBuaqowrJFl
- 0bb9HwEQ8qpJ8Sk6zFT6vAUEVGGZpwfuw5TDKszytQxi0ckxVjit4YWI8aPNtphLAQ
- Z1TgcyUDqTZbw==
+ b=RmuIe4KCrdY9l7guhbuZFBVDGRUCTNRX/2jN78Hboh/OPb/VGnMnWBLEkHX+QlyL+
+ l+99amnoahWRKDQsZBfQQiLBZK/NNC52zp+SRdYlM1jUEVKjtniGx62jphOq2BksP+
+ zQe6GCae3+6Qe+xfhATPeXuKqLM+8umL6Ur2Pb+U2C8rUgtEWkkHGaZEvOyD+mflA5
+ 3lvJ1bShY1PVZ6M3UWMCrxh0ThzQCSd5J8FreBD93jfALELoJZYhsMkrM2xVDrBE4C
+ PPIY9GUJ60+0GwWvI+xUOO/KJ0F+QsRTnospo1qs87OIwiyF7j8wo4r5upL2jgFQ3i
+ lTU/+HV93nLDA==
 Received: from sonata.ens-lyon.org ([127.0.0.1])
  by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id LF3-CjjQ4zMg; Sun, 18 Oct 2026 21:10:40 +0200 (CEST)
+ with ESMTP id 3S0wP9ULtbeh; Sun, 18 Oct 2026 21:17:04 +0200 (CEST)
 Received: from end (lfbn-bor-1-980-210.w90-120.abo.wanadoo.fr [90.120.173.210])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
  SHA256) (No client certificate requested)
- by sonata.ens-lyon.org (Postfix) with ESMTPSA id 5EBB7A1C00;
- Sun, 18 Oct 2026 21:10:40 +0200 (CEST)
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id D6DFAA1C00;
+ Sun, 18 Oct 2026 21:17:03 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
- t=1792350640; bh=tI7taOf2WllFIMxt0qDY8jf+bzzAgKREIKKq+JtGEsA=;
+ t=1792351024; bh=2AG+kDAVIyTdACMbq4q//oZ5M07NpbIAojZwBt59Xqc=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=m78U9z8b/iQH340n0zrmyI7IIrl/wRP3yXRSVeP2aGHS39xUAxa3GDBgWgaH7ngXh
- uWwWi0CuKZxnIUIJb8jOB+IpKl5U1IxbNblrOnnnwymPhK/5rU9BzCXQqistbhgV+X
- 1BR4EcfAmfscT9+yNXQvnyNQT/oesuBl5m8LyFVD7LzHj+5aA5SQ1iU38FK13RCAXB
- 5mu1cs6ZMGvM/odjDSG3Dg11M/7C99DmNwRXATI0K6ekqjwOkJdsDC2tBuaqowrJFl
- 0bb9HwEQ8qpJ8Sk6zFT6vAUEVGGZpwfuw5TDKszytQxi0ckxVjit4YWI8aPNtphLAQ
- Z1TgcyUDqTZbw==
+ b=RmuIe4KCrdY9l7guhbuZFBVDGRUCTNRX/2jN78Hboh/OPb/VGnMnWBLEkHX+QlyL+
+ l+99amnoahWRKDQsZBfQQiLBZK/NNC52zp+SRdYlM1jUEVKjtniGx62jphOq2BksP+
+ zQe6GCae3+6Qe+xfhATPeXuKqLM+8umL6Ur2Pb+U2C8rUgtEWkkHGaZEvOyD+mflA5
+ 3lvJ1bShY1PVZ6M3UWMCrxh0ThzQCSd5J8FreBD93jfALELoJZYhsMkrM2xVDrBE4C
+ PPIY9GUJ60+0GwWvI+xUOO/KJ0F+QsRTnospo1qs87OIwiyF7j8wo4r5upL2jgFQ3i
+ lTU/+HV93nLDA==
 Received: from samy by end with local (Exim 4.100.1)
  (envelope-from <samuel.thibault@ens-lyon.org>)
- id 1xIWHH-00000002Af3-3y0B; Sun, 18 Oct 2026 21:10:39 +0200
-Date: Sun, 18 Oct 2026 21:10:39 +0200
+ id 1xIWNT-00000002AzV-1sPe; Sun, 18 Oct 2026 21:17:03 +0200
+Date: Sun, 18 Oct 2026 21:17:03 +0200
 From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 To: Alexander Epaneshnikov <aarnaarn2@gmail.com>
 Cc: qemu-devel@nongnu.org, brltty@brltty.app
-Subject: Re: baum: NVDA does not detect usb-braille
-Message-ID: <atUZr1LP8k5b78I8@end>
+Subject: Re: baum: NVDA does not detect usb-braille, and following the
+ input-linux grab
+Message-ID: <atUbL22N4UounO8L@end>
 References: <atNoDNz0dQucxzFN@alex-pc> <atNo9sk_7jCAi98u@end>
  <atPIRr46KvMoiCti@alex-pc> <atTzTVaSxUy5r95x@end>
  <atUU4HpVVI59QcLJ@alex-pc>
@@ -93,25 +95,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(splitting the actually-unrelated questions)
-
 Alexander Epaneshnikov, le dim. 18 oct. 2026 21:52:44 +0300, a ecrit:
 > On Sun, Oct 18, 2026 at 06:26:53PM +0200, Samuel Thibault wrote:
-> > Ah, that is a requirement of the protocol? Then we need to do that
-> > indeed. What is the value of the uint8_t protocol field when it
-> > expects to receive 0x01 and 0x84?
+> > I'm a bit surprised by setting the priority to 0, but maybe that's
+> > because of your setup, which is not described enough. Are you
+> > running on the linux console or X, actually?
 > 
-> It is 1 (on). For serial displays, NVDA's Baum driver
-> (source/brailleDisplayDrivers/baum.py) first sends 0x15 with 0 to make
-> sure the protocol is off, then sends 0x15 with 1 twice, "in case the
-> display misses the first one". After that it waits for the cell count
-> and the device identity. According to the comment in that driver, a
-> real display answers only when the protocol goes from off to on. On
-> that transition it sends its device identity, its serial number and
-> its cell count, and it sends nothing if the protocol was already on.
-> NVDA itself only waits for the cell count and the identity.
+> Sorry, I should have described it. The host runs GNOME on Wayland on
+> tty 2, with Orca using BrlAPI.
+> 
+> The guest is a Windows VM started by libvirt, with a second GPU passed
+> through to it. My monitor is connected to both GPUs. I switch its input
+> by hand, or over DDC/CI when I need sighted help. QEMU itself has no
+> window: the display is "none", and SPICE has no listener. I am blind,
+> so in practice I use the guest through NVDA's speech, which comes out
+> through PipeWire on the host, and its braille.
+> 
+> > But then how do you access the VM to get keyboard/mouse access?
+> 
+> Through input-linux (libvirt <input type='evdev'> with grab='all').
+> QEMU reads the host keyboard and mouse evdev devices directly. Pressing
+> both Ctrl keys toggles the exclusive grab between the host and the
+> guest.
 
-Does the device sends the cell count first or the device identity first?
+So you mean that you make qemu steal keyboard presses from under your
+Wayland session? That is very peculiar... I'm really unclear this way of
+stealing the keyboard will work on the long run.
+
+> There is no front-end. The grab toggle happens inside QEMU's
+> input-linux, so QEMU is the only process that knows which side has the
+> keyboard. libvirt doesn't see it, and neither does anything else on
+> the host. That is why I thought baum should react to it directly.
+
+I now understand your situation, but I don't think it is long-term
+sustainable :/
+
+> > SDL/GTK do not need a grab: provided that the window id is properly
+> > set, brlapi already switches according to the window focus.
+> 
+> Thanks, that answers my third question. Then only input-linux, which
+> has no window, needs to report the grab.
+
+Yes, this is really a situation only for such tinkering.
 
 Samuel
 
