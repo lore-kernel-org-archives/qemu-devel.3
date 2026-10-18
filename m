@@ -4,167 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE995CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 05:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEBACCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 05:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIJEt-00081V-71; Sun, 18 Oct 2026 01:15:19 -0400
+	id 1xIJHO-0000Cl-Nn; Sun, 18 Oct 2026 01:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1xIJEn-000819-Gj; Sun, 18 Oct 2026 01:15:13 -0400
-Received: from smarthost3.eviden.com ([80.78.11.84])
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xIJHK-0000CL-1p
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 01:17:50 -0400
+Received: from nx236.node01.secure-mailgate.com ([89.22.108.236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
- id 1xIJEk-00018L-GI; Sun, 18 Oct 2026 01:15:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=bull.com; i=@bull.com; q=dns/txt; s=mail;
- t=1792300510; x=1823836510;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=V4mf88e+OEwGQKRZoUeXW4kS4Ds5PgZB/orHylUumBs=;
- b=jCUCS+KEgLhRBuUECw64Fpkq4hhCbHuJ0J0Voq3N+gqUGg3ySJ4+d/Gj
- npigAfiTeteUwp4qkyzRj0c860fvuMwgKUtJGKUs4mibyjbUbKM/vJf9+
- KVNy3hUNFO9ry+/OkylXLKZnMMdc+vEoiDp4m67WTLIGCV32vghfHq30t
- ujeqs/d/6UvWbkkSa+biqxF8a12lLDcScYg8AqCO31kBSxLlCcGVVS5AX
- xC9km/pGzJD7Pz94gZwbht3UwvaTJD8fK93zciVpoKQTJCsqkLTMknpmA
- HKYti2saVOF8yOrR9Et9XWycYeISTuUdZ42lqb/9rl+aFZJQMqBCylO2o Q==;
-X-CSE-ConnectionGUID: YryYBtAKQtKmEjfUX8OUNw==
-X-CSE-MsgGUID: bt2vFa3uQ6KZbTPygTSrkA==
-IronPort-SDR: 6ad455d8_iOOBAJzhwgqjxA0Q2RvsEUzCDRgcPw0g2Dq60CZgxg/vmOb
- FZiXkM1AdlFSiLYXATS0YlHCqsRPtzKckJEOjvA==
-X-IronPort-AV: E=Sophos;i="6.27,165,1787004000"; d="scan'208";a="48961670"
-X-MGA-submission: =?us-ascii?q?MDGmbmP3fLzDTwkY3A8wa5B9H3LlTKk/UbZXXc?=
- =?us-ascii?q?7mek0LsXyzDSiNnNL4yuu0FYkjY8uK1nHE5ksFk2bp7ZJWeMHGIo/KQA?=
- =?us-ascii?q?p+vHZHSvTN4/0owLJ3WeZE1jQEy8Ulya6vuDBYltad2W3IKCXxGnRu5L?=
- =?us-ascii?q?FWwI1CaJ+To4PstYmkqd3DRw=3D=3D?=
-Received: from mail-norwayeastazon11013025.outbound.protection.outlook.com
- (HELO OSPPR02CU001.outbound.protection.outlook.com) ([40.107.159.25])
- by smarthost3.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
- 18 Oct 2026 07:15:03 +0200
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NzxVXLpffaE87rsbJrnJLo0j0nW3d0iRpWHgRa7bpNTNgb2PNuORV5JNuCAgI4OVCCFV+gprCOYlqE+d1c0zaiIOFuqRQ+IY7+YBSZeqTTQCwiN3v+QqzYmI3Rhu9pnUqh73dEa0KPLPH01yXxhHDw5TISPI4VXUlY8BcUmXFdRztrw6wpmwgEkeL5PlQ9/An/1ltnB3QotJa3EpjgmIPJ8gLDfuWGuYi5mgt2i7GiurhvdIjwoyhDiEV9ogL5BuhAEWkIBghM0xvv8HbRkswq6ZSiTFUnikUw6R+5Wn/aliaNLgm3fgK+3W6PAbHcYYdQzhgLgYR/YeIdDTHembuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V4mf88e+OEwGQKRZoUeXW4kS4Ds5PgZB/orHylUumBs=;
- b=hvygYcsyeM5oEaTOx+U3qfZB7co/2WUL+cRmiUTGySmZ5WW+V2lK0PoI76zkaFswakTeO9j1BrMZWGqIeZ3hJUbcMBxBvYjgUvLzMmxenGOLyHUIJw1cZAoz0Phs+3RPB7Se5ZHLrqu8NPZ52m2Fp+tf7GpX6eUM3HFuoJBulcFc+dMLiJZl9kEyfwlJoQXBcSrvMlZ5BGXPyODoSbONHUGwv1FHrLw2MpYg2YwvFc5l6A4VCqIzmcTZow4LS63Jx6ST43hNa0GT+dhlV+DS6N/wHdOfHwtI0oj4QlTCQk9UbBrYVzsN3Z1/noq7T6QyrdY4jTe8bKhfj8FGnP43WQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
- dkim=pass header.d=bull.com; arc=none
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
- by VI1PR07MB9544.eurprd07.prod.outlook.com (2603:10a6:800:1ce::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.14; Sun, 18 Oct
- 2026 05:14:57 +0000
-Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
- ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0522.017; Sun, 18 Oct 2026
- 05:14:57 +0000
-From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
- <clement.mathieu--drif@bull.com>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "artem_mygaiev@epam.com"
- <artem_mygaiev@epam.com>, "volodymyr_babchuk@epam.com"
- <volodymyr_babchuk@epam.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "francisco.iglesias@amd.com"
- <francisco.iglesias@amd.com>, "edgar.iglesias@gmail.com"
- <edgar.iglesias@gmail.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "eugene@nuvacore.ai" <eugene@nuvacore.ai>, "Ruslan_Ruslichenko@epam.com"
- <Ruslan_Ruslichenko@epam.com>, "takahiro.nakata.wr@renesas.com"
- <takahiro.nakata.wr@renesas.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Xu <peterx@redhat.com>, =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=
- <philmd@oss.qualcomm.com>, "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: Re: [PATCH v2 12/20] system/physmem: Add ats_do_translate helper
-Thread-Topic: [PATCH v2 12/20] system/physmem: Add ats_do_translate helper
-Thread-Index: AQHdWx731X0JMc9Ev0+s73m4HQw/Y7b8s+KAgAGoZACAAjaiAIACNhQA
-Date: Sun, 18 Oct 2026 05:14:57 +0000
-Message-ID: <cd9e908abcfacbff252185551477bdcf645af76a.camel@bull.com>
-References: <20260915160044.345788-1-ruslichenko.r@gmail.com>
- <20260915160044.345788-13-ruslichenko.r@gmail.com>
- <07181e2fc148dce3c2152f450e9337b4b9a21f16.camel@bull.com>
- <011b142e-feae-47e0-9c67-6cc7277c5113@gmail.com>
- <d29965e800482e96e8f42c8307900f665eb61a69.camel@bull.com>
- <068f6239-9a04-4182-9e45-19fe38106184@gmail.com>
-In-Reply-To: <068f6239-9a04-4182-9e45-19fe38106184@gmail.com>
-Accept-Language: en-GB, fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=bull.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|VI1PR07MB9544:EE_
-x-ms-office365-filtering-correlation-id: 326d8dcd-6678-4038-f610-08df2cd6c050
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|23010399003|376014|7416014|1800799024|6133799003|10063799003|18002099003|10067099003|4133799003|22082099003|13003099007|11063799006|261009221227099003|4143699003|261009223027099003|38070700021|56012099006;
-x-microsoft-antispam-message-info: K8dspNYr5kNausZFPWbMyEz9mcj9NRPeFSlSgpfzpnVxdoUx1WDAkctTJpMjrKMDyM6dCHB2UusInN0r+toV0SWGZKlJNuiiYzhPWXiPGUVjyx1/WQ0lqFG26hh34J0FJ4OFXqCD2pe3c7UOMonRCJJMzeWFu9lNuvcC804Fb1N1T4hc8NS5arnrOFmaC7c2msLb1wFsE9ITi+TC6RcsoLARA5MNC8SOwPNSjSMxFr/iJhwD1e18CSRC39BSOYcFUizyNObd1eg7qLDD9/+eZHMAX4ZZmixwk25oChaHTzgR5CEocgbo4PBllqc0OwWRoXoMF3JAd4guoyrlcbzDZ4KtTdzT90Vg/JaEIUnt+Is43+vFtEuI+YAVIq4ndbF6Sab7Y5KYGpY71oMQ0BJrzhdL+kvOz3umfTdJUR0YnxigvTL5t6cW0hPG+DVHntym8h+Y+g/YoFRVx627VGyENmDinaXNXLtwAjLV9lqAgHIYXOptATOelXR20kS9WIPa3/wUrcaaPIF+a6MhyGC8HjO+h7z03dqdTdGZ8gISvlsnZqLacK2wHVXufKaMkTjWEnBjJFtQLnetY+STMsDry0wVAQeIJZ3uKFoVoyFJWwvBI4Qa1HXY+LyfS5riDPk1cRZE2b6EptUfXfRwM2kCIE9+2uOQksOlucz3P0bicIped642ZISGB+3GVFGP95WI9DCwZStFBrQw/upJL3pFrPde5smQx1qsAgBOORZaFb4=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(376014)(7416014)(1800799024)(6133799003)(10063799003)(18002099003)(10067099003)(4133799003)(22082099003)(13003099007)(11063799006)(261009221227099003)(4143699003)(261009223027099003)(38070700021)(56012099006);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?K3pqczM5Y2JSYk9nWjExN1prYzUzYXVnUzVNa3ZWQkUxbVdoaDRoUk94aUdr?=
- =?utf-8?B?TXlLMnlqS2c2OEY0OUMyRDMwMnR4NFRhYWpiOEV5RWRmOXhZRTd2U29nYkxq?=
- =?utf-8?B?dkNxTDNMMExjNEppZjRRZ1c3T2kwSFFpZFNVK0Znc04wcDBJNlBXWmtwb3pL?=
- =?utf-8?B?SWkreWdMb3NJMG4yVUZ2TjJzQzBmdEkyb09USWRuVm01dWx0NTIyRG9GUFk4?=
- =?utf-8?B?Vzgyc3I3akN1dTFKRDhOazJ4czBxbGhma2g2d1ZTNkJCREZMeDl4NU1JZUZm?=
- =?utf-8?B?VEJZb1Y3eEFyUkFEdk1nc0Rsd0dhNHRnS3Z1L1lCOEhUVnIzbFd1V1l6KzVY?=
- =?utf-8?B?MzBzTm53Nys4NkRpVi9TNmMzN3lLYVNnYXlnclZBVVoxR2J0T25BNjBUemE5?=
- =?utf-8?B?cUsxR3BNaUx5cC9taVRQTFM4eU11SWNtM08vRkQ0clV1Zjd4MGV5cXlubGo1?=
- =?utf-8?B?aDI4RFNRQkMrT1FPS3pyUDN4RnFJMm92Rm1DVnBmSXNacmp3NVZrcWpraURU?=
- =?utf-8?B?WmJiL2JXNGFIWEo0TmFGQ3dTYzNUL0VsdXJsTk1FSXZaejdhK3VXYkZrejRB?=
- =?utf-8?B?cjM1U3hyekFYSWlNVFI3YVYwU0hYaTIybE9XS2ZIZWpKZkJ5dzd6YUJJSWg2?=
- =?utf-8?B?ZFdwVjY1SnFUOERyS2RWZ1RJNCtCa3BBRHEzS2x3V1JLZTZHQTZrenhhNW8y?=
- =?utf-8?B?YUNib1FqOVNFQmVIUFhmWDZUalRqSWVzMnFJcFhoZnlBMjdYRDRTWW80UlVz?=
- =?utf-8?B?WGZQMVZIdVVnZFB6V05pd0p3Zm1VeW9Ca3JIVS9mVE4zZ0cwcWRpRS96ZUpn?=
- =?utf-8?B?ZXg1Z1lnUG96aFhwMXk4ZFZYeFk2VkhicmxFN0FvL01YWmNNTUsrRThURFVP?=
- =?utf-8?B?OHhMMDExTElTUzdqOEV5cWN3RHU1UzhoZExrWVdIS3d0NlpsNlhjUDQyUGZs?=
- =?utf-8?B?UTM0MW5Cc3VWYTZRYWlncXg5SUhpWXJjeUpwakMrUktOYlVxeE15ZjFjUmtB?=
- =?utf-8?B?ZHoyczBDWkdaazBrd0lJSUlDYzVlbDNvM0JGcitrYk5qb1RMK0xIUjJYNUx0?=
- =?utf-8?B?d1BIMitUV1YvU0ltaDN3WWJZL3NtenFTeFZGZ0t3dVpiMFVFTnp0SnlMMktk?=
- =?utf-8?B?MHV1Nkc2WUlPb3VlUDFxMmdCSGZtU2daaVpZOGNXSSs5dzV4WU80TUMxeGdY?=
- =?utf-8?B?M0g4cGVlamhUQ1lSYlBjdjdqRGtTZStFR2VSZHJXOENkYXU1aEVIMS9jODVU?=
- =?utf-8?B?TDlYWEpLbERnazBMRDRPRk9jU1NsVk5RRmlBektENGplRU9TMnlFMkNEcDVW?=
- =?utf-8?B?SUVXNlpJUTU3ak1WckNZcjE3OG5KSEx1WmxNOHlVZmpLaEFJSDJEM213bmg1?=
- =?utf-8?B?dmdyZWQ3NHh5ajVleXpXc0wrOUhCV29JSWpPWWxrUDgrL1F1RWlIYkFOM2FR?=
- =?utf-8?B?Ry9RZWZTU2U0cjVaOXgySWx5dkJ3ZzlQNmhySW5DemY1VjdNWHVpVGV5eStq?=
- =?utf-8?B?Nk1hMUFkdnFjTjloZlFXbEttTTZRcWRybkdNOHYzU0xueFNYSXlmZUZZSW5a?=
- =?utf-8?B?N0IwTlp2ZUFJc2RWcEc3ekJzKzZmUHRVcG9iNjNCYnBqZFNJaitReklJS05P?=
- =?utf-8?B?S240QzdkdVhaa1cxb25yTHU5WFdUNHVmUDA1ZHZpRUFTM1BFY05rWmpOc0hw?=
- =?utf-8?B?SW50MGZpd1prdTNlU21TdTBaaGF0MnV3cTkycUpORHQxNW9nekhOR1psdkZr?=
- =?utf-8?B?TlVRVXBHMzZSdEY4QVlrbzZVeTA1VVFoREloaWRmckhlbUFUMVIrUGJoVEx3?=
- =?utf-8?B?NkVaZXlhOGRBZ2lZYkV5cUY1Rmh5d2JtaFljenpRNmsxUE40OTBlenFORmJM?=
- =?utf-8?B?ZGFIYlV5eEpVN0twMmNCK2xiSWhIdzVPaFV2cXR5RHkrVFEzRi9tc2M2cnVs?=
- =?utf-8?B?TkVzcFZlU3M0OUNzM1lVZ2ZieEtyWkFnWG9GVVlFSUl4SlB6V3lhNWxzbXUv?=
- =?utf-8?B?RmQ5VmM2ZXdLbTNNbkZSUkJvVnRKVTQ4eThUWm1zY3hXMnJ3MU1JZGhPNXEw?=
- =?utf-8?B?c1V3eXp5TngyWTJqNFFuSnRlSVVDUXlTd29MWS9BVGx2YW5wZHNFYk1KVm5S?=
- =?utf-8?B?Z3B4d3NDMVJRZ2lFL0V6Smh2bzB3NHNEblowbkcvSzZmT1hEWjYyRkFQK0lw?=
- =?utf-8?B?RTNNdGs2RGFYell1eG1uSDdLOHpkaWdKai9XQ1k1MDR2NW9oVGtOdG15SzJw?=
- =?utf-8?B?S3NaMm9xK2JEcXBJZWFUTmpyMnpSK3UxVXB1SzdldFdwM281ZG1wTjFsUlo1?=
- =?utf-8?B?eFY3NWJMbG5TSDFRNVJFVXNwd0VwM1g1bGFHQStHQnptcjhuOVFzWlcrR1JE?=
- =?utf-8?Q?9hn1XJsikgC53Sp0aDcSyN90/N3wm3xjyNgva?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <32173FD23E948B4887B66AA8EF72096F@eurprd07.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xIJHH-0001Ay-Eu
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 01:17:49 -0400
+Received: from web279.dogado.net ([31.47.255.59])
+ by node01.secure-mailgate.com with esmtps (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <christian@quante.one>)
+ id 1xIJHC-007xj4-Ju; Sun, 18 Oct 2026 07:17:43 +0200
+Received: from Zeuss.fritz.box (p57b2fda0.dip0.t-ipconnect.de [87.178.253.160])
+ (Authenticated sender: christian@quante.one)
+ by web279.dogado.net (Postfix) with ESMTPSA id D2B1B282AB1;
+ Sun, 18 Oct 2026 07:17:40 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
+ s=cloudpit; t=1792300662;
+ bh=EP2rpgKgjzi8mP1goSgycQWAnVWPm6jQAT61285CC2s=;
+ h=From:To:Cc:Subject:Date:From;
+ b=j2TODuua7lsbfLyRx83M8+Fj4em7zeyNAwf2kI+9Y0I7h7acRl4yoghnVb98/Olag
+ Ww3vtfTofrFqkZN71zDG0zAOW7sQ6wsx9O+fQ5zKQ37LpRTXLyETdYGLv4v32x9W82
+ w6ctrC6cn3h+L2yrFpwHFmntx0Q6SCxn5BRs/PKs=
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+From: Christian Quante <christian@quante.one>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] hw/input/pckbd: raise the keyboard irq for 0xd2 also while
+ disabled
+Date: Sun, 18 Oct 2026 07:17:13 +0200
+Message-ID: <20261018051715.12267-1-christian@quante.one>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: tMhglGJS43N5v/aH1UzgYwJmLAIjNuUSSEmNsZ+BxVZPyhvKycm8X6nPao4sFK+KIlv9jhItTq0YXIvUdAx0JuHRuzpBXU6/Y4fRKCgxaM13e/WCvYRtfvOGg2ftGw11g9VasdvGHJoCozeHAqYpyASawFOmSxsdJ6NYAEF7YGSigKdVFd96x0ssLrY5LC7zTTxZ7FZQnoWc93opSSDsYZngmso8sRuzyYaRXea29KDgvKBzTVsLE6fQRs+LV44p6/K89lXVxiyYrAq12k8dyzwLGz++jv6TWORFV+BnxNTUiFRI+s7JCDLQgddAH2mR0XswbZxNnPtdYgCu2e7u5w==
-X-OriginatorOrg: bull.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 326d8dcd-6678-4038-f610-08df2cd6c050
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Oct 2026 05:14:57.0512 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: S2C2DU5fhIaArofDXRj/KtODu0oAC4dVqhn/FaEQj8ReiRE//teHrfzpZ29usWJ2QG3qdiFe+COsIvhgTwpViqFE+JgaHys34yKnzRGsRhE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR07MB9544
-Received-SPF: pass client-ip=80.78.11.84;
- envelope-from=clement.mathieu--drif@bull.com; helo=smarthost3.eviden.com
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <179230066131.397781.9034412120309008868@web279.dogado.net>
+X-PPP-Vhost: quante.one
+X-Originating-IP: 31.47.255.59
+X-SecureMailgate-Domain: web279.dogado.net
+X-SecureMailgate-Username: 31.47.255.59
+Authentication-Results: secure-mailgate.com;
+ auth=pass smtp.auth=31.47.255.59@web279.dogado.net
+X-SecureMailgate-Outgoing-Class: ham
+X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.000313505442682)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuWQDuxDjzdGbWmDwyrhEgr90sBUeyjuFYic
+ ayvrgsfj1Cu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4Y07ZQFkwKdAbrPqTYt2Kl8S5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+ 1vk99RMgoMVb7lebWWPLzvZvEUCPdOtYechJ/ikE1WgRg4cS6K5mANmx2g/2xIniaWLUPf0al0h7
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
+ xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
+ 07iZIeUSWePdS+owFPr4kjXuZPwOU47Z9+uiyBzEoUPergF1Fr7PXRtjTffsOB8F7c9lBceogHQ4
+ /ADG0FyWKtan2R3jnELtGjVlIqecxOBP1yJf91UNzkSEUDq6mKQ/XAiI42Mzh38yXz3dKxLhoxcm
+ aInYbR5vlqHlDhVAB/0EYD/jnz2OZJv6szlVwj1n2JAvHUSGQgae904HZe+Npbm5PA9zxaDCuu7n
+ enbrzWUw2X62ZQfetBN+Wd6yNxOSUIsmGCJDuSiGSNdj68Lf4FNI5GmjYNknO4WLIFZtYLHBUTps
+ l3R7CReAta0GbUei82mY0H6Chww1cz80oxZpqzGK0CNfmEFbcNY9tQrhDVxWCGj1JArKPJWkG7EB
+ ouE/Lp65oEK6Kr4PFISAzVaFNHfkjGyFyiRzr7YOhfiboNBv0POUVLQJNXGP/GGMrN0VgEP1fddi
+ hPZrzx1Lw2yMf4vpvhlM+vErQ1gn6IjLLbcvolUaG2pSKCEkiWrFfcvTzpdI3AEG059XQdWGh3EH
+ O+AUBK5+ekb1JyB3OnKG9eRDP2/Ogb+c8D2oSvdcBJ1869L2y5ERFHC8NPIK4B7OUVSn0kbL6D23
+ dfd3aH2fATPqEIe+zbt2NwyT7DYzFfTn4NXnBjEun9DvZ0n9a1rfFCnSMsc+vEwrNstTbe4wBw6S
+ kC2jAENWaINDgXBbKTIlqNpRK89muFbKwBsa9A+nmEd7cRVfyxrpZ1WT35ix5VehBc2cUR742vO7
+ eUcOGCmJTaorUhtlNRknxw==
+X-Report-Abuse-To: spam@node04.secure-mailgate.com
+X-Complaints-To: abuse@node01.secure-mailgate.com
+Received-SPF: pass client-ip=89.22.108.236; envelope-from=christian@quante.one;
+ helo=nx236.node01.secure-mailgate.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -186,168 +98,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpPbiBGcmksIDIwMjYtMTAtMTYgYXQgMjE6MjggKzAyMDAsIFJ1c2xhbiBSdXNsaWNoZW5rbyB3
-cm90ZToNCj4gQ2F1dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRz
-IG9yIGNsaWNrIGxpbmtzLCB1bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2Vu
-ZGVyIGFuZCB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPg0KPg0KPiBPbiAxMC8xNS8y
-NiAxMTo0MCwgQ2zDqW1lbnQgTUFUSElFVS0tRFJJRiB3cm90ZToNCj4NCj4NCj4gPiBPbiBXZWQs
-IDIwMjYtMTAtMTQgYXQgMTA6MjEgKzAyMDAsIFJ1c2xhbiBSdXNsaWNoZW5rbyB3cm90ZToNCj4g
-Pg0KPiA+ID4gQ2F1dGlvbjogRXh0ZXJuYWwgZW1haWwuIERvIG5vdCBvcGVuIGF0dGFjaG1lbnRz
-IG9yIGNsaWNrIGxpbmtzLCB1bmxlc3MgdGhpcyBlbWFpbCBjb21lcyBmcm9tIGEga25vd24gc2Vu
-ZGVyIGFuZCB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPiA+ID4NCj4gPiA+DQo+ID4g
-PiBPbiAxMC8xMy8yNiAxNjoyNywgQ2zDqW1lbnQgTUFUSElFVS0tRFJJRiB3cm90ZToNCj4gPiA+
-DQo+ID4gPg0KPiA+ID4gPiBEbyB5b3UgbmVlZCB0byBvcGVyYXRlIGF0IHBoeXNtZW0gbGV2ZWw/
-DQo+ID4gPiA+IFdlIGhhdmUgYW4gQVBJIGZvciBQQ0kgZGV2aWNlIGZvciBBVFMgYW5kIFBSSSAo
-c2VlIHBjaV9hdHNfcmVxdWVzdF90cmFuc2xhdGlvbiBhbmQgcGNpX3ByaV91bnJlZ2lzdGVyX25v
-dGlmaWVyKQ0KPiA+ID4gPg0KPiA+ID4NCj4gPiA+DQo+ID4gPg0KPiA+ID4gVGhpcyBoZWxwZXIg
-aXMgdXNlZCBieSBSZW1vdGUtUG9ydC1BVFMgZGV2aWNlLCB3aGljaCBpcyB1c2VkIGZvciByZXNv
-bHZpbmcgQVRTIHJlcXVlc3RzIGZyb20gcmVtb3RlIG1hc3RlcnMgdmlhIFJlbW90ZVBvcnQgbGlu
-ayBhbmQgaXQgaXMgVFlQRV9ERVZJQ0UgaXRzZWxmLg0KPiA+ID4gQXMgaXQgaXMgbm90IGEgUENJ
-IGRldmljZSBpdHNlbGYsIHdlIGNhbm5vdCB1c2UgUENJIEFQSSB1bmZvcnR1bmF0ZWx5Lg0KPiA+
-ID4NCj4gPg0KPiA+DQo+ID4gT2ssIEkgc2VlLA0KPiA+DQo+ID4gVGhlIGlzc3VlIEkgc2VlIGhl
-cmUgaXMgdGhhdCB3ZSBhcmUgYmFzaWNhbGx5IHJlLWltcGxlbWV0aW5nIHdoYXQgSU9NTVVzIGFs
-cmVhZHkgZG8gdGhyb3VnaCB0aGUgUENJIEFQSS4NCj4gPiBJdCBsb29rcyBsaWtlIHRoZXJlIGlz
-IGEgcmlzayBoZXJlIGFzIHNvbWUgSU9NTVVzIG1pZ2h0IHdhbnQgdG8gdXBkYXRlIHRoZWlyIHN0
-YXRlIHdoZW4gYmVpbmcgY2FsbGVkIG9uIEFUUy9QUkksIHdoaWNoIHdvbid0IGJlIGRvbmUgaGVy
-ZS4NCj4gPg0KPiA+IEknbSBub3Qgc3VwZXIgZmFtaWxpYXIgd2l0aCBSZW1vdGVQb3J0IGJ1dCBJ
-IGhhdmUgYSBoaWdoIGxldmVsIG92ZXJ2aWV3IG9mIHdoYXQgc29tZSBjb21wYW5pZXMgZG8gdG8g
-YnJpZGdlIHJ0bCBzaW11bGF0b3JzIHdpdGggYSBQQ0kgYnVzIGluIFFlbXUuDQo+ID4gSUlVQywg
-dGhlIGJ1cyB0eXBlIG9mIHRoZSBzaW11bGF0b3IgaXMga25vd24sIGFuZCB0aGVpciBicmlkZ2Ug
-YWxsb2NhdGVzIGFuIGVtdWxhdGVkIGRldmljZSBvZiB0aGUgbWF0Y2hpbmcgdHlwZSBpbiBRZW11
-IHNvIHRoZXkgY2FuIGNhbGwgdGhlIG9mZmljaWFsIEFQSXMgYXMgaWYgdGhlcmUgd2FzIGEgInJl
-YWwiIGVtdWxhdGVkIGRldmljZS4NCj4gPg0KPiA+IEluIHlvdXIgdXNlIGNhc2UsIHdoYXQga2lu
-ZCBvZiBkZXZpY2VzIGFyZSB5b3UgcnVubmluZyBpbiB0aGUgZXh0ZXJuYWwgc2ltdWxhdG9yPyBQ
-Q0kgSSBndWVzcz8NCj4gPg0KPg0KPg0KPg0KPiBUaGUgbW9zdCBjb21tb24gdXNhZ2Ugb2YgQVRT
-IGFuZCByZW1vdGUtcG9ydC1hdHMgaXMgaW5kZWVkIGJvdW5kIHRvIFBDSSBzdWJzeXN0ZW0uDQo+
-IEZvciByZWZlcmVuY2UsIGluIFJlbW90ZSBQb3J0IHN1YnN5c3RlbSBpdCBpcyB1c2VkIGJ5IHJl
-bW90ZS1wb3J0LXBjaS1kZXZpY2UgYW5kIHJlbW90ZS1wb3J0LXBjaWUtcm9vdC1wb3J0IGluIFhp
-bGlueCB0cmVlOg0KPiBbaHR0cHM6Ly9naXRodWIuY29tL1hpbGlueC9xZW11L2Jsb2IvbWFzdGVy
-L2h3L2NvcmUvcmVtb3RlLXBvcnQtcGNpLWRldmljZS5jXShodHRwczovL2dpdGh1Yi5jb20vWGls
-aW54L3FlbXUvYmxvYi9tYXN0ZXIvaHcvY29yZS9yZW1vdGUtcG9ydC1wY2ktZGV2aWNlLmMpDQo+
-IFtodHRwczovL2dpdGh1Yi5jb20vWGlsaW54L3FlbXUvYmxvYi9tYXN0ZXIvaHcvY29yZS9yZW1v
-dGUtcG9ydC1wY2llLXJvb3QtcG9ydC5jXShodHRwczovL2dpdGh1Yi5jb20vWGlsaW54L3FlbXUv
-YmxvYi9tYXN0ZXIvaHcvY29yZS9yZW1vdGUtcG9ydC1wY2llLXJvb3QtcG9ydC5jKQ0KPg0KPiBB
-bmQgc2luY2UgdGhlcmUgaXMgYWxyZWFkeSBleGlzdGluZyAncGNpX2F0c19yZXF1ZXN0X3RyYW5z
-bGF0aW9uJyBBUEksIEkgYWdyZWUgaXQgaXMgYSBjbGVhbmVyIGFuZCBtb3JlIGNvcnJlY3QgYXBw
-cm9hY2guDQo+IEkgdGhpbmssIEFUUyBkZXZpY2UgY2FuIHVzZSBQQ0lEZXZpY2UgY3JlYXRlZCBi
-eSB0aG9zZSBtb2RlbHMgYW5kIGNhbGwgcGNpX2F0c19yZXF1ZXN0X3RyYW5zbGF0aW9uKCksIHdo
-aWNoIHJlbW92ZXMgdGhlIG5lZWQgZm9yIHBoeXNtZW0tbGV2ZWwgaGVscGVyLg0KPiBBbHRob3Vn
-aCwgdGhlICdhdHNfcmVxdWVzdF90cmFuc2xhdGlvbicgaXMgY3VycmVudGx5IGltcGxlbWVudGVk
-IG9ubHkgYnkgdGhlIEludGVsIElPTU1VLCBBUk0gU01NVSBkb24ndCBpbXBsZW1lbnQgaXQsIHNv
-IHRoaXMgbmVlZHMgdG8gYmUgZG9uZSB0b28uDQoNCnllcywgeW91IG5lZWQgdG8gd29yayB3aXRo
-IHRoZSBtYWludGFpbmVycyBvZiB0aG9zZSBkZXZpY2VzIGlmIHlvdSB3YW50IGJyb2FkZXIgc3Vw
-cG9ydC4NClRoZSBBUEkgaXMgaGVyZSBhdCBsZWFzdC4NCg0KPg0KPiBJbiBvdXIgY2FzZSB3ZSBo
-YXZlIGEgdXNlIGNhc2Ugd2hlcmUgYSBkZXZpY2Ugb24gdGhlIHBsYXRmb3JtIGJ1cywgYmVoaW5k
-IFNNTVUgYWxzbyB3YW50cyB0byB1c2UgQVRTIHJlcXVlc3RzLg0KPiBCdXQgdGhvc2UgbGlrZWx5
-IHJlcXVpcmUgc2VwYXJhdGUgYXBwcm9hY2ggYW5kIGl0IGJlbG9uZ3MgdG8gU01NVSBmb3IgcGxh
-dGZvcm0gYnVzIHNlcmllcywgc3VjaCBhczoNCj4gW2h0dHBzOi8vbGlzdHMubm9uZ251Lm9yZy9h
-cmNoaXZlL2h0bWwvcWVtdS1kZXZlbC8yMDI1LTEyL21zZzAyNjM3Lmh0bWxdKGh0dHBzOi8vbGlz
-dHMubm9uZ251Lm9yZy9hcmNoaXZlL2h0bWwvcWVtdS1kZXZlbC8yMDI1LTEyL21zZzAyNjM3Lmh0
-bWwpDQo+DQoNCnllcywgdGhpcyBpcyBhIGRpZmZlcmVudCBzdG9yeS4NCkJhc2ljYWxseSwgSSB0
-aGluayB5b3Ugc2hvdWxkIGFsd2F5cyB0cnkgdG8gdXNlIHRoZSBBUEkgZXhwb3NlZCBieSB0aGUg
-YnVzIChvciBhbnkgb3RoZXIgZW50aXR5KSB5b3UgYXJlIGF0dGFjaGVkIHRvLg0KDQo+IFNvIHdp
-bGwgZHJvcCAnYXRzX2RvX3RyYW5zbGF0ZScgZm9yIHRoZSBuZXh0IHJldmlzaW9uLg0KPg0KPiBU
-aGFua3MgZm9yIHRoZSBmZWVkYmFjayENCj4NCg0KRmluZSwNCkZlZWwgZnJlZSB0byBDQyBtZSBp
-ZiB5b3UgcmVzcGluIHRoaXMgc2VyaWVzIG9yIGlmIHlvdSB3b3JrIG9uIEFUUy9QUkkgc3VwcG9y
-dCBpbiBvdGhlciBJT01NVXMuDQoNCmNtZA0KDQo+IC0tDQo+IEJlc3QgUmVnYXJkcywNCj4gUnVz
-bGFuDQo+DQo+DQo+DQo+ID4gPg0KPiA+ID4NCj4gPiA+ID4gT24gVHVlLCAyMDI2LTA5LTE1IGF0
-IDE4OjAwICswMjAwLCBSdXNsYW4gUnVzbGljaGVua28gd3JvdGU6DQo+ID4gPiA+DQo+ID4gPiA+
-DQo+ID4gPiA+ID4gRnJvbTogUnVzbGFuIFJ1c2xpY2hlbmtvIDxbW1tSdXNsYW5fUnVzbGljaGVu
-a29AZXBhbS5jb21dKG1haWx0bzpSdXNsYW5fUnVzbGljaGVua29AZXBhbS5jb20pXShtYWlsdG86
-W1J1c2xhbl9SdXNsaWNoZW5rb0BlcGFtLmNvbV0obWFpbHRvOlJ1c2xhbl9SdXNsaWNoZW5rb0Bl
-cGFtLmNvbSkpXShtYWlsdG86W1tSdXNsYW5fUnVzbGljaGVua29AZXBhbS5jb21dKG1haWx0bzpS
-dXNsYW5fUnVzbGljaGVua29AZXBhbS5jb20pXShtYWlsdG86W1J1c2xhbl9SdXNsaWNoZW5rb0Bl
-cGFtLmNvbV0obWFpbHRvOlJ1c2xhbl9SdXNsaWNoZW5rb0BlcGFtLmNvbSkpKT4NCj4gPiA+ID4g
-Pg0KPiA+ID4gPiA+IEFkZCAnYXRzX2RvX3RyYW5zbGF0ZScgbWV0aG9kIHRvIGVuYWJsZSBtYW51
-YWwgSU9NTVUgYWRkcmVzcw0KPiA+ID4gPiA+IHRyYW5zbGF0aW9uLg0KPiA+ID4gPiA+DQo+ID4g
-PiA+ID4gVGhpcyBhbGxvd3MgdGhlIFJlbW90ZSBQb3J0IHN1YnN5c3RlbSB0byByZXNvbHZlIGd1
-ZXN0IHZpcnR1YWwNCj4gPiA+ID4gPiBhZGRyZXNzZXMgdG8gcGh5c2ljYWwgYWRkcmVzc2VzIGJ5
-IHF1ZXJ5aW5nIHRoZSBRRU1VIElPTU1VDQo+ID4gPiA+ID4gdHJhbnNsYXRpb24gcGlwZWxpbmUu
-IFRoaXMgaXMgcmVxdWlyZWQgZm9yIHRoZSBSZW1vdGUgUG9ydA0KPiA+ID4gPiA+IHN1YnN5c3Rl
-bSB0byBzdXBwb3J0IHRyYW5zbGF0aW9uICByZXF1ZXN0cyBmcm9tIGV4dGVybmFsIG1hc3RlcnMN
-Cj4gPiA+ID4gPiBpbiBhIGNvLXNpbXVsYXRpb24gZW52aXJvbm1lbnQuDQo+ID4gPiA+ID4NCj4g
-PiA+ID4gPiBTaWduZWQtb2ZmLWJ5OiBFZGdhciBFLiBJZ2xlc2lhcyA8W1tbZWRnYXIuaWdsZXNp
-YXNAYW1kLmNvbV0obWFpbHRvOmVkZ2FyLmlnbGVzaWFzQGFtZC5jb20pXShtYWlsdG86W2VkZ2Fy
-LmlnbGVzaWFzQGFtZC5jb21dKG1haWx0bzplZGdhci5pZ2xlc2lhc0BhbWQuY29tKSldKG1haWx0
-bzpbW2VkZ2FyLmlnbGVzaWFzQGFtZC5jb21dKG1haWx0bzplZGdhci5pZ2xlc2lhc0BhbWQuY29t
-KV0obWFpbHRvOltlZGdhci5pZ2xlc2lhc0BhbWQuY29tXShtYWlsdG86ZWRnYXIuaWdsZXNpYXNA
-YW1kLmNvbSkpKT4NCj4gPiA+ID4gPiBTaWduZWQtb2ZmLWJ5OiBUYWthaGlybyBOYWthdGEgPFtb
-W3Rha2FoaXJvLm5ha2F0YS53ckByZW5lc2FzLmNvbV0obWFpbHRvOnRha2FoaXJvLm5ha2F0YS53
-ckByZW5lc2FzLmNvbSldKG1haWx0bzpbdGFrYWhpcm8ubmFrYXRhLndyQHJlbmVzYXMuY29tXSht
-YWlsdG86dGFrYWhpcm8ubmFrYXRhLndyQHJlbmVzYXMuY29tKSldKG1haWx0bzpbW3Rha2FoaXJv
-Lm5ha2F0YS53ckByZW5lc2FzLmNvbV0obWFpbHRvOnRha2FoaXJvLm5ha2F0YS53ckByZW5lc2Fz
-LmNvbSldKG1haWx0bzpbdGFrYWhpcm8ubmFrYXRhLndyQHJlbmVzYXMuY29tXShtYWlsdG86dGFr
-YWhpcm8ubmFrYXRhLndyQHJlbmVzYXMuY29tKSkpPg0KPiA+ID4gPiA+IFNpZ25lZC1vZmYtYnk6
-IFJ1c2xhbiBSdXNsaWNoZW5rbyA8W1tbUnVzbGFuX1J1c2xpY2hlbmtvQGVwYW0uY29tXShtYWls
-dG86UnVzbGFuX1J1c2xpY2hlbmtvQGVwYW0uY29tKV0obWFpbHRvOltSdXNsYW5fUnVzbGljaGVu
-a29AZXBhbS5jb21dKG1haWx0bzpSdXNsYW5fUnVzbGljaGVua29AZXBhbS5jb20pKV0obWFpbHRv
-OltbUnVzbGFuX1J1c2xpY2hlbmtvQGVwYW0uY29tXShtYWlsdG86UnVzbGFuX1J1c2xpY2hlbmtv
-QGVwYW0uY29tKV0obWFpbHRvOltSdXNsYW5fUnVzbGljaGVua29AZXBhbS5jb21dKG1haWx0bzpS
-dXNsYW5fUnVzbGljaGVua29AZXBhbS5jb20pKSk+DQo+ID4gPiA+ID4gLS0tDQo+ID4gPiA+ID4g
-IGluY2x1ZGUvc3lzdGVtL21lbW9yeS5oIHwgIDggKysrKysrKw0KPiA+ID4gPiA+ICBzeXN0ZW0v
-cGh5c21lbS5jICAgICAgICB8IDUzICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrDQo+ID4gPiA+ID4gIDIgZmlsZXMgY2hhbmdlZCwgNjEgaW5zZXJ0aW9ucygrKQ0KPiA+
-ID4gPiA+DQo+ID4gPiA+ID4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvc3lzdGVtL21lbW9yeS5oIGIv
-aW5jbHVkZS9zeXN0ZW0vbWVtb3J5LmgNCj4gPiA+ID4gPiBpbmRleCBhN2UwM2ZjM2U3Li4yMDMy
-ZDMwMjhkIDEwMDY0NA0KPiA+ID4gPiA+IC0tLSBhL2luY2x1ZGUvc3lzdGVtL21lbW9yeS5oDQo+
-ID4gPiA+ID4gKysrIGIvaW5jbHVkZS9zeXN0ZW0vbWVtb3J5LmgNCj4gPiA+ID4gPiBAQCAtMjU4
-Myw2ICsyNTgzLDE0IEBAIHN0YXRpYyBpbmxpbmUgTWVtb3J5UmVnaW9uICphZGRyZXNzX3NwYWNl
-X3RyYW5zbGF0ZShBZGRyZXNzU3BhY2UgKmFzLA0KPiA+ID4gPiA+ICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBhZGRyLCB4bGF0LCBsZW4sIGlzX3dyaXRlLCBhdHRycyk7DQo+ID4gPiA+
-ID4gIH0NCj4gPiA+ID4gPg0KPiA+ID4gPiA+ICtNZW1vcnlSZWdpb24gKmF0c19kb190cmFuc2xh
-dGUoQWRkcmVzc1NwYWNlICphcywNCj4gPiA+ID4gPiArICAgIGh3YWRkciBhZGRyLA0KPiA+ID4g
-PiA+ICsgICAgaHdhZGRyICp4bGF0LA0KPiA+ID4gPiA+ICsgICAgaHdhZGRyICpwbGVuX291dCwN
-Cj4gPiA+ID4gPiArICAgIEFkZHJlc3NTcGFjZSAqKnRhcmdldF9hcywNCj4gPiA+ID4gPiArICAg
-IGludCAqcHJvdCwNCj4gPiA+ID4gPiArICAgIE1lbVR4QXR0cnMgYXR0cnMpOw0KPiA+ID4gPiA+
-ICsNCj4gPiA+ID4gPiAgLyogYWRkcmVzc19zcGFjZV9hY2Nlc3NfdmFsaWQ6IGNoZWNrIGZvciB2
-YWxpZGl0eSBvZiBhY2Nlc3NpbmcgYW4gYWRkcmVzcw0KPiA+ID4gPiA+ICAgKiBzcGFjZSByYW5n
-ZQ0KPiA+ID4gPiA+ICAgKg0KPiA+ID4gPiA+IGRpZmYgLS1naXQgYS9zeXN0ZW0vcGh5c21lbS5j
-IGIvc3lzdGVtL3BoeXNtZW0uYw0KPiA+ID4gPiA+IGluZGV4IGE0YTZhNDcxMGMuLjFhY2RhMjJl
-ZGUgMTAwNjQ0DQo+ID4gPiA+ID4gLS0tIGEvc3lzdGVtL3BoeXNtZW0uYw0KPiA+ID4gPiA+ICsr
-KyBiL3N5c3RlbS9waHlzbWVtLmMNCj4gPiA+ID4gPiBAQCAtNTI1LDYgKzUyNSw1OSBAQCBzdGF0
-aWMgTWVtb3J5UmVnaW9uU2VjdGlvbiBmbGF0dmlld19kb190cmFuc2xhdGUoRmxhdFZpZXcgKmZ2
-LA0KPiA+ID4gPiA+ICAgICAgcmV0dXJuICpzZWN0aW9uOw0KPiA+ID4gPiA+ICB9DQo+ID4gPiA+
-ID4NCj4gPiA+ID4gPiArLyogVGhpcyBmdW5jdGlvbiBpcyBjYWxsZWQgZnJvbSBSQ1UgY3JpdGlj
-YWwgc2VjdGlvbiAqLw0KPiA+ID4gPiA+ICtNZW1vcnlSZWdpb24gKmF0c19kb190cmFuc2xhdGUo
-QWRkcmVzc1NwYWNlICphcywNCj4gPiA+ID4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIGh3YWRkciBhZGRyLA0KPiA+ID4gPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgaHdhZGRyICp4bGF0LA0KPiA+ID4gPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgaHdhZGRyICpwbGVuX291dCwNCj4gPiA+ID4gPiArICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIEFkZHJlc3NTcGFjZSAqKnRhcmdldF9hcywNCj4gPiA+ID4gPiArICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIGludCAqcHJvdCwNCj4gPiA+ID4gPiArICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIE1lbVR4QXR0cnMgYXR0cnMpDQo+ID4gPiA+ID4gK3sNCj4gPiA+ID4g
-PiArICAgIE1lbW9yeVJlZ2lvblNlY3Rpb24gKnNlY3Rpb247DQo+ID4gPiA+ID4gKyAgICBJT01N
-VU1lbW9yeVJlZ2lvbiAqaW9tbXVfbXI7DQo+ID4gPiA+ID4gKyAgICBod2FkZHIgcGxlbiA9ICho
-d2FkZHIpKC0xKTsNCj4gPiA+ID4gPiArICAgIEZsYXRWaWV3ICpmdiA9IGFkZHJlc3Nfc3BhY2Vf
-dG9fZmxhdHZpZXcoYXMpOw0KPiA+ID4gPiA+ICsgICAgSU9NTVVNZW1vcnlSZWdpb25DbGFzcyAq
-aW1yYzsNCj4gPiA+ID4gPiArICAgIElPTU1VVExCRW50cnkgaW90bGI7DQo+ID4gPiA+ID4gKyAg
-ICBpbnQgaW9tbXVfaWR4ID0gMDsNCj4gPiA+ID4gPiArDQo+ID4gPiA+ID4gKyAgICBpZiAoIXBs
-ZW5fb3V0KSB7DQo+ID4gPiA+ID4gKyAgICAgICAgcGxlbl9vdXQgPSAmcGxlbjsNCj4gPiA+ID4g
-PiArICAgIH0NCj4gPiA+ID4gPiArDQo+ID4gPiA+ID4gKyAgICAvKiBUaGlzIGNhbiBiZSBNTUlP
-LCBzbyBzZXR1cCBNTUlPIGJpdC4gKi8NCj4gPiA+ID4gPiArICAgIHNlY3Rpb24gPSBhZGRyZXNz
-X3NwYWNlX3RyYW5zbGF0ZV9pbnRlcm5hbCgNCj4gPiA+ID4gPiArICAgICAgICAgICAgZmxhdHZp
-ZXdfdG9fZGlzcGF0Y2goZnYpLCBhZGRyLCB4bGF0LA0KPiA+ID4gPiA+ICsgICAgICAgICAgICBw
-bGVuX291dCwgdHJ1ZSk7DQo+ID4gPiA+ID4gKw0KPiA+ID4gPiA+ICsgICAgLyogSWxsZWdhbCB0
-cmFuc2xhdGlvbiAqLw0KPiA+ID4gPiA+ICsgICAgaWYgKHNlY3Rpb24tPm1yID09ICZpb19tZW1f
-dW5hc3NpZ25lZCkgew0KPiA+ID4gPiA+ICsgICAgICAgIHJldHVybiBOVUxMOw0KPiA+ID4gPiA+
-ICsgICAgfQ0KPiA+ID4gPiA+ICsNCj4gPiA+ID4gPiArICAgIGlvbW11X21yID0gbWVtb3J5X3Jl
-Z2lvbl9nZXRfaW9tbXUoc2VjdGlvbi0+bXIpOw0KPiA+ID4gPiA+ICsgICAgaWYgKCFpb21tdV9t
-cikgew0KPiA+ID4gPiA+ICsgICAgICAgIHJldHVybiBOVUxMOw0KPiA+ID4gPiA+ICsgICAgfQ0K
-PiA+ID4gPiA+ICsNCj4gPiA+ID4gPiArICAgIGltcmMgPSBtZW1vcnlfcmVnaW9uX2dldF9pb21t
-dV9jbGFzc19ub2NoZWNrKGlvbW11X21yKTsNCj4gPiA+ID4gPiArDQo+ID4gPiA+ID4gKyAgICBp
-ZiAoaW1yYy0+YXR0cnNfdG9faW5kZXgpIHsNCj4gPiA+ID4gPiArICAgICAgICBpb21tdV9pZHgg
-PSBpbXJjLT5hdHRyc190b19pbmRleChpb21tdV9tciwgYXR0cnMpOw0KPiA+ID4gPiA+ICsgICAg
-fQ0KPiA+ID4gPiA+ICsNCj4gPiA+ID4gPiArICAgIGlvdGxiID0gaW1yYy0+dHJhbnNsYXRlKGlv
-bW11X21yLCBhZGRyLCBJT01NVV9STywgaW9tbXVfaWR4KTsNCj4gPiA+ID4gPiArDQo+ID4gPiA+
-ID4gKyAgICAqeGxhdCA9ICgoaW90bGIudHJhbnNsYXRlZF9hZGRyICYgfmlvdGxiLmFkZHJfbWFz
-aykNCj4gPiA+ID4gPiArICAgICAgICAgICAgfCAoYWRkciAmIGlvdGxiLmFkZHJfbWFzaykpOw0K
-PiA+ID4gPiA+ICsgICAgKnBsZW5fb3V0ID0gTUlOKCpwbGVuX291dCwgKGFkZHIgfCBpb3RsYi5h
-ZGRyX21hc2spIC0gYWRkciArIDEpOw0KPiA+ID4gPiA+ICsgICAgKnByb3QgPSBpb3RsYi5wZXJt
-Ow0KPiA+ID4gPiA+ICsgICAgKnRhcmdldF9hcyA9IGlvdGxiLnRhcmdldF9hczsNCj4gPiA+ID4g
-PiArDQo+ID4gPiA+ID4gKyAgICByZXR1cm4gc2VjdGlvbi0+bXI7DQo+ID4gPiA+ID4gK30NCj4g
-PiA+ID4gPiArDQo+ID4gPiA+ID4gIC8qIENhbGxlZCBmcm9tIFJDVSBjcml0aWNhbCBzZWN0aW9u
-ICovDQo+ID4gPiA+ID4gIElPTU1VVExCRW50cnkgYWRkcmVzc19zcGFjZV9nZXRfaW90bGJfZW50
-cnkoQWRkcmVzc1NwYWNlICphcywgaHdhZGRyIGFkZHIsDQo+ID4gPiA+ID4gICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBpc193cml0ZSwgTWVtVHhBdHRy
-cyBhdHRycykNCj4gPiA+ID4NCj4gPiA+ID4NCj4gPiA+DQo+ID4gPg0KPiA+DQo+DQo+DQo=
+QEMU raises no keyboard irq while the keyboard is disabled
+(KBD_MODE_DISABLE_KBD, for example after KBD_CCMD_KBD_DISABLE 0xad).
+This also applies to the bytes that the controller itself puts into the
+output buffer, such as the answer to KBD_CCMD_READ_MODE (0x20) or a
+byte that the guest writes with KBD_CCMD_WRITE_OBUF (0xd2).
+
+The keyboard driver of the OS/2 Warp 4 installation (IBMKBD.SYS,
+1996-09-09, code at file offsets 0xf08 and 0xf8b) disables the
+keyboard, sends 0x20, reads port 0x60 at once and then waits for the
+keyboard irq.  If the irq does not come within about 0.35 seconds, the
+driver writes the byte that it has read back with 0xd2 and waits again,
+so it expects an irq for this byte.  With
+QEMU, this irq does not come either.  The driver then loses track of
+its command sequence and leaves the keyboard disabled: the installation
+does not accept the Enter key after the request for diskette 2.
+
+0xd2 puts a byte into the output buffer as if the keyboard had sent it
+(HelpPC 2.10, 8042 commands: "as if initiated by a device; invokes
+interrupt if enabled").  Bochs (controller_enQ() in keyboard.cc) and
+86Box (kbc_send_to_ob() in kbc_at.c) raise the keyboard irq for every
+byte in the output buffer that does not come from the mouse, if bit 0
+of the command byte is set.  They do this also while the keyboard is
+disabled.
+
+Raise the irq while the keyboard is disabled, but only for a byte from
+0xd2.  The answers to other controller commands keep the old behaviour,
+because an irq for them causes a problem with the emulated 8259: the
+8259 of QEMU and the 8259 of KVM keep the edge request of a masked line
+after the line has gone low again, but a real 8259A drops it (Intel
+8259A data sheet: "the request latch is a transparent D type latch",
+and "the IR inputs must remain high until after the falling edge of the
+first INTA").  Windows for Workgroups 3.11 masks IRQ 1,
+sends 0xad and 0x20, and polls for the answer.  With an irq for the
+answer, it gets a stale IRQ 1 with an empty output buffer when it
+unmasks the line, and then it masks IRQ 1 for good, so the keyboard
+does not work any more.  In my traces (start of Windows for Workgroups
+up to the first dialog box, and one key press), it does not use 0xd2.
+
+A new flag in "pending" marks the byte from 0xd2.  The flag is only set
+with the extended state of the i8042, so machine types 6.0 and older
+keep the old behaviour.  It is migrated with
+"pending"; an older QEMU clears unknown flags in kbd_post_load() and
+keeps its old behaviour for this byte.
+
+With this patch, the Warp 4 installation goes on after the 0xd2
+fallback (one delay of about 0.35 seconds, tested with TCG).
+
+Signed-off-by: Christian Quante <christian@quante.one>
+---
+
+Notes:
+    Windows for Workgroups 3.11 and OS/2 Warp 3 (both with KVM) work as
+    before.  Both runs, and the traces of Windows for Workgroups above, used
+    my Cirrus patches (the first series is
+    <20261018050643.9288-1-christian@quante.one>, the others follow),
+    because the Cirrus display drivers of these guests need them; the
+    keyboard path does not depend on them.
+
+ hw/input/pckbd.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
+
+diff --git a/hw/input/pckbd.c b/hw/input/pckbd.c
+index b09c3bce93..06b4c5d9ea 100644
+--- a/hw/input/pckbd.c
++++ b/hw/input/pckbd.c
+@@ -139,6 +139,7 @@
+ #define KBD_PENDING_CTRL_AUX    0x08
+ #define KBD_PENDING_KBD         KBD_MODE_DISABLE_KBD    /* 0x10 */
+ #define KBD_PENDING_AUX         KBD_MODE_DISABLE_MOUSE  /* 0x20 */
++#define KBD_PENDING_CTRL_OBUF   0x40
+ 
+ #define KBD_MIGR_TIMER_PENDING  0x1
+ 
+@@ -149,7 +150,10 @@
+ 
+ /*
+  * XXX: not generating the irqs if KBD_MODE_DISABLE_KBD is set may be
+- * incorrect, but it avoids having to simulate exact delays
++ * incorrect, but it avoids having to simulate exact delays.
++ * A byte from KBD_CCMD_WRITE_OBUF raises the irq also while the keyboard
++ * is disabled: a guest may write a byte with this command and then wait
++ * for the keyboard irq.
+  */
+ static void kbd_update_irq_lines(KBDState *s)
+ {
+@@ -165,7 +169,9 @@ static void kbd_update_irq_lines(KBDState *s)
+             }
+         } else {
+             if ((s->mode & KBD_MODE_KBD_INT) &&
+-                !(s->mode & KBD_MODE_DISABLE_KBD)) {
++                (!(s->mode & KBD_MODE_DISABLE_KBD) ||
++                 ((s->obsrc & KBD_OBSRC_CTRL) &&
++                  (s->pending & KBD_PENDING_CTRL_OBUF)))) {
+                 irq_kbd_level = 1;
+             }
+         }
+@@ -282,7 +288,8 @@ static void kbd_queue(KBDState *s, int b, int aux)
+ {
+     if (s->extended_state) {
+         s->cbdata = b;
+-        s->pending &= ~KBD_PENDING_CTRL_KBD & ~KBD_PENDING_CTRL_AUX;
++        s->pending &= ~KBD_PENDING_CTRL_KBD & ~KBD_PENDING_CTRL_AUX &
++                      ~KBD_PENDING_CTRL_OBUF;
+         s->pending |= aux ? KBD_PENDING_CTRL_AUX : KBD_PENDING_CTRL_KBD;
+         kbd_safe_update_irq(s);
+     } else {
+@@ -290,11 +297,21 @@ static void kbd_queue(KBDState *s, int b, int aux)
+     }
+ }
+ 
++static void kbd_queue_obuf(KBDState *s, int b)
++{
++    kbd_queue(s, b, 0);
++    if (s->extended_state) {
++        s->pending |= KBD_PENDING_CTRL_OBUF;
++        kbd_update_irq_lines(s);
++    }
++}
++
+ static uint8_t kbd_dequeue(KBDState *s)
+ {
+     uint8_t b = s->cbdata;
+ 
+-    s->pending &= ~KBD_PENDING_CTRL_KBD & ~KBD_PENDING_CTRL_AUX;
++    s->pending &= ~KBD_PENDING_CTRL_KBD & ~KBD_PENDING_CTRL_AUX &
++                  ~KBD_PENDING_CTRL_OBUF;
+     if (kbd_pending(s)) {
+         kbd_update_irq(s);
+     }
+@@ -450,7 +467,7 @@ static void kbd_write_data(void *opaque, hwaddr addr,
+         kbd_safe_update_irq(s);
+         break;
+     case KBD_CCMD_WRITE_OBUF:
+-        kbd_queue(s, val, 0);
++        kbd_queue_obuf(s, val);
+         break;
+     case KBD_CCMD_WRITE_AUX_OBUF:
+         kbd_queue(s, val, 1);
+@@ -608,7 +625,7 @@ static int kbd_post_load(void *opaque, int version_id)
+     }
+     /* clear all unused flags */
+     s->pending &= KBD_PENDING_CTRL_KBD | KBD_PENDING_CTRL_AUX |
+-                  KBD_PENDING_KBD | KBD_PENDING_AUX;
++                  KBD_PENDING_CTRL_OBUF | KBD_PENDING_KBD | KBD_PENDING_AUX;
+     return 0;
+ }
+ 
+-- 
+2.53.0
+
 
