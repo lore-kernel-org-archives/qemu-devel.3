@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0758CCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 17:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D28CCA490
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 18:53:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIV17-00019u-Ep; Sun, 18 Oct 2026 13:49:53 -0400
+	id 1xIW04-00009S-C9; Sun, 18 Oct 2026 14:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xIV15-00019F-Gd
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 13:49:51 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <aarnaarn2@gmail.com>)
+ id 1xIW02-00008n-JH
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 14:52:50 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xIV13-0006Br-Qg
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 13:49:51 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6acbdbc1725so2010706a12.3
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 10:49:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <aarnaarn2@gmail.com>)
+ id 1xIW00-0003jc-Re
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 14:52:50 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a1b07c3c5fso16089415e9.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 11:52:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792345788; x=1792950588; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792349567; x=1792954367; darn=nongnu.org;
  h=user-agent:in-reply-to:content-disposition:content-type
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=oMVUjdN95Ah216cN1pN8bb1DsQthi+djBQhpKaH/wHk=;
- b=CcyliHOULuSTemMwSaRk81KsisRxVP4SqTMCK9z//yRb40t/kT6Bk4f1iNxgE3nlC9
- Tl6FVXg6vTtIeb2YxGDa/UYFrUxly0+JcWev+lmOCwUlLATpcHNIFAO4aRAkyO5xFvEZ
- 3PSwHUt/c+gEyh3x5eh8UhTWcEguHPelqOkmaUlRTerVQgVDpGiCalkwuhxjDl0sGgK8
- WCBXu5GCfzoYLMJItDY5QCMwC7SNme3U+qiOqL/R49mruOLKDrZG6go70jBXrS2W2NWo
- BNt44t9Rtj8M/VQ41vbhUL5Ua5Dx1Hxj9fAHyJDXKOUL42gMjrxlGhRpV04AVVtYGX+K
- guow==
+ bh=I463AGvNZ4ZQj9X56jqfci92r4MzE/T+i2kBII7Oth0=;
+ b=Rm/WNGXX6LzBq6bwKqkRVtaAX5mKbf320dqYNTmyVyfzJvOg+3NfzAviw98W4Duj/S
+ O3+SBr/jRdDp6V7OHf3fU4VXsuX+M1s1nZf/m8w4fsS4fUli00C1ersXuN/ca/bR2dTH
+ Zz+Rkrmc1/ZZKdcrqXVpDuqUYfyLFAi6rnxRzbHnVH38aWmQ9aOVkV5++idoAA4XqgSp
+ imNmsU1HIt3mH2k0k0iIYT2kFLW+/2X865P4giCfuse5IzZeg5jDCIUASa7nlkqSVxQ2
+ IvxSHGAm05DD12Zm684fqvFMxWqRXJS8tUZt3Z70WSkuax/d5NOBbI7QbsPxo52A1lv7
+ EFWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792345788; x=1792950588;
+ d=1e100.net; s=20260707; t=1792349567; x=1792954367;
  h=user-agent:in-reply-to:content-disposition:content-type
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=oMVUjdN95Ah216cN1pN8bb1DsQthi+djBQhpKaH/wHk=;
- b=JRFDIggGAG/hdRzNVJX7ilqIRaZcx0M1RTt6lXFCOshbIWES3wLkpmkxEzvSDj3Y9y
- VZGGyCe0IGGOFwAkmL+EbKK1h/HrgoXHX7spc4aU5DAx0PrhHLxt8jlt4PWq1Ff9kGXO
- RvHdf8TEmsFjLupYYQjcOKs4CGozRl/b97sPgIbytCDVisYgjgkX0GP4Aud1JMafeYZb
- I6wD9mQl886EPpklWtIIsiOnJUerCUa9nZaaXLTjNg+tH6APoq1ADipoEpHBJH1fYRZO
- +ASwbeYrKPS0btWEcX9By8/ev5BZ04Jd5BQX5kVI5DfYpnMte4d7tni5xYflkoB4532o
- ZB8Q==
-X-Gm-Message-State: AFq9FYINfi4jAquOWTDngK1aDFVIq1sBXltV9poFniRcR4QLswJriPJP
- vs2NxXntP3rgveLXK96/l/biBvp0v25tTK8+smZ/9ZNwlI4qjsnJUzKy
-X-Gm-Gg: AYBFou0pv/PZD7bubpgEUFQmpz43xY1jOWaULx0622FuQqUieMdedjKv21sIm4qvDtA
- XzJpHzJj61F6Ffs/LqM5O7SP2NzbmzCx5qd7gGOjAWqyLOfpC5l3PLw93/WXYy3REWISn+Ywbs0
- lwPQJlMPBp+5IJnnue3RzznOlXdsLX5uMMUaC3jpT38qj+yeEoRYtMTlN+6CIRJUv8yxJaWSnOM
- eWVSff5MIQeEfepbkZo3pxl2zssXAq4drTPfT6TVziPw+AkIT79tSJwfp7ScGotKsEhdh/eMGe4
- BUFaLNUd7dL6ee9nk2C/x4Hhn+5fqGxQ/n58309MNZNszygHCT+vO49wP3gQaXdQA1FBDEKhwax
- t4q59v5YaiFeqzS33OrRTEikXXNNVkXhmMBRVO6W1DPuX2hk0Tyioj2J/e0ynRpbe7cHO8/NOr4
- UxeXx9erzqpjpvCmFpUAQY6rUJ/qB8QyMzyxjNrNHIEOV7s/5FC6mBAyzooovadw0vNwwpnxRnx
- WRvGYB1wYBblkY1yq/LRZwwKCG9WRu//YlRbmnZkMijXUV4fD+Q6iMtYCrmcTh88MPu01tM
-X-Received: by 2002:a05:6402:4344:b0:6b1:e4a0:4848 with SMTP id
- 4fb4d7f45d1cf-6b3a81c2048mr3608480a12.43.1792345787397; 
- Sun, 18 Oct 2026 10:49:47 -0700 (PDT)
-Received: from tulp
- (2001-1c02-1a15-3000-2727-f7d1-9628-aa81.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:2727:f7d1:9628:aa81])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6b3cbe98563sm542261a12.27.2026.10.18.10.49.46
+ bh=I463AGvNZ4ZQj9X56jqfci92r4MzE/T+i2kBII7Oth0=;
+ b=c4zEQ4nfd7dQAIw8wAcpDOMJSFVZfdQPf5a8mc3ZttA1c9vgLl3XU8ngBwhGdiwbWs
+ +sUQ3CpMi7OaEpL7tpb7DZvnfWfj9Sn8JqSM24pNrovRHXs8AJYi1DRUm4DzBVMxglbA
+ z+dJSSIfHk8WJc1BZmY8HVrralt/Fmbz6ej/hlFBF3LyN7mSDtnNzB90oi/0MEqfD2f9
+ Tv9iiQ6auiebwTli4CqjGLpVjBKlUcL4kPzqDXL7dEnuDMK0alqLRBUertjvkf95JMVE
+ lGWgViQLyJ5kADTbfsLskJx/a9bAKfsl8L/bcvqLz+OK+RD05FiOCX0YId010LZCogfA
+ B7Bg==
+X-Gm-Message-State: AFq9FYL0+33fIk2aNKk5iUfp2B4LsNqzKG82wHkTq79so0+TVmcG3Eae
+ 4SXd45+w1tunlFnUZEi/xOAEDiK/vGFvcmr5ai4lCi4bLYrT4qQH6t2R
+X-Gm-Gg: AYBFou22jex457pzbxmKJ42ANUJUZ7kkLGMfXkYzsbvl+MfKMTTEgrEGibWJEMIyFyY
+ Yj5RyncAFybJFzzhB1Zs4kq3rHuxk2giVxEOVvLMo2BNBvabOvZOPzf4MaNU5R7YCyfPydG9Mql
+ f1hjKQflOlVnQCj2XcJ89+8GpiaGWj5JFt4YkHG3JJETV5suexwLlsEeBkh0eBf8o30rm+CAoOg
+ 9QbQp3sVAAVsSglt9uKi7/rrPdFBMACbImheaCe5uNOPJ1C8J9sVouqrckx8Jpe9GAEuaW9LP5H
+ BqBPwsuqlTKHJ1RUD45GfRohLgY5bamDkZzI8NCudDlh0mFyPbvddLGhBof0ZRgC/V6JqWlUzLq
+ 7FH35bEP2oY6N8TtgnM73HUr2MnmkbRY4pvMbxIc8trvpPQNLnFeCT8CqjVvm2QUCdoKT162TTL
+ tLK+6DrSE7ch5Adp8h7LPrODKZ8LxXm3TIuK8AdUh+HamUi78ErJ2sDWDYQJQS0Ws=
+X-Received: by 2002:a05:600c:8b43:b0:4a1:83f0:7c8a with SMTP id
+ 5b1f17b1804b1-4a1d75ad072mr114215495e9.1.1792349566716; 
+ Sun, 18 Oct 2026 11:52:46 -0700 (PDT)
+Received: from localhost ([31.7.57.58]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48dfd471a64sm19578529f8f.6.2026.10.18.11.52.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Oct 2026 10:49:46 -0700 (PDT)
-Date: Sun, 18 Oct 2026 19:49:01 +0200
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: Oleksij Samorukov <samm@net-art.cz>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Alexander Ivanov <alexander.ivanov@virtuozzo.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH] qga: set FreeBSD virtio-serial channel to raw mode
-Message-ID: <atUGjXcdSBqQWAIx@tulp>
-References: <20261017201905.12211-1-samm@net-art.cz>
+ Sun, 18 Oct 2026 11:52:46 -0700 (PDT)
+Date: Sun, 18 Oct 2026 21:52:44 +0300
+From: Alexander Epaneshnikov <aarnaarn2@gmail.com>
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: qemu-devel@nongnu.org, brltty@brltty.app
+Subject: Re: baum: NVDA does not detect usb-braille, and following the
+ input-linux grab
+Message-ID: <atUU4HpVVI59QcLJ@alex-pc>
+References: <atNoDNz0dQucxzFN@alex-pc> <atNo9sk_7jCAi98u@end>
+ <atPIRr46KvMoiCti@alex-pc> <atTzTVaSxUy5r95x@end>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20261017201905.12211-1-samm@net-art.cz>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <atTzTVaSxUy5r95x@end>
+User-Agent: NeoMutt/20260616-dirty
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=aarnaarn2@gmail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: 28
+X-Spam_score: 2.8
+X-Spam_bar: ++
+X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,86 +103,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Oleksij Samorukov wrote:
+Hello Samuel,
 
-> On FreeBSD the virtio-console port is a tty, unlike Linux's
-> /dev/virtio-ports which is a character device.  It defaults to canonical
-> mode with echo and software flow control enabled, so the QGA stream
-> protocol does not work: the initial guest-sync handshake is held in the
-> line discipline and the host eventually times out.
-> 
-> The existing FreeBSD-specific code only clears ECHO.  Configure the port
-> the same way as the ISA serial path: disable canonical mode, echo and
-> software flow control, and set VMIN/VTIME.  Use TCSANOW instead of
-> TCSAFLUSH so a handshake that arrives between open() and tcsetattr() is
-> not discarded.
-> 
-> Tested on FreeBSD 15.1 aarch64 under UTM/QEMU.  Before the change
-> utmctl ip-address timed out and the guest received zero bytes; after the
-> change QGA commands and guest-set-time work.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: c6cd588bb3a29a831c862780631a7d2145ade5de ("qga: Add initial FreeBSD support")
-> Signed-off-by: Oleksij Samorukov <samm@net-art.cz>
-> ---
->  qga/channel-posix.c | 22 +++++++++++++++++-----
->  1 file changed, 17 insertions(+), 5 deletions(-)
-> 
-> diff --git a/qga/channel-posix.c b/qga/channel-posix.c
-> index 9ccc8b7..c6dfb2d 100644
-> --- a/qga/channel-posix.c
-> +++ b/qga/channel-posix.c
-> @@ -156,9 +156,10 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
->  #endif
->  #ifdef __FreeBSD__
->          /*
-> -         * In the default state channel sends echo of every command to a
-> -         * client. The client program doesn't expect this and raises an
-> -         * error. Suppress echo by resetting ECHO terminal flag.
-> +         * FreeBSD's virtio-console port is a tty (unlike Linux's
-> +         * /dev/virtio-ports, which is a character device) and defaults to
-> +         * canonical mode with echo and software flow control enabled.
-> +         * QGA uses a raw stream protocol, so put the port in raw mode.
->           */
->          struct termios tio;
->          if (tcgetattr(fd, &tio) < 0) {
-> @@ -166,8 +167,19 @@ static gboolean ga_channel_open(GAChannel *c, const gchar *path,
->              close(fd);
->              return false;
->          }
-> -        tio.c_lflag &= ~ECHO;
-> -        if (tcsetattr(fd, TCSAFLUSH, &tio) < 0) {
-> +        tio.c_iflag &= ~(IGNBRK | BRKINT | IGNPAR | PARMRK | INPCK | ISTRIP |
-> +                         INLCR | IGNCR | ICRNL | IXON | IXOFF | IXANY |
-> +                         IMAXBEL);
-> +        tio.c_oflag = 0;
-> +        tio.c_lflag = 0;
-> +        tio.c_cflag |= CLOCAL | CREAD;
-> +        tio.c_cc[VMIN] = 1;
-> +        tio.c_cc[VTIME] = 0;
-> +        /*
-> +         * Use TCSANOW rather than TCSAFLUSH: the host may already have sent
-> +         * the initial handshake between open() and tcsetattr().
-> +         */
-> +        if (tcsetattr(fd, TCSANOW, &tio) < 0) {
->              error_setg_errno(errp, errno, "error setting channel termios attrs");
->              close(fd);
->              return false;
-> -- 
-> 2.54.0 (Apple Git-157)
-> 
+On Sun, Oct 18, 2026 at 06:26:53PM +0200, Samuel Thibault wrote:
+> Ah, that is a requirement of the protocol? Then we need to do that
+> indeed. What is the value of the uint8_t protocol field when it
+> expects to receive 0x01 and 0x84?
 
-Interestingly, the issue does not apply to libvirt (bhyve and qemu
-drivers) talking to the guest agent, likely because libvirt terminates
-guest agent commands with '\n'.
+It is 1 (on). For serial displays, NVDA's Baum driver
+(source/brailleDisplayDrivers/baum.py) first sends 0x15 with 0 to make
+sure the protocol is off, then sends 0x15 with 1 twice, "in case the
+display misses the first one". After that it waits for the cell count
+and the device identity. According to the comment in that driver, a
+real display answers only when the protocol goes from off to on. On
+that transition it sends its device identity, its serial number and
+its cell count, and it sends nothing if the protocol was already on.
+NVDA itself only waits for the cell count and the identity.
 
-Either way, I have tested this change on:
+> I'm a bit surprised by setting the priority to 0, but maybe that's
+> because of your setup, which is not described enough. Are you
+> running on the linux console or X, actually?
 
- - FreeBSD 16-CURRENT amd64 guest under libvirt/qemu
- - FreeBSD 14.4 amd64 guest under libvirt/bhyve
- - FreeBSD 15.0 aarch64 guest under libvirt/bhyve
+Sorry, I should have described it. The host runs GNOME on Wayland on
+tty 2, with Orca using BrlAPI. BRLTTY drives a HumanWare Brailliant
+BI 40X over USB.
 
-and did not notice any regressions.
+The guest is a Windows VM started by libvirt, with a second GPU passed
+through to it. My monitor is connected to both GPUs. I switch its input
+by hand, or over DDC/CI when I need sighted help. QEMU itself has no
+window: the display is "none", and SPICE has no listener. I am blind,
+so in practice I use the guest through NVDA's speech, which comes out
+through PipeWire on the host, and its braille.
 
-Tested-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> But then how do you access the VM to get keyboard/mouse access?
+
+Through input-linux (libvirt <input type='evdev'> with grab='all').
+QEMU reads the host keyboard and mouse evdev devices directly. Pressing
+both Ctrl keys toggles the exclusive grab between the host and the
+guest. Because there is no window, nothing gains or loses focus when I
+switch, and WINDOWID cannot help.
+
+> What are the two clients you are talking about? Is that two VMs run
+> by qemu?
+
+No, there is a single VM. The two BrlAPI clients on tty 2 are Orca on
+the host and QEMU's baum chardev, which shows NVDA's output from the
+guest.
+
+> My crude guess is that you are using some sort of front-end. In that
+> case, one would rather need to teach it to access brlapi itself,
+> instead of the qemu backend doing it.
+
+There is no front-end. The grab toggle happens inside QEMU's
+input-linux, so QEMU is the only process that knows which side has the
+keyboard. libvirt doesn't see it, and neither does anything else on
+the host. That is why I thought baum should react to it directly.
+
+About the priority 0: my intent was that, while the host has the
+keyboard, the guest's output never appears on the display. That should
+hold even when Orca isn't running or isn't using the display, since
+BRLTTY's own view of the tty is more useful than NVDA's last content.
+A low non-zero value would also work if you think that is cleaner.
+
+> SDL/GTK do not need a grab: provided that the window id is properly
+> set, brlapi already switches according to the window focus.
+
+Thanks, that answers my third question. Then only input-linux, which
+has no window, needs to report the grab.
+
+--
+Sincerely, Alexander
 
