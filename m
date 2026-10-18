@@ -4,128 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5D0CCF2D4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 23:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC8C7CCF2D4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 23:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIZyp-0001xa-E7; Sun, 18 Oct 2026 19:07:51 -0400
+	id 1xIaJi-00045w-Fw; Sun, 18 Oct 2026 19:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xIZyo-0001xK-IJ
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:07:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xIaJh-00045m-DC
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:29:25 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xIZym-0008FK-NU
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:07:50 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xIaJf-0001jt-Gc
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 19:29:25 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69ILjKNn1956835
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:07:46 GMT
+ 69ILjNoD1312163
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:29:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=Vw7XXvh93hkTueCsFYlkxV
- 0beTx7+p2NZ+HttDarvO4=; b=V4+J2JXrTS8KElf0e5znH8akC7C7MwnCPKZGPf
- 3aRMzvkgpS9cRlnhGQo3UkhoVym4y21Ew+LcJjmDUrB6prgj7Gu4TfgXDPrX4oZm
- 5qd8hPGD0A/maooWTB4AFby1YT58cy66TtIGlUyC6g+AXFqRBSSj1AhDUhP6d8YP
- W00DrLUSf0EQqa7WZNmc8IPIG0gPvoWC2a291VKlZ9X49c4Gu9bqHrr0vKVC7r+1
- kGxavO7mo6v/gllF14fmlb9YBM+jt/8M2fekRIpe3+YESctjV8AKN3jqPSdyqzTd
- R/CGdMuex8qATpvRbcMx+rTsQMZRh3ZoTQonIvzOOFUpcFaA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hbxqfvc1g-1
+ :mime-version:subject:to; s=qcppdkim1; bh=GVR/VEDeWEqIDIOBC6C99y
+ 7Io24VsjPmlnkh4OFRMpU=; b=aPLO8oFiuYvtNC+RB91pmXuItAZIUqgpwX2SSn
+ McbPFumR/gfP+VKWxENiTBj57z7BVnkWzaFEPhjD3yTWmdjsgYOizjz9M78YDOkr
+ Pwq/bICzXLK8oMdQhY+XvJpxliDpGZXYm/Dlj0F/U73yCPecXGUk7n7XKKmQTTdA
+ wdVrWK7fMBmU+CPiKojArzyH0xuqAYs9p0ujAVRnCkO2yeORJW5EPGIz5xbHdfnw
+ BZylGXCRcvXWjBOigA7+gY6lMNu+BUEgGPjEhdMUVXblSc+eQklftQTrifZ/H8nU
+ B3JxmA35Uugd2ZnwTKVsLwUSRikx470DmVRVTXmTrjA/nPoA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hd5u1g6sp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:07:46 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93cb93c874bso489074485a.0
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 16:07:46 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:29:21 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93a3f673221so616788385a.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 16:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792364865; x=1792969665; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792366160; x=1792970960; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Vw7XXvh93hkTueCsFYlkxV0beTx7+p2NZ+HttDarvO4=;
- b=Dl5aEq7xtUpIdVPnx5g7iBC4PL05QuytQSNiKDhVIOlLWuF3kmCH4I0kmegZsnEdGT
- JBpWPnNI+Wes1I6iqwcpJd75dBKtgQC1IWcrQZgVOg2NNgSKFCtlKj/HrPzow8BDMFS/
- T5nHVO7A/H4+1Wvc00k00hRrYNaqUAdlvk9BBovM87VU00JgdZNNma1PXF0HTKeR5VUY
- z/Q8nYM//4ATOAY+6Tu+zIIpztuyMDGSFBn2D2i0qGz7NVjJ00kYqvCKF54yTJGziX5g
- ZMmoXn0+JzlSob8AF+eTAdnm44WTwHfWIWZOiWENzgRZICyF8mpHOM/he+l4uAoWxL2h
- uGQg==
+ :content-type; bh=GVR/VEDeWEqIDIOBC6C99y7Io24VsjPmlnkh4OFRMpU=;
+ b=chf8RzxTUf8h62IaCIk4RACBVyM9yaz8sppQ9FMqEpWKMzcoX+TdhSWryhozSitqHh
+ sL/K04ip+BPtQkDiXJPQrssFiZKW0Vld5+oHuagv1Gcz2EfueDbCGvCqu5aG+xFjobQO
+ LRBUaZTY5AhOGzJ3OuKlWHCva58egDlkQ5qByEgJ8AD88qfaNQVuYkhe+21I1tOzJmPh
+ p6KGuQYBZdezklqYjSiQgvwAITPzU3bkSjgMK4eN3MyemPDNK4TgWHmbd5u5U+gHNGaI
+ YGD2PCar52ObaCg++fB55/bost8MjF+x5eXKvxGe4I/ljm/++xax1iAJP/Dxp0wP9NZA
+ DeoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792364865; x=1792969665;
+ d=1e100.net; s=20260707; t=1792366160; x=1792970960;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Vw7XXvh93hkTueCsFYlkxV0beTx7+p2NZ+HttDarvO4=;
- b=mcRLvVorqJ1T6kWdF/A3qAvUTC1kCiyRzHN4bi4BCC/jWiFRRdDggGTg4LWMhvHJGZ
- MhvE/jKYPiyskmR6Q9NrPaOU3vB2exge17KPRsdpL5N6t2WA1LHVJyHSHBI+1LfRBhQi
- AF9zpDOcEiLZGHdNar4yOO9rTEuUFePLwh8J0dIO8rrILrWSg5+A+iYcPuVCnJ6bkuM/
- 92bBsFnJE+j6p50g/w+m9KlntAi53aZwLW7N3I9yku3PMBDDQ8RhAFFhqdJLYpxpek9A
- c5sy8/v74FRRJjCb1IevbnpBsAd5QJHZHK63X34ukVyUFrxjOJODqju14E18/lwPTF66
- /EaA==
-X-Gm-Message-State: AFq9FYLivy58q6JXPTbLJhgb2mOtss3gDk2BIhSrevONfuitHOZXjo/V
- 04D4vbj6PxKGihC1KJ+aFGgUEO+vEkCTlHDEYvOvuz59ATBQWoJoWtKWM08luKl8ikfoNA2Vf7+
- +/ujfLJkp/bdvWeKBSMhXREIs2uNBrwdyxDPtAeP5c0Xwt1EFSavlk56t9v5EcwWg2w==
-X-Gm-Gg: AYBFou30fo4AQcwAIaISy6Fb9XM+gRXS4fC/y1nBccmQCoTLvgoiNRWgq7rHRQ33tiY
- 4txTllUvRycF7ZXslBL+q5IlPGg5bXxQIrOt6qXJj2UFVfzg6WnpwqYGLtq8i+UerHfjtobG9Ez
- SJo1EORK71y9/ckLMICD0Gxg6XzvkFQ9pWnzclAJXurIkXxHJ+DZh8xDsY3tQyf9OVWIj2Cyt+l
- oOpVAKiKisx4QLSoK67vDkKfXmmlZuXrZu9ryfmLUtFPReod+2mx6OUScLPH7HAUWZ+Jjq0DNE0
- cH0b68EPuaFwIY67ckpviWDjjT1xz8jFjAXFoOIy1aZZBQWc4oWeQeIyrr/bBQa+gOMgQj8IVcY
- iVqN/cVNyGJnpL1BssHdNiWY+Z3/A52+wZqnuQn2m
-X-Received: by 2002:a05:620a:4608:b0:93e:fcac:a91f with SMTP id
- af79cd13be357-93f17f9f371mr1515256585a.37.1792364865415; 
- Sun, 18 Oct 2026 16:07:45 -0700 (PDT)
-X-Received: by 2002:a05:620a:4608:b0:93e:fcac:a91f with SMTP id
- af79cd13be357-93f17f9f371mr1515252785a.37.1792364864888; 
- Sun, 18 Oct 2026 16:07:44 -0700 (PDT)
+ bh=GVR/VEDeWEqIDIOBC6C99y7Io24VsjPmlnkh4OFRMpU=;
+ b=KH6Z2Oj70WbTMEcsCWAMIBYqOGGjTxYnsVBZfkaORPMwcy8D6MJ+cbcBzxCUh3pwfy
+ bLSKHFD7YPcBvikfrWwdcNdyIztv3MLDLJ+E28iCm8rFhnUWxe7amEncWwxIxaMAu7Z7
+ KUhTwWCb0JKF87Fn+zSxl723KCvW4BmJSpeuFlzFPT61obsaujQL/y740GdFq7AyiNO0
+ GvgC1BOQYoFSXuFjBhoT3oYpf7SlCnJ1jqRRyvUmD1ozZhBqwLn/5uqf8pOoXTCxmjcg
+ c+Cqd1jtPmc7IMU7qOuvrLoys1kwnoEy3ZcQB9KAxLiUouFB5JwycPL0CNjDHVoEv2Ba
+ 9f5g==
+X-Gm-Message-State: AFq9FYK7uJ0XGIJHinbKiPMUSb32uPC7rOIAcxYEg8174100OJhed7w7
+ NpURSBZYzXWrN3XTouAzWxaQhL8xA1LKsZqB5KW+4yv7zjoHKsR8gyvL8b2lFnI3ba1urSIUhgd
+ VH7KehdYwOtjGvFkOaaDo163svxgra5YQBU15lsNoRPZv4m0jiqft5CPxgEkd36/lJg==
+X-Gm-Gg: AYBFou05alS2myrK2wd3Q6kc1CDVIpXzy14Uxi+8zQ0hfcS5JyahlbqoULSCpP/JbRj
+ vZvA1rTBhwY/CzHW3T+bt+LzpXTxtRbAmK5/X2Ubhe/ysRBDy4Mp9ehq2Mqqb5wvKeYsgTkTidI
+ V3HTSXW+wqtvm2VkIaNLAlOb/d0Xq4qaS0oDobVhhNwX7chQW4vZBrDtcSqKVoVynDKclD3bp/S
+ h5ucsdjueQLvO9z0pxxY1C5LIMgRfppXeIXkBCQqsNblVa8iEKjmk9BOzHFQawko0ep5IluppDu
+ 17oSYwqxuebsBE+YRZmlcJdSuvarWLlPfm7JZweHzU8rZIVuzgc1gnfUqpnVlWYRjryRPlDVdg0
+ MSpVLlOtIfEvaKeueM9gKMeyy4e3FgG6K7ULoXPSp
+X-Received: by 2002:a05:620a:7018:b0:93e:4d60:d389 with SMTP id
+ af79cd13be357-93f29cccec2mr1143533485a.25.1792366160443; 
+ Sun, 18 Oct 2026 16:29:20 -0700 (PDT)
+X-Received: by 2002:a05:620a:7018:b0:93e:4d60:d389 with SMTP id
+ af79cd13be357-93f29cccec2mr1143530485a.25.1792366159929; 
+ Sun, 18 Oct 2026 16:29:19 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd4ee183sm19230164f8f.29.2026.10.18.16.07.41
+ 5b1f17b1804b1-4a1c8ae6d2esm231222095e9.6.2026.10.18.16.29.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Oct 2026 16:07:43 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ Sun, 18 Oct 2026 16:29:19 -0700 (PDT)
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, devel@lists.libvirt.org,
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, devel@lists.libvirt.org,
+ Laurent Vivier <lvivier@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH] docs: Remove stale chapter on RISC-V 'Z' CPU properties
-Date: Mon, 19 Oct 2026 01:07:41 +0200
-Message-ID: <20261018230741.6560-1-philmd@oss.qualcomm.com>
+Subject: [PATCH] system: Remove deprecated '-name foo,
+ debug-threads=...' option
+Date: Mon, 19 Oct 2026 01:29:17 +0200
+Message-ID: <20261018232917.7716-1-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE4MDA5MiBTYWx0ZWRfX5Ehr/BkObXSy
- xxeXnjPYCfaeoTeHPesGJ1LtEkPo/fkxX/UAuqHkCmxBRAFsr4/45UYI5/AqRTB5DUL9md2kdEt
- z5VThPV7Dp9YeufD7zdw3szmIkXWaJs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE4MDA5MiBTYWx0ZWRfXzr9kSZeOyz5S
- 3VTGyOBBh6ELXC6cbSUGawPhj2PQA6bjKX6EviUSI2ytZJqpaVrLShZvWdkeGk706kCkLKmqG/7
- 2/bfSv9Rs+8FSurf+5/HoLbKz5MhWXVvWyugO2QiYu/4jwqsYuLNgdC3lhYgWnb2ImBAMzRU8x+
- zWr8oPYJnto7G5Q8be4FoTCaPR9Q0k8SpcRn/HEMaCi8er3qilURxX9Q449WVF901kwyTb/ApN2
- DkPvnKDZUEZJd3xNCnZPCPnr0BqDQkebp6aWfjgBxm/AfZouNRSDylxrWGonKvt33mh2PLE6sTS
- OECJ5gz1misy3UEBO2hi7shnTMK4LsN3zNApevnGZeGEpQ0MAyPIwgsCaRtPeFjNX1MJOC1C8ao
- NZf5jRRBOewRnC/Zm3EGoMNyBzdiBVaIPP3QKd9muN7zFO5CS2O1PQAEDURo8dR3lquuva81ewQ
- 61Ktu9JXzxdirAvXqaQ==
-X-Proofpoint-ORIG-GUID: wpP3ejC4T2m_W8IPPmZ9WdXNiV8OVDON
-X-Proofpoint-GUID: wpP3ejC4T2m_W8IPPmZ9WdXNiV8OVDON
-X-Authority-Analysis: v=2.4 cv=RYMFmFtv c=1 sm=1 tr=0 ts=6ad55142 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: p-ljjWeLSry4SkIcuV-81CRGyTDmJz1k
+X-Authority-Analysis: v=2.4 cv=NItAaE6g c=1 sm=1 tr=0 ts=6ad55651 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=-qirTN_0YUXb2Kf5Y8sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=LQmNBL1JU3umNfIF-20A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE4MDA5MyBTYWx0ZWRfX9XzA7ms/9Yzm
+ uxY7aN+SJRl+4ajXL5UA+u5uo83BLH+ImkB2ARsSNPm6+OxarKPgSu/yUU4Ebg/dQqTJHxPuO/F
+ 0Wn5si6H+Yu/4Tit0/Ix2xhHODst7VQ=
+X-Proofpoint-GUID: p-ljjWeLSry4SkIcuV-81CRGyTDmJz1k
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE4MDA5MyBTYWx0ZWRfX9rJOhOSai/JC
+ NjRjktTQ3JincSbPUciHUVcn8ikTBMoJhbZeMj9THqTXo/lq4P7P1BRJqt33ZH0e4kThixdFQ0T
+ bXZIHr6QNFjlqWHOGB8GSEUqTpQablVhtvSdj0cdt2foKdZxyoT2fM6/CEkNv3AcO638nBYmadY
+ 9NVNEQ5Mb4x5+od7YoEuuSI2YuC5sVTLWMf9uwbNY4NurXcp0GTXNtYymOUF3kgkPAYxmceG3bs
+ lgDz79/8+0bBqjXpTBFhHcABZp8W6UowBFK5V3WdLgSjd5+cvN6M1Rils9QiPIfERL5g3+9cBpN
+ 4YFiCg1L59O5L3w5k4kks3nmDqVqFr4E6cnwooGQryJtZRM5uSlE2uerXXYwJ1QbDm+o1+W2zE8
+ ukqqCMePpc+ZcSyCFd475GFUGfNiXM7t3nSXcdWZwCe/aJigQH1VSw76QdM2KCWyYUC/JfDhCHZ
+ rsYPThbetop5GXFpd6A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-18_05,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610180092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ suspectscore=0 phishscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610180093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -145,53 +149,160 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+From:  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
-for the release v10.1.0. Remove the stale comment.
+'debug-threads' option for -name was deprecated in v11.0
+(commit 1b65aeed2a0 "system: unconditionally enable thread
+naming") thus can now be removed.
 
-Fixes: 455c0fa9eef ("target/riscv: remove capital 'Z' CPU properties")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- docs/about/deprecated.rst | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ docs/about/deprecated.rst             |  7 -------
+ docs/about/removed-features.rst       |  9 +++++++--
+ system/vl.c                           | 11 -----------
+ tests/qtest/migration/framework.c     |  4 ++--
+ tests/qtest/migration/precopy-tests.c |  2 +-
+ qemu-options.hx                       |  7 +++----
+ 6 files changed, 13 insertions(+), 27 deletions(-)
 
 diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ccbc4219497..368fa1b4ed3 100644
+index ccbc4219497..08d86bec314 100644
 --- a/docs/about/deprecated.rst
 +++ b/docs/about/deprecated.rst
-@@ -349,30 +349,6 @@ the addition of volatile memory support, it is now necessary to distinguish
- between persistent and volatile memory backends.  As such, memdev is deprecated
- in favor of persistent-memdev.
+@@ -54,13 +54,6 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
+ However, short-form booleans are deprecated and full explicit ``arg_name=on``
+ form is preferred.
  
+-``debug-threads`` option for ``-name`` (since 11.0)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''
 -
--RISC-V CPU properties which start with capital 'Z' (since 8.2)
--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-The ``debug-threads`` option of the ``-name`` argument is now
+-ignored. Thread naming is unconditionally enabled for all platforms
+-where it is supported.
 -
--All RISC-V CPU properties which start with capital 'Z' are being deprecated
--starting in 8.2. The reason is that they were wrongly added with capital 'Z'
--in the past. CPU properties were later added with lower-case names, which
--is the format we want to use from now on.
--
--Users which try to use these deprecated properties will receive a warning
--recommending to switch to their stable counterparts:
--
--- "Zifencei" should be replaced with "zifencei"
--- "Zicsr" should be replaced with "zicsr"
--- "Zihintntl" should be replaced with "zihintntl"
--- "Zihintpause" should be replaced with "zihintpause"
--- "Zawrs" should be replaced with "zawrs"
--- "Zfa" should be replaced with "zfa"
--- "Zfh" should be replaced with "zfh"
--- "Zfhmin" should be replaced with "zfhmin"
--- "Zve32f" should be replaced with "zve32f"
--- "Zve64f" should be replaced with "zve64f"
--- "Zve64d" should be replaced with "zve64d"
--
- Block device options
- ''''''''''''''''''''
+ ``-mon`` option (since 11.1)
+ ''''''''''''''''''''''''''''
  
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 6a9944a0c79..cd4f3338bcc 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -578,6 +578,11 @@ kernel since 2001. None of the board types QEMU supports need
+ Keeping 32-bit host support alive was a substantial burden for the
+ QEMU project.  Thus QEMU dropped all support for all 32-bit host systems.
+ 
++``debug-threads`` option for ``-name`` (removed in 11.2)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Thread naming is unconditionally enabled for all platforms where it
++is supported.
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
+@@ -779,8 +784,8 @@ values could be assigned to integer device properties or vice versa.
+ Removed with no replacement, as it reported only a limited set of
+ threads (for example, it only reported source side of multifd threads,
+ without reporting any destination threads, or non-multifd source
+-threads).  For debugging purpose, please use ``-name
+-$VM,debug-threads=on`` instead.
++threads).  For debugging purpose, thread names are unconditionally
++enabled where supported.
+ 
+ ``migrate`` argument ``detach`` (removed in 11.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''
+diff --git a/system/vl.c b/system/vl.c
+index 468a9fc247a..e766402f7e1 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -403,11 +403,6 @@ static QemuOptsList qemu_name_opts = {
+             .name = "process",
+             .type = QEMU_OPT_STRING,
+             .help = "Sets the name of the QEMU process, as shown in top etc",
+-        }, {
+-            .name = "debug-threads",
+-            .type = QEMU_OPT_BOOL,
+-            .help = "Enable thread names"
+-                    "(deprecated, always enabled where supported)",
+         },
+         { /* End of list */ }
+     },
+@@ -556,12 +551,6 @@ static int parse_name(void *opaque, QemuOpts *opts, Error **errp)
+ {
+     const char *proc_name;
+ 
+-    if (qemu_opt_get(opts, "debug-threads") &&
+-        !qemu_opt_get_bool(opts, "debug-threads", false)) {
+-        fprintf(stderr, "Ignoring deprecated 'debug-threads=no' option, " \
+-                "thread naming is unconditionally enabled\n");
+-    }
+-
+     qemu_name = qemu_opt_get(opts, "guest");
+ 
+     proc_name = qemu_opt_get(opts, "process");
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index b7aef6b21cb..fbe1e1f247d 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -413,7 +413,7 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+ 
+     cmd_source = g_strdup_printf("-accel kvm%s -accel tcg "
+                                  "-machine %s,%s "
+-                                 "-name source,debug-threads=on "
++                                 "-name source "
+                                  "%s "
+                                  "-serial file:%s/src_serial "
+                                  "%s %s %s",
+@@ -433,7 +433,7 @@ int migrate_args(char **from, char **to, MigrateStart *args)
+ 
+     cmd_target = g_strdup_printf("-accel kvm%s -accel tcg "
+                                  "-machine %s,%s "
+-                                 "-name target,debug-threads=on "
++                                 "-name target "
+                                  "%s "
+                                  "-serial file:%s/dest_serial "
+                                  "-incoming defer "
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index d57ffcac234..3298bf026a1 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -807,7 +807,7 @@ static QTestState *dirtylimit_start_vm(void)
+ 
+     bootpath = bootfile_create(qtest_get_arch(), tmpfs, false);
+     cmd = g_strdup_printf("-accel kvm,dirty-ring-size=4096 "
+-                          "-name dirtylimit-test,debug-threads=on "
++                          "-name dirtylimit-test "
+                           "-m 150M -smp 1 "
+                           "-serial file:%s/vm_serial "
+                           "-drive file=%s,format=raw ",
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 2f6863180b0..7f75fe54a12 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1376,18 +1376,17 @@ SRST
+ ERST
+ 
+ DEF("name", HAS_ARG, QEMU_OPTION_name,
+-    "-name string1[,process=string2][,debug-threads=on|off]\n"
++    "-name string1[,process=string2]\n"
+     "                set the name of the guest\n"
+     "                string1 sets the window title and string2 the process name\n"
+-    "                When debug-threads is enabled, individual threads are given a separate name\n"
+     "                NOTE: The thread names are for debugging and not a stable API.\n",
+     QEMU_ARCH_ALL)
+ SRST
+ ``-name name``
+     Sets the name of the guest. This name will be displayed in the SDL
+     window caption. The name will also be used for the VNC server. Also
+-    optionally set the top visible process name in Linux. Naming of
+-    individual threads can also be enabled on Linux to aid debugging.
++    where supported, set the top visible process name (individual threads
++    are always given a separate name to aid debugging).
+ ERST
+ 
+ DEF("uuid", HAS_ARG, QEMU_OPTION_uuid,
 -- 
 2.55.0
 
