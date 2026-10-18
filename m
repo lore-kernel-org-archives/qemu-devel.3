@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A87CCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 11:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3229ECCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 13:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIOgc-0001QX-0U; Sun, 18 Oct 2026 07:04:18 -0400
+	id 1xIR3h-0002Jw-Hd; Sun, 18 Oct 2026 09:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1xIOgX-0001QP-Fm
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 07:04:13 -0400
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xIR3d-0002GE-2I
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:36:13 -0400
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <a.tarasenko@gmail.com>)
- id 1xIOgU-0003t6-Jb
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 07:04:13 -0400
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-97622cc1f40so1036659241.3
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 04:04:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792321448; cv=none;
- d=google.com; s=arc-20260327;
- b=WS7+/AaQ1jAOqGoY33nCa16cQRUxXpq8aEraVQALmj3aKsuItYkEEYJwxMg0gJcNCF
- b+XpugbIXSLKdltADUVRK8JQrB+bOWsHMEA5k+pN9eMW51a6gsX1YRVU5o5qJXHDozvv
- /fphxkyw/9zG0QR5H90RRUK1H3POx1QoyufiS2djJ7eLVn7zQABMpguI6KD1yrHuN78K
- iz+JjPAiIVPj1MqixUC6NnI318dWh65dFp5ffVgj3+/gfPhl+myqr8rDJEcbjJ/ub8LJ
- GvdpPQ7Zm481YB+M9JZ2sGZvlp3obwfhRXzrqUG/MV0gFvjnJMToFHVWHn6YRS37Ob5P
- ZZaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=75eLIY3FN4+v/keyk3bBcek2YY0M4RhVm4z+Jq93TW0=;
- fh=CzjPuOB5Yd/Rs7SzmRKen+/N3DIXYkzhWptyxMRA/s8=;
- b=JKJC/iRs0WqTd6DS8uH277iKerlKbq9yrT8Tflj3Ev0SzZh3aAmjDCTGtnUmkEtarJ
- Va3j9rdrHkK4Klp8450z1q+NQRlVXzS4PacvelB/kNErPvhv2P/oWwXU5LygPPnvKzgp
- g7eQAIkOGSjCfpNVIv21/gVPUofmBYqg7fW/Z/430e7R8gowDcjt3J/yTBh4FJ2KP3dJ
- P3A/eF0ZLO9GKzDFMAeIValwH3kg/vFSD0J2P6L/gyTW/GbMHMM8IZ4Wg2xid+J3+E9L
- BBxTJFIail6v39xGJVAD72KMVrit1p4GA/wGqfmgZpPxS4EGQF55Pct6KL8ClOhcbK51
- 0OuA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xIR3a-0002GI-KD
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 09:36:12 -0400
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-91b83459526so18019606d6.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 06:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792321448; x=1792926248; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=75eLIY3FN4+v/keyk3bBcek2YY0M4RhVm4z+Jq93TW0=;
- b=o8cDN3SlqNUpsXmiDQYdC6k7U1dCH5yKIgCf+N+g38f1RjXDZRmhbkySZ8QDLDPA+7
- /ZQsxLfGwIuD1GuzGTifBFpmZJhKDrmfCRXAToAOD5h/dbtvs3ndb0KnKfU8iBJj6Iki
- RKnBq/5UTHzt0dePQO5AD06TyZW73DsJgaHzjRAndxTyQ1wqLrZ0itQkBkINbRKlfaKS
- nE0cdzzZbZj1dpwYjiG0wmtY3ER1yPHkhFSryZoeJw2NqIBkyXCYZXJj6+Bf6AVuk7xZ
- RnEXUl35IN4dI4VqdM4jX+fb9X5hdqLSCRHIhxeEaAgQOB7wm+ieWj2PSLW+23l2icZM
- glCQ==
+ d=gmail.com; s=20251104; t=1792330569; x=1792935369; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jvbpzHlx3PhD0w74lwv+VGvPz7R/D0s1maih6e/LH1c=;
+ b=WAW8xYy2hOCP4u9xhlMd1Ai7RxsZrfkaDXKy7XSpF6LesjFHKmucAo3g9KnYsVtnHj
+ ayZCtqDHCqLMBjP/I7YDO3eFO/dc6SLZ181bH1JEn5FPdC7A0ve0SDSuIpg6uuwYt/a5
+ 3rU1cLq1zN9spCQtRZXeBIwHmmphTGErTp9J9DuqyHEOfc7wHp/ABMwiWShMfdRrRDLC
+ QlRbiBKskbAvYiwVW/n6PcGpSd3B+bQEe7LiDUsPv3trjVUmLaEzab5owCfy/SUzn7/w
+ bwJPYfPM0u1YCr3g3xGnmubR8VHQBXeVzbTW9du/ylxIow8rU10L/y5uiV0hk02wTBGm
+ pNYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792321448; x=1792926248;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=75eLIY3FN4+v/keyk3bBcek2YY0M4RhVm4z+Jq93TW0=;
- b=yTXIjUyjMLH5JM06G9bK1toQAD2oi4wQPpHzK/+IjnlaTVZ4YparuBY0iBZCyox15+
- XRqLW82w2k0T4ov8LfcvtE5Le6rNNsF64vA4agZG76t0bWbYf1+Xg+jMSlmNMZJdXPgY
- hkVhe4KvyySM0a2zYaa+WK8uQVkrvbXszlGgcP+wsAhnddpHzvyHwa51A6aek7K9HbBF
- 9+/MTYoKYqToXbVuuMd+ekBiD2DWAjj69rnJn9cDtcIBU6BAdwKBjhWpy2fsk052gBa5
- 0vPrrkz2DO+nRuoyYQt9DoW9yWTLBHfpAr4DglsCPY98c89AUigNqinF4zTToSJViYL7
- MRQg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzNTUcoNpKIrr/rSj7zwKw7EQwfOKvhLUyLjm2hnR1gnOb720OKgQM6oMPbfgj4YMmRgbiu8O+Mn+OQ@nongnu.org
-X-Gm-Message-State: AFq9FYIFPWkIlOHB1F1W7KnXS3a8MMEdzX9FuabvmPI+Zc5opPrdjDUb
- ILp9SFBF5yzU+qhwc0n9azMhjkqJfTeZSJdzQ6k/Hym50iK+WdmLnTxSchaEOmPc0XimAlOba/i
- FajnwN2aVwUP4qKo1FbGUKOwEKJ1LiAM=
-X-Gm-Gg: AYBFou1sdhBckX5g2m0mtsioGA1TcpRi1fth309zM/uaJ+LZiGfomj55dJXkN+wSJaF
- eFUGBjb7ucxGMug5iktDJkoFc6peyDpOQ/pB3LxQr1X4iAtplt7TzDh9AlGcTjRRgBIjNlJTPwc
- CYYXtDEtS25qIT5knlzyLtwLrEnDDrRVyx9Z5CP7nJcnOqAkrtmsZIhOD5+yuVkCdYd4VN8Hs6u
- /HsKBwNZa+WlJNr5evDYHZlz/52XYqF8QJ3vPPvO/9y+d6aDZ7chuuB72hgD7OLfwDfp8sYpGAA
- 6APhkxVZhim6riPGBEbA5JI2/jfIdahvGGJPwdZKLkYj5irYoPx4WAw=
-X-Received: by 2002:a05:6102:5cc8:b0:7cb:9e72:cee2 with SMTP id
- ada2fe7eead31-7cc36905d5emr1743798137.10.1792321447866; Sun, 18 Oct 2026
- 04:04:07 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792330569; x=1792935369;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jvbpzHlx3PhD0w74lwv+VGvPz7R/D0s1maih6e/LH1c=;
+ b=I8vyY4msnBWdDov8ZSFQKGUYWgHoeMeHLe8NZk6ks4sUS8/vQDIyAWxb0koSb6sI3j
+ SuZE3UEBYfy/6w6pkC9T1UwAFGwSlHyNh/gZiFWhzhTOWZtkxwVGVoY3RLEeA2D0KMYz
+ 44DecD/E6b+sz6gAK0X/LvK0WI0UxWE2eGthWOvXY/0YIGUr2wye8ReVOWG7eHGsanJW
+ HjqZGt36DsAeZIS7bOjiEu1aGdpaHgaTXq+cRQoQGfhmS6A4+8y5qL88DqfkeVUgupBo
+ 51Bk2W3iUkGkkhEJu/UcPNha9pCfh57QvyPhyELhnoseAD5ONPCEyj7C9mcG85RSPXE6
+ pFBQ==
+X-Gm-Message-State: AFq9FYIHy2fWEldawuaHUTgDheBvHpLu70n0Xle/w/aMY4slCKZeD2my
+ RGjNRM6RDajCXPQ6yL1+AnBW8qjsSQJMMTSiWm901CPTKDFwsNYrTFtS5mpqTYjT
+X-Gm-Gg: AYBFou01c3vO45FYc4vnzWJoXKUiMLA8BXqDf9tydHCUCgtVEb/lzdWy8/BqjlIzQWc
+ kSeG3OBMgTGsWLbQlIvMuKWWOFLRPEMEQhQ/nI7vtqHP5Uv2qMhcn59U6SWSTdbrfIxG2yckEEm
+ UNzNVglpwVYWV1YD5sFAZ8Rz7MQ5Os7Qfrk2s6MWQTHiJ8gN+6RhaUJilAofEda/jtLpuH3CVaz
+ Mg4nGxK2/yk8hZC9tKYlimpMK4E+xBVJ1RWwFd/qyPklOxeVVtgArBhcRLriwz9p5b4sNnZECt/
+ QE4Ov/3D20+io3j5Qe9dWxdmReoc+XSarh4uxK9bj9h0vkgDd2/aPx5d1Jyu8qBEqgMH76KH0af
+ xhQTs7ATkWyeJ6V0tZS9SzUZ9wsJsZHP+4lMGfhX4PuvWngh7OyZMGQc9yDSLHYEctHJIW8wvkV
+ IVQTFMumgC5DJ26vqgnrTT2YWuOR9AwQhOJ4qJTMMPYDpD0m1513zI4Ng4+iPSNdxKmJdrKewos
+ UiwmLc4WeGjaCCuGlwNsH6bxCktuzztUyOUizreeFatuo8Hzp75ess6r/Lez1ZKRAGOAT8=
+X-Received: by 2002:a05:620a:2943:b0:93c:8544:6ad8 with SMTP id
+ af79cd13be357-93f29c97a9fmr827037685a.28.1792330569566; 
+ Sun, 18 Oct 2026 06:36:09 -0700 (PDT)
+Received: from localhost.localdomain ([2606:6d00:159:2900:ecfc:9d0d:b95b:11bf])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93f2a854bb7sm459056485a.23.2026.10.18.06.36.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 18 Oct 2026 06:36:09 -0700 (PDT)
+From: Marcelo Manzo <marcelomanzo@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com,
+ Marcelo Manzo <marcelomanzo@gmail.com>, Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v4 04/17] hw/net/bcm2838_genet: add GENET stub device
+Date: Sun, 18 Oct 2026 09:35:50 -0400
+Message-ID: <20261018133603.64323-5-marcelomanzo@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261018133603.64323-1-marcelomanzo@gmail.com>
+References: <20261018133603.64323-1-marcelomanzo@gmail.com>
 MIME-Version: 1.0
-References: <20260918105705.433093-1-sun4qemu@gmail.com>
- <ebea4a0e-3a70-4f6a-bd4e-0ab80f810e31@ilande.co.uk>
-In-Reply-To: <ebea4a0e-3a70-4f6a-bd4e-0ab80f810e31@ilande.co.uk>
-From: Artyom Tarasenko <atar4qemu@gmail.com>
-Date: Sun, 18 Oct 2026 13:03:57 +0200
-X-Gm-Features: AclHuK_W0XARJw37Xe0JKL-U0xaf7qN2RkEzx3oLTgYjphJEFEIlKAQ-XXgYjYQ
-Message-ID: <CAAM0arPaue5A331c7MSd_Z-C+tTZbNQes-9T-dX0Vmu8vmQyDQ@mail.gmail.com>
-Subject: Re: [PATCH v2] target/sparc: implement TTE page-size for 32M/256M
- pages
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: dpim <sun4qemu@gmail.com>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003935e5065e1b5be4"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=a.tarasenko@gmail.com; helo=mail-ua1-x932.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qv1-xf33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,552 +102,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003935e5065e1b5be4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Add a bare-bones BCM2838 GENET (Gigabit Ethernet) sysbus device:
+MMIO region registration, an out-of-range read/write handler that
+just logs, and a reset callback. No register-level behavior yet;
+that comes in the following patches.
 
-Hi Mark,
+Adapted from patch 19/41 of Sergey Kambalin's Raspberry Pi 4B
+series (patchwork series 829638) against current QEMU master. The
+reset callback and class_init() use the current Resettable-phases
+API (ResettableClass / resettable_class_set_parent_phases()) rather
+than the plain DeviceClass::reset hook the original patch used, and
+headers moved under hw/core/, both API changes since the series was
+originally posted.
 
-=D0=B2=D1=81, 18 =D0=BE=D0=BA=D1=82. 2026 =D0=B3., 11:23 Mark Cave-Ayland <=
-mark.cave-ayland@ilande.co.uk>:
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/net/bcm2838_genet.c               | 103 +++++++++++++++++++++++++++
+ hw/net/meson.build                   |   2 +
+ hw/net/trace-events                  |  16 +++++
+ include/hw/arm/bcm2838_peripherals.h |   2 +
+ include/hw/net/bcm2838_genet.h       |  40 +++++++++++
+ 5 files changed, 163 insertions(+)
+ create mode 100644 hw/net/bcm2838_genet.c
+ create mode 100644 include/hw/net/bcm2838_genet.h
 
-> On 18/09/2026 11:57, dpim wrote:
->
-> > Currently, the TTE's page-size field, Size, is 2 bits wide:
-> >
-> >      #define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
-> >
-> > That is the TTE of every UltraSPARC before UltraSPARC IV+.
-> > The JPS1 implementation supplements for UltraSPARC III and IV+
-> > describe the TTE word in tables F-1 and F-1-4 respectively, and differ
-> > in one bit:
-> > Before IV+ bit 48 is reserved and reads as 0, Size is 2 bits at 62:61;
-> > On IV+ bit 48 is Size<2>, which "is the most significant bit of the
-> > page size and is concatenated with bits <62:61>"
-> > On T1 the same split exists, szl at 62:61 and szh at 48 (T1 Supplement,
-> > sec. 13.1.2).
-> >
-> > QEMU models parts on both sides of that change (UltraSPARC III/IIIi/IV,
-> > IV+, T1, T2) with the III layout: Size<2> was never implemented.
-> > Bit 48 gets lost in more than one place:
-> >
-> > On sun4u the raw TTE word is stored as the guest wrote it, bit 48
-> > included, but TTE_PGSIZE() only reads bits 62:61: the bit survives in
-> > the TLB, it is just never decoded.
-> >
-> > On sun4v, sun4v_tte_to_sun4u() converts the incoming three-bit code
-> > (cpu.h defines TTE_PGSIZE_UA2005() for it, unused until now) but masked
-> > it to two:
-> >
-> >      sun4u_tte |=3D (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
-> >
-> > so the third bit was dropped before it was stored.
-> >
-> > demap_tlb() duplicates the same 2-bit math instead of calling
-> > TTE_PGSIZE(), so it misses bit 48 too, for a TTE from either origin.
-> >
-> > Either way 256M decodes as 64K and 32M as 8K; the guest faults on the
-> > first access past the truncated entry.
-> >
-> > This patch implements Size<2> at bit 48, where the hardware keeps it.
-> >
-> > TTE_PGSIZE() now reads bit 48 as the high bit; on parts that keep bit
-> > 48 reserved it reads as zero, so they decode as before.
-> > sun4v_tte_to_sun4u() stores the full three-bit code, and demap_tlb()
-> > now calls TTE_PGSIZE() instead of its own copy. dump_mmu() gains 32M
-> > and 256M labels.
-> >
-> > Link:
-> https://lore.kernel.org/qemu-devel/20260727233646.332875-1-sun4qemu@gmail=
-.com/
-> > AI-used-for: code, analysis
-> > Signed-off-by: Dmitry Pimenov <sun4qemu@gmail.com>
-> > ---
-> > v2: described behaviour across sun4u/sun4v instead of the sun4v
-> > conversion; no functional change. QEMU_BUILD_BUG_ON and comments in
-> > cpu.h/ldst_helper.c are dropped.
-> >
-> > This email's text -- beyond the code and analysis the trailer above
-> > covers -- also had AI involvement: current policy (AGENTS.md)
-> > declines AI-derived content outright, and even the not-yet-merged
-> > llm-usage.rst RFC would require it to be human-written regardless of
-> > any trailer. Sending as-is rather than silently -- happy to hear if
-> > that's not acceptable here.
-> >
-> > Happy to run more tests or provide more evidence if this isn't enough.
-> >
-> > Guest is OpenSolaris snv_134 (osol-dev-134-ai-sparc.iso). Firmware is
-> > the S10image/ set from OpenSPARCT1_Arch.1.5.tar.bz2, which
-> > docs/system/target-sparc64.rst names for this machine, except the
-> > MD/hv-config pair (1up-md.bin, 1up-hv.bin), from the repo below. The
-> > archive's own config only boots disk.s10hw2, capped at 4M pages.
-> >
-> > Observed on upstream 5f664cd37a, with and without this patch -- same
-> > guest, firmware and RAM, plain `boot` at the `ok` prompt (occasionally
-> > hits an unrelated, pre-existing trap in OBP's loader phase before the
-> > kernel runs):
-> >
-> >    pristine: hangs after "Loading: /platform/sun4v/kernel/sparcv9/unix"=
-;
-> >              "info tlb" shows no 32M or 256M entry.
-> >    patched:  boots to "Enter user name for system maintenance";
-> >              "info tlb" shows 256M entries, e.g.
-> >              [17] VA: 600108b8000, PA: 140000000, 256M, priv, RW, ...
-> >    Full info tlb dumps:
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/logs/pristine-plain-boot-tlb.txt
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/logs/patched-plain-boot-tlb.txt
-> >
-> > The reproduction as a script, verify.sh (fetches firmware, MD and
-> > ISO, checks their hashes, boots):
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/verify.sh
-> >
-> > On sun4u the pre-extension page sizes are verified by
-> > make check-qtest-sparc64 and make check-functional-sparc64 (sun4u,
-> > tuxrun, migration), which pass on the patched build with logs:
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/check-qtest-sparc64.log
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/check-functional-sparc64.log
-> > To check whether
-> > Size<2> is exercised at all, I added a temporary log in
-> > replace_tlb_entry() and ran both suites again: zero hits, as expected
-> > -- IIi predates IV+ and doesn't implement Size<2>, so the guest
-> > running under it never sets bit 48. Result:
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/sun4u-bit48-probe/RESULT
-> > Probe and logs:
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/tree/967a037/verific=
-ation/0002-tte-size2/sun4u-bit48-probe/
-> > 32M/256M on sun4u stays untested by this suite; that would need a guest
-> > running under Sun-UltraSparc-IV-plus.
-> >
-> > Overview of everything above (scripts, logs, README):
-> >
-> https://github.com/unix0cc/qemu-experimental-patches/blob/967a037/verific=
-ation/0002-tte-size2/README
-> >
-> >   target/sparc/cpu.h         |  4 +++-
-> >   target/sparc/ldst_helper.c |  9 +++++++--
-> >   target/sparc/mmu_helper.c  | 12 ++++++++++++
-> >   3 files changed, 22 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-> > index 31a16c2af0..1ab420d831 100644
-> > --- a/target/sparc/cpu.h
-> > +++ b/target/sparc/cpu.h
-> > @@ -307,7 +307,9 @@ enum {
-> >   #define TTE_SET_USED(tte)   ((tte) |=3D TTE_USED_BIT)
-> >   #define TTE_SET_UNUSED(tte) ((tte) &=3D ~TTE_USED_BIT)
-> >
-> > -#define TTE_PGSIZE(tte)     (((tte) >> 61) & 3ULL)
-> > +#define TTE_PGSIZE_HI_BIT   (1ULL << 48)
-> > +#define TTE_PGSIZE(tte)     ((((tte) >> 61) & 3ULL) | \
-> > +                             (((tte) & TTE_PGSIZE_HI_BIT) >> 46))
-> >   #define TTE_PGSIZE_UA2005(tte)     ((tte) & 7ULL)
-> >   #define TTE_PA(tte)         ((tte) & 0x1ffffffe000ULL)
-> >
-> > diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-> > index 4ec8799d1f..142c1c24de 100644
-> > --- a/target/sparc/ldst_helper.c
-> > +++ b/target/sparc/ldst_helper.c
-> > @@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb,
-> target_ulong demap_addr,
-> >                   /* demap page
-> >                      will remove any entry matching VA */
-> >                   mask =3D 0xffffffffffffe000ULL;
-> > -                mask <<=3D 3 * ((tlb[i].tte >> 61) & 3);
-> > +                mask <<=3D 3 * TTE_PGSIZE(tlb[i].tte);
-> >
-> >                   if (!compare_masked(demap_addr, tlb[i].tag, mask)) {
-> >                       continue;
-> > @@ -217,7 +217,12 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState
-> *env, uint64_t tag,
-> >           return sun4v_tte;
-> >       }
-> >       sun4u_tte =3D TTE_PA(sun4v_tte) | (sun4v_tte & TTE_VALID_BIT);
-> > -    sun4u_tte |=3D (sun4v_tte & 3ULL) << 61; /* TTE_PGSIZE */
-> > +    {
-> > +        uint64_t pgsz =3D TTE_PGSIZE_UA2005(sun4v_tte);
-> > +        sun4u_tte |=3D (pgsz & 3ULL) << 61; /* TTE_PGSIZE bits 61-62 *=
-/
-> > +        sun4u_tte |=3D (pgsz & 4ULL) ?
-> > +            TTE_PGSIZE_HI_BIT : 0; /* TTE_PGSIZE bit 48 */
-> > +    }
-> >       sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_NFO_BIT_UA2005,
-> TTE_NFO_BIT);
-> >       sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_USED_BIT_UA2005,
-> TTE_USED_BIT);
-> >       sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_W_OK_BIT_UA2005,
-> TTE_W_OK_BIT);
-> > diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> > index 07ba25dfce..8544de097d 100644
-> > --- a/target/sparc/mmu_helper.c
-> > +++ b/target/sparc/mmu_helper.c
-> > @@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)
-> >               case 0x3:
-> >                   mask =3D "  4M";
-> >                   break;
-> > +            case 0x4:
-> > +                mask =3D " 32M";
-> > +                break;
-> > +            case 0x5:
-> > +                mask =3D "256M";
-> > +                break;
-> >               }
-> >               if (TTE_IS_VALID(env->dtlb[i].tte)) {
-> >                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
-> > @@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)
-> >               case 0x3:
-> >                   mask =3D "  4M";
-> >                   break;
-> > +            case 0x4:
-> > +                mask =3D " 32M";
-> > +                break;
-> > +            case 0x5:
-> > +                mask =3D "256M";
-> > +                break;
-> >               }
-> >               if (TTE_IS_VALID(env->itlb[i].tte)) {
-> >                   qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
->
-> Hi,
->
-> I've run this over a few sun4u test images and it doesn't seem to
-> introduce any
-> regressions. I just need to make sure there is no conflict with our AI
-> policy here,
-> otherwise I'll queue it.
->
-> I don't think the AI policy might be relevant for such patches. Probably
-any human would have done it precisely the same way. At least I'm sure I
-would.
+diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
+new file mode 100644
+index 0000000000..a20a9e7c72
+--- /dev/null
++++ b/hw/net/bcm2838_genet.c
+@@ -0,0 +1,103 @@
++/*
++ * BCM2838 Gigabit Ethernet emulation
++ *
++ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qemu/log.h"
++#include "qemu/error-report.h"
++#include "net/eth.h"
++#include "qapi/error.h"
++#include "hw/core/irq.h"
++#include "net/checksum.h"
++#include "system/dma.h"
++#include "hw/core/resettable.h"
++#include "hw/net/bcm2838_genet.h"
++#include "trace.h"
++
++
++static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
++{
++    uint64_t value = ~0;
++
++    qemu_log_mask(
++        LOG_GUEST_ERROR,
++        "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
++        __func__, size, offset);
++
++    trace_bcm2838_genet_read(size, offset, value);
++    return value;
++}
++
++static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
++                                unsigned size) {
++    qemu_log_mask(
++        LOG_GUEST_ERROR,
++        "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
++        __func__, size, offset);
++}
++
++static const MemoryRegionOps bcm2838_genet_ops = {
++    .read = bcm2838_genet_read,
++    .write = bcm2838_genet_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {.min_access_size = 4, .max_access_size = 4},
++    .valid = {.min_access_size = 4, .max_access_size = 4},
++};
++
++
++static void bcm2838_genet_realize(DeviceState *dev, Error **errp)
++{
++    BCM2838GenetState *s = BCM2838_GENET(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++
++    /* Controller registers */
++    memory_region_init_io(&s->regs_mr, OBJECT(s), &bcm2838_genet_ops, s,
++                          "bcm2838_genet_regs", sizeof(s->regs));
++    sysbus_init_mmio(sbd, &s->regs_mr);
++}
++
++static void bcm2838_genet_phy_reset(BCM2838GenetState *s)
++{
++    trace_bcm2838_genet_phy_reset("done");
++}
++
++static void bcm2838_genet_reset(Object *obj, ResetType type)
++{
++    BCM2838GenetState *s = BCM2838_GENET(obj);
++
++    memset(&s->regs, 0x00, sizeof(s->regs));
++
++    trace_bcm2838_genet_reset("done");
++
++    bcm2838_genet_phy_reset(s);
++}
++
++static void bcm2838_genet_class_init(ObjectClass *class, const void *data)
++{
++    static ResettablePhases unused_parent_phases;
++    DeviceClass *dc = DEVICE_CLASS(class);
++    ResettableClass *rc = RESETTABLE_CLASS(class);
++
++    dc->realize = bcm2838_genet_realize;
++    resettable_class_set_parent_phases(rc, NULL, bcm2838_genet_reset, NULL,
++                                       &unused_parent_phases);
++}
++
++static const TypeInfo bcm2838_genet_info = {
++    .name       = TYPE_BCM2838_GENET,
++    .parent     = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(BCM2838GenetState),
++    .class_init = bcm2838_genet_class_init,
++};
++
++static void bcm2838_genet_register(void)
++{
++    type_register_static(&bcm2838_genet_info);
++}
++
++type_init(bcm2838_genet_register)
+diff --git a/hw/net/meson.build b/hw/net/meson.build
+index 63b0e96245..ef85b85adf 100644
+--- a/hw/net/meson.build
++++ b/hw/net/meson.build
+@@ -70,4 +70,6 @@ if have_hmp
+   system_ss.add(files('rocker/rocker-hmp-cmds.c'))
+ endif
+ 
++system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2838_genet.c'))
++
+ subdir('can')
+diff --git a/hw/net/trace-events b/hw/net/trace-events
+index 001a20b0e2..2dde33e892 100644
+--- a/hw/net/trace-events
++++ b/hw/net/trace-events
+@@ -528,3 +528,19 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
+ ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
+ ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
+ ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
++# bcm2838_genet.c
++bcm2838_genet_read(unsigned int size, uint64_t offset, uint64_t value) "%u bytes @ 0x%04" PRIx64 ": 0x%016" PRIx64
++bcm2838_genet_write(unsigned int size, uint64_t offset, uint64_t value) "%u bytes @ 0x%04" PRIx64 ": 0x%016" PRIx64
++bcm2838_genet_can_receive(const char *state) "receive is %s"
++bcm2838_genet_receive(ssize_t bytes_received) "%zd bytes received"
++bcm2838_genet_phy_update_link(const char *link_state) "link is %s"
++bcm2838_genet_phy_reset(const char *status) "PHY reset %s"
++bcm2838_genet_reset(const char *status) "MAC reset %s"
++bcm2838_genet_mac_address(const char *info) "%s"
++bcm2838_genet_tx_dma(const char *dma_state) "TX DMA %s"
++bcm2838_genet_tx_dma_ring(uint32_t ring_en) "TX DMA enabled rings: 0x%05x"
++bcm2838_genet_tx_dma_ring_buf(uint32_t ring_buf_en) "TX DMA enabled ring buffers: 0x%05x"
++bcm2838_genet_tx_dma_ring_active(unsigned int ring, const char *ring_state) "ring %u is %s"
++bcm2838_genet_tx_request(unsigned int ring_idx, uint32_t prod_idx, uint32_t cons_idx) "ring %u, PROD_INDEX %u, CONS_INDEX %u"
++bcm2838_genet_tx(unsigned int ring_idx, uint64_t desc_idx, uint32_t desc_status, uint64_t data_addr) "ring %u, descriptor %" PRIu64 ": 0x%08x, data @ 0x%08" PRIx64
++bcm2838_genet_rx_dma_ring_active(unsigned int ring, const char *ring_state) "ring %u is %s"
+diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
+index 7fe92789e8..2a4307bed7 100644
+--- a/include/hw/arm/bcm2838_peripherals.h
++++ b/include/hw/arm/bcm2838_peripherals.h
+@@ -52,6 +52,8 @@
+ #define BCM2838_MPHI_OFFSET     0xb200
+ #define BCM2838_MPHI_SIZE       0x200
+ 
++#define GENET_OFFSET            0x1580000
++
+ #define TYPE_BCM2838_PERIPHERALS "bcm2838-peripherals"
+ OBJECT_DECLARE_TYPE(BCM2838PeripheralState, BCM2838PeripheralClass,
+                     BCM2838_PERIPHERALS)
+diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
+new file mode 100644
+index 0000000000..91cf1773d5
+--- /dev/null
++++ b/include/hw/net/bcm2838_genet.h
+@@ -0,0 +1,40 @@
++/*
++ * BCM2838 Gigabit Ethernet emulation
++ *
++ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef BCM2838_GENET_H
++#define BCM2838_GENET_H
++
++#include "net/net.h"
++#include "hw/core/sysbus.h"
++
++#define TYPE_BCM2838_GENET "bcm2838-genet"
++OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
++
++#define BCM2838_GENET_REV_MAJOR         6
++#define BCM2838_GENET_REV_MINOR         0
++
++typedef struct {
++    uint8_t stub_area[0x10000]; /* temporary stub */
++} BCM2838GenetRegs;
++
++struct BCM2838GenetState {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++
++    MemoryRegion regs_mr;
++    AddressSpace dma_as;
++
++    BCM2838GenetRegs regs;
++
++    qemu_irq irq_default;
++    qemu_irq irq_prio;
++};
++
++#endif /* BCM2838_GENET_H */
+-- 
+2.55.0
 
-Kind regards
-Artyom
-
---0000000000003935e5065e1b5be4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi Mark,=C2=A0<br><br><div class=3D"gmail_quote" dir=3D"a=
-uto"><div dir=3D"ltr" class=3D"gmail_attr">=D0=B2=D1=81, 18 =D0=BE=D0=BA=D1=
-=82. 2026 =D0=B3., 11:23 Mark Cave-Ayland &lt;<a href=3D"mailto:mark.cave-a=
-yland@ilande.co.uk">mark.cave-ayland@ilande.co.uk</a>&gt;:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc =
-solid;padding-left:1ex">On 18/09/2026 11:57, dpim wrote:<br>
-<br>
-&gt; Currently, the TTE&#39;s page-size field, Size, is 2 bits wide:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 #define TTE_PGSIZE(tte)=C2=A0 =C2=A0 =C2=A0(((tte)=
- &gt;&gt; 61) &amp; 3ULL)<br>
-&gt; <br>
-&gt; That is the TTE of every UltraSPARC before UltraSPARC IV+.<br>
-&gt; The JPS1 implementation supplements for UltraSPARC III and IV+<br>
-&gt; describe the TTE word in tables F-1 and F-1-4 respectively, and differ=
-<br>
-&gt; in one bit:<br>
-&gt; Before IV+ bit 48 is reserved and reads as 0, Size is 2 bits at 62:61;=
-<br>
-&gt; On IV+ bit 48 is Size&lt;2&gt;, which &quot;is the most significant bi=
-t of the<br>
-&gt; page size and is concatenated with bits &lt;62:61&gt;&quot;<br>
-&gt; On T1 the same split exists, szl at 62:61 and szh at 48 (T1 Supplement=
-,<br>
-&gt; sec. 13.1.2).<br>
-&gt; <br>
-&gt; QEMU models parts on both sides of that change (UltraSPARC III/IIIi/IV=
-,<br>
-&gt; IV+, T1, T2) with the III layout: Size&lt;2&gt; was never implemented.=
-<br>
-&gt; Bit 48 gets lost in more than one place:<br>
-&gt; <br>
-&gt; On sun4u the raw TTE word is stored as the guest wrote it, bit 48<br>
-&gt; included, but TTE_PGSIZE() only reads bits 62:61: the bit survives in<=
-br>
-&gt; the TLB, it is just never decoded.<br>
-&gt; <br>
-&gt; On sun4v, sun4v_tte_to_sun4u() converts the incoming three-bit code<br=
->
-&gt; (cpu.h defines TTE_PGSIZE_UA2005() for it, unused until now) but maske=
-d<br>
-&gt; it to two:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 sun4u_tte |=3D (sun4v_tte &amp; 3ULL) &lt;&lt; 61;=
- /* TTE_PGSIZE */<br>
-&gt; <br>
-&gt; so the third bit was dropped before it was stored.<br>
-&gt; <br>
-&gt; demap_tlb() duplicates the same 2-bit math instead of calling<br>
-&gt; TTE_PGSIZE(), so it misses bit 48 too, for a TTE from either origin.<b=
-r>
-&gt; <br>
-&gt; Either way 256M decodes as 64K and 32M as 8K; the guest faults on the<=
-br>
-&gt; first access past the truncated entry.<br>
-&gt; <br>
-&gt; This patch implements Size&lt;2&gt; at bit 48, where the hardware keep=
-s it.<br>
-&gt; <br>
-&gt; TTE_PGSIZE() now reads bit 48 as the high bit; on parts that keep bit<=
-br>
-&gt; 48 reserved it reads as zero, so they decode as before.<br>
-&gt; sun4v_tte_to_sun4u() stores the full three-bit code, and demap_tlb()<b=
-r>
-&gt; now calls TTE_PGSIZE() instead of its own copy. dump_mmu() gains 32M<b=
-r>
-&gt; and 256M labels.<br>
-&gt; <br>
-&gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/20260727233646.332=
-875-1-sun4qemu@gmail.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">=
-https://lore.kernel.org/qemu-devel/20260727233646.332875-1-sun4qemu@gmail.c=
-om/</a><br>
-&gt; AI-used-for: code, analysis<br>
-&gt; Signed-off-by: Dmitry Pimenov &lt;<a href=3D"mailto:sun4qemu@gmail.com=
-" target=3D"_blank" rel=3D"noreferrer">sun4qemu@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt; v2: described behaviour across sun4u/sun4v instead of the sun4v<br>
-&gt; conversion; no functional change. QEMU_BUILD_BUG_ON and comments in<br=
->
-&gt; cpu.h/ldst_helper.c are dropped.<br>
-&gt; <br>
-&gt; This email&#39;s text -- beyond the code and analysis the trailer abov=
-e<br>
-&gt; covers -- also had AI involvement: current policy (AGENTS.md)<br>
-&gt; declines AI-derived content outright, and even the not-yet-merged<br>
-&gt; llm-usage.rst RFC would require it to be human-written regardless of<b=
-r>
-&gt; any trailer. Sending as-is rather than silently -- happy to hear if<br=
->
-&gt; that&#39;s not acceptable here.<br>
-&gt; <br>
-&gt; Happy to run more tests or provide more evidence if this isn&#39;t eno=
-ugh.<br>
-&gt; <br>
-&gt; Guest is OpenSolaris snv_134 (osol-dev-134-ai-sparc.iso). Firmware is<=
-br>
-&gt; the S10image/ set from OpenSPARCT1_Arch.1.5.tar.bz2, which<br>
-&gt; docs/system/target-sparc64.rst names for this machine, except the<br>
-&gt; MD/hv-config pair (1up-md.bin, 1up-hv.bin), from the repo below. The<b=
-r>
-&gt; archive&#39;s own config only boots disk.s10hw2, capped at 4M pages.<b=
-r>
-&gt; <br>
-&gt; Observed on upstream 5f664cd37a, with and without this patch -- same<b=
-r>
-&gt; guest, firmware and RAM, plain `boot` at the `ok` prompt (occasionally=
-<br>
-&gt; hits an unrelated, pre-existing trap in OBP&#39;s loader phase before =
-the<br>
-&gt; kernel runs):<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 pristine: hangs after &quot;Loading: /platform/sun4v/kern=
-el/sparcv9/unix&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;info tlb&quot; s=
-hows no 32M or 256M entry.<br>
-&gt;=C2=A0 =C2=A0 patched:=C2=A0 boots to &quot;Enter user name for system =
-maintenance&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;info tlb&quot; s=
-hows 256M entries, e.g.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [17] VA: 600108b8000, =
-PA: 140000000, 256M, priv, RW, ...<br>
-&gt;=C2=A0 =C2=A0 Full info tlb dumps:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experim=
-ental-patches/blob/967a037/verification/0002-tte-size2/logs/pristine-plain-=
-boot-tlb.txt" rel=3D"noreferrer noreferrer" target=3D"_blank">https://githu=
-b.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-=
-size2/logs/pristine-plain-boot-tlb.txt</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experim=
-ental-patches/blob/967a037/verification/0002-tte-size2/logs/patched-plain-b=
-oot-tlb.txt" rel=3D"noreferrer noreferrer" target=3D"_blank">https://github=
-.com/unix0cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-s=
-ize2/logs/patched-plain-boot-tlb.txt</a><br>
-&gt; <br>
-&gt; The reproduction as a script, verify.sh (fetches firmware, MD and<br>
-&gt; ISO, checks their hashes, boots):<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/verify.sh" rel=3D"noreferre=
-r noreferrer" target=3D"_blank">https://github.com/unix0cc/qemu-experimenta=
-l-patches/blob/967a037/verification/0002-tte-size2/verify.sh</a><br>
-&gt; <br>
-&gt; On sun4u the pre-extension page sizes are verified by<br>
-&gt; make check-qtest-sparc64 and make check-functional-sparc64 (sun4u,<br>
-&gt; tuxrun, migration), which pass on the patched build with logs:<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/check-qtest-sparc64.log" re=
-l=3D"noreferrer noreferrer" target=3D"_blank">https://github.com/unix0cc/qe=
-mu-experimental-patches/blob/967a037/verification/0002-tte-size2/check-qtes=
-t-sparc64.log</a><br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/check-functional-sparc64.lo=
-g" rel=3D"noreferrer noreferrer" target=3D"_blank">https://github.com/unix0=
-cc/qemu-experimental-patches/blob/967a037/verification/0002-tte-size2/check=
--functional-sparc64.log</a><br>
-&gt; To check whether<br>
-&gt; Size&lt;2&gt; is exercised at all, I added a temporary log in<br>
-&gt; replace_tlb_entry() and ran both suites again: zero hits, as expected<=
-br>
-&gt; -- IIi predates IV+ and doesn&#39;t implement Size&lt;2&gt;, so the gu=
-est<br>
-&gt; running under it never sets bit 48. Result:<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/sun4u-bit48-probe/RESULT" r=
-el=3D"noreferrer noreferrer" target=3D"_blank">https://github.com/unix0cc/q=
-emu-experimental-patches/blob/967a037/verification/0002-tte-size2/sun4u-bit=
-48-probe/RESULT</a><br>
-&gt; Probe and logs:<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/tree/967a037/verification/0002-tte-size2/sun4u-bit48-probe/" rel=3D"=
-noreferrer noreferrer" target=3D"_blank">https://github.com/unix0cc/qemu-ex=
-perimental-patches/tree/967a037/verification/0002-tte-size2/sun4u-bit48-pro=
-be/</a><br>
-&gt; 32M/256M on sun4u stays untested by this suite; that would need a gues=
-t<br>
-&gt; running under Sun-UltraSparc-IV-plus.<br>
-&gt; <br>
-&gt; Overview of everything above (scripts, logs, README):<br>
-&gt;=C2=A0 =C2=A0 <a href=3D"https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/README" rel=3D"noreferrer n=
-oreferrer" target=3D"_blank">https://github.com/unix0cc/qemu-experimental-p=
-atches/blob/967a037/verification/0002-tte-size2/README</a><br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0target/sparc/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
-=A0 4 +++-<br>
-&gt;=C2=A0 =C2=A0target/sparc/ldst_helper.c |=C2=A0 9 +++++++--<br>
-&gt;=C2=A0 =C2=A0target/sparc/mmu_helper.c=C2=A0 | 12 ++++++++++++<br>
-&gt;=C2=A0 =C2=A03 files changed, 22 insertions(+), 3 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h<br>
-&gt; index 31a16c2af0..1ab420d831 100644<br>
-&gt; --- a/target/sparc/cpu.h<br>
-&gt; +++ b/target/sparc/cpu.h<br>
-&gt; @@ -307,7 +307,9 @@ enum {<br>
-&gt;=C2=A0 =C2=A0#define TTE_SET_USED(tte)=C2=A0 =C2=A0((tte) |=3D TTE_USED=
-_BIT)<br>
-&gt;=C2=A0 =C2=A0#define TTE_SET_UNUSED(tte) ((tte) &amp;=3D ~TTE_USED_BIT)=
-<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -#define TTE_PGSIZE(tte)=C2=A0 =C2=A0 =C2=A0(((tte) &gt;&gt; 61) &amp;=
- 3ULL)<br>
-&gt; +#define TTE_PGSIZE_HI_BIT=C2=A0 =C2=A0(1ULL &lt;&lt; 48)<br>
-&gt; +#define TTE_PGSIZE(tte)=C2=A0 =C2=A0 =C2=A0((((tte) &gt;&gt; 61) &amp=
-; 3ULL) | \<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(((tte) &amp; TTE_PGSIZE_HI_BIT) &gt;&gt=
-; 46))<br>
-&gt;=C2=A0 =C2=A0#define TTE_PGSIZE_UA2005(tte)=C2=A0 =C2=A0 =C2=A0((tte) &=
-amp; 7ULL)<br>
-&gt;=C2=A0 =C2=A0#define TTE_PA(tte)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0((tte=
-) &amp; 0x1ffffffe000ULL)<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c<b=
-r>
-&gt; index 4ec8799d1f..142c1c24de 100644<br>
-&gt; --- a/target/sparc/ldst_helper.c<br>
-&gt; +++ b/target/sparc/ldst_helper.c<br>
-&gt; @@ -186,7 +186,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_u=
-long demap_addr,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*=
- demap page<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 will remove any entry matching VA */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ma=
-sk =3D 0xffffffffffffe000ULL;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask &lt;&lt;=
-=3D 3 * ((tlb[i].tte &gt;&gt; 61) &amp; 3);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask &lt;&lt;=
-=3D 3 * TTE_PGSIZE(tlb[i].tte);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if=
- (!compare_masked(demap_addr, tlb[i].tag, mask)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0continue;<br>
-&gt; @@ -217,7 +217,12 @@ static uint64_t sun4v_tte_to_sun4u(CPUSPARCState =
-*env, uint64_t tag,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return sun4v_tte;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0sun4u_tte =3D TTE_PA(sun4v_tte) | (sun4v_tte=
- &amp; TTE_VALID_BIT);<br>
-&gt; -=C2=A0 =C2=A0 sun4u_tte |=3D (sun4v_tte &amp; 3ULL) &lt;&lt; 61; /* T=
-TE_PGSIZE */<br>
-&gt; +=C2=A0 =C2=A0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint64_t pgsz =3D TTE_PGSIZE_UA2005(sun4v=
-_tte);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 sun4u_tte |=3D (pgsz &amp; 3ULL) &lt;&lt;=
- 61; /* TTE_PGSIZE bits 61-62 */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 sun4u_tte |=3D (pgsz &amp; 4ULL) ?<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TTE_PGSIZE_HI_BIT : 0; /* T=
-TE_PGSIZE bit 48 */<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_NF=
-O_BIT_UA2005, TTE_NFO_BIT);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_US=
-ED_BIT_UA2005, TTE_USED_BIT);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0sun4u_tte |=3D CONVERT_BIT(sun4v_tte, TTE_W_=
-OK_BIT_UA2005, TTE_W_OK_BIT);<br>
-&gt; diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c<br>
-&gt; index 07ba25dfce..8544de097d 100644<br>
-&gt; --- a/target/sparc/mmu_helper.c<br>
-&gt; +++ b/target/sparc/mmu_helper.c<br>
-&gt; @@ -830,6 +830,12 @@ void dump_mmu(CPUSPARCState *env)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 0x3:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ma=
-sk =3D &quot;=C2=A0 4M&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0br=
-eak;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 0x4:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask =3D &quo=
-t; 32M&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 0x5:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask =3D &quo=
-t;256M&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (TTE_IS_VALID=
-(env-&gt;dtlb[i].tte)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qe=
-mu_printf(&quot;[%02u] VA: %&quot; PRIx64 &quot;, PA: %llx&quot;<br>
-&gt; @@ -869,6 +875,12 @@ void dump_mmu(CPUSPARCState *env)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 0x3:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ma=
-sk =3D &quot;=C2=A0 4M&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0br=
-eak;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 0x4:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask =3D &quo=
-t; 32M&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case 0x5:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mask =3D &quo=
-t;256M&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (TTE_IS_VALID=
-(env-&gt;itlb[i].tte)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qe=
-mu_printf(&quot;[%02u] VA: %&quot; PRIx64 &quot;, PA: %llx&quot;<br>
-<br>
-Hi,<br><br>
-I&#39;ve run this over a few sun4u test images and it doesn&#39;t seem to i=
-ntroduce any <br>
-regressions. I just need to make sure there is no conflict with our AI poli=
-cy here, <br>
-otherwise I&#39;ll queue it.<br><br></blockquote></div><div dir=3D"auto">I =
-don&#39;t think the AI policy might be relevant for such patches. Probably =
-any human would have done it precisely the same way. At least I&#39;m sure =
-I would.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Kind regards=C2=
-=A0</div><div dir=3D"auto">Artyom</div><div class=3D"gmail_quote" dir=3D"au=
-to"></div></div>
-
---0000000000003935e5065e1b5be4--
 
