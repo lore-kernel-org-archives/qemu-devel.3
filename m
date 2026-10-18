@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D69CCF2C9
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B91CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 10:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIOOS-0006cJ-1p; Sun, 18 Oct 2026 06:45:32 -0400
+	id 1xIOYw-0008So-Ch; Sun, 18 Oct 2026 06:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIOOO-0006ax-Dg
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:28 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1xIOYu-0008SH-AW
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:56:20 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIOOL-0002A3-L1
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:45:28 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-8ab432273c5so8952357b3.3
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:45:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792320324; cv=none;
+ id 1xIOYs-00039u-Am
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 06:56:19 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8b09e07e149so8533057b3.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 03:56:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792320977; cv=none;
  d=google.com; s=arc-20260327;
- b=iQZ54B1jqBMLsQj6ik3GI7kxWzFxI+SJyo4q71F7aZcTeWcjhlBy+KRREg/95lBtwC
- eiJVubm5dyI02B3VTCgNBtT7aOTftMtC2rZEmIeF7tOO/LLBN9Wp6cNyACrEJOZQ/VLr
- doccV1VLsl69YqCbQuZKxzG0vo0jonwoC002PEeMEzdbRRNetCmFvd5xqKGrEJEpErGM
- x6Ocvci92M82U90+Wc2Vh7NryLydYkBL1LWI6PIeC5DBFGNg0L0K41PAxSaRcr+FWwXi
- TnKIQBnfKcI/NaQhCj88Toz68XHIk1f2fJ7u+cW9xfLC5y1lQPYo7XJtnDtjvxV6ZM6A
- sjog==
+ b=TLVw3nPZjyiuEDbrxDu9DqpcXs0a2bY2kMyIene9SHY4XG2OaQI1mrNNHrBcfxFJX7
+ ZcRLLB0nDWzROzzGtPlFLoNmlVcKnJwQYfCaJBTaV9c5Yhrif7q1C4yWptkWmfV/rrtE
+ FI0wsHyZ4qGHq+5BRkW9VjZ5/kEMxZYZLXDIbaUcFbMdmZwj1SItk9Pf6wAY/dcGQfFd
+ or24jbPw4XdEUqH/a1wzMfk9psS2JU25TGFAQuh0u5U2EAP2G73RxdKu6A0bL9DZYHme
+ JQLaA+T/Z6Ze4RGK69Folf7AVJjjPql/CxaQMSQwm1VsK7OFrPbw1nXcCTp5JpRyOeQn
+ VJNQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
+ bh=QANdJ9Wx0Qdp3s9+/Wbyon45Q4YDAQdyvgVAf7Indvg=;
  fh=dHN1FZJpb1BHRtRBDcpEyrvNB3hUuCjyQs5YK6bCL1Q=;
- b=SnbCPxiset2eDPhpodbe0F4OdmS5yhWZdj+O1Xe1dvGab6Dn4faBW2ZfsrmXLyfx0Z
- u5/3pJ0G7HM9f5gmZXPKYnr9m9P64k4Cfft4WSvBs3AcEH5tvKs3QR6Ck5UN64vqJSlL
- tAB2CrPHkeP9r52kNqWyfmuv/BrvbR+cuo/SDhonbCFT4VlWoDKVaIQTcSgkjH2tMia2
- it/gqYq06gVIJY1NHoxc6Fo/F3E333oT+LW/EhtJ4gq8CMHmTG0shbwmibnww3ACILR0
- jsJfMtn0MFokt+uWl1ySSL6ZJnrjabWCeCW+85Ssd9xsd8ve4aaCHZ6dHIJ5nlulRb/m
- gDkQ==; darn=nongnu.org
+ b=JxauN9Jx9NRg5Sse4AYFc0i95mah+o6+183N7bp5YSsAF1FvZzqSRwkpolNj7hnwuz
+ 2IHi09NPN8LnY6YN/Rhg2nKlU8nphGBYp0MmlhcmVGmgj8mOe7HkAEgA1RfUd/xhYGZP
+ kGHT1ECGGL87Vubc/8baRyLsc3TIhM3LeHF8mbPU2y0mySlZtn/uFPqlKJShxpTS3L8c
+ tmp6mGIEQaqK7StkTwE0l8e/rAGeDJnhZjTtsOUzVDfoQRyk2teB+NrVYjW9o5ywx1qS
+ ITbAL/J/gZvSJTSCzw3e1ZOXNISLRNtQx5VAQll4qsBEXnngor3H4DB4lcWlKWiQNom0
+ xhrQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792320324; x=1792925124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792320977; x=1792925777; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
- b=IVUGKFL82j5y2Y3OR6ofj2G/R9ERtR8KwYCFOtpjTT4jTPGQ+S82lM3bxGaXKvL+Ks
- BzDah3a8g+C7RhyD3NA7uWTKzoJE23BKCXQ4FSo5+v2QC1W+nuBX5hJWp2SBZFoOheu/
- RvijUHwudw3PDo3dGnLCmHuqCXXS585MKsBOOaeTeyQ+6vJlNNuFGUHyq7EJvZTMtuwl
- 6zsNK096g4FMtRAUIEQzbONVE59B9KSGS3HEROWnDf+wmzdfmRZKOvWKxl8YJGI+TdI3
- EMiiucgvFdci8KqR1ZcRPntIcVUvA5EN2xvgjYlGIXj2SitWTeCcKO25xJsxM0X0iVqr
- D8+g==
+ bh=QANdJ9Wx0Qdp3s9+/Wbyon45Q4YDAQdyvgVAf7Indvg=;
+ b=c30eaEoRYRBet5jMKR/8V80+jCLVbuMKTB2F8u1Gy9RDehXLn0km/3bQsr5X2Gr4jA
+ XeMY7ybQGDJZ3mKLFXd7PbLYMhNUgrc7DNoLzxDA/cbEzjT5A39JZq2dbBlmek0r6jpb
+ MT7IkRAxBoeL4GakKOg2IXkgxAcHkGbJEDIex8CJyWssJYTk3kZTSZRMwDtvRupG8Lsn
+ 6t8KH7DxkN7gu50ND0yhpbOjSWPW8GwfKNBSD18QHID1+VNG/wNVBvJrjtQSRCduKwQJ
+ DYHAyuZVvieiFMxIv7fG3LPPAf3D8rT5i4pApRNnPgTi9tg/cphjczu8NoSYHsfa5aan
+ sjsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792320324; x=1792925124;
+ d=1e100.net; s=20260707; t=1792320977; x=1792925777;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DDZwfz0oJ9cj7LCVcAOnZSAtyuxKGOxCV5kvOoYqfW4=;
- b=pZm2d2wXYY7z/YvO1EbKr2DvhJS3EtmMNmkzUoUhPknQssDVX84z/0cJqa6g9tS+os
- oZjlpG6qgTjPJpvxmoXUBKdV6C+2LlPVMaeawS8np6vzYmOkIkcRHRUiGCkX5/z5mjbK
- eWyFJPTiNQ+WGX3uh3v4FCMCDFU0vFOg/v2ZBlUUjabgvvQubzlEdAJXaaPf+5saDy1/
- oy8mUGXnixXbtAN76mcLl6BP48uJQ9NDSPYosHGaH0KtMqV9lL62v8ghCflMu+JBv74K
- 6AGC5H/UXJwLvb7wJJqgoBJExPtmvQku+PyEOrn4dA0b/D55VZcc2ahm/I47/vxS6VQ+
- 6DEg==
-X-Gm-Message-State: AFq9FYIGNOtDn37tN/iOx51fNjc33q+BLTn4gHoCZXb74OCD6LKHCPzg
- jZaUkwccBTgBehRPkuF2OLiTmbywtxrrZV8CR6dxqu9Urs+HohGukEfm0lsRoHXSYXIaLaD/fV6
- 2XccnKSJX956SDYoO7is07znvX+9E+yvjfXRWtOUxxg==
-X-Gm-Gg: AYBFou0mKLN6SvSOI2Z3SoTN8yEWztUN3Ue5v/5ELkz0Zsk/eh8mrNJnBlEy5SmcKt6
- hnfWQHz4Poda9dyvf1fX0ZKrZceJH1ySqWddMtcmJsLPCbIYyNy21W3a7SLU/vTcF14pz0m4ex8
- 9rSC0rcKe5v4QG8SdrmwYW9SgVwGfmmqBUMjFFb28AkEXGtbNieHR1cyNnf4UpaXbtOnF/R3orZ
- hS+T4QcAR2/VAKbOLK8cHL6KRQbTQw/A6nV0rXxwlD31scBjmRvElEsitdn3RvH4FC9r4Ls3++6
- 2UVzCTvrlyysJK5cc/qV8W9EkHgWjgkN47BuFsQc+t+9z5WdCbv2Anvw9KvE0Jj0td//K5LNoS7
- wf/RvX6FcWyEmkayoOuCJvXqgoY2k19b6xb3nnag=
-X-Received: by 2002:a05:690c:dd5:b0:87d:b776:c659 with SMTP id
- 00721157ae682-8b0f214022emr14634037b3.11.1792320324161; Sun, 18 Oct 2026
- 03:45:24 -0700 (PDT)
+ bh=QANdJ9Wx0Qdp3s9+/Wbyon45Q4YDAQdyvgVAf7Indvg=;
+ b=AzBtvAQ7z0vaj89b9rK0I4IkVLl+7BbkPy6Lg2JG0y08nei2CBmyDFarSB5ffi8NFU
+ 1mONgk06BuxzK+27EME9aQPV1ZR+W5WmRhyhM2h2pMv1OjUx4UntXms0XquTrhs0W3yy
+ XnMeFkFTw54SG1X/6LzrXFxw3kGVlG7L7IoREFVmQmpyq6pf9QUJvzxxCVG/Xq6qdIfH
+ GKXK7MwOagZLKa3MZshRvUGhx/lfJmTNY9YIZpF7FILFnl56Kh/GXBXRJ1Mrs2YgPWG4
+ LxcCGn+7vGXYTo/etaizTAM/fYOO512uPJ6GcnoTMebzur0JOKOi42F5TRdf+2bIH8+2
+ XtPQ==
+X-Gm-Message-State: AFq9FYI939Nsmz5Lg7NHcx0xfQiagD6p0rbFaRty4dVyHpl1m8SgXUzc
+ maHmttzIvn92UsPhfSXDKRAJQCfr8edezewkYRx0vIN5swIx2TBJMFGIOnnI6ryERzO8u6+iJCu
+ yTh4IRIF0INA+pSds+JinDB24vHUQUtlBQqXoRer/VQ==
+X-Gm-Gg: AYBFou3st+RLjYaU3RLaXZ+1WuZ7p/HVWC//KoxPtPPK42Hjf4OnoGEnggAz+C/iPfe
+ sxaWaHgK6SLXTyQUdKcYG3PBxtkEEfI0UZRknF9oCwTXORkl8xjz98PU7c2ml1/E9xy3+S0CISj
+ ZTK4Oj5w5y46ReVm8y2PbC80m+vDznBclUtOlUM/Q9I8jNnhZC+0v3Fzyv8IaNtmJLkjP2O4uB4
+ CzCUHC6k7qKLMY6AaAnTNXPqQcqFUNsamVtcD/RFyXOk04JlV4jjDqYDAH/AfxMaLJ1jCLuLERA
+ JphGJPrWvGA9cdU1jRfQ/lLdlQS5h3orz/i3+I+kYeE2y52QvK2nTyNSGFoIsmysB0GjxJ1mllv
+ 1mWEWy7qXLcbzCISlHcP2w17NsTUhsZSGUN2zQ7VE
+X-Received: by 2002:a05:690c:e20d:10b0:8b0:9e07:d8b3 with SMTP id
+ 00721157ae682-8b0f21dc83bmr10084897b3.48.1792320976603; Sun, 18 Oct 2026
+ 03:56:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260918101158.42101-1-corvin.koehne@gmail.com>
- <20260918101158.42101-2-corvin.koehne@gmail.com>
-In-Reply-To: <20260918101158.42101-2-corvin.koehne@gmail.com>
+ <20260918101158.42101-5-corvin.koehne@gmail.com>
+In-Reply-To: <20260918101158.42101-5-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 18 Oct 2026 11:45:12 +0100
-X-Gm-Features: AclHuK8tuzheOpj_BLQlx4udrGn780m2i4dg_04pgAOQKjT5w-HjW_ngWY39jdU
-Message-ID: <CAFEAcA8jwp0OJO_8v_06hBm0nsWydxt1NuQ6b_0csKL4UkLf5Q@mail.gmail.com>
-Subject: Re: [PATCH v8 1/7] hw/misc: Add Beckhoff CCAT device
+Date: Sun, 18 Oct 2026 11:56:05 +0100
+X-Gm-Features: AclHuK-HZKcyf6s8gcu18mFgDkRq1dyy41wbK1FpU5J5BM9Bw5InPgJ6piSwZfQ
+Message-ID: <CAFEAcA-XezAELu7b55coyvBn975+SKtZn=7zmBaMj8aELmNxEw@mail.gmail.com>
+Subject: Re: [PATCH v8 4/7] hw/timer,
+ cpu: Add Clock API support to A9MPCore timers
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
  qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -100,8 +101,8 @@ Cc: qemu-devel@nongnu.org, Corvin Koehne <C.Koehne@beckhoff.com>,
  Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,73 +130,27 @@ wrote:
 >
 > From: YannickV <Y.Vossen@beckhoff.com>
 >
-> This adds the Beckhoff Communication Controller (CCAT). The information
-> block, EEPROM interface and DMA controller are currently  implemented.
+> Add a clock input to a9gtimer, arm_mptimer and a9mpcore. a9mpcore
+> distributes the clock to the other timers. If no clock is
+> connected, falls back to 100 MHz for backward compatibility with
+> existing machine types.
 >
-> The EEPROM provides production information for Beckhoff Devices.
-> An EEPORM binary must therefor be handed over. It should be aligned to
-
-"EEPROM"
-
-> a power of two. If no EEPROM binary is handed over an empty EEPROM of
-> size 4096 is initialized.
+> Frequency calculation now uses the input clock and prescaler
+> values according to ARM Cortex-A9 MPCore Technical Reference Manual.
 >
-> This device is needed for the Beckhoff CX7200 board emulation.
+> More information about the A9MPCore timers can be found here:
+> https://developer.arm.com/documentation/ddi0407/c/timers-and-watchdog-reg=
+isters?lang=3Den
 >
 > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 
-Any progress on availability of a manual/datasheet for this device?
-
-
-> +static void beckhoff_ccat_dma_write(void *opaque, hwaddr addr, uint64_t =
-val,
-> +                           unsigned size)
-> +{
-> +    BeckhoffCcat *s =3D opaque;
-> +    dma_addr_t dma_addr;
-> +    uint8_t len;
-> +    uint8_t *mem_buf;
-> +
-> +    switch (addr) {
-> +    case DMA_TRANSFER_OFFSET:
-> +        len =3D s->mem[DMA_TRANSFER_LENGTH_OFFSET];
-> +        mem_buf =3D &s->mem[DMA_BUFFER_OFFSET];
-> +        dma_addr =3D ldl_le_p(&s->mem[DMA_HOST_ADR_OFFSET]);
-
-If I'm reading the code correctly, the dma_memory_read/write
-accesses to mem_buf can't overflow the s->mem array because
-len is at most 255 and mem_buf isn't close enough to the end
-of s->mem for a 255 * 8 transfer to be able to overrun.
-But I think it would be helpful to add an assert() here for the
-benefit of readers and static analysers alike, e.g:
-
-    /*
-     * The DMA buffer is placed such that the worst case transfer
-     * cannot run off the end of the mem buffer.
-     */
-    assert((mem_buf + len * 8) <=3D (s->mem + sizeof(s->mem));
-
-> +        if (s->mem[DMA_DIRECTION_OFFSET] & DMA_DIRECTION_MASK) {
-> +            dma_memory_read(&address_space_memory, dma_addr,
-> +                            mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED);
-> +        } else {
-> +            /*
-> +             * The write transfer uses Host DMA Address + 8 as the targe=
-t
-> +             * offset, as described in the CCAT manual Version 0.0.41
-> +             * section 20.2.
-> +             */
-> +            dma_memory_write(&address_space_memory, dma_addr + 8,
-> +                                mem_buf, len * 8, MEMTXATTRS_UNSPECIFIED=
-);
-> +        }
-> +        break;
-> +    }
-> +    stn_le_p(&s->mem[addr], size, val);
-> +}
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Also, something in this commit has broken the functional test
+for the realview board, so "make check-functional" fails
+because the boot of that board hangs with no output.
+You can run the individual test with
+QEMU_TEST_QEMU_BINARY=3Dqemu-system-arm $BUILDDIR/run
+tests/functional/arm/test_realview.py
+(it won't have a timeout applied like that, so it just hangs).
 
 thanks
 -- PMM
