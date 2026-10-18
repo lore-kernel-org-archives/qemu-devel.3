@@ -4,87 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D0BCCA490
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 09:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54266CCF2C9
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Oct 2026 09:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIN9P-0003Oz-9N; Sun, 18 Oct 2026 05:25:55 -0400
+	id 1xINL1-0004uB-P2; Sun, 18 Oct 2026 05:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIN9L-0003OS-2O
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:25:52 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xINL0-0004tw-3Q
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:37:54 -0400
+Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIN9H-0003Za-5X
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:25:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=5FOXH990qWfzOAhWdU/N7mHiHb/OsolU1Dpk6ZxzOao=; b=oe+P4xeHRKJlxkpZL2dWRYBFzv
- 22e8gHpvndT3x8Qxu3rPNkTgaD91vFWJVQmrn7Hrb+JZVhdJFkh3acNhc75rpsXwq28Er9V+z24PE
- 9n9rUZ0PDin3lh9L0KQ4H86Wbv1RpyblJYhnjVZPxPXIxV+ghhC3u4hN1b7uW+HvJ2U3ZPrIDhIV0
- VF0g2tp2p9IbfXbPMr9+RKdjpETEhoOJzmNI0+CXxXu37zg5BTI2Vxm2HBhzCJg9SyLgVBOtgkL72
- W+CsLUxI22Exxj7nVXDJPpMfGLcsmN5HvPX2dn6Xtih0De2qvBWBHnvrWfWElgsqFZZTomZX/1UWF
- U3QCPVw5UmGF2sVpYys+Bjaj49S4OMygp2gQMgSGtY+aLJBhdfMPCXF6opEJ2QYjigf/fJY9+gvYb
- rbIBGagMKtb0HnyEL2leb5t4tBTt8XVzICTOPhfEs4qth4qiZVBz6RvMPoMvUncFS8+YlVxuFiwDW
- tlEushpdkWQ1MxhEJzYTwv6lBMGJxWMtMpJ3o+iwJz/DIb4bLHSpKPzJj4hQ1W3CftzIqtOpPAHL8
- fGMaFKEpNTgNnnUrSSIDE/IW9cNC/SrqvKjmxNA3iWOgisfOh6NszUv31wt6383jSPM9YBD4qoZ3Q
- zGtXxqlBA3yiLbGpHiw01ldD9T2fkGqTRGEfjFI4g=;
-Received: from [2a02:8012:2f01:0:7620:997c:c9a4:6fba]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xIN8Z-002N3r-RO; Sun, 18 Oct 2026 10:25:04 +0100
-Message-ID: <4d098749-fc9d-46c8-99f8-67d6414279e9@ilande.co.uk>
-Date: Sun, 18 Oct 2026 10:25:43 +0100
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xINKy-0004GD-EQ
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 05:37:53 -0400
+Message-ID: <73ecbee134fe943699fcc1c03476a04ed1fc25bc.camel@itx.no>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
+ t=1792316262;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VVa307vp154R+RR/9rjgl03hzDnUUr44JTX1nBF2Epk=;
+ b=dkCtaoC6zfKAtCPHEF+o+paV0bLQxqZp6/55r9H8aqygIDv7EfCo8Ikx1kVbrY7qdAXiQP
+ AXfRrPoBHDK7GLvo2t7THilEh272EQaEi/3xOHAKyu7hA8IxoWBunp1JX0RTW3cNV2mvlp
+ TVyWBCMLRJPWGUCjr7yuuCwXbeUZ8AI=
+Subject: Re: [RFC] target/sparc: crypto instructions for Linux kernel testing
+From: Stian Halseth <stian@itx.no>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Richard Henderson
+ <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Eric Biggers <ebiggers@kernel.org>
+Date: Sun, 18 Oct 2026 11:37:42 +0200
+In-Reply-To: <1c31ff8b-4a61-434e-9c85-ca70194040fb@ilande.co.uk>
+References: <63d84da88caec4176900e535116d64b1c4cffffb.camel@itx.no>
+ <764a9ecd-6856-4309-9ae3-8f878a9b1d8a@linaro.org>
+ <0fe42d81618fc6e7a229c9c3efcbf9310987f89d.camel@itx.no>
+ <1c31ff8b-4a61-434e-9c85-ca70194040fb@ilande.co.uk>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+ protocol="application/pgp-signature"; boundary="=-hul45SC8jkBp4tf+1eRt"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Frode_Tenneb=C3=B8?= <frode@tennebo.com>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260919-add_hostid_sub-properties-v1-0-cc1667c0a8ad@tennebo.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260919-add_hostid_sub-properties-v1-0-cc1667c0a8ad@tennebo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:7620:997c:c9a4:6fba
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/3] hw/sparc, hw/sparc64: add hostid=/machineid= -machine
- properties
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
+ helo=mx.itxnorge.no
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,74 +65,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/09/2026 15:56, Frode Tennebø wrote:
 
-> This series adds "hostid" and "machineid" as -machine sub-properties
-> for the sun4m and sun4u/sun4v machine families:
-> 
->      qemu-system-sparc  -machine SS-20,hostid=0x352e09,machineid=0x80
->      qemu-system-sparc64 -machine sun4u,hostid=0x352e09,machineid=0x72
-> 
-> Background: these machines report a classic 32-bit Sun "hostid" to
-> the guest OS (as read by hostid(1), and historically use by some
-> software for license checks), built from two independent pieces stored
-> in the emulated NVRAM/IDPROM - a fixed per-model machine-type byte, and
-> the low 24 bits of the machine's Ethernet MAC address. QEMU already
-> reproduces this scheme, but until now neither half was settable from
-> the command line: the machine-type byte was fixed per hwdef, and the
-> low 24 bits always tracked whatever MAC ended up on the emulated NIC.
-> Both properties default to that existing behaviour when left unset,
-> so this series is fully backward compatible.
-> 
-> Patch 1 adds a small shared helper (hw/sparc/sun_hostid.c) rather
-> than duplicating the property getter/setter logic between the two
-> machine families: a generic SunHostIDProps struct that a machine's
-> own instance struct embeds anywhere, located via byte offset, plus
-> two functions to register the properties on a class and initialise
-> an instance.
-> 
-> Patch 2 wires this into sun4m, via the existing sun4m-common
-> abstract machine class.
-> 
-> Patch 3 wires it into sun4u/sun4v. Since sun4u.c had no shared
-> abstract machine class before this series, patch 3 introduces one
-> (sun4u-common) as the parent of both "sun4u" and "sun4v", and
-> registers the properties on it once - both machines pick them up
-> through QOM's class-hierarchy property lookup. The "niagara" machine
-> (hw/sparc64/niagara.c) is a separate machine family that does not
-> use this NVRAM/IDPROM hostid mechanism and is unaffected.
-> 
-> PS: This is my first patch set for QEMU.
-> 
-> ---
-> Frode Tennebø (3):
->        hw/sparc: add shared sun_hostid helper for hostid/machineid properties
->        hw/sparc: add hostid= and machineid= -machine sub-properties
->        hw/sparc64: add hostid= and machineid= -machine sub-properties
-> 
->   docs/system/target-sparc.rst   | 23 +++++++++++
->   docs/system/target-sparc64.rst | 22 +++++++++++
->   hw/sparc/meson.build           |  1 +
->   hw/sparc/sun4m.c               | 55 ++++++++++++++++++++++----
->   hw/sparc/sun_hostid.c          | 88 ++++++++++++++++++++++++++++++++++++++++++
->   hw/sparc64/meson.build         |  1 +
->   hw/sparc64/sun4u.c             | 74 +++++++++++++++++++++++++++++++----
->   include/hw/nvram/sun_nvram.h   | 11 ++++--
->   include/hw/sparc/sun_hostid.h  | 48 +++++++++++++++++++++++
->   9 files changed, 306 insertions(+), 17 deletions(-)
-> ---
-> base-commit: f8296b816fabd370307cd22b0270b610fc0fa279
-> change-id: 20260917-add_hostid_sub-properties-473a0d2ea35e
-> 
-> Best regards,
+--=-hul45SC8jkBp4tf+1eRt
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the series. Just out of curiosity, what is the use case for this? Normally 
-people want to change the hostid for licensing reasons (i.e. so that the virtual 
-machine matches a real one), but I'd expect that to be already possible?
+Hi all,
 
+On Sun, 2026-10-18 at 10:16 +0100, Mark Cave-Ayland wrote:
+> On 10/10/2026 09:30, Stian Halseth wrote:
+>=20
+> > Hi Richard,
+> >=20
+> > On Sat, 2026-10-10 at 09:30 +0200, Richard Henderson wrote:
+> > >=20
+> > > When I implemented the VIS{3,4} stuff a couple of years ago, I
+> > > tried
+> > > to add a newer cpu (though I forget which model).=A0 I couldn't get
+> > > a
+> > > kernel to boot with that and sun4u, so in the end I left the cpu
+> > > out
+> > > and left the extensions as plain cpu features.
+> > >=20
+> > > The biggest problem with sun4v is that it's incomplete.=A0 It has
+> > > the
+> > > most promise as an emulation platform because it is explicitly a
+> > > hyper<v<isor platform.=A0 In the ideal case, QEMU would not
+> > > faithfully
+> > > model the hardware, but would instead model the hypervisor
+> > > interface.=A0 Which would make lots of stuff far easier and quicker
+> > > to
+> > > emulate -- most notably the TLB.
+> >=20
+> >=20
+> > I agree. I looked into the sun4v hypervisor first, as that sounded
+> > like
+> > the ideal approach. I did however come to realize, as you say, that
+> > it
+> > would be a lot of work. Also there is the requirement for bundling
+> > the
+> > OpenSPARC firmware and building a boot image (no -kernel), which is
+> > a
+> > bit overkill for kernel testing.
+> >=20
+> > Based on that reasoning I've already done some experimenting, by
+> > writing the crypto code for sun4u. Much of the code would be shared
+> > either way, so if the sun4u approach was rejected, I would still be
+> > able to use much of it.
+> > I've managed to get it working well enough to exercise the crypto
+> > tests. It's not in a upstreamable state yet, still work in
+> > progress. I
+> > took some shortcuts just to get to a proof of concept, and I wasn't
+> > sure it would every be finished with this approach.
+> >=20
+> > >=20
+> > > But it's a big packet of work and no one has done it.
+> > >=20
+> >=20
+> > Indeed, and much more than what is needed to achieve the goal of
+> > getting the crypto tests running, so would be out of scope for me,
+> > at
+> > least.
+> >=20
+> > If you would be willing to accept a contribution based on my
+> > described
+> > sun4u approach, I could spend some time cleaning it up and run more
+> > thorough tests to iron out any remaining issues (which I'm sure
+> > there
+> > are).
+> >=20
+> > Mark, for this to work Linux needs a hwcap-list property on the cpu
+> > node before it uses the instructions. =A0What are your thougts about
+> > QEMU
+> > passing the list in a fw_cfg file, with OpenBIOS adding the
+> > property in
+> > cpu_generic_init()?
+>=20
+> Sure, I think this seems a reasonable approach to allow people to
+> exercise various=20
+> parts of the instruction set until someone manages to come up with a
+> full sun4v=20
+> implementation.
+>=20
+Thanks, I will continue working on the qemu side whenever I can
+allocate the time.
 
-ATB,
+It's work in progress, but I will report back when I have something
+that I think is ready for upstream review.
 
-Mark.
+Maybe I'll draft some patches for OpenBIOS as well, along the lines of
+what I'm suggesting.
 
+Best regards
+Stian Halseth
+
+--=-hul45SC8jkBp4tf+1eRt
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCatSTZgAKCRDoeAEuJe36
+VtF5AP44tVkDva9evMI/Qb/sQkY5UdHp1m2kYfz8IjJ3p0Y9/wEAk3GrH1PMN8mT
+4C2R1DfefnbCqjRXwJ7LkX1oocXznAI=
+=apM2
+-----END PGP SIGNATURE-----
+
+--=-hul45SC8jkBp4tf+1eRt--
 
