@@ -4,114 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D431FCCF2D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 01:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABAB8CCA490
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 01:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIceH-00076U-5P; Sun, 18 Oct 2026 21:58:49 -0400
+	id 1xIceP-000781-Hj; Sun, 18 Oct 2026 21:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xIceB-000762-83
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:58:44 -0400
-Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xIce9-00075u-R0; Sun, 18 Oct 2026 21:58:42 -0400
+Received: from canpmsgout02.his.huawei.com ([113.46.200.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xIce9-0007dl-Ek
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:58:42 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 12F327A0190
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 21:58:40 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Sun, 18 Oct 2026 21:58:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1792375119; x=1792461519; bh=9BhPMI9MMmLcJzZAap+ipvJSNsCSDzCT
- Q90D34CN4RI=; b=IVTBcJe5RVs6Vf9Fd2N9F+h+cQj7ddT+p50CmxOrUP1CGrqE
- DfBkDLSZyM4e8sPYeGyyktzfldi0RDi3Vt4H4zWol1lHmGR0f73DzLG0GyGsaZft
- quz7h7toTRSEi+a+iNF1JNgdEtruBfDbxO3iZYCf8ykwDOq7GsOwGD/YzfZCXz0g
- PVl03Fs0sRRAop6LyLT20JSsg1vPv5h4YthE7NNWlouxMzjyStKUinLh5/uVBBVj
- nGb6EqjH1CznszSudaeqKDlUra1BwqXCvKblujQ3mUu34MkzAkZMAqBUesfC1V4A
- 8QdON8e2GOe3/uUgkhwAZQaM+L1oiOKeIcxPXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792375119; x=
- 1792461519; bh=9BhPMI9MMmLcJzZAap+ipvJSNsCSDzCTQ90D34CN4RI=; b=p
- jfCLKLqTqmccK/oZDFZJ9I1rf5p1lZvqWJHid6A6ACuwVQ5CU2efH/cwybAn5AWU
- KOglnjzGLMxxv0Hlv+J7keducWkDdU5Ax9rCstXBSzRZa1AZFhGOlARMYF4VU/tn
- iMHI6ldK4mYUscYQlFk5Ifc7xZKA8/Jc5nS+LCr3CzSsEH5UzTc/+P67YN4O8uKG
- r9FNgyNsdzupEZ6YWB2bvT32nTCdV+u2srhABJqeOug8IVM9cFTVBrB/4OfyX4n2
- OJKoiEgV241PKD0NBTJ4I5i3uoNxBXOxXO+3vSfWMDXQXHCRaBaho8BTaF6jbWGH
- 6HspGz51NrXldjs3FYUng==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792375119; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:aAHtgGi8H5UBqDIMvN6MwqclIZfNmXP8a9ajqGJ4P7XIpX2
- FOByvkKyG+ci71cdMU3YaUpkaCJWOPtJaQI3qd9glCNjIZVEgrU7u+ReEByzMkAu
- kB/xUc4+Cp6okuCJ1TeDlVQ9bPcQV6Mu5SSCuhR1uhNHuiNhKEHQWt/OFDHVYRAd
- nn7WZDGQgj72oE4wce8d/I+lLnLByQVtDt0dM2lS+Q8n8vewupwy2Rh3syGU+f31
- 0mvvJCyMV3AW5B5Zpw9FHJeGDnWITAYATDHFjiet6ks43uPMJ3HNCVhZxUiGYPAf
- T+TzDPWDHoA2nlg8JdiB/pqQ0PgPRKKIdxrE5mg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
- repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:Kmj6j0ZpzAz8tB2sajVvTCV7B+13r7kkJnq4otycZis=:9BhPMI9MMmLcJzZAap+ipvJSNsCSDzCTQ90D34CN4RI=;
-X-ME-Sender: <xms:T3nVaj4SWPgBCyPPvy1XKHSY_PPXe2B6GWnTxesyDGvJf5baZiE90A>
- <xme:T3nVah3SB3f3vPk-NVAQrzhVW1PvTJgGiYT0oCFPD7v3ZsaJHPmFJy9T9z7INSvmF
- EarYXbYAzdzMPUr5LS4MV7gxvSQFY8wGFKfTBbLz2xlG-wZqBLj0R2T>
-X-ME-Received: <xmr:T3nVamDMD-Ru-ZdH4htWfTWYPXWFEo6aXrQhxEzpuC7fYZFrEwEY5wTfEl1yOKbgnSSGDYv_AacVr_lzOD6E5MCvX54>
-X-ME-Proxy-Cause: dmFkZTFX4wfXwZC4MkPHf8AxAoVgacCPqVnRTej8apYP66ZQDBKoNh81irJvnAwNA0NUG9
- aq0nd9p5/NH9YaeXxDY0upwATpbQayswhkg6CyGmuq5t7PrExSHraRcwh9V5Irh8/RlJ8c
- XwweX9w0QO1X/2ZI9tPWpehthie1GKGfz508Tf7jVlgMMdyH3PPwLvfWG7rzcrlDuGp9bC
- Gq8dMwzj8PttkiAWGeUW/susYQsDVrCYWbKeXINRhwoh4WXUEf5bmA1CxiUPfJvDoSTMNk
- ahjEdN53Lo1z9Z3gWmxVY6RIaPktG+qqEgo7FkGvXvkTel7uxLwzxHlruzSlTseqNs+wif
- DoiFjemp5HANmZBf3aaXQorVx92s44AW8/KziplRP8KpxX1CIi/rLlQN4IY3JV2nMMf+jj
- 6AP8nyyyE939Tzqy67I2lWlTJnMMw3qfTrp7esytdcqQOgryWUT2ECoCiZiiWbYiYB+eHt
- C3gitw7MQUpJW+hNfzfPhyv87t2rfOajrt9lSl9IS6luXe2FNdAV2Okc2exeDM6q61rhbQ
- U+CZMHXtwF4NAA2/WlS/ov/WqLEnz4SQZVL4REES7St+19CHwYhNTvZMbQgWaP/CNWgzgx
- 3750eZNmI2I1JWASzX2RSqHhyhG/BN2bU5bhoSjRnpzuPTfi/DUZlSYpcTYQ
-X-ME-Proxy: <xmx:T3nVakOGSezOBFyLT4wzdZnea1dNP97yTIWF0yxs7b2SG9tAGIu2cQ>
- <xmx:T3nVaja3ddJdpOkrfq_sNYfRWJGEkYDnALz67vIEMChKFuHDrKXYrA>
- <xmx:T3nVarv1bvxiIGQxSiEDUaGZ6mVm1V55_1m15Mg98SC4O_UT7lLI-g>
- <xmx:T3nVatNx3kRYvfEwx2Mnbi8TYdoQm34axuq6cdoG5Zp5xMEtdpM2WQ>
- <xmx:T3nVavFHeFK9RcV5cIaGT3tIQj6gAFc9Uhbog_XisQ_V1TV49auMnJdh>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 18 Oct 2026 21:58:37 -0400 (EDT)
-Message-ID: <552426ab7df22d5d01079818663d7844405a6990.camel@alistair23.me>
-Subject: Re: [PATCH] docs: Remove stale chapter on RISC-V 'Z' CPU properties
-From: Alistair <alistair@alistair23.me>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, devel@lists.libvirt.org, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>
-Date: Mon, 19 Oct 2026 11:58:35 +1000
-In-Reply-To: <20261018230741.6560-1-philmd@oss.qualcomm.com>
-References: <20261018230741.6560-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xIce6-0007bq-4N; Sun, 18 Oct 2026 21:58:41 -0400
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=JwGY3r1v5cG1PUwqtuk03i32AyWJXqANzH+KJKEIxlU=;
+ b=ico/C3Y/Deh4Y7ijwJlUxk/VqGS5Bn+yz44mJvlqVYhl2b2fdAzPBcfAN6xpgVkei/kbJyNbg
+ qLAABquOItY81g0dDhSa3IJimBj45TSRk8cFxQINbRFKQp25kFLhOJIOdyX98+UcblRvxU+Le6b
+ klqvlxz1Bq5VJR7ArYd6Q4c=
+Received: from mail.maildlp.com (unknown [172.19.163.0])
+ by canpmsgout02.his.huawei.com (SkyGuard) with ESMTPS id 4j7JZZ0FRdzcb3L;
+ Mon, 19 Oct 2026 09:57:10 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+ by mail.maildlp.com (Postfix) with ESMTPS id B1C2740537;
+ Mon, 19 Oct 2026 09:57:15 +0800 (CST)
+Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
+ (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 19 Oct
+ 2026 09:57:14 +0800
+Message-ID: <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
+Date: Mon, 19 Oct 2026 09:57:14 +0800
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.158;
- envelope-from=alistair@alistair23.me; helo=fhigh-b7-smtp.messagingengine.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
+To: Peter Maydell <peter.maydell@linaro.org>, Jinjie Ruan <2118537295@qq.com>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <eblake@redhat.com>,
+ <imammedo@redhat.com>, <michael.roth@amd.com>, <mst@redhat.com>,
+ <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
+ <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.110.68]
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
+Received-SPF: pass client-ip=113.46.200.217;
+ envelope-from=ruanjinjie@huawei.com; helo=canpmsgout02.his.huawei.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,62 +75,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-10-19 at 01:07 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
-> for the release v10.1.0. Remove the stale comment.
->=20
-> Fixes: 455c0fa9eef ("target/riscv: remove capital 'Z' CPU
-> properties")
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Alistair
+在 2026/10/16 18:20, Peter Maydell 写道:
+> On Fri, 16 Oct 2026 at 10:47, Jinjie Ruan <2118537295@qq.com> wrote:
+>>
+>> From: Jinjie Ruan <ruanjinjie@huawei.com>
+>>
+>> MPAM (Memory System Resource Partitioning and Monitoring) is Arm's
+>> architecture for partitioning and monitoring system memory resources
+>> - Cache portions
+>> - Capacity limits
+>> - Memory bandwidth and priority
+>>
+>> And MPAM is the Arm counterpart of x86 RDT, which Linux exposes to user
+>> space via resctrl.
+>>
+>> QEMU so far has no MPAM support at all: the CPU-side system registers
+>> are missing (a guest kernel that probes FEAT_MPAM takes an UNDEFINED
+>> exception), and there are no Memory System Components (MSCs), so a virt
+>> guest cannot exercise resctrl on Arm.
+>>
+>> This series adds MPAM 1.1 emulation for the virt machine,
+>> and the structure is as below:
+> 
+>> With this, a Linux guest booted with -M virt,mpam=on (plus NUMA nodes)
+>> mounts resctrl with the full schemata set (L2/L3 CAT, capacity, MBA,
+>> priority), and MBM bandwidth and L2/L3 occupancy counters track the
+>> configured controls.
+> 
+> I guess my question here is "how much is this actually doing,
+> and how much is it 'we provide enough software-facing interface
+> to keep the guest happy'" ? My (rather shallow) understanding of
+> MPAM is that it's essentially adding tags to memory transactions
+> and then accounting how much bandwidth each tag is using. That
+> seems obviously infeasible for emulation, but on the other hand
 
-> ---
-> =C2=A0docs/about/deprecated.rst | 24 ------------------------
-> =C2=A01 file changed, 24 deletions(-)
->=20
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index ccbc4219497..368fa1b4ed3 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -349,30 +349,6 @@ the addition of volatile memory support, it is
-> now necessary to distinguish
-> =C2=A0between persistent and volatile memory backends.=C2=A0 As such, mem=
-dev is
-> deprecated
-> =C2=A0in favor of persistent-memdev.
-> =C2=A0
-> -
-> -RISC-V CPU properties which start with capital 'Z' (since 8.2)
-> -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> -
-> -All RISC-V CPU properties which start with capital 'Z' are being
-> deprecated
-> -starting in 8.2. The reason is that they were wrongly added with
-> capital 'Z'
-> -in the past. CPU properties were later added with lower-case names,
-> which
-> -is the format we want to use from now on.
-> -
-> -Users which try to use these deprecated properties will receive a
-> warning
-> -recommending to switch to their stable counterparts:
-> -
-> -- "Zifencei" should be replaced with "zifencei"
-> -- "Zicsr" should be replaced with "zicsr"
-> -- "Zihintntl" should be replaced with "zihintntl"
-> -- "Zihintpause" should be replaced with "zihintpause"
-> -- "Zawrs" should be replaced with "zawrs"
-> -- "Zfa" should be replaced with "zfa"
-> -- "Zfh" should be replaced with "zfh"
-> -- "Zfhmin" should be replaced with "zfhmin"
-> -- "Zve32f" should be replaced with "zve32f"
-> -- "Zve64f" should be replaced with "zve64f"
-> -- "Zve64d" should be replaced with "zve64d"
-> -
-> =C2=A0Block device options
-> =C2=A0''''''''''''''''''''
-> =C2=A0
+Hi Peter,
+
+Yes, I agree with you.
+
+Implementing MPAM bandwidth control and partitioning at the
+performance-effect level in QEMU is neither feasible nor necessary, and
+it is not in line with QEMU’s original purpose as a fast functional
+emulator.
+
+We only need to implement the functionality-related parts (i.e., the
+register interfaces and control flow) to ensure that the software stack
+can correctly recognize and configure MPAM, without simulating the real
+performance impact produced by those configurations.
+
+> this looks like it's rather larger than a minimal "we provide
+> the register interface but it does nothing", so what are we doing?
+
+By implementing MPAM-related register interfaces and control flow, as
+well as the MSC hardware topology in QEMU, we can understand the resctrl
+framework and interfaces in Linux, along with the related hardware
+topology discovery process. This facilitates kernel debugging and
+pre-silicon testing, and also allows us to debug and test test cases,
+avoiding the complexity and slowness of testing on FPGA.
+
+Through this series of QEMU implementations, I discovered many kernel
+issues and test-case issues in advance before FPGA testing, accelerating
+the development and testing of new kernel features (such as narrow PARTID).
+
+Moreover, as far as I understand, many hardware vendors have not yet
+implemented MPAM. Implementing it in QEMU helps enable MPAM on Linux,
+and then understand, learn, test, and even develop some MPAM-related
+features.
+
+Link:
+https://lore.kernel.org/all/20261012082337.822258-1-ruanjinjie@huawei.com/
+
+> 
+> thanks
+> -- PMM
+
+-- 
+Best regards,
+Jinjie
+
 
