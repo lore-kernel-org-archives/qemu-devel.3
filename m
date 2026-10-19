@@ -4,142 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059EDCCF2DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097A3CCF2D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:45:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIjs5-0001mt-AZ; Mon, 19 Oct 2026 05:41:33 -0400
+	id 1xIjvp-0003JB-M7; Mon, 19 Oct 2026 05:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xIjrb-0001iA-Sy
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:41:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xIjra-0004WG-2t
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:41:03 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69J8PCRx2193384
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:40:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Lw80XRv1geymiXBU0kHCn5VDsjJ8geZSwDWB43Kxya8=; b=QxaAKM23xRJ/qlTR
- 7sGv9SpVbd/Cmff/wtwy1LxCU+Rt9oujic9oEGxe9YM+PBsSmI5Abw/CVNWYP2st
- tQprfxAgBsjQQslPkP/+cGQfIcdV9fv52R7gwgol+UJmwm8GTqrDdz9EL8zZs6zM
- OwyyfTSo+f9tOAEIi9sEQRamGhJBom1U1Kz2+krzcBccb+2na+dk5Wzv5qMsY3WK
- 7/BJ0+dLNSwKl31/oqR1aCr5wmaqUoZkrwJLHLsKDfog8x+95gV2BAsMTONCPxjV
- Ec99ZSRqvxDJLUlCpmgr7p+MLrUBMlUi0GYCdPlYBrPwCjLLiCr3nTvwHWyliBSm
- OXGHlw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hd5w1a3ah-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:40:57 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-53635e21ddaso21787261cf.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:40:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIjvn-0003IS-Ox
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:45:23 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIjvl-00051S-Qa
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:45:23 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-8a83d2706fdso11524267b3.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:45:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792403120; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BwBZ/UWLUjAZmJrsNbZ88Zw1sSHW9fTsygk9PZqJRottj9M44FgL+bKG+3msbReuf6
+ VZLVez59SWRhV6mVjS8P3O3V1PyeuVC3ESWni9mqMe19KQ67Ln6uaDRN7MLlaqp2PifS
+ CiNhaA4xF96m+GxJx6sE07LIKF7yJIKUJy5xRYfgt1GiJCgipO+qjn3qOVf+8zOCupju
+ engcllJnNDpK54qw5RJf0WevKXvo11yTqiGOlLmp2sKln2ewgnU+o0L82qW11+Jh3UJ7
+ QL0E7thQhKGQkcHZhe47tJbxIe6JGi3z9ymjCYwHwSseQshT7lT0OGwVsQnDH1c1cz6f
+ dFQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
+ fh=vko0/TlqtB25AL5yVaXrsFvz9tTYh/L5jjqDQm79mcA=;
+ b=HshCE10Hc9n3UlkcbO4T3TvDyDr7KkX53i7Z4njSfqfj3ZKE0uzsAiumf0dM5t8o65
+ 26OtUE1Bl8Zvxv7XRiX6qn05/AIBDVmC762OgfnBmioquJ8xwqna5Ex9ppD0bqi3DPMn
+ sWYa7xSVF28NUKDE1qzq5lIHjxcXxS6+ZSVSQczz5/1zxxdsgECxClnzlDOjgsQLM8AU
+ LoreUZW3/AQEPx4cuUoRUzsF4xC0nX6qNzF46Gm+dWa4PU8yT+a/Ag1jwZXpOzCLuiZu
+ 6F4YTto5jR7c7TDmPoTMBDVUlkgXVKMg38oZRpoFQ2LvZFAMGNG2khLrHXP7ZDLVKDDP
+ HZbA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792402857; x=1793007657; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Lw80XRv1geymiXBU0kHCn5VDsjJ8geZSwDWB43Kxya8=;
- b=jRkzfLW6jnWW7iu4wmfsSmrlOhoQaY2HAim7Hbinf79C3+3cHbUxxeWs0xVb5ds55+
- ZoGzYXXvySmn5YAJK20pF9gX/WIk7nf/pqCfcr3ScQsm/kb2bQYNrjo8dAdhkr2CiXWv
- i6d3+7JIIiTmq8FF6K2MPwhh6MluFm1VTZu3dH8DWl8U0VIa+ZTOhlEvrDzRD19X+YWn
- 17NtdIqKmkWFX035EEx0KmY2y9lz4Vo+C1v5PPTkZVnPFvpL7vlGt6RuziFeMyzfHIfR
- aut7tx/yBnrNqMyEvVVibyCvuKzebZD3s3ZhRUUy66/dsg2gzwkfmQYU3FNJEa6BYcaB
- xkjA==
+ d=linaro.org; s=google; t=1792403120; x=1793007920; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
+ b=E1J/w5CuW2pxsHuQnu64nwmiUyn7+yGm8fH+xLZARIAhWT6YOQT1XB0GMUXImKY8Je
+ VWNBqn3VMzi1GfVXZcsjzt7gXIsouj+46jwDKYk6mTJStSE5F2surIblM3HKxhju8ivi
+ NuSaSojTJofxclLu+Rzrm614seUNFd5YlDxz6mSOawiJ4vW1l1+yW3vgrtjoEOUX/RdZ
+ wGL0YCqQ86HKcgszbQ2z1mwC0qec2sZ7A9/KJACTCUkvxsxBavF3drOZ3Ga/O819Ppmg
+ +O5xmhvoa7eU414aDZsxv7diN00QXG3xZlvzhfZj7mWsppoebvv3VRJMd9mzk6SIUzYB
+ LAJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792402857; x=1793007657;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Lw80XRv1geymiXBU0kHCn5VDsjJ8geZSwDWB43Kxya8=;
- b=bf8OH97rKycppCYnU1Dvsv0cYZryt6eAStK+eVrkOF0/yUxszeEZs9dM1NyA6LCcyt
- 9vLJEOdafusIQV2MAtZ5h30OiU004UFsCZDLZd3kl8UQdXDy+s5Ie/fHgLBsyCh+xr5T
- q9K54aKmHnRtNhJuYfmGCVVDCEjJD/PXbC3Qxb3DNyCrxFKnkJQnvu5rzg9V8QXIegM1
- zJXgUsp2LetvNdRnKG2J4bPWLDlzPnpZu/fCPxcVSud/xKCebFa/sJBHUC9rGP5wnUfY
- 669uZgbiJvaqlb+LCR+oyPdPrd0cXp6IWGZnYrkDWMoXVZeTmQCiRaJOuDpZPefSXwi+
- TIuw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBz/n/kavCNKzgWnO0sdhzCU2aIc9FGq28GbeUWP8IWd3ZBVAjHFBjxzQJjIlDKu9nfaLRnwX/womcJC@nongnu.org
-X-Gm-Message-State: AFq9FYI8BWqu1g5rHe89TmYwENdALbo/mkbzFbF6VbpLYVyrTU0f9uFU
- rsunxp3DVJcKKGoxP4ZPmnAzYiGLFS8y83Fx3U5nuVNKnHqlB5lV1yRnRRQVlPupOZMEXMTL1WO
- WCXo6ctN0u0vCUJ436BQtDl+0fU4aDoI76pBTHtv4Bb64mIjkgTYv/nuG+Q==
-X-Gm-Gg: AYBFou1OV5mJPWkGZoTIjfWD65yAxZ4H1jTpB/DKJ2HWCCYDzRl+prcbPpCHlvtEhXP
- h7XBOLZsu3/FIvTqxXdKleoZ4niLZM/83rJS+UlmlXpevna7ANdYoOfLXB8vysfSf0zOOczBuN8
- CmfY2papqJwIOcdLEKBherC1ljbs8l3/SGN4N3a1mZMCKU4N9/HDoQBHdcoVbIQ1Rf9HL9HgymQ
- awkoFPFmD3GX9NtMy1gnmNKtGrNadCN6d+8zu9Cr0DEmeAA94Q9fvGFV02uSpY+c65HzeA/AloI
- 4KQEoC2aTFBpwCLX8vUVoIo4QX8gRwIOPgHjMTxwdRuIl8iWLRq6Vj+ApuNFiddtqZzBsTq6pTg
- fY+AfN83vesDcjkmYa7vB5HcFOzauxGD9dfPgXuAgjrDZjgccdpYW5zhF+myzW2aybihm7x7T
-X-Received: by 2002:ad4:596d:0:b0:915:e9af:3145 with SMTP id
- 6a1803df08f44-91bdf0aaaa5mr128925746d6.12.1792402857237; 
- Mon, 19 Oct 2026 02:40:57 -0700 (PDT)
-X-Received: by 2002:ad4:596d:0:b0:915:e9af:3145 with SMTP id
- 6a1803df08f44-91bdf0aaaa5mr128925526d6.12.1792402856603; 
- Mon, 19 Oct 2026 02:40:56 -0700 (PDT)
-Received: from [192.168.68.103] (200-204-190-237.dsl.telesp.net.br.
- [200.204.190.237]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91bcbb0b231sm93087826d6.31.2026.10.19.02.40.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Oct 2026 02:40:56 -0700 (PDT)
-Message-ID: <8360ad12-6dab-44e6-a930-17ed8e92a09b@oss.qualcomm.com>
-Date: Mon, 19 Oct 2026 06:40:52 -0300
+ d=1e100.net; s=20260707; t=1792403120; x=1793007920;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
+ b=ueEsKVtV4apy163HoXu8jUoq+rJGDIXG5URVpfpZBcUV7aSXw2dEfURwOQROSB3XEC
+ INhwhNROVvYcUDrTVGPkuu9yc5yPJdeE0DJq5rwY+Ri+kuuBj96TTxkLgm9pVenbgFjd
+ yn/C7NlnNO7ubOrjVkCjnVWimAVdpQB7JrBG7gQ16dxLR9gq7E68+gQCKQbSX/w+oIKl
+ 7yq2EjBUJ6RjWyIa0HC0wnOYtBNdJk31NSCM+X9idxrvt50flKlNFko2eM3JQkJj+iPY
+ TcQ+qgYYnl9MsVcPsHpAvEcb1CsyHNLmziONSgOU4h1/OKKlR8efYgMvspldRjzTreu3
+ ZuNQ==
+X-Gm-Message-State: AFq9FYJur4vPeXlFv3f1ZBE7OnbYxLZ4dwvevEwM394Yj3ADaud0PK3E
+ m/7y7Ir43Xvc5u81m3QnwpDqvUDgvYTenMuQRKMUtL6WvMaKVZO6rj1EuEdnikFW1Jtgj0NgZY9
+ SnGWIAGuyhsvcoQcdlZh1XiNV5MmxJnfDf4DgMqK8Vg==
+X-Gm-Gg: AYBFou0wXHrJCZwRJ84KBzbzbKM8oj7nJHSEv8bVfFsRcaV2oK6hBPQOFa83P5vJkKG
+ cme6nQxcvYVdAMrOCH4IxfLMy4O+aHZ1GSS2YSwHv27YyoOsVMfVH4r92eCnNmBUQ1xVC4cmomU
+ 7UFXxSka1eSc0bs6v5yf5DYwuAU1cfYm07gWIsaKj3xzsYfAxh7+btscKNr/mbD02Wick/aE5G+
+ g3QJ127gVQVThcoVCc0QKqG+BexmYRQAGvKp3GqGiF+f8xJEchU+SAQ+ZLkCX60GhjkwmjuDEKB
+ 7H6FN8YxXWsA0sFOOp3flTicRyHyMqfO3JZLPtO3DRLGIB+2JuIoN+C7khuhIsJ9ipp10J8XtbV
+ LoV/eSqywWi3NRtY13jl20P7uG18euMxUKy4jmEaw
+X-Received: by 2002:a05:690c:dd5:b0:8b0:f0f6:1476 with SMTP id
+ 00721157ae682-8b0f2072830mr24054677b3.15.1792403120329; Mon, 19 Oct 2026
+ 02:45:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: Remove stale chapter on RISC-V 'Z' CPU properties
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, devel@lists.libvirt.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20261018230741.6560-1-philmd@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261018230741.6560-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDAzOCBTYWx0ZWRfX+Ho30CcFPsQc
- TWlZ9rA2BzdwsHzsb14OPqCbAJ5hcizmf6lMQ04x63+FIzuMSXuLR6OCITk4YUUUL4UcqtpfKd8
- 0AaDkr2gkqJbE0zqCGrYbnSsl+hD2TA=
-X-Authority-Analysis: v=2.4 cv=KuPYSmWN c=1 sm=1 tr=0 ts=6ad5e5aa cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=Gv721ALbR4eKpHl3R-AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDAzOCBTYWx0ZWRfX1IHqi/ZSLlb5
- BPpbUpBL8OSgmCY719p11R1orrzaM8RQ1EDf6Nv/5rGQ05i/bI49MOBlw2zATyY3NR5QgzeK80x
- AKZ5wn2JNb6GEl3POJDLKGMPOKFYYj1bp0ztKveiUXq5d5k+cyRUgmi+7/YeU/8Bo9ryLh/e5Vq
- 0LnmyVX7LogIWiF1vDTGrZXJr+8oDvaFJ5xlMqPHGxrAVZsl2kB2F+X2lAP9WALW4aONYO2LGDm
- e4k5HQpHaO46NhfCL0hKyXvrlF8ead2casMe3WqwHyIHRwvgUfHgRRhoHMCkxxy8WI81PmFLR0Z
- yUJHnCeMRpCyJaM3A2pQ/xxgOr4ikvjW56Rl8+R9UYxgQFYjS6Mlh2quCyPAviQKp2cE0im076T
- BNMsspQg9129SpnFYQ4m8zuhIFAQ/ZY3cuYGotIiUcEwPB+6ePfFXLToKmxSOfEPPLoy/8h3vGQ
- DjE+m3xhlyEazUG3JXw==
-X-Proofpoint-ORIG-GUID: 4xlrevTfLBDHNaKr1MsX0k9ssQLUWl3o
-X-Proofpoint-GUID: 4xlrevTfLBDHNaKr1MsX0k9ssQLUWl3o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-19_03,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190038
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261015163352.1751191-1-peter.maydell@linaro.org>
+ <bdf28ad1-a8ec-4e13-b49c-34b12d7580cc@nutanix.com>
+In-Reply-To: <bdf28ad1-a8ec-4e13-b49c-34b12d7580cc@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Oct 2026 10:45:09 +0100
+X-Gm-Features: AclHuK_cSWdHeBKoH7OkA17AQD-PzeETwXWYUqulwB2AkvYYU9AjO-ifFf-LPh0
+Message-ID: <CAFEAcA_RsNToGACV3vX1Gcr+j51+-Tv3Te+LAOEwhGnBHZED8g@mail.gmail.com>
+Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
+ device_class_set_parent_realize docs suggest putting parent_realize
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,59 +117,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 16 Oct 2026 at 10:09, Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> On 15/10/2026 17:33, Peter Maydell wrote:
+>
+> > The documentation for device_class_set_parent_realize() suggests that
+> > the parent realize function pointer is "usually in the instance
+> > structure".  This is definitely wrong, because the function pointer
+> > is a class thing, and should live in a class struct, not an instance
+> > struct.  Update the documentation to correct this, instead
+> > recommending that it should be placed in the class struct for the
+> > child class.
+> >
+> > At time of writing, of the 75 or so uses of this function, about 50
+> > put the parent_realize pointer in the child class struct, and about
+> > 25 in the parent class struct.  We recommend the former both because
+> > it is the more common choice, and also because it makes more logical
+> > sense: it's the child that knows (a) that it exists at all and that
+> > (b) it wants to have a realize method that will mean it needs to
+> > chain back to the parent, and we shouldn't need to edit the parent's
+> > class struct because we want to add a child class that chains to its
+> > realize method.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   include/hw/core/qdev.h | 15 ++++++++++++---
+> >   1 file changed, 12 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+> > index 8e91e2fcb08..1330e0153d4 100644
+> > --- a/include/hw/core/qdev.h
+> > +++ b/include/hw/core/qdev.h
+> > @@ -953,9 +953,18 @@ void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n);
+> >    *
+> >    * This is intended to be used when the new realize function will
+> >    * eventually call its parent realization function during creation.
+> > - * This requires storing the function call somewhere (usually in the
+> > - * instance structure) so you can eventually call
+> > - * dc->parent_realize(dev, errp)
+> > + * @parent_realize should be where you want to save the pointer to
+> > + * the parent class realize function; the recommended location is a
+>
+> Do we need something stronger than "recommended location" if we want to
+> encourage people to always do it this way in future?
 
+I think the discussion here suggests we want to get rid of
+this function entirely in the future, so being stronger
+than "recommended" is probably a bit moot.
 
-On 10/18/2026 8:07 PM, Philippe Mathieu-Daudé wrote:
-> RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
-> for the release v10.1.0. Remove the stale comment.
+> > + * field named "parent_realize" in your class's class struct.
+> > + * (Some existing code puts the field in the parent class's class
+> > + * struct; this will work but is not the preferred thing for new code.)
+> > + *
+> > + * In your realize function you should chain to your parent's
+> > + * realize function using something like::
+> > + *
+> > + *    MyThingClass *mc = MY_THING_GET_CLASS(dev);
+> > + *    (do your child class realize actions here)
+> > + *    mc->parent_realize(dev, errp);
+> >    */
+> >   void device_class_set_parent_realize(DeviceClass *dc,
+> >                                        DeviceRealize dev_realize,
+>
+> Otherwise:
+>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-I wasn't aware that we need to remove stuff from deprecated.rst after
-awhile.  Thanks for taking care of it!
+Thanks. I'm going to queue this patch as a fix for this API doc
+for the moment, because we clearly aren't going to get
+to Daniel's better way of doing this for the 11.2 release.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-> 
-> Fixes: 455c0fa9eef ("target/riscv: remove capital 'Z' CPU properties")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   docs/about/deprecated.rst | 24 ------------------------
->   1 file changed, 24 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index ccbc4219497..368fa1b4ed3 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -349,30 +349,6 @@ the addition of volatile memory support, it is now necessary to distinguish
->   between persistent and volatile memory backends.  As such, memdev is deprecated
->   in favor of persistent-memdev.
->   
-> -
-> -RISC-V CPU properties which start with capital 'Z' (since 8.2)
-> -^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> -
-> -All RISC-V CPU properties which start with capital 'Z' are being deprecated
-> -starting in 8.2. The reason is that they were wrongly added with capital 'Z'
-> -in the past. CPU properties were later added with lower-case names, which
-> -is the format we want to use from now on.
-> -
-> -Users which try to use these deprecated properties will receive a warning
-> -recommending to switch to their stable counterparts:
-> -
-> -- "Zifencei" should be replaced with "zifencei"
-> -- "Zicsr" should be replaced with "zicsr"
-> -- "Zihintntl" should be replaced with "zihintntl"
-> -- "Zihintpause" should be replaced with "zihintpause"
-> -- "Zawrs" should be replaced with "zawrs"
-> -- "Zfa" should be replaced with "zfa"
-> -- "Zfh" should be replaced with "zfh"
-> -- "Zfhmin" should be replaced with "zfhmin"
-> -- "Zve32f" should be replaced with "zve32f"
-> -- "Zve64f" should be replaced with "zve64f"
-> -- "Zve64d" should be replaced with "zve64d"
-> -
->   Block device options
->   ''''''''''''''''''''
->   
-
+-- PMM
 
