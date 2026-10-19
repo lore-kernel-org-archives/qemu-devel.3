@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561DACCF2D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 02:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8B7CCA490
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 02:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIcur-0002NR-M9; Sun, 18 Oct 2026 22:15:57 -0400
+	id 1xIcvL-0002YT-9i; Sun, 18 Oct 2026 22:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xIcuq-0002NI-1B
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 22:15:56 -0400
-Received: from fout-b1-smtp.messagingengine.com ([202.12.124.144])
+ id 1xIcvH-0002V5-Hg
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 22:16:24 -0400
+Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xIcun-0000om-NF
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 22:15:55 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id D793D1D0015E
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 22:15:51 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Sun, 18 Oct 2026 22:15:51 -0400
+ id 1xIcvG-0000qj-3c
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 22:16:23 -0400
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 5D20E7A019F
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 22:16:21 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Sun, 18 Oct 2026 22:16:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1792376151; x=1792462551; bh=i+yGs/eAMh+RBuURDK+rapAmp3HdKj+/
- wpLRF43nUz4=; b=IsKz0swMEVJgyZkZe/JqHK77psybiMd4PgDhPk3pIgyapehn
- KUYZINRm+b9up5cp2IyPRqlk4U5j2p7M8/erOjxK+jLWcDxTN+bryDzeV6TMyG1C
- noYBMwt6W73YCIiG4DSehP8QwO8xkPc1SgnHMupDAikJOU5+p2R9IMHTxs0lDsVe
- qfrZi50UK64NO9Wg6gfu4gumuF77qXC/7oFzcBHGafsyi5RTMTCBgBDfsi2iAwGE
- scgoBkvkxDri+iWLHRHw7YLYIY46DsIKni2Q2zT5hFKeijQ7SAcIwT5YUOuBEt+3
- D7GIUWGgOngOz1CrcGR5boMLzbM05PrkgpTwDw==
+ t=1792376181; x=1792462581; bh=nWGon3LnozWfgEpVSbyNk6xdR1C0LjUV
+ PYR/K46H5Ks=; b=eYNZclLrkLYILEqAl2H2wHueqtbLWNQUXj6FmBoYr0mNTJxO
+ fGoa+rMH3G0lKuo14RJWIZYU8mfnqGT3IxEfDb5urQe78HAr4UelXo3+y4eYM4Y3
+ 2ROf5CPyRy1eH0EIHgLc7qI+gWEzH/Kwz+K0jMvrLkdRKSiFrzVQwUqefbD6xP38
+ L3DDDJXnmpf/1Q2hNWcfOEo/TgM2Dney+MkBPydq+M1Vt/Lv1xfSBCvba+ugvnsh
+ 2NwhE74mgl8iCKIWJw6X4ki3/b7XzRjXnedk+LCrnW9/JO/T0XM4jl5EgKSfqaj3
+ 5fUVsRAEDQQvmMlCeNBpSLd52x+jQhEX4xq4XQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792376151; x=
- 1792462551; bh=i+yGs/eAMh+RBuURDK+rapAmp3HdKj+/wpLRF43nUz4=; b=l
- MS6k0BdAK5yy/bLwMAohOGzMOKoxnBCj8MSD8vZZBloxB3cYHawaxAsWpfz3wEbE
- VTNgq0ks3g7NfUT6D/9SBMotOUezh9o5Sjg2PHhkARuNoeOxHMDStyVwlSuvjxz0
- ByJY2sEwSw7ZXwDtTj7GDo0LWKkDvMtxcuWvYOejQTGr8l1O+XhQp0DqpKGBG5HZ
- eq2sYFOq4adCBioDYaZ7EWtEA4DprJjVkSejuZbymKjzJ01CqBKTte7jTxzCnYHZ
- 05myaaqermLyte7q9Qw0+Xael1mKNoGsNsoGpd275wS9NZI28G9GmQ0sVv/Xvz4h
- UHvmSu+bPhstAm7SCKMPA==
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1792376181; x=
+ 1792462581; bh=nWGon3LnozWfgEpVSbyNk6xdR1C0LjUVPYR/K46H5Ks=; b=s
+ Lc8nARyD29CzMs41jJxIkPLzPXMmc9qH1lKAmbRKwBAiP+xgk+Xe8KLlRCtHke83
+ tttGDab6eqIZLWpj16Nu0RfpwkaQf3GcWirAdDA5WDRpqpSqtA5LotgIBLtKCMOe
+ bkosu2Gi60O6QwOs/jkMRPTRjI5GuMTjLJQxi1yUwxLA6Rr54anoUrqLyqZuF+g0
+ gkPZKnDKMplI8CB6lhVhotXWCtN2tCrRD9PDgzjaBJZc9JVgJXIk0JrVF1CxBAIk
+ kzD3N0OLZ1ZbKX/82CCgPRrDi4db3COzncLtEQtUVSMunQRjeiikZ2bCIsYbtJwS
+ QLg/0a+AdOav0+qsJvY+w==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
  action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792376151; d=alistair23.me;
+DKIM2-Signature: i=1; m=1; t=1792376181; d=alistair23.me;
  mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
  rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:OEPc/nkfIQs/L8l4MaIL07ez/vIWUtdhCfe4EglIBZ1GbIA
- 19x95Hps8BGHQN5/+bKkugOEMUvpS2CQHqWFOPNspCWrCuBX0PNof9BbWyCoZ3zY
- QGOG0ouYofzrKUnL4Ix2ahqiwOgtBo30tQxyHu1qHzb5XqbuUelkYKKFCJQLLdOt
- c3UE9GJEG/g1RWAkUbneLe05dCl4WDG+ihZVDXiH3vc9Lh25igDeDbdcZGthjFWH
- 0ZEqEQC4AeK9WONk1ndTUV3SnzFOM7HiogIjODI9Q2h3mPGrZMUdqZl2D4YWh9dm
- ommKrT7lKCzDS9d1JgkYrVzRZy1EJ0EUJ89kswg==;
+ s=fm2:rsa-sha256:FK0TbKSluZyApdyY2ZhN56LH/NhN4MDDD4E8eClnTQstr3t
+ AE7sTKx+t2mJ50MRJLvITaBBeC+g1x7J1+7ydIyG41+g7/hkR5L5XYZsDkUjJaBQ
+ M8wDbu2D1/DJdeaaes0t7Ie5VVslr2rCXGHjXIwAhXugududLRBEbfZE09OuUJ0O
+ yjgXBm6K1G5Phx0wNsy22voF9XWaD6CeQygoU5KHTK76v6L2i2Z24HZtvex2l1xi
+ pT5TclyAn0t9Fr0kvJni4lc0FB3ChaB8dEP/nzo/FHzy8hNytGjencHES2oQcI7z
+ K/fZkscMMqJnVwkThf5hXpF34IRBMtbxwSUgsFg==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  repo=github.com/dkim2wg/interop; date=2026-10-08; sw=lmtpprox;
  action=mi-m=1; hc=13;
@@ -68,47 +68,48 @@ X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-06;
  from,in-reply-to,message-id,mime-version,references,subject,to,
  user-agent;
 Message-Instance: m=1;
- h=sha256:vFfCxrTReRFp8Acpz+JRh1wlMP0EMhPNG8nZ1y/WiaI=:i+yGs/eAMh+RBuURDK+rapAmp3HdKj+/wpLRF43nUz4=;
-X-ME-Sender: <xms:V33Valf_Uc_VIEnb_iIr1yiur4lr-Zye72SrPB8VjLIY3JdNgcYncg>
- <xme:V33VauIAtlaY_v_q8gqh5u1UGK-iy_abrJ-lU_uXE_w1kZQTwqTKcynvI1iLNgi5c
- qPpyz18Aw1s-RrQZYE3kXtkSKSUrQ-ZJwmtOgnxV3BI30PnFasml2s>
-X-ME-Received: <xmr:V33VatjiqUrCvXLrfXhfnmIvfqWVjAVgY--DM5sf0gUY8fMVet5BoLcBHIif4Zs81l87_DynKNEJ25Ox97kQqjib_8s>
-X-ME-Proxy-Cause: dmFkZTG22oLZKCCmAxybmiva5vB3oflKDnmJX1o2iLDlkI+j/QFMwAcbaz9cFXsj65E9hL
- mCgj1Ef1zWusAkyjAohnUuQx9S9XF7pDQC5I+Ams/XRvDeTljQoYhAJFkz1SryqHmEfxCo
- EFvdF6Q4Q/YX+fd0sxNtzwCz//XsbX1JeC2MB4n+CltsNMQlGZL3jn/KI70ZyQP+TuwUoH
- jbX/sTUqERl+vmD87x2/t4+p9UlbdSG7cuCybkWl25q/9LZq5IXAmnM9MpTe+rchD+RuJA
- 1VnNXoU9SqzhJCv1DnzL+KznwbuQCRbckYSL5wFYvx7mWbgQBzUFda3VD5nQJt5OT9kKZ8
- AEbkQD8oyykSJ46Oyqbv/Qb8oELnuP2KlEJGQ1fJ1gPbXKpCJxLU91qhrNgaGLMMS+x2Ej
- JL3zvI+y/BolTgTAKwnuMvDFPd+jDFMs4xrTDupTIBXFxM2uL5xPeGqnzWescC/9UxMlKA
- Tb6WzAAVh+sjVITlbaKiCc1a7YP+xfQvsdZYU3bBBiz1A2nIxcluCzerUmSxCgo10+OWxz
- sLndqCzqy7QWeOpZzXXZS5uASa5rx/9YAMDyKb4+I8rc0GHLhuzRp7wWYAAIEJCd9j3uzC
- 0tF2l86hYY5evXcYqh2jExp50wxejrITABX3Sc+0DgkdueWuNMLKhUAdoZYQ
-X-ME-Proxy: <xmx:V33VakSqEdqOTN3hEBGvhx9XSRv51Uq6C0t2dnU1BYW0b58-4kaVkw>
- <xmx:V33VavVycpLSXpkDUuxrnoo2MrZ3X6GzHF4AzciciM8om3RcPGtsMA>
- <xmx:V33VaoR-jizCgg2_pquEjx9TVK8nsoWZ0ffuu9V9bsLXD1eDw84miA>
- <xmx:V33VaplKu193uMcUDQaGDtQ9nOU_ALnDNc89J_lWEU5yeAebgYbbSw>
- <xmx:V33Vah-FSM2YqHElc8DvpY-KnlbmyDUtliKC6XefKkPquvkJwyNX2LVr>
+ h=sha256:uf8u4eqgxeUVhk+RSJT/WvP7PHYgiuLoM8assai1tlo=:nWGon3LnozWfgEpVSbyNk6xdR1C0LjUVPYR/K46H5Ks=;
+X-ME-Sender: <xms:dH3VashukTmOm7MMLcsWSkpvJ_APLan-7SVzUfC7L6fcAhzoiv-bgQ>
+ <xme:dH3Vav_5A0wQ9Da4C_8K22OK_D0f3u6ngY3V9PUR2ZEY1Rn1e_QMnq_FkloEpJrET
+ pXGMoZTIXiqrhp89NelX2KFF92AhojSYYXcYW4iJ9Ppg0DDJWqJpi8>
+X-ME-Received: <xmr:dH3VajECaZfTZnPYh35NQQFw4WaTbvDaSAaFhRhi8WnreYUOtw4v7Uv6ScCxM24UIEXvvc6NvAvzpEITqX8hSK57St8>
+X-ME-Proxy-Cause: dmFkZTEZVE6g1qXALWmt1eo3gbtprdej/ALQ+cmdeCcmrlCycqzqpoxN0kyhzGW5uG1iEV
+ LgittEhIRwy127S1qyK0ipmSdfjGK5khq/TlJ5B9yP0f2HCyzlXg5U9AJDM2qn5kXq9Bji
+ x1vfB+finpvokVz3r5suwYZB9ODJtuZ8SHsw8iRZ1ilNLAicHHosL/1NQ3TrKsvmRKbeW8
+ jIMBQUoB3t98IgHaVQDdLmZdmeBLVRUNG7Dt5JiZLQMFvKw2himSUant/7CNf7MPF/Vu1d
+ VmyZ8ks4d/Kpc3YcM8Vv1BNCyiogD9R4Qxmkf7NSjYQqhgQl715lvLgQq6o8auwQ9c4eWx
+ tqH7QLaw7xFBo2EHccKAPwVWH1lRbkgFHRcz7M9xzRxrQ2nROd675ggZMi7IjCNU5k9GMP
+ 39Fy8V6OobhxxgFISXEy3cttU8AYXQK/oIGmCxi7wfJ68SWMjdvYOXoAClZ+nMdXupbaLO
+ OfBLKIIRRe/XEwAoE2lOgZOqc8zDUths87A0d57miOVpecEdytMObpRRd0T0wdYZsEV0d4
+ 3uSefjoXftd2fj15c40HOjV+oMpttX0UNiXQzPnNRO2+BnuOVve7IHhFn/rVP5x/WOjq7p
+ lgeyMsAfAbuMr84O3dkyjRKIFq24pR74VZvmL+zgsIASi3x37yMrG0jj4u3A
+X-ME-Proxy: <xmx:dH3Vain5p1GXNNoieMEfdD1juRxXmm8Dnjj_rkbHIflHt5Sqrms3Qw>
+ <xmx:dH3VanbIb9m6G9TnKC-REzFxeNpTT-50siSIy6vt1MP-vHyiA5jBnQ>
+ <xmx:dH3VanHMKbJlx1fIE29uB7vm_4STmaT6aT5pvdoAnIMeIXHcZk30RQ>
+ <xmx:dH3VaoJmWifoNvdP7hm9Q1E0X4HHH2U5ZhM32C_s7oqs5klju9-ZAA>
+ <xmx:dX3VaqxtbYrgX0YWMesrXZEwcE0G-B2FJVeKOOfEyUM1bV6MasarT9oO>
 Feedback-ID: ifd214418:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 18 Oct 2026 22:15:48 -0400 (EDT)
-Message-ID: <ddb5ba58e24be916b591b6012524205398d482fd.camel@alistair23.me>
-Subject: Re: [PATCH 26/63] hw/char/cadence_uart: fix RX FIFO overflow handling
+ 18 Oct 2026 22:16:18 -0400 (EDT)
+Message-ID: <c4eccfd1ab400b60ca66d859af8b26b75191e13b.camel@alistair23.me>
+Subject: Re: [PATCH 27/63] hw/char/cadence_uart: use correct interrupt for
+ TX FIFO overflow
 From: Alistair <alistair@alistair23.me>
 To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, 
  qemu-devel@nongnu.org
 Cc: Pavee Hui <phui@google.com>, "Edgar E. Iglesias"
  <edgar.iglesias@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org
-Date: Mon, 19 Oct 2026 12:15:46 +1000
-In-Reply-To: <20261004-issue-4560-v1-26-ccbef537cbeb@redhat.com>
+Date: Mon, 19 Oct 2026 12:16:16 +1000
+In-Reply-To: <20261004-issue-4560-v1-27-ccbef537cbeb@redhat.com>
 References: <20261004-issue-4560-v1-0-ccbef537cbeb@redhat.com>
- <20261004-issue-4560-v1-26-ccbef537cbeb@redhat.com>
+ <20261004-issue-4560-v1-27-ccbef537cbeb@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.62.0 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.144;
- envelope-from=alistair@alistair23.me; helo=fout-b1-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.158;
+ envelope-from=alistair@alistair23.me; helo=fhigh-b7-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -130,41 +131,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gU3VuLCAyMDI2LTEwLTA0IGF0IDE0OjIzICswNDAwLCBNYXJjLUFuZHLDqSBMdXJlYXUgd3Jv
-dGU6Cj4gVGhlIG9sZCBjb2RlIGNoZWNrZWQgZm9yIG92ZXJmbG93IG9ubHkgb25jZSBiZWZvcmUg
-dGhlIGxvb3AsIHdoaWNoCj4gbWVhbnQgYSBtdWx0aS1ieXRlIHdyaXRlIGNvdWxkIHNpbGVudGx5
-IG92ZXJmbG93IHRoZSBGSUZPIHdoZW4gdGhlcmUKPiB3YXMgc3BhY2UgZm9yIHNvbWUgYnV0IG5v
-dCBhbGwgYnl0ZXMuIENoZWNrIHBlci1ieXRlIGluc3RlYWQsIHN0b3JpbmcKPiBhcyBtYW55IGJ5
-dGVzIGFzIHBvc3NpYmxlIGJlZm9yZSBmbGFnZ2luZyBST1ZSLiBPbmx5IGFybSB0aGUgRklGTwo+
-IHRyaWdnZXIgdGltZXIgd2hlbiBieXRlcyB3ZXJlIGFjdHVhbGx5IHN0b3JlZC4KPiAKPiBGaXhl
-czogMzU1NDhiMDZjZjU1ICgiY2FkZW5jZV91YXJ0OiBpbml0aWFsIHZlcnNpb24gb2YgZGV2aWNl
-IG1vZGVsIikKPiBSZXBvcnRlZC1ieTogUGF2ZWUgSHVpIDxwaHVpQGdvb2dsZS5jb20+Cj4gU2ln
-bmVkLW9mZi1ieTogTWFyYy1BbmRyw6kgTHVyZWF1IDxtYXJjYW5kcmUubHVyZWF1QHJlZGhhdC5j
-b20+CgpSZXZpZXdlZC1ieTogQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMu
-Y29tPgoKQWxpc3RhaXIKCj4gLS0tCj4gwqBody9jaGFyL2NhZGVuY2VfdWFydC5jIHwgMTYgKysr
-KysrKysrLS0tLS0tLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDkgaW5zZXJ0aW9ucygrKSwgNyBkZWxl
-dGlvbnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvY2hhci9jYWRlbmNlX3VhcnQuYyBiL2h3L2No
-YXIvY2FkZW5jZV91YXJ0LmMKPiBpbmRleCBlZmY2YTNjNGQxN2EuLmFlMTFjYWExMWI4MiAxMDA2
-NDQKPiAtLS0gYS9ody9jaGFyL2NhZGVuY2VfdWFydC5jCj4gKysrIGIvaHcvY2hhci9jYWRlbmNl
-X3VhcnQuYwo+IEBAIC0yODQsMTQgKzI4NCwxNiBAQCBzdGF0aWMgdm9pZCB1YXJ0X3dyaXRlX3J4
-X2ZpZm8odm9pZCAqb3BhcXVlLAo+IGNvbnN0IHVpbnQ4X3QgKmJ1ZiwgaW50IHNpemUpCj4gwqDC
-oMKgwqDCoMKgwqDCoCByZXR1cm47Cj4gwqDCoMKgwqAgfQo+IMKgCj4gLcKgwqDCoCBpZiAocy0+
-cnhfY291bnQgPT0gQ0FERU5DRV9VQVJUX1JYX0ZJRk9fU0laRSkgewo+IC3CoMKgwqDCoMKgwqDC
-oCBzLT5yW1JfQ0lTUl0gfD0gVUFSVF9JTlRSX1JPVlI7Cj4gLcKgwqDCoCB9IGVsc2Ugewo+IC3C
-oMKgwqDCoMKgwqDCoCBmb3IgKGkgPSAwOyBpIDwgc2l6ZTsgaSsrKSB7Cj4gLcKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgcy0+cnhfZmlmb1tzLT5yeF93cG9zXSA9IGJ1ZltpXTsKPiAtwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBzLT5yeF93cG9zID0gKHMtPnJ4X3dwb3MgKyAxKSAlCj4gQ0FERU5DRV9V
-QVJUX1JYX0ZJRk9fU0laRTsKPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzLT5yeF9jb3VudCsr
-Owo+ICvCoMKgwqAgZm9yIChpID0gMDsgaSA8IHNpemU7IGkrKykgewo+ICvCoMKgwqDCoMKgwqDC
-oCBpZiAocy0+cnhfY291bnQgPj0gQ0FERU5DRV9VQVJUX1JYX0ZJRk9fU0laRSkgewo+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgIHMtPnJbUl9DSVNSXSB8PSBVQVJUX0lOVFJfUk9WUjsKPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBicmVhazsKPiDCoMKgwqDCoMKgwqDCoMKgIH0KPiArwqDCoMKg
-wqDCoMKgwqAgcy0+cnhfZmlmb1tzLT5yeF93cG9zXSA9IGJ1ZltpXTsKPiArwqDCoMKgwqDCoMKg
-wqAgcy0+cnhfd3BvcyA9IChzLT5yeF93cG9zICsgMSkgJSBDQURFTkNFX1VBUlRfUlhfRklGT19T
-SVpFOwo+ICvCoMKgwqDCoMKgwqDCoCBzLT5yeF9jb3VudCsrOwo+ICvCoMKgwqAgfQo+ICvCoMKg
-wqAgaWYgKGkgPiAwKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoCB0aW1lcl9tb2Qocy0+Zmlmb190cmln
-Z2VyX2hhbmRsZSwgbmV3X3J4X3RpbWUgKwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCAocy0+Y2hhcl90eF90aW1lICoKPiA0KSk7Cj4gwqDCoMKgwqAgfQo=
+On Sun, 2026-10-04 at 14:23 +0400, Marc-Andr=C3=A9 Lureau wrote:
+> The TX FIFO overflow path was raising UART_INTR_ROVR (RX overflow)
+> instead of UART_INTR_TOVR (TX overflow).
+>=20
+> Fixes: 86baecc3e435 ("char/cadence_uart: Use the TX fifo for
+> transmission")
+> Reported-by: Pavee Hui <phui@google.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+> =C2=A0hw/char/cadence_uart.c | 2 +-
+> =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+> index ae11caa11b82..c790372e98fb 100644
+> --- a/hw/char/cadence_uart.c
+> +++ b/hw/char/cadence_uart.c
+> @@ -351,7 +351,7 @@ static void uart_write_tx_fifo(CadenceUARTState
+> *s, const uint8_t *buf,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * us to here.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_log_mask(LOG_GUEST_=
+ERROR, "cadence_uart: TxFIFO
+> overflow");
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->r[R_CISR] |=3D UART_INTR_R=
+OVR;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->r[R_CISR] |=3D UART_INTR_T=
+OVR;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 memcpy(s->tx_fifo + s->tx_count, buf, size);
 
