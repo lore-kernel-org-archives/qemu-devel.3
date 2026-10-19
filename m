@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABDACCF2D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 08:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6FC2CCF2D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 08:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIiLE-0000jR-Gt; Mon, 19 Oct 2026 04:03:32 -0400
+	id 1xIiPF-0001wG-DT; Mon, 19 Oct 2026 04:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3y87VagoKCh4MN4HF8SDBOAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--stanleyjhu.bounces.google.com>)
- id 1xIiLA-0000j7-Hd
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:03:28 -0400
-Received: from mail-pf1-x447.google.com ([2607:f8b0:4864:20::447])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3y87VagoKCh4MN4HF8SDBOAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--stanleyjhu.bounces.google.com>)
- id 1xIiL8-0003qj-NZ
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:03:27 -0400
-Received: by mail-pf1-x447.google.com with SMTP id
- d2e1a72fcca58-8a0688a43d3so560955b3a.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 01:03:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792397004; x=1793001804; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=nrEi1oIFehaWsOgSrcZoXh48qkgjSbMTKUFU5X0gmO8=;
- b=ayImV61/hZrJXYeqcHd2lUbywLzppyT0c4YoH9NyL6jSf0Jp2JR4tbyKqSqsl3VFVY
- 8195I9BBFlDRhYyVWdtDNFIu6hwU5vY/9WI151DHeli/TOJYnt+vqwMbQh5liBJDtg1b
- fUOdS9bEEl8stmr48WJseNpEcBUAgsSYSTads/4BY/Vk6vzAaqC2c5iXJodLTvRihZAD
- JgwclEzT8bOx5Q7NyiLdcLbJT8KuU1G7sQkbmsmH3yFK7szXUQIGRs6hfplITsEU3ogm
- j8ejjeUE30TpGiQDNib6+eTZtwbXLT2rs2/m3AOrsDkq2XzxOny80GEkO0mMeTCwsg1i
- RbQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792397004; x=1793001804;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=nrEi1oIFehaWsOgSrcZoXh48qkgjSbMTKUFU5X0gmO8=;
- b=C+2EmMirWPfT5OwD7hrkQU0w1jaXgcNi3GrOxX7ZukkdZP3U3fbD8fvXpTvQ7klZ/Q
- lv4yj6382U1nU/7XKYgmYEfwXqfZz5noQat/l8VRmzOrQLBDFIUbnpk6c/E9MQtdV4rB
- S/SXPPVdn+aTSMZnIWyFeXyCM6CrQZxKIOTaS0wqsR2PW4f8+IxusUzLfT8mTzqYH8F6
- beJzFXDkfWF7kF5NSo1AYNwYfS8UlBOYSicHRawg27xGewkHR3a82eZNlqvb2R0e5pXF
- X+1XNV65e+XdQYJdaopShoq+DgW1olOFtvinX0jRYD1Hll3z8FFWTWdlrGgpDKboDVgl
- 9olw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBztrNyQ852jmqXT+seTIdpiL7wogLswVAYWbqLADdzWRBbVQJM1fMVLeHVDnNfbYZocWcdKvNhEmxEs@nongnu.org
-X-Gm-Message-State: AFq9FYJ7lYWbetFYKYmGmLlElODt5CGFDyf5dfDXFYwZVFNvGCuCFjP6
- gWNhPAuW/VruNjpOLcpqJqEYgvPEMuW4lRhKpc34mytUVG31fFZO7GGZP1iUwbmdpAHeJdiUzaa
- AI0yjNstNQYDU4OylNWDcnA==
-X-Received: from pfbgm11.prod.google.com
- ([2002:a05:6a00:640b:b0:89f:4f8e:282d])
- (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:348e:b0:89f:34c3:2031 with SMTP id
- d2e1a72fcca58-8a04cb24760mr5312480b3a.53.1792397003641; 
- Mon, 19 Oct 2026 01:03:23 -0700 (PDT)
-Date: Mon, 19 Oct 2026 16:03:21 +0800
-In-Reply-To: <20261019013307epcms2p14049cf5797cbe5332877ddeb950f18bc@epcms2p1>
-Mime-Version: 1.0
-References: <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
- <20261016093109epcms2p4a1f77d99f9f4fd50fa786eeb79fe1cf5@epcms2p4>
- <20261016115434.2658500-1-stanleyjhu@google.com>
- <20261019013307epcms2p14049cf5797cbe5332877ddeb950f18bc@epcms2p1>
-X-Mailer: git-send-email 2.56.0.176.g3575e65682-goog
-Message-ID: <20261019080321.1982926-1-stanleyjhu@google.com>
-Subject: Re: [PATCH v2 3/6] hw/ufs: Limit data transfers to the transfer
- length of the CDB
-From: Stanley Jhu <stanleyjhu@google.com>
-To: Daejun Park <daejun7.park@samsung.com>, qemu-devel@nongnu.org
-Cc: Jeuk Kim <jeuk20.kim@samsung.com>, farosas@suse.de, lvivier@redhat.com, 
- pbonzini@redhat.com, kwolf@redhat.com, hreitz@redhat.com, 
- qemu-block@nongnu.org, pierrick.bouvier@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::447;
- envelope-from=3y87VagoKCh4MN4HF8SDBOAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--stanleyjhu.bounces.google.com;
- helo=mail-pf1-x447.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIiPA-0001vS-LB
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:07:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIiP7-0004GC-Hg
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:07:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792397251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=5LalhCAaMhzYOPv6hlCkEqOXsF4fDnqWNr18CUqN77w=;
+ b=DQfL4M+nlKjIATPSABWVm0GzuGLSSi636qA1h/9/i6mNb7o9dv4/nyF5L5XOt3F5fUPFvG
+ tzqjvo/S6XjiDXT7Z7CcxbDncxdjnpoUkTftRmgGXlho2Mz2LaaoTcHCcmx/abJVPn33u2
+ I4Zu+dqPl1lZ/lQ2+QkTW/geZRE05fs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-uurdzPacNrekP4y-eqiaNQ-1; Mon,
+ 19 Oct 2026 08:07:30 +0000
+X-MC-Unique: uurdzPacNrekP4y-eqiaNQ-1
+X-Mimecast-MFC-AGG-ID: uurdzPacNrekP4y-eqiaNQ_1792397249
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CE3E1955F72; Mon, 19 Oct 2026 08:07:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 011A61800642; Mon, 19 Oct 2026 08:07:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9E3F221E6A04; Mon, 19 Oct 2026 10:07:26 +0200 (CEST)
+Resent-To: michael.roth@amd.com, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 19 Oct 2026 10:07:26 +0200
+Resent-Message-ID: <874iei2jwh.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  jsnow@redhat.com
+Subject: Re: [RFC PATCH 0/6] qapi: Preliminary work for better QOM
+ introspection
+In-Reply-To: <CAMxuvay1K9gS8xRc_bH1f28txFZXAt9hjH7O4uQZtzffs8fJHA@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Wed, 14 Oct 2026
+ 18:09:17 +0400")
+References: <20261009140431.3175479-1-armbru@redhat.com>
+ <CAJ+F1CKqDbV0xVkL6Q_++qHk4iNstWC_y2raPXy8BovUyPQzdQ@mail.gmail.com>
+ <871p9tya83.fsf@pond.sub.org>
+ <CAMxuvaxyrOtn5uXuWSuRL4KUTyAVZFAinniG-YZQfo4_ngizrA@mail.gmail.com>
+ <87o6cwu816.fsf@pond.sub.org>
+ <CAMxuvay1K9gS8xRc_bH1f28txFZXAt9hjH7O4uQZtzffs8fJHA@mail.gmail.com>
+Date: Mon, 19 Oct 2026 09:06:53 +0200
+Message-ID: <87pkx62mpe.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +94,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Oct 2026 10:33:07 +0900, Daejun Park wrote:
-> UFSHCI reports a data buffer that is too small with OCS MISMATCH DATA
-> BUFFER SIZE, so the status belongs to ufs.c. ufs.c does not parse the
-> CDB, though; the LU does, in scsi_req_new(). In v3 the LU would pass
-> the transfer length to ufs.c, and ufs.c would fail the request with
-> that OCS when the PRDT is smaller, before scsi-hd sees it and with the
-> write pointer unchanged. Would that split work for you?
+Thanks!  I intend to post a v6 of your "qom/qdev: associate properties
+with QAPI schema types" today, then continue review there.
 
-Yes, that split sounds good to me. Thanks.
-
-Stanley
 
