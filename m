@@ -4,75 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40F7CCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8268CCF2E3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoDe-0002O9-08; Mon, 19 Oct 2026 10:20:06 -0400
+	id 1xIoT9-0007Co-Gh; Mon, 19 Oct 2026 10:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDJ-0002Ca-EG
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <69d00f0bb898e3e635d376e6a7e063e0aff072e0@kylie.crudebyte.com>)
+ id 1xIoT7-0007CU-SB
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:05 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDG-0005Ys-83
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gE74ym71MtLujBClC1IqS0YjVMeyOfif/2X51OHcNXk=;
- b=DoI1Dctk9cTvEiTAn/Udxdo41cIKUgThT8IjsuzK6wB72ful4imOlJCakinZb92I78rGOf
- 2nRWbf0FFLqnNmGkZPxCDi2zYF9yt/Ej2ih8aw5bndBZQpRLMLzsRFH6WjC9ILgEwP8RDl
- VoTxx4qAxPPbo5EezZJc8x6mR+soHo4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-462-Zf6KKr0tPraCsnd0SXtXFg-1; Mon,
- 19 Oct 2026 14:19:39 +0000
-X-MC-Unique: Zf6KKr0tPraCsnd0SXtXFg-1
-X-Mimecast-MFC-AGG-ID: Zf6KKr0tPraCsnd0SXtXFg_1792419578
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B93D1954AC8; Mon, 19 Oct 2026 14:19:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0A201955E76; Mon, 19 Oct 2026 14:19:37 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BC02821E6896; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1)
+ (envelope-from <69d00f0bb898e3e635d376e6a7e063e0aff072e0@kylie.crudebyte.com>)
+ id 1xIoT6-0007UC-3n
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=bgyHkocTAQn8Zy/D/YQYiC18eCMiUqs9zorblhNGkY0=; b=co9Lu
+ XOEW/FDJMZxfEQZFvRWaT7eq3D9uUNZmnuYkDHaTrpbzpqIfy7v0+gOCAk9dZKZONnBZiSjLPsjro
+ ur6xFPOVilMbTEhIZJiur1RA+7ySxxATJpvjISRLYAl2g1UZllX2OAvwfz0r/GkTWug7fsHxzBRi+
+ yLjFRem3RatjOOEamtAVOZ4Dgp01FjdWqRtDz0cMOxI1KItBkgy+P/Eyzc+qDvAjHVx6gitZBGMn8
+ aKTGcRNb3Gg/JwasmFRz79s223RcuBFXOpdwB4aO+nVFyCwZ7eau1N/f3l4SmYZ7HmWGZXnSdsJN6
+ XIrZhklHJPsvL/bnqH8IcmbSFV2ONJfh2pzdeED52wbXsSRFM+ukLtvXvVCAn5+xhuffW9t6P2fyx
+ w8yTNui0rL2euzwHwfQ5v3W0/cayTD5/DQtUZVBCrbzlisqK+0Crajm2Vpa1eyFCnED1CBjquuGxp
+ qPKN1MRDOM/0mrNRFEhf2xvFxjTBE+UIg5YrWKEEEslHA0vuTclBwCBB7mJnFfA0M8R3G+6jWnuec
+ tR4O+JRe4qI6z98Xd//WV98D47g6QhTO+cst4+6mkswqhFD7MEubZKk/m/DkhjuR/V7AY1uKLPbYX
+ nmG7EymqJn6xww+OmZABuoiPrKAm+HhucQd43hVD2M8FUbeCB3FQdaBCAzDqs0=;
+Message-ID: <69d00f0bb898e3e635d376e6a7e063e0aff072e0.1792420035.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1792420035.git.qemu_oss@crudebyte.com>
+References: <cover.1792420035.git.qemu_oss@crudebyte.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Date: Mon, 19 Oct 2026 16:27:16 +0200
+Subject: [PULL 1/9] tests/9p-client: add Txattrwalk / Rxattrwalk test client
+ functions
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
- michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
- philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
- amachhiw@linux.ibm.com
-Subject: [PATCH v6 18/65] tests: update check-qom-proplist for QAPI-aware
- property registration
-Date: Mon, 19 Oct 2026 16:18:42 +0200
-Message-ID: <20261019141929.1594337-19-armbru@redhat.com>
-In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
-References: <20261019141929.1594337-1-armbru@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: Greg Kurz <groug@kaod.org>,
+    Peter Maydell <peter.maydell@linaro.org>
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=69d00f0bb898e3e635d376e6a7e063e0aff072e0@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,158 +69,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Add v9fs_txattrwalk() and v9fs_rxattrwalk() functions to the 9p test
+client. This can be used to retrieve a list of xattrs or to acquire
+a FID that can subsequently be used to retrieve the value of an xattr.
 
-Migrate the dummy object's string and enum properties from the legacy
-object_class_property_add_str/enum() helpers to the new QAPI-aware
-object_class_property_add_qapi/qapi_enum() registration.
+This is a preparatory patch, these functions will be used by the
+subsequently added 9p race test.
 
-Add test cases verifying that the qapi_type metadata is correctly
-populated on properties registered through the new API, and that it
-remains NULL for properties using the old-style registration.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/fcd4dd1ed8cf6ae9af99ba5ade8b5922875e442d.1791368962.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/unit/check-qom-proplist.c | 93 +++++++++++++++++++++++++++------
- 1 file changed, 77 insertions(+), 16 deletions(-)
+ tests/qtest/libqos/virtio-9p-client.c | 48 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 28 ++++++++++++++++
+ 2 files changed, 76 insertions(+)
 
-diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 89de92b7d9..69155e7207 100644
---- a/tests/unit/check-qom-proplist.c
-+++ b/tests/unit/check-qom-proplist.c
-@@ -108,22 +108,21 @@ static int dummy_get_av(Object *obj,
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index 305b0dac63..b2f0037b7b 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -1227,3 +1227,51 @@ void v9fs_rxattrcreate(P9Req *req)
+     v9fs_req_recv(req, P9_RXATTRCREATE);
+     v9fs_req_free(req);
  }
- 
- 
--static void dummy_set_sv(Object *obj,
--                         const char *value,
--                         Error **errp)
-+static void dummy_set_sv(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
- {
-     DummyObject *dobj = DUMMY_OBJECT(obj);
- 
--    g_free(dobj->sv);
--    dobj->sv = g_strdup(value);
-+    g_clear_pointer(&dobj->sv, g_free);
-+    visit_type_str(v, name, &dobj->sv, errp);
- }
- 
--static char *dummy_get_sv(Object *obj,
--                          Error **errp)
-+static void dummy_get_sv(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
- {
-     DummyObject *dobj = DUMMY_OBJECT(obj);
- 
--    return g_strdup(dobj->sv);
-+    visit_type_str(v, name, &dobj->sv, errp);
- }
- 
- 
-@@ -135,16 +134,28 @@ static void dummy_init(Object *obj)
- }
- 
- 
-+static const QAPITypeInfo dummy_animal_qapi_type_info = {
-+    .name = "DummyAnimal",
-+    .masked_name = "DummyAnimalSchema",
-+    .lookup = &dummy_animal_map,
-+};
 +
-+static const QAPITypeInfo dummy_str_qapi_type_info = {
-+    .name = "str",
-+    .masked_name = "StrSchema",
-+};
-+
- static void dummy_class_init(ObjectClass *cls, const void *data)
- {
--    object_class_property_add_str(cls, "sv",
--                                  dummy_get_sv,
--                                  dummy_set_sv);
--    object_class_property_add_enum(cls, "av",
--                                   "DummyAnimal",
--                                   &dummy_animal_map,
--                                   dummy_get_av,
--                                   dummy_set_av);
-+    object_class_property_add_qapi(cls, "sv", &dummy_str_qapi_type_info,
-+                                   dummy_get_sv, dummy_set_sv,
-+                                   NULL, NULL);
-+    object_class_property_add_qapi_enum(cls, QAPI_ENUM_PROP(
-+        .name = "av",
-+        .qapi_type = &dummy_animal_qapi_type_info,
-+        .get = dummy_get_av,
-+        .set = dummy_set_av,
-+    ));
- }
- 
- 
-@@ -703,6 +714,54 @@ static void test_qom_partial_path(void)
-     object_unparent(cont1);
- }
- 
-+static void test_dummy_qapi_enum(void)
++/* size[4] Txattrwalk tag[2] fid[4] newfid[4] name[s] */
++TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt)
 +{
-+    ObjectProperty *prop;
-+    Object *parent = object_get_objects_root();
-+    DummyObject *dobj = DUMMY_OBJECT(
-+        object_new_with_props(TYPE_DUMMY,
-+                              parent,
-+                              "dummy0",
-+                              &error_abort,
-+                              "av", "platypus",
-+                              NULL));
++    P9Req *req;
++    uint32_t err;
++    uint32_t body_size = 4 + 4;
++    uint16_t string_size;
++    uint64_t xattr_size = 0;
 +
-+    g_assert(dobj->av == DUMMY_PLATYPUS);
++    g_assert(opt.client);
++    g_assert(opt.name);
 +
-+    prop = object_property_find(OBJECT(dobj), "av");
-+    g_assert(prop);
-+    g_assert(prop->qapi_type == &dummy_animal_qapi_type_info);
-+    g_assert_cmpstr(prop->qapi_type->name, ==, "DummyAnimal");
-+    g_assert_cmpstr(prop->qapi_type->masked_name, ==, "DummyAnimalSchema");
-+    g_assert(prop->qapi_type->lookup == &dummy_animal_map);
++    string_size = v9fs_string_size(opt.name);
++    g_assert_cmpint(body_size, <=, UINT32_MAX - string_size);
++    body_size += string_size;
 +
-+    object_unparent(OBJECT(dobj));
++    req = v9fs_req_init(opt.client, body_size, P9_TXATTRWALK, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_uint32_write(req, opt.newfid);
++    v9fs_string_write(req, opt.name);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_rlerror(req, &err);
++            g_assert_cmpint(err, ==, opt.expectErr);
++        } else {
++            v9fs_rxattrwalk(req, &xattr_size);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TXattrWalkRes) { .req = req, xattr_size };
 +}
 +
-+static void test_dummy_qapi_prop(void)
++/* size[4] Rxattrwalk tag[2] size[8] */
++void v9fs_rxattrwalk(P9Req *req, uint64_t *size)
 +{
-+    ObjectProperty *prop;
-+    Object *parent = object_get_objects_root();
-+    DummyObject *dobj = DUMMY_OBJECT(
-+        object_new_with_props(TYPE_DUMMY,
-+                              parent,
-+                              "dummy0",
-+                              &error_abort,
-+                              "sv", "hello",
-+                              NULL));
-+
-+    g_assert_cmpstr(dobj->sv, ==, "hello");
-+
-+    prop = object_property_find(OBJECT(dobj), "sv");
-+    g_assert(prop);
-+    g_assert(prop->qapi_type == &dummy_str_qapi_type_info);
-+    g_assert_cmpstr(prop->qapi_type->name, ==, "str");
-+    g_assert_cmpstr(prop->qapi_type->masked_name, ==, "StrSchema");
-+    g_assert(prop->qapi_type->lookup == NULL);
-+
-+    object_unparent(OBJECT(dobj));
++    v9fs_req_recv(req, P9_RXATTRWALK);
++    if (size) {
++        v9fs_uint64_read(req, size);
++    } else {
++        v9fs_memskip(req, 8);
++    }
++    v9fs_req_free(req);
 +}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-@@ -727,6 +786,8 @@ int main(int argc, char **argv)
-     g_test_add_func("/qom/proplist/iterator", test_dummy_iterator);
-     g_test_add_func("/qom/proplist/class_iterator", test_dummy_class_iterator);
-     g_test_add_func("/qom/proplist/delchild", test_dummy_delchild);
-+    g_test_add_func("/qom/proplist/qapi_enum", test_dummy_qapi_enum);
-+    g_test_add_func("/qom/proplist/qapi_prop", test_dummy_qapi_prop);
-     g_test_add_func("/qom/resolve/partial", test_qom_partial_path);
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index 4b04324503..c910407f70 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -553,6 +553,32 @@ typedef struct TXattrCreateRes {
+     uint32_t err;
+ } TXattrCreateRes;
  
-     return g_test_run();
++/* options for 'Txattrwalk' 9p request */
++typedef struct TXattrWalkOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of file/dir from which to walk (required) */
++    uint32_t fid;
++    /* file ID that will refer to the walked-to xattr (required) */
++    uint32_t newfid;
++    /* xattr name, or empty for a list of all xattrs (required) */
++    const char *name;
++    /* only send Txattrwalk request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an Rlerror response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TXattrWalkOpt;
++
++/* result of 'Txattrwalk' 9p request */
++typedef struct TXattrWalkRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++    /* size of xattr */
++    uint64_t size;
++} TXattrWalkRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -610,5 +636,7 @@ TClunkRes v9fs_tclunk(TClunkOpt opt);
+ void v9fs_rclunk(P9Req *req);
+ TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
+ void v9fs_rxattrcreate(P9Req *req);
++TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt);
++void v9fs_rxattrwalk(P9Req *req, uint64_t *size);
+ 
+ #endif
 -- 
-2.55.0
+2.47.3
 
 
