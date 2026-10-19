@@ -1,152 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44AA60ACCC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 15:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D29609B65D
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gYWCbWs5;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=N5o8KbXc
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qJNbZHF1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIpBv-0001Py-MY; Mon, 19 Oct 2026 11:22:23 -0400
+	id 1xIp2q-0006ls-Ia; Mon, 19 Oct 2026 11:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xIpBt-0001Pb-Ng
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 11:22:21 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xIp2d-0006hl-Oj; Mon, 19 Oct 2026 11:12:47 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xIpBr-0003UW-CK
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 11:22:21 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JE0JjW3401189
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 15:22:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LSg2TF6ZKvzNW9leVn44t/+sSoO7gtN/+8xj3iCatnI=; b=gYWCbWs5z6BxZv4s
- I6ynxstT5n7w9qEadfVlxdLiJn2PjouCc+cpVivt2pF7D+B3LOp0pZbHQVCSL6uM
- bCJcWS7lmFKdoHp5Fv+p0x/IPAwzm+6on6s1dQijwmk3mMKTd+tFCYg/L94SbsNY
- mSuR+RvGh0GRLJRcThlMVHlAf5zaPYdbEyet6co0v4WHLuSjivIC9w5SaefFVa2q
- EOhsAZ85g5ATKwhcnKL1bWiPvp0lKMgCGsiN/Ne2tPwGFZoJbvutqKvlRtMtVf2n
- iRnAUUjrV0F8s4r/na62Obc1PDutAjDe9p598VVmrmwrG5TMBlYJBodMRkIA/3Zh
- Zos+fg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdftn1p54-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 15:22:16 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cb93c874bso604312985a.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 08:22:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792423336; x=1793028136; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=LSg2TF6ZKvzNW9leVn44t/+sSoO7gtN/+8xj3iCatnI=;
- b=N5o8KbXc6paKcQ4aEaJaU9yzESAcGjfdPm1b2Btc/FBLELKMBXwagyJId89h6i3Z6a
- S0GZyCZqU9i238bGMoP97P2OYMGWQamPiXOZwcA05Pq5SBYHuONn0fiNTNBWIz4ucUZY
- 0GhVXyLU1aia460Zkc+X1Zoauodq6DrD1VrdNcFm7h1meARVc30Sb/XEvPUyzwjsLyhp
- HdgbghEXUmjReu5Lm/8YRDb2pmu+2Ij3jWme7l6hwCq9qrKx9JAjjBJMTtESnmbMNu61
- Hx8fsWVNqkYHdTMMVjodiKmL/8cewij4EAEOOI6fFAGKNoQkU8eJdLe9YOOvWJoSwob/
- RQCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792423336; x=1793028136;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LSg2TF6ZKvzNW9leVn44t/+sSoO7gtN/+8xj3iCatnI=;
- b=Pp1DVabkQqFslZqH650CoODhsdkxbcjpoYsFtzIaOLhQRdBHabYfqAxTqVZ+9Vzskx
- inNNRjG1ftGdmoTInt/7biKddovrqslnMdc2Uj4mYOGp1L8hWKi34sRCnmWG2lteTSuP
- IRCJ5qZ2hJVRQt3CV1SfKfiEt2nXRkhsqg4oES1/9pvH+Y+rIuEwdjcr5rbvC0ThZ5SU
- Oumf9tcJ/68sRK9CIwhxledJSAw9FWkld2BQs2TBDLXet2REC/JpI93JCOtQOpc+WvUD
- q8CGgtn2tuDVcJCCYop+lv5eMBY4a8Ygpp3I4jLla8dx2BiccIOzslhZy30mSC/CH5Oa
- tKnw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwyo2p2Tp1fUr7hpIgvFbJtXNT4qVDEeNnnQFfO+hpWfIuyyJzYpLkkBaqcbSBhwbd4wQVMfufj7n5+@nongnu.org
-X-Gm-Message-State: AFq9FYLT2LAiR1ihfHnwPOdazlGlV7fxPAPv9A7Gfq1Px1ctJF3Xcdv7
- b2nTjQeW75Mn4T7/iiWg7ym8GEt7OmtQWIG92/Zd07fyoArskcexmVSBHEfD2yicrPg1zUHyHTQ
- n+qSbjgow0fGi+CJub/ABIfSwoeua1p74qx/K6YFOP/HI04TWq3p8oEubvg==
-X-Gm-Gg: AYBFou0wVTwFFU8RMQ36oUAq0wbBsbsIdjtmzen4IPsKLxedN1YYLF8ZzgqwHdmZ1ct
- Sj4AYOtqxBPSCsD39/KCZyQ56xi0iWvT4bXNdCj88eOZoogEBFzfG+wI8egDBeMcYeZNCcLQR60
- J5NMYDvrqvLf3F0LwenCHtBfBNDeaaL8WvjEvkXDhmdUbo+t86WVmyo/HxL3LnDJxi6FcaPaUGm
- GwAZOGu26qrjNzsrBVya+lQDZHrFFfC1DbzJ8FyUCwGSk6N5L+3jXjsf+Sr3AwMRcyF2y5LDNpW
- 970DfxLlRgAKHLqh3jSjQgvHQzXEuipi0LBflu7tRoGECPTuWlCKfX1HjoclOS6xJiUwsbwdsm/
- 4fzj2BWWrbXUnOSlpMt4L3H72HgEq6tkb7bECjv6l7hlfMq7oVCFUdxX7sspiJe6Z
-X-Received: by 2002:a05:620a:4608:b0:93e:fcac:a91f with SMTP id
- af79cd13be357-93f17f9f371mr1797055685a.37.1792423335944; 
- Mon, 19 Oct 2026 08:22:15 -0700 (PDT)
-X-Received: by 2002:a05:620a:4608:b0:93e:fcac:a91f with SMTP id
- af79cd13be357-93f17f9f371mr1797050185a.37.1792423335374; 
- Mon, 19 Oct 2026 08:22:15 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91c01e833d9sm3247196d6.29.2026.10.19.08.22.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Oct 2026 08:22:14 -0700 (PDT)
-Message-ID: <66ae1e1c-edba-450d-9fb1-9ad8cf710dd0@oss.qualcomm.com>
-Date: Mon, 19 Oct 2026 10:22:12 -0500
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xIp2b-0002Vw-8I; Mon, 19 Oct 2026 11:12:47 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69JEEB414023781; Mon, 19 Oct 2026 15:12:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=Tf0vMtXnduSRXhUtSDZ9EQdJgHgu
+ y7780nLGLBH2q/Y=; b=qJNbZHF1wi/Q/LGj/ZY3yIQBgKBGBl8SEMRMJeOT151n
+ UANgcPLjkww/Etcj8N+9pHuqoV9BHhficJBqouMLEpZZ0D0ggptwsXNDCLW4ZcWk
+ 3R8zjPIfhEmgmMdWTMsVzLceXpTvjuT3+mRbZL+Fmxq2Su+Sz8a6QeIAEoEqHtDQ
+ g1xFK+wrekkEM/oJ7B8KB88EyNlEJBIQuHTGxP6ZyGlfu9iiwNYk2WZgGLZxeIA0
+ CS01AUKhiHZHoj8vjhwT9M7udt48uw+orixD/F7TFcsQEJJIoWaX9/sZpBviDOHk
+ /mEjg6eCEwDCeNUCC/mnAAHjlyidTB/PH5MyQydztA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hc0nvu2jq-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2026 15:12:40 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69JE4vFc4174114; Mon, 19 Oct 2026 15:12:40 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hcmbjx7d2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2026 15:12:40 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69JFCZeJ34275778
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Oct 2026 15:12:35 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 41E912004E;
+ Mon, 19 Oct 2026 15:12:35 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 16BCF20049;
+ Mon, 19 Oct 2026 15:12:35 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Mon, 19 Oct 2026 15:12:35 +0000 (GMT)
+Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
+ id F17BC160CFD; Mon, 19 Oct 2026 17:12:34 +0200 (CEST)
+From: Eric Farman <farman@linux.ibm.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
+Subject: [PATCH v1 0/4] tests/tcg fixes
+Date: Mon, 19 Oct 2026 17:12:27 +0200
+Message-ID: <20261019151233.230172-1-farman@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/14] tests/functional/hexagon: boot DSP firmware
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, Anton Johansson <anjo@rev.ng>,
- Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20261019055245.1457795-1-brian.cain@oss.qualcomm.com>
- <20261019055245.1457795-15-brian.cain@oss.qualcomm.com>
- <56dee5b4-f1d7-45f6-8a6d-a1d9b3d6e7e6@oss.qualcomm.com>
- <9ee17c2e-5f47-40be-8741-cda9390c1e04@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <9ee17c2e-5f47-40be-8741-cda9390c1e04@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA2MSBTYWx0ZWRfXyleMXax+g/y2
- SiF2qUS/4AZqz0Gdj4va2ooqoUkEQpvfTdPCTcROpG/fvCKn0eJUo/QCOqn5eVVbnP4OLdoP43y
- ktJ9MQCxhKtdUdHyGO/J0Z73qcox5t4=
-X-Proofpoint-GUID: XdrvKvUqVEhxny3GSZUi2M8A5azG7Y-r
-X-Proofpoint-ORIG-GUID: XdrvKvUqVEhxny3GSZUi2M8A5azG7Y-r
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA2MSBTYWx0ZWRfX97zcnWxWT3tY
- 6WCIuf5WbaGWvtPGjL3yz5IMh/jvEnaDoFqtsIIIRLRwThfrphtDv2Zb+mVxPvHVn1KF+QSo+uF
- aNNkBl1s/Qndo6xPxCNqXuEcjP8GfY+oOFHWtYgHE2dY0vR7UnOY5rPPI93IZImc9aqckueREfe
- EPL/+Ibb9l+mwixm0vFC3B1KASSQPqxtl+UuFnmO1IL/ToXnJOCEC2ac3Jy2ZG4UTvrbmE7wi3z
- 1HRlCt3fYC/IEwPZs9WJU/MT+UT+R6orGQPKEvhYZUvmQqPrNW1/pqSgxuOM9K3kthu5SIP5nnP
- +HqZ8XhcECh0S2HqynA8Jo4Me6zs3/SXIHwJ4+KjaYw3dV5bRIv6EZXlncDyg3yvmI/4JNcWO9Z
- Fg8D55+gazDO4MHAHKe1Ip4YF7i+OY8jHqMvlClv41sHeBXZN6ZB0SsATLRPS1E6w7GcrpAmXG0
- +Ksz9JFI+PHTS9FFxrg==
-X-Authority-Analysis: v=2.4 cv=OvTaWC/t c=1 sm=1 tr=0 ts=6ad635a8 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=NI66SgwwdX6N2Z_EC54A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA1OCBTYWx0ZWRfX/CwGPBBmBp15
+ Ky6stCXEGCfOyC2RNDWv4ZCLCf9bfHtwxiGLSG5fH2EtJobcDP4Ls3dgpFtgicBJwBB6a44NvId
+ T/4eDuwHg1l83jgQLE9kKAdb1CVkKYk=
+X-Proofpoint-ORIG-GUID: JI82h5wbc1exwz8DbNzsM-oiBjdweN50
+X-Proofpoint-GUID: aIBdtXAL_ePd28k3uNqnkAqdBvseiGQ7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA1OCBTYWx0ZWRfXwWEXA29LRlLo
+ k3VsF0wsQM4kUd7/QZO7FRp12GZVCu3s0Zu4jNpAdhoixCWLjmzXFYtjaBGQgwfLjuEOEdEG+BL
+ RNOy1OA3Olrt8eDFmpNq9KobX1l+bYTseD5Lp0YOP15s2ifve1GqakYbGSKwn9ufV/WXzEJTVBM
+ pV46ywoKF1Tp5rKRT1Tl4FyYWMlxLfuQ9fT5+ARayHFhdaVkJda6PvCxA0jXC0gurBL6RDdQvJa
+ FICJAsRvKqln9RfQvvPRasSUZsdKoSz+QEQbA1B+gdPKSRR7PqonXaJw6/8nA/4RnxroMXmZk1z
+ RvYZMk0WRyRMIUwxZOcXwYvEnfK4oUyZc1QbCzuiZsDIz+3cS2sxKeOHKZdEeUykzGKIZEhWU72
+ ywU3ocpUJCa0emYnUtkRu+mxdhX2UAHqzXKxKXEoftrEtNqx8N1RrnmTZ9b4mSEbkZFmv0SzBpt
+ Dk86boDmkpOw0IyC19w==
+X-Authority-Analysis: v=2.4 cv=MY35KJ/f c=1 sm=1 tr=0 ts=6ad63369 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=QbD7gNHDlg4_N-IKhW0A:9
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-19_04,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610190061
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ phishscore=0 adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190058
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,88 +125,59 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_ZEN_BLOCKED_OPENDNS,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_ZEN_BLOCKED_OPENDNS,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Hi,
 
-On 10/19/2026 8:51 AM, Brian Cain wrote:
->
-> On 10/19/2026 8:47 AM, Philippe Mathieu-Daudé wrote:
->> On 19/10/26 07:52, Brian Cain wrote:
->>> Download the firmware and run it on the corresponding DSP machine.
->>>
->>> The images are third-party binaries, so the tests run only when 
->>> untrusted
->>> code is allowed.
->>>
->>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->>> ---
->>>   tests/functional/hexagon/meson.build          |  2 +
->>>   .../hexagon/test_qcom_dsp_firmware.py         | 89 
->>> +++++++++++++++++++
->>>   2 files changed, 91 insertions(+)
->>>   create mode 100755 tests/functional/hexagon/test_qcom_dsp_firmware.py
->>
->>
->>> diff --git a/tests/functional/hexagon/test_qcom_dsp_firmware.py 
->>> b/tests/functional/hexagon/test_qcom_dsp_firmware.py
->>> new file mode 100755
->>> index 00000000000..86a0628d9f3
->>> --- /dev/null
->>> +++ b/tests/functional/hexagon/test_qcom_dsp_firmware.py
->>> @@ -0,0 +1,89 @@
->>> +#!/usr/bin/env python3
->>> +#
->>> +# Boot the production DSP firmware on the Qualcomm DSP machines
->>> +#
->>> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>> +#
->>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>> +
->>> +from qemu_test import QemuSystemTest, Asset, skipUntrustedTest
->>> +from qemu_test import wait_for_console_pattern
->>> +
->>> +
->>> +class QcomDspFirmwareTest(QemuSystemTest):
->>> +    """Base class: the firmware is the ELF that -kernel starts 
->>> running."""
->>> +
->>> +    REPO = 
->>> 'https://gitlab.com/kernel-firmware/linux-firmware/-/raw/' \
->>> +           'd947e4e8e314e9254a1242dc1a5d9cede2cce33d/qcom'
->>
->> 404: Page not found
->
->
-> Huh.  Maybe I picked a funny commit and somehow the asset cache fooled 
-> me?  Will take a closer look.
+With the tests/tcg rework that went in recently, we now see the results
+of make check-tcg tests as part of make check output, which is a nice
+addition so thank you for that! Of course, it did expose a few problems
+in the non-container environment that I'd like to consider here.
 
-Disregard: all is well.  A "wget" of one of these assets works for me.  
-If I paste the URL into chrome, it downloads the asset.
+=C2=A0- Patch 1 addresses an endianness problem that shows up when runnin=
+g
+=C2=A0=C2=A0=C2=A0on a big-endian (s390) host. It's existed for a while, =
+as I can
+=C2=A0=C2=A0=C2=A0recreate similar errors (if slightly different messages=
+) at least
+=C2=A0=C2=A0=C2=A0back to 11.0.0. Just never noticed (or looked into it) =
+before.
+=C2=A0- Patches 2-4 addresses a change in behavior that occurs in the pow=
+erpc
+=C2=A0=C2=A0=C2=A0toolchain between power6 and power7 (based on experimen=
+tation with
+=C2=A0=C2=A0=C2=A0gcc -mcpu=3D settings). The tests as they currently are=
+ run fine for me
+=C2=A0=C2=A0=C2=A0on either an s390 or x86 host running Fedora, but fail =
+on both hosts
+=C2=A0=C2=A0=C2=A0running Debian. I opted to disable the tests up front, =
+and then add
+   the problematic tests one at a time, since passing a cpu generation
+   to the compiler changes the expected reference output.
 
-But if I browse 
-to https://gitlab.com/kernel-firmware/linux-firmware/-/raw/d947e4e8e314e9254a1242dc1a5d9cede2cce33d/qcom 
-I do get a 404.  I think this is the expected behavior, though. That 
-"raw" mode for the URL expects a path to a file object that git could 
-serve up.
+Can't say I understand the details of the ppc64 compiler behavior,
+but this gets make check-tcg running cleanly in all my configs.
 
-If you browse 
-to https://gitlab.com/kernel-firmware/linux-firmware/-/tree/d947e4e8e314e9254a1242dc1a5d9cede2cce33d/qcom 
-you can see the directory listing that you might have expected. If you 
-apply these changes to master I would expect `check-functional` will 
-download and run them (w/the untrusted code bit set).
+Eric Farman (4):
+  hw/i386: ELF endianness fixes
+  tests/tcg/ppc64: Skip float_conv* tests
+  tests/tcg/ppc64: Add float_convd test
+  tests/tcg/ppc64: Add float_convs test
 
-The sha in the URL is inconvenient and unclear so in v2 I will switch to 
-a recent tag instead.
+ hw/i386/x86-common.c            |   6 +-
+ include/hw/elf_ops.h.inc        |  20 ++++-
+ tests/tcg/ppc64/float_convd.ref | 144 ++++++++++++++++----------------
+ tests/tcg/ppc64/float_convs.ref |  80 +++++++++---------
+ tests/tcg/ppc64/meson.build     |  11 +++
+ 5 files changed, 145 insertions(+), 116 deletions(-)
 
+--=20
+2.53.0
 
->
->
-> -Brian
 
