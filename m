@@ -1,124 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE77606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 18:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A004E606A31E
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 18:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=LG1MvEf9
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=chApVMyM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIsY7-0000RG-2R; Mon, 19 Oct 2026 14:57:31 -0400
+	id 1xIsZj-0001F2-WA; Mon, 19 Oct 2026 14:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xIsY0-0000Ig-2P; Mon, 19 Oct 2026 14:57:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xIsXy-0000NT-28; Mon, 19 Oct 2026 14:57:23 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JFiDuB006395; Mon, 19 Oct 2026 18:57:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qe9DP5
- /3nchaY064Jf0Ws70Vv7QvB9hyr7OTuxG7yT0=; b=LG1MvEf9aTJ57zD4DRPZqJ
- tQ/JSUrJb/ehzTLW1PEdFt3FJq8tei7GNuvLTyMFaJrtHE2AVxdYF8Bw+CZ2OnhS
- QJZ7kl9TzjEd/v603gieaDdH6unDWc28apNGbAuZ5KZUYY7/ZqOg9yqRJUdqQDnD
- DTq7CtTx60LCiJzVPinGFbvgPOrJeCOog1CxMvylDP9PEJnjBP7LRHtOfEnqPVap
- /cFMpPqZI02PDDWc6ylJ/JFJSx1V+F5+dYFiaBTUNeckdzaBK7btYw0I5ZQjBO4y
- NcwkRrExfbh46ABVDbY+vuyeUJUr/OgigF3a4l/tcgG13h+zvSlfCA/dxi1lVXyQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hc0r7n2yg-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 18:57:17 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JFZ6Pq168450; Mon, 19 Oct 2026 18:57:16 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hcmugy096-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 18:57:16 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69JIvCfW53018994
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Oct 2026 18:57:12 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 298F42004E;
- Mon, 19 Oct 2026 18:57:12 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D44D2004D;
- Mon, 19 Oct 2026 18:57:11 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.79.27])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 19 Oct 2026 18:57:11 +0000 (GMT)
-Message-ID: <2be3455d-929e-46de-864c-09675ee9c71f@linux.ibm.com>
-Date: Mon, 19 Oct 2026 20:57:11 +0200
+ (Exim 4.90_1) (envelope-from <samanyu.goel16@gmail.com>)
+ id 1xIpi8-0007yD-1c
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 11:55:40 -0400
+Received: from mail-dl1-x122b.google.com ([2607:f8b0:4864:20::122b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <samanyu.goel16@gmail.com>)
+ id 1xIpi6-0006n9-Jz
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 11:55:39 -0400
+Received: by mail-dl1-x122b.google.com with SMTP id
+ a92af1059eb24-157fe9d771bso915062c88.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 08:55:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792425337; x=1793030137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=oa7GGKxGIdUJiEFtMZRhwgXozwpjlUBJYDhFsQiQlKY=;
+ b=chApVMyMNGv7lRMpzZs2vnyAIVCt8b1RXVVInaKvS6uFbJ4fEb4NzocEUys0Luy65U
+ tvtx10B3KRHwwzxVI3tkVZB6VZAovKtNgCiVMIaT1l07YEfUSVbXQ5bK85uJ+5yh2KGv
+ de+mcJZi8mNPoUIYbmLEY2jjhXEwJGXiSkeB8LHEFoaXCdkuUVrNoGsEi/yWq+2aAoRT
+ d0Y5XQiyey49vMUcsq6sOIWwWWoH/oCDvD3Y/TBlpDR6Uc9iOREPxY3a1IRnLN+bCk0G
+ +ymu6cwuUsoA2NdZa3GKQlQi6J2ltJ+/i3BXf6+6b/5hUVMU/s1sZ7UAH4h0qgT1v5sq
+ Gv4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792425337; x=1793030137;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=oa7GGKxGIdUJiEFtMZRhwgXozwpjlUBJYDhFsQiQlKY=;
+ b=i1jjsMjCPPlXWy89gw1dOJcP8bJBjaQJjSN0h9pzuzrv8tNHYHfQvXR3CX18mtaoLw
+ G8ccF560zi6ovB+XCpYJf9zEeQJ2yxmW77TsDUIG2bjeb8qYFdWlyEjtrjgn57VPssIy
+ z0zX/lUi6TDnMirdl3hnXs3Y2PpRQvPolDzAA8HO+Nix6WjP6s+/MsCtPlc1MIuvThyo
+ nV+sqNC4ztu0GUdz0Vst6+rgY+g5F0gLbJsn0/BsoGK1rhGoPPWC8Sp3ziAQz6uBZsGC
+ rm2L6TMMqqqw+6wQziw41sEJZL9L4AbvTA2tOn7m8SFFx6gWY+2iwbQHJyS/3LKHBQvj
+ 1g/w==
+X-Gm-Message-State: AFq9FYI/A0b5TIPabCUs8oYacePubfQ73nkbpmgbmJtQw9cgLZurQL1c
+ bp6KEalS/uQ49swSmp2D4QluBDvigYQSnEZpg18mNDVHqSmhQ0/yVuI0GJ1keH9pn/fuJw==
+X-Gm-Gg: AYBFou3e8vcAFU6OKQ07HKnozrVu3abt8Gj4CfHoC0PBmsO1O/6yrla/why5UNQCp8F
+ 5HOU9MO69oFgT3irpB/td/FRy1sNguREUP5LphO9+J5WVxsOKvmtUSK4fjXOHGVKKPKnmRFHtG9
+ EanvqUX+eknIBFEGIfWVkZT37NQED8ShVmiToDgqRRQxmzf5ngYnli4GYX97kYP42F4pY9y0dix
+ WtVywvd8ma1DhOQth0zU5Qt2z1XvKEI+gq5e9c6J7ALkJZA6GwLECuNqVPP3sgczhwXJxlM+srE
+ 6MqeryX7AQvPjOM32UzhRUBl/hQj0UpRi49jkhh0A4wGoGJTuhTo3+5lkvxWMr/AhQ3W2gbIRu/
+ HGoOM+2V44Ge20bPyIs97JIN++UEU9qVRbmG+BC1ehNLn6un+z/i5CBNflw9iIf0WktoAN6yfyz
+ CEEkDv6J9HTjcm6kfi+TCa0Lsr+XWVJVCrBKCBRy5lgvm6Ac/MM627tnjRKlA3SgvplzuULNc9S
+ TQEP+LwhEpJuPbrU3L3v2yn49EWjFulpdKlg8R1k1ZWZS1SS1U32v13jwbNI0VJSfQ8lVzBdaFo
+ c89NYqddeFgWyypTow==
+X-Received: by 2002:a05:7022:170d:b0:143:3617:c595 with SMTP id
+ a92af1059eb24-1850c223bb9mr10820485c88.1.1792425336314; 
+ Mon, 19 Oct 2026 08:55:36 -0700 (PDT)
+Received: from Samanyu.localdomain ([117.213.200.4])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1831c5cb39esm31283501c88.22.2026.10.19.08.55.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Oct 2026 08:55:35 -0700 (PDT)
+From: Samanyu Goel <samanyu.goel16@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org,
+ Samanyu Goel <samanyu.goel16@gmail.com>
+Subject: [PATCH] hw/intc/exynos4210_combiner: Fix out of bounds access
+Date: Mon, 19 Oct 2026 15:55:19 +0000
+Message-ID: <20261019155519.1302964-1-samanyu.goel16@gmail.com>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] hw/i386: ELF endianness fixes
-To: Eric Farman <farman@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20261019151233.230172-1-farman@linux.ibm.com>
- <20261019151233.230172-2-farman@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20261019151233.230172-2-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA3NCBTYWx0ZWRfX8P4vCDoEzBB9
- hZ1mqcEGac7ibr975Yd4trOfPpPNHPwMM8gJG004OXbLu8/gtcFMKLhs4SOYjvwJz7P/hvlh3h6
- KC8sKx4vrDdgnnkq9ci3StyFKDhzk6s=
-X-Authority-Analysis: v=2.4 cv=PrUG/AM3 c=1 sm=1 tr=0 ts=6ad6680d cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=vduKVk_dJG_DsMz-FTcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA3NCBTYWx0ZWRfX0n7YGSz+zVEw
- jrppC/K9SvpoU8LDRbuYzFS9rChxXXwjG3/ZVL8la9Bp+BUWgDLUsjOOyNdxRPALViFq4EMNT+m
- SKsOTY8NnNd5LlLwHpIxYnZP1JZEIwU6Em1kFPnYJnrIpFJaNYUzw2q+Fcfay7XO6h0GqdU7onX
- x8ugj6gL6sNfQM/0wCzI08H+apRFT8d/knytCO/K2KRZhH1cPMhc697+lc43JNKQqsM20ivDrC/
- lJw6O8A7/cHtW4G662CDWoYBZ4WX31t8XjvmY3XOXPKIoGJJZFy+aiD5srqhp/sA0gKbSC7bV8Z
- Cr/nmRfvU3SlajjuASgrVnvHidFZXLF+F7yaABhiyG6KDhC05izA4DElcQxK9Yorphp7snzCEqh
- 5AKruvJ3K4WzFrZX4VU1whlMRbCzPxQd2aXYPK9nr6DAcurLBbfFrGme4Vqq+vsSlMY3YgoePE8
- TPnA1L6XrmNo1trCnvA==
-X-Proofpoint-GUID: 4bxFmDIktYBOQfH9ZtdzDCaCLvs2CdUt
-X-Proofpoint-ORIG-GUID: CBXvJrI0VwnHKLEOZZY33_U5Nk1vroNZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-19_05,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 impostorscore=0 phishscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190074
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122b;
+ envelope-from=samanyu.goel16@gmail.com; helo=mail-dl1-x122b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 19 Oct 2026 14:59:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,42 +97,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+In exynos4210_combiner_write(), the bounds check used req_quad_base_n
+instead of grp_quad_base_n. Because req_quad_base_n counts 4-group blocks
+rather than individual groups, invalid offsets were allowed through.
 
+For example, writing to offset 0x100 resulted in req_quad_base_n = 16,
+passing the check (16 < 64). As verified in GDB, this caused
+grp_quad_base_n to reach 64, leading to an out-of-bounds write at
+s->group[64].
 
-On 10/19/26 17:12, Eric Farman wrote:
-> Running make check-tcg-x86_64 on a big-endian host (e.g., s390x) fails due
-> to problems reading/parsing the ELF data:
-> 
->    qemu-system-x86_64: Error loading uncompressed kernel without PVH ELF Note
-> 
-> There already exists logic in include/hw/elf_ops.h.inc to handle byte-swaps
-> where necessary, but it does not perform this logic for ELF notes itself.
-> 
-> Fixing that improves matters, but yields other errors: most of the tests
-> timeout while some generate confusing assertions. Both appear to be related
-> to the data addresses in those notes, which are incorrect when running on a
-> big-endian host.
-> 
-> Adding tswap wrappers, which will conditionally swap if the host and target
-> endianness don't match, fixes that such that check-tcg-x86_64 runs cleanly
-> on an s390 host.
-> 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   hw/i386/x86-common.c     |  6 ++++--
->   include/hw/elf_ops.h.inc | 20 ++++++++++++++++++--
->   2 files changed, 22 insertions(+), 4 deletions(-)
+Signed-off-by: Samanyu Goel <samanyu.goel16@gmail.com>
+---
+ hw/intc/exynos4210_combiner.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This looks similar to [1], which I've been desperately pinging for a
-while.
+diff --git a/hw/intc/exynos4210_combiner.c b/hw/intc/exynos4210_combiner.c
+index dbbdee4d31..458949e8bb 100644
+--- a/hw/intc/exynos4210_combiner.c
++++ b/hw/intc/exynos4210_combiner.c
+@@ -184,7 +184,7 @@ static void exynos4210_combiner_write(void *opaque, hwaddr offset,
+     grp_quad_base_n = req_quad_base_n << 2;
+     reg_n = (offset - (req_quad_base_n << 4)) >> 2;
+ 
+-    if (req_quad_base_n >= IIC_NGRP) {
++    if (grp_quad_base_n >= IIC_NGRP) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "exynos4210.combiner: unallowed write access at offset 0x"
+                       HWADDR_FMT_plx "\n", offset);
+-- 
+2.53.0
 
-[1] 
-https://lore.kernel.org/qemu-devel/20240929180659.3598-1-ardb@kernel.org/
 
