@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3807ACCF2D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 08:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58738CCF2DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 08:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIj8R-0005va-Hq; Mon, 19 Oct 2026 04:54:23 -0400
+	id 1xIj8Y-0005zH-Ni; Mon, 19 Oct 2026 04:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xIj8K-0005tY-Ju
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:54:16 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1xIj8X-0005xw-26
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:54:29 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xIj8H-0008QB-2q
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:54:15 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4a1ddc7c9beso7540565e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 01:54:11 -0700 (PDT)
+ id 1xIj8T-0008RA-Dq
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 04:54:27 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-48c4be28b82so1381455f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 01:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792400050; x=1793004850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792400064; x=1793004864; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=16/kep8BGb5ez3FlDTh94zREThdgTmlrT7fGEqi2f/o=;
- b=csxjsN67iQZ55SbWCDEwQDhi9xKKOf5gqpFfNjiKPE2Y1nLZXkG3smGgVHuFRqQaRO
- 424Ybx21zdqqBXCFRpSYK4KtfEAs82E32AWExdq/yLA1kRNeHa65E3j87CVepSdJq4pd
- asBXBccJ9kHZyOP4EKgFUg/iNMHjJ+kpMuhhM8YSNxmb8JNoOrUB8vkfPcv/n0vzzaYT
- BI68PSBILr0cIO6O4qoRpnAwRzRNurjObMwh04qX0/gvtIOEvjH9wu5rG1bzWHrdl11D
- JAct5a76d0At7hcRt46c17J+WDMG6u97MenWSFG7M+2TJclu+gpibL1WrLIxNF4XAlEG
- MXHQ==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=8/dHi80RO8nWesmfOqifptWpnAkwSptTtRbtE44JYkA=;
+ b=R2SvNIpsUFaRotShXelDKwhxMIi/TYGxg6NXTxuZbQz8OmgT1tQTvHf/0Dnzjkt29r
+ SuhJI9mVKOz4kqWekntS41H8bX0AsH3jhyFRyjwVeeJz2Wmxe6qOTmBrFAnhIRTumCzW
+ IJQjVzDUR2vib7nXmd6iMzl/Kaxweg3nfe4vgTsfNhwkEm2YFLWFUP5pC0zYSKf7mGYj
+ zGzjGrf6SFmrXaptzlh6PNlFEmf/xhD/VmRYMEQwLG65Ix/yqswepFiVWnk9+Onh5pX0
+ 23Y2y8WiiiYl92DHXuUIcbZ2ZoORrUMc7tD2/6IFQK+vFNE70+wu8Bb9JAjp4xT9+IM8
+ PdVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792400050; x=1793004850;
+ d=1e100.net; s=20260707; t=1792400064; x=1793004864;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=16/kep8BGb5ez3FlDTh94zREThdgTmlrT7fGEqi2f/o=;
- b=cvCmxYkGIqLG4Gn+q/y8PPe6elW3/egg6ZH6A4x0WBr4RvY36xBkJwA2A2enbWZ+BF
- A/n13c22zSSMyC6etxrFvWG9ROlFMFEouAKCihJS51GtVroIgZ/kgxvVmS16oOxJ+75z
- wgl4cTUhIedxU7E+GTszqstzkzsho3HS1vMtVMXdprc99TTmco0vblR+9m+T78o0uRxy
- IgJBEqwT/bQwryHMC8MyndIh7o3MjnyReq4WUXRZcWmCj/+4vibjl/0hb3UoBF5ZdbK9
- /oZdMcWcst1MvUaJxotxilHOXvc72P5jT7+buU714OIfg4R9SGf9/iBOwuqeoM7oxhf7
- GZhw==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=8/dHi80RO8nWesmfOqifptWpnAkwSptTtRbtE44JYkA=;
+ b=LZ1JkLa5+FMVEsvvloMwrSqxd9uBljGnGGJd1XdfOJVDAiT1oyp6bIoezBagMWDT3G
+ CN5eq2Mvaxm0u5EGq5X2y/BHdA0uVlJr9AkWdcIRUd9GEJP4KDFn9sbi6eZSAX4KjMA4
+ O85Z2tMyl1ni19OPjVpcc5ZpI5plObLUMzUuNk6CznBGkHWzpPEnIVdZ7jrjcF6UPsjm
+ QqeHV4Kt4uaPPZ+H1iwmOD4Y8jqzBT2gpqP1apywJg/X22dDqWYupi+zRi0CZwv2Bm4y
+ qkhV4mgNawzAR3QdG2oeLfZlX8lea2aT0KquY1pz+t0mtR8z8So0s5Sv4WqHxVUOjfec
+ qc1Q==
 X-Forwarded-Encrypted: i=1;
- AKwUvByKA6P9bU82QQaQZggEl9/K09Qor7y77P4vf2mzuEHGwkglv7qPOZFzeuMZX0VzRG5i8Yg44k9ck9TA@nongnu.org
-X-Gm-Message-State: AFq9FYKUAWE3NOrPJS3RDiFYk9BkrtFFl1PluXRZuyml5KEEUZ/UpY4Z
- j47egEtcXdINXe3SANzSG8ex0XzinVmyFAOfDeIIT6fQxn0b3p7omzQQGO7TiqI11kp7QPLqNV1
- 6Y0s56rE=
-X-Gm-Gg: AYBFou0KWyilmOTzI8lGtZNDZIi1IjMEosCNwDOCwdL3z3MuTOe53bYwGZhzq3jzpcb
- S0VO8PCfmC1Xu8hl7gTvmGkykbW8rZ8DaTvA/jM3L4USXnj82T0rkKDtM4X6B9yGAonaL8Er6pY
- CakK40wSOXpcqHxMS56Qme3l31yQp7gvvHOD5H9AmyH5TX9poW5PT6cnQxy1I7t6g0LnUZT8+EW
- QPXvscWn6vV+fE6jLBwZ9S34wFRDrGXxp2/13kznroZk1ugw5MaDtu+1XRy1L1h+IGGbNHjpGs+
- pvIbyUNkC5dO04gY+gcej0VQlIL0pZSdVV/twPqMMjgHNXs46Q0jYZXDME+3AjAtiCA7fc5eijT
- wAGL4ksyiU7BvKCZQlOeu38pVhdBdVyrExY4ZGClRMYNn/xJyDhNFUufmlfB8Ph7KgNsi63Hl1q
- Hw9cOw3dWZHL7xGMzgvuZMLwUvJsTp/NvTa1RoGjXunIwJklmSnKE4ca007ZwfC89CSHPAkbUJd
- zQWH009xfyDqy/wRYTB0/1JpGrEdYy7WvI73NH2Kyo7fGYdL9mNn5O/yg/29A==
-X-Received: by 2002:a05:600c:8b6f:b0:4a1:88de:9e8b with SMTP id
- 5b1f17b1804b1-4a1d75e380dmr143423785e9.5.1792400049826; 
- Mon, 19 Oct 2026 01:54:09 -0700 (PDT)
+ AKwUvBy4EmNK0xxx12xb0BRfg6IIwCUe3f9mC4bDhS9o+16MG4E31B4xNGT0drxPa2DkBABpCMQxuYd0bt0f@nongnu.org
+X-Gm-Message-State: AFq9FYLP8doMVwm+DiLlPhyWdKyIUnJar8SJOfpNG7P0A6GXOgRFh65V
+ /YfvICUuN3AzH92BibzaKu+8dJEIkvFVcctJkJHEc+BRHmiFvatjeocHfR2lbppsjRM=
+X-Gm-Gg: AYBFou3Gwt51JboezL4e5t70N5ARDGAgwe7OepgYlrtUD1vbEAnpyts6yFXVINGeXd9
+ kTWUkJQZ+2nMjlBut2tUqdrhHc//UrmbEf3wrwrkZVOqcPuTxVUB4/ZqkJm/1w9hfoeajCGNBXt
+ tbTKxgIYxZRXRGJz3ZSPdLAzuf2MMTxyinWUdHyIbRoTS6CF4/qjlxEvKsR5Azs/BetDqKsHws5
+ HOW3erkxEuhJTD2bC3NuCMo7ZvBoZsoyYnJESE62jxcDFhpDAG3wU2LeDf2VvbusFOMOpb2DIa9
+ Yr+dMONE7aHPZa8s7N6jZK597Hbx3dUD8vjFuqD+291SG3bQ290agtFo0WkewDH3uK0PTFvp+Zs
+ VwWP28lvUOaak/MLDRP6ar4oMZPGzEIikuIJ16iozpKHRbhpSqyNAVl2jiP4wgTp4buToks+OfV
+ jNeCOVyqsTBIL3uuctOwgQjxArAn4Mr3scbUTPS87zYZu+i9kjgxCpd+AdE7IUQDcD7qNqPtofj
+ qXcBydVmEt74PezB1abRLTwGRWagHXUcSVamrby+6tCt/bYmlfRfmiPITEyRQ==
+X-Received: by 2002:a05:6000:2905:b0:48e:f8d:8cab with SMTP id
+ ffacd0b85a97d-48e1afe357amr92415f8f.4.1792400063776; 
+ Mon, 19 Oct 2026 01:54:23 -0700 (PDT)
 Received: from [10.89.180.227] (cust-east-par-46-193-64-64.cust.wifirst.net.
  [46.193.64.64]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1cca30aa4sm118156715e9.2.2026.10.19.01.54.08
+ ffacd0b85a97d-48dfd471a35sm18708554f8f.7.2026.10.19.01.54.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Oct 2026 01:54:09 -0700 (PDT)
-Message-ID: <8031d08f-0b47-4ce8-9154-3ddf9d5432b8@linaro.org>
-Date: Mon, 19 Oct 2026 10:54:07 +0200
+ Mon, 19 Oct 2026 01:54:23 -0700 (PDT)
+Message-ID: <e4e79dc9-18e1-4f5e-baef-fdc29b1884ef@linaro.org>
+Date: Mon, 19 Oct 2026 10:54:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] Linux user next patches
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Andreas Schwab <schwab@suse.de>, Helge Deller <deller@gmx.de>
-References: <20261017203031.3107-1-deller@kernel.org>
+Subject: Re: [PULL 0/2] tcg tests 20261017
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
+ stefanha@redhat.com
+References: <20261017174105.25814-1-pierrick.bouvier@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261017203031.3107-1-deller@kernel.org>
+In-Reply-To: <20261017174105.25814-1-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,26 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/17/26 22:30, Helge Deller wrote:
-> From: Helge Deller<deller@gmx.de>
+On 10/17/26 19:41, Pierrick Bouvier wrote:
+> The following changes since commit a19f59a72d96056d9a8f48cf6c77f5787491e414:
 > 
-> The following changes since commit 8ee6c77176cfee03be0ec7665b6652b2f31f1531:
-> 
->    Merge tag 'pull-ufs-20261012' ofhttps://gitlab.com/jeuk20.kim/qemu into staging (2026-10-13 22:01:07 +0200)
+>    Merge tag 'pull-hex-20261015' ofhttps://github.com/qualcomm/qemu into staging (2026-10-16 07:50:02 +0200)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
+>    https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/tcg_tests-20261017
 > 
-> for you to fetch changes up to 56ab4a7356ac7b6a18a4283d51e868e2cf366588:
+> for you to fetch changes up to e77a38d8944cafd7285b9f7caa4771e89027dd1c:
 > 
->    linux-user: don't print core dump message by default (2026-10-14 21:14:06 +0200)
+>    tcg/tests: add an alias for all TCG tests of a target (2026-10-17 17:40:25 +0000)
 > 
 > ----------------------------------------------------------------
-> linux user patches
-> 
-> One patch from Andreas Schwab to not trash the guest console when
-> warning about unhandled core dumps.
+> Changes:
+> - [PATCH] tests/tcg: match custom target name to executable name (Paolo Bonzini<pbonzini@redhat.com>)
+>    Link:https://lore.kernel.org/qemu-devel/20261017074226.1347492-1- 
+> pbonzini@redhat.com
+> - [PATCH] tcg/tests: add an alias for all TCG tests of a target (Paolo Bonzini<pbonzini@redhat.com>)
+>    Link:https://lore.kernel.org/qemu-devel/20261017073952.1346449-1- 
+> pbonzini@redhat.com
 
 Applied, thanks.
 
