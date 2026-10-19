@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B32CCF2E9
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CA5CCF2ED
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoDr-0002Xa-Qq; Mon, 19 Oct 2026 10:20:20 -0400
+	id 1xIoEX-0003Da-8T; Mon, 19 Oct 2026 10:21:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDE-0002CD-Vx
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDO-0002Eq-UR
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDC-0005Xo-8y
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDJ-0005al-4B
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419577;
+ s=mimecast20190719; t=1792419584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RzkIDFxIW46GlEhxmH6c262kRii0e6nccYIJ96460Tw=;
- b=Rv7UgwOqRkBSN8g4zaVxsZADhkbueG42Hl6Eylq26pPNDfGwvGJwCYcAfvzfjylyVozmM4
- sBNlF1eXMal9J5h7UsY0Hn8DToD5/Vz6oxrlIT89c4iilshFCdAiLLiXE5oD05D49pg69x
- OA1loigxBxVikgnppGOp9wxpOvPaoPM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VC/6XNX6A0pipOH7kJd7/2QU6o0+QG4LKuFePa7g8eI=;
+ b=dXmj0P3tdoz2tZ8LPX0gTcBEGn0UkxXfU+qRf0Ew5CRqofJpxAQL8r45T5hVtmkqA3kFwk
+ Y7yjItHeU+BTRmw45cK0whQgQe4NCN47ptxxiH7gjkvpPWOQAmWwTEvFcUE1HO8c1zMury
+ 49JBM7RU/Q+ZHf1Db8GTR4wX4rdy4ac=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-JXJwtBbxNDuthWSErARNqA-1; Mon,
- 19 Oct 2026 14:19:33 +0000
-X-MC-Unique: JXJwtBbxNDuthWSErARNqA-1
-X-Mimecast-MFC-AGG-ID: JXJwtBbxNDuthWSErARNqA_1792419572
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-6awV43zjPae6LStvUlyEeg-1; Mon,
+ 19 Oct 2026 14:19:39 +0000
+X-MC-Unique: 6awV43zjPae6LStvUlyEeg-1
+X-Mimecast-MFC-AGG-ID: 6awV43zjPae6LStvUlyEeg_1792419578
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80AE01955D84; Mon, 19 Oct 2026 14:19:32 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7424B1955E77; Mon, 19 Oct 2026 14:19:38 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFB4F1955F01; Mon, 19 Oct 2026 14:19:31 +0000 (UTC)
+ id DE1141955F24; Mon, 19 Oct 2026 14:19:37 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6F6B821E6880; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
+ id CFD1D21E689A; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
  amachhiw@linux.ibm.com
-Subject: [PATCH v6 02/65] qapi: Ease access to introspection names
-Date: Mon, 19 Oct 2026 16:18:26 +0200
-Message-ID: <20261019141929.1594337-3-armbru@redhat.com>
+Subject: [PATCH v6 22/65] microvm: convert OnOffAuto properties to QAPI-aware
+ registration
+Date: Mon, 19 Oct 2026 16:18:46 +0200
+Message-ID: <20261019141929.1594337-23-armbru@redhat.com>
 In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -86,192 +87,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-query-qmp-schema masks type names, because they are not part of the
-external interface.  Marc-André Lureau would like to also use them
-with qom-list & friends.  Trouble is the masked names are buried deep
-in QAPISchemaGenIntrospectVisitor.  Lift them into schema.py: new
-QAPISchemaDefinition method introspection_name() returns a
-definition's name for use in introspection.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This changes the masked names, which is fine.
+Convert the rtc, pcie, and ioapic2 OnOffAuto properties from
+manual visitor-based callbacks to property_add_qapi_enum().
 
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/introspect.py | 23 ++++----------------
- scripts/qapi/schema.py     | 43 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 19 deletions(-)
+ hw/i386/microvm.c | 80 ++++++++++++++++++++---------------------------
+ 1 file changed, 34 insertions(+), 46 deletions(-)
 
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-index 7e28de2279..644461560c 100644
---- a/scripts/qapi/introspect.py
-+++ b/scripts/qapi/introspect.py
-@@ -30,7 +30,6 @@
-     QAPISchemaAlternatives,
-     QAPISchemaArrayType,
-     QAPISchemaBranches,
--    QAPISchemaBuiltinType,
-     QAPISchemaEntity,
-     QAPISchemaEnumMember,
-     QAPISchemaFeature,
-@@ -177,7 +176,6 @@ def __init__(self, prefix: str, unmask: bool):
-         self._schema: Optional[QAPISchema] = None
-         self._trees: List[Annotated[SchemaInfo]] = []
-         self._used_types: List[QAPISchemaType] = []
--        self._name_map: Dict[str, str] = {}
-         self._genc.add(mcgen('''
- #include "qemu/osdep.h"
- #include "%(prefix)sqapi-introspect.h"
-@@ -208,18 +206,14 @@ def visit_end(self) -> None:
-         self._schema = None
-         self._trees = []
-         self._used_types = []
--        self._name_map = {}
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index a49de33749..1d1ca172bf 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -21,7 +21,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "system/system.h"
+ #include "system/cpus.h"
+ #include "system/numa.h"
+@@ -519,55 +519,40 @@ static void microvm_machine_reset(MachineState *machine, ResetType type)
+     }
+ }
  
-     def visit_needed(self, entity: QAPISchemaEntity) -> bool:
-         # Ignore types on first pass; visit_end() will pick up used types
-         return not isinstance(entity, QAPISchemaType)
+-static void microvm_machine_get_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static int microvm_machine_get_rtc(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto rtc = mms->rtc;
+-
+-    visit_type_OnOffAuto(v, name, &rtc, errp);
++    return mms->rtc;
+ }
  
-     def _name(self, name: str) -> str:
--        if self._unmask:
--            return name
--        if name not in self._name_map:
--            self._name_map[name] = '%d' % len(self._name_map)
--        return self._name_map[name]
-+        assert self._schema
-+        return self._schema.definition_introspection_name(name, self._unmask)
+-static void microvm_machine_set_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static void microvm_machine_set_rtc(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->rtc, errp);
++    mms->rtc = value;
+ }
  
-     def _use_type(self, typ: QAPISchemaType) -> str:
-         assert self._schema is not None
-@@ -237,13 +231,6 @@ def _use_type(self, typ: QAPISchemaType) -> str:
-         # Add type to work queue if new
-         if typ not in self._used_types:
-             self._used_types.append(typ)
--        # Clients should examine commands and events, not types.  Hide
--        # type names as integers to reduce the temptation.  Also, it
--        # saves a few characters on the wire.
--        if isinstance(typ, QAPISchemaBuiltinType):
--            return typ.name
--        if isinstance(typ, QAPISchemaArrayType):
--            return '[' + self._use_type(typ.element_type) + ']'
-         return self._name(typ.name)
+-static void microvm_machine_get_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static int microvm_machine_get_pcie(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto pcie = mms->pcie;
+-
+-    visit_type_OnOffAuto(v, name, &pcie, errp);
++    return mms->pcie;
+ }
  
-     @staticmethod
-@@ -271,8 +258,7 @@ def _gen_tree(self, name: str, mtype: str, obj: Dict[str, object],
-                 # Output a comment to make it easy to map masked names
-                 # back to the source when reading the generated output.
-                 comment = f'"{self._name(name)}" = {name}'
--            name = self._name(name)
--        obj['name'] = name
-+        obj['name'] = self._name(name)
-         obj['meta-type'] = mtype
-         if features:
-             obj['features'] = self._gen_features(features)
-@@ -327,8 +313,7 @@ def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
-                          ifcond: QAPISchemaIfCond,
-                          element_type: QAPISchemaType) -> None:
-         element = self._use_type(element_type)
--        self._gen_tree('[' + element + ']', 'array', {'element-type': element},
--                       ifcond)
-+        self._gen_tree(name, 'array', {'element-type': element}, ifcond)
+-static void microvm_machine_set_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static void microvm_machine_set_pcie(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->pcie, errp);
++    mms->pcie = value;
+ }
  
-     def visit_object_type_flat(self, name: str, info: Optional[QAPISourceInfo],
-                                ifcond: QAPISchemaIfCond,
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 9c9e257a8f..11f3accec8 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -136,6 +136,13 @@ def __repr__(self) -> str:
-     def c_name(self) -> str:
-         return c_name(self.name)
+-static void microvm_machine_get_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static int microvm_machine_get_ioapic2(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto ioapic2 = mms->ioapic2;
+-
+-    visit_type_OnOffAuto(v, name, &ioapic2, errp);
++    return mms->ioapic2;
+ }
  
-+    def set_ordinal(self, ordinal: int) -> None:
-+        pass
-+
-+    # pylint: disable=unused-argument
-+    def introspection_name(self, unmask: bool) -> str:
-+        return self.name
-+
-     def check(self, schema: QAPISchema) -> None:
-         assert not self._checked
-         super().check(schema)
-@@ -323,6 +330,17 @@ def visit(self, visitor: QAPISchemaVisitor) -> None:
+-static void microvm_machine_set_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static void microvm_machine_set_ioapic2(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->ioapic2, errp);
++    mms->ioapic2 = value;
+ }
  
+ static bool microvm_machine_get_isa_serial(Object *obj, Error **errp)
+@@ -673,26 +658,29 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = microvm_device_unplug_request_cb;
+     hc->unplug = microvm_device_unplug_cb;
  
- class QAPISchemaType(QAPISchemaDefinition, ABC):
-+    def __init__(
-+        self,
-+        name: str,
-+        info: Optional[QAPISourceInfo],
-+        doc: Optional[QAPIDoc],
-+        ifcond: Optional[QAPISchemaIfCond] = None,
-+        features: Optional[List[QAPISchemaFeature]] = None,
-+    ):
-+        super().__init__(name, info, doc, ifcond, features)
-+        self._masked_name: Optional[str] = None
-+
-     # Return the C type for common use.
-     # For the types we commonly box, this is a pointer type.
-     @abstractmethod
-@@ -363,6 +381,17 @@ def need_has_if_optional(self) -> bool:
-         # Except for arrays; see QAPISchemaArrayType.need_has_if_optional().
-         return not self.c_type().endswith(POINTER_SUFFIX)
+-    object_class_property_add(oc, MICROVM_MACHINE_RTC, "OnOffAuto",
+-                              microvm_machine_get_rtc,
+-                              microvm_machine_set_rtc,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_RTC,
+-        "Enable MC146818 RTC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_RTC,
++        .description = "Enable MC146818 RTC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_rtc,
++        .set = microvm_machine_set_rtc,
++    ));
  
-+    def set_ordinal(self, ordinal: int) -> None:
-+        assert not self._masked_name
-+        self._masked_name = str(ordinal)
-+
-+    def introspection_name(self, unmask: bool) -> str:
-+        # Type names are not part of the external interface.  Hide
-+        # them in introspection.  Also saves a few characters on the
-+        # wire.
-+        assert self._masked_name
-+        return self.name if unmask else self._masked_name
-+
-     def check(self, schema: QAPISchema) -> None:
-         super().check(schema)
-         for feat in self.features:
-@@ -402,6 +431,11 @@ def json_type(self) -> str:
-     def doc_type(self) -> str:
-         return self.json_type()
+-    object_class_property_add(oc, MICROVM_MACHINE_PCIE, "OnOffAuto",
+-                              microvm_machine_get_pcie,
+-                              microvm_machine_set_pcie,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_PCIE,
+-        "Enable PCIe");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_PCIE,
++        .description = "Enable PCIe",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_pcie,
++        .set = microvm_machine_set_pcie,
++    ));
  
-+    def introspection_name(self, unmask: bool):
-+        if self.json_type() == 'int':
-+            return 'int'
-+        return self.name
-+
-     def visit(self, visitor: QAPISchemaVisitor) -> None:
-         super().visit(visitor)
-         visitor.visit_builtin_type(self.name, self.info, self.json_type())
-@@ -503,6 +537,9 @@ def doc_type(self) -> Optional[str]:
-             return None
-         return 'array of ' + elt_doc_type
+-    object_class_property_add(oc, MICROVM_MACHINE_IOAPIC2, "OnOffAuto",
+-                              microvm_machine_get_ioapic2,
+-                              microvm_machine_set_ioapic2,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_IOAPIC2,
+-        "Enable second IO-APIC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_IOAPIC2,
++        .description = "Enable second IO-APIC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_ioapic2,
++        .set = microvm_machine_set_ioapic2,
++    ));
  
-+    def introspection_name(self, unmask: bool):
-+        return '[' + self.element_type.introspection_name(unmask) + ']'
-+
-     def visit(self, visitor: QAPISchemaVisitor) -> None:
-         super().visit(visitor)
-         visitor.visit_array_type(self.name, self.info, self.ifcond,
-@@ -1182,6 +1219,7 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
-                     "'%s' is already defined\n%s" % (defn.name, where))
-             raise QAPISemError(
-                 defn.info, "%s is already defined" % other_defn.describe())
-+        defn.set_ordinal(len(self._entity_dict))
-         self._entity_dict[defn.name] = defn
- 
-     def lookup_defn(self, name: str) -> Optional[QAPISchemaDefinition]:
-@@ -1208,6 +1246,11 @@ def resolve_type(
-                 info, "%s uses unknown type '%s'" % (what, name))
-         return typ
- 
-+    def definition_introspection_name(self, name: str, unmask: bool) -> str:
-+        defn = self.lookup_defn(name)
-+        assert defn
-+        return defn.introspection_name(unmask)
-+
-     def _module_name(self, fname: str) -> str:
-         if QAPISchemaModule.is_system_module(fname):
-             return fname
+     object_class_property_add_bool(oc, MICROVM_MACHINE_ISA_SERIAL,
+                                    microvm_machine_get_isa_serial,
 -- 
 2.55.0
 
