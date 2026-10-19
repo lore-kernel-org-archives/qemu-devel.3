@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 051ECCCF2E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 10:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640AACCF2DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 10:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIkat-00087b-6w; Mon, 19 Oct 2026 06:27:51 -0400
+	id 1xIkkE-0000kj-Ew; Mon, 19 Oct 2026 06:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xIkaq-00086n-RZ
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:27:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
- id 1xIkap-0000iF-92
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:27:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792405666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qwfdsSrVIuOZEOt6G0XZapVNdRO/I83QEUwNbnxJPSA=;
- b=cGfgGkh2vKCC90cnc4v4DvsrIaewlGfPCqHgTMOWUd2ZLyqrpNn/VMqqkajpTZgqALEn4W
- AK8RIOymSk6Sh16tBttDHfXJSW7u7T4kFhjMjSEyvrruYj1r9getWM/DwYzinzv+UxlZrn
- rg2+AfEMlqUfU3gFb/OrQQPcPRRFb1s=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-pdjIy5psN-aB3B1hHLR1AA-1; Mon,
- 19 Oct 2026 10:27:43 +0000
-X-MC-Unique: pdjIy5psN-aB3B1hHLR1AA-1
-X-Mimecast-MFC-AGG-ID: pdjIy5psN-aB3B1hHLR1AA_1792405661
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A06371955DC3; Mon, 19 Oct 2026 10:27:40 +0000 (UTC)
-Received: from nucbdw.ghoffman.csb.home.kraxel.org
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F02618005BA; Mon, 19 Oct 2026 10:27:39 +0000 (UTC)
-Received: by nucbdw.ghoffman.csb.home.kraxel.org (Postfix, from userid 11758)
- id 466FE4077819; Mon, 19 Oct 2026 12:27:37 +0200 (CEST)
-Date: Mon, 19 Oct 2026 12:27:36 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: "junjie.cao@linux.dev" <junjie.cao@linux.dev>, 
- "junjie.cao@intel.com" <junjie.cao@intel.com>,
- "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>, 
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Kane Chen <kane_chen@aspeedtech.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
- insertion
-Message-ID: <atXr2J5oxn3BBgb-@nucbdw.ghoffman.csb.home.kraxel.org>
-References: <20261019092448.278079-1-jamin_lin@aspeedtech.com>
- <20261019092448.278079-2-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xIkkB-0000kR-LG
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:37:27 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xIkk9-0001Rh-Ry
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:37:27 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-49d0da752ffso15496005e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 03:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792406244; x=1793011044; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Zm7oir+fRv/Ck6RiJaa/XQ5jO1620I7UtHhr1YZ4Fb0=;
+ b=l9DlBUOdx8wiFj6IDDGHVfVaC8Gc2q9wtlPP5YwMhDyg94sv6ayXWhRhAH65Pj9bYJ
+ ScoWN9EtglwMja+lp1BuDVofvao6h7Db3oKupjXCb0grqw38FWrrU612l+anFoSn9kAF
+ VK/MbbQJR9c21EA6nTGb2KuYkxynYV4uQtQyxFKnXledki41g8uQ2xO6sj6B4fQsG3m9
+ AkiWEO2c+6w7VsiLzAHs/rxPLYLaL9nWh5U6387Qt/cUjhQ3V8ftM9ewPZyG5HPrss9H
+ +t2CEZTmpC1+OmUCzg2WxF0ODR3HHlAHK3DBIvm+BdTrfqCW2W2pEqYMUEbeaywMXYYV
+ rB9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792406244; x=1793011044;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Zm7oir+fRv/Ck6RiJaa/XQ5jO1620I7UtHhr1YZ4Fb0=;
+ b=2IiLVj62veKI58eiePi1lKh+lw4kf/ymAwmNlee93AgMzKzHtK2T+RuI3gZ9tlafZ7
+ 9hyzTa2jG7PyNfw/y/7w7OXlgLZiz1Ug8MUquxLCMEa43HxhSgWcSWEyWjyh2LDBLI07
+ +yJFf9WBedcFR6DHhNdbx8MA88AYTLwr9hpHTJoWGfG4LdEVd08xbcu72TJrB6q8Pwh6
+ dT8ZAq3qmBcCVm7ztJrCVxGUxzZKzX0/E6wYCxQPW/C14SxfaOKL3IyjugW3nJ77acJ9
+ YlP7hOAnh46IjjwjLc1reMRoF6eENMrGbKUZkA6sgSv+Xcxh4SM5HJPpip0+7rUzrU4G
+ HrLQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwFE8BfQzSXSD1vFdTKWtNZCTUwpdW+olav0jUe10fkzD/KHF9REgj+uIjgf+/90Exzm56k4cx51nvs@nongnu.org
+X-Gm-Message-State: AFq9FYLa5QtmPRP8radv8wqQuM7OcG1hcCJdWfhGlVL7yv8Efbd3GgXi
+ ERFWLb7KnIKgOX+LMEJf5Pw1VwtVmnguZpDuumw6TW6lIZREAwQq/d6Ilz//Vc89A7RChD5Dyx6
+ KmA6c8PQ=
+X-Gm-Gg: AYBFou1p1oD1kD4hxPjwflis6qK3GS5BUgVCLVWjkK8bG5DU6e41AyU9SN6k9FC2OlD
+ V6YqVWkN8LPSRguny9O0hNYWWo2e59RPkteb6leUO+dIBQJ8Fdu3MHs5XFpMA165agaW6SJXrAT
+ Q5TTAhBwy+vnBNsOfb90yYlsuWqIYiBHVpyve5tmt22v1uApjKKwp7ERBXo28+n49EvYFiryKHK
+ TfQno1bihovCi0MGJ0PfXsyWLU10iZCNjmtT+BNjDlbsMkf1fx0ViarH7D0j3ozvH/Rpb4QsbV9
+ DPY+DDQiAAYY/mMWTiRa7XSxBZ0JC7FSeaTwx0/kPsBBsN9Et+Q9xqj+qtFBmj7czYccDOvpZGs
+ 5O5W1PSKhrmL+TBJKPWakV05LWepv5z6dHlIvpnGgf9gIEXZhzJkqBBS7+izsd8qSz8Dc3g6aD/
+ dwbihM5bONXP47dscwY8jBO3eRSO3T8tUoVEboS5B4vuxPv7wFTU78oDXOuKSFQkxkG6V6V7NQ2
+ W1iViiilHGOyHLYGRHdsOZVwYvoltNlNZxKWCpiMsb8k7pR/zy9UAYJ479S7Q==
+X-Received: by 2002:a05:600c:8b6b:b0:4a1:e7ce:10a4 with SMTP id
+ 5b1f17b1804b1-4a1e7ce1832mr48550435e9.29.1792406243915; 
+ Mon, 19 Oct 2026 03:37:23 -0700 (PDT)
+Received: from [10.89.180.227] (cust-east-par-46-193-64-64.cust.wifirst.net.
+ [46.193.64.64]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1ce02d619sm179411855e9.3.2026.10.19.03.37.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Oct 2026 03:37:23 -0700 (PDT)
+Message-ID: <56c20d8c-cc4b-497e-891d-e06cd79808dd@linaro.org>
+Date: Mon, 19 Oct 2026 12:34:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261019092448.278079-2-jamin_lin@aspeedtech.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ghoffman@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v4 00/13] NBD patches through 2026-10-08
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+References: <20261016185029.1275855-15-eblake@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261016185029.1275855-15-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,32 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Oct 19, 2026 at 09:24:50AM +0000, Jamin Lin wrote:
-> usb_claim_port() inserts a usb-hub when a device is plugged in and only
-> one port is still free, so that more devices can follow. That is what a
-> host controller with root ports wants.
+On 10/16/26 20:48, Eric Blake wrote:
+> The following changes since commit a19f59a72d96056d9a8f48cf6c77f5787491e414:
+> 
+>    Merge tag 'pull-hex-20261015' ofhttps://github.com/qualcomm/qemu into staging (2026-10-16 07:50:02 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/ebblake/qemu.git tags/pull-nbd-2026-10-08-v4
+> 
+> for you to fetch changes up to 137374d861a3507e18d9154c5266e20c92371e20:
+> 
+>    iotests/iothreads-nbd-export: Skip on s390 (2026-10-16 10:23:05 -0500)
+> 
+> [v4: Drop 2 patches from Guillaume Vinke while we sort out testsuite issues]
+> 
+> ----------------------------------------------------------------
+> NBD patches through 2026-10-08
+> 
+> Several fixes, including:
+> - Eric Blake: Update MAINTAINERS, support qemu-nbd -s -l
+> - Fiona Ebner: Report flush error on qemu-img convert
+> - Denis V. Lunev: Fix postcopy dirty bitmap migration
+> - Eric Farman: Several iotest improvements
 
-Ah, well, not really.  It's there mostly for historical reasons.
+Applied, thanks.
 
-The emulated usb hub supports only usb 1.1, so for newer host
-controllers (ehci / xhci) it does not make much sense and the
-better approach is to add more host controllers if needed.  Which
-should rarely actually be the case though given that xhci supports
-up to 15 root ports.
-
-So if this gets into the way I'm wondering whenever the better
-approach here is to remove this altogether.  You can still add an
-USB hub manually of needed, IIRC there is (or was?) some board with
-a single-port OHCI where you actually need a hub if you want plug
-in both usb keyboard and usb mouse.  It just would not be automatic
-any more.
-
-Alternative idea would be to add the config option, but only enable
-the automatic hub logic for actual usb 1.1 controllers (ohci / uhci),
-where it does not matter much for devices whenever they are plugged
-into an root port or hub port.
-
-take care,
-  Gerd
-
+r~
 
