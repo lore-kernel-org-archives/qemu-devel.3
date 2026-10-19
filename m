@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819D3CCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DEA5CCF2E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoEP-0002yN-Im; Mon, 19 Oct 2026 10:20:53 -0400
+	id 1xIoDc-0002Mh-EI; Mon, 19 Oct 2026 10:20:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDK-0002EL-VJ
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:50 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDG-0002CI-G4
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDI-0005Zq-3A
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDE-0005Y2-Tz
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419583;
+ s=mimecast20190719; t=1792419580;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BPEiTnBf6Lo9R5WEcLDjkwxa7sUoRwT9PuweGjO5hJc=;
- b=D34Ma0DUgFUDi7G9AF9AAS/+smg2ZgTQZcH8Mm6wRHbYSjvnY+GljZ870ZiXOxYx+ndDdn
- 0jNRbexlxQmM8gyNU9WnYMRogsZPpNsQw8kUfKxZOQAqzZ+VspIaxESk6C5bIZQ8TdEOId
- CLJ/sDT5MR08DeyThR634vf9d97yhSo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=SbL5dkEQelsCcSGTt8nazaddTdV8+UxJcEjpdM6jfGA=;
+ b=gTmiLipb0eqUlgH4AsVaQD3HkgeTBrdFxMWrKSHuNiM+PFqDeZMKcO/sbcn27f6ZYT1mGm
+ jteWZPxKdP1PK4rXfG+Xv7jpipPB3ueu/YcPepRxTiekKuQr5jB8VgUs8k21cGDZSiYFMl
+ KakaWVpz1LlY0IM62ccdRfRLMI2ArDc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-U7M2qCUpMRSznKAqmS-hTQ-1; Mon,
- 19 Oct 2026 14:19:39 +0000
-X-MC-Unique: U7M2qCUpMRSznKAqmS-hTQ-1
-X-Mimecast-MFC-AGG-ID: U7M2qCUpMRSznKAqmS-hTQ_1792419578
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-CXJrXPpYPLujJnkqLXI9Aw-1; Mon,
+ 19 Oct 2026 14:19:36 +0000
+X-MC-Unique: CXJrXPpYPLujJnkqLXI9Aw-1
+X-Mimecast-MFC-AGG-ID: CXJrXPpYPLujJnkqLXI9Aw_1792419575
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7464C1954AD8; Mon, 19 Oct 2026 14:19:38 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37A8D1954B01; Mon, 19 Oct 2026 14:19:35 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC55730000E7; Mon, 19 Oct 2026 14:19:37 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E42FB41B; Mon, 19 Oct 2026 14:19:34 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B27AA21E6894; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
+ id 870D221E6886; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
  amachhiw@linux.ibm.com
-Subject: [PATCH v6 16/65] qom: add object_{class_}property_add_qapi
-Date: Mon, 19 Oct 2026 16:18:40 +0200
-Message-ID: <20261019141929.1594337-17-armbru@redhat.com>
+Subject: [PATCH v6 07/65] qapi: add QAPITypeInfo struct definition
+Date: Mon, 19 Oct 2026 16:18:31 +0200
+Message-ID: <20261019141929.1594337-8-armbru@redhat.com>
 In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -89,122 +89,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Introduce a minimal struct that pairs a QAPI type's internal name with
+its "masked" introspection name. Generated constants of this type will
+let QOM property registration carry a reliable reference to the QAPI
+schema and possibly other associated data.
+
+The fields are populated in following commits.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qom/object.h | 55 ++++++++++++++++++++++++++++++++++++++++++++
- qom/object.c         | 32 ++++++++++++++++++++++++++
- 2 files changed, 87 insertions(+)
+ include/qapi/qapi-type-info.h | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+ create mode 100644 include/qapi/qapi-type-info.h
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 28d3250de0..365d819d35 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -2006,6 +2006,61 @@ ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
-                                     int (*get)(Object *, Error **),
-                                     void (*set)(Object *, int, Error **));
- 
-+/**
-+ * object_property_add_qapi:
-+ * @obj: the object to add a property to
-+ * @name: the name of the property
-+ * @qapi_type: QAPI type info descriptor
-+ * @get: The getter to be called to read a property.  If this is NULL, then
-+ *   the property cannot be read.
-+ * @set: the setter to be called to write a property.  If this is NULL,
-+ *   then the property cannot be written.
-+ * @release: called when the property is removed from the object.  This is
-+ *   meant to allow a property to free its opaque upon object
-+ *   destruction.  This may be NULL.
-+ * @opaque: an opaque pointer to pass to the callbacks for the property
-+ *
-+ * Add a property with a QAPI type association. The property type name
-+ * is derived from @qapi_type->name.
-+ *
-+ * Returns: The newly added property on success, or %NULL on failure.
+diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-info.h
+new file mode 100644
+index 0000000000..6a63555683
+--- /dev/null
++++ b/include/qapi/qapi-type-info.h
+@@ -0,0 +1,31 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+ObjectProperty *
-+object_property_add_qapi(Object *obj, const char *name,
-+                         const QAPITypeInfo *qapi_type,
-+                         ObjectPropertyAccessor *get,
-+                         ObjectPropertyAccessor *set,
-+                         ObjectPropertyRelease *release,
-+                         void *opaque);
++
++#ifndef QAPI_TYPE_INFO_H
++#define QAPI_TYPE_INFO_H
++
++#include "qapi/util.h"
 +
 +/**
-+ * object_class_property_add_qapi:
-+ * @klass: the object class to add a property to
-+ * @name: the name of the property
-+ * @qapi_type: QAPI type info descriptor
-+ * @get: The getter to be called to read a property.  If this is NULL, then
-+ *   the property cannot be read.
-+ * @set: the setter to be called to write a property.  If this is NULL,
-+ *   then the property cannot be written.
-+ * @release: called when the property is removed from the object.  This is
-+ *   meant to allow a property to free its opaque upon object
-+ *   destruction.  This may be NULL.
-+ * @opaque: an opaque pointer to pass to the callbacks for the property
++ * QAPITypeInfo - QAPI type metadata
 + *
-+ * Add a property with a QAPI type association. The property type name
-+ * is derived from @qapi_type->name.
-+ *
-+ * Returns: The newly added property on success, or %NULL on failure.
++ * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
++ *        QOM uses this as the property type string.
++ * @masked_name: Name of the type in the QAPI introspection schema, assigned by
++ *        scripts/qapi code generator (e.g. "368").
++ * @lookup: QEnumLookup for this type, or NULL for non-enum types.
++ *        visit_type_enum(), qapi_enum_parse(), and qapi_enum_lookup()
++ *        all rely on it.
++ * @list: The list-type counterpart, or NULL if none exists.
++ *        str_type_info.list points to strList_type_info.  qdev array
++ *        properties follow this to find the list type for their element.
 + */
-+ObjectProperty *
-+object_class_property_add_qapi(ObjectClass *klass,
-+                               const char *name,
-+                               const QAPITypeInfo *qapi_type,
-+                               ObjectPropertyAccessor *get,
-+                               ObjectPropertyAccessor *set,
-+                               ObjectPropertyRelease *release,
-+                               void *opaque);
++typedef struct QAPITypeInfo {
++    const char *name;
++    const char *masked_name;
++    const QEnumLookup *lookup;
++    const struct QAPITypeInfo *list;
++} QAPITypeInfo;
 +
- /**
-  * object_property_add_tm:
-  * @obj: the object to add a property to
-diff --git a/qom/object.c b/qom/object.c
-index 1d09315b32..bebbfc4355 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -2609,6 +2609,38 @@ object_class_property_add_enum(ObjectClass *klass, const char *name,
-                                      prop);
- }
- 
-+ObjectProperty *
-+object_property_add_qapi(Object *obj, const char *name,
-+                         const QAPITypeInfo *qapi_type,
-+                         ObjectPropertyAccessor *get,
-+                         ObjectPropertyAccessor *set,
-+                         ObjectPropertyRelease *release,
-+                         void *opaque)
-+{
-+    ObjectProperty *prop;
-+
-+    prop = object_property_add(obj, name, qapi_type->name,
-+                               get, set, release, opaque);
-+    prop->qapi_type = qapi_type;
-+    return prop;
-+}
-+
-+ObjectProperty *
-+object_class_property_add_qapi(ObjectClass *klass, const char *name,
-+                               const QAPITypeInfo *qapi_type,
-+                               ObjectPropertyAccessor *get,
-+                               ObjectPropertyAccessor *set,
-+                               ObjectPropertyRelease *release,
-+                               void *opaque)
-+{
-+    ObjectProperty *prop;
-+
-+    prop = object_class_property_add(klass, name, qapi_type->name,
-+                                     get, set, release, opaque);
-+    prop->qapi_type = qapi_type;
-+    return prop;
-+}
-+
- typedef struct TMProperty {
-     void (*get)(Object *, struct tm *, Error **);
- } TMProperty;
++#endif /* QAPI_TYPE_INFO_H */
 -- 
 2.55.0
 
