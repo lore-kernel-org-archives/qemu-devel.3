@@ -1,101 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF16606A31D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 20:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CEC606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 20:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PuNd5AMM
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=JEAG8Acj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xItXd-0004J8-8B; Mon, 19 Oct 2026 16:01:05 -0400
+	id 1xItkU-0005aM-QS; Mon, 19 Oct 2026 16:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xItXa-0004Ia-LF
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 16:01:03 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1xItXY-0007Li-F6
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 16:01:02 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3ab752f6244so2102664a91.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 13:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792440057; x=1793044857; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=m8+Us3U2Pncbjo77qvwp3S+xeyIDBlursH67bOY+7p8=;
- b=PuNd5AMMmRowARLrJu23DTco4L2nhiUH9gtHyyIMBDpEBExAQfqUBWP3OpS6tTLH6K
- P3n6SAPA7KL8+UumEu09RA8GnMUZLILItip034HnDhVnVU8zwrqVSZ0HjDjrgRgye+P1
- JuVgPRNKlG3fLhJQ/se82+yzk5Sr3X9L/HiOFIs006mhSu61DN7d+5jvRfsJrc+i6EEO
- 26yZykbHWqTVR8EWSMunOJzyL+gpHcpAT5Z65NA9F0EvU5cx3bzr0wDphgcy+Dn2Mr2D
- rfZw1hgGgtG5G9uAPDlP5P3PPqRUG+Cw77IxllN4sMp8ogOmMol5pAZiBh8PK+pDg9Yc
- /IzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792440057; x=1793044857;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=m8+Us3U2Pncbjo77qvwp3S+xeyIDBlursH67bOY+7p8=;
- b=DX2L1kyd2jnrg/DQnkjouXbrwPzd/ft0ExwtBiEBWnuTE6NRDD9DErvTQFlmO4+W32
- qRclyaTqYrfrp29v2mVszQvtOr/juUt+Yc5UDdfXjhoB5oODH/rkHk3adNsatt00eyYS
- 4a0VFAgLKJ+JPjgLJnBxKJMf3bK4HWDDDYHXPZDuBhzKpBs0fizKEEh2W7d0YBnXMgqc
- LG01CwqrbV6wN07ntr0izNsHGuCLSw79f8kYih3RMY7wDzYd/s2gG8B1zklAM7HYPoer
- m+lD0IzQElH5AVtnjuqO1AXA4XPlesD9TfubQN8TgMSzc3U56PYIUT1Kxf49LYMVyHXw
- Ulog==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx9VvG0g1SqyvHeY2cmL1zsXfKFJobbDCUrKyExmHo4/skE53aJhC6opA23baSu0dZsi6BqRLe3GY11@nongnu.org
-X-Gm-Message-State: AFq9FYLavNTJYiQ6qMMLUc8ErafksbjkpIj9OuPhwx/PFABMrdtGZhRd
- NAia3PT7tAHMXtmluHSsqrj9blO3tdmod9ygEMC780LXRJXRUAEWc2NJGKOhVLOkXH4=
-X-Gm-Gg: AYBFou2sVM5kifsgqWwlm+U3yVwZJvG5a6DAGiW8wBcY/pWcs3RtVnz6uFdVgCRbNGN
- /WaIW3Rj/jNr5HSDoC6eepyacYApwq+AzBwb8U0ZNKIOg3b4W/lir/l6kXFFr/+llaj92lxt22d
- 4Bb/9cYmRquLQ49Gs2nlzZ1t9Af08uO/42HSKsKU1abzauOFW+C/pb/Sk5lpAxbCtbsbCwekP/e
- 3+/CtRvdRekwgCd90EL8lov9rPXTh1t8Y1joV5MgGHrz3CsH3pR7HJtK6XmPLQaCuZ3hN/C2cAw
- jeqt7XyrS5h41t+UVpJnxvdnQlYIUb94CHDn/6LzLBtDrHHSVLHmo/nnSgWDQbSWoPniLnzt+AL
- D96pZ2BJfmnUWtjeiJHWTUa+khLRyp/aLm7LlYpegC7lQmJJL5cbO31h+C2QtJ/BZZ0d1O2Ms+/
- rb52+AD1IAkvvCxyjIdJ3wCJgCj4u2+k722bGxtsfoqdO4MZh6N/UfJJY6CX1CqtPTedPoCpGVH
- g==
-X-Received: by 2002:a17:90a:6082:b0:3ac:ffb8:183b with SMTP id
- 98e67ed59e1d1-3acffb826b6mr3745980a91.51.1792440056725; 
- Mon, 19 Oct 2026 13:00:56 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:5410:6440:73bf:119f])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ad60f90a6bsm647159a91.13.2026.10.19.13.00.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 13:00:55 -0700 (PDT)
-Date: Mon, 19 Oct 2026 14:00:52 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
- enju.kohei@fujitsu.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [RFC v4 17/24] hw/arm/virt: Reserve one bit of guest physical
- address for RME
-Message-ID: <atZ29B8xDwCoH6kF@p14s>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-18-mathieu.poirier@linaro.org>
- <e6fdb508-0036-4581-9c91-bbf74de1e0e5@redhat.com>
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1xItkR-0005Zt-LQ
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 16:14:20 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1xItkL-0008Ei-Mu
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 16:14:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JgB5DfvzaiADv37D6jerEFPmLyyxNsamcbVgwIpGo+dI61ULE1TgoJ1EG2cWD77FwzvfHYn9/oqQxREeb+BrQ3/HFfAR+90rcBKztOdVgoJb40pYKifepyURukh9awvZNk7RaYw/38pDpWj1QDNFirnZRvR7Rt7tTpS9DXM6Qi9gvrnwzHkuYLhDALyJIg4HwNmyH5Jhz18ed4O856K44c2AOIhUW6di+i9U4di8p78ENTTN0JLp8vRQb1Cv0UcY7L3sWQW25WlpmTBClHqX8eRtobikrbje9vJ3WQan9p0EE3+MH8tv1YDZ8CZkbu8dscNwz7tFwtebfmkkmQGoWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8+amxV6u2UzFyk64CgspuUqWzS14/o4d4VNcCeOU5yI=;
+ b=AmLIiWZp+RwhMGV+2ttrvdRogNdkhfxSW1UyYmz9CPtqQS0UXOKrI6jw9NQkfrOQpdNTGNpe7jsqw6Ue/d0txgvvq6oUsC5jwGnD3hGXkFGAWQD5g2qC3f5Ug0JhodYP6cDTF9/U6un/5kpvpzQDMlYZAteXtss5SJ6pvT2qTyBU6X8bzcL37Wj/UXI9D2hiODkgs+/YmwkoUUNYI4g4byGk1dbuzQlxUfH85A10IJCkAyYnxO70YLRuP/0koSvDzYZipKy4OJMEsqhDxz+di52b8Tj85di1VP+XR4020o0TmbSzu3pe0+jNAYgcOKnWIBp/0bL2SUeX3DlSIN4ofA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8+amxV6u2UzFyk64CgspuUqWzS14/o4d4VNcCeOU5yI=;
+ b=JEAG8Acj5qCah+ALOeaLOQv+8Q6WH/EEuZtsTuG2gl/CX3hdDBaw76HCBCZvQvsk0V/mWj7Vt6hU47gKdBaJH+aAiY8kRkhYC9gPvoaQJq7vASNaxMSMITIdb4R6dcmB1fvDm8CnsX6Ecb8L8IMzh5hq7yicgS7p10JhemNg6fM=
+Received: from DSSP221CA0003.NAMP221.PROD.OUTLOOK.COM (2603:10b6:8:3d5::15) by
+ MN2PR12MB4207.namprd12.prod.outlook.com (2603:10b6:208:1d9::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
+ 2026 20:14:08 +0000
+Received: from CY5PEPF00000E7B.namprd02.prod.outlook.com
+ (2603:10b6:8:3d5:cafe::7f) by DSSP221CA0003.outlook.office365.com
+ (2603:10b6:8:3d5::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.19 via Frontend Transport; Mon,
+ 19 Oct 2026 20:14:07 +0000
+X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
+ is 165.204.84.17) smtp.mailfrom=amd.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ CY5PEPF00000E7B.mail.protection.outlook.com (10.167.247.43) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.522.6 via Frontend Transport; Mon, 19 Oct 2026 20:14:07 +0000
+Received: from purico-abeahost.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 19 Oct
+ 2026 15:14:05 -0500
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>
+CC: <seanjc@google.com>, <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>,
+ <yosry@kernel.org>, <nikunj.dadhania@amd.com>, <sandipan.das@amd.com>,
+ <shivansh.dhiman@amd.com>
+Subject: [PATCH v2 2/4] target/i386: Add AMD LbrExtV2 states to vmstate
+Date: Mon, 19 Oct 2026 20:13:11 +0000
+Message-ID: <20261019201314.269798-3-shivansh.dhiman@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261019201314.269798-1-shivansh.dhiman@amd.com>
+References: <20261019201314.269798-1-shivansh.dhiman@amd.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e6fdb508-0036-4581-9c91-bbf74de1e0e5@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY5PEPF00000E7B:EE_|MN2PR12MB4207:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19f281c8-eb0f-4c46-2b62-08df2e1d87cd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700016|23010399003|1800799024|82310400026|261009223027099003|10067099003|56012099006|6133799003|18002099003|22082099003|11063799006;
+X-Microsoft-Antispam-Message-Info: hmH8F+4CyTJI+4YvQJSc6TJGQ3g98soNCToHaRCbVgdIcFTWdkEwxziyWTjl4+KeSC919gLdJB67vCBiTqNmzhe/tTQcjc0zXTjH/bVKz3HFmBvj+mb4Vl6FbVnRLmUAtz1b2NVc2Ax2kiGAjgIblqh0I/DovoFB5PY5Mvu3M7Y5GIZwNP5e5yHWqJGn68aYYIk0EKgYg/Kn4GJ2FDwdZDn1JMAo9VXEreNxPE7VhZImve+spVsppOiOCAHOU48knMRMOhjdtzjvbAf+tgtSPfG4MAXoJbNEo8Yd8M7WnVAvgIk7XIKD2+PxwDpspHTndYnN62BPdBNRrZbzXurs98pBQclAnUn5+1udKHUyAZmKiNPuKdraTHhZ9NImnowrxaUCP4nlg+xRJNLKNSoVvASi5qmKZqPUTiEbvgcyGb1NoGhq+5efFxuxwNbbTxOzlZNS0z2tak/EMzGur7/h70PzR204Rfova6cGsLSwL5LXrv8fumFJeVW8ssW+ykRPvE9kL4/b8xEXgUqMXBGAq58nWCooGTTRjMT247wT5R8Ewl4kx8s4ZW21JlUM2bjiGC5SAQyr1lkahbvyXlmLqZj4PJiCog+xYhC1wOjHwRXYLj9INtTLM68T9b3GLoMA6zbXr5NUPja69NXy8RaQjCCrfGgUFGR7eYkiNTzBgi6DXONkQqnIqVxTs2154G0/RFLiQmqQ6epqUcN1edpmmA==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700016)(23010399003)(1800799024)(82310400026)(261009223027099003)(10067099003)(56012099006)(6133799003)(18002099003)(22082099003)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: TSmBRNg9FazHA7hgoTjH8PbS4gziIueflkwvzqLd/oMwDtGDWXO0Sn9/dyYYaOsCHRZ6Rb67z2umg4RZWg8waYA0xaYRTNjMm1PydJrIUmeDgQssQXfPnaLSOs6ZrnT2nQr67Ss774T5PtZiRK7P0PvOrZbAk3q5w44apFJoGOTJFycmKcJR5Rd0NA3lpg59kx1ytP9EQgtHb8bvu98FXJjP9EkYn8QJWt9Y6WsL3LAuf5cNoPqvYAfFQsVuSrflP2hVekVokbRht4p5/1rV7lXWFGMPUNP0H4J247ZTIf8BZUDOf2ee0IBtBlz5HjeC9d1wdNeGWtUFKrUDIGWalG2iTcMyo4P0ENaN+QYrT+0tOl+mnu1kmZyqaGgzUyd+TiCOaw5zR8AtXTRokyk2fjvdgi4II14ZjzgmO3l1Bm1FZmfHUJxrJnmDNpltGblr
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Oct 2026 20:14:07.6354 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19f281c8-eb0f-4c46-2b62-08df2e1d87cd
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY5PEPF00000E7B.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4207
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,84 +122,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 02, 2026 at 02:19:11PM +1000, Gavin Shan wrote:
-> On 9/4/26 5:36 AM, Mathieu Poirier wrote:
-> > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > 
-> > When RME is enabled, the upper GPA bit is used to distinguish protected
-> > from unprotected addresses. Reserve it when setting up the guest memory
-> > map.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > ---
-> >   hw/arm/virt.c | 20 +++++++++++++++-----
-> >   1 file changed, 15 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 61751aa31e0d..cf3a9320dc3a 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -4054,17 +4054,27 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-> >   {
-> >       VirtMachineState *vms = VIRT_MACHINE(ms);
-> >       int max_vm_pa_size, requested_pa_size;
-> > +    int rme_reserve_bit = 0;
-> >       bool fixed_ipa;
-> >       int vm_type;
-> > -    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa);
-> > -
-> >       vm_type = (ms->cgs ? KVM_VM_TYPE_ARM_REALM : KVM_VM_TYPE_ARM_NORMAL);
-> > +    if (vm_type) {
-> > +        /*
-> > +         * With RME, the upper GPA bit differentiates Realm from NS memory.
-> > +         * Reserve the upper bit to ensure that highmem devices will fit.
-> > +         */
-> > +        rme_reserve_bit = 1;
-> > +    }
-> 
-> "if (vm_type)" are mapped to any VM types other than KVM_VM_TYPE_ARM_NORMAL, meaning
-> it can be PKVM in theory. So this would be:
-> 
->        if (vm_type == KVM_VM_TYPE_ARM_REALM) {
->            ...
->        }
+Migrate the LbrExtV2 control and LBR stack MSRs in a new VMState
+subsection, so that the guest's LBR configuration and branch records
+survive live migration. Do it only when the vCPU has a PMU and LbrExtV2
+is set.
 
-I agree.
+Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
+---
 
-> 
-> > +
-> > +    max_vm_pa_size = kvm_arm_get_max_vm_ipa_size(ms, &fixed_ipa) -
-> > +                     rme_reserve_bit;
-> > +
-> >       /* we freeze the memory map to compute the highest gpa */
-> >       virt_set_memmap(vms, max_vm_pa_size);
-> > -    requested_pa_size = 64 - clz64(vms->highest_gpa);
-> > +    requested_pa_size = 64 - clz64(vms->highest_gpa) + rme_reserve_bit;
-> >       /*
-> >        * KVM requires the IPA size to be at least 32 bits.
-> > @@ -4073,11 +4083,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-> >           requested_pa_size = 32;
-> >       }
-> > -    if (requested_pa_size > max_vm_pa_size) {
-> > +    if (requested_pa_size > max_vm_pa_size + rme_reserve_bit) {
-> >           error_report("-m and ,maxmem option values "
-> >                        "require an IPA range (%d bits) larger than "
-> >                        "the one supported by the host (%d bits)",
-> > -                     requested_pa_size, max_vm_pa_size);
-> > +                     requested_pa_size, max_vm_pa_size + rme_reserve_bit);
-> >           return -1;
-> >       }
-> >       /*
-> 
-> Thanks,
-> Gavin
-> 
+Changes in v2:
+* New patch.
+
+---
+ target/i386/machine.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index df0e0c178e43..1363da5b430d 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1648,6 +1648,29 @@ static const VMStateDescription vmstate_arch_lbr = {
+     }
+ };
+ 
++static bool amd_lbr_v2_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
++
++    return cpu->enable_pmu &&
++           (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_LBREXT_V2);
++}
++
++static const VMStateDescription vmstate_amd_lbr_v2 = {
++    .name = "cpu/amd_lbr_v2",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = amd_lbr_v2_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64(env.msr_amd_dbg_extn_cfg, X86CPU),
++        VMSTATE_UINT64(env.msr_amd_lbr_select, X86CPU),
++        VMSTATE_UINT64_ARRAY(env.msr_amd_lbr_stack, X86CPU,
++                             AMD_LBR_V2_NR_ENTRIES * 2),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool triple_fault_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+@@ -1910,6 +1933,7 @@ const VMStateDescription vmstate_x86_cpu = {
+         &vmstate_amx_xtile,
+ #endif
+         &vmstate_arch_lbr,
++        &vmstate_amd_lbr_v2,
+         &vmstate_triple_fault,
+         &vmstate_pl0_ssp,
+         &vmstate_cet,
+-- 
+2.43.0
+
 
