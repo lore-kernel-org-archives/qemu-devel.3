@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679BF606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B067606A321
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=fo+1H96n
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=V0pd5iec
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt41-0004UB-UY; Mon, 19 Oct 2026 15:30:31 -0400
+	id 1xIt4A-0004tJ-PV; Mon, 19 Oct 2026 15:30:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt1E-0000bm-5F
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:36 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1xIt1E-0000cR-HN
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:38 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt1B-0003Bv-B9
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:35 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a01933b584so17760975e9.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:32 -0700 (PDT)
+ id 1xIt1C-0003CC-9R
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:36 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a1e3b87ac5so13368725e9.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1792438052; x=1793042852; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=0EjCsLzxCc6Z1J6Avt4waW7BwoDGH1cC4bpSsprV0z0=;
- b=fo+1H96ny8BH1wp4r6Zd29oWL3ulE8oleagZD6mikn++fG2AKPBfgb5cKizTqicrma
- d3aGZuSkFk4Lr2igFMKxB1bH81uby5WuF4PRTvwQIC6pFhFM/YItRPLBU1bFF/VmK6sL
- 8NTokppdhaZ+qNQv3hmGB1ccciOQ3ZZZY92MEBgFE2O+n5Bwzo4lbxs1VGdy4zpvketL
- qXm9Llwdl7CGNR7Gm3PPsrJz1nW9gqA/jiWETkJIa5twbnkBWu7RmHNMMTcs5/nirxRl
- Lj6LLaKapT3eWb+0Lea8+Zpgz+SAFw+jTsqct+VXTBLJjE1i7a7vGoV2eV114bJxQ3Rl
- PiQA==
+ bh=QhYHEO3ZxejazA6iXsRomgdAQi5gUE1y7/m+pzLUlNQ=;
+ b=V0pd5iecEnsP4m4XhbAXGIgLyBQARbfzMvEQ7W1+dhqFxIFYDFZo/D+EQmYFvD+dLe
+ GHdl8uh85ppjco7k6/qLjDkgOvkV0ia2iJUwNt8Xfh8Q/VOUgNuf1U5iJ/oLF33z93ZJ
+ AY5UNra3yBBUni9wbGZFAPM4ogiE/mAutPcShvNuAqXStwC5FKI+7wKBe6WjewOvqnqV
+ +pR8v2cIu6eaH76CLcy8Z4w5hRcnGsHavuaMTZJTmZYAnsZ2EhcXRuWN4noOvVJHncPg
+ DzNmJCVrf/9yv+qr68uOOTzkMZbfky08fyr1KRSTDv/VAOxtcdXm1g9KkoyDsOXxURrj
+ YFFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20260707; t=1792438052; x=1793042852;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=0EjCsLzxCc6Z1J6Avt4waW7BwoDGH1cC4bpSsprV0z0=;
- b=gFVLur5n2msQnQqK91Bl8xAMhDqnBdzTG5eU8DJbZRf14ggIA10jKAUGAQo5viRZOW
- 0KBHonxkVlIzC8yqm8fEICMyiiLnq2S1l0T1ZBGMN0xhBisKWdW4OxTSDVUjWR2sQ+1W
- PJ121cdd057i+0/McOcqev+tHD/g2Dr8z/YrPmqFiC9emNxjZXetYTcVQVu0VaSyATja
- z8Z3wQAlxJVHpGO/m1wAD1JEl5CXki2b2Vf60bsiLnVYDeAGNpWMNvSXkHx+kdxLdsJy
- 6mxh2XyvZrueZlZf1L7DAB6X9ZtFQt786M7T0qSUAs3GZr9PINTWAsfo15x/7rTJN7Gs
- 6POQ==
-X-Gm-Message-State: AFq9FYL6uZWrbKmda5o5NopwekPoAWU3xG01HZM4ztSKZ8mn19AJSC+x
- le7CGdWgJZLrTncdbIf55IQnR8cduvHC0zTOmCsZyCD0q0P9zpfo0/mZ5lxAuLMbyEM=
-X-Gm-Gg: AYBFou29xOySqGI47nAJ7z+tHZGGBPZw1TE8lHcpuLCZoOXUs4HBmjwG5Qbyheu8BZn
- BVl2+iJH9j4H/XWYTj4qlS7nptjlkugekOc4WH10q7wOPfa6UR1GUj2zBvBkY7H1oFobGfIcZgi
- y8sBd+KZlp4STZEK+ftIgJe+/QrNAf2BW6yJ0aX9jtcndo9+CuwuArCwsQx0jFbfTRmhP8wDHcQ
- UU9AiEpmXVh6UECk5NFpdQ9U47DYBrIqgmULBQOk94vqb+/mei/RfNLomO4Vl1rWAn8/Zteolv9
- tPdXLHzT9U8dmXWOsEQKEpb/Mt5QYrvC6k1/voWrWVB3JqmGo8aa3ZvboSjullulXc2mCMnO86Y
- y7S1sNJKhSCjIrHrc9Ocf8PTqRZTZ5ssPT3jCooEL+CTW3Cj1uRE1Gfi4IW5a2pEK7p9aIc/gjN
- hiitXFRMXtmqNXNTg44QCUGwXZQJJMPvRJOiLPehd5SHd4oSiUYH9iepzx0dafk7FGdbUz+Q==
-X-Received: by 2002:a05:600c:1906:b0:4a1:e6c8:ff74 with SMTP id
- 5b1f17b1804b1-4a1e6c8ffd4mr94637325e9.29.1792438051703; 
- Mon, 19 Oct 2026 12:27:31 -0700 (PDT)
+ bh=QhYHEO3ZxejazA6iXsRomgdAQi5gUE1y7/m+pzLUlNQ=;
+ b=B3x6qT1rrLj5QYsX0gdZ6u0oKppvcQDPTz7qa5Grwz80+1euI0vn0+iXsus/7ZzFAm
+ VGA7xB9M9cmn1BFVpgsoI7mZQE4suDPaEHZkZRYdamQTR4PkJhOK4q+rvCTYOYj9YqtN
+ gYbPXO/7Zq3TBgOPFgntG0rDNDP42C4uigZDt/7JqZPYujqiJkcrvBKSFVmNIARzouE7
+ Hie3IpjEPIwv7aWheum7XBm9lvMG5LhEbhpPNXY+0I2Nh/aXxzE2jY6QhuU1Mx9rpdWm
+ Tym5O2a7QTB/sd4EwWXliKUMMLBjD4zrHMhhPYdkMhwSx86BHExwairlXbDmr6szKqvh
+ ZS2g==
+X-Gm-Message-State: AFq9FYKHs7WZlFU8zVqsy/fjiVRiB7vuNYpo8fGDc/hZNv0JCtVNP35A
+ ZQl4jU0SYT5R6/OHtS7nW3IppBxurDyZAwY3J/m2hE6zzDWyf/9ecMFvY2cC0QJ7hHI=
+X-Gm-Gg: AYBFou3lx2T8rHknM0VGN4a6HzM5I6GHuCIvnaIawl9BkZzCh1J2OphKCBVipLBbuUb
+ 3nuOvag5F7lF3+WqffsTULfPYPypeSYv7pWLXrSFrjsyCrGtwePyD40IfPoR35I6qsxenRzR8bD
+ Y5MKwHfvBYEFSfDC0iic2Np7+m0ICghCueUrCBnFQicMmt4+PWHONUyeGLIR3zXsYdgHNE+FTnB
+ PhGN6/ax3d0z/4m4JNLt4+SZaV+IabXKSDTIVnMV047UG57qB+t/AhY5I3cnwOfdmfsixFKWs7o
+ z4uD7eSwnp2gG5wasLOdeH62SqAojAqfNZyEh57iqMDjzROAiG+crQBIhE/h2LeF+qQX2tvzpJI
+ GUieCLURZKlwfUR1wO5+wRzSlaA0JFUWPHMqTOWeipQjS8qoOGOJCtA2BLz1S1yD7Y2m8MKHBOF
+ ZKKm3JGsqFYcPDrOttS29gnj6GcCELtyFL6wi9ZQGn5THd6E/ZcEa9iABOK3qxscHjv9CpNA==
+X-Received: by 2002:a05:600c:3488:b0:4a1:dbb7:bb44 with SMTP id
+ 5b1f17b1804b1-4a1dbb7bc9emr125319335e9.5.1792438052481; 
+ Mon, 19 Oct 2026 12:27:32 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1f37f7fc3sm4616095e9.2.2026.10.19.12.27.14
+ ffacd0b85a97d-48e1d6dc034sm827876f8f.3.2026.10.19.12.27.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 19 Oct 2026 12:27:24 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6299D5FD54;
+ by draig.lan (Postfix) with ESMTP id BEAB65FF88;
  Mon, 19 Oct 2026 20:27:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,9 +90,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 13/19] tests/functional: add tuxrun kvm gdb test for x86_64
-Date: Mon, 19 Oct 2026 20:26:58 +0100
-Message-ID: <20261019192704.3220373-14-alex.bennee@linaro.org>
+Subject: [PATCH v3 17/19] tests/functional: split s390x tuxrun into tcg and
+ kvm run
+Date: Mon, 19 Oct 2026 20:27:02 +0100
+Message-ID: <20261019192704.3220373-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
 References: <20261019192704.3220373-1-alex.bennee@linaro.org>
@@ -100,15 +101,15 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,61 +124,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With all the bits in place we can now exercise the KVM gdb interfaces.
+Add an explicit "kvm" run to the tuxrun tests. Although running on an
+s390x host would probably have defaulted to "kvm" anyway we want to
+exercise specific features later.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260930164649.433573-14-alex.bennee@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/x86_64/test_tuxrun.py | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ tests/functional/s390x/test_tuxrun.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functional/x86_64/test_tuxrun.py
-index 026b373accb..1a1138d16ae 100755
---- a/tests/functional/x86_64/test_tuxrun.py
-+++ b/tests/functional/x86_64/test_tuxrun.py
-@@ -11,7 +11,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s390x/test_tuxrun.py
+index 8df3c6893b7..086466af81f 100755
+--- a/tests/functional/s390x/test_tuxrun.py
++++ b/tests/functional/s390x/test_tuxrun.py
+@@ -25,11 +25,22 @@ class TuxRunS390xTest(TuxRunBaselineTest):
  
--from qemu_test import Asset
-+from qemu_test import Asset, skipIfMissingEnv
- from qemu_test.tuxruntest import TuxRunBaselineTest
+     def test_s390(self):
+         self.set_machine('s390-ccw-virtio')
++        self.require_accelerator('tcg')
+         self.wait_for_shutdown=False
+         self.common_tuxrun(kernel_asset=self.ASSET_S390X_KERNEL,
+                            rootfs_asset=self.ASSET_S390X_ROOTFS,
+                            drive="virtio-blk-ccw",
+                            haltmsg="Requesting system halt")
  
- class TuxRunX86Test(TuxRunBaselineTest):
-@@ -19,6 +19,9 @@ class TuxRunX86Test(TuxRunBaselineTest):
-     ASSET_X86_64_KERNEL = Asset(
-         'https://storage.tuxboot.com/kernels/6.18.54/x86_64/bzImage',
-         '24a3ade610c2cc426ff821050de8a35930b0371357d94cc2c334abac6658552b')
-+    ASSET_X86_64_VMLINUX = Asset(
-+        'https://storage.tuxboot.com/kernels/6.18.54/x86_64/vmlinux.xz',
-+        '77bf44cca48c9c1b9c142e16a2311d58b8ae3462b61bce44bcaf9243b5f26628')
-     ASSET_X86_64_ROOTFS = Asset(
-         'https://storage.tuxboot.com/buildroot/20260924/x86_64/rootfs.ext4.zst',
-         '8e310455b0244414ccff29c507f7ccfd4032e3587cc405e49ab0322738e3e27c')
-@@ -47,5 +50,20 @@ def test_x86_64_kvm(self):
-                            drive="driver=ide-hd,bus=ide.0,unit=0",
-                            accel="kvm")
- 
-+    @skipIfMissingEnv("QEMU_TEST_GDB")
-+    def test_x86_64_kvm_gdb(self):
-+        self.require_accelerator("kvm")
-+
-+        self.set_machine('q35')
-+        self.cpu="Nehalem"
-+        self.root='sda'
++    def test_s390_kvm(self):
++        self.set_machine('s390-ccw-virtio')
++        self.require_accelerator('kvm')
 +        self.wait_for_shutdown=False
-+        self.common_tuxrun_gdb(kernel_asset=self.ASSET_X86_64_KERNEL,
-+                               vmlinux_asset=self.ASSET_X86_64_VMLINUX,
-+                               rootfs_asset=self.ASSET_X86_64_ROOTFS,
-+                               drive="driver=ide-hd,bus=ide.0,unit=0",
-+                               accel="kvm")
-+
++        self.common_tuxrun(kernel_asset=self.ASSET_S390X_KERNEL,
++                           rootfs_asset=self.ASSET_S390X_ROOTFS,
++                           drive="virtio-blk-ccw",
++                           haltmsg="Requesting system halt",
++                           accel="kvm")
 +
  if __name__ == '__main__':
      TuxRunBaselineTest.main()
