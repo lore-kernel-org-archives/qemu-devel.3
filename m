@@ -1,118 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5813606A325
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 16:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B734606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 16:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=k4Tt+ULS
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=jxxsvMLF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIqCZ-0002Mr-37; Mon, 19 Oct 2026 12:27:07 -0400
+	id 1xIqFW-0004vg-7j; Mon, 19 Oct 2026 12:30:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1xIqCE-00029Z-Mh; Mon, 19 Oct 2026 12:26:47 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
- id 1xIqCC-0001Un-8X; Mon, 19 Oct 2026 12:26:45 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JFj31A3042775; Mon, 19 Oct 2026 16:26:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Q839harI6NKWSta2p
- oavzM2yxDm6fPJKONc0aFAObcs=; b=k4Tt+ULSDVYcq0eLxUqS7maVAm0Aqbn1q
- W7J4MKroDuotKq2cwTIZBMqqSAUrp5tMvuYcorvfBBrnB5DMOn7lgDJ0+y/hFAwF
- vejPC7LXMWr+ZOzSmTnMmsYVXwrIC571gHXmdNHIoElW2mkHc6XVFcK2nkZ+UG2z
- S05eopPCqlsL/UpmjT/6GrTOGKM7VK1gO72p+gxQ7h5neR3QzXKVmzdXXUDOrpoA
- 1Y7O8MYrqXcfkDvepX0hehAZJT2nNPtaHuKMIBZTBJ9uG2Az3lVBQav8DvCWus/B
- JdYUDMUHwzqd69KVhd6lKzo7t18HPaRcm+ISQ4Fzx9dv3EB2PGY2Q==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hbyepunv0-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 16:26:38 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JFZ5j0121764; Mon, 19 Oct 2026 16:26:37 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hckbq6nr7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 16:26:37 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69JGQTH447382792
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Oct 2026 16:26:30 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C449F2004E;
- Mon, 19 Oct 2026 16:26:29 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1730F20040;
- Mon, 19 Oct 2026 16:26:26 +0000 (GMT)
-Received: from Narayanas-MacBook-Pro.ibm.com (unknown [9.124.217.62])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 19 Oct 2026 16:26:25 +0000 (GMT)
-From: Narayana Murty N <nnmlinux@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Sourabh Bhat <sbhat@linux.ibm.com>, anushree.mathur@linux.vnet.ibm.com,
- clg@redhat.com, Sourabh Jain <sourabhjain@linux.ibm.com>,
- adityag@linux.ibm.com, nikhilks@linux.ibm.com
-Cc: pierrick.bouvier@oss.qualcomm.com, rathc@linux.ibm.com,
- Nicholas Piggin <npiggin@gmail.com>, harshpb@linux.ibm.com,
- amachhiw@linux.ibm.com, hbathini@linux.ibm.com, shivangu@linux.ibm.com
-Subject: [PATCH v6 6/6] MAINTAINERS: Add self as sPAPR EEH reviewer under PPC
- RAS
-Date: Mon, 19 Oct 2026 21:55:40 +0530
-Message-ID: <20261019162541.68440-7-nnmlinux@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261019162541.68440-1-nnmlinux@linux.ibm.com>
-References: <20261019162541.68440-1-nnmlinux@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIqFQ-0004v4-QK
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:30:04 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIqFO-0001hx-Tp
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:30:04 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-8b118bea471so3105447b3.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:30:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792427401; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Ff2QZeJVcg2wU05YUItzBMSyZ6YgChsjhPWa+yrY83N0PNWXcsP119L31AArpzR882
+ FszJrr1dAmp0ZnrTNk/pX65FBS0xsE4xmQYrf75dG3Hh/ThjE1uX58+5AkYnd0RX8ZjJ
+ C66rp+fFS+/NboLxaYRKa2kgI2QhY1+2rJgiQjeIaKXqADJAtOQ15WDzsc21+JkjDHSJ
+ TKMi8CInq5LLHixrg890il9iyQSYxfVg1bz98t7I4tcry+rs7UjGgUNBLz8GaIWve/Yq
+ s/y3uJ6NPTNQcalykH5unrmElK1/zcMRR0HJIlaLeauxDvhx25d6GWLF66Dl7gdb+u5a
+ rjMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=z0n5kzwllhycJNwzz7O7iDXpRQDJOs+Vdz1EpH/TaT4=;
+ fh=2pP+O1em66D2PRn9aGMPVObofMcBhXtCuMqUbD3jSgI=;
+ b=CKp5XPbW5+bsv2xoxkPsnOPc/bXekftsE7JVID6nBdQqd/uwZAPC3VFnObNpQUBs8u
+ VFNbVjDTyf0oG7JtQbQdEdYh1zU2/zSu8T/VUnUtDzBN7x12E0PvzktMh9ptuGHb5C5k
+ iDZ3I6tey0cKbstWPTqYfpjr9LWw4F5be4YO1RMFpid7cgjRJOYNn+apJJNNO/+JvhG5
+ HkeChtFc/ju4ViQwP+NVIXbZcjWS1dgRoHn9rnjNSTzNCwm9+yHMJnlDvrlnUGACK1pc
+ oh/nEVO+0m06qKJPj/jNjbWP9FKFKPE2vMtUpJB33aAj5Tg3aQvRfvYArbzYkpKvNLo0
+ eGAg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792427401; x=1793032201; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=z0n5kzwllhycJNwzz7O7iDXpRQDJOs+Vdz1EpH/TaT4=;
+ b=jxxsvMLFmUGx2rwft+iKBVShEZgz2/DlgSl4e2VekMiJxIVVCMvvFA4/ePr8uBA5N1
+ F+h0tOz09tGqYx8QxX87Z3Kp12yzUwIFobn2np0QRfDorVnTMbmc8o6j7eqS9XzCwgBx
+ XYRZt6kYo4X41bYePYRGqzdD689CsCsBg79oQ3iacplTOntaQJbCZhvsBGZcsHE+cwH6
+ jwmpESYIc1dJ3IOMs/qoBI1NNIgKcrqTeXoDLUGqHrjEq+UmT+YAbO/+h4AlJiduCXh1
+ YVt5nvH+nNybVw81/utsPRZsS4aKToNKp6YtterbePZBtpKNQ5BPP+gYx4niX1ySf200
+ rtzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792427401; x=1793032201;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=z0n5kzwllhycJNwzz7O7iDXpRQDJOs+Vdz1EpH/TaT4=;
+ b=nsSkKPZX1PxQT3xvGYC2pVlxeHtOjrtvoT5f+/4qToeTS3t1myD8WHPU08AeeAb31o
+ fyUFF9ps8Vgv1QL8JeNWyuDX50QI2RjEQ3aSzmNuaQCqKlRpwN7PlFNHZzzLSUXypiMM
+ hxHg77IBu6rDFt9UgBzpZr94KL72L9D1lFQfvv/acXog7dVGEr/jyS0CUyvFSpbMlKSP
+ omvyPsnkRQJlTo8PdM1NFroKsTWNeOCGjnwi4KmRO6NVWYlSa3nq0ntrO0HgNuBofR/K
+ tsfScXpvz+n8Y0yrcZ+rIXjnRnh6Tke9F+q1Tdfb+InPVe7zCeT0D4b5l2oJ5LavwqlM
+ D4MQ==
+X-Gm-Message-State: AFq9FYJS+aYhAoTpIB9xD+OtNKBKQHpwTc2lb+9SUoZnW1IkzMj8oEAH
+ FOWT64Em+wNMoUdNSmgf9jKt/JL6TgZIJMiSn4Q3uzbub3AVEaJx1SSBRg+9cfpfjQnBt9R6HeT
+ 1GRmhWyZGd/H481vWg06/Mvavg8c3FhUoMw1XFpDfqg==
+X-Gm-Gg: AYBFou2H+MAclCu3gbXbZvp4cplhEoa3dXHo35fOdywyvNa43ItCy78JBj72TgjLZ43
+ kFp2bk5XmSPlef86fNiYPRbdlhEtXmlo/Z6zzHZK1ZBVaMFd5dOjT4uV0vFFvp+xpptkCU3NNOK
+ tU0GjFTXpbic4owny2KRiTxRplTVtBFvgp2ux7Q0W4z/O7p3PF6ujOiqwRnRljz7OLLyH2Xk4eF
+ tClovjvoG4kNxI9yw+q7MIDiOd5WR748HtZ8RINKb1vuZeRxNoSrdO/WFSrQqc8bkPSYZUYok/K
+ Gj/YX6wF6h/vtXfZgHGjdhE/pIojH87cSxveM5TQLazYWMYNXYk830RX0Gb0wPgrganIJmLRSN4
+ 9k7MRrfxsg92Ru6AWVEc8s478OVLamwTnZzQLDNw=
+X-Received: by 2002:a05:690c:c512:b0:8b1:9c2:87d6 with SMTP id
+ 00721157ae682-8b109c29015mr13609837b3.17.1792427401295; Mon, 19 Oct 2026
+ 09:30:01 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA2NCBTYWx0ZWRfX3M0hxi0AsjYW
- vjOTfKYeelWQzbt6wTyc9xehdQsreita1uhT3CSszX3xSxqp+s/iHExPTNpe4wxonGe+yBPLh1u
- I6LXJVfs6vowXYDQtHO1p5ZdCXrFBK0=
-X-Authority-Analysis: v=2.4 cv=Z4R5j3RA c=1 sm=1 tr=0 ts=6ad644be cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=uPrgHAJC8kndP_WudMUA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: DXhjiqsAs1Xdz_u8iebLYN10kThmEzWI
-X-Proofpoint-GUID: C-BCSZIXXjWR5JTM4Gbg2fmKk1hnkmiU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA2NCBTYWx0ZWRfX0AXq899gPp+Y
- AIhm1Sz7L9qmJMzQm6ajOq+efuSMyO5RlU6ppMS0T6qENUsMQuNKWocabGdxndEemOOngykt/u6
- I1RDL2C19BYVFF6VoSQFO+tltKnhFBOnpoLk85Co+n6PRcGWkTeJ2HkSVgY7wowhU//lrJe1guB
- EhVyW+JDcr2x1YgQ+8ZYoJQhN0J4zpm5XZrEyiaDguo+YkElrZHfsXyecV8EBYH1v7te8b2QTJW
- OA020Mn0jbqTDg/94KPK7p9jaPP34i3vaJ8btSjaPwo0ilCcPLjnknpnRcuXTVbvJlcJ6vlTSlt
- Fxh4vx6TnsflkPJz9cYcVfXO2JWabe4Wb1WAz3nDWHPe69z2YO0tHg+gAhbUykxKLpvZZeGQ7uR
- lQo2I7SK2CbEKvG80V5zYpszLZyK8U/sboJhxMZMD0DLQfzNGv3TyUjTr8xOOvM9txmCWvnRJBI
- L/pVlz0epN7xHF+CZdQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-19_05,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- impostorscore=0 suspectscore=0 phishscore=0 clxscore=1011 adultscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
- definitions=main-2610190064
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261019155519.1302964-1-samanyu.goel16@gmail.com>
+ <CAFEAcA_QYXpjXdC8oiTfn2Z3E99hW0j-mcDSqGLhKfKKex8VsA@mail.gmail.com>
+ <CAL3-oQiGT2OSxq7casnW7JuwrCM5wa2L4SDpDe_As7+1hyEuww@mail.gmail.com>
+In-Reply-To: <CAL3-oQiGT2OSxq7casnW7JuwrCM5wa2L4SDpDe_As7+1hyEuww@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Oct 2026 17:29:48 +0100
+X-Gm-Features: AclHuK_sCX-JTw-AdXEUU7Ddhih0pcFE2Vvyyw9uD0z3UURYvBh7lWGLNVxrmxE
+Message-ID: <CAFEAcA82xogQU1vW=NLSxvZHOcz4KvaL3NutgXLZ17eNAvt7nw@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/exynos4210_combiner: Fix out of bounds access
+To: Samanyu Goel <samanyu.goel16@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,41 +112,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,RCVD_IN_DNSWL_BLOCKED,
-	RCVD_IN_ZEN_BLOCKED_OPENDNS,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_ZEN_BLOCKED_OPENDNS,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Adding self as reviewer for the sPAPR EEH under PPC RAS.
-Updating the EEH specific file name as got updated in previous patches.
+On Mon, 19 Oct 2026 at 17:25, Samanyu Goel <samanyu.goel16@gmail.com> wrote:
+>
+> Thanks Peter! Good catch on the read function, I totally missed that part of it while focusing just on the main issue.
+>
+> It makes complete sense to clean up both functions together in your fix. This was a great learning experience for me, so thank you for taking the time to review and share feedback.
 
-Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+No worries, and sorry that we ended up duplicating effort.
+I've got a bit lazy about not assigning issues in gitlab to myself
+before starting work on them, I should be more careful about that.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 33b4f7c259..337d402fa6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1775,11 +1775,13 @@ M: Aditya Gupta <adityag@linux.ibm.com>
- R: Sourabh Jain <sourabhjain@linux.ibm.com>
- R: Hari Bathini <hbathini@linux.ibm.com>
- R: Shivang Upadhyay <shivangu@linux.ibm.com>
-+R: Narayana Murty N <nnmlinux@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Maintained
- F: hw/ppc/spapr_events.c
- F: hw/ppc/spapr_fadump.c
- F: hw/ppc/spapr_pci_vfio.c
-+F: hw/ppc/spapr_eeh.c
- F: hw/ppc/spapr_rtas.c
- F: hw/ppc/pnv_mpipl.c
- F: include/hw/ppc/spapr_fadump.h
--- 
-2.51.1
+I've just posted my series, if you're interested:
+https://patchew.org/QEMU/20261019162217.3272337-1-peter.maydell@linaro.org/
 
+-- PMM
 
