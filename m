@@ -1,101 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6545C606A32D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 16:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B482606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 16:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=he6UI7uT;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Br0NUMnQ
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=jN7h/m/a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIqXg-0008PI-3s; Mon, 19 Oct 2026 12:48:56 -0400
+	id 1xIqcY-0001VJ-7L; Mon, 19 Oct 2026 12:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIqXc-0008OW-Uu
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:48:53 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xIqcW-0001UY-1M; Mon, 19 Oct 2026 12:53:56 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIqXZ-0003yn-O3
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:48:52 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JFPFqL2589773
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 16:48:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZSl/HJWWEMDnimVxwEoRJAvfwzxAdjS6yp7sMT/PWxA=; b=he6UI7uTTy+GGqEJ
- OxDEiWBrZH7NrOYDxkyGCX1HCso3yAgzvO7ZrKiEiRhA2JV+E8rXQlWzgYP+oWSY
- kdzU9+lWrGPvRFzHoX314JDbomAKDEyXoHqk1CnmGn0qqLu7dliIY3bUDwHCe/N/
- 9hck/0IBQEXDGggm+28XgVQb3DcVDk/yI/15HfN7dMJmswHJiBTxQ8tJe/TJsOaf
- ZfJl6AL3KNxC0sAzB5z7848CkngqDQ2sc+swWc4AluFS1xRU6t4vlNfEKhcVkRKQ
- gl0+d01Vyde6sgtwV2QNoSfxtfjPYpOEyJvQqkHOm90cla13C4gUOtUk/QPyfUsz
- hRkqQg==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdf3n298v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 16:48:45 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3552883bd19so6295030eec.1
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792428525; x=1793033325; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZSl/HJWWEMDnimVxwEoRJAvfwzxAdjS6yp7sMT/PWxA=;
- b=Br0NUMnQfGy42CFBW/ceE1WbxDAENA61ffmK75ukFdYPez36+siS0ymOWwPUpPqp6G
- bteDPT7jJ1l5v2IfFXs51UDUJPq8H3X5agBu/OcFmn2/yqwa/sSAbGDHXcY9AB2yY9pR
- mxOsaBucq2GRToEROON1B7xjZPk7a7Dw+7o1tt8j1scIlXXZSUEPowL4A/5q4ZjxujHO
- WNvsJYYXFkAE4rxaRec4ydvtEOCKv+qQA6nmvFlsihZyl1dUaqF8bIz+QoGKSx6LoMg9
- aDimzDPwj8lGYHPphm9A/6ofyLvzqDrOYNyil1YaaHUX6tPKBNV8GwqUjFxd/484yQ/8
- Lu9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792428525; x=1793033325;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZSl/HJWWEMDnimVxwEoRJAvfwzxAdjS6yp7sMT/PWxA=;
- b=WPeoDWLqGR+DLKyRfF6glHcKQICnLrP6h4AK3UUatdPyY6LRmADHRyOfR4+6tCxZDT
- Td8nENxeRL7YDUK0pllkTsr2FobsW9elSNKqzRpMYwyOpFhCYAvVc/i5vLJhE0OPyf6+
- VKea/qrwCf5caZvodv0qrmnK/0wlHiw1vtpE0B94nwJqK5+09et2JSHgQnXVGYJzQguN
- XLN5kCoHW4N5zwJbtmpGHVig9M/SYcZNNL330dcvKsqI+Eb/ndc4Qbkq6a8zxv18wtR6
- 0A+WEfhVn869NDi/Hh2pUgztAXvBvIyutK/f/X4cWqD8n3Sefc3Qt0/aonG1tpmGXNAo
- X85g==
-X-Gm-Message-State: AFq9FYJWMjVBYfpOxYuzPCkRGsPnUK//5FRrjHbxXcBze4+mUnTSkbdf
- NKRQaH9qG4qpf36TeLzTC9q0AqRuoaDUnXMUiIRORYnpj5KOYlJ932Xh+0u91NuFn9+iUOgACPr
- AGJ4IK9hfRq/MdNTcbz9d4b4ZVe3fxzPozz2pMjazc4yO52AlQzmloXkbuA==
-X-Gm-Gg: AYBFou3yotLv1ZfnzwcHr5n9TniMt4Q2bk2bwvw9Vj5zjCNwRO0hNgU977SpQxsGglL
- o7ZVSIc+7kLzUuodfw9x6UUab/WYJJX6jHYnBcsiRxZWQyFtpBi1q6TY6xiHip7GoSI09mFGgKt
- kZuxV0nerdCzTwh+aBkQCTxePC70pK7x3SM4QVNerJNr5eVXORIwBMLn85ErAnAiplFs9yrqUDP
- CbMjrqYM0AV/+1lTdpplUhlB2C2G7glD7ryAog8OJ2EJrFfz4c6XTpBC/2YGjw2ChXQhHIuOqru
- Va/GXJpYOhyfdb0HgntFj16TGMN8oJ+LCYKxWz04DdwOksClNDPG08HdsKmsRPKF+IxzamBb/PZ
- VL+xRQVkVKGsaKBnqdUXlv7uZlok1cS1Sm4GYLKjKYpXJjHHy372rRYCfReu07CNvmoFgwA==
-X-Received: by 2002:a05:7300:768c:b0:35e:a117:8fd8 with SMTP id
- 5a478bee46e88-361a18603d7mr17388665eec.17.1792428524438; 
- Mon, 19 Oct 2026 09:48:44 -0700 (PDT)
-X-Received: by 2002:a05:7300:768c:b0:35e:a117:8fd8 with SMTP id
- 5a478bee46e88-361a18603d7mr17388598eec.17.1792428523659; 
- Mon, 19 Oct 2026 09:48:43 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3608308a87csm56224958eec.28.2026.10.19.09.48.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Oct 2026 09:48:43 -0700 (PDT)
-Message-ID: <f6583ee1-2f4c-4e07-8552-6c6c780370d8@oss.qualcomm.com>
-Date: Mon, 19 Oct 2026 09:48:41 -0700
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xIqcU-0005Bb-2b; Mon, 19 Oct 2026 12:53:55 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69JFiLG54116529; Mon, 19 Oct 2026 16:53:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+qxtbZ
+ Gzbd4Mp50HOcbH/2wMV5ZdR0nc7jnkimozo64=; b=jN7h/m/aM2OqBHfULzahIA
+ LEjD5JX4USdLUvkJl6BjiASOAQY7iAxbt7MRZq1XQVZ49mbCC4xdPEwJVE3Yj9HP
+ TIY9I8oRuozwgpXPUeQBll3TraL4q7sHlnTC3Igr3LRGTTVrWUEwgGRV5ZaAhW0g
+ WKCaMaP/qV5W+HYMWe+kjvTbbLtlMStkaB2dsgb7WZuvpDD4iJYbUDX3RvxBWmFc
+ yF5g0SHoMfhY0PbpyC3Eq3dwZv+4PVl4BS2xIRbjtsnLZDlNV9fAF16o/7oxmNDH
+ D6uDfAKbFFrianZ3z902uUNWJUeALZ9A48/a5dcx2C3sjC/m0o+8Z244D2Q7E3iA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hbxehv1p5-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2026 16:53:50 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69JFZ43j121747; Mon, 19 Oct 2026 16:53:50 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hckbq6sew-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2026 16:53:50 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69JGrmZv29688534
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Oct 2026 16:53:48 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F6EE58056;
+ Mon, 19 Oct 2026 16:53:48 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 27C6058052;
+ Mon, 19 Oct 2026 16:53:47 +0000 (GMT)
+Received: from [9.61.191.236] (unknown [9.61.191.236])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Oct 2026 16:53:47 +0000 (GMT)
+Message-ID: <2e4941f8-9192-4fb7-a352-2296307a775d@linux.ibm.com>
+Date: Mon, 19 Oct 2026 12:53:46 -0400
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] hw/i386: ELF endianness fixes
-To: Eric Farman <farman@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Chinmay Rath <rathc@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
+Subject: Re: [PATCH v1 2/4] tests/tcg/ppc64: Skip float_conv* tests
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -103,49 +74,96 @@ To: Eric Farman <farman@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
  Matthew Rosato <mjrosato@linux.ibm.com>
 References: <20261019151233.230172-1-farman@linux.ibm.com>
- <20261019151233.230172-2-farman@linux.ibm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ <20261019151233.230172-3-farman@linux.ibm.com>
+ <9c7fb198-06eb-43ae-b945-bf789158a68b@oss.qualcomm.com>
+ <1d797652-50c7-4292-9297-61b09aefbac3@linux.ibm.com>
+ <03cf8b9e-c23b-4286-8c19-7094f7865f8a@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261019151233.230172-2-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA2NiBTYWx0ZWRfXzbP2yb+eLVj0
- P1C0xy9RcPcAu4qDh9oiwT0zrybl4um3a7vQr4GMeHqX87r8S8wuGFEJKZHD+KkegqnPc8l7Byu
- 3Pa8MyGGv/e5EGf9U0ZvHLBqRejxrmg=
-X-Proofpoint-ORIG-GUID: v09REuevn2CCAS6OStWJ7REwQ9p1SS28
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA2NiBTYWx0ZWRfX6OLCESX/zXVw
- MC6tKstOBl1nJMVkRwZdcvmItyeiNlUMR+ytdvYDW+EvLUl7tKVTF1be9YX60/wHPjeI1LlNBvI
- +ijHNDSKRI3134bUQ6ix3/dLpEGttM1u2QH7ui1E80nV1EZ915DBU067NMEb0VdP2UIyq9ePqdu
- jzl+Qpxi6iE9KAp+8LNKRidDOlu7TuYcRy1WMmwQKLPlw2iZpKHJ/nhyRAnW8VsUQiyhOPwZJAO
- JMLfh99SW1lBfwNRS340e9ggGIlvb/pUupFb5eagV9E+GxEWdTpK9L+YPOzQ3s08W9kPl6NDmz3
- sFxjvFsYvPqW+VaKo42ZcGId0pr+z905ioSuALLx5KJwnxwcJ2TGnsjw+83cvCtQK1OzLg6xfGO
- 20HgF7m8sMTHxOhOKh/K0bBQtY87crfTZawr59AyLbfC+BHTTFV4SZlqDB7/j8eD/gaDVS16Xnt
- FRdu+E03vn4CN2geuLA==
-X-Proofpoint-GUID: v09REuevn2CCAS6OStWJ7REwQ9p1SS28
-X-Authority-Analysis: v=2.4 cv=Zf2IpcVA c=1 sm=1 tr=0 ts=6ad649ed cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=bP5XXabYqgtyESp_ZC0A:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ xsFNBF7EiEwBEADGG0EtNKnjp+kQfEVqlqxXoBHjnaQptFpMgxNlz2GtqOujY6nzEWnybIXY
+ 63XUTmMS/tWUf2DTbNCNoWwumGM/I2Gj1uGyMnc4Q477BQlL/e2/9MRaut11rwHsi4zmWylc
+ jO0eFTSLFA8yFBj9osT3uZzk5TwWkD8sf+rD916fFVk0G39uYEd5sjEzjeOf9/dwXyZpjJY6
+ api1pUHEw7weRvOnllJAfIKFz+KoR6d7ezvMF9zOYHF73FGeSVIYoIEUhA5Cdg60rSlTtHb2
+ cftex3/cEapvY5bK3CKJ33BVVK10Bht9XfVaA/AOcg/3o5ZbhSIwz4xScGsEVf/Yr368YMdr
+ 3VkCZrmN2ppmVRz/RvAmCyItnmzoVDlSREA6Faw6S0x8Oi7lN0cKh2hy9VPcVupraXJZrdAh
+ GtdU+jrJvSbpdsrX8F7K3RwynbiqGrqC0izGla04hhtei/uwthatglukuxep4PknDGbzijg8
+ Ef7A8t3qEVklUDrsnNPN5HbR9QQdeF0HuWsDTfILbZv1MICfOK3BCDeT5mJWaJCoQ2rbuljM
+ e1hFSt+mr7GV4h6NcBE+uGIqDSzQORtyTo0uBV4et3cSE84JxOfXBMrj0TlL1855JaIoPWEN
+ uhDRB/dHW8+Fumq2du5hLcaXPka+MO26cNVKVLF0/JjwMTZ9bQARAQABzSJFcmljIEZhcm1h
+ biA8ZmFybWFuQGxpbnV4LmlibS5jb20+wsGuBBMBCABYAhsDBwsJCAcDAgEGFQgCCQoLBBYC
+ AwECHgECF4AdGGh0dHBzOi8va2V5c2VydmVyLnVidW50dS5jb20WIQTSxgUEyej1aM/lh7U4
+ J7IScb+VYgUCYel8TgAKCRA4J7IScb+VYsHAD/9BSQj7HeJf90PttOmVh35Bb4QyHLZ4g+9x
+ waM59JCKGbiURuNRIGnoRarYXHk6vfy19v8v56Dy1IOlKWaRnizp5Mw9zXBBTCs4fgNbOzY/
+ SggFY2UzcziXDG29X9zznq5LgY1Jf/cwm1O+rn89GKCZWZhLEB2wKzBj7hum7NBdW+lxfVwp
+ 2qONGDerttWDwAHxJ995k9aDJahq9kIKEMEZbrTQ8JI8KZGoox6+HA04EhoNzxvbV0J+/gLJ
+ 2DkvxN5/xmcD3z+s8B5ev3NarOF17AIA9oCdfu8CPAupcNqJW86m19P5q6AyRB2ZLyAIAAhr
+ HCXrnlh/8HJW1yCOVXxprFdpg1SX1fuArjbFAh53vVVDfkZlwHeTeE7+3y1rtDLfy830pqdD
+ ymv94yey2y1+iZBdbaW0fSC/JkjkOCy8oZawkH3geM4MXV4ze4gbBH6BhxW/0gbEYjnLm3FA
+ 53JcXwhHQFPWIYEYYPvATJi0JUiMY1Znkm3QBWDOCXSrG0tHpAclBa9L40zLRwA1h9YOMFEs
+ qvKijUdvcDf4sTdJ+A6YL66grzul5vNt06NlqsI8HUDHE6vghqyWxupCav2+9b1BuLie++er
+ b8OCo5n3TUHsVMjYJEePU1EkcCa84dCm+CXqPthgRv0sbe4UQEd/qUoVMdWj7Q7FL96mBn0G
+ zM7BTQRexIhMARAAp+k1sC4y7Wtwjqtfu9wIihvY/Vot0v/sKg8CRGRIIRGLiCeA9o+2ZlxC
+ jYztT3Leri5Vo5z09OmRMvoFLJjcHMCG5sYeZwOWNAbeuAxGkIMDSB4pLl3t2c+1PQuMBCd7
+ +mRZFaMEJfT3nhdUKxy2rp1+YucnA67xGXUJCiD5l9UmhPqa7SAYlpMAqDz7cmBo25c/UNm1
+ Tpwjrh70jq/4guV5gnprawH8nkRjdKH1JvKWvkuaB7FNZ9IuSHlWclcQX4IQMsaxsU2emAbP
+ VYv7l4YNlKfdlJd8tuEodjuMLOBnr7e9H0hVNUWGFN9bkBNRu3zi/jvhyu15Iu4euR/WdVNu
+ 2K2iYxIfiGMnv0F/a6R1bm10lCJrjyf23J8DYIeH4YmHvOOqYFkq3DWOctlXbb3+aABqjYt3
+ mkiOLXeplqbo/m3rWcGNd8Q/d1aVA0wm5+Nt3RdSuXG2FHOFdVUQKPLpf1NUH/LInBhS/9Ys
+ ajm6tWXKv7hxwWmyz0u/th6gUra3KpARB1ypebWHULLNzKGwVS81XNs76QhXwX04cyiwLqKb
+ WqLqJKThz+rLa09Ap+eO/UzPfFXvWYWfTeFRIQ/tKF332ZzRR8Xrh/fk//YXyRfpoE/7i5uz
+ ve0HZWp5jXg9Yb+S6g0+XUKznnN9B8WLLCcuRIuSa722070v7KsAEQEAAcLBdgQYAQgAIAIb
+ DBYhBNLGBQTJ6PVoz+WHtTgnshJxv5ViBQJh6XwwAAoJEDgnshJxv5Vib28P/1BYT5gvjuEB
+ A80AXo/IqycicXxDJtrfmyw4COP7bi7AuiDcKyA1wRzC51paKwPFB8Unk2GvG4DV6aDmGTJY
+ +GeCYgthQ+znW461S8B6GqDCAQt2VDNNFVU+gTuh7vYQOgt/OjtiiAvMIJBVRbXoNSRokKOF
+ tpTiXf3ZOsAkot5ZmxE0TV94v18sp/bC84YvFyaxpw5bilT7bmpcq8B8/3yb0kmy6gXLcQAp
+ OnomV3sQBmm050amiO3tvxMNv8J71AvNdTG/rojTDKUl2Nw4f+aw4nVw874m2XpEe9JGRw54
+ 5d2dN8k3GpzcTBe9fCQPOFHOGkQ1CgptDkQuQVD3DIeNzQjXf6xehEymIKnLOkukT2smV0zh
+ fj08z7eiv+dsmnBsbhdM6DKU8qIgkTu77TfHUKjjOY/Mj0YHPuH/J4b1AZFxBhGP0BTKiB2W
+ CR6/49XVKvY1jHxgadSSNCD+f7tEqUNBlVl+P0emMJaYpK1+gy88ma4g3nvyOVe/VzDPjGDC
+ 4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
+ 1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <03cf8b9e-c23b-4286-8c19-7094f7865f8a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA2NiBTYWx0ZWRfX6j4Xw3nhbZ45
+ ipC1lREEoQayO5z8ZPKNjb8lr2pdqazy6MHI5BkFdhlX/7/TB4SAWuJejVm5gTmu58yanuoxACn
+ ryBITkW4vxXfz4nl6uw6MpLhtss03bkrFKWCq3Vaskz4CrpMQiLst7keor68kAzPEomeW+WdDGh
+ O9FHJLMaR+vZK1ibXCwUTc9xkKoy2pymqAtm0uOsHdnx+WrAgbTrK2dxKpPjneNVhvhjfDshKPt
+ 9taoCiP/jMLTqEW3dXKj/oGfmpsxtqJVpK2wtGNwK5UHE91fGybYjTPMEGne1G/ghymgTGzaXvC
+ ddPKdq6xJT3wRGAlf69UX0jO+kEy6Nj6J6BvSPky+xCBPtSblH8GeG9zFvj8XEkDOQIQyrULeeM
+ nnn3Xfy64BOfncqm15e49ICVeoyqRrOPyCIeAoQY2kWl9L8mt2reNVQbnugTyo3TEx81RuUNFxv
+ ocSYVDijK8xDRty/z2w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA2NiBTYWx0ZWRfX7fGWb68Ar0Ri
+ ByL2jNsnqz+4zpgYKT9CbYnrBCUd1bsqA2wYKWqtzl+XSqyStqBHAv1Nghi5vgviuhrtAICjL3a
+ U2VT5go9LSNPHdrnt1y4IJDlvU18VKc=
+X-Proofpoint-GUID: VP0fzokskeCQyfGx3ua60tRO5zlXx5KU
+X-Proofpoint-ORIG-GUID: wwIy-fnFAlLbHRLOdwyzT62KeWiQt4Dm
+X-Authority-Analysis: v=2.4 cv=OZQNnRTY c=1 sm=1 tr=0 ts=6ad64b1f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=LJKnelaLU_koa1p8L4UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-19_05,2026-10-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
- phishscore=0 priorityscore=1501 bulkscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190066
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,135 +175,115 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_BLOCKED,RCVD_IN_ZEN_BLOCKED_OPENDNS,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/19/2026 8:12 AM, Eric Farman wrote:
-> Running make check-tcg-x86_64 on a big-endian host (e.g., s390x) fails due
-> to problems reading/parsing the ELF data:
-> 
->   qemu-system-x86_64: Error loading uncompressed kernel without PVH ELF Note
-> 
-> There already exists logic in include/hw/elf_ops.h.inc to handle byte-swaps
-> where necessary, but it does not perform this logic for ELF notes itself.
-> 
-> Fixing that improves matters, but yields other errors: most of the tests
-> timeout while some generate confusing assertions. Both appear to be related
-> to the data addresses in those notes, which are incorrect when running on a
-> big-endian host.
-> 
-> Adding tswap wrappers, which will conditionally swap if the host and target
-> endianness don't match, fixes that such that check-tcg-x86_64 runs cleanly
-> on an s390 host.
-> 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->  hw/i386/x86-common.c     |  6 ++++--
->  include/hw/elf_ops.h.inc | 20 ++++++++++++++++++--
->  2 files changed, 22 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index fa18bf1aece..dcd4fa8eb79 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -45,6 +45,8 @@
->  #include "kvm/kvm_i386.h"
->  #include "kvm/tdx.h"
->  
-> +#include "exec/tswap.h"
-> +
->  #ifdef CONFIG_XEN_EMU
->  #include "hw/xen/xen.h"
->  #include "hw/i386/kvm/xen_evtchn.h"
-> @@ -573,7 +575,7 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
->              ((void *)nhdr64) + nhdr_size64 +
->              QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
->  
-> -        pvh_start_addr = *elf_note_data_addr;
-> +        pvh_start_addr = tswap64(*elf_note_data_addr);
->      } else {
->          struct elf32_note *nhdr32 = (struct elf32_note *)arg1;
->          uint32_t nhdr_size32 = sizeof(struct elf32_note);
-> @@ -584,7 +586,7 @@ static uint64_t read_pvh_start_addr(void *arg1, void *arg2, bool is64)
->              ((void *)nhdr32) + nhdr_size32 +
->              QEMU_ALIGN_UP(nhdr_namesz, phdr_align);
->  
-> -        pvh_start_addr = *(uint32_t *)elf_note_data_addr;
-> +        pvh_start_addr = tswap32(*(uint32_t *)elf_note_data_addr);
->      }
->  
->      return pvh_start_addr;
-> diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-> index 044e72de2a2..b4fc0b146f0 100644
-> --- a/include/hw/elf_ops.h.inc
-> +++ b/include/hw/elf_ops.h.inc
-> @@ -56,6 +56,13 @@ static void glue(bswap_rela, SZ)(struct elf_rela *rela)
->      bswapSZs((elf_word *)&rela->r_addend);
->  }
->  
-> +static void glue(bswap_note, SZ)(struct elf_note *note)
-> +{
-> +    bswap32s(&note->n_namesz);
-> +    bswap32s(&note->n_descsz);
-> +    bswap32s(&note->n_type);
-> +}
-> +
->  static struct elf_shdr *glue(find_section, SZ)(struct elf_shdr *shdr_table,
->                                                 int n, int type)
->  {
-> @@ -275,7 +282,8 @@ fail:
->  static struct elf_note *glue(get_elf_note_type, SZ)(struct elf_note *nhdr,
->                                                      elf_word note_size,
->                                                      elf_word phdr_align,
-> -                                                    elf_word elf_note_type)
-> +                                                    elf_word elf_note_type,
-> +                                                    int must_swab)
->  {
->      elf_word nhdr_size = sizeof(struct elf_note);
->      elf_word elf_note_entry_offset = 0;
-> @@ -287,6 +295,10 @@ static struct elf_note *glue(get_elf_note_type, SZ)(struct elf_note *nhdr,
->          return NULL;
->      }
->  
-> +    if (must_swab) {
-> +        glue(bswap_note, SZ)(nhdr);
-> +    }
-> +
->      note_type = nhdr->n_type;
->      while (note_type != elf_note_type) {
->          nhdr_namesz = nhdr->n_namesz;
-> @@ -306,6 +318,9 @@ static struct elf_note *glue(get_elf_note_type, SZ)(struct elf_note *nhdr,
->  
->          /* skip to the next ELF Note entry */
->          nhdr = (void *)nhdr + elf_note_entry_offset;
-> +        if (must_swab) {
-> +            glue(bswap_note, SZ)(nhdr);
-> +        }
->          note_type = nhdr->n_type;
->      }
->  
-> @@ -608,7 +623,8 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
->              nhdr = (struct elf_note *)data;
->              assert(translate_opaque != NULL);
->              nhdr = glue(get_elf_note_type, SZ)(nhdr, file_size, ph->p_align,
-> -                                               *(uint64_t *)translate_opaque);
-> +                                               *(uint64_t *)translate_opaque,
-> +                                               must_swab);
->              if (nhdr != NULL) {
->                  elf_note_fn((void *)nhdr, (void *)&ph->p_align, SZ == 64);
->              }
 
-s/must_swab/must_swap?
 
-For the rest,
-Acked-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On 10/19/26 12:44 PM, Pierrick Bouvier wrote:
+> On 10/19/2026 9:23 AM, Eric Farman wrote:
+>>
+>>
+>> On 10/19/26 11:59 AM, Pierrick Bouvier wrote:
+>>> Hi Eric,
+>>>
+>>> On 10/19/2026 8:12 AM, Eric Farman wrote:
+>>>> There is an oddity that turns up with the float_convd and float_convs
+>>>> tests, when running from different toolchains. As one example, the
+>>>> expectation at the start of tests/tcg/ppc64/float_conv*.ref is:
+>>>>
+>>>>     ### Rounding to nearest
+>>>>     from double: f64(nan:0x007ff4000000000000)
+>>>>       to single: f32(nan:0x7fe00000) (INVALID)
+>>>>        to int32: -2147483648 (INVALID)
+>>>>        to int64: -9223372036854775808 (INVALID)
+>>>>       to uint32: 0 (INVALID)
+>>>>       to uint64: -9223372036854775808 (INVALID)
+>>>>
+>>>> But, other hosts offer a different response, e.g., this debian guest
+>>>> on a laptop:
+>>>>
+>>>>     ### Rounding to nearest
+>>>>     from double: f64(nan:0x007ff4000000000000)
+>>>>       to single: f32(nan:0x7fe00000) (INVALID)
+>>>>        to int32: -2147483648 (INVALID)
+>>>>        to int64: -9223372036854775808 (INVALID)
+>>>>       to uint32: 0 (INVALID)
+>>>>       to uint64: 0 (INVALID)
+>>>>
+>>>> The explanation seems to be a behavior change when compiling to
+>>>> different
+>>>> versions of power hardware. Disable this for the time being, and it can
+>>>> be added back in manually with the correct responses.
+>>>>
+>>>> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+>>>> ---
+>>>>    tests/tcg/ppc64/meson.build | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/tests/tcg/ppc64/meson.build b/tests/tcg/ppc64/meson.build
+>>>> index 8cca4d65a4c..ee86a75c23a 100644
+>>>> --- a/tests/tcg/ppc64/meson.build
+>>>> +++ b/tests/tcg/ppc64/meson.build
+>>>> @@ -13,6 +13,9 @@ foreach t: tcg_tests['multiarch-linux-user']['tests']
+>>>>        if fs.stem(src) == 'test-plugin-mem-access' and 'wrapper' in setup
+>>>>          continue
+>>>>        endif
+>>>> +    if 'float_conv' in fs.stem(src)
+>>>> +      continue
+>>>> +    endif
+>>>>        tests += {src: setup}
+>>>>      endforeach
+>>>>    endforeach
+>>>
+>>> could this be made deterministic by setting an explicit -march or -mcpu
+>>> compiler option?
+>>
+>> That's what ends up happening in patches 3 and 4. I didn't like the idea
+>> of cobbling a conditional add to an existing dictionary of options
+>> within this multiarch loop, so thought it'd be cleaner to skip it and
+>> readd it outside the loop. Could squash them all together either way, of
+>> course.
+>>
+> 
+> Just saw that after sending this message, thanks.
+> 
+> For why to keep them in the loop, the reason is to keep multiarch
+> definition centralized. For instance, by removing and adding them, one
+> plugin test was unexpectedly removed. It's also just the general pattern
+> I enforced in all arch, so that could be nice if it could stay enforced.
+> 
+> Thus, I would invite you to use the following instead:
+> 
+>       if fs.stem(src) == 'test-plugin-mem-access' and 'wrapper' in setup
+>         continue
+>       endif
+> +    if fs.stem(src).contains('float_conv') and 'cflags' in setup
+> +      # ensure float conversion tests are deterministic
+> +      setup += {'cflags': setup['cflags'] + '-mcpu=power8'}
+> +    endif
 
-Regards,
-Pierrick
+Yup, that's much what I had, though I overengineered it in case there 
+isn't a cflags.
+
+>       tests += {src: setup}
+>     endforeach
+>   endforeach
+> 
+> You can squash the ref files update with this change, that's good for me.
+
+Works for me; I'll go through my combinations to make sure it's still 
+behaving and send a v2.
+
+Thanks,
+Eric
+
+> 
+> Thanks,
+> Pierrick
+
 
