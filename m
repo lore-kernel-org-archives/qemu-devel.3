@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FF7CCF2DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E6ECCF2DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIjQW-0004Xs-92; Mon, 19 Oct 2026 05:13:04 -0400
+	id 1xIjQZ-0004aW-2e; Mon, 19 Oct 2026 05:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xIjQU-0004XF-M4
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:02 -0400
+ id 1xIjQW-0004Xp-2c
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xIjQT-0001vW-0n
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:02 -0400
+ id 1xIjQU-0001vi-4o
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792401179;
+ s=mimecast20190719; t=1792401181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ppQmTYTgy5vliK2NTCy02bRgH3pcUzCbveXlZ+D1DTY=;
- b=JrteIRw1Lzk5bsxvOc3Q3/hY7lTyBQfnkaev0Cmst5Mt8EdH8rwHA2O6IcF9EPfmd8ZTC4
- VdbN/53hGwI86Ky4Od7BLe73ldWXssI5hKD9zPcwYGDwDteoddSt97ndELtON48tRTpGMR
- BJ58gn7vYkFY36GK7WwyNQyRQb54b/o=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=62oqdDj8dlT0pxuHt5cHb69+lEDkeWcIgt+nbW9frLw=;
+ b=T/bEv/uJuBvVM5FMyYIx6o2YEgdq0c8Sts07fZA2RDgBL39KZs1aY0c1TMXsHtoXGVk/LF
+ mtWIp2eOoHu0P8KV4jK+Neta2bFc5guckwDQUkCviW51mOZ8LIRvTFZBTPs2LDg22YVLBd
+ wCH+BPO5MkeLpBTFRAr8Arwo+D1bpSY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-q0TfzDZ5MlSu-5PkCLLtmA-1; Mon, 19 Oct 2026 09:12:58 +0000
-X-MC-Unique: q0TfzDZ5MlSu-5PkCLLtmA-1
-X-Mimecast-MFC-AGG-ID: q0TfzDZ5MlSu-5PkCLLtmA_1792401177
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a1de9dac94so10828925e9.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:12:57 -0700 (PDT)
+ us-mta-502-jZfbxhefNauK77LMMe52OQ-1; Mon, 19 Oct 2026 09:13:00 +0000
+X-MC-Unique: jZfbxhefNauK77LMMe52OQ-1
+X-Mimecast-MFC-AGG-ID: jZfbxhefNauK77LMMe52OQ_1792401179
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48e0389d6f9so1223058f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792401177; x=1793005977; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ppQmTYTgy5vliK2NTCy02bRgH3pcUzCbveXlZ+D1DTY=;
- b=Odw++2RfEcIvyZPxMyKUVJOEnVvHUioanORB2ZdFy6pJNbULS5NMPUL7f/TtnOFhba
- iv27EYnMr5FlZl8I9Sr5+qAo+FJ1i7E3RgdjRR9y/4TPsrTpHGGmEomMMiNfvPPuigMz
- tFjwQyyvCgA8/7Z0MzWg/aW55w3MnW59MUHJMeTqcdPmqZ8HqqUZrRr5TDOsNGANLZdA
- T8O3bxTzdw8tHs4EQIHVTOqKZOqh9mNz9LaIqd+KlrF/rP7ge3026zLH09TZefZ3pOFT
- euYNPXygCP6Gnbac5+CAezjdukpPIbl4fgcbHqfYdHSOCVJ1Xn6eJzgM/2v1jctaAOm9
- SEgg==
+ d=redhat.com; s=google; t=1792401179; x=1793005979; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=62oqdDj8dlT0pxuHt5cHb69+lEDkeWcIgt+nbW9frLw=;
+ b=qSGX3yyvvvOCr9P+dKW37sZl/C7JkJ1RHo9vIBJp5AZLE5qEkvUGVY5oiCFBb9Lk5d
+ w1ZlIeuI2m2YMEBquuxtS8f7fPzOLMweqIq9F9BQhkF2TqJCPtfKHYlAl0Uvw+S8Prlj
+ ljvCUYaQr9xS3aCJXTtHd+HsfipfArRda218qOm3VPNntXaHA0oBFDe7Ve4bitMS7k+I
+ 5M6j1K4oqBM7SfiVc7wyOG/tUE9i1OXuQGSvL2MVnEgzk2F1w3+3CwNGKiNvvO6uYMqK
+ gTyAFFQFICdaext/nysAspEL132ZgTnT8uM9DsoGK4MvB9wmqTq0bOdycIbQ62bNTBfm
+ o5jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792401177; x=1793005977;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ppQmTYTgy5vliK2NTCy02bRgH3pcUzCbveXlZ+D1DTY=;
- b=qK2Ze+EKLmFLCSWIOY95w0ceJC2zM/f1p0VSrPL1Z9N48ltPgt9FsxZnkgba2YNd3O
- db27dA0XXTjam7aA6ldFjtbc909xPzvVtbwweK070EkhvEvwSwWkU9xe/JO7UdOU5al8
- Z4b9rw8Fo/vKn8nli3kcQkBUhR2JT2RoY5teGEpY05zT+p4NHHjacujxnASng1tWTV80
- figxq/iq4eAKj0Q2reicVH4ZBC4s8Dgq7PNn0UgKcvsm4JcdvmZraqTQDNYr42JOX4TD
- WjJF30xcKzIZ3nlg5uKy9p3H4XoC0GLNqezn87GxeN/0HhGToWskUXEY6lAUWg6y6j+j
- EnOQ==
-X-Gm-Message-State: AFq9FYLCCFGbhMgrQ224rLEXbKUUeWHe0YMSk5jAzmKjDEiMKGkBz/kC
- wDeIliSE/AQR4cU0puUsXMC0kWlTKaViGn+DrkHLlxTgqVlfay03NXEgmDupEsIZaxGrWRR8Bb2
- L4q5w5lKXdHE9JsP+jMNKm1tt+M01YeYfXwHaWiIg+DrDiQxQoj9HB8F1
-X-Gm-Gg: AYBFou048+Jf6MlKpwk99fDqjA61/dvbdE6+qKnxPjMZC0/nKj7NlQVk0CiTmlcsQnk
- J0539r+cDyAF9DBl6GW00iFdpa8UljaiUY1v0xZ04HwMppOFB+2qraTe4xkFccKHzTu3zGgFNsY
- 67c1F/7h9KzNFLwU5K1RYmBD0VeNkunU2jpwmCQbfOvmdE7YflMRNqizL7J7xzPmYVW6WEfgtyV
- fydh7cCl8JtYS9MM+Z4ZsxQNy+HYGppcbbDhR19uZIn9tBv286m7mQHgFEXXppIQerqCuslfNoG
- YjcHFhxqGxZigQK+jM5h1z1Zk5gEKUYTJApOELU6mX7Hu2sDxnnDtgpJ+uTtmTNzHH4922B4uPo
- BVsjkIiBCSNyeoikRunOq6wI5V4l0sZlC/d4RBS+mRPlA3/WqnZf84eqmNTxPVsFAaitN
-X-Received: by 2002:a05:600c:548c:b0:49f:dc71:e609 with SMTP id
- 5b1f17b1804b1-4a1d7610f2dmr150504465e9.20.1792401176694; 
- Mon, 19 Oct 2026 02:12:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:548c:b0:49f:dc71:e609 with SMTP id
- 5b1f17b1804b1-4a1d7610f2dmr150504115e9.20.1792401176227; 
- Mon, 19 Oct 2026 02:12:56 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792401179; x=1793005979;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=62oqdDj8dlT0pxuHt5cHb69+lEDkeWcIgt+nbW9frLw=;
+ b=Wmnci0ci/nUAxyJ8JJkOrJxVwnvwL1fTUdzkRK34K/ipmwHq/ke2Mgy0n7t6qwlkSd
+ tHlpRw7snFRB0RhJy0sn94K5c2imip1hOl3zP/8Kz1eZ84vNbBht8dHiCDpki2nxAS9c
+ d+CK052abNZ+ZUGijbO9KAruFTpmZCQPVyWl3jhmOFQSXlrm2nzJu+9Df6Y/L7R4YJa1
+ DbVM/PZb+1/Nv4xAoj5BKvu8gPWor8z5r9ey7j2bCqeo5uEpOMlpA3yxv1RfGCMnW3zL
+ xjU+qJOqNwjs6dWTjHljt+yHKBmwASCBXv17qyvpcMiJulsumtnwsHg61wfc2cVXBp5o
+ X/PA==
+X-Gm-Message-State: AFq9FYKjcuTGbiB78Tz1l1cI66ihuGID9jGWZIr/1DmzF3BLSPN3JNwH
+ 2xUX6nQ2arpIij7sI/2lLS0mNi4jiZ76j0XWcKHYkaiHHg7yUgN6e2N7HMMNYvm24TErJkgBM2o
+ dAOBsl2pRD2N9DDtncZvOf4Yhk2zX9yY2EtI0JwFbda1v/eD+BBTwKDk7
+X-Gm-Gg: AYBFou34Hr9/DBYUs+qgJyd6GZNIwdMnbXeVeSUK131EF6WTwZPgv4k2dy3obfhzA8m
+ gHQUUFtuKC1apEFJvHaArOWx16oxFWhlndoDAoiD8jcINTtOrPMB3OYAXi8DDQ4e+b3JvqdgES/
+ egSjWZ8mwrL0Q2nfChYyW1QmZLvONdeE/vMzbHBc5dFOA5RRjPCduQ6hyaQotI6ycnsQsmTsGMO
+ fJ2dJhzG3yS2HfL1r2UV6L40YbghCGFXOznJglzOv3J7NNXnk5UonF7LNTtxaX6AMEVfoi2BmjN
+ eMzj2mBs94aM7+ZdS3mzqfT2q2vIS8irH62pQKMZb9BSF+Xz7Kvavk497N+OqpVkZJiOpq/dfWq
+ hwTbxg8eJnJljEn2Yrt8ZEEv3U7Mq1B3mZ88YjiD1I4u0mwvaVCBmNFrE0O1lX9UpM/J8
+X-Received: by 2002:a05:6000:b06:b0:48b:a21:87f7 with SMTP id
+ ffacd0b85a97d-48e07f9c0ffmr10859082f8f.44.1792401179007; 
+ Mon, 19 Oct 2026 02:12:59 -0700 (PDT)
+X-Received: by 2002:a05:6000:b06:b0:48b:a21:87f7 with SMTP id
+ ffacd0b85a97d-48e07f9c0ffmr10859034f8f.44.1792401178634; 
+ Mon, 19 Oct 2026 02:12:58 -0700 (PDT)
 Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.36.232])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd50ae5esm24137600f8f.51.2026.10.19.02.12.55
+ ffacd0b85a97d-48dfd50ae5esm24137600f8f.51.2026.10.19.02.12.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 02:12:55 -0700 (PDT)
+ Mon, 19 Oct 2026 02:12:58 -0700 (PDT)
 From: Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH v3 0/2] igvm: add command line parameter support
-Date: Mon, 19 Oct 2026 11:12:45 +0200
-Message-Id: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
+Date: Mon, 19 Oct 2026 11:12:47 +0200
+Subject: [PATCH v3 2/2] docs/system/igvm: document MADT, COMMAND_LINE and
+ DEVICE_TREE directives
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NzQrCMAzA8VeRnq2kHd2HJ99DZHRNuwVcJ+0oy
- ti72+0gCOLxH5JfFhZtIBvZ+bCwYBNFmnyO4nhgZtC+t5wwN5MgS2gK4NSnsTXTOGqP7Z285cZ
- 0SkOHiBpYvnsE6+i5m9db7oHiPIXX/iKJbfpPS4ILXspaVQAV1g1egsVBz6e8xTYuyQ8hQKhfh
- MyEcIWqtXHopPsi1nV9A4nX02n2AAAA
-X-Change-ID: 20260930-igvm_command_line-ccb5a0bddda0
+Message-Id: <20261019-igvm_command_line-v3-2-29aeacbd6cd7@redhat.com>
+References: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
+In-Reply-To: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
@@ -128,39 +128,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The MADT and DEVICE_TREE directives were added without updating the
+list of supported directives. Document them, together with the
+COMMAND_LINE directive added in the previous patch.
+
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 ---
-Changes in v3:
-- Removed "kernel-style" from the property description and QAPI
-  doc [Stefano],
-- Documented the cmdline property in qemu-options.hx [Stefano]
-- New patch documenting the MADT, DEVICE_TREE and COMMAND_LINE
-  directives in docs/system/igvm.rst [Stefano]
-- Link to v2: https://lore.kernel.org/qemu-devel/20261015-igvm_command_line-v2-1-1f358acfdf2f@redhat.com
+ docs/system/igvm.rst | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Changes in v2:
-- Updated commit message and doc to make it clear that QEMU does not
-  need to parse this string [Markus]
-- Link to v1: https://lore.kernel.org/qemu-devel/20260930-igvm_command_line-v1-1-62857007d89d@redhat.com
+diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
+index 9db8ae43d2..da1e965f54 100644
+--- a/docs/system/igvm.rst
++++ b/docs/system/igvm.rst
+@@ -72,6 +72,14 @@ SEV-ES, SEV-SNP and non-confidential platforms.
+    * - IGVM_VHT_ENVIRONMENT_INFO_PARAMETER
+      - The ``memory_is_shared`` parameter is set to 1 in the guest parameter
+        page.
++   * - IGVM_VHT_MADT
++     - The parameter area is populated with the ACPI MADT generated by QEMU.
++   * - IGVM_VHT_COMMAND_LINE
++     - The parameter area is populated with the ``cmdline`` property of the
++       ``igvm-cfg`` object, or an empty string if it is not set.
++   * - IGVM_VHT_DEVICE_TREE
++     - The parameter area is populated with the device tree generated by QEMU.
++       Only available when QEMU is built with FDT support.
+ 
+ .. list-table:: Additional SEV, SEV-ES & SEV_SNP Supported Directives
+    :widths: 25 75
 
----
-Luigi Leonardi (2):
-      igvm: add command line parameter support
-      docs/system/igvm: document MADT, COMMAND_LINE and DEVICE_TREE directives
-
- backends/igvm-cfg.c            | 21 +++++++++++++++++++++
- backends/igvm.c                | 31 +++++++++++++++++++++++++++++++
- docs/system/igvm.rst           |  8 ++++++++
- include/system/igvm-internal.h |  5 +++++
- qapi/qom.json                  |  7 ++++++-
- qemu-options.hx                |  6 +++++-
- 6 files changed, 76 insertions(+), 2 deletions(-)
----
-base-commit: 9c88811b81a935a172c5c873b2ada2d9b38a5f74
-change-id: 20260930-igvm_command_line-ccb5a0bddda0
-
-Best regards,
 -- 
-Luigi Leonardi <leonardi@redhat.com>
+2.56.0
 
 
