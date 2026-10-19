@@ -4,59 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BE0CCF2D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 06:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7866CCF2DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 07:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIhKp-000729-O5; Mon, 19 Oct 2026 02:59:03 -0400
+	id 1xIhLb-0007nk-6M; Mon, 19 Oct 2026 02:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xIhKl-0006wB-GD; Mon, 19 Oct 2026 02:58:59 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xIhKi-0006lD-Hy; Mon, 19 Oct 2026 02:58:59 -0400
-Received: from mail-nwsmtp-smtp-corp-main-68.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.yp-c.yandex.net)
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 03A9080804;
- Mon, 19 Oct 2026 09:58:52 +0300 (MSK)
-Received: from i115954770.yandex-team.ru
- by mail-nwsmtp-smtp-corp-main-68 with ESMTPSA id nwSS6342ba60-J69Jh7rT;
- Mon, 19 Oct 2026 09:58:51 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1792393131;
- bh=U+McxGX0whB/xNmAgaoCFyDpykoIgtkfN0wL4bdZxzg=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=0p5KGPu5wlTtXhRu6GslIB4LjPYJ23rbSgl8toQjsYogkyvvfnUgS5UQqGx4lc5IY
- k/4cUOcctu+iTKvvWdKzEj2XWMdButLP1fzMbD6KIZItXE5pXqjpwIOo06lUcZe4uQ
- JNdYSUQHdg+SIbtQq32AwEEY8MiUixjUkmS2ZbGA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru,
- Haoqian He <haoqian.he@smartx.com>
-Subject: [PULL 2/2] block/mirror: inherit the source node discard flag in
- mirror_top
-Date: Mon, 19 Oct 2026 09:58:28 +0300
-Message-ID: <20261019065828.16335-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261019065828.16335-1-vsementsov@yandex-team.ru>
-References: <20261019065828.16335-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xIhLM-0007aV-AA
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:59:37 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xIhLJ-0006oS-JQ
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:59:34 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-48dfb76b304so105407f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:59:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792393171; x=1792997971; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=n5iM2FYHEZukSOMLLul7WBPirxPFEM7addOysQmjn8A=;
+ b=RD9kObxI2mJwUUVe9RbKMkz0ZOu6V2vhrJ0m7dVsRh2cPTob2O0Ej1fzV5/wWdNoQ1
+ lZ8zI0z+HuCSURK8d3Fh29M1+FCQEuhwvvOFIOnkUshMCYA7cS6kk8Zd+xCvAHJT+LQs
+ S8J0zfQMMnp94f9GXvDTPauLbF/SsGmLrdEU/S9zZk60A5Ar09HAeVaw8wSwVYrwE1Uy
+ 5VHZoEdnzw3h3gLX7seauJbjLD8hIn8EVlcBPTjcTHE00SmfLnO3sz/IduL/cFlSrSUu
+ GlcepaRcw1wpkGR8gpq+9TSxWWaFELAIHR6RJ/H3AMpw5sylsc+hXlLcgMeNTX7TnPfR
+ fRJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792393171; x=1792997971;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=n5iM2FYHEZukSOMLLul7WBPirxPFEM7addOysQmjn8A=;
+ b=aWIUVKKW9fdU5/KbhwovQzMIUvZblQRhgVXPUJpARW3QGAeRE+7ae1ap/Eafen/X7I
+ r0jjNwfh1eXT0zDQz0O/iG1h5G43hD65sERxSDkokhvIW7cUa224bSk2xPmzktiJPJC0
+ H/7LZKuKeDtyDDMtoUUCrrQKnIxn0ytYQxaPR/79VqpK7O7n0XfHFtgW1d0vjDhBOQ78
+ hefVjf9Ups3PueGd3QsBthArts/pL91fOHx/UxoK//glRTQtbN3dP6O7G7w7E1su5S6r
+ 7DPlvhTEdEzLCQu6lMu6hzGmtsVmOgjhlHtctwvoqodMSc3VellXnFBpnHbyWN5I7oKY
+ Mriw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzQXclg4yr8FBCk9FyU8zFJfr+Ow3VWh12Iz/uM+Vk7wyffAUBgD/s0xlzl91Q7dH1C7vbq+nhSLCEw@nongnu.org
+X-Gm-Message-State: AFq9FYLqWG5iKtNFn7dLsY2S+i1Ou+NSStCCf1LuZu4TVBQ6QWORyB8w
+ N7ylLHcJbZH7zIXgx6cq7KhyFBtYeItTlYM77Y0NwUKjrcoaeGpuqfz1zl6hv/Fx+J8W5E7t8HI
+ inf01Jbw=
+X-Gm-Gg: AYBFou2G25o+qxtqbGEUZkNKUkQr4oWV+tBDd+UsTtVW4KR8XZIH1qSnEEEabp9W1e0
+ 42m50H48MIIlqlllJ2A2OJlEHr80+ANhvzKK023vjNMqKCB1CSn5HmSN9Xz3oAwCy6ZTvyCswE3
+ L0pKtPyRlqULlmkTfBw9+3jEwBBKN6AOF3yBlzMNh3NT6f/SbAO6D1E0QN00l1BYld1gjCQyjA+
+ NE9J8mcEBAibhJcUpMNr8ksAvTbLohU0txF1FgihMI1JbB4IpWr74czzktM0modRvglbu7xubxy
+ pfOMWlv2oNAtP4kPMKbMETDOH8b4PITuzVIGnZxNxQTjuhfp4LzlIep9UJyFrFN8D8BySot2eMZ
+ Eh+wB1BgJT8fY251EDZOUe5hEDlaovxchJWcR9bVZT5RqLJDAC7ZmjGtCFzlAHquhjaz4SAxAii
+ 4DpsmFVMrVWlmr2Tns9DjSjZqJiwfTR13k4zGYjTvx0AwHkTyshMDdIJpilutd9ExDNlCRjWyIx
+ VcaNeUgTz9fqgBPxA5tX3YfLpXnkBnlYFUqT+cPWq65OxtUciTQWoBcJjzvh6rRCBTmJGDq
+X-Received: by 2002:a05:6000:60b:b0:487:1662:cf4c with SMTP id
+ ffacd0b85a97d-48e0797ffddmr13621722f8f.7.1792393171102; 
+ Sun, 18 Oct 2026 23:59:31 -0700 (PDT)
+Received: from [10.89.180.227] (cust-east-par-46-193-64-64.cust.wifirst.net.
+ [46.193.64.64]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48dfd4c0894sm19199397f8f.12.2026.10.18.23.59.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Oct 2026 23:59:30 -0700 (PDT)
+Message-ID: <75480909-510c-419d-b378-2b6f1b55700d@linaro.org>
+Date: Mon, 19 Oct 2026 08:59:28 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/8] Misc fixes patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20261016094348.2616374-1-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261016094348.2616374-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,66 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Haoqian He <haoqian.he@smartx.com>
+On 10/16/26 11:43, Daniel P. Berrangé wrote:
+> The following changes since commit d5b5083cb783c447001e862c2b525e59f48ad78c:
+> 
+>    Merge tag 'block-pull-request' ofhttps://gitlab.com/stefanha/qemu into staging (2026-10-15 11:53:41 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
+> 
+> for you to fetch changes up to 87e403247d318a6b782d3ffe20e1442197d032fe:
+> 
+>    Revert "crypto: implement workaround for GNUTLS thread safety problems" (2026-10-15 16:52:01 +0100)
+> 
+> ----------------------------------------------------------------
+> * Really fix blocking of setns/execveat/unshare in seccomp
+> * Fail fast in qtest when QEMU terminates before a connection
+>    is established
+> * Deprecate use of instance properties in QOM to encourage greater
+>    use of class properties in new code
+> * Drop obsolete, disabled & broken migration workaround for gnutls
+>    thread safety bug
 
-mirror_start_job() inserts a mirror_top filter above the source node
-for both mirror and active commit jobs. Previously, the filter was
-opened with BDRV_O_RDWR only, even when the source had BDRV_O_UNMAP
-enabled.
+Applied, thanks.
 
-The block layer checks BDRV_O_UNMAP before invoking a node's discard
-callback. Without this flag on mirror_top, discard requests return
-success without reaching bdrv_mirror_top_pdiscard(). Consequently,
-starting a job can silently suppress guest UNMAP/TRIM requests that
-would otherwise reach the discard-enabled source.
-
-Initialize the filter's open flags with BDRV_O_RDWR and conditionally
-add BDRV_O_UNMAP from bs->open_flags. Pass the resulting flags to
-bdrv_new_open_driver() so that mirror_top follows the source node's
-discard setting.
-
-This allows discard requests to reach the existing filter callback,
-which forwards them to the source and either tracks the affected
-range in the dirty bitmap or synchronously propagates the discard
-to the target, depending on the copy mode.
-
-Signed-off-by: Haoqian He <haoqian.he@smartx.com>
-Message-ID: <20261013060549.3008438-1-haoqian.he@smartx.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/mirror.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/block/mirror.c b/block/mirror.c
-index 089856f4a84..a551d392c66 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1854,6 +1854,7 @@ static BlockJob *mirror_start_job(
-     BlockDriverState *mirror_top_bs;
-     bool target_is_backing;
-     uint64_t target_perms, target_shared_perms;
-+    int flags;
-     int ret;
- 
-     GLOBAL_STATE_CODE();
-@@ -1886,8 +1887,13 @@ static BlockJob *mirror_start_job(
-     /* In the case of active commit, add dummy driver to provide consistent
-      * reads on the top, while disabling it in the intermediate nodes, and make
-      * the backing chain writable. */
--    mirror_top_bs = bdrv_new_open_driver(&bdrv_mirror_top, filter_node_name,
--                                         BDRV_O_RDWR, errp);
-+    flags = BDRV_O_RDWR;
-+    if (bs->open_flags & BDRV_O_UNMAP) {
-+        flags |= BDRV_O_UNMAP;
-+    }
-+    mirror_top_bs = bdrv_new_open_driver(&bdrv_mirror_top,
-+                                         filter_node_name,
-+                                         flags, errp);
-     if (mirror_top_bs == NULL) {
-         return NULL;
-     }
--- 
-2.43.0
-
+r~
 
