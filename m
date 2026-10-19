@@ -4,44 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B18A1CCF2E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7580ACCF2E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoT5-0007BP-BH; Mon, 19 Oct 2026 10:36:03 -0400
+	id 1xIoTV-0007H8-IH; Mon, 19 Oct 2026 10:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <e727e0c5d7d31640708fe3cebe31cc1312eefadc@kylie.crudebyte.com>)
- id 1xIoT3-0007A0-JI; Mon, 19 Oct 2026 10:36:01 -0400
+ (envelope-from <a99e69adc75477caeebb3af14eed1cd21fd0c4fe@kylie.crudebyte.com>)
+ id 1xIoTU-0007H0-0w
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:28 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <e727e0c5d7d31640708fe3cebe31cc1312eefadc@kylie.crudebyte.com>)
- id 1xIoT1-0007TR-SQ; Mon, 19 Oct 2026 10:36:01 -0400
+ (envelope-from <a99e69adc75477caeebb3af14eed1cd21fd0c4fe@kylie.crudebyte.com>)
+ id 1xIoTS-0007WA-4Q
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
- Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
- Content-Description; bh=Uokg2hTbgTAcnHw6vf8xZdktKy1KxQGxZvOJOxbjeQ8=; b=MZdmN
- 3jMlsKPIpUfEVZ1+YGN6AnxQ44jm6JCBVPh7AyiY0XI5E1Y9H/4T/0qWnaZGyIuM2D7Eftk1VWYXt
- MJmUzqxJg4PdZD/umv47IREoe4bGOZJylopQQzUhgdU1SoZAwHvpFDhq/npx4HS9QGXb/IwAmBmGI
- J4gtj6Uf/lO8Rogd5Y7iTsFm8jTmZvt2IGf4Q8crfRVTHd/PB00K/vj5eetAaNMPlWm+0fqbPP2VC
- mwy6ngCkBzCDmX5NLQHEEbeHYkWhBp35xxTxMj7KRw7qAq1JjOrN7dKcZGGzKmlmxe5lyPez0UPT0
- mDPXhkEdz2Xnpc528PgpkVz2lcMG73UxbqRhFosEdX2t1U7gu3lpR1T9ZH/j9kzo06+9PEfpC7h1s
- XwfgOdGD2aSy5afJY2un7feHGhoCl4utwN1fmu52OZgb9MlvoJDGCDsWluHVb1SFhHFllKFMbS5XL
- LE4Q8lzrhiLIICYcN/8BQt85GyRxY+83iYPZonXFy7Pf1ZJ0MU00JGq55XK/P3h15qxVcULjSBd5U
- 8jyascFgsrp2Onkk/cK4CkeILRA4XoDywh2LmlAygdBrvYSNHnj9ylboDcAr5R2CuHQG0/Qw8QJEy
- uI4NMD3NevHbLsN5jWg+Ytqqij6tnRljUKNyNgX950SQ6Ey30ppjSszd6x6IGc=;
-Message-ID: <cover.1792420035.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
+ Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
+ Content-Description; bh=NGdxEStX6XvYegdLJTFQ6ZsZIwFzQRJXLTHmjAbZj2g=; b=O06p+
+ roGSSnVJn6UePVn6rtfmSnKuUord2/tE68rovp/5UX0+lGs3I9q4mEl6/I5Bbu3JoiaO9k5Np31gN
+ QJ3LHIpYbbX63FxF9VjIyKrgltNV33/YasZyfuW8dKZvKrf3UD5F3zTLbGMVTFaMKT0Gpdas3jmpU
+ wJOwl5L0b4FnDjTx3XwgGeFoD3md7mnqGEzaBCBBSqaNBNDY/taxOO2+DjRJnJNY9WGiZiPp8XVkJ
+ SKe0SxAkSHq6KBpvPBoDNIK6EDQYhbn+gN8003W9jwFrHUMX4JWUkK62ydyuPp2rVTEIxxCHM4sk1
+ ecusA/IL/uNp1cfiF7SKbwLP31cZaH31ECT4q7DQF/RBko3D/K8pi32lFkJTxd4vUIZPc1YKz8yVt
+ rKL4iflC9bHMVeCh5cvjcDf3iwoxwNCD3u4K6lPR5QJwZIkEXVazCnt43QLyVUt1IzdLBBtq7/F+p
+ 3Mi6Xj+88BUTpVjL017A0DDUaft/jzIlpnNUdY2+WWcBR984vG3L5AQlqn1Do02Vf2AEF+v+HLOH+
+ Bw1qovmT4eGuFcaSaVQcnQaQXpqC7c5/wIIiYrem8WjYDJnCJ2hh0sLD0YFeLH194/Zci+1yCdiLs
+ 2iqNwfTCvBeWPoYc9Zsbc516c1nXJBaKSS7JTWayRimceibwAgc7jWkKR4/Quk=;
+Message-ID: <a99e69adc75477caeebb3af14eed1cd21fd0c4fe.1792420035.git.qemu_oss@crudebyte.com>
+In-Reply-To: <cover.1792420035.git.qemu_oss@crudebyte.com>
+References: <cover.1792420035.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 19 Oct 2026 16:27:16 +0200
-Subject: [PULL 0/9] 9p queue 2026-10-19
+Subject: [PULL 4/9] tests/9p-client: add Tstat / Rstat test client functions
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>
+Cc: Greg Kurz <groug@kaod.org>,
+    Peter Maydell <peter.maydell@linaro.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=e727e0c5d7d31640708fe3cebe31cc1312eefadc@kylie.crudebyte.com;
+ envelope-from=a99e69adc75477caeebb3af14eed1cd21fd0c4fe@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -64,44 +68,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 288b6c9e78913401fac4880b3281ce431540b8df:
+Add v9fs_tstat() and v9fs_rstat() functions to the 9p test client.
 
-  Merge tag 'pull-nbd-2026-10-08-v4' of https://gitlab.com/ebblake/qemu into staging (2026-10-19 10:54:44 +0200)
+Since this is a request type that exists both in legacy 9p2000.u
+and modern 9p2000.L protocol version, error responses types might
+differ (Rerror vs. Rlerror). Therefore v9fs_tstat() is using an
+error type tolerant helper function v9fs_req_check_err() for
+processing expected errors with this request type.
 
-are available in the Git repository at:
+Link: https://lore.kernel.org/qemu-devel/46192047d8b38e4d37cef7115de6cad11ea8f362.1791368962.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+---
+ tests/qtest/libqos/virtio-9p-client.c | 79 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 45 +++++++++++++++
+ 2 files changed, 124 insertions(+)
 
-  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20261019
+diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
+index 005ae53a3f..4a3fc1511b 100644
+--- a/tests/qtest/libqos/virtio-9p-client.c
++++ b/tests/qtest/libqos/virtio-9p-client.c
+@@ -306,6 +306,33 @@ void v9fs_rlerror(P9Req *req, uint32_t *err)
+     v9fs_req_free(req);
+ }
+ 
++/*
++ * Asserts for caller that the request's response returned with the passed,
++ * expected error code (in a protocol version agnostic manner).
++ */
++static void v9fs_req_check_err(P9Req *req, uint32_t expect_err)
++{
++    P9Hdr hdr;
++    uint32_t err;
++
++    /* peek the response header */
++    v9fs_memread(req, &hdr, sizeof(hdr));
++    /* reset offset after peek, so v9fs_rlerror() etc. read correctly */
++    req->r_off = 0;
++
++    if (hdr.id == P9_RLERROR) {
++        v9fs_rlerror(req, &err);
++    } else if (hdr.id == P9_RERROR) {
++        v9fs_rerror(req, &err);
++    } else {
++        g_printerr("Received response %d (%s) instead of an error response\n",
++                   hdr.id, rmessage_name(hdr.id));
++        v9fs_req_free(req);
++        g_assert_not_reached();
++    }
++    g_assert_cmpint(err, ==, expect_err);
++}
++
+ /* size[4] Tversion tag[2] msize[4] version[s] */
+ TVersionRes v9fs_tversion(TVersionOpt opt)
+ {
+@@ -1286,3 +1313,55 @@ void v9fs_rxattrwalk(P9Req *req, uint64_t *size)
+     }
+     v9fs_req_free(req);
+ }
++
++/* size[4] Tstat tag[2] fid[4] */
++TStatRes v9fs_tstat(TStatOpt opt)
++{
++    P9Req *req;
++
++    g_assert(opt.client);
++    /* expecting either Rstat or an error response, but obviously not both */
++    g_assert(!opt.expectErr || !opt.rstat.stat);
++
++    req = v9fs_req_init(opt.client, 4, P9_TSTAT, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_req_check_err(req, opt.expectErr);
++        } else {
++            v9fs_rstat(req, opt.rstat.stat);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TStatRes) { .req = req };
++}
++
++/* size[4] Rstat tag[2] stat[n] */
++void v9fs_rstat(P9Req *req, v9fs_stat *stat)
++{
++    v9fs_req_recv(req, P9_RSTAT);
++
++    v9fs_memskip(req, 2); /* protocol quirk: size appears twice */
++    v9fs_uint16_read(req, &stat->size);
++    v9fs_uint16_read(req, &stat->type);
++    v9fs_uint32_read(req, &stat->dev);
++    v9fs_memread(req, &stat->qid, 13);
++    v9fs_uint32_read(req, &stat->mode);
++    v9fs_uint32_read(req, &stat->atime);
++    v9fs_uint32_read(req, &stat->mtime);
++    v9fs_uint64_read(req, &stat->length);
++    v9fs_string_read(req, NULL, &stat->name);
++    v9fs_string_read(req, NULL, &stat->uid);
++    v9fs_string_read(req, NULL, &stat->gid);
++    v9fs_string_read(req, NULL, &stat->muid);
++    v9fs_string_read(req, NULL, &stat->extension);
++    v9fs_uint32_read(req, &stat->n_uid);
++    v9fs_uint32_read(req, &stat->n_gid);
++    v9fs_uint32_read(req, &stat->n_muid);
++
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index 5a00a0870c..f604cc0ee5 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -63,6 +63,25 @@ typedef struct v9fs_attr {
+     uint64_t data_version;
+ } v9fs_attr;
+ 
++typedef struct v9fs_stat {
++    uint16_t size;
++    uint16_t type;
++    uint32_t dev;
++    v9fs_qid qid;
++    uint32_t mode;
++    uint32_t atime;
++    uint32_t mtime;
++    uint64_t length;
++    char *name;
++    char *uid;
++    char *gid;
++    char *muid;
++    char *extension;
++    uint32_t n_uid;
++    uint32_t n_gid;
++    uint32_t n_muid;
++} v9fs_stat;
++
+ #define P9_GETATTR_BASIC    0x000007ffULL /* Mask for fields up to BLOCKS */
+ #define P9_GETATTR_ALL      0x00003fffULL /* Mask for ALL fields */
+ 
+@@ -579,6 +598,30 @@ typedef struct TXattrWalkRes {
+     uint64_t size;
+ } TXattrWalkRes;
+ 
++/* options for 'Tstat' 9p request */
++typedef struct TStatOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID to get the Rstat for (required) */
++    uint32_t fid;
++    /* data being received from 9p server as 'Rstat' response (optional) */
++    struct {
++        v9fs_stat *stat;
++    } rstat;
++    /* only send Tstat request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an error response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TStatOpt;
++
++/* result of 'Tstat' 9p request */
++typedef struct TStatRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++} TStatRes;
++
+ void v9fs_set_allocator(QGuestAllocator *t_alloc);
+ void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
+ void v9fs_memskip(P9Req *req, size_t len);
+@@ -639,5 +682,7 @@ TXattrCreateRes v9fs_txattrcreate(TXattrCreateOpt opt);
+ void v9fs_rxattrcreate(P9Req *req);
+ TXattrWalkRes v9fs_txattrwalk(TXattrWalkOpt opt);
+ void v9fs_rxattrwalk(P9Req *req, uint64_t *size);
++TStatRes v9fs_tstat(TStatOpt opt);
++void v9fs_rstat(P9Req *req, v9fs_stat *stat);
+ 
+ #endif
+-- 
+2.47.3
 
-for you to fetch changes up to e727e0c5d7d31640708fe3cebe31cc1312eefadc:
-
-  tests/9p-race: add Tread-on-dir race test (2026-10-19 16:07:26 +0200)
-
-----------------------------------------------------------------
-9pfs changes:
-
-- Fix dir stream race via legacy 9p2000.u Tread request.
-
-- Tests: add 9p race test suite (registered as slow tests).
-
-----------------------------------------------------------------
-Christian Schoenebeck (9):
-      tests/9p-client: add Txattrwalk / Rxattrwalk test client functions
-      tests/9p-race: add 9p race test suite (race FID-path mutations)
-      tests/9p-client: add Rerror function (legacy 9p2000.u)
-      tests/9p-client: add Tstat / Rstat test client functions
-      tests/9p-race: add Treaddir race test
-      hw/9pfs: fix dirent stream protection for legacy (9p2000.u) Tread
-      tests/9p-client: add Tcreate / Rcreate test client functions
-      tests/9p-client: track the negotiated 9p version for session
-      tests/9p-race: add Tread-on-dir race test
-
- MAINTAINERS                           |    1 +
- hw/9pfs/9p.c                          |   23 +-
- tests/qtest/libqos/virtio-9p-client.c |  213 ++++++-
- tests/qtest/libqos/virtio-9p-client.h |  124 ++++
- tests/qtest/libqos/virtio-9p.h        |    6 +
- tests/qtest/meson.build               |    1 +
- tests/qtest/virtio-9p-race-test.c     | 1035 +++++++++++++++++++++++++++++++++
- 7 files changed, 1393 insertions(+), 10 deletions(-)
- create mode 100644 tests/qtest/virtio-9p-race-test.c
 
