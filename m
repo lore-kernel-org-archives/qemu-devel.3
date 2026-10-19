@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C14A606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE95606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vvajsxPW
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BwcxBLV4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt1Q-0000hc-JI; Mon, 19 Oct 2026 15:27:48 -0400
+	id 1xIt2G-0001ik-DF; Mon, 19 Oct 2026 15:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0x-0000Se-Sq
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:22 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1xIt15-0000WE-E7
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:28 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0q-000342-Ok
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:18 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-48c4d870d54so1606571f8f.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:12 -0700 (PDT)
+ id 1xIt13-00038L-Fl
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:27 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48df4f540ebso1369602f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792438031; x=1793042831; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792438044; x=1793042844; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=KAs40TV+PDaQglwa6v2de1/yb9nyml5tfy5LFR8T1zU=;
- b=vvajsxPWwTyZyp++ABj+oabCuVASf+/t/AFW4eieesDblqsqKVniRF3scGpexxi+96
- t4Ri3CKxYobysDCHUSy5T3BbTFDugKVmpe12Ug0cBVu/mmEYlZxxSOjpcSm3klUqgq5K
- EKBH/TH7ZJc7o4NGyjSm+bBcTP6I8rsHZJSWRA0YU2Sy0NnM/Vfsai7zU7cb0GY5Fg7O
- QxeBL1sUIf3ltP/WnGjnk2iEfdhd61dieHmU8K+my4JvFPD+iodvvJw5qrGXGotrJfSM
- 8duReNFe8G6H0+qJ5OUmYsmqOHTw80ZGAKqWJid8qwoqnzGaxNn3V2DMyZCGVwKX2ete
- laqA==
+ bh=YV9eJVsxbqw8J76FHBdHJCWhMzBUl9uMTeF3jAHykKE=;
+ b=BwcxBLV4skLmPJADV2wydBT+qq7cpSVVBeVvEbaQs36sp4pELVLkgULDawK7fJLuyP
+ T3rFzXp4T2IZVvPqo+l7RH9BbXPye/ZIXNlDgp6hMwAiUwuFvi9xz7maDtaqfmAR9Fe2
+ TIgj+0TZdS7YgyLLf5sDtN00ukE2nqH43xyiR9YJK2eGn9x5/cnFX6wsavNTKpBZIR/G
+ gCM5ynBsX0S+44SX7w0mAw7gTteDd3saGfwY54/EwghB+a1AqG6Z43YL3rYtuiTSS6QT
+ Hp5vXELcJQKcMRPp5+C27t4FkszEh0VtTqJJHnCuYx4RCDyUDze6K4orjEXm9q2mTlmg
+ 0dEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792438031; x=1793042831;
+ d=1e100.net; s=20260707; t=1792438044; x=1793042844;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=KAs40TV+PDaQglwa6v2de1/yb9nyml5tfy5LFR8T1zU=;
- b=fcxJ0x0LX9bhlGh4Oa15+Der4hLPHvxf5dc4yznJDuZ2my7uHX+x7zaoR6S7vPGicZ
- 74VPqkrHZQ+DegtL5IK1nd41Lw63NS7olWl/Csxyzq9gxEJO2QPVNwUn0dBLQZ3p31z4
- ODlIaTKZgHHhCB1hBP9MA1GT6DiSoG2FoMikM/zaQqEY+qp9o9CQv2vWQuy2K27dRGbS
- r4nunqceN7ykc8gJsnLtSrirt7a3OcbJjlSgty1Vrt/Nh06W7y+mKRObBgrTLo+Cpn0r
- Z4pUQIP275eQUXaXJ8xsUmhXLztTfCVlGbmocDlingXt+ZpN71fyBqbZQLU9OvJgka5n
- zalA==
-X-Gm-Message-State: AFq9FYLxDboeFNyJb/aEi+hcHQYq3PIZecBZcSOQBD6ln2p+sq38Q8R/
- 3yaGeuq8U5lzp66DH7NxVk8aGMdSfuneWo3in+/JyTy93QWCJbbRUPWTBWOYBMxpAaI=
-X-Gm-Gg: AYBFou3iTrFgSLko/i3+5lxQ/sMg5GYdcAsgX7ZeYPKhoQvw5mwc6dawMBpWyrUC04R
- VnfdgUko58GJI5ykgUsEQxt3tW2hl/MknfTcEaV0DNEYgt+H/AG/RVi+MwoS8+nDar/dHjDb+Ld
- x32b+wc8igyJIYCHRP9uqc/R+f8n+VK7oqJDY1WfQ5ecmXrndG9HNofteWOohe7hrfDXvl1gG8F
- H96Cmm4PtATmg1234cRnA3jyBNZGw58dFGLp5v7Bctcy8XDQCRPUMpi8naXza2BUyeIeU6uo/R2
- cgWrROdQQGkCrQyinLydz2nq2NylXP7+638kU+oo9spX2+8o+2/z7N4tHPbzw/lYa+Ww1t1EnW4
- yr+g4d5B2vyyJ7Gm6qghaJOeCGf7xPPpkZATpHH1fxugKg4Gvk4NssbG22HhbeGXAZYZqVmSUzz
- kWuxns5jRD1/I6XaB0nnWlDVwy7w1I+nSfVgxYlN/ZTmsfbANUGsWC53Fe+4Ub0CHm1vQ5Jw==
-X-Received: by 2002:a5d:674a:0:b0:488:8850:50ec with SMTP id
- ffacd0b85a97d-48e07fa9800mr12906407f8f.46.1792438031204; 
- Mon, 19 Oct 2026 12:27:11 -0700 (PDT)
+ bh=YV9eJVsxbqw8J76FHBdHJCWhMzBUl9uMTeF3jAHykKE=;
+ b=H2bBqha6gqRVmHOQw6c8PoeEu/DHFXYTwJt9ypdEgVnDm2QCQD0bLEBP22IMthWxJ1
+ Ekg5Obw/Ap/GfJ82xWzF9/yadBq+T+k4c7/JqHEWPUy0q2PlGn/akpJOVxShR1JfRGDN
+ EgtbW9FVmjXhhce+60VejhEg7wPQpTE9U0P8DYNiYJjJyXsX26uE1z9Yhw3ZRciUSwVp
+ bhNnqKP1VnM9kaPKhIJ7k24On+aoLsKRK5WPq7cadZX478tRgzihocYRN1i+1QvIvl0E
+ XnYVQ/Y9VbVLkl13Py1t7kmUr9aOMClCdyxdLq3kZXTwNY4l1dgSjNyctlBDGkNkIE+4
+ XqVA==
+X-Gm-Message-State: AFq9FYJ7jNk5BdOyJEGhWAzOMYxYIWMH1v5qucCOK+Y7gUSVNz9Ug+hf
+ 184WEr4ZIf3Bu8uP+MqXmIc8ANq6votxPG4EBUIvMcNDjOt0i9C5yx3cRra02aF4YvE=
+X-Gm-Gg: AYBFou01V4kXNTvRYcxaGPXcM+/7FxJuEDPyLNnprw1Ba5XO1qtemh793GBruSpkEgG
+ 5vOU9LNz4L89y++KOW8oW76U83MnrTax7kinggY3bjduc1W8DSvcYLOXqD+c0xjXr3T5EAn3+8c
+ 9RS1T33lqZOYm61LAgo4HCt8Yx0HvBE4L4kMc7hL06SlRMODnUlQYj0GxgWPgTPeAvoNFF+ToMB
+ Y8PzXPJy+uoVu6OYhTiWm5CnkQwMm4H5Qav9ScBEP9WXmJX5FBkyAcLmTpCJDN8LydPezf1fXCo
+ XBT9BVhvvuMX9IWjX6BrMA5nBV7K516QsNgf6USoQXoIOGIfuGxSSmqQCxtZM0D8ziKJoVLzSZD
+ ea8YC4B/QtoPPwmR1UOoiSnOgUlDA58jQ7uwFDWSR9D/GQS6A9c7U5kfTPW3KSKZFkLL8NndRbu
+ p3+T/CqTWf/TtpHlwItuYvMOghnb36dTXP/L7SNf//PGCFrKMPQdTr32Nsjx34Xgjx0bkbfQ==
+X-Received: by 2002:a05:6000:2990:10b0:486:f4ae:72a2 with SMTP id
+ ffacd0b85a97d-48e07b9201emr13278166f8f.1.1792438044019; 
+ Mon, 19 Oct 2026 12:27:24 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d830e91sm818569f8f.54.2026.10.19.12.27.05
+ ffacd0b85a97d-48e1d83a099sm701373f8f.57.2026.10.19.12.27.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 12:27:05 -0700 (PDT)
+ Mon, 19 Oct 2026 12:27:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4A7C65F9E2;
- Mon, 19 Oct 2026 20:27:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 121BE5FC8D;
+ Mon, 19 Oct 2026 20:27:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
@@ -90,9 +90,9 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 03/19] .dir-locals: include QEMU code in PYTHONPATH
-Date: Mon, 19 Oct 2026 20:26:48 +0100
-Message-ID: <20261019192704.3220373-4-alex.bennee@linaro.org>
+Subject: [PATCH v3 10/19] tests/guest-debug: add --kargs option to run-test
+Date: Mon, 19 Oct 2026 20:26:55 +0100
+Message-ID: <20261019192704.3220373-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
 References: <20261019192704.3220373-1-alex.bennee@linaro.org>
@@ -100,8 +100,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,35 +127,54 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When editing python code the linters tools have a hard time with our
-imports as they can't be found. To ease this we can expand a
-PYTHONPATH in .dir-locals so at least Emacs users can have less
-warnings in their editor.
+When passing kernel arguments to QEMU with --append we need to take
+care that things are properly escaped. It's easier if we get the run
+script to do it for us that constructed the nested escaped --qargs.
 
-I still get complaints from python-mypy about missing library stubs
-that mean it can't do proper type analysis though.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260930163050.426737-1-alex.bennee@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260930164649.433573-11-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .dir-locals.el | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/.dir-locals.el b/.dir-locals.el
-index 3ac0cfc6f0d..51871619422 100644
---- a/.dir-locals.el
-+++ b/.dir-locals.el
-@@ -1,2 +1,8 @@
- ((c-mode . ((c-file-style . "stroustrup")
--	    (indent-tabs-mode . nil))))
-+	    (indent-tabs-mode . nil)))
-+ (python-mode .
-+              ((eval . (when-let* ((root (locate-dominating-file default-directory ".dir-locals.el")))
-+                         (setq-local process-environment (copy-sequence process-environment))
-+                         (setenv "PYTHONPATH"
-+                                 (concat (expand-file-name "python" root) ":"
-+                                         (expand-file-name "tests/functional" root))))))))
+---
+v3
+  - fix merge with array
+---
+ tests/guest-debug/run-test.py | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index d5ffaaa9ffc..782c0c5da19 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -25,6 +25,7 @@ def get_args():
+                         required=True)
+     parser.add_argument("--qargs", help="Qemu arguments for test")
+     parser.add_argument("--pargs", help="Program arguments for test")
++    parser.add_argument("--kargs", help="Kernel args to --append")
+     parser.add_argument("--binary", help="Binary to debug",
+                         required=True)
+     parser.add_argument("--test", help="GDB test script")
+@@ -89,6 +90,10 @@ def format_cmd(cmd):
+         if not args.no_suspend:
+             qemu_cmd.append("-S")
+         qemu_cmd.extend(["-gdb", f"unix:path={socket_name},server=on"])
++
++        if args.kargs:
++            qemu_cmd.extend(["--append", args.kargs])
++
+         # There is no guest program command-line in system mode.
+         assert not args.pargs
+     else:
+@@ -98,6 +103,9 @@ def format_cmd(cmd):
+         else:
+             qemu_cmd.append(f"{socket_name}")
+ 
++        # There are no appended args in user-mode
++        assert not args.kargs
++
+         # for user mode binary and args always go at the end
+         qemu_cmd.append(args.binary)
+         if args.pargs:
 -- 
 2.47.3
 
