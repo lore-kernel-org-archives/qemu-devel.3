@@ -1,90 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C8C606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 21:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12630606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 21:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Z+o+QDu1;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Yi+LU6O5
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JYlNOqZ3;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=f4btgV1M
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIunh-0001lG-Dz; Mon, 19 Oct 2026 17:21:45 -0400
+	id 1xIuni-0001lZ-SH; Mon, 19 Oct 2026 17:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIunQ-0001hX-TG
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:21:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xIunW-0001iJ-6X
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:21:35 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIunO-0005ip-Vp
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:21:28 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xIunS-0005hx-9W
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:21:33 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JJJxpX549443
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:21:25 GMT
+ 69JJKCQ53329074
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:21:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=CD2MV03z5YL
- e39V288IQtDr6CNDi1ffl6+smvrhQ9s4=; b=Z+o+QDu1u7mLdZnv32IOR9KH1lw
- wZJuyf2pC4bFClgXFHYIFNSeiU/4GeYWi+2j52jlnfa5ibTPHZ2vZmrIjQ4tKTmq
- iWa036Sj67MUgt0OTwm/eSuHH1BVH9PXDIX8DIGHHlAHzYQugTGZdjUg2v0KvwR4
- cJFKj3m5YVLp+Hg5tk4Vk0MmU/oyEsBZhu9NJ44KXjwJ9QxP8jUaRkhjbPMiru4w
- U5s5OcOslgUqEWoSc++pDfcH2LUXPlEZJQK3o+3cf24RlAie0n031Z8aFl6Oer1I
- x8BO2E9K60K0tbFw0NyRHCYqw2TgTExQCz32YyPIJ5PTKv6L4RG29SPzhkQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdf47kc60-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=dxSKjXhMePq
+ k/yVwgWq1O7IbK4rEHBrKtjiF3DnlB6w=; b=JYlNOqZ3eArKO3dgRr3+5qKixSm
+ m1xioryjXMZNvUf+luz6f+8vCLCoINpd8WtdNVw5b+NZxT4Cu1rCMosIaX7uNDb1
+ GNLq135N5qbgCjHguAQde9jZC6Qc5xWGq3wdJPN+aZPM5B39qXmR2wW8yueevkjp
+ Tq9p2Ud300wBO5hf59aS7Y5JC3ZiPnQ81c1++UZ4Ny+lKm944zWeLEdNLSy1mtoD
+ Ndmkb+prpG/5Lt8D3gu+c9PT8yeZ5/2va9SKVzt3UByS/KIFq4Agg+ZM8eNA3jnV
+ Dz8dj1bDHVx8LKux/rn1KQT3j2qYuAXjUHvSf+HrTHMp+eiVfwedU6V13DQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdkmfj2jw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:21:25 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3ad30487d55so1889368a91.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 14:21:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:21:18 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-3a4a0017549so5509599a91.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 14:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792444885; x=1793049685; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792444878; x=1793049678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CD2MV03z5YLe39V288IQtDr6CNDi1ffl6+smvrhQ9s4=;
- b=Yi+LU6O5Usx9/7KkbutPxUBONZffzFMiseOFgvCtapMzRf1PzWFnCHBiXDCv3pqO1+
- /eVLneGd4RXQsv81NLafo/4HH+bW+x4a1xURBIf6gf8psVEyF4XnjORjGEHNCILWfRaD
- Q8kzJgRBgULQiSNQVv1S7W52yKMjtDNnc0wa6a8jw7Fcv19w6Aq1IuGBhTFmJioa88ue
- /AecmXARbMrvcPc9H0LrnbROaegf8gk5AenajXkSk8Calyz9wdp4bLBJh6AK5ICGDCbj
- /1v03qBDynLOtzAZZoqlJSeRy3p73I+SOzeWZNma72yKuXqfYUUhKwtiRQgBan41BpEb
- Il1g==
+ bh=dxSKjXhMePqk/yVwgWq1O7IbK4rEHBrKtjiF3DnlB6w=;
+ b=f4btgV1MveTlJT9neufxxO+ynaeHo/KvxZoZhB2SG9MPayqYYLddfNKJmmGRbtza25
+ OrsxioLNZG++eSAG7LbpQHPfZPe95yjq9ccabb/RMINw6eNcUKsFWzMxfjD8ZU4NQA+M
+ z3jfA6dB6zJWEYIEg9oseoHBS5hzI5MIgsuwciJrX2Xv0kp90+bAQpSBiOiwX3oeioa0
+ PHb2GUmWd9rg28JA7/2FhtyqKVfhIqvnfJOSul5ELVnh6kntG5/YIsqKCnnWGcCtr5Jm
+ o1D2ULKH74Neip395Yzngk10j7PYpjtECADrzHzkc/5bBL+SxVr9437jHsNrcC5N/7/0
+ QitA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792444885; x=1793049685;
+ d=1e100.net; s=20260707; t=1792444878; x=1793049678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=CD2MV03z5YLe39V288IQtDr6CNDi1ffl6+smvrhQ9s4=;
- b=ZR8sKLynaTu/+xjSxlixr7nlvGp6FP/5iFtQex7EBSyQViBk1Gf8JAonTy37m3Ylfi
- QG3UvW6WhfHn8TaPSUKiSy2jYiRcoI3qNBKrJN916hGZam+b3BOhHib+ib2Zq9A8Qojr
- 5SzbKcJ0FBuutMTCtdIbYAD9MvBElJZ+TPVvnbjK8OZEdQpxlUMBI8K8dELhl6y2vnrm
- 781cHWeV1L/V0MZ5FgF+vMaiQhdEER7ZDsxyzE5FlbzkOFY/6InKCKjlTuNk+K3Zp9kU
- 1+Fb/ytVA9EZ7lIrdgJBm7sc67iGXub9kNovOpmei5NNTWrf2vkiR9k4aNl1FrxlAVac
- qcTw==
-X-Gm-Message-State: AFq9FYIID1/zlUMBXraa8clN5vAm0wJOYPs8bQbH7cX85AcykyNautSN
- CRs/EbJuP/fZP/Byau0xXTbyP6oUTwa3k4coxLGhf6Nfwqe+Qe2B0LSS7N4XYHjwYowSbnUhdBP
- QxvpFNkMZ8L4sa9q5zhU5ag9SzJpBf94n2k4vjLJLGe7jhRoG+1WCVb+RR67hKTfuFQ==
-X-Gm-Gg: AYBFou2wFbx/G/jHpthiwEFhfNbMBDd+9zGG0SNbJybmffWvVlBgxBdydlg/dVSOn+G
- 2G1FxHyWwu36xltnUoG1E4Xo4aicCukNM1c32SQxEqrZKxE6DAF12Q+OzydVKT9droDIpNHdhaY
- LTEId2nj02L9jw9No0g0QJ8o1catVBzqsfGoHLO6YAuHihNUYTq4tw8vPQERPzm0ggoXWDyxmfw
- JvJ9bTvSMXKuQQdutHLh0ulDjo2Her9YlXIFB89hl70YGS7cwLKTrHXWRvF1wyvjUVw4pwuSXo7
- XXJOSZcpYX0ZAahsJd9eST0VSS9Nejv/z5OBMV2KT0oiTy9mZ0XrG7ZsfiPTc5boq9FxqodqgkB
- ZP0G4YXRSnZIcy0UCAy7iomMjUWyC1sRM8k+8r501j1yvYZoa+0EllQFwdGuGlho=
-X-Received: by 2002:a17:90b:380f:b0:3a6:e901:e79b with SMTP id
- 98e67ed59e1d1-3acef106598mr7579117a91.15.1792444884851; 
- Mon, 19 Oct 2026 14:21:24 -0700 (PDT)
-X-Received: by 2002:a17:90b:380f:b0:3a6:e901:e79b with SMTP id
- 98e67ed59e1d1-3acef106598mr7579092a91.15.1792444884233; 
- Mon, 19 Oct 2026 14:21:24 -0700 (PDT)
+ bh=dxSKjXhMePqk/yVwgWq1O7IbK4rEHBrKtjiF3DnlB6w=;
+ b=i6JXFkvUBrqLXsAqUP6PiqoQbaeqtsLmQS4h+gEInqau14RhHntVTN0bylJpUMdhSM
+ bnVGg25c3YllX2pS6zZNV6y8+hCPKsagKvi9q+BFoHd5RNoBqq+/2RWojMyUbtyTWFS2
+ EagCuuTGvTYKLMYBNxZtPW9Rp/jUFPMbBc1Rj3JgnFMszRbfmYzxsCKrGTOyk6GkuCo0
+ VaRJuOhSyUBuaV+6Js2dGSv/UfRTdgQkCxGzexLjN2njNAkigLrheb0ON9F4P9LRY4dt
+ E/gVxAJ7GZSnHFmpJDZ9vLgAYbJy27sAB51XlL9rWcvCfOwTNIKTN5y1HiiwehDiE4Tv
+ Wuww==
+X-Gm-Message-State: AFq9FYKm5S59WM88z99vSyO4ZvuWdFMonqmJKaFJjOO1rQOKFg4gSnI6
+ 4crWRmGlMeOh0VkzFy0Z6UJsxo7XlRD2w/h2l77FSChgWtit3Z2zittnQGlh3oN0E633cB2aVoE
+ y+fJ5wYe4Xt1jHF9Axfg0RKMd54+y55utljLuolq3fq0G3aANH3Q/uOq+NkNMzlX80w==
+X-Gm-Gg: AYBFou2ZzmHrmdC2TcxlgUAT28Q5BNXcKYGGuuO9yo/Ar2dXzsczRnHwUnyD5W7c7WT
+ ZZaansY+qzqoBmc+ntxMDmF4y/lQavQJlgy2P8eYc+5wuMfJFledH9UEhMNdMBTO2wHXBi/RD7S
+ +V8546h8nUS36rN6KFPZPdgEwYFBw4IQkO685zPXh2u38DGt+WNZDDfPN2qZ2IRxTNqK6RGsmfO
+ SGisFMSpJiPlu788nAScFB4h7EEneqlBy2XuliqFDMS//RvPLpKOkezYHU46Adj7gz6qiCG2D8j
+ YbOPHzuh7ANkNcj6nBIdHtr/NC5kNku36qRxP/yBBe1Vo86M/bMtchiRx2nk9gihXQz6e1Z5Pry
+ pRm2uXz1vq5zGC2lyHdHTvpTwxip91ogxztu9HfsNO3hysxn8qYmZ0wTnkUHgP9Q=
+X-Received: by 2002:a17:90b:4e88:b0:3ac:6fca:f88a with SMTP id
+ 98e67ed59e1d1-3acee728a89mr8082893a91.3.1792444877586; 
+ Mon, 19 Oct 2026 14:21:17 -0700 (PDT)
+X-Received: by 2002:a17:90b:4e88:b0:3ac:6fca:f88a with SMTP id
+ 98e67ed59e1d1-3acee728a89mr8082878a91.3.1792444877042; 
+ Mon, 19 Oct 2026 14:21:17 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ad60ec4457sm863243a91.6.2026.10.19.14.21.23
+ 98e67ed59e1d1-3ad60ec4457sm863243a91.6.2026.10.19.14.21.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 14:21:23 -0700 (PDT)
+ Mon, 19 Oct 2026 14:21:15 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>,
@@ -92,45 +92,45 @@ Cc: Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 21/26] target/hexagon: remove explicit target specific prefix
-Date: Mon, 19 Oct 2026 21:20:40 +0000
-Message-ID: <20261019212046.149572-22-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 15/26] target/sh4: define and call helpers using HELPER macro
+Date: Mon, 19 Oct 2026 21:20:34 +0000
+Message-ID: <20261019212046.149572-16-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: beqlnBZden6HLIO8a6Iit1ceg2uG3J5c
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX+SbQ1MBHDmmg
- JP/li3fzz40PXHltyxnCM3Bx5DGhMDZLAjzTdME+9MRcFJe9YLZsaLKJiafAZEB7v4vHX/OSf71
- p75ZnoTIWe1MfX6lSJaoK1JfOH101yaREEFRM8lhEM+uiRtBUrgVtpZEVpvhdGVfi33VW4X7mpv
- Zy5QrlJCqhvWLaH0fEWTNJL1xANuPFjWLDnQIJJHCs8Eq0NuXbOKfsCYLq3hVKT0nqUNWrdS0gt
- uUIwRJ7VQDrkpDqIgfMGv5cP3FcJtoX9bP76nHURyNvIUVAMI/MKseDNritw6TD4EULee5YyLUf
- k6leiA8YnA0Ekc9u9JQc+ac6u4W60G43Brn1b55T2mMIlq9whMF40qazfKH8AapMX5PZk0HpMxc
- r05cfFE/XejE3ONqKmNQBoPBU49xw395I07Rx/xc2i1CHIJkaDx1eIDvht+SIJs4KC+h82HDv7s
- VIayauwSogc241Q9tIA==
-X-Proofpoint-GUID: beqlnBZden6HLIO8a6Iit1ceg2uG3J5c
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfXxh1R11gpkx1w
- gwUOb0wQrd8xyoz7oR9S3urSp6eDb+o/EbKAyfNDmOSTrT83WKTx1YwfdldeSycY1LfEVVfwd1K
- BRu/OdtLaKe8yCCTUhrWfOCBOfkYTxw=
-X-Authority-Analysis: v=2.4 cv=cLt1IVeN c=1 sm=1 tr=0 ts=6ad689d5 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-GUID: axSHkR5yb0QrwuEdwFEUjULwhzt265Sd
+X-Authority-Analysis: v=2.4 cv=O+isLx9W c=1 sm=1 tr=0 ts=6ad689ce cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=xJBkFjxltbiK57tzlAwA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
+ a=s8CIgTy_PDT41ihXdFQA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX6/J0+vKY85GM
+ aKVUw1pKXvxx03a5KsJNHAX8PH2ivzBnZBUb+2c4zY0QXsbvRG9gj61bAERgNrIzOKxFoC9Q8Qq
+ BXy2QwyafiaQxDAMN6LGJPj34dsc/koTMTUMlzhN8Va6ilmCqjWZQfNwVZ8ijxishvrWXzeoJ6x
+ a0xwxAa+iB3zq9LDxldge3AmNBSWXsWOQqHHdBbmFJIq+rJtenPjZ8CyDyUetfO0QVbTTrwYwbR
+ GQ/KrDp3VFVUOnKXq+gvx4OgUMMhoTGmntIiL1fLKErJrSVRKO5Vsn841523eg7WE1lKI2fbO2s
+ VRgkNzPE8z8OICbrsK/HsXvJqrXZilVJqV1ClYxAedS5yxEaPdwSibZqoWW82+rmQxGG6DtfTyE
+ X8SXm3ZJKBONHF1hnVl7byjiy2996MJ2StwIAZn5K2lYViKaNkD++OSsH+4SU7r/XAM6bSWNcI5
+ tgdNoTjLlvW5BXnNjLg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX0pD/Ht5lGolH
+ cY4LEKgknLbRGuI0yLCJ+Us2nK9UPRzps7GQqF5uqNHtffQyF9brxBjB9e095O0JQ/vzjKzZnKZ
+ VJkTYuamZ4rJ1u5VZIephNVvEIP55D8=
+X-Proofpoint-ORIG-GUID: axSHkR5yb0QrwuEdwFEUjULwhzt265Sd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-19_05,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 phishscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 spamscore=0 clxscore=1015 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
  definitions=main-2610190085
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,113 +156,345 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Now that we have a generic mechanism to prefix all helpers, we can undo the
-recent changes that fixed conflicts between targets in multi-target set.
-
-This reverts commit 086150a223a6dfeae85e8bb925c5df0ca3061ed5
-"target/hexagon: prefix helpers conflicting with other arch"
+In a upcoming commit, we'll prefix all helpers and helper_info with target
+prefix, to disambiguate symbols between targets. As a first step, we need to
+make sure all usages are using the existing HELPER macro.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/hexagon/gen_tcg.h     | 2 +-
- target/hexagon/gen_tcg_sys.h | 2 +-
- target/hexagon/helper.h      | 4 ++--
- target/hexagon/op_helper.c   | 4 ++--
- target/hexagon/translate.c   | 4 ++--
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ target/sh4/op_helper.c | 76 +++++++++++++++++++++---------------------
+ 1 file changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h
-index ed05f97efed..80d8a7b6bac 100644
---- a/target/hexagon/gen_tcg.h
-+++ b/target/hexagon/gen_tcg.h
-@@ -1135,7 +1135,7 @@
- #define fGEN_TCG_J2_pause(SHORTCODE) \
-     do { \
-         uiV = uiV; \
--        gen_helper_hexagon_raise_exception(tcg_env, \
-+        gen_helper_raise_exception(tcg_env, \
-             tcg_constant_i32(EXCP_YIELD), \
-             tcg_constant_i32(ctx->next_PC)); \
-     } while (0)
-diff --git a/target/hexagon/gen_tcg_sys.h b/target/hexagon/gen_tcg_sys.h
-index 3760b671adf..413ccc97f7b 100644
---- a/target/hexagon/gen_tcg_sys.h
-+++ b/target/hexagon/gen_tcg_sys.h
-@@ -80,7 +80,7 @@
- #define fGEN_TCG_Y2_wait(SHORTCODE) \
-     do { \
-         RsV = RsV; \
--        gen_helper_hexagon_wait(tcg_env); \
-+        gen_helper_wait(tcg_env); \
-     } while (0)
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 777380f8e40..173ea35109a 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -46,7 +46,7 @@ void superh_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
  
- #define fGEN_TCG_Y2_resume(SHORTCODE) \
-diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
-index 28591417040..47958c48ea9 100644
---- a/target/hexagon/helper.h
-+++ b/target/hexagon/helper.h
-@@ -18,7 +18,7 @@
- #include "internal.h"
- #include "helper_protos_generated.h.inc"
- 
--DEF_HELPER_FLAGS_3(hexagon_raise_exception, TCG_CALL_NO_RETURN, noreturn, env, i32, i32)
-+DEF_HELPER_FLAGS_3(raise_exception, TCG_CALL_NO_RETURN, noreturn, env, i32, i32)
- DEF_HELPER_2(commit_store, void, env, int)
- DEF_HELPER_3(gather_store, void, env, i32, int)
- DEF_HELPER_1(commit_hvx_stores, void, env)
-@@ -138,7 +138,7 @@ DEF_HELPER_3(sreg_write_masked, void, env, i32, i32)
- DEF_HELPER_3(setprio, void, env, i32, i32)
- DEF_HELPER_2(start, void, env, i32)
- DEF_HELPER_1(stop, void, env)
--DEF_HELPER_1(hexagon_wait, void, env)
-+DEF_HELPER_1(wait, void, env)
- DEF_HELPER_2(resume, void, env, i32)
- DEF_HELPER_1(resched, void, env)
- DEF_HELPER_3(modify_ssr, void, env, i32, i32)
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 9850dc07289..82d38dc0b08 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -93,7 +93,7 @@ G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
-     do_raise_exception(env, exception, pc, 0);
- }
- 
--G_NORETURN void HELPER(hexagon_raise_exception)(CPUHexagonState *env, uint32_t excp,
-+G_NORETURN void HELPER(raise_exception)(CPUHexagonState *env, uint32_t excp,
-                                         uint32_t PC)
- {
-     hexagon_raise_exception_err(env, excp, PC);
-@@ -1839,7 +1839,7 @@ void HELPER(resched)(CPUHexagonState *env)
-     resched(env);
- }
- 
--void HELPER(hexagon_wait)(CPUHexagonState *env)
-+void HELPER(wait)(CPUHexagonState *env)
- {
-     BQL_LOCK_GUARD();
- 
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 2c18f5eebff..e2a5038a1a5 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -139,7 +139,7 @@ intptr_t ctx_tmp_vreg_off(DisasContext *ctx, int regnum,
- static void gen_precise_exception(int cause, uint32_t PC)
- {
-     tcg_gen_movi_i32(hex_cause_code, cause);
--    gen_helper_hexagon_raise_exception(tcg_env, tcg_constant_i32(HEX_EVENT_PRECISE),
-+    gen_helper_raise_exception(tcg_env, tcg_constant_i32(HEX_EVENT_PRECISE),
-                                tcg_constant_i32(PC));
- }
- 
-@@ -1146,7 +1146,7 @@ static void check_imprecise_exception(DisasContext *ctx)
-     TCGLabel *label = gen_new_label();
- 
-     tcg_gen_brcondi_tl(TCG_COND_EQ, hex_imprecise_exception, 0, label);
--    gen_helper_hexagon_raise_exception(tcg_env, hex_imprecise_exception, PC);
-+    gen_helper_raise_exception(tcg_env, hex_imprecise_exception, PC);
-     gen_set_label(label);
- }
  #endif
+ 
+-void helper_ldtlb(CPUSH4State *env)
++void HELPER(ldtlb)(CPUSH4State *env)
+ {
+ #ifdef CONFIG_USER_ONLY
+     cpu_abort(env_cpu(env), "Unhandled ldtlb");
+@@ -65,27 +65,27 @@ void raise_exception(CPUSH4State *env, int index,
+     cpu_loop_exit_restore(cs, retaddr);
+ }
+ 
+-void helper_raise_illegal_instruction(CPUSH4State *env)
++void HELPER(raise_illegal_instruction)(CPUSH4State *env)
+ {
+     raise_exception(env, 0x180, 0);
+ }
+ 
+-void helper_raise_slot_illegal_instruction(CPUSH4State *env)
++void HELPER(raise_slot_illegal_instruction)(CPUSH4State *env)
+ {
+     raise_exception(env, 0x1a0, 0);
+ }
+ 
+-void helper_raise_fpu_disable(CPUSH4State *env)
++void HELPER(raise_fpu_disable)(CPUSH4State *env)
+ {
+     raise_exception(env, 0x800, 0);
+ }
+ 
+-void helper_raise_slot_fpu_disable(CPUSH4State *env)
++void HELPER(raise_slot_fpu_disable)(CPUSH4State *env)
+ {
+     raise_exception(env, 0x820, 0);
+ }
+ 
+-void helper_sleep(CPUSH4State *env)
++void HELPER(sleep)(CPUSH4State *env)
+ {
+     CPUState *cs = env_cpu(env);
+ 
+@@ -94,19 +94,19 @@ void helper_sleep(CPUSH4State *env)
+     raise_exception(env, EXCP_HLT, 0);
+ }
+ 
+-void helper_trapa(CPUSH4State *env, uint32_t tra)
++void HELPER(trapa)(CPUSH4State *env, uint32_t tra)
+ {
+     env->tra = tra << 2;
+     raise_exception(env, 0x160, 0);
+ }
+ 
+-void helper_exclusive(CPUSH4State *env)
++void HELPER(exclusive)(CPUSH4State *env)
+ {
+     /* We do not want cpu_restore_state to run.  */
+     cpu_loop_exit_atomic(env_cpu(env), 0);
+ }
+ 
+-void helper_movcal(CPUSH4State *env, uint32_t address, uint32_t value)
++void HELPER(movcal)(CPUSH4State *env, uint32_t address, uint32_t value)
+ {
+     if (cpu_sh4_is_cached (env, address))
+     {
+@@ -121,7 +121,7 @@ void helper_movcal(CPUSH4State *env, uint32_t address, uint32_t value)
+     }
+ }
+ 
+-void helper_discard_movcal_backup(CPUSH4State *env)
++void HELPER(discard_movcal_backup)(CPUSH4State *env)
+ {
+     memory_content *current = env->movcal_backup;
+ 
+@@ -135,7 +135,7 @@ void helper_discard_movcal_backup(CPUSH4State *env)
+     }
+ }
+ 
+-void helper_ocbi(CPUSH4State *env, uint32_t address)
++void HELPER(ocbi)(CPUSH4State *env, uint32_t address)
+ {
+     unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
+     MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_UNALN, mmu_idx);
+@@ -161,7 +161,7 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
+     }
+ }
+ 
+-void helper_macl(CPUSH4State *env, int32_t arg0, int32_t arg1)
++void HELPER(macl)(CPUSH4State *env, int32_t arg0, int32_t arg1)
+ {
+     const int64_t min = -(1ll << 47);
+     const int64_t max = (1ll << 47) - 1;
+@@ -180,7 +180,7 @@ void helper_macl(CPUSH4State *env, int32_t arg0, int32_t arg1)
+     env->mac = res;
+ }
+ 
+-void helper_macw(CPUSH4State *env, int32_t arg0, int32_t arg1)
++void HELPER(macw)(CPUSH4State *env, int32_t arg0, int32_t arg1)
+ {
+     /* Inputs are already sign-extended from 16 bits. */
+     int32_t mul = arg0 * arg1;
+@@ -216,7 +216,7 @@ void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
+     set_flush_to_zero((val & FPSCR_DN) != 0, &env->fp_status);
+ }
+ 
+-void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++void HELPER(ld_fpscr)(CPUSH4State *env, uint32_t val)
+ {
+     cpu_load_fpscr(env, val);
+ }
+@@ -260,7 +260,7 @@ static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
+     }
+ }
+ 
+-float32 helper_fadd_FT(CPUSH4State *env, float32 t0, float32 t1)
++float32 HELPER(fadd_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_add(t0, t1, &env->fp_status);
+@@ -268,7 +268,7 @@ float32 helper_fadd_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return t0;
+ }
+ 
+-float64 helper_fadd_DT(CPUSH4State *env, float64 t0, float64 t1)
++float64 HELPER(fadd_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float64_add(t0, t1, &env->fp_status);
+@@ -276,7 +276,7 @@ float64 helper_fadd_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return t0;
+ }
+ 
+-uint32_t helper_fcmp_eq_FT(CPUSH4State *env, float32 t0, float32 t1)
++uint32_t HELPER(fcmp_eq_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     int relation;
+ 
+@@ -286,7 +286,7 @@ uint32_t helper_fcmp_eq_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return relation == float_relation_equal;
+ }
+ 
+-uint32_t helper_fcmp_eq_DT(CPUSH4State *env, float64 t0, float64 t1)
++uint32_t HELPER(fcmp_eq_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     int relation;
+ 
+@@ -296,7 +296,7 @@ uint32_t helper_fcmp_eq_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return relation == float_relation_equal;
+ }
+ 
+-uint32_t helper_fcmp_gt_FT(CPUSH4State *env, float32 t0, float32 t1)
++uint32_t HELPER(fcmp_gt_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     int relation;
+ 
+@@ -306,7 +306,7 @@ uint32_t helper_fcmp_gt_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return relation == float_relation_greater;
+ }
+ 
+-uint32_t helper_fcmp_gt_DT(CPUSH4State *env, float64 t0, float64 t1)
++uint32_t HELPER(fcmp_gt_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     int relation;
+ 
+@@ -316,7 +316,7 @@ uint32_t helper_fcmp_gt_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return relation == float_relation_greater;
+ }
+ 
+-float64 helper_fcnvsd_FT_DT(CPUSH4State *env, float32 t0)
++float64 HELPER(fcnvsd_FT_DT)(CPUSH4State *env, float32 t0)
+ {
+     float64 ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -325,7 +325,7 @@ float64 helper_fcnvsd_FT_DT(CPUSH4State *env, float32 t0)
+     return ret;
+ }
+ 
+-float32 helper_fcnvds_DT_FT(CPUSH4State *env, float64 t0)
++float32 HELPER(fcnvds_DT_FT)(CPUSH4State *env, float64 t0)
+ {
+     float32 ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -334,7 +334,7 @@ float32 helper_fcnvds_DT_FT(CPUSH4State *env, float64 t0)
+     return ret;
+ }
+ 
+-float32 helper_fdiv_FT(CPUSH4State *env, float32 t0, float32 t1)
++float32 HELPER(fdiv_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_div(t0, t1, &env->fp_status);
+@@ -342,7 +342,7 @@ float32 helper_fdiv_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return t0;
+ }
+ 
+-float64 helper_fdiv_DT(CPUSH4State *env, float64 t0, float64 t1)
++float64 HELPER(fdiv_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float64_div(t0, t1, &env->fp_status);
+@@ -350,7 +350,7 @@ float64 helper_fdiv_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return t0;
+ }
+ 
+-float32 helper_float_FT(CPUSH4State *env, uint32_t t0)
++float32 HELPER(float_FT)(CPUSH4State *env, uint32_t t0)
+ {
+     float32 ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -359,7 +359,7 @@ float32 helper_float_FT(CPUSH4State *env, uint32_t t0)
+     return ret;
+ }
+ 
+-float64 helper_float_DT(CPUSH4State *env, uint32_t t0)
++float64 HELPER(float_DT)(CPUSH4State *env, uint32_t t0)
+ {
+     float64 ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -368,7 +368,7 @@ float64 helper_float_DT(CPUSH4State *env, uint32_t t0)
+     return ret;
+ }
+ 
+-float32 helper_fmac_FT(CPUSH4State *env, float32 t0, float32 t1, float32 t2)
++float32 HELPER(fmac_FT)(CPUSH4State *env, float32 t0, float32 t1, float32 t2)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_muladd(t0, t1, t2, 0, &env->fp_status);
+@@ -376,7 +376,7 @@ float32 helper_fmac_FT(CPUSH4State *env, float32 t0, float32 t1, float32 t2)
+     return t0;
+ }
+ 
+-float32 helper_fmul_FT(CPUSH4State *env, float32 t0, float32 t1)
++float32 HELPER(fmul_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_mul(t0, t1, &env->fp_status);
+@@ -384,7 +384,7 @@ float32 helper_fmul_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return t0;
+ }
+ 
+-float64 helper_fmul_DT(CPUSH4State *env, float64 t0, float64 t1)
++float64 HELPER(fmul_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float64_mul(t0, t1, &env->fp_status);
+@@ -392,7 +392,7 @@ float64 helper_fmul_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return t0;
+ }
+ 
+-float32 helper_fsqrt_FT(CPUSH4State *env, float32 t0)
++float32 HELPER(fsqrt_FT)(CPUSH4State *env, float32 t0)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_sqrt(t0, &env->fp_status);
+@@ -400,7 +400,7 @@ float32 helper_fsqrt_FT(CPUSH4State *env, float32 t0)
+     return t0;
+ }
+ 
+-float64 helper_fsqrt_DT(CPUSH4State *env, float64 t0)
++float64 HELPER(fsqrt_DT)(CPUSH4State *env, float64 t0)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float64_sqrt(t0, &env->fp_status);
+@@ -408,7 +408,7 @@ float64 helper_fsqrt_DT(CPUSH4State *env, float64 t0)
+     return t0;
+ }
+ 
+-float32 helper_fsrra_FT(CPUSH4State *env, float32 t0)
++float32 HELPER(fsrra_FT)(CPUSH4State *env, float32 t0)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     /* "Approximate" 1/sqrt(x) via actual computation.  */
+@@ -426,7 +426,7 @@ float32 helper_fsrra_FT(CPUSH4State *env, float32 t0)
+     return t0;
+ }
+ 
+-float32 helper_fsub_FT(CPUSH4State *env, float32 t0, float32 t1)
++float32 HELPER(fsub_FT)(CPUSH4State *env, float32 t0, float32 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float32_sub(t0, t1, &env->fp_status);
+@@ -434,7 +434,7 @@ float32 helper_fsub_FT(CPUSH4State *env, float32 t0, float32 t1)
+     return t0;
+ }
+ 
+-float64 helper_fsub_DT(CPUSH4State *env, float64 t0, float64 t1)
++float64 HELPER(fsub_DT)(CPUSH4State *env, float64 t0, float64 t1)
+ {
+     set_float_exception_flags(0, &env->fp_status);
+     t0 = float64_sub(t0, t1, &env->fp_status);
+@@ -442,7 +442,7 @@ float64 helper_fsub_DT(CPUSH4State *env, float64 t0, float64 t1)
+     return t0;
+ }
+ 
+-uint32_t helper_ftrc_FT(CPUSH4State *env, float32 t0)
++uint32_t HELPER(ftrc_FT)(CPUSH4State *env, float32 t0)
+ {
+     uint32_t ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -451,7 +451,7 @@ uint32_t helper_ftrc_FT(CPUSH4State *env, float32 t0)
+     return ret;
+ }
+ 
+-uint32_t helper_ftrc_DT(CPUSH4State *env, float64 t0)
++uint32_t HELPER(ftrc_DT)(CPUSH4State *env, float64 t0)
+ {
+     uint32_t ret;
+     set_float_exception_flags(0, &env->fp_status);
+@@ -460,7 +460,7 @@ uint32_t helper_ftrc_DT(CPUSH4State *env, float64 t0)
+     return ret;
+ }
+ 
+-void helper_fipr(CPUSH4State *env, uint32_t m, uint32_t n)
++void HELPER(fipr)(CPUSH4State *env, uint32_t m, uint32_t n)
+ {
+     int bank, i;
+     float32 r, p;
+@@ -480,7 +480,7 @@ void helper_fipr(CPUSH4State *env, uint32_t m, uint32_t n)
+     env->fregs[bank + n + 3] = r;
+ }
+ 
+-void helper_ftrv(CPUSH4State *env, uint32_t n)
++void HELPER(ftrv)(CPUSH4State *env, uint32_t n)
+ {
+     int bank_matrix, bank_vector;
+     int i, j;
 -- 
 2.43.0
 
