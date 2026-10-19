@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614ECCCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45CCCCF2E6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoEu-00045A-Ql; Mon, 19 Oct 2026 10:21:25 -0400
+	id 1xIoDm-0002Sa-03; Mon, 19 Oct 2026 10:20:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDS-0002FW-JD
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDR-0002FR-6d
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDO-0005df-H9
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDK-0005bv-TO
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419589;
+ s=mimecast20190719; t=1792419586;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ogLt+r+2ZZb7Sn9e9WhTaW5AeEu8LjHxN8C57FQ794g=;
- b=ZowF+vFrcWVVXNX5WEUUu74SyNo301z20pAcHUMRq20tzbFrJJg8K8t0Zve136dDWevlMn
- L7V7KUzgECy14yePtprSdm86mNkabP2K1y197GjpzWjfkvxjPhlygjTvmDl+XHDN433lKT
- MSC3GA9XEDAn8tEnOEOXMesuQ/hQJDE=
+ bh=I8AAmKpOkTsaXOkHtypT6NSuydDaB7Avkfgfu+bBFoQ=;
+ b=MIa36kiZLZnnbm2FtH9GyC4xLQc1HQDpOXlivo56qyMOSoOdT2DzG7MZ+egGOkWYhzJSzs
+ B8ektvpQzM78evd3N9r7bjVK4Ff3ELdyk2joDQUMaCW99yYpT+upHlqWV79gB8K2x4dW8m
+ lMtsl31IR9w5EAIqNyH+qsUeZt6GygM=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-XACggkuPM7uzGeLOFFccsg-1; Mon,
- 19 Oct 2026 14:19:39 +0000
-X-MC-Unique: XACggkuPM7uzGeLOFFccsg-1
-X-Mimecast-MFC-AGG-ID: XACggkuPM7uzGeLOFFccsg_1792419578
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-UJmLORXLMx-KPyCZedoxpg-1; Mon,
+ 19 Oct 2026 14:19:42 +0000
+X-MC-Unique: UJmLORXLMx-KPyCZedoxpg-1
+X-Mimecast-MFC-AGG-ID: UJmLORXLMx-KPyCZedoxpg_1792419581
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EB6819560B9; Mon, 19 Oct 2026 14:19:38 +0000 (UTC)
+ id 3E84F1954B0B; Mon, 19 Oct 2026 14:19:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E13FC30000E3; Mon, 19 Oct 2026 14:19:37 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F025C767; Mon, 19 Oct 2026 14:19:40 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CAFE221E6899; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
+ id 54FA221E683B; Mon, 19 Oct 2026 16:19:30 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
  amachhiw@linux.ibm.com
-Subject: [PATCH v6 21/65] x86: convert OnOffAuto properties to QAPI-aware
+Subject: [PATCH v6 47/65] hw/s390x: convert BootCertificatesList to QAPI-aware
  registration
-Date: Mon, 19 Oct 2026 16:18:45 +0200
-Message-ID: <20261019141929.1594337-22-armbru@redhat.com>
+Date: Mon, 19 Oct 2026 16:19:11 +0200
+Message-ID: <20261019141929.1594337-48-armbru@redhat.com>
 In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,182 +90,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Convert the smm, acpi, pit, and pic OnOffAuto properties from
-manual visitor-based callbacks to property_add_qapi_enum().
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/i386/x86.c | 104 ++++++++++++++++++++++----------------------------
- 1 file changed, 45 insertions(+), 59 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index f8ba3244e2..63f297a105 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -24,7 +24,7 @@
- #include "qemu/error-report.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
--#include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qapi-visit-machine.h"
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 3ed425b16c..8bc09c1795 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -44,6 +44,7 @@
+ #include "target/s390x/kvm/pv.h"
+ #include "migration/blocker.h"
+ #include "qapi/qapi-builtin-type-infos.h"
++#include "qapi/qapi-type-infos-machine-s390x.h"
  #include "qapi/visitor.h"
- #include "system/qtest.h"
-@@ -188,21 +188,16 @@ bool x86_machine_is_smm_enabled(const X86MachineState *x86ms)
-     return false;
- }
+ #include "qapi/qapi-visit-machine-s390x.h"
+ #include "hw/s390x/cpu-topology.h"
+@@ -918,8 +919,10 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+             " to upper case) to pass to machine loader, boot manager,"
+             " and guest kernel");
  
--static void x86_machine_get_smm(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static int x86_machine_get_smm(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto smm = x86ms->smm;
--
--    visit_type_OnOffAuto(v, name, &smm, errp);
-+    return x86ms->smm;
- }
+-    object_class_property_add(oc, "boot-certs", "BootCertificatesList",
+-                              machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
++    object_class_property_add_qapi(oc, "boot-certs",
++                                   &BootCertificatesList_type_info,
++                                   machine_get_boot_certs,
++                                   machine_set_boot_certs, NULL, NULL);
+     object_class_property_set_description(oc, "boot-certs",
+             "provide paths to a directory and/or a certificate file for secure boot");
  
--static void x86_machine_set_smm(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static void x86_machine_set_smm(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->smm, errp);
-+    x86ms->smm = value;
- }
- 
- bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
-@@ -213,55 +208,40 @@ bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
-     return true;
- }
- 
--static void x86_machine_get_acpi(Object *obj, Visitor *v, const char *name,
--                                 void *opaque, Error **errp)
-+static int x86_machine_get_acpi(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto acpi = x86ms->acpi;
--
--    visit_type_OnOffAuto(v, name, &acpi, errp);
-+    return x86ms->acpi;
- }
- 
--static void x86_machine_set_acpi(Object *obj, Visitor *v, const char *name,
--                                 void *opaque, Error **errp)
-+static void x86_machine_set_acpi(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->acpi, errp);
-+    x86ms->acpi = value;
- }
- 
--static void x86_machine_get_pit(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static int x86_machine_get_pit(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto pit = x86ms->pit;
--
--    visit_type_OnOffAuto(v, name, &pit, errp);
-+    return x86ms->pit;
- }
- 
--static void x86_machine_set_pit(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static void x86_machine_set_pit(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->pit, errp);
-+    x86ms->pit = value;
- }
- 
--static void x86_machine_get_pic(Object *obj, Visitor *v, const char *name,
--                                void *opaque, Error **errp)
-+static int x86_machine_get_pic(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto pic = x86ms->pic;
--
--    visit_type_OnOffAuto(v, name, &pic, errp);
-+    return x86ms->pic;
- }
- 
--static void x86_machine_set_pic(Object *obj, Visitor *v, const char *name,
--                                void *opaque, Error **errp)
-+static void x86_machine_set_pic(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->pic, errp);
-+    x86ms->pic = value;
- }
- 
- static char *x86_machine_get_oem_id(Object *obj, Error **errp)
-@@ -391,31 +371,37 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
-     mc->kvm_type = x86_kvm_type;
-     nc->raise_nmi = x86_nmi;
- 
--    object_class_property_add(oc, X86_MACHINE_SMM, "OnOffAuto",
--        x86_machine_get_smm, x86_machine_set_smm,
--        NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_SMM,
--        "Enable SMM");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_SMM,
-+        .description = "Enable SMM",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_smm,
-+        .set = x86_machine_set_smm,
-+    ));
- 
--    object_class_property_add(oc, X86_MACHINE_ACPI, "OnOffAuto",
--        x86_machine_get_acpi, x86_machine_set_acpi,
--        NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_ACPI,
--        "Enable ACPI");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_ACPI,
-+        .description = "Enable ACPI",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_acpi,
-+        .set = x86_machine_set_acpi,
-+    ));
- 
--    object_class_property_add(oc, X86_MACHINE_PIT, "OnOffAuto",
--                              x86_machine_get_pit,
--                              x86_machine_set_pit,
--                              NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_PIT,
--        "Enable i8254 PIT");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_PIT,
-+        .description = "Enable i8254 PIT",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_pit,
-+        .set = x86_machine_set_pit,
-+    ));
- 
--    object_class_property_add(oc, X86_MACHINE_PIC, "OnOffAuto",
--                              x86_machine_get_pic,
--                              x86_machine_set_pic,
--                              NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_PIC,
--        "Enable i8259 PIC");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_PIC,
-+        .description = "Enable i8259 PIC",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_pic,
-+        .set = x86_machine_set_pic,
-+    ));
- 
-     object_class_property_add_str(oc, X86_MACHINE_OEM_ID,
-                                   x86_machine_get_oem_id,
 -- 
 2.55.0
 
