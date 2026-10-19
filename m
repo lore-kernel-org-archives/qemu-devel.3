@@ -1,132 +1,136 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855D3606A31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 21:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A60F606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 21:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eKMlGMq+;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=eqRfhq67
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=QTUQRW0w;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DUyTaXPx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIuul-0003Ym-QQ; Mon, 19 Oct 2026 17:29:04 -0400
+	id 1xIutd-0002wI-DW; Mon, 19 Oct 2026 17:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIutM-0002oM-Fr
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:27:41 -0400
+ id 1xIutJ-0002o3-Dk
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:27:39 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xIutJ-0006L2-8r
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:27:36 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xIutC-0006Jr-9l
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 17:27:31 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JJJwTB3103319
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:27:26 GMT
+ 69JJJuBG3672236
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:27:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=fTiltsghreG
- szmy4qD9sK5drlKW43fMlcOKmtUEtrqY=; b=eKMlGMq+/fqPgMgqy02wjwVphaw
- t16nB0B44EqqjVXXnCIJBEb/ATL57eTZO1+R5deUOX5bcNhvAa7qE9/sDUdCCHq2
- eAOvuxHfP8UPvWKs9xvXfe3DuSBpFaLSENLV4px14n3G33CQECH+UhcNT2rQfxKl
- IIiGxkRoBxqIUtqVbQR8ZWc9ztX3Oxti4OfsVQqTptiZ13tIfTqsX5+8SsZw8FXf
- UgkNocqkcbFf7Hu5742qiPMYl7+SgeWVmuvzcJO7jzRS/A1SJlQsyA1PnUoQsMDR
- /wB3YfuldCSE40jk8SWbJFk90eQHkLp9NtJAhugsdmAAjg+FXLhxKybIH+g==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdr4q0pd1-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ bAAmjLSWEog6/VDmAXKBOiykt7JvqrYIFjongFPqGy0=; b=QTUQRW0w/6xvl689
+ 5QnYjJcTH0npafHT/v7FM0YZkGyFZsULMiMUe3Ud9s/VjvnzNAXY3HW3Me5xuyLM
+ mdU94B/TTxjvJRilT4sOai9u13D/Zt6s4RmA7k21oA87oSr7BVzqCT6v1CUpjRZb
+ NAtcjOCW3n+kAK4+5F86srNYdWdSFdvZNVwjntLKUksEM+BoiqYXxaGq0s+TIghC
+ 0oQhHACh+ypENfYMVT1PQcCGoJqTx8umZpy1PADbHIf6LuahxWruyhN4ulbrW+tI
+ +qjWeb9P0On+gXHGol2HA0OuqnvxtQQae2j72ca6Sko9jyXfaYWv9zu3Wh79zY5g
+ CCikjQ==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdf3xbbjx-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:27:26 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3ab7f1efe5dso5346148a91.1
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 14:27:26 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 21:27:12 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-3aaee1fc104so3916536a91.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 14:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792445246; x=1793050046; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=fTiltsghreGszmy4qD9sK5drlKW43fMlcOKmtUEtrqY=;
- b=eqRfhq67MO7IGFqlZ2HWcg+F8oa8GkVGcY2++iketj6VR/SPmX6EKN8MJy8vkYBt+V
- OMHB/U2PCKZOWT/tfdPg1xq+6+TxXX/oVC1sVWVzvXfQOIipK3z2X6GIUevYEAFd15Fd
- +r1613mfkTQbhi8ZJpS101sIqZHdhN7zdXWIx1qSSo0JroajZmmbIXrQVWeNbQdYUl+2
- wNjknCWN6d8PFgwmWo/MNCAm1ZWhqVXb4HkDdnH6j+uEwrf++1owutyZDRq88t3viPGm
- quxpK45YclS2OJTfg6V9IdQWVLcFnZEzMWoXGmEYgkHsAYYm0nFpiy+Di+U1X43fJqWV
- Gd2Q==
+ d=oss.qualcomm.com; s=google; t=1792445232; x=1793050032; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bAAmjLSWEog6/VDmAXKBOiykt7JvqrYIFjongFPqGy0=;
+ b=DUyTaXPxM3iCkfmoCQLfxwiuqAZamrwLZTGB3Gij6Gb/Jp4fK5ZxkY9HRBW4ZQEpji
+ GUTMlFIyK2dEp6+Mg0vbbhqxTUWPKkzmCiSvXboty28B4eGIkU4MLYRNjoFJHNhoCMbY
+ fHo7Nq9L4jA1LJIBfBtcUW8IUx5bshMasI3/0qowZ5v4xG3G+vUq4FY3dDdqov1oJl2Y
+ QGPqPmvMeXYrOzItM97TaEs4sKIQ1K4RrN856xEvuHG6y2Q7E9DVE2Bzi2OmkiMK3MFW
+ Cyv9S9Ak7e60paoRlQPTgAZCeio6yXWwxTZc18gZBWzzyys6wrgh7ddUJ7qPXWc86wCt
+ AHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792445246; x=1793050046;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fTiltsghreGszmy4qD9sK5drlKW43fMlcOKmtUEtrqY=;
- b=MRIPZByGS+6TnbJgvCAJQKmOWYgBHLKUKa4koyI3YKB2fSmqVtaSvOpvzrMT+hiLKB
- eKxykKGtwt6IpmqTWgDDRuxhDTGGDbYyiFz2gUQ5oxZbZUh+RVPyEoJiPrwXSNckUU/I
- s75eRn22hJB2C4P0xmFq46XJrtWqGlBHHsTn3mPu4HBYJsX1NpZPr+tI2rEuf+3O2d4K
- zL8xBu7I4jRMU9UK8ryJc50sxnMkMe8hk4j3x654B+jxpYMroU8wM3uKCE5LeVAqvNUd
- DzOsp/XWO7V0rzrINAxESdb5chZkf+ecHq70nZPXncSZRm/lU/LZLz7ySp8HpIokrjRN
- 4z0g==
-X-Gm-Message-State: AFq9FYLFzYnz3kAx+bJYEVxj8nnxta+csLZDPpLfg+76kVOiu0RX1kxu
- KYtfo1BfAkk92e0dw9JK3cMqHVDroKj9ZT61H604naDeYrv4m+MI3wEhu2ah1BG6a8tEGz292mg
- NcoOtS91ArmL34QoISCfzvUmlZPbhLe9DlB6DRRt2waMj6w1eWKNICMYsKSFXE8K3lw==
-X-Gm-Gg: AYBFou0vjvO5JDsvL7rAEXAEab4Ra3QdpIVsx5s+repDLkHeKmKQDCDsq70qaSakZXG
- 6ei0dzufSwSYtjQ/nI4WeuLis6JA8NBK/HCEWvC8PgGRwjl7W8Mnh8MT67ZoVyMSAVAzIy8vWyM
- nOWrhgk1GUHyYc1yg6f2kYYIVcf1LEEBZ1OgxA9ZD/DmbOMK+ogouBLo9GPWtFH0QvPTlkQBVZe
- +yIYP0TdgoUjnITTRqkdECYbE+rZaLGa3lgXrxRcw1jf4OVN0IRy9vpxhdB4E3zlkW+hBWVrh2p
- s4Q++QSk+wuyjuGUKXeKcFKMLYwYdcHcosWPNYDts4q9C0IbKvV+vSrpOHq1ygffrwQBpRPUtfd
- juNFDMQQsOveJETxn3IoTXghTxytW3TPjfxWFWaFbQyC8VyKIgb/6t2xY6U7CloE=
-X-Received: by 2002:a17:90a:e7d0:b0:3ac:9176:e83c with SMTP id
- 98e67ed59e1d1-3aceeb9606dmr7916259a91.12.1792445245827; 
- Mon, 19 Oct 2026 14:27:25 -0700 (PDT)
-X-Received: by 2002:a17:90a:e7d0:b0:3ac:9176:e83c with SMTP id
- 98e67ed59e1d1-3aceeb9606dmr7916234a91.12.1792445245354; 
- Mon, 19 Oct 2026 14:27:25 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792445232; x=1793050032;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=bAAmjLSWEog6/VDmAXKBOiykt7JvqrYIFjongFPqGy0=;
+ b=uLiXAsERQl/Ye5FG2s4+TbEwTaDcuLNGzTothTqQg2dMFWREdav7ICBnacLvKbHmKF
+ L+a2wAMJCoKD51l+kazKuMNQ+xDkQBgMFgNnPliqBnkFWnfX/VEWM5GdVMZrbnK/klDX
+ CK+yOGU25trvc0Cel4BzpAzcATNGQHoaBamDIFgDo2PQ0PAAsis5+IhHBJp/RSBiDs+F
+ XvhEna3GSy4sb+G4vZDdmTI3WgosJlGElaVub59t4CcMAfgvecBh2EKIhhh+l3Z3u/bT
+ mZgDdmw7Dy0AGI45jDgPQkOE/4zi/EfN07p5f/YN6eM8mIrmtDTWvhGOYtb7FHrDskP9
+ xO0w==
+X-Gm-Message-State: AFq9FYLEfUNw9H37pkqyNJFRpItyLig4NpUs/gP9doNr6bexJVZUmxwe
+ O64Ev2XZZ+zZBi6/dIYKR+hi8smBtrb74ytd6VpivhreuhXN1TMzOhfYwmHX8rMb9GMQiNMfXth
+ wvG5AyTFLnVrdJfr5iSwQSOf2dma2SNsL2ZBwD+T1rETD4Hf6pgKVvza235pFKywYIw==
+X-Gm-Gg: AYBFou3IVK4S4GGeqnJ6fXAV5Lr+JbSX/A82Hq3UqAQGGMj6dsNCtzxjsM/nycu8YUT
+ sKyQ+IbqAt7DfvHP0qdQW0kZ751e+7DgBdp/Yq8e+Gijjvu+qYnhSCfUaVYjh3Q43cQa5+Yx+t+
+ BQxRQDUE+SUBcIuxgJGWANAX8bhyoilG9LneSajQnKYxqOwX6vrHdiJ3xC0Sa5J6DhEHUNkMs+d
+ 05decx4pvgBdvlT/GruehyI/cZPLUZ7pL9KGkzpT+pYS5TRy/9y1oJjaKr/ahNX5ePeb20aYucg
+ lGUuStZjWcabzDl/yEZg8CSCZ4ZM/YNZDFDV7S3+v7PeSwua6ei0Vq31qal0skV7k/gXTYxigzh
+ 2SxrM8gPZNEXcebRDAJ6bu9w7J+cnI9vg9qdNaTJlPb6Xaz8Ua6z+3hG3VfLGHYI=
+X-Received: by 2002:a17:90a:d60d:b0:3ab:2737:3393 with SMTP id
+ 98e67ed59e1d1-3acef4e6d00mr7879715a91.40.1792445232181; 
+ Mon, 19 Oct 2026 14:27:12 -0700 (PDT)
+X-Received: by 2002:a17:90a:d60d:b0:3ab:2737:3393 with SMTP id
+ 98e67ed59e1d1-3acef4e6d00mr7879667a91.40.1792445230636; 
+ Mon, 19 Oct 2026 14:27:10 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ad60f2c785sm867061a91.7.2026.10.19.14.27.24
+ 98e67ed59e1d1-3ad60f2c785sm867061a91.7.2026.10.19.14.27.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 14:27:24 -0700 (PDT)
+ Mon, 19 Oct 2026 14:27:10 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  anjo@rev.ng,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v4 21/21] dump: reimplement cpu_get_note_size using
- get_note_size sysemu op
-Date: Mon, 19 Oct 2026 21:26:48 +0000
-Message-ID: <20261019212648.154493-22-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v4 07/21] target/i386: implement get_dump_info sysemu op
+Date: Mon, 19 Oct 2026 21:26:34 +0000
+Message-ID: <20261019212648.154493-8-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261019212648.154493-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261019212648.154493-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 7eBtbt6DdPFmdq1dtC84nissWvnOIf6j
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfXySFNsSN5yXug
- ZsiyAeGlxFFZWDxNSH0cc/GUmWsmopMdDVaS+5q1HfRmbUrEXJat5+XqJCHAASIlfj1kUjO4Frc
- fPnD/6N7O2L+4g6Aww0dS2MLtc8KjOg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX+u5vo/DKZm4i
- W210lDfy+sZqr5E7oWlODY1+1O27osiyzltK5KTKPJ3H86KvX3irl5sDKh6HGt8Xp6rsRXu9O3+
- rDHwyzb6Qe9ipbqieKCdT7JFtwNRKX1bReLiDIT5SdGRxIud23aCZaUE7zOObWcGNnlVwUSWB8g
- /5121H9k5RFHM6Y/1OnYT/mMiGkKv2gPDAqBpxAevJMMyRGG7FwMCY2a6oUvr3GJZcJe+GOFlt0
- ObKXGch9UTKTZ4jfabU+JOHXIGYqJoM9sjJAkiw26A8hyCMekvYhsuiB1wJkh7ZTRQ7U+W7JFBr
- KJSYtsD33tQ4omQ0feH4Nz1SzMshWLhSEE/apKnSuehviojyrT1dmJUmQ3si+0sXdoLqdhyuDJ7
- rTdUv7VVA7f1Ea2pljuOkXZBLZ1gLpswLzvIbrqb+uCd5Prub286HF/w0GTuQS8ZZxmqRmmMWn0
- 2yzq6CMhU9uvGU8v8Hw==
-X-Authority-Analysis: v=2.4 cv=aqsnmiZV c=1 sm=1 tr=0 ts=6ad68b3e cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=omOdbC7AAAAA:8 a=MHTLdSNsR-t22p2ATOwA:9 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: 7eBtbt6DdPFmdq1dtC84nissWvnOIf6j
+X-Proofpoint-ORIG-GUID: 10bJwnQX64j_YFX8tY-S1t70DX-gW_Ow
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX72yl35XsARGD
+ UtF/xVifPCFlLR23us76aYukX6+Vvz6soEzvRZER0+IVfxIl/R3BQoxVI0d7Hr3YXGr4wJO5gy4
+ PNZ+dPlpAp68hQWx8I3izQMkRcWRv70=
+X-Authority-Analysis: v=2.4 cv=XPOl2ghE c=1 sm=1 tr=0 ts=6ad68b30 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=9TR7Q1sQarOedDMGQfkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-GUID: 10bJwnQX64j_YFX8tY-S1t70DX-gW_Ow
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA4NSBTYWx0ZWRfX5DurecH45fSs
+ iST1C3GTGf+/B89zl/LxgiSy4ciHEtHJp1ZfrkytG/pBIqX/KJWdBYHJ4J/dRmfQHtPHYp1jymU
+ 6mJ8Qhpxdu3iL7+Cp0cPqr86ZTgNXhHU6OUo6uAjmDkMz+Vx6ESmsy+dxR4w2xKGrNU4MzgOj+J
+ YypBK35Zqt5JJxSunv6no6i7pUAAKIHlywFIuwXQzkV5nB5jgCLsm0lQH8LI81Hx9rwMaUkN1rM
+ 96zydgOwalNeI13uoE6o0TLceV1C8H4CdRnVN4DwaL9IR6FNU1OiEkoHd9GolEtvBEMPVlT8VEb
+ nOJeQjMhDSFCAdG2ndTmHujRmDyHBVKYFSBLIKkyQ1MrieigvchjuYcRqFJ8/3KuN2C7SFgXl5A
+ BqaNpxjR0MVlXeuf/PFO3UU3hfrw507WXvjHvvcOyll3nLya9aPtaY/ytF/YmEbGlU7JEjQ9Pjb
+ p3Xr35LcNi0O07Go8Dw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-19_05,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190085
+ impostorscore=0 spamscore=0 adultscore=0 phishscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610190085
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -155,216 +159,91 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Now that all targets implement the get_note_size sysemu op, we can
-replace the per-target cpu_get_note_size() implementations (and its stub)
-with a single generic version in hw/core/cpu-system.c, taking the cpu as
-parameter, like other dump related sysemu ops wrappers.
+For now, we keep the global cpu_get_dump_info symbol defined.
 
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- dump/dump.c                  |  2 +-
- hw/core/cpu-system.c         |  9 +++++++++
- include/hw/core/cpu.h        | 13 +++++++++++++
- include/system/dump-arch.h   |  2 --
- stubs/dump.c                 | 21 ---------------------
- stubs/meson.build            |  1 -
- target/arm/arch_dump.c       |  5 -----
- target/i386/arch_dump.c      |  5 -----
- target/loongarch/arch_dump.c |  5 -----
- target/ppc/arch_dump.c       |  5 -----
- target/riscv/arch_dump.c     |  5 -----
- target/s390x/arch_dump.c     |  5 -----
- 12 files changed, 23 insertions(+), 55 deletions(-)
- delete mode 100644 stubs/dump.c
+ target/i386/arch_dump.c    | 17 ++++++++++++++---
+ target/i386/cpu-internal.h |  3 +++
+ target/i386/cpu.c          |  1 +
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/dump/dump.c b/dump/dump.c
-index 60ecde02173..23ac689907a 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1873,7 +1873,7 @@ static void dump_init(DumpState *s, int fd, bool has_format,
-         s->dump_info.page_size = qemu_target_page_size();
-     }
- 
--    s->note_size = cpu_get_note_size(s->dump_info.d_class,
-+    s->note_size = cpu_get_note_size(first_cpu, s->dump_info.d_class,
-                                      s->dump_info.d_machine, nr_cpus);
-     assert(s->note_size >= 0);
- 
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 499fad1c68a..3704dd40640 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -139,6 +139,15 @@ int cpu_get_dump_info(const CPUState *cpu, ArchDumpInfo *info,
-     return cpu->cc->sysemu_ops->get_dump_info(cpu, info, guest_phys_blocks);
- }
- 
-+ssize_t cpu_get_note_size(const CPUState *cpu, int class, int machine,
-+                          int nr_cpus)
-+{
-+    if (!cpu->cc->sysemu_ops->get_note_size) {
-+        return -1;
-+    }
-+    return cpu->cc->sysemu_ops->get_note_size(cpu, class, machine, nr_cpus);
-+}
-+
- bool cpu_internal_is_big_endian(CPUState *cpu)
- {
-     if (cpu->cc->sysemu_ops->internal_is_big_endian) {
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index d80a6a4e752..a3b4c6c08a7 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -712,6 +712,19 @@ int cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cpu,
- int cpu_get_dump_info(const CPUState *cpu, ArchDumpInfo *info,
-                       const GuestPhysBlockList *guest_phys_blocks);
- 
-+/**
-+ * cpu_get_note_size:
-+ * @cpu: The CPU whose memory is to be dumped
-+ * @class: ELF class reported by cpu_get_dump_info()
-+ * @machine: ELF machine reported by cpu_get_dump_info()
-+ * @nr_cpus: Number of CPUs to be dumped
-+ *
-+ * Returns: size of the ELF notes needed to dump @nr_cpus CPUs,
-+ * or -1 if not supported.
-+ */
-+ssize_t cpu_get_note_size(const CPUState *cpu, int class, int machine,
-+                          int nr_cpus);
-+
- /**
-  * cpu_memory_rw_debug:
-  * @cpu: The CPU whose memory is to be accessed
-diff --git a/include/system/dump-arch.h b/include/system/dump-arch.h
-index b89e495661f..1df88e732d0 100644
---- a/include/system/dump-arch.h
-+++ b/include/system/dump-arch.h
-@@ -27,6 +27,4 @@ typedef struct ArchDumpInfo {
-     void (*arch_cleanup_fn)(DumpState *s);
- } ArchDumpInfo;
- 
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus);
--
- #endif
-diff --git a/stubs/dump.c b/stubs/dump.c
-deleted file mode 100644
-index 2ce3c5e274d..00000000000
---- a/stubs/dump.c
-+++ /dev/null
-@@ -1,21 +0,0 @@
--/*
-- * QEMU dump
-- *
-- * Copyright Fujitsu, Corp. 2011, 2012
-- *
-- * Authors:
-- *     Wen Congyang <wency@cn.fujitsu.com>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- *
-- */
--
--#include "qemu/osdep.h"
--#include "system/dump-arch.h"
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return -1;
--}
--
-diff --git a/stubs/meson.build b/stubs/meson.build
-index dcb67ce5295..4a26f795a6a 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -71,7 +71,6 @@ if have_system
-   # adding more of these.  If the symbol is used in specific_ss,
-   # in particular, consider defining a preprocessor macro via
-   # Kconfig or configs/targets/.
--  stub_ss.add(files('dump.c'))
-   stub_ss.add(files('cmos.c'))
-   stub_ss.add(files('fw_cfg.c'))
-   if igvm.found()
-diff --git a/target/arm/arch_dump.c b/target/arm/arch_dump.c
-index 60456e81bf8..986ce3d7884 100644
---- a/target/arm/arch_dump.c
-+++ b/target/arm/arch_dump.c
-@@ -453,8 +453,3 @@ ssize_t arm_get_note_size(const CPUState *cs, int class, int machine,
- 
-     return note_size * nr_cpus;
- }
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return arm_get_note_size(first_cpu, class, machine, nr_cpus);
--}
 diff --git a/target/i386/arch_dump.c b/target/i386/arch_dump.c
-index 4d8e9374cd1..4a375f5cbe0 100644
+index 16e47c4747d..d5016c198cb 100644
 --- a/target/i386/arch_dump.c
 +++ b/target/i386/arch_dump.c
-@@ -461,8 +461,3 @@ ssize_t x86_get_note_size(const CPUState *cs, int class, int machine,
+@@ -16,6 +16,7 @@
+ #include "system/dump.h"
+ #include "elf.h"
+ #include "system/memory_mapping.h"
++#include "cpu-internal.h"
  
-     return (elf_note_size + qemu_note_size) * nr_cpus;
- }
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return x86_get_note_size(first_cpu, class, machine, nr_cpus);
--}
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index e27bd0f6497..0b39fc73c12 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -163,8 +163,3 @@ ssize_t loongarch_get_note_size(const CPUState *cs, int class,
- 
-     return note_size * nr_cpus;
- }
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return loongarch_get_note_size(first_cpu, class, machine, nr_cpus);
--}
-diff --git a/target/ppc/arch_dump.c b/target/ppc/arch_dump.c
-index b59fef3c48e..f54729d77a8 100644
---- a/target/ppc/arch_dump.c
-+++ b/target/ppc/arch_dump.c
-@@ -269,11 +269,6 @@ ssize_t ppc_get_note_size(const CPUState *cs, int class, int machine,
-     return (elf_note_size) * nr_cpus;
+ #define ELF_NOTE_SIZE(hdr_size, name_size, desc_size)   \
+     ((DIV_ROUND_UP((hdr_size), 4)                       \
+@@ -394,15 +395,15 @@ int x86_cpu_write_elf32_qemunote(WriteCoreDumpFunction f, CPUState *cs,
+     return cpu_write_qemu_note(f, &cpu->env, s, 0);
  }
  
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return ppc_get_note_size(first_cpu, class, machine, nr_cpus);
--}
--
- static int ppc_write_all_elf_notes(const char *note_name,
-                                    WriteCoreDumpFunction f,
-                                    PowerPCCPU *cpu, int id,
-diff --git a/target/riscv/arch_dump.c b/target/riscv/arch_dump.c
-index 74b1489ddcb..05b637bea93 100644
---- a/target/riscv/arch_dump.c
-+++ b/target/riscv/arch_dump.c
-@@ -195,8 +195,3 @@ ssize_t riscv_get_note_size(const CPUState *cs, int class, int machine,
+-int cpu_get_dump_info(ArchDumpInfo *info,
++int x86_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
+                       const GuestPhysBlockList *guest_phys_blocks)
+ {
+     bool lma = false;
+     GuestPhysBlock *block;
  
-     return note_size * nr_cpus;
- }
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return riscv_get_note_size(first_cpu, class, machine, nr_cpus);
--}
-diff --git a/target/s390x/arch_dump.c b/target/s390x/arch_dump.c
-index 3ca85e6b64b..5048fbaf982 100644
---- a/target/s390x/arch_dump.c
-+++ b/target/s390x/arch_dump.c
-@@ -496,8 +496,3 @@ ssize_t s390_get_note_size(const CPUState *cs, int class, int machine,
+ #ifdef TARGET_X86_64
+-    X86CPU *first_x86_cpu = X86_CPU(first_cpu);
+-    lma = first_cpu && (first_x86_cpu->env.hflags & HF_LMA_MASK);
++    const X86CPU *cpu = X86_CPU(cs);
++    lma = !!(cpu->env.hflags & HF_LMA_MASK);
+ #endif
  
-     return (elf_note_size) * nr_cpus;
+     if (lma) {
+@@ -429,6 +430,16 @@ int cpu_get_dump_info(ArchDumpInfo *info,
+     return 0;
  }
--
--ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
--{
--    return s390_get_note_size(first_cpu, class, machine, nr_cpus);
--}
+ 
++int cpu_get_dump_info(ArchDumpInfo *info,
++                      const GuestPhysBlockList *guest_phys_blocks)
++{
++    if (first_cpu == NULL) {
++        return -1;
++    }
++
++    return x86_get_dump_info(first_cpu, info, guest_phys_blocks);
++}
++
+ ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
+ {
+     int name_size = 5; /* "CORE" or "QEMU" */
+diff --git a/target/i386/cpu-internal.h b/target/i386/cpu-internal.h
+index 37c61a1bc3d..9bd2a37c447 100644
+--- a/target/i386/cpu-internal.h
++++ b/target/i386/cpu-internal.h
+@@ -65,6 +65,9 @@ void x86_cpu_get_crash_info_qom(Object *obj, Visitor *v,
+ void x86_cpu_apic_create(X86CPU *cpu, Error **errp);
+ void x86_cpu_apic_realize(X86CPU *cpu, Error **errp);
+ void x86_cpu_machine_reset_cb(void *opaque);
++
++int x86_get_dump_info(const CPUState *cs, ArchDumpInfo *info,
++                      const GuestPhysBlockList *guest_phys_blocks);
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ #endif /* I386_CPU_INTERNAL_H */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5da80ade70e..49f453bb011 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10920,6 +10920,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
+     .write_elf64_note = x86_cpu_write_elf64_note,
+     .write_elf32_qemunote = x86_cpu_write_elf32_qemunote,
+     .write_elf64_qemunote = x86_cpu_write_elf64_qemunote,
++    .get_dump_info = x86_get_dump_info,
+ #ifdef CONFIG_HMP
+     .monitor_defs = x86_monitor_defs,
+ #endif
 -- 
 2.43.0
 
