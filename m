@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDA1606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6DD606A321
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=v6jGR0vX
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=chkDOZWU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt2A-0001Wj-7E; Mon, 19 Oct 2026 15:28:34 -0400
+	id 1xIt32-0002e6-5C; Mon, 19 Oct 2026 15:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt11-0000Tb-6i
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:24 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1xIt19-0000a3-Mr
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:32 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0x-00034p-LS
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:22 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-48e011d370dso2032565f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:15 -0700 (PDT)
+ id 1xIt17-0003Am-TU
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:31 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4a1698ea378so18697665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792438034; x=1793042834; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792438048; x=1793042848; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=z+hzAC5Hq510CpP4qtWjwafBYrnKIC1zr/PjN6LgqaI=;
- b=v6jGR0vXzb7sEpxG2RalkEL702LmmLpgUAWw8vukHBAjDkvFCNPUhO1vCdglrbiX0h
- 5vUeXcw44rHWn3XvsrdhZDEDvLDjKO30XwCRXRc4sQLqgNFfdkyj1zxE2c9fVgUhgd+G
- f4rJSYKuyGFTJhRawwNf1rvXmXcqBUULtoXa48o+mO9Rm1Yc2dDUYdg7b+icwGDU5qwn
- 9ZOSpBr1sJZKNDc4cfkBhhFZvnlTCqqHTOlrMwfSNQ+0BeqRywjnjTUWzQsRXR8RUyUN
- N+LmhuBLLkwilHAN0Tai8bLNyKcuXWl/NGkR/dWNjotDqUgCPoVguZ1ykHEJO6a1xzbm
- 1Cwg==
+ bh=gtJIuiD6IgmZZ6Fngidu3aK7yzPsm3ikKpy/MHqPRF0=;
+ b=chkDOZWUPNQn1GUr2htRIlEf5R/JvUwMgFeDKdBsiMgfaaw8+TrZrP41XhRJShg+BJ
+ //p/JHMVtJ38wkD+iyf10+7aXRtqSllniIswkaVBCGH4plAwudcWvcvDHS0ll+jW6ARW
+ /Ke+ewajMzGISxXXq6Mn4mq+70FUnmdgHYm8B6sua6XkPSYfj72l92KwdLPQMcCUqFT9
+ S+ysDlxmlrbm2wCFiaOtR236JVSqKkHHKTg+UcZ31vUKOaCp+JInlppEc4FH0l/t4ej+
+ T2i8Nak0WYV8b/Tp9dYB34lDKsH5/XrD17UBpPSVDbyaRBfw/UXl5E3rIx9G+EYqndEi
+ m92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792438034; x=1793042834;
+ d=1e100.net; s=20260707; t=1792438048; x=1793042848;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=z+hzAC5Hq510CpP4qtWjwafBYrnKIC1zr/PjN6LgqaI=;
- b=ArR9lvloMdjb1nCtNLm0d6QAEM+8TQlVKezRUq2wAfPO0EJ0nawSEgINNLDVOtyh4p
- APzpgxSG9QYWizd1j8O86PIkt1n7yGyXZCrpTedyhl7757AtIb4C7DdHrroLNLcf0+Tk
- Ti1CjjCH4fO96MzgpsCh+3CcS6RAOhQ9rcqI+sh5+lfv6D4hTjTzF9pMrwNsFhRDKbsH
- V/iaOrZCZjdLLzmefjSENzrm3te82mgIC1/kK3SHEk/sD+CaZL0xM54VkbAxqtSTBZTJ
- F9O/ttXv70tINR6yEAwn82WcmnoUZHQwyKuE6d3eyd3KWPmPE5WRPXZa0cgI1BU60IBv
- sf3A==
-X-Gm-Message-State: AFq9FYJ9HDKAQeZy8IqcDF4XXsEZGcepRrH5+nZeLUpkBVbY3FAWTO3e
- y7M4Ine6ljpyuCzDUHavXiXgqMnHi4Nx6XgM5N3B7cdo3z+uYIANJ/Wn7brOim6PeWs=
-X-Gm-Gg: AYBFou0xrk/x1jNmYRH9cHXUBaG1OdkPNRrbYGSZLDYGyQnibu0o5ThHnYpjejpKiZH
- a6itR0683Oz1lGlMTS4ykCOHCT8YxbBdU2CVI09J/cOd5/50rFVQhesiWqc+VtykSLwROo3cSns
- 8eObEBQiNzNjUT3m7cAbAQFNwjL9GiOTfP7iUeEoexPJMOrFGHOwQ5Who/SsPY2UHAke6g1+KD6
- UEIO3dTaSCLj32q5hG9kXYEj6Fevk7Wo9KfVoZUgRg+HcW9IojECUB13o2XSo5PJma0acFISAAs
- SVsmeGSHbEpZms4c9Rk8jvANsL9QQelEgJ5oazlaC27M0HkQ+N72VQfE8sSdE1eum8SNPr0CJgE
- tEVk2k2SD8sQXl6GOsvPM6E/NzwsHTP8UBt/KoECUgzy8TFiWbbPw9dduWqPU/qpGuORTlXJvN2
- wKldKinEsqVarZa/FQOaG+k47ZkwSnqKMIELb83O0R9FMngW9h16mjRBnTG6lhx8bvu0u/P6A=
-X-Received: by 2002:a05:6000:2484:b0:485:8cc8:1f5f with SMTP id
- ffacd0b85a97d-48e07fa892amr17250660f8f.42.1792438034445; 
- Mon, 19 Oct 2026 12:27:14 -0700 (PDT)
+ bh=gtJIuiD6IgmZZ6Fngidu3aK7yzPsm3ikKpy/MHqPRF0=;
+ b=2vOHCMlRhW61htYyj2Vf5mYkWO+zx8OWMnTWtypP56LCYbCO//7Ygk6DuF7N4p0Roj
+ vIwJQWcaF8VxDeUopQ6yiXwjSxVZhrT43rbc4hI3PGgCHGoHJhfNQw4RBz5rqKPlqmpx
+ 7Z3tWAembAsYhlcTtMOVZE85v90YyfXepqxtBtzuTEBtKA6wSLnSB6xkM1FQcnppEdqb
+ ULJbrb++sgJ8H4iaHYNHKMzSiDEGDEyNpxVyNs5nl5xxUNuYRcXkMLRIWGgdPfSmuwSF
+ 8sjYEk7F9VCMwhqSqMqH/ovW6h6pBUr9ccrcE9WDhugNUr6EHPxQZA4odJXopOiRz+bH
+ myqA==
+X-Gm-Message-State: AFq9FYLk6y1x5L0BA3Nl1SqM55/TNzodRaTgmHCdWgXUAPbiWZbwz2Wn
+ xoRP0sxo1+ty2rklJStfIwnhLrclc1qNo+UxISSRg7j5Ul6Tai0Xgtyjb+sYx0fCc34=
+X-Gm-Gg: AYBFou0Uw3G2JSrzib/ZGgiZv2Jb7XSb1Cpg8mi+KOr9y9us8pyHWLTc2nT0L9a4GzT
+ xxfIqZJOq57B0366g4CLRanDUnWSF3SEj45TcsuAHdmSOHRU5wWHc0RJY6TCZyGt13e+Bmg1ybf
+ bHhu3PNZr6PSOKTtTlolh/ph6EUIpkmjUr6kxM7lStAqsiO3O941a7OWcmIykN4Zbm1Kd9NTsKq
+ PZZx/oe1H5jOuw+qVNJkCJwSYSHpVzSKYkHgCBYyKuIaMxk+lzaBd3Me3Oh3lXfO+GlpHWrJvLE
+ ze5PFENZkurFXUZwMmCKJLRN1+IO1vQhGNeUHZa3gR9mDw29NJuDWUE3E0HJBGitz0ybXFVBHah
+ en0ljQM0ZHuHHdJThTRf2VWUtuYYYRVolnNQk3StqDbDdli9Fi4VOZBEgJup6ECUYrZVXDigjrW
+ WBELxlB2xzMVeR4h3CGd+oZLfSn3+K1sr15bgQdMnguELzAaoPzXEkA97yJyG9pdZmndr1Mb8=
+X-Received: by 2002:a05:600d:82e1:b0:4a1:f377:5c50 with SMTP id
+ 5b1f17b1804b1-4a1f3775e78mr9151115e9.30.1792438048066; 
+ Mon, 19 Oct 2026 12:27:28 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d820714sm799256f8f.35.2026.10.19.12.27.08
+ 5b1f17b1804b1-4a1f2cc809csm13254295e9.8.2026.10.19.12.27.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 12:27:11 -0700 (PDT)
+ Mon, 19 Oct 2026 12:27:24 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D3FA95FB4A;
- Mon, 19 Oct 2026 20:27:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7B1145FD57;
+ Mon, 19 Oct 2026 20:27:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
@@ -90,9 +90,10 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 08/19] tests/guest-debug: convert gdb_cmd to an array
-Date: Mon, 19 Oct 2026 20:26:53 +0100
-Message-ID: <20261019192704.3220373-9-alex.bennee@linaro.org>
+Subject: [PATCH v3 14/19] tests/functional: split aarch64 tuxrun into tcg and
+ kvm run
+Date: Mon, 19 Oct 2026 20:26:59 +0100
+Message-ID: <20261019192704.3220373-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
 References: <20261019192704.3220373-1-alex.bennee@linaro.org>
@@ -100,8 +101,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,80 +129,42 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Passing a plain string to subprocess involves making sure the escaping
-is correct so the underlying shell doesn't get confused. This can be
-tricky to track across multiple  processes. To simplify this build the
-command as an array and execute gdb directly without involving the
-shell.
+Add an explicit "kvm" run to the tuxrun tests. Although running on an
+aarch64 host would probably have defaulted to "kvm" anyway we want to
+exercise specific features later.
 
-We add a mini-helper to make the log output a bit more copy and paste
-friendly.
-
-Suggested-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260930164649.433573-9-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/guest-debug/run-test.py | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index 838c1c26971..e8b69f85cd1 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -51,6 +51,10 @@ def log(output, msg):
-         print(msg)
+---
+v2
+  - pass "host" cpu type for KVM run
+---
+ tests/functional/aarch64/test_tuxrun.py | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/tests/functional/aarch64/test_tuxrun.py b/tests/functional/aarch64/test_tuxrun.py
+index 7dd50c3de17..0ef1b126fae 100755
+--- a/tests/functional/aarch64/test_tuxrun.py
++++ b/tests/functional/aarch64/test_tuxrun.py
+@@ -32,6 +32,16 @@ def test_arm64(self):
+         self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
+                            rootfs_asset=self.ASSET_ARM64_ROOTFS)
  
- 
-+def format_cmd(cmd):
-+    return " ".join(f'"{arg}"' if ' ' in arg else arg for arg in cmd)
++    def test_arm64_kvm(self):
++        self.set_machine('virt')
++        self.require_accelerator('kvm')
++        self.cpu='host'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
++                           rootfs_asset=self.ASSET_ARM64_ROOTFS,
++                           accel="kvm")
 +
-+
- if __name__ == '__main__':
-     args = get_args()
- 
-@@ -98,32 +102,32 @@ def log(output, msg):
-     inferior = subprocess.Popen(shlex.split(cmd))
- 
-     # Now launch gdb with our test and collect the result
--    gdb_cmd = "%s %s" % (args.gdb, args.binary)
-+    gdb_cmd = [args.gdb, args.binary]
-     if args.gdb_args:
--        gdb_cmd += " %s" % (args.gdb_args)
-+        gdb_cmd.extend(shlex.split(args.gdb_args))
-+
-     # run quietly and ignore .gdbinit
--    gdb_cmd += " -q -n -batch"
-+    gdb_cmd.extend(["-q", "-n", "-batch"])
-     # disable pagination
--    gdb_cmd += " -ex 'set pagination off'"
-+    gdb_cmd.extend(["-ex", "set pagination off"])
-     # disable prompts in case of crash
--    gdb_cmd += " -ex 'set confirm off'"
-+    gdb_cmd.extend(["-ex", "set confirm off"])
-     # connect to remote
--    gdb_cmd += " -ex 'target remote %s'" % (socket_name)
-+    gdb_cmd.extend(["-ex", f"target remote {socket_name}"])
-     # finally the test script itself
-     if args.test:
-         if args.test_args:
--            gdb_cmd += f" -ex \"py sys.argv={args.test_args}\""
--        gdb_cmd += " -x %s" % (args.test)
--
-+            gdb_cmd.extend(["-ex", f"py sys.argv={args.test_args}"])
-+        gdb_cmd.extend(["-x", args.test])
- 
-     sleep(1)
--    log(output, "GDB CMD: %s" % (gdb_cmd))
-+    log(output, "GDB CMD: %s" % (format_cmd(gdb_cmd)))
- 
-     gdb_env = dict(os.environ)
-     gdb_pythonpath = gdb_env.get("PYTHONPATH", "").split(os.pathsep)
-     gdb_pythonpath.append(os.path.dirname(os.path.realpath(__file__)))
-     gdb_env["PYTHONPATH"] = os.pathsep.join(gdb_pythonpath)
--    result = subprocess.call(gdb_cmd, shell=True, stdout=output, stderr=stderr,
-+    result = subprocess.call(gdb_cmd, stdout=output, stderr=stderr,
-                              env=gdb_env)
- 
-     # A result of greater than 128 indicates a fatal signal (likely a
+     ASSET_ARM64BE_KERNEL = Asset(
+         'https://storage.tuxboot.com/buildroot/20241119/arm64be/Image',
+         'fd6af4f16689d17a2c24fe0053cc212edcdf77abdcaf301800b8d38fa9f6e109')
 -- 
 2.47.3
 
