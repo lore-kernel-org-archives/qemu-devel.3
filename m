@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 632D4CCF2DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF71CCF2DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIjQc-0004cH-0F; Mon, 19 Oct 2026 05:13:10 -0400
+	id 1xIjTc-0006JU-UV; Mon, 19 Oct 2026 05:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xIjQV-0004Xa-Pf
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1xIjQT-0001vd-MT
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:13:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792401180;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c0y41bN6PyYIZ+lXbrCj4VRNLpWgxCT8kTOELMfaCUU=;
- b=XOdH68J/mz7f+Zg1vivp1RwceDNyfi8Mu/KpEsdTNrviewJTGUGCrgVF+BKjsYv94A7wtb
- ogmQ83Y1zlG8jWYNeNy3XvtYJNWXjo7QdYVRispIhovXG4X/lao7gDkqGnxXwlG7rdkwF9
- 5LmBK4vUoSMEa8MhFR9ysmrd+xFOu2I=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-MNYvwLQAOFC_OCmb2aY8PQ-1; Mon, 19 Oct 2026 09:12:59 +0000
-X-MC-Unique: MNYvwLQAOFC_OCmb2aY8PQ-1
-X-Mimecast-MFC-AGG-ID: MNYvwLQAOFC_OCmb2aY8PQ_1792401178
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48af4046a3bso1728025f8f.2
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:12:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xIjTa-0006J3-09
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:16:14 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xIjTX-0002It-L1
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:16:13 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a1df4c0966so7418205e9.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792401178; x=1793005978; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=c0y41bN6PyYIZ+lXbrCj4VRNLpWgxCT8kTOELMfaCUU=;
- b=FO6/EJMDyEIBkZT96pcz2iM0cOxAkO6jmHNqRaeNb9KBZBlk7EIMRvpKQhbNhCLVKH
- n1jYNWuKjvuJxufP0ENXR7d1aEj81xRSHB65o5o8CnY88UXgjM26EiH89q7k6UFiSyHG
- AHogHWP1X1gaaVkUtxy9PHFvui6vbV3vivKNf0cp63KQuyGHTICRA17aoU6a126DdySS
- FbbD9JeSvQoWWWPgxQvntg5EOp+Y7I68nwYfrptcg9rHWWBcHW9/AxZcAQg6xvs9JrcK
- 2wFcL6ZXp0Y6tIlIigx6/gr7semGj2T4HH1MJnuM5XwngS5fsSDkVnSD/ppfbLgtf6OL
- gg7g==
+ d=linaro.org; s=google; t=1792401369; x=1793006169; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=/qQefFFGLYZu6otAuLTo/hYtsr8+bw6w89hpD6t4Hmc=;
+ b=I1t2Wzv+JscQ4VmYmxRZxvyc+9VvhnytlUCcrhtcYzI48WxQl7hJSumgXJdWc2EzN8
+ kWTmI2tvt4PcuuziUxx8Dw/ZrgIp9Ev6Pk0uy2fHtLhOA87a9yunVoY4kq4y/NBfRoqd
+ gNy6GnyXddlh6TGmIc0k2Dss/Yc45sTQdjhOqIGzdaF3DoIxryskOUdu00Hm3A462Bn4
+ 6gZ5PvuRzIXeoOEfEN1l232x7wfSupKkQPYlvi5m5efYl7mwlaTCBKCIkM/4czq4ZB+a
+ UN1o4UIUGfRSFK7dKTl4UpW8PRX7Mlkmd35HuFLCdKSk+oFRo27sy8+luWfIaLqzoxFm
+ Vbyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792401178; x=1793005978;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1792401369; x=1793006169;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=c0y41bN6PyYIZ+lXbrCj4VRNLpWgxCT8kTOELMfaCUU=;
- b=qTu+H2v4NVwNeGqwQ9+uwwN8aD2a5g+8lblmr5RwUFXqNWzuNcJFdf1vvS8XvdwlYo
- izQt+uhR+/KoyDKPQDuKe39g1GwbHGZgpOVe1n1dBr1T/ckEYPant9bm1yIif9OS7qCV
- +Ps92us+eApeIUODaL+5rDQ1Ozv9e/Aa/j7qo+KbfkfGR9SHME8o7xDIemsvxJL0dcd8
- RDtmNloRQMh956oMyERjxdSFHa+l8nR4zQLMnpCQLxbnHv7HIVlkkgYi2BV8G7W1xO+Y
- 6OXIZmQylwGCCeJix9Mk28CL3rlZxKb6mb2/2hXRR5WsaGzes/6kci6jw6/GXcZjzelb
- BiIQ==
-X-Gm-Message-State: AFq9FYIZXp6IptzTE0HQ2HGMp3AbPglq9tLKL0X3VBnskKaXjimFt8HD
- NOZ+MTY1922ufApbHMD8dac+fhaZB51w519E8NIsLTYpWm5v878PRzrnz7t020TvOftjucnxFHb
- n4ijXA6JZvboon+QCJ2hvoRk6cBP4lgjRTIDZJTqK2qESu8y7HhDYykQ2
-X-Gm-Gg: AYBFou1lbsuCEtPk8IvyDWNw64YwBnE458UcAeHhidlFogsg9HIcR8Rrm8q+gEvNHlc
- 5p/OkmVXR5WOYkDWW3GyMAvxq4gaDEuu+3+uhAEj11N/EBWdtpk+3t9jjhrCLNvwYiOkM4Igfl8
- DRL7C5Z4u3uoGXKzjO9i4x/dSve0vJ0r/eZNJFrPGjqGOHY+B/wBlUuvoJbEXRwlq6wADNJFs/Z
- pCWaMHgoacxGoczz3K5GyWH4yLkQMLLB0HqFOk87O/w+y/kQB7mixYjKWFDtpO+x03wMw1V7mH9
- Qqr69+PMGpXmL2N2pJWy6pYOIiA9+EQ1ElSZPgGR+pxyvkJCPvQd6ItRuvXIVdQNSXnp1c9VEoo
- KNhjWH57xa5z6RSzH4G5EjHl7N8/uUj+qJpAQpewqYWixAjy08ceo0Cg7xG3b6NcpfsUq
-X-Received: by 2002:a05:6000:4021:b0:48e:c84:5be6 with SMTP id
- ffacd0b85a97d-48e0c845d7amr12405435f8f.14.1792401177959; 
- Mon, 19 Oct 2026 02:12:57 -0700 (PDT)
-X-Received: by 2002:a05:6000:4021:b0:48e:c84:5be6 with SMTP id
- ffacd0b85a97d-48e0c845d7amr12405377f8f.14.1792401177525; 
- Mon, 19 Oct 2026 02:12:57 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([151.29.36.232])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48dfd50ae5esm24137600f8f.51.2026.10.19.02.12.56
+ bh=/qQefFFGLYZu6otAuLTo/hYtsr8+bw6w89hpD6t4Hmc=;
+ b=vtCvcoNIDmuncxLFQNvkxpaW9pE+bUmJqovHMjzcKzIn+pf+VpBZVBy4cU+XJFHIds
+ 3lH86GF/LNxiqei0BbXzZayPXSSuWSzxH+v1Wxu+cxPrYtlhKIL6/lGYsY5QIoUQn1uv
+ vlwx4kyaxATP11klF+gJJc+e++7DVgrcC/E/uKur5xhzCuYHLk1aX4Qh43956fxmX6Td
+ UEmP/28FfRvHi4WRblWUxBoo5bEjURWoQs66SZlympHy1tz50PU2eruvnBQfGI/cEZjf
+ f5N5dBQxilH+D6lbJOT7qCROdiJjodndQoU6LdpOBwIg/F5HWZohVm/Xe/BYcY96Jjfj
+ Dy6Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw1nbw9FehxhniC3dE/3Q+IZ7Yhd21/dYjI2NUL6SzK+NXSm5UXTXVz86AbkDrIdAHOZ2dQzDu1j4tc@nongnu.org
+X-Gm-Message-State: AFq9FYJoT+5OuVgLm5eh3vKhOpCRHYyeoU8rdfJHlQN12QSbGQ1+T8b1
+ iJOnN4WIRSTS8MQC/HMSmahwBzw4r9QnqJiQ2iGpn1hKBNX4Rqcwh5Wecu70eftW/To=
+X-Gm-Gg: AYBFou28nuCKKaHskLPoraRpMiy+g7nzgD3kxxsDpCzJcryrG3hqkFJ4Yy8MsVNbpV2
+ islHnfS+1JEmEOGf5SvdmZo5ErBoqlGifLu4OZdnqji6jN06YmnMgWpj6B2wX6vj64UlWeFFT7m
+ +Sx18aGLNEGlK1zpMfrdjS2e2djNuADjRk59aWh/f9to/5shK4wshJa0T2nbWVoul9Y2RFAZyJT
+ aLr1L/XP9jZa2kP4IlaQcWt4c4wk2MSKk4i778ECR0D8YYoS66kytTqtscXCjkCNFDDGYOPahd2
+ J6jNRh3gkKk3Fb2U7Fwzw1X7QecPZThMV55+j5i5zF1aN3+qhSG5SkNcNMJSeuP2MCCMZ/ErArm
+ TCoCHvt8VaT9FYmYTZSg6IgcWD1puN3AfwGcTfL/kjKeUpJYjdmuspbpRJC+pleTi1SKoIMh4MQ
+ JP8MLTqJwW5MvbGMYdaFMXgl/GmZmcgiiDd/+V2bKLZYwdl36ROG4u3u3GS0pm3xtv0cBPyg==
+X-Received: by 2002:a05:600c:1d04:b0:4a1:7f96:9b42 with SMTP id
+ 5b1f17b1804b1-4a1d76121a2mr166900265e9.15.1792401369082; 
+ Mon, 19 Oct 2026 02:16:09 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1cc642573sm214098465e9.2.2026.10.19.02.16.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 02:12:56 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Mon, 19 Oct 2026 11:12:46 +0200
-Subject: [PATCH v3 1/2] igvm: add command line parameter support
+ Mon, 19 Oct 2026 02:16:08 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2BE9A5F87D;
+ Mon, 19 Oct 2026 10:16:07 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Jinjie Ruan <2118537295@qq.com>
+Cc: anisinha@redhat.com,  armbru@redhat.com,  eblake@redhat.com,
+ imammedo@redhat.com,  michael.roth@amd.com,  mst@redhat.com,
+ pbonzini@redhat.com,  peter.maydell@linaro.org,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  ruanjinjie@huawei.com
+Subject: Re: [PATCH 01/37] target/arm: Add support for MPAM CPU registers
+In-Reply-To: <tencent_0D8D61C20611EC56598A6F86E7B869052E05@qq.com> (Jinjie
+ Ruan's message of "Fri, 16 Oct 2026 17:46:55 +0800")
+References: <20261016094733.1898485-1-2118537295@qq.com>
+ <tencent_0D8D61C20611EC56598A6F86E7B869052E05@qq.com>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Mon, 19 Oct 2026 10:16:07 +0100
+Message-ID: <87fqy23vag.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261019-igvm_command_line-v3-1-29aeacbd6cd7@redhat.com>
-References: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
-In-Reply-To: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Oliver Steffen <osteffen@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,188 +110,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a "cmdline" property to the igvm-cfg object and a handler for the
-IGVM_VHT_COMMAND_LINE directive, which copies the string into the
-parameter area the directive points at.
+Jinjie Ruan <2118537295@qq.com> writes:
 
-The command line is passed to whatever software the IGVM file loads,
-such as an SVSM. For example, SVSM can use it to select the serial port
-it logs to.
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>
+> Add the MPAM system registers for TCG: MPAMIDR_EL1 (RO) reporting 64
+> PARTIDs and 4 PMGs, and MPAM0_EL1/MPAM1_EL1 (RW, of which only
+> MPAM1_EL1.MPAMEN is architecturally reset). Advertise FEAT_MPAM via
+> ID_AA64PFR0.MPAM for TCG CPUs.
+>
+> It is common to support MPAM on CPU cores, but not in the rest of the
+> system, so there is little disadvantage in always enabling these.
+>
+> Based on an RFC series by Jonathan Cameron, adapted to the current
+> idregs[] storage and access_tid3() naming.
+>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- backends/igvm-cfg.c            | 21 +++++++++++++++++++++
- backends/igvm.c                | 31 +++++++++++++++++++++++++++++++
- include/system/igvm-internal.h |  5 +++++
- qapi/qom.json                  |  7 ++++++-
- qemu-options.hx                |  6 +++++-
- 5 files changed, 68 insertions(+), 2 deletions(-)
+Something is wrong with this thread, when I was reading the cover letter
+I couldn't find the rest of the thread. How did you post this series? It
+looks like the cover letter, first 16 and remaining patches where sent
+in separate batches?
 
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index 935ba54f54..653f79bef5 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -34,6 +34,19 @@ static void set_igvm(Object *obj, const char *value, Error **errp)
-     igvm->filename = g_strdup(value);
- }
- 
-+static char *get_cmdline(Object *obj, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    return g_strdup(igvm->cmdline);
-+}
-+
-+static void set_cmdline(Object *obj, const char *value, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    g_free(igvm->cmdline);
-+    igvm->cmdline = g_strdup(value);
-+}
-+
- static ResettableState *igvm_reset_state(Object *obj)
- {
-     IgvmCfg *igvm = IGVM_CFG(obj);
-@@ -85,6 +98,13 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "file",
-                                           "Set the IGVM filename to use");
- 
-+    object_class_property_add_str(oc, "cmdline", get_cmdline, set_cmdline);
-+    object_class_property_set_description(oc, "cmdline",
-+                                          "Set the command line for the "
-+                                          "software loaded from the IGVM "
-+                                          "file (copied verbatim, not "
-+                                          "parsed by QEMU)");
-+
-     igvmc->process = qigvm_process_file;
- 
-     rc->get_state = igvm_reset_state;
-@@ -112,4 +132,5 @@ static void igvm_cfg_finalize(Object *obj)
-         igvm_free(igvm->file);
-     }
-     g_free(igvm->filename);
-+    g_free(igvm->cmdline);
- }
-diff --git a/backends/igvm.c b/backends/igvm.c
-index ec7bee428b..d059fee4d2 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -158,6 +158,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp);
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp);
-@@ -192,6 +194,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_initialization_guest_policy },
-     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_madt },
-+    { IGVM_VHT_COMMAND_LINE, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_command_line },
- #ifdef CONFIG_FDT
-     { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_device_tree },
-@@ -851,6 +855,33 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-     return 0;
- }
- 
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    const char *cmdline = ctx->cfg->cmdline ? ctx->cfg->cmdline : "";
-+    uint8_t *param_data;
-+    uint32_t param_size;
-+    size_t cmdline_size = strlen(cmdline) + 1;
-+
-+    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!param_data) {
-+        return -1;
-+    }
-+
-+    if (cmdline_size > param_size) {
-+        error_setg(errp,
-+                   "IGVM: command line size %zu exceeds the %u byte "
-+                   "parameter area defined in IGVM file",
-+                   cmdline_size, param_size);
-+        return -1;
-+    }
-+
-+    memcpy(param_data, cmdline, cmdline_size);
-+
-+    return 0;
-+}
-+
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp)
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index b3b64cb584..b56a2e1254 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -32,6 +32,11 @@ struct IgvmCfg {
-      *           format.
-      */
-     char *filename;
-+    /*
-+     * cmdline: Command line for the software loaded from the IGVM file,
-+     *          if it asks for one.
-+     */
-+    char *cmdline;
-     IgvmHandle file;
-     ResettableState reset_state;
-     QTAILQ_HEAD(, IgvmMemoryRegion) memory_regions;
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 5895c97750..fe08d6d8f6 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1004,11 +1004,16 @@
- #
- # @file: IGVM file to use to configure guest
- #
-+# @cmdline: command line for the software loaded from the IGVM file.
-+#     Its format is specific to that software.  Passed verbatim: QEMU
-+#     does not parse it.
-+#     Ignored if the IGVM file does not ask for one.  (since 11.2)
-+#
- # Since: 10.1
- ##
- { 'struct': 'IgvmCfgProperties',
-   'if': 'CONFIG_IGVM',
--  'data': { 'file': 'str' } }
-+  'data': { 'file': 'str', '*cmdline': 'str' } }
- 
- ##
- # @SevCommonProperties:
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 2f6863180b..f72f30e246 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -6496,7 +6496,7 @@ SRST
-                  -machine ...,confidential-guest-support=tdx \\
-                  ......
- 
--    ``-object igvm-cfg,file=file``
-+    ``-object igvm-cfg,file=file[,cmdline=string]``
-         Create an IGVM configuration object that defines the initial state
-         of the guest using a file in that conforms to the Independent Guest
-         Virtual Machine (IGVM) file format.
-@@ -6509,6 +6509,10 @@ SRST
-         memory of the virtual machine and, depending on the platform, can
-         define the initial processor state, memory map and parameters.
- 
-+        The optional ``cmdline`` parameter is a command line passed
-+        verbatim to the software loaded from the IGVM file, if the file
-+        requests one. Its format is specific to that software.
-+
-         The IGVM file is expected to contain the firmware for the virtual
-         machine, therefore an ``igvm-cfg`` object cannot be provided along
-         with other ways of specifying firmware, such as the ``-bios``
+> ---
+>  target/arm/cpu-features.h | 11 +++++++++++
+>  target/arm/cpu.c          | 10 +++++++++-
+>  target/arm/cpu.h          |  3 +++
+>  target/arm/helper.c       | 17 +++++++++++++++++
+>  4 files changed, 40 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index a9eebb4..4b7d47b 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -459,6 +459,17 @@ FIELD(DBGDEVID, DOUBLELOCK, 20, 4)
+>  FIELD(DBGDEVID, AUXREGS, 24, 4)
+>  FIELD(DBGDEVID, CIDMASK, 28, 4)
+>=20=20
+> +FIELD(MPAMIDR, PARTID_MAX, 0, 16)
+> +FIELD(MPAMIDR, HAS_HCR, 17, 1)
+> +FIELD(MPAMIDR, VMR_MAX, 18, 3)
+> +FIELD(MPAMIDR, PMG_MAX, 32, 8)
+> +FIELD(MPAMIDR, HAS_ALTSP, 57, 1)
+> +FIELD(MPAMIDR, HAS_TIDR, 58, 1)
+> +FIELD(MPAMIDR, SP4, 59, 1)
+> +FIELD(MPAMIDR, HAS_FORCE_NS, 60, 1)
+> +FIELD(MPAMIDR, HAS_SDEFLT, 61, 1)
+> +FIELD(MPAM1_EL1, MPAMEN, 63, 1)
+> +
+>  FIELD(DBGDEVID1, PCSROFFSET, 0, 4)
+>=20=20
+>  FIELD(MVFR0, SIMDREG, 0, 4)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 10ac6c9..e7529d5 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -439,6 +439,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType=
+ type)
+>          /* Sample rvbar at reset.  */
+>          env->cp15.rvbar =3D cpu->rvbar_prop;
+>          env->pc =3D env->cp15.rvbar;
+> +
+> +        env->mpam1_el1 =3D R_MPAM1_EL1_MPAMEN_MASK;
+>  #endif
+>      } else {
+>  #if defined(CONFIG_USER_ONLY)
+> @@ -452,6 +454,8 @@ static void arm_cpu_reset_hold(Object *obj, ResetType=
+ type)
+>              env->cp15.rvbar =3D cpu->rvbar_prop;
+>              env->regs[15] =3D cpu->rvbar_prop;
+>          }
+> +
+> +        env->mpam1_el1 =3D R_MPAM1_EL1_MPAMEN_MASK;
+>      }
+>=20=20
+>  #if defined(CONFIG_USER_ONLY)
+> @@ -2333,7 +2337,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Er=
+ror **errp)
+>          FIELD_DP64_IDREG(isar, ID_AA64PFR0, AMU, 0);
+>          FIELD_DP32_IDREG(isar, ID_PFR0, AMU, 0);
+>          /* FEAT_MPAM (Memory Partitioning and Monitoring Extension) */
+> -        FIELD_DP64_IDREG(isar, ID_AA64PFR0, MPAM, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, MPAM, 1);
+> +        cpu->isar.mpamidr_el1 =3D
+> +            FIELD_DP64(cpu->isar.mpamidr_el1, MPAMIDR, PARTID_MAX, 63);
+> +        cpu->isar.mpamidr_el1 =3D
+> +            FIELD_DP64(cpu->isar.mpamidr_el1, MPAMIDR, PMG_MAX, 3);
+>      }
+>=20=20
+>      /* MPU can be configured out of a PMSA CPU either by setting has-mpu
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 06ebed4..51a36fa 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -757,6 +757,8 @@ typedef struct CPUArchState {
+>      struct CPUBreakpoint *cpu_breakpoint[16];
+>      struct CPUWatchpoint *cpu_watchpoint[16];
+>=20=20
+> +    uint64_t mpam0_el1;
+> +    uint64_t mpam1_el1;
+>      /* Optional fault info across tlb lookup. */
+>      ARMMMUFaultInfo *tlb_fi;
+>=20=20
+> @@ -1121,6 +1123,7 @@ struct ArchCPU {
+>          uint32_t dbgdevid;
+>          uint32_t dbgdevid1;
+>          uint64_t reset_pmcr_el0;
+> +        uint64_t mpamidr_el1;
+>          uint64_t idregs[NUM_ID_IDX];
+>      } isar;
+>      uint64_t midr;
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index ff0b766..896ac0e 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -6907,6 +6907,23 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                .access =3D PL1_R, .type =3D ARM_CP_CONST,
+>                .accessfn =3D access_tid3,
+>                .resetvalue =3D cpu->isar.mvfr0 },
+> +            { .name =3D "MPAMIDR_EL1", .state =3D ARM_CP_STATE_AA64,
+> +              .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0xa, .crm =3D 4, .opc2 =
+=3D 4,
+> +              .access =3D PL1_R, .type =3D ARM_CP_CONST,
+> +              .accessfn =3D access_tid3,
+> +              .resetvalue =3D cpu->isar.mpamidr_el1 },
+> +            { .name =3D "MPAM0_EL1", .state =3D ARM_CP_STATE_AA64,
+> +              .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0xa, .crm =3D 5, .opc2 =
+=3D 1,
+> +              .access =3D PL1_RW, .type =3D ARM_CP_ALIAS,
+> +              .accessfn =3D access_tid3,
+> +              .fieldoffset =3D offsetof(CPUARMState, mpam0_el1),
+> +            },
+> +            { .name =3D "MPAM1_EL1", .state =3D ARM_CP_STATE_AA64,
+> +              .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0xa, .crm =3D 5, .opc2 =
+=3D 0,
+> +              .access =3D PL1_RW, .type =3D ARM_CP_ALIAS,
+> +              .accessfn =3D access_tid3,
+> +              .fieldoffset =3D offsetof(CPUARMState, mpam1_el1),
+> +            },
+>              { .name =3D "MVFR1_EL1", .state =3D ARM_CP_STATE_AA64,
+>                .opc0 =3D 3, .opc1 =3D 0, .crn =3D 0, .crm =3D 3, .opc2 =
+=3D 1,
+>                .access =3D PL1_R, .type =3D ARM_CP_CONST,
 
--- 
-2.56.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
