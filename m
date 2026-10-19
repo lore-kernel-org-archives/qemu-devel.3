@@ -4,70 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827E7CCF2DB
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FBECCF2D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIjbX-0000Td-DU; Mon, 19 Oct 2026 05:24:27 -0400
+	id 1xIjbq-0000a6-3e; Mon, 19 Oct 2026 05:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xIjbV-0000Ss-V9
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:24:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xIjbH-0002md-0l
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:24:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792401849;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=RkyJJftsuLINSzs44tAskMdqVi/d7YlA0Rz4Uj4AZbU=;
- b=QKVbJ/X4LKKuM913rThqEvHfy+ibE9tel2sD+4bhMNYrgaDfA+wPfcFpEWBuoDqVPsHlE1
- R+VhuINStU323f1M9ndwvWyHgaUFWgF3AWlcuFu0w2Tp3vpq42brcrD6Ds5GR3pgr2RRkL
- ieGECKteHyNTmhMKtivhSXEl5K78gcU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-CcGDKU_HMqaT9FNgwlaa-Q-1; Mon,
- 19 Oct 2026 09:23:55 +0000
-X-MC-Unique: CcGDKU_HMqaT9FNgwlaa-Q-1
-X-Mimecast-MFC-AGG-ID: CcGDKU_HMqaT9FNgwlaa-Q_1792401834
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1C251800669
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:23:54 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ABF3D767; Mon, 19 Oct 2026 09:23:53 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] ui/dbus: validate clipboard selection in Release handler
-Date: Mon, 19 Oct 2026 13:23:51 +0400
-Message-ID: <20261019092351.2435194-2-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIjbo-0000Z3-6G
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:24:44 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xIjbm-0002ol-L2
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:24:43 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-6798c43a3d6so1175561d50.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:24:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792401880; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ALlroiK+oQmH6FP2sPYExiImhoban4DxsRnnnm0eBIOncUa3pqYyMfwuVIyCE+BtxS
+ C9fkqqhAcK2q18L6BPal2otrwYgTVyw4V7TN4j8KGzSkqitXaeKIAp5LnSriuZpxIYyr
+ 3WuAido6Jh1CbFmIJL71ml+LbTHJyPiT5BdXYaTqzikI+UOJpcvZ+ou5VzNlsSGb/yDL
+ 0+fcC/V6wkwEs+qLMYQMjYoGW/ywhXuKszAtuLsTUWwE471h6pCF2PKXGxWBVoM5KNOO
+ p22r+dxIUlgXpc3itO8np8CXCRjkcQFI9tly8WSSnqA4decqIW7hnqDG+8/+KBgkOl6e
+ Rb6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MNENA/MC9L+77hx3g/q/IU25eQjNwPssmSWwXIKL5Tc=;
+ fh=5Cdf/Z4kSBQryBydwDs/SCIZcuS2qJf1GkOYkDmvwX8=;
+ b=owm5xQnHzhq1m77/tQV3QQZ8hlXoWcs+KgdPOTYGm+vUQdq/Evv9yVeC5jX/9iyaKP
+ PkLW12ZCJjLlBHVD9lzihDALstTBCFrFen26RFQmTmnhJX0H9eKXA/nvrs5GWFZh7gcS
+ 5Yer9dPg9KE4anC0vIbtHv5LJNCOJGhrgXN4zpLBbIHykN6rhRWXknZzlUtKiG/LNSGs
+ 0/cd6QBfd5guG+Wg8I6lzyt6GW2WYWU5EdBQrKxf7AWeaLZzBv28Jvu7eWExtyfoqKy0
+ zy7+baLCPFnI+YuvCmGZxoPqedbEqpMeSzLVCrPF5GT8GomxTGOFQX6N0nt6veNOOhjF
+ n7MQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792401880; x=1793006680; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MNENA/MC9L+77hx3g/q/IU25eQjNwPssmSWwXIKL5Tc=;
+ b=Y7HZ6afo52d6BNX3aU5mbQC3KW2DMdzuc6gehxXTgRIiYaDs6wFoNVdX3e1McBZw63
+ eTSYH2W89qx2RXdqbRSNm9xJdIdd/4n5Zumig97lHR7eWyoGBijjbwOxEBMt5JfOwxYi
+ DgrMJHCLlY3ZkggeptOyKhZq+Z//9vilqJA54njteAhjTMaoth/tdEKF/YBbVyDwCSZW
+ prMCdSujWs/yqXrpPO9QO0F7spBCHnzCqqrUMR/oeQrivnB4+eOdLIB4pCvAMw3kcCPd
+ 6SzHvKAF776+aPjUzX0LJ3Q3dMO0fbFMgcrYi+mO7ifFNivCjaKGaCJ2hfCzXLmeuAPM
+ wH/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792401880; x=1793006680;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MNENA/MC9L+77hx3g/q/IU25eQjNwPssmSWwXIKL5Tc=;
+ b=eSpnQS5ycLfGdXZ5sCZlyK3ojtWbc4BpCcv8f4C2Z3ZhhKa9DHhciqOV0jJN+Bkp0e
+ ATvpBC5WFAK24oeToyT4uO4PM8QcjyRRMM24Dr+BiUhUfu8Q5CiNtG6ovTg7jRUY43xV
+ ahK0O1VsCyiR05ZD1DfKQJtYdnbbfUpg6GKsq10rbQYy4558UsdKQCM1E94fLX3hwK7b
+ nFKNSYMPqCoLWbr+Q4Y4iK9TYaD2DaOk2mrIyD2mqRv+Tc2Q8R/dpMs2uJENjKtFbMXL
+ sJOPsR3d7+R3AThvItlGydL6ksdxHaijwAVIQjxhNaiy62vJKOXD1IdtX0mOwqixvfj1
+ SAXA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy75WjxhuYKuMulpW4S3jDHcevSgbbHewRazwG3HpDKTYtluSlsPlGcJGaxyeJ3faiQpPOehNQA5D/O@nongnu.org
+X-Gm-Message-State: AFq9FYJQbsB6lyfUsGlV17tRo53XRXdgJo4G4FYeZOKtId3TQDTMutrE
+ EQ8YN6mO70VGH945n3++8PGsW2aOizY1+vzvj8oeOuINP28mLxCZGKIuMmkdJxEoRSyoHgULl6Y
+ RXHGBIJdYSXEZ53lfdglu1q9ICMK25Le8dw4MzHjiCg==
+X-Gm-Gg: AYBFou3a/rF7V4E5RHlGeT9jvVpmmVyIfyiCm0BxnvUVr2jq5zlBXv3dijCLn72542B
+ TyWIstMhJf5nyGa4ldl7iPugSR9BQNnboO+TvEF9vjxMJBtTnBtMvf/D6LboY8j2SXriCntfZ14
+ Gg9XGLeQLWqrkkf5XDlyAk8P1kNOggDvyYVoSnORYcx0657UnTGv8WLpqZ2zTiPUzBJTEM0Nrgf
+ UD8mVsiy6DQaKAdo2ydIKiRD10XHew8SwVy/veGQDyby1pzA+5LCW2t2yTN6Woq5tLY22Ej891Q
+ 95zm/bS2ezlSzEI7Osot6rePq8e61d3ez9ucpvmvR9cRCbbPlRkEixx37tOEvThSNqAUNgw91AV
+ AegSsAxFB7gQAfz4290a4BOPTPfpQDnFQCiYvTss=
+X-Received: by 2002:a05:690e:e89:b0:679:9c43:8599 with SMTP id
+ 956f58d0204a3-679ca573adfmr1752717d50.8.1792401879841; Mon, 19 Oct 2026
+ 02:24:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
+ <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+ <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
+In-Reply-To: <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Oct 2026 10:24:28 +0100
+X-Gm-Features: AclHuK8T7IlPIQFv-s8rGXV6qKTa6j_RBW8npIig5AVCHtrtgTbHRe0lx-FU40k
+Message-ID: <CAFEAcA_4xb3CBL9TTAdKMOG_ijWpt9wsveCp0R602VoFaWUH1Q@mail.gmail.com>
+Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Jinjie Ruan <2118537295@qq.com>, anisinha@redhat.com, armbru@redhat.com, 
+ eblake@redhat.com, imammedo@redhat.com, michael.roth@amd.com,
+ mst@redhat.com, 
+ pbonzini@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.34,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,54 +124,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Mon, 19 Oct 2026 at 02:57, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+> =E5=9C=A8 2026/10/16 18:20, Peter Maydell =E5=86=99=E9=81=93:
+> > I guess my question here is "how much is this actually doing,
+> > and how much is it 'we provide enough software-facing interface
+> > to keep the guest happy'" ? My (rather shallow) understanding of
+> > MPAM is that it's essentially adding tags to memory transactions
+> > and then accounting how much bandwidth each tag is using. That
+> > seems obviously infeasible for emulation, but on the other hand
+>
+> Hi Peter,
+>
+> Yes, I agree with you.
+>
+> Implementing MPAM bandwidth control and partitioning at the
+> performance-effect level in QEMU is neither feasible nor necessary, and
+> it is not in line with QEMU=E2=80=99s original purpose as a fast function=
+al
+> emulator.
+>
+> We only need to implement the functionality-related parts (i.e., the
+> register interfaces and control flow) to ensure that the software stack
+> can correctly recognize and configure MPAM, without simulating the real
+> performance impact produced by those configurations.
+>
+> > this looks like it's rather larger than a minimal "we provide
+> > the register interface but it does nothing", so what are we doing?
+>
+> By implementing MPAM-related register interfaces and control flow, as
+> well as the MSC hardware topology in QEMU, we can understand the resctrl
+> framework and interfaces in Linux, along with the related hardware
+> topology discovery process. This facilitates kernel debugging and
+> pre-silicon testing, and also allows us to debug and test test cases,
+> avoiding the complexity and slowness of testing on FPGA.
 
-The clipboard "Release" D-Bus method handler passes the caller provided
-selection to qemu_clipboard_peer_release() without any bounds check,
-unlike the "Grab" and "Request" handlers.
+Yes, but what is your implementation actually *doing* ? If
+software reads some MPAM resource monitor, does it read zeroes,
+or something else, or do we implement no monitors at all?
+2400 lines is a lot of code for "nothing actually happens".
 
-An out-of-range selection reaches qemu_clipboard_info(), which asserts
-selection < QEMU_CLIPBOARD_SELECTION__COUNT and aborts QEMU (with
-asserts compiled out, it would index the cbinfo[] array out of bounds).
-
-Reject invalid selections with an error, following the same pattern as
-the other clipboard handlers.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4717
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/dbus-clipboard.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
-index 90318384ee48..44764fff8081 100644
---- a/ui/dbus-clipboard.c
-+++ b/ui/dbus-clipboard.c
-@@ -346,11 +346,22 @@ dbus_clipboard_release(
-     GDBusMethodInvocation *invocation,
-     gint arg_selection)
- {
-+    QemuClipboardSelection s = arg_selection;
-+
-     if (!dbus_clipboard_check_caller(dpy, invocation)) {
-         return DBUS_METHOD_INVOCATION_HANDLED;
-     }
- 
--    qemu_clipboard_peer_release(&dpy->clipboard_peer, arg_selection);
-+    if (s >= QEMU_CLIPBOARD_SELECTION__COUNT) {
-+        g_dbus_method_invocation_return_error(
-+            invocation,
-+            DBUS_DISPLAY_ERROR,
-+            DBUS_DISPLAY_ERROR_FAILED,
-+            "Invalid clipboard selection: %d", arg_selection);
-+        return DBUS_METHOD_INVOCATION_HANDLED;
-+    }
-+
-+    qemu_clipboard_peer_release(&dpy->clipboard_peer, s);
- 
-     qemu_dbus_display1_clipboard_complete_release(dpy->clipboard, invocation);
-     return DBUS_METHOD_INVOCATION_HANDLED;
--- 
-2.56.0.116.g6de20f6092dc
-
+-- PMM
 
