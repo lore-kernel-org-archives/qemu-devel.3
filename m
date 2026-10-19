@@ -1,68 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AFE606A321
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3665606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D3vyclbR
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JOLrdeKL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt1M-0000fY-L8; Mon, 19 Oct 2026 15:27:44 -0400
+	id 1xIt1n-0001A2-8p; Mon, 19 Oct 2026 15:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0x-0000Sb-RQ
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:22 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1xIt14-0000W9-UB
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:28 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0q-00033v-Oa
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:18 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-48dfdd0678dso1618303f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:12 -0700 (PDT)
+ id 1xIt13-00037z-41
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:26 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a1e2957d7eso15490375e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792438031; x=1793042831; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3o+Btf39R989kvm/VWlrprxcKrBtRJRhTAk2pUmeGhI=;
- b=D3vyclbRyo2nUkQwL7zny6we7hmLsAjlbpmQb48iUXgXYhbQC0xzbBjKYm4nUTdPH0
- ViuBTOOogbFjjiWRRX/RHuISKwiBIcgRKNJpVI7XrfY/Uf+h+CsBfkT+OEg5f/ADXnJX
- /4CJBMcqYPMsp4gv52TvIZ7ZA52uf6cWzAmOUywzWWfeH5X/AQhK8rwPB788ce98tdPf
- IPB4fL5aaCrDONkBo5z08zXeX3NTQbTiL12HnucWCZTwK/mPSJM1h8sWA0jmd3v5F9ps
- Pno0zBs7G1qxDkxggXkf4J651BWc+x5GjqHmbTkwZrutcQzm86CWfsZHHfk3LAHvbCAE
- IOIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792438031; x=1793042831;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=linaro.org; s=google; t=1792438043; x=1793042843; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3o+Btf39R989kvm/VWlrprxcKrBtRJRhTAk2pUmeGhI=;
- b=ixlzmLJEz3+RdSiQcf27qUt8mjhBfhDXo+TwjTqPJLliWIZwNVQCwGODkoXZaWlAw9
- mJTKRaQEMD6lArxUqMqHlSoGhNpHM9EQKq+VyInR30CG6pbaD1HwjIdDHfWu9SAfPlD8
- dI/6ujADHFDkjWM2KaYEDdYqbwzjlZs48arLWsu+0TnfCk0tKfFtWx0+xdNPgaKf4BgX
- bpRWn6rjhtF++iz8fV/QofAGFBo+srR0rGIs2oc45p9+5l4yp0el3sXKbZ2Jpvqgd+Ts
- fPwQAbR1vzzn0tIH9Sb+82P6gBrxydnPzNXtka43RApAnI81X9TPTpWTt0Ess/4nPD7e
- mJLg==
-X-Gm-Message-State: AFq9FYKPUhln3MCJ/Nc1T247kerERF2bmH36Nj4OEz/kycsotjm0A0S7
- WZRaD3/OqmiICZd7xzCcxCups7A+GCpM+Z3rkPbR+Oie2pejeZ+GEnom0Tkjl7TuvCA=
-X-Gm-Gg: AYBFou1YDFU4OqbscqzkcrBnaydpABM8EyykNHwTi4ipcMd//pq6Jwd0NxKGNY/3tS2
- WLx6fmmqmArz+qGcmpN479BHAfuei/WWx+QBT6uMEI+k4+DNthYJ7incRaaGzWkdwXCaVaO9IiD
- ykAi86qoFd0YPQZsgnfFN7Sl8sPMHBZ50N7ICgIBdI1uh9nJ7RuommQiV5Xrv6tqvvZIiRL5Dbt
- +XpCaozkMshirUNxTGzYhb6+3Bu5Db74eR0oSoXYm1x3mHAEWcaevJdStptJBSpBx/plzUQcyp7
- aFn/BZP8xBpuOxLTTorNFYMhwax0wYt16a+F0EX4I+dXlueCQTxXadsSpfglCbczUaAkighQzQj
- zsmIpEnVTiv8IJQ9GSFNX7cQn7A3+EAq3ygPxIFf8Ml8dJAx8W44+duGRT1Af1m/SWOt+kfQsP0
- ZxPkJi4xlvYHlnS+tqmW95Rl02WUY3/Ss9xyNGXBHE3o2ejs1bcYkUlzHk44fLVprVDgb4hA==
-X-Received: by 2002:a5d:4b8c:0:b0:48e:38e:3102 with SMTP id
- ffacd0b85a97d-48e07f9bdfamr12895951f8f.29.1792438030394; 
- Mon, 19 Oct 2026 12:27:10 -0700 (PDT)
+ bh=LvwOWBSv5bjU3IQiTRgBXtkpjY1ZO4xJW05ChFwIZuI=;
+ b=JOLrdeKLYSOBvF0d45Iv9X7rOaHsZRFcNgRVvOy5nKKRM+0WJG2IESYrEfRJctZ/YL
+ qrgY0yKcxl+7p+uZV7+aC6BFRF++rQnkk6oKPq3MImbhbgyXgDj1/6pubpQe+k99qtgT
+ hE6tcogDLJLkxjEm6l5h2mWRCT332Km3rqL+rllwWlmt/aiykLKstETw406LOcNeksQU
+ I7NmHE7FIrmMkOrHp4GN+oRdIiXlJislA5iGJ3UvIVuOnGYzERdBGoAqOAsiSv6l0Yai
+ R7oWRcmc1uLND0HjBWkZIPjX6OwKbmS0KpfBPoqSF6i0Fd6x+bz8HMYouFIn2BSK6FSJ
+ qZAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792438043; x=1793042843;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LvwOWBSv5bjU3IQiTRgBXtkpjY1ZO4xJW05ChFwIZuI=;
+ b=bnlSGRCSjlf79TU211isl6UyJU4Sj1+B01gOv1yP1e8zRONORJPJzOixu+2oRiRgnn
+ XX3pfrZXPjr3nniAPmdVDxV0kt5UYo/sXs8miWIyWNLjLHt02qN/MRb9C/2n4lrN91J4
+ mPRv5qmZmwNmOdKX8+C5IZE4aYqxY47mTWMbjK56NGgLeZdxsgxmsTXz/bFMnGCmMp7z
+ v0x8nh+jWj1Z0+lprWAO9SQdizXRVmFe9ph2suJTsHvJgVGWdcul9TZhBt2Juoa7VB5m
+ zPFMR6BEytH8MOLuSZvWZ+YB+3kDu4dSUzhPEGa/CtMbKEoVXuMMXD8IR7gnXQsZd8w4
+ cSvA==
+X-Gm-Message-State: AFq9FYJOUj9YLhOqW9G8z7CGqqlr3un0rc//PCcnK/Md4hcrM1Oq0Ryr
+ I/lrNl/F9Pfrtsu5/ljL5KcL3Pf/GO9bso7JU9xvV79NthFqEP7vaIKTV/sv5jjWA+I=
+X-Gm-Gg: AYBFou3HmNy18Z0xb2NmO/Zxuo6uP2EvZy5zfyu5N0gfRS9dIyqs/mqDCi7wt/OK2L4
+ dOBgNoSgB+1jx6tLmkQ8NOKyPu0O+qtUDXxQqWTt94wuop9h/xdDJUU2iSl+sEvtnfTnY37Ra/x
+ CUWI0GpcZq7NYu3ERp0/Pmex/2/3PTdmxRxyxrkoUVjXUpl92DhkPDMLd+fxakse9inRD1JvQD6
+ bC7PE+2rYMv+Hucha6AWDI8ji/odhRV9YnjSEPfyUxOh6Jc6ItaRUtcUfYcaQ7IC7tQx9K5Pgjq
+ dpRKDKFt/UpCvsTB9GlCojYkcifcwFinO22Js9Xj9P4dR7/W4I65QcvdwkTb7Ajlsu64tRt7Mym
+ hAbX2LOrI/Vdl5bDKPR6bYrxJlhgO9IwXK1fIca1anktTQvCz2MGDNOmD2U9/Mx/bmCOzETXOHX
+ qK02m/W/Lw2Ti9wYzVtSO9tSowV+lEcPtO2OhpolkhzBbmRKvYEwCnJcRm+3/nFRz8yKDBUQ==
+X-Received: by 2002:a05:600c:4691:b0:4a1:ebf0:43ed with SMTP id
+ 5b1f17b1804b1-4a1ebf04495mr60140065e9.24.1792438041180; 
+ Mon, 19 Oct 2026 12:27:21 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d80f9dbsm810525f8f.19.2026.10.19.12.27.05
+ 5b1f17b1804b1-4a1f2d569d4sm13621795e9.10.2026.10.19.12.27.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Oct 2026 12:27:05 -0700 (PDT)
+ Mon, 19 Oct 2026 12:27:13 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0305B5F82D;
+ by draig.lan (Postfix) with ESMTP id ED7315FB54;
  Mon, 19 Oct 2026 20:27:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,17 +90,18 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v3 00/19] testing/next: functional testing updates for gdb
- (pre-PR)
-Date: Mon, 19 Oct 2026 20:26:45 +0100
-Message-ID: <20261019192704.3220373-1-alex.bennee@linaro.org>
+Subject: [PATCH v3 09/19] tests/guest-debug: convert cmd to an qemu_cmd array
+Date: Mon, 19 Oct 2026 20:26:54 +0100
+Message-ID: <20261019192704.3220373-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
+References: <20261019192704.3220373-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,100 +120,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
+As with gdb_cmd passing a plain string to a subprocess involves making
+sure the escaping is correct so the underlying shell doesn't get
+confused. Do the same as gdb_cmd and make the whole thing an array.
 
-This is the current state of my testing/next tree. There a are a few
-minor tweaks and fixes that I've picked up. The majority of the new
-code adds testing for the gdb stub when used via KVM.
+There are a few minor wrinkles with when args.binary is expected so
+add some comments for that.
 
-As a result I spoke to Anders who handles the tuxrun images and he was
-able to turn on debugging symbols and provide a vmlinux alongside the
-bootable image. With these updates I was able to resurrect the old
-test script I was running by hand and then plumb it into a functional
-test.
+Suggested-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/guest-debug/run-test.py | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-So far I've done x86_64, aarch64 and s390x. I can't test ppc because
-our CI machines don't support nested KVM. I don't have access to any
-riscv kvm capable hardware.
-
-The reason I went on the side-quest is because when working on
-cleaning up QEMU's internal KVM api I realised that quite a large
-chunk of it is not exercised by our functional tests. This would
-ensure that at least:
-
-  kvm_arch_update_guest_debug
-  kvm_arch_get_registers
-  kvm_arch_set_registers
-
-is exercised and I'm less likely to break things in my re-factor ;-)
-
-v3
-  - address review comments
-  - convert run-test to use arrays for gdb and qemu cmd lines
-  - fix errors on s390x and aarch64 hosts
-
-v2
-
-  - fixed up the sh4 direct call
-  - dropped the fw tracing test case as tuxrun images cover it all
-  - added aarch64 and s390x cases
-  - worked around s390x watchpoint issues
-
-The following still need review:
-
-  tests/functional: teach tuxrun about launching gdb tests
-  tests/guest-debug: convert cmd to an qemu_cmd array
-  tests/guest-debug: convert gdb_cmd to an array
-
-Alex.
-
-Alex Bennée (18):
-  tests/functional: test_acpi_bits requires TCG
-  .dir-locals: include QEMU code in PYTHONPATH
-  meson: move gdb detection into the top level build file
-  tests/functional: allow tuxrun tests to be passed "accel"
-  tests/functional: split x86_64 tuxrun into tcg and kvm run
-  tests/functional: update x86_64 tuxrun images
-  tests/guest-debug: convert gdb_cmd to an array
-  tests/guest-debug: convert cmd to an qemu_cmd array
-  tests/guest-debug: add --kargs option to run-test
-  tests/guest-debug: add --symbols option to run-test
-  tests/functional: teach tuxrun about launching gdb tests
-  tests/functional: add tuxrun kvm gdb test for x86_64
-  tests/functional: split aarch64 tuxrun into tcg and kvm run
-  tests/functional: update arm64 tuxrun images
-  tests/functional: add tuxrun kvm gdb test for arm64
-  tests/functional: split s390x tuxrun into tcg and kvm run
-  tests/functional: update s390x tuxrun images
-  tests/functional: add tuxrun kvm gdb test for s390x
-
-Max Filippov (1):
-  tests/tcg: fix buffer overflow in multiarch/linux/linux-sigrtminmax
-
- meson.build                                   |  15 +-
- tests/tcg/multiarch/linux/linux-sigrtminmax.c |   2 +-
- .dir-locals.el                                |   8 +-
- tests/functional/aarch64/test_tuxrun.py       |  35 +++-
- .../functional/gdb-scripts/kernel_gdb_test.py | 164 ++++++++++++++++++
- tests/functional/meson.build                  |   5 +-
- tests/functional/qemu_test/tuxruntest.py      | 108 ++++++++++--
- tests/functional/s390x/test_tuxrun.py         |  37 +++-
- tests/functional/sh4/test_tuxrun.py           |   6 +-
- tests/functional/x86_64/test_acpi_bits.py     |   3 +
- tests/functional/x86_64/test_tuxrun.py        |  45 ++++-
- tests/guest-debug/run-test.py                 |  83 ++++++---
- tests/lcitool/libvirt-ci                      |   2 +-
- tests/tcg/meson.build                         |   5 -
- 14 files changed, 444 insertions(+), 74 deletions(-)
- create mode 100644 tests/functional/gdb-scripts/kernel_gdb_test.py
-
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index e8b69f85cd1..d5ffaaa9ffc 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -79,27 +79,32 @@ def format_cmd(cmd):
+     socket_name = os.path.join(socket_dir.name, "gdbstub.socket")
+ 
+     # Launch QEMU with binary
++    qemu_cmd = [args.qemu]
++    if args.qargs:
++        qemu_cmd.extend(shlex.split(args.qargs))
++
+     if "system" in args.qemu:
+-        if args.no_suspend:
+-            suspend = ''
+-        else:
+-            suspend = ' -S'
+-        cmd = f'{args.qemu} {args.qargs} {args.binary}' \
+-            f'{suspend} -gdb unix:path={socket_name},server=on'
++        # for system mode we assume qargs has set-up for binary
++        qemu_cmd.append(args.binary)
++        if not args.no_suspend:
++            qemu_cmd.append("-S")
++        qemu_cmd.extend(["-gdb", f"unix:path={socket_name},server=on"])
+         # There is no guest program command-line in system mode.
+         assert not args.pargs
+     else:
++        qemu_cmd.append("-g")
+         if args.no_suspend:
+-            suspend = ',suspend=n'
++            qemu_cmd.append(f"{socket_name},suspend=n")
+         else:
+-            suspend = ''
+-        cmd = f'{args.qemu} {args.qargs} -g {socket_name}{suspend}' \
+-            f' {args.binary}'
++            qemu_cmd.append(f"{socket_name}")
++
++        # for user mode binary and args always go at the end
++        qemu_cmd.append(args.binary)
+         if args.pargs:
+-            cmd += f' {args.pargs}'
++            qemu_cmd.extend(shlex.split(args.pargs))
+ 
+-    log(output, "QEMU CMD: %s" % (cmd))
+-    inferior = subprocess.Popen(shlex.split(cmd))
++    log(output, "QEMU CMD: %s" % (format_cmd(qemu_cmd)))
++    inferior = subprocess.Popen(qemu_cmd)
+ 
+     # Now launch gdb with our test and collect the result
+     gdb_cmd = [args.gdb, args.binary]
 -- 
 2.47.3
 
