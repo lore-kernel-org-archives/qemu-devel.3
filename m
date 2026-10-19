@@ -4,70 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D33CCF2DB
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 13:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA99CCF2DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 13:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIn9g-0001Hc-4b; Mon, 19 Oct 2026 09:11:56 -0400
+	id 1xInCc-0001x9-67; Mon, 19 Oct 2026 09:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xIn9e-0001HN-Te
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 09:11:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xInCV-0001vq-7O
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 09:14:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xIn9d-00070J-6m
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 09:11:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xInCT-0007Bf-KD
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 09:14:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792415512;
+ s=mimecast20190719; t=1792415686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=knwRCzNZ4snLUrfUgd8OV8NSLbPxeO83zo/cRL5sABg=;
- b=J/eYpdtKh14RlZQMaLHFNsasYpnnniTmOEs+gDYWU2JwSJxx8fRbgzbfO0Qk0YCElspJO8
- RpMMbpGzJpw22uUalIG+L/5lpq17kuQmVm3nRQr+9ZRFCy0kaUtxbg9O272LQC73hhRIIP
- jo8TimuAKF9q2H3s+60G5fB3DQHj3Lg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IH7gFs//57w6geKln45P7/yUam2hpwR3qEEtKlXnHRQ=;
+ b=R+Hu6sOHpOdHa6OPIBkl5x84O2cJxsdzs0CTTbE5iYZ6G+P/i3y3OiNnTkZu2xOw96gq1Q
+ eG3bQ0NC4UMwtbwrvUfy0UsQit6J3kQekzO5Nqj1qf5D3NDCrt5nYTVR8HUIFcUblwljO5
+ nUBuBVJaKb+jdKUrUpLX9qlrYwbcYnc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-499--nt9l5H8M2aGAc6agnBGAg-1; Mon,
- 19 Oct 2026 13:11:48 +0000
-X-MC-Unique: -nt9l5H8M2aGAc6agnBGAg-1
-X-Mimecast-MFC-AGG-ID: -nt9l5H8M2aGAc6agnBGAg_1792415506
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-aHMTewoYNvS1XdB9PagH3Q-1; Mon,
+ 19 Oct 2026 13:14:41 +0000
+X-MC-Unique: aHMTewoYNvS1XdB9PagH3Q-1
+X-Mimecast-MFC-AGG-ID: aHMTewoYNvS1XdB9PagH3Q_1792415679
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A23731954B1B; Mon, 19 Oct 2026 13:11:46 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B987C1955F1C; Mon, 19 Oct 2026 13:11:45 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2] ui/dbus: validate clipboard selection in Release handler
-Date: Mon, 19 Oct 2026 17:11:43 +0400
-Message-ID: <20261019131143.2555126-2-marcandre.lureau@redhat.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A421118011EB; Mon, 19 Oct 2026 13:14:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40ECB30000E3; Mon, 19 Oct 2026 13:14:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id EDC4421E6A04; Mon, 19 Oct 2026 15:14:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Markus Armbruster <armbru@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v5 48/62] qdev: add qapi_type field to PropertyInfo with
+ fallback registration
+In-Reply-To: <20260911-qom-qapi-v5-48-7732a55b7760@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Fri, 11 Sep 2026 20:35:22 +0400")
+References: <20260911-qom-qapi-v5-0-7732a55b7760@redhat.com>
+ <20260911-qom-qapi-v5-48-7732a55b7760@redhat.com>
+Date: Mon, 19 Oct 2026 15:14:34 +0200
+Message-ID: <878q3tzvb9.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,53 +93,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-The clipboard "Release" D-Bus method handler passes the caller provided
-selection to qemu_clipboard_peer_release() without any bounds check,
-unlike the "Grab" and "Request" handlers.
+> Add a qapi_type field to PropertyInfo to prepare for the transition
+> from string-based type metadata to QAPI type-info.
+>
+> Add a qdev_prop_qapi_type() helper that resolves the QAPI type for a
+> property from .qapi_type. It will be later extended to cope with array
+> types.
+>
+> Update qdev_property_add_static() and qdev_class_add_property() to
+> prefer object_property_add_qapi() when a QAPI type is available, falling
+> back to the old object_property_add() for unconverted properties.
+>
+> Update the shared enum accessor functions to prefer .qapi_type->lookup
+> over .enum_table via a new qdev_propinfo_enum_lookup() helper.
+>
+> No PropertyInfo definitions are changed, all .qapi_type fields
+> default to NULL, so the fallback paths are always taken. This patch
+> is no-op for now.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/core/qdev-properties.c         | 67 +++++++++++++++++++++++++++++----=
+------
+>  include/hw/core/qdev-properties.h |  1 +
+>  2 files changed, 52 insertions(+), 16 deletions(-)
+>
+> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+> index 34d7b26a7303..b3d5abd5053c 100644
+> --- a/hw/core/qdev-properties.c
+> +++ b/hw/core/qdev-properties.c
 
-An out-of-range selection reaches qemu_clipboard_info(), which asserts
-selection < QEMU_CLIPBOARD_SELECTION__COUNT and aborts QEMU.
+[...]
 
-Reject invalid selections with an error, following the same pattern as
-the other clipboard handlers.
+> @@ -114,14 +123,14 @@ void qdev_propinfo_set_enum(Object *obj, Visitor *v=
+, const char *name,
+>      const Property *prop =3D opaque;
+>      int *ptr =3D object_field_prop_ptr(obj, prop);
+>=20=20
+> -    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
+> +    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info),=
+ errp);
+>  }
+>=20=20
+>  void qdev_propinfo_set_default_value_enum(ObjectProperty *op,
+>                                            const Property *prop)
+>  {
+>      object_property_set_default_str(op,
+> -        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
+> +        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), prop->de=
+fval.i));
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4717
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/dbus-clipboard.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+scripts/checkpatch.pl warns
 
-diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
-index 90318384ee48..44764fff8081 100644
---- a/ui/dbus-clipboard.c
-+++ b/ui/dbus-clipboard.c
-@@ -346,11 +346,22 @@ dbus_clipboard_release(
-     GDBusMethodInvocation *invocation,
-     gint arg_selection)
- {
-+    QemuClipboardSelection s = arg_selection;
-+
-     if (!dbus_clipboard_check_caller(dpy, invocation)) {
-         return DBUS_METHOD_INVOCATION_HANDLED;
-     }
- 
--    qemu_clipboard_peer_release(&dpy->clipboard_peer, arg_selection);
-+    if (s >= QEMU_CLIPBOARD_SELECTION__COUNT) {
-+        g_dbus_method_invocation_return_error(
-+            invocation,
-+            DBUS_DISPLAY_ERROR,
-+            DBUS_DISPLAY_ERROR_FAILED,
-+            "Invalid clipboard selection: %d", arg_selection);
-+        return DBUS_METHOD_INVOCATION_HANDLED;
-+    }
-+
-+    qemu_clipboard_peer_release(&dpy->clipboard_peer, s);
- 
-     qemu_dbus_display1_clipboard_complete_release(dpy->clipboard, invocation);
-     return DBUS_METHOD_INVOCATION_HANDLED;
--- 
-2.56.0.116.g6de20f6092dc
+    WARNING: line over 80 characters
+
+Easy enough to avoid.
+
+>  }
+>=20=20
+>  /* Bit */
+
+[...]
 
 
