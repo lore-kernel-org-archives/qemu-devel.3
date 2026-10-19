@@ -1,70 +1,68 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B1C606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AFE606A321
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vRROTqVj
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D3vyclbR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt17-0000YA-4J; Mon, 19 Oct 2026 15:27:29 -0400
+	id 1xIt1M-0000fY-L8; Mon, 19 Oct 2026 15:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0v-0000SN-6q
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:18 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1xIt0x-0000Sb-RQ
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:22 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xIt0o-00033F-P4
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:14 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a140e7405dso21468155e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:08 -0700 (PDT)
+ id 1xIt0q-00033v-Oa
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:27:18 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48dfdd0678dso1618303f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792438027; x=1793042827; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EL0Vj3lE1wOMC+825DlATKPDfWDFpznI37+dufm74XU=;
- b=vRROTqVjNVxVlqUwYJUoBWeUbvjq3p6Xu69/zBWVnl5OV13wEpXIruK3UWIoOyqFqI
- 022WE0aj1KKIh030q0NAceDfAvLhK4nFdfprSM8rHENHRjpCJ1jDzCRI0dXbkqVIjQve
- MAsOiFMQLC3aaXo2n9i8VtsrxHdQIxG6UjpRWFAYMQWEfQK2yJ6Dd6aK6CwCoZhfbvBX
- y9+8HFnPye6N+5G2jpUhHQDu/V20KkLf8A/QvkD2PAzBHo+GThmAyIEUBAsD6fiSxgy2
- HvYwJbzHqle3O0yYe26eCR4hWWMjJA9rpXUQaVzK/NRCQhrm3fVdUNXqFQMQVOwj0/AC
- vU6w==
+ d=linaro.org; s=google; t=1792438031; x=1793042831; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3o+Btf39R989kvm/VWlrprxcKrBtRJRhTAk2pUmeGhI=;
+ b=D3vyclbRyo2nUkQwL7zny6we7hmLsAjlbpmQb48iUXgXYhbQC0xzbBjKYm4nUTdPH0
+ ViuBTOOogbFjjiWRRX/RHuISKwiBIcgRKNJpVI7XrfY/Uf+h+CsBfkT+OEg5f/ADXnJX
+ /4CJBMcqYPMsp4gv52TvIZ7ZA52uf6cWzAmOUywzWWfeH5X/AQhK8rwPB788ce98tdPf
+ IPB4fL5aaCrDONkBo5z08zXeX3NTQbTiL12HnucWCZTwK/mPSJM1h8sWA0jmd3v5F9ps
+ Pno0zBs7G1qxDkxggXkf4J651BWc+x5GjqHmbTkwZrutcQzm86CWfsZHHfk3LAHvbCAE
+ IOIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792438027; x=1793042827;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EL0Vj3lE1wOMC+825DlATKPDfWDFpznI37+dufm74XU=;
- b=GUL/48Qor1kIuEn8KzoHd8bZ2cIsDec/PYXkdnIO0qc1MLHzUYETB9kn3z79SiAxmT
- x128JT6O1YcRJYMszc/AEbGQYgS4cy8Eaa75j4iqIH40j6WuwAn5C2naFCliXJ0dtnUZ
- 8/XRo2SiUh5HJveTFkblXCCfvBhSzCZB+nj5hbzQjAVLZrVreJosFFWKDTY1r7DhUggi
- pmO2XtPAe/3+Jruk5YNrGfEfku6xckYxQ2D6qlfi/lgT/kN3G/AW9jpqF6orb5rZ84nO
- qpsqR2WOMePOli1b5KL2P7Yj+Yl0I4ZwbFZzH7pyDJiRoHw2oXR5pKnytPaeqM/v/xA3
- Da/Q==
-X-Gm-Message-State: AFq9FYILhrKTwMBswu+LPbo7zlb6Ew2vAD+MerH78SObzx96T+YPsi1o
- fnakHXGBsYsRSmF6aHf8juBhBYUhH/skyVBVJnC6+ej+zJ6V62BIxfYOoATyiI4coBM=
-X-Gm-Gg: AYBFou0V8mGJfxJwRV9034rcuwJZMcnJzJp+QmcoPdyjnGblThjjSad2ki5feawcgY1
- R/2PGqUKxyK2KAicFKaoSn1mspvaef9VZRdT+fgydxrAolO/oyzNyPaUVqjreOaWQUwHsEDDHJd
- WPVr+9+LjmQWqCXSBBHAQ5QTAnKy80H7IThyzmaw9apxpkobOPpCoCS80Pzfubf+ojD+GtZvOfZ
- ULt2s4IXv1KR4EOjBePfFV8rw6RVxgDWZYIaibm0iqh8JEtGdlzcKYcyl8v04yF/UhSCy3W/I5r
- YEMb3EAQG5SqwSST+v8YGmByprW5AgGceHYpi2hp46WgTE+tkbqzLe36LuhmA+oHCDO0M6HFhyi
- crB7XUsS3g+hLEqcSifNvNAn7O8bskpJSbnaRxrCAea1fvc5WndAnmQcC3Pqg/XM0u1v5k7IBpJ
- 6dG8ElbQ8dQ6sXtABZzGUxwbc7xci7fYYXjTjn7DqJjZQIunxV6d2RFg/rll2JptVb6j65Bg==
-X-Received: by 2002:a05:600c:4f95:b0:4a1:706f:b40d with SMTP id
- 5b1f17b1804b1-4a1d75e6f9bmr193127455e9.7.1792438026676; 
- Mon, 19 Oct 2026 12:27:06 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792438031; x=1793042831;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3o+Btf39R989kvm/VWlrprxcKrBtRJRhTAk2pUmeGhI=;
+ b=ixlzmLJEz3+RdSiQcf27qUt8mjhBfhDXo+TwjTqPJLliWIZwNVQCwGODkoXZaWlAw9
+ mJTKRaQEMD6lArxUqMqHlSoGhNpHM9EQKq+VyInR30CG6pbaD1HwjIdDHfWu9SAfPlD8
+ dI/6ujADHFDkjWM2KaYEDdYqbwzjlZs48arLWsu+0TnfCk0tKfFtWx0+xdNPgaKf4BgX
+ bpRWn6rjhtF++iz8fV/QofAGFBo+srR0rGIs2oc45p9+5l4yp0el3sXKbZ2Jpvqgd+Ts
+ fPwQAbR1vzzn0tIH9Sb+82P6gBrxydnPzNXtka43RApAnI81X9TPTpWTt0Ess/4nPD7e
+ mJLg==
+X-Gm-Message-State: AFq9FYKPUhln3MCJ/Nc1T247kerERF2bmH36Nj4OEz/kycsotjm0A0S7
+ WZRaD3/OqmiICZd7xzCcxCups7A+GCpM+Z3rkPbR+Oie2pejeZ+GEnom0Tkjl7TuvCA=
+X-Gm-Gg: AYBFou1YDFU4OqbscqzkcrBnaydpABM8EyykNHwTi4ipcMd//pq6Jwd0NxKGNY/3tS2
+ WLx6fmmqmArz+qGcmpN479BHAfuei/WWx+QBT6uMEI+k4+DNthYJ7incRaaGzWkdwXCaVaO9IiD
+ ykAi86qoFd0YPQZsgnfFN7Sl8sPMHBZ50N7ICgIBdI1uh9nJ7RuommQiV5Xrv6tqvvZIiRL5Dbt
+ +XpCaozkMshirUNxTGzYhb6+3Bu5Db74eR0oSoXYm1x3mHAEWcaevJdStptJBSpBx/plzUQcyp7
+ aFn/BZP8xBpuOxLTTorNFYMhwax0wYt16a+F0EX4I+dXlueCQTxXadsSpfglCbczUaAkighQzQj
+ zsmIpEnVTiv8IJQ9GSFNX7cQn7A3+EAq3ygPxIFf8Ml8dJAx8W44+duGRT1Af1m/SWOt+kfQsP0
+ ZxPkJi4xlvYHlnS+tqmW95Rl02WUY3/Ss9xyNGXBHE3o2ejs1bcYkUlzHk44fLVprVDgb4hA==
+X-Received: by 2002:a5d:4b8c:0:b0:48e:38e:3102 with SMTP id
+ ffacd0b85a97d-48e07f9bdfamr12895951f8f.29.1792438030394; 
+ Mon, 19 Oct 2026 12:27:10 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1f2c242dcsm13709675e9.0.2026.10.19.12.27.05
+ ffacd0b85a97d-48e1d80f9dbsm810525f8f.19.2026.10.19.12.27.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 19 Oct 2026 12:27:05 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1A31F5F8DC;
+ by draig.lan (Postfix) with ESMTP id 0305B5F82D;
  Mon, 19 Oct 2026 20:27:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -89,20 +87,18 @@ Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
- Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 01/19] tests/functional: test_acpi_bits requires TCG
-Date: Mon, 19 Oct 2026 20:26:46 +0100
-Message-ID: <20261019192704.3220373-2-alex.bennee@linaro.org>
+ Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
+Subject: [PATCH v3 00/19] testing/next: functional testing updates for gdb
+ (pre-PR)
+Date: Mon, 19 Oct 2026 20:26:45 +0100
+Message-ID: <20261019192704.3220373-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
-References: <20261019192704.3220373-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,45 +117,100 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Running a full thorough test suite on a KVM-only build fails due to
-acpi bits needing icount, therefor tcg. Declare the restriction so the
-test harness can skip it.
+Hi,
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20260930164649.433573-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+This is the current state of my testing/next tree. There a are a few
+minor tweaks and fixes that I've picked up. The majority of the new
+code adds testing for the gdb stub when used via KVM.
 
----
+As a result I spoke to Anders who handles the tuxrun images and he was
+able to turn on debugging symbols and provide a vmlinux alongside the
+bootable image. With these updates I was able to resurrect the old
+test script I was running by hand and then plumb it into a functional
+test.
+
+So far I've done x86_64, aarch64 and s390x. I can't test ppc because
+our CI machines don't support nested KVM. I don't have access to any
+riscv kvm capable hardware.
+
+The reason I went on the side-quest is because when working on
+cleaning up QEMU's internal KVM api I realised that quite a large
+chunk of it is not exercised by our functional tests. This would
+ensure that at least:
+
+  kvm_arch_update_guest_debug
+  kvm_arch_get_registers
+  kvm_arch_set_registers
+
+is exercised and I'm less likely to break things in my re-factor ;-)
+
+v3
+  - address review comments
+  - convert run-test to use arrays for gdb and qemu cmd lines
+  - fix errors on s390x and aarch64 hosts
+
 v2
-  - add comment
----
- tests/functional/x86_64/test_acpi_bits.py | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/tests/functional/x86_64/test_acpi_bits.py b/tests/functional/x86_64/test_acpi_bits.py
-index ec716d643bf..d445660f0ed 100755
---- a/tests/functional/x86_64/test_acpi_bits.py
-+++ b/tests/functional/x86_64/test_acpi_bits.py
-@@ -303,6 +303,9 @@ def test_acpi_smbios_bits(self):
-         """The main test case implementation."""
- 
-         self.set_machine('pc')
-+        # see icount comment below
-+        self.require_accelerator('tcg')
-+
-         iso_file = self.scratch_file('bits-%d.iso' % self.BITS_INTERNAL_VER)
- 
-         self.assertTrue(os.access(iso_file, os.R_OK))
+  - fixed up the sh4 direct call
+  - dropped the fw tracing test case as tuxrun images cover it all
+  - added aarch64 and s390x cases
+  - worked around s390x watchpoint issues
+
+The following still need review:
+
+  tests/functional: teach tuxrun about launching gdb tests
+  tests/guest-debug: convert cmd to an qemu_cmd array
+  tests/guest-debug: convert gdb_cmd to an array
+
+Alex.
+
+Alex Bennée (18):
+  tests/functional: test_acpi_bits requires TCG
+  .dir-locals: include QEMU code in PYTHONPATH
+  meson: move gdb detection into the top level build file
+  tests/functional: allow tuxrun tests to be passed "accel"
+  tests/functional: split x86_64 tuxrun into tcg and kvm run
+  tests/functional: update x86_64 tuxrun images
+  tests/guest-debug: convert gdb_cmd to an array
+  tests/guest-debug: convert cmd to an qemu_cmd array
+  tests/guest-debug: add --kargs option to run-test
+  tests/guest-debug: add --symbols option to run-test
+  tests/functional: teach tuxrun about launching gdb tests
+  tests/functional: add tuxrun kvm gdb test for x86_64
+  tests/functional: split aarch64 tuxrun into tcg and kvm run
+  tests/functional: update arm64 tuxrun images
+  tests/functional: add tuxrun kvm gdb test for arm64
+  tests/functional: split s390x tuxrun into tcg and kvm run
+  tests/functional: update s390x tuxrun images
+  tests/functional: add tuxrun kvm gdb test for s390x
+
+Max Filippov (1):
+  tests/tcg: fix buffer overflow in multiarch/linux/linux-sigrtminmax
+
+ meson.build                                   |  15 +-
+ tests/tcg/multiarch/linux/linux-sigrtminmax.c |   2 +-
+ .dir-locals.el                                |   8 +-
+ tests/functional/aarch64/test_tuxrun.py       |  35 +++-
+ .../functional/gdb-scripts/kernel_gdb_test.py | 164 ++++++++++++++++++
+ tests/functional/meson.build                  |   5 +-
+ tests/functional/qemu_test/tuxruntest.py      | 108 ++++++++++--
+ tests/functional/s390x/test_tuxrun.py         |  37 +++-
+ tests/functional/sh4/test_tuxrun.py           |   6 +-
+ tests/functional/x86_64/test_acpi_bits.py     |   3 +
+ tests/functional/x86_64/test_tuxrun.py        |  45 ++++-
+ tests/guest-debug/run-test.py                 |  83 ++++++---
+ tests/lcitool/libvirt-ci                      |   2 +-
+ tests/tcg/meson.build                         |   5 -
+ 14 files changed, 444 insertions(+), 74 deletions(-)
+ create mode 100644 tests/functional/gdb-scripts/kernel_gdb_test.py
+
 -- 
 2.47.3
 
