@@ -4,137 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1196CCF2DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 06:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C247FCCF2DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 06:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIgYm-0004el-0k; Mon, 19 Oct 2026 02:09:24 -0400
+	id 1xIggy-0000iE-6z; Mon, 19 Oct 2026 02:17:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xIgYi-0004ds-S0
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:09:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xIggo-0000gI-BQ; Mon, 19 Oct 2026 02:17:43 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xIgYh-0002jn-A2
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:09:20 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69J4jEoe864802
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 06:09:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CjDatffSrqT0R/tBzjuHatkIgdBQ0da6kr602wks+nM=; b=j25BL9L86TkT8Nni
- cVlnUpsoUf1YTN92pQ4LeiXDN20PWNe+GIubABGJ3EbzrVQZtg0igJ9FYOblP3+a
- XwSH/qIlo84ZxJbKEW4acIBK7RDaxgFhD/RnbfOYNaPflPQFU5UahsnJMIHUt7zC
- u8+UqeHjHaOIxyf8Byj/W2dmklvaZH73NubqJjaOV1d0978/lcYJsTArGVwV3441
- ydwY/W6Iu9uuPHyqzVbGQXnf9GVepRj2orTunoWy8J8s7i1j31yXGlQFg++7MGAn
- o4oU/oZJiCHQjHdAGYKSOEml4Nty7B/Fy0rlDY2OM9r8T3J1ABHhJPno8S8GVAUP
- 9Usqvw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hc2a9my1m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 06:09:17 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-35fb6be0f9fso4974856eec.0
- for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792390157; x=1792994957; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CjDatffSrqT0R/tBzjuHatkIgdBQ0da6kr602wks+nM=;
- b=MyMbR8Nn4CSgIZl9XuuOKtcALe0L3MaEDmKGOaSf7TNnaIy3SX9I1cAFS+uddVRvif
- iKgwuLp1Q66fl9B1ztSui+tlhmPV6pSvBNf99Du5tS2zzBsU9BMrH7dM0nmW/Pf0pzoj
- T125D5LL8JZTozC6+gxyu4eFewmNl2aJu8ci/tmEO/JDGQKRbQTNNIlfq/jRExfb4i3l
- vfMCd7qmJGdhWVEdcQaNFx6dIseuDMuUX8Qd6UIjqXFJ3fmpzQAjmKo92WBx/aycq4TJ
- 58Og0lP54AJPE30ruERXSHG/dsLsQmYlAov93KLQJdEaLjHZCan0vayLUYJmSSQgK4ZV
- zwWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792390157; x=1792994957;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CjDatffSrqT0R/tBzjuHatkIgdBQ0da6kr602wks+nM=;
- b=pDyqzprZaMAPvC0uxgR922F67L7bPBY+6/oxnvewEa+FWDPn9+I3pLCOLnZ2fEd+1u
- jTNpSGm2z0r4y9P0dUtnsIs6QuFLASUjdA+2YCwDxJ/biNq5bRMAgW7x/7auksMkRGmM
- kajHDnAbsfG0vIOtdrzW5qoMOyl5KiRrc/yLqsTxjLrhe3A55WUhBGWo+L8BmP8eM994
- UuGjRFhU5c7egSmOcmXJmufcJ74BdSCBhQD0b1nZrwLlEtBULjxQn/LxxasVilLAujM8
- Z42HQxXkc8F/hNR4KVEJIBXHik0qsFKtIesovgj4iZmNP58fAknEtwwsAjrSFVC4GbHW
- SrDw==
-X-Gm-Message-State: AFq9FYLcgSqfEXUhA0hhczUMKB+QTCXfJ1Fdex84aqCoX5/KsFZEcW+9
- 5Zzl4NvhO3OADW745bUUKS/IwRhPyKaPNVUxUExytIBaejDANqXmi60QNSD5dDBRiMt1/+WqAyB
- 633COayqUXTochIxvB6vaFLtOPpeZR6n+lHEvYkVcDXQa2lU/JiIA21DxFp223ddLzw==
-X-Gm-Gg: AYBFou1gyY1h2Vy7gEhzwX2kfyDaixAuAmMN6YDa3bHTF8n7Rna8O6PG+8fgFufD0OE
- WQUFrxVrwdXEB9xC6qUwM72pkgd0TwAPxLvtTdgXmG7jmqm+JETbxW5pgFBiRl0GcNBtDEARuEg
- 1J0BEg2HOkr0DxNc/DEzDWg6U3TKMHjNWPs4fsGUtNtAlNLzQsQuM+3HRZP0c9wib7LvmsFIWgW
- jgJHdY8gSZgc29AqC13Xcky5d7icYLMJmQuYvjI6leWE9IaKauQxRCnpDc/NIyFz9kMra+L00Q1
- fPRABELc6ZLRuV5MlnJEaT4buip2+KWHlFUg6ClCqKzuTekwuDTR4wRUBfMBOqZepwsv0E0f8Cj
- 0b/fZsaty/BJuYjvwYenVcqk34EmRAGI8uvfSe1oBELdkW5U=
-X-Received: by 2002:a05:693c:638d:10b0:359:8492:20ff with SMTP id
- 5a478bee46e88-361a1270c4cmr9238147eec.12.1792390156622; 
- Sun, 18 Oct 2026 23:09:16 -0700 (PDT)
-X-Received: by 2002:a05:693c:638d:10b0:359:8492:20ff with SMTP id
- 5a478bee46e88-361a1270c4cmr9238056eec.12.1792390154590; 
- Sun, 18 Oct 2026 23:09:14 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-360820a02b8sm31770053eec.17.2026.10.18.23.09.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Oct 2026 23:09:13 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH 1/5] target/hexagon: acquire BQL before reading interrupt state
-Date: Sun, 18 Oct 2026 23:09:07 -0700
-Message-Id: <20261019060911.1479329-2-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261019060911.1479329-1-brian.cain@oss.qualcomm.com>
-References: <20261019060911.1479329-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xIggk-0003ME-Mg; Mon, 19 Oct 2026 02:17:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IyYHTDm7bCKnIvQyJceltlxHR9IcQHKE9XXfwASCMuXd9bj+c0p+SRF0YHnnHDEYW+zVNo6C5Otns3/k5T4uunpp5tnByrjken3c78A841JN+4ud3z5FH+X6kzzVwm/3HagmNrcWF65ZiLRrsY1rc0HBE3R6WGdNFmqaagSJ47sht/c3C3Huje+kMxBI3oWSPnP42MSXZmyxsBrLW1D3TK8vTKDLLQweVM0nTVDLYbQ4P/6YCbtTlkSND6N9i8cghxHSeS62lLhNIdLkVyUB3I9vBTi6+EMyTIK8H9vn5dwgSGniS7/pN+xvyBaWgqcbW2sdehm6ChWZMDIaHnnscQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BE5oImui5jDXJJdN8XESmuQ5bz6jEMZ+F7lwuIJ4G8w=;
+ b=JnOq6Ca9L9BZca6wduoU5Up3UGvS9RvocBCAHXitlrWMI6ZOyHk9jvtMOFEPZovu1Hqoe8T56WJUYq4UlknXFSUs8j4YQaPhEJQtWQBHezW8iRlk5YMjVZnYhqS6mle+9s8uTWLjkKd8EQ+YFbjQ8YTcjC7cySiegYBPkZBrPokWMNJkFSCP5i11pCJYCV7BcH7rSTPafQDfVL5DgPfdvxw4y/8vbBgSktVWHV4NNVpa5CLN6bfOkGwgOM3FgPcYGecoyt8f14q9V6ZfczHapiDS+H+t4+FiftvHMrCBnNA19MLvYKbEMZfS3juDVk4kDiYPraev1JkBPFLUHDmrIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BE5oImui5jDXJJdN8XESmuQ5bz6jEMZ+F7lwuIJ4G8w=;
+ b=eXoZOc4OwiDhN+ZMXw+Mq6qzIIQFuYhCFgAFN6z7NFeFZhkie4seml8lwZfc97ETAUhDxzqb/+wAwjRWxy6VYxlNOeS88SKOsWhM+nQJAgIxEibqmVQpE4dAR72OU2s7BcoUEnr3uR4CPT71qB6WVzLF649voGSN82XuqnncuPhHJA2Shn60KCqGjw0MGHbTrXKghbmewD3C0rgv4I3r/RX/Kdl0oteynbed5iDWM8aN/RAHULdIo9u0tCE78KoYl7rGirVXTfSMlk7+n3vlPR+wxyRwSozE+u1gAmiWWOQn8hRvIVFhDq281+wiK8uAgcXu7UBzNLQ9SEZ/R0Kxhw==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by KUXPR06MB8055.apcprd06.prod.outlook.com (2603:1096:d10:51::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
+ 2026 06:17:29 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0522.017; Mon, 19 Oct 2026
+ 06:17:29 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Junjie Cao <junjie.cao@linux.dev>
+CC: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
+ "clg@kaod.org" <clg@kaod.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ "leetroy@gmail.com" <leetroy@gmail.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, "andrew@codeconstruct.com.au"
+ <andrew@codeconstruct.com.au>, "joel@jms.id.au" <joel@jms.id.au>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>,
+ "junjie.cao@intel.com" <junjie.cao@intel.com>
+Subject: RE: [PATCH v5 5/8] hw/usb/redirect-server: Implement control transfers
+Thread-Topic: [PATCH v5 5/8] hw/usb/redirect-server: Implement control
+ transfers
+Thread-Index: AQHdXIhd2ZMTjYb6EEqIZVOzL6eLabb/0AIAgASZsDA=
+Date: Mon, 19 Oct 2026 06:17:28 +0000
+Message-ID: <SEZPR06MB736251748E9F14BB2648D96EFC982@SEZPR06MB7362.apcprd06.prod.outlook.com>
+References: <20261015093417.573063-1-jamin_lin@aspeedtech.com>
+ <20261015093417.573063-6-jamin_lin@aspeedtech.com>
+ <20261016080125.418342-1-junjie.cao@linux.dev>
+In-Reply-To: <20261016080125.418342-1-junjie.cao@linux.dev>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|KUXPR06MB8055:EE_
+x-ms-office365-filtering-correlation-id: 794ec039-e108-4c56-3e9d-08df2da8a6f6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|23010399003|366016|22082099003|18002099003|10067099003|4143699003|261009221227099003|261009223027099003|38070700021|56012099006;
+x-microsoft-antispam-message-info: TmzDV5pa2aTuj93BUjblD8vFjktFR+VzYhcJ66cC8Rq7XKY8C2BJ+y2OhiV6HiDgHH+T31sKAF6UwyQsui2i+H/jbk/8iMAPvYaPV1xPYgnjOPtRQuWFQB+feh8C2CB+Jl7ObvrK9r0REdJj6/pmsdkS/zN+WI0uBbmn5SkHMSZWpIqGUxgCL67RO5R/0J3Mw47hdpl0suKd1Sq7hCGavEG2SyPPDrmpZ5SMz7f/XsP7dccQDPHlEqknCEv4GwQXShRod+6hxhhQOKUQfCPMOxhoVOihFkDgPq3uKiqJeMoQA4Gm27c7FvufR9P0sOdUY11B6uq4dL4MGubasmuijG1ORoRW+YgUGUMnvACNvw4WfiwimpZ+Fjj15au9rOrcuSMnttJ2c98MXy/jw0j+DG5SAtpCkwscP8AR6zBtbvkyk8rUcYmlNcB/KbecWYw8gpw3LheIGXdKeSiYLq5hmBu3iUwixHOjzERBYaFo6xkEGnHE+sJ0oxawXEf+YZT/5gD49wJwz905LZxsf1rpwwS/eSmQGy6mkuuCKHVFzyB9/p0MIUfpygJp6i/s51LZOsd4Q2CZMy8+rHHZty07BJ2rkCj3U4ZCAQsKrNb6JNoQuH5wGy/75m/+jhyHykDYXrTXpHxSTbVy8M+1alqHO62Q99aWUD201QnuWnaN4FVmvaX7tO+fWEL/+bb4WWfPTZyapLgq1UjjyMLE64idMf8/vqvcGfibhfdx7CJIKy0=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(22082099003)(18002099003)(10067099003)(4143699003)(261009221227099003)(261009223027099003)(38070700021)(56012099006);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?u6IwF7zJcR7AUYt0VtJabjrt6KAwIaQlkhvG5bzpGEvXMREnQBgRMNAy8+wW?=
+ =?us-ascii?Q?L2NfPE+gBP31JtavUCXevi8/CGqTacx3lWQPpS5yUwk1TtszR1XMG7icEBU7?=
+ =?us-ascii?Q?v2FRg6THMQnXoyq82WkrIc64pJq3Qais3v840k+YNCqxpcwWlq/VkqA61Ydf?=
+ =?us-ascii?Q?k2HNkGHBWQ14dD9VtLbOK8JK1EFfj8XThqQWrhuPygXD5QOaDzM+rp+S0AO9?=
+ =?us-ascii?Q?yxdooknsexA7O3lylslpVJClsiKb/QaMv1g/wb75AGGZ5Brj/0D9hR34rUWv?=
+ =?us-ascii?Q?HehgrmihGMtIpmdj8SpFb+9SSrtciThywL5wkIMu99V0y8AQ7cXn9UBOJ/Vs?=
+ =?us-ascii?Q?VmsMvWC2IQfNBZ5JHus9waQNTy14/bV7H6M2Uzp/KWM+Hmj1wAEWWI0vuqet?=
+ =?us-ascii?Q?QsmEK1miFEAaTiQidNFSBcoO+wDE15H2uKJwZc7jR2DKXih9TfHAWnc+R/DC?=
+ =?us-ascii?Q?RdDGLauUEX4BukgFvzKYMDpTSIyoEYrdbAL/mBc1lrxamWUP/+yFBTwVehN3?=
+ =?us-ascii?Q?+809FP4gDPjWCxjZYRPriDDVX9SubnmcSPS5LxiGrIvMAFkOfwQoUrUrzAQi?=
+ =?us-ascii?Q?pOScPnp0wZZcc0h9p9z3ljlxVwI8dqTdunC97pGEnfg85Rqmjl5lcjXviA79?=
+ =?us-ascii?Q?YoisCpZdJ4eR7HxZiFvTlhZn1KkZFTPUflpeUNzYEVky9KTX1caisdA2DGMq?=
+ =?us-ascii?Q?U37JGi4wFgDPhIciRa5s2AQmk+0bghRbH0+irvsXSJ9roouL//3ztECAFOP0?=
+ =?us-ascii?Q?Rm8Xf2UQKCXQPSisahM4Vq+S67yoAeSlq/svxO917b49XTfDWykHoaCUAdoa?=
+ =?us-ascii?Q?Ht9gR5EZHnTKia4Dxc1U+pYjBlDaG5S4R3MhM4PI/CFmhmkpzXv4Z/YkUNcy?=
+ =?us-ascii?Q?JeL0fVTu1JUkgWzdbd1QkDTFBu7WYy7rVYA69HZTSrYL9cwYbZ49H/0pLGjm?=
+ =?us-ascii?Q?tKUjK2Vw3zKJvxQcgZt8rwAfPBPTGKl+w2tPXPV/IfDNRFMkIXL1BHB09R3A?=
+ =?us-ascii?Q?nGY245336tkEM5wZOMl7vrvbjbAMtjPJq1egAuUrUyvts9SBLaa438Z9JE04?=
+ =?us-ascii?Q?H12iYq14LsqRDeV6VLKt8Lv9IPYeV+n7eOouqx0ZL5ACb3Qn/3AQlNkVO5nN?=
+ =?us-ascii?Q?UyzXCql1sgJvCHVbJEGZmXYKgec/giPfyqyI22y1vhAiaZhkathNIbde/bA8?=
+ =?us-ascii?Q?WU0XxGFnv8BUtkdLNbMwsfD4BkOyq8YTxSRpGz7tqs2gKl53jrG9YLiTBSSY?=
+ =?us-ascii?Q?rBSBBXpds1ukRBiWP8i/LSexlmEmNkM1Wz8gFEhNq9uoq52qWUGv4WJaUA5D?=
+ =?us-ascii?Q?CohvVTXCHu4w7GAaLPdetVgVLw/Veym/dn7lOvVJjaPb4s9ZFSHwCQNAuMHP?=
+ =?us-ascii?Q?ABgUtKio0gFW7C6SgVoQUoxXTMR6vGHgzayhsF8hzqagScoyayWOo3/0zL+8?=
+ =?us-ascii?Q?uz7oNHZdcFXtv+XBdbe1GokC5ewrE2SsbxZmzpx2jubpR1tXSinVoMWhjPgk?=
+ =?us-ascii?Q?b+ZfQgtPm0/UQ+LTZvu6tmRRgB84PXZwm3x0yfse55hNxi019VwJSLaAeGL5?=
+ =?us-ascii?Q?bpyXdpQCDYs5NO9VxBbexPO9I+RZifTb3kObB/wQIdbAMbkYviAR7lF1tVr1?=
+ =?us-ascii?Q?iAHqp6tdt4DhJj7d2A+XFv5QIJQVoaV+ypxhPugvMVyPJY+SV5T7syDEpYhC?=
+ =?us-ascii?Q?6H7KJ1VxFPQTbLK38BdkwLlnh+znf5+NDnpkyKUzezU5kSPtq2Qjv57RlaJw?=
+ =?us-ascii?Q?R9k1rVb4Zw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDAyNCBTYWx0ZWRfX023vWW1sCVWA
- Vw5PKDxpFhuuGAZwdOKu8MRC5HmwflZ9xhqr7LWdx2lnBfbo35zEBLXR7XPon0Wwbe9DKMAohjy
- UGir4qw1JYpZMUOFIib66Brg3pHuyjA=
-X-Proofpoint-GUID: xM1WoiPPJYCjCSvNKIuG36AZQFDiyi4w
-X-Proofpoint-ORIG-GUID: xM1WoiPPJYCjCSvNKIuG36AZQFDiyi4w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDAyNCBTYWx0ZWRfX9cTfvwn8EUeh
- qrskWlJMR1rJ2YNQR8XGpRzTW5uSCZA2pE7baOzUcTK5brlnkQIKP0A722wjp1vf1iQcJW7oGZ8
- 2NYUsSxVCsaLsY3J7Bc5GJoIAcXGb0n1mpn8EUTpat8GmWMN/ZSM2rEXm+LK8iUowIdrYAQah3Y
- m7aK/3EKOnEjb7cfAID4CtfZgKwPQZrgoj52dK4obE5EIJ+rjwqsn39RTV2WUduOwPpSbEmuO9K
- KeU/9Zd8R+mxK+njVZvCm1cs5R9PkBCb0bZxs2KxbqPGsLIJOpN2DN9URaWN7216Rnz/J/4G2eN
- A815Ty7n6bZdM8Fh0rD+BvCNg4PydF31ZgE2mZcIx7tu9aIrqUFKXswozqJFlb5r9QlqeFMSunC
- 0Cp2cTEaTdiXcHt9f4+3Yi4l4Si4JykpxPxzILKLgpzoCYKXAlzCr0el2BZTEUfHYFECIu1vz4L
- D1Kn/QY1IPj83s1H/cw==
-X-Authority-Analysis: v=2.4 cv=PMeaavqC c=1 sm=1 tr=0 ts=6ad5b40d cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=ewxjkIWJOwr-sdKVJGAA:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-19_02,2026-10-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 spamscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190024
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Exchange-RoutingPolicyChecked: UXWjP+Lzwj3GTSveTji4ccPw0RjjX7pC2H/GKnrE5Hfzy/WAaRuuR48WM7GgVeI8L45m+baCBprL2IbC/+rcg9y/tGU67tEkf3DvruAi+eVC/eefihliM4BPGipAi0Wm+IrMFcn2ATk+ZjwbTU9lADLNMeMcJDb/d8bFHagcM2dhGWFzYoV8k8YGlt5sUau3MsXK+KdIMFsuRvEjbO1mSAG6BhcWstPdz8d0Vsst6963So2Zg7KiWg858XRcf2WEq+G9X00L5cAl/9rVEouT42D8TzbQ9o3gGmgsVU/78tyLPYwWOJ1UgSK6oeDzeI9S56nM08v/Ng8VZ6osfIiEsg==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 794ec039-e108-4c56-3e9d-08df2da8a6f6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Oct 2026 06:17:28.8501 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: svA0ptRpnpjAyOSvoT5+4cH58izUTzt1b/5Xqc/qvcLTpkTfeQ/6VJM532WqfsVCAIGWF7Kk4d4NYm65wbME9o1aT8Eyf9DQq54dy7EX47s=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB8055
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,24 +151,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TW92ZSBCUUxfTE9DS19HVUFSRCgpIHRvIHRoZSB0b3Agb2YgaGV4X2NoZWNrX2ludGVycnVwdHMu
-CgpUaGVyZSB3YXMgYSByYWNlIHdpdGggaGV4X2ludGVycnVwdF91cGRhdGUgb24gb3RoZXIgdkNQ
-VSB0aHJlYWRzIHdoZW4KZW5hYmxpbmcgTVRUQ0cuCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWlu
-IDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFnb24vaGV4X2lu
-dGVycnVwdHMuYyB8IDggKysrKystLS0KIDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyks
-IDMgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vaGV4X2ludGVycnVw
-dHMuYyBiL3RhcmdldC9oZXhhZ29uL2hleF9pbnRlcnJ1cHRzLmMKaW5kZXggMDNlMWYyOGRhOWIu
-LjM0MDAwN2RkNTQ1IDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9oZXhfaW50ZXJydXB0cy5j
-CisrKyBiL3RhcmdldC9oZXhhZ29uL2hleF9pbnRlcnJ1cHRzLmMKQEAgLTM4NiwxNyArMzg2LDE5
-IEBAIGJvb2wgaGV4X2NoZWNrX2ludGVycnVwdHMoQ1BVSGV4YWdvblN0YXRlICplbnYpCiB7CiAg
-ICAgQ1BVU3RhdGUgKmNzID0gZW52X2NwdShlbnYpOwogICAgIGJvb2wgaW50X2hhbmRsZWQgPSBm
-YWxzZTsKLSAgICBib29sIHNzcl9leCA9IGdldF9zc3JfZXgoZW52KTsKKyAgICBib29sIHNzcl9l
-eDsKICAgICBpbnQgbWF4X2ludHMgPSAzMjsKICAgICBib29sIHNjaGVkY2ZnZW47CiAKKyAgICBC
-UUxfTE9DS19HVUFSRCgpOworCisgICAgc3NyX2V4ID0gZ2V0X3Nzcl9leChlbnYpOworCiAgICAg
-LyogRWFybHkgZXhpdCBpZiBub3RoaW5nIHBlbmRpbmcgKi8KICAgICBpZiAoZ2V0X2lwZW5kKGVu
-dikgPT0gMCkgewogICAgICAgICByZXN0b3JlX3N0YXRlKGVudiwgZmFsc2UpOwogICAgICAgICBy
-ZXR1cm4gZmFsc2U7CiAgICAgfQotCi0gICAgQlFMX0xPQ0tfR1VBUkQoKTsKICAgICAvKiBPbmx5
-IGNoZWNrIHByaW9yaXRpZXMgd2hlbiBzY2hlZGNmZ2VuIGlzIHNldCAqLwogICAgIHNjaGVkY2Zn
-ZW4gPSBnZXRfc2NoZWRjZmdlbihlbnYpOwogICAgIGZvciAoaW50IGkgPSAwOyBpIDwgbWF4X2lu
-dHM7IGkrKykgewotLSAKMi4zNC4xCgo=
+Hi Junjie
+
+> Subject: Re: [PATCH v5 5/8] hw/usb/redirect-server: Implement control
+> transfers
+>=20
+> From: Junjie Cao <junjie.cao@intel.com>
+>=20
+> Hi Jamin,
+>=20
+> The tests below were run on v4; patches 5 and 6 are unchanged in v5.
+>=20
+> > +    usbredir_server_do_control(priv, id, hdr, data, data_len,
+> > +
+> USBREDIR_SERVER_REPLY_CONTROL);
+>=20
+> The callback owns data, but do_control() copies it without freeing the or=
+iginal
+> buffer. In a test with usb-storage, 100 vendor control OUT requests carry=
+ing 64
+> bytes each complete with STALL, but LSan reports
+> 6,400 bytes leaked in 100 parser allocations.
+>=20
+> Could we call usbredirparser_free_packet_data() after do_control() return=
+s,
+> and free data on every exit from the bulk and interrupt callbacks in patc=
+h 6?
+>=20
+Thanks for the review and suggestion.
+Will fix it.
+> > +    QTAILQ_REMOVE(&s->inflight, rp, next);
+> > +    usb_packet_cleanup(&rp->pkt);
+>=20
+> A test device returning async IOERROR for the first of two bulk OUT reque=
+sts
+> reproduces an assertion here. The core calls back for the second packet w=
+ith
+> USB_RET_REMOVE_FROM_QUEUE, but leaves it QUEUED on
+> ep->queue. usb_packet_cleanup() then hits its
+> !usb_packet_is_inflight() assertion.
+>=20
+> Could we call usb_cancel_packet() for that status before cleanup?
+> For a QUEUED packet it removes the core queue entry without calling the
+> device's cancel callback.
+>=20
+Will fix it.
+
+> In the not-found case of usbredir_server_cancel_data_packet():
+>=20
+> > +    usbredirparser_send_control_packet(s->parser, id, &resp, NULL,
+> > + 0);
+>=20
+> If the original reply is already queued when the cancel arrives, the QEMU
+> client consumes its cancelled-ID entry when it receives that reply. The e=
+xtra
+> control packet then sends a second reply for the same ID.
+>=20
+> Could we omit this reply when the transfer is not found?
+> usbredirhost_cancel_data_packet() also sends no additional reply in that =
+case.
+
+Will do.
+
+Jamin
 
