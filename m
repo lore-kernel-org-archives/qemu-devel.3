@@ -4,137 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C247FCCF2DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 06:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB88ECCF2D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 06:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIggy-0000iE-6z; Mon, 19 Oct 2026 02:17:53 -0400
+	id 1xIhFA-0005a3-7i; Mon, 19 Oct 2026 02:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xIggo-0000gI-BQ; Mon, 19 Oct 2026 02:17:43 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xIggk-0003ME-Mg; Mon, 19 Oct 2026 02:17:42 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IyYHTDm7bCKnIvQyJceltlxHR9IcQHKE9XXfwASCMuXd9bj+c0p+SRF0YHnnHDEYW+zVNo6C5Otns3/k5T4uunpp5tnByrjken3c78A841JN+4ud3z5FH+X6kzzVwm/3HagmNrcWF65ZiLRrsY1rc0HBE3R6WGdNFmqaagSJ47sht/c3C3Huje+kMxBI3oWSPnP42MSXZmyxsBrLW1D3TK8vTKDLLQweVM0nTVDLYbQ4P/6YCbtTlkSND6N9i8cghxHSeS62lLhNIdLkVyUB3I9vBTi6+EMyTIK8H9vn5dwgSGniS7/pN+xvyBaWgqcbW2sdehm6ChWZMDIaHnnscQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BE5oImui5jDXJJdN8XESmuQ5bz6jEMZ+F7lwuIJ4G8w=;
- b=JnOq6Ca9L9BZca6wduoU5Up3UGvS9RvocBCAHXitlrWMI6ZOyHk9jvtMOFEPZovu1Hqoe8T56WJUYq4UlknXFSUs8j4YQaPhEJQtWQBHezW8iRlk5YMjVZnYhqS6mle+9s8uTWLjkKd8EQ+YFbjQ8YTcjC7cySiegYBPkZBrPokWMNJkFSCP5i11pCJYCV7BcH7rSTPafQDfVL5DgPfdvxw4y/8vbBgSktVWHV4NNVpa5CLN6bfOkGwgOM3FgPcYGecoyt8f14q9V6ZfczHapiDS+H+t4+FiftvHMrCBnNA19MLvYKbEMZfS3juDVk4kDiYPraev1JkBPFLUHDmrIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BE5oImui5jDXJJdN8XESmuQ5bz6jEMZ+F7lwuIJ4G8w=;
- b=eXoZOc4OwiDhN+ZMXw+Mq6qzIIQFuYhCFgAFN6z7NFeFZhkie4seml8lwZfc97ETAUhDxzqb/+wAwjRWxy6VYxlNOeS88SKOsWhM+nQJAgIxEibqmVQpE4dAR72OU2s7BcoUEnr3uR4CPT71qB6WVzLF649voGSN82XuqnncuPhHJA2Shn60KCqGjw0MGHbTrXKghbmewD3C0rgv4I3r/RX/Kdl0oteynbed5iDWM8aN/RAHULdIo9u0tCE78KoYl7rGirVXTfSMlk7+n3vlPR+wxyRwSozE+u1gAmiWWOQn8hRvIVFhDq281+wiK8uAgcXu7UBzNLQ9SEZ/R0Kxhw==
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by KUXPR06MB8055.apcprd06.prod.outlook.com (2603:1096:d10:51::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Mon, 19 Oct
- 2026 06:17:29 +0000
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0522.017; Mon, 19 Oct 2026
- 06:17:29 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Junjie Cao <junjie.cao@linux.dev>
-CC: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>,
- "clg@kaod.org" <clg@kaod.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
- "leetroy@gmail.com" <leetroy@gmail.com>, Kane Chen
- <kane_chen@aspeedtech.com>, "andrew@codeconstruct.com.au"
- <andrew@codeconstruct.com.au>, "joel@jms.id.au" <joel@jms.id.au>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>,
- "junjie.cao@intel.com" <junjie.cao@intel.com>
-Subject: RE: [PATCH v5 5/8] hw/usb/redirect-server: Implement control transfers
-Thread-Topic: [PATCH v5 5/8] hw/usb/redirect-server: Implement control
- transfers
-Thread-Index: AQHdXIhd2ZMTjYb6EEqIZVOzL6eLabb/0AIAgASZsDA=
-Date: Mon, 19 Oct 2026 06:17:28 +0000
-Message-ID: <SEZPR06MB736251748E9F14BB2648D96EFC982@SEZPR06MB7362.apcprd06.prod.outlook.com>
-References: <20261015093417.573063-1-jamin_lin@aspeedtech.com>
- <20261015093417.573063-6-jamin_lin@aspeedtech.com>
- <20261016080125.418342-1-junjie.cao@linux.dev>
-In-Reply-To: <20261016080125.418342-1-junjie.cao@linux.dev>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|KUXPR06MB8055:EE_
-x-ms-office365-filtering-correlation-id: 794ec039-e108-4c56-3e9d-08df2da8a6f6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|23010399003|366016|22082099003|18002099003|10067099003|4143699003|261009221227099003|261009223027099003|38070700021|56012099006;
-x-microsoft-antispam-message-info: TmzDV5pa2aTuj93BUjblD8vFjktFR+VzYhcJ66cC8Rq7XKY8C2BJ+y2OhiV6HiDgHH+T31sKAF6UwyQsui2i+H/jbk/8iMAPvYaPV1xPYgnjOPtRQuWFQB+feh8C2CB+Jl7ObvrK9r0REdJj6/pmsdkS/zN+WI0uBbmn5SkHMSZWpIqGUxgCL67RO5R/0J3Mw47hdpl0suKd1Sq7hCGavEG2SyPPDrmpZ5SMz7f/XsP7dccQDPHlEqknCEv4GwQXShRod+6hxhhQOKUQfCPMOxhoVOihFkDgPq3uKiqJeMoQA4Gm27c7FvufR9P0sOdUY11B6uq4dL4MGubasmuijG1ORoRW+YgUGUMnvACNvw4WfiwimpZ+Fjj15au9rOrcuSMnttJ2c98MXy/jw0j+DG5SAtpCkwscP8AR6zBtbvkyk8rUcYmlNcB/KbecWYw8gpw3LheIGXdKeSiYLq5hmBu3iUwixHOjzERBYaFo6xkEGnHE+sJ0oxawXEf+YZT/5gD49wJwz905LZxsf1rpwwS/eSmQGy6mkuuCKHVFzyB9/p0MIUfpygJp6i/s51LZOsd4Q2CZMy8+rHHZty07BJ2rkCj3U4ZCAQsKrNb6JNoQuH5wGy/75m/+jhyHykDYXrTXpHxSTbVy8M+1alqHO62Q99aWUD201QnuWnaN4FVmvaX7tO+fWEL/+bb4WWfPTZyapLgq1UjjyMLE64idMf8/vqvcGfibhfdx7CJIKy0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(23010399003)(366016)(22082099003)(18002099003)(10067099003)(4143699003)(261009221227099003)(261009223027099003)(38070700021)(56012099006);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?u6IwF7zJcR7AUYt0VtJabjrt6KAwIaQlkhvG5bzpGEvXMREnQBgRMNAy8+wW?=
- =?us-ascii?Q?L2NfPE+gBP31JtavUCXevi8/CGqTacx3lWQPpS5yUwk1TtszR1XMG7icEBU7?=
- =?us-ascii?Q?v2FRg6THMQnXoyq82WkrIc64pJq3Qais3v840k+YNCqxpcwWlq/VkqA61Ydf?=
- =?us-ascii?Q?k2HNkGHBWQ14dD9VtLbOK8JK1EFfj8XThqQWrhuPygXD5QOaDzM+rp+S0AO9?=
- =?us-ascii?Q?yxdooknsexA7O3lylslpVJClsiKb/QaMv1g/wb75AGGZ5Brj/0D9hR34rUWv?=
- =?us-ascii?Q?HehgrmihGMtIpmdj8SpFb+9SSrtciThywL5wkIMu99V0y8AQ7cXn9UBOJ/Vs?=
- =?us-ascii?Q?VmsMvWC2IQfNBZ5JHus9waQNTy14/bV7H6M2Uzp/KWM+Hmj1wAEWWI0vuqet?=
- =?us-ascii?Q?QsmEK1miFEAaTiQidNFSBcoO+wDE15H2uKJwZc7jR2DKXih9TfHAWnc+R/DC?=
- =?us-ascii?Q?RdDGLauUEX4BukgFvzKYMDpTSIyoEYrdbAL/mBc1lrxamWUP/+yFBTwVehN3?=
- =?us-ascii?Q?+809FP4gDPjWCxjZYRPriDDVX9SubnmcSPS5LxiGrIvMAFkOfwQoUrUrzAQi?=
- =?us-ascii?Q?pOScPnp0wZZcc0h9p9z3ljlxVwI8dqTdunC97pGEnfg85Rqmjl5lcjXviA79?=
- =?us-ascii?Q?YoisCpZdJ4eR7HxZiFvTlhZn1KkZFTPUflpeUNzYEVky9KTX1caisdA2DGMq?=
- =?us-ascii?Q?U37JGi4wFgDPhIciRa5s2AQmk+0bghRbH0+irvsXSJ9roouL//3ztECAFOP0?=
- =?us-ascii?Q?Rm8Xf2UQKCXQPSisahM4Vq+S67yoAeSlq/svxO917b49XTfDWykHoaCUAdoa?=
- =?us-ascii?Q?Ht9gR5EZHnTKia4Dxc1U+pYjBlDaG5S4R3MhM4PI/CFmhmkpzXv4Z/YkUNcy?=
- =?us-ascii?Q?JeL0fVTu1JUkgWzdbd1QkDTFBu7WYy7rVYA69HZTSrYL9cwYbZ49H/0pLGjm?=
- =?us-ascii?Q?tKUjK2Vw3zKJvxQcgZt8rwAfPBPTGKl+w2tPXPV/IfDNRFMkIXL1BHB09R3A?=
- =?us-ascii?Q?nGY245336tkEM5wZOMl7vrvbjbAMtjPJq1egAuUrUyvts9SBLaa438Z9JE04?=
- =?us-ascii?Q?H12iYq14LsqRDeV6VLKt8Lv9IPYeV+n7eOouqx0ZL5ACb3Qn/3AQlNkVO5nN?=
- =?us-ascii?Q?UyzXCql1sgJvCHVbJEGZmXYKgec/giPfyqyI22y1vhAiaZhkathNIbde/bA8?=
- =?us-ascii?Q?WU0XxGFnv8BUtkdLNbMwsfD4BkOyq8YTxSRpGz7tqs2gKl53jrG9YLiTBSSY?=
- =?us-ascii?Q?rBSBBXpds1ukRBiWP8i/LSexlmEmNkM1Wz8gFEhNq9uoq52qWUGv4WJaUA5D?=
- =?us-ascii?Q?CohvVTXCHu4w7GAaLPdetVgVLw/Veym/dn7lOvVJjaPb4s9ZFSHwCQNAuMHP?=
- =?us-ascii?Q?ABgUtKio0gFW7C6SgVoQUoxXTMR6vGHgzayhsF8hzqagScoyayWOo3/0zL+8?=
- =?us-ascii?Q?uz7oNHZdcFXtv+XBdbe1GokC5ewrE2SsbxZmzpx2jubpR1tXSinVoMWhjPgk?=
- =?us-ascii?Q?b+ZfQgtPm0/UQ+LTZvu6tmRRgB84PXZwm3x0yfse55hNxi019VwJSLaAeGL5?=
- =?us-ascii?Q?bpyXdpQCDYs5NO9VxBbexPO9I+RZifTb3kObB/wQIdbAMbkYviAR7lF1tVr1?=
- =?us-ascii?Q?iAHqp6tdt4DhJj7d2A+XFv5QIJQVoaV+ypxhPugvMVyPJY+SV5T7syDEpYhC?=
- =?us-ascii?Q?6H7KJ1VxFPQTbLK38BdkwLlnh+znf5+NDnpkyKUzezU5kSPtq2Qjv57RlaJw?=
- =?us-ascii?Q?R9k1rVb4Zw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xIhF7-0005ZZ-Vv
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:53:10 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xIhF5-00069q-UX
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 02:53:09 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1cc392d8bso1929035a12.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Oct 2026 23:53:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792392785; cv=none;
+ d=google.com; s=arc-20260327;
+ b=bt2MyE/mGbmXQGd9vL1F7Dn10dG4OJWpLHHxOu4McF8xPyEQXjB/UeEX7modVE5tzn
+ t091uH0Kkj973c7wpiCYKKFNhgc7OFCeNkIhUsRRbf9cIHPHmmXdns28dbVpPw2uJuaq
+ Xs9GrYEDMnGP0OpcwovU+Iz4qEp5vev5v3wxoYq/ePPiqSJEPtncrCoJREeP02RUW2bO
+ B7jBNdENC0h/znnu+ODmcs7OSXO/wd2UcA7tUSZOHL52x1XqoWNNn1iCdtsR/7WWAB4m
+ qgG+mo3KyUMzdpbW4IpSwO7mHbKmgO0e8Iw600l6k+MlPY5um+Q5JVbiLvQEUMdObD/1
+ O3ig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=pD/CRwTFRQqQz5Uc/ZFouJDd34rFU03sKGHGQtOCkxQ=;
+ fh=aU1efp1Hqslajef9yw/kvM+9GDKW8LvzbV7DMPwJ+U0=;
+ b=pmS8CzNhdn9+pykWrCvWoLEpdHWynHATGCAcWiVD09kJGCfMqoWYY3SL2bJ3MoQexJ
+ 1wyiqtANhvyL/wnx7/SIOjZsBNMKTMBKPXncJbqOonGn+T7GRr64L6REPH/Yb4mV5CQj
+ Tz79lvhoIRYGKHSIMENoom//ZFkxtpV6WHKB/enILF/5UHRXDBZRjKh1QMtWAvn0sX/E
+ GDBrv1aoPyV2VqDsxhppKTFZHxxpnzATcDnnuFlZWfUXGxYeccRqtIbONmsivHKzCb/5
+ ZHP2Be4SBZ33+q3f/OPfPUlcJnhsTGBlb375asYGl1+C3eBMvJt+dO3pxOd6sRbBFpfs
+ TJLw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792392785; x=1792997585; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pD/CRwTFRQqQz5Uc/ZFouJDd34rFU03sKGHGQtOCkxQ=;
+ b=AlyiTCRhTLl/iC6DrsWXv7luvsXXfldCunLUYuHxIlurhsL+489U+iC5oXXDcEW3TA
+ gVAiFdQzMq3xlMV6DDN0qRf8zdS99k+jx1kxuaEeg1ZRDmccBsK7L028LMkt7e1LEyya
+ h6VtwzMLg/HqeUqPMrGbYjYQNFrLBiW2iukYHvntEQF3Zn8QBmP0Qms2vNjhv/N0+TyN
+ 6/oZbVPcCb5g8QuKsqi29TJmVoV5oR7ffgRMOr1XGY81dMCYCf09Q+fCDZAbtfMbztWK
+ kxQTq7Fnv0JclA7g4xHfd5rQCshyyTLX+cdQuLeArDH5HYkG+Q3/6PjMmlL9oI1Dca96
+ JHug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792392785; x=1792997585;
+ h=content-transfer-encoding:content-type:to:subject:message-id:date
+ :from:in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pD/CRwTFRQqQz5Uc/ZFouJDd34rFU03sKGHGQtOCkxQ=;
+ b=TjVw64bUO9NsiEAkO5EzDPtuqGR7Qz4Vb1lLSmQ9Y7NXy4NNFMaMe1ayiTVkTG7qbJ
+ xzZ1MxvAT5OGa6auzgD29ysvx6Bhrw78MANWgcXDQDHwkCt0Hn8ai9cIdtsY8hU+aGTK
+ CU9GUSrJjvaQCcyYdDb4iS2CD3ZvKvWG/jXhS19VxS8jAflDGGxUP6Eem/tr5zdLKLP1
+ kZpUJFzV3si3xtQ9LISGzLLAwErD77J62IPtM+YXn72RWbg4EKyqfxHwobW82AN8mavz
+ KX6Ruv/0hiP/2Tvkr8CxEL38haFQRIJ760nU2hY2Ji1PTdGvLgZAaUDpT6sWStk4VChT
+ eDYw==
+X-Gm-Message-State: AFq9FYKNThj8ZBegb4k3j2UW1fcckX3FJRYIMHPMX1hzx1QL1mbDfd3A
+ +/JTC3iPH+mxT8aFSTXGP2/F6Zl5MHVOVo1qsoJmy2gffrjqGCTG+Q4FJvq3G+Q+ky6Zq7036DJ
+ dW4zNZcjCU4uV2DLfAKz0yIR4DkrS80FqGA7371E=
+X-Gm-Gg: AYBFou02eKarksm12d8Mbe3lTXrwUErLD5FMuVGJkUjW/Tb5wg6IzKDOkuxWk4TT9mc
+ S3h4UWS9LtedZlPanldSBmQdAqv8crBLz1mp0nCn46UYDPrn6Q3UP90dumx9NZB0xO75BdHmnTc
+ pNfAUWjIYJNIHhXDz9DQSZAxv4h6pM9hCSqURJT1jzVyF+88jWQWZ1A0PkIM+KFPhQwQ9ekrq68
+ qPf8vEug397HP0O6lrbdOKneepkSjZT3uSWClT0hUyn1jCTF7txSmYteQnIt7iZwWA+5bDBBIXK
+ S9s26uVFWyh292KICN5XFFukMsxIRgU5Y6hB6he6x/zFZ51TPR7fpD88XKO+lg/t3+I=
+X-Received: by 2002:a05:6402:1d4a:b0:6b1:ef6b:f3e4 with SMTP id
+ 4fb4d7f45d1cf-6b3a8176404mr3811510a12.14.1792392784920; Sun, 18 Oct 2026
+ 23:53:04 -0700 (PDT)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: UXWjP+Lzwj3GTSveTji4ccPw0RjjX7pC2H/GKnrE5Hfzy/WAaRuuR48WM7GgVeI8L45m+baCBprL2IbC/+rcg9y/tGU67tEkf3DvruAi+eVC/eefihliM4BPGipAi0Wm+IrMFcn2ATk+ZjwbTU9lADLNMeMcJDb/d8bFHagcM2dhGWFzYoV8k8YGlt5sUau3MsXK+KdIMFsuRvEjbO1mSAG6BhcWstPdz8d0Vsst6963So2Zg7KiWg858XRcf2WEq+G9X00L5cAl/9rVEouT42D8TzbQ9o3gGmgsVU/78tyLPYwWOJ1UgSK6oeDzeI9S56nM08v/Ng8VZ6osfIiEsg==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 794ec039-e108-4c56-3e9d-08df2da8a6f6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Oct 2026 06:17:28.8501 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: svA0ptRpnpjAyOSvoT5+4cH58izUTzt1b/5Xqc/qvcLTpkTfeQ/6VJM532WqfsVCAIGWF7Kk4d4NYm65wbME9o1aT8Eyf9DQq54dy7EX47s=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUXPR06MB8055
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+References: <20260929084416.1600199-1-zhangckid@gmail.com>
+In-Reply-To: <20260929084416.1600199-1-zhangckid@gmail.com>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Mon, 19 Oct 2026 14:52:26 +0800
+X-Gm-Features: AclHuK-urWFDkkmQtaXdTd-Amj-2GBhyDN34vNM-rtxQd1v2fJ5CG4dKfpIZvkU
+Message-ID: <CAK3tnvJUWJ3DpG960gCBL0GtvKmPpbiTQeWdcC-eMjcusci4Hg@mail.gmail.com>
+Subject: Re: [PATCH V18 00/13] iothread: Support tracking and querying
+ IOThread holder
+To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,67 +119,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Junjie
+Hi all,
 
-> Subject: Re: [PATCH v5 5/8] hw/usb/redirect-server: Implement control
-> transfers
->=20
-> From: Junjie Cao <junjie.cao@intel.com>
->=20
-> Hi Jamin,
->=20
-> The tests below were run on v4; patches 5 and 6 are unchanged in v5.
->=20
-> > +    usbredir_server_do_control(priv, id, hdr, data, data_len,
-> > +
-> USBREDIR_SERVER_REPLY_CONTROL);
->=20
-> The callback owns data, but do_control() copies it without freeing the or=
-iginal
-> buffer. In a test with usb-storage, 100 vendor control OUT requests carry=
-ing 64
-> bytes each complete with STALL, but LSan reports
-> 6,400 bytes leaked in 100 parser allocations.
->=20
-> Could we call usbredirparser_free_packet_data() after do_control() return=
-s,
-> and free data on every exit from the bulk and interrupt callbacks in patc=
-h 6?
->=20
-Thanks for the review and suggestion.
-Will fix it.
-> > +    QTAILQ_REMOVE(&s->inflight, rp, next);
-> > +    usb_packet_cleanup(&rp->pkt);
->=20
-> A test device returning async IOERROR for the first of two bulk OUT reque=
-sts
-> reproduces an assertion here. The core calls back for the second packet w=
-ith
-> USB_RET_REMOVE_FROM_QUEUE, but leaves it QUEUED on
-> ep->queue. usb_packet_cleanup() then hits its
-> !usb_packet_is_inflight() assertion.
->=20
-> Could we call usb_cancel_packet() for that status before cleanup?
-> For a QUEUED packet it removes the core queue entry without calling the
-> device's cancel callback.
->=20
-Will fix it.
+A gentle ping on v18. Could you please take a look at the remaining
+patches, particularly the COLO and vfio-user changes addressing the
+previous review comments?
 
-> In the not-found case of usbredir_server_cancel_data_packet():
->=20
-> > +    usbredirparser_send_control_packet(s->parser, id, &resp, NULL,
-> > + 0);
->=20
-> If the original reply is already queued when the cancel arrives, the QEMU
-> client consumes its cancelled-ID entry when it receives that reply. The e=
-xtra
-> control packet then sends a second reply for the same ID.
->=20
-> Could we omit this reply when the transfer is not found?
-> usbredirhost_cancel_data_packet() also sends no additional reply in that =
-case.
+Please let me know if anything else is needed to move this series forward.
 
-Will do.
+Thanks,
+Chen
 
-Jamin
+
+On Tue, Sep 29, 2026 at 4:44=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> wr=
+ote:
+>
+> ### Motivation
+> Currently, the relationship between IOThreads and the resources using the=
+m is
+> opaque. From a management perspective, it is difficult to determine which
+> devices or block exports are currently associated with a specific IOThrea=
+d
+> via QMP or HMP.
+>
+> This series introduces a "holder" tracking mechanism based on QOM paths o=
+r
+> block exports to significantly improve IOThread observability.
+> In high-performance virtualization environments, users often pre-allocate
+> a set of IOThreads to serve as a persistent thread pool. During device
+> hotplug/unplug cycles, while IOThread objects remain persistent,
+> their attachment state changes dynamically.
+>
+> By tracking these "holders," administrators can use `query-iothreads` to
+> monitor the real-time load distribution of the thread pool and identify w=
+hich
+> specific devices (e.g., virtio-blk, BlockExport) are attached to which th=
+read.
+>
+> ### Technical Overview
+> * Holder tracking
+>
+>   Add a QAPI holder list to each IOThread.  A holder identifies either
+>   a QOM object by its canonical path or a block export by its unique
+>   BlockExportOptions ID.
+>
+> * Explicit reference lifecycle
+>
+>   Add iothread_ref_and_get_aio_context() and the matching
+>   iothread_unref_and_put_aio_context().  Acquiring an AioContext register=
+s a
+>   holder and keeps the IOThread alive until the matching put.
+>
+>   Legacy callers without a matching lifecycle use the explicitly named
+>   iothread_unsafe_get_aio_context().  The ambiguous legacy
+>   iothread_get_aio_context() is removed after all production callers
+>   are migrated.
+>
+> * Subsystem integration
+>
+>   Track holders for block exports, monitors, virtio-blk, virtio-scsi,
+>   virtio queue mappings, virtio balloon thread pinning, COLO compare,
+>   vfio-user proxy, and xen-block.
+>
+> * Introspection
+>
+>   Extend IOThreadInfo with a holders array returned by
+>   query-iothreads.  Display the same information with info iothreads.
+>
+>
+> ### V18 -> V17 Changelog
+>   - Saved the COLO object's QOM path for finalization and guarded
+>     holder cleanup against incomplete initialization.
+>   - Used the owning PCI device's QOM path for vfio-user holders
+>     and saved it for disconnect().
+>   - Simplified the monitor QOM path field name and clarified
+>     PATCH 12's commit message.
+>   - Rebased on upstream and collected Reviewed-by tags.
+>
+> ### V17 -> V16 Changelog
+>   - Rebase code to resolve code conflicts for patch 8:
+>     "virtio-balloon: Update tracking iothread users with holder".
+>     This issue caused by latest merged patch "fdc3f9a83d".
+>
+> ### V16 -> V15 Changelog
+>   - Unified per-monitor IOThread checks and accesses through
+>     mon->iothread after initialization.
+>   - Simplified PATCH 13's commit message and clarified why blockdev
+>     cannot use the holder-aware get/put APIs.
+>   - Dropped the v15 Patch 1 in this series, It will be taken away
+>     independently by trivial-patches tree.
+>
+> ### V15 -> V14 Changelog
+>   - Moved monitor IOThread cleanup from unparent() to monitor_finalize(),
+>     pairing complete() with instance finalization.
+>   - Squashed V14 PATCH 04 and PATCH 14 into PATCH 13 and clarified the
+>     blockdev lifetime assumption. Since the additional changes are minima=
+l,
+>     PATCH 13 retains Stefan's Reviewed-by from V14 PATCH 04.
+>   - Rebased and adapted info iothreads to the MonitorHMP interface.
+>
+> ### V14 -> V13 Changelog
+>   - Renamed patch 3 and clarified that it introduces holder-tracking
+>     infrastructure, with users converted in subsequent patches.
+>   - Documented that monitor holders are not visible to management
+>     applications, while retaining the tracking for a consistent holder
+>     and IOThread reference lifecycle.
+>   - Rebased on the latest upstream.
+>
+> ### V13 -> V12 Changelog
+>   - Refactored block export IOThread reference handling with shared
+>     init/cleanup helpers and preserved the existing single-IOThread
+>     driver arguments.
+>   - Moved monitor IOThread cleanup to the QOM unparent callback,
+>     where the canonical path is still available.
+>   - Kept internal IOThreads hidden from query-iothreads.
+>   - Made virtio queue-mapping holder arguments const.
+>   - Improved some detail comments.
+>
+> ### V12 -> V11 Changelog
+>   - Change the function name from the "iothread_put_aio_context()"
+>     to "iothread_unref_and_put_aio_context()" match the
+>     "iothread_unref_and_put_aio_context".
+>   - Fix unnecessary char * cast since the holder variable is
+>     declared const.
+>   - Add detailed commit msg in patch 06/15.
+>   - Optimize the HMP print in patch 13/15.
+>   - Rebase code on upstream.
+>
+>
+> Zhang Chen (13):
+>   iothread: introduce holder tracking
+>   iothread: add holder-aware AioContext accessors
+>   block/export: track IOThread references
+>   monitor: track IOThread users with QOM paths
+>   virtio-vq-mapping: track iothread-vq-mapping references using device
+>     path
+>   virtio: track IOThread references for thread pinning
+>   net/colo: track IOThread references using path-based holder
+>   virtio-balloon: Update tracking iothread users with holder
+>   vfio-user/proxy: Update tracking iothread users with device QOM paths
+>   xen-block: Update tracking iothread users with holder name
+>   monitor/hmp: display IOThread holders
+>   iothread: make legacy AioContext getter explicitly unsafe
+>   tests/unit/iothread: update AioContext ref/put helpers
+>
+>  block/export/export.c                   | 62 +++++++++++++---
+>  blockdev.c                              |  9 ++-
+>  hw/block/dataplane/xen-block.c          | 19 ++++-
+>  hw/block/virtio-blk.c                   | 21 ++++--
+>  hw/scsi/virtio-scsi-dataplane.c         | 22 ++++--
+>  hw/vfio-user/pci.c                      |  2 +-
+>  hw/vfio-user/proxy.c                    | 20 +++++-
+>  hw/vfio-user/proxy.h                    |  4 +-
+>  hw/virtio/iothread-vq-mapping.c         | 20 ++++--
+>  hw/virtio/virtio-balloon.c              | 21 ++++--
+>  include/block/export.h                  |  5 ++
+>  include/hw/virtio/iothread-vq-mapping.h |  6 +-
+>  include/hw/virtio/virtio-balloon.h      |  1 +
+>  include/system/iothread.h               | 38 +++++++++-
+>  iothread.c                              | 89 ++++++++++++++++++++++-
+>  monitor/hmp-cmds.c                      | 20 ++++++
+>  monitor/monitor-internal.h              |  7 +-
+>  monitor/monitor.c                       | 36 +++++++---
+>  monitor/qmp.c                           | 14 ++--
+>  net/colo-compare.c                      | 36 ++++++----
+>  qapi/misc.json                          | 94 +++++++++++++++++++++----
+>  tests/unit/iothread.c                   | 18 +++--
+>  tests/unit/iothread.h                   |  7 +-
+>  tests/unit/test-aio-multithread.c       |  5 +-
+>  tests/unit/test-bdrv-drain.c            | 18 +++--
+>  tests/unit/test-block-iothread.c        | 21 ++++--
+>  26 files changed, 508 insertions(+), 107 deletions(-)
+>
+> --
+> 2.43.0
+>
 
