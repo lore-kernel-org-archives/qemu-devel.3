@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BD5CCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5CACCF2E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoTP-0007Ge-5r; Mon, 19 Oct 2026 10:36:23 -0400
+	id 1xIoTj-0007xf-8a; Mon, 19 Oct 2026 10:36:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <8a9be26b0aac54d97b4228dc1bd61049d80472a8@kylie.crudebyte.com>)
- id 1xIoTN-0007G0-8L
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:21 -0400
+ (envelope-from <12df3256042c8db14984248d0660d14e380b312d@kylie.crudebyte.com>)
+ id 1xIoTh-0007kd-40; Mon, 19 Oct 2026 10:36:41 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <8a9be26b0aac54d97b4228dc1bd61049d80472a8@kylie.crudebyte.com>)
- id 1xIoTL-0007Vh-O0
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:21 -0400
+ (envelope-from <12df3256042c8db14984248d0660d14e380b312d@kylie.crudebyte.com>)
+ id 1xIoTf-0007XH-5X; Mon, 19 Oct 2026 10:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=3sjb3UBBgzDNLh3mbrEpyXJaIuJ4otItdxce6XxFjQo=; b=KWRnw
- 84CstdT21DvgjQLnPd3c20K18lL+A2YbQCe05aES9oBH+rhRsV9Ky3KsRROsNzyVg+4kZkrJpPNyE
- 9QLa60L0LK3b0T7dTnmuScH8bWKWDzkvfB5rEPYJlr84bKu8Q7iRYM5UsVlwnHnpCY8n+X+2y8obX
- 7Gp2C900RxfKyek4D8JSWHdy7WRM7ZSwfZFtxnfBJYSrrgJDBOvwPfRe+o0zyQzrhLPVvhR3sFdaF
- 5KkGWMyKuHl3yLEkiec0kM9fH/HdvgU1O7zLlxWay6fkc0GqGKdsatWApnRskTNOlb5Umwr1Se819
- iZ3lTBTCPUN51GduQQR5CKoIx1iNQQyt8t/zy3d8kkrIZH9y07ru3Gu33MG63uszIto1aFCGSIFcd
- P0V2i1KcymKfd6AjSeh6AryfOPrZ1wkjd9ekiWYw5ceJ7In017911KnXzKaax2xjvGSKR+ilroyG7
- uhX4x9bdV6eLbHdpiHYNtwmTCC5G8EJT5fM3EAl8Pl7/ftZ+dSoSxjJ1g0T4XnNU6DM6YAskZu9QE
- R8KLROo12FozG/dWRplq2w7PICp49vzJ6gQko7c/GSp2KHrJO2CJmgVEkatgw1duij2vcIqkHYP2R
- /w76epKCU8cczu3qsWVFuLh6ophNxTFHSbIW5jYeB9PppN6iF7ZXp8RRADxqrA=;
-Message-ID: <8a9be26b0aac54d97b4228dc1bd61049d80472a8.1792420035.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=upnmIveujoDak5KFIdh40JgC4qu3Wp35hH98+YdcFZ4=; b=rONLP
+ vw3Ney5V2+hcLFU7ytWWJDzLorI5B+3/xZWpnqjSf6Ou+excCop9AY7mncrgpwlNhAKR65LB3j2Er
+ 2TtzH65JVG78FO04QsOOxQOAzQR9lWxnqUc5M3qOeX4ZPCtfdMpknak1m9oDZUu6xQicjbilBwwpY
+ veRKpKKbjC8AFwVJu0FCstEZ1DTNYd/N9YmE/flPS6V+1bSuwBkW16kjr+ZJSV8BfL6dnx349ameU
+ OOU9er0qb6ElTQ8MVt2ONYHGBFJXNv1FHA/bnA0YvkIF+FFckpvw1k7slcRHMsnzP9bAtwt6wbHgu
+ cEOqb8c0Wag3FLpCgH2aCh7b50myslJCRqipx0uYVE57qimLzi7HuGAiFmluPQSkNddJEiSQRIPGw
+ NWgdvxZhVCQxnjVFfEMG3+HAjFKAjOOHHc+9ZyalCcoYTlT4XdHp26+atBk4aW8DE3cciLAvAjGyu
+ gieaWi6kquu/oscra2pV5WYezhHnfPVn6r0QgpuyYkD/Xn7LfSIPQwHlHfASTrbrL682MiOw/YNk2
+ oyQ+RjRQ82olBX0fS27KYaShE/HB3Vpg6xW0rFznBRRvb/JP8tnz1/qsMWy/5g68XYQhoMAtM1Pl9
+ 7zhI4+rb14yUg42wQJGixxcd+y40ruwIdMoGPJ25MqPcpSrlofhaj/V9HUMkJk=;
+Message-ID: <12df3256042c8db14984248d0660d14e380b312d.1792420035.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1792420035.git.qemu_oss@crudebyte.com>
 References: <cover.1792420035.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 19 Oct 2026 16:27:16 +0200
-Subject: [PULL 3/9] tests/9p-client: add Rerror function (legacy 9p2000.u)
+Subject: [PULL 6/9] hw/9pfs: fix dirent stream protection for legacy
+ (9p2000.u) Tread
 To: qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=8a9be26b0aac54d97b4228dc1bd61049d80472a8@kylie.crudebyte.com;
+ envelope-from=12df3256042c8db14984248d0660d14e380b312d@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,52 +67,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_rerror() function to the 9p test client. This function is
-the legacy 9p2000.u variant for returned errors (i.e. in contrast
-to the already existing Rlerror response handler function
-v9fs_rlerror() for the 9p2000.L protocol version).
+Concurrent legacy Tread requests (9p2000.u) on the same directory FID
+race the FID's shared dirent stream.
 
-Link: https://lore.kernel.org/qemu-devel/13b2cead57321d45b6503059e35c1ec1b49a629a.1791368962.git.qemu_oss@crudebyte.com
+In the initial Tread implementation (a92315553d) the dirent stream
+was entirely unprotected. Commit 7cde47d4a8 introduced a lock, which
+mitigated the problem, but without sufficient full coverage for this
+request type, as it only held the lock during individual dirent
+stream steps. A concurrent request could mutate the dirent stream in
+between. Furthermore the initial rewinddir() (to offset 0) was still
+not protected at all.
+
+This could cause corrupted directory entries being returned to
+client, with entries missing, duplicate entries and wrong order, up
+to heap corruption of 9p server's QEMU process due to garbage seek
+targets.
+
+Fix this by holding the lock for the entire directory reading
+transaction (i.e. for the whole v9fs_do_readdir_with_stat() call).
+
+Fixes: a92315553d ("virtio-9p: Add P9_TREAD support")
+Link: https://lore.kernel.org/qemu-devel/2f0a6e10200bb3a0dbc0f762493cf1f4d642d61b.1791368962.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 11 +++++++++++
- tests/qtest/libqos/virtio-9p-client.h |  1 +
- 2 files changed, 12 insertions(+)
+ hw/9pfs/9p.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index b2f0037b7b..005ae53a3f 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -287,6 +287,17 @@ void v9fs_req_free(P9Req *req)
-     g_free(req);
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 4764d9db13..730d1279bb 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -2421,6 +2421,10 @@ v9fs_xattr_read(V9fsState *s, V9fsPDU *pdu, V9fsFidState *fidp,
+     return offset;
  }
  
-+/* size[4] Rerror tag[2] ename[s] errno[4] */
-+void v9fs_rerror(P9Req *req, uint32_t *err)
-+{
-+    g_autofree char *ename = NULL;
-+
-+    v9fs_req_recv(req, P9_RERROR);
-+    v9fs_string_read(req, NULL, &ename);
-+    v9fs_uint32_read(req, err);
-+    v9fs_req_free(req);
-+}
-+
- /* size[4] Rlerror tag[2] ecode[4] */
- void v9fs_rlerror(P9Req *req, uint32_t *err)
- {
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index c910407f70..5a00a0870c 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -599,6 +599,7 @@ void v9fs_req_send(P9Req *req);
- void v9fs_req_wait_for_reply(P9Req *req, uint32_t *len);
- void v9fs_req_recv(P9Req *req, uint8_t id);
- void v9fs_req_free(P9Req *req);
-+void v9fs_rerror(P9Req *req, uint32_t *err);
- void v9fs_rlerror(P9Req *req, uint32_t *err);
- TVersionRes v9fs_tversion(TVersionOpt);
- void v9fs_rversion(P9Req *req, uint16_t *len, char **version);
++/*
++ * The only caller of this function (v9fs_read()) holds the per-FID readdir
++ * lock during the whole call of this function.
++ */
+ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+                                                   V9fsFidState *fidp,
+                                                   uint32_t max_count)
+@@ -2431,6 +2435,7 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+     int32_t count = 0;
+     struct stat stbuf;
+     off_t saved_dir_pos;
++    off_t current_dir_pos;
+     struct dirent *dent;
+ 
+     /* save the directory position */
+@@ -2442,12 +2447,11 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+     while (1) {
+         v9fs_path_init(&path);
+ 
+-        v9fs_readdir_lock(&fidp->fs.dir);
+-
+         err = v9fs_co_readdir(pdu, fidp, &dent);
+         if (err || !dent) {
+             break;
+         }
++        current_dir_pos = qemu_dirent_off(dent);
+         err = v9fs_co_name_to_path(pdu, &fidp->path, dent->d_name, &path);
+         if (err < 0) {
+             break;
+@@ -2461,8 +2465,6 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+             break;
+         }
+         if ((count + v9stat.size + 2) > max_count) {
+-            v9fs_readdir_unlock(&fidp->fs.dir);
+-
+             /* Ran out of buffer. Set dir back to old position and return */
+             v9fs_co_seekdir(pdu, fidp, saved_dir_pos);
+             v9fs_stat_free(&v9stat);
+@@ -2473,8 +2475,6 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+         /* 11 = 7 + 4 (7 = start offset, 4 = space for storing count) */
+         len = pdu_marshal(pdu, 11 + count, "S", &v9stat);
+ 
+-        v9fs_readdir_unlock(&fidp->fs.dir);
+-
+         if (len < 0) {
+             v9fs_co_seekdir(pdu, fidp, saved_dir_pos);
+             v9fs_stat_free(&v9stat);
+@@ -2484,11 +2484,9 @@ static int coroutine_fn v9fs_do_readdir_with_stat(V9fsPDU *pdu,
+         count += len;
+         v9fs_stat_free(&v9stat);
+         v9fs_path_free(&path);
+-        saved_dir_pos = qemu_dirent_off(dent);
++        saved_dir_pos = current_dir_pos;
+     }
+ 
+-    v9fs_readdir_unlock(&fidp->fs.dir);
+-
+     v9fs_path_free(&path);
+     if (err < 0) {
+         return err;
+@@ -2528,10 +2526,17 @@ static void coroutine_fn v9fs_read(void *opaque)
+             err = -EOPNOTSUPP;
+             goto out;
+         }
++        /*
++         * Hold the lock for the entire readdir transaction (rewind and
++         * getdents) to prevent dirent stream corruption on concurrent requests
++         * on the same FID.
++         */
++        v9fs_readdir_lock(&fidp->fs.dir);
+         if (off == 0) {
+             v9fs_co_rewinddir(pdu, fidp);
+         }
+         count = v9fs_do_readdir_with_stat(pdu, fidp, max_count);
++        v9fs_readdir_unlock(&fidp->fs.dir);
+         if (count < 0) {
+             err = count;
+             goto out;
 -- 
 2.47.3
 
