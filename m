@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31000CCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4D9DCCF2E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoDU-0002En-1D; Mon, 19 Oct 2026 10:19:57 -0400
+	id 1xIoDf-0002PD-MR; Mon, 19 Oct 2026 10:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDE-0002CC-W0
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:44 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDP-0002Es-0M
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDC-0005Xj-93
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDJ-0005ah-0o
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419575;
+ s=mimecast20190719; t=1792419584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vZwieRBJR5bGNH1g9WPO9iUQzQBm2BUud1lnpQQFdg4=;
- b=ho+4gcpu2kzeSibTuH2JfXV8OiUonU6z1IHwv9cE6IJzged1GqDFQZmwfq51uKlni+YNbe
- Yu8/epIUjwL52C7hAvgUCbNNHrDRgaqeWa6eXJmw3lB1/hMPPbWrFG1CrWODB1cY71xRD4
- l+uwLWcWRseFCAJayB6sZdDM199SYns=
+ bh=/9/X/mNudbAKEK3nbnRw6HG7f3ivoThrRR7I3u3hvxM=;
+ b=Jc6hVRtLbgh6otQybUl2D0lOdsJaWUZ3ajjreohl2GmgHBt9Q5HKr14hK1FdkGAqt9d3C3
+ eDmarm0/g9LoSJ17CVl0aRnjeZ2V4ta1P8RCeZn+rEFSNTJW7yMVJbcZ6Xy6puAegpJVzh
+ 1Rl3LmlI3TuMGXfh0rK+EDVAqyUOI20=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-yffXXb9KMUWkZNCPQ2240g-1; Mon,
- 19 Oct 2026 14:19:33 +0000
-X-MC-Unique: yffXXb9KMUWkZNCPQ2240g-1
-X-Mimecast-MFC-AGG-ID: yffXXb9KMUWkZNCPQ2240g_1792419572
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-VxfoEL5tOd-IWLmWQ7fQbw-1; Mon,
+ 19 Oct 2026 14:19:42 +0000
+X-MC-Unique: VxfoEL5tOd-IWLmWQ7fQbw-1
+X-Mimecast-MFC-AGG-ID: VxfoEL5tOd-IWLmWQ7fQbw_1792419581
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FD5D18001D1; Mon, 19 Oct 2026 14:19:32 +0000 (UTC)
+ id DD98B180065A; Mon, 19 Oct 2026 14:19:40 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B76C5767; Mon, 19 Oct 2026 14:19:31 +0000 (UTC)
+ id 9E2067C6; Mon, 19 Oct 2026 14:19:40 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7476121E6882; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
+ id 1949E21E68A8; Mon, 19 Oct 2026 16:19:30 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
  amachhiw@linux.ibm.com
-Subject: [PATCH v6 03/65] qapi/introspect: Simplify masked name comment
- emission slighly
-Date: Mon, 19 Oct 2026 16:18:27 +0200
-Message-ID: <20261019141929.1594337-4-armbru@redhat.com>
+Subject: [PATCH v6 35/65] net/colo-compare: fix compare_timeout setter visitor
+ type
+Date: Mon, 19 Oct 2026 16:18:59 +0200
+Message-ID: <20261019141929.1594337-36-armbru@redhat.com>
 In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
@@ -86,39 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of emitting the comment for certain meta-types, simply emit it
-when introspection name and name differ.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This additionally emits it for arrays, which is fine.
+The setter was using visit_type_uint32, truncating the value, while the
+getter and typename use uint64. Use visit_type_uint64 consistently.
 
+Fixes: 0c4266ef2690 ("net/colo-compare.c: Fix compare_timeout format issue")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/introspect.py | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/colo-compare.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-index 644461560c..49d1ed2897 100644
---- a/scripts/qapi/introspect.py
-+++ b/scripts/qapi/introspect.py
-@@ -253,12 +253,12 @@ def _gen_tree(self, name: str, mtype: str, obj: Dict[str, object],
-                          Will be omitted from the output if empty.
-         """
-         comment: Optional[str] = None
--        if mtype not in ('command', 'event', 'builtin', 'array'):
--            if not self._unmask:
--                # Output a comment to make it easy to map masked names
--                # back to the source when reading the generated output.
--                comment = f'"{self._name(name)}" = {name}'
--        obj['name'] = self._name(name)
-+        introspection_name = self._name(name)
-+        if introspection_name != name:
-+            # Output a comment to make it easy to map masked names
-+            # back to the source when reading the generated output.
-+            comment = f'"{introspection_name}" = {name}'
-+        obj['name'] = introspection_name
-         obj['meta-type'] = mtype
-         if features:
-             obj['features'] = self._gen_features(features)
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index 5986fb1e88..948a2f7f9e 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -1075,9 +1075,9 @@ static void compare_set_timeout(Object *obj, Visitor *v,
+                                 Error **errp)
+ {
+     CompareState *s = COLO_COMPARE(obj);
+-    uint32_t value;
++    uint64_t value;
+ 
+-    if (!visit_type_uint32(v, name, &value, errp)) {
++    if (!visit_type_uint64(v, name, &value, errp)) {
+         return;
+     }
+     if (!value) {
 -- 
 2.55.0
 
