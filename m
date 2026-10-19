@@ -1,108 +1,155 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5BF606A322
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 18:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359E3606A31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=sU2ptv8H
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eWP8Dx+0;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hhVLeGoX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIsZl-0001IK-AV; Mon, 19 Oct 2026 14:59:13 -0400
+	id 1xIsfP-0002zL-Th; Mon, 19 Oct 2026 15:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samanyu.goel16@gmail.com>)
- id 1xIqAz-0001aD-J7
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:25:29 -0400
-Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <samanyu.goel16@gmail.com>)
- id 1xIqAx-0001PI-Rm
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 12:25:29 -0400
-Received: by mail-qv1-xf2a.google.com with SMTP id
- 6a1803df08f44-9178aabd30dso21445396d6.1
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 09:25:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792427127; cv=none;
- d=google.com; s=arc-20260327;
- b=ciLB9V2Wjkk0+IH56t0ld8oOIoM6LzBOw73ybTzRTGhPlN2K2t0HixiQBjAlLLCbqc
- YsjJW+VP7JDQaWzf6D0uyJjLgvL/0uivNEwiH39K6lSye0pBFcDvmp5twf9h5VupQvRl
- dTQetUJ9Kz0RUUReM4505XlKkaegUNXmCsFv35vXhiQBt6VTNENlp26RT/HkyKjOCXqM
- sMkRCQqqR8XOYCV65DqT8fUNhCsPvYjbWn/fck+FFk0V/BDJDqgux9WazghBIwwIpR35
- FwchCFFljfoD3Kc+/DBrT1WZZzj2u1/tefooGXSEL5HOrxc3u9uMtVQMR63fAP0xOuao
- X6SA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Kl9iXwi4LOXMFWUH/bOEVH1gGOQOhUX9QNpEdl9gE5s=;
- fh=VQUMc85x8ANizanga/Uk0eVpSOWbPwTPWK+d/C2OKHM=;
- b=rIfLdrKMWQzAF6j5fuJ/7PdMOtlK+YALWy4bIxQcbU583C8bjWI0PYB6Fk7M0IbJXm
- Nfph4iXV455kDlPa7Ho6XwXaLw0v3C4o9bFLaxrJvNddy1jdZOFK8SgFHSwRXahY3LcI
- 8Jk5Hr8kqqkVpjqHxqzDjNHm40LuGdf+6pO8SImKVrU9qADmGH828/y2e9VWkV+TGhZr
- AItirBPunN5MVuLvHFJCBg9wUaKFK5gZ/efIMpw8CPMtGrU+4NRJbJkI4eor2GR2xemT
- vbNJXqeLkiK5h5cFZzrJcbvAdw6KKJf8HqtMV780dtCDzSW9QUwdJX2lsk9208Fpmhym
- HSRA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xIsfO-0002z0-Dn
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:05:02 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xIsfM-00010U-9X
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:05:02 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69JFOsKw4180380
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 19:04:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ suYVWt+bVCPEGAUWmBr1sVbMBLzYGWy1+D2NFe2tdAY=; b=eWP8Dx+0HKWjyN9G
+ kKxz6KQ1NWDnjEtw0tdiHcITWFJTB8lK39Il1q36wz2jaO2jQhPWX5qdiZJCwntN
+ oexsE443Ng08JSjIH/qzl6S7HG2sZPdl9TnhwswHy9Bt1YTLwVhm0Hh4UusN4VBN
+ OdCm9m+MJicKoc7wFu0fhXAHmKQXklZbotoA8umXzJtJ24a1iJTguE22d/FeQuy9
+ YXJJ7PsvnSMAGpcxe5NnNyL13uyzXOfV1b0F5D7QWele1R+utm/TXMybtVvSP6/i
+ 5r2N+SRbiYxyWD3MIkQqrXWV61z4YQQJjFFjwSlrqRsSR4PbGBg0ipa5ktXlTgpw
+ d/uIaw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdf3faug9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 19:04:57 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-30c0d568830so5249323eec.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:04:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792427127; x=1793031927; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Kl9iXwi4LOXMFWUH/bOEVH1gGOQOhUX9QNpEdl9gE5s=;
- b=sU2ptv8HVHkWLiemf0lv0Wg2yrbwMr7gqIDK+gobyw4Kj5F8TFTtCowR6M+67xqSvw
- d15/CuH/rKMu7k0jI1omNLOvfaVp/HETmpbreEudsONwTALMJtCgKOf1qnLVk/mFblhI
- gCy3s2WkQ+fSaS/A1Wt9kV4BG6khx1XR6IogoRGQt16/t6n+CdWFSFyKUIFWGXMpctqg
- ZtuV+ATetaSPdrByrG/j0qXKV6gnSbBi0+aTP+H+jR4ifegSjv5HwtZ6bBBalsJwN8qk
- iz5lyE5lG/TR5DR28HvMI1srBq3xpcFoYA6vrlJagZV5tPFiGGz8TJoybzQ+dKRdeKnW
- W4Ng==
+ d=oss.qualcomm.com; s=google; t=1792436697; x=1793041497; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=suYVWt+bVCPEGAUWmBr1sVbMBLzYGWy1+D2NFe2tdAY=;
+ b=hhVLeGoXxXxHwpXOWS6Bv22GHAPZVtoJJIE9CVSdX+k5WB9O4xrN2An1C10Nu/YYg3
+ tbKKCrR6lClZ8FtrQmDshfuipVNgbDthteTdMvJV5hbzme1+57BCCvKc8pvcwASDo3hW
+ NGvH9ClsdYDE1GS+L0ZoXNemPQkoRIn8LoMCXHw3JGJz56DmXyHYr65KCfRAt/8d3vca
+ XsdhA/C5apdp4MqTwiZj2gVm3PJi4RJgNtMfIzjQFiZHT+FBjoytBcWIQbSOQPi4zJGH
+ ePrwlJRtt0kasA/38kteu8VZjKbH0D4zB3EdAA82lawt6kFHuhSuOUMUMsqSwxpXefys
+ 9otg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792427127; x=1793031927;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Kl9iXwi4LOXMFWUH/bOEVH1gGOQOhUX9QNpEdl9gE5s=;
- b=fpURh2leaPb+qioTwVBUwawR1jq3z9t4bvlcWhhIu4bXddj30hvbuD2Jfmbqb+y2+p
- tw+NpWuC+Xa8Qs+3Tdk9v8A+fX9Yoc8cdJcMp3WVLb20V8V9Zcx1/Tcib10+5ucWn97y
- r1uLvQzF2M1pt4aUGsGqOzWmUsRodIZUqLyZgzLz2fBFrmeVkrYpeQ8IP1JuIPV2/ViW
- 44U4PESWETWA0Z07jHjRKcffpMpZPYiF/R4K7X4tO9KTTcKet5iN0fZaf5x0ksd+6TGx
- 4Udmw8nQ3WRdf7G47WGiBQ7s6Ikt7lo0iTDgsddaZ4nwZrAertZ8e8NRAZl11Vx2GbZm
- xjNA==
-X-Gm-Message-State: AFq9FYLmS6w1Sd0eucUgfEEqbbqq+QMs9FKhcaIzVxWEujhatymNCFVJ
- sW7tyJXl1LZ+TUNV4xEELzGvBDmlBhSZ0SyZHuvE6sExvgKQkzjRTJ2/Jj7F3SLAkw3mUZUJnZo
- 72hemcbzip3VADx7K9AtySqdjSdjgodc=
-X-Gm-Gg: AYBFou32ZSFNpYB+jxMygYPdP4iCCK57FxiTNPBN6/xOJhwLemha8FOoWWihX3mVCks
- dN6ejn4Pp+bZLm9penOPs6YnrTrhjCM+JeQUrvgvR006+pz3Y/m4Dn/Vn16bEf6lzqfXCizqLpw
- 26DtOJcp/X64oVattw4dW7yRADSilLSblGx67pVvkAcR9xWHBx35BAILRkHnZIrWQHngXe8pY9Q
- q135ivH5PyAN2R7EyeqbPNUrRE7AYXEmHtESjbebBayiljSYY+Jy81cV5vRACdoCbTr80ZC/Mmh
- kqW+kbamLu9iyjNIwa7JTMhL37O8yUopLTNn8yzR5hbUU6wdcdYn82fQKwi1uWGbrqVkYr9PT9y
- fQCgQH3xov9UnDqeXnrLL30GZNZ+/oXCbkuzqNcA=
-X-Received: by 2002:a05:6214:2e48:b0:914:40fb:8e89 with SMTP id
- 6a1803df08f44-91bdefbc857mr130146526d6.16.1792427126643; Mon, 19 Oct 2026
- 09:25:26 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792436697; x=1793041497;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=suYVWt+bVCPEGAUWmBr1sVbMBLzYGWy1+D2NFe2tdAY=;
+ b=2G2vqqBnxyCl/mc9S8vHV6/llEvisthQCtTtdWrWKdWXtvU19WqoW1qrl/T97flKbA
+ FWRTVZ6Tj0O6B6UXE+k4Olc3NxLfeHHQUYnEETOWmKv7dr8bGfg3M5wtgqbOWUXotT5p
+ 3jq/Z5dRenVC24ypzoTEKsk9IbNqC6Db5/KhkiaN1WrFzjGsDRHIA7THIaK+Z+5UwdCx
+ 8lxUkat1lX1yqnDLfsTffL2QXDdZd36kZt+XkYKaCHRX1+gb2lCjxuY5k4Z6Q3Hol2dH
+ aUWK5mxDQiyr6iO4p9cn2FGbDFjmY5gT0VHOr4TU4bbLl2JBpWB6EztZiUvR6kTCydO+
+ xcqA==
+X-Gm-Message-State: AFq9FYKV7YKHtGqKz3ZIvqrqjnDuA5qkOEzFJvB3xLEFkv9WMoiyalLp
+ ueZCUyfEqzPT7Ntg82aoKHQpNjFWhvSvEbGjyTfuL5SR9NJ29zRQhg8ZomN0fHheV/xqFiFl3Be
+ fVh614rVlmOWIpMjEGkMU3kTyTlybP0diTzXHFwzLrZRruEQw2egW/Yjdxw==
+X-Gm-Gg: AYBFou0NB/9sPdCX+5eEzsau9CHVIArFVGmk10LPTcfaUDJgo2hQuIQukvx2i/Jwqik
+ /5QSzmpZqPEhtODG18225FUaGGOp4KTBV7+byqCfvHnMyoTJd03ZeOShxj96mkqg3Pr6FEx0TQA
+ hjTbNPJN+iAVsvoe0fzxKQWfppnTsBoOM0SlAyW4SgbH7/x7SKKgiih/nP2BHjl3rLVTb+qgoDq
+ g4Gpfjo2TppWDGMC3QbZ4M5dFBdux1j4MD9L2wDl4E3NwIsPRmVt8YiKi5VXebMJ95VO2GIIjqZ
+ C0ynx6yYPtsVOAJAijgBf7i7kZFyr+3el9F53xRhFrTA2QE/DUC8kOk7+UBiBLPwsfe1pvOEmwv
+ m+MGpUlyLnwLWNKf9naqLitYwrMkNsYGAP0eiewm/AkARsH+ZE7TDOINNusENoyywqEkWGA==
+X-Received: by 2002:a05:693c:20c6:10b0:365:d42a:f415 with SMTP id
+ 5a478bee46e88-365d42af6f4mr522235eec.12.1792436696971; 
+ Mon, 19 Oct 2026 12:04:56 -0700 (PDT)
+X-Received: by 2002:a05:693c:20c6:10b0:365:d42a:f415 with SMTP id
+ 5a478bee46e88-365d42af6f4mr522201eec.12.1792436696402; 
+ Mon, 19 Oct 2026 12:04:56 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-360813b6ca5sm32266574eec.9.2026.10.19.12.04.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Oct 2026 12:04:55 -0700 (PDT)
+Message-ID: <81cfdf46-571e-4810-b0cd-bf842292e177@oss.qualcomm.com>
+Date: Mon, 19 Oct 2026 12:04:53 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261019155519.1302964-1-samanyu.goel16@gmail.com>
- <CAFEAcA_QYXpjXdC8oiTfn2Z3E99hW0j-mcDSqGLhKfKKex8VsA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_QYXpjXdC8oiTfn2Z3E99hW0j-mcDSqGLhKfKKex8VsA@mail.gmail.com>
-From: Samanyu Goel <samanyu.goel16@gmail.com>
-Date: Mon, 19 Oct 2026 21:55:13 +0530
-X-Gm-Features: AclHuK9DfyJEFY0MWupTHVEG_JtaPCW-ax_PvkOfeG_WeYxSbGhg25GiD-Awng4
-Message-ID: <CAL3-oQiGT2OSxq7casnW7JuwrCM5wa2L4SDpDe_As7+1hyEuww@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/exynos4210_combiner: Fix out of bounds access
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000002b5f11065e33f621"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
- envelope-from=samanyu.goel16@gmail.com; helo=mail-qv1-xf2a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] hw/i386: ELF endianness fixes
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20261019151233.230172-1-farman@linux.ibm.com>
+ <20261019151233.230172-2-farman@linux.ibm.com>
+ <2be3455d-929e-46de-864c-09675ee9c71f@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <2be3455d-929e-46de-864c-09675ee9c71f@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: tNYXfZ5KX44oIeepaqHuU80nCbQldUyo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA3NSBTYWx0ZWRfX0KxKm25W8C2N
+ gBZNdfgXt9sREwL1u1uuf2BwINC9sIe+nIYzPgdHxHudPox/PZ0TANrYngWUwdoLfRAnr7vgxnT
+ 8bjyrGCV423h9OgeGa/+qE1ZDLkKsDJcMuD3LYBrmq9RRudLtpnWDIp/13W0g/JiZ3S4R4jBoG6
+ RkyI7LSwDm9O1DxDJzDTIhDoIzfEInFblHjMEcZotyrF9zdB7ihRwyCAuBoYvfpzzxIoTgawItP
+ clIYJZUPhvIndPjiNPGgvreGDI1s1o1sWWZHsSCZuAsxAsLdElrDIT+RCKKnH++Y0vWj9TT/Vz4
+ VuT/Z4StlYtDnz5ZYsBXXPRsQY+ql6yAMcRIBOJGsiWtm7wkMdm0xPOHC1memIkstQzB4mjMxBC
+ PpqacjPw51gqN08XPWa0PHYG8Tfy44z/PPajiauAwR2AZGw3M3DDk/k8YySG/omgABl7m2bCj/X
+ VCgunxf5F7TPMD3nkwA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA3NSBTYWx0ZWRfX8fJjbb23+cEr
+ jPkuhZkFRQAatJKjWxrQuO7382LouiaZ7kE/IJHNJvFWwcb/RU8kXCZ5Wbr3UgVl/WRVunVotWG
+ 1spxjgZOoP1vL4GM2Ze3Qa5KxwCqbos=
+X-Proofpoint-GUID: tNYXfZ5KX44oIeepaqHuU80nCbQldUyo
+X-Authority-Analysis: v=2.4 cv=OaANnRTY c=1 sm=1 tr=0 ts=6ad669d9 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=Wo-anEq9gCjtSUVyRZQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-19_05,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610190075
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 19 Oct 2026 14:59:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,106 +160,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---0000000000002b5f11065e33f621
-Content-Type: text/plain; charset="UTF-8"
+On 10/19/2026 11:57 AM, Ilya Leoshkevich wrote:
+> 
+> 
+> On 10/19/26 17:12, Eric Farman wrote:
+>> Running make check-tcg-x86_64 on a big-endian host (e.g., s390x) fails
+>> due
+>> to problems reading/parsing the ELF data:
+>>
+>>    qemu-system-x86_64: Error loading uncompressed kernel without PVH
+>> ELF Note
+>>
+>> There already exists logic in include/hw/elf_ops.h.inc to handle byte-
+>> swaps
+>> where necessary, but it does not perform this logic for ELF notes itself.
+>>
+>> Fixing that improves matters, but yields other errors: most of the tests
+>> timeout while some generate confusing assertions. Both appear to be
+>> related
+>> to the data addresses in those notes, which are incorrect when running
+>> on a
+>> big-endian host.
+>>
+>> Adding tswap wrappers, which will conditionally swap if the host and
+>> target
+>> endianness don't match, fixes that such that check-tcg-x86_64 runs
+>> cleanly
+>> on an s390 host.
+>>
+>> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+>> ---
+>>   hw/i386/x86-common.c     |  6 ++++--
+>>   include/hw/elf_ops.h.inc | 20 ++++++++++++++++++--
+>>   2 files changed, 22 insertions(+), 4 deletions(-)
+> 
+> This looks similar to [1], which I've been desperately pinging for a
+> while.
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240929180659.3598-1-
+> ardb@kernel.org/
 
-Thanks Peter! Good catch on the read function, I totally missed that part
-of it while focusing just on the main issue.
+I'm not sure if that's the reason, but I noticed that the (common) email
+workflow to add people in cc on an existing thread rarely works.
 
-It makes complete sense to clean up both functions together in your fix.
-This was a great learning experience for me, so thank you for taking the
-time to review and share feedback.
+I suspect it's related to the fact that it's not possible to have an
+email filter/rule that modifies a whole (parent) thread from a given
+message.
+In my case, I end up not seeing those cc most of the time, simply
+because they are drowned into the noise of series for which I am not a
+recipient from cover letter, and thus that I don't read/follow.
+Or maybe people at the time were just too busy.
 
-Best,
-Samanyu
+Anyway, there is another chance to review this today, and Richard and
+Paolo are here also.
 
-On Mon, Oct 19, 2026, 21:46 Peter Maydell <peter.maydell@linaro.org> wrote:
-
-> On Mon, 19 Oct 2026 at 16:55, Samanyu Goel <samanyu.goel16@gmail.com>
-> wrote:
-> >
-> > In exynos4210_combiner_write(), the bounds check used req_quad_base_n
-> > instead of grp_quad_base_n. Because req_quad_base_n counts 4-group blocks
-> > rather than individual groups, invalid offsets were allowed through.
-> >
-> > For example, writing to offset 0x100 resulted in req_quad_base_n = 16,
-> > passing the check (16 < 64). As verified in GDB, this caused
-> > grp_quad_base_n to reach 64, leading to an out-of-bounds write at
-> > s->group[64].
-> >
-> > Signed-off-by: Samanyu Goel <samanyu.goel16@gmail.com>
-> > ---
->
-> This is https://gitlab.com/qemu-project/qemu/-/work_items/4709.
->
-> You've missed the equivalent check in the read function.
->
-> As it happens I was working on this bug this afternoon; I have
-> a patch nearly ready to send which fixes this and also cleans up
-> some other oddities about the checks in these functions.
->
-> thanks
-> -- PMM
->
-
---0000000000002b5f11065e33f621
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Thanks Peter! Good catch on the read function, I totally =
-missed that part of it while focusing just on the main issue.<div dir=3D"au=
-to">=C2=A0=C2=A0</div><div dir=3D"auto">It makes complete sense to clean up=
- both functions together in your fix. This was a great learning experience =
-for me, so thank you for taking the time to review and share feedback.</div=
-><div dir=3D"auto">=C2=A0=C2=A0</div><div dir=3D"auto">Best,</div><div dir=
-=3D"auto">Samanyu</div></div><br><div class=3D"gmail_quote gmail_quote_cont=
-ainer"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Oct 19, 2026, 21:46 Pe=
-ter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell@l=
-inaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Mon, =
-19 Oct 2026 at 16:55, Samanyu Goel &lt;<a href=3D"mailto:samanyu.goel16@gma=
-il.com" target=3D"_blank" rel=3D"noreferrer">samanyu.goel16@gmail.com</a>&g=
-t; wrote:<br>
-&gt;<br>
-&gt; In exynos4210_combiner_write(), the bounds check used req_quad_base_n<=
-br>
-&gt; instead of grp_quad_base_n. Because req_quad_base_n counts 4-group blo=
-cks<br>
-&gt; rather than individual groups, invalid offsets were allowed through.<b=
-r>
-&gt;<br>
-&gt; For example, writing to offset 0x100 resulted in req_quad_base_n =3D 1=
-6,<br>
-&gt; passing the check (16 &lt; 64). As verified in GDB, this caused<br>
-&gt; grp_quad_base_n to reach 64, leading to an out-of-bounds write at<br>
-&gt; s-&gt;group[64].<br>
-&gt;<br>
-&gt; Signed-off-by: Samanyu Goel &lt;<a href=3D"mailto:samanyu.goel16@gmail=
-.com" target=3D"_blank" rel=3D"noreferrer">samanyu.goel16@gmail.com</a>&gt;=
-<br>
-&gt; ---<br>
-<br>
-This is <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/4709" =
-rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-pro=
-ject/qemu/-/work_items/4709</a>.<br>
-<br>
-You&#39;ve missed the equivalent check in the read function.<br>
-<br>
-As it happens I was working on this bug this afternoon; I have<br>
-a patch nearly ready to send which fixes this and also cleans up<br>
-some other oddities about the checks in these functions.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-
---0000000000002b5f11065e33f621--
+Regards,
+Pierrick
 
