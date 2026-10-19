@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097A3CCF2D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CA1CCF2DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 09:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIjvp-0003JB-M7; Mon, 19 Oct 2026 05:45:25 -0400
+	id 1xIjzL-0004Se-Uy; Mon, 19 Oct 2026 05:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIjvn-0003IS-Ox
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:45:23 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1xIjzJ-0004R7-6a
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:49:01 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIjvl-00051S-Qa
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:45:23 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-8a83d2706fdso11524267b3.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:45:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792403120; cv=none;
+ id 1xIjzH-00059L-Nz
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 05:49:00 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8b0ca1ebc8bso13669367b3.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 02:48:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792403338; cv=none;
  d=google.com; s=arc-20260327;
- b=BwBZ/UWLUjAZmJrsNbZ88Zw1sSHW9fTsygk9PZqJRottj9M44FgL+bKG+3msbReuf6
- VZLVez59SWRhV6mVjS8P3O3V1PyeuVC3ESWni9mqMe19KQ67Ln6uaDRN7MLlaqp2PifS
- CiNhaA4xF96m+GxJx6sE07LIKF7yJIKUJy5xRYfgt1GiJCgipO+qjn3qOVf+8zOCupju
- engcllJnNDpK54qw5RJf0WevKXvo11yTqiGOlLmp2sKln2ewgnU+o0L82qW11+Jh3UJ7
- QL0E7thQhKGQkcHZhe47tJbxIe6JGi3z9ymjCYwHwSseQshT7lT0OGwVsQnDH1c1cz6f
- dFQg==
+ b=B6bw25b0gFcvLd5tmW11cM6mX/w3ZwQiLx8LYiJmcDY7ZacTUhpea8F6LgokBV3xWZ
+ OG78mOC+1cTuecWXYus/7/RI77TBQ81QJ2+4iUHuYuxZrRe6Wuk4nJM6uZV+GGwjKCQW
+ hpIn6PIzfu4TSpGZMCFt3wFgeRpBng6KWy5TtT4ys0Ygrh0+oaam05Trn1KHMQKewsX0
+ dyATb9/w9S9kwzcBvbM2Ah2yz8lhG/lpLa/L/X7mQ3bMmjbBw3nYx+kmyNo+N7CirKrx
+ HKm0sNKjKr1pwjYm6ZKPNg+VEELXVzWRuy0goA3hu44E+fN+rv62IebJbhxArJ/Ieu14
+ qhcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
- fh=vko0/TlqtB25AL5yVaXrsFvz9tTYh/L5jjqDQm79mcA=;
- b=HshCE10Hc9n3UlkcbO4T3TvDyDr7KkX53i7Z4njSfqfj3ZKE0uzsAiumf0dM5t8o65
- 26OtUE1Bl8Zvxv7XRiX6qn05/AIBDVmC762OgfnBmioquJ8xwqna5Ex9ppD0bqi3DPMn
- sWYa7xSVF28NUKDE1qzq5lIHjxcXxS6+ZSVSQczz5/1zxxdsgECxClnzlDOjgsQLM8AU
- LoreUZW3/AQEPx4cuUoRUzsF4xC0nX6qNzF46Gm+dWa4PU8yT+a/Ag1jwZXpOzCLuiZu
- 6F4YTto5jR7c7TDmPoTMBDVUlkgXVKMg38oZRpoFQ2LvZFAMGNG2khLrHXP7ZDLVKDDP
- HZbA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VpazGT/H0cNlBGgBGm0mofOQrsYsp4CwtARvM4aII+Y=;
+ fh=C0p+Ns9KoS0PDDaH5QGOYnJPnX6c0tcriKgAp76Azbg=;
+ b=HfJZ9xRzEoOQET9z9jHbxXOEh96iDmAT2oSrHNmjnqVTVS6ZsRnqBv0R1A2TRTVuOk
+ 0D3DHThF7pS9HGBXMKdhxTnsxbuB0d4pwnh9cwFoM4nW6bE4uYk9vA80F0gjPrYNmbCG
+ J760GEKhEj+M+0So9LJevHk8hfuVFahMwo3H0dcGC8N4E7h43liIlhy84l9DBuxdPbMr
+ 2YPX8Z1AAfRkSmIl9ZGmEMosJys199Xo5kGtb/xO5zQeEJ5je/a0E7uMQoHXqAxWBqw4
+ OnvUF9+96FiPwyAVcb1Ifk2ab48IwJ6Bw0uW3yCzCu/zNhlBlrqWRBC+1SzJUpX9X5Nc
+ SGpA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792403120; x=1793007920; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
- b=E1J/w5CuW2pxsHuQnu64nwmiUyn7+yGm8fH+xLZARIAhWT6YOQT1XB0GMUXImKY8Je
- VWNBqn3VMzi1GfVXZcsjzt7gXIsouj+46jwDKYk6mTJStSE5F2surIblM3HKxhju8ivi
- NuSaSojTJofxclLu+Rzrm614seUNFd5YlDxz6mSOawiJ4vW1l1+yW3vgrtjoEOUX/RdZ
- wGL0YCqQ86HKcgszbQ2z1mwC0qec2sZ7A9/KJACTCUkvxsxBavF3drOZ3Ga/O819Ppmg
- +O5xmhvoa7eU414aDZsxv7diN00QXG3xZlvzhfZj7mWsppoebvv3VRJMd9mzk6SIUzYB
- LAJQ==
+ d=linaro.org; s=google; t=1792403338; x=1793008138; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=VpazGT/H0cNlBGgBGm0mofOQrsYsp4CwtARvM4aII+Y=;
+ b=jzka2MbN67RQe6Q3sw0f1EMQtds+8Ia+Gu8iBN4gcc/fi6nZsW/QANyutlkvRrFXzh
+ 35Dh3Qc1TEYJOqEMecwyNElMyg9bmNewlEWYAP7PN+mo3g7G7rV8pVmtGv1R/pT0DmAr
+ /m9I749Ku4bI/xGZPtAeBneQN1aiwrZmB+PrjLaKSPwLXU4HuKvLgXuIkOBqeA+UGdgV
+ 2/gJ53FYRCF0DsnCOpfLqLGmjFqLKprYr0RROqu4AOaJ6dGw3oXN2brsq7EwHpmwRyrZ
+ TWsEPoY7dPVZaL/goEBSzyvxEf/td3DshJYpbEU6Mm7Mh0BHKO+VAsAGk4K/8nNOrEaE
+ f+Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792403120; x=1793007920;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=xKo/4l25o62uaIDmPhFxXtrVUZ8/fCH7zbFgnGgw9jo=;
- b=ueEsKVtV4apy163HoXu8jUoq+rJGDIXG5URVpfpZBcUV7aSXw2dEfURwOQROSB3XEC
- INhwhNROVvYcUDrTVGPkuu9yc5yPJdeE0DJq5rwY+Ri+kuuBj96TTxkLgm9pVenbgFjd
- yn/C7NlnNO7ubOrjVkCjnVWimAVdpQB7JrBG7gQ16dxLR9gq7E68+gQCKQbSX/w+oIKl
- 7yq2EjBUJ6RjWyIa0HC0wnOYtBNdJk31NSCM+X9idxrvt50flKlNFko2eM3JQkJj+iPY
- TcQ+qgYYnl9MsVcPsHpAvEcb1CsyHNLmziONSgOU4h1/OKKlR8efYgMvspldRjzTreu3
- ZuNQ==
-X-Gm-Message-State: AFq9FYJur4vPeXlFv3f1ZBE7OnbYxLZ4dwvevEwM394Yj3ADaud0PK3E
- m/7y7Ir43Xvc5u81m3QnwpDqvUDgvYTenMuQRKMUtL6WvMaKVZO6rj1EuEdnikFW1Jtgj0NgZY9
- SnGWIAGuyhsvcoQcdlZh1XiNV5MmxJnfDf4DgMqK8Vg==
-X-Gm-Gg: AYBFou0wXHrJCZwRJ84KBzbzbKM8oj7nJHSEv8bVfFsRcaV2oK6hBPQOFa83P5vJkKG
- cme6nQxcvYVdAMrOCH4IxfLMy4O+aHZ1GSS2YSwHv27YyoOsVMfVH4r92eCnNmBUQ1xVC4cmomU
- 7UFXxSka1eSc0bs6v5yf5DYwuAU1cfYm07gWIsaKj3xzsYfAxh7+btscKNr/mbD02Wick/aE5G+
- g3QJ127gVQVThcoVCc0QKqG+BexmYRQAGvKp3GqGiF+f8xJEchU+SAQ+ZLkCX60GhjkwmjuDEKB
- 7H6FN8YxXWsA0sFOOp3flTicRyHyMqfO3JZLPtO3DRLGIB+2JuIoN+C7khuhIsJ9ipp10J8XtbV
- LoV/eSqywWi3NRtY13jl20P7uG18euMxUKy4jmEaw
-X-Received: by 2002:a05:690c:dd5:b0:8b0:f0f6:1476 with SMTP id
- 00721157ae682-8b0f2072830mr24054677b3.15.1792403120329; Mon, 19 Oct 2026
- 02:45:20 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792403338; x=1793008138;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=VpazGT/H0cNlBGgBGm0mofOQrsYsp4CwtARvM4aII+Y=;
+ b=iPyc08GkN665o12GHr0gRBZ/dUgYwtaq9jmWRH8SJaPpqdHvrKXhX+R08l/joSkVmQ
+ oL7c3wIW6AKzTC5pAyAzKXGGvoSrNLTFLY8ov2mOOOQqtFRi50dXNGboP9RgGTQiBi4N
+ n+R7uv+ohaT4OAAHJ5nAsqXzecwEStAcG/iqbxPprb/Pb9rtDczv5HdbYc5iRvNvsb/d
+ 1A7FM5OqnwZFnkdWV1CzPJxGolLCNwJ6aY+B0fcJxMCoM9R/gzVHcTJ2OJ+kb0GewAPh
+ dUG/OM15ZmmePwHLxjZpxxiC1naojEECDsYoXuBs9Y6HCvpr7/xM7yU5QIBDZndb0C0p
+ riww==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxzJ6+3P0HTA/Mfiza842atX2HJXCo/mO5LnKEVaQS+1ydCAkj2heaan2XMOgGMiLi4AJt/FW5i0cgD@nongnu.org
+X-Gm-Message-State: AFq9FYJgNMiTeSTuWcg2T6yzMixeiJaBgk1POBTnx7wTvUZb7lA36+RG
+ OQnvvRWvIyLJKsX+ZIh3YJzwRJ+54AjU+6YydZGPPi22hYqZg5CX6ixTyx+AbU/WcgRPNUgjPfv
+ uCObPJ533oLrz0kYyTtjBbhM06idH3bplgjS6rRMpEQ==
+X-Gm-Gg: AYBFou2IsHCZhL0l+3oKosme2vBx4d7/RkyjmLX9HQoVa5HamPwRjHGU1VaPpQt3k1h
+ 4eOCt0yujvSK0aPmOLqqFC/VUsa0uGz0dc7US1Ib5JRBSOhx+eeuRxmMyo6k+Uak/UBn1iEUlgj
+ l4bNSp1CUguseAuYyKvQkqeFLnNZggTZiiGL0lSFqJFsMP9ObowFtvpu1R0qwa9JZcauj3GsT59
+ fRHWH7mlvaJPGfYPNraFgkBOFgCUPWAvP9fwcfKdL3YPXxgQYV6/lYifH8XU+09Ujo4wZ89a8bk
+ LQ1+220Q/JLfRXgi4FtvMsafXOnEbfaAFCG3uUycsiPucytGX4WExM6w0/g+7yxeiKg0JNuZINu
+ XkGL+rJq+KY8Jf4SphnhrGVEgi4pFf0Dz6Sv/y/U=
+X-Received: by 2002:a05:690c:e3ef:b0:8b0:ad5b:d487 with SMTP id
+ 00721157ae682-8b0f2065a34mr28644737b3.2.1792403338459; Mon, 19 Oct 2026
+ 02:48:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261015163352.1751191-1-peter.maydell@linaro.org>
- <bdf28ad1-a8ec-4e13-b49c-34b12d7580cc@nutanix.com>
-In-Reply-To: <bdf28ad1-a8ec-4e13-b49c-34b12d7580cc@nutanix.com>
+References: <20261018230741.6560-1-philmd@oss.qualcomm.com>
+ <8360ad12-6dab-44e6-a930-17ed8e92a09b@oss.qualcomm.com>
+In-Reply-To: <8360ad12-6dab-44e6-a930-17ed8e92a09b@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Oct 2026 10:45:09 +0100
-X-Gm-Features: AclHuK_cSWdHeBKoH7OkA17AQD-PzeETwXWYUqulwB2AkvYYU9AjO-ifFf-LPh0
-Message-ID: <CAFEAcA_RsNToGACV3vX1Gcr+j51+-Tv3Te+LAOEwhGnBHZED8g@mail.gmail.com>
-Subject: Re: [PATCH] include/hw/core/qdev.h: Fix where
- device_class_set_parent_realize docs suggest putting parent_realize
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Date: Mon, 19 Oct 2026 10:48:47 +0100
+X-Gm-Features: AclHuK-coNXjJOiyeIIN5PLDBbZToILIcDSjk6lnon2bFaxl5z1EVFGcfdu7qyY
+Message-ID: <CAFEAcA8thrNkzvR_UVnfYUjaSNiaax6Xupw=DsBapHDyPbpdEg@mail.gmail.com>
+Subject: Re: [PATCH] docs: Remove stale chapter on RISC-V 'Z' CPU properties
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, devel@lists.libvirt.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,76 +122,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 at 10:09, Mark Cave-Ayland
-<mark.caveayland@nutanix.com> wrote:
+On Mon, 19 Oct 2026 at 10:42, Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
-> On 15/10/2026 17:33, Peter Maydell wrote:
 >
-> > The documentation for device_class_set_parent_realize() suggests that
-> > the parent realize function pointer is "usually in the instance
-> > structure".  This is definitely wrong, because the function pointer
-> > is a class thing, and should live in a class struct, not an instance
-> > struct.  Update the documentation to correct this, instead
-> > recommending that it should be placed in the class struct for the
-> > child class.
-> >
-> > At time of writing, of the 75 or so uses of this function, about 50
-> > put the parent_realize pointer in the child class struct, and about
-> > 25 in the parent class struct.  We recommend the former both because
-> > it is the more common choice, and also because it makes more logical
-> > sense: it's the child that knows (a) that it exists at all and that
-> > (b) it wants to have a realize method that will mean it needs to
-> > chain back to the parent, and we shouldn't need to edit the parent's
-> > class struct because we want to add a child class that chains to its
-> > realize method.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   include/hw/core/qdev.h | 15 ++++++++++++---
-> >   1 file changed, 12 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-> > index 8e91e2fcb08..1330e0153d4 100644
-> > --- a/include/hw/core/qdev.h
-> > +++ b/include/hw/core/qdev.h
-> > @@ -953,9 +953,18 @@ void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n);
-> >    *
-> >    * This is intended to be used when the new realize function will
-> >    * eventually call its parent realization function during creation.
-> > - * This requires storing the function call somewhere (usually in the
-> > - * instance structure) so you can eventually call
-> > - * dc->parent_realize(dev, errp)
-> > + * @parent_realize should be where you want to save the pointer to
-> > + * the parent class realize function; the recommended location is a
 >
-> Do we need something stronger than "recommended location" if we want to
-> encourage people to always do it this way in future?
+> On 10/18/2026 8:07 PM, Philippe Mathieu-Daud=C3=A9 wrote:
+> > RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
+> > for the release v10.1.0. Remove the stale comment.
+>
+> I wasn't aware that we need to remove stuff from deprecated.rst after
+> awhile.  Thanks for taking care of it!
 
-I think the discussion here suggests we want to get rid of
-this function entirely in the future, so being stronger
-than "recommended" is probably a bit moot.
+We are supposed to move the section from deprecated.rst to
+removed.rst (adjusting it as necessary) when the feature moves
+from "deprecated" to "actually removed". We didn't do that in
+455c0fa9eef, so we should do that here, rather than just deleting
+the section.
 
-> > + * field named "parent_realize" in your class's class struct.
-> > + * (Some existing code puts the field in the parent class's class
-> > + * struct; this will work but is not the preferred thing for new code.)
-> > + *
-> > + * In your realize function you should chain to your parent's
-> > + * realize function using something like::
-> > + *
-> > + *    MyThingClass *mc = MY_THING_GET_CLASS(dev);
-> > + *    (do your child class realize actions here)
-> > + *    mc->parent_realize(dev, errp);
-> >    */
-> >   void device_class_set_parent_realize(DeviceClass *dc,
-> >                                        DeviceRealize dev_realize,
->
-> Otherwise:
->
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> >   docs/about/deprecated.rst | 24 ------------------------
+> >   1 file changed, 24 deletions(-)
 
-Thanks. I'm going to queue this patch as a fix for this API doc
-for the moment, because we clearly aren't going to get
-to Daniel's better way of doing this for the 11.2 release.
+Alistair, could you unqueue this, please, as it doesn't update
+removed.rst ?
 
+thanks
 -- PMM
 
