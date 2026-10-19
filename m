@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F365DCCF2D6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 10:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74487CCF2D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 10:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIkBY-0008JD-97; Mon, 19 Oct 2026 06:01:40 -0400
+	id 1xIkFc-0001PW-Ts; Mon, 19 Oct 2026 06:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIkBX-0008Ig-8c
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:01:39 -0400
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ id 1xIkFX-0001Oj-Jg
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:05:48 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xIkBV-0006ag-7h
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:01:38 -0400
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-8b0c5a64de8so21944077b3.0
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 03:01:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792404096; cv=none;
+ id 1xIkFV-0006zb-Li
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 06:05:47 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-8ac4806e210so10835777b3.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 03:05:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792404344; cv=none;
  d=google.com; s=arc-20260327;
- b=G/p4TsUTDUa6iGX4aAIWQ5xqZlBfqT4gCYIMd/ttSQYBidbTVtT//hD4SzQe6zi+SO
- rrrGGupYV7HHWo+E0KKc2WO5vOAh9AA0PFjaDeHyGdDwi12ymuDwL5xNqeHJHFwKsIzU
- whBUp6J2uTdFyTpAnCDeZEQUdhYXzKt7TcfkFHqgeTS3mpIk/p9GK8keb+4BDDJwdkBa
- jEck3YJEsFs0u0/sTqZgM+tPze8v9gsqzhc0qkggi53sylX/t1oQzJMzjESsX6CwRBGQ
- FD/5VOLaoxyDLt30wB0rUd9pR5n8Nn4m5EKIfGJW2Vtiw47V53gp3sxp2lLf4H4W7Vyz
- lx7w==
+ b=KRVuzAmBrrLRDmYb5TfcNtMCTp2GGN8S1SKI/a/t9yfaLK8PymHFTn8K3ht6xAopXS
+ b40B/JG8qZTPnHOkxuV/FEzU17dpf26WKz0hoehEACp7VN7ZiCm9ps2TZuta819AQLtX
+ Wh1jaEm3pHvDRcXGHPeE7HfiK+i1jfpXh+LNeG+ny0Bp2qVFX/To6iunlNirJjllz6UE
+ 9g5MemTtCcYJjmDnBoHNSpE4Mw37bdOq151ro+IpNt3bVa95wZuQVic2Q3UR4PYFCSc3
+ nntMBG8iYW4kRI3sn8caBExA7l3j6b2vT5mWbIlR9MxhlVm5hlsKt5GEATkraPjO52A2
+ 2/Og==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=4xAsyGg8IhtuWbgNPNz8kypMHgYRyH3jOtBC8Us4qGE=;
- fh=VobgdUTDMXxTWFH3vLKklrMlZpjVSYbJzaQz6wiyAVI=;
- b=JoZpuHJWfZyJ1lhgPfWoyT44209/QKfsExE/GwSzYu7MyHRG0WANuS59IgltjkCQUM
- ET86RvI4PlShU7uekjchdlzRedjFt7Jylnd7yiGDhJ1ufTbY/gJHJajvfyF7U5TkGpOR
- mafcx09BxifLETWmRYSFt2k6KC5g41BGcsKKOIfzs3rS7Ns/Z9X2gim1W++dOIQunRyN
- 4sCNU+UvxJa0SOySltE6CyH3i/muXkTlo1cR5eB3LzEwaWcYyEnxJJxS1hzt4Czva0Go
- YaEeXl8/58qSOTJAod0qca4wKgrN6+oyNzMKCPqxbpKoGucAraVepnIMuSN26YsK/FsV
- he0w==; darn=nongnu.org
+ bh=umN8au4AwvrVj10Y8cmq0X4PD+ztQePyyYJBU9Stchk=;
+ fh=oyYVkTN2tOJZ6Sy7PlWjXoqNIc3llQEvujqG4Um5lp0=;
+ b=KZUm08opYpPEK8AGNC0O1Go/KUub2oNxNmcCifwQZIvsBRjG9VOQtLfQfAiRTK0nDV
+ +dgTS1ZvLIAxX6LyG3GOpGIkKgz6m4ksgb9GSJ2LHuZxL4Gk1rI/w2MlRgqDuu26+2Ye
+ PpfwFGZCM1GVsmNa5gKLqynIlpzladZlSIXVLkWvzZsX7rKImTos9vdEM4bpfDz7p4qK
+ FoNM8Pramt6p6EiioYC/Gs0ACTmc3w1Ctk13O2S2CJA2Cw2B+XnFRDQZJz181ryKvMLQ
+ Hs/FfU3kNfEXsp/CdC9xcCHhiOBjtpwGYeW8LOco86YtN2gcOAgxJreptxvNXXHlUVwl
+ yT8w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792404096; x=1793008896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792404344; x=1793009144; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4xAsyGg8IhtuWbgNPNz8kypMHgYRyH3jOtBC8Us4qGE=;
- b=Vp62O8mucIHa+zEUoA4PjUpcg6VgOJMcao7zDJ29/46rgH7U8FQpF9qmP3m0vg1GZO
- MOAKQOivfP2tcl8J8nI0+qnEJrH+ObWmLczt6nviD5ksTDNausHsfHRQWHuSmJLBJ7Go
- 5YV7Xp1Co0b783VzV+KIb67Kwdp8AdXJeV6Qj5DzJgCbkNMu1RWE6SYFlMz0f7Vflx2c
- u0UQ7UBkzNAcZ5NjfiskGLK+rn3qgwFa4hS2fzhWLdF+IHZwrzyoo8TgQaeXXIBmfC+k
- ZfxOw5xbIg8Pza2/xqiX20AqwXCvNBMA8otGqH2V8uT3c4HaursTl+nT6dFuDuWs49f0
- IaKg==
+ :content-type; bh=umN8au4AwvrVj10Y8cmq0X4PD+ztQePyyYJBU9Stchk=;
+ b=KKhkqaY00Ip7tLoEkIi6FRLAK40GjApNreeZPcOV3rQyoWxWgPeB5ZkCdFmFZ7DRZe
+ fF5TSypqMf2kCU8HB1MKdkUsX7AgXZqJGc7/13WoQLUMOtm7VzeMCCx4Pa1MrnjP/+dm
+ 1YAU5CY/JtGDtWYg/cD8aTOIPT2VneY+qquGbZbcwbQmJR85hJVEGIAzCsXqJk7cTDtD
+ Hu6ISZZen3TKZ/LYMSDLyzb91tJHTRVMJfPhdKjrHfca/lPPqi5sSkITvll7eiNtJ3TP
+ 5aT15s+wvDo/aFlRN1KbUWX878El8v6Z0tzXkBteVNEKY3TdGYbJAT0mnrW5e/PXdJVh
+ gjpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792404096; x=1793008896;
+ d=1e100.net; s=20260707; t=1792404344; x=1793009144;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=4xAsyGg8IhtuWbgNPNz8kypMHgYRyH3jOtBC8Us4qGE=;
- b=kY2UomdK+DXs3dAkHkWxvVinTC6c2VnEHZhuRW3/GsZ5T31gBRAIF/n/NHwSeaBMAd
- bduAoRViOFISmXHZ52LeOMQjBd620JdXvuQHT1fq+wHoYI51fwSZv6CxHWBUEWJGkwKu
- RfwDLkaICwkJxIrG9LTZdCvjxg7dGbfXFHFz9rq1R1X0O3L/5vdyxefTx0ggW5BKThHI
- Joepx1/nMRw7FXKyeGP40Ox7QGwWt8JLDggP95nDXP4QYoKizyQdMFqLYwK4aMCrbahV
- b/0ntMS5n97O6Oxh96oZJNASUZ9rIcTsNuXkFVQFHAXMk/qPSShklWWOEBaqRsEl4z/2
- +zYg==
-X-Gm-Message-State: AFq9FYIVqyZW0l2PZCsVjYSHJNCROGFT9J+jPGetQV5qwK3VrU8WY1z/
- tX5G+CJSLbGH6oKyNinEGCYP0K5dshePOsXfY14QVQM3+gQjM2inRYIULrpnqTEXb5dbpMPRh7M
- UWVA7oXE2ISMwmHGfw+DthsgSY8j8gj5DdhmzWbT/sA==
-X-Gm-Gg: AYBFou11k6/3CZOztl6LHQ/ZIPUc4GulPpU/G+l3jhG7yOh3l1mQGwa/vBa9FVtkpq9
- 1z3Q5MLSnvPx0q8hBJ3eveerS3pQmPyMlsqk2SE45g+iRZ513//kjN4/vcTTWFN+EZfZzCr9JWy
- QjruwJeYucexyQWf9iopb1c3jmfAhjGSXs3dPJOuVuEGDSWYHcNkibk23H1rLnD4Wbxp4I9elis
- eZoETxz58zJuQuuzFbCwT6+VZ6yT4TVEOdNidVG4otq9+4RE3A9S13LTzeh0sBu9C05ouitCRjr
- M4mbqLZKnR/D/8aeMucvmRaWArRMCpkN8/3wHj07k46MGQ9ufXyNKpUiziUwI1+hneObb/W3+oH
- 6WNnKnnpEIBMEi7uiQEsDU/JCPytSb9YO51eshF8=
-X-Received: by 2002:a05:690c:4902:b0:8a9:8744:c07d with SMTP id
- 00721157ae682-8b0e2dbee67mr34300267b3.18.1792404090738; Mon, 19 Oct 2026
- 03:01:30 -0700 (PDT)
+ bh=umN8au4AwvrVj10Y8cmq0X4PD+ztQePyyYJBU9Stchk=;
+ b=m+TR/oRw7VHjktq7hTkc3HSqlaN1T/NnF+775UPCdKK6ao/0skosgWxfZRYdhQzpB7
+ 6rlX9cv8a1UbgfugVGQRfvQf0JeFvGod/u6PuaZvm6XRJqLuyXBmPVDe50nlYYwi5h7V
+ hEnRizInQvpJXpZlh8CJ1PxRuSD1U8hdO/2DJ4x//0I8DKZBq73PQoazIhjtNh6FD8bG
+ Kf1PRy+p/Z9/oFyAgz97zbws0AcRlaYdHcPZv2Bsx0zpcA7cPPUZ7zphOlijo2slyEFP
+ DbjdpRBpmjMB6icHPQHa4sB3qQMzAxx25Blb+ND6gDeIu+fBFd2I4Ac/IQCiQRtJlaim
+ axiw==
+X-Gm-Message-State: AFq9FYKTXTgmVTUAQT6+W3yX2goBxbUsbMDIzcd/A+2wsxbE17euxrQ3
+ JOVIr0Np+EcubG9AVQWR5zOO+mQNeXFmMmf/1t668eB8motRSjskh9072pRyeGOIY5ztkoVXRyE
+ eKXTVrrTzdbvaOMdklXFSW8JDVa9X612QRoqjPfdtZw==
+X-Gm-Gg: AYBFou16TieKpuAtKa3xXsOVE6+VyttGGEW+c0r/h6+kRbnEB2fgVv/tk3xHWbHs+gV
+ 6WM9idAHm5sV9F01ovrvUAibLHvbGEJQNCNqCjtakcuiAoebj3J9hkaVxyoENHYqXUswx2FH4SU
+ tUDWfFH9hD/URKJTZMRBlPtCLBTxkP8WTZ9wsU+j/PFRCua5wxtE8YXiXVBFqJYcQHwnIStsDbC
+ 66o7N4mQiyceCpoapqSn6txN3BLUWp5foHfn4USj6XTSr5uCefOKsbWPHKbE89XgsrMCPnX89Xe
+ BbQkKFlzuWBaX7ikJgVEQHeYcYeGo1tQYaehlD36Pvp9yLlJUVbT+ulsvV8Tz6wRIVIRzGQgVLW
+ kV7H8cUS0a8NR0ywJeqA+pVQdR0VfE3cIxZcGjpw=
+X-Received: by 2002:a05:690c:6507:b0:8b0:cd30:ce8f with SMTP id
+ 00721157ae682-8b0f21b9faemr23546817b3.49.1792404344218; Mon, 19 Oct 2026
+ 03:05:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20261012041722.1159355-1-brian.cain@oss.qualcomm.com>
- <20261012041722.1159355-16-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261012041722.1159355-16-brian.cain@oss.qualcomm.com>
+References: <20261002165039.212819-1-alexander@mihalicyn.com>
+ <CAFEAcA-JWf-KxgdTj5wuT7140ZY2=RXcnkCeAZkFx=t3OEoyWw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-JWf-KxgdTj5wuT7140ZY2=RXcnkCeAZkFx=t3OEoyWw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Oct 2026 11:01:19 +0100
-X-Gm-Features: AclHuK-sdybCidZbw8Oa_07Td5CTQA9VeN02-9ox7upEL36wBe5672GvGKask_s
-Message-ID: <CAFEAcA_WJ-PYCfiiu44uTQiDoc58_9Ky3uEd-9g14nPgDPT__g@mail.gmail.com>
-Subject: Re: [PULL 15/25] target/hexagon: add the QFloat logic
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, 
- Marco Liebel <marco.liebel@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Date: Mon, 19 Oct 2026 11:05:32 +0100
+X-Gm-Features: AclHuK8aFwbyXElxhVGz8aTmeCIVQeEdGru76HdpNhE0AceVJQBqhAEBCnzNJhI
+Message-ID: <CAFEAcA-dni9eUQs-Mxhuf7Z72BNrEcFwzS4ywXDZFe1VA6V3Tg@mail.gmail.com>
+Subject: Re: [PATCH] virtio-snd: don't use virtio_snd_pcm_get_stream() in
+ virtio_snd_post_load()
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,83 +119,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 Oct 2026 at 05:17, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> Add routines to handle QFloat/HVX floating point values.
->
-> Also: add documentation to describe the feature.
->
-> Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
-> +/*
-> + * Return the legacy rounded significand numerator.  The result is N where
-> + * the rounded value is normally N * 2^-(frac + 1).  `half` selects the
-> + * legacy arm which uses N * 2^-(frac + 2) and increments the exponent.
-> + */
-> +static int64_t legacy_round_n(FloatParts64 parts, int exp, int frac, int adj,
-> +                              bool midpoint, bool *half)
-
-Hi; Coverity complains about a possible undefined behaviour
-in this function (CID 1688240):
-
-> +{
-> +    int shift = 65 + exp - parts.exp - frac + adj;
-> +    uint64_t mask, low, threshold;
-> +    int64_t base;
-> +
-> +    g_assert(parts.cls == float_class_normal);
-> +    if (shift >= 64) {
-> +        return parts.sign ? -1 : 1;
-> +    }
-> +    if (shift <= 0) {
-> +        uint64_t magnitude = parts.frac << -shift;
-> +        int64_t value = parts.sign ? -(int64_t)magnitude : magnitude;
-> +
-> +        return value;
-> +    }
-
-These checks mean that shift is in [1..63]...
-
-> +
-> +    mask = (UINT64_C(1) << shift) - 1;
-> +    if (parts.sign) {
-> +        uint64_t twos = -parts.frac;
-> +
-> +        low = twos & mask;
-> +        base = -(int64_t)((parts.frac + mask) >> shift) * 4;
-> +    } else {
-> +        low = parts.frac & mask;
-> +        base = (parts.frac >> shift) * 4;
-> +    }
-> +
-> +    if (midpoint) {
-> +        threshold = UINT64_C(3) << (shift - 3);
-
-...but in this code path we implicitly assume that shift is
-at least 3.
-
-If this is a "can't happen because the caller guarantees to
-pass us arguments that don't get here" case it would be
-helpful to assert and document why in a comment.
-
-> +        if (low <= threshold) {
-> +            return base + 1;
-> +        }
-> +        threshold = UINT64_C(5) << (shift - 3);
-> +        if (low <= threshold) {
-> +            *half = true;
-> +            return base + 2;
-> +        }
-> +    } else {
-> +        threshold = UINT64_C(1) << (shift - 1);
-> +        if (low <= threshold) {
-> +            return base + 1;
-> +        }
-> +    }
-> +    return base + 3;
-> +}
+This patch doesn't seem to be upstream yet -- which maintainer takes
+virtio-snd patches?
 
 thanks
 -- PMM
+
+On Mon, 5 Oct 2026 at 10:13, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Fri, 2 Oct 2026 at 17:50, Alexander Mikhalitsyn
+> <alexander@mihalicyn.com> wrote:
+> >
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> >
+> > Coverity suspects nullptr-deref, because we don't check a return value
+> > of virtio_snd_pcm_get_stream() call in virtio_snd_post_load().
+> >
+> > While, techically this code has no issue it's better to change it and
+> > as Peter has pointed out [1] just follow the same pattern as in other places
+> > of virtio-snd code:
+> >     for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
+> >         VirtIOSoundPCMStream *stream = &vsnd->streams[i];
+> >         ...
+> >     }
+> >
+> > this way it's perfectly clear that an index is always within the bounds.
+> >
+> > Link: https://lore.kernel.org/qemu-devel/CAFEAcA-K7L5NWk0cC9R8yVvojSS6O6Eh+i9KXP8Lijo4Tjnd-Q@mail.gmail.com [1]
+> > Resolves: Coverity CID 1687010
+> > Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
