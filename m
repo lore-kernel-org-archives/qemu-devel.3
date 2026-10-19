@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5CECCF2EA
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B32CCF2E9
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoGG-0006nG-E8; Mon, 19 Oct 2026 10:22:48 -0400
+	id 1xIoDr-0002Xa-Qq; Mon, 19 Oct 2026 10:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDZ-0002K7-BJ
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:20:02 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDE-0002CD-Vx
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDT-0005gQ-O1
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:20:01 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xIoDC-0005Xo-8y
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:19:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792419595;
+ s=mimecast20190719; t=1792419577;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ncNgs2S9kwI9IM9UGfqiPzluRdjQQizQb7YvAEgksSg=;
- b=Bm/jwHr2T6xfQB23KF7FI1yELKshsRO+o9VykLE92nRdj/GQDxp1pMA4i4zjaf1iKmds02
- LfBedrqjQRmPIqnuBAjVWM9Tl/z8BpE20zZBgj91bSXd1wjbL1f7NqKzLlmQsmMJ/54pWr
- t1z2LTCtrQl2sqcsFwr6JoyDuBsJpe8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RzkIDFxIW46GlEhxmH6c262kRii0e6nccYIJ96460Tw=;
+ b=Rv7UgwOqRkBSN8g4zaVxsZADhkbueG42Hl6Eylq26pPNDfGwvGJwCYcAfvzfjylyVozmM4
+ sBNlF1eXMal9J5h7UsY0Hn8DToD5/Vz6oxrlIT89c4iilshFCdAiLLiXE5oD05D49pg69x
+ OA1loigxBxVikgnppGOp9wxpOvPaoPM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-SSK4n1e7MYWKUxN1U541Yw-1; Mon,
- 19 Oct 2026 14:19:45 +0000
-X-MC-Unique: SSK4n1e7MYWKUxN1U541Yw-1
-X-Mimecast-MFC-AGG-ID: SSK4n1e7MYWKUxN1U541Yw_1792419584
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-JXJwtBbxNDuthWSErARNqA-1; Mon,
+ 19 Oct 2026 14:19:33 +0000
+X-MC-Unique: JXJwtBbxNDuthWSErARNqA-1
+X-Mimecast-MFC-AGG-ID: JXJwtBbxNDuthWSErARNqA_1792419572
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 161011955BDD; Mon, 19 Oct 2026 14:19:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80AE01955D84; Mon, 19 Oct 2026 14:19:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81ECA1803A4D; Mon, 19 Oct 2026 14:19:43 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFB4F1955F01; Mon, 19 Oct 2026 14:19:31 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A713D21E662D; Mon, 19 Oct 2026 16:19:30 +0200 (CEST)
+ id 6F6B821E6880; Mon, 19 Oct 2026 16:19:29 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
  michael.roth@amd.com, pierrick.bouvier@oss.qualcomm.com,
  philmd@oss.qualcomm.com, kkostiuk@redhat.com, alistair.francis@wdc.com,
  amachhiw@linux.ibm.com
-Subject: [PATCH v6 64/65] qom: use QAPITypeInfo in object_property_get_enum
-Date: Mon, 19 Oct 2026 16:19:28 +0200
-Message-ID: <20261019141929.1594337-65-armbru@redhat.com>
+Subject: [PATCH v6 02/65] qapi: Ease access to introspection names
+Date: Mon, 19 Oct 2026 16:18:26 +0200
+Message-ID: <20261019141929.1594337-3-armbru@redhat.com>
 In-Reply-To: <20261019141929.1594337-1-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -86,122 +86,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+query-qmp-schema masks type names, because they are not part of the
+external interface.  Marc-André Lureau would like to also use them
+with qom-list & friends.  Trouble is the masked names are buried deep
+in QAPISchemaGenIntrospectVisitor.  Lift them into schema.py: new
+QAPISchemaDefinition method introspection_name() returns a
+definition's name for use in introspection.
 
-The typename parameter becomes a QAPITypeInfo pointer, and the
-validation compares prop->qapi_type against it instead of matching
-prop->type strings.
+This changes the masked names, which is fine.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/qom/object.h            | 4 ++--
- hw/core/machine-qmp-cmds.c      | 4 +++-
- qom/object.c                    | 8 ++++----
- tests/unit/check-qom-proplist.c | 6 +++---
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ scripts/qapi/introspect.py | 23 ++++----------------
+ scripts/qapi/schema.py     | 43 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 19 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 45999a03ed..f1ffc1cfdc 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1545,7 +1545,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * object_property_get_enum:
-  * @obj: the object
-  * @name: the name of the property
-- * @typename: the name of the enum data type
-+ * @type_info: the QAPITypeInfo of the enum
-  * @errp: returns an error if this function fails
-  *
-  * Returns: the value of the property, converted to an integer (which
-@@ -1553,7 +1553,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * value is not an enum).
-  */
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp);
-+                             const QAPITypeInfo *type_info, Error **errp);
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index 7e28de2279..644461560c 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -30,7 +30,6 @@
+     QAPISchemaAlternatives,
+     QAPISchemaArrayType,
+     QAPISchemaBranches,
+-    QAPISchemaBuiltinType,
+     QAPISchemaEntity,
+     QAPISchemaEnumMember,
+     QAPISchemaFeature,
+@@ -177,7 +176,6 @@ def __init__(self, prefix: str, unmask: bool):
+         self._schema: Optional[QAPISchema] = None
+         self._trees: List[Annotated[SchemaInfo]] = []
+         self._used_types: List[QAPISchemaType] = []
+-        self._name_map: Dict[str, str] = {}
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
+ #include "%(prefix)sqapi-introspect.h"
+@@ -208,18 +206,14 @@ def visit_end(self) -> None:
+         self._schema = None
+         self._trees = []
+         self._used_types = []
+-        self._name_map = {}
  
- /**
-  * object_property_set:
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 9c08b17510..9094f0dce2 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -18,6 +18,7 @@
- #include "qapi/qapi-commands-accelerator.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qobject/qobject.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
-@@ -220,7 +221,8 @@ static int query_memdev(Object *obj, void *opaque)
-         } else {
-             m->has_reserve = true;
-         }
--        m->policy = object_property_get_enum(obj, "policy", "HostMemPolicy",
-+        m->policy = object_property_get_enum(obj, "policy",
-+                                             &HostMemPolicy_type_info,
-                                              &error_abort);
-         host_nodes = object_property_get_qobject(obj,
-                                                  "host-nodes",
-diff --git a/qom/object.c b/qom/object.c
-index 90adadb80d..078606de3d 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1775,7 +1775,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
- }
+     def visit_needed(self, entity: QAPISchemaEntity) -> bool:
+         # Ignore types on first pass; visit_end() will pick up used types
+         return not isinstance(entity, QAPISchemaType)
  
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp)
-+                             const QAPITypeInfo *type_info, Error **errp)
- {
-     char *str;
-     int ret;
-@@ -1785,10 +1785,10 @@ int object_property_get_enum(Object *obj, const char *name,
-         return -1;
-     }
+     def _name(self, name: str) -> str:
+-        if self._unmask:
+-            return name
+-        if name not in self._name_map:
+-            self._name_map[name] = '%d' % len(self._name_map)
+-        return self._name_map[name]
++        assert self._schema
++        return self._schema.definition_introspection_name(name, self._unmask)
  
--    if (!g_str_equal(prop->type, typename)) {
-+    if (prop->qapi_type != type_info) {
-         error_setg(errp, "Property %s on %s is not '%s' enum type",
--                   name, object_class_get_name(
--                       object_get_class(obj)), typename);
-+                   name, object_class_get_name(object_get_class(obj)),
-+                   type_info->name);
-         return -1;
-     }
+     def _use_type(self, typ: QAPISchemaType) -> str:
+         assert self._schema is not None
+@@ -237,13 +231,6 @@ def _use_type(self, typ: QAPISchemaType) -> str:
+         # Add type to work queue if new
+         if typ not in self._used_types:
+             self._used_types.append(typ)
+-        # Clients should examine commands and events, not types.  Hide
+-        # type names as integers to reduce the temptation.  Also, it
+-        # saves a few characters on the wire.
+-        if isinstance(typ, QAPISchemaBuiltinType):
+-            return typ.name
+-        if isinstance(typ, QAPISchemaArrayType):
+-            return '[' + self._use_type(typ.element_type) + ']'
+         return self._name(typ.name)
  
-diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 69155e7207..1cb48c7490 100644
---- a/tests/unit/check-qom-proplist.c
-+++ b/tests/unit/check-qom-proplist.c
-@@ -582,14 +582,14 @@ static void test_dummy_getenum(void)
+     @staticmethod
+@@ -271,8 +258,7 @@ def _gen_tree(self, name: str, mtype: str, obj: Dict[str, object],
+                 # Output a comment to make it easy to map masked names
+                 # back to the source when reading the generated output.
+                 comment = f'"{self._name(name)}" = {name}'
+-            name = self._name(name)
+-        obj['name'] = name
++        obj['name'] = self._name(name)
+         obj['meta-type'] = mtype
+         if features:
+             obj['features'] = self._gen_features(features)
+@@ -327,8 +313,7 @@ def visit_array_type(self, name: str, info: Optional[QAPISourceInfo],
+                          ifcond: QAPISchemaIfCond,
+                          element_type: QAPISchemaType) -> None:
+         element = self._use_type(element_type)
+-        self._gen_tree('[' + element + ']', 'array', {'element-type': element},
+-                       ifcond)
++        self._gen_tree(name, 'array', {'element-type': element}, ifcond)
  
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &error_abort);
-     g_assert(val == DUMMY_PLATYPUS);
+     def visit_object_type_flat(self, name: str, info: Optional[QAPISourceInfo],
+                                ifcond: QAPISchemaIfCond,
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index 9c9e257a8f..11f3accec8 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -136,6 +136,13 @@ def __repr__(self) -> str:
+     def c_name(self) -> str:
+         return c_name(self.name)
  
-     /* A bad enum type name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "BadAnimal",
-+                                   &dummy_str_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
-@@ -597,7 +597,7 @@ static void test_dummy_getenum(void)
-     /* A non-enum property name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "iv",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
++    def set_ordinal(self, ordinal: int) -> None:
++        pass
++
++    # pylint: disable=unused-argument
++    def introspection_name(self, unmask: bool) -> str:
++        return self.name
++
+     def check(self, schema: QAPISchema) -> None:
+         assert not self._checked
+         super().check(schema)
+@@ -323,6 +330,17 @@ def visit(self, visitor: QAPISchemaVisitor) -> None:
+ 
+ 
+ class QAPISchemaType(QAPISchemaDefinition, ABC):
++    def __init__(
++        self,
++        name: str,
++        info: Optional[QAPISourceInfo],
++        doc: Optional[QAPIDoc],
++        ifcond: Optional[QAPISchemaIfCond] = None,
++        features: Optional[List[QAPISchemaFeature]] = None,
++    ):
++        super().__init__(name, info, doc, ifcond, features)
++        self._masked_name: Optional[str] = None
++
+     # Return the C type for common use.
+     # For the types we commonly box, this is a pointer type.
+     @abstractmethod
+@@ -363,6 +381,17 @@ def need_has_if_optional(self) -> bool:
+         # Except for arrays; see QAPISchemaArrayType.need_has_if_optional().
+         return not self.c_type().endswith(POINTER_SUFFIX)
+ 
++    def set_ordinal(self, ordinal: int) -> None:
++        assert not self._masked_name
++        self._masked_name = str(ordinal)
++
++    def introspection_name(self, unmask: bool) -> str:
++        # Type names are not part of the external interface.  Hide
++        # them in introspection.  Also saves a few characters on the
++        # wire.
++        assert self._masked_name
++        return self.name if unmask else self._masked_name
++
+     def check(self, schema: QAPISchema) -> None:
+         super().check(schema)
+         for feat in self.features:
+@@ -402,6 +431,11 @@ def json_type(self) -> str:
+     def doc_type(self) -> str:
+         return self.json_type()
+ 
++    def introspection_name(self, unmask: bool):
++        if self.json_type() == 'int':
++            return 'int'
++        return self.name
++
+     def visit(self, visitor: QAPISchemaVisitor) -> None:
+         super().visit(visitor)
+         visitor.visit_builtin_type(self.name, self.info, self.json_type())
+@@ -503,6 +537,9 @@ def doc_type(self) -> Optional[str]:
+             return None
+         return 'array of ' + elt_doc_type
+ 
++    def introspection_name(self, unmask: bool):
++        return '[' + self.element_type.introspection_name(unmask) + ']'
++
+     def visit(self, visitor: QAPISchemaVisitor) -> None:
+         super().visit(visitor)
+         visitor.visit_array_type(self.name, self.info, self.ifcond,
+@@ -1182,6 +1219,7 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
+                     "'%s' is already defined\n%s" % (defn.name, where))
+             raise QAPISemError(
+                 defn.info, "%s is already defined" % other_defn.describe())
++        defn.set_ordinal(len(self._entity_dict))
+         self._entity_dict[defn.name] = defn
+ 
+     def lookup_defn(self, name: str) -> Optional[QAPISchemaDefinition]:
+@@ -1208,6 +1246,11 @@ def resolve_type(
+                 info, "%s uses unknown type '%s'" % (what, name))
+         return typ
+ 
++    def definition_introspection_name(self, name: str, unmask: bool) -> str:
++        defn = self.lookup_defn(name)
++        assert defn
++        return defn.introspection_name(unmask)
++
+     def _module_name(self, fname: str) -> str:
+         if QAPISchemaModule.is_system_module(fname):
+             return fname
 -- 
 2.55.0
 
