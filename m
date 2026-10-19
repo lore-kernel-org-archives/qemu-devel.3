@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6CF4CCA490
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 01:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE762CCA490
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 01:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIcF8-00042t-RQ; Sun, 18 Oct 2026 21:32:51 -0400
+	id 1xIcFn-00046T-20; Sun, 18 Oct 2026 21:33:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xIcF6-00042L-Br
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:32:48 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1xIcFb-00044u-Vz
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:33:21 -0400
+Received: from mailout4.samsung.com ([203.254.224.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xIcF1-0005QR-Nv
- for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:32:48 -0400
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20261019013233epoutp03b0237a1d765ebd79edf4be2248db0314~fykAKtvWJ2793727937epoutp03d
- for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 01:32:33 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20261019013233epoutp03b0237a1d765ebd79edf4be2248db0314~fykAKtvWJ2793727937epoutp03d
+ id 1xIcFY-0005XL-55
+ for qemu-devel@nongnu.org; Sun, 18 Oct 2026 21:33:19 -0400
+Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20261019013309epoutp044acbce4d185a08981477294581c36f92~fykh0MOe80890608906epoutp04Y
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 01:33:09 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20261019013309epoutp044acbce4d185a08981477294581c36f92~fykh0MOe80890608906epoutp04Y
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1792373553;
- bh=yUSNrpaR/gqi659mVqzvoV5x4SFVRMLgQKV8W82DQr0=;
+ s=mail20170921; t=1792373589;
+ bh=z+kKkpNDuheUAiw9xRSS/lVFIdaqT0DhbO83DgC18Ng=;
  h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=ajYZY0cYs9HfeFe+DuvP8HOXFDcB+NCftuzdLBNExTz+M1Ro6mBbzgy+pcqQELOdR
- WXMIRCGDT/46/1oAoCG62dppsdbCnO1zqpw/7BK+HxtOgzpdwaRJz1mYLthGc/ZNUh
- bzVfoUItO/dtJoWuZaazmeGLeGt/1zzvbCn/hlgg=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
- 20261019013232epcas2p442217c62fdc048ea2e71ef4e63a5327c~fyj-zLjTo1667716677epcas2p47;
- Mon, 19 Oct 2026 01:32:32 +0000 (GMT)
-Received: from epcas2p1.samsung.com (unknown [182.195.38.206]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4j7J282hTBz2SSKm; Mon, 19 Oct
- 2026 01:32:32 +0000 (GMT)
+ b=VV+yOF1YS85YkdymxUA0SpXQ5nRQ5Ih1gKLUVSOs3Zj9O/lTcRIFW5EpraewdKpzV
+ fzG83lid15oLuZCAZ5jICpVsuntL3Ihv7+bFcZSvAPkcmIX3QMwJUI5et7GATXCnmp
+ KSulNhyTcnZk32G/+z/282AgQqbM5DGZzG3f+pO0=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+ epcas2p3.samsung.com (KnoxPortal) with ESMTPS id
+ 20261019013308epcas2p344c515c86c13201e7dc115c6879909e5~fykhhEReg2392023920epcas2p3i;
+ Mon, 19 Oct 2026 01:33:08 +0000 (GMT)
+Received: from epcas2p1.samsung.com (unknown [182.195.38.201]) by
+ epsnrtp04.localdomain (Postfix) with ESMTP id 4j7J2r4BBXz6B9m5; Mon, 19 Oct
+ 2026 01:33:08 +0000 (GMT)
 Mime-Version: 1.0
-Subject: RE:(2) [PATCH v2 5/6] hw/ufs: Support for Zoned UFS
+Subject: RE:(2) [PATCH v2 3/6] hw/ufs: Limit data transfers to the transfer
+ length of the CDB
 From: Daejun Park <daejun7.park@samsung.com>
 To: Stanley Jhu <stanleyjhu@google.com>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -53,15 +54,15 @@ CC: Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
  <pierrick.bouvier@oss.qualcomm.com>, Daejun Park <daejun7.park@samsung.com>
 X-Priority: 3
 X-Content-Kind-Code: NORMAL
-In-Reply-To: <20261016115436.2659347-1-stanleyjhu@google.com>
+In-Reply-To: <20261016115434.2658500-1-stanleyjhu@google.com>
 X-CPGS-Detection: blocking_info_exchange
 X-Drm-Type: N,general
 X-Msg-Generator: Mail
 X-Msg-Type: PERSONAL
 X-Reply-Demand: N
-Message-ID: <20261019013231epcms2p40fbdbb2afdaf0cd29381c768e8963f03@epcms2p4>
-Date: Mon, 19 Oct 2026 10:32:31 +0900
-X-CMS-MailID: 20261019013231epcms2p40fbdbb2afdaf0cd29381c768e8963f03
+Message-ID: <20261019013307epcms2p14049cf5797cbe5332877ddeb950f18bc@epcms2p1>
+Date: Mon, 19 Oct 2026 10:33:07 +0900
+X-CMS-MailID: 20261019013307epcms2p14049cf5797cbe5332877ddeb950f18bc
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: AUTO_CONFIDENTIAL
@@ -70,13 +71,13 @@ X-CPGSPASS: Y
 X-CPGSPASS: Y
 cpgsPolicy: CPGSC10-223,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20261016115442epcas2p424720f88a9ba204e23c5b498f01ed35e
-References: <20261016115436.2659347-1-stanleyjhu@google.com>
+X-CMS-RootMailID: 20261016115443epcas2p1a0e9a64b6bb3eaceb606461b5f90033b
+References: <20261016115434.2658500-1-stanleyjhu@google.com>
  <20261016092423epcms2p83f80a8dd8f7c1ddc3a94541e0771c306@epcms2p8>
- <20261016093343epcms2p8d5801bd57384c44d5120ae0b7c4eb206@epcms2p8>
- <CGME20261016115442epcas2p424720f88a9ba204e23c5b498f01ed35e@epcms2p4>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=daejun7.park@samsung.com; helo=mailout3.samsung.com
+ <20261016093109epcms2p4a1f77d99f9f4fd50fa786eeb79fe1cf5@epcms2p4>
+ <CGME20261016115443epcas2p1a0e9a64b6bb3eaceb606461b5f90033b@epcms2p1>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=daejun7.park@samsung.com; helo=mailout4.samsung.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
 X-Spam_bar: ----
@@ -100,25 +101,26 @@ Reply-To: daejun7.park@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Oct 2026 19:54:36 +0800, Stanley Jhu wrote:
-> On Fri, 16 Oct 2026 18:33:43 +0900, Daejun Park wrote:
->> +    case WRITE_SAME_10:
+On Fri, 16 Oct 2026 19:54:34 +0800, Stanley Jhu wrote:
+> On Fri, 16 Oct 2026 18:31:09 +0900, Daejun Park wrote:
+>> +    if (req->sg && req->sg->size > scsi_req->cmd.xfer) {
+>> +        ufs_limit_sg_list(req, scsi_req->cmd.xfer);
+>> +    }
 >
-> As far as I can see, JESD220H does not list WRITE SAME among the UFS
-> commands. Would it make sense to reject WRITE SAME(10/16) on a zoned
-> LU?
+> This handles a PRDT that is larger than the CDB. Does a PRDT that is
+> smaller than the CDB need to be handled as well? If so, could that be
+> done on the host controller side instead of in the LU?
 
-Thanks, agreed. Linux ufshcd sets no_write_same on every UFS logical
-unit, so Linux guests do not depend on it.
+Thanks, yes. Today scsi-hd moves only what the SG list holds and
+completes with GOOD, and on a zoned LU the write pointer moves past
+blocks that were not written.
 
-v3 will fail WRITE SAME(10) and WRITE SAME(16) on a zoned LU with
-INVALID COMMAND OPERATION CODE, as it does UNMAP. This also removes a
-case where the write pointer runs ahead of the data: scsi-hd completes
-a WRITE SAME with NDOB=1 with GOOD without writing anything, after the
-zone check has moved the write pointer.
-
-Regular LUs keep passing WRITE SAME to scsi-hd as today; if they
-should reject it too, I can send that as a separate patch.
+UFSHCI reports a data buffer that is too small with OCS MISMATCH DATA
+BUFFER SIZE, so the status belongs to ufs.c. ufs.c does not parse the
+CDB, though; the LU does, in scsi_req_new(). In v3 the LU would pass
+the transfer length to ufs.c, and ufs.c would fail the request with
+that OCS when the PRDT is smaller, before scsi-hd sees it and with the
+write pointer unchanged. Would that split work for you?
 
 Daejun
 
