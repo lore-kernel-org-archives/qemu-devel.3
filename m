@@ -4,76 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD04CCF2E4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 11:47:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9347CCF2D6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 11:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIlpK-0004k1-Pl; Mon, 19 Oct 2026 07:46:50 -0400
+	id 1xIlwW-0005xl-An; Mon, 19 Oct 2026 07:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2118537295@qq.com>) id 1xIlpB-0004jP-Sx
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 07:46:42 -0400
-Received: from out203-205-221-149.mail.qq.com ([203.205.221.149])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xIlwV-0005xW-2h
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 07:54:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2118537295@qq.com>) id 1xIlp4-0001eA-Jq
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 07:46:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1792410382; bh=Wh3oNE7nHL150dfBDTJFwVcWeJKCV7Jp/qTz3pEAXyk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=c0X0oAW0luXD+qL1C9XvbvPs1awlUx0FiLPto697fGKoZq/one+YeG+xXeSNZAqid
- MOfEETtDIOtek/M0iQMwH/J0BikAG7BQRvld5JrNI7LrATfTGZbnTFkepu4HPZFXYh
- Zw/4e4l17xrWuIRncQgXeFAeg9NKWybMRiWgSvNQ=
-Received: from [100.125.153.207] ([139.159.170.67])
- by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
- id B932C402; Mon, 19 Oct 2026 19:46:19 +0800
-X-QQ-mid: xmsmtpt1792410379tnrf08j6g
-Message-ID: <tencent_82895B2529E419B263EC95C8349389114407@qq.com>
-X-QQ-XMAILINFO: Ms8vYu678XiMxFJinJxmdUsqpD05kzSDZWEHNxItZsZ1fqJk35gwRX1goUL/nj
- sBwSJJNBYYGKMIotIYWSKbJ0dY+9joRvMOjWHETM8wDXyI/lyKcEyDSEmi//moT6nWk+t0lMm5FT
- diX6X0htbdZ2Lq0tkndDIsOKOwy0I0JaFiI+ouHhF6Zn3TlogdiWlFENHJxVRf51mf3n24DJx1Fa
- 7P62suUEoNZJrBM4I0sevwT4AzgtEHzYHg/MZgM70kya/PvrkO0ysRcIDW2Nxcwp8AgXqG2f9OzN
- B8qkvksWcJ3pgzhb4kX4PLsSsumCaQmWtHU7CLR7lcmmfAv4gigiq6D9Ou+iO6faM4tat07ZNFpx
- 4mrwWmvb4sI8gW62IZ450Kwvy6YvcNHHqCNxfYMWSt59iwZZur+XCM+PtEdbRl4AgyZ+EJ05g+Ho
- VDf7hQsMr6jgU+vEPm9Z78Q4pZHueMQAEvj1iNE2h1beLWMJPcT9p4MEnHWL3s8HbPyNDdW1PzRJ
- vJVJWApo51bdyYXqF1dPz3YrZ00BFN+NgWPCO/QFH76TsAXzr4bnoF7UT4R5VNf2jbXYNg0D5/FF
- ABUG2Jj8PBnrVkMmFTc4FoB4ymwI6aojUyqtCiKjIUZUJRgY0PrnuiWcuoQMstQUq7mP0/uVMc/B
- tMGYWUL4i0LtAbXcMYIry/cC33PFpBZhT1HjaR0HDeriWVgSK8i3i43Mo14XLAazOQFfdfO1etN5
- tr3ojwc98OvLoqPyjUkGiJOmM0nc0hLggnknT7slNU8ZKVv6UhxVej6IhT5PNQwtU9rwkJ9MSTET
- grDOQf8yzWHoqW0myKwq6N/GltXNVwQhe//UtYKpuqhEuu2xPq9xZYlp3HnSbsHjm3XKEg5mGINb
- f60pLhQYt/hVxoVwP9nxcLqsM2GxDN23F8wGbJ6ipC6tVDkUgwDqfxbHp8LtlW4vasRnk6icIG19
- uZKk1Wex0gQCeHFlmfkLZK8UaP5A1j2Tl/7xk7p6NrqGaIkg+gmYdB2ywsftq3kKNPvP6sz7sKbr
- x1hw38mwG/ui7ARe0+bT1dJ0YfnNSq6YL2OpcZJypE65pMCgzDy1U+612+bt0=
-X-QQ-XMRINFO: Nq+8W0+stu50gAooZK9W0vrdePOQh9fFqg==
-X-OQ-MSGID: <1cf9c647-9d18-430c-a7b6-2f53b8280d35@qq.com>
-Date: Mon, 19 Oct 2026 19:46:19 +0800
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xIlwT-0002cl-6I
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 07:54:14 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69J8Osm33305548
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 11:54:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ seflFJn6QYQmQe1vaD2wNIDBThztECEZBMdyfT8OQAQ=; b=Ds2CG1vTuWEFF8qz
+ mlFS3gh6YHo8sU2wY3r1HM2KdoczR0RSPUBSdLnzGQWzbtpzsBUPXw97a2Ti1qzW
+ aydJ/JstbZwfIW4EYxWcIgMG4wI3XR45wfiloOvRDVNc1qGoJHdppTMS1XU+bG20
+ emc7ekmhnW3ukV45qr+DZ3UByBWyE2vqRE/JbAfZmG+aSFoADYQUk/wZEXz7LlTL
+ ut0CIqxdeHT+SvHhMkwEkiH0+9hg6gGNH89ZLx4aj0bf15OQGiCfe+t40QeWxq0N
+ 9uATAZmX2Pxuof9gmcZ/BTXPoEFo2MC+xUs6IaiajHvr1artAJa0M3Hr0afzgFQv
+ B251Iw==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdf47gwm1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 11:54:10 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-91b92acedd9so73765706d6.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 04:54:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792410850; x=1793015650; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=seflFJn6QYQmQe1vaD2wNIDBThztECEZBMdyfT8OQAQ=;
+ b=I5XQh1AyExL/A0W/vvXrgepSoviJOBbr/y7ZAwyyaDTcUx2hb2KdgqdfOMsabB2IKs
+ q2rFDPQQTvdeZ0AaFlbvokefiio4T8jj3lCxDs7fOzkS/LRuU9olOgfjL/KhZ57GtAEU
+ nKO+2Cum7fI1PAuQlQnlupw1A1FVX4N09OPKYiKk7aB3mRMeTmVVqfTMfhOfKh9eJcq/
+ dkhP1U9R1tv4vO99IaNsm1iMB3vP8a8oiqrCHnbIHYGvs2tGxtiVsdePhkC9Oy/maNYt
+ WhB4ke0sgKoJytFzMujHnATH3h1PweaTNcCMXcSPMwKk3fFy9zYfXpkls3+NBj4b0vvW
+ 1Yig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792410850; x=1793015650;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=seflFJn6QYQmQe1vaD2wNIDBThztECEZBMdyfT8OQAQ=;
+ b=LV9XDrWbYzJWCNSfjDUK0TemJhQ6EXBZShczl6gkVa23P4YO8+RIBqgEjrAZbFxxUX
+ C+hjhoN+FAJoJVwX8XEilQW7p4sdyRSlXHXSGPz1Q/JiMo+85HnG4G+8N41fE59Ltlv0
+ ZnNrSpqprnOVrRO5gOUPf2KJWNfm9IaLYhShIMAPkAGH5RqDRvsHeo2u9a7OAEf31G/f
+ 6Fb+x4tihrfzOuN2okmmfwTDqSxTfymc5s10ImcSNPWt371MsoQwLWedgxxCMAo2Xxy5
+ cbE+Beo3IhiglkbjbD4Iu8gkbJFHCFGEq2zG+wNZRJAW/aT6Pk5OkqOVpR1VVuJKRnJ8
+ cFaA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBye0dgWQ9H84I4htg4ntCcxKCXjlQNptULN7EQGuOez7Y3f/6nW6Q62iul058pzwvgK8ZJr/mE9Mrqc@nongnu.org
+X-Gm-Message-State: AFq9FYL8+VK0hGL2q4VG3O6R1LCFYfIvCTHDcBX7IKOMw1y4xxJNxpEQ
+ b55ZwjmSN7mJfiCrShjDY04jtRq6DUihBlaxeCpIGY/hrGlLymKqXpN59Mda1YkFSV1HuI5w+SL
+ 4DYImWqbTXc+SKOz0DXYpK2aYoI5avVo/ebv7KfTPCEODCQ7a0UeN8XVdug==
+X-Gm-Gg: AYBFou1C5mZwexGkEUZVUBmHwJYPS3iSkGO6xYZ7Xcn2yh+csPRKBPqavlr6HTQz3kt
+ nlk8RmrfSD8iooTJD7BiEvqpARsKdEANUF/sNPgcfrQ/oVVetltNBqUrBFhVNTHWI91e2JYu8Ux
+ D01Ex25Daz3wu8g9O04IIN07B0cGDHraQ/aselHU4UrPMcVz8Rht8cMhSiosXUD5570YXfmj3sC
+ biBmyCg39g5iVf9xzMyUZpSuMQnvtXj4ef1jRZQXrNac9/QnouexzYottWKfJ11ekl4tsWv3YDz
+ eAYQYC2NgYofMmSIeVbNt8yu/W078qF73RRvTqJ+7aPDCF9WnXk/ZKxSyfe1LeaaKIDSp+bcxmt
+ gkAbmFl1Pm2AdBjXWJD2TS7wLXKmOUO83OVSGr/YRwiRAput4aX5vftFC+iSUxCMrRrcMc905
+X-Received: by 2002:ad4:5dce:0:b0:91b:5d39:e142 with SMTP id
+ 6a1803df08f44-91bdf631e9fmr125353516d6.55.1792410849726; 
+ Mon, 19 Oct 2026 04:54:09 -0700 (PDT)
+X-Received: by 2002:ad4:5dce:0:b0:91b:5d39:e142 with SMTP id
+ 6a1803df08f44-91bdf631e9fmr125353056d6.55.1792410849099; 
+ Mon, 19 Oct 2026 04:54:09 -0700 (PDT)
+Received: from [192.168.68.103] (200-204-190-237.dsl.telesp.net.br.
+ [200.204.190.237]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91bcbae1e06sm96564086d6.27.2026.10.19.04.54.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Oct 2026 04:54:08 -0700 (PDT)
+Message-ID: <943c16d9-1880-44a6-9982-4fac725cf982@oss.qualcomm.com>
+Date: Mon, 19 Oct 2026 08:54:05 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
-To: Peter Maydell <peter.maydell@linaro.org>,
- Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: anisinha@redhat.com, armbru@redhat.com, eblake@redhat.com,
- imammedo@redhat.com, michael.roth@amd.com, mst@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
- <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
- <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
- <CAFEAcA_4xb3CBL9TTAdKMOG_ijWpt9wsveCp0R602VoFaWUH1Q@mail.gmail.com>
+Subject: Re: [PATCH] docs: Remove stale chapter on RISC-V 'Z' CPU properties
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, devel@lists.libvirt.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20261018230741.6560-1-philmd@oss.qualcomm.com>
+ <8360ad12-6dab-44e6-a930-17ed8e92a09b@oss.qualcomm.com>
+ <CAFEAcA8thrNkzvR_UVnfYUjaSNiaax6Xupw=DsBapHDyPbpdEg@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Jinjie Ruan <2118537295@qq.com>
-In-Reply-To: <CAFEAcA_4xb3CBL9TTAdKMOG_ijWpt9wsveCp0R602VoFaWUH1Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA8thrNkzvR_UVnfYUjaSNiaax6Xupw=DsBapHDyPbpdEg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.149; envelope-from=2118537295@qq.com;
- helo=out203-205-221-149.mail.qq.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-ORIG-GUID: RbWkmBVsKDX1Lxyzb_P6bb7CMazSoQ-Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA0NyBTYWx0ZWRfX2Ra1sqO6Fz1r
+ 0YDd48GlfXZO6gLQm3g+oPh8fbuor9Jep+zp+p71Br0a2sXJdVI5iIYrprldWFR3pMZNxuLPis0
+ qSoLB0PuVXgeuC6kOccdbgdb6lWJO/xNe10Sch1Qh7XdPGqoa10oVLqOkWz/Db2QNgPOP8JXrNz
+ HEq+Bp4h/YSoD7Rf4zWmkdK4LXupkugoZyKOu8ShDROhs4eCPFTZr31h2Z07WCk6psOVmb+zru7
+ 4cgIm61Qj1jmUwGPWKlOtFcn3WhZZk1oditfG+9XGeALtk2po3ilFhNFYdVUgZJxFKYt63J/K+u
+ 8VGIX0sXG3qrXQcvmq+sgM0jb/WhOmQ2En8foAMMIiu84Tf7vnsUP4Dg1zgxToJV/hK0bwUqL+Z
+ f3I+6d5pGNyelwnUfk4jP7dt86cxFjuMePSWUZq+pJ0VCrwF9EjqPijgSM5NqVOETwfAZJLR6Vd
+ bwXyCVt9xSdpWJeriNQ==
+X-Proofpoint-GUID: RbWkmBVsKDX1Lxyzb_P6bb7CMazSoQ-Z
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA0NyBTYWx0ZWRfX7ikMXzDqVesN
+ yMVxNd8T43wE14wrCMruIWYtt18uXyytrz3YWpJ3qxdPeTM+ToaycwF/du4w4KsHL9MPPjTBZ/7
+ tkxKDjMlzwAkf8SLe43WoBtO8A5VG1U=
+X-Authority-Analysis: v=2.4 cv=cLt1IVeN c=1 sm=1 tr=0 ts=6ad604e2 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=r6Uv-rxiSxc7U83AazAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-19_03,2026-10-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 phishscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610080000
+ definitions=main-2610190047
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,137 +160,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-在 2026/10/19 17:24, Peter Maydell 写道:
-> On Mon, 19 Oct 2026 at 02:57, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->> 在 2026/10/16 18:20, Peter Maydell 写道:
->>> I guess my question here is "how much is this actually doing,
->>> and how much is it 'we provide enough software-facing interface
->>> to keep the guest happy'" ? My (rather shallow) understanding of
->>> MPAM is that it's essentially adding tags to memory transactions
->>> and then accounting how much bandwidth each tag is using. That
->>> seems obviously infeasible for emulation, but on the other hand
->> Hi Peter,
+
+On 10/19/2026 6:48 AM, Peter Maydell wrote:
+> On Mon, 19 Oct 2026 at 10:42, Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
 >>
->> Yes, I agree with you.
 >>
->> Implementing MPAM bandwidth control and partitioning at the
->> performance-effect level in QEMU is neither feasible nor necessary, and
->> it is not in line with QEMU’s original purpose as a fast functional
->> emulator.
 >>
->> We only need to implement the functionality-related parts (i.e., the
->> register interfaces and control flow) to ensure that the software stack
->> can correctly recognize and configure MPAM, without simulating the real
->> performance impact produced by those configurations.
+>> On 10/18/2026 8:07 PM, Philippe Mathieu-Daudé wrote:
+>>> RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
+>>> for the release v10.1.0. Remove the stale comment.
 >>
->>> this looks like it's rather larger than a minimal "we provide
->>> the register interface but it does nothing", so what are we doing?
->> By implementing MPAM-related register interfaces and control flow, as
->> well as the MSC hardware topology in QEMU, we can understand the resctrl
->> framework and interfaces in Linux, along with the related hardware
->> topology discovery process. This facilitates kernel debugging and
->> pre-silicon testing, and also allows us to debug and test test cases,
->> avoiding the complexity and slowness of testing on FPGA.
-> Yes, but what is your implementation actually *doing* ? If
-> software reads some MPAM resource monitor, does it read zeroes,
-> or something else, or do we implement no monitors at all?
-> 2400 lines is a lot of code for "nothing actually happens".
+>> I wasn't aware that we need to remove stuff from deprecated.rst after
+>> awhile.  Thanks for taking care of it!
+> 
+> We are supposed to move the section from deprecated.rst to
+> removed.rst (adjusting it as necessary) when the feature moves
+> from "deprecated" to "actually removed". We didn't do that in
+> 455c0fa9eef, so we should do that here, rather than just deleting
+> the section.
 
-Monitors are implemented and do not return inert zeroes — both CSU and 
-MBWU read back values thattrack the partition configuration software has 
-programmed.
+Got it.  Thanks for clarifying!
 
-CSU (MPAMF_MSMON_CSU) — mpam_csu_value(), hw/arm/mpam.c:615,  as the 
-"hw/arm/mpam: Emulate CSU cache-usage monitoring" patch done:
-- Monitor disabled → returns 0.
-- Monitor enabled with MATCH_PARTID → returns csu_capacity × 
-popcount(CPBM)/32, i.e. the fraction of cache capacity the filtered 
-PARTID is currently allowed to occupy. Granting/revoking cache ways in 
-CPBM changes the readback.
+Phil, can you please re-send the patch moving the text to remove.rst?
 
-static uint32_t mpam_csu_value(MPAMMSCState *s, Mpamf *mf, MpamCsuMon *m)
-{
-     if (FIELD_EX32(m->ctl, MSMON_CFG_CSU_CTL, EN) &&
-         FIELD_EX32(m->ctl, MSMON_CFG_CSU_CTL, MATCH_PARTID)) {
-         uint32_t partid = FIELD_EX32(m->flt, MSMON_CFG_CSU_FLT, PARTID);
-         uint32_t nrw = mpam_nrw_id_for(s, mf, partid);
-         uint32_t cpbm = mf->per_nrw_id[nrw].cfg_cpbm[0];
-
-         return muldiv64(s->csu_capacity, ctpop32(cpbm), MPAM_CACHE_PART);
-     }
-     return 0;
-}
-
-The cfg_cpbm[0] was set by software by partid in patch "hw/arm/mpam: 
-Implement CPOR cache portion partitioning"
-
-+    case A_MPAMF_MPAMCFG_CPBM0...
-+        (A_MPAMF_MPAMCFG_CPBM0 + ((MPAM_CACHE_PART + 31) / 32 - 1) * 4):
-+    {
-+        uint32_t array_offset;
-
-......
-+        array_offset = (offset - A_MPAMF_MPAMCFG_CPBM0) / sizeof(uint32_t);
-+        mpamf->per_nrw_id[nrw_part_sel].cfg_cpbm[array_offset] = value;
-
-
-MBWU (MSMON_MBWU / MSMON_MBWU_L) — mpam_mbwu_value(), hw/arm/mpam.c:542:
-- Lazily accumulated: value = base + rate × (now − t0), rate = 
-bw_nominal × MBW_MAX fraction (or MBW_PBM popcount ratio, if set).
-- Disabled → rate = 0, readback stays at base (0 at reset).
-- Enabled → counts up over time, wraps at 48 bits, latches OFLOW_STATUS, 
-raises the overflow IRQ. The rate depends on the MBW_MAX/PBM programmed 
-for the filtered PARTID, so raising a PARTID's bandwidth quota is 
-visible in that monitor's readback.
-
-             if (cfg->cfg_mbw_pbm[0]) {
-                 frac_num = __builtin_popcount(cfg->cfg_mbw_pbm[0] &
-                                      ((1u << MPAM_MBW_PART) - 1));
-                 frac_den = MPAM_MBWetPART;
-             } else {
-                 /* MBW_MAX is a 16-bit fraction; 0xffff = full 
-bandwidth. */
-                 frac_num = cfg->cfg_mbw_max & 0xffff;
-                 frac_den = 0xffff;
-             }
-             rate_mbs = muldiv64(rate_mbs, frac_num, frac_den);
-
-The MBW_MAX was set by software as below in patch "hw/arm/mpam: 
-Implement MBW bandwidth partitioning"
-
-  case A_MPAMF_MPAMCFG_MBW_MAX:
-      ......
-         mpamf->per_nrw_id[nrw_part_sel].cfg_mbw_max = value;
-
-
-So the two monitors are closed-loop with the control plane: write 
-CPBM/MBW_MAX → the matching PARTID's CSU/MBWU readback moves. Not no-ops.
-
-The 2400 lines break down as:
-- MPAM2/MPAMHCR/MPAMSM_EL1 + PPTT rev3 cache IDs (guest visibility)
-- MSC (Memory System Component) register map, mem/cache MSC subtypes, 
-partition control (CPOR/MBW/PRI/CCAP) + PARTID narrowing (*extended 
-feature*), the CSU/MBWU monitors above, error/overflow IRQ + ECR/ESR, 
-reset/power-on state
-- MSC creation/sizing, MMIO window, IRQ-to-GIC wiring, ACPI MPAM table
-- qapi/mpam.json + query-mpam-cache: introspection
-
-- qemu boot parameters for mpam.
-
-The bulk sits in hw/arm/mpam.c (1620 lines, two-thirds of the total), 
-and most of that is IHI 0099 register field definitions plus the MMIO 
-read/write dispatch — fixed overhead from the spec's many registers, not 
-logic bloat.
-
-One honest caveat: monitors reflect configuration, not measured traffic 
-— rate is derived from the programmed MBW_MAX/PBM fraction, not from 
-real memory transactions. That is intentional for a 
-functional/configuration model.
 
 Thanks,
-Jinjie
+Daniel
 
->
+
+> 
+>>>    docs/about/deprecated.rst | 24 ------------------------
+>>>    1 file changed, 24 deletions(-)
+> 
+> Alistair, could you unqueue this, please, as it doesn't update
+> removed.rst ?
+> 
+> thanks
 > -- PMM
 
 
