@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DA1CCF2E5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E008CCF2E5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 14:38:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIoUA-0008Re-Ir; Mon, 19 Oct 2026 10:37:10 -0400
+	id 1xIoU6-0008L3-PV; Mon, 19 Oct 2026 10:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <b1ba6810f10139f5346c8fe49102d534aa94ce88@kylie.crudebyte.com>)
- id 1xIoTu-0008Dr-2J
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:59 -0400
+ (envelope-from <d8dd4017095383bd4b14a7ee8151248f6902eb72@kylie.crudebyte.com>)
+ id 1xIoTn-00085v-55
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:48 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <b1ba6810f10139f5346c8fe49102d534aa94ce88@kylie.crudebyte.com>)
- id 1xIoTs-0007YI-BX
- for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:53 -0400
+ (envelope-from <d8dd4017095383bd4b14a7ee8151248f6902eb72@kylie.crudebyte.com>)
+ id 1xIoTl-0007Xk-Ee
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 10:36:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=oATbJdAiOnpwZcYA8cLN5rFgwHZ9uzquoQVshJz889Q=; b=f1kC6
- 4ozb0guQariBTywET5kYKZtOQSqwa/y+74YZzD6SPmlEZZDWDQfRkIZWR9kQrQyeQ51bjd2EWZLCx
- ACNw+uboMqzYtBOoaLaZqF+UhvSZhn50f+XvcoFdkFftea8CZUuepUaD4SXQ2e7yaFN4hosmMLF7O
- tOytrdXK34QqVyl5lEjI8So9oZgk4v3wzEE5ZXnaF+WFOpiYTeLOS65Xuzrg3+CwoUDYJHswmH/IP
- +LGldvDJPtZykifMmKxmX74gkgoV6UJtjz/b4djTRqOJHl31GwSi+HvhuaEFYvzU1Z8lcYmCjs0MJ
- vWRYJ8vYlteDtQ9Q3NyOBsdYVn4rfKipiRfFPmRNcrcjZJfReuluAsqjZJjInxhzGg6D9aBAyBTlW
- LGBaAW1YOLnqWfHspZDPmuZysuOUCRB/bTxYvFEzBoC9Ii4xCwlJZ+L7hy8sbWYJieEh3afvtW+1g
- lDRaYxtmu2lnUXOwn6T7K9B7vodlk0Qop4eaGluhIFclvEkQY5ceDSGkJ7ea3i2kUQK/nJNlsTabb
- e0jBBVzIhDC2R4sthqXswoZluU1TV27Hx00XmBkdovq2G2Shd5Ih0KbA6dW4shmyJxfYYeHj2zkPe
- W4ti9ZuC5S3ALlsjKFTmw2yEqESlD+cYG2EgsIzGEps39glX3Cgo+HtaEDHfuk=;
-Message-ID: <b1ba6810f10139f5346c8fe49102d534aa94ce88.1792420035.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=D/l6eXUlVJjuO9j0jWaOG3I5EU2cMuMJYuYVQoLiou8=; b=Ocqku
+ JdGfeEdZ1BjqCAWGeyeXFMGti/TIP9M5Fe4QLJLuqO3ZXW2H7BCLyc6i2TB9hfkeuLpYxYb+i42z9
+ rdoZOGPyvFH6F18W0/iw+TVD6y7qygiZHtlo1SYTR8gFAVCVvYuiDP+r+nZoRL3Dfza4fWZkDxoaD
+ rrf4CzSjL1PKb0Z3JwsP5hvz5p6XnMqawvXmWA3fDS72zO0irTcsgniuD8df85UVIE5wPHrmzYDZ/
+ jKoS7ijwYiWWMdpr9Hl1S06/gbQjnIOeR8XKK0xiWShPSypoe0B/aUjuZ9QZtK33c7qdP8E/7+lU9
+ JCaGhdZJW9hsndWPQ8BQILiCjPLsOc8fkfFq7H0PUriXqW528NsgeIQz9cJ81eaamxvee/JO1WLG9
+ DaTUz3XDddEBl1c5pPXqpdUVRVPk8AeV/XBHnAXy0+Irf/UoquApvOAJkXcWb+VflrveO/1/QwJY7
+ uM0tTUc5gBtV8a6EuYiUupqJgG1ESugOrUxe3pmBJFVvd/uur/feE8ThICRgfjrU+yOFMEFywhzAd
+ GavCFy79hpA5WNgDJbWlMcs1Uow013EjH0BCBqAFsfAnBHhYvQd/yFeUac9q7kjLp1F2zT+zJG2Ib
+ o7KPRHBRlfP1H+bJWZYed4+BeJEAlpp1FIlYFOpPqUZCcsnkXM/0gzeWRG2NJE=;
+Message-ID: <d8dd4017095383bd4b14a7ee8151248f6902eb72.1792420035.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1792420035.git.qemu_oss@crudebyte.com>
 References: <cover.1792420035.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 19 Oct 2026 16:27:16 +0200
-Subject: [PULL 8/9] tests/9p-client: track the negotiated 9p version for
- session
+Subject: [PULL 7/9] tests/9p-client: add Tcreate / Rcreate test client
+ functions
 To: qemu-devel@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Peter Maydell <peter.maydell@linaro.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=b1ba6810f10139f5346c8fe49102d534aa94ce88@kylie.crudebyte.com;
+ envelope-from=d8dd4017095383bd4b14a7ee8151248f6902eb72@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,90 +69,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far v9fs_tattach() always sent an implied Tversion request, which
-was supposed to be a convenient mechanisms such that not every test
-case code would need to call v9fs_tversion() prior to a
-v9fs_tattach(). The problem however is that this implicit Tversion
-defaults to 9p2000.L, and it would also be (re)sent if an explicit
-v9fs_tversion() call had been issued with 9p2000.u before, which then
-would reset the session to the unintended 9p2000.L protocol version.
+Add v9fs_tcreate() and v9fs_rcreate() functions to the 9p test
+client for the legacy 9p2000(.u) Tcreate request type.
 
-Fix this by storing the initial Tversion request's (desired) protocol
-version to the client object. And only issue the implicit Tversion
-request inside of v9fs_tattach() if no protocol version had been
-negotiated already.
+This is a preparatory patch, these functions will be used by the
+subsequently added 9p race test.
 
-This is a preparatory patch for the subsequently added race test,
-which negotiates a 9p2000.u session.
-
-It also allows request / response handling to later become more
-protocol dialect aware (e.g. expecting specific request / response
-types according to negotiated protocol version during a session).
-
-Link: https://lore.kernel.org/qemu-devel/419b2b047c0f61b9e4a7e58f117c03ec6feea1ea.1791368962.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/532fed8595419fd57ec7d24dc5dbcbd8b1190e80.1791368962.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 15 ++++++++++++++-
- tests/qtest/libqos/virtio-9p.h        |  6 ++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ tests/qtest/libqos/virtio-9p-client.c | 60 +++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-9p-client.h | 50 ++++++++++++++++++++++
+ 2 files changed, 110 insertions(+)
 
 diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index ce67a4b8c5..20c7af91bd 100644
+index 4a3fc1511b..ce67a4b8c5 100644
 --- a/tests/qtest/libqos/virtio-9p-client.c
 +++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -366,6 +366,15 @@ TVersionRes v9fs_tversion(TVersionOpt opt)
-     v9fs_string_write(req, opt.version);
-     v9fs_req_send(req);
+@@ -1365,3 +1365,63 @@ void v9fs_rstat(P9Req *req, v9fs_stat *stat)
  
-+    /* store session's protocol version to client object */
-+    if (!strcmp(opt.version, "9P2000.u")) {
-+        opt.client->proto_version = V9FS_PROTO_2000U;
-+    } else if (!strcmp(opt.version, "9P2000.L")) {
-+        opt.client->proto_version = V9FS_PROTO_2000L;
-+    } else {
-+        g_assert_not_reached();
+     v9fs_req_free(req);
+ }
++
++/* size[4] Tcreate tag[2] fid[4] name[s] perm[4] mode[1] extension[s] */
++TCreateRes v9fs_tcreate(TCreateOpt opt)
++{
++    P9Req *req;
++    uint8_t mode = opt.mode;
++    uint32_t body_size = 4 + 4 + 1;
++    uint16_t string_size;
++
++    g_assert(opt.client);
++    /* expecting either Rcreate or an error response, but obviously not both */
++    g_assert(!opt.expectErr || !(opt.rcreate.qid || opt.rcreate.iounit));
++
++    if (!opt.perm) {
++        opt.perm = 0644;
++    }
++    if (!opt.extension) {
++        opt.extension = "";
 +    }
 +
-     if (!opt.requestOnly) {
-         v9fs_req_wait_for_reply(req, NULL);
-         if (opt.expectErr) {
-@@ -412,7 +421,11 @@ TAttachRes v9fs_tattach(TAttachOpt opt)
-     /* expecting either Rattach or Rlerror, but obviously not both */
-     g_assert(!opt.expectErr || !opt.rattach.qid);
++    string_size = v9fs_string_size(opt.name) +
++                  v9fs_string_size(opt.extension);
++    g_assert_cmpint(body_size, <=, UINT32_MAX - string_size);
++    body_size += string_size;
++
++    req = v9fs_req_init(opt.client, body_size, P9_TCREATE, opt.tag);
++    v9fs_uint32_write(req, opt.fid);
++    v9fs_string_write(req, opt.name);
++    v9fs_uint32_write(req, opt.perm);
++    v9fs_memwrite(req, &mode, 1);
++    v9fs_string_write(req, opt.extension);
++    v9fs_req_send(req);
++
++    if (!opt.requestOnly) {
++        v9fs_req_wait_for_reply(req, NULL);
++        if (opt.expectErr) {
++            v9fs_req_check_err(req, opt.expectErr);
++        } else {
++            v9fs_rcreate(req, opt.rcreate.qid, opt.rcreate.iounit);
++        }
++        req = NULL; /* request was freed */
++    }
++
++    return (TCreateRes) { .req = req };
++}
++
++/* size[4] Rcreate tag[2] qid[13] iounit[4] */
++void v9fs_rcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit)
++{
++    v9fs_req_recv(req, P9_RCREATE);
++    if (qid) {
++        v9fs_memread(req, qid, 13);
++    } else {
++        v9fs_memskip(req, 13);
++    }
++    if (iounit) {
++        v9fs_uint32_read(req, iounit);
++    }
++    v9fs_req_free(req);
++}
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index f604cc0ee5..88e0f41ff0 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -372,6 +372,54 @@ typedef struct TMkdirRes {
+     P9Req *req;
+ } TMkdirRes;
  
--    if (!opt.requestOnly) {
++/* create directory */
++#define P9_CREATE_PERM_DMDIR     0x80000000
++
++/* options for 'Tcreate' 9p request (legacy 9p2000.u) */
++typedef struct TCreateOpt {
++    /* 9P client being used (mandatory) */
++    QVirtio9P *client;
++    /* user supplied tag number being returned with response (optional) */
++    uint16_t tag;
++    /* file ID of the directory the new file shall be created in (required) */
++    uint32_t fid;
++    /* name of the new file (required) */
++    const char *name;
 +    /*
-+     * convenience feature: send an implicit Tversion request, however only if
-+     * Tversion has not been issued for this session before.
++     * Create mode bits (including file type bits):
++     * e.g. 0644 for a regular file,
++     * or P9_CREATE_PERM_DMDIR | 0755 for a directory
++     * (optional)
 +     */
-+    if (!opt.requestOnly && opt.client->proto_version == 0) {
-         v9fs_tversion((TVersionOpt) { .client = opt.client });
-     }
- 
-diff --git a/tests/qtest/libqos/virtio-9p.h b/tests/qtest/libqos/virtio-9p.h
-index e7efeef7a1..db21c5059c 100644
---- a/tests/qtest/libqos/virtio-9p.h
-+++ b/tests/qtest/libqos/virtio-9p.h
-@@ -22,6 +22,7 @@
- #include "qgraph.h"
- #include "virtio.h"
- #include "virtio-pci.h"
-+#include "hw/9pfs/9p.h"
- 
- typedef struct QVirtio9P QVirtio9P;
- typedef struct QVirtio9PPCI QVirtio9PPCI;
-@@ -32,6 +33,11 @@ typedef struct QVirtio9PDevice QVirtio9PDevice;
- struct QVirtio9P {
-     QVirtioDevice *vdev;
-     QVirtQueue *vq;
++    uint32_t perm;
 +    /*
-+     * The protocol version negotiated for this 9p session via Tversion request
-+     * (0 if no protocol version negotiated yet)
++     * Open mode byte:
++     * OREAD (0), OWRITE (1), ORDWR (2), OEXEC(3), OTRUNC(0x10), ORCLOSE(0x40)
++     * (optional)
 +     */
-+    P9ProtoVersion proto_version;
- };
- 
- struct QVirtio9PPCI {
++    uint8_t mode;
++    /*
++     * Extension data for special files (e.g. symlink target), empty for
++     * regular files. (optional)
++     */
++    const char *extension;
++    /* data being received from 9p server as 'Rcreate' response (optional) */
++    struct {
++        v9fs_qid *qid;
++        uint32_t *iounit;
++    } rcreate;
++    /* only send Tcreate request but not wait for a reply? (optional) */
++    bool requestOnly;
++    /* do we expect an error response, if yes which error code? (optional) */
++    uint32_t expectErr;
++} TCreateOpt;
++
++/* result of 'Tcreate' 9p request */
++typedef struct TCreateRes {
++    /* if requestOnly was set: request object for further processing */
++    P9Req *req;
++} TCreateRes;
++
+ /* options for 'Tlcreate' 9p request */
+ typedef struct TlcreateOpt {
+     /* 9P client being used (mandatory) */
+@@ -666,6 +714,8 @@ TFlushRes v9fs_tflush(TFlushOpt);
+ void v9fs_rflush(P9Req *req);
+ TMkdirRes v9fs_tmkdir(TMkdirOpt);
+ void v9fs_rmkdir(P9Req *req, v9fs_qid *qid);
++TCreateRes v9fs_tcreate(TCreateOpt opt);
++void v9fs_rcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit);
+ TlcreateRes v9fs_tlcreate(TlcreateOpt);
+ void v9fs_rlcreate(P9Req *req, v9fs_qid *qid, uint32_t *iounit);
+ TsymlinkRes v9fs_tsymlink(TsymlinkOpt);
 -- 
 2.47.3
 
