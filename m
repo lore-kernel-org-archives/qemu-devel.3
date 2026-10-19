@@ -1,116 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5442D606A319
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EA6606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Oct 2026 19:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qzOrNqkb
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Ou+KUryA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xIt7f-0008KN-99; Mon, 19 Oct 2026 15:34:15 -0400
+	id 1xItAN-0000rr-Iq; Mon, 19 Oct 2026 15:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1xIt7Y-0008Hz-EG; Mon, 19 Oct 2026 15:34:10 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1xIt7W-0004D8-KA; Mon, 19 Oct 2026 15:34:08 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JJEb0t450032; Mon, 19 Oct 2026 19:34:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Xd/934
- HG/giV+9uQkJHCGycpfj4IDOl6+5vOBCwuX74=; b=qzOrNqkbgNBGGrPiqgZONj
- fOoj6ojEWE0Lq6KEjDGMArNfs9J2GYaMxs07kpvW14IdzdCK3vTPnGJ2wJMPl9Z/
- 8XAxcnxkta/q0yq0kC4MtvhV/MBGXgIhFjSqPVkwnRHEaryIohtTnqXTkcq8V0jU
- gijqQxUuauypcSC/URBOTNGuV//5a/e303OxFTaoLZUtSgmx6f4q6zRVMKge0S2+
- YUvVPddVvGgmjsPsfzcj8xqeAH74czY+9WtQBYIvaSpqzFEVGKuBuwwocsh7mhrV
- wJ4yiF/Pieh35eqq+K9RBhcfAkMtLbB6y7WG32Ma3BP16oEKPc4I65GcVglOSnJg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hc0nvvap1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 19:34:04 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69JJKFBv374338; Mon, 19 Oct 2026 19:34:03 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hckbq7bbx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Oct 2026 19:34:03 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69JJY2kA31457866
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Oct 2026 19:34:02 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 943C158056;
- Mon, 19 Oct 2026 19:34:02 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0019A5805A;
- Mon, 19 Oct 2026 19:34:01 +0000 (GMT)
-Received: from [9.61.242.107] (unknown [9.61.242.107])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 19 Oct 2026 19:34:01 +0000 (GMT)
-Message-ID: <81412620-9c0f-4539-bc1e-371538ef1da4@linux.ibm.com>
-Date: Mon, 19 Oct 2026 15:34:01 -0400
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xItAE-0000pz-Le
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:36:56 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xItAC-0004kx-Ck
+ for qemu-devel@nongnu.org; Mon, 19 Oct 2026 15:36:54 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48dee593f18so1835175f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Oct 2026 12:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792438610; x=1793043410; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=UbUrbLN/sDDEnFE7Xqo6V0rfU+vNo7qlgaeQ5BeX5TQ=;
+ b=Ou+KUryACP8TQe41JIX5N3LAhWlwawHZXvoECfmrLTKgMrSIenpTl1/VO/qwtNONt+
+ TTRHHCm8JejRmPyPbA20WExge7VtYJdO+VB+hDJ4yb8J6/ieaGN6cCtTpGdEH157zVxx
+ 9aWnCrVLHSl4IWq1bXscaC+BEwV4WQE0+EytdksZk+k82rPjSvSF49A/bmBDVmOah58U
+ cl0mW6pX1pVpCEN9z+eRZ90WHs++4jp03aqwYpl6sUCDLh++tz0754iLBNgM50IMvxPt
+ vhP41L298p2UOouOlpwBWlSDudLCMP1VukLcH9P3Z5KhL/ZOJAPZIIhdUBTjj8hUQa4n
+ pvag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792438610; x=1793043410;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=UbUrbLN/sDDEnFE7Xqo6V0rfU+vNo7qlgaeQ5BeX5TQ=;
+ b=XXzBS0m/034C/5zgx/21iQEdC92WlbQ4vCoEW1YKXCA7BrHzWhthOZ+MPQrVa4L5MU
+ qKIR3n7U/lXvQQFafAnz+qkCQJHI9zwBKcz7pEAjsyo8RJosZ73zAtuelDXbFew08gZ2
+ oVneFXWDbfG9AC/04yZJiZm4Zs5gJgBUoy2jJrniEgNQiSsgw6behG5M6Wz3/SQ3WFAg
+ YRY5Cv5kQDTjbmsbbkG3J1+mWK6Vmy1KUvopgefdwZwZ++Xwl7On8s2Dbdv4D0iVIGGZ
+ nCbpwCVCgDAX3n7bHc5f2B+fOHFgqH77/2wOvxwpFm7pxmRGAnqTB6rt7ooarpa0h2WB
+ bc+w==
+X-Gm-Message-State: AFq9FYJcCVmOha1kNXZ5WtZN2S/OJel9+r1ec++yGYxoosfW+qJTQJEV
+ fqKANqEKfLC+tY1TENi8DBQ5ufDPwvob1axl5HRVII7D1HxrV/cK/CXV+taWssQNwrI=
+X-Gm-Gg: AYBFou30t4EtIOOpKLZZapDhqBMFqxdpnRakMlEQ8BsnmFnNm+MhIdXaTwEff2KbQrP
+ shNZYJT6NLbrY5AckaC+BwjB9A3qpsOngKXCGVzOCdJZMhpGrbU/vGzqLFW81M+f+wQegEDSjp6
+ haK8NlDQml5B7CKIsI5VDYhAlGVYGlgWQBVdZl0rDlAjXE0RRosBGrtjYSIldVesGNAatA1ylrd
+ 6AmUapHjySIbS/EZ48xkiRdJU+e+yfluTTlSzje5OXfsvTXyWVfcLhNnrHfn1BzdcOOD+jknZhI
+ DW9GL0hfxvSr+5HKvfYmabNohxAUPJZL8q9YWJpIYS0eIpMYTaCw4sNOxyhc40zxny2BlwEybQG
+ saFoXarTyW97u5+Fdkai8He+r09hhHdusm4rrshBujldvtHF7qnIu7QoTJYiJrZQtsGmI7utp5p
+ 0PyyA4uQ5WTicknGQBLUA95GOjRJl/PVvo2CU2/ixE0DnLn7jksyPJHNpzU7tCP4QpooR0uA==
+X-Received: by 2002:a5d:6a11:0:b0:48d:e62f:db70 with SMTP id
+ ffacd0b85a97d-48e07fb362fmr12832517f8f.48.1792438610459; 
+ Mon, 19 Oct 2026 12:36:50 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e1d80f9dbsm856996f8f.19.2026.10.19.12.36.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Oct 2026 12:36:48 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D5D985FF9E;
+ Mon, 19 Oct 2026 20:27:06 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Peter Xu <peterx@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>, Keith Busch <kbusch@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Ani Sinha <anisinha@redhat.com>, Anders Roxell <anders.roxell@linaro.org>,
+ qemu-arm@nongnu.org, Song Gao <gaosong@loongson.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-s390x@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brad Smith <brad@comstyle.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
+Subject: [PATCH v3 18/19] tests/functional: update s390x tuxrun images
+Date: Mon, 19 Oct 2026 20:27:03 +0100
+Message-ID: <20261019192704.3220373-19-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20261019192704.3220373-1-alex.bennee@linaro.org>
+References: <20261019192704.3220373-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390x/pci: re-fetch DMA slot shadow count from VFIO
- upon IOMMU disable
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: alifm@linux.ibm.com, cam@linux.ibm.com, farman@linux.ibm.com,
- qemu-stable@nongnu.org
-References: <20261019153729.40823-1-oelghoul@linux.ibm.com>
- <5e9b8aa7-c157-43cd-99b1-7afecda27cd1@linux.ibm.com>
-Content-Language: en-US
-From: Omar Elghoul <oelghoul@linux.ibm.com>
-In-Reply-To: <5e9b8aa7-c157-43cd-99b1-7afecda27cd1@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDE5MDA3NiBTYWx0ZWRfX/SOZuc77bxiK
- frAXxsHEHe/kSkV0d/sdyK9yW4wBs8IgwBMKm6ggfqmxSHBvMDvL116vpCdWgb5NAm//eIlJtVU
- ms4XawRX4wE6E2XC+r4SZad2YsThKwM=
-X-Proofpoint-ORIG-GUID: RyRJUM7GONIs-sQ9gcb2zpAzrJSK8jIY
-X-Proofpoint-GUID: RyRJUM7GONIs-sQ9gcb2zpAzrJSK8jIY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDE5MDA3NiBTYWx0ZWRfXxyoXgN0O2tcA
- q5dw98T19gVMIUk5u9+aKq2ZP1rjCD7qVXLIs03gAg2cHgZurESawAo7jy3FiEiubWfXAJVfdLB
- Wt7SeVYKE/o78NRhd019wWr/myvVFNnImcirvwmh/2unCEEyQmzi1up96zIng2Uy3cxeiR37H5c
- lwCrj8GlEsMFb8UHhYXTakjicaFz93p8XpT7+5VmXwfmhx6bpiB2vAZwv6P4VoCNm2a+iVo9NhH
- jO1q65DVL4JBbVZ/SM//WraZrbH3jcPa/koIKb52ppCQDCcphmaJQ2EZE24GHb81Y3FRPVmziwk
- apg0a9jUkXnsl8lG93w4HSHLZQCDHjS4ps9ZcELDqSfyWlK6MP7VFEIYsqbfcn1hy3vsCvHsSKz
- lF8EqFP2FhqX6BM+ZF6tAOgpsZ8FodikHwolWv6lsmjNkGp2GZMcT/rmGQWksd+gFZW02KJKJW+
- OVXbRS3gv5MCU584Dwg==
-X-Authority-Analysis: v=2.4 cv=MY35KJ/f c=1 sm=1 tr=0 ts=6ad670ac cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=L8ZlNmyXYivIpPH0CNMA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-19_05,2026-10-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610080000 definitions=main-2610190076
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=oelghoul@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,105 +120,49 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/19/26 3:18 PM, Matthew Rosato wrote:
-> On 10/19/26 11:37 AM, Omar Elghoul wrote:
->> s390_pci_iommu_disable() destroys the I/O TLB and unpins the host's
->> mappings, but it doesn't reset the available DMA slot counter back to
->> the VFIO-advertised limit. This is problematic when an IOMMU is disabled
->> and re-enabled while reusing the container (e.g. during a guest reboot),
->> which may cause the RPCIT path to fail with DMA slot exhaustion errors,
->> manifesting as unexplained ENOMEMs in the guest.
->>
->> Fix it by refactoring s390_pci_update_dma_avail() to take a pointer to
->> S390PCIBusDevice instead of the plain file descriptor. Call it in
->> s390_pci_iommu_disable() after the host mappings have been unpinned.
->>
->> Further print a warning if the VFIO-advertised counter doesn't match the
->> in-use shadow counter, to reduce the likelihood of introducing new
-> 
-> Maybe something like 'doesn't match the previously-stashed limit' ?
+We now fetch the kernel from a different location to the buildroot
+image itself. This is because we will want to access additional kernel
+metadata in future tests.
 
-Sure.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-> 
->> similar DMA accounting bugs in the future.
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: 37fa32de7073 ("s390x/pci: Honor DMA limits set by vfio")
->> Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
->> ---
->> v1 -> v2: rebase on latest master, ensure that the device is a vfio-pci
->> device before calling vfio-specific code.
->> ---
->>   hw/s390x/s390-pci-bus.c          | 21 +++++++++++++++++++++
->>   hw/s390x/s390-pci-vfio-stubs.c   |  2 +-
->>   hw/s390x/s390-pci-vfio.c         | 18 ++++++++++++------
->>   include/hw/s390x/s390-pci-vfio.h |  2 +-
->>   4 files changed, 35 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index 2724b27ec2..9938191c4d 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> @@ -825,6 +825,8 @@ void s390_pci_iommu_direct_map_enable(S390PCIBusDevice *pbdev)
->>   void s390_pci_iommu_disable(S390PCIBusDevice *pbdev)
->>   {
->>       S390PCIIOMMU *iommu = pbdev->iommu;
->> +    unsigned int dma_avail;
->> +
->>       pbdev->iommu_enabled = false;
->>       g_hash_table_remove_all(pbdev->iotlb);
->>       if (pbdev->dm_mr) {
->> @@ -837,6 +839,25 @@ void s390_pci_iommu_disable(S390PCIBusDevice *pbdev)
->>                                       MEMORY_REGION(&pbdev->iommu_mr));
->>           object_unparent(OBJECT(&pbdev->iommu_mr));
->>       }
->> +
->> +    /*
->> +     * update shadow counter from vfio after having unpinned all host mappings.
->> +     * if this value mismatches our previous shadow count, then we likely have
->> +     * DMA remapping, unmapping, or accounting bugs
-> 
-> comment nit: This is related to the commit message -- we aren't looking
-> at the previous shadow count here (dma_limit->avail) but rather at the
-> previously stashed limit (max_dma_limit) to make sure the vfio count got
-> back to the value we expected.
-> 
->> +     */
->> +    if (object_dynamic_cast(OBJECT(pbdev->pdev), "vfio-pci")) {
-> 
-> Could you just check for if (pbev->dma_avail) here?
-> 
-> We should only have that if s390_pci_start_dma_count() was called
-> successfully, and that should only happen for a vfio-pci device.
+---
+v3
+  - rewrote commit message for clarity
+---
+ tests/functional/s390x/test_tuxrun.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-That works too, I just thought it'd make sense to explicitly check for
-the "vfio-pci" cast since the same file already does that in another
-place.
-
-> 
->> +        if (s390_pci_update_dma_avail(pbdev, &dma_avail)) {
->> +            if (pbdev->max_dma_limit != dma_avail) {
->> +                warn_report("DMA limit %u from vfio != %" PRIu64 " shadowed",
->> +                            dma_avail, pbdev->max_dma_limit);
->> +                pbdev->max_dma_limit = dma_avail;
->> +            }
->> +
->> +            if (pbdev->dma_limit) {
-> 
-> Then you also don't need this check.
-> 
->> +                pbdev->dma_limit->avail = dma_avail;
->> +            }
->> +        }
->> +    }
->>   }
+diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s390x/test_tuxrun.py
+index 086466af81f..8e0261e2b7f 100755
+--- a/tests/functional/s390x/test_tuxrun.py
++++ b/tests/functional/s390x/test_tuxrun.py
+@@ -17,11 +17,11 @@
+ class TuxRunS390xTest(TuxRunBaselineTest):
+ 
+     ASSET_S390X_KERNEL = Asset(
+-        'https://storage.tuxboot.com/buildroot/20241119/s390/bzImage',
+-        'ee67e91db52a2aed104a7c72b2a08987c678f8179c029626789c35d6dd0fedf1')
++        'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
++        '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71aec')
+     ASSET_S390X_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/buildroot/20241119/s390/rootfs.ext4.zst',
+-        'bff7971fc2fef56372d98afe4557b82fd0a785a241e44c29b058e577ad1bbb44')
++        'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ext4.zst',
++        '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c6f5')
+ 
+     def test_s390(self):
+         self.set_machine('s390-ccw-virtio')
+-- 
+2.47.3
 
 
