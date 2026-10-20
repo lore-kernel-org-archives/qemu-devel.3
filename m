@@ -1,107 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2E9606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADD6606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TWN1OkQi
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kLoptXId
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJA9W-0007yt-OW; Tue, 20 Oct 2026 09:45:18 -0400
+	id 1xJAKv-0001tb-DF; Tue, 20 Oct 2026 09:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJA9U-0007yI-Sb
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:45:16 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xJAKt-0001tH-9A
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:57:03 -0400
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJA9S-00055E-PO
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:45:16 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-8aea7b7ca0cso23986277b3.2
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 06:45:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792503913; cv=none;
+ (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
+ id 1xJAKp-00067g-Qy
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:57:02 -0400
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-70059e4dab6so2146371eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 06:56:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792504617; cv=none;
  d=google.com; s=arc-20260327;
- b=eN950/Ckv0P7Zei6AK2hS/ck4cTZuhXWiGbybL0nmBbojcjGtsoae2LBfhogAEz1iE
- B6jN8cHUeioaGa/9VfpUwJEeOBwGk5fDf2+q3eOBx6F18VgaFMHoFRvjfEwo7wKhJJN9
- 1VyFGPTx16UvidvGu/Wkib5sRklk362iJ8JUxI4ecIGP/+em8fwC6pUvmzNvnYDRFZFB
- 61xI2uV1Tl6F5hvuuwY1XcIhBTJyS4/K6DNfMbIIMGU4JG5Z/MJMC/dLey1Ovg5tPXEP
- Yn0t+tU3OrZ64Zuh07b7fwMY3agR80jKOWo56QmDY1UaCX+nKf2MZMJW3sPcWHjLaLpV
- 6WGQ==
+ b=a62+SLFiiAUG7OTh6gB/VOXfdwVR9+DK6aBiY1Z1Voa1g8kvO6lFiIIgdMIeUn+0RD
+ BPKdPgPFQmoe1G7BZLBjTJDAZvg6NCYrc+XCKtlMbb1zFTrrLeO+itWmnUA5Y9F3wR1S
+ 8FBd/x37Gs6hXts+wbEnDI5q9ctUpPL+McSacFYQlZcnlvUAc0nYG91itJpcDHlWoeSC
+ tqQkLcHipW+EjqajgOEZaRBW9UoHpun0gbUrLs6/GMuqpskUEURaY+CK6r4PLOskjVeJ
+ RlBcDCilDDCV7hUi6l7vYPlTBu47qU71RIX0khmF9+pmgngo9Nn2+9D7DxIv+ceaX5I4
+ zvpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
- fh=oraPjQU+yAe2h/NZP3Xc/cKBl+/fAxl4XlrKwLshaqM=;
- b=YXhysTnOkKWbE5fjI6eoxnR22IntqYAVG9Rzf3V74WaijDr17N5rYsZ9VfCVoHKWup
- pp13ypR+SvR+5inRt2lLpLiLEHbJX4w+KvsHQ9aWSWT2Tl1bCAUuiez6Ajc1dt05Pz3J
- dUJ6FyOUPoXl8/lHM7Js1WPjA9gFG86QeFL0Uy3s1W4I42LdT+qUm6rvdEWsLlV4ml+r
- 8mGT5B7nQ4OOzaCOq5WUEsF+m/y+GR/s+3+SFXGCJVMyohMeqzGsDKMYruZfQhMx33Ck
- 3cXqZH0KqHWM1kSZ1ZWa7D1xzLWU78kbpeSttWhRxHL8b8TG92VVav8rQj7xfja5Y/F0
- louQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:dkim-signature;
+ bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
+ fh=uHsInzl9zV3RMtTep5HATHFWXDawVrBpmXDlZsDBuQY=;
+ b=A2RnXUd+RI9fymDK7jFYVgcCEZaF2cyRygfL3dviWFwO+2uQ3SvYgaNjkt/IdE4H8R
+ NrtwqlcxVWPkgED30yIRKzvfyRbKiS3xohMC2FQLow0eDqUKFsxB+KRK03qOFE82i5KV
+ Qggr0afjus5c18KcYILAXZSf0MiFOccsRXcWEH0CMDE2+GyR+c99y7XayDWGJxjoDh5p
+ xdwhGwg1whNoYDYHfb6W02xeK+1oTTh+4ueZOIMhqQm7FxG2O4InyOo/I/ujullPY8+L
+ 7eAOk9wAYuhnrffxrHnlMICQ+tMMwrK1KEjuOdJLvpftC+AOZsxYf2X9c1oVps1A7qbm
+ G1Vw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792503913; x=1793108713; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
- b=TWN1OkQiniHj6wY7+TFbTDOV+gTHdOp0AD4Yo77kJCY7sHsgg5I4yvmmUuZvsYkMmq
- VNf5lPPth/HfRbWGvooKt/5nriituXKVwQZKnidJHk8JSd4zE/Cov0GxX9hOY/T1rch2
- lIaYV0uZShmHHHtWllGHmu5g+k1peLeWUBKZFGeeE+NqKwcLdhUXvM+DqRmUs0NMWNaf
- arRlXB7Di9vgRAlM6LJobuIhlecDlCIBGheeD/T5wHDTgJMhwtRqJ+xUvOd1T/Q28zE7
- Eb18X0i8kttqjG93hjoVidXvnoSTZLQKvPTUWpQakFj6MBL66VgPJ9M7VxqN7AU8wEWR
- CGCg==
+ d=gmail.com; s=20251104; t=1792504617; x=1793109417; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:mime-version:references
+ :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
+ b=kLoptXIdx8efPV21/DMIxlEr/bAVN7ikbXuTWKgcWrYgveJMERK80yVPUeOLhxlkAo
+ 5zeOS+hUwZztB09FiDztvRsDY7+Uzo5yC7VpQEC+IOcDStcpa+UB/Z9BmUbEMzSXdBBK
+ RtF5WTiPLAznU9by9zSayPajK8zMm+bO7n35RBHwb8XB4nSBJEJF6T4YWB0mTkXgUW0o
+ c5Qt5aUgT42haMsO1r7C2R05/9+GL7QOcDZjSwUBJbI2sqvRX/S6LVMDARt3CWUnuIb5
+ U8e0LkcpmweRKVcaW3kpbgZhxzT0ffsxwMAB+NuyrL4gpdWSK4zG9lte63SajTrwhayi
+ PhFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792503913; x=1793108713;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
- b=B/1E2+BZHw7+Ff+0janenLZBriEb1ybf9jCmwNJmTevfx7DpOPPnsowEb7RRU1n3Yu
- FhTNCsASe3VpyquJPcwUwOfnnti4EJd7/qET5Qo6mL24LDMquEmA503V65OCQIc0ePgb
- S4fLDns5vgsBI8U2Vef6gqEfvDESf3oDNOGxWem7hGXMaCrzw5YVM4z4dLuxKF68Dr7C
- IzWB5oIgMnMkOMHwjnQzi5BH2sXm0d16PN/jkvAkfBcbz+f60PMNKKQGAKSp+06ElCcy
- xOL/LrZBcjLk2AEN6yS34SartUNIZXh8AfwR0PP2l1gLE2I0XLma6pwyITDmgIpX32Fr
- CIlw==
-X-Gm-Message-State: AFq9FYIDvaNwwOif7uMvAxBMmiZFa8FR6fIXjb/WjGTHcNUgjSaYsSUu
- eY3hWZp4X/1aRuGQjw8/wKGxmJbKL1OWZJD7bVbKOlMBkFSKBivv/VMD9jU7UAWGWQczsXzDo95
- sxVvomEgwNytpAXabSrc1MaHTEKLwcncu1r/Uz8EUyA==
-X-Gm-Gg: AYBFou3LHVuuqWwFAy05/244xO4guo5T9q38GsS+NgTOvZu+WPPhHhDEF9QIBZp5vx3
- +e4Jy36valKyNmJo9BtnJOCF7QrR1jccDYh9ka9MzEbP1Bz50BM8y0Ze1YjKIoeo4iDeIHe8UHO
- wflF4ij2ari8gWug4JygenfywFCAVDIJoLgjQrRLIQVgBXH43qDXD224zycyvjogGG2HOwZHzEl
- m3QhQQ0Zb1EIJ/Cvs62aFCLB/bbzlLgtjV7ejYr4PxhraKpsYMXJRPt2yUc4XqsY976cp2M20yO
- kxwOD77QqPm7gmvDck1wKmSmbryAIhSbLJjbkTV6u7whe4cd1uKicP34HlQVVWUVhiPOnX6Hu/d
- kWJZj2LE36OobBfrSBUByYeBM1cLVZMSRKuhcFBmO
-X-Received: by 2002:a05:690c:112:b0:873:5bd1:98c9 with SMTP id
- 00721157ae682-8b0f21d095amr35358157b3.59.1792503913032; Tue, 20 Oct 2026
- 06:45:13 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792504617; x=1793109417;
+ h=content-type:cc:to:subject:message-id:date:mime-version:references
+ :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
+ b=u3MHwxEHwOZGKS+EItyAXUpsF9zJdcRSYwYqK3HpQqvaGxJMJOBItBAgujO0Cyah5Z
+ wXzlxIspoJpm+wGpEwtr/aymp16HKaUQT9fkeKaUJH04+WEz+MnsHwEaLVbj7X7zPMu/
+ zo9LpC5G1PevmHzPr8Z3x4HHS+7JS52QWRIPT9E0B29pKC42sEd8f0NWEOaWqCHgIvvY
+ 54RQ3EFJBZiOC0cCCcBI+N2Z7EnvFxsVNDO0Z3EQ8OBoWUd4+jtjX7sn1Y+UwT7k5cAP
+ D/05evHuRnT+RE0Maf7aTpCh25/Eg2/ncsRkhtjKR0j2IVE9uidEkdkhYskcMvyydYs8
+ opbw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxSw3Bd8CNGhbrdGnhyMpXRneGR1GF1aDCF/kS9WESVW1uOAL8hKZXCFuGbK9IapaNhQd3qPN11YDz3@nongnu.org
+X-Gm-Message-State: AFq9FYKveMFO31NlhYCKFSGLcc4YYJyEZsMvOtPOQR1jRyeuBizSdAHx
+ v5l/VzzTag8YIoihIaobZedKfqlQK54e+oqnH4dIMhvspzGKC4lpktpdgfCvQ0sHs8+oTUPZ878
+ vKCyoA88yXC6hMwGG16JUmGlTcra2So8=
+X-Gm-Gg: AYBFou0wCeb9R/qQi8jIqnhCEoWOcfU6XwGIB1HB35JeFiPNUiRfD8cN/5FlZ+T5u3q
+ KOMwBYs4tb3Cqm7W5jT2lN27cF6ZcPPaIl6g/PwU8YQBctgYabevzl+lM9uDZqjbSoEhw03LtRG
+ 34YexWQzuAEaFxsow3cvulm3GPaODl7qXTlKWZgVxNTY21oEpmwJ3vbWLfPhRGF8edlcGw1NimZ
+ qqRooDbmmH0OXYXWEQomaZZIeQTSHVWcqgHuHLVeAL2/H8jt8GEmWnlqZJqbmiumdQ0F5mi73tv
+ VimXxpazPHt0NZEXVTHfdjYAfBiNOl19Z6BJFz/9xNySJN8vUxK+mRbtKV9VAj85Ob7sbJZaU+y
+ HDcJpLPmH5wor1ArxKGpbcye3RJZrSvmfKrlKJVo=
+X-Received: by 2002:a05:6820:1c87:b0:708:95ad:6777 with SMTP id
+ 006d021491bc7-70895ad691cmr430196eaf.21.1792504617181; Tue, 20 Oct 2026
+ 06:56:57 -0700 (PDT)
+Received: from 101988054943 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 Oct 2026 08:56:56 -0500
+Received: from 101988054943 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 Oct 2026 06:56:55 -0700
+From: Marcelo Manzo <marcelomanzo@gmail.com>
+In-Reply-To: <20261020033755.2618640-1-jamin_lin@aspeedtech.com>
+References: <20261020033755.2618640-1-jamin_lin@aspeedtech.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20260806213640.699905-1-brian.cain@oss.qualcomm.com>
- <20260806213640.699905-3-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260806213640.699905-3-brian.cain@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Oct 2026 14:45:00 +0100
-X-Gm-Features: AclHuK_vYBtJHMZ9a4qD8FriVhrufuPjZfTsGR7wU2WuEQK4dvnUbb9bvMwwgaE
-Message-ID: <CAFEAcA8CYaJ=jAyc29RSdUMD_SWquJqz4fNQyW7oCrWithZhYA@mail.gmail.com>
-Subject: Re: [PULL 2/3] tests/tcg/hexagon: add slot-assignment tests
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Date: Tue, 20 Oct 2026 08:56:56 -0500
+X-Gm-Features: AclHuK_NWJ12iseKrcoe_wWJEXmro4aWS5iA0HX6lYcjnre-Ar8fIXuDwNKs504
+Message-ID: <CAGaQod+sDwsjEYt54U-ac7vEcdKEtSdvqy4SxUx01xe4DA9Jiw@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/pci-host/aspeed_pcie: Fix global MSI setting during
+ class initialization
+To: jamin_lin@aspeedtech.com
+Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com, clg@kaod.org, 
+ kane_chen@aspeedtech.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ troy_lee@aspeedtech.com, qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f7251f065e460012"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-oo1-xc33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,79 +119,150 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 6 Aug 2026 at 22:37, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+--000000000000f7251f065e460012
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Reviewed-by: Marcelo Manzo <marcelomanzo@gmail.com>
+Tested-by: Marcelo Manzo <marcelomanzo@gmail.com>
+
+Looks right to me: it sets the flag where designware.c does, once an
+Aspeed RC is actually realized.
+
+I tested it. On raspi4b a qemu-xhci on pcie.1 now ends up with
+msix=3Doff, so it falls back to INTx; without the patch it is msix=3Dauto
+and MSI-X is wrongly enabled. On ast2700-evb a qemu-xhci on each of its
+PCIe buses (pcie.0-2, pcie.rc0-2) still gets msix=3Dauto, so MSI-X is
+still available where an Aspeed RC is present. I have not run the
+ast2700 functional tests.
+
+Thanks for the quick fix.
+
+On Mon, Oct 19, 2026 11:38 PM, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+
+> The ASPEED PCIe class may be registered for machines that do not
+> instantiate a PCIe root complex. Updating the global msi_nonbroken
+> flag from class_init() therefore affects unrelated machines.
 >
-> valid-slots: packets that legally share a slot and were wrongly
-> rejected before the fix (load and transfer, load encoded first;
-> dczeroa packed last with three transfers).
+> Defer the update to the per-device realize handler, so the flag
+> changes only when an ASPEED PCIe root complex is actually
+> instantiated.
 >
-> invalid-slots: unassignable packets that must still be rejected:
-> store + duplex, load + indirect jump, three logical ops competing for
-> slots 2 and 3, and five ops for four slots.
->
-> Reviewed-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Reported-by: Marcelo Manzo <marcelomanzo@gmail.com>
+> Fixes: f002aa35f320 ("hw/pci-host/aspeed: Add AST2600 PCIe config space
+> and host bridge")
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->  tests/tcg/hexagon/invalid-slots.c | 72 +++++++++++++++++++++++++++++++
->  tests/tcg/hexagon/valid-slots.c   | 62 ++++++++++++++++++++++++++
->  tests/tcg/hexagon/Makefile.target |  1 +
->  3 files changed, 135 insertions(+)
->  create mode 100644 tests/tcg/hexagon/valid-slots.c
+>  hw/pci-host/aspeed_pcie.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+> index b46eb74234..ceb010f213 100644
+> --- a/hw/pci-host/aspeed_pcie.c
+> +++ b/hw/pci-host/aspeed_pcie.c
+> @@ -181,6 +181,8 @@ static void aspeed_pcie_rc_realize(DeviceState *dev,
+> Error **errp)
+>      g_autofree char *dram_alias_name =3D NULL;
+>      g_autofree char *root_bus_name =3D NULL;
+>
+> +    msi_nonbroken =3D true;
+> +
+>      /* PCI configuration space */
+>      pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
+>      sysbus_init_mmio(sbd, &pex->mmio);
+> @@ -294,8 +296,6 @@ static void aspeed_pcie_rc_class_init(ObjectClass
+> *klass, const void *data)
+>
+>      hc->root_bus_path =3D aspeed_pcie_rc_root_bus_path;
+>      device_class_set_props(dc, aspeed_pcie_rc_props);
+> -
+> -    msi_nonbroken =3D true;
+>  }
+>
+>  /*
+> --
+> 2.43.0
+>
 
-Hi; if you build QEMU with the clang sanitizer enabled
-("--enable-ubsan --cc=clang --cxx=clang++") then the invalid-slots
-test added here results in the hexagon decoder trying to shift
-by -1, which is UB:
+--000000000000f7251f065e460012
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-./build/clang/qemu-hexagon
-./build/clang/tests/tcg/hexagon-linux-user-invalid-slots.test
-../../target/hexagon/decode.c:603:35: runtime error: shift exponent -1
-is negative
-    #0 0x555695dc2392 in decode_set_slot_number
-/home/pm215/qemu/build/clang/../../target/hexagon/decode.c:603:35
-    #1 0x555695dc2392 in decode_packet
-/home/pm215/qemu/build/clang/../../target/hexagon/decode.c:783:14
-    #2 0x5556959801e7 in decode_and_translate_packet
-/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1274:18
-    #3 0x55569597f927 in hexagon_tr_translate_packet
-/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1375:5
-    #4 0x5556958bda32 in translator_loop
-/home/pm215/qemu/build/clang/../../accel/tcg/translator.c:216:9
-    #5 0x55569597ec72 in hexagon_translate_code
-/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1428:5
-    #6 0x5556958bca00 in setjmp_gen_code
-/home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:251:5
-    #7 0x5556958babd7 in tb_gen_code
-/home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:324:21
-    #8 0x55569589fbfc in cpu_exec_loop
-/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:973:22
-    #9 0x55569589e309 in cpu_exec_setjmp
-/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1019:12
-    #10 0x55569589e10d in cpu_exec
-/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1050:12
-    #11 0x555695977cdb in cpu_loop
-/home/pm215/qemu/build/clang/../../linux-user/hexagon/cpu_loop.c:38:18
-    #12 0x5556961fe1f5 in main
-/home/pm215/qemu/build/clang/../../linux-user/main.c:1010:5
-    #13 0x7c65f202a1c9 in __libc_start_call_main
-csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #14 0x7c65f202a28a in __libc_start_main csu/../csu/libc-start.c:360:3
-    #15 0x55569582d294 in _start
-(/home/pm215/qemu/build/clang/qemu-hexagon+0x910294) (BuildId:
-d18c0fb84fd3431a52be6d831fc64fd2d0e00980)
+<html><body><div dir=3D"auto">Reviewed-by: Marcelo Manzo &lt;<a href=3D"mai=
+lto:marcelomanzo@gmail.com">marcelomanzo@gmail.com</a>&gt;<br>Tested-by: Ma=
+rcelo Manzo &lt;<a href=3D"mailto:marcelomanzo@gmail.com">marcelomanzo@gmai=
+l.com</a>&gt;<br><br>Looks right to me: it sets the flag where designware.c=
+ does, once an<br>Aspeed RC is actually realized.<br><br>I tested it. On ra=
+spi4b a qemu-xhci on pcie.1 now ends up with<br>msix=3Doff, so it falls bac=
+k to INTx; without the patch it is msix=3Dauto<br>and MSI-X is wrongly enab=
+led. On ast2700-evb a qemu-xhci on each of its<br>PCIe buses (pcie.0-2, pci=
+e.rc0-2) still gets msix=3Dauto, so MSI-X is<br>still available where an As=
+peed RC is present. I have not run the<br>ast2700 functional tests.<br><br>=
+Thanks for the quick fix.<br></div></body></html><br><div class=3D"gmail_ex=
+tra"><div>On Mon, Oct 19, 2026 11:38 PM, Jamin Lin &lt;<a href=3D"mailto:ja=
+min_lin@aspeedtech.com">jamin_lin@aspeedtech.com</a>&gt; wrote:<br><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc s=
+olid;padding-left:1ex">The ASPEED PCIe class may be registered for machines=
+ that do not<br>
+instantiate a PCIe root complex. Updating the global msi_nonbroken<br>
+flag from class_init() therefore affects unrelated machines.<br>
+<br>
+Defer the update to the per-device realize handler, so the flag<br>
+changes only when an ASPEED PCIe root complex is actually<br>
+instantiated.<br>
+<br>
+Reported-by: Marcelo Manzo &lt;<a href=3D"mailto:marcelomanzo@gmail.com" ta=
+rget=3D"_blank">marcelomanzo@gmail.com</a>&gt;<br>
+Fixes: f002aa35f320 (&quot;hw/pci-host/aspeed: Add AST2600 PCIe config spac=
+e and host bridge&quot;)<br>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@oss.q=
+ualcomm.com" target=3D"_blank">philmd@oss.qualcomm.com</a>&gt;<br>
+Reviewed-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" =
+target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
+Signed-off-by: Jamin Lin &lt;<a href=3D"mailto:jamin_lin@aspeedtech.com" ta=
+rget=3D"_blank">jamin_lin@aspeedtech.com</a>&gt;<br>
+---<br>
+=C2=A0hw/pci-host/aspeed_pcie.c | 4 ++--<br>
+=C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c<br>
+index b46eb74234..ceb010f213 100644<br>
+--- a/hw/pci-host/aspeed_pcie.c<br>
++++ b/hw/pci-host/aspeed_pcie.c<br>
+@@ -181,6 +181,8 @@ static void aspeed_pcie_rc_realize(DeviceS<wbr>tate *de=
+v, Error **errp)<br>
+=C2=A0 =C2=A0 =C2=A0g_autofree char *dram_alias_name =3D NULL;<br>
+=C2=A0 =C2=A0 =C2=A0g_autofree char *root_bus_name =3D NULL;<br>
+<br>
++=C2=A0 =C2=A0 msi_nonbroken =3D true;<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0/* PCI configuration space */<br>
+=C2=A0 =C2=A0 =C2=A0pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);<br>
+=C2=A0 =C2=A0 =C2=A0sysbus_init_mmio(sbd, &amp;pex-&gt;mmio);<br>
+@@ -294,8 +296,6 @@ static void aspeed_pcie_rc_class_init(Obje<wbr>ctClass =
+*klass, const void *data)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0hc-&gt;root_bus_path =3D aspeed_pcie_rc_root_bus_path;<=
+br>
+=C2=A0 =C2=A0 =C2=A0device_class_set_props(dc, aspeed_pcie_rc_props);<br>
+-<br>
+-=C2=A0 =C2=A0 msi_nonbroken =3D true;<br>
+=C2=A0}<br>
+<br>
+=C2=A0/*<br>
+-- <br>
+2.43.0<br>
+</blockquote></div></div>
 
-(This also shows up as "make check" failing in this config.)
-
-Could you have a look at what goes wrong here, please?
-
-thanks
--- PMM
+--000000000000f7251f065e460012--
 
