@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A74606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20210606A319
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AqW9jVyE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W/bpnmLm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7QC-0006lt-5F; Tue, 20 Oct 2026 06:50:21 -0400
+	id 1xJ7T8-0002QW-8e; Tue, 20 Oct 2026 06:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7OQ-0002wF-Vl
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xJ7QH-00073O-6W
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7OP-0005XP-0P
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:30 -0400
+ id 1xJ7QF-0006HO-4Z
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493308;
+ s=mimecast20190719; t=1792493422;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eMqswUiLM19ojZ+xv5E964KFYfmL1usSS/p/S7HX9Dw=;
- b=AqW9jVyEtnSWREvjB48VPTz3N+KfiJr3PIomHY7YEH+OlN8/JyC5ju+ASc5UJ6QicoNMx1
- /fVmGSeRUVknGOLRI7qR+tKPk4CXc+nkNuaGutPDkptIibIfBWM0kNZ+rjaahXRbyr0PXI
- vvDSWOnRvyZ3x3kToA0dDjWEL9tuceY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5CC43HGq5NqmO9GuRv3YOCIPDVNxOH0lYT23DJe+EOs=;
+ b=W/bpnmLm1Uz2WwbuFjvvC0161c0UZylGBi05TIrDD6OdY70s/V7tEQJh+OzlK0yT+e2Se9
+ IIvy/MRguNONDAAB4b604Eax8BDWfIXsUWil1P2d8woCzBuyrkAIhthNBFDOiPM4eEvhYS
+ 7SU/fzcHnFkesHVLHEn8PU81pEc/h48=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-cVbzbvoGOKiXjaCIGIacxQ-1; Tue,
- 20 Oct 2026 10:48:22 +0000
-X-MC-Unique: cVbzbvoGOKiXjaCIGIacxQ-1
-X-Mimecast-MFC-AGG-ID: cVbzbvoGOKiXjaCIGIacxQ_1792493298
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-0yk3KpK5MBKZ9_x5V_hyRg-1; Tue,
+ 20 Oct 2026 10:50:18 +0000
+X-MC-Unique: 0yk3KpK5MBKZ9_x5V_hyRg-1
+X-Mimecast-MFC-AGG-ID: 0yk3KpK5MBKZ9_x5V_hyRg_1792493414
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F35FD1956050; Tue, 20 Oct 2026 10:48:17 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78F3E1954102; Tue, 20 Oct 2026 10:50:14 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7FEA65BC; Tue, 20 Oct 2026 10:48:15 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8AABE1956095; Tue, 20 Oct 2026 10:50:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:40 +0400
-Subject: [PATCH v7 23/65] pc: convert OnOffAuto vmport property to
- QAPI-aware registration
+Date: Tue, 20 Oct 2026 14:46:01 +0400
+Subject: [PATCH v7 44/65] hw/nvdimm: convert UUID property to QAPI-aware
+ registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-23-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-44-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,25 +130,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2552;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2398;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rT4IlVA3K6hhZkzIFOmf7AHwvtTZzfc1DRg/HWfKdY4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZZM5/OPYpgkFOCrz7lC/8MWagOdQlNe9HMu
- Ryp6VHtccaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWQAKCRDa6OEJdZac
- 5SEYD/9QUk3mMyoHypSwCfk0l9cp7LpdZdLAE2EvzjA5uGZIIAqBUxJDWAuzNGzj6S+fvUJlWdC
- EAhsGdZYLWEH7ASWHHvy7QL+I4sYO8Xg73A6bzHJwEOXw/X9WMYP92+xT4V4aCVSuSlgPw0vTW0
- iDGOxiKxLpni8ZM7f9KyKZ7A07apImgWr/PvLmtbAQVMyGBFVMAlRVQNHiAVAYdPfO4SqPGDtEL
- FSBHcAGWwReG+sJQLCw41zKiUg19IRx+HFFvZizprongoFMpDaugaNynZ5796k7gt/kq32gooTW
- K1HtncPs4zo3o0RQhly74rTNpbStacdnJYfkbYDra1gDQX4eyKiFqN0SjV67VE/VvdnJQ8LJ+8E
- Io6ab5QTARFKwxykGzqjoPPlbjW5eZ6GbWMq2hOGAKs7EJU3OZb880jYHppuGtTKMeUpX/uuFJ5
- eN4Qb9D4OSHbiB0FCPwmlld/4ccrph+UXo3QxiUbsq3bq2b/jfEoZkiNrexjwcvm0VgnTwhUzxZ
- 8vLXrwQhyrorPwXLyf2OJODHc3WMrHl2l0U2HAnthI2rPwYhMyYDc0jK0pwPULBUOsnDcOp0HmV
- s84v32DlNvvS1/ARhP+gJq6EJ073Rob14KhIt2ElZfOtp3GUn5BAYDx7P4sYVuaJp2x6H2r0frC
- taKgfMicnsq1l+w==
+ bh=JcrXJbY3n1i8Aie2efrfuUCSPF/58nBE1VKv/oA1cHQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10Zb3uRNyW/Ops8TO0GvUmz+pY4b6iH48X9V4
+ dT8KSx5JbWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWwAKCRDa6OEJdZac
+ 5eITD/46vxBPKKy5DKVq41RW+PpNl8DJi94l5Ic/FKfo92YajuNHmy1WErhgftc0rpWEf92vWp2
+ /kk3U5z38JmBDTtBklsCNKY8V6UA1XuWHNxhMtpJz2/4uluVz/cPDYqtyc5XAf9WWJkCw/hKmmS
+ GadWFMgjwRsGaAuWAT8IbDB82XGWkgzxZBqh76fEVznt+V5gX1shJ/a/u7KUcuHEJIPgCWlTFJL
+ QBCIrSrvGW7MWZ0xI6AR+EAtJ5oG9xc74eILqmJoNMDhp/m+1JEEOl25Mbb1EyX6EfB8kpzqdSH
+ KM5tKqVXHz/gpPWacm9DzXGSH+nsG/v0CDnsS4ywByxghoIzo5/Ky0uP3XENBVy1UT+Uf8hu9t5
+ CD+bEOs7ExRxdT41kAbWSQ1vB42SwN1uJkXot5RNttTmmYv0IAoxkSuNpwJa+Cs1fdhKaoPZfil
+ VUqLPeJmD5Q6WahLYyg8bC0pz2HjinNVlT0LFkveiW9+hmae361bD7hOPLGVvxO7cDzDUOLn1Xm
+ E/kEb3lwBP8u23KM6nwMg79RA4QttKHK8lFNs00JdB3dg5vTZuLt8HetlALcd+9l8UGL2rTRW1P
+ hEksQQ1rUSoEHWaxQZgtclQUsPD8AksY8ygzbhXCo6fmu78aH5/mTWRUeItn2w9Ul5sPsE2sTFj
+ 9RH9c/P0NdV/h2w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -156,8 +156,7 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -173,76 +172,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert the vmport OnOffAuto property from manual visitor-based
-callbacks to property_add_qapi_enum().
+Add a QemuUUID_type_info and use object_property_add_qapi() instead of
+object_property_add() for the nvdimm UUID property.
+
+The type info is defined manually in uuid.c rather than generated,
+since QAPI does not yet support string typedefs. An alternative would
+be to extend the QAPI schema language with a 'typedef' construct
+(e.g. { 'typedef': 'UUID', 'data': 'str' }), which would let the
+generator produce the type info, C typedef, and introspection entry
+automatically.
+
+Alternatively, the exposed type being a string, we could change the
+property to be str_type_info.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/pc.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ hw/mem/nvdimm.c     | 4 ++--
+ include/qemu/uuid.h | 4 ++++
+ util/uuid.c         | 5 +++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2d8c87b0e34c..12de020adfbf 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -46,6 +46,7 @@
- #include "kvm/kvm_i386.h"
- #include "kvm/tdx.h"
- #include "hw/xen/xen.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qobject/qlist.h"
- #include "qemu/error-report.h"
- #include "hw/acpi/acpi.h"
-@@ -1417,21 +1418,16 @@ static const HotplugHandler *pc_get_hotplug_handler(MachineState *machine,
-     return NULL;
+diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
+index 123ddc938546..b7ccb5c93678 100644
+--- a/hw/mem/nvdimm.c
++++ b/hw/mem/nvdimm.c
+@@ -104,8 +104,8 @@ static void nvdimm_init(Object *obj)
+                              nvdimm_get_label_size, nvdimm_set_label_size, NULL,
+                              NULL);
+ 
+-    object_property_add(obj, NVDIMM_UUID_PROP, "QemuUUID", nvdimm_get_uuid,
+-                        nvdimm_set_uuid, NULL, NULL);
++    object_property_add_qapi(obj, NVDIMM_UUID_PROP, &QemuUUID_type_info,
++                             nvdimm_get_uuid, nvdimm_set_uuid, NULL, NULL);
  }
  
--static void pc_machine_get_vmport(Object *obj, Visitor *v, const char *name,
--                                  void *opaque, Error **errp)
-+static int pc_machine_get_vmport(Object *obj, Error **errp)
+ static void nvdimm_finalize(Object *obj)
+diff --git a/include/qemu/uuid.h b/include/qemu/uuid.h
+index 869f84af09dd..ed0c62327d4d 100644
+--- a/include/qemu/uuid.h
++++ b/include/qemu/uuid.h
+@@ -16,6 +16,8 @@
+ #ifndef QEMU_UUID_H
+ #define QEMU_UUID_H
+ 
++#include "qapi/qapi-type-info.h"
++
+ 
+ /* Version 4 UUID (pseudo random numbers), RFC4122 4.4. */
+ 
+@@ -99,4 +101,6 @@ QemuUUID qemu_uuid_bswap(QemuUUID uuid);
+ 
+ uint32_t qemu_uuid_hash(const void *uuid);
+ 
++extern const QAPITypeInfo QemuUUID_type_info;
++
+ #endif
+diff --git a/util/uuid.c b/util/uuid.c
+index 234619dd5e69..363a03051aba 100644
+--- a/util/uuid.c
++++ b/util/uuid.c
+@@ -17,6 +17,11 @@
+ #include "qemu/uuid.h"
+ #include "qemu/bswap.h"
+ 
++const QAPITypeInfo QemuUUID_type_info = {
++    .name = "QemuUUID",
++    .masked_name = "str",
++};
++
+ void qemu_uuid_generate(QemuUUID *uuid)
  {
-     PCMachineState *pcms = PC_MACHINE(obj);
--    OnOffAuto vmport = pcms->vmport;
--
--    visit_type_OnOffAuto(v, name, &vmport, errp);
-+    return pcms->vmport;
- }
- 
--static void pc_machine_set_vmport(Object *obj, Visitor *v, const char *name,
--                                  void *opaque, Error **errp)
-+static void pc_machine_set_vmport(Object *obj, int value, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &pcms->vmport, errp);
-+    pcms->vmport = value;
- }
- 
- static bool pc_machine_get_fd_bootchk(Object *obj, Error **errp)
-@@ -1728,11 +1724,13 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, PC_MACHINE_MAX_RAM_BELOW_4G,
-         "Maximum ram below the 4G boundary (32bit boundary)");
- 
--    object_class_property_add(oc, PC_MACHINE_VMPORT, "OnOffAuto",
--        pc_machine_get_vmport, pc_machine_set_vmport,
--        NULL, NULL);
--    object_class_property_set_description(oc, PC_MACHINE_VMPORT,
--        "Enable vmport (pc & q35)");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = PC_MACHINE_VMPORT,
-+        .description = "Enable vmport (pc & q35)",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = pc_machine_get_vmport,
-+        .set = pc_machine_set_vmport,
-+    ));
- 
-     object_class_property_add_bool(oc, PC_MACHINE_SMBUS,
-         pc_machine_get_smbus, pc_machine_set_smbus);
+     int i;
 
 -- 
 2.56.0.116.g6de20f6092dc
