@@ -1,58 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4006A606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C929606A332
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XKh0HZ/U
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=H1iExDn7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJCDD-00044d-80; Tue, 20 Oct 2026 11:57:15 -0400
+	id 1xJCD0-00041z-0R; Tue, 20 Oct 2026 11:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJCDB-00043e-R5
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:57:13 -0400
+ id 1xJCCw-00041h-Dq
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:56:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJCDA-0000qw-Eu
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:57:13 -0400
+ id 1xJCCv-0000pG-6T
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:56:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792511831;
+ s=mimecast20190719; t=1792511816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rE+ZUqNdVajXAohoYNIk2daa0AOxLKJmfo7/nWpLMmw=;
- b=XKh0HZ/UeaoHoqr37d5MaWoJPLScTj+KMNKYBQLMwonbFZq8dKlh1XsCbY68ASr7pfhtc9
- DKMdp1jHBVP61DAPTil4Gs3cey4CGx1RqfdQlW0oXMRF2lAa7ne5dimUU8TvgfuPaX1SA7
- qok5v6kQBQI0ZfhWfhpsRTjTcy4XHto=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=V0mtgIwy7RrMfJniGVObEl/D2TuyuPyDJQ1h0MtVOmY=;
+ b=H1iExDn7pmWOeyEJajyR1WIfonmXfLX/G24RhyM1bnAVnYwt0E3nf4AjG1nC8pWrwsbrlZ
+ A1riXmLlnrOClFiVOl9B7/TE6JTZvlUIEZboFseNtbDvMthKLTioQFidP+iyrVjBEbhd1J
+ OdZYegnGUWLgFJ99y94q6qbNbqer7+Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-B-fdiTJEMDWiTLmXPl8LxQ-1; Tue,
- 20 Oct 2026 15:57:08 +0000
-X-MC-Unique: B-fdiTJEMDWiTLmXPl8LxQ-1
-X-Mimecast-MFC-AGG-ID: B-fdiTJEMDWiTLmXPl8LxQ_1792511826
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-3-y9e3YcHwMo2diwWgVnqR_A-1; Tue,
+ 20 Oct 2026 11:56:52 -0400
+X-MC-Unique: y9e3YcHwMo2diwWgVnqR_A-1
+X-Mimecast-MFC-AGG-ID: y9e3YcHwMo2diwWgVnqR_A_1792511810
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A88B31955EAF; Tue, 20 Oct 2026 15:57:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 906E71953963; Tue, 20 Oct 2026 15:56:50 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7318D30002CD; Tue, 20 Oct 2026 15:57:05 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 44D50418; Tue, 20 Oct 2026 15:56:47 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v10 12/12] virtio-console: notify the guest about
- terminal resizes
+Subject: Re: [PATCH v10 08/12] ui/console-vc: forward text console size to
+ vc chardev
 From: marcandre.lureau@redhat.com
 To: Filip Hejsek <filip.hejsek@gmail.com>
 Cc: qemu-devel@nongnu.org, 
@@ -66,31 +66,30 @@ Cc: qemu-devel@nongnu.org,
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
  Dominique Martinet <asmadeus@codewreck.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Szymon Lukasz <noh4hss@gmail.com>
-In-Reply-To: <20261012-console-resize-v10-12-2c3b10d829b3@gmail.com>
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261012-console-resize-v10-8-2c3b10d829b3@gmail.com>
 References: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
- <20261012-console-resize-v10-12-2c3b10d829b3@gmail.com>
-Date: Tue, 20 Oct 2026 19:56:13 +0400
-Message-Id: <179251177300.3780647.16075488524721632131.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=325;
+ <20261012-console-resize-v10-8-2c3b10d829b3@gmail.com>
+Date: Tue, 20 Oct 2026 19:56:12 +0400
+Message-Id: <179251177298.3780647.5244244031011590162.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=653;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bx+Czc8UAp1TRBt7leUWpn5FpP7dQe2/aeQU8hIQNKg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq148hv4ja2Pv844sFX4KGfDtTJDYTb8ViBoOg8
- ZD/05Bl5Q2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatePIQAKCRDa6OEJdZac
- 5Uq9D/sHI1UWIm8qunJtDT6Kl3zofyuJg7jTTGF1pN7gXtBIaYEFyvK6PI+jRapss/MB5kySrfQ
- jEmY4Vku99BRQ98qxHbH4kvVn7uzTjVbgg/119moo0tBxrPdQ/JfoVJiwUdfAmrDb0K8lKURxjp
- twdwJVCedjP/YhLMYlqCrgzyMlDIb2dkyxmSPxtvoJwMOICxgnsmJ8qb5HatmRzu16rYgmL5DqJ
- ddNUYuvIlloMBGEytgSesnThmZsAKBFIzNITypnrEEQQ4tNd6vftMSUe+lWk2HF6257drHsfudq
- 42wf9HNioA9xXn7ZiP4esDtzQt9NLHoJ1huPwfftwpZMKMab6dwxS68ohcjQ7hu6nXh+LiiTNxx
- BIGV9OaB5XIJ++fJ/dghkFGEaJ5KLdeHC+dFw1najQomxOC4OvuvvREsdJJfiDmCoyP9wPEnl4z
- cHX/4OyCQxYe6Lpq5ge7vw8noLAG1NGt6ZQx8poZ+rpsKr8/UjghE7M2OJ6qHzRMKTx8BcJRm5a
- h7BbsHTFQXqFXJTeYRzZC1FJzCj1yfE8JDzr6pE34ulOEnTcO8yorSTHTloE91m5hZk+ldSx8m7
- GbD7i4RRq4KDpviC5sdVL0cSZfe2PRxlDmJcEMd5ddJDXVwW1COb2NAukCcvkByNhQjQTSSjoWY
- JHndZgF54aFVADw==
+ bh=2IpKweTIDuthJDDV7ho9qyASt15Z0lBGkkOUi67vsx4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq148gBm1bvIX0McZBYAIluPvWooVtDg88G6ZMj
+ Ra3YoBt51eJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatePIAAKCRDa6OEJdZac
+ 5SYxD/9TZy7yDAgjkpnkRBxmZDXg9mW1Jtgkp9+DZsADlZJkC/MB/R8DAYBwL4U1w7chUApyld6
+ oBfyWPRa8sMTis3IegJbRifvt5So73DYGZ0BKqvuyMifn3ebSfXkahen/7300IH0NHKD1VBxsNl
+ qdVNKLcc7ZfKsb+5nBetuLEhJi8JC+JVKxgKZH5V5YomfnX3cfB8agcywBRz+NYSd/1dCQrdll1
+ LkVIrj7IgDQ/duCV7LCdYcJkiov5OxmH5eJUjDeXj7MRjrpLhV29adF9la3+lsc0FmHP5GBbo2x
+ 3eIYQIUA0r7VMRkFm8DVpVnEMjTkjJuTqWCO7RrBvYyLvj6LsCpd4KqbudxIfYAMx+jLGZGHJE3
+ oCs1bgRfiJQ5OCO2HRdnfwUAczqKh473jG6pxRJ23AFRYLK2NoVQgSulwdCmlMZTBmkxgcQCmqn
+ ZWCXuEOwiHrdcM90OD4OcvokZFFCJEK7Kadc/bZSXfH2sAiU+6NwBzr+iuxcX1ftOH7zW5jTdHC
+ AEBaeJhSVdM0d+E4PwCAPF2lmIcmx2qc0xqZKXjbBtm5GJtSF6C+0ioBxQ8SGgUorVT0/WO6QkP
+ wR/zEmIbPGPuTpgCFRHov1DRDxOde4hMooufSXUB+kHPO/LhS8RkkNaZp64MBlflGyEslo+uYIp
+ 5e5UNM6zv4YLn5A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -119,9 +118,17 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 12 Oct 2026 16:05:11 +0200, Filip Hejsek <filip.hejsek@gmail.com> wrote:
-> If a virtio serial port is a console port, forward terminal resize
-> messages from the chardev backend to the guest.
+On Mon, 12 Oct 2026 16:05:07 +0200, Filip Hejsek <filip.hejsek@gmail.com> wrote:
+> Update the vc chardev size when initializing the console and after
+> changing the surface image.
+> 
+> NOTE: There seems to be a bug in the code where the dpy_text_resize
+>       callback is not called when the size changes due to changing the
+>       surface image. (Though it doesn't cause any problem in practice
+>       because the callback is only used by ui/ncurses for fixed
+>       consoles, whose size never changes.)
+> 
+> [...]
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
