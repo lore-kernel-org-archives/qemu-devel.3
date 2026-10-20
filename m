@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08CF606A31C
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E6D606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=TClpssJS
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hn0yilAh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7QZ-0007wG-Jj; Tue, 20 Oct 2026 06:50:43 -0400
+	id 1xJ7PV-0004RY-9w; Tue, 20 Oct 2026 06:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7PO-0004Hq-Ho
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:30 -0400
+ id 1xJ7Nx-0002OI-P0
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7PL-0005m1-Fv
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:29 -0400
+ id 1xJ7Nv-0005Qa-QM
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493367;
+ s=mimecast20190719; t=1792493279;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=G0tJqQA4vjH1OewDrlPPbV755lqj6OJV4iLGYLxe1dQ=;
- b=TClpssJSA/I7XA881THsfVcW8Sca6E/YSZqtTZdXP2KWiTBEPB2AfW2JX7jxzDIxLxWg/9
- F53LjRbmsNTes2I7izBcuuHtGqupK3WX7sUIxZR91i6oO19xnR/VOedvQHMD1UpVzTA249
- n9PxbKlxcPHoQ6HMVOfZFb6gutDhWIQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=w3CoU0QuGNI+p7I3jy6WGQ0mlfEWpp4sXXt2/m2QXAI=;
+ b=hn0yilAh8Oj49BlA7VlsjuvKL3AQjQ7f8ESkma3v5RhAUNX5EiI6jyWLKrplsflrhboH3M
+ qOU7xd+DrH07AoVjxUmouYMhG/kJARU4o//IWAbZ+bFlADBpGvJzeT6B3e/d1ykH2ZX13a
+ q/vsXKVeBN2ohPEwNzyOPhOKSHdQuCc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-AU63UEb8PQ-MadFO--Yndg-1; Tue,
- 20 Oct 2026 10:49:20 +0000
-X-MC-Unique: AU63UEb8PQ-MadFO--Yndg-1
-X-Mimecast-MFC-AGG-ID: AU63UEb8PQ-MadFO--Yndg_1792493356
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-qnN94N6QPK2vA93ceMbHjQ-1; Tue,
+ 20 Oct 2026 10:47:46 +0000
+X-MC-Unique: qnN94N6QPK2vA93ceMbHjQ-1
+X-Mimecast-MFC-AGG-ID: qnN94N6QPK2vA93ceMbHjQ_1792493261
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EE4D1955DE9; Tue, 20 Oct 2026 10:49:16 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9161F1955F02; Tue, 20 Oct 2026 10:47:41 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1701A418; Tue, 20 Oct 2026 10:49:14 +0000 (UTC)
+ id 15EC75BC; Tue, 20 Oct 2026 10:47:39 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:51 +0400
-Subject: [PATCH v7 34/65] ppc/spapr-caps: convert to QAPI-aware property
- registration
+Date: Tue, 20 Oct 2026 14:45:33 +0400
+Subject: [PATCH v7 16/65] qom: add object_{class_}property_add_qapi
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-34-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-16-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,21 +129,21 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6963;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4847;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=h0OiLsI4rZp+v/Mhu46aHZ2MeGUSC4RGBbFRwR/fgso=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZafzwZrCef0nnjKmQFgGHI7d1DU4j3tcKg8
- rfJ8YYSxbiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWgAKCRDa6OEJdZac
- 5ZNiD/9uJkrnfIq0f1AAFb55zRGcmM6E9/bY9PjcQwic7qZwiIF30FoVEyW+LS1V4LBV8lFxJNS
- PQU7j6R+CB6v9HoMI64E1PyApDwdLlnaHAJlXcyEPUzd2BVafhj1hHbaYhLxkEy1FKLnJgXjLkJ
- gdIwysLCQIt8EXWXa5PEr9we5qawBjwypQ0Lag+ls7M/dEH/0Kh1uzOi9w8a2krYIDQZcarZN7i
- E4LtOP390qyqqA6YnMhP59VMT+qvfxHzc/ZQswUOQyZJDTsWt5bsBXzpOFFpbBXuTXpDT9AtofO
- ID8iow8Lpz1Tszo5kP/m/Lm4S8UWRsm6FmK1PFXmwtWWlyXJh+CUFxiKOxoxpS5FTXbRJGSv05O
- ZMYDLHTHu8+gadlaJjYgyFbJVyKlNsrAGTmFvM/RU3rpVkTt06dMhmHo8K8rWEYHAwUYB4Ks35l
- E6S+GJ02O0X284mnQwikHn+fLhcivRrqM+9mynA/bGmrsWZIK4DhT6Cp8zFSPLW47Oshjun/E64
- G1PIDvecXY/KRp7V24XZJYFMStRWq10r6lNpi654+g4kT2EsUxLVHwoqsQTcV+XoNk/+hsNx570
- AStfbHcS7MyUnY6GxM7Pl2zFwIbukx86j8jruO3yrSjE+v6CcaPGGLJ2oigWATENvOZrnqpgn3Y
- yk4mypdVxiZikCA==
+ bh=Kq06N3iO6F8AhEf3w27s03u+jnvcQuJjGRRe4Zmd+Hw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZYIBdWrkS5tz+9/UTddwYES8EXuUjGwwr7o
+ DY/JyPpfPaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWAAKCRDa6OEJdZac
+ 5YwTEACxwwoxioLPKJmAISYmT8CzcjaWz6/mg9O/RdNTtr/Qe5SgKfnNgHmYpowIFXzfKxXxVk0
+ B1ORjczYVaJ2+0sEYatt98MR4cL6Hv6jxJmuNPVhuZm/dGP4xT8zjDnqPWrzyhuGDnRW314fM0G
+ cs/+K/C+Nwe2hpLMybC8gw/whDhlPfHu8KTvLEBX5v7tKzgP6D7PedIBYWNwqFSmpuO0PlQuMHR
+ vN33ahh98LvZbfbEhdgO2kdICQMa0DUZEF3ng3OASLe7+t8JVNn+KdmUEBihcL1bJKaAVpj30Xa
+ akndT9MZhwYvZw095fcPoxfNhNpNXbRLhzvdGBMkE2j3b8DxfYnc+JFviLUfeaEL/RnpAHO/io7
+ w903ZGKDrm8kPlKsMwWsMLrWGdPLR5Kc5NsiK0+s+/lExqWl6WXGAKpJ1XWiI9SvSRFr+pT8sRG
+ YQnTqX+5yjvMZjHUf8jZ5kJOLYZxU/73vOGIBhxLDvlVywwQz+b5C3azNqGdFSLYqf+PbAJiruh
+ g7uaTSrEABrr0xm+UN5VZL/yxAJEyP0wzq4K8tg3ZRfb9EeYCKYxoaRTQnBz5hWjPVnJbnUqt4X
+ lIR0HJed6Cwk5m/Qb1NAZshRIkE3JTkSJUbwmlB1M99oPiceyZi0qG1emOPy0nq/lenfk9B+FRX
+ AIGs9zGqOul8NUQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
@@ -177,186 +176,122 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Replace the type string in SpaprCapabilityInfo with a QAPITypeInfo
-pointer and switch spapr_caps_add_properties() from
-object_class_property_add() to object_class_property_add_qapi().
-
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/ppc/spapr_caps.c | 39 ++++++++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 19 deletions(-)
+ include/qom/object.h | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ qom/object.c         | 32 ++++++++++++++++++++++++++++++
+ 2 files changed, 87 insertions(+)
 
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index 103b17364feb..e622c79eb52a 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -24,6 +24,7 @@
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 2a5723c555e9..eb61d8842b80 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -2027,6 +2027,61 @@ ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
+                                     int (*get)(Object *, Error **),
+                                     void (*set)(Object *, int, Error **));
  
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/qapi-builtin-type-infos.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "system/hw_accel.h"
-@@ -59,7 +60,7 @@ typedef struct SpaprCapabilityInfo {
-     /* Getter and Setter Function Pointers */
-     ObjectPropertyAccessor *get;
-     ObjectPropertyAccessor *set;
--    const char *type;
-+    const QAPITypeInfo *type;
-     /* Possible values if this is a custom string type */
-     SpaprCapPossible *possible;
-     /* Make sure the virtual hardware can support this capability */
-@@ -725,7 +726,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_HTM,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_htm_apply,
-     },
-     [SPAPR_CAP_VSX] = {
-@@ -734,7 +735,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_VSX,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_vsx_apply,
-     },
-     [SPAPR_CAP_DFP] = {
-@@ -743,7 +744,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_DFP,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_dfp_apply,
-     },
-     [SPAPR_CAP_CFPC] = {
-@@ -752,7 +753,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_CFPC,
-         .get = spapr_cap_get_string,
-         .set = spapr_cap_set_string,
--        .type = "string",
-+        .type = &str_type_info,
-         .possible = &cap_cfpc_possible,
-         .apply = cap_safe_cache_apply,
-     },
-@@ -762,7 +763,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_SBBC,
-         .get = spapr_cap_get_string,
-         .set = spapr_cap_set_string,
--        .type = "string",
-+        .type = &str_type_info,
-         .possible = &cap_sbbc_possible,
-         .apply = cap_safe_bounds_check_apply,
-     },
-@@ -774,7 +775,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_IBS,
-         .get = spapr_cap_get_string,
-         .set = spapr_cap_set_string,
--        .type = "string",
-+        .type = &str_type_info,
-         .possible = &cap_ibs_possible,
-         .apply = cap_safe_indirect_branch_apply,
-     },
-@@ -784,7 +785,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_HPT_MAXPAGESIZE,
-         .get = spapr_cap_get_pagesize,
-         .set = spapr_cap_set_pagesize,
--        .type = "size",
-+        .type = &size_type_info,
-         .apply = cap_hpt_maxpagesize_apply,
-         .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
-     },
-@@ -794,7 +795,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_NESTED_KVM_HV,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_nested_kvm_hv_apply,
-     },
-     [SPAPR_CAP_NESTED_PAPR] = {
-@@ -803,7 +804,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_NESTED_PAPR,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_nested_papr_apply,
-     },
-     [SPAPR_CAP_LARGE_DECREMENTER] = {
-@@ -812,7 +813,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_LARGE_DECREMENTER,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_large_decr_apply,
-         .cpu_apply = cap_large_decr_cpu_apply,
-     },
-@@ -822,7 +823,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_CCF_ASSIST,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_ccf_assist_apply,
-     },
-     [SPAPR_CAP_FWNMI] = {
-@@ -831,7 +832,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_FWNMI,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_fwnmi_apply,
-     },
-     [SPAPR_CAP_RPT_INVALIDATE] = {
-@@ -840,7 +841,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_RPT_INVALIDATE,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_rpt_invalidate_apply,
-     },
-     [SPAPR_CAP_AIL_MODE_3] = {
-@@ -849,7 +850,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_AIL_MODE_3,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_ail_mode_3_apply,
-     },
-     [SPAPR_CAP_DAWR1] = {
-@@ -858,7 +859,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .index = SPAPR_CAP_DAWR1,
-         .get = spapr_cap_get_bool,
-         .set = spapr_cap_set_bool,
--        .type = "bool",
-+        .type = &bool_type_info,
-         .apply = cap_dawr1_apply,
-     },
- };
-@@ -1069,9 +1070,9 @@ void spapr_caps_add_properties(SpaprMachineClass *smc)
-         g_autofree char *name = g_strdup_printf("cap-%s", cap->name);
-         g_autofree char *desc = g_strdup(cap->description);
++/**
++ * object_property_add_qapi:
++ * @obj: the object to add a property to
++ * @name: the name of the property
++ * @qapi_type: QAPI type info descriptor
++ * @get: The getter to be called to read a property.  If this is NULL, then
++ *   the property cannot be read.
++ * @set: the setter to be called to write a property.  If this is NULL,
++ *   then the property cannot be written.
++ * @release: called when the property is removed from the object.  This is
++ *   meant to allow a property to free its opaque upon object
++ *   destruction.  This may be NULL.
++ * @opaque: an opaque pointer to pass to the callbacks for the property
++ *
++ * Add a property with a QAPI type association. The property type name
++ * is derived from @qapi_type->name.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *
++object_property_add_qapi(Object *obj, const char *name,
++                         const QAPITypeInfo *qapi_type,
++                         ObjectPropertyAccessor *get,
++                         ObjectPropertyAccessor *set,
++                         ObjectPropertyRelease *release,
++                         void *opaque);
++
++/**
++ * object_class_property_add_qapi:
++ * @klass: the object class to add a property to
++ * @name: the name of the property
++ * @qapi_type: QAPI type info descriptor
++ * @get: The getter to be called to read a property.  If this is NULL, then
++ *   the property cannot be read.
++ * @set: the setter to be called to write a property.  If this is NULL,
++ *   then the property cannot be written.
++ * @release: called when the property is removed from the object.  This is
++ *   meant to allow a property to free its opaque upon object
++ *   destruction.  This may be NULL.
++ * @opaque: an opaque pointer to pass to the callbacks for the property
++ *
++ * Add a property with a QAPI type association. The property type name
++ * is derived from @qapi_type->name.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *
++object_class_property_add_qapi(ObjectClass *klass,
++                               const char *name,
++                               const QAPITypeInfo *qapi_type,
++                               ObjectPropertyAccessor *get,
++                               ObjectPropertyAccessor *set,
++                               ObjectPropertyRelease *release,
++                               void *opaque);
++
+ /**
+  * object_property_add_tm:
+  * @obj: the object to add a property to
+diff --git a/qom/object.c b/qom/object.c
+index 1d09315b328b..bebbfc43556d 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2609,6 +2609,38 @@ object_class_property_add_enum(ObjectClass *klass, const char *name,
+                                      prop);
+ }
  
--        object_class_property_add(klass, name, cap->type,
--                                  cap->get, cap->set,
--                                  NULL, cap);
-+        object_class_property_add_qapi(klass, name, cap->type,
-+                                       cap->get, cap->set,
-+                                       NULL, cap);
- 
-         object_class_property_set_description(klass, name, desc);
-     }
++ObjectProperty *
++object_property_add_qapi(Object *obj, const char *name,
++                         const QAPITypeInfo *qapi_type,
++                         ObjectPropertyAccessor *get,
++                         ObjectPropertyAccessor *set,
++                         ObjectPropertyRelease *release,
++                         void *opaque)
++{
++    ObjectProperty *prop;
++
++    prop = object_property_add(obj, name, qapi_type->name,
++                               get, set, release, opaque);
++    prop->qapi_type = qapi_type;
++    return prop;
++}
++
++ObjectProperty *
++object_class_property_add_qapi(ObjectClass *klass, const char *name,
++                               const QAPITypeInfo *qapi_type,
++                               ObjectPropertyAccessor *get,
++                               ObjectPropertyAccessor *set,
++                               ObjectPropertyRelease *release,
++                               void *opaque)
++{
++    ObjectProperty *prop;
++
++    prop = object_class_property_add(klass, name, qapi_type->name,
++                                     get, set, release, opaque);
++    prop->qapi_type = qapi_type;
++    return prop;
++}
++
+ typedef struct TMProperty {
+     void (*get)(Object *, struct tm *, Error **);
+ } TMProperty;
 
 -- 
 2.56.0.116.g6de20f6092dc
