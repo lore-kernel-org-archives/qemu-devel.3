@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E924E60A260A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037FD60A2603
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EixwMFHv
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JnSpf3wk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Nt-0002C5-8B; Tue, 20 Oct 2026 06:47:57 -0400
+	id 1xJ7TZ-0003TQ-R4; Tue, 20 Oct 2026 06:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7N9-00018O-BY
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xJ7Qc-000849-MW
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7N6-0005Du-4W
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:10 -0400
+ id 1xJ7QX-0006Mt-BE
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493226;
+ s=mimecast20190719; t=1792493440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ABGJlqhjTzuYRZnmPc116ozStZtH+NrxbC+tSxh9ams=;
- b=EixwMFHvTimPrYLZp7+w5IYqM2gBc2eRfW0oaQmhK0dKDRZN53jlO7IkGJRJ4yUyWklcKf
- MIGKbasrVncQMU+cfbUt4L092DG4znK85OhlnNFSPK0EREu1jRc5mg21JkA2F+DPct9qVo
- +D6/dHDgyMo2cNWpqGAYWZfIXpd26tQ=
+ bh=wDKqI9lxsJYOWv5oXkIIVMolronNVooZmn3jjB1NaoM=;
+ b=JnSpf3wkoHQHHOIAZ6Y9OpdY5+3qdd/WVTpPWP2/pBk31YNgGDzJLoiiCvAm2aBDxBcbNq
+ wOVT2Vvgn9/FBcozigME5XA3dxwUym/aBfkPuC6Xwb6xUKKZqM9WRiO8Ia889aTJfSIid0
+ VjvCKp7r82Zl8AC+PX7K9F1hSI9pnZk=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-c5deni3IOC2wghL_mDuwjA-1; Tue,
- 20 Oct 2026 10:47:02 +0000
-X-MC-Unique: c5deni3IOC2wghL_mDuwjA-1
-X-Mimecast-MFC-AGG-ID: c5deni3IOC2wghL_mDuwjA_1792493219
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-nPrkmqWhMXen_3R1vU7oZw-1; Tue,
+ 20 Oct 2026 10:50:34 +0000
+X-MC-Unique: nPrkmqWhMXen_3R1vU7oZw-1
+X-Mimecast-MFC-AGG-ID: nPrkmqWhMXen_3R1vU7oZw_1792493430
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2CAE1800BD4; Tue, 20 Oct 2026 10:46:58 +0000 (UTC)
+ id 06E3A1805A18; Tue, 20 Oct 2026 10:50:30 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66E731956088; Tue, 20 Oct 2026 10:46:55 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D157218005B8; Tue, 20 Oct 2026 10:50:26 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:25 +0400
-Subject: [PATCH v7 08/65] qapi/gen: fix _module_basename for multi-dash
- 'what' parameters
+Date: Tue, 20 Oct 2026 14:46:04 +0400
+Subject: [PATCH v7 47/65] hw/s390x: convert BootCertificatesList to
+ QAPI-aware registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-8-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-47-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,25 +130,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1135;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1505;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=OXQAJj92qnLHVy/ekT2tV/E7DqxlrqwyneXLdAaw748=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZYkpNZTiTu/0NKP25uG6QN+n4wrDZMxyVQO
- X1gFQ2YGniJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWAAKCRDa6OEJdZac
- 5Tm3EACDRom1wjYZ0S5SCUsfw8t+j56evvGukUBRwQKN2w3Du6uYAw4nS9RuGSZhu8Qnd+u5pMZ
- RR4HP3oxzkczsRTA8h9qgVMNqhnT0wlElBiABH9tCI3YJUEmCvZ6BcLxuFPzfBeyc9GxW13b1zO
- eFJpHhMeM/R3jK04zRuRqksv4/8kXnR6/wpqoTWxFKiLIHlDVBwA/CTfIs4nGprg3ZGZmRlb33o
- EmNs25MODVt3L329BQIU0WG7OwYkXsYoGUdf4ZEbcr9CZywiZ8S0Rvx9fyqeYkVfaSlmqy1IM8D
- gBphVT/878S1qnGZqgmJs2Mb/btw8aPl7PQPV5lHDeMKBfwNHCoePHXNHb7C36F9khg3w29QQGl
- cKkIx32v/w3/L0dR1CWVI+YkbZ7xfh8oZJabF87gg5+jzpgm0AhaVUIgHU33CwJpYm2u62IUU6O
- GUxREslEK8bfz4pPnfxyzQVd8JIjSZoz7J2ip2+0PYyI8mftsOWTAFnUU8jnITGf2UjSAGRfXtR
- DTXKPDqAwHdk7bX3rSvoybxG2RnFNFluw+yjjhDEyY/RhYpOJItxVCbcr+e3/wkbhBjbIiHOO14
- e3pUpNugRf71Qh75I/eHU/GjXdHLvK/PibBXQ7ZxPFfUTuBYAVOQILNa2K4bAzoDOqwVFf9OOq/
- UAbLSh+VqcTxYTw==
+ bh=wdbhYWD/vf672j0phUbR1cOU3kwkLl3/cupZ0YaTznU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZbDkYgPj0HDzsA3Y34WzGHrPrDPeDHvzd0l
+ wPaLOFmX3WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWwAKCRDa6OEJdZac
+ 5QyFD/0b7xA4ChrYMo5WcQsrtlQZqCXFanjHmndWojPNq6E6DJrh7yNweRlM5B8GO8az5oyA75h
+ sUttRiBWYNvMnlgXQtH/nE8T96ywsGyTT9ZInHttlzN9P5Fh5Kr/SqOcHkuYj6mXh4Qo8l9kpkX
+ 5Ls7K8Ke23byTyibodkbaedkpfdM3EpJ3hzQ5r3Cbp68RrQqxPRAGGe+DEVXyTzCaUIrg/oKuKl
+ ee+1owd49sj/oDWlsbQ8JKwkl9rM61yJQqCHZ/8bYXLsQ8Sy+lP6fJkHm9Ng4C2rM7dDW0wPeZJ
+ /AnxrnFDz+SaS70Z+Q7qSIRHxareyWZJA0rnKOl82n26hwJ2mAFFTibkJxJPdnojLqX+mWBzWUU
+ 61jumL2L/vI6Hbuh3iO7YnsdjYk+RAjIYNyc/LVGHWFYLkgevtNRkvL4bo4c8ILFq/kfEbpOOX9
+ IJctXj/7n79Sx62wNtTjV3Wmenr+zMkYIemOn14uqf9VuXdkB0ih5iiJgO031WJpDUGUW/l3UO0
+ Nt1goAs8YdyzC1w+yD/OBemcsUJMxG2IKhcXMBoyjQtwO1hYYX+0qqyxosT72NLiOrgKTvIWx/C
+ AamF9QKFFgHdWVkuKlqIBCfed1sEkedvwsLa07Bik/rEdPJdSrKHrHCPDZ9x/Q5r3QVwD+zyVVq
+ V10wnjLfSGUrDTg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -156,8 +156,8 @@ X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,32 +176,37 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The re.sub() call replaces every hyphen in 'what' with the system module
-infix. This produces broken filenames for multi-hyphen names (e.g.
-'qapi-type-infos' becomes 'qapi-builtin-type-builtin-infos').
-
-Add count=1 so only the first hyphen is replaced.
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/qapi/gen.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/s390x/s390-virtio-ccw.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-index 0c9b8db3b024..690187d4280d 100644
---- a/scripts/qapi/gen.py
-+++ b/scripts/qapi/gen.py
-@@ -300,7 +300,7 @@ def _module_basename(self, what: str, name: str) -> str:
-                 ret += '-' + os.path.splitext(basename)[0]
-         else:
-             assert QAPISchemaModule.is_system_module(name)
--            ret += re.sub(r'-', '-' + name[2:] + '-', what)
-+            ret += re.sub(r'-', '-' + name[2:] + '-', what, count=1)
-         return ret
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 3ed425b16c3e..8bc09c179552 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -44,6 +44,7 @@
+ #include "target/s390x/kvm/pv.h"
+ #include "migration/blocker.h"
+ #include "qapi/qapi-builtin-type-infos.h"
++#include "qapi/qapi-type-infos-machine-s390x.h"
+ #include "qapi/visitor.h"
+ #include "qapi/qapi-visit-machine-s390x.h"
+ #include "hw/s390x/cpu-topology.h"
+@@ -918,8 +919,10 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+             " to upper case) to pass to machine loader, boot manager,"
+             " and guest kernel");
  
-     def _module_filename(self, what: str, name: str) -> str:
+-    object_class_property_add(oc, "boot-certs", "BootCertificatesList",
+-                              machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
++    object_class_property_add_qapi(oc, "boot-certs",
++                                   &BootCertificatesList_type_info,
++                                   machine_get_boot_certs,
++                                   machine_set_boot_certs, NULL, NULL);
+     object_class_property_set_description(oc, "boot-certs",
+             "provide paths to a directory and/or a certificate file for secure boot");
+ 
 
 -- 
 2.56.0.116.g6de20f6092dc
