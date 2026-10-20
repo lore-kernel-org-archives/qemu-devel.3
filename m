@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20210606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116CC606A319
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W/bpnmLm
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ewyQoEfY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7T8-0002QW-8e; Tue, 20 Oct 2026 06:53:24 -0400
+	id 1xJ7Pw-0005lx-9E; Tue, 20 Oct 2026 06:50:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7QH-00073O-6W
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:25 -0400
+ id 1xJ7OK-0002sO-GH
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7QF-0006HO-4Z
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:24 -0400
+ id 1xJ7OI-0005Vo-G8
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493422;
+ s=mimecast20190719; t=1792493301;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5CC43HGq5NqmO9GuRv3YOCIPDVNxOH0lYT23DJe+EOs=;
- b=W/bpnmLm1Uz2WwbuFjvvC0161c0UZylGBi05TIrDD6OdY70s/V7tEQJh+OzlK0yT+e2Se9
- IIvy/MRguNONDAAB4b604Eax8BDWfIXsUWil1P2d8woCzBuyrkAIhthNBFDOiPM4eEvhYS
- 7SU/fzcHnFkesHVLHEn8PU81pEc/h48=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=v686T4nh/NM1oflx6vG+8Is5DSOwiopIdEkbzupk+MM=;
+ b=ewyQoEfYiRFfZwqzSvjxpj/Ur+YQE2DOdR5+rsl0JUcqHPuhmx2KQxEILVklNH0Hi/4qwU
+ hwABejnh1km+F60ZUGZfVVK+oNYq1C0lKNM4Hv8jShWOR1wvMDzOcN0sxKTnqONy3y3tn5
+ 4jMXFzskIR3SVT1t3Ld2NFlNuIQDgpI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-0yk3KpK5MBKZ9_x5V_hyRg-1; Tue,
- 20 Oct 2026 10:50:18 +0000
-X-MC-Unique: 0yk3KpK5MBKZ9_x5V_hyRg-1
-X-Mimecast-MFC-AGG-ID: 0yk3KpK5MBKZ9_x5V_hyRg_1792493414
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-UHV1rinTOJ-bbp-udAPWMg-1; Tue,
+ 20 Oct 2026 10:48:17 +0000
+X-MC-Unique: UHV1rinTOJ-bbp-udAPWMg-1
+X-Mimecast-MFC-AGG-ID: UHV1rinTOJ-bbp-udAPWMg_1792493293
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 78F3E1954102; Tue, 20 Oct 2026 10:50:14 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7010C1955F45; Tue, 20 Oct 2026 10:48:13 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8AABE1956095; Tue, 20 Oct 2026 10:50:11 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CF5DA418; Tue, 20 Oct 2026 10:48:10 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:46:01 +0400
-Subject: [PATCH v7 44/65] hw/nvdimm: convert UUID property to QAPI-aware
- registration
+Date: Tue, 20 Oct 2026 14:45:39 +0400
+Subject: [PATCH v7 22/65] microvm: convert OnOffAuto properties to
+ QAPI-aware registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-44-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-22-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,24 +130,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2398;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5556;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=JcrXJbY3n1i8Aie2efrfuUCSPF/58nBE1VKv/oA1cHQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10Zb3uRNyW/Ops8TO0GvUmz+pY4b6iH48X9V4
- dT8KSx5JbWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWwAKCRDa6OEJdZac
- 5eITD/46vxBPKKy5DKVq41RW+PpNl8DJi94l5Ic/FKfo92YajuNHmy1WErhgftc0rpWEf92vWp2
- /kk3U5z38JmBDTtBklsCNKY8V6UA1XuWHNxhMtpJz2/4uluVz/cPDYqtyc5XAf9WWJkCw/hKmmS
- GadWFMgjwRsGaAuWAT8IbDB82XGWkgzxZBqh76fEVznt+V5gX1shJ/a/u7KUcuHEJIPgCWlTFJL
- QBCIrSrvGW7MWZ0xI6AR+EAtJ5oG9xc74eILqmJoNMDhp/m+1JEEOl25Mbb1EyX6EfB8kpzqdSH
- KM5tKqVXHz/gpPWacm9DzXGSH+nsG/v0CDnsS4ywByxghoIzo5/Ky0uP3XENBVy1UT+Uf8hu9t5
- CD+bEOs7ExRxdT41kAbWSQ1vB42SwN1uJkXot5RNttTmmYv0IAoxkSuNpwJa+Cs1fdhKaoPZfil
- VUqLPeJmD5Q6WahLYyg8bC0pz2HjinNVlT0LFkveiW9+hmae361bD7hOPLGVvxO7cDzDUOLn1Xm
- E/kEb3lwBP8u23KM6nwMg79RA4QttKHK8lFNs00JdB3dg5vTZuLt8HetlALcd+9l8UGL2rTRW1P
- hEksQQ1rUSoEHWaxQZgtclQUsPD8AksY8ygzbhXCo6fmu78aH5/mTWRUeItn2w9Ul5sPsE2sTFj
- 9RH9c/P0NdV/h2w==
+ bh=Me58f9fSeK/487LTdlmbScljyoJV9DEvmYyKKbHzwr8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZZ3f4zIw9e9fAooGIYWl6vTVthCVQrX3AkP
+ XVN/peDhQSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWQAKCRDa6OEJdZac
+ 5fnHD/9CAoB6HxmaaNMY3yvic/Ns1VSzlrGDD64+/ws7znbkXJRUTZsOARrXI1NAeSpDHhCFWE9
+ aZd/g/x4iqjEreGL3YZPfURomCbgx6ZL2TF6AlB55TgCTVe2XtDQj/SGRMvYlYCtnJe3WSvBZBn
+ bny6tC2hWorruBkFGA9yBI4JdjJxyjim1tl/WHPghkn15F+IpLYBgDkEgq9qbfhj/fESSetVQsd
+ VQZXlEfUCCztjvdJMJ6jQ1SXe0VGxUP7DZ7a9Vf02O93B4Opigh9XHf6vMHYabAMFIlN1mDwkN5
+ 2vBVXdmcRf5b9i2TQmJlbvINqUpEpmL6PuTWsNEwkdlrdajGL23/Ah/EqGP5GubDFp5GKvUuv09
+ jziOpT7fKZL5DyiwQH4hIklap6S/uF2suc4dqlOXxwBfx22kMvSzUwB2XGLS5gczCvmza/9I8XI
+ OcA43WSJrdXDy6E+kDt4DBuYIxX5W67D4waFpayENO54YxTxUAv3KMq6X6TXxElumjQ02BrlzCD
+ DuOMlSu50VP3qJ9Y/LWPvABZIDvnuDAthAqtbNK8n2L9dYMrSLuXHBP4okOZgG2EU0Ao9AR5j5p
+ fq9wzqn7yXllRZPlm4J9ZzPhMQtbmpGNzSaX1iz4/BgOytGx+cqURRn+3yGlIzcqzlrBQvF3sTb
+ tU860q8EJkGq3cQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -172,82 +172,148 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a QemuUUID_type_info and use object_property_add_qapi() instead of
-object_property_add() for the nvdimm UUID property.
-
-The type info is defined manually in uuid.c rather than generated,
-since QAPI does not yet support string typedefs. An alternative would
-be to extend the QAPI schema language with a 'typedef' construct
-(e.g. { 'typedef': 'UUID', 'data': 'str' }), which would let the
-generator produce the type info, C typedef, and introspection entry
-automatically.
-
-Alternatively, the exposed type being a string, we could change the
-property to be str_type_info.
+Convert the rtc, pcie, and ioapic2 OnOffAuto properties from
+manual visitor-based callbacks to property_add_qapi_enum().
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/mem/nvdimm.c     | 4 ++--
- include/qemu/uuid.h | 4 ++++
- util/uuid.c         | 5 +++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ hw/i386/microvm.c | 80 +++++++++++++++++++++++--------------------------------
+ 1 file changed, 34 insertions(+), 46 deletions(-)
 
-diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
-index 123ddc938546..b7ccb5c93678 100644
---- a/hw/mem/nvdimm.c
-+++ b/hw/mem/nvdimm.c
-@@ -104,8 +104,8 @@ static void nvdimm_init(Object *obj)
-                              nvdimm_get_label_size, nvdimm_set_label_size, NULL,
-                              NULL);
- 
--    object_property_add(obj, NVDIMM_UUID_PROP, "QemuUUID", nvdimm_get_uuid,
--                        nvdimm_set_uuid, NULL, NULL);
-+    object_property_add_qapi(obj, NVDIMM_UUID_PROP, &QemuUUID_type_info,
-+                             nvdimm_get_uuid, nvdimm_set_uuid, NULL, NULL);
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index a49de3374979..1d1ca172bfbd 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -21,7 +21,7 @@
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "system/system.h"
+ #include "system/cpus.h"
+ #include "system/numa.h"
+@@ -519,55 +519,40 @@ static void microvm_machine_reset(MachineState *machine, ResetType type)
+     }
  }
  
- static void nvdimm_finalize(Object *obj)
-diff --git a/include/qemu/uuid.h b/include/qemu/uuid.h
-index 869f84af09dd..ed0c62327d4d 100644
---- a/include/qemu/uuid.h
-+++ b/include/qemu/uuid.h
-@@ -16,6 +16,8 @@
- #ifndef QEMU_UUID_H
- #define QEMU_UUID_H
- 
-+#include "qapi/qapi-type-info.h"
-+
- 
- /* Version 4 UUID (pseudo random numbers), RFC4122 4.4. */
- 
-@@ -99,4 +101,6 @@ QemuUUID qemu_uuid_bswap(QemuUUID uuid);
- 
- uint32_t qemu_uuid_hash(const void *uuid);
- 
-+extern const QAPITypeInfo QemuUUID_type_info;
-+
- #endif
-diff --git a/util/uuid.c b/util/uuid.c
-index 234619dd5e69..363a03051aba 100644
---- a/util/uuid.c
-+++ b/util/uuid.c
-@@ -17,6 +17,11 @@
- #include "qemu/uuid.h"
- #include "qemu/bswap.h"
- 
-+const QAPITypeInfo QemuUUID_type_info = {
-+    .name = "QemuUUID",
-+    .masked_name = "str",
-+};
-+
- void qemu_uuid_generate(QemuUUID *uuid)
+-static void microvm_machine_get_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static int microvm_machine_get_rtc(Object *obj, Error **errp)
  {
-     int i;
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto rtc = mms->rtc;
+-
+-    visit_type_OnOffAuto(v, name, &rtc, errp);
++    return mms->rtc;
+ }
+ 
+-static void microvm_machine_set_rtc(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static void microvm_machine_set_rtc(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->rtc, errp);
++    mms->rtc = value;
+ }
+ 
+-static void microvm_machine_get_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static int microvm_machine_get_pcie(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto pcie = mms->pcie;
+-
+-    visit_type_OnOffAuto(v, name, &pcie, errp);
++    return mms->pcie;
+ }
+ 
+-static void microvm_machine_set_pcie(Object *obj, Visitor *v, const char *name,
+-                                     void *opaque, Error **errp)
++static void microvm_machine_set_pcie(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->pcie, errp);
++    mms->pcie = value;
+ }
+ 
+-static void microvm_machine_get_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static int microvm_machine_get_ioapic2(Object *obj, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-    OnOffAuto ioapic2 = mms->ioapic2;
+-
+-    visit_type_OnOffAuto(v, name, &ioapic2, errp);
++    return mms->ioapic2;
+ }
+ 
+-static void microvm_machine_set_ioapic2(Object *obj, Visitor *v, const char *name,
+-                                        void *opaque, Error **errp)
++static void microvm_machine_set_ioapic2(Object *obj, int value, Error **errp)
+ {
+     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &mms->ioapic2, errp);
++    mms->ioapic2 = value;
+ }
+ 
+ static bool microvm_machine_get_isa_serial(Object *obj, Error **errp)
+@@ -673,26 +658,29 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
+     hc->unplug_request = microvm_device_unplug_request_cb;
+     hc->unplug = microvm_device_unplug_cb;
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_RTC, "OnOffAuto",
+-                              microvm_machine_get_rtc,
+-                              microvm_machine_set_rtc,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_RTC,
+-        "Enable MC146818 RTC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_RTC,
++        .description = "Enable MC146818 RTC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_rtc,
++        .set = microvm_machine_set_rtc,
++    ));
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_PCIE, "OnOffAuto",
+-                              microvm_machine_get_pcie,
+-                              microvm_machine_set_pcie,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_PCIE,
+-        "Enable PCIe");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_PCIE,
++        .description = "Enable PCIe",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_pcie,
++        .set = microvm_machine_set_pcie,
++    ));
+ 
+-    object_class_property_add(oc, MICROVM_MACHINE_IOAPIC2, "OnOffAuto",
+-                              microvm_machine_get_ioapic2,
+-                              microvm_machine_set_ioapic2,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, MICROVM_MACHINE_IOAPIC2,
+-        "Enable second IO-APIC");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = MICROVM_MACHINE_IOAPIC2,
++        .description = "Enable second IO-APIC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = microvm_machine_get_ioapic2,
++        .set = microvm_machine_set_ioapic2,
++    ));
+ 
+     object_class_property_add_bool(oc, MICROVM_MACHINE_ISA_SERIAL,
+                                    microvm_machine_get_isa_serial,
 
 -- 
 2.56.0.116.g6de20f6092dc
