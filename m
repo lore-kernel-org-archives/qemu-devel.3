@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424B0606A333
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D7606A32D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Dl5WQd25
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XWLOffIq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7U9-0005Dm-Rk; Tue, 20 Oct 2026 06:54:25 -0400
+	id 1xJ7U9-0005DG-H4; Tue, 20 Oct 2026 06:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Rf-00010a-8s
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:57 -0400
+ id 1xJ7Rx-0001Im-GC
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7RZ-0006eB-Pp
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:50 -0400
+ id 1xJ7Rv-0006jy-Ar
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493505;
+ s=mimecast20190719; t=1792493526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r8QtuizhlL08ffZvDlPlw2v2PSSFR41aZ6S3u6bs6Qs=;
- b=Dl5WQd25DyFfc1Bf2Vnqio5y2uLcQNgdmza66W2oUqvHs3aOkVxLYrdLwDGO6l6DsigvSo
- 0GUVkGg9QM/Z8lNnaiYCcKvANqSsOp94fEUe/Xc4Z0UM2SBokcQP5HYloX4JKJOhzrcn8k
- 2NsBnUsFAbEJQ9tahCYrgubQdqie9fo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=edIbxy8j0ZeLmK0JPM910tAFzYTrVmN4a79XoyzsTPs=;
+ b=XWLOffIqp0dzfMN7npTE8ln70l0mHDaJQ4YaNJRInktXlCaBxNhmbyBVPhyAV6otDDtdZy
+ SGBHj4GLBUSArH6Iom+X3eSUe1sm1Jj0316wi3U4uAgDVTXTIztlHtKwQV/ossAe8gzT6w
+ DXMxUDvxjwkY5B0h7ZOJsOZASue9/7c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-ZgjA7GB6MIOQEU4UKDz0Pw-1; Tue,
- 20 Oct 2026 10:51:41 +0000
-X-MC-Unique: ZgjA7GB6MIOQEU4UKDz0Pw-1
-X-Mimecast-MFC-AGG-ID: ZgjA7GB6MIOQEU4UKDz0Pw_1792493497
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-UkF2cxSIP0KFpD-x2kfPug-1; Tue,
+ 20 Oct 2026 10:52:03 +0000
+X-MC-Unique: UkF2cxSIP0KFpD-x2kfPug-1
+X-Mimecast-MFC-AGG-ID: UkF2cxSIP0KFpD-x2kfPug_1792493519
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DAA619541A2; Tue, 20 Oct 2026 10:51:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 171B41955DE8; Tue, 20 Oct 2026 10:51:59 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2887A5BC; Tue, 20 Oct 2026 10:51:35 +0000 (UTC)
+ id D26A65BC; Tue, 20 Oct 2026 10:51:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:46:17 +0400
-Subject: [PATCH v7 60/65] qdev: simplify DEFINE_PROP_ARRAY and remove
- generic array PropertyInfo
+Date: Tue, 20 Oct 2026 14:46:21 +0400
+Subject: [PATCH v7 64/65] qom: use QAPITypeInfo in object_property_get_enum
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-60-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-64-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,21 +129,21 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=18915;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4777;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=AcBmF3xK1ByT+5UwBtaglHA+LD1ebp5i6d9a8Eno2C4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZcQVsvYZthZcJnIe4I+d1Hh4MrCaE9gYxWU
- lhG/CyXLeSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXAAKCRDa6OEJdZac
- 5ehBD/0bQxYDrIfQP8eZONOGiv1tqlX8g1WhNB17TG+vBi5j+C3oGfzsx38lnKRAcN5xgxzz1CM
- 1C6QLO3YbdB7nO7OD6wXVB2ACmBrsKt/kzhkJMRAOS2F6RZkcrxNnIvxNV64HsPCaV/bgKHptCW
- i3j8mn2meJlvQg1JeQ9c6gGf0UkYJsMGfVKnqEU6rUR5mZx0iX5zghoO+VG1oXmHXVYe7oOl7lb
- E5wtqIj6ipYyrt3nTaE84ZNyXgchLpOG3YU+afL4IA6cH4CkPrnv7B4OmnjET3jRLE+kStLOe9C
- N0izUsnNyTalfSJxy4y0Dbrewp8QQntANZnrle7jyFTW8kUQmu0G/0/80F4LxWf9y8dRpqJYDHl
- 4nzzttOhpDmwqnqQoB16CcQlMNhX3vXFqO+jDwjYeS5qXdM91f88Cgn+r6fakjIYk/II637VUYV
- Pb0MHezwGN8sBTUROcVPxo65vHguUIdV1Zcp6jJ/seTaCbNFiOqFY9mqhW6PEI/dn4u8rTWLhvV
- JbZdVZyrW1STJql4uj6cX7xOhzHzd1/FtlOUJKxigqrbx8XjmLOauttoZzOnJdnnsQHcShiKuAb
- VdyqA86tVpuDQPZba/kmur0HlRnDqMuvW+V3Mb8Ij0S8aGdUuq9Zp5RscZC2sLV9VUt8bwaf8mz
- 3T5spA2nBMmHtjQ==
+ bh=btPOLigegMrUtE/H8gDPhCCZC+0Be3DpIj2amZiGpeM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZdBPk60N5wT01axiLdb48ZwuPjCejnM2ZCc
+ 8PglQD+RAWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXQAKCRDa6OEJdZac
+ 5SPyEAC5HRZ0r0eZqxI5kzCsHrclz4H0Z1qTSRRBggURJDWP1KPYcglKwzX4001DDcIq+3FTVpq
+ uqL6jJTS5vpJyJyR897eCp/+/txzLU8tlhsslIoDbOhlREexjvA38cJU7R22vQlvcx+DpICRHE3
+ a5XvP5h0s1/Pyiwdap+iMevEvuEEcbH/jRuSHep2d8iVv7Koi8q0iUC8zZ9PuwSKBiXi/oILGfy
+ aiMrs8f/RgP9W/MoV3ZQRoFzC+PDRjFuTVfcaA60kq0BkbXlZZqC8u7Z+II9Xx+mxD8jpqF0dvl
+ YdxYl9iXw3cbjdx662K6DNPPTjQqlqch+lUyD9IDKGSOxwMVRZODMwFtKF8oOvp/VlJSjSI2dYp
+ n/X+gSwpl4DPtL64HznEe7j1fcGEq0YFRHnDbDHbwuxtIa57jCuK6wDAdaarfxUiuLtPfX7zXKA
+ 1mhzw7Xk53JCYfVRtyhDDwz68cwocztkSeDoHbr+rWIMtJWAgR3K0ZgRcwpuhUoaQpp7LtkUpd6
+ SttTn4wc4MNuYc4Awpzamcf3DaIFaC+EQhFDU5i9gl+OPJb5rstVcuwsDzcleSXgUaDrqgSpCQo
+ Bgm5lkNrnrlf7BG0h6WM3CgbBEadCmph3q1159HTgqfLA36QI7zt946mDEQrtiXWNDke3TZA+Wo
+ l6wkFmd77J6ABag==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
@@ -176,391 +175,120 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Change DEFINE_PROP_ARRAY, the macro now uses _arrayprop##_list to
-resolve the typed list PropertyInfo (introduced in the previous patch)
-instead of the generic qdev_prop_array.
-
-This means the element type and size information is carried by the
-PropertyInfo itself rather than duplicated at each callsite. Since
-the typed list PropertyInfos encode element_info and element_size,
-the .arrayinfo and .arrayfieldsize fields are no longer set by the
-macro (they will be removed from the Property struct in the next patch).
-
-Remove qdev_prop_array, which is now unused.
+The typename parameter becomes a QAPITypeInfo pointer, and the
+validation compares prop->qapi_type against it instead of matching
+prop->type strings.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/qdev-properties.c         |  8 --------
- hw/display/apple-gfx-mmio.m       |  2 +-
- hw/display/apple-gfx-pci.m        |  2 +-
- hw/display/apple-gfx.h            |  1 +
- hw/display/apple-gfx.m            |  4 ++++
- hw/input/stellaris_gamepad.c      |  2 +-
- hw/intc/arm_gicv3_common.c        |  2 +-
- hw/intc/arm_gicv5_common.c        |  4 ++--
- hw/intc/rx_icu.c                  |  4 ++--
- hw/misc/arm_sysctl.c              |  4 ++--
- hw/misc/mps2-scc.c                |  2 +-
- hw/net/rocker/rocker.c            |  2 +-
- hw/net/virtio-net.c               |  2 +-
- hw/nvram/xlnx-efuse.c             |  2 +-
- hw/nvram/xlnx-versal-efuse-ctrl.c |  2 +-
- hw/riscv/riscv_hart.c             |  6 ++----
- hw/virtio/virtio-iommu-pci.c      |  2 +-
- include/hw/block/block.h          |  2 +-
- include/hw/core/qdev-properties.h | 27 ++++++++++-----------------
- tests/unit/test-qdev.c            |  2 +-
- 20 files changed, 35 insertions(+), 47 deletions(-)
+ hw/core/machine-qmp-cmds.c      | 4 +++-
+ include/qom/object.h            | 4 ++--
+ qom/object.c                    | 8 ++++----
+ tests/unit/check-qom-proplist.c | 6 +++---
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index bace12b10e36..5c403cc2e57e 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -875,14 +875,6 @@ void default_prop_array(ObjectProperty *op, const Property *prop)
-     object_property_set_default_list(op);
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 3fee45d568da..6b425baeb2da 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -18,6 +18,7 @@
+ #include "qapi/qapi-commands-accelerator.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qobject/qobject.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/type-helpers.h"
+ #include "qemu/uuid.h"
+@@ -252,7 +253,8 @@ static int query_memdev(Object *obj, void *opaque)
+         } else {
+             m->has_reserve = true;
+         }
+-        m->policy = object_property_get_enum(obj, "policy", "HostMemPolicy",
++        m->policy = object_property_get_enum(obj, "policy",
++                                             &HostMemPolicy_type_info,
+                                              &error_abort);
+         host_nodes = object_property_get_qobject(obj,
+                                                  "host-nodes",
+diff --git a/include/qom/object.h b/include/qom/object.h
+index a9bbc44cfcc9..9f937e30dae5 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1566,7 +1566,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
+  * object_property_get_enum:
+  * @obj: the object
+  * @name: the name of the property
+- * @typename: the name of the enum data type
++ * @type_info: the QAPITypeInfo of the enum
+  * @errp: returns an error if this function fails
+  *
+  * Returns: the value of the property, converted to an integer (which
+@@ -1574,7 +1574,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
+  * value is not an enum).
+  */
+ int object_property_get_enum(Object *obj, const char *name,
+-                             const char *typename, Error **errp);
++                             const QAPITypeInfo *type_info, Error **errp);
+ 
+ /**
+  * object_property_set:
+diff --git a/qom/object.c b/qom/object.c
+index 791d981dc689..40b569d4d574 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1775,7 +1775,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
  }
  
--const PropertyInfo qdev_prop_array = {
--    .type = "list",
--    .get = get_prop_array,
--    .set = set_prop_array,
--    .release = release_prop_array,
--    .set_default_value = default_prop_array,
--};
--
- const PropertyInfo qdev_prop_uint8_list =
-     DEFINE_PROP_ARRAY_INFO(qdev_prop_uint8, uint8_t);
- const PropertyInfo qdev_prop_uint16_list =
-diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-index 58beaadd1f10..dcd04617eb87 100644
---- a/hw/display/apple-gfx-mmio.m
-+++ b/hw/display/apple-gfx-mmio.m
-@@ -258,7 +258,7 @@ static void apple_gfx_mmio_reset(Object *obj, ResetType type)
- static const Property apple_gfx_mmio_properties[] = {
-     DEFINE_PROP_ARRAY("display-modes", AppleGFXMMIOState,
-                       common.num_display_modes, common.display_modes,
--                      qdev_prop_apple_gfx_display_mode, AppleGFXDisplayMode),
-+                      qdev_prop_apple_gfx_display_mode),
- };
+ int object_property_get_enum(Object *obj, const char *name,
+-                             const char *typename, Error **errp)
++                             const QAPITypeInfo *type_info, Error **errp)
+ {
+     char *str;
+     int ret;
+@@ -1785,10 +1785,10 @@ int object_property_get_enum(Object *obj, const char *name,
+         return -1;
+     }
  
- static void apple_gfx_mmio_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/apple-gfx-pci.m b/hw/display/apple-gfx-pci.m
-index b0694f4cb855..74f79c8b157b 100644
---- a/hw/display/apple-gfx-pci.m
-+++ b/hw/display/apple-gfx-pci.m
-@@ -118,7 +118,7 @@ static void apple_gfx_pci_reset(Object *obj, ResetType type)
- static const Property apple_gfx_pci_properties[] = {
-     DEFINE_PROP_ARRAY("display-modes", AppleGFXPCIState,
-                       common.num_display_modes, common.display_modes,
--                      qdev_prop_apple_gfx_display_mode, AppleGFXDisplayMode),
-+                      qdev_prop_apple_gfx_display_mode),
- };
+-    if (!g_str_equal(prop->type, typename)) {
++    if (prop->qapi_type != type_info) {
+         error_setg(errp, "Property %s on %s is not '%s' enum type",
+-                   name, object_class_get_name(
+-                       object_get_class(obj)), typename);
++                   name, object_class_get_name(object_get_class(obj)),
++                   type_info->name);
+         return -1;
+     }
  
- static void apple_gfx_pci_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
-index 3197bd853dab..b7eef7b9b14a 100644
---- a/hw/display/apple-gfx.h
-+++ b/hw/display/apple-gfx.h
-@@ -69,6 +69,7 @@ void *apple_gfx_host_ptr_for_gpa_range(uint64_t guest_physical,
-                                        MemoryRegion **mapping_in_region);
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index 69155e720751..1cb48c7490ef 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -582,14 +582,14 @@ static void test_dummy_getenum(void)
  
- extern const PropertyInfo qdev_prop_apple_gfx_display_mode;
-+extern const PropertyInfo qdev_prop_apple_gfx_display_mode_list;
+     val = object_property_get_enum(OBJECT(dobj),
+                                    "av",
+-                                   "DummyAnimal",
++                                   &dummy_animal_qapi_type_info,
+                                    &error_abort);
+     g_assert(val == DUMMY_PLATYPUS);
  
- #endif
- 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 77c420b30006..592d692d793d 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -16,6 +16,7 @@
- #include "qemu/cutils.h"
- #include "qemu/log.h"
- #include "qapi/qapi-builtin-type-infos.h"
-+#include "hw/core/qdev-prop-internal.h"
- #include "qapi/visitor.h"
- #include "qapi/error.h"
- #include "qemu/aio-wait.h"
-@@ -879,3 +880,6 @@ static void apple_gfx_set_display_mode(Object *obj, Visitor *v,
-     .get   = apple_gfx_get_display_mode,
-     .set   = apple_gfx_set_display_mode,
- };
-+
-+const PropertyInfo qdev_prop_apple_gfx_display_mode_list =
-+    DEFINE_PROP_ARRAY_INFO(qdev_prop_apple_gfx_display_mode, AppleGFXDisplayMode);
-diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
-index 376d91abad70..20613f649977 100644
---- a/hw/input/stellaris_gamepad.c
-+++ b/hw/input/stellaris_gamepad.c
-@@ -80,7 +80,7 @@ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
- 
- static const Property stellaris_gamepad_properties[] = {
-     DEFINE_PROP_ARRAY("keycodes", StellarisGamepad, num_buttons,
--                      keycodes, qdev_prop_uint32, uint32_t),
-+                      keycodes, qdev_prop_uint32),
- };
- 
- static void stellaris_gamepad_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index f7ba74e6d52a..1298b6b735e9 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -615,7 +615,7 @@ static const Property arm_gicv3_common_properties[] = {
-      */
-     DEFINE_PROP_BOOL("force-8-bit-prio", GICv3State, force_8bit_prio, 0),
-     DEFINE_PROP_ARRAY("redist-region-count", GICv3State, nb_redist_regions,
--                      redist_region_count, qdev_prop_uint32, uint32_t),
-+                      redist_region_count, qdev_prop_uint32),
-     DEFINE_PROP_LINK("sysmem", GICv3State, dma, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_UINT32("first-cpu-index", GICv3State, first_cpu_idx, 0),
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index b155486af65e..61c8ae493021 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -191,9 +191,9 @@ static void gicv5_common_realize(DeviceState *dev, Error **errp)
- 
- static const Property arm_gicv5_common_properties[] = {
-     DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
--                           cpus, TYPE_ARM_CPU, ARMCPU *),
-+                           cpus, TYPE_ARM_CPU),
-     DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
--                      cpu_iaffids, qdev_prop_uint32, uint32_t),
-+                      cpu_iaffids, qdev_prop_uint32),
-     DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
-     DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
-     DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
-diff --git a/hw/intc/rx_icu.c b/hw/intc/rx_icu.c
-index 992b069ae245..125a6dcb6804 100644
---- a/hw/intc/rx_icu.c
-+++ b/hw/intc/rx_icu.c
-@@ -356,9 +356,9 @@ static const VMStateDescription vmstate_rxicu = {
- 
- static const Property rxicu_properties[] = {
-     DEFINE_PROP_ARRAY("ipr-map", RXICUState, nr_irqs, map,
--                      qdev_prop_uint8, uint8_t),
-+                      qdev_prop_uint8),
-     DEFINE_PROP_ARRAY("trigger-level", RXICUState, nr_sense, init_sense,
--                      qdev_prop_uint8, uint8_t),
-+                      qdev_prop_uint8),
- };
- 
- static void rxicu_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/misc/arm_sysctl.c b/hw/misc/arm_sysctl.c
-index ebc95b9bb54c..1df85593a5cb 100644
---- a/hw/misc/arm_sysctl.c
-+++ b/hw/misc/arm_sysctl.c
-@@ -626,10 +626,10 @@ static const Property arm_sysctl_properties[] = {
-     DEFINE_PROP_UINT32("proc_id", arm_sysctl_state, proc_id, 0),
-     /* Daughterboard power supply voltages (as reported via SYS_CFG) */
-     DEFINE_PROP_ARRAY("db-voltage", arm_sysctl_state, db_num_vsensors,
--                      db_voltage, qdev_prop_uint32, uint32_t),
-+                      db_voltage, qdev_prop_uint32),
-     /* Daughterboard clock reset values (as reported via SYS_CFG) */
-     DEFINE_PROP_ARRAY("db-clock", arm_sysctl_state, db_num_clocks,
--                      db_clock_reset, qdev_prop_uint32, uint32_t),
-+                      db_clock_reset, qdev_prop_uint32),
- };
- 
- static void arm_sysctl_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
-index 554b504c7203..32f9e166feed 100644
---- a/hw/misc/mps2-scc.c
-+++ b/hw/misc/mps2-scc.c
-@@ -464,7 +464,7 @@ static const Property mps2_scc_properties[] = {
-      * motherboard configuration controller to suit the FPGA image.
-      */
-     DEFINE_PROP_ARRAY("oscclk", MPS2SCC, num_oscclk, oscclk_reset,
--                      qdev_prop_uint32, uint32_t),
-+                      qdev_prop_uint32),
- };
- 
- static void mps2_scc_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 910dce901b67..afbc32e99d94 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -1466,7 +1466,7 @@ static const Property rocker_properties[] = {
-     DEFINE_PROP_UINT64("switch_id", Rocker,
-                        switch_id, 0),
-     DEFINE_PROP_ARRAY("ports", Rocker, fp_ports,
--                      fp_ports_peers, qdev_prop_netdev, NICPeers),
-+                      fp_ports_peers, qdev_prop_netdev),
- };
- 
- static const VMStateDescription rocker_vmsd = {
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 19f453fb7dfd..56194398742e 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -4377,7 +4377,7 @@ static const Property virtio_net_properties[] = {
-     DEFINE_PROP_BIT64("hash", VirtIONet, host_features,
-                     VIRTIO_NET_F_HASH_REPORT, false),
-     DEFINE_PROP_ARRAY("ebpf-rss-fds", VirtIONet, nr_ebpf_rss_fds,
--                      ebpf_rss_fds, qdev_prop_string, char*),
-+                      ebpf_rss_fds, qdev_prop_string),
-     DEFINE_PROP_BIT64("guest_rsc_ext", VirtIONet, host_features,
-                     VIRTIO_NET_F_RSC_EXT, false),
-     DEFINE_PROP_UINT32("rsc_interval", VirtIONet, rsc_timeout,
-diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
-index b1c9ee4980a0..99c16ce76f15 100644
---- a/hw/nvram/xlnx-efuse.c
-+++ b/hw/nvram/xlnx-efuse.c
-@@ -266,7 +266,7 @@ static const Property efuse_properties[] = {
-     DEFINE_PROP_UINT32("efuse-size", XlnxEFuse, efuse_size, 64 * 32),
-     DEFINE_PROP_BOOL("init-factory-tbits", XlnxEFuse, init_tbits, true),
-     DEFINE_PROP_ARRAY("read-only", XlnxEFuse, ro_bits_cnt, ro_bits,
--                      qdev_prop_uint32, uint32_t),
-+                      qdev_prop_uint32),
- };
- 
- static void efuse_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
-index f5d5587cb657..101320b82fd9 100644
---- a/hw/nvram/xlnx-versal-efuse-ctrl.c
-+++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
-@@ -740,7 +740,7 @@ static const Property efuse_ctrl_props[] = {
-                      TYPE_XLNX_EFUSE, XlnxEFuse *),
-     DEFINE_PROP_ARRAY("pg0-lock",
-                       XlnxVersalEFuseCtrl, extra_pg0_lock_n16,
--                      extra_pg0_lock_spec, qdev_prop_uint16, uint16_t),
-+                      extra_pg0_lock_spec, qdev_prop_uint16),
- };
- 
- static void efuse_ctrl_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
-index 32fd39737ff6..132cf8737001 100644
---- a/hw/riscv/riscv_hart.c
-+++ b/hw/riscv/riscv_hart.c
-@@ -48,11 +48,9 @@ static const Property riscv_harts_props[] = {
-      * defined by "rnmi-exception-vector".
-      */
-     DEFINE_PROP_ARRAY("rnmi-interrupt-vector", RISCVHartArrayState,
--                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64,
--                      uint64_t),
-+                      num_rnmi_irqvec, rnmi_irqvec, qdev_prop_uint64),
-     DEFINE_PROP_ARRAY("rnmi-exception-vector", RISCVHartArrayState,
--                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64,
--                      uint64_t),
-+                      num_rnmi_excpvec, rnmi_excpvec, qdev_prop_uint64),
-     DEFINE_PROP_LINK("memory", RISCVHartArrayState, memory,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
- };
-diff --git a/hw/virtio/virtio-iommu-pci.c b/hw/virtio/virtio-iommu-pci.c
-index 7b5ffddc1e97..1f3a07c5d119 100644
---- a/hw/virtio/virtio-iommu-pci.c
-+++ b/hw/virtio/virtio-iommu-pci.c
-@@ -38,7 +38,7 @@ static const Property virtio_iommu_pci_properties[] = {
-     DEFINE_PROP_UINT32("class", VirtIOPCIProxy, class_code, 0),
-     DEFINE_PROP_ARRAY("reserved-regions", VirtIOIOMMUPCI,
-                       vdev.nr_prop_resv_regions, vdev.prop_resv_regions,
--                      qdev_prop_reserved_region, ReservedRegion),
-+                      qdev_prop_reserved_region),
- };
- 
- static void virtio_iommu_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index df941df19f26..70bf03a8de73 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -83,7 +83,7 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
-                             _conf.account_failed, ON_OFF_AUTO_AUTO),    \
-     DEFINE_PROP_ARRAY("stats-intervals", _state,                        \
-                      _conf.num_stats_intervals, _conf.stats_intervals,  \
--                     qdev_prop_uint32, uint32_t)
-+                     qdev_prop_uint32)
- 
- #define DEFINE_BLOCK_PROPERTIES(_state, _conf)                          \
-     DEFINE_PROP_DRIVE("drive", _state, _conf.blk),                      \
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index 0c067170079d..39f95ce7a3c6 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -76,7 +76,6 @@ extern const PropertyInfo qdev_prop_size;
- extern const PropertyInfo qdev_prop_string;
- extern const PropertyInfo qdev_prop_on_off_auto;
- extern const PropertyInfo qdev_prop_size32;
--extern const PropertyInfo qdev_prop_array;
- extern const PropertyInfo qdev_prop_uint8_list;
- extern const PropertyInfo qdev_prop_uint16_list;
- extern const PropertyInfo qdev_prop_uint32_list;
-@@ -148,15 +147,15 @@ extern const PropertyInfo qdev_prop_link_list;
-  * @_name: name of the array
-  * @_state: name of the device state structure type
-  * @_field: uint32_t field in @_state to hold the array length
-- * @_arrayfield: field in @_state (of type '@_arraytype *') which
-- *               will point to the array
-- * @_arrayprop: PropertyInfo defining what property the array elements have
-- * @_arraytype: C type of the array elements
-+ * @_arrayfield: field in @_state which will point to the array
-+ * @_arrayprop: PropertyInfo for the array elements (e.g. qdev_prop_uint32);
-+ *              a corresponding list PropertyInfo named @_arrayprop##_list
-+ *              must exist
-  *
-  * Define device properties for a variable-length array _name.  The array is
-  * represented as a list in the visitor interface.
-  *
-- * @_arraytype is required to be movable with memcpy().
-+ * The element type must be movable with memcpy().
-  *
-  * When the array property is set, the @_field member of the device
-  * struct is set to the array length, and @_arrayfield is set to point
-@@ -166,12 +165,10 @@ extern const PropertyInfo qdev_prop_link_list;
-  * @_arrayfield memory.
-  */
- #define DEFINE_PROP_ARRAY(_name, _state, _field,                        \
--                          _arrayfield, _arrayprop, _arraytype)          \
--    DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,       \
-+                          _arrayfield, _arrayprop)                      \
-+    DEFINE_PROP(_name, _state, _field, _arrayprop##_list, uint32_t,     \
-                 .set_default = true,                                    \
-                 .defval.u = 0,                                          \
--                .arrayinfo = &(_arrayprop),                             \
--                .arrayfieldsize = sizeof(_arraytype),                   \
-                 .arrayoffset = offsetof(_state, _arrayfield))
- 
- #define DEFINE_PROP_LINK(_name, _state, _field, _type, _ptr_type)     \
-@@ -183,10 +180,8 @@ extern const PropertyInfo qdev_prop_link_list;
-  * @_name: name of the array
-  * @_state: name of the device state structure type
-  * @_field: uint32_t field in @_state to hold the array length
-- * @_arrayfield: field in @_state (of type '@_arraytype *') which
-- *               will point to the array
-+ * @_arrayfield: field in @_state which will point to the array
-  * @_linktype: QOM type name of the link type
-- * @_arraytype: C type of the array elements
-  *
-  * Define device properties for a variable-length array _name of links
-  * (i.e. this is the array version of DEFINE_PROP_LINK).
-@@ -195,12 +190,10 @@ extern const PropertyInfo qdev_prop_link_list;
-  * where each string is the QOM path of the object to be linked.
-  */
- #define DEFINE_PROP_LINK_ARRAY(_name, _state, _field, _arrayfield,      \
--                               _linktype, _arraytype)                   \
--    DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,       \
-+                               _linktype)                               \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_link_list, uint32_t,   \
-                 .set_default = true,                                    \
-                 .defval.u = 0,                                          \
--                .arrayinfo = &qdev_prop_link,                           \
--                .arrayfieldsize = sizeof(_arraytype),                   \
-                 .arrayoffset = offsetof(_state, _arrayfield),           \
-                 .link_type = _linktype)
- 
-diff --git a/tests/unit/test-qdev.c b/tests/unit/test-qdev.c
-index 77c3eee71713..8cd004b1efab 100644
---- a/tests/unit/test-qdev.c
-+++ b/tests/unit/test-qdev.c
-@@ -23,7 +23,7 @@ static const Property my_dev_props[] = {
-     DEFINE_PROP_UINT32("u32", MyDev, prop_u32, 100),
-     DEFINE_PROP_STRING("string", MyDev, prop_string),
-     DEFINE_PROP_ARRAY("array-u32", MyDev, prop_array_u32_nb, prop_array_u32,
--                     qdev_prop_uint32, uint32_t),
-+                     qdev_prop_uint32),
- };
- 
- static void my_dev_class_init(ObjectClass *oc, const void *data)
+     /* A bad enum type name */
+     val = object_property_get_enum(OBJECT(dobj),
+                                    "av",
+-                                   "BadAnimal",
++                                   &dummy_str_qapi_type_info,
+                                    &err);
+     g_assert(val == -1);
+     error_free_or_abort(&err);
+@@ -597,7 +597,7 @@ static void test_dummy_getenum(void)
+     /* A non-enum property name */
+     val = object_property_get_enum(OBJECT(dobj),
+                                    "iv",
+-                                   "DummyAnimal",
++                                   &dummy_animal_qapi_type_info,
+                                    &err);
+     g_assert(val == -1);
+     error_free_or_abort(&err);
 
 -- 
 2.56.0.116.g6de20f6092dc
