@@ -1,132 +1,139 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE3B606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5253A606A319
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=llBmBceU;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bni5TB8u
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Mzlfkr36;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=hHCTVL9E
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJBal-0000eN-Nm; Tue, 20 Oct 2026 11:17:31 -0400
+	id 1xJBkb-00045E-PT; Tue, 20 Oct 2026 11:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xJBaj-0000dn-P1
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:17:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xJBkV-00044p-Ql
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:27:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xJBah-0005NW-T2
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:17:29 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xJBkS-0006Nn-Jp
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:27:34 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KDAFh01575857
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 15:17:24 GMT
+ 69KDA4vU2845836
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 15:27:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=9k8qhJbZ249bd2yrx7ySme
- GqhBj+F8tPCe0gBrXV8cs=; b=llBmBceU1En8yT9GXxL/GUxAZxvmmukr95D3w9
- n/nRf/UyPc8riN+Oh1enUCBAdEMSp57TcJpSd7cNACjoQVPxwF+7TK608jmISJs+
- 0rTpcPwwqwzsQUjPoMMk9W29skb8yk7qveLejpevtGznmIq8+LQbQNqPyBtq2rPo
- dR6xycwGoJc41Ksbfb28EfX8FG9ucXQg2Lykj38ykeR5cjQ6TE7Z7tveuzTs4P40
- dLTIqtMMXIVBe2UEG0SYlwc9DWRYnM/LcGaizhguPxLQACWUJJEp0/62eQv42wwq
- U1Xaot1oM10bo3rIY5Jk4UNARd6G1U1tUt53KSDZAv+PyOmw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdw5n33sv-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ j00bfTyg4T8iRpBjv1lDlw93ie7C5sBXyUyFWi26jGU=; b=Mzlfkr36VQRIPTx7
+ HJB9smohh3GM86sae3QyawnY7ODLG9SeVcz+4R10fbENDiSzrZ2C07jqStbiXQ8H
+ 9JLHq+fQ5nsgpeABaOesAULN4cULuxiCTmTVPYIKHsqfwH0aCQT3Sw7TzdkGdx1k
+ kthdEv5a4zl2XHGiYMJBdxLF5NTqQofLj2JpMWJW9KDjaD0h2jlmafNr3Zv9WOZZ
+ g2M1/yPSyvPhU4KAX8iBURy5odHym+WH3gjXIyb0kZZF/yrnPNeQQKBMNWzk1FrM
+ z4tuhjOwba0CD/+sWyleOSLt7Uzj/fAkA0cTm/VibAcoCFJ7dA/Qy+DW+en2Q+JW
+ KXkufw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdw5nb3rr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 15:17:23 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2e8e16d22d8so49089215ad.1
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 08:17:23 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 15:27:29 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-91b8306ba68so80867926d6.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 08:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792509443; x=1793114243; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=9k8qhJbZ249bd2yrx7ySmeGqhBj+F8tPCe0gBrXV8cs=;
- b=bni5TB8ur2E74O74eILIBRDwerD+qqVo3tYoZXF60Ny6aMPV573bghWcmn0ok6hQ9v
- 4+K/J5Ob/Q5YDWKFkmdUY2o6Hb5QVPtp5zNVE9MC3bn/3Zdl+Kz4dTUE8WKY9eyIN9FA
- NClZirIV4080u8ol/RTfGbBkM+O9id9N8urEXnWzm6qG8RpVw2+7FPwO2oAWz7SsgeI2
- VZ0CFsd7Jsa0jCr1Pn+6glKJzYb8eSNnj3wV88bXvjyijP4D+jOPVtQcZtCQbTuL0pg4
- V9Sk5iU9lwMAsDZUSGx3LyuFlWrcWDyP6VwBZnumfr4V+yR3SDf1F1VPf90OR0HmdJDc
- zGaA==
+ d=oss.qualcomm.com; s=google; t=1792510048; x=1793114848; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=j00bfTyg4T8iRpBjv1lDlw93ie7C5sBXyUyFWi26jGU=;
+ b=hHCTVL9EyuoVZoVnfxfj1Jj+AahoaOO1FWGqKS3tXaLVst5+cwm3qg11+hb+HUQz9X
+ 1R/Y0ZZ1ZCERBDifgSm6unj+KHbOrz3B5O9/BHdLgSfPDkiL/kCwPnBtG/e1WkE4aIz7
+ WK5oghJDnunAydBj4WS+HCd0W5EJM4REF9WxAUEUtjSFB7gHjM7TZl4GlpS90giepYTz
+ SJwsewatpa+XoUshhxVpRrjjthrXbS3JHGsj/jfZLGSG2jyZDF3TS9AZshSoMOfKs+Rj
+ N5FMCPkWOQ0WnH+0hn7W5LmlxREkotTVwYID1emqg0/279PsF03JFjSrA89T9xhNZ/4c
+ 6gSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792509443; x=1793114243;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9k8qhJbZ249bd2yrx7ySmeGqhBj+F8tPCe0gBrXV8cs=;
- b=j1Jgl+NpMbuqvFcWNLz+OLVCFj93sPfF5hcOM3ULN/88bMQleRcd7Z8OPEaTUVOWkd
- 2B8gPj0j1nsEwVeReDqBHGmujr+KfkdH9FyGSuyh3HwHKhTeJ0B1Kd4uoveqBovDuTLo
- 973ZfSIn2LPtkCmxO4EZFdb94tEYbBYNmnuRousFxbLhADs6Twy73HmWEsKw3g9sUxxs
- LkDze+GRQt4a6oNtybvYfWAhu2Ru2BZzYLijRAYzfkYgng6RHh6uwc2YjWCrZZDJdSE5
- XbzFroRyaEPdKgkN2V7FUjo+X1A+NRJ0cw1fBi8x2yyJJDfT3kYhtSDqtIyddHBkARgH
- 9cDQ==
-X-Gm-Message-State: AFq9FYL1Dj3rLAEgmjoCk5qJMMjg3vH2ueQ2+YfJwoYoWc40Y8zXviDZ
- wABlEMdHqdVtqHDRWK/3fMwCcTU+uUMpjscVG02Qaj3Y30u8wwHDdvz2py85ayqQsE5o/vSZtGR
- m9rVnIT4LO+0UDLKsX+VKbLWRKE3nbeD2l0F5sRSyg71IV4b4184oX5MG9zupvlMDnQ==
-X-Gm-Gg: AYBFou0SUxs9TChI417zsrnISVD/RSBND0h/Vv4U90UB4MglQzhO0hnxX9uUeiaoXo/
- kr8B/sJUAy7HcCa3DdWjpXJPgti1Jg4W6bXaJdPD7Ivn3BU+tjXD0oenyeYy2Mk5oC+WMguQu18
- UkJjjktzLfMh3u5v6Oq6SgiSP5m1FETxW4/cz/9/AIdUMFTqlYZGkNBcDO45t8nk8pIt+5imwtC
- woY/1/T2d7LcJ14HQmf0qnCB4mAvaWPQZPJ6+C2hPNMgjErLwzQ03ysaTxObMUVLjdGxibTRTzh
- 8aF6zzrTZIFL55d/rlNcofg8Q9zjuclDIP2UtmBhAxvEWrTZhhwcbsk6/QgI6LoIHaVg6QZHx2R
- 8C7pEjKicqy0BChqhi+qqH+3uBdSJ3hOGH/x23oKbn/oEiZw=
-X-Received: by 2002:a17:903:3904:b0:2e2:d77b:e586 with SMTP id
- d9443c01a7336-2e9a6d41400mr107093555ad.60.1792509442781; 
- Tue, 20 Oct 2026 08:17:22 -0700 (PDT)
-X-Received: by 2002:a17:903:3904:b0:2e2:d77b:e586 with SMTP id
- d9443c01a7336-2e9a6d41400mr107093265ad.60.1792509442325; 
- Tue, 20 Oct 2026 08:17:22 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ea3b410626sm656815ad.20.2026.10.20.08.17.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Oct 2026 08:17:21 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 0/3] Hexagon: Fix undefined behavior bugs
-Date: Tue, 20 Oct 2026 08:17:17 -0700
-Message-Id: <20261020151720.728888-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20260707; t=1792510048; x=1793114848;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=j00bfTyg4T8iRpBjv1lDlw93ie7C5sBXyUyFWi26jGU=;
+ b=yVhhL+Br2VMn2xVAR2CwAA0+ma8LXTNMjRpDnKUFW+UUS4nju+2/fafNIQNnpsZ+nI
+ dzIVoeDmXsnxiiae0hBC+pAFVMprSZyy/QBh/5kOuNYnIgi0wVBs5OSX3Hp2r24JzjKx
+ 4JuWCDNbu/IvZ7h6tpP0oqThGnIgeDk1Fc1fIhataPH+xOg9PsIJB6TRuhoRC+klWnJX
+ BmL0ZoeN31QBZKXpiR0gGrnKtvX2JozIXJlgFY8OBTJ/ogXvbZ4beFbQ90j9lp4DqrCH
+ /IWGp++z4pZJRkIXIk4rl+4h1TYtAiLEMWj/R9sn7PBk9ZIlD19BbkcKNwntGSFca3Sf
+ aEHg==
+X-Gm-Message-State: AFq9FYJYdKZC2urG/8zA+uE/0nVNobuF6ze4bFtbRA/2Lcq6ZADCDj5L
+ SrXptFI25UV+sA07qaE2iDgYyXJok5Kl9F3LmJQkyAtO0lRt8qyarkX8Hl5mt7g2XTSHUkl8Rc9
+ hS6gRNzbxMfWUGitpxC75KHcQ9v+vtH85IW3lr/PCd46Xjg6HQeXmLoFONQ==
+X-Gm-Gg: AYBFou2rcX8BadeyHVOdZvWyzi4v4gnCo+Dw1Uc/FrSALPEQe30tUY0MDwzHZ85evGW
+ mC0lrZq/+Vzethm4uGXS/fQec7jUiR2842BCGDZfC3q8GUup9voep0OMmnP1Zr4kH8IJWZw+ewg
+ QdkNy1SIKxgyUmSnJnKFQRGRgOQnS8qFwpTBqVSoQde230fHPMCDwvQawL3KbiqESSZYgcxHIoi
+ scHwLr+/pHd1E81ESS1DuaFvjRdor47mwyPK6THknWNsPUDxYrPuhRLOZubrohjaHhA4QLHlJ0S
+ +n0j4lEGJ9Ncogatc1iSSkL46k9WBZhTfPcPzHaQ/mmQR/I2OspApMO1j7sVaNfpTzET7bslVHs
+ P5+Me0YSmRnBEEDu6gph7Wn7sfsUQmJmNHzibhCvXyekWV8wa9trQ5vgO1/hFjIdE
+X-Received: by 2002:a05:6214:5541:b0:914:4464:41b8 with SMTP id
+ 6a1803df08f44-91bdf095c77mr190585506d6.12.1792510047857; 
+ Tue, 20 Oct 2026 08:27:27 -0700 (PDT)
+X-Received: by 2002:a05:6214:5541:b0:914:4464:41b8 with SMTP id
+ 6a1803df08f44-91bdf095c77mr190584956d6.12.1792510047107; 
+ Tue, 20 Oct 2026 08:27:27 -0700 (PDT)
+Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
+ [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91c10bd5d8csm724696d6.24.2026.10.20.08.27.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 08:27:26 -0700 (PDT)
+Message-ID: <41f6dc3f-f172-4de7-b839-cff727f726a5@oss.qualcomm.com>
+Date: Tue, 20 Oct 2026 10:27:23 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: D0Z5FJ8WtYzNiEHDSz9FQOX3wsL4jY1a
-X-Proofpoint-ORIG-GUID: D0Z5FJ8WtYzNiEHDSz9FQOX3wsL4jY1a
-X-Authority-Analysis: v=2.4 cv=L7qI0OT8 c=1 sm=1 tr=0 ts=6ad78603 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/3] tests/tcg/hexagon: add slot-assignment tests
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260806213640.699905-1-brian.cain@oss.qualcomm.com>
+ <20260806213640.699905-3-brian.cain@oss.qualcomm.com>
+ <CAFEAcA8CYaJ=jAyc29RSdUMD_SWquJqz4fNQyW7oCrWithZhYA@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <CAFEAcA8CYaJ=jAyc29RSdUMD_SWquJqz4fNQyW7oCrWithZhYA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: MAetH6EWVB03kHbbsqc5LuSXGDzBvZFz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA2MSBTYWx0ZWRfX37kCzbElk/Tm
+ Nk9AcjcpZcEFx+S9JGD4SWrgAfMsbwaJlxFPGm0SZLxTbfGbkav1rXBmmJBjaT9CqPmnGMJ3Oop
+ ZNn1Lh9LXMKXGOyH5G5HT5uQBRdXVB5KO3U2M+UtsVB1NOcGeZFeD9tchJ6YYJgJd9gADkvJCL6
+ lHkJqYdV12pp3sLYe0EcQvAMafUPA9eW2NxtwUPAsJV7RNCxIwqGUV+m5QICFCGQ9gsUZu5sa5P
+ /dDaET+O5mMJlO/j3O644e6MTa9iZZbYiphq+k1Rtl9559QA4V1ByUOL/yoR5OLq+EH5ZhFv/T+
+ PXMmVo5HWjGPMXLMH6tSgvBp5Byh1FIQhR/8EZ17acDsuSmx7gERZWZ9gcA/xm3wy0nqURfsyMx
+ sni4Ns7AtVRkqy5FpOaSuLEh1gTjqXm+6ZJAsykqc4FsIRN4S24D6CPfGBdpERttT7UNW9Ni+xP
+ h0crAu2UFYrVSqo0/Eg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA2MSBTYWx0ZWRfX3ZWJGXR8mPK9
+ cqO9AQgaq47/KA2a9wzkVtpHmFN1n2LhfC2oTt3x29BB/ZK5pOUWgOlzF1gsFYxmM2HzOKM6VYS
+ mQD0s5dyIMxJZuOPnw+OSEqIFpqWvww=
+X-Authority-Analysis: v=2.4 cv=VI9IDNPX c=1 sm=1 tr=0 ts=6ad78861 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=_xejiSJ84wRmUESzVQEA:9 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA2MCBTYWx0ZWRfXww6VdYVCMjl7
- rWn2tslAgqEvniRUsPxfU8cBUWQMjWCiLNyg2kchrnWnj2FRKu1LFkFGirM3dQsTziovSiW21JZ
- bpxntjtNIscUQyCaMN+6GrVJrI97XFEFfu3OMKJcd3YSxyq0gzJkg5xoN/ztIR70qjINp2VllUM
- iOjowcHSAXD37A/f5BGtDToiZxWqbp47RdliAOAyQ6vdZEHu4JUQFFtPXVSYOuzXuCp5m2ZOXvp
- JBVQmCz3+miK5D4dNrr9FkAV4FBRUbLl3BJYgmzTPOLRKJfrWiUywkS5fietD5pqWTHKryVStRv
- QyYETCOOwu/K/bodEghX0gNL7s2WWT0hN7gF6/5a+uVf91YsZ2uaENmAxcgDlzgiRaW/jgqh+aq
- 3KQ41Jx8QV5bn1XHaOLBqlGyXdYqAlBNgM5t9yXsPuG4tMzPjLWgdvGF37AvKGo6EgFpK7E9pDW
- 75DiiLm9FvP+iB9Gfww==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA2MCBTYWx0ZWRfX9eNpXYfme/MS
- YIh8ct8jqBWVQMIrkS7kwTb7llOiEjPzpRDnj0UsdmsgcJV24BhSapSv/xxTmeuok2xz/FYTXRT
- D2hPMa2xTddr4wvWduFegKjh3RqkyKw=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ioWAfrCCVwa-FguC9LgA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-GUID: MAetH6EWVB03kHbbsqc5LuSXGDzBvZFz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-20_02,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
- priorityscore=1501 bulkscore=0 malwarescore=0 suspectscore=0 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610200060
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610200061
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -145,27 +152,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Q292ZXJpdHkgcmVwb3J0ZWQgYW4gdW5kZWZpbmVkIGJlaGF2aW9yIGlzc3VlIGFuZCBVQlNhbiBz
-aG93ZWQgYW5vdGhlcgppc3N1ZSB3aXRoIFVCLgoKSW4gdjM6Ci0gdGVzdGluZyB3aXRoIFVCU2Fu
-IGRpZG4ndCBzaG93IGlzc3VlcyBhdCB2MiBidXQgSSB3YXMgdXNpbmcgZ2NjLiAgY2xhbmcKZXhw
-b3NlcyBhbm90aGVyIFVCIGJ1ZywgdGhpcyBvbmUgaW4gZGVjb2RlX3NldF9zbG90X251bWJlcigp
-LiAgQWRkZWQgYSBwYXRjaAoiYXZvaWQgbmVnYXRpdmUgc2xvdCBzaGlmdCIgdG8gZml4IHRoYXQg
-YnVnLiAgUG9pbnRlZCBvdXQgYnkgUGV0ZXIuCgpJbiB2MjoKLSB1cGRhdGVkIHNoaWZ0IGFzc2Vy
-dGlvbiB0byB1c2UgYHNoaWZ0ID49IDQxYCBpbnN0ZWFkIG9mIDMuCgp2MjogaHR0cHM6Ly9sb3Jl
-Lmtlcm5lbC5vcmcvcWVtdS1kZXZlbC8yMDI2MTAxOTIyMzI1My4zMjQzMDY3LTEtYnJpYW4uY2Fp
-bkBvc3MucXVhbGNvbW0uY29tLwp2MTogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZl
-bC8yMDI2MTAxOTE1MzU1OC4yNDIyMjc3LTEtYnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tLwoK
-QnJpYW4gQ2FpbiAoMyk6CiAgdGFyZ2V0L2hleGFnb246IGFzc2VydCBxZmxvYXQgc2hpZnQKICB0
-YXJnZXQvaGV4YWdvbjogcmVzZXQgaW1wbGljaXQgVVNSIHdyaXRlIHN0YXRlCiAgdGFyZ2V0L2hl
-eGFnb246IGF2b2lkIG5lZ2F0aXZlIHNsb3Qgc2hpZnQKCiB0YXJnZXQvaGV4YWdvbi9kZWNvZGUu
-YyAgICAgICAgICAgfCA1ICsrKystCiB0YXJnZXQvaGV4YWdvbi9tbXZlYy9odnhfcWZsb2F0LmMg
-fCA1ICsrKysrCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuYyAgICAgICAgfCAxICsKIDMgZmls
-ZXMgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKLS0gCjIuMzQuMQoK
+
+On 10/20/2026 8:45 AM, Peter Maydell wrote:
+> On Thu, 6 Aug 2026 at 22:37, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> valid-slots: packets that legally share a slot and were wrongly
+>> rejected before the fix (load and transfer, load encoded first;
+>> dczeroa packed last with three transfers).
+>>
+>> invalid-slots: unassignable packets that must still be rejected:
+>> store + duplex, load + indirect jump, three logical ops competing for
+>> slots 2 and 3, and five ops for four slots.
+>>
+>> Reviewed-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   tests/tcg/hexagon/invalid-slots.c | 72 +++++++++++++++++++++++++++++++
+>>   tests/tcg/hexagon/valid-slots.c   | 62 ++++++++++++++++++++++++++
+>>   tests/tcg/hexagon/Makefile.target |  1 +
+>>   3 files changed, 135 insertions(+)
+>>   create mode 100644 tests/tcg/hexagon/valid-slots.c
+> Hi; if you build QEMU with the clang sanitizer enabled
+> ("--enable-ubsan --cc=clang --cxx=clang++") then the invalid-slots
+> test added here results in the hexagon decoder trying to shift
+> by -1, which is UB:
+>
+> $ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+> ./build/clang/qemu-hexagon
+> ./build/clang/tests/tcg/hexagon-linux-user-invalid-slots.test
+> ../../target/hexagon/decode.c:603:35: runtime error: shift exponent -1
+> is negative
+>      #0 0x555695dc2392 in decode_set_slot_number
+> /home/pm215/qemu/build/clang/../../target/hexagon/decode.c:603:35
+>      #1 0x555695dc2392 in decode_packet
+> /home/pm215/qemu/build/clang/../../target/hexagon/decode.c:783:14
+>      #2 0x5556959801e7 in decode_and_translate_packet
+> /home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1274:18
+>      #3 0x55569597f927 in hexagon_tr_translate_packet
+> /home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1375:5
+>      #4 0x5556958bda32 in translator_loop
+> /home/pm215/qemu/build/clang/../../accel/tcg/translator.c:216:9
+>      #5 0x55569597ec72 in hexagon_translate_code
+> /home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1428:5
+>      #6 0x5556958bca00 in setjmp_gen_code
+> /home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:251:5
+>      #7 0x5556958babd7 in tb_gen_code
+> /home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:324:21
+>      #8 0x55569589fbfc in cpu_exec_loop
+> /home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:973:22
+>      #9 0x55569589e309 in cpu_exec_setjmp
+> /home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1019:12
+>      #10 0x55569589e10d in cpu_exec
+> /home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1050:12
+>      #11 0x555695977cdb in cpu_loop
+> /home/pm215/qemu/build/clang/../../linux-user/hexagon/cpu_loop.c:38:18
+>      #12 0x5556961fe1f5 in main
+> /home/pm215/qemu/build/clang/../../linux-user/main.c:1010:5
+>      #13 0x7c65f202a1c9 in __libc_start_call_main
+> csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+>      #14 0x7c65f202a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+>      #15 0x55569582d294 in _start
+> (/home/pm215/qemu/build/clang/qemu-hexagon+0x910294) (BuildId:
+> d18c0fb84fd3431a52be6d831fc64fd2d0e00980)
+>
+> (This also shows up as "make check" failing in this config.)
+>
+> Could you have a look at what goes wrong here, please?
+
+Thanks - I've now posted a v3 of the UB fixes series w/a fix for this one:
+
+https://lore.kernel.org/qemu-devel/20261020151720.728888-4-brian.cain@oss.qualcomm.com/
+
+
+>
+> thanks
+> -- PMM
 
