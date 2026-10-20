@@ -1,164 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32382606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A44606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GoIOFSpM
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=jQO/yW43
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Nd-0001N0-To; Tue, 20 Oct 2026 06:47:42 -0400
+	id 1xJ7uh-0007DR-QC; Tue, 20 Oct 2026 07:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7MP-0000H6-J6
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:46:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7MM-00055i-IE
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:46:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493181;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SL1ZQMFYVZqYTtNaimBSrRx03AL2YY9TcP8iYzzQRMU=;
- b=GoIOFSpMGUgIb+5RE1gq7qVkaoFM2udlkHQ4p1BfDua2UtQq22cDQJnBta8aRocX7Fq8dI
- O/mJAxMYzV7HSEsuzwWLPRggFGSscLplK2BC/5b2zktuGlTQYNABcKu5p/3LhWnIMXwPLJ
- Piiz3/37Rxk/AiLVYotflTe1GkiJcKg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-icWL8dY1Mw2Sv8wMuI-1iw-1; Tue,
- 20 Oct 2026 10:46:17 +0000
-X-MC-Unique: icWL8dY1Mw2Sv8wMuI-1iw-1
-X-Mimecast-MFC-AGG-ID: icWL8dY1Mw2Sv8wMuI-1iw_1792493173
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFCAE1955EA1; Tue, 20 Oct 2026 10:46:10 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B862C7D6; Tue, 20 Oct 2026 10:46:03 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-Date: Tue, 20 Oct 2026 14:45:18 +0400
-Subject: [PATCH v7 01/65] qapi/schema: Rename .lookup_entity() and tighten
- return type
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJ7uc-0007Cv-D3
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 07:21:46 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJ7uZ-0003BA-Pb
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 07:21:45 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a1d75f2f11so21781855e9.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 04:21:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792495302; x=1793100102; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=2/y6WVmeqG1OPwYNPz9215YT6b6rVbd6ecgXKvSOZTs=;
+ b=jQO/yW43EcYElqG/45L5JwELhTQYdPE+2z/OpDkIGIf4SJx1a+IaGLg/D6uCLNgFUl
+ Wdq9DzFsqwstM6sAOQozRCB+2P+SdtK+ySvefYC7uzo+mGH+5uHmpWOXrCdbg3rvXxoe
+ eaOu1pbOaG7Ysv06M25UP7kQ7e8JnpOG49tpQZC6rQEHBG9e1C1YGvsG6RhaL9hXVZ8u
+ FsRgFvBnnQBHwjzN8EnVvOj2U16VYdOu6DB4XlKDppYFXn2hKYJ0RsT2E25s9Gxx61Eu
+ yrZOf/F+iNvMdixMe73wcQIqzqiAwXRROlATYkwEZHv16zuTAboV2huBsVWJO9XdW/eE
+ bFnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792495302; x=1793100102;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=2/y6WVmeqG1OPwYNPz9215YT6b6rVbd6ecgXKvSOZTs=;
+ b=K0taTyrCdGmQ53YVXZis8/sMjrB0r2v0AqNEzx079kv09BImpA5qcuO0XlLrsU5GeF
+ aVmAzFuPifdBxklkNC+a+MiDeM2SNX0Ng0trzV/oczPPP7AYV2BvuhV3HfI3Y0AHJ34u
+ tG8HaP1rgxccWt1msUoGr0rb8YnygN9imPwqSmR9P4emDrdZs7AkwVf5MJuJcwWTLqaE
+ whbgD1C2/UMJ6Wx/5718kHKfxuN8W51Is/flftNufNVyaibxSDnobltqObT35TGmU2w+
+ 69ytXVPlHgUxQSQsRZcunMHAkyCuDSP1RD7UdT/bVlkXXFKXf00CTL8kBk69z1wfuNlC
+ 9uVw==
+X-Gm-Message-State: AFq9FYL5qj7OBV23yPBoHIabs89hvsIYW8gdBW88HAvb+k4OrgyBKuN9
+ ZuecMnw74I/anBpWwDFRpuwP6loPjxY7mbRAloVohmnU+C+0OYpBej0ne5lZZlLSNdI=
+X-Gm-Gg: AYBFou11ZhEueEj0KfuNshwRjaix7PLhcWg/8yVnFaNymlgk4OVITg1ELIFezpjoPem
+ eHjy4bTfw+9ETyw0dHY2vAMpTC9Bv/7z5Parq1UB0TS1LzPCfe9RaB7dmFj46BsnYK9IbDOMf76
+ 7feY0vleVtpcCpt2mKXv2lv6f22s+XV25EERY9DAMwm01lRr4/Ev01ezZVbzGaeeDZi4kx1vQnd
+ 3TcMcaxLZ1cIC7y0HBcr8XUb9uNtGTVeTipsG02ILnAX7x+oTAfGKKUx2HB6eQFWByAwbuUPAaU
+ FBZc2WJ7/JIMdQxowyHshac00SfMK3ecbU6nPKKGoMgcHZie2/l90ZaXiWDeBfW9IhIduhwdFPR
+ k2O2dMT/OJygwYJ9fQk3RmeSrRCP12BxkZ1MVxEGxLjGRW8evcVN6oZ0DC2s6LlWqsnKBTyHjil
+ Rn3ItYMGfKOnKZal87mURd0xU5RTNAzxGRF7BVO/hMhEAzzM6xSsW79LPGOZ4n/JJ+9mkT1A==
+X-Received: by 2002:a05:600c:c166:b0:4a1:f736:79f3 with SMTP id
+ 5b1f17b1804b1-4a1f7367b83mr24851065e9.5.1792495302093; 
+ Tue, 20 Oct 2026 04:21:42 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1f8016c93sm29458585e9.5.2026.10.20.04.21.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Oct 2026 04:21:41 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 7919C5F8DC;
+ Tue, 20 Oct 2026 12:21:40 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>,  Christian Borntraeger
+ <borntraeger@linux.ibm.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,  Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,  David Hildenbrand
+ <david@kernel.org>,  Bernhard Beschow <shentey@gmail.com>,  Halil Pasic
+ <pasic@linux.ibm.com>,  Nicholas Piggin <npiggin@gmail.com>,  Paul Durrant
+ <paul@xen.org>,  =?utf-8?Q?Bj=C3=B6rn?= Walk <bwalk@linux.ibm.com>,  Jiaxun
+ Yang <jiaxun.yang@flygoat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-s390x@nongnu.org,  David Woodhouse <dwmw2@infradead.org>,  Liu
+ Zhiwei <zhiwei_liu@linux.alibaba.com>,  qemu-ppc@nongnu.org,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
+ linux-edac@vger.kernel.org,  Glenn Miles <milesg@linux.ibm.com>,  Chao
+ Liu <chao.liu@processmission.com>,  Cornelia Huck <cohuck@redhat.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,  Xianglai Li
+ <lixianglai@loongson.cn>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Chinmay Rath <rathc@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Matthew Rosato
+ <mjrosato@linux.ibm.com>,  Amit Machhiwal <amachhiw@linux.ibm.com>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Weiwei Li <liwei1518@gmail.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  qemu-riscv@nongnu.org
+Subject: Re: [PATCH 00/23] kvm: introduce KVMCPUOps
+In-Reply-To: <20261020104320.3686723-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Tue, 20 Oct 2026 11:42:54 +0100")
+References: <20261020104320.3686723-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Tue, 20 Oct 2026 12:21:40 +0100
+Message-ID: <87se2039dn.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-1-431a86b02b58@redhat.com>
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
-In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, John Snow <jsnow@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>, 
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Jason Wang <jasowangio@gmail.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- kvm@vger.kernel.org, Alberto Garcia <berto@igalia.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>, 
- Junjie Cao <junjie.cao@intel.com>, Anisa Su <anisa.su@samsung.com>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, 
- John Levon <john.levon@nutanix.com>, 
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org, 
- linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Sergio Lopez <slp@redhat.com>, 
- qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
- Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>, 
- Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Pedro Barbuda <pbarbuda@microsoft.com>, 
- Mohamed Mediouni <mohamed@unpredictable.fr>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org, 
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
- Alistair Francis <alistair@alistair23.me>, Alexander Graf <graf@amazon.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>, Ani Sinha <anisinha@redhat.com>, 
- Luc Michel <luc@lmichel.fr>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Samuel Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>, 
- FangSheng Huang <FangSheng.Huang@amd.com>, Tyrone Ting <kfting@nuvoton.com>, 
- Hao Wu <wuhaotsh@google.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
- Conor Dooley <conor@kernel.org>, 
- Sebastian Huber <sebastian.huber@embedded-brains.de>, 
- Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>, 
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>, Peter Xu <peterx@redhat.com>, 
- Chinmay Rath <rathc@linux.ibm.com>, 
- Hendrik Brueckner <brueckner@linux.ibm.com>, xen-devel@lists.xenproject.org, 
- Roman Bolshakov <rbolshakov@ddn.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>, 
- Farhan Ali <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>, 
- Tao Tang <tangtao1634@phytium.com.cn>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
- Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2295;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NMq+Yt1ZfEaiiiNISBhSiNYen4lYgrhVdbLzdVLcgfY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZXTleuqEiJdOJBA42CH7+pe3OkqntERWYE8
- KkGpCTR7GKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGVwAKCRDa6OEJdZac
- 5eYXD/90lN2dF09F8Y8jULoa/Yv/HKP5x+nzYa1fz/PQiLU7rTNVeepj43nm7pjOPbzOWrqEQTu
- NGoiSEKMRcvP1/dL9lcMa2CMuoel6YAqIPu3c4B7fzk9RaLK8bST/AFHrsPamduiFcq5dCcGKaG
- ju0zoBbLNJoiwWpPC77UMf+Clab17oGrd3Z4UfxbvjwQFg/pdxCzvARoDcoMrPWROgcdkSOxy56
- Z6gpyvJsS0JuLkUElGeGWPoEAgx1DSsdcQqYRRYzQ00USvXT8UPIPr1TxhQw1E5kvawYPNKsNKA
- 0ajGyDh/qGM8oz38HT0eipfUQxbk8tb7XPYDfOGFlTY+onpx7NVz31xrjXvctk3vjKZAkgcyqmg
- RB1fck+uzzyRqd14eL/FGI9vQkNgZQQPerW76Mv0nw/WnkXLfVaC2b632vq1GWpP0HYNbveno4Y
- RCPyzB+PhVOAVSC08/A9hkdBN+7OmaKswbhyW0DLGJhdtmeqMfxvW9buz3UlCDtJKSO63qUb2no
- tAMywgLV/anwoy+3qbtqNT4ZANXeoYjryX7nYBKXePcjhoApDzPCtpb9mbVcci4eJ+HXy1wiqY5
- 7Q/ftdsMrLQ6OjJ/QgY7rouCvnwhQKViJteuaYK5NDjHS3qbduGhwOfg4VUfD42iQhmNxKSpseU
- mBGYatJXPQ/kgYg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,69 +124,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Markus Armbruster <armbru@redhat.com>
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Commit 060b5a9323 (qapi: Dumb down QAPISchema.lookup_entity())
-accidentally relaxed QAPISchema.lookup_entity()'s return type to
-QAPISchemaEntity.  Tighten it back to QAPISchemaDefinition, and rename
-the method to .lookup_defn().
+> There is a world coming where we can have a KVM interface which
+> supports multiple architectures. The old style approach of using
+> linking to resolve per arch kvm_arch_foo handlers won't scale and is
+> also slightly antithetical to the flexible not-quite object orientated
+> way we do things in QEMU.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- docs/sphinx/qapidoc.py | 2 +-
- scripts/qapi/schema.py | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+In case it's not obvious I intended the prefix to be RFC as it needs
+discussion ;-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 54a32e45f7ed..31d09ed6343e 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -512,7 +512,7 @@ def transmogrify(self, schema: QAPISchema) -> nodes.Element:
-                 modules.add(module_source)
- 
-             if doc.symbol:
--                ent = schema.lookup_entity(doc.symbol)
-+                ent = schema.lookup_defn(doc.symbol)
-                 assert isinstance(ent, QAPISchemaDefinition)
-                 vis.visit_entity(ent)
-             else:
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 8d88b40de2e1..9c9e257a8fd5 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -1184,11 +1184,11 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
-                 defn.info, "%s is already defined" % other_defn.describe())
-         self._entity_dict[defn.name] = defn
- 
--    def lookup_entity(self, name: str) -> Optional[QAPISchemaEntity]:
-+    def lookup_defn(self, name: str) -> Optional[QAPISchemaDefinition]:
-         return self._entity_dict.get(name)
- 
-     def lookup_type(self, name: str) -> Optional[QAPISchemaType]:
--        typ = self.lookup_entity(name)
-+        typ = self.lookup_defn(name)
-         if isinstance(typ, QAPISchemaType):
-             return typ
-         return None
-@@ -1324,7 +1324,7 @@ def _make_implicit_object_type(
-             return None
-         # See also QAPISchemaObjectTypeMember.describe()
-         name = 'q_obj_%s-%s' % (name, role)
--        typ = self.lookup_entity(name)
-+        typ = self.lookup_defn(name)
-         if typ:
-             assert isinstance(typ, QAPISchemaObjectType)
-             # The implicit object type has multiple users.  This can
-
--- 
-2.56.0.116.g6de20f6092dc
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
