@@ -1,174 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95480606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 20:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FCE606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 20:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=gryBQiZp
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=YAPqqQs4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJGSS-0006GP-9I; Tue, 20 Oct 2026 16:29:16 -0400
+	id 1xJGZ9-0007ba-Px; Tue, 20 Oct 2026 16:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xJGSP-0006Fg-L5; Tue, 20 Oct 2026 16:29:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1xJGSM-0004oj-KT; Tue, 20 Oct 2026 16:29:13 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KHEaMW3065410; Tue, 20 Oct 2026 20:28:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=Pbg2OFXa34DEIIHpJyaCulmgUfbxOrfxEkZAKRhMex4=; b=gryBQiZpYaYe
- +rscbtJOMUMGzJILaO9bxcqwAzLIOX+j60zcXWH7tKvp08o40WoTpUGVyLoqWjGF
- ZkUPXLwP8RwgFXaLLDWNzTKj3ap3mJdD1BO/1HXfs1dYuHwb9rWeRqt8GowmS644
- 50UL+brNoroymAw4we0HPjTOmE1wcH9sGecmJN6hvUF49OvQ80slVcDAhqxSmPlQ
- hSAB89mjuxAM4Xy/czGuXpXvp+9ip0/G8lAJ8i3S+uKSjmnkBnAPhxEv9O4Zujz+
- n5IQ9SrRLVR2AI3cmiOziLyzdt3R0G+SY7SZNguBEHE3h6jlPLu0ojoSEWc6Cwsc
- weZZ1xQpeA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw5a58tk-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 20 Oct 2026 20:28:58 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KKOc4J1753723; Tue, 20 Oct 2026 20:28:57 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4he7bs2390-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Oct 2026 20:28:57 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69KKSu7F26542802
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 Oct 2026 20:28:56 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AF0B58059;
- Tue, 20 Oct 2026 20:28:56 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 39C1758053;
- Tue, 20 Oct 2026 20:28:49 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 20 Oct 2026 20:28:49 +0000 (GMT)
-Message-ID: <9623e038a99fbaa32f3b674335b717aaac28a9b7.camel@linux.ibm.com>
-Subject: Re: [PATCH v7 48/65] hw/gpio/pca955x: use QAPI enums for led and
- pin properties
-From: Miles Glenn <milesg@linux.ibm.com>
-To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth
- <michael.roth@amd.com>, John Snow <jsnow@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Kostiantyn
- Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>, David
- Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, "Edgar
- E. Iglesias" <edgar.iglesias@gmail.com>, Jason Wang <jasowangio@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, Alberto Garcia
- <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@oss.qualcomm.com>, Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron
- <jic23@kernel.org>, Junjie Cao <junjie.cao@intel.com>, Anisa Su
- <anisa.su@samsung.com>, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>, John Levon
- <john.levon@nutanix.com>, Thanos Makatos <thanos.makatos@nutanix.com>,
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
- linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org, "Michael S. Tsirkin"
- <mst@redhat.com>, Sergio Lopez <slp@redhat.com>,
- qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
- <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, Daniel
- Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, Mohamed
- Mediouni <mohamed@unpredictable.fr>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Amit Machhiwal
- <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org, Zhang Chen
- <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, Alistair Francis
- <alistair@alistair23.me>, Alexander Graf <graf@amazon.com>, "Gonglei
- (Arei)" <arei.gonglei@huawei.com>, zhenwei pi <zhenwei.pi@linux.dev>, Ani
- Sinha <anisinha@redhat.com>, Luc Michel <luc@lmichel.fr>,
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, Samuel
- Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>, FangSheng
- Huang <FangSheng.Huang@amd.com>, Tyrone Ting <kfting@nuvoton.com>, Hao Wu
- <wuhaotsh@google.com>, Keith Busch <kbusch@kernel.org>, Klaus Jensen
- <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, Aditya Gupta
- <adityag@linux.ibm.com>, Conor Dooley <conor@kernel.org>, Sebastian Huber
- <sebastian.huber@embedded-brains.de>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, Jason Herne
- <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>, Stefano
- Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony@xenproject.org>, Peter Xu <peterx@redhat.com>, Chinmay Rath
- <rathc@linux.ibm.com>, Hendrik Brueckner <brueckner@linux.ibm.com>,
- xen-devel@lists.xenproject.org, Roman Bolshakov <rbolshakov@ddn.com>, Phil
- Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>, Farhan Ali
- <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>, Tao Tang
- <tangtao1634@phytium.com.cn>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Jiri Pirko <jiri@resnulli.us>, Eric Auger <eric.auger@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Date: Tue, 20 Oct 2026 15:28:48 -0500
-In-Reply-To: <20261020-qom-qapi-v7-48-431a86b02b58@redhat.com>
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-48-431a86b02b58@redhat.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1xJGZ8-0007b2-0L
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 16:36:10 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1xJGZ5-0005eZ-Rs
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 16:36:09 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-8b05bf699easo506647b3.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 13:36:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792528564; x=1793133364; darn=nongnu.org;
+ h=content-type:in-reply-to:autocrypt:from:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=LVXZO/A+jxkg8NaKs2bQTAklpCTfNo0fpHC/tQkUgg8=;
+ b=YAPqqQs44MO2Sh3hQmGnsTrLQ3FvSUuir0Du4Lr4hlhAbJIY4MasJcezwkfK7lAFRk
+ MWCbheiFMvHm0gJ7iKh2ynfm5JgpKx6MSo1wY+PA+f0sLVqQcK6FItzed81+W+MgM3C3
+ cDnmMBuT6kxH/cdry2nkHci/AcMn7CA+UYQ1O4gNTOSAsjRexXQLFurPvad1xWM/aS5r
+ G6O1rFogOwDjBMiOQtOcrWU+/g1whJ0CRbwgmoKHmKsQdbnZCsCGaI6KkO+RSWsgijAQ
+ A5lznr9iEw3dhG510Hj7evZwUlfJ5PGbqwaZ6s+JYtKWfmfEPdGVBYLFniRj2uqz4wiF
+ mKhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792528564; x=1793133364;
+ h=content-type:in-reply-to:autocrypt:from:content-language:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LVXZO/A+jxkg8NaKs2bQTAklpCTfNo0fpHC/tQkUgg8=;
+ b=yIGJ7r56DNYa9ojpzmfEwjR+bYADOCpO1M8Cumk1CJ3D6rIxLKOXDOZRg2ZcIixst5
+ sYYAzMdUbc0qGy6ongcaa3r+wBR8a3z4gkMB8fSshHEhMRaJCZJfidgq2U1IAicx9p1Y
+ 7ovTrCGjCLbnDCuAX2X2S6TznbhG6L5TwlqDPeG1RtNAQLeEBTd16oMHqckOUDcclNWo
+ irgrNlfkp3ZdBGYJfSFHuACikVwIof0zFLNhtTB7dijY0v3Qe2z6KyxLaF7++zpzvafc
+ hg9flqlQU7wkvQv/3imyzx4NifMtm2cUIOk11tt9za03nB22HalOJfrzZxj4g68SQQOQ
+ B5EA==
+X-Gm-Message-State: AFq9FYJfgJEMlFWirJk/7FtRFmi1d7sjw0AzT3lujuAs7o6flxdMbpwb
+ 9wUV26gV6MktucPCKcoD4DU2BEpIZ15CEPBaJf1ma6pXVh6lcN6Jx+0W
+X-Gm-Gg: AYBFou2CNo+xGwDaVHTYAGFIq3TbnleHorTWepg2E6VMs+XrfEyPwfp0hGhSQO9ugZD
+ doflOXNs5sZsTbaU4l/6dsxtEvV9onBkI3XuM+NGmkR56KbYfZLvmq0DMzPfwaQnIUbvjjvO93l
+ Dm+bVlXsDZNJ0e31QvnLpu1ELBm0n1geILjnV2eq4ow3A50nZsKKu1cnDoibKVvxcs7gy+L3yAC
+ ZIXkrKPAcx3SGHax9a6XgviLPeqwxdnEhb586oOdXVSytAcEy6y7fSuwvkFAEbR1WuT2jer9Rs9
+ +n9/nBu+O4eo+UAALl2XJn61rIUuIZ891NoR6o1mmt8id8lJGPX1As7Rfa9G9JWJInnXyKOcmmI
+ vTAlGUr6ubH1T7L9G5fjlqZxmCSYTNDrvg4/4eDxp8iwOjDpXRYA6sLqfIfnbEyEuCVc7+Qqcpp
+ +7bALbPYOJYN/XsSWaE6FhDBfke6JdFkTsE+3hOUXJQ7nYgHm1WXWmvbF9dH6gPgtRPLg4swlkA
+ UkZ
+X-Received: by 2002:a05:690c:dd4:b0:8ab:4b1b:fb06 with SMTP id
+ 00721157ae682-8b13417af11mr280357b3.27.1792528564297; 
+ Tue, 20 Oct 2026 13:36:04 -0700 (PDT)
+Received: from [10.138.10.6] ([149.102.242.31])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-8b13012f91bsm2778267b3.34.2026.10.20.13.36.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 13:36:03 -0700 (PDT)
+Message-ID: <32c01083-732f-4a45-95d3-6cffccb7c791@gmail.com>
+Date: Tue, 20 Oct 2026 16:35:57 -0400
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA4MCBTYWx0ZWRfX+9t/y7lhb2NG
- WRjTvBs8OQevzx4sdzmL6Tx48u4P32LMaUsHknmvsUzsQaucLioBR2sjCY6GT3OJ4yssLuDC0EO
- xJOE2Sdth5z5s9nQwh6PUys3fZGefWM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA4MCBTYWx0ZWRfX3Qu0Fruw9FfE
- Ym4jZr96pufaiiUd4/rQ1VRiwxdBVMEJLalf3ME9JEtAQaN6Yhv0QwgryMUZTbXSXwg/DfZZCl7
- /xP3aEF4DBW1yJT16UvGIlCC8savRUWw67ZIp3OUezPcqsRlbBNFuScIw7bh74KPfDDfp3UWH0H
- tkc7dPCd5QXXhKqVxbaO61OTVKvMRVzCRXgvlL5Qw6pAHPkVV4ALHoA7o+NX+SE29WGhwk1ozVa
- hTadZPgXjdOlRadT+Pzkf9PEbGlkJf2S995AwjStoV4mJwbnBdy1JmwZiXYnkVD6m8dGRXVBSUJ
- hTMlIbAgYthVor/1Dab5nXl+SPjghbjOfG1OzOZ1req4HJPion9UERcDGtLjrnNyDZ3j0kysEDi
- cUR7EwYhI81VbRMm2Ocx47cZ1J++/t1P8i3Q1GulTumaAI6YDA09Bd7ZCbpejcrAF8paLII0Pm6
- KD8z5UTW5GBvooZYOJw==
-X-Proofpoint-GUID: B9E0T9KfFgRckvDuzc9Ax4ROrE9sxB9M
-X-Authority-Analysis: v=2.4 cv=JIKuIMKb c=1 sm=1 tr=0 ts=6ad7cf0b cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=HV9-su-gHPMe9Pw3G_AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: B9E0T9KfFgRckvDuzc9Ax4ROrE9sxB9M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_03,2026-10-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 clxscore=1011
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610200080
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: iommu recovery follow-up (was Re: KVM/QEMU Community Call 13/10
+ agenda items?)
+To: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+References: <87fqyh79ty.fsf@draig.linaro.org>
+ <39ed350d-7324-4bf1-9433-54a0d74855c3@gmail.com>
+ <87wlrc1mie.fsf@draig.linaro.org>
+ <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
+Content-Language: en-US
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+In-Reply-To: <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------sK03UOIG0EDQkwf2QJWXaQ3T"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=demiobenour@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -180,437 +153,190 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------sK03UOIG0EDQkwf2QJWXaQ3T
+Content-Type: multipart/mixed; boundary="------------TD0b06sig68BTEnu8cAFXkDk";
+ protected-headers="v1"; hp="clear"
+Message-ID: <32c01083-732f-4a45-95d3-6cffccb7c791@gmail.com>
+Date: Tue, 20 Oct 2026 16:35:57 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: iommu recovery follow-up (was Re: KVM/QEMU Community Call 13/10
+ agenda items?)
+To: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
+ <zhenzhong.duan@intel.com>, Tao Tang <tangtao1634@phytium.com.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+References: <87fqyh79ty.fsf@draig.linaro.org>
+ <39ed350d-7324-4bf1-9433-54a0d74855c3@gmail.com>
+ <87wlrc1mie.fsf@draig.linaro.org>
+ <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
+Content-Language: en-US
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+In-Reply-To: <B7610B3C-5A0E-4429-B8ED-BD3EBE53BB23@unpredictable.fr>
 
-Thanks,
+--------------TD0b06sig68BTEnu8cAFXkDk
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Glenn
+On 10/20/26 11:06, Mohamed Mediouni wrote:
+>=20
+>> On 20. Oct 2026, at 16:20, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> Demi Marie Obenour <demiobenour@gmail.com> writes:
+>>
+>>> On 10/7/26 12:29, Alex Benn=C3=A9e wrote:
+>>
+>> (CC trimmed, IOMMU relevant maintainers added)
+>>
+>>>>
+>>>> Hi,
+>>>>
+>>>> The KVM/QEMU community call is at:
+>>>>
+>> <snip>
+>>>
+>>> Is this also for topics related to KVM but not necessarily QEMU?
+>>> If so, and if there will be people who are familiar with device
+>>> passthrough, I'd like to discuss whether IOMMU faults and KVM MMU
+>>> faults are recoverable.  There is a virtio device I am working on
+>>> which requires this to avoid either crashing the guest or allowing
+>>> the guest to hog host memory.
+>>
+>> We didn't get to this at the last community call. Is this something th=
+at
+>> can be discussed on list first?
+>=20
+> It should be I think.
+>=20
+> Hi,
+>=20
+> For such a virtio device (and granularly exposing it to user contexts t=
+oo), is ATS + PRI
+> a good choice? Perhaps even using the host page tables directly, with a=
+ per-process
+> abstraction as the security boundary.> > On physical hardware as intend=
+ed, outside of the ATS + PRI case, IOMMU faults
+> are expected to be something requiring a device/driver reset. On Arm ho=
+wever,
+> there=E2=80=99s an exception for the stall model, which pre-dates ATS +=
+ PRI.
+>=20
+> A PRI PPR reply of not present isn=E2=80=99t equivalent to an IOMMU fau=
+lt and isn=E2=80=99t expected to
+> result in a crash resulting in a device reset.
 
-On Tue, 2026-10-20 at 14:46 +0400, Marc-André Lureau wrote:
-> Replace hand-rolled string lookup tables with QAPI enums
-> Pca9552LedState and Pca955{2,4}PinState for the led%d and pin%d QOM
-> properties. This fixes the incorrect property type ("bool" for LEDs,
-> "str" for pins) and lets QAPI handle string-to-enum conversion in the
-> visitor, removing the manual string matching in the setters.
-> 
-> Add QEMU_BUILD_BUG_ON guards to ensure the QAPI-generated enum values
-> stay in sync with the hardware register encoding.
-> 
-> I kept Pca9552PinState & @Pca9554PinState separate types, because I
-> don't know if they could diverge. We could eventually merge those.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  hw/gpio/pca9552.c | 82 +++++++++++++++++++++----------------------------------
->  hw/gpio/pca9554.c | 39 ++++++++++----------------
->  qapi/machine.json | 46 +++++++++++++++++++++++++++++++
->  3 files changed, 92 insertions(+), 75 deletions(-)
-> 
-> diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-> index 719149b7174b..16741c22dea3 100644
-> --- a/hw/gpio/pca9552.c
-> +++ b/hw/gpio/pca9552.c
-> @@ -23,7 +23,8 @@
->  #include "hw/core/irq.h"
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
-> -#include "qapi/visitor.h"
-> +#include "qapi/qapi-types-machine.h"
-> +#include "qapi/qapi-visit-machine.h"
->  #include "trace.h"
->  #include "qom/object.h"
->  
-> @@ -59,16 +60,15 @@ struct PCA955xClass {
->  /*
->   * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
->   *        chips are the reverse of the PCA953X family of chips.
-> + *
-> + * The QAPI enums must match the hardware register values.
->   */
-> -#define PCA9552_LED_ON   0x0
-> -#define PCA9552_LED_OFF  0x1
-> -#define PCA9552_LED_PWM0 0x2
-> -#define PCA9552_LED_PWM1 0x3
-> -#define PCA9552_PIN_LOW  0x0
-> -#define PCA9552_PIN_HIZ  0x1
-> -
-> -static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
-> -static const char *pin_state[] = {"low", "high"};
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_ON != 0x0);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_OFF != 0x1);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM0 != 0x2);
-> +QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM1 != 0x3);
-> +QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_LOW != 0x0);
-> +QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_HIGH != 0x1);
->  
->  static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
->  {
-> @@ -142,24 +142,24 @@ static void pca955x_update_pin_input(PCA955xState *s)
->              uint8_t config = pca955x_pin_get_config(s, i);
->  
->              switch (config) {
-> -            case PCA9552_LED_ON:
-> +            case PCA9552_LED_STATE_ON:
->                  /* Pin is set to 0V to turn on LED */
->                  s->regs[input_reg] &= ~bit_mask;
->                  break;
-> -            case PCA9552_LED_OFF:
-> +            case PCA9552_LED_STATE_OFF:
->                  /*
->                   * Pin is set to Hi-Z to turn off LED and
->                   * pullup sets it to a logical 1 unless
->                   * external device drives it low.
->                   */
-> -                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-> +                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
->                      s->regs[input_reg] &= ~bit_mask;
->                  } else {
->                      s->regs[input_reg] |=  bit_mask;
->                  }
->                  break;
-> -            case PCA9552_LED_PWM0:
-> -            case PCA9552_LED_PWM1:
-> +            case PCA9552_LED_STATE_PWM0:
-> +            case PCA9552_LED_STATE_PWM1:
->                  /* TODO */
->              default:
->                  break;
-> @@ -176,7 +176,7 @@ static void pca955x_update_pin_input(PCA955xState *s)
->               */
->              if (s->regs[config_reg] & bit_mask) {
->                  /* Input mode - reflect external state */
-> -                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-> +                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
->                      s->regs[input_reg] &= ~bit_mask;
->                  } else {
->                      s->regs[input_reg] |= bit_mask;
-> @@ -360,7 +360,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int led, rc, reg;
-> -    uint8_t state;
-> +    Pca9552LedState state;
->  
->      rc = sscanf(name, "led%2d", &led);
->      if (rc != 1) {
-> @@ -378,7 +378,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
->       */
->      reg = PCA9552_LS0 + led / 4;
->      state = (pca955x_read(s, reg) >> ((led % 4) * 2)) & 0x3;
-> -    visit_type_str(v, name, (char **)&led_state[state], errp);
-> +    visit_type_Pca9552LedState(v, name, &state, errp);
->  }
->  
->  /*
-> @@ -397,10 +397,9 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int led, rc, reg, val;
-> -    uint8_t state;
-> -    g_autofree char *state_str = NULL;
-> +    Pca9552LedState state;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_Pca9552LedState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "led%2d", &led);
-> @@ -413,16 +412,6 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(led_state); state++) {
-> -        if (!strcmp(state_str, led_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(led_state)) {
-> -        error_setg(errp, "%s invalid led state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      reg = PCA9552_LS0 + led / 4;
->      val = pca955x_read(s, reg);
->      val = pca955x_ledsel(val, led % 4, state);
-> @@ -437,7 +426,8 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int pin, rc;
-> -    uint8_t input_reg, state;
-> +    uint8_t input_reg;
-> +    Pca9552PinState state;
->  
->      rc = sscanf(name, "pin%2d", &pin);
->      if (rc != 1) {
-> @@ -455,7 +445,7 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
->       */
->      input_reg = PCA9535_INPUT0 + (pin / 8);
->      state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
-> -    visit_type_str(v, name, (char **)&pin_state[state], errp);
-> +    visit_type_Pca9552PinState(v, name, &state, errp);
->  }
->  
->  static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-> @@ -464,10 +454,10 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->      PCA955xClass *k = PCA955X_GET_CLASS(obj);
->      PCA955xState *s = PCA955X(obj);
->      int pin, rc;
-> -    uint8_t state, config_reg;
-> -    g_autofree char *state_str = NULL;
-> +    Pca9552PinState state;
-> +    uint8_t config_reg;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_Pca9552PinState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "pin%2d", &pin);
-> @@ -480,16 +470,6 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
-> -        if (!strcmp(state_str, pin_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(pin_state)) {
-> -        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      /* Only input-configured pins can be driven by an external device. */
->      config_reg = PCA9535_CONFIG0 + (pin / 8);
->      if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
-> @@ -499,7 +479,7 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
-> +    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_STATE_LOW);
->  }
->  
->  static const VMStateDescription pca9552_vmstate = {
-> @@ -529,7 +509,7 @@ static void pca9552_reset_hold(Object *obj, ResetType type)
->      s->regs[PCA9552_LS2] = 0x55;
->      s->regs[PCA9552_LS3] = 0x55;
->  
-> -    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-> +    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
->      pca955x_update_pin_input(s);
->  
->      s->pointer = 0xFF;
-> @@ -549,7 +529,7 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
->      s->regs[PCA9535_CONFIG0] = 0xFF;  /* All pins as inputs */
->      s->regs[PCA9535_CONFIG1] = 0xFF;  /* All pins as inputs */
->  
-> -    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-> +    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
->      pca955x_update_pin_input(s);
->  
->      s->pointer = 0xFF;
-> @@ -567,12 +547,12 @@ static void pca955x_initfn(Object *obj)
->          if (k->has_led_support) {
->              /* LED variant: expose the LED selector state as led%d. */
->              name = g_strdup_printf("led%d", ix);
-> -            object_property_add(obj, name, "bool",
-> +            object_property_add(obj, name, "Pca9552LedState",
->                                  pca955x_get_led, pca955x_set_led, NULL, NULL);
->          } else {
->              /* GPIO variant: expose the pin logic level as pin%d. */
->              name = g_strdup_printf("pin%d", ix);
-> -            object_property_add(obj, name, "str",
-> +            object_property_add(obj, name, "Pca9552PinState",
->                                  pca955x_get_pin, pca955x_set_pin, NULL, NULL);
->          }
->          g_free(name);
-> diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-> index 904698cdce85..e4eddc829ef7 100644
-> --- a/hw/gpio/pca9554.c
-> +++ b/hw/gpio/pca9554.c
-> @@ -16,6 +16,8 @@
->  #include "hw/core/irq.h"
->  #include "migration/vmstate.h"
->  #include "qapi/error.h"
-> +#include "qapi/qapi-types-machine.h"
-> +#include "qapi/qapi-visit-machine.h"
->  #include "qapi/visitor.h"
->  #include "trace.h"
->  #include "qom/object.h"
-> @@ -32,10 +34,8 @@ typedef struct PCA9554Class PCA9554Class;
->  DECLARE_CLASS_CHECKERS(PCA9554Class, PCA9554,
->                         TYPE_PCA9554)
->  
-> -#define PCA9554_PIN_LOW  0x0
-> -#define PCA9554_PIN_HIZ  0x1
-> -
-> -static const char *pin_state[] = {"low", "high"};
-> +QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_LOW != 0x0);
-> +QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_HIGH != 0x1);
->  
->  static void pca9554_update_pin_input(PCA9554State *s)
->  {
-> @@ -54,7 +54,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
->               * Input: the pin is Hi-Z with a pull-up, so it reads high
->               * unless an external device drives it low.
->               */
-> -            if (s->ext_state[i] == PCA9554_PIN_LOW) {
-> +            if (s->ext_state[i] == PCA9554_PIN_STATE_LOW) {
->                  s->regs[PCA9554_INPUT] &= ~bit_mask;
->              } else {
->                  s->regs[PCA9554_INPUT] |= bit_mask;
-> @@ -156,7 +156,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
->  {
->      PCA9554State *s = PCA9554(obj);
->      int pin, rc;
-> -    uint8_t state;
-> +    Pca9554PinState state;
->  
->      rc = sscanf(name, "pin%2d", &pin);
->      if (rc != 1) {
-> @@ -175,7 +175,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
->       * holds the wire level regardless of the configured direction.
->       */
->      state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
-> -    visit_type_str(v, name, (char **)&pin_state[state], errp);
-> +    visit_type_Pca9554PinState(v, name, &state, errp);
->  }
->  
->  static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-> @@ -183,10 +183,10 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->  {
->      PCA9554State *s = PCA9554(obj);
->      int pin, rc, val;
-> -    uint8_t state, mask;
-> -    g_autofree char *state_str = NULL;
-> +    uint8_t mask;
-> +    Pca9554PinState state;
->  
-> -    if (!visit_type_str(v, name, &state_str, errp)) {
-> +    if (!visit_type_Pca9554PinState(v, name, &state, errp)) {
->          return;
->      }
->      rc = sscanf(name, "pin%2d", &pin);
-> @@ -199,16 +199,6 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->          return;
->      }
->  
-> -    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
-> -        if (!strcmp(state_str, pin_state[state])) {
-> -            break;
-> -        }
-> -    }
-> -    if (state >= ARRAY_SIZE(pin_state)) {
-> -        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
-> -        return;
-> -    }
-> -
->      if (s->hw_dir) {
->          /* Warn and ignore if the guest has configured this pin as output */
->          if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
-> @@ -219,13 +209,13 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
->              return;
->          }
->          /* Drive the external input level */
-> -        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
-> +        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_STATE_LOW);
->      } else {
->          /* Legacy behavior: force output mode and drive */
->          /* First, modify the output register bit */
->          val = pca9554_read(s, PCA9554_OUTPUT);
->          mask = 0x1 << pin;
-> -        if (state == PCA9554_PIN_LOW) {
-> +        if (state == PCA9554_PIN_STATE_LOW) {
->              val &= ~(mask);
->          } else {
->              val |= mask;
-> @@ -264,7 +254,7 @@ static void pca9554_reset(DeviceState *dev)
->      s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
->      s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
->  
-> -    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
-> +    memset(s->ext_state, PCA9554_PIN_STATE_HIGH, pc->pin_count);
->      pca9554_update_pin_input(s);
->  
->      s->pointer = 0x0;
-> @@ -280,7 +270,8 @@ static void pca9554_initfn(Object *obj)
->          char *name;
->  
->          name = g_strdup_printf("pin%d", pin);
-> -        object_property_add(obj, name, "str", pca9554_get_pin, pca9554_set_pin,
-> +        object_property_add(obj, name, "Pca9554PinState",
-> +                            pca9554_get_pin, pca9554_set_pin,
->                              NULL, NULL);
->          g_free(name);
->      }
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 34be3156270c..46b6935ab0b8 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -416,6 +416,52 @@
->  { 'enum': 'LostTickPolicy',
->    'data': ['discard', 'delay', 'slew' ] }
->  
-> +##
-> +# @Pca9552LedState:
-> +#
-> +# LED state for PCA9552.
-> +#
-> +# @on: LED on
-> +#
-> +# @off: LED off
-> +#
-> +# @pwm0: LED controlled by PWM0
-> +#
-> +# @pwm1: LED controlled by PWM1
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'enum': 'Pca9552LedState',
-> +  'data': ['on', 'off', 'pwm0', 'pwm1'] }
-> +
-> +##
-> +# @Pca9552PinState:
-> +#
-> +# Pin state for PCA9552.
-> +#
-> +# @low: Pin low
-> +#
-> +# @high: Pin high
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'enum': 'Pca9552PinState',
-> +  'data': ['low', 'high'] }
-> +
-> +##
-> +# @Pca9554PinState:
-> +#
-> +# Pin state for PCA9554.
-> +#
-> +# @low: Pin low
-> +#
-> +# @high: Pin high
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'enum': 'Pca9554PinState',
-> +  'data': ['low', 'high'] }
-> +
->  ##
->  # @inject-nmi:
->  #     Injects a Non-Maskable Interrupt (machine specific: for example
-> 
+I have two concerns with ATS + PRI:
 
+1. ATS allows a device to bypass the IOMMU, and my project relies on
+   the IOMMU to isolate a compromised device.
+  =20
+2. I need to support both consumer and enterprise hardware.  I suspect
+   that ATS support is very limited in the consumer space.
+
+For more context, I'm working on a device that allows a backend VM
+to provide virtio devices to other (frontend) VMs.  The backend VM
+will often have an assigned PCIe device, and there are applications
+where zero-copy I/O would be very helpful for performance.
+
+However, when the frontend VM exits or unmaps memory, the memory
+also needs to be unmapped from the backend.  If this is cooperative,
+the backend may simply refuse to cooperate, causing a host-side
+memory leak.  If it is preemptive, the backend will take faults when
+it tries to access the memory that has been unmapped from it.
+
+One can avoid both problems by only letting the backend access a small
+buffer, but this requires a copy in either the frontend or the device.
+This might make the system uncompetitive with host-side vhost-user
+devices in high-performance applications.
+
+Is there a way around this tradeoff, or is zero copy incompatible
+with protecting both the backend and the host?
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+
+--------------TD0b06sig68BTEnu8cAFXkDk--
+
+--------------sK03UOIG0EDQkwf2QJWXaQ3T
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmrX0K4ACgkQszaHOrMp
+8lNnqw//fu34G1ZtoYaUZagzAysNd4DTWd4rlf3kU18JsF1S15ah7FJwYUixp/E8
+vWy+HXbNLJEmW+OevjVlTdln8aVcpnNROPgJ1F4IDa0ZBNXai3QRnIIq0X1JSNqr
+XQ0l7bru20reJUQplFam87B4SVKIGvLVRMMxjQctfq40KiwwgbLIw/fyDAK8FayG
+g1J/NUgjFkTKRFnLDspeiZBcUix/JfpSqw9fuKWizZuTapeFcohpu5lONQsXzP96
+whjIAXq6/739wwhRlNALo5z0A6OeeAKPCmZSeUf2PzSxJfi4PLWeeeUydO2d7Yum
+usYsHxWsl0WUxSh7TA4q0+eQODrHmeU48IJZp4RcFptbTSm15/ws3WXyd8CWCrpk
+YsHTi0C9n7WPTNszhLzjgWLwGZyXy1ix/zsWKDe60ZJzIp0/yhO02rSCEMjfxT1F
+3cOnQCIJIa+CSte6BLaNjxE0VI5Qr5eC6K88Ge5VXPPDjL6qdSMiO9wZvVbUrdnt
+J5wkaUwqEM7R319NzP/xlZbDvYdBuLKrSjXDDGCwKoxelRduE5rxD5zpEUGxAWQE
+AusJ/teOmxtfIsZFaf5aD8zhaEKPDacVDGKibN9zNQhEH8/EGXaDwdr9UVB7Qze0
+otqez2j02l0civkLm3RTdzA0x2IcX5SpiO1CFR3p/Am3f44aMZI=
+=mncX
+-----END PGP SIGNATURE-----
+
+--------------sK03UOIG0EDQkwf2QJWXaQ3T--
 
