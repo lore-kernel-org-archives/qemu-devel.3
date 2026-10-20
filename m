@@ -1,103 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA281606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAEE606A329
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 15:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=MF8XDVFf
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BiIF0+uk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJC4n-0001Xf-KK; Tue, 20 Oct 2026 11:48:33 -0400
+	id 1xJCCm-0003zn-3f; Tue, 20 Oct 2026 11:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xJC4j-0001W3-Kq
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:48:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xJC4f-0008LM-2X
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:48:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a018dc1f98so24679645e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 08:48:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792511301; x=1793116101; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:user-agent:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=3guLV4Of/zrYlWr8Uw84u1DpXlzhNs80hbZWEYjYFvI=;
- b=MF8XDVFf7Oe5z8/djtYEElvuVMH2t60e8SttXbcKdq8ZYsDcYYL7wSkH2w9dwo9Bgn
- W5vkLhzSTnfavxuhc7mdZlnr6fP2pPv0rz9Aef7/pWkc2fUIHB/+RwQ/cHAby/pCQddD
- QDEOLpd/m428mZpuQORLaHBpcKNhMOHnneRf9T2PoVOW8t20GFYG3g3ChVHPXMtJ4H0A
- gs9IxEGrhehecxd/4Lb/+W60b0waqsOaJPTZGim5SyqiSE8iqrv6hrxXt3bNVWXj0KRH
- c40RMJknRp0d1ayLqbdlEisbM+6ch/lVAHoCi5nILjYuNv+c+r82IcOx4aCPYQgYXFt5
- N6Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792511301; x=1793116101;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:user-agent:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3guLV4Of/zrYlWr8Uw84u1DpXlzhNs80hbZWEYjYFvI=;
- b=O8S4IvkTjdpAel0lYr+V/Kid4uhrXZAUxySbYEl/SHneBNOTtPm2EqG9wGIlPUu+lP
- S/tUDAyJfTCBEnEoO1OJJdq57lRXo2aGEqomPIW+T4niPiSrI/OSi/0r2nzy2CTdBIba
- e2Ii42q65O4E+9cyPp/kB8+HfcXFu9QtOSbGGiAQFLt1/HE3k2L+/JM283MCCsvf/Z3r
- D6oAdHxRQmr5i4Wo+ufDQ6JUxUt1JSGSskaAFzd7eRsNcVVnOGNUsFBKA5whmIVwBoOc
- HdbzG35rh3UUAnnAtwiDWGJKMNqcmgnlaeN/FTbI7/YrlACfUiTCX/gP58uV2qOz1GkP
- Z2lg==
-X-Gm-Message-State: AFq9FYKNID211pftv5oRQej91gVwIbjQl4jDxV+t6L7xNabx0At0LhyY
- rUR7MoklJJ1PcnWnLM9zX+/Gep8Dw6rIvuRz/3JXfQoq9rlO8mkf4ZkL
-X-Gm-Gg: AYBFou2Mai4a2YokH80WaJJuHSC/stJGtC9bmrFghanF6mLOolREVl8p3rWy2vPzQ9d
- t0pEE7cDoX1eVD191eXfz6I+NzwatTozXJKG96Uhj2LEPcycL/7uYRpkUdGJwZxRwuC599Mymg/
- 2UJpa9xLqXrQQsZBp7Ao/yg78+gQQpcLR84xCSQfx39ggnp+ugWoyNMjIrtpMg/F/GuymD4CuwC
- bVz7H+XSMlFblorxAOa9nSHyrQTWYcxeJ0lVj8zMRqENjpxZp6yMRbkrPI9/AiNIsBv2xDN4JfL
- jpL7ymZDSYP6njhM6uT7LIK30MfIYU6f/w3l97GzV4/HQhhIv5pnzLKyrWzqqEw+Q7GLDPDPX58
- A9S59MXRnplcCQWMQ9Aq4rSpiGlHS0/vociXzbIkMRGZYqXGcfuyPu5/MlT/tU7s0bD2d1wnXkc
- cipL4lWNQeR8IrRXw8YEescFqaoQ9kDNzdB8DQIv6i6U53H7RRgibk3e++SrMMsREve1LfhGmVj
- NFhp+Qcet5J
-X-Received: by 2002:a05:600c:3ba7:b0:4a1:e6cb:25bb with SMTP id
- 5b1f17b1804b1-4a1e6cb2ad6mr177079855e9.2.1792511300724; 
- Tue, 20 Oct 2026 08:48:20 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([109.183.17.110])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d6dd2a2sm7488640f8f.7.2026.10.20.08.48.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Oct 2026 08:48:20 -0700 (PDT)
-Date: Tue, 20 Oct 2026 17:48:18 +0200
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-CC: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_not-so-trivial_v2=5D_treew?=
- =?US-ASCII?Q?ide=3A_use_qemu=5Fdup=28=29_instead_of_dup=28=29?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <d70fcc30-a9f7-4615-95de-610be38f9274@tls.msk.ru>
-References: <20261013-use-qemu-dup-v2-1-12ecd94263b7@gmail.com>
- <as3lliIKDs6aTRnS@redhat.com>
- <d70fcc30-a9f7-4615-95de-610be38f9274@tls.msk.ru>
-Message-ID: <06E420BE-B0DC-4EB4-92B5-9669C7B6F777@gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJCCl-0003zf-ES
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:56:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJCCk-0000ms-1J
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 11:56:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792511804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VE22xbP8s5yqzpOboiNCpq5AUhkt3iJZuJnBCk0TuQ8=;
+ b=BiIF0+uk59aI36LSBMQRNY4LnP9wtM7qfZ3rTTkcETKpX7GmBLB4LvL0Y+NKQP0iM06NT4
+ glOfptFg4adOV7eC7Xf7Kw3QlQj/2fbRvtJ2CknduzFswbVL5nzdfc0PUxRXo1B9AFRnQX
+ DfQCrZUjTAIqCy/NGbeKUl+hfkM9F9Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-USFPJ525PxuvlW4ZvHOw7A-1; Tue,
+ 20 Oct 2026 15:56:40 +0000
+X-MC-Unique: USFPJ525PxuvlW4ZvHOw7A-1
+X-Mimecast-MFC-AGG-ID: USFPJ525PxuvlW4ZvHOw7A_1792511799
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A21941955F2B; Tue, 20 Oct 2026 15:56:38 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 67577195608B; Tue, 20 Oct 2026 15:56:37 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v10 05/12] main-loop: change the handling of SIGWINCH
+From: marcandre.lureau@redhat.com
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
+ Dominique Martinet <asmadeus@codewreck.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Szymon Lukasz <noh4hss@gmail.com>
+In-Reply-To: <20261012-console-resize-v10-5-2c3b10d829b3@gmail.com>
+References: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
+ <20261012-console-resize-v10-5-2c3b10d829b3@gmail.com>
+Date: Tue, 20 Oct 2026 19:56:12 +0400
+Message-Id: <179251177296.3780647.18187135044971573699.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=360;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=Kt1GkmHwRzntejMW1vAAThU1OwaCUA4Ywk/utpFdY4I=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq148gPEJmR1dpap47j8NoobRQAkUjM6wahSH6T
+ pcB3srfYPWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatePIAAKCRDa6OEJdZac
+ 5TyFD/4/AmjkS2GsGvWYmEgEBx6qfLGMzH8VqvDm3dWVVPqpGrY0W8MOFO30ox7xaXSj46eo9tS
+ 7vl7J05+1GZVQPC4epMr8mN1S9quZcJes8cDcai4bH64JZe1L1QlAerHBlGaQT1+XRC7dg8NTk0
+ m2e9sjHYFj0OcWkOk6KS5VkQubyTG43RmIytKEFueGX+Y4tviF12xBfVdoGCqQtAoDZ8eUooA7B
+ 3pAPnhs6yjVoRshidEUYYe8S9jbIjKHIRTGGmOd1DwBpNIGeKbPcRc/Fja3/CdhYQT3voR0b3Pu
+ +oKJi/6Uq3HSXtVjLIn4J5Bg86ONUjK4+BOs2X+QxgrsuzNz5NAPNjOGcFhOkUYprlf2UP3z1Ej
+ Eqe/LmmfjL8O9LeFtBJi4HLAlxhOnC6FFWnGVHwE/dHN6iVMBOx25o2fGNsPb8y3jN9cMs7jLzi
+ av84kg8FbYTSCCQvhAvpGD/TDCK5DSVsVlLbOD7hpY82lYLIJZvDj5BnErSsIV+1hmnfnvajYIA
+ DWpKmlqL8Uy/4GdtLajGjcE4VRGqAC81rZzUSc6c278ZaZ6uzZB3dXCSmsMj2+B5FT4izpSjd/3
+ 9gQFc5KVTe8J1gMDGl3DLGz353gVlKKfRFB9feWqcDoam+mC6FHbV1Wc8NfDqp7hoUO4suTTUUD
+ h5QEfATcakkYtpA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,51 +111,21 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On October 20, 2026 5:38:06 PM GMT+02:00, Michael Tokarev <mjt@tls=2Emsk=2E=
-ru> wrote:
-> On 10/13/26 11:02, Daniel P=2E Berrang=C3=A9 wrote:
-> > On Tue, Oct 13, 2026 at 12:01:58AM +0200, Filip Hejsek wrote:
-> >> Use qemu_dup() to ensure the cloexec flag is set on dup'd fds=2E
-> >>=20
-> >> The following dup() instances were left unchanged:
-> >>=20
-> >>      FILE                     REASON
-> >>      util/osdep=2Ec             implementation of qemu_dup
-> >>      migration/cpr-exec=2Ec     fd is intentionally kept across exec
-> >=20
-> > IMHO that should use qemu_dup() too, and then explicitly
-> > clear the O_CLOEXEC flag so intended behaviour is clear=2E
-> > Right now it looks like a mistaken failure to use qemu_dup=2E
-> >=20
-> >>      tests/*                  left for future work
-> >=20
-> > Why not fix them now ? There are only a few uses which look suitable
-> > to change=2E
->=20
-> I'd say let's apply this one and fix the rest later=2E
->=20
-> I don't see a big need to do that in tests/ - if not only for
-> consistency=2E
->=20
-> Thanks,
->=20
-> /mjt
+On Mon, 12 Oct 2026 16:05:04 +0200, Filip Hejsek <filip.hejsek@gmail.com> wrote:
+> Block SIGWINCH, so it is delivered only via signalfd.
+> Install a handler that uses NotifierList to tell
+> interested parties about SIGWINCH delivery.
 
-I already sent a v3 which fixes the tests too=2E
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-After changing my mind on whether this counts as trivial, I dropped qemu-t=
-rivial from Cc in v3 and forgot to send a note about that to qemu-trivial=
-=2E That was my mistake, sorry if you didn't notice my v3 because of that=
-=2E
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Best regards,
-Filip
 
