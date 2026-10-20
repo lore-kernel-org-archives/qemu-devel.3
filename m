@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDB9606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FC4606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Pp4t7PoX
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=K9WCtTdV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7QT-0007eM-F4; Tue, 20 Oct 2026 06:50:37 -0400
+	id 1xJ7Uh-0007Cw-Ks; Tue, 20 Oct 2026 06:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Oz-0003j3-PK
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xJ7Rw-0001Ht-O9
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Ox-0005gS-Nc
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:05 -0400
+ id 1xJ7Rr-0006iC-Sg
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493343;
+ s=mimecast20190719; t=1792493522;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vqRAumP9Q4P45v+BnAaswZB9eyGK4924nboYOJbbp2E=;
- b=Pp4t7PoXPc6risekObVBS7oa6PvODWLaqylR7KF5GeyLlZMt4v+yvY98KvsFbymQs/cFo4
- +r1HfspmEgErdD637s5UZt8hdC9SDGdxbS7YY8MZFHNICCVRXgYBgRF3wNNjh9uHVs94mu
- zj0DlI2EeCXv9rHQxGO759Wn89eTnzA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ccOsUIeVtpZ4LAvRKvLPIKBLjfW8xoZv/G7l+9bsArM=;
+ b=K9WCtTdV7r+EwLaE5aExv1tr5fJoh2XluabdFEhxfEp9wMxhw2+AQrv4f2IVNopJDnm/9r
+ bp7AhES0I5qEEOrdIJVTuVBNAOqM6niBB7I/mQNquYYGkGUcOdMlzSnnPykL7d4sXR3sXi
+ +20y5Lzn3wqgIeRJbsmw9RoZQeTdkos=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-GSbpLDLrPQqHZRQ94vMg0A-1; Tue,
- 20 Oct 2026 10:48:59 +0000
-X-MC-Unique: GSbpLDLrPQqHZRQ94vMg0A-1
-X-Mimecast-MFC-AGG-ID: GSbpLDLrPQqHZRQ94vMg0A_1792493335
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-LUDw3GgDOriOUgUPMvJZCA-1; Tue,
+ 20 Oct 2026 10:51:57 +0000
+X-MC-Unique: LUDw3GgDOriOUgUPMvJZCA-1
+X-Mimecast-MFC-AGG-ID: LUDw3GgDOriOUgUPMvJZCA_1792493513
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 401F418002AD; Tue, 20 Oct 2026 10:48:55 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 55CF01955BD4; Tue, 20 Oct 2026 10:51:53 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4CB201800257; Tue, 20 Oct 2026 10:48:52 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7054130000E7; Tue, 20 Oct 2026 10:51:50 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:47 +0400
-Subject: [PATCH v7 30/65] whpx: convert OnOffAuto arch properties to
- QAPI-aware registration
+Date: Tue, 20 Oct 2026 14:46:20 +0400
+Subject: [PATCH v7 63/65] qom: remove old enum property registration API
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-30-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-63-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,34 +129,35 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6702;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7342;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=F8HZ01XPkkBAtzYnAznI+OeIpIRAjOQCT4x6+nWcsZQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZaNHtr+AkGnY6QtTL0vsHs6SXFQUQ8MQ6i4
- S1YABGB6XOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWgAKCRDa6OEJdZac
- 5U3+D/0bY0Yw06OplfGaxwkWeRkmM8vGPJ5F9M0cVeicCg/oXCYp+UKgC78TYi76WRGpbyL2C7S
- 0KxXaqPjOuPoiru3KbrrdebJxsrbKZijDWmhlIsP9jywqVWMuCB+weipCeiSrSWcM8KYKDNl6lh
- BAGjS+eZuivN40OoVe2PxA7lKt96RrybUNJq39LwnTdm/8Lx0x5A7nOmtMf6p5zUDEy6bO9wTJ9
- /9cnmG5OgUn4fNab0GmXDPDj2/b7lDQNLOZQiOEE1aPD1CnruklCEcrbKrMXEZIYQc9JkVJVviZ
- sWu3vDJ9GCWP/JGd6P26BcaZeOw6qiIfSjJgGMcE3CyRguBdSr4ldn+yC83f6n9vVa68VDVU85t
- PoSwXa0eYL0MCuvzu1v2GPnE/oDcMkqhH7+e/tLdejjt7K9jX7qtbmGTnHtszQGZv3Bn0tfV3RM
- fJtheu+i9GFuCM5MxESNY85RUBO6acenPHsR1+nmHtqbICIGanSHvfZzCXqJL4WwAH/IRbzic4F
- sB4SZ4sCdErodKNcNWECfUhDwpvmtfzJ5r4PC9kT3qEABypAk8pdibNyUNuaX6p+KJtOwuuQsnA
- NP6Npp4aqbXBUyIW3gZUAcetZJhmn/V7jRQ/TFEG2uGqdOa3T2YNGJ9TDknE1CAeWkCjRf+IwA6
- Z2YAEk2bZvmBjgQ==
+ bh=4DUVOH2Il1uXarwapsGNw4Sqxi5JL+XRDYj5v/DxTXw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZdSCtnqLwFsuDwikbI6gRflGPZtD05w5lEa
+ CvQaDVyJvKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXQAKCRDa6OEJdZac
+ 5VbJEACAn2E9Fh4lFMReVrd4NHuC3naIFHBUIw5ZLoxN7mbcaqivG69WFWxx7ZOrTDRmg/G7yWj
+ fDJpczz3Mb0e0IfqafD0Zo52HRprrS3vQqsPJaRNSQkXu2fm6LC1O8aSPWSYAU1eanghk9OhXWy
+ YrwTj+hC9ewJZHcH2F93rQKIhbccNRiQPCGgJPy4Lrq/uTwsScJ1VwIlavz58EMOc8D5pLsrqcC
+ yq0g6DK4SrNPSK30qRc1DYPDZzDv6UP/6SYl4MOl80b/lEg9HtMa3nOcPYat73Xrz4lJ34zsyq2
+ DaiEjhshxRzeWlxSRKFBlCtFXeclBqDgqyY/wXjt1O7g+q+UUKYGqmFXdH3HZHF2a0DzqVUoNpl
+ 4FKV2A5wr9Y9wmy+YIR0Lnw3Te8+UkuWx8TJu4UGPD64J7Am8Zdr+5lc4k63v3MIxbJ3V6i3/gx
+ xcPgIxzQ2tjUAC413GKGiKMZihOU5ca3wMMcT+SurJ4f6AckLphRseXIw6lV64r07VMlIt2v/on
+ t/KCYg7F6sIRLgxf7Q8rsFrDB/0o+lW42EJjrEKIKBVNwdsoxM+4Tc7BWJ7ciCx3ovDWcgc+b9G
+ Z8i3KE57kVIhAV2xKZSycVzEGQWVUjJagDqkIlSLS/+8A/FeLV/wYW0PQJQEo9s4t45BXPSFjoI
+ Q65g0nQz/0Olqvw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,214 +176,195 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert the ignore-unknown-msr, intercept-msr-gp, and ssd OnOffAuto
-properties from manual visitor-based callbacks to
-property_add_qapi_enum().
+Now that all callers use object_class_property_add_qapi_enum(), remove
+the legacy object_property_add_enum() and object_class_property_add_enum()
+functions along with their EnumProperty struct and property_get_enum /
+property_set_enum helpers.
+
+Simplify object_property_get_enum() to assert on qapi_type rather than
+falling back to the old EnumProperty opaque data.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 101 +++++++++++++++-----------------------------
- 1 file changed, 34 insertions(+), 67 deletions(-)
+ include/qom/object.h | 45 ++--------------------------
+ qom/object.c         | 82 ++--------------------------------------------------
+ 2 files changed, 4 insertions(+), 123 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 113f79afb9ab..64fa389a2f93 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -30,7 +30,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-common.h"
--#include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "migration/blocker.h"
- #include "host-cpu.h"
- #include "accel/accel-cpu-target.h"
-@@ -1875,6 +1875,7 @@ void whpx_apply_breakpoints(
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 29cbd84b8d03..a9bbc44cfcc9 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1697,12 +1697,12 @@ char *object_get_canonical_path(const Object *obj);
+  *   because it was ambiguous, or %NULL. Set to %false on success.
+  *
+  * There are two types of supported paths--absolute paths and partial paths.
+- * 
++ *
+  * Absolute paths are derived from the root object and can follow child<> or
+  * link<> properties.  Since they can follow link<> properties, they can be
+  * arbitrarily long.  Absolute paths look like absolute filenames and are
+  * prefixed with a leading slash.
+- * 
++ *
+  * Partial paths look like relative filenames.  They do not begin with a
+  * prefix.  The matching rules for partial paths are subtle but designed to make
+  * specifying objects easy.  At each level of the composition tree, the partial
+@@ -1986,47 +1986,6 @@ ObjectProperty *object_class_property_add_bool(ObjectClass *klass,
+                                     bool (*get)(Object *, Error **),
+                                     void (*set)(Object *, bool, Error **));
+ 
+-/**
+- * object_property_add_enum:
+- * @obj: the object to add a property to
+- * @name: the name of the property
+- * @typename: the name of the enum data type
+- * @lookup: enum value namelookup table
+- * @get: the getter or %NULL if the property is write-only.
+- * @set: the setter or %NULL if the property is read-only
+- *
+- * Add an enum property using getters/setters.  This function will add a
+- * property of type '@typename'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_property_add_enum(Object *obj, const char *name,
+-                              const char *typename,
+-                              const QEnumLookup *lookup,
+-                              int (*get)(Object *, Error **),
+-                              void (*set)(Object *, int, Error **));
+-
+-/**
+- * object_class_property_add_enum:
+- * @klass: the object class to add a property to
+- * @name: the name of the property
+- * @typename: the name of the enum data type
+- * @lookup: enum value namelookup table
+- * @get: the getter or %NULL if the property is write-only.
+- * @set: the setter or %NULL if the property is read-only
+- *
+- * Add an enum property using getters/setters.  This function will add a
+- * property of type '@typename'.
+- *
+- * Returns: The newly added property on success, or %NULL on failure.
+- */
+-ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
+-                                    const char *name,
+-                                    const char *typename,
+-                                    const QEnumLookup *lookup,
+-                                    int (*get)(Object *, Error **),
+-                                    void (*set)(Object *, int, Error **));
+-
+ /**
+  * struct QapiEnumProp: Descriptor for a property backed by a QAPI enum type
+  *
+diff --git a/qom/object.c b/qom/object.c
+index cf18880c6c0c..791d981dc689 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1774,12 +1774,6 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
+     return retval;
+ }
+ 
+-typedef struct EnumProperty {
+-    const QEnumLookup *lookup;
+-    int (*get)(Object *, Error **);
+-    void (*set)(Object *, int, Error **);
+-} EnumProperty;
+-
+ int object_property_get_enum(Object *obj, const char *name,
+                              const char *typename, Error **errp)
+ {
+@@ -1803,12 +1797,8 @@ int object_property_get_enum(Object *obj, const char *name,
+         return -1;
      }
+ 
+-    if (prop->qapi_type) {
+-        ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
+-    } else {
+-        EnumProperty *enumprop = prop->opaque;
+-        ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
+-    }
++    assert(prop->qapi_type);
++    ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
+     g_free(str);
+ 
+     return ret;
+@@ -2543,74 +2533,6 @@ object_class_property_add_bool(ObjectClass *klass, const char *name,
+                                      prop);
  }
  
-+
- void whpx_arch_destroy_vcpu(CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -1955,7 +1956,7 @@ static int whpx_handle_hyperv_guestidle(CPUState *cpu)
-     return whpx_handle_halt(cpu);
- }
- 
--static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
-+static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu)
- {
-     WHV_REGISTER_VALUE reg;
-     whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
-@@ -2059,7 +2060,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
-                 .Vector = irq,
-             };
-             reg_count += 1;
--            /* 
-+            /*
-              * When the Hyper-V APIC is enabled, to get out of HLT we
-              * either have to request an interrupt or manually get it away
-              * from HLT.
-@@ -2359,7 +2360,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_VALUE reg_values[3] = {0};
-             WHV_REGISTER_NAME reg_names[3];
-             UINT32 reg_count;
--            bool is_known_msr = 0; 
-+            bool is_known_msr = 0;
-             bool raises_gpf = false;
-             uint64_t val;
- 
-@@ -2911,120 +2912,86 @@ void whpx_cpu_instance_init(CPUState *cs)
-  * Partition support
-  */
- 
--static void whpx_set_unknown_msr(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_unknown_msr(Object *obj, int value, Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
- 
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-static void property_get_enum(Object *obj, Visitor *v, const char *name,
+-                              void *opaque, Error **errp)
+-{
+-    EnumProperty *prop = opaque;
+-    int value;
+-    Error *err = NULL;
+-
+-    value = prop->get(obj, &err);
+-    if (err) {
+-        error_propagate(errp, err);
 -        return;
 -    }
 -
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->ignore_unknown_msr = true;
-         break;
+-    visit_type_enum(v, name, &value, prop->lookup, errp);
+-}
 -
-     case ON_OFF_AUTO_OFF:
-         whpx->ignore_unknown_msr = false;
-         break;
+-static void property_set_enum(Object *obj, Visitor *v, const char *name,
+-                              void *opaque, Error **errp)
+-{
+-    EnumProperty *prop = opaque;
+-    int value;
 -
-     case ON_OFF_AUTO_AUTO:
-         whpx->ignore_unknown_msr = true;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
--static void whpx_set_intercept_msr_gp(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_intercept_msr_gp(Object *obj, int value, Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
- 
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-    if (!visit_type_enum(v, name, &value, prop->lookup, errp)) {
 -        return;
 -    }
+-    prop->set(obj, value, errp);
+-}
 -
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->intercept_msr_gp = true;
-         break;
+-ObjectProperty *
+-object_property_add_enum(Object *obj, const char *name,
+-                         const char *typename,
+-                         const QEnumLookup *lookup,
+-                         int (*get)(Object *, Error **),
+-                         void (*set)(Object *, int, Error **))
+-{
+-    EnumProperty *prop = g_malloc(sizeof(*prop));
 -
-     case ON_OFF_AUTO_OFF:
-         whpx->intercept_msr_gp = false;
-         break;
+-    prop->lookup = lookup;
+-    prop->get = get;
+-    prop->set = set;
 -
-     case ON_OFF_AUTO_AUTO:
-         whpx->intercept_msr_gp = false;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
--static void whpx_set_ssd(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_ssd(Object *obj, int value, Error **errp)
+-    return object_property_add(obj, name, typename,
+-                               get ? property_get_enum : NULL,
+-                               set ? property_set_enum : NULL,
+-                               property_release_data,
+-                               prop);
+-}
+-
+-ObjectProperty *
+-object_class_property_add_enum(ObjectClass *klass, const char *name,
+-                                    const char *typename,
+-                                    const QEnumLookup *lookup,
+-                                    int (*get)(Object *, Error **),
+-                                    void (*set)(Object *, int, Error **))
+-{
+-    EnumProperty *prop = g_malloc(sizeof(*prop));
+-
+-    prop->lookup = lookup;
+-    prop->get = get;
+-    prop->set = set;
+-
+-    return object_class_property_add(klass, name, typename,
+-                                     get ? property_get_enum : NULL,
+-                                     set ? property_set_enum : NULL,
+-                                     NULL,
+-                                     prop);
+-}
+-
+ static void get_qapi_enum(Object *obj, Visitor *v, const char *name,
+                           void *opaque, Error **errp)
  {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
- 
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
--        return;
--    }
--
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->separate_security_domain = true;
-         break;
--
-     case ON_OFF_AUTO_OFF:
-         whpx->separate_security_domain = false;
-         break;
--
-     case ON_OFF_AUTO_AUTO:
-         whpx->separate_security_domain = true;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
- 
- void whpx_arch_accel_class_init(ObjectClass *oc)
- {
--    object_class_property_add(oc, "ignore-unknown-msr", "OnOffAuto",
--        NULL, whpx_set_unknown_msr,
--        NULL, NULL);
--    object_class_property_set_description(oc, "ignore-unknown-msr",
--        "Configure unknown MSR behavior");
--    object_class_property_add(oc, "intercept-msr-gp", "OnOffAuto",
--        NULL, whpx_set_intercept_msr_gp,
--        NULL, NULL);
--    object_class_property_set_description(oc, "intercept-msr-gp",
--        "Intercept #GP to log erroring MSR accesses.");
--    object_class_property_add(oc, "ssd", "OnOffAuto",
--        NULL, whpx_set_ssd,
--        NULL, NULL);
--    object_class_property_set_description(oc, "ssd",
--        "Separate security domain");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "ignore-unknown-msr",
-+        .description = "Configure unknown MSR behavior",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_unknown_msr,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "intercept-msr-gp",
-+        .description = "Intercept #GP to log erroring MSR accesses.",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_intercept_msr_gp,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "ssd",
-+        .description = "Separate security domain",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_ssd,
-+    ));
- }
- 
- int whpx_accel_init(AccelState *as, MachineState *ms)
 
 -- 
 2.56.0.116.g6de20f6092dc
