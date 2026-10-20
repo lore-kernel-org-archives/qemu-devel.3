@@ -1,79 +1,129 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FE8606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 09:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F88E60A3802
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 09:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MAAyp6IQ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eHvItXeV;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=okyacly+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ61R-0006eF-2X; Tue, 20 Oct 2026 05:20:41 -0400
+	id 1xJ6PX-0003Wn-CT; Tue, 20 Oct 2026 05:45:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xJ61M-0006dy-1L
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:36 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1xJ6PU-0003QG-FX
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:45:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xJ61J-0005a1-VG
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1792488034; x=1824024034;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=HTWeiTScuBzcGAmB63p8YfXT4wQ4XcOXONb8/5dvYvE=;
- b=MAAyp6IQ9zA881mlWLkv1SjSAI9O21uT5x0L5YPBhgA8b1S4RREW2HvQ
- d/oVVpFF+/h/XaWIZIpgOsZiQ+iU/ki2aiGYztdLD8kXzZRJCT5sCbmOf
- XiDApliQz9j/yhTXu3+BGe9GulP+E+hqrWiWBb6SIJDNxBPO3FaKWhyJI
- lYvF/T8VH192KvbMQnhEMltXh9XrQ9UH8Ldzzk76Q0xVB+E4v7stZBQr8
- xM8foxjadGTi4p3nvrq/6Ic8WvlmBPMBAePUTyYYrF9rUZvE7PbYlHoKU
- MG4LgdVIJpIJZj4z+en8iqP44GZHQN7rpdpoaMRy2RIZKul+dRLHFboKs w==;
-X-CSE-ConnectionGUID: URihJDCCRH+YO7/CcOqvdA==
-X-CSE-MsgGUID: Cji2x2uqTuiJyO9Me2hRlA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1080673"
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1080673"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2026 02:20:33 -0700
-X-CSE-ConnectionGUID: 6ZYlZQTJRLqii+XM3oAoaw==
-X-CSE-MsgGUID: XVt+FbnWQ1mLauISdKETEQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="3138378"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2026 02:20:30 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowangio@gmail.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v9 5/6] intel_iommu_accel: Accept PRQ response for passthrough
- device
-Date: Tue, 20 Oct 2026 17:19:53 +0800
-Message-ID: <20261020091955.1607161-6-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20261020091955.1607161-1-zhenzhong.duan@intel.com>
-References: <20261020091955.1607161-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1xJ6PS-0007vO-4R
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:45:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792489527;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=veWA9VkXhn+l/tzbS5PKI899AhcaBYfdbmMJqIztGtQ=;
+ b=eHvItXeV0iCDr3PX4GbPcSmzD63KiBklBd66w7D7Q/phB3wf+6b2T/HYRiSBwjOUsB3huv
+ fC5Gt5IoTwXHU2cZtJ4rUe+JLLCZEtGzuLXSftKxaI2dubCTPsHZiNWfisN0cpQ4opaH89
+ 3zQPuBTX+Zp3J2u12neslEf6QRv+Z5k=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-244-MrSr6dQ9M3uyR3FBMwEUrw-1; Tue, 20 Oct 2026 09:45:26 +0000
+X-MC-Unique: MrSr6dQ9M3uyR3FBMwEUrw-1
+X-Mimecast-MFC-AGG-ID: MrSr6dQ9M3uyR3FBMwEUrw_1792489525
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-8b09ee23de2so40192147b3.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 02:45:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792489525; cv=none;
+ d=google.com; s=arc-20260327;
+ b=LGHJ7ijO0crH0VlWfXB7NHkwpA7edllosn5hrZbob7woNbT2+htQfLq8HJv3jfXxFu
+ +NTEGaqNMFdN4cZmXfcCzQqnQPnWKSggqSdBga3HSjEgb1DFQmnwl6ykQxXjhV5JtKVI
+ 7+2d5iZ3FcaWMprrV+g7Nx2NZGnnaHY4agJNiPxv/WildviWUWRkNdYJ0KGtPaARBTci
+ Zx0d6c1dDSU4OZXpDRIFSv1K3YG0LvXTTYEbmM1HMLd6IycPZmSKqOmZDjDVKDqNixbT
+ 5zg6ufUfvNNyGTcpfoUY2g+KWfElnXr+1uHFFXAjxsGYkcWclJbqWS+QzUB1+V+lupu/
+ ZG4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=veWA9VkXhn+l/tzbS5PKI899AhcaBYfdbmMJqIztGtQ=;
+ fh=jY72J5Hg4aX43KASIe6sczDfUvq/oWwpe8SFXWkP4nc=;
+ b=Y7HnEw/xgiwuEe6z92bneg2wq7jVHy7z0meZhc7GbNntQZk7oiKndSsw/OYwk6oWBJ
+ 48C4AVtqezE/RfsNDWsgGxWO+WiMoK6rEKID+0ZjP0kiyeLj+eZ0CkjJBXMXZ7jhVVNW
+ VBXIbuRrfDd0wkvLbbsGdsyDsqul2BIhhvAvaErDsWJ3gUsf+CYWTDkwqv65NicGQZu1
+ gC7huKFrEQOaR4feCMZ9UmAsQdluMwAczj4wUHEhr03QPko70/u6Q7CElfj1nkiQpZEI
+ TBjGyY04J4gXN9ke9Zp3kvTo0goY+bSy1enQXQW7j2iWoK1gIkmYVoAT2G/VSdrK5y7e
+ h+Rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792489525; x=1793094325; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=veWA9VkXhn+l/tzbS5PKI899AhcaBYfdbmMJqIztGtQ=;
+ b=okyacly+B7JYo9ujVip018oQ9XbXak+YHDEPG1oKgTotCKwsuiLl/cCRzKcj9Vu+Wq
+ Ve+xOXN0nEsk4e+liqUjoqQGRDZTg1rL42pV6hPvdRB4lU/TMzbGd0CWs42qp4reIxEZ
+ eNtCa754NQdVDBaJ52dLEtmtlfJTGtb8CdZLf2LCRMdBFsKzEFE56QkHrPQFF45nA1mu
+ SyXw7vosDWXQJjC11lSpMmPy9b+xKS4LINfviuJhlwzYaw6bcjkdRmdhdjfI21ZqE3Tu
+ hGXwK46zW//nCBGg8ApEd0a9IdVAi22CXZV8HmK1NIk3XKMT6dcSS7NuMIWsVRZxv/QS
+ QayA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792489525; x=1793094325;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=veWA9VkXhn+l/tzbS5PKI899AhcaBYfdbmMJqIztGtQ=;
+ b=SYI9W2o0OEiGfMgQU4KoeW4CR3O+fZof4aYi2K/mPEdmaZhPIN56qU1892GRrXLLP1
+ IoXT3pn5hdQkc9tvksB34oZQVCeVwoyJCSIe+6jy6DVtMwomR6qz0qeyWi9LcBadAq9Z
+ 1UuDLe4TP1CTVY3kl68jO238j0krfY87sXUkgfvSQhIAQMcnNbvzqsElu8zFFQ7f75Jr
+ wJiEsLaZcqMhUMqLEBoA6KUsH2HgJNlYqQ825lehn1vWZILKExuX6McRhHtj1XZl3VDI
+ mPYW3mdpm+0WsYNVbE893xMBRF/dUwkK22mPXQ15pcYI93paYNyMLDvfBP9ZcSUltc3A
+ FLIQ==
+X-Gm-Message-State: AFq9FYLK3WND1fDVOCzepmWMY6K+fUCGnEihGS8Hs5URYby+Qjqj2lmJ
+ lcPvm6xbPQZc2m0CDDCNXCHUQz7t01kYkVIsxnem2qyJd4kodUPC6kIZilyz3h8zkkXCNXvmnnw
+ dJqUNJoBunVkIZFc0srLLT+5Ij7kLu3cX9AEs+MLrDVu3KI0JCGxlW4qqr+q1iy/otxPYqWHbKl
+ SQSwL+KQlH/ZOUwAYL75kCZLIWX7fwpSw=
+X-Gm-Gg: AYBFou1T7vtRhO5nYskUXFm07SfcMziRxL9ku6eRR7JGEWDf5PzsN7CIqcSi/aYmwA9
+ vMfxvcsIDFZc/XVVXvbXTPNPiRDWqX0uoS1w9nLqnIkX1ZyyZYLHemAPnLCeE0bprjLoDzZ5nBk
+ ILFGQ4HN+xLE43MT9hVeUVnwsq1A6WELrr0OjY6M1StWbNAFDPTDgPc7pLGKZSpmJ4NIzABVhur
+ r1+vT4pLEuyggMpXxw5IfnVgTb4qk/eNNBY3ccXiFQ54Wb0kjYhyhrWmv8=
+X-Received: by 2002:a05:690c:a610:b0:8b0:a28d:6444 with SMTP id
+ 00721157ae682-8b0f21b0445mr23395087b3.20.1792489525333; 
+ Tue, 20 Oct 2026 02:45:25 -0700 (PDT)
+X-Received: by 2002:a05:690c:a610:b0:8b0:a28d:6444 with SMTP id
+ 00721157ae682-8b0f21b0445mr23395017b3.20.1792489524865; Tue, 20 Oct 2026
+ 02:45:24 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+References: <20260816043451.2547-1-narimansayed28@gmail.com>
+ <20261007050718.926-1-narimansayed28@gmail.com>
+In-Reply-To: <20261007050718.926-1-narimansayed28@gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 20 Oct 2026 11:44:47 +0200
+X-Gm-Features: AclHuK_duW66xKwM6qU1stBP3ZICTl2UuUvL0d9LoR_LU_7Pjfbe1qWpELfouDM
+Message-ID: <CAJaqyWeWrFSw3ZBwgz3oKz41Ziz+uJfJxYuWTa2K_QMwCpChLw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] net/tap,
+ virtio-net: auto-detect MTU from host tap device
+To: Nariman Sayed <narimansayed28@gmail.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowangio@gmail.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,258 +135,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-21.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Propagate guest's PRQ response to host by writing to fault_fd.
-Create a new VTDPRQEntry to cache cookie for each fault group,
-this cookie is used to mark the fault group on host side.
+On Wed, Oct 7, 2026 at 10:55=E2=80=AFAM Nariman Sayed <narimansayed28@gmail=
+.com> wrote:
+>
+> This series adds automatic detection of the host tap device's MTU
+> and exposes it to the guest via VIRTIO_NET_F_MTU, addressing
+> gitlab.com/qemu-project/qemu/-/issues/3155.
+>
+> Currently, host_mtu=3D must be set manually on the virtio-net-pci
+> device, duplicating the MTU already configured on the host's tap
+> interface. This series adds a new mtu-from-tap boolean property
+> (default off) that, when enabled, automatically reads the backend's
+> MTU and uses it for the guest, avoiding the need to specify the
+> value twice.
+>
+> v2:
+>  - Addressed feedback from Eugenio Perez Martin: rather than
+>    checking for NET_CLIENT_DRIVER_TAP and calling tap_get_mtu()
+>    directly, added a generic get_mtu callback to NetClientInfo and
+>    a qemu_get_mtu() wrapper, following the existing qemu_has_ufo()
+>    pattern. virtio-net.c now calls qemu_get_mtu() without any
+>    backend-type check, so other backends (e.g. vhost-user,
+>    vhost-vdpa) can implement get_mtu in the future without
+>    requiring any change to virtio-net.c. (patch 2 is new as a
+>    result; patch 3 updated accordingly)
+>
+> The series is split into three patches:
+>  - patch 1 adds a helper to query a tap fd's host MTU (Linux only,
+>    with build-safe stubs for BSD/Solaris/stub backends)
+>  - patch 2 adds a generic get_mtu NetClientInfo callback and wires
+>    it up for the tap backend
+>  - patch 3 adds the new virtio-net property and wires it up,
+>    including a note on a config-space sizing timing issue
+>    discovered during testing
+>
+> Tested manually with a tap device configured for MTU 9000 and an
+> Alpine Linux guest, confirming the guest correctly negotiates
+> VIRTIO_NET_F_MTU and reports the expected MTU. Also tested by
+> Aniket Sahu on ppc64le/POWER10 with a SLES guest.
+>
 
-If there is either PRQ overflow or full error condition, propagate
-a success response to host for LPIG request with the PRQ requests
-dropped. For other error conditions, propagate response of invalid
-request.
+Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
----
- hw/i386/intel_iommu_accel.h   |  12 ++++
- include/hw/i386/intel_iommu.h |   6 ++
- hw/i386/intel_iommu.c         |   4 ++
- hw/i386/intel_iommu_accel.c   | 102 +++++++++++++++++++++++++++++++---
- hw/i386/trace-events          |   1 +
- 5 files changed, 118 insertions(+), 7 deletions(-)
+Thanks!
 
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index e0319749a5..0cc22b2cbb 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -20,6 +20,7 @@ typedef struct VTDAccelPASIDCacheEntry {
-     uint32_t fs_hwpt_id;
-     uint32_t fault_id;
-     int fault_fd;
-+    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
-     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
- } VTDAccelPASIDCacheEntry;
- 
-@@ -31,6 +32,9 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                                       uint64_t npages, bool ih);
- void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
- void vtd_accel_pasid_cache_reset(IntelIOMMUState *s);
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response);
- void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
- #else
- static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
-@@ -69,6 +73,14 @@ static inline void vtd_accel_pasid_cache_reset(IntelIOMMUState *s)
- {
- }
- 
-+static inline
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    return false;
-+}
-+
- static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
- {
- }
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 1842ba5840..5d44eac0ed 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -100,6 +100,12 @@ typedef struct VTDPASIDCacheEntry {
-     bool valid;
- } VTDPASIDCacheEntry;
- 
-+typedef struct VTDPRQEntry {
-+    uint32_t grpid;
-+    uint32_t cookie;
-+    QLIST_ENTRY(VTDPRQEntry) next;
-+} VTDPRQEntry;
-+
- struct VTDAddressSpace {
-     PCIBus *bus;
-     uint8_t devfn;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 81c53c6f5a..4c2347e7d2 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3380,6 +3380,10 @@ static bool vtd_process_page_group_response_desc(IntelIOMMUState *s,
-         response.response_code = IOMMU_PRI_RESP_FAILURE;
-     }
- 
-+    if (vtd_accel_propagate_page_group_response(s, rid, pasid, &response)) {
-+        return true;
-+    }
-+
-     if (vtd_dev_as->pri_notifier) {
-         vtd_dev_as->pri_notifier->notify(vtd_dev_as->pri_notifier, &response);
-     }
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index bcd361bae3..243501f137 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -17,6 +17,9 @@
- #include "hw/pci/pci_bus.h"
- #include "trace.h"
- 
-+static void vtd_write_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                uint32_t cookie, uint32_t code);
-+
- bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-                           Error **errp)
- {
-@@ -84,6 +87,46 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-     return NULL;
- }
- 
-+static void vtd_prq_handle_pasid_response(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                          IOMMUPRIResponse *response)
-+{
-+    VTDPRQEntry *prqe, *tmp;
-+
-+    QLIST_FOREACH_SAFE(prqe, &vtd_pce->vtd_prq_list, next, tmp) {
-+        if (prqe->grpid != response->prgi) {
-+            continue;
-+        }
-+
-+        vtd_write_fs_faultq(vtd_pce, prqe->cookie, response->response_code);
-+
-+        QLIST_REMOVE(prqe, next);
-+        g_free(prqe);
-+        break;
-+    }
-+}
-+
-+bool vtd_accel_propagate_page_group_response(IntelIOMMUState *s,
-+                                             uint16_t rid, uint32_t pasid,
-+                                             IOMMUPRIResponse *response)
-+{
-+    VTDAddressSpace *vtd_as = vtd_get_as_by_sid(s, rid);
-+    VTDAccelPASIDCacheEntry *vtd_pce;
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
-+
-+    if (!vtd_hiod) {
-+        return false;
-+    }
-+
-+    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-+        if (vtd_pce->pasid == pasid) {
-+            vtd_prq_handle_pasid_response(vtd_pce, response);
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
-                                              struct iommu_hwpt_pgfault *fault,
-                                              unsigned cnt)
-@@ -94,14 +137,42 @@ static void vtd_propagate_recoverable_faults(VTDAccelPASIDCacheEntry *vtd_pce,
- 
-     for (; cnt--; fault++) {
-         bool last_page = fault->flags & IOMMU_PGFAULT_FLAGS_LAST_PAGE;
-+        int ret;
-+
-+        ret = vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
-+                                   vtd_hiod->devfn, pasid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_PRIV,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_EXEC,
-+                                   fault->addr, last_page, fault->grpid,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_READ,
-+                                   fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+        if (!last_page) {
-+            continue;
-+        }
-+
-+        if (!ret) {
-+            VTDPRQEntry *prqe = g_malloc0(sizeof(*prqe));
- 
--        vtd_pri_request_page(vtd_hiod->bus, vtd_hiod->iommu_state,
--                             vtd_hiod->devfn, pasid,
--                             fault->perm & IOMMU_PGFAULT_PERM_PRIV,
--                             fault->perm & IOMMU_PGFAULT_PERM_EXEC,
--                             fault->addr, last_page, fault->grpid,
--                             fault->perm & IOMMU_PGFAULT_PERM_READ,
--                             fault->perm & IOMMU_PGFAULT_PERM_WRITE);
-+            prqe->grpid = fault->grpid;
-+            prqe->cookie = fault->cookie;
-+            QLIST_INSERT_HEAD(&vtd_pce->vtd_prq_list, prqe, next);
-+            continue;
-+        }
-+
-+        /*
-+         * vt-d spec 7.4.1:
-+         *
-+         * Hardware generates page group response with code of success for
-+         * PRQ overflow and PRQ full, with code of invalid request for
-+         * other error conditions.
-+         */
-+        if (ret == -ENOSPC) {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_SUCCESS);
-+        } else {
-+            vtd_write_fs_faultq(vtd_pce, fault->cookie,
-+                                IOMMUFD_PAGE_RESP_INVALID);
-+        }
-     }
- }
- 
-@@ -138,6 +209,22 @@ static void vtd_read_fs_faultq(void *opaque)
-                                      bytes / sizeof(faults[0]));
- }
- 
-+static void vtd_write_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                uint32_t cookie, uint32_t code)
-+{
-+    struct iommu_hwpt_page_response resp = {.cookie = cookie, .code = code};
-+    uint32_t id = vtd_pce->fault_id;
-+    int fd = vtd_pce->fault_fd;
-+    ssize_t bytes;
-+
-+    bytes = write(fd, &resp, sizeof(resp));
-+    trace_vtd_write_fs_faultq(id, fd, cookie, code, bytes);
-+    if (bytes < 0) {
-+        error_report_once("FAULTQ(id %u): write failed "
-+                          "[cookie 0x%x code 0x%x] (%m)", id, cookie, code);
-+    }
-+}
-+
- static void vtd_destroy_fs_faultq(VTDHostIOMMUDevice *vtd_hiod,
-                                   uint32_t fault_id, int fault_fd)
- {
-@@ -438,6 +525,7 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-     vtd_pce->pasid = pasid;
-     vtd_pce->pasid_entry = *pe;
-     vtd_pce->fault_fd = -1;
-+    QLIST_INIT(&vtd_pce->vtd_prq_list);
-     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
- 
-     if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index ad84d106a4..7bf4cddd38 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -78,6 +78,7 @@ vtd_device_attach_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int re
- vtd_device_detach_hwpt(uint32_t dev_id, uint32_t pasid, int ret) "dev_id %d pasid %d ret: %d"
- vtd_device_reattach_def_hwpt(uint32_t dev_id, uint32_t pasid, uint32_t hwpt_id, int ret) "dev_id %d pasid %d hwpt_id %d, ret: %d"
- vtd_read_fs_faultq(uint32_t fault_id, uint32_t fault_fd, ssize_t ret) "fault_id %d fault_fd %d ret: %zd"
-+vtd_write_fs_faultq(uint32_t fault_id, uint32_t fault_fd, uint32_t cookie, uint32_t code, ssize_t ret) "fault_id %d fault_fd %d cookie %d code %d ret: %zd"
- 
- # amd_iommu.c
- amdvi_evntlog_fail(uint64_t addr, uint32_t head) "error: fail to write at addr 0x%"PRIx64" +  offset 0x%"PRIx32
--- 
-2.52.0
+> Nariman Sayed (3):
+>   net/tap: add tap_fd_get_mtu() to query host tap MTU
+>   net: add generic get_mtu NetClientInfo callback
+>   virtio-net: add mtu-from-tap property for automatic MTU detection
+>
+>  hw/net/virtio-net.c            | 10 ++++++++++
+>  include/hw/virtio/virtio-net.h |  1 +
+>  include/net/net.h              |  3 +++
+>  net/net.c                      |  9 +++++++++
+>  net/tap-bsd.c                  |  5 +++++
+>  net/tap-linux.c                | 30 ++++++++++++++++++++++++++++++
+>  net/tap-solaris.c              |  5 +++++
+>  net/tap-stub.c                 |  5 +++++
+>  net/tap.c                      |  8 ++++++++
+>  net/tap_int.h                  |  1 +
+>  10 files changed, 77 insertions(+)
+>
+> --
+> 2.34.1
+>
+>
 
 
