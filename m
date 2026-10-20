@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E1C606A33E
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E924E60A260A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZOPmkaMg
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EixwMFHv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Q6-0006UF-Pr; Tue, 20 Oct 2026 06:50:14 -0400
+	id 1xJ7Nt-0002C5-8B; Tue, 20 Oct 2026 06:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Od-0003BZ-P6
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xJ7N9-00018O-BY
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Oa-0005Z8-Uj
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:43 -0400
+ id 1xJ7N6-0005Du-4W
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493317;
+ s=mimecast20190719; t=1792493226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jKM88emaTtDD8hNN+EMLi80BeL2n1f7ZRXAzTgl+JrI=;
- b=ZOPmkaMgvo6uFwaFECQZxpwUn+x+i00u2b3aVaVBdzNMMoHgBQolMSDwg0hpu+d3pvwriD
- OxhPuFamkx7PAOJNloGgJbfbFRzeU/MUd/5t2AbAP80SF+5TPvGw8VXnCy7Wwmrv+vRqQm
- EuEILLQDQXLtzOp4VtYu9QCF78eThIg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ABGJlqhjTzuYRZnmPc116ozStZtH+NrxbC+tSxh9ams=;
+ b=EixwMFHvTimPrYLZp7+w5IYqM2gBc2eRfW0oaQmhK0dKDRZN53jlO7IkGJRJ4yUyWklcKf
+ MIGKbasrVncQMU+cfbUt4L092DG4znK85OhlnNFSPK0EREu1jRc5mg21JkA2F+DPct9qVo
+ +D6/dHDgyMo2cNWpqGAYWZfIXpd26tQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-EQKPMv8wMpawhrKwHK50cA-1; Tue,
- 20 Oct 2026 10:48:33 +0000
-X-MC-Unique: EQKPMv8wMpawhrKwHK50cA-1
-X-Mimecast-MFC-AGG-ID: EQKPMv8wMpawhrKwHK50cA_1792493308
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-c5deni3IOC2wghL_mDuwjA-1; Tue,
+ 20 Oct 2026 10:47:02 +0000
+X-MC-Unique: c5deni3IOC2wghL_mDuwjA-1
+X-Mimecast-MFC-AGG-ID: c5deni3IOC2wghL_mDuwjA_1792493219
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57756195604D; Tue, 20 Oct 2026 10:48:28 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E2CAE1800BD4; Tue, 20 Oct 2026 10:46:58 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F5DC1956095; Tue, 20 Oct 2026 10:48:25 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 66E731956088; Tue, 20 Oct 2026 10:46:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:42 +0400
-Subject: [PATCH v7 25/65] riscv/virt: convert OnOffAuto properties to
- QAPI-aware registration
+Date: Tue, 20 Oct 2026 14:45:25 +0400
+Subject: [PATCH v7 08/65] qapi/gen: fix _module_basename for multi-dash
+ 'what' parameters
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-25-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-8-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,35 +130,34 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3989;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1135;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HRo91rA2atLaPMjCcy77uoSJBv27Cj9pfW470LYlxds=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZZn3Inx2fUnnD+uy0noJtEswlqC284ZfNax
- CJpcQgVj++JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWQAKCRDa6OEJdZac
- 5YyTD/sHV9okzYNJc6MkoRYx/8TowxhPLBhPsWuj+Z23OSrNnkhKkHnDExMsk5HmnvTa0ulRg4b
- LYQKIHIadpWN/XU7ugrsNMWvt2vE1M6WMh1J6VHifxNwfktdLDiRJbe0FDZnfd37CWdaQUUl2J8
- avTewGpI6EMGes/ro4NKDvyC4R0266xA2ma3nkF4giv5r4D9u10PkgS0JY1La1JPmg8jSCrBWSG
- h5SRiJTRRB838tgMyKtlieM2qvFkwYs6vxZta8mwMLWRCJ2qlrDou4X+w0mQmWe22ZDxnnKShlS
- 862qoPEe5fd+gL0bJwae3XjbgOWdIFsVxVAp8CGayp+xYpvHin9d0m0LqMai3fWlbmhL7Cfg1s1
- rydrYSQTeUYAMErEqGvu2WCnqBtBZtQFmwr15x6v5/bqPorKv4DQHwiVwdKURNyFdW+Nx3KFAfq
- AscOzqRwse2gfkIaC1/3VfU4l2KUfFX5H7n6u7Qmir7AEKGBJmV21sGsvEGiLanNfn6G5Mhk3t3
- rOWtlDBNgJ7TPddfv1DlKc4E1knF6kuaAYaQ0h/fdvNK4/n+iTgK2yAcTj5LqixHVyRzDDDdAX3
- AjXEd1EQ7S0ak0D07LG6vcNpzqsFF0hV1CHcYiqXo8BniMFmPKjS8rc/4CkqczHYdJv0WAwtWHl
- AkxiOqO7ZuvqssQ==
+ bh=OXQAJj92qnLHVy/ekT2tV/E7DqxlrqwyneXLdAaw748=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZYkpNZTiTu/0NKP25uG6QN+n4wrDZMxyVQO
+ X1gFQ2YGniJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWAAKCRDa6OEJdZac
+ 5Tm3EACDRom1wjYZ0S5SCUsfw8t+j56evvGukUBRwQKN2w3Du6uYAw4nS9RuGSZhu8Qnd+u5pMZ
+ RR4HP3oxzkczsRTA8h9qgVMNqhnT0wlElBiABH9tCI3YJUEmCvZ6BcLxuFPzfBeyc9GxW13b1zO
+ eFJpHhMeM/R3jK04zRuRqksv4/8kXnR6/wpqoTWxFKiLIHlDVBwA/CTfIs4nGprg3ZGZmRlb33o
+ EmNs25MODVt3L329BQIU0WG7OwYkXsYoGUdf4ZEbcr9CZywiZ8S0Rvx9fyqeYkVfaSlmqy1IM8D
+ gBphVT/878S1qnGZqgmJs2Mb/btw8aPl7PQPV5lHDeMKBfwNHCoePHXNHb7C36F9khg3w29QQGl
+ cKkIx32v/w3/L0dR1CWVI+YkbZ7xfh8oZJabF87gg5+jzpgm0AhaVUIgHU33CwJpYm2u62IUU6O
+ GUxREslEK8bfz4pPnfxyzQVd8JIjSZoz7J2ip2+0PYyI8mftsOWTAFnUU8jnITGf2UjSAGRfXtR
+ DTXKPDqAwHdk7bX3rSvoybxG2RnFNFluw+yjjhDEyY/RhYpOJItxVCbcr+e3/wkbhBjbIiHOO14
+ e3pUpNugRf71Qh75I/eHU/GjXdHLvK/PibBXQ7ZxPFfUTuBYAVOQILNa2K4bAzoDOqwVFf9OOq/
+ UAbLSh+VqcTxYTw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,113 +176,32 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert the acpi and iommu-sys OnOffAuto properties from manual
-visitor-based callbacks to property_add_qapi_enum().
+The re.sub() call replaces every hyphen in 'what' with the system module
+infix. This produces broken filenames for multi-hyphen names (e.g.
+'qapi-type-infos' becomes 'qapi-builtin-type-builtin-infos').
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Add count=1 so only the first hyphen is replaced.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/riscv/virt.c | 52 +++++++++++++++++++++++-----------------------------
- 1 file changed, 23 insertions(+), 29 deletions(-)
+ scripts/qapi/gen.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d4b501802f60..c33a279f1e5c 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -57,7 +57,7 @@
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
- #include "hw/acpi/aml-build.h"
--#include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/uefi/var-service-api.h"
+diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
+index 0c9b8db3b024..690187d4280d 100644
+--- a/scripts/qapi/gen.py
++++ b/scripts/qapi/gen.py
+@@ -300,7 +300,7 @@ def _module_basename(self, what: str, name: str) -> str:
+                 ret += '-' + os.path.splitext(basename)[0]
+         else:
+             assert QAPISchemaModule.is_system_module(name)
+-            ret += re.sub(r'-', '-' + name[2:] + '-', what)
++            ret += re.sub(r'-', '-' + name[2:] + '-', what, count=1)
+         return ret
  
-@@ -1049,21 +1049,16 @@ bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
-     return s->iommu_sys == ON_OFF_AUTO_ON;
- }
- 
--static void virt_get_iommu_sys(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static int virt_get_iommu_sys(Object *obj, Error **errp)
- {
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
--    OnOffAuto iommu_sys = s->iommu_sys;
--
--    visit_type_OnOffAuto(v, name, &iommu_sys, errp);
-+    return s->iommu_sys;
- }
- 
--static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static void virt_set_iommu_sys(Object *obj, int value, Error **errp)
- {
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
-+    s->iommu_sys = value;
- }
- 
- bool virt_is_acpi_enabled(RISCVVirtState *s)
-@@ -1071,21 +1066,16 @@ bool virt_is_acpi_enabled(RISCVVirtState *s)
-     return s->acpi != ON_OFF_AUTO_OFF;
- }
- 
--static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
--                          void *opaque, Error **errp)
-+static int virt_get_acpi(Object *obj, Error **errp)
- {
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
--    OnOffAuto acpi = s->acpi;
--
--    visit_type_OnOffAuto(v, name, &acpi, errp);
-+    return s->acpi;
- }
- 
--static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
--                          void *opaque, Error **errp)
-+static void virt_set_acpi(Object *obj, int value, Error **errp)
- {
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &s->acpi, errp);
-+    s->acpi = value;
- }
- 
- static const HotplugHandler *
-@@ -1183,17 +1173,21 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-         object_class_property_set_description(oc, "aia-guests", str);
-     }
- 
--    object_class_property_add(oc, "acpi", "OnOffAuto",
--                              virt_get_acpi, virt_set_acpi,
--                              NULL, NULL);
--    object_class_property_set_description(oc, "acpi",
--                                          "Enable ACPI");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "acpi",
-+        .description = "Enable ACPI",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_acpi,
-+        .set = virt_set_acpi,
-+    ));
- 
--    object_class_property_add(oc, "iommu-sys", "OnOffAuto",
--                              virt_get_iommu_sys, virt_set_iommu_sys,
--                              NULL, NULL);
--    object_class_property_set_description(oc, "iommu-sys",
--                                          "Enable IOMMU platform device");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "iommu-sys",
-+        .description = "Enable IOMMU platform device",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_iommu_sys,
-+        .set = virt_set_iommu_sys,
-+    ));
- }
- 
- static const TypeInfo virt_machine_typeinfo = {
+     def _module_filename(self, what: str, name: str) -> str:
 
 -- 
 2.56.0.116.g6de20f6092dc
