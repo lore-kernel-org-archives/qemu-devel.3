@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0E606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF5C606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iNGh3B3u
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UXmfB+1e
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Qb-00081Y-9d; Tue, 20 Oct 2026 06:50:45 -0400
+	id 1xJ7TR-00038a-BO; Tue, 20 Oct 2026 06:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Pr-0005dH-Uo
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:00 -0400
+ id 1xJ7RA-0000Mx-S0
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Pp-0005td-CD
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:59 -0400
+ id 1xJ7R7-0006Vq-Sv
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493396;
+ s=mimecast20190719; t=1792493477;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SaO9TD83O1mESMfVgH3WuoSzmG3APdCIb1nj0sICWaY=;
- b=iNGh3B3uckSXQwe9OYfQbFlK5rbHREk4cSMdE4P9sG29Kx/eBL4SbKqjV0oHAN/m8WFENn
- uUkd8KFK05JTGf/8yu75d9RyGOY1gKGnBREi2u+ogkRUHgoAj3fO9V+/ZOV5f7xMwoVuhF
- pS/690y5XrhGYatbpf6+wNw9LfHRkOk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AzOqWKFaDt1dcUvSh5TH4ogfAdXt1H3DxJt5OXlYfGQ=;
+ b=UXmfB+1eRqoFqt+6qRebqrY3LwruqULdHzmDivgd7cpu5rMSykCK9Ef+d+itGS5d7VrqE9
+ IvwVNo6dEvagsGBeB5sWkrGm+CTB2+fLO5GD3kPqGHng+pGAcSAYcQnVrH2ZWoLsHU0khK
+ hP6zRo2cZI8C6ljutrfl6Q3w05CdmZk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-206-FotbGa2bN3uiQWrd6VJL7Q-1; Tue,
- 20 Oct 2026 10:49:52 +0000
-X-MC-Unique: FotbGa2bN3uiQWrd6VJL7Q-1
-X-Mimecast-MFC-AGG-ID: FotbGa2bN3uiQWrd6VJL7Q_1792493388
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-D7y_ed00OAaymLbt3bjJCQ-1; Tue,
+ 20 Oct 2026 10:51:11 +0000
+X-MC-Unique: D7y_ed00OAaymLbt3bjJCQ-1
+X-Mimecast-MFC-AGG-ID: D7y_ed00OAaymLbt3bjJCQ_1792493466
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CFF51800A30; Tue, 20 Oct 2026 10:49:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC19B18011FD; Tue, 20 Oct 2026 10:51:06 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F8041800677; Tue, 20 Oct 2026 10:49:43 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D664E30002CD; Tue, 20 Oct 2026 10:51:03 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:56 +0400
-Subject: [PATCH v7 39/65] i386/cpu: convert strList property to QAPI-aware
- registration
+Date: Tue, 20 Oct 2026 14:46:11 +0400
+Subject: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-39-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,24 +129,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=927;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1182;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/KSVjwfA6NJABrU8j/+rplEihE7WbSuvvPqkwS91nlk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10Zbi8OK49WAzCOnFkroErxJhCPevzYVZbRRQ
- puH2R/pXLCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWwAKCRDa6OEJdZac
- 5Za+EAC4HYxAzDB6R6B/Noe10vMQK3B2SHQlClijhbENvmsvZv+GkuP6ofyL3AMjQq7g/lGOrmr
- kZR2Ol0ojf7GsTbPDPZC1kjtzUdQMn/LtO42Lk23fn3xUsw2aW27mj3TXI7nh1DDVWX3jgPxwiK
- ydRbU6lC/4F6A2VQWjdFzU4fbU2KK61YYgUEglYkpb5R7yjvLJ7W4mKRBchEfEtR49x12Pq5twp
- DWF2vI63kyQ/P+Qvouz+2AbBduW0y+965Qh/qC22TeE2/sEmP9wJbYUB2zJytThfAWj2eyNiueK
- GizBJDEuMzW1gBvPXs4efEsA9PwP5/qk6kJHD/DYuianSi4tR+5ENhbyKrBLusUCPSLdvQwkAh4
- 3U1ofLR/Z2pxMxJR4y8fxT7RNDj7Jtl9kLNLxZEhSQqnkKDtN58/dHtfzjnHnxsuGU/ntoYHAxO
- 4HYyMk9ilCrrh200rMF5WADd68dXw0wcnmHZMt7J3ihT8FcMQw7g+jVnCiYfY6yGwqvW8n6STUT
- +U6Uzo4zLAOoAHD699r7p6EkjoKe8OT7lqPFtrwIyM+Tpv0Sh47SdRwNoD8CcP6tycIaDAyB5lZ
- jlNKLfm+Ov/X+M47Kj5g0z3/DpvIrUhDJ2+rTO5vF4Sgl8eVMwqfuLYlVB0lTw7eQ9ys7QpVHig
- U3bIykrc/pNCZdA==
+ bh=Rc9Kn1ykFR1030A/T3Qsw/MLRtZoT0IcFryuHUpEgHo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZcBKB9OckTgPDc5ceinUI9Ks8T8mQpbSHjR
+ wt32qduSASJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXAAKCRDa6OEJdZac
+ 5UlxD/0aesvLeJMhDPNK4VKMeyOaPPsCQtFR4qFG7KlCXynT1T2vJymf0cc0GzQxvMuqQi7QkP3
+ Nq+vx1h0wS8aWYock4+0cMRoNcvRyjdcEIEaz+hY9fYszOClGXo+WgnVvXIP/ymzT6wOrtEm8zi
+ KyTeNOPlbml9T8xE5XCRMCuRDYgQQ/C50LkGOdvWZPi4/QPg61NcRcEdwgwyKWGA//4KF53Etv9
+ YF57/ckC+h0DIpVltVP7DozmL6yMRAQhvvbN/k7Wvocf991FXI4FBBQjx3DjWlI02TWx1ZbTHj7
+ Ul0nCa4y4Trxncc4kvuErZYreWkXTb3OM10IrtqT0Cxjebhspuf6b49Tpbr3s/b8iiX9czsUwXA
+ p89Q53jzV6hkwxaqFNslKASETfvPDs+MhV9lykZnoFlxSdUnXT9X0E7aN2lUv3YRzxnc6Jff11W
+ T3pb97gVWEOi/Odv9Mpm+kqrjqMdiRufTDS9y2rm+bzyC4oRVO5awihl+6ojLB1OJGVVwkwc7rQ
+ Zbl0T+Ercm3AhwHa5/RMvPncaAuJqvWSIsEqW1vouhls8x0QJ+F7U8ndzLr4k1Xw79jazen5h9J
+ arXpcL+C7MupGvk2Kx7ddRWgG+DbBn8bd6xO139DIRMT2by8ApQ+rFpyVEq/Uj7YjDAk1NxdvS0
+ GHFEBLCP2lMK0Ow==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -176,26 +175,34 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+PciDevfn is a bit special, since it accepts integer and string as
+setter, but only output integer as getter.
+
+Unfortunately, we can't declare an alternate str|int QAPI type for it,
+since: branch 'string' can't be distinguished from 'integer'
+
+Rather than declaring it as "str", use the common type instead.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/cpu.c | 3 ++-
+ hw/core/qdev-properties-system.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3601a56e6848..0a9acfa74600 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -11001,7 +11001,8 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
-      * QMP command: they list the features that would have prevented the
-      * CPU from running if the "enforce" flag was set.
-      */
--    object_class_property_add(oc, "unavailable-features", "strList",
-+    object_class_property_add_qapi(oc, "unavailable-features",
-+                              &strList_type_info,
-                               x86_cpu_get_unavailable_features,
-                               NULL, NULL, NULL);
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 5bfdfe1ab9d9..3381de1144d6 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -904,7 +904,8 @@ static char *print_pci_devfn(Object *obj, const Property *prop)
+ }
  
+ const PropertyInfo qdev_prop_pci_devfn = {
+-    .type  = "str",
++    /* The formatted string accepted by the setter is a CLI convenience. */
++    .type  = "int32",
+     .description = "Slot and optional function number, example: 06.0 or 06",
+     .print = print_pci_devfn,
+     .get   = qdev_propinfo_get_int32,
 
 -- 
 2.56.0.116.g6de20f6092dc
