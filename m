@@ -1,113 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADD6606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694C2606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kLoptXId
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hGWp7yu9;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=XvBsNv8s
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJAKv-0001tb-DF; Tue, 20 Oct 2026 09:57:05 -0400
+	id 1xJAMq-0002gh-Ms; Tue, 20 Oct 2026 09:59:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xJAKt-0001tH-9A
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:57:03 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xJAKp-00067g-Qy
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:57:02 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-70059e4dab6so2146371eaf.3
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 06:56:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792504617; cv=none;
- d=google.com; s=arc-20260327;
- b=a62+SLFiiAUG7OTh6gB/VOXfdwVR9+DK6aBiY1Z1Voa1g8kvO6lFiIIgdMIeUn+0RD
- BPKdPgPFQmoe1G7BZLBjTJDAZvg6NCYrc+XCKtlMbb1zFTrrLeO+itWmnUA5Y9F3wR1S
- 8FBd/x37Gs6hXts+wbEnDI5q9ctUpPL+McSacFYQlZcnlvUAc0nYG91itJpcDHlWoeSC
- tqQkLcHipW+EjqajgOEZaRBW9UoHpun0gbUrLs6/GMuqpskUEURaY+CK6r4PLOskjVeJ
- RlBcDCilDDCV7hUi6l7vYPlTBu47qU71RIX0khmF9+pmgngo9Nn2+9D7DxIv+ceaX5I4
- zvpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:dkim-signature;
- bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
- fh=uHsInzl9zV3RMtTep5HATHFWXDawVrBpmXDlZsDBuQY=;
- b=A2RnXUd+RI9fymDK7jFYVgcCEZaF2cyRygfL3dviWFwO+2uQ3SvYgaNjkt/IdE4H8R
- NrtwqlcxVWPkgED30yIRKzvfyRbKiS3xohMC2FQLow0eDqUKFsxB+KRK03qOFE82i5KV
- Qggr0afjus5c18KcYILAXZSf0MiFOccsRXcWEH0CMDE2+GyR+c99y7XayDWGJxjoDh5p
- xdwhGwg1whNoYDYHfb6W02xeK+1oTTh+4ueZOIMhqQm7FxG2O4InyOo/I/ujullPY8+L
- 7eAOk9wAYuhnrffxrHnlMICQ+tMMwrK1KEjuOdJLvpftC+AOZsxYf2X9c1oVps1A7qbm
- G1Vw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJAMo-0002fc-Fj
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:59:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJAMm-0006IF-8n
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:59:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792504738;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=gVdvAAPzpUEpLB0DBPtluBhzh1p3s9Od7CtFRQOefYk=;
+ b=hGWp7yu9sdUGn8dPdBZ78G+X9lC4f+as4sVxGkyhoPUruGEv6z5cvr/N5bHgNN7wj3H65M
+ 5d1BXbD4z1RqPg8YN5Tx6xJWMPGt1qCiD66ERwIeIBGQ553jSNDk2DW1smJivytxUAn9YA
+ 2a1aDlfogkd4EOmx0/V6KC6Tt5LDDRU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-D79yfZoyMiaR-OroaNOXbA-1; Tue, 20 Oct 2026 13:58:51 +0000
+X-MC-Unique: D79yfZoyMiaR-OroaNOXbA-1
+X-Mimecast-MFC-AGG-ID: D79yfZoyMiaR-OroaNOXbA_1792504730
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48dff112136so2411663f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 06:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792504617; x=1793109417; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
- b=kLoptXIdx8efPV21/DMIxlEr/bAVN7ikbXuTWKgcWrYgveJMERK80yVPUeOLhxlkAo
- 5zeOS+hUwZztB09FiDztvRsDY7+Uzo5yC7VpQEC+IOcDStcpa+UB/Z9BmUbEMzSXdBBK
- RtF5WTiPLAznU9by9zSayPajK8zMm+bO7n35RBHwb8XB4nSBJEJF6T4YWB0mTkXgUW0o
- c5Qt5aUgT42haMsO1r7C2R05/9+GL7QOcDZjSwUBJbI2sqvRX/S6LVMDARt3CWUnuIb5
- U8e0LkcpmweRKVcaW3kpbgZhxzT0ffsxwMAB+NuyrL4gpdWSK4zG9lte63SajTrwhayi
- PhFg==
+ d=redhat.com; s=google; t=1792504730; x=1793109530; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=gVdvAAPzpUEpLB0DBPtluBhzh1p3s9Od7CtFRQOefYk=;
+ b=XvBsNv8slFbUT9iDhqI8dcL6xOjd2Cl2/c/w1UtaAOZU9dhL7Pro3UK0fj0eJ8dlaA
+ SPttaN6Y18fBC2ImbPzj/uHP9CsVoL1x6xWY1JB9sA0FJ5GGH8OZoh3eHg7CAWeLpVVk
+ 2QO6fB6NqwRZ4NT9Kb7c11nV9k6wwd0KoGEv6ot7Jpv5aucasaqmPcMY8WmIQ5R1Rfxh
+ vkJkm0KdSwLlA58ApK7SnVhInNSX5EpvJltl5eJSQyowgdv4LTQaR2tBHUwIH395pM79
+ OhfuwPaOdhX1TU8dJKd1OWkcbxkeIGo/WGXGNxcfKQj93rRfjRf4gfTt70SUTCnR3EcG
+ eumA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792504617; x=1793109417;
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PYrVIC/FurzBuxniUjuP52UXuymUgdhcpGxmiAYpqow=;
- b=u3MHwxEHwOZGKS+EItyAXUpsF9zJdcRSYwYqK3HpQqvaGxJMJOBItBAgujO0Cyah5Z
- wXzlxIspoJpm+wGpEwtr/aymp16HKaUQT9fkeKaUJH04+WEz+MnsHwEaLVbj7X7zPMu/
- zo9LpC5G1PevmHzPr8Z3x4HHS+7JS52QWRIPT9E0B29pKC42sEd8f0NWEOaWqCHgIvvY
- 54RQ3EFJBZiOC0cCCcBI+N2Z7EnvFxsVNDO0Z3EQ8OBoWUd4+jtjX7sn1Y+UwT7k5cAP
- D/05evHuRnT+RE0Maf7aTpCh25/Eg2/ncsRkhtjKR0j2IVE9uidEkdkhYskcMvyydYs8
- opbw==
+ d=1e100.net; s=20260707; t=1792504730; x=1793109530;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gVdvAAPzpUEpLB0DBPtluBhzh1p3s9Od7CtFRQOefYk=;
+ b=YF38y1aCb+bFkJ7a7neBn6bn8G5XRXT/flh4tDGxoGtxMqrUGtvZB1Qmch1owECKbb
+ G/vbDN5uJ2Xq+o4eUH+EfIW43AFBQhArkLNOIiGLkI4bwkMjZ/vt8nMs3EJOFkSVVYeQ
+ M+oQuF3tkk3b261oKiLLqN2F+zn8DtCRaxsxbUhHBcLB9/snuNaFExY9F0CFJmBxxvZO
+ fpTNhRioQOdiiHMGOQXEKa66r2LPnbKPQDdIZRFnHA23xRay+aXFbAxqHOeHAU3otMoI
+ f3bxYlGClqc51ExRqKistDKMdFaoOVNDETawh6WcP2Yv/UVpIWZMWhR/k02QHSadt53q
+ 5uEQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxSw3Bd8CNGhbrdGnhyMpXRneGR1GF1aDCF/kS9WESVW1uOAL8hKZXCFuGbK9IapaNhQd3qPN11YDz3@nongnu.org
-X-Gm-Message-State: AFq9FYKveMFO31NlhYCKFSGLcc4YYJyEZsMvOtPOQR1jRyeuBizSdAHx
- v5l/VzzTag8YIoihIaobZedKfqlQK54e+oqnH4dIMhvspzGKC4lpktpdgfCvQ0sHs8+oTUPZ878
- vKCyoA88yXC6hMwGG16JUmGlTcra2So8=
-X-Gm-Gg: AYBFou0wCeb9R/qQi8jIqnhCEoWOcfU6XwGIB1HB35JeFiPNUiRfD8cN/5FlZ+T5u3q
- KOMwBYs4tb3Cqm7W5jT2lN27cF6ZcPPaIl6g/PwU8YQBctgYabevzl+lM9uDZqjbSoEhw03LtRG
- 34YexWQzuAEaFxsow3cvulm3GPaODl7qXTlKWZgVxNTY21oEpmwJ3vbWLfPhRGF8edlcGw1NimZ
- qqRooDbmmH0OXYXWEQomaZZIeQTSHVWcqgHuHLVeAL2/H8jt8GEmWnlqZJqbmiumdQ0F5mi73tv
- VimXxpazPHt0NZEXVTHfdjYAfBiNOl19Z6BJFz/9xNySJN8vUxK+mRbtKV9VAj85Ob7sbJZaU+y
- HDcJpLPmH5wor1ArxKGpbcye3RJZrSvmfKrlKJVo=
-X-Received: by 2002:a05:6820:1c87:b0:708:95ad:6777 with SMTP id
- 006d021491bc7-70895ad691cmr430196eaf.21.1792504617181; Tue, 20 Oct 2026
- 06:56:57 -0700 (PDT)
-Received: from 101988054943 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Oct 2026 08:56:56 -0500
-Received: from 101988054943 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 Oct 2026 06:56:55 -0700
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-In-Reply-To: <20261020033755.2618640-1-jamin_lin@aspeedtech.com>
-References: <20261020033755.2618640-1-jamin_lin@aspeedtech.com>
+ AKwUvBxnYc4tPIBCsI9uH3dtGKQfPJD5zA+Lf0/4wsQrxp9MKkmYJMxM5pLC+IzxFlQNETACEqYuD3i5iLjB@nongnu.org
+X-Gm-Message-State: AFq9FYICEfQomV5mDSaiiPhU4LwHkR4Ldw+6K19NmK/i08OuIRLqlAVn
+ ZDEUO8rY7Ak9DIKK0ibCQCDeoGDW7FOHbBvmq0xdmR4ISPxTQ+CVUqExePfKQ5+87OnAwKbkQgF
+ Iw2iLmRKUXHxFbFPeg+v/jZ7o4I8AqwdAQXTzx5Uih2Y83mOSNckCNi4D
+X-Gm-Gg: AYBFou2LThaoR/TwrqanouZzFdocmAe2Ws6/TauRh8BW8ZPOv0FBKEo01as1/Ko/2vm
+ Q0AU2AYWb8qjHZ7XwyYj41MJ+Q/rXAp0HFt6SsOQywct+jfV2HpknrFzeAN36IzCmkvpHiTq2kj
+ mFOvt4UaK1XIaJQFBADPkoCtIMNPKzDo57Dij950AxK6k9TaYw7sawBszOEHt9R4XZIBracygVQ
+ abJGnALT4rZMOZEGL55OuC2iVqSr3Jv2lnSMzgigreVY4K0J4VyYsNS0EoOdoW2FzhQy5edyVHm
+ B0z0vgOI4mv5re+wMMXnFGpvDFLWyn5g83Xl+R6c1CA/JIdJjRuPdShmQuVZ5G3nAyUFzgiZ
+X-Received: by 2002:a05:600c:4e11:b0:4a1:811c:8069 with SMTP id
+ 5b1f17b1804b1-4a1d75e37fbmr222553535e9.8.1792504730001; 
+ Tue, 20 Oct 2026 06:58:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e11:b0:4a1:811c:8069 with SMTP id
+ 5b1f17b1804b1-4a1d75e37fbmr222553155e9.8.1792504729559; 
+ Tue, 20 Oct 2026 06:58:49 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.113.103])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1cca26dc8sm255770615e9.3.2026.10.20.06.58.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 06:58:48 -0700 (PDT)
+Message-ID: <8bcef912-1471-4443-a3ab-a30099adebdc@redhat.com>
+Date: Tue, 20 Oct 2026 15:58:47 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 Oct 2026 08:56:56 -0500
-X-Gm-Features: AclHuK_NWJ12iseKrcoe_wWJEXmro4aWS5iA0HX6lYcjnre-Ar8fIXuDwNKs504
-Message-ID: <CAGaQod+sDwsjEYt54U-ac7vEcdKEtSdvqy4SxUx01xe4DA9Jiw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/pci-host/aspeed_pcie: Fix global MSI setting during
- class initialization
-To: jamin_lin@aspeedtech.com
-Cc: peter.maydell@linaro.org, philmd@oss.qualcomm.com, clg@kaod.org, 
- kane_chen@aspeedtech.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- troy_lee@aspeedtech.com, qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f7251f065e460012"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=marcelomanzo@gmail.com; helo=mail-oo1-xc33.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] block: Print simple help text when calling "-blockdev
+ help"
+From: Thomas Huth <thuth@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260914090036.125300-1-thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20260914090036.125300-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,150 +162,98 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000f7251f065e460012
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Reviewed-by: Marcelo Manzo <marcelomanzo@gmail.com>
-Tested-by: Marcelo Manzo <marcelomanzo@gmail.com>
-
-Looks right to me: it sets the flag where designware.c does, once an
-Aspeed RC is actually realized.
-
-I tested it. On raspi4b a qemu-xhci on pcie.1 now ends up with
-msix=3Doff, so it falls back to INTx; without the patch it is msix=3Dauto
-and MSI-X is wrongly enabled. On ast2700-evb a qemu-xhci on each of its
-PCIe buses (pcie.0-2, pcie.rc0-2) still gets msix=3Dauto, so MSI-X is
-still available where an Aspeed RC is present. I have not run the
-ast2700 functional tests.
-
-Thanks for the quick fix.
-
-On Mon, Oct 19, 2026 11:38 PM, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
-
-> The ASPEED PCIe class may be registered for machines that do not
-> instantiate a PCIe root complex. Updating the global msi_nonbroken
-> flag from class_init() therefore affects unrelated machines.
->
-> Defer the update to the per-device realize handler, so the flag
-> changes only when an ASPEED PCIe root complex is actually
-> instantiated.
->
-> Reported-by: Marcelo Manzo <marcelomanzo@gmail.com>
-> Fixes: f002aa35f320 ("hw/pci-host/aspeed: Add AST2600 PCIe config space
-> and host bridge")
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+On 14/09/2026 11.00, Thomas Huth wrote:
+> Other command line options like "-chardev", "-netdev" or "-device"
+> already present the user with a list of available parameters, but
+> when running "-blockdev help", there is currently only an error
+> message. There is already the possibility to run "-drive format=help",
+> but it does not seem to be documented, so this is not very useful
+> for the average user. Thus let's improve this situation by providing
+> a proper list of available drivers when running QEMU with
+> "-blockdev help".
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/pci-host/aspeed_pcie.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index b46eb74234..ceb010f213 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -181,6 +181,8 @@ static void aspeed_pcie_rc_realize(DeviceState *dev,
-> Error **errp)
->      g_autofree char *dram_alias_name =3D NULL;
->      g_autofree char *root_bus_name =3D NULL;
->
-> +    msi_nonbroken =3D true;
+>   v2: Don't re-use the code from "-drive format=help" and print the
+>       help in a better readable way instead
+
+Ping?
+
+>   include/block/block-common.h |  1 +
+>   block.c                      | 15 +++++++++++++++
+>   system/vl.c                  |  7 +++++--
+>   3 files changed, 21 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/block/block-common.h b/include/block/block-common.h
+> index 895ea175413..c76a72c1220 100644
+> --- a/include/block/block-common.h
+> +++ b/include/block/block-common.h
+> @@ -583,5 +583,6 @@ char *path_combine(const char *base_path, const char *filename);
+>   char *bdrv_get_full_backing_filename_from_filename(const char *backed,
+>                                                      const char *backing,
+>                                                      Error **errp);
+> +void bdrv_show_help(void);
+>   
+>   #endif /* BLOCK_COMMON_H */
+> diff --git a/block.c b/block.c
+> index f0a6042e616..895d6db5acf 100644
+> --- a/block.c
+> +++ b/block.c
+> @@ -524,6 +524,21 @@ bool bdrv_uses_whitelist(void)
+>       return use_bdrv_whitelist;
+>   }
+>   
+> +static void bdrv_help_format_print(void *opaque, const char *name)
+> +{
+> +    if (bdrv_format_is_whitelisted(name, false)) {
+> +        printf("%s\n", name);
+> +    } else {
+> +        printf("%s (read-only)\n", name);
+> +    }
+> +}
 > +
->      /* PCI configuration space */
->      pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
->      sysbus_init_mmio(sbd, &pex->mmio);
-> @@ -294,8 +296,6 @@ static void aspeed_pcie_rc_class_init(ObjectClass
-> *klass, const void *data)
->
->      hc->root_bus_path =3D aspeed_pcie_rc_root_bus_path;
->      device_class_set_props(dc, aspeed_pcie_rc_props);
-> -
-> -    msi_nonbroken =3D true;
->  }
->
->  /*
-> --
-> 2.43.0
->
+> +void bdrv_show_help(void)
+> +{
+> +      printf("Available blockdev drivers:\n");
+> +      bdrv_iterate_format(bdrv_help_format_print, NULL, true);
+> +}
+> +
+>   typedef struct CreateCo {
+>       BlockDriver *drv;
+>       char *filename;
+> diff --git a/system/vl.c b/system/vl.c
+> index 9bd7664b85c..dc93e8737cb 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -2960,7 +2960,10 @@ void qemu_init(int argc, char **argv)
+>                             HD_OPTS);
+>                   break;
+>               case QEMU_OPTION_blockdev:
+> -                {
+> +                if (is_help_option(optarg)) {
+> +                    bdrv_show_help();
+> +                    exit(EXIT_SUCCESS);
+> +                } else {
+>                       Visitor *v;
+>                       BlockdevOptionsQueueEntry *bdo;
+>   
+> @@ -2973,8 +2976,8 @@ void qemu_init(int argc, char **argv)
+>                       visit_free(v);
+>                       loc_save(&bdo->loc);
+>                       QSIMPLEQ_INSERT_TAIL(&bdo_queue, bdo, entry);
+> -                    break;
+>                   }
+> +                break;
+>               case QEMU_OPTION_drive:
+>                   if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
+>                                                optarg, false)) {
 
---000000000000f7251f065e460012
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html><body><div dir=3D"auto">Reviewed-by: Marcelo Manzo &lt;<a href=3D"mai=
-lto:marcelomanzo@gmail.com">marcelomanzo@gmail.com</a>&gt;<br>Tested-by: Ma=
-rcelo Manzo &lt;<a href=3D"mailto:marcelomanzo@gmail.com">marcelomanzo@gmai=
-l.com</a>&gt;<br><br>Looks right to me: it sets the flag where designware.c=
- does, once an<br>Aspeed RC is actually realized.<br><br>I tested it. On ra=
-spi4b a qemu-xhci on pcie.1 now ends up with<br>msix=3Doff, so it falls bac=
-k to INTx; without the patch it is msix=3Dauto<br>and MSI-X is wrongly enab=
-led. On ast2700-evb a qemu-xhci on each of its<br>PCIe buses (pcie.0-2, pci=
-e.rc0-2) still gets msix=3Dauto, so MSI-X is<br>still available where an As=
-peed RC is present. I have not run the<br>ast2700 functional tests.<br><br>=
-Thanks for the quick fix.<br></div></body></html><br><div class=3D"gmail_ex=
-tra"><div>On Mon, Oct 19, 2026 11:38 PM, Jamin Lin &lt;<a href=3D"mailto:ja=
-min_lin@aspeedtech.com">jamin_lin@aspeedtech.com</a>&gt; wrote:<br><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc s=
-olid;padding-left:1ex">The ASPEED PCIe class may be registered for machines=
- that do not<br>
-instantiate a PCIe root complex. Updating the global msi_nonbroken<br>
-flag from class_init() therefore affects unrelated machines.<br>
-<br>
-Defer the update to the per-device realize handler, so the flag<br>
-changes only when an ASPEED PCIe root complex is actually<br>
-instantiated.<br>
-<br>
-Reported-by: Marcelo Manzo &lt;<a href=3D"mailto:marcelomanzo@gmail.com" ta=
-rget=3D"_blank">marcelomanzo@gmail.com</a>&gt;<br>
-Fixes: f002aa35f320 (&quot;hw/pci-host/aspeed: Add AST2600 PCIe config spac=
-e and host bridge&quot;)<br>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@oss.q=
-ualcomm.com" target=3D"_blank">philmd@oss.qualcomm.com</a>&gt;<br>
-Reviewed-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" =
-target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
-Signed-off-by: Jamin Lin &lt;<a href=3D"mailto:jamin_lin@aspeedtech.com" ta=
-rget=3D"_blank">jamin_lin@aspeedtech.com</a>&gt;<br>
----<br>
-=C2=A0hw/pci-host/aspeed_pcie.c | 4 ++--<br>
-=C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c<br>
-index b46eb74234..ceb010f213 100644<br>
---- a/hw/pci-host/aspeed_pcie.c<br>
-+++ b/hw/pci-host/aspeed_pcie.c<br>
-@@ -181,6 +181,8 @@ static void aspeed_pcie_rc_realize(DeviceS<wbr>tate *de=
-v, Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0g_autofree char *dram_alias_name =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0g_autofree char *root_bus_name =3D NULL;<br>
-<br>
-+=C2=A0 =C2=A0 msi_nonbroken =3D true;<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0/* PCI configuration space */<br>
-=C2=A0 =C2=A0 =C2=A0pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);<br>
-=C2=A0 =C2=A0 =C2=A0sysbus_init_mmio(sbd, &amp;pex-&gt;mmio);<br>
-@@ -294,8 +296,6 @@ static void aspeed_pcie_rc_class_init(Obje<wbr>ctClass =
-*klass, const void *data)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0hc-&gt;root_bus_path =3D aspeed_pcie_rc_root_bus_path;<=
-br>
-=C2=A0 =C2=A0 =C2=A0device_class_set_props(dc, aspeed_pcie_rc_props);<br>
--<br>
--=C2=A0 =C2=A0 msi_nonbroken =3D true;<br>
-=C2=A0}<br>
-<br>
-=C2=A0/*<br>
--- <br>
-2.43.0<br>
-</blockquote></div></div>
-
---000000000000f7251f065e460012--
 
