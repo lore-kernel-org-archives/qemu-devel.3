@@ -1,88 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5BF606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 06:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7EA606A33E
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 06:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ccj3tFOJ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=d0k5iNsk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ3Qa-0003AL-4t; Tue, 20 Oct 2026 02:34:28 -0400
+	id 1xJ3Qf-0003BV-4e; Tue, 20 Oct 2026 02:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ3QU-00039J-DR
+ id 1xJ3QT-00039I-SO
  for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:34:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ3QS-0007yG-Me
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:34:22 -0400
+ id 1xJ3QS-0007yC-7E
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:34:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792478060;
+ s=mimecast20190719; t=1792478059;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2L1Riof/tsskGgWRRN1Q63y9Y2v2VJrWVSW2rnCZKzY=;
- b=ccj3tFOJYeGhbli2FoT+mtWgXNEtrcidI8w1wS+r+iVuMuJsfLaH8oxWG6UFWHQOzurVlL
- bcXU+FuXt2l99W9c6i9EmpFKTspu6uCd9Pk1mzy/qKy8PFetdm9ypGe4dhwcCC26wc+y0J
- PYpu4+x76jWyoP8JjdsJCi4Ob+EEYIk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xBWbigaKrFJDigxgb0CWVg553C1J5UM2yWmP5W/hwgc=;
+ b=d0k5iNsks4+lz+EciGxyBUPlkPS4mX2COVp6q9A6sou3sBpgnUkrtU2t8yFeq1YosWUmGX
+ Mxuah1IgVdGv/o/70TnNizC/gOJxftNr7qK8hjSRB25PCmvxUL6tcw3VwOlWGPZVDw8sJj
+ c3kB2wE7fxU5b5+t6nWkrrCPd6cV7vA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-2r0N0Zm9OZyFzP2rfZlPTw-1; Tue,
- 20 Oct 2026 02:34:09 -0400
-X-MC-Unique: 2r0N0Zm9OZyFzP2rfZlPTw-1
-X-Mimecast-MFC-AGG-ID: 2r0N0Zm9OZyFzP2rfZlPTw_1792478048
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-eIon2wu3NGmqV9vHd4pZ8g-1; Tue,
+ 20 Oct 2026 06:34:16 +0000
+X-MC-Unique: eIon2wu3NGmqV9vHd4pZ8g-1
+X-Mimecast-MFC-AGG-ID: eIon2wu3NGmqV9vHd4pZ8g_1792478055
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87D06180266E; Tue, 20 Oct 2026 06:34:08 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0FFA51800A34; Tue, 20 Oct 2026 06:34:15 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 899B241B; Tue, 20 Oct 2026 06:34:07 +0000 (UTC)
+ id 40A3A5BC; Tue, 20 Oct 2026 06:34:13 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v6 17/65] qom: add
- object_{class_}property_add_qapi_enum
+Subject: Re: [PATCH v6 43/65] qom: replace object_property_add_tm with
+ StructTm QAPI type
 From: marcandre.lureau@redhat.com
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, pbonzini@redhat.com, 
  berrange@redhat.com, michael.roth@amd.com, 
  pierrick.bouvier@oss.qualcomm.com, philmd@oss.qualcomm.com, 
  kkostiuk@redhat.com, alistair.francis@wdc.com, amachhiw@linux.ibm.com
-In-Reply-To: <20261019141929.1594337-18-armbru@redhat.com>
+In-Reply-To: <20261019141929.1594337-44-armbru@redhat.com>
 References: <20261019141929.1594337-1-armbru@redhat.com>
- <20261019141929.1594337-18-armbru@redhat.com>
+ <20261019141929.1594337-44-armbru@redhat.com>
 Date: Tue, 20 Oct 2026 10:33:32 +0400
-Message-Id: <179247801297.2782576.3885857387150737502.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5824;
+Message-Id: <179247801298.2782576.4814080150282693277.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2555;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ADTeQF6S9CBHCuqkKyxeWb8Tkxsq7mZo+ZjfOe8iq28=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq1wtC7LFRMacxQVA6linFkQv5fgUQHqH/lruCO
- 2mmMUSmB4OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatcLQgAKCRDa6OEJdZac
- 5UgyD/9nXM6tOIkmlAHn3vgKlwKBgb+eT5xY3JVW/8WcPnYjiDs1rhher19bnkDmAtexJ6AECFU
- 6GybtJ2gJCTGUrZv/T7YRuSaYWxKOUf9gOlVyo2CmcDvCE2qkt7w7Oe0txgWL6h1PF6Iny7JM6f
- nO7kY3zB0BarkfAzvvLVCPWwTu0yvDY5Gp8ZWyAfLMjSKoA+3zqcc2/XoWiRcv9dRW4HQCQ1MKb
- nZdaMDtmSMpFtHIvKOUE4hwa2q49bbGFTypNELsh6QiWfQuFUapFbPYZN37bP7nV5LNmdnYI0vx
- qkAUIIvddAuwm6PRrhaky+CovjsT0T4EanVxO23vGkoO2Fpd4fQsJnqAyivICksRjOypHPlT57X
- e4Oz8yUCz7digs/lSdJWHIk6j52bnMPYkkvqVqms7VIwj4Ef+cqpAZ9wYLEgYrsIz8GKQKnMouE
- t48Hjh6iVTWY6cd2qlRDgfsKCjzWmRob9qLEu81s73FmULyPx+ZUH4eK2GiqXMeVlNHj+z91c3O
- slJNiK6QgOnmR32gg7mODEQyHngIycJWrf3xZG3xohsnD75xRwFpPaYAns8F+lPPLE2sIaWObpV
- wlKsXq2xkx1dPO7mwlXut5UJWATIB6KbY3ER/0ERJkgWjC2bQgen6OVPGg+E6073tYTSf3mufXG
- O/UzQ2sxjIyXxMA==
+ bh=qCLHGsfYYwcqCu4SE4csYvueGhLxtgyToQ2eiBayzHw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq1wtCC5pzmch2YO9bQLVmmpUKJCTqAz/1pC3dk
+ Tb0dYDrCWGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatcLQgAKCRDa6OEJdZac
+ 5Sz8D/9LB/Zgq9uCMHZBq2IHitfHyPTlD8Ps1rs2JkDI09WIESNqHKTbF3R8W39CJ3pI5KKtmJZ
+ Kved/FGLo8Bh7q2Po/54nRENZSxQxrbG7PiPO0kIL4KUn1U4iNzSJNLrjKQUH8c2YVhuERv5biU
+ 2KPwsGouFL/9MjL9hOCcmqJvj38YLsvu+ewm4P9TZ+GHY+CU1RVAJTz3lyWwaM+o2L5+NVBnTdZ
+ eE74k3PCDmkUPsu6EpHchdvJBrTfBjAPApHc53t8mm1JYzQFrNHjDdBhrxs7nUfuoEvaFLbGUDw
+ HalTwPfY6XAGA7Fr+3Ise4qldaQxjQIV8IkLbs+GW4I9K+buDXRHcStY0HbRpWsuV21NaKJBgdC
+ qkkdAJ1pPCw7B53SwSYiDdG7pzvKQxXLy7G7vFySu8mLwzxp6Qhmdso8z1jP4Ptmuu8w5lSXMMt
+ 0tzw9mD/0D3ozppcte7gLvcssbv+EPw0UXvxMBfR+JxuJ80jGxYB2T+S6xOLwBjum58kr4daFsy
+ EEpeRQvWwctxW88K2o8quh7Ek8ulpsvvcdYWVkN527kwOiiY74A9CVqOHtXj3+qWgHOoiSEZwpS
+ /sHBRSV8FIzqzFr1EuJ1mT5JPPe6EvLePMjQS5/ncIar3YkkIQ/i2F/YbX1sCcuPUD8JwlQpL23
+ cr4Jr1s3/pEEAiA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -90,8 +90,8 @@ X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,155 +110,65 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+> Define a StructTm QAPI struct in common.json matching the existing
+> "struct tm" property wire format (tm_year, tm_mon, tm_mday, tm_hour,
+> tm_min, tm_sec as int32).
+> 
+> Convert the two callers (mc146818rtc and spapr_rtc) to use
+> object_property_add_qapi() with a standard ObjectPropertyAccessor
+> that populates a StructTm and calls the generated visitor.
+> 
+> Remove object_property_add_tm(), object_class_property_add_tm(),
+> the TMProperty type, and the property_get_tm() helper from
+> qom/object.c, along with their declarations in object.h.
+> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Message-ID: <20261019141929.1594337-18-armbru@redhat.com>
+> Message-ID: <20261019141929.1594337-44-armbru@redhat.com>
 > ---
->  include/qom/object.h | 74 ++++++++++++++++++++++++++++++++++++
->  qom/object.c         | 89 +++++++++++++++++++++++++++++++++++++++++---
->  2 files changed, 158 insertions(+), 5 deletions(-)
+>  qapi/common.json     | 28 ++++++++++++++++++
+>  qapi/pragma.json     |  1 +
+>  include/qom/object.h | 29 -------------------
+>  hw/ppc/spapr_rtc.c   | 18 ++++++++++--
+>  hw/rtc/mc146818rtc.c | 16 ++++++++--
+>  qom/object.c         | 69 --------------------------------------------
+>  6 files changed, 57 insertions(+), 104 deletions(-)
 >
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 365d819d35a3..ce9375f37af9 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -2006,6 +2006,80 @@ ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
->                                      int (*get)(Object *, Error **),
->                                      void (*set)(Object *, int, Error **));
+> diff --git a/hw/ppc/spapr_rtc.c b/hw/ppc/spapr_rtc.c
+> index 1f7d2d8f898b..a4a2b3237e26 100644
+> --- a/hw/ppc/spapr_rtc.c
+> +++ b/hw/ppc/spapr_rtc.c
+> @@ -33,6 +33,9 @@
+>  #include "migration/vmstate.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-events-misc.h"
+> +#include "qapi/qapi-type-infos-common.h"
+> +#include "qapi/qapi-visit-common.h"
+> +#include "qapi/visitor.h"
+>  #include "qemu/cutils.h"
+>  #include "qemu/module.h"
 >  
-> +/**
-> + * struct QapiEnumProp: Descriptor for a property backed by a QAPI enum type
-> + *
-> + * Binds a QOM object property to a QAPI enum, providing automatic
-> + * string<->int conversion through QAPI visitors and optional
-> + * default-value initialization during object instance init.
-> + *
-> + * Use the QAPI_ENUM_PROP() macro to construct instances inline.
-> + *
-> + * @name: property name exposed on the QOM object
-> + * @description: human-readable description (shown in ``-device help``, etc.)
-> + * @default_value: initial enum value applied via @set during instance init,
-> + *                 or -1 (the QAPI_ENUM_PROP default) to skip initialization
-> + * @qapi_type: pointer to the generated QAPITypeInfo for the enum
-> + *             (provides the string<->int lookup table)
-> + * @get: getter that returns the current enum value as int, or -1 on error
-> + * @set: setter that receives the enum value as int; %NULL for read-only props
-> + */
-> +typedef struct QapiEnumProp {
-> +    const char *name;
-> +    const char *description;
-> +    const int default_value;
-> +    const QAPITypeInfo *qapi_type;
-> +    int (*get)(Object *, Error **);
-> +    void (*set)(Object *, int, Error **);
-> +} QapiEnumProp;
-> +
-> +#define QAPI_ENUM_PROP(...) ({                                           \
-> +    static const QapiEnumProp _prop = {                                  \
-> +        .default_value = -1, __VA_ARGS__                                 \
-> +    };                                                                   \
-> +    &_prop; })
-> +
-> +/**
-> + * object_property_add_qapi_enum:
-> + * @obj: the object to add a property to
-> + * @prop: property descriptor
-> + *
-> + * Add an enum property with QAPI type association.
-> + *
-> + * Returns: The newly added property on success, or %NULL on failure.
-> + */
-> +ObjectProperty *
-> +object_property_add_qapi_enum(Object *obj, const QapiEnumProp *prop);
-> +
-> +/**
-> + * object_class_property_add_qapi_enum:
-> + * @klass: the class object to add a property to
-> + * @prop: property descriptor
-> + *
-> + * Add an enum property with QAPI type association.
-> + *
-> + * Use the QAPI_ENUM_PROP() macro to construct the property descriptor
-> + * inline. If .default_value is not set, the property is not initialized
-> + * (default_value is -1). Otherwise, the setter is called with
-> + * default_value during object instance init.
-> + *
-> + * Example::
-> + *
-> + *   object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> + *       .name = "policy",
-> + *       .description = "Set the NUMA policy",
-> + *       .default_value = HOST_MEM_POLICY_DEFAULT,
-> + *       .qapi_type = &HostMemPolicy_type_info,
-> + *       .get = my_get_policy,
-> + *       .set = my_set_policy,
-> + *   ));
-> + *
-> + * Returns: The newly added property on success, or %NULL on failure.
-> + */
-> +ObjectProperty *
-> +object_class_property_add_qapi_enum(ObjectClass *klass,
-> +                                    const QapiEnumProp *prop);
-> +
->  /**
->   * object_property_add_qapi:
->   * @obj: the object to add a property to
-> diff --git a/qom/object.c b/qom/object.c
-> index bebbfc43556d..c1aa2b96fcc2 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1219,7 +1219,7 @@ static void object_class_foreach_tramp(gpointer key, gpointer value,
->          return;
->      }
->  
-> -    if (data->implements_type && 
-> +    if (data->implements_type &&
->          !object_class_dynamic_cast(k, data->implements_type)) {
->          return;
->      }
-> @@ -1786,7 +1786,6 @@ int object_property_get_enum(Object *obj, const char *name,
->      char *str;
->      int ret;
->      ObjectProperty *prop = object_property_find_err(obj, name, errp);
-> -    EnumProperty *enumprop;
->  
->      if (prop == NULL) {
->          return -1;
-> @@ -1799,14 +1798,17 @@ int object_property_get_enum(Object *obj, const char *name,
->          return -1;
->      }
->  
-> -    enumprop = prop->opaque;
-> -
->      str = object_property_get_str(obj, name, errp);
->      if (!str) {
->          return -1;
->      }
->  
-> -    ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
-> +    if (prop->qapi_type) {
-> +        ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
-> +    } else {
-> +        EnumProperty *enumprop = prop->opaque;
-> +        ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
-> +    }
->      g_free(str);
->  
->      return ret;
-> @@ -2609,6 +2611,83 @@ object_class_property_add_enum(ObjectClass *klass, const char *name,
->                                       prop);
+> @@ -131,9 +134,17 @@ static void rtas_set_time_of_day(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>      rtas_st(rets, 0, RTAS_OUT_SUCCESS);
 >  }
 >  
-> +static void get_qapi_enum(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
-> +{
-> +    const QapiEnumProp *prop = opaque;
-> +    int value;
-> +    Error *err = NULL;
+> -static void spapr_rtc_qom_date(Object *obj, struct tm *current_tm, Error **errp)
+> +static void spapr_rtc_qom_date(Object *obj, Visitor *v, const char *name,
+> +                               void *opaque, Error **errp)
+>  {
+> -    spapr_rtc_read(SPAPR_RTC(obj), current_tm, NULL);
+> +    struct tm value;
+> +    StructTm tm, *tmp = &tm;
 > +
-> +    value = prop->get(obj, &err);
+> +    spapr_rtc_read(SPAPR_RTC(obj), &value, NULL);
+> +
+> +    tm = (StructTm) { value.tm_year, value.tm_mon, value.tm_mday,
 
-It could assert (value != -1 || err)
+Positional initialization relies on the QAPI field order matching
+the struct tm field order here (and in mc146818rtc.c). Designated
+initializers (.tm_year = value.tm_year, ...) would be robust against
+a future reordering of either side.
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
