@@ -1,122 +1,163 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71315606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83039606A336
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=g8jgjBQs
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iG76S2jF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7KT-0004vd-Tj; Tue, 20 Oct 2026 06:44:28 -0400
+	id 1xJ7RX-0000sJ-CH; Tue, 20 Oct 2026 06:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xJ7Jr-0004K8-1E
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:47 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xJ7Ja-0004O5-6d
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:46 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-48c45111bebso1906916f8f.0
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 03:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792493008; x=1793097808; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=HO3Ja0+9v+igMSVwX72ixvycLcYQhsP4AuHqtgFe9uk=;
- b=g8jgjBQsUyVImJ2A812W/gm7XGW24fkPt5SHURDXOxdTmwgr2vL5LJsLbJ6LR2CWxK
- IA1UFmkO+UnwhzWR/wG5l2ZPVVbITs4x0rtCj2GX7Shrgald9h9byUJviPlBzpp7GMAI
- 646mFeGXD2b+o/+gLhX+12Bb7REnzV9qsNbemX8SNl0hIkg415OB0WJz/byK2lJK6AvV
- QEIABSOrQdg8fZK0FQf02dzM2dLpqHoqlIvqq0yIhgAztvtS/va9KQ4pJEIAwFZWTnL+
- ifIv0X8ZvYM+o2y/BeDy3JTUAoc0afOGoK5uuDG1/kVJdxvWzks2vS5GGQ2dCyE0Hpjx
- uawQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792493008; x=1793097808;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=HO3Ja0+9v+igMSVwX72ixvycLcYQhsP4AuHqtgFe9uk=;
- b=kg8KQQelDHpf8PPbC9EPmsM4l7e7vszskzORb8J7NwhLEKTdL9Fv4QCETt1fNoFlwP
- vnEsU9Gd9O7xvotdGv3PMIhUv2XL5AeM5b/dnJimtdhtYcayH7Win1ou7sPFabD9hQm0
- 0iMNaTYX7jTgx2mdUOy4ApZoxqppOADNTz0NB2Q3CnPpCzHrhvKQannV73yq2Ft65Tby
- Mgt8mCqW2Fyp/Cc22e/JqgVWjxi28NsYrAakYM1YjTCV1MxXg2rGyEXwPwaW8R1b346M
- BhEGL5wDkMAfHTlLBYujVDysu7F5wL+ks3IYow/w+y8TmVThc5HiYKSYdIciXo/jBEf8
- 5qQQ==
-X-Gm-Message-State: AFq9FYLohnpMqYij5kgoEE28BeYfEYvMlKxU5eCWevOb17axt8hB7KF3
- EbUsPLmh2bcLEpUVFG/el1JCl2Q0+kG4nxPWCC2ftGJcDpKk4wBMIjlTITrGbnpF/Ls=
-X-Gm-Gg: AYBFou0WF1fM9kdXpeElnbz2FDZdZJB/DbupVRof67g88aloArT/kfiKrr7TK47209T
- B5iVEypz0ZkiwngzGWzT27UINSFiOMxXiF5Z808KJg3IRQUXuzBSZEiLkeNx5n6/aRxxPAou3q4
- ltT/MUc6mUOM8wId26utKmllJ2qWlaNpzj3Ye64XaNnMoU/kd+nryV77hFYUq2POfYgB5R6bzEC
- Pr4Genko1vZF2FTZkpgLZjEqQuy7HoDOiwWW8e5i56NUmu0nsaatNTHKaEPC11NGYoIga7e6OQj
- swnB+WmpibQfEDh+rFNlyUGcQggp8WWawnNxyjJEICEuFDZvhnuBV2E8rdED9VKSyo0lUdMxwnO
- hW2JavzY+kNfkl+kSSVuqYyh50BSH3iINrbgGliKAhMbgZGowP1C27dea3f9yMXav7xWJqvsSKk
- 5+nfh/MAbJto7NFMSai6qkbPMe1zLSimGbnbOvv4w5OenNIEYWV0CVCTruP2UeL0dX9wMpYQ==
-X-Received: by 2002:a05:6000:468d:b0:48d:f39b:83de with SMTP id
- ffacd0b85a97d-48e07b92058mr15645006f8f.3.1792493008429; 
- Tue, 20 Oct 2026 03:43:28 -0700 (PDT)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d82e8f7sm5296588f8f.48.2026.10.20.03.43.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Oct 2026 03:43:26 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 43CE45F957;
- Tue, 20 Oct 2026 11:43:22 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Song Gao <17746591750@163.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Bernhard Beschow <shentey@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Paul Durrant <paul@xen.org>,
- =?UTF-8?q?Bj=C3=B6rn=20Walk?= <bwalk@linux.ibm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-s390x@nongnu.org,
- David Woodhouse <dwmw2@infradead.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-ppc@nongnu.org,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, linux-edac@vger.kernel.org,
- Glenn Miles <milesg@linux.ibm.com>, Chao Liu <chao.liu@processmission.com>,
- Cornelia Huck <cohuck@redhat.com>, Gautam Menghani <gautam@linux.ibm.com>,
- Xianglai Li <lixianglai@loongson.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Weiwei Li <liwei1518@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-riscv@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 12/23] accel/kvm: port kvm_arch_[put|get]_registers to
- KVMCPUOps
-Date: Tue, 20 Oct 2026 11:43:06 +0100
-Message-ID: <20261020104320.3686723-13-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261020104320.3686723-1-alex.bennee@linaro.org>
-References: <20261020104320.3686723-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJ7Pw-0005nW-A2
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJ7Pt-0005vJ-It
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:50:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792493400;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zgYXy9wUlwpZwJEXhfhg6ueZe5iP6OdFNQDVMpjhNJA=;
+ b=iG76S2jFAn3DXv9bMxaJpEi6Id6G1tJ0lGQGqQLeZY0punILMzg5wU4Ez29ihw8s0/Px1V
+ JizlgJma1ImmjNmSyEGpYiNP2cOovqE6j5nsMdK4M7CrV7SQjaA6+5fkL9rdtWpvmIhYwA
+ aDz8KAqPAAhVuwN+BTeH35EA9bwvBxE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-X_BZbfi1OoaEw-XuKd7GEA-1; Tue,
+ 20 Oct 2026 10:49:57 +0000
+X-MC-Unique: X_BZbfi1OoaEw-XuKd7GEA-1
+X-Mimecast-MFC-AGG-ID: X_BZbfi1OoaEw-XuKd7GEA_1792493393
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 382911954B17; Tue, 20 Oct 2026 10:49:53 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 89D3D1956089; Tue, 20 Oct 2026 10:49:50 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 20 Oct 2026 14:45:57 +0400
+Subject: [PATCH v7 40/65] accel/hvf: convert OnOffSplit property to
+ QAPI-aware registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20261020-qom-qapi-v7-40-431a86b02b58@redhat.com>
+References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
+In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, John Snow <jsnow@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Jason Wang <jasowangio@gmail.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ kvm@vger.kernel.org, Alberto Garcia <berto@igalia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>, 
+ Junjie Cao <junjie.cao@intel.com>, Anisa Su <anisa.su@samsung.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>, 
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org, 
+ linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Sergio Lopez <slp@redhat.com>, 
+ qemu-arm@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>, 
+ Xianglai Li <lixianglai@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org, 
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ Alistair Francis <alistair@alistair23.me>, Alexander Graf <graf@amazon.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>, Ani Sinha <anisinha@redhat.com>, 
+ Luc Michel <luc@lmichel.fr>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Samuel Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>, 
+ FangSheng Huang <FangSheng.Huang@amd.com>, Tyrone Ting <kfting@nuvoton.com>, 
+ Hao Wu <wuhaotsh@google.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
+ Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
+ Conor Dooley <conor@kernel.org>, 
+ Sebastian Huber <sebastian.huber@embedded-brains.de>, 
+ Halil Pasic <pasic@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Jason Herne <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, Peter Xu <peterx@redhat.com>, 
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ Hendrik Brueckner <brueckner@linux.ibm.com>, xen-devel@lists.xenproject.org, 
+ Roman Bolshakov <rbolshakov@ddn.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>, 
+ Farhan Ali <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>, 
+ Tao Tang <tangtao1634@phytium.com.cn>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
+ Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2523;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=21V2JPj2rB3XQ9p0Fpt/4Sfi5TlT/INiy3CejR1RcSQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10Zbcvmz2dcDonHaGuZ+0JSpCQbdwS1IqolsF
+ mrcOSZwsk+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWwAKCRDa6OEJdZac
+ 5fbMD/4oDBa4aRAcuosgqEgTN/lLvXMd4CMMg/8NISFX3WirC2kLfaACPLJXeKGgyRmLFD49aZS
+ C90374vVULKD25rkYEUinJNvw+z9cP8i/VTdLPCDvrtC/7kvYoqnDLVLO3J2Q3Wd5nfI6rmQZEk
+ BwtAVjR6SSBb0iStYbJyVtP1TklsvdIlQhIhxfshPIqRwse/RgRnOxnAYRNMRVtDhm7Vu0j9+oI
+ wQB+bCNaqKS88nEJIGu53wZ2zbS3wyEAQfjpFxwi2bIDLHSRhy3a07Hpo2bHHN003BU8sQAI530
+ fQnkPZFCQYFsKo1aZUPu739hgcgJsTtebTEHP7wVhaY5T9oTYjhlHy1h4bcxUIi+sUYQMwDz/B2
+ FNBgAkMwUmaom+WrzqUMDHFkmLBUULwbNeGiCgyNquapgGac7N7DQsItMvc5RouXeu8HIEjusQP
+ ji/64PxnCl55S40Wr93VNww9w+uHtJ2MYwSRdIxtBvnRYW8k45wZ6f8n/bZ43PwOPLzkIMPhkAB
+ AZPh9GndU9GtEDdzZQobzjyi5YtG9aqyHYwsF8IvbkM9hDWBKeSxYQInUbsFVgKYsEzJt9ORvoG
+ Xh7xWXHM+nTdrSEW+k93/3Qu2ekkPkSElHFptLpXseE43g35XzS9fsK0+PV6Y6aNivNUO37QrR2
+ au4mCAtBZO6aHYg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,323 +169,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The ability to save and restore register state from KVM is required
-for both migration and the gdbstub. These hooks are mandatory for any
-KVM implementation.
+Convert the OnOffSplit property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/accel/kvm/cpu-ops.h | 11 +++++++++++
- include/system/kvm.h        |  4 ----
- target/i386/kvm/kvm_i386.h  |  2 ++
- accel/kvm/kvm-all.c         |  6 ++++--
- target/arm/kvm.c            |  6 ++++--
- target/i386/kvm/kvm-cpu.c   |  2 ++
- target/i386/kvm/kvm.c       |  4 ++--
- target/loongarch/kvm/kvm.c  |  7 +++++--
- target/ppc/kvm.c            |  6 ++++--
- target/riscv/kvm/kvm-cpu.c  |  7 +++++--
- target/s390x/kvm/kvm.c      |  7 +++++--
- 11 files changed, 44 insertions(+), 18 deletions(-)
+ accel/hvf/hvf-all.c | 29 +++++++++++------------------
+ 1 file changed, 11 insertions(+), 18 deletions(-)
 
-diff --git a/include/accel/kvm/cpu-ops.h b/include/accel/kvm/cpu-ops.h
-index cbd3935ba4d..b3f6b8e47b7 100644
---- a/include/accel/kvm/cpu-ops.h
-+++ b/include/accel/kvm/cpu-ops.h
-@@ -12,12 +12,21 @@
- #include "qom/object.h"
- #include "hw/core/cpu.h"
- #include "accel/accel-cpu-target.h"
-+#include "system/kvm.h"
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 8bd9154a50b6..2fd594ad156f 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -11,6 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "accel/accel-ops.h"
+ #include "exec/cpu-common.h"
+@@ -230,18 +231,12 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
+     return hvf_arch_init();
+ }
  
- struct kvm_run;
- 
- /**
-  * struct KVMCPUOps - Target-specific per-vCPU operations for KVM
-  *
-+ * @get_registers: Mandatory callback to synchronize architecture-specific
-+ *                 vCPU register state from KVM into QEMU's CPUState.
-+ *                 Returns 0 on success, or a negative errno on failure.
-+ * @put_registers: Mandatory callback to synchronize architecture-specific
-+ *                 vCPU register state from QEMU's CPUState into KVM.
-+ *                 The @level parameter specifies whether to write runtime,
-+ *                 reset, or full state.
-+ *                 Returns 0 on success, or a negative errno on failure.
-  * @pre_run: Optional callback executed immediately prior to entering the
-  *           KVM_RUN ioctl in the vCPU thread loop. Used by architectures
-  *           that need to inject pending events (e.g. x86 NMI/SMI) or verify
-@@ -45,6 +54,8 @@ struct kvm_run;
-  *                        processing before execution.
-  */
- typedef struct KVMCPUOps {
-+    int (*get_registers)(CPUState *cpu, Error **errp);
-+    int (*put_registers)(CPUState *cpu, KvmPutState level, Error **errp);
-     void (*pre_run)(CPUState *cpu, struct kvm_run *run);
-     MemTxAttrs (*post_run)(CPUState *cpu, struct kvm_run *run);
-     int (*handle_exit)(CPUState *cpu, struct kvm_run *run);
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 8c705d21f79..b2d76f99df0 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -333,8 +333,6 @@ extern const KVMCapabilityInfo kvm_arch_required_capabilities[];
- 
- void kvm_arch_accel_class_init(ObjectClass *oc);
- 
--int kvm_arch_get_registers(CPUState *cpu, Error **errp);
+-static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
++static void hvf_set_kernel_irqchip(Object *obj, int value,
+                                    Error **errp)
+ {
+-    OnOffSplit mode;
 -
- typedef enum kvm_put_state {
-     /* state subset only touched by the VCPU itself during runtime */
-     KVM_PUT_RUNTIME_STATE = 1,
-@@ -344,8 +342,6 @@ typedef enum kvm_put_state {
-     KVM_PUT_FULL_STATE = 3,
- } KvmPutState;
+     hvf_kernel_irqchip_override = true;
+-    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
+-        return;
+-    }
  
--int kvm_arch_put_registers(CPUState *cpu, KvmPutState level, Error **errp);
--
- int kvm_arch_get_default_type(MachineState *ms);
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_SPLIT_ON:
+ #ifdef HOST_X86_64
+         /* macOS 12 onwards exposes an HVF virtual APIC. */
+@@ -261,11 +256,7 @@ static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
+         break;
  
- int kvm_arch_init(MachineState *ms, KVMState *s);
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index bff587a56de..2c92afc3320 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -33,6 +33,8 @@ bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
- 
- int kvm_get_vm_type(MachineState *ms);
- void kvm_arch_reset_vcpu(X86CPU *cs);
-+int x86_kvm_get_registers(CPUState *cs, Error **errp);
-+int x86_kvm_put_registers(CPUState *cpu, KvmPutState level, Error **errp);
- void x86_kvm_pre_run(CPUState *cpu, struct kvm_run *run);
- MemTxAttrs x86_kvm_post_run(CPUState *cpu, struct kvm_run *run);
- int x86_kvm_handle_exit(CPUState *cs, struct kvm_run *run);
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index e8a26a9f067..3de05bb8bb8 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3214,8 +3214,9 @@ void kvm_flush_coalesced_mmio_buffer(void)
- static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
-     if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-+        const KVMCPUOps *ops = kvm_get_cpu_ops(cpu);
-         Error *err = NULL;
--        int ret = kvm_arch_get_registers(cpu, &err);
-+        int ret = ops->get_registers(cpu, &err);
-         if (ret) {
-             if (err) {
-                 error_reportf_err(err, "Failed to synchronize CPU state: ");
-@@ -3241,8 +3242,9 @@ void kvm_cpu_synchronize_state(CPUState *cpu)
- static bool kvm_cpu_synchronize_put(CPUState *cpu, KvmPutState state,
-                                     const char *desc)
- {
-+    const KVMCPUOps *ops = kvm_get_cpu_ops(cpu);
-     Error *err = NULL;
--    int ret = kvm_arch_put_registers(cpu, state, &err);
-+    int ret = ops->put_registers(cpu, state, &err);
-     if (ret) {
-         if (err) {
-             error_reportf_err(err, "Restoring resisters %s: ", desc);
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 06b133ebf53..ea8c4d02ee8 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2198,7 +2198,7 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
-     return 0;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffSplit() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
  }
  
--int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-+static int arm_kvm_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- {
-     uint64_t val;
-     uint32_t fpr;
-@@ -2383,7 +2383,7 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
-     return 0;
+@@ -277,11 +268,13 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+     ac->allowed = &hvf_allowed;
+     hvf_kernel_irqchip_override = false;
+     hvf_kernel_irqchip = false;
+-    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+-        NULL, hvf_set_kernel_irqchip,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "kernel-irqchip",
+-        "Configure HVF irqchip");
++
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "kernel-irqchip",
++        .qapi_type = &OnOffSplit_type_info,
++        .set = hvf_set_kernel_irqchip,
++        .description = "Configure HVF irqchip",
++    ));
  }
  
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+static int arm_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     uint64_t val;
-     unsigned int el;
-@@ -2661,6 +2661,8 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
- }
- 
- static const KVMCPUOps arm_kvm_cpu_ops = {
-+    .get_registers = arm_kvm_get_registers,
-+    .put_registers = arm_kvm_put_registers,
-     .pre_run = arm_kvm_pre_run,
-     .post_run = arm_kvm_post_run,
-     .handle_exit = arm_kvm_handle_exit,
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 163d60a1060..08308ef8a80 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -235,6 +235,8 @@ static void kvm_cpu_instance_init(CPUState *cs)
- }
- 
- static const KVMCPUOps x86_kvm_cpu_ops = {
-+    .get_registers = x86_kvm_get_registers,
-+    .put_registers = x86_kvm_put_registers,
-     .pre_run = x86_kvm_pre_run,
-     .post_run = x86_kvm_post_run,
-     .handle_exit = x86_kvm_handle_exit,
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 83c4451cf31..7ee6d3d4f38 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5712,7 +5712,7 @@ static int kvm_get_nested_state(X86CPU *cpu)
-     return ret;
- }
- 
--int kvm_arch_put_registers(CPUState *cpu, KvmPutState level, Error **errp)
-+int x86_kvm_put_registers(CPUState *cpu, KvmPutState level, Error **errp)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     int ret;
-@@ -5817,7 +5817,7 @@ int kvm_arch_put_registers(CPUState *cpu, KvmPutState level, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+int x86_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     X86CPU *cpu = X86_CPU(cs);
-     int ret;
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 600903a2280..1e7565732e8 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -823,7 +823,7 @@ static int kvm_loongarch_put_cpucfg(CPUState *cs)
-     return ret;
- }
- 
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+static int loongarch_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     int ret;
- 
-@@ -861,7 +861,8 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-     return ret;
- }
- 
--int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-+static int loongarch_kvm_put_registers(CPUState *cs, KvmPutState level,
-+                                       Error **errp)
- {
-     int ret;
-     static int once;
-@@ -1643,6 +1644,8 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
- }
- 
- static const KVMCPUOps loongarch_kvm_cpu_ops = {
-+    .get_registers = loongarch_kvm_get_registers,
-+    .put_registers = loongarch_kvm_put_registers,
-     .handle_exit = loongarch_kvm_handle_exit,
-     .process_async_events = loongarch_kvm_process_async_events,
- };
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index e52f0b84ee3..25f797cb2d8 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -908,7 +908,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
-     return kvm_vcpu_ioctl(CPU(cpu), KVM_SET_SREGS, &sregs);
- }
- 
--int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-+static int ppc_kvm_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
-@@ -1213,7 +1213,7 @@ static int kvmppc_get_books_sregs(PowerPCCPU *cpu)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+static int ppc_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *env = &cpu->env;
-@@ -3073,6 +3073,8 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
- }
- 
- static const KVMCPUOps ppc_kvm_cpu_ops = {
-+    .get_registers = ppc_kvm_get_registers,
-+    .put_registers = ppc_kvm_put_registers,
-     .handle_exit = ppc_kvm_handle_exit,
-     .process_async_events = ppc_kvm_process_async_events,
- };
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index a5333083765..c38c07a563b 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1389,7 +1389,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+static int riscv_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     int ret = 0;
- 
-@@ -1444,7 +1444,8 @@ static int kvm_riscv_put_mp_state(CPUState *cs)
-     return kvm_vcpu_ioctl(cs, KVM_SET_MP_STATE, &mp_state);
- }
- 
--int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-+static int riscv_kvm_put_registers(CPUState *cs, KvmPutState level,
-+                                   Error **errp)
- {
-     int ret = 0;
- 
-@@ -2183,6 +2184,8 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- }
- 
- static const KVMCPUOps riscv_kvm_cpu_ops = {
-+    .get_registers = riscv_kvm_get_registers,
-+    .put_registers = riscv_kvm_put_registers,
-     .handle_exit = riscv_kvm_handle_exit,
- };
- 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 420703f7683..c85d286288b 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -471,7 +471,8 @@ static int can_sync_regs(CPUState *cs, int regs)
-                                 KVM_SYNC_CRS | KVM_SYNC_PREFIX | \
-                                 KVM_SYNC_PFAULT)
- 
--int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-+static int s390x_kvm_put_registers(CPUState *cs, KvmPutState level,
-+                                   Error **errp)
- {
-     CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu = {};
-@@ -582,7 +583,7 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_get_registers(CPUState *cs, Error **errp)
-+static int s390x_kvm_get_registers(CPUState *cs, Error **errp)
- {
-     CPUS390XState *env = cpu_env(cs);
-     struct kvm_fpu fpu;
-@@ -2650,6 +2651,8 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
- }
- 
- static const KVMCPUOps s390x_kvm_cpu_ops = {
-+    .get_registers = s390x_kvm_get_registers,
-+    .put_registers = s390x_kvm_put_registers,
-     .handle_exit = s390x_kvm_handle_exit,
-     .process_async_events = s390x_kvm_process_async_events,
- };
+ static const TypeInfo hvf_accel_type = {
+
 -- 
-2.47.3
+2.56.0.116.g6de20f6092dc
 
 
