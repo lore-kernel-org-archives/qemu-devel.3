@@ -1,92 +1,78 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4C5606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 06:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD1260A2604
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 06:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=tencent.com header.i=@tencent.com header.a=rsa-sha256 header.s=s201512 header.b=dvjwU8ai
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OcnQYY1z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ3aE-0000Ih-T9; Tue, 20 Oct 2026 02:44:26 -0400
+	id 1xJ3fM-00010c-Fb; Tue, 20 Oct 2026 02:49:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
- id 1xJ3aC-0000IW-Jc
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:44:24 -0400
-Received: from smtpbgau1.qq.com ([54.206.16.166])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xJ3fI-00010K-AZ
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:49:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sundayjiang@tencent.com>)
- id 1xJ3a6-0000JW-47
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:44:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tencent.com;
- s=s201512; t=1792478642;
- bh=A2ROvVMDOcZDt3pLy21H1WPcqnfTVjuC68omje0RqeE=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=dvjwU8ai4KO81n92a6XNNziZEQC8CrnX/R8jyVdBiWYNxpF5xMZR0u3o0CSHGf5Zn
- 0vbxf1E20MDytD8YG6EIW1c7Sa1Z7aD3n8HkHllY0HxT3i6iJ/aZXzofLLVazOpggm
- S+RyQ/ttsZHZiV7cw9Jgst7Pud4zbqDUUOS/qYMs=
-EX-QQ-RecipientCnt: 2
-X-QQ-GoodBg: 2
-X-QQ-SSF: 00400000000000F0
-X-QQ-FEAT: D4aqtcRDiqRqrX+K4iacs1Y3qa9KkqPtkDVHFdjJw6k=
-X-QQ-BUSINESS-ORIGIN: 2
-X-QQ-Originating-IP: GkkiqHkUZpaMxaxackTB3hKe45/Ghrb6qwMew55MCd0=
-X-QQ-STYLE: 
-X-QQ-mid: lv5gz3a-0t1792478642t28cb7234
-From: "=?utf-8?B?c3VuZGF5amlhbmcoc3VuZGF5amlhbmcp?=" <sundayjiang@tencent.com>
-To: "=?utf-8?B?VGhvbWFzIEh1dGg=?=" <thuth@redhat.com>
-Cc: "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
-Subject: =?utf-8?B?5Zue5aSN77yaW0ludGVybmV0XVJlOiBbUEFUQ0gg?=
- =?utf-8?B?MC8yXSB1c2ItaG9zdDogZml4IHVzZS1hZnRlci1m?=
- =?utf-8?B?cmVlIGlzc3Vlcw==?=
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xJ3fG-0000li-OW
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 02:49:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792478978;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+aC+1nI0DQgKx+5iRdDIiQKKdEyQaXalDIT3IaDC8V4=;
+ b=OcnQYY1zIILzPzQTj1ebVECjfodh8fafdPaK/nFQtO+eJl0c4O2SnTCmdRCiLdo8Qco67F
+ 5AmGF7k9jE68S6JabvCjRoWLTQL+MZw18TRaaimRJKwYZDiedAaltckT7gjfr8dxFSO2rF
+ TTyvTI+/GdhlLUqEOwI8b1R3bTFGk28=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-u-E2aCbWO1qHmioi4WISKA-1; Tue,
+ 20 Oct 2026 06:49:34 +0000
+X-MC-Unique: u-E2aCbWO1qHmioi4WISKA-1
+X-Mimecast-MFC-AGG-ID: u-E2aCbWO1qHmioi4WISKA_1792478973
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACEF21956054; Tue, 20 Oct 2026 06:49:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B47C1800444; Tue, 20 Oct 2026 06:49:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D081021E6A04; Tue, 20 Oct 2026 08:49:30 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org,  qemu-devel@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  John Snow <jsnow@redhat.com>,  "Denis V . Lunev"
+ <den@openvz.org>,  Eric Blake <eblake@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 06/12] qapi/block: Add BLOCK_IO_DELAY event
+In-Reply-To: <20261019182028.45305-7-hreitz@redhat.com> (Hanna Czenczek's
+ message of "Mon, 19 Oct 2026 20:20:22 +0200")
+References: <20261019182028.45305-1-hreitz@redhat.com>
+ <20261019182028.45305-7-hreitz@redhat.com>
+Date: Tue, 20 Oct 2026 08:49:30 +0200
+Message-ID: <87a4o8sw79.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_6AD70DB2_C1E17860_126FC91A"
-Content-Transfer-Encoding: 8Bit
-Date: Tue, 20 Oct 2026 14:44:02 +0800
-X-Priority: 3
-Message-ID: <tencent_50AF80054E3ECAC0405374DB@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 730909776
-X-BIZMAIL-ID: 6542732366966527117
-X-Address-Ticket: version=; type=; ticket_id=; id_list=; display_name=;
- session_id=; 
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Tue, 20 Oct 2026 14:44:02 +0800 (CST)
-Feedback-ID: lv:tencent.com:qybglogicsvrgz:qybglogicsvrgz3a-1
-X-QQ-XMAILINFO: Mi0NhBPPe/4RluO78npGsgUgOs4yn0cv+E5zfBq8R4xBxQ+xj0TBjif3
- b/00qJEmfN0MNpFsXd5Nya3lOYN/xgLxUfV9AAo9948uNRxhdmfifL5ioh61gvEGtA2ehOc
- gRqqJ+wUiNeez6buaKtsb6Ad0Ga7a3NbCfCdZwwfGqd32vP4tfu1QFHV3O4iBXRjJOQhPNw
- QuFDlUfhNq7+btTFm9GkciQEruQs28atKGS4hsOzj8Mfpc+32AyhEbgalOUfbdgAJ/fae6+
- WFnMuF8pLvU9SdhS9PK78qu/Th0EguLyI89a3kIIQvGbnaPZR+9wbOy3njUHv1QV9AT5Zde
- i9UZttpwh7OhZdw9R7OUcRS8n1nTslWH/BVEZ9WGe/Z3deJjrnk1xDeDOYwbhBmsa6L46/m
- WFySHv9r7RKcyaKahbKsiNQJwFC4bYOvBMo6r1eSNqKVicg1sUF9w741fAajWQfOYMsRNR+
- YxOQW3UEwAOFEfNpFeIWQRMvmcXLdpe45Pv1sL7jRlJuxP/8boHZJ3yaKQ8IXiyIN7at33h
- GoEfvM9hjn/xNvEvANntQcsEJIIVTsx9BV0wvvXW2eqqmkjoDFolgUP/nlXThJKgq+QCq0Y
- nKT+xaOXGJa/Ae/nE29xhgz1VzfyRNNqU+EaUSuxkWeBFvHn1NbjTn6T7lvaruP8u/u8p2o
- EXz9axgtCmTqmvD7hFuGBtcdzQyF/iSbvWTh7SljuFWANTmiU294WcnudGEkYBQb+z0umtS
- 7Dgp7LaUArrjoX0E1HsrAGLcABRc/D4lU0ta2uCpsqWjycmMirM9gQtZjWOUm2OOFa98ouJ
- 8ik36jWUren3lufwGMINLYoyCC47HOhF7tRSGfDJyJMAUSXSiG5oRO0Bgl6DIXnSgEDGxDN
- dV8Q8bWVJof89FQ2nxISuHghx343nPjTItGOQJ0d4uKfTqDLMWd9YmzdRNmcGvRl66j/714
- JDQD+Qu/akBCdwQOivpdwwLTM1Q7fh1cUgUijWoKZq1Z5u0rJdKMCPNThHroK7e8sJmT+Ey
- TnCZfTb14Z4vB5AAIwV2HtQAlM4PmhaP/5uGCJsPwMC7ub1rEJ8b2pzTGs09Q=
-X-QQ-XMRINFO: OWPUhxQsoeAVgyF9u6tQ93Fs4BHSpkCILw==
-X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.206.16.166;
- envelope-from=sundayjiang@tencent.com; helo=smtpbgau1.qq.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_EXCESS_BASE64=0.001, HTML_MESSAGE=0.001, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,110 +84,111 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FROM_EXCESS_BASE64,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MSGID_FROM_MTA_HEADER,SPF_HELO_PASS,SPF_PASS
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This is a multi-part message in MIME format.
+Hanna Czenczek <hreitz@redhat.com> writes:
 
-------=_NextPart_6AD70DB2_C1E17860_126FC91A
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+> This event will be emitted when a disk operation takes longer than a
+> pre-defined threshold (as set on the block device).
+>
+> Note that the description refers to the "delay-report-ns" and
+> "delay-stop-ns" block device properties, which are not yet available.
+> A future commit in this series will add them.
+>
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  qapi/block.json | 37 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 37 insertions(+)
+>
+> diff --git a/qapi/block.json b/qapi/block.json
+> index 8f4a71733c1..5f9f5c28050 100644
+> --- a/qapi/block.json
+> +++ b/qapi/block.json
+> @@ -649,3 +649,40 @@
+>  ##
+>  { 'enum': 'IoAccountingOperation',
+>    'data': [ 'read', 'write', 'flush', 'zone-append', 'unmap' ] }
+> +
+> +##
+> +# @BLOCK_IO_DELAY:
+> +#
+> +# Emitted when a disk operation takes longer than the pre-defined
+> +# threshold (as set via the "delay-report-ns" / "delay-stop-ns"
+> +# properties on the block device).
 
-SGkmbmJzcDtUaG9tYXMsJm5ic3A7Jm5ic3A7DQpUaGFuayZuYnNwO3lvdSZuYnNwO2ZvciZu
-YnNwO2FwcGx5aW5nJm5ic3A7YW5kJm5ic3A7cXVldWluZyZuYnNwO3RoZSZuYnNwO3BhdGNo
-ZXMuJm5ic3A7U29ycnkmbmJzcDtmb3ImbmJzcDt0aGUmbmJzcDtmb3JtYXR0aW5nJm5ic3A7
-aXNzdWUuJm5ic3A7SeKAmWxsJm5ic3A7dXNlJm5ic3A7Z2l0Jm5ic3A7c2VuZC1lbWFpbCZu
-YnNwO25leHQmbmJzcDt0aW1lLiZuYnNwOyZuYnNwOw0KQmVzdCZuYnNwO3JlZ2FyZHMsDQpI
-YW90aWFuJm5ic3A7SmlhbmcNCg0KDQoNCg0KDQogICAgICAgICAgICAgICAgICAgIFRob21h
-cyBIdXRoPHRodXRoQHJlZGhhdC5jb20mZ3Q7Jm5ic3A75ZyoIDIwMjblubQxMOaciDE25pel
-IOWRqOS6lCAyMToxNCDlhpnpgZPvvJoNCg0KT24gMTYvMTAvMjAyNiAwOS4zNywgc3VuZGF5
-amlhbmcoc3VuZGF5amlhbmcpIHdyb3RlOg0KJmd0OyBGaXggdHdvIGluZGVwZW5kZW50IHVz
-ZS1hZnRlci1mcmVlIGlzc3VlcyBpbiB0aGUgbGlidXNiIHVzYi1ob3N0DQomZ3Q7IGJhY2tl
-bmQuDQomZ3Q7IA0KJmd0OyBUaGUgZmlyc3QgcGF0Y2ggZnJlZXMgVVNCSG9zdFJlcXVlc3Qg
-b2JqZWN0cyB3aGVuDQomZ3Q7IGxpYnVzYl9zdWJtaXRfdHJhbnNmZXIoKSBmYWlscywgcHJl
-dmVudGluZyBzdGFsZSBVU0JQYWNrZXQgcG9pbnRlcnMNCiZndDsgZnJvbSByZW1haW5pbmcg
-b24gdGhlIHJlcXVlc3QgcXVldWUuDQomZ3Q7IA0KJmd0OyBUaGUgc2Vjb25kIHBhdGNoIGRl
-bGV0ZXMgdGhlIGxhemlseSBhbGxvY2F0ZWQgYm90dG9tIGhhbHZlcyBkdXJpbmcNCiZndDsg
-ZGV2aWNlIHVucmVhbGl6ZSwgcHJldmVudGluZyBjYWxsYmFja3MgZnJvbSBhY2Nlc3Npbmcg
-YSBmcmVlZA0KJmd0OyBVU0JIb3N0RGV2aWNlLg0KJmd0OyANCiZndDsgVG9tbWFzbyBDYWxp
-ZmFubyB0ZXN0ZWQgdGhlIG9yaWdpbmFsIGNvbWJpbmVkIHBhdGNoIGFuZCByZXBvcnRlZCB0
-aGF0DQomZ3Q7IGl0IGxvb2tzIGNvcnJlY3QuICZuYnNwO1RoaXMgc2VyaWVzIHNwbGl0cyB0
-aGUgdHdvIGZpeGVzIHNvIHRoYXQgZWFjaCBjaGFuZ2UNCiZndDsgaGFzIGl0cyBvd24gbG9n
-aWNhbCBzY29wZSBhbmQgRml4ZXMgdGFnLg0KJmd0OyANCiZndDsgSGFvdGlhbiBKaWFuZyAo
-Mik6DQomZ3Q7Jm5ic3A7ICZuYnNwOyB1c2ItaG9zdDogZnJlZSByZXF1ZXN0IG9uIGxpYnVz
-YiBzdWJtaXQgZmFpbHVyZQ0KJmd0OyZuYnNwOyAmbmJzcDsgdXNiLWhvc3Q6IGRlbGV0ZSBi
-b3R0b20gaGFsdmVzIGR1cmluZyB1bnJlYWxpemUNCiZndDsgDQomZ3Q7Jm5ic3A7ICZuYnNw
-O2h3L3VzYi9ob3N0LWxpYnVzYi5jIHwgMjkgKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysNCiZndDsmbmJzcDsgJm5ic3A7MSBmaWxlIGNoYW5nZWQsIDI5IGluc2VydGlvbnMoKykN
-ClRoYW5rcyBmb3IgdGhlIGZpeGVzLiBJJ2xsIHF1ZXVlIHRoZXNlIGZvciBteSBuZXh0IHB1
-bGwgcmVxdWVzdC4NCg0KQnV0IGlmIHlvdSBjb3VsZCBkbyBtZSBhIGZhdm9yOiBUaGUgbmV4
-dCB0aW1lIHlvdSBzZW5kIHBhdGNoZXMsIHBsZWFzZSBkb24ndCANCnNlbmQgdGhlbSBhcyBt
-aW1lLWVuY29kZWQgZS1tYWlscy4gSSBoYWQgdG8gYXBwbHkgdGhlc2UgcGF0Y2hlcyBtYW51
-YWxseSANCnNpbmNlICJnaXQgYW0iIHJlZnVzZWQgdG8gcGFyc2UgeW91ciBtYWlsLiBJLmUu
-IHRyeSB0byB1c2UgImdpdCBzZW5kLWVtYWlsIiANCnRoZSBuZXh0IHRpbWUsIHRoaXMgd2ls
-bCBtYWtlIHN1cmUgdGhhdCB5b3VyIHBhdGNoZXMgY2FuIGJlIHByb2Nlc3NlZCBtb3JlIA0K
-ZWFzaWx5LiBUaGFua3MhDQoNCiZuYnNwOyBUaG9tYXM=
+As in PATCH 01, "block device" could be confusing, because we use the
+term both for frontends and backends.  I believe "delay-report-ns" and
+"delay-stop-ns" are the qdev properties every block device model will
+have [PATCH 11].
 
-------=_NextPart_6AD70DB2_C1E17860_126FC91A
-Content-Type: text/html;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
+> +#
+> +# Note that delays deliberately incurred by throttling do count
+> +# towards the operation duration.
+> +#
 
-PGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNC42NjY3cHg7IGZvbnQtZmFtaWx5OiAtYXBwbGUt
-c3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1BpbmdGYW5nIFNDJnF1b3Q7LCAm
-cXVvdDtNaWNyb3NvZnQgWWFIZWkmcXVvdDs7Ij48ZGl2PkhpJm5ic3A7VGhvbWFzLCZuYnNw
-OyZuYnNwOzxicj5UaGFuayZuYnNwO3lvdSZuYnNwO2ZvciZuYnNwO2FwcGx5aW5nJm5ic3A7
-YW5kJm5ic3A7cXVldWluZyZuYnNwO3RoZSZuYnNwO3BhdGNoZXMuJm5ic3A7U29ycnkmbmJz
-cDtmb3ImbmJzcDt0aGUmbmJzcDtmb3JtYXR0aW5nJm5ic3A7aXNzdWUuJm5ic3A7SeKAmWxs
-Jm5ic3A7dXNlJm5ic3A7Z2l0Jm5ic3A7c2VuZC1lbWFpbCZuYnNwO25leHQmbmJzcDt0aW1l
-LiZuYnNwOyZuYnNwOzxicj5CZXN0Jm5ic3A7cmVnYXJkcyw8YnI+SGFvdGlhbiZuYnNwO0pp
-YW5nPC9kaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTQuNjY2N3B4OyBm
-b250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtQ
-aW5nRmFuZyBTQyZxdW90OywgJnF1b3Q7TWljcm9zb2Z0IFlhSGVpJnF1b3Q7OyI+PGJyPjwv
-ZGl2PjxkaXY+PC9kaXY+PGRpdiBjbGFzcz0ibWFpbHBsdWdpbl9xdW90ZSBtYWlscGxpdWdp
-bl9xdW90ZV9zcGxpdCIgc3R5bGU9Im1hcmdpbjogMDsiPgogICAgICAgICAgICAKICAgICAg
-PGRpdiBjbGFzcz0ibWFpbHBsdWdpbl9xdW90ZV9oZWFkZXIiIHN0eWxlPSJmb250LXNpemU6
-IDE0cHg7Y29sb3I6IHJnYmEoMTEsIDE4LCAyNiwgMC42KTsiPjxzcGFuPlRob21hcyBIdXRo
-PC9zcGFuPjxzcGFuPiZsdDt0aHV0aEByZWRoYXQuY29tJmd0Ozwvc3Bhbj4mbmJzcDvlnKg8
-c3Bhbj4gMjAyNuW5tDEw5pyIMTbml6Ug5ZGo5LqUIDIxOjE0IDwvc3Bhbj7lhpnpgZPvvJo8
-L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46IDA7cGFkZGluZzogMHB4IDBweCAwcHggMTBweDti
-b3JkZXItbGVmdDogMXB4IHNvbGlkIHJnYmEoNywgMTUsIDI2LCAwLjE1KTttYXJnaW4tdG9w
-OiAxNnB4OyI+PGRpdj48L2Rpdj48ZGl2IGNsYXNzPSJxbWJveCI+T24gMTYvMTAvMjAyNiAw
-OS4zNywgc3VuZGF5amlhbmcoc3VuZGF5amlhbmcpIHdyb3RlOjxicj4mZ3Q7IEZpeCB0d28g
-aW5kZXBlbmRlbnQgdXNlLWFmdGVyLWZyZWUgaXNzdWVzIGluIHRoZSBsaWJ1c2IgdXNiLWhv
-c3Q8YnI+Jmd0OyBiYWNrZW5kLjxicj4mZ3Q7IDxicj4mZ3Q7IFRoZSBmaXJzdCBwYXRjaCBm
-cmVlcyBVU0JIb3N0UmVxdWVzdCBvYmplY3RzIHdoZW48YnI+Jmd0OyBsaWJ1c2Jfc3VibWl0
-X3RyYW5zZmVyKCkgZmFpbHMsIHByZXZlbnRpbmcgc3RhbGUgVVNCUGFja2V0IHBvaW50ZXJz
-PGJyPiZndDsgZnJvbSByZW1haW5pbmcgb24gdGhlIHJlcXVlc3QgcXVldWUuPGJyPiZndDsg
-PGJyPiZndDsgVGhlIHNlY29uZCBwYXRjaCBkZWxldGVzIHRoZSBsYXppbHkgYWxsb2NhdGVk
-IGJvdHRvbSBoYWx2ZXMgZHVyaW5nPGJyPiZndDsgZGV2aWNlIHVucmVhbGl6ZSwgcHJldmVu
-dGluZyBjYWxsYmFja3MgZnJvbSBhY2Nlc3NpbmcgYSBmcmVlZDxicj4mZ3Q7IFVTQkhvc3RE
-ZXZpY2UuPGJyPiZndDsgPGJyPiZndDsgVG9tbWFzbyBDYWxpZmFubyB0ZXN0ZWQgdGhlIG9y
-aWdpbmFsIGNvbWJpbmVkIHBhdGNoIGFuZCByZXBvcnRlZCB0aGF0PGJyPiZndDsgaXQgbG9v
-a3MgY29ycmVjdC4gJm5ic3A7VGhpcyBzZXJpZXMgc3BsaXRzIHRoZSB0d28gZml4ZXMgc28g
-dGhhdCBlYWNoIGNoYW5nZTxicj4mZ3Q7IGhhcyBpdHMgb3duIGxvZ2ljYWwgc2NvcGUgYW5k
-IEZpeGVzIHRhZy48YnI+Jmd0OyA8YnI+Jmd0OyBIYW90aWFuIEppYW5nICgyKTo8YnI+Jmd0
-OyZuYnNwOyAmbmJzcDsgdXNiLWhvc3Q6IGZyZWUgcmVxdWVzdCBvbiBsaWJ1c2Igc3VibWl0
-IGZhaWx1cmU8YnI+Jmd0OyZuYnNwOyAmbmJzcDsgdXNiLWhvc3Q6IGRlbGV0ZSBib3R0b20g
-aGFsdmVzIGR1cmluZyB1bnJlYWxpemU8YnI+Jmd0OyA8YnI+Jmd0OyZuYnNwOyAmbmJzcDto
-dy91c2IvaG9zdC1saWJ1c2IuYyB8IDI5ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-PGJyPiZndDsmbmJzcDsgJm5ic3A7MSBmaWxlIGNoYW5nZWQsIDI5IGluc2VydGlvbnMoKyk8
-YnI+VGhhbmtzIGZvciB0aGUgZml4ZXMuIEknbGwgcXVldWUgdGhlc2UgZm9yIG15IG5leHQg
-cHVsbCByZXF1ZXN0Ljxicj48YnI+QnV0IGlmIHlvdSBjb3VsZCBkbyBtZSBhIGZhdm9yOiBU
-aGUgbmV4dCB0aW1lIHlvdSBzZW5kIHBhdGNoZXMsIHBsZWFzZSBkb24ndCA8YnI+c2VuZCB0
-aGVtIGFzIG1pbWUtZW5jb2RlZCBlLW1haWxzLiBJIGhhZCB0byBhcHBseSB0aGVzZSBwYXRj
-aGVzIG1hbnVhbGx5IDxicj5zaW5jZSAiZ2l0IGFtIiByZWZ1c2VkIHRvIHBhcnNlIHlvdXIg
-bWFpbC4gSS5lLiB0cnkgdG8gdXNlICJnaXQgc2VuZC1lbWFpbCIgPGJyPnRoZSBuZXh0IHRp
-bWUsIHRoaXMgd2lsbCBtYWtlIHN1cmUgdGhhdCB5b3VyIHBhdGNoZXMgY2FuIGJlIHByb2Nl
-c3NlZCBtb3JlIDxicj5lYXNpbHkuIFRoYW5rcyE8YnI+PGJyPiZuYnNwOyBUaG9tYXM8YnI+
-PGJyPjwvZGl2PjwvZGl2PjwvZGl2Pg==
+Please use the revised syntax for introductions, like you did in PATCH
+01:
 
-------=_NextPart_6AD70DB2_C1E17860_126FC91A--
+   # @name: introduction, best to keep it brief, but you may continue it
+   #     like this if necessary.  If your text need to refer to
+   #     arguments, it's almost certainly not brief introduction
+   #     anymore.
+   #
+   # Additional text can go here for now.
+
+I apologize for the inconvenience.  We need this to eliminate certain
+syntactic ambiguities that plagued the doc generator.  We'll need it
+some more for the doc inliner.
+
+> +# @qom-path: path to the block device object in the QOM tree
+> +#
+> +# @operation: I/O operation
+> +#
+> +# @latency-ns: Ongoing duration of the operation (in nanoseconds)
+> +#
+> +# @action: Action that has been taken ("report" for "delay-report-ns"
+> +#     or "stop" for "delay-stop-ns").  A "stop" action means the VM
+> +#     will be stopped with the "io-hang" `RunState`, which does not
+> +#     drain the block devices attached to the VM, because draining
+> +#     would be counterproductive in case of a hanging I/O request.
+
+This feels less than clear.  What exactly happens?  My best guess:
+
+* When an operation takes longer than delay-report-ns, BLOCK_IO_DELAY is
+  emitted with "action": "report" (but only once for this operation).
+
+* When an operation takes longer than delay-stop-ns, the guest is
+  stopped (run state becomes io-hang), and BLOCK_IO_DELAY is emitted
+  with "action": "stop".
+
+  Say we continue the guest.  Can the even be triggered again for this
+  operation?
+
+The three possible values are ignore, report, and stop.  You cover
+report and stop.  Can ignore happen?
+
+We should use ``literal`` markup for literal values.
+
+> +#
+> +# @offset: Request offset in the guest disk (in bytes), if available
+> +#
+> +# @bytes: Request length
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'event': 'BLOCK_IO_DELAY',
+> +  'data': {
+> +      'qom-path': 'str',
+> +      'operation': 'IoAccountingOperation',
+> +      'latency-ns': 'uint64',
+> +      'action': 'BlockErrorAction',
+> +      '*offset': 'uint64',
+> +      'bytes': 'uint64' } }
 
 
