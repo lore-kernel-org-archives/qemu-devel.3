@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073B9606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 09:21:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5FF606A32C
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 09:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=XvJZM2sW
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=X7qSllUu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ61D-0006cM-Si; Tue, 20 Oct 2026 05:20:27 -0400
+	id 1xJ61T-0006en-QX; Tue, 20 Oct 2026 05:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xJ61B-0006c0-61
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:25 -0400
+ id 1xJ61R-0006eQ-4s
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:41 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1xJ619-0005a1-2s
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:24 -0400
+ id 1xJ61P-0005b6-Bb
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:20:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1792488023; x=1824024023;
+ t=1792488039; x=1824024039;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+ppTtaaIoX3Z7Bx3uv0GyjOGE54Gi2Hrg/cJF6Xn3hg=;
- b=XvJZM2sWZDw/srkm16kCnAAqKD/2G972hhM88PWYNnkYw1yyJYQFdb0t
- XVh1hobzncQDneUl57LN9Hld85p6odE9B8B/fk7aNEy1s97pyEDtndtn6
- Q39Ta2JcL27/wi4IzQ0Zr31Ahx+Ti1pP8vG8KrzFMgZXjOt+jhEEq9voi
- mPGkBI7MertVXiwQkubk//cq3xoKE2IAPMqreD5kEHTzxL5egJG3ehfl9
- 0jUbnLsoOEy0UoNqHNoWsfBNfm7JkedIPp+J9tTybnNBXS8Nd1SF4iv0U
- RuslrdsbyLA3dHMbnAL6+Rm11wmU5pcGyYtE+kqDouNpd/7eTBLFVVUPw g==;
-X-CSE-ConnectionGUID: Z/qNCmLIS1ekaigZCbDHYw==
-X-CSE-MsgGUID: z93w6lMfSYKTF+OfOcLt9Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1080638"
+ bh=aE0zRH6rlS8CPTLr1w2HcBEqdr/y7TC2FCuZpHX1UqY=;
+ b=X7qSllUu1imOYGqYjNb3MjKf7S4LVt/hPvevzhXlRPXqIz33bssIVivs
+ eLrtaWkGRsMlLKEA6a33B+KMFNWyd91MBiUserQL33V4BkKRA0aVEmnQL
+ 1T/dTbywIfBEwWVqYwRglANpxT8OZKuKqfjn7/FA8uE+3zmrvkDKfeF6R
+ woGdg3QkkuGoKsyuIjAAsfUfGkel7VRcik0Ybclpiqy6VMKYWE3tKZYfv
+ /+s4uiDYCATwLbI1recQsYQllHvsqbXehC/8sRuUa3ox7jO1Y60nW9+or
+ vqQ20pUR9YDOzhnYcXyeoBhA8T+lv4ITkygr5Yuk+XUf0ZBvvKVY0bDy4 g==;
+X-CSE-ConnectionGUID: yRBuPZtcSD2jJkNmBauTCw==
+X-CSE-MsgGUID: lKeKxBKKRz+2OaCo46IMZQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11940"; a="1080688"
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="1080638"
+   d="scan'208";a="1080688"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2026 02:20:21 -0700
-X-CSE-ConnectionGUID: PPceEkPjTKSnUaFP2AojPg==
-X-CSE-MsgGUID: Ui7FnA7LQgSAf26WgspXRw==
+ 20 Oct 2026 02:20:37 -0700
+X-CSE-ConnectionGUID: JZLlYIq0RqSfuHGJAEtTOQ==
+X-CSE-MsgGUID: hAk2skcbQl+4sUTK94flfQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,168,1787036400"; 
-   d="scan'208";a="3138306"
+   d="scan'208";a="3138404"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Oct 2026 02:20:18 -0700
+ 20 Oct 2026 02:20:33 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -55,10 +55,10 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v9 2/6] backends/iommufd: Introduce
- iommufd_backend_alloc_faultq
-Date: Tue, 20 Oct 2026 17:19:50 +0800
-Message-ID: <20261020091955.1607161-3-zhenzhong.duan@intel.com>
+Subject: [PATCH v9 6/6] intel_iommu_accel: Teardown FAULTQ resources in bottom
+ half
+Date: Tue, 20 Oct 2026 17:19:54 +0800
+Message-ID: <20261020091955.1607161-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20261020091955.1607161-1-zhenzhong.duan@intel.com>
 References: <20261020091955.1607161-1-zhenzhong.duan@intel.com>
@@ -92,78 +92,108 @@ X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
-handling object which will be used in hwpt allocation.
+When a PASID entry becomes invalid, all resources allocated for that entry,
+including the FAULTQ object and fault_fd, must be released.
 
+Calling qemu_set_fd_handler() detaches the fault_fd I/O read handler and
+wakes up the main loop thread from poll(). However, a race window exists
+where iommufd_backend_free_id(fault_id) can be invoked before poll() exits
+and releases its reference to the fault_fd file. In this scenario, freeing
+the FAULTQ object returns -EBUSY because the opened fault_fd file still
+holds an active reference to the FAULTQ object.
+
+Defer FAULTQ resource teardown to a bottom half. This ensures poll() has
+fully exited and dropped the file reference before the fault_fd is closed
+and the FAULTQ object ID is freed. Additionally, keep the IOMMUFD backend
+FD open via iommufd_backend_connect() across the asynchronous bottom half
+execution to ensure FAULTQ object freed successfully.
+
+Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 21 +++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 25 insertions(+)
+ hw/i386/intel_iommu_accel.c | 59 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 3 deletions(-)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 17bf1a3727..36b34b4899 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -106,6 +106,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-                                    uint32_t *out_veventq_id,
-                                    uint32_t *out_veventq_fd, Error **errp);
- 
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
-+                                  uint32_t *out_fault_fd, Error **errp);
-+
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 15f2a51350..2775eef741 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -554,6 +554,27 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-     return true;
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 243501f137..7db8319ad4 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -271,17 +271,70 @@ free_faultq:
+     return false;
  }
  
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
-+                                  uint32_t *out_fault_fd, Error **errp)
-+{
-+    int ret, fd = be->fd;
-+    struct iommu_fault_alloc cmd = {
-+        .size = sizeof(cmd),
-+    };
++typedef struct IOMMUFaultQueue {
++    IOMMUFDBackend *iommufd;
++    uint32_t id;
++    int fd;
++    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
++} IOMMUFaultQueue;
 +
-+    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
-+    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
-+                                       ret);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to allocate fault queue");
-+        return false;
++static void faultq_teardown_bh(void *opaque)
++{
++    IOMMUFaultQueue *fq = opaque;
++    VTDPRQEntry *prqe, *next;
++
++    QLIST_FOREACH_SAFE(prqe, &fq->vtd_prq_list, next, next) {
++        QLIST_REMOVE(prqe, next);
++        g_free(prqe);
 +    }
 +
-+    *out_fault_id = cmd.out_fault_id;
-+    *out_fault_fd = cmd.out_fault_fd;
-+    return true;
++    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
++    close(fq->fd);
++    iommufd_backend_free_id(fq->iommufd, fq->id);
++    iommufd_backend_disconnect(fq->iommufd);
++
++    g_free(fq);
 +}
 +
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/trace-events b/backends/trace-events
-index 9b7b9b7d68..b1c1d89dd8 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
- iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-+iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
+ {
++    HostIOMMUDeviceIOMMUFD *idev =
++        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
++    IOMMUFaultQueue *fq;
++
+     if (vtd_pce->fault_fd < 0) {
+         return;
+     }
+ 
+-    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
+-    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
+-                          vtd_pce->fault_fd);
++    fq = g_malloc(sizeof(*fq));
++    fq->iommufd = idev->iommufd;
++    fq->fd = vtd_pce->fault_fd;
++    fq->id = vtd_pce->fault_id;
+     vtd_pce->fault_id = 0;
+     vtd_pce->fault_fd = -1;
++    fq->vtd_prq_list.lh_first = vtd_pce->vtd_prq_list.lh_first;
++    QLIST_INIT(&vtd_pce->vtd_prq_list);
++
++    /*
++     * During a VFIO device hot-unplug, if this is the last device connected
++     * to the IOMMUFDBackend, the backend user count (iommufd->users) will
++     * drop to zero, triggering iommufd_backend_disconnect() which closes
++     * the backend's opened container FD.
++     *
++     * Since the teardown of this fault queue (faultq_teardown_bh) is
++     * scheduled asynchronously as a bottom half, we must temporarily
++     * increment the connection user count of the iommufd backend here.
++     * This guarantees the backend connection remains open and its opened
++     * FD remains active until the async BH completes.
++     *
++     * Incrementing the user count is guaranteed to succeed here because the
++     * VFIO device is still registered as an active user of the backend at
++     * this point in the teardown sequence.
++     */
++    iommufd_backend_connect(fq->iommufd, &error_abort);
++
++    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
++                            faultq_teardown_bh, fq);
+ }
+ 
+ static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
 -- 
 2.52.0
 
