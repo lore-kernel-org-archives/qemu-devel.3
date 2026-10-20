@@ -1,71 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFA2606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10422606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 10:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FAi8dsPn
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=h69dCYmf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7M9-0007L3-QC; Tue, 20 Oct 2026 06:46:10 -0400
+	id 1xJ7Jd-0004Ao-Nd; Tue, 20 Oct 2026 06:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xJ7K3-0004an-KC
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:59 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xJ7Ja-000481-7C
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:30 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xJ7Jh-0004SW-G3
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:59 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-48dfdd0678dso2059500f8f.0
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 03:43:36 -0700 (PDT)
+ id 1xJ7JU-0004JY-Od
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:43:29 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4a16af2a232so21607535e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 03:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792493016; x=1793097816; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=3nKJ8HDcn3r8uziE9nKrYpZyKDrGZlceKJ4Jq+Ujj9I=;
- b=FAi8dsPny1TdtJ58mji3uQb8+iZr/Xfv4hKXEr6R+o/J5n0bEscpa2cw6HqI5YUM9X
- A4ccdAS7ydpnh7a1haZ76kqnIL/8XuqddsgiCdHy3yhJLoZ67udjulYG/F6qI5yIVgyx
- iG0mthnLDwCIgwrpQZWGffoX9bbdpA7azIi+M9Pw73hy03nZoqu/t88Qk/yEoTAv0KiE
- MYNP2jgRCyhLDcNDf/stUJrGmZJREhlnDw1g3b8qYLGW/4ZSXANmWJU4ceiaHKjKnYH1
- R9MKnXzK2kOt8LwqBcvSjE7GA2be+nqvYEfgiYoYyKS/1UReMG9jmUZah+X/41KXW7UA
- PslA==
+ d=linaro.org; s=google; t=1792493003; x=1793097803; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=3NNeDfISu2gpg9ZYXN0W5UQrgwObRlFXGjX8CXeq/qY=;
+ b=h69dCYmfoPKNF1jFib4GFauJXecSl7LUYpU07Fszgl4Ef2VzCTxYoLXOFfNZ/Xd7BZ
+ Dfh8ChJqacvyiwHu/tO+UW/cNyjBZtBzrxjnWaHNvvriyjAOrixW+F+JadSQOlpNZYuN
+ a40TFL8m/x7XsWNJh1ePuL8ZH5BvwA+kw1MEMhTg3zXJe/yKlxO/mEiZZfnMGnE3EvnB
+ FhZq4H1ezyB1sPCejQ92hiocdyLhvRVPd9wR0Jmwu4A9HjEJ5u7SsrqPqNw3mwXGerLs
+ qRb9v0ASlPuskDVgEIbYwxDzwoiQEiy2JPwgwOH5Mm1XJh84QoxFOuplA49sekqlCfTr
+ Y9CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792493016; x=1793097816;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3nKJ8HDcn3r8uziE9nKrYpZyKDrGZlceKJ4Jq+Ujj9I=;
- b=SGiA0FXhG3sks+eD8u0/vscRK3Nh0pJfyNpEBMyMFmZID0wpa6kKTKf1o2eixrSr7e
- M236QwaoY57TsB148Hb04+7i4nUiqSWoYp5Cz8aeOcu5Dc6DjAT7cxU8O4o4JSsjeZdO
- Oncco9A7K7FxAFB+7K7Se3mBzdpKsYstY4S6aSnQd9kGIF00Vo+F0kVjUmPYdIaJ+2qu
- 91TjSqKvi8W8bo538tUlKKOvWy4oOHCoahy00QMt/YYhSPIq94DhEyjTYIuniF07YUQ1
- b2Ilhiu6638enJDICqNSoUSgfbSr0uX6j87XtKDhuqPRDHE6n7W9JRQZU2qZbkyHAu2G
- za5w==
-X-Gm-Message-State: AFq9FYJ2oNM7BvkEVILgLSg7UiOFhEKrwHR3KQKZNCo+6maHc/tYc+9L
- 3AWvNT5R3RPU6NfYpJsOlO79bAhkHFC4FCAsqQF7ksU/V5EAWclmj2IQLP+JjiZxsE0=
-X-Gm-Gg: AYBFou1aZNB1Nc5UH1pYxfnHa5IP+zbHFyT2phWu3gcFf2wQQkgYIIONbO/xeDw0wir
- VBEav+eL7EIVxc6op+jdHmBNoNHNqaaepTwCL4el4aFrpsi0Jl/SuUqJJYsTNjKw4gfnjXzv3l9
- diubWxI7IBAmVgkpjNS2Zd+dzzrypOWQvbVvKcJB16MFf0irr3ZeNyrxJlmzoOTEygR0VT+Xv73
- ksf98bqilxRYUh8kTos5gHlYydq5VDlVgYKkj28C5JlyGgawU8xk4P+94V1TYCuEnCl3JlvGIKa
- 1s3IHHixjfuDLDIjz8FxvxTIMunsS/F8spVB64otwQdFFqSS8FFlfzP6+U3Katubsg1cc3k7z8p
- brmS6HIaWOdmwZ+srKjzPDkfjRpSunWsMt7dQszSmJHFY9j8eY8NpH2kYHUvn8zVflXBT24NaO3
- kWELH7U8MufRmeu0rpJv7HAbDocw0WtfdSA2ce+06hYvWKW9G4v5urEn0OVrUelcNBpsjVkg==
-X-Received: by 2002:a05:6000:5ca:b0:48d:ff06:c626 with SMTP id
- ffacd0b85a97d-48e07f9eacbmr20650207f8f.35.1792493015656; 
- Tue, 20 Oct 2026 03:43:35 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792493003; x=1793097803;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=3NNeDfISu2gpg9ZYXN0W5UQrgwObRlFXGjX8CXeq/qY=;
+ b=odP/gJ8veok432HgHTbse0x/a2FICUoNIriMemH5+eVGoc3XJWa3Oz1oyxuZrYeIMm
+ 6K43cb5FKQ1NUomNb/KQJYUYasOJ5IPfsoviS6fPudA8uLpJ4fFGoYVZNGYZW46AVgrk
+ QBpDJrC406AYvtT9/n4bmegwxNW1rIdlkpOlZkWqkaHO1A8MfG+tFPzYNG2GHdnVhRkm
+ wpETlsE5gh6jq9wrZ0XTLbyFpCAPyyMb9blV1pnXSq9Pdgnb1cNWUEVFwa5ForudJFKV
+ YdMRJx/PXoDo0DPVAJUSeW6SSKXfcODtRbM8mX0e8OVYt9GAVeLvuLKGpRC8IJcguB7V
+ uvvA==
+X-Gm-Message-State: AFq9FYI0x91fnaAVqWFWao5gZADL5XpOseoeQhesRMSO59FObCwwtj3D
+ vgvUpYH1me0gERwptjX0XteojzUeVAKHPVrJjjrRSY5ssitnkZ55zNQdcGY03gfCi9I=
+X-Gm-Gg: AYBFou3MBvzOzJvacjW5zaUyA2rFn+aiWAoy/LTbO4dGUR/9jwLcSoS2+dlw9ArdFvW
+ /uLJzgcjOuy142GjvckQn482ylIPsUb9TNrrpZjILllaUoErE5v2j5H+sKNzWmODzOTZeG06MBH
+ ruWW9R1PKHE73na4etn1Z7RNXKJMoVX3AfpXJHzlVuB5QFxs6gmuD3kKzZhFOILFGNvzDRftryo
+ 2DBdiarMbKMRKs3OOeDhW4ZnEUlXc8MabFPj8rhRvsoelXbS98m5hPtuF2Hbv9Z5EPh8p5MCxKe
+ QU5VeZZTyoFgWsUuIGH5Qrv8h2s/cpVZ20IJ3OjbbZB8l0n14cWxWOyBTNekMya9CXL6F81Jgbb
+ 3HHJ0nYi5ydy+1GPky/9fxYxK1yw1LUfRPdfIw+szG9TPwxjDLde6QYye0jqF95agH3z0vRgbSL
+ uRdmtxrdGfPSDiFWsdqIfzHdmpSjQmEKzxiP8FQg32TCNuACfimvCxdyBacUdWwb24m7RxP9n1A
+ eO2lfPn
+X-Received: by 2002:a05:600c:608e:b0:4a1:e08e:46b5 with SMTP id
+ 5b1f17b1804b1-4a1e08e4871mr157389645e9.16.1792493003076; 
+ Tue, 20 Oct 2026 03:43:23 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e1d80fafdsm5465775f8f.9.2026.10.20.03.43.26
+ 5b1f17b1804b1-4a1ce325107sm289903195e9.3.2026.10.20.03.43.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Oct 2026 03:43:27 -0700 (PDT)
+ Tue, 20 Oct 2026 03:43:21 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 015BD5F9E2;
- Tue, 20 Oct 2026 11:43:24 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 37ED55F8DC;
+ Tue, 20 Oct 2026 11:43:20 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>,
@@ -97,25 +96,23 @@ Cc: Bibo Mao <maobibo@loongson.cn>,
  Weiwei Li <liwei1518@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-riscv@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 19/23] accel/kvm: remove TARGET_KVM_HAVE_GUEST_DEBUG
-Date: Tue, 20 Oct 2026 11:43:13 +0100
-Message-ID: <20261020104320.3686723-20-alex.bennee@linaro.org>
+Subject: [PATCH 00/23] kvm: introduce KVMCPUOps
+Date: Tue, 20 Oct 2026 11:42:54 +0100
+Message-ID: <20261020104320.3686723-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261020104320.3686723-1-alex.bennee@linaro.org>
-References: <20261020104320.3686723-1-alex.bennee@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,257 +124,110 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With guest debug and breakpoint handling now migrated to struct
-KVMCPUOps, accel/kvm dispatches dynamically via ops. If an
-architecture does not support guest debug or breakpoints, the
-callbacks are simply NULL and common code handles this gracefully.
+There is a world coming where we can have a KVM interface which
+supports multiple architectures. The old style approach of using
+linking to resolve per arch kvm_arch_foo handlers won't scale and is
+also slightly antithetical to the flexible not-quite object orientated
+way we do things in QEMU.
 
-As a result we can drop TARGET_KVM_HAVE_GUEST_DEBUG. Remove it from
-target configs and eliminate the #ifdef guards.
+Taking TCGCpuOps as a reference this implements KVMCpuOps as the
+shared function dispatcher for CPU specific KVM operations.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- configs/targets/aarch64-softmmu.mak     |  1 -
- configs/targets/i386-softmmu.mak        |  1 -
- configs/targets/loongarch64-softmmu.mak |  1 -
- configs/targets/ppc-softmmu.mak         |  1 -
- configs/targets/ppc64-softmmu.mak       |  1 -
- configs/targets/riscv64-softmmu.mak     |  1 -
- configs/targets/s390x-softmmu.mak       |  1 -
- configs/targets/x86_64-softmmu.mak      |  1 -
- include/system/kvm.h                    |  7 -------
- include/system/kvm_int.h                |  2 --
- accel/kvm/kvm-accel-ops.c               |  4 ----
- accel/kvm/kvm-all.c                     | 15 +++++----------
- 12 files changed, 5 insertions(+), 31 deletions(-)
+A couple of open questions:
 
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index d34aead41c4..6f60ca6505c 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml aarch64-pauth.xml aarch64-sme2.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index 38a8f85201f..2eef68dc55e 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=i386
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= i386-32bit.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index a425b3dbaae..3b3a9021980 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= loongarch-base32.xml loongarch-base64.xml loongarch-fpu.xml loongarch-lsx.xml loongarch-lasx.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
-index 867898bd47c..c47887f8992 100644
---- a/configs/targets/ppc-softmmu.mak
-+++ b/configs/targets/ppc-softmmu.mak
-@@ -1,5 +1,4 @@
- TARGET_ARCH=ppc
- TARGET_BIG_ENDIAN=y
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
-index 10d7a2681e7..8c6dc84b821 100644
---- a/configs/targets/ppc64-softmmu.mak
-+++ b/configs/targets/ppc64-softmmu.mak
-@@ -1,7 +1,6 @@
- TARGET_ARCH=ppc64
- TARGET_BASE_ARCH=ppc
- TARGET_BIG_ENDIAN=y
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-index a10dc03c04c..18b674230ab 100644
---- a/configs/targets/riscv64-softmmu.mak
-+++ b/configs/targets/riscv64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-32bit-cpu.xml riscv-32bit-virtual.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
-diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
-index 478988e6d4a..6a629c6479e 100644
---- a/configs/targets/s390x-softmmu.mak
-+++ b/configs/targets/s390x-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=s390x
- TARGET_BIG_ENDIAN=y
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_XML_FILES= s390x-core64.xml s390-acr.xml s390-fpr.xml s390-vx.xml s390-cr.xml s390-virt.xml s390-virt-kvm.xml s390-gs.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index c7f8746b4f5..491173df466 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -1,6 +1,5 @@
- TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
--TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
- TARGET_XML_FILES= i386-64bit.xml i386-64bit-apx.xml
- TARGET_LONG_BITS=64
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index cfc0144d9a5..1a52e7e5261 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -232,14 +232,7 @@ void kvm_irqchip_change_notify(void);
-  * calling down to the KVMCPUOps::update_guest_debug callback after the generic
-  * fields have been set.
-  */
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
- int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap);
--#else
--static inline int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
--{
--    return -EINVAL;
--}
--#endif
- 
- /* internal API */
- 
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index 0876aac938d..9d1d3fd3deb 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -113,9 +113,7 @@ struct KVMState
-     struct kvm_coalesced_mmio_ring *coalesced_mmio_ring;
-     bool coalesced_flush_in_progress;
-     int vcpu_events;
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-     QTAILQ_HEAD(, kvm_sw_breakpoint) kvm_sw_breakpoints;
--#endif
-     int max_nested_state_len;
-     int kvm_shadow_mem;
-     bool kernel_irqchip_allowed;
-diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
-index 445d7d7f545..ab10de6ac30 100644
---- a/accel/kvm/kvm-accel-ops.c
-+++ b/accel/kvm/kvm-accel-ops.c
-@@ -86,12 +86,10 @@ static bool kvm_cpus_are_resettable(void)
-     return !kvm_enabled() || !kvm_state->guest_state_protected;
- }
- 
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
- static void kvm_update_guest_debug_ops(CPUState *cpu)
- {
-     kvm_update_guest_debug(cpu, 0);
- }
--#endif
- 
- static void kvm_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-@@ -106,12 +104,10 @@ static void kvm_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->synchronize_pre_loadvm = kvm_cpu_synchronize_pre_loadvm;
-     ops->handle_interrupt = generic_handle_interrupt;
- 
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-     ops->update_guest_debug = kvm_update_guest_debug_ops;
-     ops->insert_gdbstub_breakpoint = kvm_insert_gdbstub_breakpoint;
-     ops->remove_gdbstub_breakpoint = kvm_remove_gdbstub_breakpoint;
-     ops->remove_all_gdbstub_breakpoints = kvm_remove_all_gdbstub_breakpoints;
--#endif
- }
- 
- static const TypeInfo kvm_accel_ops_type = {
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 3bd61264a7e..5b96fac513e 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2964,9 +2964,7 @@ static int kvm_init(AccelState *as, MachineState *ms)
-     s->sigmask_len = 8;
-     accel_blocker_init();
- 
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-     QTAILQ_INIT(&s->kvm_sw_breakpoints);
--#endif
-     QLIST_INIT(&s->kvm_parked_vcpus);
-     s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
-     if (s->fd == -1) {
-@@ -3077,7 +3075,6 @@ static int kvm_init(AccelState *as, MachineState *ms)
-     kvm_vm_attributes_allowed =
-         (kvm_check_extension(s, KVM_CAP_VM_ATTRIBUTES) > 0);
- 
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
-     if (kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG) > 0) {
-         as->gdbstub.sstep_flags = SSTEP_ENABLE;
- 
-@@ -3088,7 +3085,6 @@ static int kvm_init(AccelState *as, MachineState *ms)
-             as->gdbstub.sstep_flags |= SSTEP_NOIRQ;
-         }
-     }
--#endif
- 
-     kvm_state = s;
- 
-@@ -3832,7 +3828,6 @@ bool kvm_arm_supports_user_irq(void)
-     return kvm_check_extension(kvm_state, KVM_CAP_ARM_USER_IRQ);
- }
- 
--#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
- struct kvm_sw_breakpoint *kvm_find_sw_breakpoint(CPUState *cpu, vaddr pc)
- {
-     struct kvm_sw_breakpoint *bp;
-@@ -3869,6 +3864,10 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
-     const KVMCPUOps *ops = kvm_get_cpu_ops(cpu);
-     struct kvm_set_guest_debug_data data;
- 
-+    if (!ops || !ops->update_guest_debug) {
-+        return -EINVAL;
-+    }
-+
-     data.dbg.control = reinject_trap;
- 
-     if (cpu_single_stepping(cpu)) {
-@@ -3878,9 +3877,7 @@ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
-             data.dbg.control |= KVM_GUESTDBG_BLOCKIRQ;
-         }
-     }
--    if (ops && ops->update_guest_debug) {
--        ops->update_guest_debug(cpu, &data.dbg);
--    }
-+    ops->update_guest_debug(cpu, &data.dbg);
- 
-     run_on_cpu(cpu, kvm_invoke_set_guest_debug,
-                RUN_ON_CPU_HOST_PTR(&data));
-@@ -4022,8 +4019,6 @@ void kvm_remove_all_gdbstub_breakpoints(CPUState *cpu)
-     }
- }
- 
--#endif /* !TARGET_KVM_HAVE_GUEST_DEBUG */
--
- static int kvm_set_signal_mask(CPUState *cpu, const sigset_t *sigset)
- {
-     KVMState *s = kvm_state;
+  - should we consider some sort of shared AccelInfo region for
+  CPUState instead of a bunch of mutually unused bits
+  - how can we improve coverage of KVM testing?
+
+The main driver for writing:
+
+  Message-ID: <20261019192704.3220373-1-alex.bennee@linaro.org>
+  Date: Mon, 19 Oct 2026 20:26:45 +0100
+  Subject: [PATCH v3 00/19] testing/next: functional testing updates for gdb (pre-PR)
+  From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+
+was so I could be sure the KVMCpuOps where properly working. I don't
+think we have that much that exercises KVM in our CI system anyway
+because most runners don't give access to HW virtualisation. I have
+tested this on:
+
+  - x86_64 (on my dev box)
+  - aarch64 (on my personal dev box and the aarch64 ci machine)
+  - s390x (on devcloud instance, same as the s390x runner)
+
+Notably I wasn't able to test the riscv64, loongarch64 or ppc64
+behaviour. I do have access to the OSUL ppc runner but it doesn't
+support nested virt and testing on that machine needs some love anyway
+(see #3207).
+
+Anyway I await your discussion ;-)
+
+Alex.
+
+Alex Bennée (23):
+  accel: introduce KVMAccelClass and KVMCPUOps
+  target/i386: wire up empty KVMAccelCPUClass
+  target/ppc: wire up empty KVMAccelCPUClass
+  target/riscv: wire up empty KVMAccelCPUClass
+  target/arm: wire up empty KVMAccelCPUClass
+  target/s390x: wire up empty KVMAccelCPUClass
+  target/loongarch: wire up empty KVMAccelCPUClass
+  accel/kvm: port kvm_arch_pre_run to KVMCPUOps
+  accel/kvm: port kvm_arch_post_run to KVMCPUOps
+  accel/kvm: port kvm_arch_handle_exit to KVMCPUOps
+  accel/kvm: port kvm_arch_process_async_events to KVMCPUOps
+  accel/kvm: port kvm_arch_[put|get]_registers to KVMCPUOps
+  accel/kvm: port kvm_arch_pre_create_vcpu to KVMCPUOps
+  accel/kvm: port kvm_arch_init_vcpu to KVMCPUOps
+  accel/kvm: port kvm_arch_destroy_vcpu to KVMCPUOps
+  accel/kvm: port kvm_arch_vpcu_id to KVMCPUOps
+  accel/kvm: port kvm_arch_update_guest_debug to KVMCPUOps
+  accel/kvm: port kvm_arch_[insert|remove]_hw_breakpoints to KVMCPUOps
+  accel/kvm: remove TARGET_KVM_HAVE_GUEST_DEBUG
+  accel/kvm: port kvm_arch_stop_on_emulation_error to KVMCPUOps
+  accel/kvm: port kvm_arch_on_sigbus_vcpu to KVMCPUOps
+  accel/kvm: cache KVMCPUOps
+  accel/kvm: remove redundant ops checks for kvm_get_cpu_ops
+
+ docs/specs/acpi_hest_ghes.rst           |   3 +-
+ configs/targets/aarch64-softmmu.mak     |   1 -
+ configs/targets/i386-softmmu.mak        |   1 -
+ configs/targets/loongarch64-softmmu.mak |   1 -
+ configs/targets/ppc-softmmu.mak         |   1 -
+ configs/targets/ppc64-softmmu.mak       |   1 -
+ configs/targets/riscv64-softmmu.mak     |   1 -
+ configs/targets/s390x-softmmu.mak       |   1 -
+ configs/targets/x86_64-softmmu.mak      |   1 -
+ include/accel/kvm/cpu-ops.h             | 171 ++++++++++++++++++++++
+ include/hw/core/cpu.h                   |   3 +
+ include/system/kvm.h                    |  42 +-----
+ include/system/kvm_int.h                |   2 -
+ target/i386/kvm/kvm_i386.h              |  20 +++
+ accel/kvm/kvm-accel-ops.c               |  13 +-
+ accel/kvm/kvm-all.c                     | 183 +++++++++++++++++-------
+ accel/tcg/cpu-exec.c                    |   2 +-
+ hw/i386/kvm/xen_evtchn.c                |   6 +-
+ hw/intc/openpic_kvm.c                   |   4 +-
+ hw/intc/spapr_xive_kvm.c                |  10 +-
+ hw/intc/xics_kvm.c                      |   6 +-
+ target/arm/kvm.c                        |  96 +++++++------
+ target/i386/kvm/kvm-cpu.c               |  26 +++-
+ target/i386/kvm/kvm.c                   |  42 +++---
+ target/loongarch/cpu.c                  |   8 +-
+ target/loongarch/kvm/kvm.c              |  96 ++++++-------
+ target/ppc/kvm.c                        |  75 +++++-----
+ target/riscv/kvm/kvm-cpu.c              |  95 +++++-------
+ target/s390x/kvm/kvm.c                  |  89 +++++++-----
+ 29 files changed, 628 insertions(+), 372 deletions(-)
+ create mode 100644 include/accel/kvm/cpu-ops.h
+
 -- 
 2.47.3
 
