@@ -1,81 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A64C606A33E
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 08:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4A606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 09:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Zh1mDs6P
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=NEGvqXDz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ5S3-0001Kf-9b; Tue, 20 Oct 2026 04:44:07 -0400
+	id 1xJ5uu-0005WD-Ut; Tue, 20 Oct 2026 05:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1xJ5S1-0001KN-5e
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 04:44:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jtomko@redhat.com>) id 1xJ5Rz-00027Y-2K
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 04:44:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792485841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UTbdtk+aMD5bH0CKhwmgQiJIZZIyl7rI+WNKMuRwKjI=;
- b=Zh1mDs6PLy1VWUovoc6lX60B5//hRYr7IqFeYhxKIeB1BchFx92763ya0xui2lOBe1dv6Q
- 7L3JasPlyIY6rtg6a5SGAhL27+ZYhngcBjb1zi71OXAIVuWzfJo8ZLVvjGYBEO5jsygYcV
- uzmqn4IqqIIgoNG956/xdzsJmoLDg9A=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-aSrXdarRMteXGLlLRBhTOQ-1; Tue,
- 20 Oct 2026 04:42:49 -0400
-X-MC-Unique: aSrXdarRMteXGLlLRBhTOQ-1
-X-Mimecast-MFC-AGG-ID: aSrXdarRMteXGLlLRBhTOQ_1792485768
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A555C195419C; Tue, 20 Oct 2026 08:42:47 +0000 (UTC)
-Received: from jtomko.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B3271956088; Tue, 20 Oct 2026 08:42:43 +0000 (UTC)
-Date: Tue, 20 Oct 2026 10:42:41 +0200
-From: =?iso-8859-1?B?SuFu?= Tomko <jtomko@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- devel@lists.libvirt.org, Laurent Vivier <lvivier@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH] system: Remove deprecated '-name foo, debug-threads=...'
- option
-Message-ID: <atcpgXk-rQ5m1PDK@jtomko.csb>
-References: <20261018232917.7716-1-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xJ5ur-0005Vv-5d
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:13:53 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xJ5up-0004tZ-I1
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 05:13:52 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1d8944cb0so4256982a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 02:13:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792487629; cv=none;
+ d=google.com; s=arc-20260327;
+ b=L2zU79VZc3F+hqxGI2dibvQeITCSUONkB1wfvpnItVzVrP8aNLZ6cEZoBEXaNiiDqb
+ k1sdZbB1ZDX66S2oaqhVi9FwE+20ShZ55hsg8drDxyvVoc9ZvkSr2DerDUfFlYimESzK
+ YPnQzCvdO7CTji/8w3h3VrMEabrXu+R27EhxJhipSzMnIWnazPVO2fTe/dSe2mz0YXYK
+ FSOac0LENZWR+T1N+H3UTXsFPcDxGO5t37kxHHicSXdJ2gQx17ZJpSy49RPjhxeB+uzx
+ k9uJf5Yk4Mn9n7TCHgUKAfABTpgCzrB8PNkVByCSbxHmOGV1aC6CUMrG6BXI1x2QwW7P
+ /Fdg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=oi+DiORcv8oPY+bwo7vKR3lVC7t8yHxl0tr6tfI0oE4=;
+ fh=6NgOZ+w4lYYtlbsSC0SpMMJrPrfMzyA6V9Gx96Cfks0=;
+ b=ddebcJ5g77hUpD1ml/mo80XtzKL6bRJb9mPlnOqiFAQ8PIRwwhIcSwSsTYmr7HxT96
+ VMcchNXFETmIRrugEiA0vgCSo57m48WUxAi/3S28CcXscMs9Nh4AB61txCJ4oWOpkW5k
+ MJ/gXza0d5pG5I3Kjyo7Y8dNIwW9myfhl5MCKvTXVqwn7uIleDfJ/aMquJz3TiUPE/af
+ 3/ij8PQszez9AEnY7Xb3YP47USnRnZVcE2iFtMZho691XEE+MgCXDkH/ye/1pKdZzB5k
+ GUhD6BW76WWMwmN2ZtBcs4zxit2b31zZweGdJvXND61od9/9TrnrA+MEdvCPzbxSfYXt
+ uasg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792487629; x=1793092429; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=oi+DiORcv8oPY+bwo7vKR3lVC7t8yHxl0tr6tfI0oE4=;
+ b=NEGvqXDztZb7Vm6SzaIMrGDah/e+iGZNXUk6LzwNhBjI1unFHIvtmsVPmLI6NhR+8i
+ zP/zdVcSYbMe9Fda/XNBSg8UUYjulpkS2uTwJZDFzVJOxe3kS+yry/BXbzK0+0HB1u+2
+ 44HKj2ExGGGvDo68Qrrs8q92ooC4L5NjnxLZCjTzAWJtAcnkLkEaKouZciaZXB0J6pxC
+ 5uXUEcYrqO5Qp8AWLDMOh9xJP6EJlSCbkd6zweqALF1gLp49WEwZ6Nb8+2tzKiC03bbi
+ Oy9FsRojlI1ONvUfZod/Bg60REg+MiaK7q5PWPHyjIWezWEcMgvb7/lI8XQSk+rypgMY
+ +mnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792487629; x=1793092429;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=oi+DiORcv8oPY+bwo7vKR3lVC7t8yHxl0tr6tfI0oE4=;
+ b=OtpDXBlvKuQjXVkosHcB2dsts+qPwyL8ShUkiJHj2VIyQEhDUa+oALsGoqOtAvqAUA
+ Poe7qQ4M/KCWZvam+EQ/KuXU1mi02YjHi9JYQaphRFVpeg5TFigix6DavKX5ui6pXp2f
+ LKr4c/TdAO6MPLsrq0uezUc3RW4JMmMAcOOAOs9kFwdqJBpQPFt/2qDtTcCBOFI5qngN
+ jHLNUi6Rk50QSKxgCegliNT6oedDmMtD8G5w2hQlZYqdwelB4NtUgC8ocYqwwSLci+X6
+ kvximh4sTHFLq0zaZ8uOkZzcfc5TxTd2WXCNpiEdvbeONW2sWul/bhvwF05KEDcZ3PpI
+ QByQ==
+X-Gm-Message-State: AFq9FYKkeuSOjBcLuUVF3ifUgcTXn0ReTRl66CPWGPFhfXzWINAJLoTB
+ 9fvmhMnqEpbiJAd5C+2nfDzjRC7hCQvbseqMQ3Ev+Qx5df17KsCSMLi6qAiOa8dXO0szqtSF8xC
+ 3nWtyHsKXgYrcBeCAVNzXGv589u0O75I=
+X-Gm-Gg: AYBFou1G0QXUa/EzswShG4zOeECWY6eyiuN49w64DvkH6gNClgyxyfXLT8OP/751+/Q
+ cv4wqFGyZ7aByszgqyEvGdPSNO5L3BaoaXLMMNMTTFtbX5eC31RokJVu6GEUaAwhiI3D14Q0PJM
+ 4uMcryZQJ5zcaZJXuN/S3nnXlx3/iESnBRXPGq1JzMGIojTNiWbhxyBbv+DV6r8MBdBTOL16u2+
+ hD0XM5fcvUiRq8+WKY/EcAPYTWBOHSGPkuGl8ks6Qed49XoI0J0pchE/LtjDOQmRRKetzz50FDU
+ 0C5F7h9oQovKDEV8bkXKlw5zh1gibWtPstAd1RfihevGFL38l1Yzxzw=
+X-Received: by 2002:a05:6402:4404:b0:6b1:df89:7e1e with SMTP id
+ 4fb4d7f45d1cf-6b3a80d48a3mr6300579a12.1.1792487628673; Tue, 20 Oct 2026
+ 02:13:48 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261018232917.7716-1-philmd@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jtomko@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com>
+ <4070aab4-ba81-4ecb-8144-e0b1c7415ed2@oss.qualcomm.com>
+In-Reply-To: <4070aab4-ba81-4ecb-8144-e0b1c7415ed2@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Tue, 20 Oct 2026 17:13:36 +0800
+X-Gm-Features: AclHuK-d7QwUlRsfPqUv3TlxcEw-NpBzTXy_v18vi6bnKQlCH2wdHiczOhwg38w
+Message-ID: <CAE2XoE9wAdCAS229CV6SqAboZdEOjvT8Msjamp9EnLc5LiH-WQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] multi-target: remove qmp_query_cpu_model_expansion
+ duplication
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Anton Johansson <anjo@rev.ng>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,36 +118,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On a Monday in 2026, Philippe Mathieu-Daudé via qemu development wrote:
->'debug-threads' option for -name was deprecated in v11.0
->(commit 1b65aeed2a0 "system: unconditionally enable thread
->naming") thus can now be removed.
+On Tue, Oct 20, 2026 at 6:17=E2=80=AFAM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 10/16/2026 9:25 AM, Pierrick Bouvier wrote:
+> > This series allows to link multiple targets that define
+> > qmp_query_cpu_definitions. It simply replaces the duplicated definition=
+s with
+> > target-specific ones and a single dispatcher.
+> >
+> > It follows the exact same approach and structure than:
+> > https://lore.kernel.org/qemu-devel/20261015005355.62406-1-pierrick.bouv=
+ier@oss.qualcomm.com/,
+> > which was merged yesterday.
+> >
+> > Pierrick Bouvier (6):
+> >   target/arm: rename qmp_query_cpu_model_expansion to
+> >     qmp_query_arm_cpu_model_expansion
+> >   target/i386: rename qmp_query_cpu_model_expansion to
+> >     qmp_query_i386_cpu_model_expansion
+> >   target/loongarch: rename to qmp_query_loongarch_cpu_model_expansion
+> >   target/riscv: rename qmp_query_cpu_model_expansion to
+> >     qmp_query_riscv_cpu_model_expansion
+> >   target/s390x: rename qmp_query_cpu_model_expansion to
+> >     qmp_query_s390x_cpu_model_expansion
+> >   qmp: reimplement qmp_query_cpu_model_expansion as a dispatcher
+> >     function
+> >
+> >  hw/core/machine-qmp-cmds.c            | 26 ++++++++++++++++++++++++++
+> >  include/system/qmp-cpu.h              | 21 +++++++++++++++++++++
+> >  stubs/meson.build                     |  1 -
+> >  stubs/qmp-cpu-arm.c                   |  8 ++++++++
+> >  stubs/qmp-cpu-i386.c                  |  8 ++++++++
+> >  stubs/qmp-cpu-loongarch.c             |  8 ++++++++
+> >  stubs/qmp-cpu-riscv.c                 |  8 ++++++++
+> >  stubs/qmp-cpu-s390x.c                 |  8 ++++++++
+> >  stubs/qmp-cpu.c                       | 14 --------------
+> >  target/arm/arm-qmp-cmds.c             |  7 ++++---
+> >  target/i386/cpu-system.c              |  7 ++++---
+> >  target/loongarch/loongarch-qmp-cmds.c |  7 ++++---
+> >  target/mips/system/mips-qmp-cmds.c    |  9 ---------
+> >  target/ppc/ppc-qmp-cmds.c             |  9 ---------
+> >  target/riscv/riscv-qmp-cmds.c         |  7 ++++---
+> >  target/s390x/cpu_models_system.c      |  7 ++++---
+> >  16 files changed, 107 insertions(+), 48 deletions(-)
+> >  delete mode 100644 stubs/qmp-cpu.c
+> >
+>
+> Ping (sorry for the short delay) on this series, to try to get this in
+> before freeze.
+>
+> Regards,
+> Pierrick
 >
 
-libvirt patch sent:
-https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/E5HZUYURWU3JCQSXQJEM3HLW52KUQPKB/
+Acked-by: Yonggang Luo <luoyonggang@gmail.com>
 
->Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->---
-> docs/about/deprecated.rst             |  7 -------
-> docs/about/removed-features.rst       |  9 +++++++--
-> system/vl.c                           | 11 -----------
-> tests/qtest/migration/framework.c     |  4 ++--
-> tests/qtest/migration/precopy-tests.c |  2 +-
-> qemu-options.hx                       |  7 +++----
-> 6 files changed, 13 insertions(+), 27 deletions(-)
->
+For this series, fine for me
 
-Reviewed-by: Ján Tomko <jtomko@redhat.com>
-
-Jano
-
+--=20
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
