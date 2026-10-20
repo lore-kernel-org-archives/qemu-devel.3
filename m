@@ -1,61 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0C4606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32382606A31F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=D+56EUPz
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GoIOFSpM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7QI-00075Y-3S; Tue, 20 Oct 2026 06:50:26 -0400
+	id 1xJ7Nd-0001N0-To; Tue, 20 Oct 2026 06:47:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Ou-0003Oa-2S
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xJ7MP-0000H6-J6
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:46:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Os-0005ee-4K
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:59 -0400
+ id 1xJ7MM-00055i-IE
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:46:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493337;
+ s=mimecast20190719; t=1792493181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=neSxnRoG/OmCl+kteGebRHQJWP0OZxqFcRCZ8c/QA3c=;
- b=D+56EUPzRbElijTdR0D6J/jyH4jZohB3dtoXFhLIWoEnYwVOMRgaQWuc9dqtd3oQfJ5GT5
- Geigx0td7O0X+r6vQTCdsWYiY5AMB9y1NAkyZo4y0gQST/VefdjlbqM383/ElXdM4Eht20
- peNKeG+hhHE1P5UZ8wciIvGIw+nIf/o=
+ bh=SL1ZQMFYVZqYTtNaimBSrRx03AL2YY9TcP8iYzzQRMU=;
+ b=GoIOFSpMGUgIb+5RE1gq7qVkaoFM2udlkHQ4p1BfDua2UtQq22cDQJnBta8aRocX7Fq8dI
+ O/mJAxMYzV7HSEsuzwWLPRggFGSscLplK2BC/5b2zktuGlTQYNABcKu5p/3LhWnIMXwPLJ
+ Piiz3/37Rxk/AiLVYotflTe1GkiJcKg=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561--SDF1wKINiCajNC4XN8nVg-1; Tue,
- 20 Oct 2026 10:48:53 +0000
-X-MC-Unique: -SDF1wKINiCajNC4XN8nVg-1
-X-Mimecast-MFC-AGG-ID: -SDF1wKINiCajNC4XN8nVg_1792493329
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-icWL8dY1Mw2Sv8wMuI-1iw-1; Tue,
+ 20 Oct 2026 10:46:17 +0000
+X-MC-Unique: icWL8dY1Mw2Sv8wMuI-1iw-1
+X-Mimecast-MFC-AGG-ID: icWL8dY1Mw2Sv8wMuI-1iw_1792493173
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C281219560AD; Tue, 20 Oct 2026 10:48:49 +0000 (UTC)
+ id EFCAE1955EA1; Tue, 20 Oct 2026 10:46:10 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CC00130000E7; Tue, 20 Oct 2026 10:48:46 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:46 +0400
-Subject: [PATCH v7 29/65] whpx: convert OnOffAuto hyperv property to
- QAPI-aware registration
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B862C7D6; Tue, 20 Oct 2026 10:46:03 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+Date: Tue, 20 Oct 2026 14:45:18 +0400
+Subject: [PATCH v7 01/65] qapi/schema: Rename .lookup_entity() and tighten
+ return type
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-29-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-1-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -130,25 +130,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2624;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2295;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fGCiDH3DKuAcB7LiCAkFXJHjeu1egNzKD2fVY9nF9O8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZaOCCAg3rKTDCUl37+MgI4Ayhi8dunIN41j
- jugR4kjAkCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWgAKCRDa6OEJdZac
- 5b6WEACNN5lLKAUjdYB4zCcQJTY9b/clU3Ul2ZqrNT8WzHUQ+fqxHO7sMKEnV/KpehWqsAYB7Wa
- TcTcGvlU8B+Rp77AddGo/jHP3KiihUrvHM5s2QNpNKBTkpdE/FtNtDGvtY7Rl7BnE0I4ur8xacz
- HXMHNM++tzb2u4VkpDDbgWl8A7MUiCYAu2iAC93LMBoFtVGYq/tjz4PQr2gFfLvNxJ8hh8g+2iu
- smVuhJO5UxVs/qkZoh6kIe0LZ6WvLafLB9/AU4a+YYPl0g7G3gvQV+Pzb64VIcibMzpV8qJ8b8M
- t+/BnO1YoRZPZ11BLDzxA83zKDcZQWNwtNYWZCCxAgLA9Evb3RKKpX3ezykZW625hA11ml8/USP
- Ng9IwZx3DS+SVp66cPB3YD4Vblja8jaJLVCuGSQnNstkM9jWJ41xW1pTt/RQn1TsRK/t7qyBtO1
- kHBG4Xp7bkht89XuKnLvIPrFH/W85g9KGuerywfZYfz/FobiX2GdtR3qPJiq0+oIJa2vLvqAjID
- 3M72ERKY7E2DdWkQ/qN6y7zsbhicNq980YAI7vae2/ht1mYnRZYyo4tF62m7MjopLEjAufj+RHB
- jZQHwA8CL5TVxFAQmJ8wDFE+5CAwj4qru7MbpAYn1njH780Iqg5frmuGfrB2B5bUXeimrR8uppN
- FX/dQnG4r/dU1+A==
+ bh=NMq+Yt1ZfEaiiiNISBhSiNYen4lYgrhVdbLzdVLcgfY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZXTleuqEiJdOJBA42CH7+pe3OkqntERWYE8
+ KkGpCTR7GKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGVwAKCRDa6OEJdZac
+ 5eYXD/90lN2dF09F8Y8jULoa/Yv/HKP5x+nzYa1fz/PQiLU7rTNVeepj43nm7pjOPbzOWrqEQTu
+ NGoiSEKMRcvP1/dL9lcMa2CMuoel6YAqIPu3c4B7fzk9RaLK8bST/AFHrsPamduiFcq5dCcGKaG
+ ju0zoBbLNJoiwWpPC77UMf+Clab17oGrd3Z4UfxbvjwQFg/pdxCzvARoDcoMrPWROgcdkSOxy56
+ Z6gpyvJsS0JuLkUElGeGWPoEAgx1DSsdcQqYRRYzQ00USvXT8UPIPr1TxhQw1E5kvawYPNKsNKA
+ 0ajGyDh/qGM8oz38HT0eipfUQxbk8tb7XPYDfOGFlTY+onpx7NVz31xrjXvctk3vjKZAkgcyqmg
+ RB1fck+uzzyRqd14eL/FGI9vQkNgZQQPerW76Mv0nw/WnkXLfVaC2b632vq1GWpP0HYNbveno4Y
+ RCPyzB+PhVOAVSC08/A9hkdBN+7OmaKswbhyW0DLGJhdtmeqMfxvW9buz3UlCDtJKSO63qUb2no
+ tAMywgLV/anwoy+3qbtqNT4ZANXeoYjryX7nYBKXePcjhoApDzPCtpb9mbVcci4eJ+HXy1wiqY5
+ 7Q/ftdsMrLQ6OjJ/QgY7rouCvnwhQKViJteuaYK5NDjHS3qbduGhwOfg4VUfD42iQhmNxKSpseU
+ mBGYatJXPQ/kgYg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -156,7 +156,8 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,79 +177,60 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert the hyperv OnOffAuto property from manual visitor-based
-callbacks to property_add_qapi_enum().
+From: Markus Armbruster <armbru@redhat.com>
+
+Commit 060b5a9323 (qapi: Dumb down QAPISchema.lookup_entity())
+accidentally relaxed QAPISchema.lookup_entity()'s return type to
+QAPISchemaEntity.  Tighten it back to QAPISchemaDefinition, and rename
+the method to .lookup_defn().
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/whpx/whpx-common.c | 29 ++++++++++-------------------
- 1 file changed, 10 insertions(+), 19 deletions(-)
+ docs/sphinx/qapidoc.py | 2 +-
+ scripts/qapi/schema.py | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 247e12db8128..187938c02b51 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -22,6 +22,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qapi-visit-common.h"
- #include "migration/blocker.h"
- #include "accel/accel-cpu-target.h"
-@@ -470,18 +471,11 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
-     }
- }
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 54a32e45f7ed..31d09ed6343e 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -512,7 +512,7 @@ def transmogrify(self, schema: QAPISchema) -> nodes.Element:
+                 modules.add(module_source)
  
--static void whpx_set_hyperv(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_hyperv(Object *obj, int value, Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
+             if doc.symbol:
+-                ent = schema.lookup_entity(doc.symbol)
++                ent = schema.lookup_defn(doc.symbol)
+                 assert isinstance(ent, QAPISchemaDefinition)
+                 vis.visit_entity(ent)
+             else:
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index 8d88b40de2e1..9c9e257a8fd5 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -1184,11 +1184,11 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
+                 defn.info, "%s is already defined" % other_defn.describe())
+         self._entity_dict[defn.name] = defn
  
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
--        return;
--    }
--
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->hyperv_enlightenments_allowed = true;
-         whpx->hyperv_enlightenments_required = true;
-@@ -497,11 +491,7 @@ static void whpx_set_hyperv(Object *obj, Visitor *v,
-         whpx->hyperv_enlightenments_required = false;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
+-    def lookup_entity(self, name: str) -> Optional[QAPISchemaEntity]:
++    def lookup_defn(self, name: str) -> Optional[QAPISchemaDefinition]:
+         return self._entity_dict.get(name)
  
-@@ -533,11 +523,12 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
-         NULL, NULL);
-     object_class_property_set_description(oc, "kernel-irqchip",
-         "Configure WHPX in-kernel irqchip");
--    object_class_property_add(oc, "hyperv", "OnOffAuto",
--        NULL, whpx_set_hyperv,
--        NULL, NULL);
--    object_class_property_set_description(oc, "hyperv",
--        "Configure Hyper-V enlightenments");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "hyperv",
-+        .description = "Configure Hyper-V enlightenments",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_hyperv,
-+    ));
- 
-     whpx_arch_accel_class_init(oc);
- }
+     def lookup_type(self, name: str) -> Optional[QAPISchemaType]:
+-        typ = self.lookup_entity(name)
++        typ = self.lookup_defn(name)
+         if isinstance(typ, QAPISchemaType):
+             return typ
+         return None
+@@ -1324,7 +1324,7 @@ def _make_implicit_object_type(
+             return None
+         # See also QAPISchemaObjectTypeMember.describe()
+         name = 'q_obj_%s-%s' % (name, role)
+-        typ = self.lookup_entity(name)
++        typ = self.lookup_defn(name)
+         if typ:
+             assert isinstance(typ, QAPISchemaObjectType)
+             # The implicit object type has multiple users.  This can
 
 -- 
 2.56.0.116.g6de20f6092dc
