@@ -1,122 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D5A606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 18:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AF4606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 18:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=RZUOJATw
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZpKoeE8r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJEKw-0007i8-20; Tue, 20 Oct 2026 14:13:22 -0400
+	id 1xJEsr-00052y-3C; Tue, 20 Oct 2026 14:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xJEKu-0007hu-GP; Tue, 20 Oct 2026 14:13:20 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xJEKr-0006vW-9J; Tue, 20 Oct 2026 14:13:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=anwk2XI8KCRwMXke72QihjJr6yPa4cG6hkkilP7xL06aNyiFoDgGXkoP61xKdyq2d5teC5GrDMVK68Va22uZ9Wmm2A9ocjOUFGpSKfkVg9+iq9RgexwPwonRRBnbb7sYbR0g/2LX8yiDkssuYLnmU877tRvyxX+9swscGpYorq/quBEjxrWrQYRZyNBho8Zv1DXVPAvaQOMAQXJkFPnQd7gXNGC0qbwoRV3laV6kQmmKg6PInwlxVrpPLdOz8Rcawr44iVdVESGChGQ35L5mPdUDu0Qnh4rJ6y/phuFBZ7udmg7y41w5OE4YzYZjwfpw0CqK8MhygtFNDgj8QEJWWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VaOvS2twVbKi3tyA3d7Wv4DfFe56GtGVq5wc4Ly0sBY=;
- b=mhw6UX3wasOmRnBGvwrnOdAKSZbQUWmY6t2KT54zKcVol4Un6TJOAbp+ZK0FgZEO9m1ssAsGqxMTCOLBCVCguqfau5/+OXtKza3ugTZyt1WyeM8vwW/F1Nu2/gefcrsCjz/dK/jQFBdIZLmxDhPM1vfh/vur5NDKx+dn3NtZa1a3eCSn4c+SJk+G3Taw50KL4YUrRiZ/ImHFjF36ZVWYOakdYcpSHUv5dKanMlA/VJKMxqawfBV2WyumrnZacnKXYydiViCHDVBnGFtGH8L2HTO0mLw5ZZ9xcohkuzyGqx7W/h7CkbSIfol39w8bhBz4Cz/tJeSlhqfuhw/pbwF+jg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VaOvS2twVbKi3tyA3d7Wv4DfFe56GtGVq5wc4Ly0sBY=;
- b=RZUOJATwdUn+Z3qNPwnXPu5m8DeMFsjLP08xEk7zjIuo5fMJ1MN3DDJE4dNhNu1gWmc+TsRuMQxRoLLu0TZZ4cr5cCOO/nrFot8VBx48GHUPExmDrjx1fIAx5zghQLA6SYyx6Loi1zxuaxBKtuIRkZvPZx5tzY7XRS7G1GnaqiQ=
-Received: from MN2PR01CA0040.prod.exchangelabs.com (2603:10b6:208:23f::9) by
- CY1PR12MB9625.namprd12.prod.outlook.com (2603:10b6:930:106::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.522.19; Tue, 20 Oct
- 2026 18:13:01 +0000
-Received: from MN7PEPF0000014D.namprd04.prod.outlook.com
- (2603:10b6:208:23f:cafe::93) by MN2PR01CA0040.outlook.office365.com
- (2603:10b6:208:23f::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.522.20 via Frontend Transport; Tue,
- 20 Oct 2026 18:13:01 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MN7PEPF0000014D.mail.protection.outlook.com (10.167.254.39) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.546.15 via Frontend Transport; Tue, 20 Oct 2026 18:13:01 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Tue, 20 Oct
- 2026 13:13:00 -0500
-Date: Tue, 20 Oct 2026 13:12:45 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: Mathieu Poirier <mathieu.poirier@linaro.org>
-CC: Lorenzo Pieralisi <lpieralisi@kernel.org>, Kohei Enju
- <enju.kohei@fujitsu.com>, <gshan@redhat.com>, <berrange@redhat.com>,
- <kchamart@redhat.com>, <pierrick.bouvier@oss.qualcomm.com>,
- <peter.maydell@linaro.org>, <mst@redhat.com>, <cohuck@redhat.com>,
- <pbonzini@redhat.com>, <eblake@redhat.com>, <armbru@redhat.com>,
- <lorenzo.pieralisi@linaro.org>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>, <kvm@vger.kernel.org>
-Subject: Re: [RFC v4 03/24] target/arm: Add confidential guest support
-Message-ID: <fgmu2cuxx2n2cuxqeotas2iu43jk7aou3hldhw4757x4jyv6np@snsceczzajcy>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-4-mathieu.poirier@linaro.org>
- <dhrvydsmaw22xqx5d5i5s7fdyjxupz27yxp6trv2tesysp4npj@quvzrxjvfipz>
- <arI197vJkW75p50c@lpieralisi>
- <arSTQQ5uB6oR-vFe@FCCLS0092175.localdomain> <ataBkrIvULJXj4v6@p14s>
- <atdKSwvu_uldqwlz@red-moon> <atekhR1Wz03nUCHB@p14s>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xJEso-00052O-LO
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 14:48:22 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xJEsk-0004LO-6K
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 14:48:20 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48dfdd0678dso2424046f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 11:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792522096; x=1793126896; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6FwV03BnljHvrYkJf+lErNTezJD62CanPfxXQ6NNZ5U=;
+ b=ZpKoeE8r6ZxqrGgeC00NaFLbF3ux7jO75aA8+tpS/OIHarHAj9yIs+FDTq6n85q6LR
+ zPIooGX/Ojx+CR2I1EKaIt0U30zpCGz6zxDTe0jHk1XotFFWzOQcdDE8Bfgx/yUAoMjN
+ PoPblTL2OeNEwJcNLfIga5tPka5+aWqtJfI/62478V9F50qoHfkMeL+jRsYz5xJ+yiPq
+ CfULQXqY4xdzPKravMcMk+HD5ggnw6cU1dRR+GlJvljadlmmB1GZyv+z9CPiAVjW3PNe
+ RwbeAKwvBDN78rUPQieNqGOzKFxnkVc9KHrphJ/G9h620CC2fUmc3Nn0TcuZNSuvS96h
+ MWJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792522096; x=1793126896;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6FwV03BnljHvrYkJf+lErNTezJD62CanPfxXQ6NNZ5U=;
+ b=IrM/ob0FfggPNLSFmasnEPzfebflIRZSWKQ+1RkVn2eJnXxnNtzrlVHMKGldS1Cq1j
+ P7zubOJJ44mo5HVFqRBiZUowbJjLxPDPyx6NRUlUA7AUOivQTUSTFGb22Uk/sSx+qbxb
+ nh3vBvQKiTP7x1afQQL8S40B60f5nF/7CJNHIzeGrfO9qzAER2JSi77Dm6mJlgyt/+Fj
+ rIty+ioxC9guZ2/gBeOpD0f7f0MCS5lXXK/yywUuOx/Dp1CcDJHq1MLRwjf3gKwRL7N0
+ ZRHWG7mTVZ5QRRbNFW4X1+17YDw1hNuH2PkBsqcICOYlisaVVlw0xjYb+0drtyyMs0Tq
+ o7FA==
+X-Gm-Message-State: AFq9FYK6O0HGrwHNSWe1BtkCie661gzqcNJ2ZDl4vQEynaj6kX87OuRf
+ q1nUY6l4xTkCV0ARprH8fxJDvbW2Wr2JAp7FrBPctmO18jj2hjXhN4721AOtqQ==
+X-Gm-Gg: AYBFou2oqodEVfJvcleSxvgT60c602YR+1viwNEzrPSTz7x8pOzBD2dSWMO5MIq7IUx
+ OjOnSqxZPpGQS15+R9rMPyyqrH6Oiqmbdfj559/sopUEzG3qzr/gu1xTKfkwNoGLBzzCRq4rOzi
+ 0xrO+953NI2wi9HYThPE6ovMQ6cVmaUFHSDT4ufKjaOJY56+s4U/E6AmMODPLhcNQ6IGSigLrgK
+ aVj1Y53WEeL3Bu1PM0JQD5M6yPUnW972oi1N2lgroIAFVw9IuY7HuE+P8GO2CT7U09ftmEiddJE
+ b4bhx3fP34Z7H87+cHswJjBLLsWubqlBaX+b5Z/qWl5H+hjpOrbvvgoNy6Pyrdip+UAVfFWQ0nq
+ sjTydiE5KwYNN7dVvRn5eTHvgA4PaD+SL2oZ1f5iNxGYZ0xFEczNpJTL47Z6ZtutFj20vfsxp2G
+ 7v8gm8lLFPDJIneZ8tddg8b3ILnvgTlVT5JVlmcNgp9JtFI2MH5pUMhyyL2hnfPEjJACIGFjZ9E
+ xZuX3PIirEWJ6hKutOOTw4pk4AoNWQS5Lk+nusiEMdSIsQ8OOKd4rgwpslpnH/umTa+ONJMHq0o
+ KOiJP7fT0lYr+pyZP+A=
+X-Received: by 2002:a05:6000:4a0a:b0:48d:f14a:9183 with SMTP id
+ ffacd0b85a97d-48e07bbc619mr25855899f8f.15.1792522095942; 
+ Tue, 20 Oct 2026 11:48:15 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-18af-d500-ec6b-a832-f355-434e.310.pool.telefonica.de.
+ [2a02:3100:18af:d500:ec6b:a832:f355:434e])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e2584afe1sm183030f8f.56.2026.10.20.11.48.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 11:48:15 -0700 (PDT)
+Date: Tue, 20 Oct 2026 17:39:39 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ pbonzini@redhat.com, richard.henderson@linaro.org, mst@redhat.com,
+ sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com,
+ xen-devel@lists.xenproject.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_22/28=5D_xen-hvm=2Ec=3A_rename_xen=5Fin?=
+ =?US-ASCII?Q?terrupt=5Fcontroller=5Fini?=
+ =?US-ASCII?Q?t=28=29_to_xen=5Fi8259=5Finit=28=29?=
+In-Reply-To: <20261019120517.1448687-23-mark.caveayland@nutanix.com>
+References: <20261019120517.1448687-1-mark.caveayland@nutanix.com>
+ <20261019120517.1448687-23-mark.caveayland@nutanix.com>
+Message-ID: <22FB9414-4D72-4699-9FB4-107D9DF10F28@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <atekhR1Wz03nUCHB@p14s>
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN7PEPF0000014D:EE_|CY1PR12MB9625:EE_
-X-MS-Office365-Filtering-Correlation-Id: f643022a-732b-4a5a-0897-08df2ed5c712
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|30052699003|36860700016|7416014|376014|23010399003|82310400026|1800799024|4143699003|11063799006|56012099006|261009223027099003|261009221227099003|10067099003|22082099003|18002099003|6133799003|3023799007|27256017;
-X-Microsoft-Antispam-Message-Info: JvGZXNbq25KKDzB0FeG5pNVpzccqY+v+0+RdWNuNQOyk36HKHQ+xHRE6z8Bs28GEJlhYpKgnoNCIKtgnw4mT441L3jcJqx07Q+ze60CX462+5kPnSMrR/6dn06GbhhdJo++6KNXeSBbPwiy7N6xzNnK+DvaMqUrpP10WD1yh4/m0i6b/C5Mu85HnLumWuTUydNn3fr3u3uWFjV+BiMg0uEp4qTvTGBmWildN5UFQx5qcnhzPOEE1l/mt+UMUXojPuAyfo9x+i9no2HnsexWAWvabEX5PAHn8TWLAS8L1o3zLtiUPwDVI2OQoV3efl711/NwBhhwRQaFFwI5OEaOJsJ9He92I7Cu/Imx5atNjkBQhH2j4S+dkSVIeRvRgOvUNc2IUhZEMGS/uD9iB5j8ZBc4bZOo+kCkqDcm2012hzJ++zm1wLuCZ85dNukZppaLZSJHovM+XhyQROsODvGRiyop2KeothUU2d3+5lVUiey3T7/yTxg+uGGJT56cqsBwrQmEvH8pfXfSdywzTA12qGSteQ9ROT6Hm3RbJDT5A+4I+5GR93/yJbNZtjdHUlpIIUj+MwU+wF3E8AXw8u5XTFJ01pjYYO5DtmLy6v26O2ny5KpGxt01RgLDgB0jr1mbpjzX8Ymq6kGZyY9vTo7AYYhCGMw7nhnHkPYxSwU8fBiXPoTk7FkF7GRFrJnmwjpn+z8nH23raWeMFzSVSEbZrXGocEVbkq6CtmEFew+nVikdvQ3Iic/AZsDS35b5Mh8s3
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(30052699003)(36860700016)(7416014)(376014)(23010399003)(82310400026)(1800799024)(4143699003)(11063799006)(56012099006)(261009223027099003)(261009221227099003)(10067099003)(22082099003)(18002099003)(6133799003)(3023799007)(27256017);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: XWtz9eycPLAEcsNGeyJlJwq31T6Ved/crOOoNBKwZsL3aWTkT826qK4YpsBBqlKsF1bXBIFB2ImkQiAZU+1jZEJmmz/Gybm/fdL2Am/uMxImaDtgc/Ez+j5zAlyPZDYXfFFmO8rePdNnTM4LGbW/wN+s7ww2Uf2En2oQLBFZ3MMjdhGZhccqVvPwK09CJ7dkyuD20ZgndO/IAGZV0cVCT0hmzaqM1MJj77yPcqp/gq0xlVg7C9la0ul/uXc/U8HFq8BTUC3+KNafTaUU6UI4XH9FtsdfuC1SdarmcwbiZs51xaQMriCnwtYJpyhmQHq/frm7yqThQZDwvGvypBQstyRV7NarSixDofAGqAowORMFSRuOnSo9bnbyAge2snDD+sumrTRA6UEuMmrom936FIqI5WDdwvVOljhG0vjZ84OAfJdKLMgFAm2q+M7G3KQr
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Oct 2026 18:13:01.2205 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f643022a-732b-4a5a-0897-08df2ed5c712
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN7PEPF0000014D.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR12MB9625
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
- envelope-from=Michael.Roth@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,260 +104,94 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Oct 20, 2026 at 11:27:33AM -0600, Mathieu Poirier wrote:
-> On Tue, Oct 20, 2026 at 01:02:35PM +0200, Lorenzo Pieralisi wrote:
-> > On Mon, Oct 19, 2026 at 02:46:10PM -0600, Mathieu Poirier wrote:
-> > > On Thu, Sep 24, 2026 at 12:12:35PM +0900, Kohei Enju wrote:
-> > > > On 09/22 10:01, Lorenzo Pieralisi wrote:
-> > > > > On Tue, Sep 15, 2026 at 04:27:21PM -0500, Michael Roth wrote:
-> > > > > > On Thu, Sep 03, 2026 at 01:35:50PM -0600, Mathieu Poirier wrote:
-> > > > > > > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > > > > 
-> > > > > > > Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
-> > > > > > > support the Arm Realm Management Extension (RME). It is instantiated by
-> > > > > > > passing on the command-line:
-> > > > > > > 
-> > > > > > >   -M virt,confidential-guest-support=<id>
-> > > > > > >   -object rme-guest,id=<id>
-> > > > > > > 
-> > > > > > > This is only the skeleton. Support will be added in following patches.
-> > > > > > > 
-> > > > > > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > > > > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > > > > > > ---
-> > > > > > >  docs/system/confidential-guest-support.rst |  1 +
-> > > > > > >  qapi/qom.json                              | 13 +++++++
-> > > > > > >  target/arm/kvm-rme.c                       | 42 ++++++++++++++++++++++
-> > > > > > >  target/arm/meson.build                     |  5 ++-
-> > > > > > >  4 files changed, 60 insertions(+), 1 deletion(-)
-> > > > > > >  create mode 100644 target/arm/kvm-rme.c
-> > > > > > > 
-> > > > > > > diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
-> > > > > > > index 562a7c3c2852..abb56923ad13 100644
-> > > > > > > --- a/docs/system/confidential-guest-support.rst
-> > > > > > > +++ b/docs/system/confidential-guest-support.rst
-> > > > > > > @@ -42,5 +42,6 @@ Currently supported confidential guest mechanisms are:
-> > > > > > >  * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
-> > > > > > >  * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
-> > > > > > >  * AWS Nitro Enclaves (see :doc:`nitro`)
-> > > > > > > +* Arm Realm Management Extension (RME)
-> > > > > > >  
-> > > > > > >  Other mechanisms may be supported in future.
-> > > > > > > diff --git a/qapi/qom.json b/qapi/qom.json
-> > > > > > > index 776b13027fd8..52997c29a32d 100644
-> > > > > > > --- a/qapi/qom.json
-> > > > > > > +++ b/qapi/qom.json
-> > > > > > > @@ -1288,6 +1288,17 @@
-> > > > > > >    'data': { '*pretty': 'bool',
-> > > > > > >              '*close-action': 'MonitorQMPCloseAction' } }
-> > > > > > >  
-> > > > > > > +##
-> > > > > > > +# @RmeGuestProperties:
-> > > > > > > +#
-> > > > > > > +# Properties for rme-guest objects.
-> > > > > > > +#
-> > > > > > > +# Since: 11.1
-> > > > > > > +##
-> > > > > > > +{ 'struct': 'RmeGuestProperties',
-> > > > > > > +  'base': 'ConfidentialGuestSupportProperties',
-> > > > > > 
-> > > > > > Just FYI, based on input from Markus I'm planning to drop this
-> > > > > > ConfidentialGuestSupportProperties base type from my series
-> > > > > > since it's probably only SNP/TDX that need to be able to switch
-> > > > > > it on/off, whereas this series appears to use/require it from
-> > > > > > the start.
-> > > > > > 
-> > > > > > I'm not exactly sure what it will look like for v3 yet, but if you
-> > > > > > were based on v2 you'd instead probably just do the following in the
-> > > > > > instance_init function for your rme-guest instance:
-> > > > > > 
-> > > > > >   cgs->allow_convert_in_place = true;
-> > > > > >   cgs->convert_in_place = true;
-> > > > > > 
-> > > > > > rather than exposing it as a cmdline option.
-> > > > > 
-> > > > > Yep, it won't be an option for CCA Realms anyway since that will be
-> > > > > the baseline.
-> > > > 
-> > > > IIUC, in-place conversion requires RAM backed by a shared/mappable
-> > > > guest_memfd. If in-place conversion is always enabled for CCA Realms,
-> > > > could QEMU also select the equivalent of
-> > > > 
-> > > >   -object memory-backend-guest-memfd,id=ram0,size=...,share=on
-> > > > 
-> > > > automatically for the default RAM, so that specifying the RAM size with
-> > > > `-m` is sufficient?
-> > > 
-> > > Are you suggesting that on Arm, we completely get rid of 
-> > 
-> > Nit: obviously on Arm rme-guest configs.
-> 
-> Indeed.
-> 
-> > 
-> > >     -object memory-backend-guest-memfd,id=ram0,size=$(RAMSIZE),share=on
-> > 
-> > If that's what we want to make a default, I guess we ought to override
-> > create_default_memdev for arm machines + rme-guest configs ?
-> > 
-> > Pros and cons ? I am not sure how well received is setting implicit defaults
-> > for specific machine configs and what that really buys us eventually.
-> 
-> I agree, this entails a fair amount of changes for cosmetic gains only.
 
-I think it will also add some uneccessary confusion. For instance, based
-on Paolo's feedback[1], we will likely not expose any sort of option to
-switch between in-place/out-of-place conversion for SNP/TDX, but instead
-just use whatever mode the KVM module was actually configured to use.
 
-For in-place conversion, it actually doesn't seem too bad to hook into
-create_default_memdev to have it default to memory-backend-memfd.
-However, currently, it used backend-file/backend-ram depending on other
-options, and those options are applicable to out-of-place conversion as
-well where e.g. maybe the user wants to use file-backed hugetlb memory
-for their shared memory. So we wouldn't want to change the behavior for
-out-of-place.
+Am 19=2E Oktober 2026 12:04:54 UTC schrieb Mark Cave-Ayland <mark=2Ecaveay=
+land@nutanix=2Ecom>:
+>This clarifies that the interrupt controller being modelled is an emulate=
+d
+>i8259 implementation, and brings the naming convention in line with the
+>in-built i8259 and KVM i8259 implementations=2E
+>
+>Signed-off-by: Mark Cave-Ayland <mark=2Ecaveayland@nutanix=2Ecom>
+>Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
+>---
+> include/hw/xen/xen=2Eh  | 2 +-
+> hw/i386/pc=2Ec          | 2 +-
+> hw/i386/xen/xen-hvm=2Ec | 2 +-
+> stubs/xen-hw-stub=2Ec   | 2 +-
+> 4 files changed, 4 insertions(+), 4 deletions(-)
+>
+>diff --git a/include/hw/xen/xen=2Eh b/include/hw/xen/xen=2Eh
+>index e94c6e5a31=2E=2Eee4ed4f11b 100644
+>--- a/include/hw/xen/xen=2Eh
+>+++ b/include/hw/xen/xen=2Eh
+>@@ -42,7 +42,7 @@ void xen_intx_set_irq(void *opaque, int irq_num, int le=
+vel);
+> void xen_hvm_inject_msi(uint64_t addr, uint32_t data);
+> int xen_is_pirq_msi(uint32_t msi_data);
+>=20
+>-qemu_irq *xen_interrupt_controller_init(void);
+>+qemu_irq *xen_i8259_init(void);
+>=20
+> void xen_register_framebuffer(struct MemoryRegion *mr);
+>=20
+>diff --git a/hw/i386/pc=2Ec b/hw/i386/pc=2Ec
+>index 2d8c87b0e3=2E=2Edbfd55de30 100644
+>--- a/hw/i386/pc=2Ec
+>+++ b/hw/i386/pc=2Ec
+>@@ -1167,7 +1167,7 @@ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i82=
+59_irqs)
+>     if (kvm_pic_in_kernel()) {
+>         i8259 =3D kvm_i8259_init(isa_bus);
+>     } else if (xen_enabled()) {
+>-        i8259 =3D xen_interrupt_controller_init();
+>+        i8259 =3D xen_i8259_init();
+>     } else {
+>         i8259 =3D i8259_init(isa_bus, x86_allocate_cpu_irq());
+>     }
+>diff --git a/hw/i386/xen/xen-hvm=2Ec b/hw/i386/xen/xen-hvm=2Ec
+>index d3ce082e07=2E=2Eaf3a90987c 100644
+>--- a/hw/i386/xen/xen-hvm=2Ec
+>+++ b/hw/i386/xen/xen-hvm=2Ec
+>@@ -112,7 +112,7 @@ static void xen_set_irq(void *opaque, int irq, int le=
+vel)
+>     xen_set_isa_irq_level(xen_domid, irq, level);
+> }
+>=20
+>-qemu_irq *xen_interrupt_controller_init(void)
+>+qemu_irq *xen_i8259_init(void)
+> {
+>     return qemu_allocate_irqs(xen_set_irq, NULL, 16);
 
-But then, for in-place, if we default to a different backend then stuff
-like mem-path=... parameters for out-of-place invocations will then
-become silently ignored, or we will need to generate an error for those,
-which works against the idea of having a common cmdline that "just
-works" for in-place/out-of-place.
+Since this function allocates 16 IRQs, the convention according to this se=
+ries would be xen_i8259_pic_init(), no?
 
-If we (users, management/libvirt, etc.) consolidate around specifying the
-memfd backend for confidential VMs, then we can have a "default" that is
-more consistent between in-place vs. out-of-place, which i think is more
-beneficial than trying to consolidate around a syntacticly simpler
-cmdline that might not behave as expected when switching between
-older/newer kernels which may or may not have in-place support.
+Otherwise, much appreciated clarification of the terminology=2E
 
-So, a longwinded "I agree" from me as well.
+Best regards,
+Bernhard
 
-Thanks,
-
-Mike
-
-> 
-> > 
-> > > or simply to get rid of "size=$(RAMSIZE)" in the above because it is redundant
-> > > with "-m $(RAMSIZE)"?
-> > > 
-> > > Gavin and Michael, what is your take on that suggestion?
-> > 
-> > Yes please any feedback on this is welcome.
-> > 
-> > Thanks,
-> > Lorenzo
-> > 
-> > > Thanks,
-> > > Mathieu
-> > > 
-> > > > 
-> > > > Thanks,
-> > > > Kohei
-> > > > 
-> > > > > 
-> > > > > Thanks,
-> > > > > Lorenzo
-> > > > > 
-> > > > > > Thanks,
-> > > > > > 
-> > > > > > Mike
-> > > > > > 
-> > > > > > > +  'data': {} }
-> > > > > > > +
-> > > > > > >  ##
-> > > > > > >  # @ObjectType:
-> > > > > > >  #
-> > > > > > > @@ -1346,6 +1357,7 @@
-> > > > > > >      { 'name': 'pr-manager-helper',
-> > > > > > >        'if': 'CONFIG_LINUX' },
-> > > > > > >      'qtest',
-> > > > > > > +    'rme-guest',
-> > > > > > >      'rng-builtin',
-> > > > > > >      'rng-egd',
-> > > > > > >      { 'name': 'rng-random',
-> > > > > > > @@ -1427,6 +1439,7 @@
-> > > > > > >        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
-> > > > > > >                                        'if': 'CONFIG_LINUX' },
-> > > > > > >        'qtest':                      'QtestProperties',
-> > > > > > > +      'rme-guest':                  'RmeGuestProperties',
-> > > > > > >        'rng-builtin':                'RngProperties',
-> > > > > > >        'rng-egd':                    'RngEgdProperties',
-> > > > > > >        'rng-random':                 { 'type': 'RngRandomProperties',
-> > > > > > > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> > > > > > > new file mode 100644
-> > > > > > > index 000000000000..42e1d1e7b859
-> > > > > > > --- /dev/null
-> > > > > > > +++ b/target/arm/kvm-rme.c
-> > > > > > > @@ -0,0 +1,42 @@
-> > > > > > > +/*
-> > > > > > > + * QEMU Arm RME support
-> > > > > > > + *
-> > > > > > > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > > > > > > + *
-> > > > > > > + * Copyright Linaro 2026
-> > > > > > > + */
-> > > > > > > +
-> > > > > > > +#include "qemu/osdep.h"
-> > > > > > > +
-> > > > > > > +#include "hw/core/boards.h"
-> > > > > > > +#include "hw/core/cpu.h"
-> > > > > > > +#include "kvm_arm.h"
-> > > > > > > +#include "migration/blocker.h"
-> > > > > > > +#include "qapi/error.h"
-> > > > > > > +#include "qom/object_interfaces.h"
-> > > > > > > +#include "system/confidential-guest-support.h"
-> > > > > > > +#include "system/kvm.h"
-> > > > > > > +#include "system/runstate.h"
-> > > > > > > +
-> > > > > > > +#define TYPE_RME_GUEST "rme-guest"
-> > > > > > > +OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
-> > > > > > > +
-> > > > > > > +struct RmeGuest {
-> > > > > > > +    ConfidentialGuestSupport parent_obj;
-> > > > > > > +};
-> > > > > > > +
-> > > > > > > +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> > > > > > > +                                          CONFIDENTIAL_GUEST_SUPPORT,
-> > > > > > > +                                          { TYPE_USER_CREATABLE }, { })
-> > > > > > > +
-> > > > > > > +static void rme_guest_class_init(ObjectClass *oc, const void *data)
-> > > > > > > +{
-> > > > > > > +}
-> > > > > > > +
-> > > > > > > +static void rme_guest_init(Object *obj)
-> > > > > > > +{
-> > > > > > > +}
-> > > > > > > +
-> > > > > > > +static void rme_guest_finalize(Object *obj)
-> > > > > > > +{
-> > > > > > > +}
-> > > > > > > diff --git a/target/arm/meson.build b/target/arm/meson.build
-> > > > > > > index 0369f96b4cc6..9d322a7aad28 100644
-> > > > > > > --- a/target/arm/meson.build
-> > > > > > > +++ b/target/arm/meson.build
-> > > > > > > @@ -31,7 +31,10 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
-> > > > > > >  arm_common_system_ss.add(files(
-> > > > > > >    'arm-qmp-cmds.c',
-> > > > > > >  ))
-> > > > > > > -arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
-> > > > > > > +arm_system_ss.add(when: 'CONFIG_KVM', if_true: files(
-> > > > > > > +  'hyp_gdbstub.c',
-> > > > > > > +  'kvm.c',
-> > > > > > > +  'kvm-rme.c'))
-> > > > > > >  arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
-> > > > > > >  
-> > > > > > >  arm_user_ss.add(files('cpu.c'))
-> > > > > > > -- 
-> > > > > > > 2.43.0
-> > > > > > > 
-> > > > > > > 
+> }
+>diff --git a/stubs/xen-hw-stub=2Ec b/stubs/xen-hw-stub=2Ec
+>index 6cf0e9a4c1=2E=2Eb3e27f0292 100644
+>--- a/stubs/xen-hw-stub=2Ec
+>+++ b/stubs/xen-hw-stub=2Ec
+>@@ -29,7 +29,7 @@ int xen_is_pirq_msi(uint32_t msi_data)
+>     return 0;
+> }
+>=20
+>-qemu_irq *xen_interrupt_controller_init(void)
+>+qemu_irq *xen_i8259_init(void)
+> {
+>     return NULL;
+> }
 
