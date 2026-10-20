@@ -1,60 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FAE606A322
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3A0606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EsuFvIr/
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YZF4ux0O
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Uc-0006iV-SB; Tue, 20 Oct 2026 06:54:54 -0400
+	id 1xJ7Po-0005R3-01; Tue, 20 Oct 2026 06:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Rs-00018F-51
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xJ7OJ-0002sH-0S
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Rm-0006gL-NG
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:03 -0400
+ id 1xJ7OF-0005Tx-Vv
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493516;
+ s=mimecast20190719; t=1792493294;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=th1JKpfzAzi8+0DyZvMgIumhc4CFEiTeW47qkGiYHs4=;
- b=EsuFvIr/Opo2dpcrc92u4DQgS/+C9k3yD9tfXf7sXD5fCVOUI96+5ochFzdcbM/CWCUHuc
- MmyoNxtDKTJbk0+Cn510+GFzt8qiLaDmw44nuRVmKLCituWLRy4c/f3f/iSSdPc4wxS5n2
- lPgNOjuco4s0d7NbAiKg9x207QCFZH8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Vp5ZhrZ42bWj3S549eW3vIVawiZYq0pfGezhyH5wDcg=;
+ b=YZF4ux0OKMtT1jRFmHLCvXL3koIXg1SXPI+0HdoBl8Q1NzgYCtZlDL/lLHf3rTel6P350F
+ tX6d+Jm4h/V71CvnfqPTZz2/j8JBj0vDl0QubEgiVbKvgNAqE27SnrdbfdmZ/7ejh/X88P
+ AHpWzAMnzMQnS150UIsdGrYNgu/OzOc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-MDo8sez-NcyGAOl5_G0YjQ-1; Tue,
- 20 Oct 2026 10:51:52 +0000
-X-MC-Unique: MDo8sez-NcyGAOl5_G0YjQ-1
-X-Mimecast-MFC-AGG-ID: MDo8sez-NcyGAOl5_G0YjQ_1792493508
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-JzE2Aw8dO7qEs2TC0tJQ1g-1; Tue,
+ 20 Oct 2026 10:48:07 +0000
+X-MC-Unique: JzE2Aw8dO7qEs2TC0tJQ1g-1
+X-Mimecast-MFC-AGG-ID: JzE2Aw8dO7qEs2TC0tJQ1g_1792493283
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E077E1955DD1; Tue, 20 Oct 2026 10:51:47 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3D2518005BC; Tue, 20 Oct 2026 10:48:02 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9E9F31800677; Tue, 20 Oct 2026 10:51:44 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA4BE1956041; Tue, 20 Oct 2026 10:47:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:46:19 +0400
-Subject: [PATCH v7 62/65] hw/i386: convert PCSouthBridgeOption to QAPI enum
+Date: Tue, 20 Oct 2026 14:45:37 +0400
+Subject: [PATCH v7 20/65] qom: convert struct properties to QAPI-aware
+ registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-62-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-20-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -129,35 +130,34 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6526;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12148;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=jr+R1XEAXGqEfl6dzBqQchDTHMoMaEnbkkCJTWPjK7M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZdHAMFgnhAvWl4qCaozSGC8ZoljjEYi6VBP
- 70IoZTx452JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXQAKCRDa6OEJdZac
- 5bQgEACXrVy4PI0RHLf3EYbpFdgeh/G/qw9Szqqn90QJFXbDyFtQmp3c6wFtAFWSP3ffrhRIGOr
- RcUHeYkCVoyizAcDDgjI8OyPrmHVEnG3PwXeWRtGK0kH1my0bbmCJx/osVW8rApSvdzvYpi9s0Y
- 6bnxKKjw0JzliwdtFqTmFt0nn1S7YQOKfUDqhPgAWAHg8bwDPi1N1201GaF9lvKcJLYtaT4uNPx
- duB+KEvf23TePBMMCkwNlGjW5qm6S0gf5Ryxjb7UDLk0DAMDD6sOLYbUwrlEcS2bJu7T+7pz3Pk
- KIUx9WJmwNr8hA510xbEUM7U+qI4jtLtBszuvBioYQI3kVmqBqcaNtqPICXlIwOy+0b4xnL1Gkk
- eA26OvbARkhRxfm9CnY4bEgdMJQoeQnDOu1qzkbjiH5164V7Vey/w6iyXw5kqW/vm1Sq08RW2k9
- ICd329fnCbR+neChTSaunOu2wlSsKfBfb8AHGJDPC9l+G08VUaWeDhOHfuAgrke7NLVPatk+RPO
- Idq2+9q621/0Y/k95lzrzNRBGYp6P2uo1GlxLYcHglKAYZo/Cej2Jt8gBe7Gw+Qz351rWqwXcvm
- 8YX+kB6Z2Q3knEFy4SolR3NudeuK7WGfrFsryom7DUjqSDf2dGK5/LD4kxH5aflGMGZmB0moZnG
- LnhWzV1mrbEwmtw==
+ bh=eg+SxgTFJgIB4Yau2dF+w/HtN0glmjOwr1JI4WkR+8g=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZZQGFK/ZN3udAc6CNCpipD4AhiQQoJIGozU
+ /UDWSaFQtOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWQAKCRDa6OEJdZac
+ 5RtTD/4kY/PNza23E86wJfF/fcJzESsEo8MEy/VqKsja5Oehs0XOVVUYFNHeM3Hoz1tn0t6gfEB
+ gEdZ6/dJUGUJsPT0Dj0TYlXOOC8uD6Zvml9ph4IssmkkoEVdOYCBEEh67ckdRLA+NhNogviRDgz
+ pCf2Zf7wUKqc1WkJF7sDNgP2H346XFj5MJrvHYj+nchuXlLLJoJ2p8HRttnZVit3Bdcc8EVPLeq
+ AiHdKE812PiIqx1KWVmo/AZD0Lve7bA8x3s9o2bXTj/C5WfXxaruFK1SEfvzwTSqS+eDZQa+9fR
+ 7myj8VpQE8yMn4VkxlzMrQIdY3RLVol5dLbJqyOXixRGS7tup1ZTrthFFukzQ+JCIscmo0IFAzV
+ 5Si0D6bITCS6Tuut/xCbHDT8PSneeFZ0cWij9WWp5dAB/MsZaiDjGU6VMM1DQbYxVVuPSDXujjZ
+ TWfeG0zqk2YrLWTnqGDFDYN8sWFPB7hVAyu+5Z0C6WsRhAW6yJvDeRVFo09jibHvtdFtdDs6rZl
+ TpG4qpJJgjL9ZoJid62lKL1oqVwWecyUyjvka9DVriGfw5BrWPlNKx6/zMNe82tz/yXa4413sCM
+ /wmN+rl/byVmDvaAb/tgK1r7TXAwbPeuTuY/7eZ/wdgx3JWRblmU8A4iQI4d152HVQpmQjZ/jgZ
+ aNhHsQ21q2Xo4hw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,192 +176,288 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Move PCSouthBridgeOption from a hand-rolled C enum to a proper QAPI
-enum in qapi/machine.json.
+Convert all callers of object_property_add() and
+object_class_property_add() that register struct-typed properties with
+QAPI visitor-based getters/setters to use object_property_add_qapi() and
+object_class_property_add_qapi() instead.
 
-This gives the x-south-bridge property a generated type_info with a
-valid masked_name, so it appears in query-qmp-schema introspection and
-the qapi-type field of qom-list-properties output.
+This replaces the manual string type name with a reference to the
+generated QAPITypeInfo constant, enabling QMP introspection to report
+accurate QAPI type information for struct properties. Existing
+getters/setters are preserved unchanged.
 
-The south_bridge/default_south_bridge fields change from const char *
-to PCSouthBridgeOption, with an explicit mapping table from enum value
-to QOM device type name.
-
-Enum values are changed: "PIIX3"->"ppix3", "piix4-isa"->"piix4", this
-is under a x-property, so shouldn't be a breaking change.
+The cxl-fmw property type is corrected from "CXLFixedMemoryWindow"
+(not a real QAPI type) to "CXLFixedMemoryWindowOptionsList", along with
+other mis-typed list properties.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/pc_piix.c    | 61 ++++++++++++++++------------------------------------
- include/hw/i386/pc.h |  4 ++--
- qapi/machine.json    | 14 ++++++++++++
- 3 files changed, 34 insertions(+), 45 deletions(-)
+ authz/list.c              |  2 +-
+ block/throttle-groups.c   |  5 +++--
+ chardev/char-socket.c     |  3 ++-
+ hw/core/machine.c         | 11 +++++++----
+ hw/cxl/cxl-host.c         |  4 +++-
+ hw/remote/vfio-user-obj.c |  5 +++--
+ hw/vfio-user/pci.c        |  5 +++--
+ target/i386/cpu.c         | 11 ++++++++---
+ target/i386/kvm/tdx.c     |  4 +++-
+ target/s390x/cpu-system.c |  4 +++-
+ 10 files changed, 36 insertions(+), 18 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 63c4667ea372..5a94a34166d8 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -47,6 +47,7 @@
- #include "hw/acpi/acpi.h"
- #include "hw/vfio/types.h"
+diff --git a/authz/list.c b/authz/list.c
+index 363b2ee12c98..3efbe1fa1687 100644
+--- a/authz/list.c
++++ b/authz/list.c
+@@ -128,7 +128,7 @@ qauthz_list_class_init(ObjectClass *oc, const void *data)
+         .set = qauthz_list_prop_set_policy,
+     ));
+ 
+-    object_class_property_add(oc, "rules", "QAuthZListRule",
++    object_class_property_add_qapi(oc, "rules", &QAuthZListRuleList_type_info,
+                               qauthz_list_prop_get_rules,
+                               qauthz_list_prop_set_rules,
+                               NULL, NULL);
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 37814b84fe09..987867477acc 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -31,6 +31,7 @@
+ #include "qemu/thread.h"
+ #include "system/qtest.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-type-infos-block-core.h"
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
+@@ -993,8 +994,8 @@ static void throttle_group_obj_class_init(ObjectClass *klass,
+     }
+ 
+     /* ThrottleLimits */
+-    object_class_property_add(klass,
+-                              "limits", "ThrottleLimits",
++    object_class_property_add_qapi(klass,
++                              "limits", &ThrottleLimits_type_info,
+                               throttle_group_get_limits,
+                               throttle_group_set_limits,
+                               NULL, NULL);
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 81bac42a1587..8e0e5d4343aa 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -31,6 +31,7 @@
+ #include "qemu/option.h"
+ #include "qapi/error.h"
+ #include "qapi/clone-visitor.h"
++#include "qapi/qapi-type-infos-sockets.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qemu/yank.h"
+ #include "trace.h"
+@@ -1568,7 +1569,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+     cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
+     cc->chr_get_filename = tcp_chr_get_filename;
+ 
+-    object_class_property_add(oc, "addr", "SocketAddress",
++    object_class_property_add_qapi(oc, "addr", &SocketAddress_type_info,
+                               char_socket_get_addr, NULL,
+                               NULL, NULL);
+ 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index d9ac4b419a36..94737e17e66f 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -18,6 +18,7 @@
+ #include "hw/core/loader.h"
+ #include "qemu/error-report.h"
  #include "qapi/error.h"
 +#include "qapi/qapi-type-infos-machine.h"
+ #include "qapi/qapi-visit-machine.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "qemu/madvise.h"
+@@ -1118,19 +1119,20 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_set_description(oc, "dumpdtb",
+         "Dump current dtb to a file and quit");
+ 
+-    object_class_property_add(oc, "boot", "BootConfiguration",
++    object_class_property_add_qapi(oc, "boot", &BootConfiguration_type_info,
+         machine_get_boot, machine_set_boot,
+         NULL, NULL);
+     object_class_property_set_description(oc, "boot",
+         "Boot configuration");
+ 
+-    object_class_property_add(oc, "smp", "SMPConfiguration",
++    object_class_property_add_qapi(oc, "smp", &SMPConfiguration_type_info,
+         machine_get_smp, machine_set_smp,
+         NULL, NULL);
+     object_class_property_set_description(oc, "smp",
+         "CPU topology");
+ 
+-    object_class_property_add(oc, "smp-cache", "SmpCachePropertiesWrapper",
++    object_class_property_add_qapi(oc, "smp-cache",
++        &SmpCachePropertiesWrapper_type_info,
+         machine_get_smp_cache, machine_set_smp_cache, NULL, NULL);
+     object_class_property_set_description(oc, "smp-cache",
+         "Cache properties list for SMP machine");
+@@ -1212,7 +1214,8 @@ static void machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set RAM backend"
+                                           "Valid value is ID of hostmem based backend");
+ 
+-    object_class_property_add(oc, "memory", "MemorySizeConfiguration",
++    object_class_property_add_qapi(oc, "memory",
++        &MemorySizeConfiguration_type_info,
+         machine_get_mem, machine_set_mem,
+         NULL, NULL);
+     object_class_property_set_description(oc, "memory",
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index e279ce5fe3ae..8997bf1785c8 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -13,6 +13,7 @@
+ #include "system/qtest.h"
+ #include "hw/core/boards.h"
+ 
++#include "qapi/qapi-type-infos-machine.h"
+ #include "qapi/qapi-visit-machine.h"
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_host.h"
+@@ -616,7 +617,8 @@ void cxl_machine_init(Object *obj, CXLState *state)
+                                     "Set on/off to enable/disable "
+                                     "CXL instantiation");
+ 
+-    object_property_add(obj, "cxl-fmw", "CXLFixedMemoryWindow",
++    object_property_add_qapi(obj, "cxl-fmw",
++                        &CXLFixedMemoryWindowOptionsList_type_info,
+                         machine_get_cfmw, machine_set_cfmw,
+                         NULL, state);
+     object_property_set_description(obj, "cxl-fmw",
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index a0498d218faf..7e6819f670b5 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -47,6 +47,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/remote/machine.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-type-infos-sockets.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qapi/qapi-events-misc.h"
+ #include "qemu/notify.h"
+@@ -931,8 +932,8 @@ static void vfu_object_class_init(ObjectClass *klass, const void *data)
+ 
+     k->nr_devs = 0;
+ 
+-    object_class_property_add(klass, "socket", "SocketAddress", NULL,
+-                              vfu_object_set_socket, NULL, NULL);
++    object_class_property_add_qapi(klass, "socket", &SocketAddress_type_info,
++                              NULL, vfu_object_set_socket, NULL, NULL);
+     object_class_property_set_description(klass, "socket",
+                                           "SocketAddress "
+                                           "(ex: type=unix,path=/tmp/sock). "
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 983e1d4ad470..f58c4a0f3965 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -8,6 +8,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
++#include "qapi/qapi-type-infos-sockets.h"
+ #include "qapi-visit-sockets.h"
  #include "qemu/error-report.h"
- #include "system/xen.h"
- #ifdef CONFIG_XEN
-@@ -75,6 +76,11 @@ static GlobalProperty pc_piix_compat_defaults[] = {
- static const size_t pc_piix_compat_defaults_len =
-     G_N_ELEMENTS(pc_piix_compat_defaults);
  
-+static const char *pc_south_bridge_type[] = {
-+    [PC_SOUTH_BRIDGE_OPTION_PIIX3] = TYPE_PIIX3_DEVICE,
-+    [PC_SOUTH_BRIDGE_OPTION_PIIX4] = TYPE_PIIX4_PCI_DEVICE,
-+};
-+
- /*
-  * Return the global irq number corresponding to a given device irq
-  * pin. We could also use the bus number to have a more precise mapping.
-@@ -236,7 +242,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+@@ -471,8 +472,8 @@ static void vfio_user_pci_class_init(ObjectClass *klass, const void *data)
+     device_class_set_legacy_reset(dc, vfio_user_pci_reset);
+     device_class_set_props(dc, vfio_user_pci_properties);
  
-     gsi_state = pc_gsi_create(&x86ms->gsi, true);
+-    object_class_property_add(klass, "socket", "SocketAddress", NULL,
+-                              vfio_user_pci_set_socket, NULL, NULL);
++    object_class_property_add_qapi(klass, "socket", &SocketAddress_type_info,
++                              NULL, vfio_user_pci_set_socket, NULL, NULL);
+     object_class_property_set_description(klass, "socket",
+                                           "SocketAddress (UNIX sockets only)");
  
--    pci_dev = pci_new_multifunction(-1, pcms->south_bridge);
-+    pci_dev = pci_new_multifunction(-1,
-+                                    pc_south_bridge_type[pcms->south_bridge]);
-     object_property_set_bool(OBJECT(pci_dev), "has-usb",
-                              machine_usb(machine), &error_abort);
-     object_property_set_bool(OBJECT(pci_dev), "has-acpi",
-@@ -317,51 +324,18 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-     }
- }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5da80ade70eb..4553ef0892a1 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -35,6 +35,8 @@
+ #include "sev.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "qapi/qapi-type-infos-machine.h"
++#include "qapi/qapi-type-infos-run-state.h"
+ #include "qapi/qapi-visit-machine.h"
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "hw/core/qdev-properties.h"
+@@ -10540,10 +10542,12 @@ static void x86_cpu_initfn(Object *obj)
  
--typedef enum PCSouthBridgeOption {
--    PC_SOUTH_BRIDGE_OPTION_PIIX3,
--    PC_SOUTH_BRIDGE_OPTION_PIIX4,
--    PC_SOUTH_BRIDGE_OPTION_MAX,
--} PCSouthBridgeOption;
--
--static const QEnumLookup PCSouthBridgeOption_lookup = {
--    .array = (const char *const[]) {
--        [PC_SOUTH_BRIDGE_OPTION_PIIX3] = TYPE_PIIX3_DEVICE,
--        [PC_SOUTH_BRIDGE_OPTION_PIIX4] = TYPE_PIIX4_PCI_DEVICE,
--    },
--    .size = PC_SOUTH_BRIDGE_OPTION_MAX
--};
--
- static int pc_get_south_bridge(Object *obj, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
--    int i;
+     x86_cpu_init_default_topo(cpu);
  
--    for (i = 0; i < PCSouthBridgeOption_lookup.size; i++) {
--        if (g_strcmp0(PCSouthBridgeOption_lookup.array[i],
--                      pcms->south_bridge) == 0) {
--            return i;
--        }
--    }
--
--    error_setg(errp, "Invalid south bridge value set");
--    return 0;
-+    return pcms->south_bridge;
- }
+-    object_property_add(obj, "feature-words", "X86CPUFeatureWordInfo",
++    object_property_add_qapi(obj, "feature-words",
++                        &X86CPUFeatureWordInfoList_type_info,
+                         x86_cpu_get_feature_words,
+                         NULL, NULL, (void *)env->features);
+-    object_property_add(obj, "filtered-features", "X86CPUFeatureWordInfo",
++    object_property_add_qapi(obj, "filtered-features",
++                        &X86CPUFeatureWordInfo_type_info,
+                         x86_cpu_get_feature_words,
+                         NULL, NULL, (void *)cpu->filtered_features);
  
- static void pc_set_south_bridge(Object *obj, int value, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
+@@ -11007,7 +11011,8 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
+                               NULL, NULL);
  
--    if (value < 0) {
--        error_setg(errp, "Value can't be negative");
--        return;
--    }
--
--    if (value >= PCSouthBridgeOption_lookup.size) {
--        error_setg(errp, "Value too big");
--        return;
--    }
--
--    pcms->south_bridge = PCSouthBridgeOption_lookup.array[value];
-+    pcms->south_bridge = value;
- }
+ #if !defined(CONFIG_USER_ONLY)
+-    object_class_property_add(oc, "crash-information", "GuestPanicInformation",
++    object_class_property_add_qapi(oc, "crash-information",
++                              &GuestPanicInformation_type_info,
+                               x86_cpu_get_crash_info_qom, NULL, NULL, NULL);
+ #endif
  
- #ifdef CONFIG_XEN
-@@ -398,7 +372,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
- {
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     ObjectClass *oc = OBJECT_CLASS(m);
--    pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
-+    pcmc->default_south_bridge = PC_SOUTH_BRIDGE_OPTION_PIIX3;
-     pcmc->pci_root_uid = 0;
-     pcmc->default_cpu_version = 1;
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 8294dbde3aa8..81c5ba3a1b54 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -14,6 +14,7 @@
+ #include "qemu/base64.h"
+ #include "qemu/mmap-alloc.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-type-infos-sockets.h"
+ #include "qapi/qapi-visit-sockets.h"
+ #include "qom/object_interfaces.h"
+ #include "crypto/hash.h"
+@@ -1586,7 +1587,8 @@ static void tdx_guest_init(Object *obj)
+                             tdx_guest_get_mrownerconfig,
+                             tdx_guest_set_mrownerconfig);
  
-@@ -413,12 +387,13 @@ static void pc_i440fx_machine_options(MachineClass *m)
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_UEFI_VARS_X64);
+-    object_property_add(obj, "quote-generation-socket", "SocketAddress",
++    object_property_add_qapi(obj, "quote-generation-socket",
++                            &SocketAddress_type_info,
+                             tdx_guest_get_qgs,
+                             tdx_guest_set_qgs,
+                             NULL, NULL);
+diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
+index d963d9e940e1..30992ef654f4 100644
+--- a/target/s390x/cpu-system.c
++++ b/target/s390x/cpu-system.c
+@@ -30,6 +30,7 @@
+ #include "system/reset.h"
+ #include "qemu/timer.h"
+ #include "trace.h"
++#include "qapi/qapi-type-infos-run-state.h"
+ #include "qapi/qapi-visit-run-state.h"
+ #include "system/hw_accel.h"
  
--    object_class_property_add_enum(oc, "x-south-bridge", "PCSouthBridgeOption",
--                                   &PCSouthBridgeOption_lookup,
--                                   pc_get_south_bridge,
--                                   pc_set_south_bridge);
--    object_class_property_set_description(oc, "x-south-bridge",
--                                     "Use a different south bridge than PIIX3");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "x-south-bridge",
-+        .description = "Use a different south bridge than PIIX3",
-+        .qapi_type = &PCSouthBridgeOption_type_info,
-+        .get = pc_get_south_bridge,
-+        .set = pc_set_south_bridge,
-+    ));
-     compat_props_add(m->compat_props,
-                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
- }
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 8edec62a1af2..3afd376116b1 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -47,7 +47,7 @@ typedef struct PCMachineState {
-     uint64_t max_ram_below_4g;
-     OnOffAuto vmport;
-     SmbiosEntryPointType smbios_entry_point_type;
--    const char *south_bridge;
-+    PCSouthBridgeOption south_bridge;
+@@ -137,7 +138,8 @@ void s390_cpu_system_init(Object *obj)
+     S390CPU *cpu = S390_CPU(obj);
  
-     bool acpi_build_enabled;
-     bool wdat_enabled;
-@@ -94,7 +94,7 @@ struct PCMachineClass {
- 
-     /* Device configuration: */
-     bool pci_enabled;
--    const char *default_south_bridge;
-+    PCSouthBridgeOption default_south_bridge;
- 
-     /* Compat options: */
- 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 46b6935ab0b8..cc028e890ae5 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -462,6 +462,20 @@
- { 'enum': 'Pca9554PinState',
-   'data': ['low', 'high'] }
- 
-+##
-+# @PCSouthBridgeOption:
-+#
-+# South bridge chipset option for PC i440FX machines.
-+#
-+# @piix3: Intel PIIX3 (default)
-+#
-+# @piix4: Intel PIIX4
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'PCSouthBridgeOption',
-+  'data': ['piix3', 'piix4'] }
-+
- ##
- # @inject-nmi:
- #     Injects a Non-Maskable Interrupt (machine specific: for example
+     cs->start_powered_off = true;
+-    object_property_add(obj, "crash-information", "GuestPanicInformation",
++    object_property_add_qapi(obj, "crash-information",
++                        &GuestPanicInformation_type_info,
+                         s390_cpu_get_crash_info_qom, NULL, NULL, NULL);
+     cpu->env.tod_timer =
+         timer_new_ns(QEMU_CLOCK_VIRTUAL, s390x_tod_timer, cpu);
 
 -- 
 2.56.0.116.g6de20f6092dc
