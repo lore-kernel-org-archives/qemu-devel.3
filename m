@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4A2606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A172606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZlEibq6a
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JHHN6DP0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Pq-0005Y1-Da; Tue, 20 Oct 2026 06:49:58 -0400
+	id 1xJ7Ua-0006TR-LK; Tue, 20 Oct 2026 06:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Nw-0002Ky-91
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xJ7RX-0000xH-IT
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Ns-0005Pj-RX
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:59 -0400
+ id 1xJ7RU-0006cU-Ql
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493276;
+ s=mimecast20190719; t=1792493500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VkXUlwrEvWdaFT7ZgPzD9XegjPTV54S9i+Wt7fwK38w=;
- b=ZlEibq6aTI7BPMH1qQm0FIN3Z7FM0bwQwWriMv8Vth9D8C+N+LlYD5rqaWFwgpp2Pe97oy
- VlV0/oXFCwSLgkh+bLpQ3+3sAcZXs0j/HjKRNaKNg3wcqgFeavkihTagnD1XYfDXFg1hUq
- d4vwajA16Q904plDSTRPrUyn+H9RLO8=
+ bh=nP79V/gtequIXU+t/Eu02ll/FN9WUbHuc8AyTpCeGFQ=;
+ b=JHHN6DP0gi4BBye0SSokSIdSfmIn576WOZoBFdd7NUvYXQvKHlFdSNXmjc8/cwiMaYqeTl
+ 7GsK2p9lyUnqNjrDMmWM1oSjnRdkPkhmPAdnkT+lACm3nvJ/S9vBRngWb6w1F2XUK4b3PW
+ zB54U7s1JrmGFNuBD0XG4CMiWoIAFU0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-ofM9Jc0cNLCC9EhH-k12SQ-1; Tue,
- 20 Oct 2026 10:47:51 +0000
-X-MC-Unique: ofM9Jc0cNLCC9EhH-k12SQ-1
-X-Mimecast-MFC-AGG-ID: ofM9Jc0cNLCC9EhH-k12SQ_1792493267
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-xio_7je-O7qSetICYWdMZA-1; Tue,
+ 20 Oct 2026 10:51:36 +0000
+X-MC-Unique: xio_7je-O7qSetICYWdMZA-1
+X-Mimecast-MFC-AGG-ID: xio_7je-O7qSetICYWdMZA_1792493492
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 10F8B19560B6; Tue, 20 Oct 2026 10:47:47 +0000 (UTC)
+ id A1AEC19541A2; Tue, 20 Oct 2026 10:51:32 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05BB51800444; Tue, 20 Oct 2026 10:47:44 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DDBF930000E7; Tue, 20 Oct 2026 10:51:29 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:34 +0400
-Subject: [PATCH v7 17/65] qom: add object_{class_}property_add_qapi_enum
+Date: Tue, 20 Oct 2026 14:46:16 +0400
+Subject: [PATCH v7 59/65] qdev: introduce typed array PropertyInfos
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-17-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-59-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -129,25 +129,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7651;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14678;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6wd/SoQY2q+EMLwTd/AeIQErpXbBILREXSh6bn43Lqo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZZB/jExQFvbdi+wU3hKVxpaaPc1XbpmkIhP
- WMqxmJ0I1aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWQAKCRDa6OEJdZac
- 5dBmD/9iljR90PsVPSEMouwGTqd5u0I3uFFVeGE6aj8If5dMfAJeES/9tbvs9mRjLcapLLGllYU
- TQNIPpVo9+5Q6yWoXDup+0bZugqArDJn+E+oR5GWaIn14K0W/lTsFVa1fdorL5FJzcZt9nLwPbs
- qBkK2X0Tow/JAOq9beFe0nqvt9e3h8csBkY2OzylCKV8xgUUa/N7/jUd9n3xMAaklrEguKhws7p
- RB2EmxgN94MyEQXZtZhqjVrWq/vsUKgCcwLJ7z6Xyu8ikQIh00qHstMPJONSLnW5X32860y2JUn
- RdI6UxJof0RAZu18Ge3d8Qgv+eKmoIfivMtXvHmI0YJtHLFqrI6rXfocRQLrZTDmpURYQ6U9u1U
- 9yB9eLpPbMa9W1bghYaq4IAEJtvVsjv1kKDYGVAIPSlYH4dCgI/2TzssabsosxuEN1Phkx1epKW
- nBgKSEf8pt2cQsFq4SKILCVz/lUAkaZIcqrcLdVjN41qVK33dbV9SETzfNzbcypT0qn3Uvh31bB
- cekeBayXn2khLf+x2Dyym0EbRSJPRvIWIuFiabEG6a8kpeAZgLkNy8ux2Hrid+xaEV/Q2NlRSrc
- gxaEBZ3gRSWWWvkLE9xRhqAlVrj2m9egPJPQhy1zP1+3Zkc94/+TwXdjvCND2ByqbflBsfGVWJ7
- eokXUJapDD7zDZg==
+ bh=mlWOi/fW9OK4tckY+TRn1APE+VrJXQmOBnALGjwbEQ0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZcpE0N36exL5+QBGMlSA4uACN+Y42xftBBX
+ h9qkQtQ0riJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXAAKCRDa6OEJdZac
+ 5c4yD/0UfQJG5WPTuqhdaOYQ99AXPKpribvFkipRwwlEz96K4bv7wRdXGRAr48+aD1LJmqKvk4f
+ V17WHG4HitooSDv/eG/xUEtK/FocBxblDotXH8BhHVOB/Vm6+WZvumi1SaA7wsEEJTOmCoxI/+1
+ JA4g74DbBXlF27s435rmq88I5yk503Hr5D/mtYjnBGEfJQJWP6gtGR0jJooy4WkKd1mu2/doJoa
+ GW4yy09MADqm4HEVyvYVFq3jhw9DCTR1I6QOkWeiDwWMpsMGGG80At5F8/GBdJaNBTvKB8RZIx8
+ MW0217lABMAz0nqw4WtpPqsol58KGjFV+nukL2w94iheX41hZlKyYMRt9HIMJvIlqJKkYnC/Pod
+ Lf2LyJ9MJTjl3cStpGO6ZWTbaI7PTJTbDg/EPSgMc5bXZN+74W/24LNLnlAJV42D6Gn3H5x5HXc
+ kRlLKg4vMoJA+KqASQpzEaMBcqXVKg5hlFivlzNZ783+Jo1g5fMBJCcH8BnPj9MWzmabnxLyWPU
+ L/Vgjr2BOHK8D+hyhWAoWZGJSCdsQ+cvw06/E7oFhDC2pt/iuWjoHiDroClUn2z1un54JMSBOeF
+ 6koVyz1y+KYiYSH2xjv1sEelhoyWcBxu0Gsr6HR7pAkp7whYnNX+56uoutkbGSccx3fFcrczzZN
+ x8oPZybEnxuzd7A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -155,8 +155,7 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,225 +175,357 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Add element_info and element_size fields to PropertyInfo, and extend
+qdev_prop_qapi_type() to derive QAPI types for array properties via
+element_info->qapi_type->list.
+
+Add typed list PropertyInfo definitions that replace the generic
+qdev_prop_array. Each typed list PropertyInfo knows its element type
+at compile time through the element_info and element_size fields,
+which allows the QAPI type to be derived automatically.
+
+Infrastructure changes:
+- Add prop_array_info() and prop_array_elem_size() helpers that
+  prefer the new element_info/element_size fields with fallback to
+  the old arrayinfo/arrayfieldsize fields for compatibility
+- Make get_prop_array, set_prop_array, release_prop_array, and
+  default_prop_array non-static so they can be used by
+  DEFINE_PROP_ARRAY_INFO in other translation units
+- Add DEFINE_PROP_ARRAY_INFO macro in qdev-prop-internal.h
+
+The array of links needs special care for its "full type name" to follow
+the "link<TYPE>List" pattern used by link properties ("link<TYPE>").
+
+The old qdev_prop_array and DEFINE_PROP_ARRAY macro are preserved
+for compatibility; they will be replaced in the next patch.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qom/object.h | 74 ++++++++++++++++++++++++++++++++++++++++++
- qom/object.c         | 90 +++++++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 159 insertions(+), 5 deletions(-)
+ hw/core/qdev-prop-internal.h             |  21 +++++++
+ hw/core/qdev-properties-system.c         |   5 ++
+ hw/core/qdev-properties.c                | 104 ++++++++++++++++++++++++-------
+ include/hw/core/qdev-properties-system.h |   2 +
+ include/hw/core/qdev-properties.h        |   8 +++
+ 5 files changed, 119 insertions(+), 21 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index eb61d8842b80..e04be4caed57 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -2027,6 +2027,80 @@ ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
-                                     int (*get)(Object *, Error **),
-                                     void (*set)(Object *, int, Error **));
+diff --git a/hw/core/qdev-prop-internal.h b/hw/core/qdev-prop-internal.h
+index c190b7b88cf4..40fa4bc63f03 100644
+--- a/hw/core/qdev-prop-internal.h
++++ b/hw/core/qdev-prop-internal.h
+@@ -27,4 +27,25 @@ void qdev_propinfo_get_int32(Object *obj, Visitor *v, const char *name,
+ void qdev_propinfo_get_size32(Object *obj, Visitor *v, const char *name,
+                               void *opaque, Error **errp);
  
-+/**
-+ * struct QapiEnumProp: Descriptor for a property backed by a QAPI enum type
-+ *
-+ * Binds a QOM object property to a QAPI enum, providing automatic
-+ * string<->int conversion through QAPI visitors and optional
-+ * default-value initialization during object instance init.
-+ *
-+ * Use the QAPI_ENUM_PROP() macro to construct instances inline.
-+ *
-+ * @name: property name exposed on the QOM object
-+ * @description: human-readable description (shown in ``-device help``, etc.)
-+ * @default_value: initial enum value applied via @set during instance init,
-+ *                 or -1 (the QAPI_ENUM_PROP default) to skip initialization
-+ * @qapi_type: pointer to the generated QAPITypeInfo for the enum
-+ *             (provides the string<->int lookup table)
-+ * @get: getter that returns the current enum value as int, or -1 on error
-+ * @set: setter that receives the enum value as int; %NULL for read-only props
++void get_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp);
++void set_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp);
++void release_prop_array(Object *obj, const char *name, void *opaque);
++void default_prop_array(ObjectProperty *op, const Property *prop);
++
++/*
++ * Note: .qapi_type is derived from element_info->qapi_type->list by
++ * qdev_prop_qapi_type()
 + */
-+typedef struct QapiEnumProp {
-+    const char *name;
-+    const char *description;
-+    const int default_value;
-+    const QAPITypeInfo *qapi_type;
-+    int (*get)(Object *, Error **);
-+    void (*set)(Object *, int, Error **);
-+} QapiEnumProp;
-+
-+#define QAPI_ENUM_PROP(...) ({                                           \
-+    static const QapiEnumProp _prop = {                                  \
-+        .default_value = -1, __VA_ARGS__                                 \
-+    };                                                                   \
-+    &_prop; })
-+
-+/**
-+ * object_property_add_qapi_enum:
-+ * @obj: the object to add a property to
-+ * @prop: property descriptor
-+ *
-+ * Add an enum property with QAPI type association.
-+ *
-+ * Returns: The newly added property on success, or %NULL on failure.
-+ */
-+ObjectProperty *
-+object_property_add_qapi_enum(Object *obj, const QapiEnumProp *prop);
-+
-+/**
-+ * object_class_property_add_qapi_enum:
-+ * @klass: the class object to add a property to
-+ * @prop: property descriptor
-+ *
-+ * Add an enum property with QAPI type association.
-+ *
-+ * Use the QAPI_ENUM_PROP() macro to construct the property descriptor
-+ * inline. If .default_value is not set, the property is not initialized
-+ * (default_value is -1). Otherwise, the setter is called with
-+ * default_value during object instance init.
-+ *
-+ * Example::
-+ *
-+ *   object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+ *       .name = "policy",
-+ *       .description = "Set the NUMA policy",
-+ *       .default_value = HOST_MEM_POLICY_DEFAULT,
-+ *       .qapi_type = &HostMemPolicy_type_info,
-+ *       .get = my_get_policy,
-+ *       .set = my_set_policy,
-+ *   ));
-+ *
-+ * Returns: The newly added property on success, or %NULL on failure.
-+ */
-+ObjectProperty *
-+object_class_property_add_qapi_enum(ObjectClass *klass,
-+                                    const QapiEnumProp *prop);
-+
- /**
-  * object_property_add_qapi:
-  * @obj: the object to add a property to
-diff --git a/qom/object.c b/qom/object.c
-index bebbfc43556d..cc113c0810e7 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1219,7 +1219,7 @@ static void object_class_foreach_tramp(gpointer key, gpointer value,
-         return;
-     }
- 
--    if (data->implements_type && 
-+    if (data->implements_type &&
-         !object_class_dynamic_cast(k, data->implements_type)) {
-         return;
-     }
-@@ -1786,7 +1786,6 @@ int object_property_get_enum(Object *obj, const char *name,
-     char *str;
-     int ret;
-     ObjectProperty *prop = object_property_find_err(obj, name, errp);
--    EnumProperty *enumprop;
- 
-     if (prop == NULL) {
-         return -1;
-@@ -1799,14 +1798,17 @@ int object_property_get_enum(Object *obj, const char *name,
-         return -1;
-     }
- 
--    enumprop = prop->opaque;
--
-     str = object_property_get_str(obj, name, errp);
-     if (!str) {
-         return -1;
-     }
- 
--    ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
-+    if (prop->qapi_type) {
-+        ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
-+    } else {
-+        EnumProperty *enumprop = prop->opaque;
-+        ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
++#define DEFINE_PROP_ARRAY_INFO(_elem_prop_info, _elem_type) \
++    {                                                       \
++        .element_info = &(_elem_prop_info),                 \
++        .element_size = sizeof(_elem_type),                 \
++        .get = get_prop_array,                              \
++        .set = set_prop_array,                              \
++        .release = release_prop_array,                      \
++        .set_default_value = default_prop_array,            \
 +    }
-     g_free(str);
++
+ #endif
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 8819a9a0b748..ad4a00f776e6 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -484,6 +484,8 @@ const PropertyInfo qdev_prop_netdev = {
+     .set   = set_netdev,
+ };
  
-     return ret;
-@@ -2609,6 +2611,84 @@ object_class_property_add_enum(ObjectClass *klass, const char *name,
-                                      prop);
++const PropertyInfo qdev_prop_netdev_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_netdev, NICPeers);
+ 
+ /* --- audiodev --- */
+ static void get_audiodev(Object *obj, Visitor *v, const char* name,
+@@ -822,6 +824,9 @@ const PropertyInfo qdev_prop_reserved_region = {
+     .set   = set_reserved_region,
+ };
+ 
++const PropertyInfo qdev_prop_reserved_region_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_reserved_region, ReservedRegion);
++
+ /* --- pci address --- */
+ 
+ /*
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index a9abc646d5d7..bace12b10e36 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -666,6 +666,22 @@ struct ArrayElementList {
+     void *value;
+ };
+ 
++static const PropertyInfo *prop_array_info(const Property *prop)
++{
++    if (prop->info->element_info) {
++        return prop->info->element_info;
++    }
++    return prop->arrayinfo;
++}
++
++static int prop_array_elem_size(const Property *prop)
++{
++    if (prop->info->element_size) {
++        return prop->info->element_size;
++    }
++    return prop->arrayfieldsize;
++}
++
+ /*
+  * Given an array property @parent_prop in @obj, return a Property for a
+  * specific element of the array. Arrays are backed by an uint32_t length field
+@@ -675,7 +691,7 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+                                 const char *name, char *elem)
+ {
+     return (Property) {
+-        .info = parent_prop->arrayinfo,
++        .info = prop_array_info(parent_prop),
+         .name = name,
+         /*
+          * This ugly piece of pointer arithmetic sets up the offset so
+@@ -693,19 +709,21 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+  * underlying element's property release hook for each element and free the
+  * property array.
+  */
+-static void release_prop_array(Object *obj, const char *name, void *opaque)
++void release_prop_array(Object *obj, const char *name, void *opaque)
+ {
+     const Property *prop = opaque;
+     uint32_t *alenptr = object_field_prop_ptr(obj, prop);
+     void **arrayptr = (void *)obj + prop->arrayoffset;
+     char *elem = *arrayptr;
+     int i;
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+ 
+-    if (prop->arrayinfo->release) {
++    if (elem_info->release) {
+         for (i = 0; i < *alenptr; i++) {
+             Property elem_prop = array_elem_prop(obj, prop, name, elem);
+-            prop->arrayinfo->release(obj, NULL, &elem_prop);
+-            elem += prop->arrayfieldsize;
++            elem_info->release(obj, NULL, &elem_prop);
++            elem += elem_size;
+         }
+     }
+ 
+@@ -719,8 +737,8 @@ static void release_prop_array(Object *obj, const char *name, void *opaque)
+  * (a pointer to which is stored in the additional field described by
+  * prop->arrayoffset).
+  */
+-static void set_prop_array(Object *obj, Visitor *v, const char *name,
+-                           void *opaque, Error **errp)
++void set_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     const Property *prop = opaque;
+@@ -728,6 +746,8 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
+     void **arrayptr = (void *)obj + prop->arrayoffset;
+     ArrayElementList *list, *elem, *next;
+     const size_t size = sizeof(*list);
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+     char *elemptr;
+     bool ok = true;
+ 
+@@ -746,9 +766,9 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
+     while (elem) {
+         Property elem_prop;
+ 
+-        elem->value = g_malloc0(prop->arrayfieldsize);
++        elem->value = g_malloc0(elem_size);
+         elem_prop = array_elem_prop(obj, prop, name, elem->value);
+-        prop->arrayinfo->set(obj, v, NULL, &elem_prop, errp);
++        elem_info->set(obj, v, NULL, &elem_prop, errp);
+         if (*errp) {
+             ok = false;
+             goto out_obj;
+@@ -770,8 +790,8 @@ out_obj:
+         for (elem = list; elem; elem = next) {
+             Property elem_prop = array_elem_prop(obj, prop, name,
+                                                  elem->value);
+-            if (prop->arrayinfo->release) {
+-                prop->arrayinfo->release(obj, NULL, &elem_prop);
++            if (elem_info->release) {
++                elem_info->release(obj, NULL, &elem_prop);
+             }
+             next = elem->next;
+             g_free(elem->value);
+@@ -784,19 +804,19 @@ out_obj:
+      * Now that we know how big the array has to be, move the data over to a
+      * linear array and free the temporary list.
+      */
+-    *arrayptr = g_malloc_n(*alenptr, prop->arrayfieldsize);
++    *arrayptr = g_malloc_n(*alenptr, elem_size);
+     elemptr = *arrayptr;
+     for (elem = list; elem; elem = next) {
+-        memcpy(elemptr, elem->value, prop->arrayfieldsize);
+-        elemptr += prop->arrayfieldsize;
++        memcpy(elemptr, elem->value, elem_size);
++        elemptr += elem_size;
+         next = elem->next;
+         g_free(elem->value);
+         g_free(elem);
+     }
  }
  
-+static void get_qapi_enum(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
+-static void get_prop_array(Object *obj, Visitor *v, const char *name,
+-                           void *opaque, Error **errp)
++void get_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     const Property *prop = opaque;
+@@ -806,6 +826,8 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     ArrayElementList *list = NULL, *elem;
+     ArrayElementList **tail = &list;
+     const size_t size = sizeof(*list);
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+     int i;
+     bool ok;
+ 
+@@ -813,7 +835,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     for (i = 0; i < *alenptr; i++) {
+         elem = g_new0(ArrayElementList, 1);
+         elem->value = elemptr;
+-        elemptr += prop->arrayfieldsize;
++        elemptr += elem_size;
+ 
+         *tail = elem;
+         tail = &elem->next;
+@@ -826,7 +848,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     elem = list;
+     while (elem) {
+         Property elem_prop = array_elem_prop(obj, prop, name, elem->value);
+-        prop->arrayinfo->get(obj, v, NULL, &elem_prop, errp);
++        elem_info->get(obj, v, NULL, &elem_prop, errp);
+         if (*errp) {
+             goto out_obj;
+         }
+@@ -848,7 +870,7 @@ out_obj:
+     }
+ }
+ 
+-static void default_prop_array(ObjectProperty *op, const Property *prop)
++void default_prop_array(ObjectProperty *op, const Property *prop)
+ {
+     object_property_set_default_list(op);
+ }
+@@ -861,6 +883,39 @@ const PropertyInfo qdev_prop_array = {
+     .set_default_value = default_prop_array,
+ };
+ 
++const PropertyInfo qdev_prop_uint8_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint8, uint8_t);
++const PropertyInfo qdev_prop_uint16_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint16, uint16_t);
++const PropertyInfo qdev_prop_uint32_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint32, uint32_t);
++const PropertyInfo qdev_prop_uint64_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint64, uint64_t);
++const PropertyInfo qdev_prop_string_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_string, char *);
++
++static ObjectProperty *create_link_list_property(ObjectClass *oc,
++                                                  const char *name,
++                                                  const Property *prop)
 +{
-+    const QapiEnumProp *prop = opaque;
-+    int value;
-+    Error *err = NULL;
++    g_autofree char *full_type = g_strdup_printf("link<%s>List",
++                                                 prop->link_type);
 +
-+    value = prop->get(obj, &err);
-+    assert(value >= 0 || err);
-+    if (err) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    visit_type_enum(v, name, &value, prop->qapi_type->lookup, errp);
++    return object_class_property_add(oc, name, full_type,
++                                     get_prop_array, set_prop_array,
++                                     release_prop_array, (Property *)prop);
 +}
 +
-+static void set_qapi_enum(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
-+{
-+    const QapiEnumProp *prop = opaque;
-+    int value;
++const PropertyInfo qdev_prop_link_list = {
++    .element_info = &qdev_prop_link,
++    .element_size = sizeof(void *),
++    .create = create_link_list_property,
++    .get = get_prop_array,
++    .set = set_prop_array,
++    .release = release_prop_array,
++    .set_default_value = default_prop_array,
++};
 +
-+    if (!visit_type_enum(v, name, &value, prop->qapi_type->lookup, errp)) {
-+        return;
+ /* --- public helpers --- */
+ 
+ static const Property *qdev_prop_walk(DeviceClass *cls, const char *name)
+@@ -1159,8 +1214,15 @@ const PropertyInfo qdev_prop_link = {
+ 
+ static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
+ {
+-    /* this will be later extended to cope with QAPI array properties */
+-    return prop->info->qapi_type;
++    if (prop->info->qapi_type) {
++        return prop->info->qapi_type;
 +    }
-+    prop->set(obj, value, errp);
-+}
-+
-+static void init_qapi_enum(Object *obj, ObjectProperty *prop)
-+{
-+    const QapiEnumProp *e = prop->opaque;
-+
-+    if (e->set && e->default_value >= 0) {
-+        e->set(obj, e->default_value, &error_abort);
++    if (prop->info->element_info) {
++        assert(prop->info->element_info->qapi_type);
++        assert(prop->info->element_info->qapi_type->list);
++        return prop->info->element_info->qapi_type->list;
 +    }
-+}
-+
-+ObjectProperty *
-+object_property_add_qapi_enum(Object *obj, const QapiEnumProp *e)
-+{
-+    ObjectProperty *prop;
-+
-+    assert(e && e->qapi_type && e->qapi_type->lookup);
-+
-+    prop = object_property_add_qapi(obj, e->name, e->qapi_type,
-+                                    e->get ? get_qapi_enum : NULL,
-+                                    e->set ? set_qapi_enum : NULL,
-+                                    NULL,
-+                                    (void *)e);
-+    prop->description = g_strdup(e->description);
-+    if (e->default_value >= 0) {
-+        prop->init = init_qapi_enum;
-+    }
-+
-+    return prop;
-+}
-+
-+ObjectProperty *
-+object_class_property_add_qapi_enum(ObjectClass *klass, const QapiEnumProp *e)
-+{
-+    ObjectProperty *prop;
-+
-+    assert(e && e->qapi_type && e->qapi_type->lookup);
-+
-+    prop = object_class_property_add_qapi(klass, e->name, e->qapi_type,
-+                                          e->get ? get_qapi_enum : NULL,
-+                                          e->set ? set_qapi_enum : NULL,
-+                                          NULL,
-+                                          (void *)e);
-+    prop->description = g_strdup(e->description);
-+    if (e->default_value >= 0) {
-+        prop->init = init_qapi_enum;
-+    }
-+
-+    return prop;
-+}
-+
- ObjectProperty *
- object_property_add_qapi(Object *obj, const char *name,
-                          const QAPITypeInfo *qapi_type,
++    return NULL;
+ }
+ 
+ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
+index 2cbea16d615e..819dce7d5e5d 100644
+--- a/include/hw/core/qdev-properties-system.h
++++ b/include/hw/core/qdev-properties-system.h
+@@ -23,6 +23,8 @@ extern const PropertyInfo qdev_prop_fdc_drive_type;
+ extern const PropertyInfo qdev_prop_drive;
+ extern const PropertyInfo qdev_prop_drive_iothread;
+ extern const PropertyInfo qdev_prop_netdev;
++extern const PropertyInfo qdev_prop_netdev_list;
++extern const PropertyInfo qdev_prop_reserved_region_list;
+ extern const PropertyInfo qdev_prop_pci_devfn;
+ extern const PropertyInfo qdev_prop_blocksize;
+ extern const PropertyInfo qdev_prop_pci_host_devaddr;
+diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+index 1ea2ba66bb37..0c067170079d 100644
+--- a/include/hw/core/qdev-properties.h
++++ b/include/hw/core/qdev-properties.h
+@@ -35,6 +35,8 @@ struct PropertyInfo {
+     const char *description;
+     const QEnumLookup *enum_table;
+     const QAPITypeInfo *qapi_type;
++    const struct PropertyInfo *element_info;
++    int element_size;
+     bool realized_set_allowed; /* allow setting property on realized device */
+     char *(*print)(Object *obj, const Property *prop);
+     void (*set_default_value)(ObjectProperty *op, const Property *prop);
+@@ -75,7 +77,13 @@ extern const PropertyInfo qdev_prop_string;
+ extern const PropertyInfo qdev_prop_on_off_auto;
+ extern const PropertyInfo qdev_prop_size32;
+ extern const PropertyInfo qdev_prop_array;
++extern const PropertyInfo qdev_prop_uint8_list;
++extern const PropertyInfo qdev_prop_uint16_list;
++extern const PropertyInfo qdev_prop_uint32_list;
++extern const PropertyInfo qdev_prop_uint64_list;
++extern const PropertyInfo qdev_prop_string_list;
+ extern const PropertyInfo qdev_prop_link;
++extern const PropertyInfo qdev_prop_link_list;
+ 
+ #define DEFINE_PROP(_name, _state, _field, _prop, _type, ...) {  \
+         .name      = (_name),                                    \
 
 -- 
 2.56.0.116.g6de20f6092dc
