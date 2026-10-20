@@ -1,157 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C771606AA29
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 14:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55218606A33B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 14:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=DirqL3oe;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=isMyEHvE
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZTkE53aQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJAhf-00068s-C7; Tue, 20 Oct 2026 10:20:35 -0400
+	id 1xJAkQ-0007bv-Qu; Tue, 20 Oct 2026 10:23:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xJAhd-00068k-He
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 10:20:33 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xJAhb-0000BC-TI
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 10:20:33 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KDAEW91429985
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 14:20:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2KX80MlqHjNopehwrrckeR7gP8KsnyuJPSgFp59gVjk=; b=DirqL3oe7AJHwXeH
- +BYfhjz3P86n6FLZi+rWHlN7+KgVgCqQa8yTsS17P7A/jdb4i6KAYywjb2wQhR+j
- yjQhXEayelS5TufZ2pRiClYmP6YVDam1Lkd+x8TSz9G0ucNWYe2UokIP+wCQ89in
- 6hJ4Cc+6yg6rpM0AVa6jrv7qw2v64pwMWzNwwXEiR0SthXuM1j/pUqY2JU5KcSpf
- LhbGSmF5yci2kqj0mZhE4Gc8nC4ZerE9i3gkrbP/YLIlTs7W/MeNAA4IyIOgSfp2
- l4NFnLL2jCP2uHKDw4YB/CwfYaCIrKoFqp5ashv2NsPggIn0oZLyEZHzdzdbymxk
- rRT7+w==
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hdw5qaufa-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 14:20:29 +0000 (GMT)
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-82274137201so5262297a34.0
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 07:20:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792506029; cv=none;
- d=google.com; s=arc-20260327;
- b=qOLJrhjgDvifcPB2kYpGW9d9ehWNmuCCqOUzFuFsg9Q4y12zwy4hSNbjQKddAEMr9C
- Fb9RY+UWBD4E3uGuYa+yEz3YGlfdlUZ+UPXSdaoeZiKYf1AvMfYAWdamu/Ifcx1NXDcz
- MdEwRA7W2k8cWX3B3Nc41ApVbq+74+p7FDUHnRIVC+T9tc0pdujKGh4pB+bwxhl7tf/i
- aVWf4OhQFAIbgwoLm8jBX+TffYq7JyKabuQnAt7fViaDxpO6ZMg/T/v7XqTm4vNo3/4T
- p+V1ydSccQGx7Pos3i2Suns/fKk5PC2kC6oSuueLsBmnBp8cvKBRpqBXtnmE0xvvT9Fx
- XD+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=2KX80MlqHjNopehwrrckeR7gP8KsnyuJPSgFp59gVjk=;
- fh=p7vKGbV3kHmZwfDKw8DZlKLXpqfe/l+j4ZxZG+A7MSc=;
- b=jyuMWe7XWzRL4y9louDjsevzMWM7nbaEV+2A0qjRWITyZiv/FbHv2VkfcI5hC7Xmcu
- OgvqLL4doYFZfq0CxM5yfB2CTznfVcOBT+p7K30Oc/3ANUQigaaVVtls4pbIcJAFI2bi
- ftfrgseD56U4oP5CdyEEuW1F8ycfjZXSkwY0I8Mbtrw3MC8yI9NCR6HMxW1krGjwLUkI
- YIqN9ecU2tuJCeV3aImbjjzqZfgqlw/NCl3mb3G1iZQ008caGCRAhruIqnhsMfMhLZzp
- /L37QhMSzSGYzgdYc3Tw8u4cC9unbV+lbk3/NB/g5U2meZDUgyTUd/2I/fQ2A3QfsitT
- D5XQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJAkM-0007ba-Ks
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 10:23:22 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJAkH-0000ME-Qi
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 10:23:22 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-48dfdd0678dso2235985f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 07:23:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792506029; x=1793110829; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2KX80MlqHjNopehwrrckeR7gP8KsnyuJPSgFp59gVjk=;
- b=isMyEHvE6mXN6kETVpzKw51ivNB0mKFIxO7ybB+spS8sGeQZinNAWbiuWR4BzXMLld
- J0qZOPb/q9VKxsM+ZYZRNlpTD/8G43fPgyjOgaBmKNa3hbMK96QMI1oozRzXuNuqbpX4
- aaKtIrknZUNOpku3jHVXBd/62QWcTk9hmN8lzaRV1L15OxYF2UfQ1V4/l1FcevOuyeyD
- Bo3xTX+w4h6miSOduqzT+JoWIakor6ZYSmfuhc24m6fSQkmT4SqaANpCJT3drKtbNw8a
- F7VUcjLB7MSL723aQSFpL+2sD1xovjEawi/ZIQ9RJptp6EVrRcAYLCNqDJAjK70reM/h
- Z2ZA==
+ d=linaro.org; s=google; t=1792506196; x=1793110996; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PhEtv1OD731M8BFH8OVnS47WdL7/GHTXLfD8WW8QLTs=;
+ b=ZTkE53aQ1Od3/RiaRZo8N771+l7TzLWwaJDtpy2gV89/RhrvV3E6QmRKifKm+ghgJe
+ boKpuwgZL6Wl/2bcdFckljZDxkusqt/aDcYWH8hKE5UzTFcOEz+TfpFvl2P26EJTkhTJ
+ QS+EztMeQUbBrdiE2KWL2Ndm4oiVm6YUAhx43RZFPdh8S3DQ4E5stwZeg73TYCZOU3AS
+ A03vQt83DQKIORu6MjpdIR8A1lwnPW3CnNPlAltsMzx3FwWIVE1BMBybq4+hFgIhY4OY
+ EbUTZNngaxffChFssex9imGVxmGa37pOOw292ce4I88CESmG68JNSZnfajxHSs7rF356
+ WdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792506029; x=1793110829;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2KX80MlqHjNopehwrrckeR7gP8KsnyuJPSgFp59gVjk=;
- b=hP+r4CgEhPyF2dNWNlFrV1j47Lu6OQr52cohkqKjwuog32YVKOUmCynGBpCvmhXpBw
- B/ft0ZBjmiH/b1Bh30ZWtaIiXPXgrODyJ8beVoMEb/A106BGemZ4n7t+mcI+BDeJ8/iO
- tUObYwOHnA6Ua6aWKEOSPWdjIYoK3QalybV7qI9PrCy4acKFJ84fVlXYcM2zhdbUiZbm
- Vxz4UaBV5d+IKm0dx/MZ8T8XWEgeLvxbnfwkcQH/DwWhoTZlAxalOOYgqeN/9w0RlV+/
- CKcYnZ1qJTxbENnlNRW3+iSijh8mOPKdAqLd6p4+lPpnnIua7PSvcQG+q7CEj6txeNZD
- D+Rw==
-X-Gm-Message-State: AFq9FYLl5IFYdUpv1mHOFP+sN6aQAbMwwMAn48NDqMa/CCNP149kgmii
- OlSYFuxNC6e0rcogCODZk1hahJ0WwVAA0strEiO6jc/mIFwv0/GeLf9OfEbpJKFQypCaeMCHEA0
- E/w8mxM+KZVGaWvnnQ9hum2j5cHVJnN+1Pd3hXcHCpakTSfMdDXACBywFV61NkDLtBmQ/64/2tA
- 7HX1OIBvQAyQuZ2FNPos7UvgNXjFoU2gks
-X-Gm-Gg: AYBFou2634mXhLR2UAjbIbtPwAkLR7+3OSSNkpX6zv04Fu085zqIe6dEBdI5tVtwzgN
- RgmEzwZeZstjSmZCUadu1TyZBStYH71S2WtrynHohSHmmtrGHCWIWKGEetoWp4NTY2Yi23xjt88
- AFFjCCG9iWLxoLPr1iZPJJJmjtcXJsEyKc/dPy1GdJXZxdXe+fMWY8yLHBOmIfyNtKE9Aa0b1pZ
- SIAN9UTfsSWiENSAQ==
-X-Received: by 2002:a05:6808:2389:b0:4f6:5279:5c89 with SMTP id
- 5614622812f47-53cd20a4287mr8929130b6e.47.1792506028279; 
- Tue, 20 Oct 2026 07:20:28 -0700 (PDT)
-X-Received: by 2002:a05:6808:2389:b0:4f6:5279:5c89 with SMTP id
- 5614622812f47-53cd20a4287mr8929098b6e.47.1792506027758; Tue, 20 Oct 2026
- 07:20:27 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792506196; x=1793110996;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PhEtv1OD731M8BFH8OVnS47WdL7/GHTXLfD8WW8QLTs=;
+ b=JSDpggr9GhXaKlgqCVXQcU53aZEGJUxrvIyTkGYCgAFlEHE2+D9gSt9fmYR9to12m6
+ FJbEPkFIT9XSOSkqPFt8W0xHeKNwjebiaMZEJYvX3r7+5XUdzqzOmh5w6warP3RQ9k70
+ +CElXnlvKJQVxvKULVlfAcgRQA7lWsxU4TsYQayvhO1obEujVap/GPs3z3O26iiao+1t
+ /fxdaILEosc7xZji6SfAOFdUqsHfr8O9FZbKsKh2/Ome+AEQ/YZYlhhJt8/bewHhyB96
+ 6ec/tvtTfSNkgWH7O2lFYFPaUBIgAzZqrgX35UitH4f+UW6vc+rkIdOnqsHbU71Nr2TB
+ X9Gg==
+X-Gm-Message-State: AFq9FYK4XjfGh3e0VfvpC5LCR23cnws9lshuHTM6d6iB6Vu4vcoDlpie
+ H4ZgzQe3V4wxvKYdtihXGn41sWHobdlp+IVSvqnEqNNpjkiIEdA8ShAbnn86FoFOCJha9OY2nEm
+ gYJkQxoI=
+X-Gm-Gg: AYBFou3ET3xpJIz5gZ/9sRkX3q9C7cjl7B4Ky79Vgg+Cd2Ga9AuPdAYz0uhWaNNYqKF
+ AmzGB3CwEn7xfH0LfdR4BWdVM4IUbQGjNjamNTUraCdTRoYGOpyPSWY08Y2pgjAIZPCpxx5wFqs
+ LpURi0DM46vV1/Bn+CecnatKy6nGCV+af58sJvZbN/dm/xtf5sZuyB7GofraVbdrSnLsbLvpho5
+ +A5eKPWmLdkztpRqUTI6ZUM3o27GUFvnwepzx9gxqyWeXr1F5NOZA9oU83T8trjQkxQPiiTUSLc
+ /CZEmGNSqj8FD9Ir0vGN4L1JXrm3DG3I/V02t0eHTrWcyhRQ5K0phM14AbgZemZuakcpiUxXitL
+ xKkR4ti/n2m0iPubPqLN24JS25lXQhmplLNHjADTugnSzU7u0GwyzFT6psXkAm00X9Rq9+cUEOl
+ 0IxiqJCX1YGZAExkqVwuIsn1hkMwxXEoUxm72D80cFaVfbHzcVnu1TpBQixdXETEe8MmaNCB/Mr
+ pZ1hZ5IARnabfsOV0Lapwpig/+6YniPnU9zrx3nhbWx5doFXfw7NIytPFePAerYGgkOti/9sKW2
+ 5AY=
+X-Received: by 2002:a05:6000:2982:10b0:48d:fd48:86c0 with SMTP id
+ ffacd0b85a97d-48e07fb83e1mr16747041f8f.47.1792506195751; 
+ Tue, 20 Oct 2026 07:23:15 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e1d82dec7sm6380907f8f.46.2026.10.20.07.23.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Oct 2026 07:23:11 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>
+Subject: [PATCH] linux-user/loongarch64: In extframe_alloc,
+ align before subtracting sctx_info size
+Date: Tue, 20 Oct 2026 15:23:10 +0100
+Message-ID: <20261020142310.3860421-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261020015154.3600098-1-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261020015154.3600098-1-brian.cain@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Tue, 20 Oct 2026 09:20:16 -0500
-X-Gm-Features: AclHuK-Uha5D0jAsPWWclPzFFdSd0bhPkQj-ntFB6PXG8rV2GrhVO6q0mse1HTA
-Message-ID: <CAJ+KCYN-W5tk_ccbvRTHnuGiFYfonQRE8kU-S9S3LXqLDtDQkg@mail.gmail.com>
-Subject: Re: [PATCH v2] target/hexagon: fix allocframe FRAMEKEY scrambling
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Alessandro Di Federico <ale@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: IqlMMCs9S08sGnbt7VU0nLK403Dtvu_P
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA1NyBTYWx0ZWRfXwDktHXOqNzpQ
- 9tWRsaMV6/qIEDzpezkq/2/I8QaqcNiIS2XlqbDBne+2eBllinnMwhuRWBWoTSmOrZWzmx9wNbN
- wL9GjBpM4WGr6rei9/q1BMGLDxDTuKsq3Eg9xeMkyaVr3hHIsqZksKqoQHIMoTFOKgN8dg54m6p
- wLFIcwT1DYImffKKNxye0zn/2uWP/te7APnkt2VYumhaCDYrxCev4YxQwkcbdzXt584NXeCv8c2
- vfpiict9EYLhr9jqyDqK/HFcd52FR8S+1H7LLs+v0idJ3nEkUJwjQDBhevdJin+ztWDORfxSBoG
- 5lo5EbgsPBZvLxBD1nP6Ipv0J5y5HJQlBk+EJE5XjSrHxonI6/lR/hm08Z3oJRPEFT1Il1R7syj
- VtX332c27yVRiaXA6Vj2MnJ/phxtpCn7WuZmGyCINDg+PQgNl9vgYT4jIFgIzxS4jXl128DbG4t
- iG40ShaQlZrq3DQJ73w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA1NyBTYWx0ZWRfX/yK8lbD8HxfF
- A76wcVbWtSd/YyvY9QsVKtPXfIfbWEddQv7nnc7nJK8sYUKP5t1SgA+emHfppEht0Ge4JzywvOz
- NaI0YIvHV58B7FQ5mhkixdifltP1fMo=
-X-Authority-Analysis: v=2.4 cv=LpcHWXdc c=1 sm=1 tr=0 ts=6ad778ad cx=c_pps
- a=+3WqYijBVYhDct2f5Fivkw==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8 a=EaiV291W8dNeE7VNLDEA:9
- a=QEXdDO2ut3YA:10 a=eYe2g0i6gJ5uXG_o6N4q:22
-X-Proofpoint-GUID: IqlMMCs9S08sGnbt7VU0nLK403Dtvu_P
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_02,2026-10-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610200057
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,39 +99,77 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Oct 19, 2026 at 8:51=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> The architecture scrambles only the LR word of the {FP, LR} frame that
-> allocframe stores.  With the idef parser enabled, fFRAME_SCRAMBLE built
-> the XOR key with FRAMEKEY in both halves of the 64-bit value, so the
-> stored FP was scrambled as well.
->
-> deallocframe is also parser-generated and applies the same incorrect
-> transform a second time, which masks the error.  dealloc_return uses the
-> hand-written TCG implementation that correctly descrambles only LR, so
-> it leaves FP corrupt when returning from a frame allocated by the parser.
->
-> Add a regression test that sets a nonzero FRAMEKEY, allocates a frame,
-> and returns through dealloc_return to validate the restored FP.
->
-> Uncovered by testing some boot images using QuRT.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/idef-parser/parser-helpers.c |  2 +-
->  tests/tcg/hexagon/framekey.c                | 54 +++++++++++++++++++++
->  tests/tcg/hexagon/meson.build               |  1 +
->  3 files changed, 56 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/hexagon/framekey.c
->
+In extframe_alloc() we allocate space on the guest stack for a
+context struct, which consists of a target_sctx_info plus a more
+specific struct such as target_lasx_context.  The specific struct may
+have a higher alignment requirement than the basic target_sctx_info.
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+The Linux kernel code for this is in arch/loongarch/kernel/signal.c
+in extframe_alloc():
+
+       unsigned long new_base = base - size;
+
+       new_base = round_down(new_base, (align < 16 ? 16 : align));
+       new_base -= sizeof(struct sctx_info);
+
+and it first adjusts the base (SP) address down by the size of the
+specific struct, then rounds that down to provide the required
+alignment, and finally subtracts the size of the sctx_info.
+
+QEMU's version does this in the wrong order, subtracting both the
+specific struct size and the sctx_info size before rounding down for
+alignment.  This means that for the target_lasx_context which needs
+32-alignment, we instead give the start of sctx_info 32-alignment,
+which (since that is 16 bytes long) means that the
+target_lasx_context is only 16-aligned.
+
+This manifests as a failure in the TCG tests such as
+loongarch64-linux-user-signals.test if you build with the clang
+sanitizers enabled:
+
+../../linux-user/loongarch64/signal.c:182:13: runtime error: member access within misaligned address 0x7dc793950b90 for type 'struct target_lasx_context', which requires 32 byte alignment
+0x7dc793950b90: note: pointer points here
+ 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00
+              ^
+    #0 0x57216113d881 in setup_sigframe /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:182:13
+    #1 0x57216113d881 in setup_rt_frame /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:389:5
+    #2 0x5721612a5041 in handle_pending_signal /home/pm215/qemu/build/clang/../../linux-user/signal.c:1349:9
+    #3 0x5721612a46ef in process_pending_signals /home/pm215/qemu/build/clang/../../linux-user/signal.c:1401:17
+    #4 0x57216113baa3 in cpu_loop /home/pm215/qemu/build/clang/../../linux-user/loongarch64/cpu_loop.c:121:9
+
+Correct setup_extcontext() to match the order the kernel does it.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9d5cd6587a70d613 ("linux-user: Add LoongArch signal support")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ linux-user/loongarch64/signal.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/linux-user/loongarch64/signal.c b/linux-user/loongarch64/signal.c
+index eff75bcdc86..04015e06fda 100644
+--- a/linux-user/loongarch64/signal.c
++++ b/linux-user/loongarch64/signal.c
+@@ -111,9 +111,10 @@ static abi_ptr extframe_alloc(struct extctx_layout *extctx,
+ {
+     abi_ptr sp = orig_sp;
+ 
+-    sp -= sizeof(struct target_sctx_info) + size;
++    sp -= size;
+     align = MAX(align, CONTEXT_INFO_ALIGN);
+     sp = ROUND_DOWN(sp, align);
++    sp -= sizeof(struct target_sctx_info);
+     sctx->gaddr = sp;
+ 
+     size = orig_sp - sp;
+-- 
+2.43.0
+
 
