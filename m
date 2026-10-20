@@ -1,70 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069AC606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073FC606A31A
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 12:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=KdFifvu5
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=Eku5XKVc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ8tD-00077e-36; Tue, 20 Oct 2026 08:24:23 -0400
+	id 1xJ8t9-00077Z-Rh; Tue, 20 Oct 2026 08:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3aF3XagoKCt0RS9MKDXIGTFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--stanleyjhu.bounces.google.com>)
- id 1xJ8t6-000774-07
+ <3Zl3XagoKCtsPQ7KIBVGERDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--stanleyjhu.bounces.google.com>)
+ id 1xJ8t4-00076u-7F
  for qemu-devel@nongnu.org; Tue, 20 Oct 2026 08:24:16 -0400
-Received: from mail-pl1-x646.google.com ([2607:f8b0:4864:20::646])
+Received: from mail-pf1-x446.google.com ([2607:f8b0:4864:20::446])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3aF3XagoKCt0RS9MKDXIGTFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--stanleyjhu.bounces.google.com>)
- id 1xJ8t3-0003wU-Vs
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 08:24:15 -0400
-Received: by mail-pl1-x646.google.com with SMTP id
- d9443c01a7336-2e869e00005so35429405ad.2
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 05:24:09 -0700 (PDT)
+ <3Zl3XagoKCtsPQ7KIBVGERDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--stanleyjhu.bounces.google.com>)
+ id 1xJ8t0-0003wL-Eb
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 08:24:11 -0400
+Received: by mail-pf1-x446.google.com with SMTP id
+ d2e1a72fcca58-89fb6a45c48so2707778b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 05:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792499049; x=1793103849; darn=nongnu.org;
+ d=google.com; s=20251104; t=1792499046; x=1793103846; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
  :content-type; bh=jIEy5cT5mmkkVcGKdpbeH8K331ZFV/0IWVEdNWVBdcc=;
- b=KdFifvu5P3t9nqZACED+plXDjUXoE13tb6ghqmsmDykhaUsNTiKbsbbtCXCs+jkv/u
- 8qlPm/Fdwg9z8dykVexnpnQ9E03Y7gwADKP5QBiSi7g2RzgPLipKXNpnXcwilZWUit6a
- +eNEcarUsdv1PWoGb351vjUWuFNTIphR2b74rKQ+2o7kfOJLPtE8g+zD0CyDywAib42t
- 3B2GIx1D6uVPUOGmfdCUUkp5o1YZ243APb6mC7u/Nw/jHd2Ct4R2o0aJ8+pFb6DxjxE+
- yeD7S8pM3w/Gs+5AbmMU8ZW+7sr6eisBlCTZ7DaQNwuyrvtWPnLmnzLIuImNA8rnY4iF
- ekeg==
+ b=Eku5XKVcTXZmcC1vcEa6SSNM29rkx9wkII3nHs4k7L7p7PdlBnp0Ul8J1KDbXfs9YD
+ viUUaKYh1z2y/zInyM97U1OZRs9qCglBeRgyIWAgdKHDuE8ESnNyu+Ne/723qNNSaPt+
+ q0uisZwbwAlDe6cewZnWWQKmdjTQrfBAqpbFxIHI4SKLQNpm07b+Y2sa9CPzqjwgIKUP
+ ILsApVo3VaiuGqFzCc49M4ioiokvm4BTeaSHm2/CX8gVoxWL6siUZwS/l02ZUJ8Rtyok
+ Sldn8WuwlSUhifGuvkEcVWAvx8ylFZrR1NN2xs8DTZYHQf9gBgXDbnxl04W36fAsqaq8
+ lfVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792499049; x=1793103849;
+ d=1e100.net; s=20260707; t=1792499046; x=1793103846;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
  bh=jIEy5cT5mmkkVcGKdpbeH8K331ZFV/0IWVEdNWVBdcc=;
- b=LEvpVHM44S6MYJ4qdydyD4lUfiOWP2XGZb1uPpxPcPoHr/UlCFnFTMuGslx+ciH2ef
- EyWMzULE2f9zKsLoFuoZVAX/nZvVH2opfqr4zDu4A7veFJfyHiSqIWRveajrb1O3cnMW
- S3s6GKjpDkR6mPzW7un9bqA3UGqiysLDCWrzkSE5T3NhDTvuJ/1eghaSgs7y3l/YN/aj
- Ifup9LaOqm6Cl+dMjed/TOOR42f74j0HtpZI0OeqmbaO8OuQF5O9B9SBYf21tnoSjGLS
- 77QFJRjWfqAaZu0zDC8ydw/6SSONHwr3yItQaB3uSNxCe45ruOaHeunblV7SAkjPUC8/
- A5Qg==
-X-Gm-Message-State: AFq9FYIbNdp8RgmpYXy2XR2XIafOQnaZFc73yswfBW38b7TqMByLfO/D
- ne3dcoqrkSk1l6o67VGtNaVESW7hyUGIbC3FWy2OB18utjnBvUF7h+HyRi7jNeSWOWipYsDRYgx
- OaYgmabTaUaxfjIv1MyKyO++kETF8bn5eQh2gcYzxIh5FZ9J0tUVa+1aB/zr+3rAeampVEaKKzL
- ZX7NCJo+B2gGxFoaG1K7AILeZgoPA2zsrzeQ71aFLb1nfFxe6ZO8cxvFeL
-X-Received: from plblk15.prod.google.com ([2002:a17:903:8cf:b0:2e8:2364:2533])
+ b=vYFjClTLEciAxGiyXmxA3plzsmxSB8tBCG1UWoBnYIUlF437A2TuEVOlGNx60imt6v
+ D0R4NIAsUsRBtaJthTedaF/4lfgMXqVp27zP2pNVdlA2aA7eBoP6HJxxT5eoasg4F+vX
+ fs+0PUvs9uCLXo29PQzGO3F/dY/Bkuo4mrnzf6qMYLIk4kotV/l4gI5rcfzhfyobm4Er
+ zPaLS7ILQp7hYf9l8e7k1kqDNJ6XNs4srPRr6X4gyY2hj8GgTmLaKBQDKiYUMDcJ2sfg
+ WlhDQTJuBIevS0De3XtBer5V863DfOmWzyogIkp57KmkYg8cbTvTvzBFL4NptwLBTUKY
+ /a8w==
+X-Gm-Message-State: AFq9FYKebkmT2+h+xYep0R6Qcjd+Q25t286yI3GM1/wwv0Q/1B1o5QsJ
+ yNBP1DkoXFYhRElZ+FboKixZD7c0xr/KZCp+BEhqUxea6DmBaHiagdnKuL2sHvKxljFzsVAsNXC
+ B2dzc7FkSfq5/Tk9y+TNAcdVZ1FDwg7+GXyP9QOvCWvfBFUb8w5B0eCQseE8KuVlnnmTJvQcy8S
+ zsx8Mt7+NcWp/OG+z0u7b8qE7L6VwygHvMmaWNbBO9NHKZ9k7BGSeO7JRy
+X-Received: from pfnp16.prod.google.com ([2002:aa7:8610:0:b0:89f:ee93:28a6])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:4b08:b0:2e6:679:9e4 with SMTP id
- d9443c01a7336-2e9a7254108mr84433795ad.60.1792499048098; 
- Tue, 20 Oct 2026 05:24:08 -0700 (PDT)
-Date: Tue, 20 Oct 2026 20:24:04 +0800
-In-Reply-To: <20261020002112epcms2p30a1e8fd3b2c6a3de2ac533f98b7b6c1e@epcms2p3>
+ 2002:a05:6a00:a803:b0:89a:19ae:10e7 with SMTP id
+ d2e1a72fcca58-8a04ce2e2dfmr8649944b3a.42.1792499046102; 
+ Tue, 20 Oct 2026 05:24:06 -0700 (PDT)
+Date: Tue, 20 Oct 2026 20:24:03 +0800
+In-Reply-To: <20261020001920epcms2p4004ef6eaae9fd389e5fc91c104caf2c2@epcms2p4>
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
 References: <20261020001647epcms2p52cd58173164a43e252c33a3eb5935dc8@epcms2p5>
- <20261020002112epcms2p30a1e8fd3b2c6a3de2ac533f98b7b6c1e@epcms2p3>
+ <20261020001920epcms2p4004ef6eaae9fd389e5fc91c104caf2c2@epcms2p4>
 X-Mailer: git-send-email 2.56.0.212.g129ede20d9-goog
-Message-ID: <20261020122404.1107182-2-stanleyjhu@google.com>
-Subject: Re: [PATCH v3 5/6] hw/ufs: Support for Zoned UFS
+Message-ID: <20261020122404.1107182-1-stanleyjhu@google.com>
+Subject: Re: [PATCH v3 3/6] hw/ufs: Check the PRDT size against the transfer
+ length of the CDB
 From: Stanley Jhu <stanleyjhu@google.com>
 To: qemu-devel@nongnu.org, Daejun Park <daejun7.park@samsung.com>
 Cc: Jeuk Kim <jeuk20.kim@samsung.com>, farosas@suse.de, lvivier@redhat.com, 
@@ -72,9 +73,9 @@ Cc: Jeuk Kim <jeuk20.kim@samsung.com>, farosas@suse.de, lvivier@redhat.com,
  qemu-block@nongnu.org, pierrick.bouvier@oss.qualcomm.com, 
  Keoseong Park <keosung.park@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::646;
- envelope-from=3aF3XagoKCt0RS9MKDXIGTFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--stanleyjhu.bounces.google.com;
- helo=mail-pl1-x646.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::446;
+ envelope-from=3Zl3XagoKCtsPQ7KIBVGERDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pf1-x446.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
