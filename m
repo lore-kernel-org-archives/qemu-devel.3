@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F18606A319
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1507606A325
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=S9z9fb03
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZYuBF6jL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7Pj-0005AJ-Gb; Tue, 20 Oct 2026 06:49:51 -0400
+	id 1xJ7QW-0007pB-KR; Tue, 20 Oct 2026 06:50:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Nk-0001h3-Ix
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xJ7PH-000456-MI
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Ni-0005NL-VV
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:47:48 -0400
+ id 1xJ7PG-0005kZ-0y
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:49:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493266;
+ s=mimecast20190719; t=1792493361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+mUlmiLA0IUJrEFhhdtqFL7MoWyX2aJUgEr0fLN0OLI=;
- b=S9z9fb038lLKmzVz3IScWE/4NIpec9ba0bbTuGi4m7v/nbzimE2UHfpBZ0OVpZyIO0V9zE
- sfl8loTR3qCDXbtyuHV4z88Ofvo5PfDtBAIkN1CjYwc8qVBpIDNfASgxtgH+B9KnXBF1k8
- veb5BLl8kA4kmedpL6eJB3tu/xtZTiY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=R8vVLHsjEWyiM3GyLmHOx9f7QvIPqbFYRpW6VNEtrF4=;
+ b=ZYuBF6jLQTCgDm/JDMLrUU84MFlL1Kx+qq1MilsNbxiaFF5YO70+Xqb6bsWfg38M0LXFia
+ cKq6lPwZykHdKAEUrQfyMT/Tlewn/jTk9QQcDnjhAOKS+0DTZVpqSwE9Y4xsEoA2YtlEl4
+ X+USeZqNLgR8vtoOpsKZC5iw5x66S20=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-b50LkXhBNAOr4KDZgzOCJQ-1; Tue,
- 20 Oct 2026 06:47:41 -0400
-X-MC-Unique: b50LkXhBNAOr4KDZgzOCJQ-1
-X-Mimecast-MFC-AGG-ID: b50LkXhBNAOr4KDZgzOCJQ_1792493257
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-LCXPFJilNDyc21HBnDLkMg-1; Tue,
+ 20 Oct 2026 10:49:15 +0000
+X-MC-Unique: LCXPFJilNDyc21HBnDLkMg-1
+X-Mimecast-MFC-AGG-ID: LCXPFJilNDyc21HBnDLkMg_1792493351
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0944C1955F10; Tue, 20 Oct 2026 10:47:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E0361955BD4; Tue, 20 Oct 2026 10:49:11 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2487E418; Tue, 20 Oct 2026 10:47:34 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 51BBB18002B1; Tue, 20 Oct 2026 10:49:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:45:32 +0400
-Subject: [PATCH v7 15/65] qom: add object_property_set_default_enum()
+Date: Tue, 20 Oct 2026 14:45:50 +0400
+Subject: [PATCH v7 33/65] hw/ppc/spapr_caps: fix property type name
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-15-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-33-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -129,25 +129,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1741;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=878;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bT9PbeYHomyeIGAcVfTDM+lJI5Y2hBOOffhp2f1n7bs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZY3cZceXMTAsDTPVPQLUPiFXhCtfGOTuUzE
- ex7dEME5rOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWAAKCRDa6OEJdZac
- 5YB4D/9GPjvfJ9QnS3NS7uzoH3zuMz6cgmZWUWiCGV7tsWnNbbIfmXnGwpWDwpNzL9cRsohPRiM
- Tt8mSTGA/sJmszkK+oQShJ63FCmfW5pbd7ruMCtTStlRVh8rCjUWyx0b9IGf9lj7a1sXuaMjRiZ
- RmIstsYrcvq9fJ0J5SM1RTodk1Qvgn2pQe7pG/U8OW8Myg6fto5tvml4IN5pYuE4YB/AteIWUfl
- cy3Y6JisAPLbkZWEjeehnRqpYjs8lJcEc0jd6jT5Ajm3DFQFLMkmckRPpjNofoDbeN1tQ7K0s98
- vwayy8xoutwUgsV9wX6qCvRBLY1+DpxNBTHm+xV32yF2estcn1ixmHngJQMaNbWwx3sJ0FueH2i
- nHGW2/UH0XkgcegNOKOcSppusTIisYEHOeK2W37dK7A4gv7fgemaMBfKADWuc6jN/xKP4O2sAOs
- EPPKK+R1nyzBdIIsDWdYkhnmUpz08PjAX7t/9zIyQvJy6HeZMYEvqH92Dv9Aqm0tKTwJeHGv8Mx
- G+jFxLb6K1GFyZQ9S6izdwx5JWqfiEfKijUzBP4iLHpB4BirgMYkk/bqayFVYZSlxI7iVj9lGda
- LEl9RmhNncJu8lNAZW9bmWSGo4Vlr/rpl4jKvIuRbcz2N62kMeZEEXIRFPUNBGeJNDW8b+FYyQK
- eIre7G+lNeX5Okw==
+ bh=Qq7OSQxtuwlCseGf35wegvnM5f+EnUrGWd4RRhnAzxw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZaWeTAuqQ+RlnWisH2RQ0zLCOkC+4rdcGXQ
+ QZYeC6VHiyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWgAKCRDa6OEJdZac
+ 5SEMD/9w84ouUqqiCZ64ZylCbaeUJxtrtqWrrPUGFcC4JDbVpUU7Nct7HZK5iaBsDnqrZURBNr/
+ 8RtOPyRuf3Q4/lguHW+RKtJ6Jw6sS9784J67RNrbD/EUHDIUOt7QzUVNwflsohDZNJOI9y+5Jnm
+ kQo6SsduyW19qi63LcidGWcAlV/Xhkp7CQCbfFhhsWCCOZImzdzQNYXU5o48Xw0oHdXg8nKkp8o
+ CHqOboRWcyM8r62/Gw1pH4wfJ4FTNQ6cZE+4d9Vig+z5pqWha7vzQllfk7aMxXAmqkXS/vARQoM
+ UXUUZp/aZHyRnnikACNHPNcdFMpXi+1ZumV++RqFqAMt4YSox+qwQ7UscrjDUjEIb5XAOUktB5B
+ VPkm6qZmiK9o23zlZPnbrcOd6Cc/oVEoxtzF/5aGWNPq4xUErMRaj6oZ1O0g3E2Sp17WjDScFl+
+ 0lzVm3f2Q6znwnFis+4sg7ZlVUeCQv4+0yNa6+YCuJUlOi9rSfQRe9bHmQZvOvqRYdxKhXzWeUP
+ px5zlcXZSRP9vaSQKS4s9yZuJXZyk9Fm+4Tp9UD7LAkNEdD0HnXM4AvsfFojISVCJV9Kog3R+f0
+ PepoSJr4XZ308R58TgTJ4NL5LlAsuYnr0Pwm+XPXvg1N8aoTb4MS7gKitj+utet5HHJ0ws1tClu
+ dh4Iln1OvPNjzpQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
@@ -155,8 +155,7 @@ X-Spam_score: 0.9
 X-Spam_bar: /
 X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -176,55 +175,28 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A simple helper to set the default enum value from the integer value.
+The getter/setter use visit_type_size(). Fix the type name mismatch.
 
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qom/object.h | 9 +++++++++
- qom/object.c         | 9 +++++++++
- 2 files changed, 18 insertions(+)
+ hw/ppc/spapr_caps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index e9b380462ded..2a5723c555e9 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1260,6 +1260,15 @@ void object_property_set_default_bool(ObjectProperty *prop, bool value);
-  */
- void object_property_set_default_str(ObjectProperty *prop, const char *value);
- 
-+/**
-+ * object_property_set_default_enum:
-+ * @prop: the property to set
-+ * @value: the value to be written to the property
-+ *
-+ * Set the property default value.
-+ */
-+void object_property_set_default_enum(ObjectProperty *prop, int value);
-+
- /**
-  * object_property_set_default_list:
-  * @prop: the property to set
-diff --git a/qom/object.c b/qom/object.c
-index c34b47312f29..1d09315b328b 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1719,6 +1719,15 @@ void object_property_set_default_str(ObjectProperty *prop, const char *value)
-     object_property_set_default(prop, QOBJECT(qstring_from_str(value)));
- }
- 
-+void object_property_set_default_enum(ObjectProperty *prop, int value)
-+{
-+    assert(prop && prop->qapi_type && prop->qapi_type->lookup);
-+
-+    object_property_set_default(prop, QOBJECT(qstring_from_str(
-+        qapi_enum_lookup(prop->qapi_type->lookup, value)
-+    )));
-+}
-+
- void object_property_set_default_list(ObjectProperty *prop)
- {
-     object_property_set_default(prop, QOBJECT(qlist_new()));
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index 0d659e9b0251..103b17364feb 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -784,7 +784,7 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+         .index = SPAPR_CAP_HPT_MAXPAGESIZE,
+         .get = spapr_cap_get_pagesize,
+         .set = spapr_cap_set_pagesize,
+-        .type = "int",
++        .type = "size",
+         .apply = cap_hpt_maxpagesize_apply,
+         .cpu_apply = cap_hpt_maxpagesize_cpu_apply,
+     },
 
 -- 
 2.56.0.116.g6de20f6092dc
