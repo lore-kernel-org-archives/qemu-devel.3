@@ -1,94 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB07606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2E9606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 13:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HILOYhc/
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=TWN1OkQi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJA8f-0007rr-Uu; Tue, 20 Oct 2026 09:44:25 -0400
+	id 1xJA9W-0007yt-OW; Tue, 20 Oct 2026 09:45:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJA8e-0007rh-AY
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:44:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJA8c-0004qR-DA
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:44:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792503860;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d6NIbjAvP7jhZn37m4s318lrpH+kKKf6+ryKUTfP8XM=;
- b=HILOYhc/7Gmptxj7d4zO8Ae/hVPh3SV17/RobRw8XK99hSJzGlKXedO4t9jvd9QWQE69z+
- nHUeIOdGdEsnzN/ZrS2rh6y1H1GOTB29UFgc7nWSdQ22QqqNzH+5OT1eKi8HCAtVE0dvQu
- VYa6g68iXRpONKWkuPH3wTVoE/uGWMk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-s0wrKp8FMQi8g51WQVRXqA-1; Tue,
- 20 Oct 2026 13:44:19 +0000
-X-MC-Unique: s0wrKp8FMQi8g51WQVRXqA-1
-X-Mimecast-MFC-AGG-ID: s0wrKp8FMQi8g51WQVRXqA_1792503858
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3266B18007F5; Tue, 20 Oct 2026 13:44:18 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 254261800347; Tue, 20 Oct 2026 13:44:16 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJA9U-0007yI-Sb
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:45:16 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJA9S-00055E-PO
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 09:45:16 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-8aea7b7ca0cso23986277b3.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 06:45:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792503913; cv=none;
+ d=google.com; s=arc-20260327;
+ b=eN950/Ckv0P7Zei6AK2hS/ck4cTZuhXWiGbybL0nmBbojcjGtsoae2LBfhogAEz1iE
+ B6jN8cHUeioaGa/9VfpUwJEeOBwGk5fDf2+q3eOBx6F18VgaFMHoFRvjfEwo7wKhJJN9
+ 1VyFGPTx16UvidvGu/Wkib5sRklk362iJ8JUxI4ecIGP/+em8fwC6pUvmzNvnYDRFZFB
+ 61xI2uV1Tl6F5hvuuwY1XcIhBTJyS4/K6DNfMbIIMGU4JG5Z/MJMC/dLey1Ovg5tPXEP
+ Yn0t+tU3OrZ64Zuh07b7fwMY3agR80jKOWo56QmDY1UaCX+nKf2MZMJW3sPcWHjLaLpV
+ 6WGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
+ fh=oraPjQU+yAe2h/NZP3Xc/cKBl+/fAxl4XlrKwLshaqM=;
+ b=YXhysTnOkKWbE5fjI6eoxnR22IntqYAVG9Rzf3V74WaijDr17N5rYsZ9VfCVoHKWup
+ pp13ypR+SvR+5inRt2lLpLiLEHbJX4w+KvsHQ9aWSWT2Tl1bCAUuiez6Ajc1dt05Pz3J
+ dUJ6FyOUPoXl8/lHM7Js1WPjA9gFG86QeFL0Uy3s1W4I42LdT+qUm6rvdEWsLlV4ml+r
+ 8mGT5B7nQ4OOzaCOq5WUEsF+m/y+GR/s+3+SFXGCJVMyohMeqzGsDKMYruZfQhMx33Ck
+ 3cXqZH0KqHWM1kSZ1ZWa7D1xzLWU78kbpeSttWhRxHL8b8TG92VVav8rQj7xfja5Y/F0
+ louQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792503913; x=1793108713; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
+ b=TWN1OkQiniHj6wY7+TFbTDOV+gTHdOp0AD4Yo77kJCY7sHsgg5I4yvmmUuZvsYkMmq
+ VNf5lPPth/HfRbWGvooKt/5nriituXKVwQZKnidJHk8JSd4zE/Cov0GxX9hOY/T1rch2
+ lIaYV0uZShmHHHtWllGHmu5g+k1peLeWUBKZFGeeE+NqKwcLdhUXvM+DqRmUs0NMWNaf
+ arRlXB7Di9vgRAlM6LJobuIhlecDlCIBGheeD/T5wHDTgJMhwtRqJ+xUvOd1T/Q28zE7
+ Eb18X0i8kttqjG93hjoVidXvnoSTZLQKvPTUWpQakFj6MBL66VgPJ9M7VxqN7AU8wEWR
+ CGCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792503913; x=1793108713;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=jtWeFmERuTIWiGub5eckixUA1LB8Wjo5yRV72Te/LnA=;
+ b=B/1E2+BZHw7+Ff+0janenLZBriEb1ybf9jCmwNJmTevfx7DpOPPnsowEb7RRU1n3Yu
+ FhTNCsASe3VpyquJPcwUwOfnnti4EJd7/qET5Qo6mL24LDMquEmA503V65OCQIc0ePgb
+ S4fLDns5vgsBI8U2Vef6gqEfvDESf3oDNOGxWem7hGXMaCrzw5YVM4z4dLuxKF68Dr7C
+ IzWB5oIgMnMkOMHwjnQzi5BH2sXm0d16PN/jkvAkfBcbz+f60PMNKKQGAKSp+06ElCcy
+ xOL/LrZBcjLk2AEN6yS34SartUNIZXh8AfwR0PP2l1gLE2I0XLma6pwyITDmgIpX32Fr
+ CIlw==
+X-Gm-Message-State: AFq9FYIDvaNwwOif7uMvAxBMmiZFa8FR6fIXjb/WjGTHcNUgjSaYsSUu
+ eY3hWZp4X/1aRuGQjw8/wKGxmJbKL1OWZJD7bVbKOlMBkFSKBivv/VMD9jU7UAWGWQczsXzDo95
+ sxVvomEgwNytpAXabSrc1MaHTEKLwcncu1r/Uz8EUyA==
+X-Gm-Gg: AYBFou3LHVuuqWwFAy05/244xO4guo5T9q38GsS+NgTOvZu+WPPhHhDEF9QIBZp5vx3
+ +e4Jy36valKyNmJo9BtnJOCF7QrR1jccDYh9ka9MzEbP1Bz50BM8y0Ze1YjKIoeo4iDeIHe8UHO
+ wflF4ij2ari8gWug4JygenfywFCAVDIJoLgjQrRLIQVgBXH43qDXD224zycyvjogGG2HOwZHzEl
+ m3QhQQ0Zb1EIJ/Cvs62aFCLB/bbzlLgtjV7ejYr4PxhraKpsYMXJRPt2yUc4XqsY976cp2M20yO
+ kxwOD77QqPm7gmvDck1wKmSmbryAIhSbLJjbkTV6u7whe4cd1uKicP34HlQVVWUVhiPOnX6Hu/d
+ kWJZj2LE36OobBfrSBUByYeBM1cLVZMSRKuhcFBmO
+X-Received: by 2002:a05:690c:112:b0:873:5bd1:98c9 with SMTP id
+ 00721157ae682-8b0f21d095amr35358157b3.59.1792503913032; Tue, 20 Oct 2026
+ 06:45:13 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/2] io: make sure we don't close stdio fds
-From: marcandre.lureau@redhat.com
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
-References: <20261017-fix-stdio-close-v3-0-cfff0122a2a4@gmail.com>
-Date: Tue, 20 Oct 2026 17:44:13 +0400
-Message-Id: <179250385328.3755659.11097847611161323555.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=468;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=eFaQBlEezOvJ/6PkEVxF7jn5eVA9d1em6sAIC4rghrE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq13At1+KqqNDIvBPjxdVvrLh4Tlo9JrGNtlmI5
- y9ihu4h5K2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdwLQAKCRDa6OEJdZac
- 5WWbD/9Db0NZpNl0HT0eE5qsh4fjnGVlRsCpWm+IQrH4CtBf44kcSxS2F7L8qQUKuJk+QBOY4z7
- uUrvDD0OJdoc0/mJGHGToJnSv5hrbqx88LU3nAsEe5YrwHyNVDzHJgq6Ttx06GtpEczqhd+bS5/
- M3yIVDhibj9vSe9kMhszwCPhQxDdMYLiX/JDib5tqk3cVSTNbnpodEGv/O1/Whx+corzLh4esc7
- NnVan3PILC8IlTEIHojs4wUtqyP3e8EsmI0QOBrHfre7vxXT2SZzB7w3ARtLMmtlsbV7kL3qn15
- A5lrhrAuluD3ujAw8CxVjBGsitYlgA6yoKuFQJr9xnY9/IDjsYNgzBVZ8IWKnTWs53/10kmsdzF
- tZ8YY2UIqgOiEafhVv5baOwS/e16bHMCJHOcHItJV3zWecjX0DttXCQ8LcYmGpDh5v73YKHsJy+
- I89hhrVb7r5Fcil3MZ0yPXfSnjIn4JURUS9XPhHNA2SVZVntHH4+RGXgVVWKYyuSnXqOj7vis0t
- yXFvZu+kyqB1gDuxI2SZM4DkPhZCJATe3092yh3UhNGLa74R04xkaUVbbdLhBFkvawbG7AEIZ/d
- aArlz8B2RWhY1h3LUfNryOhyD02bzxaoCjiNfLSQzAPov5vki8721R5pgMUUU7qE3aXHxlA8+hk
- lT/31cigsqnV/2g==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20260806213640.699905-1-brian.cain@oss.qualcomm.com>
+ <20260806213640.699905-3-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260806213640.699905-3-brian.cain@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 Oct 2026 14:45:00 +0100
+X-Gm-Features: AclHuK_vYBtJHMZ9a4qD8FriVhrufuPjZfTsGR7wU2WuEQK4dvnUbb9bvMwwgaE
+Message-ID: <CAFEAcA8CYaJ=jAyc29RSdUMD_SWquJqz4fNQyW7oCrWithZhYA@mail.gmail.com>
+Subject: Re: [PULL 2/3] tests/tcg/hexagon: add slot-assignment tests
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,27 +113,79 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sat, 17 Oct 2026 01:09:07 +0200, Filip Hejsek <filip.hejsek@gmail.com> wrote:
-> io: make sure we don't close stdio fds
-> 
-> The stdio chardev currently closes the stdin and stdout fds when it is
-> destroyed. This means that, assuming char0 is a stdio chardev, invoking
-> the HMP command
-> 
->     chardev-change char0 null
-> 
-> [...]
+On Thu, 6 Aug 2026 at 22:37, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>
+> valid-slots: packets that legally share a slot and were wrongly
+> rejected before the fix (load and transfer, load encoded first;
+> dczeroa packed last with three transfers).
+>
+> invalid-slots: unassignable packets that must still be rejected:
+> store + duplex, load + indirect jump, three logical ops competing for
+> slots 2 and 3, and five ops for four slots.
+>
+> Reviewed-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  tests/tcg/hexagon/invalid-slots.c | 72 +++++++++++++++++++++++++++++++
+>  tests/tcg/hexagon/valid-slots.c   | 62 ++++++++++++++++++++++++++
+>  tests/tcg/hexagon/Makefile.target |  1 +
+>  3 files changed, 135 insertions(+)
+>  create mode 100644 tests/tcg/hexagon/valid-slots.c
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi; if you build QEMU with the clang sanitizer enabled
+("--enable-ubsan --cc=clang --cxx=clang++") then the invalid-slots
+test added here results in the hexagon decoder trying to shift
+by -1, which is UB:
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+$ UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
+./build/clang/qemu-hexagon
+./build/clang/tests/tcg/hexagon-linux-user-invalid-slots.test
+../../target/hexagon/decode.c:603:35: runtime error: shift exponent -1
+is negative
+    #0 0x555695dc2392 in decode_set_slot_number
+/home/pm215/qemu/build/clang/../../target/hexagon/decode.c:603:35
+    #1 0x555695dc2392 in decode_packet
+/home/pm215/qemu/build/clang/../../target/hexagon/decode.c:783:14
+    #2 0x5556959801e7 in decode_and_translate_packet
+/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1274:18
+    #3 0x55569597f927 in hexagon_tr_translate_packet
+/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1375:5
+    #4 0x5556958bda32 in translator_loop
+/home/pm215/qemu/build/clang/../../accel/tcg/translator.c:216:9
+    #5 0x55569597ec72 in hexagon_translate_code
+/home/pm215/qemu/build/clang/../../target/hexagon/translate.c:1428:5
+    #6 0x5556958bca00 in setjmp_gen_code
+/home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:251:5
+    #7 0x5556958babd7 in tb_gen_code
+/home/pm215/qemu/build/clang/../../accel/tcg/translate-all.c:324:21
+    #8 0x55569589fbfc in cpu_exec_loop
+/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:973:22
+    #9 0x55569589e309 in cpu_exec_setjmp
+/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1019:12
+    #10 0x55569589e10d in cpu_exec
+/home/pm215/qemu/build/clang/../../accel/tcg/cpu-exec.c:1050:12
+    #11 0x555695977cdb in cpu_loop
+/home/pm215/qemu/build/clang/../../linux-user/hexagon/cpu_loop.c:38:18
+    #12 0x5556961fe1f5 in main
+/home/pm215/qemu/build/clang/../../linux-user/main.c:1010:5
+    #13 0x7c65f202a1c9 in __libc_start_call_main
+csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #14 0x7c65f202a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+    #15 0x55569582d294 in _start
+(/home/pm215/qemu/build/clang/qemu-hexagon+0x910294) (BuildId:
+d18c0fb84fd3431a52be6d831fc64fd2d0e00980)
 
+(This also shows up as "make check" failing in this config.)
+
+Could you have a look at what goes wrong here, please?
+
+thanks
+-- PMM
 
