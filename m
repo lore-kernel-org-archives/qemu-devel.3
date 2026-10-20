@@ -1,60 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5D7606A32D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268FB606A32F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 11:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XWLOffIq
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Kvj6Uhmx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJ7U9-0005DG-H4; Tue, 20 Oct 2026 06:54:25 -0400
+	id 1xJ7Q9-0006dW-7w; Tue, 20 Oct 2026 06:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Rx-0001Im-GC
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:09 -0400
+ id 1xJ7Oj-0003Dq-3O
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJ7Rv-0006jy-Ar
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:52:08 -0400
+ id 1xJ7Oh-0005bH-7l
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 06:48:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792493526;
+ s=mimecast20190719; t=1792493326;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=edIbxy8j0ZeLmK0JPM910tAFzYTrVmN4a79XoyzsTPs=;
- b=XWLOffIqp0dzfMN7npTE8ln70l0mHDaJQ4YaNJRInktXlCaBxNhmbyBVPhyAV6otDDtdZy
- SGBHj4GLBUSArH6Iom+X3eSUe1sm1Jj0316wi3U4uAgDVTXTIztlHtKwQV/ossAe8gzT6w
- DXMxUDvxjwkY5B0h7ZOJsOZASue9/7c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VsbaU0VdjEFE5/Kdiolu0QHc56Ub04+6AJsyszfha5Q=;
+ b=Kvj6Uhmx0CftacNi8fS11w2+s5+vYOuMOklkfQcL817okxj1BLEXQ5Wx0bxnDrs2S7y03u
+ /igaXAem0RanY67EA4+bRDbOFopm14PF8Is+FUroEJEjxZShXK7zfrGslsQ1kCajOGRwjm
+ flMBuzKO9F2N5mpB94gS69XuGdt0/A0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-UkF2cxSIP0KFpD-x2kfPug-1; Tue,
- 20 Oct 2026 10:52:03 +0000
-X-MC-Unique: UkF2cxSIP0KFpD-x2kfPug-1
-X-Mimecast-MFC-AGG-ID: UkF2cxSIP0KFpD-x2kfPug_1792493519
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-83--Z5Wuh_zPUyc0JzRRnv_JA-1; Tue,
+ 20 Oct 2026 06:48:42 -0400
+X-MC-Unique: -Z5Wuh_zPUyc0JzRRnv_JA-1
+X-Mimecast-MFC-AGG-ID: -Z5Wuh_zPUyc0JzRRnv_JA_1792493319
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 171B41955DE8; Tue, 20 Oct 2026 10:51:59 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15B921956076; Tue, 20 Oct 2026 10:48:39 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D26A65BC; Tue, 20 Oct 2026 10:51:55 +0000 (UTC)
+ id 1EFBA418; Tue, 20 Oct 2026 10:48:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 20 Oct 2026 14:46:21 +0400
-Subject: [PATCH v7 64/65] qom: use QAPITypeInfo in object_property_get_enum
+Date: Tue, 20 Oct 2026 14:45:44 +0400
+Subject: [PATCH v7 27/65] hostmem-file: convert OnOffAuto rom property to
+ QAPI-aware registration
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261020-qom-qapi-v7-64-431a86b02b58@redhat.com>
+Message-Id: <20261020-qom-qapi-v7-27-431a86b02b58@redhat.com>
 References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
 To: qemu-devel@nongnu.org
@@ -129,21 +130,21 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Yoshinori Sato <yoshinori.sato@nifty.com>, Jiri Pirko <jiri@resnulli.us>, 
  Eric Auger <eric.auger@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4777;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3017;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=btPOLigegMrUtE/H8gDPhCCZC+0Be3DpIj2amZiGpeM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZdBPk60N5wT01axiLdb48ZwuPjCejnM2ZCc
- 8PglQD+RAWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGXQAKCRDa6OEJdZac
- 5SPyEAC5HRZ0r0eZqxI5kzCsHrclz4H0Z1qTSRRBggURJDWP1KPYcglKwzX4001DDcIq+3FTVpq
- uqL6jJTS5vpJyJyR897eCp/+/txzLU8tlhsslIoDbOhlREexjvA38cJU7R22vQlvcx+DpICRHE3
- a5XvP5h0s1/Pyiwdap+iMevEvuEEcbH/jRuSHep2d8iVv7Koi8q0iUC8zZ9PuwSKBiXi/oILGfy
- aiMrs8f/RgP9W/MoV3ZQRoFzC+PDRjFuTVfcaA60kq0BkbXlZZqC8u7Z+II9Xx+mxD8jpqF0dvl
- YdxYl9iXw3cbjdx662K6DNPPTjQqlqch+lUyD9IDKGSOxwMVRZODMwFtKF8oOvp/VlJSjSI2dYp
- n/X+gSwpl4DPtL64HznEe7j1fcGEq0YFRHnDbDHbwuxtIa57jCuK6wDAdaarfxUiuLtPfX7zXKA
- 1mhzw7Xk53JCYfVRtyhDDwz68cwocztkSeDoHbr+rWIMtJWAgR3K0ZgRcwpuhUoaQpp7LtkUpd6
- SttTn4wc4MNuYc4Awpzamcf3DaIFaC+EQhFDU5i9gl+OPJb5rstVcuwsDzcleSXgUaDrqgSpCQo
- Bgm5lkNrnrlf7BG0h6WM3CgbBEadCmph3q1159HTgqfLA36QI7zt946mDEQrtiXWNDke3TZA+Wo
- l6wkFmd77J6ABag==
+ bh=iZFd9HvderJ8uRReytwVEg9V/BI0/W9et6yTV5n+0HQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq10ZaUi0I/HhTBoPEm8cGvUR2Ags/oP63+/IJC
+ B3aPbt5x/6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatdGWgAKCRDa6OEJdZac
+ 5SbrEACzpT4DA3aDgoPm1mkI7LWP4C1/KmFL4+/JVH+4dvDiHK2lfPUcj6g8+5ZAjiaZ7BNg5vr
+ GU3ywL52hlZ5JZCn41HMfti/ha4z983dNfIctpiaV9RJU+A22EtAvPLpDEcFPF9PfeB/aMB6a1h
+ 0Dpk/O8iKpIR0ww2sHYfJ7HC8jqBpBpc5BTWLONeOzWTk3OnFRU6R0c5BPcI6cENi7juVgxXrtZ
+ ispq5YrtGrp52pLe3Ewh7Z+QrKyA2oKxwo7jhh3PQ9MQf1Bv4H9XMKBZmivwnir/bT4wnDtabCG
+ Z3MBE8QRfPUHzLW7s8idRTcelPr99S0+ZteQGhagDNHrC6CSQMSUQPO7daBJj8bgI/gxraF66d0
+ ceIDBeRODFFyp397ZvOHRafc6G41UZt3Q09G/ONGcgNom+1IxZuqlJKhvb2/lhLdZMQFRPNkGAj
+ +EpBka/x64Ny38YdXyQE79VKzddpZZLDC1bVdR+/jm4r3s6ujtMANYlwZojYhpW6CGtB8RorWmI
+ BzUp4XLCDTQrGR4EZej7rnfAUKzkJ3+sMWrkIk59mZgmLJ5fXSxLqhwExH6OrIEp1ay3QZ15Bhp
+ MS3Wp8RSmuhgaHr6i15QnVDly1vb0u60cJvRjNcpvjIEC40XFnirrOV6Qw6AmT4lgBoJx/CvkS4
+ b2y0JppmjOhRU9g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
@@ -175,120 +176,82 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The typename parameter becomes a QAPITypeInfo pointer, and the
-validation compares prop->qapi_type against it instead of matching
-prop->type strings.
+Convert the rom OnOffAuto property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/machine-qmp-cmds.c      | 4 +++-
- include/qom/object.h            | 4 ++--
- qom/object.c                    | 8 ++++----
- tests/unit/check-qom-proplist.c | 6 +++---
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ backends/hostmem-file.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3fee45d568da..6b425baeb2da 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -18,6 +18,7 @@
- #include "qapi/qapi-commands-accelerator.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qobject/qobject.h"
+diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+index 7efecf71f565..7d4d52482966 100644
+--- a/backends/hostmem-file.c
++++ b/backends/hostmem-file.c
+@@ -19,7 +19,7 @@
+ #include "qom/object_interfaces.h"
+ #include "qom/object.h"
+ #include "qapi/visitor.h"
+-#include "qapi/qapi-visit-common.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
-@@ -252,7 +253,8 @@ static int query_memdev(Object *obj, void *opaque)
-         } else {
-             m->has_reserve = true;
-         }
--        m->policy = object_property_get_enum(obj, "policy", "HostMemPolicy",
-+        m->policy = object_property_get_enum(obj, "policy",
-+                                             &HostMemPolicy_type_info,
-                                              &error_abort);
-         host_nodes = object_property_get_qobject(obj,
-                                                  "host-nodes",
-diff --git a/include/qom/object.h b/include/qom/object.h
-index a9bbc44cfcc9..9f937e30dae5 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1566,7 +1566,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * object_property_get_enum:
-  * @obj: the object
-  * @name: the name of the property
-- * @typename: the name of the enum data type
-+ * @type_info: the QAPITypeInfo of the enum
-  * @errp: returns an error if this function fails
-  *
-  * Returns: the value of the property, converted to an integer (which
-@@ -1574,7 +1574,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * value is not an enum).
-  */
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp);
-+                             const QAPITypeInfo *type_info, Error **errp);
  
- /**
-  * object_property_set:
-diff --git a/qom/object.c b/qom/object.c
-index 791d981dc689..40b569d4d574 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1775,7 +1775,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendFile, MEMORY_BACKEND_FILE)
+ 
+@@ -230,30 +230,24 @@ static void file_memory_backend_set_readonly(Object *obj, bool value,
+     fb->readonly = value;
  }
  
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp)
-+                             const QAPITypeInfo *type_info, Error **errp)
+-static void file_memory_backend_get_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static int file_memory_backend_get_rom(Object *obj, Error **errp)
  {
-     char *str;
-     int ret;
-@@ -1785,10 +1785,10 @@ int object_property_get_enum(Object *obj, const char *name,
-         return -1;
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+-    OnOffAuto rom = fb->rom;
+-
+-    visit_type_OnOffAuto(v, name, &rom, errp);
++    return fb->rom;
+ }
+ 
+-static void file_memory_backend_set_rom(Object *obj, Visitor *v,
+-                                        const char *name, void *opaque,
+-                                        Error **errp)
++static void file_memory_backend_set_rom(Object *obj, int value, Error **errp)
+ {
+     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
+     HostMemoryBackendFile *fb = MEMORY_BACKEND_FILE(obj);
+ 
+     if (host_memory_backend_mr_inited(backend)) {
+-        error_setg(errp, "cannot change property '%s' of %s.", name,
++        error_setg(errp, "cannot change property 'rom' of %s.",
+                    object_get_typename(obj));
+         return;
      }
  
--    if (!g_str_equal(prop->type, typename)) {
-+    if (prop->qapi_type != type_info) {
-         error_setg(errp, "Property %s on %s is not '%s' enum type",
--                   name, object_class_get_name(
--                       object_get_class(obj)), typename);
-+                   name, object_class_get_name(object_get_class(obj)),
-+                   type_info->name);
-         return -1;
-     }
+-    visit_type_OnOffAuto(v, name, &fb->rom, errp);
++    fb->rom = value;
+ }
  
-diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 69155e720751..1cb48c7490ef 100644
---- a/tests/unit/check-qom-proplist.c
-+++ b/tests/unit/check-qom-proplist.c
-@@ -582,14 +582,14 @@ static void test_dummy_getenum(void)
+ static void file_backend_unparent(Object *obj)
+@@ -298,10 +292,13 @@ file_backend_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_bool(oc, "readonly",
+         file_memory_backend_get_readonly,
+         file_memory_backend_set_readonly);
+-    object_class_property_add(oc, "rom", "OnOffAuto",
+-        file_memory_backend_get_rom, file_memory_backend_set_rom, NULL, NULL);
+-    object_class_property_set_description(oc, "rom",
+-        "Whether to create Read Only Memory (ROM)");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "rom",
++        .description = "Whether to create Read Only Memory (ROM)",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = file_memory_backend_get_rom,
++        .set = file_memory_backend_set_rom,
++    ));
+ }
  
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &error_abort);
-     g_assert(val == DUMMY_PLATYPUS);
- 
-     /* A bad enum type name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "BadAnimal",
-+                                   &dummy_str_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
-@@ -597,7 +597,7 @@ static void test_dummy_getenum(void)
-     /* A non-enum property name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "iv",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
+ static void file_backend_instance_finalize(Object *o)
 
 -- 
 2.56.0.116.g6de20f6092dc
