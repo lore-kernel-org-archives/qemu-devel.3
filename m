@@ -1,83 +1,77 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC0E606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E95B606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=S9pT5d0F
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=p2ybxckb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJX7z-00034l-3s; Wed, 21 Oct 2026 10:17:15 -0400
+	id 1xJX7l-00032X-B0; Wed, 21 Oct 2026 10:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJX7q-00033t-D2
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:17:06 -0400
+ id 1xJX7i-00032K-Uw
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:16:58 -0400
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJX7o-0001Tx-Nb
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:17:06 -0400
+ id 1xJX7g-0001T3-Nl
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:16:58 -0400
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a180fbeef5so5979675e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:17:04 -0700 (PDT)
+ 5b1f17b1804b1-4a0e1b0681bso4370165e9.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792592223; x=1793197023; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+v9XHDF5ShyLMW0zG5TC9qa5KKqObnwfP1BvKkRvK3I=;
- b=S9pT5d0FqGqZxgvhT4jdqD2NaDgKfTLnQguFnTf7JOQJizONINhMSoJY6EZ75wB834
- 9patkOFebzJPrOJ7pwYPc49B1HCuHWqFdrKyo58MMEWb/Pm95UTCihmqZouQ0J7y/Nqw
- X0qVvoEYmi6dtNjUVmeYveXXIxFsWaV77008239HRvE/zolG7tJd77x4wI7h2jrnOGUr
- ywKOZYC/zs6fYMKmS8FwZ1aVaAlCyjjSUjX/f+RbBSqFGNIOneg4wXav6fSeL1QSrT9b
- lFdzdxkRkJlbrxDZcXEywvvHmCghHpz2GRyQCMgHunvmYyfYCdZmTal8pde35xlAundt
- mzOQ==
+ d=linaro.org; s=google; t=1792592215; x=1793197015; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=lxIsZjRG7xX/kfwBcVV+Sepp3f0qLgh48ynM1xT10K0=;
+ b=p2ybxckbC2/euYkQoctFzp17+FjyD9qm0MsgOvU+Pa/2nucFUQzGqOSBnyVzoZPclQ
+ gb9y5muTxwW/78k4jKQRGRv/d5Zw7CT+WpBpydSeevi5XIS63ZKplA4ZYU+l3yWMp9y1
+ cfP4tYuH/OdXTugEhKrIRaogNzKyXsNZXNSfU6mxiaVEWJRfON4u6/wvchL+5YkBnxE1
+ DLmDDulITSogtp4pK1z0HSUpey0EDY1RuKZTEjZr9WmpNUYuJntHuE5VW1EJhi6nsE7+
+ pjqYNGH6fhOiaYf1VD6BTaueJrbDy0jSh5KCVcELhqo+c4mV84dXkxTrPAH2uKnBAe2D
+ pbhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792592223; x=1793197023;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+v9XHDF5ShyLMW0zG5TC9qa5KKqObnwfP1BvKkRvK3I=;
- b=SVvhdIipA2gdW30oeR+P5YNPn36a9hKmzz/uOXL8mNfVmNrlLE1kpvbFUB6wVnHnLq
- 07eB/K0JzAx5InnDVBvjXz3AIZrALBFJk8zOP34ksuXzakcyD7XPHaGxLOEk1hUIQ19W
- 4Tlv+T95GM7ykXsqYhvUZjVid19TgiivkyEM/NbLNsHqAl3CEQjyt/VsgPr4qFAbx9kg
- infx9XarnpqNzLGnmYczZD18XvDaixbc8s6cifvSzQ/wLMzvPOKLrv4uv8Jdfrp9xJUs
- q+aL/chnTa3g3UX5g5tew0/2FVjBPUgqMJg2htDtF99gt0LzyXMb+mSdOpBeAWXnQQoA
- B4uA==
-X-Gm-Message-State: AFq9FYKEBKbnEX6GLKTrYdTsiySNz5DGJKumZBxsS72o9x4RrfnyTPdf
- rMo9CvHxL0BjtkWpcY69ul/hRCdicwEy4OmcLB3/b5xiDBglq4QOVFVRkixAwx1QGiF/JdAuYvF
- OSCWcOec=
-X-Gm-Gg: AYBFou0V0QTHmyaaPaOf6WuZAG7CqPE/dChz3v+Hfmdrjuv2xNQUgaSUyrT90X3od2K
- blwemyZKKzfUnPD6Mry/0nBIqtUlyt1MOLDylXs6Vkn2D38EocoRjWtCYaCcd2d0EDFNS1h7E5q
- 2RB6JvA5XxshxBW6Ds+eoW86T4hSPSuJf/LxeIpH1YyX4g4JlR4HD3ftWqc8PbMri4tzkMkTSj1
- GHIRdTLq4WigefPliFN9TdaW3Bs6JkCU93LjvI1Baw2sayGTwJMYi1x8vxyGZI3A4+AbZYw+cBu
- DwgPRH5c3WmlYwiYpNt+VQcZkXr3Jptf+GROV9jZPPVlwTcqNsycSvilsvsGTUnCnGBsHSy0bER
- t6oe79BxrbjqIM7QPURML9L4NUQXVfZAW7Spyyb4GauWmbOVNxw8caAUiDsxP1+IIo/hfj5qucL
- prP2U1Lr0g0gz5pGyP3XzSMwA9fpKurPQ0aK0DuKnUax3X4qPpi0hI2xLR0K4bdr3TOt0eXQSLG
- tq6qbmR/Z5q/JATcl21EXrKw75yok4njtKfOMRud5kjodTfkY8tR5AnoAsJnLbzLR6y3coXIgkd
- zVXCVNfWWl0Vlkcl7i3YqiAlHN4=
-X-Received: by 2002:a05:600c:b86:b0:4a0:1fb9:2f51 with SMTP id
- 5b1f17b1804b1-4a1fdd2fa6cmr48825155e9.14.1792592223207; 
- Wed, 21 Oct 2026 07:17:03 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792592215; x=1793197015;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=lxIsZjRG7xX/kfwBcVV+Sepp3f0qLgh48ynM1xT10K0=;
+ b=DtPEMXffh1iiHL334znxIdXr9kpaAkHtQHcJi15PvidoPhzr8IDEUNc6wkZ2pjMTo2
+ 3Tp0UdbluTYt0JxkTY8uMcvsk2m6GzVBTQVP6mh2xF9rFJj0kTwyLMOmUTGBbgxS31wx
+ CQ4mqbSW7XzqNGHvwBPWXwdUTLupdkAKrPYkRFsXakMnCDczF3zajrXiFhKEDUrS2pJv
+ NEkhs0BCtHt9V4dyc67nVblB4Ah+lnEjKmC5bmOutyStb9v1NllgnWck//5Frk8fp4cL
+ cFlLETIfble3PLeHAdDEW6k4XF+J9d92/OL9HEeKPEBMHL9L5Zvkju50gCbC/0nSQNHF
+ S/nQ==
+X-Gm-Message-State: AFq9FYIKcGJ81uEY0XKLeIMNtq4XTdos8FwXoCL94vMFlnW5t3N6iPGo
+ zoUo9Fu67bL+fOLYTXC3Vx/tajY8Qy4QeIR8zf2q4/KFNLsDPxGY91YsJZak7e2MAMHmvIURlBM
+ YBKlpZP0=
+X-Gm-Gg: AYBFou2UI7LVHFZAIuXvagijV7faS7LIJ565jZf5ikZDC9qyceT/2zm/GxS+0Tu4AQl
+ bEXsfvd/cA8CVKyUgJEaa9eGslnh66hmu5KTWcLWpoyikF6F+0H2SHcPTk7m24EHtPpxh08wJ0P
+ kuOYSFGfS/D09mcvRv37efBVSntlpeQA8zvRW9Wj26rfmpANMR97uTZdC++/KfT9x855Z4VGNvK
+ mIvEpm2jhUKaGtK+niawrIG6NThVyX2sa+yDHNM+bXPkCaNkAHlaaEFhtLB4kQC1Xjxs7t7RNaq
+ wXIMx3xuET9T+zPwHm8jY1I/Kj+Moc3zyNYDewZRe17a4Y3Z9n5kdMmgzR0C4DF8ToeEUUo4zaA
+ ggm3o7ILbLR0l9tTOCvZKZZqIx+nevKSrHxSoH98dZmqadb1jYtC3fsy0eiKaMvXE86rM1IPMwH
+ Um+PKF5x4x0cuFCNlhXuzQIAMr//RUIG3XsgfnzOPR/DWH0BAnUUI64axBqqEAgbR+GR/P5br2A
+ UjfF0VYrdShit5O4efa3v3jTYrjPZRSdMTim2YrjnW5Xw1tRoxOf/6I0G7uv04VDIFEYFIU+is0
+ wt+0PX9QBZVXOlIbqK+36HOcIls=
+X-Received: by 2002:a05:600d:8645:20b0:4a1:f377:5c75 with SMTP id
+ 5b1f17b1804b1-4a1fdd6097cmr34816795e9.33.1792592214698; 
+ Wed, 21 Oct 2026 07:16:54 -0700 (PDT)
 Received: from stoup.fritz.box (pd95f64ec.dip0.t-ipconnect.de.
  [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1f2c242dcsm147113845e9.0.2026.10.21.07.17.01
+ 5b1f17b1804b1-4a1f2c242dcsm147113845e9.0.2026.10.21.07.16.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 07:17:02 -0700 (PDT)
+ Wed, 21 Oct 2026 07:16:53 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mattst88@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v6 004/100] tcg: Annontate functions in tcg-internal.h with
- QEMU_*_NONNULL
-Date: Wed, 21 Oct 2026 16:15:16 +0200
-Message-ID: <20261021141652.363109-5-richard.henderson@linaro.org>
+Cc: mattst88@gmail.com
+Subject: [PATCH v6 000/100] tcg: Generic expansion of most operations
+Date: Wed, 21 Oct 2026 16:15:12 +0200
+Message-ID: <20261021141652.363109-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261021141652.363109-1-richard.henderson@linaro.org>
-References: <20261021141652.363109-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -102,107 +96,146 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/tcg-internal.h | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+This eliminates the majority of the code duplication between
+the _i32 and _i64 expanders.  What remains are those expanders
+that truly differ between the two widths, or that are only
+present for one width.
 
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index e35440dc8c..2620c23b44 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -41,53 +41,55 @@ extern unsigned int tcg_max_ctxs;
- #endif
- 
- void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads);
--bool tcg_region_alloc(TCGContext *s);
--void tcg_region_thread_initial_alloc(TCGContext *s);
--void tcg_region_prologue_set(TCGContext *s);
-+QEMU_ARG_NONNULL bool tcg_region_alloc(TCGContext *s);
-+QEMU_ARG_NONNULL void tcg_region_thread_initial_alloc(TCGContext *s);
-+QEMU_ARG_NONNULL void tcg_region_prologue_set(TCGContext *s);
- 
--static inline void *tcg_call_func(TCGOp *op)
-+QEMU_RET_ARG_NONNULL static inline void *tcg_call_func(TCGOp *op)
- {
-     return (void *)(uintptr_t)op->args[TCGOP_CALLO(op) + TCGOP_CALLI(op)];
- }
- 
--static inline const TCGHelperInfo *tcg_call_info(TCGOp *op)
-+QEMU_RET_ARG_NONNULL static inline const TCGHelperInfo *tcg_call_info(TCGOp *op)
- {
-     return (void *)(uintptr_t)op->args[TCGOP_CALLO(op) + TCGOP_CALLI(op) + 1];
- }
- 
--static inline unsigned tcg_call_flags(TCGOp *op)
-+QEMU_ARG_NONNULL static inline unsigned tcg_call_flags(TCGOp *op)
- {
-     return tcg_call_info(op)->flags;
- }
- 
--static inline TCGv_i64 TCGV128_LOW(TCGv_i128 t)
-+QEMU_RET_ARG_NONNULL static inline TCGv_i64 TCGV128_LOW(TCGv_i128 t)
- {
-     return temp_tcgv_i64(tcgv_i128_temp(t) + HOST_BIG_ENDIAN);
- }
- 
--static inline TCGv_i64 TCGV128_HIGH(TCGv_i128 t)
-+QEMU_RET_ARG_NONNULL static inline TCGv_i64 TCGV128_HIGH(TCGv_i128 t)
- {
-     return temp_tcgv_i64(tcgv_i128_temp(t) + !HOST_BIG_ENDIAN);
- }
- 
- bool tcg_target_has_memory_bswap(MemOp memop);
- 
--TCGTemp *tcg_temp_new_internal(TCGType type, TCGTempKind kind);
-+QEMU_RET_NONNULL TCGTemp *tcg_temp_new_internal(TCGType type, TCGTempKind kind);
- 
- /*
-  * Locate or create a read-only temporary that is a constant.
-  * This kind of temporary need not be freed, but for convenience
-  * will be silently ignored by tcg_temp_free_*.
-  */
--TCGTemp *tcg_constant_internal(TCGType type, int64_t val);
-+QEMU_RET_NONNULL TCGTemp *tcg_constant_internal(TCGType type, int64_t val);
- 
--TCGOp *tcg_gen_op1(TCGOpcode, TCGType, TCGArg);
--TCGOp *tcg_gen_op2(TCGOpcode, TCGType, TCGArg, TCGArg);
--TCGOp *tcg_gen_op3(TCGOpcode, TCGType, TCGArg, TCGArg, TCGArg);
--TCGOp *tcg_gen_op4(TCGOpcode, TCGType, TCGArg, TCGArg, TCGArg, TCGArg);
--TCGOp *tcg_gen_op5(TCGOpcode, TCGType, TCGArg, TCGArg, TCGArg, TCGArg, TCGArg);
--TCGOp *tcg_gen_op6(TCGOpcode, TCGType, TCGArg, TCGArg,
--                   TCGArg, TCGArg, TCGArg, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op1(TCGOpcode, TCGType, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op2(TCGOpcode, TCGType, TCGArg, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op3(TCGOpcode, TCGType, TCGArg, TCGArg, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op4(TCGOpcode, TCGType, TCGArg, TCGArg,
-+                                    TCGArg, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op5(TCGOpcode, TCGType, TCGArg, TCGArg,
-+                                    TCGArg, TCGArg, TCGArg);
-+QEMU_RET_NONNULL TCGOp *tcg_gen_op6(TCGOpcode, TCGType, TCGArg, TCGArg,
-+                                    TCGArg, TCGArg, TCGArg, TCGArg);
- 
- void vec_gen_2(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg);
- void vec_gen_3(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg, TCGArg);
-@@ -95,8 +97,10 @@ void vec_gen_4(TCGOpcode, TCGType, unsigned, TCGArg, TCGArg, TCGArg, TCGArg);
- void vec_gen_6(TCGOpcode opc, TCGType type, unsigned vece, TCGArg r,
-                TCGArg a, TCGArg b, TCGArg c, TCGArg d, TCGArg e);
- 
-+QEMU_RET_ARG_NONNULL
- TCGOp *tcg_op_insert_before(TCGContext *s, TCGOp *op,
-                             TCGOpcode, TCGType, unsigned nargs);
-+QEMU_RET_ARG_NONNULL
- TCGOp *tcg_op_insert_after(TCGContext *s, TCGOp *op,
-                            TCGOpcode, TCGType, unsigned nargs);
- 
+Changes for v6:
+  - No __attribute__((alias)), since unsupported on MacOS.
+  - Constants canonicalized in tcg_constant_internal, as pointed out in review.
+  - Other flubs fixed, also per review.
+
+
+r~
+
+
+Richard Henderson (100):
+  include/qemu/compiler: Add QEMU_*_NONNULL attributes
+  tcg: Annontate functions in tcg.h with QEMU_*_NONNULL
+  tcg: Annontate functions in tcg-op-mem.h with QEMU_*_NONNULL
+  tcg: Annontate functions in tcg-internal.h with QEMU_*_NONNULL
+  tcg: Prepare for easy temp lifetimes
+  tcg: Enforce sign-extension for TCG_TYPE_I32 in tcg_constant_internal
+  tcg: Generic expansion of tcg_gen_mov_*
+  tcg: Generic expansion of tcg_gen_movi_*
+  tcg: Generic expansion of tcg_gen_discard_*
+  tcg: Generic expansion of tcg_gen_add_*
+  tcg: Generic expansion of tcg_gen_addi_*
+  tcg: Generic expansion of tcg_gen_sub_*
+  tcg: Generic expansion of tcg_gen_subi_*
+  tcg: Generic expansion of tcg_gen_neg_*
+  tcg: Generic expansion of tcg_gen_subfi_*
+  tcg: Generic expansion of tcg_gen_and_*
+  tcg: Generic expansion of tcg_gen_or_*
+  tcg: Generic expansion of tcg_gen_xor_*
+  tcg: Generic expansion of tcg_gen_shl_*
+  tcg: Generic expansion of tcg_gen_shr_*
+  tcg: Generic expansion of tcg_gen_sar_*
+  tcg: Generic expansion of tcg_gen_mul_*
+  tcg: Generic expansion of tcg_gen_shli_*
+  tcg: Generic expansion of tcg_gen_shri_*
+  tcg: Generic expansion of tcg_gen_sari_*
+  tcg: Generic expansion of tcg_gen_andi_*
+  tcg: Generic expansion of tcg_gen_ori_*
+  tcg: Generic expansion of tcg_gen_xori_*
+  tcg: Generic expansion of tcg_gen_muli_*
+  tcg: Generic expansion of tcg_gen_not_*
+  tcg: Drop division helpers
+  tcg: Generic expansion of tcg_gen_div_*
+  tcg: Generic expansion of tcg_gen_rem_*
+  tcg: Generic expansion of tcg_gen_divu_*
+  tcg: Generic expansion of tcg_gen_remu_*
+  tcg: Generic expansion of tcg_gen_andc_*
+  tcg: Generic expansion of tcg_gen_eqv_*
+  tcg: Generic expansion of tcg_gen_nand_*
+  tcg: Generic expansion of tcg_gen_nor_*
+  tcg: Generic expansion of tcg_gen_orc_*
+  tcg: Generic expansion of tcg_gen_brcond_*
+  tcg: Generic expansion of tcg_gen_brcondi_*
+  tcg: Generic expansion of tcg_gen_setcond_*
+  tcg: Generic expansion of tcg_gen_setcondi_*
+  tcg: Generic expansion of tcg_gen_negsetcond_*
+  tcg: Generic expansion of tcg_gen_negsetcondi_*
+  tcg: Generic expansion of tcg_gen_movcond_*
+  tcg: Split out tcg_gen_ext{rl,rh,s,u}
+  tcg: Convert ext/trunc from TCGv_ptr to the new interfaces
+  tcg: Generic expansion of tcg_gen_clz_*
+  tcg: Use signed integer for tcg_gen_{clz,ctz}i_{i32,i64}
+  tcg: Generic expansion of tcg_gen_clzi_*
+  tcg: Generic expansion of tcg_gen_ctpop_*
+  tcg: Generic expansion of tcg_gen_ctz_*
+  tcg: Generic expansion of tcg_gen_ctzi_*
+  tcg: Generic expansion of tcg_gen_clrsb_*
+  tcg: Generic expansion of tcg_gen_rotl_*
+  tcg: Generic expansion of tcg_gen_rotr_*
+  tcg: Generic expansion of tcg_gen_rotri_*
+  tcg: Generic expansion of tcg_gen_rotli_*
+  tcg: Generic expansion of tcg_gen_deposit_*
+  tcg: Generic expansion of tcg_gen_extract_*
+  tcg: Generic expansion of tcg_gen_sextract_*
+  tcg: Generic expansion of tcg_gen_deposit_z_*
+  tcg: Generic expansion of tcg_gen_ext8s_*
+  tcg: Generic expansion of tcg_gen_ext8u_*
+  tcg: Generic expansion of tcg_gen_ext16s_*
+  tcg: Generic expansion of tcg_gen_ext16u_*
+  tcg: Generic expansion of tcg_gen_ext_*
+  tcg: Generic expansion of tcg_gen_smin_*
+  tcg: Generic expansion of tcg_gen_smax_*
+  tcg: Generic expansion of tcg_gen_umin_*
+  tcg: Generic expansion of tcg_gen_umax_*
+  tcg: Generic expansion of tcg_gen_abs_*
+  tcg: Generic expansion of tcg_gen_ussub_*
+  tcg: Use umax in ussub if available
+  tcg: Generic expansion of tcg_gen_extract2_*
+  tcg: Generic expansion of tcg_gen_addcio_*
+  tcg: Generic expansion of tcg_gen_add2_*
+  tcg: Generic expansion of tcg_gen_sub2_*
+  tcg: Generic expansion of tcg_gen_mulu2_*
+  tcg: Generic expansion of tcg_gen_muls2_*
+  tcg: Use unsigned for flags for bswap and revbit operations
+  tcg: Generic expansion of tcg_gen_bswap16_*
+  tcg: Split out gen_bitswap
+  tcg: Generic expansion of tcg_gen_revbit8_*
+  tcg: Generic expansion of tcg_gen_ld_*
+  tcg: Generic expansion of tcg_gen_ld8s_*
+  tcg: Generic expansion of tcg_gen_ld8u_*
+  tcg: Generic expansion of tcg_gen_ld16s_*
+  tcg: Generic expansion of tcg_gen_ld16u_*
+  tcg: Generic expansion of tcg_gen_st_*
+  tcg: Generic expansion of tcg_gen_st8_*
+  tcg: Generic expansion of tcg_gen_st16_*
+  tcg: Generic expansion of tcg_gen_dup_*
+  tcg: Generic expansion of tcg_gen_qemu_ld_chk
+  tcg: Generic expansion of tcg_gen_qemu_st_chk
+  tcg: Generic expansion of tcg_gen_{non}atomic_qemu_cmpxchg_chk
+  tcg: Generic expansion of remaining atomic operations
+  tcg: Annontate functions in tcg-op-common.h with QEMU_*_NONNULL
+
+ accel/tcg/tcg-runtime.h                    |   10 -
+ include/qemu/compiler.h                    |    8 +
+ include/tcg/tcg-op-common.h                |  556 ++--
+ include/tcg/tcg-op-mem.h                   |   36 +-
+ include/tcg/tcg-temp-internal.h            |    2 +
+ include/tcg/tcg.h                          |   61 +-
+ tcg/tcg-internal.h                         |  160 +-
+ include/tcg/tcg-op-def.h.inc               |  110 +
+ accel/tcg/tcg-runtime.c                    |   44 -
+ tcg/tcg-op-gvec.c                          |   41 -
+ tcg/tcg-op-ldst.c                          |  734 ++---
+ tcg/tcg-op.c                               | 3030 +++++++-------------
+ tcg/tcg.c                                  |    8 +
+ target/ppc/translate/fixedpoint-impl.c.inc |    4 +-
+ 14 files changed, 1834 insertions(+), 2970 deletions(-)
+ create mode 100644 include/tcg/tcg-op-def.h.inc
+
 -- 
 2.53.0
 
