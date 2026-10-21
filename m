@@ -1,102 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CF7606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB78606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=GpY0HZwA
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kt+VQkak
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJXGQ-0005q4-FH; Wed, 21 Oct 2026 10:25:58 -0400
+	id 1xJXAT-0007T0-Cv; Wed, 21 Oct 2026 10:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xJXF2-0003R4-8o
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:24:41 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xJX9n-00059H-Ie
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:19:12 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1xJXF0-0002Hx-Dp
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:24:32 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a018792ab3so6765885e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:24:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xJX9l-0001gX-GP
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:19:07 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48df4f540ebso484325f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792592669; x=1793197469; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=3CvJsNhrdvCfq6pbETT8FYKRQh9hWkfdmLF81nGsjmw=;
- b=GpY0HZwA/U2nXBp0G3gW3UkpfMxs43xjlprZyOUsURvb7kGoEucFun7tsSuuqdY1UZ
- EWrCb/5JI1BPRZTCR/+p6twm/aFxHMAkmQgGz+yihQjbGbaAy/NEqJEXNLZeNbORRTHo
- O1Aq3l1iVfGbWhOQLjQo5V1ZW/T6QxELaJv2ZW7BA6K/tq9+eZQXr3Rr3JqLGQjBv6mr
- OoRG4xUBsI0UCtqeOyF0H18cYMMkPlb2kDZaDFx2sAVzhlDyLfC0Sv3YTebOXo+sBNjH
- 1HqIA+eJwtr1VFdg5Vb9nDJUZ0PZOOvMt4c9IBL5WYPrFxq/lCUJ+q6cLvEIHfv1i2UP
- hTuQ==
+ d=linaro.org; s=google; t=1792592344; x=1793197144; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Zff17J5W8bYeqNO+JrV1N0+tXpixwnpmICO6Bor6d5A=;
+ b=kt+VQkakaPIs9/ZjIX6BCXPRPPtK4rrIXvKbWkSl8UOPbb8DVNB4CWLCf9VpPtt9ix
+ f6Ga0k/zVcqfrqgRkS292Sa6oaxR8+a08w9gxnu+X2bKH2tcUr+ECD5tkkVrKXvY1ttR
+ 4oBs8VtZ+Zv+x2KVtNrZ+n0SL59M50rRmfpEhsgfu6RZDoh4xVnsIZ3/RmyUqa5eH6ct
+ 6nSniIro3CckzIp5lc7xxdJfPM007wibJUvOZr05NmHz5mmUXvEFyomzgU8xHThD+3is
+ bZd+DefrHBi6zr8Z1UhMHjeoS3emmfFgBPkg5rVI/svt8N5/TxDrQgdQYtpLk7uBBtdo
+ K97Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792592669; x=1793197469;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=3CvJsNhrdvCfq6pbETT8FYKRQh9hWkfdmLF81nGsjmw=;
- b=Br2GhpAanfnMYy7LbawdT6/kJeoXKAOr2+Yb4e7C929PET99LU0/q8hYsCa/aJ2m1N
- UrSbAB9eHarrsbFs0xMxSg7K3i6qYgFwWLdpVYpE/e4FduzN+pGOqXQzdUwf4yJU2V7H
- d3+WNqcTCj74Onct3u4kvBWUJONpjmfh5lkR+OnBKvWj1BcBt4WjOIwHIzW5X8FpZPrm
- xkNyUfss2rqdSk16zNxYGFpCm/lKZPBvNfoWyqi5I8gFQSmoG27Monol1LTEwz5hwIHI
- R5ax/WvAUBwOyaYA8u41NNEhcQYgyaM8nI4sQ8RbZwulQAgwOO2QNEi2eWZgaZ3jCw3j
- StEg==
-X-Gm-Message-State: AFq9FYK3E6VpE9MMBuEYJ7PXSKW506dGHZPBUQrHw20v6wayE2NyglRQ
- HgAZUaEDf790feWS1bFCZnxDg9JqpilwSCVc2HcpGSaCGOdFBsxVXGJE
-X-Gm-Gg: AYBFou2G6nxnL2yaWYLOizB5ejsC3+r08dzPMgOxf1ev8QlXxD88Gq1hnzLJKauDW5k
- lsE0Wus1Wcd5IqNAmrWyPNSEhgPWQ5nGAlPrr6FPRPQ+ZIr9T7EE3ML03FFzfd5Mw72V19xIG/0
- jcyEl6CYlz5ZqDaa2ETBLxEnwtsy2oew/jZB/M9MV7kPIy5qqpl9MPpcLTv+41PB0LPXxNmq4QA
- 4YQv2C2hfCfIRGur/376kZO48qZOzkr+XEBlysgcEIFO/huQ59M+2Qy9H+gl2oabQMgvnd/9Lny
- 1mjrFL0LaEz42WanaNfBTlsugiRQZgE5h+fNRVTse+EMlnhyeaTXAVyyy3i/tLBzcADwqHJonvK
- vy9u3blG3D4FfWPDEZefzb4vGAW9DyoGrVTpxk2gqXYMxDzj9/b6cv3WKzStrBpcf5e5ueJig+8
- PUISVo4dwOlnraAxC9tsV5NgWiuDY7HjScclgOiHd/Tu8vHHrw3bDkfs6SkFS4r01A0FPeZcVWs
- KcI9uIYZKCByfdwGRrz/FDvIpQj5PDeuGiJFfQ34/Zyp0qCfhTLcckGBawPU52LW28oTwm6wNFG
- lun3qh3bXchzoQ==
-X-Received: by 2002:a05:600d:82c1:b0:49f:ff73:9971 with SMTP id
- 5b1f17b1804b1-4a1fdd393c4mr50008985e9.18.1792592668718; 
- Wed, 21 Oct 2026 07:24:28 -0700 (PDT)
-Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1fc0ad18esm41683585e9.0.2026.10.21.07.24.27
+ d=1e100.net; s=20260707; t=1792592344; x=1793197144;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Zff17J5W8bYeqNO+JrV1N0+tXpixwnpmICO6Bor6d5A=;
+ b=Rf0VOsWU2ExtEaoLMrbm1wytaS/SARVBWAZw9wPGz2qbG0Pdq0IJu0EarN+HhYx6BE
+ uTx2ep3Fvc7npYLDoEO+PkWXTvvNEoYDaAJ3Iw8c2yTvR8flAQRLhHEgutewm/Njd+8v
+ 4flvkNqNXU1jsZqvye4z4+j5kPpJAF9T3lRnlTBcDqQ0WzHfiuwPJ17rq0G1hEdpA6OG
+ WfmoNQmwnNvUTqfmOLGPEVxsPMwKeQgWBa91z+hNjYApk1YWi/BGxz20YUKUnWJpmro+
+ TpPzg54SlItadC7G5cyyvKBrKMHoixc7cCQXrRh2xVzIPkkJdYCygoMxa8TYsNkMxtcZ
+ 5nnw==
+X-Gm-Message-State: AFq9FYIO2rrw+Phgk759KJEADEDyAgHMluCMKVLyxI6bApPjTS1+RaX6
+ kib66wtf2VtLWepS/kbEVdBLGXbNHkfDTVY0TGQM/DE/k5FRnIn+JC7PKDMA3YFdPdMyUBFCEmL
+ hqI1AwjA=
+X-Gm-Gg: AYBFou2g10gAb8At85eak/MIoLa3PMVt+7wsq7zUvE3ff+dfaApvjyfOxtB9q/aopoi
+ vf7KPHIEFzDdFzzdfzzr+ogfpAKd0ZYylkv28VgugrIUDuH0lOe4f6RD9WDtjTYQPHxEtryYsVA
+ yFj8rvcj+jLJJZ/7X3RD/HQOdwbyVEDQvB4u2GiHsdGpMiJCEbLUtK4Ew0vbMHvzI/JUip9Bh3o
+ w/fJASnJz+bH4f6ZnQyf+l898N4iv+CqKwzFRk8I9uSAo64FnYr1KtwoNUQcPngy3FGxFdT05ur
+ KkomB+GFij0npE/+D/VKFvBHh9Fu0P7Kb6GnMjeH77CvkRwEX9ZsMfw++k1aU1Zd8xoSmGwbrmy
+ e5+fE0eolYFutqOPQMISyWn8vc+ACDY1HTeL0HNwtetSgYYph/3ku6xAHepHM+S/uewkFvQjbcU
+ F9x5ypytG0JIj8skC5uBTEaQJNUgDq3Gs5v8PuG/m+hrmXZV2G+poHOstzsCtVBsuCDBv2f+EBc
+ QDf5vmFRi4BJ+dHd/vsjdbAAlpKm1XVrGMnaAJ8uN+3k2f2Xe3i6HOxVbbQlPidbjRJyyw/Nin4
+ oj67lobdsWdI97CBUc108AiGrA8=
+X-Received: by 2002:a05:600c:3e19:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a1fdd26e3fmr44526965e9.22.1792592343754; 
+ Wed, 21 Oct 2026 07:19:03 -0700 (PDT)
+Received: from stoup.fritz.box (pd95f64ec.dip0.t-ipconnect.de.
+ [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1f2c242dcsm147113845e9.0.2026.10.21.07.19.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 07:24:28 -0700 (PDT)
-Message-ID: <c668c6e8a78145d5e77078aa355c1fd7999b0ecb.camel@gmail.com>
-Subject: Re: [PATCH v10 11/12] virtio-serial-bus: add terminal resize messages
-From: Filip Hejsek <filip.hejsek@gmail.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Amit Shah
- <amit@kernel.org>,  Markus Armbruster	 <armbru@redhat.com>, Eric Blake
- <eblake@redhat.com>, Eduardo Habkost	 <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?=	 <berrange@redhat.com>, Max Brandtner	
- <maximilian.immanuel.brandtner@protonmail.com>, Dominique Martinet	
- <asmadeus@codewreck.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
- <philmd@oss.qualcomm.com>, Szymon Lukasz <noh4hss@gmail.com>
-Date: Wed, 21 Oct 2026 16:24:26 +0200
-In-Reply-To: <179251177300.3780647.2268008186453794133.b4-review@b4>
-References: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
- <20261012-console-resize-v10-11-2c3b10d829b3@gmail.com>
- <179251177300.3780647.2268008186453794133.b4-review@b4>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 
+ Wed, 21 Oct 2026 07:19:02 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: mattst88@gmail.com
+Subject: [PATCH v6 029/100] tcg: Generic expansion of tcg_gen_muli_*
+Date: Wed, 21 Oct 2026 16:15:41 +0200
+Message-ID: <20261021141652.363109-30-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261021141652.363109-1-richard.henderson@linaro.org>
+References: <20261021141652.363109-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,113 +98,111 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, 2026-10-20 at 19:56 +0400, marcandre.lureau@redhat.com wrote:
-> > Implement the part of the virtio spec that allows to notify the virtio
-> > driver about terminal resizes. Gate the new resize support behind the
-> > console-size property, which defaults to off. To implement the property=
-,
-> > restore VirtIOSerial::host_features (previously removed by commit
-> > d0660e5b7fc7e97926232d13d2500a16df32b310).
-> >=20
-> > The virtio spec contains two methods to inform the guest about console
-> > size:
-> >=20
-> > For legacy drivers, we have only one port and we put the terminal size
-> > in the config space and inject the config changed interrupt.
-> >=20
-> > For multiport devices, we use the control virtqueue to send a
-> > packet containing the terminal size. Unfortunately, old versions
-> > of the Linux kernel used an incorrect order for the fields (rows
-> > then cols instead of cols then rows), until it was fixed by commit
-> > 5326ab737a47278dbd16ed3ee7380b26c7056ddd. As a result, when running an
-> > old guest kernel, the number of rows and columns will be swapped.
-> >=20
-> > Based on a patch originally written by Szymon Lukasz <noh4hss@gmail.com=
->,
-> > but partially rewritten to fix various corner cases.
-> >=20
-> > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-> > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-> > Message-ID: <20261012-console-resize-v10-11-2c3b10d829b3@gmail.com>
-> > ---
-> > =C2=A0hw/char/trace-events              |  1 +
-> > =C2=A0hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++=
-++++++++++++-
-> > =C2=A0include/hw/virtio/virtio-serial.h |  7 ++++
-> > =C2=A03 files changed, 87 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/hw/char/trace-events b/hw/char/trace-events
-> > index a3fcc772877a..e387c8853fcf 100644
-> > --- a/hw/char/trace-events
-> > +++ b/hw/char/trace-events
-> > @@ -11,6 +11,7 @@ serial_update_parameters(uint64_t baudrate, char pari=
-ty, int data_bits, int stop
-> > =C2=A0
-> >=20
-> > =C2=A0# virtio-serial-bus.c
-> > =C2=A0virtio_serial_send_control_event(unsigned int port, uint16_t even=
-t, uint16_t value) "port %u, event %u, value %u"
-> > +virtio_serial_send_console_resize(unsigned int port, uint16_t cols, ui=
-nt16_t rows) "port %u, cols %u, rows %u"
-> > =C2=A0virtio_serial_throttle_port(unsigned int port, bool throttle) "po=
-rt %u, throttle %d"
-> > =C2=A0virtio_serial_handle_control_message(uint16_t event, uint16_t val=
-ue) "event %u, value %u"
-> > =C2=A0virtio_serial_handle_control_message_port(unsigned int port) "por=
-t %u"
-> > diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-> > index c36e18a4cfb5..882765ac88ab 100644
-> > --- a/hw/char/virtio-serial-bus.c
-> > +++ b/hw/char/virtio-serial-bus.c
-> > @@ -261,6 +261,68 @@ static size_t send_control_event(VirtIOSerial *vse=
-r, uint32_t port_id,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0return send_control_msg(vser, &cpkt, size=
-of(cpkt));
-> > =C2=A0}
-> > =C2=A0
-> >=20
-> > +/*
-> > + * This struct should be added to the Linux kernel uapi headers
-> > + * and later imported to standard-headers/linux/virtio_console.h
-> > + */
-> > +struct virtio_console_resize {
-> > +    __virtio16 cols;
-> > +    __virtio16 rows;
-> > +};
-> > +
-> > +static void send_console_resize(VirtIOSerialPort *port)
-> > +{
-> > +    VirtIOSerial *vser =3D port->vser;
-> > +    VirtIODevice *vdev =3D VIRTIO_DEVICE(vser);
-> > +
-> > +    if (!virtio_has_feature(vser->host_features, VIRTIO_CONSOLE_F_SIZE=
-)) {
-> > +        return;
-> > +    }
-> > +
-> > +    trace_virtio_serial_send_console_resize(port->id, port->cols, port=
-->rows);
-> > +
-> > +    if (use_multiport(vser)) {
->=20
-> it should probably gate on negotiated virtio_vdev_has_feature(vdev, VIRTI=
-O_CONSOLE_F_SIZE) as well
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/tcg/tcg-op-common.h  |  2 --
+ include/tcg/tcg-op-def.h.inc |  1 +
+ tcg/tcg-op.c                 | 33 +++++++++++----------------------
+ 3 files changed, 12 insertions(+), 24 deletions(-)
 
-I think the patch is already merged [1]? I'm not familiar with all
-details of the QEMU development process. Should I address this in a
-follow-up commit?
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index dd4e7f6686..2b2653d07c 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -123,7 +123,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+ 
+ /* 32 bit ops */
+ 
+-void tcg_gen_muli_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2);
+ void tcg_gen_div_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_rem_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_divu_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2);
+@@ -208,7 +207,6 @@ void tcg_gen_not_i32(TCGv_i32 ret, TCGv_i32 arg);
+ 
+ /* 64 bit ops */
+ 
+-void tcg_gen_muli_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2);
+ void tcg_gen_div_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_rem_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_divu_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2);
+diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
+index b38969478a..abea00e7e0 100644
+--- a/include/tcg/tcg-op-def.h.inc
++++ b/include/tcg/tcg-op-def.h.inc
+@@ -9,6 +9,7 @@ DEF1(discard, TCGV)
+ DEF2(mov, TCGV, TCGV)
+ DEF2(movi, TCGV, TINT)
+ DEF3(mul, TCGV, TCGV, TCGV)
++DEF3(muli, TCGV, TCGV, TINT)
+ DEF2(neg, TCGV, TCGV)
+ DEF3(or, TCGV, TCGV, TCGV)
+ DEF3(ori, TCGV, TCGV, TINT)
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index cc34e0f31f..23aeea8026 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -428,6 +428,17 @@ void tcg_gen_mul(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
+     tcg_gen_op_ttt(INDEX_op_mul, type, dst, src1, src2);
+ }
+ 
++void tcg_gen_muli(TCGType type, TCGTemp *dst, TCGTemp *src1, int64_t src2)
++{
++    if (src2 == 0) {
++        tcg_gen_movi(type, dst, 0);
++    } else if (is_power_of_2(src2)) {
++        tcg_gen_shli(type, dst, src1, ctz64(src2));
++    } else {
++        tcg_gen_mul(type, dst, src1, tcg_constant_internal(type, src2));
++    }
++}
++
+ void tcg_gen_neg(TCGType type, TCGTemp *dst, TCGTemp *src)
+ {
+     tcg_gen_op_tt(INDEX_op_neg, type, dst, src);
+@@ -597,17 +608,6 @@ void tcg_gen_negsetcondi_i32(TCGCond cond, TCGv_i32 ret,
+     tcg_gen_negsetcond_i32(cond, ret, arg1, tcg_constant_i32(arg2));
+ }
+ 
+-void tcg_gen_muli_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2)
+-{
+-    if (arg2 == 0) {
+-        tcg_gen_movi_i32(ret, 0);
+-    } else if (is_power_of_2(arg2)) {
+-        tcg_gen_shli_i32(ret, arg1, ctz32(arg2));
+-    } else {
+-        tcg_gen_mul_i32(ret, arg1, tcg_constant_i32(arg2));
+-    }
+-}
+-
+ void tcg_gen_div_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2)
+ {
+     if (tcg_op_supported(INDEX_op_divs, TCG_TYPE_I32, 0)) {
+@@ -1536,17 +1536,6 @@ void tcg_gen_negsetcond_i64(TCGCond cond, TCGv_i64 ret,
+     }
+ }
+ 
+-void tcg_gen_muli_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
+-{
+-    if (arg2 == 0) {
+-        tcg_gen_movi_i64(ret, 0);
+-    } else if (is_power_of_2(arg2)) {
+-        tcg_gen_shli_i64(ret, arg1, ctz64(arg2));
+-    } else {
+-        tcg_gen_mul_i64(ret, arg1, tcg_constant_i64(arg2));
+-    }
+-}
+-
+ void tcg_gen_div_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2)
+ {
+     if (tcg_op_supported(INDEX_op_divs, TCG_TYPE_I64, 0)) {
+-- 
+2.53.0
 
-[1]: https://lore.kernel.org/qemu-devel/20261013-ui-v1-0-92da3082ad96@redha=
-t.com/
-
---
-Filip
 
