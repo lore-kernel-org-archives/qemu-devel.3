@@ -1,92 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B849606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 23:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E2606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 23:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AcMS8n/o;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PKX2MZfR
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hQxytY5i;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=I0VZ/Gmz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJfWV-00080Y-MZ; Wed, 21 Oct 2026 19:15:08 -0400
+	id 1xJfWV-00080J-NY; Wed, 21 Oct 2026 19:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJfW9-0007iy-LH
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xJfWG-0007sB-73
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:52 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJfW7-00052y-Ra
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:45 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xJfWE-00052T-AT
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:51 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LKe5X82748308
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:42 GMT
+ 69LKe8MF642066
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=xA/2MIE1awN
- saQNlpuYctPhOBgSBq4Bdh4il8/V7pIw=; b=AcMS8n/ours/VRvN+LA3QXRA8Dx
- Wkjc7KGyTsBuDZl8RSvXczCcMGPUKxaDGyl+DDynM0GkGNRa8qamQHvxZBKzLEc8
- HcmR9nNrM15yQJLIUvhFAxt4TT1YMtome+l4MyX7Ou4rjUYMjanN6HNdgDZVtUOg
- Npa5QTWFHC3KjgaOLX4ICTluVaSTVLRUjem74Dhy69Uai4/C3wLEjverrjfTlLDU
- Biz+qcExHP2Hvb8xhsPSoBPQTU8qvmsUxLZHFA3+Rqox8KiNhkSN1oQVE3imNPpR
- h6lD3AI8XHXMF0i2l7O+OkbKIKPA88qmFHDWf8z3KIgmIKUC6bGW5x2A+yw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf0ke1h1p-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=HziJ8UBV9UV
+ 9YJwY/KW+mHg4CspLb3r8IA/SuQ3F/60=; b=hQxytY5iFTX8JXM62vFQrSu3Yok
+ 0yCgrjzVsfZG/9M+DqjEWvUWu28z6ggVBYpjvoXe9I/l4h5aK320DMYYvIKrvzSD
+ Ld69cqY0dWn0a2vUhXSaybXCmch5wehQeWezkj/dwvimGijxRx28pcuZaas7CPpl
+ NKsC0gudTe34awRpWVnQfQLifLbA8oKN3iWdaqR5+9BfIZfVc/NZS1hhhkOPJymM
+ ZljMmYSnhoOd57bMPlNNAM/HW1Z20CRgKguJcmuEJP2IoDpG/cgAEdbnFfAfDxb9
+ NvQCgRLA4SRcweZzeu4CkTVAxnyuWzf1gMgLxAwPz8NZzbFtGJgfwIoDi+g==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hex5qa75s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:42 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-536720195ebso26542831cf.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:14:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:39 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-536720195ebso26541941cf.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:14:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792624481; x=1793229281; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792624479; x=1793229279; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xA/2MIE1awNsaQNlpuYctPhOBgSBq4Bdh4il8/V7pIw=;
- b=PKX2MZfRev9/+DC3O+F6EHaeFAMLaZqB+QaR0LaN5/Zdb+ZXEGM90X7LKCYmorzheL
- FWPkJyzeATVjnfBAiY+z7QxAtBMtuA4bCMZ+6SGwGGPLH2U+vOmJD0JxXImkiYQA9Clv
- Kiu3t93gP9znn/JRLBnCqRI2DB8AYXSJYaZ/EVGSYurt4j9KGHwM41Kjt0BMNJjxzI/R
- Zj8Bya/0IbaS1d+B/z4pdlWmlShlJVyDd5UM68zXTnmCONfH3DhXA4WJrnw/6wQiNSTU
- x1WEMd2bVM4js1/w2x2YaP6kkIf2AynfyXTLxLPcPNaoftYnT5yNTHOVuqaacrjM8jVY
- fdVg==
+ bh=HziJ8UBV9UV9YJwY/KW+mHg4CspLb3r8IA/SuQ3F/60=;
+ b=I0VZ/GmzTgIRfzuwxIgILftHxMhl2fGi8pxBws79Y2b7nlPM8UgDeOVS+zTkciJU5x
+ CNQ0vLQbBtNkHoxlvFhA/Dv51XjXch5XT3F4vpO1PchgmCe6BT+FlgxC8GnAcgSfzLUw
+ 7jh8MtJhh8tflIJLEqRAbA8G1aIKvWjVFZdukXM30rsocU0bYRrQyuM8xqhTWDN0Bp9e
+ qx4mjzdFnlo64CGDa7HNa9GBSs9pwtn7E7gzMKYxPXLyFUVYbYzPBXRycI176mZa4aif
+ Kwa+aIoW4T4ccwlKz3Xc03/WLSNt6s3BPy+6YwE0La8OUu1GgAylO9MJ4kVdmRY/NED4
+ kG3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792624481; x=1793229281;
+ d=1e100.net; s=20260707; t=1792624479; x=1793229279;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xA/2MIE1awNsaQNlpuYctPhOBgSBq4Bdh4il8/V7pIw=;
- b=fyhsuyWF+Y7oq4b9Pz1i37aJ3XYx6ps2oAMpJIWsakWATXLPZbhCgkck6tuC9Epsk9
- Im4Djr3hhpwOHSIbQh7eYBcc/Oj67F0VsWm1kTGz4pDQkcv2kRl0wDljev4j83X7vXhy
- rk6Co0kUF2EeH5r2tKcLTUtgDmYyj27KqtJ4uo/IKvZmYdfRuU1w2BeII8dn1WkzTCFC
- u0KSP4SXaF0pARk01+0RDbgPvBmYPkvGnXOLZCN0e/y1E7ZfyFlhTwbfv9IG6Xp3+DM8
- ZEQUdkzpwiulKpEMslcejBMp/tsJoEm3Hgh0vJyrzKnwYU41NIHcW3uaKwSFCf53lYRX
- PVNg==
-X-Gm-Message-State: AFq9FYIcG3dfW2ZfIzvrnWND0w74Y5Vbq6j+Tks1oMs/d+Gh0fQI436t
- //31TnhWOi0E2kABUDyn4DFpGRiqsb3lvEPPRk8DJEClEiEj11kQrfYm+4ThH2gydGas3ZF1YjT
- 4/q+XvnTvRguA2KrcrXf7Z/0FWpkSqE18LWiiDPXPEwQ8O8m4++9+T3UV2PcGlLecyg==
-X-Gm-Gg: AYBFou3+cJ5T5aPKbkXBwsP4A7FIyKU0Fchj6lFzM5PizU5BBIW7SY9lycMh4s0hRf9
- PwBQ6g7oHVjAe9XVz1HCgVK//A7Spead+0T8YF4qlaOzLY2MWAatzRGql9PvngI1OjzGXm/q6ol
- 1YLmOokhgv9bm10EBhYZE2B3XalQ6XcovH+j2eD8OIIR3VAjRQM4Wvstoxbs0xVYeED9E+d3ZQx
- XJI+IM4gdxRo69oqRlpH0AMVrYHnD8rcuSNNac+xOV9qXiqvZqzJfQj3vpHhG9dckpkR2tAbXtl
- J0wORAE0MU/pEVw2PGQ7e1uYQY8AHDfqjKdfoluDQHpiERerfBMGzYZz57FKjJGArWCyDkyspbC
- OOxATqk9ywJanpopxXZS0oClit7mrprU4Q7H3LuKmslR4fMbWtK8Wvie5+8dBOYhldOsLAIBh2Q
+ bh=HziJ8UBV9UV9YJwY/KW+mHg4CspLb3r8IA/SuQ3F/60=;
+ b=snCWGLgEpxYOCaO6t6/vL6suNQrBaBjeDuXcoSpDT++ed44lPfGcxBXn2m75xDDOLR
+ TJ2h9e6DcCkAVe508ZyH4nTJKhdhDUv/qYPdDTACnpnC5wolx/brQhqbuiOkamqVJup+
+ VQ+fnYWYSvtHxcm9Q2hfmBTgQt9hLBV6B/SO87m0FgeCVKc1Li8+MQNVeposnjoSQPm+
+ dITD+0JVv2EDDFdVx6pVnxYFHnhXFz+yUDb+g7xzJ8yBvkJPVTjnbvOOMm8mxvr+gPSW
+ ZyPTnfAnc8+tydwfSKOBeR7K1rLJrxsuQbUzCFCHASxC1tC7w5eqa3lTsjB69OUwqcJf
+ bu2w==
+X-Gm-Message-State: AFq9FYJ6bpOv3Fvs9jjoblD2tIf8wiAqroeROkrn8pXAjtzYFoiRz0nx
+ zOfryq4O1Sx4KUYGcOzOZ79mjVNgqSSAYlyQmlT08yh1/glVHc5EXTTRUou1i9Ogx5Cwxw80yB0
+ ZATr3iOHhF3kT/vbjt6dbEB3wwaEuxX1ZAlSXxgRhARsUVgY8MXqw9TZOPdwrXOs/Xw==
+X-Gm-Gg: AYBFou1A6l9OlUd/mtgnexCeF5r0ofqQRerZBZ4H4Iqp//tmU1gIdj1vHqr727puPuv
+ Kl70Uo3zm5WrpkflQuLIfOP04Vqu+6UWp8GO15vYYkSfFLwEJVAOAUNOMEEVgdMR5mk9F+qZz18
+ OVtXMXqt1FT4h6JOuc82u7VEuRRqxswxw78tHnGHZqTA2Qy9qtCVPBz/Xhts+xoEqLgDYcgbXwX
+ hhb63O+DDL18T+ZkAnwWmACrXG6U0uXGr5o0sXUP317ssaR+U3ivkbhvY625yqFtgYwq/dX3rqU
+ zRBkDtIOJfp/iBHFFBFqInbW6MvqUriLzqZlrRom+KiIX7D31wthk1OYmCCLLfizZivbqefPlPG
+ A08OoVLL9Phe4c/mo4Lm6DKs866DDXqk4IivHI24BF3+bAEv8Coo+/VI62ga7Sq1V5bDNgmzrPg
  ==
-X-Received: by 2002:a05:622a:164d:b0:536:65fc:1e with SMTP id
- d75a77b69052e-5369bb41760mr55646491cf.62.1792624481246; 
- Wed, 21 Oct 2026 16:14:41 -0700 (PDT)
-X-Received: by 2002:a05:622a:164d:b0:536:65fc:1e with SMTP id
- d75a77b69052e-5369bb41760mr55646021cf.62.1792624480633; 
- Wed, 21 Oct 2026 16:14:40 -0700 (PDT)
+X-Received: by 2002:a05:622a:1aa5:b0:536:6902:db04 with SMTP id
+ d75a77b69052e-5369bb9b16emr55840301cf.75.1792624478641; 
+ Wed, 21 Oct 2026 16:14:38 -0700 (PDT)
+X-Received: by 2002:a05:622a:1aa5:b0:536:6902:db04 with SMTP id
+ d75a77b69052e-5369bb9b16emr55839861cf.75.1792624478067; 
+ Wed, 21 Oct 2026 16:14:38 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com
  (200-204-190-237.dsl.telesp.net.br. [200.204.190.237])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536ab6cd0dcsm11995651cf.6.2026.10.21.16.14.38
+ d75a77b69052e-536ab6cd0dcsm11995651cf.6.2026.10.21.16.14.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 16:14:40 -0700 (PDT)
+ Wed, 21 Oct 2026 16:14:37 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -94,52 +94,52 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  antikostya2@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v4 15/18] hw/riscv/rv-trace-messages: add format 1 msgs with
- branch info
-Date: Wed, 21 Oct 2026 20:13:42 -0300
-Message-ID: <20261021231346.2452179-16-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v4 14/18] hw/riscv,
+ target/riscv: send resync updiscon trace packets
+Date: Wed, 21 Oct 2026 20:13:41 -0300
+Message-ID: <20261021231346.2452179-15-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
 References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: eWXxmJrQZTgsN1GWCb91-Q89V_qzWud0
-X-Proofpoint-ORIG-GUID: eWXxmJrQZTgsN1GWCb91-Q89V_qzWud0
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX6rgR+1RA+8UL
- qRtpTbQbztPe4WS1CHcUZT7pFzurN23Rv3AVyOzmA9iWt+pihtGKh36/ifibdLfSws86X//bsZc
- 2RPAoMzf0vylYC+nts/O5Lc6MqBW9bU=
-X-Authority-Analysis: v=2.4 cv=KOzPn1Fo c=1 sm=1 tr=0 ts=6ad94762 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfXwba38xLQ3lNg
+ X/eZRKsJk0ZbGhItFHNHKZZ4Ppmt33jC4SYLflu/nZKnR2y8R023LbZBEgFez5fBOazHDHGmOT4
+ z/r2TFKLIMVHFpRTXIuYspaOcCVXqP4=
+X-Authority-Analysis: v=2.4 cv=eJaGH3p1 c=1 sm=1 tr=0 ts=6ad9475f cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=26Pa0hPBu1MJQ4wyLl0A:9 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX9uACJVADxXSx
- hf91tk4IerJSNM9II/AR762ZsvZO4MghRky4B+ZauF/hhLwiLP6TclRjw7BQjigQHqcWhRoj6aY
- f9mLbWRmGNtEAGVo1Hp9B5vsGjMYzGG+iQhGMugMPfw6DDYRE9G/YYJjGlyfg57rgLgiMO0okQe
- kBEizXDdSXlLcZFw/EhEDY4a75I6XlATE6j22uxoWMf3dpgIKV8YPUK4n0iiDcqbAX95bqmlhjW
- d3S2MfBrWIb4iDywyYJx1/u9L8hcFSMvAOTRsjVoahXV3fbOqrVakAlZewDQHGv+O4oEcss72RM
- w5Nnyiw3CXjtMUG2Il00rwLedtTQ6fhAjO9uL00pk7jmPkyJVt9tL79tNlXziqXkcnZvRxDYlx0
- pTu9GQJ18EGDGbjStXliADgHux/OnCA/lbunWVQWcHQa6b1Vzq7TtqBWaJQuqn46Xsl4lYKP1ij
- 2YYqmIHCBnA5b2HKASA==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=v6o39jtdX7kFEx2kGjIA:9 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: 8FBOQRyrqy48SWeBMkID5RZyT-AdwCOn
+X-Proofpoint-ORIG-GUID: 8FBOQRyrqy48SWeBMkID5RZyT-AdwCOn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX6mRUp1PeG8L4
+ osiKEyodDbC7lH4i7usRr6JNXnExTM6u2sZtaoebSiN8qdNKFu0ZnEY+a5uNwwyR8HzsdClMkLH
+ 4Cb+sDSuz06clqsAWvVxfDPp8CcrnbETbDcsBuU+9xLHYwrnvVK/1YWKbqZsgQFNt6NrC9vBV3A
+ 6r1Trq1DVXmRmhLipATqNMTtBGHyXfJGj9V2u625NmdrA29Vy3CXuw92hWNRhCVZmF544soct4l
+ 62Jr06XESbMuzjjy1Nr0iNMOJFiPSx4gs/pTiK942cdMsNKArhiG1rLfEuU8m90kxr+frozzjL+
+ jeeo7J1FBKG8bKyVHBkQFy6Ef6UlApTaXGyYnjGsw4OJn+jrezcSRR88Jl+6V8KCO/51cXfKHix
+ ji7XSTlbhM6D6+Fd70APLe4R1IRkOnOR+qOxP1aLTwlvs63eJNM/h7QMaJMX6HVxeIJyxXR/YvM
+ zOymDX8oiO0wFF0ZEBw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 impostorscore=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ adultscore=0 spamscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
  definitions=main-2610210092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,176 +154,250 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add encoded message helpers to send branch information trace packets.
+Send updiscon packets based on the constraints already discussed in the
+previous patch:
+
+- We do not implement any form of call/return prediction in the encoder,
+  and TCG will always retire a single insn per cycle, e.g. irreport will
+  always be equal to updiscon;
+
+- irdepth is not implemented since we'll always return a  package where
+  irreport == updiscon.
+
+Note that we're sending an updiscon packet if the 'updiscon_pending'
+flag is set when we're about the send a resync or a trap packet. The TCG
+helper in this case is just setting the trace encoder flags instead of
+actually triggering a RAM sink SMEM write.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- hw/riscv/rv-trace-messages.c | 126 +++++++++++++++++++++++++++++++++++
- hw/riscv/rv-trace-messages.h |   7 ++
- 2 files changed, 133 insertions(+)
+ hw/riscv/trace-encoder.c                      | 37 +++++++++++++++++++
+ hw/riscv/trace-encoder.h                      |  3 ++
+ target/riscv/helper.h                         |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     | 11 ++++++
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  2 +
+ target/riscv/tcg/trace_helper.c               | 14 +++++++
+ target/riscv/tcg/translate.c                  |  7 ++++
+ 7 files changed, 75 insertions(+)
 
-diff --git a/hw/riscv/rv-trace-messages.c b/hw/riscv/rv-trace-messages.c
-index 83d3436e2e..46445a47da 100644
---- a/hw/riscv/rv-trace-messages.c
-+++ b/hw/riscv/rv-trace-messages.c
-@@ -64,6 +64,31 @@ typedef struct RVTraceFormat2Payload {
- } RVTraceFormat2Payload;
- #define FORMAT2_PAYLOAD_SIZE_64BITS 9
- 
-+typedef struct RVTraceFormat1BasePayload {
-+    uint8_t format:2;
-+    uint8_t branches:5;
-+    uint32_t branch_map:31;
-+} RVTraceFormat1BasePayload;
-+#define FORMAT1_BASE_PAYLOAD_SIZE_64BITS 5
-+
-+typedef struct RVTraceFormat1Payload {
-+    uint8_t format:2;
-+    uint8_t branches:5;
-+    uint32_t branch_map;
-+    uint32_t addressLow;
-+    uint32_t addressHigh;
-+    uint8_t notify:1;
-+    uint8_t updiscon:1;
-+    uint8_t irreport:1;
-+    uint8_t irdepth:3;
-+} RVTraceFormat1Payload;
-+
-+/*
-+ * FORMAT2_PAYLOAD_SIZE_64BITS = 9 plus 5 bits of 'branches',
-+ * plus minimal 3 bits of 'branch_map' = 10 bytes.
-+ */
-+#define FORMAT1_PAYLOAD_MIN_SIZE_64BITS 10
-+
- static void rv_etrace_write_bits(uint8_t *bytes, uint32_t bit_pos,
-                                  uint32_t num_bits, uint32_t val)
- {
-@@ -245,3 +270,104 @@ size_t rv_etrace_gen_encoded_format2_msg(uint8_t *buf, uint64_t addr,
- 
-     return HEADER_SIZE + header.length;
+diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
+index b2e2707e0c..b9121d93a7 100644
+--- a/hw/riscv/trace-encoder.c
++++ b/hw/riscv/trace-encoder.c
+@@ -403,6 +403,22 @@ static void trencoder_send_sync_msg(Object *trencoder_obj, uint64_t pc)
+     trencoder_send_message_smem(trencoder, msg, msg_size);
  }
-+
-+size_t rv_etrace_gen_encoded_format1_noaddr(uint8_t *buf,
-+                                            uint8_t branches,
-+                                            uint32_t branch_map)
+ 
++static void trencoder_send_updiscon(TraceEncoder *trencoder, uint64_t pc)
 +{
-+    RVTraceMessageHeader header = {.flow = 0, .extend = 0,
-+        .length = FORMAT1_BASE_PAYLOAD_SIZE_64BITS};
-+    RVTraceFormat1BasePayload payload = {.format = 0b01,
-+        .branches = branches, .branch_map = branch_map};
-+    uint8_t bit_pos;
++    g_autofree uint8_t *format2_msg = g_malloc0(TRACE_MSG_MAX_SIZE);
++    uint8_t addr_msb = extract64(pc, 31, 1);
++    bool notify = addr_msb;
++    bool updiscon = !notify;
++    uint8_t msg_size;
 +
-+    rv_etrace_write_header(buf, header);
-+    bit_pos = 8;
++    msg_size = rv_etrace_gen_encoded_format2_msg(format2_msg, pc,
++                                                 notify,
++                                                 updiscon);
++    trencoder_send_message_smem(trencoder, format2_msg, msg_size);
 +
-+    rv_etrace_write_bits(buf, bit_pos, 2, payload.format);
-+    bit_pos += 2;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 5, payload.branches);
-+    bit_pos += 5;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 31, payload.branch_map);
-+
-+    return HEADER_SIZE + header.length;
++    trencoder->updiscon_pending = false;
 +}
 +
-+/*
-+ * Same reservations made in the format 2 helper:
-+ *
-+ * - irreport and irdepth is always == updiscon;
-+ *
-+ * - return_stack_size_p + call_counter_size_p is hardcoded
-+ * to 3 since we don't implement neither ATM.
-+ */
-+size_t rv_etrace_gen_encoded_format1(uint8_t *buf,
-+                                     uint8_t branches, uint32_t branch_map,
-+                                     uint64_t addr,
-+                                     bool notify, bool updiscon)
+ void trencoder_set_first_trace_insn(Object *trencoder_obj, uint64_t pc)
+ {
+     TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
+@@ -410,6 +426,10 @@ void trencoder_set_first_trace_insn(Object *trencoder_obj, uint64_t pc)
+     g_autofree uint8_t *msg = g_malloc0(TRACE_MSG_MAX_SIZE);
+     uint8_t msg_size;
+ 
++    if (trencoder->updiscon_pending) {
++        trencoder_send_updiscon(trencoder, pc);
++    }
++
+     trencoder->first_pc = pc;
+     trace_trencoder_first_trace_insn(pc);
+     msg_size = rv_etrace_gen_encoded_sync_msg(msg, pc, priv);
+@@ -427,6 +447,10 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
+     g_autofree uint8_t *msg = g_malloc0(TRACE_MSG_MAX_SIZE);
+     uint8_t msg_size;
+ 
++    if (trencoder->updiscon_pending) {
++        trencoder_send_updiscon(trencoder, pc);
++    }
++
+     msg_size = rv_etrace_gen_encoded_trap_msg(msg, pc, priv,
+                                               ecause, is_interrupt,
+                                               tval);
+@@ -436,9 +460,22 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
+ 
+ void trencoder_trace_ppccd(Object *trencoder_obj, uint64_t pc)
+ {
++    TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
++
++    if (trencoder->updiscon_pending) {
++        trencoder_send_updiscon(trencoder, pc);
++    }
++
+     trencoder_send_sync_msg(trencoder_obj, pc);
+ }
+ 
++void trencoder_report_updiscon(Object *trencoder_obj)
 +{
-+    RVTraceMessageHeader header = {.flow = 0, .extend = 0};
-+    RVTraceFormat1Payload payload = {.format = 0b01,
-+                                     .branches = branches,
-+                                     .notify = notify,
-+                                     .updiscon = updiscon};
-+    uint8_t payload_size = FORMAT1_PAYLOAD_MIN_SIZE_64BITS;
-+    uint8_t branch_map_size = 0;
-+    uint8_t bit_pos;
++    TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
 +
-+    g_assert(branches < 32);
-+
-+    if (branches <= 3) {
-+        branch_map_size = 3;
-+    } else if (branches <= 7) {
-+        branch_map_size = 7;
-+        payload_size++;
-+    } else if (branches <= 15) {
-+        branch_map_size = 15;
-+        payload_size += 2;
-+    } else {
-+        branch_map_size = 31;
-+        payload_size += 4;
-+    }
-+
-+    header.length = payload_size;
-+
-+    rv_etrace_write_header(buf, header);
-+    bit_pos = 8;
-+
-+    payload.addressLow = extract64(addr, 0, 32);
-+    payload.addressHigh = extract64(addr, 32, 32);
-+
-+    payload.irreport = updiscon;
-+    if (updiscon) {
-+        payload.irdepth = 0b111;
-+    } else {
-+        payload.irdepth = 0;
-+    }
-+
-+    rv_etrace_write_bits(buf, bit_pos, 2, payload.format);
-+    bit_pos += 2;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 5, payload.branches);
-+    bit_pos += 5;
-+
-+    rv_etrace_write_bits(buf, bit_pos, branch_map_size, payload.branch_map);
-+    bit_pos += branch_map_size;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressLow);
-+    bit_pos += 32;
-+    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressHigh);
-+    bit_pos += 32;
-+
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.notify);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.updiscon);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 1, payload.irreport);
-+    bit_pos += 1;
-+    rv_etrace_write_bits(buf, bit_pos, 3, payload.irdepth);
-+
-+    return HEADER_SIZE + header.length;
++    trencoder->updiscon_pending = true;
 +}
-diff --git a/hw/riscv/rv-trace-messages.h b/hw/riscv/rv-trace-messages.h
-index 89f30e7d36..f8f1830852 100644
---- a/hw/riscv/rv-trace-messages.h
-+++ b/hw/riscv/rv-trace-messages.h
-@@ -28,5 +28,12 @@ size_t rv_etrace_gen_encoded_trap_msg(uint8_t *buf, uint64_t trap_addr,
-                                       uint64_t tval);
- size_t rv_etrace_gen_encoded_format2_msg(uint8_t *buf, uint64_t addr,
-                                          bool notify, bool updiscon);
-+size_t rv_etrace_gen_encoded_format1_noaddr(uint8_t *buf,
-+                                            uint8_t branches,
-+                                            uint32_t branch_map);
-+size_t rv_etrace_gen_encoded_format1(uint8_t *buf,
-+                                     uint8_t branches, uint32_t branch_map,
-+                                     uint64_t addr,
-+                                     bool notify, bool updiscon);
++
+ static const Property trencoder_props[] = {
+     /*
+      * We need a link to the associated CPU to
+diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
+index 64e19c5752..9116fe4f56 100644
+--- a/hw/riscv/trace-encoder.h
++++ b/hw/riscv/trace-encoder.h
+@@ -36,6 +36,8 @@ struct TraceEncoder {
+     uint32_t regs[TRACE_R_MAX];
+     RegisterInfo regs_info[TRACE_R_MAX];
+ 
++    bool updiscon_pending;
++
+     bool enabled;
+     bool trace_running;
+     bool trace_next_insn;
+@@ -51,5 +53,6 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
+                                bool is_interrupt,
+                                uint64_t tval);
+ void trencoder_trace_ppccd(Object *trencoder_obj, uint64_t pc);
++void trencoder_report_updiscon(Object *trencoder_obj);
  
  #endif
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 0832159adc..68348e5473 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
+ 
+ /* Trace helpers (should be put inside ifdef) */
+ DEF_HELPER_2(trace_insn, void, env, i64)
++DEF_HELPER_1(trace_updiscon, void, env)
+ 
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(sret, tl, env)
+diff --git a/target/riscv/tcg/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+index e22df6fbe7..531eb40595 100644
+--- a/target/riscv/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
+@@ -26,6 +26,8 @@
+ 
+ static bool trans_ecall(DisasContext *ctx, arg_ecall *a)
+ {
++    gen_trace_updiscon(ctx);
++
+     /* always generates U-level ECALL, fixed in do_interrupt handler */
+     generate_exception(ctx, RISCV_EXCP_U_ECALL);
+     return true;
+@@ -40,6 +42,8 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
+     uint32_t ebreak = 0;
+     uint32_t post   = 0;
+ 
++    gen_trace_updiscon(ctx);
++
+     /*
+      * The RISC-V semihosting spec specifies the following
+      * three-instruction sequence to flag a semihosting call:
+@@ -101,6 +105,8 @@ static bool trans_sret(DisasContext *ctx, arg_sret *a)
+ {
+ #ifndef CONFIG_USER_ONLY
+     if (has_ext(ctx, RVS)) {
++        gen_trace_updiscon(ctx);
++
+         decode_save_opc(ctx, 0);
+         translator_io_start(&ctx->base);
+         gen_update_pc(ctx, 0);
+@@ -119,6 +125,8 @@ static bool trans_sret(DisasContext *ctx, arg_sret *a)
+ static bool trans_mret(DisasContext *ctx, arg_mret *a)
+ {
+ #ifndef CONFIG_USER_ONLY
++    gen_trace_updiscon(ctx);
++
+     decode_save_opc(ctx, 0);
+     translator_io_start(&ctx->base);
+     gen_update_pc(ctx, 0);
+@@ -153,6 +161,9 @@ static bool trans_mnret(DisasContext *ctx, arg_mnret *a)
+ {
+ #ifndef CONFIG_USER_ONLY
+     REQUIRE_SMRNMI(ctx);
++
++    gen_trace_updiscon(ctx);
++
+     decode_save_opc(ctx, 0);
+     gen_helper_mnret(cpu_pc, tcg_env);
+     tcg_gen_exit_tb(NULL, 0); /* no chaining */
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index cc1b5dbbad..2de67c1a88 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -183,6 +183,8 @@ static bool trans_jalr(DisasContext *ctx, arg_jalr *a)
+         }
+     }
+ 
++    gen_trace_updiscon(ctx);
++
+     lookup_and_goto_ptr(ctx);
+ 
+     if (misaligned) {
+diff --git a/target/riscv/tcg/trace_helper.c b/target/riscv/tcg/trace_helper.c
+index 5a6d725f56..a4c5720a65 100644
+--- a/target/riscv/tcg/trace_helper.c
++++ b/target/riscv/tcg/trace_helper.c
+@@ -28,9 +28,23 @@ void helper_trace_insn(CPURISCVState *env, uint64_t pc)
+         te->trace_next_insn = false;
+     }
+ }
++
++void helper_trace_updiscon(CPURISCVState *env)
++{
++    RISCVCPU *cpu = env_archcpu(env);
++    TraceEncoder *te = TRACE_ENCODER(cpu->trencoder);
++
++    te->updiscon_pending = true;
++    te->trace_next_insn = true;
++}
+ #else /* #ifndef CONFIG_USER_ONLY */
+ void helper_trace_insn(CPURISCVState *env, uint64_t pc)
+ {
+     return;
+ }
++
++void helper_trace_updiscon(CPURISCVState *env)
++{
++    return;
++}
+ #endif /* #ifndef CONFIG_USER_ONLY*/
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index fb82a6b2fa..7f6dc6e9e3 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -627,6 +627,13 @@ static void gen_ctr_jal(DisasContext *ctx, int rd, target_ulong imm)
+ }
+ #endif
+ 
++static void gen_trace_updiscon(DisasContext *ctx)
++{
++    if (ctx->cpu_trace_running) {
++        gen_helper_trace_updiscon(tcg_env);
++    }
++}
++
+ static void gen_jal(DisasContext *ctx, int rd, target_ulong imm)
+ {
+     TCGv succ_pc = dest_gpr(ctx, rd);
 -- 
 2.43.0
 
