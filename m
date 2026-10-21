@@ -1,84 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68390606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BA6606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=m6Cmys0L
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=ZtqbI7tZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJWlW-0006yw-6H; Wed, 21 Oct 2026 09:54:03 -0400
+	id 1xJWlb-00070N-Cj; Wed, 21 Oct 2026 09:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xJWlD-0006xg-I9
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:53:51 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1xJWlT-0006yy-1O
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:54:00 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xJWlB-0007dX-O6
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:53:43 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ea138a3497so4648925ad.2
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 06:53:40 -0700 (PDT)
+ id 1xJWlR-0007gH-EI
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:53:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2e9cf928dc9so9470205ad.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 06:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792590819; x=1793195619; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CWZ1vo+SwdlHXeVTHPjZ962eIPh08Q3C16lAAUbnpT0=;
- b=m6Cmys0LTkBDf3w1rQUdjpoDoG3v6TToQK0bmEyh2tOSkVUIoEqOK/qjoOvUVg5Gad
- C5DDz8jPebK7m6aNevpGitoTN9UUQF2Xorq729tNvX9N0/bYGLzmhqO6s5Df0iU1B/VD
- mYUXQdxCZTfX7Ms0yZmsVRvUQw405ByEl/Yjy8kl/okLbwdnuHc8/1gGnappQGf4ilKG
- yK1vsmTNjn2L0HKKEj8JhNEmvMkNTXXCKGZhL0UvgsSTgEp+5n3QZ4KWuIKg5EouHQLK
- 0rB2ML5iVSOGnOGdGPqL/ALuniCNCSQVPMy9mbU3esz95GZX+SsmermQGR+UNeSPqeVE
- KbqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792590819; x=1793195619;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1792590836; x=1793195636; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CWZ1vo+SwdlHXeVTHPjZ962eIPh08Q3C16lAAUbnpT0=;
- b=ixcJos1pXEzEKaXT4JBBWs3OXFnP1wNG9DKjYpgSHDbJS752sLsBPv/x8+39B6HAHG
- 1Ew2KFyi/H+2UKkr/4M+ePSpx12cDWm+w3bHzjU0IZeqaVTyyO2Gv7W+lTBvFm8WoDpS
- wrSEv2gsMZ7gKmHCrD8iaNs6sNoJL0aA3JZM6ZPwwbQdiy/RQQDtQ3Wz8rEbmAQ83dmE
- psDaSr/2dHRlHEdYCIa1mAdV5WXY4/4Doa9L2JmTuBHf7k4Rng0vdblxl978NVG1tPUL
- f6aUVXa35/R3uEC2yiEww92gKrRCwQlpxu/oJTpmB8+pCbKezmHyaT8JmCcjPNlArkEB
- y64g==
-X-Gm-Message-State: AFq9FYI/Y5rTayU9oVk1f5u1PQUcbVghbbUI7755B2bM9UeVEBENelU/
- pRbaiu2zRGNNjz2b5yWlqK3VVweUIYkBvKKdaZmicX/2nTy66Kv3K5NZieAd1JuCVfqxIQVa
-X-Gm-Gg: AYBFou1axjKJLmMZ1ssbu9noua2+N8Z60dNw4236lhQXqLllztnEMSA+9W1XV/qiUJc
- sQL3LgbbK9Aj9QJcbE6KB5o4Hf7sO5EMlnEOtcXB/uGyX/asrjPP8ZxnHxD9+lUfTq9qQFj239F
- w8NurPgo2ff2R4C1u5bUxT2IcqSKUNAUva+eBurLcEnqA3ZsHP/MFnFi727jYqE6R/KdO3RWJk6
- vgLSqRyu2nhksDVmgb6+5iGM8KmGiw+AVbrDNcPoptK1puZ0gUWR1grNgFXMKt1yb2fYvShAxnk
- cV0Ie4W7ylVWljF5WmCvEy2+LIV5LK7TrGc9Og8cNRARoqBPFrG9MyisBUQdkL6rRaHPzBEsYag
- H/ci3VNIB3qRGcLhuUuDAFcVW81Vg9YiqN2hocKlmrUwvgvTV5VISWRwPTD9salcFpM0cm8q/jp
- osX0/0wp4m7aa8ZjWVwLkicAI6zogEKWGHm6jnoIPjIeydEoss06lHejxU9oY3/6ZuzMHTXFLUU
- GxfBfdUG5wBY3XB24rijQ7wS4is1d2sHUXzbW5TWJx8k/NYcyat+bPlG7BhTM4NKcmLD72/aipw
- QP0J3Z0=
-X-Received: by 2002:a17:903:2f89:b0:2e5:54c6:e5c9 with SMTP id
- d9443c01a7336-2ea437b4bf8mr17173345ad.2.1792590818840; 
- Wed, 21 Oct 2026 06:53:38 -0700 (PDT)
+ bh=dxnFporQ4rn5YtvH0PzOh6MHgLq7rylmA6sbBANnVyQ=;
+ b=ZtqbI7tZF3tPTnBMMih3AnCN6dqtlEWjHR9HAkE2Xz1s5LFEXeINZsLK1aXGjN/mme
+ 7oZYnz7TjqnEu/Ny8fMm3pn/JK+XOpGjvkh8V3sw6EDPRVwsKxDtWwkn3O3/bdtK0pJO
+ vqWimOOuCedk4QmJpE1mRH6uM/fUYa8I9GI5FY3a8+LUaCH8pF9ZFwmlnDNPqeNWFD72
+ 5+k/bs1IycvcYphU/ig0VLQu1RNwDMqOQoAmr907gCctuk4VmfVahC5SffyNBrod7sJE
+ g0BpcUwXEfw1/1s7oFZcdrIZrZjfdVbHNHnUbhxVHUXybeZoVaQMyWy372sGbt3wDWk3
+ o/UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792590836; x=1793195636;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dxnFporQ4rn5YtvH0PzOh6MHgLq7rylmA6sbBANnVyQ=;
+ b=Vnl4NsCHdYzFIDfdbJ0ZhcGHBy6Cp+EGy7fWo7M3Z0sA2KUy8p782EM9eMwnWdMhcI
+ iAdKmrSYaePJOy8Q5mAXKASorF1sP5zQCRsm6Te+KMUkR+i72WMZxnAmB24Z7Ijzvwo2
+ 2I/xsW6sRO6IltMBERsMGI7V5sR5OagydT2AlEWNwCAGVYdEr5ufwUnk5UFhf39Srz6z
+ +RYkwwUiMIzQ6qFbOljNZbHxA8KA0MaXJ8Y37MTNIeT1bGvhYuQDWrfYJPjiTaApfJvA
+ t6+RB2lKYG6Xtr8kV3BPnQOeY5ImuIqDhIaKO/nvEzS1tp5b2yzLR0L4jPa8YlLNyqkV
+ ikgQ==
+X-Gm-Message-State: AFq9FYK0h0CGfE4KxtDssYrbLSFmWlFqYQpf38EYHE6uYS53nWUdJY9Z
+ tdJmADN4Mq8hCKMKOZLvAy98R8P9bQFsWz6uIkhcXGz1YKnQYpGPX6buCODfRm5+pOePKQ==
+X-Gm-Gg: AYBFou0K9dpK3liNKkhiQ1w4/wqcUYNJqDpckF6HmNTYC6JH25rJkoL47adJ3sdoLAG
+ +NuaAl6eiRZRbQfhMhZNngT5TRN643ozeBEsLrtEi2Zvc4e8gJ+vcasV0YKYAqJbkC8ga6SOr41
+ 1RamW+8yEJQEBAaozVPpXAcSRJdzgojHWuVDAL1zgUVELl5L5zpQnsbtdcxtjOVzmKNrncMCs4/
+ FHUHPL66+juyXP1suN8ddYxUtQ7g9p0fqL/Wxi6Ccr14EdpfRrs3wZq6Rd3gzq80L/Y1XzjbU0u
+ gVt6STi/jDVVtVZEAL9wxV9/98Vay0+HD5+RmiJOE+UWjRPieQtkNhVg7DlW2oxdChTyIXdzyir
+ G00uqzhSzX8jHKSLxC4jl/Y68RuJUO3IhtqT926wx2KsK0qOFMztOeMvcMESELnLCMrBFsKWD37
+ 9tdbuvkbcSv62qBwrER2KzCuFg9l/vcdctrK1ts8U1LgBrXVBwAprQ7COHSoB+xndYa6GSRJDGy
+ x0IsilJmXGkxt3moz7hG8uks6b7LLY0R8lGEVZKHaSXLgDAx5IZscuZRVQf
+X-Received: by 2002:a17:902:d4cd:b0:2e9:95b9:4bcb with SMTP id
+ d9443c01a7336-2ea43dcd579mr11076855ad.14.1792590835704; 
+ Wed, 21 Oct 2026 06:53:55 -0700 (PDT)
 Received: from archlinux ([2409:8949:4c8c:84e:a337:63b8:1a6e:7a9b])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ea3b49caa7sm11865135ad.69.2026.10.21.06.53.33
+ d9443c01a7336-2ea3b49caa7sm11865135ad.69.2026.10.21.06.53.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 06:53:38 -0700 (PDT)
+ Wed, 21 Oct 2026 06:53:55 -0700 (PDT)
 From: pillow <waysorrypub@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  jiaxun.yang@flygoat.com, mst@redhat.com, imammedo@redhat.com,
  anisinha@redhat.com, pillow <waysorrypub@gmail.com>
-Subject: [PATCH v3 0/3] hw/loongarch/virt: Fix UART ACPI description and
- update DSDT blobs
-Date: Wed, 21 Oct 2026 21:53:19 +0800
-Message-ID: <20261021135322.473781-1-waysorrypub@gmail.com>
+Subject: [PATCH v3 2/3] hw/loongarch/virt: Drop UART _DSD/_CCA and add _STA
+Date: Wed, 21 Oct 2026 21:53:21 +0800
+Message-ID: <20261021135322.473781-3-waysorrypub@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261021135322.473781-1-waysorrypub@gmail.com>
+References: <20261021135322.473781-1-waysorrypub@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=waysorrypub@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=waysorrypub@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,51 +98,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The LoongArch virt UART ACPI description currently carries a _DSD clock
-property with a typo ("clock-frenquency"), a reversed key/value order,
-and a declared 100 MHz that does not match the QEMU model. The _DSD
-contains nothing but this clock property, so the whole object is
-dropped.
+The UART _DSD contains only a clock property, which has a typo
+("clock-frenquency") and the key/value order is reversed. The declared
+100 MHz also does not match the current QEMU model.
 
-The Linux PNP serial driver uses uartclk = 1843200 Hz by default and
-the QEMU UART uses baudbase = 115200, i.e. uartclk / 16 = baudbase,
-so the Linux default clock already matches the model. QEMU's x86 ISA
-serial ACPI description also provides no clock property, which is
-consistent with this change.
+The Linux PNP serial driver uses uartclk = 1843200 Hz by default, and
+the QEMU UART uses baudbase = 115200. These correspond as
+uartclk / 16 = baudbase (1843200 / 16 = 115200), so the Linux default
+clock is consistent with the QEMU model. Since the clock property is
+the only content of the _DSD, remove the entire _DSD rather than
+keeping an empty one. The QEMU x86 ISA serial ACPI description also
+does not provide a clock property, which is consistent with this
+change.
 
-Two further cleanups are folded into the same patch: _CCA is dropped
-because the emulated UART does not support DMA, and _STA = 0x0f is
-added to indicate the device is present, enabled, should be shown and
-functioning properly.
+Also drop _CCA because the emulated UART does not support DMA, and add
+_STA = 0x0f to indicate the device is present, enable, should be
+shown and functioning properly.
 
-Patch 1 allows the LoongArch DSDT.* diffs in bios-tables-test, patch 2
-makes the ACPI change, and patch 3 refreshes the expected DSDT blobs.
+Signed-off-by: pillow <waysorrypub@gmail.com>
+---
+ hw/loongarch/virt-acpi-build.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-Testing: ran bios-tables-test with the updated blobs; no unexpected
-diffs remain.
-
-pillow (3):
-  bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
-  hw/loongarch/virt: Drop UART _DSD/_CCA and add _STA
-  tests/data/acpi/loongarch64: Update expected DSDT.*
-
- hw/loongarch/virt-acpi-build.c                |  12 +-----------
- tests/data/acpi/loongarch64/virt/DSDT         | Bin 4603 -> 4379 bytes
- tests/data/acpi/loongarch64/virt/DSDT.memhp   | Bin 5824 -> 5600 bytes
- tests/data/acpi/loongarch64/virt/DSDT.numamem | Bin 4609 -> 4385 bytes
- .../data/acpi/loongarch64/virt/DSDT.topology  | Bin 4905 -> 4681 bytes
- 5 files changed, 1 insertion(+), 11 deletions(-)
-
-
-base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 54965f0..55c7641 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -314,7 +314,6 @@ static void build_uart_device_aml(Aml *table, int index)
+ {
+     Aml *dev;
+     Aml *crs;
+-    Aml *pkg0, *pkg1, *pkg2;
+     Aml *scope;
+     uint32_t uart_irq;
+     uint64_t base;
+@@ -325,7 +324,7 @@ static void build_uart_device_aml(Aml *table, int index)
+     dev = aml_device("COM%d", index);
+     aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+     aml_append(dev, aml_name_decl("_UID", aml_int(index)));
+-    aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
++    aml_append(dev, aml_name_decl("_STA", aml_int(0x0f)));
+     crs = aml_resource_template();
+     aml_append(crs,
+         aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+@@ -335,15 +334,6 @@ static void build_uart_device_aml(Aml *table, int index)
+     aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
+                                   AML_SHARED, &uart_irq, 1));
+     aml_append(dev, aml_name_decl("_CRS", crs));
+-    pkg0 = aml_package(0x2);
+-    aml_append(pkg0, aml_int(0x05F5E100));
+-    aml_append(pkg0, aml_string("clock-frenquency"));
+-    pkg1 = aml_package(0x1);
+-    aml_append(pkg1, pkg0);
+-    pkg2 = aml_package(0x2);
+-    aml_append(pkg2, aml_touuid("DAFFD814-6EBA-4D8C-8A91-BC9BBF4AA301"));
+-    aml_append(pkg2, pkg1);
+-    aml_append(dev, aml_name_decl("_DSD", pkg2));
+     aml_append(scope, dev);
+     aml_append(table, scope);
+ }
 -- 
 2.56.0
 
