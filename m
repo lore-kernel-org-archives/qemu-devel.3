@@ -1,57 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47FF606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 07:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A2D606A331
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 07:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=ixkuX/hE
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Yi3IVDDT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJQzD-0002yN-Dj; Wed, 21 Oct 2026 03:43:47 -0400
+	id 1xJR1H-0003XK-CC; Wed, 21 Oct 2026 03:45:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQzB-0002yB-ES
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:43:45 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQz8-00033Y-84
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:43:45 -0400
-Message-ID: <0da65c5ba0e9b84d17c88cfca01af4c788f00766.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1792568619;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AqmgqfHH4AQim8A/LM85o2U4Ma4hDKDyGZXuSJ58dgQ=;
- b=ixkuX/hEGOutayhV3/ZzSLisFdttsf/EczV2YhOH57UFKNoGdnES68Iu8Nci+c196RVCCJ
- 4LjUkDKGl50mT1FJymN1QjgqnpQBUZLTpd4Er5oeWboLwoDbRbDUnkgCSvE+suAeqAu9iv
- efmjQVBgzZT7irJ9r57RjDhmhXnx+gY=
-Subject: Re: [PATCH v2 7/7] linux-user/sparc: Report HWCAP_SPARC_CRYPTO for
- crypto CPU feature
-From: Stian Halseth <stian@itx.no>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
- <atar4qemu@gmail.com>, Richard Henderson <richard.henderson@linaro.org>, 
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>, Eric Biggers
- <ebiggers@kernel.org>
-Date: Wed, 21 Oct 2026 09:43:38 +0200
-In-Reply-To: <20261021064640.3591682-8-stian@itx.no>
-References: <20261021064640.3591682-1-stian@itx.no>
- <20261021064640.3591682-8-stian@itx.no>
-Content-Type: multipart/signed; micalg="pgp-sha512";
- protocol="application/pgp-signature"; boundary="=-lqc/ZBikupAk1wbXMZhN"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xJR15-0003Wj-Qq
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:45:43 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xJR14-0003OR-9V
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:45:43 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48df0fa43c5so252357f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 00:45:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792568740; x=1793173540; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+naEJlM3M1bZUCqHtCKB7BnBpA4uBcYC44P00GgDzU0=;
+ b=Yi3IVDDTDEMeJkh9qYuLC9tPj0rux9Ve2y0YGoOZ8FnMt4LfXJCUGy9g7pyMtrFnGZ
+ eDWn4ViriYedt0zxQybDSTuefh19UtcOMqnipgUdHjRFKGR4bcFrswaEVLd5hyRNkCLs
+ 4BxZpaoXDnmu97mQCUxek7S9EAZcNObCz0xDNceLRfJbuO99wm5KUJWA1iv4e8FtxOWg
+ h2PFWYAm9H3nf0JknHHkMSNtRyrlM0qr/nZX0KjwIyMgPDVk7vLMp83DKUWyKm05ADwd
+ HUVWIOsbQfBm7t7n/PfLaZxFa4OvEA0zkNEWyXaW+8XWq3a6HgoZFFi3BSyK9gZxm48K
+ TIzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792568740; x=1793173540;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+naEJlM3M1bZUCqHtCKB7BnBpA4uBcYC44P00GgDzU0=;
+ b=Fr1AuSTSrFkZtlAx6ehhSvTWZlh3CwMShp6gn0ujQY2HbEPp6/Bjvh1nIXZPs0WCOT
+ vntwz8GnS2xWcqLAUXBiw3P/itTAxIPt3Tr67EBW5gQnr4TdbQ6UPbw7oisGtMNN5bF2
+ i38Z26K/VzLiaOVo0E+XCOOyGvHecyCipMnPiZ/PaLfYNgtcibE3SCzbN2yObrs/IJMt
+ UaBUOcWgCWMxsWnBTClbV/K8Jnst0HqPf33BLG/BLqVI2UPLK/DoIPUPvEd7sGd7LzJ/
+ OsKlL1m1feoXoCcvcgdxzsJIeSc6sOjFDm/jIsq8X5DlZh2Zw5hB17oD/pcTwlUNI5Bx
+ kftA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByMlgvfaU936HMBpzRXoUB5zvc3VlAJyDZ+j5E5/0XO5Xrj/G3KkY0QXeNrrLWqK0klfTGimIUcwFgH@nongnu.org
+X-Gm-Message-State: AFq9FYIFqI7A0xkiKRM70qX3hMglxZhag0DdicyVCdsFlKCDDx7Xxy+x
+ EK/B1ki82KnQWLjE1Q1pktb5kdTwbirmyuBAe5Do2lvFKT5KTtyatwxJtwzpUjvnj5s=
+X-Gm-Gg: AYBFou1aSG1RQXVIVBXyYplBCxD9YCaFNzIwtDYAKK7qW7ZW95RS6yuj/SvjvY4Y9Zf
+ Zmq6YSGyHLMnlLYsP97CxzP7a3sIu2UtKf+uGN0mif/nfa0/GyrH0Xfp24hSTpxa0arMyAL71b6
+ mpFFfL36UpteFbykfDCjRpAB4St6sUJLwFYzGXZBtd2guMzf/wSn4wdc24O1s5US6m68c5UVYEn
+ mhm6apfFnBg2De9K8AWDgPRC2t69lDwRznCZzr7wI1FSWqSfvEy173RnptIcze6wKSDGBpnXlF0
+ OvN3gY47jZJ3hUocFRYgtpM4y/iqo1L54CLKYQmZCJQPV8NFcnSbxmPDnNGTyeaoeN3B6uR33W6
+ t8yu9c5OwSBUXG1KhvurWzbOYtIC0NBTdNAPRdETIU0q/N7K4IryUDUPJZW9wxFXMEr387Qj5ng
+ 1fETE0U3ELWxujsRA4WR4hYf+U3JEqVRdvsnWRyJH+2VUPOSXX/Q08HCGlAFAF9jN7fKxlkBNuW
+ K6sYAZhGTMe//me1Mlfw3F0kCkuveZ4cDqOz7W7BQ1ECcX2OZWwRnpDUISpm6Wc9lGc+B7RXZow
+ jbThvFVyHPPbVWA8W5pqsHH4dR1x
+X-Received: by 2002:a05:6000:29d6:b0:48c:585b:8825 with SMTP id
+ ffacd0b85a97d-48e264c65b0mr1219675f8f.18.1792568739956; 
+ Wed, 21 Oct 2026 00:45:39 -0700 (PDT)
+Received: from [192.168.2.121] (pd95f64ec.dip0.t-ipconnect.de.
+ [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e25828cd1sm3770547f8f.22.2026.10.21.00.45.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Oct 2026 00:45:39 -0700 (PDT)
+Message-ID: <273fbd41-be34-4a88-9b06-b651407c59ed@linaro.org>
+Date: Wed, 21 Oct 2026 09:45:37 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/alpha: honor the page table entry granularity hint
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20261008193119.1246259-1-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261008193119.1246259-1-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,102 +102,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
---=-lqc/ZBikupAk1wbXMZhN
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-Found a problem that comes with patch 7 and glibc multiarch builds.
-
-As soon as HWCAP_SPARC_CRYPTO is visible, glibc chooses the niagara4
-routines (SPARC T4 and later), and on the sun4u model with +crypto they
-die with SIGILL.
-
-glibc's niagara4 memcpy/memset use block-init stores (ASI 0xe2,
-ASI_BLK_INIT_QUAD_LDD_P).=A0gen_st_asi() only accepts that store on CPUs
-with CPU_FEATURE_HYPV.
-
-Note that this does not reproduce with Debian's sparc64 glibc, without
-multiarch. I reproduced with Gentoo stage3, built with -mcpu=3Dultrasparc
-and multiarch glibc 2.44.
-
-A small change to translate.c, function gen_st_asi(), fixes the
-problem.
-
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 921ffd2d1b..931fc006ce 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -1863,8 +1863,12 @@ static void gen_st_asi(DisasContext *dc,
-DisasASI *da, TCGv src, TCGv addr)
-         if (TARGET_LONG_BITS =3D=3D 32) {
-             gen_exception(dc, TT_ILL_INSN);
-             break;
--        } else if (!(dc->def->features & CPU_FEATURE_HYPV)) {
--            /* Pre OpenSPARC CPUs don't have these */
-+        } else if (!(dc->def->features &
-+                    (CPU_FEATURE_HYPV | CPU_FEATURE_CRYPTO))) {
-+            /*
-+             * Pre-OpenSPARC CPUs lack block-init stores. Crypto
-instructions
-+             * imply T4 or later, which supports them.
-+             */
-             gen_exception(dc, TT_ILL_INSN);
-             break;
-         }
-
-My kernel tests missed this, so will improve my testing routines going
-forward. Sorry about this extra noise.
-
-The fix is queued for v3.
-
-/Stian
-
-On Wed, 2026-10-21 at 08:46 +0200, Stian Halseth wrote:
-> Set HWCAP_SPARC_CRYPTO in AT_HWCAP like Linux does on real hardware
-> that supports it. qemu-sparc64 defaults to "TI UltraSparc II",
-> which has no crypto feature, so it must be enabled explicitly,
-> e.g. -cpu TI-UltraSparc-II,+crypto
->=20
-> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>
-> Signed-off-by: Stian Halseth <stian@itx.no>
+On 10/8/26 21:31, Matt Turner wrote:
+> PTE<6:5> is the granularity hint. A hint of N says the entry is one of a
+> block of 8^N pages (64KB, 512KB or 4MB) that are contiguous and naturally
+> aligned in both address spaces, so that one translation buffer entry may
+> map the whole block. Such an entry takes the frame number bits above the
+> block size from the PTE and everything below from the virtual address.
+> 
+> Do the same: mask the frame number down to the block base and take the
+> offset within the block from the address. A well-formed block translates
+> exactly as before. A block whose frames are not contiguous or not aligned
+> now gets a wrong translation, as it can on hardware, instead of working
+> by accident.
+> 
+> The size passed to tlb_set_page() stays TARGET_PAGE_SIZE. A translation
+> buffer is free to ignore the hint, so a guest already has to invalidate
+> every page of a block, and one entry per page is all that is needed.
+> 
+> Signed-off-by: Matt Turner<mattst88@gmail.com>
 > ---
-> =A0linux-user/sparc/elfload.c | 1 +
-> =A01 file changed, 1 insertion(+)
->=20
-> diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
-> index 181f1e00b5..0412741285 100644
-> --- a/linux-user/sparc/elfload.c
-> +++ b/linux-user/sparc/elfload.c
-> @@ -90,6 +90,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-> =A0=A0=A0=A0 r |=3D features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
-> =A0=A0=A0=A0 r |=3D features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
-> =A0=A0=A0=A0 r |=3D features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
-> +=A0=A0=A0 r |=3D features & CPU_FEATURE_CRYPTO ? HWCAP_SPARC_CRYPTO : 0;
-> =A0#endif
-> =A0
-> =A0=A0=A0=A0 return r;
+>   target/alpha/cpu.h    | 1 +
+>   target/alpha/helper.c | 7 +++++++
+>   2 files changed, 8 insertions(+)
 
---=-lqc/ZBikupAk1wbXMZhN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Mm.  I had never implemented this before because the well-formed case 
+shouldn't matter.  But I can understand wanting the ill-formed case to 
+fail in the same way.
 
------BEGIN PGP SIGNATURE-----
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCathtKgAKCRDoeAEuJe36
-VvYKAP9nVg6tw9phTjdqdBnoCkIGiJ5QktXXo0bnhMOzkGdihwD/Ue+0hK6PF3/l
-yF6b69o3ZG1MWHAidI9VHCPTQslJfwg=
-=dJmv
------END PGP SIGNATURE-----
-
---=-lqc/ZBikupAk1wbXMZhN--
+r~
 
