@@ -1,92 +1,124 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1A9606A31D
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14225606A31F
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tvj4XxmH
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PLh62SFp;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=C2U8eibx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJXGV-00068A-2f; Wed, 21 Oct 2026 10:26:03 -0400
+	id 1xJXSa-0004G6-7h; Wed, 21 Oct 2026 10:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJXDS-0001eB-Hb
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:56 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJXDM-0002AW-J1
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:53 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-48e0d1da913so700119f8f.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:22:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xJXRn-00045y-Qe
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:37:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xJXRl-0003XM-S8
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:37:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792593460;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VJY/VQXabF9YQFPESGPwynluvIavq6kW7BPOub19CoE=;
+ b=PLh62SFpjyS5x1d6hXpIclV3QS2XqJPPI3wL7JD0LQwxu5srZz2EintVfT2IWZ4GhKCFcH
+ vIKi+gWqTZ2gcTFzj5g/gx0NrlF+rSEgktahcF0L6IljB95syerbtskh3air1HKbPrFnze
+ xkT5WIlb4ShFcbYoKkjXDv2bDr5ygug=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-j4tXaVjpPOqoiPzvl38ufA-1; Wed, 21 Oct 2026 14:37:32 +0000
+X-MC-Unique: j4tXaVjpPOqoiPzvl38ufA-1
+X-Mimecast-MFC-AGG-ID: j4tXaVjpPOqoiPzvl38ufA_1792593451
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a01d1fb07bso10341885e9.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792592562; x=1793197362; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=r8MfzwFSaVOnbgcPsExCxvp/RxRa1vZkfNRGD9NjhuE=;
- b=tvj4XxmHpTXBLaQX48qH48MoDzx7EdiBJJOAEgX1UQpANSWuZZ92cdLkBpC2tQlNMI
- DZHaU3jIUgMqLlzk8xQvPXI1erxU85oYmhgicWMa2w5Y07wXzQEFHuPN0oqTsGPzvo8x
- RcGYA7+c5+MK6QRutrHKRjnxTWmYIIoxI1WHwFOlrwMlP+oynHcbYMk7p7SpT2n6FMTu
- Ugi3AC/yKOBtmk0JLMyO1ilEH5tSVKEj9ELcMND9zuR3rYDRo1R22mkhV3nU7FVJDDzp
- 1NWVmJQ67qrg2EgkV/jgZYinuIo1pPc0evvkopNw5DM+MnkcDLFAtPciHxl7OhDIEUoS
- jE5w==
+ d=redhat.com; s=google; t=1792593451; x=1793198251; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=VJY/VQXabF9YQFPESGPwynluvIavq6kW7BPOub19CoE=;
+ b=C2U8eibxR4G3FNPBvc/Gl9bVQgYKfe3/bPkCmkjdrw4g8L0m20fHg7NYWqrMjlHrlA
+ NqTzMrB6CyYKg4m+mwUexYtgk+BHNeFdemQzESDxwhYPV1NjFHhtJNK+knmELNyxDyHc
+ NtxoM1ORQ8TtWOzmJPBadgFeLUkCmmUFcutCBU0+OSeBytGseylZ7kx+8wskrHACI/wf
+ JeHKduIws60XDdEXyCS8D5VVKk7GUMOkQUVmuzwfT0EC2liPTEZ3xVtvBCDdry7Z6INp
+ Qyd8cE9BfTnmVKHlB8gJXa0xFPrubKyYnjf6v3kwgOdp0xJquEBXUcJxPW1idCaSCgsD
+ U0QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792592562; x=1793197362;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=r8MfzwFSaVOnbgcPsExCxvp/RxRa1vZkfNRGD9NjhuE=;
- b=WJRGo/pKfwuqkoP8qHNVqUffE9xpvr6P5fZgE/AqE8H/xQE0qGtsz8uG5PMKjUIz+7
- bzWp6u4u3cOdSvr938OZuEWEOmi37dg1GF+QrhnlXoQq1iVZLeG9pg6g9mPA8ciyDUL/
- oCsTxTv9RRCt3AdlPjt/rg1hL9Cs1ezVTSkJYWP2fbq4RTEVSxomSlZFIfGoYeZy9iGg
- dqEGhNeKxn67rtTMZfAswpSoJU/ROPQlm3ArJhTSCHpyfXJHZE1VjgXbuFJ6BxOy+94t
- GS6rbEUL1OKUADZyoKDmgFmP2GcNoNmuYtf3UK8UpRipf3il0Q8JTIG43xDg3Kt5L7r7
- vT2Q==
-X-Gm-Message-State: AFq9FYLdKEctkC0UyE2Sjy6hOI+wmCxXmcx36GdtdZQy5idhw4fzEcXK
- 73RcqC0hnq4fFjmjPtotkybM1JGuDYVCza5JvFnOuXxDxdFTzB0BlxXVwsaz+gr5gWx7yGZ1wrq
- pVzbSeg0=
-X-Gm-Gg: AYBFou0Om3U/MImJBXPrfQrFlFZ9CzX2WCGeYLM2PffJbdCFDU61mCLA00kvCEG3dLn
- vUvkxF4gtC3FjleSPYZy8sAhHy7NaeLDF6tZ7BxCgOJLzeUjnS0QhFr4pviVd6WNKizCFL2r5iC
- TzfqbWil0TyZVjDsYv7UV6GuUlI7dZxpQbV1tYoeDG+wNXm1XtqtzoTldrW7i39/P8r2+d/8+rL
- 9TPUDu6JWKapiZaAH/ptHvgc674R/4NcWc2hdHJw2d2GumVydsrTSUcKOnGb0rusKlE53+neyGl
- G9p+Pmv0DohK65FEnwYuV9sU7YeUaFlO4EK3pRPVvoKS8caSWiasTMQqL0A7M9leWbqCAQtk7EF
- iJ/lhZw13TfzjyFUwMFJFt9A5ENHTWz0oD7uD4/3Tzt3q+G3+UEsPw5svs41p6UH6UnstDhK1u8
- KUcAIT8XFAu6B1KQ87MnF2R4FHedkKqFL62IbfMowa/KXokXhqI8LS2U2hLbnboJRu+lh/6pS9z
- CbS2hDLhjymjAh+Wop9NwhSOXmcIbqY5LWsqALh6aPBjrc/+99BmZX/KCJFBev4BFMFUL8zz89F
- vkxVmvqbWel4pbRohyzcpf3Ll/U=
-X-Received: by 2002:a05:6000:617:b0:48d:f160:efad with SMTP id
- ffacd0b85a97d-48e1e9f12c3mr12872670f8f.30.1792592561717; 
- Wed, 21 Oct 2026 07:22:41 -0700 (PDT)
-Received: from stoup.fritz.box (pd95f64ec.dip0.t-ipconnect.de.
- [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e25828e72sm5393603f8f.26.2026.10.21.07.22.40
+ d=1e100.net; s=20260707; t=1792593451; x=1793198251;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=VJY/VQXabF9YQFPESGPwynluvIavq6kW7BPOub19CoE=;
+ b=CCb5TzwGH86F59Nah34rZgCIbJf9tW2g8knbKB/qVSk+pmQp2Xni6vJ058xq6edtXJ
+ 2VETapAT06tliEkK0YF0mwSzFfQ9ZlsOhWPuDsBMu77fZydvG6lctEiVSAMDREx6x8gq
+ yB2Bodx7Dn312J8Zf8lrPi04MqZyCTXLU7SvEdsbFzXxkS1b07tbSQwT8wBl1JEFPYnj
+ KhoVLpSOsyuDRZesBGXtLG1uTmsuzySpERzYyGNVB+fAL5SgKPEXfWV3GkJNEGKxmxqx
+ R7tw11AsZOyfKmq3xvNsxfiw552R4zTp9tNDk+DOO71B/ABM/kuc3lF9bJz+GIfuucye
+ E0vA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxOOO3fnx9QUI5XLc8aqA5EYNuqZb2jxhdV35RbzAVZz6YW5J8SjR7J6BbMhGjkRQYo3R4gX+mVKz2N@nongnu.org
+X-Gm-Message-State: AFq9FYJwi3ed25DyuWWZRQ6TErPrjMFl0LY4j73KUxn7E9LzHbJv6Gbw
+ 7apUk2UWUv4FrJHVAtdm2j3Gb2KuI49M5tPlwm4w0l1jNeDv1DDs0GTaMsaaHWJCCpT/+Ulu12w
+ EXLl4tu2B6dqaqdEWbxnBBmfHDrksjVJZvSDGtmp2o4zPefzebXRvHZaq
+X-Gm-Gg: AYBFou1g8SJENu2ecflVwXu3UE1rhzQn12pr/0scSpsoH8H2vtlbPBqgqhjxs99VWj0
+ si9m0M0dHftf8g4cFBFCNuZgkPo40jvkRX1Tv1hoUlKj5pSeMFaxB/0G6r7bD2QJoCRoFUHtn85
+ RQRAuiF+HZx1wnE7VeEvNeOaSGaPivUPoZEMpNKENH3+1kp2jovQbAYZGFOFPfxtJSl/olb2eMb
+ Bg7gO56tAJAN71zXT+NfQwz0a2rcnnWtQ+kTxVqksI8C2u5mUNznxmWjets8Y+rl9kT8cS15W6r
+ 6tOPYGUVD8rj+jkEhPeOWbXGJaTixsUz3CZsCfdKaOMvXjZlg33dW14uNJSYKd4rka8=
+X-Received: by 2002:a05:600c:3548:b0:4a1:dfd4:9430 with SMTP id
+ 5b1f17b1804b1-4a1fdd159e9mr51590355e9.28.1792593451149; 
+ Wed, 21 Oct 2026 07:37:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:3548:b0:4a1:dfd4:9430 with SMTP id
+ 5b1f17b1804b1-4a1fdd159e9mr51589755e9.28.1792593450579; 
+ Wed, 21 Oct 2026 07:37:30 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1fcd2eff9sm53389205e9.4.2026.10.21.07.37.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 07:22:41 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mattst88@gmail.com
-Subject: [PATCH v6 062/100] tcg: Generic expansion of tcg_gen_extract_*
-Date: Wed, 21 Oct 2026 16:16:14 +0200
-Message-ID: <20261021141652.363109-63-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261021141652.363109-1-richard.henderson@linaro.org>
-References: <20261021141652.363109-1-richard.henderson@linaro.org>
+ Wed, 21 Oct 2026 07:37:29 -0700 (PDT)
+Date: Wed, 21 Oct 2026 10:37:26 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Max Brandtner <maximilian.immanuel.brandtner@protonmail.com>,
+ Dominique Martinet <asmadeus@codewreck.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Szymon Lukasz <noh4hss@gmail.com>
+Subject: Re: [PATCH v10 11/12] virtio-serial-bus: add terminal resize messages
+Message-ID: <20261021103721-mutt-send-email-mst@kernel.org>
+References: <20261012-console-resize-v10-0-2c3b10d829b3@gmail.com>
+ <20261012-console-resize-v10-11-2c3b10d829b3@gmail.com>
+ <179251177300.3780647.2268008186453794133.b4-review@b4>
+ <c668c6e8a78145d5e77078aa355c1fd7999b0ecb.camel@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <c668c6e8a78145d5e77078aa355c1fd7999b0ecb.camel@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,211 +130,101 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/tcg/tcg-op-common.h  |   4 --
- include/tcg/tcg-op-def.h.inc |   1 +
- tcg/tcg-op.c                 | 131 ++++++++++++-----------------------
- 3 files changed, 46 insertions(+), 90 deletions(-)
+On Wed, Oct 21, 2026 at 04:24:26PM +0200, Filip Hejsek wrote:
+> On Tue, 2026-10-20 at 19:56 +0400, marcandre.lureau@redhat.com wrote:
+> > > Implement the part of the virtio spec that allows to notify the virtio
+> > > driver about terminal resizes. Gate the new resize support behind the
+> > > console-size property, which defaults to off. To implement the property,
+> > > restore VirtIOSerial::host_features (previously removed by commit
+> > > d0660e5b7fc7e97926232d13d2500a16df32b310).
+> > > 
+> > > The virtio spec contains two methods to inform the guest about console
+> > > size:
+> > > 
+> > > For legacy drivers, we have only one port and we put the terminal size
+> > > in the config space and inject the config changed interrupt.
+> > > 
+> > > For multiport devices, we use the control virtqueue to send a
+> > > packet containing the terminal size. Unfortunately, old versions
+> > > of the Linux kernel used an incorrect order for the fields (rows
+> > > then cols instead of cols then rows), until it was fixed by commit
+> > > 5326ab737a47278dbd16ed3ee7380b26c7056ddd. As a result, when running an
+> > > old guest kernel, the number of rows and columns will be swapped.
+> > > 
+> > > Based on a patch originally written by Szymon Lukasz <noh4hss@gmail.com>,
+> > > but partially rewritten to fix various corner cases.
+> > > 
+> > > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> > > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> > > Message-ID: <20261012-console-resize-v10-11-2c3b10d829b3@gmail.com>
+> > > ---
+> > >  hw/char/trace-events              |  1 +
+> > >  hw/char/virtio-serial-bus.c       | 81 ++++++++++++++++++++++++++++++++++++++-
+> > >  include/hw/virtio/virtio-serial.h |  7 ++++
+> > >  3 files changed, 87 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/hw/char/trace-events b/hw/char/trace-events
+> > > index a3fcc772877a..e387c8853fcf 100644
+> > > --- a/hw/char/trace-events
+> > > +++ b/hw/char/trace-events
+> > > @@ -11,6 +11,7 @@ serial_update_parameters(uint64_t baudrate, char parity, int data_bits, int stop
+> > >  
+> > > 
+> > >  # virtio-serial-bus.c
+> > >  virtio_serial_send_control_event(unsigned int port, uint16_t event, uint16_t value) "port %u, event %u, value %u"
+> > > +virtio_serial_send_console_resize(unsigned int port, uint16_t cols, uint16_t rows) "port %u, cols %u, rows %u"
+> > >  virtio_serial_throttle_port(unsigned int port, bool throttle) "port %u, throttle %d"
+> > >  virtio_serial_handle_control_message(uint16_t event, uint16_t value) "event %u, value %u"
+> > >  virtio_serial_handle_control_message_port(unsigned int port) "port %u"
+> > > diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+> > > index c36e18a4cfb5..882765ac88ab 100644
+> > > --- a/hw/char/virtio-serial-bus.c
+> > > +++ b/hw/char/virtio-serial-bus.c
+> > > @@ -261,6 +261,68 @@ static size_t send_control_event(VirtIOSerial *vser, uint32_t port_id,
+> > >      return send_control_msg(vser, &cpkt, sizeof(cpkt));
+> > >  }
+> > >  
+> > > 
+> > > +/*
+> > > + * This struct should be added to the Linux kernel uapi headers
+> > > + * and later imported to standard-headers/linux/virtio_console.h
+> > > + */
+> > > +struct virtio_console_resize {
+> > > +    __virtio16 cols;
+> > > +    __virtio16 rows;
+> > > +};
+> > > +
+> > > +static void send_console_resize(VirtIOSerialPort *port)
+> > > +{
+> > > +    VirtIOSerial *vser = port->vser;
+> > > +    VirtIODevice *vdev = VIRTIO_DEVICE(vser);
+> > > +
+> > > +    if (!virtio_has_feature(vser->host_features, VIRTIO_CONSOLE_F_SIZE)) {
+> > > +        return;
+> > > +    }
+> > > +
+> > > +    trace_virtio_serial_send_console_resize(port->id, port->cols, port->rows);
+> > > +
+> > > +    if (use_multiport(vser)) {
+> > 
+> > it should probably gate on negotiated virtio_vdev_has_feature(vdev, VIRTIO_CONSOLE_F_SIZE) as well
+> 
+> I think the patch is already merged [1]? I'm not familiar with all
+> details of the QEMU development process. Should I address this in a
+> follow-up commit?
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20261013-ui-v1-0-92da3082ad96@redhat.com/
+> 
+> --
+> Filip
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 7cb1a4de52..77f9599115 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -134,8 +134,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
- 
- void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
-                            unsigned int ofs, unsigned int len);
--void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
--                         unsigned int ofs, unsigned int len);
- void tcg_gen_sextract_i32(TCGv_i32 ret, TCGv_i32 arg,
-                           unsigned int ofs, unsigned int len);
- void tcg_gen_extract2_i32(TCGv_i32 ret, TCGv_i32 al, TCGv_i32 ah,
-@@ -183,8 +181,6 @@ void tcg_gen_st_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
- void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
-                            unsigned int ofs, unsigned int len);
--void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
--                         unsigned int ofs, unsigned int len);
- void tcg_gen_sextract_i64(TCGv_i64 ret, TCGv_i64 arg,
-                           unsigned int ofs, unsigned int len);
- void tcg_gen_extract2_i64(TCGv_i64 ret, TCGv_i64 al, TCGv_i64 ah,
-diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
-index 95885d28d8..69f76f1d23 100644
---- a/include/tcg/tcg-op-def.h.inc
-+++ b/include/tcg/tcg-op-def.h.inc
-@@ -18,6 +18,7 @@ DEF5(deposit, TCGV, TCGV, TCGV, unsigned, unsigned)
- DEF1(discard, TCGV)
- DEF3(div, TCGV, TCGV, TCGV)
- DEF3(divu, TCGV, TCGV, TCGV)
-+DEF4(extract, TCGV, TCGV, unsigned, unsigned)
- DEF3(eqv, TCGV, TCGV, TCGV)
- DEF2(mov, TCGV, TCGV)
- DEF2(movi, TCGV, TINT)
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 62c2186d0c..a58978dd02 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -607,6 +607,51 @@ void tcg_gen_eqv(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
-     }
- }
- 
-+void tcg_gen_extract(TCGType type, TCGTemp *dst, TCGTemp *src,
-+                     unsigned int ofs, unsigned int len)
-+{
-+    unsigned width = tcg_type_bits(type);
-+    uint64_t mask;
-+
-+    tcg_debug_assert(ofs < width);
-+    tcg_debug_assert(len > 0);
-+    tcg_debug_assert(len <= width);
-+    tcg_debug_assert(ofs + len <= width);
-+
-+    /* Canonicalize certain special cases, even if extract is supported.  */
-+    if (ofs + len == width) {
-+        tcg_gen_shri(type, dst, src, ofs);
-+        return;
-+    }
-+
-+    if (TCG_TARGET_extract_valid(type, ofs, len)) {
-+        tcg_gen_op_ttii(INDEX_op_extract, type, dst, src, ofs, len);
-+        return;
-+    }
-+
-+    /* Assume that zero-extension, if available, is cheaper than a shift.  */
-+    if (TCG_TARGET_extract_valid(type, 0, ofs + len)) {
-+        tcg_gen_op_ttii(INDEX_op_extract, type, dst, src, 0, ofs + len);
-+        tcg_gen_shri(type, dst, dst, ofs);
-+        return;
-+    }
-+    if (TCG_TARGET_extract_valid(type, 0, len)) {
-+        tcg_gen_shri(type, dst, src, ofs);
-+        tcg_gen_op_ttii(INDEX_op_extract, type, dst, dst, 0, len);
-+        return;
-+    }
-+
-+    mask = MAKE_64BIT_MASK(0, len);
-+    if (tcg_op_imm_match(INDEX_op_and, type, mask)) {
-+        tcg_gen_shri(type, dst, src, ofs);
-+        /* Do not recurse with gen_andi. */
-+        tcg_gen_and(type, dst, dst, tcg_constant_internal(type, mask));
-+    } else {
-+        tcg_gen_shli(type, dst, src, width - len - ofs);
-+        tcg_gen_shri(type, dst, dst, width - len);
-+    }
-+}
-+
- void tcg_gen_mov(TCGType type, TCGTemp *dst, TCGTemp *src)
- {
-     if (src != dst) {
-@@ -962,49 +1007,6 @@ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
-     }
- }
- 
--void tcg_gen_extract_i32(TCGv_i32 ret, TCGv_i32 arg,
--                         unsigned int ofs, unsigned int len)
--{
--    uint32_t mask;
--
--    tcg_debug_assert(ofs < 32);
--    tcg_debug_assert(len > 0);
--    tcg_debug_assert(len <= 32);
--    tcg_debug_assert(ofs + len <= 32);
--
--    /* Canonicalize certain special cases, even if extract is supported.  */
--    if (ofs + len == 32) {
--        tcg_gen_shri_i32(ret, arg, 32 - len);
--        return;
--    }
--
--    if (TCG_TARGET_extract_valid(TCG_TYPE_I32, ofs, len)) {
--        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, ofs, len);
--        return;
--    }
--
--    mask = (1u << len) - 1;
--    if (ofs == 0) {
--        tcg_gen_andi_i32(ret, arg, mask);
--        return;
--    }
--
--    /* Assume that zero-extension, if available, is cheaper than a shift.  */
--    if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, ofs + len)) {
--        tcg_gen_op4ii_i32(INDEX_op_extract, ret, arg, 0, ofs + len);
--        tcg_gen_shri_i32(ret, ret, ofs);
--        return;
--    }
--
--    if (tcg_op_imm_match(INDEX_op_and, TCG_TYPE_I32, mask)) {
--        tcg_gen_shri_i32(ret, arg, ofs);
--        tcg_gen_andi_i32(ret, ret, mask);
--    } else {
--        tcg_gen_shli_i32(ret, arg, 32 - len - ofs);
--        tcg_gen_shri_i32(ret, ret, 32 - len);
--    }
--}
--
- void tcg_gen_sextract_i32(TCGv_i32 ret, TCGv_i32 arg,
-                           unsigned int ofs, unsigned int len)
- {
-@@ -1709,49 +1711,6 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
-     }
- }
- 
--void tcg_gen_extract_i64(TCGv_i64 ret, TCGv_i64 arg,
--                         unsigned int ofs, unsigned int len)
--{
--    uint64_t mask;
--
--    tcg_debug_assert(ofs < 64);
--    tcg_debug_assert(len > 0);
--    tcg_debug_assert(len <= 64);
--    tcg_debug_assert(ofs + len <= 64);
--
--    /* Canonicalize certain special cases, even if extract is supported.  */
--    if (ofs + len == 64) {
--        tcg_gen_shri_i64(ret, arg, 64 - len);
--        return;
--    }
--
--    if (TCG_TARGET_extract_valid(TCG_TYPE_I64, ofs, len)) {
--        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, ofs, len);
--        return;
--    }
--
--    mask = (1ull << len) - 1;
--    if (ofs == 0) {
--        tcg_gen_andi_i64(ret, arg, mask);
--        return;
--    }
--
--    /* Assume that zero-extension, if available, is cheaper than a shift.  */
--    if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, ofs + len)) {
--        tcg_gen_op4ii_i64(INDEX_op_extract, ret, arg, 0, ofs + len);
--        tcg_gen_shri_i64(ret, ret, ofs);
--        return;
--    }
--
--    if (tcg_op_imm_match(INDEX_op_and, TCG_TYPE_I64, mask)) {
--        tcg_gen_shri_i64(ret, arg, ofs);
--        tcg_gen_andi_i64(ret, ret, mask);
--    } else {
--        tcg_gen_shli_i64(ret, arg, 64 - len - ofs);
--        tcg_gen_shri_i64(ret, ret, 64 - len);
--    }
--}
--
- void tcg_gen_sextract_i64(TCGv_i64 ret, TCGv_i64 arg,
-                           unsigned int ofs, unsigned int len)
- {
--- 
-2.53.0
+Pls do.
 
 
