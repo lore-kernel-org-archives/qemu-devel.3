@@ -1,85 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C1F606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54623606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 14:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=iVWHhEUF
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=MN/T57C4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJXDy-0002Oa-CR; Wed, 21 Oct 2026 10:23:26 -0400
+	id 1xJXGN-0005a3-07; Wed, 21 Oct 2026 10:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJXD8-0001VO-J2
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:43 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1xJXDS-0001eV-JA
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:56 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJXD6-000292-Ra
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:34 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-48e10a70540so485096f8f.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:22:32 -0700 (PDT)
+ id 1xJXDM-0002Ab-M2
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 10:22:52 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-48c4649b35bso711175f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792592551; x=1793197351; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792592563; x=1793197363; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uR+xOtdHTIxjNl5nhW5OSQLlZ0XlfMOSr45pXLHnR58=;
- b=iVWHhEUFXi/i2pkI0TrzHm8/q2/ABvMzr86hVMCt+X08Ymn9UYJ0NMzASZJfQ1S/f3
- Z8+6AcHRb91HIHXeqpfoGejyyzkZ3Kj6CSI2g2kJTDArhqHfuFe0DJSAbFxU7y9WCcQ6
- DZhWpsHC0fnadhEtiQJuuTCQUWouK53+aHK33n9QAhT6Ot2O3DDikw7u3zpZXbYp8Ubk
- LRLo90hPJPrI/dv8tAaAsMjia+dzOUjCYpyG0595H5Vu2Tis0LOi6OJz6+ugjF3h1C32
- K2H8mvwmmlsJhHkdG1lNx3RL56rXwI2UW3+RcHnYrPjjI238R54G5nKGHAEC9s2fEvXp
- mZVw==
+ bh=jMIXVH0psZ0GYWpdGyqPZHmAkVNMRXS4n2MAzwFShTY=;
+ b=MN/T57C4dQIY+Gs4Gqi3H5RQVKjdH1RPhqNHN4Q8wB89FjEc2mdQ6S/7UTCEUmrIH3
+ c9cKyupR9f3GAAdxYkKw+u0W55jWoBMpTGiC6XbHD7LFI9nwJMZD7DQMWeCllTaAsrMj
+ wjFYsVRcsEhCUq/UqO7Uj5lcxV2k6pHaSOUzziCugrzUT4+/grnLerChbndYupHSI0Lu
+ O7HUS0aikT6I/Uqbxmd+5xKM9QQCQKNCsu445YtHYVgrUQA1yvMhThOVDQ6klqjQHu04
+ N3IZ2d9xaqK08ZYXI0R6coVjL+uAUTR4JS4HP+L+PWVVchdLe9xAGQKujY4lhWdZjGMi
+ LEXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792592551; x=1793197351;
+ d=1e100.net; s=20260707; t=1792592563; x=1793197363;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=uR+xOtdHTIxjNl5nhW5OSQLlZ0XlfMOSr45pXLHnR58=;
- b=tVMRlQu26ZU1RNrFgOeZCX7xLcgIT8RiX7M2yeKitZ/gTvfLT/KKyy2uzi2eTv6d3E
- 3Ub4l4HlGnQFUE74RrR35120K+yBuwRUYNIlPQ1Q83STKRhGJXppWcxkB0m9Ms1hQC2D
- L/Ky1cZg37Vx5gYAIKQAx3GPiZCAKZTlBbuNpZUi3gypo/KzRldqKjY7thcbEkjNDkb7
- 8Zd7Qfhf3dGBezViOSnzdm1wp9Iw8MJpCMHoMbKKxyltiT2W100aA3zlYDzzfj6tVc/D
- xZAK5BHq0nNfwfE9Kv0+JtyOBB7i4IYyrLDAk0s7E5gVa1dJP9akzb79flIHhi7kFCSO
- 8JlA==
-X-Gm-Message-State: AFq9FYK84S5qR+m1hIpUauxPjJxpldtit2BJtoGKOY6eqchA0ohnsG9y
- GkitUMARn+5JCd03ZwDZkOc5Zg62yZo5JcvAnyM6RCwYSGqJze/3zPyvWX2wN8BMP+rxINCFLMy
- wU/tfs0M=
-X-Gm-Gg: AYBFou0/PYHWedq6KvnDrH4l7MagJL7ooiqcjxfUBojyITVOIsPBzohh4cSyzS5+l/7
- D9WVz0rnOxFDMVVObdzHF8tu8cy3QtGV3+I4Z6D7iJdrqX9ZtHKQCFwtxutyMXVCdFjEUID7Szl
- Ab9wRy22nG5gCzUubJSZv5mrHzdq+Ln/AUQ1Tjs3KXW3cy5pK7fQgyj42qMzbHxh5JtHgCp0KGA
- iqmwhAXvmoZxL9DsSwx9CH2/zbfdFI4zILoP21oBe6YkimX5cakYPAsumxdntYKsfmlphnKiAm7
- u55QYXayDIZ92IIpADxx2XJpteDYf9yGzq4quI/Y6st5V4FVa5Bz7P3Ya0oNpbr4eh3eCTLXPA1
- PvuvZzRjQUmdc4xuO/jb9efDlbLJEJprXubxt12AvgrOPIhO5AB1J5hH52AsfHQ24gtR1e9p69i
- l1CrVsTBDt6dYIeiUMUazFd759mzWtE0XCD0HjRmRGxDj42kzO+0anC4o0DkEHTHNBWk9htfec5
- +ISFHq783itBYi0Gcz8Z0lO3/Jk1Wf0t/ACD4dk5qSd5Pg9Esy+5maD9BfSFSqC8eNOVHXmyipH
- bBkWU2dMZ6J7uF70AP4ASN/UIrU=
-X-Received: by 2002:a05:6000:25c3:b0:48c:43a3:6a74 with SMTP id
- ffacd0b85a97d-48e2649d874mr5456532f8f.12.1792592551130; 
- Wed, 21 Oct 2026 07:22:31 -0700 (PDT)
+ bh=jMIXVH0psZ0GYWpdGyqPZHmAkVNMRXS4n2MAzwFShTY=;
+ b=IVQwoyN0zwFEataXHDa3cKEES/5MS12dWfILhvdmlfuXPyPjXjjGmvVR45gDCBiJZU
+ Qvr+PjUwiw6TVAc/DSJreAfe7y+LNvbr9DFUO5XOkiuy1wV9U+lmCjKT53O/YhL8QpYK
+ BZbn1cA0L+ui8Y8szHDm16roUDyj4mSOYfxAoI5P6TQtLWS8P4TCkg5XfPrSkodEx2tm
+ eJKJy4oJ9UdM7csuApL9OOaK/0xS5xmXndDwr1bDmIPWTLd1nZgR/0XFaIi58RmVvgOn
+ iGRutIUL1AGfLq7p/4uZZ6VbqBypz0xryf/sW9vb59GoxZhcHAW6x+Cs+eDqGXDxkTQn
+ Yn1g==
+X-Gm-Message-State: AFq9FYJZRWTlmniN29V/HWyOShfWs9+0FioEUkBTSW8CTDc/15WCviSv
+ juNwlltAbmv0dramfVp/YufNwhdDcdfbsDv79rOh/JlhqadDgQreoWRX+Dmfl0/P+6/wwbK8V/C
+ L83AaBUE=
+X-Gm-Gg: AYBFou0PLrrLCzFwLwyss7wHLCFNnp5eOT5yIbrJPKkkMBGE1XRuysp3FYr6vx6utdX
+ j1X6tf2TWHZh10r8TKTjnOizIRlhjlotxOsb2HGo5NLSnKt2QjfgDobK1ePXhC1cC0MYi+CrEWH
+ T9DC8rgJfUWtbwL2pz3OZU9+t9iepVeQzARCE2FKRn9YcdOgUZQEEgwy09NaiLIdTFvt94teQIO
+ Ark3AiT7q0pLToectgIgzhs+EdaqZ8/DnzlgS6XGaJ4a/TjMHOr62ryLMVKQymXoqWDkIrc0DDi
+ 3OvGcXhQ4h4tLhWOYUZegTb3oucloUNldGFN/R7FubKjB8Q+BjMxA9y3VzZjpQjGjua6tHieVyL
+ ml1EEFnn93Pnu+EcxgXwj/vr66bnSycW2e35JKb6KSp2oDmqdmtvMZaTcYeFRrHPizBw1WwOM3E
+ cWof+EStfLUFR7ibTjaZLd8sJc4ce34+8OBLUjiIcGh/xPjoI0+OaOZ3JvBzKroai4nzaVFq0iT
+ Hyo7Eqmvs7gpXV7PFDXum9ItCrSLTTEw5BGzwcmJLZCtcnoV20gq/WcxQRQ9C3u8F9c0n9szcdl
+ wCsA+8Va7XGpnyha/71kOKiNqhLF/1ms/nSn6r4QEqi/IX6g
+X-Received: by 2002:a5d:6f0c:0:b0:48e:1fb5:eac2 with SMTP id
+ ffacd0b85a97d-48e2647cb86mr4403527f8f.12.1792592562601; 
+ Wed, 21 Oct 2026 07:22:42 -0700 (PDT)
 Received: from stoup.fritz.box (pd95f64ec.dip0.t-ipconnect.de.
  [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e25828e72sm5393603f8f.26.2026.10.21.07.22.30
+ ffacd0b85a97d-48e25828e72sm5393603f8f.26.2026.10.21.07.22.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 07:22:30 -0700 (PDT)
+ Wed, 21 Oct 2026 07:22:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mattst88@gmail.com
-Subject: [PATCH v6 052/100] tcg: Generic expansion of tcg_gen_clzi_*
-Date: Wed, 21 Oct 2026 16:16:04 +0200
-Message-ID: <20261021141652.363109-53-richard.henderson@linaro.org>
+Subject: [PATCH v6 063/100] tcg: Generic expansion of tcg_gen_sextract_*
+Date: Wed, 21 Oct 2026 16:16:15 +0200
+Message-ID: <20261021141652.363109-64-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261021141652.363109-1-richard.henderson@linaro.org>
 References: <20261021141652.363109-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,83 +107,198 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-op-common.h  |  2 --
- include/tcg/tcg-op-def.h.inc |  1 +
- tcg/tcg-op.c                 | 15 +++++----------
- 3 files changed, 6 insertions(+), 12 deletions(-)
+ include/tcg/tcg-op-common.h  |   4 --
+ include/tcg/tcg-op-def.h.inc |   1 +
+ tcg/tcg-op.c                 | 121 +++++++++++------------------------
+ 3 files changed, 38 insertions(+), 88 deletions(-)
 
 diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index b5575647d3..d68362fd02 100644
+index 77f9599115..34a79c5818 100644
 --- a/include/tcg/tcg-op-common.h
 +++ b/include/tcg/tcg-op-common.h
-@@ -130,7 +130,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
- /* 32 bit ops */
+@@ -134,8 +134,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
  
- void tcg_gen_ctz_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2);
--void tcg_gen_clzi_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2);
- void tcg_gen_ctzi_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2);
- void tcg_gen_clrsb_i32(TCGv_i32 ret, TCGv_i32 arg);
- void tcg_gen_ctpop_i32(TCGv_i32 a1, TCGv_i32 a2);
-@@ -190,7 +189,6 @@ void tcg_gen_st_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
- /* 64 bit ops */
+ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
+                            unsigned int ofs, unsigned int len);
+-void tcg_gen_sextract_i32(TCGv_i32 ret, TCGv_i32 arg,
+-                          unsigned int ofs, unsigned int len);
+ void tcg_gen_extract2_i32(TCGv_i32 ret, TCGv_i32 al, TCGv_i32 ah,
+                           unsigned int ofs);
+ void tcg_gen_add2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
+@@ -181,8 +179,6 @@ void tcg_gen_st_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
  
- void tcg_gen_ctz_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2);
--void tcg_gen_clzi_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2);
- void tcg_gen_ctzi_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2);
- void tcg_gen_clrsb_i64(TCGv_i64 ret, TCGv_i64 arg);
- void tcg_gen_ctpop_i64(TCGv_i64 a1, TCGv_i64 a2);
+ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
+                            unsigned int ofs, unsigned int len);
+-void tcg_gen_sextract_i64(TCGv_i64 ret, TCGv_i64 arg,
+-                          unsigned int ofs, unsigned int len);
+ void tcg_gen_extract2_i64(TCGv_i64 ret, TCGv_i64 al, TCGv_i64 ah,
+                           unsigned int ofs);
+ void tcg_gen_add2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
 diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
-index 74c68f46b7..cf832a6dc0 100644
+index 69f76f1d23..338ecce6fc 100644
 --- a/include/tcg/tcg-op-def.h.inc
 +++ b/include/tcg/tcg-op-def.h.inc
-@@ -9,6 +9,7 @@ DEF3(andc, TCGV, TCGV, TCGV)
- DEF4(brcond, TCGCond, TCGV, TCGV, TCGLabelPtr)
- DEF4(brcondi, TCGCond, TCGV, TINT, TCGLabelPtr)
- DEF3(clz, TCGV, TCGV, TCGV)
-+DEF3(clzi, TCGV, TCGV, TINT)
- DEF1(discard, TCGV)
- DEF3(div, TCGV, TCGV, TCGV)
- DEF3(divu, TCGV, TCGV, TCGV)
+@@ -44,6 +44,7 @@ DEF3(sar, TCGV, TCGV, TCGV)
+ DEF3(sari, TCGV, TCGV, TINT)
+ DEF4(setcond, TCGCond, TCGV, TCGV, TCGV)
+ DEF4(setcondi, TCGCond, TCGV, TCGV, TINT)
++DEF4(sextract, TCGV, TCGV, unsigned, unsigned)
+ DEF3(shl, TCGV, TCGV, TCGV)
+ DEF3(shli, TCGV, TCGV, TINT)
+ DEF3(shr, TCGV, TCGV, TCGV)
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index e623f9bbc7..efbbe4d8a1 100644
+index a58978dd02..f2928ae8e7 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -445,6 +445,11 @@ void tcg_gen_clz(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
-     }
+@@ -197,20 +197,6 @@ static void DNI tcg_gen_op4i_i64(TCGOpcode opc, TCGv_i64 a1, TCGv_i64 a2,
+                 tcgv_i64_arg(a3), a4);
  }
  
-+void tcg_gen_clzi(TCGType type, TCGTemp *dst, TCGTemp *src1, int64_t src2)
+-static TCGOp * DNI tcg_gen_op4ii_i32(TCGOpcode opc, TCGv_i32 a1, TCGv_i32 a2,
+-                                     TCGArg a3, TCGArg a4)
+-{
+-    return tcg_gen_op4(opc, TCG_TYPE_I32,
+-                       tcgv_i32_arg(a1), tcgv_i32_arg(a2), a3, a4);
+-}
+-
+-static TCGOp * DNI tcg_gen_op4ii_i64(TCGOpcode opc, TCGv_i64 a1, TCGv_i64 a2,
+-                                     TCGArg a3, TCGArg a4)
+-{
+-    return tcg_gen_op4(opc, TCG_TYPE_I64,
+-                       tcgv_i64_arg(a1), tcgv_i64_arg(a2), a3, a4);
+-}
+-
+ static void DNI tcg_gen_op5ii_i32(TCGOpcode opc, TCGv_i32 a1, TCGv_i32 a2,
+                                   TCGv_i32 a3, TCGArg a4, TCGArg a5)
+ {
+@@ -921,6 +907,43 @@ void tcg_gen_setcondi(TCGType type, TCGCond cond, TCGTemp *dst,
+     tcg_gen_setcond(type, cond, dst, src1, tcg_constant_internal(type, src2));
+ }
+ 
++void tcg_gen_sextract(TCGType type, TCGTemp *dst, TCGTemp *src,
++                      unsigned int ofs, unsigned int len)
 +{
-+    tcg_gen_clz(type, dst, src1, tcg_constant_internal(type, src2));
++    unsigned width = tcg_type_bits(type);
++
++    tcg_debug_assert(ofs < width);
++    tcg_debug_assert(len > 0);
++    tcg_debug_assert(len <= width);
++    tcg_debug_assert(ofs + len <= width);
++
++    /* Canonicalize certain special cases, even if extract is supported.  */
++    if (ofs + len == width) {
++        tcg_gen_sari(type, dst, src, width - len);
++        return;
++    }
++
++    if (TCG_TARGET_sextract_valid(type, ofs, len)) {
++        tcg_gen_op_ttii(INDEX_op_sextract, type, dst, src, ofs, len);
++        return;
++    }
++
++    /* Assume that sign-extension, if available, is cheaper than a shift.  */
++    if (TCG_TARGET_sextract_valid(type, 0, ofs + len)) {
++        tcg_gen_op_ttii(INDEX_op_sextract, type, dst, src, 0, ofs + len);
++        tcg_gen_sari(type, dst, dst, ofs);
++        return;
++    }
++    if (TCG_TARGET_sextract_valid(type, 0, len)) {
++        tcg_gen_shri(type, dst, src, ofs);
++        tcg_gen_op_ttii(INDEX_op_sextract, type, dst, dst, 0, len);
++        return;
++    }
++
++    tcg_gen_shli(type, dst, src, width - len - ofs);
++    tcg_gen_sari(type, dst, dst, width - len);
 +}
 +
- void tcg_gen_discard(TCGType type, TCGTemp *src)
+ void tcg_gen_shl(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
  {
-     tcg_gen_op1(INDEX_op_discard, type, temp_arg(src));
-@@ -751,11 +756,6 @@ void tcg_gen_xori(TCGType type, TCGTemp *dst, TCGTemp *src1, int64_t src2)
- 
- /* 32 bit ops */
- 
--void tcg_gen_clzi_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2)
--{
--    tcg_gen_clz_i32(ret, arg1, tcg_constant_i32(arg2));
--}
--
- void tcg_gen_ctz_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2)
- {
-     TCGv_i32 z, t;
-@@ -1672,11 +1672,6 @@ void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg)
+     tcg_gen_op_ttt(INDEX_op_shl, type, dst, src1, src2);
+@@ -1007,41 +1030,6 @@ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
      }
  }
  
--void tcg_gen_clzi_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
+-void tcg_gen_sextract_i32(TCGv_i32 ret, TCGv_i32 arg,
+-                          unsigned int ofs, unsigned int len)
 -{
--    tcg_gen_clz_i64(ret, arg1, tcg_constant_i64(arg2));
+-    tcg_debug_assert(ofs < 32);
+-    tcg_debug_assert(len > 0);
+-    tcg_debug_assert(len <= 32);
+-    tcg_debug_assert(ofs + len <= 32);
+-
+-    /* Canonicalize certain special cases, even if extract is supported.  */
+-    if (ofs + len == 32) {
+-        tcg_gen_sari_i32(ret, arg, 32 - len);
+-        return;
+-    }
+-
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, ofs, len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, arg, ofs, len);
+-        return;
+-    }
+-
+-    /* Assume that sign-extension, if available, is cheaper than a shift.  */
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, 0, ofs + len)) {
+-        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, arg, 0, ofs + len);
+-        tcg_gen_sari_i32(ret, ret, ofs);
+-        return;
+-    }
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I32, 0, len)) {
+-        tcg_gen_shri_i32(ret, arg, ofs);
+-        tcg_gen_op4ii_i32(INDEX_op_sextract, ret, ret, 0, len);
+-        return;
+-    }
+-
+-    tcg_gen_shli_i32(ret, arg, 32 - len - ofs);
+-    tcg_gen_sari_i32(ret, ret, 32 - len);
 -}
 -
- void tcg_gen_ctz_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2)
- {
-     TCGv_i64 z, t;
+ /*
+  * Extract 32-bits from a 64-bit input, ah:al, starting from ofs.
+  * Unlike tcg_gen_extract_i32 above, len is fixed at 32.
+@@ -1711,41 +1699,6 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
+     }
+ }
+ 
+-void tcg_gen_sextract_i64(TCGv_i64 ret, TCGv_i64 arg,
+-                          unsigned int ofs, unsigned int len)
+-{
+-    tcg_debug_assert(ofs < 64);
+-    tcg_debug_assert(len > 0);
+-    tcg_debug_assert(len <= 64);
+-    tcg_debug_assert(ofs + len <= 64);
+-
+-    /* Canonicalize certain special cases, even if sextract is supported.  */
+-    if (ofs + len == 64) {
+-        tcg_gen_sari_i64(ret, arg, 64 - len);
+-        return;
+-    }
+-
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, ofs, len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, arg, ofs, len);
+-        return;
+-    }
+-
+-    /* Assume that sign-extension, if available, is cheaper than a shift.  */
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, 0, ofs + len)) {
+-        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, arg, 0, ofs + len);
+-        tcg_gen_sari_i64(ret, ret, ofs);
+-        return;
+-    }
+-    if (TCG_TARGET_sextract_valid(TCG_TYPE_I64, 0, len)) {
+-        tcg_gen_shri_i64(ret, arg, ofs);
+-        tcg_gen_op4ii_i64(INDEX_op_sextract, ret, ret, 0, len);
+-        return;
+-    }
+-
+-    tcg_gen_shli_i64(ret, arg, 64 - len - ofs);
+-    tcg_gen_sari_i64(ret, ret, 64 - len);
+-}
+-
+ /*
+  * Extract 64 bits from a 128-bit input, ah:al, starting from ofs.
+  * Unlike tcg_gen_extract_i64 above, len is fixed at 64.
 -- 
 2.53.0
 
