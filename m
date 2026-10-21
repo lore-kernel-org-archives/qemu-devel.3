@@ -1,71 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D61606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 06:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16890606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 06:52:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kIv+w3G+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJQ8Z-0002Sg-JI; Wed, 21 Oct 2026 02:49:23 -0400
+	id 1xJQBr-0003DM-Rj; Wed, 21 Oct 2026 02:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xJQ8W-0002ST-Or
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:49:20 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xJQ8T-0005wt-PP
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:49:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bxn9FoYNhqoPEXAA--.3671S3;
- Wed, 21 Oct 2026 14:49:12 +0800 (CST)
-Received: from [127.0.0.1] (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJBxpMxmYNhqkLsuAA--.5726S2;
- Wed, 21 Oct 2026 14:49:10 +0800 (CST)
-Subject: Re: [PATCH] linux-user/loongarch64: In extframe_alloc, align before
- subtracting sctx_info size
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Song Gao <17746591750@163.com>, Xianglai Li <lixianglai@loongson.cn>
-References: <20261020142310.3860421-1-peter.maydell@linaro.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <baa59027-6b6f-53ba-4bfd-fd539d5d34af@loongson.cn>
-Date: Wed, 21 Oct 2026 14:50:30 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
+ id 1xJQBq-0003D5-QH
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:52:46 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <conti.manuele@gmail.com>)
+ id 1xJQBn-0006JP-QK
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:52:46 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48e09aa5264so197711f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 23:52:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792565562; x=1793170362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GwZQMrdWb0dxuu5Dhmk9+4HjGZXH4eH3BqXJTEFnghs=;
+ b=kIv+w3G+X+mIThK3hqlo5kj/p95UwC5qtcujXpGQCU1OSM+sRZ90Kn0X9ZlIccQbrU
+ j6fz8MUbFQ3iuOCRMfyEYmhD3ZwmwVTp1qXvAiVi3X0N73KEKUUKV3tXArFYN71QtUvd
+ 1+WVIS62YWLH4T/Ry2tEmaueCHgfUxcVgBt+Uq4g5rstw9NmG6tEp9q5655CLjXl/PAj
+ 9J/RHmMBChzuE0ojlH0ndv5fKBLwVv+17U6STBpZOM78G2fzA8cVP6MIH+v6/441x5OC
+ rEdKoZu+20tAxoY2hCZaHzSOq4ujeslw1W13iL4coSTEF5adeXnY668bFyOocbniYgDY
+ awiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792565562; x=1793170362;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GwZQMrdWb0dxuu5Dhmk9+4HjGZXH4eH3BqXJTEFnghs=;
+ b=BszP2zpi2o/DV2bvvd3BIrxi8ldJOilJGUpTLuscruB8eX2UL+Bwd7Vk77qko7h5Wg
+ NzQ2wLJHbDfeFAYG6TzXIIuhZspDCBjEobj9sK50Hn9n3f3UJj+IhFr5OgRVopy7+LBJ
+ aSt30+j4SA2W1d3TRsG8q/aaSvNGXYi/3D35YU8pJ8PhS2yPjDvQ1gbOTz9hvJAkUAMg
+ rgBUR8UNbmirHqE0W20qCw/X7cB7xuuNtxD/I9opkWhsM3Mgy0SZi3tnmAxIe3bZ5/ag
+ M9rZHIXZ9kYNGOAOkC+z76gkOMt9/V8I9zXuvCOr1Ng8tjO6HVyK/bx/gFs4/pc3lYRx
+ 8dAg==
+X-Gm-Message-State: AFq9FYIW/59Ub10OBquVq4BJrQjeOWbtrD2aUojdFxExZRNxn0l9+ctf
+ 4RKdRzo/jTjUih/FXBYHP+FpQgnfPfT8tbWwqv/CK6YPAjXRw1+kVo8nETdpUQ99mdI=
+X-Gm-Gg: AYBFou1oizryIqVxV1/zEzg3zgqKqtiJfrrrZDceieIrQXNg3eO7mQ3UNNIJTC6sBMy
+ Xmnxc2F71VPFdd5e9gw1BlZThj/LjwYCCEsi+ZldpRXc981MU3yG9jToDH3agP7rDR7Hb4a7U9r
+ 811pJLWjubYTbJiJMAoBJzRzicsgViuh66Xza5aUwkYJ+hte0cZH2S5zFTbuqlRK+MXblqglRuD
+ aJUEl48vfjJ0kPU0hj3mHahuHMrlS+VJKj6Daq2Krxcm+AcvV+n1T6BOPaJeWcAGyGYtA9RR4vM
+ 4HLzZwlDPfxnMbddwfAPES0FgREsIFsrkjkc0L0X6p3hyAHPsVG/Rt/T6hRjKmwsdj+ol7p/cHa
+ 59keg2/fSo21Dehwx61YcPYo01vPHJrd3UxRgMmOENmCeVlxNDhApEswea5ctdNPO/5T+iTIlC4
+ Ev5J7uRAKCfJyjEpA0RmGuG95sD9Nnd96Tv0b7ohwtCuTDOdAwnVnnKnTj5hSpJyPyu8OX1J0jr
+ B6kNpajf6z0S/mVYg/bbeAplHmK5+fMGeqZBA8S7Uh+zy02QKYpLJNRNUdRnjbtXg4lYX85fAQG
+ GXJOsSmqRcn9k57JOYeC2UAeSTJub5ThX0Q+XkpH2Q0=
+X-Received: by 2002:adf:ecc3:0:b0:487:6f2:1a4c with SMTP id
+ ffacd0b85a97d-48e264e0fafmr1454238f8f.25.1792565561840; 
+ Tue, 20 Oct 2026 23:52:41 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:7d0:d21a:4a00:39f5:8799:5de1:6dc6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e25841fe4sm3724549f8f.53.2026.10.20.23.52.39
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 20 Oct 2026 23:52:40 -0700 (PDT)
+From: Manuele Conti <conti.manuele@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: alistair@alistair23.me, peter.maydell@linaro.org, qemu-arm@nongnu.org,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ Manuele Conti <conti.manuele@gmail.com>
+Subject: [PATCH] hw/ssi/stm32f2xx_spi: avoid transferring data on DR reads
+Date: Wed, 21 Oct 2026 08:52:38 +0200
+Message-ID: <20261021065238.15220-1-conti.manuele@gmail.com>
+X-Mailer: git-send-email 2.41.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20261020142310.3860421-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxpMxmYNhqkLsuAA--.5726S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxur13tw17trWfCFWfuryrKrX_yoW5ZFy7pr
- y5ArnIkrWrXr15Xr97t348Za4fWw1UuF47GFZ3K348Gry5AFy8urn7Kry2vF1Uu3WkCFWY
- vryUta1UKFWDJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
- xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
- 6r17McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
- 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
- JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8hiSPUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.387,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=conti.manuele@gmail.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,80 +96,132 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Writing SPI_DR already performs the synchronous SSI transfer and stores
+its response in spi_dr. Reading SPI_DR performs another transfer, using
+the previous response as transmit data, and returns the new response.
+Consequently a normal write/read pair clocks two frames on the bus and
+can skip bytes in a peripheral's response.
 
+Return the response saved by the write and clear RXNE without starting
+another transfer. Repeated reads then leave the peripheral state alone.
 
-On 2026/10/20 下午10:23, Peter Maydell wrote:
-> In extframe_alloc() we allocate space on the guest stack for a
-> context struct, which consists of a target_sctx_info plus a more
-> specific struct such as target_lasx_context.  The specific struct may
-> have a higher alignment requirement than the basic target_sctx_info.
-> 
-> The Linux kernel code for this is in arch/loongarch/kernel/signal.c
-> in extframe_alloc():
-> 
->         unsigned long new_base = base - size;
-> 
->         new_base = round_down(new_base, (align < 16 ? 16 : align));
->         new_base -= sizeof(struct sctx_info);
-> 
-> and it first adjusts the base (SP) address down by the size of the
-> specific struct, then rounds that down to provide the required
-> alignment, and finally subtracts the size of the sctx_info.
-> 
-> QEMU's version does this in the wrong order, subtracting both the
-> specific struct size and the sctx_info size before rounding down for
-> alignment.  This means that for the target_lasx_context which needs
-> 32-alignment, we instead give the start of sctx_info 32-alignment,
-> which (since that is 16 bytes long) means that the
-> target_lasx_context is only 16-aligned.
-> 
-> This manifests as a failure in the TCG tests such as
-> loongarch64-linux-user-signals.test if you build with the clang
-> sanitizers enabled:
-> 
-> ../../linux-user/loongarch64/signal.c:182:13: runtime error: member access within misaligned address 0x7dc793950b90 for type 'struct target_lasx_context', which requires 32 byte alignment
-> 0x7dc793950b90: note: pointer points here
->   00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00
->                ^
->      #0 0x57216113d881 in setup_sigframe /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:182:13
->      #1 0x57216113d881 in setup_rt_frame /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:389:5
->      #2 0x5721612a5041 in handle_pending_signal /home/pm215/qemu/build/clang/../../linux-user/signal.c:1349:9
->      #3 0x5721612a46ef in process_pending_signals /home/pm215/qemu/build/clang/../../linux-user/signal.c:1401:17
->      #4 0x57216113baa3 in cpu_loop /home/pm215/qemu/build/clang/../../linux-user/loongarch64/cpu_loop.c:121:9
-> 
-> Correct setup_extcontext() to match the order the kernel does it.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 9d5cd6587a70d613 ("linux-user: Add LoongArch signal support")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   linux-user/loongarch64/signal.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/loongarch64/signal.c b/linux-user/loongarch64/signal.c
-> index eff75bcdc86..04015e06fda 100644
-> --- a/linux-user/loongarch64/signal.c
-> +++ b/linux-user/loongarch64/signal.c
-> @@ -111,9 +111,10 @@ static abi_ptr extframe_alloc(struct extctx_layout *extctx,
->   {
->       abi_ptr sp = orig_sp;
->   
-> -    sp -= sizeof(struct target_sctx_info) + size;
-> +    sp -= size;
->       align = MAX(align, CONTEXT_INFO_ALIGN);
->       sp = ROUND_DOWN(sp, align);
-> +    sp -= sizeof(struct target_sctx_info);
->       sctx->gaddr = sp;
->   
->       size = orig_sp - sp;
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Add a qtest using the upstream netduino2 machine and an M25P80 flash.
+Check the JEDEC ID, RXNE clearing, and repeated DR reads. The test requires
+no board changes and reproduces the unwanted extra transfers before the
+fix.
+
+Fixes: 5ae74402d1f ("STM32F2xx: Add the SPI device")
+Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
+---
+ MAINTAINERS                      |  1 +
+ hw/ssi/stm32f2xx_spi.c           |  1 -
+ tests/qtest/meson.build          |  2 ++
+ tests/qtest/stm32f2xx-spi-test.c | 50 ++++++++++++++++++++++++++++++++
+ 4 files changed, 53 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/stm32f2xx-spi-test.c
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 902db77..822c60a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1201,6 +1201,7 @@ F: hw/char/stm32f2xx_usart.c
+ F: hw/timer/stm32f2xx_timer.c
+ F: hw/adc/*
+ F: hw/ssi/stm32f2xx_spi.c
++F: tests/qtest/stm32f2xx-spi-test.c
+ F: include/hw/*/stm32*.h
+ 
+ STM32F405
+diff --git a/hw/ssi/stm32f2xx_spi.c b/hw/ssi/stm32f2xx_spi.c
+index 871d573..da1dbb7 100644
+--- a/hw/ssi/stm32f2xx_spi.c
++++ b/hw/ssi/stm32f2xx_spi.c
+@@ -82,7 +82,6 @@ static uint64_t stm32f2xx_spi_read(void *opaque, hwaddr addr,
+     case STM_SPI_SR:
+         return s->spi_sr;
+     case STM_SPI_DR:
+-        stm32f2xx_spi_transfer(s);
+         s->spi_sr &= ~STM_SPI_SR_RXNE;
+         return s->spi_dr;
+     case STM_SPI_CRCPR:
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 78b3010..5984e9c 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -238,6 +238,8 @@ qtests_stm32l4x5 = \
+    'stm32l4x5_usart-test']
+ 
+ qtests_arm = \
++  (config_all_devices.has_key('CONFIG_NETDUINO2') and
++   config_all_devices.has_key('CONFIG_SSI_M25P80') ? ['stm32f2xx-spi-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-apb-dualtimer-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_CMSDK_APB_TIMER') ? ['cmsdk-apb-timer-test'] : []) + \
+diff --git a/tests/qtest/stm32f2xx-spi-test.c b/tests/qtest/stm32f2xx-spi-test.c
+new file mode 100644
+index 0000000..619191c
+--- /dev/null
++++ b/tests/qtest/stm32f2xx-spi-test.c
+@@ -0,0 +1,50 @@
++/*
++ * STM32F2XX SPI controller tests
++ *
++ * Copyright (c) 2026 Manuele Conti <conti.manuele@gmail.com>
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++/* The first SSI bus found by -device belongs to SPI3. */
++#define SPI3_BASE 0x40003c00
++#define SPI_CR1   (SPI3_BASE + 0x00)
++#define SPI_SR    (SPI3_BASE + 0x08)
++#define SPI_DR    (SPI3_BASE + 0x0c)
++#define SPI_RXNE  (1U << 0)
++
++static void test_jedec_id(void)
++{
++    static const uint8_t jedec_id[] = { 0x20, 0x20, 0x14 };
++    QTestState *qts = qtest_init("-machine netduino2 "
++                               "-device m25p80,bus=ssi");
++
++    /* Enable SPI in master mode, with software slave management. */
++    qtest_writel(qts, SPI_CR1, (1U << 9) | (1U << 8) |
++                             (1U << 6) | (1U << 2));
++
++    qtest_writeb(qts, SPI_DR, 0x9f);
++    qtest_readb(qts, SPI_DR);
++
++    for (unsigned i = 0; i < ARRAY_SIZE(jedec_id); i++) {
++        qtest_writeb(qts, SPI_DR, 0);
++        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, SPI_RXNE);
++        g_assert_cmphex(qtest_readb(qts, SPI_DR), ==, jedec_id[i]);
++        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, 0);
++
++        /* Reading DR again must not clock another byte out of the flash. */
++        g_assert_cmphex(qtest_readb(qts, SPI_DR), ==, jedec_id[i]);
++        g_assert_cmphex(qtest_readl(qts, SPI_SR) & SPI_RXNE, ==, 0);
++    }
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/stm32f2xx/spi/jedec-id", test_jedec_id);
++    return g_test_run();
++}
+-- 
+2.54.0 (Apple Git-157)
 
 
