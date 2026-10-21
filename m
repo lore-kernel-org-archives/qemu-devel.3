@@ -1,139 +1,142 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971B3606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 16:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08011606A330
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 17:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JYeM7oQC
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=fbpZ7NCi;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=i4CfUw5G
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJZU4-0005RE-5m; Wed, 21 Oct 2026 12:48:12 -0400
+	id 1xJaAN-00051P-Qr; Wed, 21 Oct 2026 13:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xJZU2-0005Pu-Fg
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:48:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJaAK-00050z-HH
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 13:31:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1xJZU0-0008KY-3o
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:48:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792601287;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=94BO6HSov+X7kNkAL7zp2o7/dxTN1SRnggZ5IARPNg0=;
- b=JYeM7oQClOewOr1wkXr4QKJi1sX+n/RLdsQ8IlgEWLNqDCT80Aq2bMikNbmMg3hRBolBrn
- GM30H1GrtC5KvHnyiyZjMuON39+80veTrKCQfNzoe992NP/nhQ2cNctVC3BYEMX+8uGIs4
- jnPB+dEhEZoRqToTGsQrWeHZNmfjKIo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-24hsknJsOP2FWUvyI7HtOw-1; Wed,
- 21 Oct 2026 16:48:01 +0000
-X-MC-Unique: 24hsknJsOP2FWUvyI7HtOw-1
-X-Mimecast-MFC-AGG-ID: 24hsknJsOP2FWUvyI7HtOw_1792601277
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E35331800654; Wed, 21 Oct 2026 16:47:54 +0000 (UTC)
-Received: from [100.90.56.12] (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D064B30002CB; Wed, 21 Oct 2026 16:47:42 +0000 (UTC)
-Message-ID: <80b593cf-77e0-4623-8059-937c51dd5cfd@redhat.com>
-Date: Wed, 21 Oct 2026 18:47:40 +0200
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJaAH-0004Iq-5b
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 13:31:52 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69LFU8D73727378
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 17:31:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=/faf1fcGkZifVtX4KwiyLLetYAcWAj3S+gI
+ NU5wxAXs=; b=fbpZ7NCi0uTBcrpKMOUMGBg1HzrmjPBPbHEGsevAxIeXr0Et29c
+ oOEugChMQ+eGtOQ5AUTI9uDI2/NrDZYYybIF2VNrvBIugD4v4g/xmRkUJWAkL88z
+ hnydUyIM58WSf233riytTkOYNf1mv8rOSgFfbMNkCpZG0AavTvoSHy7kUZYT7wMO
+ A/JbOutBFJlpSRsUbHRgPNZLLzPi9CUGiBzP/L5ljsnb2aUxvlB1XsHMEHOUWPVQ
+ TOZSgMFLZtRKQNNWm+13uGYgMGO7NjNBBr5c0zxugrJWQWH/RX+vK6pn8Q1KXWAV
+ hXRbpnrH4qcNDm3nzPkne1LS3Q4/Uz+SOeg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hesy7ac9h-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 17:31:45 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93f32050e72so317116485a.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 10:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792603904; x=1793208704; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/faf1fcGkZifVtX4KwiyLLetYAcWAj3S+gINU5wxAXs=;
+ b=i4CfUw5G9KGyTBam7RoI5ZBNGUUzkcoFvUvOteOZYWhoavofD+bAeJjt5sYLHHDI7m
+ tibJawtmfrTcj7WF1aPNDE7rTobv/xCrlGAijs12d9HcSq0weM+YBVbqpopp58ks1Te8
+ E0gl8AQDRPvHLXlNqCWTB3SU0MqTKBDJOvY3vUZSg/4VsKQSoVp0mzjFELL4rH47dUVT
+ pKhO0KX+nr54voKoLq11vFlwcz9K1fD2AcMr7nnIucnPjyZ8fm0hmtcI/OzcIFOdHks1
+ ST2uHaVlHRY7OvkyYUXC5Hkv+JUOXtOYgwc0zvCU7GARvAlT1iDLagUfpfAnXVfNhaxv
+ ymkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792603904; x=1793208704;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/faf1fcGkZifVtX4KwiyLLetYAcWAj3S+gINU5wxAXs=;
+ b=Ta2OxU7pp4cR/ls5hY7DS2+ECnQkU5mwFcwR+ydWgoHqJRC4mGOKGhiRGW6LD+2iHh
+ mvkE1AqmGkG80J4aNktSIJT7YBJxHy5wJPo/4AVbHW86TM29n28LV3IZB1ej8+b/MDaP
+ 8dZzoGVCPWBo2VAvogyiuU9qNWcGCPF1Cg2GoCXlP6tFwBwYGhed7v5yN2rh3XZJa7u4
+ 0032I8boZS2F8bLKVXgJuFCdM36m8rYLxKIgwALyItL3qLlvn9qOUletgCt+iQBy74OD
+ LFGgdVpTU+ioN3DXVMzMwhxdMjrUJDL7k0MKmOvu6Pi4wie7p8oRfzFf5DN8A+5Zd/ww
+ dGVw==
+X-Gm-Message-State: AFq9FYJ3NoA7ixBGr9164p29pnyKrAaeYtgnuZhHOzo0foXlq2CEAw++
+ vJJLalgDnN/Rwj7o+PuMETp5ZeQb1bUh3FM1+HDtv+uPLFM4Zt+3aqKvczxuT6LwUDvJIWFMf4i
+ GWYThoHIYi6UEuMADc7jOrcq1wGNgSES5kkPU+CDhJ8GO70zDz6IZGoJfXM0P/Jb9BQ==
+X-Gm-Gg: AYBFou1MuMgw09TU8ZgW6yOdj2PEl5fvBq659H7MgLSMuzWos24XtZG8B2UFNM2QK7H
+ A0luGSvnlOKFf/pJYSVxwP8Ve8Y4FisWuf5E6/BPQfKO8kiq1KfzEzdCQpV/xHoVrzY/7wDpaRQ
+ Ar9y46o/+26BOiIqIq4YCr5LRqLWYgkkt4O/aeIn2KjH+BPb61ydb8OVnzqXjLYT9ZphLHUxRRn
+ 40pXI9yb8ldLc4Rqxx3GMihWushrkcbHyrUQUM71Jiv1K7niK0sc1lyhlLvswOAjK7htnsF95E8
+ z4aF/RJvsGgUmLu2fhsDOR4hW1/rxSnlPd7N19ij6ogbsvOjtlQCRihuWdHqrQuDPTw2res6f1G
+ HM+Ds2beWVcLc1W/4ov6bgAtVtdEjxE1r6k8HZBt11DChMWqw45LFQBwwJb80wtoH1KoRDzS4VQ
+ ==
+X-Received: by 2002:a05:620a:4586:b0:93e:942f:b8a6 with SMTP id
+ af79cd13be357-93f57f7da12mr566696085a.59.1792603904092; 
+ Wed, 21 Oct 2026 10:31:44 -0700 (PDT)
+X-Received: by 2002:a05:620a:4586:b0:93e:942f:b8a6 with SMTP id
+ af79cd13be357-93f57f7da12mr566691285a.59.1792603903383; 
+ Wed, 21 Oct 2026 10:31:43 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com
+ (200-204-190-237.dsl.telesp.net.br. [200.204.190.237])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93f56c6e030sm308435985a.1.2026.10.21.10.31.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Oct 2026 10:31:42 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ armbru@redhat.com, philmd@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH] target/riscv/cpu.c: duct tape fix for QMP + RV profiles
+ introspection
+Date: Wed, 21 Oct 2026 14:31:38 -0300
+Message-ID: <20261021173138.2388231-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/23] kvm: introduce KVMCPUOps
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Eric Farman <farman@linux.ibm.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Bernhard Beschow <shentey@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Paul Durrant <paul@xen.org>, =?UTF-8?Q?Bj=C3=B6rn_Walk?=
- <bwalk@linux.ibm.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-s390x@nongnu.org,
- David Woodhouse <dwmw2@infradead.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-ppc@nongnu.org,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, linux-edac@vger.kernel.org,
- Glenn Miles <milesg@linux.ibm.com>, Chao Liu <chao.liu@processmission.com>,
- Cornelia Huck <cohuck@redhat.com>, Gautam Menghani <gautam@linux.ibm.com>,
- Xianglai Li <lixianglai@loongson.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Weiwei Li <liwei1518@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-riscv@nongnu.org
-References: <20261020104320.3686723-1-alex.bennee@linaro.org>
- <87se2039dn.fsf@draig.linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87se2039dn.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-GUID: QRFXREbrk5hS_44Vywg0k1hchzUuBi9l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2OSBTYWx0ZWRfX2GIgU5+TnG/x
+ 3N6cazcbPIxUaMxHnXLEAoRedoJS1GPVJa5aVR/EzQ14XrAJVr3R56QXZpkzgPVmJliFUejKqYu
+ lYNft2SlhA7bUVw/X6EzjAZrnhPylk5RN55e/boFGpVvIaDbvwMG/U2939lKgt8bDvmL0nX0eTR
+ fkyEEEl/KP9HBQBHG02fXhnkwXQkrG4LNy+BOBaHAWDqRWg3wIH/6Q7CwtSeT5n+/Gf4DiP5UWl
+ uHFw7hEhr/qDopMdW/JTgbks833a/hx11Rc+w+BmPpoljxXB/u7q9Fv4gJunpYgLriQIu0lYH9r
+ Y7qm0tHHC2fldEJdkm77vNcayfQ9etCb7CPS2G+If1P+MzG9zgpisYVSH+CwSSt4Wl0wMreegaZ
+ 98mnv8ajOwoVT7ms9pbH0RoHtiuG4nuQX5Rv3tiZYhBz4k/cxNn1VJK6jRo/XkJn7AIRlWZkHpw
+ NL67SEbwQZBUT6cIgTg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2OSBTYWx0ZWRfXzKhre8zLimmk
+ gV9XnDNI8P2+zPKLcjScdwbyVMdAQ4ucfClHldMX5ay1kpqjnKvyskttmWo9DpqWCMW7TpAKT26
+ SEun1ITtBg/TC58q6sOX2nklUphBB2g=
+X-Proofpoint-ORIG-GUID: QRFXREbrk5hS_44Vywg0k1hchzUuBi9l
+X-Authority-Analysis: v=2.4 cv=IPaXmQvG c=1 sm=1 tr=0 ts=6ad8f701 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
+ a=ZiMIAIO6AAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=R_5PQWnzNJfoGkejWzcA:9
+ a=PEH46H7Ffwr30OY-TuGO:22 a=KohFQSMcaiS2QNUyYz07:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210069
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,31 +148,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/20/26 13:21, Alex Bennée wrote:
-> Alex Bennée <alex.bennee@linaro.org> writes:
-> 
->> There is a world coming where we can have a KVM interface which
->> supports multiple architectures. The old style approach of using
->> linking to resolve per arch kvm_arch_foo handlers won't scale and is
->> also slightly antithetical to the flexible not-quite object orientated
->> way we do things in QEMU.
-> 
-> In case it's not obvious I intended the prefix to be RFC as it needs
-> discussion ;-)
-This generally seems like a good idea, but would this be needed for the 
-arm-on-s390 support?  Would it use the "single binary" support or would 
-there be simply two system emulators with KVM support, 
-qemu-system-aarch64 and qemu-system-s390x?
+Maruks reported in [1] a problem with QMP introspection with
+qemu-system-riscv64 that happens after querying a profile CPU.  QEMU
+crashes hitting an abort during satp_mode logic that, somehow, is being
+triggered via profile code.
 
-Thanks,
+For every profile CPU that goes through init we're setting an 'enabled'
+flag in the static RISCVProfile object.  This sounded like an okay idea
+back when profiles were introduced, but now we've realized that QMP will
+querying CPUs without exiting the QEMU process while also going multiple
+times through cpu_init() and friends.  The result is that we're in a
+situation where we have runtime information being stored in static arrays
+that persists between CPU definitions being introspected.
 
-Paolo
+A proper fix is to get rid of profile->enabled and turn profiles into
+cpu->cfg flags like we do with every other extension.  Unfortunately
+we've been using profile->enabled for lots of things and a redesign
+would be in order, one which I'm not comfortable doing right now - we're
+too close to the QEMU 11.2 code freeze for such a change.
+
+For now let's silver tape a fix in cpu_init() to reset profile->enabled
+for all available profiles.  We'll do a proper redesign in the next
+release cycle.
+
+[1] https://lore.kernel.org/qemu-devel/87ld7rmdi6.fsf@pond.sub.org/
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/cpu.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 08a4d14ea1..46b74302db 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1550,6 +1550,25 @@ static void riscv_cpu_init(Object *obj)
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+     cpu->cfg.max_satp_mode = -1;
+ 
++    /*
++     * The way we're handling profiles does not cope well with QMP
++     * instropection.  We have a static array that stores RISCVCPUProfiles
++     * objs that hold runtime state for the lifetime of the QEMU process.
++     * Thus setting profile->enabled once, e.g. when instropecting a
++     * profile CPU, will leave the flag set for subsequent intropections.
++     *
++     * For now, clear all 'enabled' flags to avoid misleading QMP w.r.t
++     * profiles being set.
++     *
++     * FIXME: a better long term solution is to remove profile->enabled
++     * and just use regular cpu->cfg flags, avoiding static variables
++     * storing dynamic state.  This will help us not only with QMP but
++     * also single-binary support.
++     */
++    for (int i = 0; riscv_profiles[i] != NULL; i++) {
++        riscv_profiles[i]->enabled = false;
++    }
++
+     if (mcc->def->profile) {
+         mcc->def->profile->enabled = true;
+     }
+-- 
+2.43.0
 
 
