@@ -1,142 +1,137 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430D2606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 18:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21069606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 18:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=JQ5/coz4;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jLUDxkSP
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=okkdzdGA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NNuxp9xz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJayd-0005oV-FS; Wed, 21 Oct 2026 14:23:51 -0400
+	id 1xJb1k-0006b1-GL; Wed, 21 Oct 2026 14:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJayb-0005nz-LQ
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:23:49 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xJb1i-0006aY-OY
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:27:02 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJaya-0000e7-0V
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:23:49 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xJb1h-00012N-0r
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:27:02 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LHpiMo4040016
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:23:45 GMT
+ 69LHpLw6454466
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:26:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- V0rwOne78GCz/YC00rgYJYVTVDvpgUtAJsa8hN2K1Lo=; b=JQ5/coz4UdubbX0H
- 0ooTH3rgTHDNSVeWogLPVzspogFSt7U77pmE+HmsF7u5N3fuvTwEWKSTVuIw5Al9
- NzzF5QW1Sfqtaf7Jp6GtlSS7ffv6nJEZ2vmG6UH3TBCXYyXbUyp4L+NjnHgoEwIU
- MgVPlry62dL8hBwhulJdIknbjQQwPV3zJ0l0AI7WKbrsZVmxNpa/G7wBd/3EWvAL
- gyjuwUaJvt5iwOMziP0IOiqJA9GKLoHKSB+xpMc+wYF8yzL/m8IjIGSEhnKVeG6W
- BFCL/WOxYd8Te8nIBoKS66i0+lgZYnsMGCuNaxuXoX7gxmS6TgpkGs8GGoghnbFr
- gWw1VA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hesy7ajs6-1
+ MzVIXiUlhstdslGDDYqh2i3kb8dGWvRpsiREFihiDrE=; b=okkdzdGArJZJkkDE
+ mhr1qWWOn55rjkIl+FknOGamBbDFalJxos1P3kK6Lz8uW1I287vG4FHx1d23YfgV
+ UzvHSd+hnVPaQ9A8u1def9yDuBDiG+HnriKB0DzbCfZRnK5DKryt3k/c9ZF8J7et
+ hJ9IzD2KacwvPH3wfA4jRrKzDQe3InwNx4vc4WBM7I84wGqSA5DBz9JtEIGUa20a
+ GZeQlLzpu9xQ2didxn8N9z8pEA2ktJRTdBFP/wQbBYz2wRW+OYZN7iXiI6YXAcTA
+ NpBE1fRnHe3o8ARh4JCXWeZccxHf5qMXOBiqpaVoIE9ez5yONW8aM8napwaEDmXk
+ hrX8gQ==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hex589drb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:23:45 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-936aa34873bso192750985a.3
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 11:23:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:26:59 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-151ba226e1bso1785958c88.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 11:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792607024; x=1793211824; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792607218; x=1793212018; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=V0rwOne78GCz/YC00rgYJYVTVDvpgUtAJsa8hN2K1Lo=;
- b=jLUDxkSPlV/SgoRm2x0hbdwzQBlHzSejt6/GG5iRdHwQmttdOtuBulbcvqn5kf2ec9
- dFb7lYtMCfwRPdMAEXK0Vf+zYKsufsz0g2E+CqkBV/RDSkpAfFp2X8yU/KcavBK6J5cK
- ct6swu8Zikdi4yKfK4h6DnPd9CAqvnsm4gzgmFj8TdEOoaWpPa10HEGhqTKcGVhqWNK4
- jB7erVgH1WAgmYfoYY9SwVUBrd6GPRsxnA7h+HsC/93+MDMPP5aH6dDugkR3QEJpg6i4
- 9JlW3AVU9WKaVLVKbuxhespaBFKt2zmH60dKxfG2bTpN4ryWXoi86uC4rQZkwyv5eX4i
- nCKw==
+ bh=MzVIXiUlhstdslGDDYqh2i3kb8dGWvRpsiREFihiDrE=;
+ b=NNuxp9xzJoK+XRHPUf+V4H0FfyPGo4V7GquUOHSfZ6BE9zn980LPcXuyvoq9DtjoFp
+ BDj3OASSqc4J86efayRDzxbeXdt0uroi+Wn4FtBLOzaEAGZbrP+vvNMbWuhGha/bUrkc
+ hHQBHiVj/FTyfu/Eq2WIhgz5sTM42Jg3phV7SSnOF0T2dUxPFo7gGVtafHnvWAgcy1gV
+ FkW0xGEW8Izjtcps8TOc4t1yO4Yj9O7z+NeA15y12TQroUcSo10+DEAWnP4ljEMEA9X4
+ pDW9Z/shubTQfrYbL+1yqTy3tGNcQaC0WpP+5u5Nr15rO3fbpHhbcPLsUL2pFJVEHsGE
+ cc8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792607024; x=1793211824;
+ d=1e100.net; s=20260707; t=1792607218; x=1793212018;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=V0rwOne78GCz/YC00rgYJYVTVDvpgUtAJsa8hN2K1Lo=;
- b=Vc2L8BXIkrJM0TmENxJCnoiLwcnxGW/KWaQgwoavVRY42sqGy7V1YgL1JkaVFtpQRU
- 8dSg68fRLNGMTZa5IGSUM/dpALA8t/WB429tpTN0LUL9xAcqu4vwGrNa6uCMv7o6+GNa
- otnL6KZlduTpjeu6w6UhmaP6UQQSZvgZEP0eBNtBsWd/pKOyL8ta4hjaGcsh7Jlkpu60
- ovuL57olAbDmv1LuT/T/wO3qHxyjJOt+6hej27+DA3/GzMvO+xG6t2l0bdwzWmsbniLa
- WP9TifD65hS8p0jdMvFakFbuabS7NfpyOS6ZqPMApEzzSGLSxc3SuCXSsAtCsmW1C3nU
- KC1A==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxI0rnSqRpHyCjLFrycF+ZwYM+mrmj5ELN4v6OnANilEivDiU3TSzCV617aLC7kFuPb9WHHb7+AYBff@nongnu.org
-X-Gm-Message-State: AFq9FYJhyr5ezBDGW2nmhIZ4XozqOPhKSwU2PDvUlhM2i8HQT5RxWs1v
- Kt/Qso5W9HhKmwMfvqAsKKXnFb+OE/249oVGe+I4CJCqdjyPeHrASP0kGBhESOfLV1sqr4A4FHG
- nLtScJXYOv+1VmvIyv4Igk3TMTOOtFmKSgLTUlOxE/x9sXvV6awjtcwXnyg==
-X-Gm-Gg: AYBFou3/hv8QT5RPPPlhTNyiPIXJuwnrlGNk3PetrmV9cAWjLIZg0f7H5CkYTMbl2hV
- hMVVfTpc4ohg6eE+RDxYe6dpw2kOn/IyzyVNEr2jdWjRAUbOmGmvW2VQ826hBRyin0Kv3JXygRI
- ou/USTkWvUHcg07S1YJXt+OKOKZns9lDB2VSDkQ7PvV0IRGuFZG2jgk9wBtsjWwquGI3lzcagXb
- KnHHzaKDI1EVg9k0gwpsARMmRol5n/ClWdR695nNjdTkat69iPGd/r9PgWIwx/Mv/iwOX8DkmW/
- 9tym7A8piuPDHFJtkb6wpIKjowQKVy4hIhAqc2aOlRe941uCPm+IPcxyaTmjBsJWdJcHS+5FayA
- MM5P/FipjxJt7JzQXWflfWmXO/TfBKwzbg59klMl8iWrPOZoKoh1Nnuuc+kIYfYFkIsDMiJ0j
-X-Received: by 2002:a05:620a:2a0b:b0:93e:94f2:ada9 with SMTP id
- af79cd13be357-93f57f79117mr582689785a.58.1792607023855; 
- Wed, 21 Oct 2026 11:23:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a0b:b0:93e:94f2:ada9 with SMTP id
- af79cd13be357-93f57f79117mr582686785a.58.1792607023340; 
- Wed, 21 Oct 2026 11:23:43 -0700 (PDT)
-Received: from [192.168.68.101] (200-204-190-237.dsl.telesp.net.br.
- [200.204.190.237]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-93f56e0952asm312395585a.34.2026.10.21.11.23.41
+ bh=MzVIXiUlhstdslGDDYqh2i3kb8dGWvRpsiREFihiDrE=;
+ b=rYcJkSprQjDK/XA+lqScyCr13xpIU4n5M0yQKrClbSwes8xptST9n0ZY2BGesxc2uH
+ YlFpY2JmIfEe7k50EQQIoZJXBcIl6NjG/H+qfB4klVMmRLg45qw19qMv9xcHQ+VMrIQ5
+ /2x5o36N0WZVSvAV2Z2lWyWtmQQjioyquKdJ8l0RbtnAvjaNA4BRBfh5fjSrwDi6c2Ih
+ pb9gh22uEdU4T2mFLh/44TBSzsK260Q5+z4VGuLFBKmSyJjsxdPlivq4FlejacRSRqit
+ 0qLJnkx53WyAVXufv66PDkVyRhRUHZEhKP6SirmOooFyRdFuIf08WS5Z/r1QK2t4XWWv
+ ZSvA==
+X-Gm-Message-State: AFq9FYIYC6JADF5RkDBMN94FfsU4NU1tOMWCV+E10ih2qM4XWBpSz4gF
+ E2xHqqmL83LHp8WVx4PmFLcMXJsgfwTaN1ENdVEbOGO0zIS6yyaMvIwZH9CdctditbUiU30uwjG
+ 7JBDl6G5UC2CSsvQxM5zgf+3m3Hkx2dXi8YlgYGGlJTEV5o+RC1QripTwcaaKtj3WFA==
+X-Gm-Gg: AYBFou2xw2haVBeE/YtXo2wRqGI8b3z41yY0LIqkkoR+tvhdix7tzWEwPMPdHIx3VbW
+ GqmfpzOawdVZsCpOTXkteUlyPqDCG753Jfw0p8I7CI8EWD6O81E+A2lbjG6Ko8R19ublkE7c8Su
+ WpnHXt03AEBlS1pgaKG15+PmTI+YOwfXxhVXwmdh1N6/Esf71/yrVCunFekfd5Fxm2KqnLEOgIA
+ GvHVMdLM3jBwvJ6N/9+Aabw6P0a0Wa8p7TCVY9EYbI1h8JSJ0gzQ77J7YY16I2h+WGh9drpZ5XN
+ 3U7phwD3KfbYSiNrdyrjGbWBO+wbqMnCQUMj3Q7uxyW1/oQo0VbEFPNVG9BZEgBNB9rIwJe1aCB
+ 4WTRPK7jkCw3pQCltSAY3YuzHDtw6qT+sxskwE083dC4RV2og5PXs9Wg7ZfNrXx6355SWYg==
+X-Received: by 2002:a05:701b:2806:b0:168:6ad8:e89f with SMTP id
+ a92af1059eb24-190a0428c2cmr3321337c88.3.1792607218146; 
+ Wed, 21 Oct 2026 11:26:58 -0700 (PDT)
+X-Received: by 2002:a05:701b:2806:b0:168:6ad8:e89f with SMTP id
+ a92af1059eb24-190a0428c2cmr3321306c88.3.1792607217439; 
+ Wed, 21 Oct 2026 11:26:57 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-36741f753f7sm9052719eec.27.2026.10.21.11.26.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 11:23:42 -0700 (PDT)
-Message-ID: <91d62753-5841-456b-9869-32b73a0ecbcc@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 15:23:40 -0300
+ Wed, 21 Oct 2026 11:26:56 -0700 (PDT)
+Message-ID: <929a2b8d-347f-4f6c-82eb-261febfe8db7@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 11:26:55 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/riscv: Add SBI STA state to vmstate
-To: Wang Yechao <wang.yechao255@zte.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20261017145211.219258-1-wang.yechao255@zte.com.cn>
- <20261017145211.219258-4-wang.yechao255@zte.com.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/9] multi-target: add riscv64-softmmu
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+References: <20261016232304.1215119-1-pierrick.bouvier@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261017145211.219258-4-wang.yechao255@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20261016232304.1215119-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: BaGfRHW9lSCpXTIlQKxaYQrxST08r1Zw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3MyBTYWx0ZWRfX2sj2tn2dfI4i
- JsV1EQRj7RS00nKGDOp6w9/kGYlOU1sW6Cl5/O8F8WbdCYSWn4zd9Lh6tPd/2r6gHlEfY4Pgofy
- Sj7kf3yvTYUT/tWAPv7obv7GT421vWG3x7ZCOMAqh0hCwroCEYuEpVlj3CxHZTwNSiz7sav4uek
- ba4cd92X8omJrEkv/BYHYHajHWz3PW0PVO/EOXOS0GQdc27f3DewlPzjSXpnQvN3PVMOoIQdTBb
- eYR3PMEQJa0hSHPjRgU7C4JXOYIv8x6aZLwmyYi4VN+WO97CrbRjbRvT6caLEh4X9hY0Lv2iy0l
- 9Z7qNulGI0IhZER4gwsXXj0yEGh4u/awyjUsXf78EPMI7jYnErswQ3JSgWmyXOCEMdeILkgnoMI
- 4Vu1NjI/WRxBYKzeZYUKLRQfuwwxAoH0NIceHje6cfSj5V9DuI6TjwqUGJd+uI6Dfhe6iRlo3Q0
- Dwar5KBX19VQOJ1a5cw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3MyBTYWx0ZWRfX/9fBtNCUq5HU
- BRtmZEemNdYKioI/RBy1HYaRuAsCfJ0EaUL8yuFxUeyrIs5bOd+C0CMdE5zt80IS8HZ0DUu6XhD
- 6XNjHbSSH4NUVJOsS70RuQ9pXumP5dk=
-X-Proofpoint-ORIG-GUID: BaGfRHW9lSCpXTIlQKxaYQrxST08r1Zw
-X-Authority-Analysis: v=2.4 cv=IPaXmQvG c=1 sm=1 tr=0 ts=6ad90331 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3MyBTYWx0ZWRfX02QY2G/xSSYc
+ KJvoQuYC0PeRf9wAtomQN6+jJAr7Wf/l1FKPDWYVPfwWa5ZQAnZcrYDISntsxYqlpDAaNE4uxJ0
+ LEo+E/GTPXbYOSG5X3yGEmRMWjO6Kgw=
+X-Proofpoint-GUID: 3W9eeHHUBuMoGNuZjQnkj9nXDgNCWMmf
+X-Proofpoint-ORIG-GUID: 3W9eeHHUBuMoGNuZjQnkj9nXDgNCWMmf
+X-Authority-Analysis: v=2.4 cv=Ku7YSmWN c=1 sm=1 tr=0 ts=6ad903f3 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=1RTuLK3dAAAA:8 a=mdeikwMS5mDVz4aCriMA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=kRpfLKi8w9umh8uBmg1i:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=QNtHADRA2rtuJ4AbM9cA:9 a=QEXdDO2ut3YA:10
+ a=Kq8ClHjjuc5pcCNDwlU0:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3MyBTYWx0ZWRfXwcnhbWX6Myz9
+ nKSDO9rX5D9qdonOLtR645PMqrfH8nMI/HmKDO6ceBl4ekZ7mw4/gYZPIDXJg0qyAfjDzV+gW08
+ 16QVEx5t1kh1/3DxwC7GkKl+rYYJP3v5WprxN1L77ZgqaKH5ZO5LRgATWfUGbh0zPUtcAon8lB4
+ o4QFhdX4JXygrZ20MhB/uennEhuKF7Zab1NRipuLBg+Vi40Z2BFAWOQ31WzPMGgRpHjkk6cDae/
+ Xa2MjDal5oG0rlQAXEE7HeGhEktXzoH/NzOnozg/eThHP1VcyEh5Gj8JPllK63EKbZIy50ssqNv
+ TK0LoYmdOObBLHgU0GwlTlsoCaEdMEzGLwD+85f+x6sLLTg17mYgzpk1VhqxaS17CUq53uYHtmN
+ zuwxxMUVre9Hub0nmPnAvzxmXcMGcTwkgBvYPaqHSX2E1K91DxowVmGzwNTEG6LxJy4eh7hwoJW
+ rynWe5SN4H3jg5uWHJQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0
- impostorscore=0 spamscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210073
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,96 +150,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
-
-On 10/17/2026 11:51 AM, Wang Yechao wrote:
-> Save and restore the KVM SBI state as a vmstate subsection, so that
-> a guest using SBI STA keeps working after live migration. Only the
-> STA shmem address (shmem_lo and shmem_hi) is saved for now; other
-> SBI state can be appended to kvm_sbi_state as it is added.
+On 10/16/2026 4:22 PM, Pierrick Bouvier wrote:
+> This series adds this target to set of multi-target.
+> Changes are straightforward: functions and helpers renaming, and one type
+> restriction for this target only.
 > 
-> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
-> ---
->   target/riscv/machine.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+> While the series applies cleanly, it will need those additional two series to
+> build multi-target test binary:
 > 
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 0de06e9588..b8cdca79cc 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -318,6 +318,23 @@ static const VMStateDescription vmstate_kvm_mp_state = {
->           VMSTATE_END_OF_LIST()
->       }
->   };
-> +
-> +static bool kvm_sbi_state_needed(void *opaque)
-> +{
-> +    return kvm_enabled();
-> +}
+> - Based-on: 20261016181410.191743-1-pierrick.bouvier@oss.qualcomm.com
+> "multi-target: remove dump functions duplication"
+> - Based-on: 20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com
+> "multi-target: remove qmp_query_cpu_model_expansion duplication"
+> 
+> Usually I prefer to wait for series to be merged, but I have good hope to catch
+> the freeze date if current series is reviewed, and send all three at once.
+> 
+> v2
+> --
+> 
+> - make virt machine only available for riscv targets
+> - enhance multi-target test to detect duplicated types between all targets (we
+>   missed the virt machine since we were always picking the first target avail)
+> - add an additional commit with the rest of softmmu commented for future work
+> 
+> Pierrick Bouvier (9):
+>   target-info: add target_base_riscv
+>   hw/riscv/virt: make machine available for riscv targets only
+>   test/unit/multi-target: check QOM types can be initialized with any
+>     target
+>   hw/riscv/virt: restrict scope of virt_is_acpi_enabled to this file
+>   target/riscv: rename virt_acpi_setup to riscv_virt_acpi_setup
+>   target/riscv: prefix helpers conflicting with other arch
+>   target/riscv/tcg: restrict tcg-accel-riscv-cpu to riscv targets
+>   meson.build: add riscv64-softmmu to multi-target
+>   meson.build: list all remaining softmmu targets as comments
+> 
+>  hw/riscv/virt-acpi-build.c                    |  2 +-
+>  hw/riscv/virt.c                               | 14 ++++----
+>  include/hw/riscv/virt.h                       |  3 +-
+>  include/qemu/target-info.h                    |  7 ++++
+>  meson.build                                   | 18 ++++++++++
+>  target-info.c                                 | 11 ++++++
+>  target/riscv/helper.h                         | 24 ++++++-------
+>  target/riscv/tcg/bitmanip_helper.c            |  4 +--
+>  target/riscv/tcg/fpu_helper.c                 | 16 ++++-----
+>  .../tcg/insn_trans/trans_privileged.c.inc     |  2 +-
+>  target/riscv/tcg/insn_trans/trans_rvd.c.inc   |  8 ++---
+>  target/riscv/tcg/insn_trans/trans_rvf.c.inc   |  8 ++---
+>  target/riscv/tcg/insn_trans/trans_rvi.c.inc   |  4 +--
+>  .../tcg/insn_trans/trans_rvzicfiss.c.inc      |  2 +-
+>  target/riscv/tcg/insn_trans/trans_xlrbr.c.inc |  4 +--
+>  target/riscv/tcg/op_helper.c                  |  4 +--
+>  target/riscv/tcg/tcg-cpu.c                    |  1 +
+>  target/riscv/tcg/translate.c                  |  4 +--
+>  tests/unit/test-multi-target.c                | 34 ++++++++++++++-----
+>  19 files changed, 113 insertions(+), 57 deletions(-)
+> 
 
-I think kvm_enabled() isn't enough here since there's no guarantee that
-the current running kvm driver supports SBI STA.
+Except if there are specific comments, I'll send it as a PR tomorrow,
+with the two companions based-on series, and with the current helper
+renaming, as there was no comment on general helper renaming. Helpers
+renaming can be reverted as part of general helper series.
 
-If we take the existing mp_state as an example, in kvm-cpu.c we have:
-
-bool kvm_riscv_has_mp_state(void)
-{
-     return cap_has_mp_state;
-}
-
-And then, in machine.c:
-
-static bool kvm_mp_state_needed(void *opaque)
-{
-     return kvm_enabled() && kvm_riscv_has_mp_state();
-}
-
-
-I think we can do the same here.  In patch 1 you're setting kvm_sbi_sta.supported
-to true if SBI STA is available.  We can add a:
-
-bool kvm_riscv_has_sbi_sta_state(void)
-{
-     return kvm_sbi_sta.supported;
-}
-
-And then you can use it as another check in kvm_sbi_state_needed() too.
-
-
-Thanks,
-Daniel
-
-
-> +
-> +static const VMStateDescription vmstate_kvm_sbi_state = {
-> +    .name = "cpu/kvm-sbi-state",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = kvm_sbi_state_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64(env.kvm_sbi_sta.shmem_lo, RISCVCPU),
-> +        VMSTATE_UINT64(env.kvm_sbi_sta.shmem_hi, RISCVCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
->   #endif
->   
->   static bool debug_needed(void *opaque)
-> @@ -645,6 +662,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->           &vmstate_kvm_timer_frequency,
->           &vmstate_kvmtimer,
->           &vmstate_kvm_mp_state,
-> +        &vmstate_kvm_sbi_state,
->   #endif
->           &vmstate_envcfg,
->           &vmstate_debug,
-
+Regards,
+Pierrick
 
