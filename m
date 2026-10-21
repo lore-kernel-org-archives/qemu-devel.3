@@ -1,134 +1,122 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25100606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C6B606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm1 header.b=f81U9WVD;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Nx+PAXSJ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HiUkqcwk;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=I0xDPSi9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJWWD-0002cv-2d; Wed, 21 Oct 2026 09:38:13 -0400
+	id 1xJWaS-0003oP-C5; Wed, 21 Oct 2026 09:42:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xJWW3-0002XH-Vk
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:38:04 -0400
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xJWaK-0003ns-F5
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:42:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xJWW0-0006ID-82
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:38:03 -0400
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 5E2C67A012B
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 09:37:57 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-10.internal (MEProxy); Wed, 21 Oct 2026 09:37:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm1; t=1792589877; x=
- 1792676277; bh=lE1Ue7oi5C+2Uu+sj7Lrqhq8EqGPId8oQBb9MCfrwRg=; b=f
- 81U9WVDOdWC2lFKoI/mbmO2H+8f9NYE6VCnq4hksz/hKKOnoxrB9ryGRLqLRYwd1
- eqG2vhxvJwq8GL6yONruIG9WD+KtNPUG9RKY08OFJAuxGr7GlurA+IVfsUnMd9ZB
- vk27fzLc7RbW/z6OvFMDh3JfXyZAtwzREbGqJO77aWCyZ6Hk1WM6BwFN+PL0WGlr
- GQLPvvTEomiyusDj0SBmJ4q8eLn8zCx7eswbS1Kw/PksDgPYMFgYL/3xygOR82aR
- HjW/UAKz1uoFoxXX5pt8XIBMWqrPBIXxOgshHh7ElXUHZyG5kBTP2/WCIy06Uj2Y
- tVKDRpGwY9BhwByGn4MYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1792589877; x=1792676277; bh=lE1Ue7oi5C+2Uu+sj7Lrqhq8EqGP
- Id8oQBb9MCfrwRg=; b=Nx+PAXSJOtqknQLLkL0r1fkRFM9igvTuy1+bKPUFLsZ4
- 9lDceNt3Hs5B0fL//F6oAQohZ7Gd/xmpipiIYyq4z7xdb8piK1JQQZwdNXcPT2Lv
- Dt51AsS2ED/9oXnVqmbRv+mWRq609NRaYr6tOcU+jsQrF3oIuypXAK92JcxRaxDT
- IxvUldUf2JPaDlzXRDPxqclTC6rJHlkvGfmxRma/BSAB0HNsXoRIqT229vYohFDv
- rPBmsOC/oTVp10JVz54CqwKr6Ylmtf3DATypGTrWy9dme4h/TtRtyM7JdtkiQmUi
- w8eU8BEji+yKQ8PNOWW612NqxhZpro9GQlXYOypvOA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1792589877; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm1:rsa-sha256:F25G5lbiF+pUcPHTBE9jrGK1xA7zRt6fu0w9uo8166gAHmL
- ESd42HcC8IOnfy1Ck6Ks74/k8D0FESParLq0pP+/IYq4dE7SJWSUAtQMpEVEBM8z
- knnr6yRJEETV1RTYaVmUYrxI9ItAt3NiwQaIfAZMVmZXDSC1h2mCiVSS0wbv4EIB
- OQZ8gn8MXEOcdjcLrgRNz50UOawSFzBiY2UBDhiLWpWq2dx3c+xECrhEzaIc4Z0T
- n10uA8Y5RM0tCG20VyGSYVN//bJ551Klj0DisH12VRJtvm4mNxw9Go4ynrztZePQ
- LTO2UOMoEqfZx/jTkDzUYvceKAll40+Y/+AQjqg==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=mi-m=1; hc=10;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,message-id,mime-version,subject,to;
-Message-Instance: m=1;
- h=sha256:juJUAaNCxyEJdnP46k4O1vv75SuCKEK8T5VohhC90dY=:uKBdng7XEbnrwHGyajQRgiB0om2mwLXShWwwQJfNmjw=;
-X-ME-Sender: <xms:M8DYalOzqtlrXSYryEBeoNzJwJ7H224iprpVXNeD2H6T4yFMpl0jow>
- <xme:M8DYai4Lf-TWDFwZNT6Ew5bYxH7KsRu4hQRog4h3iv3qMK-6KhIwxeUbRcmXSm8xL
- qjg6lKwaMOAlcdOv0hCouwRG173IZPIWWLanNi5SwLzdRjS3RMqw0zO>
-X-ME-Received: <xmr:M8DYajSNk66ge21Nekr2tF8krq0AZEgeT3UuYumffz2NkowvIO8M81Bn1chZDIMJbqwa04ZRGPsS8ywyVROouL2Q4yU1c-kc5cjK63dKl31PvqT6jDvK8Ud_Lw>
-X-ME-Proxy-Cause: dmFkZTF/5tGr6tZUjid/mBygzb5Xj36+xh7VLO6H8o1WDv/o07d57WC1UhrbM/cwGY5yHF
- HDyD/Io8zQ31s3Ou0kUsVjAReGr2/8DHonkUV7VfsSn4v/pL5CNY9fqKQQRrNfoNGvpOXr
- yJssnGWYy+E+T7PfB+3WhgfUdb0YquhnaO5jrryDzJ08ZNFx4c2Gosj4SU3kKKfuOiQk6B
- Mq4YxMs8kh/F6wFVTiOQzqJ31M1TzSEwQzKQan3PmE8T87vnLlOU/N65YB/wy7vVJIHbg8
- +u4+7/YVIzPpTWTb7eu7lOfBz0YCbZR/fWYzl7L0/Futk8idlnHaelvyKxrzn1j38OMvrw
- y55fscqSh8ggb6WdiwzED74a0OGK/Wu8CMEWAYGBTQGZT9x+jLuWY0maEw2I9QLE7cha3r
- Mn8o9j3C8Sww2uEoG8dj6n2oU2803OI46qckQYvMrHaO4gS1tHOv2JmNzFm1E0nH3YbKvg
- 6jBUTXyjngfWoJ7GiZzCESTs+6GMTbtsgxJl3/ygtr3N3O1iL7WgR0mk7MnCl58r52x+q/
- /WMw3uwk4RQIIc7/fRnJr1y/kqhPcIZlcVKBL+Iw+0hbSdSq21kao9Aq91189GFBheJ5lc
- ClamfWT4JawcisXTk1jsu8K7KZRlAQ8Thvk52Q6wgaYj1/n5PNLLWh97pl/Q
-X-ME-Proxy: <xmx:M8DYanDbbSijrM0O5eKH9frxNLKaOret5cKYgMFen1FC1HvYzEMqhg>
- <xmx:M8DYarHqcEBZfrSLRt-Ypt_6l9hZlwZwe-u5PkQQfkSdFHkunRT1lg>
- <xmx:M8DYapBhykqOoNzGNLk09xh__8TGhGikm_KZx-QgDku2QUQtQgpibw>
- <xmx:M8DYarW-R8Roj87D4XNhKp-siGsXnKhzYk_Nf5cWk6JLICUgy8BOSw>
- <xmx:NcDYavZfF8AXZ1I_xyDtgwzf3nHShE05kSGJDDt85iZUUo8wTTn5xds8>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Oct 2026 09:37:54 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-Date: Wed, 21 Oct 2026 15:37:46 +0200
-Subject: [PATCH] hw/nvme: verify source and destination lba size for copy
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xJWaH-0006iL-UX
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:42:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792590144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YoQqnlAh3Ls7KPLyTc5XKOWCZoXoU1An/kpD3CljJvw=;
+ b=HiUkqcwkvfSqYyLMmvrYh+oQGo7p/D80i9/0Uv7/XKWTdys/W9cw1d1y1mKdVVPUn0a9FR
+ lK0hxJCFdFfxbA4bT10M/ONRtkw2jJZbqG8NAICocr0oZBVMbUiDt9cc1O++tgCo9hZdoQ
+ 2AuI4tGGh0QpDHBbqYO7o/CxjTVAAhw=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-srXDNtzwPD-EAn2U651Nkw-1; Wed, 21 Oct 2026 13:42:23 +0000
+X-MC-Unique: srXDNtzwPD-EAn2U651Nkw-1
+X-Mimecast-MFC-AGG-ID: srXDNtzwPD-EAn2U651Nkw_1792590142
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-8a030e0f9c1so732650b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 06:42:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792590142; x=1793194942; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YoQqnlAh3Ls7KPLyTc5XKOWCZoXoU1An/kpD3CljJvw=;
+ b=I0xDPSi9qZRNYoIqvSQtOwCKkD6SUJGeTIvCDpOZiRq+QUn799tztGm35E4n7wG+R8
+ bdPVMaDoVW8zV4yJM1nwc0P7g4QeOqN1gl2FV4dBZk8qz07lCKeme4w5XVuts+6r+IWj
+ r9J1Y2EfqzdLdpy6BVYqBAnO8zGrSDRaGV6Ws0LQPcW9Go/szBY+wazRg4ikWwLbLEw7
+ IoWL5jmEHBrlZ0jj3VmqyFOBOxEuCyuKuKIbGMsAzmATv3E65ZctJ82i47bIaTCtredh
+ +Q+mZZ2XseZs5F3u/9A/XIMJU1JnfwzkUNPtw1+KrXHpdN3qfB6HV1C1v78n/gekYcZ9
+ 1jDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792590142; x=1793194942;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YoQqnlAh3Ls7KPLyTc5XKOWCZoXoU1An/kpD3CljJvw=;
+ b=E89MDlvjm9XEXHoGTtRZmu5o8t1SQHT441w75B2B+2f2pt6ZBrKRYuYTz1wEFi7o2H
+ c0bddtlGDan4nbvnsSZguyQVOjbnM74DQ7hrbxvi9/W1bf8GJrOculbaRGiiiiHcQhaU
+ xz/E2Ck7Gev/OFlz+t72/G9Hu69BE7MpSn7ir9zMvGTDeJLHPNt5vboDxsW0yEIrjLhp
+ bRsBW8w3gpPqWZVhuKp5bpqtFFC29Rjr2LFWzY+eOKNWvFla/KzrerOGzRThs7UwDqEU
+ XDJe6SEimVcFn0RtH4Vy/VIe1CGyAYeFPCW/lJ22oNvQWP0nuIOyfvVukUmkUVa74ni4
+ 1Hmg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx/YV/fFJ6HA0LmhCEE9eRulzGE7sOxvLvVSGllg8KFnmc9UAA+SWasL0XKz7ESFIWKnHDuNbKmspHV@nongnu.org
+X-Gm-Message-State: AFq9FYK78MRmWqEPWvGyxurbANBbQHT6HpSW+vHYOZWuDNc9OhOsJzZJ
+ DFAe8YbtymOIgwL2boCwYc0br9k3qVG5NGR3P2WbNeaIQ3EWCGhIgvc4VfDsVpiUo6XhYxrmfI8
+ NwHkjWhs9XsXDknV7kkWiOMYlltM9EceJP5hjKW/02Z+8R0UQbr44gE8H
+X-Gm-Gg: AYBFou1UotGlqxW3xz1iSP2hIeUsL/EfrnqqMC4D7AipUcS+MAwBmz4Zc6KDD3CeBKF
+ 3lvp3CkOYXPtwlwor0iCf2/6nHFfyTncPrhST0+gRof7Mboj82lU/seqW9ORwHjUBtiHz98jzEq
+ MXa3ZLXTyYB2upxGaygwlRvjmqG5TapTzTs/q7i4M5X5fvRBC+5W0OhYlfmk5c2V2l2MAY2mkwV
+ vJasb8rwLMY8PuYqBh27Jdb1Y1RB6UIpk+/hodrLKmDrtLoPfOIWcF2JdxyhU3yB6cxzwvI/jeM
+ grbynCAytFpB08YdUNl31P6DRCs+tbIvdUlv+iXOtlakfiJ9T+hQ0yWUkkWekiR1g9KKTQLAY70
+ ZhB2fKnZMsBy2Ub2tCxgs++FIATGo7QQq0Zuaz631Yw==
+X-Received: by 2002:a05:6a00:a0c:b0:89e:779b:d0f with SMTP id
+ d2e1a72fcca58-8a089dfdbb8mr1587939b3a.37.1792590141861; 
+ Wed, 21 Oct 2026 06:42:21 -0700 (PDT)
+X-Received: by 2002:a05:6a00:a0c:b0:89e:779b:d0f with SMTP id
+ d2e1a72fcca58-8a089dfdbb8mr1587908b3a.37.1792590141359; 
+ Wed, 21 Oct 2026 06:42:21 -0700 (PDT)
+Received: from [192.168.68.52] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8a0895cce93sm934064b3a.30.2026.10.21.06.42.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Oct 2026 06:42:20 -0700 (PDT)
+Message-ID: <784dfea3-24cb-4e70-ab46-b96b4b9a1831@redhat.com>
+Date: Wed, 21 Oct 2026 23:42:14 +1000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 03/24] target/arm: Add confidential guest support
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Kohei Enju <enju.kohei@fujitsu.com>, michael.roth@amd.com
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ lorenzo.pieralisi@linaro.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-4-mathieu.poirier@linaro.org>
+ <dhrvydsmaw22xqx5d5i5s7fdyjxupz27yxp6trv2tesysp4npj@quvzrxjvfipz>
+ <arI197vJkW75p50c@lpieralisi> <arSTQQ5uB6oR-vFe@FCCLS0092175.localdomain>
+ <ataBkrIvULJXj4v6@p14s>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <ataBkrIvULJXj4v6@p14s>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261021-fix-4173-v1-1-e8045545f954@samsung.com>
-X-B4-Tracking: v=1; b=H4sIACnA2GoC/yXMTQ5AMBAG0KvIrDXplNC4ilhUO2UskBaRiLsrl
- i/fzwWRAlOEJrsg0MGRlzkB8wzsaOaBBLtkUFJVKBUKz6cosS6EQ60tGuW985Dqa6CUfVdt9zv
- u/UR2e/dw3w9qHIn0bAAAAA==
-X-Change-ID: 20261021-fix-4173-d188c1a2ffdf
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1350; i=k.jensen@samsung.com; 
- h=from:subject:message-id;
- bh=2pY7FNFAZLcSO/jn0x54rnWKCUCcG2SJwxp+aVwWsCo=; 
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR3JZd0RKdFA0U0FjU09LOXE0YThjdzBsYjE3CjVQS1Mva0x5QXdDakswVitz
- U01vV29rQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcTJNQXl
- BQW9KRUUzaHJ6RnRUdzNweHZrSC9ST25tN05IQ0RCTFgxcWZuclRiV3cvZFo1QVJhZ04vQzVvYw
- orVCtzb2hvTHdaL1V6TWdpalVZZkVJeEtVb1J0VU5uUERrMDJPOHQ5ckRDOTZ1ZXlDd2tKWmdjZ
- DJPMUVEMjRyCm9iYVhFTGowM1dGSjBvUTQ3bE9GaEJEdXhUYlFuRi95N2t1aVpweWJXU1dIZUND
- K1lzNjhwemZhY2RrQjBKaHYKMHZRV09LNlg1andMV3NpM254ZlF3U3JFa1MxV2FpYnAyNTROMVV
- XNnhva2daOGk5cEZmOUNqd1E1WjBwaUwwOQpvVDVvd0tvWkR5a3J1d3BPQk10QzJ5SHZqQ0VqZz
- R2M0NIa1pmWVBNZHh6V1hBWmE5S0pvSGZRemdTZW4yTjMwCjZpckhmRklPcGV1aFRaZFhLSGl5S
- 1NqdUtRNGdWelJVRzM2MFN2V0hieVR5V0FNbzYwU3dyNlE4Cj1EQWhrCi0tLS0tRU5EIFBHUCBN
- RVNTQUdFLS0tLS0K
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=its@irrelevant.dk;
- helo=fhigh-b5-smtp.messagingengine.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,54 +128,223 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Klaus Jensen <k.jensen@samsung.com>
+On 10/20/26 6:46 AM, Mathieu Poirier wrote:
+> On Thu, Sep 24, 2026 at 12:12:35PM +0900, Kohei Enju wrote:
+>> On 09/22 10:01, Lorenzo Pieralisi wrote:
+>>> On Tue, Sep 15, 2026 at 04:27:21PM -0500, Michael Roth wrote:
+>>>> On Thu, Sep 03, 2026 at 01:35:50PM -0600, Mathieu Poirier wrote:
+>>>>> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>>>>>
+>>>>> Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
+>>>>> support the Arm Realm Management Extension (RME). It is instantiated by
+>>>>> passing on the command-line:
+>>>>>
+>>>>>    -M virt,confidential-guest-support=<id>
+>>>>>    -object rme-guest,id=<id>
+>>>>>
+>>>>> This is only the skeleton. Support will be added in following patches.
+>>>>>
+>>>>> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>>>>> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+>>>>> ---
+>>>>>   docs/system/confidential-guest-support.rst |  1 +
+>>>>>   qapi/qom.json                              | 13 +++++++
+>>>>>   target/arm/kvm-rme.c                       | 42 ++++++++++++++++++++++
+>>>>>   target/arm/meson.build                     |  5 ++-
+>>>>>   4 files changed, 60 insertions(+), 1 deletion(-)
+>>>>>   create mode 100644 target/arm/kvm-rme.c
+>>>>>
+>>>>> diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
+>>>>> index 562a7c3c2852..abb56923ad13 100644
+>>>>> --- a/docs/system/confidential-guest-support.rst
+>>>>> +++ b/docs/system/confidential-guest-support.rst
+>>>>> @@ -42,5 +42,6 @@ Currently supported confidential guest mechanisms are:
+>>>>>   * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
+>>>>>   * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
+>>>>>   * AWS Nitro Enclaves (see :doc:`nitro`)
+>>>>> +* Arm Realm Management Extension (RME)
+>>>>>   
+>>>>>   Other mechanisms may be supported in future.
+>>>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>>>> index 776b13027fd8..52997c29a32d 100644
+>>>>> --- a/qapi/qom.json
+>>>>> +++ b/qapi/qom.json
+>>>>> @@ -1288,6 +1288,17 @@
+>>>>>     'data': { '*pretty': 'bool',
+>>>>>               '*close-action': 'MonitorQMPCloseAction' } }
+>>>>>   
+>>>>> +##
+>>>>> +# @RmeGuestProperties:
+>>>>> +#
+>>>>> +# Properties for rme-guest objects.
+>>>>> +#
+>>>>> +# Since: 11.1
+>>>>> +##
+>>>>> +{ 'struct': 'RmeGuestProperties',
+>>>>> +  'base': 'ConfidentialGuestSupportProperties',
+>>>>
+>>>> Just FYI, based on input from Markus I'm planning to drop this
+>>>> ConfidentialGuestSupportProperties base type from my series
+>>>> since it's probably only SNP/TDX that need to be able to switch
+>>>> it on/off, whereas this series appears to use/require it from
+>>>> the start.
+>>>>
+>>>> I'm not exactly sure what it will look like for v3 yet, but if you
+>>>> were based on v2 you'd instead probably just do the following in the
+>>>> instance_init function for your rme-guest instance:
+>>>>
+>>>>    cgs->allow_convert_in_place = true;
+>>>>    cgs->convert_in_place = true;
+>>>>
+>>>> rather than exposing it as a cmdline option.
+>>>
+>>> Yep, it won't be an option for CCA Realms anyway since that will be
+>>> the baseline.
+>>
+>> IIUC, in-place conversion requires RAM backed by a shared/mappable
+>> guest_memfd. If in-place conversion is always enabled for CCA Realms,
+>> could QEMU also select the equivalent of
+>>
+>>    -object memory-backend-guest-memfd,id=ram0,size=...,share=on
+>>
+>> automatically for the default RAM, so that specifying the RAM size with
+>> `-m` is sufficient?
+> 
+> Are you suggesting that on Arm, we completely get rid of
+> 
+>      -object memory-backend-guest-memfd,id=ram0,size=$(RAMSIZE),share=on
+> 
+> or simply to get rid of "size=$(RAMSIZE)" in the above because it is redundant
+> with "-m $(RAMSIZE)"?
+> 
+> Gavin and Michael, what is your take on that suggestion?
+> 
 
-Cross-namespace copy requires the source and destination namespace to
-have the same logical block size. This is not verified, causing a heap
-out-of-bounds write.
+I don't think that's what Kohei meant. He actually suggested the memory backend
+shall be pinned to memory-backend-guest-memfd and its in-place conversion shall
+be enabled when the memory backend isn't explicitly specified by users through
+"-object memory-backend-xxxx". For this inexplicit case, where the memory backend
+is determined by '-mem-path', the memory backend is either TYPE_MEMORY_BACKEND_FILE
+or TYPE_MEMORY_BACKEND_RAM. Please refer to create_default_memdev().
 
-Fix by correctly identifying the invalid operation.
+I think Kohei's suggestion makes sense. Besides, I think '-mem-path' should be
+disallowed for CCA Realms as TYPE_MEMORY_BACKEND_FILE isn't what we want.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Feng Xue and XGPT of ThreatBook
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4173
-Fixes: d522aef88d42 ("hw/nvme: add cross namespace copy support")
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Thanks,
+Gavin
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 578421c21761..b48bf599b5d6 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -3277,6 +3277,11 @@ static void nvme_do_copy(NvmeCopyAIOCB *iocb)
-         status = NVME_INVALID_FIELD | NVME_DNR;
-         goto invalid;
-     } else if (snsid != dnsid) {
-+        if (sns->lbaf.ds != dns->lbaf.ds) {
-+            status = NVME_CMD_INCOMP_NS_OR_FMT | NVME_DNR;
-+            goto invalid;
-+        }
-+
-         if (!NVME_ID_NS_DPS_TYPE(sns->id_ns.dps) &&
-             !NVME_ID_NS_DPS_TYPE(dns->id_ns.dps)) {
-             if (!nvme_copy_matching_ns_format(sns, dns, false)) {
-
----
-base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
-change-id: 20261021-fix-4173-d188c1a2ffdf
-
-Best regards,
---  
-Klaus Jensen <k.jensen@samsung.com>
+> Thanks,
+> Mathieu
+> 
+>>
+>> Thanks,
+>> Kohei
+>>
+>>>
+>>> Thanks,
+>>> Lorenzo
+>>>
+>>>> Thanks,
+>>>>
+>>>> Mike
+>>>>
+>>>>> +  'data': {} }
+>>>>> +
+>>>>>   ##
+>>>>>   # @ObjectType:
+>>>>>   #
+>>>>> @@ -1346,6 +1357,7 @@
+>>>>>       { 'name': 'pr-manager-helper',
+>>>>>         'if': 'CONFIG_LINUX' },
+>>>>>       'qtest',
+>>>>> +    'rme-guest',
+>>>>>       'rng-builtin',
+>>>>>       'rng-egd',
+>>>>>       { 'name': 'rng-random',
+>>>>> @@ -1427,6 +1439,7 @@
+>>>>>         'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
+>>>>>                                         'if': 'CONFIG_LINUX' },
+>>>>>         'qtest':                      'QtestProperties',
+>>>>> +      'rme-guest':                  'RmeGuestProperties',
+>>>>>         'rng-builtin':                'RngProperties',
+>>>>>         'rng-egd':                    'RngEgdProperties',
+>>>>>         'rng-random':                 { 'type': 'RngRandomProperties',
+>>>>> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+>>>>> new file mode 100644
+>>>>> index 000000000000..42e1d1e7b859
+>>>>> --- /dev/null
+>>>>> +++ b/target/arm/kvm-rme.c
+>>>>> @@ -0,0 +1,42 @@
+>>>>> +/*
+>>>>> + * QEMU Arm RME support
+>>>>> + *
+>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>> + *
+>>>>> + * Copyright Linaro 2026
+>>>>> + */
+>>>>> +
+>>>>> +#include "qemu/osdep.h"
+>>>>> +
+>>>>> +#include "hw/core/boards.h"
+>>>>> +#include "hw/core/cpu.h"
+>>>>> +#include "kvm_arm.h"
+>>>>> +#include "migration/blocker.h"
+>>>>> +#include "qapi/error.h"
+>>>>> +#include "qom/object_interfaces.h"
+>>>>> +#include "system/confidential-guest-support.h"
+>>>>> +#include "system/kvm.h"
+>>>>> +#include "system/runstate.h"
+>>>>> +
+>>>>> +#define TYPE_RME_GUEST "rme-guest"
+>>>>> +OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
+>>>>> +
+>>>>> +struct RmeGuest {
+>>>>> +    ConfidentialGuestSupport parent_obj;
+>>>>> +};
+>>>>> +
+>>>>> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+>>>>> +                                          CONFIDENTIAL_GUEST_SUPPORT,
+>>>>> +                                          { TYPE_USER_CREATABLE }, { })
+>>>>> +
+>>>>> +static void rme_guest_class_init(ObjectClass *oc, const void *data)
+>>>>> +{
+>>>>> +}
+>>>>> +
+>>>>> +static void rme_guest_init(Object *obj)
+>>>>> +{
+>>>>> +}
+>>>>> +
+>>>>> +static void rme_guest_finalize(Object *obj)
+>>>>> +{
+>>>>> +}
+>>>>> diff --git a/target/arm/meson.build b/target/arm/meson.build
+>>>>> index 0369f96b4cc6..9d322a7aad28 100644
+>>>>> --- a/target/arm/meson.build
+>>>>> +++ b/target/arm/meson.build
+>>>>> @@ -31,7 +31,10 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
+>>>>>   arm_common_system_ss.add(files(
+>>>>>     'arm-qmp-cmds.c',
+>>>>>   ))
+>>>>> -arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+>>>>> +arm_system_ss.add(when: 'CONFIG_KVM', if_true: files(
+>>>>> +  'hyp_gdbstub.c',
+>>>>> +  'kvm.c',
+>>>>> +  'kvm-rme.c'))
+>>>>>   arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+>>>>>   
+>>>>>   arm_user_ss.add(files('cpu.c'))
+>>>>> -- 
+>>>>> 2.43.0
+>>>>>
+>>>>>
+> 
 
 
