@@ -1,58 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A406606A325
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0233606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=vmexit.de header.i=@vmexit.de header.a=rsa-sha256 header.s=mail header.b=VAJnNHMd
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HVjREeRl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJd2f-000477-Hk; Wed, 21 Oct 2026 16:36:09 -0400
+	id 1xJdBv-0005aH-Kg; Wed, 21 Oct 2026 16:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xJd2X-00043l-4q; Wed, 21 Oct 2026 16:36:02 -0400
-Received: from vmexit.de ([2a0a:4cc0:c1:d4ba::2] helo=gizmo.vmexit.de)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xJd2T-0006FS-Sx; Wed, 21 Oct 2026 16:36:00 -0400
-From: Ralf Ramsauer <ralf@vmexit.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
- t=1792614954;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MVSAu0gfeVzeEMpAMOn+JKLB5yOXFqRUFtqNjzq7UMU=;
- b=VAJnNHMddzVWoU+j6rDr5DhD7oqzAw0CycbPToY4hMA7hRzbgLEamPE+v0RP9UFAXnk5xV
- w6t4ANdXiHIi1AsLSK8pSqDlF7jBq7Zczvn14sxQ4PsJ3rX0XE+fsHwa0tditZ1m35mfQg
- 4rdvRI72WWveL53eLyA9QIwgeWwljf4=
-To: qemu-devel@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Ralf Ramsauer <ralf@vmexit.de>,
- Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, Bin Meng <bmeng.cn@gmail.com>,
- Lukas Landgraf <lukas.landgraf@st.oth-regensburg.de>
-Subject: [PATCH v3 4/4] hw/riscv: share the PLIC interrupt cells between boards
-Date: Wed, 21 Oct 2026 22:35:50 +0200
-Message-ID: <20261021203551.3211170-1-ralf@vmexit.de>
-In-Reply-To: <2949aabb-200f-44bd-9b9d-4d0ceaaf77e4@oss.qualcomm.com>
-References: <2949aabb-200f-44bd-9b9d-4d0ceaaf77e4@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1xJdBt-0005Zu-Pb
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:45:41 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1xJdBq-00070v-4t
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:45:41 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-3ab4354db11so8713381fa.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:45:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792615536; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZVJkLR2VqG1qUR046arpkzClugHohk0VHEPnHQwwr60gyl5H/HGyxy76Pg91TYFvpb
+ yKFn2M6O5Zfk3o9KaVbb2o0rVPPAavG+TewwWnsbGP39P8Kl22rpx9fcIaafYzOCmivl
+ 6haWFGJUmIytcTY7LmMgvBOf+JpNOxFkzUSw5z3ZBspBzybuIl7o/aIE0k44i8HImIb7
+ tyxCR/aIiArWBGzvg6YdGShkjJ7SEFc1jjar5PDf7nUgNVKQdtPdezxsAkPj1CN5iX59
+ OxSLbE4eV9SiiEfOWB7NvMVoNh6S1KAbGrhy4HI3sNTX8id2eUdPvzZLBPnQ3Y+6iV+7
+ hNyA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=u9aNv+MNV1gWIs6o/Dj9P0dAdWNL06j7VM1JUOj1kOc=;
+ fh=fMfr6U9vqZWyCHK3rqr7ZLaoP9Sdvf4Q6WFrB1e877c=;
+ b=PsFMrso/AN0WA23UThBEa78ipZzCK4de0oF17WhSkCzt/I+QFOBiZwYxz2k+epPjzC
+ ROzffVEtCa4sKQkY/xfRviJVssWXeAtKBXXYSUA5OMpf7T16BLmROtTqsWPhDI618cpY
+ H8xfc3ej46LqhuZlJLCi2GvcfsthMVKiGD1igw/fVNuGp2wZdgDXNg23jXbWHVO2dmwX
+ mGTeEdUswJQ/4mByMFH03KFm3iznTPQ2s6fIl7OhjEvyLci5lpyk7/zx1COqdrUnXXmk
+ iuUfX8WYuzaIAOX4cG5ocYDdx6bmVn+lddsSG1ArQQlRNiv5F8hWGtooLIct9ArrW/ox
+ VNog==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792615536; x=1793220336; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=u9aNv+MNV1gWIs6o/Dj9P0dAdWNL06j7VM1JUOj1kOc=;
+ b=HVjREeRlFtFOZsUa5+bo4GreTziXQkwAHGcxrNs155VrFLbtPlBC0si8mYFa9R1vOn
+ /FLHFjzTA5mE9N/v7ZqjV+sSdFzeqhIWFlwk2wAfWNrHOerd9Kk9c87XPuYszIQnVvpQ
+ gmIHO5FqLVrWGJtWxjliekqmkH5Sn5yLJGWi4D1kFqHqkKqfYnySUG2Snyc47k0XcH21
+ 9S1EQw4Qqq2sNrBGADuwQ2juL/FhDelLlKvJnb/gvnSIxzX3bxvUcJnkDSh4qswxd21r
+ tFK1H6Xh9EDzSmKPdrqYkPXCkAgKjcA91r8KU0s2gJ8zbCRb8wVnb/Qpa+207aFocxu8
+ owsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792615536; x=1793220336;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=u9aNv+MNV1gWIs6o/Dj9P0dAdWNL06j7VM1JUOj1kOc=;
+ b=b7mGuzR+5+80PRbh8hNGKbXvtZCSkYgAxtTOoDkRo/9Ci5fm968VVROyjtqwuLUmRE
+ cHr7vuv6+/uwKtftx9gAiVigzmhhLv9ldQ+ptPT8ISmkVpxcC+qO93XVD4jrcOXgZcvz
+ MqM+8WsttXCJtGORV/68mtoTSzZF6XCPwMPETrX1QDoBIm6kMFZUEDYi1MVvt3MU0qTv
+ EC3h//PrDCNRNNPmQOSbY7oox3YBk8aWhd2bgvhzPqPbAbUkpdRGkg+6o1Q208cLBOhS
+ A168D9yPzI5vkZOB2BHoqkgzPULmHwRC3MCZyiH9wY4cAvXJhvPa0kCq23uJ/Nx+P6T6
+ agTw==
+X-Gm-Message-State: AFq9FYKiS9biCT7P6TPHuodrjwZcbUoBvCRLn8zsbN+7Q5Bn5/q9igoT
+ uSUGdsivTlFAb9/8LipJ9V8m1WK8gA4kRofd2NUzvf6g6gHB5Bou3TUu8IVYgEylPi+pPejMwoq
+ /6l+dfE5+QRVmIXJWpY+ed3COW941QuQ=
+X-Gm-Gg: AYBFou1udrh8Gt25g/Um1ENewzjAx6g9MzqUNprOH9pBaCPr2aSu0A99pECo/vdvxjK
+ f46mDYfFoerplVuWJ/X2udTU5rrpatwucLQguG+MRMZ6vuCNuS+yJPgDcJP+7ILygJo7/ULCF16
+ QrFzWCUv0wp6S6IvvcXKpt+iIIQfyklE1N3C/GsRKAFVH1xCYp4oEtq6pO0JsljL94nf2+W6ug2
+ r/bMWY5Qh9+afHnH9V4+55ILtFxOxwgR8UX6Q61cc1z1/oXDib4SJOI6fNZKCmB8rEkm6THahoc
+ oHpCLEOg9cjaOBW3SMRBuTYcQJcoK8l5+KjBWkTOJLtLqaYxwnikcF4ZQN9c8TqLWpPleQZSjGU
+ 5WdmtQWNqDhWmaj7KXq5rndZRqD+DP7fufcpzMlJdxQL05sgkGqLJjkcbLQVXMoSepCuh42oniK
+ 4f7mH0wLgLRQbITUkfWhEoF2WM1P3YghoU3QBxpwps796RE9zRRqwX2JMvHRP+W/gmmAKufasYi
+ Q==
+X-Received: by 2002:a2e:a7cf:0:b0:3a9:d70c:f75e with SMTP id
+ 38308e7fff4ca-3ac4415825fmr8205211fa.7.1792615536073; Wed, 21 Oct 2026
+ 13:45:36 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a0a:4cc0:c1:d4ba::2; envelope-from=ralf@vmexit.de;
- helo=gizmo.vmexit.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261021141652.363109-1-richard.henderson@linaro.org>
+ <20261021141652.363109-5-richard.henderson@linaro.org>
+In-Reply-To: <20261021141652.363109-5-richard.henderson@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
+Date: Wed, 21 Oct 2026 16:45:21 -0400
+X-Gm-Features: AclHuK94I4tHIHejP0l3bbvLRf-RFMFuj16ItQn8zfK0ZkGUIXkxW0RT_W_du1Q
+Message-ID: <CAEdQ38FWXOYZ6Npvam0Bb42=a+r4F8WCQZ32TbgPLM01qZCnVg@mail.gmail.com>
+Subject: Re: [PATCH v6 004/100] tcg: Annontate functions in tcg-internal.h
+ with QEMU_*_NONNULL
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=mattst88@gmail.com; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,154 +116,12 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
-
-virt and sifive_u now describe a hart's PLIC contexts with the same rule:
-a machine context unless the hart runs under KVM, where there is no
-M-mode, and a supervisor context if the hart has supervisor mode.
-Writing that rule down twice is what let the virt device tree drift away
-from riscv_plic_hart_config_string().
-
-This makes the sifive_u device tree ask whether KVM is in use, which it
-did not do before.  Its PLIC device already does, so the two now agree.
-
-Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
----
-Cleanup, not a fix.  Can be dropped, the rest does not depend on it.
-1-3 are unchanged since v2 and carry your Reviewed-by.
-
-v3:
- - take has_m_mode as a parameter, the boards keep the accelerator
-   considerations and the fdt helper just writes what it is told (Daniel)
- - virt.c uses one has_m_mode local for the allocation and the call
-
- hw/riscv/fdt-common.c         | 18 ++++++++++++++++++
- hw/riscv/sifive_u.c           | 12 ++++--------
- hw/riscv/virt.c               | 16 ++++++----------
- include/hw/riscv/fdt-common.h |  3 +++
- 4 files changed, 31 insertions(+), 18 deletions(-)
-
-diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
-index ce2dcb43b4..503d818dd0 100644
---- a/hw/riscv/fdt-common.c
-+++ b/hw/riscv/fdt-common.c
-@@ -212,6 +212,24 @@ riscv_create_fdt_socket_cpu_sifive(void *fdt, char *clust_name,
-                                    phandle, intc_phandles, false, false);
- }
- 
-+uint32_t riscv_plic_hart_fdt_cells(uint32_t *cells, RISCVCPU *hart,
-+                                   uint32_t intc_phandle, bool has_m_mode)
-+{
-+    uint32_t len = 0;
-+
-+    if (has_m_mode) {
-+        cells[len++] = cpu_to_be32(intc_phandle);
-+        cells[len++] = cpu_to_be32(IRQ_M_EXT);
-+    }
-+
-+    if (riscv_cpu_has_supervisor_mode(hart)) {
-+        cells[len++] = cpu_to_be32(intc_phandle);
-+        cells[len++] = cpu_to_be32(IRQ_S_EXT);
-+    }
-+
-+    return len;
-+}
-+
- void riscv_create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
-                            uint32_t plic_phandle, uint32_t int_cells,
-                            uint32_t addr_cells, uint32_t *plic_cells,
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 8f50c67a14..be194f8aec 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -58,6 +58,7 @@
- #include "chardev/char.h"
- #include "net/eth.h"
- #include "system/device_tree.h"
-+#include "system/kvm.h"
- #include "system/runstate.h"
- #include "system/system.h"
- 
-@@ -201,14 +202,9 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
-         /* cpu 0 is the management hart that does not have S-mode */
-         hart = cpu ? &s->soc.u_cpus.harts[cpu - 1] : &s->soc.e_cpus.harts[0];
--
--        cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
--        cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
--
--        if (riscv_cpu_has_supervisor_mode(hart)) {
--            cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
--            cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
--        }
-+        cells_length += riscv_plic_hart_fdt_cells(&cells[cells_length], hart,
-+                                                  intc_phandles[cpu],
-+                                                  !kvm_enabled());
-     }
- 
-     riscv_create_fdt_plic(fdt, memmap[SIFIVE_U_DEV_PLIC].base,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a2851b506d..ece8ef0070 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -152,24 +152,20 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-     unsigned long plic_addr = s->memmap[VIRT_PLIC].base +
-                               (s->memmap[VIRT_PLIC].size * socket);
-     bool numa_enabled = riscv_numa_enabled(MACHINE(s));
-+    bool has_m_mode = !kvm_enabled();
-     uint32_t cells_length;
- 
-     plic_name = g_strdup_printf("/soc/interrupt-controller@%lx", plic_addr);
- 
-     plic_cells = g_new0(uint32_t,
--                        s->soc[socket].num_harts * (kvm_enabled() ? 2 : 4));
-+                        s->soc[socket].num_harts * (has_m_mode ? 4 : 2));
-     cells_length = 0;
- 
-     for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
--        if (!kvm_enabled()) {
--            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
--            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
--        }
--
--        if (riscv_cpu_has_supervisor_mode(&s->soc[socket].harts[cpu])) {
--            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
--            plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
--        }
-+        cells_length += riscv_plic_hart_fdt_cells(&plic_cells[cells_length],
-+                                                  &s->soc[socket].harts[cpu],
-+                                                  intc_phandles[cpu],
-+                                                  has_m_mode);
-     }
- 
-     plic_phandles[socket] = (*phandle)++;
-diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
-index eb9db8278d..58e635e9ed 100644
---- a/include/hw/riscv/fdt-common.h
-+++ b/include/hw/riscv/fdt-common.h
-@@ -93,6 +93,9 @@ void riscv_create_fdt_socket_cpu_sifive(void *fdt, char *clust_name,
-                                         int socket_hartid_base,
-                                         uint32_t *phandle,
-                                         uint32_t *intc_phandles);
-+/* Describe one hart's PLIC contexts, returns the number of cells written */
-+uint32_t riscv_plic_hart_fdt_cells(uint32_t *cells, RISCVCPU *hart,
-+                                   uint32_t intc_phandle, bool has_m_mode);
- void riscv_create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
-                            uint32_t plic_phandle, uint32_t int_cells,
-                            uint32_t addr_cells, uint32_t *plic_cells,
-
-base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
-prerequisite-patch-id: 70f23581616a275c2b659d655418184163a0c37c
-prerequisite-patch-id: e0d267d9d4940408ecf478a14f7cbffd069b9666
-prerequisite-patch-id: 0164dcda18a619b9f4a6f84eedcc5fe1e8c92eb9
--- 
-2.54.0
-
+s/Annontate/Annotate/ in the subject.
 
