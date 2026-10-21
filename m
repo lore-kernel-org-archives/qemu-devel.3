@@ -1,51 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB967606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 16:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDD4606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 16:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=M/uLaEZK
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dX8/Ifmz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJZFb-0007Yp-Jv; Wed, 21 Oct 2026 12:33:15 -0400
+	id 1xJZFf-0007b8-Nw; Wed, 21 Oct 2026 12:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xJZFE-0007TS-HN
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:32:54 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xJZFN-0007WI-FK
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:33:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xJZFA-0006UO-Q4
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:32:52 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1xJZFL-0006Ww-Fi
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:33:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792600368;
+ s=mimecast20190719; t=1792600377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M09Bt5Xqymo5EruqBYA5nEGo9deFrSjSyw/JX8fKg1E=;
- b=M/uLaEZKZBGgOinVsC8b8h2aNo50RZfrHVqMNY2Vayl+RTvAjSlMGdbLBk7A23xDe6ikH8
- ZPJG8ILavEVsMKdwMdxDXt4mU4OVHX2mCKVOiygADG/JJIbi4/ANyUQKinkugaOuWTehdl
- 7ri1FdCdRs6w8q3Y9BhAXS1P56OdyrE=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=IZZnczJRu/Z0IH1I/CXcERUjWwZSG/xclOlmPjwrQuE=;
+ b=dX8/IfmzPZsS7OvDEuQfOlNUmDrruoxXQ1erGa3B9+i3HdUw4hx4Jc4aoOy59v93U0N8jV
+ OVZ4hiqftWRAQB0kCiNhfYIfdcypsoOcuFFtGSNf8TbRmH8wifgNSSRONeNaC7FlRsEZsq
+ Js3YFee2MKE+JS04VObfUMtxK+xO/Cs=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-kmBmVSG3NiijxmWRoMD2EA-1; Wed,
- 21 Oct 2026 12:32:46 -0400
-X-MC-Unique: kmBmVSG3NiijxmWRoMD2EA-1
-X-Mimecast-MFC-AGG-ID: kmBmVSG3NiijxmWRoMD2EA_1792600365
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-Uq5iEOvkP4mwMgDGIJoKjA-1; Wed,
+ 21 Oct 2026 16:32:42 +0000
+X-MC-Unique: Uq5iEOvkP4mwMgDGIJoKjA-1
+X-Mimecast-MFC-AGG-ID: Uq5iEOvkP4mwMgDGIJoKjA_1792600361
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7807B1800578; Wed, 21 Oct 2026 16:32:45 +0000 (UTC)
+ id DBFEE180049D; Wed, 21 Oct 2026 16:32:40 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.48.54])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 324EB1803A51; Wed, 21 Oct 2026 16:32:45 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 70C541956087; Wed, 21 Oct 2026 16:32:40 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 217301827596; Wed, 21 Oct 2026 18:32:40 +0200 (CEST)
+ id 424351800912; Wed, 21 Oct 2026 18:32:39 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Stefano Garzarella <sgarzare@redhat.com>,
@@ -55,16 +54,15 @@ Cc: kvm@vger.kernel.org, Stefano Garzarella <sgarzare@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 08/10] igvm: add command line parameter support
-Date: Wed, 21 Oct 2026 18:32:36 +0200
-Message-ID: <20261021163239.1131460-9-kraxel@redhat.com>
-In-Reply-To: <20261021163239.1131460-1-kraxel@redhat.com>
-References: <20261021163239.1131460-1-kraxel@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 00/10] Firmware 20261021 patches
+Date: Wed, 21 Oct 2026 18:32:28 +0200
+Message-ID: <20261021163239.1131460-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -85,198 +83,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-21.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Luigi Leonardi <leonardi@redhat.com>
+The following changes since commit 8967b2fe1b2aaae3c29e207d85fab901d580a2dc:
 
-Add a "cmdline" property to the igvm-cfg object and a handler for the
-IGVM_VHT_COMMAND_LINE directive, which copies the string into the
-parameter area the directive points at.
+  Merge tag 'pull-9p-20261019' of https://github.com/cschoenebeck/qemu into staging (2026-10-20 07:04:06 +0200)
 
-The command line is passed to whatever software the IGVM file loads,
-such as an SVSM. For example, SVSM can use it to select the serial port
-it logs to.
+are available in the Git repository at:
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-ID: <20261019-igvm_command_line-v3-1-29aeacbd6cd7@redhat.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- include/system/igvm-internal.h |  5 +++++
- backends/igvm-cfg.c            | 21 +++++++++++++++++++++
- backends/igvm.c                | 31 +++++++++++++++++++++++++++++++
- qapi/qom.json                  |  7 ++++++-
- qemu-options.hx                |  6 +++++-
- 5 files changed, 68 insertions(+), 2 deletions(-)
+  https://gitlab.com/kraxel/qemu.git tags/firmware-20261021-pull-request
 
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index d88268bf602c..7ec6c204721b 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -32,6 +32,11 @@ struct IgvmCfg {
-      *           format.
-      */
-     char *filename;
-+    /*
-+     * cmdline: Command line for the software loaded from the IGVM file,
-+     *          if it asks for one.
-+     */
-+    char *cmdline;
-     IgvmHandle file;
-     ResettableState reset_state;
-     QTAILQ_HEAD(, IgvmMemoryRegion) memory_regions;
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index 935ba54f54f3..653f79bef58e 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -34,6 +34,19 @@ static void set_igvm(Object *obj, const char *value, Error **errp)
-     igvm->filename = g_strdup(value);
- }
- 
-+static char *get_cmdline(Object *obj, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    return g_strdup(igvm->cmdline);
-+}
-+
-+static void set_cmdline(Object *obj, const char *value, Error **errp)
-+{
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+    g_free(igvm->cmdline);
-+    igvm->cmdline = g_strdup(value);
-+}
-+
- static ResettableState *igvm_reset_state(Object *obj)
- {
-     IgvmCfg *igvm = IGVM_CFG(obj);
-@@ -85,6 +98,13 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "file",
-                                           "Set the IGVM filename to use");
- 
-+    object_class_property_add_str(oc, "cmdline", get_cmdline, set_cmdline);
-+    object_class_property_set_description(oc, "cmdline",
-+                                          "Set the command line for the "
-+                                          "software loaded from the IGVM "
-+                                          "file (copied verbatim, not "
-+                                          "parsed by QEMU)");
-+
-     igvmc->process = qigvm_process_file;
- 
-     rc->get_state = igvm_reset_state;
-@@ -112,4 +132,5 @@ static void igvm_cfg_finalize(Object *obj)
-         igvm_free(igvm->file);
-     }
-     g_free(igvm->filename);
-+    g_free(igvm->cmdline);
- }
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 5a1416fe8eac..4b9d78630863 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -161,6 +161,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp);
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp);
-@@ -195,6 +197,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_initialization_guest_policy },
-     { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_madt },
-+    { IGVM_VHT_COMMAND_LINE, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_command_line },
- #ifdef CONFIG_FDT
-     { IGVM_VHT_DEVICE_TREE, IGVM_HEADER_SECTION_DIRECTIVE,
-       qigvm_directive_device_tree },
-@@ -869,6 +873,33 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
-     return 0;
- }
- 
-+static int qigvm_directive_command_line(QIgvm *ctx, const uint8_t *header_data,
-+                                        Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    const char *cmdline = ctx->cfg->cmdline ? ctx->cfg->cmdline : "";
-+    uint8_t *param_data;
-+    uint32_t param_size;
-+    size_t cmdline_size = strlen(cmdline) + 1;
-+
-+    param_data = qigvm_get_param_data(ctx, param, &param_size, errp);
-+    if (!param_data) {
-+        return -1;
-+    }
-+
-+    if (cmdline_size > param_size) {
-+        error_setg(errp,
-+                   "IGVM: command line size %zu exceeds the %u byte "
-+                   "parameter area defined in IGVM file",
-+                   cmdline_size, param_size);
-+        return -1;
-+    }
-+
-+    memcpy(param_data, cmdline, cmdline_size);
-+
-+    return 0;
-+}
-+
- #ifdef CONFIG_FDT
- static int qigvm_directive_device_tree(QIgvm *ctx, const uint8_t *header_data,
-                                        Error **errp)
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 49f222796ab4..4810d53e585e 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -977,11 +977,16 @@
- #
- # @file: IGVM file to use to configure guest
- #
-+# @cmdline: command line for the software loaded from the IGVM file.
-+#     Its format is specific to that software.  Passed verbatim: QEMU
-+#     does not parse it.
-+#     Ignored if the IGVM file does not ask for one.  (since 11.2)
-+#
- # Since: 10.1
- ##
- { 'struct': 'IgvmCfgProperties',
-   'if': 'CONFIG_IGVM',
--  'data': { 'file': 'str' } }
-+  'data': { 'file': 'str', '*cmdline': 'str' } }
- 
- ##
- # @SevCommonProperties:
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 2f6863180b0f..f72f30e246d6 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -6496,7 +6496,7 @@ SRST
-                  -machine ...,confidential-guest-support=tdx \\
-                  ......
- 
--    ``-object igvm-cfg,file=file``
-+    ``-object igvm-cfg,file=file[,cmdline=string]``
-         Create an IGVM configuration object that defines the initial state
-         of the guest using a file in that conforms to the Independent Guest
-         Virtual Machine (IGVM) file format.
-@@ -6509,6 +6509,10 @@ SRST
-         memory of the virtual machine and, depending on the platform, can
-         define the initial processor state, memory map and parameters.
- 
-+        The optional ``cmdline`` parameter is a command line passed
-+        verbatim to the software loaded from the IGVM file, if the file
-+        requests one. Its format is specific to that software.
-+
-         The IGVM file is expected to contain the firmware for the virtual
-         machine, therefore an ``igvm-cfg`` object cannot be provided along
-         with other ways of specifying firmware, such as the ``-bios``
+for you to fetch changes up to 966572648f246483b2076149b4fb9d665789409a:
+
+  backends/igvm: fix parameter area entries leak (2026-10-21 18:26:52 +0200)
+
+----------------------------------------------------------------
+- igvm: fix policy handling
+- igvm: misc minor fixes
+- igvm: add command line parameter support
+- hw/uefi: fix pkcs7 wrapping typo
+
+----------------------------------------------------------------
+
+Luigi Leonardi (8):
+  sev: split set_guest_policy into set_guest_policy and set_id_block
+  igvm: move set_id_block call into the SNP ID block directive handler
+  i386/sev: convert the guest policy properties to custom accessors
+  i386/sev: add a get_guest_policy callback
+  igvm/sev: forward the IGVM guest policy to the platform before launch
+  backends/igvm: supply an empty device tree when the machine has none
+  igvm: add command line parameter support
+  docs/system/igvm: document MADT, COMMAND_LINE and DEVICE_TREE
+    directives
+
+Martin Pitt (1):
+  hw/uefi: fix ContentInfo detection in wrap_pkcs7()
+
+Stefano Garzarella (1):
+  backends/igvm: fix parameter area entries leak
+
+ include/system/confidential-guest-support.h |  36 ++--
+ include/system/igvm-internal.h              |   8 +-
+ backends/confidential-guest-support.c       |  24 ++-
+ backends/igvm-cfg.c                         |  21 ++
+ backends/igvm.c                             | 159 +++++++++-----
+ hw/uefi/var-service-pkcs7.c                 |   2 +-
+ target/i386/sev.c                           | 225 +++++++++++++-------
+ docs/system/igvm.rst                        |   8 +
+ qapi/qom.json                               |   7 +-
+ qemu-options.hx                             |   6 +-
+ 10 files changed, 336 insertions(+), 160 deletions(-)
+
 -- 
 2.56.0
 
