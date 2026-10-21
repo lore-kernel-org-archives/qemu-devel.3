@@ -1,22 +1,22 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2BD606A320
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE56606A320
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 11:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=vmexit.de header.i=@vmexit.de header.a=rsa-sha256 header.s=mail header.b=OLpa/aNp
+	dkim=pass (1024-bit key, unprotected) header.d=vmexit.de header.i=@vmexit.de header.a=rsa-sha256 header.s=mail header.b=XgRvX+B7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJUBn-000751-Qu; Wed, 21 Oct 2026 07:08:59 -0400
+	id 1xJUBm-00074z-RE; Wed, 21 Oct 2026 07:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xJUBh-00073i-AW; Wed, 21 Oct 2026 07:08:54 -0400
-Received: from vmexit.de ([159.195.53.62] helo=gizmo.vmexit.de)
+ id 1xJUBg-00073c-0T; Wed, 21 Oct 2026 07:08:52 -0400
+Received: from vmexit.de ([2a0a:4cc0:c1:d4ba::2] helo=gizmo.vmexit.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
- id 1xJUBe-0007cR-4G; Wed, 21 Oct 2026 07:08:53 -0400
+ id 1xJUBe-0007cZ-4h; Wed, 21 Oct 2026 07:08:51 -0400
 From: Ralf Ramsauer <ralf@vmexit.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
  t=1792580925;
@@ -24,10 +24,10 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bR2ZhImHfOF56oOFdy6N0wfpJwiu43eCacXEXee9zp4=;
- b=OLpa/aNp5RqRLdlhm6uctuoZzArD1N7zW/ElwBXh+PILNHfxbbuFRcfYdNL8PglhqJAGHc
- yYhIrYltcU2shsJXYUp9zMoENteCvGWj7oLiYAJ7kSeCqhIdo9i5KCZpXm4gDQF0kiYazQ
- KIbgsJqRI/Py30gIPSUtfhlcfkdpG3I=
+ bh=wPeNl4UCxUj5StMAx3q5p/uDeM72iAQcAzJ3eFplrOg=;
+ b=XgRvX+B7hIStQ6xUiFaTLV0TQEXi9QwAhmW1LF8ElpEZnKV8ITC8VXVDDAM2Rmd0PaLcTb
+ MKshc8PcziPX9sWW89eiQCJbzzG/+EBHUVZ32nfBa0b8cudNkypchkoqLTpee/lw5AMUzQ
+ HvBo1N6aWIcqrUH825bjhixQl+k/Jwc=
 To: qemu-devel@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: Ralf Ramsauer <ralf@vmexit.de>,
@@ -37,15 +37,15 @@ Cc: Ralf Ramsauer <ralf@vmexit.de>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu@processmission.com>, Bin Meng <bmeng.cn@gmail.com>,
  Lukas Landgraf <lukas.landgraf@st.oth-regensburg.de>
-Subject: [PATCH v2 1/4] target/riscv: add riscv_cpu_has_supervisor_mode()
-Date: Wed, 21 Oct 2026 13:08:34 +0200
-Message-ID: <20261021110838.3097959-2-ralf@vmexit.de>
+Subject: [PATCH v2 2/4] hw/riscv/virt: only describe PLIC contexts that exist
+Date: Wed, 21 Oct 2026 13:08:35 +0200
+Message-ID: <20261021110838.3097959-3-ralf@vmexit.de>
 In-Reply-To: <20261021110838.3097959-1-ralf@vmexit.de>
 References: <20261021110838.3097959-1-ralf@vmexit.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=159.195.53.62; envelope-from=ralf@vmexit.de;
+Received-SPF: pass client-ip=2a0a:4cc0:c1:d4ba::2; envelope-from=ralf@vmexit.de;
  helo=gizmo.vmexit.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,65 +67,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 
-Whether a hart has supervisor mode is decided in two places: KVM harts
-always have it, and for TCG it follows from RVS in the ISA string.
-riscv_plic_hart_config_string() already spells out both cases.
+The PLIC device is created from the topology string built by
+riscv_plic_hart_config_string(), which gives a hart a supervisor context
+only if that hart actually has supervisor mode.  The device tree, in
+contrast, lists a machine and a supervisor context for every hart,
+unconditionally.
 
-Board code needs the same answer to describe the interrupt controller,
-but it should not have to reach into CPURISCVState for it.  Add a helper
-next to riscv_cpu_is_vendor() so the next patches can ask the CPU
-instead of inspecting its internals.
+The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
+PLIC config helper function") taught the device about harts without
+S-mode and left the device tree behind.  Boot with
 
-Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+    -cpu rv64,s=false,u=false -smp 4
+
+and the PLIC implements four contexts while the device tree advertises
+eight.  Contexts are numbered by their position in 'interrupts-extended',
+so a guest that takes its context number from the property gets it wrong
+for every hart but the first: hart 1 drives the context of hart 2, and
+the upper harts address contexts the PLIC never created.  This is what an
+M-mode kernel on the virt machine runs into.
+
+Emit the supervisor entry only for the harts that have supervisor mode.
+The KVM case then becomes the same rule, not a separate one: its harts
+have no M-mode and always have supervisor mode, so the common loop
+describes the single supervisor context per hart that it used to spell
+out on its own.
+
+Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
 Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 ---
- target/riscv/cpu.c | 14 ++++++++++++++
- target/riscv/cpu.h |  1 +
- 2 files changed, 15 insertions(+)
+v2:
+ - ask riscv_cpu_has_supervisor_mode() instead of reading RVS out of the
+   hart's CPURISCVState (Daniel)
+ - fold the KVM branch into the common loop, it describes the same rule
+ - drop the claim about sifive_u from the commit message, patch 3 fixes
+   that board rather than leaving it as the good example
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index da4c1a090b..19b6553e04 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -334,6 +334,20 @@ bool riscv_cpu_is_vendor(Object *cpu_obj)
-     return object_dynamic_cast(cpu_obj, TYPE_RISCV_VENDOR_CPU) != NULL;
- }
+ hw/riscv/virt.c | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index d4b501802f..a2851b506d 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -156,23 +156,19 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
  
-+bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    /* KVM always provides supervisor mode, regardless of the ISA string */
-+    if (kvm_enabled()) {
-+        return true;
-+    }
-+
-+    return riscv_has_ext(&cpu->env, RVS);
-+#else
-+    return false;
-+#endif
-+}
-+
- const char * const riscv_int_regnames[] = {
-     "x0/zero", "x1/ra",  "x2/sp",  "x3/gp",  "x4/tp",  "x5/t0",   "x6/t1",
-     "x7/t2",   "x8/s0",  "x9/s1",  "x10/a0", "x11/a1", "x12/a2",  "x13/a3",
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 8c8ffe94cd..535e56345f 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -964,6 +964,7 @@ void isa_ext_update_enabled(RISCVCPU *cpu, uint32_t ext_offset, bool en);
- bool isa_ext_is_enabled(RISCVCPU *cpu, uint32_t ext_offset);
- void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext);
- bool riscv_cpu_is_vendor(Object *cpu_obj);
-+bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu);
+     plic_name = g_strdup_printf("/soc/interrupt-controller@%lx", plic_addr);
  
- typedef struct isa_ext_data {
-     const char *name;
+-    if (kvm_enabled()) {
+-        cells_length = s->soc[socket].num_harts * 2;
+-        plic_cells = g_new0(uint32_t, cells_length);
+-
+-        for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+-            plic_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
++    plic_cells = g_new0(uint32_t,
++                        s->soc[socket].num_harts * (kvm_enabled() ? 2 : 4));
++    cells_length = 0;
++
++    for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
++        if (!kvm_enabled()) {
++            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
++            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
+         }
+-   } else {
+-        cells_length = s->soc[socket].num_harts * 4;
+-        plic_cells = g_new0(uint32_t, cells_length);
+-
+-        for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+-            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
+-            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
++
++        if (riscv_cpu_has_supervisor_mode(&s->soc[socket].harts[cpu])) {
++            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
++            plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+         }
+     }
+ 
 -- 
 2.54.0
 
