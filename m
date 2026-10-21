@@ -1,155 +1,126 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCE3606A31B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 16:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69F7606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 16:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=QyrDzsoQ;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jlE91NmQ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MM3KRmCl;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MxngqhH6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJYja-0001MO-EJ; Wed, 21 Oct 2026 12:00:10 -0400
+	id 1xJYn6-000354-Q7; Wed, 21 Oct 2026 12:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xJYjW-0001Le-3u
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:00:07 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xJYmF-0002Rm-Vv
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:02:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xJYjT-0002uG-J2
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:00:05 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LFUAXD1481680
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:00:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3sLN+VtTp1GT8KmOAKZ03sJNJNMbdc2oxGQOgY6Wvh8=; b=QyrDzsoQEriiqCmP
- aDq+BxvCGhjqx7PWoGj+up5DqMjCFJ2TCWGhLDaHan+drQQgLCmmy4ipwTeU40QO
- 3U1wKtKFCYvghVtPH3aM+cFUaN9g5AUOrLiNPWA6QhACstZRvXtCBsTXQnUv8o6d
- tGCkzopjj/jeqHYUVS01Ros9Ic3oOYMNs4p5JWpwn2DqxsucI5tSlUYIbJ/kfJgr
- gB4QzGFHoNAwnTOLA2Wt5NrVBoYJyRPgHFteEruWy2SQDw9g35PgShrMfHzcnKQi
- A4fihztwi2aC3pVNGewxEF/uGlGeTtTsz4evneUxbD/2XB3f4M5Nr7oRuVIDmff+
- UwrY4g==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hegs0423s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:00:01 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3552883bd19so3205614eec.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 09:00:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1xJYmD-0003Fa-G7
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 12:02:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792598571;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z28FUQ3KbXY8NJ9Eq9XSzHMXna27UXegoFkJbSHJLYA=;
+ b=MM3KRmClvMv5bXxNOEjZkFf1Fo0zU7OrDflTYV8t/iQg/vexqqezkYGdBe6dYmWJ19ODbG
+ KZk9jq8Y09PniFVvoTpFQpeueOx9xmXK9SzPRzRmcQh71+TDcrYaou4dzmyeXjpkzfuBQr
+ lshMY92QgcdD0kzjATKXSQryzCyib2M=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373-xHpD62LTOviicA7B5gdNrA-1; Wed, 21 Oct 2026 16:02:49 +0000
+X-MC-Unique: xHpD62LTOviicA7B5gdNrA-1
+X-Mimecast-MFC-AGG-ID: xHpD62LTOviicA7B5gdNrA_1792598568
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-6790b1d37e7so1538070d50.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 09:02:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792598568; cv=none;
+ d=google.com; s=arc-20260327;
+ b=F+KrFFrF7v4DQzsl8jMrLXwAlY5gyfXzf7nt+MZDXvlrG9rLMmZto3dKFQ8i1sXXQF
+ BwFc4JXTk3AbhC4AyGIcOOQeC7cqfxBlQR8VnHEauqFpxxVQQWncz2eK3ifzFMjBug3t
+ 1i8egOwdAztSmUG9zXBJDgPIDtfsOHr/NYN0kGScyc1tv6o0m/7dsB4tzNuQasjgz2WQ
+ zWhdsUWosCIbkvhf4OitBmVCy4lazVQIrUzj8d8sZ/e57K8zSPX6ojQkPINWWe+OuyrD
+ bC2s049ugNlRP6pc4gZ4bRrwXveDEezVmxNci1+vKfEohwH9Z3X7Db3/6CVMzRUGTlo7
+ dMvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=z28FUQ3KbXY8NJ9Eq9XSzHMXna27UXegoFkJbSHJLYA=;
+ fh=WoI/ACOhU3eHZYq9MTnqXgqLXSFenIguNnbSsHkimMc=;
+ b=i5RnfpuCAKKDuJQj+zX4iqbIko2huz1GZwIZuD/VVqcTnU48/C0vypbzSLeV1vOKAG
+ w2gWeQcT6oTgEoYfJqLrNtPrxT24dqoM1xJxRQ6p4/AFHChFylHII/LJkSrWjul61UDB
+ sVC0+84aA6gRO50plaYGA38H8yatk7eb5Ck7HNCWOzxKoBrIy2HBq27Aqg8KJItqxdKz
+ DbFWrcz7tammN/2ZrZxlHRy6RZTFjtMaIrX6aCvdiuU78I3EAbwaikN4sNx7RCaQYWZd
+ k+y6vPI/e+bBajJMEd8WlNcWwzZulkoPRsrSQoq0IqX/mHyHwE7nZ3iCQut0x0YdcnJQ
+ a/XA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792598399; x=1793203199; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3sLN+VtTp1GT8KmOAKZ03sJNJNMbdc2oxGQOgY6Wvh8=;
- b=jlE91NmQCWoJtndNiCoWtoUZv1KQKA8a44kjOnSnXLSpbjjIVTpCAcOyzE1q+lfZm5
- hX2p22nq+QBourSe/2AtJ75bzRevqdJCtgqml2HKR9WHK+Jmhtryc4PR8ZX8upxWme7q
- a5scjMsEoDTeH/Rd8fG5xrnuRwmagm++Cb/paqaDG9LfAEVMV3TkK1Xeeox8Znp0X5Zc
- mzr7bTerM7o6XKQLMi7EfNIs2NKPb0pcU0sle5LPuqPv6mfke1S1bXsE5+5ljvBzPX0m
- ht+PlQnpv0zeq8Dt1OfsL/3lnvcOTY3ZhaK4/427tH5Oa6lg9yX5Pmvdes6HjANmDVwV
- /3xQ==
+ d=redhat.com; s=google; t=1792598568; x=1793203368; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=z28FUQ3KbXY8NJ9Eq9XSzHMXna27UXegoFkJbSHJLYA=;
+ b=MxngqhH6EABwjBDn+uB+hJy+piDK5iG/5+YzjelV1DbG97qxcLrUDWGz7YldJkLVLx
+ g6CRysuOpZ1VtbAoPSOitzmvRNzP5X1/dPKzAzAPMPJ1vy5hXIteYiK3kdpuJcBfk51O
+ Bf60cAvpSvGCGI4Uxj7WaKQogVaUTDaWOyV9l7ixhM2PgjiwQIB047LrpI1HA3W8BXW3
+ JA3UELRam9qnc2aB/eGtLtFVt8y7OUDyS5fOTr/Pa8futAFq79Na1L8TDST67iidLqJk
+ Pw1kE1RnNR7wVU/xVhGMkr4TBF8oQl366FJXKfaem5ydhYXXd3Rm4TCnLhTXF3PoGLZd
+ JZFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792598399; x=1793203199;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3sLN+VtTp1GT8KmOAKZ03sJNJNMbdc2oxGQOgY6Wvh8=;
- b=mVJozM+zgbQIgZ+yLluZno1SmRP2NEThCgiV3vYLlr1CkJM6RVLxMdeot3U8CjFFL0
- cRkXfN1ULCY0uzo9jaahXjOLSaVnoQaVWu/NpuLKsBhyos0LLEx7NhJSfRF+1SJgieQM
- YDI+7Uny9AdSmI/cvbHcPO4zwTMoQbJ0n5xYnDfsXwb3e6NsIEtun4nILZW6HB4YjehD
- XRxnr/VBU9Vc0nmFbVi5ncx2rX0UVLBahHRZGbr4RLZma0eB0CofK6TD64R4J7/Cn85S
- 32GphGo95yRnTGRL5DJ/ROCrou2yjmsyri1HGLD8oTYDmW//cbNtcsYDUIux8nBmDy83
- kyeA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwUEuNOCbv6sNijXPmcLVfuyxpeHkUT7mOggirjrctf7hyP4UsgR3BCNG1SV1pVgdDtWmKIj3hJbml1@nongnu.org
-X-Gm-Message-State: AFq9FYKNGa3p0X8ahNHGTPuLot5/VHKvxekxy0Mq1Nsg8n4zrRkhu1BM
- qiE6zHusgUbsxh7yfGMNF6nb0BY96Sh4VfwBHiHV7G+Sr2hcxHGtudSsBCpM5eGRBGC7csNKoll
- lqtqugb/jIPRwQre0TDyAuD6DTMTIgOa1pUWFIQJM209UDn7BZoWyEj7+Dg==
-X-Gm-Gg: AYBFou3b/EPtxIVAw0cnkJerlK+na1/dpceQJyjPOCNqAz68h5A23+S/1PxOPzOj6N+
- LWJtnxeEk7bbNA8pz69GSsUV8O1tkZ4+bZUJaCDgfiWQhalJzDUbqr5UzN8IHhYm67WKuSrwoBg
- oAAcbO+Ngtx4Ekr8LfFLMoafIRulkbm1AvDmxeAFCtP8RaNhdM6nPIDGDFbKxyeOOZIptNCrfL5
- 6/kUXf5nGaqrGWCA2cM7iUfeP3oEib3J+nq6PBsWscbwPFgho7416KgBunA1FDTXjsljzvWvo6W
- uFLlC1dE4MqQGs+dPE7Yi+UiqBFiT6HOpElHssWQKNL6lXwSXkW5nlRZ3BIeJ9SxPKm+eiHBKUN
- VIP2RVi1+jFxijPXOH0uRFnV4l5/WX1vXGxMiPI4Dih56zZtOMnej4adfay7uhaqRlq++xw==
-X-Received: by 2002:a05:693c:60cf:b0:353:8205:8558 with SMTP id
- 5a478bee46e88-3674b82ad86mr4645769eec.5.1792598399088; 
- Wed, 21 Oct 2026 08:59:59 -0700 (PDT)
-X-Received: by 2002:a05:693c:60cf:b0:353:8205:8558 with SMTP id
- 5a478bee46e88-3674b82ad86mr4645721eec.5.1792598398275; 
- Wed, 21 Oct 2026 08:59:58 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36740cca3d8sm8346775eec.14.2026.10.21.08.59.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 08:59:57 -0700 (PDT)
-Message-ID: <834c24b4-7e0f-4664-9242-5033afeeb48f@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 08:59:55 -0700
+ d=1e100.net; s=20260707; t=1792598568; x=1793203368;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=z28FUQ3KbXY8NJ9Eq9XSzHMXna27UXegoFkJbSHJLYA=;
+ b=czxH2O3oQtNE4M5jTcixxu2f5xMx3axJDdH/5ZshR2kxjTZS+veRLBLL//Hsj9+nug
+ Yp+34rOUOD1ncplMD5aST2k2L3hLJVaqdLrxDt7gQxhS4j6yowBa0lJrAdJfnyRGLhdl
+ bQHIkdE28jbnuz2MnDuBb1ww0TYEALK91p3NBgjw6eQPI5FcShAJGNvopAkJBlbIP9+N
+ A0oNojC1PEFmSYPN2o2nbZrzXyICDnbtsTYGqVKkOe8GqgF/ZClu9ygKm30+20USPizA
+ RHtRgWGaaw924QSdA6135D4f6yjvNcZFs41IY9ae/FrMcw6ftCGS3Oc2QIm757YRNLtI
+ D8yQ==
+X-Gm-Message-State: AFq9FYJdvN2yBs9Nv84vW37gRmcvzPlFF9N38ePtyw0sX/7g6W4mikR2
+ E0PJ1EKo7VkdEqMDZ0Vc2BSFtF/B5Ko7L44n5H8YmvkspcCjRUVXDmNn41eQzOLc55ac08SIDTs
+ ZMeaB7uuJayG8bmONV6N43wnNwOQqZw6bCTEB+sivoK9jNEE5g7h6FOrxd3qZeKcUHm0L/9p31v
+ utcMv291FsflDKUdOmwlQj8jW7n9RRwA8=
+X-Gm-Gg: AYBFou2hr5PgvbcNYxeC11EqRH4muJf7+Hjlfe6bHD6KvhHOUfJCQJysKndlk3Ckc6l
+ AGthgstVzvjFwLKdxFN943+i+qBThWt5XmOoEjdXi2e07V6Up0Hm4Iu04p2zuh/wVuyxPMFvaiq
+ /OHK7sBqQsNyzOV87mvcUMcOFrvbIM8cr791uYs8ys4wgAFnCU2fAOixnZeZIOh7vxjpu2CEtA1
+ JFEt5xLxr0MyWBA
+X-Received: by 2002:a53:d6cf:0:b0:675:5c06:8a4f with SMTP id
+ 956f58d0204a3-67a0e58069bmr890264d50.105.1792598568243; 
+ Wed, 21 Oct 2026 09:02:48 -0700 (PDT)
+X-Received: by 2002:a53:d6cf:0:b0:675:5c06:8a4f with SMTP id
+ 956f58d0204a3-67a0e58069bmr890220d50.105.1792598567556; Wed, 21 Oct 2026
+ 09:02:47 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ci: add automatic retry
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20261020231602.24344-1-pierrick.bouvier@oss.qualcomm.com>
- <ceab474d-ea17-41f8-817c-86f90c0feef0@oss.qualcomm.com>
- <CAFEAcA8-evgTa4GgvHV7HjUAeqnee1CN3onAK-EBH42saRqNag@mail.gmail.com>
- <87fqxz1fv7.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <87fqxz1fv7.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=S/NMU4sP c=1 sm=1 tr=0 ts=6ad8e181 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=kFd27rduAZo37rJrp94A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA2MyBTYWx0ZWRfXy/ApfIrSPM1+
- zqP8N5o8ZxcbkVQqSRBs0te4DexVMZMB7Vhfi9usNPDFUB3oVKte5gFT90eCQa7EJSDUF5V/6Kg
- cUdErYPJoxvBliR2xir9orFbxS26iazx3j9jZyIqyCGrhbXGfBlCKRVtInhPc7MfI7cFGgt6U+E
- dI/vhdHK/kKYtTNSigg8bH3Pa2ya+MdZLkm9qsFne9nINzVoucaUV/YP2UxO5Uo0qzRF/BD4q+2
- 6XJpGS3Iwf7VvdmbJf/+4xSvSWL18Xsgjj/wKQDxIaZccAs6g2dusyekJ6eZicr76VO55fK0bWu
- lT7gcY2DSoXAOpbgM5TQq1JeWSKGaa0ENafMyLORKi01aG0xvvujHDGb4kQJUKWkSu+IrkBEpQO
- EjnRFSUuuTPfIO0CzW+QQZel6jPzXa7pui3Tp76ZTQHLaasl6bqZo+Znz6rF3Uh8g+UY6HYQpaZ
- h2vR3/XFUEJHbgMXb+w==
-X-Proofpoint-ORIG-GUID: eYfP8LgLa9QL88l36m3Ae__5-EyZ0hUa
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA2MyBTYWx0ZWRfX2UXZVtb1yfxW
- Dl/gFwppnU1lACoVZTXvU2AX/myjoVeF6UPr01cEt4Fwzg9yTRfnYuKZMDHWa41SE33Rm2y2gmv
- QoAJWLb+WknwsG+A4vgMhWHlPGUIQfg=
-X-Proofpoint-GUID: eYfP8LgLa9QL88l36m3Ae__5-EyZ0hUa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-21_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210063
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261021063105.102520-1-kraxel@redhat.com>
+In-Reply-To: <20261021063105.102520-1-kraxel@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 21 Oct 2026 12:02:36 -0400
+X-Gm-Features: AclHuK8x0RKq-GNNxl6buHRmnaENy8PrgNlr_c0gv6sfpuitKw7-wkVzt16bJ8w
+Message-ID: <CAFn=p-anhY5nzcjqeVjqvmVkbi1c3=SeUYxJoFqDhCXmbRM4VA@mail.gmail.com>
+Subject: Re: [PATCH] x86: mmap kernel for direct kernel boot
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,163 +132,81 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/21/2026 3:56 AM, Alex Bennée wrote:
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> 
->> On Wed, 21 Oct 2026 at 03:41, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->>>
->>>
->>> On 10/20/2026 6:16 PM, Pierrick Bouvier wrote:
->>>> When merging PR on the project, it's possible to observe failures on CI
->>>> that can be related to sporadic test failures or infrastructure issues
->>>> (pod eviction with Kubernetes). As a result, it adds latency on the
->>>> process and workload for our top maintainers.
->>>>
->>>> This patch sets an automatic retry (supported by gitlab out of the box),
->>>> so failing jobs are automatically retriggered.
->>>>
->>>> It's important to note that in case there is a real test or build
->>>> failure, concerned jobs will run a second time, and fail again. That
->>>> said, it happens seldomly since sub maintainers are supposed to test for
->>>> this before sending it. Also, the retry is limited to the job that
->>>> failed, so it should be cheap in terms of CI minutes.
->>>
->>> Will this effectively mask those flaky failures so that no one hears
->>> about them?  Is there a way to find out about them with something like a
->>> weekly/monthly digest of failures?
->>
->> Broadly speaking, it's already the case that flaky failures are masked.
->> Random infra-type failures / random timeouts /etc are common enough
->> that when I'm doing a merge CI run I will just hit the retry button
->> without much deep investigation.
->>
->> In an ideal world we'd pull down the gitlab job history and look
->> through it for cases of "job X failed running against commit hash Y,
->> but we also saw job X succeed on commit hash Y" (i.e. the retry
->> worked second time) and then check the failure logs for what
->> kinds of things are intermittent like that. But that requires
->> somebody to put in the work to do that analysis. Gitlab's own
->> CI job history web UI is very bad and doesn't let you do even
->> basic things like "show me just the history for job X".
-> 
-> The gitlab-failure-analysis script was an attempt to start doing this,
-> so the last 10 failing staging pipelines where:
-> 
->   $ ./scripts/ci/gitlab-failure-analysis --count 10
->   failed pipeline 2949515618, total jobs 120, skipped 5, failed 8,  45059 tests, 1112 skipped tests, 8 failed tests
->     Failed job 17194356901, block: [luks], https://gitlab.com/qemu-project/qemu/-/jobs/17194356901
->     Failed job 17192659533, block: [vmdk], https://gitlab.com/qemu-project/qemu/-/jobs/17192659533
->     Failed job 17192659440, block: [vhdx], https://gitlab.com/qemu-project/qemu/-/jobs/17192659440
->     Failed job 17192659398, block: [vdi], https://gitlab.com/qemu-project/qemu/-/jobs/17192659398
->     Failed job 17192659309, block: [qed], https://gitlab.com/qemu-project/qemu/-/jobs/17192659309
->     Failed job 17192659287, block: [qcow2], https://gitlab.com/qemu-project/qemu/-/jobs/17192659287
->     Failed job 17192659245, block: [parallels], https://gitlab.com/qemu-project/qemu/-/jobs/17192659245
->     Failed job 17192659237, block: [nbd], https://gitlab.com/qemu-project/qemu/-/jobs/17192659237
->     Failed test qemu.block-nbd-optional+block-thorough - qemu:io-nbd-nbd-stale-connection, block: [nbd], 1 raw nbd-stale-connection
->     Failed test qemu.block-parallels-optional+block-thorough - qemu:io-parallels-nbd-stale-connection, block: [parallels], 1 parallels nbd-stale-connection
->     Failed test qemu.block-qcow2-optional+block-slow - qemu:io-qcow2-nbd-stale-connection, block: [qcow2], 1 qcow2 nbd-stale-connection
->     Failed test qemu.block-qed-optional+block-thorough - qemu:io-qed-nbd-stale-connection, block: [qed], 1 qed nbd-stale-connection
->     Failed test qemu.block-vdi-optional+block-thorough - qemu:io-vdi-nbd-stale-connection, block: [vdi], 1 vdi nbd-stale-connection
->     Failed test qemu.block-vhdx-optional+block-thorough - qemu:io-vhdx-nbd-stale-connection, block: [vhdx], 1 vhdx nbd-stale-connection
->     Failed test qemu.block-vmdk-optional+block-thorough - qemu:io-vmdk-nbd-stale-connection, block: [vmdk], 1 vmdk nbd-stale-connection
->     Failed test qemu.block-luks-optional+block-thorough - qemu:io-luks-nbd-stale-connection, block: [luks], 1 luks nbd-stale-connection
->   failed pipeline 2945631627, total jobs 120, skipped 5, failed 13,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 17162982778, check-python-minreqs, https://gitlab.com/qemu-project/qemu/-/jobs/17162982778
->     Failed job 17162982652, block: [vpc], https://gitlab.com/qemu-project/qemu/-/jobs/17162982652
->     Failed job 17162982622, block: [vmdk], https://gitlab.com/qemu-project/qemu/-/jobs/17162982622
->     Failed job 17162982605, block: [vhdx], https://gitlab.com/qemu-project/qemu/-/jobs/17162982605
->     Failed job 17162982484, block: [vdi], https://gitlab.com/qemu-project/qemu/-/jobs/17162982484
->     Failed job 17162982417, block: [raw], https://gitlab.com/qemu-project/qemu/-/jobs/17162982417
->     Failed job 17162982413, block: [qed], https://gitlab.com/qemu-project/qemu/-/jobs/17162982413
->     Failed job 17162982411, block: [qcow2], https://gitlab.com/qemu-project/qemu/-/jobs/17162982411
->     Failed job 17162982380, block: [parallels], https://gitlab.com/qemu-project/qemu/-/jobs/17162982380
->     Failed job 17162982361, block: [nbd], https://gitlab.com/qemu-project/qemu/-/jobs/17162982361
->     Failed job 17162982339, block: [luks], https://gitlab.com/qemu-project/qemu/-/jobs/17162982339
->     Failed job 17162261239, check-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/17162261239
->     Failed job 17162261192, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/17162261192
->   failed pipeline 2929887766, total jobs 120, skipped 7, failed 18,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 17055360127, check-python-minreqs, https://gitlab.com/qemu-project/qemu/-/jobs/17055360127
->     Failed job 17055360119, functional-system-opensuse, https://gitlab.com/qemu-project/qemu/-/jobs/17055360119
->     Failed job 17055360117, functional-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/17055360117
->     Failed job 17055360116, check-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/17055360116
->     Failed job 17055360113, block: [vpc], https://gitlab.com/qemu-project/qemu/-/jobs/17055360113
->     Failed job 17055360112, block: [vmdk], https://gitlab.com/qemu-project/qemu/-/jobs/17055360112
->     Failed job 17055360111, block: [vhdx], https://gitlab.com/qemu-project/qemu/-/jobs/17055360111
->     Failed job 17055360110, block: [vdi], https://gitlab.com/qemu-project/qemu/-/jobs/17055360110
->     Failed job 17055360109, block: [raw], https://gitlab.com/qemu-project/qemu/-/jobs/17055360109
->     Failed job 17055360108, block: [qed], https://gitlab.com/qemu-project/qemu/-/jobs/17055360108
->     Failed job 17055360107, block: [qcow2], https://gitlab.com/qemu-project/qemu/-/jobs/17055360107
->     Failed job 17055360106, block: [parallels], https://gitlab.com/qemu-project/qemu/-/jobs/17055360106
->     Failed job 17055360105, block: [nbd], https://gitlab.com/qemu-project/qemu/-/jobs/17055360105
->     Failed job 17055360104, block: [luks], https://gitlab.com/qemu-project/qemu/-/jobs/17055360104
->     Failed job 17055360078, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/17055360078
->     Failed job 17055360066, tsan-build, https://gitlab.com/qemu-project/qemu/-/jobs/17055360066
->     Failed job 17055360065, build-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/17055360065
->     Failed job 17055360061, clang-system, https://gitlab.com/qemu-project/qemu/-/jobs/17055360061
->   failed pipeline 2908947622, total jobs 119, skipped 5, failed 5,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16911683051, functional-system-debian, https://gitlab.com/qemu-project/qemu/-/jobs/16911683051
->     Failed job 16911681150, functional-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/16911681150
->     Failed job 16911679766, functional-system-opensuse, https://gitlab.com/qemu-project/qemu/-/jobs/16911679766
->     Failed job 16911678710, functional-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/16911678710
->     Failed job 16911433872, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/16911433872
->   failed pipeline 2906503036, total jobs 119, skipped 5, failed 4,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16896095104, functional-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/16896095104
->     Failed job 16896090260, functional-system-opensuse, https://gitlab.com/qemu-project/qemu/-/jobs/16896090260
->     Failed job 16896083592, functional-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/16896083592
->     Failed job 16895432496, functional-system-debian, https://gitlab.com/qemu-project/qemu/-/jobs/16895432496
->   failed pipeline 2876539219, total jobs 119, skipped 5, failed 6,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16692899473, functional-system-fedora, https://gitlab.com/qemu-project/qemu/-/jobs/16692899473
->     Failed job 16692899464, aarch64-macos-26-build, https://gitlab.com/qemu-project/qemu/-/jobs/16692899464
->     Failed job 16692899463, aarch64-macos-15-build, https://gitlab.com/qemu-project/qemu/-/jobs/16692899463
->     Failed job 16692899432, clang-system, https://gitlab.com/qemu-project/qemu/-/jobs/16692899432
->     Failed job 16692899429, build-some-softmmu, https://gitlab.com/qemu-project/qemu/-/jobs/16692899429
->     Failed job 16692899413, cross-win64-system, https://gitlab.com/qemu-project/qemu/-/jobs/16692899413
->   failed pipeline 2840522620, total jobs 119, skipped 5, failed 7,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16454091776, functional-system-opensuse, https://gitlab.com/qemu-project/qemu/-/jobs/16454091776
->     Failed job 16454091774, functional-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/16454091774
->     Failed job 16454091761, check-cfi-x86_64, https://gitlab.com/qemu-project/qemu/-/jobs/16454091761
->     Failed job 16454091760, check-system-opensuse, https://gitlab.com/qemu-project/qemu/-/jobs/16454091760
->     Failed job 16454091758, functional-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/16454091758
->     Failed job 16454091740, check-system-centos, https://gitlab.com/qemu-project/qemu/-/jobs/16454091740
->     Failed job 16454091730, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/16454091730
->   failed pipeline 2839257817, total jobs 119, skipped 5, failed 2,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16436167533, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/16436167533
->     Failed job 16436167532, ubuntu-24.04-s390x-all-linux, https://gitlab.com/qemu-project/qemu/-/jobs/16436167532
->   failed pipeline 2830538304, total jobs 119, skipped 5, failed 3,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16377263801, check-rust-tools-nightly, https://gitlab.com/qemu-project/qemu/-/jobs/16377263801
->     Failed job 16377263686, ubuntu-24.04-s390x-all-system, https://gitlab.com/qemu-project/qemu/-/jobs/16377263686
->     Failed job 16377263684, ubuntu-24.04-s390x-all-linux, https://gitlab.com/qemu-project/qemu/-/jobs/16377263684
->   failed pipeline 2820341086, total jobs 119, skipped 5, failed 2,  0 tests, 0 skipped tests, 0 failed tests
->     Failed job 16307778927, check-rust-tools-nightly, https://gitlab.com/qemu-project/qemu/-/jobs/16307778927
->     Failed job 16307778897, functional-system-debian, https://gitlab.com/qemu-project/qemu/-/jobs/16307778897
-> 
-> It has rudimentary access to the tests but I think the deep dive would
-> require better retention of the job artefacts. The second pipeline in
-> the above list lists the "job artefacts" as removed 3hrs ago which is I
-> guess why we don't get the test breakdown for the earlier jobs.
-> 
-> Anyway perhaps we can expand this to be more useful?
+On Wed, Oct 21, 2026 at 2:31=E2=80=AFAM Gerd Hoffmann <kraxel@redhat.com> w=
+rote:
 >
+> Reduce memory footprint by mapping the kernel into memory instead of
+> reading into allocated memory in the common case (no -dtb $file on the
+> qemu command line).
+>
+> Cc: John Snow <jsnow@redhat.com>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 
-I guess take the latest 1000 runs, report failing jobs, see if there is
-a pattern. Then for each run of job failing, see if they have a pattern
-inside also.
+Tested-by: John Snow <jsnow@redhat.com>
 
-Running CI on GitHub side, I found there are some recurrent flaky (that
-I simply deactivated for now) but some real sporadic that are rarely
-triggered. Since adding an automatic retry on individual tests, it's
-almost green 100% of the time, which convinced me to propose this here.
+Using this patch, I shifted about 19MiB of resources from RssAnon to
+RssFile. This theoretically allows sharing resources between multiple
+QEMU instances in the trivial case using -kernel and -initrd. This
+matches how we already load initrd.
 
->>
->> thanks
->> -- PMM
-> 
+--js
+
+> ---
+>  hw/i386/x86-common.c | 25 ++++++++++++++++++++-----
+>  1 file changed, 20 insertions(+), 5 deletions(-)
+>
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index fa18bf1aeceb..25e141aa8537 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -911,16 +911,31 @@ void x86_load_linux(X86MachineState *x86ms,
+>      }
+>
+>      setup  =3D g_malloc(setup_size);
+> -    kernel =3D g_malloc(kernel_size);
+>      fseek(f, 0, SEEK_SET);
+>      if (fread(setup, 1, setup_size, f) !=3D setup_size) {
+>          fprintf(stderr, "fread() failed\n");
+>          exit(1);
+>      }
+> -    fseek(f, 0, SEEK_SET);
+> -    if (fread(kernel, 1, kernel_size, f) !=3D kernel_size) {
+> -        fprintf(stderr, "fread() failed\n");
+> -        exit(1);
+> +    if (dtb_filename) {
+> +        /* read kernel into allocated memory, so we can realloc for the =
+dtb */
+> +        kernel =3D g_malloc(kernel_size);
+> +        fseek(f, 0, SEEK_SET);
+> +        if (fread(kernel, 1, kernel_size, f) !=3D kernel_size) {
+> +            fprintf(stderr, "fread() failed\n");
+> +            exit(1);
+> +        }
+> +    } else {
+> +        /* mmap kernel */
+> +        GMappedFile *mapped_file;
+> +        GError *gerr =3D NULL;
+> +
+> +        mapped_file =3D g_mapped_file_new(kernel_filename, false, &gerr)=
+;
+> +        if (!mapped_file) {
+> +            fprintf(stderr, "qemu: error reading kernel %s: %s\n",
+> +                    kernel_filename, gerr->message);
+> +            exit(1);
+> +        }
+> +        kernel =3D (uint8_t *)g_mapped_file_get_contents(mapped_file);
+>      }
+>      fclose(f);
+>
+> --
+> 2.56.0
+>
 
 
