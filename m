@@ -1,63 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82457606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 03:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ABB606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 03:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=QwwP4GbU;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jZayX2oJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJN6U-0007Mq-8D; Tue, 20 Oct 2026 23:35:02 -0400
+	id 1xJNEm-0000dD-P0; Tue, 20 Oct 2026 23:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xJN6S-0007Mi-0B
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 23:35:00 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xJN6O-0005Gs-Jj
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 23:34:59 -0400
-Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8CxPNLYMthqr+cXAA--.4227S3;
- Wed, 21 Oct 2026 11:34:48 +0800 (CST)
-Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJCxPs_XMthquK8uAA--.31952S2;
- Wed, 21 Oct 2026 11:34:47 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <17746591750@163.com>,
-	Peter Maydell <peter.maydell@linaro.org>
-Cc: Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Subject: [PATCH] hw/intc: Acess LoongArch irqchip data with align method
-Date: Wed, 21 Oct 2026 11:36:15 +0800
-Message-ID: <20261021033615.3619988-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xJNEk-0000cy-0r
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 23:43:34 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xJNEi-00064B-28
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 23:43:33 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69L2F3e9336836
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 03:43:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ BO3CP/U8Kmy2CaQ84m7VfYif+eqxaV8Jyv2SbIg03F8=; b=QwwP4GbU+nAkPndG
+ DFWRngkJpnwrc+LfGrFLjdHdLWch2ElVZ67aEMc05dDrRouWBQMncdpVXnzKfz4o
+ gwSj7gnycdR+RXeTG+pjrusW3kbKE9uGeNgrsv8rUUS/83Gkxg1y0L7ZBFzEQCQB
+ j1ky1XlonmkIp6DrKkoHahQ0pkqHGQsL48hp/XX6+7o01SwbjCKfK0+pkkFVq6Po
+ sCg1wuyhL6eWeDvqd5MUIhOd1j0Cq6FMcyVKBWpswuuVYYd0CCAuDzNz9bqXNUgH
+ X2mwA5TTqMKFR/RAuGmMVYlPhSP/QBvjRNkXH2dRa3YDDJyLQRJ2ZK/dOVGHqQtq
+ fquLlw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hedabhudf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 03:43:29 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93f2373e9b4so35670285a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 20:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792554208; x=1793159008; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BO3CP/U8Kmy2CaQ84m7VfYif+eqxaV8Jyv2SbIg03F8=;
+ b=jZayX2oJ7V4XeZQf003djVkV0ZMU8nddNljubkg2scfq8Mvx6ZY6b9b6Med1sNws56
+ TED1yaiEMGTJhVhOD8B9GJOAVkXOoQEpxFQvSNtSOzW0U7Zto849siEcX1ZT8D5OIXz+
+ qtILgEhhXxjKi28ZZs4GH6Cjqacnm+gQfZou7NGnRvYOU0Yt2detj7H8wGmEFuT65GRF
+ PBhS4pw2oKgCUalLX8nbTmcCPFriMvfOQ4VGX8rDu59BOAgn08aurJHD30QBmdtK831Q
+ pJtASk5gRdAaI6RRCF8r0er9fpOJNZZI0oBiaPGzrh9axBJAlw63/FSzj5c1lBOCvBLv
+ iTBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792554208; x=1793159008;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=BO3CP/U8Kmy2CaQ84m7VfYif+eqxaV8Jyv2SbIg03F8=;
+ b=cYWTgimGXxvalgGf9rnc4OhnC8C+vHUsr5CY8yAUnnfpqs/ex2cgRqC1g0hmUnfn4+
+ ilK0eECuqJNQsvsDc7Zk5TJPH8KJQUWmFioRKowoOYTMefDCGatZPSZ02V+pMNiG7QVW
+ Z8JoGIJCGqNGNeyPGUqCpVXnu93lnKG5kWRZB/u80RXgoiw8e9e/KAgYZkeerp969Rgj
+ 9LqpoL/WgpBcQcRdjom9+opn1Cg+HnVO4+Tyq1beEEHQYTHFUpn9ulhEfvFmwny2w4x0
+ 3urJpPmIouhlstlc5hJhYCzXl15pv8J8zrf5zKOtNIPz9yYpCy78u56h1LpOSukNn9Ns
+ YZGA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByqKzdEum9fq/T5mrWD5jN15E7icUOBzmQv4fWj3bt6NzStlftUbFdzboi9EZtN0HlKHFQ7q43+8zlw@nongnu.org
+X-Gm-Message-State: AFq9FYIV652JAT51vxrDdM3VPg+fNjD5jtPmLyQkvYlQSm49AQO8PHIc
+ GWLaKjMzS5LZJdyZx55Ps1TWZDwEcfv+AJlGEywdFEd1iUr18Zvn6E/rdJhTW8RJwKsPcpjQKhb
+ WJtCGoLpXjOwL6hNms1bCfStEx6kz4t3xlGmuFrtkj4Wrotrigq397586Qw==
+X-Gm-Gg: AYBFou2gkKLYX/ajNF3R+/obt9qgmJ0k5SUET0DJCPVIwURs4t55COcqFhuf+0O2hCk
+ oD9aqFLqbZpdbC5swmtdUyMqbtW+W4fVa+dNoWbQ08IDR56NL5KJ89cUE0+HDPIj7+XypYO5Fvs
+ K83SRlHRegqy4p70lzFAIcUc101tH9/b9u6jUdGFnJ6pwe/lQKayk0pxI1iKTJGU5x7y3L802IY
+ xWF0Crw+BlQ5XpA9UL0WwYkuWuvaPuC6VN8tf5yWcXzRA894fOM4mnIdoYrQk15PkBFMCcyhgcE
+ 7FUJrdGXAj2D9d7rWzJsEQksjqQ5U13R/jDXF5VQ+B5PHnrrDaBu+LOGb4AIu08w4hsVwUedvEq
+ 95ZThhp99IJ19REYAxBezZpUAx1z/A8ISnQ==
+X-Received: by 2002:a05:620a:1a16:b0:93f:2ed6:1f3a with SMTP id
+ af79cd13be357-93f57f91f83mr232853785a.49.1792554207997; 
+ Tue, 20 Oct 2026 20:43:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a16:b0:93f:2ed6:1f3a with SMTP id
+ af79cd13be357-93f57f91f83mr232852185a.49.1792554207475; 
+ Tue, 20 Oct 2026 20:43:27 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e25841fe4sm2666473f8f.53.2026.10.20.20.43.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 20:43:25 -0700 (PDT)
+Message-ID: <7de740ef-f912-451c-858a-8b4c87d697ea@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 05:43:23 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] target/or1k: Convert to translate_for_debug
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Michael Rolnik <mrolnik@gmail.com>, Stafford Horne <shorne@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+References: <20261020122752.3651914-1-peter.maydell@linaro.org>
+ <20261020122752.3651914-4-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261020122752.3651914-4-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxPs_XMthquK8uAA--.31952S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3AryxWry8uw4DWrWkJw4rCrX_yoW3GFW8pr
- Wa93sxWr40qFnrJ34DXw45XFnaqr4I9a47XF9Fyw18uFZ7G3WDZFyxtFy7WFy7Ga4fCr1I
- kwn5trWjq3WDJwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
- vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
- jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAxMyBTYWx0ZWRfX4HPbdK8YBilx
+ ao2d9gflIEL005vy+hmQgageqMJOap+BS8FoXuM947yGWzeT8dkOFDkTSbcqSnUbPEvYqJ/j3F8
+ nZFYNdbddx6qHJOjCXmzNcSZ2ME2fnM=
+X-Proofpoint-ORIG-GUID: evCJGPr_bm0tJefIYQUQCjJEQ5qnMhNg
+X-Proofpoint-GUID: evCJGPr_bm0tJefIYQUQCjJEQ5qnMhNg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAxMyBTYWx0ZWRfXyQJwHHpx07JP
+ 5kXJ8DanbwTg9qbZVjRVlYJpskyDH+5xiuMYxmQgXfMTP2LL8eoZsVVi8MKadFRp2bXRzmaWGFC
+ mBJns3RDX6l6/bUiipVszH8JcRdV+wDpvVIjZ34Ec53ZAlyFzMWDr0WlDlDj2qQqt+8WSRvERSF
+ 9HSy6pcdSPJhU/5UWuESRZn8RfjScfSJgNJySynMGhXTmQDg3d326b2+ygfkewIsl0mtV47MqCx
+ BMuaAYmLAXsKPaYDM4+OP8f9ZePcNwcJz70KPrPjghWlTztlQ4spUuF7UiCwJG51LU2kXmO8GNz
+ r4EIxf2UxEpHAwc0WRKA1cAoKg3fcrZ/E/sy5CRGT2OYXQAyFY1B/325BeVBBDffXXMYfzQdIJ3
+ L3hYffwEwrjfvudu+I1HwUHQcGoDF+NkQlO+xGUp0FlKCDm+1BJkV+KPvQjKL2CMuWm+cF4Z03f
+ uWngwrHGn/Hmfnt6Z0Q==
+X-Authority-Analysis: v=2.4 cv=NLpAaE6g c=1 sm=1 tr=0 ts=6ad834e1 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=FxyRol8rFYqdUe5CtOcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-10-21_01,2026-10-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ impostorscore=0 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610210013
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,214 +155,125 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With the clang sanitizer configured with
-"--enable-ubsan --cc=clang --cxx=clang++" and run 'make check'. The
-test-hmp test falls over with this backtrace:
-    ../../hw/intc/loongarch_extioi.c:439:33: runtime error: load of
-misaligned address 0x5b0a281448b4 for type 'uint64_t' (aka 'unsigned
-long'), which requires 8 byte alignment.
+Hi,
 
-Here LoongArch irqchip information is accessed by its natual aligned
-method, and here is output of command 'info pic'
-loongarch_ipi:
-  CPU 0   status=0x0 en=0xffffffff
-          MBX[6] 0x00082270
-  CPU 1   status=0x0 en=0xffffffff
-  CPU 2   status=0x0 en=0xffffffff
-  CPU 3   status=0x0 en=0xffffffff
-loongarch_pic:
-  mask     0xffffffffffffff7b msi_en 0xffffffffffffffff edge 0x0000000000000080 clr    0x0000000000000000
-  last_irr 0x0000000000000040 irr    0x0000000000000040 isr  0x0000000000000000 polary 0x0000000000000000
-  MSI map:
-    [ 0 -  3] 0x00 0x01 0x02 0x03
-    ...
-    [60 - 63] 0x3c 0x3d 0x3e 0x3f
-loongarch.extioi:
-  ISR     0x00000000 0x00000000 0x00000000 0x00000000
-          0x00000000 0x00000000 0x00000000 0x00000000
-  ENABLE  0xffffffff 0xffffffff 0xffffffff 0xffffffff
-          0xffffffff 0xffffffff 0xffffffff 0xffffffff
-  IPMAP   0x02020202 0x02020202
-  IRQ route:
-    [0   - 15 ] 0x01010101 0x01010101 0x01010101 0x01010101
-    ...
-    [240 - 255] 0x01010101 0x01010101 0x01010101 0x01010101
+On 20/10/26 14:27, Peter Maydell wrote:
+> Convert or1k to providing the translate_for_debug method rather than
+> the deprecated get_phys_addr_debug method.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/or1k/cpu.h |  3 ++-
+>   target/or1k/cpu.c |  2 +-
+>   target/or1k/mmu.c | 21 ++++++++++++++++-----
+>   3 files changed, 19 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/or1k/cpu.h b/target/or1k/cpu.h
+> index fc4387ce7ae..99b65ae4b97 100644
+> --- a/target/or1k/cpu.h
+> +++ b/target/or1k/cpu.h
+> @@ -296,7 +296,8 @@ void openrisc_translate_code(CPUState *cs, TranslationBlock *tb,
+>   int print_insn_or1k(bfd_vma addr, disassemble_info *info);
+>   
+>   #ifndef CONFIG_USER_ONLY
+> -hwaddr openrisc_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+> +bool openrisc_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
+> +                                      TranslateForDebugResult *result);
+>   
+>   bool openrisc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                              MMUAccessType access_type, int mmu_idx,
+> diff --git a/target/or1k/cpu.c b/target/or1k/cpu.c
+> index 66c00c0930c..d5415f0e567 100644
+> --- a/target/or1k/cpu.c
+> +++ b/target/or1k/cpu.c
+> @@ -247,7 +247,7 @@ static void openrisc_any_initfn(Object *obj)
+>   
+>   static const struct SysemuCPUOps openrisc_sysemu_ops = {
+>       .has_work = openrisc_cpu_has_work,
+> -    .get_phys_addr_debug = openrisc_cpu_get_phys_addr_debug,
+> +    .translate_for_debug = openrisc_cpu_translate_for_debug,
+>   };
+>   #endif
+>   
+> diff --git a/target/or1k/mmu.c b/target/or1k/mmu.c
+> index 3fc56e1b771..a78e8c8ca2e 100644
+> --- a/target/or1k/mmu.c
+> +++ b/target/or1k/mmu.c
+> @@ -139,7 +139,8 @@ bool openrisc_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+>       cpu_loop_exit_restore(cs, retaddr);
+>   }
+>   
+> -hwaddr openrisc_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+> +bool openrisc_cpu_translate_for_debug(CPUState *cs, vaddr addr,
+> +                                      TranslateForDebugResult *result)
+>   {
+>       OpenRISCCPU *cpu = OPENRISC_CPU(cs);
+>       int prot, excp, sr = cpu->env.sr;
+> @@ -152,12 +153,15 @@ hwaddr openrisc_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+>                               PAGE_READ,
+>                               (sr & SR_SM) != 0);
+>           if (!excp) {
+> -            return phys_addr;
+> +            break;
+>           }
 
-Fixes: 970657e490c0 ("hw/intc/loongarch_extioi: Add extioi interrupt status display")
-Fixes: 761eb76a3bc7 ("hw/intc/loongarch_ipi: Add ipi interrupt status display")
-Fixes: 82f472fa380a ("hw/intc/loongarch_pch_pic: Add pic interrupt status display")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_extioi.c  | 51 ++++++++++++++++++++++++-------------
- hw/intc/loongarch_ipi.c     |  9 ++++---
- hw/intc/loongarch_pch_pic.c | 28 +++++++++++---------
- 3 files changed, 55 insertions(+), 33 deletions(-)
+Faithful conversion, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 06f2aa7b14..ccc4eed199 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -425,7 +425,7 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-                                         GString *buf)
- {
-     LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(obj);
--    uint64_t *val;
-+    uint32_t *val;
-     unsigned long irq;
-     ExtIOICore *core;
-     int i;
-@@ -433,22 +433,35 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-     vmstate_extioi_pre_save(s);
-     g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
- 
--    val = (uint64_t *)s->isr;
--    g_string_append_printf(buf, "  ISR     0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+    val = s->isr;
-+    g_string_append_printf(buf, "  ISR     0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                 *val, *(val + 1), *(val + 2), *(val + 3));
--    val = (uint64_t *)s->enable;
--    g_string_append_printf(buf, "  ENABLE  0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+    val += 4;
-+    g_string_append_printf(buf, "          0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = s->enable;
-+    g_string_append_printf(buf, "  ENABLE  0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val += 4;
-+    g_string_append_printf(buf, "          0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                 *val, *(val + 1), *(val + 2), *(val + 3));
--    val = (uint64_t *)s->ipmap;
--    g_string_append_printf(buf, "  IPMAP   0x%016"PRIx64"\n", *val);
- 
--    val = (uint64_t *)s->coremap;
--    for (i = 0; i < EXTIOI_IRQS; i += 32) {
--        g_string_append_printf(buf, "  COREMAP 0x%016"PRIx64" 0x%016"PRIx64
--                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                    *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = s->ipmap;
-+    g_string_append_printf(buf, "  IPMAP   0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1));
-+
-+    val = s->coremap;
-+    g_string_append_printf(buf, "  IRQ route:\n");
-+    for (i = 0; i < (EXTIOI_IRQS / 4); i += 4) {
-+        g_string_append_printf(buf, "    [%-3u - %-3u] 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32"\n",
-+                                    i * 4, i * 4 + 15, *val, *(val + 1),
-+                                    *(val + 2), *(val + 3));
-         val += 4;
-     }
- 
-@@ -464,11 +477,15 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-             continue;
-         }
- 
--        val = (uint64_t *)core->coreisr;
--        g_string_append_printf(buf, "  CPU[%d] ISR 0x%016"PRIx64" 0x%016"PRIx64
--                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+        val = core->coreisr;
-+        g_string_append_printf(buf, "  CPU[%-3u] ISR 0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                     i, *val, *(val + 1), *(val + 2),
-                                     *(val + 3));
-+        val += 4;
-+        g_string_append_printf(buf, "              0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                    *val, *(val + 1), *(val + 2), *(val + 3));
-     }
- }
- 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index c8f775a93e..7efdfc904d 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -199,7 +199,7 @@ static void loongarch_ipi_print_info(InterruptStatsProvider *obj, GString *buf)
-     LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(obj);
-     int i, j;
-     IPICore *core;
--    uint64_t mbx;
-+    uint32_t mbx;
-     unsigned long pos;
- 
-     loongarch_ipi_pre_save(lics);
-@@ -221,10 +221,11 @@ static void loongarch_ipi_print_info(InterruptStatsProvider *obj, GString *buf)
-             continue;
-         }
- 
--        for (j = 0; j < IPI_MBX_NUM; j++) {
--            mbx = *(uint64_t *)&core->buf[2 * j];
-+        for (j = 0; j < (IPI_MBX_NUM * 2); j++) {
-+            mbx = core->buf[j];
-             if (mbx) {
--                g_string_append_printf(buf, "  MBX[%-1u] 0x%016"PRIx64, j, mbx);
-+                g_string_append_printf(buf, "          MBX[%-1u] 0x%08"PRIx32,
-+                                            j, mbx);
-             }
-         }
- 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 34090514ec..555575a377 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -335,7 +335,8 @@ static int loongarch_pic_post_load(LoongArchPICCommonState *opaque,
- static void loongarch_pic_print_info(InterruptStatsProvider *obj, GString *buf)
- {
-     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(obj);
--    uint64_t *vector;
-+    uint8_t *vector, val;
-+    int i;
- 
-     loongarch_pic_pre_save(s);
-     g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
-@@ -350,17 +351,20 @@ static void loongarch_pic_print_info(InterruptStatsProvider *obj, GString *buf)
-                                 s->last_intirr, s->intirr, s->intisr,
-                                 s->int_polarity);
- 
--    vector = (uint64_t *)s->htmsi_vector;
--    g_string_append_printf(buf, "  MSI map  0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                *vector, *(vector + 1), *(vector + 2),
--                                *(vector + 3));
--
--    vector += 4;
--    g_string_append_printf(buf, "           0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                *vector, *(vector + 1), *(vector + 2),
--                                *(vector + 3));
-+    vector = s->htmsi_vector;
-+    g_string_append_printf(buf, "  MSI map:\n");
-+    for (i = 0; i < 64; i += 4, vector += 4) {
-+        val = *vector | *(vector + 1) | *(vector + 2) | *(vector + 3);
-+        /* skip zero mapping */
-+        if (val == 0) {
-+            continue;
-+        }
-+
-+        g_string_append_printf(buf, "    [%2d - %2d] 0x%02"PRIx8" 0x%02"PRIx8
-+                                    " 0x%02"PRIx8" 0x%02"PRIx8"\n",
-+                                    i, i + 3, *vector, *(vector + 1),
-+                                    *(vector + 2), *(vector + 3));
-+    }
- }
- 
- static void loongarch_pic_class_init(ObjectClass *klass, const void *data)
+Data lookup failed, we don't discriminate DTLB and directly check
+ITLB. We can have:
 
-base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
--- 
-2.54.0
+   [EXCP_DPF]      = "DFP (data protection fault)",
+   [EXCP_DTLBMISS] = "DTLBMISS (data tlb miss)",
+
+EXCP_DPF could happen when accessing exec-only kernel .text;
+shouldn't we return to gdb here for "valid DTLB but read denied",
+and keep checking the ITLB for the EXCP_DTLBMISS case where no
+data mapping? As:
+
+             if (excp == EXCP_DPF) { break; }
+
+>           excp = get_phys_mmu(cpu, &phys_addr, &prot, addr,
+>                               PAGE_EXEC,
+>                               (sr & SR_SM) != 0);
+> -        return excp ? -1 : phys_addr;
+> +        if (excp) {
+> +            return false;
+> +        }
+> +        break;
+>   
+>       default:
+>           /* The mmu is partially enabled, and we don't really have
+> @@ -167,13 +171,20 @@ hwaddr openrisc_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+>                               PAGE_EXEC | PAGE_READ | PAGE_WRITE,
+>                               (sr & SR_SM) != 0);
+>           if (!excp) {
+> -            return phys_addr;
+> +            break;
+>           }
+>           /* fallthru */
+>   
+>       case 0:
+>           /* The mmu is definitely disabled; lookups never fail.  */
+>           get_phys_nommu(&phys_addr, &prot, addr);
+> -        return phys_addr;
+> +        break;
+>       }
+> +
+> +    *result = (TranslateForDebugResult) {
+> +        .physaddr = phys_addr,
+> +        .lg_page_size = TARGET_PAGE_BITS,
+> +        .attrs.debug = 1,
+> +    };
+> +    return true;
+>   }
 
 
