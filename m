@@ -1,58 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3693606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 08:30:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=OlyiU1I5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB5E606A646
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 08:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJRhh-0000OH-Rg; Wed, 21 Oct 2026 04:29:45 -0400
+	id 1xJRsa-0001fj-Rb; Wed, 21 Oct 2026 04:41:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJRhb-0000Nl-MG
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 04:29:41 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJRhZ-0008Sk-Gy
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 04:29:38 -0400
-Message-ID: <c9549a3342676bc9d70bf14c46400681b48a1d0a.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1792571375;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y5Ey1m30lriscKAqjahir6CA7oy3RS/J34EibD7vg50=;
- b=OlyiU1I5F6RB9Kg6F4HGSwsb7ZCxb3dsU8hwAIo7M+0qqtHmuRteOse49gV5WndVAtA9Dl
- qzjYHRx3ltL7x57LQDCg+q7WwXYsFSyxcTssAUWKLhuYF71sAiq79cAemgIeLwnLEuItoo
- 1ZxYtGCFSIQMy33Ll0LFAg5khlQDVUc=
-Subject: Re: [PATCH v2 6/7] target/sparc: Add the SHA instructions
-From: Stian Halseth <stian@itx.no>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
- <atar4qemu@gmail.com>, Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>, Eric Biggers
- <ebiggers@kernel.org>
-Date: Wed, 21 Oct 2026 10:29:34 +0200
-In-Reply-To: <fc4fe38e-d3f7-4d46-aad8-613df57d9260@oss.qualcomm.com>
-References: <20261021064640.3591682-1-stian@itx.no>
- <20261021064640.3591682-7-stian@itx.no>
- <fc4fe38e-d3f7-4d46-aad8-613df57d9260@oss.qualcomm.com>
-Content-Type: multipart/signed; micalg="pgp-sha512";
- protocol="application/pgp-signature"; boundary="=-NNOzor56CSahsmyKNzgN"
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xJRsU-0001fW-Oj
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 04:40:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xJRsR-00012S-2N
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 04:40:54 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxKvCEethqLfkXAA--.4136S3;
+ Wed, 21 Oct 2026 16:40:37 +0800 (CST)
+Received: from [127.0.0.1] (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJCxNs2BethqocIuAA--.18892S2;
+ Wed, 21 Oct 2026 16:40:35 +0800 (CST)
+Subject: Re: [PATCH 2/3] hw/loongarch/virt: Fix clock property name typo and
+ order
+To: way sorry <waysorrypub@gmail.com>
+Cc: qemu-devel@nongnu.org, 17746591750@163.com, lixianglai@loongson.cn,
+ jiaxun.yang@flygoat.com, mst@redhat.com, imammedo@redhat.com,
+ anisinha@redhat.com
+References: <cover.1791803914.git.waysorrypub@gmail.com>
+ <8e36ee3baff3e6abef94cda37d564aeb690b161b.1791803914.git.waysorrypub@gmail.com>
+ <7a2c2a6c-7ece-7e94-7216-6918558cda74@loongson.cn>
+ <3c7bb90f-7b94-5d88-4f92-1b0d99c3d0e6@loongson.cn>
+ <CAECqSzWofrjJgj14DB=dQOpJP-OQ5qBPM1mwJ--FKpC=g_zVTw@mail.gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <8336d47b-28ab-a846-b57b-b56e483c86a9@loongson.cn>
+Date: Wed, 21 Oct 2026 16:41:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAECqSzWofrjJgj14DB=dQOpJP-OQ5qBPM1mwJ--FKpC=g_zVTw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxNs2BethqocIuAA--.18892S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3WF1xGryfXw1xCr18CrWrXrc_yoW7Wr1Dpr
+ Z3tFWjyr98WFy8X3y0qw13GFyjvr1kt3Wjqr1xG3W5W3yYqr1SqF4avw42gFy7Zr4kAws0
+ yr1YgF929Fs8AFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUPab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2kKe7AKxVWUXVWUAwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07
+ AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWU
+ XVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI4
+ 8JMxk0xIA0c2IEe2xFo4CEbIxvr21lc7CjxVAaw2AFwI0_JF0_Jw1l42xK82IYc2Ij64vI
+ r41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAqx4xG67
+ AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIY
+ rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JVWx
+ JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU4Z2-UU
+ UUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.387,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,127 +82,148 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.6 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,NICE_REPLY_A,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 
---=-NNOzor56CSahsmyKNzgN
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Philippe,
+On 2026/10/18 下午10:36, way sorry wrote:
+> Hi all,
+> 
+> Thanks for the comments. v2 drops `_CCA` from the UART and adds
+> `_STA = 0x0f`. The expected DSDT blobs have been updated, and the
+> 5 ACPI subtests pass.
+> 
+> On the DT side: with Linux 7.0, removing `clock-frequency` makes all
+> 4 UARTs report `failed to get clock`, and the real driver fails to
+> probe, so we are keeping the property for now. Logs:
+> 
+> [    0.702431] of_serial 1fe001e0.serial: error -ENOENT: failed to get clock
+> [    0.702884] of_serial 1fe001e0.serial: probe with driver of_serial 
+> failed with error -2
+> [    0.703468] of_serial 1fe002e0.serial: error -ENOENT: failed to get clock
+> [    0.703718] of_serial 1fe002e0.serial: probe with driver of_serial 
+> failed with error -2
+> [    0.704127] of_serial 1fe003e0.serial: error -ENOENT: failed to get clock
+> [    0.704371] of_serial 1fe003e0.serial: probe with driver of_serial 
+> failed with error -2
+> [    0.704762] of_serial 1fe004e0.serial: error -ENOENT: failed to get clock
+> [    0.705013] of_serial 1fe004e0.serial: probe with driver of_serial 
+> failed with error -2
+> 
+> On the ACPI side: after removing it, all 4 UARTs still register, but
+> `base_baud` changes from 6250000 to 115200. Logs:
+> 
+> With clock-frequency:
+> [    0.813488] 00:00: ttyS0 at MMIO 0x1fe001e0 (irq = 20, base_baud = 
+> 6250000) is a 16550A
+> Without clock-frequency:
+> [    0.843528] 00:00: ttyS0 at MMIO 0x1fe001e0 (irq = 20, base_baud = 
+> 115200) is a 16550A
+> [    0.844663] printk: legacy console [ttyS0] enabled
+> [    0.845209] printk: legacy bootconsole [uart0] disabled
+> [    0.869343] 00:01: ttyS1 at MMIO 0x1fe002e0 (irq = 21, base_baud = 
+> 115200) is a 16550A
+> [    0.892556] 00:02: ttyS2 at MMIO 0x1fe003e0 (irq = 22, base_baud = 
+> 115200) is a 16550A
+> [    0.914867] 00:03: ttyS3 at MMIO 0x1fe004e0 (irq = 23, base_baud = 
+> 115200) is a 16550A
+> 
+> The reason is that Linux provides a default clock of 1,843,200 Hz in
+> `8250_pnp.c`, which matches the current QEMU UART model:
+> 
+> https://github.com/torvalds/linux/blob/028ef9c96e96197026887c0f092424679298aae8/drivers/tty/serial/8250/8250_pnp.c
+> 
+> So the property is optional under Linux ACPI, but that does not mean
+> Linux does not use it.
+> 
+> So far I have only verified boot, UART registration, and console
+> output. I have not tested other kernels or full TX/RX behavior. We
+> would prefer to keep an explicit and accurate frequency description
+> rather than rely on a kernel-specific default. But keeping the
+> property does not mean keeping the current 100 MHz; the correct value
+> still needs discussion.
+so what is the suggested frequency from your side?
+> 
+> Questions: what is the advantage of omitting the ACPI clock property
+> here? Is there any compatibility rationale from other guest OSes that
+> supports omitting it?
+Can you describe the detailed guest OS?  which cannot run in qemu-x86 
+platform without ACPI clock property.
 
-I agree with the suggested consolidation changes.
+Regards
+Bibo Mao
+> 
+> Thanks,
+> pillow
+> 
+> On Thu, Oct 15, 2026 at 6:03 PM Bibo Mao <maobibo@loongson.cn 
+> <mailto:maobibo@loongson.cn>> wrote:
+> 
+> 
+> 
+>     On 2026/10/15 下午2:57, Bibo Mao wrote:
+>      >
+>      >
+>      > On 2026/10/12 下午7:39, pillow wrote:
+>      >> The original code had a typo in the clock preperty name, and the
+>      >> property name and frequency value were in reversed order.
+>      >> According to the _DSD format rules, the property name string comes
+>      >> first, followed by the property value:
+>      >>
+>     https://github.com/UEFI/DSD-Guide/blob/main/src/dsd-guide.adoc#data-format-definition
+> 
+>      >>
+>      >>
+>      >> Signed-off-by: pillow <waysorrypub@gmail.com
+>     <mailto:waysorrypub@gmail.com>>
+>      >> ---
+>      >>   hw/loongarch/virt-acpi-build.c | 2 +-
+>      >>   1 file changed, 1 insertion(+), 1 deletion(-)
+>      >>
+>      >> diff --git a/hw/loongarch/virt-acpi-build.c
+>      >> b/hw/loongarch/virt-acpi-build.c
+>      >> index 54965f0..4081730 100644
+>      >> --- a/hw/loongarch/virt-acpi-build.c
+>      >> +++ b/hw/loongarch/virt-acpi-build.c
+>      >> @@ -336,8 +336,8 @@ static void build_uart_device_aml(Aml
+>     *table, int
+>      >> index)
+>      >>                                     AML_SHARED, &uart_irq, 1));
+>      >>       aml_append(dev, aml_name_decl("_CRS", crs));
+>      >>       pkg0 = aml_package(0x2);
+>      >> +    aml_append(pkg0, aml_string("clock-frequency"));
+>      >>       aml_append(pkg0, aml_int(0x05F5E100));
+>      >> -    aml_append(pkg0, aml_string("clock-frenquency"));
+>      >>       pkg1 = aml_package(0x1);
+>      >>       aml_append(pkg1, pkg0);
+>      >>       pkg2 = aml_package(0x2);
+>      >>
+>      > Hi,
+>      >
+>      > yes, there is spelling issue with LoongArch virt machine UART acpi
+>      > table. It seems that clock-frequency is not used by serial port.
+>     is it
+>      > possible to remove pkg0/pkg1/pkg2 property like ISA serial acpi
+>     table
+>      > defined in function serial_isa_build_aml()?
+>      >
+>      > Also "_CCA" property should be removed since the emulated serial
+>     port
+>      > does not support DMA, and add "_STA" property.
+>     Also maybe property clock-frequency of uart fdt table in
+>     fdt_add_uart_node() can be removed.
+> 
+>     Regards
+>     Bibo Mao
+>      >
+>      > Regards
+>      > Bibo Mao
+> 
 
-I'll send a cleanup series on top when this one lands, along with
-suggested AES cleanup in patch 4.
-
-Thanks again for the very fast handling on this :)
-
-/Stian
-
-
-On Wed, 2026-10-21 at 09:39 +0200, Philippe Mathieu-Daud=E9 wrote:
-> On 21/10/26 08:46, Stian Halseth wrote:
-> > Implement the SHA1, SHA256 and SHA512 instructions according
-> > to OSA (Oracle SPARC Architecture) 2011 section 7.115,
-> > using the algorithms defined in FIPS 180-4, and set the
-> > SHA1/SHA256/SHA512 bits in the CFR.
-> >=20
-> > Read and update the fixed floating-point registers and mark the
-> > lower FPR bank dirty. Share the SHA-2 Boolean functions between
-> > the SHA256 and SHA512 helpers.
-> >=20
-> > Gated behind the crypto CPU feature and disabled for sparc32.
-> >=20
-> > Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>
-> > Tested-by: Philippe Mathieu-Daud=E9 <philmd@oss.qualcomm.com>
-> > Signed-off-by: Stian Halseth <stian@itx.no>
-> > ---
-> > =A0 target/sparc/crypto_helper.c | 274
-> > +++++++++++++++++++++++++++++++++++
-> > =A0 target/sparc/helper.h=A0=A0=A0=A0=A0=A0=A0 |=A0=A0 4 +
-> > =A0 target/sparc/insns.decode=A0=A0=A0 |=A0=A0 4 +
-> > =A0 target/sparc/translate.c=A0=A0=A0=A0 |=A0 21 ++-
-> > =A0 4 files changed, 302 insertions(+), 1 deletion(-)
->=20
->=20
-> > +/*
-> > + * Compress one SHA-1 block from f8-f23 into f0-f4.
-> > + * Clear f5 to match SPARC M7 behavior.
-> > + */
-> > +void helper_sha1(CPUSPARCState *env)
-> > +{
->=20
-> Looking deeper, this is a dup of mips::octeon_sha1_transform()
-> in target/mips/tcg/octeon_crypto.c.
->=20
-> > +}
-> > +
-> > +/* SHA-2 Boolean functions. */
-> > +static inline uint64_t sha_ch(uint64_t x, uint64_t y, uint64_t z)
-> > +{
-> > +=A0=A0=A0 return (x & y) ^ (~x & z);
-> > +}
-> > +
-> > +static inline uint64_t sha_maj(uint64_t x, uint64_t y, uint64_t z)
-> > +{
-> > +=A0=A0=A0 return (x & y) ^ (x & z) ^ (y & z);
-> > +}
-> > +
-> > +static const uint32_t sha256_k[64] =3D {
->=20
-> Dup of s390x::K and mips::k.
-> (target/s390x/tcg/cpacf_sha256.c)
->=20
-> > +};
-> > +
-> > +static const uint64_t sha512_k[80] =3D {
->=20
-> Dup of s390x::K and mips::k.
-> (target/s390x/tcg/cpacf_sha512.c)
->=20
-> > +};
-> > +
-> > +/* Compress 16 numeric message words into the supplied SHA-256
-> > state. */
-> > +static void sha256_compress(uint32_t state[8], const uint32_t
-> > block[16])
-> > +{
->=20
-> Dup of s390x::sha256_bda() and mips::octeon_sha256_transform().
->=20
-> Worth consolidate as include/crypto/sha-block.h
->=20
-> > +}
-> > +
-> > +/* Compress 16 numeric message words into the supplied SHA-512
-> > state. */
-> > +static void sha512_compress(uint64_t state[8], const uint64_t
-> > block[16])
-> > +{
->=20
-> Dup of s390x::sha512_bda() and mips::octeon_sha512_transform().
->=20
-> > +}
-> Since this commit is reviewed, let's do a consolidation cleanup on
-> top.
-
---=-NNOzor56CSahsmyKNzgN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCath37gAKCRDoeAEuJe36
-VjGIAPsGT5xNNAFgWrsgflUC9FYseWa27LX7271KFOlyO5Xi1gEArRtUdLGzHAsC
-TBL7fjVb2qg2kFEoMoN9vjwidlaHyAg=
-=RzeN
------END PGP SIGNATURE-----
-
---=-NNOzor56CSahsmyKNzgN--
 
