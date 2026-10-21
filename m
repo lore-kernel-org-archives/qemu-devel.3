@@ -1,110 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4669606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775F8606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gElzwbDo
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ku4hnXpj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJdGH-0007Rt-Cx; Wed, 21 Oct 2026 16:50:13 -0400
+	id 1xJdGj-0007i6-HO; Wed, 21 Oct 2026 16:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xJdGF-0007Rj-OH
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:50:11 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJdGY-0007el-GS
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:50:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xJdGD-0007P9-Qi
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:50:11 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-3ab3dd966e1so9105351fa.2
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:50:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792615808; cv=none;
- d=google.com; s=arc-20260327;
- b=FLghFdCqoiYLqIxCnzxwyloUrfomAM1285we477wbqvtVdnJl0yWW9ljaLnKxTyGa/
- InWk2JoA0hjAxVEELdnuVClOWael2TT6wabHlmPAZHBfEyl/9XJqHPS+S0UC6WE/U8pD
- AxGgevxJ8ztw6BK3JPJvOqjV8gYslxpO/gmL5WFQST3edvDIK4bKeOnr9IE/RoQDh2wp
- tXAIA1pCu/Zclj0upuH/SQjgMQMSPfXH31vuoTFcH4HrSFdj+qzPyNCoGwNATef7WHDT
- 51GLzLUx4R6916LaA5qB8O8QA/i5CDU7R6iiSvGRU+DFrONJmPLsEYLr+QQK2RKuF35/
- /H2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=X2ZDezcKlnPW/oIxf8c+xtiC4rXEGI/ooM82CLwvu9A=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=XjfAe8aA7uU9ZAjYKRuYQiqe+EmNjjqKPXi7qc0gnZJUHtzHVvVn9Vp8dVLY/NrB+z
- n6aq6aOTLW+DpBvsdC5jDRxECBW+cClzNH87nuuIFsfbdRcfXxPX6gH8NfreekEmNjfs
- ywh4RiPgnO8fUXNXAWzAiwUQMGKPE6N3PFkUkIgDrb48/08GfY6ueyI98BMC3cw8uqqG
- BS21LQr4iTW5WHKIRcqRvmKLx2xGDXFPuVKAaQZ4Nu0yVE5j2YzuBxVXpsR2sv7GNlDd
- /iqJBVAu8X0UL5jhqMlGBeKYp7XFlW20q4acpVrjQcdA9r0L0sSp08xG663XYHAFhQRE
- cC/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJdGU-0007QC-B9
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 16:50:29 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a0286c981dso11948465e9.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792615808; x=1793220608; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=X2ZDezcKlnPW/oIxf8c+xtiC4rXEGI/ooM82CLwvu9A=;
- b=gElzwbDowygvoCYx7iWZxTq9fDi29vMflV+rfPUCKCk0Y78J+dMxbLavtYvZYNepgE
- P9mSBq3MAPB8rCh9vwpAnqObLUzmQ/u0jkbHk7Hh2tAF87TUx2WDxvTUoU1ShqaZDwES
- sIN93YfTfjmK7UiDbH5vx4NcWYwMEVtQCe/S9lIFvP/xHmNmJq6Hfgd73vlrjgGfp7y/
- s/R/dCQcFgQUlt9BaSwAfWX7q0+E7XFsmikORLufO45NR45Emt61ouA3fQdEfGIikj3q
- Xvv2qd+oG5Tj4lewXkxNUBzuuzkbZsz6L2+R5VJtLXMfNfC+LPFWRQJ0N5Y/hzqVThuF
- NR5Q==
+ d=linaro.org; s=google; t=1792615825; x=1793220625; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=X2CxcxJSRvKESmBbEKcO55HDwInTaJ4oWVM+mXsHScg=;
+ b=ku4hnXpj4D5+6PcVX4qdxXJ+Ee1KBDXY9rspKE5qwk2sMCBm+uFm3TeCrrW3eOIgjU
+ wy7JE8jOWHOm1TItAT63nhslIQtaYEmLwx8xz2nFiDL2XvIcy8bqINHTvC+sybeGiuws
+ 4DXMyAbJ2lCXw3VY7QLCGiQ+TroPrBd+2dSumrQitu+6uIM7AKMhGSrhNjbyg09EGmE0
+ +Mq4XNQN4gm8e6HFJ9RblWe/qknhoR9FOvDd/2fBO1VS9dFA6Te8GHWFwEyvc3JJeq1P
+ 98oRGbBwGIqozHLIU6rP7qfnmJF0K5EpoinrHI07xSKP4H/4hFoeLtvR+i8Oqg/Xj6U5
+ DYKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792615808; x=1793220608;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20260707; t=1792615825; x=1793220625;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=X2ZDezcKlnPW/oIxf8c+xtiC4rXEGI/ooM82CLwvu9A=;
- b=X2/twxhg4ErqD+nHogVzO0VAu+16r639kPyI2w3JyZYnsPZgbD1OGCZpN8PixQ0GJD
- FFZAOQq659SNOo0SuqZVFyxMFmFN23aPKqCnGepCfvo8ROt7CsGjC2t32QMjFk6CWW6+
- aHvveXGQ59qmnGT2hoQOZr+gstG6eeX2B32N0Zc3y8JA9J1fQtyisqZm/Pp0FjXpL6ot
- b9PMaF2E1AiS43ktjzjy+N70+4rpgwzi+lkjS+6XVzLUp6t1E2J+JZcXQ0At4548VAQE
- zcKPmPPH++fs26ejacP9Ke9ZyiQKUv1zMqM9eXSZ7BXvD0p1g+Cpeip+aewPk9oSEpH6
- zK5A==
-X-Gm-Message-State: AFq9FYLJzpRCO8a65r9jSM2QF+SPXYEwq9HoYpz+j6R6NrFCLwVRaBKm
- UiaP3gR34IyyhSagfh4EUGK9JsJIa9ucX1Jqft9yInIporFGbycjXPWvdU0pY4JVVBqTHqgtSBG
- PDC6xRLuHG/gFpG3GbQ4aaxS2BEgwK40=
-X-Gm-Gg: AYBFou163iJA6niJGaLASjyu3SX9/KkeXJ8Td5vxMHxS+Kqm7f8/9gopnocqr7cVDbb
- cLicJ/N42OaDgfTSqhTiuy+xzrztaOdB4FUdNXlp7kS+ppH+IhQ9nG6NELJ+L9HDEHkgvXwNrL2
- PmIOsDeU6m1XR+MwoGbZhyF1XI9PZ947s0PvgI6puzWmBixVctRWEfcthvjhQIfTlr18wh30iJ7
- WIcefdglkn23yOJx6Xfle+QqbCncDs3bahoSt2VnVgmUPsTV2xjHSAiYhVN1FELvd/8D1YPEGzT
- mLxWXoe4GmOfvMgqMcSXEudazAns/qUYxLRdHe0BaLvAVTeULvd++lp9HQC0ooKuTzqGt/XkX1j
- BYFHJqDZ6uy6Ps3VKJ86QUZZ3H5bCVl6XgoxssWD1SDCpcHkGUiAHhOgJV7jR8tSnktKxnwbk+m
- EgDoyN7sSC1VHbYQCQF4zfMuPOIy7U2h1PI1ySgXD4riJ+Ms/sAqzs
-X-Received: by 2002:a2e:bc02:0:b0:3a9:d407:41f6 with SMTP id
- 38308e7fff4ca-3ac441d43a0mr9657771fa.26.1792615807698; Wed, 21 Oct 2026
- 13:50:07 -0700 (PDT)
+ bh=X2CxcxJSRvKESmBbEKcO55HDwInTaJ4oWVM+mXsHScg=;
+ b=niDQq0Tpyq+EjSxTQ/gmhR05jI/1tDnkBk6UUXWdT9vQZ/bmVS7cVFiIY9SSwagQfO
+ 82bF8oO8W4FWI1YAtUQS2CwTYHOZ+ylmsCdE+ZFf/L9G/6AG5YfEUYIbqq7ktWIlm2WN
+ M+DBUmgm7YJhbRUIFwCTCxvEfbRkyri++VfdyeP4/zBsMGBhPcyCvUoug1V4aRu28iBV
+ VXEII75TgiVp+is5P6f8PBjcShfecuF1ifQ9+K4axqoX3FfUqfcH6VNJDG3Xgk/Fc54S
+ MkNpD53Wg0oVno7I09CT6WwoN3ImP+O197kNux8NRnaDNGpoCF0M5sPrhbpMkqeqSNB1
+ yf9g==
+X-Gm-Message-State: AFq9FYJGOvOncQPqwRSYupFAMZmqQ78o+/8LNYC0V/Tr44vWqhgIZJHm
+ G+SVSjtsXgao7IFyGR6j+Zbwr1P4+kY1idxBAE4p2VLGHFoN7pUKte6Fytjz1ibsjcQ=
+X-Gm-Gg: AYBFou1fJNRPv5mmzcc/CH0dT4t3Ns/lWtoc+oQT8hmYbPZNUFh5Rz5FQuhcp//xvLv
+ 7LUYsjuD8xYb7qbMuNKxS66nQg74F1ocwTNRVMgZ6KQfku5TShtFUVI13cWoe9oooqBFezW5a02
+ B3Lh1gyckNRBKTzWt1r7geRhkassl5hup4SkRGPpovAbIaiw9B1SQyN8zzcg50AIV2SUX19iMrc
+ Ieuu9nEk35op6sVbX7XiFr1FamolMzk3FEZaSV2fTX9n6i04ehY2dv7HQlTKA3TTNgit1rjslUe
+ PZ+UJ1azrPnaMa0mggyMO5fi6BFrKQ4FBVZMLoCt+gY8XW6MAyOtjYC+jSEUrS+vjAfOnAYkVap
+ XDjLRyHX11ZC30HNtqulifweEKsQh2KThZmEkOB6AOlYBn+YSGst0SMvpT0RBani9sGjd5dc7iv
+ ncJj/duhI6uhq2tFKOkLfwLcDWzvUSilBmJtw8kMQeNJllam2cz+yC252mE1RSxSjnotwvqHM6R
+ G0mnAqnsGCTt/xHo9qB1Z+BXxBGjOWgOxzSmesw657kNE9vIb/O58w=
+X-Received: by 2002:a05:600c:6304:b0:4a1:f377:5c68 with SMTP id
+ 5b1f17b1804b1-4a1fdd46423mr64987775e9.34.1792615824593; 
+ Wed, 21 Oct 2026 13:50:24 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a2038ddb20sm17473515e9.0.2026.10.21.13.50.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Oct 2026 13:50:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E7B235F7FA;
+ Wed, 21 Oct 2026 21:50:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-devel@nongnu.org,  Cornelia Huck <cohuck@redhat.com>,  Thomas Huth
+ <th.huth+qemu@posteo.eu>,  Paolo Bonzini <pbonzini@redhat.com>,  Christian
+ Borntraeger <borntraeger@linux.ibm.com>,  Peter Xu <peterx@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Kyle Evans <kevans@freebsd.org>,  Keith
+ Busch <kbusch@kernel.org>,  Matthew Rosato <mjrosato@linux.ibm.com>,  Eric
+ Farman <farman@linux.ibm.com>,  Zhao Liu <zhao1.liu@intel.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Anders Roxell <anders.roxell@linaro.org>,
+ qemu-arm@nongnu.org,  Song Gao <gaosong@loongson.cn>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Laurent Vivier
+ <laurent@vivier.eu>,  qemu-s390x@nongnu.org,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Brad Smith <brad@comstyle.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,  Halil Pasic
+ <pasic@linux.ibm.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Yoshinori Sato
+ <yoshinori.sato@nifty.com>,  Klaus Jensen <its@irrelevant.dk>,  John Snow
+ <jsnow@redhat.com>
+Subject: Re: [PATCH v3 12/19] tests/functional: teach tuxrun about launching
+ gdb tests
+In-Reply-To: <41147e0a-c8a2-4060-903e-695e3977c8cd@linux.ibm.com> (Ilya
+ Leoshkevich's message of "Wed, 21 Oct 2026 22:17:01 +0200")
+References: <20261019192704.3220373-1-alex.bennee@linaro.org>
+ <20261019192704.3220373-13-alex.bennee@linaro.org>
+ <41147e0a-c8a2-4060-903e-695e3977c8cd@linux.ibm.com>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Wed, 21 Oct 2026 21:50:22 +0100
+Message-ID: <87h5iezskx.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261021141652.363109-1-richard.henderson@linaro.org>
- <20261021141652.363109-85-richard.henderson@linaro.org>
-In-Reply-To: <20261021141652.363109-85-richard.henderson@linaro.org>
-From: Matt Turner <mattst88@gmail.com>
-Date: Wed, 21 Oct 2026 16:49:54 -0400
-X-Gm-Features: AclHuK9Q46u4BTZwcUM70YIC5GzXLnmYMR5AyY6rWVAb3m_g8JVq2Pcyx5uYavY
-Message-ID: <CAEdQ38H0ORwHrEXj_0Gc0OZt1k0jxheq-Zxsdw+rfwgbQEwZtA@mail.gmail.com>
-Subject: Re: [PATCH v6 084/100] tcg: Generic expansion of tcg_gen_bswap16_*
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=mattst88@gmail.com; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,206 +123,152 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 21, 2026 at 10:26=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  include/tcg/tcg-op-common.h  |   2 -
->  tcg/tcg-internal.h           |   6 ++
->  include/tcg/tcg-op-def.h.inc |   1 +
->  tcg/tcg-op.c                 | 120 ++++++++++-------------------------
->  4 files changed, 41 insertions(+), 88 deletions(-)
->
-> diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-> index 9f5cae36c5..8f8560023a 100644
-> --- a/include/tcg/tcg-op-common.h
-> +++ b/include/tcg/tcg-op-common.h
-> @@ -133,7 +133,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned me=
-minfo);
->  /* 32 bit ops */
->
->  void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i3=
-2 arg2);
-> -void tcg_gen_bswap16_i32(TCGv_i32 ret, TCGv_i32 arg, unsigned flags);
->  void tcg_gen_bswap32_i32(TCGv_i32 ret, TCGv_i32 arg);
->  void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg);
->  void tcg_gen_revbit8_i32(TCGv_i32 ret, TCGv_i32 arg);
-> @@ -158,7 +157,6 @@ void tcg_gen_addN_i64(int n, TCGv_i64 *r, TCGv_i64 *a=
-, TCGv_i64 *b);
->  void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i6=
-4 arg2);
->  void tcg_gen_ext32s_i64(TCGv_i64 ret, TCGv_i64 arg);
->  void tcg_gen_ext32u_i64(TCGv_i64 ret, TCGv_i64 arg);
-> -void tcg_gen_bswap16_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
->  void tcg_gen_bswap32_i64(TCGv_i64 ret, TCGv_i64 arg, unsigned flags);
->  void tcg_gen_bswap64_i64(TCGv_i64 ret, TCGv_i64 arg);
->  void tcg_gen_hswap_i64(TCGv_i64 ret, TCGv_i64 arg);
-> diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-> index 09899cb309..d6ea11d8fc 100644
-> --- a/tcg/tcg-internal.h
-> +++ b/tcg/tcg-internal.h
-> @@ -108,6 +108,12 @@ static inline void tcg_gen_op_tt(TCGOpcode opc, TCGT=
-ype type,
->      tcg_gen_op2(opc, type, temp_arg(t0), temp_arg(t1));
->  }
->
-> +static inline void tcg_gen_op_tti(TCGOpcode opc, TCGType type,
-> +                                  TCGTemp *t0, TCGTemp *t1, TCGArg a2)
-> +{
-> +    tcg_gen_op3(opc, type, temp_arg(t0), temp_arg(t1), a2);
-> +}
-> +
->  static inline void tcg_gen_op_ttt(TCGOpcode opc, TCGType type,
->                                    TCGTemp *t0, TCGTemp *t1, TCGTemp *t2)
->  {
-> diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
-> index b606aaab12..2ebcf4a066 100644
-> --- a/include/tcg/tcg-op-def.h.inc
-> +++ b/include/tcg/tcg-op-def.h.inc
-> @@ -11,6 +11,7 @@ DEF3(andi, TCGV, TCGV, TINT)
->  DEF3(andc, TCGV, TCGV, TCGV)
->  DEF4(brcond, TCGCond, TCGV, TCGV, TCGLabelPtr)
->  DEF4(brcondi, TCGCond, TCGV, TINT, TCGLabelPtr)
-> +DEF3(bswap16, TCGV, TCGV, unsigned)
->  DEF2(clrsb, TCGV, TCGV)
->  DEF3(clz, TCGV, TCGV, TCGV)
->  DEF3(clzi, TCGV, TCGV, TINT)
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index c3a8a04a4d..f1a79dc921 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -425,6 +425,40 @@ void tcg_gen_brcondi(TCGType type, TCGCond cond, TCG=
-Temp *src1,
->      tcg_gen_brcond(type, cond, src1, tcg_constant_internal(type, src2), =
-l);
->  }
->
-> +void tcg_gen_bswap16(TCGType type, TCGTemp *dst, TCGTemp *src, unsigned =
-flags)
-> +{
-> +    /* Only one extension flag may be present. */
-> +    tcg_debug_assert(!(flags & TCG_BSWAP_OS) || !(flags & TCG_BSWAP_OZ))=
-;
-> +
-> +    if (tcg_op_supported(INDEX_op_bswap16, type, 0)) {
-> +        tcg_gen_op_tti(INDEX_op_bswap16, type, dst, src, flags);
-> +    } else {
-> +        g_autoptr(TCGTemp) t0 =3D tcg_temp_new_ebb(type);
-> +        g_autoptr(TCGTemp) t1 =3D tcg_temp_new_ebb(type);
-> +        int width =3D tcg_type_bits(type);
-> +
-> +        if (flags & TCG_BSWAP_IZ) {                     /* t0 =3D ...a *=
-/
-> +            tcg_gen_shri(type, t0, src, 8);
-> +        } else {
-> +            tcg_gen_extract(type, t0, src, 8, 8);
-> +        }
-> +
-> +        if (flags & TCG_BSWAP_OS) {
-> +            tcg_gen_shli(type, t1, src, width - 8);     /* t1 =3D b... *=
-/
-> +            tcg_gen_sari(type, t1, t1, width - 16);     /* t1 =3D ssb. *=
-/
-> +        } else if (flags & TCG_BSWAP_OZ) {
-> +            tcg_gen_ext8u(type, t1, src);               /* t1 =3D ...b *=
-/
-> +            tcg_gen_shli(type, t1, t1, 8);              /* t1 =3D ..b. *=
-/
-> +        } else {
-> +            tcg_gen_shli(type, t1, src, 8);             /* t1 =3D xab. *=
-/
-> +        }
-> +
-> +        tcg_gen_or(type, dst, t0, t1);                  /* ret =3D ..ba =
-(OZ) */
-> +                                                        /*     =3D ssba =
-(OS) */
-> +                                                        /*     =3D xaba =
-(0)  */
-> +    }
-> +}
-> +
->  void tcg_gen_clrsb(TCGType type, TCGTemp *dst, TCGTemp *src)
->  {
->      if (tcg_op_supported(INDEX_op_clz, TCG_TYPE_REG, 0)) {
-> @@ -1294,49 +1328,6 @@ static void gen_bitswap_i64(TCGv_i64 ret, TCGv_i64=
- arg, uint64_t mask)
->      tcg_temp_free_i64(t1);
->  }
->
-> -/*
-> - * bswap16_i32: 16-bit byte swap on the low bits of a 32-bit value.
-> - *
-> - * Byte pattern: xxab -> yyba
-> - *
-> - * With TCG_BSWAP_IZ, x =3D=3D zero, else undefined.
-> - * With TCG_BSWAP_OZ, y =3D=3D zero, with TCG_BSWAP_OS y =3D=3D sign, el=
-se undefined.
-> - */
-> -void tcg_gen_bswap16_i32(TCGv_i32 ret, TCGv_i32 arg, unsigned flags)
-> -{
-> -    /* Only one extension flag may be present. */
-> -    tcg_debug_assert(!(flags & TCG_BSWAP_OS) || !(flags & TCG_BSWAP_OZ))=
-;
-> -
-> -    if (tcg_op_supported(INDEX_op_bswap16, TCG_TYPE_I32, 0)) {
-> -        tcg_gen_op3i_i32(INDEX_op_bswap16, ret, arg, flags);
-> -    } else {
-> -        TCGv_i32 t0 =3D tcg_temp_ebb_new_i32();
-> -        TCGv_i32 t1 =3D tcg_temp_ebb_new_i32();
-> -
-> -                                            /* arg =3D ..ab (IZ) xxab (!=
-IZ) */
-> -        tcg_gen_shri_i32(t0, arg, 8);       /*  t0 =3D ...a (IZ) .xxa (!=
-IZ) */
-> -        if (!(flags & TCG_BSWAP_IZ)) {
-> -            tcg_gen_ext8u_i32(t0, t0);      /*  t0 =3D ...a */
-> -        }
-> -
-> -        if (flags & TCG_BSWAP_OS) {
-> -            tcg_gen_shli_i32(t1, arg, 24);  /*  t1 =3D b... */
-> -            tcg_gen_sari_i32(t1, t1, 16);   /*  t1 =3D ssb. */
-> -        } else if (flags & TCG_BSWAP_OZ) {
-> -            tcg_gen_ext8u_i32(t1, arg);     /*  t1 =3D ...b */
-> -            tcg_gen_shli_i32(t1, t1, 8);    /*  t1 =3D ..b. */
-> -        } else {
-> -            tcg_gen_shli_i32(t1, arg, 8);   /*  t1 =3D xab. */
-> -        }
-> -
-> -        tcg_gen_or_i32(ret, t0, t1);        /* ret =3D ..ba (OZ) */
-> -                                            /*     =3D ssba (OS) */
-> -                                            /*     =3D xaba (no flag) */
-> -        tcg_temp_free_i32(t0);
-> -        tcg_temp_free_i32(t1);
-> -    }
-> -}
-> -
->  /*
->   * bswap32_i32: 32-bit byte swap on a 32-bit value.
->   *
-> @@ -1495,49 +1486,6 @@ void tcg_gen_ext32u_i64(TCGv_i64 ret, TCGv_i64 arg=
-)
->      tcg_gen_extract_i64(ret, arg, 0, 32);
->  }
->
-> -/*
-> - * bswap16_i64: 16-bit byte swap on the low bits of a 64-bit value.
-> - *
-> - * Byte pattern: xxxxxxxxab -> yyyyyyyyba
-> - *
-> - * With TCG_BSWAP_IZ, x =3D=3D zero, else undefined.
-> - * With TCG_BSWAP_OZ, y =3D=3D zero, with TCG_BSWAP_OS y =3D=3D sign, el=
-se undefined.
-> - */
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-We're dropping this comment. Dunno if you want to keep it in the refactor.
+> On 10/19/26 21:26, Alex Benn=C3=A9e wrote:
+>> This resurrects the hand run test script from d84842be6c5 (tests:
+>> remove test-gdbstub.py) and modernises it to use the shared test
+>> infrastructure for run-test.
+>> We then tweak the common tuxrun code to over an alternative "launch
+>> via gdbstub" helper which reuses the existing code but:
+>>    - needs a vmlinux with symbols
+>>    - drops kaslr because it doesn't play nice with symbols
+>>    - extend qargs with stuff normally added by vm.launch
+>>    - passes kargs directly
+>>    - runs with the gdb run-test script
+>>    - log the run-test output to the console log
+>>    - makes --binary not mandatory
+>> Message-ID: <20260930164649.433573-13-alex.bennee@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>> v3
+>>    - mention the nokaslr in the commit message
+>>    - add a comment about it to the shared kernel args
+>>    - drop unused failcount
+>>    - remove stale comment about hbreak
+>>    - always delete the watch point pass or fail
+>>    - fix unbalanced tuple in sh4's direct call of fetch_tuxrun_assets
+>>    - simplify the symbol to watchpoint logic
+>>    - drop the mandatory --binary
+>>    - make the command copy and paste friendly
+>> v2
+>>    - add self.vm._machine to qargs
+>>    - drop leading spaces in print () calls
+>>    - add register read tests
+>>    - use gdb.Breakpoint for hwbreak as for swbreak
+>>    - drop flaky symbol evaluation, verify hit_count instead
+>>    - explicit gdb.BP_BREAKPOINT for CatchBreakpoint
+>> ---
+>>   .../functional/gdb-scripts/kernel_gdb_test.py | 162 ++++++++++++++++++
+>>   tests/functional/qemu_test/tuxruntest.py      |  97 ++++++++++-
+>>   tests/functional/sh4/test_tuxrun.py           |   4 +-
+>>   tests/guest-debug/run-test.py                 |  14 +-
+>>   4 files changed, 261 insertions(+), 16 deletions(-)
+>>   create mode 100644 tests/functional/gdb-scripts/kernel_gdb_test.py
+>
+> [...]
+>
+>> @@ -132,10 +144,77 @@ def common_tuxrun(self,
+>>           special with the command line we can process most things using
+>>           the tag metadata.
+>>           """
+>> -        (kernel, disk, dtb) =3D self.fetch_tuxrun_assets(kernel_asset, =
+rootfs_asset,
+>> -                                                       dtb_asset)
+>> +        (kernel, disk, dtb, _) =3D self.fetch_tuxrun_assets(kernel_asse=
+t,
+>> +                                                          rootfs_asset,
+>> +                                                          dtb_asset)
+>>             self.prepare_run(accel, kernel, disk, drive, dtb,
+>> console_index)
+>>           self.vm.launch()
+>>           self.run_tuxtest_tests(haltmsg)
+>>           os.remove(disk)
+>> +
+>> +    def common_tuxrun_gdb(self,
+>> +                          kernel_asset,
+>> +                          vmlinux_asset,
+>> +                          rootfs_asset,
+>> +                          accel=3DNone,
+>> +                          dtb_asset=3DNone,
+>> +                          drive=3D"virtio-blk-device",
+>> +                          haltmsg=3D"reboot: System halted",
+>> +                          console_index=3D0):
+>> +        """
+>> +        Common path for LKFT tests under gdb. Unlike the common_tuxrun
+>> +        function we need to launch with the gdb test script and deal
+>> +        with munging the arguments for that especially.
+>> +        """
+>> +        (kernel, disk, dtb, vmlinux) =3D self.fetch_tuxrun_assets(kerne=
+l_asset,
+>> +                                                                rootfs_=
+asset,
+>> +                                                                dtb_ass=
+et,
+>> +                                                                vmlinux=
+_asset)
+>> +
+>> +        gdb_path =3D os.getenv("QEMU_TEST_GDB")
+>
+> By the way, there is a minor usability issue: if I set QEMU_TEST_GDB to
+> a non-existent binary, the test hangs instead of exiting with an error
+> message.
+
+I can add a guard - but in normal invocation meson should take care only
+to pass the env variable if configure detects gdb.
+
+>
+>> +        run_script =3D self.data_file('..', 'guest-debug','run-test.py')
+>> +        test_script =3D self.data_file('gdb-scripts', 'kernel_gdb_test.=
+py')
+>> +
+>> +        # Instead of launching QEMU via the functional test machinery
+>> +        # we need to launch it with the gdb run script. We utilise the
+>> +        # existing prepare_run machinery to build the command line but
+>> +        # we pass the kernel args separately to avoid horrible string
+>> +        # escaping.
+>> +
+>> +        self.prepare_run(accel, kernel, disk, drive, dtb,
+>> +                         console_index, append =3D False)
+>> +
+>> +        # the functional test machinery adds more stuff for handling
+>> +        # console redirection which we need to do manually.
+>> +
+>> +        qargs =3D self.vm.args
+>> +        qargs.extend(["-display", "none", "-serial", "stdio"])
+>> +
+>> +        # and the machine type
+>> +        if self.vm._machine is not None:
+>> +            qargs.extend(["-machine", self.vm._machine])
+>> +
+>> +        cmd =3D [
+>> +            str(run_script),
+>> +            "--qemu", self.qemu_bin,
+>> +            "--qargs", " ".join(qargs),
+>> +            "--kargs", self.kcmd_line,
+>> +            "--symbols", str(vmlinux),
+>> +            "--test", str(test_script),
+>> +            "--gdb", gdb_path,
+>> +        ]
+>> +
+>> +        log_cmd =3D " ".join(f'"{arg}"' if ' ' in arg else arg for arg =
+in cmd)
+>> +        self.log.info(f"run-test: {log_cmd}")
+>> +
+>> +        res =3D subprocess.run(cmd, text=3DTrue,
+>> +                             stdout=3Dsubprocess.PIPE,
+>> +                             stderr=3Dsubprocess.STDOUT)
+>
+> [...]
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
