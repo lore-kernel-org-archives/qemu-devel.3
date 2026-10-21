@@ -1,150 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85419606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 07:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687BE606A31B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 07:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=DU1oacy4;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=J7B4wvn3
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=F5wHEOt4;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=grZW64el
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJQiV-0007Da-Q4; Wed, 21 Oct 2026 03:26:32 -0400
+	id 1xJQlg-0007kq-14; Wed, 21 Oct 2026 03:29:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJQiL-0007Cg-UY
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:26:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xJQla-0007kT-Ah
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:29:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJQiI-00014Q-S0
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:26:20 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69L5ivB5164981
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:26:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2zoaF2iR+Wz6pFtnanrhWuer4x1dALmitloSery1EN0=; b=DU1oacy44htJh1ge
- PxnuUsu2JXVP7C9Nra58wJlgE5D0llUoR5gu4hTWAvBOFrQ0g3jZGAOXo8RJ/836
- zPORlmZCvN+c1iYUhivOc4W+oaNy8fDhdcJYKsUuM/EKAwfpSwJYGXmb8UP6bskE
- Dgg6qRkVtCnKeyZHtqs2Q+pQ+PMYeaxuclny7sKFACvIIyEaZ/tMFtokyNZP9Me0
- E/HqXjwLcs8qFoxi7BbAd9tr55FfmXgal1EVpF9waPHCNYg06pcbHHuumS7JYFb+
- YUiu6Cj3JeASR5w7X0ehVyqumHWo2wkHgDQPczR50aLYx6UtJtYzr9XBlScm6Mc1
- MxNQ+Q==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hegs01r64-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 07:26:16 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-934956beec8so94950585a.0
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 00:26:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xJQlW-0001EB-RU
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:29:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792567777;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iNngR5AsgI/xtMeDOuhVg9W0RMqoNvBNp812kQ07xDc=;
+ b=F5wHEOt4hrUPElKuIZejRArTzlBs9YW34GIJce/ILSGctOFlqLCikoj1bJek4AztjHVPsC
+ LWF0lvFdOrMozWGEPE1El74zBU8sh+mGkVZjQqLrY73PYnrwIagLKANyejwnXHH1JynO0L
+ xiVFnNpDwaamOqXNRHsH/wauh4sow9g=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-577-CYjzAE2IO8aXbgtc_yFsYA-1; Wed, 21 Oct 2026 07:29:29 +0000
+X-MC-Unique: CYjzAE2IO8aXbgtc_yFsYA-1
+X-Mimecast-MFC-AGG-ID: CYjzAE2IO8aXbgtc_yFsYA_1792567768
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48c415561aaso266867f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 00:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792567575; x=1793172375; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2zoaF2iR+Wz6pFtnanrhWuer4x1dALmitloSery1EN0=;
- b=J7B4wvn3zxDO3205gwJCDAf5a14gEQrBz0r5bPZQR1j5y0ZmjcBUamnfwdaJn7NHzD
- V2QgKPHiYTysCsWTHUSh8nKdBvtWVm5eI+DwOeVsJP7oB8sn5a6TFAeXBf+cYeTIJc5F
- 2+5ozuxOc9LALbo2An0N1gZTCe/cRyLp5BEjczVbSyspAeMPMiIonAx6VzaXVvWPpzES
- n2AW2PoEtkSmmVpb878SOZ8Mo0QUq1yQVnUkA3ahcr9+EnqqkchgCpc8hJJD4bj6SmWH
- IPI62cuGfZzhNwh72Zrz4iIvoN9v9hSAdJZoc7SXCP/PKBEvVukrwza/IGgMpKuGwF4m
- DFvA==
+ d=redhat.com; s=google; t=1792567768; x=1793172568; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=iNngR5AsgI/xtMeDOuhVg9W0RMqoNvBNp812kQ07xDc=;
+ b=grZW64elrX82EYo0UaQy2YEp+g9R2VSKP/C0NT7PlwCQCBILC8o9j83xqYQQ+7kZgS
+ Pe5MahrA1DEgnBjoqW49VcIvnNvUeDBff5NwzXam3knG/f/WidYgmnyu+z8X6LlG+aHZ
+ bKPuR55RyPR6EKWTwC8yWahxL2kapu5uHMTkK0+6SHrkMIc8aVucUfRLM8AG2NHx/Iu+
+ n1NMeTxNOWisu/z+GRHGFyWkqShAyq+CBJy2E1ln6x3PUPB8VML03woyn1ZJ+DqQMiQB
+ 5UfbHKG3/RmKRyKftGj7JIjBauOjwjPy18XCQMvDBJZJB2UhupsjEf2pKzexK4Novtyt
+ QI+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792567575; x=1793172375;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2zoaF2iR+Wz6pFtnanrhWuer4x1dALmitloSery1EN0=;
- b=KFQ2OYBvpQnREmzzbVmx9im1UA8Zbb9Uoe49yXDz9nKCvn3srpbDwfVoSZsf/4/Qxk
- Qkv0uULqcpJoilj9jFiItT3rbwskC23GzADOQs/dBJa3HNm6PyKqZO5qVD5goNXAwlRl
- +0o5L/SnVnwISguG8RssTaYhXT8sHrAecLH4EyV61sYwwhBQIogD4KubaKIl3gWh1usB
- Oz1KbpUbXFvLhx6pJgohJuQ/JrdZo/7I76mEYy3QxB0e+53C4Dv7jBD6WVqgOtwOVHZa
- CACmNFl2DGnLYqOs5VQTITDQWs8b0/ChCziH/OOmWq72KtOmP7nIrI/JsaHf43gM34F3
- Dd8g==
-X-Forwarded-Encrypted: i=1;
- AKwUvByVXRMz29Wn2Kr4nKaxHRRAqIAdUh7g91CF5NmGkf59Aq3B5ISmSTOxF5i3ytrv1H3zVqK208ARCLgV@nongnu.org
-X-Gm-Message-State: AFq9FYIrYvsW+N1DFwHHDbzEpUwDz0hhiM8qCxkOIS2HvLfzAozJLfml
- mG78TyKirizBV4QOvswyxuespUnQWVTUyAChN9KhJHQgx8eWjM+mSHtitrbkE+va52WPOzWbqrd
- 9nR/nJJl5CqCfgkGliGy+MwC8E2Wd5JX1A+UWwIJwfmz0pLWxkfijzhSitA==
-X-Gm-Gg: AYBFou1GyCE1pBDwjDb2KLTKxwGxTVGAgEtboT9xC117iGiEzSQ2H/x3ifi1TEjdIrJ
- xyAQJDDphhedQBybXPI+am7DSBGXMv+07zvYmem+FftEAQ5+8MxurhuoAagV2U5P7EvN2D+JTIC
- 3ITLgXqCVVvJ6r+q9t/lHrdrlmNCGFgG9j5ZyVmnKgdLUZa31qEVAhfq+bfT7mBkETT1O+/CLw+
- bB08X/tnFSyjK2lhhsdDc4QOvboWtXGmdeqCwad+jPWYtLGXZI93G6/jeGzdglov24T8u45Lc3M
- 2AbBtyzUErUF7//bwfHMcdLlJEUDNgaAP+0d2XroLusHbP/nm734NB0L5PQMCZLvQmyNFRGdS11
- D69Uwj6kZ2KwLvv+NG3e7I9LdInOTDCVaPA==
-X-Received: by 2002:a05:620a:a88d:20b0:93f:38c7:70f9 with SMTP id
- af79cd13be357-93f57f0bd94mr189722585a.14.1792567575551; 
- Wed, 21 Oct 2026 00:26:15 -0700 (PDT)
-X-Received: by 2002:a05:620a:a88d:20b0:93f:38c7:70f9 with SMTP id
- af79cd13be357-93f57f0bd94mr189720085a.14.1792567575050; 
- Wed, 21 Oct 2026 00:26:15 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ d=1e100.net; s=20260707; t=1792567768; x=1793172568;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=iNngR5AsgI/xtMeDOuhVg9W0RMqoNvBNp812kQ07xDc=;
+ b=m3Y8UUXyDRNkReLiPP7E6DPTYqcoqBYEqIUOK6PWRWc42Ah2QeGTktsk5W22Odz+/k
+ 6WtmZbW/VUJ0APsZy4F8c4qGp41DTfc8UYFvFa00TE8cza9Q8KWJNC3BlU7R0tvvGVmn
+ YLPgNoc9kc+tt1paLqUwWncrh3aHn5LuNoyAHYeYVDvUSdEvKeZOH8DUrtAOxkBLgOHE
+ CBtHbd34SyUWiQLVydLzC/9sPt+GBEeQFluTGtgA30+yXSLpER9MaPCOvzyfcK5OMeiD
+ 7duW86cQ/NPpUqkJ+v9vxKtcrTEacn9b2C90ZUT6dDT9We2K84VIAHe2fdiUrEBFUfr3
+ WxQQ==
+X-Gm-Message-State: AFq9FYIg5AQAhTHfjCTCcCmpx4YgOrQ5ZMudh3hI110Yri1a93y49VPf
+ 8s9MWxn10SCb6S5i4HW51KPCVL30nqIsbRYx7h2GZe0vHuBm4zi9ySTzoGDTOkTXc/xj4E2FUJ4
+ W1A6WSE9bhNYulJoARNHa+2hRPmTPEy14n2I3C9kBRj9ciT0U5BT7GkxI
+X-Gm-Gg: AYBFou3CUaM1GKXcHilZ5VmB/pAGjFqDsD7LksePvHGHBsw1eL6fQ497/I0q295tBER
+ mo5HzGvNKOaRCn36t1fGjJPRE+yJF8FWG9T6XlQGL2JtSxUCnAfCFu8bX6nTsVYB6Hpg0lFxm6J
+ AhYeFe3Qffv/dkoXsj9Vv6vyFjb+npbnn6RGD2sfk5ax1d1Uz24uuhiQ5lEzNsIT1T838GgnV9X
+ c+g/UiQj6odkaX0vI+sVwpP1wvC0yX8vl9mo5yK1r0TSUdZwTIfWsxc6ofWe/bGwL7/41YjwLXt
+ z6EZ9EtpBu0j9erJr67f3KdyQshEfZqHa7xTtZlbNr2iKeroChkoFX0uITzvpCPyFjlouXrz/e7
+ W+E0=
+X-Received: by 2002:a05:600c:3e19:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a1fdd26e3fmr21638955e9.22.1792567768188; 
+ Wed, 21 Oct 2026 00:29:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:3e19:b0:4a0:8b1:f5c with SMTP id
+ 5b1f17b1804b1-4a1fdd26e3fmr21638555e9.22.1792567767721; 
+ Wed, 21 Oct 2026 00:29:27 -0700 (PDT)
+Received: from sgarzare-redhat ([80.116.165.64])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1fcd2eff9sm32910885e9.4.2026.10.21.00.26.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 00:26:14 -0700 (PDT)
-Message-ID: <145a7086-d9eb-4cf0-a162-b3a44d51e9e6@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 09:26:13 +0200
+ 5b1f17b1804b1-4a1f2d324f8sm119776885e9.6.2026.10.21.00.29.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Oct 2026 00:29:27 -0700 (PDT)
+Date: Wed, 21 Oct 2026 09:29:24 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Oliver Steffen <osteffen@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v3 1/2] igvm: add command line parameter support
+Message-ID: <athpxweAwaPNNMJo@sgarzare-redhat>
+References: <20261019-igvm_command_line-v3-0-29aeacbd6cd7@redhat.com>
+ <20261019-igvm_command_line-v3-1-29aeacbd6cd7@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] target/sparc: Add the AES key expansion
- instructions
-Content-Language: en-US
-To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Biggers <ebiggers@kernel.org>, qemu-riscv <qemu-riscv@nongnu.org>
-References: <20261021064640.3591682-1-stian@itx.no>
- <20261021064640.3591682-5-stian@itx.no>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261021064640.3591682-5-stian@itx.no>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=S/NMU4sP c=1 sm=1 tr=0 ts=6ad86918 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=Tw0MqJahTJh3gxrfwiMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAyOSBTYWx0ZWRfXyMM/g1RjVS0p
- NdpkH2fo5U9is3+3LfVZx67xDL1YRYtJFknkkX1eHS/oYtOGF8oGGoQ/5FYQdY26xJKV9frq0id
- uNfYC/17wFhNVfwejM4wKTFIIvXfQnQCxqQpiRKTefxp83t7rrZGLaUyOzpFXxW769oV5eLF6fm
- sxv2BKfOgQK54J0Q3Ps1cbY/gsFKmiQtD2egvEx+NaRwRtL/VruO7w3LwL4xYoSSWPHGUv+k3Av
- 0yGlBOD29dPd3XLB3hfALUTfdfelDE6Qj+bKoBl7PmrWLQEHdT2uF9nw8SXlU1PrYwffn1vzRTv
- a0r89mZpzgum8w78jt8JRxuppnZTR9B/NwVdOmK6tJW5pGBloNI9LO6X5978cQ1+4iemy+K7yTw
- L1Ro92/2TbNOMe5PKERNfnL0QmEwCl69Wmgq8YLHYDZ4tUU5adIkiSNrqZNIIfuudvSHNmDe5N4
- kZ1UUjFppqAIf/+tRiA==
-X-Proofpoint-ORIG-GUID: X3h4Xp6PtRIltMVoyKWOMkFqcyqACTOo
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAyOSBTYWx0ZWRfXyhwEVT1H+wTp
- nTuRN1FYKVQX+ylu0B9Cyx3OWnLWyilfPQ48PAWJYlSGGWlYsmUpXy1pV3iPLYgVVJzjhq8v/zY
- cqFwOcQDFwkE2dSFI1D+jK95Vtoesco=
-X-Proofpoint-GUID: X3h4Xp6PtRIltMVoyKWOMkFqcyqACTOo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-21_02,2026-10-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 phishscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210029
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20261019-igvm_command_line-v3-1-29aeacbd6cd7@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,141 +121,32 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 21/10/26 08:46, Stian Halseth wrote:
-> Implement the AES key expansion instructions according to
-> OSA (Oracle SPARC Architecture) 2011 sections 7.3 and 7.4
-> and set the AES bit in the CFR.
-> 
-> 4-operand form (7.3):
-> - AES_KEXPAND1
-> 
-> 3-operand form (7.4):
-> - AES_KEXPAND0
-> - AES_KEXPAND2
-> 
-> Like the AES round instructions, they are gated behind the
-> crypto CPU feature and disabled for sparc32.
+On Mon, Oct 19, 2026 at 11:12:46AM +0200, Luigi Leonardi wrote:
+>Add a "cmdline" property to the igvm-cfg object and a handler for the
+>IGVM_VHT_COMMAND_LINE directive, which copies the string into the
+>parameter area the directive points at.
+>
+>The command line is passed to whatever software the IGVM file loads,
+>such as an SVSM. For example, SVSM can use it to select the serial port
+>it logs to.
+>
+>Acked-by: Markus Armbruster <armbru@redhat.com>
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+> backends/igvm-cfg.c            | 21 +++++++++++++++++++++
+> backends/igvm.c                | 31 +++++++++++++++++++++++++++++++
+> include/system/igvm-internal.h |  5 +++++
+> qapi/qom.json                  |  7 ++++++-
+> qemu-options.hx                |  6 +++++-
+> 5 files changed, 68 insertions(+), 2 deletions(-)
 
-~ "The AES feature is now complete and exposed in the Compatibility 
-Feature Register".
-> 
-> Signed-off-by: Stian Halseth <stian@itx.no>
-> ---
->   target/sparc/crypto_helper.c | 58 ++++++++++++++++++++++++++++++++++++
->   target/sparc/helper.h        |  3 ++
->   target/sparc/insns.decode    |  7 +++++
->   target/sparc/translate.c     | 30 ++++++++++++++++++-
->   4 files changed, 97 insertions(+), 1 deletion(-)
-
-
->   /*
->    * SPARC four-operand AES round (Section 7.3).
-> @@ -87,3 +88,60 @@ uint64_t helper_aes_dround23_l(uint64_t key, uint64_t s2, uint64_t s3)
->   {
->       return aes_round(key, s2, s3, 1, true, true);
->   }
-> +
-> +/* Combine the transformed word with the two words in rs1. */
-> +static uint64_t aes_kexpand(uint64_t rs1, uint32_t t)
-> +{
-> +    uint32_t hi = (rs1 >> 32) ^ t;
-> +    uint32_t lo = (uint32_t)rs1 ^ hi;
-> +
-> +    return ((uint64_t)hi << 32) | lo;
-
-Alternatively:
-
-        return deposit64(lo, 32, 32, hi);
-
-> +}
-> +
-> +/* Apply the AES S-box to each byte, preserving byte positions. */
-> +static uint32_t aes_subword(uint32_t x)
-> +{
-> +    return ((uint32_t)AES_sbox[x >> 24] << 24) |
-> +           ((uint32_t)AES_sbox[(x >> 16) & 0xff] << 16) |
-> +           ((uint32_t)AES_sbox[(x >> 8) & 0xff] << 8) |
-> +           (uint32_t)AES_sbox[x & 0xff];
-> +}
-
-We could move that method to include/crypto/aes.h and re-use
-it in RISCV's vaeskf1_vi / vaeskf2_vi helpers.
-
-> +
-> +/*
-> + * AES Cryptographic Operations 4-operand (Section 7.3)
-> + * AES key expansion with RotWord, SubWord, and RCON.
-> + */
-> +uint64_t helper_aes_kexpand1(uint64_t rs1, uint64_t rs2, uint32_t imm)
-> +{
-> +    static const uint8_t rcon[10] = {
-> +        0x01, 0x02, 0x04, 0x08, 0x10,
-> +        0x20, 0x40, 0x80, 0x1b, 0x36,
-
-This table is also used by RISCV aes64ks1i, vaeskf1_vi, and vaeskf2_vi,
-so we could add a common const uint8_t AES_rcon[10] in include/crypto/aes.h:
-
--- >8 --
-diff --git a/include/crypto/aes.h b/include/crypto/aes.h
---- a/include/crypto/aes.h
-+++ b/include/crypto/aes.h
-@@ -29,6 +29,7 @@ void AES_decrypt(const unsigned char *in, unsigned 
-char *out,
-
-  extern const uint8_t AES_sbox[256];
-  extern const uint8_t AES_isbox[256];
-+extern const uint8_t AES_rcon[10];
-
----
-
-and in crypto/aes.c:
-
-@@ -944,6 +944,11 @@
-  };
-
-+const uint8_t AES_rcon[10] = {
-+    0x01, 0x02, 0x04, 0x08, 0x10,
-+    0x20, 0x40, 0x80, 0x1b, 0x36,
-+};
-+
-> +    };
-> +    uint32_t t = rol32((uint32_t)rs2, 8);
-> +
-> +    t = aes_subword(t);
-> +
-> +    if (imm < ARRAY_SIZE(rcon)) {
-> +        t ^= (uint32_t)rcon[imm] << 24;
-> +    }
-> +
-> +    return aes_kexpand(rs1, t);
-> +}
-> +
-> +/*
-> + * AES Cryptographic Operations 3-operand (Section 7.4)
-> + * AES key expansion with SubWord, without RotWord or RCON.
-> + */
-> +uint64_t helper_aes_kexpand0(uint64_t rs1, uint64_t rs2)
-> +{
-> +    return aes_kexpand(rs1, aes_subword(rs2));
-> +}
-> +
-> +/*
-> + * AES Cryptographic Operations 3-operand (Section 7.4)
-> + * AES key expansion without SubWord, RotWord, or RCON.
-> + */
-> +uint64_t helper_aes_kexpand2(uint64_t rs1, uint64_t rs2)
-> +{
-> +    return aes_kexpand(rs1, (uint32_t)rs2);
-> +}
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
 
