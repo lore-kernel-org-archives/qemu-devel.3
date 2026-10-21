@@ -1,149 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001F8606A31D
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A406606A325
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 20:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=oth-regensburg.de header.i=@oth-regensburg.de header.a=rsa-sha256 header.s=selector1 header.b=TZvy3Dxr
+	dkim=pass (1024-bit key, unprotected) header.d=vmexit.de header.i=@vmexit.de header.a=rsa-sha256 header.s=mail header.b=VAJnNHMd
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJcwe-00031Z-D8; Wed, 21 Oct 2026 16:29:56 -0400
+	id 1xJd2f-000477-Hk; Wed, 21 Oct 2026 16:36:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf.ramsauer@oth-regensburg.de>)
- id 1xJcwX-00031B-Rk; Wed, 21 Oct 2026 16:29:50 -0400
-Received: from mail-germanynorthazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c20b::] helo=BEUP281CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
+ id 1xJd2X-00043l-4q; Wed, 21 Oct 2026 16:36:02 -0400
+Received: from vmexit.de ([2a0a:4cc0:c1:d4ba::2] helo=gizmo.vmexit.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralf.ramsauer@oth-regensburg.de>)
- id 1xJcwU-0005Mj-3v; Wed, 21 Oct 2026 16:29:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SbwHfDnSmM1co8DUDa///6grP07a7DHW2Rns4ULBtUTHhMRQ+rCJLfmbPjeh1VUri8wiBfxc4f9tkURBMVLFShpwTjaemd5bo489F+nHjQGs7XUqCIR2+4t198PtO3E5L27H0FUgehYOnr8sx3Ym4WcV8Gb4Sge5n54g6z4NherfDtpp07ZH0PVjQKc8+2tMX8V42Q9J6Zn09yIfdwsylSriKag6I2ppY3rf/12ya8CalhI6gg/FQZ2tG+2yICwxK+W+7K99+6nf708sG0jpHCLYDimInzHSuExTXJVtqURmtCIQj9Hdy1PiE2zBJHofM4XqLIQRLlVP/uEC/tTtzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZG+yaRH3s8GgV7J+zbz4K3l1GjnXqMsDKXBljY6CNhA=;
- b=Mlavcc0zN2tIq9712iUKmIB0pkcTSvjyMW6d5A3Rt/qrwG6l/43GYovlUHU++F4BL9ny4uXqu7A3vSZqV5XDv3Y8cVaprmcfdfZngsRQRmDIuk3G05L80OqGAOkfRHpMClIpl6BsL277WJCyN/Lx2hBYY31huZnra+M1Wpl7egm/KQRXMR9UKAHzJUrXnPEFiADFDAnLDQJDFsvw6EWkKYLiSrErcLPJUMItk4Btv95VQ4JulhzFq/NFvEKrbqgYLT2En/nRjDovRPzHD/TVRu00yugCjF2PDD5Flmj9u1cKdhxqeTTOxe0btb0Gio2DNsFou1LUmeB1XOV9iuLTgA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oth-regensburg.de; dmarc=pass action=none
- header.from=oth-regensburg.de; dkim=pass header.d=oth-regensburg.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oth-regensburg.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZG+yaRH3s8GgV7J+zbz4K3l1GjnXqMsDKXBljY6CNhA=;
- b=TZvy3DxrSHPx8JXCpFWSCpHQSfroTRy7KKFvrq+x8bzkxooxlwD28mv/upySUvLMZrpYezXHuQsRZ7OW4cO0SS9fgO73/vUWkt27lFgvbmaQRmac/ipxtta/rUBuWXeNarG3OAhmCGAmV5P98LFtVOQjcNo7CaXTh9xTRyaUUvBdsX/D8/9wpOlQp7/ltQIyxQrs3uH0fT8gNsNW1aw4bJ4+6XvKVrY0vxzi/idRe+iflQe3p4zaj3CcVpxRX6NB0vagLdZoLs5ZZP9GxA2JmvNdxSejYXZkveYpRc+M6J2czJErXrJbz1IlACcwGMkeHRVzeUraXudVEeAw2LQNeA==
-Received: from FR5P281MB5432.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:1ac::8)
- by BE3P281MB5131.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:d0::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Wed, 21 Oct
- 2026 20:29:25 +0000
-Received: from FR5P281MB5432.DEUP281.PROD.OUTLOOK.COM
- ([fe80::c786:612b:eb8e:b13c]) by FR5P281MB5432.DEUP281.PROD.OUTLOOK.COM
- ([fe80::c786:612b:eb8e:b13c%5]) with mapi id 15.21.0546.012; Wed, 21 Oct 2026
- 20:29:25 +0000
-From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, Ralf Ramsauer
- <ralf@vmexit.de>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu
- <chao.liu@processmission.com>, Bin Meng <bmeng.cn@gmail.com>, Lukas Landgraf
- <lukas.landgraf@st.oth-regensburg.de>
-Subject: Re: [EXT]Re: [PATCH v2 4/4] hw/riscv: share the PLIC interrupt cells
- between boards
-Thread-Topic: [EXT]Re: [PATCH v2 4/4] hw/riscv: share the PLIC interrupt cells
- between boards
-Thread-Index: AQHdYY0kbpwCdNoHl0m6vqHzTMH2HLcIcp2A
-Date: Wed, 21 Oct 2026 20:29:25 +0000
-Message-ID: <76e826d2-7345-4434-8fb4-c529ca9a8031@oth-regensburg.de>
-References: <20261021110838.3097959-1-ralf@vmexit.de>
- <20261021110838.3097959-5-ralf@vmexit.de>
- <2949aabb-200f-44bd-9b9d-4d0ceaaf77e4@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <ralf@vmexit.de>)
+ id 1xJd2T-0006FS-Sx; Wed, 21 Oct 2026 16:36:00 -0400
+From: Ralf Ramsauer <ralf@vmexit.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vmexit.de; s=mail;
+ t=1792614954;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MVSAu0gfeVzeEMpAMOn+JKLB5yOXFqRUFtqNjzq7UMU=;
+ b=VAJnNHMddzVWoU+j6rDr5DhD7oqzAw0CycbPToY4hMA7hRzbgLEamPE+v0RP9UFAXnk5xV
+ w6t4ANdXiHIi1AsLSK8pSqDlF7jBq7Zczvn14sxQ4PsJ3rX0XE+fsHwa0tditZ1m35mfQg
+ 4rdvRI72WWveL53eLyA9QIwgeWwljf4=
+To: qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Ralf Ramsauer <ralf@vmexit.de>,
+ Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Lukas Landgraf <lukas.landgraf@st.oth-regensburg.de>
+Subject: [PATCH v3 4/4] hw/riscv: share the PLIC interrupt cells between boards
+Date: Wed, 21 Oct 2026 22:35:50 +0200
+Message-ID: <20261021203551.3211170-1-ralf@vmexit.de>
 In-Reply-To: <2949aabb-200f-44bd-9b9d-4d0ceaaf77e4@oss.qualcomm.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oth-regensburg.de;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FR5P281MB5432:EE_|BE3P281MB5131:EE_
-x-ms-office365-filtering-correlation-id: 24d2f0e2-4548-407d-3d61-08df2fb1ffa0
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|23010399003|1800799024|7416014|786006|261009223027099003|10067099003|56012099006|261021121427099003|6133799003|18002099003|22082099003|261021123027099003|11063799006|38070700021|4143699003;
-x-microsoft-antispam-message-info: fInHd0xfJDKTsJvIXDf79yr+PNW2fpBOzjT3uytzUOEh2AuPBchRZXRLarbLTKaEL24bRX9KRcrbN3sMaXpj+gHzKtxmR397LkHRdNFOzVuo3fyMXo5z1X272HIjJs7nrM/dUotMOxvgFePZIAebi/ZCwy4aQ4wJEqAsdItsG8zb/s2t2Vu/XQ0faTkTM2W1GmE0NbSQ+B6b19l8T5xSMvyer5SABbFWN76X3evzxlPLk1oMN8TKa6JgeEVkL7zn8CFUtd9OcFUdIeVfOnwmYY7xJbsOx2jS5noMqe41oXiKc1HX1/O9LFefEN2KHia62n0awejYdDKSPwuFyaVRnRvSy/q3wJTkvhGQGWWPyHEmzNVawyuPzf+gtWa7OGybk/8mSYWXl/F02orbsGuerF8gvUA3/E4hyVWYydpJVJkYjWoCTZsiSs5yxUcY08w81BhOKygMwheJnLY7YXBfzQhN14x86GF9msZDZBVbZXurf8CnDB07ycG6NtVBN4suIR2TDCJd0Z+4oAVnHGEQjFWibTs3dB3IlD0L3WyF4j3F3TxxY6HlHQlKbF4l/0uEKxJlDWNdZmk7Io2Ug/iZXxaY54jUqWfINtFzgX6fKH0R6R/81SiHEv5nZN3DFiXKGrSYQaRnQfXUgAwsxsq+CX7BdtySL97oc7hq9mnj1f0WyCZSbyXE48Pqso44Ru5UJOnNPXPapnXrY4nKOgb+4RJpsb9FFV7XBeWAY0TGs6Q=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:FR5P281MB5432.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(7416014)(786006)(261009223027099003)(10067099003)(56012099006)(261021121427099003)(6133799003)(18002099003)(22082099003)(261021123027099003)(11063799006)(38070700021)(4143699003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UDNFdHdGN01qcitJZ3RBeEdUZlZPQ3lIN1kwdWdYY0xSendielRxYjFNU1Bw?=
- =?utf-8?B?Wk5wSEsrVjRJdzlYdUpSaXJpaThuWDl3cVh6bE8zZTNsV1NSVUcvNFpUcnhH?=
- =?utf-8?B?U2pWYXZmdUdyK1dCeUMxUFNKdFA3M1VkNkg3QnhRTjR3MWpsNlkwdXRFUlpD?=
- =?utf-8?B?RzIzU25CMGNXUVNRT29SNUlkOEUyZ1BDV1dlOHRmNVhuYUJGUWNiREV4aGhx?=
- =?utf-8?B?cU1tRUFRNngrQ3ZCdmVaQlFPNUFHdTE5d0kzTU80NjV1ZmhzU0JvUTU2VWFY?=
- =?utf-8?B?NlhFeWhOSDBNV1d5dkljMDFLWkpJMUVOZ1NiV1pSdEx2bU5zanVlT1VvWi9S?=
- =?utf-8?B?RitMY1M3d0c2eXlsZ3FmV2h0b2w4VW41bkcreW5BOXJaamwzMjB2eUJIZGlU?=
- =?utf-8?B?WndYM1JITHVyYW9kUmhSY1pIOFBHcG92UjJBa1FJZUFLcWRjVHNXR1U0ZjRt?=
- =?utf-8?B?ckVpTGYybUV0b0hETk1yVDdVRVloMHFDUVpBZ2ZiUllKNTNSY3NrLzBMSU5y?=
- =?utf-8?B?WlY0WWRSZGRtUjZJRDZlUWdQd1BqeXl6SXFDTUJLamNqb3U3b2luc0cwZHhW?=
- =?utf-8?B?bXRJNjJTSnlKL1ROQndvdDdWTlY3MzFROXZYQk45emREL2R5QW1WY2QyckN3?=
- =?utf-8?B?ZXpwdklKSVZYVmZ3QWJTUnNJdXhIVURFdElHcFY4MUtnamxBclJsNUVtNWZr?=
- =?utf-8?B?a0d1cGxkRmFYQk1JZUxZZFNYbDhMeng5d2xZSm9RYXFsaW1FSjdYc1VOWWRG?=
- =?utf-8?B?UWVkV2Y2QS9VWmJ6c1Zsa1Q0MXJTYzdxU0dGWXB5Q2M0WEl1OTBydnlDSEp6?=
- =?utf-8?B?SVJUNXIyTGpyUXBRYzh6WU5McVcvRmhlcDNQVk5HbFZSN1d1d1Nwc2NaSE04?=
- =?utf-8?B?MWgveVdJTUk5S3F2cFZVYWJZMEJHZlFLMGRrOVhhb3p5U2VpaE9vR3VHQ1JK?=
- =?utf-8?B?UGhvSDVIL2doR2VzQUlITFJEa0NydHk1bGFQazdCMWNyYTZaS292YTBNMysy?=
- =?utf-8?B?dzZ5NEpPWWVCT0xrVUtCZXFLYzVoM3Q3dVV2bWVMeENNa25FME1yTTNJZG5N?=
- =?utf-8?B?K1g5aGpMWXJZaEZnNUhiSU9HTDQzQ0pyMWd2NWhtM3ZWSmpmVlMzUkJoUzI0?=
- =?utf-8?B?SmVQYTBDWW1SUFFmTXZHaTNsTFR5Y3JIYUovWExnK1Y3Y3lSZ1kyUVRnaEU2?=
- =?utf-8?B?ZkFHTy9HNnFzV3dQNm92NXBVd3NJWkVIQVFrb1VtQTFYR0JnUDN2MGVHdloz?=
- =?utf-8?B?L1llUDdSb0ZjOFdWQTBoSENqUzBTblA0NHRYRzR0N3pKdXltM1dyd09GVW5r?=
- =?utf-8?B?NnQ1L01rcWpxdld4bVI5dG9DL2k5U3JndjBwei9VMkd5WHVpRzl1SlVNeDY3?=
- =?utf-8?B?K0dtQmtZNm5oVWIySG1VM2Nidm1lZlJ1ekN2N2w0Rm1yU21seFVPZ0FnQUV5?=
- =?utf-8?B?eWorOG9EZkxydnVsOGVMOElCbUVpOGQrcVN3UGc4c0xpb3d0K2QvSXA1RWIz?=
- =?utf-8?B?d1p2ZTNadmJxYmRBR3RHeTg1T09hUjJxMlQ2dzlNSFQ5SHJNSGNTSVdpSXFi?=
- =?utf-8?B?bHVBb0ZZaUEvbzRBRE9uZlpWYUNxaktjSkxPR3F4Q3pIa2NDeWxwOFh6czdt?=
- =?utf-8?B?enVnLzlmZ3A1a0lCR3ZCeS9zOWJ0ck5TMERxbzlMeWRWTkVaQ1VBbjN1V0Y5?=
- =?utf-8?B?eWlQdEo5TmNzZ3o4cUR0d1NWeFR3eGZFZy9oVDdtM2ZhUTZ6NEpjRHBhNlQx?=
- =?utf-8?B?NXQ2UkRiRGhIVmRYcWpQajhpUkhidTNXRjZ2WjVxMlg1SStKYXZKTnlwZHZK?=
- =?utf-8?B?UnVaRklhczlNK21ZUDZOY1N1Q3ljN3pWUGkzUzl1YlRzeUlWWGlRdVgzY2hu?=
- =?utf-8?B?YXFVeWRkSmY1WStLTGxUN1FHZDMrZkQ1TWxZMjRTTkRnSm5iWnZzTUVhRnJH?=
- =?utf-8?B?RTZ2aFpwVS9YWEZyUGU3dWdPK29pMEg3dWFFbXRZTm1ORkoyaWdCN1VnT2xH?=
- =?utf-8?B?K2VzaklWRDJXeVVFQ1lQQkNTc3VKOXd0K2pnZ2EwcU9icGJjdUNZQlNFWXNG?=
- =?utf-8?B?Mit5Nkwwd2VhS2EwZEVIZmJBN3RCdFpmWk0zck5oaFRJY2hreVgzeHhOcW9I?=
- =?utf-8?B?M3luVzVwZmE5eENGZ3RXL3o4dCtISzVodkNxczNsNDJ2dXRnWk92MmIvZHJ5?=
- =?utf-8?B?VlBaMXlvcXRsU2ZXUmZwb3d1RVZub004UjZNY2dUK01YZkZUdEg2WGxqOUdF?=
- =?utf-8?B?N3I5MzVFdDI2dmlnWjRDdHlpMVJTSjI0dXZVMGF6Q3IrRWV3SGRrRjN3d1l0?=
- =?utf-8?B?WmM1ZXJmSVdkUjg1bGxoM1hZVHo5VDRLbm54MlZCRUNVcTBDdXlNbWlCdVIw?=
- =?utf-8?Q?QN7KFUsNUv9wSZcs=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D8FBD5934B46FF499B0A7BC10614B075@DEUP281.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+References: <2949aabb-200f-44bd-9b9d-4d0ceaaf77e4@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: oth-regensburg.de
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FR5P281MB5432.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24d2f0e2-4548-407d-3d61-08df2fb1ffa0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2026 20:29:25.4293 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2c1b9b13-893c-42a5-bbc1-d7a1db5ddb54
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: DGc7SbHJHq9JtdBhlLQ8sVRc1E5saKlr1T3ivNgXclpZh5hqPXbyhWTj1qh08CLCI1RlDAEZBfNA4MyPnGO1hZneCh3BuHALy7frfRX90Qs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BE3P281MB5131
-Received-SPF: pass client-ip=2a01:111:f403:c20b::;
- envelope-from=ralf.ramsauer@oth-regensburg.de;
- helo=BEUP281CU002.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a0a:4cc0:c1:d4ba::2; envelope-from=ralf@vmexit.de;
+ helo=gizmo.vmexit.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,148 +71,147 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-T24gMTAvMjEvMjYgMjA6NTAsIERhbmllbCBIZW5yaXF1ZSBCYXJib3phIHdyb3RlOg0KPiANCj4g
-DQo+IE9uIDEwLzIxLzIwMjYgODowOCBBTSwgUmFsZiBSYW1zYXVlciB3cm90ZToNCj4+IEZyb206
-IFJhbGYgUmFtc2F1ZXIgPHJhbGYucmFtc2F1ZXJAb3RoLXJlZ2Vuc2J1cmcuZGU+DQo+Pg0KPj4g
-dmlydCBhbmQgc2lmaXZlX3Ugbm93IGRlc2NyaWJlIGEgaGFydCdzIFBMSUMgY29udGV4dHMgd2l0
-aCB0aGUgc2FtZSBydWxlOg0KPj4gYSBtYWNoaW5lIGNvbnRleHQgdW5sZXNzIHRoZSBoYXJ0IHJ1
-bnMgdW5kZXIgS1ZNLCB3aGVyZSB0aGVyZSBpcyBubw0KPj4gTS1tb2RlLCBhbmQgYSBzdXBlcnZp
-c29yIGNvbnRleHQgaWYgdGhlIGhhcnQgaGFzIHN1cGVydmlzb3IgbW9kZS4NCj4+IFdyaXRpbmcg
-dGhhdCBydWxlIGRvd24gdHdpY2UgaXMgd2hhdCBsZXQgdGhlIHZpcnQgZGV2aWNlIHRyZWUgZHJp
-ZnQgYXdheQ0KPj4gZnJvbSByaXNjdl9wbGljX2hhcnRfY29uZmlnX3N0cmluZygpLg0KPj4NCj4+
-IFRoaXMgbWFrZXMgdGhlIHNpZml2ZV91IGRldmljZSB0cmVlIGFzayB3aGV0aGVyIEtWTSBpcyBp
-biB1c2UsIHdoaWNoIGl0DQo+PiBkaWQgbm90IGRvIGJlZm9yZS7CoCBJdHMgUExJQyBkZXZpY2Ug
-YWxyZWFkeSBkb2VzLCBzbyB0aGUgdHdvIG5vdyBhZ3JlZS4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5
-OiBSYWxmIFJhbXNhdWVyIDxyYWxmLnJhbXNhdWVyQG90aC1yZWdlbnNidXJnLmRlPg0KPj4gLS0t
-DQo+PiBDbGVhbnVwLCBub3QgYSBmaXguwqAgQ2FuIGJlIGRyb3BwZWQsIHRoZSByZXN0IGRvZXMg
-bm90IGRlcGVuZCBvbiBpdC4NCj4+DQo+PiDCoCBody9yaXNjdi9mZHQtY29tbW9uLmPCoMKgwqDC
-oMKgwqDCoMKgIHwgMjAgKysrKysrKysrKysrKysrKysrKysNCj4+IMKgIGh3L3Jpc2N2L3NpZml2
-ZV91LmPCoMKgwqDCoMKgwqDCoMKgwqDCoCB8IDEwICsrLS0tLS0tLS0NCj4+IMKgIGh3L3Jpc2N2
-L3ZpcnQuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAxMiArKystLS0tLS0tLS0NCj4+
-IMKgIGluY2x1ZGUvaHcvcmlzY3YvZmR0LWNvbW1vbi5oIHzCoCAzICsrKw0KPj4gwqAgNCBmaWxl
-cyBjaGFuZ2VkLCAyOCBpbnNlcnRpb25zKCspLCAxNyBkZWxldGlvbnMoLSkNCj4+DQo+PiBkaWZm
-IC0tZ2l0IGEvaHcvcmlzY3YvZmR0LWNvbW1vbi5jIGIvaHcvcmlzY3YvZmR0LWNvbW1vbi5jDQo+
-PiBpbmRleCBjZTJkY2I0M2I0Li43MGY5NjczNGI0IDEwMDY0NA0KPj4gLS0tIGEvaHcvcmlzY3Yv
-ZmR0LWNvbW1vbi5jDQo+PiArKysgYi9ody9yaXNjdi9mZHQtY29tbW9uLmMNCj4+IEBAIC0xMCw2
-ICsxMCw3IEBADQo+PiDCoCAjaW5jbHVkZSAicWVtdS9lcnJvci1yZXBvcnQuaCINCj4+IMKgICNp
-bmNsdWRlICJzeXN0ZW0vZGV2aWNlX3RyZWUuaCINCj4+ICsjaW5jbHVkZSAic3lzdGVtL2t2bS5o
-Ig0KPj4gwqAgI2luY2x1ZGUgImh3L2NvcmUvYm9hcmRzLmgiDQo+PiDCoCAjaW5jbHVkZSAiaHcv
-Y29yZS9zeXNidXMtZmR0LmgiDQo+PiDCoCAjaW5jbHVkZSAiaHcvcmlzY3YvZmR0LWNvbW1vbi5o
-Ig0KPj4gQEAgLTIxMiw2ICsyMTMsMjUgQEAgcmlzY3ZfY3JlYXRlX2ZkdF9zb2NrZXRfY3B1X3Np
-Zml2ZSh2b2lkICpmZHQsIA0KPj4gY2hhciAqY2x1c3RfbmFtZSwNCj4+IMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBwaGFuZGxlLCBpbnRjX3BoYW5kbGVzLCBmYWxzZSwgDQo+PiBmYWxzZSk7DQo+PiDCoCB9DQo+
-PiArdWludDMyX3QgcmlzY3ZfcGxpY19oYXJ0X2ZkdF9jZWxscyh1aW50MzJfdCAqY2VsbHMsIFJJ
-U0NWQ1BVICpoYXJ0LA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGludGNfcGhhbmRsZSkNCj4+
-ICt7DQo+PiArwqDCoMKgIHVpbnQzMl90IGxlbiA9IDA7DQo+PiArDQo+PiArwqDCoMKgIC8qIGhh
-cnRzIHJ1bm5pbmcgdW5kZXIgS1ZNIGhhdmUgbm8gTS1tb2RlICovDQo+PiArwqDCoMKgIGlmICgh
-a3ZtX2VuYWJsZWQoKSkgew0KPiANCj4gSW4gdGhpcyBmaWxlIHdlJ3JlIHRyeWluZyB0byBrZWVw
-IGl0IGFzIGJsYW5kIGFzIHBvc3NpYmxlIHcuci50IA0KPiBhY2NlbGVyYXRvciBsb2dpYy4NCj4g
-VGhlIGlkZWEgaXMgdGhhdCB0aGUgYm9hcmRzIHdpbGwgZG8gYWNjZWxlcmF0b3IgY29uc2lkZXJh
-dGlvbnMgYW5kIGp1c3QgDQo+IHBvaW50DQo+IHRoZSBmZHQgZnVuY3Rpb25zIHdoYXQgdG8gd3Jp
-dGUgaW4gdGhlIGZkdC7CoCBUaGlzIHdpbGwgbWFrZSBpdCBsZXNzIA0KPiBhbm5veWluZyB0byBk
-ZWFsDQo+IHdpdGggYWNjZWwgZGlmZmVyZW5jZXMgYWNyb3NzIG11bHRpcGxlIGZpbGVzIC4uLiBp
-ZGVhbGx5Lg0KPiANCj4gRm9yIGV4YW1wbGUgaW4gdmlydC5jIHdlIGhhdmU6DQo+IA0KPiAgwqDC
-oMKgIHJpc2N2X2ZkdF9jcmVhdGVfY3B1X3NvY2tldF9zdWJub2RlKG1zLT5mZHQsDQo+ICDCoMKg
-wqDCoMKgwqDCoCBrdm1fZW5hYmxlZCgpID8ga3ZtX3Jpc2N2X2dldF90aW1lYmFzZV9mcmVxdWVu
-Y3koJnMtPnNvYy0gDQo+ICA+aGFydHNbMF0pIDoNCj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgUklTQ1ZfQUNMSU5UX0RFRkFVTFRfVElNRUJBU0VfRlJF
-USk7DQo+IA0KPiBUaGUgYWJvdmUgY2FsbHMgdGhpcyBmZHQgaGVscGVyOg0KPiANCj4gdm9pZCBy
-aXNjdl9mZHRfY3JlYXRlX2NwdV9zb2NrZXRfc3Vibm9kZSh2b2lkICpmZHQsDQo+ICDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCB1aW50NjRfdCB0aW1lYmFzZV9mcmVxdWVuY3kpDQo+IA0KPiBJLmUu
-IHRoZSBmZHQgaGVscGVyIG9ubHkgY2FyZXMgYWJvdXQgdGltZWJhc2VfZnJlcXVlbmN5IHRvIGJs
-aW5kbHkgcHV0IA0KPiBpdCBpbiB0aGUNCj4gZmR0LsKgIEl0IGRvZXNuJ3QgY2FyZSBpZiBpdCdz
-IGt2bSBvciBub3QuDQo+IA0KPiBTbyBmb3IgdGhpcyBoZWxwZXIgSSBzdWdnZXN0IHNvbWV0aGlu
-ZyBsaWtlOg0KPiANCj4gdWludDMyX3QgcmlzY3ZfcGxpY19oYXJ0X2ZkdF9jZWxscyh1aW50MzJf
-dCAqY2VsbHMsIFJJU0NWQ1BVICpoYXJ0LA0KPiAgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgaW50Y19w
-aGFuZGxlLCBib29sIGhhc19tX21vZGUpDQo+IA0KPiB7DQo+ICDCoMKgwqAgdWludDMyX3QgbGVu
-ID0gMDsNCj4gDQo+ICDCoMKgwqAgaWYgKGhhc19tX21vZGUpIHsNCj4gIMKgwqDCoMKgwqDCoMKg
-IC4uLg0KPiAgwqDCoMKgIH0NCj4gIMKgwqDCoCAuLi4NCj4gfQ0KPiANCj4gQW5kIHRoZW4gdmly
-dC5jIGFuZCBzaWZpdmVfdS5jIG1ha2VzIGFjY2VsbGVyYXRvciBjb25zaWRlcmF0aW9ucyBpZiBu
-ZWVkZWQuDQo+IEUuZy46DQo+IA0KPiANCj4gcmlzY3ZfcGxpY19oYXJ0X2ZkdF9jZWxscygmY2Vs
-bHNbY2VsbHNfbGVuZ3RoXSwgaGFydCwNCj4gIMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIGludGNfcGhhbmRsZXNbY3B1XSwgIWt2bV9lbmFibGVkKCkp
-Ow0KDQpVbmRlcnN0YW5kLCBtYWtlcyBzZW5zZSBhbmQgdGhhdCdzIG5vIGJpZyBkZWFsLiBXaWxs
-IHNlbmQgYSB2My1maXggZm9yIA0KanVzdCB0aGlzIG9uZSwgdG8gbm90IGFubm95IGFnYWluIHdp
-dGggYSBmdWxsIHNlcmllcywgdW5sZXNzIHRoZXJlJ3MgDQphbnl0aGluZyBiaWdnZXIgbGVmdC4N
-Cg0KVGhhbmtzLA0KICAgUmFsZg0KDQo+IA0KPiANCj4gVGhhbmtzLA0KPiBEYW5pZWwNCj4gDQo+
-PiArwqDCoMKgwqDCoMKgwqAgY2VsbHNbbGVuKytdID0gY3B1X3RvX2JlMzIoaW50Y19waGFuZGxl
-KTsNCj4+ICvCoMKgwqDCoMKgwqDCoCBjZWxsc1tsZW4rK10gPSBjcHVfdG9fYmUzMihJUlFfTV9F
-WFQpOw0KPj4gK8KgwqDCoCB9DQo+PiArDQo+PiArwqDCoMKgIGlmIChyaXNjdl9jcHVfaGFzX3N1
-cGVydmlzb3JfbW9kZShoYXJ0KSkgew0KPj4gK8KgwqDCoMKgwqDCoMKgIGNlbGxzW2xlbisrXSA9
-IGNwdV90b19iZTMyKGludGNfcGhhbmRsZSk7DQo+PiArwqDCoMKgwqDCoMKgwqAgY2VsbHNbbGVu
-KytdID0gY3B1X3RvX2JlMzIoSVJRX1NfRVhUKTsNCj4+ICvCoMKgwqAgfQ0KPj4gKw0KPj4gK8Kg
-wqDCoCByZXR1cm4gbGVuOw0KPj4gK30NCj4+ICsNCj4+IMKgIHZvaWQgcmlzY3ZfY3JlYXRlX2Zk
-dF9wbGljKHZvaWQgKmZkdCwgaHdhZGRyIGFkZHIsIHVpbnQ2NF90IHNpemUsDQo+PiDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJf
-dCBwbGljX3BoYW5kbGUsIHVpbnQzMl90IGludF9jZWxscywNCj4+IMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGFkZHJfY2Vs
-bHMsIHVpbnQzMl90ICpwbGljX2NlbGxzLA0KPj4gZGlmZiAtLWdpdCBhL2h3L3Jpc2N2L3NpZml2
-ZV91LmMgYi9ody9yaXNjdi9zaWZpdmVfdS5jDQo+PiBpbmRleCA4ZjUwYzY3YTE0Li40NTZiNmRh
-M2U2IDEwMDY0NA0KPj4gLS0tIGEvaHcvcmlzY3Yvc2lmaXZlX3UuYw0KPj4gKysrIGIvaHcvcmlz
-Y3Yvc2lmaXZlX3UuYw0KPj4gQEAgLTIwMSwxNCArMjAxLDggQEAgc3RhdGljIHZvaWQgY3JlYXRl
-X2ZkdChTaUZpdmVVU3RhdGUgKnMsIGNvbnN0IA0KPj4gTWVtTWFwRW50cnkgKm1lbW1hcCwNCj4+
-IMKgwqDCoMKgwqAgZm9yIChjcHUgPSAwOyBjcHUgPCBtcy0+c21wLmNwdXM7IGNwdSsrKSB7DQo+
-PiDCoMKgwqDCoMKgwqDCoMKgwqAgLyogY3B1IDAgaXMgdGhlIG1hbmFnZW1lbnQgaGFydCB0aGF0
-IGRvZXMgbm90IGhhdmUgUy1tb2RlICovDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqAgaGFydCA9IGNw
-dSA/ICZzLT5zb2MudV9jcHVzLmhhcnRzW2NwdSAtIDFdIDogJnMtIA0KPj4gPnNvYy5lX2NwdXMu
-aGFydHNbMF07DQo+PiAtDQo+PiAtwqDCoMKgwqDCoMKgwqAgY2VsbHNbY2VsbHNfbGVuZ3RoKytd
-ID0gY3B1X3RvX2JlMzIoaW50Y19waGFuZGxlc1tjcHVdKTsNCj4+IC3CoMKgwqDCoMKgwqDCoCBj
-ZWxsc1tjZWxsc19sZW5ndGgrK10gPSBjcHVfdG9fYmUzMihJUlFfTV9FWFQpOw0KPj4gLQ0KPj4g
-LcKgwqDCoMKgwqDCoMKgIGlmIChyaXNjdl9jcHVfaGFzX3N1cGVydmlzb3JfbW9kZShoYXJ0KSkg
-ew0KPj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2VsbHNbY2VsbHNfbGVuZ3RoKytdID0gY3B1
-X3RvX2JlMzIoaW50Y19waGFuZGxlc1tjcHVdKTsNCj4+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IGNlbGxzW2NlbGxzX2xlbmd0aCsrXSA9IGNwdV90b19iZTMyKElSUV9TX0VYVCk7DQo+PiAtwqDC
-oMKgwqDCoMKgwqAgfQ0KPj4gK8KgwqDCoMKgwqDCoMKgIGNlbGxzX2xlbmd0aCArPSANCj4+IHJp
-c2N2X3BsaWNfaGFydF9mZHRfY2VsbHMoJmNlbGxzW2NlbGxzX2xlbmd0aF0sIGhhcnQsDQo+PiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaW50Y19waGFuZGxlc1tj
-cHVdKTsNCj4+IMKgwqDCoMKgwqAgfQ0KPj4gwqDCoMKgwqDCoCByaXNjdl9jcmVhdGVfZmR0X3Bs
-aWMoZmR0LCBtZW1tYXBbU0lGSVZFX1VfREVWX1BMSUNdLmJhc2UsDQo+PiBkaWZmIC0tZ2l0IGEv
-aHcvcmlzY3YvdmlydC5jIGIvaHcvcmlzY3YvdmlydC5jDQo+PiBpbmRleCBhMjg1MWI1MDZkLi5h
-MzI1ODkxZGNhIDEwMDY0NA0KPj4gLS0tIGEvaHcvcmlzY3YvdmlydC5jDQo+PiArKysgYi9ody9y
-aXNjdi92aXJ0LmMNCj4+IEBAIC0xNjEsMTUgKzE2MSw5IEBAIHN0YXRpYyB2b2lkIGNyZWF0ZV9m
-ZHRfc29ja2V0X3BsaWMoUklTQ1ZWaXJ0U3RhdGUgDQo+PiAqcywNCj4+IMKgwqDCoMKgwqAgY2Vs
-bHNfbGVuZ3RoID0gMDsNCj4+IMKgwqDCoMKgwqAgZm9yIChjcHUgPSAwOyBjcHUgPCBzLT5zb2Nb
-c29ja2V0XS5udW1faGFydHM7IGNwdSsrKSB7DQo+PiAtwqDCoMKgwqDCoMKgwqAgaWYgKCFrdm1f
-ZW5hYmxlZCgpKSB7DQo+PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwbGljX2NlbGxzW2NlbGxz
-X2xlbmd0aCsrXSA9IA0KPj4gY3B1X3RvX2JlMzIoaW50Y19waGFuZGxlc1tjcHVdKTsNCj4+IC3C
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHBsaWNfY2VsbHNbY2VsbHNfbGVuZ3RoKytdID0gY3B1X3Rv
-X2JlMzIoSVJRX01fRVhUKTsNCj4+IC3CoMKgwqDCoMKgwqDCoCB9DQo+PiAtDQo+PiAtwqDCoMKg
-wqDCoMKgwqAgaWYgKHJpc2N2X2NwdV9oYXNfc3VwZXJ2aXNvcl9tb2RlKCZzLT5zb2Nbc29ja2V0
-XS5oYXJ0c1tjcHVdKSkgew0KPj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcGxpY19jZWxsc1tj
-ZWxsc19sZW5ndGgrK10gPSANCj4+IGNwdV90b19iZTMyKGludGNfcGhhbmRsZXNbY3B1XSk7DQo+
-PiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwbGljX2NlbGxzW2NlbGxzX2xlbmd0aCsrXSA9IGNw
-dV90b19iZTMyKElSUV9TX0VYVCk7DQo+PiAtwqDCoMKgwqDCoMKgwqAgfQ0KPj4gK8KgwqDCoMKg
-wqDCoMKgIGNlbGxzX2xlbmd0aCArPSANCj4+IHJpc2N2X3BsaWNfaGFydF9mZHRfY2VsbHMoJnBs
-aWNfY2VsbHNbY2VsbHNfbGVuZ3RoXSwNCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCAmcy0gDQo+PiA+c29jW3NvY2tldF0uaGFydHNbY3B1XSwNCj4+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpbnRjX3BoYW5kbGVzW2NwdV0p
-Ow0KPj4gwqDCoMKgwqDCoCB9DQo+PiDCoMKgwqDCoMKgIHBsaWNfcGhhbmRsZXNbc29ja2V0XSA9
-ICgqcGhhbmRsZSkrKzsNCj4+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2h3L3Jpc2N2L2ZkdC1jb21t
-b24uaCBiL2luY2x1ZGUvaHcvcmlzY3YvZmR0LSANCj4+IGNvbW1vbi5oDQo+PiBpbmRleCBlYjlk
-YjgyNzhkLi4xNDExNmE5NWNmIDEwMDY0NA0KPj4gLS0tIGEvaW5jbHVkZS9ody9yaXNjdi9mZHQt
-Y29tbW9uLmgNCj4+ICsrKyBiL2luY2x1ZGUvaHcvcmlzY3YvZmR0LWNvbW1vbi5oDQo+PiBAQCAt
-OTMsNiArOTMsOSBAQCB2b2lkIHJpc2N2X2NyZWF0ZV9mZHRfc29ja2V0X2NwdV9zaWZpdmUodm9p
-ZCAqZmR0LCANCj4+IGNoYXIgKmNsdXN0X25hbWUsDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIGludCBzb2NrZXRfaGFydGlkX2Jhc2UsDQo+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IHVpbnQzMl90ICpwaGFuZGxlLA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB1aW50MzJf
-dCAqaW50Y19waGFuZGxlcyk7DQo+PiArLyogRGVzY3JpYmUgb25lIGhhcnQncyBQTElDIGNvbnRl
-eHRzLCByZXR1cm5zIHRoZSBudW1iZXIgb2YgY2VsbHMgDQo+PiB3cml0dGVuICovDQo+PiArdWlu
-dDMyX3QgcmlzY3ZfcGxpY19oYXJ0X2ZkdF9jZWxscyh1aW50MzJfdCAqY2VsbHMsIFJJU0NWQ1BV
-ICpoYXJ0LA0KPj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IGludGNfcGhhbmRsZSk7DQo+PiDCoCB2
-b2lkIHJpc2N2X2NyZWF0ZV9mZHRfcGxpYyh2b2lkICpmZHQsIGh3YWRkciBhZGRyLCB1aW50NjRf
-dCBzaXplLA0KPj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgdWludDMyX3QgcGxpY19waGFuZGxlLCB1aW50MzJfdCBpbnRfY2VsbHMsDQo+
-PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCB1aW50MzJfdCBhZGRyX2NlbGxzLCB1aW50MzJfdCAqcGxpY19jZWxscywNCj4gDQoNCg==
+From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
+
+virt and sifive_u now describe a hart's PLIC contexts with the same rule:
+a machine context unless the hart runs under KVM, where there is no
+M-mode, and a supervisor context if the hart has supervisor mode.
+Writing that rule down twice is what let the virt device tree drift away
+from riscv_plic_hart_config_string().
+
+This makes the sifive_u device tree ask whether KVM is in use, which it
+did not do before.  Its PLIC device already does, so the two now agree.
+
+Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
+---
+Cleanup, not a fix.  Can be dropped, the rest does not depend on it.
+1-3 are unchanged since v2 and carry your Reviewed-by.
+
+v3:
+ - take has_m_mode as a parameter, the boards keep the accelerator
+   considerations and the fdt helper just writes what it is told (Daniel)
+ - virt.c uses one has_m_mode local for the allocation and the call
+
+ hw/riscv/fdt-common.c         | 18 ++++++++++++++++++
+ hw/riscv/sifive_u.c           | 12 ++++--------
+ hw/riscv/virt.c               | 16 ++++++----------
+ include/hw/riscv/fdt-common.h |  3 +++
+ 4 files changed, 31 insertions(+), 18 deletions(-)
+
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index ce2dcb43b4..503d818dd0 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -212,6 +212,24 @@ riscv_create_fdt_socket_cpu_sifive(void *fdt, char *clust_name,
+                                    phandle, intc_phandles, false, false);
+ }
+ 
++uint32_t riscv_plic_hart_fdt_cells(uint32_t *cells, RISCVCPU *hart,
++                                   uint32_t intc_phandle, bool has_m_mode)
++{
++    uint32_t len = 0;
++
++    if (has_m_mode) {
++        cells[len++] = cpu_to_be32(intc_phandle);
++        cells[len++] = cpu_to_be32(IRQ_M_EXT);
++    }
++
++    if (riscv_cpu_has_supervisor_mode(hart)) {
++        cells[len++] = cpu_to_be32(intc_phandle);
++        cells[len++] = cpu_to_be32(IRQ_S_EXT);
++    }
++
++    return len;
++}
++
+ void riscv_create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+                            uint32_t plic_phandle, uint32_t int_cells,
+                            uint32_t addr_cells, uint32_t *plic_cells,
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 8f50c67a14..be194f8aec 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -58,6 +58,7 @@
+ #include "chardev/char.h"
+ #include "net/eth.h"
+ #include "system/device_tree.h"
++#include "system/kvm.h"
+ #include "system/runstate.h"
+ #include "system/system.h"
+ 
+@@ -201,14 +202,9 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
+     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+         /* cpu 0 is the management hart that does not have S-mode */
+         hart = cpu ? &s->soc.u_cpus.harts[cpu - 1] : &s->soc.e_cpus.harts[0];
+-
+-        cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+-        cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
+-
+-        if (riscv_cpu_has_supervisor_mode(hart)) {
+-            cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+-            cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+-        }
++        cells_length += riscv_plic_hart_fdt_cells(&cells[cells_length], hart,
++                                                  intc_phandles[cpu],
++                                                  !kvm_enabled());
+     }
+ 
+     riscv_create_fdt_plic(fdt, memmap[SIFIVE_U_DEV_PLIC].base,
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a2851b506d..ece8ef0070 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -152,24 +152,20 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
+     unsigned long plic_addr = s->memmap[VIRT_PLIC].base +
+                               (s->memmap[VIRT_PLIC].size * socket);
+     bool numa_enabled = riscv_numa_enabled(MACHINE(s));
++    bool has_m_mode = !kvm_enabled();
+     uint32_t cells_length;
+ 
+     plic_name = g_strdup_printf("/soc/interrupt-controller@%lx", plic_addr);
+ 
+     plic_cells = g_new0(uint32_t,
+-                        s->soc[socket].num_harts * (kvm_enabled() ? 2 : 4));
++                        s->soc[socket].num_harts * (has_m_mode ? 4 : 2));
+     cells_length = 0;
+ 
+     for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+-        if (!kvm_enabled()) {
+-            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
+-        }
+-
+-        if (riscv_cpu_has_supervisor_mode(&s->soc[socket].harts[cpu])) {
+-            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+-            plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+-        }
++        cells_length += riscv_plic_hart_fdt_cells(&plic_cells[cells_length],
++                                                  &s->soc[socket].harts[cpu],
++                                                  intc_phandles[cpu],
++                                                  has_m_mode);
+     }
+ 
+     plic_phandles[socket] = (*phandle)++;
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index eb9db8278d..58e635e9ed 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -93,6 +93,9 @@ void riscv_create_fdt_socket_cpu_sifive(void *fdt, char *clust_name,
+                                         int socket_hartid_base,
+                                         uint32_t *phandle,
+                                         uint32_t *intc_phandles);
++/* Describe one hart's PLIC contexts, returns the number of cells written */
++uint32_t riscv_plic_hart_fdt_cells(uint32_t *cells, RISCVCPU *hart,
++                                   uint32_t intc_phandle, bool has_m_mode);
+ void riscv_create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+                            uint32_t plic_phandle, uint32_t int_cells,
+                            uint32_t addr_cells, uint32_t *plic_cells,
+
+base-commit: 81ce3a87737aa50716c42db8886082d12783e0a1
+prerequisite-patch-id: 70f23581616a275c2b659d655418184163a0c37c
+prerequisite-patch-id: e0d267d9d4940408ecf478a14f7cbffd069b9666
+prerequisite-patch-id: 0164dcda18a619b9f4a6f84eedcc5fe1e8c92eb9
+-- 
+2.54.0
+
 
