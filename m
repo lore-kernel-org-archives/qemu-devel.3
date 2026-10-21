@@ -1,136 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A60606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Oct 2026 23:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6431606A329
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 00:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=IBUlhyip;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=JzsOr12s
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=V0GRsgQe;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RSMP0XHq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJJ4K-0002If-HH; Tue, 20 Oct 2026 19:16:32 -0400
+	id 1xJKMf-0001Zc-Hz; Tue, 20 Oct 2026 20:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xJJ49-0002I4-Kd
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 19:16:23 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJKMb-0001ZD-MV
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 20:39:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xJJ47-0007wq-NK
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 19:16:21 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJKMZ-0006hG-7k
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 20:39:29 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KKts993856505
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 23:16:17 GMT
+ 69KKtij41716848
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 00:39:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=UUnEKV76IrqweUGT3w2EpC7aJdrXgaXngBj
- IiBkLCjM=; b=IBUlhyipAUrO42PfBcsK15fprM1Hms9HKnVQo2jMFNNVdrLevkG
- tGXkWedpPx0Vf4nYytuCtQLMn/g/PXWApLpNE0kP+Ib/BMDc3hc30ovnf02mr4mz
- vM15paNNLUowUdEFLbCdnD0/WiTkDc53MXqpeoheevKKuTwp4+qRzhOmPKvgs7Fr
- fJG/JBM9rKLtY4xeej+hZTuP/jcGswVHS9bcE0v3tDrxqLAm9kbRZjBe7E+6ePGj
- 7ICiGULQmcOLq4GgsL5u3U5G9b++5y7aFt8qo75+KYQXck61NlOalSJNjJkrXRTd
- s5N3FPtWC+0AgRHAd6Ds1pL8Js5il4eZSlQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hedabh099-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ hki1UadwPra700XH717J7g2dx+4hBwAsUMOk2G3WHBY=; b=V0GRsgQeJVhW0tRZ
+ hmXbRRnuIIAvfhQHmJWG1YBuZOQoSmX3hWpq0/VGVcuDEyNAgJ7zTNdgiyHQnJ2q
+ ipdmDWDM23W5lpYb+JQcet7PjKURYSi67r+uQnMIZzV5QJAkZ9ku/M7hjDE4reJ6
+ 96azoAno5YkUBD5eCppL1TROq/tjezR3J7RBWbNeYxKq3f7rJKMRcIqfuRFOXJ1t
+ TCkiYVHXnjlvZXvUCi4oplyCYtDX5fKnJa7DgGog4NkR6CbLx6i6KS8eQeVwGW5S
+ oub9Ve3VDk1M7aBmzIETTQpe8SjSc0rTcK8K3hs/TPVW3WMozZDgZ9NSuLnMESeg
+ H23FPQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4heeb98yvm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 23:16:17 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3ac7a4ba546so803432a91.0
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 16:16:17 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 00:39:24 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93e92aad34aso44848885a.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 17:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792538176; x=1793142976; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=UUnEKV76IrqweUGT3w2EpC7aJdrXgaXngBjIiBkLCjM=;
- b=JzsOr12sxzIhVWF9BXIafUF0qYYKoOXVq9r2qrq2S/jpKQoD+z/iZN7N8kJNqghw5G
- ZOWl5tDaf1UJj4yE7YCFLrl4VmPh4pUZCWI34Q5hCNWxwQ5P5SdSEvZYa6kWGAPA5ROA
- WaQTQfDzu0QMNE0rs0AC19Yfr1AEM0UJdJ05iGQqCiOOilTEg+hubzAwQk2/7wWFGYlP
- rmLelfRdkZhLKjeabtgbYSX1a32RZzDx6zg7VawAN9A/HOEWh+rzsL9Csjniv6RzJ28x
- URpOt7NG8JJwX/Ih0P7uAnr4/I3nIkohiyZgHebCys5HXjX4hMS0gWx+kcl+PHOY9W7Q
- OXFw==
+ d=oss.qualcomm.com; s=google; t=1792543164; x=1793147964; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hki1UadwPra700XH717J7g2dx+4hBwAsUMOk2G3WHBY=;
+ b=RSMP0XHqZjZmOtl+wIb0ON98EaeyPIclN8dHk3upUGNIZRMJJBlP077i/hu7n4Et5v
+ mU1ZUt5yRtNtdJmWdxwciAluQgpkoAmbCMKoErc93f9J5DiHd9yCiwAYxfxMlxj+mNEL
+ nHLyZT4HQaJR1d5fNks3PgvbGt/mzsYIMu8uAQkTL5yyNJ1Gjra+nN5PSN4HDl6S0wpF
+ Vt2D5e/EiYMVeFSPrF7VF4TR4gLWPoFiXm0Sm6smQvEuPJ3QG9Rc00BpsDzc/pQTyTe2
+ McMc6dzwb6FmB1HCwWBTf9x7vQSAwimtSzIbWeSFuu2BQj9Up1Ljx7LbizXV6v+S46A/
+ SlgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792538176; x=1793142976;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792543164; x=1793147964;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=UUnEKV76IrqweUGT3w2EpC7aJdrXgaXngBjIiBkLCjM=;
- b=1H47WaJY2IFSkmInzdPsxpXigGR4LzPv0SbXrXppkXnFgIMfIeU3N7Y6XQ370grJAp
- SQvu+LKTQ1fPIu4Se59omfiYLPva7Pgf8QqURhNv6vIiFoJPNGKa5rY/kJGsDDXuEoZ8
- i13COX6xy45pUzUmFiIUdUp9XPIce60drkHaq/UGl3C9WM2yZdumrObJYMi3Y3mYlgu5
- VG189uiGO21ZI7bH685PTpWSq3gYkaiBftK/LNx9PyEP8H3T9T0ssXhxMRemNNi63aoU
- l482TRxbydXhPjPSNSJ5wSDUbKf0HqRgRRhhK1ZnV2PAkxxOTab51xBEPrM7KUmUrDfl
- HXBQ==
-X-Gm-Message-State: AFq9FYJrCPBXu3+W2FZPjV+WPlwHkti0CG+iShuMRNFm6als4CX5ITTp
- pysYT+DWNnaBwbqZCtdWEgQZrzIzqxBOqHd5dr/hreHSyosdkTbOLb8eTOCOKU4UjzsBIwOJiXU
- h/xZQTtFhjzFViJLOBe9vFKMASK2pZTH5mrnVjQsY5KIA7wdvOtdlgSP7Yk1m8f/SjQ==
-X-Gm-Gg: AYBFou3/6V5cpJ0/ryZzkERaft/9UdmZRyWPik+becSlKVpTGjxkUQ6aGVUMObW9sEs
- HBVdRk5oIorswpxRY/HnEzYl3ggG71EdrUfkWdtqPK78pL9c3WMcCKykBxWCc2h6yhkZ2aOXBIP
- kQMWClrCmXwfeXlY2pcflJBRKhkLr2AbAqk55hJkvLfS5xoB5USC/nJo5hchx0cfSEpVQN7qPmA
- dkWhs6uGfL8R5jO5R9qzSnbBtw0Avhhs5dFos2g/xWMI7kkBmcmI6VjO/8siM6WtNaDvLgi0klZ
- 7/34YseGaAoB3ECpS1ZEDUy0IkZIPfb/gU2cQB35aDIx/9GESCoqWJ+/trdMf+1ox6ld332yf8M
- hX+8XK988N+Xoc7sX0/bLGhMlqPEd/rK8TZQnI/J9ptCV/IPXYZmgmPpwNALhFJo=
-X-Received: by 2002:a17:90a:e707:b0:3ab:b39f:41ca with SMTP id
- 98e67ed59e1d1-3ad86f397e5mr153928a91.31.1792538176280; 
- Tue, 20 Oct 2026 16:16:16 -0700 (PDT)
-X-Received: by 2002:a17:90a:e707:b0:3ab:b39f:41ca with SMTP id
- 98e67ed59e1d1-3ad86f397e5mr153917a91.31.1792538175785; 
- Tue, 20 Oct 2026 16:16:15 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ad8085ede9sm1327968a91.0.2026.10.20.16.16.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Oct 2026 16:16:15 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] ci: add automatic retry
-Date: Tue, 20 Oct 2026 23:16:02 +0000
-Message-ID: <20261020231602.24344-1-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+ bh=hki1UadwPra700XH717J7g2dx+4hBwAsUMOk2G3WHBY=;
+ b=na1cL8gWsxkLzGyA/oKtBww9e6C6gNxn+DPr3Q0fPwtDzgR3bHFhmNAxv8NavH8IL3
+ 0dSlhsK9R0/l/et1OzRWfq3SZdEkOKqfTlmj1rAhNOGP/TMA7F0dZomdxW5sIbJnaHB6
+ WWewVBgZda3EKdCPB4QKyQNhPa7a8yNnkfNqN2CRhDISBBiEiCiZ2d5J3voc7bCdDjvS
+ SzvZFjl961p0KrY1T5+8a/da/8sRpi6DzKqg/JNQfhvHj0ZYP0vrmSm88LczIe3jbmD4
+ 9hlqPZWwFSMJWMOkNxU6B73QmIhDxIGkgPXudmPxF0JrhZAap/vT4QCtnGcxKkidqb8G
+ 0/bw==
+X-Gm-Message-State: AFq9FYIwoO8acs+EGsB80G28N7TjPfpX6cyWAxowEzYCMh/OqECxByrd
+ sM2uWzDNvsWMS2+li3jwkeZMrkpoeoLpQYNMwq9Gv18+Lm1XLd90Hssu5jFdtdyNQU1MZEQHtES
+ 0XgtzyR8OKLgx3DK1DdIYfqqVpFRWJCs9/MVOyjQSLUxgNZ0MBB5tZXhSrA==
+X-Gm-Gg: AYBFou2l3z/OsAgw8rHpMMssn0AxZXQV+JtiV1S41+JpYHJNBTFiDBN+ckrWMMtHQjh
+ JlbMsJPSAqelhOYATTpHmIl9xIw9nVOr+Kw1i71WdCgIHCa1eaff72JmnOeAiKs+XgROEq6RHH0
+ zS4ipkRjuCwZHjKfuRLAU8h15uGlZ5d/jz8Y/ZH84S6qSFwB00b7TciCrPoJGyTz4OefDYuaWjt
+ UOqJ7EnM7e3YLASOTxgPdm5yg+hu0AwDYTdeeCFMRQXB5neAtc6Ikgp7y63veuK6ERNiSu9qOt3
+ jnqUk+0qPLfq5qvDTer6vSamxoL6lLZr7h7LaY/zKFbHs9P1pOsP87l7kKfSYwn+YeYW1AgYthq
+ pRdw2+OKDxVHAbvrduVBiVcJZN4rgC7V0vCeGP1GncLz/TchIFZF45mj6NDduB9GBwlGpdFPE
+X-Received: by 2002:a05:620a:4109:b0:93e:c12c:43fb with SMTP id
+ af79cd13be357-93f57f7540emr175471685a.72.1792543164297; 
+ Tue, 20 Oct 2026 17:39:24 -0700 (PDT)
+X-Received: by 2002:a05:620a:4109:b0:93e:c12c:43fb with SMTP id
+ af79cd13be357-93f57f7540emr175468485a.72.1792543163781; 
+ Tue, 20 Oct 2026 17:39:23 -0700 (PDT)
+Received: from [192.168.68.101] (200-204-190-237.dsl.telesp.net.br.
+ [200.204.190.237]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93f56e0b402sm117145485a.33.2026.10.20.17.39.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Oct 2026 17:39:23 -0700 (PDT)
+Message-ID: <9c468ae3-e303-40da-bbc8-a22a82b9bc97@oss.qualcomm.com>
+Date: Tue, 20 Oct 2026 21:39:19 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIwMDA5MiBTYWx0ZWRfXyg1TJKf8aMgK
- icoIHSe9phu6osWYCmlK2UwHa3nF3Gyv4Oa68Ia8ra0hHhppWDPutzgp88m7Bh6tDoFEgj3ISkX
- cpB91wy5pHDPpTIx4qUbS13a5ZNq3wY=
-X-Proofpoint-ORIG-GUID: RBVd4nXCN1ZnAJgifEa4n2U0HC5Waoac
-X-Proofpoint-GUID: RBVd4nXCN1ZnAJgifEa4n2U0HC5Waoac
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIwMDA5MiBTYWx0ZWRfX5SCNeIoXf9r3
- yjQp0D3Yxm8wmAwN8VSSy/Q+7Yi1o8o7aGwaFu+P2Y5Mg8n5rHUQUlmzC10fBgRex8OUUdW/O1m
- DMWyGygMfCoNzuShtnXOi0WkYufvPrhXeZ9Kz2MMzfcx62DacfI6yevuPhZyUBhbZxZelKFXsd2
- yAvGFJc1F839v6+DkqN6AMiw7fZS1ay2xMFWOVHLiBSqUXzV9e9czp+OwzCjKyHN8ly83fhMQGT
- ZWRA8la+ycV7tHKKi6CALwQsIi+Np1dr5B2sFXbUH4O4R9c0Me2z/rrdZk+khNEF8es9GyWqEFk
- 65zWplTG7MUcoebeNxoshjNMFjV32LgYv4CXf6yUgMTVoep13t0XLdLHWHRMq4hZ7h9gQJSlVJq
- G/A4Qp/aNwtXTIO3EkWQMLCIVqade9EkSpd6bnYiqkX0IiuThWdakTpB4iqZvoCvMDXORID7udM
- eLe58XVC7RBADiDFz8g==
-X-Authority-Analysis: v=2.4 cv=NLpAaE6g c=1 sm=1 tr=0 ts=6ad7f641 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=tvjTBfmJX5djJxn3ErEA:9 a=rl5im9kqc5Lf4LNbBjHf:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] RISC-V: ACPI: Add PPTT support
+To: Drew Fustini <fustini@kernel.org>, Sunil V L <sunilvl@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Anup Patel <anup.patel@oss.qualcomm.com>,
+ Prajwal N <prajwal.n@oss.qualcomm.com>,
+ Shankar C <shankar.c@oss.qualcomm.com>,
+ Jinjie Ruan <2118537295@qq.com>, ruanjinjie@huawei.com
+References: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
+ <atfrQY1w-er0onXV@thelio>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <atfrQY1w-er0onXV@thelio>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAwMSBTYWx0ZWRfX3OJHYt43Tk9h
+ 3wf95xtW4OcdvVhLh87ucccwv3/uIWrozy8hICo2AsFHv9eQmYYoYfHf9oVh6cm68XDyRcCYdyt
+ Z0p2PTpP5jAcqV/2KTX23hgALB1NqT0=
+X-Proofpoint-GUID: q52TmnEfLxZ7BH8vb1EmwiWPLoA4iEGk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAwMSBTYWx0ZWRfX9RPYZ62KUa00
+ 9MtEmb/UAF0zcnl++0xGM5kdKIx7VjaCP66ErHtf/6lGHrKYQPAqf3xS4NfCYowhPz5p4yJhIKP
+ tkO9NtyJa0k2gEiTeT5H3KUzwEKrhQalapN+83LIsDmwuCuhd4pWg/JJgneg+JYTQWP0Dlyot3x
+ MukHSsmVZ3SYyYjlayGo2XZ2MRMYQV6ksY9gAF8EM5jZmGP2BWDehhf+8DEZUsW4byPY2BDsjBt
+ dKb0a70Kjr8sok665WMCmPfSNidoKeWEFytcUKcd7S2H0hB2Nk5LTlbtsFm+fGLWgIQyjS/SGXO
+ JqAMFlpHBwgpcKWq7Ol/fb1a7Psi70G2V2Vn+B6SITyU7QYB2or332rULx3wl4qPQQXDk+3qd7k
+ KOYq5NkolCiOM3o8agWFgyrGycbbO2BQLpstM3Eh9diO0M+tAkmGczpIt1ifLVlmk1AAqV/VbY1
+ hRXNMrFfPVsAnemKO/g==
+X-Authority-Analysis: v=2.4 cv=R42WitRX c=1 sm=1 tr=0 ts=6ad809bc cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=VwQbUJbxAAAA:8 a=dZbOZ2KzAAAA:8 a=8ZrYuC2gKm7xYYnm9eMA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-ORIG-GUID: q52TmnEfLxZ7BH8vb1EmwiWPLoA4iEGk
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-10-20_04,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- impostorscore=0 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610200092
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ bulkscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 spamscore=0
+ malwarescore=0 adultscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210001
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -149,48 +159,66 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When merging PR on the project, it's possible to observe failures on CI
-that can be related to sporadic test failures or infrastructure issues
-(pod eviction with Kubernetes). As a result, it adds latency on the
-process and workload for our top maintainers.
+Hi Drew!
 
-This patch sets an automatic retry (supported by gitlab out of the box),
-so failing jobs are automatically retriggered.
+On 10/20/2026 7:29 PM, Drew Fustini wrote:
+> On Thu, Oct 15, 2026 at 12:19:53PM +0530, Sunil V L wrote:
+>> Hi all,
+>>
+>> This series adds ACPI Processor Properties Topology Table (PPTT) support to
+>> the RISC-V virt machine. PPTT allows the guest to discover the processor and
+>> cache topology exposed by the machine, which is useful for making better
+>> scheduling and cache-management decisions.
+> 
+> Thanks for picking up PPTT support. I can now rebase the RQSC support
+> [1] on this series.
+> 
+> However, RQSC actually needs PPTT revision 3, because it adds cache IDs
+> to the PPTT. The RQSC table references a capacity controller's cache by
+> the PPTT cache ID. In Linux, find_acpi_cache_level_from_id() and
+> acpi_pptt_get_cpumask_from_cache_id() return -ENOENT if PPTT rev < 3.
+> 
+> There is a new MPAM series by Jinjie Ruan which contains the patch
+> "[PATCH 04/37] hw/acpi: Build PPTT rev 3 with cache IDs for MPAM
+> cross-references" [2]. It bumps build_pptt() to revision 3 and gives
+> every cache node an ID.
+> 
+> I could just base the RQSC series on this PPTT series and that patch
+> 03/37. But maybe there is a better way to coordinate adding PPTT v3?
 
-It's important to note that in case there is a real test or build
-failure, concerned jobs will run a second time, and fail again. That
-said, it happens seldomly since sub maintainers are supposed to test for
-this before sending it. Also, the retry is limited to the job that
-failed, so it should be cheap in terms of CI minutes.
+This PPTT support is acked and I believe we'll queue it in riscv-to-apply.next
+shortly.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- .gitlab-ci.d/base.yml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+As for the PPTT rev3 patch in the "Add Arm MPAM emulation", my suggestion is
+to put that on top of your series (i.e. your series will contain that patch).
+That ARM series has 37 patches and might take awhile to go through, and your
+work relies only on patch 04 ...  which happens to be an arch agnostic patch.
+I believe it's fine for us to push it via the riscv queue.
 
-diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-index 8fe00809357..63ba82e3632 100644
---- a/.gitlab-ci.d/base.yml
-+++ b/.gitlab-ci.d/base.yml
-@@ -31,8 +31,9 @@ variables:
-     # Ensure docker.py / tests/docker/Makefile.include always displays stdout
-     # from any docker commands to aid debugging of failures
-     DOCKER_V: 1
--
-   interruptible: true
-+  # automatic retry on failure (sporadic test failures or infra issues)
-+  retry: 2
- 
-   rules:
-     #############################################################
--- 
-2.53.0
+I see that the author from the ARM series is CCed here.  Jinjie Ruan, are you
+okay with us pushing your patch via the RISC-V tree?  It'll unblock Drew's work
+and you'll have one less patch to worry about in your ARM MPAM work.
+
+
+Thanks,
+Daniel
+
+
+
+
+
+> 
+> Thanks,
+> Drew
+> 
+> [1] https://lore.kernel.org/all/20260202-riscv-rqsc-v1-0-dcf448a3ed73@kernel.org/
+> [2] https://lore.kernel.org/all/tencent_F9C68A515AC6C40BE2C32DB314E14CCB7106@qq.com/
 
 
