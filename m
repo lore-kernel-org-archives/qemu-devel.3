@@ -1,139 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA56606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 01:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DE7606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 02:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YOc+RU/R;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kjraiS9t
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Vk9/qoMY;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AxLC9z+N
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJLMe-00084K-5r; Tue, 20 Oct 2026 21:43:36 -0400
+	id 1xJMGh-0007Vq-RJ; Tue, 20 Oct 2026 22:41:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJLMc-00083v-A3
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 21:43:34 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xJMGe-0007Vb-7S
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 22:41:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJLMa-0003hr-BF
- for qemu-devel@nongnu.org; Tue, 20 Oct 2026 21:43:34 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xJMGZ-0008LS-Ju
+ for qemu-devel@nongnu.org; Tue, 20 Oct 2026 22:41:25 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69KKtr7x2442066
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 01:43:30 GMT
+ 69L2FUSe1957080
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 02:41:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +vszFqrR8kVeH5LmmmgcVHBEtEWECsW1KnE5M0a12N4=; b=YOc+RU/RfYaZPFa+
- SxtxSICVtpayEYVxhwPmIdW4eiOr3jAl+7PHfudjtjMZZie8VCKqP3n5EF+1bXQo
- urFLxiNYI/ztutus96rCZh7CMWSBtIRjY1ByRhVopcsMBc/cKNuilirVw4xM4/cL
- KQeLt3RCcANo9HKKxwNo8ZxcRrZIgYqG1S0HiQ7yzS7nM+nrRMnqvrslaxv/O4vF
- eYpMxtNJreSfCXWraZtcLiKS6vg9VimT66crSYXs7iHCQCzNaySVOwScGaunTRwr
- KsoAYB628/5BmlytextEFaUmPBsk5lmZyohveEJ5YYk4XDlZhOmwI2TDUfKN9OBn
- +t/vHA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hed9hscu6-1
+ E/Pv+fxlDco5yiVGsaGBI1mriPFfvOSLu3Q2J7paGRs=; b=Vk9/qoMYiRnaYc/3
+ 52kQGroNCvhsAbvquQxGkqsGwHTxu0VcKZpVMGR64xxgSgtFfHCcNnpNDmTjnB+F
+ SktAY3fAOxMbbW+ZkJBj5llZELoQ4maldBM7vW5+47Sxaq6p2smWFU9Q/ThpwWcI
+ Bwg2IyzIKa4TGW11Gz+n2oa/F6uWMqsB7FyvcJ0od3U61ZXo2mut1ScUQDeNflKu
+ IJMDinmZURg0yiPldKYZw4V1geuFg9YT1eGzGzDUrwU1FfjFv87CACat6dDHZTDa
+ vDT/6Zs8yVOUQ+rnvokbxvlYXlXw0DZYnNQxwU/eQxeQYH3xKj+sklzQcVgG9CH2
+ Fs8tbA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4he7hvb3c2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 01:43:30 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-91c0f73807eso4698626d6.0
- for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 18:43:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 02:41:21 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-91b861c0618so5588706d6.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Oct 2026 19:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792547010; x=1793151810; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+vszFqrR8kVeH5LmmmgcVHBEtEWECsW1KnE5M0a12N4=;
- b=kjraiS9tzOPgDw8jWTSnVwbTkb+0/0+WDtB8tmLlVV5/+/QND54KoJNl+Bkx7dSEcd
- NiSXOyyS9Q4xL20YCysb1PklJN7uWExc6mBQnpbylwSwlgukqCrdkggRmYPmryDj1z5a
- W4CPKvClSJWKeh7o5P9eRlv4kA4OcyiDgBvkI/Ura35JGyXhojQiImyBN4mQQchANe6S
- MCCEo2fOVI7uzTUEQ8+Zd81VFZuSrIyot55eCwzbc/Ew8N37oygRHmDdULJ9imOk7JaP
- 8QNJAPs7J5n7LE8AfEIdRGY9iM2KTiIwM1OXFa8Fxk4fkKV8k3DG0qXX6I2FpZ/uwxGj
- Lv4Q==
+ d=oss.qualcomm.com; s=google; t=1792550480; x=1793155280; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=E/Pv+fxlDco5yiVGsaGBI1mriPFfvOSLu3Q2J7paGRs=;
+ b=AxLC9z+NBb/Jq3gekz86TiLrkZnubPIKV3fVpeaqYVW9ot8JOFyW0rIbRhYjzJE+w1
+ G8OrH7fUDACRGq1xJUsspHnYejL9ZjV3nqhVuvBWArLiMPKWLyaH0Tni+chYIoWGjg5K
+ v1p/Grxf746v3X7i5k/PV5xIM/SAMPvuqS3bGmhsp80xHUzz267I+MpdejoQ9uISnVq8
+ tFOfRfs5ZthRT99eYmMtJp0EVzmlgLCv+ntVY3r8xSTD1mQuu1iYmCqzcsWvUz1+PS9q
+ p7JImmZMzk+U8ctnwYlz+fTlfi7/7RWnA5r8JOjD366A5wIrCmGb3dSAxj3GQxerjNGm
+ 5Aew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792547010; x=1793151810;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792550480; x=1793155280;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+vszFqrR8kVeH5LmmmgcVHBEtEWECsW1KnE5M0a12N4=;
- b=mgd3zU+/gEOF4aQ7n87qhYL5Og3js40mYvU8zAM2cQPV5xmryXhUaBNke7eFTd5DNW
- 4e9e1iFPMm2YLXVhENH9DiCgkONB5yBPBQHTvn07l/2wrFSLSflvdah9Od+4P59I97Ye
- Rw/7K58LNp1uAwEt9hCA2KB2Kx5W+Gt5hm7UdDqxeKtBRhTBX6Q+kxrF0HgUd5G7qjyL
- u9K7SC1HExNSa8u4j0EUkErNp9GospZKTInhN6Z2fTpuJ5M3PpG4/7d/77HJq2QyhB55
- BcJ+GfQbovhHdVqDPKZ3awcXUzQf1nFKnNeEXzsSLiOIl7nI7tj9uZk6ElT/bZmFbr6+
- mL3A==
+ bh=E/Pv+fxlDco5yiVGsaGBI1mriPFfvOSLu3Q2J7paGRs=;
+ b=V/TlAyzAN6Nin9JRyTOo/1G6OCrxKlT1+ojZs0Hq8iepseEnjiDYHTD7uv8s5xOrTX
+ +vx8cQt7faQPVmpPNjwtpzb7aJnkejnqXhpH5W8OIM7L2X1cMdfb3TIUhKNWXrazsD3B
+ EkF2g9U4xsUYe2Apd7HFfe54bSfN4aJuSq3CIgXEQd6TIxC49d8DK2KTwS2hjv1bAPkT
+ jygA8ugG5vBQR9DHwsXL6SDrB5930W2/KVqIdaAqCb/qxZ4FYIH1l3C3gHg9DcxhM9JQ
+ uxvt6S8aWm9qOyqcsZYIRUP0T54LzyAQpbpifnP7PITIy/akEDhSiJGUZ/TBROv3eg/0
+ JZwg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzIn1OUPbGEC/NUHgcm/kVP3W6F59rHYu/k23I7xiiYGuW4AXdMUnbo2OQVZ9DrdWIOGEv8+VdRTWV0@nongnu.org
-X-Gm-Message-State: AFq9FYId3zrGlTrIcylxPEvHb4NJTISVK1Jv9JrbpuX1+HPuPUDdfJx9
- nyHn58JlwrwCbLBuMZggKbAEXmHnYqBeJ6Ewfo9JvSsPvGQWSjKgFzoA7EDoC/0wEaNEi5vjp72
- MQQ9nYW9seck+L8b2uqeV/romzhfQ+dVw6qw4WkxzmvgiK0BlH2OHTsbFJA==
-X-Gm-Gg: AYBFou3AUUjcdKh/DAH6V0m35cmsm+3eX1bGwKZyrt9+hqSQ4A5W1fh7tiZcaHDuLL8
- TyUPa4L4j6w/VduDUOl7hEB/yNHx4gK+qywG5nqLjbYdvh4LT3K9zCV0sxWyxYCD3fWOSNA/K4W
- xj9AIIpmSlFicMqIlXh8tn98nKKomXl5NPBYStXsk92ErqJopywUcr7jG5leGQFoQ6MngHAbPZM
- 9CfAuNvuCo+oak9KDpIN8OGu3aFT2vYjwJDezOxLRoH93US+WJ9F3IiFmeWY8gwzjW5LbWGSOfL
- ywyq4j0OzbR7J15FRKKJh7UwmqIJEbHgj4nu4bJiAniRQMDhmKcGpBPvx0Z1tQ4V23o8DzTI+sQ
- 0tjHE3tT2HrWIHQgVDu5FFClgIzOq3PnFhA==
-X-Received: by 2002:a05:620a:4621:b0:93f:a7e:e0f0 with SMTP id
- af79cd13be357-93f57fd3b6amr175950785a.82.1792547009719; 
- Tue, 20 Oct 2026 18:43:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:4621:b0:93f:a7e:e0f0 with SMTP id
- af79cd13be357-93f57fd3b6amr175949085a.82.1792547009234; 
- Tue, 20 Oct 2026 18:43:29 -0700 (PDT)
-Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e25833b9asm2025059f8f.33.2026.10.20.18.43.27
+ AKwUvByamX6qHSF+Tm6UzwYZpoMbdtH2KkOx1fAscZWGJf2WeFznNx3vJKiBxb3LhHQy40c6Gz7MjjTKlFE/@nongnu.org
+X-Gm-Message-State: AFq9FYKvK+GvUsvIJfHnjXDNdOtDFOeVF9jcGOZ1QYLs/owVZKWuHWva
+ Ai1CNbYCz8g9SSYv6ry9FnVmbbwlLHZq+Bfjw1fuG2tAwXjsYMG1ttJeD+iIqj9p/3VgjOAY072
+ /hhobPL0kp4bwxNNWflD/xI1MBlNzM8ir6koO3YOAr4i3nwkAbtIRVEveiA==
+X-Gm-Gg: AYBFou0xnWoyn26OaRk6VTKcdphcaWUlxGKMl/ky9xlBiHtYYMBBbfL9BWmRO5Q4zaU
+ i8luDKedh7DYHu0qRMKhub3GjR8u7239E7sKaE5NvHpwvn7uXrOqxUPzWM4gzR21i1TXajVon9f
+ 3riDDpFLS8B1qjbRgfxz0kL1hex74xYqWmk8+pLgR9UkrRoq6ttufUuTQEArfBYmaw4nNSj6ii7
+ dEkKjc/Eep/axT05GNJdxPBSJ5M1vX+5LRUDAhlFcrGkP8hgKlcG35SkQinLT5KFUPN0sA1b9ll
+ lz36gcRpYAQ8QzcOwj2Y2c5Z2OZTl236lOjqlln0GXOTE7rqS14VE4l4ULT14TP9fU7vybkDWKO
+ UShBH7UQmdl6Drnfash88nMM6h33cPTnxhdZTTT0oXYat9B2k4h3/UYjyWaUzxhCDk+Av3Ftzri
+ JHE5M=
+X-Received: by 2002:a05:6214:2f08:b0:917:a16b:e1b8 with SMTP id
+ 6a1803df08f44-91c12dfaa45mr13479106d6.8.1792550480138; 
+ Tue, 20 Oct 2026 19:41:20 -0700 (PDT)
+X-Received: by 2002:a05:6214:2f08:b0:917:a16b:e1b8 with SMTP id
+ 6a1803df08f44-91c12dfaa45mr13478936d6.8.1792550479705; 
+ Tue, 20 Oct 2026 19:41:19 -0700 (PDT)
+Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91c10a45336sm13845436d6.3.2026.10.20.19.41.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Oct 2026 18:43:27 -0700 (PDT)
-Message-ID: <18a22eb3-9e56-441e-9d1b-e1ecc9eb98a0@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 03:43:26 +0200
+ Tue, 20 Oct 2026 19:41:18 -0700 (PDT)
+Message-ID: <ceab474d-ea17-41f8-817c-86f90c0feef0@oss.qualcomm.com>
+Date: Tue, 20 Oct 2026 21:41:16 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/21] hw/core/sysemu-cpu-ops: add get_dump_info
-Content-Language: en-US
+Subject: Re: [PATCH] ci: add automatic retry
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- anjo@rev.ng
-References: <20261019212648.154493-1-pierrick.bouvier@oss.qualcomm.com>
- <20261019212648.154493-6-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261019212648.154493-6-pierrick.bouvier@oss.qualcomm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20261020231602.24344-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261020231602.24344-1-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=YuKa1IYX c=1 sm=1 tr=0 ts=6ad818c2 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=cXGpp2lGlwQQuBBFnDsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAwNiBTYWx0ZWRfX/c0lDI7+CmCR
- aCXye77bldBiL6f9i1AXfVWUmQn+01CQ0d4baAk+MCJjLtbp6sGpwPpafKNVaAyAcoor0j/9xLj
- btbltGqTYkHKvSnptdDGX6KcOexiFuw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAwNiBTYWx0ZWRfX88R67YhbRYaR
- kAz8jCE8ab1sto5BqCBwY39iCu8hGBm0UUDhLqq0cZmSwYBEc83tCVx0W8hI1GO3hBwkoa1tujU
- LLuyHzMfhgARgXbHVaaOYtgdZDz4ozCrhal6sZJCSbY0wSrs+O6q+nJUAwvize+d7OGIeHZvgSH
- UoHuckx2HeqCCDHf/XNP9TwRs3QMDEUfD6x026PYZZWYgX6OtLTo/3vDmiJAhwrS83FGammdTRY
- ysEJRa9r1IeC97KJxO8pvRYO4O3aOvphJ5pejdtcPNQ60udZVl2xy/7uUuOpMWrFHbelgHJuRk/
- cU6I56hpzQjmvdcZr315VfD4LMthneUawSJtu6mQBi3EXIxes6t6rfqSOEpYDpc932DpBQavIba
- PnVIQSgo3DPT2KalVS6CJw32F89b+B9qLgdAhEnJUWVijG2oKeRv+45PkYNXOIBEaSUTKzzroKg
- isWPNRnLSvHNILcFAcw==
-X-Proofpoint-GUID: HOdoXYGiSsCaCDP-JT4Vdv-BBt3hKWp9
-X-Proofpoint-ORIG-GUID: HOdoXYGiSsCaCDP-JT4Vdv-BBt3hKWp9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDAxMCBTYWx0ZWRfX2bmOiNsksbYi
+ Igpc9VMhUl3DZA+vCgrigoy7UGShFB4FKtLQyKwYw1ChJYnZtc2ddwibspYtgdrsSPN+ivriiq7
+ fw1sogzyhv11O8nJBP2u/Hoyg+zafe/GKNy/UvftfMCTXND1Es77GQySjCjYLMyqvbm2SCuSh59
+ OVrs7A7hFV9vD0GEBoAlirKdAkyqkBXmTjgOmqgRo2D+0rS5pDwxu3UID7+3k8nqZNhlRO948lr
+ 6bF2iAcADJVLQVZhaguz3pq1uGZCJnLvYgL3OlnX/cDr8IRvKh1nqT0/rnObAIPNWQDG6tbrvVM
+ 1rvpxrk8S6lc0ok1kbC7A5LLJzL8Tn8OYZkWr3R4P2SVtY1s4sU4mqGZPE9CRQk6123kHD79Kaf
+ k4f6ofXwO8udHo8GcrQHFsyXm43YILJoyK3q4DmrEZ/WNTjslrDjHjIkbjmp6ZHQ48cEt60vANn
+ 03sROWR2wdVlDd3WuFQ==
+X-Proofpoint-ORIG-GUID: 8ytmyMbdHeU0HQaYZ2NjpUfl4QfyNuh6
+X-Proofpoint-GUID: 8ytmyMbdHeU0HQaYZ2NjpUfl4QfyNuh6
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDAxMCBTYWx0ZWRfXwPA9oHUI4tDJ
+ ork8CEU8iLksZengHDIUyfaHvPMzHfEhegrDFFh/1lpy7LTrHfzfoolUY1U43BzZ50nrtgIlGv0
+ 7qFMBYPR8mm34DvGSUxs9HWwfzipcos=
+X-Authority-Analysis: v=2.4 cv=NppE4MdJ c=1 sm=1 tr=0 ts=6ad82651 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=oP5yz2Yi8CnxVeh9_jYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-10-20_04,2026-10-19_02,2025-10-01_01
+ definitions=2026-10-21_01,2026-10-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 clxscore=1015
- phishscore=0 adultscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210006
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210010
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -160,38 +165,46 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 19/10/26 23:26, Pierrick Bouvier wrote:
-> This allows a specific cpu to declare its implementation of
-> get_dump_info, needed by dump.
-> 
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+On 10/20/2026 6:16 PM, Pierrick Bouvier wrote:
+> When merging PR on the project, it's possible to observe failures on CI
+> that can be related to sporadic test failures or infrastructure issues
+> (pod eviction with Kubernetes). As a result, it adds latency on the
+> process and workload for our top maintainers.
+>
+> This patch sets an automatic retry (supported by gitlab out of the box),
+> so failing jobs are automatically retriggered.
+>
+> It's important to note that in case there is a real test or build
+> failure, concerned jobs will run a second time, and fail again. That
+> said, it happens seldomly since sub maintainers are supposed to test for
+> this before sending it. Also, the retry is limited to the job that
+> failed, so it should be cheap in terms of CI minutes.
+
+Will this effectively mask those flaky failures so that no one hears 
+about them?  Is there a way to find out about them with something like a 
+weekly/monthly digest of failures?
+
+
+>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->   include/hw/core/sysemu-cpu-ops.h | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-> index d125540262d..2c7d0b94767 100644
-> --- a/include/hw/core/sysemu-cpu-ops.h
-> +++ b/include/hw/core/sysemu-cpu-ops.h
-> @@ -94,6 +94,12 @@ typedef struct SysemuCPUOps {
->        */
->       int (*write_elf64_qemunote)(WriteCoreDumpFunction f, CPUState *cpu,
->                                   DumpState *s);
-> +    /**
-> +     * @get_dump_info: fills @info with the endianness, class and architecture.
-> +     * Returns 0 on success, or -1 if the guest memory can't be dumped.
-
-QEMU style is to return int when errno is propagated, otherwise
-a boolean is preferred (bonus if error propagated in Error *errp).
-
-Getting the prototype right is simpler at its addition than later refactors.
-> +     */
-> +    int (*get_dump_info)(const CPUState *cpu, ArchDumpInfo *info,
-> +                         const GuestPhysBlockList *guest_phys_blocks);
->       /**
->        * @internal_is_big_endian: Callback to return %true if a CPU which supports
->        * runtime configurable endianness is currently big-endian.
-
+>   .gitlab-ci.d/base.yml | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+> index 8fe00809357..63ba82e3632 100644
+> --- a/.gitlab-ci.d/base.yml
+> +++ b/.gitlab-ci.d/base.yml
+> @@ -31,8 +31,9 @@ variables:
+>       # Ensure docker.py / tests/docker/Makefile.include always displays stdout
+>       # from any docker commands to aid debugging of failures
+>       DOCKER_V: 1
+> -
+>     interruptible: true
+> +  # automatic retry on failure (sporadic test failures or infra issues)
+> +  retry: 2
+>   
+>     rules:
+>       #############################################################
 
