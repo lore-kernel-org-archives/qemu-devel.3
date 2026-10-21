@@ -1,108 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E78F606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 07:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D162606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 08:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IK1azzQ7
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=E6qVBKIk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJR6o-0004SP-C3; Wed, 21 Oct 2026 03:51:38 -0400
+	id 1xJRFb-0001nI-DD; Wed, 21 Oct 2026 04:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJR6d-0004Qh-LK
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:51:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1xJREK-0000vX-QD
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:59:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJR6a-0003xI-QN
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:51:27 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1xJREJ-0004sp-2n
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 03:59:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792569083;
+ s=mimecast20190719; t=1792569561;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=yI5UTJfkMtWYhdI7ylOyWQPbVZZxgEFDRQRrslfGlic=;
- b=IK1azzQ7fIBoVrz3W2Wyh/hs9m3L12QxqVr7SBY+L9/5QeVhCB0B/iji8d07c///7ZGTUv
- 42CP37+yeA1r02FKIclKtIuoyet3f9v6x8GrrSX0UNgi4XYREm19JyJiFfbEU6dIXRjCH3
- ++BUsmVPVw92DlJV29mfWIJr7K1tWIw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=leQUqguYqlX8Zp5PnfXYIRfjPFyciZ6zH2sqv5k85lY=;
+ b=E6qVBKIka42mej4MSRYcLk6lWgOWfa1ZD2zgYYoDYOZZWuqHywdENat8F3xYPo1nMB9Ir8
+ jl/mo+xQaV9SNHnVObIucuwxKX1DUzzNRft2KvCdS2gx0D1dGOfjtE89potGdU0S5vYSSO
+ hI4UwC2twRp2+JlMUmu9Ws8sNUq8IWY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-_u2pxMfnPXWp6ABCIbsRMA-1; Wed,
- 21 Oct 2026 07:51:15 +0000
-X-MC-Unique: _u2pxMfnPXWp6ABCIbsRMA-1
-X-Mimecast-MFC-AGG-ID: _u2pxMfnPXWp6ABCIbsRMA_1792569073
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-u5UxqWqmMsGzPl1p6UjVmA-1; Wed,
+ 21 Oct 2026 03:59:18 -0400
+X-MC-Unique: u5UxqWqmMsGzPl1p6UjVmA-1
+X-Mimecast-MFC-AGG-ID: u5UxqWqmMsGzPl1p6UjVmA_1792569557
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7ACF61955F75; Wed, 21 Oct 2026 07:51:13 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C958718005A3; Wed, 21 Oct 2026 07:59:16 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3ECB18005B7; Wed, 21 Oct 2026 07:51:11 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 0/9] Various ASAN & tests fixes
-Date: Wed, 21 Oct 2026 11:51:03 +0400
-Message-Id: <20261021-nohmp-next-v2-0-85471fca83db@redhat.com>
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AABB1956089; Wed, 21 Oct 2026 07:59:15 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Alberto Faria <afaria@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Alberto Faria
+ <afaria@redhat.com>
+Subject: Re: [PATCH 1/2] include: Add virtio-blk request flag FUA definitions
+In-Reply-To: <20261021062257.735757-2-afaria@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20261021062257.735757-1-afaria@redhat.com>
+ <20261021062257.735757-2-afaria@redhat.com>
+User-Agent: Notmuch/0.40 (https://notmuchmail.org)
+Date: Wed, 21 Oct 2026 09:59:13 +0200
+Message-ID: <87v76v32ni.fsf@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22NwQ6DIBAFf8XsuTSwNhp66n8YD4proYlggBIbw
- 78X7bXHSebN2yGQNxTgXu3gKZlgnC2AlwqUHuyTmJkKA3JsuOQNs04vK7O0Rda2YuQoleIzQhm
- snmaznbGu/3F4jy9S8SgchjYhOv8535I4vL/hJBhnOKKgppbtba4fniY9xKtyC/Q55y+w2hWit
- wAAAA==
-X-Change-ID: 20260906-nohmp-next-771b029cc0f2
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, 
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1613;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=moKphPuX4l41iGjdlGij8EOGb5BOmW34cZac/rcqLqQ=;
- b=kA0DAAoB2ujhCXWWnOUByyZiAGrYbuyh0H3ef1qJTdkx9x4B7n7jYZz6gs0IkehokWoXBm5wM
- okCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJq2G7sAAoJENro4Ql1lpzlz0AP/02f
- iMbR2c7eMUMTLywxSDhM4X+c9Xz4nOp0+ZP6wciwVF2I/cO5Y6H2Q659zrIXtY2bLfNXLfXC9nk
- cgdBlPLjmP03cJjHwPbMEf2GiGx2nw3hc0stIcKTBQvsZRWCTVbUGPJpfWZYrsTvKFSKBYt/BKK
- qAMCEOCchtxWk06QUdsjlwwpxTHECpvYJY0exDCbvLgSrfgvLw2GiS5MDCcWoT6w4OVsRnHkwVf
- mu6v7YYJVhXJjm4GyeYqEJV+SqZVT1/MBlcJT5BerUyv416/CTqEzJtEFtIIfgtx3IXeWbE2V4G
- EQbSYhpNw+5HIt4i3JyISy7vHa1P6q4sjKfbYaEMI/ns5Y9Qgt2uHEZt/5NO9OyfFUGOuXnLl24
- s27y22INWAAZTMIn2Wxaz+CncahC9Kl9eU4sF1IA74X0elCXkVAurAIEOD+H4kTU5tzbIPW6kKY
- F0B8jsVogWp8IxjJ0ORBs+3p9zuShYb5iKmwQ7YnZQTp0Oz8CWbeXMUSELJjpx4pLx5inkrdxxP
- iPPyyAecVaJucWDoeZXuC/Dk27G+/1aaxDx9aj0B3m2BDatj79NjMzhpaRDqJ1wvjUmiDx/oR4G
- rtbpq7VmI7obYBwQt8T8eWJm8rkXHAUujNO/CYL910hXjkWVIijNrpZGLDGaj1RaLzAwlPD1v9M
- 2DMVl
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.329,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,46 +95,15 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi,
+On Wed, Oct 21 2026, Alberto Faria <afaria@redhat.com> wrote:
 
-A collection of leak-related fixes.
+> Signed-off-by: Alberto Faria <afaria@redhat.com>
+> ---
+>  include/standard-headers/linux/virtio_blk.h | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
-Changes in v2:
-- add "tests/exynos4210_uart_fifo-test: fix buffer leaks"
-- add "tests/xilinx-zynq-sdhci-test: fix GIOChannel leak"
-- add "glib-compat: fix g_autofd fallback warnings"
-- rebased, collect trailer tags
-- Link to v1: https://lore.kernel.org/qemu-devel/20260906-nohmp-next-v1-0-2b21e63974f3@redhat.com
-
----
-Marc-André Lureau (9):
-      tests/launchupdate-test: correct g_auto usage
-      tests/launchupdate-test: correctly release qs
-      tests/launchupdate-test: fix fw_cfg leak
-      igvm: release found memory region on success
-      igvm: make IgvmMemoryRegion a QOM
-      hw/s390x/ipl: fix short SCSI loadparm buffer over-read
-      glib-compat: fix g_autofd fallback warnings
-      tests/exynos4210_uart_fifo-test: fix buffer leaks
-      tests/xilinx-zynq-sdhci-test: fix GIOChannel leak
-
- backends/igvm.c                         | 99 ++++++++++++++++++++-------------
- hw/s390x/ipl.c                          | 10 ++--
- include/glib-compat.h                   |  8 +--
- include/system/igvm-internal.h          |  9 +--
- tests/qtest/exynos4210_uart_fifo-test.c |  6 +-
- tests/qtest/launchupdate-test.c         | 20 +++----
- tests/qtest/libqos/libqos.h             |  2 +
- tests/qtest/xilinx-zynq-sdhci-test.c    |  6 +-
- 8 files changed, 88 insertions(+), 72 deletions(-)
----
-base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
-change-id: 20260906-nohmp-next-771b029cc0f2
-
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+Maybe explicitly mark as *placeholder*, so it doesn't get merged
+accidentally?
 
 
