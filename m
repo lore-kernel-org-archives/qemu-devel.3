@@ -1,130 +1,132 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98FE606A32A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D72D606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 13:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TlFUP3ca;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GX/7PpOz
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=nEUMwo05;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BucA+NEH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJW53-0004xr-Op; Wed, 21 Oct 2026 09:10:09 -0400
+	id 1xJWBs-0006xs-H0; Wed, 21 Oct 2026 09:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJW51-0004xZ-0H
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:10:07 -0400
+ id 1xJWBi-0006xL-EK
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:17:03 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJW4y-0003h7-Mq
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:10:06 -0400
+ id 1xJWBf-0004WH-UF
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 09:17:01 -0400
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LBgBE2325180
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:10:02 GMT
+ 69LBg47s325091
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:16:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- we5qFbCv5BxKgZ9S9m4CRft1J3M10rPpWJMXwyiMeZU=; b=TlFUP3caxLd02gIi
- jN1CUpEQhY6YDlxWvloUgg3SX4RJaWGlbIkWAAbjL4Q60Npbii8NLtvjdDa6iHK9
- It3F/q9+rYWOF5xBhUvGNIScdJE9f5fF1LgqfPLWcgnUrXutuFOM2UXiNpWGVGIb
- 5zJ0QrjdYeiuhUViyH7GoEqQIzmMuFxBaWLan7FwmrjKpCWK+zvKIV/RF4DrTlfg
- pzSMKHa6ytiPwSeZ4ukOR0j1DuQjGYEkoQ+kCFlp1NQ9E9yLz0KDU8BoA5Ebki9A
- 93kqKp8xDKaaIFKd1GbXSzWuup6x4M76IGZbNHJPJvUb6JhhuE+6GMcjjhgMRe6d
- 8MOq4g==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hed9v4366-1
+ MFMLOU4cmP0CyfZA2OslwYY+g6yA1v2k0IIgGpUYFas=; b=nEUMwo05QwyWURpz
+ 4ojB7TY0L26Lmqzg12PnQ0A01wfGBWV2PCpbGpOCWNsI0oL+dBvBdOdGpdOkHD+O
+ s0YEel01WkXwZaj2cY66Vd8eiqEEiKySAFfUJLSa4W3Tbni9iM/eJT9hyQXWJVKP
+ 2/v/I5xHuElug7D6pD1WqUd7TRxO0ojKiTXz9gKkNxxfGV2iAT3nr2/leAmq1Ect
+ tHtwlQhT4ClLORZxxD0Ysxjsb+6ndjnY8mQFZ54xp3wJwauAFy/Kr5GxIAMey352
+ yH9KON83fhwfHvN/XeNrE1afr3JQLK8T3QU4Rmf8p4GnpL6xyT8l6J/NXfguMyCW
+ lJPBmQ==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hed9v43xr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:10:01 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e82060977so161383685a.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 06:10:01 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 13:16:57 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-7bf3a6cf1c8so458003137.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 06:16:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792588201; x=1793193001; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1792588617; x=1793193417; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=we5qFbCv5BxKgZ9S9m4CRft1J3M10rPpWJMXwyiMeZU=;
- b=GX/7PpOzmXAx3QQr565bXwtrW2M/BeiRQBJBoVCXfSSGxsS6HE9dYS2ZtPgJOrTAFi
- 6y3S3j95cz5GiTeTSlLsMz94apRkkn+PKR/4Ul053HV8UlZRcmZSlTMk6pGdYbp4FtS2
- ARAUuqsZHAGCtASmJvh8myrAk7J9PSibMMjK/wCIJsUTFu/J6n76ElPephyzcAjcB6in
- nt5BZdArJl4CSkB64H/D3eMX5D1X3O8rBLKGHiOsNFLlGvetvFzzFTcs7hkW4QyMyg1s
- JwMAUHavidrXm9aQsDerhGBEA86v4hd/M90GxOCOT//A1piAdajTzW5iKbONs+YQ/DUN
- rl4w==
+ bh=MFMLOU4cmP0CyfZA2OslwYY+g6yA1v2k0IIgGpUYFas=;
+ b=BucA+NEHTW4BTBpZdaCgHXc4qPoa80iUka1gh0DO4HwWVbCOXzxjZmtmtrzW6V+oxf
+ 5qJVwWHSZH/h97AgAuU1G8gNUD6uvv86/PhSqlQuvT8wEJLk5E4mAsaZuWypAwnCCq5z
+ TdAkBFanguq4ZXDbCWl48hQpXeFqn/TyUKe9CaaCTkQKeSUZr2U2Et1CpAPcTKp6nCQm
+ DAXv/Xpaj2z9j51MDPTrnk02t/8CO+14HhE6EY6ZvuUpeH/XaiHqW6gQL+to4Hm+Zg/M
+ A0RrC+4CW9jbGqLhpsqEomFlCcqYHXEY13w9vCXuBzK8HwT4/haSm++Bdox0rQPctoEV
+ euTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792588201; x=1793193001;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1792588617; x=1793193417;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=we5qFbCv5BxKgZ9S9m4CRft1J3M10rPpWJMXwyiMeZU=;
- b=pNRuax6ZO0/FGvQtjZvBUvTouN5Laz9sgEQ/zRWP5B9hJ0KKFjx+zJzA5DddjlNYei
- 9GIYmhZEzDz8GaJ5IgztZmY8Rd3J9pv9crBfgkAIluBQvlZXobB6OQYO6/QuH2BNJ+qV
- qxPQJ7LF5ypfPQpJEuZCsFyEzq2yIZWJnNbPaCf22JaxV649MLi6ZztweDDR6ra9qfvF
- cx9OmEdERnukBT6EnTvkXnb3re1TGjcaUf4tVb8CLVuQ5sBU7vq4StCi3cEFLcFI+UyW
- xBUQUGRv8AYkfFfv7j/kw4ZAKcKq39dmESDCY5Eu6VkofaId2rTfPWxtJ6P7d+pQtxp5
- g7Rg==
+ bh=MFMLOU4cmP0CyfZA2OslwYY+g6yA1v2k0IIgGpUYFas=;
+ b=ss7nHZC/M6zc66GixSkEhQjwSsy8VZIkkqXSHmPNzQrxQmAjrJY3X5sHGfdE3rsKe7
+ vQ7U7+Da3Nz3NoXBbrr/0LM4f02RIle0A8f6R+Fb1XnztyCxS0X3RUo4R/NYUSYbqsr7
+ rVIDFMyl1jcIGqwEM+IUq07hGKKkcGviOawy3JemteKIro7fd7F90nQvlwSloBvNuR86
+ ElpFioDyIZtDrQfJ5/9ZzJBcF7uzXJyitIZe6cLc07vLskj2YfcovivCjL5ARMKhEQAk
+ L7R59W3mWy73qYR0eUbuDT5PifA3k6l6Smys2OyHBl4MYafOfZmpaeMWiE2cJZ3l/cjI
+ OQ3A==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxpVVjHwFiBUSWB421sSlHLi9FmDOtC+3A4ArYRYS8Aq1kapClOsPGBP7+l4mlkut04M/gQdyOlWpeM@nongnu.org
-X-Gm-Message-State: AFq9FYLGMOFaC/UFDF3fhpzem+NFmnjIL2sg5xzwVp7LUfH3M0VgmqaT
- y9wwZjBeQ6onxYfFsjD1tBfylj79MAp/EepBR6x6nESwWZ1umSPKgmaVWaNsZFPCDKVNOip3hq7
- VCYS+5xXEns119waj4YVDy+FVkPM/LIDGmYpuRIp69yd0jW/qNbJYB/5Q1g==
-X-Gm-Gg: AYBFou1pnzTFOUNk7iW+y6XrDC5jL6rmWq1kV5qdNEOlPLMO1i5J3M0IdArJXq1OnoX
- YUq77oTzMXq3q3Nl4qorFrD7mOLiyEjfd2LjNYA7r8GNEljPNvb8ny8VrVLs+ExRCKNAczy6BEy
- JdM5AaFqunxSVLz1V1ZvzcrWsXU+EEPMR45P7E0pmmbZi0MEjjUuf/uJvV2k/CxS/QAFfHygy5O
- t+3WCGMNGcdTAKqY4XeoYnYVsOZjz+7ZsRmalucsHQ3PQ2ZehQD+2MEFV8EN7PFLHBnPVlKrIyT
- /+whTyFPN8ezIyTmhnaf/Mcn+n1RnMJl5holPd4T/lEw0odNlmC8+x6Hgav7YlAV3ud6S6nbKWA
- CT7+Wd4zCdmg/Cw+X7333SHJW6gq1XuTeDg==
-X-Received: by 2002:a05:620a:28d4:b0:93f:2571:c317 with SMTP id
- af79cd13be357-93f4c78f7a2mr882425085a.28.1792588200932; 
- Wed, 21 Oct 2026 06:10:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:28d4:b0:93f:2571:c317 with SMTP id
- af79cd13be357-93f4c78f7a2mr882416785a.28.1792588200296; 
- Wed, 21 Oct 2026 06:10:00 -0700 (PDT)
+ AKwUvByTFqFkdkzg8BmmDltO857EJwJVkGhIIvFQ1Cry7z7mVYaRje8gIVB6XK3PWP/MrSQ/6OiWJjZRkhJt@nongnu.org
+X-Gm-Message-State: AFq9FYJMWIv7ImLB/+Om+qEhQDvbb6bidLYuc6CbDMKs3mXpq9+jIhz2
+ xGEqXff7PtVC5p66x7ZVsx+uLporpMI5v+mVqyPBilN8l63yBS2zxvo5/GH2hJrTSXIgDgERFFP
+ u+oIYMoxR4g/1BS2RF8cJiLlfJDXxglw407IZeAvipC1XvN6lXIh9zaTSsg==
+X-Gm-Gg: AYBFou2bUiH02YWHxNYa2qbxZOZmHCoYViD9A13vIt1pgN4uxazoVESFdmokwoLyU9B
+ V769Rj28ogPPXmQIdq+xQoyHaE9e/V7NnRW4zuEk0L3uYv9hu8KN6wn4/83mFTvhWBEz6GwjRU6
+ riIedVFpaLFM4QGjO5wHWz3pK05w0/d8GOrtCpY5wX7lN486eX/ztYGf5egGHxxx4HR2hN2j+Kv
+ Dvd/P2RiRG1sbVNqO7rX907v/m1FapN4yke4aD1iE7dDjP7SnCsE1MinbRS9gWX9grB9HMxBIYy
+ EI7lWvqO5D8UiiCCeIZ8I2ElXKl8VpKc4xfjwHzc/4NWA/kPW5bzl7AmMinwXtoHiI0kT3I72VM
+ Xl8o/cd+q68rIJyOQqCiJmwngK8eLW/h63A==
+X-Received: by 2002:a05:6102:4191:b0:7cc:1dbf:a4e with SMTP id
+ ada2fe7eead31-7cc92764e8fmr771882137.34.1792588617260; 
+ Wed, 21 Oct 2026 06:16:57 -0700 (PDT)
+X-Received: by 2002:a05:6102:4191:b0:7cc:1dbf:a4e with SMTP id
+ ada2fe7eead31-7cc92764e8fmr771854137.34.1792588616704; 
+ Wed, 21 Oct 2026 06:16:56 -0700 (PDT)
 Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e2583522esm5596478f8f.35.2026.10.21.06.09.58
+ ffacd0b85a97d-48e2583523asm5489145f8f.37.2026.10.21.06.16.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 06:09:59 -0700 (PDT)
-Message-ID: <5c693f11-6ce5-4c95-805e-c022a7249f97@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 15:09:58 +0200
+ Wed, 21 Oct 2026 06:16:55 -0700 (PDT)
+Message-ID: <963636f3-2eba-46e0-a19e-0a85598ee0c4@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 15:16:54 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Introspecting max32-riscv-cpu after rva23s64-riscv-cpu crashes
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org
-References: <87ld7rmdi6.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: qemu-system-arm dies on introspection of ast2700-a1 and ast2700-a2
 Content-Language: en-US
-In-Reply-To: <87ld7rmdi6.fsf@pond.sub.org>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Anton Johansson <anjo@rev.ng>, Yonggang Luo <luoyonggang@gmail.com>
+References: <87qzhjmft8.fsf@pond.sub.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <87qzhjmft8.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA1MiBTYWx0ZWRfXykisEu8e0038
- Be6Av0FoJ0HWoB8vVn6rqC5ZI69BaXLxThQG9QAGuNb80UIPLq69JsPT8s/ejKMom9i1PdJxefg
- Dp427EgLo713Sn/APuEk+fmDkCfScwk=
-X-Proofpoint-ORIG-GUID: -OiFQILkEGD-UzPFeYKEasu9_SHjNeRP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA1MiBTYWx0ZWRfX68XPlatqc8cV
- IiR2FZY/MFJLn54ktnRo5aCJfTlGt98PUwaLU1Cnns0PDc34Fg50K9bYE29GzCcWMNlo4ODX+0p
- wh/l8qeSo+sbnRa14wWXeaze370tcyfIO9dP1wg3oo0v2McDCHqKYeap99DTR/y/vdRo3uHj8oo
- Ong6hcBQB5JA3RxyPFwrZA7YQhreDtgPQIq9+pLsKaV/NC7l1a7qMthwbWLfN9lHllp+6EizJ/X
- lbhqpyuY5KNom+OszpTZXomKajAhjuo9m+TG+cy6Rk47oGr9XRX5lFSnhG/ArUjZ4HZyt+7rvw5
- W1IAHA3m4XFGPKRcENWjKT/c95PSuLuRiuOwj13DH9KoI/C4APNF8KhU0b0M+ZaK/Sfg+61etBi
- 9nuV+Iw9dHxMO6heeRI+jKQi8A6uWsTdymtuYT6SDCBq5czGFABp1s35AnKJg1xPq1l25M7IaP7
- wi7Tz2sKkqx9pfrciiA==
-X-Authority-Analysis: v=2.4 cv=I6zw19gg c=1 sm=1 tr=0 ts=6ad8b9a9 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA1MiBTYWx0ZWRfX6aj+BfDfaDZL
+ /seTO6dTGDXmtwsfG5IVmuG9n2gXxQ6G1ABlucyNYuqLR0li/fBchYAM3D6Ha7TMoivpruwugLW
+ Sy7IiYISV7NzE6FiVrvwQroTiQyPvzo=
+X-Proofpoint-ORIG-GUID: FEjnSvnSsoZdNaNSdCqgatNwStlpHYSc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA1MiBTYWx0ZWRfX7eSAkN6BQo+D
+ 6XZ4QYYapJgWjyk4M4SmipcCXL4nSzcTj++lxw1q3sEwV67TSxS+VhhdTBNKPe7gHZJ02tUmXIr
+ aSgvWm4muv2f5LjD6eLpQFDdbF7cfexp3vYhQJG6rvZiwgP9ICSXFPt1TGHKVi13qGGZLRmH5wC
+ MUf/2jz+EJHh6R9tmxliwfeBjRgCNLbjVeM92MUSUoYLocUz0AcTS0Bu77RwyMaua5uD3pZL/kw
+ 8fFkCIcnfj/SrUfEpoRZGKpTMqmlYuZ+olG9IKvC4hvq4TZlUuGv9J9fA3TqVzSL0sPOYwJ2jI1
+ nwNg/iotjmQ1h0s54D43hWq7DepFEx2kzH+Qd0AAWegtpC6vD3l4joAtxnE8bPFxajfjiDHFcyj
+ bRApBaLPs7Z/2FwyLpIwQvE6fv/XeiA6fzVqnUMRNj8YP6o4OEZ0dD6xn8RBvRHh9bnR1AuwSa4
+ 3CAekf0ZBVDD8Fsq9NA==
+X-Authority-Analysis: v=2.4 cv=I6zw19gg c=1 sm=1 tr=0 ts=6ad8bb49 cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=JU8QZXDhB6R5nT4ilmQA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: -OiFQILkEGD-UzPFeYKEasu9_SHjNeRP
+ a=x5dM4pBRUn_V6qr4VpEA:9 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
+X-Proofpoint-GUID: FEjnSvnSsoZdNaNSdCqgatNwStlpHYSc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_03,2026-10-21_01,2025-10-01_01
@@ -153,89 +155,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 21/10/26 14:42, Markus Armbruster wrote:
+On 21/10/26 13:52, Markus Armbruster wrote:
 > Watch this:
 > 
->      $ qemu-system-riscv64 -S -nodefaults -display none -M none -qmp stdio
->      {"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 11}, "package": "v11.1.0-2545-g2d150b99ce-dirty"}, "capabilities": ["oob"]}}
+>      $ qemu-system-arm -S -nodefaults -display none -M none -qmp stdio
+>      {"QMP": {"version": {"qemu": {"micro": 50, "minor": 1, "major": 11}, "package": "v11.1.0-2545-g2d150b99ce"}, "capabilities": ["oob"]}}
 >      {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
 >      {"return": {}}
->      {"execute": "qom-list-properties", "arguments": {"typename": "rva23s64-riscv-cpu"}}
->      [Expected output...]
->      {"execute": "qom-list-properties", "arguments": {"typename": "max32-riscv-cpu"}}
->      **
->      ERROR:../target/riscv/cpu.c:516:satp_mode_str: code should not be reached
->      Bail out! ERROR:../target/riscv/cpu.c:516:satp_mode_str: code should not be reached
->      Aborted                    (core dumped) ../qemu/bld/qemu-system-riscv64 -S -nodefaults -display none -M none -qmp stdio
+>      {"execute": "qom-list-properties", "arguments": {"typename": "ast2700-a1"}}
+>      qemu-system-arm: unknown type 'cortex-a35-arm-cpu'
+>      [Exit 1 ]
 > 
-> This is satp_mode_str(VM_1_10_SV39, false).  Interesting part of stack
-> backtrace:
+> Same for ast2700-a2.
 > 
->      #4  0x00007f9d6e7cd447 in g_assertion_message_expr ()
->          at /lib64/libglib-2.0.so.0
->      #5  0x000055801fc2f556 in satp_mode_str
->          (satp_mode=<optimized out>, is_32_bit=<optimized out>)
->          at ../target/riscv/cpu.c:516
->      #6  0x000055801fca193c in riscv_cpu_set_profile
->          (cpu=0x55802e5b8c90, profile=profile@entry=0x5580209732e0 <RVA22S64>, enabled=enabled@entry=true) at ../target/riscv/tcg/tcg-cpu.c:1305
->      #7  0x000055801fca1cf7 in riscv_cpu_add_profiles (cpu_obj=<optimized out>)
->          at ../target/riscv/tcg/tcg-cpu.c:1549
->      #8  riscv_cpu_add_user_properties (obj=0x55802e5b8c90)
->          at ../target/riscv/tcg/tcg-cpu.c:1622
->      #9  riscv_tcg_cpu_instance_init (cs=<optimized out>)
->          at ../target/riscv/tcg/tcg-cpu.c:1741
->      #10 0x000055801fd178a7 in object_init_with_type
->          (obj=0x55802e5b8c90, ti=<optimized out>) at ../qom/object.c:430
->      #11 object_init_with_type (obj=0x55802e5b8c90, ti=<optimized out>)
->          at ../qom/object.c:426
->      #12 object_init_with_type (obj=0x55802e5b8c90, ti=0x55802e2e0250)
->          at ../qom/object.c:426
->      #13 object_initialize_with_type
->          (obj=0x55802e5b8c90, size=<optimized out>, type=0x55802e2e0250)
->          at ../qom/object.c:512
->      #14 0x000055801fd17c5f in object_new_with_type (type=0x55802e2e0250)
->          at ../qom/object.c:710
->      #15 0x000055801fe17276 in qmp_qom_list_properties
->          (typename=0x55802e5ab3d0 "max32-riscv-cpu", errp=0x22c5a0,
->          errp@entry=0x7ffe4a494aa0) at ../qom/qom-qmp-cmds.c:283
+> I found the folllowing in their .instance_init() method
+> aspeed_soc_ast2700_init():
+> 
+>      for (i = 0; i < sc->num_cpus; i++) {
+>          if (qtest_enabled() && !target_aarch64()) {
+>              /*
+>               * Introspection qtest just want to create this object
+>               * without realizing it. ARM_CPU_TYPE_NAME("cortex-a35")
+>               * is not available on 32-bit binary: skip it since we
+>               * won't even realize it.
+>               */
+>              continue;
+>          }
+>          object_initialize_child(obj, "cpu[*]", &a->cpu[i],
+>                                  aspeed_soc_cpu_type(sc->valid_cpu_types));
+>      }
+> 
+> This seems to paper over the bug so make the tests pass.  That's wrong.
+> 
+> .instance_init() must not fail and must not exit(), regardless of
+> context.
+> 
+> object_initialize_child() exit()s when the type doesn't exist, because
+> &error_fatal gets passed to in type_get_or_load_by_name() in
+> object_initialize_child().
+> 
+> The narrow fix is to make type "cortex-a35-arm-cpu" exist, or to make
+> the two bad types "ast2700-a1" and "ast2700-a2" not exist.
 
-Following commit 198265df8a7 ("target/riscv: convert profile CPU
-models to RISCVCPUDef"):
+The ast2700 machines are hidden on 32-bit builds with
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index f3d70afb866..ed88adef452 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -540,6 +540,7 @@ struct ArchCPU {
+   .is_available = target_aarch64,
 
-  typedef struct RISCVCPUDef {
-      RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-+    RISCVCPUProfile *profile;
-      uint32_t misa_ext;
-      int priv_spec;
-      int32_t vext_spec;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 7dcaf72fc14..54fce767657 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1487,6 +1487,10 @@ static void riscv_cpu_init(Object *obj)
-      cpu->env.vext_ver = VEXT_VERSION_1_00_0;
-      cpu->cfg.max_satp_mode = -1;
+but the SoC types they use are not (see commit 89b5f1ed43f
+"hw/arm: filter minimal set of machines" following earlier
+attempt a2239a87339 "hw/arm/aspeed: Do not realize 64-bit
+CPU types under QTest").
 
-+    if (mcc->def->profile) {
-+        mcc->def->profile->enabled = true;
-+    }
+Pierrick, I thought this pattern was solved, can you have a
+look please?
 
-This comes from commit f655704c3df ("target/riscv/tcg: decouple
-profile enablement from user prop") which ought to fix that issue...
+Thanks,
 
-Per-instance update of a shared class field? RISCVCPUProfile should
-really be const there.
+Phil.
 
