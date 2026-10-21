@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72974606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 06:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24FD606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 06:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=fpQNigSg
+	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=lvFo5yZH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJQ6J-00082s-9R; Wed, 21 Oct 2026 02:47:03 -0400
+	id 1xJQ6k-0008GI-G3; Wed, 21 Oct 2026 02:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQ69-00081Y-QW
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:46:56 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQ6C-00081e-1n
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:46:58 -0400
 Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQ68-0005nP-49
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:46:53 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJQ68-0005nO-Gr
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 02:46:54 -0400
 From: Stian Halseth <stian@itx.no>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1792565211;
+ t=1792565210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XXLqwpyD4Aj6S2wrcMvV4OOhYRQhNDwyNDY+eZbZj0Q=;
- b=fpQNigSgdZFcgzR6ZVUz571Rybupn+6cYVY8QBVxruqg8te9sLCmoNCRqyjvbVwW5htUyd
- JRBopsvw5phwJOUexLHQLRsCqow+/tLxb15jvBfGi4t2nfbAqUAyaukFSdxYNS0kpyfmuA
- Y5uT94K1STSeTAQUlAfM3lnazjJpwN0=
+ bh=rQsprD5Zolw8ko4zuu+Uiv2L5dDehzY92S9xhwIHYbM=;
+ b=lvFo5yZHLmq1X5CXUYHAiIf/r3bY6yj92gLkIGwRlOYZw2fKS3Ee9Au+KKJJhI7pb490BF
+ r3ioMC/qjcMDzpTepLj1LQGxKrtc7BmbeBS8IIcx8Y74OXmy/8nNc/89pnFJVfRY/y5u1H
+ tEWJPC8kE6CceY5fBaNTKOHIH+bKdJ8=
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -36,13 +36,14 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Biggers <ebiggers@kernel.org>, Stian Halseth <stian@itx.no>
-Subject: [PATCH v2 2/7] target/sparc: Return CFR when crypto feature is enabled
-Date: Wed, 21 Oct 2026 08:46:35 +0200
-Message-ID: <20261021064640.3591682-3-stian@itx.no>
+Subject: [PATCH v2 1/7] target/sparc: Add crypto feature
+Date: Wed, 21 Oct 2026 08:46:34 +0200
+Message-ID: <20261021064640.3591682-2-stian@itx.no>
 In-Reply-To: <20261021064640.3591682-1-stian@itx.no>
 References: <20261021064640.3591682-1-stian@itx.no>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
  helo=mx.itxnorge.no
@@ -70,64 +71,71 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-ASR 26 returns a Compatibility Feature Register (CFR) when the
-crypto feature is on.  Without the crypto feature, a read keeps
-strand status as before.
+Add a "crypto" feature bit gating the OSA 2011 cryptographic
+instructions (AES, SHA-1/256/512, CRC32C, CFR in ASR 26).
+Off by default; no CPU model enables it yet; can be set
+explicitly with "-cpu ...,+crypto". SPARC64 only.
 
-Return an empty CFR. Each instruction patch sets its bit.
-Guests can read the CFR before using each crypto instruction.
-
-Based on OSA (Oracle SPARC Architecture) 2011:
-- 5.5 (Ancillary State Registers), table 5-8
-- 5.5.11 Compatibility Feature Register (CFR), table 5-15
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Stian Halseth <stian@itx.no>
 ---
- target/sparc/insns.decode |  5 ++++-
- target/sparc/translate.c  | 14 ++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ target/sparc/cpu-feature.h.inc | 1 +
+ target/sparc/cpu.c             | 3 +++
+ target/sparc/translate.c       | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 242ec42016..55f8528ffe 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -106,7 +106,10 @@ CALL    01 i:s30
-     RDTICK_CMPR     10 rd:5  101000 10111 0 0000000000000
-     RDSTICK         10 rd:5  101000 11000 0 0000000000000
-     RDSTICK_CMPR    10 rd:5  101000 11001 0 0000000000000
--    RDSTRAND_STATUS 10 rd:5  101000 11010 0 0000000000000
-+    {
-+      RDCFR           10 rd:5  101000 11010 0 0000000000000
-+      RDSTRAND_STATUS 10 rd:5  101000 11010 0 0000000000000
-+    }
-   ]
- 
-   # The v8 manual, section B.30 STBAR instruction, says
+diff --git a/target/sparc/cpu-feature.h.inc b/target/sparc/cpu-feature.h.inc
+index be81005237..4a32f49de4 100644
+--- a/target/sparc/cpu-feature.h.inc
++++ b/target/sparc/cpu-feature.h.inc
+@@ -16,3 +16,4 @@ FEATURE(FMAF)
+ FEATURE(VIS3)
+ FEATURE(IMA)
+ FEATURE(VIS4)
++FEATURE(CRYPTO)
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index ae9bdca9df..528a9d2bd8 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -560,6 +560,7 @@ static const char * const feature_name[] = {
+     [CPU_FEATURE_BIT_VIS3] = "vis3",
+     [CPU_FEATURE_BIT_IMA] = "ima",
+     [CPU_FEATURE_BIT_VIS4] = "vis4",
++    [CPU_FEATURE_BIT_CRYPTO] = "crypto",
+ #else
+     [CPU_FEATURE_BIT_MUL] = "mul",
+     [CPU_FEATURE_BIT_DIV] = "div",
+@@ -977,6 +978,8 @@ static const Property sparc_cpu_properties[] = {
+                     CPU_FEATURE_BIT_IMA, false),
+     DEFINE_PROP_BIT("vis4",     SPARCCPU, env.def.features,
+                     CPU_FEATURE_BIT_VIS4, false),
++    DEFINE_PROP_BIT("crypto",   SPARCCPU, env.def.features,
++                    CPU_FEATURE_BIT_CRYPTO, false),
+ #else
+     DEFINE_PROP_BIT("mul",      SPARCCPU, env.def.features,
+                     CPU_FEATURE_BIT_MUL, false),
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index b93feb074b..a1562f5047 100644
+index 3156be6a94..b93feb074b 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -3022,6 +3022,20 @@ static TCGv do_rdstrand_status(DisasContext *dc, TCGv dst)
+@@ -2507,6 +2507,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS3(C)    ((C)->def->features & CPU_FEATURE_VIS3)
+ # define avail_VIS3B(C)   avail_VIS3(C)
+ # define avail_VIS4(C)    ((C)->def->features & CPU_FEATURE_VIS4)
++# define avail_CRYPTO(C)  ((C)->def->features & CPU_FEATURE_CRYPTO)
+ #else
+ # define avail_32(C)      true
+ # define avail_ASR17(C)   ((C)->def->features & CPU_FEATURE_ASR17)
+@@ -2524,6 +2525,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS3(C)    false
+ # define avail_VIS3B(C)   false
+ # define avail_VIS4(C)    false
++# define avail_CRYPTO(C)  false
+ #endif
  
- TRANS(RDSTRAND_STATUS, HYPV, do_rd_special, true, a->rd, do_rdstrand_status)
- 
-+/* CFR bits (OSA 2011, 5.5.11) */
-+#define CFR_AES         (1 << 0)
-+#define CFR_SHA1        (1 << 5)
-+#define CFR_SHA256      (1 << 6)
-+#define CFR_SHA512      (1 << 7)
-+#define CFR_CRC32C      (1 << 11)
-+
-+static TCGv do_rdcfr(DisasContext *dc, TCGv dst)
-+{
-+    return tcg_constant_tl(0);
-+}
-+
-+TRANS(RDCFR, CRYPTO, do_rd_special, true, a->rd, do_rdcfr)
-+
- static TCGv do_rdpsr(DisasContext *dc, TCGv dst)
- {
-     gen_helper_rdpsr(dst, tcg_env);
+ /*
+
+base-commit: 11661d857254b27fca5568c6deacf4f6b6f3460f
 -- 
 2.43.0
 
