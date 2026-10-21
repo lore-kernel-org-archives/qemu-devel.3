@@ -1,137 +1,137 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809E8606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 23:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EA1606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 23:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YFywT4/s;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kPblbLtw
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GWOrofWG;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=VpmY5+/+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJfWN-0007yB-OB; Wed, 21 Oct 2026 19:14:59 -0400
+	id 1xJfVv-0007YO-6Z; Wed, 21 Oct 2026 19:14:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJfWB-0007n7-Lw
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xJfVt-0007XM-DR
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJfW9-00051s-UI
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:47 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1xJfVr-0004zv-F3
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 19:14:29 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LKf4Go1503340
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:34 GMT
+ 69LKeO2I1723153
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=moKJmcI+1OW
- uFQACzWAx/lqmUGHiR02qlhQGMZuwecQ=; b=YFywT4/s9HgL6vkaXLfBMQWH99E
- PR5k3ibfvyvahBC59c4shqjJEsNg8HjgYx10jgRRnB+qwu0+HKfTwqdsOGgdTSvs
- lpFjFxLp8pPIddGyqlSVq0EsipznJsx5Wk2y7tl/CkiPFs2t9DFp2aU54LZwuf9J
- 3n8SnyvMfhdu229GvQ3x2/Kz7zgpb+jHXXaDCpbbPBFEDLbsnFMz4w5dVwYVcrSo
- cJcvAVd2RnwjKf4O57skCZhIIDslJRiWRWFZX3R42o3du+KBQR1flWBjr1T9ItFt
- nsmfiB/5nYHXsmZUNPwtfI71Bou8Z07mcAmvFa0pljW99JiDDE5paopOqQQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf0k2hgab-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=bzFIQRElvAD
+ RWus62g5u6DUWVHkFSdL6BCzGT/m056g=; b=GWOrofWG7YMpCWCR2o2Jqo91XmA
+ 7/t7C58Me36Wlqnra8Q7kG2LSk1c9DCiX+VJY0SE/uzTzsTN8eM5CbG2aN/azwST
+ 7iujPlI8V1i4AF5IIX1AK9oVDqxKj8BqriC7+/kA2vffSFZlx4taM7psD6OJtWt9
+ Wysax4zStf73X5lfmE2hUrj4oE627W5nwliQdyezi1G9zTxcwkjnKy55L85Xe3uV
+ T3tdz2BzUm3dzpE6NeQ2a1VmJ2fOU42reiDbe4PRw/JbXDZK0ERDBrjPlMQouoZ4
+ 27ajbqLv88LSUu4rY5D/I6tg6W5hfDnUOv18Xi1roQOOnFTanwu2OmHKY/Q==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hetj4b5cm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:34 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-53635e21ddaso17157591cf.2
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:14:34 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 23:14:26 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5338c215ed2so18893201cf.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 16:14:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792624474; x=1793229274; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792624465; x=1793229265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=moKJmcI+1OWuFQACzWAx/lqmUGHiR02qlhQGMZuwecQ=;
- b=kPblbLtwrqlmA3aAxfiLqC9K/vx1Y1k9hJ7+a/OTNaKaeq6TjVqwccoUFbSv0dasqH
- 0hEy7+nqBYW4y3tuMBlBEt8u/Sm2Vxg19o/GY8epr1CgRQPd9SvFuf//n3dZnNVwgJsH
- ktRku6igXJzKdOrbcWvI1XsaAD3owHyUQyO86mEqdIOOMJhjB3MUrYrv1KCIsyx2fXEz
- xmyI1UIJUAeT4IgQqv4A4SrZW5oR65/Tfdw1UmIg/kKaFensCfHR++wH78Dsqyh4Nx8X
- IrHJwXJ5517JFqjNytuJ4O2V/9JA5QmmI5VpKJH9arWAZ7ifaibsv7ePTi/OTEnngIBY
- m+ng==
+ bh=bzFIQRElvADRWus62g5u6DUWVHkFSdL6BCzGT/m056g=;
+ b=VpmY5+/+z0LHzW1kAzRyCeuCAPrQXc4YYe3j02kpqI+3kiR5TaC7MvmTg0v4XVZB9N
+ fQaqG+picmWPka7JHhduxPj7jix5I00t7wNP92TrIcEISuZBMR0n+YlVvy3X0nvzDd/h
+ u0yOUwd4rq07NS6P3d6N5zNfhvL5NOIhavNAsrkSytQJnu36LJrhm9fBMHVjTHEUh9Bj
+ nKdiMicXjRQuyOAnTywdOS6Gcj+SmsH+Hm2u8ezkRs9/FIhKuSZ/weRvblymkG5Ri6zR
+ KEiSVieNCrIfOT7dPnscm6CSnzkGsOx/rrzD+GjoJwBuGxxBNl1UjFpI9GSyngd8wHU7
+ n7Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792624474; x=1793229274;
+ d=1e100.net; s=20260707; t=1792624465; x=1793229265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=moKJmcI+1OWuFQACzWAx/lqmUGHiR02qlhQGMZuwecQ=;
- b=DQSixrkcm2wWIonPgrNCiQmWJlMiOmQ5aY4btD0OFKdRvYueaw8bPsGz779nChMBMD
- +QWXir8TjDegsmYZKYsAf1t53Ab+Xs1d3+/QYRY7GwRMF6y6tm8OHCO5zF/uJ2cauyHS
- rQ/UIH3LjLBycsgUBjzX3s9JwyeShAPY01TlkB4QgVeoiSS59hvDD4mVWu47bWnuDEr4
- GvJeZB3LfpdJAhU1EAP0KkAGM3nQ1E04byns05XlY4nmMIcqJBYKnpTJovJHDgjdumVn
- 3/8h3c0hYb7Z/e2G8WmxoeAsrAY9+cbpaHRmZzRaHqgLGk3cs4hDVRMEUO5w5L39kJej
- adFg==
-X-Gm-Message-State: AFq9FYI1YqkvYYTZqiALsQzjRw1NX+6qDX96NKlWWSDETpquN3ItnZLJ
- f8enTdah434vv5u32Cj90NoRNKPpCPdfOhJEDEaBM+6sLFuxgRM0hkoohs0wVZcOYrc5Ws3j13Q
- FwfRV/u1uTDvH4YV+fqdj5IczupYqKD0z4mwnFq92MDiGof0AbTqaAT0AIlH+h5tCjg==
-X-Gm-Gg: AYBFou1CdVU3GiH4RVc9iZMOPBYZh8vjKIvTOi0zMcywMe8vqd7npZApLxwHyDyNY+f
- uKgfvNAbxN/MZvYWj3d+krILUG0ndOOTRyL6eYfEJm2a+XWzIM8m22gTkVuPuwO4KyXNntXt1d1
- qgS5mcFUdjhb7GqAIkfOPKW0Te9nXAa6p/sQxEo2d2sRQTW56gwEK5cVGDB6MBHkO/afB4dH+Ev
- pc2gbRvFxNQ7Jsp47aMOHDfSeJRNVQ5BhddBOB83cHXMaLplY/gBUpmNTIgdeh96kjUBegYwHSk
- Fs+6aMHkk8ihEFl+PGqQF/ecoMZjkaosZpLYvl57dGJo3/pnqgl2fJqYXT2+XMcFRj2ZIlYXs0g
- IRt/3s2Bl7YLZEN5mwc3ElNpcUlHXX6I8kF1dAPxsOMOc/v5wivL1sPp6K2berb3+HG3JymO4sQ
+ bh=bzFIQRElvADRWus62g5u6DUWVHkFSdL6BCzGT/m056g=;
+ b=XtLNXH5AiDfzlq2yhgbfPTiwV3RcnKxi0OdfEtZ9gLpvTwABWpRF5zlH+VAbwj9fu/
+ N2pASNOTdVkq4/rYsHxe+5Lna8Gvs8+GouoOFAo9+xDCfbVW0Adn+TmzhecQJH5OPhvh
+ XbFdnGZxRrg2SmIdDK6aYtHd5EmK/uqNdENueDb8MjSkcXptWAUxR1+lIU5e6joPUkrM
+ yD5Pv+wDKWFrzceExDaEz/W49NnPScGpqmfDLLp07aQ0SeXA4ob8H+TAkBsNfGHA8crp
+ SXj1lgSI8A8IDg4mCxFKte/9EnW+ojtzrEWhEMSayEw+yvhskYnAgEZWN385j2cbGsdX
+ Aksg==
+X-Gm-Message-State: AFq9FYJ0HEWkNf0Xfe3+xcfIGOP78eLkEaeLW820xfb+Z88+kHEjlNMZ
+ mPozx4kJnGWcYcry3gpC4/5B6YZ/uj5vwA2DVXmTZLpQo5Sl9rH3nkKAPMrojfgs6GdY275Eh5W
+ ufKEYvzBInNlPdGSDclkKr9B9QqPAg4i5mNVAqkQ6Sxz+qU64quJY+aq/XOKf9olndw==
+X-Gm-Gg: AYBFou26scgVEz7EJdI6/Ei4EOBoQnsh9N6PlObySiXMZjMzgQc+SrrQO4nzo1Z1XUP
+ 2n6HinghyS0BKES2rXfCRAFsAnVRP3RCe3V/vYf/7gNbMdZ2l88CSI83MtiYWQE1pFmdp6XNo+K
+ +AWDE8j7DmIzWUw7WbMCEPtDOGDNT0RPMpzsiKUv7VccOlZJ+ntNQTdjcPGYSkCEiK6vEphWarJ
+ 4v2EU1Tkq8Jc3zw5NMagE8d7ZFKyb+19L9aMhqqjKvpBsFIu1vod5r27gGoMpT0MMbGDm+xQozk
+ 0EY9mso4fU6HKElN4TUaTBqfj6mZD+943cwXpJkIIrXmfINqfnkBqRuMUn7pBf4/F9H+bwAUIeM
+ FNVYAPahHfVJQlM5kOCNzaUQCw8w901Afa8gK0MxaA/SDDXMefDaVyxzbWvqZzmZkSLELZZXw2g
  ==
-X-Received: by 2002:a05:622a:301:b0:533:3627:49fd with SMTP id
- d75a77b69052e-5369b8055a9mr64006971cf.18.1792624473520; 
- Wed, 21 Oct 2026 16:14:33 -0700 (PDT)
-X-Received: by 2002:a05:622a:301:b0:533:3627:49fd with SMTP id
- d75a77b69052e-5369b8055a9mr64006631cf.18.1792624473068; 
- Wed, 21 Oct 2026 16:14:33 -0700 (PDT)
+X-Received: by 2002:ac8:5d45:0:b0:535:f20:c828 with SMTP id
+ d75a77b69052e-5369b6176cdmr60746081cf.24.1792624465070; 
+ Wed, 21 Oct 2026 16:14:25 -0700 (PDT)
+X-Received: by 2002:ac8:5d45:0:b0:535:f20:c828 with SMTP id
+ d75a77b69052e-5369b6176cdmr60745661cf.24.1792624464631; 
+ Wed, 21 Oct 2026 16:14:24 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com
  (200-204-190-237.dsl.telesp.net.br. [200.204.190.237])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536ab6cd0dcsm11995651cf.6.2026.10.21.16.14.30
+ d75a77b69052e-536ab6cd0dcsm11995651cf.6.2026.10.21.16.14.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 16:14:32 -0700 (PDT)
+ Wed, 21 Oct 2026 16:14:24 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  antikostya2@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v4 12/18] target/riscv, hw/riscv: send trace ppccd packets
-Date: Wed, 21 Oct 2026 20:13:39 -0300
-Message-ID: <20261021231346.2452179-13-daniel.barboza@oss.qualcomm.com>
+ Palmer Dabbelt <palmer@dabbelt.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v4 09/18] test/qtest: add riscv-trace-test.c
+Date: Wed, 21 Oct 2026 20:13:36 -0300
+Message-ID: <20261021231346.2452179-10-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
 References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX7V6Gfz9GRLsU
- VtZnW+Gv478mqiK4hIrHvGXZELfxwU7X7SqKkfz6qJESGi166EvjF+pAwPNe85LbuoX1+JhrV/Z
- hGSViDDqsma2CwNXmz/slTXVu5wNdio=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX4XS4D0GQHuzn
- HPlF6er20dcRvgOhmviIqO2yhrKJu5tYPc0HhcuKgzDLy6ANrBtgZWupN0SRPMNX3C+7NatcVrx
- fydhadmWwrxcNk+aQ+XsXgkdddJRi6oMoumRnPjyDdlbrWw4v1ypnQvt9WaUhDbM9YWm3wSli9c
- wMRbd2JA6j3IKZ7hSAsz11PZSfc3HSFIlumhQ/pVvTOu51fAygasT6pVf31OcyXKYC6Vx3iu/ph
- Cz/uxQU2zypdCz1BK7pfw60KusdP10BsFlcZls0DIHXQAff7qbiaBy+F7VofklHKwnfkJDF+shs
- hMzXWq8GAoE/oQ8NQNIeaaUWqUB+vxKiPNSmHE5IClrxoR1hrPQEsHFPOQ+WUKRQy1Sv2S8OlKu
- WlYtjtTGNSEBiOCm11UpQtjVyao37L/O/nB5eqyiP/GQkz6Vjf6S9SKrJSyUxcQI04nJPEfNk4w
- r0rZzLpjMqs3nPig9tg==
-X-Proofpoint-ORIG-GUID: x6fXZMklyFMhJutTbess6u_OwZfzjABc
-X-Proofpoint-GUID: x6fXZMklyFMhJutTbess6u_OwZfzjABc
-X-Authority-Analysis: v=2.4 cv=K/+3jCWI c=1 sm=1 tr=0 ts=6ad9475a cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+X-Proofpoint-ORIG-GUID: k_zjlGvW7hw9ZImKbd4pzI-PARUCsDjg
+X-Proofpoint-GUID: k_zjlGvW7hw9ZImKbd4pzI-PARUCsDjg
+X-Authority-Analysis: v=2.4 cv=N768hG9B c=1 sm=1 tr=0 ts=6ad94752 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=AAlH0JvuWwwlC_hcYokA:9 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=3p2-zMZ1ap-INAhg5P8A:9 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX5B8Aby9j5Inn
+ lndDQ9YXDTZUI2uthaxAZuQ9l0s9eD1rIGyFzwb/46hNT0EVXhBC4xn8BLeuTNTq5xGdLn4yZNl
+ FyY0TaG3Cr8yx18QpOUHt1bfwiFv2dmqGsqU5rsugsolVIMr4Q4skeW/qgVaPBY79InmZFx2iZ0
+ 4lRiQT1oG6uz4lG6KSDGZJ4Y0kPj0A5BsEHqUDBDnV+7tAQHVEuWSCWBeNcZkmH94cbGnWC26J4
+ EOp+m52Tg3ldVrHSzySaUALSgWXFYuzEwy6nDGAqZTdN9O+APRj8FsBwr0CKSq3+/PpGwNbKr7t
+ +vwudB4l25aFGjVYFrkuKqsFwvpzFRfyFIc+985T71LOZ0jLOkOXlqe//hVrIKpJ1F6kCwjBzKw
+ Z/OmbyucEBDX84TNdA5aq3ZKrYp7w3rIZjNUjGqOY0PMLTx5qSoRTtA7Zbp3EpMyzf3sXmXmhU1
+ xWSZqj4dgdbheKi/w5Q==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA5MiBTYWx0ZWRfX0TJCp6V7hWzq
+ vvgBoAHv75BslZemBQPw7diGTcjvMIEFRjZAwNfNg/lqRBSJcgkwcOgvk5i5cHTvznIslN/kJw3
+ 4X/IDStPqzu7wKqAWUWNpeZUUx8HmWU=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610210092
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ priorityscore=1501 clxscore=1015 malwarescore=0 suspectscore=0 phishscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610210092
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,105 +153,174 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The ppccd (privilege change) trace packets consists of sync packets like we
-already sent during trace start and resyncs.
-
-The privilege change is being fetched via riscv_cpu_set_mode().
+Add a simple smoke test for the trace encoder/trace ram sink integration
+with the RISC-V 'virt' machine.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- hw/riscv/trace-encoder.c      | 18 ++++++++++++++++++
- hw/riscv/trace-encoder.h      |  1 +
- target/riscv/tcg/cpu_helper.c | 13 ++++++++++++-
- 3 files changed, 31 insertions(+), 1 deletion(-)
+ hw/riscv/virt.c                |   2 +-
+ tests/qtest/meson.build        |   2 +-
+ tests/qtest/riscv-trace-test.c | 120 +++++++++++++++++++++++++++++++++
+ 3 files changed, 122 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/riscv-trace-test.c
 
-diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-index 0e912952eb..b2e2707e0c 100644
---- a/hw/riscv/trace-encoder.c
-+++ b/hw/riscv/trace-encoder.c
-@@ -390,6 +390,19 @@ static void trencoder_send_message_smem(TraceEncoder *trencoder,
-     trencoder_update_ramsink_writep(trencoder, dest, wrapped);
- }
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 6bc8d384ec..60d1ab3a90 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -889,7 +889,7 @@ static void virt_machine_init(MachineState *machine)
+                                 hart_count, &error_abort);
+         sysbus_realize(SYS_BUS_DEVICE(&s->soc[i]), &error_fatal);
  
-+static void trencoder_send_sync_msg(Object *trencoder_obj, uint64_t pc)
-+{
-+    TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
-+    TracePrivLevel priv = trencoder_get_curr_priv_level(trencoder);
-+    g_autofree uint8_t *msg = g_malloc0(TRACE_MSG_MAX_SIZE);
-+    uint8_t msg_size;
-+
-+    trencoder->first_pc = pc;
-+    msg_size = rv_etrace_gen_encoded_sync_msg(msg, pc, priv);
-+
-+    trencoder_send_message_smem(trencoder, msg, msg_size);
-+}
-+
- void trencoder_set_first_trace_insn(Object *trencoder_obj, uint64_t pc)
- {
-     TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
-@@ -421,6 +434,11 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
-     trencoder_send_message_smem(trencoder, msg, msg_size);
- }
- 
-+void trencoder_trace_ppccd(Object *trencoder_obj, uint64_t pc)
-+{
-+    trencoder_send_sync_msg(trencoder_obj, pc);
-+}
-+
- static const Property trencoder_props[] = {
-     /*
-      * We need a link to the associated CPU to
-diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
-index 75645218ba..64e19c5752 100644
---- a/hw/riscv/trace-encoder.h
-+++ b/hw/riscv/trace-encoder.h
-@@ -50,5 +50,6 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
-                                uint64_t pc, uint32_t ecause,
-                                bool is_interrupt,
-                                uint64_t tval);
-+void trencoder_trace_ppccd(Object *trencoder_obj, uint64_t pc);
- 
- #endif
-diff --git a/target/riscv/tcg/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-index 8bacf0ca59..f23b89ccf2 100644
---- a/target/riscv/tcg/cpu_helper.c
-+++ b/target/riscv/tcg/cpu_helper.c
-@@ -943,11 +943,22 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
- {
-     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
- 
-+    CPUState *cs = env_cpu(env);
-+
-     if (newpriv != env->priv || env->virt_enabled != virt_en) {
-         if (icount_enabled()) {
-             riscv_itrigger_update_priv(env);
+-        if (tcg_enabled()) {
++        if (tcg_enabled()  || qtest_enabled()) {
+             virt_init_socket_trace_hw(s, i);
          }
  
-+        if (newpriv != env->priv) {
-+            RISCVCPU *cpu = RISCV_CPU(cs);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 019c63ca60..b1249eb733 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -311,7 +311,7 @@ qtests_s390x = \
+ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
+-qtests_riscv64 = ['riscv-csr-test'] + \
++qtests_riscv64 = ['riscv-csr-test', 'riscv-trace-test'] + \
+   (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+diff --git a/tests/qtest/riscv-trace-test.c b/tests/qtest/riscv-trace-test.c
+new file mode 100644
+index 0000000000..8015a00b76
+--- /dev/null
++++ b/tests/qtest/riscv-trace-test.c
+@@ -0,0 +1,120 @@
++/*
++ * Testcase for RISC-V Trace framework
++ *
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+            if (cpu->trencoder &&
-+                TRACE_ENCODER(cpu->trencoder)->trace_running) {
-+                trencoder_trace_ppccd(cpu->trencoder, env->pc);
-+            }
++#include "qemu/osdep.h"
++
++#include "qemu/timer.h"
++#include "qemu/bitops.h"
++#include "libqtest.h"
++#include "hw/core/registerfields.h"
++
++/* taken from virt machine memmap */
++#define TE_BASE   0x3020000
++#define TRAM_BASE 0x6000000
++
++REG32(TR_TE_CONTROL, 0x0)
++    FIELD(TR_TE_CONTROL, ACTIVE, 0, 1)
++    FIELD(TR_TE_CONTROL, ENABLE, 1, 1)
++    FIELD(TR_TE_CONTROL, INST_TRACING, 2, 1)
++
++REG32(TR_RAM_START_LOW, 0x010)
++    FIELD(TR_RAM_START_LOW, ADDR, 0, 32)
++REG32(TR_RAM_START_HIGH, 0x014)
++    FIELD(TR_RAM_START_HIGH, ADDR, 0, 32)
++
++REG32(TR_RAM_LIMIT_LOW, 0x018)
++    FIELD(TR_RAM_LIMIT_LOW, ADDR, 0, 32)
++REG32(TR_RAM_LIMIT_HIGH, 0x01C)
++    FIELD(TR_RAM_LIMIT_HIGH, ADDR, 0, 32)
++
++REG32(TR_RAM_WP_LOW, 0x020)
++    FIELD(TR_RAM_WP_LOW, WRAP, 0, 1)
++    FIELD(TR_RAM_WP_LOW, ADDR, 0, 32)
++REG32(TR_RAM_WP_HIGH, 0x024)
++    FIELD(TR_RAM_WP_HIGH, ADDR, 0, 32)
++
++static uint32_t test_read_te_control(QTestState *qts)
++{
++    return qtest_readl(qts, TE_BASE + A_TR_TE_CONTROL);
++}
++
++static void test_write_te_control(QTestState *qts, uint32_t val)
++{
++    qtest_writel(qts, TE_BASE + A_TR_TE_CONTROL, val);
++}
++
++static uint64_t test_read_tram_ramstart(QTestState *qts)
++{
++    uint64_t reg = qtest_readl(qts, TRAM_BASE + A_TR_RAM_START_HIGH);
++
++    reg <<= 32;
++    reg += qtest_readl(qts, TRAM_BASE + A_TR_RAM_START_LOW);
++    return reg;
++}
++
++static uint64_t test_read_tram_writep(QTestState *qts)
++{
++    uint64_t reg = qtest_readl(qts, TRAM_BASE + A_TR_RAM_WP_HIGH);
++
++    reg <<= 32;
++    reg += qtest_readl(qts, TRAM_BASE + A_TR_RAM_WP_LOW);
++    return reg;
++}
++
++static void test_trace_simple(void)
++{
++    QTestState *qts = qtest_init("-machine virt -accel tcg");
++    double timeout_sec = 0.5;
++    uint64_t reg_tram_start, reg_tram_writep;
++    uint32_t reg;
++
++    reg = test_read_te_control(qts);
++    reg = FIELD_DP32(reg, TR_TE_CONTROL, ACTIVE, 1);
++    test_write_te_control(qts, reg);
++    reg = test_read_te_control(qts);
++    g_assert(1 == FIELD_EX32(reg, TR_TE_CONTROL, ACTIVE));
++
++    reg = FIELD_DP32(reg, TR_TE_CONTROL, ENABLE, 1);
++    test_write_te_control(qts, reg);
++    reg = test_read_te_control(qts);
++    g_assert(1 == FIELD_EX32(reg, TR_TE_CONTROL, ENABLE));
++
++    /*
++     * Verify if RAM Sink write pointer is equal to
++     * ramstart before start tracing.
++     */
++    reg_tram_start = test_read_tram_ramstart(qts);
++    g_assert(reg_tram_start > 0);
++    reg_tram_writep = test_read_tram_writep(qts);
++    g_assert(reg_tram_writep == reg_tram_start);
++
++    reg = FIELD_DP32(reg, TR_TE_CONTROL, INST_TRACING, 1);
++    test_write_te_control(qts, reg);
++    reg = test_read_te_control(qts);
++    g_assert(1 == FIELD_EX32(reg, TR_TE_CONTROL, INST_TRACING));
++
++    g_test_timer_start();
++    for (;;) {
++        reg_tram_writep = test_read_tram_writep(qts);
++        if (reg_tram_writep > reg_tram_start) {
++            break;
 +        }
 +
-         riscv_pmu_update_fixed_ctrs(env, newpriv, virt_en);
-     }
- 
-@@ -968,7 +979,7 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-     if (riscv_has_ext(env, RVH)) {
-         /* Flush the TLB on all virt mode changes. */
-         if (env->virt_enabled != virt_en) {
--            tlb_flush(env_cpu(env));
-+            tlb_flush(cs);
-         }
- 
-         env->virt_enabled = virt_en;
++        g_assert(g_test_timer_elapsed() <= timeout_sec);
++    }
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/riscv-trace-test/test-trace-simple",
++                   test_trace_simple);
++    return g_test_run();
++}
 -- 
 2.43.0
 
