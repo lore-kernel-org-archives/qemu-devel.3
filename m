@@ -1,100 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF94606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 18:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B712606A319
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 18:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HXkc0gBH;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UvC+9j6V
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ilAwXSTu;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=i92Rqfhn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJb9t-0000Ya-Ml; Wed, 21 Oct 2026 14:35:29 -0400
+	id 1xJbAM-0000c4-OZ; Wed, 21 Oct 2026 14:35:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJb9r-0000YB-Rr
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:35:27 -0400
+ id 1xJbAK-0000bD-FT
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:35:56 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJb9p-00025h-Vl
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:35:27 -0400
+ id 1xJbAI-00027e-M9
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 14:35:56 -0400
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69LHpHg41135444
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:35:23 GMT
+ 69LHpOOl1136212
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:35:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xCX46VFmx1bwUB67OuJI0vc27Wx/NwDF8kL5KC9TSLI=; b=HXkc0gBH0j3ExyEa
- QTFx0GMpg1Dlfrnj+T/KI17r6G6u9kKdKG4GUPKGyU4JnHo1OHliIX8St7FyYbw4
- hvhYLjCtRxspeydqIw8FxVHRg/w5uHwNEokb3Ehq+GS8/GLnu6qRTBLBxCAKvX83
- 6EHk+rYbkyXhK4QNhOXXQPfoXY+v0gcpa0iy8bqKXxgL3AIiY7PnSQhensJL20wT
- h9FxWV2vDG8/66XRgrYE9TqwWEIooFTR+UaXdo0IBe/iwNk/pBdGGPIeLF/Y+xLt
- Mdt1UrmGJ+pBvFr91kt0L0jz29CyW+3WmEnsJaDfoPlVa5ixgsLpZguKLjUTRXDe
- Znvf2A==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf0k2gmxv-1
+ 2hVNjtHuSlv2Dnbiq2xJsihuQ2Tal8Cr9fT/Z1dg3ik=; b=ilAwXSTuXp7c1nF/
+ 24bOREMIQa9VISJnSzaHKfrpQXa+ed4JwU7kDZp19G8Ij4TwADicreUqPzLuL5zi
+ a76THVOOSCos8WBppNB6rVATjIfbObNfhwWacoQhaLhZYLUoOm4XZ9M22Utr+ju9
+ Qmn/Mt646xWg1BmDBleTXhZAo3QFoFLu1HqZGsgUMBfQhGSvExM6ZV6Aq2TLWApO
+ 5OWG84YTYQEALFtWNCZ1yL0UQTkHS4jpwpwHnUqdvmOiPKoOpSkU6RjG6k2/pQq+
+ W9OJ41eY49G6axmxit5Skwj+y3V3E0h7REhXy+PniZOX2xVTx8or6ehNBU770MzQ
+ /m/u+g==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf0k2gn11-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:35:23 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5337b591609so15670401cf.3
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 11:35:23 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 18:35:53 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5337ed1ba44so21299991cf.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 11:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792607723; x=1793212523; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792607753; x=1793212553; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xCX46VFmx1bwUB67OuJI0vc27Wx/NwDF8kL5KC9TSLI=;
- b=UvC+9j6VyhjFSi8rVLWE6K+NZ2wjJOH0rFIC3OOQ9j1p+3v6rHQz5mKg0KrD/CodFd
- RgILxRc5wMvVWrh5APKBtunSkrgfJeZkX8IBJLLq3qll5ZGqmRis1zPoknqwkt99YVvI
- w0srwLUqXp3Vztufvm5BawO365udqL3NPzKeUq58cOUOfPUL7HikuBW+gAUQu8yvLscZ
- MwGLyAlt5/p3WpXG0PrU2UauvhvQY5rkRLej4Dd9qgtx7UcQ0m65Z8m7yP0IWJfBdABE
- Qu7xbklYr8sV7a9t0wDM5YDy8Nu6e2UWNzmCz7ulEIkIhufst86mnFmNZaiKQ+hGVHt/
- ylHg==
+ bh=2hVNjtHuSlv2Dnbiq2xJsihuQ2Tal8Cr9fT/Z1dg3ik=;
+ b=i92Rqfhn5OJQT13oIRQZ36077DreEteT/Mu1nplS3VKVB9m59BC/FPy6mbhew5X/V8
+ E2c+IZJWA/CoPDnSAKrI/WFblQqjxdXJbqY1KWZ24EnDslw4VwLp49T2aAzefQR2zf8K
+ vFwSSKmvS3zjDKyVEqn6bT4g5lPyqFWQRqOLdmyTcq+BfdxFJZelJfOeVqvtZrYusfcn
+ /G65KAopQwgHQhPrD3t/yVC6xArHzOCA7L0sLQuCMUOPBWvU88Ft3rE+UVS5aCyfx4P3
+ SUCgl8arAQ9+lU4RM3hk1f6Pl2Yu1mBULvAkSzem9yTRGfAIQBP0VbJ919CtF9Jfx+TK
+ XpoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792607723; x=1793212523;
+ d=1e100.net; s=20260707; t=1792607753; x=1793212553;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xCX46VFmx1bwUB67OuJI0vc27Wx/NwDF8kL5KC9TSLI=;
- b=b62mT4uErtnYyBq3Jnc+QlBI2t3Rb62JLtcibDT06uq6HNiSqYLfrMRZlPsnnERs5/
- mW0gBef5pGaZa5D1iPTYWKK4cogW/U08veSS8e+90UgLYqadZ6YvMfgOrw8aC5oOrbGd
- aqdlabRWsuYOpfDrdlZJig0bFqdS5n/Zwr1hKmxs4QNO6fwhx8D1fh/lHJi5FRZyHftA
- ME3n3rFks1TnsjgDD9+O33yI083MYveFry57nUdOf5pTWUrmcWZatnr+PJ0NoGhDVRuG
- Qg8KLtXJ8nb4EMAN4ooggGn+DQycFcD3wX8RxjofkhKCiaar9vO+7XGNEKefm6DNnk1I
- TNCQ==
+ bh=2hVNjtHuSlv2Dnbiq2xJsihuQ2Tal8Cr9fT/Z1dg3ik=;
+ b=1GqDZJE0d1PJMyRVj2FsNAU8C5HcF+Mr0e2rvIOrLGvxF5miCHVS3O0h8sIKLj6Icc
+ 3fc6qGUrxA2+gCorVxBnyQ12QojVKHE3uCXIwHRy3cPasfnRVzdZHxgNLu3rgU+uk+ru
+ SUqGzIiPuQrYeBnHBYAdA+gYd1rvM0UwtKhFPiOeJGNdQcrmzJdltFCA9vdmb6kITgeA
+ w5xRmQEN1EteflNXQEeeb3uEoV3zq5DSTZb5bgy6NGcWSTXpHXVhoa6mR6IiFruJ60i0
+ D0bf07v0auOhIsMqJmPNWTA3cGo0FFxRzGrFOIoCq2vQ5HwCINdee1z4xRdkJs8gMjBa
+ FLfw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwAhodtGmuj6jl1p/xAA1SOntP1FubFJQuysWIncorEj9YMQIgojrDvrxbGIQPyOU0RmH5GYtQNXH3S@nongnu.org
-X-Gm-Message-State: AFq9FYJWg66NSR7iOjwKh2dLkOhkK6bLLWpg8u4To3RjNuwQloBwLiIX
- PLgrI8XiqQCulMaUKam+tvX7qH4y1b5cq1TEOs70QteK//yDi7mVkPJ2IBkYIa0nuoaEDHmAXiA
- H7owuPuWWzCqbuYAKF6jFiQoLwHMKW8lmBgPOQiquzLHsP1twID2dHCdYwA==
-X-Gm-Gg: AYBFou3RYLr1FgPiTz+kOPGQiBBMwAAIxdU4mgTgLFwlF8W+O40q7VB0Ltff8+FNMF1
- FP/x2cvvhaumarqKuH5FXLgk5NVfCiMeAk1VQBTAdTO/MApxG89pC+0E95ShbMObYzUXm0rFJPs
- ipHosMiphDOPN3DpU5LKHiXU91Y3IB2+poEXmO256+JYRCz5xMeTAHW81L4inStLbubmmEwCabu
- +SUdouYHEqg2TVqEqKH9JFfBUGyZFXm2RC54JR1F20gHBfzhxMXZKEgSDe+C1eabSnRFwDiZZQr
- wh90ZlUH0E0iVtxcbMOuuLfNQRhkoQ5olKJcmi9G6VriJL7yY98WmeKpSwSAj0bVH4CAW98N/Fz
- IFQXAdItNC/1mz2kLN4DnW2Gp6NXrj6IuHeOt3EXaQX2qJrXQ4Dbc5Qv40OorWvu9UEbY//4a
-X-Received: by 2002:a05:622a:301:b0:533:3627:49fd with SMTP id
- d75a77b69052e-5369b8055a9mr51623451cf.18.1792607722770; 
- Wed, 21 Oct 2026 11:35:22 -0700 (PDT)
-X-Received: by 2002:a05:622a:301:b0:533:3627:49fd with SMTP id
- d75a77b69052e-5369b8055a9mr51622831cf.18.1792607722062; 
- Wed, 21 Oct 2026 11:35:22 -0700 (PDT)
+ AKwUvBw7LmD3pHV+OJbNuWkfInBpScMBVVlI74CoSKpoD1hkEG4PKN+pwmnKUzNAjFQRgSmYrW230sQRNq7U@nongnu.org
+X-Gm-Message-State: AFq9FYKmgGcCnmMf7IMsmVaninMV9DjOb/JbBw5548YQltNUpACTAW/H
+ m/DX4QY7Tp4a0cGyxA8AKLJ8I+s/5FrNb2ejBmeXyy9oIil2kL17eDX+Ov7idSb3+0WHEdGCGCj
+ t0oc/FSJGFTlODs640YveOciCm8Ik7uXKBhBcHYN/QqQ3R+lRvfyUBGXF6w==
+X-Gm-Gg: AYBFou3749yzVF9nDia3F3WMLc/WWeOVndU1WVOvyn0/gBhNI37ALsGjDQyrkA4+P/D
+ /aML0MCLKJ4boQxOGHUN27qzBGq0HYXTg5PWwZY9Vowv5Ft/kljTp9kW3kFPdRQ3taHW+PUU0ig
+ EwgT/4G/tbCvoZ0sBV6N6xYOVzl1DNvPaRwjINb/Vo8Ttvg/+fr5KW4Ud7fhhL53ldqBFFAUgdK
+ Hlhwk6ShPcVQRqYHZf+UJdMuSz5yMiV81ypb3JO+IWpOtW3XE5kCBYGROGyDdgiUj7k+xe4DJ1D
+ YSAfHdv7QCA8oDDCeAEQItxub+OFDg9D1SoE5fkxR7qayL8CgAmPufnE1ogGvsAY31zjz3fstfR
+ IfiwfttYbrgHM817qCuIGfl2ehDUPdM88aXqqjKVSnjQxuowBWAjPzCAwiOCJqPaF/SAREYhp
+X-Received: by 2002:a05:622a:2488:b0:535:84e7:5a82 with SMTP id
+ d75a77b69052e-5369bb287e1mr44248491cf.55.1792607752929; 
+ Wed, 21 Oct 2026 11:35:52 -0700 (PDT)
+X-Received: by 2002:a05:622a:2488:b0:535:84e7:5a82 with SMTP id
+ d75a77b69052e-5369bb287e1mr44247991cf.55.1792607752316; 
+ Wed, 21 Oct 2026 11:35:52 -0700 (PDT)
 Received: from [192.168.68.101] (200-204-190-237.dsl.telesp.net.br.
  [200.204.190.237]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536ab4af6eesm6395981cf.1.2026.10.21.11.35.19
+ 6a1803df08f44-91c1f77518bsm7728426d6.31.2026.10.21.11.35.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 11:35:21 -0700 (PDT)
-Message-ID: <00404c44-38ed-494a-ac31-1ea236780485@oss.qualcomm.com>
-Date: Wed, 21 Oct 2026 15:35:17 -0300
+ Wed, 21 Oct 2026 11:35:51 -0700 (PDT)
+Message-ID: <5755c021-5c4f-4957-ab9f-e32be1e004a5@oss.qualcomm.com>
+Date: Wed, 21 Oct 2026 15:35:48 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] target/riscv: add riscv_cpu_has_supervisor_mode()
+Subject: Re: [PATCH v2 2/4] hw/riscv/virt: only describe PLIC contexts that
+ exist
 To: Ralf Ramsauer <ralf@vmexit.de>, qemu-devel@nongnu.org
 Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -103,31 +104,31 @@ Cc: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>, qemu-riscv@nongnu.org,
  Chao Liu <chao.liu@processmission.com>, Bin Meng <bmeng.cn@gmail.com>,
  Lukas Landgraf <lukas.landgraf@st.oth-regensburg.de>
 References: <20261021110838.3097959-1-ralf@vmexit.de>
- <20261021110838.3097959-2-ralf@vmexit.de>
+ <20261021110838.3097959-3-ralf@vmexit.de>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261021110838.3097959-2-ralf@vmexit.de>
+In-Reply-To: <20261021110838.3097959-3-ralf@vmexit.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3NCBTYWx0ZWRfX6OaHibbb2yrb
- 12mdizXDVLWp7QHQ7wqLM3n4dmAFucp60FY7INIQAbt8SvRcyZ40vhpjvrct8dLjvrkJZdTslvq
- y98HqeljKpb1aM39fW1U0w8T2GDGdJw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3NCBTYWx0ZWRfX9o/qHNpdneem
- RvHA1mbsd79B1tJhmJddw7S+KLHuyc8GD7PCq+HhGpNE3QaPae7nJMJVpOi+zfXiovXywQh7cxV
- DwcLQAuJ8O/btxh1gucJy67QZiMfK5D3yKc+W9y7a3aYqHGhAgT/hCNqbTkuEwFbxewGcpzkqHR
- X8/nPtz2B1ppMqT2MDUiGC2ru9tVtcIALvU1LY6/uz5T6utjdqDU7oUNF0LEPvjA9gBAOgedlFP
- zXEfC32EnVDMP8ryGzeFAOtJkrRPF6IVxvLmyVrIJFAKCS62nvI827Tg470SBtIL2qiNLtY/TWF
- bgUsVghgltQ5pYNZi49faanI2SCOGDuBf3bXgZFiYllrt6xK4LX0NUZHkLFW/9tS6PtMW+nF6Bx
- V6DKiLpX+kUmOX+d1W/2dTEJPqF/3gn9Ld9Il4VMRPWaF1Vc/TlOBOcy1eg1bOoJXTH9XYslnH+
- UKLN8erOXVU75OXFjSw==
-X-Proofpoint-ORIG-GUID: H6Sh1HYYPgPGKG18jenwiIHieod8erXE
-X-Proofpoint-GUID: H6Sh1HYYPgPGKG18jenwiIHieod8erXE
-X-Authority-Analysis: v=2.4 cv=K/+3jCWI c=1 sm=1 tr=0 ts=6ad905eb cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIxMDA3NCBTYWx0ZWRfX5/gVWADC/H7P
+ Jcbd5PTpEjtUM+HUJgsZvyEQqTWtnl594YU0OOaYhEJPwI4KOa0xcC0jkO15HJpFgFaEuQt+pzh
+ AhcWLFc8LFoAvqkQW1smewvVz5+4tY0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIxMDA3NCBTYWx0ZWRfX8axFHgo1hYj3
+ GC8UMQf8KeUL411R1i66BRzI8fYr78lVL+hyWN+bifwmPbTV4Vi1Z1KRttRY2UXXwtL2sY+Hq7N
+ AFJQ3/7RlPTEnbmkLX0j0PTyFDr862LUcH8JocFYqqqJkrjJx9+63wjNalVDR5YAdheOpZmTeSx
+ hyrbxOXYRRgx+MxYiAYh7l3OFD3CO3dgfzZtKfmSCxHX4a71pXU0UDKsdb7wgzOJ9oW1PBkvEOq
+ jeKjaCOstyHcJPulUNyzbUrzA9XTgLKCQVTW9FQxeF9+co15DDZ74L4LNvh/LC3KY1CiqFjkb03
+ 4SakxXqFkeTyi0w6/KwsS/3Jn2q8ZRXPEPF0uDawFBJCcR13prBE0MFENuhHBm/lXg/rZVVvOxE
+ fNZ1+AA9lieZFi40fyPpmsBtjnYSvfwTVIebl+yfaGerVKOj5Uy2YuyvCcJjPaQ1JMoPgn4e1Da
+ Q7GkQq5PKB2DhW1NKhA==
+X-Proofpoint-ORIG-GUID: nP1ZOEKb-Uzm9iryCALpDzaUtlovsMSL
+X-Proofpoint-GUID: nP1ZOEKb-Uzm9iryCALpDzaUtlovsMSL
+X-Authority-Analysis: v=2.4 cv=K/+3jCWI c=1 sm=1 tr=0 ts=6ad90609 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=QmVDPCq3bE4LYXGvZ20s0w==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=ffQtN6DDJp9pZQXGl-YA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
+ a=EUspDBNiAAAA:8 a=loLN2dJ51w1iObKrfQgA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-21_05,2026-10-21_02,2025-10-01_01
@@ -170,61 +171,86 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 On 10/21/2026 8:08 AM, Ralf Ramsauer wrote:
 > From: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 > 
-> Whether a hart has supervisor mode is decided in two places: KVM harts
-> always have it, and for TCG it follows from RVS in the ISA string.
-> riscv_plic_hart_config_string() already spells out both cases.
+> The PLIC device is created from the topology string built by
+> riscv_plic_hart_config_string(), which gives a hart a supervisor context
+> only if that hart actually has supervisor mode.  The device tree, in
+> contrast, lists a machine and a supervisor context for every hart,
+> unconditionally.
 > 
-> Board code needs the same answer to describe the interrupt controller,
-> but it should not have to reach into CPURISCVState for it.  Add a helper
-> next to riscv_cpu_is_vendor() so the next patches can ask the CPU
-> instead of inspecting its internals.
+> The two have disagreed since commit 7d10ff8a4d ("hw/riscv: virt: Use the
+> PLIC config helper function") taught the device about harts without
+> S-mode and left the device tree behind.  Boot with
 > 
-> Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>      -cpu rv64,s=false,u=false -smp 4
+> 
+> and the PLIC implements four contexts while the device tree advertises
+> eight.  Contexts are numbered by their position in 'interrupts-extended',
+> so a guest that takes its context number from the property gets it wrong
+> for every hart but the first: hart 1 drives the context of hart 2, and
+> the upper harts address contexts the PLIC never created.  This is what an
+> M-mode kernel on the virt machine runs into.
+> 
+> Emit the supervisor entry only for the harts that have supervisor mode.
+> The KVM case then becomes the same rule, not a separate one: its harts
+> have no M-mode and always have supervisor mode, so the common loop
+> describes the single supervisor context per hart that it used to spell
+> out on its own.
+> 
+> Fixes: 7d10ff8a4d ("hw/riscv: virt: Use the PLIC config helper function")
 > Signed-off-by: Ralf Ramsauer <ralf.ramsauer@oth-regensburg.de>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   target/riscv/cpu.c | 14 ++++++++++++++
->   target/riscv/cpu.h |  1 +
->   2 files changed, 15 insertions(+)
+> v2:
+>   - ask riscv_cpu_has_supervisor_mode() instead of reading RVS out of the
+>     hart's CPURISCVState (Daniel)
+>   - fold the KVM branch into the common loop, it describes the same rule
+>   - drop the claim about sifive_u from the commit message, patch 3 fixes
+>     that board rather than leaving it as the good example
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index da4c1a090b..19b6553e04 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -334,6 +334,20 @@ bool riscv_cpu_is_vendor(Object *cpu_obj)
->       return object_dynamic_cast(cpu_obj, TYPE_RISCV_VENDOR_CPU) != NULL;
->   }
+>   hw/riscv/virt.c | 28 ++++++++++++----------------
+>   1 file changed, 12 insertions(+), 16 deletions(-)
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index d4b501802f..a2851b506d 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -156,23 +156,19 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
 >   
-> +bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu)
-> +{
-> +#ifndef CONFIG_USER_ONLY
-> +    /* KVM always provides supervisor mode, regardless of the ISA string */
-> +    if (kvm_enabled()) {
-> +        return true;
-> +    }
-> +
-> +    return riscv_has_ext(&cpu->env, RVS);
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
->   const char * const riscv_int_regnames[] = {
->       "x0/zero", "x1/ra",  "x2/sp",  "x3/gp",  "x4/tp",  "x5/t0",   "x6/t1",
->       "x7/t2",   "x8/s0",  "x9/s1",  "x10/a0", "x11/a1", "x12/a2",  "x13/a3",
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 8c8ffe94cd..535e56345f 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -964,6 +964,7 @@ void isa_ext_update_enabled(RISCVCPU *cpu, uint32_t ext_offset, bool en);
->   bool isa_ext_is_enabled(RISCVCPU *cpu, uint32_t ext_offset);
->   void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext);
->   bool riscv_cpu_is_vendor(Object *cpu_obj);
-> +bool riscv_cpu_has_supervisor_mode(RISCVCPU *cpu);
+>       plic_name = g_strdup_printf("/soc/interrupt-controller@%lx", plic_addr);
 >   
->   typedef struct isa_ext_data {
->       const char *name;
+> -    if (kvm_enabled()) {
+> -        cells_length = s->soc[socket].num_harts * 2;
+> -        plic_cells = g_new0(uint32_t, cells_length);
+> -
+> -        for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+> -            plic_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
+> -            plic_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_EXT);
+> +    plic_cells = g_new0(uint32_t,
+> +                        s->soc[socket].num_harts * (kvm_enabled() ? 2 : 4));
+> +    cells_length = 0;
+> +
+> +    for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+> +        if (!kvm_enabled()) {
+> +            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+> +            plic_cells[cells_length++] = cpu_to_be32(IRQ_M_EXT);
+>           }
+> -   } else {
+> -        cells_length = s->soc[socket].num_harts * 4;
+> -        plic_cells = g_new0(uint32_t, cells_length);
+> -
+> -        for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
+> -            plic_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
+> -            plic_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_EXT);
+> -            plic_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
+> -            plic_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_S_EXT);
+> +
+> +        if (riscv_cpu_has_supervisor_mode(&s->soc[socket].harts[cpu])) {
+> +            plic_cells[cells_length++] = cpu_to_be32(intc_phandles[cpu]);
+> +            plic_cells[cells_length++] = cpu_to_be32(IRQ_S_EXT);
+>           }
+>       }
+>   
 
 
