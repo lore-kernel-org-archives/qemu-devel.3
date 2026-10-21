@@ -1,93 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EA0606A319
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 10:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E757A606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Oct 2026 10:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GVYuMIGr
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=owKMl6oq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJTmJ-0008VV-2G; Wed, 21 Oct 2026 06:42:39 -0400
+	id 1xJU05-0001SX-NB; Wed, 21 Oct 2026 06:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJTmH-0008Uv-75
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 06:42:37 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJU04-0001SK-Fv
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 06:56:52 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJTmF-0003om-AT
- for qemu-devel@nongnu.org; Wed, 21 Oct 2026 06:42:36 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-49d0da752ffso4448525e9.3
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 03:42:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xJU01-0004vK-JW
+ for qemu-devel@nongnu.org; Wed, 21 Oct 2026 06:56:52 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-48afcfc4bf5so558901f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 03:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792579353; x=1793184153; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=bhz1qewhkOIO80xrSb3nuYMVUngy+CLYwQxSjFjjLdk=;
- b=GVYuMIGrgbwme2HR3kScx5p1cAe0izpkwVFlSlFjyHZUnK59ko9PbPGi9aDalWKs0v
- R8IJ5EaYbiQwl3KYMDbHERMDhgI6d+BMqhaZnTzP5pILm6w22XeBriY9YJG2pJJ4qfHT
- gLCvww0d5kSptSMn79/+wCdJ9/VjRaU4k17GOust6XaZ0YpTwEPYO2EZMLaOjAQlNexu
- gVyOCs4IkOzQo3z5aVAX8mzhbIS+3gDwj/x9EDwkQub0muQQAqaaTa1PyKNR7H+alXV5
- JQ4DbCa9vftfD85iukoyBNnoUtCuVOD371MgXuNfqokMc4Ba1Yj1tQE972DCHhGlQisy
- 5xyw==
+ d=linaro.org; s=google; t=1792580207; x=1793185007; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=LTrLIzG+NNl/ftlmbA1Ww5yw1Xs2o9YwNwsFoyvFU90=;
+ b=owKMl6oq3fBSkojKOsoK9/ex5QhGs/QkdNbqOOUC9SJ0Bd+wUWnb8YEsytuDopv4M0
+ Kfheh+sHMLZJ+s39och9MDGDtFlBDu8cGexrySdJb8IpbKtBRGO43WlCtS4zHUC6Godc
+ aMtdWoaSR62HVeZXeXqKnGT6a3oynaN/e91CjBOWoLqBe/MdbOem4av09MrkSALKoGwd
+ dqem64RvRCEGaY82NDMy1EEGhC2g+z8lUESBL1q5fvhq82xhpYcYgVWeW3wcrienfPfw
+ cG3MoVa0vwyJ50clPudMVz0HDVA7io0F0xkPJErn277iKuT50DIuDI8Hm0zpYEWUsIsw
+ JJfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792579353; x=1793184153;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=bhz1qewhkOIO80xrSb3nuYMVUngy+CLYwQxSjFjjLdk=;
- b=gC423MTLS1281s/TcoPQf2vDgyhbeOTG478xdEJxRB4I1/+vFJZjGU9lMNkEGkc+/x
- WNHsizCg4M10P9rvfuvrQ4dBf7KCsWNOaV9uUg9CVwCDVUe3cIvzrEA1hWNmASQTYc4S
- DJfJ55/23PI4lvN43FXw2VEZEpoJ1D4gnbHGrxwR8RdX00mm2Icfs0IGCM2neiXdzT5r
- RJ5napnCWRrZjy7heXN/tdrxn5xc+3Don/6UVCMOp/scAtbKvOezaso7IKRT07mHKwyM
- hyalUSlj/zBulPT1aLDTeQqB+V/PmFyThZrH8eLwSB5Ije6mUH2Sdo5qlEgTRl5V4xwG
- foyw==
+ d=1e100.net; s=20260707; t=1792580207; x=1793185007;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=LTrLIzG+NNl/ftlmbA1Ww5yw1Xs2o9YwNwsFoyvFU90=;
+ b=UGJFy5cNa7wTjDL/K9uqrCKfZoIqwSy3D8T1Hi/dfKXtd0vP67UzEpnuRc9OakZW/F
+ L+RYV0oZSga0c5tdItNTbs5X7Fz+zvqFeLQcd5ABaje65kMd/Ulxlhavq0fLeoxMPFaJ
+ 7dKvRdX6wgqRA2Lf8HJsTHs3S+JQOcb+T9FrnNnnd9IVfi/HnIx9QSnn9XG2+Eb8iIGo
+ iJFn+ucCEYMnFBhMWU+sDYQmfSbucnqXVxngXTkIbWqr1bfjzwAGHnLNAS354nSQ8+z7
+ Y4tWq8SaAn9x0Cjsa6A09rGPqUGzOoLCCW8BxAm9dFkUzKeKEjpvnkOJW6m22ckx3sGa
+ Qk5A==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxDooVAZ0OEcj0hZ7v48tdU1SVuKIB8VNnlumzm3QSCSlPO2W/zDkkVAEWIiZ/AIn+qSxUTYm5LjRqm@nongnu.org
-X-Gm-Message-State: AFq9FYL7a3AEla6wz+aMHqHzeOAV6slaBjdFopyCJLjgf5T98Ha/rUgv
- CikRhk2KqYQGaMObl8iomV0bzlxc0Yuiqqz9c4H0WMoc3OnxsTR1MRpASRBfO1bA+wg=
-X-Gm-Gg: AYBFou25nsae3qyDm9Ylc/lCbJap6sBBHmCm0s1M1+qu9cFhQIWiqRlf3Gb5iufecRc
- 9yCDdEQl8XGMv8qgP/vbzHgib84yxj7HQGYdD1Nbw83rnb8U4+vG7rZaUV6lDKiYuS1zi0T4AMl
- QVqDFZ34mG4vO6pawz0dW8H8RITMS8g2pT3SDJflwu8mHEV7dC49Vy7kAw8IWYNdn3Lbg7qDYz/
- 1nzNQVN+x0aEr7bpu+Ne1A7g6seIIPIbYepX9fIZA2Hh1Ik1ZlM2lzDq6tQZDFaVUXK+WP9wOjy
- Yc9ZqHNXrAEYIML7+iktYPw7II2uXcyUjs0sNZL4Y4h/16BjAd8uC05PhSDnlRUxQJMfojba/51
- nMRsC8hA2opbVyQsx6hgaws8pJaeNyFQOYVn7riU/zg6Ii8PdcddgQvMuIU+VKFIEFFCBL3Uevw
- xgLtGwOWOM5xfdWMkd5EAJsBCMPVpZDMFvszdUwygq3mt2FKkLjPmAjfUid5a4Zt+oLZZZGHWG4
- iKo7YN++pUAkwieEp/51T0EQBK2BvYh+1OHhp7X7Oe2xEx18B5bN+V7tsxWW0SMmYqV+NXXF+ng
- hyDh1jkzyHwqMJRr2N0/uBk3bvs=
-X-Received: by 2002:a05:600c:19ce:b0:4a0:c02:938c with SMTP id
- 5b1f17b1804b1-4a1fdb1c4e8mr32186065e9.25.1792579353080; 
- Wed, 21 Oct 2026 03:42:33 -0700 (PDT)
-Received: from [192.168.2.121] (pd95f64ec.dip0.t-ipconnect.de.
- [217.95.100.236]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a1f2e8daffsm161747355e9.4.2026.10.21.03.42.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Oct 2026 03:42:32 -0700 (PDT)
-Message-ID: <9c44d872-586c-41d3-906e-1a35aefa0bf5@linaro.org>
-Date: Wed, 21 Oct 2026 12:42:30 +0200
+ AKwUvByL6BhMmjTa7i6lH4iy6ttkzNTBoDt905cHgDvyglrRYOsxJAtMEu4JfscL2Zn3ijqsRSrnsqpygEp2@nongnu.org
+X-Gm-Message-State: AFq9FYLFQFyfVXhQrhzdP/MXPPhy/uLbYEgNP+j+NQxcxl4xk2mgIgDe
+ 9BKDWFaWXiMo4UJfhPDmr3EJp71YBzzDNG0g+b8fwwzh2N9Vvi2c27WSy0jL5hPM3IM=
+X-Gm-Gg: AYBFou2JLYjXpIPpcqveyHU/KXIvvVMV+ABk3AjiOd8N6rXn0g6aUG1VUIciA8nfqoH
+ jojGrzIZjXunCpQXGaFm0aY3r+IxOENSTuLkGMo82t8p0HV3njfayOmK2uq1xft9crDFgnnEuDF
+ MDrZG5OUg9HPOfxHHwWGoSQUVqdfku9c/4jfsRLcjegGtGZm3WoeBycGSwgxJuqxMDnVTj4rXZv
+ royk5WOB8lgPYHF5ttOXSNORrSSwGWWQI5A8Z1y2Q2/oonqV0wucgEUzutBMpPJz+7eLWAqr/Yd
+ EM5RSJbH4iLiho9x070X41Cpls8xqHYU5inrqunKXSWgO6ahzQ7fJXwtZKP8r+hoTp6FpV5UGl8
+ z7W/kbTIbgEXZ7odaY4lNknlIdlImmubaDkO6FHpH/GEWMk+Odz5Gy+BBS/AxBF7VOL1GIH7jVQ
+ NODF/f8B4SuBKIJJAeUFb4OdtSZ/oGeURXTMBR+ZPBfsHhLHpaZi6Xf8pDe4WEEZ9F+WCXyb7x8
+ dYWdsrwdbvBhtH0Qbam14EEokmfA8NA9ILXyt40mFNgSRg7HU6ej8yeo57BpbhisslI3ZKvlLRJ
+X-Received: by 2002:adf:e00f:0:20b0:488:8232:d16e with SMTP id
+ ffacd0b85a97d-48e264a9823mr2220894f8f.45.1792580206721; 
+ Wed, 21 Oct 2026 03:56:46 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e25828ca3sm4719514f8f.25.2026.10.21.03.56.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Oct 2026 03:56:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0E6AE5F828;
+ Wed, 21 Oct 2026 11:56:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  qemu-devel@nongnu.org,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] ci: add automatic retry
+In-Reply-To: <CAFEAcA8-evgTa4GgvHV7HjUAeqnee1CN3onAK-EBH42saRqNag@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 21 Oct 2026 10:20:57 +0100")
+References: <20261020231602.24344-1-pierrick.bouvier@oss.qualcomm.com>
+ <ceab474d-ea17-41f8-817c-86f90c0feef0@oss.qualcomm.com>
+ <CAFEAcA8-evgTa4GgvHV7HjUAeqnee1CN3onAK-EBH42saRqNag@mail.gmail.com>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Wed, 21 Oct 2026 11:56:44 +0100
+Message-ID: <87fqxz1fv7.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] target/i386/tcg: fix EIP truncation for wrapping
- near branches
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: paul@galbraiths.ca, pbonzini@redhat.com, qemu-stable@nongnu.org
-References: <20260926235620.851099-1-richard.henderson@linaro.org>
- <20260926235620.851099-3-richard.henderson@linaro.org>
- <6080974b-f174-4e95-8846-26ed13202dcd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <6080974b-f174-4e95-8846-26ed13202dcd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,98 +110,244 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/21/26 10:50, Philippe Mathieu-Daudé wrote:
-> Hi Richard,
-> 
-> On 27/9/26 01:56, Richard Henderson wrote:
->> A 16-bit near branch that wraps through 0xFFFF must truncate EIP.
->> TCG skipped this when the target was on the same page, which can
->> happen when the CS base is not page aligned.
+Peter Maydell <peter.maydell@linaro.org> writes:
+
+> On Wed, 21 Oct 2026 at 03:41, Brian Cain <brian.cain@oss.qualcomm.com> wr=
+ote:
 >>
->> There was an existing test for this further up that attempted to
->> test this, but was restricted to a 16-bit branch in 32-bit mode,
->> which can be subsumed.
 >>
->> The previous test for pc being on the same page, rather than eip, is
->> only relevant to using goto_tb not to eip wrapping.  There is another
->> test for pc on the same page further down, via translator_use_goto_tb.
+>> On 10/20/2026 6:16 PM, Pierrick Bouvier wrote:
+>> > When merging PR on the project, it's possible to observe failures on CI
+>> > that can be related to sporadic test failures or infrastructure issues
+>> > (pod eviction with Kubernetes). As a result, it adds latency on the
+>> > process and workload for our top maintainers.
+>> >
+>> > This patch sets an automatic retry (supported by gitlab out of the box=
+),
+>> > so failing jobs are automatically retriggered.
+>> >
+>> > It's important to note that in case there is a real test or build
+>> > failure, concerned jobs will run a second time, and fail again. That
+>> > said, it happens seldomly since sub maintainers are supposed to test f=
+or
+>> > this before sending it. Also, the retry is limited to the job that
+>> > failed, so it should be cheap in terms of CI minutes.
 >>
->> Cc: qemu-stable@nongnu.org
->> Fixes: e3a79e0e878 ("target/i386: Enable TARGET_TB_PCREL")
->> Reported-by: Paul Galbraith <paul@galbraiths.ca>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/i386/tcg/translate.c | 24 +++++++++++++-----------
->>   1 file changed, 13 insertions(+), 11 deletions(-)
->>
->> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
->> index a38cc2c15d0..18706ec8a74 100644
->> --- a/target/i386/tcg/translate.c
->> +++ b/target/i386/tcg/translate.c
->> @@ -2015,9 +2015,6 @@ static void gen_jmp_rel(DisasContext *s, MemOp 
->> ot, int diff, int tb_num)
->>       if (!CODE64(s)) {
->>           if (ot == MO_16) {
->>               mask = 0xffff;
->> -            if (tb_cflags(s->base.tb) & CF_PCREL && CODE32(s)) {
->> -                use_goto_tb = false;
->> -            }
->>           } else {
->>               mask = 0xffffffff;
->>           }
->> @@ -2025,15 +2022,20 @@ static void gen_jmp_rel(DisasContext *s, MemOp 
->> ot, int diff, int tb_num)
->>       new_eip &= mask;
->>       if (tb_cflags(s->base.tb) & CF_PCREL) {
->> +        assert(s->pc_save_valid);
->>           tcg_gen_addi_tl(cpu_eip, cpu_eip, new_pc - s->pc_save);
->> -        /*
->> -         * If we can prove the branch does not leave the page and we 
->> have
->> -         * no extra masking to apply (data16 branch in code32, see 
->> above),
->> -         * then we have also proven that the addition does not wrap.
->> -         */
->> -        if (!use_goto_tb || !translator_is_same_page(&s->base, 
->> new_pc)) {
->> -            tcg_gen_andi_tl(cpu_eip, cpu_eip, mask);
->> -            use_goto_tb = false;
->> +
->> +        if (mask != -1) {
->> +            /*
->> +             * If eip "page" doesn't change, then the addition cannot
->> +             * leave [0, mask] on any rerun of this TB, which only
->> +             * ever shifts EIP by whole pages.
->> +             */
->> +            target_ulong old_eip = s->pc_save - s->cs_base;
->> +            if ((old_eip ^ new_eip) & TARGET_PAGE_MASK) {
-> 
-> Is it OK to skip the previous ot == MO_16 and CODE32() checks?
+>> Will this effectively mask those flaky failures so that no one hears
+>> about them?  Is there a way to find out about them with something like a
+>> weekly/monthly digest of failures?
+>
+> Broadly speaking, it's already the case that flaky failures are masked.
+> Random infra-type failures / random timeouts /etc are common enough
+> that when I'm doing a merge CI run I will just hit the retry button
+> without much deep investigation.
+>
+> In an ideal world we'd pull down the gitlab job history and look
+> through it for cases of "job X failed running against commit hash Y,
+> but we also saw job X succeed on commit hash Y" (i.e. the retry
+> worked second time) and then check the failure logs for what
+> kinds of things are intermittent like that. But that requires
+> somebody to put in the work to do that analysis. Gitlab's own
+> CI job history web UI is very bad and doesn't let you do even
+> basic things like "show me just the history for job X".
 
-Yes.
+The gitlab-failure-analysis script was an attempt to start doing this,
+so the last 10 failing staging pipelines where:
 
-> The next patch only tests 16-bit, not 32-bit protected. Can we
-> complement with a 32-bit test? Since this is a qemu-stable@ fix,
-> can you better explain the "subsuming" and why we don't need this
-> safer check:
-> 
->                 if ((CODE32(s) && ot == MO_16)
+  $ ./scripts/ci/gitlab-failure-analysis --count 10
+  failed pipeline 2949515618, total jobs 120, skipped 5, failed 8,  45059 t=
+ests, 1112 skipped tests, 8 failed tests
+    Failed job 17194356901, block: [luks], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17194356901
+    Failed job 17192659533, block: [vmdk], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17192659533
+    Failed job 17192659440, block: [vhdx], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17192659440
+    Failed job 17192659398, block: [vdi], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17192659398
+    Failed job 17192659309, block: [qed], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17192659309
+    Failed job 17192659287, block: [qcow2], https://gitlab.com/qemu-project=
+/qemu/-/jobs/17192659287
+    Failed job 17192659245, block: [parallels], https://gitlab.com/qemu-pro=
+ject/qemu/-/jobs/17192659245
+    Failed job 17192659237, block: [nbd], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17192659237
+    Failed test qemu.block-nbd-optional+block-thorough - qemu:io-nbd-nbd-st=
+ale-connection, block: [nbd], 1 raw nbd-stale-connection
+    Failed test qemu.block-parallels-optional+block-thorough - qemu:io-para=
+llels-nbd-stale-connection, block: [parallels], 1 parallels nbd-stale-conne=
+ction
+    Failed test qemu.block-qcow2-optional+block-slow - qemu:io-qcow2-nbd-st=
+ale-connection, block: [qcow2], 1 qcow2 nbd-stale-connection
+    Failed test qemu.block-qed-optional+block-thorough - qemu:io-qed-nbd-st=
+ale-connection, block: [qed], 1 qed nbd-stale-connection
+    Failed test qemu.block-vdi-optional+block-thorough - qemu:io-vdi-nbd-st=
+ale-connection, block: [vdi], 1 vdi nbd-stale-connection
+    Failed test qemu.block-vhdx-optional+block-thorough - qemu:io-vhdx-nbd-=
+stale-connection, block: [vhdx], 1 vhdx nbd-stale-connection
+    Failed test qemu.block-vmdk-optional+block-thorough - qemu:io-vmdk-nbd-=
+stale-connection, block: [vmdk], 1 vmdk nbd-stale-connection
+    Failed test qemu.block-luks-optional+block-thorough - qemu:io-luks-nbd-=
+stale-connection, block: [luks], 1 luks nbd-stale-connection
+  failed pipeline 2945631627, total jobs 120, skipped 5, failed 13,  0 test=
+s, 0 skipped tests, 0 failed tests
+    Failed job 17162982778, check-python-minreqs, https://gitlab.com/qemu-p=
+roject/qemu/-/jobs/17162982778
+    Failed job 17162982652, block: [vpc], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17162982652
+    Failed job 17162982622, block: [vmdk], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17162982622
+    Failed job 17162982605, block: [vhdx], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17162982605
+    Failed job 17162982484, block: [vdi], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17162982484
+    Failed job 17162982417, block: [raw], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17162982417
+    Failed job 17162982413, block: [qed], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17162982413
+    Failed job 17162982411, block: [qcow2], https://gitlab.com/qemu-project=
+/qemu/-/jobs/17162982411
+    Failed job 17162982380, block: [parallels], https://gitlab.com/qemu-pro=
+ject/qemu/-/jobs/17162982380
+    Failed job 17162982361, block: [nbd], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17162982361
+    Failed job 17162982339, block: [luks], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17162982339
+    Failed job 17162261239, check-cfi-x86_64, https://gitlab.com/qemu-proje=
+ct/qemu/-/jobs/17162261239
+    Failed job 17162261192, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/17162261192
+  failed pipeline 2929887766, total jobs 120, skipped 7, failed 18,  0 test=
+s, 0 skipped tests, 0 failed tests
+    Failed job 17055360127, check-python-minreqs, https://gitlab.com/qemu-p=
+roject/qemu/-/jobs/17055360127
+    Failed job 17055360119, functional-system-opensuse, https://gitlab.com/=
+qemu-project/qemu/-/jobs/17055360119
+    Failed job 17055360117, functional-system-centos, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/17055360117
+    Failed job 17055360116, check-system-centos, https://gitlab.com/qemu-pr=
+oject/qemu/-/jobs/17055360116
+    Failed job 17055360113, block: [vpc], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360113
+    Failed job 17055360112, block: [vmdk], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17055360112
+    Failed job 17055360111, block: [vhdx], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17055360111
+    Failed job 17055360110, block: [vdi], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360110
+    Failed job 17055360109, block: [raw], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360109
+    Failed job 17055360108, block: [qed], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360108
+    Failed job 17055360107, block: [qcow2], https://gitlab.com/qemu-project=
+/qemu/-/jobs/17055360107
+    Failed job 17055360106, block: [parallels], https://gitlab.com/qemu-pro=
+ject/qemu/-/jobs/17055360106
+    Failed job 17055360105, block: [nbd], https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360105
+    Failed job 17055360104, block: [luks], https://gitlab.com/qemu-project/=
+qemu/-/jobs/17055360104
+    Failed job 17055360078, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/17055360078
+    Failed job 17055360066, tsan-build, https://gitlab.com/qemu-project/qem=
+u/-/jobs/17055360066
+    Failed job 17055360065, build-cfi-x86_64, https://gitlab.com/qemu-proje=
+ct/qemu/-/jobs/17055360065
+    Failed job 17055360061, clang-system, https://gitlab.com/qemu-project/q=
+emu/-/jobs/17055360061
+  failed pipeline 2908947622, total jobs 119, skipped 5, failed 5,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16911683051, functional-system-debian, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16911683051
+    Failed job 16911681150, functional-cfi-x86_64, https://gitlab.com/qemu-=
+project/qemu/-/jobs/16911681150
+    Failed job 16911679766, functional-system-opensuse, https://gitlab.com/=
+qemu-project/qemu/-/jobs/16911679766
+    Failed job 16911678710, functional-system-centos, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16911678710
+    Failed job 16911433872, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/16911433872
+  failed pipeline 2906503036, total jobs 119, skipped 5, failed 4,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16896095104, functional-system-centos, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16896095104
+    Failed job 16896090260, functional-system-opensuse, https://gitlab.com/=
+qemu-project/qemu/-/jobs/16896090260
+    Failed job 16896083592, functional-cfi-x86_64, https://gitlab.com/qemu-=
+project/qemu/-/jobs/16896083592
+    Failed job 16895432496, functional-system-debian, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16895432496
+  failed pipeline 2876539219, total jobs 119, skipped 5, failed 6,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16692899473, functional-system-fedora, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16692899473
+    Failed job 16692899464, aarch64-macos-26-build, https://gitlab.com/qemu=
+-project/qemu/-/jobs/16692899464
+    Failed job 16692899463, aarch64-macos-15-build, https://gitlab.com/qemu=
+-project/qemu/-/jobs/16692899463
+    Failed job 16692899432, clang-system, https://gitlab.com/qemu-project/q=
+emu/-/jobs/16692899432
+    Failed job 16692899429, build-some-softmmu, https://gitlab.com/qemu-pro=
+ject/qemu/-/jobs/16692899429
+    Failed job 16692899413, cross-win64-system, https://gitlab.com/qemu-pro=
+ject/qemu/-/jobs/16692899413
+  failed pipeline 2840522620, total jobs 119, skipped 5, failed 7,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16454091776, functional-system-opensuse, https://gitlab.com/=
+qemu-project/qemu/-/jobs/16454091776
+    Failed job 16454091774, functional-cfi-x86_64, https://gitlab.com/qemu-=
+project/qemu/-/jobs/16454091774
+    Failed job 16454091761, check-cfi-x86_64, https://gitlab.com/qemu-proje=
+ct/qemu/-/jobs/16454091761
+    Failed job 16454091760, check-system-opensuse, https://gitlab.com/qemu-=
+project/qemu/-/jobs/16454091760
+    Failed job 16454091758, functional-system-centos, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16454091758
+    Failed job 16454091740, check-system-centos, https://gitlab.com/qemu-pr=
+oject/qemu/-/jobs/16454091740
+    Failed job 16454091730, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/16454091730
+  failed pipeline 2839257817, total jobs 119, skipped 5, failed 2,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16436167533, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/16436167533
+    Failed job 16436167532, ubuntu-24.04-s390x-all-linux, https://gitlab.co=
+m/qemu-project/qemu/-/jobs/16436167532
+  failed pipeline 2830538304, total jobs 119, skipped 5, failed 3,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16377263801, check-rust-tools-nightly, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16377263801
+    Failed job 16377263686, ubuntu-24.04-s390x-all-system, https://gitlab.c=
+om/qemu-project/qemu/-/jobs/16377263686
+    Failed job 16377263684, ubuntu-24.04-s390x-all-linux, https://gitlab.co=
+m/qemu-project/qemu/-/jobs/16377263684
+  failed pipeline 2820341086, total jobs 119, skipped 5, failed 2,  0 tests=
+, 0 skipped tests, 0 failed tests
+    Failed job 16307778927, check-rust-tools-nightly, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16307778927
+    Failed job 16307778897, functional-system-debian, https://gitlab.com/qe=
+mu-project/qemu/-/jobs/16307778897
 
-Because this was trying to do exactly what...
+It has rudimentary access to the tests but I think the deep dive would
+require better retention of the job artefacts. The second pipeline in
+the above list lists the "job artefacts" as removed 3hrs ago which is I
+guess why we don't get the test breakdown for the earlier jobs.
 
+Anyway perhaps we can expand this to be more useful?
 
->                     || ((old_eip ^ new_eip) & TARGET_PAGE_MASK)) {
+>
+> thanks
+> -- PMM
 
-... this does, but more accurately.
-
-
-r~
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
