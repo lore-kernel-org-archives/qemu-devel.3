@@ -1,100 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BB1606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 22:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB02760A2607
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 22:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=I9w0su3+
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=LM59REBt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK1YY-0002wT-TK; Thu, 22 Oct 2026 18:46:43 -0400
+	id 1xK1c3-0003de-I3; Thu, 22 Oct 2026 18:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xK1YO-0002vW-Bw
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:46:33 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xK1c1-0003c6-BL
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:50:17 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xK1YM-0008Ia-2d
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:46:31 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-48df4f540ebso141896f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 15:46:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xK1bz-0000De-G1
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:50:17 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a1e34ecb02so1742495e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 15:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792709187; x=1793313987; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792709414; x=1793314214; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id
  :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mQxyLPDRiFLfMiCILZwrHP1ZDNxwhKcamovn4mGlXGU=;
- b=I9w0su3+PrOfRQBqzc1B8FlrEp7QWpn01kf/DJ0dKt6AXBHMqlEu2msqkStak0k/Q4
- GLPuqzoocfNp3GR65lkJqsY5yXl2Yez+xbW0u/5/kiAuvdp+XfyOera9nVTwZmVf6QKO
- Wf+h2mPGUkWSZKp3GJI0+f5gHCAwnYpQw0qxpFc8TE2lt5zDtfwGzWfCxgLk/zrGWU/b
- GFpjsCcBXPKwQ52CYHGNGDltIW7rDmlOXCTXQMIT01mLGBzFeOtH/57xufh+gaYvZpPV
- yQVLxSJkQ75u3IvXzcAOAhNTB1x+DEVB8OerESG6lwSY5/WQ5MrOI0XTnruCIQ3Cg+iT
- eGVw==
+ bh=tLCX0MFq2lPBGxec7+w1MDWPAWgf45VNplsQexTDOeM=;
+ b=LM59REBtE6arJOsjhJiRoGp1+3Y//OUG5wDPDkQkNbDL6D4+/kdJF/060Pe90LFENJ
+ dweVeTVh1tQeM/hnGl2vD/Af0Pn9hPxuZng3OMH4TjjVJDhGMnCcJ9g1iHT4Gp6MG9uW
+ MLGDxqlxla9+3/fCdDUkIpm8HnaO1p2JvZm+jJC4eZqWLDnS8fnOa7Vb+ULkCakzAIwb
+ GOg54wbEpPGkMl9o7Prd5jn8NLoILg1fO3K6nYHWhzgCAFcntIZs/AW8xZ2nI0aESutZ
+ 51oKR/hgnKCSDChW3MNCp17b3ViIKrrSgQTrSZO2flNmGT6L/dTcYVGK96YGr9skt6Fc
+ fAWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792709187; x=1793313987;
+ d=1e100.net; s=20260707; t=1792709414; x=1793314214;
  h=content-transfer-encoding:content-type:mime-version:message-id
  :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mQxyLPDRiFLfMiCILZwrHP1ZDNxwhKcamovn4mGlXGU=;
- b=PL5P5g4EnPU7JF0h8t5soVWklJ0PoYsvv1NT4ZmzRVFYmYKsmqHyWvxQ8ehBVqBByG
- aEiulm9b0j0ULcBz7gSx2/SOdM9YhQDY+lHgKeEuALU3dz30YePte5BqLnpHUTFXZ8jr
- y+YQWAUX9bAIFD5lbM/GFcKgl32efLx9cEUxCPCYvQg9/0w+m1gtJo9rYshfGqL23RLY
- kqsZQPcpH41rJFOwPpfgAWL5bXvjQNXlN7bcju9sGj9R9x5XEqBtSOu3+RTOpk/6Y9w3
- L8EXjjTCKCM2uypTHp6g+5HVAhUbUTvhlylB5AY7U94Qj05sxcgL+EpqWh1qsJyZ5o7Q
- rJlg==
+ bh=tLCX0MFq2lPBGxec7+w1MDWPAWgf45VNplsQexTDOeM=;
+ b=zg0OZ7BLCo2Y+u+LeYNgE+QMmtf0Xwy1NmGKggIsAF9exJ6cPx28OhKdda5kK6BE9f
+ kSICe31HRkVWm5hTt6Wr0BuN0XofQcufhcxGGqmJBu7+hPB4b2BKkSsS4CrsNFgjxXMh
+ wv0XWA/qYfiY7LcZOM9e/e5x83dcPtjqrxgu10KIGFieOvv85dFbX7EPIl3v3f4SQo6y
+ SEXv2Nc8SoKG+gllArTVRkqew+IKJ7VDPY0FVwzc4XI6NrjG4aq5ThifYP5qcOOeR7/R
+ gq5V+HLRBL4ummI5Kh87PP6jG3uSYuhJXqTZ4pqnvhn1ua539p/y5eqcMRqiR41yC2iq
+ NKbg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwozxulU9lCwSkLUGpPYySNYpSeTNmQBKXQlJw/Xkz1N6FzLr0bLbvTDzEflpm0vKDCTCZLmOLkdXsN@nongnu.org
-X-Gm-Message-State: AFq9FYJs3AbSoIa1jHSDCOs1Mq6D7yDs/LxbwCJYhmZAbCEVdraoW4Lx
- i0HQ5dj1h0fRbbgQC7BgqE22YRIcUt726IapHYwgJaWNbJYTNXgHQrcfgDvhMQ==
-X-Gm-Gg: AYBFou3VODfiO/HhSCtHN5bSCNs11QSb3aXy6FsdzZwPv6Vlm5uIa855+rBpgBzy84f
- pXR2H3vXiQfcD6J8KX1jmEnemLViDcJpqqQmA7fdPgHX2JHUeT+trsTvDqp/ORQ71f/2E6jSxtT
- ShTTjYdurPs9Ewpn4bJTEFGlu+oE8f+2uYtb8MlomVEJzl7Wq6wywVSRfk8z126+DULV1Evpv5D
- Lx35luX+MBhDW7kTj7qj0/sImNnAbwzZ51j16BzVBotXnElRKu8BMdlHEq8UZoFOpZktyqR3aqW
- /tZzI3rFlin8lRHDuy0oGv/PgIek/THRjEsXUxlzUuBLUVlqj7HszS4IJDLNhSvC5t085oicSIZ
- aV7gM4xpznELzTEv1Qti66uM7QK0x7HieOdRv0HtqkOfBoi8FdqgSEQJd4mkzEzNY/T085C6UwQ
- wFb2L+BvmkADUvE+Fmu8ytQioqM3tRatioP9NfzbFNcuBZjUINkrckbObWn9A/Gt+Ib8h5xdHAu
- a28TcaIqODi38qdhDaYUfDMKYj2av9SJzelKK7tUgC6G1Hvh4OQZJXKcq91nDWZHRS8I7CnrgEA
- tbJxEXRtQqG+8e1+z+TGB8nCOYD5S/SQdxLUew1ZDCRQibuZm279oD0Z3VhiXeAHGfUBiSfF
-X-Received: by 2002:a05:6000:186e:b0:48d:f39b:83de with SMTP id
- ffacd0b85a97d-48e3854c650mr440207f8f.3.1792709186459; 
- Thu, 22 Oct 2026 15:46:26 -0700 (PDT)
+ AKwUvBxENZCFEW5D2vql8ieB5diWjVe4nTHZJw2y7i1gvVXOiYsjajSKL3Xi5b8oNuiGA57e3cyvrC5N7M4u@nongnu.org
+X-Gm-Message-State: AFq9FYKn2nSj4wuJ2ktYQ8TE50HHrJ1pKV0Ci91XiCAsLFBl57WDnbnZ
+ ZNQgqJVYbWwGCo8wvVFWIUBfMqay6hLvcisS78qs/zZ0za1FrnokH6NLJ1lJlA==
+X-Gm-Gg: AYBFou0bSOIg6xi9RUWBMXyYHnE9m8Ef3XGUmFgKwZvmH2yU/n8huf1dlmtae80F3cP
+ ySr2lw2MEQf2aNOlz8VfqapNVmigaNTiBDThIUAL9XxLOzhsFOiaAsx5IkFBJGpEszqjWGsRSjB
+ cRiCjwv3KhE/5DOKwLwyZKTQFawR3v/sfUJ0Pf9G4CEY2PcsBxIMMRJtsL8uXOOBelLDveMhEzf
+ eItltxJtOMnhP0UYIPck/1fatA47GbM2CR2z0HnIUSixTxjAFwBB/xPOQvv0wwa/qQCIcfx/DC0
+ bZD5d+MfxJnc7A5DKvgiKkrM+ZubAaGCEQw1lgAjNhOUBY7/ja+81j5OxGPhp93qOdzKkKW94l4
+ +M3ZtqwHcorEkwObNVm1K+0V7o1e5NdWqtbA4OYFCL5LLJ82A1kVk6sJkYf2i6YHMeCz5J1r+/Z
+ Odx/fVcvb9X5jT5+K0iibUw6h6PN0s/DVd2yZmNa9HCCzo38Dv/WnYnoDregH0GKu/QoJvY1Teq
+ p522++J189jTbqvf8PG++ZxtWVQ0E7tJhcG+7N7y7x1ycehaKXTrTSP5GST7OhlqcJ+j+qjhcKF
+ pcPgBhaM7AcCrPnY4YwN9SgSS5gckaz+c+6QA44I+5NelfCzylwbf4H66I38cSr5srHYCyNoky5
+ SRalGS30Zr8UX+UWsNw==
+X-Received: by 2002:a05:600c:1c1b:b0:4a1:e11f:b2d5 with SMTP id
+ 5b1f17b1804b1-4a211c7870cmr7849325e9.2.1792709413578; 
+ Thu, 22 Oct 2026 15:50:13 -0700 (PDT)
 Received: from ehlo.thunderbird.net
  (dynamic-2a02-3100-1dba-0000-ec6b-a832-f355-434e.310.pool.telefonica.de.
  [2a02:3100:1dba:0:ec6b:a832:f355:434e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3805c2c8sm792317f8f.48.2026.10.22.15.46.24
+ 5b1f17b1804b1-4a210487d16sm29273725e9.15.2026.10.22.15.50.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Oct 2026 15:46:25 -0700 (PDT)
-Date: Thu, 22 Oct 2026 22:46:24 +0000
+ Thu, 22 Oct 2026 15:50:12 -0700 (PDT)
+Date: Thu, 22 Oct 2026 22:50:11 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org, Bin Meng <bin.meng@processmission.com>,
  QEMU <qemu-devel@nongnu.org>
-CC: Bin Meng <bmeng.cn@gmail.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- qemu-block@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_06/10=5D_hw/sd=3A_sdhci=3A_?=
- =?US-ASCII?Q?Honor_i=2EMX_uSDHC_vendor_clock_gates?=
-In-Reply-To: <20261014045605.399684-7-bin.meng@processmission.com>
+CC: Jean-Christophe Dubois <jcd@tribudubois.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_09/10=5D_docs/system/arm=3A?=
+ =?US-ASCII?Q?_Document_MCIMX6UL-EVK_Buildroot_boot?=
+In-Reply-To: <20261014045605.399684-10-bin.meng@processmission.com>
 References: <20261014045605.399684-1-bin.meng@processmission.com>
- <20261014045605.399684-7-bin.meng@processmission.com>
-Message-ID: <D3DE9BC4-6058-49C9-A6EE-67883C2FD6FE@gmail.com>
+ <20261014045605.399684-10-bin.meng@processmission.com>
+Message-ID: <8713C764-0DB7-4C17-ACB8-F2A4987963C1@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +107,20 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 
 
-Am 14=2E Oktober 2026 04:55:56 UTC schrieb Bin Meng <bin=2Emeng@processmis=
+Am 14=2E Oktober 2026 04:55:59 UTC schrieb Bin Meng <bin=2Emeng@processmis=
 sion=2Ecom>:
->U-Boot enables i=2EMX uSDHC clocks through VEND_SPEC, so checking only
->the standard SDHCI clock-control bits drops commands and prevents
->firmware from loading its kernel from the SD card=2E
->
->Present vendor gates to the common clock check during uSDHC command
->writes, then restore the guest clock register=2E Retain the standard
->clock path used by Linux without adding vendor quirks to generic code=2E
->Report SDSTB and handle partial vendor accesses in uSDHC MMIO handlers=2E
->
->Reference: IMX6ULRM (Rev=2E2), sections 56=2E8=2E10, 56=2E8=2E12 and 56=
-=2E8=2E26
->https://www=2Enxp=2Ecom/webapp/Download?colCode=3DIMX6ULRM
+>Provide verified instructions for U-Boot and direct Linux boot using
+>Buildroot images=2E
 >
 >Signed-off-by: Bin Meng <bin=2Emeng@processmission=2Ecom>
 >
@@ -138,183 +129,121 @@ sion=2Ecom>:
 >(no changes since v3)
 >
 >Changes in v3:
->- Translate vendor gates in uSDHC MMIO instead of a generic quirk
->- Preserve the standard clock path used by direct Linux boot
->- Handle partial vendor accesses and report SDSTB in uSDHC reads
->- Migrate the vendor register in an optional subsection
+>- Document the RAM limits and firmware geometry rounding
 >
-> hw/sd/sdhci=2Ec | 93 ++++++++++++++++++++++++++++++++++++++++++++-------
-> 1 file changed, 80 insertions(+), 13 deletions(-)
+> docs/system/arm/mcimx6ul-evk=2Erst | 72 ++++++++++++++++++++++++++++++++
+> 1 file changed, 72 insertions(+)
 >
->diff --git a/hw/sd/sdhci=2Ec b/hw/sd/sdhci=2Ec
->index 0c5b0ed984=2E=2E1831e5e8ff 100644
->--- a/hw/sd/sdhci=2Ec
->+++ b/hw/sd/sdhci=2Ec
->@@ -1604,6 +1604,24 @@ static const VMStateDescription sdhci_hostctl2_vms=
-tate =3D {
->     },
-> };
+>diff --git a/docs/system/arm/mcimx6ul-evk=2Erst b/docs/system/arm/mcimx6u=
+l-evk=2Erst
+>index 8871138ab3=2E=2Ea84b447019 100644
+>--- a/docs/system/arm/mcimx6ul-evk=2Erst
+>+++ b/docs/system/arm/mcimx6ul-evk=2Erst
+>@@ -3,3 +3,75 @@ NXP MCIMX6UL-EVK (``mcimx6ul-evk``)
 >=20
->+static bool sdhci_vendor_spec_vmstate_needed(void *opaque)
->+{
->+    SDHCIState *s =3D opaque;
+> The ``mcimx6ul-evk`` machine models the NXP i=2EMX6UltraLite Evaluation =
+Kit
+> MCIMX6UL-EVK development board=2E It has a single Cortex-A7 CPU=2E
 >+
->+    return s->vendor_spec;
->+}
+>+The minimum RAM size is 16 MiB and the maximum is 2 GiB=2E
+>+The MMDC geometry reports the largest power-of-two capacity
+>+not exceeding the configured RAM size to firmware=2E Direct Linux
+>+boot uses the full configured RAM size=2E
 >+
->+static const VMStateDescription sdhci_vendor_spec_vmstate =3D {
->+    =2Ename =3D "sdhci/vendor-spec",
->+    =2Eversion_id =3D 1,
->+    =2Eminimum_version_id =3D 1,
->+    =2Eneeded =3D sdhci_vendor_spec_vmstate_needed,
->+    =2Efields =3D (const VMStateField[]) {
->+        VMSTATE_UINT16(vendor_spec, SDHCIState),
->+        VMSTATE_END_OF_LIST()
->+    },
->+};
+>+Booting Buildroot images
+>+------------------------
 >+
-> static bool sdhci_pending_insert_vmstate_needed(void *opaque)
-> {
->     SDHCIState *s =3D opaque;
->@@ -1623,6 +1641,7 @@ static int sdhci_pre_load(void *opaque)
->     SDHCIState *s =3D opaque;
->=20
->     s->hostctl2 =3D 0;
->+    s->vendor_spec =3D 0;
->     s->sdma_boundary_paused =3D false;
->     return 0;
-> }
->@@ -1698,6 +1717,7 @@ const VMStateDescription sdhci_vmstate =3D {
->     },
->     =2Esubsections =3D (const VMStateDescription * const []) {
->         &sdhci_hostctl2_vmstate,
->+        &sdhci_vendor_spec_vmstate,
->         &sdhci_pending_insert_vmstate,
->         &sdhci_sdma_boundary_paused_vmstate,
->         NULL
->@@ -1801,6 +1821,10 @@ static void sdhci_bus_class_init(ObjectClass *klas=
-s, const void *data)
->=20
-> #define ESDHC_VENDOR_SPEC               0xc0
-> #define ESDHC_FRC_SDCLK_ON              (1 << 8)
->+#define ESDHC_VENDOR_IPGEN              (1 << 11)
->+#define ESDHC_VENDOR_HCKEN              (1 << 12)
->+#define ESDHC_VENDOR_PEREN              (1 << 13)
->+#define ESDHC_VENDOR_CKEN               (1 << 14)
->=20
-> #define ESDHC_DLL_CTRL                  0x60
->=20
->@@ -2051,12 +2075,67 @@ static void fsl_esdhc_le_init(Object *obj)
->     qdev_prop_set_uint8(dev, "sd-spec-version", 2);
-> }
->=20
->+static bool usdhc_vendor_clocks_on(SDHCIState *s)
+>+Build the SD card image with the tested Buildroot version:
+>+
+>+=2E=2E code-block:: bash
+>+
+>+  $ git clone https://gitlab=2Ecom/buildroot=2Eorg/buildroot=2Egit
+>+  $ cd buildroot
+>+  $ git checkout 2026=2E05
+>+  $ make imx6ulevk_defconfig
+>+  $ make
+>+
+>+The following examples use images generated by Buildroot::
+>+
+>+  IMAGES=3D/path/to/buildroot/output/images
+>+  QEMU_BUILD=3D/path/to/qemu/build
+>+
+>+The generated raw ``sdcard=2Eimg`` is about 84 MiB, which is not a capac=
+ity
+>+supported by QEMU's SD card model=2E Resize the image in place to 128 Mi=
+B::
+>+
+>+  "$QEMU_BUILD/qemu-img" resize -f raw "$IMAGES/sdcard=2Eimg" 128M
+>+
+>+This modifies the Buildroot output image; rebuilding the image restores =
+its
+>+original size=2E
+>+
+>+The SD card must be attached to USDHC2 with ``index=3D1``=2E It is conse=
+quently
+>+named ``mmc1`` by U-Boot and ``mmcblk1`` by Linux=2E The first partition=
+ contains
+>+the kernel and device tree, while the second partition contains the root=
+ file
+>+system=2E
+>+
+>+U-Boot boot
+>+~~~~~~~~~~~
+>+
+>+The machine does not model the i=2EMX6UL Boot ROM or its SPL loading seq=
+uence=2E
+>+Load U-Boot proper at its linked address::
 
-s could be pointer to const (though this isn't very common in QEMU, so no =
-blocker)=2E
+Extra ':' which prevents the code block being rendered correctly=2E Removi=
+ng it fixes it=2E
 
->+{
->+    uint16_t clocks =3D ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN |
->+                      ESDHC_VENDOR_PEREN | ESDHC_VENDOR_CKEN;
 >+
->+    return (s->vendor_spec & clocks) =3D=3D clocks;
->+}
+>+=2E=2E code-block:: bash
 >+
->+static uint64_t usdhc_read(void *opaque, hwaddr offset, unsigned size)
->+{
->+    SDHCIState *s =3D SYSBUS_SDHCI(opaque);
+>+  "$QEMU_BUILD/qemu-system-arm" \
+>+      -M mcimx6ul-evk -m 512M \
 
-No need for an explicit cast=2E
+The `-m 512M` will become redundant once my imx cleanup series lands=2E Sa=
+me in the command below=2E
 
->+    uint32_t value;
+>+      -device loader,file=3D"$IMAGES/u-boot=2Ebin",addr=3D0x87800000,cpu=
+-num=3D0 \
+>+      -drive file=3D"$IMAGES/sdcard=2Eimg",if=3Dsd,index=3D1,format=3Dra=
+w \
+>+      -nographic
 >+
->+    switch (offset & ~3) {
->+    case SDHC_PRNSTS:
->+        value =3D esdhc_read(opaque, SDHC_PRNSTS, 4);
->+        if ((s->vendor_spec & (ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN))=
- =3D=3D
->+            (ESDHC_VENDOR_IPGEN | ESDHC_VENDOR_HCKEN)) {
->+            value |=3D ESDHC_PRNSTS_SDSTB;
->+        }
->+        break;
->+    case ESDHC_VENDOR_SPEC:
->+        value =3D s->vendor_spec;
->+        break;
->+    default:
->+        return esdhc_read(opaque, offset, size);
->+    }
->+    return extract32(value, (offset & 3) * 8, size * 8);
->+}
+>+The default Buildroot U-Boot environment selects ``mmc1``, loads ``zImag=
+e``
+>+and ``imx6ul-14x14-evk=2Edtb`` from the first partition, and starts Linu=
+x with
+>+``/dev/mmcblk1p2`` as the root file system=2E A ``bad CRC`` warning whil=
+e loading
+>+an uninitialized persistent U-Boot environment is expected; U-Boot conti=
+nues
+>+with its compiled-in defaults=2E
 >+
-> static void
-> usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-> {
->     SDHCIState *s =3D SYSBUS_SDHCI(opaque);
->     uint32_t value =3D (uint32_t)val;
->=20
->+    if ((offset & ~3) =3D=3D ESDHC_VENDOR_SPEC) {
->+        value =3D deposit32(s->vendor_spec, (offset & 3) * 8,
->+                          size * 8, value);
->+        esdhc_write(opaque, ESDHC_VENDOR_SPEC, value, 4);
->+        return;
->+    }
->+    if ((offset & ~3) =3D=3D SDHC_CLKCON) {
->+        esdhc_write(opaque, offset, val, size);
->+        return;
->+    }
->+    if ((offset & ~3) =3D=3D SDHC_TRNMOD) {
->+        uint16_t clkcon =3D s->clkcon;
+>+Direct Linux boot
+>+~~~~~~~~~~~~~~~~~
 >+
->+        /* Present vendor clocks to the common command check */
->+        if (usdhc_vendor_clocks_on(s)) {
->+            s->clkcon |=3D SDHC_CLOCK_CHK_MASK;
->+        }
->+        if (offset =3D=3D SDHC_TRNMOD && size =3D=3D 4) {
->+            val |=3D s->trnmod;
->+        }
->+        sdhci_write(opaque, offset, val, size);
->+        s->clkcon =3D clkcon;
->+        return;
->+    }
+>+QEMU can load the Buildroot kernel and device tree directly=2E The kerne=
+l then
+>+mounts the second SD card partition as its root file system::
 
-Any reason why these if statements aren't incorporated into the switch sta=
-tement below?
+Extra ':' here, too=2E
 
 Best regards,
 Bernhard
 
 >+
->     switch (offset) {
->     case ESDHC_MIX_CTRL:
->         /*
->@@ -2076,18 +2155,6 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t =
-val, unsigned size)
->         s->trnmod =3D value & UINT16_MAX;
->         break;
->=20
->-    case SDHC_TRNMOD:
->-        /*
->-         * Similar to above, but this time a write to "Command
->-         * Register" will be translated into a 4-byte write to
->-         * "Transfer Mode register" where lower 16-bit of value would
->-         * be set to zero=2E So what we do is fill those bits with
->-         * cached value from s->trnmod and let the SDHCI
->-         * infrastructure handle the rest
->-         */
->-        sdhci_write(opaque, offset, val | s->trnmod, size);
->-        break;
->-
->     default:
->         esdhc_write(opaque, offset, val, size);
->         break;
->@@ -2095,7 +2162,7 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t v=
-al, unsigned size)
-> }
->=20
-> static const MemoryRegionOps usdhc_mmio_ops =3D {
->-    =2Eread =3D esdhc_read,
->+    =2Eread =3D usdhc_read,
->     =2Ewrite =3D usdhc_write,
->     =2Evalid =3D {
->         =2Emin_access_size =3D 1,
+>+=2E=2E code-block:: bash
+>+
+>+  "$QEMU_BUILD/qemu-system-arm" \
+>+      -M mcimx6ul-evk -m 512M \
+>+      -kernel "$IMAGES/zImage" \
+>+      -dtb "$IMAGES/imx6ul-14x14-evk=2Edtb" \
+>+      -append "console=3Dttymxc0,115200 root=3D/dev/mmcblk1p2 rootwait r=
+w" \
+>+      -drive file=3D"$IMAGES/sdcard=2Eimg",if=3Dsd,index=3D1,format=3Dra=
+w \
+>+      -nographic
 
