@@ -1,106 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6317E606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 15:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30A3606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 15:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=VAlmIJGr
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gHg5WMFa;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Qu87v8Rh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJv5E-0004r8-72; Thu, 22 Oct 2026 11:52:00 -0400
+	id 1xJv96-0005mN-Rn; Thu, 22 Oct 2026 11:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJv5C-0004qt-Lo
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:51:58 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJv5A-0002Jp-RG
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:51:58 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-8b09e07e149so19466947b3.1
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 08:51:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792684315; cv=none;
- d=google.com; s=arc-20260327;
- b=ZGIhw6oIF5Xh0OXZGP97qZbdAwbLdckifU6v12VChx4MayE9S56vTh1Tyx55io4MbG
- btTx5DoxGkxiX+iWzl2zfymyZdYNy7wq5RfCB/r+P2Nnndy9mdDY8yg6NBQF/seKcfgo
- f46kXLSpcEzuw25Z6aNu/aWz8AaVHUEzASvKnDXTJeAh+HYt5xluvpHj8Uow+CRHy7rm
- RcrJTeBusdIUnMN2/L2sNAI7V/JJwd03IBGQJ5t9fCYdCt2frgMr5FHg9T1nf3YN570E
- /ojDDiBwdNjg/oiCMlw3FdQrdegIRKph2MzeioIuZjjJnTKWYHcK0Y8094oU2fDFYjko
- +x+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=J9CqLs6+Mm5qpzKwegGysuCsOhTAC0AaSvt284Er5HE=;
- fh=TRprHe8Ly4r4Gp/hkMfLWYg35Due7zYkNqSPlkAmVvg=;
- b=jEajtKpQ7iPff49IeWsLyZ5FtsrE972SI+JCeArGKFErJ263rusIGfsT/3CBnl+gd5
- GsP4rB+rYc4I7F/G/kBrpsbnU3kd2SygmDH+JcL6vzD5SVKDTwMg9UZijsUeM/Z2JDQ3
- tQoD/nT3nTvf4i9OnHKfoZwPg42UQcM0I7ssarHoXZhCD1qborSeuRU1/3eRrhpbFodz
- jALbWlXWWQR+VcJ7ZWPVXnwuKtyoHLsxak6+H+2NactXjChmnEn/2XvePi/HQdkw/TFN
- osH86P9XjLL7en/xuC+DA/9Uy6c3Lf6xVNYiVvMPNR7gKno4IxUMJd3XQa+Eebns4kv0
- KiEg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xJv92-0005kU-Sk
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:55:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xJv91-0002U1-2I
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:55:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792684554;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MaHH4pxbdNnAgyeh1Vhe7D81MzgJIkPFQi9IeylD1oc=;
+ b=gHg5WMFap+QQRDBAkU8ib8hiHde4qL/yZtIAGO6ESDxVBx0GdgJWKi0bfPYej3NqkrBwRJ
+ HlrCBE7f6tZ9YncBe/3fN0ZEp0JBOgrJCFCTYpx+4D5xdacSC2iVHcJy+oeoZ+7dehSEFh
+ NWP1OwaVROAmH1PffJjjaJWsBscSDJ8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-SN7jBq7ENZa9H23yFz0h9Q-1; Thu, 22 Oct 2026 11:55:51 -0400
+X-MC-Unique: SN7jBq7ENZa9H23yFz0h9Q-1
+X-Mimecast-MFC-AGG-ID: SN7jBq7ENZa9H23yFz0h9Q_1792684550
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a1fdde384cso12319625e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 08:55:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792684315; x=1793289115; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:mime-version:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=J9CqLs6+Mm5qpzKwegGysuCsOhTAC0AaSvt284Er5HE=;
- b=VAlmIJGr7Hmy1K+5qYaBF6UJ92/w5S/G39nnMahtMxyl3gNQG5yjnEybwod/faG1lg
- UHuyiGK4ln79g+qK9m4grmKWGclagJBkt/DN3sBZLTsvM5OZfftBA7ZKC1KPjfzmBcs9
- AyOMtyfRXK5QmC/BShEJgYEgUPxDJ+cKgPA8W8+yT4UNp/h6daPuFmbKl/i/a/2meD1P
- 3rC6hY0NGpx6CYcoYlm97343c2Az61FmcrWI167pzw+yeJB3YyAYN3dtcg5YSlXmy7AW
- YoxClhrxUpT8IU6ezjSSvJmmDrMijMCrlwzwqIduGTBa4VoYW5twYOJvIcPIgUF1Kccc
- fXuQ==
+ d=redhat.com; s=google; t=1792684549; x=1793289349; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=MaHH4pxbdNnAgyeh1Vhe7D81MzgJIkPFQi9IeylD1oc=;
+ b=Qu87v8RhclPZ2YUnTFIs/ZyL4ZqNlz49tOCYI5+C+4i16QVLHBKdj0ffqGU/xjsYS9
+ pkHDq3T/rwuZwD6/Hwbl8LrAy+LI99FUODfPwruhnOLTiP3oBtd9At85jw7bTbvqsDHI
+ /+bvJoMZndwA3olGMyRAGJiBtAUqgwLBfhlndZIHtirAN+nvcvMPyT5inLXczzpGmG78
+ XW59npa3TJ4gbMYNoybfkZsmBsEZnpjSN6wqV2Grs0/zu7w1i2M4tzUAYjdCtm5x3zqw
+ GFAgO/k5/VYFR6So46QvFmGT2Si+fy/yGY/viZyoPjAHv7h/dUe2bhNLZxjjYQxV00zz
+ oZNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792684315; x=1793289115;
- h=content-type:cc:to:subject:message-id:date:from:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=J9CqLs6+Mm5qpzKwegGysuCsOhTAC0AaSvt284Er5HE=;
- b=lB7FKtYBFAuwmKyQOgIBeo/JxI0x8xyIai5GMEJmJY0t008/KIMckgCbI0YBmwd1DR
- O7zEUr+cfX9mR3i73/xeT3H4EoyCqER5jMqibXsPOmmLrWEABUKiFvP+gfOjcRWdQ4oh
- KqnZtgJKEk1uG3lYECfpnWSeKwqegaDYTKlk4aWiPyX6OQQOEYeV2epw7gXfBqK5hESd
- vy6NJ6PEQRcsTasf1AXxX/vRLe01SEgS9tR/JNd1vJoSXq12ht/AvClz8Z1/LZxvIIc/
- CxbMfSGuFj3Wk39ekX/jDaPHS1OVMSg3eGvBeXX2wqRs3U5DW+R/cLcw42efSN+S7Cmt
- R0kg==
-X-Gm-Message-State: AFq9FYLOL4m49eyEKUlz1xHddAhN34NI0VYiJxNJU6Kz7ss2Nc+yrba7
- 5CMTTkUH4TaT0q/TUeZR6gNd792aQ0KTIs00wySW+FiESH/Wn6Vo+ztyl35HlVkJ2DLQWJujXst
- 48eeDX2yJBkqQadX5gBd7uD+vR+jsJo9Vl1idSVRF4cllCmiqPSRC04CGXg==
-X-Gm-Gg: AYBFou2lxNINvM9WfHsEsZFX4Dnd4aqpKWwJoS00C8OqYi99q8E/fmfiYppxjnd7/4q
- IKdilqcfxhsIxXZFR1Bna3OyznE7B1+Iu04dmRYUVxdTNc/6tb9DGahhz9tkQkZTx8Nh+yhBN+A
- rfDYBUFx8UR2ehcskf3fl11kjNzAa282+AonJm0JeD9p9aLWMoaR5wlO8hIqkarUoV17sYbZF98
- +I3bUpLgBEMy/4uJG9AynN1/zA6WF4yeAw5bql0XeGUtoaE8/PDbZzIJh5cBfgtyRXtLvxQDKVp
- wqIbLH/v4b/nCFjm6bKSA5kuBTDbLR8PdUKHt+zV5BYZQNpYFtazOvR3ma/HeO6Nmp5CCGAhVv6
- 7+at9rx2fuCVd/xui7OigCx0Q79Bc4p1n6/6hPWTbX5hLiH9U5U3R0IBC5qxzgD1ZKdQ/B6qbpO
- Zyazr+SHBrySDreNBq5tlZ
-X-Received: by 2002:a05:690c:d8f:b0:8b0:6617:e241 with SMTP id
- 00721157ae682-8b133d07ddcmr28693247b3.4.1792684314723; Thu, 22 Oct 2026
- 08:51:54 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792684549; x=1793289349;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MaHH4pxbdNnAgyeh1Vhe7D81MzgJIkPFQi9IeylD1oc=;
+ b=QItkHO1qAZotLTWqAQ2okWUzI4KJT3g3fOrRyevAbXqHW29CPZKOzSe9y4xb+8p8H7
+ rHgh3t7d9iqvsE1sgJhcu9/zukjs0S8XuqsifgKkpvCX54hXUKy+GcGkJT5gmmzLiTIO
+ rVn2yEhQCrp7If+JJhkGi/YFyJaP1yL0FO0/ip2TZfZCQLwE0AyCpjyqao+vgN0Ya4Vv
+ wIjUZh5t4DTi9tG+QL1d1AR5xlUhIQGIccxL5FmLopKZAGEVlLaRp1P1jd1kazgimH0+
+ 8Uz/jHRURN6lsQsMMyYJVNU64kIexd3Pf6C2p2qE1OLHpp0Qd54Krt+SPcGVf3R48vJU
+ eHwg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz47tHWRK60imnIpbKwvNHkmlJkwpN3NTGN3KgflpLhXNIBxsOpaH2qopB73627TiA+EXQrHGpHIbnG@nongnu.org
+X-Gm-Message-State: AFq9FYJ0XXPHe4jmfXtIjzzDnFfYQPCFW16k/3FLOpdDK+zIHq3sR1/c
+ qwK7VLmstkyPFJ2EOKn4jlL0IOcZAiluxcU0H8o2rqFaXryCSR+5QFASWmivXnm9wO9wjd9yb7k
+ trzKvbt6ksUQJPtspJcCiuBpw9hXAv9CJJ2yFWB5qJ90bZkHCD4yOaW6n
+X-Gm-Gg: AYBFou33RbJR5JqXuGuDm96ADsWPnouRvJTE+bO2peVPUF2swvMRbdaQX6mHhPT1X59
+ 2DsFJO9idNeJeTQbGzIAqL23Fb6y8k0HkiKrUhZEPCwdkqMAEyADEgSnPE4owYjOZssGMQvgD+2
+ k+Izw+nfQ6TqYBgbrnv2PSvOuAk9omDzjHik1PaTQB9oe9vxr0WQbCYkh1hyCb7uKW3vUZj5zx/
+ CDbkqwP/qNa1yrhcuFgOjh73hKzWn9jmBwePYLd2bYNWiZnDc2Xmq0C20+e2b9jHO93658WmBB4
+ fh35dHlM1zpyhL2duYuWLAl3A4KLh+ErWJkhr3qisgNgEl49OwMMkRuHT2p/4XGVY0qobyjIyZC
+ 4SCB0xOSRwK5MqjOe8YU1lQ13FZIENTCnQw==
+X-Received: by 2002:a05:600c:c11b:b0:4a1:f736:79f3 with SMTP id
+ 5b1f17b1804b1-4a1fdd0b261mr97898125e9.5.1792684549346; 
+ Thu, 22 Oct 2026 08:55:49 -0700 (PDT)
+X-Received: by 2002:a05:600c:c11b:b0:4a1:f736:79f3 with SMTP id
+ 5b1f17b1804b1-4a1fdd0b261mr97897855e9.5.1792684548974; 
+ Thu, 22 Oct 2026 08:55:48 -0700 (PDT)
+Received: from [192.168.192.3] (p4fdeb9e7.dip0.t-ipconnect.de.
+ [79.222.185.231]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a21029c9b2sm5780515e9.2.2026.10.22.08.55.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 08:55:48 -0700 (PDT)
+Message-ID: <65193d93-2fcc-4a39-8e54-d16022855bbf@redhat.com>
+Date: Thu, 22 Oct 2026 17:55:47 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Oct 2026 16:51:42 +0100
-X-Gm-Features: AclHuK-lbX4glG2jFpuTtDhHBF0OUZ-2EygR6lW_wlocbJlm6nUS186J_8Kp9hs
-Message-ID: <CAFEAcA846O2jbpDvy+zUnxrpfxKLQpjhHq14zBOGQMC6caXOJw@mail.gmail.com>
-Subject: tests/tcg: how should we skip a gdb test if the host's gdb isn't new
- enough?
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Song Gao <17746591750@163.com>, 
- Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/12] qapi/block: Add BLOCK_IO_DELAY event
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20261019182028.45305-1-hreitz@redhat.com>
+ <20261019182028.45305-7-hreitz@redhat.com> <87a4o8sw79.fsf@pond.sub.org>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <87a4o8sw79.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,103 +122,125 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-I noticed that the gdbstub/memory.py test hangs for me when it tries
-to test the loongarch64 architecture. Running it as a standalone
-test (which is what "make check" does) hangs too (transcript at
-end of mail).
+On 20.10.26 08:49, Markus Armbruster wrote:
+> Hanna Czenczek <hreitz@redhat.com> writes:
+>
+>> This event will be emitted when a disk operation takes longer than a
+>> pre-defined threshold (as set on the block device).
+>>
+>> Note that the description refers to the "delay-report-ns" and
+>> "delay-stop-ns" block device properties, which are not yet available.
+>> A future commit in this series will add them.
+>>
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>>   qapi/block.json | 37 +++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 37 insertions(+)
+>>
+>> diff --git a/qapi/block.json b/qapi/block.json
+>> index 8f4a71733c1..5f9f5c28050 100644
+>> --- a/qapi/block.json
+>> +++ b/qapi/block.json
+>> @@ -649,3 +649,40 @@
+>>   ##
+>>   { 'enum': 'IoAccountingOperation',
+>>     'data': [ 'read', 'write', 'flush', 'zone-append', 'unmap' ] }
+>> +
+>> +##
+>> +# @BLOCK_IO_DELAY:
+>> +#
+>> +# Emitted when a disk operation takes longer than the pre-defined
+>> +# threshold (as set via the "delay-report-ns" / "delay-stop-ns"
+>> +# properties on the block device).
+> As in PATCH 01, "block device" could be confusing, because we use the
+> term both for frontends and backends.  I believe "delay-report-ns" and
+> "delay-stop-ns" are the qdev properties every block device model will
+> have [PATCH 11].
 
-I'm guessing that the fundamental cause of this is that my host
-gdb doesn't like talking to the gdbstub, and reports in the log:
-"warning: Architecture rejected target-supplied description".
-(The hang seems to be because we continually re-execute a
-store insn that provokes a debug exception -- presumably the
-gdb is not doing what it should at its end and reporting
-and then deleting the watchpoint before continuing, so we just
-keep reporting the watchpoint hit to gdb endlessly.)
+Sure. So… “block device model”, or “on -device”?
 
-The gdb is the gdb-multiarch Ubuntu one; --version reports
-"GNU gdb (Ubuntu 15.1-1ubuntu1~24.04.1) 15.1"
+>> +#
+>> +# Note that delays deliberately incurred by throttling do count
+>> +# towards the operation duration.
+>> +#
+> Please use the revised syntax for introductions, like you did in PATCH
+> 01:
+>
+>     # @name: introduction, best to keep it brief, but you may continue it
+>     #     like this if necessary.  If your text need to refer to
+>     #     arguments, it's almost certainly not brief introduction
+>     #     anymore.
+>     #
+>     # Additional text can go here for now.
+>
+> I apologize for the inconvenience.  We need this to eliminate certain
+> syntactic ambiguities that plagued the doc generator.  We'll need it
+> some more for the doc inliner.
 
-How in the gdbstub test framework should we detect "this gdb
-isn't good enough for this architecture/test" and skip tests?
+Sure!
 
+>> +# @qom-path: path to the block device object in the QOM tree
+>> +#
+>> +# @operation: I/O operation
+>> +#
+>> +# @latency-ns: Ongoing duration of the operation (in nanoseconds)
+>> +#
+>> +# @action: Action that has been taken ("report" for "delay-report-ns"
+>> +#     or "stop" for "delay-stop-ns").  A "stop" action means the VM
+>> +#     will be stopped with the "io-hang" `RunState`, which does not
+>> +#     drain the block devices attached to the VM, because draining
+>> +#     would be counterproductive in case of a hanging I/O request.
+> This feels less than clear.  What exactly happens?  My best guess:
+>
+> * When an operation takes longer than delay-report-ns, BLOCK_IO_DELAY is
+>    emitted with "action": "report" (but only once for this operation).
+>
+> * When an operation takes longer than delay-stop-ns, the guest is
+>    stopped (run state becomes io-hang), and BLOCK_IO_DELAY is emitted
+>    with "action": "stop".
+>
+>    Say we continue the guest.  Can the even be triggered again for this
+>    operation?
 
-===begin===
-$ /home/pm215/qemu/tests/tcg/../guest-debug/run-test.py --gdb
-/usr/bin/gdb-multiarch --qemu
-/home/pm215/qemu/build/loongarch-dbg/qemu-system-loongarch64 --qargs
-'-display none -serial stdio -kernel' --bin
-build/loongarch-dbg/tests/tcg/loongarch64-softmmu-memory.test --test
-/home/pm215/qemu/build/loongarch-dbg/../../tests/tcg/multiarch/system/../gdbstub/memory.py
-QEMU CMD: /home/pm215/qemu/build/loongarch-dbg/qemu-system-loongarch64
--display none -serial stdio -kernel
-build/loongarch-dbg/tests/tcg/loongarch64-softmmu-memory.test -S -gdb
-unix:path=/tmp/tmpodrh2895qemu-gdbstub/gdbstub.socket,server=on
-qemu-system-loongarch64: -gdb
-unix:path=/tmp/tmpodrh2895qemu-gdbstub/gdbstub.socket,server=on: info:
-QEMU waiting for connection on:
-disconnected:unix:/tmp/tmpodrh2895qemu-gdbstub/gdbstub.socket,server=on
-GDB CMD: /usr/bin/gdb-multiarch
-build/loongarch-dbg/tests/tcg/loongarch64-softmmu-memory.test -q -n
--batch -ex 'set pagination off' -ex 'set confirm off' -ex 'target
-remote /tmp/tmpodrh2895qemu-gdbstub/gdbstub.socket' -x
-/home/pm215/qemu/build/loongarch-dbg/../../tests/tcg/multiarch/system/../gdbstub/memory.py
-warning: Architecture rejected target-supplied description
-0x000000001c000000 in ?? ()
-ATTACHED: Loongarch64
-Checking we can step the first few instructions
-0x000000001c000004 in ?? ()
-0x000000001c000008 in ?? ()
-0x000000001c00000c in ?? ()
-PASS: single step in boot code
-Setup catch-all for _exit
-Breakpoint 1 at 0x220000: file
-../../tests/tcg/loongarch64/system/boot.S, line 24.
-Breakpoint 2 at 0x2015ec: file
-/home/pm215/qemu/tests/tcg/multiarch/system/memory.c, line 510.
+No, because latency starts when the request begins, and the event (and 
+action) happen only when that threshold is crossed.
 
-Breakpoint 2, main () at
-/home/pm215/qemu/tests/tcg/multiarch/system/memory.c:510
-510         bool ok = true;
-PASS: break @ 0x2015ec <main+16> ({int (void)} 0x2015dc <main> 1 hits)
-Hardware access (read/write) watchpoint 3: test_data[128]
-Test data start: 0x238000
-Test data end: 0x23c000
-Filling test area with u8 (238000):.
-Hardware access (read/write) watchpoint 3: test_data[128]
+I can try to be more clear.
 
-Value = 0 '\000'
-init_test_data_u8 (unused_offset=0) at
-/home/pm215/qemu/tests/tcg/multiarch/system/memory.c:77
-77              *ptr++ = BYTE_NEXT(count);
-PASS: awatch for test_data[128]
-Hardware read watchpoint 4: test_data[128]
-...............................................................................................................................done
-16384 @ 23c000
-Reading u16 from 0x238000 (offset 0):.
-Hardware read watchpoint 4: test_data[128]
+> The three possible values are ignore, report, and stop.  You cover
+> report and stop.  Can ignore happen?
 
-Value = 128 '\200'
-read_test_data_u16 (offset=0) at
-/home/pm215/qemu/tests/tcg/multiarch/system/memory.c:213
-213             word = *ptr++;
-PASS: rwatch for test_data[128]
-Hardware watchpoint 5: test_data[128]
-...............................................................done
-8192 @ 23c000
-Reading u32 from 0x238000 (offset
-0):................................done 4096 @ 23c000
-Reading u64 from 0x238000 (offset 0):................done 2048 @ 23c000
-Filling test area with u16 (offset 0, 238000):.
-===endit===
+No, it cannot. (Also by definition of `ignore` meaning to… ignore 
+something. So an event cannot carry this.)
 
-thanks
--- PMM
+> We should use ``literal`` markup for literal values.
+
+Sure.
+
+Hanna
+
+>> +#
+>> +# @offset: Request offset in the guest disk (in bytes), if available
+>> +#
+>> +# @bytes: Request length
+>> +#
+>> +# Since: 11.2
+>> +##
+>> +{ 'event': 'BLOCK_IO_DELAY',
+>> +  'data': {
+>> +      'qom-path': 'str',
+>> +      'operation': 'IoAccountingOperation',
+>> +      'latency-ns': 'uint64',
+>> +      'action': 'BlockErrorAction',
+>> +      '*offset': 'uint64',
+>> +      'bytes': 'uint64' } }
+
 
