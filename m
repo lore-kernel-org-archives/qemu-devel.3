@@ -1,100 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6585A606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 23:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3463606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 23:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=LT+dFcEZ;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=am6U1qo+
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dLIJhaFA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=eGMC0xmh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK2am-0000eh-Sz; Thu, 22 Oct 2026 19:53:04 -0400
+	id 1xK2ew-000279-N3; Thu, 22 Oct 2026 19:57:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xK2ak-0000eP-9r
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:53:02 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xK2ev-00026x-1G
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:57:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xK2ai-00014C-Mg
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:53:02 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xK2et-0001nw-Cv
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:57:20 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MMEmGa1995989
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:52:59 GMT
+ 69MNa5561083053
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:57:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- b277JF0qHmIn5/PAT5/4L8XfFM5w/RydE5HH0Zw887s=; b=LT+dFcEZvDxCMQNt
- rPBTJkjdrosdbFxp30Ep6vBagsrY+wyduU+KB34hIX0PO+gtu6g94fP4wQACglzi
- ogWok2btV3jTvgPbC0sCrx9Ozch8IummGtnQqauEnm9KPgEBf8M9VC/BfWFDjHe1
- o3jckheQbhxr9eIZkULbxIXsNdj7YgeN04sXjywJ1TEwRsHw+GKpMyOpJEMIycAj
- FEO2j9EoCnYeL7VmnipEyWxy4jaqI1GIARsyfnPzbfyLkcJi61cnnHHYcXqo4ErB
- Wj/HWCZk/ag/H10+gUqmjkB8iDv+sp8oNuNqwCz48TKlrRKwRVfoQMdau/tSHlJU
- spQtag==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmr920n-1
+ LI/M8vgm8+jARMqex7tuM253rqhIo5Eg2U6VmeaVAfM=; b=dLIJhaFAQS7LmTw2
+ PLZUHzg0u4vxQYM4Z5jktbkAC/4y+fWnkS3QExmpD/vIVHphqQx9pI+9Tqbo3Icm
+ jGmZvwvF5vH5HAOjOj6sRJQ71l9gDCRYUopgSYLoVtbkDe29FpViFl+KTwcUS4SJ
+ ZCBNhf0k8ggeWXa6yrX7IpVda9SUIzqoWSeyrhSF18OvsWbe5TARAV3UpMC7Po37
+ geyby5EXJlqNWchdkTpKcra9qkoKkkQbF1lmC0/JcVLs0Mi/OawrEVy9aitX5x3a
+ XonGOuHvELqQvJPc3A92aseK6tidoIyA+issZEL+vbsz84D9aVrEndwQFbgkd3+7
+ UBzjrg==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfnyw1ksf-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:52:59 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3ac8f449d1bso292094a91.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:52:59 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:57:17 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cd3e7a65fa8so176280a12.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:57:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792713179; x=1793317979; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792713437; x=1793318237; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=b277JF0qHmIn5/PAT5/4L8XfFM5w/RydE5HH0Zw887s=;
- b=am6U1qo+M9vv/7jRvB5nJ8ZPzUAQ+uCyFSzRwOTZPN07JnMR+0Y9qgh3Akeg7xIBLC
- B1nyjX9aTFty9RJtFJnwzXrQrhHPuodOImXRM+rjDMF0iI3N0OepGnw7k1DJAr6azo5H
- uY76rwPwATgLWA30M5siB8rj6wLjUR5m5tzlvTnA5lcsuobMTjj8GTI0ekrO1wakvqTU
- 3oJwxGYISMhBZSJ8o49Tr4VRAGOe0PdttoSdrD2LNh6kNnXz1zV3qK+O1aYJ7paPoxop
- YGALdfGer/k7tqgtOXbK2DffXrRnLFsKfA641OnSJ5Oeugq6R+XvY3Qc6+eAkKFLp6oT
- zJgQ==
+ bh=LI/M8vgm8+jARMqex7tuM253rqhIo5Eg2U6VmeaVAfM=;
+ b=eGMC0xmhmVPuqtjQ2D4TeeWCD3q/h2Z8DENfjW/ScK1udtKeVX3Sb/SQci/mEtG2so
+ kHX0foXcZxDSVF3pWTDsquwCIbjiS4yimFArBWITCloBYwHTpelw5ECD6cJK0el58Lc2
+ L3YNwSztiMV9drDgS6Z7TsNZ4wKyDTO6Qi3w3KJnIoE+Q+4HqJRgPpvRQDmDoM7uDzf0
+ ZcOPw1kabcr4sm2CM+PvCzzJ2y1Xi8bT0jNDiGPAtuduspnu9lRuNoHuwRx+D+lDCTNa
+ NzZ13/MgMuC/wp0EG36MgY/0Gma9kxykc0ZhG7PXmMRO0q9ck/JnYmAtTxm5hnFN394B
+ 0c9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792713179; x=1793317979;
+ d=1e100.net; s=20260707; t=1792713437; x=1793318237;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=b277JF0qHmIn5/PAT5/4L8XfFM5w/RydE5HH0Zw887s=;
- b=fh3cdO1DxZt1Ez0zidLb6WVfHTyvyqQbisK+k5mPGTJVyFxC6R/96q+W4q3pWfrmfe
- Hp8u1lQZygH9BpOVNWZSrMIdQYlTxZseWTQLdLY5/XD2TiPnmy/dagXJNYPCwDeEnicF
- ON+5IYhCrg2gQ9OmtIs0inBtF3kMWYQs4j1SBGG1NaOoUImzbd1SWVPsLZvwhZ6ZNr5D
- 7Dt2UtNAnLmjGDmRQT0Lh3eL1tbQCDbphenZh4cXSvN1rFyXHA8RUQqEtNROcvuKtCDj
- cGBCOkc4a4jgKc2GOfsEIv35p4PhNSzcD7coE6MpEvim+2sB828wko+tH6Zn29OiPths
- xCDA==
+ bh=LI/M8vgm8+jARMqex7tuM253rqhIo5Eg2U6VmeaVAfM=;
+ b=lU2roPC7xawg7b4jQCGMJ4DTONFqAHSlbTTVt/k+SStZ2a9KEF1LT0bAF529wBuCOp
+ 0CBfWJlTnKX7Hb9hNDJIGXE3EPoJQ1b33GqKqnIyUudTv6uGQwTMaj/7RkoXCu3xOCcI
+ 2gZxz/y4Lzj+f7LCE6IYePW1S4WMMLAqMJ3oMdvjDNkW1XQbaxNuvQpybmY9cfQBFuUk
+ y+r9lUKScWI5QlY4DapcFc7M7TUnZs4abYVXolPctc7GnZ5JU2S817D357u7Ie7chDBI
+ iNUOT7inyoDnrq/owbNkTGMzzqbQZARw+lBqGon4f4QD9g1fxVWo/be3QTOy52XThhsb
+ 4HNw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwGyKXcBJEB+zTBLmwiCFqHH/RVS0c4pAtizA6pOlJrL7SmEiPS2P//brVVpcByHl5Y9FzeDPTK1iJG@nongnu.org
-X-Gm-Message-State: AFq9FYJeVFxX4WzP0La94DCieQh6l1ocf1S+9weTrCWBt+DkSHlWYRHn
- ONXQIQku8COrxO3LDJoAfV3Ow1ObeTEQLl7diUD5wzrL2ws3BNqmYpQg8UBqpeAVkW7asUAcGMk
- i5GiSmwP0+Q4uHI5c1gG31tc76BPcIHI6cR331HKxYjv5Bl9S++AmCUx3xg==
-X-Gm-Gg: AYBFou3KoUPi3vyC1pzwfNz5cCJHTZXaEGTXkvbD+YxraP+GM+kcbgiRbiI7pgLFRgZ
- 4NWVrvMUove0qVzCorpC4P+PqIi4QIso0bNedM4DrfDalZ9Z11fmILvW2HlUN7tW9mFiMfSVtLj
- LjdTBhk4TCKMN3B9gQU+2SsMWbolnk7f/eCck9c3sYXuxf+0VjM1EAELrBGDhYLF/13yr/HkdGS
- HeojgeVK8JOpZdJVobDkQYzX+3hX5gjrBDLrhnoTgaCIijn8fDRXYqE4kOhjRE+qoEg5kAOQ0Mz
- gESl8yquFwaXfhrp2ju7g5TXmLu3rzHH76Yw60xIdUH2XELIFo32A4ZbNQD/GLtAyIymhkhB0tx
- DE+tWvWG/92Z9NuDBXvAaB9etFgZeR7gICopYPFyWyGMvdCh4UhSDZEV2JRvMtFCp7V71rg==
-X-Received: by 2002:a17:90b:39c5:b0:3a7:a463:54c2 with SMTP id
- 98e67ed59e1d1-3adce07f94emr417827a91.35.1792713178692; 
- Thu, 22 Oct 2026 16:52:58 -0700 (PDT)
-X-Received: by 2002:a17:90b:39c5:b0:3a7:a463:54c2 with SMTP id
- 98e67ed59e1d1-3adce07f94emr417811a91.35.1792713178269; 
- Thu, 22 Oct 2026 16:52:58 -0700 (PDT)
+ AKwUvByiwpvdX9tTR2Tid5wczRX3UcCR9chrLBD26KSPheqLFaMf+qQZkpyaJuk4pjMAju9jSRyN5NOhC4nW@nongnu.org
+X-Gm-Message-State: AFq9FYIkAdD1PPQyviapgzSqrM2oK7iK4oQpEDCveCqgjt3GsaqKTdS9
+ JeY7OoCD5xq2dnIkczcQD4ObkP2mMPV7qFJF9VT6Gkq8Wo8woTK+s/qVO/TegfpzOS1KDXaqvAv
+ jkulrEwi985IFAylDlfH0kK1Rmnr1ZgTuU5IGZnyPKcIb0EVKLSiVCvQBKg==
+X-Gm-Gg: AYBFou2uZu7a/ZIYprAPv84pXBTMDUw3doPmbbyGXkXZAzJJL3ITAqRtqERjf3yk4xG
+ MAM/np4uqHUi5DEqIiwjqN5/mzdQdqRV8QSzVqkz+49p/LpqHebZ6BR4WXAMGe9ZjZmnNuWMkO9
+ h9cK9hhdvtG1+RB3arRoSZEM7G68jLsOuVGMb1WStcCVsDkUz+itw/OibQHmQ3ihCjPFDHBUHbJ
+ mMv37szBfd+KmTWXz2DEb1WQBoo7/GcoYDlax+6T6TCGX6FsMU3tWWBps34v7Rih/vytRzONN7N
+ Xd1i9fufrDzuW+/cXA5DnOENBVjfF/uw1SXHhqb1+DrK3QHKn5QbnDv+lzLq+cE6OPPQJlDlV9S
+ uEK8qrz9KpWTl/UIbeUuCYx3hUHBWVAD/xJ+MnKnE+INEd/f8VogeklipHSXMJ65fnLaSUQ==
+X-Received: by 2002:a17:90b:3805:b0:3a8:59d3:530f with SMTP id
+ 98e67ed59e1d1-3adce0df541mr393549a91.57.1792713436794; 
+ Thu, 22 Oct 2026 16:57:16 -0700 (PDT)
+X-Received: by 2002:a17:90b:3805:b0:3a8:59d3:530f with SMTP id
+ 98e67ed59e1d1-3adce0df541mr393536a91.57.1792713436284; 
+ Thu, 22 Oct 2026 16:57:16 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ada493261asm6189807a91.12.2026.10.22.16.52.57
+ 98e67ed59e1d1-3ada49314besm6095600a91.11.2026.10.22.16.57.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Oct 2026 16:52:57 -0700 (PDT)
-Message-ID: <2ed3e873-a89c-4657-abab-1af0a901b3df@oss.qualcomm.com>
-Date: Thu, 22 Oct 2026 16:52:57 -0700
+ Thu, 22 Oct 2026 16:57:15 -0700 (PDT)
+Message-ID: <9a2c99f4-5f6c-4509-a473-6a124b0daed1@oss.qualcomm.com>
+Date: Thu, 22 Oct 2026 16:57:15 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/16] hw/hexagon: convert virt board to hex-board
+Subject: Re: [PATCH v3 16/16] BCAIN do not merge - gitlab-ci: enable CI
+ pipelines on forks
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alessandro Di Federico <ale@rev.ng>, Laurent Vivier <lvivier@redhat.com>,
@@ -103,42 +104,42 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <laurent@vivier.eu>
 References: <20261022230048.2160400-1-brian.cain@oss.qualcomm.com>
- <20261022230048.2160400-6-brian.cain@oss.qualcomm.com>
+ <20261022230048.2160400-17-brian.cain@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261022230048.2160400-6-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20261022230048.2160400-17-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: cSCBcIpLtgzwPESUxpKuc3rTCO-4wthl
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA5NSBTYWx0ZWRfXyIySQcdFAI7s
- llyyWk5g1Ii9VhSqm8Vrsf/r3K/JB552IhnpJUQHmF8wlwBrvfQKPCW4ALXdUWWv9nO+iYVE+Fv
- StL5fheH4hwGI34WsE/WL+60BW76Wcg=
-X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6adaa1db cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-GUID: IFqpYdwrgTTXWtCPtku_xlC9Rgnk1ItA
+X-Proofpoint-ORIG-GUID: IFqpYdwrgTTXWtCPtku_xlC9Rgnk1ItA
+X-Authority-Analysis: v=2.4 cv=dphOmFg4 c=1 sm=1 tr=0 ts=6adaa2dd cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=qYXX2ZwjeG6IFCmtEZcA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA5NSBTYWx0ZWRfX50Po2wkR6sRx
- Fh2wq0uztXT4CGP5KsmSfv5hWvIewDT2zTHB/eCoOdNboimaJ0Fotp1GyEtBeHsj3InmbneVPTE
- 0Y0mDOIn4Fm+TuucQAIwZFBFble7bVbX7WUWk3+2ahLg7BkNpRzGo4tvBXRxDauNJIc0NY/zRWP
- ajRMIxnnDfhvW+wMH1OvJsvO+tHy+7hIl93p6K9vNfWQgfFoWxYIfL7VT1FuWe7j+oTTAzINxXU
- +0OapJHqBLVHFgpoUTB9ud91JQt+q30NOXDwvQ5lq+Wmql22ExBUCJD1WDDL1WegjbZTsaKBylW
- FvT2z08FCo3Y++XmklzmXES5k9H2JLBS348e43bpg9Xf5pEdbGidYwwfc2LyLM5jgTd6hUT0taN
- NVjWqRbKQsYfbO+4SIVK7WvhgS0tZQdhKf6HfFMGdoi08k81cTiRO98LPoLpC4TOefOhIjNtCYR
- V5oHHt9JpVTCXX8btug==
-X-Proofpoint-ORIG-GUID: cSCBcIpLtgzwPESUxpKuc3rTCO-4wthl
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=Rqg3d0ghmPrR7fqlHcoA:9 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA5NSBTYWx0ZWRfX+Yrk9hqRHnmI
+ Wx1iS9s5mlbkQxXKFPBiSgSkxWH27CTxfLDK0RY556HtwnKAmz0RHPTjFVRxUbUmC4hIJ8/W75H
+ CWwEnQk6c9qu1177CcRjVnUI7TxvbH4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA5NSBTYWx0ZWRfX3xRO5i0AE4Ek
+ Ic7rmiVNNaVBBsW05deS2xitU0pMgqoPRKUEtHwVMNBJh31nBxsyVu/fEWz9fnSZ4p6UleHEsep
+ fVGLrDq4TTuegeSx7WVsO4Mpvp6ImQg0UFEF0axCtzzdaUARcp1km0ako3lW0Ufrrrp5VvVGQWI
+ WCfo0wjbsdNXseOr9I29HlH2id5gTRzccfpabgMo1DKkFQ62tl8J8AzvyuuSiLMlRspLH/guyX0
+ t/lmimMqQiOYHYqu1IgI/hCY5BjssdVFJXF8+zzN0nLopxB8YtBHQfmeBHP421IEB7EApGqKfVY
+ nIlHISaUgYWru7je/5gHvwzGv+I9yeM3/aJqkBD6fOPjwyJ74R0hraltaaS5CWQustyu+NIusSw
+ 9bhxjNEX9dGMFAjoVfNnioX6lYbABeJy9xqf6rpjIQKRU4OK418F4JMijjLII5tU18zbvJj6+5q
+ GEf0VGlRY5NlX1G2Guw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-22_07,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220095
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -166,17 +167,116 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/22/2026 4:00 PM, Brian Cain wrote:
-> Build the virt machine with the hex-board helpers instead of its own
-> copies, and drop the machine state that nothing used.  The machine, its
-> device tree and its devices are unchanged; virt writes interrupts as the
-> bare line number.
+> Set QEMU_CI=2 so that pipeline jobs start automatically regardless
+> of whether the project is in the upstream namespace or a fork.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  include/hw/hexagon/virt.h |   6 -
->  hw/hexagon/virt.c         | 309 ++++----------------------------------
->  2 files changed, 26 insertions(+), 289 deletions(-)
+>  .../dockerfiles/debian-hexagon-cross.docker   |  2 +
+>  .gitlab-ci.d/buildtest.yml                    | 58 +++++++++++++++++++
+>  .gitlab-ci.d/qemu-project.yml                 |  2 +
+>  3 files changed, 62 insertions(+)
 > 
+> diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> index e07a2be37e2..39f647c743c 100644
+> --- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> @@ -28,6 +28,8 @@ RUN apt-get update && \
+>          flex \
+>          git \
+>          ninja-build \
+> +        clang \
+> +        libclang-rt-dev \
+>          python3-pip \
+>          python3-setuptools \
+>          python3-tomli \
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index b1e95395d0c..1f12a5f1f64 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -397,6 +397,64 @@ build-user-hexagon:
+>      CONFIGURE_ARGS: --disable-tools --disable-docs --enable-debug-tcg
+>      MAKE_CHECK_ARGS: check-tcg
+>  
+> +build-user-hexagon-noidefparser:
+> +  extends: .native_build_job_template
+> +  needs:
+> +    - job: hexagon-cross-container
+> +  variables:
+> +    IMAGE: debian-hexagon-cross
+> +    TARGETS: hexagon-linux-user
+> +    CONFIGURE_ARGS: --disable-tools --disable-docs --enable-debug-tcg
+> +      --disable-hexagon-idef-parser
+> +    MAKE_CHECK_ARGS: check-tcg
+> +
+> +build-hexagon-ubsan:
+> +  extends:
+> +    - .native_build_job_template
+> +    - .native_build_artifact_template
+> +  needs:
+> +    - job: hexagon-cross-container
+> +  variables:
+> +    IMAGE: debian-hexagon-cross
+> +    TARGETS: hexagon-linux-user hexagon-softmmu
+> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-tools --disable-docs
+> +      --enable-debug-tcg --enable-ubsan
+> +      --extra-cflags=-fno-sanitize-recover=undefined
+> +    MAKE_CHECK_ARGS: check-tcg
+> +
+> +functional-hexagon-ubsan:
+> +  extends: .functional_test_job_template
+> +  needs:
+> +    - job: build-hexagon-ubsan
+> +      artifacts: true
+> +  variables:
+> +    IMAGE: debian-hexagon-cross
+> +    MAKE_CHECK_ARGS: check-functional
+> +
+> +build-hexagon-asan:
+> +  extends:
+> +    - .native_build_job_template
+> +    - .native_build_artifact_template
+> +  needs:
+> +    - job: hexagon-cross-container
+> +  variables:
+> +    IMAGE: debian-hexagon-cross
+> +    TARGETS: hexagon-linux-user hexagon-softmmu
+> +    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-tools --disable-docs
+> +      --enable-debug-tcg --enable-asan
+> +    MAKE_CHECK_ARGS: check-tcg
+> +    ASAN_OPTIONS: detect_leaks=0
+> +
+> +functional-hexagon-asan:
+> +  extends: .functional_test_job_template
+> +  needs:
+> +    - job: build-hexagon-asan
+> +      artifacts: true
+> +  variables:
+> +    IMAGE: debian-hexagon-cross
+> +    MAKE_CHECK_ARGS: check-functional
+> +    ASAN_OPTIONS: detect_leaks=0
+> +
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Out of the modifications below, this could be added to upstream CI.
+Also, it's possible to combine asan+ubsan in a single build, and run
+both check-tcg and check-functional in the same job (or two steps, if
+you don't want to mix output).
+
+>  # Build the softmmu targets we have check-tcg tests and compilers in
+>  # our omnibus all-test-cross container. Those targets that haven't got
+>  # Debian cross compiler support need to use special containers.
+> diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
+> index 72d02bc65be..fe638bc5fd7 100644
+> --- a/.gitlab-ci.d/qemu-project.yml
+> +++ b/.gitlab-ci.d/qemu-project.yml
+> @@ -3,6 +3,8 @@
+>  
+>  variables:
+>    RUNNER_TAG: ""
+> +  QEMU_CI: "2"
+> +  QEMU_CI_FUNCTIONAL: "1"
+>  
+>  default:
+>    tags:
+
 
