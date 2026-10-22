@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9025E606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACAB606A31D
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RQGpE2Hg
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Cm60CaqP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJrIq-0008CC-EQ; Thu, 22 Oct 2026 07:49:48 -0400
+	id 1xJrIq-00087u-4H; Thu, 22 Oct 2026 07:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJrH6-0006kj-HA
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:48:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1xJrHK-0006pW-2C
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:48:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJrH4-0007GO-Fi
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:48:00 -0400
+ id 1xJrHI-0007JB-Ik
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:48:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792669677;
+ s=mimecast20190719; t=1792669692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/1fjiWygkRwux1lBwCGtl1AUmo2UCIH9Jml6qaPzOWQ=;
- b=RQGpE2HggtZ/l5ZPEnAUA3kI93Qm1tnajgdEjzR8dVwYgDQ1BGqPV+PUJNtBwmcGeZkEFh
- eEZD4NSdHlAjxT4MZQcszx0d4uxHohp7+NMuINDuaBt5EMiyQB7Z70L2wpG6jgA0ypi2Bx
- N3n8CQVxHeHAlY5DWZHXYrl99mvcs4I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=0tDABSE3pTCICLY9FmNTqSUPOMsAIDyqPC5pZoQ/qiY=;
+ b=Cm60CaqPDq0rPPqb1Re4uNcF4MwYjj5FBMjyPuZ11DGIIulmGPSNSRSjDi5ck0pTxZfG4B
+ oyZTNEqLrfLC4fcZRBIb5OjCLjYmOFtqIPWk+PQOnHnDsGotD6o12hYBD7VEu/3vBWk4bX
+ 1gPsNqM/xdSSWiOj0OE0Yyurjym5zuc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-DoRyfFrrOKuPhqdI7jg2LA-1; Thu,
- 22 Oct 2026 11:47:54 +0000
-X-MC-Unique: DoRyfFrrOKuPhqdI7jg2LA-1
-X-Mimecast-MFC-AGG-ID: DoRyfFrrOKuPhqdI7jg2LA_1792669672
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-I-V2zejcPaSEV0B_DcQrYw-1; Thu,
+ 22 Oct 2026 11:48:08 +0000
+X-MC-Unique: I-V2zejcPaSEV0B_DcQrYw-1
+X-Mimecast-MFC-AGG-ID: I-V2zejcPaSEV0B_DcQrYw_1792669686
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 472A01800652; Thu, 22 Oct 2026 11:47:52 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5115D1956054; Thu, 22 Oct 2026 11:48:06 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3AB6A1800480; Thu, 22 Oct 2026 11:47:50 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C4281956089; Thu, 22 Oct 2026 11:48:04 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 22 Oct 2026 15:47:19 +0400
-Subject: [PATCH v3 06/10] igvm: make IgvmMemoryRegion a QOM
+Date: Thu, 22 Oct 2026 15:47:23 +0400
+Subject: [PATCH v3 10/10] tests/xilinx-zynq-sdhci-test: fix GIOChannel leak
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261022-nohmp-next-v3-6-8b581b590512@redhat.com>
+Message-Id: <20261022-nohmp-next-v3-10-8b581b590512@redhat.com>
 References: <20261022-nohmp-next-v3-0-8b581b590512@redhat.com>
 In-Reply-To: <20261022-nohmp-next-v3-0-8b581b590512@redhat.com>
 To: qemu-devel@nongnu.org
@@ -72,34 +72,35 @@ Cc: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6350;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1290;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=U7m8WDF/BAK2Wf3yksj4Ah1D/30tnscuRyK47dRWL0M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2ffNLaxGntlZSvspfl9NjlRmVNBSRpQnhtIFA
- MoP2oOE/4uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatn3zQAKCRDa6OEJdZac
- 5fsWD/471pKjMGtcE6lGQLuofu+3ZXpaYwr69kyo2Gkxzz8gpYdtIx8dTjKkY7arltrm/Qv2sVl
- N34BiJFwzeM5p+q+Q+KA+jJmNVZ2Nmo/8SfB3uHNxbuBgTCNvCx7Orov6Cr+bgvLHetO/ybcpER
- /uVNqnnZbFT+ApBQac/F7spieAJOC/ceXGnjUD2BttWI0ZYQslp788Le5Jb/YSTLxc4jZbNcCTu
- 1OuOy22n1qnsrcUmB/XPVBCD49Rsdz1sfzsBJkj3CepNGd+JVuFjUTSzPCD+W43jnnb+TDhSZCM
- g3IbkOJZhw8IX8qs4W3Kfg8ORNhraM80or6w2e+XduVA3Y/S0LU6NpZh9+jfof343FLhYykG9s8
- A4XmunqtB8Ax+0XDxkZijvRYphL3Juth7WNQ0vUzi2ypjtoCBEK26Oi8z9NUilecWPYxmeK3Q0M
- Q2LzlTQdTUfHptLFUcKxygmXdv6fP3FbYpl/PV+l5wJrFASGCVP6wtinvIaL6uEiKAVaikqHwCS
- WKvG9HfxUDy/lM2HzCm2EEqfsJOFzd2YFyXnlAH5WcSVuN02UO81qlb09ds8kUIunoFxbjgSdWk
- JsxnLfq9QyEZri1o7iBlY5x9v4nhgkbsSpdvXWU25tWRkXh3GYnUR+kxb91jgg2u6xVOHMY+Xn6
- ea7tbWSF7ehU+Rg==
+ bh=q8J/y3hmdKkcrVl9eijNHa5xCK6axq1o5tLk9qkNbJ4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2ffOjE5lbQJMRPf3uHjmjEF6g6+cxUEq/SlHC
+ ox8rXFnNbuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatn3zgAKCRDa6OEJdZac
+ 5dR/EACUXwZBPFFg239eqvP4hK3+x1oXR/wxTR1CxxzYktmge5H9Mz/IxKsz7dfXljphJLvn+Dp
+ Lo80aIjAeWIj2FouECua5nYTSrtIpNK4NCzobsyro+OB2Hg/3pnd2gq2uyx62j7E27c9ndpAOOh
+ Zw6TlKBMuZWAJRxrWTw3qj9wS6/3LJuDya1TRVfFMP/9BdX6n/3SFs9nmEmGPvNn5Tw4G8+b3P/
+ jjRTOUtZ/aDgkGJVUWjyUBIxlRZunpQdlPHuzHKflZd/YcatzjjPBVanulLP0idMHStYkDo1VxY
+ US2o7qwFiZ3WfAzlZp1klkUrt+t8L6Yy8zaZKhNPJs7bxQchKUWHcccuDNX/seV18YPJo4hFc15
+ KWyytSWyKF6xaIt6nEdbPrtB2sUEz+eBiunm4mwiU2mQuIqjPv+pxqqs5SG9t39WljPqS2Owyem
+ CezHxssQEA7N/HjhVPUFs64mKtQKNlrn7SkpkqOnn2m3KZNeRkOWUQ7HfpG7W2mOevOFR3wcmEj
+ ZkTeABAXK1GRWd8ylXDz2Hu7KDo/rYuh+DJy+ojBx8St2Oo5g53jDsod1sJsxXXkfJbKfxVN+Qu
+ qmhnoEidHVPcK7cb5McJTR85pLQ/DArgZ2f70BBPOmScBB2ieBslZZXcLOegRnRefSc8tS4bTed
+ 4Jtr+WfbD+HBdgQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,174 +119,41 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Make IgvmMemoryRegion a QOM object, embedding MemoryRegion, and use it
-as the region owner. The IGVM list and memory subsystem can now hold
-references independently, and QOM frees after the last reference is
-dropped, fixing leaks reported by ASAN while running tests.
+Reported by ASAN.
 
-- object_unparent() is no longer needed, children are automatically unref
-- switch to memory_region_init_ram_flags_nomigrate() as other helpers
-  expect a DEVICE
-
+Fixes: 255c627c645b ("qtest: add xilinx-zynq SDHCI sdma test")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- backends/igvm.c                | 97 +++++++++++++++++++++++++-----------------
- include/system/igvm-internal.h |  9 ++--
- 2 files changed, 64 insertions(+), 42 deletions(-)
+ tests/qtest/xilinx-zynq-sdhci-test.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 7aa76441d0d0..e659fea25517 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -35,6 +35,12 @@
- #define IGVM_VHT_OPTIONAL_BIT (1U << 31)
- #endif
+diff --git a/tests/qtest/xilinx-zynq-sdhci-test.c b/tests/qtest/xilinx-zynq-sdhci-test.c
+index 7957358cf5d4..42e1b8f46e88 100644
+--- a/tests/qtest/xilinx-zynq-sdhci-test.c
++++ b/tests/qtest/xilinx-zynq-sdhci-test.c
+@@ -58,10 +58,10 @@ static QTestState *setup_sd_card(void)
  
-+struct IgvmMemoryRegion {
-+    Object parent_obj;
-+    MemoryRegion mr;
-+    QTAILQ_ENTRY(IgvmMemoryRegion) next;
-+};
-+
- /*
-  * Bit 31 of the variable header type indicates that the header is
-  * optional and can be safely ignored by a loader that does not
-@@ -253,10 +259,13 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-                                   int region_identifier, Error **errp)
+ static void write_pattern_to_image(size_t offset, size_t len)
  {
-     ERRP_GUARD();
--    IgvmMemoryRegion *imr = NULL;
-+    g_autoptr(IgvmMemoryRegion) imr = NULL;
-     Int128 gpa_region_size;
-+    g_autofree char *region_name = NULL;
-+    uint32_t flags = 0;
-     MemoryRegionSection mrs =
-         memory_region_find(get_system_memory(), addr, size);
-+
-     if (mrs.mr) {
-         if (!memory_region_is_ram(mrs.mr)) {
-             memory_region_unref(mrs.mr);
-@@ -279,36 +288,29 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-             return NULL;
-         }
-         return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
--    } else {
--        /*
--         * The region_identifier is the is the index of the IGVM directive that
--         * contains the page with the lowest GPA in the region. This will
--         * generate a unique region name.
--         */
--        g_autofree char *region_name =
--            g_strdup_printf("igvm.%X", region_identifier);
--        imr = g_new0(IgvmMemoryRegion, 1);
--        imr->mr = g_new0(MemoryRegion, 1);
--        if (ctx->machine_state->cgs &&
--            ctx->machine_state->cgs->require_guest_memfd) {
--            if (!memory_region_init_ram_guest_memfd_private(
--                    imr->mr, NULL, region_name, size, errp)) {
--                g_free(imr->mr);
--                g_free(imr);
--                return NULL;
--            }
--        } else {
--            if (!memory_region_init_ram(imr->mr, NULL, region_name, size,
--                                        errp)) {
--                g_free(imr->mr);
--                g_free(imr);
--                return NULL;
--            }
--        }
--        memory_region_add_subregion(get_system_memory(), addr, imr->mr);
--        QTAILQ_INSERT_TAIL(&ctx->cfg->memory_regions, imr, next);
--        return memory_region_get_ram_ptr(imr->mr);
-     }
-+
-+    /*
-+     * The region_identifier is the is the index of the IGVM directive that
-+     * contains the page with the lowest GPA in the region. This will
-+     * generate a unique region name.
-+     */
-+    region_name = g_strdup_printf("igvm.%X", region_identifier);
-+    imr = IGVM_MEMORY_REGION(object_new(TYPE_IGVM_MEMORY_REGION));
-+    if (ctx->machine_state->cgs &&
-+        ctx->machine_state->cgs->require_guest_memfd) {
-+        flags = RAM_GUEST_MEMFD_PRIVATE;
-+    }
-+    if (!memory_region_init_ram_flags_nomigrate(&imr->mr, OBJECT(imr),
-+                                                region_name, size,
-+                                                flags, errp)) {
-+        return NULL;
-+    }
-+    vmstate_register_ram_global(&imr->mr);
-+    memory_region_add_subregion(get_system_memory(), addr, &imr->mr);
-+    object_ref(imr); /* for the list */
-+    QTAILQ_INSERT_TAIL(&ctx->cfg->memory_regions, imr, next);
-+    return memory_region_get_ram_ptr(&imr->mr);
+-    gchar *buf = g_malloc(len);
++    g_autofree gchar *buf = g_malloc(len);
++    g_autoptr(GIOChannel) chan = NULL;
+     GError *err = NULL;
+     gsize bytes_written;
+-    GIOChannel *chan;
+ 
+     for (size_t i = 0; i < len; i++) {
+         buf[i] = (i * 13 + 7) & 0xff;
+@@ -78,8 +78,6 @@ static void write_pattern_to_image(size_t offset, size_t len)
+     g_assert_cmpint(bytes_written, ==, len);
+     g_io_channel_shutdown(chan, TRUE, &err);
+     g_assert_no_error(err);
+-
+-    g_free(buf);
  }
  
- static int qigvm_type_to_cgs_type(IgvmPageDataType memory_type, bool unmeasured,
-@@ -1161,14 +1163,33 @@ void qigvm_cleanup_memory(IgvmCfg *cfg)
- {
-     IgvmMemoryRegion *imr, *tmp;
- 
--    QTAILQ_FOREACH_SAFE(imr, &cfg->memory_regions, next, tmp)
--    {
--        trace_qigvm_cleanup_memory(imr->mr->name);
--        memory_region_del_subregion(get_system_memory(), imr->mr);
--        vmstate_unregister_ram(imr->mr, NULL);
-+    QTAILQ_FOREACH_SAFE(imr, &cfg->memory_regions, next, tmp) {
-+        trace_qigvm_cleanup_memory(imr->mr.name);
-         QTAILQ_REMOVE(&cfg->memory_regions, imr, next);
--        /* this triggers MemoryRegion cleanup */
--        object_unparent(OBJECT(imr->mr));
--        g_free(imr);
-+        object_unref(OBJECT(imr));
-     }
- }
-+
-+static void qigvm_memory_region_finalize(Object *obj)
-+{
-+    IgvmMemoryRegion *imr = IGVM_MEMORY_REGION(obj);
-+
-+    if (imr->mr.container) {
-+        memory_region_del_subregion(imr->mr.container, &imr->mr);
-+    }
-+    vmstate_unregister_ram(&imr->mr, NULL);
-+}
-+
-+static const TypeInfo qigvm_memory_region_info = {
-+    .name = TYPE_IGVM_MEMORY_REGION,
-+    .parent = TYPE_OBJECT,
-+    .instance_size = sizeof(IgvmMemoryRegion),
-+    .instance_finalize = qigvm_memory_region_finalize,
-+};
-+
-+static void qigvm_register_types(void)
-+{
-+    type_register_static(&qigvm_memory_region_info);
-+}
-+
-+type_init(qigvm_register_types);
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index b3b64cb58444..c2ceb57ffa65 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -18,10 +18,11 @@
- #include "system/confidential-guest-support.h"
- #include <igvm/igvm.h>
- 
--typedef struct IgvmMemoryRegion {
--    QTAILQ_ENTRY(IgvmMemoryRegion) next;
--    MemoryRegion *mr;
--} IgvmMemoryRegion;
-+typedef struct IgvmMemoryRegion IgvmMemoryRegion;
-+
-+#define TYPE_IGVM_MEMORY_REGION "igvm-memory-region"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(IgvmMemoryRegion, IGVM_MEMORY_REGION)
- 
- struct IgvmCfg {
-     Object parent_obj;
+ static void wait_for_block_count(QTestState *qts, uint16_t expected)
 
 -- 
 2.56.0.116.g6de20f6092dc
