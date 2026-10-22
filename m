@@ -1,79 +1,151 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A40B606A319
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4EC606A31B
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 14:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JoR0+xBS
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=KpAWegbF;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=eRMwUB0O
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJtQ0-0000iP-Lv; Thu, 22 Oct 2026 10:05:20 -0400
+	id 1xJtPK-0000RM-N4; Thu, 22 Oct 2026 10:04:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xJtPc-0000Uv-CG
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:05:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJtOr-0000OH-Sh
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:04:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xJtPa-0007mf-5d
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:04:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJtOq-0007f8-3x
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792677890;
+ s=mimecast20190719; t=1792677846;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r0Dn4cMbatHc8u5gPwJqR6ERLr2a6FKdRWRqmYGAqKY=;
- b=JoR0+xBS+La8bOU3bcDCtZbGmfdfOg0RSpeyHJEERLvinnp3ctUZ42DOFCF3jVtMWFhr26
- 2lPWCbN+jSIfgkL/xiJZUiehE4XRmnXWDAHaIGWKU7je0aNaihHRvTBXN+vIHUtjptOq1P
- R0G7HKoIWGLTvM9ViO/L9Ag98MkWuw0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-y55zXdV3Pde0jpNhjT7RhQ-1; Thu,
- 22 Oct 2026 10:04:49 -0400
-X-MC-Unique: y55zXdV3Pde0jpNhjT7RhQ-1
-X-Mimecast-MFC-AGG-ID: y55zXdV3Pde0jpNhjT7RhQ_1792677888
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED9BB195420D; Thu, 22 Oct 2026 14:04:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4065C180057F; Thu, 22 Oct 2026 14:04:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DB84221E6A04; Thu, 22 Oct 2026 16:04:44 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
- <jsnow@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: ObjectPropertyInfo design (was: [PATCH v7 00/65] Hi)
-In-Reply-To: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com> (marcandre
- lureau's message of "Tue, 20 Oct 2026 14:45:17 +0400")
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
-Date: Thu, 22 Oct 2026 16:04:44 +0200
-Message-ID: <87ik2tj0g3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Te9/+mTzMJtO3zMi+HZSwVvJuMI3yHodGaZCpSdi2xM=;
+ b=KpAWegbF+SZTOlP+BdFwAZnH1XHLbLqhXfeNviA19QXJ2DWJP3Ki9pgq9ovpRi7/bD/Vsi
+ /sjmjVZc69lOsgWphYF6IzOjGH7JGe1pRUkcLXl7Sey94PMxr10BVK4bWksyCHuY0S3jT3
+ szVfqVtNK1o2GK/1YzC3Up7tTkW1BT4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-TTE_dDpINxGF0raHKA6sIA-1; Thu, 22 Oct 2026 14:04:05 +0000
+X-MC-Unique: TTE_dDpINxGF0raHKA6sIA-1
+X-Mimecast-MFC-AGG-ID: TTE_dDpINxGF0raHKA6sIA_1792677844
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4a1e6ae710bso14017355e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 07:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792677844; x=1793282644; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Te9/+mTzMJtO3zMi+HZSwVvJuMI3yHodGaZCpSdi2xM=;
+ b=eRMwUB0OPb1fCFlp1BHwvU17pS5OPYGJ4z4k57fKjGVW9rwxYYyyH43vj8SX0TxEPr
+ a6M6J6Ws7dqteclG92Xk5lS6UYU7XxuX7iW4kgmeyG1gd0lbzzAzXyz7bJd97+eyT70R
+ K75x5jk7iwVg1W1cLuScdFlHvnoPKDGo5ks/76oxfLfb4QkXrijc48m1gRVWotXJEs9m
+ 5d+uJ1LtDe0hePRPcuTCmQTkq6q4c2wQu5XoEh+Rd3lYpC23B3GVhg4wiXZJHQZ2/iM1
+ mrUlunaCuwNl0frjX2eNibIQm1WwJQFmcZixEmcJtK74cHfy6mUlDpSdptnOB4LY9sya
+ P0Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792677844; x=1793282644;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Te9/+mTzMJtO3zMi+HZSwVvJuMI3yHodGaZCpSdi2xM=;
+ b=C29HMTaDGe4dET14Y7mdDMlQFEkBzO0i6QJV/1jTMKo7Wh18BAoyD0NLvk+QZp745m
+ CU+fBicNU4OXrTSEYYmpluT37HI4HJVAOLAaJs4CgFKUffbHwx1P8v8c2tBqgsxAkicH
+ SBpPgawR2rg8a6B2mlO1foyJ5zkGDaH2zKfNiimtVZ/y2A5S+315uCjQ0yb2ysbRkuBT
+ XTNO+xyriExgwM9FZLfvxpNzrhGNLWZYFS9TAO/jnpESWHaU7obdlw4u9MjkDz/tRFxz
+ GjIVM/rcUE2PmGnnEWIJzPI7Y5BU4RnnwzfLqYIyhIamYes/XF/85BuVt3L1ei+CaYaK
+ jn9g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByMGAgTVUSxhw3jlUdTdSI0ZHC8mHpFjBg0ROtg+CzXqmJ+nfMCndECM5mv2dSKRh/CKOmfjykeCD/A@nongnu.org
+X-Gm-Message-State: AFq9FYK5vjvPtOdvFxnR4DhQSenhu4zNoaed5aZOTRB0VKJaNIeH7zGq
+ LDsmQEY27rXfDzcWdPt7whxpsBBPtkfkou4wV37frX1z6n+1CiYdpT1NPLzk1oCZw1XQLPvt11K
+ iXpOMR+Unl+51Ef5r4V3FT7sLFQwNbPoZ0wU87dp2UjtaHW/+kIheMEAT
+X-Gm-Gg: AYBFou2+vCN9mDjdgQqq/LlMWBFWtNoZg7R2VGahYGJZ8JaFC/vyCpUEekqW7dzsaS2
+ m4eK5YGexEiePPsoyHX35f5Qz9d02oFGCS2ahMWwtEJ44zStSoV3Z7QZNN5cdKLrzElNVUw3ipu
+ 7K/yKQcQcIj8/jNZsp/m+/Ce6kkq7UjCos7OlEkPKSr3IorR0G+PwNWH/t4KCXAZuYhzzCoelAx
+ R+HjuNKA4J+BMkrh2H9NizH3lGja5MCkEBM/MmCuxL4EvgN2R3pHwx9cyj2mkoqPn9CPhQkBtHb
+ 9ZqyUKE+tQfBHUUw8UZlv5Mn5Nt1wwuqJFzsSXIAaDg+OzCeoYqVYMhfP5SWKM4RV4Pxdbw=
+X-Received: by 2002:a05:600c:b86:b0:4a1:90d7:88a8 with SMTP id
+ 5b1f17b1804b1-4a1fdd32c79mr108013155e9.25.1792677843704; 
+ Thu, 22 Oct 2026 07:04:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:b86:b0:4a1:90d7:88a8 with SMTP id
+ 5b1f17b1804b1-4a1fdd32c79mr108012535e9.25.1792677843223; 
+ Thu, 22 Oct 2026 07:04:03 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.93]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e25828e2esm12311795f8f.30.2026.10.22.07.04.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 07:04:02 -0700 (PDT)
+Message-ID: <5799c2c1-e589-415d-96fb-5eae4700202d@redhat.com>
+Date: Thu, 22 Oct 2026 16:04:01 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: How to start with QEMU
+To: Ankush Mondal <ankushmondal1y2t@gmail.com>, qemu-devel@nongnu.org
+References: <CAEw80_3juSguzQARd0jLxrvRXi09-9A9pYYv-dm8Z0bc7LBDwA@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAEw80_3juSguzQARd0jLxrvRXi09-9A9pYYv-dm8Z0bc7LBDwA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,157 +157,35 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Marc-Andr=C3=A9's series evolves ObjectPropertyInfo and ObjectPropertyValue:
-it adds member @qapi-type and changes many values of member @type.
+On 22/10/2026 15.03, Ankush Mondal wrote:
+> Hi QEMU Developers,
+> My name is Ankush, and I'm interested in getting started with QEMU 
+> development. I'm not sure if this is the right place to introduce myself, 
+> but I wanted to reach out to the community.
+> 
+> I've cloned the QEMU repository and successfully built it. I'd now like to 
+> start contributing and am looking for issues.
+> 
+> If you have any recommendations for issues or advice on where I should 
+> start, I'd really appreciate your guidance.
+  Hi Ankush,
 
-I'd like to take a step back and discuss design.  I trimmed Cc:
-accordingly.
+we've got a bunch of smaller tasks in the issue tracker, look for the "Bite 
+Sized" label:
 
+  https://gitlab.com/qemu-project/qemu/-/work_items?label_name%5B%5D=Bite+Sized
 
-=3D The current interface
+If there is no assignee yet for a ticket, feel free to drop a comment in 
+there, then it can be assigned to you!
 
-qom-list returns information on an object's properties, one
-ObjectPropertyInfo per property.
-
-qom-list-properties returns information on properties an instance of a
-type is known to have[*], one ObjectPropertyInfo per property.
-
-qom-list-get returns information on the properties of several objects,
-one ObjectPropertyValue per property.
-
-ObjectPropertyInfo and ObjectPropertyValue provide @name and @type.
-
-ObjectPropertyInfo additionally provides @description and
-@default-value, both optional.
-
-ObjectPropertyValue additionally provides optional @value, absent when
-the property cannot be read.
-
-If ObjectPropertyValue was an extension of ObjectPropertyInfo, then
-qom-list-get would be a strictly more powerful version of qom-list.
-It isn't.  However, I think the information lost when moving from
-qom-list to qom-list-get is not useful:
-
-* @description is rarely present (I see under 15% in a quick test).  The
-  description text is commonly misleading for QMP.  For instance, qdev
-  bool properties have description "on/off".  The possible values are
-  actually JSON false and true.
-
-* @default-value can be useful with qom-list-properties, which operates
-  on types.  I doubt it is with qom-list, which operates on objects.
-
-Let's pretend @description doesn't exist, and @default-value exists only
-with qom-list-properties.
-
-This makes qom-list-get strictly more powerful than qom-list, so let's
-further pretend qom-list doesn't exist.
-
-
-=3D Simplified interface for the sake of discussion
-
-qom-list-properties returns information on properties an instance of a
-type is known to have[*]: @name, @type, and maybe @default-value.
-
-qom-list-get returns information on the properties of several objects:
-@name, @type, and maybe @value.
-
-
-=3D The meaning of @type
-
-Three cases:
-
-1. For a child property (created with object_property_add_child() etc.),
-   @type is "child<T>", where T is the child's QOM type.
-
-2. For a link property (created with object_class_property_add_link()
-   etc.), @type is "link<T>", where T is the target's QOM type.
-
-3. For other properties, @type can be anything.  We commonly use QAPI
-   type names (occasionally misspelled), and also "well-known" (but
-   undocumented) non-QAPI names for primitive types.  Every now and
-   then, developers get lazy and use values like "list", or creative and
-   use values like "guest statistics".  Nobody has gotten sufficiently
-   masochistic to use values starting with "child<" or "link<" so far,
-   although nothing would stop that.
-
-Cases 1 and 2 go against the QAPI/QMP design maxim "don't encode stuff
-in strings".
-
-Case 3 is is hard to use for anything.  You're forced into stupid and
-brittle hardcoding.
-
-Marc-Andr=C3=A9's work adds a new optional member @qapi_type that refers to=
- a
-QAPI type in the output of query-qmp-schema.  It's present for a large
-subset of case 3.  When it's present, @type should not be used.
-
-It also cleans up many crap cases of 3, but without making it robust.  I
-understand this isn't something the series tries to do, it's just
-something that's easier to do than not to do.  If it creates
-compatibility problems, we have to not do it.  I hope it doesn't.
-
-
-=3D Can we do better?
-
-What information are we trying to convey?  Four cases:
-
-1. Child property: the child's QOM type
-
-2. Link property: the target's QOM type
-
-3. QAPI-backed property: the property's QAPI type
-
-4. Other property: we have nothing useful to offer
-
-Case 4 should go away eventually.
-
-How would we encode this in QAPI on a green field?  With a union, of
-course:
-
-    { 'enum': 'ObjectPropertyKind',
-      'data': [ 'child', 'link', 'qapi', 'other'] }
-
-    { 'struct': 'ObjectPropertyInfoLink',
-      'data': { 'qom-type': 'str' } }
-
-    { 'struct': 'ObjectPropertyInfoQAPI',
-      'data': { 'qapi-type': 'str' } }
-
-    { 'union': 'ObjectProperty...',
-      'base': { 'kind': 'ObjectPropertyKind',
-                ... more ... },
-      'discriminator': 'kind',
-      'data': {
-          'child': 'ObjectPropertyInfoLink',
-          'link': 'ObjectPropertyInfoLink',
-          'qapi': 'ObjectPropertyInfoQAPI' } }
-
-To make this a compatible evolution of ObjectPropertyInfo, we need
-... more ... to be
-
-                'type': 'str',
-                '*description': 'str'
-                '*default-value': 'any',
-
-Sadly, we need to duplicate the union for ObjectPropertyValue.  There,
-... more ... needs to be
-
-                'type': 'str',
-                '*value': 'any'
-
-We should deprecate @type.  I'd also deprecate @description.
-
-Thoughts?
-
-
-[*] It may have more; see the note in the doc comment of
-qom-list-properties.
+  HTH,
+   Thomas
 
 
