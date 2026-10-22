@@ -1,103 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A91606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DF0606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=X8iCF6o8
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=EX04zLIy;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ta70RFZf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJsS6-0004cL-98; Thu, 22 Oct 2026 09:03:26 -0400
+	id 1xJsk1-0000QS-NH; Thu, 22 Oct 2026 09:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankushmondal1y2t@gmail.com>)
- id 1xJsS0-0004Zo-Mx
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:03:21 -0400
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ankushmondal1y2t@gmail.com>)
- id 1xJsRz-0007kq-2j
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:03:20 -0400
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-368581df789so1057784eec.1
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 06:03:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792674196; cv=none;
- d=google.com; s=arc-20260327;
- b=keqnXjtWHZ15Yf/RZI9QIDbMNoimgpivvQWHS1THXcnOMa9tx0WuqbOpI92Ne+P6pE
- o19twNTYXgj2EMhmid32mMyhNswk3BjuKx7+AP75Eaq4dAp7nQfXMJQF2thognjA+Y4h
- z4dmIl4JYI7+vsnL4WFwxIo9OKcWWnO+gtCG7EPvBqNS5L79IUd5l3s+ON5F+yF43vVR
- JIlfpqZFfy/wAYeue9npXgBVxPiPl98BM+4y+mcgvTSlH8vECvkaBTLCiAL+DAXhxRei
- Vq10DxJg8jXp/9xN5Ma1nP/zV/YWXvtPANuBWMcgjyUEihSM5Um1IPHuPwWqbxCDNZz/
- C/9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=Vii3NcW6XWtmFozbEmi44nJqeS+3A6WFgS/dNCC9OHo=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=aty7rEdsZaWofH/HeNj3eltXK7bGgymyBRvmzP5gxV5q5ItKUr5tyWYBCQ3IbSooql
- Iero998mJeyPG4ZRymxRPW2eMSe6b54jtJF/i605q8bRoP7aqs9i4sN/THRml0W7GVoY
- 0uhRZ4dmfKQj1LacSRKia0BjoaTqEDQD6Q2YCZ2MsaxHvCUFNhFo/RanPY0H9UuJ40Qn
- ZXUDuhshqj8zOcpD2PGzkYN3vOGry5Y7uUqRiLfX8sbqZ5kfB6mXwfPV1eiDBYkThoq6
- KUzYkyHT7CaOC0CYgXwVVyvbJlzsSKMuLv2d8yfxDNgM9UszuhvhIAotSp4UQEkd8j0o
- nMjw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJsk0-0000Py-EW
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:21:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xJsjx-0001Fg-1P
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:21:56 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69MD3aqM271943
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 13:21:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ SHNdxMOxnSiQcm4yc/nmyMkIS38ADqQafLfwxFtiMyw=; b=EX04zLIyYAyZR8AK
+ 9hYm6Q1NXlPm+JSZ+ffFGTXJmHQXNgZLcGsgB2H+iDc/9X6a5BsKbjPinAAGkNyP
+ ZHPzKw4E/9ebauBjxyrGYlyAjhga34eOGH1D7Kf3maHTmLpEhtuYcftf2fjLJnjQ
+ 1H2iAASCk7ModJU97Rf8cL2Ru4pS8ehRg90myqxplpCTfDJOXDsXCq6iZyNHc185
+ 1QG1ZAKBK3nmbrvKR1sPzx1oGp8hD9fgi1hUW3I5Qur6TKfmJc6LYGjl7+N8Iw//
+ 8DHNeqzHOKEhkNz5pMvFf0RZ5BV5+ecHacDkW+f8ZTa5T58D9un5VQ3V6/tE+oSc
+ bFcoAg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf93cbp02-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 13:21:51 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f1e62510cso445797985a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 06:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792674196; x=1793278996; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:mime-version:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=Vii3NcW6XWtmFozbEmi44nJqeS+3A6WFgS/dNCC9OHo=;
- b=X8iCF6o8uHXFpONkl85Qkgn/tQ/W2vanILYdX1p61VsILM5jDIl4jMPyVRT8C8mQBP
- hZEz6/vvj4ElcqyF1F7jDr1MGo1/IhAv4zJjqtTTHMOyk8yUYShHJf1KKFNqRk7Bt3V5
- xr7e+vRTk6zVeYQt6wdkKqqMmdJ3rWqshqy7Gy0pw1wXSnvnYarwoLvnYCBuq+Po23Z2
- wELd47V/Q/VpuYFBRuBsow3Jf4OM0ylpC2vJwWHmcjwkDRRrP4uYATn2pccV6xii8Owd
- 1Ua0fZr/Jn6NJV1ZZ+BTvnLz+DjDL3LO7yKei+ypi8SBED1PJxuOjYsI6t+4ZdcFBp5Y
- kQvA==
+ d=oss.qualcomm.com; s=google; t=1792675310; x=1793280110; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SHNdxMOxnSiQcm4yc/nmyMkIS38ADqQafLfwxFtiMyw=;
+ b=Ta70RFZfmhCHIlcKN4qEuRkG67q/8Blr8lqgk3VOjq0hNvc7MqqTznDjiDyuqIGQYM
+ 17VsEha68Ub3jwWj+uCHpXJ78sbDIwPzMFLXn6qu58ze7KUoNOSm3kh3EVj308HkaKx+
+ rP2+m4mwyhU6c+yH9ldhbPU/GYDETgKyWzBjygZIFMu5bcE09Eq1LMttlEWT2wMZYVfa
+ DNmEx+FEQd4VA/P6CTYIOVrcS6WnYa7Ca495z3icOLQfbPEjajWoF/1ST1GwqY87ziPz
+ tRWLWW4Hl5zru5yumTOpj2AIzm4aTokg7G4af6TSFgVLc2yBNij0xa5OK8HAi/wuj4tz
+ 4zAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792674196; x=1793278996;
- h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Vii3NcW6XWtmFozbEmi44nJqeS+3A6WFgS/dNCC9OHo=;
- b=ikG6a2ApV5kaf/Q6PHG1BSAEwiWDeVkP7qK2eJW57ax2VXH0mB8reeklF3Zqya9hm8
- FFUmQHHrYXKYWPAKPTduofvHopb6W7khYQeQSDGnTFupkloeM6NKWT0n/lCS45Q4nzp8
- cuARa7/vVh0FbLS4Zm6+rEk73WmTddINijpzrhdpNDCK17kQAKmBvgcQ8R2kDtqzRdhl
- M/v3WhaUhwg4O3eoaMWquKyRTUrXkxniPi9LU0dhYZ7jKb0FjD8nHRA86zoRXkFRLYaV
- by51yKrT0LVY7IDy0bmw37qzmGcRdnaAI7ps4V/u5MxSzuq7rOsPDog1x3OksTSft3RK
- fPcQ==
-X-Gm-Message-State: AFq9FYK4Zs2GST/uriBTtmVTjCVZn85NAUz1bnIMmRfO+LD+YLOPNYCr
- GpZybvodyABytWeqtN/Z8kiFnSLsri1HogO6eE/dpcKjhVuZ87NmF24PRI0WLlkwjX0mVvJEWgP
- ho4bxdaW98xs2czZRgH/gGtIzXE95GepqOSdl
-X-Gm-Gg: AYBFou3g1DfyPInaqZOA2VBuWR8hsUJcRGC5mCWCJaZ+i7vnnL5n4JKKc5xAPWEdLQh
- KclFTg9JNXsR9whk3ilYVqp1+7TKK6W2qvgPIDf9iLFpHrqBFn7w8M3nJgnUmF5LagG65V0MyTZ
- MsWaidZxewRsMFP6v+h/ZHor3xoqSmwSoTx+fmJYGGjr9zplK7UKMcEft0fuhBCmI6umv1ZlrCK
- r0O/lE7FzXZC7RzgyV788mPAxlnWJ4QlRFXokzt9BRdZDIMjctehHhpW990EJamqD+CF98XJSap
- 90gOaB9ygs4xiFcmOE7/jL7KXEWg06vVLuNNp3K8ASi3ogse0Gu6T9yfgXgTHczzcaaDIMty4CH
- ymaxwJn5/zGdG73DqX+SNJiFCHvHpdF7nUXNRrkHjUNDQw2gWYGH7MU6A+qNhPdnyPXDJYy4tfb
- IRv27IBOg0iui/EHk6KYbd1nZwQycK8V6Vp6ZJGpMUaL8h9SzuVo63cG4EIaoopgZ5W1rEhDVvo
- xEikvmxOEPk+QquJ8w04IdDw6FJl5Zpta+44bqMdWxZevOv5knA77dYJymSIyzqQ8xIeFCow1a5
- OPnGrjwo2GtiNBMc
-X-Received: by 2002:a05:693c:88d0:10b0:35e:2c6:d462 with SMTP id
- 5a478bee46e88-368ab6c0a96mr2955492eec.0.1792674196202; Thu, 22 Oct 2026
- 06:03:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792675310; x=1793280110;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SHNdxMOxnSiQcm4yc/nmyMkIS38ADqQafLfwxFtiMyw=;
+ b=GKiUnZ8U4qsoGjesuufFsRtwgOP+ibctgdYtbZvaBznvplJDbKPqA6C3lJkGdqbyW+
+ 28Krp0OmC6aBL0Fu4IDJkUMnYXbVikym/D9KwzEIsImQBcXswX3xO1v3tfvR5UBypgOq
+ 8ktW1c1zRp33OSQKboXARKGvapY3oUsJhRC+PjVliIg4GkQP92fxL5F6B/OPalZD5HoN
+ lFTyBtLtjFbvz8005njAvq0BYeTps8ZyPrkwNJ28pWBd4Co2NQZW27MzUHvvzJZ+qLT6
+ 7kA1D4Ja2tOJUZgvlRgWAu5U00ZvK9LVAwXpK6TWaNIYRky14my+wl8YyChwglH9X3Bz
+ rdNQ==
+X-Gm-Message-State: AFq9FYLLjnK+TFcB9x9jfzhZr2ooRlLe3xPbP2A2cdMClOCH9rnnPpA4
+ 3JETnu5XSMxeSqVCy9aAp2X1XLDylmy3hSUkQwU+3T8pk53S6M50Oq+SWxvbUukWkTiwy2Di2If
+ ZsmjpPU4vrJz9EOq1ltx6/PVc2h1luq93dPmL5xSF9lDYLIiI3oSGmwj9uw==
+X-Gm-Gg: AYBFou3fw9xvlegabA/ET78mKlPG6M/Mog7BFzk39TSj2BCC2V8U2d1lLRa6V7GO62X
+ sV8gNnt7XYJEsuKDYPKhJu8Ox4qlaGX119qqkCVD9xyydZ9jxPa9Q86yRP9Kadpe8z1u3jystJH
+ +Op4DUHPFNmDyHcyN4ZDK/H38utq2s/QQfT3q22xZ+nFIqbxSxI9V8xmQTO8A48hckNcZW0dmMl
+ zKcRVA4X+fCiGnaZ/dy+ZhQaoFe02DPwGt5YMYqSyoap93zu4UDf1AJsnpilpu8bKIO1CEHAD6p
+ UQaUt3D/iBEqbqiH+tpGU9hJ/vm11K69S/zKhXuL+/f+EfCKD2VOuhxiqoEYx43BIGm6jPZMXoi
+ cloQz/vI0vZ1Jgu3kuNVR2iNvhsAhIlKn1vCO
+X-Received: by 2002:a05:620a:4886:b0:93e:c12c:9b6b with SMTP id
+ af79cd13be357-93f57f82894mr829903985a.70.1792675310203; 
+ Thu, 22 Oct 2026 06:21:50 -0700 (PDT)
+X-Received: by 2002:a05:620a:4886:b0:93e:c12c:9b6b with SMTP id
+ af79cd13be357-93f57f82894mr829899185a.70.1792675309720; 
+ Thu, 22 Oct 2026 06:21:49 -0700 (PDT)
+Received: from [192.168.68.64] ([187.106.240.201])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-93f56c6f16dsm519415585a.4.2026.10.22.06.21.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 06:21:49 -0700 (PDT)
+Message-ID: <1ce16776-3338-4b3e-8206-48c17ad1a776@oss.qualcomm.com>
+Date: Thu, 22 Oct 2026 10:21:45 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Ankush Mondal <ankushmondal1y2t@gmail.com>
-Date: Thu, 22 Oct 2026 13:03:04 +0000
-X-Gm-Features: AclHuK9YAi8tOjEdPpP01n1Le9gvA1aHcH-TBP0Su_yMoA0WV7DGO6M8dNLoMXg
-Message-ID: <CAEw80_3juSguzQARd0jLxrvRXi09-9A9pYYv-dm8Z0bc7LBDwA@mail.gmail.com>
-Subject: How to start with QEMU
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000a9a880065e6d7c13"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=ankushmondal1y2t@gmail.com; helo=mail-dy1-x132c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/cpu.c: duct tape fix for QMP + RV profiles
+ introspection
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com, philmd@oss.qualcomm.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20261021173138.2388231-1-daniel.barboza@oss.qualcomm.com>
+ <87ecdil1g3.fsf@pond.sub.org>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <87ecdil1g3.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA1MyBTYWx0ZWRfX0Hr9wxO2RNCH
+ XrzSmwk82fMb98lMVEwnj+GDc/pJZOARZh4h7z0Wtkh2/iey6GkCxqYk9jh6A8+h8Ud4wtz8JnJ
+ k0g16/BtEO0kke0gJnMGDv9vrGGXlYc=
+X-Authority-Analysis: v=2.4 cv=ReAFmFtv c=1 sm=1 tr=0 ts=6ada0def cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=7SJRNfuEitxYTu7vBacxyQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=ZiMIAIO6AAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8
+ a=WOXBTGftTibl2L6nbU4A:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+ a=KohFQSMcaiS2QNUyYz07:22
+X-Proofpoint-GUID: 7ydsmy1ek-zfb2tHJoHLrcovWAka--nS
+X-Proofpoint-ORIG-GUID: 7ydsmy1ek-zfb2tHJoHLrcovWAka--nS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA1MyBTYWx0ZWRfX7L0Wtwc3BIFZ
+ 2Sh0/fauMTJFTbFB6JaCsLX15rNaAiBAOk5FpHB45FP4J48y8GH1/K8XRVEug0ys39Gop0pZ14Z
+ J5JVn+HIKeFTAaIwMFNLrhDiMTsmhgMsDRDJC0OPQaXfJjkz4UEkwOj5hUhkHuEEYsyd4vUwX12
+ ke9p1EFBNOhWfuy5ZFpqWWtvdUuO8BItVCcKl/cxZ6JuC3H7sALKy8LLzJg7hnZsu1xijax5iTX
+ 2hleG9PCbYkceSsJJCRsksVrvNqt75daYgyiS0SHYSNpDmCSHthk55V7GZ4GsJKnIv9AsbGvJbh
+ mDstkq2uhX+6sxoGu/a4E1p0l9b1xOWmAnFQXZiKOGatIInMzFU5Yghtto4GNFLiSDONEbeNT/Y
+ 8sezUm37CobZxJaYn8azefsmRaHIGw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ bulkscore=0 phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610220053
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +153,58 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000a9a880065e6d7c13
-Content-Type: text/plain; charset="UTF-8"
 
-Hi QEMU Developers,
-My name is Ankush, and I'm interested in getting started with QEMU
-development. I'm not sure if this is the right place to introduce myself,
-but I wanted to reach out to the community.
 
-I've cloned the QEMU repository and successfully built it. I'd now like to
-start contributing and am looking for issues.
+On 10/22/2026 3:00 AM, Markus Armbruster wrote:
+> Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> writes:
+> 
+>> Maruks reported in [1] a problem with QMP introspection with
 
-If you have any recommendations for issues or advice on where I should
-start, I'd really appreciate your guidance.
+Just now noticed the typo :D
 
-Thanks,
 
-Ankush Mondal
+Alistair, can you fix it in-tree or should I re-send?  Thanks,
 
---000000000000a9a880065e6d7c13
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Daniel
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div>Hi QEMU Developers,</div><div><span>=
-My name is Ankush, and I&#39;m interested in getting started with QEMU deve=
-lopment. I&#39;m not sure if this is the right place to introduce myself, b=
-ut I wanted to reach out to the community.</span></div><div><span></span><s=
-pan><br></span></div><div><span>I&#39;ve cloned the QEMU repository=C2=A0an=
-d successfully built it. I&#39;d now like to start contributing and am look=
-ing for issues.</span></div><div><p><span>If you have any recommendations f=
-or issues or advice on where I should start, I&#39;d really appreciate your=
- guidance.</span></p><p>Thanks,</p><p>Ankush Mondal</p></div></div>
-</div>
+>> qemu-system-riscv64 that happens after querying a profile CPU.  QEMU
+>> crashes hitting an abort during satp_mode logic that, somehow, is being
+>> triggered via profile code.
+>>
+>> For every profile CPU that goes through init we're setting an 'enabled'
+>> flag in the static RISCVProfile object.  This sounded like an okay idea
+>> back when profiles were introduced, but now we've realized that QMP will
+>> querying CPUs without exiting the QEMU process while also going multiple
+>> times through cpu_init() and friends.  The result is that we're in a
+>> situation where we have runtime information being stored in static arrays
+>> that persists between CPU definitions being introspected.
+>>
+>> A proper fix is to get rid of profile->enabled and turn profiles into
+>> cpu->cfg flags like we do with every other extension.  Unfortunately
+>> we've been using profile->enabled for lots of things and a redesign
+>> would be in order, one which I'm not comfortable doing right now - we're
+>> too close to the QEMU 11.2 code freeze for such a change.
+>>
+>> For now let's silver tape a fix in cpu_init() to reset profile->enabled
+>> for all available profiles.  We'll do a proper redesign in the next
+>> release cycle.
+>>
+>> [1] https://lore.kernel.org/qemu-devel/87ld7rmdi6.fsf@pond.sub.org/
+>>
+>> Reported-by: Markus Armbruster <armbru@redhat.com>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
+> That was quick, thank you!
+> 
+> Tested-by: Markus Armbruster <armbru@redhat.com>
+> 
 
---000000000000a9a880065e6d7c13--
 
