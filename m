@@ -1,46 +1,46 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CE5606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EFC606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=q0oBx0k7
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=VGjM4ed5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK06v-0004df-DI; Thu, 22 Oct 2026 17:14:05 -0400
+	id 1xK09f-0005Fq-4d; Thu, 22 Oct 2026 17:16:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK06r-0004dN-UX
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:14:02 -0400
+ id 1xK09b-0005FZ-AC
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:16:51 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK06p-0003KU-IQ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:14:00 -0400
+ id 1xK09Z-0003eG-O0
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:16:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=WQJ2SHhG+54Pe61vKFjdUyLra1AowDil2IN15WeKuZA=; b=q0oBx0k7LQIcmHROGc5VzcYzkR
- QovQmhuK3JjEEmJQBp0B+X7JVqSLwfYnTCUjrvhzIXemx6nxSOq0chGvgCORkUZYGR6KlcEeLvZC0
- 9mv+WeRTN6zs/CFlNPFh5IXz4FA1FPhaptLmC1SpeuXbi7i6JH/ItxP0H/+rEWXH+PrPmSwSu6S+r
- b1SWkj5uue6VCj35D7rclDomKVh3FRDshYI4Dl178meZLWPUpntSo88ebaaprS9DIZDQEuLMkxdjv
- DXkzDzlNswf6C6nbquShawdqjjkcY//+y3QwtyJu0jaQ3E5B4aeok/AR7Lq/f/HEyYabZ95iWBVLr
- OZWfM7o/rJkL7gIH95aY81i4br3nwK0HbWhcbzKIqAOtHukIAvj6z14uVpwtYo3hhmoJDjcGXQJwL
- LqSq9HMJeFR1gxtkBhaR3oWd4V5SP19zwv+njjO9lfXei7CDHKDSt9FfMKVOAqo1hgXw9q74NgPT/
- xvaOPxLkWWE2e23MQk0esGKDbh6RRUXRCxEeBnIxpNsxnWCQe2cS4nzx05CebIUmotmou5NygZa/4
- J1vpRCDXYCqBiPt0DVejaeyZ49LFCH8IruKeeKnqnDgPy1Ne91vcBOpEMlqyrmyOjb6Dqc5obCQ4o
- OjcgU3YcL587ucuLDwcAFmamGcfI8tD+BT40t4Lj8=;
+ bh=RNlI/5BSiFNC1JSfKEJ1tGPfvVG4uIFqHnls/K5rjBs=; b=VGjM4ed5oxysVUSEESsl/iyqvY
+ aQftXD/8T8TEHnSJGAoMfK8iJwRbxruyRoJoHaUq4RSob/1bl+liGEa7eKj+AXXnraGTUUbpJiA7J
+ Q1M55qVy4BaQzheUEW9MoWPSQ3Ki3YmirTQZpzxrHOIpY/sg1Bf0BTDQ6SISgPXSXfkuvqnX+czth
+ r38uPn5fEUazXu4Yd02PFOamA1IE0rwAYWtrYLeYqTeRoEeJfT99WV8iGLPSjnjN6JYD4xtqMoSEp
+ uvw3ds3EPYtqEnaEbV0T+PFjLNFXfixo4Nipgh07tTWcUToAqk26HYRseyIg4OsbZB8BoT/UvNt9l
+ V/1CJy+OcnAdRQ2IPMCBwFdXDZmqY3Bhw0tB8/A3xSmQUeyYyV9lfRZc/GoJO2TA4unp/Zvv914wT
+ D38D0qHVco4+zzMg6YsNw8z/2C/IMR4PTWnAtvbOYZi5WSCP0srmlQfmRZoUZ5FrEZTJ6TMFWL74p
+ CpMnPLtMUa479X3Lc0dODvfq/CKyow2dx0vpGbVrWGLkwgSItsmxkWkQy7bxFp8WOgla0Mtl2OnHI
+ 1VTE4RQG3B69D4dohUisWF0L/4jCcpZAsVGQ/Vn4DS+tH402Boy8/p9NSasMHcx+pRqrMYqsDq89t
+ A8dfkJDo7iAGucJT8exDh3srz1v8HeNn2YpPEVAOQ=;
 Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK065-003Fhq-TU; Thu, 22 Oct 2026 22:13:14 +0100
-Message-ID: <c94faeca-b6d7-4742-8927-a7573e774983@ilande.co.uk>
-Date: Thu, 22 Oct 2026 22:13:55 +0100
+ id 1xK08p-003Fj9-Qr; Thu, 22 Oct 2026 22:16:04 +0100
+Message-ID: <33f5f44a-1ea2-46bd-bdaa-b9327e0e832a@ilande.co.uk>
+Date: Thu, 22 Oct 2026 22:16:45 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
@@ -52,9 +52,7 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Biggers <ebiggers@kernel.org>
 References: <20261022070059.3861291-1-stian@itx.no>
- <20261022070059.3861291-5-stian@itx.no>
- <b31c544d-b369-4d42-918e-ddafda444d78@ilande.co.uk>
- <03d991dc43d5c7bc91a0bee350a11bdd8e499fa9.camel@itx.no>
+ <20261022070059.3861291-9-stian@itx.no>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -81,13 +79,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <03d991dc43d5c7bc91a0bee350a11bdd8e499fa9.camel@itx.no>
+In-Reply-To: <20261022070059.3861291-9-stian@itx.no>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 4/8] target/sparc: Add the AES key expansion
- instructions
+Subject: Re: [PATCH v3 8/8] linux-user/sparc: Report HWCAP_SPARC_CRYPTO for
+ crypto CPU feature
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,50 +107,40 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 22/10/2026 21:55, Stian Halseth wrote:
+On 22/10/2026 08:00, Stian Halseth wrote:
 
-> Hi Mark,
+> Set HWCAP_SPARC_CRYPTO in AT_HWCAP like Linux does on real hardware
+> that supports it. qemu-sparc64 defaults to "TI UltraSparc II",
+> which has no crypto feature, so it must be enabled explicitly,
+> e.g. -cpu TI-UltraSparc-II,+crypto
 > 
-> On Thu, 2026-10-22 at 21:43 +0100, Mark Cave-Ayland wrote:
->>
->> Please can we match the existing style in translate.c and remove the
->> indent here?
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Stian Halseth <stian@itx.no>
+> ---
+>   linux-user/sparc/elfload.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> Noted for v4.
-> 
->>
->>> +        TCGv_i64 dst, src1, src2;
->>> +
->>> +        if (!avail_CRYPTO(dc)) {
->>> +            return false;
->>> +        }
->>> +        if (gen_trap_ifnofpu(dc)) {
->>> +            return true;
->>> +        }
->>
->> Question: is it possible for a 64-bit CPU not to have a FPU? Even
->> more so, one with
->> the crypto extensions present? I wonder if gen_trap_ifnofpu() isn't
->> needed here.
-> 
-> Not to my knowledge, but the gen_trap_ifnofpu() is checking if FPU is
-> enabled, not if it's present. Every sparc64 CPU has an FPU, but it can
-> be switched off. It's mentioned in the OSA 2011 spec.
+> diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
+> index 181f1e00b5..0412741285 100644
+> --- a/linux-user/sparc/elfload.c
+> +++ b/linux-user/sparc/elfload.c
+> @@ -90,6 +90,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
+>       r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
+>       r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
+>       r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
+> +    r |= features & CPU_FEATURE_CRYPTO ? HWCAP_SPARC_CRYPTO : 0;
+>   #endif
+>   
+>       return r;
 
-(goes and looks)
-
-Yes, you're right. I did wonder if the FPU registers were simply being used for 
-storage (as opposed to carrying out the instructions), however OSA 2011 indicates 
-that these instructions can throw an fp_disabled trap which suggests otherwise.
-
-So it looks like this is correct.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
