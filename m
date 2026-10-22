@@ -1,61 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E6D606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85150606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GjiyjciJ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JUpsK2hq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJqUD-0003Nd-Ay; Thu, 22 Oct 2026 06:57:29 -0400
+	id 1xJqU2-0003Eg-2I; Thu, 22 Oct 2026 06:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJqUB-0003LD-Ad
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:27 -0400
+ id 1xJqU0-0003Dt-5P
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJqU9-0001X4-Ec
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:27 -0400
+ id 1xJqTy-0001VC-6j
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792666644;
+ s=mimecast20190719; t=1792666633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8uG857Yw/J+VrWeb5Of7T05X4Hrj8YcyeL79sHPpMTE=;
- b=GjiyjciJ2Sv6OhDP4+IUby8fjMnqHMTs42085IdiK+6JErtPUepj69D2IUbGUimaf0P30B
- RODR5VbqNsFMT5FMB3B2dCsu1BrHCk+2ZHzR49M87hie7/nW3YkyDrrACEloHC/No7loAm
- v2eyUPxq2W/CiCI4ZNOdHNk6D/YT2so=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cqL5nZnJrqCRh2b20BgaMsqzpzCpt+nRAzqOXP1zkSg=;
+ b=JUpsK2hquHoanmjuyUfyfYd5pUv7F8RwbDlc5QORJaFivDH8ygno0ph5v6sXqaEZ0yW/bZ
+ 2V+nYu3UHsKG/96rEtF9Z5icfv3GRBd/sbiufrFtPCACIm9it9EElmpeaY5UGwyZwdwDFK
+ noz3+nwORv0qVIyPav6p5AkIIxnqcto=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-p5aL_ZWBOXatI-4064rRUA-1; Thu,
- 22 Oct 2026 10:57:15 +0000
-X-MC-Unique: p5aL_ZWBOXatI-4064rRUA-1
-X-Mimecast-MFC-AGG-ID: p5aL_ZWBOXatI-4064rRUA_1792666632
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-GDWNPYlhMF626DbC8x8eBg-1; Thu,
+ 22 Oct 2026 06:57:04 -0400
+X-MC-Unique: GDWNPYlhMF626DbC8x8eBg-1
+X-Mimecast-MFC-AGG-ID: GDWNPYlhMF626DbC8x8eBg_1792666621
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBBA11800624; Thu, 22 Oct 2026 10:57:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF98A1955F1D; Thu, 22 Oct 2026 10:57:00 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5D741803A4D; Thu, 22 Oct 2026 10:57:10 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5EC8E195608C; Thu, 22 Oct 2026 10:56:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 22 Oct 2026 14:56:34 +0400
-Subject: [PATCH v3 07/18] target/i386: fix FPU tag word in GDB register
- read
+Date: Thu, 22 Oct 2026 14:56:31 +0400
+Subject: [PATCH v3 04/18] gdbstub: add gdb_register_internal_coprocessor()
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261022-query-reg-v3-7-7ad902b9a7cf@redhat.com>
+Message-Id: <20261022-query-reg-v3-4-7ad902b9a7cf@redhat.com>
 References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
 In-Reply-To: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
 To: qemu-devel@nongnu.org
@@ -78,36 +77,35 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4405;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9073;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=IM3+x1/S1cR2SCx9Nb2e/xZ/oIp/3k/WeRpDw1xL/D4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2evmlRDbgQuQFK16hGbI5Cs9c7c27oI7aalcF
- rQfokkslcaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatnr5gAKCRDa6OEJdZac
- 5URbD/4hYlwK8ldW/oR3pvlyrijk3UR+OsnQAUt8DK8xofVF2MY15mQM432xftamXqx00l2Mx36
- 9ro9blPGzkTT84IId5qWjoitYTxel9HqLEFpkoFmWChxsVORzP96fGP4sNOoRjBbAdm7YaYIyFl
- hs8JJI4dJqi7GCAT+q258Gaf4LVu6sT+s0GwF3Z1+nvCQ0Tyc9u6gAxHQ9lea0HIb3sEmeOeydi
- BWLrUulE6CFjoB0ytSUK7otxjSNAbCIvYhofTRUfsOBQ5E0LZFoX0dXxCtnjO2vMJWBUIK7jNPB
- 21ruDYtbkAnM0POg9taRFJ7Db4Zsd1NWOd32yi3IL64+wl8dOX05pf+7CIdcFakjp+GrWF/Y+Zc
- FyDVQ/UDiLZPvdAtRm35caX+uafgSrRjg1EAigH6Sa5BLup4AsnLe2VGFxh/NSnA3LuK68owyPm
- A46/YMHGwpsCm7pruJPXt58hZYGO8a2Qo8sAxdliPd0W0ZnkDwQM7E0T3HPcU4DAPTXHnYZQrCU
- drkKo8HWlg4aOtsF8KNnbi1tGp91RGNk/GXRVQpbLQeQevcz/FdbmNSqD7y2y1EQxxTDkBgGXnh
- W87CBbmyrMHQKbf+gpd6LVQmNKmoKBKFa2hXC18I+eP5y7M8Gf/FuIZUW2jEcrj+LEO8KZuuwIu
- IHfTKFdNtr1YRYA==
+ bh=M8mqJpJWHgUlbbcWhtLftruLBtiNryQk9R4g8pjGgDE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2evmxB4UmF9LwksQwvh7uFY3Ixbk7JmLyxv41
+ w/KR3E8VQKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatnr5gAKCRDa6OEJdZac
+ 5UtRD/9Ip7giXQKT/lMWSrBX0FGsOoURmoXFZidfonhJ02e5+F5VAmX7ix/BjrjLeAMfu1gBWcc
+ VTuG5B4x/VYUIfjoDK+m1sTdo6GkdaqMhHZYc1exThIhD+Cw7rQ9Qyl+er6n4ubDhsWV38jHWGU
+ ozMRPwOjjYCppDfmB7QYsD3UUm8vzd3CdDZAyFFQojp3iE6BXnpfZ6uYY+YelS3W5fop+5tHtm0
+ F9SLVukTp2Gqbx0SZHCsBFbZcXJYskM2rplhMJbNXQ/WHwLZFCaE0P9b1W4YKJVkSl8Nr1CqB83
+ RQx4Rf/iVzYG+G64NZyBivOOO155M93Hc+s3q2Ezj6R7BSUdJeMxgggWonbwLoKwR5WyiH+4l/x
+ RLfiQKSDLLRIaKmkSeyTosHGe1TmnV6ZmzA2x6dRDS4JFHGcAh8ptEVhzuUfNtah0Gt8AGVSLpq
+ sN8DVHZp4cgeIGBFT/R3Q53zTz6hgXGVNXt5nLM2TcCmsVEkRte+My5CUvHdo4CK/0rjvmt+Ahx
+ 7lnlbdrJvrBN86V8+VAze3ggUBZn9qxruBQt/Suxs1Jftam21KvzkOE0OQp34XjEIWGQQVhDNpG
+ OawZaJNpw0OQ5W/qFF7+Afja2O8A4dzy9u13wFgEY0ehlRnHgLuaaZFAusogCtzG1lEoCVLXm+T
+ 2wmFrDr9l11v3Uw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,128 +124,228 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The GDB stub was returning a hardcoded 0 for the x87 FPU tag word
-register (ftag). Factor out cpu_compute_fptag() helper. Simplify a
-little bit the code by dropping unnecessary CPU_LDoubleU
-reinterpretation, building the value 0..7, avoiding signed-shifting.
+Add support for registering coprocessor features that are only visible
+to QEMU's internal APIs (HMP monitor $register expressions, plugins) but
+hidden from GDB's target description XML.
+
+When a feature is registered as internal:
+- It is excluded from the target.xml sent to GDB
+- Its XML is not served via qXfer:features:read
+- 'p'/'P' packets for internal register numbers return E14
+
+This is useful for exposing system registers to the HMP monitor without
+affecting GDB's register namespace. Exposing aliases or synthetic
+registers through GDB's target description can cause problems: name
+collisions with GDB's pseudo-registers, independent register caching,
+and missing DWARF unwind rules.
+
+Internal features must be registered after all GDB-visible features to
+keep remote register numbering consistent. This ordering is enforced
+with an assertion.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/cpu.c            | 28 ++++++++++++++++++++++++++++
- target/i386/cpu.h            |  9 +++++++++
- target/i386/gdbstub.c        |  2 +-
- target/i386/tcg/fpu_helper.c | 24 ++----------------------
- 4 files changed, 40 insertions(+), 23 deletions(-)
+ gdbstub/gdbstub.c      | 71 ++++++++++++++++++++++++++++++++++++++++++++------
+ include/exec/gdbstub.h | 21 +++++++++++++++
+ 2 files changed, 84 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 37732b65e408..2f5ea4e51715 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9372,6 +9372,34 @@ static bool cpuid_has_xsave_feature(CPUX86State *env, const ExtSaveArea *esa)
-     return false;
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 912e31b66744..1675f4d6cd4a 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -54,6 +54,7 @@ typedef struct GDBRegisterState {
+     gdb_get_reg_cb get_reg;
+     gdb_set_reg_cb set_reg;
+     const GDBFeature *feature;
++    bool internal; /* hidden from GDB, accessible via API/monitor */
+ } GDBRegisterState;
+ 
+ GDBState gdbserver_state;
+@@ -385,6 +386,11 @@ static const char *get_feature_xml(const char *p, const char **newp,
+             }
+             for (guint i = 0; i < cpu->gdb_regs->len; i++) {
+                 r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
++                /* The core target.xml feature must never be internal. */
++                g_assert(i > 0 || !r->internal);
++                if (r->internal) {
++                    continue;
++                }
+                 g_ptr_array_add(
+                     xml,
+                     g_markup_printf_escaped("<xi:include href=\"%s\"/>",
+@@ -400,6 +406,9 @@ static const char *get_feature_xml(const char *p, const char **newp,
+     /* Is it one of the features? */
+     for (guint i = 0; i < cpu->gdb_regs->len; i++) {
+         r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
++        if (r->internal) {
++            continue;
++        }
+         if (strncmp(p, r->feature->xmlname, len) == 0) {
+             return r->feature->xml;
+         }
+@@ -563,13 +572,14 @@ int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+ 
+ static void gdb_register_feature(CPUState *cpu, int base_reg,
+                                  gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+-                                 const GDBFeature *feature)
++                                 const GDBFeature *feature, bool internal)
+ {
+     GDBRegisterState s = {
+         .base_reg = base_reg,
+         .get_reg = get_reg,
+         .set_reg = set_reg,
+-        .feature = feature
++        .feature = feature,
++        .internal = internal
+     };
+ 
+     trace_gdbxml_register_feature(feature->name, feature->xmlname,
+@@ -605,7 +615,7 @@ void gdb_init_cpu(CPUState *cpu)
+         assert(feature->base_reg == 0);
+         gdb_register_feature(cpu, 0,
+                              cc->gdb_read_register, cc->gdb_write_register,
+-                             feature);
++                             feature, false);
+         cpu->gdb_next_base_reg = cpu->gdb_num_g_regs = feature->num_regs;
+     } else {
+         cpu->gdb_next_base_reg = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
+@@ -616,20 +626,26 @@ void gdb_init_cpu(CPUState *cpu)
+                           cc->gdb_num_core_regs);
  }
  
-+uint16_t cpu_compute_fptag(CPUX86State *env)
-+{
-+    uint16_t fptag = 0;
-+
-+    for (int i = 0; i < 8; i++) {
-+        unsigned tag;
-+
-+        if (env->fptags[i]) {
-+            tag = 3; /* empty */
-+        } else {
-+            floatx80 f = env->fpregs[i].d;
-+            uint16_t exponent = f.high & 0x7fff;
-+            uint64_t mantissa = f.low;
-+
-+            if (exponent == 0 && mantissa == 0) {
-+                tag = 1; /* zero */
-+            } else if (exponent == 0 || exponent == 0x7fff ||
-+                       !(mantissa & (1ULL << 63))) {
-+                tag = 2; /* NaNs, infinity, denormal */
-+            } else {
-+                tag = 0; /* valid */
-+            }
+-void gdb_register_coprocessor(CPUState *cpu,
+-                              gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+-                              const GDBFeature *feature)
++static void do_gdb_register_coprocessor(CPUState *cpu,
++                                        gdb_get_reg_cb get_reg,
++                                        gdb_set_reg_cb set_reg,
++                                        const GDBFeature *feature,
++                                        bool internal)
+ {
+     GDBRegisterState *s;
+     guint i;
+     int base_reg = cpu->gdb_next_base_reg;
+ 
+     for (i = 0; i < cpu->gdb_regs->len; i++) {
+-        /* Check for duplicates.  */
+         s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
++        /* Check for duplicates. */
+         if (s->feature == feature) {
+             return;
+         }
++        /* GDB-visible features must not follow internal ones.  */
++        if (!internal) {
++            g_assert(!s->internal);
 +        }
-+        fptag |= tag << (2 * i);
-+    }
-+    return fptag;
+     }
+ 
+     if (base_reg < feature->base_reg) {
+@@ -637,12 +653,27 @@ void gdb_register_coprocessor(CPUState *cpu,
+                                               feature->base_reg);
+         base_reg = feature->base_reg;
+     }
+-    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
++    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature, internal);
+ 
+     /* Add to end of list.  */
+     cpu->gdb_next_base_reg = base_reg + feature->num_regs;
+ }
+ 
++void gdb_register_coprocessor(CPUState *cpu,
++                              gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
++                              const GDBFeature *feature)
++{
++    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, false);
 +}
 +
- static void x86_cpu_reset_hold(Object *obj, ResetType type)
++void gdb_register_internal_coprocessor(CPUState *cpu,
++                                       gdb_get_reg_cb get_reg,
++                                       gdb_set_reg_cb set_reg,
++                                       const GDBFeature *feature)
++{
++    do_gdb_register_coprocessor(cpu, get_reg, set_reg, feature, true);
++}
++
+ void gdb_unregister_coprocessor_all(CPUState *cpu)
  {
-     CPUState *cs = CPU(obj);
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e7a88074c071..116e28a59701 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2989,6 +2989,15 @@ static inline void cpu_set_mxcsr(CPUX86State *env, uint32_t mxcsr)
+     /*
+@@ -1223,6 +1254,18 @@ static void handle_remove_bp(GArray *params, void *user_ctx)
+  * the remote gdb to fallback to older methods.
+  */
+ 
++static bool gdb_register_is_internal(CPUState *cpu, int reg)
++{
++    for (guint i = 0; i < cpu->gdb_regs->len; i++) {
++        GDBRegisterState *r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
++
++        if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
++            return r->internal;
++        }
++    }
++    return false;
++}
++
+ static void handle_set_reg(GArray *params, void *user_ctx)
+ {
+     int reg_size;
+@@ -1232,6 +1275,12 @@ static void handle_set_reg(GArray *params, void *user_ctx)
+         return;
      }
- }
+ 
++    if (gdb_register_is_internal(gdbserver_state.g_cpu,
++                                 gdb_get_cmd_param(params, 0)->val_ull)) {
++        gdb_put_packet("E14");
++        return;
++    }
++
+     reg_size = strlen(gdb_get_cmd_param(params, 1)->data) / 2;
+     gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 1)->data, reg_size);
+     gdb_write_register(gdbserver_state.g_cpu, gdbserver_state.mem_buf->data,
+@@ -1248,6 +1297,12 @@ static void handle_get_reg(GArray *params, void *user_ctx)
+         return;
+     }
+ 
++    if (gdb_register_is_internal(gdbserver_state.g_cpu,
++                                 gdb_get_cmd_param(params, 0)->val_ull)) {
++        gdb_put_packet("E14");
++        return;
++    }
++
+     reg_size = gdb_read_register(gdbserver_state.g_cpu,
+                                  gdbserver_state.mem_buf,
+                                  gdb_get_cmd_param(params, 0)->val_ull);
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index 75eb4d9c365e..1bc778324758 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -40,6 +40,27 @@ void gdb_register_coprocessor(CPUState *cpu,
+                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+                               const GDBFeature *feature);
  
 +/**
-+ * cpu_compute_fptag - Compute the full 16-bit x87 FPU tag word.
++ * gdb_register_internal_coprocessor() - register internal registers
 + *
-+ * Reconstructs the 16-bit tag word from the fpregs and fptags arrays.
-+ * Each of the 8 physical registers gets a 2-bit tag in bits [2*i+1 : 2*i]:
-+ *   0 = valid, 1 = zero, 2 = special (NaN/Inf/denormal), 3 = empty.
++ * Like gdb_register_coprocessor(), but the feature is NOT exposed to
++ * GDB via the target description XML. The registers are only
++ * accessible through QEMU's internal APIs (HMP monitor ``$register``
++ * expressions via gdb_get_register_list()).
++ *
++ * Internal features must be registered after all GDB-visible features
++ * to avoid register numbering mismatches with GDB.
++ *
++ * @cpu - the CPU associated with registers
++ * @get_reg - get function
++ * @set_reg - set function
++ * @feature - the GDBFeature describing the registers
 + */
-+uint16_t cpu_compute_fptag(CPUX86State *env);
++void gdb_register_internal_coprocessor(CPUState *cpu,
++                                       gdb_get_reg_cb get_reg,
++                                       gdb_set_reg_cb set_reg,
++                                       const GDBFeature *feature);
 +
- static inline void cpu_set_fpuc(CPUX86State *env, uint16_t fpuc)
- {
-      env->fpuc = fpuc;
-diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
-index c0cde26d978c..420ce845eeae 100644
---- a/target/i386/gdbstub.c
-+++ b/target/i386/gdbstub.c
-@@ -186,7 +186,7 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
-             return gdb_get_reg32(mem_buf, (env->fpus & ~0x3800) |
-                                           (env->fpstt & 0x7) << 11);
-         case IDX_FP_REGS + 10:
--            return gdb_get_reg32(mem_buf, 0); /* ftag */
-+            return gdb_get_reg32(mem_buf, cpu_compute_fptag(env));
-         case IDX_FP_REGS + 11:
-             return gdb_get_reg32(mem_buf, 0); /* fiseg */
-         case IDX_FP_REGS + 12:
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 4bbac996326e..81ae3d8f3d0f 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -2459,30 +2459,10 @@ void helper_fxam_ST0(CPUX86State *env)
- static void do_fstenv(X86Access *ac, target_ulong ptr, int data32)
- {
-     CPUX86State *env = ac->env;
--    int fpus, fptag, exp, i;
--    uint64_t mant;
--    CPU_LDoubleU tmp;
-+    int fpus, fptag;
- 
-     fpus = (env->fpus & ~0x3800) | (env->fpstt & 0x7) << 11;
--    fptag = 0;
--    for (i = 7; i >= 0; i--) {
--        fptag <<= 2;
--        if (env->fptags[i]) {
--            fptag |= 3;
--        } else {
--            tmp.d = env->fpregs[i].d;
--            exp = EXPD(tmp);
--            mant = MANTD(tmp);
--            if (exp == 0 && mant == 0) {
--                /* zero */
--                fptag |= 1;
--            } else if (exp == 0 || exp == MAXEXPD
--                       || (mant & (1LL << 63)) == 0) {
--                /* NaNs, infinity, denormal */
--                fptag |= 2;
--            }
--        }
--    }
-+    fptag = cpu_compute_fptag(env);
-     if (data32) {
-         /* 32 bit */
-         access_stl(ac, ptr, env->fpuc);
+ /**
+  * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
+  * @cpu - the CPU associated with registers
 
 -- 
 2.56.0.116.g6de20f6092dc
