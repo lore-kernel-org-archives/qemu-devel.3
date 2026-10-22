@@ -1,75 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BD0606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB6606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 15:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IucNvbdZ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ma1oCx5e;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=drabZTfP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJuBx-0003LD-7v; Thu, 22 Oct 2026 10:54:53 -0400
+	id 1xJutU-0002b7-Uf; Thu, 22 Oct 2026 11:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJuBt-0003K9-Bm
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:54:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xJutQ-0002ak-Bb
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:39:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJuBr-0004wf-A6
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:54:49 -0400
+ (Exim 4.90_1) (envelope-from <tcalifano@redhat.com>)
+ id 1xJutO-0000wq-S0
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:39:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792680884;
+ s=mimecast20190719; t=1792683585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=xMeclBtIsoWDquVey77gYzHp0P0smhDvZpu4FD33fr0=;
- b=IucNvbdZ6TbZxCe6DeZsYt1dhR/RtBkfCEAqibXlxILckWGt5fDCCu++YwOgrnnX5u29ba
- wWnTKfwaBC+b9awu6CQfqniHgzCDrd9vFj5cdLGH/pZlNg/tkuq/E9O/lqKonH3qUTeiET
- NEEt2qs39SuXysD1tfCxF4pKUprC7E8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-81ayABNfNwqAKkbpbOYOEw-1; Thu,
- 22 Oct 2026 10:54:42 -0400
-X-MC-Unique: 81ayABNfNwqAKkbpbOYOEw-1
-X-Mimecast-MFC-AGG-ID: 81ayABNfNwqAKkbpbOYOEw_1792680881
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6BEA1954206
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 14:54:41 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9694A30001B9; Thu, 22 Oct 2026 14:54:40 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: kraxel@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH] hw/display/ramfb: reject invalid framebuffer mappings
-Date: Thu, 22 Oct 2026 18:54:38 +0400
-Message-ID: <20261022145437.3546795-2-marcandre.lureau@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SRdDwD16FYdo7f8MRpViIOxs5O7sss2LQ1g4MZ9nNPM=;
+ b=Ma1oCx5erxqsIvCHPLRgI6OrRDFwT1RSVYLY5qqiHC70ruziWdA1ax7MABmipyIZDibJoE
+ PVpxPbU9q4951kOp90MWiafT0sJVU7RExxmMt+ariVX4CRfuAGQ9TgDpONOxZ1BUq3eGyB
+ tudOVRz6wPGs0SLOP7Q33tf7TxsZt24=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-375-WQgLD5iqNUqo4kQjYh5H-w-1; Thu, 22 Oct 2026 11:39:37 -0400
+X-MC-Unique: WQgLD5iqNUqo4kQjYh5H-w-1
+X-Mimecast-MFC-AGG-ID: WQgLD5iqNUqo4kQjYh5H-w_1792683576
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48e0fc747a7so1553919f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 08:39:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1792683576; x=1793288376; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-type:content-transfer-encoding:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=SRdDwD16FYdo7f8MRpViIOxs5O7sss2LQ1g4MZ9nNPM=;
+ b=drabZTfPb3FnVHVM+UbjzxEdKctixdHkAGpr0s7uQH5RzFh9+a62jtvSjjNqAHO7L/
+ 5HAEArJZ8yQpPHA5JbGAbUnURJisNBjeE97k3eYyjD/4snODN9QlMDf4IngIeOxDRPwr
+ BwFM7Q+NW25qL5ocoY36KTM2GDA4VZLrga1AaJ1Am8g1jt7pEOMIps7Op/SQLU3CjDh6
+ ePRQfAC9ZDZj/EQ0QpLIVt0ruIfthFHt6Tztd3YsNA58SDSQj4dNilF6vm9hrlHkqJ7Z
+ kSzcVon7e3/CX3VA97Hjgzq5sLqHdOYRytHMCAUXQXBjrsYDI754/MGVg1j8jVcvS9ZM
+ yn+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792683576; x=1793288376;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
+ :content-type:content-transfer-encoding:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=SRdDwD16FYdo7f8MRpViIOxs5O7sss2LQ1g4MZ9nNPM=;
+ b=BlFIhve4edLtmfwL/nzUvAzLPCDZd9w8T0Qkh1OCt8vgy3DwIZqNrFpKU2+n4UDG5/
+ AozE4fkHvY9wY/mWzPUQac9BcmIMEnO/vB3h3WkMFx8T47DXgL4tK80gECL6lthcCJDl
+ x4QxpuINp17cNmHly/MtUXVsZCjjrwH6gEFnNgGwsdC26thNwKTID+G1ovhIPXoVpIo1
+ lXu0SpbKrPVrfc2vilTkSX6K3N1ALpjQg7IpIEN9Y8XjY05SMf4bOVQOVzvNBasFRfg5
+ pKpV4MNq7lZoowHOYLIvncpR5J1yiMj1RunAxw3Dfm7IFOwpd9ST8K6LNFyrpnbiTXRE
+ vRZw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxozMaqVBfP9svaFMPjTiszXyrhxexJFmgrtKsCvXPAzCLtV0zuaD7Ni/pz9RN7kYDid8uFAPnpqDdI@nongnu.org
+X-Gm-Message-State: AFq9FYKD6KvSN1bijEJKiOrJqf7xFT6o8lP3l8DMzj4t6ilqTtUFoGzm
+ M0gI4PyhehUgydv3Ai+qVbF94+fjMgrlr20OlZfy6WJ+Ac/6TeVvQqnuFCIOpMVVob2PnBL0fm6
+ 8Z+mDCPeHx1a9/p3uHg+Kq7xBYjLue4cAzX363feFu8P3ZYOBQH7yEbVv
+X-Gm-Gg: AYBFou1Q49VTpiRTvhZwq4lZ0fP9sUCanOdiEHdrDkdaKezbtszA96a0XjeGmSs9fVo
+ SG8XlUIN/gXuhQwVIgCyeuuAZZOc4cBGCnNEY0ZhtrIyUvXxMbYZz92oCiyvp8LAoucLbQzX/m8
+ pcrZh1SCJQ4cBE3qbusoSLz1+65Snpq6OW5qHR9xJM8AI9X4GFCP9f3Elr9vEbGGtq8TxX/+U7z
+ LAbznsnJ6eTUWl0SqHNk5Qh89FXXEVlEAssUUnILcqPGojzS11w3Bflcip0ZxzCm/avlS1oHcDu
+ rFg+opWZZfLTKWLrySA/ZNcI/0CTNnd2vBEMsvB+WQZ+LaS1w1Wl+ot+2WOk0A==
+X-Received: by 2002:a05:600d:8653:20b0:4a2:5ca:767f with SMTP id
+ 5b1f17b1804b1-4a205ca7975mr40893985e9.4.1792683575942; 
+ Thu, 22 Oct 2026 08:39:35 -0700 (PDT)
+X-Received: by 2002:a05:600d:8653:20b0:4a2:5ca:767f with SMTP id
+ 5b1f17b1804b1-4a205ca7975mr40893675e9.4.1792683575553; 
+ Thu, 22 Oct 2026 08:39:35 -0700 (PDT)
+Received: from localhost ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a1fcd13891sm91091195e9.2.2026.10.22.08.39.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 08:39:34 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+Date: Thu, 22 Oct 2026 17:39:33 +0200
+Message-Id: <DMBHAGC8CCIH.KY6YB03VCSMJ@redhat.com>
+To: "Anton Johansson" <anjo@rev.ng>, <qemu-devel@nongnu.org>
+Cc: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>,
+ <alistair.francis@wdc.com>, <daniel.barboza@oss.qualcomm.com>,
+ <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>,
+ <chao.liu@processmission.com>,
+ <qemu-devel-bounces+tcalifano=redhat.com@nongnu.org>
+Subject: Re: [PATCH] target/riscv: Fix CPU state access on big-endian hosts
+From: "Tommaso Califano" <tcalifano@redhat.com>
+X-Mailer: aerc 0.22.0
+References: <20261022130657.6449-1-anjo@rev.ng>
+In-Reply-To: <20261022130657.6449-1-anjo@rev.ng>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=tcalifano@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,130 +121,114 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Thu Oct 22, 2026 at 3:06 PM CEST, Anton Johansson via qemu development w=
+rote:
+> mstatus and mstatus_hs are uint64_t but accessed through
+>
+>   tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
+>
+> which on a big-endian host running riscv32 incorrectly accesses the
+> top 32 bits rather than the lower bits.
+>
+> Widen the operations to 64 bit so the lower bits are modified.
+>
 
-ramfb_create_display_surface() passes the guest-controlled address
-straight to physical_memory_map() and only checks whether the returned
-length matches the requested size.  Two problems follow.
+Maybe a Fixes Tag and cc to QEMU stable?
 
-An address backed by a non-directly-mappable region (device MMIO, an
-unassigned hole, ...) is bounced through a temporary host buffer.
-Bouncing is pointless for a framebuffer that is only ever read, and it
-consumes the limited address_space_memory bounce buffer budget.
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>  target/riscv/tcg/translate.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
+>
+> diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+> index ede9c2563f..79b0f444ef 100644
+> --- a/target/riscv/tcg/translate.c
+> +++ b/target/riscv/tcg/translate.c
+> @@ -693,7 +693,7 @@ static TCGv get_address_indexed(DisasContext *ctx, in=
+t rs1, TCGv offs)
+>   */
+>  static void mark_fs_dirty(DisasContext *ctx)
+>  {
+> -    TCGv tmp;
+> +    TCGv_i64 tmp;
+> =20
+>      if (!has_ext(ctx, RVF)) {
+>          return;
+> @@ -703,15 +703,15 @@ static void mark_fs_dirty(DisasContext *ctx)
+>          /* Remember the state change for the rest of the TB. */
+>          ctx->mstatus_fs =3D EXT_STATUS_DIRTY;
+> =20
+> -        tmp =3D tcg_temp_new();
+> -        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> -        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+> -        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tmp =3D tcg_temp_new_i64();
+> +        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
+> +        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> =20
+>          if (ctx->virt_enabled) {
+> -            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_=
+hs));
+> -            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+> -            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_=
+hs));
+> +            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus=
+_hs));
+> +            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
+> +            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus=
+_hs));
+>          }
+>      }
+>  }
+> @@ -726,21 +726,21 @@ static inline void mark_fs_dirty(DisasContext *ctx)=
+ { }
+>   */
+>  static void mark_vs_dirty(DisasContext *ctx)
+>  {
+> -    TCGv tmp;
+> +    TCGv_i64 tmp;
+> =20
+>      if (ctx->mstatus_vs !=3D EXT_STATUS_DIRTY) {
+>          /* Remember the state change for the rest of the TB.  */
+>          ctx->mstatus_vs =3D EXT_STATUS_DIRTY;
+> =20
+> -        tmp =3D tcg_temp_new();
+> -        tcg_ge\n_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> -        tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+> -        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tmp =3D tcg_temp_new_i64();
+> +        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
+> +        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> =20
+>          if (ctx->virt_enabled) {
+> -            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_=
+hs));
+> -            tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+> -            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_=
+hs));
+> +            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus=
+_hs));
+> +            tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
+> +            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus=
+_hs));
+>          }
+>      }
+>  }
 
-When address_space_map() cannot obtain bounce buffer space it returns
-NULL with *plen set to 0.  The size check then fails and the function
-calls physical_memory_unmap(NULL, 0, ...).  address_space_unmap() treats
-the NULL pointer as a BounceBuffer and dereferences its magic field,
-crashing QEMU.
+Regarding the code I am not an expert, but this fix LGTM.
 
-A guest can trigger the latter by writing the same configuration twice
-via etc/ramfb: the first 16x64 XRGB8888 surface at an unmapped GPA
-consumes the entire 4096 byte bounce buffer allowance, and the second
-mapping fails because that surface is still being displayed.
+Reviewed-by: Tommaso Califano <tcalifano@redhat.com>
 
-Validate up front that the whole framebuffer range is backed by
-directly accessible memory, and still return early if the mapping
-fails, leaving the previous surface in place.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4740
-Reported-by: Karl Mehltretter <https://gitlab.com/kmehltretter>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/display/ramfb.c      | 38 ++++++++++++++++++++++++++++++++++++--
- hw/display/trace-events |  4 ++++
- 2 files changed, 40 insertions(+), 2 deletions(-)
-
-diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
-index f477bdcc2186..8e2be33b0fcc 100644
---- a/hw/display/ramfb.c
-+++ b/hw/display/ramfb.c
-@@ -17,8 +17,10 @@
- #include "hw/display/ramfb.h"
- #include "hw/display/bochs-vbe.h" /* for limits */
- #include "ui/console.h"
-+#include "system/memory.h"
- #include "system/physmem.h"
- #include "system/reset.h"
-+#include "trace.h"
- #include "exec/cpu-common.h"
- 
- struct QEMU_PACKED RAMFBCfg {
-@@ -46,6 +48,31 @@ static void ramfb_unmap_display_surface(pixman_image_t *image, void *unused)
-     physical_memory_unmap(data, size, 0, 0);
- }
- 
-+/*
-+ * A framebuffer must live in directly mappable host memory. Reject
-+ * addresses backed by unrelated regions (MMIO, unassigned holes, ...)
-+ */
-+static bool ramfb_range_is_direct_access(hwaddr addr, hwaddr size)
-+{
-+    WITH_RCU_READ_LOCK_GUARD() {
-+        while (size > 0) {
-+            MemoryRegion *mr;
-+            hwaddr len = size, xlat;
-+
-+            mr = address_space_translate(&address_space_memory, addr,
-+                                         &xlat, &len, false,
-+                                         MEMTXATTRS_UNSPECIFIED);
-+            if (len == 0 || !memory_region_supports_direct_access(mr)) {
-+                return false;
-+            }
-+            addr += len;
-+            size -= len;
-+        }
-+    }
-+
-+    return true;
-+}
-+
- static DisplaySurface *ramfb_create_display_surface(int width, int height,
-                                                     pixman_format_code_t format,
-                                                     hwaddr stride, hwaddr addr)
-@@ -65,9 +92,16 @@ static DisplaySurface *ramfb_create_display_surface(int width, int height,
-     }
- 
-     mapsize = size = stride * (height - 1) + linesize;
-+    if (!ramfb_range_is_direct_access(addr, size)) {
-+        trace_ramfb_bad_range(addr, size);
-+        return NULL;
-+    }
-     data = physical_memory_map(addr, &mapsize, false);
--    if (size != mapsize) {
--        physical_memory_unmap(data, mapsize, 0, 0);
-+    if (!data || size != mapsize) {
-+        trace_ramfb_map_failed(addr, size, mapsize);
-+        if (data) {
-+            physical_memory_unmap(data, mapsize, 0, 0);
-+        }
-         return NULL;
-     }
- 
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index c5e7e42af23b..bc1822b6b023 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -184,6 +184,10 @@ macfb_sense_read(uint32_t value) "video sense: 0x%"PRIx32
- macfb_sense_write(uint32_t value) "video sense: 0x%"PRIx32
- macfb_update_mode(uint32_t width, uint32_t height, uint8_t depth) "setting mode to width %"PRId32 " height %"PRId32 " size %d"
- 
-+# ramfb.c
-+ramfb_bad_range(uint64_t addr, uint64_t size) "addr=0x%"PRIx64" size=0x%"PRIx64
-+ramfb_map_failed(uint64_t addr, uint64_t size, uint64_t mapsize) "addr=0x%"PRIx64" size=0x%"PRIx64" mapped=0x%"PRIx64
-+
- # dm163.c
- dm163_redraw(uint8_t redraw) "0x%02x"
- dm163_dck(unsigned new_state) "dck : %u"
--- 
-2.56.0.116.g6de20f6092dc
+Regards,
+Tommaso
 
 
