@@ -1,109 +1,129 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8204D606A31F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 09:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2C160A2602
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 09:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Gx6pxVm8
+	dkim=pass (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=BRb7lFOT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJp2z-0003Nv-Lg; Thu, 22 Oct 2026 05:25:17 -0400
+	id 1xJpAR-0004sl-NF; Thu, 22 Oct 2026 05:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xJp2y-0003NV-6s
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:25:16 -0400
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xJp2w-0000lm-6m
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:25:15 -0400
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-4f699fe49b3so1107449b6e.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 02:25:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792661113; cv=none;
- d=google.com; s=arc-20260327;
- b=U2afrOC9CS8tXMZndY3/ymeuyIn6tKuNLABH7M0xNv8d0qIOotGp0rnq3YFb2s/0sI
- j27Phj81A/QRnrc8JDSb0zd5yxW+uvxBgnMZCUhFjiTtTUaudO2IJy7wjBqrHvY0fCAS
- awqPXVM27e3ZOnICq5F2QsqHZTxCetYnEi7paSZOQxHT7MWU77AZ9ua/sItl2cvki/g3
- hBtmWcicHjds+SLiifMH9yOIt+KzYhldj0UuDi//DxKi5dunLtmmHgTGABpeqNc2XwCS
- NnauCO1h4+Jx5TETzDupWaNWRkf78Mt+z77j1mZ2ijaTPJtypMO6DxNQjV1Z179sR4fp
- 2z3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mX66QcQ0dUmzG7zeMxqveq8tGDnmxoO5s36fZCWyHQc=;
- fh=CaWnO18l3T2JEm5Fha20AvFFAY3acH8IOPEOfr9q15k=;
- b=HkEmAe36+l1BADszhRjmGeXR+PA3FPJme7MHmQj3v3gabrv7wzTKF3YvKkq6toolgG
- NZG3GdsbQ9PWpU7uxoKH003yEuGtG8F5z1O8zuKFV2H1+t0fiZbdSD22985jCTY9y0w2
- rQin8UjjCydXbrQe8kBB55wUZQ2ep9gWKHP4Hv8Sh9q94+fli+CotBkiAE1S8h+Z9k9m
- jhDhItqism/ZpHyGRJMgUI5iVluqBPBHTsFQNMSkIcaOgtlzOKZMXXIPUEdytFsFhoNY
- 9EtoD7ankGI9sa9MkZUPdO5rElUiGkYRFjsVARcV7hLz9GFtgCYk+GlJMvfikTDQSonT
- 2YMw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792661113; x=1793265913; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=mX66QcQ0dUmzG7zeMxqveq8tGDnmxoO5s36fZCWyHQc=;
- b=Gx6pxVm82v1Vc1sGYVdJYWGYuUHzPkwRqlZ/wfgiGEnDZfawgqjAxH434PqM6xt/ys
- fkba+B2hv7PaejBy0W/JW0DCjCYJAl7aneQ+/X5eBA6/aJASeeCUL3zQHKnXxPC9cpFB
- S5mCIm85dzntKL8+JqM0rai0CKMUWjJS4pL36Pq2YdCMjAF1Z4uU/i905Xo6cOPI+/KG
- HepXe41vo/2SfM4PTaduPLwWWC1PmL/S7SsgwAE4MwJOK0krEt097hBDkQxdX/H45Qxc
- REA/Zy3j1y7EakELeEbRlqLITmQtGGuX48Yol382Km4O1aQXMB0ELx3EzF1XvdrQTZfm
- zNeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792661113; x=1793265913;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=mX66QcQ0dUmzG7zeMxqveq8tGDnmxoO5s36fZCWyHQc=;
- b=vnxCUXlnXmLY5V0QvM03TAvCAeyJDXWLI6P6rPMfwdltUxv5bvw0q89u4KKBURZbdO
- iupjdEnAIvwNZAcoivvUJtIPGvxSJZyHLeJg3CTG0dPPKFval6DgWcdRkdzxqXQEdoZj
- 87AncCu+TpMhe3oh4xLKGNy5R06v55bTTfwwKOQ1E+By+E7eVvHETKPfsWW9MSj546hZ
- rYoqHeiqzMCHFVb3/TndBbqt4ZcxgliP1CBx744s5Pt0oin2bdQYPVJjZ/X9PrvVJgGC
- o+0+4gZNflvz7lcLwvAgiK4ZXek4nSPfSj7tS4lL0G/VKMGIVYbvluKNbQliAh97VmQj
- ZztQ==
-X-Gm-Message-State: AFq9FYIZHluibTGFhIVLGLCbOdCqiRU5AnRzCHsvG//SBVsLGxMe/WIq
- EJbOfANnSI3+PfPsSYqqhNCO72PD066etKQeHlpw6LTZq/SwpBRv1s6lrEtvZWCEKsAJUmnUzFW
- 3sjne/v7SWvBcUW4wHW5L817mmZb/Rz4=
-X-Gm-Gg: AYBFou1SVsH0q/D345vzeHZaAxyVPTtoby+t0gUCwz9p9LfddQz6xSNEu9fZSLL4kdw
- vE8adZBhLgTD0LBxyx/jlUBTJLJ2iAT4LrYNxvZOpXGMaTLxEd5XWWHkGV9drlKicGXjvA2utmz
- HIlIemIXyVIXecTz3BiFzwFcolzWhZ5XnAnsDiFHAXij2t0w/qsGnLLw3Y3zZRvsCdURB1E+8FY
- 3UlPa+E+o0mtLDgO3Fbn7ujf6EHtw0qobBQ5SopCiCjfmXH/aAtrwadM0YbPiLVXoyKLIB9hRET
- St4AY+W7/Mb/P7jcpJ6yrqBFXI/GhDFsXeK7mejWcREP3Pag+yPHV0fO7iCqn1y71/mcGQzSnbj
- 8BLwAGkpP9r7La/hNfX+vF0vMpXrPtvFgsbqv5g==
-X-Received: by 2002:a05:6808:3091:b0:53b:87e5:8c95 with SMTP id
- 5614622812f47-5535818cfd6mr3754029b6e.37.1792661112717; Thu, 22 Oct 2026
- 02:25:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xJpAM-0004rm-PV; Thu, 22 Oct 2026 05:32:55 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xJpAK-0001Fr-5r; Thu, 22 Oct 2026 05:32:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QEHkHbtM3MDw0yLM1Eq+hfbIfhwfZ5k3Fbg+xl5HGswmSAn8SLVxLrU/tiVDJ7z5ZHDYeA5cUpGL5NBR5788NkBZ9zoxYDxXmHS+A9DTbFk+xqq/w2IWZV8nKLWB8mM+X1dJPPJmmOZ43osARv1NO0m5gikhbVidYlb8dFd23IDRFfigi2gSu7eTpdLrXmG3gGvpLLrg5WnhV1xYUY0cTlSQKt9cF0e/QUSCnqk9kCBEJ3r1nxzK+xedC3iiybbM8orLroCB1R1HFRWn+CTZ+enXis3fa6FpKZoREIr4B2uI9yU6p+EvX1XdEWktNSmLHsDdgeHakJPfbpnax4BgNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ssMzrygU/mzixi0AqfdN4qsdf8eaCvvClbPAo2KPrbA=;
+ b=pcgigvYUmczZitmBlnt00zhk1h2wgNiy1EEFdtGHS4otfzCPvjR0788Q7yWd/qa+bkNAkr/E4tzfKlOXLgi7htVWhb+VDWCbrTiHP4o87vjIFVL8nSpguAnUnOEI5jbUHaimsunmwJp4uCV03s6FZoO9rneFN44sVFxYFHsU+2GQLU+on5GGIGxkyvvN9lE1Y9i3ULCWr4gJhP+77rrRvpGeYDmOxplLFrWKiS9QNM90FjgIDyiX8bG5WJLbEuLRukGN1YZX40cEPwxOSle56Q0uIuX3SuL5dsHDv/NL/Ijc167WnxPgRpzUw0O1U7GyFwVNworJOtjwD+WTX/JiYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ssMzrygU/mzixi0AqfdN4qsdf8eaCvvClbPAo2KPrbA=;
+ b=BRb7lFOTQ7fsGqFlrpwO5fjyzulPJj333zQudh9JD55SSX67+tbPgcwGsv7U/LRMk5TwLWojR6W5ON0l6spNhoNDlQULGm4hi6Qn4XLXaen0I9C0jTTn2gez8ErVfSXXi/TYKB/V4qBtkkraGclQa6bPQfaldJtkHQJ84S+lutL2llDtMnI4np9QeWXSzjUab0Ku/548xv8dTbZoe7yqm5sTbw68BIG7pfJf95RB43jUYqBqwc5ii0bVcvDjPyjyxQrg+Oqd9v3/03/n5/cmvcU2FE2Msy1CIBuIc/aCvR1cWuJgF6oaV9s1rkTT074rNtDElTIBEH59gt3CqVCeTQ==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by SEZPR02MB7849.apcprd02.prod.outlook.com (2603:1096:101:223::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
+ 2026 09:32:40 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0522.017; Thu, 22 Oct 2026
+ 09:32:39 +0000
+Date: Thu, 22 Oct 2026 17:32:32 +0800
+From: Chao Liu <chao.liu@processmission.com>
+To: Harshit Mukhedkar <harshit007k@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, qemu-stable@nongnu.org
+Subject: Re: [PATCH] target/riscv: make sstateen1-3 reserved bits read-only
+ zero
+Message-ID: <atnYIbqQiFB_iswA@MacBook-Pro-4.local>
+References: <20261021193538.80383-1-harshit007k@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261021193538.80383-1-harshit007k@gmail.com>
+X-ClientProxiedBy: PH7P220CA0173.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:33b::6) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261022072238.319308-1-waysorrypub@gmail.com>
- <20261022072238.319308-3-waysorrypub@gmail.com>
- <20261022101845.381dd1a6@imammedo>
- <CAECqSzXF6a2P9-tz_xRP8+t_RQUYRjgsRhQtMygnRLJJtvHPTg@mail.gmail.com>
-In-Reply-To: <CAECqSzXF6a2P9-tz_xRP8+t_RQUYRjgsRhQtMygnRLJJtvHPTg@mail.gmail.com>
-From: way sorry <waysorrypub@gmail.com>
-Date: Thu, 22 Oct 2026 17:25:00 +0800
-X-Gm-Features: AclHuK_OBE03DFZA_cEqvG3CBG3QxVckQW8Q1l-4ydpB7o1ecEw7yzBI9oKnG_c
-Message-ID: <CAECqSzWt5gP91iOnoGcKymSYp_O6vt8=7s6-Mg616S_VVREYbg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] hw/loongarch/virt-acpi-build: Drop UART _DSD clock
- and add _STA
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, 17746591750@163.com, maobibo@loongson.cn, 
- lixianglai@loongson.cn, jiaxun.yang@flygoat.com, mst@redhat.com, 
- anisinha@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000d386c6065e6a7069"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=waysorrypub@gmail.com; helo=mail-oi1-x234.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SEZPR02MB7849:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8db301f6-e521-48a4-940a-08df301f6a65
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|376014|366016|261021121427099003|56012099006|261009223027099003|10067099003|18002099003|22082099003|261021123027099003;
+X-Microsoft-Antispam-Message-Info: SG72QEMw61I8z3NKuO4T48PSoDbOI0ykh+ZmKJ7nMrO3D21hVt9IRYy6XwiiRcIqDyo8pKYVmkjRu8dbCJRS4mm0ttG+iLZhc9DXwBasfIIdv9WADFHJIU+SSjo9JX7FpLj5rn6PSM+Yzzy+wuZnv3rDGYwc2MJrIwO2zq/iS+Kp3WqUh6BA83p7OO5DTHrJgo4AsrJUZBfdRQwXWq0PS+z5EJQrqdp6i4niG7/+FRkbOeugG2fBoIZK3uCFNz+No3b8ADFiaOCZLl0gS3qwvnMujc6XmjlaMEQ9aIocS5lBUoQqAyIN1xE01Kmxa0UzYwVnRACju2lSrGp82YevkqaYUdlC1XKuAf1ifQzHJMylsxhhre05FHDG55iOx9MPet+7G+iQr/v1b/y7OvSZUX12oSgC59LHQsWiU8195Nz0fznE3+5AAyI/mpZ+UKQJlF9PNr8JRzOjQnWmN4FgJ2kDVMEm0ZMcg69DyEQuFr2CdmQVEytKnxyvr/pB72GtqP0fnx2BtyjxU6bZmvRetztIOpZ5d1s9byI8iRAbf5eCZQS6gnr2HL5W5iNnrJCwL73iEcgHTPAPrylRh6GYyuCU7mShrWUG9R9Wm4NifdM7FCQe2YE9rlJ5ht43sludTSEsEIcfcukjqreBDUZ/Yi2ip5SAFfXbi75mvFAVmxs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(376014)(366016)(261021121427099003)(56012099006)(261009223027099003)(10067099003)(18002099003)(22082099003)(261021123027099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?EAavmd6uWfUYcGYKhrbbcv+jVHQpmD6bjtsE7CNTJm36p+kiUiy0lNfmyvvE?=
+ =?us-ascii?Q?swmRtw6QM5DDDyMcSmAt8OX209/qwrK5uRuBuECLpx6yHU+isAQTncTao6E0?=
+ =?us-ascii?Q?qmJ6UKHfQIGSuaiUs3xzPA8FYA8Y+uu5UTmOHefou2HBw1v/MAH/mYds1G5b?=
+ =?us-ascii?Q?NlNyl8u0YP4fE+5hwaB7D3yezhOCdHGr7wc+yeA14qWP6ARlrL8Ea2GZE0+T?=
+ =?us-ascii?Q?O8IkOR/hGTbJYywgBZszYkgWtuMMu9EtWiqzrKAthNGMR96T6xYK0lV3zQRT?=
+ =?us-ascii?Q?CiutYFh90BKpLDZNf3nkojv5NtioUeB7/qn5w6UI7aOiKh+iX8KX8LSINPwn?=
+ =?us-ascii?Q?0OV7sI4YSxTFsv+bnGYFKNnp9OwxW+b9D4r99tWgnpdwtY3hDEbdbdLnTVaR?=
+ =?us-ascii?Q?hYdt8pQLuqjgunTpNJ8GVTmyfsUoBHQVTQAinMM0CerImLUHoto8nYv4G7S8?=
+ =?us-ascii?Q?uMPNJrfPdQQuUfGZkfpBI6THLh9hBlmRgeBjhlOCq1Buh225gdUAR7ZEoNiL?=
+ =?us-ascii?Q?VZvnMDmN8olHPsT7tMgFVIhk64XIeJB3ObROb6mZTXtW5vsi0kWdOc9uyQ2H?=
+ =?us-ascii?Q?CnG3Y6Ix2H8sZQrjdDXFCicPgKvXtYJKf4f324ppx08//0G2FP50AaxaK1aC?=
+ =?us-ascii?Q?7a3dkmgsjTH1DuU4D4M3Ktu6LTgNrIPeulPwR3iYmprcNbFNYnREYYCrsE9n?=
+ =?us-ascii?Q?E3xZNnFwlTDNU/PbCTzGtwfUGzwIACBUVKfJxoMd4NLQsTq0Hmks/miDjl5L?=
+ =?us-ascii?Q?2cQE6YjDTT75HNBcjd5Y54Y/QQnD9/HIvsxwy25+SRrer2UTYxnKQ/8koVtb?=
+ =?us-ascii?Q?Viyl/K/bOFyqF1iIiS0wecHt97UqS++VzZc/iWmgHdI0KpU24dk626nzda0f?=
+ =?us-ascii?Q?gXao+bfldNlmJIryP6iwgMVB9dyKkcQNwBDLh3EhR/blLb/occ28MbcZzJWg?=
+ =?us-ascii?Q?ltSkhtOyh7Qc7Sh64DqqHJCKLrloG8WSa6zeCugss2kqbJSNUti0QzxZsHkd?=
+ =?us-ascii?Q?+fnlf5Xr5pusnfF0T7iwkxf/a528ezKlq9VcRD3vF4qwcKMxfk+1cKzaJVog?=
+ =?us-ascii?Q?fGxbIaxIAurVGjMEI5O81iQGnKvkzS+yl7n2Xg3nlNQ7iY7D0yF/Ef1Z4OS1?=
+ =?us-ascii?Q?h0D1wxYQfccFqPWPt0RIy2qJrWsaFzC6kDix0AD53Qbvmt5G3wvMEk61EpJ4?=
+ =?us-ascii?Q?Q7Xet6UcO9ShJLjYt4Dc3N9slEb6+Mu6HM6G18vDQ/fBoFD2uYq7pfCni0Ay?=
+ =?us-ascii?Q?gv4XYO+aulbCw7bfKMNsh65MIINv92HzAOEIQiO9pkY64Sv1Y2ykHLDdfp+K?=
+ =?us-ascii?Q?A0DYDM+LZzbM3s39BC9AW/bsdrR8PSxeWRxDOV/ibngUKX5UI5PvkqDXCylE?=
+ =?us-ascii?Q?qOaLfLZGV8sx0VFg0sk9ZwKSI4uBGv9rBSavTcgUDQ3PCXW4L5mXHrt9WlWT?=
+ =?us-ascii?Q?MZsXqxCCbO5U4POTlVCbrIGUiCnNRp/0Uyw3HHDQ1InLAQ6HBbZJzqlfo8Zg?=
+ =?us-ascii?Q?nWRDFgtKzJbsETrs99N5iXOCXu/3nH3RFMuJM9xy28t6vDkhkrytnr0DZ89R?=
+ =?us-ascii?Q?/aGuoE1twEw8ouBlaZOJY9R7UaZTxb0QZx3kR/nQJFHhcQ9hiOXw0wIdeOY3?=
+ =?us-ascii?Q?WHgBLTeEVquuNW3aeQTlyBRm/SvpZJBI7zrEhFmDtEb0Yao9eI8zuEkcYpdD?=
+ =?us-ascii?Q?wQaCGRW2cZeyYZW0uI1MHF23CXtVT6fNq6iTb/8wQAJBKj+MDspqt0W0WBEr?=
+ =?us-ascii?Q?s881IlL/1wxCRhM/kgHbrRanFsGPQTo=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8db301f6-e521-48a4-940a-08df301f6a65
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2026 09:32:39.8913 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9KSawknkMomtK94SmkeMy/d0wn2FX/cUxydfdKv1kR79q9dzUxM2+WujgpgbpBkt6xw3G8dWHsnsBCTDuwomBhg9YtNfHyuK0hNB1WwqfCM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR02MB7849
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=chao.liu@processmission.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,128 +136,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000d386c6065e6a7069
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Igor,
-
-One additional observation: QEMU's x86 ISA serial implementation explicitly
-defines _STA =3D
-0x0f in serial_isa_build_aml(), rather than relying on the ACPI default:
-
-https://github.com/qemu/qemu/blob/8967b2fe1b2aaae3c29e207d85fab901d580a2dc/=
-hw/char/serial-isa.c#L101
-
-I think following the same approach for LoongArch UART would be reasonable
-for consistency.
+On Thu, Oct 22, 2026 at 01:05:38AM +0800, Harshit Mukhedkar wrote:
+> write_sstateen_1_3() passes SMSTATEEN_STATEEN (bit 63) as the write
+> mask to write_sstateen(). That bit is the SE control bit only in
+> mstateenN/hstateenN, where it gates access to sstateenN. The sstateen1-3
+> CSRs have no defined bits, and reserved bits must be read-only zero, so
+> bit 63 must not be writable on RV64.
+> 
+> Use a write mask of 0 for sstateen1-3 until bits are defined there.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4726
+> Fixes: 3bee0e40106d ("target/riscv: Add smstateen support")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Harshit Mukhedkar <harshit007k@gmail.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
 
 Thanks,
-pillow
+Chao
 
-On Thu, Oct 22, 2026 at 5:01=E2=80=AFPM way sorry <waysorrypub@gmail.com> w=
-rote:
-
-> Hi Igor,
->
-> The _STA method was added in response to Bibo's review comment on the
-> original patch, where
-> he explicitly suggested adding _STA.
->
-> I understand your concern that omitting _STA already implies 0x0f.
-> However, the two review
-> comments seem to suggest different approaches.
->
-> I'm happy to split the changes into separate patches as required. For
-> _STA, though, I'd
-> appreciate it if we could first agree on whether it should be added or
-> omitted, so I have a clear
-> direction for the next version.
->
-> Thanks,
-> pillow
->
-> On Thu, Oct 22, 2026 at 4:18=E2=80=AFPM Igor Mammedov <imammedo@redhat.co=
-m> wrote:
->
->> On Thu, 22 Oct 2026 15:22:36 +0800
->> pillow <waysorrypub@gmail.com> wrote:
->>
->> ...
->> > @@ -325,7 +324,7 @@ static void build_uart_device_aml(Aml *table, int
->> index)
->> ...
->> > +    aml_append(dev, aml_name_decl("_STA", aml_int(0x0f)));
->>
->> also is it really necessary? Doesn't missing _STA imply 0xF already?
->>
->> >      crs =3D aml_resource_template();
->> >      aml_append(crs,
->> >          aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED=
-,
->>
->>
-
---000000000000d386c6065e6a7069
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Igor,<div><br></div><div>One additional observation: QE=
-MU&#39;s x86 ISA serial implementation explicitly defines _STA =3D</div><di=
-v>0x0f in serial_isa_build_aml(), rather than relying on the ACPI default:<=
-/div><div><br></div><div><a href=3D"https://github.com/qemu/qemu/blob/8967b=
-2fe1b2aaae3c29e207d85fab901d580a2dc/hw/char/serial-isa.c#L101">https://gith=
-ub.com/qemu/qemu/blob/8967b2fe1b2aaae3c29e207d85fab901d580a2dc/hw/char/seri=
-al-isa.c#L101</a><br><br>I think following the same approach for LoongArch =
-UART would be reasonable for consistency.</div><div><br></div><div>Thanks,<=
-/div><div>pillow</div></div><br><div class=3D"gmail_quote gmail_quote_conta=
-iner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 22, 2026 at 5:01=E2=
-=80=AFPM way sorry &lt;<a href=3D"mailto:waysorrypub@gmail.com">waysorrypub=
-@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex"><div dir=3D"ltr">Hi Igor,<div><br></div><div>The _STA method was=
- added in response to Bibo&#39;s review comment on the original patch, wher=
-e</div><div>he explicitly suggested adding _STA.</div><div><br></div><div>I=
- understand your concern that omitting _STA already implies 0x0f. However, =
-the two review</div><div>comments seem to suggest different approaches.</di=
-v><div><br></div><div>I&#39;m happy to split the changes into separate patc=
-hes as required. For _STA, though, I&#39;d</div><div>appreciate it if we co=
-uld first agree on whether it should be added or omitted, so I have a clear=
-</div><div>direction for the next version.</div><div><br></div><div>Thanks,=
-</div><div>pillow</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr=
-" class=3D"gmail_attr">On Thu, Oct 22, 2026 at 4:18=E2=80=AFPM Igor Mammedo=
-v &lt;<a href=3D"mailto:imammedo@redhat.com" target=3D"_blank">imammedo@red=
-hat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">On Thu, 22 Oct 2026 15:22:36 +0800<br>
-pillow &lt;<a href=3D"mailto:waysorrypub@gmail.com" target=3D"_blank">wayso=
-rrypub@gmail.com</a>&gt; wrote:<br>
-<br>
-...<br>
-&gt; @@ -325,7 +324,7 @@ static void build_uart_device_aml(Aml *table, int =
-index)<br>
-...<br>
-&gt; +=C2=A0 =C2=A0 aml_append(dev, aml_name_decl(&quot;_STA&quot;, aml_int=
-(0x0f)));<br>
-<br>
-also is it really necessary? Doesn&#39;t missing _STA imply 0xF already?<br=
->
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 crs =3D aml_resource_template();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 aml_append(crs,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 aml_qword_memory(AML_POS_DECODE, AML=
-_MIN_FIXED, AML_MAX_FIXED,<br>
-<br>
-</blockquote></div>
-</blockquote></div>
-
---000000000000d386c6065e6a7069--
+> ---
+>  target/riscv/tcg/csr.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+> index 063590f56a..d9731421af 100644
+> --- a/target/riscv/tcg/csr.c
+> +++ b/target/riscv/tcg/csr.c
+> @@ -3941,7 +3941,12 @@ static RISCVException write_sstateen0(CPURISCVState *env, int csrno,
+>  static RISCVException write_sstateen_1_3(CPURISCVState *env, int csrno,
+>                                           target_ulong new_val, uintptr_t ra)
+>  {
+> -    return write_sstateen(env, csrno, SMSTATEEN_STATEEN, new_val);
+> +    /*
+> +     * sstateen1-3 have no defined bits yet, so they are read only zero.
+> +     * Bit 63 is the SE bit only in mstateenN/hstateenN, where it gates
+> +     * access to sstateenN.
+> +     */
+> +    return write_sstateen(env, csrno, 0, new_val);
+>  }
+>  
+>  static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+> -- 
+> 2.56.0
+> 
 
