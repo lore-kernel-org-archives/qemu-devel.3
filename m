@@ -1,136 +1,133 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C805A606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 22:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C323E606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 22:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eYWWooFR;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CEw1H4uo
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=onU5KH3X;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RtNQbPS8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK0nO-0001kx-4B; Thu, 22 Oct 2026 17:57:58 -0400
+	id 1xK0qL-0004rz-B0; Thu, 22 Oct 2026 18:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xK0nL-0001jt-Jx
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:57:55 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xK0pn-00043u-6c
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:00:31 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xK0nJ-0000Fi-PX
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:57:55 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xK0pj-0000yQ-AH
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 18:00:26 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MIH99E1494700
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:57:52 GMT
+ 69MHt9QD060115
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 22:00:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- U2g+1W7PW3UR9TOQfxvua2EkUNe+5fs16xF3q5cN4bI=; b=eYWWooFRAhANaz2m
- wZMEVlvdvucZppDnJUuYabi+T2fX3C/fy81erhw/C+bZlwMcmz/m9w3mqscq24lq
- S6xEVhQ1/huiAQfVp8Y0bmKfrOxz/8w/cukgRBXmoGWJBY0bAGt1vREkj2zlWYxF
- b1Cl4LGBfX7Xs5Nr/SwPEn59gwBvBD9D8vL/oXH6OOYx5Zb58I7S7Jsxx0vqm5kv
- +F60RVmG9Yf9fZ5U3mnHq+DCBZd57qXlh0C0FPuDor1FPaNQ9fnxbYRwArGD3ar/
- DAMn6UoyWOIZIwSsBUWzF9X5qaBGGbEA+rd4TDs8ckf5O+SLD0rrIxrKFYgE0VUN
- 3xm2qQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmr8q3g-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=kVkjH4bfRnD
+ wps3AdchA/WEoYg08crqmfbWg6i14nRM=; b=onU5KH3X5k4vtH8cs1oH/lv4pPi
+ 9e8dDR4ocbVPDpzS2RfHxLscCtv8cY0S0RubBPNpzFE2RmbXttaFv9W2LbwA4v8r
+ Z+EMyep6VT/89O3Nfp3zaNMSarEQa+Sq3vwxzpvVqBq3dGCwPYMUHBLFcvN47TCj
+ yqA/IEEf0hlG94ik77vYFh96uKWVWjwvtyVO+qeAhk1G30E/s4OhpRnnSsG9Kz2C
+ UKz9ZBKgUVRHHtHfuwShDaZ9Bv7JWph11QrF8830Tz9q3v9wWcJtDJoxkPbwWQwl
+ 6EXMUvyJOf1xoNfTSQAP5wuL6FrfwFHFER5Hy32iQ2cN5qwSrJYFUK9F3yw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfpahs4q7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:57:52 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3acc98e3b3cso213011a91.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 14:57:52 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 22:00:01 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2e617b5e9b3so1279185ad.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 15:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792706271; x=1793311071; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=U2g+1W7PW3UR9TOQfxvua2EkUNe+5fs16xF3q5cN4bI=;
- b=CEw1H4uoEeyK4PSs2rVphU2Zv8QUNc1FzODAAyyJtWdSnobo1N/Gb4JAp2LGhFtrqx
- PWbqldp4cYO9TOYbn7wjdWFkEhcqqdGEwOcPo9HyzdP+AAcVykrIYMBCogR8weEppwIq
- o+95lnGrJuOVM77kDEaV/5N2IpvFhyY474Vg27v09+PZjHIzi700ylQGrHBXNkUvnplI
- kOS04OpaFPNJmxugCvsK605ro33XSfjdGfhe2qXPfjTWmHyC8emKfzkKPVedTidI1gNI
- hIncBsbpdNFpsXCMxl0PVLS+CK+Cj4aWaSxlcgVZEa5eCGI3f3CUeitpi5EczgQON9T4
- Ke9w==
+ d=oss.qualcomm.com; s=google; t=1792706401; x=1793311201; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kVkjH4bfRnDwps3AdchA/WEoYg08crqmfbWg6i14nRM=;
+ b=RtNQbPS8/LJVLShK/lNj39MJDbRO7M6cLQBM9wkNNxna4vHriaoS2EtID+X4GxuQfX
+ OHDrVsbYtDAFTZYzbiCd4Znl299+u8fZBV7weUeYhsNFY3AOSDhiysu1x/tU0AMbCmgz
+ bgmC28NIbz4U80YvRL5Yn5Ro98shcMtERUflHABcvW8zuOLv4rOOyUWWUGQUf4cDJpCw
+ I8HSzCzxvnl8CG875bzll9KjAjsSaRw78qv3DvmgoEfO78XClrPNqQ1M6EpkgbC9LFnq
+ NV2SY1dAzvqUFb/X+5SMojD5QS53pv0/OU8m4sfooK38LLs4nkLDt4AjyhU/umWle2M0
+ wvmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792706271; x=1793311071;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=U2g+1W7PW3UR9TOQfxvua2EkUNe+5fs16xF3q5cN4bI=;
- b=UIR85pUf8a1Nsnpt6+R1/hMHSP9+4Ygss1LgClsLNfSeyl65JHXi5gRaj6kZ2yY9Xb
- +hwb+qVTbHYou+xUkevZvLue4lUiPg2z1vdvSzusgABK2VewbKlMx6Fq1CACLx+d1qtU
- MhxLiSZNey9/LI7JlB9azuPmyr2uYtU+ZyisLZSDKb/ZW1w9KadZ4vj110ySKZSg3+lL
- Egia8eggDuop8pT1V3LVWdOM4PXr06DU5eoLfRADYn30wUKJ/7X2mIUcs7qVEVSR8kbw
- RKHyXmYXeJjnuqbMFJliHat/GxrHy+yqsIfizKCn7SApznO0YnMBDwjiVTadcJkztf+U
- zjyg==
-X-Gm-Message-State: AFq9FYI4FlQJyzLs2Ldy+bRK/7yb5CAezOaf3aZ9O9DT0XMal2gP7VWs
- lfDEslcJb3cBEC3NALIp8+A5pmf2O/0ZhAiXFFUC7/irVZ9tEd5N83pJD33xVBFuadB4vCAeG59
- 8mo1rlwZmWH+UdoE2HtLw/akUSjSyZyQcdiJRg5qkaYlzG2kq4XDsyuTBseFqGj06kQ==
-X-Gm-Gg: AYBFou3ZC/XhnS4VjWJi4sumV8wuwx+kLmsX/uVqjXW45MnM6ls60QC6bHoPOs9CvBA
- Bc8zIXefjG4RJeDZZHBnAJfPQ7Y/TfW0c37qERq9gWAL6V0i2i+D3e5q33oRtiXS2F4t4JCvC4L
- HvWbfd9+Tk2/JtkBH8mgF6IU6cQNBJkP5MGMRXwAieNGUyvM+bBPrzkjgF3Z+e8+c37d5o4Ge/K
- dDv3edTAK8BlijljUkFmbZdC593GlltqDxd9CzmirDNLY9g/VO0Q6oVMucGUxr3vyCrlbq1pLHn
- qIxBnzRAdott8+efYElpHeayjy0nrkH8e9K3cHQcVRyxP/aWgxh3QyyxnlxUFaQk8FgTXFLiBdl
- 7Bh922QbHsCfMskTkE5vYyHg7Br1pvFsv0uwbayPxsktlIdiwrYRuhjIWxKUjniQ=
-X-Received: by 2002:a17:90b:4a0c:b0:3a4:fe48:d410 with SMTP id
- 98e67ed59e1d1-3adce629c32mr148354a91.30.1792706271522; 
- Thu, 22 Oct 2026 14:57:51 -0700 (PDT)
-X-Received: by 2002:a17:90b:4a0c:b0:3a4:fe48:d410 with SMTP id
- 98e67ed59e1d1-3adce629c32mr148336a91.30.1792706271012; 
- Thu, 22 Oct 2026 14:57:51 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792706401; x=1793311201;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kVkjH4bfRnDwps3AdchA/WEoYg08crqmfbWg6i14nRM=;
+ b=HAOV9ABvPcYm18fchu869BrsAahAGgAubjFh/ppAzLQm2I4v/c6vQxhV8SIy4+KAyJ
+ VIFZc/YORelOKrpnMX11ixqYNHXcTeZA2LfWl6kv2EspakR6HKOtUgbgjg+Wfj7LouSQ
+ ukxCR9hS80sN15y2/8Ki7O8pu0wQKTSXIIWbrEuOQ68NZSb4PMien3nW62l/DtBIGv4C
+ f284+jpnLhdsI/MUopvGdz5oiX+z4vzHyKXyaiD5/u5hdLa5s9LKhJ/EB3KzQ+48h6uG
+ yCYpezbMglGf9XAQJbd2XLUd8RMyIcEBwZb2bhB6W5uqqEk0H2fLrvXtEgS475iqgjMX
+ pFhg==
+X-Gm-Message-State: AFq9FYLcIfxlouxb/RigYCDllgqBFhNG0HHiQFuHVQEHgaMTHwnZhkLE
+ eisRqYX2hLiOrDvWqtPqlXB4mY433PHGIa7Z3GmPYeLgflcMZsmxuPcADkt7NLrdCb81Cq/yQKe
+ bHfTiDzicu1JqITHUibFKOXGECpAmxNfQjxrFTbLzBguhLRdaWQUoSP2lMEjjjlS1Zw==
+X-Gm-Gg: AYBFou0cz5urhgSwmrqgmSQbkyA54Mye3MoB6gJitCXs4Wea/kayRQI3m274Z1Dr1vM
+ Sdtdtboshj8EnG44kssygLibRHDYUttaQb72ezT0LSWWI08SO1rX/+pLZlVjywywkCpu9/8AhnH
+ 4NmstQUjhmq7Ws8kRqfzSVLWmb6FP++3C9yChCtWpfV4ZSs15BIW4M8MrGIIzcyiP9oCZX1Yfja
+ 1GrqVwT58V1qBypfdIBnD+QFOXFWz6aVCOU66YaClDX0aDy96VENR14CbFs1tMiHBWYtbhUKohu
+ l+9rpoduCpQKc9fUOY9SH0mQDXmTUYUNBBySSbClg+sDfoqxhre1alVzgCI0YUPyG3Pz7qcshTi
+ Rd8HFKPWIJvftGXJtNlk0DKgcnjbjON/eJwYOxZoTu/UXTzjZlSZVJcRylVkpQJM=
+X-Received: by 2002:a17:90b:3ec7:b0:3ab:1af3:a0d with SMTP id
+ 98e67ed59e1d1-3adce76f530mr125796a91.33.1792706400449; 
+ Thu, 22 Oct 2026 15:00:00 -0700 (PDT)
+X-Received: by 2002:a17:90b:3ec7:b0:3ab:1af3:a0d with SMTP id
+ 98e67ed59e1d1-3adce76f530mr125784a91.33.1792706399555; 
+ Thu, 22 Oct 2026 14:59:59 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3adca62e477sm648061a91.2.2026.10.22.14.57.50
+ 98e67ed59e1d1-3adcb1b167fsm596875a91.9.2026.10.22.14.59.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 14:57:50 -0700 (PDT)
+ Thu, 22 Oct 2026 14:59:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 03/27] include/qemu/typedefs: add ArchDumpInfo
-Date: Thu, 22 Oct 2026 14:57:22 -0700
-Message-ID: <20261022215747.2479440-4-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 2/2] tests/tcg/ppc64: Run float_conv* against power8
+Date: Thu, 22 Oct 2026 14:59:54 -0700
+Message-ID: <20261022215954.2482681-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261022215747.2479440-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20261022215747.2479440-1-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261022215954.2482681-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20261022215954.2482681-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 2bZBhXI8yiKR_6yGsXxmdXaB707qMwpt
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX6RaYz2c4Ud9r
- BhWSv1ToVGdEr6Oz1vqQWmPf5YGb8qUDAIv4UrASc4dDB5a6xpNxFsPU3lL4fwdBvjicVS7aPiO
- uX96sYMzM2vMlXeXdU034IZv18WnOmw=
-X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6ada86e0 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=WAb2S511oTjnKBTKeboA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX2ojQFnv7jJYP
- fmjWyc7bjwPs9qIvXP9H53Ik3Ia2GJOxU1opdP1JburuaZq3wHGCFbpbM5OKfBHjwgNk1aDS+TW
- VSl+A6px31Lp1M55CxrGXPUziMchqiAYI+bTYoYElVJKNWCYLyE/o/+wzgUrR7aUJyoqo7MmXfp
- 1dedUQz0am2S0VwE4VlA1CDnUD7Dzpdzu1NIKSI536b8enp+KxF1BSchRvFjkROrjBRn0nU7Wlo
- O0QgGpa6CVGOccc04MUb5NmwC794IdJqn/NVtF3Lfqn68BOWtK/K+IaJM8Pkrp+xR7XPwkwrIqT
- TC2GDqgb0Uo+eZfvk2XRilan+5QIht+8nVR14g+WafO+12KVk/grd6RA5cGz8e6jh4s+DrMnMZv
- 9l3tPqhuXeydnsy6uCjnMYp7ha8qAZi/RWtamibPGgQh3k9UcyHFNn6a4Ir9wJAwTIDepfGdIqI
- gKxsvAOLxmtDJrpS4YQ==
-X-Proofpoint-ORIG-GUID: 2bZBhXI8yiKR_6yGsXxmdXaB707qMwpt
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfXxPyq8XsfUyDZ
+ BuLDdLaLz0KB1s/tgXIH7AX3LUZQq+S/DxEvnFq6PBR7e5bIAsmgWEhBLfTRUQ7+HPN4XiMmp5o
+ iP62qQZHg/HZIlr7VmzeAajbSd++jps=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX19jRcVR2Lmez
+ IJoRQ7xWRTuxKhPYikNDU5XhOch+dKHyNgmg8Egf3LLkzgGAL33Bd+JF3ioPOVa4z+ygNMh8s1O
+ b4Rp/shKpXfs88+PtkjcxuCf8fDbvKPLiVcNFyQ/WSviz5QdZVaPByYlHu56MViql6r3jXnSCpO
+ TkOHRqxg+GOo052ncX5DSo5BunELD41YBsvILX6E5U4NYCzXeRFLXTUMmI1CgOuN5Lh1XQg6mKQ
+ fTqAoPIy0fGEIVeuljK9oUTPQtzbC/IQdd2GfXMczOFFBRMi618cmTVgxjBSLyWijDXmnBN8k1s
+ N6ULuJIjjh4PU7OrGc+kbsOLecByEfF1zlEzihltDU1m5uTYQgA0ZuJgB2h3/QI+a/39GPm/bcK
+ pS3kRAk/K1Vj4xZXlemQTN+CVQF1S6p1sbC5gcHqTCD1kIcaZMVtuOsVhovxIOPn+nq6A6NCelJ
+ azOfkMTFnboDz6zd6gA==
+X-Proofpoint-GUID: folEwMqdY1aRzRxxVq7RZGHFzxvLwt9i
+X-Authority-Analysis: v=2.4 cv=YIMKWhGx c=1 sm=1 tr=0 ts=6ada8762 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=mTO5zd2ZRFQLC5amIzUA:9
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: folEwMqdY1aRzRxxVq7RZGHFzxvLwt9i
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ spamscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220087
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,52 +153,847 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This allows to use a forward declaration instead of including
-system/dump-arch.h.
+From: Eric Farman <farman@linux.ibm.com>
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20261021181244.867840-4-pierrick.bouvier@oss.qualcomm.com
+There is an oddity that turns up with the float_convd and float_convs
+tests, when running from different toolchains. As one example, the
+expectation at the start of tests/tcg/ppc64/float_conv*.ref is:
+
+  ### Rounding to nearest
+  from double: f64(nan:0x007ff4000000000000)
+    to single: f32(nan:0x7fe00000) (INVALID)
+     to int32: -2147483648 (INVALID)
+     to int64: -9223372036854775808 (INVALID)
+    to uint32: 0 (INVALID)
+    to uint64: -9223372036854775808 (INVALID)
+
+But, other hosts offer a different response, e.g., this debian guest
+on my laptop:
+
+  ### Rounding to nearest
+  from double: f64(nan:0x007ff4000000000000)
+    to single: f32(nan:0x7fe00000) (INVALID)
+     to int32: -2147483648 (INVALID)
+     to int64: -9223372036854775808 (INVALID)
+    to uint32: 0 (INVALID)
+    to uint64: 0 (INVALID)
+
+The explanation seems to be a behavior change when compiling to different
+versions of power hardware. When building the arguments from the multiarch
+directory, let's ensure these float tests offer a deterministic response
+to these NaN tests by explicitly binding them to a CPU architecture.
+
+Chose power8 for no real reason. This behavior change appears between
+power6 and power7, but other tests that rely on a specific architecture
+today pick either power8 or power10.
+
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20261019185600.2031729-3-farman@linux.ibm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/qemu/typedefs.h    | 1 +
- include/system/dump-arch.h | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ tests/tcg/ppc64/float_convd.ref | 144 ++++++++++++++++----------------
+ tests/tcg/ppc64/float_convs.ref |  80 +++++++++---------
+ tests/tcg/ppc64/meson.build     |   6 ++
+ 3 files changed, 118 insertions(+), 112 deletions(-)
 
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 2344c92182e..8fa7f752dac 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -28,6 +28,7 @@ typedef struct AddressSpace AddressSpace;
- typedef struct AioContext AioContext;
- typedef struct Aml Aml;
- typedef struct ArchCPU ArchCPU;
-+typedef struct ArchDumpInfo ArchDumpInfo;
- typedef struct BdrvDirtyBitmap BdrvDirtyBitmap;
- typedef struct BdrvDirtyBitmapIter BdrvDirtyBitmapIter;
- typedef struct BlockBackend BlockBackend;
-diff --git a/include/system/dump-arch.h b/include/system/dump-arch.h
-index 743916e46ca..7165a5bbd03 100644
---- a/include/system/dump-arch.h
-+++ b/include/system/dump-arch.h
-@@ -14,7 +14,7 @@
- #ifndef DUMP_ARCH_H
- #define DUMP_ARCH_H
- 
--typedef struct ArchDumpInfo {
-+struct ArchDumpInfo {
-     int d_machine;           /* Architecture */
-     int d_endian;            /* ELFDATA2LSB or ELFDATA2MSB */
-     int d_class;             /* ELFCLASS32 or ELFCLASS64 */
-@@ -25,7 +25,7 @@ typedef struct ArchDumpInfo {
-     uint64_t (*arch_sections_write_hdr_fn)(DumpState *s, uint8_t *buff);
-     int (*arch_sections_write_fn)(DumpState *s, uint8_t *buff);
-     void (*arch_cleanup_fn)(DumpState *s);
--} ArchDumpInfo;
-+};
- 
- struct GuestPhysBlockList; /* memory_mapping.h */
- int cpu_get_dump_info(ArchDumpInfo *info,
+diff --git a/tests/tcg/ppc64/float_convd.ref b/tests/tcg/ppc64/float_convd.ref
+index 43aa3117f14..2995a767c04 100644
+--- a/tests/tcg/ppc64/float_convd.ref
++++ b/tests/tcg/ppc64/float_convd.ref
+@@ -4,61 +4,61 @@ from double: f64(nan:0x007ff4000000000000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-nan:0x00fff8000000000000)
+   to single: f32(-nan:0xffc00000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-inf:0x00fff0000000000000)
+   to single: f32(-inf:0xff800000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+    to int64: -2 (OK)
+-  to uint32: -2 (OK)
+-  to uint64: -2 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
+   to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
+    to int32: -1 (OK)
+    to int64: -1 (OK)
+-  to uint32: -1 (OK)
+-  to uint64: -1 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
+   to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
+    to int32: 0 (INEXACT )
+@@ -208,19 +208,19 @@ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW INEXACT )
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -232,80 +232,80 @@ from double: f64(nan:0x007ff8000000000000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff0000000000001)
+   to single: f32(nan:0x7fc00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding upwards
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-nan:0x00fff8000000000000)
+   to single: f32(-nan:0xffc00000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-inf:0x00fff0000000000000)
+   to single: f32(-inf:0xff800000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OVERFLOW INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b000000000000000p+103:0xf30c3a58) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab400000000000000p+99:0xf1605d5a) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+    to int64: -2 (OK)
+-  to uint32: -2 (OK)
+-  to uint64: -2 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
+   to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
+    to int32: -1 (OK)
+    to int64: -1 (OK)
+-  to uint32: -1 (OK)
+-  to uint64: -1 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
+   to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
+    to int32: 0 (INEXACT )
+@@ -455,19 +455,19 @@ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW INEXACT )
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -479,80 +479,80 @@ from double: f64(nan:0x007ff8000000000000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff0000000000001)
+   to single: f32(nan:0x7fc00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding downwards
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-nan:0x00fff8000000000000)
+   to single: f32(-nan:0xffc00000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-inf:0x00fff0000000000000)
+   to single: f32(-inf:0xff800000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+    to int64: -2 (OK)
+-  to uint32: -2 (OK)
+-  to uint64: -2 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
+   to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
+    to int32: -1 (OK)
+    to int64: -1 (OK)
+-  to uint32: -1 (OK)
+-  to uint64: -1 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
+   to single: f32(-0x1.00000000000000000000p-149:0x80000001) (UNDERFLOW INEXACT )
+    to int32: 0 (INEXACT )
+@@ -702,19 +702,19 @@ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OVERFLOW INEXACT )
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -726,80 +726,80 @@ from double: f64(nan:0x007ff8000000000000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff0000000000001)
+   to single: f32(nan:0x7fc00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding to zero
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-nan:0x00fff8000000000000)
+   to single: f32(-nan:0xffc00000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-inf:0x00fff0000000000000)
+   to single: f32(-inf:0xff800000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OVERFLOW INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b000000000000000p+103:0xf30c3a58) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab400000000000000p+99:0xf1605d5a) (INEXACT )
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+    to int64: -2 (OK)
+-  to uint32: -2 (OK)
+-  to uint64: -2 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+0:0x00bff0000000000000)
+   to single: f32(-0x1.00000000000000000000p+0:0xbf800000) (OK)
+    to int32: -1 (OK)
+    to int64: -1 (OK)
+-  to uint32: -1 (OK)
+-  to uint64: -1 (OK)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.00000000000000000000p-1022:0x008010000000000000)
+   to single: f32(-0x0.00000000000000000000p+0:0x80000000) (UNDERFLOW INEXACT )
+    to int32: 0 (INEXACT )
+@@ -949,19 +949,19 @@ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OVERFLOW INEXACT )
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -973,16 +973,16 @@ from double: f64(nan:0x007ff8000000000000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff0000000000001)
+   to single: f32(nan:0x7fc00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(nan:0x007ff4000000000000)
+   to single: f32(nan:0x7fe00000) (INVALID)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+diff --git a/tests/tcg/ppc64/float_convs.ref b/tests/tcg/ppc64/float_convs.ref
+index bd7b14d37e3..6e6f6368344 100644
+--- a/tests/tcg/ppc64/float_convs.ref
++++ b/tests/tcg/ppc64/float_convs.ref
+@@ -4,37 +4,37 @@ from single: f32(-nan:0xffa00000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-nan:0xffc00000)
+   to double: f64(-nan:0x00fff8000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-inf:0xff800000)
+   to double: f64(-inf:0x00fff0000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (INEXACT )
+@@ -160,13 +160,13 @@ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -178,50 +178,50 @@ from single: f32(nan:0x7fc00000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(nan:0x7fa00000)
+   to double: f64(nan:0x007ff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding upwards
+ from single: f32(-nan:0xffa00000)
+   to double: f64(-nan:0x00fff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-nan:0xffc00000)
+   to double: f64(-nan:0x00fff8000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-inf:0xff800000)
+   to double: f64(-inf:0x00fff0000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (INEXACT )
+@@ -347,13 +347,13 @@ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -365,50 +365,50 @@ from single: f32(nan:0x7fc00000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(nan:0x7fa00000)
+   to double: f64(nan:0x007ff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding downwards
+ from single: f32(-nan:0xffa00000)
+   to double: f64(-nan:0x00fff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-nan:0xffc00000)
+   to double: f64(-nan:0x00fff8000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-inf:0xff800000)
+   to double: f64(-inf:0x00fff0000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (INEXACT )
+@@ -534,13 +534,13 @@ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -552,50 +552,50 @@ from single: f32(nan:0x7fc00000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(nan:0x7fa00000)
+   to double: f64(nan:0x007ff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ ### Rounding to zero
+ from single: f32(-nan:0xffa00000)
+   to double: f64(-nan:0x00fff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-nan:0xffc00000)
+   to double: f64(-nan:0x00fff8000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-inf:0xff800000)
+   to double: f64(-inf:0x00fff0000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (INEXACT )
+@@ -721,13 +721,13 @@ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+    to int32: 2147483647 (INVALID)
+    to int64: 9223372036854775807 (INVALID)
+   to uint32: -1 (INVALID)
+-  to uint64: -1 (INEXACT INVALID)
++  to uint64: -1 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 2147483647 (INVALID)
+@@ -739,10 +739,10 @@ from single: f32(nan:0x7fc00000)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(nan:0x7fa00000)
+   to double: f64(nan:0x007ff4000000000000) (OK)
+    to int32: -2147483648 (INVALID)
+    to int64: -9223372036854775808 (INVALID)
+   to uint32: 0 (INVALID)
+-  to uint64: -9223372036854775808 (INVALID)
++  to uint64: 0 (INVALID)
+diff --git a/tests/tcg/ppc64/meson.build b/tests/tcg/ppc64/meson.build
+index 8cca4d65a4c..d9b4b153d94 100644
+--- a/tests/tcg/ppc64/meson.build
++++ b/tests/tcg/ppc64/meson.build
+@@ -13,6 +13,12 @@ foreach t: tcg_tests['multiarch-linux-user']['tests']
+     if fs.stem(src) == 'test-plugin-mem-access' and 'wrapper' in setup
+       continue
+     endif
++    if fs.stem(src).contains('float_conv')
++      # Ensure float NaN tests are done against a known cpu generation
++      if 'cflags' in setup
++        setup += {'cflags': setup['cflags'] + '-mcpu=power8'}
++      endif
++    endif
+     tests += {src: setup}
+   endforeach
+ endforeach
 -- 
 2.47.3
 
