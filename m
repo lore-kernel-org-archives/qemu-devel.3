@@ -1,60 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB81606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A771D606A319
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FwaJ8Cl7
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ilyxFHLU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJqTu-0003B8-UO; Thu, 22 Oct 2026 06:57:10 -0400
+	id 1xJqUR-0003cS-KA; Thu, 22 Oct 2026 06:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJqTs-00039o-SR
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:08 -0400
+ id 1xJqUO-0003Xy-6D
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJqTq-0001Tp-O8
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:08 -0400
+ id 1xJqUM-0001b4-Jz
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792666626;
+ s=mimecast20190719; t=1792666657;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jNzV6BaWVFq1+/O7YYwswt0SKLovTH7A3DMoCwLjQZ4=;
- b=FwaJ8Cl79se6ZsCicH41523+X88umq8iOccKxDbGXyURgS7ICSp7nC+dlfQpoBu45oS4Hj
- lyVQd1TwwtJgHhdN+Z7D8gsCAuLmZ4Pke2ntiUW9FqkJIE8rZtfSAteZICfyf8pJEYzGLY
- zobRnEkg4YrZsjkVgfIUtrdZU3NgrVw=
+ bh=t5kGCfHgCc/S1Rz9fYcpiHxYbGcs/KHHbdcereSG2Es=;
+ b=ilyxFHLUWF2DI2LY3P+9sIWIonr0KXvk19Rf/IzwCt/wnTwayNQKcRlwypMV3oOQ1yr8wP
+ hE6a/rZDSOVkAjb6KDbMzRdt0d13jP5WmsAzVsykJgy3L70UI+ATP2FplI1PKEftpavMlK
+ HRQ/CgFQ2z9fyaOxTdb8iWvJ5Qjs+Wc=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-0lVj2VoDOqSAg839h2mVxw-1; Thu,
- 22 Oct 2026 10:57:00 +0000
-X-MC-Unique: 0lVj2VoDOqSAg839h2mVxw-1
-X-Mimecast-MFC-AGG-ID: 0lVj2VoDOqSAg839h2mVxw_1792666617
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-H1njEnGOOvq6-vtbq_ELPg-1; Thu,
+ 22 Oct 2026 06:57:32 -0400
+X-MC-Unique: H1njEnGOOvq6-vtbq_ELPg-1
+X-Mimecast-MFC-AGG-ID: H1njEnGOOvq6-vtbq_ELPg_1792666649
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE7F11955F24; Thu, 22 Oct 2026 10:56:56 +0000 (UTC)
+ id 66CB21956059; Thu, 22 Oct 2026 10:57:29 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9894546C; Thu, 22 Oct 2026 10:56:55 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8178B195608C; Thu, 22 Oct 2026 10:57:28 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 22 Oct 2026 14:56:30 +0400
-Subject: [PATCH v3 03/18] gdbstub: set feature->base_reg for dynamic features
+Date: Thu, 22 Oct 2026 14:56:39 +0400
+Subject: [PATCH v3 12/18] MAINTAINERS: cover m68k GDB XML files
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261022-query-reg-v3-3-7ad902b9a7cf@redhat.com>
+Message-Id: <20261022-query-reg-v3-12-7ad902b9a7cf@redhat.com>
 References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
 In-Reply-To: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +78,24 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1091;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=591;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=KuwHJGXyije9XLDEqL0xZ9kuS8FmeuZ9mxj6XXAIhZs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2evl28uSxci1PaCBSIw47bA24Vcvlpn1p2N5E
- 8vWHyVaBEOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatnr5QAKCRDa6OEJdZac
- 5cxRD/9coUpLre38IRaw8b5iPk054If8CTCdOQm/ZpNkWjjzEti1TWzQ6IW662Ratz9MvqpYb+8
- VuNslNygDFmquGrxCrKDn+AH1Bd6g7ZQ4wh9vMZudoP2dCGxf/dhFyIsyvHVBjNntulEpUcpqY1
- X0giyN9AjnKl6kjF6j5ZQe95E9kthKqGty3clm4SMOND/DAVkBS4qfY0U6KQeB6ihJi0qtprM+q
- AqHHQjwzifKGbcWFxNVwA0XNfg1L47gdgIT01cwWFKZVoS3XUKzATgJnPB0twE+kuU0LmSiucty
- R/odHak3P4VZeCGmWFcCcj26BvSZ8RGl6CCmrKFqRdVttUg38g346uJgODjCt/vv91EzTkCtLAt
- gK0yOntuLtKM7vEeB29feLU7NBjhz0L2GjlajqEaCNzV/4AsZevlVjhCx4FGnXPHbJLQkRVLIPl
- I5Luwy5JjSxB8cTsep+M/6BPIx1y42g7HTZGFsOEggUIXbCEpOKq9hDvBTTl7HqKITDsMAnjyTx
- 9JcUd6OJ+KIfFNqXKSk8TGZAyd0znn6wFHV2O4eHpRl0C6D6D+UQmKCj7vkrSUxw/9B3OJCcQ/t
- nNh+50xnlOjiEj46kdasjfrFmJunlRRD3j8UMnSvw3CJdm3jS2t5Tim4zRNj2m6HMSXl0vwZSdm
- gYty5AFMeQfHdAg==
+ bh=0bstKJJsgi1FPZ/zGf2Unp0q0dU4pENa2SLvxQB9r3U=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2evmRtRuCyn0MHU6YsmrHO4Is30Yzuhg4tKib
+ D4ylSfs6uSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatnr5gAKCRDa6OEJdZac
+ 5fLmEACnVBklFtmi51tAvAdFqTvyjmtWV3IbHcJ9QJKJtksQ7Xd1/xBAE88d2MdNOWGAHiGX7dL
+ v5FBziRa30KymELgMeakaLYHPjzcmaK8X2yr8igWtGhZhjAl3Ki/g7GnheqljMhninEwbn4+qUk
+ qkFjN+xmD2Rn4XJStNOJBqd1/wJRlb0LQ14CgqyDvazCqalY+abKtfUIZG8u0ibmZvJ0ZsfIjUe
+ ONsJJZFNKeYX6Ycv+INY/D+csyZVlufXGct7GDXcZJZ5B13dk69xdpkSxD2ERpfkRI5IPrF2ye3
+ sIthercEyZS7tl7nuAwk5V3NehedpcfKqQ9kKkyEL582SC8NXjnzp2z7omnkarvS498/zsyEJFf
+ WkDpVtoe8WHvoDT2IYftwgMuucJJLwGEdYJH8t6Ec9pYbUnz5nnai/Mh5AaP9ImXhcmC1uXFN5N
+ K7upVxNULAPhTJlhSuBujP3MGD88GS20bBc7h5Q5QjmqzRid+NbI9vrJ9R3HZIJuMCmDiiPBWo6
+ SpHH99Zkm2wAa446QkMxI5fF1Quo7BbLCM5URZRgxzzOFJ7AUs8BwMFbxLV8DdKEnbf0lkglSL1
+ mJDrPaIKM5Q+er/wtlr2fBawqQgcv3w6x/dNHpKaw7/LnDScAKkfZkOGNMFS5BLBaSwJeLz5E4M
+ 5YY5tuwxB0vtIdQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,32 +124,27 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-gdb_feature_builder_end() never propagated builder->base_reg into
-feature->base_reg, leaving it at 0 for all dynamically-built features.
-This made the trace log at gdb_get_register_list() report an incorrect
-base_reg for dynamic features.
+Add entries so changes to these files are routed to the m68k
+maintainers.
 
-GDBRegisterState::base_reg was correctly set, so this doesn't fix
-an actual issue.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- gdbstub/gdbstub.c | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 0ce871d74929..912e31b66744 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -476,6 +476,7 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f22333fbf177..de3cb9dcaf25 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -303,6 +303,8 @@ M: Laurent Vivier <laurent@vivier.eu>
+ S: Maintained
+ F: target/m68k/
+ F: disas/m68k.c
++F: gdbstub/gdb-xml/cf*.xml
++F: gdbstub/gdb-xml/m68k*.xml
+ F: tests/functional/m68k/meson.build
+ F: tests/tcg/m68k/
  
-     g_ptr_array_free(builder->xml, TRUE);
- 
-+    builder->feature->base_reg = builder->base_reg;
-     builder->feature->num_regs = builder->regs->len;
-     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
-     trace_gdbxml_feature_builder_header(builder->feature->name,
 
 -- 
 2.56.0.116.g6de20f6092dc
