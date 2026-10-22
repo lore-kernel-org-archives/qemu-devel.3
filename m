@@ -1,160 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A44606A325
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 19:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ED4606A32F
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 19:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=i9kboTXu;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RYbM98bQ
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cXUbmMxw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJyPw-0002yp-0I; Thu, 22 Oct 2026 15:25:36 -0400
+	id 1xJydj-0005FX-SJ; Thu, 22 Oct 2026 15:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xJyPs-0002xy-3u
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:25:32 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1xJydX-0005DO-HZ
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:41 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marco.liebel@oss.qualcomm.com>)
- id 1xJyPp-0001JB-Vp
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:25:31 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MHtTKO387600
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 19:25:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Naukb8YH2aGMa9clIx31kSQB+1cc4KDDVoLMUrR7Wvw=; b=i9kboTXuxaLA0clM
- 9ZBKl1Ujf5OO/owsvZX6ZEC1bHwtxQFw2KTm9To//Ulm3kTq6lGDCjgQI6S88FIa
- 3IJmwlPZTKvfjCbHayx2HnsolpDVvsRq4N5P/ttOqMrDaViDiIvlg9FcE5tDdL3L
- MxDp5HzG7iHhaPwTUenEoT3r/jqB7/9K7Z+3B62r0urqEQxyIYDDq+wyKvCqapPK
- c//rWe2hdGNp0bO5YtyaqkuDXBH+Vjtn55gDktI5vVdNZf4UZCh4dMWbtdYq81w2
- cWW7kio62l8hQstOMv5tcyofh2MyohJMIpdayUWtiVcSEnHY5ybuYyZnS5Wd1Jts
- TxCTow==
-Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
- [209.85.160.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfewq49ed-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 19:25:27 +0000 (GMT)
-Received: by mail-oa1-f69.google.com with SMTP id
- 586e51a60fabf-4519ef1babeso243460fac.2
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 12:25:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792697127; cv=none;
- d=google.com; s=arc-20260327;
- b=QjqO7On40ytIqcEbuiLVY1Ii4ZvMjwL3Pv5lB0v3v2vjwVc1A6x4T48vSsK4dA3Wn4
- yd0yt68pXoQU2PYRi5cDmJ6exZUoTPTduhh1QzSYvshE3E9yXeOH9Kl4NX5t15esyI6S
- Gz4fvn52LeCMN6NaiRNuyQKpZt92z48p+iMTmfiNN/67M7sDiFFTfIAUllCTQ/sN/ixZ
- 6/YA6BJBoB1Aky3h0oC3mPuoaLCdWDVMoLImPga0xNXmPpPsfWNp3w2LiubIZPYOVcR6
- VZRYjWiryV/U4OB1RXDD1a5mCV29DOzGCrsqeSYwCBveJboqUvJ8lIq2v62gizvSqExl
- c7kQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Naukb8YH2aGMa9clIx31kSQB+1cc4KDDVoLMUrR7Wvw=;
- fh=X+mPrGF8PwPNFxjkNXNuYtliDikbywOcHBV8TCdDgCM=;
- b=VnFA4M/W6dNGFUelFOCWDhcmlZK6Mep8WD+RddFG9HGKjcnJOASh4ZWZ2DtAyaA2iX
- 7Y6mM7Nq6AmWtgTfkjxDKP4RHlWByXMbF6uqltgNf7W7wWlW5kR4ZT3XYObB10N7Ooiz
- jEWRpeuJ1pRhlc5VMkP5Oa8Xtduvj6UQqwntTOL5qwB5GAtyGuFBiX4csrcxVjSgq+5E
- I+01xDa3LICzYCpmRlG9Xuy/146RCHcIJtl92gcHEKEGGcKXctxkyLL/+9O3CwPfMLug
- YRoc4e+/DAZPYJ7Gb+mbWHm/0+T9T0E9uBNQJLLy7HwmbJvWavfwx0AOpAaaz7tYt02v
- SW7g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792697127; x=1793301927; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Naukb8YH2aGMa9clIx31kSQB+1cc4KDDVoLMUrR7Wvw=;
- b=RYbM98bQGXy8kB+P2NwzTwTIHN0geBF7l9uYmSgeHtAOETAgijpGMWYz6Ue7ZZL5wx
- YjKmsir4JfwTl9TqpU/ey0U2MvPgn8MBPlx54liYrl/p5Ybkp7WYHsRsI6aWjdrpTUFa
- PfjOOka3ANoqvYKUjcZrIajllx0iNzHFDdT3yKfv3o7pGsTEqxAHmKybJJzWCJpxbOed
- jSNkWicTuyJLF/wRboZjUS4uRtRNkPQBqUPgIr8ZtiXFZpbmkBIEagDHx1Nrvx8tAzV5
- rOyVv12O5bnNAaDo9Vr+xPsilvDEQGz7cuiRQwRRfZk27u/uQPdyMc1FW0NGov5PVSyG
- uSZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792697127; x=1793301927;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Naukb8YH2aGMa9clIx31kSQB+1cc4KDDVoLMUrR7Wvw=;
- b=GJUg704rai4h0rRtlCibGUmrVU6hFAn/vtoFioTa6XhPWshTgWDF7abSIno+PHH9Qk
- kKKPKDh9Y0RA8W8f0DCcvLVH3QBdhFS5bZgk1YcsKVB8t1BpeEa0bmEi+ADtC7GUtccZ
- uRsYfX4fx00ZR3EYOdOcFqdl9GRzpkTx5zsdvJNdAGgvn8yc+Vb6ahXen82iQk1G8N/t
- bwZcUlqso4wsScpFbN/PLRNVEvlN7temlXRmSVqIBsMqAyInMzkNInOWvdT1aau7Kxpf
- YI9cENVs/DIfch3ISZ/JUfJo3tBim3BT2Y0VRJQAGKQ133eJCSy+bWLZGGTdEvzAHSvD
- yZVw==
-X-Gm-Message-State: AFq9FYJvJ6kPaQ4HuNwe1rM0S9i5VukyGlgIwD6kVQolp6h6GncWmoz0
- 38m91i6WOH9rlmjLI2rQkIst6laboyUYCBEa6jWEX54e6blPVkN5hrQu+zC7Hy8CSdLbLhW2jiA
- 9vKyUPdD36Xeqw106VAmM7STORSejiHEo/F+Q0YvwLA1IXoeqeQ3ieK+h5oHTsp8dWlxAlMTflI
- I+P6BLd/Qpcvi4DkKloA8lDo3dLseMvLnH
-X-Gm-Gg: AYBFou0waUJ0240q+yT7mIkqLOhef2hZrbR0N2nbvVjosQ0zIionLnrZVNYOsB8+lJy
- QpN6tQBGo7NArKu9GArj2JG0O3PV5oQSrxeuP/sKAGTGJoEM1aoBIdfeIZcNbNIGBtFs7Y/ZghW
- 6Jz9IBXfLYXjJZ6Rr6iFzUdv/4Q/iPtVxmAtwEeNbid6dNu+IknUcPgkkCKlIw+U16NC5DPHPhe
- aY/9O5hRF7VH5Ps4sU=
-X-Received: by 2002:a05:6808:2208:b0:4f5:98d:d1ae with SMTP id
- 5614622812f47-55be83213a8mr48509b6e.55.1792697126650; 
- Thu, 22 Oct 2026 12:25:26 -0700 (PDT)
-X-Received: by 2002:a05:6808:2208:b0:4f5:98d:d1ae with SMTP id
- 5614622812f47-55be83213a8mr48490b6e.55.1792697126139; Thu, 22 Oct 2026
- 12:25:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1xJydT-0002bw-LL
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1792697976; x=1824233976;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=ZNQcZx8pWbR9+hOBojzN5ro7Z8a1dMxDKtQmMu3nuGE=;
+ b=cXUbmMxwFof62Np6AHTLIbTYXvOHyGw0g0WMmq/+4K5jgrsMXGYwcUd3
+ 5iPL6MaIbK5m01SGjCPQiyDuP30WioI3eij8DkUnlvH01/jf8+aePQ95k
+ 8DE3FuaA6zWjP3leUWW89WFaeXbERdMxxmRPymsFErkjWi3Xed+ACSYIr
+ V6jFYnc3Lj5H75fn08lkcThhEhEuECoALO7PyaNXxCW+ry5G7BkOvB/IX
+ U1wk/Np/onv7KVjfGkjI3qjYPvm6T9Y5CTsP+W1WzApUmexMdJcuEiu5K
+ 8BtltZv3JSo1UtOIfbdeEZK9BIqmsxzfKARM4ZR4sYjd3NZgxwW95TNpR Q==;
+X-CSE-ConnectionGUID: PgNrQiUYRmOgeBblqKXcng==
+X-CSE-MsgGUID: ckCkQr8SSK2L5ZMiNT2cAA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11943"; a="1563782"
+X-IronPort-AV: E=Sophos;i="6.27,172,1787036400"; 
+   d="scan'208";a="1563782"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Oct 2026 12:39:27 -0700
+X-CSE-ConnectionGUID: BqqKjZzjRzy2Sbe/bySTaw==
+X-CSE-MsgGUID: qYyBShVYQS6nNSzK+iWKvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,172,1787036400"; 
+   d="scan'208";a="3530577"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.80.113.172])
+ by orviesa006.jf.intel.com with ESMTP; 22 Oct 2026 12:39:27 -0700
+From: dongwon.kim@intel.com
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com
+Subject: [PATCH v3 1/3] ui/gtk: Enable fullscreen and zoom hotkeys for
+ detached windows
+Date: Thu, 22 Oct 2026 12:39:42 -0700
+Message-Id: <20261022193944.19266-2-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261022193944.19266-1-dongwon.kim@intel.com>
+References: <20261022193944.19266-1-dongwon.kim@intel.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261022183147.1535585-1-brian.cain@oss.qualcomm.com>
- <20261022183147.1535585-7-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20261022183147.1535585-7-brian.cain@oss.qualcomm.com>
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Date: Thu, 22 Oct 2026 14:25:15 -0500
-X-Gm-Features: AclHuK_xdOE5RRB_Ru0wshpBv49h7z8XWUA9ctZORjdt2nU3rMr8nqHAKkSyL5I
-Message-ID: <CAJ+KCYPMxmVpquQsrY=m5cEONPtmSDY636f89fTm9xnyKF8BUQ@mail.gmail.com>
-Subject: Re: [PATCH v4 06/11] target/hexagon: add v83 trap2 and vector stack
- instructions
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Helge Deller <deller@gmx.de>, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Alessandro Di Federico <ale@rev.ng>, Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: 5JNIaZzatdlUH2aa5tZnLlzXHM4wER-P
-X-Proofpoint-ORIG-GUID: 5JNIaZzatdlUH2aa5tZnLlzXHM4wER-P
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA3NyBTYWx0ZWRfX4D6jwlS7afGZ
- psd6Txjr/Yso/fvz61k1hWb+Y+mhfE3Afm/FgGLx0LkB7997m6pE1sDVFyycj2ocNuSHPPUYNdB
- w52VNCbXAEO4adNIJbUL4tKaEFbA9/Y=
-X-Authority-Analysis: v=2.4 cv=G4OJgNk5 c=1 sm=1 tr=0 ts=6ada6327 cx=c_pps
- a=zPxD6eHSjdtQ/OcAcrOFGw==:117 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=4LkgUH6z6pi3v63jlOMA:9
- a=QEXdDO2ut3YA:10 a=y8BKWJGFn5sdPF1Y92-H:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA3NyBTYWx0ZWRfX+wvNBbCtgp0t
- 1S2ws8WexSv4lGqf8q+EpCnAN4Tj7qo0IRYVToIJA04F6Q4sdydhn73Js4pgUSPzOWFgBGVRs+u
- /vd4+fILZwBgWFHJ1a5UqOC6VZ1RDuKdUaHLjIV1xG7QmVTwf7ynQQjz/Ih+O41goK5dPjtUYbJ
- RG4m2jUwnhOpGLZIrZc1CssZljrDeictrK3w7ko+T5syR7QbgY4EnnGWl/9IjKIWL/i4hEWAbNJ
- AU6UIStb5RT6t7887WjmC/zjgJDAcI1RWKOYB+kUzd6js8F+yqql4PS4n9dApo0pE9Nc7cAcCmp
- rKimpyMyr0I/vhWBC2dzz8LHJUbLsQZgAVcY5oKB71aqgjiTYqhHY0vrfgYult0+KKPEowWEk1M
- uGgCPCcFmaaMvjMAHhBovQ+SqxwKGWNSY6vuJcPJLgzqrgm+7+43gs8+9fATrGopTvKShXtpqcL
- zjcrNpnvwuYCFcpafng==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0
- impostorscore=0 adultscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220077
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=marco.liebel@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,51 +80,367 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 22, 2026 at 1:32=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> Add decode and translation for trap2 and the vallocframe and vdeallocfram=
-e
-> instruction forms introduced with v83. Model vector stack overflow as a
-> precise exception and report it to linux-user as SIGSEGV.
->
-> Teach the IDEF parser about VSP and vector frame checks. Describe the
-> vallocframe and vdeallocframe instruction semantics in system.idef, and m=
-ove
-> the vector stack overflow check into a shared TCG generator helper.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/cpu_bits.h                   |  2 +
->  target/hexagon/gen_tcg.h                    | 51 +++++++++++++++++++++
->  target/hexagon/genptr.h                     |  1 +
->  target/hexagon/hex_regs.h                   |  2 +
->  target/hexagon/idef-parser/parser-helpers.h |  1 +
->  target/hexagon/translate.h                  |  1 +
->  linux-user/hexagon/cpu_loop.c               |  5 ++
->  target/hexagon/cpu.c                        |  2 +-
->  target/hexagon/decode.c                     |  1 +
->  target/hexagon/genptr.c                     | 21 +++++++++
->  target/hexagon/hexswi.c                     | 25 +++++++++-
->  target/hexagon/iclass.c                     |  1 +
->  target/hexagon/idef-parser/parser-helpers.c | 14 ++++++
->  target/hexagon/translate.c                  |  2 +-
->  target/hexagon/tag_rev_info.c.inc           | 10 ++++
->  target/hexagon/gen_idef_parser_funcs.py     |  2 +-
->  target/hexagon/idef-parser/idef-parser.lex  |  8 ++++
->  target/hexagon/idef-parser/idef-parser.y    |  9 +++-
->  target/hexagon/imported/encode_pp.def       |  5 ++
->  target/hexagon/imported/system.idef         |  8 ++++
->  20 files changed, 166 insertions(+), 5 deletions(-)
->
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Reviewed-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Currently, the fullscreen toggle hotkey (Ctrl+Alt+f by default) and zoom
+hotkeys (Ctrl+Alt++, Ctrl+Alt+-, Ctrl+Alt+0) only function for the main
+QEMU window. When a VC is detached (untabified), it loses these capabilities.
+
+Implement toggle helpers, gd_win_full_screen and zoom helpers
+(gd_win_zoom_in, gd_win_zoom_out, gd_win_zoom_fixed) and connect them
+to the detached window's accelerator group in gd_menu_untabify.
+
+Also remove a leftover debug fprintf in gd_win_grab.
+
+v2:
+ - Reuse gd_win_zoom_* in gd_menu_zoom_* to avoid duplicated scaling logic
+ - Guard zoom helpers against NULL or non-GFX consoles
+   (!vc || vc->type != GD_VC_GFX)
+ - Keep both GDK_KEY_plus and GDK_KEY_equal accelerators
+
+v3:
+ - Add gd_is_full_screen() to query GdkWindowState directly and replace
+   s->full_screen checks across attached and detached consoles
+ - Keep zoom_fit_item deactivation in gd_menu_zoom_* while keeping
+   gd_win_zoom_* focused on per-VC scaling
+ - Restrict global free_scale handling to attached consoles so detached
+   window geometry is not overridden
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ include/ui/gtk.h |   2 -
+ ui/gtk.c         | 183 ++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 135 insertions(+), 50 deletions(-)
+
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index 6b62e97588..d2ccbd2c0d 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -138,8 +138,6 @@ struct GtkDisplayState {
+     VirtualConsole *kbd_owner;
+     VirtualConsole *ptr_owner;
+ 
+-    gboolean full_screen;
+-
+     GdkCursor *null_cursor;
+     Notifier mouse_mode_notifier;
+     VMChangeStateEntry *vmse;
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 8d312d6a4b..724ede5633 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -202,6 +202,22 @@ static bool gd_grab_on_hover(GtkDisplayState *s)
+     return gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(s->grab_on_hover_item));
+ }
+ 
++static bool gd_is_full_screen(GtkWidget *widget)
++{
++    GdkWindow *window;
++
++    if (!widget || !gtk_widget_get_realized(widget)) {
++        return FALSE;
++    }
++
++    window = gtk_widget_get_window(widget);
++    if (!window) {
++        return FALSE;
++    }
++
++    return gdk_window_get_state(window) & GDK_WINDOW_STATE_FULLSCREEN;
++}
++
+ static void gd_update_cursor(VirtualConsole *vc)
+ {
+     GtkDisplayState *s = vc->s;
+@@ -217,7 +233,8 @@ static void gd_update_cursor(VirtualConsole *vc)
+     }
+ 
+     window = gtk_widget_get_window(GTK_WIDGET(vc->gfx.drawing_area));
+-    if (s->full_screen || qemu_input_is_absolute(vc->gfx.dcl.con) || s->ptr_owner == vc) {
++    if (gd_is_full_screen(vc->window ? vc->window : s->window) ||
++        qemu_input_is_absolute(vc->gfx.dcl.con) || s->ptr_owner == vc) {
+         gdk_window_set_cursor(window, s->null_cursor);
+     } else {
+         gdk_window_set_cursor(window, NULL);
+@@ -341,7 +358,9 @@ void gd_update_windowsize(VirtualConsole *vc)
+ 
+     gd_update_geometry_hints(vc);
+ 
+-    if (vc->type == GD_VC_GFX && !s->full_screen && !s->free_scale) {
++    if (vc->type == GD_VC_GFX &&
++        !gd_is_full_screen(vc->window ? vc->window : s->window) &&
++        !s->free_scale) {
+         gtk_window_resize(GTK_WINDOW(vc->window ? vc->window : s->window),
+                           VC_WINDOW_X_MIN, VC_WINDOW_Y_MIN);
+     }
+@@ -792,7 +811,8 @@ static void gd_resize_event(GtkGLArea *area,
+     GdkWindow *window = gtk_widget_get_window(GTK_WIDGET(area));
+     const int gs = gdk_window_get_scale_factor(window);
+ 
+-    if (!vc->s->free_scale && !vc->s->full_screen) {
++    if ((!vc->s->free_scale || vc->window) &&
++        !gd_is_full_screen(vc->window ? vc->window : vc->s->window)) {
+         pw /= sx;
+         ph /= sy;
+     }
+@@ -835,10 +855,10 @@ void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh)
+         return;
+     }
+ 
+-    if (vc->s->full_screen) {
++    if (gd_is_full_screen(vc->window ? vc->window : vc->s->window)) {
+         vc->gfx.scale_x = (double)ww / fbw;
+         vc->gfx.scale_y = (double)wh / fbh;
+-    } else if (vc->s->free_scale) {
++    } else if (vc->s->free_scale && !vc->window) {
+         double sx, sy;
+ 
+         sx = (double)ww / fbw;
+@@ -1562,7 +1582,6 @@ static gboolean gd_win_grab(void *opaque)
+ {
+     VirtualConsole *vc = opaque;
+ 
+-    fprintf(stderr, "%s: %s\n", __func__, vc->label);
+     if (vc->s->ptr_owner) {
+         gd_ungrab_pointer(vc->s);
+     } else {
+@@ -1571,6 +1590,87 @@ static gboolean gd_win_grab(void *opaque)
+     return TRUE;
+ }
+ 
++static gboolean gd_win_full_screen(void *opaque)
++{
++    VirtualConsole *vc = opaque;
++    GdkWindow *window;
++
++    if (!vc || !vc->window || !gtk_widget_get_realized(vc->window)) {
++        return TRUE;
++    }
++
++    window = gtk_widget_get_window(vc->window);
++    if (!window) {
++        return TRUE;
++    }
++
++    if (gd_is_full_screen(vc->window)) {
++        gtk_window_unfullscreen(GTK_WINDOW(vc->window));
++
++        if (vc->type == GD_VC_GFX) {
++            vc->gfx.scale_x = vc->gfx.preferred_scale;
++            vc->gfx.scale_y = vc->gfx.preferred_scale;
++            gd_update_windowsize(vc);
++        }
++    } else {
++        if (vc->type == GD_VC_GFX) {
++            gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
++        }
++        gtk_window_fullscreen(GTK_WINDOW(vc->window));
++    }
++
++    gd_update_cursor(vc);
++    return TRUE;
++}
++
++static gboolean gd_win_zoom_in(void *opaque)
++{
++    VirtualConsole *vc = opaque;
++
++    if (!vc || vc->type != GD_VC_GFX) {
++        return TRUE;
++    }
++
++    vc->gfx.scale_x += VC_SCALE_STEP;
++    vc->gfx.scale_y += VC_SCALE_STEP;
++
++    gd_update_windowsize(vc);
++    return TRUE;
++}
++
++static gboolean gd_win_zoom_out(void *opaque)
++{
++    VirtualConsole *vc = opaque;
++
++    if (!vc || vc->type != GD_VC_GFX) {
++        return TRUE;
++    }
++
++    vc->gfx.scale_x -= VC_SCALE_STEP;
++    vc->gfx.scale_y -= VC_SCALE_STEP;
++
++    vc->gfx.scale_x = MAX(vc->gfx.scale_x, VC_SCALE_MIN);
++    vc->gfx.scale_y = MAX(vc->gfx.scale_y, VC_SCALE_MIN);
++
++    gd_update_windowsize(vc);
++    return TRUE;
++}
++
++static gboolean gd_win_zoom_fixed(void *opaque)
++{
++    VirtualConsole *vc = opaque;
++
++    if (!vc || vc->type != GD_VC_GFX) {
++        return TRUE;
++    }
++
++    vc->gfx.scale_x = vc->gfx.preferred_scale;
++    vc->gfx.scale_y = vc->gfx.preferred_scale;
++
++    gd_update_windowsize(vc);
++    return TRUE;
++}
++
+ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+ {
+     GtkDisplayState *s = opaque;
+@@ -1609,9 +1709,24 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+             GtkAccelGroup *ag = gtk_accel_group_new();
+             gtk_window_add_accel_group(GTK_WINDOW(vc->window), ag);
+ 
+-            GClosure *cb = g_cclosure_new_swap(G_CALLBACK(gd_win_grab),
+-                                               vc, NULL);
+-            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, cb);
++            gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_grab),
++                                        vc, NULL));
++            gtk_accel_group_connect(ag, GDK_KEY_f, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_full_screen),
++                                        vc, NULL));
++            gtk_accel_group_connect(ag, GDK_KEY_plus, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
++                                        vc, NULL));
++            gtk_accel_group_connect(ag, GDK_KEY_equal, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_in),
++                                        vc, NULL));
++            gtk_accel_group_connect(ag, GDK_KEY_minus, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_out),
++                                        vc, NULL));
++            gtk_accel_group_connect(ag, GDK_KEY_0, HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_win_zoom_fixed),
++                                        vc, NULL));
+         }
+ 
+         gd_rebuild_vc_menu(s);
+@@ -1625,7 +1740,7 @@ static void gd_menu_show_menubar(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    if (s->full_screen) {
++    if (gd_is_full_screen(s->window)) {
+         return;
+     }
+ 
+@@ -1652,14 +1767,13 @@ static void gd_menu_full_screen(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    if (!s->full_screen) {
++    if (!gd_is_full_screen(s->window)) {
+         gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
+         gtk_widget_hide(s->menu_bar);
+         if (vc && vc->type == GD_VC_GFX) {
+             gtk_widget_set_size_request(vc->gfx.drawing_area, -1, -1);
+         }
+         gtk_window_fullscreen(GTK_WINDOW(s->window));
+-        s->full_screen = TRUE;
+     } else {
+         gtk_window_unfullscreen(GTK_WINDOW(s->window));
+         gd_menu_show_tabs(GTK_MENU_ITEM(s->show_tabs_item), s);
+@@ -1667,7 +1781,6 @@ static void gd_menu_full_screen(GtkMenuItem *item, void *opaque)
+                     GTK_CHECK_MENU_ITEM(s->show_menubar_item))) {
+             gtk_widget_show(s->menu_bar);
+         }
+-        s->full_screen = FALSE;
+         if (vc && vc->type == GD_VC_GFX) {
+             vc->gfx.scale_x = vc->gfx.preferred_scale;
+             vc->gfx.scale_y = vc->gfx.preferred_scale;
+@@ -1691,17 +1804,8 @@ static void gd_menu_zoom_in(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    if (!vc) {
+-        return;
+-    }
+-
+-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item),
+-                                   FALSE);
+-
+-    vc->gfx.scale_x += VC_SCALE_STEP;
+-    vc->gfx.scale_y += VC_SCALE_STEP;
+-
+-    gd_update_windowsize(vc);
++    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item), FALSE);
++    gd_win_zoom_in(vc);
+ }
+ 
+ static void gd_accel_zoom_in(void *opaque)
+@@ -1715,20 +1819,8 @@ static void gd_menu_zoom_out(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    if (!vc) {
+-        return;
+-    }
+-
+-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item),
+-                                   FALSE);
+-
+-    vc->gfx.scale_x -= VC_SCALE_STEP;
+-    vc->gfx.scale_y -= VC_SCALE_STEP;
+-
+-    vc->gfx.scale_x = MAX(vc->gfx.scale_x, VC_SCALE_MIN);
+-    vc->gfx.scale_y = MAX(vc->gfx.scale_y, VC_SCALE_MIN);
+-
+-    gd_update_windowsize(vc);
++    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item), FALSE);
++    gd_win_zoom_out(vc);
+ }
+ 
+ static void gd_menu_zoom_fixed(GtkMenuItem *item, void *opaque)
+@@ -1736,14 +1828,8 @@ static void gd_menu_zoom_fixed(GtkMenuItem *item, void *opaque)
+     GtkDisplayState *s = opaque;
+     VirtualConsole *vc = gd_vc_find_current(s);
+ 
+-    if (!vc) {
+-        return;
+-    }
+-
+-    vc->gfx.scale_x = vc->gfx.preferred_scale;
+-    vc->gfx.scale_y = vc->gfx.preferred_scale;
+-
+-    gd_update_windowsize(vc);
++    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->zoom_fit_item), FALSE);
++    gd_win_zoom_fixed(vc);
+ }
+ 
+ static void gd_menu_zoom_fit(GtkMenuItem *item, void *opaque)
+@@ -1907,7 +1993,7 @@ static void gd_change_page(GtkNotebook *nb, gpointer arg1, guint arg2,
+     if (!on_vga) {
+         gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->grab_item),
+                                        FALSE);
+-    } else if (s->full_screen) {
++    } else if (gd_is_full_screen(s->window)) {
+         gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(s->grab_item),
+                                        TRUE);
+     }
+@@ -1971,7 +2057,8 @@ static gboolean gd_configure(GtkWidget *widget,
+     const double sx = vc->gfx.scale_x, sy = vc->gfx.scale_y;
+     double width = cfg->width, height = cfg->height;
+ 
+-    if (!vc->s->free_scale && !vc->s->full_screen) {
++    if ((!vc->s->free_scale || vc->window) &&
++        !gd_is_full_screen(vc->window ? vc->window : vc->s->window)) {
+         width /= sx;
+         height /= sy;
+     }
+-- 
+2.43.0
+
 
