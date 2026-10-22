@@ -1,68 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF82606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 14:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BD0606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 14:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NIWL1n2p
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=IucNvbdZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJtsd-0008Fl-Uz; Thu, 22 Oct 2026 10:34:57 -0400
+	id 1xJuBx-0003LD-7v; Thu, 22 Oct 2026 10:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xJtsP-0008DT-Db; Thu, 22 Oct 2026 10:34:41 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJuBt-0003K9-Bm
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:54:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xJtsN-00033l-0W; Thu, 22 Oct 2026 10:34:41 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 97B2F401DF;
- Thu, 22 Oct 2026 14:34:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A711F000C1;
- Thu, 22 Oct 2026 14:34:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792679669;
- bh=NsTdAQ9klXtboyhfno6ZvDGK7HZPd3nbzvjibLiq8Qo=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=NIWL1n2pokMbUr4xbCCNYp5wXYDC1oG8GrN5nYwJamodZBItmNCcIAV4GBaREARJj
- YKKYRAQRlR+Vm73PNixWQnLhFgbL1Pe85gG1qYUr50fm7OKRjxqryDfLMRlSFNLPEH
- R4OqayjXj+Ojr29ssuGLCfrH1P5MCJ0jmf0YNmQwpFfjmck/4PIdrs7wRGtSq+gKXy
- voyyBjiLDX2DtruPeMsNiyEXcnuyAh16/VTIl59TTljkYl8nJMtn6DLqOtSX3lCFFZ
- j+nkVoNJnhjVSLWWyxz7w+iur+8SkHPlnE8csi6tNIOsOH0kfmE2Qq25xh+463XWRd
- u6cqRpwSv8sTg==
-Date: Thu, 22 Oct 2026 16:34:23 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v4 11/24] target/arm/kvm-rme: Populate Realm with runtime
- images
-Message-ID: <atoe77pJ119cDcSF@red-moon>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-12-mathieu.poirier@linaro.org>
- <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
- <atiKJ8-PyIHSRTKy@red-moon>
- <27fe3ba8-c8c8-4d5c-9d57-3cfb67142ac1@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJuBr-0004wf-A6
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 10:54:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792680884;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xMeclBtIsoWDquVey77gYzHp0P0smhDvZpu4FD33fr0=;
+ b=IucNvbdZ6TbZxCe6DeZsYt1dhR/RtBkfCEAqibXlxILckWGt5fDCCu++YwOgrnnX5u29ba
+ wWnTKfwaBC+b9awu6CQfqniHgzCDrd9vFj5cdLGH/pZlNg/tkuq/E9O/lqKonH3qUTeiET
+ NEEt2qs39SuXysD1tfCxF4pKUprC7E8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-81ayABNfNwqAKkbpbOYOEw-1; Thu,
+ 22 Oct 2026 10:54:42 -0400
+X-MC-Unique: 81ayABNfNwqAKkbpbOYOEw-1
+X-Mimecast-MFC-AGG-ID: 81ayABNfNwqAKkbpbOYOEw_1792680881
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6BEA1954206
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 14:54:41 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9694A30001B9; Thu, 22 Oct 2026 14:54:40 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] hw/display/ramfb: reject invalid framebuffer mappings
+Date: Thu, 22 Oct 2026 18:54:38 +0400
+Message-ID: <20261022145437.3546795-2-marcandre.lureau@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <27fe3ba8-c8c8-4d5c-9d57-3cfb67142ac1@redhat.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=lpieralisi@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,173 +81,130 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 21, 2026 at 10:24:56PM +1000, Gavin Shan wrote:
-> On 10/21/26 7:47 PM, Lorenzo Pieralisi wrote:
-> > On Fri, Oct 02, 2026 at 01:45:40PM +1000, Gavin Shan wrote:
-> > > On 9/4/26 5:35 AM, Mathieu Poirier wrote:
-> > > > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > 
-> > > > Once the Realm descriptor has been created, tell KVM to transfer runtime
-> > > > images (kernel, DT, and rootfs) from guest memory to Realm memory.
-> > > > 
-> > > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
-> > > > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > > > ---
-> > > >    target/arm/kvm-rme.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
-> > > >    1 file changed, 76 insertions(+)
-> > > > 
-> > > > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> > > > index 9985f5daba89..c082a5d8f3d1 100644
-> > > > --- a/target/arm/kvm-rme.c
-> > > > +++ b/target/arm/kvm-rme.c
-> > > > @@ -15,6 +15,7 @@
-> > > >    #include "migration/blocker.h"
-> > > >    #include "qapi/error.h"
-> > > >    #include "qemu/error-report.h"
-> > > > +#include "qemu/memalign.h"
-> > > >    #include "qom/object_interfaces.h"
-> > > >    #include "system/confidential-guest-support.h"
-> > > >    #include "system/kvm.h"
-> > > > @@ -43,12 +44,87 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> > > >    static RmeGuest *rme_guest;
-> > > > +static int rme_populate_range(const RmeRamRegion *region, bool measure,
-> > > > +                              Error **errp)
-> > > > +{
-> > > > +    int ret;
-> > > > +    void *buffer;
-> > > > +    hwaddr size = region->size;
-> > > > +    hwaddr base = region->base;
-> > > > +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
-> > > > +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
-> > > > +    struct kvm_arm_rmi_populate populate_args;
-> > > > +    size_t aligned_size = ROUND_UP(region->size, qemu_real_host_page_size());
-> > > 
-> > > s/qemu_real_host_page_size()/RME_PAGE_SIZE
-> > 
-> > It will always have to be qemu_real_host_page_size(), KVM configures it
-> > that way.
-> > 
-> > > > +
-> > > > +    if (!region->data) {
-> > > > +        return -ENODEV;
-> > > > +    }
-> > > > +
-> > > > +    ret = kvm_set_memory_attributes_private(start, end - start);
-> > > > +    if (ret) {
-> > > > +        error_report("RME: failed to configure initial"
-> > > > +                     "private guest memory");
-> > > > +        return ret;
-> > > > +    }
-> > > > +
-> > > > +    /* Allocate page-aligned memory */
-> > > > +    buffer = qemu_memalign(qemu_real_host_page_size(), aligned_size);
-> > > > +
-> > > > +    if (!buffer) {
-> > > > +        return -ENOMEM;
-> > > > +    }
-> > > > +
-> > > > +    memset(buffer, 0, aligned_size);
-> > > > +    memcpy(buffer, region->data, region->size);
-> > > > +
-> > > > +    populate_args = (struct kvm_arm_rmi_populate) {
-> > > > +        .base = start,
-> > > > +        .size = end - start,
-> > > > +        .source_uaddr = (uintptr_t)buffer,
-> > > > +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
-> > > > +    };
-> > > > +
-> > > > +    while (populate_args.size > 0) {
-> > > > +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
-> > > > +        if (ret) {
-> > > > +            error_setg_errno(errp, -ret,
-> > > > +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
-> > > > +                start, end);
-> > > > +            break;
-> > > > +        }
-> > > > +    }
-> > > > +
-> > > > +    qemu_vfree(buffer);
-> > > > +
-> > > > +    return ret;
-> > > > +}
-> > > > +
-> > > 
-> > > I doubt that the unaligned regions (RmeRamRegion) are allowed. For example,
-> > > the region [4KB 64KB+4KB] is turned to the aligned range [0 128KB] when RME_PAGE_SIZE
-> > > is 64KB. The question is how do we know the added regions due to the alignment
-> > > ([0 4KB] and [64KB+4KB 128KB]) are safe for kvm_vm_ioctl(KVM_ARM_RMI_POPULATE).
-> > 
-> > Getting back to this because it is important. Can you define "safe" here ?
-> > 
-> > I think it is VMM's role to load with the required alignment and make
-> > sure it does not double populate (that is anyway prevented by KVM), what was
-> > your concern here to make sure we are in agreement ?
-> > 
-> 
-> For example, there are two regions are populated: [0 4KB] and [4KB 64KB] on a 64KB
-> host. With the alignment considered, we're populating [0 64KB] for region [0 4KB],
-> and [0 64KB] for [4KB 64KB]. [0 64KB] are populated for twice. Is this allowed by
-> TF-RMM? If it's allowed by TF-RMM, the data populated in the first time is overwritten
-> by the second population.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It is not allowed by the RMM and it is a VMM bug that we have to prevent.
+ramfb_create_display_surface() passes the guest-controlled address
+straight to physical_memory_map() and only checks whether the returned
+length matches the requested size.  Two problems follow.
 
-Thanks,
-Lorenzo
+An address backed by a non-directly-mappable region (device MMIO, an
+unassigned hole, ...) is bounced through a temporary host buffer.
+Bouncing is pointless for a framebuffer that is only ever read, and it
+consumes the limited address_space_memory bounce buffer budget.
 
-> Thanks,
-> Gavin
-> 
-> > Thanks,
-> > Lorenzo
-> > 
-> > > I guess we probably just reject unaligned regions if they're not expected.
-> > > 
-> > > Even if the unaligned regions are allowed, they seem not well handled.
-> > > 
-> > > - @aligned_size is still 64KB instead of the 128KB ?
-> > > - In "memcpy(buffer, region->data, region->size);", the blob data would be copied to
-> > >    [4KB, 4KB+64KB]. However, we're copying the data to [0 64KB] now.
-> > > 
-> > > > +static void rme_populate_ram_region(gpointer data, gpointer err)
-> > > > +{
-> > > > +    Error **errp = err;
-> > > > +    const RmeRamRegion *region = data;
-> > > > +
-> > > > +    if (*errp) {
-> > > > +        return;
-> > > > +    }
-> > > > +
-> > > > +    rme_populate_range(region, /* measure */ true, errp);
-> > > > +}
-> > > > +
-> > > >    static void rme_vm_state_change(void *opaque, bool running, RunState state)
-> > > >    {
-> > > > +    Error *errp = NULL;
-> > > > +
-> > > >        if (!running) {
-> > > >            return;
-> > > >        }
-> > > > +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
-> > > > +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
-> > > > +    if (errp) {
-> > > > +        return;
-> > > > +    }
-> > > > +
-> > > >        kvm_mark_guest_state_protected();
-> > > >    }
-> > > 
-> > > Thanks,
-> > > Gavin
-> > > 
-> > 
-> 
+When address_space_map() cannot obtain bounce buffer space it returns
+NULL with *plen set to 0.  The size check then fails and the function
+calls physical_memory_unmap(NULL, 0, ...).  address_space_unmap() treats
+the NULL pointer as a BounceBuffer and dereferences its magic field,
+crashing QEMU.
+
+A guest can trigger the latter by writing the same configuration twice
+via etc/ramfb: the first 16x64 XRGB8888 surface at an unmapped GPA
+consumes the entire 4096 byte bounce buffer allowance, and the second
+mapping fails because that surface is still being displayed.
+
+Validate up front that the whole framebuffer range is backed by
+directly accessible memory, and still return early if the mapping
+fails, leaving the previous surface in place.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4740
+Reported-by: Karl Mehltretter <https://gitlab.com/kmehltretter>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/ramfb.c      | 38 ++++++++++++++++++++++++++++++++++++--
+ hw/display/trace-events |  4 ++++
+ 2 files changed, 40 insertions(+), 2 deletions(-)
+
+diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
+index f477bdcc2186..8e2be33b0fcc 100644
+--- a/hw/display/ramfb.c
++++ b/hw/display/ramfb.c
+@@ -17,8 +17,10 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/display/bochs-vbe.h" /* for limits */
+ #include "ui/console.h"
++#include "system/memory.h"
+ #include "system/physmem.h"
+ #include "system/reset.h"
++#include "trace.h"
+ #include "exec/cpu-common.h"
+ 
+ struct QEMU_PACKED RAMFBCfg {
+@@ -46,6 +48,31 @@ static void ramfb_unmap_display_surface(pixman_image_t *image, void *unused)
+     physical_memory_unmap(data, size, 0, 0);
+ }
+ 
++/*
++ * A framebuffer must live in directly mappable host memory. Reject
++ * addresses backed by unrelated regions (MMIO, unassigned holes, ...)
++ */
++static bool ramfb_range_is_direct_access(hwaddr addr, hwaddr size)
++{
++    WITH_RCU_READ_LOCK_GUARD() {
++        while (size > 0) {
++            MemoryRegion *mr;
++            hwaddr len = size, xlat;
++
++            mr = address_space_translate(&address_space_memory, addr,
++                                         &xlat, &len, false,
++                                         MEMTXATTRS_UNSPECIFIED);
++            if (len == 0 || !memory_region_supports_direct_access(mr)) {
++                return false;
++            }
++            addr += len;
++            size -= len;
++        }
++    }
++
++    return true;
++}
++
+ static DisplaySurface *ramfb_create_display_surface(int width, int height,
+                                                     pixman_format_code_t format,
+                                                     hwaddr stride, hwaddr addr)
+@@ -65,9 +92,16 @@ static DisplaySurface *ramfb_create_display_surface(int width, int height,
+     }
+ 
+     mapsize = size = stride * (height - 1) + linesize;
++    if (!ramfb_range_is_direct_access(addr, size)) {
++        trace_ramfb_bad_range(addr, size);
++        return NULL;
++    }
+     data = physical_memory_map(addr, &mapsize, false);
+-    if (size != mapsize) {
+-        physical_memory_unmap(data, mapsize, 0, 0);
++    if (!data || size != mapsize) {
++        trace_ramfb_map_failed(addr, size, mapsize);
++        if (data) {
++            physical_memory_unmap(data, mapsize, 0, 0);
++        }
+         return NULL;
+     }
+ 
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index c5e7e42af23b..bc1822b6b023 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -184,6 +184,10 @@ macfb_sense_read(uint32_t value) "video sense: 0x%"PRIx32
+ macfb_sense_write(uint32_t value) "video sense: 0x%"PRIx32
+ macfb_update_mode(uint32_t width, uint32_t height, uint8_t depth) "setting mode to width %"PRId32 " height %"PRId32 " size %d"
+ 
++# ramfb.c
++ramfb_bad_range(uint64_t addr, uint64_t size) "addr=0x%"PRIx64" size=0x%"PRIx64
++ramfb_map_failed(uint64_t addr, uint64_t size, uint64_t mapsize) "addr=0x%"PRIx64" size=0x%"PRIx64" mapped=0x%"PRIx64
++
+ # dm163.c
+ dm163_redraw(uint8_t redraw) "0x%02x"
+ dm163_dck(unsigned new_state) "dck : %u"
+-- 
+2.56.0.116.g6de20f6092dc
+
 
