@@ -1,117 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AB0606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD55960A4AC5
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20251104.gappssmtp.com header.i=@theorem-dev.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b=UjCdbaIS
+	dkim=pass (1024-bit key, unprotected) header.d=quante.one header.i=@quante.one header.a=rsa-sha256 header.s=cloudpit header.b=WmsYM1/z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJstv-0002Zw-Cd; Thu, 22 Oct 2026 09:32:11 -0400
+	id 1xJt5W-0005S6-0m; Thu, 22 Oct 2026 09:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
- id 1xJksD-0005O5-Va
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:57:54 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
- id 1xJksB-0002Oa-Ay
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:57:53 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c43373ae89aso207561266b.3
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 21:57:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792645069; cv=none;
- d=google.com; s=arc-20260327;
- b=hA9AwctqTZjueK0V7NZvnb79YWos3pB5QcVmf3OoO8hGPT1mak787h2ln276dZDMgN
- u2p9PCBNzi52noq4EnYL7F4L6WSK6hkEuuL+APCvmnZ3yoaL4embEVT0ApNhTW2n3+q/
- JuC3bqCy/rS4VcVnlq6Aa7qw3dhuqa9nvsaQ9JQQRK83YUcNd4LDqfpmwpu1rZpRAStQ
- PyHaoP2wjbdIPnL1EFEBkr4y/f4W65XIuUUGoCYR8dA/C9ut6zf9dof1c1Jj2ffKJMR/
- I7LnASQJkuOwmZSakdTn5WeMQBLXqId825bfUvDdvbkcSEzIXg7qVGe5WezC6pLYoUZ+
- 2P7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:dkim-signature;
- bh=j/IQYjLHdjCF1gb4GVDkIzT4OQ7lR/A43Idw83O4mwc=;
- fh=KzEVRCrhke8VK+WFAq+Dy0o38BVLmA8ww6Zm36tVw6w=;
- b=XYl6Yt6uxKsTfyPd3S21pstRm06RwADAVzDiKnKS7BTwL4Kt0e1ol9qd1LhdR79PIA
- I3jlb6vJ+TSXQKzTQUun8QMxwEpWCggxIgVrSOOQ2CChGgb8ceVf15XclxkBYGfnNUH1
- IV50mmvS3TuicUFQ8X6npUJ53rxZo0N3LQyCl7vdzZARtD1xC/5wcfpyAk29baupJ/xp
- yiSeNVH2zjI9M5Hv4Vy0lx730tmf4stvMBeL8RMK325jps5LXlfG1oaTjsQxS10xeGh5
- 697f7R9sbXProwKZhjMCRqFSOswHyMcMj47amzvHqOfF0+E4rv2LBPN0aVCnBIJgNHVF
- 9vEw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=theorem-dev.20251104.gappssmtp.com; s=20251104; t=1792645069; x=1793249869;
- darn=nongnu.org; 
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=j/IQYjLHdjCF1gb4GVDkIzT4OQ7lR/A43Idw83O4mwc=;
- b=UjCdbaISZm00LAXurOIXnFWXVlYLyq9NEjk1Sv9p7ZL1W3Gte8soQQE1bR3XsZhux0
- CyAfg2C8y7fOJp129gornv3cJgDIsZvOKkgtlCQ6/3wKhi+MR2E/mCXj7WkHue8Eczez
- NG9DWEBiqROxzM/JnKkjNmqASaPbkQJC1UE3s+5tn5NV8VXQt3OL5MuhvmmwqJiiwRJ+
- lBN7TJQDklmRHeAHFPeSH/jgliPIfHaK4K98CfWC7od8rdex7BjnT7zqCwlj8VDMYeIV
- QhIK70KxFOnA+Tj84X0BtFgbfjYL/q9rxap2n6w39mScxAZK02Euky/Cn7EvapvDbO40
- xK0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792645069; x=1793249869;
- h=content-type:cc:to:subject:message-id:date:mime-version:references
- :in-reply-to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=j/IQYjLHdjCF1gb4GVDkIzT4OQ7lR/A43Idw83O4mwc=;
- b=xrbB34GbRZcTuMkFgtAN/lyRJ+ICutgDBv/9yxR5tNjH+FRVsgg53QZWAz1ET25zpv
- XO7acaK1cpQeFLrPHOqPYtd7DDXUfrsK8AupdEv2/I77R9XvV/B1ZVjYJBsjbu8Ax8VF
- 2xGgzzMlgYjOCUCUhn2GLxPGVHgGkOaQm9MwUndaY+X0XcQSGEsVybxsHA2QV7ITCE7m
- R4mZpPcsx42L8DsIYS658bJEFlFGnVOdc42EHO9wBIXKFOLZ7ULwyTSSu4TKoTEV0knD
- GHvw16Ll01J9W0bPR4VPzplJUCeg5DjZkha4XP3XoV/7UBdJj2M//RhJ8ZCLCHXpmOwr
- BoRw==
-X-Gm-Message-State: AFq9FYIDJcIuGJ6pDf+4mKxibPfarKN6SN6Flas8Yl7uRKKB/5MNTrl9
- e2DcixAaO/xLmkSDNOGd9tO/Va89UpGOeOYvF1niejt6r4tWg1TrBZr5DlEBRpAjB8JSa3bvoeS
- nvnjkHb3lXLiYqe5krWEKtf8nySP2d4hHJaiiq653Wr1+jMQDZxVXz63Cuw==
-X-Gm-Gg: AYBFou3feJeUVWJLqlNSgcCeTBWTCEMnAH71lecBzmxYrsKqNDD9e0kTMHhtohuQ0NZ
- VjXNN2e6yu1bJZaD8x54gofaeuhEKofRH/LAuh4dWfT9R/jxGsIeOsETcoVk7J8D3HKuCI00kYs
- GgE5U7JT/e/DLcLhjeX2cuBARJfQJfSyBfBvg3T/omjIFaa2ujFz/RtU2YtQ9EPVRV6DwrKIDvf
- Zre82efE1pWUv6ocuac5AGObfHuQCJqVfTTf4FPAxZLZKx2qV1rQCg0qEZwknVCN26o+NA7OREB
- 5FQedvO3nBPSMNjkoXEi5dNgg9qvmjSI7ycWfay3rDUj4+RwLRhINR99/e1xkHu5SoO6YXH6uRi
- Sj55NxrTiov01LaSQ3dRarftaGqfE8Br4ii/T2fwHwn+8vaBZccuyigS0G08=
-X-Received: by 2002:a17:907:6e8e:b0:c40:5de7:33d3 with SMTP id
- a640c23a62f3a-c467975dfeemr366448066b.35.1792645068984; Wed, 21 Oct 2026
- 21:57:48 -0700 (PDT)
-Received: from 428534693058 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 Oct 2026 00:57:47 -0400
-Received: from 428534693058 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 Oct 2026 00:57:47 -0400
-From: tewaro <tewaro@theorem.dev>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261022045737.67060-1-tewaro@theorem.dev>
-References: <20261022045737.67060-1-tewaro@theorem.dev>
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xJt5U-0005Ri-1z
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:44:08 -0400
+Received: from nx34.node02.secure-mailgate.com ([192.162.87.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1xJt5R-0004YZ-5y
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:44:07 -0400
+Received: from web279.dogado.net ([31.47.255.59])
+ by node02.secure-mailgate.com with esmtps (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.94.2) (envelope-from <christian@quante.one>)
+ id 1xJt5N-0022qp-JD; Thu, 22 Oct 2026 15:44:02 +0200
+Received: from Zeuss.fritz.box (p57b2f06c.dip0.t-ipconnect.de [87.178.240.108])
+ (Authenticated sender: christian@quante.one)
+ by web279.dogado.net (Postfix) with ESMTPSA id B09CE281C96;
+ Thu, 22 Oct 2026 15:44:00 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
+ s=cloudpit; t=1792676641;
+ bh=HAbgcJRIMWvejf+d2eVBi5QNqNG0X6ouyN5oW5RmWCI=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=WmsYM1/z1I2Yp5i+F1XWHKeOqMpahWYaYihK+iCpONBQkEtiOo+tRFuPcvIdEUMfR
+ XkoYSvikrq7Kuv5cDV8brKuNamNSmU8CE9CCH6ihs5ixQp8xtz1Mxq+jHLdAevKtVi
+ 3DiOdYUPQpMa4aFZlKGaduuLdqvYUgvyf+ziJZqw=
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+From: Christian Quante <christian@quante.one>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2 2/2] tests/qtest/dbus-display-test: check the Scanout after
+ a text resize
+Date: Thu, 22 Oct 2026 15:43:33 +0200
+Message-ID: <20261022134335.12241-3-christian@quante.one>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261022134335.12241-1-christian@quante.one>
+References: <20261022134335.12241-1-christian@quante.one>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 22 Oct 2026 00:57:47 -0400
-X-Gm-Features: AclHuK9Q6bzEfzTCX8xnUe3RGN8yhRG6E1lHVF1o5FSe0Y_wTZckkQ7DvnaWOQw
-Message-ID: <CAEq2Q90Lvd4PMtxhj=2B-v5BiOdgBsgo2q5sFV-B4UcRFdEHkA@mail.gmail.com>
-Subject: [PATCH 1/2] target/riscv: do not raise the no-PMP-rule access fault
- from mret
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, disclosures@theorem.dev, tewaro <tewaro@tewaro.org>,
- tewaro <tewaro@theorem.dev>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=tewaro@theorem.dev; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <179267664131.1250912.12079473830258782967@web279.dogado.net>
+X-PPP-Vhost: quante.one
+X-SecureMailgate-Domain: web279.dogado.net
+X-SecureMailgate-Username: 31.47.255.59
+Authentication-Results: secure-mailgate.com;
+ auth=pass smtp.auth=31.47.255.59@web279.dogado.net
+X-SecureMailgate-Outgoing-Class: ham
+X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.000287407726432)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuXrliPY/UonToGsfsq8ugyJzoCuiKwS65ED
+ pautRICfqSu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4ZjA9Ob/CZLcxS4VHLkkqapS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+ 1vk99RMgoMVb7lebWWPLzvZvEUCPdOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
+ xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
+ 07iZIeUSWePdS+owFPr4kjXuZPwOU47Z9+u6ffrnBlJ/YqH1yn3Cst2xbkPGIRcDT6rLne4OdACl
+ OctV6sNUpLlLzrnCw1TFot2DkCrUkXoFc9xPnGOHdNrvKzHXVbgGS7w2P8nPW3J1xwRaF5dGK1eM
+ UkB0FGdiCjIUUBm1A0OeWEadRp7IkjpM+zcdijFnYDwIvvgDwGlGNltqz//gVodr2Bbrpa11KQ1X
+ 60pfttRUJPEpY+dD8D1vIveD1kaqoOX9s49As8Lf9rIL5hu6PBBmQVXJOgy40oaNgxLGDo2IfSff
+ yLpMY4GiERnEqbM7eXcjjx1NgqwoSQEiRQv+PVjjwa+Z5RFCOMQRxM2W6biFbzhekDa7/BtMWlcI
+ SpJ6e8JC6wP/8HYDLw28epu/aG1pgqaCRoxNoPbHYZi/RQSVvjLZ9073r2ThsSxXvtcBnutXV2hR
+ cyZeMt5qC3RC37WOfcNnA2gZY0tsDJ5OpGajzK+y6qnu2TRmCgWkeniwaIPiNK/dtWTwcPdjzQ6Y
+ C7Heg3Xf7O1TOd4AR3bnyxZNhM1OcgqdW/wVtHH2Jl8eCsKWVs21EHNFpMmQSlj1IZHH2YTOuGo7
+ uSjxCAheiVMc/Zdx7yWxu+m0xKrS24UQEiEcX0sIf20P9Z24W5FAMBlV4QRE+Zyl9in1H/aAwarQ
+ pYDOYx/6JtUO0Mqlhs6pmFPCFjhhN7CA6xKgoHAnJs1I5c9E1S43mq3kM3Qwxv7D9C3QH5nA6BrC
+ GpdIe+N1TqSjWPuDI4o4oSgbUYstBS2wVr+z782L/itpmtBVV8AcwDEGcp3bMIDG5wlpy6uLmsAa
+ TUOwBUuWxQ==
+X-Report-Abuse-To: spam@node04.secure-mailgate.com
+X-Complaints-To: abuse@node01.secure-mailgate.com
+Received-SPF: pass client-ip=192.162.87.34; envelope-from=christian@quante.one;
+ helo=nx34.node02.secure-mailgate.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 22 Oct 2026 09:32:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,110 +99,270 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Consider a CPU that implements PMP but has no PMP entry configured.
-If M-mode executes mret with MPP set to S or U, QEMU raises an
-instruction access fault on the mret. The trap is taken in M-mode,
-with mepc pointing at the mret, mtval zero and MPP equal to M.
+Set up an 80x25 VGA text mode, change the character height from 16 to
+12 lines as the Windows NT 4.0 setup does, and check that the first
+message the listener gets after the change is a Scanout of the new size
+(720x396), not an Update.
 
-The spec says the mret succeeds and the first S/U-mode fetch fails
-[1][2]. The trap should therefore be taken from S/U-mode, with mepc
-and mtval equal to the mret target [3][4] and MPP equal to S/U [5].
+The registration of the listener moves from test_dbus_display_console()
+to test_dbus_console_register(), so that both tests can use it, and the
+listener now also handles Update.
 
-The early check in check_ret_from_m_mode() is what moves the fault
-onto the mret. Without it, the fetch at the target misses the TB and
-TLB caches, which are keyed by privilege level, and reaches
-pmp_hart_has_privs_default() through riscv_cpu_tlb_fill(). That
-function already denies S/U-mode when no rule matches. Nothing
-executes between the privilege switch and that fetch, so no other
-behaviour changes.
+The test waits until no message has come for some time, so the cursor
+is put outside the screen: vga_draw_text() redraws the character under
+the cursor at every refresh, also when the cursor is off.
 
-As it stands, S/U-mode can never be entered on such a configuration,
-and a handler that steps mepc past the apparent fault resumes in
-M-mode at the S-mode entry point (GitLab issue #2074).
-
-The check was added by commit d102f19a208 alongside the pmp.c change
-that makes the no-rule path M-mode-only, and I believe it was already
-redundant then. Building v6.0.0 and v7.2.0 with only the check removed
-confirms the fetch faults as expected. Later commits (0fbb5d2d3c9,
-4c48aad1, 3157a553, 16aa7771) changed its gating, cause and location
-but not the normal path. Remove it and the now unused prev_priv
-parameter.
-
-The bug was found and debugged with the help of Claude (Anthropic),
-used as a research and debugging aid; the patch was written by hand.
-
-[1] Privileged ISA v1.12, 3.7.1 "Physical Memory Protection CSRs",
-    Priority and Matching Logic
-[2] Privileged ISA v1.12, 3.3.2 "Trap-Return Instructions"
-[3] Privileged ISA v1.12, 3.1.14 "Machine Exception Program Counter"
-[4] Privileged ISA v1.12, 3.1.16 "Machine Trap Value Register"
-[5] Privileged ISA v1.12, 3.1.6.1 "Privilege and Global
-    Interrupt-Enable Stack in mstatus register"
-
-Privileged ISA v1.12 (ratified, 2021-12-03):
-https://github.com/riscv/riscv-isa-manual/releases/tag/Priv-v1.12
-Current source, same wording:
-https://github.com/riscv/riscv-isa-manual/blob/4877e41a/src/priv/machine.adoc
-
-Fixes: d102f19a2085 ("target/riscv/pmp: Raise exception if no PMP
-entry is configured")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2074
-Signed-off-by: tewaro <tewaro@theorem.dev>
+Signed-off-by: Christian Quante <christian@quante.one>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/tcg/op_helper.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ tests/qtest/dbus-display-test.c | 162 +++++++++++++++++++++++++++++---
+ 1 file changed, 148 insertions(+), 14 deletions(-)
 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index b67c7718db..a355d28f4b 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -423,7 +423,6 @@ target_ulong helper_sret(CPURISCVState *env)
- }
-
- static void check_ret_from_m_mode(CPURISCVState *env, target_ulong retpc,
--                                  privilege_mode_t prev_priv,
-                                   uintptr_t ra)
+diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-test.c
+index 7838ce7323..eb81b9ca05 100644
+--- a/tests/qtest/dbus-display-test.c
++++ b/tests/qtest/dbus-display-test.c
+@@ -94,8 +94,26 @@ typedef struct TestDBusConsoleRegister {
+     GDBusConnection *listener_conn;
+     GDBusObjectManagerServer *server;
+     bool with_map;
++    /* Scanout and Update calls received, and the first one after @watch */
++    guint messages;
++    bool watch;
++    const char *first;
++    guint first_width;
++    guint first_height;
+ } TestDBusConsoleRegister;
+ 
++static void test_dbus_console_seen(TestDBusConsoleRegister *test,
++                                   const char *method,
++                                   guint width, guint height)
++{
++    test->messages++;
++    if (test->watch && !test->first) {
++        test->first = method;
++        test->first_width = width;
++        test->first_height = height;
++    }
++}
++
+ static gboolean listener_handle_scanout(
+     QemuDBusDisplay1Listener *object,
+     GDBusMethodInvocation *invocation,
+@@ -106,6 +124,7 @@ static gboolean listener_handle_scanout(
+     GVariant *arg_data,
+     TestDBusConsoleRegister *test)
  {
-     if (!(env->priv >= PRV_M)) {
-@@ -435,11 +434,6 @@ static void check_ret_from_m_mode(CPURISCVState
-*env, target_ulong retpc,
-                                     env->misa_ext) && (retpc & 0x3)) {
-         riscv_raise_exception(env, RISCV_EXCP_INST_ADDR_MIS, ra);
-     }
--
--    if (riscv_cpu_cfg(env)->pmp &&
--        !pmp_get_num_rules(env) && (prev_priv != PRV_M)) {
--        riscv_raise_exception(env, RISCV_EXCP_INST_ACCESS_FAULT, ra);
--    }
++    test_dbus_console_seen(test, "Scanout", arg_width, arg_height);
+     qemu_dbus_display1_listener_complete_scanout(object, invocation);
+ 
+     if (!test->with_map) {
+@@ -115,6 +134,24 @@ static gboolean listener_handle_scanout(
+     return DBUS_METHOD_INVOCATION_HANDLED;
  }
- static target_ulong ssdbltrp_mxret(CPURISCVState *env, target_ulong mstatus,
-                                    privilege_mode_t prev_priv,
-@@ -465,7 +459,7 @@ target_ulong helper_mret(CPURISCVState *env)
-     privilege_mode_t prev_priv = get_field(mstatus, MSTATUS_MPP);
-     uintptr_t ra = GETPC();
-
--    check_ret_from_m_mode(env, retpc, prev_priv, ra);
-+    check_ret_from_m_mode(env, retpc, ra);
-
-     bool prev_virt = !!(get_field(env->mstatus, MSTATUS_MPV) &&
-                      (prev_priv != PRV_M));
-@@ -515,7 +509,7 @@ target_ulong helper_mnret(CPURISCVState *env)
-     bool prev_virt;
-     uintptr_t ra = GETPC();
-
--    check_ret_from_m_mode(env, retpc, prev_priv, ra);
-+    check_ret_from_m_mode(env, retpc, ra);
-
-     prev_virt = !!(get_field(env->mnstatus, MNSTATUS_MNPV) &&
-                 (prev_priv != PRV_M));
+ 
++static gboolean listener_handle_update(
++    QemuDBusDisplay1Listener *object,
++    GDBusMethodInvocation *invocation,
++    gint arg_x,
++    gint arg_y,
++    gint arg_width,
++    gint arg_height,
++    guint arg_stride,
++    guint arg_pixman_format,
++    GVariant *arg_data,
++    TestDBusConsoleRegister *test)
++{
++    test_dbus_console_seen(test, "Update", arg_width, arg_height);
++    qemu_dbus_display1_listener_complete_update(object, invocation);
++
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
+ #ifndef WIN32
+ static gboolean listener_handle_scanout_map(
+     QemuDBusDisplay1ListenerUnixMap *object,
+@@ -164,6 +201,7 @@ test_dbus_console_setup_listener(TestDBusConsoleRegister *test, bool with_map)
+         qemu_dbus_display1_listener_skeleton_new());
+     g_object_connect(iface,
+                      "signal::handle-scanout", listener_handle_scanout, test,
++                     "signal::handle-update", listener_handle_update, test,
+                      NULL);
+     g_dbus_object_skeleton_add_interface(listener,
+                                          G_DBUS_INTERFACE_SKELETON(iface));
+@@ -227,15 +265,12 @@ test_dbus_p2p_server_setup_thread(gpointer data)
+ }
+ 
+ static void
+-test_dbus_display_console(const void* data)
++test_dbus_console_register(QTestState *qts, GDBusConnection *conn,
++                           TestDBusConsoleRegister *test)
+ {
+     g_autoptr(GError) err = NULL;
+-    g_autoptr(GDBusConnection) conn = NULL;
+     g_autoptr(QemuDBusDisplay1ConsoleProxy) console = NULL;
+-    g_autoptr(GMainLoop) loop = NULL;
+-    QTestState *qts = NULL;
+     int pair[2];
+-    TestDBusConsoleRegister test = { 0, .with_map = GPOINTER_TO_INT(data) };
+ #ifdef WIN32
+     WSAPROTOCOL_INFOW info;
+     g_autoptr(GVariant) listener = NULL;
+@@ -244,8 +279,6 @@ test_dbus_display_console(const void* data)
+     int idx;
+ #endif
+ 
+-    test_setup(&qts, &conn);
+-
+     g_assert_cmpint(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair), ==, 0);
+ #ifndef WIN32
+     fd_list = g_unix_fd_list_new();
+@@ -262,9 +295,9 @@ test_dbus_display_console(const void* data)
+             &err));
+     g_assert_no_error(err);
+ 
+-    test.loop = loop = g_main_loop_new(NULL, FALSE);
+-    test.thread = g_thread_new(NULL, test_dbus_p2p_server_setup_thread,
+-                               GINT_TO_POINTER(pair[0]));
++    test->loop = g_main_loop_new(NULL, FALSE);
++    test->thread = g_thread_new(NULL, test_dbus_p2p_server_setup_thread,
++                                GINT_TO_POINTER(pair[0]));
+ 
+ #ifdef WIN32
+     if (WSADuplicateSocketW(_get_osfhandle(pair[1]),
+@@ -295,12 +328,111 @@ test_dbus_display_console(const void* data)
+ #endif
+         NULL,
+         test_dbus_console_registered,
+-        &test);
++        test);
++
++    g_main_loop_run(test->loop);
++}
++
++static void
++test_dbus_console_cleanup(TestDBusConsoleRegister *test)
++{
++    g_clear_object(&test->server);
++    g_clear_object(&test->listener_conn);
++    g_clear_pointer(&test->loop, g_main_loop_unref);
++}
++
++static void
++test_dbus_display_console(const void *data)
++{
++    g_autoptr(GDBusConnection) conn = NULL;
++    QTestState *qts = NULL;
++    TestDBusConsoleRegister test = { 0, .with_map = GPOINTER_TO_INT(data) };
+ 
+-    g_main_loop_run(loop);
++    test_setup(&qts, &conn);
++    test_dbus_console_register(qts, conn, &test);
++
++    test_dbus_console_cleanup(&test);
++    g_clear_object(&conn);
++    qtest_quit(qts);
++}
++
++/* Handle whatever reaches the listener during the next @ms milliseconds. */
++static void
++test_dbus_console_turn(guint ms)
++{
++    gint64 end = g_get_monotonic_time() + ms * G_TIME_SPAN_MILLISECOND;
++
++    while (g_get_monotonic_time() < end) {
++        while (g_main_context_iteration(NULL, FALSE)) {
++        }
++        g_usleep(G_TIME_SPAN_MILLISECOND);
++    }
++}
++
++/* Wait until the picture is still: no Scanout or Update for 200 ms. */
++static void
++test_dbus_console_settle(TestDBusConsoleRegister *test)
++{
++    guint seen;
++    int i;
++
++    for (i = 0; i < 25; i++) {
++        seen = test->messages;
++        test_dbus_console_turn(200);
++        if (test->messages == seen) {
++            return;
++        }
++    }
++    g_assert_not_reached();
++}
++
++static void
++vga_crtc_write(QTestState *qts, uint8_t index, uint8_t value)
++{
++    qtest_outb(qts, 0x3d4, index);
++    qtest_outb(qts, 0x3d5, value);
++}
++
++static void
++test_dbus_display_text_resize(void)
++{
++    g_autoptr(GDBusConnection) conn = NULL;
++    QTestState *qts = NULL;
++    TestDBusConsoleRegister test = { 0 };
++    gint64 end;
++
++    test_setup(&qts, &conn);
++    test_dbus_console_register(qts, conn, &test);
++
++    /* VGA text mode, 80x25 cells of 9x16 pixels: 720x400 */
++    qtest_outb(qts, 0x3c2, 0x67);       /* CRTC at 0x3d4 */
++    vga_crtc_write(qts, 0x01, 0x4f);    /* 80 columns */
++    vga_crtc_write(qts, 0x07, 0x02);    /* bit 8 of the vertical display end */
++    vga_crtc_write(qts, 0x09, 0x0f);    /* 16 scan lines per cell */
++    vga_crtc_write(qts, 0x0e, 0x3f);    /* cursor outside the screen */
++    vga_crtc_write(qts, 0x0f, 0xff);
++    vga_crtc_write(qts, 0x12, 0x8f);    /* 400 scan lines */
++    vga_crtc_write(qts, 0x13, 0x28);    /* 80 characters per row */
++    qtest_inb(qts, 0x3da);              /* attribute controller to index */
++    qtest_outb(qts, 0x3c0, 0x20);       /* display on */
++    test_dbus_console_settle(&test);
++
++    /*
++     * Cells of 9x12 pixels, as the Windows NT 4.0 setup sets: 720x396.
++     * VGA redraws a text mode one row of cells at a time, and the client
++     * has to know the new size before the first row arrives.
++     */
++    test.watch = true;
++    vga_crtc_write(qts, 0x09, 0x0b);
++    end = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
++    while (!test.first && g_get_monotonic_time() < end) {
++        test_dbus_console_turn(10);
++    }
++    g_assert_cmpstr(test.first, ==, "Scanout");
++    g_assert_cmpuint(test.first_width, ==, 720);
++    g_assert_cmpuint(test.first_height, ==, 396);
+ 
+-    g_clear_object(&test.server);
+-    g_clear_object(&test.listener_conn);
++    test_dbus_console_cleanup(&test);
+     g_clear_object(&conn);
+     qtest_quit(qts);
+ }
+@@ -462,6 +594,8 @@ main(int argc, char **argv)
+     qtest_add_func("/dbus-display/vm", test_dbus_display_vm);
+     qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false), test_dbus_display_console);
+     qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(true), test_dbus_display_console);
++    qtest_add_func("/dbus-display/console/text-resize",
++                   test_dbus_display_text_resize);
+     qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
+     if (qtest_has_machine("q35") && qtest_has_device("bochs-display")) {
+         qtest_add_func("/dbus-display/hotplug", test_dbus_display_hotplug);
 -- 
-2.47.3
+2.53.0
+
 
