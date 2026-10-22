@@ -1,115 +1,176 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62336606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 04:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FC4606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 04:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=RHsHv9SL
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=wdc.com header.i=@wdc.com header.a=rsa-sha256 header.s=dkim.wdc.com header.b=G2ut+yuB;
+	dkim=pass (1024-bit key, unprotected) header.d=sharedspace.onmicrosoft.com header.i=@sharedspace.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-sharedspace-onmicrosoft-com header.b=p/kLbTBj
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJk3a-00056N-9q; Thu, 22 Oct 2026 00:05:34 -0400
+	id 1xJkDx-0007BI-1o; Thu, 22 Oct 2026 00:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1xJk3W-00055l-U1
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:05:31 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1xJk3U-0006Wr-OD
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:05:30 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6b1f31c63ebso886283a12.0
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 21:05:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792641927; cv=none;
- d=google.com; s=arc-20260327;
- b=ZkbJFfLOpVxPLpR9XXRchDaA0JCv9VW44w5GWhvKFDQ3ApzOBQpJL7k8O8U9WFyzeO
- 001CFgLrjG4ZQIeR0d/oSFpr4DmNUNW491J68ivxx0RAbWYIx7qRx3gnrSSqJyqWmSMW
- 8oNaWxTCnro6UNFGqyA16wzvXGdXWFp97hsJQDIGPA3VEmKb2DiZ2SdnRQ2BBWLfC782
- yYiOJBt0cz3uTYIQ9Z79zdwNG9U3lLsWQUnhOtGxynH+kjpDd4dXyCQjr2mKNV21ON/f
- MnGxVxjMWOzQ7K+xilSyg/HVExqgKlL/TYD2hBSWdf/VMeDzC5SrDgUlJTJEAdYV3bAh
- 4BzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=TFQgWMamAJZMz10nIImx75Z9gy7XEUPfb+0E1okITUY=;
- fh=JaCq1KfEX7k1zWaG8s8D+4igtZt/A+Uw3gV3zCTkL/E=;
- b=ZxC6nNb9Has8jotylXUYSc9t6vCOUpwcdVQ9OxqgHNg/5CbzVEwn13GN4+vv0LoYXK
- pIMOjvOcSYjBmKY4fVBw10vEMcShd29xDg9CzjpnoUIRDz4kaOSkI8WldGUFS08Sj8nE
- C+qnBAEpv+sRrET9bK8oj1CJhI9+HNlaxO+Vl9H/z6BL/bc8eVB4NpP71eGpaz5s9e4f
- lDNW9fn7usgfNiEswj/y4uV8Ffsb9p3S4iu57FXCL8xyU0zTMEHmc0LUBms+OjiivzYL
- NjRqOTJJbBQX6DEe8o3TqQtEB2mZ9jw+crMIagSvKTLRu6b1qsYinE5jZnVKfTUloPRh
- YUJQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1)
+ (envelope-from <prvs=748e7da1e=Alistair.Francis@wdc.com>)
+ id 1xJkDv-0007B2-05; Thu, 22 Oct 2026 00:16:15 -0400
+Received: from esa5.hgst.iphmx.com ([216.71.153.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=748e7da1e=Alistair.Francis@wdc.com>)
+ id 1xJkDt-0007YK-3a; Thu, 22 Oct 2026 00:16:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1792642573; x=1824178573;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=X/8A+cN1Sp9zTaU79AfCBSncIso0NxeDyPttmRtKwxA=;
+ b=G2ut+yuBNEmYMTBF9+G0/66pn1JzYgRYFHh3tczkwcqADpQcZRId6xFa
+ ohh5l53aBQAAAyXyZU+3GjOJVelUc0Y/IOKe8Q9/AufFUpSpij275KJde
+ sjz3HQ1mZEKUImot9oYuqcGNQ93nE1XyykBJ6HMFL6TrLyADl66GYA4Ef
+ IzRfEdZDST9GV1bk3V0r0iUM/nU7uspJTHYeKrowdTnBJUk6xTcaZg86I
+ i5suA8xqhM0gE7ZO1tbb7hwxe1j9d392CxrBYJ0x/8BuYioaNxgwcfxdT
+ iNmnNpJItaBrKHgS9Z8YhGNhakOKPeSK7pbBR2JSW1fifkHLZMKw9rMz/ g==;
+X-CSE-ConnectionGUID: tVzQFVcXTXyPPR6Q00bBpw==
+X-CSE-MsgGUID: su11XhUhRkGep14MsYNoyg==
+X-IronPort-AV: E=Sophos;i="6.27,171,1786982400"; d="scan'208";a="157743107"
+Received: from mail-southcentralusazon11011067.outbound.protection.outlook.com
+ (HELO SN4PR0501CU005.outbound.protection.outlook.com) ([40.93.194.67])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 22 Oct 2026 12:16:10 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=liiobWQyA/NOmfdRD/sfPXvF9G+oTWy/YKm0yNTL4tXt0wFpuicWcmyeKmqLVBOs+7pBP73LR8WXF23EG34RYhRZ7sYyXDC1YEDpNyHK9dUW505/D0Mx2BSf2rvYjLdYuOoYAe1nFBiZ3x1sevKaFHnBfv9DVVrBANkiiTbNmjNKsZi0Kr2aY6fmXHV6SO5Wge4YOhjgjXALsKCX1aGfGTwfx7dS3mXfxcQPNFTBx2FN/YQr1WtQQ5gfSQ6XspiDe1OU1FPbZ8JGeltP1z7/Dxy/wIXl/mMymQ+2sn5LVCaPe0KLrrlK8DDI2yVgurARfSnX4s6X/GGKs4v3MM/0mA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=X/8A+cN1Sp9zTaU79AfCBSncIso0NxeDyPttmRtKwxA=;
+ b=euqPgEPFwaTUGKWGmnx7Qa5GJpgtOY1vQJKUhgHYmkKrjV2OO84i6fxzly02sIy2Zz4gOwGXdBjVLPNFWyF+nhVqpR53MNwssTN0A1gSak0XAUO7ozKMwwYTrm3MVgrRlVd1bSaTCBtT3Dtge7ejAS4lzT1Chtns4aV4TeqWEp/C+zwyP+CxifJsUYM/UrTpFBPse2ts72Owe9jF8nIzYFpT9obxLDSc7Dd07YkEx0wudkXu3vef07wb93Ni377xUG4uBzCpf23+CO7mU42l9QcR2CV//zbLkpsoR48CiTVpKiC7b5sWS+/07KtK4ZlyHLY1XSTXd14/RQ33lh6nhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792641927; x=1793246727; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=TFQgWMamAJZMz10nIImx75Z9gy7XEUPfb+0E1okITUY=;
- b=RHsHv9SLJXJPrr8TjePn0VrcA9aHjfPOas8xT60VBe+Im3luQQ4AUSgt9JLeLK5pcU
- AF+Awj9WM6/U3WcMhmY1K8Wq2QbtOF+Sytijv+m/TAdiDpkYPB0MU6LbdI3SCbBINCcL
- sP6Q4yhisIriKrW2At+PVKSYpFPaPZ0fcNwXqrN9MKp9FWL8aEy4/zBAjyil8LcgUo33
- iRS6FoT/n0rEpPKl7f5aBg32nGDjeTJddTc1bovx/DW0Z43+/ofGWUPTVGzpZD68RxZy
- LwXcFWG6oAIEQewOmW54HAoxMsurolEwqvbv0WETCgYycj/8irDMy3N2HdZ7ODUnoKM9
- yy3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792641927; x=1793246727;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TFQgWMamAJZMz10nIImx75Z9gy7XEUPfb+0E1okITUY=;
- b=jAzqNG+iDahORSRD0ysHYx6RirvXH1WRucdR15sWVbrKf8lQoWCBNkL4Zbz7JWCjla
- ejJuCnh3wa1IZIz27smANfHM+B8bPPby3fYvkoXbgUSHzG8Ut8P1dPGeF0/fpo2azx3b
- 1rjDZX2vDpP9h3y6PqrFLElbS5imZTkdgHmp3rbPriKh9ZPVG5d9/kvqUojqMOv5SDfG
- O6HnfvsfAo3+MVsVvDULG7jjuR9Z/t7S8+46K13bsu9yqmxgiGXjPjfTODBSgPYwHOjP
- n/c7TQgjZlX0+7NJLkoZY+sfUbGEm3bTO4rfWEQtniaGKDGUNdLMQmde8bLd7R93BXrf
- KLtA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx+D77jpypLCulijvpB8IddMSBia47qo/idvhH4Xoe7OLUwnJKc8UMzz5sHfPHkgt5q/olvEmpy/hFV@nongnu.org
-X-Gm-Message-State: AFq9FYKcsoWelK/m0zFgwF/OwWETtG5UiK1wwV8rQBZSSx/XZMgudsNz
- B2IfpjlnttpLu2AQbdXlJfuENHjHh9RFIM6u8Ch5ZD+qalXEzjmPx4ZwfvwaaAOuTcG4mONSU/X
- juyexWaLg8dT6YhxW1g4Ep2W1bxJOnbE=
-X-Gm-Gg: AYBFou2bOB4yxoVEsSbYVrgjuOCSF+2Zddtq7JHlxqDW4Kh+h+fgj/0ExBbUIJsErzu
- FovIS9UuCx+eGwp7qiPapgJmrHTeIxXchX8cDtQms5SyycQaBL6T9jJZYSDzDqM/r41tEHfzVp0
- otkFB/J4uVf4zAE8O02lUDYCGQfA4KGGG8SOgY7Ts6cEpN9zLgSsgVJ9OyufUQJWdZS+Mk1xqDv
- i7jScz4NogMr5TWU/i2ECn61MgxfmfPCULzn3Ao0RaHgxwkVFPbjmsiAy7z7q721wQN+fKmr7Cu
- LKfQ2Cqx9O9t8Q863FKQ5RiirkiRvCKzYhF9bhd6nbr3aRFsPaoCp9PHXskCd9+iNKTavDhh2Ip
- VqVugvyPv73beAxbxDeqpWuKzrveUu+rFYl+o1sXIjvZ/PwcxXv6/lBcVhukKS9Kmh4tk0D6HuK
- dXLEVWx4K/eEJpg3c=
-X-Received: by 2002:a05:6402:4246:10b0:6ae:1895:3b3e with SMTP id
- 4fb4d7f45d1cf-6b41d5cfd2emr855861a12.6.1792641926665; Wed, 21 Oct 2026
- 21:05:26 -0700 (PDT)
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=X/8A+cN1Sp9zTaU79AfCBSncIso0NxeDyPttmRtKwxA=;
+ b=p/kLbTBjN8zVG5zcH98DKsb7JfPqo4LH/iBLvOWdaxG4yZFGyOiqiPCSrs7aWqCY06rrIMkgS7CZu96YF6xh5Y427gC3ZMDcRBeyR+tRlR7kBKam8Z0h7mrhX1wOL3GMVSbq7s8ghuwQe8x4mB9Y4VNpuU/KVfnOzMl+JSKiVeQ=
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com (2603:10b6:208:4f2::13)
+ by MW6PR04MB8916.namprd04.prod.outlook.com (2603:10b6:303:246::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.15; Thu, 22 Oct
+ 2026 04:16:07 +0000
+Received: from MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77]) by MN6PR04MB9359.namprd04.prod.outlook.com
+ ([fe80::e729:bbef:5a37:2e77%4]) with mapi id 15.21.0522.017; Thu, 22 Oct 2026
+ 04:16:07 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "sebasjosue84@gmail.com" <sebasjosue84@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "palmer@dabbelt.com"
+ <palmer@dabbelt.com>, "daniel.barboza@oss.qualcomm.com"
+ <daniel.barboza@oss.qualcomm.com>, "chao.liu@processmission.com"
+ <chao.liu@processmission.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v3 1/2] target/riscv: pmp: clear A and L on every
+ implemented PMP entry at reset
+Thread-Topic: [PATCH v3 1/2] target/riscv: pmp: clear A and L on every
+ implemented PMP entry at reset
+Thread-Index: AQHdYdpGN/cVIeETXESs0WiuYJjcDLcI9GkA
+Date: Thu, 22 Oct 2026 04:16:07 +0000
+Message-ID: <8ef60815c8e34aff906f12d0793a0b91873063b7.camel@wdc.com>
+References: <20261022040258.1509306-1-sebasjosue84@gmail.com>
+ <20261022040258.1509306-2-sebasjosue84@gmail.com>
+In-Reply-To: <20261022040258.1509306-2-sebasjosue84@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.62.0 (by Flathub.org) 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MN6PR04MB9359:EE_|MW6PR04MB8916:EE_
+x-ms-office365-filtering-correlation-id: bb2d03b6-b6a9-4cbf-5875-08df2ff331f6
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|23010399003|10070799003|376014|19092799006|366016|261021121427099003|38070700021|56012099006|11063799006|4143699003|10067099003|18002099003|22082099003|261021123027099003|6133799003;
+x-microsoft-antispam-message-info: gnrwfaa4cbt4FKSv+KzXKN5Kw5GVgrtoR9CMs95rFEAuMQcFwIsmfPSu4c0bCxSxy1Q4ok3rjCz9+OOV/hPXqP6rA0jEILPLJcZwqUm69702RMg8ajEdMOuQfXVf9rFcyVko62/HcMtCE5LGklZmlgXvLqkPi7Mi6Y1tHSBTvRHLT0vH3OhFzPziaE+YZpCaWI2EyE66noG/PdOQOmBC8CGcj+TEgpj8PNrHxp668JiSQkw+seS4uFCk+sgQQKgkCZJ8MU4gy5Q0bt6xXuqlWpy/B9KHxQLUIsbYj6hhOQKKqYMZm3UZYOyy06y4T2SRFmx6Iycma+UP6uNolYapA7yF8276XXhi4XiCLLbMtpdrOimqil6RqUss6Xc5P7AmernF0KtmGRq7EhE7Ka8qgoS3+MtsftiZGgKxYjvdQz1R8Rb5FfLAIdLiWvJ2zk05iul6zwO3WKcdTa6K0NcXFJHqXPyxnMP0/x8xl6YOWfKb9ODQu8Z1rFiL8J4CC0HFAZQV4Jpd5SC/N1DpgHNA0vKwrZn4HDf7Oh6ClgnWlyALAQb9Q7WNHhWSiCzNlMAPlXvJfkaJD5HZsve40YOyoP7rEFGCGvM7VLcVatwl2Uis/YhbctmDjVcfsQbf1WQ8PxfrfXS9+xabdmbw8gW28huAzUk+NNdEyrKXSJAibljesbza0QfbYi7Q5N2geXQBHvxgLjhjPunmalutNaX1w1f5n+OdAI1NhJJvxN6SU04=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MN6PR04MB9359.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(23010399003)(10070799003)(376014)(19092799006)(366016)(261021121427099003)(38070700021)(56012099006)(11063799006)(4143699003)(10067099003)(18002099003)(22082099003)(261021123027099003)(6133799003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?M0MzL3ZtdmRVcmFqTU16dC9UMjhoRkRqQmxqU3k1YkdvR1ZqaWFMWitJRkxQ?=
+ =?utf-8?B?a2h4b212VUg3OXorMDhFeWlZTCtDanZhOWo4aHY0akN6WXZyMXR6QnZHSmJs?=
+ =?utf-8?B?bVZWTTQ5eWZVZDBJRTVYK3RodTFxVGRxWkNNUnFTa052R1VacElZaXVMdVpo?=
+ =?utf-8?B?MDBuTWVwWDFLZGRhdVQvaG15VFVxclRwM0tWY2ZUNHdxd3YvZU4yenBVK3pG?=
+ =?utf-8?B?NGR0S0ZYNHJFbHhIMjZldzRtOWVvZjk0blZaM1RaZitZdDNaQkxuQ3BKNS9D?=
+ =?utf-8?B?RDlTcEZaelhTaCt2V1VLUlU3MWFrTGZuL1h6WGFLYStLaUZpNVNqVFM3bkU5?=
+ =?utf-8?B?ZklhS2tvMXBiNUgzbDBBYkZMRWdIaTlpSXMxY3o3dEZ1blhEeDc5ME9JNFVB?=
+ =?utf-8?B?dGtqZXBTeG01bEdTc1dkN2hGeElPR05QUmUxVzJKdXFkQ3ZIY3lSN1RoWHZT?=
+ =?utf-8?B?Z1owd2l2N3lRWEQrR1NRNXY3SjBzcG1jcVJaZ2VUc2QzRXladVF1ZnhEUmJu?=
+ =?utf-8?B?emlaREc3QUU5NUdIQVNGM1ZHSCszZXpLeXROSFZzZmx1dTB0TmhJZXNXOE02?=
+ =?utf-8?B?Mk5jWkNnZmlmMUxuWlI0c05EV0h1aXJYc0JKc2txMzFZOEc2YTgraTF6ZFdm?=
+ =?utf-8?B?NXFtUHpFdmJJWUJCdTl1Wldrem1OdjhUTzIwb0xick95dkU5dENlYkhGRVo1?=
+ =?utf-8?B?cTZDVkNuWm9LV0ZBeE1FNTBUNGxYT1JHUzErcTFWVzA3RlN3a2Nlb0k1Wmsx?=
+ =?utf-8?B?UGRCQVdGWStXRnhDaXRkcFVSVGJzdUc5dzdtS1dndVZmb2VQem53RzlpZnFr?=
+ =?utf-8?B?WjVieUhKUndRUlNjbHhBalpXdkxOT2dscEIrSDF3OVM2cTYxaXFnVWo4Ym5M?=
+ =?utf-8?B?b3ZFd3g3UkN4cFJ1NEJKeEVXcWtnTXU0bFZLY25UNDVKUnlKMnJES1Q0T1NZ?=
+ =?utf-8?B?Qmt5eEY3YlI0NGZsVVlSSm5XT1h6emphK3RGZXhsMldnbVdZUGZrQllDOG5G?=
+ =?utf-8?B?RnJrL0xOL1E5MHltTEZpTkFUeGtva3VWMnpYeGNqY3VVY1paVTQwM2VUSW84?=
+ =?utf-8?B?czlZSFlvdEVHYTIwQjl2Sm94VVM4aEJVOFBrbmd0M3A5RWZ1TkJlZTU4ZE5T?=
+ =?utf-8?B?eG1MS3ZwSEY5VlYvTGE5V25MOTltNUNIVS9QVmVZQ2c1UGZjcURYditkQWho?=
+ =?utf-8?B?Y2JOMnBWZ0ZHczRiZFgyMUo1RUVMV2ZpNjlzRHZuV2RWRmdnYVJCZDQ4K2FV?=
+ =?utf-8?B?bGthU3RXVDNITHd5SnlXS05OY1YvWDFZdmgwMVFCd2pUdG1TS3hzN281MENV?=
+ =?utf-8?B?QkNnRFN4Y2lQZVdIdGNSazlEMXdYOElsUTdoT1NQdFlWbEVveVBpclB2OWpJ?=
+ =?utf-8?B?U3J5bGx1Z0haNG42VnYramdvWlpoS0l2VWF0RHljcDJvTUFkSTl2cnNVVHZY?=
+ =?utf-8?B?Z2JWaEw0K3BTbUc4eXkyOG9xK1BBYWJJbU5wbDFTcmUrYVJCVnFOTlJYRHlQ?=
+ =?utf-8?B?N3pxbGZ2ejVzMkFRVzh4SEVZMTFRbjdGM2V1blRibzFvYUJJSmxSTjl5MjRQ?=
+ =?utf-8?B?aUI4NjZETzUybEpqa0lVM203cVhwQ3UxOGd1MU1LeEFmeDBvSjNmZnMyZE9q?=
+ =?utf-8?B?bHNDRWN4R2xFTGdNdkJLMzdSdVZ6dVJXdnl3Wm9keGlQS1k2SE55aUZuZW9j?=
+ =?utf-8?B?WGhXTVJDdUQxTFV2MWVwUlFtemx6QkU1dEJwZ09IRFJlQ2RnQ29DbDhiTXBh?=
+ =?utf-8?B?VlRXWmg1RjVleHQzSWhsdnk5cS83YXIyY2ozZDJzckdTQy8rbEJyVWdaT2tR?=
+ =?utf-8?B?NEFFOUpjV2hVb0I0R0dBeFNERFJvTytWM3VXOW1IMVI2cXM0VE9jcGVob2Er?=
+ =?utf-8?B?cHRKVmZ1Q2dtNWc4T2lXUHk5WkwzbWtEd0l1Q0l4cWx6WGNCZm96UzhpZDVR?=
+ =?utf-8?B?cEFNQmFxNk5xZ2o4RGtyZThqSkNIbmNDYmRuRDBQQzI4ckRlcUloUGs0SnBX?=
+ =?utf-8?B?TTJFUDBsQVZ2NTd6c3k0MXFpQXozdFhMN0RSRXdTY2NMaENOVE5VVHJEZGdp?=
+ =?utf-8?B?L1ZOL0lFTHVqQTJIbXlLM1RQck9JYXBHNUpsUm5lelRvcFBFSldpTDZFSHhC?=
+ =?utf-8?B?b292MU40Z0ppMXlTckd4Nmlsa0kvUFNFajFvcndyOUd0Q2RLUDA3K2I0Sk9R?=
+ =?utf-8?B?VVU1VjZPYlVIOXB6dmlnVDJBSjhkVUVubG54TWhwWFpodGw5Vno0U0JUcDRh?=
+ =?utf-8?B?MzVKZjNmd2VXQmc4YUJHczY1ZFozQXA5WWxhYXJFZEk1Rk44bFRjZTdaSUk4?=
+ =?utf-8?B?dS9sTm5XUjBCdUhZSU1WTGNidmJhWUhUdWxaMlcvd2JYWWZOZmtRT0h4aUsr?=
+ =?utf-8?Q?9tXAQChEchGyTFpzTQTN0Kjrl+1KMhhhbX0YL5SHv90Bq?=
+x-ms-exchange-antispam-messagedata-1: slLMcDf8Kd2Tdz4LEYKTPofMI8j6r2w1jrw=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <9B7066ABCB6F4C408896C1F52E2A4D41@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20260916034331.2390427-1-sebasjosue84@gmail.com>
- <0ebf4cdd-d5be-41f0-adaf-d540f3dd0793@linaro.org>
- <ba06d1597bb8e7f3c68e77d4b8c999fec3b410d3.camel@wdc.com>
-In-Reply-To: <ba06d1597bb8e7f3c68e77d4b8c999fec3b410d3.camel@wdc.com>
-From: =?UTF-8?Q?Sebasti=C3=A1n_Alba?= <sebasjosue84@gmail.com>
-Date: Wed, 21 Oct 2026 22:05:15 -0600
-X-Gm-Features: AclHuK85aaqHY0mRhxNYbsrMNNJ9K7DjXsUA9jhw7tFj5t5Ds5OHVqcGONAgvr4
-Message-ID: <CAJD=UNdaqRj30PLbGpQ-EAue=h3i0TfaQjxYL+SPH62U9V79xw@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv/pmp: unlock all PMP entries on reset
-To: Alistair Francis <Alistair.Francis@wdc.com>
-Cc: "richard.henderson@linaro.org" <richard.henderson@linaro.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
- "palmer@dabbelt.com" <palmer@dabbelt.com>, 
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>, 
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
-Content-Type: multipart/alternative; boundary="0000000000003f98e2065e65f900"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=sebasjosue84@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Exchange-RoutingPolicyChecked: 5JarEWfM+vSsgUIwuBaQBvvhJpLaaaeyRQLtE4/SYxITgIZ3tGkIhYeI1m8Z+Hpg4IBkcVv2gdiCQSM3obprhR6NIaVR/iR41nb1tF6wUs4nZ48itFhouXcJeav3ZT0LbW1xoa7pCJ8uIxaI5QPbn1QARVbPgt/k0//xNLrnWMaF9fFwT7k11RvLSDeeQ0DfkRsz0zL4hqgNGzsxntmbVod2zqkhko+kuvw5Sk1zTpmN4mxCaxlVunW+x5DUZnxKI9baByHskuQuFOTqKFX2sNZrjHGEzSiXFOfQCEyBtAOsaT+L25/eQ4zGswCSevdSy5Y93nFWg0b3SHpA1SWP6A==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: fKaxRo7FPeoZbZ2JciJxm7BRFQ/7VRGpIoYMkT/g0HN6OtT4yexneR62F+b93C1Qw3lxjIlcRPySDJY6X6bnRB+zjtfbkLhGSdcxD1Yn1aJocLD8Zg9EBKRaZxgmxf52hFPeioUA4HUfu3SmwuBqUDXTlVzWTUswTelQsdnc+HQUQ3n3yg2bpNr69f6WL4S2kCnkoSPZ8KRKYXRnKJQryPaKeg2YE/rDV/PyzyIRWjC5r0iP3xAfOzpMaY399voRYtMuOONmaGlyLs2PCmhHsBR60MlevLRe2AkFd0Zhsiv5gRK29g1yyYGTQDOjjDeksuFeFWbhXMtgC0mpvFJVP48af7Okr6mhwRA/ldyfRUzg/tP3U2gqpkqfFs9e2MqK8hT9MOLFuM8XbIEC7Z2V8fb3bzVZbZd3pYHYM4GYVp7P1aLvlc3KK3tdFAO/ZwNdF7I5VhgtF4eGfgWOii10Qf3TA6ClHAhF4C2xQMf8JAUo6N39SkreRtDEFc0A/C8Hyu+VEtCoxNGm3AbmNDr9D58dcS4BvdmEBptPcY40hY6lluUWyIJIBwwU/hZSsH12a6e4PCzX+jc3UT0joERdLQYHwdOdxZzyjQ1Ao/3+Zm6c51dgIhpXSdJY/QurcZoh
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN6PR04MB9359.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb2d03b6-b6a9-4cbf-5875-08df2ff331f6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2026 04:16:07.1071 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: M3RjXkJWSEiMVDLWDzY4pnsoSlntj+9yG538U4S+NEtTAxXOT5/B0ba1j1n7Ge/vq0u3stGEbOCPK+ibLUhemM63Lci4yHBBhoR8zfQyQVg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR04MB8916
+Received-SPF: pass client-ip=216.71.153.144;
+ envelope-from=prvs=748e7da1e=Alistair.Francis@wdc.com;
+ helo=esa5.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,235 +183,40 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---0000000000003f98e2065e65f900
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-I sent a v3 a few minutes ago, before seeing this. It splits the change in
-two:
-
-  1/2  this fix, with a reworded commit message. Functionally the
-       same, though I kept the variable as pmp_num instead of
-       renaming it, so let me know whether you'd rather I carry your
-       Reviewed-by across or just take v1 from this thread.
-
-  2/2  clears pmp_state.addr[] and num_rules. The spec doesn't cover
-       those, but they stay stale across reset and the difference is
-       observable from a guest. There's a measurement in the v3
-       cover letter.
-
-v3:
-https://lore.kernel.org/qemu-devel/20261022040258.1509306-1-sebasjosue84@gm=
-ail.com/
-
-Sebasti=C3=A1n
-
-El mi=C3=A9, 21 oct 2026 a las 21:40, Alistair Francis (<Alistair.Francis@w=
-dc.com>)
-escribi=C3=B3:
-
-> On Wed, 2026-09-16 at 00:10 -1000, Richard Henderson wrote:
-> > On 9/15/26 17:43, Sebastian Alba Vives wrote:
-> > > pmp_unlock_entries() bounds its loop with pmp_get_num_rules(),
-> > > which is
-> > > the count of entries whose A field is not OFF, not the number of
-> > > implemented PMP entries. When the active rules are not contiguous
-> > > from
-> > > index 0, every entry at an index greater than or equal to num_rules
-> > > keeps its lock bit across a CPU reset.
-> > >
-> > > Those entries stay locked after the reset has cleared mseccfg, so
-> > > mseccfg.RLB is no longer set and pmp_is_readonly() silently
-> > > discards
-> > > subsequent pmpcfg writes. Firmware started after the reset finds
-> > > PMP
-> > > entries it did not configure and cannot clear.
-> > >
-> > > Reproduced on -machine virt -cpu rv64,smepmp=3Dtrue with a bare-metal
-> > > payload that sets pmpcfg0 =3D 0x99990000 (entries 2 and 3 as
-> > > L | NAPOT | R, entries 0 and 1 left OFF) and then resets through
-> > > the
-> > > sifive_test device. On the second boot pmpcfg0 reads back
-> > > 0x99990000
-> > > and writing 0 to it leaves the value unchanged. With this patch the
-> > > same payload reads 0x01010000 on the second boot and clearing
-> > > pmpcfg0
-> > > succeeds.
-> > >
-> > > Iterate over the implemented entries instead.
-> > >
-> > > Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on
-> > > reset")
-> > > Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-> > > ---
-> > >   target/riscv/tcg/pmp.c | 4 ++--
-> > >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-> > > index 41b55519a8..5286c6aa90 100644
-> > > --- a/target/riscv/tcg/pmp.c
-> > > +++ b/target/riscv/tcg/pmp.c
-> > > @@ -201,10 +201,10 @@ static bool pmp_write_cfg(CPURISCVState *env,
-> > > uint32_t pmp_index, uint8_t val)
-> > >
-> > >   void pmp_unlock_entries(CPURISCVState *env)
-> > >   {
-> > > -    uint32_t pmp_num =3D pmp_get_num_rules(env);
-> > > +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
-> > >       int i;
-> > >
-> > > -    for (i =3D 0; i < pmp_num; i++) {
-> > > +    for (i =3D 0; i < pmp_regions; i++) {
-> > >           env->pmp_state.pmp[i].cfg_reg &=3D ~(PMP_LOCK |
-> > > PMP_AMATCH);
-> > >       }
-> > >   }
-> >
-> > Why is the entire env->pmp_state not zeroed instead?
->
-> The RISC-V spec specifically states that on reset:
->
-> "Writable PMP registers=E2=80=99 A and L fields are set to 0...", so this=
- does
-> seem to be the correct approach
->
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->
-> Alistair
->
-> >
-> >
-> > r~
->
-
-
---=20
-Sebasti=C3=A1n Alba
-
---0000000000003f98e2065e65f900
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I sent a v3 a few minutes ago, before seeing this. It spli=
-ts the change in two:<br><br>=C2=A0 1/2 =C2=A0this fix, with a reworded com=
-mit message. Functionally the<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0same, though I =
-kept the variable as pmp_num instead of<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0renam=
-ing it, so let me know whether you&#39;d rather I carry your<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0Reviewed-by across or just take v1 from this thread.<br><b=
-r>=C2=A0 2/2 =C2=A0clears pmp_state.addr[] and num_rules. The spec doesn&#3=
-9;t cover<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0those, but they stay stale across r=
-eset and the difference is<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0observable from a =
-guest. There&#39;s a measurement in the v3<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0co=
-ver letter.<br><br>v3: <a href=3D"https://lore.kernel.org/qemu-devel/202610=
-22040258.1509306-1-sebasjosue84@gmail.com/">https://lore.kernel.org/qemu-de=
-vel/20261022040258.1509306-1-sebasjosue84@gmail.com/</a><br><br>Sebasti=C3=
-=A1n<br></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=
-=3D"ltr" class=3D"gmail_attr">El mi=C3=A9, 21 oct 2026 a las 21:40, Alistai=
-r Francis (&lt;<a href=3D"mailto:Alistair.Francis@wdc.com">Alistair.Francis=
-@wdc.com</a>&gt;) escribi=C3=B3:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:=
-solid;border-left-color:rgb(204,204,204);padding-left:1ex">On Wed, 2026-09-=
-16 at 00:10 -1000, Richard Henderson wrote:<br>
-&gt; On 9/15/26 17:43, Sebastian Alba Vives wrote:<br>
-&gt; &gt; pmp_unlock_entries() bounds its loop with pmp_get_num_rules(),<br=
->
-&gt; &gt; which is<br>
-&gt; &gt; the count of entries whose A field is not OFF, not the number of<=
-br>
-&gt; &gt; implemented PMP entries. When the active rules are not contiguous=
-<br>
-&gt; &gt; from<br>
-&gt; &gt; index 0, every entry at an index greater than or equal to num_rul=
-es<br>
-&gt; &gt; keeps its lock bit across a CPU reset.<br>
-&gt; &gt; <br>
-&gt; &gt; Those entries stay locked after the reset has cleared mseccfg, so=
-<br>
-&gt; &gt; mseccfg.RLB is no longer set and pmp_is_readonly() silently<br>
-&gt; &gt; discards<br>
-&gt; &gt; subsequent pmpcfg writes. Firmware started after the reset finds<=
-br>
-&gt; &gt; PMP<br>
-&gt; &gt; entries it did not configure and cannot clear.<br>
-&gt; &gt; <br>
-&gt; &gt; Reproduced on -machine virt -cpu rv64,smepmp=3Dtrue with a bare-m=
-etal<br>
-&gt; &gt; payload that sets pmpcfg0 =3D 0x99990000 (entries 2 and 3 as<br>
-&gt; &gt; L | NAPOT | R, entries 0 and 1 left OFF) and then resets through<=
-br>
-&gt; &gt; the<br>
-&gt; &gt; sifive_test device. On the second boot pmpcfg0 reads back<br>
-&gt; &gt; 0x99990000<br>
-&gt; &gt; and writing 0 to it leaves the value unchanged. With this patch t=
-he<br>
-&gt; &gt; same payload reads 0x01010000 on the second boot and clearing<br>
-&gt; &gt; pmpcfg0<br>
-&gt; &gt; succeeds.<br>
-&gt; &gt; <br>
-&gt; &gt; Iterate over the implemented entries instead.<br>
-&gt; &gt; <br>
-&gt; &gt; Fixes: 4bf501dc0118 (&quot;target/riscv: pmp: Clear pmp/smepmp bi=
-ts on<br>
-&gt; &gt; reset&quot;)<br>
-&gt; &gt; Signed-off-by: Sebastian Alba Vives &lt;<a href=3D"mailto:sebasjo=
-sue84@gmail.com" target=3D"_blank">sebasjosue84@gmail.com</a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt; =C2=A0 target/riscv/tcg/pmp.c | 4 ++--<br>
-&gt; &gt; =C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)<br>
-&gt; &gt; <br>
-&gt; &gt; diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c<br>
-&gt; &gt; index 41b55519a8..5286c6aa90 100644<br>
-&gt; &gt; --- a/target/riscv/tcg/pmp.c<br>
-&gt; &gt; +++ b/target/riscv/tcg/pmp.c<br>
-&gt; &gt; @@ -201,10 +201,10 @@ static bool pmp_write_cfg(CPURISCVState *en=
-v,<br>
-&gt; &gt; uint32_t pmp_index, uint8_t val)<br>
-&gt; &gt; =C2=A0 <br>
-&gt; &gt; =C2=A0 void pmp_unlock_entries(CPURISCVState *env)<br>
-&gt; &gt; =C2=A0 {<br>
-&gt; &gt; -=C2=A0=C2=A0=C2=A0 uint32_t pmp_num =3D pmp_get_num_rules(env);<=
-br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 uint8_t pmp_regions =3D riscv_cpu_cfg(env)-&g=
-t;pmp_regions;<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int i;<br>
-&gt; &gt; =C2=A0 <br>
-&gt; &gt; -=C2=A0=C2=A0=C2=A0 for (i =3D 0; i &lt; pmp_num; i++) {<br>
-&gt; &gt; +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i &lt; pmp_regions; i++) {<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env-&gt;pm=
-p_state.pmp[i].cfg_reg &amp;=3D ~(PMP_LOCK |<br>
-&gt; &gt; PMP_AMATCH);<br>
-&gt; &gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>
-&gt; &gt; =C2=A0 }<br>
-&gt; <br>
-&gt; Why is the entire env-&gt;pmp_state not zeroed instead?<br>
-<br>
-The RISC-V spec specifically states that on reset:<br>
-<br>
-&quot;Writable PMP registers=E2=80=99 A and L fields are set to 0...&quot;,=
- so this does<br>
-seem to be the correct approach<br>
-<br>
-Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@wdc.co=
-m" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-<br>
-Alistair<br>
-<br>
-&gt; <br>
-&gt; <br>
-&gt; r~<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div style=3D"=
-text-align:left">Sebasti=C3=A1n Alba</div><div style=3D"text-align:center">=
-</div></div></div></div></div>
-
---0000000000003f98e2065e65f900--
+T24gV2VkLCAyMDI2LTEwLTIxIGF0IDIyOjAyIC0wNjAwLCBTZWJhc3RpYW4gQWxiYSBWaXZlcyB3
+cm90ZToNCj4gcG1wX3VubG9ja19lbnRyaWVzKCkgYm91bmRzIGl0cyBsb29wIHdpdGggcG1wX2dl
+dF9udW1fcnVsZXMoKSwgd2hpY2gNCj4gcmV0dXJucyB0aGUgbnVtYmVyIG9mIGVudHJpZXMgd2hv
+c2UgQSBmaWVsZCBpcyBub3QgT0ZGIHJhdGhlciB0aGFuDQo+IHRoZQ0KPiBudW1iZXIgb2YgaW1w
+bGVtZW50ZWQgZW50cmllcy4gV2l0aCBhIHNwYXJzZSBjb25maWd1cmF0aW9uIHRoZSBsb29wDQo+
+IHN0b3BzIGVhcmx5OiB3aXRoIGVudHJpZXMgMCBhbmQgMSBPRkYgYW5kIGVudHJpZXMgMiBhbmQg
+MyBsb2NrZWQsDQo+IG51bV9ydWxlcyBpcyAyLCB0aGUgbG9vcCBjb3ZlcnMgaSA9IDAgYW5kIGkg
+PSAxLCBhbmQgZW50cmllcyAyIGFuZCAzDQo+IGtlZXAgdGhlaXIgbG9jayBhbmQgYWRkcmVzcy1t
+YXRjaCBiaXRzIGFjcm9zcyByZXNldC4NCj4gDQo+IHJpc2N2X2NwdV9yZXNldF9ob2xkKCkgY2xl
+YXJzIG1zZWNjZmcsIGFuZCB3aXRoIGl0IFJMQiwgYmVmb3JlDQo+IGNhbGxpbmcNCj4gdGhpcywg
+c28gcG1wX2lzX3JlYWRvbmx5KCkgdGhlbiBzaWxlbnRseSBkaXNjYXJkcyBldmVyeSBzdWJzZXF1
+ZW50DQo+IHBtcGNmZyB3cml0ZSB0byB0aG9zZSBlbnRyaWVzLiBUaGUgc3RhbGUgcnVsZXMgc3Vy
+dml2ZSBmb3IgdGhlDQo+IGxpZmV0aW1lIG9mIHRoZSBtYWNoaW5lLg0KPiANCj4gQm91bmQgdGhl
+IGxvb3AgYnkgdGhlIG51bWJlciBvZiBpbXBsZW1lbnRlZCByZWdpb25zIGluc3RlYWQuDQo+IA0K
+PiBGaXhlczogNGJmNTAxZGMwMTE4ICgidGFyZ2V0L3Jpc2N2OiBwbXA6IENsZWFyIHBtcC9zbWVw
+bXAgYml0cyBvbg0KPiByZXNldCIpDQo+IFNpZ25lZC1vZmYtYnk6IFNlYmFzdGlhbiBBbGJhIFZp
+dmVzIDxzZWJhc2pvc3VlODRAZ21haWwuY29tPg0KDQpSZXZpZXdlZC1ieTogQWxpc3RhaXIgRnJh
+bmNpcyA8YWxpc3RhaXIuZnJhbmNpc0B3ZGMuY29tPg0KDQpBbGlzdGFpcg0KDQo+IC0tLQ0KPiDC
+oHRhcmdldC9yaXNjdi90Y2cvcG1wLmMgfCAyICstDQo+IMKgMSBmaWxlIGNoYW5nZWQsIDEgaW5z
+ZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pDQo+IA0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L3Jpc2N2
+L3RjZy9wbXAuYyBiL3RhcmdldC9yaXNjdi90Y2cvcG1wLmMNCj4gaW5kZXggNDFiNTU1MTlhOC4u
+MDYxZjBlMDc4ZCAxMDA2NDQNCj4gLS0tIGEvdGFyZ2V0L3Jpc2N2L3RjZy9wbXAuYw0KPiArKysg
+Yi90YXJnZXQvcmlzY3YvdGNnL3BtcC5jDQo+IEBAIC0yMDEsNyArMjAxLDcgQEAgc3RhdGljIGJv
+b2wgcG1wX3dyaXRlX2NmZyhDUFVSSVNDVlN0YXRlICplbnYsDQo+IHVpbnQzMl90IHBtcF9pbmRl
+eCwgdWludDhfdCB2YWwpDQo+IMKgDQo+IMKgdm9pZCBwbXBfdW5sb2NrX2VudHJpZXMoQ1BVUklT
+Q1ZTdGF0ZSAqZW52KQ0KPiDCoHsNCj4gLcKgwqDCoCB1aW50MzJfdCBwbXBfbnVtID0gcG1wX2dl
+dF9udW1fcnVsZXMoZW52KTsNCj4gK8KgwqDCoCB1aW50MzJfdCBwbXBfbnVtID0gcmlzY3ZfY3B1
+X2NmZyhlbnYpLT5wbXBfcmVnaW9uczsNCj4gwqDCoMKgwqAgaW50IGk7DQo+IMKgDQo+IMKgwqDC
+oMKgIGZvciAoaSA9IDA7IGkgPCBwbXBfbnVtOyBpKyspIHsNCg==
 
