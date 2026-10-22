@@ -1,68 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62FE606A31B
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C2E606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZR5Z1Qah
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QmoaVHU/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJq9y-0003Uw-64; Thu, 22 Oct 2026 06:36:34 -0400
+	id 1xJqAQ-0003mX-1b; Thu, 22 Oct 2026 06:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJq9w-0003UN-Jm
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJqAN-0003kc-UT
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:37:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJq9u-0007kt-4e
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJqAM-0007oO-3u
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792665387;
+ s=mimecast20190719; t=1792665417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=u+sKn7Y2UTAAGU6sFfeJyI2+8hEhMk7bY6J/I29Nbbs=;
- b=ZR5Z1QahZMl4ktrVkcuGcBpLJqvpAVwRNMGWCdGtZk0B4xc9MXzrDLmuHzjP8zYaSSGVqf
- 4L32RhH8ZeoLR7qSCIzEZ/ThcFp+xTfG74NCh0rCKcXFajPIYkXt5SFlIYZ0ZCeTJpUtmh
- 3pDawcmJL/9VQBUv/lrCF34DWAvK2Lo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VDbShbMKWVIUFIflYk6b3e2Dgp0hn9J4zxXnrBscNyk=;
+ b=QmoaVHU/DDtDaOu9GVdDAfPXMsNPLMIbFcs2eWs8ug9KBfMWTXOeb8B5lfULD63eybwMvZ
+ LE0hv50AREiQfGJ9+jJ9U7AjkDCY6Et1Nv0hq2fIwIFuuMmWtBqF05PMMT+JrOADocwYcb
+ XgoZMFauFHRb/6XAZ52VD8TANMo/5CY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-G1VdrEJ5MpOAoZMWCk5D_A-1; Thu,
- 22 Oct 2026 10:36:26 +0000
-X-MC-Unique: G1VdrEJ5MpOAoZMWCk5D_A-1
-X-Mimecast-MFC-AGG-ID: G1VdrEJ5MpOAoZMWCk5D_A_1792665385
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-d5aYC6T5MPCZwJDr1QbwUA-1; Thu,
+ 22 Oct 2026 06:36:53 -0400
+X-MC-Unique: d5aYC6T5MPCZwJDr1QbwUA-1
+X-Mimecast-MFC-AGG-ID: d5aYC6T5MPCZwJDr1QbwUA_1792665412
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F57E180059B; Thu, 22 Oct 2026 10:36:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2ED71955E7A; Thu, 22 Oct 2026 10:36:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.48.5])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 56D1B30000E7; Thu, 22 Oct 2026 10:36:24 +0000 (UTC)
+ id 6A06830000E7; Thu, 22 Oct 2026 10:36:51 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 00/11] Various fixes for the USB code
-Date: Thu, 22 Oct 2026 12:36:11 +0200
-Message-ID: <20261022103622.1151089-1-thuth@redhat.com>
+Cc: Nikhil Agrawal <nikhil.agrawal@mettlelabs.ai>
+Subject: [PULL 11/11] hw/usb/hcd-xhci: More reentrancy guard fixes for the
+ XHCI code
+Date: Thu, 22 Oct 2026 12:36:22 +0200
+Message-ID: <20261022103622.1151089-12-thuth@redhat.com>
+In-Reply-To: <20261022103622.1151089-1-thuth@redhat.com>
+References: <20261022103622.1151089-1-thuth@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,58 +80,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
- Hi Richard!
+The XHCI controller's USB port and bus callbacks -- xhci_complete(),
+xhci_wakeup_endpoint(), xhci_attach(), xhci_detach(), and
+xhci_wakeup() -- can be invoked from outside any MMIO handler context.
+The device's mem_reentrancy_guard is therefore not engaged during
+this processing.
 
-The following changes since commit 8967b2fe1b2aaae3c29e207d85fab901d580a2dc:
+A malicious guest can exploit this gap via MSI-X self-targeting: it
+programs the MSI-X vector's message address to point at the XHCI
+doorbell register array (both reside in the same BAR0 MemoryRegion).
+When any of these callbacks posts an event via xhci_event() ->
+xhci_intr_raise(), the resulting msix_notify() -> pci_msi_trigger()
+issues an address_space_stl_le() that writes doorbell 0, triggering
+xhci_process_commands() reentrantly. A CR_DISABLE_SLOT command
+planted on the command ring then frees XHCITransfer/XHCIEPContext
+objects that the outer call stack still references, causing a
+heap use-after-free.
 
-  Merge tag 'pull-9p-20261019' of https://github.com/cschoenebeck/qemu into staging (2026-10-20 07:04:06 +0200)
+Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
+around the processing in all five callbacks. The guard is set
+conditionally (only when not already engaged) because these callbacks
+may also be reached from within a guarded MMIO context.
 
-are available in the Git repository at:
+xhci_child_detach() is intentionally left unguarded: it only calls
+xhci_detach_slot() which passes report=0 to xhci_ep_nuke_xfers(),
+suppressing event generation, so it never reaches xhci_event().
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-10-22
+Note: This is similar to the fixes done for CVE-2026-17588, see
+f91b0544fe ("Set reentrancy guard in timer functions").
 
-for you to fetch changes up to cfa70f3a82f581ad758586ecf408fe7f3602850f:
+CVE: CVE-2026-111819
+Message-ID: <20261020114031.687929-1-thuth@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4625
+Reported-by: Ken Hsu, Royce Lu, and Bo Qu of Palo Alto Networks
+Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/4642
+Reported-by: Nikhil Agrawal <nikhil.agrawal@mettlelabs.ai>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/usb/hcd-xhci.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-  hw/usb/hcd-xhci: More reentrancy guard fixes for the XHCI code (2026-10-22 12:33:17 +0200)
-
-----------------------------------------------------------------
-Various fixes for the USB code
-
-----------------------------------------------------------------
-Haotian Jiang (2):
-      usb-host: free request on libusb submit failure
-      usb-host: delete bottom halves during unrealize
-
-Junjie Cao (4):
-      tests/qtest: Cover OHCI endpoint type mismatches
-      usb-host: validate interface number before indexing altsetting
-      usb-host: free configuration descriptors on error paths
-      tests/qtest/usb-hcd-xhci: test interrupt pacing above 2^32
-
-Peter Maydell (1):
-      hw/usb/hcd-ohci: Fail iso packets sent to non-iso endpoints and vice-versa
-
-Thomas Huth (1):
-      hw/usb/hcd-xhci: More reentrancy guard fixes for the XHCI code
-
-Tommaso Califano (3):
-      hw/usb/dev-mtp: Fix assert crash on undersized BULK IN
-      hw/usb/dev-mtp: Fix assert crash on short CMD_SEND_OBJECT
-      hw/usb/dev-mtp: Fix heap OOB read in usb_mtp_write_metadata()
-
- hw/usb/dev-mtp.c                |  24 ++-
- hw/usb/hcd-ohci.c               |  67 +++---
- hw/usb/hcd-xhci.c               |  27 +++
- hw/usb/host-libusb.c            |  47 ++++-
- tests/qtest/usb-hcd-ohci-test.c | 439 ++++++++++++++++++++++++++++++++++++++++
- tests/qtest/usb-hcd-xhci-test.c |  46 +++++
- hw/usb/trace-events             |   2 +
- 7 files changed, 613 insertions(+), 39 deletions(-)
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 376bc00264d..5d7a77b8bcf 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3251,49 +3251,73 @@ static const MemoryRegionOps xhci_doorbell_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
++static bool xhci_engage_reentrancy_guard(XHCIState *xhci)
++{
++    bool prev_engaged = xhci->parent.mem_reentrancy_guard.engaged_in_io;
++
++    xhci->parent.mem_reentrancy_guard.engaged_in_io = true;
++    return prev_engaged;
++}
++
++static void xhci_restore_reentrancy_guard(XHCIState *xhci, bool engaged)
++{
++    xhci->parent.mem_reentrancy_guard.engaged_in_io = engaged;
++}
++
+ static void xhci_attach(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged = xhci_engage_reentrancy_guard(xhci);
+ 
+     xhci_port_update(port, 0);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_detach(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged = xhci_engage_reentrancy_guard(xhci);
+ 
+     xhci_detach_slot(xhci, usbport);
+     xhci_port_update(port, 1);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_wakeup(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged;
+ 
+     assert(port);
+     if (get_field(port->portsc, PORTSC_PLS) != PLS_U3) {
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     set_field(&port->portsc, PLS_RESUME, PORTSC_PLS);
+     xhci_port_notify(port, PORTSC_PLC);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_complete(USBPort *port, USBPacket *packet)
+ {
+     XHCITransfer *xfer = container_of(packet, XHCITransfer, packet);
++    XHCIState *xhci = xfer->epctx->xhci;
++    bool prev_engaged;
+ 
+     if (packet->status == USB_RET_REMOVE_FROM_QUEUE) {
+         xhci_ep_nuke_one_xfer(xfer, 0);
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     xhci_try_complete_packet(xfer);
+     xhci_kick_epctx(xfer->epctx, xfer->streamid);
+     if (xfer->complete) {
+         xhci_ep_free_xfer(xfer);
+     }
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_child_detach(USBPort *uport, USBDevice *child)
+@@ -3345,6 +3369,7 @@ static void xhci_wakeup_endpoint(USBBus *bus, USBEndpoint *ep,
+ {
+     XHCIState *xhci = container_of(bus, XHCIState, bus);
+     int slotid;
++    bool prev_engaged;
+ 
+     DPRINTF("%s\n", __func__);
+     slotid = ep->dev->addr;
+@@ -3353,7 +3378,9 @@ static void xhci_wakeup_endpoint(USBBus *bus, USBEndpoint *ep,
+         DPRINTF("%s: oops, no slot for dev %d\n", __func__, ep->dev->addr);
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     xhci_kick_ep(xhci, slotid, xhci_find_epid(ep), stream);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static USBBusOps xhci_bus_ops = {
+-- 
+2.56.0
 
 
