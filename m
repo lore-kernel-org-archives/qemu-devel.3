@@ -1,149 +1,121 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770D2606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 23:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF39E606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 23:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UeRgXhq/;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=csIxuh0U
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Jn3u8vwu;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=RwZOp8MB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK1mV-0004xt-Qt; Thu, 22 Oct 2026 19:01:07 -0400
+	id 1xK2FI-0005ma-Dl; Thu, 22 Oct 2026 19:30:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xK1mR-0004wx-QZ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:01:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xK2FG-0005mJ-Nf
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:30:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xK1mP-00020H-OQ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:01:03 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MMF0vC048204
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:01:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2WvpjHfTHS/mrc53aLzVG5TlXLeYoIMeJi3OGpA9ilI=; b=UeRgXhq/dS0jRfKO
- BeEnuCeASzU45W5btmDMEXZHVhIYpcmSPCOmpvHwbJijdkbgbjGERMIBGnSE72u6
- rBOwqocY3+4JuA5tk8nxvq3QmskPsrgZUsu3OUgHhcn4eRo71PUVlTYKuH+oHjDD
- W+KWarSF2sltyHpGkaZ0IN9nyZEbxSrGRfRKDIfZIeHDgvfFA/wPe8YuyMIaPEOx
- rDJawRSV1HIjqaoxE1z15xp7FVUatCxnzXt37H1sEb//09BRmqFyy1OEX+Kto3aB
- v961kR6/4JCBx+5rBpL233zrzvkOKOhCG/+7ubz9NVBqlqb8pl9tEfVDatfQr/9l
- 901kUA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqms0w58-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 23:01:00 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-3698bd5392cso218533eec.1
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:01:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1xK2FE-0006Or-GU
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 19:30:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792711846;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MOgyq+Ja3mR+Ufhj4i5OdqknV4ad6wdPSZHg41lniQQ=;
+ b=Jn3u8vwu/5GDV5GZjmQO1Sty/hZgv470TM9L0VKIh8ekRScc1c9smM5UWFFSrWrcUa8WpL
+ mwVVw2Ez2Yr5KP1Lx1LjiSxjaxNGl3f8LXzNBbt9jT+7FoXR6OxFZezvOdR5v0XFg5wbLx
+ TN9RUIajoJdJ6aRbIdhf8f9xNQoTLco=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-274-fXDf-apfMyq-Ac5hnJBAew-1; Thu, 22 Oct 2026 19:30:45 -0400
+X-MC-Unique: fXDf-apfMyq-Ac5hnJBAew-1
+X-Mimecast-MFC-AGG-ID: fXDf-apfMyq-Ac5hnJBAew_1792711844
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-3adbc9a47fbso289315a91.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:30:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792710060; x=1793314860; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2WvpjHfTHS/mrc53aLzVG5TlXLeYoIMeJi3OGpA9ilI=;
- b=csIxuh0UhyNtAn4+CIQl8oyBoDx4670/G/L2jd4FIofBI6aHLUNrL2Ba/rEBE8K3XW
- YZftqH3ZPUEbs2zl1CeOmwc4u1cbFgjQ+KZnQYydjBUJx3Di4pxjkikU2Uq2RHWNO9AF
- EF/PHosjl63FBKwhaOgkX8EbQk0nqcXkWrDYB/w097kBWzpNYqWnY45nuwLAK1cxoo2D
- 6D0+5UEGm63jFUaW2ajGfpibcIThsZiHU+GbWYn97pwGtHKoYEd6MJZc5NeETy4ca34Y
- PGyLrdLAtqPjjMahu2OPAZ1NCbd6yenbBM4w/6vNzlAWt1iylLOS021Y2V3XnaW6QU57
- tXvw==
+ d=redhat.com; s=google; t=1792711844; x=1793316644; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=MOgyq+Ja3mR+Ufhj4i5OdqknV4ad6wdPSZHg41lniQQ=;
+ b=RwZOp8MBAvACdoOIz6Ic89ZPOZK8q4utgBy0AIk9iZIfDORvEE32zP776QUuW6TtiK
+ /nUFoP3hzgTyUHduefO9cZn2dCP4xI4mR3ImuGG4qfwioPDvOYRfmhuesMD0rUa2lHpe
+ Q8GBHPv1zucG19B0Bsbg1W90HMbwKuhLZE5ddmBNOWvRq+PBMkTu0yCeGCDsGc84se0k
+ 5amNmO8RY6aUQakn+2fajpuBiGTQFpKlAkl/pCp6FdLk5zW/SixnfarOxBCX4vC36Ayd
+ CcTXc73arDdjLGyoRxj0ubel5nsbRMx9RlTrDTgRt6Gf0d5i5p8tHsWJO7gWVXYPrezv
+ 3kgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792710060; x=1793314860;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2WvpjHfTHS/mrc53aLzVG5TlXLeYoIMeJi3OGpA9ilI=;
- b=h+znstRzCGQJzSpWT3MLi9f4SCfPMjnHk6arn6qG8rb/En/nhwDd729vMAde9PLISM
- IAkco9zWpfYL3hKyE2GSGGca6tPLHc+1c/9R1sNzAlezhM3e6QrVseyvyDOMEOTCBtvZ
- dUuqZSPph0jaTn9abNH1f8meas+7f3XY7lPQ3jeBWgLpn+z+mz1rgpxM7IonVX5JW2zA
- WuiF0mJ6gd5YsDy7rwAKycYHMYPR/DYKD/swwrLAXtl6ItgS6LIptckMX8SkzxxbBwAC
- dfnY5pfZ16az7D/pSyRLnyh03862msyeS51UsczbwAaxypLPrKUyCQjFsFDFAAPrnFKf
- bN5Q==
-X-Gm-Message-State: AFq9FYJnpY0IXBicpasnp8HqlN31S2QbGop78P9O3kigGbZZl59SmvDf
- QxmOMUKfdQDLkInQmwgoGps1cyBA3nBOecSBIPd96ethxAOncld8QtPYf7W8M+u81bdsA13rTRq
- WrNNM5eF2OQ54TZ8Gg2xs1kAexF9dyFVsNa4NPg1gow6W7Ruze6I070DxhYjajVnKxQ==
-X-Gm-Gg: AYBFou1mN2d8BEwlL+1tG1jAfigTh4PPtMejnw2Uot7Ao+7xQMd1Wu2YUxV32JJZBqp
- hnT/aZDH/xHBkkss2tBNPTr83PSF3GfKCeCgH+3WEC8ss3FTc/d5XSIIrYI8HCtdss7HVI6xrvy
- e3KW6G0uOi7qbo/AD/TqZzLB+pcs+CPBWEDueLOg8ilUKKhYilmqEJqhB4/hp+pJ8UQXPpkoDsr
- 22MxuA1tvHCyKCZ+mDH7TgPtWbPDYyDLNpkB9Me/7tn14fNgsFFWM+jDDqH1K0np2mQrvbI2Fu8
- +7dCpkZSIyK5bbr7WIuyuJSA/EnCSj6cph/aKUIz15Ge5KCyoiP1RQrIt/ReJihenGjeknohs/9
- XOzgP2I59SeYml2Cz+lUL2wf/WHCMQnOZOueqBdmSIlUSJ9dq
-X-Received: by 2002:a05:7301:7e17:b0:366:6c79:212b with SMTP id
- 5a478bee46e88-368b122ff22mr4180405eec.25.1792710059368; 
- Thu, 22 Oct 2026 16:00:59 -0700 (PDT)
-X-Received: by 2002:a05:7301:7e17:b0:366:6c79:212b with SMTP id
- 5a478bee46e88-368b122ff22mr4180369eec.25.1792710058597; 
- Thu, 22 Oct 2026 16:00:58 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369d9c0e60dsm1088138eec.2.2026.10.22.16.00.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 16:00:55 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Alessandro Di Federico <ale@rev.ng>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.de>,
- Anton Johansson <anjo@rev.ng>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v3 03/16] hw/hexagon: let a machine place its DDR
-Date: Thu, 22 Oct 2026 16:00:35 -0700
-Message-Id: <20261022230048.2160400-4-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261022230048.2160400-1-brian.cain@oss.qualcomm.com>
-References: <20261022230048.2160400-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1792711844; x=1793316644;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=MOgyq+Ja3mR+Ufhj4i5OdqknV4ad6wdPSZHg41lniQQ=;
+ b=XS+k5fLxznwbCp2yN7DgxDAsxSx/h5hymK3ByBPAVe5TChtnoomw0utRteNaD8V2WI
+ nJs0qFaW3ENP7t0gNpdYRi0DNipD7deU5fl0zOnuE5dLhXcNmmHlwMMn8WhWIwUxewmG
+ tbAEh5kBpYdKez6KlCSwe4OyLl/PChgUZOH79bgkRBZ6TlUJZ6Gj1bndGfze80Ev8nuZ
+ sn775dh50DVsm9NACOIg44vVHiw5yt8wsHFuec2tXI0eZCLjwYFRUg6du3MODn1vr4Ce
+ CXvFuVudIFNjB3PEhZugztuUA1rEZUZ3Iwyy5MnsiDdMWegGC+pGquAGKEWhfz7zGfYE
+ Komw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBz1VAwSnRR4bN7HGeUs0Tw4uXqmLWll8O3w6B0fnFfNAwaqyDHy9hpkq37v3ek0Q1r2l6GZtkPiHjX3@nongnu.org
+X-Gm-Message-State: AFq9FYJAIX73zFJw5WkIbaMgG4PykRQurW3/b942SJIIj1pWNvjoy7QG
+ 3o64pg50d0sge4ZGo87F5x9lmkQxI3fBnZQy9vbiVqOTRKODXk+Wxuk9nLJSouR0WOYktxXNaiW
+ lEKOYUk/lsw9kLmf1NcJ9RmL1UhTpaSZ+X+YdXrhK9sXTb+r61HS8Dojh
+X-Gm-Gg: AYBFou1O5rGPMfRrdGFBAajZ7FZAOs9+gdWN7BFpoa4YwX7gGuzowYAfM4pWjBLJf1f
+ xrHO1wdZdAGGuiVFBvTDaHzZ3Hd1lEqZB2+nSbpHclAAH/mvJ8mgjvugoanaHqTmjrE6uCPAD5o
+ BHgQ/MftniQfHUCgoBsqealbn7SLrB1EWpTjardsRd0at6ywZmOtiyA47bfK6ov3RNcJleWOcmw
+ A3ExpzCiMhouLhL5yIKaZhvc7uhSRusOp6rJgjSQcfY8k1KYwgQgLaktFBj7J/K2+o/J9tKOgGm
+ DO17jnRrD84EyWWt7TG8R8YXfFU8P6bG241zEzSTwvDOZxsKoKJOwnnX0Qw/tXLIvaeWpHkCTnZ
+ WAcO8+EBZG0R2V2WA+W6X2SmpLalnCEGwIzDPHaHDvg==
+X-Received: by 2002:a17:90a:a793:b0:3ac:b3f9:70cb with SMTP id
+ 98e67ed59e1d1-3adce7cab7amr185974a91.57.1792711844130; 
+ Thu, 22 Oct 2026 16:30:44 -0700 (PDT)
+X-Received: by 2002:a17:90a:a793:b0:3ac:b3f9:70cb with SMTP id
+ 98e67ed59e1d1-3adce7cab7amr185948a91.57.1792711843565; 
+ Thu, 22 Oct 2026 16:30:43 -0700 (PDT)
+Received: from [192.168.68.52] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3adcdb06b91sm325014a91.2.2026.10.22.16.30.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 16:30:42 -0700 (PDT)
+Message-ID: <ff029f82-07e2-469b-a758-6d27212a9227@redhat.com>
+Date: Fri, 23 Oct 2026 09:30:36 +1000
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA5MSBTYWx0ZWRfX4ZF6YqLLemHF
- krAq5qE0oDWZY6GQCj3mrKRuRp8pvphBLJLa0zDYK+ct8KdAtM+o8UdsjEza9OkbpH9sWQH4q3S
- AdVXDxyZhX1oIO5kC+mSH8NxPD7LpJ5a99K2wCwPeEGkZ0Bfvj/n94cSxh0uOZoWr0+3PBvIbb1
- i897l8YR6+TCJBznZ6YOxgdOizUd+C15de0ZSOTfU92EOi0xc1z177mOHTRKA8XAHdZfxUR7s/W
- KP5rz0ZNCIp2UBK6ajgoqZLe48cQasIBQU4lXIGP1WoSz3+121cVcl0F/PmsGFr1t43S1KtpSB2
- 8yiKJtdovR9WV+dK0hErnec6AmEGOXecjTwNIfTrCaEFdnUWgxAGWDMvPsv6aTNJFbTRjknvkYb
- ND5X0zpPwhv2sgHUW5SSEV0ppeFoa3/5Citl8Cp4f5bm9cqkEy1EJ5iodpNBsfV1hbOYypxuaQX
- bwCRRQbPOB31aDasFfg==
-X-Proofpoint-GUID: AfWw0lAohmybY8bIWTZod2CzrrFNDAqm
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA5MSBTYWx0ZWRfX8gslZeptTHRX
- JjTxWXkd7csBtw2YIKsmzUKjh8C5cFFkcLEAvJvNrmYB7zAmVc3J/jfLcL6G8iw5I7msgjeIJqh
- wraRqnQ4jADDKrBkJmnjZQ7LVkNSmKk=
-X-Authority-Analysis: v=2.4 cv=UdbE26SN c=1 sm=1 tr=0 ts=6ada95ac cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=aYFWVRUMB-liYKm9W0cA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: AfWw0lAohmybY8bIWTZod2CzrrFNDAqm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_07,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610220091
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 11/24] target/arm/kvm-rme: Populate Realm with runtime
+ images
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
+ kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
+ lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-12-mathieu.poirier@linaro.org>
+ <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com> <atiKJ8-PyIHSRTKy@red-moon>
+ <27fe3ba8-c8c8-4d5c-9d57-3cfb67142ac1@redhat.com> <atoe77pJ119cDcSF@red-moon>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <atoe77pJ119cDcSF@red-moon>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,39 +127,197 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-aGV4X3N1YnN5c19jcmVhdGUoKSBhbHdheXMgbWFwcyB0aGUgbWFpbiBERFIgYXQgYWRkcmVzcyAw
-LiAgVGhpcyBpcyBhcHByb3ByaWF0ZQpmb3IgaGV4YWdvbi1zaW0tc3R5bGUgbWFjaGluZXMsIGJ1
-dCByZWFsIFNvQ3MgbWFwIGl0IGVsc2V3aGVyZS4KClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4g
-PGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiBpbmNsdWRlL2h3L2hleGFnb24vaGV4
-YWdvbi5oIHwgMiArKwogaHcvaGV4YWdvbi9oZXgtc3Vic3lzLmMgICAgICB8IDQgKystLQogMiBm
-aWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0
-IGEvaW5jbHVkZS9ody9oZXhhZ29uL2hleGFnb24uaCBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhh
-Z29uLmgKaW5kZXggOWI1ZDMzZmZjM2IuLjY5NTVlNjAwYWVlIDEwMDY0NAotLS0gYS9pbmNsdWRl
-L2h3L2hleGFnb24vaGV4YWdvbi5oCisrKyBiL2luY2x1ZGUvaHcvaGV4YWdvbi9oZXhhZ29uLmgK
-QEAgLTE0NSw2ICsxNDUsOCBAQCB1bmlvbiBoZXhhZ29uX2NvbmZpZ190YWJsZSB7CiB9OwogCiBz
-dHJ1Y3QgaGV4YWdvbl9tYWNoaW5lX2NvbmZpZyB7CisgICAgLyogQmFzZSBhZGRyZXNzIG9mIHRo
-ZSBtYWluIEREUiByZWdpb24gKi8KKyAgICBod2FkZHIgZGRyX2Jhc2U7CiAgICAgLyogQmFzZSBh
-ZGRyZXNzIG9mIGNvbmZpZyB0YWJsZSAqLwogICAgIHVpbnQzMl90IGNmZ2Jhc2U7CiAgICAgLyog
-U2l6ZSBvZiBMMiBUQ00gKi8KZGlmZiAtLWdpdCBhL2h3L2hleGFnb24vaGV4LXN1YnN5cy5jIGIv
-aHcvaGV4YWdvbi9oZXgtc3Vic3lzLmMKaW5kZXggOTgxOGNmNTg4NzguLjM4MmY0NWJkMDlmIDEw
-MDY0NAotLS0gYS9ody9oZXhhZ29uL2hleC1zdWJzeXMuYworKysgYi9ody9oZXhhZ29uL2hleC1z
-dWJzeXMuYwpAQCAtMTM2LDEwICsxMzYsMTAgQEAgdm9pZCBoZXhfc3Vic3lzX2NyZWF0ZShIZXhh
-Z29uQ29tbW9uTWFjaGluZVN0YXRlICpobXMsCiAgICAgTWFjaGluZVN0YXRlICptYWNoaW5lID0g
-TUFDSElORShobXMpOwogICAgIE1lbW9yeVJlZ2lvbiAqc3lzbWVtID0gZ2V0X3N5c3RlbV9tZW1v
-cnkoKTsKIAotICAgIC8qIE1haW4gRERSIGF0IHRoZSByZXNldCB2ZWN0b3IuICovCisgICAgLyog
-TWFpbiBERFIuICovCiAgICAgbWVtb3J5X3JlZ2lvbl9pbml0X3JhbSgmaG1zLT5yYW0sIE5VTEws
-ICJkZHIucmFtIiwgbWFjaGluZS0+cmFtX3NpemUsCiAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAmZXJyb3JfZmF0YWwpOwotICAgIG1lbW9yeV9yZWdpb25fYWRkX3N1YnJlZ2lvbihzeXNtZW0s
-IDB4MCwgJmhtcy0+cmFtKTsKKyAgICBtZW1vcnlfcmVnaW9uX2FkZF9zdWJyZWdpb24oc3lzbWVt
-LCBtX2NmZy0+ZGRyX2Jhc2UsICZobXMtPnJhbSk7CiAKICAgICAvKiBDb25maWctdGFibGUgUk9N
-IGFuZCB0aGUgYmxvYiB0aGF0IGJhY2tzIGl0LiAqLwogICAgIG1lbW9yeV9yZWdpb25faW5pdF9y
-b20oJmhtcy0+Y2ZndGFibGVfcm9tLCBOVUxMLCAiY29uZmlnX3RhYmxlLnJvbSIsCi0tIAoyLjM0
-LjEKCg==
+On 10/23/26 12:34 AM, Lorenzo Pieralisi wrote:
+> On Wed, Oct 21, 2026 at 10:24:56PM +1000, Gavin Shan wrote:
+>> On 10/21/26 7:47 PM, Lorenzo Pieralisi wrote:
+>>> On Fri, Oct 02, 2026 at 01:45:40PM +1000, Gavin Shan wrote:
+>>>> On 9/4/26 5:35 AM, Mathieu Poirier wrote:
+>>>>> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>>>>>
+>>>>> Once the Realm descriptor has been created, tell KVM to transfer runtime
+>>>>> images (kernel, DT, and rootfs) from guest memory to Realm memory.
+>>>>>
+>>>>> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>>>>> Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
+>>>>> Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+>>>>> ---
+>>>>>     target/arm/kvm-rme.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
+>>>>>     1 file changed, 76 insertions(+)
+>>>>>
+>>>>> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+>>>>> index 9985f5daba89..c082a5d8f3d1 100644
+>>>>> --- a/target/arm/kvm-rme.c
+>>>>> +++ b/target/arm/kvm-rme.c
+>>>>> @@ -15,6 +15,7 @@
+>>>>>     #include "migration/blocker.h"
+>>>>>     #include "qapi/error.h"
+>>>>>     #include "qemu/error-report.h"
+>>>>> +#include "qemu/memalign.h"
+>>>>>     #include "qom/object_interfaces.h"
+>>>>>     #include "system/confidential-guest-support.h"
+>>>>>     #include "system/kvm.h"
+>>>>> @@ -43,12 +44,87 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+>>>>>     static RmeGuest *rme_guest;
+>>>>> +static int rme_populate_range(const RmeRamRegion *region, bool measure,
+>>>>> +                              Error **errp)
+>>>>> +{
+>>>>> +    int ret;
+>>>>> +    void *buffer;
+>>>>> +    hwaddr size = region->size;
+>>>>> +    hwaddr base = region->base;
+>>>>> +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
+>>>>> +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
+>>>>> +    struct kvm_arm_rmi_populate populate_args;
+>>>>> +    size_t aligned_size = ROUND_UP(region->size, qemu_real_host_page_size());
+>>>>
+>>>> s/qemu_real_host_page_size()/RME_PAGE_SIZE
+>>>
+>>> It will always have to be qemu_real_host_page_size(), KVM configures it
+>>> that way.
+>>>
+>>>>> +
+>>>>> +    if (!region->data) {
+>>>>> +        return -ENODEV;
+>>>>> +    }
+>>>>> +
+>>>>> +    ret = kvm_set_memory_attributes_private(start, end - start);
+>>>>> +    if (ret) {
+>>>>> +        error_report("RME: failed to configure initial"
+>>>>> +                     "private guest memory");
+>>>>> +        return ret;
+>>>>> +    }
+>>>>> +
+>>>>> +    /* Allocate page-aligned memory */
+>>>>> +    buffer = qemu_memalign(qemu_real_host_page_size(), aligned_size);
+>>>>> +
+>>>>> +    if (!buffer) {
+>>>>> +        return -ENOMEM;
+>>>>> +    }
+>>>>> +
+>>>>> +    memset(buffer, 0, aligned_size);
+>>>>> +    memcpy(buffer, region->data, region->size);
+>>>>> +
+>>>>> +    populate_args = (struct kvm_arm_rmi_populate) {
+>>>>> +        .base = start,
+>>>>> +        .size = end - start,
+>>>>> +        .source_uaddr = (uintptr_t)buffer,
+>>>>> +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
+>>>>> +    };
+>>>>> +
+>>>>> +    while (populate_args.size > 0) {
+>>>>> +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
+>>>>> +        if (ret) {
+>>>>> +            error_setg_errno(errp, -ret,
+>>>>> +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
+>>>>> +                start, end);
+>>>>> +            break;
+>>>>> +        }
+>>>>> +    }
+>>>>> +
+>>>>> +    qemu_vfree(buffer);
+>>>>> +
+>>>>> +    return ret;
+>>>>> +}
+>>>>> +
+>>>>
+>>>> I doubt that the unaligned regions (RmeRamRegion) are allowed. For example,
+>>>> the region [4KB 64KB+4KB] is turned to the aligned range [0 128KB] when RME_PAGE_SIZE
+>>>> is 64KB. The question is how do we know the added regions due to the alignment
+>>>> ([0 4KB] and [64KB+4KB 128KB]) are safe for kvm_vm_ioctl(KVM_ARM_RMI_POPULATE).
+>>>
+>>> Getting back to this because it is important. Can you define "safe" here ?
+>>>
+>>> I think it is VMM's role to load with the required alignment and make
+>>> sure it does not double populate (that is anyway prevented by KVM), what was
+>>> your concern here to make sure we are in agreement ?
+>>>
+>>
+>> For example, there are two regions are populated: [0 4KB] and [4KB 64KB] on a 64KB
+>> host. With the alignment considered, we're populating [0 64KB] for region [0 4KB],
+>> and [0 64KB] for [4KB 64KB]. [0 64KB] are populated for twice. Is this allowed by
+>> TF-RMM? If it's allowed by TF-RMM, the data populated in the first time is overwritten
+>> by the second population.
+> 
+> It is not allowed by the RMM and it is a VMM bug that we have to prevent.
+> 
+
+Ok, thanks for your confirm. It's why I asked if we ever see an unaligned
+Rom region. If all Rom regions are aligned to host page size, then we needn't
+to handle the unaligned Rom regions in rme_populate_range(). Otherwise, we
+need come up with a solution to address the issue.
+
+The solution would be to generate a temporary region list based on the existing
+Rom region list. For each region in the temporary list, its start/size are well
+aligned to host page size, and the temporary buffer is allocated, and the data
+is properly copied over from the original Rom region. The population is done
+based on the temporary list. For example, we need to have [0 64kb], [128kb 192kb]
+regions in the temporary list if we have Rom region [0 1kb], [4kb 5kb] [16kb 17kb],
+[132kb 133kb], [136kb 140kb]. The host page size is assumed to be 64kb in the example.
+
+    [0 64kb] covers [0 1kb], [4kb 5kb] [16kb 17kb]
+    [128kb 192kb] covers [132kb 133kb], [136kb 140kb]
+
+Thanks,
+Gavin
+
+> Thanks,
+> Lorenzo
+> 
+>> Thanks,
+>> Gavin
+>>
+>>> Thanks,
+>>> Lorenzo
+>>>
+>>>> I guess we probably just reject unaligned regions if they're not expected.
+>>>>
+>>>> Even if the unaligned regions are allowed, they seem not well handled.
+>>>>
+>>>> - @aligned_size is still 64KB instead of the 128KB ?
+>>>> - In "memcpy(buffer, region->data, region->size);", the blob data would be copied to
+>>>>     [4KB, 4KB+64KB]. However, we're copying the data to [0 64KB] now.
+>>>>
+>>>>> +static void rme_populate_ram_region(gpointer data, gpointer err)
+>>>>> +{
+>>>>> +    Error **errp = err;
+>>>>> +    const RmeRamRegion *region = data;
+>>>>> +
+>>>>> +    if (*errp) {
+>>>>> +        return;
+>>>>> +    }
+>>>>> +
+>>>>> +    rme_populate_range(region, /* measure */ true, errp);
+>>>>> +}
+>>>>> +
+>>>>>     static void rme_vm_state_change(void *opaque, bool running, RunState state)
+>>>>>     {
+>>>>> +    Error *errp = NULL;
+>>>>> +
+>>>>>         if (!running) {
+>>>>>             return;
+>>>>>         }
+>>>>> +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
+>>>>> +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
+>>>>> +    if (errp) {
+>>>>> +        return;
+>>>>> +    }
+>>>>> +
+>>>>>         kvm_mark_guest_state_protected();
+>>>>>     }
+>>>>
+>>>> Thanks,
+>>>> Gavin
+>>>>
+>>>
+>>
+> 
+
 
