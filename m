@@ -1,88 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CCD606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF15606A319
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 04:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kBw3iL61
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TJ48fmXr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJk1T-0003pG-Dc; Thu, 22 Oct 2026 00:03:23 -0400
+	id 1xJk1Q-0003nd-5L; Thu, 22 Oct 2026 00:03:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1xJk1P-0003nJ-0a
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:03:19 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
+ id 1xJk1O-0003my-2G
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:03:18 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <sebasjosue84@gmail.com>)
- id 1xJk1N-0006B1-5z
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:03:18 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-5eabf7d5bbeso1531376e0c.1
- for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 21:03:16 -0700 (PDT)
+ id 1xJk1M-0006Ar-9g
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:03:17 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-5eac319a6c2so1304545e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 21:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792641796; x=1793246596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/uetjsA9Z42pxGQEPsZaIXxyPFdfdHALxEuTtBc7tAA=;
- b=kBw3iL61mp5l8/S1yhKSq06EpiE6m0YIJo1D7t/Ibd2vFiJgvOeH8YqjFmWS82ulVG
- 2GtWW41gwDAo47BvJhKmjBJ8Xqo4Ec+Gesd8jivPr0Yhngt1NyeXSeRml7SBIi+QKvJ0
- IU4DaqGfICOnGV4PCCqal0LkmuU9Z9i8hoiXlU2IMb6L1whvaWF3+YvMiIAw14pgGQKp
- E05RQCZVO/CjViUdr+6DUMisf5Nu/F3DgxjoqI3QSBwPqsXD7osLr4rCWeKpsehFuKKC
- H398S0paVBVSTFKIldnm8CoDh4Z/DCqeMuX8K5bakLyC0jyv5qCagkk1k3o4jUrMpcWQ
- 89Tw==
+ d=gmail.com; s=20251104; t=1792641794; x=1793246594; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Zuw0OJSWmr5QDxsUVBa1EC4RdPVtV7sYJcTlPNQ5FWY=;
+ b=TJ48fmXrmLGaol2mTijQZFjV4BZbEnrjqSi2qU/R6CXRXb2rY95zUc+kWo48vSZvly
+ yTf35r77ClHWs/rxK1MkdkHUTrNdiAs25n2Vt3DdFbbxAKaITUfij69ZE4czkHyGMaz7
+ O9KzwiSzZqk9Lo1rWlvry0fYem3rR2WmfmiG7x+RJChvqdnTUGSaUDv2L3JFWhwc+JWU
+ oOSikSG6Kd29VvxUw3PEebNrEZS44vtOg36nyHd4zkCh1TLlwOJxJ6uJ2+uLw1Rfihml
+ ycM1QSHko4uA2trQw0044kU/wBeykbKSSYxiONjJpoK9AvUSc+t423u47PrW3hwa1nod
+ LfdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792641796; x=1793246596;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/uetjsA9Z42pxGQEPsZaIXxyPFdfdHALxEuTtBc7tAA=;
- b=OH4VJtqLQnIxiN/dZxu9nI2qX5y/u+gt36z5DaO3Kp+9KN4R6UYdFQ+BESCJaRYagn
- q5UAyPxoBrn0tbFNIHi2fvZxOLWLyJ+dokU84CIQ2UzdxhGuOP7pD7st1nT3ZkaD6WIz
- GzaupB5NDmCLycdgDwHnh4Q431k0i7hOFiivTEkqRwIsxk/uIS5jpAZQ3OFip0PWtMbU
- nEPMLA2TM56uNwSrxu1hQrrYwjdDqybfCqMrMP9sLKbHDuD+SD4Bf+B7IeQwZ0ZQxrcN
- m0b2A9JwlrgMMSPP5ZBknNrxeNdCWUB0gGWQMHK4Iu7v7TZmmkNynrcxVD+NfHC0b6xP
- WlLg==
-X-Gm-Message-State: AFq9FYKEJwxiI4yt+45Ozp9jmiKI+rr3arFy8giAaGjdiskG8cFLshux
- IujQiP+v6rcjuhqtZAsFzgs7jDHh1vfS5L5oxi9PIN+9GxgBqTclWMWhcz1kirms
-X-Gm-Gg: AYBFou0hyosFo2MvSlaq5nqXIEJiLjkgXnFrJTccXgk2qR6/DfprBHCNpdQIkdo8quh
- z++YHKeglvMkfkbnB0pcEafIoByBQD8GXyK7xxlHMWcvmNLQNkxMH8lqi2poZnW84jcIW5xYssD
- t4Eq06/Lk8dqrt8VkroHtfOf/yaE9T4lZQT2Nnbv28Pum0W1dtPUP+JUwH8yRERz1Se4KSG5uaz
- ROjg7T8GKClyblLajCpGjKPfjx2GF8AlHGy8h+RwLEhtLgfL46pcTAJer9VfKGrN4K/OIyUEIEA
- FIK180UZRBrjCUIHtCnxvQwd0DW0HCz68aBX/WKv9nhfwSW/xPczDbTn+YTARK/WqvIBH5UzZ8X
- StiSo3LYyKfcpJ4yAqfnnU3nZ7+r3XnAO4Hi7JGY8T0MbxRtqTk4ztMzT+3dOafMKuoGljJ4SNs
- kZb4W+wLcvODxCg36auSNRCUmFpTr5Rjjn16/vn8FWBhg0gSY4QvEHzlzKiH6bFKu7B9hbb6nQU
- bjzSFEzN0k5u13qrgr64IPKAtL4rmrUUydZeqt5SElY2q/1p+V3pLyGtRo1S7lQ6j6FsIr+NFeA
- Ehi5VUBRzHQEMEi76sY9emczIhFBfUrH2S/LArClH1o4
-X-Received: by 2002:a05:6122:469e:b0:5ea:bfe3:6035 with SMTP id
- 71dfb90a1353d-5eaebd6d4bbmr1751513e0c.8.1792641796129; 
- Wed, 21 Oct 2026 21:03:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792641794; x=1793246594;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Zuw0OJSWmr5QDxsUVBa1EC4RdPVtV7sYJcTlPNQ5FWY=;
+ b=l6lkKT+lNpDW9n8HzuAPAH9Z/DVPfTcm10tWq3ybOmJAwPzO7WMtLjYAWqD0U6IceA
+ Nasqif4hc8mxoMtPhQw7LTzJ44GkPBD7OT2vG0VKlsmE0v6L8OS9ZtkE1/ywe5hehSbc
+ lBn2tpbmzCkz6kJ52q4zVHVpZ9zNWAPOqDil+Fw/UREzHVJ4JpYLCwbp+DrAh0s8Iw3w
+ tIYYRtpIxbDiT9QTOdUdYhuJ9wF3E9jcWvkhp4zp4VucTM6n2sy977eajRuLWZROkzTk
+ wCJUO5jCPqrKujJmOQYpurDU0JvgpMcGqFJn6a7XTcfzLdWG0n8V8qoExWY61aiAQC4o
+ wuXQ==
+X-Gm-Message-State: AFq9FYIZDxuGbo3viB1xBTZEtmRflr4Cp+YVyEb+1GnOlzZXSb4oVH9l
+ RKsZ6t05ACYACx/nWlbL207YTNoB1Npm6pZAwg/R3eHY8oyX5xcNgA+zuZMh4kb1
+X-Gm-Gg: AYBFou2JZM3DEp1+vveShltUJ8AHKewA0RFjKSAjCOTaBAX32QOqRHVvrc305CVYrM9
+ LqfCJgUF41IqbqWOCxtIov2I5Ud37oJy2WgKl/YqooG5NaWwLnvUUPfDzXl1MAg5w3Wi9U/E1KC
+ lzcTHscWUP96TjQxIrnntVwf//N+cirsB1FKlyHlylsbGSIdJwK7zN6mb+RZar9ir52arY+ifmX
+ OJHc3KSHqSlM4cQue2TNcEf2ynaSVKdAMmfMoXE247EiCg20GZ3J4+s6PfITe0TDCACxBcbMv/9
+ X+RAP1kbUIBMkCMZ6H/w5Cty36DNKsytRf/2bKduTSiOuZPddjpG1SvqxvRVv3zJYfW2PIIepx5
+ UtR59kmp8BgyQeIfxcXd5kl+3GWcvXIa995Xg+ihApv+4tDRfJh2qZdl684ReOO/iUds8gsxjRe
+ cYRPJ2jXYFwvAJ1xH/aBvcc7zjnnCT+CqeuG8J2xPRKd/GPRwK311uR9LVngABxgWNwUtpqDAF5
+ /QZ+4BVwAHcUF3uaFrV/URm6d9fMsHkalV1sHLCSaWhUoaeKpvGap2Yq5fcdmARUDQepHEGp++s
+ /hniL4VMroveVLOq3h9rW9RNuz6xBP7YyEO8xaxo9tCd
+X-Received: by 2002:a05:6122:4909:b0:5ea:c3bc:c567 with SMTP id
+ 71dfb90a1353d-5eaebdb8be1mr1837607e0c.9.1792641794537; 
+ Wed, 21 Oct 2026 21:03:14 -0700 (PDT)
 Received: from localhost.localdomain ([186.151.100.62])
  by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-5eae969803dsm5859810e0c.2.2026.10.21.21.03.14
+ 71dfb90a1353d-5eae969803dsm5859810e0c.2.2026.10.21.21.03.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Oct 2026 21:03:15 -0700 (PDT)
+ Wed, 21 Oct 2026 21:03:13 -0700 (PDT)
 From: Sebastian Alba Vives <sebasjosue84@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  richard.henderson@linaro.org, Sebastian Alba Vives <sebasjosue84@gmail.com>
-Subject: [PATCH v3 1/2] target/riscv: pmp: clear A and L on every implemented
- PMP entry at reset
-Date: Wed, 21 Oct 2026 22:02:57 -0600
-Message-ID: <20261022040258.1509306-2-sebasjosue84@gmail.com>
+Subject: [PATCH v3 0/2] target/riscv: pmp: fix stale PMP state across reset
+Date: Wed, 21 Oct 2026 22:02:56 -0600
+Message-ID: <20261022040258.1509306-1-sebasjosue84@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261022040258.1509306-1-sebasjosue84@gmail.com>
-References: <20261022040258.1509306-1-sebasjosue84@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=sebasjosue84@gmail.com; helo=mail-vk1-xa35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=sebasjosue84@gmail.com; helo=mail-vk1-xa29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,47 +98,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-pmp_unlock_entries() bounds its loop with pmp_get_num_rules(), which
-returns the number of entries whose A field is not OFF rather than the
-number of implemented entries. With a sparse configuration the loop
-stops early: with entries 0 and 1 OFF and entries 2 and 3 locked,
-num_rules is 2, the loop covers i = 0 and i = 1, and entries 2 and 3
-keep their lock and address-match bits across reset.
+v2 cleared the whole pmp_state with a memset. Alistair pointed out that
+the priv spec only requires the A and L fields to be reset, so v3 splits
+the change: 1/2 stays within what the spec mandates, and 2/2 handles the
+derived state QEMU keeps alongside the architectural registers.
 
-riscv_cpu_reset_hold() clears mseccfg, and with it RLB, before calling
-this, so pmp_is_readonly() then silently discards every subsequent
-pmpcfg write to those entries. The stale rules survive for the
-lifetime of the machine.
+1/2 is the v1 fix. It bounds the loop by the number of implemented
+regions rather than pmp_get_num_rules(), so entries past the last active
+rule are no longer skipped.
 
-Bound the loop by the number of implemented regions instead.
+2/2 clears pmp_state.addr[] and pmp_state.num_rules. Those are not
+architectural, so the spec does not speak to them, but they are
+recomputed on the pmpaddr and pmpcfg write paths only and never at
+reset.
 
-Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on reset")
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
----
- target/riscv/tcg/pmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The second one is observable from a guest. A bare-metal M-mode program
+configures PMP entry 0 as NA4 over [0x80100000, 0x80100003], resets
+through sifive_test, and on the second boot performs an 8-byte load at
+0x80100000, which starts inside the old range and ends outside it:
 
-diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-index 41b55519a8..061f0e078d 100644
---- a/target/riscv/tcg/pmp.c
-+++ b/target/riscv/tcg/pmp.c
-@@ -201,7 +201,7 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
- 
- void pmp_unlock_entries(CPURISCVState *env)
- {
--    uint32_t pmp_num = pmp_get_num_rules(env);
-+    uint32_t pmp_num = riscv_cpu_cfg(env)->pmp_regions;
-     int i;
- 
-     for (i = 0; i < pmp_num; i++) {
+  tree          pmpcfg0 after reset   8-byte load at 0x80100000
+  1/2 only      0x00000001            load access fault
+  1/2 + 2/2     0x00000001            succeeds
+
+The architectural state is identical in both runs. The difference is
+that with 1/2 alone num_rules is still 1 and addr[0] still holds the old
+bounds, so pmp_hart_has_privs() skips the no-rules short cut and reaches
+the partially-inside check. That check calls pmp_is_in_range(), which
+compares against addr[].sa and addr[].ea only, and returns before the A
+field is ever tested.
+
+v2: https://lore.kernel.org/qemu-devel/20261011040617.807504-1-sebasjosue84@gmail.com/
+v1: https://lore.kernel.org/qemu-devel/20260916034331.2390427-1-sebasjosue84@gmail.com/
+
+Sebastian Alba Vives (2):
+  target/riscv: pmp: clear A and L on every implemented PMP entry at
+    reset
+  target/riscv: pmp: reset the derived PMP bounds and rule count
+
+ target/riscv/tcg/pmp.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
 -- 
 2.43.0
 
