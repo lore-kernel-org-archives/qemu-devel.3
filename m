@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5908B606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8460606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=bPyhv4p1
+	dkim=pass (2048-bit key, unprotected) header.d=univ-grenoble-alpes.fr header.i=@univ-grenoble-alpes.fr header.a=rsa-sha256 header.s=2020 header.b=3fWYTju3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJnbR-0003Un-Dg; Thu, 22 Oct 2026 03:52:45 -0400
+	id 1xJnbT-0003VP-3g; Thu, 22 Oct 2026 03:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1xJnbG-0003TA-55; Thu, 22 Oct 2026 03:52:34 -0400
+ id 1xJnbH-0003Ta-U9; Thu, 22 Oct 2026 03:52:36 -0400
 Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1xJnbD-0003Cn-Ny; Thu, 22 Oct 2026 03:52:33 -0400
+ id 1xJnbD-0003Cs-UD; Thu, 22 Oct 2026 03:52:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=univ-grenoble-alpes.fr; s=2020; t=1792655548;
- bh=Dkciry6et/ifW+uU+i2xvgHj2I0vUFOhC26z8mab1SA=;
- h=From:To:Cc:Subject:Date:From;
- b=bPyhv4p1CwyS5z0+BaaB+0ALqJr88El4B+Ur6N4M4TpnOw+C3iFwTsc3kCvVYMgPx
- 67ZzEnPwCXqQ6PJ7Gj6/UVCeypFFG8+VdThhACceH0p+LHmUVMsD/Z/ItINAqsDKy9
- jCb7gu5b7RFMMiJs61SO3lsKvlvMUHgfZTB8MPHktx9KZApw6UOzB1chxezioVhBMG
- XdRhXTSyW0u8TMre2w+2kpPUJ3IiSvaQhkHLplS9RodB/4o21BeLTRST4zgeTA1bd+
- pU6h+BthR8iRBTDRHmQBDLzzn8TIm/bVG1ctplmpYPxOdDxE8bRrpoj5lr2bZuKMZI
- 8cIXbH2YWKLEA==
+ bh=9iLVwWFckkLO/M4oIrOHE9dO6Xn8zkBqYYU1VXpPTXU=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=3fWYTju3ehkV2/K67BAtvlYDxGb/VAamAqEspwdd0ufOuezL/QXO1Za58Vplhmr0V
+ ASoAH/D5yevlWeBmnKfJhABxMx1PAl9AESkLxJ+8qqzgIOZXB7hnTYIVjSy7wlNlcs
+ xYkM1NAtda1fnnNrhMNCxKAP3AnPbcTbH6MzEbx79wyWfZke5f9qKiD0ib5aiYEjha
+ NLPhDWs86y4c4BJqF6e/sWndouWLzF6J0G0sZ2yHGGayqbVc1db1o5ivBtVJ6+Bwkx
+ d+vwaUbwII+TEM6nzGYBXqS74gTVKn+tuTF2ZWVG1Vd00Bz5fdJJnmU/mOkEuJsb2i
+ Uh2e0ZzCWgU4w==
 Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 2F8E140274;
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 9F1CD4027D;
  Thu, 22 Oct 2026 09:52:28 +0200 (CEST)
 Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
- by mailhub-2.u-ga.fr (Postfix) with ESMTP id 2ACDAFF855;
+ by mailhub-2.u-ga.fr (Postfix) with ESMTP id 996A4FF856;
  Thu, 22 Oct 2026 09:52:28 +0200 (CEST)
 Received: from naga.home (88-170-236-106.subs.proxad.net [88.170.236.106])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 4A96B4004A;
- Thu, 22 Oct 2026 09:52:27 +0200 (CEST)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 382534004A;
+ Thu, 22 Oct 2026 09:52:28 +0200 (CEST)
 From: frederic.petrot@univ-grenoble-alpes.fr
 To: peter.maydell@linaro.org, daniel.barboza@oss.qualcomm.com,
  palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -49,10 +49,12 @@ To: peter.maydell@linaro.org, daniel.barboza@oss.qualcomm.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
  <frederic.petrot@univ-grenoble-alpes.fr>
-Subject: [PATCH 0/2] Correct undefined behaviors in x-rv128
-Date: Thu, 22 Oct 2026 09:52:16 +0200
-Message-ID: <20261022075219.312757-1-frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH 1/2] target/riscv: fix pmp sanitize error for x-rv128
+Date: Thu, 22 Oct 2026 09:52:17 +0200
+Message-ID: <20261022075219.312757-2-frederic.petrot@univ-grenoble-alpes.fr>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261022075219.312757-1-frederic.petrot@univ-grenoble-alpes.fr>
+References: <20261022075219.312757-1-frederic.petrot@univ-grenoble-alpes.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -80,32 +82,195 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Peter reported undefined behaviors in x-rv128 pmp configuration
-registers accesses detected by the clang sanitizer.
-This series introduces a 128-bit version of these accesses, and
-corrects other out-of-bound shifts within the handling of interrupts
-that were triggered afterwards.
+UndefinedBehaviorSanitizer reports an undefined behavior due to shifts
+larger than type in the handling of the pmp configuration registers for the
+x-rv128 cpu.
+Adding an "i128" version for the functions accessing the pmpcfg registers
+to properly handle the 128-bit case.
 
-Frédéric Pétrot (2):
-  target/riscv: fix pmp sanitize error for x-rv128
-  target/riscv: fix riscv_cpu_do_interrupt sanitize error for x-rv128
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+---
+ target/riscv/tcg/csr.c | 66 ++++++++++++++++++++++++++++++++----------
+ target/riscv/tcg/csr.h |  3 ++
+ target/riscv/tcg/pmp.c | 38 ++++++++++++++++++++++++
+ 3 files changed, 91 insertions(+), 16 deletions(-)
 
- target/riscv/cpu.h            |  2 ++
- target/riscv/tcg/cpu_helper.c | 14 ++++++--
- target/riscv/tcg/csr.c        | 66 ++++++++++++++++++++++++++---------
- target/riscv/tcg/csr.h        |  3 ++
- target/riscv/tcg/pmp.c        | 38 ++++++++++++++++++++
- 5 files changed, 105 insertions(+), 18 deletions(-)
-
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 063590f56a..fabb95c171 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -5598,6 +5598,24 @@ static RISCVException write_pmpcfg(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException read_pmpcfg_i128(CPURISCVState *env, int csrno,
++                                       Int128 *val)
++{
++    uint32_t reg_index = csrno - CSR_PMPCFG0;
++
++    *val = pmpcfg_csr_read_i128(env, reg_index);
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_pmpcfg_i128(CPURISCVState *env, int csrno,
++                                        Int128 val)
++{
++    uint32_t reg_index = csrno - CSR_PMPCFG0;
++
++    pmpcfg_csr_write_i128(env, reg_index, val);
++    return RISCV_EXCP_NONE;
++}
++
+ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+@@ -6472,33 +6490,49 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
+     /* Physical Memory Protection */
+     [CSR_MSECCFG]    = { "mseccfg",   have_mseccfg, read_mseccfg, write_mseccfg,
+                          .min_priv_ver = PRIV_VERSION_1_11_0           },
+-    [CSR_PMPCFG0]    = { "pmpcfg0",   pmp, read_pmpcfg,  write_pmpcfg  },
+-    [CSR_PMPCFG1]    = { "pmpcfg1",   pmp, read_pmpcfg,  write_pmpcfg  },
+-    [CSR_PMPCFG2]    = { "pmpcfg2",   pmp, read_pmpcfg,  write_pmpcfg  },
+-    [CSR_PMPCFG3]    = { "pmpcfg3",   pmp, read_pmpcfg,  write_pmpcfg  },
+-    [CSR_PMPCFG4]    = { "pmpcfg4",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG0]    = { "pmpcfg0",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128 },
++    [CSR_PMPCFG1]    = { "pmpcfg1",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128  },
++    [CSR_PMPCFG2]    = { "pmpcfg2",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128  },
++    [CSR_PMPCFG3]    = { "pmpcfg3",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128  },
++    [CSR_PMPCFG4]    = { "pmpcfg4",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG5]    = { "pmpcfg5",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG5]    = { "pmpcfg5",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                          read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG6]    = { "pmpcfg6",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG6]    = { "pmpcfg6",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG7]    = { "pmpcfg7",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG7]    = { "pmpcfg7",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG8]    = { "pmpcfg8",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG8]    = { "pmpcfg8",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG9]    = { "pmpcfg9",   pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG9]    = { "pmpcfg9",   pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG10]   = { "pmpcfg10",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG10]   = { "pmpcfg10",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG11]   = { "pmpcfg11",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG11]   = { "pmpcfg11",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG12]   = { "pmpcfg12",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG12]   = { "pmpcfg12",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG13]   = { "pmpcfg13",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG13]   = { "pmpcfg13",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG14]   = { "pmpcfg14",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG14]   = { "pmpcfg14",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+-    [CSR_PMPCFG15]   = { "pmpcfg15",  pmp, read_pmpcfg,  write_pmpcfg,
++    [CSR_PMPCFG15]   = { "pmpcfg15",  pmp, read_pmpcfg,  write_pmpcfg, NULL,
++                         read_pmpcfg_i128,  write_pmpcfg_i128,
+                          .min_priv_ver = PRIV_VERSION_1_12_0           },
+     [CSR_PMPADDR0]   = { "pmpaddr0",  pmp, read_pmpaddr, write_pmpaddr },
+     [CSR_PMPADDR1]   = { "pmpaddr1",  pmp, read_pmpaddr, write_pmpaddr },
+diff --git a/target/riscv/tcg/csr.h b/target/riscv/tcg/csr.h
+index 53ba3b4a4d..40396bafdb 100644
+--- a/target/riscv/tcg/csr.h
++++ b/target/riscv/tcg/csr.h
+@@ -91,6 +91,9 @@ extern const RISCVCSR mips_csr_list[];
+ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+                       target_ulong val);
+ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
++void pmpcfg_csr_write_i128(CPURISCVState *env, uint32_t reg_index,
++                           Int128 val);
++Int128 pmpcfg_csr_read_i128(CPURISCVState *env, uint32_t reg_index);
+ 
+ void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
+ uint64_t mseccfg_csr_read(CPURISCVState *env);
+diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
+index 41b55519a8..5601a81337 100644
+--- a/target/riscv/tcg/pmp.c
++++ b/target/riscv/tcg/pmp.c
+@@ -556,6 +556,28 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+     }
+ }
+ 
++void pmpcfg_csr_write_i128(CPURISCVState *env, uint32_t reg_index,
++                           Int128 val)
++{
++    int i;
++    uint8_t cfg_val;
++    int pmpcfg_nums = 2 << riscv_cpu_mxl(env);
++    bool modified = false;
++
++    trace_pmpcfg_csr_write(env->mhartid, reg_index, int128_getlo(val));
++    trace_pmpcfg_csr_write(env->mhartid, reg_index, int128_gethi(val));
++
++    for (i = 0; i < pmpcfg_nums; i++) {
++        cfg_val = int128_getlo(int128_rshift(val, 8 * i)) & 0xff;
++        modified |= pmp_write_cfg(env, (reg_index * 4) + i, cfg_val);
++    }
++
++    /* If PMP permission of any addr has been changed, flush TLB pages. */
++    if (modified) {
++        pmp_update_rule_nums(env);
++        tlb_flush(env_cpu(env));
++    }
++}
+ 
+ /*
+  * Handle a read from a pmpcfg CSR
+@@ -576,6 +598,22 @@ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index)
+     return cfg_val;
+ }
+ 
++Int128 pmpcfg_csr_read_i128(CPURISCVState *env, uint32_t reg_index)
++{
++    int i;
++    Int128 cfg_val = 0;
++    target_ulong val = 0;
++    int pmpcfg_nums = 2 << riscv_cpu_mxl(env);
++
++    for (i = 0; i < pmpcfg_nums; i++) {
++        val = pmp_read_cfg(env, (reg_index * 4) + i);
++        cfg_val = int128_or(cfg_val, int128_lshift(int128_make64(val), i * 8));
++    }
++    trace_pmpcfg_csr_read(env->mhartid, reg_index, int128_getlo(cfg_val));
++    trace_pmpcfg_csr_read(env->mhartid, reg_index, int128_gethi(cfg_val));
++
++    return cfg_val;
++}
+ 
+ /*
+  * Handle a write to a pmpaddr CSR
 -- 
 2.43.0
 
