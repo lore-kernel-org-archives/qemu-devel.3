@@ -1,92 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D3A606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914E7606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FepbZUtX;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=h4Br2Dsl
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=E8gZCWsE;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Xld+W+aM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK0jb-0002Zn-CV; Thu, 22 Oct 2026 17:54:03 -0400
+	id 1xK0jg-0002ze-08; Thu, 22 Oct 2026 17:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xK0jV-0002RE-RG
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:53:59 -0400
+ id 1xK0jc-0002iU-Pg
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:54:04 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xK0jT-0007gh-O2
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:53:57 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xK0ja-0007hW-No
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:54:04 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MHt0Lf860184
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:53:54 GMT
+ 69MHt5O2059999
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:54:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- BODzv/jcZo4K11FLZy7PcI3KT8rwTrB/RGx2VhuOsmQ=; b=FepbZUtXQMHLrSQY
- SYXKdRNUvGrbNg2gc6TjLFMkUqTe05YIm6Kvnc+qe4OP4Fe9qwPAEjsS98xhPMMn
- rtADKsOfIJAZQSdEmZNuJhQLWYQAadCoqxM5qeYvGT6LjCjlzJsJzb+OvmvUr70q
- IMewnXmtrOeHp42MVmyNrgu3Ep+6iPYMuIhiKXH5KGT3blp6sWTRK/3RogdeRAMy
- FmKVeqQyBUIaiDabHW5O0UDgee4tYsp/Iu1xQRPfZoD/1Cc91xK6u1PXofDAnLye
- qXHSfejg7rf2bgxy3aEB0WttQVpyyOTmNyNZQKCaH6z2nbVqm6hpXtvgYD21TOWi
- qNkOPA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfnq0h9kg-1
+ wxLesOMFpRlSVgk30lwrvhPKo/RNaQPFPMfYQw5scrs=; b=E8gZCWsERfBBoNw5
+ mKCOLClCwmETl2ijF1Fsd8D2fOqyuCaU8j1w1uNXmO2Pq1L67lMuT0WcqiEi88Mq
+ CPY6wjlbCyy2JegJkGB4zXaGuPgHImMESiDIEihmcfAU0xuFAhIoG11enDUtCEXJ
+ TmlYpPo1GUCdtCST8aNAodPMO09LevLZpNk8xA5SpquSwmYSnKKLSrCA5go3g1e3
+ pQw6xvwtLTZYehRqZgh5Y65eRBKWjb8UQsTPTzmzJF/vrJ/a7rb0dm9YnhK2g0RM
+ 19bkebAcvTPzktHbmGq2M+OcCuPV4Cu0tm1nBbTBi+JKHIyfh/CCgwbzWf4K6ALZ
+ 0O9nMw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfpahs44g-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:53:54 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93ecdc701a2so33660185a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 14:53:54 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 21:54:01 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93f2005ce21so44317785a.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 14:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792706034; x=1793310834; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792706041; x=1793310841; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=BODzv/jcZo4K11FLZy7PcI3KT8rwTrB/RGx2VhuOsmQ=;
- b=h4Br2Dslt37AiFtIMOlMIfDSXfDGOkRf+NoKKBnnk9MT27SKkZ8GpUNKr0bg2wlxK2
- //gdEVRkdwlBsG/LfL4ZaDOXNLYlatJmueJFe4w10WX7QROcSQ/QF1zFmkfIZmaYGaL6
- Ao1EfY2eEq3QAbEopt+77dMolqHwrezseVhPNRUrbuBWxIjdMP/X+isRmb6siNqSFicC
- Tr/vyhqobgZMUnzn2/B5Rm0BVW3pd/2/CTdryaelQXsGHPpW8ny7mCBa3XHb1bGU9Tkh
- tV1G1ZYRTKK9ZO3xC92sxZJ9Bs6aclAwMyIO0KuLWqZA/NKszHLF+ADHZNdzRjfqo+d6
- 5GpQ==
+ bh=wxLesOMFpRlSVgk30lwrvhPKo/RNaQPFPMfYQw5scrs=;
+ b=Xld+W+aMAVH23zorWWuOtqCisjhPL2+ilxln9OPWIAsHmT+QMv59q66MXXulX+9JjO
+ xzpOTybS8a7kD99Co59sXlWOpyi3X6tAhxgH4f5QOds6foZR2GM+j+Rgza9bmZhmB9r0
+ abB//p2YPlC+yOpHa8Na/qeCwB7mXVPKBOQc5f6ybIeC6BMRYMCvLbpLnNeBC0UFwW29
+ dDDboS96xSYzKOjbl1YqC/K1+afT5sNdnl0Wcw1x1TkNVkFIrh51MntbSXAG/CpDZSCq
+ 4JMAYtBOvaZ97jS+rS5C6WD3Zgx4s7UTeHkKACoyP1RCUAJTlnGW8URwMX3UqkhXAAy7
+ I36w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792706034; x=1793310834;
+ d=1e100.net; s=20260707; t=1792706041; x=1793310841;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=BODzv/jcZo4K11FLZy7PcI3KT8rwTrB/RGx2VhuOsmQ=;
- b=qIb0HOr8ioaMfy9tzckIk9eEHRq+OspwtZZqeSD0tlLxUxVCKGYojOsTKJ7pGmeL9A
- KQNRkOEKh8i/TgK7AqJHXhbMBv0IKIxTriGty3zLKaG+exn9fOktz3owswQzcjS/ICIO
- WJzYdtsm0Q2t/sqYcsrsImlARUQBGl9+LsJR4Avh3kAvMZoyP4PC5pXeguqPa7t4J4IS
- /1suKB6FBudFBJL22+jqi9UFLyOFCUgdGaPSiehXWIAgzsVO0yUb4CHsxJu+ak3L+Won
- 7hK8OpN5poXMUupYer4dVwxKm8XyFTS04UO8ibg1WfDO3rRjVn6lcuees4ewAa66Deuf
- pTxA==
-X-Gm-Message-State: AFq9FYL83kJ1zlj0T+IS2hnXBLSBs9a4d7ZHXbfzXayiG3iVS+E6vajx
- 16humP887yDv2Rby52kejlAoLHGyY+gS7oq81DbSVmC42hBAtur8WBOLMij0LQP08ZRhI2a8jg5
- HZ+NeiQV4EU1uXMgs/xerr25As7oa05S/0wKo8T9pfp2hynVjhOu7fj6sdSxqFXRgmQ==
-X-Gm-Gg: AYBFou1TlggW7iWMASNp5y1s3EwkaItJi1w06ML/A9IXfQRu5mm/n/hpUa8lmWo3mEw
- x+DXI4yd+JTfdTJCTnXjG9z2Txg4I8hb6fnQerIBUPGJhTmaY/MvMKKoD/zrjaNsEoTxS6tq4i+
- 7d9NpuQS+AJB4JDHbafTsOqdaq+186vRANCPZbJ0UxooUNRU9UpqbOCXjCFf9rMa9UIQP4906Ei
- ADra86AHVajYQxqQ/+7OwtEyRbQ4+5heUFltmMxaR4bIvJWv+nYJu3XJ30RMax1r6AF4vWFBlfd
- nS6UNe755S5qvFixYGuCWS7spha77DUtwwV1ygeVEyuExZ4OEI0ioPfH7crHmQVYhk6W2TUJOQ3
- /TS7nCNM5pIUPzZsdL9AS1GJCb2MknTtN+7j1tKya
-X-Received: by 2002:a05:620a:2851:b0:939:3fcd:4c3a with SMTP id
- af79cd13be357-93f6f908edemr131453585a.17.1792706033782; 
- Thu, 22 Oct 2026 14:53:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:2851:b0:939:3fcd:4c3a with SMTP id
- af79cd13be357-93f6f908edemr131450485a.17.1792706033258; 
- Thu, 22 Oct 2026 14:53:53 -0700 (PDT)
+ bh=wxLesOMFpRlSVgk30lwrvhPKo/RNaQPFPMfYQw5scrs=;
+ b=tGAav2kH1A5noFSLS5OzXBceR8jOZO8zvW3HSko9uAKCtfkUbzbnxiuJ7aMrDdWWxQ
+ BBRQq0NtggiiVhkhZL4gcLGOrRbkfSKParpyY7hHuiKTXra2zKz7Xd11dl9EdAISLVeP
+ DKQ/lkFwCah6N2rrm5LAk7dkSvP602eRgjWB0/Di/GSpnzDoBy8Y4Kxt8LPpFHj566RI
+ 9sB8u6n2XNNyMZEubmEgVx//zT8nb0/9RknOm2KW6O8/Lkayo2nCE18pX8wwj63huZ5p
+ OgzF23vYsIxxCCSz/rbX2f6NiGzwbzIwQRU7O1xmbxCmTxbXWIYLCPvgkkj30tl6E6m6
+ B76g==
+X-Gm-Message-State: AFq9FYJ5UrbbVc5nH84hYPGcZTaBPH2/g18CHIHk+pse8ibKLchlp7Jd
+ /m9m53yNHyBm/Bpy/JzjG8hG1R1IYdypU6c3pl1oc6DJpBSaIzpp/YgD+bhy09/EkBUvSAm4JlP
+ kSIQh3Y2OGWEDMPClTSVCxX3TunfWAGHFflVXoOyDAB9LkikS0E/cE42r2Ocw9kPtFw==
+X-Gm-Gg: AYBFou17Vq/lYVUbMmcxuyecYkHPeTMZnxpOWuLH3n+g8HsiIBetWpszJHAHTexEvkl
+ MQh7HQT533mWcx2gcoNhghw7LMGbfcGnY4fEtVTaSFrDSRFRfZ4YJUarI/35pq8Dq+qBZzfMUWh
+ TcEwA5p48OMK8IEARX674oHQlv6m9Jl4FKE5h0Juk35U3TLbIiYasnejJ8nuGqi/l6krG+qZDtB
+ BHUm7ZZHHk51Ne1w9RGeDcINZNC3eJAEW3yej8C8Hu4tj7Y+6swqNDOrM9spc6QP9j6f1G9jwtJ
+ OIJMSvaUe0TOofiArkaf7RgacTz1rgYsVsAWRzqQi7xz5wmzhPHlwEt6uTVmN0xfBBS6DIvqYQv
+ yOuop/keaBAZwXcS2tujosfQNx7q9J6fyFuDbSE95
+X-Received: by 2002:a05:620a:31a6:b0:93e:fc4e:c48d with SMTP id
+ af79cd13be357-93f6f9b869bmr135972985a.61.1792706041023; 
+ Thu, 22 Oct 2026 14:54:01 -0700 (PDT)
+X-Received: by 2002:a05:620a:31a6:b0:93e:fc4e:c48d with SMTP id
+ af79cd13be357-93f6f9b869bmr135969685a.61.1792706040538; 
+ Thu, 22 Oct 2026 14:54:00 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a21047b2absm26241175e9.13.2026.10.22.14.53.52
+ ffacd0b85a97d-48e37eded3fsm690860f8f.7.2026.10.22.14.53.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Oct 2026 14:53:52 -0700 (PDT)
+ Thu, 22 Oct 2026 14:53:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -94,9 +94,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
  Glenn Miles <milesg@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PATCH v3 21/33] target/ppc: Use a static table in powerpc_excp_name()
-Date: Thu, 22 Oct 2026 23:51:01 +0200
-Message-ID: <20261022215115.19680-22-philmd@oss.qualcomm.com>
+Subject: [PATCH v3 22/33] target/ppc: Register CPUClass::exception_name()
+ handler
+Date: Thu, 22 Oct 2026 23:51:02 +0200
+Message-ID: <20261022215115.19680-23-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261022215115.19680-1-philmd@oss.qualcomm.com>
 References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
@@ -104,31 +105,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xwuS5T2_jzPs-m73INdh6MC_n7LpwpJa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfXzbGUt9YWJ6Qc
- mNEa61DcZbmhIwJjq5DvoOw0BmvDqto8UuDpDDg6hGfzZVWlzXQIU7wpTIWe0RLt27lhpVuScrd
- FDRcuug7XnhaLvaMs5kRdUc7aUztxHaKQJ1yRIFCRG9bsqCSHDkui2w5mqUQ8/hkBAn+AR+NApD
- +M+fhyqa7gZy7LrsjVHOf4Ws5IROfpi64JRte1g+obwk54Phzi0q+gicGeSM1Qc5s23irdQFDEd
- hr6fDvXWrFHKQN2nNI6b5E1OCmZI/ucpiU+zUOTNDQ3f6Fqt9HopHaxZ786qRWlG6zpUYWfI/29
- 42ms7a/WW0kdXlNUQ2QDUUCYQftDZ0cDoIrGMLqKGpq6GK87mNMOA+NeQwMGrBWdabqCz7C2m91
- 0nfDnQU6xBzkphLmu2zIlC7WNBcjZEkO7BZXY94OZ1JZFr+x3EwDYzMJWPpORW1m7oQTfNLGLSi
- ivPoDpCaeUUY9qeVH5Q==
-X-Proofpoint-GUID: xwuS5T2_jzPs-m73INdh6MC_n7LpwpJa
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX6vjDX0yIYlDW
- R3yx3TwBt/VhvkY92UEu8uqxM+eJQopEOksO3W1zIDXxhCjA/p1+mjIEH1yV7Ealjp78OeQK3ud
- NcodZ9XhXTtlMO6BMfy6jFzPi6K7qJM=
-X-Authority-Analysis: v=2.4 cv=UaHE26SN c=1 sm=1 tr=0 ts=6ada85f2 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX/bai6OkOT4iv
+ KXUH14NJVKlrhWqVl3DdvdP5xRuvozHPkerWJcVjn9sC+7FB3eaesAs1cPUPm98k1OU+S9r23kf
+ dmkbYS5FJeUdET9Bd35bvPc0E4L/P8w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4NyBTYWx0ZWRfX5eQfDMBYZ+I5
+ XKsAHhA0Z8pKM4w7f4E/yi39gxFoyZsL3Cz78udW2PbIKIOQigd6cndaOgwrVOWvdu8Cc7c/eid
+ qUNoLkRGP9u1p3i5L+85u+Ltke1CtgZjJyjsj6JmOiGgn8Yq9zQMRdaOAZE2qLWDe1o2Ae/H6uk
+ PbFGgXrw/paVsl+nQcVhcfyPXji6MOe98794MTz+Ml8aQok9EZwM0gXW8Ui/LZk9awEBJsAyAka
+ pmPOs1ogO3CrwoallAYShnacmJpyS8aEmXHmLao4wCg7Qzg/hyuh1UIqbGPo2wQ86BEKfkMwvep
+ drZKjestfaUCfTpiA4jFBUOrRfpP1C5wKQZVjIv9XTrqUIknaDqm96B5R8gB0aN3UXRfEmxBltR
+ a3TGo165CHfDSUqxiIqjO60rX/giGoDnVYjE9RsoQj2r1T+dSho06lMjqQAQ2e/Tb65D5F36r2m
+ 1amwEWrH5PBfFuzCbNg==
+X-Proofpoint-GUID: Vg5_hyGxXjcoQAxHfKkCeDL0LNobr3kj
+X-Authority-Analysis: v=2.4 cv=YIMKWhGx c=1 sm=1 tr=0 ts=6ada85f9 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=ToDOQhdInOzr0WCV1tUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=GQJXTKmK7mRzDcunaLEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: Vg5_hyGxXjcoQAxHfKkCeDL0LNobr3kj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 spamscore=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 adultscore=0
+ spamscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220087
 Received-SPF: pass client-ip=205.220.180.131;
@@ -138,8 +139,8 @@ X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,183 +152,74 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UPPERCASE_50_75,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Replace the switch statement with a static lookup table.
+Expose powerpc_excp_name() prototype and register it
+as the CPUClass::exception_name() handler, so the common
+exception logging can resolve PPC exception codes to names.
 
-Unlisted exception codes now return "unknown" instead of reaching
-g_assert_not_reached(), so with '-d int' they are logged instead
-of aborting QEMU. Do this before registering the function as the
-CPUClass::exception_name() handler, which must accept any code.
-
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/ppc/excp_helper.c | 137 ++++++++++++++++++++-------------------
- 1 file changed, 69 insertions(+), 68 deletions(-)
+ target/ppc/cpu.h         | 2 ++
+ target/ppc/cpu_init.c    | 1 +
+ target/ppc/excp_helper.c | 5 +++--
+ 3 files changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 3fb51bbeb82..4eb7db3d727 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -153,6 +153,8 @@ enum {
+     POWERPC_EXCP_SYSCALL_USER = 0x203, /* System call in user mode only      */
+ };
+ 
++const char *powerpc_excp_name(int excp);
++
+ /* Exceptions error codes                                                    */
+ enum {
+     /* Exception subtypes for POWERPC_EXCP_ALIGN                             */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index b711f9c0a85..d5f9ac28020 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7529,6 +7529,7 @@ static void ppc_cpu_class_init(ObjectClass *oc, const void *data)
+                                        &pcc->parent_phases);
+ 
+     cc->class_by_name = ppc_cpu_class_by_name;
++    cc->exception_name = powerpc_excp_name;
+     cc->list_cpus = ppc_cpu_list;
+     cc->dump_state = ppc_cpu_dump_state;
+     cc->set_pc = ppc_cpu_set_pc;
 diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 895127fb2e6..4892cbaeb07 100644
+index 4892cbaeb07..76ac41e964d 100644
 --- a/target/ppc/excp_helper.c
 +++ b/target/ppc/excp_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/log.h"
-+#include "qemu/cutils.h"
- #include "system/memory.h"
- #include "system/tcg.h"
- #include "system/system.h"
-@@ -37,74 +38,74 @@
+@@ -34,9 +34,8 @@
  
- static const char *powerpc_excp_name(int excp)
+ /*****************************************************************************/
+ /* Exception processing */
+-#ifndef CONFIG_USER_ONLY
+ 
+-static const char *powerpc_excp_name(int excp)
++const char *powerpc_excp_name(int excp)
  {
--    switch (excp) {
--    case POWERPC_EXCP_CRITICAL: return "CRITICAL";
--    case POWERPC_EXCP_MCHECK:   return "MCHECK";
--    case POWERPC_EXCP_DSI:      return "DSI";
--    case POWERPC_EXCP_ISI:      return "ISI";
--    case POWERPC_EXCP_EXTERNAL: return "EXTERNAL";
--    case POWERPC_EXCP_ALIGN:    return "ALIGN";
--    case POWERPC_EXCP_PROGRAM:  return "PROGRAM";
--    case POWERPC_EXCP_FPU:      return "FPU";
--    case POWERPC_EXCP_SYSCALL:  return "SYSCALL";
--    case POWERPC_EXCP_APU:      return "APU";
--    case POWERPC_EXCP_DECR:     return "DECR";
--    case POWERPC_EXCP_FIT:      return "FIT";
--    case POWERPC_EXCP_WDT:      return "WDT";
--    case POWERPC_EXCP_DTLB:     return "DTLB";
--    case POWERPC_EXCP_ITLB:     return "ITLB";
--    case POWERPC_EXCP_DEBUG:    return "DEBUG";
--    case POWERPC_EXCP_SPEU:     return "SPEU";
--    case POWERPC_EXCP_EFPDI:    return "EFPDI";
--    case POWERPC_EXCP_EFPRI:    return "EFPRI";
--    case POWERPC_EXCP_EPERFM:   return "EPERFM";
--    case POWERPC_EXCP_DOORI:    return "DOORI";
--    case POWERPC_EXCP_DOORCI:   return "DOORCI";
--    case POWERPC_EXCP_GDOORI:   return "GDOORI";
--    case POWERPC_EXCP_GDOORCI:  return "GDOORCI";
--    case POWERPC_EXCP_HYPPRIV:  return "HYPPRIV";
--    case POWERPC_EXCP_RESET:    return "RESET";
--    case POWERPC_EXCP_DSEG:     return "DSEG";
--    case POWERPC_EXCP_ISEG:     return "ISEG";
--    case POWERPC_EXCP_HDECR:    return "HDECR";
--    case POWERPC_EXCP_TRACE:    return "TRACE";
--    case POWERPC_EXCP_HDSI:     return "HDSI";
--    case POWERPC_EXCP_HISI:     return "HISI";
--    case POWERPC_EXCP_HDSEG:    return "HDSEG";
--    case POWERPC_EXCP_HISEG:    return "HISEG";
--    case POWERPC_EXCP_VPU:      return "VPU";
--    case POWERPC_EXCP_PIT:      return "PIT";
--    case POWERPC_EXCP_EMUL:     return "EMUL";
--    case POWERPC_EXCP_IFTLB:    return "IFTLB";
--    case POWERPC_EXCP_DLTLB:    return "DLTLB";
--    case POWERPC_EXCP_DSTLB:    return "DSTLB";
--    case POWERPC_EXCP_FPA:      return "FPA";
--    case POWERPC_EXCP_DABR:     return "DABR";
--    case POWERPC_EXCP_IABR:     return "IABR";
--    case POWERPC_EXCP_SMI:      return "SMI";
--    case POWERPC_EXCP_PERFM:    return "PERFM";
--    case POWERPC_EXCP_THERM:    return "THERM";
--    case POWERPC_EXCP_VPUA:     return "VPUA";
--    case POWERPC_EXCP_SOFTP:    return "SOFTP";
--    case POWERPC_EXCP_MAINT:    return "MAINT";
--    case POWERPC_EXCP_MEXTBR:   return "MEXTBR";
--    case POWERPC_EXCP_NMEXTBR:  return "NMEXTBR";
--    case POWERPC_EXCP_ITLBE:    return "ITLBE";
--    case POWERPC_EXCP_DTLBE:    return "DTLBE";
--    case POWERPC_EXCP_VSXU:     return "VSXU";
--    case POWERPC_EXCP_FU:       return "FU";
--    case POWERPC_EXCP_HV_EMU:   return "HV_EMU";
--    case POWERPC_EXCP_HV_MAINT: return "HV_MAINT";
--    case POWERPC_EXCP_HV_FU:    return "HV_FU";
--    case POWERPC_EXCP_SDOOR:    return "SDOOR";
--    case POWERPC_EXCP_SDOOR_HV: return "SDOOR_HV";
--    case POWERPC_EXCP_HVIRT:    return "HVIRT";
--    case POWERPC_EXCP_SYSCALL_VECTORED: return "SYSCALL_VECTORED";
--    case POWERPC_EXCP_PERFM_EBB: return "PERFM_EBB";
--    case POWERPC_EXCP_EXTERNAL_EBB: return "EXTERNAL_EBB";
--    default:
--        g_assert_not_reached();
--    }
-+    static const char * const excp_names[POWERPC_EXCP_NB] = {
-+        [POWERPC_EXCP_CRITICAL] = "CRITICAL",
-+        [POWERPC_EXCP_MCHECK]   = "MCHECK",
-+        [POWERPC_EXCP_DSI]      = "DSI",
-+        [POWERPC_EXCP_ISI]      = "ISI",
-+        [POWERPC_EXCP_EXTERNAL] = "EXTERNAL",
-+        [POWERPC_EXCP_ALIGN]    = "ALIGN",
-+        [POWERPC_EXCP_PROGRAM]  = "PROGRAM",
-+        [POWERPC_EXCP_FPU]      = "FPU",
-+        [POWERPC_EXCP_SYSCALL]  = "SYSCALL",
-+        [POWERPC_EXCP_APU]      = "APU",
-+        [POWERPC_EXCP_DECR]     = "DECR",
-+        [POWERPC_EXCP_FIT]      = "FIT",
-+        [POWERPC_EXCP_WDT]      = "WDT",
-+        [POWERPC_EXCP_DTLB]     = "DTLB",
-+        [POWERPC_EXCP_ITLB]     = "ITLB",
-+        [POWERPC_EXCP_DEBUG]    = "DEBUG",
-+        [POWERPC_EXCP_SPEU]     = "SPEU",
-+        [POWERPC_EXCP_EFPDI]    = "EFPDI",
-+        [POWERPC_EXCP_EFPRI]    = "EFPRI",
-+        [POWERPC_EXCP_EPERFM]   = "EPERFM",
-+        [POWERPC_EXCP_DOORI]    = "DOORI",
-+        [POWERPC_EXCP_DOORCI]   = "DOORCI",
-+        [POWERPC_EXCP_GDOORI]   = "GDOORI",
-+        [POWERPC_EXCP_GDOORCI]  = "GDOORCI",
-+        [POWERPC_EXCP_HYPPRIV]  = "HYPPRIV",
-+        [POWERPC_EXCP_RESET]    = "RESET",
-+        [POWERPC_EXCP_DSEG]     = "DSEG",
-+        [POWERPC_EXCP_ISEG]     = "ISEG",
-+        [POWERPC_EXCP_HDECR]    = "HDECR",
-+        [POWERPC_EXCP_TRACE]    = "TRACE",
-+        [POWERPC_EXCP_HDSI]     = "HDSI",
-+        [POWERPC_EXCP_HISI]     = "HISI",
-+        [POWERPC_EXCP_HDSEG]    = "HDSEG",
-+        [POWERPC_EXCP_HISEG]    = "HISEG",
-+        [POWERPC_EXCP_VPU]      = "VPU",
-+        [POWERPC_EXCP_PIT]      = "PIT",
-+        [POWERPC_EXCP_EMUL]     = "EMUL",
-+        [POWERPC_EXCP_IFTLB]    = "IFTLB",
-+        [POWERPC_EXCP_DLTLB]    = "DLTLB",
-+        [POWERPC_EXCP_DSTLB]    = "DSTLB",
-+        [POWERPC_EXCP_FPA]      = "FPA",
-+        [POWERPC_EXCP_DABR]     = "DABR",
-+        [POWERPC_EXCP_IABR]     = "IABR",
-+        [POWERPC_EXCP_SMI]      = "SMI",
-+        [POWERPC_EXCP_PERFM]    = "PERFM",
-+        [POWERPC_EXCP_THERM]    = "THERM",
-+        [POWERPC_EXCP_VPUA]     = "VPUA",
-+        [POWERPC_EXCP_SOFTP]    = "SOFTP",
-+        [POWERPC_EXCP_MAINT]    = "MAINT",
-+        [POWERPC_EXCP_MEXTBR]   = "MEXTBR",
-+        [POWERPC_EXCP_NMEXTBR]  = "NMEXTBR",
-+        [POWERPC_EXCP_ITLBE]    = "ITLBE",
-+        [POWERPC_EXCP_DTLBE]    = "DTLBE",
-+        [POWERPC_EXCP_VSXU]     = "VSXU",
-+        [POWERPC_EXCP_FU]       = "FU",
-+        [POWERPC_EXCP_HV_EMU]   = "HV_EMU",
-+        [POWERPC_EXCP_HV_MAINT] = "HV_MAINT",
-+        [POWERPC_EXCP_HV_FU]    = "HV_FU",
-+        [POWERPC_EXCP_SDOOR]    = "SDOOR",
-+        [POWERPC_EXCP_SDOOR_HV] = "SDOOR_HV",
-+        [POWERPC_EXCP_HVIRT]    = "HVIRT",
-+        [POWERPC_EXCP_SYSCALL_VECTORED] = "SYSCALL_VECTORED",
-+        [POWERPC_EXCP_PERFM_EBB]        = "PERFM_EBB",
-+        [POWERPC_EXCP_EXTERNAL_EBB]     = "EXTERNAL_EBB",
-+    };
-+
-+    return STR_ARRAY_ELEM_OR_NULL(excp_names, excp) ?: "unknown";
+     static const char * const excp_names[POWERPC_EXCP_NB] = {
+         [POWERPC_EXCP_CRITICAL] = "CRITICAL",
+@@ -108,6 +107,8 @@ static const char *powerpc_excp_name(int excp)
+     return STR_ARRAY_ELEM_OR_NULL(excp_names, excp) ?: "unknown";
  }
  
++#ifndef CONFIG_USER_ONLY
++
  static void dump_syscall(CPUPPCState *env)
+ {
+     qemu_log_mask(CPU_LOG_INT, "syscall r0=%016" PRIx64
 -- 
 2.55.0
 
