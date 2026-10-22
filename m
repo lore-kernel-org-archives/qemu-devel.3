@@ -1,99 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE43606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ADE606A31A
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 20:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=FHHhpyAZ
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=iX0/VOJo;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=XeCpYf2d
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJzR9-0002l0-I3; Thu, 22 Oct 2026 16:30:57 -0400
+	id 1xJzRF-0002li-4y; Thu, 22 Oct 2026 16:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xJzQn-0002jh-NS
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:30:40 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xJzR9-0002lF-8f
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:30:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xJzQj-0007t7-4s
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:30:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=RcO1AIexKVT+2POtng3yRmszGtuWrXvms5ivOMkjU38=; b=FHHhpyAZ3EKVzhMuQNEHs+IP5I
- grIVXm1nPNnYwznLKKW9sid0/uVVYA1Y/dSChETb5HSw4aeHNaS60SvMKj5/pBjBmNZ8oq0zwA3KP
- hns84pFeXJM8wO/5et96xYyKbVnY2K1Ac8S2F5dBDNaWlibq6wu0JHuHkOQk5axe4MB8buIFb3Waw
- /pD2y+JNa8pUO64z9bWnPIRmd/SIi02jYRBhA15ZLSERumDKriCPFbDMYIwxOU0H8kzmM+AKkXb1q
- f9gOfXeCkf9uuQKwql1ynzDTvOYQJfmGY0kDO6BQx8kSGggiwGdnxrlKZZKsZa6O2KhlKKSTN+EiM
- yO66PyLpg0Q+jNntJBq1DnpmHfzwcjPnWYH1A2X7nxkDFen+tMBdZx6bZX5i4OTEHT8Ag+oGHJhZa
- fg/pnJ7cZ5yYLTFeoFC0ccxb5e8dZILcWNyTmn1b1gfz1ZKZzt5vZQzkgptMK05/22fInLVO9La+1
- VgRg4w5AFcCo4igT9sTcs8s11OAe+Wx/v5RNT9NhnXdWIqoxQiYsJG/nhLxrLbd42zYXTAG6AQye1
- cNiTfj+utX2pOefZ+RrwAm/kb0nW+BVDYQOtsmu18QIqoWmI3C6QEtpdMPgoipGKBZZysb6SLW/hU
- jU4cqSfuJ1ZjdOA0XxMoT34/sUgz5ITr3BNbZbB9E=;
-Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xJzPw-003FNg-Hg; Thu, 22 Oct 2026 21:29:41 +0100
-Message-ID: <c73d3684-6735-4a6c-809b-3d5217a33281@ilande.co.uk>
-Date: Thu, 22 Oct 2026 21:30:22 +0100
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xJzR5-0007vF-9r
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:30:54 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69MIHaw81495580
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 20:30:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ LETvwzLNjhRh29uX4rEwoltb4/XtQrPchWQEHW7Gr5U=; b=iX0/VOJofpPHnkmP
+ lUGUk1YfZz/Lvtj4h54zsIbOAVdlLps3TQ2XV8SvV4TmaV/bmm665l5cLXhXzAFL
+ 9o78vKW09ISXw7ZhIWsUutIG6owpL3LPrrcSh0DHAvnbrPAVeMttRbm+8Y0p/dSa
+ veVgcHqWs+Ahzccag7l3OzuA0xzpkryBzUVFuCR2FNOMMF/FG+mth+ZWqYJvwZMG
+ DSpCiYeag+PUQTtPzbZlp7ywJm0zXnCZ/muoBr5ugRkBP54KkFxYVflewAV5JAOB
+ QS5DzJONXjj30pWFN3Uuj7oP8auKpUkmxPAOBQmFtbLYUHH0BypYbjPzCNw1muhG
+ Ge9geg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmr8eph-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 20:30:46 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-35c902e0da2so1539985eec.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 13:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792701045; x=1793305845; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=LETvwzLNjhRh29uX4rEwoltb4/XtQrPchWQEHW7Gr5U=;
+ b=XeCpYf2diq1GwJf+zEbKG4c55YecDcTv420BponTlkVm0HttWLkPMh9rExwfhmDywn
+ C7w0phlLoORAD104WySKQCK/toOuKnfWAD6pAagzIDsv9cdVnyL3uLsX16KTvMrrcQHS
+ j+6+3inpaR5NyQy/nSIfoU0jEo1eP2Y6Sr6DEWd3dSdgUNwJUFt2dRgdYhWmhEwo4EOc
+ DWvP1rCWyUZx5O8IUCIiP7qKfaK65wAMi+yerQXkJ6lPMAVUKN5QP3OH1xZbbZzX6X61
+ myZ9HXTYgQ5WOOyHABaL7m00cyDmkI7bAPigf/qvqH53HrEDhf4RDvWo1DsFPUDhLEuQ
+ XWLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792701045; x=1793305845;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=LETvwzLNjhRh29uX4rEwoltb4/XtQrPchWQEHW7Gr5U=;
+ b=cVrOanzPP7hu/lNwcaEt51rfmOLLAGY6Jv9nCwDDJJ8oJ2naPo04ZB3SbDN6j1irfj
+ A1ccLFg+aI69C+f21fuSgUWSZ4fcrz2S2p01XTbkrgHtKWA5lnIQlH3Rkc21MvKqfu4A
+ ZLc7xqY8c/UcMA44WTvMzQTk6z3/IDhhAzDbTKB+dmwjUPmw/KT4gB4Mdq73/Ca2Yth1
+ u5dvCdqp2sR0lfC0icZIshb0yUZbtZFGo8/v/qPye+JZQW9IcN9Kiqcgp4eIN487Mblj
+ /3P/X3z11IWg7+KR7UB57jZMJQ3v085Q0O7tRwRUafCo/s0yCMzYgWmiQXveUWFMuWa2
+ zedQ==
+X-Gm-Message-State: AFq9FYIAkJvWy30IaYecmXMCo/9WiqLVoi72VVUTubH772LtmlwczsYY
+ /ug502nUiOZKCURcv8poUuYnrJH+qQrKfskT9vq2MfY/1dLgoDrIWX2r7/oma//qXFic4KbdeEw
+ 5SVeA5XrN8ty9TCtb92AcGId0hFZQSa1tIM1CBEj+grdtKMH8C1gWZLnhTw==
+X-Gm-Gg: AYBFou1uAc+FtwzEb+/Iek7wVQKnmJJm/DZTm49GnIe5/H9NFu0r22UHRNzQpSxTObb
+ Aseu2amW6Iw9Nx3S+yGgfMusoSNmfjuIBQGR5BP6cSBZw/HVcNoaSgbGozdvHw3Ywbnvnd98ZN3
+ Z7wi6aZqYEwL/pbze+gxv8qrM7ddmM6sUTQNZn8F41fSWb2A7jVbrAih8qqkpFAjyqKouy55U74
+ ZScfqRZfKTax/TqEITw+AYLPJJa/w85zLRLE/T5EMSCf0V2dsQ3BzvipskZ+7WK15lHXMSLAiVM
+ iu0mmjYALjQWXy5mrOCMtaUpLww3LBLWTobp/V5eBhTYHUnnVkMGnyRvh11KNSQZun3GjXfFzyy
+ cnejn5yAUGCOLeZAAyVTR7kH190h4nfeTdQpkYS8ASLBmUM1cIt/HrR19qypYWDy50k6Atg==
+X-Received: by 2002:a05:7022:1005:b0:185:6c8c:d860 with SMTP id
+ a92af1059eb24-19599bd3184mr713997c88.5.1792701045326; 
+ Thu, 22 Oct 2026 13:30:45 -0700 (PDT)
+X-Received: by 2002:a05:7022:1005:b0:185:6c8c:d860 with SMTP id
+ a92af1059eb24-19599bd3184mr713969c88.5.1792701044744; 
+ Thu, 22 Oct 2026 13:30:44 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-195eab24c9dsm325854c88.9.2026.10.22.13.30.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 13:30:44 -0700 (PDT)
+Message-ID: <9e695340-1b23-4c69-ac1b-d28b245ccb59@oss.qualcomm.com>
+Date: Thu, 22 Oct 2026 13:30:42 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Biggers <ebiggers@kernel.org>
-References: <20261022070059.3861291-1-stian@itx.no>
- <20261022070059.3861291-4-stian@itx.no>
+Subject: Re: [PATCH v2 0/2] tests/tcg fixes
+To: Eric Farman <farman@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Chinmay Rath <rathc@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20261019185600.2031729-1-farman@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20261022070059.3861291-4-stian@itx.no>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 3/8] target/sparc: Add the eight AES round instructions
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20261019185600.2031729-1-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: yezRzZDQPZuBXhK2eU3erpf_CgOjKeZ9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4MSBTYWx0ZWRfX78dTNt3qRqdx
+ ZQ6L58Ba1laOAiiTetym4j+Ms7p8kM3g5LmbxCaXXw/gaMHeFCGenbVENr+yf79iOGU/Yg4fKwW
+ dPy1HzI7EaXmf5YBpcwmBZtKRGmc1rU=
+X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6ada7276 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=vpHPgimwONWjb4lggYAA:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4MSBTYWx0ZWRfX3Q+8J6mjyseO
+ Cgqt1FqjdE7DrDnYRTqAduMrhTE4F8uaPzmzy5Jj9Ntm0ipBoBJxjcpWg1n+IG/fGICMOa2QzxP
+ oAMnH605P8MdJoelUjEeRDGu46jyenyXU3ngRrOh0iWSKmuaKjKo0+TZavfpBBYoelC/GjDqowb
+ b3W6UPGFiQvD+6Q3oPjtE9jqLHTsQw3605Uq0lRkTlMA39NN/pRjYsHTZumZFpSEnJBsiVTcWk3
+ F2owvU/fE035iHl5uuY6hdRmO8MLPqwnJnnN9y6xGRQMpt5/Lgku4v3FjzjfrWC5QDiloDW3iCw
+ RZgNSW5GlKUX4GeLQAoZRZRJlNy3jT1BPFto9EFuzIOZSlbo/zZUAC8Ps3umyzYXc4/LO+toJhq
+ OJAcbpAcVfXn2i+xQYKefLUtDlQ8Wj+Vcwk38KXxiU6ekUkfa+AzcmiDZi+cRRW5tTFyWKHFI+y
+ FSqywYJ+JuXCmQjozEw==
+X-Proofpoint-ORIG-GUID: yezRzZDQPZuBXhK2eU3erpf_CgOjKeZ9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220081
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,225 +155,51 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 22/10/2026 08:00, Stian Halseth wrote:
-
-> Implement the eight AES round instructions by using QEMU's shared
-> crypto/aes-round.h, gated behind the crypto CPU feature:
-> - AES_EROUND01/23 and last variants
-> - AES_DROUND01/23 and last variants
+On 10/19/2026 11:55 AM, Eric Farman wrote:
+> Hi,
 > 
-> Based on OSA (Oracle SPARC Architecture) 2011, section 7.3:
-> AES Cryptographic Operations (4 operand)
+> Here's a quick turnaround on the tests/tcg fixes to address Pierrick's
+> comments on v1.
 > 
-> Next commit will complete the feature and expose its availability
-> to the guest by setting the AES bit in CFR.
+> Quoting the important part of v1:
 > 
-> Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Signed-off-by: Stian Halseth <stian@itx.no>
-> ---
->   target/sparc/crypto_helper.c | 89 ++++++++++++++++++++++++++++++++++++
->   target/sparc/helper.h        |  8 ++++
->   target/sparc/insns.decode    |  9 ++++
->   target/sparc/meson.build     |  2 +-
->   target/sparc/translate.c     | 16 +++++++
->   5 files changed, 123 insertions(+), 1 deletion(-)
->   create mode 100644 target/sparc/crypto_helper.c
+>  - Patch 1 addresses an endianness problem that shows up when running
+>    on a big-endian (s390) host. It's existed for a while, as I can
+>    recreate similar errors (if slightly different messages) at least
+>    back to 11.0.0. Just never noticed (or looked into it) before.
+>  - Patch 2 addresses a change in behavior that occurs in the powerpc
+>    toolchain between power6 and power7 (based on experimentation with
+>    gcc -mcpu= settings). The tests as they currently are run fine for me
+>    on either an s390 or x86 host running Fedora, but fail on both hosts
+>    running Debian. 
 > 
-> diff --git a/target/sparc/crypto_helper.c b/target/sparc/crypto_helper.c
-> new file mode 100644
-> index 0000000000..7dd4dd5144
-> --- /dev/null
-> +++ b/target/sparc/crypto_helper.c
-> @@ -0,0 +1,89 @@
-> +/*
-> + * SPARC crypto instructions for QEMU
-> + *
-> + * Based on Oracle SPARC Architecture 2011
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "exec/helper-proto.h"
-> +#include "crypto/aes-round.h"
-> +
-> +/*
-> + * SPARC four-operand AES round (Section 7.3).
-> + * s2:s3 holds the state; half selects output columns 0-1 or 2-3, and
-> + * key supplies their round key. dec selects decryption; last omits
-> + * MixColumns/InvMixColumns. Return the selected 64-bit half.
-> + *
-> + * Note all 64-bit values (state and key) hold AES bytes in big-endian
-> + * order, i.e. the most significant byte is the first state byte.
-> + */
-> +static uint64_t aes_round(uint64_t key, uint64_t s2, uint64_t s3,
-> +                          int half, bool dec, bool last)
-> +{
-> +    AESState st, rk, r;
-> +    const unsigned first = HOST_BIG_ENDIAN ? 0 : 1;
-> +    const unsigned out = first ^ half;
-> +
-> +    st.d[first] = s2;       /* columns 0-1 */
-> +    st.d[first ^ 1] = s3;   /* columns 2-3 */
-> +    rk.d[out] = key;
-> +    rk.d[out ^ 1] = 0;
-> +
-> +    if (dec) {
-> +        if (last) {
-> +            aesdec_ISB_ISR_AK(&r, &st, &rk, true);
-> +        } else {
-> +            aesdec_ISB_ISR_AK_IMC(&r, &st, &rk, true);
-> +        }
-> +    } else {
-> +        if (last) {
-> +            aesenc_SB_SR_AK(&r, &st, &rk, true);
-> +        } else {
-> +            aesenc_SB_SR_MC_AK(&r, &st, &rk, true);
-> +        }
-> +    }
-> +
-> +    return r.d[out];
-> +}
-> +
-> +uint64_t helper_aes_eround01(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 0, false, false);
-> +}
-> +
-> +uint64_t helper_aes_eround23(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 1, false, false);
-> +}
-> +
-> +uint64_t helper_aes_dround01(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 0, true, false);
-> +}
-> +
-> +uint64_t helper_aes_dround23(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 1, true, false);
-> +}
-> +
-> +uint64_t helper_aes_eround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 0, false, true);
-> +}
-> +
-> +uint64_t helper_aes_eround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 1, false, true);
-> +}
-> +
-> +uint64_t helper_aes_dround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 0, true, true);
-> +}
-> +
-> +uint64_t helper_aes_dround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-> +{
-> +    return aes_round(key, s2, s3, 1, true, true);
-> +}
-> diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-> index 3a7f7dc129..9bfd643b09 100644
-> --- a/target/sparc/helper.h
-> +++ b/target/sparc/helper.h
-> @@ -122,6 +122,14 @@ DEF_HELPER_FLAGS_2(fchksm16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
->   DEF_HELPER_FLAGS_2(fmean16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
->   DEF_HELPER_FLAGS_2(fslas16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
->   DEF_HELPER_FLAGS_2(fslas32, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_eround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_eround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_dround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_dround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_eround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_eround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_dround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-> +DEF_HELPER_FLAGS_3(aes_dround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
->   #define VIS_CMPHELPER(name)                                  \
->       DEF_HELPER_FLAGS_2(f##name##8, TCG_CALL_NO_RWG_SE,       \
->                          i64, i64, i64)                        \
-> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-> index 55f8528ffe..99c9147e7d 100644
-> --- a/target/sparc/insns.decode
-> +++ b/target/sparc/insns.decode
-> @@ -596,6 +596,15 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
->     NCP           10 ----- 110111 ----- --------- -----      # v8 CPop2
->   }
->   
-> +AES_EROUND01    10 ..... 011001 ..... ..... 0000 .....     @d_d_d_d
-> +AES_EROUND23    10 ..... 011001 ..... ..... 0001 .....     @d_d_d_d
-> +AES_DROUND01    10 ..... 011001 ..... ..... 0010 .....     @d_d_d_d
-> +AES_DROUND23    10 ..... 011001 ..... ..... 0011 .....     @d_d_d_d
-> +AES_EROUND01_L  10 ..... 011001 ..... ..... 0100 .....     @d_d_d_d
-> +AES_EROUND23_L  10 ..... 011001 ..... ..... 0101 .....     @d_d_d_d
-> +AES_DROUND01_L  10 ..... 011001 ..... ..... 0110 .....     @d_d_d_d
-> +AES_DROUND23_L  10 ..... 011001 ..... ..... 0111 .....     @d_d_d_d
-> +
->   ##
->   ## Major Opcode 11 -- load and store instructions
->   ##
-> diff --git a/target/sparc/meson.build b/target/sparc/meson.build
-> index 46289c8669..af65c933bf 100644
-> --- a/target/sparc/meson.build
-> +++ b/target/sparc/meson.build
-> @@ -12,7 +12,7 @@ sparc_ss.add(files(
->     'win_helper.c',
->   ))
->   sparc_ss.add(when: 'TARGET_SPARC', if_true: files('int32_helper.c'))
-> -sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c'))
-> +sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c', 'crypto_helper.c'))
->   
->   sparc_system_ss = ss.source_set()
->   sparc_system_ss.add(files(
-> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-> index a1562f5047..16907b1085 100644
-> --- a/target/sparc/translate.c
-> +++ b/target/sparc/translate.c
-> @@ -101,6 +101,14 @@
->   # define gen_helper_xmulx                ({ qemu_build_not_reached(); NULL; })
->   # define gen_helper_xmulxhi              ({ qemu_build_not_reached(); NULL; })
->   # define MAXTL_MASK                             0
-> +# define gen_helper_aes_eround01         ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_eround23         ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_dround01         ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_dround23         ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_eround01_l       ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_eround23_l       ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_dround01_l       ({ qemu_build_not_reached(); NULL; })
-> +# define gen_helper_aes_dround23_l       ({ qemu_build_not_reached(); NULL; })
->   #endif
->   
->   #define DISAS_EXIT  DISAS_TARGET_0
-> @@ -5418,6 +5426,14 @@ TRANS(FNMSUBd, FMAF, do_dddd, a, gen_op_fnmsubd)
->   TRANS(FNMADDd, FMAF, do_dddd, a, gen_op_fnmaddd)
->   TRANS(FPMADDX, IMA, do_dddd, a, gen_op_fpmaddx)
->   TRANS(FPMADDXHI, IMA, do_dddd, a, gen_op_fpmaddxhi)
-> +TRANS(AES_EROUND01, CRYPTO, do_dddd, a, gen_helper_aes_eround01)
-> +TRANS(AES_EROUND23, CRYPTO, do_dddd, a, gen_helper_aes_eround23)
-> +TRANS(AES_DROUND01, CRYPTO, do_dddd, a, gen_helper_aes_dround01)
-> +TRANS(AES_DROUND23, CRYPTO, do_dddd, a, gen_helper_aes_dround23)
-> +TRANS(AES_EROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_eround01_l)
-> +TRANS(AES_EROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_eround23_l)
-> +TRANS(AES_DROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_dround01_l)
-> +TRANS(AES_DROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_dround23_l)
->   
->   static bool trans_FALIGNDATAi(DisasContext *dc, arg_r_r_r *a)
->   {
+> v1->v2:
+>  - [PB] Add -mcpu in the loop processing the multiarch tests, rather than
+>    skipping it and adding it later.
+>  - [PB] Squash patches 2-4 into one
+> v1: https://lore.kernel.org/qemu-devel/20261019151233.230172-1-farman@linux.ibm.com/
+> 
+> Eric Farman (2):
+>   hw/i386: ELF endianness fixes
+>   tests/tcg/ppc64: Run float_conv* against power8
+> 
+>  hw/i386/x86-common.c            |   6 +-
+>  include/hw/elf_ops.h.inc        |  20 ++++-
+>  tests/tcg/ppc64/float_convd.ref | 144 ++++++++++++++++----------------
+>  tests/tcg/ppc64/float_convs.ref |  80 +++++++++---------
+>  tests/tcg/ppc64/meson.build     |   6 ++
+>  5 files changed, 140 insertions(+), 116 deletions(-)
+> 
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
+Series:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
 
