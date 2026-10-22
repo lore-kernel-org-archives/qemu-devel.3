@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48C606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA357606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=jZfs/dwO
+	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=lB2f7jIE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJmoF-0002uu-F5; Thu, 22 Oct 2026 03:01:55 -0400
+	id 1xJmoL-00030G-Sf; Thu, 22 Oct 2026 03:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmnj-0002oM-MJ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:25 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmnh-0002o3-DT
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:22 -0400
 Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmni-0005vo-3x
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:23 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmne-0005uq-Pu
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:20 -0400
 From: Stian Halseth <stian@itx.no>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
  t=1792652469;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vxriTHHowpsSZLR87NAuAdPjs7ttJqW/KlYeswRB0m4=;
- b=jZfs/dwOCTMpzIcE+gRmaUs6O6YMx57X5KG+R42on1A1Faon2ALVvp04TgGm9rwYxL63u0
- nOLmjqVLv+mO+PkmV6j6V5Ih25wMCcXxmto0wSnMe8cXLS4LgRVCnCWp2PsCxLLXi2Icy0
- VkpENjewdQ8vQlpNyLSswJ89TrZ+k2A=
+ bh=N8S1gE9waKIsyA2TaGvT3mUme7EtsXYWFdPJ9syqTFY=;
+ b=lB2f7jIEfedI60t/x0LMwbYxoCxCFNcXYy+4JLeJjlZaakVu7WBAqKQwDFf5UggibFcezj
+ t+jYeJpdwOSbLgPMB+qODaC9HU0MOprpreeOSomTS0oRxUVJ5QPLiefEDBmuF2D/H2QOtL
+ Z+0tbNqCLkB7hR2hSZ3PXJdi/5ifh6c=
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -36,14 +36,14 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Biggers <ebiggers@kernel.org>, Stian Halseth <stian@itx.no>
-Subject: [PATCH v3 7/8] target/sparc: Allow block-init stores when the CPU has
- the crypto feature
-Date: Thu, 22 Oct 2026 09:00:58 +0200
-Message-ID: <20261022070059.3861291-8-stian@itx.no>
+Subject: [PATCH v3 1/8] target/sparc: Add crypto feature
+Date: Thu, 22 Oct 2026 09:00:52 +0200
+Message-ID: <20261022070059.3861291-2-stian@itx.no>
 In-Reply-To: <20261022070059.3861291-1-stian@itx.no>
 References: <20261022070059.3861291-1-stian@itx.no>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
  helo=mx.itxnorge.no
@@ -71,42 +71,69 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The next patch reports HWCAP_SPARC_CRYPTO to linux-user guests.
-A multiarch glibc then picks its niagara4 memcpy/memset, which
-store with ASI 0xe2. QEMU only allows that store on CPUs with
-HYPV, so every dynamically linked program dies with SIGILL.
+Add a "crypto" feature bit gating the OSA 2011 cryptographic
+instructions (AES, SHA-1/256/512, CRC32C, CFR in ASR 26).
+Off by default; no CPU model enables it yet; can be set
+explicitly with "-cpu ...,+crypto". SPARC64 only.
 
-The crypto opcodes exist only on T4 and later, and all of those
-have the block-init ASIs.
-
-Reproduced with Gentoo sparc64 stage3 sysroot:
-qemu-sparc64 -L <stage3 root> -cpu \
-TI-UltraSparc-IIi,+crypto <stage3 root>/usr/bin/dd --version
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Stian Halseth <stian@itx.no>
 ---
- target/sparc/translate.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ target/sparc/cpu-feature.h.inc | 1 +
+ target/sparc/cpu.c             | 3 +++
+ target/sparc/translate.c       | 2 ++
+ 3 files changed, 6 insertions(+)
 
+diff --git a/target/sparc/cpu-feature.h.inc b/target/sparc/cpu-feature.h.inc
+index be81005237..4a32f49de4 100644
+--- a/target/sparc/cpu-feature.h.inc
++++ b/target/sparc/cpu-feature.h.inc
+@@ -16,3 +16,4 @@ FEATURE(FMAF)
+ FEATURE(VIS3)
+ FEATURE(IMA)
+ FEATURE(VIS4)
++FEATURE(CRYPTO)
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index ae9bdca9df..528a9d2bd8 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -560,6 +560,7 @@ static const char * const feature_name[] = {
+     [CPU_FEATURE_BIT_VIS3] = "vis3",
+     [CPU_FEATURE_BIT_IMA] = "ima",
+     [CPU_FEATURE_BIT_VIS4] = "vis4",
++    [CPU_FEATURE_BIT_CRYPTO] = "crypto",
+ #else
+     [CPU_FEATURE_BIT_MUL] = "mul",
+     [CPU_FEATURE_BIT_DIV] = "div",
+@@ -977,6 +978,8 @@ static const Property sparc_cpu_properties[] = {
+                     CPU_FEATURE_BIT_IMA, false),
+     DEFINE_PROP_BIT("vis4",     SPARCCPU, env.def.features,
+                     CPU_FEATURE_BIT_VIS4, false),
++    DEFINE_PROP_BIT("crypto",   SPARCCPU, env.def.features,
++                    CPU_FEATURE_BIT_CRYPTO, false),
+ #else
+     DEFINE_PROP_BIT("mul",      SPARCCPU, env.def.features,
+                     CPU_FEATURE_BIT_MUL, false),
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 921ffd2d1b..931fc006ce 100644
+index 3156be6a94..b93feb074b 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -1863,8 +1863,12 @@ static void gen_st_asi(DisasContext *dc, DisasASI *da, TCGv src, TCGv addr)
-         if (TARGET_LONG_BITS == 32) {
-             gen_exception(dc, TT_ILL_INSN);
-             break;
--        } else if (!(dc->def->features & CPU_FEATURE_HYPV)) {
--            /* Pre OpenSPARC CPUs don't have these */
-+        } else if (!(dc->def->features &
-+                    (CPU_FEATURE_HYPV | CPU_FEATURE_CRYPTO))) {
-+            /*
-+             * Pre-OpenSPARC CPUs lack block-init stores. Crypto instructions
-+             * imply T4 or later, which supports them.
-+             */
-             gen_exception(dc, TT_ILL_INSN);
-             break;
-         }
+@@ -2507,6 +2507,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS3(C)    ((C)->def->features & CPU_FEATURE_VIS3)
+ # define avail_VIS3B(C)   avail_VIS3(C)
+ # define avail_VIS4(C)    ((C)->def->features & CPU_FEATURE_VIS4)
++# define avail_CRYPTO(C)  ((C)->def->features & CPU_FEATURE_CRYPTO)
+ #else
+ # define avail_32(C)      true
+ # define avail_ASR17(C)   ((C)->def->features & CPU_FEATURE_ASR17)
+@@ -2524,6 +2525,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS3(C)    false
+ # define avail_VIS3B(C)   false
+ # define avail_VIS4(C)    false
++# define avail_CRYPTO(C)  false
+ #endif
+ 
+ /*
 -- 
 2.43.0
 
