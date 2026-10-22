@@ -1,106 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFB0606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6AB606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 11:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ihc9Y1J2
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AAaLrElr;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CVWbwIP+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJrIW-0007Ww-JD; Thu, 22 Oct 2026 07:49:28 -0400
+	id 1xJrL8-00037j-1Y; Thu, 22 Oct 2026 07:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJrGz-0006jH-Sr
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:47:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xJrL6-00034b-8O
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:52:08 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xJrGx-0007Eo-6e
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:47:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792669670;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2DO8OeMb+C+EUDoAt5gPWzSeCXRyILLDCf3aXuMCRFo=;
- b=ihc9Y1J2YHIZ5AZAbscqpaJJKNySmk3QZ7ukxvgOgEgDs0DMDwgCZ/v952uapNlxrJwvzA
- Qx2KBTKB+7YIEwM7rKLMGal1FZMnlYYO7F7tW9Aw6izrWB5qDCqzzU6pfESnUqBK2V7EeP
- HmkcF7BTT31TG4/uZ7MsPwCgf9wL53s=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-EhNRYIhAOrO-ylTcYOmRGw-1; Thu,
- 22 Oct 2026 07:47:47 -0400
-X-MC-Unique: EhNRYIhAOrO-ylTcYOmRGw-1
-X-Mimecast-MFC-AGG-ID: EhNRYIhAOrO-ylTcYOmRGw_1792669664
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C63401956056; Thu, 22 Oct 2026 11:47:44 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB9D918002B1; Thu, 22 Oct 2026 11:47:43 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 22 Oct 2026 15:47:17 +0400
-Subject: [PATCH v3 04/10] igvm: release found memory region on success
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xJrL4-0007qy-01
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 07:52:08 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69M9xsxU346172
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 11:52:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ IOSlQ3xl55TB6kwB6qoXC6+QT2JRmV9yTgT0SfzDbDs=; b=AAaLrElr5EnQS6xx
+ pmdZAXci/1w6vHWT3QEpfCquFJ3b5ILX2jwbsjDaAvsI5HCrScbC0ehni7Y2YxtF
+ 8GILBlY4JKDSQQirMUoVYTCGc2uVv2D/qId+4FT+5kjJgMlHm3SyXFnYPg3w7D1n
+ Swbq7E8kS2OayXwGSDsCu1LaSxyBnKVS/C6TQ7TNDaFSjGt3mFOQmpO4mt0C1/hN
+ JBhINcOxmIvhCIA9dJZk1ZxgC6D4RtoadWH8JtK84LCjcYq0WIEhH/gAYhWqQUQu
+ 1RsN965GG8U/Pz5/iTSGXwgNkWPYmuDC7Eo0xnnuMWbebpANVfG+m46JDjPpxoTt
+ dTd+1Q==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hf93davdm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 11:52:01 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5367e512db0so18508211cf.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 04:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792669921; x=1793274721; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=IOSlQ3xl55TB6kwB6qoXC6+QT2JRmV9yTgT0SfzDbDs=;
+ b=CVWbwIP+jBajvvjpFlNaRJb1TAepv9FHZx2mQpsQrGGPRqlAd83UAlCXh1DehW+sMH
+ 3Deo4TpSAMbYW/+86NfCNylHWfC7GScVVb/xigU6YbcIzMZOkTVMlObnG/zzswQFXTFv
+ 14oHPX24QCnB2SVHzov65zpdjBMTQOOLYYaF0YktqTB98lX7MGBHWgwFwxyJcJ8q8awr
+ 3Dl+S75fzRqBFmv2fNOanQbDUjJJ4l17nS+ptzNVu60gX5UR6rWyQOYKHVA6dYreQiIR
+ znwxWjkVdlKp2z0pH37TbRMvIzzDWbcno3bCOGxKVZGJiUnkvGNxcozqr5q6yrYX3ua/
+ Y8zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792669921; x=1793274721;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=IOSlQ3xl55TB6kwB6qoXC6+QT2JRmV9yTgT0SfzDbDs=;
+ b=uIneARHPxXHKVcLX/OH1mI3ags8/hS3Rzp47dwq6oa+MHtJI+d9+9g4CPuhAzIfxX0
+ TnYq9bQz8EBB128ZoKG8qADhyVLebOjhH8Ou+BQz0x7i+fYear07S+rqEkaXRCv1w/ye
+ aeg88PnJKD+3/EFWPAwTcIcNTnq6WlkmY4/gnPLsYmAf4h+JrykRB2hUv6WQSThQh+BI
+ Hk9EKPgMHTxt13ZdbLc5s9WohKRy4w49ApvwiOGj9FhDdKNv2bBil8QcIuka8agJSulw
+ kBQUByAbppePFTUHU31N9gE8d0HMo+rENTOG29GdHYHL5LtQeZbctM4/47vzp6hmv5xL
+ kR8g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzzOgUnwOOwNLlNFF77i6mWFPb2CpV1/iWLVWUPuUhgHKQcBm4nPROO81U0ZquxpfnBH0zJ5F1VeCdo@nongnu.org
+X-Gm-Message-State: AFq9FYIEBqo/9CTFT8ebwkN+GDl9uXoAg+kQwpnrNkhGzZWypxufdec2
+ o0mwGrDHUWSf/WO1D8ry4r7dtn7krDxx+WF0PZxTc6DekwbYqeecgfjZ0bpx/ddB6clNcziO4Bu
+ INMIngJlPiHJA8+/rgq6FtCqZfhepD4vzOr8TfYr0McPA/NviBtqgsoFsEg==
+X-Gm-Gg: AYBFou1n+HWjLagfsY1CgfloqgVEj1s3aGXfWAJS9fpI9VSeRjw9faS2IZ5xjZObHDl
+ QFCgJBQfUb4Uzrwgi+k/HqYbtIMl2iP8aD5nDAuuwITaPXmpGDtqoRBZjJY3Czfz91tTlbXL3Z5
+ 94mICwoafNnNlVm8QTK8pG7ZopjniVsau9VnaESapKN+hfiaR7qcwVnrdrdNfI6SZi8+3+rOUQa
+ VOAm5xvpzEu2zD20DEjA+aJKRmzLvvniwrubwg7g/aZDBLfGKnXhJPSsId4rLdXhdIOXRoP82TO
+ 9pbzkMCzNhrM7eTDbBCsV5xJVvQwJOiRIldKixtCfUDaw3oOIGHiUOihV2fabuzHBoN0W0qcP1A
+ Hu3Y9H4z/Gb6kVEzSzjWtvm9iD4oeAqNcXQ==
+X-Received: by 2002:a05:620a:43a7:b0:939:b053:ce44 with SMTP id
+ af79cd13be357-93f627227f4mr353051185a.22.1792669920890; 
+ Thu, 22 Oct 2026 04:52:00 -0700 (PDT)
+X-Received: by 2002:a05:620a:43a7:b0:939:b053:ce44 with SMTP id
+ af79cd13be357-93f627227f4mr353048285a.22.1792669920397; 
+ Thu, 22 Oct 2026 04:52:00 -0700 (PDT)
+Received: from [192.168.69.210] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a207b29276sm80990305e9.6.2026.10.22.04.51.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Oct 2026 04:51:59 -0700 (PDT)
+Message-ID: <3e131c64-1c75-4405-be8b-c682aed2d6a2@oss.qualcomm.com>
+Date: Thu, 22 Oct 2026 13:51:58 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/26] multi-target: prefix helpers with target prefix
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20261022-nohmp-next-v3-4-8b581b590512@redhat.com>
-References: <20261022-nohmp-next-v3-0-8b581b590512@redhat.com>
-In-Reply-To: <20261022-nohmp-next-v3-0-8b581b590512@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Jason Herne <jjherne@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, 
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=821;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wBMEnCG6NX/SrNvdiEREVxq3Y1p2VuUlUjKNL1jFJqw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2ffN+9DaoIeVmXLAJhJvIfXxeAAXKucqrOiw4
- TVWJOtP+GCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatn3zQAKCRDa6OEJdZac
- 5YFCD/96Ky+DPDGreowAlHMied1tiRZIdHRes2ESPbcQbmhFLGsHGuWDuKSfImzVxjrgnJCvKJd
- QIi4GuduiuWfwk5NyXB6Sd7vXNaE0Vpq535K5CT4uZ2EU1Z2LoRRzz0ltxM+DnPbcjG1IUVJ3jV
- If0Zp7xQGKqW4NXNX354QQ6IzMy5QVJMJ3rk3tYLX5cdgsFRuPrf5biJCSHvKZHtTBFPT7/gqeI
- BQBZVdE2FuKx8186unDr3uFRGvvg26kUnkevtOCQkUgoInQQzAPO7bPVWaVUqC9/CNdsRfueUMs
- g8bc5glbAZNDXLXQqN6S94LmfzRcdShXnV4b1NFo9GRGvLGtqSV9CXMqkrylirISeookFRPHuGj
- cjLSi5nk1k3PF9BPfmRiPV8QNJ4ePuyiai0LvFb9shRBVyAF48/80O0SGMpoqBd8VJRK12ld9dd
- MQkS7gOU+ohab6EtWphX3mHr5DeBbD6kC9CmPwVuA38keB2j1qQmu3GRYbSJekQjRcQgFgWk+Ph
- SSxLH59AWnhJ+bm0sdarnGOTwrpo5fvyb2dsrLvYbzh92mjuy438atka67wAHQBIl7IqC/u6OKI
- CJHEzKschdnfBQyX7P4oGFm2TO+eG+whraeg6DhaAzrs+4kJYasjzAadqDkaV5J4GSMsZL+vF0j
- zhIC84Op+AkIknQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA0NyBTYWx0ZWRfXx9ixPOwCRH/Y
+ krc5jmf40wDBafPENA5tBNKP/ubOsz6QMv0p+QubdhRiv++s2pzao1uuTx1H4oMgWWd+ZG3WV+m
+ mtc9U0SYvB1tLN5WhrVuO5n7FqPmMgE=
+X-Proofpoint-ORIG-GUID: y_KzCBjZVtMPmXiqKDNTbQYOn6e4dPA6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA0NyBTYWx0ZWRfX256hV8Bgbj6p
+ XVQzfUJO5Wu8MmuL54vdqQSJBd+JTink6obhtxblpNWG46XmIcfswtIIq+N6nPG8PfN5Mv7Z4UO
+ aVHqqigVzUgCtV0+lzdZhYhFZx33L+/dc2JhjMJXv5Sr+KuLeWol7kMzcWBwKoGKduHls3sAKlD
+ qm7LXWwnWrXvgRdV/ploc0lfjsIBdSQ5YrqH+yCRmBW7aX/09ZuPDwhRfF3MOCjqZ+TxJlprTo8
+ iM1uqMSTm47HG+kQRMLRNiQYFw1BdBYwyKc/AnkftRX0DlN9U1fUDJPv87D7WUJf+zhCOfw4cql
+ ZsmYIwjaueXc2jRjBbN2fmWLrWrVlDqwRPrnpAPBvZks6/TYSOPkgOGy5dwgwKizj1+UoykVWXF
+ 5MI7S2utEgzARqoLaNLo+HAJeG8gEN4BdExDNsLpegZShHz6zWZP4V+5vFRXuhWv2Sm/E99fYkE
+ WoQr1CqO0JrwBSb13lw==
+X-Proofpoint-GUID: y_KzCBjZVtMPmXiqKDNTbQYOn6e4dPA6
+X-Authority-Analysis: v=2.4 cv=TIPQ2Fla c=1 sm=1 tr=0 ts=6ad9f8e1 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=vPf2aQAtsfViqZfzQfkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-22_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220047
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,37 +152,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Not only in error paths must the mrs.mr be released.
+On 19/10/26 23:20, Pierrick Bouvier wrote:
+> When linking multiple targets together, we usually have conflicts with helper
+> names. So far, it was solved using ad-hoc renaming, but multiple people pointed it
+> would be better to have a general mechanism for it, so here it is.
+> 
+> A previous series attempted that:
+> https://lore.kernel.org/qemu-devel/20260930073935.712-1-luoyonggang@gmail.com/,
+> but it was relying on (binary) symbol renaming, which is not a portable solution.
+> Instead, this series approaches the problem from source code directly.
+> It requires more change, but it's cleaner IMHO.
+> 
+> Series follows these steps:
+> 
+> First, we make sure all helpers and definition are using HELPER() macro. A lot
+> of helpers were already defined this way, we just make sure it's exhaustive.
+> After that we don't have any 'helper_' left on any target code. This is a big
+> change touching the whole codebase, but it's a simple mechanical change. As long
+> as it compiles and links, we know it's correct.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- backends/igvm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I started to do the same manually 3 weeks ago and gave up after
+converting the 3rd target, thanks for covering all of them.
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 58f3097e8518..7aa76441d0d0 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -268,9 +268,9 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-             return NULL;
-         }
- 
-+        memory_region_unref(mrs.mr);
-         gpa_region_size = int128_make64(size);
-         if (int128_lt(mrs.size, gpa_region_size)) {
--            memory_region_unref(mrs.mr);
-             error_setg(
-                 errp,
-                 "Processing of IGVM file failed: Could not prepare memory "
+> Pierrick Bouvier (26):
+>    target/alpha: define and call helpers using HELPER macro
+>    target/arm: define and call helpers using HELPER macro
+>    target/avr: define and call helpers using HELPER macro
+>    target/hppa: define and call helpers using HELPER macro
+>    target/i386: define and call helpers using HELPER macro
+>    target/loongarch: define and call helpers using HELPER macro
+>    target/m68k: define and call helpers using HELPER macro
+>    target/microblaze: define and call helpers using HELPER macro
+>    target/mips: define and call helpers using HELPER macro
+>    target/or1k: define and call helpers using HELPER macro
+>    target/ppc: define and call helpers using HELPER macro
+>    target/riscv: define and call helpers using HELPER macro
+>    target/rx: define and call helpers using HELPER macro
+>    target/s390x: define and call helpers using HELPER macro
+>    target/sh4: define and call helpers using HELPER macro
+>    target/sparc: define and call helpers using HELPER macro
 
--- 
-2.56.0.116.g6de20f6092dc
+patches 1 to 17:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
