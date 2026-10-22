@@ -1,103 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C44B606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE47606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YjnGSn6R
+	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20251104.gappssmtp.com header.i=@theorem-dev.20251104.gappssmtp.com header.a=rsa-sha256 header.s=20251104 header.b=t0MgVS92
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJsjm-0000ML-VK; Thu, 22 Oct 2026 09:21:43 -0400
+	id 1xJstw-0002aO-9z; Thu, 22 Oct 2026 09:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJsjg-0000Kl-Mu
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:21:36 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xJksA-0005N5-1S
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:57:50 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJsje-0001EH-SG
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:21:36 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-8871ada1a26so13767717b3.1
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 06:21:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792675292; cv=none;
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xJks7-0002OM-Uv
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 00:57:49 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-c434376dbebso110967466b.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Oct 2026 21:57:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792645066; cv=none;
  d=google.com; s=arc-20260327;
- b=cAnqEM5yvn7N/pI2tCpHcz87k09mEeMse89KPiSXhTUxTCiSHrbWFJANtQc7uToO55
- KAKFdlbEbcrBYRErmRq0Y3xqcgO9rO2suaHW0lXcDUq/K1hgXW7n2pA73e9B5phvQTEE
- Syn+j/vyDCI6Q5S9OIi4POvLqGUuUYzLYB15I+xQNz8BEOl+Rp6acAT4AYgHYeQ1PrGv
- gfeZGGN+du5YTC7zZXqmrHw71Sy5E6cGVwRpDOiPLMTEhJ61G3vDCxulQkf97lkLgSGZ
- R+QUWb/Fxo9yPHH+73F/qhbfaSsTNn+sM70LQ/pGjwgztec8I4KpuT4FLB+Um/3/TGCV
- 7l5Q==
+ b=NrHYJ9z9upGxpp3dR+kwWzLAtF7s9/TVmCd38bPDudL5FLKxN1BX85vFXVLZCJ2//P
+ m5S5IG1OuN+1MibFydv75zunVPgpsqFkaC2ZbYtflUCDUIq1dzZUaV/hhqIxTSzYqjv/
+ pf7IOwnNprBItW11/0CPOzQcHkVqay9B0VpdVTDyblt/wwda/U5x3BvXJqA8KH32yWiZ
+ vV3948lbdw+NoXeiQhmjT0uqwuvjfwUw3pJLFxn6zevWlkFAaJWw7jYsemJgf9ZjH5dG
+ fRwMZiZz0HzIyrrArr0hS9mhcNpSrROLxwOfjzTBf4qzAuUSt/BEUv+Hf3ketg0sE1+B
+ mGDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=w0H3pHdT5/DARs+ZyFHVcfo8IVHZOAcD409QCou2Bmc=;
- fh=xS7PDnxNjt+3pGu8h2A8YsFQ48YIDo7SGiTsZsAfSNA=;
- b=kBpx6yH0a7CLftlT3N7hhrdURCuoNUEGcGKVMjPnhLWbow2AVfnE2YrFLS5e/QXY6K
- 07EI0pCpUjYuNjvIYcYcilJWPgln5k9xITzl+TsIcNkR4WAqKL68bDL5gGP1SihuIC4i
- zWTOd9kNM/SkanYZ79fM7GOWTpswuNNGPOnSUVp0MqI028YuzsBjw+DPNHc5ZVATw4WO
- UECPmMCEjRCVQH1mj/Q4I3epIam8h8lASXp0NvhAUkLLYoaSqUTU6irtfMU8S26fgIUq
- Yj/3+i1khbLyk6nmpSFXKNQx5xtKOJismWQ8ggfFZpAIPDfVDdU0CAp6KIZI5145M4HK
- igyg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:mime-version:from:dkim-signature;
+ bh=yl4HWkmrDNimBUaI8VIFcbAax0pHxh7K3loxflXpKbI=;
+ fh=WpNAuUXiMsfIKUBu/gBiH5cBz4L+2NGE/KQSYqZbhSc=;
+ b=H+MxM+GRoS2qHF2ZkcRCIB9/I86Rus24I7SRoGjTSnGa0ZVckt3O7DrwatWny0Sziz
+ NNuRcKR1oeVHVI77inBfsFLdE49o226YqAXzOXSI+AhfGDTe1nULTO88js8f9nitpDB7
+ ol31XPFNWFlMSEztyEehj+DGpfKGA1MDZ0hC134r1ZcLJTTl4kWyAC7ZLRDvWsKu8PWi
+ 3x6wvKIKiSpafg+GB8C4WwbWDIHaPZOya2lqMGFSQ5XkQ3dLJ6dyTVhqHGOBY4rNNVKZ
+ m+wik0vzCTDeUrsRLJilx14PnXoRfQWUP0XH1oChc7zLULIS+bJvPxzusrZspqGtdhJZ
+ 8e5w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792675292; x=1793280092; darn=nongnu.org;
- h=content-type:to:subject:message-id:date:from:mime-version:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=w0H3pHdT5/DARs+ZyFHVcfo8IVHZOAcD409QCou2Bmc=;
- b=YjnGSn6RzSQJUNr9L4QiQtvkXnlW9cvtLGCQUESnSxqlDBz6sby3nr6eeqEJ3b1HMJ
- r/uhm6csi2xWwZBpkMqqeCIaUFkcv4sBT/j172Xdo0+0zjXPLzG8YFOFMqMSmdMYx+3z
- vM/lybu1Jdp48OJw02W4PuAaS4xJKdKnWlnfvruC1ww9mdlgsxtcWEkpInsg6+OAOE3E
- mH0SzuS1gPouArHe1uXcMpfIsdOpEEjzM0r18b4Df1aVLDhFWX7joG/g+e6WZX0+uUBA
- OJ0TA9GrLXLk5ynBBnQ/Zyv0GirNGmioG2jCOpeS9R+KwoWaQpPF6oMKgsY3cut+2zBl
- 1EQw==
+ d=theorem-dev.20251104.gappssmtp.com; s=20251104; t=1792645066; x=1793249866;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:mime-version:from:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=yl4HWkmrDNimBUaI8VIFcbAax0pHxh7K3loxflXpKbI=;
+ b=t0MgVS92JZSuPPbk3z+evSFqtuMLEiOn7FFHJfFd8l9lZKTuRtnlnrlqukSsHtDB9X
+ vZJy2C8+7szGNXqzF84XeO2vSYiACC4EBnyKZye+IITcaTJhdSVcvnitx1uw3IccTdlD
+ yE1kbMfBWItS9Kl77oQY8THSjL4MM9EgqTXxZepdqfLlpgic30PvFePtYKcVjpdlfzAL
+ TTOAecUzhcCNh4iY64fIEvhx3Kzee5jCh9kiJIODc9V6zDyWZCfpS3fCCGhj+6051yPx
+ ldPtYumcFOZfXug+VBXwPZmVazHLAZSzYgvtpEd2cBrtqoInvrPFpJlmdrQ712qb8TJS
+ Y/YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792675292; x=1793280092;
- h=content-type:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=w0H3pHdT5/DARs+ZyFHVcfo8IVHZOAcD409QCou2Bmc=;
- b=WTR3E+53sTplYkTFYS8JDh6RRSlBjOl0PF07KClzZX9diV1Vxf2iCmF7LJWHYDrqzF
- igiBkIrzTH6fAKUQ/TZeBsWcNaFFUK59j2o2eO6lJd7PxjSiJ97otDPbGDvJdBf6n794
- 0f3crn8fiQ44rR1TN6Af5EyMoLvTSLDqjHJn8nRQisdu7BciUqIgwNLCAlnxub4qDFYk
- LplMpQUGDba6QgCq6terlJ7uI3u1kitwAVcPmFj8Wlww9mRHEfzmjhfmviUOfTI1mDt4
- gpTwWQMwpQY4Du7EEMq0MizVdTrKYcRLnSk9LV8cloRkD4spcWgu3hen4W72hFexCPgu
- 3HyA==
-X-Gm-Message-State: AFq9FYLciiw/AX7LS307F6+aCqDCXbtacQYlz30qSMkCvOTJgTZBKmK+
- sYKlkXD+AUorqAbYeJkAiD2YwYJNE10QD7fT5SCUBChb3b9ouXoSqhxDiGoD09FuxHFc/bQyI++
- kNtvUyXIF6MEpZ786z+FVygaTMUwt2GW7D2Is+9oWbDDSxhuD8y0XbTmLQA==
-X-Gm-Gg: AYBFou2rUFggrpDGDd3U+xxb6KSKiKYf5bch39arTaToLTlCN8IwCtsrlyXz9/c+CrD
- vCrnRIHAvhA25h6pcv6r072Lx6btKNXO68xo3wGObUmOG3+SKrBbc1ktVIQs1JSkfF+rx36zkIu
- tmFIa8VEDgjM3yMh/+9B34+Qz8LiNJ0j64ytCs34ne18plArAz5cCVXUn5ZHT6GuulUmBGF07TB
- rJ0ZGLfJYnvPN/wbW3gLgNdbuqZWmQlLFr6a4nxcfkU3eP98tfleeF1OqOFeSLtjOFJQKaUdtNT
- 1jAqD71GlIfZ7gkEl49Q9q9x1XRQSZ1YAFmnHB3FjAoeLh/5QZXWGoG7LMOOXVPr331OEfYLNJy
- t9eQk8i419x1RbHsZwMkv8f6aHxRTiVXDeHN3PrmgTkwzh1sgYEZhYIrH2uTTKqSiYk7/PM/m25
- 7UishS0FiLbAnuRcmPfbhAuw==
-X-Received: by 2002:a05:690c:2e09:b0:8a8:9149:e4da with SMTP id
- 00721157ae682-8b1340f8d18mr18721367b3.108.1792675292188; Thu, 22 Oct 2026
- 06:21:32 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792645066; x=1793249866;
+ h=content-type:cc:to:subject:message-id:date:mime-version:from
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=yl4HWkmrDNimBUaI8VIFcbAax0pHxh7K3loxflXpKbI=;
+ b=A2h6SBMqiJx8Lnyg2vnosyb88I+v9LrFME/4vVp8BConp1WfZ4ypGsyN56jxk6mDJ3
+ 48J7Vz2B8e7Zo6d2LjDLp5de8CdnrRJ6Dwp49diChu7RyMwSZgX5ibBnA20HyPZ4nOdW
+ 2e6icQ7DJF0AY43q5JivpfG8ntkcVHXrNKdwfwr0nS02S7rkag9euU9yFU86SrzvdmTM
+ Lktanzo81UfWhs8b7sAF3P3wcwu9p5Dck9L1tD2FXUwNByf66nKSG+nFE3TLdQ65WaPm
+ rnW//tVW7TMyqaczTmccYuGr+JZzMJvSa4MpiQkFtCkUu8lOnYlkKzqUiBWRaMAu00k9
+ JVEA==
+X-Gm-Message-State: AFq9FYLiA8M3v2Zw9b+xS9DxA3VSJudJB5KWpphCxk1DVA2csxzhWAZG
+ 3hwrkzYlqR4oJYSTTShsz0AzsqOstfGZHDI7aI/B3Hl2YvHKnjWSPHPcTNuL1KgrSiY1tdNfdtF
+ bNnBnjVBvUSlGc9qwu+TdvKsH/3eZhQvDiRLVIBMF5T8MpVOxj54OZ4U=
+X-Gm-Gg: AYBFou38kMkAMxAg1DjlFYRsFL/5qQJslZJLs0ombps3k8Lf8anXH2s7CfD0fuz+Gnc
+ ogFFnqqXcjpT3GLwqU6if8Z26IwHO9Ta4sECsPhQ/JZuknI68YJUvJgQ4SWLXt3l2EDD33TZIyE
+ 388Pd73yvSdGiBDIJcs6OmZhkpKmbjMb8rag0aw+NN6isGErWL9XgBk+mR3TJqk2EncWk8+kIPW
+ kvrTUoi25GwRlJOvABEzhgSEKAgxGqMbecYCLs3LRtg7BboCLGI+aWFXF2KUj3iBqAUp2GfiFKp
+ 1nJkCuxMUISLDz9xbQgcjlOZlMIZ8ksJgUuW5/YFrcXKP7aHuM0goZKHtqq23gi/y/nt5hytzxP
+ pB2/khOgTiGQNQrGcrtcseSyvBgy8F56XotJ7yZgvI52tQnO84yfXXettzrM=
+X-Received: by 2002:a17:907:3da0:b0:c42:4f89:13 with SMTP id
+ a640c23a62f3a-c468d80594amr132772866b.15.1792645065334; Wed, 21 Oct 2026
+ 21:57:45 -0700 (PDT)
+Received: from 428534693058 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Oct 2026 00:57:44 -0400
+Received: from 428534693058 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Oct 2026 00:57:44 -0400
+From: tewaro <tewaro@theorem.dev>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Oct 2026 14:21:20 +0100
-X-Gm-Features: AclHuK9hCJ4Ke1LCZmjfmKTZsottcOx4sekZ3fdITvxFpJi_IbFkhdaoCmobNxI
-Message-ID: <CAFEAcA-E1Kuvegq2PeafG0of=TTRJfGX_yvbV-UibJ0tNhUM6Q@mail.gmail.com>
-Subject: preferred tlb_fill mechanism for non-legacy code?
-To: QEMU Developers <qemu-devel@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>
+Date: Thu, 22 Oct 2026 00:57:44 -0400
+X-Gm-Features: AclHuK_8oTtMQam4LbO8gSyI7fuGTL1z4KK1tJ7PN2qHosLb0v_MuXYBMfgYark
+Message-ID: <CAEq2Q90UbCK2=7SFGQErviup1=u0AYVf=n90NaJvo1M9N=_BUA@mail.gmail.com>
+Subject: [PATCH 0/2] target/riscv: report the no-PMP-rule fault on the S/U
+ fetch rather than on mret
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, disclosures@theorem.dev, tewaro <tewaro@tewaro.org>,
+ tewaro <tewaro@theorem.dev>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=tewaro@theorem.dev; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Oct 2026 09:32:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,43 +115,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently we provide multiple different ways that targets can implement
-the basic "deal with a softmmu TLB miss" functionality:
+Hi,
 
-(1) Implement TCGCPUOps::tlb_fill_align, which passes an argument
-    CPUTLBEntryFull *out which the target code must fill in with the
-    info about the TLB entry to add
-(2) Implement TCGCPUOps::tlb_fill, and in your implementation call
-    tlb_set_page_full, passing it a CPUTLBEntryFull *full with the
-    info about the TLB entry
-(3) Like 2, but call tlb_set_page_with_attrs(), which is a trivial
-    wrapper round tlb_set_page_full()
-(4) Like 2, but call tlb_set_page(), which is a trivial wrapper
-    round tlb_set_page_attrs()
+When PMP is implemented but no PMP entry has been configured, QEMU
+raises the resulting access fault on the mret itself rather than on the
+first S/U-mode fetch after it. The access is correctly denied either
+way, but because the trap is taken before the privilege switch, S-mode
+can never be entered on such a configuration. Patch 1 has the details
+and the history; patch 2 adds a tests/tcg/riscv64 system test that
+fails before and passes after it.
 
-Currently Arm and hppa do (1). sparc does (2). i386 and microblaze
-do (3). Other targets all do (4).
+This is not reachable from S/U-mode or from a guest, since mret and
+mnret are M-mode-only and PMP is configured from M-mode. The affected
+software is firmware that executes mret with PMP present and no entry
+configured, so I do not consider this a security issue. The same
+symptom was reported in GitLab issue #2074; the earlier discussions in
+Launchpad #1923197 and GitLab #585 were about whether the access should
+fail, which is not in question here.
 
-If we wanted to try to reduce the number of ways we're providing
-to do this, what is our preferred destination? Moving i386 and
-microblaze from tlb_set_page_with_attrs() to tlb_set_page_full()
-would be easy, for instance, but should we move them directly to
-tlb_fill_align instead? Or is the idea that you only implement
-tlb_fill_align if you need to care about the priority of alignment
-vs other faults, and implementing tlb_fill is fine if you're OK
-with the default "check alignment fault before page fault" ?
+Tested with make check-tcg for riscv64-softmmu, and by rebuilding
+v6.0.0 and v7.2.0 with only the mret check removed to confirm that the
+normal PMP path has always handled this case on its own.
 
-(Updating all the "type (4)" architectures might not be worth
-the effort, but I feel like we could at least rationalize the
-type (3) cases and maybe type (2).)
+Provenance: the bug was found, and the analysis above was debugged, with
+the help of Claude (Anthropic), used as a research and debugging aid as
+permitted by docs/devel/code-provenance.rst. The code and the text of
+the patches were written by me.
 
-thanks
--- PMM
+tewaro (2):
+  target/riscv: do not raise the no-PMP-rule access fault from mret
+  tests/tcg/riscv64: add test for mret to S-mode with no PMP entry
+
+ target/riscv/tcg/op_helper.c         |  10 +--
+ tests/tcg/riscv64/system/meson.build |   1 +
+ tests/tcg/riscv64/test-mret-nopmp.S  | 100 +++++++++++++++++++++++++++
+ 3 files changed, 103 insertions(+), 8 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-mret-nopmp.S
+
+-- 
+2.47.3
 
