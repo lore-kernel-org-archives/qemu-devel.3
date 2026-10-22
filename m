@@ -1,101 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403CC606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB81606A31B
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NkYj1mhP
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FwaJ8Cl7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJqNA-0001cq-1r; Thu, 22 Oct 2026 06:50:12 -0400
+	id 1xJqTu-0003B8-UO; Thu, 22 Oct 2026 06:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJqN7-0001bP-9i
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:50:09 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xJqN3-0000ds-Qw
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:50:08 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-c45551fa84eso251474666b.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 03:50:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792666202; x=1793271002; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=6dJgUIAr937ULoZCwHqanoDo4JFDo6siKBpOeUPBQEo=;
- b=NkYj1mhP7Xz9xZkQ99YSOCY6Q6p6CJsDt2/rwYnbvN9PrCQigCozMqGHDvj29iLKng
- WRQf90D1z/GRfBxx5/AMO5BeFWg+BSEu97HJlDIl/ePPmIbRk+spSCUUWvWkY+1lXOsc
- 3APk12XJ3EbJEcHxoxD68jvmVMWp8L+Myr4qhQ9N/Snq12ZoWG5GeWGgvzYTT/31e7+I
- V3KLA8sbZvTOvJxkuA3cyfrHuIrIuWN+VwGZFuzhTCr4Cc3ViZo9t8jB4YxcNkOzONie
- QNUyyE5H3vf2DFxoXs2Zhx2Xl2JNJSI9SaTGuKbnJEkEx+wnzB+Ua9GCYIl4ZYIbCyfF
- NYPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792666202; x=1793271002;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6dJgUIAr937ULoZCwHqanoDo4JFDo6siKBpOeUPBQEo=;
- b=GCQyyEg6chrJiiKAR20uTi3XNdWBrKSYZQAnaAGaBwdTmYM49ahsUs8St31sRfxE+1
- Ao3SlAv5A1rXCJ/ANx81anvlG7gOjFzV30D/U8Q7UWNc+tZ8x18FteFX0J+wvO0nAdGB
- SGZDHOKmNzUOg/tNo/1dgh+X04dB+FFc4+HiFGkUM6+qoA7IvTEJdYeQ1gGsQZA0/nS1
- YLFwxeFX3vKqMxqmhNzHzC1p8VQsbC0GruReccdQay/tW6udy/S+W+LjwqY6SDJn04RG
- KFPu3g+JabAWKrIt1Yu3tLidRddW+YLVWCZbSll+97mXz8dm3jdBPx8NdA5bTivy0Wpc
- TEtA==
-X-Forwarded-Encrypted: i=1;
- AKwUvByQpa6+lwEtNVXrmCdkUMBlBz+fClj4M/N6J3NMTlZUwns02H9bcydFK3coKzXz2C4+PEqVIK2KnIgO@nongnu.org
-X-Gm-Message-State: AFq9FYL8mdeGWwqe83qny6eL8hHyK5MjoVDCiuBTV0EyZxUyymq2PMb4
- ejDWAgSMqS3FIKVVbalSC1EuK7FqrsCRt+ImFeliZjXvyzc94Zalfda+eaw3his5sHE=
-X-Gm-Gg: AYBFou0t7xp+Cr+2FdM4/1wvbht7knJTMX2sa8FyreGO0Ec6im0/dJfiJXZOA6mvkff
- Mi+K59/iL74TyobVFlwUPYijt5cKwTSvAApGgMhSSmTiF8ecBjOROr8P7HGqUqC4rgpoxsmZh5Q
- SzVxn0wTK+wNNOl2gX3srxw23u2M+zL9aqcsMzGX9RqkPs3S7y5wJcsPWsibl6XGr5MAStp6cmB
- KZ0YQxMyJm6ULvzGt7vJsUwqk3KhJJ+D+hphISCZFUL1BB1xLRa3zTNL1pAzwyEE5E1+m3LqfKd
- TVbpGrtGUF6r5UL6AlBxqMdPHX/huygISQQ9iIYAUHtD8BphcRsdRFnsrahE0Es9t0IWwQ+2MZT
- BzyWyLHynrm9RwdpWzanjZOwRkHI7atfHy03CKQXRFLH6hhHMTpEO0qzlDm5DT3lXZhcyKy3D/w
- Xo1Y3qUYrUxLq/Hg/tmrDGkxNs9tEKGbw2K2OOOW/hYII/+1kF8lt+jTByLNLCjfvqMiWrhqGov
- RMKwVzQfJEpn5qbUG/QS2diK67OGI7QmLIJ3ltZ8Uyn7hshUF/nLp/7JK8ZQVK1Th2if3OfOCVG
- UEcUnI8MXiAjpFvdYdVuJUsJmywZJGEmO3ZlZV/2sBWvUF6c8aRSg7pmBda8
-X-Received: by 2002:a17:907:7ba0:b0:c33:ae8b:817d with SMTP id
- a640c23a62f3a-c4679746245mr516041966b.46.1792666202425; 
- Thu, 22 Oct 2026 03:50:02 -0700 (PDT)
-Received: from [10.25.47.227] (195-200-20-154.mclarenap.oninferno.net.
- [195.200.20.154]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c468a5102cbsm89608966b.13.2026.10.22.03.49.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Oct 2026 03:50:01 -0700 (PDT)
-Message-ID: <236dd2b3-1d2e-4561-b3d1-cb4409f9dd9d@linaro.org>
-Date: Thu, 22 Oct 2026 12:49:54 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJqTs-00039o-SR
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJqTq-0001Tp-O8
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:57:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792666626;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jNzV6BaWVFq1+/O7YYwswt0SKLovTH7A3DMoCwLjQZ4=;
+ b=FwaJ8Cl79se6ZsCicH41523+X88umq8iOccKxDbGXyURgS7ICSp7nC+dlfQpoBu45oS4Hj
+ lyVQd1TwwtJgHhdN+Z7D8gsCAuLmZ4Pke2ntiUW9FqkJIE8rZtfSAteZICfyf8pJEYzGLY
+ zobRnEkg4YrZsjkVgfIUtrdZU3NgrVw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-59-0lVj2VoDOqSAg839h2mVxw-1; Thu,
+ 22 Oct 2026 10:57:00 +0000
+X-MC-Unique: 0lVj2VoDOqSAg839h2mVxw-1
+X-Mimecast-MFC-AGG-ID: 0lVj2VoDOqSAg839h2mVxw_1792666617
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE7F11955F24; Thu, 22 Oct 2026 10:56:56 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9894546C; Thu, 22 Oct 2026 10:56:55 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Thu, 22 Oct 2026 14:56:30 +0400
+Subject: [PATCH v3 03/18] gdbstub: set feature->base_reg for dynamic features
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: fix pmp sanitize error for x-rv128
-To: Peter Maydell <peter.maydell@linaro.org>,
- frederic.petrot@univ-grenoble-alpes.fr
-Cc: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20261022075219.312757-1-frederic.petrot@univ-grenoble-alpes.fr>
- <20261022075219.312757-2-frederic.petrot@univ-grenoble-alpes.fr>
- <CAFEAcA-rw1_a5q7jB_Rx3KoH2_aPE48odM_99kx+Tz_J_LYw_Q@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA-rw1_a5q7jB_Rx3KoH2_aPE48odM_99kx+Tz_J_LYw_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20261022-query-reg-v3-3-7ad902b9a7cf@redhat.com>
+References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
+In-Reply-To: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1091;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=KuwHJGXyije9XLDEqL0xZ9kuS8FmeuZ9mxj6XXAIhZs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2evl28uSxci1PaCBSIw47bA24Vcvlpn1p2N5E
+ 8vWHyVaBEOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatnr5QAKCRDa6OEJdZac
+ 5cxRD/9coUpLre38IRaw8b5iPk054If8CTCdOQm/ZpNkWjjzEti1TWzQ6IW662Ratz9MvqpYb+8
+ VuNslNygDFmquGrxCrKDn+AH1Bd6g7ZQ4wh9vMZudoP2dCGxf/dhFyIsyvHVBjNntulEpUcpqY1
+ X0giyN9AjnKl6kjF6j5ZQe95E9kthKqGty3clm4SMOND/DAVkBS4qfY0U6KQeB6ihJi0qtprM+q
+ AqHHQjwzifKGbcWFxNVwA0XNfg1L47gdgIT01cwWFKZVoS3XUKzATgJnPB0twE+kuU0LmSiucty
+ R/odHak3P4VZeCGmWFcCcj26BvSZ8RGl6CCmrKFqRdVttUg38g346uJgODjCt/vv91EzTkCtLAt
+ gK0yOntuLtKM7vEeB29feLU7NBjhz0L2GjlajqEaCNzV/4AsZevlVjhCx4FGnXPHbJLQkRVLIPl
+ I5Luwy5JjSxB8cTsep+M/6BPIx1y42g7HTZGFsOEggUIXbCEpOKq9hDvBTTl7HqKITDsMAnjyTx
+ 9JcUd6OJ+KIfFNqXKSk8TGZAyd0znn6wFHV2O4eHpRl0C6D6D+UQmKCj7vkrSUxw/9B3OJCcQ/t
+ nNh+50xnlOjiEj46kdasjfrFmJunlRRD3j8UMnSvw3CJdm3jS2t5Tim4zRNj2m6HMSXl0vwZSdm
+ gYty5AFMeQfHdAg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,38 +117,41 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/22/26 11:16, Peter Maydell wrote:
-> On Thu, 22 Oct 2026 at 08:52, <frederic.petrot@univ-grenoble-alpes.fr> wrote:
->>
->> From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
->>
->> UndefinedBehaviorSanitizer reports an undefined behavior due to shifts
->> larger than type in the handling of the pmp configuration registers for the
->> x-rv128 cpu.
->> Adding an "i128" version for the functions accessing the pmpcfg registers
->> to properly handle the 128-bit case.
->>
->> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-> 
->> +Int128 pmpcfg_csr_read_i128(CPURISCVState *env, uint32_t reg_index)
->> +{
->> +    int i;
->> +    Int128 cfg_val = 0;
-> 
-> I think you need "= int128_zero();" here, to avoid a compile
-> failure when Int128 is the struct type rather than the compiler's
-> native int128 type.
-Yep.  You can test this with --enable-tcg-interpreter.
+gdb_feature_builder_end() never propagated builder->base_reg into
+feature->base_reg, leaving it at 0 for all dynamically-built features.
+This made the trace log at gdb_get_register_list() report an incorrect
+base_reg for dynamic features.
 
+GDBRegisterState::base_reg was correctly set, so this doesn't fix
+an actual issue.
 
-r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ gdbstub/gdbstub.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 0ce871d74929..912e31b66744 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -476,6 +476,7 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
+ 
+     g_ptr_array_free(builder->xml, TRUE);
+ 
++    builder->feature->base_reg = builder->base_reg;
+     builder->feature->num_regs = builder->regs->len;
+     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
+     trace_gdbxml_feature_builder_header(builder->feature->name,
+
+-- 
+2.56.0.116.g6de20f6092dc
+
 
