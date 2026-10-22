@@ -1,67 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D224606A31F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3AA606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=jPPuHOGF
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=h0B/+eLK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJnUH-0007Ep-0R; Thu, 22 Oct 2026 03:45:21 -0400
+	id 1xJnUX-0007Jy-QV; Thu, 22 Oct 2026 03:45:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3C7_ZagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com>)
- id 1xJnUF-0007EI-PG
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:45:19 -0400
-Received: from mail-pf1-x448.google.com ([2607:f8b0:4864:20::448])
+ <3Gr_ZagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com>)
+ id 1xJnUU-0007IQ-Pt
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:45:34 -0400
+Received: from mail-pg1-x545.google.com ([2607:f8b0:4864:20::545])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3C7_ZagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com>)
- id 1xJnUD-0002Fl-ND
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:45:19 -0400
-Received: by mail-pf1-x448.google.com with SMTP id
- d2e1a72fcca58-8a05bfa6af5so1173377b3a.2
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 00:45:16 -0700 (PDT)
+ <3Gr_ZagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com>)
+ id 1xJnUT-0002Hq-1O
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:45:34 -0400
+Received: by mail-pg1-x545.google.com with SMTP id
+ 41be03b00d2f7-cd3b9e70f88so1746245a12.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 00:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792655116; x=1793259916; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:mime-version:date:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=OZTtSqza/DC5uE9GXrjltUSVUmMKgCUvlJcl+I2az1Q=;
- b=jPPuHOGFc4u4BbZ2+GwUzkjanETIetwa/1z9Bo7CgRphcMcrO+naPoQq2DvOcE21fk
- 9kgtH9jfqK1JrbvYkKty8ATbJ2J7Ws+mR56YSkiraHMnKPGEcH731Jx6IwsxchseOmqr
- FNv+cmRkRJhX3k2CQ3yo5Q5ryafjzbmVl59meUPUUTGe5jEx6JOtE2Z4sTdsxKIvriWE
- 2G8jogqMgvmwbk2R1+G4bmFZBJtcxjoKdfhLv9WBM9Jx8jOHfY0+twfaY5PZVc74NIXP
- hkX8t3fojc3fJ/AZ8ZI6wHoWbnY3/yDDBmU9NW0h6sdWea0g/NK5qWYjaNKNoZ9hLYva
- wl7g==
+ d=google.com; s=20251104; t=1792655131; x=1793259931; darn=nongnu.org;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=QW4je3U/3zyQLhRvG412cMinFBcQ+6FyWD2o0c1N0B0=;
+ b=h0B/+eLKMlPWnw+ynpgDxmMu4lf6ZMF/BhuokrWAErzG2GxbTPxOyxDmDEmNpbS+jS
+ MtAdgyXAjyXR+aYdEHspc1DJakkE60zRhwgtqX9tfGP3LE99LggE+m5AdSX3YRBGclF0
+ B5w6pIicqlm4eLVP9gns1buEwrb4ag1ICuC2TD5VmdnFB6uovx8KOU+Lr60D3spq97AL
+ SVyiVXhyg1SV8MntwkpFZgu24nj97D55XdQ/J4Tnl6ImxvlD7zF9bvHKzHWpmsyQcek4
+ cPdkwDJqQQapyk3XBFUvCgqqKOb25IMufbNKAgXr/0Kcfbi25cfWAJh46zkBGWrXT3nU
+ 5JZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792655116; x=1793259916;
- h=content-type:cc:to:from:subject:message-id:mime-version:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=OZTtSqza/DC5uE9GXrjltUSVUmMKgCUvlJcl+I2az1Q=;
- b=lhRy/b70mzASJ0n8Lg3nXu9fiWA/PLZgD5fZSOKgT2PsXcrZNJhjHE/qbm8raC94s6
- iTsM3Li/gD+KxnOThoLp/ifiqs2bAk2A9N5A/VEE40a94Oc4XY1376br1R7+v+1yle/K
- 0blyJRoflTZA2mRuOufK0SZlJHrSbEMAhSUSg3TtbHIAyKSSG13G67ynly4qgHv/YrF/
- nwS/8QBlJlCqAcbtpJY2EYvlrRLOjiJQiQyJ0Ob+AYleY5YIr+trF+u9X/1jbnYdkJ0A
- TJmome4ddNrT/oPNIeVBvZ3Ijie/9fS5TU3cLdAvAxYRBFdC9kQ3dgMaRwugsXDNUQsI
- nq+g==
-X-Gm-Message-State: AFq9FYKjS30dWwFHZ9pmxrm0aaXJl6bDZP54bXqoCzQCXPpGY68vYeWC
- DL3BG4he/tTeiWQsS4KhKxaM7CO8E4pgOhDkZ2wL77b+grjCYMLFupAkZGKqcbYIgP0rdb85HrW
- NXWBiXq0daSNrlRTh+TdgBQ==
-X-Received: from pfbbq15.prod.google.com ([2002:a05:6a00:e0f:b0:89d:56e1:f725])
+ d=1e100.net; s=20260707; t=1792655131; x=1793259931;
+ h=content-type:cc:to:from:subject:message-id:references:mime-version
+ :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QW4je3U/3zyQLhRvG412cMinFBcQ+6FyWD2o0c1N0B0=;
+ b=eAhlEd+AeDzhfsGDDMkflayuhcHOKzK0rKksw2yEWs8OwQuhcb9z6ok3GpxSVXPE09
+ HKJ4EEp4NutJwvmUPP2Ar+xyz6NDI7806SZ7HmD5QxB7U7J+og8RboARS6PEEhbrSr88
+ LvAl1dkIwZTsnyRnOTIj51sw4QghH/+xeHJxNr8cdzcjbgF2RzB3ECPkT2XdYr3LlWm1
+ Cj04DUFQlFDpa6ZIBLCSaatjtd23pBEaLF9Ne1GYIXxn/BRb4kUJwT5E9kpaG0JXQFwr
+ HF9wsGAIHov/QlDys5VTb+5qxZcuVDm0R4qPi7uoOiz44VzrmfW9cJIl7IeOa+rm9a8M
+ U2Jw==
+X-Gm-Message-State: AFq9FYIFiJwnpn5tyVfmKQlvi4bx9+h5WVRW/N2leNP+ssggvOMhZrVU
+ R5yVZOJDigUVnsilC+NqUJ68edYmAKe6a/ojlyYkYoN7t1c0MXHDPER2VegkoV7NfbkAUvbvm0c
+ rOYqz8R9t6a0YA6M8/D7wKA==
+X-Received: from pgdu13.prod.google.com ([2002:a05:6a02:2f4d:b0:cc9:5e28:9460])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:e17:b0:874:705d:f64a with SMTP id
- d2e1a72fcca58-8a089f7430amr2911586b3a.44.1792655115539; 
- Thu, 22 Oct 2026 00:45:15 -0700 (PDT)
-Date: Thu, 22 Oct 2026 15:45:05 +0800
+ 2002:a05:6a20:918a:b0:3e1:a769:9620 with SMTP id
+ adf61e73a8af0-3e287f3c888mr3850796637.71.1792655130904; 
+ Thu, 22 Oct 2026 00:45:30 -0700 (PDT)
+Date: Thu, 22 Oct 2026 15:45:10 +0800
+In-Reply-To: <20261022074513.2292281-1-stanleyjhu@google.com>
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
+References: <20261022074513.2292281-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.218.g1ec904b173-goog
-Message-ID: <20261022074513.2292281-1-stanleyjhu@google.com>
-Subject: [PATCH v2 0/8] hw/ufs: Add fault injection, update TMR doc,
- and add qtests
+Message-ID: <20261022074513.2292281-6-stanleyjhu@google.com>
+Subject: [PATCH v2 5/8] tests/qtest/ufs-test: Add TMR and async MCQ SCSI
+ submission helpers
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
@@ -70,9 +72,9 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Jinyoung Choi <j-young.choi@samsung.com>,
  Daejun Park <daejun7.park@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::448;
- envelope-from=3C7_ZagoKCk489q31uEzxAw44w1u.s426u2A-tuBu1343w3A.47w@flex--stanleyjhu.bounces.google.com;
- helo=mail-pf1-x448.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::545;
+ envelope-from=3Gr_ZagoKCl0NO5IG9TECPBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pg1-x545.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -91,66 +93,87 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This series adds experimental fault injection to the UFS device model
-so host drivers can exercise task abort and power management recovery,
-updates the task management description in the UFS docs, and adds
-qtest cases for controller reset, MCQ runtime registers, task
-management and fault-injected task abort.
+Add ufs_send_tmr() and ufs_mcq_send_scsi_cmd_async() helper functions
+in preparation for UTMRL task management and QOM fault injection unit
+tests.
 
-The series applies on top of Daejun Park's Zoned UFS v3 series.
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+---
+ tests/qtest/ufs-test.c | 53 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-- Patches 1-2: x-fault-inject-tag and x-fault-inject-mode properties
-  to hold a transfer request, and task management handling for the
-  held request.
-- Patch 3: ssu-timeout mode for power management recovery testing.
-- Patch 4: document the supported task management functions (QUERY
-  TASK and ABORT TASK).
-- Patches 5-8: qtest helpers and test cases.
-
-The fault injection properties are experimental (x- prefix) and off
-by default.
-
-Differences from v1:
-- Rebased on top of Daejun Park's Zoned UFS v3 series.
-- Clarified in patch 2 that in-transition mode completes without
-  executing the SCSI command or transferring data.
-
-v1: https://lore.kernel.org/qemu-devel/20261015060827.341298-1-stanleyjhu@google.com/
-
-Tested with qos-test on aarch64 (all 28 UFS cases pass, including 10
-zoned UFS cases).
-
-Based-on: <20261020001647epcms2p52cd58173164a43e252c33a3eb5935dc8@epcms2p5>
-
-Stanley Jhu (8):
-  hw/ufs: Add experimental fault injection properties for holding
-    requests
-  hw/ufs: Handle task management requests for fault-injected held
-    requests
-  hw/ufs: Add ssu-timeout mode for power management recovery testing
-  docs/system/ufs: Update task management request support status
-  tests/qtest/ufs-test: Add TMR and async MCQ SCSI submission helpers
-  tests/qtest/ufs-test: Add HCE reset unit test
-  tests/qtest/ufs-test: Add MCQ runtime register and TMR handling test
-  tests/qtest/ufs-test: Add QOM fault injection task abort test
-
- docs/system/devices/ufs.rst |   7 +-
- hw/ufs/trace-events         |   3 +
- hw/ufs/ufs-pci.c            |   6 +
- hw/ufs/ufs-sysbus.c         |   6 +
- hw/ufs/ufs.c                | 341 +++++++++++++++++++-
- hw/ufs/ufs.h                |  62 ++++
- tests/qtest/ufs-test.c      | 618 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 1039 insertions(+), 4 deletions(-)
-
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index e24caa2efc..f577fe2614 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -1899,6 +1899,59 @@ static void ufstest_hid(void *obj, void *data, QGuestAllocator *alloc)
+     ufs_exit(ufs, alloc);
+ }
+ 
++static G_GNUC_UNUSED void ufs_send_tmr(QUfs *ufs, uint64_t utmrlba, int slot,
++                                       uint8_t tm_func, uint8_t lun,
++                                       uint32_t task_tag,
++                                       UtpTaskReqDesc *utrd_out)
++{
++    uint64_t desc_addr = utmrlba + slot * sizeof(UtpTaskReqDesc);
++    UtpTaskReqDesc desc = { 0 };
++
++    desc.header.dword_0 = cpu_to_le32(UFS_UTP_REQ_DESC_INT_CMD);
++    desc.header.dword_2 = cpu_to_le32(UFS_OCS_INVALID_COMMAND_STATUS);
++
++    desc.upiu_req.req_header.trans_type = UFS_UPIU_TRANSACTION_TASK_REQ;
++    desc.upiu_req.req_header.query_func = tm_func;
++    desc.upiu_req.req_header.lun = lun;
++    desc.upiu_req.req_header.task_tag = 0x10 + slot;
++    desc.upiu_req.input_param1 = cpu_to_be32(lun);
++    desc.upiu_req.input_param2 = cpu_to_be32(task_tag);
++
++    qtest_memwrite(ufs->dev.bus->qts, desc_addr, &desc, sizeof(desc));
++
++    ufs_wreg(ufs, A_UTMRLDBR, 1 << slot);
++    ufs_wait_for_irq(ufs);
++    g_assert_true(FIELD_EX32(ufs_rreg(ufs, A_IS), IS, UTMRCS));
++    ufs_wreg(ufs, A_IS, FIELD_DP32(0, IS, UTMRCS, 1));
++    g_assert_cmpuint(ufs_rreg(ufs, A_UTMRLDBR) & (1 << slot), ==, 0);
++
++    qtest_memread(ufs->dev.bus->qts, desc_addr, utrd_out, sizeof(*utrd_out));
++}
++
++static G_GNUC_UNUSED int ufs_mcq_send_scsi_cmd_async(QUfs *ufs, uint8_t lun,
++                                                     const uint8_t *cdb)
++{
++    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
++    uint64_t req_upiu_addr =
++        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++    UtpUpiuReq req_upiu = { 0 };
++    UtpTransferReqDesc utrd;
++
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_COMMAND;
++    req_upiu.header.flags = UFS_UPIU_CMD_FLAGS_NONE;
++    req_upiu.header.lun = lun;
++    req_upiu.header.task_tag = cmd_desc_slot;
++    memcpy(req_upiu.sc.cdb, cdb, UFS_CDB_SIZE);
++    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
++                   sizeof(req_upiu));
++
++    utrd = ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
++    __ufs_send_transfer_request_mcq_async(ufs, lun, &utrd);
++
++    return cmd_desc_slot;
++}
++
++
+ #define ZONE_SIZE (2 * 1024 * 1024)
+ #define ZONE_BLOCKS (ZONE_SIZE / 4096)
+ #define MAX_OPEN_ZONE 6
 -- 
 2.56.0.218.g1ec904b173-goog
 
