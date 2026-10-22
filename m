@@ -1,60 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0E606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 12:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24B4606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 12:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=bXyHjuOk
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XAQ8DvVZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJrZx-0007U4-CC; Thu, 22 Oct 2026 08:07:31 -0400
+	id 1xJrcZ-0008Uw-7g; Thu, 22 Oct 2026 08:10:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
- id 1xJrZi-0007TM-MO; Thu, 22 Oct 2026 08:07:15 -0400
-Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJrcT-0008NW-Kb
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:10:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
- id 1xJrZa-0001gN-7m; Thu, 22 Oct 2026 08:07:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1792670796; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=FJ6yTtzWshNsLQmFV/ajSLAfbp+yhrn+FsSCSUUgRmk=;
- b=bXyHjuOknePj87EvPBI1DTdUSdKmyavdxr/NlCofgkho6N/AXEysXFahJ+/zBoAU0FVTSs/NKfeUlyh5FcG3gmbfIXLtd/5ymUIpva3I7EtTlCuxaqTXne57h53ypuwvzf5/TX1CH1cosgyYoN6U7W77H4ihAPe69bxYaP/zvKA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R601e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
- MF=fangyu.yu@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
- TI=SMTPD_---0XDJ9.P-_1792670475; 
-Received: from localhost.localdomain(mailfrom:fangyu.yu@linux.alibaba.com
- fp:SMTPD_---0XDJ9.P-_1792670475 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 22 Oct 2026 20:01:17 +0800
-From: fangyu.yu@linux.alibaba.com
-To: daniel.barboza@oss.qualcomm.com
-Cc: alistair.francis@wdc.com, chao.liu.zevorn@gmail.com, liwei1518@gmail.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH 1/2] target/riscv/csr.c: do not allow mstatus MPV/GVA
- writes
-Date: Thu, 22 Oct 2026 20:01:11 +0800
-Message-Id: <20261022120111.24298-1-fangyu.yu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
-References: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xJrcQ-000232-FM
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:10:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792671000;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8SAVu/4rGyygaZrEUpFPxbLNf0DlryR7dYh8Ja8YdBk=;
+ b=XAQ8DvVZDVMZIgQThyavxtKaHF90+P//WjOC5GPhiIACv/vUOtLLW0rquzHLGCnwh8tEW5
+ MmuUEk/pb8oHcqj7vlII8hpmLcD5QS2WFhlaKjTksMXFjPe8fX6T3zQzu7gbOCnsbJFzIa
+ Z/mRnMuyM3EXV5ksrRET2XG+3t1ylo4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-5-0Qq2zFOvuCIceS3vr2Ig-1; Thu,
+ 22 Oct 2026 12:09:51 +0000
+X-MC-Unique: 5-0Qq2zFOvuCIceS3vr2Ig-1
+X-Mimecast-MFC-AGG-ID: 5-0Qq2zFOvuCIceS3vr2Ig_1792670990
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8100618011C8; Thu, 22 Oct 2026 12:09:50 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 711C81956089; Thu, 22 Oct 2026 12:09:49 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
-Received-SPF: pass client-ip=115.124.30.99;
- envelope-from=fangyu.yu@linux.alibaba.com;
- helo=out30-99.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Subject: Re: [PATCH] baum: send device identity and cell count on protocol
+ off/on
+From: marcandre.lureau@redhat.com
+To: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, pbonzini@redhat.com
+In-Reply-To: <20261021230736.1451533-1-samuel.thibault@ens-lyon.org>
+References: <20261021230736.1451533-1-samuel.thibault@ens-lyon.org>
+Date: Thu, 22 Oct 2026 16:09:45 +0400
+Message-Id: <179267098536.3250908.6929134299379237877.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2357;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=FApWydZRnMm7c22NQSxeGFYzcROOvccyF2pWCC+ojWM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq2f0KNY2HJQVOOD6wGEWY8XWD0SlicvYEA5q5N
+ AvqzkR/9puJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatn9CgAKCRDa6OEJdZac
+ 5fSKEACw6RxT/vPh84ZnZB4dPQ18zsZ68lNe5jvp4OJSau+HonDI6AHmey01t0OGRrhrd637f5L
+ fQhpuKHJDJeV0ysk9urIVudsyCFGCibmy/bdAlDt0T+gE/sGFRhM9GtOALWcKrtZTnIwEU4zDRP
+ O4nDb+XdIiIhJV3htMXSxVAVVDHvmjC3Z+Rxffps5ej8Wv3fagxdg0AIMFNwH/nH7iDt45bnDup
+ cKazQphsFXxYGUoYJF5FDJFc5bxFg7GocgV5NFue5uqgHFYz3nl4iGU98IMoqUJtkih71BnqOHr
+ L8gWF+uFF/NzmWJDdxhw46RtcxyfPbh31yKNm1wDTv4ZiunzOFMnUP9rr0pAN9yWpfaq9DB4WWp
+ +11QfMn9xZjMeub+vS2jBgNmNM5/P64P6IGGTD7w2if0fX1O07Gg9zKSvaqebHI8Yw9E+TupkWk
+ qc8Tuk2ZAqJy72ulkf7megOknqdfmILcJdI7tkZobUmunTS7JUCB+mp4ZZvPTChxN+b+rcPUZeM
+ UKg5TvATeD1suTHGF2rF8S5JtYMk4l9LiVWfWZ3XXwlv1yUoWxj6nYSpJeSR3NIMwzKtpGRgC5m
+ sKiWRbi4gCWCPMxncF/5gxbqk4GFZ0DREoW1mJe0kROPSMGg0hC9mjDtuITT3DWuGfxilqFnsT1
+ uOjhe7zs6gfzwtg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,70 +99,78 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
->The priv spec states the following about mstatus.MPV:
->
->"The MPV bit (Machine Previous Virtualization Mode) is written by the
->implementation whenever a trap is taken into M-mode."
->
->And, about mstatus.GVA:
->
->"Field GVA (Guest Virtual Address) is written by the implementation
->whenever a trap is taken into M-mode."
->
->Both are written during riscv_cpu_do_interrupt().  They're not supposed
->to be written by userspace.  As far as write_mstatus goes these fields
->are read only.  The same applies for mstatush.MPV/mstatush.GVA.
->
->Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
->Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->---
-> target/riscv/csr.c | 5 +----
-> 1 file changed, 1 insertion(+), 4 deletions(-)
->
->diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->index e1cd4a299c..74f5f868f0 100644
->--- a/target/riscv/csr.c
->+++ b/target/riscv/csr.c
->@@ -2040,9 +2040,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
->     }
->
->     if (xl != MXL_RV32 || env->debugger) {
->-        if (riscv_has_ext(env, RVH)) {
->-            mask |= MSTATUS_MPV | MSTATUS_GVA;
->-        }
+> The hardware devices do identify themselves when the driver turns the
+> protocol off and on again. NVDA expects to get it.
+> Message-ID: <20261021230736.1451533-1-samuel.thibault@ens-lyon.org>
 
-Hi Daniel,
+Missing required Signed-off-by
 
-Could you share the motivation for making MPV/GVA read-only here? Was
-this based on a real misbehavior, or mainly on the spec wording.
-
-I noticed that the current OpenSBI code modifies MPV in several places
-(sbi_hart_switch_mode, sbi_trap_redirect, sse_event_resume). With this
-patch, those writes are dropped.
-
-Thanks,
-Fangyu
-
->         if ((val & MSTATUS64_UXL) != 0) {
->             mask |= MSTATUS64_UXL;
->         }
->@@ -2079,7 +2076,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
->                                      target_ulong val, uintptr_t ra)
-> {
->     uint64_t valh = (uint64_t)val << 32;
->-    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
->+    uint64_t mask = 0;
+> ---
+>  chardev/baum.c | 32 ++++++++++++++++++++++++--------
+>  1 file changed, 24 insertions(+), 8 deletions(-)
 >
->     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
->         mask |= MSTATUS_MDT;
->--
->2.43.0
+> diff --git a/chardev/baum.c b/chardev/baum.c
+> index ac1e535ba8e9..e60fb628e0ff 100644
+> --- a/chardev/baum.c
+> +++ b/chardev/baum.c
+> @@ -97,6 +97,7 @@ struct BaumChardev {
+>      brlapi_fileDescriptor brlapi_fd;
+>      unsigned int x, y;
+>      bool deferred_init;
+> +    bool protocol_on;
+
+reset it alongside deferred_init? or document if it's intentional
+
+>  
+>      uint8_t in_buf[BUF_SIZE];
+>      uint8_t in_buf_used;
+> @@ -337,13 +338,27 @@ static void baum_write_packet(BaumChardev *baum, const uint8_t *buf, int len)
+>      }
+>  }
+>  
+> +static void baum_send_cell_count(BaumChardev *baum)
+> +{
+> +    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
+> +    baum_write_packet(baum, cell_count, sizeof(cell_count));
+> +}
+> +
+> +static void baum_send_device_identity(BaumChardev *baum)
+> +{
+> +    uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
+> +        'B','a','u','m',' ','V','a','r','i','o' };
+> +    identity[11] = '0' + baum->x / 10;
+> +    identity[12] = '0' + baum->x % 10;
+> +    baum_write_packet(baum, identity, sizeof(identity));
+> +}
+> +
+>  /* Called when the other end seems to have a wrong idea of our display size */
+>  static void baum_cellCount_timer_cb(void *opaque)
+>  {
+>      BaumChardev *baum = BAUM_CHARDEV(opaque);
+> -    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
+>      DPRINTF("Timeout waiting for DisplayData, sending cell count\n");
+> -    baum_write_packet(baum, cell_count, sizeof(cell_count));
+> +    baum_send_cell_count(baum);
+>  }
+>  
+>  /* Try to interpret a whole incoming packet */
+> @@ -441,17 +456,18 @@ static int baum_eat_packet(BaumChardev *baum, const uint8_t *buf, int len)
+>          uint8_t protocol;
+>          DPRINTF("SetProtocol\n");
+>          EAT(protocol);
+> -        /* ignore */
+> +        if (!baum->protocol_on && protocol) {
+
+Maybe it should respond on all ->on "if (protocol)"?
+
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
