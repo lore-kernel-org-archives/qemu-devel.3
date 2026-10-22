@@ -1,110 +1,120 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458EB606A31F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 18:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF23606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 19:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hizLTKBu
+	dkim=pass (1024-bit key, unprotected) header.d=linuxbe.com header.i=@linuxbe.com header.a=rsa-sha256 header.s=default header.b=AavUtsiP;
+	dkim=pass (1024-bit key) header.d=linuxbe.com header.i=@linuxbe.com header.a=rsa-sha256 header.s=default header.b=AavUtsiP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJy01-0005qD-7k; Thu, 22 Oct 2026 14:58:49 -0400
+	id 1xJyOU-0001vM-IG; Thu, 22 Oct 2026 15:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1xJxzq-0005ih-Vu; Thu, 22 Oct 2026 14:58:40 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jnuyens@linuxbe.com>)
+ id 1xJudd-000152-PD
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:23:29 -0400
+Received: from www.linuxbe.com ([88.99.136.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1xJxzp-0006J5-8j; Thu, 22 Oct 2026 14:58:38 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MIE3Fp747240; Thu, 22 Oct 2026 18:58:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=11cjQ5MNVoIecvR08hkUE/DBk0coGl1ZLZkhTUBrO
- p0=; b=hizLTKBuMf2yrAcRXRw3iZ7hawJVTp54ADj2sqi1nEx+rjZX0FwLFG4TE
- tALWlCKnoVq0jhM5kuBSDMsy2R0sfBA3mPetKXEisIrNgUrzCV/d2wI3ug2OiX0L
- ZMoFYr3GC0k3zjJFoA74yBdKlPOqLHQfzPYroM2qWVIWlTdQy/MWICXG6dWsFcuQ
- SJkmhKHwSgNn/aHeisZmqCInKYn+v2Q1LOSAZnsuEi5Oy8WMr2nz/hseVLZIQW/w
- muNB+oEeG6446k6/4L7c64tRjbIKq8s9EQ0n/aitf/CQLxnqorNAKsttS2GIePjW
- cwzaM9XN/Wv7rW1KWLOjNAyMLjZ6Q==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw5910ar-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 22 Oct 2026 18:58:33 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MI55Nq921301; Thu, 22 Oct 2026 18:58:32 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hfgck1xnf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Oct 2026 18:58:32 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69MIwVgG51773754
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Oct 2026 18:58:31 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2FCB658056;
- Thu, 22 Oct 2026 18:58:31 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87CD358052;
- Thu, 22 Oct 2026 18:58:30 +0000 (GMT)
-Received: from IBM-D32RQW3.ibm.com (unknown [9.61.249.57])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 Oct 2026 18:58:30 +0000 (GMT)
-From: Farhan Ali <alifm@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: alifm@linux.ibm.com, mjrosato@linux.ibm.com, farman@linux.ibm.com,
- cohuck@redhat.com, oelghoul@linux.ibm.com, qemu-stable@nongnu.org
-Subject: [PATCH v1] s390/pci: Reset device before tearing down IOMMU mappings
-Date: Thu, 22 Oct 2026 11:58:29 -0700
-Message-ID: <20261022185829.11835-1-alifm@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jnuyens@linuxbe.com>)
+ id 1xJudb-0007xK-Ll
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 11:23:29 -0400
+ARC-Filter: OpenARC Filter v1.3.0 www.linuxbe.com D98C4803CF6
+Authentication-Results: www.linuxbe.com;
+ arc=pass header.oldest-pass=0 smtp.remote-ip=127.0.0.1
+ARC-Seal: i=2; d=linuxbe.com; s=default; a=rsa-sha256; cv=pass; t=1792682603; 
+ b=k9LwSWFMYDrlckI59h26oLvfyxMbKDwZBbJpdcl7OLgj7DT2wlYJf9VChEZ+Qr6ZVfK6
+ VTythmln0p9Y5dMoVsDVnC46RyIc2vbs0t6KzwWEfYPYDEjyy8qgD4ueJjO0XnSdeZmub
+ LopxIuK2bPfG9D2uK0A1oAfri99OW0wRvQ=
+ARC-Message-Signature: i=2; d=linuxbe.com; s=default; a=rsa-sha256;
+ c=relaxed/simple; t=1792682603;
+ h=DKIM-Signature:X-Spam-Checker-Version:X-Spam-Level:X-Spam-Status:
+ ARC-Filter:DKIM-Signature:Received:Received:X-Gm-Message-State:
+ X-Received:Received:Received:MIME-Version:From:Date:
+ X-Gmail-Original-Message-ID:X-Gm-Features:Message-ID:Subject:To:Cc:
+ Content-Type;
+ bh=k6JhvxZj3baoSxx9eCuoGvc1nwGdEuHDl/dDQuCgP88=;
+ b=aLHReuaQgaeIx5xzY/8dNmz1R99z76ZD4SZh4HeSKQpu44BPiWxlPEyh13GL63l7rhLC
+ W/NRdtNRGKDSgQCF+GdJIXS9BliSzsq94HcNzl0QXXwowZ7zDpdkr2C384aJsNjr6vFzt
+ zAMiRl0HM04ms/1f5kCcejyl8tZe941BnE=
+ARC-Authentication-Results: i=2; www.linuxbe.com; arc=pass header.oldest-pass=0
+ smtp.remote-ip=127.0.0.1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxbe.com;
+ s=default; t=1792682603;
+ bh=k6JhvxZj3baoSxx9eCuoGvc1nwGdEuHDl/dDQuCgP88=;
+ h=From:Date:Subject:To:Cc:From;
+ b=AavUtsiPI/IVMg/P16QQA4i7z3s3OZ0DIz6Elkawi58KSbYpoA/uhUb+Pj5p3XVCe
+ pQN/boSQ8ANx1JEOysJ4pi4pemIkjg6caLTelpMOSZ+5Yy1JNTUiC6mzN9GCW81lxn
+ Hv7qYQ2m4E3ch7RTmdKZkkOCoctqMDAC+J4Yphi0=
+Received: by www.linuxbe.com (Postfix, from userid 114)
+ id D98C4803CF6; Thu, 22 Oct 2026 17:23:23 +0200 (CEST)
+ARC-Filter: OpenARC Filter v1.3.0 www.linuxbe.com A8131803CE2
+Authentication-Results: www.linuxbe.com; arc=none smtp.remote-ip=209.85.161.41
+ARC-Seal: i=1; d=linuxbe.com; s=default; a=rsa-sha256; cv=none; t=1792682603; 
+ b=z245uzBtAG1XkAWQP2MTEdA8r8m6jD9iCgSftBc+O7WgKCOduodYKt7OC0abvlHgaSk7
+ S/SEDEEUq9AOIFxRlxUsE2Tnli525PYGkiv4j68w9fgOpWFqFGP7gLDJrBoT0hGwacE0G
+ 8gJV+zuZ5qIk+3kdQu2Es7BQHRvn7OgkJY=
+ARC-Message-Signature: i=1; d=linuxbe.com; s=default; a=rsa-sha256;
+ c=relaxed/simple; t=1792682603;
+ h=DKIM-Signature:Received:X-Gm-Message-State:X-Received:Received:
+ Received:MIME-Version:From:Date:X-Gmail-Original-Message-ID:
+ X-Gm-Features:Message-ID:Subject:To:Cc:Content-Type;
+ bh=k6JhvxZj3baoSxx9eCuoGvc1nwGdEuHDl/dDQuCgP88=;
+ b=dpWvzP6H7vU3M2kr2JSsWtEUHp/1i7kAYBxqTydXhJMN3T85F2dc4tI1IOeTsVOCbqxE
+ BxZLqoqy+BK7CYULQoHRM58EHGSIwD78GYUup9SkXPIU18mzr7zSZWLDkseXyFa1QteB9
+ H/flVce1zN795HOumK7qp7HaTPxyKqP8JE=
+ARC-Authentication-Results: i=1; www.linuxbe.com;
+ arc=none smtp.remote-ip=209.85.161.41
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxbe.com;
+ s=default; t=1792682603;
+ bh=k6JhvxZj3baoSxx9eCuoGvc1nwGdEuHDl/dDQuCgP88=;
+ h=From:Date:Subject:To:Cc:From;
+ b=AavUtsiPI/IVMg/P16QQA4i7z3s3OZ0DIz6Elkawi58KSbYpoA/uhUb+Pj5p3XVCe
+ pQN/boSQ8ANx1JEOysJ4pi4pemIkjg6caLTelpMOSZ+5Yy1JNTUiC6mzN9GCW81lxn
+ Hv7qYQ2m4E3ch7RTmdKZkkOCoctqMDAC+J4Yphi0=
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com
+ [209.85.161.41])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+ (No client certificate requested)
+ by www.linuxbe.com (Postfix) with ESMTPSA id A8131803CE2
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 17:23:23 +0200 (CEST)
+Received: by mail-oo1-f41.google.com with SMTP id
+ 006d021491bc7-6d290b10a35so885991eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 08:23:23 -0700 (PDT)
+X-Gm-Message-State: AFq9FYKbrYVankJVmSaW3iuLHmVXAr7jyqBIHvHQU56hZgGhLmeuoORc
+ T+yHRDg+nSMRBQOYj9YHdHZzAz/wY/teiKj38xGLa8BHk8joIRbDlhzNi6BUHg6PFBAWmOSCVaq
+ SkRUWibTi9etqQZKcOJ1uyH48SiMo39M=
+X-Received: by 2002:a4a:edc4:0:b0:6f9:91c9:4e5e with SMTP id
+ 006d021491bc7-709419437acmr3247039eaf.47.1792682602209; Thu, 22 Oct 2026
+ 08:23:22 -0700 (PDT)
+Received: from 101988054943 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Oct 2026 08:23:21 -0700
+Received: from 101988054943 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 22 Oct 2026 08:23:21 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 8-xxnteBIW2m8YErC6iNdh-YoBRW5HqQ
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA3NCBTYWx0ZWRfX7bHCu+9AGydE
- LIIeV5hlajieMJdUQvtXCjresFVAjMFFEEzRZRq58piqV0366hvmgFbhdU68JofBnCRLY//kVKK
- D4fKPq4xQFjjSd8yVPxhiaOI0PSOGpY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA3NCBTYWx0ZWRfX3cRp6rgNTw7u
- bYAKjdYDoHypmh1pgP0G5Mi56mszP1ezNQGtDGOmE6Li9kd+ykYaQCyN+lCJggZ+ZApN+ghsYg/
- nhNMot2CY2qMf7an3y3tIbtvmPLMbRlVkg+rGa3dRnvnCCRFjBmRAQSLhAuY9S/UA11m0yUo2eQ
- zzSbRFqw2yhioOl+92okZk068JZItVCVSA1tNsbPNlWFNQhXMTQbDHLWg2yuNCI33yEl5cH5Q6f
- sUBkOtUD488mbP0elgMGQbVl8e6t/ird8inoIO7AfQAox6aQPjsdZ40GJQupDZa+ZvQcIbZQZ1q
- EnDSLh9CSmvmlnyiqrhMCr6aOwOHeKimwF/psB2ZA9tnCT/j8DRq7Ti0M2yeieVOrDm3/DkSE/M
- NessNrYzOhs1ywz+RYFj06SCgVZSTP5ZnyIgmu5ku0c/Xj4Dd5541r2rW8Cf9lcEQrbIiSxzxP+
- u+gTjb3nAKviISaGYmA==
-X-Proofpoint-ORIG-GUID: 8-xxnteBIW2m8YErC6iNdh-YoBRW5HqQ
-X-Authority-Analysis: v=2.4 cv=Ob4NnRTY c=1 sm=1 tr=0 ts=6ada5cd9 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=7fL7QKSG5HQNWf0BWnYA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
- lowpriorityscore=0 clxscore=1011 impostorscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610220074
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Jasper Nuyens <jnuyens@linuxbe.com>
+Date: Thu, 22 Oct 2026 08:23:21 -0700
+X-Gmail-Original-Message-ID: <CADayN0kGbiDEZG7f-fW19+AWJQXUQS8wU8LxbXx3Arc=1oP9fQ@mail.gmail.com>
+X-Gm-Features: AclHuK_u3J2jhDq3qprMqd3Ca_MoiPOaruCoQm02ImfoIGr-RFi6gQKN3l81PF0
+Message-ID: <CADayN0kGbiDEZG7f-fW19+AWJQXUQS8wU8LxbXx3Arc=1oP9fQ@mail.gmail.com>
+Subject: Looking for a speaker on where QEMU is heading (Belgium Proxmox
+ Community Day, 3 February 2027, Ghent)
+To: qemu-devel@nongnu.org
+Cc: team@pveday.be
+Content-Type: multipart/alternative; boundary="000000000000b3295b065e6f7175"
+Received-SPF: pass client-ip=88.99.136.145; envelope-from=jnuyens@linuxbe.com;
+ helo=www.linuxbe.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Oct 2026 15:24:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,58 +125,95 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=0.2 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In s390_pci_device_reset(), IOMMU mappings are torn down without first
-resetting the device. For a PCI passthrough device this opens a window
-where the device may issue DMA to addresses that no longer have valid IOMMU
-mappings, causing an error (PEC 0x7) for the device on the host.
+--000000000000b3295b065e6f7175
+Content-Type: text/plain; charset="UTF-8"
 
-Fix this by calling pci_device_reset() before tearing down IOMMU mappings
-in the default case.  The dedicated ERROR-state case existed to issue
-that same reset before falling through, so it can now be removed.
+Hello,
 
-Fixes: 3e5cfba3ca0a ("s390x/pci: introduce S390PCIBusDevice qdev")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
----
- hw/s390x/s390-pci-bus.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+On Wednesday 3 February 2027 we run the first Belgium Proxmox Community
+Day in Ghent, during Config Management Camp and in the week right after
+FOSDEM. It is a free one day community event about Proxmox VE and the
+stack it is built on: KVM, QEMU, Ceph, LXC.
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 2724b27ec2..7182d97a33 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1786,22 +1786,8 @@ static void s390_pci_device_reset(DeviceState *dev)
-         return;
-     case ZPCI_FS_STANDBY:
-         break;
--    case ZPCI_FS_ERROR:
--        /*
--         * Attempt a reset to recover the device. A device in ERROR state
--         * can be transitioned to ENABLED or DISABLED state via guest
--         * driven actions.  Since this code path is also executed on
--         * subsystem_reset() and the expected state of a configured device
--         * after subsystem_reset() is to be in a DISABLED state, we need to
--         * transition from ERROR to DISABLED.
--         *
--         * Linux guests drive the state transition from ERROR to DISABLED
--         * via CLP_SET_DISABLE_PCI_FN. So it should be safe to transition
--         * from ERROR to DISABLED state.
--         */
--        pci_device_reset(pbdev->pdev);
--        /* fallthrough */
-     default:
-+        pci_device_reset(pbdev->pdev);
-         pbdev->fh &= ~FH_MASK_ENABLE;
-         pbdev->state = ZPCI_FS_DISABLED;
-         break;
--- 
-2.43.0
+QEMU is the engine under every Proxmox VM, so we would very much like a
+talk from someone in the QEMU community about where the project is
+heading and what users can expect: what landed recently, what is being
+worked on now, and which directions you see for the next years. An
+honest "this is what we are struggling with" is just as welcome as a
+roadmap.
 
+The practical part:
+
+- Wednesday 3 February 2027, 10:00 to 18:00
+- HOGENT Campus Schoonmeersen, Valentin Vaerwyckweg 1, 9000 Ghent
+- Talks are 40 minutes, everything in English
+- Free entrance. The audience is mostly sysadmins, integrators and
+hosters who run Proxmox in production, plus students
+- Cole Hughes of Proxmox Server Solutions GmbH gives the keynote,
+"Proxmox, What's New?"
+- Many people are in Ghent that week anyway for Config Management Camp,
+and Brussels is 30 minutes away by train
+
+If this is something you or a colleague would like to do, submit it at
+https://www.google.com/url?q=https://cfp.pveday.be/bpcd2027/cfp&source=gmail&ust=1792769001418000&sa=E
+before 1 December, or simply reply to
+me and we sort out the details.
+
+More about the day:
+https://www.google.com/url?q=https://pveday.be&source=gmail&ust=1792769001418000&sa=E
+
+Greetings,
+Jasper
+--
+Jasper Nuyens
+Managing Director, Linux Belgium
+https://www.google.com/url?q=http://www.linuxbe.com&source=gmail&ust=1792769001418000&sa=E
+Phone: +32 (0)2 747 47 01
+Mobile: +32 (0)478 978967
+
+--000000000000b3295b065e6f7175
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><body><div dir=3D"auto">Hello,<br><br>On Wednesday 3 February 2027 we=
+ run the first Belgium Proxmox Community<br>Day in Ghent, during Config Man=
+agement Camp and in the week right after<br>FOSDEM. It is a free one day co=
+mmunity event about Proxmox VE and the<br>stack it is built on: KVM, QEMU, =
+Ceph, LXC.<br><br>QEMU is the engine under every Proxmox VM, so we would ve=
+ry much like a<br>talk from someone in the QEMU community about where the p=
+roject is<br>heading and what users can expect: what landed recently, what =
+is being<br>worked on now, and which directions you see for the next years.=
+ An<br>honest &quot;this is what we are struggling with&quot; is just as we=
+lcome as a<br>roadmap.<br><br>The practical part:<br><br>- Wednesday 3 Febr=
+uary 2027, 10:00 to 18:00<br>- HOGENT Campus Schoonmeersen, Valentin Vaerwy=
+ckweg 1, 9000 Ghent<br>- Talks are 40 minutes, everything in English<br>- F=
+ree entrance. The audience is mostly sysadmins, integrators and<br>  hoster=
+s who run Proxmox in production, plus students<br>- Cole Hughes of Proxmox =
+Server Solutions GmbH gives the keynote,<br>  &quot;Proxmox, What&#39;s New=
+?&quot;<br>- Many people are in Ghent that week anyway for Config Managemen=
+t Camp,<br>  and Brussels is 30 minutes away by train<br><br>If this is som=
+ething you or a colleague would like to do, submit it at<br><a href=3D"http=
+s://www.google.com/url?q=3Dhttps://cfp.pveday.be/bpcd2027/cfp&amp;source=3D=
+gmail&amp;ust=3D1792769001418000&amp;sa=3DE">https://www.google.com/url?q=
+=3Dhttps://cfp.pveday.be/bpcd2027/cfp&amp;source=3Dgmail&amp;ust=3D17927690=
+01418000&amp;sa=3DE</a> before 1 December, or simply reply to<br>me and we =
+sort out the details.<br><br>More about the day: <a href=3D"https://www.goo=
+gle.com/url?q=3Dhttps://pveday.be&amp;source=3Dgmail&amp;ust=3D179276900141=
+8000&amp;sa=3DE">https://www.google.com/url?q=3Dhttps://pveday.be&amp;sourc=
+e=3Dgmail&amp;ust=3D1792769001418000&amp;sa=3DE</a><br><br>Greetings,<br>Ja=
+sper<br>--<br>Jasper Nuyens<br>Managing Director, Linux Belgium<br><a href=
+=3D"https://www.google.com/url?q=3Dhttp://www.linuxbe.com&amp;source=3Dgmai=
+l&amp;ust=3D1792769001418000&amp;sa=3DE">https://www.google.com/url?q=3Dhtt=
+p://www.linuxbe.com&amp;source=3Dgmail&amp;ust=3D1792769001418000&amp;sa=3D=
+E</a><br>Phone: +32 (0)2 747 47 01<br>Mobile: +32 (0)478 978967<br></div></=
+body></html>
+
+--000000000000b3295b065e6f7175--
 
