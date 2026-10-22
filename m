@@ -1,150 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D316606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 20:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DF2606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 20:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=C+OLEM8+;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=K12t83AY
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=UwM02Btt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJzZy-0005La-Ds; Thu, 22 Oct 2026 16:40:02 -0400
+	id 1xJzce-0006NV-Tm; Thu, 22 Oct 2026 16:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJzZw-0005Kd-RQ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:40:00 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xJzZv-0000Bn-1c
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:40:00 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MIHHh24086712
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 20:39:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 418+7rgblxZ++HlKyQ4KqsYEuCx+LH3dgU1jTmP44pM=; b=C+OLEM8+B8cGJ+3z
- 06DHycHPDVU1CpHVnacJ0bBOuhWNUcXFNMHGWzL9jAk+rgLbtghzat+IBIMAcMh+
- SPs2XSffLzBQJ84l43spM2nq6SpJgsQ6LRi9tJhjK223zpFRAO4r0krVijak6v5v
- qrq+K7TVPU0/imk4BLk+1E0/4GassQLZqfiBdrl7wObNkcN7jzZwXd45TgriHDTC
- OI5u5ii4pbtZ8yqimr7BBjDniSR5e6UfYFxOP0/KWyNcrmi7HBSO6+rEx9P4Et2O
- ulqQbUzx/Z5bT8h6EwXKOBG0mlrjOmu5Sj/YIgyCT3nd3BcWSJoknAMY5s/TvYpt
- iEzXkg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmtrfjm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 20:39:55 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5363fa3d3e4so3072271cf.0
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 13:39:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJzcO-0006M5-Ee
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:42:32 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJzcK-0000bd-Hv
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 16:42:31 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-48e1d0e5dafso950735f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 13:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792701595; x=1793306395; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=418+7rgblxZ++HlKyQ4KqsYEuCx+LH3dgU1jTmP44pM=;
- b=K12t83AYFywYT/9Wogyp066tGS3ocx1O275Dm99mXr1JTlP+HV9wCtS2xytfyHANpM
- 5Bmdr139kDfGQVgb91/9rVIKsOsM5TGD8L5gZgMkBzpl0V9pANcKbW/qQOWI3fkJGOIq
- oRHU2B1o76UK1sfG12fqauwrUpQ8uSwjrlX3BahI5HTDgdYxgMZs5PRcaGxmkYJ94wn1
- CLUqJVP9ESs5gB/0nmSVROsWWVaCm4pskZixnWOrLKrLqhnYIs4q3LSK7Mt3z2jdEawp
- Pk1pv9gwH+npaeHqngFFr/fWazgvY4pO6S7AEC6bAQNeALDNv8Afb+Nai1aQQaz3cW+S
- vVFw==
+ d=linaro.org; s=google; t=1792701747; x=1793306547; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0Tp7VwhFvHAsi8dSi+irjPRdwFI/zuGh/S5ZsAhoA2k=;
+ b=UwM02Btt8q0w+jP0azmMPxGHr0cT9GpEoz/MaxuG2P30YICuPdRyc/qfSunLB3/1fF
+ 7pa+phmOQhyP+Kib0Ai7WBChzhh/yAfkwr7NWr11f5++E0Ge8RTJdbw4jnxdfTRE00+c
+ xN+M53pir2f5f3udxFZKrYG4wdHZTYARSVJXNH5PvVSq1LjFQ4EgdYT7cSai9FwUYW9Q
+ MTW+QG5+QRKTOM8MzIs2wHfHSponZmhGLr7fizM1KjYp7vmkEc6mn2LjIHKrBfw6FXLK
+ sG1jIzvUs3P1jEx1CCFZ367a2Atdw+szU6xwM/qqnA8d/NWgklKhYVP/W7IM9F06SjNX
+ TQQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792701595; x=1793306395;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792701747; x=1793306547;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=418+7rgblxZ++HlKyQ4KqsYEuCx+LH3dgU1jTmP44pM=;
- b=OhLw4yULmkaBCj+PKhrLUnpqXGYlgejE8at2wsicMI88N66I8iCljBJMuqXRXVaBm6
- UlSJ49XC4CZeguAyYfZh+7siCqm+/CIJizrxIp+bk6TKQhDc7XolNk4OCqhyfnEzgi55
- eePv9W3ELgbovkeGSgRxSWPaAbwdMGsNnnwSgUxgb6fsXeIEh00CODppYU07wdDot/Mm
- /5SOWYmbDwnKpOejjhlUeutYYfc7rY6zsc0L1thpWwwZSZYKa+SBfCr/UND10IhM2d0Z
- Ygpd2j3o0icwxbQUTBit5qjwDdIsOJsYs3Es/w0x73NitOc3fa8O2QzkqicJPOpobXby
- kL7g==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx+Cl0Xe8JjToUwD34xuMOqxnLJLrETBloL0hhvs2mHaJpqJTkJvrPaY65WhKqbeMAx1vUIT05+kj8C@nongnu.org
-X-Gm-Message-State: AFq9FYLxmVQPNRGb2YH9u6ES0fb7L6YpgOUlupI946jxz+lQJze3NABT
- F2TXj79almkPLroQ/MxyQveWLyR04Szf3nfyVOpZmEw86hr1Yt3tNToi3llG5bW6HlbYpF/YzZ2
- GhUyz3bBx11+xoy4529ciXdDAxe/kYH2OH1aszFYuoHPU7QOLzzekrcuudg==
-X-Gm-Gg: AYBFou2AjVVv2CPcdAEK8R2oWlomnW4tljgRQCNx+KGHUeSWBZ84hxsay1Mpaa2hWC6
- kZ/IB4ijbbUJL4KANB0TtiKr71Z9YPlf6fMpPp9z1XwIPgU60vKbM/7vILL28Dpl18Qk2l5rJyz
- VjfU/iRLO74JDD5EBC3P/aVsJ7apjkQW0e18aLSp18gZTggaWGNA9BaZdTQe/GyoKS1WuenA3ox
- qIsN90k6z7ZcLUTPXCJhwR8AuAbEui5CrQLKMmOd69nnNt9DPNJdBYF9saUsqmLSr3MCi+7t2op
- MANK+v4kWQp53nLXgAIlORHfOStDwgTy5bOdl0FtB9Vyk0QvnoIuvj8m/1cgeAYHw/vJSiwx1KT
- 8Yj20FOmFbRB7ra//uuvrhi0r4pXKg7K3s+mG
-X-Received: by 2002:a05:622a:22a2:b0:536:98da:f790 with SMTP id
- d75a77b69052e-536c2695f53mr726891cf.6.1792701594719; 
- Thu, 22 Oct 2026 13:39:54 -0700 (PDT)
-X-Received: by 2002:a05:622a:22a2:b0:536:98da:f790 with SMTP id
- d75a77b69052e-536c2695f53mr726451cf.6.1792701594096; 
- Thu, 22 Oct 2026 13:39:54 -0700 (PDT)
-Received: from [192.168.68.100] ([152.234.125.162])
+ bh=0Tp7VwhFvHAsi8dSi+irjPRdwFI/zuGh/S5ZsAhoA2k=;
+ b=sMrp5th9PTFC8v/Dc0QlNr2sp6VFqlkoE84t8I3q8P484UIGLoGSu9iluxK6g14hxG
+ zbeC7Iv2k8eunOkGYYRmQ9AqkwFMfg+tKes4eIGmXLIXULKEorZJLafka8BnO6Vn+Quv
+ MxL7Gtg8tdhlZuIscr85QqO+TdoL0Qs+stDFiX/CEJ4w1wvuWlWt994MXh6S1Rb2sBZJ
+ AujRvrhwH7/QMO7Epjqpq7QhMuYodcNKsCXpXZsIGeRcKYGG5SscHlmVM8H9ZbNl7+W4
+ aAbtSzgjP7YNfUXL9x/PpOQ3adxXxHH18dGmkDBSJRJMo8uSB0GlGLCUwV3WNDqFNliG
+ B2tg==
+X-Gm-Message-State: AFq9FYLIkQi0emBc8Tr7PW2ldN+97MKTSuTVCASHEEYSRdTjaXj2Lt1I
+ k9cPokfrCt1rZYUtDDDQ/s8/9V5KW3PrCYHvTa9IYwgsOPbMxm1LSUGM8tDaJGhFiUzW++/vIYM
+ aZxR+w9E=
+X-Gm-Gg: AYBFou39OFDha+p8dZoV4wfnbz0ku8wSEPqqDyqLvvAzU9mYhOiRS9OxgiWa7rQG5zb
+ k13YjJjLUhB/0VDgkwL5Mo16g+jOj4jho9qzHmURJg0FADNDkrq40kH4+Y2cSaS8OYw/nOPWfG0
+ 8w3Cq6LtNVMOAmC6UlGvcfCknYgVhrYF+Pa4OLd4gz2o301bVGbzjOgGgRCRl48VeQCFR4uDgCL
+ Xsaou1kasxpSWSJ/si7M/w0O+5i7W/JfD8LpfmKCoZz5wQNjC9Z1NB1vGTJZ2gYakVYcocI2nFu
+ PBm0yD8Gt2TNAXTgM8/Z+0Spy+lvHxBFgMGt8H72kseTPj0XGYjrqNPS0/dBy2ZOo1QT9SnlPNu
+ PraHgQJwng6tMiv1ybrHUqLgwcTRAGRn/V7WrAjGVOfO4DQ4LqstB0SVy1gbBjkJYPmPF6Axn31
+ DOA/VPYTmF0PuotZU+snNdHiiIxYxXV9BKeG6PB6AExXBry/zEV18JMaBBKjYjPve76m7rtiKoW
+ KB2kZA74aIUaMUcHYLfpe7wcAzAFRpj5hHRUxzOSlvHAosyW9Bv1OWTk45u+jpe2T8008gQXvSR
+ B9N3hCa4jHWDeqAPTlc1I5KYZp2KtaZg8tvuf4n6Js0qQpSOjCT7HIi9Fb68
+X-Received: by 2002:a05:600c:3b0a:b0:4a0:20b4:ba93 with SMTP id
+ 5b1f17b1804b1-4a211c869d9mr3433155e9.16.1792701746768; 
+ Thu, 22 Oct 2026 13:42:26 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-536c17b32cfsm1834291cf.6.2026.10.22.13.39.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Oct 2026 13:39:53 -0700 (PDT)
-Message-ID: <6cbd401e-54c5-4ef8-be97-900af8cc0764@oss.qualcomm.com>
-Date: Thu, 22 Oct 2026 17:39:49 -0300
+ ffacd0b85a97d-48e38053821sm326700f8f.41.2026.10.22.13.42.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Oct 2026 13:42:25 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+Subject: [PATCH] hw/intc/riscv_aplic: Check config value bounds in realize
+Date: Thu, 22 Oct 2026 21:42:23 +0100
+Message-ID: <20261022204223.854640-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use 1ULL for a value we're going to shift
- by 63
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-References: <20261022201037.764619-1-peter.maydell@linaro.org>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261022201037.764619-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Gt3XaU1C c=1 sm=1 tr=0 ts=6ada749b cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=AgQEunjic7gIBKSbIeB6Ag==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=ovYhUq7p_jiGD7MGxLgA:9
- a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: FpaTtnz1Q3-O28jhqvXldkyaiIOBy2ds
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA4MiBTYWx0ZWRfX9/O94G8pnQvJ
- qAIR85PyAzJrUwLHVP+OuoXT/tvTl9LqKQDTwfa6CjIQ0FhieBP6tchtgPFMoHFT+DuwUG7+GYO
- xnh0/feTefD4LHN+9fKJQME896jA/kLEQIpTcawNpQwTbnlUrRvX1I8l98hEj5jfGN6FvBmXfIZ
- VZpEaWUf5Gg39++mQEW1J098RmyAmg1zlxFn4mh1VMdK+cM47cSvyNCJeqqilXZZS3TRoTXz6fa
- QjlVITlHBFvm+OQHCOiozkOK/YWMw4xzW5364GzZaWwnEhTzurtPibed3UiGoRql2ooEVEYlFP9
- BfEt6GoAKwaQX0T5BaYD74+++NAFpyGKrDK2oZPGSdkKkvkFiKiIB2Z/0bnQpvSVOUQ8puvYoLu
- yrksrIVmHKVyITQEORoj8jOp8IfsJwThS5XENCuG3SHODyBomZmE/fXFuMVnBkFpL2QrizfKQjo
- V911tPajK0haaWiNOHg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA4MiBTYWx0ZWRfX9DxgKtOC1i/8
- uMNXEKG5B12JciJS90Ycw15PbEgAQ5DG2sxu/L/zSXolTS93gY6C6SPFKl+0gQ3EDhBlvT9xq7D
- QOiCkj8B5xxaU661ZxApGhlgAeS3wBk=
-X-Proofpoint-ORIG-GUID: FpaTtnz1Q3-O28jhqvXldkyaiIOBy2ds
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_06,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 phishscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610220082
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,51 +100,104 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+The riscv aplic interrupt controller has various configurable
+properties for things like num-harts and num-irqs, which have
+architectural upper limits.
 
+Currently these are checked in riscv_aplic_create(), by assert().
+QOM devices should check this kind of thing in their realize method,
+and fail realize for out of range values (which in this case will
+cause riscv_aplic_create() to make QEMU exit with an error, since it
+uses &error_fatal).  This isn't a problem currently as no SoC creates
+and configures the TYPE_RISCV_APLIC device itself, but it avoids one
+for the future.
 
-On 10/22/2026 5:10 PM, Peter Maydell wrote:
-> In prop_marchid_set() we set mxlen to either 32 or 64, and then
-> calculate
->   invalid_val = 1LL << (mxlen - 1);
-> 
-> which shifts the signed value 1LL up into its sign bit when mxlen is
-> 64, which Coverity complains about.
-> 
-> This is not UB for QEMU because we use -fwrapv, but it makes more
-> sense to use an explicitly unsigned 1ULL here when we clearly want to
-> be treating it as an unsigned value and the 'invalid_val' variable is
-> of type uint64_t.
-> 
-> Resolves: Coverity CID 1547552
-> Fixes: d6a427e2c0b24 ("target/riscv/cpu.c: restrict 'marchid' value")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
+Move the checks to the realize method. This requires slight
+adjustments in some cases because:
+ * property num-irqs is set to num_sources + 1
+ * property iprio-mask is set to (1U << iprio_bits) - 1
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I noticed this because Coverity complains about possible overflow in
+various places that e.g.  multiply
+  aplic->num_harts * APLIC_IDC_SIZE
+That can't overflow the 32x32 multiply because of the limit on
+num_harts. Moving the error checks won't make Coverity any
+better able to figure out the maximum range on num_harts etc,
+though, so I have marked CID 1487105, 1487113, 1487185, 1487208
+as false positives.
 
->   target/riscv/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 08a4d14ea1f..d47a69bea7d 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2298,7 +2298,7 @@ static void prop_marchid_set(Object *obj, Visitor *v, const char *name,
->           g_assert_not_reached();
->       }
->   
-> -    invalid_val = 1LL << (mxlen - 1);
-> +    invalid_val = 1ULL << (mxlen - 1);
->   
->       if (value == invalid_val) {
->           error_setg(errp, "Unable to set marchid with MSB (%u) bit set "
+NB that I have assumed that the existing code is correct in
+asserting "must be < APLIC_MAX_SOURCE" before adding 1, which is
+why the "assert(num_sources < APLIC_MAX_SOURCE)" becomes a check
+on num_irqs > APLIC_MAX_SOURCE and looks oddly different
+from the num_harts check.
+
+Caveat: tested with 'make check' and 'make check-functional' only.
+---
+ hw/intc/riscv_aplic.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
+
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 03a0852b8b8..b29a22a455a 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -954,6 +954,32 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
+     uint32_t i;
+     RISCVAPLICState *aplic = RISCV_APLIC(dev);
+ 
++    if (aplic->num_harts >= APLIC_MAX_IDC) {
++        error_setg(errp, "num-harts must be less than %d", (int)APLIC_MAX_IDC);
++        return;
++    }
++    if ((APLIC_IDC_BASE + (aplic->num_harts * APLIC_IDC_SIZE)) >
++        aplic->aperture_size) {
++        error_setg(errp, "aperture-size 0x%x too small for num-harts %d",
++                   aplic->aperture_size, aplic->num_harts);
++        return;
++    }
++    if (aplic->num_irqs > APLIC_MAX_SOURCE) {
++        error_setg(errp, "num-irqs must be less than or equal to %d",
++                   APLIC_MAX_SOURCE);
++        return;
++    }
++    if (!is_power_of_2(aplic->iprio_mask + 1)) {
++        error_setg(errp, "iprio-mask must have all lower bits set");
++        return;
++    }
++    if (aplic->iprio_mask < ((1U << APLIC_MIN_IPRIO_BITS) - 1) ||
++        aplic->iprio_mask > ((1U << APLIC_MAX_IPRIO_BITS) - 1)) {
++        error_setg(errp, "iprio-mask must specify between %d and %d bits of "
++                   "priority", APLIC_MIN_IPRIO_BITS, APLIC_MAX_IPRIO_BITS);
++        return;
++    }
++
+     if (riscv_use_emulated_aplic(aplic->msimode)) {
+         /* Create output IRQ lines for non-MSI mode */
+         if (!aplic->msimode) {
+@@ -1119,12 +1145,6 @@ DeviceState *riscv_aplic_create(MemoryRegion *container,
+     DeviceState *dev = qdev_new(TYPE_RISCV_APLIC);
+     uint32_t i;
+ 
+-    assert(num_harts < APLIC_MAX_IDC);
+-    assert((APLIC_IDC_BASE + (num_harts * APLIC_IDC_SIZE)) <= size);
+-    assert(num_sources < APLIC_MAX_SOURCE);
+-    assert(APLIC_MIN_IPRIO_BITS <= iprio_bits);
+-    assert(iprio_bits <= APLIC_MAX_IPRIO_BITS);
+-
+     qdev_prop_set_uint32(dev, "aperture-size", size);
+     qdev_prop_set_uint32(dev, "hartid-base", hartid_base);
+     qdev_prop_set_uint32(dev, "num-harts", num_harts);
+-- 
+2.43.0
 
 
