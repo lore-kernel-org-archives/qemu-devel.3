@@ -1,84 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E155606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DCB606A330
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=as8MVZhv
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=e31xPsVw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJt9p-00017O-MP; Thu, 22 Oct 2026 09:48:38 -0400
+	id 1xJt9i-0000vo-Oe; Thu, 22 Oct 2026 09:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xJt9R-0000SP-K4
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:48:18 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1xJt9L-0000Oa-So
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:48:11 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
- id 1xJt9L-00056T-0L
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:48:10 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a2001dd4e7so20120825e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 06:48:02 -0700 (PDT)
+ id 1xJt9H-00055y-6x
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 09:48:05 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-487049569b6so1298765f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 06:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792676881; x=1793281681; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=uCO4jWd/GCl+BQESy4pd/ThUis2N7ZU3bVWGeRHDfMM=;
- b=as8MVZhvsA4ddgBGhW/aocwesRrfK8ZkW9hvl2xNWt7Or4mmKfVAtIL3Vzj+qR7EPG
- f9HP80eAi86lqr+d0HDzftf2wgPvBa19JlnVsT/2Z+kiItZetVBy4tDX8A96BzoWvjbd
- 7EsV6TNLN9nqv9egn2sSahkuwmEwmlv4ABQ55si/uaviWg7BmchZx0ykoQ+P7sqJ/kuP
- IYyIVvrCPw+X4SVV8OSDYB7gvpW49D1k+SOLcJ12Spj88aT7s2vVRXLt0HgpghbB0VbL
- VQJ1h5j5Vwhn74QcQo5WAnxWGRM16eXtqvAKjkMJ/FpF/hIx+82guEef973s5ubjRRJk
- vdKQ==
+ d=gmail.com; s=20251104; t=1792676879; x=1793281679; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=GVmZoNLcFfTiEWCamJcIcPOg4eqdrXf1kgXuTnB5c1c=;
+ b=e31xPsVwZZD3HEu0N+YqylYAB8CRW+JEid4PIsTEdXnp1r+N4X6MrG3JWIdHJWEFtc
+ YXN36+GaIaRSabAk16e58HaHicTorlM5R2XxqpW4p53HHD6bLTTka1lz1ztpn9d1byqg
+ th0mw5gOdTDKhFIf7GTgLD4VIcenugjmXnuA789pPX6s72wpEDINIrAHtVyvEXFp/d/q
+ fXF6VflBJov2uViBsnZx/H6xC2OW7hw6Z/YjDV2lo1PPwyz/AKdUExSInEQyse0s0wGE
+ C/vw+VeIx/IeQ+/om1ZmYF3EY7vAVTmU2cjv/OQPUu8BoCcuA8COuQfqkpLAND+Q+1KY
+ 5yPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792676881; x=1793281681;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=uCO4jWd/GCl+BQESy4pd/ThUis2N7ZU3bVWGeRHDfMM=;
- b=hsSC6swnBOZ449zO9QfxhOi63aNn1qd25g03SosInlrsj11MBK01o6LfXIwfcxHlKH
- Lf0fwcPeRxNQUmNHfdGtp6i/svLBRaNPdhC6+PJQ82wix+JeE6jF411vP0JOc4jjyLMf
- 7+Ym1We8ctoBCCpeWLm+JF9inDdcn6Mm9iWi/fqO5oog19s46EbaoZi1fKc6p91u8+R2
- SY8Tx9ryA+7MwIc8f/x9fPTuLZ6xTsgeBUodOg0XHPfkUOfUXL1v9ToFsNV93r/dhVJc
- soGv8yAtwBpSJ7ywJEsppPWRQn5m/DnGFWERdtM+74t/oA5auD2hpqNTx8XllbTHOZXB
- 6kxA==
-X-Gm-Message-State: AFq9FYLctJCCQS1cQadox2SvdjYPq9iUNMYwPSpHLWY1OrcszTk0o3ET
- 1OYSNus89j3Z+a2VjDf6Ti48st6ad8O9BHcM3woqgES9kNH6BhN7GkHU
-X-Gm-Gg: AYBFou3Zx0LICmE8yVNVEUXdptAEky+x3ete9DH/+9bhAwDOmQy8wba+fdFHSLHKd6P
- Nwg11BI9Nve+g7Mn36r6bhc/Kb9xmzBO4pKDH+0Bp51cyfZlpuJKG8pPVQvTK/xU9rH1jFndPrV
- pdlyhf7RMEpmzTbAGRfhyPuhj4Fmkblb2kqDijeB8CRCu3ZHJtEmh1GsPn6nkONANZSJbTYoDob
- qZRYAqZqMz7vk7xQrERbWnZ+gcYcLIxfIWXmRh2fZNUNcDWyvbwhEGxOAaWDyYgS3rAkcnzdc6U
- BS3c2ZfTyYTq8743gXA7Yzg2e/9pkQ/0Pv9FnocNx1Uhw1tzGUaQUbAuBhquWWsR3JOp2l0KQOd
- 4CC03aKjgiL/OTcWIobob/BlEKHhcgpGevsxPX7h+QwT+kPgR+pGNt4xaG4dHIwDTgI/FaNZO0t
- 9Ni6TYsuxvoJFZw6SWC96t324XdSl2tCUdKtvaDR7WuYa7LljogtabYflUNdElvadJz5MrtItvM
- zXxISWgDpZcpCaSQUhj0KEjKnaGgRSfsrEB3DGDTkPBRHAIoxcotZpLkZrypUHXHvU+jGqVDlR4
- NY9nRRTYc9HjJNFaggQQgrcDN4jnLyl7ZdUTPcWbWVbCqrLw3GXPQceZBP9ZSiEbpdTkt1SBLkJ
- KEh3LOxZgFw==
-X-Received: by 2002:a05:6000:2612:b0:48e:7fb:aed3 with SMTP id
- ffacd0b85a97d-48e264a5a5bmr11307183f8f.17.1792676881121; 
- Thu, 22 Oct 2026 06:48:01 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792676879; x=1793281679;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=GVmZoNLcFfTiEWCamJcIcPOg4eqdrXf1kgXuTnB5c1c=;
+ b=GzEM5gMqqNb9g2eueN7EhPFADMh7uTstSjTa/LlMzD1axPpj282yHkPhlbSjjrvrcn
+ iXdVIUrAQSLsrhg0D2rezh4Wi5uIJWjXxEkL9Rai2B+IGqRbeVXqgmWg8iyWKG3ZhTka
+ jjOcpqo7ez1G+cYbqkNh3GOC5UqGdH2fGaL7vgoI8guvLc2lldg9rJwKVz0Pq44v5jSp
+ vBVOQCr4AAf3vbwyZKsAe5QpjONFvn5fYPDtR1q1HNbx5a8rF4Ygdg0Q/4G7H4bSgsvP
+ TLBM4TJqIs245hyzPBa+V0fNQXcp4DIzoqkgE1/feeiSfLx3FNItivQE6YNzn6mxxVyN
+ N2dg==
+X-Gm-Message-State: AFq9FYJr9d6qIJz/jtiRaWgq8l+dThXDVvr7pfm7cYUnEGMyIjpOjXBl
+ fyIVZvtvYbGNM+m3VlF+MfdQmXcmGxFL+/S0W/tNFmnTawDsXCVBz+bs
+X-Gm-Gg: AYBFou27BphTcsEHT0eheQgdjKO5IfwbBhXJgJdIu9s/Y0GT8lHd6Na+LjUJ8Ozf1RQ
+ 1oXof7IogbDuZtaX7G+UKOnp9wk4277L/2NekdeWu/hmlm205YWFiZVBe+DGbL0AAY5oHmATfid
+ ogIwT3mM//B56baCCcGd5TWZpdVOigoaMxmktLfYd/QcmHdHrGWgZTGQa7lrtWDeMWzTR1yKCZb
+ wepL64AGHpwHl15EaVBiSsbIqWjiP7r7paJYzir+XgrjtXwVh0TAT8lWdlnpQyeDeNwK2ver1og
+ ZsvJZaWxQnLdNGQYgof4OFHsUaNXemupdAaRRKG4KLC8cC4TeEvDKQUbtDs9XIRLS9f6IGx9hTB
+ TJgv/4GN5KUzlHXPo9/8bNwr6uu/2yzAi5x3iwo+DWe6LZ1D8jOJlyIMFgozirctEx4gnqnrCFs
+ SA8YnKKX3CwytO2CFbT9X7395uSSYZXwm5/aibLYKbdmt2bl8uxRQcVQ6p2XLWBSqE1y73nb+JI
+ 0EE139Uz+fq4T8WA/0C1o+3Cd07CTAnV+beJ7XL5kulxowB+CdazuBT06GwC0wv4WAfmaWILvmg
+ FZHnm6YP7YQ+0Q17I88pXMYC32ZH4YYwxLOh4yP9mMBbPOXo5e1B8xJs1oxby/mpXT1nBu3JWtk
+ 3az35U33NYg==
+X-Received: by 2002:a5d:5f55:0:b0:48c:5304:5e50 with SMTP id
+ ffacd0b85a97d-48e263ad234mr11993726f8f.0.1792676878768; 
+ Thu, 22 Oct 2026 06:47:58 -0700 (PDT)
 Received: from tim-m2.local
  (dynamic-2a02-3100-5a78-7100-00df-217a-667a-8b0a.310.pool.telefonica.de.
  [2a02:3100:5a78:7100:df:217a:667a:8b0a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e254ef1bfsm13120414f8f.6.2026.10.22.06.47.59
+ ffacd0b85a97d-48e254ef1bfsm13120414f8f.6.2026.10.22.06.47.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 06:48:00 -0700 (PDT)
+ Thu, 22 Oct 2026 06:47:57 -0700 (PDT)
 From: Tim Pambor <timpambor@gmail.com>
-Date: Thu, 22 Oct 2026 15:47:23 +0200
-Subject: [PATCH 2/8] libvhost-user: self-kick through a library-owned notifier
+Subject: [PATCH 0/8] vhost-user: another try at supporting any POSIX system
+Date: Thu, 22 Oct 2026 15:47:21 +0200
+Message-Id: <20261022-vhost-user-posix-v1-0-0bd4d450d23c@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261022-vhost-user-posix-v1-2-0bd4d450d23c@gmail.com>
-References: <20261022-vhost-user-posix-v1-0-0bd4d450d23c@gmail.com>
-In-Reply-To: <20261022-vhost-user-posix-v1-0-0bd4d450d23c@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBBA0avIrE3SNqGpq4hFMRgLlQ4iEXdXL
+ N/i/wuEIpNAlV0Q6WDhsCToPINu8stIyH0yGGVKrYzBYwqy4Z4yXIPwiWRb55z3ttA9pGyNNPD
+ 5Levmt+ztTN32fuC+Hyte5Rh0AAAA
+X-Change-ID: 20261022-vhost-user-posix-e7b999aa751d
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  Stefano Garzarella <sgarzare@redhat.com>, 
@@ -88,17 +89,19 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowangio@gmail.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-block@nongnu.org, 
  Raphael Norwitz <rnorwitz@nvidia.com>, Brad Smith <brad@comstyle.com>, 
- Tim Pambor <timpambor@gmail.com>
+ Tim Pambor <timpambor@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ David Hildenbrand <david@kernel.org>
 X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=timpambor@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=timpambor@gmail.com; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,282 +113,76 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-19.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When a ring is started, it may already hold requests: ones the driver
-queued while the back-end was away and ones the previous instance left
-in flight. The spec says front-ends SHOULD send a kick after
-SET_VRING_KICK and back-ends SHOULD NOT rely on it, so libvhost-user
-kicks itself by writing to the kick fd it has received from the
-front-end. With an eventfd that fd is writable, but when pipes are used
-it is the read end and the write fails.
+This series continues the work started by Stefano [1] to add support
+for any POSIX system to vhost-user.
 
-Replace it with a notifier the library owns. vu_init() creates it, the
-embedder watches its read end through set_watch() like a kick fd, and
-the library writes it when a started ring has available entries or
-in-flight requests to resubmit. The watch callback drains it and runs
-the handler of every queue flagged kick_pending. This way the handler
-still runs from the event loop after the reply to SET_VRING_KICK has
-gone out, as with the kick-fd self-kick.
+Three patches from his original series were never applied due to failing
+tests [2]. I was able to reproduce these test failures on current master.
+
+Patch 4 contains a fix for this problem. Patches 1-3 fix further issues I
+identified on macOS. Patches 5-7 are the three unmodified patches from
+Stefano's patch series. Patch 8 contains another bugfix I came across
+while testing.
+
+I have tested this patch series on Ubuntu 24.04, macOS 15, FreeBSD 14.2
+and OpenBSD 7.7. On all platforms the tests are now passing. In addition,
+on these platforms I have tested successfully booting a Fedora image with
+
+  qemu-storage-daemon \
+    --blockdev file,filename=Fedora-Cloud-Base-Generic-44-1.7.x86_64.qcow2,node-name=file \
+    --blockdev qcow2,file=file,node-name=qcow2 \
+    --export vhost-user-blk,addr.type=unix,addr.path=/tmp/vhost.socket,id=vub,num-queues=1,node-name=qcow2,writable=on
+
+  qemu-system-x86_64 -smp 2 -M q35,memory-backend=mem \
+    -object memory-backend-shm,id=mem,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+Full CI run: https://gitlab.com/tpambor/qemu/-/pipelines/2974109193
+
+[1] https://lore.kernel.org/all/20240618100043.144657-1-sgarzare@redhat.com/
+[2] https://lore.kernel.org/all/suvpzkb3ppdodjdyo5zcpngz5mwrrlq3nfowemh4tqjghbc4si@hzrsr23fganv/
 
 Signed-off-by: Tim Pambor <timpambor@gmail.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 145 +++++++++++++++++++++++++++---
- subprojects/libvhost-user/libvhost-user.h |  10 +++
- 2 files changed, 141 insertions(+), 14 deletions(-)
+Stefano Garzarella (3):
+      vhost-user: enable frontends on any POSIX system
+      libvhost-user: enable it on any POSIX system
+      contrib/vhost-user-blk: enable it on any POSIX system
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 2fed792e85..e323e32cab 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -23,6 +23,7 @@
- #include <unistd.h>
- #include <stdarg.h>
- #include <errno.h>
-+#include <fcntl.h>
- #include <string.h>
- #include <assert.h>
- #include <inttypes.h>
-@@ -40,7 +41,6 @@
- 
- #if defined(__linux__)
- #include <sys/syscall.h>
--#include <fcntl.h>
- #include <sys/ioctl.h>
- #include <linux/vhost.h>
- #include <sys/vfs.h>
-@@ -1305,6 +1305,7 @@ vu_get_vring_base_exec(VuDev *dev, VhostUserMsg *vmsg)
-     vmsg->size = sizeof(vmsg->payload.state);
- 
-     dev->vq[index].started = false;
-+    dev->vq[index].kick_pending = false;
-     if (dev->iface->queue_set_started) {
-         dev->iface->queue_set_started(dev, index, false);
-     }
-@@ -1440,6 +1441,121 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
-     return 0;
- }
- 
-+static bool
-+vu_self_kick_init(VuDev *dev)
-+{
-+#ifdef CONFIG_EVENTFD
-+    int fd = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
-+
-+    if (fd < 0) {
-+        return false;
-+    }
-+
-+    dev->self_kick_rfd = dev->self_kick_wfd = fd;
-+#else
-+    int fds[2];
-+    int i;
-+
-+    if (pipe(fds) < 0) {
-+        return false;
-+    }
-+
-+    for (i = 0; i < 2; i++) {
-+        int flags = fcntl(fds[i], F_GETFL);
-+
-+        if (flags < 0 ||
-+            fcntl(fds[i], F_SETFL, flags | O_NONBLOCK) < 0 ||
-+            fcntl(fds[i], F_SETFD, FD_CLOEXEC) < 0) {
-+            close(fds[0]);
-+            close(fds[1]);
-+            return false;
-+        }
-+    }
-+
-+    dev->self_kick_rfd = fds[0];
-+    dev->self_kick_wfd = fds[1];
-+#endif
-+
-+    return true;
-+}
-+
-+static void
-+vu_self_kick_deinit(VuDev *dev)
-+{
-+    if (dev->self_kick_watched) {
-+        dev->remove_watch(dev, dev->self_kick_rfd);
-+        dev->self_kick_watched = false;
-+    }
-+
-+    if (dev->self_kick_wfd != -1 && dev->self_kick_wfd != dev->self_kick_rfd) {
-+        close(dev->self_kick_wfd);
-+    }
-+
-+    if (dev->self_kick_rfd != -1) {
-+        close(dev->self_kick_rfd);
-+    }
-+
-+    dev->self_kick_rfd = dev->self_kick_wfd = -1;
-+}
-+
-+static void
-+vu_self_kick_cb(VuDev *dev, int condition, void *data)
-+{
-+    eventfd_t value;
-+    unsigned int i;
-+
-+    while (eventfd_read(dev->self_kick_rfd, &value) == 0) {
-+        continue;
-+    }
-+
-+    for (i = 0; i < dev->max_queues; i++) {
-+        VuVirtq *vq = &dev->vq[i];
-+
-+        if (!vq->kick_pending) {
-+            continue;
-+        }
-+        vq->kick_pending = false;
-+
-+        DPRINT("Running handler for pending requests on vq: %u\n", i);
-+        if (vq->handler) {
-+            vq->handler(dev, i);
-+        }
-+    }
-+}
-+
-+static void
-+vu_schedule_pending_requests(VuDev *dev, int index)
-+{
-+    VuVirtq *vq = &dev->vq[index];
-+    int ret;
-+
-+    if (!vq->handler) {
-+        return;
-+    }
-+
-+    if (vq->resubmit_num == 0 && vu_queue_empty(dev, vq)) {
-+        return;
-+    }
-+
-+    DPRINT("Scheduling pending requests on vq: %d (resubmit: %d)\n",
-+           index, vq->resubmit_num);
-+    vq->kick_pending = true;
-+
-+    if (!dev->self_kick_watched) {
-+        dev->set_watch(dev, dev->self_kick_rfd, VU_WATCH_IN,
-+                       vu_self_kick_cb, NULL);
-+        dev->self_kick_watched = true;
-+    }
-+
-+    ret = eventfd_write(dev->self_kick_wfd, 1);
-+
-+    /* EAGAIN: the notifier is already pending, which is all we need */
-+    if (ret < 0 && errno != EAGAIN) {
-+        vu_panic(dev, "Failed to kick ourselves for vq: %d: %s\n",
-+                 index, strerror(errno));
-+    }
-+}
-+
- static bool
- vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
- {
-@@ -1478,19 +1594,7 @@ vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
-         vu_panic(dev, "Failed to check inflights for vq: %d\n", index);
-     }
- 
--    /* Inject a kick to look for available vq buffers */
--    if (dev->vq[index].kick_fd != -1) {
--        int ret;
--
--        do {
--            ret = eventfd_write(dev->vq[index].kick_fd, 1);
--        } while (ret != 0 && errno == EINTR);
--
--        if (ret != 0 && errno != EAGAIN /* already readable */) {
--            vu_panic(dev, "Failed to inject kick during SET_VRING_KICK "
--                     "on vq: %d with error: %m\n", index);
--        }
--    }
-+    vu_schedule_pending_requests(dev, index);
- 
-     return false;
- }
-@@ -1509,6 +1613,10 @@ void vu_set_queue_handler(VuDev *dev, VuVirtq *vq,
-             dev->remove_watch(dev, vq->kick_fd);
-         }
-     }
-+
-+    if (handler && vq->started) {
-+        vu_schedule_pending_requests(dev, qidx);
-+    }
- }
- 
- bool vu_set_queue_host_notifier(VuDev *dev, VuVirtq *vq, int fd,
-@@ -2379,6 +2487,7 @@ vu_deinit(VuDev *dev)
-     }
- 
-     vu_close_log(dev);
-+    vu_self_kick_deinit(dev);
-     if (dev->backend_fd != -1) {
-         close(dev->backend_fd);
-         dev->backend_fd = -1;
-@@ -2426,10 +2535,17 @@ vu_init(VuDev *dev,
-     pthread_mutex_init(&dev->backend_mutex, NULL);
-     dev->backend_fd = -1;
-     dev->max_queues = max_queues;
-+    dev->self_kick_rfd = dev->self_kick_wfd = -1;
-+
-+    if (!vu_self_kick_init(dev)) {
-+        DPRINT("%s: failed to create the self-kick notifier\n", __func__);
-+        return false;
-+    }
- 
-     dev->regions = malloc(VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regions[0]));
-     if (!dev->regions) {
-         DPRINT("%s: failed to malloc mem regions\n", __func__);
-+        vu_self_kick_deinit(dev);
-         return false;
-     }
- 
-@@ -2438,6 +2554,7 @@ vu_init(VuDev *dev,
-         DPRINT("%s: failed to malloc virtqueues\n", __func__);
-         free(dev->regions);
-         dev->regions = NULL;
-+        vu_self_kick_deinit(dev);
-         return false;
-     }
- 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index a534d70771..ddd5cbb90e 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -392,6 +392,7 @@ typedef struct VuVirtq {
-     int err_fd;
-     unsigned int enable;
-     bool started;
-+    bool kick_pending;
- 
-     /* Guest addresses of our ring */
-     struct vhost_vring_addr vra;
-@@ -471,6 +472,15 @@ struct VuDev {
-     /* Postcopy data */
-     int postcopy_ufd;
-     bool postcopy_listening;
-+
-+    /*
-+     * Notifier owned by the library, used to run queue handlers from the
-+     * event loop when a ring is started with requests already pending.
-+     * Either the same eventfd on both sides or the two ends of a pipe.
-+     */
-+    int self_kick_rfd;
-+    int self_kick_wfd;
-+    bool self_kick_watched;
- };
- 
- typedef struct VuVirtqElement {
+Tim Pambor (5):
+      vhost-user: kick via event_notifier_set()
+      libvhost-user: self-kick through a library-owned notifier
+      io/channel-socket: only clear O_NONBLOCK on received fds if set
+      chardev/char-socket: detect peer close portably
+      libvhost-user: detect memfd support with a link test
 
--- 
-2.55.0
+ chardev/char-socket.c                     |  78 ++++++++---
+ contrib/vhost-user-blk/vhost-user-blk.c   |  14 ++
+ hw/block/Kconfig                          |   2 +-
+ hw/net/vhost_net.c                        |   6 +
+ hw/virtio/vhost-user.c                    |  11 +-
+ io/channel-socket.c                       |  19 ++-
+ meson.build                               |   5 +-
+ subprojects/libvhost-user/libvhost-user.c | 219 ++++++++++++++++++++++++++----
+ subprojects/libvhost-user/libvhost-user.h |  12 +-
+ subprojects/libvhost-user/meson.build     |  11 +-
+ util/meson.build                          |   4 +-
+ 11 files changed, 319 insertions(+), 62 deletions(-)
+---
+base-commit: a19f59a72d96056d9a8f48cf6c77f5787491e414
+change-id: 20261022-vhost-user-posix-e7b999aa751d
+
+Best regards,
+--  
+Tim Pambor <timpambor@gmail.com>
 
 
