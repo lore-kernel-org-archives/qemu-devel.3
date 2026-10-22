@@ -1,144 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0791606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 16:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14338606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 16:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=W30a5Qwn;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=K0DivtJp
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=OeFx0tq6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJvQg-0002Ua-Kk; Thu, 22 Oct 2026 12:14:10 -0400
+	id 1xJvnI-0005Tu-M9; Thu, 22 Oct 2026 12:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJvQb-0002UA-PX
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 12:14:06 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xJvQY-0004R1-JH
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 12:14:04 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69MEFVLi4098326
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:14:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Oe234m3H7AUF/8KNojv/NCKo4m391Sawp+2JdN8QgoE=; b=W30a5Qwn6qUAYoJm
- OVnROFUNY21sZA746/WWcIG19SjwG3/PXGJrL8Sd0ue4TkNvVLEIRkcz59mFFE/F
- KkVy+3sQVbGDWG7NNyMDKm3wf0jaJWft04n+Y/gRZNxCP1hrdXsejn/WDqT9LP0U
- fVKyaIgjNVCwrng1X0t7G9OPmnOCcXQug+va1vjSD79Mwfu04/WW7zlYR9/kdTVz
- IFST+4SKgJnkGDboAwmqg1M0VEKuVU+SrUsjSMzng/Ys0tpm85KS5wAGny7TrFCp
- G4On9DpYw/X/mYQquz5VBoN3NOcwnPg3kckXKxajqui8agc9h5AHoIRaM6K0hthJ
- AaW+Eg==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfewq3fue-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 16:13:59 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-7cc06b9cb33so5990137.0
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 09:13:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJvnB-0005T5-E7
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 12:37:25 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xJvn8-0006Sb-Hj
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 12:37:24 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-48c4649b35bso2017518f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 09:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792685639; x=1793290439; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Oe234m3H7AUF/8KNojv/NCKo4m391Sawp+2JdN8QgoE=;
- b=K0DivtJpZgoCDTzN1lD+XBZn1WrDazunqawRt88uTpoAJ/95IqjtMCx+gHkKKmpqC3
- Q/Jk4O3fKiIi9jbnH0EcpgkVbG5UjLimNVcrI7V0NQbxGXE29omfzME9dtjTJCR/vddf
- 9iO1RFAm17BXB315zIRYbOocfiEFXbUXKN35uKc8DUtZ7ugiWExIV/ZzaF/nIOLAXmeH
- iHpTsPLWjrjyZx53iqkhlCvYFGp6cLRK4Kd8+wnmggCVIIpOAycYpAbl4pATU7vbNm8L
- KLbNIS1YeJDAA3w832P3P4qo5psoMP82Qidzt7vSJDZQAcozCT9TKrdjc9D9Cg9IJ/df
- NAbg==
+ d=linaro.org; s=google; t=1792687041; x=1793291841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HxhAz6bVRmv4Wlodx9ldgv+FyhKQd5+fWXSBsqrB874=;
+ b=OeFx0tq6mufH5pcEEBvETeJCOoFfGUNpvp0XmHXR/x0EdyegYuZnumzP6leMyszsQV
+ HKTdlnApiv+nMLQT/SnP8tKz8LoeVEwMGJCCUFlYL8EIPAtYA9Jy8aKk4KEWzXf9FN/t
+ cLrmFgH8RHuB1VEUkA0O+UXu7qzKp5pKfuzC4XedCxF0p0ENWr333bX/AHh94uKT/O5D
+ 4AuxGdGr0wxxcwhCS/gDzOEhkMZvdZ8QL6IfwKjgBmbqqjs/c4pbIJRKJA77c6cgo6Lj
+ O92yZnoDC/syDhQFH+ei6a4O68C6UNE3wQ01kJrCtTJekcc4z5+/BQSmGz3oqdPm9XXY
+ NnjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792685639; x=1793290439;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20260707; t=1792687041; x=1793291841;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Oe234m3H7AUF/8KNojv/NCKo4m391Sawp+2JdN8QgoE=;
- b=Elvx+YLXvKLBsqK1+5Nd+YibmPLJ3st2WJf5GYxMaN4DB3mcGy7Prxhk2pHwxzipkh
- QBpMkmzEpInoofNsn54g7C3wDr+jo82fiTsXX77G3jiHa9HGJZgCMtNxxdXlbxF85orN
- ykaKt1f3+4e4ANUPB+7OjxwEHWQqfWVZTpU06uDKrVXXKuup6VKJ/D+LAvVyypyEdElk
- i2l1LSDuPzd3Z2RffgrwjnCzS73ljfKT8tWndL3nQ/C2NK1JRq8qBKf9jOylX0gQdCSz
- OPBFrUln5/QlWg4r8acXfS9dNjIfSv/xG3JhGv4pIGDvxyqRAkcmhUyv1wXX7K8/hvQR
- qShg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwJAAcSGTwBbW+5oFUekRnILdfqQVlWcuDv76BGUV5Q2jgZK6QIXqpapvpInpBqrwdRWcngrsam3xSL@nongnu.org
-X-Gm-Message-State: AFq9FYI1K+FLx+zVw17sD0SjBsOhVDeQHq4oCSAKf3pGVp9BYwsw+Ic5
- WojMhbh1+YB0jX2wwWamY0enfmodrheLM7kDiGyJ/WA0cuQkAmAjcaGZiy+ZCpVFRDTLmSGbbWw
- B7P2fZ+tLDYF2nTussNzOEXzvWGZW6N0WZ+1LZu6noeM81Qf0u5JJXXwqOg==
-X-Gm-Gg: AYBFou1toonD98lXPEnxeEH/eGof1kCSoj54D5U2SjMr+vR6kogR5MOcoz13SnBIcue
- F/M5uRrU3a5vtC6ZI5R3a68a7KGr4VuaUpYxHSIC6fCDMe98P6930PPJuiN0Q8uIZAlVtGYhM76
- u4jN3mGMQitUcXpQSAbsOOnA+lR4Lj/tCy5VBbzBOwa7HkEjbqXc6zKPRRDhQ50AO8EYKPzKm5E
- idOCiZZfSqKvzB7iRkEMQ52EJRc90vo+X0Ib7XEnx5ZALt207Vrc4HgzQkU7Z+sRJhWVgjEoaa6
- TNFKAhRVFLJF1Bx/dSgZ4WzjM6RtYKBNZRgzGE12B8xmn4uTynITYu8eap1A57AWTQ9QiTtzH6B
- 0pagda9KOCLCpOzFjqA==
-X-Received: by 2002:a05:6102:3fa8:b0:7c3:9a14:cfdb with SMTP id
- ada2fe7eead31-7cc926820ccmr2074789137.17.1792685639357; 
- Thu, 22 Oct 2026 09:13:59 -0700 (PDT)
-X-Received: by 2002:a05:6102:3fa8:b0:7c3:9a14:cfdb with SMTP id
- ada2fe7eead31-7cc926820ccmr2074781137.17.1792685638885; 
- Thu, 22 Oct 2026 09:13:58 -0700 (PDT)
-Received: from [192.168.1.121] ([176.167.83.12])
+ bh=HxhAz6bVRmv4Wlodx9ldgv+FyhKQd5+fWXSBsqrB874=;
+ b=2PYSbNDBDvw3QM2j/TEFbWMjARVrqPRuZi95zPA9SAk4Naiwqxd1DpUBHCZyfnoXS0
+ 6G6VF34BgCnpBJnj5Kf0d6ywjlnYu4H+9x9nKTkF+eaie9Me8LDY0t61/1dySZSMJgK6
+ U+AT5QvlwNCU35tSi6M/2uTG3+mdrUQoepgepx+SURO9HW4QiPSkRfjyAeb0xICqQH9G
+ 1Rd4qjxqFwL6993Zd6GDXx3xfUotsgGyysxD6C6o4KIAa4CdmtVG/IDKfF9bngjOGL7M
+ H1uxRCRyyjskylaYVPPfk7/pMA0Ty4wfdDVUyL0hJJthaYUkpj7Dk257UHAWhqwXqFrW
+ HVJQ==
+X-Gm-Message-State: AFq9FYIh+ngKpUhLeFXXFu8XpP9mq1rw2DZj5cmtV0eaD57f7vWkuRmI
+ p1Jvi6xhUGT1jFgJGzHyL17LQeS9OkjdJp5EyjmJuONQC3qR+OaYGUZGGDDj186Dh/7KKnI042T
+ DTawXExM=
+X-Gm-Gg: AYBFou1aJ61uaLZSbosm0W1tZAwvoV8glr27lvcjhc116zC2b+2CkZHI+8Xve/Ikocc
+ /LlYyz4IZafluwO7z0JjFl+ZAvQOWoieDvE4Ww/qGMP9zE/9jXfvXaZXC5/c0qQM3EdX+sBoiLu
+ Ju8b8B2ai/TdqA90qVPFrlLLMS+BCuGC9VmwI9gBewGZqnG3fb2pNEdVbQwDgyDRwA4LtbppzkW
+ 8tUgRWX/E56uK5Ce1tecLY/oDuNzcAkESnR7g2MrQM0VE1dyLXP6ajRpSqUwqOyMYkepK8XUgvL
+ UDT2ETt21VgZlBIuBtej/F4fM+yFqztflzjIV+F+fnYOH1fDYhI2adnEMORvq8fxtq8lnMiTXiZ
+ Yjfe5698A8YFC4nxMlfF28Xn1FNm5IpLL1bfDX6DmbiPyCx/8FDAe0LilMmOUbv4gmKtkwWkBZM
+ cUK3dZIKjWkszsB/SFs/+48Dw7+RyTdmtMV2H2ccnMcu4kh75vzW51ZACzPWw24161x1OLheZCz
+ JFVnL//9hCcwpVc2DX1LLGIRHx3g03iJDtldBdtCmXYXhmQf+jgPSIbVcomkGx4QTunYEn2roVd
+ RGjObhBeSyoi62MBVb7G+o4TbKHLwtecd+UwdrfQagXXF+zoY/FNBzrNM2y+tZrFGLPdRZ7T7Cx
+ eaM9z1A==
+X-Received: by 2002:a05:6000:41c7:b0:48c:a08:5858 with SMTP id
+ ffacd0b85a97d-48e26489aa9mr10826972f8f.23.1792687040625; 
+ Thu, 22 Oct 2026 09:37:20 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2102dba42sm6732775e9.6.2026.10.22.09.13.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Oct 2026 09:13:57 -0700 (PDT)
-Message-ID: <6f6d3064-94c8-45dd-b012-dcfd09ca9ad9@oss.qualcomm.com>
-Date: Thu, 22 Oct 2026 18:13:56 +0200
+ ffacd0b85a97d-48e254ef1casm10443116f8f.7.2026.10.22.09.37.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Oct 2026 09:37:19 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] linux-user: Use QemuSemaphore to wait for clone child thread
+Date: Thu, 22 Oct 2026 17:37:18 +0100
+Message-ID: <20261022163718.562442-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net/tap: Avoid "close(-1)" in net_init_tap() error path
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowangio@gmail.com>
-References: <20261022160426.451919-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261022160426.451919-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: o19maOKGXCz2x3c-TYFWdw2jm6rroR87
-X-Proofpoint-ORIG-GUID: o19maOKGXCz2x3c-TYFWdw2jm6rroR87
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIyMDA2NCBTYWx0ZWRfX8GOAVdk1B1pr
- emaaOr3i7Q1W/MSrarKSiadzRYgJy6elhgxPNyDyvZ1LW8EijdECurGrq0csJt6ClDRkyvaPdmd
- 6KVhZLbs8CXz3giBtakMFxVcpHSx1Po=
-X-Authority-Analysis: v=2.4 cv=G4OJgNk5 c=1 sm=1 tr=0 ts=6ada3647 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=8cDJgt8GFf4w86rseogMfw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Nym24-sG8xDkFaldbecA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=-aSRE8QhW-JAV6biHavz:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIyMDA2NCBTYWx0ZWRfX3ldaZqfCtPfx
- fZANXQ3LtEE9Nyk1Qw18RZQgbyUdJ+Z2klDjeQ/bOed/qUIK92fTZzPsxpI0Cy1BmxqHmth7Z6I
- 6qtSmFsNklKo4rFrAp1LNkH4tVxqc1iBiKeuxta5yoCPz21uGdwkOSNnKu01iXYkWWTwfFDt2rC
- tcr90aXX7J0nLIx1EMwcIThuSNI7CrEx7196CWcX7kB5JBd6c/9l8M5QKZd0kBlHkOfNSmHE7o2
- IqvM1HqLp75Nsh00Z22mZ3yQTCk0rKqSy6jdNp6NtIA4d2u2Oai6w/hQijRLvAp1CW/ubGO4DAc
- suITpO8Mn0SWMiB+kYM5hw7sBihpaeNmZGFeaJITVC/KxWYc+EkDRt6AhEo1Y2mpfWyedgRe9Pa
- UBWjKM+Cwsnqkkks3cv+p4iRNdwKlJqIrCB+b3gZl+iqit0cnhE2kGje0rEvDIqMZUf3AQE3/3P
- mt/OOmKvAAloFIibzhw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-22_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0
- impostorscore=0 adultscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610220064
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,27 +97,102 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 22/10/26 18:04, Peter Maydell wrote:
-> Coverity point out (CID 1660042, 1660052) that some error-exit paths
-> in net_init_tap() reach the "close(fd)" at the 'fail' label when 'fd'
-> still has its initial value of -1.  This isn't a valid fd, so while
-> close(-1) will fail and we are ignoring its return value anyway, we
-> should avoid it.  (Compare net_free_fds() which has "don't close -1"
-> logic in it.)
-> 
-> Resolves: Coverity CID 1660042, 1660052
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   net/tap.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+In do_fork() and clone_func() we currently use a pthread_mutex_t and
+a pthread_cond_t to allow the parent thread to wait until the child
+thread has started and e.g.  set fields like info->tid, before the
+parent reads those fields and otherwise proceeds.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Coverity points out that this use of a pthread condition variable
+isn't reliable: pthread_cond_wait() may wake up spuriously, so the
+idiom for "wait on a condition" should be "loop around calling
+pthread_cond_wait() until a predicate that was updated by the caller
+of pthread_cond_broadcast() is true".
+
+This is quite old code; rather than fixing up its use of raw pthread
+condition variables, we can use a QemuSemaphore.  This gives us the
+"thread A waits until thread B signals it" semantics we want.  (Under
+the hood it is implemented with a mutex and condition variable.)
+
+Cc: qemu-stable@nongnu.org
+Resolves: CID 1527417
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+cc stable because in theory this could result in the parent thread
+waking up too early and weird stuff happening; however my guess is
+that in practice with one waiter and one signaller that the
+"spurious wakeup" case won't happen. At any rate this code has
+been like this for a very long time.
+
+Disclaimer: tested with "make check" only, but that does include
+various linux-user tests that use multiple threads.
+---
+ linux-user/syscall.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 0380691a8b1..9d85a193efe 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6932,8 +6932,7 @@ static abi_long do_map_shadow_stack(CPUArchState *env, abi_ulong addr,
+ static pthread_mutex_t clone_lock = PTHREAD_MUTEX_INITIALIZER;
+ typedef struct {
+     CPUArchState *env;
+-    pthread_mutex_t mutex;
+-    pthread_cond_t cond;
++    QemuSemaphore sem;
+     pthread_t thread;
+     uint32_t tid;
+     abi_ulong child_tidptr;
+@@ -6964,9 +6963,7 @@ static void *clone_func(void *arg)
+     /* Enable signals.  */
+     sigprocmask(SIG_SETMASK, &info->sigmask, NULL);
+     /* Signal to the parent that we're ready.  */
+-    pthread_mutex_lock(&info->mutex);
+-    pthread_cond_broadcast(&info->cond);
+-    pthread_mutex_unlock(&info->mutex);
++    qemu_sem_post(&info->sem);
+     /* Wait until the parent has finished initializing the tls state.  */
+     pthread_mutex_lock(&clone_lock);
+     pthread_mutex_unlock(&clone_lock);
+@@ -7071,9 +7068,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         }
+ 
+         memset(&info, 0, sizeof(info));
+-        pthread_mutex_init(&info.mutex, NULL);
+-        pthread_mutex_lock(&info.mutex);
+-        pthread_cond_init(&info.cond, NULL);
++        qemu_sem_init(&info.sem, 0);
+         info.env = new_env;
+         if (flags & CLONE_CHILD_SETTID) {
+             info.child_tidptr = child_tidptr;
+@@ -7097,7 +7092,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+         pthread_attr_destroy(&attr);
+         if (ret == 0) {
+             /* Wait for the child to initialize.  */
+-            pthread_cond_wait(&info.cond, &info.mutex);
++            qemu_sem_wait(&info.sem);
+             ret = info.tid;
+         } else {
+             errno = ret;
+@@ -7111,9 +7106,7 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+ #endif
+             g_free(ts);
+         }
+-        pthread_mutex_unlock(&info.mutex);
+-        pthread_cond_destroy(&info.cond);
+-        pthread_mutex_destroy(&info.mutex);
++        qemu_sem_destroy(&info.sem);
+         pthread_mutex_unlock(&clone_lock);
+     } else {
+         /* if no CLONE_VM, we consider it is a fork */
+-- 
+2.43.0
+
 
