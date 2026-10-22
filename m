@@ -1,58 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F858606A31F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 19:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486C7606A32F
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 19:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=jxfJrBYs
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kLiDSy5N
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJydx-0005Ov-DI; Thu, 22 Oct 2026 15:40:05 -0400
+	id 1xJydv-0005MD-9E; Thu, 22 Oct 2026 15:40:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1xJyda-0005ER-Vm
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:45 -0400
+ id 1xJydZ-0005DY-4C
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:41 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1xJydX-0002bw-RJ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:41 -0400
+ id 1xJydV-0002eH-8v
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 15:39:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1792697980; x=1824233980;
+ t=1792697977; x=1824233977;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6ozjDoKM2TkI3/QhrSZp0dTUxzM2BodZ2aG3BUGrc+I=;
- b=jxfJrBYsHu2+OL9xI9w60OFiOiLK6hXcw0Tz18IY6SsJSJS3XniNi9nn
- EkZ9NpWI4dmupk4nMa+PEzIUbr6lGGfirkzCLL0KZTSyohVsqrfZkV9f8
- MtXqb38CbXDtyPDlxrEkHjOJGau7M+wX7iUrOdy8qifvJgkDCx2b81+Jf
- yI56+JP2NzwjMJkB+cFRewjgLvhmuistbrGXEWZrb5OHNIiWukxnrNjTf
- PmAAC8u7vo4RcLho3w5fyh78SnLKXt7cX/kAMf4SoVpoA0eOGOiddQnH6
- pJyXtT62Wz7G7B1cqcUbVj8ZzyEUQa35oUbFT7TvLjaEw+z1yUKwKZ2wl Q==;
-X-CSE-ConnectionGUID: i1Hpq2HEQ+WkQupOzLAUjA==
-X-CSE-MsgGUID: 10ljPvNwQFmw2CgJgeSZ8A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11943"; a="1563786"
+ bh=WqOWzvrW7tGRdboN2WFbumhemB3Ixj/nAYPc3HPjbnU=;
+ b=kLiDSy5NVZRRLvcc1Cxd2tALmrGGl/nrVIksqiD5KIuGcwQuLYAdWX5r
+ Ho765wWUImGK+asKu9YE9KbtnNvzbjALpq0OqSTSQnnJBgyXm4XwT+ocn
+ uYN/OzCY+bnadEju9l++GPp/2PULqOZxj3b+xRXG189eDENzlssHEXxNA
+ AK5RGeJm1tKMR6Fn870nPSyrTfJ/h5B5Yft9UIcnhO0nmNJv8rlrE6sEF
+ ib9JZdB7S3YexrtXPkKZ7aWuSbKSiC3pyex7Ly1bbGnZUUwk+OuoBX7D5
+ XtNuionyCRJItdULUs2ADjZCprJdiR8LyJA0Gl/T/LFH89Oz1In/jsOdS A==;
+X-CSE-ConnectionGUID: 87KNOmH/S3CUlpRc8ENs+g==
+X-CSE-MsgGUID: ehxdDa0+QbSiPi/mIQkGYg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11943"; a="1563784"
 X-IronPort-AV: E=Sophos;i="6.27,172,1787036400"; 
-   d="scan'208";a="1563786"
+   d="scan'208";a="1563784"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  22 Oct 2026 12:39:28 -0700
-X-CSE-ConnectionGUID: Y6t2PiYeRQ6YsQVOV1JXTg==
-X-CSE-MsgGUID: 2WxkIL38TPSgZRwQc2whxQ==
+X-CSE-ConnectionGUID: 5GPjs7vhSpWk6c79JdnFFg==
+X-CSE-MsgGUID: z1+FFpw+SeWhQi5nEaPTJQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,172,1787036400"; 
-   d="scan'208";a="3530580"
+   d="scan'208";a="3530579"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.80.113.172])
  by orviesa006.jf.intel.com with ESMTP; 22 Oct 2026 12:39:27 -0700
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com
-Subject: [PATCH v2 3/3] ui/gtk: Defer initial fullscreen activation until
- window is mapped
-Date: Thu, 22 Oct 2026 12:39:44 -0700
-Message-Id: <20261022193944.19266-4-dongwon.kim@intel.com>
+Subject: [PATCH 2/3] ui/gtk: Register "Grab Input" shortcut to accel_group
+Date: Thu, 22 Oct 2026 12:39:43 -0700
+Message-Id: <20261022193944.19266-3-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261022193944.19266-1-dongwon.kim@intel.com>
 References: <20261022193944.19266-1-dongwon.kim@intel.com>
@@ -89,65 +88,70 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-When QEMU is started with '-display gtk,full-screen=on', the fullscreen
-state is currently requested in gtk_display_init() before the window is
-realized or mapped by the display server.
+The "Grab Input" shortcut key currently fails to trigger when the
+window is in fullscreen mode because the menubar is hidden, which
+disables GtkAccelMap-based shortcuts associated with it.
 
-On certain compositors (such as GNOME/Mutter under Wayland or X11),
-requesting fullscreen on an unmapped window can be overridden or dropped
-when the window is subsequently mapped and assigned its initial windowed
-geometry constraints.
+To ensure the accelerator remains active in fullscreen, connect it
+directly to s->accel_group and explicitly set the hotkey display on
+the menu item label.
 
-Resolve this by deferring the initial fullscreen toggle until the
-window's "map-event" signal fires. Once the native surface is fully mapped
-and acknowledged by the compositor, activate the fullscreen action and
-disconnect the one-shot handler.
-
-v2: Use gd_is_full_screen for full_screen check in gd_window_map_event
+v2: gd_accel_grab_input returns TRUE
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- ui/gtk.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ ui/gtk.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/ui/gtk.c b/ui/gtk.c
-index 10db77414a..ff9d17015c 100644
+index 724ede5633..10db77414a 100644
 --- a/ui/gtk.c
 +++ b/ui/gtk.c
-@@ -2902,6 +2902,22 @@ static void gd_vc_free(void *p)
- static GtkDisplayState *gtk_display_state;
- static gboolean gtkinit;
+@@ -1971,6 +1971,14 @@ static void gd_menu_grab_input(GtkMenuItem *item, void *opaque)
+     }
+ }
  
-+static gboolean gd_window_map_event(GtkWidget *widget, GdkEvent *event, gpointer opaque)
++static gboolean gd_accel_grab_input(void *opaque)
 +{
 +    GtkDisplayState *s = opaque;
 +
-+    if (s->opts->has_full_screen &&
-+        s->opts->full_screen) {
-+        if (!gd_is_full_screen(widget)) {
-+            gtk_menu_item_activate(GTK_MENU_ITEM(s->full_screen_item));
-+        }
-+    }
-+
-+    /* Disconnect or ensure it runs only once at launch */
-+    g_signal_handlers_disconnect_by_func(widget, gd_window_map_event, s);
-+    return FALSE;
++    gtk_menu_item_activate(GTK_MENU_ITEM(s->grab_item));
++    return TRUE;
 +}
 +
- static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+ static void gd_change_page(GtkNotebook *nb, gpointer arg1, guint arg2,
+                            gpointer data)
  {
-     VirtualConsole *vc;
-@@ -3001,7 +3017,8 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+@@ -2684,6 +2692,7 @@ static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+ {
+     GtkWidget *view_menu;
+     GtkWidget *separator;
++    GtkWidget *child;
+     QemuConsole *con;
+     bool zoom_to_fit = false;
+     int vc, i;
+@@ -2742,12 +2751,16 @@ static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->grab_on_hover_item);
  
-     if (opts->has_full_screen &&
-         opts->full_screen) {
--        gtk_menu_item_activate(GTK_MENU_ITEM(s->full_screen_item));
-+        g_signal_connect(s->window, "map-event",
-+                         G_CALLBACK(gd_window_map_event), s);
-     }
-     if (opts->u.gtk.has_grab_on_hover &&
-         opts->u.gtk.grab_on_hover) {
+     s->grab_item = gtk_check_menu_item_new_with_mnemonic(_("_Grab Input"));
+-    gtk_menu_item_set_accel_path(GTK_MENU_ITEM(s->grab_item),
+-                                 "<QEMU>/View/Grab Input");
+-    gtk_accel_map_add_entry("<QEMU>/View/Grab Input", GDK_KEY_g,
+-                            HOTKEY_MODIFIERS);
+     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->grab_item);
+ 
++    gtk_accel_group_connect(s->accel_group, GDK_KEY_g, HOTKEY_MODIFIERS, 0,
++                            g_cclosure_new_swap(G_CALLBACK(gd_accel_grab_input),
++                                                s, NULL));
++    child = gtk_bin_get_child(GTK_BIN(s->grab_item));
++    if (GTK_IS_ACCEL_LABEL(child)) {
++        gtk_accel_label_set_accel(GTK_ACCEL_LABEL(child),
++                                  GDK_KEY_g, HOTKEY_MODIFIERS);
++    }
+     separator = gtk_separator_menu_item_new();
+     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), separator);
+ 
 -- 
 2.43.0
 
