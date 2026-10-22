@@ -1,58 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EFC606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F902606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 21:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=VGjM4ed5
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=UYDk4hej
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK09f-0005Fq-4d; Thu, 22 Oct 2026 17:16:55 -0400
+	id 1xK0Bs-0005hw-RM; Thu, 22 Oct 2026 17:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK09b-0005FZ-AC
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:16:51 -0400
+ id 1xK0Bq-0005hd-Pl
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:19:10 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK09Z-0003eG-O0
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:16:51 -0400
+ id 1xK0Bp-0003rG-8r
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 17:19:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=RNlI/5BSiFNC1JSfKEJ1tGPfvVG4uIFqHnls/K5rjBs=; b=VGjM4ed5oxysVUSEESsl/iyqvY
- aQftXD/8T8TEHnSJGAoMfK8iJwRbxruyRoJoHaUq4RSob/1bl+liGEa7eKj+AXXnraGTUUbpJiA7J
- Q1M55qVy4BaQzheUEW9MoWPSQ3Ki3YmirTQZpzxrHOIpY/sg1Bf0BTDQ6SISgPXSXfkuvqnX+czth
- r38uPn5fEUazXu4Yd02PFOamA1IE0rwAYWtrYLeYqTeRoEeJfT99WV8iGLPSjnjN6JYD4xtqMoSEp
- uvw3ds3EPYtqEnaEbV0T+PFjLNFXfixo4Nipgh07tTWcUToAqk26HYRseyIg4OsbZB8BoT/UvNt9l
- V/1CJy+OcnAdRQ2IPMCBwFdXDZmqY3Bhw0tB8/A3xSmQUeyYyV9lfRZc/GoJO2TA4unp/Zvv914wT
- D38D0qHVco4+zzMg6YsNw8z/2C/IMR4PTWnAtvbOYZi5WSCP0srmlQfmRZoUZ5FrEZTJ6TMFWL74p
- CpMnPLtMUa479X3Lc0dODvfq/CKyow2dx0vpGbVrWGLkwgSItsmxkWkQy7bxFp8WOgla0Mtl2OnHI
- 1VTE4RQG3B69D4dohUisWF0L/4jCcpZAsVGQ/Vn4DS+tH402Boy8/p9NSasMHcx+pRqrMYqsDq89t
- A8dfkJDo7iAGucJT8exDh3srz1v8HeNn2YpPEVAOQ=;
+ bh=j/z7gsStric8l8TGr6Rd+hz+VmM38/u2Mmc++lAL+jc=; b=UYDk4hejjCR8cJS407owfGzKfD
+ QagnLWPhWAI4E+/vQ7fLMOb42cxDG7SWuV3levyS2B6xQsfLiYPcYbXzWlLCrmXqJ29Q1B6CPb/7D
+ 5FxunuYivHC12L0vpFU5ayLVywSwIoiClOsr0WchH+pjw0DL8tMcsfZriNuVoiufultLGScDIcZJF
+ iHa3aISOwsttBrYAqwXNDdRxpEskNP7AoKATNUuWznxlHwOsy/LtPKCykAUIaAmIqGYLOyeR7L1KJ
+ MS8msZkaSVWgHB97KRK9fMJh1MQb3slHz/3L9Jm1wYEoB2R7bfSWIUz7EQvlr42v2eohhkKIkqBYA
+ GesIHI8pahMk+VR41mr8AUldtqR+i4+uliHaySTUmT+ElyFF8dkTbjrCoH9gqUhyBp/6OKE+3vQHZ
+ icOEWojj5wxN4eHr93A9vwRrjmLuz/KNWoLULAZMjFnfa1DK4a4lt/qgKuQxx4cYABQ0Kc0Sl37IP
+ Qx7hOsf09YmvsBMjWEoG0K9E+nSzoYGaKCGRkLIU2ChexAgJxuXIcUhwpAJzAWu7jVm8voAsmciKK
+ 2912Gc2hmKLU08mi0bqr9CuFWi47FYlug0idFy6asVw0C5Go2L7DRgmKfmJNSgZgu8dwnAZ60oUq4
+ o5d6mYit8mK9pUuoPh7do5RcWBXd1zvKX0paXPQww=;
 Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
  by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xK08p-003Fj9-Qr; Thu, 22 Oct 2026 22:16:04 +0100
-Message-ID: <33f5f44a-1ea2-46bd-bdaa-b9327e0e832a@ilande.co.uk>
-Date: Thu, 22 Oct 2026 22:16:45 +0100
+ id 1xK0B6-003FkG-8i; Thu, 22 Oct 2026 22:18:24 +0100
+Message-ID: <9f0c2da9-9fa1-45a5-a470-388531fd33f3@ilande.co.uk>
+Date: Thu, 22 Oct 2026 22:19:05 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Biggers <ebiggers@kernel.org>
 References: <20261022070059.3861291-1-stian@itx.no>
- <20261022070059.3861291-9-stian@itx.no>
+ <e3fc4bfa-4510-4d3d-9a24-77c17864e660@oss.qualcomm.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -79,13 +79,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20261022070059.3861291-9-stian@itx.no>
+In-Reply-To: <e3fc4bfa-4510-4d3d-9a24-77c17864e660@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v3 8/8] linux-user/sparc: Report HWCAP_SPARC_CRYPTO for
- crypto CPU feature
+Subject: Re: [PATCH v3 0/8] target/sparc: Add support for SPARC crypto
+ instructions
 X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,40 +107,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 22/10/2026 08:00, Stian Halseth wrote:
+On 22/10/2026 12:57, Philippe Mathieu-Daudé wrote:
 
-> Set HWCAP_SPARC_CRYPTO in AT_HWCAP like Linux does on real hardware
-> that supports it. qemu-sparc64 defaults to "TI UltraSparc II",
-> which has no crypto feature, so it must be enabled explicitly,
-> e.g. -cpu TI-UltraSparc-II,+crypto
+> On 22/10/26 09:00, Stian Halseth wrote:
+>> This series implements SPARC crypto instructions for QEMU. Most other
+>> arches already support crypto instructions, but SPARC is lagging behind.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> Signed-off-by: Stian Halseth <stian@itx.no>
-> ---
->   linux-user/sparc/elfload.c | 1 +
->   1 file changed, 1 insertion(+)
 > 
-> diff --git a/linux-user/sparc/elfload.c b/linux-user/sparc/elfload.c
-> index 181f1e00b5..0412741285 100644
-> --- a/linux-user/sparc/elfload.c
-> +++ b/linux-user/sparc/elfload.c
-> @@ -90,6 +90,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
->       r |= features & CPU_FEATURE_FMAF ? HWCAP_SPARC_FMAF : 0;
->       r |= features & CPU_FEATURE_VIS3 ? HWCAP_SPARC_VIS3 : 0;
->       r |= features & CPU_FEATURE_IMA ? HWCAP_SPARC_IMA : 0;
-> +    r |= features & CPU_FEATURE_CRYPTO ? HWCAP_SPARC_CRYPTO : 0;
->   #endif
->   
->       return r;
+>> Changes in v2:
+>> - 1/7: use suggested commit message (Philippe); R-b Philippe
+>> - 2/7: start with an empty CFR. Bits set in each instruction patch
+>> - 3/7: byte-order comment, rk half zeroed explicitly; T-b Philippe
+>> - 4/7: sets CFR.aes; "3-operand"/"4-operand" wording.
+>> - 5/7: sets CFR.crc32c; "3-operand" wording; explicit 64-bit return;
+>>         R-b + T-b Philippe
+>> - 6/7: sets the SHA bits; comment on the narrowing; R-b + T-b Philippe
+>> - 7/7: -cpu TI-UltraSparc-II,+crypto mentioned; R-b Philippe
+>> - Tests: Follow-up, as agreed (Philippe)
+>>
+>> v1: https://lore.kernel.org/qemu-devel/20261020145530.3385376-1-stian@itx.no/
+>>
+>> Stian Halseth (8):
+>>    target/sparc: Add crypto feature
+>>    target/sparc: Return CFR when crypto feature is enabled
+>>    target/sparc: Add the eight AES round instructions
+>>    target/sparc: Add the AES key expansion instructions
+>>    target/sparc: Add the CRC32C instruction
+>>    target/sparc: Add the SHA instructions
+> 
+> Mark, Artyom, if you Ack I can queue the first reviewed 6 patches
+> via my mist-target tree. I'll let the rest which is unreviewed go
+> via your or Helge's tree.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+I think the series is basically good: I can test it tomorrow evening and send a PR if 
+it passes a few local tests and CI.
+
+Stian: if the only outstanding issue is the indentation, I can fix that when I merge 
+it into my qemu-sparc branch.
 
 
 ATB,
