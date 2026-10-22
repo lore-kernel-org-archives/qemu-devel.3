@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5960606A31E
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F48C606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 07:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=UOpqYXO6
+	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=jZfs/dwO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJmo9-0002rr-Ac; Thu, 22 Oct 2026 03:01:51 -0400
+	id 1xJmoF-0002uu-F5; Thu, 22 Oct 2026 03:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmnh-0002o7-JO
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:23 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmnj-0002oM-MJ
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:25 -0400
 Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmne-0005up-P5
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:21 -0400
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xJmni-0005vo-3x
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 03:01:23 -0400
 From: Stian Halseth <stian@itx.no>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
  t=1792652469;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6epWgzjquJ4lHjBIoyWtxCEBvA3kIXAaPG8TU96aQvE=;
- b=UOpqYXO6UJdBryAjmEXr2DLURQHmRs5pqDQEpnEngFTgaSiKUz0fMzIui1PFzHZzE7cRBo
- KSXsN6v0jczbZy49ho2Bsip3Ng4W5J6q+KKsbBZfhrVVFZkMk0spjuPk6+qOQrsfsYdNhJ
- e+Pw5n8jutQH4nMZMBzrVzfg69H28Qg=
+ bh=vxriTHHowpsSZLR87NAuAdPjs7ttJqW/KlYeswRB0m4=;
+ b=jZfs/dwOCTMpzIcE+gRmaUs6O6YMx57X5KG+R42on1A1Faon2ALVvp04TgGm9rwYxL63u0
+ nOLmjqVLv+mO+PkmV6j6V5Ih25wMCcXxmto0wSnMe8cXLS4LgRVCnCWp2PsCxLLXi2Icy0
+ VkpENjewdQ8vQlpNyLSswJ89TrZ+k2A=
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -36,14 +36,14 @@ Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Eric Biggers <ebiggers@kernel.org>, Stian Halseth <stian@itx.no>
-Subject: [PATCH v3 3/8] target/sparc: Add the eight AES round instructions
-Date: Thu, 22 Oct 2026 09:00:54 +0200
-Message-ID: <20261022070059.3861291-4-stian@itx.no>
+Subject: [PATCH v3 7/8] target/sparc: Allow block-init stores when the CPU has
+ the crypto feature
+Date: Thu, 22 Oct 2026 09:00:58 +0200
+Message-ID: <20261022070059.3861291-8-stian@itx.no>
 In-Reply-To: <20261022070059.3861291-1-stian@itx.no>
 References: <20261022070059.3861291-1-stian@itx.no>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
  helo=mx.itxnorge.no
@@ -71,210 +71,42 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Implement the eight AES round instructions by using QEMU's shared
-crypto/aes-round.h, gated behind the crypto CPU feature:
-- AES_EROUND01/23 and last variants
-- AES_DROUND01/23 and last variants
+The next patch reports HWCAP_SPARC_CRYPTO to linux-user guests.
+A multiarch glibc then picks its niagara4 memcpy/memset, which
+store with ASI 0xe2. QEMU only allows that store on CPUs with
+HYPV, so every dynamically linked program dies with SIGILL.
 
-Based on OSA (Oracle SPARC Architecture) 2011, section 7.3:
-AES Cryptographic Operations (4 operand)
+The crypto opcodes exist only on T4 and later, and all of those
+have the block-init ASIs.
 
-Next commit will complete the feature and expose its availability
-to the guest by setting the AES bit in CFR.
+Reproduced with Gentoo sparc64 stage3 sysroot:
+qemu-sparc64 -L <stage3 root> -cpu \
+TI-UltraSparc-IIi,+crypto <stage3 root>/usr/bin/dd --version
 
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Stian Halseth <stian@itx.no>
 ---
- target/sparc/crypto_helper.c | 89 ++++++++++++++++++++++++++++++++++++
- target/sparc/helper.h        |  8 ++++
- target/sparc/insns.decode    |  9 ++++
- target/sparc/meson.build     |  2 +-
- target/sparc/translate.c     | 16 +++++++
- 5 files changed, 123 insertions(+), 1 deletion(-)
- create mode 100644 target/sparc/crypto_helper.c
+ target/sparc/translate.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/target/sparc/crypto_helper.c b/target/sparc/crypto_helper.c
-new file mode 100644
-index 0000000000..7dd4dd5144
---- /dev/null
-+++ b/target/sparc/crypto_helper.c
-@@ -0,0 +1,89 @@
-+/*
-+ * SPARC crypto instructions for QEMU
-+ *
-+ * Based on Oracle SPARC Architecture 2011
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/helper-proto.h"
-+#include "crypto/aes-round.h"
-+
-+/*
-+ * SPARC four-operand AES round (Section 7.3).
-+ * s2:s3 holds the state; half selects output columns 0-1 or 2-3, and
-+ * key supplies their round key. dec selects decryption; last omits
-+ * MixColumns/InvMixColumns. Return the selected 64-bit half.
-+ *
-+ * Note all 64-bit values (state and key) hold AES bytes in big-endian
-+ * order, i.e. the most significant byte is the first state byte.
-+ */
-+static uint64_t aes_round(uint64_t key, uint64_t s2, uint64_t s3,
-+                          int half, bool dec, bool last)
-+{
-+    AESState st, rk, r;
-+    const unsigned first = HOST_BIG_ENDIAN ? 0 : 1;
-+    const unsigned out = first ^ half;
-+
-+    st.d[first] = s2;       /* columns 0-1 */
-+    st.d[first ^ 1] = s3;   /* columns 2-3 */
-+    rk.d[out] = key;
-+    rk.d[out ^ 1] = 0;
-+
-+    if (dec) {
-+        if (last) {
-+            aesdec_ISB_ISR_AK(&r, &st, &rk, true);
-+        } else {
-+            aesdec_ISB_ISR_AK_IMC(&r, &st, &rk, true);
-+        }
-+    } else {
-+        if (last) {
-+            aesenc_SB_SR_AK(&r, &st, &rk, true);
-+        } else {
-+            aesenc_SB_SR_MC_AK(&r, &st, &rk, true);
-+        }
-+    }
-+
-+    return r.d[out];
-+}
-+
-+uint64_t helper_aes_eround01(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, false, false);
-+}
-+
-+uint64_t helper_aes_eround23(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, false, false);
-+}
-+
-+uint64_t helper_aes_dround01(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, true, false);
-+}
-+
-+uint64_t helper_aes_dround23(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, true, false);
-+}
-+
-+uint64_t helper_aes_eround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, false, true);
-+}
-+
-+uint64_t helper_aes_eround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, false, true);
-+}
-+
-+uint64_t helper_aes_dround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, true, true);
-+}
-+
-+uint64_t helper_aes_dround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, true, true);
-+}
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 3a7f7dc129..9bfd643b09 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -122,6 +122,14 @@ DEF_HELPER_FLAGS_2(fchksm16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmean16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas32, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
- #define VIS_CMPHELPER(name)                                  \
-     DEF_HELPER_FLAGS_2(f##name##8, TCG_CALL_NO_RWG_SE,       \
-                        i64, i64, i64)                        \
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 55f8528ffe..99c9147e7d 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -596,6 +596,15 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
-   NCP           10 ----- 110111 ----- --------- -----      # v8 CPop2
- }
- 
-+AES_EROUND01    10 ..... 011001 ..... ..... 0000 .....     @d_d_d_d
-+AES_EROUND23    10 ..... 011001 ..... ..... 0001 .....     @d_d_d_d
-+AES_DROUND01    10 ..... 011001 ..... ..... 0010 .....     @d_d_d_d
-+AES_DROUND23    10 ..... 011001 ..... ..... 0011 .....     @d_d_d_d
-+AES_EROUND01_L  10 ..... 011001 ..... ..... 0100 .....     @d_d_d_d
-+AES_EROUND23_L  10 ..... 011001 ..... ..... 0101 .....     @d_d_d_d
-+AES_DROUND01_L  10 ..... 011001 ..... ..... 0110 .....     @d_d_d_d
-+AES_DROUND23_L  10 ..... 011001 ..... ..... 0111 .....     @d_d_d_d
-+
- ##
- ## Major Opcode 11 -- load and store instructions
- ##
-diff --git a/target/sparc/meson.build b/target/sparc/meson.build
-index 46289c8669..af65c933bf 100644
---- a/target/sparc/meson.build
-+++ b/target/sparc/meson.build
-@@ -12,7 +12,7 @@ sparc_ss.add(files(
-   'win_helper.c',
- ))
- sparc_ss.add(when: 'TARGET_SPARC', if_true: files('int32_helper.c'))
--sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c'))
-+sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c', 'crypto_helper.c'))
- 
- sparc_system_ss = ss.source_set()
- sparc_system_ss.add(files(
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index a1562f5047..16907b1085 100644
+index 921ffd2d1b..931fc006ce 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -101,6 +101,14 @@
- # define gen_helper_xmulx                ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_xmulxhi              ({ qemu_build_not_reached(); NULL; })
- # define MAXTL_MASK                             0
-+# define gen_helper_aes_eround01         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround23         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround01         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround23         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround01_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround23_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround01_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround23_l       ({ qemu_build_not_reached(); NULL; })
- #endif
- 
- #define DISAS_EXIT  DISAS_TARGET_0
-@@ -5418,6 +5426,14 @@ TRANS(FNMSUBd, FMAF, do_dddd, a, gen_op_fnmsubd)
- TRANS(FNMADDd, FMAF, do_dddd, a, gen_op_fnmaddd)
- TRANS(FPMADDX, IMA, do_dddd, a, gen_op_fpmaddx)
- TRANS(FPMADDXHI, IMA, do_dddd, a, gen_op_fpmaddxhi)
-+TRANS(AES_EROUND01, CRYPTO, do_dddd, a, gen_helper_aes_eround01)
-+TRANS(AES_EROUND23, CRYPTO, do_dddd, a, gen_helper_aes_eround23)
-+TRANS(AES_DROUND01, CRYPTO, do_dddd, a, gen_helper_aes_dround01)
-+TRANS(AES_DROUND23, CRYPTO, do_dddd, a, gen_helper_aes_dround23)
-+TRANS(AES_EROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_eround01_l)
-+TRANS(AES_EROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_eround23_l)
-+TRANS(AES_DROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_dround01_l)
-+TRANS(AES_DROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_dround23_l)
- 
- static bool trans_FALIGNDATAi(DisasContext *dc, arg_r_r_r *a)
- {
+@@ -1863,8 +1863,12 @@ static void gen_st_asi(DisasContext *dc, DisasASI *da, TCGv src, TCGv addr)
+         if (TARGET_LONG_BITS == 32) {
+             gen_exception(dc, TT_ILL_INSN);
+             break;
+-        } else if (!(dc->def->features & CPU_FEATURE_HYPV)) {
+-            /* Pre OpenSPARC CPUs don't have these */
++        } else if (!(dc->def->features &
++                    (CPU_FEATURE_HYPV | CPU_FEATURE_CRYPTO))) {
++            /*
++             * Pre-OpenSPARC CPUs lack block-init stores. Crypto instructions
++             * imply T4 or later, which supports them.
++             */
+             gen_exception(dc, TT_ILL_INSN);
+             break;
+         }
 -- 
 2.43.0
 
