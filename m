@@ -1,96 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3264606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 12:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0E606A31D
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 12:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=F/PslWKz
+	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=bXyHjuOk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJrVK-0005vG-Qa; Thu, 22 Oct 2026 08:02:43 -0400
+	id 1xJrZx-0007U4-CC; Thu, 22 Oct 2026 08:07:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xJrUy-0005rk-Q5
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:02:27 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1xJrUs-00010o-44
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:02:18 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-c4203bbb1e9so255177766b.3
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 05:02:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1xJrZi-0007TM-MO; Thu, 22 Oct 2026 08:07:15 -0400
+Received: from [115.124.30.99] (helo=out30-99.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1xJrZa-0001gN-7m; Thu, 22 Oct 2026 08:07:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792670532; x=1793275332; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=pWU2Xl7mPKw0ooG9GxPHWEB9HXEjzbVoSU6y6PkyIis=;
- b=F/PslWKz/4Ru4Uw1r5DG23dtAG1UjW3x1wo+Vt7ydoq+fzkWcbEe5nTX02gw7nxbvy
- ouFAQej20iAtdVzjdJOKd4AcThn+wu4KlFS2HFLpT8P+r9wKAqitEwRD19f72ppM0ZOu
- HL0aLB/aXU2oU2y/O/DwHDPrObWxaGr992Yv9XZe2stjow9xKg989Dws55Y6SpowB/e1
- 3aZWZcfFAHoPwZR1jpIdXChb3m0ikOxVbXFIFENIAnc9NFsdzFOMleoNsIwvwaLgu0Hw
- +TyJUWiGjnZjI7dh4lHVG156q2xyiP6xHxiXki4J5uCDBbk6IY15sPCJiTneaJxKcl1d
- 10ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792670532; x=1793275332;
- h=user-agent:in-reply-to:content-disposition:content-type
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=pWU2Xl7mPKw0ooG9GxPHWEB9HXEjzbVoSU6y6PkyIis=;
- b=BLq9A8SPTjtUioITPbi9RZLnMGfxkOvnG9L9M4c8Ofyivjmti0V9tq5XiOxCb5e78z
- 8VNmorXyzCtMB+IEvxU+VGy7lvFcPwx36PrbIACU9pQmAsI7ns6QZGWxDRHim8rLgY0r
- SbvE6eIchc3854cE4CtR5LaQvQli6RoWpO/x3vjyQXzaARdKK5REJ6Zd3G1pfDS3RJLz
- 04ZwSjxebteCAQ+0o0TsIGpQYY1UGDW27Gl7F4T8qPoAGkC1huJiiGAGKKTtFRc1zo8D
- hLRzpem+aeGyKLrxu6KIUw4HTAhgyYz1sHHTe7Qk1Z9G+3aBGIzHVlbjWLoic3E1+t4B
- nSaw==
-X-Gm-Message-State: AFq9FYJzvzgZPS1bAHRTvhh9bfri+1jLLOslvLIBfrAUFQtH1iVG7IT5
- aVIr99dFWQpuh+xj7K+/1hxL4snqxhkXTjDuyylF0qYoQMp45SZzxa8agpSRs2/AXF0=
-X-Gm-Gg: AYBFou0M8FxbrFm/EvoB+Wqf5ow65w0KcLkglg0zWKqtA2+V23dgRKAupuMz9+Fbxh/
- 8/Ql7HOhnFpXM9c7JEGo7Y82mhCziEKPjv7D3nSYr7z23AQ9HJzUBy+uelOZODeeLdd5NG0zeJa
- jMVGZGRTDv/J8nATnxdvbZeh99KMvbkD2AYPIIyWrBqX9lFyJLFdRHTEdq4/e5KMfkAZVQaLC5U
- rxZJRXs0hzEEq8dUa0/bh6DZjJIp+MlJ3VDf3DlZrPECfdACUGUm2V1QNfVmAnITftGmdg5LHFP
- 5sKPg+Xwn+jMtWpYWLYi2bcbXSKzqj9wxofsSK+QqOWcDT8gHRehtYkO0rqjttEcW1jpeHcVCGV
- dzgvKRq67LBqvzbT/VKfSBx8prk3KEYc6Bw1uhsbfYfHhy+ro29GJiL2zFK++qCu5fevrF/fIw/
- cA/5w5Ssfjo1ibR3owut2/3XYk3QGpI4UrCO0ABfT5cnP/O8xA2vAu1L3WzS45f+uQZt3Tg3iZ/
- BWay+s0BpHbj1bRB0gd0QjByohwfFERZ487Pr3dq1Qk3KWtfoQmZfaNoAdR8QnkuzxA0Kax6bN2
- EMInTlxBu5KxrzTFOB13L+iIeSx+BB0ZQVGBe//eWpPlc9KGliemYA==
-X-Received: by 2002:a17:907:944c:b0:c2e:2baa:a642 with SMTP id
- a640c23a62f3a-c46796530d5mr508422466b.30.1792670531869; 
- Thu, 22 Oct 2026 05:02:11 -0700 (PDT)
-Received: from tulp
- (2001-1c02-1a15-3000-25f6-628e-6064-de9b.cable.dynamic.v6.ziggo.nl.
- [2001:1c02:1a15:3000:25f6:628e:6064:de9b])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c468a4ffcddsm96172566b.14.2026.10.22.05.02.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 05:02:11 -0700 (PDT)
-Date: Thu, 22 Oct 2026 14:01:40 +0200
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v2] qga: implement 'guest-get-diskstats' for FreeBSD
-Message-ID: <atn7JNVVVEWldZuV@tulp>
-References: <20260901192732.46190-1-bogorodskiy@gmail.com>
+ d=linux.alibaba.com; s=default;
+ t=1792670796; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=FJ6yTtzWshNsLQmFV/ajSLAfbp+yhrn+FsSCSUUgRmk=;
+ b=bXyHjuOknePj87EvPBI1DTdUSdKmyavdxr/NlCofgkho6N/AXEysXFahJ+/zBoAU0FVTSs/NKfeUlyh5FcG3gmbfIXLtd/5ymUIpva3I7EtTlCuxaqTXne57h53ypuwvzf5/TX1CH1cosgyYoN6U7W77H4ihAPe69bxYaP/zvKA=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R601e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ MF=fangyu.yu@linux.alibaba.com; NM=1; PH=DS; RN=7; SR=0;
+ TI=SMTPD_---0XDJ9.P-_1792670475; 
+Received: from localhost.localdomain(mailfrom:fangyu.yu@linux.alibaba.com
+ fp:SMTPD_---0XDJ9.P-_1792670475 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 22 Oct 2026 20:01:17 +0800
+From: fangyu.yu@linux.alibaba.com
+To: daniel.barboza@oss.qualcomm.com
+Cc: alistair.francis@wdc.com, chao.liu.zevorn@gmail.com, liwei1518@gmail.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH 1/2] target/riscv/csr.c: do not allow mstatus MPV/GVA
+ writes
+Date: Thu, 22 Oct 2026 20:01:11 +0800
+Message-Id: <20261022120111.24298-1-fangyu.yu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
+References: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260901192732.46190-1-bogorodskiy@gmail.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.99 (deferred)
+Received-SPF: pass client-ip=115.124.30.99;
+ envelope-from=fangyu.yu@linux.alibaba.com;
+ helo=out30-99.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,35 +66,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-  Roman Bogorodskiy wrote:
+>The priv spec states the following about mstatus.MPV:
+>
+>"The MPV bit (Machine Previous Virtualization Mode) is written by the
+>implementation whenever a trap is taken into M-mode."
+>
+>And, about mstatus.GVA:
+>
+>"Field GVA (Guest Virtual Address) is written by the implementation
+>whenever a trap is taken into M-mode."
+>
+>Both are written during riscv_cpu_do_interrupt().  They're not supposed
+>to be written by userspace.  As far as write_mstatus goes these fields
+>are read only.  The same applies for mstatush.MPV/mstatush.GVA.
+>
+>Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
+>Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>---
+> target/riscv/csr.c | 5 +----
+> 1 file changed, 1 insertion(+), 4 deletions(-)
+>
+>diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>index e1cd4a299c..74f5f868f0 100644
+>--- a/target/riscv/csr.c
+>+++ b/target/riscv/csr.c
+>@@ -2040,9 +2040,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+>     }
+>
+>     if (xl != MXL_RV32 || env->debugger) {
+>-        if (riscv_has_ext(env, RVH)) {
+>-            mask |= MSTATUS_MPV | MSTATUS_GVA;
+>-        }
 
-> Implement the 'guest-get-diskstats' for FreeBSD.
-> This implementation uses the devstat(3) library which is a part
-> of the FreeBSD base system.
-> 
-> The build system is updated to link qga with `-ldevstat`.
-> 
-> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com> (QAPI schema)
-> ---
-> Changes since v1:
->  - Replace the guest_diskstats_append() helper with a simpler guest_diskstats_info_new().
->  - Drop the unnecessary condition for ios_pgr.
->  - Drop the unnecessary guest_get_diskstats() wrapper.
->  - Jump to error on devstat_getdevs() as it does allocations.
-> 
->  qga/commands-bsd.c   | 120 +++++++++++++++++++++++++++++++++++++++++++
->  qga/meson.build      |   3 ++
->  qga/qapi-schema.json |   6 +--
->  3 files changed, 126 insertions(+), 3 deletions(-)
+Hi Daniel,
 
-ping?
+Could you share the motivation for making MPV/GVA read-only here? Was
+this based on a real misbehavior, or mainly on the spec wording.
+
+I noticed that the current OpenSBI code modifies MPV in several places
+(sbi_hart_switch_mode, sbi_trap_redirect, sse_event_resume). With this
+patch, those writes are dropped.
+
+Thanks,
+Fangyu
+
+>         if ((val & MSTATUS64_UXL) != 0) {
+>             mask |= MSTATUS64_UXL;
+>         }
+>@@ -2079,7 +2076,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
+>                                      target_ulong val, uintptr_t ra)
+> {
+>     uint64_t valh = (uint64_t)val << 32;
+>-    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
+>+    uint64_t mask = 0;
+>
+>     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
+>         mask |= MSTATUS_MDT;
+>--
+>2.43.0
 
