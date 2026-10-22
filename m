@@ -1,57 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83B1606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF32606A322
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 10:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VM4TYTut
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=B+AHGaMA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJqA2-0003Vw-VU; Thu, 22 Oct 2026 06:36:38 -0400
+	id 1xJqAO-0003lB-FU; Thu, 22 Oct 2026 06:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJqA1-0003VT-FC
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJqAM-0003jD-60
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJq9z-0007lK-QD
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xJqAJ-0007nl-Pa
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 06:36:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792665394;
+ s=mimecast20190719; t=1792665415;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mApZOr2CweZ/S3eePcKqkjr3cKAXptRSFdPEcfe60NE=;
- b=VM4TYTutl6AZGZQrVecA2ZYDJvoXBe2PB2Wo+ZQKFCMip2bfjIWq8wv9bxWHTaIpN1bYpx
- mjyP8aYiUf0m8DsahRn1aJvmTz992ke5Ksma93F7ez9GTc5WuAk4hDH0qmAVRiJA9N6u3s
- C+qUdAHcNQFIgmKhdxa9uv58Umeu4lU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=r25DjAHGho+AEFthyQtdMaPP7Iap18O1a7YHfENK1Jk=;
+ b=B+AHGaMAQ2OLqnNh8eMcWyl3GJZiAA3BJ+s6J8GiBtT6gcocZ4O7W74XB89Ij9GP+dLrvE
+ KP5xBtBGCZBq2wS7/KdZX3ns3geSnMNxtHj8i3txRU+0FM31WPbJTasrcZkcurG1pBLUV8
+ 8K1gHFpC5PvEXoh5f35kNCbZVAIfWCo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-237-W9mPkbdWMx-lJDhajqTIWQ-1; Thu,
- 22 Oct 2026 06:36:32 -0400
-X-MC-Unique: W9mPkbdWMx-lJDhajqTIWQ-1
-X-Mimecast-MFC-AGG-ID: W9mPkbdWMx-lJDhajqTIWQ_1792665391
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-kynUN4iLNe2E4LLf1hLnpA-1; Thu,
+ 22 Oct 2026 06:36:47 -0400
+X-MC-Unique: kynUN4iLNe2E4LLf1hLnpA-1
+X-Mimecast-MFC-AGG-ID: kynUN4iLNe2E4LLf1hLnpA_1792665406
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A6361955F21; Thu, 22 Oct 2026 10:36:31 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 72F12180058A; Thu, 22 Oct 2026 10:36:46 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.48.5])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 081C530001B9; Thu, 22 Oct 2026 10:36:25 +0000 (UTC)
+ id E750230001B9; Thu, 22 Oct 2026 10:36:44 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Tommaso Califano <tcalifano@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
- Luigi Leonardi <leonardi@redhat.com>
-Subject: [PULL 01/11] hw/usb/dev-mtp: Fix assert crash on undersized BULK IN
-Date: Thu, 22 Oct 2026 12:36:12 +0200
-Message-ID: <20261022103622.1151089-2-thuth@redhat.com>
+Cc: Haotian Jiang <sundayjiang@tencent.com>,
+	qemu-stable@nongnu.org
+Subject: [PULL 08/11] usb-host: delete bottom halves during unrealize
+Date: Thu, 22 Oct 2026 12:36:19 +0200
+Message-ID: <20261022103622.1151089-9-thuth@redhat.com>
 In-Reply-To: <20261022103622.1151089-1-thuth@redhat.com>
 References: <20261022103622.1151089-1-thuth@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -60,13 +60,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,55 +86,55 @@ X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tommaso Califano <tcalifano@redhat.com>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-The EP_DATA_IN result path serializes the queued response as a 12
-byte MTP container header followed by one 4 byte word per result
-argument (12 + 4 * argc bytes).  The entry check at the top of the
-function only verifies that the guest-provided transfer buffer holds
-at least the 12 byte header.
+usb_host_nodev() lazily creates s->bh_nodev and
+usb_host_post_load() lazily creates s->bh_postld, but
+usb_host_unrealize() never calls qemu_bh_delete() on either.  If a BH
+is still pending when unrealize returns, its callback dereferences the
+freed USBHostDevice.
 
-If the queued result carries arguments, e.g. RES_SESSION_ALREADY_OPEN
-which returns the existing session ID, the second usb_packet_copy()
-writes past the end of the guest-declared buffer and trips the
-p->actual_length + bytes <= iov->size assertion, aborting QEMU.  A
-guest can control the transfer size freely, e.g. TBYTES in the qTD
-of an EHCI BULK IN.
+Delete both BHs in usb_host_unrealize() after usb_host_close()
+returns.  They must be deleted after close because usb_host_close()
+can process libusb callbacks that call usb_host_nodev(), which lazily
+recreates bh_nodev.  Deleting it before close could therefore leave a
+recreated BH alive after unrealize.
 
-A device must not send more data than the initiator signaled it would
-accept. Stall the transfer instead, and keep the result queued so that
-a subsequent BULK IN with a sufficient buffer size delivers the full
-response.
-
-Fixes: 840a178c94db ("usb: mtp filesharing")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3386
-Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Message-ID: <20261012140839.93559-1-tcalifano@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/3595
+Fixes: 95efb20c7148 ("usb-host: live migration support for the libusb version")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <sundayjiang@tencent.com>
+Signed-off-by: Haotian Jiang <sundayjiang@tencent.com>
+Cc: qemu-stable@nongnu.org
 ---
- hw/usb/dev-mtp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/usb/host-libusb.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index c2d36a73cf9..cbc2be3317f 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1905,6 +1905,13 @@ static void usb_mtp_handle_data(USBDevice *dev, USBPacket *p)
-         } else if (s->result != NULL) {
-             MTPControl *r = s->result;
-             int length = sizeof(container) + r->argc * sizeof(uint32_t);
-+
-+            if (p->iov.size < length) {
-+                trace_usb_mtp_stall(s->dev.addr,
-+                                    "packet too small to send response");
-+                p->status = USB_RET_STALL;
-+                return;
-+            }
-             if (r->code == RES_OK) {
-                 trace_usb_mtp_success(s->dev.addr, r->trans,
-                                       (r->argc > 0) ? r->argv[0] : 0,
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index bddd50903ae..8f7ced95cfe 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -1275,6 +1275,21 @@ static void usb_host_unrealize(USBDevice *udev)
+     qemu_remove_exit_notifier(&s->exit);
+     QTAILQ_REMOVE(&hostdevs, s, next);
+     usb_host_close(s);
++    /*
++     * Delete bottom halves after usb_host_close().  During close,
++     * libusb callbacks (usb_host_req_complete_ctrl/data) can call
++     * usb_host_nodev() which lazily creates bh_nodev.  If we
++     * deleted them before close, a newly created BH would leak and
++     * fire after unrealize, dereferencing freed USBHostDevice.
++     */
++    if (s->bh_nodev) {
++        qemu_bh_delete(s->bh_nodev);
++        s->bh_nodev = NULL;
++    }
++    if (s->bh_postld) {
++        qemu_bh_delete(s->bh_postld);
++        s->bh_postld = NULL;
++    }
+ }
+ 
+ static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
 -- 
 2.56.0
 
