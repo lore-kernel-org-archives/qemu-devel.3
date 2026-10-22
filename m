@@ -1,72 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366AC606A326
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 12:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B073F606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 13:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=aSawto8d
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BZZL0pw+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJsOS-0001K9-Q6; Thu, 22 Oct 2026 08:59:40 -0400
+	id 1xJsOU-0001Rh-Gh; Thu, 22 Oct 2026 08:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJsNv-00013l-QX
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:59:10 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1xJsNy-00014X-JL
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:59:12 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xJsNu-0007KM-00
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:59:07 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4a20a37703bso4745595e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 05:59:05 -0700 (PDT)
+ id 1xJsNw-0007Km-I5
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 08:59:10 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4a20e5628f2so225245e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 05:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792673944; x=1793278744; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792673947; x=1793278747; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qI8OBD9x6CAOtPn1OPrDP7VOd6EWQBpJduYoW7fgTe8=;
- b=aSawto8d1ECoY5B7AzEYvRXV+ZTig5V9Hr9Y/eo08V5KGB4PwnraYF8sQjucBpox4y
- y+Sx/u9GuoJorkO9cqYYSN9mEx0eXBmE80zHiCW5Fp2BgTl3RqtEBBJ8Dg+sqaY7uRN4
- 3LJWxn58N87wS+mkkCi3KdJ3YVLWaVagwWcJQYN7KleSDvd1x8k/Tq1lfe7im/jmBDZO
- D9jn/X/vBi85sO0mrT82Ip0zPvgr2EaqZs2aaBFT2c0K8Dkz4YLN6jnu8dLtCb7GA7J5
- J4GW4F/segLJDNF79bGpJId3NHXXXRv8k0euB2rGEYb3qAzu6R4mQc2D6wCfyibraUxs
- IUgg==
+ bh=5q8cqXkH4d0IOT4zH3mEoMRfAvV9e/9SmmXGC/TaIL0=;
+ b=BZZL0pw+RZCnKKQxMQVx8hxtqhKHsfjUBybwTttLGY26pPEbIfYEdb2f+l64KQaSZH
+ 2poRQB7icarPo2uhQ5m+nFYCnocUx39XZQYWOnLVJHS3C8h7r3W8aKpeEP/4C7i01UQ5
+ UfYBGpwrV4aXqHF7NDoYlDw1ZPewFyqND9jZVia8+7EStUb1/AyHxqnXwgGBFGp5IEX5
+ QhV2igBErUxBvNON2NP8FxfN6mOkGET+QbKV2EzJsI8veLF/kCMg3TDIC0nrZORPSe/r
+ AhjcSDBYIW0AsrucX0AzFu8vmHu12an9GuVh2RPwwwS/imQvRwpP1VaDpOZfUN1N45i4
+ fV7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792673944; x=1793278744;
+ d=1e100.net; s=20260707; t=1792673947; x=1793278747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=qI8OBD9x6CAOtPn1OPrDP7VOd6EWQBpJduYoW7fgTe8=;
- b=K351ke9yfh9Izax7o2B1t1ZvJ3ZnVkGzID6Ur8KIqXUcNGr7YVPWVXI3DFvVss3H8/
- EOsVqB7DBJgxU8Ya6cUqTS4TivhpT+WrrlONaPYEfPzjSfdFFfKaYWjOllLWIbhGfkvi
- TUlCtfZSzttLD5weEytDd7YCOwlKdsyVT6h71idveL1MLX3qN7mSQGKpPR9IpN4Jknfm
- FqSjNaEm+t6NHHCNi0wdflmWHVT6E7sGIOVCRlw1Gk0Q+PONr7Pbk7xrY2W1YBBe/WRI
- S0F+WatmGzMAmNWr5xAkUJLm6pQ+JhyhfY2vz1EOFutvHYPjiFMxH2dI/EgTkFpTOkLx
- XSEg==
-X-Gm-Message-State: AFq9FYI4HtPmXlIy21OMndmtNvyIy1FX2vpe5oeQk+QHnZctehPPKHRR
- qQVld+7EunEGAkNYxuw3xr8v9lheUDIRSbIw49O0K2R6L2VjIptLa373/BVdnHtnXfixtJDl3nS
- PMHb7PLU=
-X-Gm-Gg: AYBFou1wmfxdZLhbFBb9bLZZyMM/0DsrlNSzzWvqfgwCQreJlojZ7jJOcm/G14wdZRQ
- rOhaf5NuzKrkkW3V+xYY+m/Ut8kop8NmvNhQy8chdw/Mgoe3ebzz73OU9pYJcBEUfckiFsTg5zA
- /OeLUytcCFhk6xB+4rlWBOGcO7l2ivx4iJ+f9KuOLvU76WtsGHwfBnZ4p5UmSNPnQgiNprsz5GX
- Nrqns49Wv9bhKPuYiYhGuMOBiiBNhYLuQ0ZUDAnvw67aDliwpCLLE4e+k6kUbmij28ifWfjw/BM
- INsvZYQ7MmxNzCGt68zQdyEnOfJqnADohaFWzOc2jleNlKY1vbaOAbPQN7Opus8r3p73FfaQqtI
- WtKxZ1Y08PQ8pPM1IErBsCrl+8hp84raN9TxelHCFEKT0r6WTHuoila1eOMuKo/Ey6/pyB0CmW1
- mFYaDJDZHYNBERkZGKcsuo53IMXo3d0LthWQNYkR0ef+7nWeUohWQR8huMPca60FCezDuaBnkoR
- OIbtBl6FW06lcdgaf2gbuFViDNLHn+TWmAU3riUzBjVju16Pn6or/mxpNKkYIl+PIIErOL+JYie
- Er8dhptcwOmiHMVRnthrgbFSfDDhwNsnq1Sj4nrCx0fQAAtcW0tQeAhT8I3s1O9iVdgphbwjYMb
- OR39mVQ==
-X-Received: by 2002:a05:600c:4f53:b0:4a1:ce33:1536 with SMTP id
- 5b1f17b1804b1-4a1fdd20d2amr108196565e9.9.1792673944423; 
- Thu, 22 Oct 2026 05:59:04 -0700 (PDT)
+ bh=5q8cqXkH4d0IOT4zH3mEoMRfAvV9e/9SmmXGC/TaIL0=;
+ b=HsX3odBFtyMtiXkC8VHLKw/60ViLnZDzb8NOttda3IpMBrnUJOehupPdC/0jqMZooC
+ THhfQi4dgfDvPCO96CFq1F+kqXbC+K9eXmzA6rfx21W4ZBQsVkz/YEXC3rqNBqb1LltC
+ PSjA3xchA5nSmh9jyQhQfAV+Ft9/Nlp5x35ATe30Rc5w4hb5hpdFMZDOsuWbcKYAafqk
+ CfnA+M8n2+TQj+Td6HIJybIzoSfhyqtdGfe3pqtk5SLIBA9/tRojs3QCzMwAtZOC9LYk
+ bGp4Gi5vgUDhVYtT+Wnt57TyDdu36wJ3Xh8yG7L3YwSjEJHiMo7u/vk9oi7iVOUDDeBa
+ LOJA==
+X-Gm-Message-State: AFq9FYL5322hQExsrNqfCITEs8NO1JAsIByw/NZDVgWLY3+T9knvgCQO
+ 6HPKince4iWrKym4BOSy4tdHeXKUCO+7AwDINj++BctunDs/Hugp4ZbsvZyInTgqm4UUNHFasXI
+ +K0qXItI=
+X-Gm-Gg: AYBFou0coBt0adxDOkXhjxd8WfwdqVStx2Q54slbCLbvk4AaUkEiOVzHX2VbC0uwvT4
+ bNMI7ovnICsUS5HduH8RuQIv8EMxWA/f6sqVCd+imT3QyYYT0R7pwmgPTCeIhMcPINLeOGACikr
+ ha2PWpG8WgPN4YsRRNeEPchS+gRdoQZzbr0lMuYrmXP+fPfLLWaJcgq+vy5oV1wbxjCld7k0zkO
+ cpbtpiVcC2KI5MIqQ5mO0/z/LCCbc/AgqpCxseC1T9LSJkl+BmT70kwhDLA/FJrQYObn20ntO+v
+ mtZxbd4hZl5Ewsc/zsomZBmVnXazqSiouhljc9p3jdBitKHFWhvT4IO7Ifm4JKrBtyo+9GhlXjF
+ pMgx+6N+2aoxMQIKc0fYXNi8pLjaGcgjwkhaOY0Kpp/6UMjvnYGZRtj1ERFiJx4Chatynwjx/4k
+ zAT8mIS3Cm5Te8k4xI2ksVZkU8xr58c2Fu2Lz6qljC/d0YaTouhprsXvG95dy0ZEh7jzVWzbaH6
+ iYVCmCimXnj8On/JoB+jtjH0cclNRZfBAQI8jGDCy1bMiDkEvcQhqdoE06715uF1PfDrwxic6rU
+ T2KwhoarI8nHkE0EWaT4LQysXmGS1pv0XSJAgmV7MJxNZuRpSDinUrYSNxsA
+X-Received: by 2002:a05:600c:5391:b0:4a1:d537:1c8d with SMTP id
+ 5b1f17b1804b1-4a1fdd23e21mr109204925e9.19.1792673947054; 
+ Thu, 22 Oct 2026 05:59:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a203b439absm79247015e9.9.2026.10.22.05.59.03
+ 5b1f17b1804b1-4a203b439absm79247015e9.9.2026.10.22.05.59.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 05:59:03 -0700 (PDT)
+ Thu, 22 Oct 2026 05:59:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
@@ -78,17 +77,17 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH 3/5] target/loongarch: Convert to translate_for_debug
-Date: Thu, 22 Oct 2026 13:58:56 +0100
-Message-ID: <20261022125858.310252-4-peter.maydell@linaro.org>
+Subject: [PATCH 5/5] target/mips: Convert to translate_for_debug
+Date: Thu, 22 Oct 2026 13:58:58 +0100
+Message-ID: <20261022125858.310252-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261022125858.310252-1-peter.maydell@linaro.org>
 References: <20261022125858.310252-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,74 +113,80 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Convert loongarch to providing the translate_for_debug method rather
+Convert mips to providing the translate_for_debug method rather
 than the deprecated get_phys_addr_debug method.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/loongarch/cpu-mmu.h    |  3 ++-
- target/loongarch/cpu.c        |  2 +-
- target/loongarch/cpu_helper.c | 12 +++++++++---
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ target/mips/internal.h        |  3 ++-
+ target/mips/cpu.c             |  2 +-
+ target/mips/system/physaddr.c | 13 ++++++++++---
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 54fb732d62d..491eb514d9d 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -99,7 +99,8 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-                      int access_type, int mmu_idx, int debug);
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level);
--hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
-+bool loongarch_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-+                                       TranslateForDebugResult *result);
- uint64_t loongarch_palen_mask(CPULoongArchState *env);
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 7dba22300b1..f054dca5f7a 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -118,7 +118,8 @@ enum {
+ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+                          int *prot, target_ulong real_address,
+                          MMUAccessType access_type, int mmu_idx);
+-hwaddr mips_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
++bool mips_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
++                                  TranslateForDebugResult *result);
  
- #endif  /* LOONGARCH_CPU_MMU_H */
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 54c26998979..69d9658f8ce 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -841,7 +841,7 @@ static void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- static const struct SysemuCPUOps loongarch_sysemu_ops = {
-     .has_work = loongarch_cpu_has_work,
-     .write_elf64_note = loongarch_cpu_write_elf64_note,
--    .get_phys_addr_debug = loongarch_cpu_get_phys_addr_debug,
-+    .translate_for_debug = loongarch_cpu_translate_for_debug,
+ typedef struct r4k_tlb_t r4k_tlb_t;
+ struct r4k_tlb_t {
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 0fead20d651..c618fd3d000 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -659,7 +659,7 @@ static ObjectClass *mips_cpu_class_by_name(const char *cpu_model)
+ 
+ static const struct SysemuCPUOps mips_sysemu_ops = {
+     .has_work = mips_cpu_has_work,
+-    .get_phys_addr_debug = mips_cpu_get_phys_addr_debug,
++    .translate_for_debug = mips_cpu_translate_for_debug,
+     .legacy_vmsd = &vmstate_mips_cpu,
  };
+ #endif
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index 746dbf8aa4e..6f11e70ba80 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "../internal.h"
  
- static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 123cad3d930..270917184a6 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -363,7 +363,8 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-     return loongarch_map_address(env, context, access_type, mmu_idx, is_debug);
+ static int is_seg_am_mapped(unsigned int am, bool eu, int mmu_idx)
+@@ -227,7 +228,8 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+     return ret;
  }
  
--hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-+bool loongarch_cpu_translate_for_debug(CPUState *cs, vaddr addr,
-+                                       TranslateForDebugResult *result)
+-hwaddr mips_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
++bool mips_cpu_translate_for_debug(CPUState *cs, vaddr addr,
++                                  TranslateForDebugResult *result)
  {
-     CPULoongArchState *env = cpu_env(cs);
-     MMUContext context;
-@@ -371,9 +372,14 @@ hwaddr loongarch_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-     context.addr = addr;
-     if (get_physical_address(env, &context, MMU_DATA_LOAD,
-                              cpu_mmu_index(cs, false), 1) != TLBRET_MATCH) {
+     CPUMIPSState *env = cpu_env(cs);
+     hwaddr phys_addr;
+@@ -235,7 +237,12 @@ hwaddr mips_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+ 
+     if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
+                              mips_env_mmu_index(env)) != 0) {
 -        return -1;
 +        return false;
      }
--    return context.physical;
+-    return phys_addr;
 +    *result = (TranslateForDebugResult) {
-+        .physaddr = context.physical,
-+        .attrs.debug = 1,
++        .physaddr = phys_addr,
 +        .lg_page_size = TARGET_PAGE_BITS,
++        .attrs.debug = 1,
 +    };
 +    return true;
  }
- 
- uint64_t loongarch_palen_mask(CPULoongArchState *env)
 -- 
 2.43.0
 
