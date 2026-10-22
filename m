@@ -1,69 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0D7606A319
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 09:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=JBPT3Qxa
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AEB606A319
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Oct 2026 09:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xJpTi-0000qd-B5; Thu, 22 Oct 2026 05:52:54 -0400
+	id 1xJpVV-0001XF-Pb; Thu, 22 Oct 2026 05:54:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xJpTg-0000pg-18
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:52:52 -0400
-Received: from forwardcorp2d.mail.yandex.net ([178.154.239.207])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xJpTd-00034D-UZ
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:52:51 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.yp-c.yandex.net)
- by forwardcorp2d.mail.yandex.net (postfix) with ESMTPS id C57EB809BA;
- Thu, 22 Oct 2026 12:52:46 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b37::1:16]
- by mail-nwsmtp-smtp-corp-main-56 with ESMTPSA id jqYNlD9ZCqM0-xGIEoby1;
- Thu, 22 Oct 2026 12:52:46 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1792662766;
- bh=LuVTStR+Md9iRqM2tX29a4wLJsd2LTbthTChcAwtyG4=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=JBPT3Qxa1M2Eqbr+bD+KXNWCJgTgRxEp40QvZSPRvTr8nrCat2A7MyaHuYLwepm9N
- OaDdcNpcGTW2UU8gc5ZR0iHYzjrtdVH/6hpeGBpzr60tu1Fe37QC0gScPGXyYLJnpB
- AVwDibuYhrc1GXthbDBA4Kl5oGzEdWqQrqc916hk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <ad216146-83a1-44e5-afbc-f1028b22299b@yandex-team.ru>
-Date: Thu, 22 Oct 2026 12:52:45 +0300
+ (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
+ id 1xJpVT-0001We-Ew
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:54:43 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <ewanhai-oc@zhaoxin.com>) id 1xJpVQ-0003Bv-IM
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 05:54:43 -0400
+Received: from zhaoxin.com (unknown [127.0.0.1])
+ by mx1.zhaoxin.com (MTA) with ESMTP id 4j9M1s3mHqzb0pbL;
+ Thu, 22 Oct 2026 17:54:25 +0800 (CST)
+Received: from zhaoxin.com (unknown [10.28.140.201])
+ by mx1.zhaoxin.com (MTA) with ESMTP id 4j9M1r3Klxzb0pbL;
+ Thu, 22 Oct 2026 17:54:24 +0800 (CST)
+Received: from ewan-server (ewan-server [10.28.24.7])
+ by zhaoxin.com (8.30) with ESMTP49ec586927af1748ac6263a515f0510c
+ Thu, 22 Oct 2026 17:54:24 +0800
+X-Eyou-Smtpauth: ewanhai-oc@zhaoxin.com
+X-Eyou-EnvelopeSender: ewanhai-oc@zhaoxin.com
+X-Eyou-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+From: "=?UTF-8?B?RXdhbiBIYWktb2M=?=" <ewanhai-oc@zhaoxin.com>
+Date: Thu, 22 Oct 2026 17:54:46 +0800
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, ewanhai@zhaoxin.com, 
+ cobechen@zhaoxin.com
+Subject: Re: [PATCH v4 0/4] target/i386: Add Zhaoxin Shijidadao CPU model
+Message-ID: <atncw8u-1ERPEcgw@ewan-server>
+References: <20260826084838.2107629-1-ewanhai-oc@zhaoxin.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] kvm: skip tsc synchronization on shutdown
-To: mst@redhat.com
-Cc: marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20260127201831.179237-1-vsementsov@yandex-team.ru>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260127201831.179237-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.207;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp2d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826084838.2107629-1-ewanhai-oc@zhaoxin.com>
+X-Eyou-Sender: <ewanhai-oc@zhaoxin.com>
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=ewanhai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FROM_EXCESS_BASE64=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Archive: <https://lists.nongnu.org/archive/html/qemu-devel>
 List-Post: <mailto:qemu-devel@nongnu.org>
@@ -71,44 +60,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-ping
-
-
-On 27.01.26 23:18, Vladimir Sementsov-Ogievskiy wrote:
-> That doesn't make real sense, but may take much time when
-> there are a lot of vCPUs. Let's just skip it.
+On Wed, Aug 26, 2026 at 04:48:34PM +0800, Ewan Hai-oc wrote:
+> Add CPU models for the Zhaoxin Shijidadao server (v1) and client (v2),
+> including their cache topology.  The matching KVM support for SM2, CCS,
+> RNG2, PHE2 and RSA is queued in the KVM next branch.
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   hw/i386/kvm/clock.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+> The series also adds YongFeng-v4 with the same five feature pairs.
 > 
-> diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-> index aba6842a22..46efdbed14 100644
-> --- a/hw/i386/kvm/clock.c
-> +++ b/hw/i386/kvm/clock.c
-> @@ -207,7 +207,9 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
->   
->           s->runstate_paused = runstate_check(RUN_STATE_PAUSED);
->   
-> -        kvm_synchronize_all_tsc();
-> +        if (!runstate_check(RUN_STATE_SHUTDOWN)) {
-> +            kvm_synchronize_all_tsc();
-> +        }
->   
->           kvm_update_clock(s);
->           /*
+> TCG does not currently implement these instructions.  TCG_EXT4_FEATURES
+> remains zero, so QEMU filters the new bits from realized TCG CPUs.
+> 
+> The Shijidadao models expose CPUID leaf 0x1f.  A related fix for invalid
+> subleaf handling under TCG is available here:
+> https://lore.kernel.org/qemu-devel/20260609090046.2376016-1-ewanhai-oc@zhaoxin.com/
+> 
+> Changes since v3:
+> - Rebased to the 11.2 development tree.
+> - Added QEMU definitions for the five feature pairs now available
+>   through KVM.
+> - Enabled the new CPUID 0xC0000001 EDX feature pairs in the Shijidadao
+>   models and adjusted the server and client feature sets to match their
+>   respective silicon.
+> - Added YongFeng-v4 with the same feature set.
+> 
+> v3:
+> https://lore.kernel.org/all/20260109021028.83985-1-ewanhai-oc@zhaoxin.com/
+> 
+> KVM feature series:
+> https://lore.kernel.org/all/20260610023512.3690734-1-ewanhai-oc@zhaoxin.com/
+> 
+> Ewan Hai (4):
+>   target/i386: Add cache model for Zhaoxin Shijidadao vCPUs
+>   target/i386: Add Zhaoxin cryptographic CPUID features
+>   target/i386: Introduce Zhaoxin Shijidadao CPU model
+>   target/i386: Enable new cryptographic features in YongFeng-v4
+> 
+>  target/i386/cpu.c | 284 ++++++++++++++++++++++++++++++++++++++++++++--
+>  target/i386/cpu.h |  20 ++++
+>  2 files changed, 295 insertions(+), 9 deletions(-)
+> 
+> -- 
+> 2.34.1
 
+Hi Paolo,
 
--- 
-Best regards,
-Vladimir
+Ping on this series. All four patches have Zhao's Reviewed-by, and
+I've checked that the series still applies cleanly to current master.
+
+Could you please pick this up, or let me know if anything else is needed?
+
+https://lore.kernel.org/all/20260826084838.2107629-1-ewanhai-oc@zhaoxin.com/
+
+Thanks,
+Ewan
+
 
