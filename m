@@ -1,151 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC55606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD51E606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Z3rmBCi+;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OlNvgSPv
+	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=v/MRxcNK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKKCr-0002Ot-Kj; Fri, 23 Oct 2026 14:41:35 -0400
+	id 1xKKTx-0006wS-5d; Fri, 23 Oct 2026 14:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKKCT-0002IH-Q5
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:41:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xKKTd-0006tt-QD
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:58:56 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKKCR-0007Oz-M9
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:41:09 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NIZPHX2074769
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 18:41:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1a/dfM+7136CDra7CBk6zTi7NeKPREAoeMOA3X0DHw0=; b=Z3rmBCi+04vcbxW2
- lwPy5ql2BS2iAGZvjzbe4EMiR3UVNHE8jxAg3xCh4WtLDPXoD2V6FxnY/FC0YgRG
- 8kJTn8Az0OiaX837c9qIZhZVXV/GVOlfKv31MDqRKyo3n7N3A1a8A7pkm1EYPukh
- bdxmUqUl4BVCF6xuMS0UBMMmyMGiNBLJs7G2mVcEOTuObAWQtdXw2SA6/LacOnmH
- YaHRQjPjYxLg52ZVYF/xkDIlP4cXu7VlydKXVi2g03PWACheOT0ev5J8RRZuYDH4
- kiIfltmR/f4/sMv6aYXJSQmSqRQPHPRIiYV3WFhQcSEoHCmXLkeHsjALHtnM4GML
- 0tm26w==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgcr0833d-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 18:41:05 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-91be1227fdeso27960626d6.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:41:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792780864; x=1793385664; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1a/dfM+7136CDra7CBk6zTi7NeKPREAoeMOA3X0DHw0=;
- b=OlNvgSPvfMKUSIAdZKC5ItTJbkAuQZXozniWdsbw9KqtnVR/4lvULbV0RXNXww8qx/
- vW0V/CW92b5et7Kf2OgabgpGiqakZxVCF5BMiq9n+nVvMFNG7xBxVDOxB5bPi6xY0LXY
- q6hqycPXud7BfcG0pMLW/WmSkuRgfPucqs+W0jd4GrcG5KAS/E+r5jozReq5WP6jfUvi
- T4qI1BRW8AwtYJ3o06hGFaUjYa9ncT2ewQdA6HCv72DzPU/qNovbyqGedDGKlAJFDvIc
- dNwCXaWeq+3S1uF7twWfwGui3vnmkBF4XJ8UTs2LRFo2VwJ+unWT3yJGeiI0SDgvyGWV
- bi6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792780864; x=1793385664;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=1a/dfM+7136CDra7CBk6zTi7NeKPREAoeMOA3X0DHw0=;
- b=IHOoQIqfOLD7dY6VE3+rKS3wH6yNDlYjQH0Brp76EfFq+e8KMd3bkdj1Xs9nzVV0Um
- kOFSz6BT89wVwOymUUSNw/KLMFcvrt2mWhtP5CAsejdkbMrGfLGAIaFEHmy8t0Ds2GYY
- qwRfqJzGC2l3yejrl/AOJBY6fEgu0m/Q0XdCEj8cTg/ht+SUSwKNslSlzuQgawHXHtv/
- +PiY4PVMevIkyCNKo/vvvuZp4mtU2Yoq4FNqPWc/paEWgJZUUq0dZ+KiecSdd0537pju
- hMhb3g5jrwQdznhtlVc8rwSmY8dNoZJQJypiznOb+YxnE5LgvnRfbhjh8gXbDrgCtsth
- XnZw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByJfwfrKVy2Ayd4Owd25BDhAVEe+keWpLRNB9JQN+2yHfuvh/SkzgFcxWl15rSK6Se5gnOrQD1iLHkN@nongnu.org
-X-Gm-Message-State: AFq9FYJkpFMXm5hEIHH6pOiTW1ONGsyU/9FQcA2DbTI7t/Y9KLBMq5IY
- O2wUySDQ8JF4JSNuhU0cGK+sb6/MmeL3+xCUYXEV9LpASq/EN9tDdMP6+q9d7gUn7rXkVoiRF5g
- XyHHSbga5wj/5Ty6YFAPWuuhjWV2g+2Z2SQgM6D1GKfi4kDRURtx+kwEm2g==
-X-Gm-Gg: AYBFou1wOBraq2EoHzb0JIWz7nsc3pERfn53rskiZY/8e9k26DurkelcZV25/OKCjZB
- p4DF0XgNN1NoBbNtnJ7YByUxaDUnZxAvao75RaHcnp6nineyghf0BNWnBbGuucyXLLHjN0qnCW/
- al2GtqqyRyGraWVswOKvjzUCf6s4DzAW29iIrx7vTEejKI1lmqBwuivAF1ftPY4MmD0rZRdX5zL
- GVRwlVzgFHZnZz7j6VJj0yjhRKT0Zo3hyRRf4yORSNKLeBZrinCfAnOWrgpdzqM43r1oWOPKHiy
- PDmOhfAUpXlWkh71NIIKvQ00EINBTWqkleBNx0slCimFqu3ckWpkSc7uhK5zuMYC8yehJXAEl8U
- lb4No2QjbAtCwpK0ppASpEyDJnEkEcxQsPO7Q
-X-Received: by 2002:a05:620a:2603:b0:93f:2463:f78f with SMTP id
- af79cd13be357-93f6f898d18mr581682085a.62.1792780864122; 
- Fri, 23 Oct 2026 11:41:04 -0700 (PDT)
-X-Received: by 2002:a05:620a:2603:b0:93f:2463:f78f with SMTP id
- af79cd13be357-93f6f898d18mr581678185a.62.1792780863599; 
- Fri, 23 Oct 2026 11:41:03 -0700 (PDT)
-Received: from [192.168.68.104] ([152.234.125.162])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9404722f49bsm86016085a.13.2026.10.23.11.41.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 11:41:03 -0700 (PDT)
-Message-ID: <32fc55cb-bdf2-4407-8309-6d52757a210f@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 15:41:00 -0300
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xKKTa-0000ae-Dx
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:58:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=NYHRtOkXwgKulY89drqvliaNIdAb8eTYjkFQ0MXxqus=; b=v/MRxcNK3G+dTR+sACoaCmosdZ
+ 8JQE4FiLpnKuB0Mmzw70uvz+5Bf0saq7Sg+LQWRRnKzhIbPntNB8ckyTcccw+drwcMcUjLOe5Wz0v
+ nZeSaN+5SSjNP6ExC+5KuHtucgghxEYgZrM+1/drEHIX9S/KGFNsb6laIGWHHAkgqkqFOGXs+IUoQ
+ QR7PhpacsFTleh+2CyrzQGpk5yvnRw59UEYxb5Rv1ujxbVj9qUVoygLeENVU9ihW4sKVCS5lkw7bV
+ aMjaalR8/drIswin6UTFRebYECQNCNZGdH/EFif9xxEII/vla5FolKK+3AwNKzWYylgsfGCwzG0R9
+ AI7gok2UbMh5OpEq2b5CbUb/Wafh4+oNwbAeKXxi7M8YQApdNDB16vBOsR8DbjSzM7bqLn8R9sK7f
+ T3qNoXgFX/IPdbQcS7EEqxLnhB2tF6GU3Gjwn1wdhonxfZuCb2+p8VG/50o09B/XECBf1GEwvje/G
+ AXNrkUapFnZ8sfyZMSODhI8IT7i/pNLVk4YzW81oL0jZFept03vG6RUy337HvwQPMm6M98k+xpA9x
+ 30YvL9Qz0kRmJx4TA4IeFZRmISZMFaSJWFs12vvLMXiLyl8NaR6w33li5WyJIwiu77/9EFBwidlUJ
+ U/ey7Ft/+jVrhGMHCgmCvrbfaR1IW6YnGLBG6BgDI=;
+Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1xKKSq-003PTd-8P; Fri, 23 Oct 2026 19:58:04 +0100
+Message-ID: <0aba96c1-d184-452e-aba7-b6c6005cb293@ilande.co.uk>
+Date: Fri, 23 Oct 2026 19:58:43 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] hw/intc/riscv_aplic: Add in-kernel aplic save and
- restore function
-To: Wang Yechao <wang.yechao255@zte.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Xuemei Liu <liu.xuemei1@zte.com.cn>
-References: <20261023021237.486091-1-wang.yechao255@zte.com.cn>
- <20261023021237.486091-3-wang.yechao255@zte.com.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: Stian Halseth <stian@itx.no>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Biggers <ebiggers@kernel.org>
+References: <20261022070059.3861291-1-stian@itx.no>
+ <20261022070059.3861291-5-stian@itx.no>
 Content-Language: en-US
-In-Reply-To: <20261023021237.486091-3-wang.yechao255@zte.com.cn>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20261022070059.3861291-5-stian@itx.no>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: ZH650t7JkDxhepAz0ifU07GGO3fNfkK9
-X-Authority-Analysis: v=2.4 cv=FM6OVOos c=1 sm=1 tr=0 ts=6adbaa41 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=AgQEunjic7gIBKSbIeB6Ag==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=tvxrRNcjlJDut60I9ZoA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=kRpfLKi8w9umh8uBmg1i:22
-X-Proofpoint-GUID: ZH650t7JkDxhepAz0ifU07GGO3fNfkK9
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA3MyBTYWx0ZWRfX3bmvhOwPX5P1
- UmSeU4R7MpqFHVZUHjQpGyMoJsf0EQ9zKbVbG0qjf7Z0wqFhLpMLhwS5PelrPXYRAJ6RfGbAj6w
- zJcXkpLBwgq9bwhtiOKi4uJpIgAlrqc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA3MyBTYWx0ZWRfX69XV1FSAfvmj
- VV3h8iD6rYEO8lTLk3ZTVEXlufrDDypsIsAUiSuHfgcRcbihSuLyZsXyP8tWBssDCRIQRU8vGti
- DG6NJPYBTYBzOZn8d0KsIBToNJSBlo/zE83mEQfpd5tEPM7Seo19jxpQs2VQwCEyReSX8Ph8vSx
- P7cr96V+0b1eJyOeZD/45iLUYqQE1MSHGnjpSBo9Ty/tryCxqOwzavssGGhOaIGSNl6Om525org
- vePbQja64OahpIPrNSzZLJbKg29IWIv37POoNorNP90m3TtGb5HFN3zdq7boQPYGVxIFGpB8wMW
- NkZ3EN7BXsSfvcL+STxaXbs7FB29uZfzjqdR8esi/NcwsKVv8mRwi9gRyfo4nkhjUhpeIVyolQB
- IXtMJLqGPJLwYjOrSrpCpbvCBBRhNT6lP6yXi8iGeJhx9SwBSyyPlIuUfI8px5TY+DuzCXUWquR
- 1abG3QJFMLVXOIG/hWg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230073
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 4/8] target/sparc: Add the AES key expansion
+ instructions
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,299 +107,222 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 22/10/2026 08:00, Stian Halseth wrote:
 
-
-On 10/22/2026 11:12 PM, Wang Yechao wrote:
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> Implement the AES key expansion instructions according to
+> OSA (Oracle SPARC Architecture) 2011 sections 7.3 and 7.4
+> and set the AES bit in the CFR.
 > 
-> Add save and restore function if riscv_use_emulated_aplic return
-> false, it is to get and set APLIC irqchip state from KVM kernel.
+> 4-operand form (7.3):
+> - AES_KEXPAND1
 > 
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
+> 3-operand form (7.4):
+> - AES_KEXPAND0
+> - AES_KEXPAND2
+> 
+> Like the AES round instructions, they are gated behind the
+> crypto CPU feature and disabled for sparc32.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Stian Halseth <stian@itx.no>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   hw/intc/riscv_aplic.c         | 201 +++++++++++++++++++++++++++++-----
->   include/hw/intc/riscv_aplic.h |   4 +
->   2 files changed, 179 insertions(+), 26 deletions(-)
+>   target/sparc/crypto_helper.c | 58 ++++++++++++++++++++++++++++++++++++
+>   target/sparc/helper.h        |  3 ++
+>   target/sparc/insns.decode    |  7 +++++
+>   target/sparc/translate.c     | 30 ++++++++++++++++++-
+>   4 files changed, 97 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 03a0852b8b..a3d209ca23 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -979,9 +979,7 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
->           }
+> diff --git a/target/sparc/crypto_helper.c b/target/sparc/crypto_helper.c
+> index 7dd4dd5144..f04bd3569d 100644
+> --- a/target/sparc/crypto_helper.c
+> +++ b/target/sparc/crypto_helper.c
+> @@ -9,6 +9,7 @@
+>   #include "qemu/osdep.h"
+>   #include "exec/helper-proto.h"
+>   #include "crypto/aes-round.h"
+> +#include "crypto/aes.h"
 >   
->           aplic->bitfield_words = (aplic->num_irqs + 31) >> 5;
-> -        aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
->           aplic->state = g_new0(uint32_t, aplic->num_irqs);
-> -        aplic->target = g_new0(uint32_t, aplic->num_irqs);
->           aplic->idelivery = g_new0(uint32_t, aplic->num_harts);
->           aplic->iforce = g_new0(uint32_t, aplic->num_harts);
->           aplic->ithreshold = g_new0(uint32_t, aplic->num_harts);
-> @@ -993,8 +991,16 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
->           if (kvm_enabled()) {
->               aplic->kvm_splitmode = true;
->           }
-> +    } else {
-> +        aplic->nr_words = BITS_TO_U32S(aplic->num_irqs);
-> +        aplic->setip = g_new0(uint32_t, aplic->nr_words);
-> +        aplic->clrip = g_new0(uint32_t, aplic->nr_words);
-> +        aplic->setie = g_new0(uint32_t, aplic->nr_words);
->       }
->   
-> +    aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
-> +    aplic->target = g_new0(uint32_t, aplic->num_irqs);
-> +
->       /*
->        * Only root APLICs have hardware IRQ lines. All non-root APLICs
->        * have IRQ lines delegated by their parent APLIC.
-> @@ -1020,47 +1026,190 @@ static const Property riscv_aplic_properties[] = {
->       DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
->   };
->   
-> -static bool riscv_aplic_state_needed(void *opaque)
-> +static bool riscv_emulated_aplic_state_needed(void *opaque)
+>   /*
+>    * SPARC four-operand AES round (Section 7.3).
+> @@ -87,3 +88,60 @@ uint64_t helper_aes_dround23_l(uint64_t key, uint64_t s2, uint64_t s3)
 >   {
->       RISCVAPLICState *aplic = opaque;
+>       return aes_round(key, s2, s3, 1, true, true);
+>   }
+> +
+> +/* Combine the transformed word with the two words in rs1. */
+> +static uint64_t aes_kexpand(uint64_t rs1, uint32_t t)
+> +{
+> +    uint32_t hi = (rs1 >> 32) ^ t;
+> +    uint32_t lo = (uint32_t)rs1 ^ hi;
+> +
+> +    return deposit64(lo, 32, 32, hi);
+> +}
+> +
+> +/* Apply the AES S-box to each byte, preserving byte positions. */
+> +static uint32_t aes_subword(uint32_t x)
+> +{
+> +    return ((uint32_t)AES_sbox[x >> 24] << 24) |
+> +           ((uint32_t)AES_sbox[(x >> 16) & 0xff] << 16) |
+> +           ((uint32_t)AES_sbox[(x >> 8) & 0xff] << 8) |
+> +           (uint32_t)AES_sbox[x & 0xff];
+> +}
+> +
+> +/*
+> + * AES Cryptographic Operations 4-operand (Section 7.3)
+> + * AES key expansion with RotWord, SubWord, and RCON.
+> + */
+> +uint64_t helper_aes_kexpand1(uint64_t rs1, uint64_t rs2, uint32_t imm)
+> +{
+> +    static const uint8_t rcon[10] = {
+> +        0x01, 0x02, 0x04, 0x08, 0x10,
+> +        0x20, 0x40, 0x80, 0x1b, 0x36,
+> +    };
+> +    uint32_t t = rol32((uint32_t)rs2, 8);
+> +
+> +    t = aes_subword(t);
+> +
+> +    if (imm < ARRAY_SIZE(rcon)) {
+> +        t ^= (uint32_t)rcon[imm] << 24;
+> +    }
+> +
+> +    return aes_kexpand(rs1, t);
+> +}
+> +
+> +/*
+> + * AES Cryptographic Operations 3-operand (Section 7.4)
+> + * AES key expansion with SubWord, without RotWord or RCON.
+> + */
+> +uint64_t helper_aes_kexpand0(uint64_t rs1, uint64_t rs2)
+> +{
+> +    return aes_kexpand(rs1, aes_subword(rs2));
+> +}
+> +
+> +/*
+> + * AES Cryptographic Operations 3-operand (Section 7.4)
+> + * AES key expansion without SubWord, RotWord, or RCON.
+> + */
+> +uint64_t helper_aes_kexpand2(uint64_t rs1, uint64_t rs2)
+> +{
+> +    return aes_kexpand(rs1, (uint32_t)rs2);
+> +}
+> diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+> index 9bfd643b09..685b89d9c5 100644
+> --- a/target/sparc/helper.h
+> +++ b/target/sparc/helper.h
+> @@ -130,6 +130,9 @@ DEF_HELPER_FLAGS_3(aes_eround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+>   DEF_HELPER_FLAGS_3(aes_eround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+>   DEF_HELPER_FLAGS_3(aes_dround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+>   DEF_HELPER_FLAGS_3(aes_dround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
+> +DEF_HELPER_FLAGS_2(aes_kexpand0, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+> +DEF_HELPER_FLAGS_3(aes_kexpand1, TCG_CALL_NO_RWG_SE, i64, i64, i64, i32)
+> +DEF_HELPER_FLAGS_2(aes_kexpand2, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+>   #define VIS_CMPHELPER(name)                                  \
+>       DEF_HELPER_FLAGS_2(f##name##8, TCG_CALL_NO_RWG_SE,       \
+>                          i64, i64, i64)                        \
+> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
+> index 99c9147e7d..96791c7658 100644
+> --- a/target/sparc/insns.decode
+> +++ b/target/sparc/insns.decode
+> @@ -86,6 +86,10 @@ CALL    01 i:s30
+>   @d_d_d_d    .. ..... ...... ..... ..... .... .....         \
+>               &r_r_r_r rd=%dfp_rd rs1=%dfp_rs1 rs2=%dfp_rs2 rs3=%dfp_rs3
 >   
->       return riscv_use_emulated_aplic(aplic->msimode);
+> +&r_r_i_r    rd rs1 imm rs2
+> +@d_d_i_d    .. ..... ...... ..... imm:5 .... .....         \
+> +            &r_r_i_r rd=%dfp_rd rs1=%dfp_rs1 rs2=%dfp_rs2
+> +
+>   {
+>     [
+>       STBAR_v9        10 00000 101000 01111 0 0000000000000
+> @@ -571,6 +575,8 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
+>       FPMAXU8     10 ..... 110110 ..... 1 0101 1101 .....    @d_d_d
+>       FPMAXU16    10 ..... 110110 ..... 1 0101 1110 .....    @d_d_d
+>       FPMAXU32    10 ..... 110110 ..... 1 0101 1111 .....    @d_d_d
+> +    AES_KEXPAND0 10 ..... 110110 ..... 1 0011 0000 .....   @d_d_d
+> +    AES_KEXPAND2 10 ..... 110110 ..... 1 0011 0001 .....   @d_d_d
+>   
+>       FLCMPs      10 000 cc:2 110110 rs1:5 1 0101 0001 rs2:5
+>       FLCMPd      10 000 cc:2 110110 ..... 1 0101 0010 ..... \
+> @@ -604,6 +610,7 @@ AES_EROUND01_L  10 ..... 011001 ..... ..... 0100 .....     @d_d_d_d
+>   AES_EROUND23_L  10 ..... 011001 ..... ..... 0101 .....     @d_d_d_d
+>   AES_DROUND01_L  10 ..... 011001 ..... ..... 0110 .....     @d_d_d_d
+>   AES_DROUND23_L  10 ..... 011001 ..... ..... 0111 .....     @d_d_d_d
+> +AES_KEXPAND1    10 ..... 011001 ..... ..... 1000 .....     @d_d_i_d
+>   
+>   ##
+>   ## Major Opcode 11 -- load and store instructions
+> diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+> index 16907b1085..ad32b53cc3 100644
+> --- a/target/sparc/translate.c
+> +++ b/target/sparc/translate.c
+> @@ -109,6 +109,8 @@
+>   # define gen_helper_aes_eround23_l       ({ qemu_build_not_reached(); NULL; })
+>   # define gen_helper_aes_dround01_l       ({ qemu_build_not_reached(); NULL; })
+>   # define gen_helper_aes_dround23_l       ({ qemu_build_not_reached(); NULL; })
+> +# define gen_helper_aes_kexpand0         ({ qemu_build_not_reached(); NULL; })
+> +# define gen_helper_aes_kexpand2         ({ qemu_build_not_reached(); NULL; })
+>   #endif
+>   
+>   #define DISAS_EXIT  DISAS_TARGET_0
+> @@ -3039,7 +3041,7 @@ TRANS(RDSTRAND_STATUS, HYPV, do_rd_special, true, a->rd, do_rdstrand_status)
+>   
+>   static TCGv do_rdcfr(DisasContext *dc, TCGv dst)
+>   {
+> -    return tcg_constant_tl(0);
+> +    return tcg_constant_tl(CFR_AES);
 >   }
 >   
-> +static const VMStateDescription vmstate_emulated_aplic_state = {
-> +    .name = "riscv_aplic/emulated_aplic_state",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = riscv_emulated_aplic_state_needed,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-> +                              num_irqs, 0,
-> +                              vmstate_info_uint32, uint32_t),
-> +        VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-> +        VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
-> +        VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-> +        VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-> +        VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-> +        VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-> +        VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
-> +                              num_harts, 0,
-> +                              vmstate_info_uint32, uint32_t),
-> +        VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
-> +                              num_harts, 0,
-> +                              vmstate_info_uint32, uint32_t),
-> +        VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
-> +                              num_harts, 0,
-> +                              vmstate_info_uint32, uint32_t),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
+>   TRANS(RDCFR, CRYPTO, do_rd_special, true, a->rd, do_rdcfr)
+> @@ -5434,6 +5436,32 @@ TRANS(AES_EROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_eround01_l)
+>   TRANS(AES_EROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_eround23_l)
+>   TRANS(AES_DROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_dround01_l)
+>   TRANS(AES_DROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_dround23_l)
+> +TRANS(AES_KEXPAND0, CRYPTO, do_ddd, a, gen_helper_aes_kexpand0)
+> +TRANS(AES_KEXPAND2, CRYPTO, do_ddd, a, gen_helper_aes_kexpand2)
 > +
-> +#ifdef CONFIG_KVM
-> +static bool kvm_riscv_aplic_state_needed(void *opaque)
+> +/* AES key expansion with RCON selected by the 5-bit immediate in imm */
+> +static bool trans_AES_KEXPAND1(DisasContext *dc, arg_r_r_i_r *a)
 > +{
-> +    RISCVAPLICState *aplic = opaque;
+> +    #ifdef TARGET_SPARC64
+> +        TCGv_i64 dst, src1, src2;
 > +
-> +    return !riscv_use_emulated_aplic(aplic->msimode);
-> +}
-> +
-> +static int kvm_riscv_aplic_state_pre_save(void *opaque)
-> +{
-> +    RISCVAPLICState *aplic = opaque;
-> +
-> +    for (uint32_t i = 0; i < aplic->nr_words; i++) {
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_SETIP_BASE + i * 4,
-> +                                 aplic->setip + i, false);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_CLRIP_BASE + i * 4,
-> +                                 aplic->clrip + i, false);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_SETIE_BASE + i * 4,
-> +                                 aplic->setie + i, false);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int kvm_riscv_aplic_state_post_load(void *opaque, int version_id)
-> +{
-> +    RISCVAPLICState *aplic = opaque;
-> +
-> +    for (uint32_t i = 0; i < aplic->nr_words; i++) {
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_SETIP_BASE + i * 4,
-> +                                 aplic->setip + i, true);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_CLRIP_BASE + i * 4,
-> +                                 aplic->clrip + i, true);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                 APLIC_SETIE_BASE + i * 4,
-> +                                 aplic->setie + i, true);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_kvm_aplic_state = {
-> +    .name = "riscv_aplic/kvm_aplic_state",
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .needed = kvm_riscv_aplic_state_needed,
-> +    .pre_save = kvm_riscv_aplic_state_pre_save,
-> +    .post_load = kvm_riscv_aplic_state_post_load,
-> +    .fields = (const VMStateField[]) {
-> +            VMSTATE_VARRAY_UINT32(setip, RISCVAPLICState,
-> +                                  nr_words, 0,
-> +                                  vmstate_info_uint32, uint32_t),
-> +            VMSTATE_VARRAY_UINT32(clrip, RISCVAPLICState,
-> +                                  nr_words, 0,
-> +                                  vmstate_info_uint32, uint32_t),
-> +            VMSTATE_VARRAY_UINT32(setie, RISCVAPLICState,
-> +                                  nr_words, 0,
-> +                                  vmstate_info_uint32, uint32_t),
-> +            VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static int riscv_aplic_pre_save(void *opaque)
-> +{
-> +    RISCVAPLICState *aplic = opaque;
-> +
-> +    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-> +                                 &aplic->domaincfg, false);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-> +                                 &aplic->genmsi, false);
-> +
-> +        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-> +            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-> +                                     aplic->sourcecfg + i, false);
-> +            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                     APLIC_TARGET_BASE + (i - 1) * 4,
-> +                                     aplic->target + i, false);
+> +        if (!avail_CRYPTO(dc)) {
+> +            return false;
 > +        }
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int riscv_aplic_post_load(void *opaque, int version_id)
-> +{
-> +    RISCVAPLICState *aplic = opaque;
-> +
-> +    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-> +                                 &aplic->domaincfg, true);
-> +        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-> +                                 &aplic->genmsi, true);
-> +
-> +        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-> +            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-> +                                     aplic->sourcecfg + i, true);
-> +            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-> +                                     APLIC_TARGET_BASE + (i - 1) * 4,
-> +                                     aplic->target + i, true);
+> +        if (gen_trap_ifnofpu(dc)) {
+> +            return true;
 > +        }
-> +    }
 > +
-> +    return 0;
+> +        dst = tcg_temp_new_i64();
+> +        src1 = gen_load_fpr_D(dc, a->rs1);
+> +        src2 = gen_load_fpr_D(dc, a->rs2);
+> +        gen_helper_aes_kexpand1(dst, src1, src2, tcg_constant_i32(a->imm));
+> +        gen_store_fpr_D(dc, a->rd, dst);
+> +        return advance_pc(dc);
+> +    #else
+> +        return false;
+> +    #endif
 > +}
-> +
-> +#else
-> +static int riscv_aplic_pre_save(void *opaque)
-> +{
-> +    return 0;
-> +}
-> +
-> +static int riscv_aplic_post_load(void *opaque, int version_id)
-> +{
-> +    return 0;
-> +}
-> +#endif
-> +
->   static const VMStateDescription vmstate_riscv_aplic = {
->       .name = "riscv_aplic",
-> -    .version_id = 3,
-> -    .minimum_version_id = 3,
-> -    .needed = riscv_aplic_state_needed,
-> +    .version_id = 4,
-> +    .minimum_version_id = 4,
-> +    .pre_save = riscv_aplic_pre_save,
-> +    .post_load = riscv_aplic_post_load,
->       .fields = (const VMStateField[]) {
->               VMSTATE_UINT32(domaincfg, RISCVAPLICState),
-> -            VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-> -            VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
-> -            VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-> -            VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
->               VMSTATE_UINT32(genmsi, RISCVAPLICState),
-> -            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-> -            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-> -            VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
-> -                                  num_irqs, 0,
-> -                                  vmstate_info_uint32, uint32_t),
-> -            VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-> +            VMSTATE_VARRAY_UINT32(sourcecfg , RISCVAPLICState,
->                                     num_irqs, 0,
->                                     vmstate_info_uint32, uint32_t),
->               VMSTATE_VARRAY_UINT32(target, RISCVAPLICState,
->                                     num_irqs, 0,
->                                     vmstate_info_uint32, uint32_t),
-> -            VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
-> -                                  num_harts, 0,
-> -                                  vmstate_info_uint32, uint32_t),
-> -            VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
-> -                                  num_harts, 0,
-> -                                  vmstate_info_uint32, uint32_t),
-> -            VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
-> -                                  num_harts, 0,
-> -                                  vmstate_info_uint32, uint32_t),
->               VMSTATE_END_OF_LIST()
-> -        }
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_emulated_aplic_state,
-> +#ifdef CONFIG_KVM
-> +        &vmstate_kvm_aplic_state,
-> +#endif
-> +        NULL
-> +    }
->   };
 >   
->   static void riscv_aplic_class_init(ObjectClass *klass, const void *data)
-> diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-> index 62d2b33ade..de0fed4748 100644
-> --- a/include/hw/intc/riscv_aplic.h
-> +++ b/include/hw/intc/riscv_aplic.h
-> @@ -53,6 +53,9 @@ struct RISCVAPLICState {
->       uint32_t *idelivery;
->       uint32_t *iforce;
->       uint32_t *ithreshold;
-> +    uint32_t *setip;
-> +    uint32_t *clrip;
-> +    uint32_t *setie;
->   
->       /* topology */
->   #define QEMU_APLIC_MAX_CHILDREN        16
-> @@ -66,6 +69,7 @@ struct RISCVAPLICState {
->       uint32_t num_harts;
->       uint32_t iprio_mask;
->       uint32_t num_irqs;
-> +    uint32_t nr_words;
->       bool msimode;
->       bool mmode;
->   
+>   static bool trans_FALIGNDATAi(DisasContext *dc, arg_r_r_r *a)
+>   {
+
+Since the outstanding queries have now been answered satisfactorily:
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+I'll fix up the indentation when I apply it to my local branch.
+
+
+ATB,
+
+Mark.
 
 
