@@ -1,84 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3172606A324
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B669B606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=dEJKVan/
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NKPMbyBU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKJeT-0006m6-6W; Fri, 23 Oct 2026 14:06:01 -0400
+	id 1xKJkr-0005D2-TW; Fri, 23 Oct 2026 14:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeL-0006fQ-S8
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:53 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1xKJkp-0005CL-Pk
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:12:35 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeK-0004YS-1H
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:53 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-48df8fe8513so1050412f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:51 -0700 (PDT)
+ id 1xKJkn-00057L-Ss
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:12:35 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a1d75f2f11so6951545e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792778750; x=1793383550; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792779152; x=1793383952; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=WaqUj6WEGN6dVwMOoOZBYZN/P8vE1I0eY8vio88JriE=;
- b=dEJKVan/OoRC3xkMaPVBBPxKq70bI9dNzHOHLp59d2VU8gZQE8yGK3W5Nk/R2MzSUR
- NhLcacJkg0ofgJSg4cvu1HSg4hLWnrvkdPQpbfso52h8uueBXF+BypyyqYskTlKw2MQB
- BwVv2TAifanpHtLliu3fovnMxUpxwYvcuwTMpiTlW3nr4IKVLfcgfFsIaCsdOdiwWwFe
- 0tRLjuDNl4B/DOGHOVOgseW9IUTbtTwQPbwehUl+1EvRFEEfycc1E41/yrjyL/ASQDDk
- 094flsbYcdm4MiNk7CirO4BIIp5ivFH8mCuqxHqtNQ+6w56IbqYp5pDZPUO1rVs8cdZd
- owMg==
+ bh=+leBuh/9b3E6vLKhHoJ+VRK+v4NDUffBfKv8oI+a85A=;
+ b=NKPMbyBU8t+N/PVEsLXiWhmjDx9bu/lPk6T88SOZlq6sJBEB2yL4Au7HBEyy/PiYgx
+ csbg1KrEQf5vhckHgpfeavM8nuUp6/I8oVFWYk5V+dRdcAOZD5T2LY8Xt+MUJr5OCY+y
+ EtQXRqjbfXYDQ9a5SJcbXcwC5FdQIa2beEOxW7tU6ql84BaPxbhVBc0fp/AqLelenIsM
+ cHNGRBWuJqvH16JDc16710AONy/B5LakQ5TUXALdsw/NDGFAouLU5Xyyxh+I2HEuNQHO
+ 8W5C7Yc4ws7jwwYXi9o/VXv+ohQ8j/QHztNi3+tql4PC2HKoUEjZNymcNGsKNhhoYKKv
+ R1Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792778750; x=1793383550;
+ d=1e100.net; s=20260707; t=1792779152; x=1793383952;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WaqUj6WEGN6dVwMOoOZBYZN/P8vE1I0eY8vio88JriE=;
- b=hK1Ruy4FYCwI0k/duHAVc+pWwW7vjz/2c4lpYLXYt/0H9RexQvEBH5lvC1iwXTRsEl
- 7ZqJ/4vglZXR3+DAX4vEYuCfFLczHIfB8uzVnhfTTIWN3OqhaA+ZerSjdlCXihohxcLf
- 5cA7vkiWNRaEB1sbPVDJkdqiVNph2QjvxOGSXOqf5z9ZSS3yGYwuyjQBfS7Iz7MGtcJE
- MkLjb40YLDDcLAgueLFvdl3wI8e9hUdCwJm1EriOGM8TGw1x/pPrjUrfKQv1InO3MnKZ
- 1nzt4MSkpvYtiATqYm2yg47Ux12nWOBsGJm1dPXWss5gtEfTKNL5m3eX8do74igAjXwf
- xxCA==
-X-Gm-Message-State: AFq9FYLmO23Ea6usbCrwbS28Zz1Qep8m3dREGKo+ciCl7rA5DTIMhNSX
- pvBEANBG/SSlyTzFlbDsTMZD2rMlKXSk0zNXzlW108rukM93CitDoXiO2x09ZZYliGGqVx5w64K
- DON1p6Hk=
-X-Gm-Gg: AYBFou0WHcacXYycildcp6qhfRT6qnVFLz1tXFWiceX3rd/bTYChHZAoMkhfl9V92n4
- 2ocFu7Bo1OHWIKBavaLrc5ui59+HH3b+5zeCmHk+D3A4l+U6sbIE96W3H2Oat1Dx7Tm9TkCt2c4
- KIb0nSi6SDzNdffqfW+Kjz9ba5GMbKOBbBa7P8TRgarRD58hLS0sYXeaJ4Tp1TIGCD0T45gzlcc
- 4fMLftpm2VbtqxhiIBDPIijxInf38nVNSXCdz6zC3AC8EkeeXRMJLXBT1ZmgiYMrqexoTkrI4xQ
- h3nq0Q88qX4YW0+asMR0OnBLsp47fMtqILTyaXQsBJA5jV2VKlBDDMtwcmpk/7COZ90DQwK4V2r
- z7oizvDIDcYrUhbjqVml26NhygWkBL1i0cPETZiShZnsqYpbCJqfLsGF9rpW6Sq9X2gklq2wf7k
- hUvt+xRgHlI+pZSfjGISbv6+q9ZQ1f0nywgIKuWQH0t8vpcxg9Y9fqXZtfB/gMv7WWgkGukzgo4
- qWJKrGgvYuOEyzMQnttyB3xmOTUdnM58DAdXwrFXXOopMS69NLyLFE=
-X-Received: by 2002:a05:6000:26ca:b0:48a:f454:3d4 with SMTP id
- ffacd0b85a97d-48e385c07f9mr5076201f8f.53.1792778750540; 
- Fri, 23 Oct 2026 11:05:50 -0700 (PDT)
+ bh=+leBuh/9b3E6vLKhHoJ+VRK+v4NDUffBfKv8oI+a85A=;
+ b=KGCAJxrAitasDZ0RFdzL3ImmiLL0bifQPlt+IV4JWzDdAX5K+s6XeFOy5IVNJOjzMG
+ ai7yR62oSGwiCYMFbL8AOeOryT6cuQcLlWMdZxIDmaD4oK4Edv4avOw9He4Wn75QIeoz
+ fAU2UCn4Od2PyE6iPmKRAMdVqLipVrExbq1K1XQrzkInFg3v4VhlExd/z/F3rhkdCMbL
+ 8gEGrDggHXF6tgbYyFaxQ2EaluyASi78aWMVWi1MF2LSn08zc8NeCycu1FYxt+7zj0CF
+ ASEse0BT4l4R1nNm703lCt644ztGNp+Qf2sVA0Qa5/XAYzSk2Mi0beHGGeBdos5tfyEu
+ mtgg==
+X-Gm-Message-State: AFq9FYJb3AvP9ZsZ7wiU63N/g4w40+FTxOrt0VUaldx5itRxNW3hUQ3w
+ n9ZUktWO0ZcXVqML8EAO/bFXx9ksIB4Ll9SosSg8GOnOTzh/f8vqwwNakFoicV7Tsbk=
+X-Gm-Gg: AYBFou11l3BD0gj48zAZ94EDpH3RoxHUvh4ptG97ifL1mpG9ZC5kFd/9IpfqcZm5SqB
+ aLxb/2GLXsgHkWnhairBlRSBzENbpEwoYy/NH6N6xH9sBhy6OCTm2MJzeIuU/XWKkO2ucBAEhne
+ I7slqvpqYNMxn5zMFS/vUtJEfvFr73makO8DVwvsRfRfbvLSmqoCgwEMe4bKrDZwalwm/HFBZCm
+ LOr67ugiefOJMHYJFrghXKWI3pjS2UdKdJfcdrQoeMi7yB7hA5yR5T4g5a8vLOdkDHLvxX9awi7
+ 0+Sq7Cf5ZfPAbfRqMl3crvFihWxOa4ike1NCYHLb/TxfO0LEwLfRwVgI1oN/OHlAt50PWrYW0fG
+ qbbHHF1fszg04Ywh0QiLyX+q2vtbD0mt94EC0hlhn9ymKz0wKpOjSxDAbESMuP4EdJClNR/y2RH
+ MHR52aHpUuklmYz12Lfw2/ygH/By4PMfgABdxLyTqM4HPIQwengJmLi+PMMcnPHplFAlqTnfkYO
+ WwsOoi5Iq/Xck+0FCIIqn761D4hL5+HGO8F2KtKE/Q0ZSaWzsC3NSrIx64ADRV9or62h3mCEWoB
+X-Received: by 2002:a05:600c:3114:b0:4a1:a39b:e75b with SMTP id
+ 5b1f17b1804b1-4a211cb296bmr46895455e9.21.1792779151823; 
+ Fri, 23 Oct 2026 11:12:31 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d42f4bbsm1347760f8f.58.2026.10.23.11.05.44
+ ffacd0b85a97d-48e3d42f884sm1233625f8f.57.2026.10.23.11.12.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 11:05:47 -0700 (PDT)
+ Fri, 23 Oct 2026 11:12:31 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E93C661186;
- Fri, 23 Oct 2026 19:05:40 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5E81361323;
+ Fri, 23 Oct 2026 19:05:41 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-arm@nongnu.org (open list:Virt)
-Subject: [PULL 14/19] tests/functional: split aarch64 tuxrun into tcg and kvm
- run
-Date: Fri, 23 Oct 2026 19:05:32 +0100
-Message-ID: <20261023180539.1574134-15-alex.bennee@linaro.org>
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-s390x@nongnu.org (open list:S390 Virtio-ccw)
+Subject: [PULL 18/19] tests/functional: update s390x tuxrun images
+Date: Fri, 23 Oct 2026 19:05:36 +0100
+Message-ID: <20261023180539.1574134-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261023180539.1574134-1-alex.bennee@linaro.org>
 References: <20261023180539.1574134-1-alex.bennee@linaro.org>
@@ -86,8 +88,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,40 +111,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add an explicit "kvm" run to the tuxrun tests. Although running on an
-aarch64 host would probably have defaulted to "kvm" anyway we want to
-exercise specific features later.
+We now fetch the kernel from a different location to the buildroot
+image itself. This is because we will want to access additional kernel
+metadata in future tests.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261019192704.3220373-15-alex.bennee@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20261019192704.3220373-19-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/functional/aarch64/test_tuxrun.py b/tests/functional/aarch64/test_tuxrun.py
-index 7dd50c3de17..0ef1b126fae 100755
---- a/tests/functional/aarch64/test_tuxrun.py
-+++ b/tests/functional/aarch64/test_tuxrun.py
-@@ -32,6 +32,16 @@ def test_arm64(self):
-         self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
-                            rootfs_asset=self.ASSET_ARM64_ROOTFS)
+diff --git a/tests/functional/s390x/test_tuxrun.py b/tests/functional/s390x/test_tuxrun.py
+index 086466af81f..8e0261e2b7f 100755
+--- a/tests/functional/s390x/test_tuxrun.py
++++ b/tests/functional/s390x/test_tuxrun.py
+@@ -17,11 +17,11 @@
+ class TuxRunS390xTest(TuxRunBaselineTest):
  
-+    def test_arm64_kvm(self):
-+        self.set_machine('virt')
-+        self.require_accelerator('kvm')
-+        self.cpu='host'
-+        self.console='ttyAMA0'
-+        self.wait_for_shutdown=False
-+        self.common_tuxrun(kernel_asset=self.ASSET_ARM64_KERNEL,
-+                           rootfs_asset=self.ASSET_ARM64_ROOTFS,
-+                           accel="kvm")
-+
-     ASSET_ARM64BE_KERNEL = Asset(
-         'https://storage.tuxboot.com/buildroot/20241119/arm64be/Image',
-         'fd6af4f16689d17a2c24fe0053cc212edcdf77abdcaf301800b8d38fa9f6e109')
+     ASSET_S390X_KERNEL = Asset(
+-        'https://storage.tuxboot.com/buildroot/20241119/s390/bzImage',
+-        'ee67e91db52a2aed104a7c72b2a08987c678f8179c029626789c35d6dd0fedf1')
++        'https://storage.tuxboot.com/kernels/6.18.54/s390/bzImage',
++        '5efeb31754b211440e1595ab11355bb006fe78a2c0604ed0a8c55c4598b71aec')
+     ASSET_S390X_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/buildroot/20241119/s390/rootfs.ext4.zst',
+-        'bff7971fc2fef56372d98afe4557b82fd0a785a241e44c29b058e577ad1bbb44')
++        'https://storage.tuxboot.com/buildroot/20260924/s390/rootfs.ext4.zst',
++        '5ba18c4d18831c50a0c743990f7bdee1d3b520629d423c55b668d8fbbac9c6f5')
+ 
+     def test_s390(self):
+         self.set_machine('s390-ccw-virtio')
 -- 
 2.47.3
 
