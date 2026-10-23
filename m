@@ -1,88 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EDC60A2619
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 15:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F58606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 15:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=xQh4cCdR
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gQgs8zpK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKHEn-0006o3-VB; Fri, 23 Oct 2026 11:31:21 -0400
+	id 1xKHFP-00078L-MV; Fri, 23 Oct 2026 11:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKHEf-0006mI-CI
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 11:31:14 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1xKHFM-00073A-4o
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 11:31:56 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKHEc-0005kS-AN
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 11:31:13 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4a207b02a2cso7024205e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:31:09 -0700 (PDT)
+ id 1xKHFK-0005om-1x
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 11:31:55 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a218c463d1so4422935e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792769468; x=1793374268; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792769512; x=1793374312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YOZVdxlp9UHy/TXer17e1bouf9xS+Zoyxtb5H0jr77c=;
- b=xQh4cCdRE8ZrwKLpU+C6MfG/xdH2tIS3VUOOdOYei22wf6biWDzPQNrHl8oAvz8BTj
- 2khphOcTHxKhC0MSZylrkfBEL0b+OpuguXOOaR6tC1dh4LZud+FVTxyBNf5LqXN1byYk
- n9dMGJAKMdCNiVtmeQXeHqbYQoMAXqJTTiWVaHI6ZSwSjjoP7twiDTm54eZaJ5XNLA84
- Gft7XsmOZmJD0j/dtvAFV+GSSDs39p5tpuHbOgLoL1eN/6NG8fP0AL6Sytck6Db4YdGX
- eaWD7NCByyf8GQFLyIau4XAH0ghdH5Fk4aQDF0g4pT45le1NJX+rcAzNLfGbL6SHjauf
- I2Rw==
+ bh=nq6mGa1U1Jb7hN/w0fwb8Ul5pywvrDXTmWYtbo9ODRY=;
+ b=gQgs8zpKFxcAVG9U+HG4XBJF67Yj+ojV+f90IRjJ1Ru/oiJh68Sz4Xk8+Vg2ise6yI
+ 3sPU9A278fNwkWKMApf2+aFLTxQS6NSD6etwtUIUW7eh0Vhcppn+zfMVgS3VdjnFdhWU
+ 5cbBrCLaxD4gRDgpLbmgrUUJC+Cbe5rzxeEUyzYR8psU7jC4cM5EX2gUC6hypMa8+1bQ
+ FSwMeNuPTizzHGapeMr7G8JHKYPJ+RxYPUyUT7NLHzj9e+f7+0l8WAek2JJIrJNVifKD
+ dxABMyysVKd/JBPWAp4O6rbYedHuge6z9IWzabMmo2eFRkjzGgftMiJSXUBMd4yTj7iE
+ KkfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792769468; x=1793374268;
+ d=1e100.net; s=20260707; t=1792769512; x=1793374312;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YOZVdxlp9UHy/TXer17e1bouf9xS+Zoyxtb5H0jr77c=;
- b=z1XQDvzCLYpZJpPAn8tuFfD44D9gybcvuU2h9p6+o8apr8x13qiKqUPtezQYKxFmf8
- JJClM5C38tK3Kku7J79DZf0D79O/7+XO9fuG7AzDuu8U7adej2ElM7kZPnmdDn02n2VJ
- bkgtbkGyR9NcKz8NIbk4VxPcOHzh+EBAbWG1A2XirEb6PjDgjCW4yTfPa5NZcny3/Vxo
- 9MwuNuIJEZTNJsdQe95YFSR3yOF6EY1s/u7QVO2WRL01UChewO9ORh4SHGoqHHlB0i5F
- tr1j1NsONrQpSrXRKQPNncoDRRbGZ88QVQWpS7Oc/pjU5U/60kjMTTfuk8BhqNZujXL/
- tAgQ==
+ bh=nq6mGa1U1Jb7hN/w0fwb8Ul5pywvrDXTmWYtbo9ODRY=;
+ b=p4aT5Jb1Cg+UAQ+CoJBMHplMCTYMHh1mM2GiPMTsoWpiS0d8oYDW/s843D1tuF+tf3
+ vswLlmz7aCYLm6CeEUkq2OqxU+JGXvos/Ddmw0eoAUqN2MwESJ8gqngqKEwNd8CkVBS/
+ TLoXzN/z7tRpnGIDPloCRCX6ntataosbNWv2AsYJmcG3aD+d2sICHgbM8VnfiCvrlElU
+ oD+nZbzfLn+ZDQatzXy54YMW0UO1OnMT0/T6eKGfeOyyY0ZqrwjdxYpbVbcZcuODRVti
+ XWh7udB6xhzNQH/ZaYRm6AJ982MCk648DXzWtnHbuK1ntC6BmyrUCcJvbNlaPIYFN5GX
+ /UEw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwZ+LvW/kwf1tw6q5hTKK4f/rBEPLoHMVzkRRwdzs53Qxo20Nl203XNWQAjfFC9hYYrgn1OjPHp0cc5@nongnu.org
-X-Gm-Message-State: AFq9FYI2pOrZ4kTjp7pWCeDYZG2xma5Z+s7m5tSpstYpmB00Kb7rp1W8
- cuQpAj2NpPNywRqszXelsI66yhDvv4EBoU5nhzFwgVPDmffYi8cIRX/pNjBtiVc0d6s=
-X-Gm-Gg: AYBFou0reaOgFHw+TgUl1q1wAp+DCW0uT7KrhUqxV8Cfw5vMMIWZSPDgAHDRZ/f0N46
- hfPQ+LXbf/4tW6l0PmKkFDvSWu/SDuoWaxY3Xs6+eBQzmnTNB5NpGsfPyXrubjl3rLlxlLYDo+B
- cKWWXeZ+yAQbxzdrUgNztywYMfWGavHWkVARCszb61H4KBNTzK1lF6LMNCko/MUEYY01ZVmzho+
- A02px1HTOLq9ChM+TP3768Ef6/LvnUQEkvhrzwuTSnZud7EzH5Tbi+PDbcCJP61IWGkPN0I2oly
- 2wd+RGn11oM6T/vZ0FVt9Ih6Ie3kUZHkHjEhaE4G2L/bWHWbvTkzSvm5ve78eK4F0sI2ohG6UNX
- +oUr40VxLbKTk1EYl1yJfpogUh3goWW/2cXIuTQ4crno1+OhK271b6D3ZY22OL079AJMUpYf+Wm
- t8sIy45TOwCeMeUD49+on7VyJdWnZwETp1DiLUBOJmbb4yiLbPAw8kb2lWuZ7dGlpJtxWrOlWG6
- V3WDT7B98g7NZaYvFSD8JOqeU9ud1wd3lnlUOx01v8IurAK4Kn8Qeavtlsd81Lb5RZGw9T3v4y4
- kFehjiQgyat3p/W7niJg16N37vvxIRKgKR+1eMx2/f84dmHLyqoiWn5VMWFTr4+zM2RsXH9bzRb
- oitZF8A==
-X-Received: by 2002:a05:600c:8a1a:20b0:4a2:1e1:d55 with SMTP id
- 5b1f17b1804b1-4a211cd5ee3mr32242605e9.28.1792769468442; 
- Fri, 23 Oct 2026 08:31:08 -0700 (PDT)
+ AKwUvBycDkDTmVbPivpLoFibEmml36hs9BYSuoRdUrrmqZBdqpEmzNLghG3zYmuL9+89zOwKLWr7Xe8JMjkX@nongnu.org
+X-Gm-Message-State: AFq9FYKauauFXuAyBRsGsRCCBTgLV6/FoZFPvdNh10l6uXiE8xpaAQ6v
+ nFPgC+Kbs0VCyhMZlCJfXq/oVUorEj84oZdJYby5DTjeSmRLX36e9Aa7sKl5QhGxxyY=
+X-Gm-Gg: AYBFou0WhvbFh9Z+CKucKmHMNqKkYnVX7VyxXHyqMBDu4Yy3lpmhn/7ziqO0s2Sqavx
+ Oszeq69D67RFy20xeUK8G2u+xujXQrsHvFCI6qiOuym1Ava1jvBOOR4Gg+UvuDOYrJ6RXMmW5E5
+ zMW9RkViAbVM/13RFiUpypXRfyZrZHLwKDq4H7l1gM+RgMkn+OX9zQPWujoB42z/Q3V4//yRvhm
+ cqQizqrML8NBMNTfM573WTuMRfXeGoBQ4JFHxNZGTErbLbwjTmM0AUVLmLCKMzd82ADDCMOGdxC
+ 2UTl0RBG3pfqxCkoNMYPgmSn3RgH32Vmx1DKDaK0neKjNGn/ouVd5CrFsCGfdZmkBTY8fW6uRUS
+ eRPVznHOEuJfvoL3csSXauxzC1T4krYiCktoPMVUwG8K0z0JgAqFkXEZmQhyfhd9iQ20LT4fpLO
+ jiRzaYlMRp3exIpBBV+CE6mK1bZmL8H/oZDrhqkFehkpnGguKbtk3kjWDJnUyafWSHEO5tskHRF
+ Lp7FqVzpow5qria0J3FgoX0wD6sfjRPNKOz1E7jjfk0B7+bxtnA1mg34Joltc1WPSgiM3P+Fmrm
+ 5/YvkRcD2+QEzgCEBMT6+JUx/t8fZEtlWWTJOm8QXcoqZDoykR2CqYrnmTrr
+X-Received: by 2002:a05:600c:3b18:b0:4a1:ddca:8b66 with SMTP id
+ 5b1f17b1804b1-4a211f2bf92mr41367035e9.31.1792769512294; 
+ Fri, 23 Oct 2026 08:31:52 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2b066685dsm10842475e9.15.2026.10.23.08.31.06
+ 5b1f17b1804b1-4a2b062a277sm12920335e9.7.2026.10.23.08.31.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 08:31:07 -0700 (PDT)
+ Fri, 23 Oct 2026 08:31:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH] hw/net/cadence_gem: Check guest-provided queue numbers in
- screening registers
-Date: Fri, 23 Oct 2026 16:31:06 +0100
-Message-ID: <20261023153106.1710228-1-peter.maydell@linaro.org>
+Cc: Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Subject: [PATCH] hw/misc/allwinner-h3-dramc: Avoid shift by negative amount
+Date: Fri, 23 Oct 2026 16:31:50 +0100
+Message-ID: <20261023153150.1710372-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,75 +106,33 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The Cadence GEM allows the guest to program "screening registers"
-which control which queue received network data should be sent to.
-The field for the queue number in these registers is 4 bits, but the
-device might not actually have that many queues.  We weren't checking
-this, which meant the guest could program a value that caused us to
-index off the end of various arrays.
+In allwinner_h3_dramc_map_rows(), we take a row_bits count from a
+register, and calculate (1 << (row_bits - 3)).  If the guest programs
+row_bits to less than 3 then this is undefined behaviour.
 
-Check against num_priority_queues, and treat out-of-range values
-as if the screen didn't match (i.e. go to queue 0). (This is a
-best guess at reasonable behaviour since I don't have access to
-a datasheet for this device.)
+Treat overly small row_bits values as "doesn't match actual RAM
+size".
 
-Cc: qemu-stable@nongnu.org
-Fixes: e8e4994313b7 ("cadence_gem: Add support for screening")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4363
+Fixes: b71d0385e97e ("hw/arm/allwinner-h3: add SDRAM controller device")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4210
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/cadence_gem.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ hw/misc/allwinner-h3-dramc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index 39e3620ef5b..9a94b3b8ca4 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -854,6 +854,7 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-     uint32_t reg;
-     bool matched, mismatched;
-     int i, j;
-+    int queue = 0; /* default to queue 0 if no match */
- 
-     for (i = 0; i < s->num_type1_screeners; i++) {
-         reg = s->regs[R_SCREENING_TYPE1_REG0 + i];
-@@ -881,7 +882,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-         }
- 
-         if (matched && !mismatched) {
--            return FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
-+            queue = FIELD_EX32(reg, SCREENING_TYPE1_REG0, QUEUE_NUM);
-+            goto out;
+diff --git a/hw/misc/allwinner-h3-dramc.c b/hw/misc/allwinner-h3-dramc.c
+index 10d929a3039..2a4b33aa182 100644
+--- a/hw/misc/allwinner-h3-dramc.c
++++ b/hw/misc/allwinner-h3-dramc.c
+@@ -78,7 +78,7 @@ static void allwinner_h3_dramc_map_rows(AwH3DramCtlState *s, uint8_t row_bits,
          }
      }
  
-@@ -974,12 +976,23 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-         }
- 
-         if (matched && !mismatched) {
--            return FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
-+            queue = FIELD_EX32(reg, SCREENING_TYPE2_REG0, QUEUE_NUM);
-+            break;
-         }
-     }
- 
--    /* We made it here, assume it's queue 0 */
--    return 0;
-+out:
-+    if (queue >= s->num_priority_queues) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Screening register selected out of range queue %d\n",
-+                      queue);
-+        /*
-+         * This is a best guess at reasonable behaviour in the absence
-+         * of a datasheet to confirm it.
-+         */
-+        queue = 0;
-+    }
-+    return queue;
- }
- 
- static uint32_t gem_get_queue_base_addr(CadenceGEMState *s, bool tx, int q)
+-    if (s->ram_size == (1 << (row_bits - 3))) {
++    if (row_bits >= 3 && s->ram_size == (1 << (row_bits - 3))) {
+         /* When row bits is the expected value, remove the mirror */
+         memory_region_set_enabled(&s->row_mirror_alias, false);
+         trace_allwinner_h3_dramc_rowmirror_disable();
 -- 
 2.43.0
 
