@@ -1,59 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A28F606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 09:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5428D606A31D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 09:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=ERaLzYL2
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GG7MMCE+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKBJx-0002eB-NI; Fri, 23 Oct 2026 05:12:17 -0400
+	id 1xKBQt-0003vN-BN; Fri, 23 Oct 2026 05:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xKBJl-0002Uq-Gg
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:12:08 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xKBJi-0005XC-0N
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:12:04 -0400
-Message-ID: <d37629e0e12078cca75b58ad1aa839c267163bd6.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1792746710;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JxwLX5dTg4fa64QYz5+MS5poitdd/DCKcQG/M3V85z0=;
- b=ERaLzYL2zS4ne4t1dWifoA3GJwe+XePFpuQsvDwymxLCqC10uDeCp1cRqP0RgeYVqRtAmQ
- nLlLxeqdgVRl6njs9ho6eWt6Vnw6D1D6ygbRf76Miu4LmdWam/FtUY61UOlL4Xbexv8/nb
- 9ySDGwYEjGxgf/w8Do+gWH8HcS3cEbs=
-Subject: Re: [PATCH v3 7/8] target/sparc: Allow block-init stores when the
- CPU has the crypto feature
-From: Stian Halseth <stian@itx.no>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Richard Henderson
- <richard.henderson@linaro.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@oss.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>, Helge Deller
- <deller@gmx.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Eric
- Biggers <ebiggers@kernel.org>
-Date: Fri, 23 Oct 2026 11:11:48 +0200
-In-Reply-To: <5a545dc9-a6bb-4a02-8577-1d01acf74bcc@ilande.co.uk>
-References: <20261022070059.3861291-1-stian@itx.no>
- <20261022070059.3861291-8-stian@itx.no>
- <6dd0a00a-eeb6-4680-b1e5-a2518b604fdc@ilande.co.uk>
- <1fd05452f9af78f9d54546b752a389fe384c2939.camel@itx.no>
- <5a545dc9-a6bb-4a02-8577-1d01acf74bcc@ilande.co.uk>
-Content-Type: multipart/signed; micalg="pgp-sha512";
- protocol="application/pgp-signature"; boundary="=-5tAcYyFrc2hI+ofDlwbc"
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xKBQr-0003ua-CP
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:19:25 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xKBQp-0006Pp-Ql
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:19:25 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8ab395abf79so6511607b3.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 02:19:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792747162; cv=none;
+ d=google.com; s=arc-20260327;
+ b=SKcBgyXXwV0G8RovEo+JUt6neyA8xJBHPz3U8Qih8/lLuX7Zvxl1vNIOM+5WLTpPpC
+ 87NVDvGONQurovvVj6i7n2DPAwsPK5BY7Zg1rWTquK70jWkDV9FEgko6ErmjHkYUGOBa
+ 01tJwahYOmpAbKdF335a2eEWML0yUsBlYzU26bnqpxH6ilcP83OvUzaU9HwP9KmNlJ+g
+ pHC5xphrTdVDnLriMhIhcqnfz19iEgUmoy+j52fk0ghcvg2gAxBCLhNjj5vSNadpeW0y
+ n3FP3+CSjTBzcuDdDm3VxBQX+CFrofbIdpb2SomWgKaFhG4OiQ54B+2fqGuSisOQcnRX
+ C32g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=mLqfpqTOPQxPIyRO3AiO/z+XRCEOzHjSsl/ENke+obQ=;
+ fh=XTTVB6ywah99SChND1zlNweUq8YqXd4UiqbWz1Dd4iI=;
+ b=BloTyW4zWVCSuguLlnxmebLRAfkPz5I5WQvOVGziHNE5NcePG4Ke7nFc74+d9HAgSN
+ fkILuhixsgnDKAemkMRZVwmtsQ8h6ldkeWsywbl4wICexGq7GI/QxzrFlCcQT3Q9NVDz
+ zpsWd48ILNm78kOBzmJplmRw2RdFhMQTCdzSBxEQGCv5HwvXEad2M7mrQS5HtAoSx+xD
+ 2SrXHOnBv/n17jtIIOXazvtO2VANILvC5aCCGe/d9Z0/zl8+SrBhWEUWCEMJOejD0A1u
+ VN30q0+y73OyfhlVM6XXEjhPfULGIulP5eVLofe4tGj+gA0Geibx77zIKS0OvC/fJ/41
+ Ynbg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1792747162; x=1793351962; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mLqfpqTOPQxPIyRO3AiO/z+XRCEOzHjSsl/ENke+obQ=;
+ b=GG7MMCE+Iy8XQ9JCC9Luf1h4UU2HydJFfyRZqC1iWUg5/cfYDM7uYXZzRt8l2CVWYh
+ dTWSkHOrhgyjQytDzaCgnM6SdvdEYTMeUZDXvyK9OJjKhl8eou6yMv2ots3ezPYtU0Mz
+ oeFEYJ3uawUn1r8+wOtiaclFqYvxY3qW+0j3I+MDZzsTmSk5T/nyWJHMuyrW801EEmts
+ AXUCeBy51w9VEu/oiEbz4HpNXnZRca/uHu1tZi5CqLtXT3HQBRJdGrhl1YiQTS54FkVe
+ 5gQHCxz7Deepzw2IAud6Ody60NgzxpEmPPKyHoczU9vGNci1nbRc/2MZuLknCvK7bGfa
+ tYxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792747162; x=1793351962;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=mLqfpqTOPQxPIyRO3AiO/z+XRCEOzHjSsl/ENke+obQ=;
+ b=bqBeJx5dBWk3GoLSuuIV1Ml5bFCFmQFkcmQ2R4dP9cfdS88yX5t4ab5GYeXDZ03unh
+ 8uqyxKpSY2YMWSofKwNH+L/rt+3iTVHokwYiUhWKuw0am1bHMpxFUDBmYlUsy8FxhpFQ
+ i7H4+H6EG3bIv8n6WfhR+Ae+XPzgzC7qPIy5mPg0CgUT5IKCLHBI7DMruBh+/CKceH1F
+ p/g9D8VY0IOP02yAdkaFzzWxQ99ABlAI7LKX2lPXPzSsQqyvdvrHJqzDf7G5V5wEwIS/
+ uD3XmOdI7VgpyyHLHyec6pq2p2lBEaEScjCUUWBqMu3pgukalGCbIqaXpgGbnP2hb4wq
+ +oyA==
+X-Gm-Message-State: AFq9FYIGsOfwVH8USsRdjpOrUauJXPihqUWmdkzuNcuSht0tGs5sRnAf
+ jzHN8nm4OKYo7ROMSEwhANy3E67i0SZkha0uoyEsnk//lD2OB2A86mIGtithJjNLr4Cb2rE//kI
+ 0gwhtHp0W6TjexBpczAhQ+wtCooWCi8dQ12dix6Q0lQ==
+X-Gm-Gg: AYBFou16SF/tSPnoUHI+Qlx4PupoenxGLOY79AEVf/BTPccO5bTiZSVj6n/Vjzz4/14
+ /ZKNDuZ+yDgEfUmsOAvSaGUuwdHwLdYmr2+fLzkd+7y1QQX6YrQRjjR2ZiYUB18xFJPhWQ1axCD
+ PiWGsbWi9aYlsrpIoEf0Unl1s/T0CaAtqAALv9GRNEFWDxSfcvLzX17UpNdvIKFgbsDAbONu9xp
+ 8bkvuZ3gFI9QiEg6fx2UPCcOosfV/4Mc+KrPXNi7sONft8ZrfTFkKbYRF/KTwgXNSUw0Bpsy6Tn
+ FQ3MQtL04PWc3v6wswaIwkUfGnLbz+iied0DFavAGcIRGiS3RpC99RjXC+/j7Iry/vgp0rCAw2X
+ m8cBkJ7JsDMoaAo1l6K2B3AEWbH/VLUH4KKS6bP9AePqGP6mxeZHVqApLBvaliEOA0Tzb8Dj9mr
+ u11Jeax6iv01NI/1hro5mQdLWkGq0xuzC7SBOJOTl/ZA==
+X-Received: by 2002:a05:690c:931c:10b0:8ab:436f:6e77 with SMTP id
+ 00721157ae682-8b157efe2c5mr11345257b3.55.1792747162229; Fri, 23 Oct 2026
+ 02:19:22 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
+References: <20261018133603.64323-1-marcelomanzo@gmail.com>
+ <20261018133603.64323-2-marcelomanzo@gmail.com>
+In-Reply-To: <20261018133603.64323-2-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Oct 2026 10:19:10 +0100
+X-Gm-Features: AclHuK8-N3SG9XLv1gseGM_K2U08QRXMVp2e716TWDPfUVpZ67YzVobHzRwF4vI
+Message-ID: <CAFEAcA9Su3o0GdJ-VzkXHfx7eXYrsPU6E4hqn8SDMEinOKt-WA@mail.gmail.com>
+Subject: Re: [PATCH v4 01/17] hw/arm/bcm2838_pcie: add BCM2838 PCIe Root
+ Complex
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, philmd@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,121 +113,54 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
---=-5tAcYyFrc2hI+ofDlwbc
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Mark,
-
-On Thu, 2026-10-22 at 23:04 +0100, Mark Cave-Ayland wrote:
-> >=20
-> >=20
-> > Thanks for the review, but your question made me think about
-> > openssl,
-> > and I found a real problem that I didn't see before. Please don't
-> > apply
-> > 7/8 and 8/8.
-> >=20
-> > On real hardware, a store to ASI 0xe2 at an aligned address also
-> > zeroes
-> > the rest of the block. I measured it: the T4 zeroes the 32-byte
-> > block,
-> > the M7 the whole 64-byte line. Other offsets are plain stores.
-> >=20
-> > glibc's niagara4 memset depends on this. For zeroing it only stores
-> > two of every eight words and lets the hardware clear the rest. QEMU
-> > does a plain 8-byte store, so with 7/8 and 8/8 a memset(p, 0, n) of
-> > more than about 120 bytes leaves stale data behind. OpenSSL from a
-> > Gentoo stage3 crashes at startup because of it. So 7/8 only turns
-> > the SIGILL into silent corruption.
-> >=20
-> > And then I found a second gap..!
-> > QEMU rejects the FP form (stda %f, 0xe2), which OpenSSL's T4 AES
-> > code
-> > uses for large buffers. OpenSSL probes the CFR itself rather than
-> > AT_HWCAP, so with only 1-6 and -cpu ...,+vis3,+crypto, AES-CBC/CTR
-> > on
-> > large inputs gets SIGILL. SHA and the other instructions work fine
-> > with
-> > OpenSSL.
-> >=20
-> > My suggestion: 1-6 can go in as Philippe proposed, since the
-> > feature
-> > is opt-in. I'll withdraw 7/8 and 8/8 and send a separate series
-> > that
-> > models block-init stores properly (integer and FP, zero-fill as on
-> > the
-> > T4), with the hwcap patch on top. I have a memset/memcpy test that
-> > passes natively on the T4 and catches this, so that series will
-> > come
-> > with better testing.
-> >=20
-> > Sorry for the churn, and thanks for asking the right question.
-> >=20
-> > /Stian
->=20
-> Ack. I'll let this settle overnight as it is getting late here, and
-> aim to send a PR for patches 1-6 tomorrow evening.
->=20
-
-First of all, thanks for the quick turnaround and friendly attitude
-towards new contributors. It's really motivating.
-
-Was getting late here as well, but fell into a rabbit hole while
-researching this. AKA long night.
-
-Patches 1-6 should be good to send, thanks. As there aren't any other
-changes, feel free to fix the indentation in patch 4 before sending.
-
-For this problem introduced with patch 7 and 8, I tried the most
-obvious fix, to make the block-init stores behave like a real T4's
-(essentially zero the blocks in the same way).=A0It worked, but
-sporadically crashed under my testing. More often with +crypto than
-without. Checked vs an upstream baseline and determined this was pre-
-existing.
-
-The root cause for the instability is a bug that surfaced more often
-with +crypto, but isn't caused by it.=20
-
-Traced it to a TCG bug most likely introduced by commit ebf7a5d294a3
-(Sept 2025). I can reproduce it deterministically without the series,
-and I will follow that in a separate thread.
-
-So two things need to happen for this series to fully work as intended:
-
-1.=A0A translate.c patch modelling block-init stores. Can send as a
-follow up if 1-6 goes in. I'm currently testing and validating this
-thoroughly, and then I would like to send it, so we have a fully
-working implementation in flight. Not just code that cannot be used.
-
-2. Patch for upstream bug (most likely from ebf7a5d294a3)
-Separate discussion, outside of this series.
-
-I'm still in the validation phase, not trusting my current fixes yet,
-but hoping to have something concrete to show shortly.
-
-/Stian
+On Sun, 18 Oct 2026 at 14:36, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
+>
+> Add the PCI-facing "root" part (D0:F0) of the BCM2838 (Raspberry Pi
+> 4B / BCM2711) PCIe Root Complex: a PCIe root port with the vendor's
+> device/vendor IDs and capability offsets, not usable on its own
+> without the host-facing part added in the next patch.
+>
+> Adapted from patch 13/41 of Sergey Kambalin's "Raspberry Pi 4B
+> machine" series (patchwork series 829638, posted to qemu-devel in
+> 2024 but never merged) against current QEMU master; the surrounding
+> PCIe/GENET networking support for raspi4b was left unmerged upstream
+> (base scaffolding aside), so this and the following patches complete
+> and debug that series to get real networking working under
+> raspi4b.
+>
+> Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 
 
---=-5tAcYyFrc2hI+ofDlwbc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
 
------BEGIN PGP SIGNATURE-----
+> +static const VMStateDescription vmstate_bcm2838_pcie_root = {
+> +    .name = "bcm2838-pcie-root",
+> +    .priority = MIG_PRI_PCI_BUS,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load = pcie_cap_slot_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_PCI_DEVICE(parent_obj.parent_obj.parent_obj.parent_obj,
+> +                           BCM2838PcieRootState),
+> +        VMSTATE_STRUCT(parent_obj.parent_obj.parent_obj.parent_obj.exp.aer_log,
+> +                       BCM2838PcieRootState, 0, vmstate_pcie_aer_log,
+> +                       PCIEAERLog),
 
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCatsk1AAKCRDoeAEuJe36
-VmoZAQDCFvXSZuip03mOQkyIfpVU0+yvJVPNQR+ToWKbFPQsygD9H3cgP6ZnA52T
-AS6qnYrGxNmLn4xp0RO7kAaBKr7kmw0=
-=imW1
------END PGP SIGNATURE-----
+What the heck is going on here? All these parent_obj things are
+definitely not the right way to do this.
 
---=-5tAcYyFrc2hI+ofDlwbc--
+> +        VMSTATE_UINT8_ARRAY(regs, BCM2838PcieRootState,
+> +                            BCM2838_PCIE_REGS_SIZE - PCIE_CONFIG_SPACE_SIZE),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+
+-- PMM
 
