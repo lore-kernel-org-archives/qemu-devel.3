@@ -1,69 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5967A606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 21:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F317606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 21:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key, unprotected) header.d=ilande.co.uk header.i=@ilande.co.uk header.a=rsa-sha256 header.s=20220518 header.b=e+bJ5NKN
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=DRlWCrKs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKMU2-0001nB-14; Fri, 23 Oct 2026 17:07:26 -0400
+	id 1xKN1n-0000M5-Kh; Fri, 23 Oct 2026 17:42:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xKMTc-0001kk-Pe
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 17:07:02 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1xKMTZ-0003Pd-Sf
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 17:07:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-ID:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=cDqk1JR/QD3Fl+FAY7frPrybc4mm+bfgKBufgL69HcI=; b=e+bJ5NKNQy0y2O71EnWmkQmp4/
- 1Tjz3z+RXvvKAnNcE5prjhVk4ptbaiAfHsq5U9cIWTp6/IqSKdBRDbgQ0jUECzsbRBA0asIzpIfwt
- 1lzs/VgsM4Gbr+B9NXgw4mK+kA4A1U3wjBepr3fToe+5C06XMvU2dX7YIBOQ6D96uZmpZp5LLOPqG
- ud4AFRLmn1apK9iLk2+VGOEeMvllENPbFj6lmnyrjeYiVs68sweni9se/F8qokVU+M97vNXfXAvOe
- 2GHacwk6iHXbh1PA+5Fa9YQQVM9X+CrNvVh6q5kdE8kwIWvPZmHY5fDzwZ3w2DNfRXKxMu2LVHRIQ
- RYn8bT0u6zgJk/UMt0YvWORmyREaZTaLL2Q55L4nDoXSwqPylvGNM9K8enw101NC9Eu0pRQgi8k9C
- dR1EjbHzttJs+MNABJqJlQ5kO60Ue6f7vhq9sdOCcolBBvTRwbR3eylJFIh46hjI1M8Y3DgM2w+Of
- AEd6xcBmCOH/JWC+OHSxtxlHl7fTI3c7Vl8AXCwQNj6SvEfaGhOtV7sx9Y5DjGJDXOwwprY8n1IV9
- VZSchrKw/lYuegnOWIYSmy0XbVvSYBhrMLABev+2Jfc4MgGfFNbzCJmHiG03nUIXxo4altZlVL687
- oBn7gV8QM/REnecT/NQ9iXCLhCfmA1ppLHOmDeaxs=;
-Received: from [2a02:8012:2f01:0:fe49:60b9:9856:b8ef]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <mark.cave-ayland@ilande.co.uk>) id 1xKMSq-003QXg-H1
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:06:13 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: qemu-devel@nongnu.org
-Date: Fri, 23 Oct 2026 22:06:33 +0100
-Message-ID: <20261023210650.559141-4-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261023210650.559141-1-mark.cave-ayland@ilande.co.uk>
-References: <20261023210650.559141-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1xKN1h-0000Lj-Rp
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 17:42:15 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <namangulati@google.com>)
+ id 1xKN1b-00072e-Vk
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 17:42:12 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4a018493d57so17255e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 14:42:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792791723; cv=none;
+ d=google.com; s=arc-20260327;
+ b=szdZZiVqE8Z/qFMovTACKIH3wz1f+V049JKUXQ7rKxDSNvVTpgpJi1xDNLCtUIkvCM
+ jnhctWtIjA8pbvR9seNOKnaQEycEu8FJ4tCwrFs9e8/hVhLJelYP7PKmslra3DeNLnAH
+ HWj/IFoRVDKqoTCAo4hvyNwsp+5pBDp0D6tN8b1vM6mRwT2GcB6MsUC2WUMMuSC6wzjK
+ YjzrPFJA+XZzWs4BNtpvoh9dSeLaTTIifhpceSjwyvepCGDw3t3/fXomXWkZ4q99AKp1
+ TmKnoRHrJS4o7C31/+g0CQ+/4iXvtqDwZSkpi1k+YM6d7sqU3Ld1Cyru2XhyC0jpVEa1
+ 3Qjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=WEqi1MLcz/HNnxQ0ZF3J+qhLhm4FJoaVJ92k/XQror8=;
+ fh=kIMaH1p4WQKPaRtcLyk8jxVqnyj9ufCg+8lQuf1IepY=;
+ b=R/mS05blUicEcvOJmxKJsB8VNb0z1W8bQ4iXirxc10ndEaGpB2YdWfR5jdwoqq1Vic
+ zE6WeWJLdnYxJmv5+AQ3EfKOSkicWQVrBL5VHx0j1Is8WWKLzKSvgSKwhBng0KYdOI01
+ yZYIIX+IP02zcJGMFBbWvEbOL15cjjw+bMq6tqs17k7q165pZWhmazX72V/fDzvrZU0P
+ iKrkLVs2lHhVSjgjjfc6jiRkhH8hIhMk4U5Lr1cZVhItJCQ7q2NQ4WF6tz5/hzfj5u/r
+ K3FMGmGVaR/AqVq1gZI3DD2l+Vc75YCtUey4zJbSIj56DyajdppmlPGYbXYLYSuyHiNP
+ GQqQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1792791723; x=1793396523; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=WEqi1MLcz/HNnxQ0ZF3J+qhLhm4FJoaVJ92k/XQror8=;
+ b=DRlWCrKsTXqGkwyYSdyicO4vTk/MImeMRuyLIP9dJeavLZn6OiyG77ZkvLTrXAeFfd
+ wIiThRjGB5NGu6RSsINzE7/Po3thJdID58GfL8Q8e42Of5LxARPwCs3kr55SuuENd5MB
+ tCWohRcr+GdaH65sT6ZXq7OBybUcGICQICFut+6lMQl3MFcwCGO+Hme9ZL58hYWUWguG
+ DUcrGSizp0HHRgUUqCU91yLT3Uvte2mK1h3Bs/LRi+FVR2REvpcxBDCMHSgHtlMUqcQY
+ 9mPcsz6tKtpOM2d8/iCwqPtWp4NzPgYQA2K+FRbQEv8dIwnPRsIE0DikpK95I8aWcC15
+ QbQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792791723; x=1793396523;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=WEqi1MLcz/HNnxQ0ZF3J+qhLhm4FJoaVJ92k/XQror8=;
+ b=LF2JNbaj4cMGLtc2YgGG6eZ0yS3z9oYwSDDtBWkipHBXgSr1o4oidnm8heKrrprlwQ
+ 5okdsqFU6EDQ6ojuvUXj3FBSq4Pc/esfcmN7wId3VWMF3kWCsiDYO+1AzEkxbpsBVgbJ
+ 75V976a6m8oE3QBYbubNTUQH39r8DvAz/RWPSQhPAxn27iF2PYYUpt2/AMU6C4WjEtuJ
+ 80r85VFhx2CIBAJOl/uFhRrlviA5ZwMcqIMPOlcUZMnUxvYbu+FTmVssVep/u95XuEna
+ bYCdV3nLsYVxT59QFAtuzjHNAEhkFrHAhh8tYgUeDL2sGDFr5FtebDTM+2dumcLlvIJp
+ TSKw==
+X-Gm-Message-State: AFq9FYKtHnTAoclBHGYz3m4fNZT6wpg32i8HWgH1VGqpshnkQstLECu/
+ GMdhvwblDpAjAL5j222/ZO7X4/mmB/Wz7a21RXndaKyftz5o9XdcSM0OdD5KKgknykgfzAEZgP7
+ XhPAKSQnY4pmnYYHPLw2ls2rYjaEsrZL8EoZTzQsO
+X-Gm-Gg: AYBFou3KGivkpE8+JnL7/b93xvRD8oYAoYd7rjfNoz4kaTFrAM5/sFzsLUDI7HpAh9/
+ MhfhPdLtYeR4ngQrFUVsR1ljxrXwRQ4Q/nybkNg81kSn4+7l7UngdmrVsTWmyzRbtzXP+a5r/wn
+ EMWo7ibbxWwTdEKJBU2Hggg3eeOk0rTGEgf+sdIG0IJivaXiFQQKm84TCRB7Qq0rBicBMDvCzqu
+ lApztIakFoSGYAUqBAWBNm0P1+R327cTcd7tOL1Fx5OcwFQ2UZNO7vUBMIWbWOAGrEZYOrQPesD
+ f9u2Q1bYi1YakvHmdsMthXZa7hqXC1yU8cMvEN6bajUncdlvWMnOu4rYR4mSsLsiZXza8rInLOZ
+ ZUUwZ9Lx6a+hLuSGki/0trfHRuWPqmAJ0xutaJkFyR4qzzdzTxKw6cEYdEztbTkU7hg==
+X-Received: by 2002:a05:600d:849c:20b0:4a1:fb0d:382d with SMTP id
+ 5b1f17b1804b1-4a35a9a9048mr65575e9.4.1792791722691; Fri, 23 Oct 2026 14:42:02
+ -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:fe49:60b9:9856:b8ef
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 3/6] target/sparc: Add the eight AES round instructions
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20261014211041.1087331-1-namangulati@google.com>
+ <20261014211041.1087331-5-namangulati@google.com>
+ <IA0PR02MB9462F37E7B6D239B434ADD5B8B672@IA0PR02MB9462.namprd02.prod.outlook.com>
+In-Reply-To: <IA0PR02MB9462F37E7B6D239B434ADD5B8B672@IA0PR02MB9462.namprd02.prod.outlook.com>
+From: Naman Gulati <namangulati@google.com>
+Date: Fri, 23 Oct 2026 14:41:47 -0700
+X-Gm-Features: AclHuK-mJ76fIeqb7d-lSrakl7r9wWbpZuOu8TfmAXNDBuNS0_FGkLXezvqpwTE
+Message-ID: <CAMP57yWyxZwGU-05_HzEDYtn3uu8LymLncjXGewd0tQJdBEYpQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] vfio-user: support multiple FDs for sparse mmap
+ regions
+To: Thanos Makatos <thanos.makatos@nutanix.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ John Levon <john.levon@nutanix.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Alex Williamson <alex@shazbot.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Matt Evans <matt@ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=namangulati@google.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,223 +122,492 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Stian Halseth <stian@itx.no>
+On Tue, Oct 20, 2026 at 2:27=E2=80=AFPM Thanos Makatos
+<thanos.makatos@nutanix.com> wrote:
+>
+>
+>
+> > -----Original Message-----
+> > From: qemu-devel-bounces+thanos.makatos=3Dnutanix.com@nongnu.org <qemu-
+> > devel-bounces+thanos.makatos=3Dnutanix.com@nongnu.org> On Behalf Of
+> > Naman Gulati
+> > Sent: 14 October 2026 22:11
+> > To: qemu-devel@nongnu.org
+> > Cc: John Levon <john.levon@nutanix.com>; Thanos Makatos
+> > <thanos.makatos@nutanix.com>; C=C3=A9dric Le Goater <clg@redhat.com>; A=
+lex
+> > Williamson <alex@shazbot.org>; Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com>; Matt Evans <matt@ozlabs.org>;
+> > Naman Gulati <namangulati@google.com>
+> > Subject: [PATCH v5 4/4] vfio-user: support multiple FDs for sparse
+> > mmap regions
+> >
+> > !-------------------------------------------------------------------|
+> >   CAUTION: External Email
+> >
+> > |-------------------------------------------------------------------!
+> >
+> > Add client support for capability VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+> > (capability ID 0x8001) in vfio-user, and advertise support via the
+> > "sparse_mmap_fds" capability in VFIO_USER_VERSION.
+> >
+> > Update vfio_user_device_io_get_region_info() to receive multiple file
+> > descriptors passed in SCM_RIGHTS ancillary data for a region, store
+> > them
+> > in VFIOUserProxy, and implement setup_sparse_mmaps in
+> > vfio_user_device_io_ops_sock to validate and populate per-area file
+> > descriptors and fd_offset values.
+> >
+> > Signed-off-by: Naman Gulati <namangulati@google.com>
+> > ---
+> >  hw/vfio-user/protocol.h |  35 ++++++++++--
+> >  hw/vfio-user/proxy.h    |   2 +
+> >  hw/vfio-user/device.c   | 121 +++++++++++++++++++++++++++++++++++++--
+> > -
+> >  hw/vfio-user/proxy.c    |  52 +++++++++++++++--
+> >  4 files changed, 193 insertions(+), 17 deletions(-)
+> >
+> > diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
+> > index c478d1353f..b823689254 100644
+> > --- a/hw/vfio-user/protocol.h
+> > +++ b/hw/vfio-user/protocol.h
+> > @@ -15,6 +15,8 @@
+> >   * SPDX-License-Identifier: GPL-2.0-or-later
+> >   */
+> >
+> > +#define VFIO_USER_MAX_REGIONS 100
+> > +
+> >  typedef struct {
+> >      uint16_t id;
+> >      uint16_t command;
+> > @@ -69,12 +71,13 @@ typedef struct {
+> >  #define VFIO_USER_CAP           "capabilities"
+> >
+> >  /* "capabilities" members */
+> > -#define VFIO_USER_CAP_MAX_FDS   "max_msg_fds"
+> > -#define VFIO_USER_CAP_MAX_XFER  "max_data_xfer_size"
+> > -#define VFIO_USER_CAP_PGSIZES   "pgsizes"
+> > -#define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
+> > -#define VFIO_USER_CAP_MIGR      "migration"
+> > -#define VFIO_USER_CAP_MULTI     "write_multiple"
+> > +#define VFIO_USER_CAP_MAX_FDS           "max_msg_fds"
+> > +#define VFIO_USER_CAP_MAX_XFER          "max_data_xfer_size"
+> > +#define VFIO_USER_CAP_PGSIZES           "pgsizes"
+> > +#define VFIO_USER_CAP_MAP_MAX           "max_dma_maps"
+> > +#define VFIO_USER_CAP_MIGR              "migration"
+> > +#define VFIO_USER_CAP_MULTI             "write_multiple"
+> > +#define VFIO_USER_CAP_SPARSE_MMAP_FDS   "sparse_mmap_fds"
+> >
+> >  /* "migration" members */
+> >  #define VFIO_USER_CAP_PGSIZE            "pgsize"
+> > @@ -166,6 +169,26 @@ typedef struct {
+> >      uint64_t offset;
+> >  } VFIOUserRegionInfo;
+> >
+> > +/*
+> > + * VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+> > + */
+> > +#define VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS 0x8001
+> > +
+> > +struct vfio_region_sparse_mmap_fd_area {
+> > +    uint64_t offset;
+> > +    uint64_t fd_offset;
+> > +    uint64_t size;
+> > +    uint32_t fd_index;
+> > +    uint32_t pad;
+> > +};
+> > +
+> > +struct vfio_region_info_cap_sparse_mmap_fds {
+> > +    struct vfio_info_cap_header header;
+> > +    uint32_t nr_areas;
+> > +    uint32_t reserved;
+> > +    struct vfio_region_sparse_mmap_fd_area areas[];
+> > +};
+> > +
+> >  /*
+> >   * VFIO_USER_DEVICE_GET_IRQ_INFO
+> >   * imported from struct vfio_irq_info
+> > diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+> > index 7b97460cc5..4b9834a436 100644
+> > --- a/hw/vfio-user/proxy.h
+> > +++ b/hw/vfio-user/proxy.h
+> > @@ -72,6 +72,7 @@ typedef struct VFIOUserProxy {
+> >      AioContext *ctx;
+> >      QEMUBH *req_bh;
+> >      bool async_ops;
+> > +    VFIOUserFDs *region_fds[VFIO_USER_MAX_REGIONS];
+> >
+> >      /*
+> >       * above only changed when BQL is held
+> > @@ -111,6 +112,7 @@ bool vfio_user_validate_version(VFIOUserProxy
+> > *proxy, Error **errp);
+> >
+> >  VFIOUserFDs *vfio_user_getfds(int numfds);
+> >  void vfio_user_putfds(VFIOUserMsg *msg);
+> > +void vfio_user_free_fds(VFIOUserFDs *fds);
+> >
+> >  void vfio_user_disable_posted_writes(VFIOUserProxy *proxy);
+> >
+> > diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
+> > index 1a01e748cd..4fbf536a04 100644
+> > --- a/hw/vfio-user/device.c
+> > +++ b/hw/vfio-user/device.c
+> > @@ -14,12 +14,14 @@
+> >
+> >  #include "hw/vfio-user/device.h"
+> >  #include "hw/vfio-user/trace.h"
+> > +#include "hw/vfio/vfio-region.h"
+> > +#include "hw/vfio/vfio-helpers.h"
+> > +#include "hw/vfio/trace.h"
+> >
+> >  /*
+> >   * These are to defend against a malign server trying
+> >   * to force us to run out of memory.
+> >   */
+> > -#define VFIO_USER_MAX_REGIONS   100
+> >  #define VFIO_USER_MAX_IRQS      50
+> >
+> >  bool vfio_user_get_device_info(VFIOUserProxy *proxy,
+> > @@ -209,14 +211,17 @@ static int
+> > vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+> >                                                 struct
+> > vfio_region_info *info,
+> >                                                 int *fd)
+> >  {
+> > -    VFIOUserFDs fds =3D { 0, 1, fd};
+> > -    int ret;
+> > +    int fds[VFIO_USER_MAX_MAX_FDS];
+> > +    VFIOUserFDs user_fds =3D { 0, VFIO_USER_MAX_MAX_FDS, fds };
+> > +    int i, ret;
+> > +
+> > +    *fd =3D -1;
+> >
+> >      if (info->index > vbasedev->num_initial_regions) {
+> >          return -EINVAL;
+> >      }
+> >
+> > -    ret =3D vfio_user_get_region_info(vbasedev->proxy, info, &fds);
+> > +    ret =3D vfio_user_get_region_info(vbasedev->proxy, info,
+> > &user_fds);
+> >      if (ret) {
+> >          return ret;
+> >      }
+> > @@ -225,10 +230,30 @@ static int
+> > vfio_user_device_io_get_region_info(VFIODevice *vbasedev,
+> >      if ((info->flags & VFIO_REGION_INFO_FLAG_CAPS) &&
+> >          (info->cap_offset < sizeof(*info)
+> >           || info->cap_offset + sizeof(struct vfio_info_cap_header) >
+> > info->argsz)) {
+> > -        return -EINVAL;
+> > +        ret =3D -EINVAL;
+> > +    } else if (vfio_get_region_info_cap(info,
+> > +
+> > VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS)) {
+> > +        if (user_fds.recv_fds > 0) {
+> > +            VFIOUserFDs *saved =3D vfio_user_getfds(user_fds.recv_fds)=
+;
+> > +
+> > +            saved->recv_fds =3D user_fds.recv_fds;
+> > +            memcpy(saved->fds, fds, user_fds.recv_fds * sizeof(int));
+> > +            vfio_user_free_fds(vbasedev->proxy->region_fds[info-
+> > >index]);
+> > +            vbasedev->proxy->region_fds[info->index] =3D saved;
+> > +            return 0;
+> > +        }
+> > +        ret =3D -EINVAL;
+> > +    } else if (user_fds.recv_fds > 0) {
+> > +        *fd =3D fds[0];
+> > +        fds[0] =3D -1;
+> >      }
+> >
+> > -    return 0;
+> > +    for (i =3D 0; i < user_fds.recv_fds; i++) {
+> > +        if (fds[i] >=3D 0) {
+> > +            close(fds[i]);
+> > +        }
+> > +    }
+> > +    return ret;
+> >  }
+> >
+> >  static int vfio_user_device_io_get_irq_info(VFIODevice *vbasedev,
+> > @@ -518,12 +543,94 @@ static int
+> > vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
+> >  /*
+> >   * Socket-based io_ops
+> >   */
+> > +static int vfio_user_device_io_setup_sparse_mmaps(VFIORegion *region,
+> > +                                                  struct
+> > vfio_region_info *info,
+> > +                                                  Error **errp)
+> > +{
+> > +    struct vfio_info_cap_header *hdr;
+> > +    struct vfio_region_info_cap_sparse_mmap_fds *sparse_fds;
+> > +    VFIOUserFDs *user_fds;
+> > +    size_t cap_offset;
+> > +    int i;
+> > +
+> > +    hdr =3D vfio_get_region_info_cap(info,
+> > VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS);
+> > +    if (!hdr) {
+> > +        return vfio_default_setup_sparse_mmaps(region, info, errp);
+> > +    }
+> > +
+> > +    if (vfio_get_region_info_cap(info,
+> > VFIO_REGION_INFO_CAP_SPARSE_MMAP)) {
+> > +        error_setg(errp, "%s: region %d cannot specify both "
+> > +                   "SPARSE_MMAP and SPARSE_MMAP_FDS", __func__,
+> > region->nr);
+> > +        return -EINVAL;
+> > +    }
+> > +
+> > +    sparse_fds =3D container_of(hdr, struct
+> > vfio_region_info_cap_sparse_mmap_fds,
+> > +                              header);
+> > +
+> > +    cap_offset =3D (uintptr_t)hdr - (uintptr_t)info;
+> > +    if (cap_offset > info->argsz ||
+> > +        info->argsz - cap_offset < sizeof(*sparse_fds) ||
+> > +        sparse_fds->nr_areas >
+> > +            (info->argsz - cap_offset - sizeof(*sparse_fds)) /
+> > +            sizeof(sparse_fds->areas[0])) {
+> > +        error_setg(errp, "%s: invalid nr_areas %u in region %d",
+> > +                   __func__, sparse_fds->nr_areas, region->nr);
+> > +        return -EINVAL;
+> > +    }
+> > +
+> > +    trace_vfio_region_sparse_mmap_header(region->vbasedev->name,
+> > +                                         region->nr, sparse_fds-
+> > >nr_areas);
+> > +
+> > +    user_fds =3D region->vbasedev->proxy->region_fds[region->nr];
+> > +    if (!user_fds || user_fds->recv_fds > sparse_fds->nr_areas) {
+> > +        error_setg(errp, "%s: invalid fd count %d for %u sparse mmap
+> > areas "
+> > +                   "in region %d", __func__,
+> > +                   user_fds ? user_fds->recv_fds : 0,
+> > +                   sparse_fds->nr_areas, region->nr);
+> > +        return -EINVAL;
+> > +    }
+> > +
+> > +    region->mmaps =3D g_try_new0(VFIOMmap, sparse_fds->nr_areas);
+>
+> IMO we should impose a limit on sparse_fds->nr_areas, g_try_new0 does pre=
+vent the server from crashing but a malicious client can allocate too much =
+memory.
 
-Implement the eight AES round instructions by using QEMU's shared
-crypto/aes-round.h, gated behind the crypto CPU feature:
-- AES_EROUND01/23 and last variants
-- AES_DROUND01/23 and last variants
+sparse_fds->nr_areas is already bounded by info->argsz via the check just a=
+bove:
 
-Based on OSA (Oracle SPARC Architecture) 2011, section 7.3:
-AES Cryptographic Operations (4 operand)
+if (cap_offset > info->argsz ||
+        info->argsz - cap_offset < sizeof(*sparse_fds) ||
+        sparse_fds->nr_areas >
+            (info->argsz - cap_offset - sizeof(*sparse_fds)) /
+            sizeof(sparse_fds->areas[0])) {
+        error_setg(errp, "%s: invalid nr_areas %u in region %d",
+                   __func__, sparse_fds->nr_areas, region->nr);
+        return -EINVAL;
+    }
 
-Next commit will complete the feature and expose its availability
-to the guest by setting the AES bit in CFR.
+And in vfio_user_get_region_info(), info->argsz is capped by
+proxy->max_xfer_size (at most VFIO_USER_DEF_MAX_XFER =3D 1 MiB), so
+sparse_fds->nr_areas cannot exceed ~32K entries (the same bound that
+applies to VFIO_REGION_INFO_CAP_SPARSE_MMAP in
+vfio_region_setup_sparse_mmaps()).
 
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Stian Halseth <stian@itx.no>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20261022070059.3861291-4-stian@itx.no>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- target/sparc/crypto_helper.c | 89 ++++++++++++++++++++++++++++++++++++
- target/sparc/helper.h        |  8 ++++
- target/sparc/insns.decode    |  9 ++++
- target/sparc/meson.build     |  2 +-
- target/sparc/translate.c     | 16 +++++++
- 5 files changed, 123 insertions(+), 1 deletion(-)
- create mode 100644 target/sparc/crypto_helper.c
+Does that existing bound look sufficient to you, or would you still
+prefer an explicit smaller limit (e.g. a VFIO_USER_MAX_SPARSE_MMAPS
+constant alongside VFIO_USER_MAX_REGIONS)?
 
-diff --git a/target/sparc/crypto_helper.c b/target/sparc/crypto_helper.c
-new file mode 100644
-index 00000000000..7dd4dd51446
---- /dev/null
-+++ b/target/sparc/crypto_helper.c
-@@ -0,0 +1,89 @@
-+/*
-+ * SPARC crypto instructions for QEMU
-+ *
-+ * Based on Oracle SPARC Architecture 2011
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/helper-proto.h"
-+#include "crypto/aes-round.h"
-+
-+/*
-+ * SPARC four-operand AES round (Section 7.3).
-+ * s2:s3 holds the state; half selects output columns 0-1 or 2-3, and
-+ * key supplies their round key. dec selects decryption; last omits
-+ * MixColumns/InvMixColumns. Return the selected 64-bit half.
-+ *
-+ * Note all 64-bit values (state and key) hold AES bytes in big-endian
-+ * order, i.e. the most significant byte is the first state byte.
-+ */
-+static uint64_t aes_round(uint64_t key, uint64_t s2, uint64_t s3,
-+                          int half, bool dec, bool last)
-+{
-+    AESState st, rk, r;
-+    const unsigned first = HOST_BIG_ENDIAN ? 0 : 1;
-+    const unsigned out = first ^ half;
-+
-+    st.d[first] = s2;       /* columns 0-1 */
-+    st.d[first ^ 1] = s3;   /* columns 2-3 */
-+    rk.d[out] = key;
-+    rk.d[out ^ 1] = 0;
-+
-+    if (dec) {
-+        if (last) {
-+            aesdec_ISB_ISR_AK(&r, &st, &rk, true);
-+        } else {
-+            aesdec_ISB_ISR_AK_IMC(&r, &st, &rk, true);
-+        }
-+    } else {
-+        if (last) {
-+            aesenc_SB_SR_AK(&r, &st, &rk, true);
-+        } else {
-+            aesenc_SB_SR_MC_AK(&r, &st, &rk, true);
-+        }
-+    }
-+
-+    return r.d[out];
-+}
-+
-+uint64_t helper_aes_eround01(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, false, false);
-+}
-+
-+uint64_t helper_aes_eround23(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, false, false);
-+}
-+
-+uint64_t helper_aes_dround01(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, true, false);
-+}
-+
-+uint64_t helper_aes_dround23(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, true, false);
-+}
-+
-+uint64_t helper_aes_eround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, false, true);
-+}
-+
-+uint64_t helper_aes_eround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, false, true);
-+}
-+
-+uint64_t helper_aes_dround01_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 0, true, true);
-+}
-+
-+uint64_t helper_aes_dround23_l(uint64_t key, uint64_t s2, uint64_t s3)
-+{
-+    return aes_round(key, s2, s3, 1, true, true);
-+}
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 3a7f7dc1296..9bfd643b09c 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -122,6 +122,14 @@ DEF_HELPER_FLAGS_2(fchksm16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fmean16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas16, TCG_CALL_NO_RWG_SE, i64, i64, i64)
- DEF_HELPER_FLAGS_2(fslas32, TCG_CALL_NO_RWG_SE, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround01, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround23, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_eround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround01_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
-+DEF_HELPER_FLAGS_3(aes_dround23_l, TCG_CALL_NO_RWG_SE, i64, i64, i64, i64)
- #define VIS_CMPHELPER(name)                                  \
-     DEF_HELPER_FLAGS_2(f##name##8, TCG_CALL_NO_RWG_SE,       \
-                        i64, i64, i64)                        \
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index 55f8528ffe5..99c9147e7d9 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -596,6 +596,15 @@ FCMPEq      10 000 cc:2 110101 .....  0 0101 0111 .....    \
-   NCP           10 ----- 110111 ----- --------- -----      # v8 CPop2
- }
- 
-+AES_EROUND01    10 ..... 011001 ..... ..... 0000 .....     @d_d_d_d
-+AES_EROUND23    10 ..... 011001 ..... ..... 0001 .....     @d_d_d_d
-+AES_DROUND01    10 ..... 011001 ..... ..... 0010 .....     @d_d_d_d
-+AES_DROUND23    10 ..... 011001 ..... ..... 0011 .....     @d_d_d_d
-+AES_EROUND01_L  10 ..... 011001 ..... ..... 0100 .....     @d_d_d_d
-+AES_EROUND23_L  10 ..... 011001 ..... ..... 0101 .....     @d_d_d_d
-+AES_DROUND01_L  10 ..... 011001 ..... ..... 0110 .....     @d_d_d_d
-+AES_DROUND23_L  10 ..... 011001 ..... ..... 0111 .....     @d_d_d_d
-+
- ##
- ## Major Opcode 11 -- load and store instructions
- ##
-diff --git a/target/sparc/meson.build b/target/sparc/meson.build
-index 46289c86693..af65c933bf2 100644
---- a/target/sparc/meson.build
-+++ b/target/sparc/meson.build
-@@ -12,7 +12,7 @@ sparc_ss.add(files(
-   'win_helper.c',
- ))
- sparc_ss.add(when: 'TARGET_SPARC', if_true: files('int32_helper.c'))
--sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c'))
-+sparc_ss.add(when: 'TARGET_SPARC64', if_true: files('int64_helper.c', 'vis_helper.c', 'crypto_helper.c'))
- 
- sparc_system_ss = ss.source_set()
- sparc_system_ss.add(files(
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index a1562f50474..16907b10850 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -101,6 +101,14 @@
- # define gen_helper_xmulx                ({ qemu_build_not_reached(); NULL; })
- # define gen_helper_xmulxhi              ({ qemu_build_not_reached(); NULL; })
- # define MAXTL_MASK                             0
-+# define gen_helper_aes_eround01         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround23         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround01         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround23         ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround01_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_eround23_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround01_l       ({ qemu_build_not_reached(); NULL; })
-+# define gen_helper_aes_dround23_l       ({ qemu_build_not_reached(); NULL; })
- #endif
- 
- #define DISAS_EXIT  DISAS_TARGET_0
-@@ -5418,6 +5426,14 @@ TRANS(FNMSUBd, FMAF, do_dddd, a, gen_op_fnmsubd)
- TRANS(FNMADDd, FMAF, do_dddd, a, gen_op_fnmaddd)
- TRANS(FPMADDX, IMA, do_dddd, a, gen_op_fpmaddx)
- TRANS(FPMADDXHI, IMA, do_dddd, a, gen_op_fpmaddxhi)
-+TRANS(AES_EROUND01, CRYPTO, do_dddd, a, gen_helper_aes_eround01)
-+TRANS(AES_EROUND23, CRYPTO, do_dddd, a, gen_helper_aes_eround23)
-+TRANS(AES_DROUND01, CRYPTO, do_dddd, a, gen_helper_aes_dround01)
-+TRANS(AES_DROUND23, CRYPTO, do_dddd, a, gen_helper_aes_dround23)
-+TRANS(AES_EROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_eround01_l)
-+TRANS(AES_EROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_eround23_l)
-+TRANS(AES_DROUND01_L, CRYPTO, do_dddd, a, gen_helper_aes_dround01_l)
-+TRANS(AES_DROUND23_L, CRYPTO, do_dddd, a, gen_helper_aes_dround23_l)
- 
- static bool trans_FALIGNDATAi(DisasContext *dc, arg_r_r_r *a)
- {
--- 
-2.47.3
-
+>
+> > +    if (!region->mmaps) {
+> > +        error_setg(errp, "%s: failed to allocate %u mmaps for region
+> > %d",
+> > +                   __func__, sparse_fds->nr_areas, region->nr);
+> > +        return -ENOMEM;
+> > +    }
+> > +
+> > +    for (i =3D 0; i < sparse_fds->nr_areas; i++) {
+> > +        struct vfio_region_sparse_mmap_fd_area *area =3D &sparse_fds-
+> > >areas[i];
+> > +
+> > +        if (area->size =3D=3D 0 || area->offset > region->size ||
+> > +            area->size > region->size - area->offset ||
+> > +            area->fd_index >=3D user_fds->recv_fds) {
+> > +            error_setg(errp, "%s: invalid sparse mmap area %d in
+> > region %d "
+> > +                       "(offset=3D0x%"PRIx64" size=3D0x%"PRIx64
+> > +                       " fd_offset=3D0x%"PRIx64" fd_index=3D%u)",
+> > +                       __func__, i, region->nr, area->offset, area-
+> > >size,
+> > +                       area->fd_offset, area->fd_index);
+> > +            g_free(region->mmaps);
+> > +            region->mmaps =3D NULL;
+> > +            return -EINVAL;
+> > +        }
+> > +
+> > +        trace_vfio_region_sparse_mmap_entry(i, area->offset,
+> > +                                            area->offset + area->size
+> > - 1);
+> > +        region->mmaps[i].offset =3D area->offset;
+> > +        region->mmaps[i].fd_offset =3D area->fd_offset;
+> > +        region->mmaps[i].size =3D area->size;
+> > +        region->mmaps[i].fd =3D user_fds->fds[area->fd_index];
+> > +    }
+> > +
+> > +    region->nr_mmaps =3D sparse_fds->nr_areas;
+> > +    return 0;
+> > +}
+> > +
+> >  VFIODeviceIOOps vfio_user_device_io_ops_sock =3D {
+> >      .device_feature =3D vfio_user_device_io_device_feature,
+> >      .get_region_info =3D vfio_user_device_io_get_region_info,
+> > +    .setup_sparse_mmaps =3D vfio_user_device_io_setup_sparse_mmaps,
+> >      .get_irq_info =3D vfio_user_device_io_get_irq_info,
+> >      .set_irqs =3D vfio_user_device_io_set_irqs,
+> >      .region_read =3D vfio_user_device_io_region_read,
+> >      .region_write =3D vfio_user_device_io_region_write,
+> > -
+> >  };
+> > diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> > index 197aee07bf..ba29085321 100644
+> > --- a/hw/vfio-user/proxy.c
+> > +++ b/hw/vfio-user/proxy.c
+> > @@ -363,6 +363,13 @@ static int vfio_user_recv_one(VFIOUserProxy
+> > *proxy, Error **errp)
+> >          }
+> >
+> >          memcpy(msg->fds->fds, fdp, numfds * sizeof(int));
+> > +    } else if (msg->fds !=3D NULL) {
+> > +        /*
+> > +         * recv_fds holds the capacity of msg->fds->fds on entry;
+> > reset it
+> > +         * to 0 when the reply carries no FDs so the caller knows
+> > none were
+> > +         * received.
+> > +         */
+> > +        msg->fds->recv_fds =3D 0;
+> >      }
+> >
+> >      /*
+> > @@ -740,6 +747,11 @@ bool vfio_user_send_wait(VFIOUserProxy *proxy,
+> > VFIOUserHdr *hdr,
+> >
+> >      qemu_mutex_unlock(&proxy->lock);
+> >
+> > +    if (!ok && fds !=3D NULL) {
+> > +        /* No reply was received; report 0 received FDs to the
+> > caller. */
+> > +        fds->recv_fds =3D 0;
+> > +    }
+> > +
+> >      return ok;
+> >  }
+> >
+> > @@ -867,17 +879,30 @@ void vfio_user_send_error(VFIOUserProxy *proxy,
+> > VFIOUserHdr *hdr, int error)
+> >  }
+> >
+> >  /*
+> > - * Close FDs erroneously received in an incoming request.
+> > + * Close and free received FDs.
+> >   */
+> > -void vfio_user_putfds(VFIOUserMsg *msg)
+> > +void vfio_user_free_fds(VFIOUserFDs *fds)
+> >  {
+> > -    VFIOUserFDs *fds =3D msg->fds;
+> >      int i;
+> >
+> > +    if (!fds) {
+> > +        return;
+> > +    }
+> > +
+> >      for (i =3D 0; i < fds->recv_fds; i++) {
+> > -        close(fds->fds[i]);
+> > +        if (fds->fds[i] >=3D 0) {
+> > +            close(fds->fds[i]);
+> > +        }
+> >      }
+> >      g_free(fds);
+> > +}
+> > +
+> > +/*
+> > + * Close FDs erroneously received in an incoming request.
+> > + */
+> > +void vfio_user_putfds(VFIOUserMsg *msg)
+> > +{
+> > +    vfio_user_free_fds(msg->fds);
+> >      msg->fds =3D NULL;
+> >  }
+> >
+> > @@ -967,6 +992,7 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
+> >  void vfio_user_disconnect(VFIOUserProxy *proxy)
+> >  {
+> >      VFIOUserMsg *r1, *r2;
+> > +    int i;
+> >
+> >      qemu_mutex_lock(&proxy->lock);
+> >
+> > @@ -1027,6 +1053,10 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+> >          vfio_user_iothread =3D NULL;
+> >      }
+> >
+> > +    for (i =3D 0; i < VFIO_USER_MAX_REGIONS; i++) {
+> > +        vfio_user_free_fds(proxy->region_fds[i]);
+> > +    }
+> > +
+> >      g_free(proxy->sockname);
+> >      g_free(proxy);
+> >  }
+> > @@ -1214,6 +1244,18 @@ static bool check_multi(VFIOUserProxy *proxy,
+> > QObject *qobj, Error **errp)
+> >      return true;
+> >  }
+> >
+> > +static bool check_sparse_mmap_fds(VFIOUserProxy *proxy, QObject
+> > *qobj,
+> > +                                  Error **errp)
+> > +{
+> > +    QBool *qb =3D qobject_to(QBool, qobj);
+> > +
+> > +    if (qb =3D=3D NULL) {
+> > +        error_setg(errp, "malformed %s",
+> > VFIO_USER_CAP_SPARSE_MMAP_FDS);
+> > +        return false;
+> > +    }
+> > +    return true;
+> > +}
+> > +
+> >  static struct cap_entry caps_cap[] =3D {
+> >      { VFIO_USER_CAP_MAX_FDS, check_max_fds },
+> >      { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
+> > @@ -1221,6 +1263,7 @@ static struct cap_entry caps_cap[] =3D {
+> >      { VFIO_USER_CAP_MAP_MAX, check_max_dma },
+> >      { VFIO_USER_CAP_MIGR, check_migr },
+> >      { VFIO_USER_CAP_MULTI, check_multi },
+> > +    { VFIO_USER_CAP_SPARSE_MMAP_FDS, check_sparse_mmap_fds },
+> >      { NULL }
+> >  };
+> >
+> > @@ -1280,6 +1323,7 @@ static GString *caps_json(void)
+> >      qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES,
+> > VFIO_USER_DEF_PGSIZE);
+> >      qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX,
+> > VFIO_USER_DEF_MAP_MAX);
+> >      qdict_put_bool(capdict, VFIO_USER_CAP_MULTI, true);
+> > +    qdict_put_bool(capdict, VFIO_USER_CAP_SPARSE_MMAP_FDS, true);
+> >
+> >      qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
+> >
+> > --
+> > 2.56.0.385.gd3acb90ef8-goog
+> >
+>
 
