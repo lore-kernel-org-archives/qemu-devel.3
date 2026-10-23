@@ -1,51 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5409606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274AD606A31A
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 20:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKLdY-0000Ax-Nz; Fri, 23 Oct 2026 16:13:13 -0400
+	id 1xKLdU-00007l-EP; Fri, 23 Oct 2026 16:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLd2-0008PZ-1A
+ id 1xKLd3-0008Pb-01
  for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:41 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLcy-0006um-S8
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:39 -0400
+ id 1xKLd0-0006uV-FB
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pGnlQ59umBOkbJzJqmgWfNMyOeAF3k2F/IbgGRNnt9T22tSx10rFn7Xa4LTlAPwZKVOnIRYxuhccskIwsPqRkOggEWRE+jpYNpZo2q5UDD3BUsM3aGm2DPZkRck3rkJVZvZVifHgt/CUoY5y7Ae588m1r3RvHyizXeqYi/8MlpWwuOA1oWAaaNBB7fD7FQrKv2ZSfO6YzMWfW/MZT72UtboJztPdI9/f3ms7hCyQOwtzUUdsdW9itEsD+8RKbBkfvoD4p4Efeq7YoaTKge22VFIbNAmP3s7GlFJylHoC/XpbuY4wCPy7FLzq5u0n7wzWKiM2I2/5oMvVm1qX7HgHrQ==
+ b=G8jzh+uK89/A8KKkWkh3NU6OVpn4vSiIn+QNZ2P45Lz+Knco0w5tZ0+LoyVxLTzaXaDGL2CTnm7asJTLz/UEfrz+Dg/nbc9fICYaqvBVmOWPq+9Wq3wJVIARoZhX3iVL0wz4L4qeaAIhAMJL4BRxR4fhtoR2m7Ja0lWlVMbGObRT9JbyLKnVuy7avMiF1Ldrf2FtThsda2tZHASK49FdmMvT3BU8KZ1MsBsQNM9E8lNj1KjDBeAO1tKMfar9lj0chiBiO/lkP6vZoh6Dp1GxBptb0UT9Hbdh27aFwzKU5yjZ43gljYuM0d5ryjbHd986rQ3FlCiC+0W/Nh3dxbJZtg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qnDu1kcVeOZpyr5CCqPz5nrcoHoj0esBcf9FDBpFHgg=;
- b=PWp1zCAFQ19xKZRVYZZQEyhjtlUWzEaTF6sBHXBN12EGq0v7mXAm8PanuTUlcuFVqAHhLcaCAtTkyPD/pbhP3F4zLaHub5N4YhHqzMbrS+Cc8wxppPTGX9l5BfNvSq4UxMBQYG8vgy1++vZJv6NbGeUhQIBpNKqtoKEnMejqqD338skCsRgyafpw/rcZ0EnaSjmywQe0mkwLGWE4rYHGAh2TZV7jzovUEsM7vfNqsj37XMzc+5LJEwpMx5MukkrIk2cxUSgSbQEUhzBD5Qdh4mHGc8rir1/NwJlWjioX5qXZrjpOnrerc/xP9kFEqka6bRsudHans2gRGje5qpEfOQ==
+ bh=MtK/Ke6BGmIFGwVOnHAfj9tfGFY1mH+O+sRt1JSHUvo=;
+ b=RrI1Bt/sI0SG6WrFrwwhLJJct5D+1/cEdFrkSdyMELLshaZzWKyWtkEc5RtkI2AVxnz5Qzq8aRT4eo7kwRx4Ch5YELwGbx2BIaRUoYNu9RicS/fSAyVyKvzPts6Deycj/TsAqS2kiawI48Ob7Ee+cKBi5X+zJrgpQ1djZ9E7OKk8GqvomVpRCXzceTACaznjoJhC7OlSMYRfgA9WyVP/18Re6dEkILkkKC4WQkzRxYurLGlIiCMYK6P36k8hAxa6EHTIm2gyYuELkxlhbl4ukZ6lzgSApH66FYhdKlk88FJfoZBKEatJnykbO0q3f8Dsi6+M3z+VmmIzubwxnV+tWw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
  dkim=pass header.d=linumiz.com; arc=none
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=linumiz.com;
 Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
- by SEYPR06MB6107.apcprd06.prod.outlook.com (2603:1096:101:c4::9) with
+ by SE3PR06MB9019.apcprd06.prod.outlook.com (2603:1096:101:31f::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.3; Fri, 23 Oct
- 2026 20:12:30 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.2; Fri, 23 Oct
+ 2026 20:12:22 +0000
 Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01%4]) with mapi id 15.21.0569.002; Fri, 23 Oct 2026
- 20:12:30 +0000
+ 20:12:22 +0000
 From: Parthiban Nallathambi <parthiban@linumiz.com>
-Date: Sat, 24 Oct 2026 01:42:03 +0530
-Subject: [PATCH v2 9/9] hw/tricore: add tc39xb SoC and KIT_AURIX_TC397_TRB
- machine
+Date: Sat, 24 Oct 2026 01:41:58 +0530
+Subject: [PATCH v2 4/9] hw/char: add TriCore ASCLIN UART controller
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-9-c722e4ca5661@linumiz.com>
+Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-4-c722e4ca5661@linumiz.com>
 References: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 In-Reply-To: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 To: qemu-devel@nongnu.org
@@ -57,14 +56,13 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Christoph Seitz <christoph.seitz@infineon.com>, 
  Sivashanmugam Natarajan <Sivashanmugam.Natarajan@infineon.com>, 
  Parthiban Nallathambi <parthiban@linumiz.com>, 
- Andreas Konopik <andreas.konopik@efs-auto.de>, 
  David Brenken <david.brenken@efs-auto.de>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=23829;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=19306;
  i=parthiban@linumiz.com; s=20241125; h=from:subject:message-id;
- bh=+4bnhICTjJIs6C9YXdalMcYF1Hx9MrY6Cp/TAbig96k=;
- b=giB8/gh+6FBMDYu+Dlvp4XkHj1exrf5QeXFHeYWtHyGgV7IMfwTPDZmmteXy0MNSDQ0WcYxvu
- ccxp6SalA0aCkBW8mXXDEVjAu7eP+exu3JbxXTS0Hs8lEdU9g0H1Mn8
+ bh=oHtMhMpFzB4haa1xvByIoAaP0CMpyK12JAxcimCT7l8=;
+ b=lhOxmy4SmohhVSyjPKleUmYtAq9oVtKI6cvRiZCL9m7cWr0FNNkYAbOK6mvJWSAKqxuTxZOVc
+ cu/EoftMn7yCAa9FTe9CiaptOMIp9Er9OC5aKEWoQ/vHiCOsNJeuTyu
 X-Developer-Key: i=parthiban@linumiz.com; a=ed25519;
  pk=PrcMZ/nwnHbeXNFUFUS833wF3DAX4hziDHEbBp1eNb8=
 X-ClientProxiedBy: MA5P287CA0172.INDP287.PROD.OUTLOOK.COM
@@ -73,76 +71,76 @@ X-ClientProxiedBy: MA5P287CA0172.INDP287.PROD.OUTLOOK.COM
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|SEYPR06MB6107:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3d9af8a0-66c8-4ada-d252-08df3141f796
+X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|SE3PR06MB9019:EE_
+X-MS-Office365-Filtering-Correlation-Id: 95472c79-d731-4172-4c16-08df3141f2ab
 X-LD-Processed: 808466aa-232a-41f4-ac23-289e3a6840d4,ExtAddr
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|52116014|366016|1800799024|23010399003|38350700014|56012099006|261022105027099003|261021123027099003|261021121427099003|261009223027099003|260925021311599003|10067099003|260925022911599003|260925021911599003|18002099003|22082099003|6133799003|3023799007;
-X-Microsoft-Antispam-Message-Info: vVmr+cYhL5ItvXpkmsvd9RTaDJe7kWOxK6m1Vo3mCqSZdNy5g+iTBcq3rchSbTIDomNK/YJaHusOqtmx710cz/TjGtV1GeQDJtUQZnKSdZywMauEuz/qTk32dRduNP4NmvNkK33LsOTHGIgTO9wMxE3tLv8ou1U+Tpi/oIRPNFWEkm+xroD2UChDV+cTxC9qZX9u9cPViXIGw5qZ1vnJ1krJ1zlbGxO23MEMSbAU7LnjtqcYYNPNmVo0SJyPkOMVWiYX+IwdsCe1zrpkmWt9cLX3srXAyTf/YaOamVSTfIjF7ACZSJ7oBrCA70YFJ1XfwT9K+g9xJC+zmJe9bthGUNNNUC+6XTY1r88rm0zhoYfe94ZpqqgGRt4bVLk03Ygbp022Oc6sgCsrBQXjI1kv0TlUe5sRh/9kTzoDqEHXPMUmEXbkLKT5SAbZ3gE7koMN/4ny/lOyMsiCG0u2+BGySkWcAEEomiLYxS9PrpNfysg4wgxOH17cugFKY5ZXnlS5+f380jn5pHh9ziRURBYSbp515JgxYPEofK+9/SFxdlY2tr36bp56L12M1gWhwBLzEZhvovquJ6+g87A/XBXiC62yyson1qvvRLsQTCJGssifsE+kLGdqY3m03XphsixlQY1wr0IBSD2S935CzB9x3qjHOpAWz4yXQwchRphNtUA=
+ ARA:13230040|1800799024|366016|52116014|23010399003|376014|38350700014|261021123027099003|261009223027099003|260925021311599003|260925021911599003|260925022911599003|261021121427099003|10067099003|22082099003|56012099006|18002099003|6133799003|261022105027099003|3023799007|261022075727099003;
+X-Microsoft-Antispam-Message-Info: /K6Vg6sBL/tN0z05agYqKHq/WEx3yu6Zxlu34wAnR/pndkmsK+7iQAmcCDNX82+rCsqVftgkVh6Fg/yOta9T3GQmCbBU0oEW9NxVYHSaic0Du5h726uUMagEgIvZ5vaFDBtO0oZhVgOVRnQ2qJAoKhqVc4anYyiif6sRB07DyezNW0Dxwrc7YViHdoeKEnttMoOUFsNN94naFZ9nlG0prCleB52M4R5qj7mhi44cEeVlwiwbfzdjskN7/cnUO3CjRl0+SoJGK0jMftqwscIXCoPpU2DEwVuZqbkM3J2jOZzfMS/xSdVNrp2TdYPXwpwE9Mqbisnxx6wrRX59f4UM/4HMAze5yPEJOxDTbNQud2irEmoBOPnOJmnpzNoMBg9qtpXMJkVpyMTnUYlgvQ1DZTbpUBPO8zaEWmW6uLS5z6VEFIq84eE+wNw/DCgj/45C0WBPKBcmMUt8g7fujo2sp1DFRrx8o5Cpy4ACsR4gcZ1C9tV+sHXdDY5a94XCQeAAXvSTPx+6l2wS7kEYJtWWA5Q2UIjGTvMPpSB6ydRF435FKnEkyx/gVUqwALBba5FwQ/Wq5LSTiPnKi4WaYfD0BwJu3KUmDPZGuADalGiQEvjVQxxTPl8vZvXaOvqRRAMlzK7wauMz7zOGcnoB6i81Ogp1OKhyIKM+5tjX1iLtSZ4IITOQiNCzy+gXMT61A/CiY1prAS6eiNiG9BaVkxSazuhuEtPxRzfQQ+YycgyUeTM=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(52116014)(366016)(1800799024)(23010399003)(38350700014)(56012099006)(261022105027099003)(261021123027099003)(261021121427099003)(261009223027099003)(260925021311599003)(10067099003)(260925022911599003)(260925021911599003)(18002099003)(22082099003)(6133799003)(3023799007);
+ SFS:(13230040)(1800799024)(366016)(52116014)(23010399003)(376014)(38350700014)(261021123027099003)(261009223027099003)(260925021311599003)(260925021911599003)(260925022911599003)(261021121427099003)(10067099003)(22082099003)(56012099006)(18002099003)(6133799003)(261022105027099003)(3023799007)(261022075727099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?emIvd1pFRXlrZ1ZzQkN0dm9VeDlZTnduaXNvb2ttZVMvdDZSdFpnKzFHNExU?=
- =?utf-8?B?UmxaeEQ4QkJwcDVNVkxnYnFOZjE4NmRwR1dwUDFOT0RuUGlPSDBIR1k3dGFI?=
- =?utf-8?B?TmNiNzRia0xKSjlFaFpSWTVVUlJCRFRnZW85NDBhYXRrUWJ3ZU05ZkRmQndx?=
- =?utf-8?B?dXVFNDZQVHRqT0VVcnNySERhVUJIaXVLUkJjTWF1Sk0rNVNQOUdacXpSbjVy?=
- =?utf-8?B?WlN3NHVMdDMvaHBmaFpnaFpFdCtrUWRkL3RLalNCdUZlOE1WS0lqL3JlWHBF?=
- =?utf-8?B?bFFaYXhTRjFQTVFzZS9VRm1xblpiQ2JxU01iaGp2OWV0eFpia0FjeE9paHNW?=
- =?utf-8?B?TWNLRU5ZWGtJWFFCREVDZUpFZ2t4MUdQVU0wcmw2VWd5c1ZEYzJGc3lzNzBz?=
- =?utf-8?B?Z3J3V2JHVVZYQ1BlcHhwb3ViSzE3eXo2MXYzcktYb0ZsOVlqSURkTjgrL0li?=
- =?utf-8?B?Smk2UkFvT3hHaDVYRjRWa0xQank3K2RPbGdDY1Uza1A4T3Z1WktlTm5wbmFt?=
- =?utf-8?B?T0FRdVNXbTlFOXRWK1AyRXBuRVZrQkdLYjkreCt1VmpVODd0SnNhTHE0Umpk?=
- =?utf-8?B?QjlsemhEZUU5cXBlcnBkeW8rL2ljVThEL0dVamJvRnpCN2dxcnJtNTVZMDkv?=
- =?utf-8?B?Vk9lR3pEVHNIWm5vK2pYcUJzL0xLaXFteTcwenVtTHVqelE2K3dzcjdMMWRo?=
- =?utf-8?B?ZWMrZ2EwT1c3c0c2VW9DNWt0VTJjZlYxT2FWS1BKNDdyczlHbTVMUnE3aFgy?=
- =?utf-8?B?S1RDbFNDZWRHTWFraUxSZTRnbit5N2IvdCt3ZHlDK29ka0N2LzN1NVQ3UHgy?=
- =?utf-8?B?clF1MUtRQUlFaWxqd0dscmNBWFd2UlAxZjFETTlGZFpTek1CQlVBZnlPOEhN?=
- =?utf-8?B?MlQvTDhjN216bjl3UzBXbUJLZmc3WVhOcFNwK25ibE5OcDJDZGhPcTY5RVA2?=
- =?utf-8?B?aWdySW1xclIxdG1kTnVRalZlbWRLZXo0VVBsNWhTcDdwYVBKT3RBZnF4ZzM0?=
- =?utf-8?B?cWRhL3oxcVFEeDhQNWdtQzgrVzdNT1JzU0tkN0dXOEJ0Nzd0Y3JaUWVKdGVw?=
- =?utf-8?B?OVhMT0xlY1kxYzd0YTFsQmNiUHdqUnlRaGl0TWhxWFdFZmNhQjM0UFFFVHVw?=
- =?utf-8?B?dFBhQ1R4RDBodHBIMCtQalN4NWlnK0JvUDRPRGpaNVRjY3RSOEdLTkQ2ZVB1?=
- =?utf-8?B?dnZRdzRJU3l6WXd6Y0FTSWtob3IwbnN3b1duR3hERTVpV1p1KzJNQjVtZ25G?=
- =?utf-8?B?OGorL2tZNmZjSFE5SnVOcTBOSFRWTjR1MWJjQkI4N1JqV3pnVVlIWkkyeXVa?=
- =?utf-8?B?UmwxYkd0Z2pJRmg0bzgwUEdaVFRuMlVHZWNGeFdZZzZ2K3BKYjVwMGh3TS9G?=
- =?utf-8?B?SDUrSmlnMTVPakQ1WlRQZ2NjV1RkTXR3K1BtWFBOUEkxZEdCbmlOT1pYL1FS?=
- =?utf-8?B?ajk0UHh1ZmtZWWg1eitZak05SGhmTHpEek1iSHd3K3UzUERXYnpiVUFMajNV?=
- =?utf-8?B?WWdVbVlXUGdmOWJuR24vWDZ2Tkpab1IrSWREMS9uV0VlWGQ0YjFNZmUzejlV?=
- =?utf-8?B?UUMvV3BwSUFFdUNlSVN5WTN3UlErM2xYNmlUZk5tYVlyTVd1d0NjNU9sYkpo?=
- =?utf-8?B?MExiTlFNVEEyVFJha3NZaDhHdU9JTG95UzhIR1RKbDM2Y1lkYllYSDVVQ05n?=
- =?utf-8?B?ZUVEbmUyb0hXd2l1c2kzZnVuQzhlMTF1LzBOeER6ZkxSWlNZMXE4cHN5SzBG?=
- =?utf-8?B?OTYrejU2ZG0yYVFNa0JjazhxdFlxYzRmYjV0Ujl3b3lsL2EwNy91MDA3U3RM?=
- =?utf-8?B?L1FFbjdMYWRiWmpuUlpOSU84RFBsV3BTZ1hmL2xhWTExRm5OK0EyWnRFT2pL?=
- =?utf-8?B?NDcxVUVIM0FFSnIyRWptdUE5ZGxXRHplRldxeHNSc0JjcUJTdVl6dUtsRzlS?=
- =?utf-8?B?clh4Yk5pRlpYZ1FraEZMY1JNNjZNWmtIV3RwMkh6YlFIZkVOcmU1UXVqWHNm?=
- =?utf-8?B?Z095TUJybXZUTEg3dGRQSE41dTFNeTIwaGVyZEI1cWFWU240Tld6MzZyUnly?=
- =?utf-8?B?VnN5b3lNNEM1dlUxaEw0Zy9uV1pSaDc1SkY5TkE3RWFqSHZQNUlMNW5QcVhH?=
- =?utf-8?B?NjhMMVd3TnA2Skp6RWdsY0tFM1VXV2E0UHZvbUZMTEsxcmc0WitDWHM4cVQ0?=
- =?utf-8?B?WGVlanVnZUVITDJCdlp1RDFCVDk4WUtFQWl6YzkwRE1uQjF4UTUxckwrd1VH?=
- =?utf-8?B?RzBEVVZQZHlON2xOQ3JLM1NGa3ZSSVU0MHQvL0s0T1NoOUkxd3FQalFrVzRF?=
- =?utf-8?B?dDYybXBYdjh1aG00cGJBeHRROWE5YmRKa2plaHA3SENtNXd3ei9Vdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SWZpUlFIMVkwZERpSkwyRWR6U1dQMW40L2xBbDlrSkt1QzZDb0xHODJ6Y05m?=
+ =?utf-8?B?OHM0VzZIVmZ0blJZNWt2QWNKZkJndlN6NU1yeno4d0ZYSHExNWZETzljdUUx?=
+ =?utf-8?B?TUNDbmphZVI4dHA3ZWI0dENINThzZmd5d2w2bXFOb3N5MnRwc0pkaXRCOENj?=
+ =?utf-8?B?T1BGVXRYQUZiVUxDcytqWWxXSU5zWE5BaHhsWWRQV3N3N2grVDFwNytrUWlS?=
+ =?utf-8?B?Y0RvWldLVXMxaGRoVVEyYy9keGQ3YkN2Z2hraTdTSy83N2dQYUQvb3EyY2dX?=
+ =?utf-8?B?ZUppb0hQZkRseVkxRXRuNHVvVXRzWk5kUjlwK3kzVjhkOE1rSGhCdjRNUDFw?=
+ =?utf-8?B?NFRVc1ljUC8wUTJiVVBDMXFOTHV5TlJidG1OaSt1S3Rtc2hjbDJrY1dQalZv?=
+ =?utf-8?B?YnNxakk4Z1ZyRVY5dW4wOXVuOTRabWcvTjQ4R04xYTZ4dzJtVDNvUWsrYThG?=
+ =?utf-8?B?UUE2VDlZTGoxMWF3THB6N1BTRGNSSlhqN09zemlNb2JvZWpKci9Ja1JCWXNG?=
+ =?utf-8?B?Q2x3MndzK1dnbEVqWHBFVFRBUVJ1T0lsd2k1VldnVnRWakRsUGV0b3VqVW5o?=
+ =?utf-8?B?UXJMNlZaN0NvSWRianF5anRod0Y1Qms5WGdZalNjVmdpRG5NaTdZbDVKVmNB?=
+ =?utf-8?B?c2VwRzk1VnhJTTFsUURsQjBhMjFwZVFKaVdscmxSeEZZcjVNZk5WYS81K1dt?=
+ =?utf-8?B?Z1Y1d2hvTDk4OXpVa0R1N2JtK09hVDE5U0lrSEtqa0VQQ0FwTGJna05IRVV5?=
+ =?utf-8?B?K09BZzRVc1NkWE8xdTZUeGp3akZwaVVNZFJ6dGpFMGZaTWtBNmNXV2lUbDd3?=
+ =?utf-8?B?SXFZa0RISE5Yc0JLTkJmdDBTTzNkRWR5QTJxWkNOM3E0aG1lL0JZREFjS1U0?=
+ =?utf-8?B?UlUvb2REaDc4WWZtdkd0dHZ2TDM5MHp6NWFMZDZBaVhvWkpGVFFHSUtHNTZR?=
+ =?utf-8?B?RjdTWVpXNVp0RUhZaHZmYVBmdFFLZjc4VCtaOWtUSGl2c0ZlU3hlS0NFMmdX?=
+ =?utf-8?B?NGpHUTZkUk1Ca2dwZ2xkM3l2bWpXeVRHMWNXcXFGY3BhWGZacjJMNU9SV0ZU?=
+ =?utf-8?B?c2ZkMjQxYmdOckRhMmgwY0pBTWVnMWlBRlpaM3NiOUJ0cWdXWmROUGFxS2Jt?=
+ =?utf-8?B?RzdkV1VXZmlXc1BSQmJGOVJ3UTJmUFN1ZGhLVUs0RG4xNjVNOGMxRVZLRmF6?=
+ =?utf-8?B?ZGhCNWlTQTdVaGJvSStSdHZDUWszL0l1YmlsdWdKcnAyOEtScHZrckxzZFU2?=
+ =?utf-8?B?ZzR3TlU2V1BsaEFNK3M1UWFMS3R4Z2laNHZ2US96M0IvbkVMNWEwUEFQZ0ox?=
+ =?utf-8?B?bGtwUXFSaGdhckhteDRkeTJGelkxWTlkL1VKcFJZdkxESzRNcGFvTDF6L0FP?=
+ =?utf-8?B?UWpwTWR2SkdzT2E0WlhoZmNGQWMwVmZpaHJRNUF1NnJhS1FFVjFwQ0dCZUY0?=
+ =?utf-8?B?V0hYMFJDTXVNSW93UUVDeXU2LzV3dyszMktHbTViMU5INVZWYUJvU2Q2Vm53?=
+ =?utf-8?B?Z1dOR0t0bisvYlBjUisxcURIL29zR2tYUkVTQ2pIVERrT2hESTZWaXVGQzZU?=
+ =?utf-8?B?UCttbzIxOXQ1dlVJc2hlcXNXTTkrY1RXYnduUWlHTUJxMytET2VDMlRJLy9n?=
+ =?utf-8?B?V3FZZHFiRVExQzhMRk9sZ1NKUWJRSkpLZ3hXOEhGcGhweCtKRHlsbzVxU2tE?=
+ =?utf-8?B?bWhZaCtqaEZ0VUpacnlUWGRPcklvTll4VllhSnhrVUZtNWMrWnF5VkpudEhX?=
+ =?utf-8?B?U3ovME55V0lMVEFNUFFYMFVVU0ozQkh6aEpCakJWR0hsMGxjUWxWb2I1YmhY?=
+ =?utf-8?B?bDEvbTNHencwUzlXMWZ3M3RSZ0xkRXltMXZlek9NN25ieWtRd2g5U2Jab1Jl?=
+ =?utf-8?B?RGNITmI2SzJRcUk2bmk1RFBWL2FGN2VVMHErdWlLclpEQUc5aGpVQ2JsV2lI?=
+ =?utf-8?B?TDhuaDlrZWRiWlNJajc5SEdxSll1K0RQQXhQbU9YaDR2eGY3RUE1eEFFcWJi?=
+ =?utf-8?B?MFNHQ3VWeEtxNm9JWk44aWNEQmRrV2Z5eFVJQ3NjamFjbmZ3bkdQMFBVV1Jv?=
+ =?utf-8?B?SGNyS2orYzNkcE9GR0o3Y3M2WTZIbzZTbmNESnFya1RsSVJ2ajBCRkdlc0R2?=
+ =?utf-8?B?SE1hdXBJa09PZ2g4Sk1DVXdvQzllVVlueXlkZ0Z5MGt3eUtTY1l1NjJCWW9r?=
+ =?utf-8?B?bTFyM2kvb2dtYkJ4Sm1CRXQwVjI3VVVEaHB2Q1NJRHhMZC9zclJrRnhlbmZk?=
+ =?utf-8?B?eEZXMDl1MkdjZ1VHa0pJbGZDaWZQNDBLTzRRV2pxUEdJano0cnViZDVpY09z?=
+ =?utf-8?B?K3F2YXdaQW1ONWYzajlrSG9FWGV5dUJtZVZteGZJSmt2OUNpZEtkZz09?=
 X-OriginatorOrg: linumiz.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d9af8a0-66c8-4ada-d252-08df3141f796
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95472c79-d731-4172-4c16-08df3141f2ab
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:30.7647 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:22.5433 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XXEUHixJnZj4AKKrUYAWSt+sYuTghmPSRikeX+hCT8zZlKO0EI6fBikMSpwpX4zzlGAP29Ujz7C5HpJr+aZC6A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6107
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5nQBiOXVUf5/tBTJrks0+SFLUttHOOXCuKvsmA/R7N29WghJe7Rky9RdlvdloabkFt8WDC+1OFETz3pabaVCbQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR06MB9019
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=parthiban@linumiz.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,594 +159,646 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-TC39x SoC with the TC397B memory map: 6x 240K DSPR, 6x 64K PSPR,
-6 flash banks, DLMU, LMU, 4M EMEM.  Only CPU0 runs.  Same
-peripheral wiring pattern as tc27x.
+Model the ASCLIN in UART mode.  TX writes go to the chardev
+backend, RX fills a ring buffer.  FLAGS tracks FIFO status and
+three sysbus IRQ lines (TX, RX, ERR) are pulsed on flag edges.
 
-Originally-by: Andreas Konopik <andreas.konopik@efs-auto.de>
 Originally-by: David Brenken <david.brenken@efs-auto.de>
 Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 ---
- hw/tricore/Kconfig              |   7 +
- hw/tricore/meson.build          |   1 +
- hw/tricore/tc39xb_soc.c         | 338 ++++++++++++++++++++++++++++++++++++++++
- hw/tricore/triboard.c           |  32 +++-
- include/hw/tricore/tc39xb_soc.h | 110 +++++++++++++
- include/hw/tricore/triboard.h   |   2 +
- 6 files changed, 489 insertions(+), 1 deletion(-)
+ MAINTAINERS                      |   2 +
+ hw/char/Kconfig                  |   3 +
+ hw/char/meson.build              |   1 +
+ hw/char/tricore_asclin.c         | 537 +++++++++++++++++++++++++++++++++++++++
+ include/hw/char/tricore_asclin.h |  41 +++
+ 5 files changed, 584 insertions(+)
 
-diff --git a/hw/tricore/Kconfig b/hw/tricore/Kconfig
-index 9e312495e5..79b4731cff 100644
---- a/hw/tricore/Kconfig
-+++ b/hw/tricore/Kconfig
-@@ -8,6 +8,7 @@ config TRIBOARD
-     default y
-     depends on TRICORE
-     select TC27X_SOC
-+    select TC39X_SOC
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d9209f043f..5f985ad4e3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -478,6 +478,8 @@ S: Orphan
+ F: target/tricore/
+ F: hw/tricore/
+ F: include/hw/tricore/
++F: hw/char/tricore_asclin.c
++F: include/hw/char/tricore_asclin.h
+ F: tests/docker/dockerfiles/debian-tricore-cross.docker
+ F: tests/tcg/tricore/
  
- config TC27X_SOC
+diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+index 7040040641..11eca70181 100644
+--- a/hw/char/Kconfig
++++ b/hw/char/Kconfig
+@@ -99,3 +99,6 @@ config IP_OCTAL_232
+ config DW8250
      bool
-@@ -15,5 +16,11 @@ config TC27X_SOC
-     select TRICORE_SCU
-     select TRICORE_STM
- 
-+config TC39X_SOC
-+    bool
-+    select TRICORE_ASCLIN
-+    select TRICORE_SCU
-+    select TRICORE_STM
+     select SERIAL_MM
 +
- config TRICORE_SCU
-     bool
-diff --git a/hw/tricore/meson.build b/hw/tricore/meson.build
-index 86c8c8dd9f..96e367f996 100644
---- a/hw/tricore/meson.build
-+++ b/hw/tricore/meson.build
-@@ -3,6 +3,7 @@ tricore_ss.add(when: 'CONFIG_TRICORE_TESTBOARD', if_true: files('tricore_testboa
- tricore_ss.add(when: 'CONFIG_TRICORE_TESTBOARD', if_true: files('tricore_testdevice.c'))
- tricore_ss.add(when: 'CONFIG_TRIBOARD', if_true: files('triboard.c'))
- tricore_ss.add(when: 'CONFIG_TC27X_SOC', if_true: files('tc27x_soc.c'))
-+tricore_ss.add(when: 'CONFIG_TC39X_SOC', if_true: files('tc39xb_soc.c'))
- tricore_ss.add(when: 'CONFIG_TRICORE_SCU', if_true: files('tricore_scu.c'))
- 
- hw_arch += {'tricore': tricore_ss}
-diff --git a/hw/tricore/tc39xb_soc.c b/hw/tricore/tc39xb_soc.c
++config TRICORE_ASCLIN
++    bool
+diff --git a/hw/char/meson.build b/hw/char/meson.build
+index b2250ee6ae..97025d933b 100644
+--- a/hw/char/meson.build
++++ b/hw/char/meson.build
+@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'))
+ system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
+ system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_usart.c'))
+ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'))
++system_ss.add(when: 'CONFIG_TRICORE_ASCLIN', if_true: files('tricore_asclin.c'))
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
+ system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
+ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
+diff --git a/hw/char/tricore_asclin.c b/hw/char/tricore_asclin.c
 new file mode 100644
-index 0000000000..cecca7d94c
+index 0000000000..0142756cc9
 --- /dev/null
-+++ b/hw/tricore/tc39xb_soc.c
-@@ -0,0 +1,338 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++++ b/hw/char/tricore_asclin.c
+@@ -0,0 +1,537 @@
 +/*
-+ * Infineon TC39x SoC System emulation.
++ * TriCore ASCLIN (Asynchronous/Synchronous Interface) UART controller
 + *
-+ * Copyright (c) 2020 Andreas Konopik <andreas.konopik@efs-auto.de>
-+ * Copyright (c) 2020 David Brenken <david.brenken@efs-auto.de>
++ * Copyright (c) 2017 David Brenken <david.brenken@efs-auto.de>
++ * Copyright (c) 2024 Siemens AG
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
++#include "qemu/log.h"
 +#include "qapi/error.h"
-+#include "hw/core/clock.h"
-+#include "hw/core/qdev-clock.h"
 +#include "hw/core/sysbus.h"
-+#include "hw/core/loader.h"
-+#include "hw/core/qdev-properties.h"
-+#include "qemu/units.h"
-+#include "system/system.h"
++#include "hw/core/irq.h"
++#include "hw/core/registerfields.h"
++#include "chardev/char-fe.h"
++#include "chardev/char-serial.h"
++#include "migration/vmstate.h"
++#include "hw/char/tricore_asclin.h"
++#include "hw/core/qdev-properties-system.h"
 +
-+#include "hw/tricore/tc39xb_soc.h"
-+#include "hw/tricore/tc27x_soc.h"
-+
-+const MemmapEntry tc39xb_soc_memmap[] = {
-+    [TC39XB_DSPR5]     = { 0x10000000,            240 * KiB },
-+    [TC39XB_DCACHE5]   = { 0x10018000,             16 * KiB },
-+    [TC39XB_DTAG5]     = { 0x100C0000,              6 * KiB },
-+    [TC39XB_PSPR5]     = { 0x10100000,             64 * KiB },
-+    [TC39XB_PCACHE5]   = { 0x10108000,             32 * KiB },
-+    [TC39XB_PTAG5]     = { 0x101C0000,             12 * KiB },
-+    [TC39XB_DSPR4]     = { 0x30000000,            240 * KiB },
-+    [TC39XB_DCACHE4]   = { 0x30018000,             16 * KiB },
-+    [TC39XB_DTAG4]     = { 0x300C0000,              6 * KiB },
-+    [TC39XB_PSPR4]     = { 0x30100000,             64 * KiB },
-+    [TC39XB_PCACHE4]   = { 0x30108000,             32 * KiB },
-+    [TC39XB_PTAG4]     = { 0x301C0000,             12 * KiB },
-+    [TC39XB_DSPR3]     = { 0x40000000,            240 * KiB },
-+    [TC39XB_DCACHE3]   = { 0x40018000,             16 * KiB },
-+    [TC39XB_DTAG3]     = { 0x400C0000,              6 * KiB },
-+    [TC39XB_PSPR3]     = { 0x40100000,             64 * KiB },
-+    [TC39XB_PCACHE3]   = { 0x40108000,             32 * KiB },
-+    [TC39XB_PTAG3]     = { 0x401C0000,             12 * KiB },
-+    [TC39XB_DSPR2]     = { 0x50000000,            240 * KiB },
-+    [TC39XB_DCACHE2]   = { 0x5001E000,             16 * KiB },
-+    [TC39XB_DTAG2]     = { 0x500C0000,              6 * KiB },
-+    [TC39XB_PSPR2]     = { 0x50100000,             64 * KiB },
-+    [TC39XB_PCACHE2]   = { 0x50108000,             32 * KiB },
-+    [TC39XB_PTAG2]     = { 0x501C0000,             12 * KiB },
-+    [TC39XB_DSPR1]     = { 0x60000000,            240 * KiB },
-+    [TC39XB_DCACHE1]   = { 0x6001E000,             16 * KiB },
-+    [TC39XB_DTAG1]     = { 0x600C0000,              6 * KiB },
-+    [TC39XB_PSPR1]     = { 0x60100000,             64 * KiB },
-+    [TC39XB_PCACHE1]   = { 0x60108000,             32 * KiB },
-+    [TC39XB_PTAG1]     = { 0x601C0000,             12 * KiB },
-+    [TC39XB_DSPR0]     = { 0x70000000,            240 * KiB },
-+    [TC39XB_DCACHE0]   = { 0x7001E000,             16 * KiB },
-+    [TC39XB_DTAG0]     = { 0x700C0000,              6 * KiB },
-+    [TC39XB_PSPR0]     = { 0x70100000,             64 * KiB },
-+    [TC39XB_PCACHE0]   = { 0x70108000,             32 * KiB },
-+    [TC39XB_PTAG0]     = { 0x701C0000,             12 * KiB },
-+    [TC39XB_PFLASH0_C] = { 0x80000000,              3 * MiB },
-+    [TC39XB_PFLASH1_C] = { 0x80300000,              3 * MiB },
-+    [TC39XB_PFLASH2_C] = { 0x80600000,              3 * MiB },
-+    [TC39XB_PFLASH3_C] = { 0x80900000,              3 * MiB },
-+    [TC39XB_PFLASH4_C] = { 0x80C00000,              3 * MiB },
-+    [TC39XB_PFLASH5_C] = { 0x80F00000,              1 * MiB },
-+    [TC39XB_OLDA_C]    = { 0x8FE00000,            512 * KiB },
-+    [TC39XB_BROM_C]    = { 0x8FFF0000,             64 * KiB },
-+    [TC39XB_DLMU0_C]   = { 0x90000000,             64 * KiB },
-+    [TC39XB_DLMU1_C]   = { 0x90010000,             64 * KiB },
-+    [TC39XB_DLMU2_C]   = { 0x90020000,             64 * KiB },
-+    [TC39XB_DLMU3_C]   = { 0x90030000,             64 * KiB },
-+    [TC39XB_LMU0_C]    = { 0x90040000,            256 * KiB },
-+    [TC39XB_LMU1_C]    = { 0x90080000,            256 * KiB },
-+    [TC39XB_LMU2_C]    = { 0x900C0000,            256 * KiB },
-+    [TC39XB_DLMU4_C]   = { 0x90100000,             64 * KiB },
-+    [TC39XB_DLMU5_C]   = { 0x90110000,             64 * KiB },
-+    [TC39XB_EMEM]      = { 0x99000000,              4 * MiB },
-+    [TC39XB_PFLASH0_U] = { 0xA0000000,                  0x0 },
-+    [TC39XB_PFLASH1_U] = { 0xA0300000,                  0x0 },
-+    [TC39XB_PFLASH2_U] = { 0xA0600000,                  0x0 },
-+    [TC39XB_PFLASH3_U] = { 0xA0900000,                  0x0 },
-+    [TC39XB_PFLASH4_U] = { 0xA0C00000,                  0x0 },
-+    [TC39XB_PFLASH5_U] = { 0xA0F00000,                  0x0 },
-+    [TC39XB_DFLASH0]   = { 0xAF000000,              1 * MiB },
-+    [TC39XB_DFLASH1]   = { 0xAFC00000,            128 * KiB },
-+    [TC39XB_OLDA_U]    = { 0xAFE00000,                  0x0 },
-+    [TC39XB_BROM_U]    = { 0xAFFF0000,                  0x0 },
-+    [TC39XB_DLMU0_U]   = { 0xB0000000,                  0x0 },
-+    [TC39XB_DLMU1_U]   = { 0xB0010000,                  0x0 },
-+    [TC39XB_DLMU2_U]   = { 0xB0020000,                  0x0 },
-+    [TC39XB_DLMU3_U]   = { 0xB0030000,                  0x0 },
-+    [TC39XB_LMU0_U]    = { 0xB0040000,                  0x0 },
-+    [TC39XB_LMU1_U]    = { 0xB0080000,                  0x0 },
-+    [TC39XB_LMU2_U]    = { 0xB00C0000,                  0x0 },
-+    [TC39XB_DLMU4_U]   = { 0xB0100000,                  0x0 },
-+    [TC39XB_DLMU5_U]   = { 0xB0110000,                  0x0 },
-+    [TC39XB_PSPRX]     = { 0xC0000000,                  0x0 },
-+    [TC39XB_DSPRX]     = { 0xD0000000,                  0x0 },
-+    [TC39XB_STM0]      = { 0xF0001000,                  0x0 },
-+    [TC39XB_ASCLIN0]   = { 0xF0000600,                  0x0 },
-+    [TC39XB_SCU]       = { 0xF0036000,                  0x0 },
++/*
++ * Register offsets (byte address / 4) for TC3x ASCLIN.
++ * Each register occupies one 4-byte slot from 0x00 to 0x50.
++ */
++enum {
++    R_CLC = 0,
++    R_IOCR,
++    R_ID,
++    R_TXFIFOCON,
++    R_RXFIFOCON,
++    R_BITCON,
++    R_FRAMECON,
++    R_DATCON,
++    R_BRG,
++    R_BRD,
++    R_LINCON,
++    R_LINBTIMER,
++    R_LINHTIMER,
++    R_FLAGS,
++    R_FLAGSSET,
++    R_FLAGSCLEAR,
++    R_FLAGSENABLE,
++    R_TXDATA,
++    R_RXDATA,
++    R_CSR,
++    R_RXDATAD,
 +};
 +
-+static void make_rom(MemoryRegion *mr, const char *name,
-+                     hwaddr base, hwaddr size)
++/* FLAGS register bits */
++#define ASCLIN_FLAGS_TH     (1u << 0)
++#define ASCLIN_FLAGS_TR     (1u << 1)
++#define ASCLIN_FLAGS_RH     (1u << 2)
++#define ASCLIN_FLAGS_RR     (1u << 3)
++#define ASCLIN_FLAGS_FED    (1u << 5)
++#define ASCLIN_FLAGS_RED    (1u << 6)
++#define ASCLIN_FLAGS_PE     (1u << 16)
++#define ASCLIN_FLAGS_TC     (1u << 17)
++#define ASCLIN_FLAGS_FE     (1u << 18)
++#define ASCLIN_FLAGS_HT     (1u << 19)
++#define ASCLIN_FLAGS_RT     (1u << 20)
++#define ASCLIN_FLAGS_BD     (1u << 21)
++#define ASCLIN_FLAGS_LP     (1u << 22)
++#define ASCLIN_FLAGS_LA     (1u << 23)
++#define ASCLIN_FLAGS_LC     (1u << 24)
++#define ASCLIN_FLAGS_CE     (1u << 25)
++#define ASCLIN_FLAGS_RFO    (1u << 26)
++#define ASCLIN_FLAGS_RFU    (1u << 27)
++#define ASCLIN_FLAGS_RFL    (1u << 28)
++#define ASCLIN_FLAGS_TFO    (1u << 30)
++#define ASCLIN_FLAGS_TFL    (1u << 31)
++
++/* RXFIFOCON bits */
++#define ASCLIN_RXFIFOCON_FLUSH  0x1
++#define ASCLIN_RXFIFOCON_ENI    0x2
++
++/* TXFIFOCON.INW: bytes written to the Tx FIFO per bus write */
++#define ASCLIN_TXFIFOCON_INW_SHIFT  6
++#define ASCLIN_TXFIFOCON_INW_MASK   (0x3u << ASCLIN_TXFIFOCON_INW_SHIFT)
++
++/* Interrupt line grouping masks */
++#define ASCLIN_TX_INT_MASK  (ASCLIN_FLAGS_TH | ASCLIN_FLAGS_TR | \
++                             ASCLIN_FLAGS_TFL)
++#define ASCLIN_RX_INT_MASK  (ASCLIN_FLAGS_RH | ASCLIN_FLAGS_RR | \
++                             ASCLIN_FLAGS_RFL)
++#define ASCLIN_ERR_INT_MASK (ASCLIN_FLAGS_FED | ASCLIN_FLAGS_RED | \
++                             ASCLIN_FLAGS_PE  | ASCLIN_FLAGS_TC  | \
++                             ASCLIN_FLAGS_FE  | ASCLIN_FLAGS_HT  | \
++                             ASCLIN_FLAGS_RT  | ASCLIN_FLAGS_BD  | \
++                             ASCLIN_FLAGS_LP  | ASCLIN_FLAGS_LA  | \
++                             ASCLIN_FLAGS_LC  | ASCLIN_FLAGS_CE  | \
++                             ASCLIN_FLAGS_RFO | ASCLIN_FLAGS_RFU | \
++                             ASCLIN_FLAGS_TFO)
++
++/* FIFO depth and FILL field position in TX/RXFIFOCON */
++#define ASCLIN_HW_FIFO_DEPTH    16
++#define ASCLIN_FILL_SHIFT       16
++#define ASCLIN_FILL_MASK        (0x1fu << ASCLIN_FILL_SHIFT)
++
++static void asclin_rx_buf_reset(TriCoreASCLINState *s)
 +{
-+    memory_region_init_rom(mr, NULL, name, size, &error_fatal);
-+    memory_region_add_subregion(get_system_memory(), base, mr);
++    memset(s->rxbuf, 0, ASCLIN_RX_BUF_SIZE);
++    s->rx_rdidx = 0;
++    s->rx_wridx = 0;
 +}
 +
-+static void make_ram(MemoryRegion *mr, const char *name,
-+                     hwaddr base, hwaddr size)
++static uint32_t asclin_rx_buf_used(TriCoreASCLINState *s)
 +{
-+    memory_region_init_ram(mr, NULL, name, size, &error_fatal);
-+    memory_region_add_subregion(get_system_memory(), base, mr);
++    return ((s->rx_wridx + ASCLIN_RX_BUF_SIZE) - s->rx_rdidx)
++           % ASCLIN_RX_BUF_SIZE;
 +}
 +
-+static void make_alias(MemoryRegion *mr, const char *name,
-+                       MemoryRegion *orig, hwaddr base)
++static uint32_t asclin_rx_buf_free(TriCoreASCLINState *s)
 +{
-+    memory_region_init_alias(mr, NULL, name, orig, 0,
-+                             memory_region_size(orig));
-+    memory_region_add_subregion(get_system_memory(), base, mr);
++    return (ASCLIN_RX_BUF_SIZE - 1) - asclin_rx_buf_used(s);
 +}
 +
-+static void tc39xb_soc_init_memory_mapping(DeviceState *dev_soc)
++/*
++ * Pulse the appropriate IRQ line for each flag bit that is both
++ * set and enabled.  The TriCore interrupt router is edge-triggered.
++ */
++static void asclin_pulse_irq(TriCoreASCLINState *s, uint32_t pulse_mask)
 +{
-+    TC39XBSoCState *s = TC39XB_SOC(dev_soc);
-+    TC39XBSoCClass *sc = TC39XB_SOC_GET_CLASS(s);
-+    const MemmapEntry *map = sc->memmap;
-+    TC39XBSoCCPUMemState *c0 = &s->cpu0mem;
-+    TC39XBSoCCPUMemState *c1 = &s->cpu1mem;
-+    TC39XBSoCCPUMemState *c2 = &s->cpu2mem;
-+    TC39XBSoCCPUMemState *c3 = &s->cpu3mem;
-+    TC39XBSoCCPUMemState *c4 = &s->cpu4mem;
-+    TC39XBSoCCPUMemState *c5 = &s->cpu5mem;
-+    TC39XBSoCFlashMemState *f = &s->flashmem;
++    uint32_t fired = pulse_mask & s->regs[R_FLAGSENABLE];
 +
-+    /* CPU scratch-pad memories */
-+    make_ram(&c0->dspr, "CPU0.DSPR",
-+             map[TC39XB_DSPR0].base, map[TC39XB_DSPR0].size);
-+    make_ram(&c0->pspr, "CPU0.PSPR",
-+             map[TC39XB_PSPR0].base, map[TC39XB_PSPR0].size);
-+    make_ram(&c1->dspr, "CPU1.DSPR",
-+             map[TC39XB_DSPR1].base, map[TC39XB_DSPR1].size);
-+    make_ram(&c1->pspr, "CPU1.PSPR",
-+             map[TC39XB_PSPR1].base, map[TC39XB_PSPR1].size);
-+    make_ram(&c2->dspr, "CPU2.DSPR",
-+             map[TC39XB_DSPR2].base, map[TC39XB_DSPR2].size);
-+    make_ram(&c2->pspr, "CPU2.PSPR",
-+             map[TC39XB_PSPR2].base, map[TC39XB_PSPR2].size);
-+    make_ram(&c3->dspr, "CPU3.DSPR",
-+             map[TC39XB_DSPR3].base, map[TC39XB_DSPR3].size);
-+    make_ram(&c3->pspr, "CPU3.PSPR",
-+             map[TC39XB_PSPR3].base, map[TC39XB_PSPR3].size);
-+    make_ram(&c4->dspr, "CPU4.DSPR",
-+             map[TC39XB_DSPR4].base, map[TC39XB_DSPR4].size);
-+    make_ram(&c4->pspr, "CPU4.PSPR",
-+             map[TC39XB_PSPR4].base, map[TC39XB_PSPR4].size);
-+    make_ram(&c5->dspr, "CPU5.DSPR",
-+             map[TC39XB_DSPR5].base, map[TC39XB_DSPR5].size);
-+    make_ram(&c5->pspr, "CPU5.PSPR",
-+             map[TC39XB_PSPR5].base, map[TC39XB_PSPR5].size);
-+
-+    /*
-+     * TriCore QEMU executes CPU0 only, thus it is sufficient to map
-+     * LOCAL.PSPR/LOCAL.DSPR exclusively onto PSPR0/DSPR0.
-+     */
-+    make_alias(&s->psprX, "LOCAL.PSPR",
-+               &c0->pspr, map[TC39XB_PSPRX].base);
-+    make_alias(&s->dsprX, "LOCAL.DSPR",
-+               &c0->dspr, map[TC39XB_DSPRX].base);
-+
-+    /* Program flash (6 banks) */
-+    make_ram(&c0->pflash_c, "PF0",
-+             map[TC39XB_PFLASH0_C].base, map[TC39XB_PFLASH0_C].size);
-+    make_ram(&c1->pflash_c, "PF1",
-+             map[TC39XB_PFLASH1_C].base, map[TC39XB_PFLASH1_C].size);
-+    make_ram(&c2->pflash_c, "PF2",
-+             map[TC39XB_PFLASH2_C].base, map[TC39XB_PFLASH2_C].size);
-+    make_ram(&c3->pflash_c, "PF3",
-+             map[TC39XB_PFLASH3_C].base, map[TC39XB_PFLASH3_C].size);
-+    make_ram(&c4->pflash_c, "PF4",
-+             map[TC39XB_PFLASH4_C].base, map[TC39XB_PFLASH4_C].size);
-+    make_ram(&c5->pflash_c, "PF5",
-+             map[TC39XB_PFLASH5_C].base, map[TC39XB_PFLASH5_C].size);
-+
-+    /* DLMU (per-CPU local memory) */
-+    make_ram(&c0->dlmu_c, "DLMU0",
-+             map[TC39XB_DLMU0_C].base, map[TC39XB_DLMU0_C].size);
-+    make_ram(&c1->dlmu_c, "DLMU1",
-+             map[TC39XB_DLMU1_C].base, map[TC39XB_DLMU1_C].size);
-+    make_ram(&c2->dlmu_c, "DLMU2",
-+             map[TC39XB_DLMU2_C].base, map[TC39XB_DLMU2_C].size);
-+    make_ram(&c3->dlmu_c, "DLMU3",
-+             map[TC39XB_DLMU3_C].base, map[TC39XB_DLMU3_C].size);
-+    make_ram(&c4->dlmu_c, "DLMU4",
-+             map[TC39XB_DLMU4_C].base, map[TC39XB_DLMU4_C].size);
-+    make_ram(&c5->dlmu_c, "DLMU5",
-+             map[TC39XB_DLMU5_C].base, map[TC39XB_DLMU5_C].size);
-+
-+    /* Shared memories */
-+    make_ram(&f->dflash0, "DF0",
-+             map[TC39XB_DFLASH0].base, map[TC39XB_DFLASH0].size);
-+    make_ram(&f->dflash1, "DF1",
-+             map[TC39XB_DFLASH1].base, map[TC39XB_DFLASH1].size);
-+    make_ram(&f->olda_c, "OLDA",
-+             map[TC39XB_OLDA_C].base, map[TC39XB_OLDA_C].size);
-+    make_rom(&f->brom_c, "BROM",
-+             map[TC39XB_BROM_C].base, map[TC39XB_BROM_C].size);
-+    make_ram(&f->lmu0_c, "LMU0",
-+             map[TC39XB_LMU0_C].base, map[TC39XB_LMU0_C].size);
-+    make_ram(&f->lmu1_c, "LMU1",
-+             map[TC39XB_LMU1_C].base, map[TC39XB_LMU1_C].size);
-+    make_ram(&f->lmu2_c, "LMU2",
-+             map[TC39XB_LMU2_C].base, map[TC39XB_LMU2_C].size);
-+    make_ram(&f->emem, "EMEM",
-+             map[TC39XB_EMEM].base, map[TC39XB_EMEM].size);
-+
-+    /* Uncached aliases for program flash */
-+    make_alias(&c0->pflash_u, "PF0.U",
-+               &c0->pflash_c, map[TC39XB_PFLASH0_U].base);
-+    make_alias(&c1->pflash_u, "PF1.U",
-+               &c1->pflash_c, map[TC39XB_PFLASH1_U].base);
-+    make_alias(&c2->pflash_u, "PF2.U",
-+               &c2->pflash_c, map[TC39XB_PFLASH2_U].base);
-+    make_alias(&c3->pflash_u, "PF3.U",
-+               &c3->pflash_c, map[TC39XB_PFLASH3_U].base);
-+    make_alias(&c4->pflash_u, "PF4.U",
-+               &c4->pflash_c, map[TC39XB_PFLASH4_U].base);
-+    make_alias(&c5->pflash_u, "PF5.U",
-+               &c5->pflash_c, map[TC39XB_PFLASH5_U].base);
-+
-+    /* Uncached aliases for DLMU */
-+    make_alias(&c0->dlmu_u, "DLMU0.U",
-+               &c0->dlmu_c, map[TC39XB_DLMU0_U].base);
-+    make_alias(&c1->dlmu_u, "DLMU1.U",
-+               &c1->dlmu_c, map[TC39XB_DLMU1_U].base);
-+    make_alias(&c2->dlmu_u, "DLMU2.U",
-+               &c2->dlmu_c, map[TC39XB_DLMU2_U].base);
-+    make_alias(&c3->dlmu_u, "DLMU3.U",
-+               &c3->dlmu_c, map[TC39XB_DLMU3_U].base);
-+    make_alias(&c4->dlmu_u, "DLMU4.U",
-+               &c4->dlmu_c, map[TC39XB_DLMU4_U].base);
-+    make_alias(&c5->dlmu_u, "DLMU5.U",
-+               &c5->dlmu_c, map[TC39XB_DLMU5_U].base);
-+
-+    /* Uncached aliases for shared memories */
-+    make_alias(&f->olda_u, "OLDA.U",
-+               &f->olda_c, map[TC39XB_OLDA_U].base);
-+    make_alias(&f->brom_u, "BROM.U",
-+               &f->brom_c, map[TC39XB_BROM_U].base);
-+    make_alias(&f->lmu0_u, "LMU0.U",
-+               &f->lmu0_c, map[TC39XB_LMU0_U].base);
-+    make_alias(&f->lmu1_u, "LMU1.U",
-+               &f->lmu1_c, map[TC39XB_LMU1_U].base);
-+    make_alias(&f->lmu2_u, "LMU2.U",
-+               &f->lmu2_c, map[TC39XB_LMU2_U].base);
++    if (fired & ASCLIN_TX_INT_MASK) {
++        qemu_irq_pulse(s->irq_tx);
++    }
++    if (fired & ASCLIN_RX_INT_MASK) {
++        qemu_irq_pulse(s->irq_rx);
++    }
++    if (fired & ASCLIN_ERR_INT_MASK) {
++        qemu_irq_pulse(s->irq_err);
++    }
 +}
 +
-+static void tc39xb_soc_realize(DeviceState *dev_soc, Error **errp)
++static unsigned asclin_tx_inlet_bytes(TriCoreASCLINState *s)
 +{
-+    TC39XBSoCState *s = TC39XB_SOC(dev_soc);
-+    TC39XBSoCClass *sc = TC39XB_SOC_GET_CLASS(s);
-+    Clock *fstm;
-+    Error *err = NULL;
++    static const uint8_t inw_bytes[] = { 0, 1, 2, 4 };
 +
-+    qdev_realize(DEVICE(&s->cpu), NULL, &err);
-+    if (err) {
-+        error_propagate(errp, err);
++    return inw_bytes[(s->regs[R_TXFIFOCON] & ASCLIN_TXFIFOCON_INW_MASK) >>
++                     ASCLIN_TXFIFOCON_INW_SHIFT];
++}
++
++/*
++ * Watch callback: retries TX when the chardev was previously busy.
++ */
++static gboolean asclin_tx_watch(void *do_not_use, GIOCondition cond,
++                                void *opaque)
++{
++    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
++    int ret;
++
++    s->watch_tag = 0;
++
++    ret = qemu_chr_fe_write_all(&s->chr, (uint8_t *)&s->txbuf,
++                                asclin_tx_inlet_bytes(s));
++    if (ret <= 0) {
++        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
++                                             G_IO_OUT | G_IO_HUP,
++                                             asclin_tx_watch, s);
++        if (!s->watch_tag) {
++            goto drained;
++        }
++        return G_SOURCE_REMOVE;
++    }
++
++drained:
++    qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
++    asclin_pulse_irq(s, ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
++    return G_SOURCE_REMOVE;
++}
++
++/*
++ * Transmit TXFIFOCON.INW bytes immediately.  Re-asserts TFL and TC flags
++ * so that interrupt-driven drivers can continue filling the FIFO.
++ */
++static void asclin_txdata_write(TriCoreASCLINState *s, uint32_t value)
++{
++    unsigned len = asclin_tx_inlet_bytes(s);
++    int ret;
++
++    if (!len) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: TXFIFOCON.INW is 0, data dropped\n", __func__);
 +        return;
 +    }
 +
-+    tc39xb_soc_init_memory_mapping(dev_soc);
++    s->txbuf = cpu_to_le32(value);
++    ret = qemu_chr_fe_write_all(&s->chr, (uint8_t *)&s->txbuf, len);
++    if (ret <= 0) {
++        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
++                                             G_IO_OUT | G_IO_HUP,
++                                             asclin_tx_watch, s);
++        if (!s->watch_tag) {
++            goto drained;
++        }
++        return;
++    }
 +
-+    /* STM clock: 50 MHz */
-+    fstm = clock_new(OBJECT(dev_soc), "fstm");
-+    clock_set_hz(fstm, 50000000);
-+    qdev_connect_clock_in(DEVICE(&s->stm), "fstm", fstm);
-+
-+    qdev_prop_set_chr(DEVICE(&s->asclin), "chardev", serial_hd(0));
-+
-+    sysbus_realize(SYS_BUS_DEVICE(&s->stm), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->asclin), &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->scu), &error_fatal);
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->stm), 0,
-+                    sc->memmap[TC39XB_STM0].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->asclin), 0,
-+                    sc->memmap[TC39XB_ASCLIN0].base);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->scu), 0,
-+                    sc->memmap[TC39XB_SCU].base);
++drained:
++    qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
++    asclin_pulse_irq(s, ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
 +}
 +
-+static void tc39xb_soc_init(Object *obj)
++static void asclin_txfifocon_write(TriCoreASCLINState *s, uint32_t value)
 +{
-+    TC39XBSoCState *s = TC39XB_SOC(obj);
-+    TC39XBSoCClass *sc = TC39XB_SOC_GET_CLASS(s);
-+
-+    object_initialize_child(obj, "tc39x", &s->cpu, sc->cpu_type);
-+    object_initialize_child(obj, "stm", &s->stm, TYPE_TRICORE_STM);
-+    object_initialize_child(obj, "asclin", &s->asclin, TYPE_TRICORE_ASCLIN);
-+    object_initialize_child(obj, "scu", &s->scu, TYPE_TRICORE_SCU);
++    /* FILL field is read-only hardware status */
++    s->regs[R_TXFIFOCON] = value & ~(ASCLIN_FILL_MASK | ASCLIN_RXFIFOCON_FLUSH);
 +}
 +
-+static void tc39xb_soc_class_init(ObjectClass *klass, const void *data)
++static uint32_t asclin_txfifocon_read(TriCoreASCLINState *s)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = tc39xb_soc_realize;
++    /* Instant-TX model: FILL always reads as 0 */
++    return s->regs[R_TXFIFOCON] & ~ASCLIN_FILL_MASK;
 +}
 +
-+static void tc397b_soc_class_init(ObjectClass *oc, const void *data)
++static void asclin_rxfifocon_write(TriCoreASCLINState *s, uint32_t value)
 +{
-+    TC39XBSoCClass *sc = TC39XB_SOC_CLASS(oc);
++    s->regs[R_RXFIFOCON] = value & ~(ASCLIN_FILL_MASK | ASCLIN_RXFIFOCON_FLUSH);
 +
-+    sc->name     = "tc397b-soc";
-+    sc->cpu_type = TRICORE_CPU_TYPE_NAME("tc39x");
-+    sc->memmap   = tc39xb_soc_memmap;
-+    sc->num_cpus = 1;
-+}
-+
-+static const TypeInfo tc39xb_soc_types[] = {
-+    {
-+        .name          = "tc397b-soc",
-+        .parent        = TYPE_TC39XB_SOC,
-+        .class_init    = tc397b_soc_class_init,
-+    }, {
-+        .name          = TYPE_TC39XB_SOC,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(TC39XBSoCState),
-+        .instance_init = tc39xb_soc_init,
-+        .class_size    = sizeof(TC39XBSoCClass),
-+        .class_init    = tc39xb_soc_class_init,
-+        .abstract      = true,
-+    },
-+};
-+
-+DEFINE_TYPES(tc39xb_soc_types)
-diff --git a/hw/tricore/triboard.c b/hw/tricore/triboard.c
-index 23f11cf0a1..c16a6bc8f7 100644
---- a/hw/tricore/triboard.c
-+++ b/hw/tricore/triboard.c
-@@ -64,6 +64,20 @@ static void triboard_machine_init(MachineState *machine)
-     }
- }
- 
-+static void triboard_machine_tc397b_init(MachineState *machine)
-+{
-+    TriBoardMachineState *ms = TRIBOARD_MACHINE(machine);
-+    TriBoardMachineClass *amc = TRIBOARD_MACHINE_GET_CLASS(machine);
-+
-+    object_initialize_child(OBJECT(machine), "soc", &ms->tc39xb_soc,
-+                            amc->soc_name);
-+    sysbus_realize(SYS_BUS_DEVICE(&ms->tc39xb_soc), &error_fatal);
-+
-+    if (machine->kernel_filename) {
-+        tricore_load_kernel(&ms->tc39xb_soc.cpu, machine->kernel_filename);
++    if (value & ASCLIN_RXFIFOCON_FLUSH) {
++        asclin_rx_buf_reset(s);
++    }
++    if (value & ASCLIN_RXFIFOCON_ENI) {
++        qemu_chr_fe_accept_input(&s->chr);
 +    }
 +}
 +
- static void triboard_machine_tc277d_class_init(ObjectClass *oc,
-                                                const void *data)
- {
-@@ -74,13 +88,29 @@ static void triboard_machine_tc277d_class_init(ObjectClass *oc,
-     mc->desc        = "Infineon AURIX TriBoard TC277 (D-Step)";
-     mc->max_cpus    = 1;
-     amc->soc_name   = "tc277d-soc";
--};
-+}
-+
-+static void triboard_machine_tc397b_class_init(ObjectClass *oc,
-+                                               const void *data)
++static uint32_t asclin_rxfifocon_read(TriCoreASCLINState *s)
 +{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    TriBoardMachineClass *amc = TRIBOARD_MACHINE_CLASS(oc);
++    uint32_t used = asclin_rx_buf_used(s);
++    uint32_t fill = MIN(used, ASCLIN_HW_FIFO_DEPTH);
 +
-+    mc->init        = triboard_machine_tc397b_init;
-+    mc->desc        = "Infineon AURIX TriBoard TC397 (B-Step)";
-+    mc->max_cpus    = 1;
-+    amc->soc_name   = "tc397b-soc";
++    return (s->regs[R_RXFIFOCON] & ~ASCLIN_FILL_MASK) |
++           (fill << ASCLIN_FILL_SHIFT);
 +}
- 
- static const TypeInfo triboard_machine_types[] = {
-     {
-         .name           = MACHINE_TYPE_NAME("KIT_AURIX_TC277_TRB"),
-         .parent         = TYPE_TRIBOARD_MACHINE,
-         .class_init     = triboard_machine_tc277d_class_init,
-+    }, {
-+        .name           = MACHINE_TYPE_NAME("KIT_AURIX_TC397_TRB"),
-+        .parent         = TYPE_TRIBOARD_MACHINE,
-+        .class_init     = triboard_machine_tc397b_class_init,
-     }, {
-         .name           = TYPE_TRIBOARD_MACHINE,
-         .parent         = TYPE_MACHINE,
-diff --git a/include/hw/tricore/tc39xb_soc.h b/include/hw/tricore/tc39xb_soc.h
-new file mode 100644
-index 0000000000..b0a9562e48
---- /dev/null
-+++ b/include/hw/tricore/tc39xb_soc.h
-@@ -0,0 +1,110 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++static uint32_t asclin_rxdata_read(TriCoreASCLINState *s, bool peek)
++{
++    uint32_t r;
++
++    if (s->rx_rdidx == s->rx_wridx) {
++        return 0;
++    }
++
++    r = s->rxbuf[s->rx_rdidx];
++    if (!peek) {
++        s->rx_rdidx = (s->rx_rdidx + 1) % ASCLIN_RX_BUF_SIZE;
++    }
++    return r;
++}
++
++static uint32_t asclin_csr_read(TriCoreASCLINState *s)
++{
++    uint32_t csr = s->regs[R_CSR];
++
++    /* CLKSEL valid: set CON bit (bit 31) when a clock is selected */
++    if (csr & 0x1f) {
++        csr |= (1u << 31);
++    }
++    return csr;
++}
++
++static void asclin_flagsset_write(TriCoreASCLINState *s, uint32_t value)
++{
++    qatomic_or(&s->regs[R_FLAGS], value);
++    asclin_pulse_irq(s, value);
++}
++
++static void asclin_flagsclear_write(TriCoreASCLINState *s, uint32_t value)
++{
++    qatomic_and(&s->regs[R_FLAGS], ~value);
++}
++
 +/*
-+ * Infineon TC39x SoC System emulation.
++ * FLAGSENABLE write: newly-enabled bits whose FLAGS is already set
++ * must produce a rising edge on the corresponding interrupt line.
++ */
++static void asclin_flagsenable_write(TriCoreASCLINState *s, uint32_t value)
++{
++    uint32_t old_en = s->regs[R_FLAGSENABLE];
++    uint32_t newly_enabled = value & ~old_en;
++
++    s->regs[R_FLAGSENABLE] = value;
++    asclin_pulse_irq(s, newly_enabled & s->regs[R_FLAGS]);
++}
++
++static uint32_t asclin_reg_read(TriCoreASCLINState *s, hwaddr offset)
++{
++    hwaddr reg = offset >> 2;
++
++    switch (reg) {
++    case R_CLC:
++    case R_IOCR:
++    case R_ID:
++    case R_BITCON:
++    case R_FRAMECON:
++    case R_DATCON:
++    case R_BRG:
++    case R_BRD:
++    case R_LINCON:
++    case R_LINBTIMER:
++    case R_LINHTIMER:
++    case R_FLAGS:
++    case R_FLAGSENABLE:
++        return s->regs[reg];
++    case R_TXFIFOCON:
++        return asclin_txfifocon_read(s);
++    case R_RXFIFOCON:
++        return asclin_rxfifocon_read(s);
++    case R_FLAGSSET:
++    case R_FLAGSCLEAR:
++        return 0;
++    case R_TXDATA:
++        return 0;
++    case R_RXDATA:
++        return asclin_rxdata_read(s, false);
++    case R_CSR:
++        return asclin_csr_read(s);
++    case R_RXDATAD:
++        return asclin_rxdata_read(s, true);
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: read from unknown offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++        return 0;
++    }
++}
++
++static uint64_t asclin_read(void *opaque, hwaddr offset, unsigned size)
++{
++    TriCoreASCLINState *s = opaque;
++
++    return extract32(asclin_reg_read(s, offset), (offset & 3) * 8, size * 8);
++}
++
++static void asclin_write(void *opaque, hwaddr offset, uint64_t value,
++                         unsigned size)
++{
++    TriCoreASCLINState *s = opaque;
++    hwaddr reg = offset >> 2;
++    unsigned shift = (offset & 3) * 8;
++    uint32_t val;
++
++    /*
++     * 8/16-bit writes: merge into the stored register, except for the
++     * write-only action registers where unwritten bytes must stay 0.
++     */
++    if (reg >= ASCLIN_R_MAX || reg == R_FLAGSSET || reg == R_FLAGSCLEAR ||
++        reg == R_TXDATA) {
++        val = value << shift;
++    } else {
++        val = deposit32(s->regs[reg], shift, size * 8, value);
++    }
++
++    switch (reg) {
++    case R_CLC:
++    case R_IOCR:
++    case R_ID:
++    case R_BITCON:
++    case R_FRAMECON:
++    case R_DATCON:
++    case R_BRG:
++    case R_BRD:
++    case R_LINCON:
++    case R_LINBTIMER:
++    case R_LINHTIMER:
++        s->regs[reg] = val;
++        break;
++    case R_TXFIFOCON:
++        asclin_txfifocon_write(s, val);
++        break;
++    case R_RXFIFOCON:
++        asclin_rxfifocon_write(s, val);
++        break;
++    case R_FLAGS:
++        /* read-only hardware status */
++        break;
++    case R_FLAGSSET:
++        asclin_flagsset_write(s, val);
++        break;
++    case R_FLAGSCLEAR:
++        asclin_flagsclear_write(s, val);
++        break;
++    case R_FLAGSENABLE:
++        asclin_flagsenable_write(s, val);
++        break;
++    case R_TXDATA:
++        asclin_txdata_write(s, val);
++        break;
++    case R_RXDATA:
++    case R_RXDATAD:
++        /* read-only */
++        break;
++    case R_CSR:
++        s->regs[R_CSR] = val;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: write to unknown offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps asclin_ops = {
++    .read = asclin_read,
++    .write = asclin_write,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static void asclin_uart_rx(void *opaque, const uint8_t *buf, int size)
++{
++    TriCoreASCLINState *s = opaque;
++
++    while (size > 0) {
++        if (asclin_rx_buf_free(s) == 0) {
++            qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_RFO);
++            asclin_pulse_irq(s, ASCLIN_FLAGS_RFO);
++            break;
++        }
++        s->rxbuf[s->rx_wridx] = *buf++;
++        s->rx_wridx = (s->rx_wridx + 1) % ASCLIN_RX_BUF_SIZE;
++        size--;
++    }
++
++    if (s->rx_rdidx != s->rx_wridx) {
++        qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_RFL);
++        asclin_pulse_irq(s, ASCLIN_FLAGS_RFL);
++    }
++}
++
++static int asclin_uart_can_rx(void *opaque)
++{
++    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
++
++    if ((s->regs[R_RXFIFOCON] & ASCLIN_RXFIFOCON_ENI) &&
++        asclin_rx_buf_free(s) > 0) {
++        return 1;
++    }
++    return 0;
++}
++
++static void asclin_uart_reset_hold(Object *obj, ResetType type)
++{
++    TriCoreASCLINState *s = TRICORE_ASCLIN(obj);
++    int i;
++
++    for (i = 0; i < ASCLIN_R_MAX; i++) {
++        s->regs[i] = 0;
++    }
++    asclin_rx_buf_reset(s);
++}
++
++static void asclin_uart_realize(DeviceState *dev, Error **errp)
++{
++    TriCoreASCLINState *s = TRICORE_ASCLIN(dev);
++
++    qemu_chr_fe_set_handlers(&s->chr, asclin_uart_can_rx,
++                             asclin_uart_rx, NULL,
++                             NULL, s, NULL, true);
++}
++
++static void asclin_uart_init(Object *obj)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    TriCoreASCLINState *s = TRICORE_ASCLIN(obj);
++
++    memory_region_init_io(&s->iomem, obj, &asclin_ops, s,
++                          TYPE_TRICORE_ASCLIN, 0x100);
++    sysbus_init_mmio(sbd, &s->iomem);
++    sysbus_init_irq(sbd, &s->irq_rx);
++    sysbus_init_irq(sbd, &s->irq_tx);
++    sysbus_init_irq(sbd, &s->irq_err);
++}
++
++static int asclin_uart_post_load(void *opaque, int version_id)
++{
++    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
++
++    if (s->regs[R_FLAGS] & ASCLIN_FLAGS_TFL) {
++        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
++                                             G_IO_OUT | G_IO_HUP,
++                                             asclin_tx_watch, s);
++    }
++    return 0;
++}
++
++static const VMStateDescription vmstate_asclin_uart = {
++    .name = TYPE_TRICORE_ASCLIN,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = asclin_uart_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, TriCoreASCLINState, ASCLIN_R_MAX),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static const Property asclin_uart_properties[] = {
++    DEFINE_PROP_CHR("chardev", TriCoreASCLINState, chr),
++};
++
++static void asclin_uart_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = asclin_uart_realize;
++    rc->phases.hold = asclin_uart_reset_hold;
++    dc->vmsd = &vmstate_asclin_uart;
++    device_class_set_props(dc, asclin_uart_properties);
++}
++
++static const TypeInfo asclin_uart_info = {
++    .name = TYPE_TRICORE_ASCLIN,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(TriCoreASCLINState),
++    .instance_init = asclin_uart_init,
++    .class_init = asclin_uart_class_init,
++};
++
++static void asclin_uart_register_types(void)
++{
++    type_register_static(&asclin_uart_info);
++}
++
++type_init(asclin_uart_register_types)
+diff --git a/include/hw/char/tricore_asclin.h b/include/hw/char/tricore_asclin.h
+new file mode 100644
+index 0000000000..50642fd0f8
+--- /dev/null
++++ b/include/hw/char/tricore_asclin.h
+@@ -0,0 +1,41 @@
++/*
++ * TriCore ASCLIN (Asynchronous/Synchronous Interface) UART controller
 + *
-+ * Copyright (c) 2020 Andreas Konopik <andreas.konopik@efs-auto.de>
-+ * Copyright (c) 2020 David Brenken <david.brenken@efs-auto.de>
++ * Copyright (c) 2017 David Brenken <david.brenken@efs-auto.de>
++ * Copyright (c) 2024 Siemens AG
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef TC39XB_SOC_H
-+#define TC39XB_SOC_H
++#ifndef HW_TRICORE_ASCLIN_H
++#define HW_TRICORE_ASCLIN_H
 +
++#include "chardev/char-fe.h"
 +#include "hw/core/sysbus.h"
-+#include "hw/char/tricore_asclin.h"
-+#include "hw/timer/tricore_stm.h"
-+#include "hw/tricore/tricore_scu.h"
-+#include "target/tricore/cpu.h"
 +#include "qom/object.h"
 +
-+#define TYPE_TC39XB_SOC ("tc39xb-soc")
-+OBJECT_DECLARE_TYPE(TC39XBSoCState, TC39XBSoCClass, TC39XB_SOC)
++#define ASCLIN_R_MAX        21
++#define ASCLIN_RX_BUF_SIZE  8192
 +
-+typedef struct TC39XBSoCCPUMemState {
-+    MemoryRegion dspr;
-+    MemoryRegion pspr;
-+    MemoryRegion pflash_c;
-+    MemoryRegion pflash_u;
-+    MemoryRegion dlmu_c;
-+    MemoryRegion dlmu_u;
-+} TC39XBSoCCPUMemState;
++#define TYPE_TRICORE_ASCLIN "tricore_asclin"
++OBJECT_DECLARE_SIMPLE_TYPE(TriCoreASCLINState, TRICORE_ASCLIN)
 +
-+typedef struct TC39XBSoCFlashMemState {
-+    MemoryRegion dflash0;
-+    MemoryRegion dflash1;
-+    MemoryRegion olda_c;
-+    MemoryRegion olda_u;
-+    MemoryRegion brom_c;
-+    MemoryRegion brom_u;
-+    MemoryRegion lmu0_c;
-+    MemoryRegion lmu0_u;
-+    MemoryRegion lmu1_c;
-+    MemoryRegion lmu1_u;
-+    MemoryRegion lmu2_c;
-+    MemoryRegion lmu2_u;
-+    MemoryRegion emem;
-+} TC39XBSoCFlashMemState;
-+
-+typedef struct MemmapEntry MemmapEntry;
-+
-+typedef struct TC39XBSoCState {
++struct TriCoreASCLINState {
 +    SysBusDevice parent_obj;
 +
-+    TriCoreCPU cpu;
-+    TriCoreSTMState stm;
-+    TriCoreASCLINState asclin;
-+    TriCoreSCUState scu;
++    MemoryRegion iomem;
++    CharFrontend chr;
++    qemu_irq irq_rx;
++    qemu_irq irq_tx;
++    qemu_irq irq_err;
 +
-+    MemoryRegion dsprX;
-+    MemoryRegion psprX;
++    guint watch_tag;
++    uint32_t regs[ASCLIN_R_MAX];
++    uint32_t txbuf;
 +
-+    TC39XBSoCCPUMemState cpu0mem;
-+    TC39XBSoCCPUMemState cpu1mem;
-+    TC39XBSoCCPUMemState cpu2mem;
-+    TC39XBSoCCPUMemState cpu3mem;
-+    TC39XBSoCCPUMemState cpu4mem;
-+    TC39XBSoCCPUMemState cpu5mem;
-+
-+    TC39XBSoCFlashMemState flashmem;
-+} TC39XBSoCState;
-+
-+typedef struct TC39XBSoCClass {
-+    DeviceClass parent_class;
-+
-+    const char *name;
-+    const char *cpu_type;
-+    const MemmapEntry *memmap;
-+    uint32_t num_cpus;
-+} TC39XBSoCClass;
-+
-+enum {
-+    TC39XB_DSPR5, TC39XB_DCACHE5, TC39XB_DTAG5,
-+    TC39XB_PSPR5, TC39XB_PCACHE5, TC39XB_PTAG5,
-+    TC39XB_DSPR4, TC39XB_DCACHE4, TC39XB_DTAG4,
-+    TC39XB_PSPR4, TC39XB_PCACHE4, TC39XB_PTAG4,
-+    TC39XB_DSPR3, TC39XB_DCACHE3, TC39XB_DTAG3,
-+    TC39XB_PSPR3, TC39XB_PCACHE3, TC39XB_PTAG3,
-+    TC39XB_DSPR2, TC39XB_DCACHE2, TC39XB_DTAG2,
-+    TC39XB_PSPR2, TC39XB_PCACHE2, TC39XB_PTAG2,
-+    TC39XB_DSPR1, TC39XB_DCACHE1, TC39XB_DTAG1,
-+    TC39XB_PSPR1, TC39XB_PCACHE1, TC39XB_PTAG1,
-+    TC39XB_DSPR0, TC39XB_DCACHE0, TC39XB_DTAG0,
-+    TC39XB_PSPR0, TC39XB_PCACHE0, TC39XB_PTAG0,
-+    TC39XB_PFLASH0_C, TC39XB_PFLASH1_C, TC39XB_PFLASH2_C,
-+    TC39XB_PFLASH3_C, TC39XB_PFLASH4_C, TC39XB_PFLASH5_C,
-+    TC39XB_OLDA_C, TC39XB_BROM_C,
-+    TC39XB_DLMU0_C, TC39XB_DLMU1_C, TC39XB_DLMU2_C,
-+    TC39XB_DLMU3_C, TC39XB_LMU0_C, TC39XB_LMU1_C,
-+    TC39XB_LMU2_C, TC39XB_DLMU4_C, TC39XB_DLMU5_C,
-+    TC39XB_EMEM,
-+    TC39XB_PFLASH0_U, TC39XB_PFLASH1_U, TC39XB_PFLASH2_U,
-+    TC39XB_PFLASH3_U, TC39XB_PFLASH4_U, TC39XB_PFLASH5_U,
-+    TC39XB_DFLASH0, TC39XB_DFLASH1,
-+    TC39XB_OLDA_U, TC39XB_BROM_U,
-+    TC39XB_DLMU0_U, TC39XB_DLMU1_U, TC39XB_DLMU2_U,
-+    TC39XB_DLMU3_U, TC39XB_LMU0_U, TC39XB_LMU1_U,
-+    TC39XB_LMU2_U, TC39XB_DLMU4_U, TC39XB_DLMU5_U,
-+    TC39XB_PSPRX, TC39XB_DSPRX,
-+    TC39XB_STM0, TC39XB_ASCLIN0, TC39XB_SCU,
++    uint8_t rxbuf[ASCLIN_RX_BUF_SIZE];
++    uint32_t rx_wridx;
++    uint32_t rx_rdidx;
 +};
 +
 +#endif
-diff --git a/include/hw/tricore/triboard.h b/include/hw/tricore/triboard.h
-index c6be4dc3f3..bc84c26f32 100644
---- a/include/hw/tricore/triboard.h
-+++ b/include/hw/tricore/triboard.h
-@@ -25,6 +25,7 @@
- #include "qom/object.h"
- 
- #include "hw/tricore/tc27x_soc.h"
-+#include "hw/tricore/tc39xb_soc.h"
- 
- #define TYPE_TRIBOARD_MACHINE MACHINE_TYPE_NAME("triboard")
- typedef struct TriBoardMachineState TriBoardMachineState;
-@@ -37,6 +38,7 @@ struct TriBoardMachineState {
-     MachineState parent;
- 
-     TC27XSoCState tc27x_soc;
-+    TC39XBSoCState tc39xb_soc;
- };
- 
- struct TriBoardMachineClass {
 
 -- 
 2.47.3
