@@ -1,36 +1,36 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399C5606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37FC606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKKmQ-0003dJ-Gz; Fri, 23 Oct 2026 15:18:20 -0400
+	id 1xKKlh-00037v-KB; Fri, 23 Oct 2026 15:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKll-0003Aj-DC
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:38 -0400
+ id 1xKKla-00037E-25
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:26 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKli-00026g-Jz
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:36 -0400
+ id 1xKKlY-000267-5R
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:25 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKlf-00000007BGU-116M; Fri, 23 Oct 2026 21:17:31 +0200
+ id 1xKKlV-00000007BGA-00ii; Fri, 23 Oct 2026 21:17:21 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 12/13] virtio: Split VM state change handler into start and
+Subject: [PATCH v2 10/13] net: Split VM state change handler into start and
  stop parts
-Date: Fri, 23 Oct 2026 21:16:23 +0200
-Message-ID: <0fac083d9ef687849bddde691aebc2cafe182d79.1792758436.git.maciej.szmigiero@oracle.com>
+Date: Fri, 23 Oct 2026 21:16:21 +0200
+Message-ID: <6cd059494816e5553620b3bee99b6a422b47d098.1792758436.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1792758435.git.maciej.szmigiero@oracle.com>
 References: <cover.1792758435.git.maciej.szmigiero@oracle.com>
@@ -70,82 +70,100 @@ VM_CHANGE_STATE_PRI_HIGH.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/virtio/virtio.c         | 32 +++++++++++++++++++++++++++-----
- include/hw/virtio/virtio.h |  3 ++-
- 2 files changed, 29 insertions(+), 6 deletions(-)
+ net/net.c | 52 ++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 36 insertions(+), 16 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index c9f9e5b51168..9eefb2e2e670 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3733,12 +3733,12 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+diff --git a/net/net.c b/net/net.c
+index d7fa637ce51a..9fc62e19b36e 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -64,7 +64,8 @@
+ # define CONFIG_NET_BRIDGE
+ #endif
  
- void virtio_cleanup(VirtIODevice *vdev)
- {
--    qemu_del_vm_change_state_handler(vdev->vmstate);
-+    qemu_del_vm_change_state_handler(vdev->vmstate_start);
-+    qemu_del_vm_change_state_handler(vdev->vmstate_stop);
+-static VMChangeStateEntry *net_change_state_entry;
++static VMChangeStateEntry *net_change_state_start_entry;
++static VMChangeStateEntry *net_change_state_stop_entry;
+ NetClientStateList net_clients;
+ 
+ typedef struct NetdevQueueEntry {
+@@ -1729,27 +1730,43 @@ void qmp_set_link(const char *name, bool up, Error **errp)
+     net_client_set_link(ncs, queues, up);
  }
  
--static int virtio_vmstate_change(void *opaque, bool running, RunState state)
-+static int virtio_vmstate_change(VirtIODevice *vdev, bool running)
+-static void net_vm_change_state_handler(void *opaque, bool running,
+-                                        RunState state)
++static void net_vm_change_state_start(void *opaque, bool running,
++                                      RunState state)
  {
--    VirtIODevice *vdev = opaque;
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-     bool backend_run = running && virtio_device_started(vdev, vdev->status);
-@@ -3761,6 +3761,26 @@ static int virtio_vmstate_change(void *opaque, bool running, RunState state)
-     return 0;
+     NetClientState *nc;
+     NetClientState *tmp;
+ 
++    if (!running) {
++        return;
++    }
++
+     QTAILQ_FOREACH_SAFE(nc, &net_clients, next, tmp) {
+-        if (running) {
+-            /* Flush queued packets and wake up backends. */
+-            if (nc->peer && qemu_can_send_packet(nc)) {
+-                qemu_flush_queued_packets(nc->peer);
+-            }
+-        } else {
+-            /* Complete all queued packets, to guarantee we don't modify
+-             * state later when VM is not running.
+-             */
+-            qemu_flush_or_purge_queued_packets(nc, true);
++        /* Flush queued packets and wake up backends. */
++        if (nc->peer && qemu_can_send_packet(nc)) {
++            qemu_flush_queued_packets(nc->peer);
+         }
+     }
  }
  
-+static int virtio_vmstate_change_start(void *opaque, bool running,
++static void net_vm_change_state_stop(void *opaque, bool running,
 +                                     RunState state)
 +{
-+    if (!running) {
-+        return 0;
-+    }
++    NetClientState *nc;
++    NetClientState *tmp;
 +
-+    return virtio_vmstate_change(opaque, true);
-+}
-+
-+static int virtio_vmstate_change_stop(void *opaque, bool running,
-+                                    RunState state)
-+{
 +    if (running) {
-+        return 0;
++        return;
 +    }
 +
-+    return virtio_vmstate_change(opaque, false);
++    QTAILQ_FOREACH_SAFE(nc, &net_clients, next, tmp) {
++        /*
++         * Complete all queued packets, to guarantee we don't modify
++         * state later when VM is not running.
++         */
++        qemu_flush_or_purge_queued_packets(nc, true);
++    }
 +}
 +
- void virtio_instance_init_common(Object *proxy_obj, void *data,
-                                  size_t vdev_size, const char *vdev_name)
+ void net_cleanup(void)
  {
-@@ -3809,8 +3829,10 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size)
-     } else {
-         vdev->config = NULL;
+     NetClientState *nc, **p = &QTAILQ_FIRST(&net_clients);
+@@ -1799,7 +1816,8 @@ void net_cleanup(void)
+         }
      }
--    vdev->vmstate = qdev_add_vm_change_state_handler(DEVICE(vdev),
--            NULL, virtio_vmstate_change, vdev);
-+    vdev->vmstate_start = qdev_add_vm_change_state_handler(DEVICE(vdev),
-+            NULL, virtio_vmstate_change_start, vdev);
-+    vdev->vmstate_stop = qdev_add_vm_change_state_handler(DEVICE(vdev),
-+            NULL, virtio_vmstate_change_stop, vdev);
-     vdev->device_endian = virtio_default_endian();
-     vdev->use_guest_notifier_mask = true;
-     QSIMPLEQ_INIT(&vdev->shmem_list);
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 27c5fe3a6b48..ab7fdd6e0e42 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -191,7 +191,8 @@ struct VirtIODevice
-     bool start_on_kick; /* when virtio 1.0 feature has not been negotiated */
-     bool disable_legacy_check;
-     bool vhost_started;
--    VMChangeStateEntry *vmstate;
-+    VMChangeStateEntry *vmstate_start;
-+    VMChangeStateEntry *vmstate_stop;
-     char *bus_name;
-     uint8_t device_endian;
-     /**
+ 
+-    qemu_del_vm_change_state_handler(net_change_state_entry);
++    qemu_del_vm_change_state_handler(net_change_state_start_entry);
++    qemu_del_vm_change_state_handler(net_change_state_stop_entry);
+ }
+ 
+ void net_check_clients(void)
+@@ -1957,8 +1975,10 @@ static void netdev_init_modern(void)
+ 
+ void net_init_clients(void)
+ {
+-    net_change_state_entry =
+-        qemu_add_vm_change_state_handler(net_vm_change_state_handler, NULL);
++    net_change_state_start_entry =
++        qemu_add_vm_change_state_handler(net_vm_change_state_start, NULL);
++    net_change_state_stop_entry =
++        qemu_add_vm_change_state_handler(net_vm_change_state_stop, NULL);
+ 
+     QTAILQ_INIT(&net_clients);
+ 
 
