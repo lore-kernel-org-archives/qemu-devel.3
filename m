@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDBAE606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC5B606A31A
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 20:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKLd9-0008QA-AJ; Fri, 23 Oct 2026 16:12:48 -0400
+	id 1xKLcx-0008Ol-T9; Fri, 23 Oct 2026 16:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLcx-0008P3-PV
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:35 -0400
+ id 1xKLcu-0008OV-UE
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:32 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLcv-0006uV-E4
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:35 -0400
+ id 1xKLcs-0006uV-Hg
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:32 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eIx36QGlczM/ZzPZDKHaW9+m2dZ42awC2Afm3FsyU7RBD8MfasSiHFk2ufvfQnhaoryE8DFOk3MjM3Ix5YBmElUo5trGXdUO6Ly/DYlpnqr5nQkhl5tkUZtDT6RztXZXJF4MDXdJspGamrAeeLYJ7zri1QbXd3F4ow1DpS17wRp2+fRaZCrEte2KEE5o8flGbXJS6k4MOUyCOXNu7rZ4/WrPQMiTUpJhGvNaA/8hV697BJmn9ie4fXCbjpiPZT5HiMTHlSKkWXh4m8wXBHra6k1qJ8o4OvjoI5HcWBPeW0zaHibWsKrxl3CARMuA0Ec4F8u2XfFPCvcsbS/l4aR2RA==
+ b=UxYOM5tvSwu/2g+95R/3FqQ6PdDAyujZ6sqbmWj/tRkDDCf7HCFDcoIMiM7q2XfFBV4OHqz6Lhytv/ZRgp6eeGzXHa6iMfCj8KIPY4WVEHL4NPFolX9pXPw7teYawdF0XXERh4A3WaBsvbMHT5xn2I+2dJ30PDmlvC++JC0xS3BYsI6wu/a3ewtcuEUadsz2Uycb7axCCGef8QrAsT1t2sYaamlMj1YTRv/sP7QQQ4k8TAVkPWc6eUtsARcKXYYk4Sbe9bH7mjlHrFwVY5PxJ3/GVWG6i44AWoy7CF2zmdo5jpyelqDUfW1sghllaDVfmn2Kts+e4DWfKvqqpIN8Dw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2J7mNPL+seDxzyDVzFffdDPXzHkkPYnGeftrPByilGM=;
- b=JeJieVmiLKN/k5L57x3O8gQ0gEKr7ZJmd+Y3pHhIrB7rPcfgkgZnlOBXsGcceLyLv2py1bLNl2clz0PAAuHvbtnYSBAGNtMuxIID2fRxAwfYNMDa0p9DxHd/kBgS/DLw80KI9G58YYuF/eepq/Wspf6T5iOy+xslMkWeZn8L8wQ4cwOwLT9ieqS7fXG0F6jH+p0/IP+G6uSeDPvfCdEgULEJQxmS8IcNQSxl+IXTnf2CPO6pKAB1vmZ31bTxpUNAIL+D3y+YkK6UcKN3s1OFPuXGN9+hS5iFSVcuYSRgBY9Reqj/TBukVuoDNWoHH8sEdj85XyET0X6sIZwQ5dZiBA==
+ bh=ZLJi0GHYqVoC4jjsesyIDz/l9RRi9e5vYY6DJyJsbXU=;
+ b=D9ZiJ6Q3NHGi6GKjwGnneDrbY/dDqcke+fv+nsaLwoPt2NtNC15yDOhBdj/UKwJydZN4R4vQtU1DYD2yX+cEHJE6yYlSa1uV6WtGhOkWqFOqnSOEgzhYJDOqsbilj2sdUvn9HbOEldFlJzBYIPlrtSPP0OOB68oaTqNuviViHMtLMDn8LMxjvkACLDjJ/v3X8Vje0KcBlV3LomxVqOvNJ6jd3E+eXMzk2wLw8NrvgID+LxtwoD4TJu8z32FLUIIDUVAL6itvDwGLQ4HRSfjZtP0i3pAwYAx6lcZkt52gzlSfXOjGYXj9vPrszZ490Vbcud8TX5jPqHitYfkXF7xE3g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
  dkim=pass header.d=linumiz.com; arc=none
@@ -34,18 +34,18 @@ Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
  by SE3PR06MB9019.apcprd06.prod.outlook.com (2603:1096:101:31f::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.2; Fri, 23 Oct
- 2026 20:12:19 +0000
+ 2026 20:12:17 +0000
 Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01%4]) with mapi id 15.21.0569.002; Fri, 23 Oct 2026
- 20:12:19 +0000
+ 20:12:17 +0000
 From: Parthiban Nallathambi <parthiban@linumiz.com>
-Date: Sat, 24 Oct 2026 01:41:56 +0530
-Subject: [PATCH v2 2/9] target/tricore: implement memory protection in
- get_physical_address
+Date: Sat, 24 Oct 2026 01:41:55 +0530
+Subject: [PATCH v2 1/9] target/tricore: replace legacy DPM/CPM CSFRs with
+ CPXE/DPRE/DPWE
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-2-c722e4ca5661@linumiz.com>
+Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-1-c722e4ca5661@linumiz.com>
 References: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 In-Reply-To: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 To: qemu-devel@nongnu.org
@@ -58,11 +58,11 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Sivashanmugam Natarajan <Sivashanmugam.Natarajan@infineon.com>, 
  Parthiban Nallathambi <parthiban@linumiz.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=10132;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=1647;
  i=parthiban@linumiz.com; s=20241125; h=from:subject:message-id;
- bh=CDlJy/uVSIKY/nDcfIkOu2kOIzEISIUuPjnOITQD6wE=;
- b=DS5dqnCpMsIJrL5cDUs/6GKEyFH7m/NTYY2tGIbzYGho2+lqLqbQ1GxL5wREbPwDpByaKqFgN
- QSwcc4EChQJBIJIW7tT0hfzjvF7VBeRFmeC2+uxwRdnj16PBQAZMC5B
+ bh=cTFL3JOEnHOoiazo4b3vlwrz8KUBlJ9gV91vxec3wzU=;
+ b=olspLTb60TuS0BXByt4BbXfN7wy440Yp/RrX6kIDagxQUGtHc5/G7OeXvVZ0KBTICNFiniWqe
+ 2SLcTLuXyEVCRkGDofmKzUnnzKwvuikzKi8+lmU0EvB6tA4Gls0lXjV
 X-Developer-Key: i=parthiban@linumiz.com; a=ed25519;
  pk=PrcMZ/nwnHbeXNFUFUS833wF3DAX4hziDHEbBp1eNb8=
 X-ClientProxiedBy: MA5P287CA0172.INDP287.PROD.OUTLOOK.COM
@@ -72,66 +72,66 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|SE3PR06MB9019:EE_
-X-MS-Office365-Filtering-Correlation-Id: 44b8f04f-014c-4e28-46a8-08df3141f0ba
+X-MS-Office365-Filtering-Correlation-Id: dcda134e-53da-4190-a407-08df3141efc9
 X-LD-Processed: 808466aa-232a-41f4-ac23-289e3a6840d4,ExtAddr
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|52116014|23010399003|376014|38350700014|261021123027099003|261009223027099003|261021121427099003|10067099003|22082099003|56012099006|18002099003|6133799003|261022105027099003|3023799007|261022075727099003;
-X-Microsoft-Antispam-Message-Info: 03sS3Vw1yRUP4Am5Wg+cvyOq9aO1k3SHde7g9A1kxN9TPTg5NzWCCDU3Rp6YcZ3r+uIzU+LiIzLyqGq17/lCAlam/wU74v1R3UoJm2+UxmnuCi6wNg27JaZLmHSbx4Pi9fy2oxcvbd8xtoIaM1PUsKNJwW5Ufe0qa6UhnUmPD9UMdgbz6lfdNs65mQqzFG5I7pBi3eSZXCB/My5uAfbdwBRba63yRq5ELoPnRAdrpQoTCTus3D4JMK9U3uQfSuFqilWQOl8YjytyVbpVpc6JB6gUA8oF/QO0AYekntz36mGQQd5zQMOsR/xiTnDk8LCW2B/fTGZTX7ZOgoKLbt7kJWkq0F3OWHbNLtXzIQZOPnqtO6iYo2TfQLaKevOil82PejOwsDm4GxN684nOMAgfYH4sdQlXQnG/cUHfaAg7VCCy4EGKWiKKs/30zYN5Oq/jMRI0kNmV6QWcM6UFyT58zPIJX5/yqpb2wmrVAVE0cb5USYMVaAnVhK74W8ytpaFlHOx1JsKB5yY9v2XuX3WRM/JAfuWhsvQenrU4wUPqpPEJM9+i2Igw5WQKk/W13sEaFB9YbjWFm+JyKuwXMVPS12XcmRO3OJpgw7Sek9TjUvM8qLVEukD02sbDvwd9sRATssYVcn5UEiohZwkWklOBaFTHhDqh+ySX7t3Zgkjhxqu+rlQfdb99mRiNwBcwGgLQ+w+ID/iSNXPkChKjcdS6NWBHOpToWV7Ktm9Nsye9Ta4=
+ ARA:13230040|1800799024|366016|52116014|23010399003|376014|38350700014|261021123027099003|261021121427099003|10067099003|22082099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: J/G+ee468h/g/kyJLK+i8o8DEC23VA88pC2cb6KaALOH8oOpkd8sfQuhPhv6lxe+LxbENLoEwRS/LFLB4GdhdvGlQUdTFNa8ot6CfW5ECR8rvrnb1JA0ZfQJwMhp3aJ+nScRPtIMO4nTF2eF53Ak5lSj5vj0rdMnVRKDnhwPXxshT2orJafIvJsVyJuMQUHu0mSFpQPGv6jaedPelcdXEE3CjjcHDTLvF5NImfA58FsWn6Gxx6I24msxdaw2hwFdFKZJTd2Y2DFNPwZOAdUvVLohTrfdwp8a0DFHt/fSYmuNRExz7rkwpr1ip3v8cMO4SfgB8P7AMInCT4Ipu98uSzQfcovIKUyw7essecnsDSwIWXB4mHuB18+uVsvphBeqDvAmjVRgOYdwtr1YzvczJV2g4CBc7vskeFzGIcN4AnidEgI8KNHcMiLyugtV5a7E2mM2nWF6H1WnJgzs+YcxRnTfbeDTswt6kWjWRCJQ/1MeRUFS57i4PKdtjth2x79GGxEO37NB2vtXSZEj8KDaL4TXno3KEwrzk2t0kslKizt8LHncTeIwKoayN/9uYFWrmsiL1SIk+WtCkcuogXLGCihArHrVDPp36xSL6hcfmM9DgCg0RTzAl0Q87w9V1dSemVdLF/mI1WPTBdbQxofusCGaFWm+Zy5Bcvz/lvOEReIByIm9hyuj95SHmby11p0z0hxrCUrIWWG73BydeblVr54j13//CgvtiMw0C9C0z7Q=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(52116014)(23010399003)(376014)(38350700014)(261021123027099003)(261009223027099003)(261021121427099003)(10067099003)(22082099003)(56012099006)(18002099003)(6133799003)(261022105027099003)(3023799007)(261022075727099003);
+ SFS:(13230040)(1800799024)(366016)(52116014)(23010399003)(376014)(38350700014)(261021123027099003)(261021121427099003)(10067099003)(22082099003)(56012099006)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SGozQndRdXplVnhzeEJNNElERWY2RXNCSzRIKzN1eW1ydUpKMzlDTVUxdzh0?=
- =?utf-8?B?Y1NtODE5ZDBEVkNVdk9zVFNIcWhiRFp0Qnd4Q21KbkdhUFZiOUNUQk9rcmsx?=
- =?utf-8?B?ZTM3THlBSTBJVTJMakVvcWJhVXNxRC90enRGTmo0WW54eFJ4dllPdlVmeXhm?=
- =?utf-8?B?MWdwUEhPTSswcTZBaGNqTkhWOUdZTUZVQjlseGhVamdwbDRZU0JWSWhLTDFX?=
- =?utf-8?B?aWVaS21ud3FlVE5rbkdZNDZGbjNuNzBWajdLeGppMkdCcmJPNUFRb2pEY255?=
- =?utf-8?B?aEJ6Wmhqb2plLy9XRmtDZnd5VVM2ck44VWxjU3YvV09aMk1BSGdBaGY4ZE9p?=
- =?utf-8?B?VVEraWlvVnlid24xd1lZd1JUWGVmV0lXRmM1eldNVE0wbzNJaGxYK1ZvbGJO?=
- =?utf-8?B?YWxFUGRkclJPWUU4RGl5TU05QWpYejRrakY3KzlQeEMvbktDNzFBWkpYbFo4?=
- =?utf-8?B?SHg1Nkg0R2dsTGZpU2N1SkVRcEkyOU1MU2VGdk5mQ1M0dlJqTHBYckdCSUpT?=
- =?utf-8?B?dVVveGUzSkZ4SzNVc0VuM3NTSWRkenhTODhMZEV3UURHVFpNdVZpNDFpRG8w?=
- =?utf-8?B?SENaZkN6cWRzTjNNLzBrMUt1ck5vUWp0eXBhUlB3OXc4TzR5ZmszZGdOZkg2?=
- =?utf-8?B?aWRDd292L0ZzRlpuRVV5ZW83OTRma3ZaNEV4OElicVVRZkNTNmZ5U29TMVdO?=
- =?utf-8?B?UkpKejZHT3pMbitXUXlOeWdwMStWc3ErMFZvZ0ZoaHA1a3dpeTdkb0ZpRVAv?=
- =?utf-8?B?SUQ4OFVmMWhzVkhzOUFQOHZZZTVQNEt3VFR4cjN5K2VMZktuUWluZGlPdE9p?=
- =?utf-8?B?YjJsOUNXNjRjbWhzVGVLODR2Y29wM2dEM0sxejZOc0JDMkY3Nkl2Nmt5ZlVj?=
- =?utf-8?B?TTVXYjU1Y0FDRXgzUExRVWp4YWRkODVaUlFVT1EyNDRlY0o5ZmE4QkJmZUhD?=
- =?utf-8?B?UnZ2aEE0OUN3bEFXMjJQWGh6YStweFIvMXlXZ0Qybkw2OHB3Tm0zZ0VIYko3?=
- =?utf-8?B?enlIY2hma0U1d1J4c3l0d3RYV2V1dzcrQXp0NkVQemF0NnNpRnArUGRFcnla?=
- =?utf-8?B?UG14MnZXelJtYzFTMlE2SmJzbWI4Q0d2SDFMNkR1YUtpeE03QUtVR0lXdDRw?=
- =?utf-8?B?MkR2L3BqNnM4T29HZFhWRklFSU1EbTVRK2hQQUVDR0xFMVpHQTdrd2Y4Vyt1?=
- =?utf-8?B?bTM2NkVKbXN0Z0FQa2tYWXdzUEtJWkljbWhKQ3dhaHhLL0RiZm10L09UbDh0?=
- =?utf-8?B?Y2NteGxZNUlFMFVpNEUyV3o0Y0ZXZlNrY3h2d1JzMzhaRlIvcko5QU81enJB?=
- =?utf-8?B?a0FRdHowNWdpdEF5WVhTaDZLN0x3VENkZE9tVHhDeVk3SUVtWXpTNHAxMTdx?=
- =?utf-8?B?dUhHQ29QZnJqck16RXF4cU90Y3BVN3hQaVhVUUgvaVhxQ2FoU0ovREVIa3Rx?=
- =?utf-8?B?UDZqQkpraHlzYUpIMlBVd1d0RnMrWkI5TkhENlBVYjhMWHQ3MU1CQkF4ZzJl?=
- =?utf-8?B?eWF1NFRyQUgxRzkrU0l0aHJpZWpFZXAxSWhyU3JDVlVpYzkvcGNrYmRIZ3pj?=
- =?utf-8?B?QTFlbmNMZzlpK2hBRmNwbmJVUWtKU0R3WUhneGQ3NFlCeUpUanZmbVhpM2V6?=
- =?utf-8?B?RnArTDduYUMrWGhJeUhUdlhyc3l0aU84Qm03QnM5dmRxdFloazFsdGVHTFFJ?=
- =?utf-8?B?cnlya1YwVE92dituRGtMZS9HdFVlVDVRb1pRRVAyVmUrdmw2Q0p0Yy95OEFB?=
- =?utf-8?B?YzlxVmFSbDY3Y1V5dTdVMVlhZ0pmSnNFSU9mSVZFeHRBVTk5TXkzOUhCcktU?=
- =?utf-8?B?ZGRyVVhjbDRuVEtDem5vc2JrTm5WU2grTWtTa0lFVmR0TEg0MFVZSkVqb0gz?=
- =?utf-8?B?T1lmQ2QrMkFNNHQ3cFRzRHluekVnV0JjVDgweDFyMkx3d2ZWVDA3L0NFVGY5?=
- =?utf-8?B?TkpYZnovcVBncGNIdFI0blM1TklFYWoyZU1BbVF2ZG0rY2hReHJKMTF6SE1I?=
- =?utf-8?B?WG5MUSt0Tng0T2MyV2JHWTAwQTRyY0tubFFXRTZBb1V6WXMvVkdvZ3VFZzZx?=
- =?utf-8?B?b1p2Z1MxTE5wU01xZEVkUURmV2oyK21XZ2VlaVB1ay9US2lZQlNNMTcxVERl?=
- =?utf-8?B?NHFDSmdBWjZoRVlrSGNaL3I5dUxxc0w4di9sSTd4NEVyZjEzQVpUOVprd3Y4?=
- =?utf-8?B?REFqcThabXN6ckFPeDM1T3FpTzFZZGZaczV3THhFRmFNcTVCN0g3RWdDOFk3?=
- =?utf-8?B?RlBLSFJsNEVnNUxFTEI4bjhTenh3eHdTU2UzbG9tVFJiNS9BRVNWMDN0a1Ay?=
- =?utf-8?B?ZFcxR0JwVkplWVNVMU9TSUN6S1FOdWZ4N2ZveXJCU0RiWmtNVXFHdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RDBnVzBKMXl4NW1xK1ZjTTdmZTlKV1UxNWJ1TWliNkxqbHp5OTNMbFR6VGRL?=
+ =?utf-8?B?RzhuK0hidHViSTNieXF2QTBzRHZzd05kMmd4blU1bzk4U0lGNEIySzhnOTJr?=
+ =?utf-8?B?ZXJKOUZlN1JGWjNBa0UyTjduRktHVTk3eVZiVFQ5YnN0Nk1GcFpHWlR3TmtM?=
+ =?utf-8?B?d0xLWFIvc3kwZTRnbGI0YWdxMGxEQStVYzEvNkVGNTVobVdkb3hUU1B0Uy9B?=
+ =?utf-8?B?TjBGZ20zR3l3aGRFMjVQeU1VZHFqQWlVMWF3c0tOQWlNd1RTUitBUE9nYm9B?=
+ =?utf-8?B?ZWpXeS95R3JlZEFVaVdodGUxNm5mN2RzYkFvV2plVmFJSW1PZUk3bW0wY21i?=
+ =?utf-8?B?WHBjY0RDY1hHSkVZRFo3UkRXdnFYZ1RoNS9WRU53dDhTNEttWnp6Y0YwZy9n?=
+ =?utf-8?B?Q1J4ODB6c0RiM3BLcHdyejBUUThPK0ptZVdtZ1pBZHVhQkI1RkV3Y2l2T0hW?=
+ =?utf-8?B?aTYwY3hjeVdGdjZpTDN2b3hRdTlLV0tnTGRDZkZYc1B1dlh4dnphcHBSL1Br?=
+ =?utf-8?B?ajFOZ3FiOVRPK1NITjBUTUd6VFRvb1IxdjJ2MXM3a3JqTjlXWVo5aS80WUVr?=
+ =?utf-8?B?T0xDZzc5NnZVeVNHTTFsNGlRdkV4WjhoNGlwczdyV1dTSmErU2hHclk0TFJs?=
+ =?utf-8?B?bGN4L1VlV2ZlaXg3a0pRQjlHdlB5WDNpWTRJNlVQUFFoVzFjWnVWU3g0SkpE?=
+ =?utf-8?B?Tk91OEdNZUFNVHd6UDZjcy9wbk9KS1dLRlR6bS90cmh0U2tJVFRsVng0RWM2?=
+ =?utf-8?B?NWJpMndpeUJaY0FDQzZxVUgreXZDOGlrd3ZxUnl3blVoQjAvV2hIOWVpYUcv?=
+ =?utf-8?B?dUJLN1o1NVVSZVQ0OE50aVRDZTVwdkxTQTQ3VEZxRDdwNnF1MUJ6U2VKbTFt?=
+ =?utf-8?B?cm9WUzZ2SmgzZWZTdTJ1N2EzR3NtdHYxV1RNYmJxR25JWUdVVThMSThEdFdl?=
+ =?utf-8?B?YmlCY3hxOGFMQWJ0djRKb05EVVl2bTNBcEpQZE1nZmdTc21zeGdtM2tlN294?=
+ =?utf-8?B?RmFrSW92K1JBeUx5S0hRTDhEL3pBUUtIalZBaTZ1WUdCWTRNM1Y5M0o5ZE5y?=
+ =?utf-8?B?eDhsZThnYlg3SzlNSzd1VUE0cXU0TGNtbmJXMGtCUW9yWkJXMUl6dU1KYktZ?=
+ =?utf-8?B?VmIrWCtpVnovVFE2Sy9YTWRnWEVVMDMwczMxdWJvaGNleFcxcEZqLzZhS1kr?=
+ =?utf-8?B?UkEzK3Y0aUFaTmRsdEpSOFZTRTllSytNcWxoMkZEd0FVWTM2dHdtRFJuYnFs?=
+ =?utf-8?B?SlFOdkFDdGNXN3NBaGlBSDROWU1yQjV6WnhtT1ZFUm1NaVo3SjdJQXJDZWZP?=
+ =?utf-8?B?VWRLbGpDK0hCUldhQ2srTXUzUHVmckZSZDhRTSsyZU5FYU5mVVN2blY0MFFW?=
+ =?utf-8?B?c0F4QzYyajRWVmNDVzhyRmV3TE1VVUZnZUV2bmFpUWFPbHREWURSR3BQcVoy?=
+ =?utf-8?B?WVZtc3dPbjZmNy9aN0hmS0tFZGN3ZngwcDl3WUtBZWIxbWlyQkVDa0pBVmVh?=
+ =?utf-8?B?N3c5MUNXMTAvUTBFUWxmRitpMHVQYkdGeEZOZHR3aDVLMU5yRjF5WHdkVk9h?=
+ =?utf-8?B?ck9qbTQvcVpMTUFLWUliY0ZKa1VaQTliYy9DdmFMeTZUNEdZNElkb2FvektQ?=
+ =?utf-8?B?eEtoRjJzMzkrMlpSZk1Fdy90Q0xXRVo0WjczSWtMb2FzSVNOU0I2MzlzWXcv?=
+ =?utf-8?B?N1JEWGo4TklaYWI3R05LNHozRE9NM0ZxODM3cWJ0aGdJSFo5UnBpa01sQmpX?=
+ =?utf-8?B?RDhoRFB2L3FiNnhmSFhLYnJjTEpZSXlVd1kwVGIxUUQ2SU1hbUo1YUpDdUJp?=
+ =?utf-8?B?Ylg1WGd4VnRlcWhjc0RZT3VQNG95dVFLNTgwemd1VmVhdFhMdTRhaDRMbGVi?=
+ =?utf-8?B?dnQxWDFsU25WeGh0aDR4dFk2OTNMNVNkNTJnWFl3eWJCM3BYUnI4SXhyUVNl?=
+ =?utf-8?B?ZjVQa3p2RjFFcEdYS2xpSUJsMkp6NjZYTnpkQWZ6TnVLUSsxLzNBVlhGU1JG?=
+ =?utf-8?B?L3I1VGkzTEV2MEZCZGlrVExIdDJ4SFFqQTJmTFd0K3JNWUQyZzV3ZDUrN2RU?=
+ =?utf-8?B?Wk9xS2hmZUl4b3p0dG1uN2llUHNwZ0FZSmFOc1EzNmd1ZUhUc244akJNWFF6?=
+ =?utf-8?B?Z1A5T0E0bXh2NzMvUW9xekNDS0taVS9yOU9pMU5NKzNLVDNCbTB0N1JhL0Nh?=
+ =?utf-8?B?dktTdXkvSFpPTUdYajFNQnZyQ3J1RS9sLy9UbnpsSFBDbUhsK1RscEZHWnZn?=
+ =?utf-8?B?ZEpGcVNlbG53WkczYXpKYXpPMXJCc21PVkc4eHQvUGFDT05xRlVOdUpXVHg2?=
+ =?utf-8?B?M1IxUGkvSUlteDBmNlhuSGdSaVp1YVN2WVBOU1oxdm9ZMnU3dHNnZz09?=
 X-OriginatorOrg: linumiz.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44b8f04f-014c-4e28-46a8-08df3141f0ba
+X-MS-Exchange-CrossTenant-Network-Message-Id: dcda134e-53da-4190-a407-08df3141efc9
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:19.2155 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:17.6442 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SRZkC99LEWhVenm3rGuepIZPFN12lu5h2qZiDfOdyiOlh6eDCPGK+apokn8I4JH91ytPLbe99vUB6ybVtgCnIQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3ziGc9FxcUNvIkb/LrAEvZotQI/CKrcFUUQ+JKGuYox/88h2CAm0oeKE+o/NY0lNrxfBOhlHeFZA6eKNSXfivA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR06MB9019
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=parthiban@linumiz.com;
@@ -159,322 +159,46 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-raise_mmu_exception() was an empty stub and get_physical_address()
-always returned full RWX permissions.  Fill in the MPU:
-
-  - Walk 16 DPR ranges against DPRE/DPWE bitmasks for R/W
-  - Walk 16 CPR ranges against CPXE bitmasks for X
-  - Block instruction fetch from peripheral space (segments E/F)
-  - Dispatch TRAPC_PROT / TRAPC_SYSBUS in raise_mmu_exception()
-
-Also fix a missing else in FIELD_SETTER_WITH_FEATURE and stop
-force-adding PAGE_EXEC in tricore_cpu_tlb_fill().
+The DPM0-3 and CPM0-3 entries had wrong addresses and were never
+used.  Replace with the correct per-protection-set enable bitmask
+registers (CPXE, DPRE, DPWE) per the TriCore architecture manual.
 
 Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 ---
- target/tricore/helper.c | 242 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 237 insertions(+), 5 deletions(-)
+ target/tricore/csfr.h.inc | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 273713a147..ba85491bd6 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -28,6 +28,9 @@
- #include "qemu/qemu-print.h"
- 
- enum {
-+    TLBRET_MPX = -12,
-+    TLBRET_MPW = -11,
-+    TLBRET_MPR = -10,
-     TLBRET_DIRTY = -4,
-     TLBRET_INVALID = -3,
-     TLBRET_NOMATCH = -2,
-@@ -35,6 +38,207 @@ enum {
-     TLBRET_MATCH = 0
- };
- 
-+static uint32_t tricore_mpu_dpr_lower(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->DPR0_0L;
-+    case 1:  return env->DPR0_1L;
-+    case 2:  return env->DPR0_2L;
-+    case 3:  return env->DPR0_3L;
-+    case 4:  return env->DPR1_0L;
-+    case 5:  return env->DPR1_1L;
-+    case 6:  return env->DPR1_2L;
-+    case 7:  return env->DPR1_3L;
-+    case 8:  return env->DPR2_0L;
-+    case 9:  return env->DPR2_1L;
-+    case 10: return env->DPR2_2L;
-+    case 11: return env->DPR2_3L;
-+    case 12: return env->DPR3_0L;
-+    case 13: return env->DPR3_1L;
-+    case 14: return env->DPR3_2L;
-+    case 15: return env->DPR3_3L;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_dpr_upper(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->DPR0_0U;
-+    case 1:  return env->DPR0_1U;
-+    case 2:  return env->DPR0_2U;
-+    case 3:  return env->DPR0_3U;
-+    case 4:  return env->DPR1_0U;
-+    case 5:  return env->DPR1_1U;
-+    case 6:  return env->DPR1_2U;
-+    case 7:  return env->DPR1_3U;
-+    case 8:  return env->DPR2_0U;
-+    case 9:  return env->DPR2_1U;
-+    case 10: return env->DPR2_2U;
-+    case 11: return env->DPR2_3U;
-+    case 12: return env->DPR3_0U;
-+    case 13: return env->DPR3_1U;
-+    case 14: return env->DPR3_2U;
-+    case 15: return env->DPR3_3U;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_cpr_lower(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->CPR0_0L;
-+    case 1:  return env->CPR0_1L;
-+    case 2:  return env->CPR0_2L;
-+    case 3:  return env->CPR0_3L;
-+    case 4:  return env->CPR1_0L;
-+    case 5:  return env->CPR1_1L;
-+    case 6:  return env->CPR1_2L;
-+    case 7:  return env->CPR1_3L;
-+    case 8:  return env->CPR2_0L;
-+    case 9:  return env->CPR2_1L;
-+    case 10: return env->CPR2_2L;
-+    case 11: return env->CPR2_3L;
-+    case 12: return env->CPR3_0L;
-+    case 13: return env->CPR3_1L;
-+    case 14: return env->CPR3_2L;
-+    case 15: return env->CPR3_3L;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_cpr_upper(CPUTriCoreState *env, int idx)
-+{
-+    switch (idx) {
-+    case 0:  return env->CPR0_0U;
-+    case 1:  return env->CPR0_1U;
-+    case 2:  return env->CPR0_2U;
-+    case 3:  return env->CPR0_3U;
-+    case 4:  return env->CPR1_0U;
-+    case 5:  return env->CPR1_1U;
-+    case 6:  return env->CPR1_2U;
-+    case 7:  return env->CPR1_3U;
-+    case 8:  return env->CPR2_0U;
-+    case 9:  return env->CPR2_1U;
-+    case 10: return env->CPR2_2U;
-+    case 11: return env->CPR2_3U;
-+    case 12: return env->CPR3_0U;
-+    case 13: return env->CPR3_1U;
-+    case 14: return env->CPR3_2U;
-+    case 15: return env->CPR3_3U;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_dpre(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->DPRE_0;
-+    case 1: return env->DPRE_1;
-+    case 2: return env->DPRE_2;
-+    case 3: return env->DPRE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_dpwe(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->DPWE_0;
-+    case 1: return env->DPWE_1;
-+    case 2: return env->DPWE_2;
-+    case 3: return env->DPWE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static uint32_t tricore_mpu_cpxe(CPUTriCoreState *env, int prs)
-+{
-+    switch (prs) {
-+    case 0: return env->CPXE_0;
-+    case 1: return env->CPXE_1;
-+    case 2: return env->CPXE_2;
-+    case 3: return env->CPXE_3;
-+    default: return 0;
-+    }
-+}
-+
-+static bool tricore_mpu_enabled(CPUTriCoreState *env)
-+{
-+    /*
-+     * The MPU is enabled when SYSCON.MPEN (bit 1) is set.
-+     * As a pragmatic fallback, also treat the MPU as enabled
-+     * when any enable bitmap is nonzero, since some RTOS ports
-+     * program the range/enable registers without setting SYSCON.MPEN.
-+     */
-+    if (env->SYSCON & MASK_SYSCON_PRO_TEN) {
-+        return true;
-+    }
-+    return (env->DPRE_0 | env->DPRE_1 | env->DPRE_2 | env->DPRE_3 |
-+            env->DPWE_0 | env->DPWE_1 | env->DPWE_2 | env->DPWE_3 |
-+            env->CPXE_0 | env->CPXE_1 | env->CPXE_2 | env->CPXE_3) != 0;
-+}
-+
-+static int tricore_mpu_check(CPUTriCoreState *env, vaddr address,
-+                             MMUAccessType access_type, int *prot)
-+{
-+    int prs = (env->PSW & MASK_PSW_PRS) >> 12;
-+    uint32_t dpre = tricore_mpu_dpre(env, prs);
-+    uint32_t dpwe = tricore_mpu_dpwe(env, prs);
-+    uint32_t cpxe = tricore_mpu_cpxe(env, prs);
-+    int i;
-+
-+    *prot = 0;
-+
-+    /* Walk the 16 data protection ranges */
-+    for (i = 0; i < 16; i++) {
-+        uint32_t lower = tricore_mpu_dpr_lower(env, i);
-+        uint32_t upper = tricore_mpu_dpr_upper(env, i);
-+
-+        if (address >= lower && address < upper) {
-+            if (dpre & (1u << i)) {
-+                *prot |= PAGE_READ;
-+            }
-+            if (dpwe & (1u << i)) {
-+                *prot |= PAGE_WRITE;
-+            }
-+        }
-+    }
-+
-+    /* Walk the 16 code protection ranges */
-+    for (i = 0; i < 16; i++) {
-+        uint32_t lower = tricore_mpu_cpr_lower(env, i);
-+        uint32_t upper = tricore_mpu_cpr_upper(env, i);
-+
-+        if (address >= lower && address < upper) {
-+            if (cpxe & (1u << i)) {
-+                *prot |= PAGE_EXEC;
-+            }
-+        }
-+    }
-+
-+    /* Check the requested access against accumulated permissions */
-+    switch (access_type) {
-+    case MMU_DATA_LOAD:
-+        if (!(*prot & PAGE_READ)) {
-+            return TLBRET_MPR;
-+        }
-+        break;
-+    case MMU_DATA_STORE:
-+        if (!(*prot & PAGE_WRITE)) {
-+            return TLBRET_MPW;
-+        }
-+        break;
-+    case MMU_INST_FETCH:
-+        if (!(*prot & PAGE_EXEC)) {
-+            return TLBRET_MPX;
-+        }
-+        break;
-+    }
-+
-+    return TLBRET_MATCH;
-+}
-+
- static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
-                                 int *prot, vaddr address,
-                                 MMUAccessType access_type, int mmu_idx)
-@@ -44,6 +248,19 @@ static int get_physical_address(CPUTriCoreState *env, hwaddr *physical,
-     *physical = address & 0xFFFFFFFF;
-     *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
- 
-+    /*
-+     * Block instruction fetch from peripheral space
-+     * (segments 0xE and 0xF).
-+     */
-+    if (access_type == MMU_INST_FETCH &&
-+        (address & 0xE0000000) == 0xE0000000) {
-+        return TLBRET_MPX;
-+    }
-+
-+    if (tricore_mpu_enabled(env)) {
-+        ret = tricore_mpu_check(env, address, access_type, prot);
-+    }
-+
-     return ret;
- }
- 
-@@ -61,10 +278,25 @@ hwaddr tricore_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
-     return phys_addr;
- }
- 
--/* TODO: Add exception support */
- static void raise_mmu_exception(CPUTriCoreState *env, vaddr address,
-                                 int rw, int tlb_error)
- {
-+    CPUState *cs = env_cpu(env);
-+
-+    switch (tlb_error) {
-+    case TLBRET_MPR:
-+        cs->exception_index = TRAPC_PROT;
-+        break;
-+    case TLBRET_MPW:
-+        cs->exception_index = TRAPC_PROT;
-+        break;
-+    case TLBRET_MPX:
-+        cs->exception_index = TRAPC_PROT;
-+        break;
-+    default:
-+        cs->exception_index = TRAPC_SYSBUS;
-+        break;
-+    }
- }
- 
- bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-@@ -74,9 +306,8 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     CPUTriCoreState *env = cpu_env(cs);
-     hwaddr physical;
-     int prot;
--    int ret = 0;
-+    int ret;
- 
--    rw &= 1;
-     ret = get_physical_address(env, &physical, &prot,
-                                address, rw, mmu_idx);
- 
-@@ -86,7 +317,7 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-     if (ret == TLBRET_MATCH) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
--                     physical & TARGET_PAGE_MASK, prot | PAGE_EXEC,
-+                     physical & TARGET_PAGE_MASK, prot,
-                      mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     } else {
-@@ -171,8 +402,9 @@ void NAME(CPUTriCoreState *env, uint32_t val)                            \
- {                                                                         \
-     if (tricore_has_feature(env, TRICORE_FEATURE_##FEATURE)) {            \
-         env->REG = FIELD_DP32(env->REG, REG, FIELD ## _ ## FEATURE, val); \
-+    } else {                                                              \
-+        env->REG = FIELD_DP32(env->REG, REG, FIELD ## _13, val);          \
-     }                                                                     \
--    env->REG = FIELD_DP32(env->REG, REG, FIELD ## _13, val);              \
- }
- 
- #define FIELD_SETTER(NAME, REG, FIELD)                \
+diff --git a/target/tricore/csfr.h.inc b/target/tricore/csfr.h.inc
+index cdfaf1d662..24d8310947 100644
+--- a/target/tricore/csfr.h.inc
++++ b/target/tricore/csfr.h.inc
+@@ -83,14 +83,18 @@ A(0xDC10, CPR3_2L, TRICORE_FEATURE_13)
+ A(0xDC14, CPR3_2U, TRICORE_FEATURE_13)
+ A(0xDC18, CPR3_3L, TRICORE_FEATURE_13)
+ A(0xDC1C, CPR3_3U, TRICORE_FEATURE_13)
+-A(0xE000, DPM0, TRICORE_FEATURE_13)
+-A(0xE080, DPM1, TRICORE_FEATURE_13)
+-A(0xE100, DPM2, TRICORE_FEATURE_13)
+-A(0xE180, DPM3, TRICORE_FEATURE_13)
+-A(0xE200, CPM0, TRICORE_FEATURE_13)
+-A(0xE280, CPM1, TRICORE_FEATURE_13)
+-A(0xE300, CPM2, TRICORE_FEATURE_13)
+-A(0xE380, CPM3, TRICORE_FEATURE_13)
++A(0xE000, CPXE_0, TRICORE_FEATURE_13)
++A(0xE004, CPXE_1, TRICORE_FEATURE_13)
++A(0xE008, CPXE_2, TRICORE_FEATURE_13)
++A(0xE00C, CPXE_3, TRICORE_FEATURE_13)
++A(0xE010, DPRE_0, TRICORE_FEATURE_13)
++A(0xE014, DPRE_1, TRICORE_FEATURE_13)
++A(0xE018, DPRE_2, TRICORE_FEATURE_13)
++A(0xE01C, DPRE_3, TRICORE_FEATURE_13)
++A(0xE020, DPWE_0, TRICORE_FEATURE_13)
++A(0xE024, DPWE_1, TRICORE_FEATURE_13)
++A(0xE028, DPWE_2, TRICORE_FEATURE_13)
++A(0xE02C, DPWE_3, TRICORE_FEATURE_13)
+ /* memory management registers */
+ A(0x8000, MMU_CON, TRICORE_FEATURE_13)
+ A(0x8004, MMU_ASI, TRICORE_FEATURE_13)
 
 -- 
 2.47.3
