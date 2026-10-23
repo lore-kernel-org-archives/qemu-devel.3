@@ -1,99 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C19B606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24475606A31B
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=e22G30U6;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ck5pExKs
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=AmJp2V4n;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=iDOyc0u3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKHzM-0007Lv-V4; Fri, 23 Oct 2026 12:19:30 -0400
+	id 1xKHyy-0006Pb-2I; Fri, 23 Oct 2026 12:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKHz6-00072t-Jz
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:19:16 -0400
+ id 1xKHyd-0005Dm-E3
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:18:45 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKHz4-0002eN-Pe
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:19:12 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xKHyb-0002bu-HA
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:18:43 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NE5vmx4063370
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:19:09 GMT
+ 69NE6rjx1492220
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:18:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Gn9MiOR2eaQ37vMb0O5MnVQFkreDGb4IcS1IszPzllk=; b=e22G30U6n0yRSZmY
- Tl0sh8SoGMUHNKtck8LHoqtUGOqgHJG3iGxMA0q51rHcLvq8OiL2eJzUr8pJHORe
- zVbnZh+L8rxd9lNpo5XgfGgJYRHuQao05EenjLsmK/mwjLUCZ4+CJfxo4ukhVLvm
- 2KqtobMPCF/JgKnae9qpGIsJT1qXsSEb8SuWE/Brm6BYAmcnS0E8T/Qiu98wlqSx
- ut5vGfuyjNDV24CjEqkvyf3ursU4h4qjfnCaKt+YjniTR/EK9H7Gwax2l6+NvMPm
- KJixq9tdmar2Jc4A5/TfkzkBaJ5dcz9ym3FW5yCZVePRKF6jMUtPypOHXv4daNtt
- +GmLcw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmrch0h-1
+ m/FmiOituai+pOcvcRi/Tc03upJT4eaQSvGRgqTC3HQ=; b=AmJp2V4naOKvY1uQ
+ xBNeaqyiKX2hEjt48hm2OGXWGf7ZxoMSla5RdvJQDhFePt/3TxAXIv9Bhyam9I0X
+ HCKiSBRtPkC1AUrfw6jD1tGxFdX2CcdFmYSl98W0YgBqSSo4Tdh7/0+9W+TvMNcd
+ r07t2wFw5SuAy1Np8bqpVLrPPZLHx6Paqa16RYGY3rkZ/0TqvMGwBixjPQYUsMhr
+ xuIDvqAC8akkNwbvq89DZbt4dkzJ3EQO16LcPyIxcOklspmo7qyduxU4J4CgFVMt
+ gQdZW+Kk5CE3wB5mlebEDxQJ6kdExWZQREmIAcXVC1GKSAbkb5LS0RsicHQvUP9U
+ egt/SQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfsmauyeu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:19:09 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-936aa34873bso204146185a.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:19:09 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:18:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93cb93c874bso382115185a.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792772348; x=1793377148; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792772319; x=1793377119; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Gn9MiOR2eaQ37vMb0O5MnVQFkreDGb4IcS1IszPzllk=;
- b=ck5pExKsTo2yX8wNREVj5PSvzSLMq1EjJc3gDMQN3xOKnFgHH0O9XzgVmqx8v2OxtB
- BwlTp/97iUxHmjanFWZnrDYsAAKZsl/S9wrp6yeQVmRSaGLJhuj2tat4w7+NcRExqzh6
- rHMXQeiGEyflfL2w6MXiS7GRgtqvJGnujRopAjtqs0pa3FsXGzK9lL+k7mrtEtmjJ4Sy
- oeIG+NhcDiIfCTvZ1OkGRmSMdZ5CqWO6svbfK5STFFjw6oj+CxrdX8D7fB8OHCki84Js
- z1/uVCiQkZFi6ZJDvQPdZ8IeTYi6b5g/5zIRPRzG+fa7yf+IjsLs2Upqv9ea+VHYbawW
- 1ukA==
+ bh=m/FmiOituai+pOcvcRi/Tc03upJT4eaQSvGRgqTC3HQ=;
+ b=iDOyc0u3F8JaNqBD2g1QIg9U89sFPC2i2NXUlSLBxySZA7YC9cKlrqaox0Dj2zQtq3
+ 8txBNDOsYniOuQqKylDOI4sFMjInkdi0UTQ4T4E96shER0MGjStENJM1Qzcsb08ucVj7
+ ZXlUqy4kCQs/FIml81hUJlZLHtDvuiCo8ZUbC7XOCagvUiF/SKPL8DSu/U05A3BWKBQN
+ 3d3VfIxNSLN24F8t6unyUoSUup9JP2QV+N4lWh9nUC3ScrcrDB7nGg69GCZlwKSCZgWY
+ W+jjinLAIs8stEhLxhXlLw0dt7zoZtwW69V4rTFdA9ixLahlbX1VfDoSDbcWtf7JrUPz
+ nHQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792772348; x=1793377148;
+ d=1e100.net; s=20260707; t=1792772319; x=1793377119;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Gn9MiOR2eaQ37vMb0O5MnVQFkreDGb4IcS1IszPzllk=;
- b=mYwo3Daw8EwA/r99nRjyKHT7AWa0Tmqrb7jKf59OFmBMduV4OM6reBC3DK5X5RYlNT
- 7+VgjDrTc3TjHf8smig3iv8nSZKhT5hbDIN5Ne7rVbV//xgSJZruPfYGxKMLNAhLQ3tB
- EPZySPEbyjPyl/LJEX3GPyF3daiC7eRkYYI20WZQWUfMwoWMbbK+ZN7zwRgh5FIWbulz
- j32Pcj2pNJ5gbVXL5VCV8m9PEn7HZM3JGdlXonqcjonVAOpKiaphlmS97lvhjt192U4O
- Dt9Qt23YrV/sl5yfFFy4bMnJoLHY7JkZWUIDf9fFn/iIoNRq7eIajjdhwq6V1qYO/iaf
- PDNQ==
-X-Gm-Message-State: AFq9FYIcxcYmW+o8L54Xs+xHWbsSDTbGp/AkPDwTlz66Qf9ueD+ldx3a
- lG1tMMrhaRfVa2hvKtNNPk4Bl7ztnhkBSdkjmIy++YHSC2FBkpt0UpXMg7o4TU9QSwiy5L5bkzt
- nZ1IShGTZsbQ5XxNmEifjetQvmh1l/NDAcLFj4HevMSIBOP5rH2k9IhUphH+yzuLcsM6S
-X-Gm-Gg: AYBFou3YCdlUXVJSzIRghFYk8FtTUoNanTeSZN0FDYHqMNU0lfoFuySDTtgR8h6sJTz
- jEdO9flSgaAuu7eYZLNnHp7o8UE8serCZZwAQKfbT76yyhUMJp9hm8nTHV2PcgOkYCNNaQFKe6o
- 3PcfhckhYAs4tNxTLhNbA3nEjJvWKLawgAo3LSDTr/dMnaZI0qsu0N/4PCU2Eyqe3Aph1Iecsg4
- Kjufo8MnZz34oEscQot+7s0/UXLjWbC9ZLaTfbQKvXA+dHWZ3MnW5vuaW/6YcKgCoZeDnIKjvUZ
- YQS3KMJHDwkOlt4lGrqwCOgDmiI4tWAaYrJ5Fx71I0O1XyfBSiudNGTFvsfVYlMKu8hZy5NorbF
- 3QcleMwjEe/c/U4NcFJmbTth5z+xe8RNQl/PwExbh
-X-Received: by 2002:a05:620a:8389:b0:93c:c73b:39ed with SMTP id
- af79cd13be357-93f6f7c4facmr447639485a.39.1792772348231; 
- Fri, 23 Oct 2026 09:19:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:8389:b0:93c:c73b:39ed with SMTP id
- af79cd13be357-93f6f7c4facmr447633285a.39.1792772347581; 
- Fri, 23 Oct 2026 09:19:07 -0700 (PDT)
+ bh=m/FmiOituai+pOcvcRi/Tc03upJT4eaQSvGRgqTC3HQ=;
+ b=f84dI+CM4kCfZrMr8DsC6CpE+JmE4w46Q+PagJVTx5a6QfNRWa92Agip+MQVObYa2E
+ u4NCPf89vw6oMBvNWPwsdT2qmih3tzg/3ctB4/YsTqoXEEGOqLJCB//JtO6s0vUlW9kA
+ Kr77lqswiyREN2Hex5K3cVk9nqp2LFShwn1F7kbAlftiHqDoxWMMIWOQerl2csHjnXn/
+ NZdPeTjQkrdtcp6DSr1/sUmNC7q0KjKaf5Cr+UyzJbV7jch/YKqW4L869xpIqi04Xp/O
+ WXN8VQ9ToNJPxIzhvqLRYLPJFAGTentq53Q6R2018UWvGjyctglbLLqJZA58DAY7oMzc
+ 6ktg==
+X-Gm-Message-State: AFq9FYLJP63qbTxJRqGegZv3ry/ELTpi/Y1/t3+sw3nFPN/Myjr/vcV2
+ BPLronzNi/dBdP8OoRN0TUMid6TvcS7PNiy5uAP+5tlePs7Yj0nu04fgmJ3b0QCAKaswhqg1hL5
+ lHQX0za6BtrXJ29atP6oqCH6wqkQPiCjNU2L3uwbjsWUrWTfxV3ZKoor24ii0iw9Oos4p
+X-Gm-Gg: AYBFou1PftFX4g8jB6jJCiLAT9BypagxTXUQu/wzFdAo6M6hTfON9NP42kEl3+MAmVe
+ UCjGS1uOwU/p/nc+mLsuqj+3C+cJMsm81b9hnmlqPl28Z4ePRkozAqXzbm6R+2Hek+i/4nFoT6q
+ mFXjyLvPe8Wjy3dJvaWqhKit5fN1xEukYdJsSyJo6Uo/mnkNG4peYlkGc0anexSCBMAwcJeZjG2
+ BNaHO3sfG8h7Ayuh1UDigC/N78K6Xzv+0jdW2Fm4COUXvxFpVjTHm+/RsCJ4c+tRkMT3kBDscga
+ ygfeU7MZMhy10oFZ5aeQMa+wZQZSz8qWuogIirkFkYn93pKivBafAi82acmNvuQp4QF4rZ8ebc6
+ U2u1dY3XCrVOCPDb4jiEC62LKDPsrtFY0svS+kEvm
+X-Received: by 2002:a05:620a:4047:b0:93f:1789:8359 with SMTP id
+ af79cd13be357-93f6278ad0fmr992196485a.31.1792772319091; 
+ Fri, 23 Oct 2026 09:18:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:4047:b0:93f:1789:8359 with SMTP id
+ af79cd13be357-93f6278ad0fmr992191785a.31.1792772318524; 
+ Fri, 23 Oct 2026 09:18:38 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a312fb9b90sm10794415e9.4.2026.10.23.09.19.06
+ 5b1f17b1804b1-4a312e820f9sm4979225e9.1.2026.10.23.09.18.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 23 Oct 2026 09:19:06 -0700 (PDT)
+ Fri, 23 Oct 2026 09:18:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 46/83] target/s390x: Implement and register
- CPUClass::exception_name()
-Date: Fri, 23 Oct 2026 18:12:54 +0200
-Message-ID: <20261023161332.60153-47-philmd@oss.qualcomm.com>
+Subject: [PULL 42/83] target/riscv: Register CPUClass::exception_name() handler
+Date: Fri, 23 Oct 2026 18:12:50 +0200
+Message-ID: <20261023161332.60153-43-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261023161332.60153-1-philmd@oss.qualcomm.com>
 References: <20261023161332.60153-1-philmd@oss.qualcomm.com>
@@ -101,31 +100,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: xURG-Z-LG3Guw4SdTbLKl8fD7hy7jcIo
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX+tUoeaZ6OkIy
- bF75OBGx8scmoggRTO1UbxQriqLlx2ZznxSMoPCP25MfQTZQ1Mi8tU5XrlRk9Ok/FrubYLWKs1O
- /JxfACI/zHTG1T7ANCnz7Xci2HzIcDI=
-X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6adb88fd cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=V7LoQuni c=1 sm=1 tr=0 ts=6adb88e0 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=u-qA4s_dmyebC3KKCgsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfXwSZShbKEu1u7
- y7iEIC9gGZl6QElJv1Pm6MiE19zd5znxjmE2iDG/AY/GcqffSjFWe+tQP4JR/VqAfDcwCZDTCYd
- jNL1Qq8eTuNr43rW1yJWqKfPyh2icGkkzoMtfhubmiAN9iWGc+3TjYTyMiABVlBhyFL9QETgBzY
- +cY5qO8t3oo6+8Dpee/DPBh/aYFR8fXz0SOCeY+eyHwCIa7wzZECGjqmqaJTcd00sbG3CbETl4l
- u0q5njbtOv4fMhcI8fmiL678evzJ5kFnDI+QWyZxm8CWe78iY8TmrmW23XHAj4rgQFlbWcdKaw7
- mYZ2EnGH0WrsCKckV9ORplPkRmbYaTPvyGGhy5/ghJ99k/rCdcyutf8AZFDPhfPbQ70C0LU5LHI
- IfMid71kEar8Ok6IzklAVXxORQkC0xtcRj6CEQOrrDGsSroOGY/+l3Kwk9cegGYB3w0xafuqxW9
- vRdeW2+4y97+o0HKAlQ==
-X-Proofpoint-ORIG-GUID: xURG-Z-LG3Guw4SdTbLKl8fD7hy7jcIo
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8 a=y9j7XMdMAJhvWi9Kj2cA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX45grUhZJmwQN
+ bzSTfIzYF/fCh4Ns+MPJK+pHSYnv7uw7QTFZkM9L0DPnSzGKU54wwyi26951RcrMDRLZpBj+48c
+ EAMM3YpRe7hWiUj05b2Y73hh5yA8DbU=
+X-Proofpoint-GUID: h8QMSCYAR4D8tjUYeOGoZ62EZRVuSDeb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX+8aCMLLK94t2
+ /8XQ3UTlfe8xCxu1BD/QBOjoAdV6Tz2SdTBczjZ5XwvXY4dwT4DrCRkzv9SLhrcYb/LFkZsVNqd
+ u6czCyybQyn1RgWO4yzyVgYRRHzny3zSCmu9rTJNLoU5vcOq1EOgObN5+JaRzkRISnS2uSXgPk9
+ K89vs0YFC6r/12EphBLQ3h1I/lF3InJRbvDuk7nu+dSMNcFmLTBSTP2ObEMCMQOQBbUV0/GrFoM
+ fk4zRIglWbRPXlHafO5A1m4QHkCU5jli5YutbMWecavJ9pWlEffM459X/2+EOG2NT+3DK1GWqYF
+ I5FeZlICSCFMN/lGauYDd57O34yIqb8nfjp74f2kxmd8K0yc57c2eAf3XnFULjqle3u9pKr3zBW
+ STcUTYNu06N0EaeVtWQHltrS02GKYHYPzSVIeZ3tCpqYEzXAv5t/W8ZKoOtI8HZJ2TfQs6InXpt
+ kE1NHZ5layIkxR8YPDw==
+X-Proofpoint-ORIG-GUID: h8QMSCYAR4D8tjUYeOGoZ62EZRVuSDeb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230063
 Received-SPF: pass client-ip=205.220.168.131;
@@ -155,116 +154,99 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Implement s390x_exception_name() and register it as the
-CPUClass::exception_name() handler, so the common exception
-logging can resolve s390x exception codes to names.
-
-Use the new helper in s390_cpu_do_interrupt() and helper_exception().
-
-With '-d int', s390_cpu_do_interrupt() now logs the exception
-name in parentheses after its number.
+Factor riscv_excp_name() and riscv_intr_name() out of
+riscv_cpu_get_trap_name(). Register riscv_excp_name()
+as the CPUClass::exception_name() handler, so the common
+exception logging can resolve RISCV exception codes to names.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261022215115.19680-28-philmd@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20261022215115.19680-24-philmd@oss.qualcomm.com>
 ---
- target/s390x/cpu.h             |  2 ++
- target/s390x/cpu.c             |  1 +
- target/s390x/interrupt.c       | 16 ++++++++++++++++
- target/s390x/tcg/excp_helper.c |  6 ++++--
- target/s390x/tcg/misc_helper.c |  3 ++-
- 5 files changed, 25 insertions(+), 3 deletions(-)
+ target/riscv/cpu.h           |  1 +
+ target/riscv/cpu.c           | 20 ++++++++++----------
+ target/riscv/tcg/op_helper.c |  2 +-
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index ef73b15218e..37b6e541312 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -437,6 +437,8 @@ QEMU_BUILD_BUG_ON(FLAG_MASK_PER_IFETCH_NULLIFY !=
- #define EXCP_IO  7 /* I/O interrupt */
- #define EXCP_MCHK 8 /* machine check */
- 
-+const char *s390x_exception_name(int excp);
-+
- #define INTERRUPT_EXT_CPU_TIMER          (1 << 3)
- #define INTERRUPT_EXT_CLOCK_COMPARATOR   (1 << 4)
- #define INTERRUPT_EXTERNAL_CALL          (1 << 5)
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index e7f81fabff6..d1250945d48 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -407,6 +407,7 @@ static void s390_cpu_class_init(ObjectClass *oc, const void *data)
-                                        &scc->parent_phases);
- 
-     cc->class_by_name = s390_cpu_class_by_name;
-+    cc->exception_name = s390x_exception_name;
-     cc->list_cpus = s390_cpu_list;
-     cc->dump_state = s390_cpu_dump_state;
-     cc->query_cpu_fast = s390_query_cpu_fast;
-diff --git a/target/s390x/interrupt.c b/target/s390x/interrupt.c
-index d7e3fd45e4b..28174522944 100644
---- a/target/s390x/interrupt.c
-+++ b/target/s390x/interrupt.c
-@@ -8,6 +8,7 @@
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b65d6319940..49a1186bdbb 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -672,6 +672,7 @@ G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                         MMUAccessType access_type, int mmu_idx,
+                         bool probe, uintptr_t retaddr);
++const char *riscv_excp_name(int excp);
+ char *riscv_isa_string(RISCVCPU *cpu);
+ int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
+ bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f9946f54ced..ae750f85c6c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -18,6 +18,7 @@
   */
  
  #include "qemu/osdep.h"
 +#include "qemu/cutils.h"
- #include "cpu.h"
- #include "kvm/kvm_s390x.h"
- #include "s390x-internal.h"
-@@ -19,6 +20,21 @@
- #include "hw/s390x/s390_flic.h"
- #endif
+ #include "qemu/qemu-print.h"
+ #include "qemu/ctype.h"
+ #include "qemu/log.h"
+@@ -398,6 +399,11 @@ static const char * const riscv_excp_names[] = {
+     [RISCV_EXCP_SEMIHOST] = "semihost",
+ };
  
-+const char *s390x_exception_name(int excp)
++const char *riscv_excp_name(int excp)
 +{
-+    static const char * const excp_names[] = {
-+        [EXCP_EXT]      = "external interrupt",
-+        [EXCP_SVC]      = "supervisor call",
-+        [EXCP_PGM]      = "program interruption",
-+        [EXCP_RESTART]  = "restart interrupt",
-+        [EXCP_STOP]     = "stop interrupt",
-+        [EXCP_IO]       = "I/O interrupt",
-+        [EXCP_MCHK]     = "machine check",
-+    };
-+
-+    return STR_ARRAY_ELEM_OR_NULL(excp_names, excp) ?: "unknown";
++    return STR_ARRAY_ELEM_OR_NULL(riscv_excp_names, excp) ?: "unknown";
 +}
 +
- /* Ensure to exit the TB after this call! */
- void trigger_pgm_exception(CPUS390XState *env, uint32_t code)
- {
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index d952bb20cf1..83fe65e1f8c 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -508,8 +508,10 @@ void s390_cpu_do_interrupt(CPUState *cs)
-     bool stopped = false;
-     uint64_t last_pc = cpu->env.psw.addr;
+ static const char * const riscv_intr_names[] = {
+     [IRQ_U_SOFT] = "u_software",
+     [IRQ_S_SOFT] = "s_software",
+@@ -417,17 +423,10 @@ static const char * const riscv_intr_names[] = {
  
--    qemu_log_mask(CPU_LOG_INT, "%s: %d at psw=%" PRIx64 ":%" PRIx64 "\n",
--                  __func__, cs->exception_index, env->psw.mask, env->psw.addr);
-+    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s) at psw=%" PRIx64 ":%" PRIx64 "\n",
-+                  __func__, cs->exception_index,
-+                  s390x_exception_name(cs->exception_index),
-+                  env->psw.mask, env->psw.addr);
- 
- try_deliver:
-     /* handle machine checks */
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index f1c8563af00..a01c5d894e7 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -61,7 +61,8 @@ void HELPER(exception)(CPUS390XState *env, uint32_t excp)
+ const char *riscv_cpu_get_trap_name(uint64_t cause, bool async)
  {
+-    if (async) {
+-        if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[cause]) {
+-            return riscv_intr_names[cause];
+-        }
+-    } else {
+-        if ((cause < ARRAY_SIZE(riscv_excp_names)) && riscv_excp_names[cause]) {
+-            return riscv_excp_names[cause];
+-        }
+-    }
++    const char *name = async ? STR_ARRAY_ELEM_OR_NULL(riscv_intr_names, cause)
++                             : STR_ARRAY_ELEM_OR_NULL(riscv_excp_names, cause);
+ 
+-    return "(unknown)";
++    return name ?: "unknown";
+ }
+ 
+ void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext)
+@@ -3130,6 +3129,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+                                        &mcc->parent_phases);
+ 
+     cc->class_by_name = riscv_cpu_class_by_name;
++    cc->exception_name = riscv_excp_name;
+     cc->dump_state = riscv_cpu_dump_state;
+     cc->set_pc = riscv_cpu_set_pc;
+     cc->get_pc = riscv_cpu_get_pc;
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index b8b3e43ccd5..f85f5cd83c9 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -41,7 +41,7 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
      CPUState *cs = env_cpu(env);
  
--    HELPER_LOG("%s: exception %d\n", __func__, excp);
-+    HELPER_LOG("%s: exception %d (%s)\n", __func__, excp,
-+               s390x_exception_name(excp));
-     cs->exception_index = excp;
-     cpu_loop_exit(cs);
- }
+     trace_riscv_exception(exception,
+-                          riscv_cpu_get_trap_name(exception, false),
++                          riscv_excp_name(exception),
+                           env->pc);
+ 
+     cs->exception_index = exception;
 -- 
 2.55.0
 
