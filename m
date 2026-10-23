@@ -1,36 +1,36 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37FC606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07151606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKKlh-00037v-KB; Fri, 23 Oct 2026 15:17:33 -0400
+	id 1xKKlN-00032T-Dq; Fri, 23 Oct 2026 15:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKla-00037E-25
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:26 -0400
+ id 1xKKl4-0002xp-3p
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:16:58 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKlY-000267-5R
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:25 -0400
+ id 1xKKkz-00020w-E6
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:16:50 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1xKKlV-00000007BGA-00ii; Fri, 23 Oct 2026 21:17:21 +0200
+ id 1xKKkv-00000007BEq-0j2T; Fri, 23 Oct 2026 21:16:45 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 10/13] net: Split VM state change handler into start and
- stop parts
-Date: Fri, 23 Oct 2026 21:16:21 +0200
-Message-ID: <6cd059494816e5553620b3bee99b6a422b47d098.1792758436.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v2 03/13] runstate: Add an intermediate VM change state
+ handlers SYNC priority
+Date: Fri, 23 Oct 2026 21:16:14 +0200
+Message-ID: <2f8d2c6eccb373a2a6d19245386889b2ebaf5cba.1792758435.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1792758435.git.maciej.szmigiero@oracle.com>
 References: <cover.1792758435.git.maciej.szmigiero@oracle.com>
@@ -65,105 +65,47 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This will allow moving the VM stop part of this handler into
-VM_CHANGE_STATE_PRI_HIGH.
+VFIO code needs to register a VM change state handler between NORMAL and
+HIGH priorities as a synchronization point/barrier between the first state
+transition of its devices and their second state transition.
+
+Add an intermediate SYNC priority of VM change state handlers for that.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- net/net.c | 52 ++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 16 deletions(-)
+ include/system/runstate.h | 2 +-
+ system/runstate.c         | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/net.c b/net/net.c
-index d7fa637ce51a..9fc62e19b36e 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -64,7 +64,8 @@
- # define CONFIG_NET_BRIDGE
+diff --git a/include/system/runstate.h b/include/system/runstate.h
+index e28261ec4a20..c10d9dc8b751 100644
+--- a/include/system/runstate.h
++++ b/include/system/runstate.h
+@@ -16,6 +16,7 @@ typedef int VMChangeStateHandlerWithRet(void *opaque, bool running, RunState sta
+ 
+ typedef enum VMChangeStateHandlerPri {
+     VM_CHANGE_STATE_PRI_HIGH,
++    VM_CHANGE_STATE_PRI_SYNC,
+     VM_CHANGE_STATE_PRI_NORMAL,
+     VM_CHANGE_STATE_PRI_MAX,
+ } VMChangeStateHandlerPri;
+@@ -163,4 +164,3 @@ void qemu_system_guest_pvshutdown(void);
+ bool qemu_system_dump_in_progress(void);
+ 
  #endif
- 
--static VMChangeStateEntry *net_change_state_entry;
-+static VMChangeStateEntry *net_change_state_start_entry;
-+static VMChangeStateEntry *net_change_state_stop_entry;
- NetClientStateList net_clients;
- 
- typedef struct NetdevQueueEntry {
-@@ -1729,27 +1730,43 @@ void qmp_set_link(const char *name, bool up, Error **errp)
-     net_client_set_link(ncs, queues, up);
- }
- 
--static void net_vm_change_state_handler(void *opaque, bool running,
--                                        RunState state)
-+static void net_vm_change_state_start(void *opaque, bool running,
-+                                      RunState state)
- {
-     NetClientState *nc;
-     NetClientState *tmp;
- 
-+    if (!running) {
-+        return;
-+    }
-+
-     QTAILQ_FOREACH_SAFE(nc, &net_clients, next, tmp) {
--        if (running) {
--            /* Flush queued packets and wake up backends. */
--            if (nc->peer && qemu_can_send_packet(nc)) {
--                qemu_flush_queued_packets(nc->peer);
--            }
--        } else {
--            /* Complete all queued packets, to guarantee we don't modify
--             * state later when VM is not running.
--             */
--            qemu_flush_or_purge_queued_packets(nc, true);
-+        /* Flush queued packets and wake up backends. */
-+        if (nc->peer && qemu_can_send_packet(nc)) {
-+            qemu_flush_queued_packets(nc->peer);
-         }
-     }
- }
- 
-+static void net_vm_change_state_stop(void *opaque, bool running,
-+                                     RunState state)
-+{
-+    NetClientState *nc;
-+    NetClientState *tmp;
-+
-+    if (running) {
-+        return;
-+    }
-+
-+    QTAILQ_FOREACH_SAFE(nc, &net_clients, next, tmp) {
-+        /*
-+         * Complete all queued packets, to guarantee we don't modify
-+         * state later when VM is not running.
-+         */
-+        qemu_flush_or_purge_queued_packets(nc, true);
-+    }
-+}
-+
- void net_cleanup(void)
- {
-     NetClientState *nc, **p = &QTAILQ_FIRST(&net_clients);
-@@ -1799,7 +1816,8 @@ void net_cleanup(void)
-         }
-     }
- 
--    qemu_del_vm_change_state_handler(net_change_state_entry);
-+    qemu_del_vm_change_state_handler(net_change_state_start_entry);
-+    qemu_del_vm_change_state_handler(net_change_state_stop_entry);
- }
- 
- void net_check_clients(void)
-@@ -1957,8 +1975,10 @@ static void netdev_init_modern(void)
- 
- void net_init_clients(void)
- {
--    net_change_state_entry =
--        qemu_add_vm_change_state_handler(net_vm_change_state_handler, NULL);
-+    net_change_state_start_entry =
-+        qemu_add_vm_change_state_handler(net_vm_change_state_start, NULL);
-+    net_change_state_stop_entry =
-+        qemu_add_vm_change_state_handler(net_vm_change_state_stop, NULL);
- 
-     QTAILQ_INIT(&net_clients);
- 
+-
+diff --git a/system/runstate.c b/system/runstate.c
+index 5f16f09507ed..6039bb81ecfd 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -313,6 +313,9 @@ static VMChangeStateHead vm_change_state_head[VM_CHANGE_STATE_PRI_MAX] = {
+     [VM_CHANGE_STATE_PRI_HIGH] =
+         QTAILQ_HEAD_INITIALIZER(
+             vm_change_state_head[VM_CHANGE_STATE_PRI_HIGH]),
++    [VM_CHANGE_STATE_PRI_SYNC] =
++        QTAILQ_HEAD_INITIALIZER(
++            vm_change_state_head[VM_CHANGE_STATE_PRI_SYNC]),
+     [VM_CHANGE_STATE_PRI_NORMAL] =
+         QTAILQ_HEAD_INITIALIZER(
+             vm_change_state_head[VM_CHANGE_STATE_PRI_NORMAL]),
 
