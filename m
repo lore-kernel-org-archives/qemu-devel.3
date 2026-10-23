@@ -1,80 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725EF606A329
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D075606A322
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WCdw4MtV
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Gb29s83S
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKJeN-0006h2-U9; Fri, 23 Oct 2026 14:05:56 -0400
+	id 1xKJeP-0006ip-NR; Fri, 23 Oct 2026 14:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeI-0006c8-Au
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:50 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1xKJeM-0006fs-Oy
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:55 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeG-0004XY-NT
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:50 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4a218ffa23dso4215785e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:48 -0700 (PDT)
+ id 1xKJeK-0004YZ-Jt
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:54 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-48afbd2c386so677643f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792778747; x=1793383547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792778751; x=1793383551; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=5mqyaB2e54Dp88sZKUYT29UJuJv0Cg1+maROpCqpvd0=;
- b=WCdw4MtVsczbLaLCg1B+zqdytiCo+kcvbj/BX1lx4zbAxFN9/pcWph4a/zFVz4KOCr
- BG4AD+t+n0loVcu03AzV4ivd4agA9kCdGfoY+EvyR9OUlWW8lxL9WJ8mrzlSmiu7R485
- gWeEbVXS9eTo2jixQS30ZGq/0ZXugJ6RCFLleqY1QFx6k7v9dJqigsDuaxyT7CXQgddW
- vueiVnMdTk5N96+ltldl+e1nI8mi6UPIzd6hfb0qgnLFiXKFpV2cSYP32V3jqvfz/tt+
- qE0Vg+aOHT/kzY/knVZyKloRjU55nkXK6Gu84JnklEZrbYumlhpYdHkFJr1JEDM1pcV+
- 9E2g==
+ bh=tIt1MoBw6d47x/eSKHc3IPqV22aXtKNe7+mP07eYspE=;
+ b=Gb29s83S9EQEwAWzmi+jYekUN/sJ9BRTKyGXNk0Fo/csx5ZV2kQtJXYdy3vVzG+cOs
+ tXOYA0jRUF1biJ4BfBe07M4049kQfyw723pw11eQqIpKa+DAzmSC8xucd0EOMnUSF+hU
+ 4IK54RVaKcbqMSNOXRCg16hXcXeQurf9H9gzMYpCk4DKAepjiC/64R7FyRAnFjag6CNU
+ PZdCz96l0nLhziZurxnuXFghr3pIgErEZpvMUl5V5g/lT7BTh+J6bhlqj7Rco7LwmTGU
+ GSXVl4FZpiFyhtaUp9MDULS27SI4hJEeZj8wJhViSDcm49GWi8sh/DOh59Sk72LjdkGZ
+ HFHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792778747; x=1793383547;
+ d=1e100.net; s=20260707; t=1792778751; x=1793383551;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5mqyaB2e54Dp88sZKUYT29UJuJv0Cg1+maROpCqpvd0=;
- b=aoYEIP5rupgHlnszJUE/GLUTB5ORjpyvQwgy0XL77zfvHDQne5mgNrjrHXn/AjIVV+
- Npq4X38qhPZEk9Bf5kg6ZcoV0buYBdDKK8HBtuVTp9kuOzfbo8fEO/6I9FhxAvk6KYuh
- N/cTetWachh4q5YP4ThROaaYU0q6naYCXjamXpkBlzDWaS3jfRg5Tb2eVpEaB6MVbeNl
- 7710eik78Q8VOGHesDng/M3DxhpJ+dRrBqmhAWkcCqTTeerlDFJrKsfMjBUJdhvERnJ4
- bYTWVdyliiAwK4nPzPNPZo/sn94v8WUpK5SRt4TWy09/dsbv6Ae66VtZU2Ohp+VVki37
- RcaQ==
-X-Gm-Message-State: AFq9FYKDA9yu7BAv8ItWtGh7FBKzBw9V92THCE0+t0gCGz46gOSfdn2N
- QsmX28I9m7A/aHiAS9TwiQmNItbFcQTKYQTPEzWUHc/Ju3qDFpSupilS4ImkIDoe7Bw=
-X-Gm-Gg: AYBFou2PcEcIwDhxRJ7F346ToFL8pW/iAdUL0b9Gw/2tVphJHvnapKTYqhWSAFmcjl4
- cAIFHgIe5Da7d43Yke4yoPj79q+21EeEx7+ceVQC7LriiD7AdUS5MBz8seCruRKpIRJ9YaTifpp
- ITkBtxf1nF56OtEb5BadLjd8HbFAhp/EIDwcsUuN/4l6zH4LdjMxAMbc0i9wYXaKh+LGEMXKVKk
- 8brW499HP5CzfE6oNZgju1ez+wyFrTnUjvqg/NwJ4J/kMpINTeR8JXtwwqLxk6cKNjl4+qpV7Ms
- Be+8YuK0LU7sDeGe6SG0GdJ+chL9YZHGJqObeG2kSw22WycLLojGLnmZGbZP8OUu8zC1BA2douL
- aoVQkBngB0xGXe8wvHWMmsFIjEhrl9j7j7sGw6WeTmZKE28eLY8BsxJCgfMOyjucWutimT9R7LB
- aihoEEwjH2hcVCJryDk423ZrEaipR0EOf/GbRxtPecO65trAVwH0UQR98rgilvjmjbJgNw9s3TG
- KZkBBbPn+Lbj4cF8mO7kgB3mQwu2ojvPP7Wit/V28ZhxkZW65MzNWU=
-X-Received: by 2002:a05:600c:138e:b0:4a2:1a:a129 with SMTP id
- 5b1f17b1804b1-4a211eff350mr54266395e9.35.1792778747104; 
- Fri, 23 Oct 2026 11:05:47 -0700 (PDT)
+ bh=tIt1MoBw6d47x/eSKHc3IPqV22aXtKNe7+mP07eYspE=;
+ b=rbhRFo1yhIpBuInDgjmjgwr3FIinqqUTMAs1FYah4i3rTB/TJxeIKyi2jnLYDoUiPa
+ NYDTMZwye1L7xQ+iZ/DXFshksYAU+GFdq3JzZtkIomnbyoG6XNsxxJ99cDQx3bVZFbQr
+ 2zX9YPypoIisTfFnboIoiX0prPJoW1QuxAFo59c6wIqNQZsszSYEzAvMpnh0t9AdZ9kq
+ WblmWoCD2dxFd/xC77H0QKPaoRDcFo8zB/HMn7Oe0TTUwt1QFf2wyqxTLl3wG9VTSIXf
+ TtDBXNshKoT/pldAYeglaG33DsUiG8s2SrninSvOwlrbdCfbACNMxz61Z0l73XFQ+Ezv
+ XXgw==
+X-Gm-Message-State: AFq9FYLqUeJJ1TvJV6s+E8QdGBCEtQStQ+4zoItc3DNYcpxQpu8Ppoiq
+ cjm1ZjovNnxu+Fti0c2kfTdATwOSG7EzGdt5X0lGZx0p4BwrmrfmhYEmAGzJtE6RNEs=
+X-Gm-Gg: AYBFou29JWMP5C0s10Fhg4ITp7sCib0/PGSLzNbFuSh6qY+iui05J9DGBxKVAtsxmqD
+ uYHgB0/G4hfL6u2pISXpjpn98c3iQ5Nf6KTMJvkhVy2MsA+m+YMo08XiCEkOzZvOjDTG+q4vLv2
+ DHTSBI7haVI2UzYaGRomfoy4iVgnOrz85V7eEMvjigK65mUReqIs4hOOJnQb2CvpTFBOlLlwQTE
+ 09zkqAx5cYbfoW9m7s8YRq6dS51WTZXHleTF6hTtUeD3kIyEWq5WFloM+tMq9gOQf8VImDwcEeD
+ 8S4cdQbISXlY+dj3i9/KPUuoDjSDfo9dawMJL5QIgaL0fY9UaqA4QceB3mnkmy3AgkUq6L3Ltlp
+ aLjDLD428NaydcIzAkkI4ggmEQSKFhJ6yRzhuLtWMSYNjD2q0fqtYaVJzNh/jzlYs2HFadccAtu
+ vaL5+hI/YR6KdRj019T/KI3eflJdmLIIVmfRzK1GW0NJGLj85ZqKfRPG6iyB/4Vj2kYJUbAaIVZ
+ AxNkfeSmNIj2tUS+mk/m3J55XOPypyTP98gqPXJ881kkm6hNXWfeOo=
+X-Received: by 2002:adf:fe8c:0:b0:48e:3085:7cf0 with SMTP id
+ ffacd0b85a97d-48e385a7627mr3657444f8f.51.1792778751031; 
+ Fri, 23 Oct 2026 11:05:51 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d41e0fesm1140919f8f.46.2026.10.23.11.05.43
+ ffacd0b85a97d-48e3d37ca2asm1374011f8f.8.2026.10.23.11.05.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 11:05:44 -0700 (PDT)
+ Fri, 23 Oct 2026 11:05:47 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8F8FB60FCD;
- Fri, 23 Oct 2026 19:05:40 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 2B1D5611FC;
+ Fri, 23 Oct 2026 19:05:41 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 11/19] tests/guest-debug: add --symbols option to run-test
-Date: Fri, 23 Oct 2026 19:05:29 +0100
-Message-ID: <20261023180539.1574134-12-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-arm@nongnu.org (open list:Virt)
+Subject: [PULL 16/19] tests/functional: add tuxrun kvm gdb test for arm64
+Date: Fri, 23 Oct 2026 19:05:34 +0100
+Message-ID: <20261023180539.1574134-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261023180539.1574134-1-alex.bennee@linaro.org>
 References: <20261023180539.1574134-1-alex.bennee@linaro.org>
@@ -82,15 +84,15 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,41 +107,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Sometimes the debug symbols are not in the kernel binary image but in
-a separate elf blob. Provide --symbols to facilitate using them.
+As with x86_64 we now have the bits to add a KVM gdb test
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20261019192704.3220373-12-alex.bennee@linaro.org>
+Message-ID: <20261019192704.3220373-17-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index 48f9512d21b..afde0e2c008 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -28,6 +28,7 @@ def get_args():
-     parser.add_argument("--kargs", help="Kernel args to --append")
-     parser.add_argument("--binary", help="Binary to debug",
-                         required=True)
-+    parser.add_argument("--symbols", help="Symbol file for binary to debug")
-     parser.add_argument("--test", help="GDB test script")
-     parser.add_argument('test_args', nargs='*',
-                         help="Additional args for GDB test script. "
-@@ -127,6 +128,10 @@ def format_cmd(cmd):
-     gdb_cmd.extend(["-ex", "set confirm off"])
-     # connect to remote
-     gdb_cmd.extend(["-ex", f"target remote {socket_name}"])
+diff --git a/tests/functional/aarch64/test_tuxrun.py b/tests/functional/aarch64/test_tuxrun.py
+index 6de02e1d8b2..2ff321582d3 100755
+--- a/tests/functional/aarch64/test_tuxrun.py
++++ b/tests/functional/aarch64/test_tuxrun.py
+@@ -11,7 +11,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset
++from qemu_test import Asset, skipIfMissingEnv
+ from qemu_test.tuxruntest import TuxRunBaselineTest
+ 
+ class TuxRunAarch64Test(TuxRunBaselineTest):
+@@ -19,6 +19,9 @@ class TuxRunAarch64Test(TuxRunBaselineTest):
+     ASSET_ARM64_KERNEL = Asset(
+         'https://storage.tuxboot.com/kernels/6.18.54/arm64/Image.gz',
+         '39f4633bbcb444267d4d829bd28d8868a287c4c160cda64b0fd23fb090571c4e')
++    ASSET_ARM64_VMLINUX = Asset(
++        'https://storage.tuxboot.com/kernels/6.18.54/arm64/vmlinux.xz',
++        '6487eb113ef6e841aedab6cb6fa704006377d68f64dd544570aa42f462a52b85')
+     ASSET_ARM64_ROOTFS = Asset(
+         'https://storage.tuxboot.com/buildroot/20260924/arm64/rootfs.ext4.zst',
+         '4ab8cec9d1e17dbb1abdf2ae1939ad4f9d0dc2466230f6a119a7c1845cdef0b1')
+@@ -42,6 +45,18 @@ def test_arm64_kvm(self):
+                            rootfs_asset=self.ASSET_ARM64_ROOTFS,
+                            accel="kvm")
+ 
++    @skipIfMissingEnv("QEMU_TEST_GDB")
++    def test_arm64_kvm_gdb(self):
++        self.set_machine('virt')
++        self.require_accelerator('kvm')
++        self.cpu='host'
++        self.console='ttyAMA0'
++        self.wait_for_shutdown=False
++        self.common_tuxrun_gdb(kernel_asset=self.ASSET_ARM64_KERNEL,
++                               vmlinux_asset=self.ASSET_ARM64_VMLINUX,
++                               rootfs_asset=self.ASSET_ARM64_ROOTFS,
++                               accel="kvm")
 +
-+    if args.symbols:
-+        gdb_cmd.extend(["-ex", f"symbol-file {args.symbols}"])
-+
-     # finally the test script itself
-     if args.test:
-         if args.test_args:
+     ASSET_ARM64BE_KERNEL = Asset(
+         'https://storage.tuxboot.com/buildroot/20241119/arm64be/Image',
+         'fd6af4f16689d17a2c24fe0053cc212edcdf77abdcaf301800b8d38fa9f6e109')
 -- 
 2.47.3
 
