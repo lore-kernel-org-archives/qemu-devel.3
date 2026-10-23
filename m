@@ -1,69 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A04606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 06:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03595606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 07:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oJopjG3A
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=DBiBmPDW;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GhIo+jVg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK9Ev-0003WA-Ij; Fri, 23 Oct 2026 02:58:57 -0400
+	id 1xK9qm-0000CV-8E; Fri, 23 Oct 2026 03:38:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xK9Em-0003Up-V6; Fri, 23 Oct 2026 02:58:51 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xK9qi-0000C2-8x
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 03:38:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
- id 1xK9Ek-00068q-Pq; Fri, 23 Oct 2026 02:58:48 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id B922F43B2D;
- Fri, 23 Oct 2026 06:58:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD6B1F031E1;
- Fri, 23 Oct 2026 06:58:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792738724;
- bh=h3CjNfApqm1G3rihN7r2fU4pCLRo4/ubore+n9nJHlg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=oJopjG3AO3RvXjcn+zIkTsic7mt7FBpHt4ZZNwWb9fwifC24GKEv4ofA/yGOr+Mha
- m4g1zZ3cwgo4MSnhDdNTR7Lcc90/eRXMRFKzLFFoRtlq23fQSDNQCalw3xti0GEUYj
- NO9CnqqHGT+/UaHG+C5XyakGRkFcFQfBtYNseOkzAqVxrBRKdyjAJ8fyp8CZG0tZ1v
- 71W6JTwo/FDuLrAXRGHMCIHg/nrDwrHzbRvkt7+hkA3mIyv2LvFygvc60Iv5GbifYm
- JPnOF2Vs2Do/xj0E5ykOKMqXaJkIlUCLeOjqADPPr6ICkATRwA8+XEqRMaAskdmo/j
- hnQADc8zvGV7w==
-Date: Fri, 23 Oct 2026 08:58:38 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>, berrange@redhat.com,
- kchamart@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- peter.maydell@linaro.org, mst@redhat.com, cohuck@redhat.com,
- pbonzini@redhat.com, eblake@redhat.com, armbru@redhat.com,
- lorenzo.pieralisi@linaro.org, enju.kohei@fujitsu.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC v4 11/24] target/arm/kvm-rme: Populate Realm with runtime
- images
-Message-ID: <atsFnklBAg73Smes@red-moon>
-References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
- <20260903193611.1058589-12-mathieu.poirier@linaro.org>
- <3257a387-490f-44bb-bd44-dbe06036fd52@redhat.com>
- <atiKJ8-PyIHSRTKy@red-moon>
- <27fe3ba8-c8c8-4d5c-9d57-3cfb67142ac1@redhat.com>
- <atoe77pJ119cDcSF@red-moon>
- <ff029f82-07e2-469b-a758-6d27212a9227@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xK9qc-0001O4-UX
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 03:37:58 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69N7FAG52112171
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:37:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ pwN0Hc9/C8B9Yoj9xDOwDWIc4uU6BlHm6lY7SQJwgds=; b=DBiBmPDWFEZXM29h
+ 83l6i3PiN+7LYe5boiM4onwAFteEwe646UpiZmioHbiy6L/XtuQDWGpF3jgbXwDt
+ 9Dkm3ueSutz2I5X2E74FdTT0+JNu0gBe8IcmvFFQFdheIF5EX0LnYZz+o4Mqqk+H
+ IDPnBOZX8Qlqcy3qwZ5L+b/M0nWgfkOEnAHeRYwFvT7M5UKbNPDLbPhqRPCBq6n+
+ bp0xH+SRABprhpvkQagJfz58NSzHqJWRVPdPRDm3fjs+prAGjZTtqMXJ8PepX7pz
+ 3OfhUeh/c7F7S7OW/iHWIyVGzInGCRcDqoKnFSWvu8UK0GFVvv6Z0qmVML1EiQdu
+ SpIrIA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfsyk9xyn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:37:47 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93f26dd2165so205213685a.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 00:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792741066; x=1793345866; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=pwN0Hc9/C8B9Yoj9xDOwDWIc4uU6BlHm6lY7SQJwgds=;
+ b=GhIo+jVgg1o20c7zljRmRYH1HAnef7+780D1qTIOT44ZzyMXYW9sApcy8dcFNGZhg9
+ M59MIqbItpEGf5NL2w4pBRe75VXne9MkrSuVhx7BS3mUA0AlYA9OMirWuw5hKWd90hIY
+ xlPQCfA4o+1VXE7ZJ2aAZdi9nE6QfgqAqdR+9qDzhCJ3CpVrfw9Y1OsQC5kI7lzy3PXv
+ iFzDaNpgN0aV1CH6XJJy0+IMlsw4MaUJa5o/lkeW91AWNUg02EQ0DtfvjdScExd96H7t
+ CZrpOq9DEs3WZlwQsYXxKTHAB7EBDM+Yq7zUMHdSgq6qkwSYY8M0B/eshWGwTGCZJa6U
+ hdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792741066; x=1793345866;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=pwN0Hc9/C8B9Yoj9xDOwDWIc4uU6BlHm6lY7SQJwgds=;
+ b=0y8AwEVfyTz1wY5UHi0Qmr0GbYhBXo2a0mYJKH6L+dj1QfgkbqdoLRHaeZtextlam/
+ rFgYfT4DpVHF2FbMI1V16b4m002/9mCDvxPmhRddtlN8KjLPrC620DxjCBWb/oqhNQ9g
+ CgECRmhpWrXdlRKUsiTEltu9InZvFeu7BoR5BKoa8X/ViyS7MJBaft/WZKoIt0hA70Xo
+ g5r47X+0VDx/LkqnqoqnSgLhvQrYKOAxKCh+JtFwuxmk5zbE1/IRicjlzl9KHtUs9X5a
+ pe/mBqEUPCyZ6pwTkNwi/roOnmVI3OCmr33HDSQ+UcWniMSEX6lwJ18+KBkcN3zcQkbO
+ Cw1w==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzzs1qGWyMjzOoHnJRXaj7sp7mYylSkChlAM06oXRJOtUKJTtAxr2i3HbjT55R2ekTkLiNuhy1cRBSy@nongnu.org
+X-Gm-Message-State: AFq9FYLurbjN5iAPhvEJ+TaiPPBy8HVNTCN0WlXyj0R5jljZ1vdQZVID
+ ZjHpYujFOTOEg7dP2CT4aOJOOo+ui+Nc+G36h9QaH/L3VSPt4y/zK3WMf3CKM6mgLPNq2UdX9Ri
+ Uw5H7vGSljmxFaujkSa3XU+vu2bLx18HMsY2tx+NYtZ4BStYKIlcp3I+8TA==
+X-Gm-Gg: AYBFou02jrkMZVFWQ+VSmLzr8zkGyebj8e1+FMuWtRYlh3KYZEFGXVqubPO76I4LQgB
+ tfyMd4MZOvVOVO8H+jbRpfs5SIV2B3cC1ISvoQ7Llwn8M5H9IEBieLPcifB4d6lLVUGP/Kxpcei
+ gEY9YGZ6XY8Bu30Y/44kCqt0nF+NWMk6YYpdJ499Ky1XMJzZ9lMKfpKTpAawGYPhuU4eZWkgMCD
+ eEJrIFuCvNHk9aoRoyBS+N7Qty7YCzNqKyr0axvR1a4LmDIHgfMmtVwCY4UtJNwOyvccFYbPIF5
+ g/9rz0sGp/2jgr15wLqvn3qh16eJKUFODWPh1nxaU56AzTxnGMN/GMmarNr6jQYWcrpBktgypcy
+ bStpVeeMyGsyAmbCJCKAphBIIrkCJrcv24w==
+X-Received: by 2002:a05:620a:7108:b0:93c:a468:2db1 with SMTP id
+ af79cd13be357-93f6f9b7f76mr285723085a.58.1792741066582; 
+ Fri, 23 Oct 2026 00:37:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:7108:b0:93c:a468:2db1 with SMTP id
+ af79cd13be357-93f6f9b7f76mr285720685a.58.1792741066079; 
+ Fri, 23 Oct 2026 00:37:46 -0700 (PDT)
+Received: from [192.168.69.209] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a21034b3d0sm70782915e9.3.2026.10.23.00.37.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Oct 2026 00:37:45 -0700 (PDT)
+Message-ID: <3d9baf66-d412-439a-b9db-099124af6625@oss.qualcomm.com>
+Date: Fri, 23 Oct 2026 09:37:44 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ff029f82-07e2-469b-a758-6d27212a9227@redhat.com>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=lpieralisi@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Fix CPU state access on big-endian hosts
+Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+References: <20261022130657.6449-1-anjo@rev.ng>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261022130657.6449-1-anjo@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDAzMCBTYWx0ZWRfX1F4Gph4I30Q/
+ j2W4iQpCImjJf+0z1fy/Tt07Wbw6nvUVwlG3sKTr+3AmzAH0CTP3K76S+rDbl/MutqJcjiKUuIm
+ dTiwlLUCjbXCSJxC1i0jZxdiS2R2N894h6mxrZVAPkWWPx/eq27afthzJ3dELWcI5eKRg4y+izB
+ IQHO/uADS+BzOveVpU6ZpmYtzT+vOYeGylIghyb39xNIpcwGXTMdULY5kXRPzgErXsqWgy0JZTb
+ wVpYw4zjWvBAb3pvUvbif/FcFPKrw3XN0WT2J3rzh7rSkQK+X1XoJ05aNd8TNWbf6YY3F+2sNX6
+ S+7um7dnMkpgFdj1SXSXGprtjYfqeoBwIA/UykR7AoW5ZAkkCoAjEfOBClIQKLpaQTUyIUKlt1s
+ ORsz2uEmA8nfLx7gln7NnoFM3fj350gtXBF/n2Kh8Wa1kjtyEWfnGt7+o5AjSAFOY5iUeY9qNNP
+ m9tJwv4n/Xn/6XvZp0g==
+X-Proofpoint-ORIG-GUID: NerhW8shdPK1QK6hWYDK0sIo7QS-356u
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDAzMCBTYWx0ZWRfX9NlcNsk/3Bel
+ HEaGbiASMOr98hI5rMH0+onJ50r53uzccNTSQxYZPgXuK5+EaY9GW/fXDi8Vpa2jBepIHISl139
+ 5k34ueeS4qA1AOWbtd2lrs7BnBMPvXc=
+X-Proofpoint-GUID: NerhW8shdPK1QK6hWYDK0sIo7QS-356u
+X-Authority-Analysis: v=2.4 cv=GLKdgeNK c=1 sm=1 tr=0 ts=6adb0ecb cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=8D0aWHW-DKab9n6p2hgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-23_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230030
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,202 +153,222 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 23, 2026 at 09:30:36AM +1000, Gavin Shan wrote:
-> On 10/23/26 12:34 AM, Lorenzo Pieralisi wrote:
-> > On Wed, Oct 21, 2026 at 10:24:56PM +1000, Gavin Shan wrote:
-> > > On 10/21/26 7:47 PM, Lorenzo Pieralisi wrote:
-> > > > On Fri, Oct 02, 2026 at 01:45:40PM +1000, Gavin Shan wrote:
-> > > > > On 9/4/26 5:35 AM, Mathieu Poirier wrote:
-> > > > > > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > > > 
-> > > > > > Once the Realm descriptor has been created, tell KVM to transfer runtime
-> > > > > > images (kernel, DT, and rootfs) from guest memory to Realm memory.
-> > > > > > 
-> > > > > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > > > > > Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
-> > > > > > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-> > > > > > ---
-> > > > > >     target/arm/kvm-rme.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
-> > > > > >     1 file changed, 76 insertions(+)
-> > > > > > 
-> > > > > > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> > > > > > index 9985f5daba89..c082a5d8f3d1 100644
-> > > > > > --- a/target/arm/kvm-rme.c
-> > > > > > +++ b/target/arm/kvm-rme.c
-> > > > > > @@ -15,6 +15,7 @@
-> > > > > >     #include "migration/blocker.h"
-> > > > > >     #include "qapi/error.h"
-> > > > > >     #include "qemu/error-report.h"
-> > > > > > +#include "qemu/memalign.h"
-> > > > > >     #include "qom/object_interfaces.h"
-> > > > > >     #include "system/confidential-guest-support.h"
-> > > > > >     #include "system/kvm.h"
-> > > > > > @@ -43,12 +44,87 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
-> > > > > >     static RmeGuest *rme_guest;
-> > > > > > +static int rme_populate_range(const RmeRamRegion *region, bool measure,
-> > > > > > +                              Error **errp)
-> > > > > > +{
-> > > > > > +    int ret;
-> > > > > > +    void *buffer;
-> > > > > > +    hwaddr size = region->size;
-> > > > > > +    hwaddr base = region->base;
-> > > > > > +    hwaddr start = QEMU_ALIGN_DOWN(base, RME_PAGE_SIZE);
-> > > > > > +    hwaddr end = QEMU_ALIGN_UP(base + size, RME_PAGE_SIZE);
-> > > > > > +    struct kvm_arm_rmi_populate populate_args;
-> > > > > > +    size_t aligned_size = ROUND_UP(region->size, qemu_real_host_page_size());
-> > > > > 
-> > > > > s/qemu_real_host_page_size()/RME_PAGE_SIZE
-> > > > 
-> > > > It will always have to be qemu_real_host_page_size(), KVM configures it
-> > > > that way.
-> > > > 
-> > > > > > +
-> > > > > > +    if (!region->data) {
-> > > > > > +        return -ENODEV;
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    ret = kvm_set_memory_attributes_private(start, end - start);
-> > > > > > +    if (ret) {
-> > > > > > +        error_report("RME: failed to configure initial"
-> > > > > > +                     "private guest memory");
-> > > > > > +        return ret;
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    /* Allocate page-aligned memory */
-> > > > > > +    buffer = qemu_memalign(qemu_real_host_page_size(), aligned_size);
-> > > > > > +
-> > > > > > +    if (!buffer) {
-> > > > > > +        return -ENOMEM;
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    memset(buffer, 0, aligned_size);
-> > > > > > +    memcpy(buffer, region->data, region->size);
-> > > > > > +
-> > > > > > +    populate_args = (struct kvm_arm_rmi_populate) {
-> > > > > > +        .base = start,
-> > > > > > +        .size = end - start,
-> > > > > > +        .source_uaddr = (uintptr_t)buffer,
-> > > > > > +        .flags = measure ? KVM_ARM_RMI_POPULATE_FLAGS_MEASURE : 0,
-> > > > > > +    };
-> > > > > > +
-> > > > > > +    while (populate_args.size > 0) {
-> > > > > > +        ret = kvm_vm_ioctl(kvm_state, KVM_ARM_RMI_POPULATE, &populate_args, 0);
-> > > > > > +        if (ret) {
-> > > > > > +            error_setg_errno(errp, -ret,
-> > > > > > +                "failed to populate realm [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
-> > > > > > +                start, end);
-> > > > > > +            break;
-> > > > > > +        }
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    qemu_vfree(buffer);
-> > > > > > +
-> > > > > > +    return ret;
-> > > > > > +}
-> > > > > > +
-> > > > > 
-> > > > > I doubt that the unaligned regions (RmeRamRegion) are allowed. For example,
-> > > > > the region [4KB 64KB+4KB] is turned to the aligned range [0 128KB] when RME_PAGE_SIZE
-> > > > > is 64KB. The question is how do we know the added regions due to the alignment
-> > > > > ([0 4KB] and [64KB+4KB 128KB]) are safe for kvm_vm_ioctl(KVM_ARM_RMI_POPULATE).
-> > > > 
-> > > > Getting back to this because it is important. Can you define "safe" here ?
-> > > > 
-> > > > I think it is VMM's role to load with the required alignment and make
-> > > > sure it does not double populate (that is anyway prevented by KVM), what was
-> > > > your concern here to make sure we are in agreement ?
-> > > > 
-> > > 
-> > > For example, there are two regions are populated: [0 4KB] and [4KB 64KB] on a 64KB
-> > > host. With the alignment considered, we're populating [0 64KB] for region [0 4KB],
-> > > and [0 64KB] for [4KB 64KB]. [0 64KB] are populated for twice. Is this allowed by
-> > > TF-RMM? If it's allowed by TF-RMM, the data populated in the first time is overwritten
-> > > by the second population.
-> > 
-> > It is not allowed by the RMM and it is a VMM bug that we have to prevent.
-> > 
+On 22/10/26 15:06, Anton Johansson via qemu development wrote:
+> mstatus and mstatus_hs are uint64_t but accessed through
 > 
-> Ok, thanks for your confirm. It's why I asked if we ever see an unaligned
-> Rom region. If all Rom regions are aligned to host page size, then we needn't
-> to handle the unaligned Rom regions in rme_populate_range(). Otherwise, we
-> need come up with a solution to address the issue.
+>    tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
 > 
-> The solution would be to generate a temporary region list based on the existing
-> Rom region list. For each region in the temporary list, its start/size are well
-> aligned to host page size, and the temporary buffer is allocated, and the data
-> is properly copied over from the original Rom region. The population is done
-> based on the temporary list. For example, we need to have [0 64kb], [128kb 192kb]
-> regions in the temporary list if we have Rom region [0 1kb], [4kb 5kb] [16kb 17kb],
-> [132kb 133kb], [136kb 140kb]. The host page size is assumed to be 64kb in the example.
-> 
->    [0 64kb] covers [0 1kb], [4kb 5kb] [16kb 17kb]
->    [128kb 192kb] covers [132kb 133kb], [136kb 140kb]
+> which on a big-endian host running riscv32 incorrectly accesses the
+> top 32 bits rather than the lower bits.
 
-That's exactly what needs to be done.
+   mstatus and mstatus_hs are uint64_t, but mark_fs_dirty() and
+   mark_vs_dirty() update them with tcg_gen_[ld|st]_tl().
+   On big-endian hosts with 32-bit target_ulong, this modifies
+   the upper half instead of the lower one, so the FS/VS dirty
+   bits are never set. Use 64-bit accesses instead.
 
-Thanks,
-Lorenzo
+Cc: qemu-stable@nongnu.org
+Fixes: 284d697c74e ("target/riscv: Merge m/vsstatus and m/vsstatush into 
+one uint64_t unit")
+Fixes: 8e1ee1fb571 ("target/riscv: rvv-1.0: add translation-time vector 
+context status")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-> Thanks,
-> Gavin
+> Widen the operations to 64 bit so the lower bits are modified.
 > 
-> > Thanks,
-> > Lorenzo
-> > 
-> > > Thanks,
-> > > Gavin
-> > > 
-> > > > Thanks,
-> > > > Lorenzo
-> > > > 
-> > > > > I guess we probably just reject unaligned regions if they're not expected.
-> > > > > 
-> > > > > Even if the unaligned regions are allowed, they seem not well handled.
-> > > > > 
-> > > > > - @aligned_size is still 64KB instead of the 128KB ?
-> > > > > - In "memcpy(buffer, region->data, region->size);", the blob data would be copied to
-> > > > >     [4KB, 4KB+64KB]. However, we're copying the data to [0 64KB] now.
-> > > > > 
-> > > > > > +static void rme_populate_ram_region(gpointer data, gpointer err)
-> > > > > > +{
-> > > > > > +    Error **errp = err;
-> > > > > > +    const RmeRamRegion *region = data;
-> > > > > > +
-> > > > > > +    if (*errp) {
-> > > > > > +        return;
-> > > > > > +    }
-> > > > > > +
-> > > > > > +    rme_populate_range(region, /* measure */ true, errp);
-> > > > > > +}
-> > > > > > +
-> > > > > >     static void rme_vm_state_change(void *opaque, bool running, RunState state)
-> > > > > >     {
-> > > > > > +    Error *errp = NULL;
-> > > > > > +
-> > > > > >         if (!running) {
-> > > > > >             return;
-> > > > > >         }
-> > > > > > +    g_slist_foreach(rme_guest->ram_regions, rme_populate_ram_region, &errp);
-> > > > > > +    g_slist_free_full(g_steal_pointer(&rme_guest->ram_regions), g_free);
-> > > > > > +    if (errp) {
-> > > > > > +        return;
-> > > > > > +    }
-> > > > > > +
-> > > > > >         kvm_mark_guest_state_protected();
-> > > > > >     }
-> > > > > 
-> > > > > Thanks,
-> > > > > Gavin
-> > > > > 
-> > > > 
-> > > 
-> > 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/riscv/tcg/translate.c | 32 ++++++++++++++++----------------
+>   1 file changed, 16 insertions(+), 16 deletions(-)
 > 
+> diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+> index ede9c2563f..79b0f444ef 100644
+> --- a/target/riscv/tcg/translate.c
+> +++ b/target/riscv/tcg/translate.c
+> @@ -693,7 +693,7 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
+>    */
+>   static void mark_fs_dirty(DisasContext *ctx)
+>   {
+> -    TCGv tmp;
+> +    TCGv_i64 tmp;
+>   
+>       if (!has_ext(ctx, RVF)) {
+>           return;
+> @@ -703,15 +703,15 @@ static void mark_fs_dirty(DisasContext *ctx)
+>           /* Remember the state change for the rest of the TB. */
+>           ctx->mstatus_fs = EXT_STATUS_DIRTY;
+>   
+> -        tmp = tcg_temp_new();
+> -        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> -        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+> -        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tmp = tcg_temp_new_i64();
+> +        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+> +        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
+> +        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+>   
+>           if (ctx->virt_enabled) {
+> -            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+> -            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+> -            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+> +            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+> +            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
+> +            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+>           }
+>       }
+>   }
+
+Wondering about being safe (or catching other bad uses)
+
+#define TCG_ENV_OFS_(f)     offsetof(CPUArchState, f)
+#define TCG_ENV_SIZE_(f)    sizeof_field(CPUArchState, f)
+
+#define tcg_gen_ld_env_tl(ret, f)                               \
+     do {                                                        \
+         QEMU_BUILD_BUG_ON(TCG_ENV_SIZE_(f) !=                   \
+                           sizeof(target_ulong));                \
+         tcg_gen_ld_tl(ret, tcg_env, TCG_ENV_OFS_(f));           \
+     } while (0)
+
+#define tcg_gen_ld_env_i64(ret, f)                              \
+     do {                                                        \
+         QEMU_BUILD_BUG_ON(TCG_ENV_SIZE_(f) != 8);               \
+         tcg_gen_ld_i64(ret, tcg_env, TCG_ENV_OFS_(f));          \
+     } while (0)
+
+or even using _Generic:
+
+#define TCG_ENV_FIELD_(f)   (((CPUArchState *)0)->f)
+#define TCG_ENV_OFS_(f)     offsetof(CPUArchState, f)
+
+#define tcg_gen_st_env_i32(arg, f)                              \
+     _Generic(TCG_ENV_FIELD_(f),                                 \
+              bool:     tcg_gen_st8_i32,                         \
+              uint8_t:  tcg_gen_st8_i32,                         \
+              int8_t:   tcg_gen_st8_i32,                         \
+              uint16_t: tcg_gen_st16_i32,                        \
+              int16_t:  tcg_gen_st16_i32,                        \
+              uint32_t: tcg_gen_st_i32,                          \
+              int32_t:  tcg_gen_st_i32)                          \
+         (arg, tcg_env, TCG_ENV_OFS_(f))
+
+#define tcg_gen_st_env_i64(arg, f)                              \
+     _Generic(TCG_ENV_FIELD_(f),                                 \
+              uint64_t: tcg_gen_st_i64,                          \
+              int64_t:  tcg_gen_st_i64)                          \
+         (arg, tcg_env, TCG_ENV_OFS_(f))
+
+#if TARGET_LONG_BITS == 32
+# define tcg_gen_ld_env_tl  tcg_gen_ld_env_i32
+# define tcg_gen_st_env_tl  tcg_gen_st_env_i32
+#else
+# define tcg_gen_ld_env_tl  tcg_gen_ld_env_i64
+# define tcg_gen_st_env_tl  tcg_gen_st_env_i64
+#endif
+
+Then replacing (a cheap replacement that can be done with coccinelle
+spatch):
+
+@@ -704,14 +757,14 @@ static void mark_fs_dirty(DisasContext *ctx)
+          ctx->mstatus_fs = EXT_STATUS_DIRTY;
+
+          tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ld_env_tl(tmp, mstatus);
+          tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_st_env_tl(tmp, mstatus);
+
+          if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, 
+mstatus_hs));
++            tcg_gen_ld_env_tl(tmp, mstatus_hs);
+              tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, 
+mstatus_hs));
++            tcg_gen_st_env_tl(tmp, mstatus_hs);
+          }
+      }
+
+triggers:
+
+FAILED: [code=1] libqemu-riscv32-softmmu.a.p/target_riscv_tcg_translate.c.o
+../target/riscv/tcg/translate.c:760:9: error: controlling expression 
+type 'uint64_t' (aka 'unsigned long long') not compatible with any 
+generic association type
+   760 |         tcg_gen_ld_env_tl(tmp, mstatus);
+       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:86:29: note: expanded from macro 
+'tcg_gen_ld_env_tl'
+    86 | # define tcg_gen_ld_env_tl  tcg_gen_ld_env_i32
+       |                             ^
+../target/riscv/tcg/translate.c:45:14: note: expanded from macro 
+'tcg_gen_ld_env_i32'
+    45 |     _Generic(TCG_ENV_FIELD_(f),                                 \
+       |              ^~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:41:29: note: expanded from macro 
+'TCG_ENV_FIELD_'
+    41 | #define TCG_ENV_FIELD_(f)   (((CPURISCVState *)0)->f)
+       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:762:9: error: controlling expression 
+type 'uint64_t' (aka 'unsigned long long') not compatible with any 
+generic association type
+   762 |         tcg_gen_st_env_tl(tmp, mstatus);
+       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:87:29: note: expanded from macro 
+'tcg_gen_st_env_tl'
+    87 | # define tcg_gen_st_env_tl  tcg_gen_st_env_i32
+       |                             ^
+../target/riscv/tcg/translate.c:69:14: note: expanded from macro 
+'tcg_gen_st_env_i32'
+    69 |     _Generic(TCG_ENV_FIELD_(f),                                 \
+       |              ^~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:41:29: note: expanded from macro 
+'TCG_ENV_FIELD_'
+    41 | #define TCG_ENV_FIELD_(f)   (((CPURISCVState *)0)->f)
+       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:765:13: error: controlling expression 
+type 'uint64_t' (aka 'unsigned long long') not compatible with any 
+generic association type
+   765 |             tcg_gen_ld_env_tl(tmp, mstatus_hs);
+       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:86:29: note: expanded from macro 
+'tcg_gen_ld_env_tl'
+    86 | # define tcg_gen_ld_env_tl  tcg_gen_ld_env_i32
+       |                             ^
+../target/riscv/tcg/translate.c:45:14: note: expanded from macro 
+'tcg_gen_ld_env_i32'
+    45 |     _Generic(TCG_ENV_FIELD_(f),                                 \
+       |              ^~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:41:29: note: expanded from macro 
+'TCG_ENV_FIELD_'
+    41 | #define TCG_ENV_FIELD_(f)   (((CPURISCVState *)0)->f)
+       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:767:13: error: controlling expression 
+type 'uint64_t' (aka 'unsigned long long') not compatible with any 
+generic association type
+   767 |             tcg_gen_st_env_tl(tmp, mstatus_hs);
+       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:87:29: note: expanded from macro 
+'tcg_gen_st_env_tl'
+    87 | # define tcg_gen_st_env_tl  tcg_gen_st_env_i32
+       |                             ^
+../target/riscv/tcg/translate.c:69:14: note: expanded from macro 
+'tcg_gen_st_env_i32'
+    69 |     _Generic(TCG_ENV_FIELD_(f),                                 \
+       |              ^~~~~~~~~~~~~~~~~
+../target/riscv/tcg/translate.c:41:29: note: expanded from macro 
+'TCG_ENV_FIELD_'
+    41 | #define TCG_ENV_FIELD_(f)   (((CPURISCVState *)0)->f)
+       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~
+4 errors generated.
+
 
