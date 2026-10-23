@@ -1,131 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C62F606A31E
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 12:53:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A3D606A325
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 12:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ft9lvkOI;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=TzwQsXPC
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=li3dMQB1;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=JBnIyEQ3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKElX-0006V3-Mn; Fri, 23 Oct 2026 08:52:59 -0400
+	id 1xKEoF-0007CU-DC; Fri, 23 Oct 2026 08:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xKElV-0006UJ-Vf
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:52:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKEnk-0007Ak-6j
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:55:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1xKElT-0006yI-Rk
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:52:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792759973;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UHJn/bQ7i1nFOGUE33+SuHHLPR5+3MgUazX6axy9mcw=;
- b=Ft9lvkOIgaftEUbDIhSNF12qvqdKx9Ogo+yDqphCMJgYeUykvooCAsuPcCtzUca0EVZqL2
- WDsumkxANZDx1sxKQGOkRl39rUClhrxw3TZ8FT2evDkfU95ajSpvwl+0S4XbP7JqQPqXbs
- PVFku0ysfIiBhFou4mPkY2pAHu0D8AU=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-GXyABD3hPd6nV8oYPbUhUA-1; Fri, 23 Oct 2026 08:52:44 -0400
-X-MC-Unique: GXyABD3hPd6nV8oYPbUhUA-1
-X-Mimecast-MFC-AGG-ID: GXyABD3hPd6nV8oYPbUhUA_1792759963
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3ad704d4760so884068a91.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 05:52:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792759963; cv=none;
- d=google.com; s=arc-20260327;
- b=Jdm8WVPkyePU90cE/8CTlypXrjBPadHufG1emerYOhc0aN043hHJhUBgeJ3RarOUss
- BH/BmsN5liLZouT9SHqrrWu4NanM3Zm97XZEzS4f0OcCOusN2kRzIGrebYAFlGT4kHuG
- psSl0t2toeDpETMd8K98P1PzhpQp2AabzwnY/DWiwS0c5ZJBcK5t/UiZ0JBqvLuKIUlc
- bNzrK9YgCA6dAQpoN3bGXIwIxult56izbf9KpK9DBaNy3T4SfiaC0CyAMUCF/2OA0oND
- Txt4H4x5eq4Afyc84756XWqBSKJUbCwkvwRelS7I7hy2Ekn2VqRO8n8OVZgV85Vp53B3
- NN0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UHJn/bQ7i1nFOGUE33+SuHHLPR5+3MgUazX6axy9mcw=;
- fh=x4K5gk7xv7OXRecWWGnitIYUYxAMoMoRt5GQc/oAfM8=;
- b=XgF0+JuYlJuuNV3G4V8flbmZsa2ffhQqAz/NbkuCtv+j3MSTqi68nNvjbn4MZ6PErB
- 7PikJjZr4bDI3H0XzLlwbFX0loXkeIQr10BpaS9+217ttoKJnwBwaki/46V+4FZcJ9xX
- ndNHpVwH+NgYK5fCMfp8yLA1alF/Lg41VXOpJbfZhtrTB/ZSd30c41WqIiQV0Am21lVI
- Xth7en12fsP4sWSclrkQH+934vdMpgxWGka3VyOb73Q8e4/F9v4o0hee25pXjJbo4zTI
- IP8S/fHUghahhBiOyowB8V8OMsiC1hKPROtq4sFVaZ+Uie2t4/30nOzkprCK/aOBg+3I
- gKvQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKEnh-0007DQ-J2
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:55:15 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69NAAUCe2164239
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 12:55:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fYI4XFEx/MuM2tXwunUON5o5uCYWNUtYa5MUy7BSdQY=; b=li3dMQB1TiQFsrQK
+ NkRFRyvlTpOPPgiAoeEpb1qb8Je+lB9A9f+8MX5gCdHsv5nTimRvPorQKyXLM4tq
+ B2+wVeX2W/q5FJqm7LFVa5Yq7bH/s9XZhpAvdc/eABlSgU4hgIrmjgy8btu377+C
+ ZIgUcA266TJL026aWVpjDtXZjDmFqfuIzhhiCkgyJLriQeQYnkGV1QYI7H22GPiv
+ PUCNm2+p2vZWdPPd00oZA/yujvjn5FlVblYfztZaik/sReK8eltUo9Y459YjfWee
+ i4Adx2E5D0/z978vwh0DINNQfIzT239rk5o6t1xztVGWgHShB6UzoSbhrJKYt1EL
+ kCsWPg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfpahv5vm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 12:55:11 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93e92aad34aso171671685a.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 05:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792759963; x=1793364763; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UHJn/bQ7i1nFOGUE33+SuHHLPR5+3MgUazX6axy9mcw=;
- b=TzwQsXPC8FpBkqLMcoDc6q3vZQq+gkpSXyStwkzzipSKMqCRtualyHxpRQQG//gaJc
- cpZ1e/om9BYltuG6TTXIQqcjn4hw7bVc86rqYj5yUaK3FTW7odXEsgC8ZBCAR1HkQHMs
- 0TP65NyJzhsNHkth5OJwGhbopdg14FV/PAYBcFaV+KLrCwXwKo5x33chcPdRj7H6MQQu
- htJEZ3L8FMdwv0kaEZMHprW7aanQ3XPy+SiIfrMc9O1Yj/fr5VrEwfYnsLNgPQAoZhE3
- 8mcwMXvoo9lPuixBAgCW+K4Q/QPaytpPP+4O14DyCAOeBhOWYCuC76NK2KWBu8qoUli6
- bVAg==
+ d=oss.qualcomm.com; s=google; t=1792760111; x=1793364911; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fYI4XFEx/MuM2tXwunUON5o5uCYWNUtYa5MUy7BSdQY=;
+ b=JBnIyEQ3j14zQ/K4JTZNukayRROgyNzENtoJxuLb2RAseakYL9eaDEZA28oMqYHDpc
+ rw6ze3tt+MQZxVTl+HspHZbWw7akhrWyfCr5azsLpqAqLS1QOmkJ8e9QMDb7V2+wvXuW
+ c7agQtXzZvGypeJNmr7lnVyzwqIbI4nD72lKkPxUGIrFROcymJdiqMKoVJJxfgRCzS+b
+ WvZO0agG3rVhaMtFhzzlY04RGLamA/4WKcs37fl63TM1zV1ti5H/ROwhbjO94AC/sPJj
+ jBP+tw4BllIdhVEGl/Xh96BnbN3jQMf4Ag/O2X2IMrEbBNnc3I8D6g3xQ1a+JP9MjlDh
+ reNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792759963; x=1793364763;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UHJn/bQ7i1nFOGUE33+SuHHLPR5+3MgUazX6axy9mcw=;
- b=Nk5j2xBXV/FVnXx3iYrBoFLP9aTJxFNppeeX2YDwSXcL73NQ9NAeQXf9+qoRb5rEGV
- aYtrgAuLdwYZvRYp1y4ScZPFX/+rxol9TO0zYuG8FxiE0z6c6JNk85Z0njbJpOmOy4WF
- 7HxsNSEGTkt8+IjE16xId2r504eNQ2mdX37vB4MGf814TriP4Lyxo8Xq+KGaK6H6GlV0
- j25DMVwf2Prn6WgT5rgRAmgPlcb5SSU9rDpxRQA0+HpJUHiVfhrYVaIt3qA8Rb/eM/eS
- meNMSJV6csYRLZKxkUStixeRawPZbsI8YllgHYnJg0m7oKyijWVOUUf1j2uzRBE9klus
- 7f5A==
-X-Gm-Message-State: AFq9FYKlRhjrRKGK3zyVzWrApzUgBLvaIutvGQcOdiTU+1A7HIhGObkT
- GapSy0izJQxsc1XVHdkO2nke/w3ZgWRUbZ2mYQ3Q3ozmtXRiZFn1pFXpX4KdRsj3Hh+r6mqeMfY
- H72jgFJQ2R7Bx+12krQla+jT3K3X2UR2nYithQI53u3h0hkD9iNOUpR96IqHSI+Jlcw3VyO5ohk
- 34+9eVoiK7VecCcWWqgBgKwITu2WSpCSA=
-X-Gm-Gg: AYBFou3bAUOZbQoLjcbA4SCoaU9k/57k3wS86STLPb4IGAzjIZCYEyxxwwPtKQjrf6Q
- otcy2rrtAg/k1SnlxG/6T8owD49fXXT42IuocNG75RdMB7okupTqjzmZ1yqupvf8ByeCpgMrOfs
- Gncn8sZWJQ+aBGW1xUQ2dgKHW7DUJzsPUry5eKo/hwMc8dUAv2HUNwe0Le8ydx7JzAFpzL8pWJL
- 0JKdnvRvkzpZlLEGQSn/xE0QwAu06KxHhekxAkj37Fpx2Gno2PTXNJX+N/FIG4OAWtWFOLdodrp
- 3w==
-X-Received: by 2002:a17:90b:4c8b:b0:3ad:a232:4044 with SMTP id
- 98e67ed59e1d1-3adce77b63bmr1671107a91.38.1792759962845; 
- Fri, 23 Oct 2026 05:52:42 -0700 (PDT)
-X-Received: by 2002:a17:90b:4c8b:b0:3ad:a232:4044 with SMTP id
- 98e67ed59e1d1-3adce77b63bmr1671084a91.38.1792759962024; Fri, 23 Oct 2026
- 05:52:42 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792760111; x=1793364911;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fYI4XFEx/MuM2tXwunUON5o5uCYWNUtYa5MUy7BSdQY=;
+ b=LtHr6CRQZnktRog5YARD99n0MORBJKhFU/CKbpBFmd427uHPFc+7f0g9z8ItJLeSrf
+ GBB80kh+Nhwgp1OxFflUpop13Ql1zgtF4LycUR4ywJBwZBsQua0B2FLdB0v1C6zn3V3G
+ AWN4p8incprx/Vnf2q9Lb9ylg27IDk2ceT2pCxp9X5/NTn5YWyIXc5a11CiBT+KsUJxI
+ qmXNQ7vEwfvjpTUW73+N/nemEpvLVcxIOOZAyeAlVHeJCgv7+BMOaNWzVlMq4LK7KS1p
+ qI3J0pUgzogMExiI+0FLrX+cnrBwBE7VBUKrGDxiG/RJhcjZj+Y9qUI6UWUfOBqZmeEE
+ uwFQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzxV9K5Rnw7aubCEmsStrUfFcNybFuECNWDKKDCZGuY/qDYARdoGWR+0rx793BbqVORBEK4M153pHus@nongnu.org
+X-Gm-Message-State: AFq9FYIH7AqK7sDGrnh0mF3bKcUeJY5smNp9lpBIbL9rb1/kR+/xrIOo
+ joZ66JgwzprRIPSkeoSUkwM/7n1nNnv7M/KX2PRn6+OLDCuSomglaK0Na6OZVV1RbBaAEeFoeeI
+ QVTg00noct9dpEiiRjY+a4vXPJvUEfWKh0/V1uGDJvdFW8FUYyNx8mdZKQg==
+X-Gm-Gg: AYBFou2kGL8yesE2quGupfBIPBve0j0fjbg1nJum6R6CrxP+6kzaEpIXZu43/sI5w1Z
+ 721t2eYHesniLHMRLlUERwUUAKXUfKfrCpD32RMJAPyOudmcVGkiyAvrlsEPQiqYHWlFxqbNvln
+ R5upMbY1Ce6R4F15M2RIqGL9Na7x2jmpqQq+Bj7LRD5dDJEQU7gddG0yJeKQuouDOYSuf59a5T2
+ cqrFcY9wwZrukocTYX2b9LceTay5U7uhHUOXIR1fgRnPQAMp9L2NZ6P7EwOnFWTxHDEnBAFeAnO
+ 9KqA75XjT5bRSGmkgc9bzlToGaLMUgZC6SsdJt55uM6Qu2ze2qxJqsES87ViJ64JN10WXbVyqHq
+ geK9E7IE/K83Rq+0rmBs=
+X-Received: by 2002:a05:620a:6c0d:b0:93f:38c7:64e1 with SMTP id
+ af79cd13be357-93f6f79b9e4mr385954185a.25.1792760110558; 
+ Fri, 23 Oct 2026 05:55:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:6c0d:b0:93f:38c7:64e1 with SMTP id
+ af79cd13be357-93f6f79b9e4mr385949285a.25.1792760109819; 
+ Fri, 23 Oct 2026 05:55:09 -0700 (PDT)
+Received: from [192.168.0.4] ([79.127.134.35])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a2b061ceb7sm2205645e9.6.2026.10.23.05.55.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Oct 2026 05:55:09 -0700 (PDT)
+Message-ID: <419c14e6-cf06-4502-bad8-903d6896d4f6@oss.qualcomm.com>
+Date: Fri, 23 Oct 2026 14:55:07 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <87ik2tj0g3.fsf@pond.sub.org>
-In-Reply-To: <87ik2tj0g3.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 23 Oct 2026 16:52:30 +0400
-X-Gm-Features: AclHuK9xmEGvF0OyZ2a-feeTvInCBbT9OlJbgsN2wxK4TtyA9yVx47EX1DX-eTk
-Message-ID: <CAMxuvazmyYb4d7neLQP4v4ZoKZfQfD1iDqA4gtC+QV5nBCging@mail.gmail.com>
-Subject: Re: ObjectPropertyInfo design (was: [PATCH v7 00/65] Hi)
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Issue with PyPI when working offline
+To: John Snow <jsnow@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ QEMU Developers <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>
+References: <6e28a268-6ec0-4f83-8d31-76c48634c2b0@linaro.org>
+ <9cf3e30b-b2fe-4507-ac57-b437dca14721@redhat.com>
+ <eeac5fd9-e03e-43e6-b53b-d0bb2d9e375f@oss.qualcomm.com>
+ <CAFn=p-ZkTd5iv9UZCondYbBe6Y3Gudcv8oE-95Ttnh2O8dujEQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFn=p-ZkTd5iv9UZCondYbBe6Y3Gudcv8oE-95Ttnh2O8dujEQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA1MCBTYWx0ZWRfXwu8lNjUZ6Cxw
+ 0lZyqFNw8OzZ3oriZjANJKBqKetAGZaNbJ1tPoR8FXDmIIbgXDdbWI+XJ1f4mlyZCwh0Zxfd24W
+ 8NzB07IjsUGJZo/mpIHPRRB9CP+60qo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA1MCBTYWx0ZWRfX6EOQGVrhziaI
+ jrc4/0MUDI5mnpVZrSg1JDdS7BrjH78H2e3YbFuYB7Myp/q1N9riOBluTBqdDn963QSubpxFE0Y
+ ihaTW3J0f5M8r+t7rxPflERVKvf6lNri1Yuu9+QJX3ec9fpS825zRdmyTdoyfanBPZIT6/nbfLV
+ HNbtbTIerXq7MZ+5vUA8MSqppy9E/bK0kd2+SGqwVUf5xl3TcHqeYUg74yZeHpnZILNT++0RFQ+
+ +9A5MBhG+UKVYZwjB73K9vg2ozFrCxZs7B/VsRO0CNmYDxf2QpmY7xZxRtPJ9AB+Im2jviUJr23
+ 6ga1fZHTs78ZYQZKh1780bPs/tPK84yoDW2GzPX7H+WABr0QRWu62noMQDve84Opy/sp2fcI+mm
+ Pp4v4LIg2a7mX0a5KmriIChN77QQt27/p2S27KGpTKIChU1qT698NwVI4hQJLI6SsmCUVrlJGsb
+ CmV80n9LyPIQFQFz5Aw==
+X-Proofpoint-GUID: OzVsc-hnNKpmF2k6Nb-QrOjalD3FzudD
+X-Authority-Analysis: v=2.4 cv=YIMKWhGx c=1 sm=1 tr=0 ts=6adb592f cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=iDw3GeftGWU4ZHOe0o4/TA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=CckQENj0AAAA:8 a=-dANsA5_N5zMuR4eR_gA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: OzVsc-hnNKpmF2k6Nb-QrOjalD3FzudD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-23_03,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230050
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,174 +154,103 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi
+On 2026-07-29 18:01, John Snow wrote:
+> On Wed, Jul 29, 2026 at 9:30 AM Philippe Mathieu-Daudé
+> <philmd@oss.qualcomm.com> wrote:
+>>
+>> Hi Paolo,
+>>
+>> On 13/5/26 15:36, Paolo Bonzini wrote:
+>>> On 5/13/26 15:04, Philippe Mathieu-Daudé wrote:
+>>>> Hi,
+>>>>
+>>>> This is the second time I'm working offline and do a simple
+>>>> rebase, which triggers a re-configure, and then I'm stuck because
+>>>> PyPI tries to access the Internet and do not allow me to neither
+>>>> build nor test:
+>>>
+>>> Does it work if you configure with --disable-download?
+>>
+>> I got this issue again today:
+>>
+>> $ ../configure --disable-docs --enable-plugins
+>> --target-list=aarch64-softmmu --enable-tcg --enable-kvm
+>> python determined to be '/usr/bin/python3'
+>> python version: Python 3.14.4
+>> mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+>> mkvenv: checking for meson>=1.5.0
+>> mkvenv: checking for pycotap>=1.1.0
+>> mkvenv: installing meson==1.11.1, pycotap==1.3.1
+>> mkvenv: checking for qemu.qmp>=0.0.5
+>> mkvenv: checking for setuptools>=44.1.1
+>> mkvenv: checking for wheel>=0.34.2
+>> mkvenv: checking for pip>=20.3.4
+>> mkvenv: installing qemu.qmp==0.0.6
+>> WARNING: Retrying (Retry(total=4, connect=None, read=None,
+>> redirect=None, status=None)) after connection broken by
+>> 'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read
+>> timed out. (read timeout=15)")': /simple/qemu-qmp/
+>> WARNING: Retrying (Retry(total=3, connect=None, read=None,
+>> redirect=None, status=None)) after connection broken by
+>> 'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read
+>> timed out. (read timeout=15)")': /simple/qemu-qmp/
+>> WARNING: Retrying (Retry(total=2, connect=None, read=None,
+>> redirect=None, status=None)) after connection broken by
+>> 'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read
+>> timed out. (read timeout=15)")': /simple/qemu-qmp/
+>>
+>> Indeed using --disable-download fixed it.
+As of today's b6c4b7e86dec:
 
-On Thu, Oct 22, 2026 at 6:04=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Marc-Andr=C3=A9's series evolves ObjectPropertyInfo and ObjectPropertyVal=
-ue:
-> it adds member @qapi-type and changes many values of member @type.
->
-> I'd like to take a step back and discuss design.  I trimmed Cc:
-> accordingly.
->
->
-> =3D The current interface
->
-> qom-list returns information on an object's properties, one
-> ObjectPropertyInfo per property.
->
-> qom-list-properties returns information on properties an instance of a
-> type is known to have[*], one ObjectPropertyInfo per property.
->
-> qom-list-get returns information on the properties of several objects,
-> one ObjectPropertyValue per property.
->
-> ObjectPropertyInfo and ObjectPropertyValue provide @name and @type.
->
-> ObjectPropertyInfo additionally provides @description and
-> @default-value, both optional.
->
-> ObjectPropertyValue additionally provides optional @value, absent when
-> the property cannot be read.
->
-> If ObjectPropertyValue was an extension of ObjectPropertyInfo, then
-> qom-list-get would be a strictly more powerful version of qom-list.
-> It isn't.  However, I think the information lost when moving from
-> qom-list to qom-list-get is not useful:
->
-> * @description is rarely present (I see under 15% in a quick test).  The
->   description text is commonly misleading for QMP.  For instance, qdev
->   bool properties have description "on/off".  The possible values are
->   actually JSON false and true.
->
-> * @default-value can be useful with qom-list-properties, which operates
->   on types.  I doubt it is with qom-list, which operates on objects.
->
-> Let's pretend @description doesn't exist, and @default-value exists only
-> with qom-list-properties.
->
-> This makes qom-list-get strictly more powerful than qom-list, so let's
-> further pretend qom-list doesn't exist.
->
->
-> =3D Simplified interface for the sake of discussion
->
-> qom-list-properties returns information on properties an instance of a
-> type is known to have[*]: @name, @type, and maybe @default-value.
->
-> qom-list-get returns information on the properties of several objects:
-> @name, @type, and maybe @value.
->
->
-> =3D The meaning of @type
->
-> Three cases:
->
-> 1. For a child property (created with object_property_add_child() etc.),
->    @type is "child<T>", where T is the child's QOM type.
->
-> 2. For a link property (created with object_class_property_add_link()
->    etc.), @type is "link<T>", where T is the target's QOM type.
->
-> 3. For other properties, @type can be anything.  We commonly use QAPI
->    type names (occasionally misspelled), and also "well-known" (but
->    undocumented) non-QAPI names for primitive types.  Every now and
->    then, developers get lazy and use values like "list", or creative and
->    use values like "guest statistics".  Nobody has gotten sufficiently
->    masochistic to use values starting with "child<" or "link<" so far,
->    although nothing would stop that.
->
-> Cases 1 and 2 go against the QAPI/QMP design maxim "don't encode stuff
-> in strings".
->
-> Case 3 is is hard to use for anything.  You're forced into stupid and
-> brittle hardcoding.
->
-> Marc-Andr=C3=A9's work adds a new optional member @qapi_type that refers =
-to a
-> QAPI type in the output of query-qmp-schema.  It's present for a large
-> subset of case 3.  When it's present, @type should not be used.
->
-> It also cleans up many crap cases of 3, but without making it robust.  I
-> understand this isn't something the series tries to do, it's just
-> something that's easier to do than not to do.  If it creates
-> compatibility problems, we have to not do it.  I hope it doesn't.
->
->
-> =3D Can we do better?
->
-> What information are we trying to convey?  Four cases:
->
-> 1. Child property: the child's QOM type
->
-> 2. Link property: the target's QOM type
->
-> 3. QAPI-backed property: the property's QAPI type
->
-> 4. Other property: we have nothing useful to offer
->
-> Case 4 should go away eventually.
->
-> How would we encode this in QAPI on a green field?  With a union, of
-> course:
->
->     { 'enum': 'ObjectPropertyKind',
->       'data': [ 'child', 'link', 'qapi', 'other'] }
->
->     { 'struct': 'ObjectPropertyInfoLink',
->       'data': { 'qom-type': 'str' } }
->
->     { 'struct': 'ObjectPropertyInfoQAPI',
->       'data': { 'qapi-type': 'str' } }
->
->     { 'union': 'ObjectProperty...',
->       'base': { 'kind': 'ObjectPropertyKind',
->                 ... more ... },
->       'discriminator': 'kind',
->       'data': {
->           'child': 'ObjectPropertyInfoLink',
->           'link': 'ObjectPropertyInfoLink',
->           'qapi': 'ObjectPropertyInfoQAPI' } }
->
-> To make this a compatible evolution of ObjectPropertyInfo, we need
-> ... more ... to be
->
->                 'type': 'str',
->                 '*description': 'str'
->                 '*default-value': 'any',
->
-> Sadly, we need to duplicate the union for ObjectPropertyValue.  There,
-> ... more ... needs to be
->
->                 'type': 'str',
->                 '*value': 'any'
->
-> We should deprecate @type.  I'd also deprecate @description.
+$ ../configure
+python determined to be '/usr/bin/python3'
+python version: Python 3.14.4
+mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+mkvenv: checking for meson>=1.6.0
+mkvenv: checking for pycotap>=1.1.0
+mkvenv: installing meson==1.12.0, pycotap==1.3.1
+mkvenv: checking for qemu.qmp>=0.0.5
+mkvenv: checking for setuptools>=63.1.0
+mkvenv: checking for wheel>=0.41.2
+mkvenv: checking for pip>=23.2.1
+mkvenv: installing qemu.qmp==0.0.6
+WARNING: Retrying (Retry(total=4, connect=None, read=None, 
+redirect=None, status=None)) after connection broken by 
+'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
+timed out. (read timeout=15)")': /simple/qemu-qmp/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, 
+redirect=None, status=None)) after connection broken by 
+'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
+timed out. (read timeout=15)")': /simple/qemu-qmp/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, 
+redirect=None, status=None)) after connection broken by 
+'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
+timed out. (read timeout=15)")': /simple/qemu-qmp/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, 
+redirect=None, status=None)) after connection broken by 
+'ReadTimeoutError("HTTPSConnectionPool(host='pypi.org', port=443): Read 
+timed out. (read timeout=15)")': /simple/qemu-qmp/
+^CERROR: Operation cancelled by user
 
-It's optional, I don't think that hurts.
+$ ../configure --disable-download
 
-> Thoughts?
+ERROR: missing subprojects
 
-I like it overall.
+--disable-download specified but subprojects were not
+checked out.  Please invoke "meson subprojects download"
+before configuring QEMU, or remove --disable-download
+from the command line.
 
-But this goes beyond the intended scope of the series.
-Blending/merging QOM type & QAPI type would warrant more design
-research. So covering child<> & link<> are out of scope of the current
-qom-qapi series. I think the addition of qapi-type shouldn't be
-incompatible with a future proposal, after all all properties should
-have some 'wire' type (link/child are paths). But we can drop it for
-now or just rename it x-qapi-type until we agree on the new
-introspection.
+$ pyvenv/bin/meson subprojects down
+load
+ERROR: Directory . does not seem to be a Meson source directory.
 
-my2c
-
+$
 
