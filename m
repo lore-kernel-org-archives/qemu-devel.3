@@ -1,117 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FE5606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 17:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FECE606A31F
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 17:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iPeiObm0;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=RHEvUpuJ
+	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=hQ808bkU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKJPr-0002kt-My; Fri, 23 Oct 2026 13:50:55 -0400
+	id 1xKJSJ-0003OB-LA; Fri, 23 Oct 2026 13:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xKJPm-0002jy-V2
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 13:50:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xKJSH-0003Np-Sq
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 13:53:25 -0400
+Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xKJPk-0002zS-I1
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 13:50:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792777847;
+ (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xKJSF-00038I-Ra
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 13:53:25 -0400
+Message-ID: <a1b9fb9e6c9c5bd6e7d3b5ebc0983662a39629b3.camel@itx.no>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
+ t=1792778000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CugUozewjWHX80CQRKUYYDjpFAt9FQqtNIAskqD2gpA=;
- b=iPeiObm0jDY0tamfe4WE6UEaJCGVlmctTd5zGRwU64TKb5S9wnUZoY7cox9ZgzY4te0erz
- GJKqqK5OYCXpzFRLtXnFAeY0mvWfZ4L0iJRzwWBsvF0HDi1+JdvORMia3YdqR5n6AwjH9H
- ESI1fafAw5a5smMdAU4923l83y6OTco=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-BVCOTBw0OTGOO_YQM371WQ-1; Fri, 23 Oct 2026 13:50:45 -0400
-X-MC-Unique: BVCOTBw0OTGOO_YQM371WQ-1
-X-Mimecast-MFC-AGG-ID: BVCOTBw0OTGOO_YQM371WQ_1792777844
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a1895ffc83so8311335e9.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 10:50:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792777844; x=1793382644; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CugUozewjWHX80CQRKUYYDjpFAt9FQqtNIAskqD2gpA=;
- b=RHEvUpuJFCNoerJfsRD3q7Wzqp3vDb068TvSS7RyzCtrcgfvClp0gaOhItm+FS0gwc
- r+i9WqwIkAXhbk9Mc/pcz3PNx4oEKkV2MmQpiRo5S+wbFULioe3uex0w5Mm0JBWy4z9d
- xY/xfDKa1jayg80THxpU/W0preTeUXP3MA88FhyXVjKYSEkPK3jSVuO82J9X/eMqCVlH
- 7CV9E6AiAr0llr4z2K8Y5QLGD76LQ3PUm20uQjeQrx32qnVJc1NHoNpVcrrBdghjdAi0
- KVYfRnFeHXUy//6WhvauUarF/14ELH1cFjMUhp7AF/jXnf6tNtyAL2M2ELRDqB3iNOcx
- Fu/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792777844; x=1793382644;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=CugUozewjWHX80CQRKUYYDjpFAt9FQqtNIAskqD2gpA=;
- b=lTLkgDNmMlgoFRa15M3v7QXQy8HoCxIAwTxth3y27YRYAEdINIJh87u8ckOo0c1aim
- CSfcpjNBOv8JviO3UqdTomxgPZpRRrgThPVdBIQpSSgqd98rPQl7K2uc67w7MYWBhim8
- uQoiiAYdAzyNZtNttgzAUhIlVEFEOOdcsN+edtgio+TXfA2wexHY6qoNwjI7iXtbFTVz
- h0usN1ZSUocCdNbR/DHUNj2ffbB+fBxUJ+tP0J5eUl9aSijcD6HP8BAjucBnmxpjOVVj
- 2aSZstOkDFvsr/YIHnGWkJmYur0+5SykEbMwVkEW5mMFF17+31MImXGchj1yvslJ69iC
- WQRw==
-X-Gm-Message-State: AFq9FYJCaDktIpAqcIax1C3i00CLykQPHD7o9QvPkp6I0GommnE6vYJx
- wyWceDYxLzk2lkXeRr6/te3BU7jppfAx0qMdHee3jerFCOK2a94ohc7z4HTRMTCR5EaxiQ4qkhb
- xbbuP5XN9Zl1W5rRKC4zd+ZoKBoioCZbuEoEaOhK4V5mzUVoQGN4Lk2m9
-X-Gm-Gg: AYBFou3iOFQfFtXtwGDLr03sjNa4MXoyEzSIpiWlP2Ir1Roj3HUlfgpWBnrJ8hGj797
- gPz1DpyVtYNmDIEWNJN1aZLMgHo8XFDoV6Q/CyU7Ll7K8pvUDd528uMisZZ+cOwk8lv1suWASwO
- uq734MEENepP0Oy5iCDHTjlPAV63MGOrKvdGzCisTI/bz7cwnA5HIMYW1/OVj1oHaNhc/tHIbCq
- R2cDMCxTYSHUMDidWHYbJWpHt6ALQhH7rISwHxt3pa+SVueLJRUAH+x6P0LTN+e7KGvJbOvwkhW
- zE63kbmMdy3xuGRVQxIhRD9eKSN9CsE+YLFq02bSbhyZ/O1iZeP0+rHDu4PruNAf5P0YjnjWhHS
- PLg==
-X-Received: by 2002:a05:600c:470d:b0:4a1:fba8:b13d with SMTP id
- 5b1f17b1804b1-4a211caf202mr48524685e9.9.1792777843994; 
- Fri, 23 Oct 2026 10:50:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:470d:b0:4a1:fba8:b13d with SMTP id
- 5b1f17b1804b1-4a211caf202mr48524295e9.9.1792777843177; 
- Fri, 23 Oct 2026 10:50:43 -0700 (PDT)
-Received: from sgarzare-redhat ([5.179.131.81])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a29cd9d09csm20670065e9.5.2026.10.23.10.50.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 10:50:42 -0700 (PDT)
-Date: Fri, 23 Oct 2026 19:50:34 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Dorinda Bassey <dbassey@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Albert Esteve <aesteve@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- vhost-user@lists.linux.dev
-Subject: Re: [PATCH] vhost-user: add dedicated mailing list
-Message-ID: <atucq-HuQIj_zXCk@sgarzare-redhat>
-References: <20261023162441.89450-1-sgarzare@redhat.com>
- <atuSO02ui1nOWKsQ@redhat.com>
- <20261023132627-mutt-send-email-mst@kernel.org>
+ bh=L0zP4PJq9LufZZK/RXdRaGYZ/+c3CWBWcLGDBz2Oecw=;
+ b=hQ808bkUvDTF1kEvN2w/OprwC6HDNXoF0PWeqT3786fwlRJ8H+NcYOntIjq9x+io7YOgWL
+ euG5cfm+Jx1h3e/J2tFeRaW0ID8IFyMZuOV1HfgBrCwF/bewoFntucf9fxRoR2jpuqjh+E
+ lD4CuaHNqrYy5I5SG7Qyc9EoSKS54Rw=
+Subject: Re: [PATCH] accel/tcg: Do not chain from a TB freed by
+ tb_gen_code's flush
+From: Stian Halseth <stian@itx.no>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Matt Turner <mattst88@gmail.com>
+Date: Fri, 23 Oct 2026 19:53:19 +0200
+In-Reply-To: <8733tws5yt.fsf@draig.linaro.org>
+References: <20261023113245.562358-1-stian@itx.no>
+ <8733tws5yt.fsf@draig.linaro.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+ protocol="application/pgp-signature"; boundary="=-ZqaZQl4K+0M96Y2LlKbj"
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261023132627-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
+ helo=mx.itxnorge.no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,134 +60,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 23, 2026 at 01:26:45PM -0400, Michael S. Tsirkin wrote:
->On Fri, Oct 23, 2026 at 05:58:35PM +0100, Daniel P. Berrangé wrote:
->> On Fri, Oct 23, 2026 at 06:24:40PM +0200, Stefano Garzarella wrote:
->> > From: Stefano Garzarella <sgarzare@redhat.com>
->> >
->> > During the "Virtio and Vhost-User Ecosystem for Production and
->> > Automotive Systems" BoF at LPC 2026 [1] we discussed and agreed on
->> > creating a new vhost-user mailing list, mainly for changes to the
->> > specification and discussions around the protocol.
->>
->> You say the list is for discussions around the spec / protocol, but...
->>
->> > The main reason is that the vhost-user specification is also used
->> > by other VMMs and implemented by several back-ends outside the QEMU
->> > repository, whose developers often do not follow qemu-devel.
->> >
->> > Add a paragraph in the specification about the new mailing list and
->> > a dedicated MAINTAINERS entry for the vhost-user protocol, covering
->> > the specification, the QEMU front-end and libvhost-user (back-end
->> > library).
->>
->> ...this MAINTAINERS addition means the mailing list will be CC'd
->> on all code patches sent to QEMU for those file patterns. Are you
->> sure that's content that members of the list want to be sent
->> unconditionally ?
 
-I added them mainly because QEMU is kind of a reference implementation, 
-indeed during the discussion we agreed on keeping the spec file in QEMU 
-source git, because we saw a value on asking for both spec and code 
-changes. And also because other implementers can be interested on 
-issues/fixes of QEMU front-end and back-end code.
+--=-ZqaZQl4K+0M96Y2LlKbj
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-But yeah, I see your point, I can leave just spec files if we think it's 
-just noise.
+Hi Alex,
 
->>
->>
->
->Good point. Let's make it a separate section?
+On Fri, 2026-10-23 at 18:05 +0100, Alex Benn=E9e wrote:
+> I wonder how much:
+>=20
+> =A0=A0=A0=A0=A0=A0=A0 /* flush must be done */
+> =A0=A0=A0=A0=A0=A0=A0 if (cpu_in_serial_context(cpu)) {
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 trace_tb_gen_code_buffer_overflow("tcg_=
+tb_alloc");
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 tb_flush__exclusive_or_serial();
+> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 goto buffer_overflow;
+> =A0=A0=A0=A0=A0=A0=A0 }
+>=20
+> actually saves? Because we are skipping both cleanup in cpu_loop_exit
+> (the mem helpers) and cpu_exec_longjmp_cleanup which we get to when
+> we jump out.
 
-Do you mean a `vhost-user specification` section with just the spec (and 
-the new mailing list), and another `vhost-user implementation` section 
-with the code (without the mailing list)?
+Not much, as far as I can measure. I timed the sparc64 reproducer with
+-tb-size 1, where the buffer flushes constantly, so the worst case for
+the longjmp, with three variants on current master:
 
-Not sure about that, the code is already covered by `vhost`.
+- this patch (keep the shortcut, drop last_tb)
+- flush in place, then leave through cpu_loop_exit()
+- drop the shortcut, back to queue_tb_flush() + cpu_loop_exit()
 
-Thanks,
-Stefano
+All three fix the crash and pass test-xpage-chain and tb-link, and the
+run times are within noise of each other.
 
->
->> >
->> > [1] https://lpc.events/event/20/contributions/2365/
->> >
->> > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->> > ---
->> >  MAINTAINERS                 | 12 ++++++++++--
->> >  docs/interop/vhost-user.rst |  6 ++++++
->> >  2 files changed, 16 insertions(+), 2 deletions(-)
->> >
->> > diff --git a/MAINTAINERS b/MAINTAINERS
->> > index d9209f043f..dcdb65d8cb 100644
->> > --- a/MAINTAINERS
->> > +++ b/MAINTAINERS
->> > @@ -2532,19 +2532,27 @@ M: Michael S. Tsirkin <mst@redhat.com>
->> >  R: Stefano Garzarella <sgarzare@redhat.com>
->> >  S: Supported
->> >  F: hw/*/*vhost*
->> > -F: docs/interop/vhost-user*
->> >  F: docs/system/devices/virtio/vhost-user*
->> >  F: contrib/vhost-user-*/
->> >  F: backends/*vhost*
->> >  F: include/system/vhost-user-backend.h
->> >  F: include/hw/virtio/vhost*
->> >  F: include/*/vhost*
->> > -F: subprojects/libvhost-user/
->> >  F: block/export/vhost-user*
->> >  F: util/vhost-user-server.c
->> >  F: net/vhost*
->> >  F: tests/functional/x86_64/test_vhost_user_bridge.py
->> >
->> > +vhost-user protocol
->> > +M: Michael S. Tsirkin <mst@redhat.com>
->> > +R: Stefano Garzarella <sgarzare@redhat.com>
->> > +L: vhost-user@lists.linux.dev
->> > +S: Supported
->> > +F: docs/interop/vhost-user*
->> > +F: hw/virtio/vhost-user.c
->> > +F: include/hw/virtio/vhost-user.h
->> > +F: subprojects/libvhost-user/
->> > +
->> >  vhost-shadow-virtqueue
->> >  R: Eugenio Pérez <eperezma@redhat.com>
->> >  F: hw/virtio/vhost-shadow-virtqueue.*
->> > diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
->> > index c1e02ff7e9..198ad30f5c 100644
->> > --- a/docs/interop/vhost-user.rst
->> > +++ b/docs/interop/vhost-user.rst
->> > @@ -38,6 +38,12 @@ conventions <backend_conventions>`.
->> >  The *front-end* and *back-end* can be either a client (i.e. connecting) or
->> >  server (listening) in the socket communication.
->> >
->> > +The protocol is developed and discussed on the `vhost-user mailing list
->> > +<mailto:vhost-user@lists.linux.dev>`_, archived at
->> > +https://lore.kernel.org/vhost-user/. Until October 2026, when this list
->> > +was created, discussions took place on the qemu-devel mailing list,
->> > +archived at https://lore.kernel.org/qemu-devel/.
->> > +
->> >  Support for platforms other than Linux
->> >  --------------------------------------
->> >
->> > --
->> > 2.56.0
->> >
->> >
->>
->> With regards,
->> Daniel
->> --
->> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
->> |: https://libvirt.org          ~~          https://entangle-photo.org :|
->> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
+Dropping the shortcut looks like the cleaner fix though. no last_tb
+bookkeeping, and the cleanup you mention runs again. Richard, would you
+prefer that as v2, or is there a case where the in-place retry matters,
+e.g. cpu_exec_step_atomic?
 
+/Stian
+
+--=-ZqaZQl4K+0M96Y2LlKbj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCatufDwAKCRDoeAEuJe36
+VujcAP92DZrslT9ySfb4gTfe6Sfp/5paE77faHcD6jIN/NMbcwD/Y6jXYAhsCa/s
+3aRpVc0wRB0U/SngaxfshSv31rUjRgI=
+=X+/6
+-----END PGP SIGNATURE-----
+
+--=-ZqaZQl4K+0M96Y2LlKbj--
 
