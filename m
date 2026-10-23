@@ -1,48 +1,48 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D68606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 08:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2CC606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 08:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=rzjPzhnM
+	dkim=pass (1024-bit key, unprotected) header.d=samsung.com header.i=@samsung.com header.a=rsa-sha256 header.s=mail20170921 header.b=PewVYvFh
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKACR-0003K0-MI; Fri, 23 Oct 2026 04:00:28 -0400
+	id 1xKADA-0003hm-9m; Fri, 23 Oct 2026 04:01:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xKACN-0003Jb-Qr
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:00:23 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1xKAD8-0003gX-6T
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:01:10 -0400
+Received: from mailout2.samsung.com ([203.254.224.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daejun7.park@samsung.com>)
- id 1xKACK-0003Lm-V7
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:00:23 -0400
-Received: from epcas2p1.samsung.com (unknown [182.195.41.53])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20261023080007epoutp03123e3d78ca1bbc5bdd41632f7b8fe325~hGbiXr59s1958319583epoutp03F
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:00:07 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20261023080007epoutp03123e3d78ca1bbc5bdd41632f7b8fe325~hGbiXr59s1958319583epoutp03F
+ id 1xKAD5-0003Xo-07
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:01:09 -0400
+Received: from epcas2p3.samsung.com (unknown [182.195.41.55])
+ by mailout2.samsung.com (KnoxPortal) with ESMTP id
+ 20261023080102epoutp0263c5bcbdc51a4165930953c76d0fc07f~hGcVySmSV1672116721epoutp02S
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:01:02 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com
+ 20261023080102epoutp0263c5bcbdc51a4165930953c76d0fc07f~hGcVySmSV1672116721epoutp02S
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1792742407;
- bh=yMeJZS8ObZFl4t0yV2PKkIiUAVJPspT/JneWgMWpz5I=;
+ s=mail20170921; t=1792742462;
+ bh=WWRav6D+K/iBHgNb9kqlcNq5eu3LrVmYSdu7AMlGiPg=;
  h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=rzjPzhnMVXKIf8JiFZjViPgF2HJ9cvsE08k7r0p813iEF+RdBy0mpp0yE0fQd7h2Q
- EoHGxly04HOjanonbeudAsDiW6+9QXfIg7eTcE8kEGKR0z/LQd5g3/IwZlm01idTZV
- dM+fOti6ezNQCUZbU/CXqoPxsACVBnfD2zG53Ud4=
-Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+ b=PewVYvFhwhEOf3mPT+k96rH9OdyNEnrMJ09m1mx0CvLUSrwWaSSfK2jd0t646eS0n
+ sXOGggwLhKMxFPG2sDkmn6mg39cOU84RHJ1eZi9eQprss0E2GsilOwRzta6rS82eHU
+ oveQILN6nvQ0pCPPWiTIxhfb3nai0ZpivcOC9/TY=
+Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
  epcas2p4.samsung.com (KnoxPortal) with ESMTPS id
- 20261023080006epcas2p4bd0f3182028c6164ca2b74023b023f53~hGbh36WKj0922509225epcas2p4Y;
- Fri, 23 Oct 2026 08:00:06 +0000 (GMT)
-Received: from epcas2p2.samsung.com (unknown [182.195.38.211]) by
- epsnrtp04.localdomain (Postfix) with ESMTP id 4j9wRV2ks4z6B9m7; Fri, 23 Oct
- 2026 08:00:06 +0000 (GMT)
+ 20261023080102epcas2p46cabe4181d6d442d73a8c21f81e0a276~hGcVdVWzq0538705387epcas2p4L;
+ Fri, 23 Oct 2026 08:01:02 +0000 (GMT)
+Received: from epcas2p1.samsung.com (unknown [182.195.38.204]) by
+ epsnrtp02.localdomain (Postfix) with ESMTP id 4j9wSY5jDYz2SSKm; Fri, 23 Oct
+ 2026 08:01:01 +0000 (GMT)
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
-Subject: RE: [PATCH v2 1/8] hw/ufs: Add experimental fault injection
- properties for holding requests
+Subject: RE: [PATCH v2 2/8] hw/ufs: Handle task management requests for
+ fault-injected held requests
 From: Daejun Park <daejun7.park@samsung.com>
 To: Stanley Jhu <stanleyjhu@google.com>, Jeuk Kim <jeuk20.kim@samsung.com>,
  Jeuk Kim <jeuk20.kim@gmail.com>
@@ -53,15 +53,15 @@ CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Fabiano Rosas
  <daejun7.park@samsung.com>
 X-Priority: 3
 X-Content-Kind-Code: NORMAL
-In-Reply-To: <20261022074513.2292281-2-stanleyjhu@google.com>
+In-Reply-To: <20261022074513.2292281-3-stanleyjhu@google.com>
 X-CPGS-Detection: blocking_info_exchange
 X-Drm-Type: N,general
 X-Msg-Generator: Mail
 X-Msg-Type: PERSONAL
 X-Reply-Demand: N
-Message-ID: <20261023080005epcms2p344c865eea89ea2129bd55804a36bef0c@epcms2p3>
-Date: Fri, 23 Oct 2026 17:00:05 +0900
-X-CMS-MailID: 20261023080005epcms2p344c865eea89ea2129bd55804a36bef0c
+Message-ID: <20261023080101epcms2p7070aa02ae311188492d194457eea1a3d@epcms2p7>
+Date: Fri, 23 Oct 2026 17:01:01 +0900
+X-CMS-MailID: 20261023080101epcms2p7070aa02ae311188492d194457eea1a3d
 Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset="utf-8"
 X-Sendblock-Type: AUTO_CONFIDENTIAL
@@ -70,18 +70,18 @@ X-CPGSPASS: Y
 X-CPGSPASS: Y
 cpgsPolicy: CPGSC10-223,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20261022074520epcas2p29db44f4b96a09e19588ee3d554146368
-References: <20261022074513.2292281-2-stanleyjhu@google.com>
+X-CMS-RootMailID: 20261022074630epcas2p4001e9e28de17b02cffe601975aeeee59
+References: <20261022074513.2292281-3-stanleyjhu@google.com>
  <20261022074513.2292281-1-stanleyjhu@google.com>
- <CGME20261022074520epcas2p29db44f4b96a09e19588ee3d554146368@epcms2p3>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=daejun7.park@samsung.com; helo=mailout3.samsung.com
+ <CGME20261022074630epcas2p4001e9e28de17b02cffe601975aeeee59@epcms2p7>
+Received-SPF: pass client-ip=203.254.224.25;
+ envelope-from=daejun7.park@samsung.com; helo=mailout2.samsung.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
 X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,41 +102,44 @@ X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 22 Oct 2026 15:45:06 +0800, Stanley Jhu wrote:
-> +    if (u->active_fault_inject_tag == UFS_FAULT_INJECT_TAG_ANY) {
-> +        uint8_t op = req->req_upiu.sc.cdb[0];
-> +
-> +        if (op == READ_10 || op == WRITE_10) {
+On Thu, 22 Oct 2026 15:45:07 +0800, Stanley Jhu wrote:
+> +    if (tm_func == UFS_QUERY_TASK) {
+> +        if (u->fault_inject_mode == UFS_FAULT_INJECT_IN_TRANSITION) {
+> +            u->held_req = NULL;
+> +            u->active_fault_inject_tag = UFS_FAULT_INJECT_TAG_NONE;
+> +            u->params.fault_inject_tag = UFS_FAULT_INJECT_TAG_NONE;
+> +            *tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
+> +            ufs_fault_inject_complete_held_req(hreq);
 
-Linux sd switches zoned LUs to 16-byte READ/WRITE
-(drivers/scsi/sd_zbc.c:607-609, "READ16/WRITE16/SYNC16 is mandatory
-for ZBC devices"). On a zoned LU from the series this one is based on,
-TAG_ANY therefore never holds anything. Could READ_16/WRITE_16 be
-matched as well, with the LBA from ldq_be_p(&cdb[2])?
+Which host path is in-transition meant to reach? In Linux, QUERY TASK
+is sent only by ufshcd_try_to_abort_task(). When it runs from
+ufshcd_abort() after a SCSI timeout, scsi_timeout() has already set
+SCMD_STATE_COMPLETE (drivers/scsi/scsi_error.c:391), so scsi_done()
+drops the completion posted here (drivers/scsi/scsi_lib.c:1772). The
+request stays MQ_RQ_IN_FLIGHT, ufshcd_cmd_inflight() stays true, and
+the loop returns -EBUSY after 100 "not pending" replies
+(drivers/ufs/core/ufshcd.c:7993-8026). The "completed" branch is never
+taken, and recovery ends in a host reset, as with abort-failed. I got
+this with O_DIRECT writes on mainline 7.3-rc7 (MCQ and legacy) and on
+ACK android17-6.18 (MCQ).
 
-> +    if (!visit_type_uint32(v, name, &val, errp)) {
-> +        return;
-> +    }
+If the target is a path where the host does take this completion, for
+example ufshcd_abort_all() from the error handler, the host would see a
+WRITE succeed although no data reached the LU.
 
-Task tags are 8 bits, but any value is accepted here.
-"-device ufs,x-fault-inject-tag=300" realizes, and after qom-set to
-4096, qom-get returns 4096. Such a tag never matches a request. Could
-values above 255, other than UFS_FAULT_INJECT_TAG_NONE and
-UFS_FAULT_INJECT_TAG_ANY, be rejected here?
+> +        } else {
+> +            /* UFS_FAULT_INJECT_ABORT_SUCCESS or default */
+> +            u->held_req = NULL;
+> +            if (ufs_mcq_req(hreq)) {
+[...]
+> +            *tm_resp = UFS_UPIU_TASK_MANAGEMENT_FUNC_COMPL;
+> +        }
 
-> +const PropertyInfo ufs_prop_fault_inject_mode = {
-> +    .type = "str",
-
-Optional: the mode could be an enum property. A QEnumLookup with
-qdev_propinfo_get_enum/set_enum, as qdev_prop_spdm_trans does
-(backends/spdm-socket.c:255-262), replaces ufs_fault_inject_parse_mode(),
-ufs_fault_inject_realize(), the get/set/release handlers and the
-u->fault_inject_mode copy. I tried it on top of the whole series: 31
-insertions and 118 deletions over ufs.c, ufs.h, ufs-pci.c and
-ufs-sysbus.c. With .realized_set_allowed = true, qom-set still works
-after realize, an unknown name is rejected, and the UFS qtests pass
-29/29. It needs hw/core/qdev-prop-internal.h, and
-trace_ufs_fault_inject_set_mode would need a small wrapper to stay.
+This repeats the generic ABORT TASK code in ufs_process_tmr(). The held
+request is in UFS_REQUEST_RUNNING, so ufs_find_req_by_tag() finds it,
+and releasing the hold and returning false gives the same result. The
+same is true for the QUERY TASK SUCCEEDED branch above. With both
+changed (17 deletions, 4 insertions), the UFS qtests pass 29/29.
 
 Daejun
 
