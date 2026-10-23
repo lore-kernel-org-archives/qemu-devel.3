@@ -1,152 +1,139 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B9A606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 08:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4E8606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 08:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=bA4SvZgA;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bdxLaUdo
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bLEmrYFP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKAfA-0002s0-0R; Fri, 23 Oct 2026 04:30:08 -0400
+	id 1xKAp6-0004P3-Fs; Fri, 23 Oct 2026 04:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKAf8-0002qc-HM
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:30:06 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xKAox-0004MM-R5
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:40:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKAf6-0008QC-Ds
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:30:06 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69N7F9o62067801
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:30:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uRPtzOed2eut2LAi9V8d057urYaQFVRFtDDTS4Ca6yY=; b=bA4SvZgAUWz7DfdY
- E99TDDLuOgBe23M6jBc0zLG5MWZEEQAqwffExseOuvhXAGmsUkOvptUZ/zDJlHm3
- U2vFQiHqkMYfLsxISzxC06AK8vGO7eSYU8KNbydmahwRF9VwOMFEmYwDMsjOXPsV
- VS2tiTUsVCplgPy7sNtKiRd6eSro8a4mm66BndOK8roduaSKhP5MArgjYSmBS7Gu
- 2bWOCppgHStZod9HPBgoAEfHx+s5o3RazvG2tSyxW5DzLpQ1aDMsszEpH1tTD1c4
- lMdJCYOWIpMYjPb+64aW6Q8ipwlSYZKOyDArO79r7DaD5jsyo1TqrZBdJK1YpOag
- s1jh6w==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfnyw389j-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 08:30:01 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93caa0ce0cdso77298085a.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 01:30:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792744201; x=1793349001; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=uRPtzOed2eut2LAi9V8d057urYaQFVRFtDDTS4Ca6yY=;
- b=bdxLaUdooRS2lwr2xV+rAHibCEWv7eig6+1HoaOVuzUkwB9onJIiHDDHw9ALaB/5Jw
- 9C8AI+0QyqLmcxREV5iFTAHgkSy9ogn/qhKqB4l2fI9vUTzCcLr9yZ2XZoQcWbq6mOqR
- dkKmkw1Wr7YLdleVLr+aALHM92PqhwSd8raeA4LTUd8aB3nORpF0Rm/gZnRkQ3X0GYgR
- 1qCCVaYAx7aEn2CSYU0jljDT9luoU3BYLE+psgkHWpzikBkFwZSzI1CJe8R10n00ifbI
- SvfpvDiOdiG9oE92DnBvpva2Zt8i9NNc9rb79lPANopyDxfEgI6B6DZmvGto/YF71KsH
- 9kTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792744201; x=1793349001;
- h=content-transfer-encoding:content-type:in-reply-to:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=uRPtzOed2eut2LAi9V8d057urYaQFVRFtDDTS4Ca6yY=;
- b=DbaRkGs8VthfaGAdd9H0CCe8DG1oYwpVHHrANEbArL/1fEg5U5fRrN3qnYaV3y2bmZ
- GbhJnJfNweQe42/HIjjK1qU0A2oUkNHvUNLjTAkD8e6wJ5I58KTcIFP4hCEUTa9qh6p3
- PTEW/SZEpjimTTW5RF26v8NEFRkddqKFhUKwfOA8w7A5v+MrmkM7D7bJmV/J09wRhATf
- HDc1/voUcz8QCA/Ok//xYYDCg+S702RWt7EjJNdRszqsgQImN6tTd7p/UNdEZyziaYhJ
- 2zKc7MxmtdkBym0RU277jjJoMEZxgfOTTO9H86AeaqDVPTW8LajyjEnM8ggM6hkQmeXe
- voBw==
-X-Forwarded-Encrypted: i=1;
- AKwUvByIeAPq6BHdIq5R9Ikgu750fTFPDIKhEG2txVdA0wxTZqIm3iotH9aLDmRchWibrN57BCoLH8y6VhGz@nongnu.org
-X-Gm-Message-State: AFq9FYLUmp+dJ47HKscvQzRDMiYhptvusm+lvEyFdrJ0LMKppZQWqLpm
- 6mWQV+aJGho2Z4REL5mlYsFIUmtYrXrvrsAs9O7+UxE4AHQ0f8Cn0linW8Yre/Q4ZyHdjNOvdWR
- oEJ3EZMZhx8tZPDFMH7wcl7yWGmNuXueLLPOKgEA/Q9XsGypSUPw+IWokAg==
-X-Gm-Gg: AYBFou3dY2ZHKCEnH2H8lNjoJiUr6qCQ/PEsx0+IQIpcwcO/gck5A8eZ4a7Lgf47h9U
- XhCTKS6zjJpDlinNopR0Xk9xCvEucVU+fJeZBn63vqWcyh4Y5kt2eRqwRpl2Nnh4t3wyE0jfWGF
- ho//l8Y/GDulUMUHjs3u7Dme75dy0jZ2eO9fV17NRpq+laxLeaatbaRvqjvi4BHGxISXktFeLLR
- BE7Bkcsc2VRQxJhGInUEonx09fhch0f5H8DDiRCA1nJg344SZ7TPbOKgbz/v6F/7mzGKuTa4ugy
- oaN/BgxOstUO2g97CthYxT3YwmEaNxl+4c62up8sz6s7Oybs9cMbcVo/Hozacg+ha7uMRG03cPK
- y3kQ3u7Z1Pn0wYXR7+nJALmHuKthJFQoW2A==
-X-Received: by 2002:a05:620a:4042:b0:93f:47fa:b72d with SMTP id
- af79cd13be357-93f6f950d44mr274320885a.35.1792744201305; 
- Fri, 23 Oct 2026 01:30:01 -0700 (PDT)
-X-Received: by 2002:a05:620a:4042:b0:93f:47fa:b72d with SMTP id
- af79cd13be357-93f6f950d44mr274317585a.35.1792744200729; 
- Fri, 23 Oct 2026 01:30:00 -0700 (PDT)
-Received: from [192.168.69.209] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a21046b92esm53830965e9.10.2026.10.23.01.29.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 01:30:00 -0700 (PDT)
-Message-ID: <fd74aa6b-9724-40a5-8a6a-54d7927307f8@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 10:29:58 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xKAou-0001ga-6K
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:40:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792744810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sUVOWJHsQU1n4B4x2fZjqv8j8/n7UdJLo1ig2jGCIIw=;
+ b=bLEmrYFPqzYBWu8Oh1fLRPUwI5Pri8N3Mrhfi4kM7Tf0URC4AxggevAiEnzrfUGsskAhnD
+ dQIG5aEhbkjs/+DPn7vLvKGFEUnQOa8Iv7/AduKkZiQKHj85RLP/0JOvDnHCrQTdJijrM6
+ SIBh/OQr8/Wkz/tnMLdSeNNR6ZRy33I=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-gEH36swhMSWp1ifHI3FC6w-1; Fri,
+ 23 Oct 2026 04:40:06 -0400
+X-MC-Unique: gEH36swhMSWp1ifHI3FC6w-1
+X-Mimecast-MFC-AGG-ID: gEH36swhMSWp1ifHI3FC6w_1792744801
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A187518005AB; Fri, 23 Oct 2026 08:39:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.5])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BC4018001CA; Fri, 23 Oct 2026 08:39:54 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D776D21E6A04; Fri, 23 Oct 2026 10:39:51 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
+ <jsnow@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kostiantyn
+ Kostiuk
+ <kkostiuk@redhat.com>,  Eric Blake <eblake@redhat.com>,  David Hildenbrand
+ <david@kernel.org>,  Igor Mammedov <imammedo@redhat.com>,  "Edgar E.
+ Iglesias" <edgar.iglesias@gmail.com>,  Jason Wang <jasowangio@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  Alberto
+ Garcia <berto@igalia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>,  Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@intel.com>,  Anisa Su <anisa.su@samsung.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,  Jagannathan Raman
+ <jag.raman@oracle.com>,  John Levon <john.levon@nutanix.com>,  Thanos
+ Makatos <thanos.makatos@nutanix.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>,  Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-block@nongnu.org,  linux-cxl@vger.kernel.org,
+ qemu-s390x@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Sergio
+ Lopez <slp@redhat.com>,  qemu-arm@nongnu.org,  Palmer Dabbelt
+ <palmer@dabbelt.com>,  Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,  Daniel Henrique Barboza
+ <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
+ qemu-riscv@nongnu.org,  Song Gao <17746591750@163.com>,  Bibo Mao
+ <maobibo@loongson.cn>,  Xianglai Li <lixianglai@loongson.cn>,  Jiaxun Yang
+ <jiaxun.yang@flygoat.com>,  Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,  Nicholas Piggin
+ <npiggin@gmail.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,  Amit
+ Machhiwal <amachhiw@linux.ibm.com>,  qemu-ppc@nongnu.org,  Zhang Chen
+ <zhangckid@gmail.com>,  Li Zhijian <lizhijian@fujitsu.com>,  Alistair
+ Francis <alistair@alistair23.me>,  Alexander Graf <graf@amazon.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,  zhenwei pi
+ <zhenwei.pi@linux.dev>,  Ani Sinha <anisinha@redhat.com>,  Luc Michel
+ <luc@lmichel.fr>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,  Jamin
+ Lin
+ <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,  Samuel
+ Tardieu <sam@rfc1149.net>,  "Denis V. Lunev" <den@openvz.org>,  FangSheng
+ Huang <FangSheng.Huang@amd.com>,  Tyrone Ting <kfting@nuvoton.com>,  Hao
+ Wu <wuhaotsh@google.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
+ <its@irrelevant.dk>,  Jesper Devantier <foss@defmacro.it>,  Aditya Gupta
+ <adityag@linux.ibm.com>,  Glenn Miles <milesg@linux.ibm.com>,  Conor
+ Dooley <conor@kernel.org>,  Sebastian Huber
+ <sebastian.huber@embedded-brains.de>,  Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,  Jason Herne
+ <jjherne@linux.ibm.com>,  Titus Rwantare <titusr@google.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Anthony PERARD
+ <anthony@xenproject.org>,  Peter Xu <peterx@redhat.com>,  Chinmay Rath
+ <rathc@linux.ibm.com>,  Hendrik Brueckner <brueckner@linux.ibm.com>,
+ xen-devel@lists.xenproject.org,  Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,  Fam Zheng <fam@euphon.net>,
+ Farhan Ali <alifm@linux.ibm.com>,  Alex Williamson <alex@shazbot.org>,
+ Tao Tang <tangtao1634@phytium.com.cn>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko
+ <atar4qemu@gmail.com>,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Jiri
+ Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
+ Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v7 07/65] qapi: add QAPITypeInfo struct definition
+In-Reply-To: <20261020-qom-qapi-v7-7-431a86b02b58@redhat.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?=
+ Lureau"'s message of "Tue, 20 Oct 2026 14:45:24 +0400")
+References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
+ <20261020-qom-qapi-v7-7-431a86b02b58@redhat.com>
+Date: Fri, 23 Oct 2026 10:39:51 +0200
+Message-ID: <875wyshktk.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix CPU state access on big-endian hosts
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
-References: <20261022130657.6449-1-anjo@rev.ng>
- <3d9baf66-d412-439a-b9db-099124af6625@oss.qualcomm.com>
- <8299629b-7033-485c-8204-521e14e2f1d8@oss.qualcomm.com>
- <a7eb7b51-55ec-49e4-a4cc-209c41236c91@oss.qualcomm.com>
- <ee2dfd4c-b3aa-4157-a918-560895048422@oss.qualcomm.com>
-In-Reply-To: <ee2dfd4c-b3aa-4157-a918-560895048422@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: qfl_HKJ4Lvc33IUm0MvN5UQrT_Ix7Hep
-X-Proofpoint-ORIG-GUID: qfl_HKJ4Lvc33IUm0MvN5UQrT_Ix7Hep
-X-Authority-Analysis: v=2.4 cv=dphOmFg4 c=1 sm=1 tr=0 ts=6adb1b0a cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=DmNT2s-IBJwF5WHCG1AA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDAzMyBTYWx0ZWRfX2YZfDCsWGfkh
- v5FNPjekFoDASROMO7s9ZNFYsQyN14hslhobjN/gZO7IcvkHNf6hZFyJSyWEZmk/9cIrOVB8p8N
- 8Y29Wxtn3mhdN2+5YRTafC1E0BqmaNE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDAzMyBTYWx0ZWRfX0qWvkM/h0KIr
- NbxlgJL7vxi0122yWvZV708U8b3YWM+jj2d10WuZk5UBG5gUqJN+NCiYBXXk2A7shXATyZGlm6e
- lOafryi4yKRXF7jEIaBQavL79opAMCYFHNBj3aQCI87W2evc/YRSW6g7mm5Tk9Wh8SkUO5HgtAP
- UOt2IHu/8lr+/eA4nJca31JHH/PdEqRUDnDuw4D4DS/Sx1tRmXLkT0eUNbKMidsZmkXr0mCZb0n
- HOemKHTAlahaZJrHXhQ4chwQ+0wtNe728+3nyAs2/cBPfDauW3HaCSja2gQwhF49Yk4+Ko0CNJu
- u4VMffCfhDD4eDvvrDJWo5h4349fNpBAJ90NhDEkbThPd2uwGYiFQT/8lxLILEsqjBesK4mtjQz
- QWTK6vz5N2s+43tKIENMQETncMpTh8U+os8YFCJWI1OlibAeES2yW1AMH2SeTyEspHI6ZR5ZHvs
- pUigRDjevtH888ofAtw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230033
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,187 +145,126 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 23/10/26 10:10, Philippe Mathieu-DaudÃ© wrote:
-> On 23/10/26 10:07, Philippe Mathieu-DaudÃ© wrote:
->> On 23/10/26 09:53, Philippe Mathieu-DaudÃ© wrote:
->>> On 23/10/26 09:37, Philippe Mathieu-DaudÃ© wrote:
->>>> On 22/10/26 15:06, Anton Johansson via qemu development wrote:
->>>>> mstatus and mstatus_hs are uint64_t but accessed through
->>>>>
->>>>>    tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
->>>>>
->>>>> which on a big-endian host running riscv32 incorrectly accesses the
->>>>> top 32 bits rather than the lower bits.
->>>>
->>>>    mstatus and mstatus_hs are uint64_t, but mark_fs_dirty() and
->>>>    mark_vs_dirty() update them with tcg_gen_[ld|st]_tl().
->>>>    On big-endian hosts with 32-bit target_ulong, this modifies
->>>>    the upper half instead of the lower one, so the FS/VS dirty
->>>>    bits are never set. Use 64-bit accesses instead.
->>>>
->>>> Cc: qemu-stable@nongnu.org
->>>> Fixes: 284d697c74e ("target/riscv: Merge m/vsstatus and m/vsstatush 
->>>> into one uint64_t unit")
->>>> Fixes: 8e1ee1fb571 ("target/riscv: rvv-1.0: add translation-time 
->>>> vector context status")
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->>>>
->>>>> Widen the operations to 64 bit so the lower bits are modified.
->>>>>
->>>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>>>> ---
->>>>>   target/riscv/tcg/translate.c | 32 ++++++++++++++++----------------
->>>>>   1 file changed, 16 insertions(+), 16 deletions(-)
->>>>>
->>>>> diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/ 
->>>>> translate.c
->>>>> index ede9c2563f..79b0f444ef 100644
->>>>> --- a/target/riscv/tcg/translate.c
->>>>> +++ b/target/riscv/tcg/translate.c
->>>>> @@ -693,7 +693,7 @@ static TCGv get_address_indexed(DisasContext 
->>>>> *ctx, int rs1, TCGv offs)
->>>>>    */
->>>>>   static void mark_fs_dirty(DisasContext *ctx)
->>>>>   {
->>>>> -    TCGv tmp;
->>>>> +    TCGv_i64 tmp;
->>>>>       if (!has_ext(ctx, RVF)) {
->>>>>           return;
->>>>> @@ -703,15 +703,15 @@ static void mark_fs_dirty(DisasContext *ctx)
->>>>>           /* Remember the state change for the rest of the TB. */
->>>>>           ctx->mstatus_fs = EXT_STATUS_DIRTY;
->>>>> -        tmp = tcg_temp_new();
->>>>> -        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus));
->>>>> -        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
->>>>> -        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus));
->>>>> +        tmp = tcg_temp_new_i64();
->>>>> +        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus));
->>>>> +        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
->>>>> +        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus));
->>>>>           if (ctx->virt_enabled) {
->>>>> -            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus_hs));
->>>>> -            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
->>>>> -            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus_hs));
->>>>> +            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus_hs));
->>>>> +            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
->>>>> +            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, 
->>>>> mstatus_hs));
->>>>>           }
->>>>>       }
->>>>>   }
->>>>
->>>> Wondering about being safe (or catching other bad uses)
->>>>
->>>> #define TCG_ENV_OFS_(f)     offsetof(CPUArchState, f)
->>>> #define TCG_ENV_SIZE_(f)    sizeof_field(CPUArchState, f)
->>>>
->>>> #define tcg_gen_ld_env_tl(ret, f)                               \
->>>>      do {                                                        \
->>>>          QEMU_BUILD_BUG_ON(TCG_ENV_SIZE_(f) !=                   \
->>>>                            sizeof(target_ulong));                \
->>>>          tcg_gen_ld_tl(ret, tcg_env, TCG_ENV_OFS_(f));           \
->>>>      } while (0)
->>>>
->>>> #define tcg_gen_ld_env_i64(ret, f)                              \
->>>>      do {                                                        \
->>>>          QEMU_BUILD_BUG_ON(TCG_ENV_SIZE_(f) != 8);               \
->>>>          tcg_gen_ld_i64(ret, tcg_env, TCG_ENV_OFS_(f));          \
->>>>      } while (0)
->>>>
->>>> or even using _Generic:
->>>>
->>>> #define TCG_ENV_FIELD_(f)   (((CPUArchState *)0)->f)
->>>> #define TCG_ENV_OFS_(f)     offsetof(CPUArchState, f)
->>>>
->>>> #define tcg_gen_st_env_i32(arg, f)                              \
->>>>      _Generic(TCG_ENV_FIELD_(f),                                 \
->>>>               bool:     tcg_gen_st8_i32,                         \
->>>>               uint8_t:  tcg_gen_st8_i32,                         \
->>>>               int8_t:   tcg_gen_st8_i32,                         \
->>>>               uint16_t: tcg_gen_st16_i32,                        \
->>>>               int16_t:  tcg_gen_st16_i32,                        \
->>
->> Hmm tricky (dangerous?), this also change our current uses of
->> target-long accesses to smaller fields. This is how I'd expect
->> the uses but not always what we have now. For example, commit
->> ebc9401a406 ("target/hppa: Split PSW X and B into their own
->> field") reduced CPUHPPAState::psw from uint64_t to uint32_t,
->> but both accessors -- trans_rsm() and trans_ssm() -- keep
->> accessing with tcg_gen_ld_i64() instead of tcg_gen_ld32u_i64().
->> Likely buggy wrt endianness.
-> 
-> Noticed because the coccinelle conversion now triggers:
-> 
-> ../target/hppa/translate.c:2367:5: error: controlling expression type 
-> 'uint32_t' (aka 'unsigned int') not compatible with any generic 
-> association type
->   2367 |     tcg_gen_ld_env_i64(tmp, psw);
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> /Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:30:14: note: 
-> expanded from macro 'tcg_gen_ld_env_i64'
->     30 |     _Generic(TCG_ENV_FIELD_(f),                                 \
->        |              ^~~~~~~~~~~~~~~~~
-> /Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:15:29: note: 
-> expanded from macro 'TCG_ENV_FIELD_'
->     15 | #define TCG_ENV_FIELD_(f)   (((struct CPUArchState *)0)->f)
->        |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../target/hppa/translate.c:2387:5: error: controlling expression type 
-> 'uint32_t' (aka 'unsigned int') not compatible with any generic 
-> association type
->   2387 |     tcg_gen_ld_env_i64(tmp, psw);
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> /Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:30:14: note: 
-> expanded from macro 'tcg_gen_ld_env_i64'
->     30 |     _Generic(TCG_ENV_FIELD_(f),                                 \
->        |              ^~~~~~~~~~~~~~~~~
-> /Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:15:29: note: 
-> expanded from macro 'TCG_ENV_FIELD_'
->     15 | #define TCG_ENV_FIELD_(f)   (((struct CPUArchState *)0)->f)
->        |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 2 errors generated.
-> 
-> 
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-And using these macros on tcg_global_mem_*, another issue on Hexagon
-(slot_cancelled is u8 but registered to be accessed as u32):
+> Introduce a minimal struct that pairs a QAPI type's internal name with
+> its "masked" introspection name. Generated constants of this type will
+> let QOM property registration carry a reliable reference to the QAPI
+> schema and possibly other associated data.
+>
+> The fields are populated in following commits.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  include/qapi/qapi-type-info.h | 31 +++++++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
+>
+> diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-info.h
+> new file mode 100644
+> index 000000000000..6a6355568325
+> --- /dev/null
+> +++ b/include/qapi/qapi-type-info.h
+> @@ -0,0 +1,31 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QAPI_TYPE_INFO_H
+> +#define QAPI_TYPE_INFO_H
+> +
+> +#include "qapi/util.h"
+> +
+> +/**
+> + * QAPITypeInfo - QAPI type metadata
+> + *
+> + * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
+> + *        QOM uses this as the property type string.
+> + * @masked_name: Name of the type in the QAPI introspection schema, assi=
+gned by
+> + *        scripts/qapi code generator (e.g. "368").
 
-FAILED: [code=1] libqemu-hexagon-softmmu.a.p/target_hexagon_translate.c.o
-../target/hexagon/translate.c:1472:26: error: controlling expression 
-type 'uint8_t' (aka 'unsigned char') not compatible with any generic 
-association type
-  1472 |     hex_slot_cancelled = tcg_global_mem_new_env_tl(slot_cancelled,
-       |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1473 | 
-"slot_cancelled");
-       | 
-~~~~~~~~~~~~~~~~~
-/Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:160:37: note: 
-expanded from macro 'tcg_global_mem_new_env_tl'
-   160 | # define tcg_global_mem_new_env_tl  tcg_global_mem_new_env_i32
-       |                                     ^
-/Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:52:14: note: 
-expanded from macro 'tcg_global_mem_new_env_i32'
-    52 |     _Generic(TCG_ENV_FIELD_(f),                                 \
-       |              ^~~~~~~~~~~~~~~~~
-/Users/philmd/worktree/qemu/excp/include/tcg/tcg-op-env.h:15:29: note: 
-expanded from macro 'TCG_ENV_FIELD_'
-    15 | #define TCG_ENV_FIELD_(f)   (((struct CPUArchState *)0)->f)
-       |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1 error generated.
+I figure "in the output of query-qmp-schema" would be clearer.
+
+> + * @lookup: QEnumLookup for this type, or NULL for non-enum types.
+> + *        visit_type_enum(), qapi_enum_parse(), and qapi_enum_lookup()
+> + *        all rely on it.
+
+"It" is ambiguous and easily misunderstod.
+
+Correct interpretation: the QEnumLookup.
+
+Incorrect interpretation: QAPITypeInfo member @lookup.
+
+QAPITypeInfo member @lookup is actually used by QOM property stuff in
+object.c.  Or rather will be: PATCH 15+17.
+
+Do we need the second sentence?
+
+> + * @list: The list-type counterpart, or NULL if none exists.
+> + *        str_type_info.list points to strList_type_info.  qdev array
+> + *        properties follow this to find the list type for their element.
+
+This alludes to
+
+    static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
+    {
+        if (prop->info->qapi_type) {
+            return prop->info->qapi_type;
+        }
+        if (prop->info->element_info) {
+            assert(prop->info->element_info->qapi_type);
+            assert(prop->info->element_info->qapi_type->list);
+            return prop->info->element_info->qapi_type->list;
+        }
+        return NULL;
+    }
+
+These array properties don't have prop->info->qapi_type set, and instead
+retrieve it from their element type [PATCH 59].
+
+Maybe something like "qdev array properties lack a QAPITypeInfo, and
+instead use their element QAPITypeInfo's @list to find it."
+
+Except all that isn't true at this point in the series.  Consider adding
+it only when it is true.
+
+Ignorant question: could we set their prop->info->qapi_type at creation
+time?  No need for qdev_prop_qapi_type() then.  Hmm, I guess not, the
+obvious patch (appended) fails with "initializer element is not
+constant".
+
+> + */
+> +typedef struct QAPITypeInfo {
+> +    const char *name;
+> +    const char *masked_name;
+> +    const QEnumLookup *lookup;
+> +    const struct QAPITypeInfo *list;
+> +} QAPITypeInfo;
+> +
+> +#endif /* QAPI_TYPE_INFO_H */
+
+
+diff --git a/hw/core/qdev-prop-internal.h b/hw/core/qdev-prop-internal.h
+index 40fa4bc63f..18d982a212 100644
+--- a/hw/core/qdev-prop-internal.h
++++ b/hw/core/qdev-prop-internal.h
+@@ -40,6 +40,7 @@ void default_prop_array(ObjectProperty *op, const Propert=
+y *prop);
+  */
+ #define DEFINE_PROP_ARRAY_INFO(_elem_prop_info, _elem_type) \
+     {                                                       \
++        .qapi_type =3D _elem_prop_info.qapi_type->list,       \
+         .element_info =3D &(_elem_prop_info),                 \
+         .element_size =3D sizeof(_elem_type),                 \
+         .get =3D get_prop_array,                              \
 
 
