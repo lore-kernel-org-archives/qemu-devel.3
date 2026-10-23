@@ -1,97 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC9C606A320
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 09:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7D6606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 09:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=lnmUSGOl
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=AwCWpK57
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKBgp-0007pZ-HA; Fri, 23 Oct 2026 05:35:55 -0400
+	id 1xKBoD-0000gi-Ak; Fri, 23 Oct 2026 05:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshit007k@gmail.com>)
- id 1xKBgn-0007od-MD
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:35:53 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xKBoB-0000gH-3L
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:43:31 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <harshit007k@gmail.com>)
- id 1xKBgl-0007qz-7m
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:35:53 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-36661f953e4so1169566eec.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 02:35:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1xKBo9-0008Qc-EE
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:43:30 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1ab2ad719so1048957a12.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 02:43:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792748608; cv=none;
+ d=google.com; s=arc-20260327;
+ b=BcqmWdfmyNhUUy4Di9VVq0Xd0BerdG53Y7+3ZhoMhlo8g4GQMORJZuQmL4CqIhpGVz
+ u/5RT86U0C98rVqWspsZo7qaNjTW1TW9e9PyONnKJ1IMQx4/+8yuM7SU2pXDD9ScR7ho
+ c83IemPUOCDJRlXMbBxi93azb99rA8faExWQiNGnGlF7GMOTaks1kEECct5nlBx7V/xP
+ U0pvnnfXyRrncSePIj+O/4/nGBLvTK9TUTRFaP1W0Skc/l9+qujfDt472R3ZuRTGNRHz
+ N3egxTjc7Osg3FrFDUaOiU85JKchH5rsQWct8OC+p+gmDMEPrJ9f2Eofsg54Cx0K83yq
+ DHjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HZpmGHJcnt8GIm9cMIqDgm2G/8ZrQAlyZ2eYzVf2Xhw=;
+ fh=oR6KT4T9R4DzEe393lAnUFWLAI2XD1MXqDS3E+1BJZc=;
+ b=QDpz2ij0EkUx3jXL7FeJlLM+tLdU2tGYF9KPjQQqhsBbMdXYo4WLg6ijepeUNmFFX8
+ 3wVNXaGDETYtfkqlvxtaE7+NHUvptzKFD1fChF6in3q3/R5W26EfzzJt9yeYmEKGbvXJ
+ Av0YLruSJ4tAAuhUv+9kSI2hOm2Rhp1QbxahbHTNcR9EGLoNtQ97CBE/Z3+hqAcms+Ou
+ JSgIkuHv3m70Lv9NE7gms3lmxzrXlj8bwDpbTVLeIIsAf8zJHQDJf/xNZgGY1LJY+6VT
+ /AGMxOXDyHAILJOUXLUWKFaPE9Y3FEHrxcSIzNBVH/0aihz0zq34V3B/AagzuaNsYaXs
+ +lJg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792748149; x=1793352949; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=RmafiZvouxI8xaTDC/3w5uyTBEAScBuScIqir+IghVc=;
- b=lnmUSGOlh7O4l4VcAiZt372MoxCVH5L/N5W9uwxPgfjvApXZYdASy6c40PJ20RlFve
- DBEmocJ3/lpiZwGxhaFN1D6zK9i8ev3rKl3tK6Whhc1fSc/1g7eKkKmIFOyutdNV2LEH
- QXP7D6uSrnUYQbVWnGWwNUKtzQXVPJUuDUJ0GhgG17I08rI+cRMQe1/iZpTsn2r+Y1/+
- w8XbM1YV914f9fUhI9PpDxM40Ji887Dnjb1T+CufH3Yp4Jm9rY8GaOXpYXJ6HYj85DO7
- UcGEWxk36l7KKUK9QUlAAoJKsTXxaGRwJXCNliahYFzZhhIQLp2sDSsqhGwHhx2zXlKP
- ZQrA==
+ d=gmail.com; s=20251104; t=1792748608; x=1793353408; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HZpmGHJcnt8GIm9cMIqDgm2G/8ZrQAlyZ2eYzVf2Xhw=;
+ b=AwCWpK57oi0bA5GODFsAAdvM3poQauIXMnv8B9jSAmxV+5YGoBrnyNw1EBKOOpuBwo
+ wrgkxQkKWsW6vJ/H05kIlfFfX9Io8iu933qaPz424OxGAADyzuBxqUelRuj0a2XbU1aA
+ QEdQ/+Ati5r3y3Ks1OOWUPg9VkTB7LGbUakGVy9ZJlkAB/2u5slbQa4OF2Nq/1gT6CRX
+ CdGXKV3ZpxFT2WZyQpVbGG0pwH04717G91AUHnXzPFt5+XbqhW+bHObnaNr5sO0ud9ef
+ sqF//ZOYc7Kj57CCu8HQkWIY9+EkA3C75/MqCEcjU1ebwVBU74N/uPz0Ac1DqTNCY7NB
+ DsKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792748149; x=1793352949;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RmafiZvouxI8xaTDC/3w5uyTBEAScBuScIqir+IghVc=;
- b=scwyce3SUiJLZKa8H02GfsKN62juZsqTZwUPhibpUGqHrQgMRmGw5FsKMz1lIb/cwJ
- 7BvI1vDv8i387OFvckfndHPIMnencCrnFBgYlXoFSK99wzNYMknwlswMARRY1eV2CrRz
- JnhVG9qMyRPS8GJWmXIhzmqKnjWgiDQKuo9rGrVzUArhW4uLVV3kY5xpGKljJSeB5wjU
- vho3ssifuvvLEY2RX1Qxg02Xz5iI4bJfTGlFvgSGPeXK+euSfMwoK6ShLLosKSOc8YQI
- zumkfnG24D78sP3JmKKJUN3h5Em4+SGj7E/YYU0Hz+QmGLpeeUcziCiAONF1xsthYzIG
- 1HfQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzB5ZTjy2VPUoDh8u33Wm6xJJQBPTmg5vp7D59xkWawv3U4uaoJAFq3TrTyim0gjY9paEbYdWzczPM7@nongnu.org
-X-Gm-Message-State: AFq9FYK93rn6G1wEY9PZ5Lv2waPWCV594g2DVnseeXUsOHmTONUBNMT6
- wqmOrlK8I7YuU2NPgj1B2OOB59q2iGHZCs3BQOC0OYni7Is0DKbkEAcq
-X-Gm-Gg: AYBFou2u5lOSPVb75+ZZAV80x+0c4v4CKftE9igfufoJu53s7ZtIHqs1WBFGswP82r3
- EHgmAnPgG5XZYC5Sg44O28euOYfP/L9nC716Hk9+WVFd+Y78oz0NBfO12ONXEeT/yrgQSzFhLIS
- gIWJf3y1ZG/fDxsdU4a3jYJsGmgrg+MtJo52ZcT14Gx6pMJWVPbwdg0EyxJuH8k4hUC7HmsTbJQ
- LWLqSo8f1BBYGc5nsODZ3CrsLpqFEniyYWqNbDSXb4aDB24EPylMUNIIKdXx0goAaydKsBYvdKE
- FJgRSdUKDJtwbqvQuqmzoUiCGDv/e5bWCMheAIjRZNu/7PGvBzn3lmEtHKpp4wX5KRcRfUxSB1w
- epKtz/r0fd9KHNf3E8L0D4NiqSYbnX9gANv3JRQDlScjjUI6a601bMw+Vla2DCB1UrRjHAdvbyr
- ikdY17knwWJIxVfV2ZopQIzV5j+s+pZqLJVQePbaMheES30xy1Nr0RWRNAmH8FbQ8Ke/SyueS2t
- DapGWzs3ZbEuQBBQcqHP4rMEkSuPPYmWgRZ29jbsOXshF8lX8S/0ljdB3/87m0cmPZW9TqNRa52
- 8+hjQhozffnJu788FA==
-X-Received: by 2002:a05:693c:415b:10b0:369:d85f:ed6b with SMTP id
- 5a478bee46e88-369d9865777mr2375065eec.24.1792748148545; 
- Fri, 23 Oct 2026 02:35:48 -0700 (PDT)
-Received: from sys0 ([27.5.1.79]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369d9c15883sm5372905eec.3.2026.10.23.02.35.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 02:35:47 -0700 (PDT)
-From: Harshit Mukhedkar <harshit007k@gmail.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Harshit Mukhedkar <harshit007k@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH] target/riscv: fix uninitialised upper half in
- pmu_timer_trigger_irq()
-Date: Fri, 23 Oct 2026 15:05:22 +0530
-Message-ID: <20261023093522.34335-1-harshit007k@gmail.com>
-X-Mailer: git-send-email 2.56.0
+ d=1e100.net; s=20260707; t=1792748608; x=1793353408;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HZpmGHJcnt8GIm9cMIqDgm2G/8ZrQAlyZ2eYzVf2Xhw=;
+ b=u2hW2voykKG1t2+NpvX7VkMM8IOSMRX1XR0jTjxxHvMinj2XLRPXsA3kXlRruyxFkD
+ kMXL/XC8P+2sL1/p4wzQBaXwhuYDJEQz5tmv5FQiVXDrGituGEkxQ4x7GVdFn6FLwiu8
+ KulDsfkplOQA7CRaRkBhCNjMG0eadHMb0Mqe9g+NxgFRwdfG0/BWr0X37f+Xac2kNR3Q
+ p5ruSFMQALGJaT9jVyqGTxSxlXopZThVagoCABz7IxZT1VXFXWFn/Sxii88Om2njjT5+
+ nRBXmE7EXV7brmv0GC+yiw0B4aSy6238/pn60nzUpPml7j8QuaN5IUh8FtqlLN/SCXSY
+ sPXw==
+X-Gm-Message-State: AFq9FYJP2C+5p+BSmbWX2sqLBKY/pWzaSTb4c9g2T3C8CBHhq7r4bPfX
+ Z0hJXqBCNdXk8bRfUqnX36cLPq+/ZuunJy/1wFVS/IVZ9JE63YeCiV8gZJJ5VTG8t/ebK51w1jH
+ VCdLHJFTKQtkul4xkDVaa2ywqeQa5Wk8=
+X-Gm-Gg: AYBFou3gVKO3c53QDQaE9KP0SetxqiG/uimZrVmcF7d5YaShWdFh/Ra9eWuwfF21Upc
+ dcxXzrYyCNaBF0/2lMJQk+UAiMhT1sdgUXwW+VLakaSrw3EgN6cwkGyBS87wGtKhN+EPfX5GzJi
+ p8ahdqjeBy2aCpcYT4KAN3RmSsqNFgjSqbq+UYFgYuJbetDfcEMR8fuqW2mBU5UQp842clKAIqn
+ JkTqppTuIwGHV6ATm6de5Y8TXXb1LQcRwCc6nxvYC1pzmjnOISZRADFH+VCMdZNZMogGOXZCrMM
+ gVfwsJwNUe6HumhJF+LdOJT+IISf1TMKbsopq8j7bb4Ms0gcGYocNXXM/Q2BJ278k+wgxURdCWL
+ IYNYI5lRab1PzMlvzu2GeWF8GtCaRnCqvYzUNNg==
+X-Received: by 2002:a05:6402:1948:b0:6ac:af5e:9eab with SMTP id
+ 4fb4d7f45d1cf-6b432b9342dmr2890960a12.12.1792748607327; Fri, 23 Oct 2026
+ 02:43:27 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=harshit007k@gmail.com; helo=mail-dy1-x1333.google.com
+References: <20260929084416.1600199-1-zhangckid@gmail.com>
+ <20261022201643.GG20810@shajnocz.csb>
+In-Reply-To: <20261022201643.GG20810@shajnocz.csb>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Fri, 23 Oct 2026 17:42:48 +0800
+X-Gm-Features: AclHuK8B2JylRY_2mmubSmvSfTo_fcPvBMOta133hcMncIq-_bGlJ2xl8Lqf3O4
+Message-ID: <CAK3tnvJRKw8XSG9aWusCouo=Z=wBs8w+4DT4a774eej9tkNQBw@mail.gmail.com>
+Subject: Re: [PATCH V18 00/13] iothread: Support tracking and querying
+ IOThread holder
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,74 +119,72 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-pmu_timer_trigger_irq() reads the counter by passing
-(target_ulong *)&curr_ctr_val to riscv_pmu_read_ctr(). On RV32 that
-pointer is to a 32 bit type, so only half of the uint64_t gets written
-and the rest is whatever was on the stack. The high word read from
-riscv_pmu_read_ctr() is then ORed in on top of that, and the result is
-compared against the software written counter to decide whether to raise
-LCOFI. A stray bit in the garbage half can make that comparison wrong.
+On Fri, Oct 23, 2026 at 4:16=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> Please update docs/devel/multiple-iothreads.rst. It still refers to
+> iothread_get_aio_context() instead of the new API.
+>
 
-Read the low and high halves into their own target_ulong variables and
-assemble the 64-bit value explicitly.
+Hi Stefan,
 
-This was found while looking at #4724, whose reported mhpmcounterh
-mismatch is fixed separately by 57b484e2d232.
+Thanks for pointing this out. Would it be okay to include the documentation
+update as a separate patch in the next revision like this?
 
-Fixes: 74112400df65 ("target/riscv: More accurately model priv mode filtering.")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Harshit Mukhedkar <harshit007k@gmail.com>
----
- target/riscv/tcg/pmu.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+diff --git a/docs/devel/multiple-iothreads.rst
+b/docs/devel/multiple-iothreads.rst
+index a6eb046267..c184222d71 100644
+--- a/docs/devel/multiple-iothreads.rst
++++ b/docs/devel/multiple-iothreads.rst
+@@ -88,11 +88,20 @@ argument, which is used to check for and prevent
+re-entrancy problems. For
+ BHs associated with devices, the reentrancy-guard is contained in the
+ corresponding ``DeviceState`` and named ``mem_reentrancy_guard``.
 
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 1a4658319b..0165faf06b 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -355,7 +355,8 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-     CPURISCVState *env = &cpu->env;
-     PMUCTRState *counter;
-     int64_t irq_trigger_at;
--    uint64_t curr_ctr_val, curr_ctrh_val;
-+    target_ulong ctr_lo = 0, ctr_hi = 0;
-+    uint64_t curr_ctr_val;
-     uint64_t ctr_val;
- 
-     if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
-@@ -383,12 +384,19 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-         return;
-     }
- 
--    riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctr_val, false, ctr_idx);
--    ctr_val = counter->mhpmcounter_val;
-+    /*
-+     * riscv_pmu_read_ctr() stores a target_ulong, so on RV32 each call fills
-+     * only 32 bits. Read each half into its own target_ulong and build the
-+     * 64 bit value explicitly instead of passing a cast uint64_t pointer,
-+     * which would leave the upper half uninitialised.
-+     */
-+    riscv_pmu_read_ctr(env, &ctr_lo, false, ctr_idx);
-+    curr_ctr_val = ctr_lo;
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
--        riscv_pmu_read_ctr(env, (target_ulong *)&curr_ctrh_val, true, ctr_idx);
--        curr_ctr_val = curr_ctr_val | (curr_ctrh_val << 32);
-+        riscv_pmu_read_ctr(env, &ctr_hi, true, ctr_idx);
-+        curr_ctr_val |= (uint64_t)ctr_hi << 32;
-     }
-+    ctr_val = counter->mhpmcounter_val;
- 
-     /*
-      * We can not accommodate for inhibited modes when setting up timer. Check
--- 
-2.56.0
+-The ``AioContext`` can be obtained from the ``IOThread`` using
+-``iothread_get_aio_context()`` or for the main loop using
+-``qemu_get_aio_context()``. Code that takes an ``AioContext`` argument
+-works both in ``IOThread``\ s or the main loop, depending on which
+``AioContext``
+-instance the caller passes in.
++The ``AioContext`` can be obtained from an ``IOThread`` using
++``iothread_ref_and_get_aio_context(iothread, holder)``, or from the main l=
+oop
++using ``qemu_get_aio_context()``. Code accepting an ``AioContext`` works w=
+ith
++either event loop.
++
++The holder-aware get registers a holder and takes an IOThread reference.
++After the caller has finished using the context, release the reference wit=
+h
++``iothread_unref_and_put_aio_context()``, passing the same IOThread and an
++equivalent holder. Both calls require the BQL. No matching IOThread put is
++needed for the main loop's context.
++
++``iothread_unsafe_get_aio_context()`` neither registers a holder nor takes=
+ a
++reference. It is for legacy callers that ensure the IOThread's lifetime
++themselves; new code must use the holder-aware API.
 
+ How to synchronize with an ``IOThread``
+ ---------------------------------------
+
+
+When you have a chance, I'd also appreciate your review of the remaining
+patches that don't yet have Reviewed-by tags.
+
+Thanks
+Chen
+
+
+> Thanks,
+> Stefan
+>
 
