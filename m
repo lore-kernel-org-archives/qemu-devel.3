@@ -1,142 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D95606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67240606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=KQ1xJn0O;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=FGUSegQd
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dPWuEZR4;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=iOkXwqIL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKI26-00048j-28; Fri, 23 Oct 2026 12:22:18 -0400
+	id 1xKI4c-0003qa-Ed; Fri, 23 Oct 2026 12:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI1o-0003oP-OV
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:22:02 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xKI4Z-0003Yv-93
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:24:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI1l-00034R-V1
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:21:59 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NE6qu33001100
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:21:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2FL0W+f79pWQwOpI6aYfBDDNVTS9hr4EUrQnY0Ni014=; b=KQ1xJn0OpdBBlJ5z
- FdX5X3Wz4bz0Y4d8d/4FXfhrz49rw9Z86g1FkqmhG9mEfNFCorJTXmVTLtsMPv0b
- wOeLLaWnWqzRGCL7pMowMll8BS6BngahtD4xAfKE6rGovxsxcsYK8J1RhCz437t5
- RCvDf7xRPvFxezILuYBjnZFlS9EV19NxP5TeeWr2O6c18jdWjgSJiWRAGC7wS+mn
- ZAaYdk/zf9vhkZ5lKG5dRj5NhvVMyi3SiCp7G9Y+bBVsJjxOE4msIB6qH3ncePrJ
- DfkW7I0ARQ64gvSraIXOx5rMRaUd/7k4TKTviOcLW4B5/xjXzvWR/oLN7snLAXwY
- /c5EZA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hg7cn0wf7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:21:55 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93ca9b53afaso321127485a.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:21:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xKI4X-0003FJ-5c
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:24:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1792772687;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+wDdcMQ8EY02wA42GqC3QO4nYriHJaInirxC5LhjcR8=;
+ b=dPWuEZR48BBC++VxGZKyvpVQ8GoLgLHbe6Du6mXwkok+1SNsfJVQ9J83Xfy6354Z1hU7Mg
+ tIykOgpOk269Qpsc2nOBqZcpm7eRNi7L/EiCkbJi2Dau6y+HIJikcTnkJNpFZH+OfR6+dE
+ oMwAHmjsbkl+7FKkpWc9WLtKcRUnxJs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-228-qOcQzHGOPMaZxH1pLh5ENA-1; Fri, 23 Oct 2026 12:24:45 -0400
+X-MC-Unique: qOcQzHGOPMaZxH1pLh5ENA-1
+X-Mimecast-MFC-AGG-ID: qOcQzHGOPMaZxH1pLh5ENA_1792772685
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48e0c896d05so913912f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792772515; x=1793377315; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2FL0W+f79pWQwOpI6aYfBDDNVTS9hr4EUrQnY0Ni014=;
- b=FGUSegQdF6vqE0qHJVvYcu3dnKvGS+7llEtormq6W0NGmjO9c6WeH5JeanRLofXi+v
- 9tmbAhsritpfSBYOL6s5fdZt/tRFJt5zVKOdRLc9y8RfgRCSHy8l23IDhLD0en9PL0TZ
- E+PEb2blqg95NeT8Cd5eT5UidPdTNFQRDvegSOA+cD4aTocDO+EQNCXT4KXNIAr7rC0J
- 4Jeusj12I2ELW0ZxTJlU2wdDwryIfAqGAT88hNc7eFesLXWpfpIL9ibqUnrcZqBBTkPD
- vod7d8+XNpicJ7k9B13nVPiQqlKXrJzSK5JBrIqVAAtycrHg0ReK1myky5oHbUCFclDQ
- 5n2Q==
+ d=redhat.com; s=google; t=1792772684; x=1793377484; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=+wDdcMQ8EY02wA42GqC3QO4nYriHJaInirxC5LhjcR8=;
+ b=iOkXwqILjRrF1Qip/en3zHM3RROjIttFVTB+pgkotioW3fmFhrSWx38x1xSG1hdepn
+ 3E0jsAVbfwYp1z1cV/wYJs7ru1hRtRZJb/a92HgxqZ4ToSFBj9+76Rh9dpRWBrCcR2Gd
+ CC9LBkbk1roAGeOgJi7WX+PXf2/fZtseLGrgs6T3orBf75jwfIrWOTa3ch94fewpS77u
+ IJor4WlF4ixz8VpuUUwI7o8j8+4vZN+e9Z5FzJWtMbudQ/Hm3/AgkB2X4ft/O2CHZtQF
+ ptcNKNEidQqMHuounijlSZyuOvJq6AzNK/tRyyKTOv7Mg4kN7j2GjzI4qewKJoKKROo3
+ 2kxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792772515; x=1793377315;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2FL0W+f79pWQwOpI6aYfBDDNVTS9hr4EUrQnY0Ni014=;
- b=TgsA1El4w+fkQdfVcRniu5FbkpoS3UpAM8JGYL/ZZPctZ+EwVImtyCIHW/AbehzvNm
- dzluhHzO9wT4d9awMjuZAGfeYyrYA+hyFbFpstIqqhePoYBj9MfItwiDYRlFyYGNNw2l
- m/ImU+r+XppmRLvL0TWzInAHKfDm0vw6NfRjOErWFdsb357Lxx9THZrBlByam+Wha9YL
- FyqRWMLrO4IH8MDnGQ2vfofYhYe0Hv4KrZb8/GVsRJuyu0qij2nXh3o2C0Lw3fJttZKL
- 8K8s6th/3V8PBvfdKo0LZx0tXEOn1gRZOyThGuOblr7x1wk5NWzM4jUhVIC4XKhfZ/Se
- 6TNA==
-X-Gm-Message-State: AFq9FYK9VuI7MMmSqWqnpgYaroZ3WoHtqYp5x1qdRU3AqLH7Q6svF7mw
- vce1x63s0uTtZ0Ll2zipTQ1J8o/Esrgvot0xE9SLXl5lGbDe7L3K4eg79zCtdEMeqhFIEClWT1/
- u/fifF7Cj3foXmoeXrEsfx5gWUBGKYckYCOxU8G4J/HC2KqkIaYsesZ47S2eEeYnrQZNa
-X-Gm-Gg: AYBFou3RWuHdSdEhPRN+GpRwDB+eypD3u5Y7s9ZfhezEylEabbNpQp4weiyalkAht8f
- cnw0TtX1FTcajpVgCR06IX11EiJqlGagknqMuW/GwnIGVKo2rMGWztHSe3Ko+fRmq74XBgkaYrX
- 4DvmBFLjDPcev1OO8ao37Rc/OVG/+fAVzJFRFL8Qp0xWXE3kB04jDDMXRVx3hQtjtZkvH4sP0p4
- /DxQYfT98i/pZg3p5PLA71xzYD4L6Z53a0wdmYj7LNPWQ+5B7KgWaGvnZbuttoNo48QWVCvgOTR
- vbH0JY48poAAbCfsiCuWJQSjSuNcBFq3HYizoIZYLBEgyULmGJskB5C1Rcfly/Vy0ruXdhh2sag
- +wlOMDvold6FI5Xg0JjrlSETL3JzUHDfIvdlmH0Nx
-X-Received: by 2002:a05:620a:4515:b0:93f:26d6:d70b with SMTP id
- af79cd13be357-93f6f787243mr517704185a.29.1792772515033; 
- Fri, 23 Oct 2026 09:21:55 -0700 (PDT)
-X-Received: by 2002:a05:620a:4515:b0:93f:26d6:d70b with SMTP id
- af79cd13be357-93f6f787243mr517696585a.29.1792772514193; 
- Fri, 23 Oct 2026 09:21:54 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ d=1e100.net; s=20260707; t=1792772684; x=1793377484;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=+wDdcMQ8EY02wA42GqC3QO4nYriHJaInirxC5LhjcR8=;
+ b=e7GuuGjrhDYxzSRJPdU/raMqdK2ymcDKF28yI4hqU2ugFQeKprPBqiHWIVofH/u4kS
+ KfbEz2tLPDqMDXW8HT6z6vnFzu7gjmjSShp6JFbomiUb0Xg0aKfF1OwAUkJgz6kd4JvH
+ J4a+uuD+4KJj660q/VLZX39O+WT2oIVhw7xIaAf9lx2gg3E8SFGyt0hFFjJn4lIMhXqB
+ 0lEvS+vVn0brdi/PWW7pG6gFEk40R0xPUAyVT3kdoebnUC8e1xSoOJOjttieril7inpg
+ PW7xX1St2kUezt7H9HYXp931/rfohdOKl4a4+HeGwUWID/2GywavII1TleQbvEZhLk1Q
+ p4TA==
+X-Gm-Message-State: AFq9FYLJ00m8dJqod8KxL89cvPdbIsxTHjcRsj6jNn5DfAybwox3PyUY
+ +VX21HlQqmhce1C26993hXe6mnTR9UsdRO6z39zHxT5scPQ8TgnhOsGNWapV22bE4aBSLutT2tp
+ ynAoJ+6TQHybph2vGW4FW7k+Z3hKCg9IBkgAMMzY6fs253O7QcjFHk0UmaHGIL19EJfS6/EW9Of
+ VU9il28Qk2mjnlBQcq4wQKBIy0OTSd79pnOMJUdZjR
+X-Gm-Gg: AYBFou2ek7n6EP6EHb4oNuqND40+2Z5GuErqKWgBbX1ZmoJ0ezRWGBboOwv/heWVtv9
+ eoUn02tnatafonvLH3Arxd/odaJwCF/swNw1ZVSJ73avqeScNzSLdm+3nF4AQaQny6thjfoUIGi
+ CyqPEe9eC3NHLu3ouh5DzTuqmHzH6hkVtmSFeAoJOrl2awAkMyzb0L1RdjmMngtfe9hrswEHW6F
+ LViFDzBgDlDItZjqOuE5MQ2erf4btjEeNC5djodQ54v2OREdEJKDsMT8AINLtUIGc/wjZQ/xZtN
+ +jfA6B8hcNuTLH901F7wM5U51H9jWl/+Qgvdmrg3/J44nm7XPnD9c3nFG+r/p2VZ75sUomNfcMO
+ TdLDWCg==
+X-Received: by 2002:a05:6000:4006:b0:48e:824:f0b9 with SMTP id
+ ffacd0b85a97d-48e385ba51amr5083064f8f.45.1792772684541; 
+ Fri, 23 Oct 2026 09:24:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:4006:b0:48e:824:f0b9 with SMTP id
+ ffacd0b85a97d-48e385ba51amr5083013f8f.45.1792772683885; 
+ Fri, 23 Oct 2026 09:24:43 -0700 (PDT)
+Received: from stex1.redhat.corp ([94.32.46.128])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2a92a4444sm16540645e9.5.2026.10.23.09.21.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 23 Oct 2026 09:21:53 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ ffacd0b85a97d-48e3d3eefacsm923877f8f.9.2026.10.23.09.24.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Oct 2026 09:24:43 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 69/83] target/or1k: define and call helpers using HELPER macro
-Date: Fri, 23 Oct 2026 18:13:17 +0200
-Message-ID: <20261023161332.60153-70-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261023161332.60153-1-philmd@oss.qualcomm.com>
-References: <20261023161332.60153-1-philmd@oss.qualcomm.com>
+Cc: Dorinda Bassey <dbassey@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Albert Esteve <aesteve@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ vhost-user@lists.linux.dev
+Subject: [PATCH] vhost-user: add dedicated mailing list
+Date: Fri, 23 Oct 2026 18:24:40 +0200
+Message-ID: <20261023162441.89450-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX9WWGe79ANP9F
- IpbBWHP2AoA1fyh4UqAd4TS/ngyHu8LrDkhf/HyFskHB8t9bdpK7qAYx6tHx9cZ5oBRloDDx/kf
- ZI8xkldP9yki03G2LWu0CwSrJpy+hTFpwHH+OWhkgKhn7pihp433yOof0XGj8ONZU483JUg9/8H
- wuXEonuT/ZblUWwNu83QRdHmEk04PN7Km+M+XnjEiE1JGP8CoFiUsuwrk8JEXFfXkRhOuKQqC3I
- OWWeDjbwSSfnq5vycoMQ1pHSurZeOP4dRElRo4GT7gdIH67LkdZ1keznw+/M2zrn2C3KuuPn1DH
- Y1pnCAxswPfWcgMD58rvtfHlBB+KnoIeY/d+M334QUprkDsEvjK7m3WeC9aDIh7K/UTgCshWfpo
- QH9SlkRWAU5eqjc/SIAXz1AFw9AGD/lJ5qS97nqlu9CWSbmtSiW8SARx1vOKUlWr38x1+6w3b2a
- RWApHp8R/nkwz2yzB9Q==
-X-Proofpoint-GUID: 2aXw59U5-xyx60CC7ew5httZ30Z2jEvb
-X-Authority-Analysis: v=2.4 cv=a9mlZkSF c=1 sm=1 tr=0 ts=6adb89a3 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=UVNzukUmG7bquJPxmdsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: 2aXw59U5-xyx60CC7ew5httZ30Z2jEvb
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX9H2y/BEdeLSE
- cJGlsETyTgQZ+I2EXwpgHUJk6BibCFOu2x9Gk8Hgdr9VMD9kJIKXsVuIbv9kmCPw10U0ENiU+4j
- UliCXyrc50rd86BJYJxQL3Yo+CsDTvA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610230064
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,94 +117,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-In a upcoming commit, we'll prefix all helpers and helper_info with target
-prefix, to disambiguate symbols between targets. As a first step, we need to
-make sure all usages are using the existing HELPER macro.
+During the "Virtio and Vhost-User Ecosystem for Production and
+Automotive Systems" BoF at LPC 2026 [1] we discussed and agreed on
+creating a new vhost-user mailing list, mainly for changes to the
+specification and discussions around the protocol.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Acked-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-ID: <20261019212046.149572-11-pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+The main reason is that the vhost-user specification is also used
+by other VMMs and implemented by several back-ends outside the QEMU
+repository, whose developers often do not follow qemu-devel.
+
+Add a paragraph in the specification about the new mailing list and
+a dedicated MAINTAINERS entry for the vhost-user protocol, covering
+the specification, the QEMU front-end and libvhost-user (back-end
+library).
+
+[1] https://lpc.events/event/20/contributions/2365/
+
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- target/or1k/fpu_helper.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ MAINTAINERS                 | 12 ++++++++++--
+ docs/interop/vhost-user.rst |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/target/or1k/fpu_helper.c b/target/or1k/fpu_helper.c
-index e680606d4da..3c2aff64e9a 100644
---- a/target/or1k/fpu_helper.c
-+++ b/target/or1k/fpu_helper.c
-@@ -114,10 +114,10 @@ uint32_t HELPER(dtos)(CPUOpenRISCState *env, uint64_t val)
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d9209f043f..dcdb65d8cb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2532,19 +2532,27 @@ M: Michael S. Tsirkin <mst@redhat.com>
+ R: Stefano Garzarella <sgarzare@redhat.com>
+ S: Supported
+ F: hw/*/*vhost*
+-F: docs/interop/vhost-user*
+ F: docs/system/devices/virtio/vhost-user*
+ F: contrib/vhost-user-*/
+ F: backends/*vhost*
+ F: include/system/vhost-user-backend.h
+ F: include/hw/virtio/vhost*
+ F: include/*/vhost*
+-F: subprojects/libvhost-user/
+ F: block/export/vhost-user*
+ F: util/vhost-user-server.c
+ F: net/vhost*
+ F: tests/functional/x86_64/test_vhost_user_bridge.py
  
- #define FLOAT_CALC(name)                                                  \
--uint64_t helper_float_ ## name ## _d(CPUOpenRISCState *env,               \
-+uint64_t HELPER(float_ ## name ## _d)(CPUOpenRISCState *env,              \
-                                      uint64_t fdt0, uint64_t fdt1)        \
- { return float64_ ## name(fdt0, fdt1, &env->fp_status); }                 \
--uint32_t helper_float_ ## name ## _s(CPUOpenRISCState *env,               \
-+uint32_t HELPER(float_ ## name ## _s)(CPUOpenRISCState *env,              \
-                                      uint32_t fdt0, uint32_t fdt1)        \
- { return float32_ ## name(fdt0, fdt1, &env->fp_status); }
++vhost-user protocol
++M: Michael S. Tsirkin <mst@redhat.com>
++R: Stefano Garzarella <sgarzare@redhat.com>
++L: vhost-user@lists.linux.dev
++S: Supported
++F: docs/interop/vhost-user*
++F: hw/virtio/vhost-user.c
++F: include/hw/virtio/vhost-user.h
++F: subprojects/libvhost-user/
++
+ vhost-shadow-virtqueue
+ R: Eugenio Pérez <eperezma@redhat.com>
+ F: hw/virtio/vhost-shadow-virtqueue.*
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index c1e02ff7e9..198ad30f5c 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -38,6 +38,12 @@ conventions <backend_conventions>`.
+ The *front-end* and *back-end* can be either a client (i.e. connecting) or
+ server (listening) in the socket communication.
  
-@@ -129,7 +129,7 @@ FLOAT_CALC(rem)
- #undef FLOAT_CALC
++The protocol is developed and discussed on the `vhost-user mailing list
++<mailto:vhost-user@lists.linux.dev>`_, archived at
++https://lore.kernel.org/vhost-user/. Until October 2026, when this list
++was created, discussions took place on the qemu-devel mailing list,
++archived at https://lore.kernel.org/qemu-devel/.
++
+ Support for platforms other than Linux
+ --------------------------------------
  
- 
--uint64_t helper_float_madd_d(CPUOpenRISCState *env, uint64_t a,
-+uint64_t HELPER(float_madd_d)(CPUOpenRISCState *env, uint64_t a,
-                              uint64_t b, uint64_t c)
- {
-     /* Note that or1ksim doesn't use fused operation.  */
-@@ -137,7 +137,7 @@ uint64_t helper_float_madd_d(CPUOpenRISCState *env, uint64_t a,
-     return float64_add(a, b, &env->fp_status);
- }
- 
--uint32_t helper_float_madd_s(CPUOpenRISCState *env, uint32_t a,
-+uint32_t HELPER(float_madd_s)(CPUOpenRISCState *env, uint32_t a,
-                              uint32_t b, uint32_t c)
- {
-     /* Note that or1ksim doesn't use fused operation.  */
-@@ -147,10 +147,10 @@ uint32_t helper_float_madd_s(CPUOpenRISCState *env, uint32_t a,
- 
- 
- #define FLOAT_CMP(name, impl)                                             \
--uint32_t helper_float_ ## name ## _d(CPUOpenRISCState *env,               \
-+uint32_t HELPER(float_ ## name ## _d)(CPUOpenRISCState *env,              \
-                                          uint64_t fdt0, uint64_t fdt1)    \
- { return float64_ ## impl(fdt0, fdt1, &env->fp_status); }                 \
--uint32_t helper_float_ ## name ## _s(CPUOpenRISCState *env,               \
-+uint32_t HELPER(float_ ## name ## _s)(CPUOpenRISCState *env,              \
-                                          uint32_t fdt0, uint32_t fdt1)    \
- { return float32_ ## impl(fdt0, fdt1, &env->fp_status); }
- 
-@@ -161,13 +161,13 @@ FLOAT_CMP(un, unordered_quiet)
- #undef FLOAT_CMP
- 
- #define FLOAT_UCMP(name, expr) \
--uint32_t helper_float_ ## name ## _d(CPUOpenRISCState *env,               \
-+uint32_t HELPER(float_ ## name ## _d)(CPUOpenRISCState *env,              \
-                                          uint64_t fdt0, uint64_t fdt1)    \
- {                                                                         \
-     FloatRelation r = float64_compare_quiet(fdt0, fdt1, &env->fp_status); \
-     return expr;                                                          \
- }                                                                         \
--uint32_t helper_float_ ## name ## _s(CPUOpenRISCState *env,               \
-+uint32_t HELPER(float_ ## name ## _s)(CPUOpenRISCState *env,              \
-                                          uint32_t fdt0, uint32_t fdt1)    \
- {                                                                         \
-     FloatRelation r = float32_compare_quiet(fdt0, fdt1, &env->fp_status); \
 -- 
-2.55.0
+2.56.0
 
 
