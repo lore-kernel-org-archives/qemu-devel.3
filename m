@@ -1,114 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BA4606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 13:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DF4606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 13:48:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=UyBjRAm9;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RtzWCyew
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKFcU-0006B6-Db; Fri, 23 Oct 2026 09:47:42 -0400
+	id 1xKFdX-0006TS-IX; Fri, 23 Oct 2026 09:48:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xKFcO-0006AJ-G2; Fri, 23 Oct 2026 09:47:36 -0400
-Received: from oxygen.pond.sub.org ([94.130.129.15])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKFdQ-0006Q3-CP
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 09:48:41 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
- id 1xKFcL-0003lO-FT; Fri, 23 Oct 2026 09:47:36 -0400
-Received: from blackfin.pond.sub.org (p50902d79.dip0.t-ipconnect.de
- [80.144.45.121])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (Client did not present a certificate)
- by oxygen.pond.sub.org (Postfix) with ESMTPSA id 5F19F1FFDF;
- Fri, 23 Oct 2026 15:47:24 +0200 (CEST)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2402C21E6A04; Fri, 23 Oct 2026 15:47:21 +0200 (CEST)
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  John Snow
- <jsnow@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Mauro
- Carvalho Chehab <mchehab+huawei@kernel.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Kostiantyn
- Kostiuk
- <kkostiuk@redhat.com>,  Eric Blake <eblake@redhat.com>,  David Hildenbrand
- <david@kernel.org>,  Igor Mammedov <imammedo@redhat.com>,  "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>,  Jason Wang <jasowangio@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,  kvm@vger.kernel.org,  Alberto
- Garcia <berto@igalia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Jonathan Cameron <jic23@kernel.org>,
- Junjie Cao <junjie.cao@intel.com>,  Anisa Su <anisa.su@samsung.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,  Jagannathan Raman
- <jag.raman@oracle.com>,  John Levon <john.levon@nutanix.com>,  Thanos
- Makatos <thanos.makatos@nutanix.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,  Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-block@nongnu.org,  linux-cxl@vger.kernel.org,
- qemu-s390x@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Sergio
- Lopez <slp@redhat.com>,  qemu-arm@nongnu.org,  Palmer Dabbelt
- <palmer@dabbelt.com>,  Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
- qemu-riscv@nongnu.org,  Song Gao <17746591750@163.com>,  Bibo Mao
- <maobibo@loongson.cn>,  Xianglai Li <lixianglai@loongson.cn>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,  Nicholas Piggin
- <npiggin@gmail.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,  Amit
- Machhiwal <amachhiw@linux.ibm.com>,  qemu-ppc@nongnu.org,  Zhang Chen
- <zhangckid@gmail.com>,  Li Zhijian <lizhijian@fujitsu.com>,  Alistair
- Francis <alistair@alistair23.me>,  Alexander Graf <graf@amazon.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,  zhenwei pi
- <zhenwei.pi@linux.dev>,  Ani Sinha <anisinha@redhat.com>,  Luc Michel
- <luc@lmichel.fr>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,  Jamin
- Lin
- <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,  Samuel
- Tardieu <sam@rfc1149.net>,  "Denis V. Lunev" <den@openvz.org>,  FangSheng
- Huang <FangSheng.Huang@amd.com>,  Tyrone Ting <kfting@nuvoton.com>,  Hao
- Wu <wuhaotsh@google.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
- <its@irrelevant.dk>,  Jesper Devantier <foss@defmacro.it>,  Aditya Gupta
- <adityag@linux.ibm.com>,  Glenn Miles <milesg@linux.ibm.com>,  Conor
- Dooley <conor@kernel.org>,  Sebastian Huber
- <sebastian.huber@embedded-brains.de>,  Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,  Jason Herne
- <jjherne@linux.ibm.com>,  Titus Rwantare <titusr@google.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Anthony PERARD
- <anthony@xenproject.org>,  Peter Xu <peterx@redhat.com>,  Chinmay Rath
- <rathc@linux.ibm.com>,  Hendrik Brueckner <brueckner@linux.ibm.com>,
- xen-devel@lists.xenproject.org,  Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,  Fam Zheng <fam@euphon.net>,
- Farhan Ali <alifm@linux.ibm.com>,  Alex Williamson <alex@shazbot.org>,
- Tao Tang <tangtao1634@phytium.com.cn>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko
- <atar4qemu@gmail.com>,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Jiri
- Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
- Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v7 09/65] qapi: add type-infos generator
-In-Reply-To: <20261020-qom-qapi-v7-9-431a86b02b58@redhat.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?=
- Lureau"'s message of "Tue, 20 Oct 2026 14:45:26 +0400")
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-9-431a86b02b58@redhat.com>
-Date: Fri, 23 Oct 2026 15:47:21 +0200
-Message-ID: <87mrs4a5qu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKFdO-0003o7-Gw
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 09:48:40 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69NAASOo3550496
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 13:48:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gvoiRV3JClZ93oLpY177JWdz1/pUnZWOiKogRyDhpAw=; b=UyBjRAm9eIJF2zb3
+ 1ggij6MXcZ8h+FWWOH50me4MOgZXo6A6UG94JewbUuPTEp1yLul3vTaDGc7eCPqD
+ I4Cf0eIb3oNOzQCLhVwYSVniZCnLXXD4op/WRS/1Ql3RQWKeTZN4e/T/GR/WcMVD
+ PwKupbq0Nmr+x39KPQbB5h0YqL/PkN2iBELfLjMRGGZQkhigJguXHjeObMcF30jR
+ L8kb8tEGwpy1jDPPW13U1wWCL+pFKeK78Tx8WsVHnqkMDfaV9Xd2NTY8M+tPkyMC
+ 1e6cfgOGxqkoDichIAeZP74QL+m1BqTLe3TX7ae1lCUDAWmMYQpdqfcGNlUhHSMT
+ ig2Hyg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmrbwwe-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 13:48:35 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5363763b556so17985111cf.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 06:48:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792763314; x=1793368114; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=gvoiRV3JClZ93oLpY177JWdz1/pUnZWOiKogRyDhpAw=;
+ b=RtzWCyewkvPRDChC/OXTAHxvK8BywLEPbqBPhFQ2XzvYnHRWWnn8jJ2xo+/kaag5Fx
+ W0hjRCGpBVqiyMfE6vP6Upp/fBd8u8RQi/aZrllwq474dARsguwyuOVfQa9eeheocuYs
+ t8CiJxteYobtACu3IK4+hM2tOC83JRVqj1fy5mdp8f3Jv8WvkrbQdCKmYmoInpGUK748
+ mN6VnIEZz6zgBdbOKhezLiBOnqCzHCCznw0CmIdNrlz3sPBwo352GNhy2APiG84AHW2o
+ yQPuMaimqPUt+8Ci+16uqMiDk0TfHacNGfMKn8XUgdQz/UOb15Xn75U1+VWME97otWO4
+ /S2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792763314; x=1793368114;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=gvoiRV3JClZ93oLpY177JWdz1/pUnZWOiKogRyDhpAw=;
+ b=ER2M+JZbbA8OontClUe80SUuVlY4Eut+0fmtEH24Kuvbb0CRC1I8lJTqp8WTuWnOHY
+ 6sdDzQESfdS3gzkS1ipGcilgIH2/dhIGZZr4RvJnc6QbK7FC3yDYPHSK2+DLj8CRjSb6
+ TyCMkPO7UCDQbc1XC+4FT1sQ4XwAgDJeVv7OwySkVfvmGnxVL9LDX3Oi4s57DIakRSF/
+ fNBECIw7hx+7QTGB7WYP17zrA5XdC1DnevMXxkvEXND1mtfBaC1YY1PlLgQ4j4bKbfTo
+ qElP80+ZU7fSHEr6yi7Wq0QwBtT1G+D7WFPN1szfGIv0DsGwiVVRdq6qAaYXWSyd4Hmv
+ 5bww==
+X-Forwarded-Encrypted: i=1;
+ AKwUvByVCThqGlDg/j5BnFe2Glwv61Om5yeqkzgZXmw/H8KiSjDG2UBrO5sOqrlgfyTIBSWDU4rDSNNIBTuD@nongnu.org
+X-Gm-Message-State: AFq9FYJx80gWl/wswgRxlEORxQpjtE+rea5Lbv2cxfKlG7/hlIv6jkZy
+ r2GU02v1zTlWbY0Vsx4QdhuutjopWv2IrFVmISMTYneebjSk5q/IAhjaQN4aj8OeFbxYfhVSnU9
+ lJ5wGq+81hKNqJAcvE40QQC2N8EcwWA1tmFeRxKz9kfDk8c3lTDfn6G95yQ==
+X-Gm-Gg: AYBFou0YMlv7rY1Wn6x3QWMPhcFl5Mdyijr017s6g/dvkHEUaUcZ89VyzdG4a32tdah
+ joL2JEaEjIkpkSIxDzo6jkxxtVryVIgWgS4lSE3Z8iTgw9880c7/VpGk4RcdVzU8htpHB2YjqTq
+ Y6KTuHCkAbJKun3BbA2gkZUaA+g/o/Tlc+S9tlnS+B+F8fdLR+M19Drs5loMGVobfMbrd7nvpzQ
+ pLttCA/KhM6UNgv0dpJuK0ImwZh1Q6y5x0vUD62MrZVshlDGOlkWMd0M8Xtx+Ej5Wel/9ghlEGI
+ Vz9p+3AgaOhfiXA1kyJteboZfYYUmOHA0a94AVHiqA6w5sh4KraGyFbMNrQxSaal7vL2TvGfbn5
+ EIkRBAqGDlVT54IUdf8wnX/vJdpCVQGDf3g==
+X-Received: by 2002:a05:620a:6404:b0:93f:33a8:8e84 with SMTP id
+ af79cd13be357-93f6f815513mr404422485a.56.1792763314544; 
+ Fri, 23 Oct 2026 06:48:34 -0700 (PDT)
+X-Received: by 2002:a05:620a:6404:b0:93f:33a8:8e84 with SMTP id
+ af79cd13be357-93f6f815513mr404417685a.56.1792763313889; 
+ Fri, 23 Oct 2026 06:48:33 -0700 (PDT)
+Received: from [192.168.69.209] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a21555fcd1sm33021285e9.4.2026.10.23.06.48.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Oct 2026 06:48:33 -0700 (PDT)
+Message-ID: <beced835-ef5d-412b-8015-fd0cd5334fc8@oss.qualcomm.com>
+Date: Fri, 23 Oct 2026 15:48:32 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=94.130.129.15; envelope-from=armbru@pond.sub.org;
- helo=oxygen.pond.sub.org
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 06/25] target/hexagon: gdbstub - Add sys reg support
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, peter.maydell@linaro.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20261012041722.1159355-1-brian.cain@oss.qualcomm.com>
+ <20261012041722.1159355-7-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261012041722.1159355-7-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 3nm9-xGT2YCNyJTCNscR0oeE6kTMd_DR
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA1MyBTYWx0ZWRfXyTOBU8TbYmJ2
+ sYt1+ktLcr18rMrqrs5VpqfGK460jxxBHdU/3/TQcUtZF2zJzPFjkMPJgnHbLNI0rw9ZNM7bhce
+ Waw5R1QukRTDq/t5aERJnKs5/xNqPnA=
+X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6adb65b3 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=p43JHkzjH0k1_VF-uZEA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA1MyBTYWx0ZWRfX9modgma111Ej
+ +pQhqQHXXIXiFMYNzIe4JPCpv2/HBA0VXqNzCl29TuOXasU01hZ6SuG8fEdMCgvi5tjD7VLDE/T
+ SIdqhYFdn7aqE8j1+Gjw3fIYyQB2alHg6WZwn+1cpvFsLf3b6rrLDj47mwnWdpORZCRkEE2tgAa
+ PFJ/+35t6yIr2GrfKjyPq2Yjx7IXWGRg+WmzKJu496qt5vP9NrqxYs2kCBrJh/e6cy/H4Rv/g18
+ znsBcAdAUcepmWBa2SwKJ9XBu883f4DT3EFDD5X1BaXTSDQGoOSmP8JEBAcsVYYxerLtzEBcFHU
+ hUHXoSitSQOOLrmnzI20vgxuh4AgoBudPEQVQFl3iOMxsxGeUfhTmxok94+y1+DzdXrXZI8moIC
+ 1dx4lT6W6eujevPGkB9yd9jJ7jao8VjHnZE8Bu5cBPHtK8PNtykVaekvnKeB/XlQBa8N8pPEPuy
+ wWuekM7FpvzXET3rqYg==
+X-Proofpoint-ORIG-GUID: 3nm9-xGT2YCNyJTCNscR0oeE6kTMd_DR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-23_03,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230053
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,414 +151,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Markus Armbruster <armbru@redhat.com>
-From:  Markus Armbruster via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.5 required=3.0 tests=BAYES_00,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
-
-> New QAPISchemaGenTypeInfoVisitor produces per-module
-> qapi-type-infos-*.h/c files. Each file declares QAPITypeInfo constants
-> pairing the QAPI type name with its masked introspection name.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 12/10/26 06:17, Brian Cain wrote:
+> Add support for the system and guest registers to the gdbstub.
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  docs/devel/qapi-code-gen.rst |  92 ++++++++++++++++++++++++
->  meson.build                  |   1 +
->  scripts/qapi/backend.py      |   2 +
->  scripts/qapi/type_infos.py   | 163 +++++++++++++++++++++++++++++++++++++=
-++++++
->  4 files changed, 258 insertions(+)
->
-> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-> index 77f08bb68cac..1cc5338a210a 100644
-> --- a/docs/devel/qapi-code-gen.rst
-> +++ b/docs/devel/qapi-code-gen.rst
-> @@ -1250,6 +1250,9 @@ JSON array of strings.
->  To examine a type, start with a command or event using it, then follow
->  references by name.
->=20=20
-> +.. TODO document QOM introspection (qom-list, qom-list-properties,
-> +   qom-get) and how it relates to QAPI type information.
-> +
->  The SchemaInfo for a command has meta-type "command", and variant
->  members "arg-type", "ret-type" and "allow-oob".  On the wire, the
->  "arguments" member of a client's "execute" command must conform to the
-> @@ -2099,3 +2102,92 @@ Example::
->      }));
->=20=20
->      [Uninteresting stuff omitted...]
-> +
-> +
-> +Code generated for type information
-> +-----------------------------------
-> +
-> +Type information is generated for user-defined types and their array
-> +types.  With option --builtins, it is also generated for the built-in
-> +types.
-> +
-> +The following files are created:
-> +
-> + ``$(prefix)qapi-type-infos.c``
-> +     A ``QAPITypeInfo`` instance for each type listed above, providing
-> +     a mapping between the QAPI type name and the masked name used by
-> +     introspection, along with optional enum lookup table and array
-> +     type pointers.
-> +
-> + ``$(prefix)qapi-type-infos.h``
-> +     Declarations for the above type info instances
-> +
-> +Each ``QAPITypeInfo`` struct has the following fields:
-> +
-> +``name``
-> +    The QAPI type name (e.g. ``"UserDefOne"``).
-> +
-> +``masked_name``
-> +    The masked name used in ``query-qmp-schema`` output.
-> +
-> +``lookup``
-> +    For enum types, a pointer to the corresponding ``QEnumLookup``
-> +    table.  ``NULL`` for non-enum types.
-> +
-> +``list``
-> +    For types that have an array variant, a pointer to the array type's
-> +    ``QAPITypeInfo``.  ``NULL`` when no array type exists.
-> +
-> +These type info instances are used by QOM property registration
-> +functions (``object_property_add_qapi()``,
-> +``object_class_property_add_qapi_enum()``, etc.) to associate each
-> +property with its QAPI type.  The ``qom-list`` and
-> +``device-list-properties`` QMP commands then expose the ``qapi-type``
-> +field, giving management tools a formal type reference they can look
-> +up in the introspection schema.
-> +
-> +Example::
-> +
-> +    $ cat qapi-generated/example-qapi-type-infos.h
-> +    [Uninteresting stuff omitted...]
-> +
-> +    #ifndef EXAMPLE_QAPI_TYPE_INFOS_H
-> +    #define EXAMPLE_QAPI_TYPE_INFOS_H
-> +
-> +    #include "qapi/qapi-builtin-type-infos.h"
-> +
-> +    extern const QAPITypeInfo UserDefOne_type_info;
-> +
-> +    extern const QAPITypeInfo UserDefOneList_type_info;
-> +
-> +    #endif /* EXAMPLE_QAPI_TYPE_INFOS_H */
-> +    $ cat qapi-generated/example-qapi-type-infos.c
-> +    [Uninteresting stuff omitted...]
-> +
-> +    const QAPITypeInfo UserDefOne_type_info =3D {
-> +        .name =3D "UserDefOne",
-> +        .masked_name =3D "1",
-
-Code generated right now has "32".  Doesn't matter to readers, but using
-generated code verbatim eases maintenance a bit.
+>   target/hexagon/cpu.h      |  1 +
+>   target/hexagon/internal.h |  4 +++
+>   target/hexagon/cpu.c      | 13 ++++++--
+>   target/hexagon/gdbstub.c  | 63 +++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 78 insertions(+), 3 deletions(-)
 
 
-> +        .list =3D &UserDefOneList_type_info,
-> +    };
+> +int hexagon_sys_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+> +{
+> +    CPUHexagonState *env = cpu_env(cs);
+> +    HexagonCPU *cpu = env_archcpu(env);
+> +    BQL_LOCK_GUARD();
 > +
-> +    const QAPITypeInfo UserDefOneList_type_info =3D {
-> +        .name =3D "UserDefOneList",
-> +        .masked_name =3D "[1]",
+> +    if (n < NUM_SREGS) {
+> +        uint32_t val;
+> +        if (n < HEX_SREG_GLB_START) {
+> +            val = env->t_sreg[n];
+> +        } else {
+> +            val = cpu->globalregs ?
+> +                hexagon_globalreg_read(cpu->globalregs, n, env->threadId) : 0;
+> +        }
+> +        return gdb_get_regl(mem_buf, val);
+> +    }
+> +    n -= NUM_SREGS;
+> +
+> +    if (n < NUM_GREGS) {
+> +        return gdb_get_regl(mem_buf, hexagon_greg_read(env, n));
 
-Likewise.
+And my PR removing gdb_get_regl failed because it got re-used
+meanwhile :(
 
-> +    };
-> +
-> +    [Uninteresting stuff omitted...]
-> +
-> +For a modular QAPI schema (see section `Include directives`_), code for
-> +each sub-module SUBDIR/SUBMODULE.json is actually generated into ::
-> +
-> + SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.h
-> + SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.c
-> +
-> +If qapi-gen.py is run with option --builtins, additional files are
-> +created:
-> +
-> + ``qapi-builtin-type-infos.h``
-> +     Type info instances for built-in types
-> +
-> + ``qapi-builtin-type-infos.c``
-> +     Definitions for the above type info instances
-> diff --git a/meson.build b/meson.build
-> index bbef9d9c2932..e51fb7a37740 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3510,6 +3510,7 @@ qapi_gen_depends =3D [ meson.current_source_dir() /=
- 'scripts/qapi/__init__.py',
->                       meson.current_source_dir() / 'scripts/qapi/parser.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/schema.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/source.p=
-y',
-> +                     meson.current_source_dir() / 'scripts/qapi/type_inf=
-os.py',
->                       meson.current_source_dir() / 'scripts/qapi/types.py=
-',
->                       meson.current_source_dir() / 'scripts/qapi/visit.py=
-',
->                       meson.current_source_dir() / 'scripts/qapi-gen.py'
-> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-> index 49ae6ecdd33e..508ab2173539 100644
-> --- a/scripts/qapi/backend.py
-> +++ b/scripts/qapi/backend.py
-> @@ -8,6 +8,7 @@
->  from .features import gen_features
->  from .introspect import gen_introspect
->  from .schema import QAPISchema
-> +from .type_infos import gen_type_infos
->  from .types import gen_types
->  from .visit import gen_visit
->=20=20
-> @@ -63,3 +64,4 @@ def generate(self,
->          gen_commands(schema, output_dir, prefix, gen_tracing)
->          gen_events(schema, output_dir, prefix)
->          gen_introspect(schema, output_dir, prefix, unmask)
-> +        gen_type_infos(schema, output_dir, prefix, builtins, unmask)
-> diff --git a/scripts/qapi/type_infos.py b/scripts/qapi/type_infos.py
-> new file mode 100644
-> index 000000000000..b29e31d92640
-> --- /dev/null
-> +++ b/scripts/qapi/type_infos.py
-> @@ -0,0 +1,163 @@
-> +"""
-> +QAPI type info generator
-> +
-> +SPDX-License-Identifier: GPL-2.0-or-later
-> +"""
-> +
-> +from typing import List, Optional
-> +
-> +from .common import c_name, mcgen
-> +from .gen import QAPISchemaModularCVisitor, ifcontext
-> +from .schema import (
-> +    QAPISchema,
-> +    QAPISchemaAlternatives,
-> +    QAPISchemaBranches,
-> +    QAPISchemaEnumMember,
-> +    QAPISchemaFeature,
-> +    QAPISchemaIfCond,
-> +    QAPISchemaObjectType,
-> +    QAPISchemaObjectTypeMember,
-> +    QAPISchemaType,
-> +)
-> +from .source import QAPISourceInfo
-> +
-> +
-> +class QAPISchemaGenTypeInfoVisitor(QAPISchemaModularCVisitor):
-> +
-> +    def __init__(self, prefix: str, unmask: bool):
-> +        super().__init__(
-> +            prefix, 'qapi-type-infos',
-> +            ' * Schema-defined QAPI type info',
-> +            ' * Built-in QAPI type info', __doc__)
-> +        self._unmask =3D unmask
-> +        self._schema: Optional[QAPISchema] =3D None
-> +
-> +    def visit_begin(self, schema: QAPISchema) -> None:
-> +        super().visit_begin(schema)
-> +        self._schema =3D schema
-> +
-> +    def _begin_builtin_module(self) -> None:
-> +        self._genc.preamble_add(mcgen('''
-> +#include "qemu/osdep.h"
-> +#include "qapi/qapi-builtin-types.h"
-> +#include "qapi/qapi-builtin-type-infos.h"
-> +'''))
-> +        self._genh.preamble_add(mcgen('''
-> +#include "qapi/qapi-type-info.h"
-> +'''))
-> +
-> +    def _begin_user_module(self, name: str) -> None:
-> +        type_infos =3D self._module_basename('qapi-type-infos', name)
-> +        types =3D self._module_basename('qapi-types', name)
-> +        self._genc.preamble_add(mcgen('''
-> +#include "qemu/osdep.h"
-> +#include "%(types)s.h"
-> +#include "%(type_infos)s.h"
-> +''',
-> +                                      types=3Dtypes,
-> +                                      type_infos=3Dtype_infos))
-> +        self._genh.preamble_add(mcgen('''
-> +#include "qapi/qapi-builtin-type-infos.h"
-> +'''))
-> +
-> +    def _has_list(self, name: str) -> bool:
-> +        assert self._schema is not None
-> +        return self._schema.lookup_type(name + 'List') is not None
+https://lore.kernel.org/qemu-devel/20261007232326.66240-1-philmd@oss.qualcomm.com/
 
-Relies on QAPISchema._make_array_type()'s
+Hexagon is 32-bit so I'll replace by gdb_get_reg32 like in
+commit 7831e5f48d2 ("target/hexagon: Expand gdb_get_regl()
+-> gdb_get_reg32()").
 
-           name =3D element_type + 'List'    # reserved by check_defn_name_=
-str()
-
-Suggest to point to ._make_array_type() with a comment.
-
-There's another name + 'List' below, at [*].  One comment here could do,
-though.
-
+> +    }
+> +    n -= NUM_GREGS;
 > +
-> +    def _masked_name(self, name: str) -> str:
-> +        assert self._schema is not None
-> +        return self._schema.definition_introspection_name(name, self._un=
-mask)
-> +
-> +    def _gen_type_info(self, name: str,
-> +                       ifcond: Optional[QAPISchemaIfCond] =3D None,
-> +                       with_lookup: bool =3D False,
-> +                       with_list: bool =3D False) -> None:
-> +        c_id =3D c_name(name + '_type_info')
-> +        masked_name_str =3D '"%s"' % self._masked_name(name)
-> +        with ifcontext(ifcond or QAPISchemaIfCond(),
-> +                       self._genh, self._genc):
-> +            self._genh.add(mcgen('''
-> +
-> +extern const QAPITypeInfo %(c_id)s;
-> +''',
-> +                                 c_id=3Dc_id))
-> +            self._genc.add(mcgen('''
-> +
-> +const QAPITypeInfo %(c_id)s =3D {
-> +    .name =3D "%(name)s",
-> +    .masked_name =3D %(masked_name)s,
-> +''',
-> +                                 c_id=3Dc_id, name=3Dname,
-> +                                 masked_name=3Dmasked_name_str))
+> +    g_assert_not_reached();
+> +}
 
-Simpler and clearer, I think:
-
-       .masked_name =3D "%(masked_name)s",
-                                    ...
-                                    masked_name=3D self._masked_name(name))
-
-> +            if with_lookup:
-> +                self._genc.add(mcgen('''
-> +    .lookup =3D &%(c_name)s_lookup,
-> +''',
-> +                                     c_name=3Dc_name(name)))
-> +            if with_list:
-> +                self._genc.add(mcgen('''
-> +    .list =3D &%(list_id)s,
-> +''',
-> +                                     list_id=3Dc_name(name + 'List_type_=
-info')))
-
-[*]
-
-> +            self._genc.add(mcgen('''
-> +};
-> +'''))
-
-Three variations of c_name(name maybe with suffix) in this function:
-
-    c_name(name + '_type_info')
-    c_name(name)
-    c_name(name + 'List_type_info')
-
-Let's put just
-
-    cname =3D c_name(name)
-
-at the beginning, and add the suffix within the template like we do in
-events.py, types.py, and visit.py, i.e. like this:
-
-               self._genh.add(mcgen('''
-
-   extern const QAPITypeInfo %(cname)s_type_info;
-   ''',
-                                    cname=3Dcname))
-
-> +
-> +    def visit_builtin_type(self,
-> +                           name: str,
-> +                           info: Optional[QAPISourceInfo],
-> +                           json_type: str) -> None:
-> +        self._gen_type_info(name, with_list=3Dself._has_list(name))
-> +
-> +    def visit_enum_type(self,
-> +                        name: str,
-> +                        info: Optional[QAPISourceInfo],
-> +                        ifcond: QAPISchemaIfCond,
-> +                        features: List[QAPISchemaFeature],
-> +                        members: List[QAPISchemaEnumMember],
-> +                        prefix: Optional[str]) -> None:
-> +        self._gen_type_info(name, ifcond,
-> +                            with_lookup=3DTrue,
-> +                            with_list=3Dself._has_list(name))
-> +
-> +    def visit_array_type(self,
-> +                         name: str,
-> +                         info: Optional[QAPISourceInfo],
-> +                         ifcond: QAPISchemaIfCond,
-> +                         element_type: QAPISchemaType) -> None:
-> +        self._gen_type_info(name, ifcond)
-> +
-> +    def visit_object_type(self,
-> +                          name: str,
-> +                          info: Optional[QAPISourceInfo],
-> +                          ifcond: QAPISchemaIfCond,
-> +                          features: List[QAPISchemaFeature],
-> +                          base: Optional[QAPISchemaObjectType],
-> +                          members: List[QAPISchemaObjectTypeMember],
-> +                          branches: Optional[QAPISchemaBranches]) -> Non=
-e:
-> +        assert self._schema is not None
-> +        typ =3D self._schema.lookup_type(name)
-> +        assert typ
-> +        if typ.is_implicit():
-> +            return
-> +        self._gen_type_info(name, ifcond,
-> +                            with_list=3Dself._has_list(name))
-> +
-> +    def visit_alternate_type(self,
-> +                             name: str,
-> +                             info: Optional[QAPISourceInfo],
-> +                             ifcond: QAPISchemaIfCond,
-> +                             features: List[QAPISchemaFeature],
-> +                             alternatives: QAPISchemaAlternatives) -> No=
-ne:
-> +        self._gen_type_info(name, ifcond,
-> +                            with_list=3Dself._has_list(name))
-
-All but one caller of ._gen_type_info() pass
-with_list=3Dself._has_list(name).  The exception is visit_array_type(),
-where we let with_list default to False.  Since .has_list(name) would
-surely be False there, we could do away with with_list and check
-._has_list() in ._gen_type_info().
-
-The array business complicates review of this patch and PATCH 07 a bit.
-It isn't actually needed until PATCH 59.  I'd like you to delay it until
-then to get it out of the way here:
-
-* Create QAPITypeInfo without member @list in PATCH 07.
-
-* Don't generate member @list in PATCH 09.
-
-* Do both right before PATCH 59.
-
-Might also enable quicker merging of the bulk of this series.
-
-> +
-> +
-> +def gen_type_infos(schema: QAPISchema,
-> +                   output_dir: str,
-> +                   prefix: str,
-> +                   opt_builtins: bool,
-> +                   opt_unmask: bool) -> None:
-> +    vis =3D QAPISchemaGenTypeInfoVisitor(prefix, opt_unmask)
-> +    schema.visit(vis)
-> +    vis.write(output_dir, opt_builtins)
 
