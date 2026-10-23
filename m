@@ -1,92 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB53606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 15:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95691606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 15:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=W6f+FPlO
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bK4ICPgR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKGwq-0000es-9v; Fri, 23 Oct 2026 11:12:48 -0400
+	id 1xKGwr-0000gH-T5; Fri, 23 Oct 2026 11:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xKGwl-0000dg-Na; Fri, 23 Oct 2026 11:12:43 -0400
+ id 1xKGwm-0000eB-SC; Fri, 23 Oct 2026 11:12:45 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xKGwk-0003dl-2s; Fri, 23 Oct 2026 11:12:43 -0400
+ id 1xKGwk-0003dp-Uv; Fri, 23 Oct 2026 11:12:44 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NEE8ZE3288600; Fri, 23 Oct 2026 15:12:36 GMT
+ 69NEEDlB3288886; Fri, 23 Oct 2026 15:12:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=w0FzpdOHg89JH8MIdWtg/K/ur238sLx3VHsU6VBrg
- 8E=; b=W6f+FPlOyzRzVRAlAe2d13QnIqcs9lOOXO9uY9Ri0+vNKGoL8mAh6bTf8
- mxt2F//hOqylUn7tPM8YCFZhhYD7Dn/+9kbs/ADYFFbxM4dGth4GpQfOJVAxzPGC
- 6DmyV2+F9Z0Qdbih6ssa8qg1LeGuxv1C9DZZoYZKYq4UMAkVerCeuExZs/2sGw+j
- Jfgf6P+69WqTu8GtXA6V3ez5Xaaphf8rjzYB0mAc7bTAPcKdgQilHouhH87DJJNB
- Beo/L8LF3wlVpiNrQY+bYcj8EKNv7wy5kmyGkkNcGAR8iMsqcVr1LBx94KtHZmOW
- ODyMdKaGIk0i+jXqwhME/y3WEZCOw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw596048-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=tKm89Lpq4gBHlTXj7
+ QXR1Tpd2BRBoXWRNK63geEePwc=; b=bK4ICPgRrRryKitWn5j0UN8NonTxEoQZt
+ kaK4GZJsQ92MmVYpV12hD2SuniqgIHLT6PRMkXWjsvPJI4Dbvr9Xp9NBe2eQRL6p
+ g+Os9HkXNy/tLeEV2p8IQ/i66bxPM5mWsD9VF43TUeSWiKurgKvj83NP40Gkm4TW
+ 1/p7c5bME6bmS3I7xwqahAFZ2bfqJby94fSyF8DYxAtG1Gba46aflP6U7cwADntP
+ YN4Ttr9k0CdLfxBA4S/5nT15l1fELWjXMUngcnyIzLFSkN2VB35CzMHwt9AS7wd+
+ G/x93dQdFqFxMQO1DNV39POLQLKoN9Mjj84ZuiRLxV4zW4FZcPtmA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hdw59604a-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
  Fri, 23 Oct 2026 15:12:36 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NE64071018563; Fri, 23 Oct 2026 15:12:35 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hg5exs5h6-1
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69NE649v2165726; Fri, 23 Oct 2026 15:12:35 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hfkg25cgb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Fri, 23 Oct 2026 15:12:35 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69NFCVRV47776150
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69NFCVFj52166954
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Fri, 23 Oct 2026 15:12:31 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8CE8E20043;
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F51A20043;
  Fri, 23 Oct 2026 15:12:31 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 70FE020040;
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F37120040;
  Fri, 23 Oct 2026 15:12:31 +0000 (GMT)
 Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
  Fri, 23 Oct 2026 15:12:31 +0000 (GMT)
 Received: by tuxmaker.boeblingen.de.ibm.com (Postfix, from userid 4958)
- id 54AC9160FDA; Fri, 23 Oct 2026 17:12:31 +0200 (CEST)
+ id 57932161FB2; Fri, 23 Oct 2026 17:12:31 +0200 (CEST)
 From: Eric Farman <farman@linux.ibm.com>
 To: Matthew Rosato <mjrosato@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PATCH 0/2] s390x MAINTAINERS updates
-Date: Fri, 23 Oct 2026 17:12:27 +0200
-Message-ID: <20261023151229.1196404-1-farman@linux.ibm.com>
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Joshua Daley <jdaley@linux.ibm.com>
+Subject: [PATCH 2/2] MAINTAINERS: Update s390 boot reviewer
+Date: Fri, 23 Oct 2026 17:12:29 +0200
+Message-ID: <20261023151229.1196404-3-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261023151229.1196404-1-farman@linux.ibm.com>
+References: <20261023151229.1196404-1-farman@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Z7TiiSLf-qjO7Pem9R21cylgxLir61mf
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA1NyBTYWx0ZWRfX1zjgFYlgA1f9
- JjrKo+FiemDNUJV6FAzv/s63dKi4cqaTKqNoWybfqXh+S5erjmU0jyYToaednvXgIe5mII91u19
- Ys2vojq6Eus3iVebq90BlnEaQ8bUft0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA1NyBTYWx0ZWRfX9uQDR+U7De4n
- GL4N5Np0mWwA2FpbyFbdft1W1zPWjNXqa/nyFEu2Grm3hu8759NEukdRQLVoddoZx/abXNdrlds
- 9WdPNxPz63+Us/0C6J1Edo8NM1vFmt9h7V0GFcAgCsAvrmxaoeNPmjPS4d8jGzsw67ve1+Knxac
- c9FvNYuU4MjqEJwslfASWKKZQS4hSgpCAst7/66t51ce3lQL+Z+PqWlrPgnxgwB2FRvjXiHQu4k
- q9giQhoE/J/tZ6zV5lNsI/LYKWjD4XqcHJit2s3Kesjoy0RdkYZnXd5owvqgqOUN5kw1om3OgdE
- Lh51/0ubXuK2Hfzg1sk+VUQRykmqM98f18oudK+cp/RUW8VmBma3vBH0U2AAr276B6CoTE/a2L3
- uk3mvwNLMQDXhagQ1HhxOsvEmXysKyKY76slU78owEBPobT1DjpvcX0mbFtE/9hXfKUNvcH4y2D
- Pq7EXorWAexy5tK2ddw==
-X-Proofpoint-ORIG-GUID: Z7TiiSLf-qjO7Pem9R21cylgxLir61mf
+X-Proofpoint-GUID: jjhzc-ZJen7-f2mlgaP6efYY6KWEWCat
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA1NyBTYWx0ZWRfXyFowTU700Vhh
+ 7d9HPLU4IE2B4ROQ9wbO72/Jvr7a6Dy28fNmnelzcdU9SNGRs09O6kelNFH6ch9yaZGG6l4TaO4
+ xhnhQIW1hLR1D4qiGJJpqtncV230d+w=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA1NyBTYWx0ZWRfX+Y+f2CoqXgfI
+ dMwQJHdUr68u2GpfePzs8yIXnMp3LAjmefqqi4M5DfRWieJDXXM9OMh5SilWQlPnh+jn0AN9f5F
+ /dQQytDRHu1rJBLJ7qQ2rQmNISvBFF/il1aXvW556WlYE9WXudtav/9f8W7vGQC93CQwKbmWYNO
+ XejyEAyiaLI79zI71tiNEQtxmRTwHbU3GrLqS0xtX/+uD+oMeF9tsBbUvwOuGnBPEaf4CHj+HLL
+ GxG9Ob73ru7Tv/CyvyCfQDTNRer5KKjhwOhd+CW9mGbw+w45n1WkqDw+K93X72N7uhmIxMFQUnf
+ Oxrh7dBj1IFvNgNaJHvwnXScucEma2EHnEVVJ9BcuQ7NuGmxOyne0RCFIYDcX5Du5LIF1Iceq1c
+ c2M3mK2e8MwRGV6cEc+r7Ht4jvhNBZML629+yKfC21ER8Kke9uJ/R/izxg0/fpcyl1oX2upYPGm
+ XDHRuKYW7xToGf3Z1cQ==
+X-Proofpoint-ORIG-GUID: jjhzc-ZJen7-f2mlgaP6efYY6KWEWCat
 X-Authority-Analysis: v=2.4 cv=Ob4NnRTY c=1 sm=1 tr=0 ts=6adb7964 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=1Ix5eLCBSyxhi_lRrlcA:9
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=fQ-ETlQAWqNoHmYCrFAA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
@@ -116,22 +120,39 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Two quick updates to MAINTAINERS
+Josh picked up some recent fixes in this area, and offered to help
+with reviews as well. Let's free up some of Jason's plate.
 
-Eric Farman (2):
-  MAINTAINERS: Add other s390x tree
-  MAINTAINERS: Update s390 boot reviewer
+Thank you, both!
 
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Cc: Jared Rossi <jrossi@linux.ibm.com>
+Cc: Jason Herne <jjherne@linux.ibm.com>
+Cc: Joshua Daley <jdaley@linux.ibm.com>
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6ee1800707d..f35dfd06c22 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1987,7 +1987,7 @@ S390-ccw boot
+ M: Jared Rossi <jrossi@linux.ibm.com>
+ R: Zhuoying Cai <zycai@linux.ibm.com>
+ R: Christian Borntraeger <borntraeger@linux.ibm.com>
+-R: Jason Herne <jjherne@linux.ibm.com>
++R: Joshua Daley <jdaley@linux.ibm.com>
+ S: Supported
+ F: hw/s390x/ipl.*
+ F: hw/s390x/cert-store.[ch]
 --=20
 2.53.0
 
