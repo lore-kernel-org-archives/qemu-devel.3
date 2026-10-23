@@ -1,80 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEAF606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA10606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EEhlfCq3
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YlCUI0/H
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKJeJ-0006eG-7U; Fri, 23 Oct 2026 14:05:51 -0400
+	id 1xKJeL-0006ep-Dh; Fri, 23 Oct 2026 14:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeG-0006bA-UU
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:49 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1xKJeF-0006aJ-TG
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:47 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeF-0004Wx-38
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:48 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-48c4649b35bso1210861f8f.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:46 -0700 (PDT)
+ id 1xKJeE-0004We-4L
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:47 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4a140e7405dso11413975e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792778745; x=1793383545; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792778744; x=1793383544; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=yVu9I6W3MoTMy0FVHeff2dgAoJBTlIEzvYjHE1m6niY=;
- b=EEhlfCq3EPeE8jwyLhvzxJt+t0+1SAJU/fakvOMZPFDitKnldAt8zBVg49vm4XoRSk
- KCTlNWQ+6S6jrSVdFwYcjM72buSQl0Ajx6m1Q9qo0bA81L/RLXdfBQIyR7RukQN01Mjb
- 45VRvrq/2JF81aKGXF3rW860XcvxM6pMHABPze9bnB22quVA3VpynDz9Snr4rLTSkeNn
- WIt9G//+sYdgm6BYmqKZUcGq3a8cETnfuc0XwQeQpDdIi3lNVyVbL67Ha+7QiIV9FDRm
- PLA/BCM9641vIAji8pT3jfSkFr9oDmsTbXQ69uT5FJ6tqjQUjGEVt1hQq+wHkf4F2iUB
- MQmw==
+ bh=WScyW62PqyKcF/Nf0syxYjkj/86hjQh8UnhI40MeJAk=;
+ b=YlCUI0/HsUq5nFHCvYKsgNO9LZPrJYplhH94sXbNdrYFFc6Hg64MTQurSrz8ZTt7zO
+ Mn0pYMvhtw9MMxDIRICEZ9EBzq2omone3FZWumNAFGyGtYB2j9yFNbwSinqRO3n0/HSt
+ 4GIBzQE3j1cQyHBZqJsSrmKQXWEbSGsj6g1mEnzovJs4DsZz03DgM5bITR3oaP246UWJ
+ Zhqbjguj7UgYWaifOVbik8Yj9tonnWJ6Wm38I6F2b3teGTTCW0v4P9RBBbKfooGcZRMo
+ Sf0o2YBgNZJ1Skq418CpY9WMHXythd9a+9255QwPehmcMimIHCGWy1AcsYGI1+M42JR6
+ 7M6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792778745; x=1793383545;
+ d=1e100.net; s=20260707; t=1792778744; x=1793383544;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=yVu9I6W3MoTMy0FVHeff2dgAoJBTlIEzvYjHE1m6niY=;
- b=AI97Gd1BnN0z/ewKk4I/60K3v+SGada5K+c6eWze8aG31/+Jf/T2hll/nNBuYMfoi+
- pR2p4Rid4XoNF0Fbz9aThxm8LYx7+a/NKHN60K7MFJxyB1aIOrKVWCSsXwzk/JIDA/Tp
- U4RhtbMcz++Je8kDI89I/EVxoyaTbqMwLLt4Mks+HBPFOX5YCQPVeqgQ69KnaQRO6qCW
- hGN1XY3hZ5x1iYc3hOzMNH3b07inutXHaNbpi99PhMiSJv0/S3czrGN6xmEorgboxqYM
- t/OCosuWIupTK2St48WN8OfvaXU/lfk5G4RZNoaQpWst74Ax8xE1lQ2PCi/G7UFCjctE
- DsfA==
-X-Gm-Message-State: AFq9FYJo5Kc/iWynwByqaEs9PRnE7Fy1lwxU+p0LL1FdbZ8xzAwVYv8y
- O4YaoqgJ7SeK7D7FwRCFbpxHyccPWnLahfrcLeaTkzwJ+RM5t4oyK8KlHeFxBv54O8E=
-X-Gm-Gg: AYBFou1/VrFObqIwbgkpqRCNmm1lfT2imFeGzteO1stIltse4z5rc3pXEo3z6WzXfk6
- nympXCvw83CFYdrZVm5Co34r2w0AcScHuMD710ozRmUvnvqn9OugQlQpd4GoOk3TPSV79AiZLtS
- v+j4+8IEoWWo/PqidKYIXnuGV+TiscRwbk4+fmEcoUBtZ9Kfso2RXGfqkdKlV/YL9iFZNc2oVtX
- qOSpKJeBqL/BCtreMekJ0VzP1FQoRyiB0WEdCM3e8Pg6QNZtjFhs9pfzm8dxsJI2o3YeYXE0Bkc
- GHoOQJsZJq2jxb767/PslGUQ89J9/ug37YB6C/kGCf3x+kEj09lPqmixEdtoCXq1aOB3kFj/hSP
- bLnUFWaZ2ReFmxVE5uLfjlNpwxuC0kZbYv/ZxnEKAZ1NKaw2abzumYU5aEOHg8VWjuatbYvpKHx
- uqf7P8dQN1DcTIffUmIy1pm7xJFZpEOqvk6GGyiZ9WLJgvF9TDhG7mcTpsb5N9j17U2avzVXnnt
- IfT++GlqzEG67p69cHiViIzqdIBFZJfMaaaLop9z/1ESerwfy1DvJc=
-X-Received: by 2002:a05:6000:230a:b0:48d:dfff:fe6b with SMTP id
- ffacd0b85a97d-48e385be006mr4640639f8f.34.1792778745507; 
- Fri, 23 Oct 2026 11:05:45 -0700 (PDT)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d4040d3sm1186534f8f.27.2026.10.23.11.05.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=WScyW62PqyKcF/Nf0syxYjkj/86hjQh8UnhI40MeJAk=;
+ b=AL19gglmGKp2dY+KgLGqgDxruS/joJ8Md8OnrOP5KZRbl2zlP1j8zXDZNQbajkBhKf
+ HZNgNqBvthVP8nm1qoF3F+ciFIKtQ4D562TQc9MD4tbdDIXkXv1XXOvBWWu/zo0dQAPk
+ 7YlXWmvusmVAfUPNGuHXkXDoqEL82IYwULpv4VDRFEhZqfjJqERUMtdAns94S+WTID+w
+ wrT/PBn5BF8QwPYM/VjxKzG3aJze1Wmb3fUVEB13ysu7Aheqe/jYGnnWH2MKXdry8Iqo
+ fHI0e+yy9Gxf58Japj2/guRtPPC14ePVCme/GkAEAgiHkTDY+JD5Euv48fqOQ6CbEPrc
+ QbxA==
+X-Gm-Message-State: AFq9FYKzquznETSGgqpR8YeTQfxFbKiCh6pwDBSTkJS0TKvsDZdu9hcp
+ 1JTvmVuzvNfKoP5f6lZLZl+fbzIOMmv4lAgaSEyStn2ClqLlWfvpIACT0XvKSu9LhU0=
+X-Gm-Gg: AYBFou3VWPior/H8pZJNgEjVrtclWi7C1LP49oOZx3txrs8FTTfNMiO1To7YMiG5Dxu
+ ZDtuRNlJBlsWClwX46oCef/pBlHfrWoJ/RBk4AfdQuq2PiQD93EPSm58sqjzBEKc/nEAuP6ElR0
+ pbH4YgL0bFK82nJ+Wgv+C6bRt45S1bPod/khrGSGqAWDkCkseRf/6sfMnHzb/wjxkg4R5/RLu7Q
+ X20u69krJUb1nCWcETTd22ETThygu2AfRN9gVHtWRdkEEA3RKqgrcPNUHBen66sXOZIVlFV8aBG
+ kCEcDX1RTodh1M59YMcB7Vsw+FIMGDRMqW2itntn7TNhOnh1r4z7jtLueC/1XTdtjndM96bN/7q
+ 4VnKonqz8OVLCMRn+ipUgcMo7Z3vFLy7WuZ3GGeGl5bn5+kR0bD8RZE4sN0sl5kwhnGWYnh79C5
+ 3W1YKdBGtMI57JuYC+EnukMRmm1xsQVeEezWLgBq5+VNU8YYgL0QMO0WmdBmaNfvQKezaX49Ihc
+ EwM8hENsbVkqPZvrY2fRM/WdJ0v/5yZCVZWVDmDb2Wu7yJsGmz6VNpC
+X-Received: by 2002:a05:600c:34c7:b0:4a1:f99e:f22d with SMTP id
+ 5b1f17b1804b1-4a211c9de3bmr54879135e9.6.1792778744154; 
  Fri, 23 Oct 2026 11:05:44 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a312fb9b90sm17842395e9.4.2026.10.23.11.05.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Oct 2026 11:05:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 75FEE60FBB;
+ by draig.lan (Postfix) with ESMTP id 0BFCF60A9E;
  Fri, 23 Oct 2026 19:05:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PULL 10/19] tests/guest-debug: add --kargs option to run-test
-Date: Fri, 23 Oct 2026 19:05:28 +0100
-Message-ID: <20261023180539.1574134-11-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 06/19] tests/functional: split x86_64 tuxrun into tcg and kvm
+ run
+Date: Fri, 23 Oct 2026 19:05:24 +0100
+Message-ID: <20261023180539.1574134-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261023180539.1574134-1-alex.bennee@linaro.org>
 References: <20261023180539.1574134-1-alex.bennee@linaro.org>
@@ -82,8 +85,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,48 +112,48 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When passing kernel arguments to QEMU with --append we need to take
-care that things are properly escaped. It's easier if we get the run
-script to do it for us that constructed the nested escaped --qargs.
+Add an explicit "kvm" run to the tuxrun tests. Although running on an
+x86_64 host would probably have defaulted to "kvm" anyway we want to
+exercise specific features later.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20261019192704.3220373-11-alex.bennee@linaro.org>
+Message-ID: <20261019192704.3220373-7-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
-index 5a8ec8a68b4..48f9512d21b 100755
---- a/tests/guest-debug/run-test.py
-+++ b/tests/guest-debug/run-test.py
-@@ -25,6 +25,7 @@ def get_args():
-                         required=True)
-     parser.add_argument("--qargs", help="Qemu arguments for test")
-     parser.add_argument("--pargs", help="Program arguments for test")
-+    parser.add_argument("--kargs", help="Kernel args to --append")
-     parser.add_argument("--binary", help="Binary to debug",
-                         required=True)
-     parser.add_argument("--test", help="GDB test script")
-@@ -89,6 +90,10 @@ def format_cmd(cmd):
-         if not args.no_suspend:
-             qemu_cmd.append("-S")
-         qemu_cmd.extend(["-gdb", f"unix:path={socket_name},server=on"])
-+
-+        if args.kargs:
-+            qemu_cmd.extend(["--append", args.kargs])
-+
-         # There is no guest program command-line in system mode.
-         assert not args.pargs
-     else:
-@@ -98,6 +103,9 @@ def format_cmd(cmd):
-         else:
-             qemu_cmd.append(f"{socket_name}")
+diff --git a/tests/functional/x86_64/test_tuxrun.py b/tests/functional/x86_64/test_tuxrun.py
+index fcbc62b1b0f..729f6447d05 100755
+--- a/tests/functional/x86_64/test_tuxrun.py
++++ b/tests/functional/x86_64/test_tuxrun.py
+@@ -24,13 +24,28 @@ class TuxRunX86Test(TuxRunBaselineTest):
+         '4b8b2a99117519c5290e1202cb36eb6c7aaba92b357b5160f5970cf5fb78a751')
  
-+        # There are no appended args in user-mode
-+        assert not args.kargs
+     def test_x86_64(self):
++        self.require_accelerator("tcg")
 +
-         # for user mode binary and args always go at the end
-         qemu_cmd.append(args.binary)
-         if args.pargs:
++        self.set_machine('q35')
++        self.cpu="Nehalem"
++        self.root='sda'
++        self.wait_for_shutdown=False
++        self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
++                           rootfs_asset=self.ASSET_X86_64_ROOTFS,
++                           drive="driver=ide-hd,bus=ide.0,unit=0",
++                           accel="tcg")
++
++    def test_x86_64_kvm(self):
++        self.require_accelerator("kvm")
++
+         self.set_machine('q35')
+         self.cpu="Nehalem"
+         self.root='sda'
+         self.wait_for_shutdown=False
+         self.common_tuxrun(kernel_asset=self.ASSET_X86_64_KERNEL,
+                            rootfs_asset=self.ASSET_X86_64_ROOTFS,
+-                           drive="driver=ide-hd,bus=ide.0,unit=0")
++                           drive="driver=ide-hd,bus=ide.0,unit=0",
++                           accel="kvm")
+ 
+ if __name__ == '__main__':
+     TuxRunBaselineTest.main()
 -- 
 2.47.3
 
