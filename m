@@ -1,85 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2DE606A334
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416AC60A261A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gj/KUG91
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Kj2by8xv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKG39-0003Gz-Hc; Fri, 23 Oct 2026 10:15:16 -0400
+	id 1xKG3E-0003IA-Vu; Fri, 23 Oct 2026 10:15:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG37-0003GL-AQ
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:13 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1xKG39-0003Gx-7T
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:15 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG35-0006YU-FE
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:12 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-48e3b22e971so321346f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:11 -0700 (PDT)
+ id 1xKG37-0006Ya-2L
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:14 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4a218b13c4bso3559045e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792764910; x=1793369710; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=LuEpIyT2R96JtdAwyVI+9GBej4TOi8f0BX9qqxsJV/Y=;
- b=gj/KUG911zWkQ//HmoUFAwid5O6CGeTV+6yoOXvbMlnC6Bkw7r6UYNoe1b4WfG/+gl
- Z2OU+Oh+pUWPF24+3Hq/sSS+8ZxjV+9/9/RUlYmNxVSSR5l6zB/Eh4k2xZCNN1S7IKNC
- BZI7BBcfDWTJGhXfFDLTEmcIuo/YD1e6j3gY+FzCjFBUaDR3by3fX1QAyDAowGE0TeX7
- /sn56eq0eK3rq3+Hsjwad7ZiFqGx7CBCZBSG/YGgrNcdgVoy6jgU1aDWHbbh3daWZTp2
- ZZNwElrhKwtgIIKtFGcmiisMuT+zWsOHPGKjwdXyowhiycy0FH5Bh/QDbsUsRw4KGrH+
- GwPA==
+ d=linaro.org; s=google; t=1792764911; x=1793369711; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=3LKAZy34YndD6iJuQL7KIb5ycfRRUxBeUIboGwU86RU=;
+ b=Kj2by8xvLHKOTCEkhYdLnXJwBDB80ZpcHThJa7zzxMl36oAbWd3MRVYxvCE4vCI5zS
+ 0ft+lp9AX+/Ij0zsChmoOuIc9nIVrt5CDGIM9vxPEQkSigQdGuDvsZTg15Dbm6e61vtk
+ mOpavTCgoum0FvaeC7aeCIUR5MMK7KZOLxLmKzXw5MFUJoa3g34Zcgvfhj8cHJ6DgqjW
+ C+w9RguYSLTzyeWLTevOOuCFyW0M/Zb8GrsQ82qQAmvJv6LpubYRXOtr+Ax7ptlsM/fN
+ G5Uyti+DGjIRj1PZUzmYU22BjjSwXUmA7/AFgQX+eD9lt5vImOKJXDs+fXwBHv9LJnn/
+ gPVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792764910; x=1793369710;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=LuEpIyT2R96JtdAwyVI+9GBej4TOi8f0BX9qqxsJV/Y=;
- b=FhCSJbZwePwAkK4B+WXzlWYD/SYVBoVVsyF6korsGavy485XkVrFaPzJ/kpGRHDHBw
- 4W8hQp6FhoyhqUch21FkME5TjfcuXQ/OJq5zdWnLrzHRKEcYYPE56QP8cPjnRXKCSTel
- 0R2HHBuHasPlPxzDNejt8bZ2S67SkO04GQLQWzfNcbe7sPP58Vo9+i0MRyjebFKvBkTZ
- P5ZwDfMy4XYdyNfSCMnOf8Bx6KhpdkvGCKa7430zrEQvZ4LfAXbDUa/p4PwpI0FZ/mV3
- 6kUANH8DC2ZFI64IjRhR5WtzLJwmoHA71sh9G2R/TndftOg9CF48hO8dVlfc5StIkE0b
- Mx8Q==
-X-Gm-Message-State: AFq9FYLBXueoD/V/bjIuv0flAqN66Snvk1FzO2vtT9pENlvxlmXk/EVr
- OHsh/6gkHUlcDDx5ERdoObW/IIxem2eukvtuI/DacK/dv3P+agg/BHDViJ9NPX1NpG/PSX7rjiu
- YEMR0Ltg=
-X-Gm-Gg: AYBFou0NF+HWJJnM6K7Vbh+hS5K2TEra0cDGdjbbOU6nFlDkqy/TVHND1i5FQcRoK99
- TKojLMopjIkxMVN4/k3M6gis96IYja65ORejRBMjDbRhKiDXA0jFslnO0SUcddttgAqVaufn+f6
- v4yZkG+u367vjmuwX8v+6/0uw1yvHAB4zay1oFR4DFtUqsNTPfZiQuTjDw4IxQVSYQt4rFnztMJ
- MBz+CN54WP3mB9BPOFF0FFInIpU6ip+rbYbyH67Q73SYoCQ32YvyZv3Bls9W3lVSWlHo+2WSoDL
- gk8irg5zjq8Chilok8MXIkDHvKrAh4Ke9gPuz/dbD1+NLuRHSZ45BOKTpQIU5UBvz/NXuceHwPB
- xnnBFOl2q9+TWoIjv6YQ2IJj/+prtoDCm2hmbK/Ia+3aTNGu5Rn0G5NAUXKHYp8cKomtG9B3ekd
- Otgc07PNfFsO2sSKfNQgMRxi4wdIchl6VPILaQgPCzBd6iW2K9aROZxmzmpdgLxG5oKtR8XkJep
- fPtPClzGLZ9bke5v+vORyVQO2WmucBogiYfAksSAV6XPfrUyos4Xoxb41GUPQ/rqMMibkygM9E3
- CqxdWnemjFp44BidpuyTkrTq3Srzroj1PPJaI+0l94NymN90y71gJvsnPoEK
-X-Received: by 2002:a05:600c:468e:b0:4a1:e11f:b2d5 with SMTP id
- 5b1f17b1804b1-4a312e8cce8mr625685e9.2.1792764909752; 
- Fri, 23 Oct 2026 07:15:09 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792764911; x=1793369711;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=3LKAZy34YndD6iJuQL7KIb5ycfRRUxBeUIboGwU86RU=;
+ b=OlSrt6e51ogoF59JO6BvFPmlBK3+WWXpfuQk//O8lAWGQ1gmFBgNOiZGIFGZwUKiYh
+ 676s1htIMAmej2vui+ujRYX9k4reT4WrziupltIhe4L3RZWEL6++kc86jwVbRLnyqV3l
+ TrapPtC7z49BZdONFcm6t73ncYeNJvjoHbb5ELxxI9vYeXDruDVXVveXJk7/BZX3gvM2
+ NrfWnrye7coejFi0B+INtK8MhPscIjvJ33J66iR5wkIQgGxvX4Di1bFWLf+6Tt5qxsQY
+ d2V4EaJXxgr5mi8aK2nBq091W7zJmX652a7Dl80f/KYBIP9JBblzmHeCE3C4iafsYZ2k
+ unQg==
+X-Gm-Message-State: AFq9FYJ0d/DFrJ8c96p+t22lFSbPHt1v+f+vjz83+YplwlojFnPBhABG
+ e7SyI3tWleMtc1rKSv6+NnuiEXs0+t39dJv5DKLnSnBrV6BljKb8Pe7c10Hzdtcf29Cglspnqwi
+ NfEydIXo=
+X-Gm-Gg: AYBFou2YOEQ15PsEPm6gvVHMKelswudgXjMUfh1AfWlyvdWH70mbDaxygEvURbteFe6
+ +x1vmoUYESTGEm2120bJyLDjtjAxVEu+ZJvcRDUTik9eDhisYWNGfiC5PR3S9Ym0jhDo110aEjZ
+ AwdVUC5DAqW0FSF3ZQj+dG6qXEuWeuUBhA5zO1CS9LzRdvfZteuraAVQokmbSfwYIeqCznUIIgC
+ Kntff7WnE6bKKYaHaAvyyFB+hK0f0TsV/H3Zw3RN83C+P328xVyIGBm7K1MO3ZctqjUngauGIXw
+ us/HKLgleh9fSg8K0xarhHYEa8SpZzIIlfDo9+zfMm1K1u9046x7L2YuyYR7kWRXJIukXdWMmTe
+ Xw1NlHDAf011SxuYjpna9CwD1oZscG6IRuljHDuKOpTWarpHSYW1cgot9cq+TZYfmG7FfP94OHG
+ PxI1Qrst85LfGqn+EKVetQlIPWpLcM6A50tedPj/rZLdB9G5DQztYZ3385MN0jWgUXfx96rVjl4
+ ZrD51zSg2Bpv8O1rub+qqNRIx62GZ/+oe7Ks/HWGEGGXBHBQh0uX7jaysnDcH2Q+wNN80cj8X9E
+ jViHv+uZAX9JaPhs7P8s2btApsVwgXvC6qa/hp39IaLcIqdAcMDVXaLHm0JV
+X-Received: by 2002:a05:600c:3544:b0:4a2:883:4adb with SMTP id
+ 5b1f17b1804b1-4a211cb275amr41698325e9.22.1792764911170; 
+ Fri, 23 Oct 2026 07:15:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.07
+ 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 07:15:08 -0700 (PDT)
+ Fri, 23 Oct 2026 07:15:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/16] hw/arm/bcm2838: enable BCM2838 RNG200
-Date: Fri, 23 Oct 2026 15:14:49 +0100
-Message-ID: <20261023141503.1397009-3-peter.maydell@linaro.org>
+Subject: [PULL 03/16] hw/misc/bcm2838_thermal: add BCM2838 thermal sensor
+Date: Fri, 23 Oct 2026 15:14:50 +0100
+Message-ID: <20261023141503.1397009-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261023141503.1397009-1-peter.maydell@linaro.org>
 References: <20261023141503.1397009-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,121 +107,182 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marcelo Manzo <marcelomanzo@gmail.com>
+From: Sergey Kambalin <serg.oker@gmail.com>
 
-Wire the BCM2838 RNG200 device (added in the previous patch) into
-the SoC: instantiate it in the peripherals block, map its register
-region at the real BCM2711 physical address, and connect its
-interrupt through both the GIC and the legacy GPU interrupt
-controller path (matching how the device's own realize() wires it,
-mirroring the pattern used for the older BCM2835 RNG on raspi0-3).
-Also stop raspi4b from masking out the "brcm,bcm2711-rng200"
-device-tree node, now that the controller it describes is actually
-implemented.
+Add a dummy BCM2838 (BCM2711/Raspberry Pi 4B) thermal sensor: a
+single status register that always reports a fixed 25C reading with
+both "valid" bits set. Real hardware reports live temperature; a
+fixed reading is enough for guests that just probe the sensor and
+read it, without modeling actual thermal behavior.
 
-Adapted from patch 16/41 of Sergey Kambalin's Raspberry Pi 4B series
-(patchwork series 829638) against current QEMU master.
+Part of Sergey Kambalin's original Raspberry Pi 4B series (patchwork
+series 829638, posted to qemu-devel in 2024, never merged). Ported
+to current master by Marcelo Manzo: header paths moved under
+hw/core/, class_init()'s const void *data. No functional change
+otherwise (this device has no reset or migration state to begin
+with).
 
+Boot-tested: guest's thermal_zone0/temp reports 25310 (25.31C),
+matching the fixed reading this device returns.
+
+Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20261015181111.60491-3-marcelomanzo@gmail.com
+Message-id: 20261015181111.60491-4-marcelomanzo@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/bcm2838_peripherals.h |  2 ++
- hw/arm/bcm2838.c                     |  4 ++++
- hw/arm/bcm2838_peripherals.c         | 17 +++++++++++++++++
- hw/arm/raspi4b.c                     |  1 -
- 4 files changed, 23 insertions(+), 1 deletion(-)
+ include/hw/misc/bcm2838_thermal.h | 23 ++++++++
+ hw/misc/bcm2838_thermal.c         | 98 +++++++++++++++++++++++++++++++
+ hw/misc/meson.build               |  1 +
+ 3 files changed, 122 insertions(+)
+ create mode 100644 include/hw/misc/bcm2838_thermal.h
+ create mode 100644 hw/misc/bcm2838_thermal.c
 
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 0be97e67c73..15423527e80 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -10,6 +10,7 @@
- #define BCM2838_PERIPHERALS_H
- 
- #include "hw/arm/bcm2835_peripherals.h"
-+#include "hw/misc/bcm2838_rng200.h"
- #include "hw/sd/sdhci.h"
- #include "hw/gpio/bcm2838_gpio.h"
- 
-@@ -64,6 +65,7 @@ struct BCM2838PeripheralState {
-     MemoryRegion peri_low_mr_alias;
-     MemoryRegion mphi_mr_alias;
- 
-+    BCM2838Rng200State rng200;
-     SDHCIState emmc2;
-     BCM2838GpioState gpio;
- 
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index 089af412a30..218bebc0e85 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -209,6 +209,10 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->dwc2), 0,
-                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_DWC2));
- 
-+    /* Connect RNG200 to the interrupt controller */
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&ps->rng200), 0,
-+                       qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_RNG200));
+diff --git a/include/hw/misc/bcm2838_thermal.h b/include/hw/misc/bcm2838_thermal.h
+new file mode 100644
+index 00000000000..1ba524ed8bd
+--- /dev/null
++++ b/include/hw/misc/bcm2838_thermal.h
+@@ -0,0 +1,23 @@
++/*
++ * BCM2838 dummy thermal sensor
++ *
++ * Copyright (C) 2022 Maksim Kopusov <maksim.kopusov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     /* Connect DMA 0-6 to the interrupt controller */
-     for (int n = GIC_SPI_INTERRUPT_DMA_0; n <= GIC_SPI_INTERRUPT_DMA_6; n++) {
-         sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->dma),
-diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
-index 812b5b8480c..35e2fc005ca 100644
---- a/hw/arm/bcm2838_peripherals.c
-+++ b/hw/arm/bcm2838_peripherals.c
-@@ -35,6 +35,9 @@ static void bcm2838_peripherals_init(Object *obj)
-     /* Extended Mass Media Controller 2 */
-     object_initialize_child(obj, "emmc2", &s->emmc2, TYPE_SYSBUS_SDHCI);
- 
-+    /* Random Number Generator */
-+    object_initialize_child(obj, "rng200", &s->rng200, TYPE_BCM2838_RNG200);
++#ifndef BCM2838_THERMAL_H
++#define BCM2838_THERMAL_H
 +
-     /* GPIO */
-     object_initialize_child(obj, "gpio", &s->gpio, TYPE_BCM2838_GPIO);
- 
-@@ -67,6 +70,8 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-     MemoryRegion *mphi_mr;
-     BCM2838PeripheralState *s = BCM2838_PERIPHERALS(dev);
-     BCMSocPeripheralBaseState *s_base = BCM_SOC_PERIPHERALS_BASE(dev);
-+    MemoryRegion *rng200_mr;
-+    qemu_irq rng_200_irq;
-     int n;
- 
-     bcm_soc_peripherals_common_realize(dev, errp);
-@@ -79,6 +84,18 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-                                         BCM2838_VC_PERI_LOW_BASE,
-                                         &s->peri_low_mr_alias, 1);
- 
-+    /* Random Number Generator */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rng200), errp)) {
-+        return;
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_BCM2838_THERMAL "bcm2838-thermal"
++OBJECT_DECLARE_SIMPLE_TYPE(Bcm2838ThermalState, BCM2838_THERMAL)
++
++struct Bcm2838ThermalState {
++    SysBusDevice busdev;
++    MemoryRegion iomem;
++};
++
++#endif /* BCM2838_THERMAL_H */
+diff --git a/hw/misc/bcm2838_thermal.c b/hw/misc/bcm2838_thermal.c
+new file mode 100644
+index 00000000000..40148ddbb98
+--- /dev/null
++++ b/hw/misc/bcm2838_thermal.c
+@@ -0,0 +1,98 @@
++/*
++ * BCM2838 dummy thermal sensor
++ *
++ * Copyright (C) 2022 Maksim Kopusov <maksim.kopusov@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qapi/error.h"
++#include "hw/misc/bcm2838_thermal.h"
++#include "hw/core/registerfields.h"
++#include "migration/vmstate.h"
++#include "qemu/error-report.h"
++
++REG32(STAT, 0x200)
++FIELD(STAT, DATA, 0, 10)
++FIELD(STAT, VALID_1, 10, 1)
++FIELD(STAT, VALID_2, 16, 1)
++
++#define BCM2838_THERMAL_SIZE 0xf00
++
++#define THERMAL_OFFSET_C 410040
++#define THERMAL_COEFF  (-487.0f)
++#define MILLIDEGREE_COEFF 1000
++
++static uint16_t bcm2838_thermal_temp2adc(int temp_C)
++{
++    return (temp_C * MILLIDEGREE_COEFF - THERMAL_OFFSET_C) / THERMAL_COEFF;
++}
++
++static uint64_t bcm2838_thermal_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint32_t val = 0;
++
++    switch (addr) {
++    case A_STAT:
++        /* Temperature is always 25°C */
++        val = FIELD_DP32(val, STAT, DATA, bcm2838_thermal_temp2adc(25));
++        val = FIELD_DP32(val, STAT, VALID_1, 1);
++        val = FIELD_DP32(val, STAT, VALID_2, 1);
++
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s can't access addr: 0x%"HWADDR_PRIx,
++                     TYPE_BCM2838_THERMAL, addr);
 +    }
++    return val;
++}
 +
-+    rng200_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->rng200), 0);
-+    memory_region_add_subregion(&s_base->peri_mr, RNG_OFFSET, rng200_mr);
++static void bcm2838_thermal_write(void *opaque, hwaddr addr,
++                                      uint64_t value, unsigned size)
++{
++    qemu_log_mask(LOG_GUEST_ERROR, "%s: write 0x%" PRIx64
++                                " to 0x%" HWADDR_PRIx "\n",
++                __func__, value, addr);
++}
 +
-+    rng_200_irq = qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                         BCM2835_IC_GPU_IRQ, INTERRUPT_RNG);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->rng200), 0, rng_200_irq);
++static const MemoryRegionOps bcm2838_thermal_ops = {
++    .read = bcm2838_thermal_read,
++    .write = bcm2838_thermal_write,
++    .impl.max_access_size = 4,
++    .valid.min_access_size = 4,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
 +
-     /* Extended Mass Media Controller 2 */
-     object_property_set_uint(OBJECT(&s->emmc2), "sd-spec-version", 3,
-                              &error_abort);
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 566d64572db..87fcba036d8 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -64,7 +64,6 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
-     /* Temporarily disable following devices until they are implemented */
-     const char *nodes_to_remove[] = {
-         "brcm,bcm2711-pcie",
--        "brcm,bcm2711-rng200",
-         "brcm,bcm2711-thermal",
-         "brcm,bcm2711-genet-v5",
-     };
++static void bcm2838_thermal_realize(DeviceState *dev, Error **errp)
++{
++    Bcm2838ThermalState *s = BCM2838_THERMAL(dev);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &bcm2838_thermal_ops,
++                          s, TYPE_BCM2838_THERMAL, BCM2838_THERMAL_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->iomem);
++}
++
++static void bcm2838_thermal_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = bcm2838_thermal_realize;
++
++    /* This device has no state: no need for vmstate or reset */
++}
++
++static const TypeInfo bcm2838_thermal_info = {
++    .name = TYPE_BCM2838_THERMAL,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(Bcm2838ThermalState),
++    .class_init = bcm2838_thermal_class_init,
++};
++
++static void bcm2838_thermal_register_types(void)
++{
++    type_register_static(&bcm2838_thermal_info);
++}
++
++type_init(bcm2838_thermal_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 02e90b479ee..90f3f89de70 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -100,6 +100,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+   'bcm2835_cprman.c',
+   'bcm2835_powermgt.c',
+   'bcm2838_rng200.c',
++  'bcm2838_thermal.c',
+ ))
+ system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
+ system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
 -- 
 2.43.0
 
