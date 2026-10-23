@@ -1,91 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05C8606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 22:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7274A606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 22:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=c30ETfrv
+	dkim=pass (2048-bit key, unprotected) header.d=treblig.org header.i=@treblig.org header.a=rsa-sha256 header.s=bytemarkmx header.b=CwTaEcQ6
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKNut-0006fQ-88; Fri, 23 Oct 2026 18:39:15 -0400
+	id 1xKO6Z-0001aN-VU; Fri, 23 Oct 2026 18:51:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3DeLbagsKCp4L8K8LESJ8RGEMMEJC.AMKOCKS-BCTCJLMLELS.MPE@flex--namangulati.bounces.google.com>)
- id 1xKNur-0006ec-Kp
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 18:39:13 -0400
-Received: from mail-qk1-x745.google.com ([2607:f8b0:4864:20::745])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3DeLbagsKCp4L8K8LESJ8RGEMMEJC.AMKOCKS-BCTCJLMLELS.MPE@flex--namangulati.bounces.google.com>)
- id 1xKNup-0002lq-MC
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 18:39:13 -0400
-Received: by mail-qk1-x745.google.com with SMTP id
- af79cd13be357-93f1e62510cso348880485a.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 15:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792795150; x=1793399950; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:from:subject
- :message-id:references:mime-version:in-reply-to:date:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=TG/3qCag+2MZxljLg2V3FvMRPJf+QVtBuFAEftc9fWc=;
- b=c30ETfrvjVwVpuQqeMhW7rwuZfNfn9SQqPhPF+bldIKlKHwiz7Lnn+ndPDhzeaEzKV
- uk+8bpyaz6P4cd5aQV87ju6fHlh9Mq7LtRY4YKnsrPZfyAS9SZeGYrLJgiqDu6qnc17L
- SWRW+52Od75WjEqKNXheDyj+qfI/ZtL7kqaVnn6vyQxpf9lb1UYcYfJdm0A7ZTO8gG0f
- j+mhhTkszEBZZ1ACwMw19gfigJfZtU8bRZwbvr2ykhnye7Qi9+dbow8jrO5PvZ+C3H8C
- 6Nm2J8qTdfDmssRDLxkELiWug6/YujdZcxtjedWGzTaf2x7maptlrh9Z/R8Tdx1bINxU
- kJwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792795150; x=1793399950;
- h=content-transfer-encoding:content-type:cc:to:from:subject
- :message-id:references:mime-version:in-reply-to:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TG/3qCag+2MZxljLg2V3FvMRPJf+QVtBuFAEftc9fWc=;
- b=20J0DXAzFsnPynPDPxdaz6ZjQ3ew4xDUQrD9zO4cu48vM7C6JFG2fRqlkvto/o5dHu
- U2fRQHiVij/iq4e/5m+w5xzCTUcZ9IJh235sDEkd46AG7GjvM4y6fEkmE6JS5Mm5BtVB
- Y361POqKdmlf9XXV9xbVA+nkbYoe81zcH60JPPzPvsJS3TwVL/ro5qsLff8UVeRDqp8n
- LmKPBjZ1NQA+VnciSmIFzEXGWG+IvhsDcpoo4Um8ZKPzwE7MtkjzDpddBYNyi5vZwPqJ
- eru/X7EFK/f0LFvzD8mjVJcfI209neHcu6aZgT4r2wTxi18V323uJIXf0Q/nRbdNTyQ3
- NtBA==
-X-Gm-Message-State: AFq9FYI5qXguxNzdIJPYBhvzrPP7k7ZABx0YNerFVzPStMH+OJv7+m+P
- wfNOiP/H5X6j7nMZ0eUGxArAWfCnIENQfmlxgcVM+PQlp2UM5OBFQvwFTpZIyqOrE7wo1XDJPFh
- ahMSGuqeN7LRbOUHj/WvjdSXZSPVjowjB/TCldOZFgqKgPthTXGPzfg/SiFAJKLO+yOK9YRa/8W
- /NNnwLEMJ9qRihUwWVYnevXLNXgChHtyLyBLQirJX3j7IzMollK7MROnMmV97glg==
-X-Received: from qvnv9.prod.google.com ([2002:a0c:f909:0:b0:919:91a7:dc5c])
- (user=namangulati job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:620a:458e:b0:93a:83d:1d0e with SMTP id
- af79cd13be357-940ef9526a1mr76758885a.38.1792795149604; 
- Fri, 23 Oct 2026 15:39:09 -0700 (PDT)
-Date: Fri, 23 Oct 2026 22:39:01 +0000
-In-Reply-To: <20261023223902.1275539-1-namangulati@google.com>
-X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-References: <20261023223902.1275539-1-namangulati@google.com>
-X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
-Message-ID: <20261023223902.1275539-4-namangulati@google.com>
-Subject: [PATCH v6 3/4] vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
-From: Naman Gulati <namangulati@google.com>
-To: qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- "=?UTF-8?q?C=C3=A9dric=20Le=20Goater?=" <clg@redhat.com>,
- Alex Williamson <alex@shazbot.org>, 
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1xKO6S-0001Zv-DU; Fri, 23 Oct 2026 18:51:12 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1xKO6Q-00048C-6u; Fri, 23 Oct 2026 18:51:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=r/0vZ9XeYv6W1ZS9Y1AMZ3WMWGbwcGx0bg2i9kCEhWE=; b=CwTaEcQ6yzQWiXFJ
+ LIRmADGd7b1BqrbNxIIrFDZBH2zwNoryjDVwyzEsqbtKulx+6uILV1q2kIYmrepIoHiL5ZnaYv9HS
+ Lj5KyC1yi+ZBtalOmCG5ONR+fF4yBBMLf3ECNUaQaklhxEYuoUJc/KWPKedEMmZmuLgA2CiJtvqWi
+ olS46FFzSq/DpRvcuHLl8hi33uOUKzGllBbe95f62ZTrh8+un2QAtxJfO0T2dOarsfDKRGiCN0A8D
+ fhrJMPZ6op5YPMqlCbfUGXk2Z/Z+dkGkvSGQw50M/dMv9SE8NVCBr2yvJZpsZ2BktNvacl6rWmWAE
+ pBs9ua6zhuPvcuZchA==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1xKO6G-00000002KpI-2Jhy;
+ Fri, 23 Oct 2026 22:51:00 +0000
+Date: Fri, 23 Oct 2026 22:51:00 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Matt Evans <matt@ozlabs.org>, Naman Gulati <namangulati@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::745;
- envelope-from=3DeLbagsKCp4L8K8LESJ8RGEMMEJC.AMKOCKS-BCTCJLMLELS.MPE@flex--namangulati.bounces.google.com;
- helo=mail-qk1-x745.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v3 11/18] target/i386: drop HMP $pc
+Message-ID: <atvk1Moo4nA_w_pi@gallifrey>
+References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
+ <20261022-query-reg-v3-11-7ad902b9a7cf@redhat.com>
+ <atqdgESEVhYYsz5e@gallifrey>
+ <CAJ+F1CJvkXiBLWrRvWOeG7+qBLOovsZ8xOhoBtxd26CVor=DgQ@mail.gmail.com>
+X-Archived-By: <archiver.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CJvkXiBLWrRvWOeG7+qBLOovsZ8xOhoBtxd26CVor=DgQ@mail.gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.113+deb13-amd64 (x86_64)
+X-Uptime: 22:46:46 up 7 days, 8:07, 3 users, load average: 0.01, 0.02, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,134 +88,95 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a setup_sparse_mmaps callback to VFIODeviceIOOps so transport
-backends (such as vfio-user) can parse custom sparse mmap capabilities,
-falling back to vfio_region_setup_sparse_mmaps() to process shared
-VFIO mmap capabilities.
+* Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
+> Hi
+> 
+> On Fri, Oct 23, 2026 at 3:35 AM Dr. David Alan Gilbert <dave@treblig.org> wrote:
+> >
+> > * Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
+> > > The to be deprecated MonitorDef provided a synthetic $pc alias on
+> > > x86 (which begin as an $eip alias). Preserving it requires x86-specific
+> > > semantics (CPUClass::get_pc() omits the historical truncation).
+> > > Use $eip or $rip instead, adding $cs.base as required.
+> > >
+> > > It was never a documented feature, HMP is not a stable API, x86-only,
+> > > and the replacement ($rip/$eip + $cs.base) is arguably more correct.
+> > > Nobody asked for a deprecation window on ML either.
+> > >
+> > > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> >
+> > <snip>
+> >
+> > > diff --git a/tests/qtest/test-hmp.c b/tests/qtest/test-hmp.c
+> > > index a523dbb446ce..b3f8fd58612d 100644
+> > > --- a/tests/qtest/test-hmp.c
+> > > +++ b/tests/qtest/test-hmp.c
+> > > @@ -58,7 +58,6 @@ static const char *hmp_cmds[] = {
+> > >      "object_del mem1",
+> > >      "one-insn-per-tb on",
+> > >      "pmemsave 0 4096 \"/dev/null\"",
+> > > -    "p $pc + 8",
+> >
+> > That leaves us with no test of the 'p' command, and no test of reading
+> > a register.
+> > Given how much you're changing accessing the registers you
+> > should still have a basic test by the end.
+> 
+> The existing test doesn't really do much though, it just checks we
+> don't crash basically. I can try addressing this as a followup
+> 
+> >
+> > How does this test work on S390 where 'info registers' shows
+> > NIP but 'p $pc' works but 'p $nip' doesn't?
+> 
+> I assume you are talking about gdb, since $pc doesn't work with HMP-S390.
 
-Reviewed-by: Thanos Makatos <thanos.makatos@nutanix.com>
-Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Signed-off-by: Naman Gulati <namangulati@google.com>
----
- hw/vfio/vfio-region.h         |  5 +++++
- include/hw/vfio/vfio-device.h | 16 ++++++++++++++++
- hw/vfio/device.c              |  1 +
- hw/vfio/region.c              | 19 ++++++++++++++++---
- 4 files changed, 38 insertions(+), 3 deletions(-)
+Oh! It was that test I was worried about, so that 'p $pc + 8' fails
+on s390 - with an 'unknown register';  so yes, removing the x86 one doesn't
+make any difference then.
 
-diff --git a/hw/vfio/vfio-region.h b/hw/vfio/vfio-region.h
-index 9f6a5cf7d5..abcfbacfff 100644
---- a/hw/vfio/vfio-region.h
-+++ b/hw/vfio/vfio-region.h
-@@ -46,4 +46,9 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bo=
-ol enabled);
- void vfio_region_exit(VFIORegion *region);
- void vfio_region_finalize(VFIORegion *region);
-=20
-+struct vfio_region_info;
-+int vfio_region_setup_sparse_mmaps(VFIORegion *region,
-+                                    struct vfio_region_info *info,
-+                                    Error **errp);
-+
- #endif /* HW_VFIO_REGION_H */
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 8472420d3f..3136e152f2 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -43,6 +43,7 @@ enum {
-=20
- typedef struct VFIODeviceOps VFIODeviceOps;
- typedef struct VFIODeviceIOOps VFIODeviceIOOps;
-+typedef struct VFIORegion VFIORegion;
- typedef struct VFIOMigration VFIOMigration;
-=20
- typedef struct IOMMUFDBackend IOMMUFDBackend;
-@@ -218,6 +219,21 @@ struct VFIODeviceIOOps {
-     int (*get_region_info)(VFIODevice *vdev,
-                            struct vfio_region_info *info, int *fd);
-=20
-+    /**
-+     * @setup_sparse_mmaps
-+     *
-+     * Parse sparse mmap capabilities for a region and initialize region->=
-mmaps.
-+     *
-+     * @region: #VFIORegion to set up
-+     * @info: region info struct containing capabilities
-+     * @errp: pointer to Error*, to store an error if it happens
-+     *
-+     * Returns 0 on success, -ENODEV if not sparse, or negative error code=
-.
-+     */
-+    int (*setup_sparse_mmaps)(VFIORegion *region,
-+                              struct vfio_region_info *info,
-+                              Error **errp);
-+
-     /**
-      * @get_irq_info
-      *
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 4f11959633..339c7242ed 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -662,6 +662,7 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl =3D {
-=20
-     .device_feature =3D vfio_device_io_device_feature,
-     .get_region_info =3D vfio_device_io_get_region_info,
-+    .setup_sparse_mmaps =3D vfio_region_setup_sparse_mmaps,
-     .get_irq_info =3D vfio_device_io_get_irq_info,
-     .set_irqs =3D vfio_device_io_set_irqs,
-     .region_read =3D vfio_device_io_region_read,
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 16efed2fce..8de26f3d9b 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -162,9 +162,9 @@ static int vfio_mmap_compare_offset(const void *a, cons=
-t void *b)
-     return 0;
- }
-=20
--static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
--                                          struct vfio_region_info *info,
--                                          Error **errp)
-+int vfio_region_setup_sparse_mmaps(VFIORegion *region,
-+                                    struct vfio_region_info *info,
-+                                    Error **errp)
- {
-     struct vfio_info_cap_header *hdr;
-     struct vfio_region_info_cap_sparse_mmap *sparse;
-@@ -198,6 +198,19 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *=
-region,
-=20
-     region->nr_mmaps =3D j;
-     region->mmaps =3D g_realloc(region->mmaps, j * sizeof(VFIOMmap));
-+    return 0;
-+}
-+
-+static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
-+                                          struct vfio_region_info *info,
-+                                          Error **errp)
-+{
-+    int ret, i;
-+
-+    ret =3D region->vbasedev->io_ops->setup_sparse_mmaps(region, info, err=
-p);
-+    if (ret) {
-+        return ret;
-+    }
-=20
-     /*
-      * Sort sparse mmaps by offset to ensure proper handling of gaps
---=20
-2.56.0.307.g5fe7bd680c-goog
+> > I assume gdb also has some concept of a 'pc' at it's end?
+> 
+> GDB has extra synthetic pseudo-registers. We have a bunch in QEMU (and
+> this series add more). We can add extra as necessary. But $pc for x86
+> is currently ill-defined, so we decided to drop it earlier.
 
+OK, it was just that loss of the test for reading $pc which worried me;
+hmm it would be great if we could find a way to add a test back in the future
+for register reading.
+Given that it already silently fails on s390, you could actually leave
+that test line in and when run on any non-(x86, s390) it would test the
+reading still.
+
+Dave
+
+> > Dave
+> >
+> >
+> > >      "qom-list /",
+> > >      "qom-set /machine initrd test",
+> > >      "qom-get /machine initrd",
+> > >
+> > > --
+> > > 2.56.0.116.g6de20f6092dc
+> > >
+> > --
+> >  -----Open up your eyes, open up your mind, open up your code -------
+> > / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \
+> > \        dave @ treblig.org |                               | In Hex /
+> >  \ _________________________|_____ http://www.treblig.org   |_______/
+> >
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
