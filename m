@@ -1,57 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C8C606A319
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 01:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574FA606A320
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 01:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK4Od-00062w-BB; Thu, 22 Oct 2026 21:48:39 -0400
+	id 1xK4Oo-00066R-E7; Thu, 22 Oct 2026 21:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xK4OL-0005xd-1Z
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:48:21 -0400
+ id 1xK4OK-0005x1-2E
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:48:20 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xK4OH-0005pa-KF
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:48:20 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1xK4OG-0005pM-1I
+ for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:48:19 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8Ax29HfvNpqFpsYAA--.6663S3;
- Fri, 23 Oct 2026 09:48:15 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxUNHcvNpqEZsYAA--.6244S3;
+ Fri, 23 Oct 2026 09:48:12 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJCx+c3evNpqzF8vAA--.7714S2;
- Fri, 23 Oct 2026 09:48:14 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxGs7avNpqxl8vAA--.7626S5;
+ Fri, 23 Oct 2026 09:48:12 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 08/10] hw/intc: Acess LoongArch irqchip data with align method
-Date: Fri, 23 Oct 2026 09:49:28 +0800
-Message-ID: <20261023014931.4055823-9-maobibo@loongson.cn>
+Cc: Xianglai Li <lixianglai@loongson.cn>
+Subject: [PULL 07/10] target/loongarch: Preserve PTW dirty tracking on read
+ fills
+Date: Fri, 23 Oct 2026 09:49:27 +0800
+Message-ID: <20261023014931.4055823-8-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261023014931.4055823-1-maobibo@loongson.cn>
 References: <20261023014931.4055823-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx+c3evNpqzF8vAA--.7714S2
+X-CM-TRANSID: qMiowJAxGs7avNpqxl8vAA--.7626S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3AryxWry8uw4DWrWkJw4rCrX_yoW3GFykpr
- Wa93sxWr40qFnrJ34kXw45XFnaqr4I9a47XF9Fyw18uFZ7G3WDZFyxtFy7WF9rGa4fCr1I
- kwn5trWjq3WDJwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7CrW7XF43CF1xWw1DAw43Arc_yoW8Kr4rpF
+ Z7CF4S9a1ktrZxA3sIq3W0vFy5urs3Cay7Was3tryF9ws8Xrykur4kKrWYyFWUXF48Xw1Y
+ qF1qyF15ZFn5J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
  Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv67AK
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv67AK
  xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
  vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
  jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
  x0cI8IcVAFwI0_JFI_Gr1lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
  8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UiVysUUUUU=
+ 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1LvtUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -77,205 +78,62 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-With the clang sanitizer configured with
-"--enable-ubsan --cc=clang --cxx=clang++" and run 'make check'. The
-test-hmp test falls over with this backtrace:
-    ../../hw/intc/loongarch_extioi.c:439:33: runtime error: load of
-misaligned address 0x5b0a281448b4 for type 'uint64_t' (aka 'unsigned
-long'), which requires 8 byte alignment.
+with LoongArch hardware page table walking (PTW) enabled, a PTE
+can be writable (W=1) but still clean (D=0). A load or instruction fetch
+can install PAGE_WRITE in QEMU's software TLB based on W alone. A later
+store then bypasses loongarch_cpu_tlb_fill() and PTW, dirty bit of PTE
+will not be set with the later store operation.
 
-Here LoongArch irqchip information is accessed by its natual aligned
-method, and here is output of command 'info pic'
-loongarch_ipi:
-  CPU 0   status=0x0 en=0xffffffff
-          MBX[6] 0x00082270
-  CPU 1   status=0x0 en=0xffffffff
-  CPU 2   status=0x0 en=0xffffffff
-  CPU 3   status=0x0 en=0xffffffff
-loongarch_pic:
-  mask     0xffffffffffffff7b msi_en 0xffffffffffffffff edge 0x0000000000000080 clr    0x0000000000000000
-  last_irr 0x0000000000000040 irr    0x0000000000000040 isr  0x0000000000000000 polary 0x0000000000000000
-  MSI map:
-    [ 0 -  3] 0x00 0x01 0x02 0x03
-    ...
-    [60 - 63] 0x3c 0x3d 0x3e 0x3f
-loongarch.extioi:
-  ISR     0x00000000 0x00000000 0x00000000 0x00000000
-          0x00000000 0x00000000 0x00000000 0x00000000
-  ENABLE  0xffffffff 0xffffffff 0xffffffff 0xffffffff
-          0xffffffff 0xffffffff 0xffffffff 0xffffffff
-  IPMAP   0x02020202 0x02020202
-  IRQ route:
-    [0   - 15 ] 0x01010101 0x01010101 0x01010101 0x01010101
-    ...
-    [240 - 255] 0x01010101 0x01010101 0x01010101 0x01010101
+Here remove PAGE_WRITE for clean PTEs on read/fetch fills at the common
+software TLB fill point. The next store must re-enter PTW to set D before
+using a writable cached translation.
 
-Fixes: 970657e490c0 ("hw/intc/loongarch_extioi: Add extioi interrupt status display")
-Fixes: 761eb76a3bc7 ("hw/intc/loongarch_ipi: Add ipi interrupt status display")
-Fixes: 82f472fa380a ("hw/intc/loongarch_pch_pic: Add pic interrupt status display")
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by:  Xianglai Li <lixianglai@loongson.cn>
 ---
- hw/intc/loongarch_extioi.c  | 51 ++++++++++++++++++++++++-------------
- hw/intc/loongarch_ipi.c     |  9 ++++---
- hw/intc/loongarch_pch_pic.c | 28 +++++++++++---------
- 3 files changed, 55 insertions(+), 33 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 06f2aa7b14..ccc4eed199 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -425,7 +425,7 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-                                         GString *buf)
- {
-     LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(obj);
--    uint64_t *val;
-+    uint32_t *val;
-     unsigned long irq;
-     ExtIOICore *core;
-     int i;
-@@ -433,22 +433,35 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-     vmstate_extioi_pre_save(s);
-     g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
- 
--    val = (uint64_t *)s->isr;
--    g_string_append_printf(buf, "  ISR     0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+    val = s->isr;
-+    g_string_append_printf(buf, "  ISR     0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                 *val, *(val + 1), *(val + 2), *(val + 3));
--    val = (uint64_t *)s->enable;
--    g_string_append_printf(buf, "  ENABLE  0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+    val += 4;
-+    g_string_append_printf(buf, "          0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = s->enable;
-+    g_string_append_printf(buf, "  ENABLE  0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1), *(val + 2), *(val + 3));
-+    val += 4;
-+    g_string_append_printf(buf, "          0x%08"PRIx32" 0x%08"PRIx32
-+                                " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                 *val, *(val + 1), *(val + 2), *(val + 3));
--    val = (uint64_t *)s->ipmap;
--    g_string_append_printf(buf, "  IPMAP   0x%016"PRIx64"\n", *val);
- 
--    val = (uint64_t *)s->coremap;
--    for (i = 0; i < EXTIOI_IRQS; i += 32) {
--        g_string_append_printf(buf, "  COREMAP 0x%016"PRIx64" 0x%016"PRIx64
--                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                    *val, *(val + 1), *(val + 2), *(val + 3));
-+    val = s->ipmap;
-+    g_string_append_printf(buf, "  IPMAP   0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                *val, *(val + 1));
-+
-+    val = s->coremap;
-+    g_string_append_printf(buf, "  IRQ route:\n");
-+    for (i = 0; i < (EXTIOI_IRQS / 4); i += 4) {
-+        g_string_append_printf(buf, "    [%-3u - %-3u] 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32"\n",
-+                                    i * 4, i * 4 + 15, *val, *(val + 1),
-+                                    *(val + 2), *(val + 3));
-         val += 4;
-     }
- 
-@@ -464,11 +477,15 @@ static void loongarch_extioi_print_info(InterruptStatsProvider *obj,
-             continue;
-         }
- 
--        val = (uint64_t *)core->coreisr;
--        g_string_append_printf(buf, "  CPU[%d] ISR 0x%016"PRIx64" 0x%016"PRIx64
--                                    " 0x%016"PRIx64" 0x%016"PRIx64"\n",
-+        val = core->coreisr;
-+        g_string_append_printf(buf, "  CPU[%-3u] ISR 0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-                                     i, *val, *(val + 1), *(val + 2),
-                                     *(val + 3));
-+        val += 4;
-+        g_string_append_printf(buf, "              0x%08"PRIx32" 0x%08"PRIx32
-+                                    " 0x%08"PRIx32" 0x%08"PRIx32"\n",
-+                                    *val, *(val + 1), *(val + 2), *(val + 3));
-     }
- }
- 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index c8f775a93e..7efdfc904d 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -199,7 +199,7 @@ static void loongarch_ipi_print_info(InterruptStatsProvider *obj, GString *buf)
-     LoongsonIPICommonState *lics = LOONGSON_IPI_COMMON(obj);
-     int i, j;
-     IPICore *core;
--    uint64_t mbx;
-+    uint32_t mbx;
-     unsigned long pos;
- 
-     loongarch_ipi_pre_save(lics);
-@@ -221,10 +221,11 @@ static void loongarch_ipi_print_info(InterruptStatsProvider *obj, GString *buf)
-             continue;
-         }
- 
--        for (j = 0; j < IPI_MBX_NUM; j++) {
--            mbx = *(uint64_t *)&core->buf[2 * j];
-+        for (j = 0; j < (IPI_MBX_NUM * 2); j++) {
-+            mbx = core->buf[j];
-             if (mbx) {
--                g_string_append_printf(buf, "  MBX[%-1u] 0x%016"PRIx64, j, mbx);
-+                g_string_append_printf(buf, "          MBX[%-1u] 0x%08"PRIx32,
-+                                            j, mbx);
-             }
-         }
- 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 34090514ec..555575a377 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -335,7 +335,8 @@ static int loongarch_pic_post_load(LoongArchPICCommonState *opaque,
- static void loongarch_pic_print_info(InterruptStatsProvider *obj, GString *buf)
- {
-     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(obj);
--    uint64_t *vector;
-+    uint8_t *vector, val;
-+    int i;
- 
-     loongarch_pic_pre_save(s);
-     g_string_append_printf(buf, "%s:\n", object_get_typename(OBJECT(obj)));
-@@ -350,17 +351,20 @@ static void loongarch_pic_print_info(InterruptStatsProvider *obj, GString *buf)
-                                 s->last_intirr, s->intirr, s->intisr,
-                                 s->int_polarity);
- 
--    vector = (uint64_t *)s->htmsi_vector;
--    g_string_append_printf(buf, "  MSI map  0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                *vector, *(vector + 1), *(vector + 2),
--                                *(vector + 3));
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index b6381f7cd3..f5b4dc5c58 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -651,15 +651,6 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+             need_update = false;
+         } else if (access_type != MMU_DATA_STORE && pte_access(context.pte)) {
+             need_update = false;
 -
--    vector += 4;
--    g_string_append_printf(buf, "           0x%016"PRIx64" 0x%016"PRIx64
--                                " 0x%016"PRIx64" 0x%016"PRIx64"\n",
--                                *vector, *(vector + 1), *(vector + 2),
--                                *(vector + 3));
-+    vector = s->htmsi_vector;
-+    g_string_append_printf(buf, "  MSI map:\n");
-+    for (i = 0; i < 64; i += 4, vector += 4) {
-+        val = *vector | *(vector + 1) | *(vector + 2) | *(vector + 3);
-+        /* skip zero mapping */
-+        if (val == 0) {
-+            continue;
+-            /*
+-             * FIXME: should context.prot be set without PAGE_WRITE with
+-             * pte_write(context.pte) && !pte_dirty(context.pte)??
+-             *
+-             * Otherwise there will be no loongarch_cpu_tlb_fill() function call
+-             * for MMU_DATA_STORE access_type in future since QEMU TLB with
+-             * prot PAGE_WRITE is added already
+-             */
+         }
+ 
+         if (need_update) {
+@@ -683,6 +674,19 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     if (ret == TLBRET_MATCH) {
+         physical = context.physical;
+         prot = context.prot;
++
++        /*
++         * Loads or instruction fetches must not cache write access to a
++         * clean PTE. The first store must enter PTW to set D, whether this
++         * translation came from the LoongArch TLB or a page table walk.
++         * Store walks have already handled D, but context.pte may still
++         * contain its old value. Direct mappings have no PTE to check.
++         */
++        if (cpu_has_ptw(env) && context.mmu_index != MMU_DA_IDX &&
++            access_type != MMU_DATA_STORE && !pte_dirty(context.pte)) {
++            prot &= ~PAGE_WRITE;
 +        }
 +
-+        g_string_append_printf(buf, "    [%2d - %2d] 0x%02"PRIx8" 0x%02"PRIx8
-+                                    " 0x%02"PRIx8" 0x%02"PRIx8"\n",
-+                                    i, i + 3, *vector, *(vector + 1),
-+                                    *(vector + 2), *(vector + 3));
-+    }
- }
- 
- static void loongarch_pic_class_init(ObjectClass *klass, const void *data)
+         tlb_set_page(cs, address & TARGET_PAGE_MASK,
+                      physical & TARGET_PAGE_MASK, prot,
+                      mmu_idx, TARGET_PAGE_SIZE);
 -- 
 2.54.0
 
