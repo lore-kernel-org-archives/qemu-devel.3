@@ -1,118 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0B9606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86380606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=MRoE0nR1;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=tiZZox8F
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YbYYZ5PW;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=sd9duLMf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKGLJ-0002Tf-QN; Fri, 23 Oct 2026 10:34:01 -0400
+	id 1xKGPX-0003Co-AK; Fri, 23 Oct 2026 10:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xKGLD-0002TB-Cc
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:33:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xKGPQ-0003BH-Rf
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:38:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xKGLB-0000Cl-GN
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:33:55 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1xKGPP-0000ZR-1D
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792766032;
+ s=mimecast20190719; t=1792766293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C0y6eQe48lbRc/t5GAI2UELlG4T4DoxqBmDw65V0D9Y=;
- b=MRoE0nR17Nlq/Zj9QTz+rA7Te5eipJl3O5k/z93nMx74Ynyinp00f0kUnJ55JTo019uMIZ
- EJH81+GBi9cxxPaDcGP4989/RE4Cu4DVcdu0aCWFoRyY7GaIn3CErdjeZBby80JrQR8UMY
- bp7SNsyaXaAg2EQbQdaznuprjdIRyws=
+ bh=4gdgBK1tV3AcHoWYDOzBxPGWS2aYarrMGNGNny8EjMI=;
+ b=YbYYZ5PWyjE+Uflt6KQaYz576vw8VRQA/f44GqQPQaNnVtthandRQ+ZI8pqrgdZCm8ZJ72
+ /aeXOdPI0X7rnP5gwJp3TC0YFXpsm+fyItrC4sEXSuGjc3qGkHfsK+natKmLvIZPQA9gQ4
+ gjq/MmT7BGWc2zyJ+G6i+0vd8z7P36c=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-0PHY0cedNX2O7B3WFZYmUw-1; Fri, 23 Oct 2026 10:33:49 -0400
-X-MC-Unique: 0PHY0cedNX2O7B3WFZYmUw-1
-X-Mimecast-MFC-AGG-ID: 0PHY0cedNX2O7B3WFZYmUw_1792766028
+ us-mta-81-defiAAaKNpaLgCNIwsgYhg-1; Fri, 23 Oct 2026 10:38:12 -0400
+X-MC-Unique: defiAAaKNpaLgCNIwsgYhg-1
+X-Mimecast-MFC-AGG-ID: defiAAaKNpaLgCNIwsgYhg_1792766291
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48e1291432aso626259f8f.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:33:48 -0700 (PDT)
+ ffacd0b85a97d-48e0389d6f9so578659f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:38:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1792766028; x=1793370828; darn=nongnu.org;
+ d=redhat.com; s=google; t=1792766291; x=1793371091; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=C0y6eQe48lbRc/t5GAI2UELlG4T4DoxqBmDw65V0D9Y=;
- b=tiZZox8FyeEJAcvGoQADi0UGimdgzYkifNe5YHGvt2/KHRm4KW9QD0yftGyZQf5xp7
- bBx152FHSreEWiT8H9breB/SmsSBFY7HAuyNGErRc8bzlLpMPg30gfJWtZIvvrEXBced
- /jmca/4YVp+DfqQX+ga6K/tyIWUTZ+1yvuK4kooJfE7s+hmQoU2yjEr5Sb07n6pM8+Gg
- E2U/wyoqINmXS95LnO9MGPc4o7h0sP72boXNzojRg5Mtg/pQW0Or8eVrsjqzCLA8dlIK
- Dt03fvXjGYNFqxzLu9+CKbN1WGvkUFfhPR1qtZD2vtfKa6IC4mW15v7fpZ77gnl0bAFM
- 4T6Q==
+ :content-type; bh=4gdgBK1tV3AcHoWYDOzBxPGWS2aYarrMGNGNny8EjMI=;
+ b=sd9duLMftSDpJojEtA8fE6TB0X8fa52olUgyISC+7996lUknr42aIPUX1J9APDChiP
+ zXQ9Ap13MPQCpn8WVFJrLEMWkXfpVd2PkKTftCh6U3uqfKZ1BIFEXHPc8IuEZDreCCGc
+ A5Sp1t/NnNRt25JKiijVsMXK/uqqtyBgbM6yaNM/D756YpRBL58d8UIVJmokPMnZ0FZt
+ l0zAd5TeInhcP/1icfP2hLs0saKxk9j+qQ+i1EaNGMiybzHzheOrFWdd3STbzFQYKf0A
+ tJGvwbBVmBhhx2BH1qf1yWYrtMLZjEHeeKNbRwu5ISJhhFAqwNy3Jz/ogj42Dh+EBKJA
+ bT7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792766028; x=1793370828;
+ d=1e100.net; s=20260707; t=1792766291; x=1793371091;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=C0y6eQe48lbRc/t5GAI2UELlG4T4DoxqBmDw65V0D9Y=;
- b=sPQfORT0uYEkEiy5c8x4pUHHzukUTOh64FoxiMN4nRQJJRP/uQtfnp5vJ6UAtNScAv
- h102Nbhhb0j6jLWr/I8HoAnqxpw9ElOoEtlB1bIylcXTr1PB9o5wwW/fbKld52YSreoO
- 5kTy/yvwg7IaSWbhnTru0OIJpuwFM0x5Iy+FVRaRCGnBr7rt1boY6mL+Rsjsc35r3ADL
- Xe8Fap3/jJlP4yE867HsB/Hfq8nkwKvD7jCAlJ6SNz6eceYwlBuTuoeKmBRcUvqpdFR7
- TRgqqf4fnFcQkv2MHvTKF4w/0q7Db3zG829D27zxWPXlxSrJoVYIRi7eXz6f0ctCE2Ux
- bK2w==
+ bh=4gdgBK1tV3AcHoWYDOzBxPGWS2aYarrMGNGNny8EjMI=;
+ b=wHKDIFgaXhYZzmVYch3tX7Lc8M7T2KpznUILlVxPxS00yoBmuxjIzYunZiXdHnz2kA
+ iPLRbqZXGWXYyBWXlrf5SO6adm1jw1i3NLe/hl8Bkr2f3zNZA+Kn/ojiJyduBbH7Vvs+
+ XKEET07qdZUUdIMtmXI0jtyAkRcoM7o7pon6oqf/rBObsuBj1MRoYi+E6i5Mfufj28KK
+ G4n8hVzIVSkBJ2umApGYXxbASkCoY6nWaOJF63L6ygInVxmJgY5p2/e1W8oW01GPSiGL
+ c7D8OeJJvKHiUBHtovrsymRnmFJtjFRH9egUmnzOqg7w/65SuIIioqp1SQo1ocTsRVAE
+ RkzQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwaxJU1azzeFWxlQW8wyrMdNur2p91aoeSNFzWw3t7qOjXgKfR92D8uC3k4QZa0+3Nzykp0Xxggky0S@nongnu.org
-X-Gm-Message-State: AFq9FYJf0/bbnQEYOFJrBZRgGmeBwFTewrKNhxcjcKaZ+iHtFneA0nzq
- Jj4Bb08MqKGdZ5nbB1ufkvZriOX6E/ZUI5JiUadlK0vbqd3y/BzD0gvgxI45FlHhQ5Aq+b9pvhz
- Xlo5dNL5+BkSPzmfa1Nj7r7pPX8bJgHMXbQQplWgxlrxPAEW3wrTCwiMj
-X-Gm-Gg: AYBFou2aYVQ/YA4vxkWwchmd7bhx8+gkQSbE9l2sJZediPwsjhOh8Fplqo4wWXPvmCs
- 9ad262rycVHqntX9Tq2X3IzTpfZ404ZDjUwjkUZMVRmU4HDXBH39gyzmYNRF0QiKtKvnqpHt7DS
- 04cHn8wgkoISskySeu5hDMnM/V6j5rPDFziYqnDkIhOmF4jycL9DhThcu2nFDgibFh4qHjUKA7B
- MExIfArTun/Px2+hxnZlDIcKPbeGYmHm1+gQcech6qmlmJuJp+oZLgywWi7fGEvbUpkJ83vg/S2
- PjizjHMg5K3+bAbpGDZik0IIkwH1bQ9uuIYl/+HVQFOZe0rbzjwMU5oJ7u2y0wjScRzjA776Gyq
- aufkohEh9o2tOLleO/LGjlUdZl6ZAVjO9oQ==
-X-Received: by 2002:a05:600c:1391:b0:4a1:e250:b191 with SMTP id
- 5b1f17b1804b1-4a211f0e0d5mr42594955e9.17.1792766027907; 
- Fri, 23 Oct 2026 07:33:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:1391:b0:4a1:e250:b191 with SMTP id
- 5b1f17b1804b1-4a211f0e0d5mr42594455e9.17.1792766027383; 
- Fri, 23 Oct 2026 07:33:47 -0700 (PDT)
+ AKwUvBzxsNegtn1njAPg6jNY3azzFbUzReOuoVrrqxmyjyl/X/fwjmUID57ZJTArOMtJy3unhTOqlZ0w5zHg@nongnu.org
+X-Gm-Message-State: AFq9FYJRflppDGVD/XotE2j+HrfBpvzJMW7Hgk+e0zq+FLDFov6ATon7
+ xUpOdmtM0NPsDaD4jfVCZ/4vqlNNxwgAqGYmVHm6gC6N4A+MRm+v58oYWskKBPkHEDN7kzIB8qJ
+ /2mKJNt/MNnvUV0dIsPvJcV7rEJ3MZQZJkd5FJv5M9pgnRMHV9inNJhBt
+X-Gm-Gg: AYBFou18acvNFkAc3d0NuN1KcQ7e4SJ2R+h6B0SRo8DNvG/ClGjzkrTjmiNyNZiLaLw
+ o6g4sf9xFZ1CR7QiDKDSgzwwkgJYeTSRcH7jj8hg872LcaM7pLUu586Cz/3yOIvNUlY/ixvAejW
+ 3XvVfOomMK/tioEzZ2P8uRCyuSrSalAjsw/YN6UpXRnny/hWB6sQlo272D7lAveEjxy0ERlC5SY
+ dsWkksL7OKBpDPLrQmbkHBRVe3S3kCKIGhJWp2QA2cJ0VhNy3QUlKZlm7GRnqrReMJ8V24eACon
+ qkZ2Fe5G/c7rEWC+/ICUo5y1ZTYPf0AHNk9bGOmrYGndDU6RhUsHdUl8uwb8U9NWIBDgKGW0j6+
+ cn3odoeDVwsoLZ6vaqPODiyJx0rMaDaTnxg==
+X-Received: by 2002:a5d:5d86:0:b0:48d:f851:ee5f with SMTP id
+ ffacd0b85a97d-48e385ab429mr3889079f8f.24.1792766290698; 
+ Fri, 23 Oct 2026 07:38:10 -0700 (PDT)
+X-Received: by 2002:a5d:5d86:0:b0:48d:f851:ee5f with SMTP id
+ ffacd0b85a97d-48e385ab429mr3889041f8f.24.1792766290281; 
+ Fri, 23 Oct 2026 07:38:10 -0700 (PDT)
 Received: from [192.168.192.3] (p4fdeb9e7.dip0.t-ipconnect.de.
  [79.222.185.231]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a29cd9d232sm9812745e9.4.2026.10.23.07.33.45
+ ffacd0b85a97d-48e3d37ca2asm284592f8f.8.2026.10.23.07.38.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 07:33:46 -0700 (PDT)
-Message-ID: <44691c04-0bd0-48de-afc5-56f2cddd5662@redhat.com>
-Date: Fri, 23 Oct 2026 16:33:45 +0200
+ Fri, 23 Oct 2026 07:38:09 -0700 (PDT)
+Message-ID: <e930ae0d-cf1e-4441-85ab-109db4a57fcf@redhat.com>
+Date: Fri, 23 Oct 2026 16:38:08 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/12] qapi/block: Add BLOCK_IO_DELAY event
+Subject: Re: [PATCH v2 07/12] qapi/block: Add BLOCK_IO_DONE event
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
  "Denis V . Lunev" <den@openvz.org>, Eric Blake <eblake@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20261019182028.45305-1-hreitz@redhat.com>
- <20261019182028.45305-7-hreitz@redhat.com> <87a4o8sw79.fsf@pond.sub.org>
- <65193d93-2fcc-4a39-8e54-d16022855bbf@redhat.com>
- <87pkx1gczk.fsf@pond.sub.org>
+ <20261019182028.45305-8-hreitz@redhat.com> <871p9ksvx5.fsf@pond.sub.org>
+ <e89f7bfb-8da2-495d-b9a4-0adf3fe58f80@redhat.com>
+ <87ld7pgcsy.fsf@pond.sub.org>
 Content-Language: en-US
 From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <87pkx1gczk.fsf@pond.sub.org>
+In-Reply-To: <87ld7pgcsy.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,141 +132,120 @@ X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 23.10.26 08:14, Markus Armbruster wrote:
+On 23.10.26 08:18, Markus Armbruster wrote:
 > Hanna Czenczek <hreitz@redhat.com> writes:
 >
->> On 20.10.26 08:49, Markus Armbruster wrote:
+>> On 20.10.26 08:55, Markus Armbruster wrote:
 >>> Hanna Czenczek <hreitz@redhat.com> writes:
 >>>
->>>> This event will be emitted when a disk operation takes longer than a
->>>> pre-defined threshold (as set on the block device).
->>>>
->>>> Note that the description refers to the "delay-report-ns" and
->>>> "delay-stop-ns" block device properties, which are not yet available.
->>>> A future commit in this series will add them.
+>>>> This event is emitted when an operation completes, for which a
+>>>> BLOCK_IO_DELAY event has previously been emitted.
 >>>>
 >>>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 >>>> ---
->>>>    qapi/block.json | 37 +++++++++++++++++++++++++++++++++++++
->>>>    1 file changed, 37 insertions(+)
+>>>>    qapi/block.json | 33 +++++++++++++++++++++++++++++++++
+>>>>    1 file changed, 33 insertions(+)
 >>>>
 >>>> diff --git a/qapi/block.json b/qapi/block.json
->>>> index 8f4a71733c1..5f9f5c28050 100644
+>>>> index 5f9f5c28050..38f293dd32d 100644
 >>>> --- a/qapi/block.json
 >>>> +++ b/qapi/block.json
->>>> @@ -649,3 +649,40 @@
->>>>    ##
->>>>    { 'enum': 'IoAccountingOperation',
->>>>      'data': [ 'read', 'write', 'flush', 'zone-append', 'unmap' ] }
+>>>> @@ -660,6 +660,9 @@
+>>>>    # Note that delays deliberately incurred by throttling do count
+>>>>    # towards the operation duration.
+>>>>    #
+>>>> +# This event will only be emitted once per request and action.  When
+>>>> +# the operation does finish, a `BLOCK_IO_DONE` event is emitted.
+>>> I think the first sentence answers a question I had on the previous
+>>> patch.  Move it there?
+>> Sure.
+>>
+>>>> +#
+>>>>    # @qom-path: path to the block device object in the QOM tree
+>>>>    #
+>>>>    # @operation: I/O operation
+>>>> @@ -686,3 +689,33 @@
+>>>>          'action': 'BlockErrorAction',
+>>>>          '*offset': 'uint64',
+>>>>          'bytes': 'uint64' } }
 >>>> +
 >>>> +##
->>>> +# @BLOCK_IO_DELAY:
+>>>> +# @BLOCK_IO_DONE:
 >>>> +#
->>>> +# Emitted when a disk operation takes longer than the pre-defined
->>>> +# threshold (as set via the "delay-report-ns" / "delay-stop-ns"
->>>> +# properties on the block device).
->>> As in PATCH 01, "block device" could be confusing, because we use the
->>> term both for frontends and backends.  I believe "delay-report-ns" and
->>> "delay-stop-ns" are the qdev properties every block device model will
->>> have [PATCH 11].
->> Sure. So… “block device model”, or “on -device”?
-> For PATCH 01, I suggested additional text that makes the meaning
-> obvious:
->
->      These are the properties "rerror" and "werror" certain block device
->      models have.
->
-> Here, you have something similar already.  I think "on the block device
-> model" would do.  Or maybe "the block device model's ``delay-report-ns``
-> / ``delay-report-ns`` properties".
-
-Great, thanks.
-
->>>> +#
->>>> +# Note that delays deliberately incurred by throttling do count
->>>> +# towards the operation duration.
->>>> +#
->>> Please use the revised syntax for introductions, like you did in PATCH
->>> 01:
+>>>> +# Emitted on completion for disk operations that previously emitted a
+>>>> +# `BLOCK_IO_DELAY` event.
+>>> Can we have multiple operations in flight that previously emitted
+>>> BLOCK_IO_DELAY?
 >>>
->>>      # @name: introduction, best to keep it brief, but you may continue it
->>>      #     like this if necessary.  If your text need to refer to
->>>      #     arguments, it's almost certainly not brief introduction
->>>      #     anymore.
->>>      #
->>>      # Additional text can go here for now.
+>>> If yes, might a management application need to connect the BLOCK_IO_DONE
+>>> back to the BLOCK_IO_DELAY?
 >>>
->>> I apologize for the inconvenience.  We need this to eliminate certain
->>> syntactic ambiguities that plagued the doc generator.  We'll need it
->>> some more for the doc inliner.
->> Sure!
+>>> If yes, how could it do that?
+>> Well, the combination of device, operation, offset, bytes.
 >>
+>> Do you think there should be an ID like a u64 counter per BlockBackend?
+> I'm not overly particular on how exactly the connection can be made.  If
+> the quadruple you suggested always suffices, that's good enough for me.
+> Documentation should point it out, though.
+>
+> Can multiple operations with the same (device, operation, offset, bytes)
+> be in flight?
+
+Technically, sure.
+
+Adding an ID is quite ugly, I feel like, which is why I would need your 
+input in how it would be least intrusive in QAPI.
+
+(Caveat, at this point: I’m afraid I’ll be quite far from my notebook 
+for around four weeks… Thank you for your help so far :))
+
+>>> Please use the revised syntax for introductions:
+>>>
+>>>      ##
+>>>      # @BLOCK_IO_DONE: Emitted on completion for disk operations that
+>>>      #     previously emitted a `BLOCK_IO_DELAY` event.
+>> Sure.
+>>
+>>>> +#
 >>>> +# @qom-path: path to the block device object in the QOM tree
 >>>> +#
 >>>> +# @operation: I/O operation
 >>>> +#
->>>> +# @latency-ns: Ongoing duration of the operation (in nanoseconds)
+>>>> +# @latency-ns: Full duration of the operation (in nanoseconds)
 >>>> +#
->>>> +# @action: Action that has been taken ("report" for "delay-report-ns"
->>>> +#     or "stop" for "delay-stop-ns").  A "stop" action means the VM
->>>> +#     will be stopped with the "io-hang" `RunState`, which does not
->>>> +#     drain the block devices attached to the VM, because draining
->>>> +#     would be counterproductive in case of a hanging I/O request.
->>> This feels less than clear.  What exactly happens?  My best guess:
->>>
->>> * When an operation takes longer than delay-report-ns, BLOCK_IO_DELAY is
->>>     emitted with "action": "report" (but only once for this operation).
->>>
->>> * When an operation takes longer than delay-stop-ns, the guest is
->>>     stopped (run state becomes io-hang), and BLOCK_IO_DELAY is emitted
->>>     with "action": "stop".
->>>
->>>     Say we continue the guest.  Can the even be triggered again for this
->>>     operation?
->> No, because latency starts when the request begins, and the event (and action) happen only when that threshold is crossed.
-> So it can be triggered once for @delay-report-ns, and once for
-> @delay-stop-ns.  Correct?
+>>>> +# @offset: Request offset in the guest disk (in bytes), if available
+>>> Out of curiosity: when could @offset be unavailable?
+>> For flushes.
+> Uh, what's @bytes then?
 
-Yes, correct.
+0. I found that natural. Any offset value is a valid offset, but a value 
+of 0 for bytes sounded good to me.
 
-> In sane usage, @delay-report-ns < @delay-stop-ns.  Correct?
-
-Well, uh, I suppose. The opposite could be imagined, but if someone 
-wants that, that might rather indicate they would really want an array 
-of thresholds rather than a single one, so… As long as we just have a 
-single reporting threshold, `@delay-report-ns < @delay-stop-ns` is the 
-sane usage, yes.
-
->> I can try to be more clear.
->>
->>> The three possible values are ignore, report, and stop.  You cover
->>> report and stop.  Can ignore happen?
->> No, it cannot. (Also by definition of `ignore` meaning to… ignore something. So an event cannot carry this.)
-> Try mentioning this.  If the text feels worse then, don't.
-
-Sure!
+I now anticipate discomfort with this, so I can make @bytes optional, 
+too, yes.
 
 Hanna
 
->>> We should use ``literal`` markup for literal values.
->> Sure.
->>
->> Hanna
->>
->>>> +#
->>>> +# @offset: Request offset in the guest disk (in bytes), if available
 >>>> +#
 >>>> +# @bytes: Request length
 >>>> +#
+>>>> +# @failed: If true, this request failed for any reason.  If false, the
+>>> Suggest "for some reason".
+>> Sure!
+>>
+>> Hanna
+>>
+>>>> +#     request succeeded.
+>>>> +#
 >>>> +# Since: 11.2
 >>>> +##
->>>> +{ 'event': 'BLOCK_IO_DELAY',
+>>>> +{ 'event': 'BLOCK_IO_DONE',
 >>>> +  'data': {
 >>>> +      'qom-path': 'str',
 >>>> +      'operation': 'IoAccountingOperation',
 >>>> +      'latency-ns': 'uint64',
->>>> +      'action': 'BlockErrorAction',
 >>>> +      '*offset': 'uint64',
->>>> +      'bytes': 'uint64' } }
+>>>> +      'bytes': 'uint64',
+>>>> +      'failed': 'bool' } }
 
 
