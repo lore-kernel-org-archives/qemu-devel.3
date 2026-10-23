@@ -1,99 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFBE606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC2A606A327
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FEz0pFzm;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=EFGyHB6p
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YqosLHFQ;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=AvgkAkqg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKI1Y-0002Ra-2s; Fri, 23 Oct 2026 12:21:44 -0400
+	id 1xKI1D-0001pn-VP; Fri, 23 Oct 2026 12:21:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI1R-0002Bk-Cj
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:21:38 -0400
+ id 1xKI0w-0001bA-KM
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:21:10 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI1K-00032o-Cq
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:21:36 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xKI0s-0002z1-HY
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:21:06 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NE5s9L4072757
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:21:27 GMT
+ 69NE6rZB1492211
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:20:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8e4oPz4EfoU3x+glKCwLlowOkYZVL0c9YQwOk10UYaU=; b=FEz0pFzmwmQcgT8r
- SPnudPSBZA5V0LfWM7unJOl0U5pkUjHOyT9Vs8wQ2OpIZUV67u79mNOss1KcWs6C
- N6C1bVGrzqyAgIOG9RO5iVx3vSCxEc/gMSt6F4kblLpT+x21m8TR4VkbupMcY2QP
- 6ZusZJDOyjsnaLTctnbRHKZfUzdrMzcQEDaD/mEnZ7s9zsPJTbKmX3HmaNI/BNr+
- 7Csimx39yQ2Hihkdu42G9StwfXhFu2ooKX81lKDQQah693CtRzzoKE632at6oCKh
- 5Oksb3l1vSfNMdpfCcyZ5jnMfM3XMhFDhPtLZVY7GYdpcxhTZUtcreq9m7pIJlUM
- BVOCNw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hg7bw0xm2-1
+ 0vZ+WjjnN1pJ03QYeryilA3h2cEaVhJGtrfc4CGEDjA=; b=YqosLHFQg+o1NcNx
+ RaF+c1/dKMabDQVc473Ttj2V9zyogg0vCZ/YR8pQ0amhWKPknt4OOtj/wClNe0FJ
+ h5QqKFCSNmMDtIDJk9qft/P4E0ASpI7vBV5Rlv0EwEsjKw7RnYFcjxrpTZQpmYbd
+ QYW5UQhNtuVDMWLRhaTYVwDZq3uXAaHLdjD/42EBwvgkF7ppSr/308I4Iv8UKKLB
+ DG3pHvoyEd39SmA3ERowOm+bkPuOKewRVe6Lxsu3PJvEcWwIbe+SVBAzyXMDEyMo
+ POKrtPXSj0xoQey0S8phf0x1pPIxoCkIe9Bb3D0iHo1OdpD5F4FH6yBxxo4CmCg9
+ LEHx9A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfsmauyqm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:21:27 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93e92aad34aso211959685a.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:21:27 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:20:56 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93f32050e72so342536385a.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792772486; x=1793377286; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792772456; x=1793377256; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8e4oPz4EfoU3x+glKCwLlowOkYZVL0c9YQwOk10UYaU=;
- b=EFGyHB6pPnLi9I9YF66ww1cEqic4Md1fYDx4Y1wWJxVcx4XUkUygkavl8dSysvjyGA
- SgkjDOxq7+1xr49eKrcwMRpVlDyhJFi86IHAl0bjWhKoAMsT8ZwXxnHE36uHQgSKTNHF
- k2xy1JcVzDFQrMRELvaELLlUjs0l/mK1xHtw96KV2CGAcmRZ6gbCNsAwzvQZzhLLm6zD
- Fosq4xGMo9onfEpWTo+6k5TNV+KNTf0PSLZojF9+6Gs+1WA0zVsSi/Q2X5wtGrYBWZRE
- r0/IQY0iADuVnKPK6K6LiVbwFNS7eBx3AKiBnsb5zEfE3QKxUznIvpveO/TLPsLQRHDc
- JhuQ==
+ bh=0vZ+WjjnN1pJ03QYeryilA3h2cEaVhJGtrfc4CGEDjA=;
+ b=AvgkAkqg7Nd4l6zJCjbsjrYjys72bvIILvIIDW7HwvPlMm8ZDanmz2mNo47+GeNUze
+ G1KR9RPaCRaAz3hrhTcJeBMEPCsDtPqCxJfeREVoJJGA6l4kZoi5L+eAqQc2UOZQKxzZ
+ /gWMVmyI7nijhak4z+PwEfzqG0EMdVSOqcme9SlLY8fJrc9zC31PEv5WeS+q+yuXdjiI
+ ZgPNRWZ3LIBYIl4xKYP9Y5pfwuPSGbtxj+vHcxdp1ngd8wNzU0Djrk76SlcmhBNpBPRt
+ tJ+BQLjU4VUQIWi85pesAEm56Xnmzy/NNWKRhncm2V8ICAxTkbFrx+rlHzXSyyoD9Dat
+ 7Pdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792772486; x=1793377286;
+ d=1e100.net; s=20260707; t=1792772456; x=1793377256;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8e4oPz4EfoU3x+glKCwLlowOkYZVL0c9YQwOk10UYaU=;
- b=2q00RzNnCQkJfxQmmb9Y5WzFVi2Tdobqz+Z9XwliHGAh1hwgjPmI69XvLamJuX4Oz2
- LYeIsewyTJr38WWH9R6IahEbmHb2G5OP+sd+Djn4Ij/Btx1AdbYAkunAGVaf/0MLmJNw
- UAbK2knZ6cMebNbXW/u15cmodZpJ6n699wflOQ/hYuttdQonXrK+HPWhZrY9cwHskwpK
- wu+7YOhhS6YcjR3wWAl6E7oIdxs3MnQH+nkYdDt0QsLYsFIr1Yq5pr7+wJPB6J6w3zEt
- oheurSsKL87CFpd10+QGYWPLs60b0ztTc+eCiO7pebVj1wzh5W1LOdF/WP951n7ox2A5
- REAQ==
-X-Gm-Message-State: AFq9FYLocY1PtQ5QConP6kSt4ayWWbjbhIiUZITM3G/Lt/q4pGD4ob+X
- mL1yjU47Y8RehUhWL2tkZQOJgnZ3LTwUyOH6X98Psabi2cWrh03dRLYIDXmBY5JjzTHkFBYDdHL
- j3EoAHTQagi1hyWxKULG5LPBumO7SEguGMw0S/vm9mtxAcqMMoFAkZE1AC+MYWAkbC+ux
-X-Gm-Gg: AYBFou30QcgcR3K6p3y7Z76ktK9l/30bD6Ta8L6/Z7fQ/eheSLCmo1U50+qhpVLWkjV
- s2NX/GSqX8ajFqrz1S3YqjdHRzIrQuuoGSXL+9w8WlaNvOgpKq5wqC6FjAeiVCwHvd7nDCK/6l4
- M2uI6e1BcDYSwEefJPjn7gokqJwpDai64CuYyJuXT+HJg6SRMj/i/20q5BAnT8h/9FEh3koxLr3
- ExGfIsYG7J3JWw89eoiHWdxul0nURI6uZIfTaRwx4OqgxcAPaVttz4kY15hl2lM7HbO0gwv1Cqp
- yhYDBaNTjhvqI5jBz+PfmOqqRNMBKy+Wg1CpqHGSy3ruPa0NiFlCAFNzQt55jOhi0TN/P3VyKdy
- BxGhrjBQSrVOTJRJ8cKpgCpbtIHDA5P4kHSqmY/9Y
-X-Received: by 2002:a05:620a:2b4e:b0:93f:228c:5301 with SMTP id
- af79cd13be357-93f6f85ede5mr487622585a.64.1792772485729; 
- Fri, 23 Oct 2026 09:21:25 -0700 (PDT)
-X-Received: by 2002:a05:620a:2b4e:b0:93f:228c:5301 with SMTP id
- af79cd13be357-93f6f85ede5mr487613085a.64.1792772484630; 
- Fri, 23 Oct 2026 09:21:24 -0700 (PDT)
+ bh=0vZ+WjjnN1pJ03QYeryilA3h2cEaVhJGtrfc4CGEDjA=;
+ b=MUfTI5XU9+0UFhf07Ro1EDsA2twxP0mE2HZ9uTkHlpfTIQKBwGoZafxEH86DHC2WCT
+ /vgKvj1pnd4CI4AAXVST+2RY2dzTpdhDX1nRkTs06Pyq4QGXqa321/bLxFxe9ogbdngz
+ VzwznJ125rt1+1ZCes4qs1ANi2K5TWAfR6OEnWt7PLVwcgtmQZBfHGfKrUqMrOv/w1JI
+ QWgwjMx2kxdq4sv3JLMYEkEG5+SmG73OLCGZdKJBiklOaWKCwX0AT0esIS1KLTLIKigG
+ 8fgPOf8HIfoLNoIZ78Vr6SPuVQQXEwhl2k/kRgboVAHAiYLzNFBaZvcTKFTSyb7RvH5l
+ iSTA==
+X-Gm-Message-State: AFq9FYLVU/5iZ5JVZ91JX2cWrexYkZ4OZLspdi6TMfyXvF7L37YJGVnk
+ 4ZKPQSJieLy++QVSZXFAyQK5esRmHbTMofl+RnIoMAa9RR5vgMNfS85jVSpC1BWRJweBSnyUTNC
+ gm3z4NEb55aQzJ8ZqugRQ8bcIVr9gupADikbNEZaOX1xUdMJbRGmqRZP3YJ7V8WPi9CyY
+X-Gm-Gg: AYBFou2kZrn35Y+gWd9cfcaxcm5An9ab+fbbg+4O4+DZe1kZFhSs6eRcOmIIr/t6bap
+ xxV9pl9iIdYsI2+dzZ9aRAxqniV4lZpu5e3b/mCjDqf0Mf8qtO0C5wYnRtPb22b2aHzJRc5LmGV
+ iQq3mb73WCMBM8Rciiqth2xXaCfUcF9NhAHSfLWTgKaGyfNvPn8P9rvEUV+5LaNt/v66WrhIKzC
+ lgfqxTpwpi712ytCrtfz9sY4rgolOkEpKmNpox7otstA6BcvfxyCq04IeICwYe1htFVR7JsaNqH
+ xCGlauUEtd61e/Jkywo22j5YQUdZyWhtOmZ8MWKjk1y3Q5j9oxDbN092R6EDrzYMh4+6ZEfYnQm
+ I2SEq58S58+7m4YhJxcXh1mwotpT9WNv48wGcFI5f
+X-Received: by 2002:a05:620a:40c3:b0:937:d6e8:59b0 with SMTP id
+ af79cd13be357-93f6f79bca2mr490649085a.10.1792772455512; 
+ Fri, 23 Oct 2026 09:20:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:40c3:b0:937:d6e8:59b0 with SMTP id
+ af79cd13be357-93f6f79bca2mr490641785a.10.1792772454583; 
+ Fri, 23 Oct 2026 09:20:54 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d3ee6b2sm645344f8f.13.2026.10.23.09.21.23
+ 5b1f17b1804b1-4a2a92a4444sm16474995e9.5.2026.10.23.09.20.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 23 Oct 2026 09:21:23 -0700 (PDT)
+ Fri, 23 Oct 2026 09:20:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 65/83] target/loongarch: define and call helpers using HELPER
- macro
-Date: Fri, 23 Oct 2026 18:13:13 +0200
-Message-ID: <20261023161332.60153-66-philmd@oss.qualcomm.com>
+Subject: [PULL 61/83] target/arm: define and call helpers using HELPER macro
+Date: Fri, 23 Oct 2026 18:13:09 +0200
+Message-ID: <20261023161332.60153-62-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261023161332.60153-1-philmd@oss.qualcomm.com>
 References: <20261023161332.60153-1-philmd@oss.qualcomm.com>
@@ -101,31 +100,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 63ydEZrSrRzcui9vcmAFkByYF2nQA6Vv
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX7l5/7JJWl8Xq
- oN/KZir7ZqpAciqImsBwDoGfx6Va/oX74OEOPXd9/bclK0QIjoecHpvYr5c5AcbiCw8taeo11M0
- D/7++jxEiLDfQDBeS4WmiBvIY3F+nog=
-X-Authority-Analysis: v=2.4 cv=QdTzLcbv c=1 sm=1 tr=0 ts=6adb8987 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=V7LoQuni c=1 sm=1 tr=0 ts=6adb8969 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=SQnn4VcWqfzk9PnhchsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: 63ydEZrSrRzcui9vcmAFkByYF2nQA6Vv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX1IiQ3DYCTIYJ
- EbJhwE3EO7NCYEZT3LAQ8wvcFRrVQ0+KTC1mckz040YZznO6o9b7StlwQH9byxz7qOctDryxcmP
- S/HC3Din5EWI+cT14absBmU5yeu+tBxNSMX3YS6bzJEdIHLnZMA3sobECUIDntBj00U/j50Zla0
- CZ2cEdiUerXI83gNQGp7nQvh2qfvYRHwxc3blw/d75Va0E7rhDW2UpLGt6OEq05ak+TrbKy0V+w
- LkCqsoBddCE4WGvaKCh0vz12JLkvfPbOF5x/Wt6IEONIelVKYuADtM+Fa4PG4AvwAZHb68RGzsV
- eNYfLeLEnC3EXD80bnKj1gqP1B3Mq/b/hUeIvKtx0XprwVOSuf9H0aZuLIvJWMcMl4A63kzze2R
- 6DeWGJxZY3kVHTvEs+3+Ymb5jci9/GSyUMfToJD9RfzIxyDpmsB58o6LCpp0gEfc9IIUXn7etpi
- 23UnzPLZSYHU05MQpJQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=UqKkN2FlH-C22XUL27IA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfXxWWJkvrQwIwX
+ 6Q/XPkbTqu/Bgqw+VN5GRIvj2AsE/CIU95iWebhQIb0Dy5YEYgbETNC5LKDbOa61gGSzbYYSU0s
+ s3DWb0+uRpoexcnQf+tFwZWtgvn4ScU=
+X-Proofpoint-GUID: 5uWwGYH_OK4X5mOqXV7D_ov3NJty3Igw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX9PqTvb0IS3jT
+ ROKD1C7wg+idQlpTy0GTYxa8V77sYZqEUIe8qe9i4xrSUiK4Qba5wIRuNfnjJ0M2PCm1i7QbSwh
+ NNlgHe34md3cF0mss6fRBP/x+e37AzhNoDu5PW0bQzfZ71cjIFXWO4qlYBgGelNHjBGDoP6ICT+
+ nj88tBhlmjLKigpaB7KVMPg5hu7zCHY4EhZvXd85Dl4ABWPAL0zSsqcH/jmRIJDMEHwtUcb44Dv
+ G8aAp3dxS+acQvUk825R5O8SG5vz3JIDbzD/Evjbx+qqAl00EMwabJ4aivEUlOG+Vlc1Nd1INSq
+ 2s6rRvOXTz47krjEqSrmpomhhOl1pH8T3qASK/Tv1BtoAH2Vy1BiHcjV+QUiups7/yBAVaScQqE
+ 15GMrw8ANe1ylL5gsImS2Y9HoiOyUm4DipK71K9ieBwcBekcUqsDibZt+V6wmzXgCWRs/PnplsW
+ BO6BhXk9ZI4nqMyQRvQ==
+X-Proofpoint-ORIG-GUID: 5uWwGYH_OK4X5mOqXV7D_ov3NJty3Igw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230064
 Received-SPF: pass client-ip=205.220.168.131;
@@ -165,969 +164,656 @@ Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Yonggang Luo <luoyonggang@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-ID: <20261019212046.149572-7-pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20261019212046.149572-3-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/loongarch/tcg/csr_helper.c   |  22 ++---
- target/loongarch/tcg/fpu_helper.c   | 126 ++++++++++++++--------------
- target/loongarch/tcg/iocsr_helper.c |  16 ++--
- target/loongarch/tcg/op_helper.c    |  18 ++--
- target/loongarch/tcg/tlb_helper.c   |  26 +++---
- target/loongarch/tcg/vec_helper.c   |   4 +-
- 6 files changed, 106 insertions(+), 106 deletions(-)
+ target/arm/tcg/vec_internal.h |   5 +-
+ target/arm/tcg/helper-a64.c   |   6 +-
+ target/arm/tcg/mve_helper.c   |  28 +++----
+ target/arm/tcg/psci.c         |   2 +-
+ target/arm/tcg/sme_helper.c   |   4 +-
+ target/arm/tcg/sve_helper.c   | 141 +++++++++++++++++-----------------
+ target/arm/tcg/tlb_helper.c   |   2 +-
+ target/arm/tcg/vec_helper.c   |  72 ++++++++---------
+ target/arm/tcg/vec_helper64.c |  64 +++++++--------
+ 9 files changed, 163 insertions(+), 161 deletions(-)
 
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 1a6919417fc..7cba8035df4 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -18,7 +18,7 @@
- #include "cpu-csr.h"
- #include "cpu-mmu.h"
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 8f6d8a984b3..6d9d7c35efa 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -22,6 +22,7 @@
  
--target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_stlbps)(CPULoongArchState *env, target_ulong val)
- {
-     CPUSysState *sys = env_sys(env);
-     int64_t old_v = sys->CSR_STLBPS;
-@@ -40,7 +40,7 @@ target_ulong helper_csrwr_stlbps(CPULoongArchState *env, target_ulong val)
-     return old_v;
+ #include "fpu/softfloat.h"
+ #include "vector-type.h"
++#include "exec/helper-head.h.inc"
+ 
+ typedef struct CPUArchState CPUARMState;
+ 
+@@ -364,8 +365,8 @@ static inline float64 float64_maybe_ah_chs(float64 a, bool fpcr_ah)
  }
  
--target_ulong helper_csrrd_pgd(CPULoongArchState *env)
-+target_ulong HELPER(csrrd_pgd)(CPULoongArchState *env)
+ /* Not actually called directly as a helper, but uses similar machinery. */
+-bfloat16 helper_sme2_ah_fmax_b16(bfloat16 a, bfloat16 b, float_status *fpst);
+-bfloat16 helper_sme2_ah_fmin_b16(bfloat16 a, bfloat16 b, float_status *fpst);
++bfloat16 HELPER(sme2_ah_fmax_b16)(bfloat16 a, bfloat16 b, float_status *fpst);
++bfloat16 HELPER(sme2_ah_fmin_b16)(bfloat16 a, bfloat16 b, float_status *fpst);
+ 
+ float32 sve_f16_to_f32(float16 f, float_status *fpst);
+ float16 sve_f32_to_f16(float32 f, float_status *fpst);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index f76d89990c3..fdfa220574f 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -707,7 +707,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+         } else {
+             env->regs[15] = new_pc & ~0x3;
+         }
+-        helper_rebuild_hflags_a32(env, new_el);
++        HELPER(rebuild_hflags_a32)(env, new_el);
+         qemu_log_mask(CPU_LOG_INT, "Exception return from AArch64 EL%d to "
+                       "AArch32 EL%d PC 0x%" PRIx32 "\n",
+                       cur_el, new_el, env->regs[15]);
+@@ -721,7 +721,7 @@ void HELPER(exception_return)(CPUARMState *env, uint64_t new_pc)
+             env->pstate &= ~PSTATE_SS;
+         }
+         aarch64_restore_sp(env, new_el);
+-        helper_rebuild_hflags_a64(env, new_el);
++        HELPER(rebuild_hflags_a64)(env, new_el);
+ 
+         /*
+          * Apply TBI to the exception return address.  We had to delay this
+@@ -777,7 +777,7 @@ illegal_return:
+     if (!arm_singlestep_active(env)) {
+         env->pstate &= ~PSTATE_SS;
+     }
+-    helper_rebuild_hflags_a64(env, cur_el);
++    HELPER(rebuild_hflags_a64)(env, cur_el);
+     qemu_log_mask(LOG_GUEST_ERROR, "Illegal exception return at EL%d: "
+                   "resuming execution at 0x%" PRIx64 "\n", cur_el, env->pc);
+ }
+diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
+index 09ae2334167..4a8e0b210e6 100644
+--- a/target/arm/tcg/mve_helper.c
++++ b/target/arm/tcg/mve_helper.c
+@@ -3310,14 +3310,14 @@ DO_VCMP_FP_BOTH(vfcmples, vfcmple_scalars, 4, float32, !DO_GT32)
+         mve_advance_vpt(env);                                           \
+     }
+ 
+-DO_VCVT_FIXED(vcvt_sh, 2, int16_t, helper_vfp_shtoh)
+-DO_VCVT_FIXED(vcvt_uh, 2, uint16_t, helper_vfp_uhtoh)
+-DO_VCVT_FIXED(vcvt_hs, 2, int16_t, helper_vfp_toshh_round_to_zero)
+-DO_VCVT_FIXED(vcvt_hu, 2, uint16_t, helper_vfp_touhh_round_to_zero)
+-DO_VCVT_FIXED(vcvt_sf, 4, int32_t, helper_vfp_sltos)
+-DO_VCVT_FIXED(vcvt_uf, 4, uint32_t, helper_vfp_ultos)
+-DO_VCVT_FIXED(vcvt_fs, 4, int32_t, helper_vfp_tosls_round_to_zero)
+-DO_VCVT_FIXED(vcvt_fu, 4, uint32_t, helper_vfp_touls_round_to_zero)
++DO_VCVT_FIXED(vcvt_sh, 2, int16_t, HELPER(vfp_shtoh))
++DO_VCVT_FIXED(vcvt_uh, 2, uint16_t, HELPER(vfp_uhtoh))
++DO_VCVT_FIXED(vcvt_hs, 2, int16_t, HELPER(vfp_toshh_round_to_zero))
++DO_VCVT_FIXED(vcvt_hu, 2, uint16_t, HELPER(vfp_touhh_round_to_zero))
++DO_VCVT_FIXED(vcvt_sf, 4, int32_t, HELPER(vfp_sltos))
++DO_VCVT_FIXED(vcvt_uf, 4, uint32_t, HELPER(vfp_ultos))
++DO_VCVT_FIXED(vcvt_fs, 4, int32_t, HELPER(vfp_tosls_round_to_zero))
++DO_VCVT_FIXED(vcvt_fu, 4, uint32_t, HELPER(vfp_touls_round_to_zero))
+ 
+ /* VCVT with specified rmode */
+ #define DO_VCVT_RMODE(OP, ESIZE, TYPE, FN)                              \
+@@ -3351,13 +3351,13 @@ DO_VCVT_FIXED(vcvt_fu, 4, uint32_t, helper_vfp_touls_round_to_zero)
+         mve_advance_vpt(env);                                           \
+     }
+ 
+-DO_VCVT_RMODE(vcvt_rm_sh, 2, uint16_t, helper_vfp_toshh)
+-DO_VCVT_RMODE(vcvt_rm_uh, 2, uint16_t, helper_vfp_touhh)
+-DO_VCVT_RMODE(vcvt_rm_ss, 4, uint32_t, helper_vfp_tosls)
+-DO_VCVT_RMODE(vcvt_rm_us, 4, uint32_t, helper_vfp_touls)
++DO_VCVT_RMODE(vcvt_rm_sh, 2, uint16_t, HELPER(vfp_toshh))
++DO_VCVT_RMODE(vcvt_rm_uh, 2, uint16_t, HELPER(vfp_touhh))
++DO_VCVT_RMODE(vcvt_rm_ss, 4, uint32_t, HELPER(vfp_tosls))
++DO_VCVT_RMODE(vcvt_rm_us, 4, uint32_t, HELPER(vfp_touls))
+ 
+-#define DO_VRINT_RM_H(M, F, S) helper_rinth(M, S)
+-#define DO_VRINT_RM_S(M, F, S) helper_rints(M, S)
++#define DO_VRINT_RM_H(M, F, S) HELPER(rinth)(M, S)
++#define DO_VRINT_RM_S(M, F, S) HELPER(rints)(M, S)
+ 
+ DO_VCVT_RMODE(vrint_rm_h, 2, uint16_t, DO_VRINT_RM_H)
+ DO_VCVT_RMODE(vrint_rm_s, 4, uint32_t, DO_VRINT_RM_S)
+diff --git a/target/arm/tcg/psci.c b/target/arm/tcg/psci.c
+index 56754bde951..d8e01df7623 100644
+--- a/target/arm/tcg/psci.c
++++ b/target/arm/tcg/psci.c
+@@ -172,7 +172,7 @@ void arm_handle_psci_call(ARMCPU *cpu)
+         } else {
+             env->regs[0] = 0;
+         }
+-        helper_wfi(env, 4);
++        HELPER(wfi)(env, 4);
+         break;
+     case QEMU_PSCI_1_0_FN_PSCI_FEATURES:
+         switch (param[1]) {
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 9de95428d2a..5fb629362b9 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -34,12 +34,12 @@
+ #define HELPER_H "tcg/helper-sme-defs.h"
+ #include "exec/helper-info.c.inc"
+ 
+-void helper_set_svcr(CPUARMState *env, uint32_t val, uint32_t mask)
++void HELPER(set_svcr)(CPUARMState *env, uint32_t val, uint32_t mask)
  {
-     int64_t v;
-     CPUSysState *sys = env_sys(env);
-@@ -60,7 +60,7 @@ target_ulong helper_csrrd_pgd(CPULoongArchState *env)
-     return v;
+     aarch64_set_svcr(env, val, mask);
  }
  
--target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
-+target_ulong HELPER(csrrd_cpuid)(CPULoongArchState *env)
+-void helper_sme_zero(CPUARMState *env, uint32_t imm, uint32_t svl)
++void HELPER(sme_zero)(CPUARMState *env, uint32_t imm, uint32_t svl)
  {
-     LoongArchCPU *lac = env_archcpu(env);
-     CPUSysState *sys = env_sys(env);
-@@ -70,12 +70,12 @@ target_ulong helper_csrrd_cpuid(CPULoongArchState *env)
-     return sys->CSR_CPUID;
+     uint32_t i;
+ 
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 8389dce6299..c296fc8c08f 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -778,13 +778,13 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
+ 
+-DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
+-DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
+-DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, HELPER(vfp_ah_maxh))
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, HELPER(vfp_ah_maxs))
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, HELPER(vfp_ah_maxd))
+ 
+-DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
+-DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
+-DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, HELPER(vfp_ah_minh))
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, HELPER(vfp_ah_mins))
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, HELPER(vfp_ah_mind))
+ 
+ #undef DO_ZPZZ_PAIR_FP
+ 
+@@ -1044,8 +1044,8 @@ DO_ZPZ(sve2_sqneg_h, uint16_t, H1_2, DO_SQNEG)
+ DO_ZPZ(sve2_sqneg_s, uint32_t, H1_4, DO_SQNEG)
+ DO_ZPZ_D(sve2_sqneg_d, uint64_t, DO_SQNEG)
+ 
+-DO_ZPZ(sve2_urecpe_s, uint32_t, H1_4, helper_recpe_u32)
+-DO_ZPZ(sve2_ursqrte_s, uint32_t, H1_4, helper_rsqrte_u32)
++DO_ZPZ(sve2_urecpe_s, uint32_t, H1_4, HELPER(recpe_u32))
++DO_ZPZ(sve2_ursqrte_s, uint32_t, H1_4, HELPER(rsqrte_u32))
+ 
+ /* Three-operand expander, unpredicated, in which the third operand is "wide".
+  */
+@@ -3621,25 +3621,25 @@ static void do_perseg_zzz(void *vd, void *vn, void *vm,
+     void HELPER(NAME)(void *vd, void *vn, void *vm, uint32_t desc) \
+     { do_perseg_zzz(vd, vn, vm, desc, FUNC); }
+ 
+-DO_PERSEG_ZZZ(sve2p1_uzpq_b, helper_sve_uzp_b)
+-DO_PERSEG_ZZZ(sve2p1_uzpq_h, helper_sve_uzp_h)
+-DO_PERSEG_ZZZ(sve2p1_uzpq_s, helper_sve_uzp_s)
+-DO_PERSEG_ZZZ(sve2p1_uzpq_d, helper_sve_uzp_d)
++DO_PERSEG_ZZZ(sve2p1_uzpq_b, HELPER(sve_uzp_b))
++DO_PERSEG_ZZZ(sve2p1_uzpq_h, HELPER(sve_uzp_h))
++DO_PERSEG_ZZZ(sve2p1_uzpq_s, HELPER(sve_uzp_s))
++DO_PERSEG_ZZZ(sve2p1_uzpq_d, HELPER(sve_uzp_d))
+ 
+-DO_PERSEG_ZZZ(sve2p1_zipq_b, helper_sve_zip_b)
+-DO_PERSEG_ZZZ(sve2p1_zipq_h, helper_sve_zip_h)
+-DO_PERSEG_ZZZ(sve2p1_zipq_s, helper_sve_zip_s)
+-DO_PERSEG_ZZZ(sve2p1_zipq_d, helper_sve_zip_d)
++DO_PERSEG_ZZZ(sve2p1_zipq_b, HELPER(sve_zip_b))
++DO_PERSEG_ZZZ(sve2p1_zipq_h, HELPER(sve_zip_h))
++DO_PERSEG_ZZZ(sve2p1_zipq_s, HELPER(sve_zip_s))
++DO_PERSEG_ZZZ(sve2p1_zipq_d, HELPER(sve_zip_d))
+ 
+-DO_PERSEG_ZZZ(sve2p1_tblq_b, helper_sve_tbl_b)
+-DO_PERSEG_ZZZ(sve2p1_tblq_h, helper_sve_tbl_h)
+-DO_PERSEG_ZZZ(sve2p1_tblq_s, helper_sve_tbl_s)
+-DO_PERSEG_ZZZ(sve2p1_tblq_d, helper_sve_tbl_d)
++DO_PERSEG_ZZZ(sve2p1_tblq_b, HELPER(sve_tbl_b))
++DO_PERSEG_ZZZ(sve2p1_tblq_h, HELPER(sve_tbl_h))
++DO_PERSEG_ZZZ(sve2p1_tblq_s, HELPER(sve_tbl_s))
++DO_PERSEG_ZZZ(sve2p1_tblq_d, HELPER(sve_tbl_d))
+ 
+-DO_PERSEG_ZZZ(sve2p1_tbxq_b, helper_sve2_tbx_b)
+-DO_PERSEG_ZZZ(sve2p1_tbxq_h, helper_sve2_tbx_h)
+-DO_PERSEG_ZZZ(sve2p1_tbxq_s, helper_sve2_tbx_s)
+-DO_PERSEG_ZZZ(sve2p1_tbxq_d, helper_sve2_tbx_d)
++DO_PERSEG_ZZZ(sve2p1_tbxq_b, HELPER(sve2_tbx_b))
++DO_PERSEG_ZZZ(sve2p1_tbxq_h, HELPER(sve2_tbx_h))
++DO_PERSEG_ZZZ(sve2p1_tbxq_s, HELPER(sve2_tbx_s))
++DO_PERSEG_ZZZ(sve2p1_tbxq_d, HELPER(sve2_tbx_d))
+ 
+ #undef DO_PERSEG_ZZZ
+ 
+@@ -4575,18 +4575,19 @@ uint32_t HELPER(sve_whilecg)(void *vd, uint32_t count, uint32_t pred_desc)
+  * little to gain with a more complex non-recursive form.
+  */
+ #define DO_REDUCE(NAME, SUF, TYPE, H, FUNC, IDENT)                      \
+-static TYPE FUNC##_reduce(TYPE *data, float_status *status, uintptr_t n) \
++static TYPE NAME##_##SUF##_reduce(TYPE *data, float_status *status,   \
++                                  uintptr_t n)                        \
+ {                                                                     \
+     if (n == 1) {                                                     \
+         return *data;                                                 \
+     } else {                                                          \
+         uintptr_t half = n / 2;                                       \
+-        TYPE lo = FUNC##_reduce(data, status, half);                  \
+-        TYPE hi = FUNC##_reduce(data + half, status, half);           \
++        TYPE lo = NAME##_##SUF##_reduce(data, status, half);          \
++        TYPE hi = NAME##_##SUF##_reduce(data + half, status, half);   \
+         return FUNC(lo, hi, status);                                  \
+     }                                                                 \
+ }                                                                     \
+-uint64_t helper_sve_##NAME##v_##SUF(void *vn, void *vg,               \
++uint64_t HELPER(sve_##NAME##v_##SUF)(void *vn, void *vg,              \
+                                     float_status *status, uint32_t desc) \
+ {                                                                     \
+     uintptr_t i, oprsz = simd_oprsz(desc), maxsz = simd_data(desc);   \
+@@ -4603,9 +4604,9 @@ uint64_t helper_sve_##NAME##v_##SUF(void *vn, void *vg,               \
+     for (; i < maxsz; i += sizeof(TYPE)) {                            \
+         *(TYPE *)((void *)data + i) = ident;                          \
+     }                                                                 \
+-    return FUNC##_reduce(data, status, maxsz / sizeof(TYPE));         \
++    return NAME##_##SUF##_reduce(data, status, maxsz / sizeof(TYPE)); \
+ }                                                                     \
+-void helper_sve2p1_##NAME##qv_##SUF(void *vd, void *vn, void *vg,     \
++void HELPER(sve2p1_##NAME##qv_##SUF)(void *vd, void *vn, void *vg,    \
+                                     float_status *status, uint32_t desc) \
+ {                                                                     \
+     unsigned oprsz = simd_oprsz(desc), segments = oprsz / 16;         \
+@@ -4617,7 +4618,7 @@ void helper_sve2p1_##NAME##qv_##SUF(void *vd, void *vn, void *vg,     \
+             TYPE nn = *(TYPE *)(vn + (s * 16 + H(e)));                \
+             data[s] = (pg >> e) & 1 ? nn : ident;                     \
+         }                                                             \
+-        *(TYPE *)(vd + H(e)) = FUNC##_reduce(data, status, segments); \
++        *(TYPE *)(vd + H(e)) = NAME##_##SUF##_reduce(data, status, segments); \
+     }                                                                 \
+     clear_tail(vd, 16, simd_maxsz(desc));                             \
+ }
+@@ -4646,15 +4647,15 @@ DO_REDUCE(fmax,h, float16, H1_2, float16_max, float16_chs(float16_infinity))
+ DO_REDUCE(fmax,s, float32, H1_4, float32_max, float32_chs(float32_infinity))
+ DO_REDUCE(fmax,d, float64, H1_8, float64_max, float64_chs(float64_infinity))
+ 
+-DO_REDUCE(ah_fmin,h, float16, H1_2, helper_vfp_ah_minh, float16_infinity)
+-DO_REDUCE(ah_fmin,s, float32, H1_4, helper_vfp_ah_mins, float32_infinity)
+-DO_REDUCE(ah_fmin,d, float64, H1_8, helper_vfp_ah_mind, float64_infinity)
++DO_REDUCE(ah_fmin, h, float16, H1_2, HELPER(vfp_ah_minh), float16_infinity)
++DO_REDUCE(ah_fmin, s, float32, H1_4, HELPER(vfp_ah_mins), float32_infinity)
++DO_REDUCE(ah_fmin, d, float64, H1_8, HELPER(vfp_ah_mind), float64_infinity)
+ 
+-DO_REDUCE(ah_fmax,h, float16, H1_2, helper_vfp_ah_maxh,
++DO_REDUCE(ah_fmax, h, float16, H1_2, HELPER(vfp_ah_maxh),
+           float16_chs(float16_infinity))
+-DO_REDUCE(ah_fmax,s, float32, H1_4, helper_vfp_ah_maxs,
++DO_REDUCE(ah_fmax, s, float32, H1_4, HELPER(vfp_ah_maxs),
+           float32_chs(float32_infinity))
+-DO_REDUCE(ah_fmax,d, float64, H1_8, helper_vfp_ah_maxd,
++DO_REDUCE(ah_fmax, d, float64, H1_8, HELPER(vfp_ah_maxd),
+           float64_chs(float64_infinity))
+ 
+ #undef DO_REDUCE
+@@ -4766,15 +4767,15 @@ DO_ZPZZ_FP(sve_fmax_h, uint16_t, H1_2, float16_max)
+ DO_ZPZZ_FP(sve_fmax_s, uint32_t, H1_4, float32_max)
+ DO_ZPZZ_FP(sve_fmax_d, uint64_t, H1_8, float64_max)
+ 
+-DO_ZPZZ_FP(sve_ah_fmin_b16, uint16_t, H1_2, helper_sme2_ah_fmin_b16)
+-DO_ZPZZ_FP(sve_ah_fmin_h, uint16_t, H1_2, helper_vfp_ah_minh)
+-DO_ZPZZ_FP(sve_ah_fmin_s, uint32_t, H1_4, helper_vfp_ah_mins)
+-DO_ZPZZ_FP(sve_ah_fmin_d, uint64_t, H1_8, helper_vfp_ah_mind)
++DO_ZPZZ_FP(sve_ah_fmin_b16, uint16_t, H1_2, HELPER(sme2_ah_fmin_b16))
++DO_ZPZZ_FP(sve_ah_fmin_h, uint16_t, H1_2, HELPER(vfp_ah_minh))
++DO_ZPZZ_FP(sve_ah_fmin_s, uint32_t, H1_4, HELPER(vfp_ah_mins))
++DO_ZPZZ_FP(sve_ah_fmin_d, uint64_t, H1_8, HELPER(vfp_ah_mind))
+ 
+-DO_ZPZZ_FP(sve_ah_fmax_b16, uint16_t, H1_2, helper_sme2_ah_fmax_b16)
+-DO_ZPZZ_FP(sve_ah_fmax_h, uint16_t, H1_2, helper_vfp_ah_maxh)
+-DO_ZPZZ_FP(sve_ah_fmax_s, uint32_t, H1_4, helper_vfp_ah_maxs)
+-DO_ZPZZ_FP(sve_ah_fmax_d, uint64_t, H1_8, helper_vfp_ah_maxd)
++DO_ZPZZ_FP(sve_ah_fmax_b16, uint16_t, H1_2, HELPER(sme2_ah_fmax_b16))
++DO_ZPZZ_FP(sve_ah_fmax_h, uint16_t, H1_2, HELPER(vfp_ah_maxh))
++DO_ZPZZ_FP(sve_ah_fmax_s, uint32_t, H1_4, HELPER(vfp_ah_maxs))
++DO_ZPZZ_FP(sve_ah_fmax_d, uint64_t, H1_8, HELPER(vfp_ah_maxd))
+ 
+ DO_ZPZZ_FP(sve_fminnum_b16, uint16_t, H1_2, bfloat16_minnum)
+ DO_ZPZZ_FP(sve_fminnum_h, uint16_t, H1_2, float16_minnum)
+@@ -4832,9 +4833,9 @@ DO_ZPZZ_FP(sve_fscalbn_h, int16_t, H1_2, float16_scalbn)
+ DO_ZPZZ_FP(sve_fscalbn_s, int32_t, H1_4, float32_scalbn)
+ DO_ZPZZ_FP(sve_fscalbn_d, int64_t, H1_8, scalbn_d)
+ 
+-DO_ZPZZ_FP(sve_fmulx_h, uint16_t, H1_2, helper_advsimd_mulxh)
+-DO_ZPZZ_FP(sve_fmulx_s, uint32_t, H1_4, helper_vfp_mulxs)
+-DO_ZPZZ_FP(sve_fmulx_d, uint64_t, H1_8, helper_vfp_mulxd)
++DO_ZPZZ_FP(sve_fmulx_h, uint16_t, H1_2, HELPER(advsimd_mulxh))
++DO_ZPZZ_FP(sve_fmulx_s, uint32_t, H1_4, HELPER(vfp_mulxs))
++DO_ZPZZ_FP(sve_fmulx_d, uint64_t, H1_8, HELPER(vfp_mulxd))
+ 
+ DO_ZPZZ_FP(sve2_famax_h, uint16_t, H1_2, float16_famax)
+ DO_ZPZZ_FP(sve2_famax_s, uint32_t, H1_4, float32_famax)
+@@ -4915,13 +4916,13 @@ DO_ZPZS_FP(sve_fmins_h, float16, H1_2, float16_min)
+ DO_ZPZS_FP(sve_fmins_s, float32, H1_4, float32_min)
+ DO_ZPZS_FP(sve_fmins_d, float64, H1_8, float64_min)
+ 
+-DO_ZPZS_FP(sve_ah_fmaxs_h, float16, H1_2, helper_vfp_ah_maxh)
+-DO_ZPZS_FP(sve_ah_fmaxs_s, float32, H1_4, helper_vfp_ah_maxs)
+-DO_ZPZS_FP(sve_ah_fmaxs_d, float64, H1_8, helper_vfp_ah_maxd)
++DO_ZPZS_FP(sve_ah_fmaxs_h, float16, H1_2, HELPER(vfp_ah_maxh))
++DO_ZPZS_FP(sve_ah_fmaxs_s, float32, H1_4, HELPER(vfp_ah_maxs))
++DO_ZPZS_FP(sve_ah_fmaxs_d, float64, H1_8, HELPER(vfp_ah_maxd))
+ 
+-DO_ZPZS_FP(sve_ah_fmins_h, float16, H1_2, helper_vfp_ah_minh)
+-DO_ZPZS_FP(sve_ah_fmins_s, float32, H1_4, helper_vfp_ah_mins)
+-DO_ZPZS_FP(sve_ah_fmins_d, float64, H1_8, helper_vfp_ah_mind)
++DO_ZPZS_FP(sve_ah_fmins_h, float16, H1_2, HELPER(vfp_ah_minh))
++DO_ZPZS_FP(sve_ah_fmins_s, float32, H1_4, HELPER(vfp_ah_mins))
++DO_ZPZS_FP(sve_ah_fmins_d, float64, H1_8, HELPER(vfp_ah_mind))
+ 
+ /*
+  * Fully general two-operand expander, controlled by a predicate,
+@@ -5077,37 +5078,37 @@ DO_ZPZ_FP(sve_fcvt_ds, uint64_t, H1_8, float64_to_float32)
+ DO_ZPZ_FP(sve_fcvt_sd, uint64_t, H1_8, float32_to_float64)
+ 
+ DO_ZPZ_FP(sve_fcvtzs_hh, uint16_t, H1_2, vfp_float16_to_int16_rtz)
+-DO_ZPZ_FP(sve_fcvtzs_hs, uint32_t, H1_4, helper_vfp_tosizh)
+-DO_ZPZ_FP(sve_fcvtzs_ss, uint32_t, H1_4, helper_vfp_tosizs)
++DO_ZPZ_FP(sve_fcvtzs_hs, uint32_t, H1_4, HELPER(vfp_tosizh))
++DO_ZPZ_FP(sve_fcvtzs_ss, uint32_t, H1_4, HELPER(vfp_tosizs))
+ DO_ZPZ_FP(sve_fcvtzs_hd, uint64_t, H1_8, vfp_float16_to_int64_rtz)
+ DO_ZPZ_FP(sve_fcvtzs_sd, uint64_t, H1_8, vfp_float32_to_int64_rtz)
+-DO_ZPZ_FP(sve_fcvtzs_ds, uint64_t, H1_8, helper_vfp_tosizd)
++DO_ZPZ_FP(sve_fcvtzs_ds, uint64_t, H1_8, HELPER(vfp_tosizd))
+ DO_ZPZ_FP(sve_fcvtzs_dd, uint64_t, H1_8, vfp_float64_to_int64_rtz)
+ 
+ DO_ZPZ_FP(sve_fcvtzu_hh, uint16_t, H1_2, vfp_float16_to_uint16_rtz)
+-DO_ZPZ_FP(sve_fcvtzu_hs, uint32_t, H1_4, helper_vfp_touizh)
+-DO_ZPZ_FP(sve_fcvtzu_ss, uint32_t, H1_4, helper_vfp_touizs)
++DO_ZPZ_FP(sve_fcvtzu_hs, uint32_t, H1_4, HELPER(vfp_touizh))
++DO_ZPZ_FP(sve_fcvtzu_ss, uint32_t, H1_4, HELPER(vfp_touizs))
+ DO_ZPZ_FP(sve_fcvtzu_hd, uint64_t, H1_8, vfp_float16_to_uint64_rtz)
+ DO_ZPZ_FP(sve_fcvtzu_sd, uint64_t, H1_8, vfp_float32_to_uint64_rtz)
+-DO_ZPZ_FP(sve_fcvtzu_ds, uint64_t, H1_8, helper_vfp_touizd)
++DO_ZPZ_FP(sve_fcvtzu_ds, uint64_t, H1_8, HELPER(vfp_touizd))
+ DO_ZPZ_FP(sve_fcvtzu_dd, uint64_t, H1_8, vfp_float64_to_uint64_rtz)
+ 
+-DO_ZPZ_FP(sve_frint_h, uint16_t, H1_2, helper_advsimd_rinth)
+-DO_ZPZ_FP(sve_frint_s, uint32_t, H1_4, helper_rints)
+-DO_ZPZ_FP(sve_frint_d, uint64_t, H1_8, helper_rintd)
++DO_ZPZ_FP(sve_frint_h, uint16_t, H1_2, HELPER(advsimd_rinth))
++DO_ZPZ_FP(sve_frint_s, uint32_t, H1_4, HELPER(rints))
++DO_ZPZ_FP(sve_frint_d, uint64_t, H1_8, HELPER(rintd))
+ 
+ DO_ZPZ_FP(sve_frintx_h, uint16_t, H1_2, float16_round_to_int)
+ DO_ZPZ_FP(sve_frintx_s, uint32_t, H1_4, float32_round_to_int)
+ DO_ZPZ_FP(sve_frintx_d, uint64_t, H1_8, float64_round_to_int)
+ 
+-DO_ZPZ_FP(sve2p2_frint32_s, uint32_t, H1_4, helper_frint32_s)
+-DO_ZPZ_FP(sve2p2_frint64_s, uint32_t, H1_4, helper_frint64_s)
+-DO_ZPZ_FP(sve2p2_frint32_d, uint64_t, H1_8, helper_frint32_d)
+-DO_ZPZ_FP(sve2p2_frint64_d, uint64_t, H1_8, helper_frint64_d)
++DO_ZPZ_FP(sve2p2_frint32_s, uint32_t, H1_4, HELPER(frint32_s))
++DO_ZPZ_FP(sve2p2_frint64_s, uint32_t, H1_4, HELPER(frint64_s))
++DO_ZPZ_FP(sve2p2_frint32_d, uint64_t, H1_8, HELPER(frint32_d))
++DO_ZPZ_FP(sve2p2_frint64_d, uint64_t, H1_8, HELPER(frint64_d))
+ 
+-DO_ZPZ_FP(sve_frecpx_h, uint16_t, H1_2, helper_frecpx_f16)
+-DO_ZPZ_FP(sve_frecpx_s, uint32_t, H1_4, helper_frecpx_f32)
+-DO_ZPZ_FP(sve_frecpx_d, uint64_t, H1_8, helper_frecpx_f64)
++DO_ZPZ_FP(sve_frecpx_h, uint16_t, H1_2, HELPER(frecpx_f16))
++DO_ZPZ_FP(sve_frecpx_s, uint32_t, H1_4, HELPER(frecpx_f32))
++DO_ZPZ_FP(sve_frecpx_d, uint64_t, H1_8, HELPER(frecpx_f64))
+ 
+ DO_ZPZ_FP(sve_fsqrt_h, uint16_t, H1_2, float16_sqrt)
+ DO_ZPZ_FP(sve_fsqrt_s, uint32_t, H1_4, float32_sqrt)
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index 4c3f16dc2aa..4a1611f23f5 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -289,7 +289,7 @@ void arm_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+     arm_deliver_fault(cpu, vaddr, access_type, mmu_idx, &fi);
  }
  
--target_ulong helper_csrrd_tval(CPULoongArchState *env)
-+target_ulong HELPER(csrrd_tval)(CPULoongArchState *env)
+-void helper_exception_pc_alignment(CPUARMState *env, vaddr pc)
++void HELPER(exception_pc_alignment)(CPUARMState *env, vaddr pc)
  {
-     return cpu_loongarch_get_timer_ticks(env_timer(env));
+     ARMMMUFaultInfo fi = { .type = ARMFault_Alignment };
+     int target_el = exception_target_el(env);
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 3c06e93e02d..8dd840e8291 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -1286,23 +1286,23 @@ void HELPER(NAME)(void *vd, void *vn, float_status *stat, uint32_t desc)  \
+     clear_tail(d, oprsz, simd_maxsz(desc));                       \
  }
  
--target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-+target_ulong HELPER(csrrd_msgir)(CPULoongArchState *env)
- {
-     int irq, new;
-     CPUSysState *sys = env_sys(env);
-@@ -97,7 +97,7 @@ target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-     return irq;
+-DO_2OP(gvec_frecpe_h, helper_recpe_f16, float16)
+-DO_2OP(gvec_frecpe_s, helper_recpe_f32, float32)
+-DO_2OP(gvec_frecpe_rpres_s, helper_recpe_rpres_f32, float32)
+-DO_2OP(gvec_frecpe_d, helper_recpe_f64, float64)
++DO_2OP(gvec_frecpe_h, HELPER(recpe_f16), float16)
++DO_2OP(gvec_frecpe_s, HELPER(recpe_f32), float32)
++DO_2OP(gvec_frecpe_rpres_s, HELPER(recpe_rpres_f32), float32)
++DO_2OP(gvec_frecpe_d, HELPER(recpe_f64), float64)
+ 
+-DO_2OP(gvec_frsqrte_h, helper_rsqrte_f16, float16)
+-DO_2OP(gvec_frsqrte_s, helper_rsqrte_f32, float32)
+-DO_2OP(gvec_frsqrte_rpres_s, helper_rsqrte_rpres_f32, float32)
+-DO_2OP(gvec_frsqrte_d, helper_rsqrte_f64, float64)
++DO_2OP(gvec_frsqrte_h, HELPER(rsqrte_f16), float16)
++DO_2OP(gvec_frsqrte_s, HELPER(rsqrte_f32), float32)
++DO_2OP(gvec_frsqrte_rpres_s, HELPER(rsqrte_rpres_f32), float32)
++DO_2OP(gvec_frsqrte_d, HELPER(rsqrte_f64), float64)
+ 
+ DO_2OP(gvec_vrintx_h, float16_round_to_int, float16)
+ DO_2OP(gvec_vrintx_s, float32_round_to_int, float32)
+ 
+-DO_2OP(gvec_sitos, helper_vfp_sitos, int32_t)
+-DO_2OP(gvec_uitos, helper_vfp_uitos, uint32_t)
+-DO_2OP(gvec_tosizs, helper_vfp_tosizs, float32)
+-DO_2OP(gvec_touizs, helper_vfp_touizs, float32)
++DO_2OP(gvec_sitos, HELPER(vfp_sitos), int32_t)
++DO_2OP(gvec_uitos, HELPER(vfp_uitos), uint32_t)
++DO_2OP(gvec_tosizs, HELPER(vfp_tosizs), float32)
++DO_2OP(gvec_touizs, HELPER(vfp_touizs), float32)
+ DO_2OP(gvec_sstoh, int16_to_float16, int16_t)
+ DO_2OP(gvec_ustoh, uint16_to_float16, uint16_t)
+ DO_2OP(gvec_tosszh, vfp_tosszh, float16)
+@@ -2596,19 +2596,19 @@ DO_3OP_PAIR_NO_STATUS(gvec_uminp_s, MIN, uint32_t, H4)
+         clear_tail(d, oprsz, simd_maxsz(desc));                         \
+     }
+ 
+-DO_VCVT_FIXED(gvec_vcvt_sd, helper_vfp_sqtod, uint64_t)
+-DO_VCVT_FIXED(gvec_vcvt_ud, helper_vfp_uqtod, uint64_t)
+-DO_VCVT_FIXED(gvec_vcvt_sf, helper_vfp_sltos, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_uf, helper_vfp_ultos, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_sh, helper_vfp_shtoh, uint16_t)
+-DO_VCVT_FIXED(gvec_vcvt_uh, helper_vfp_uhtoh, uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_sd, HELPER(vfp_sqtod), uint64_t)
++DO_VCVT_FIXED(gvec_vcvt_ud, HELPER(vfp_uqtod), uint64_t)
++DO_VCVT_FIXED(gvec_vcvt_sf, HELPER(vfp_sltos), uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_uf, HELPER(vfp_ultos), uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_sh, HELPER(vfp_shtoh), uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_uh, HELPER(vfp_uhtoh), uint16_t)
+ 
+-DO_VCVT_FIXED(gvec_vcvt_rz_ds, helper_vfp_tosqd_round_to_zero, uint64_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_du, helper_vfp_touqd_round_to_zero, uint64_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_hs, helper_vfp_toshh_round_to_zero, uint16_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_hu, helper_vfp_touhh_round_to_zero, uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_ds, HELPER(vfp_tosqd_round_to_zero), uint64_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_du, HELPER(vfp_touqd_round_to_zero), uint64_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_fs, HELPER(vfp_tosls_round_to_zero), uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_fu, HELPER(vfp_touls_round_to_zero), uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_hs, HELPER(vfp_toshh_round_to_zero), uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_hu, HELPER(vfp_touhh_round_to_zero), uint16_t)
+ 
+ #undef DO_VCVT_FIXED
+ 
+@@ -2627,12 +2627,12 @@ DO_VCVT_FIXED(gvec_vcvt_rz_hu, helper_vfp_touhh_round_to_zero, uint16_t)
+         clear_tail(d, oprsz, simd_maxsz(desc));                         \
+     }
+ 
+-DO_VCVT_RMODE(gvec_vcvt_rm_sd, helper_vfp_tosqd, uint64_t)
+-DO_VCVT_RMODE(gvec_vcvt_rm_ud, helper_vfp_touqd, uint64_t)
+-DO_VCVT_RMODE(gvec_vcvt_rm_ss, helper_vfp_tosls, uint32_t)
+-DO_VCVT_RMODE(gvec_vcvt_rm_us, helper_vfp_touls, uint32_t)
+-DO_VCVT_RMODE(gvec_vcvt_rm_sh, helper_vfp_toshh, uint16_t)
+-DO_VCVT_RMODE(gvec_vcvt_rm_uh, helper_vfp_touhh, uint16_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_sd, HELPER(vfp_tosqd), uint64_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_ud, HELPER(vfp_touqd), uint64_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_ss, HELPER(vfp_tosls), uint32_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_us, HELPER(vfp_touls), uint32_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_sh, HELPER(vfp_toshh), uint16_t)
++DO_VCVT_RMODE(gvec_vcvt_rm_uh, HELPER(vfp_touhh), uint16_t)
+ 
+ #undef DO_VCVT_RMODE
+ 
+@@ -2651,8 +2651,8 @@ DO_VCVT_RMODE(gvec_vcvt_rm_uh, helper_vfp_touhh, uint16_t)
+         clear_tail(d, oprsz, simd_maxsz(desc));                         \
+     }
+ 
+-DO_VRINT_RMODE(gvec_vrint_rm_h, helper_rinth, uint16_t)
+-DO_VRINT_RMODE(gvec_vrint_rm_s, helper_rints, uint32_t)
++DO_VRINT_RMODE(gvec_vrint_rm_h, HELPER(rinth), uint16_t)
++DO_VRINT_RMODE(gvec_vrint_rm_s, HELPER(rints), uint32_t)
+ 
+ #undef DO_VRINT_RMODE
+ 
+@@ -3242,7 +3242,7 @@ void HELPER(gvec_urecpe_s)(void *vd, void *vn, uint32_t desc)
+     uint32_t *d = vd, *n = vn;
+ 
+     for (i = 0; i < opr_sz / 4; ++i) {
+-        d[i] = helper_recpe_u32(n[i]);
++        d[i] = HELPER(recpe_u32)(n[i]);
+     }
+     clear_tail(d, opr_sz, simd_maxsz(desc));
+ }
+@@ -3253,7 +3253,7 @@ void HELPER(gvec_ursqrte_s)(void *vd, void *vn, uint32_t desc)
+     uint32_t *d = vd, *n = vn;
+ 
+     for (i = 0; i < opr_sz / 4; ++i) {
+-        d[i] = helper_rsqrte_u32(n[i]);
++        d[i] = HELPER(rsqrte_u32)(n[i]);
+     }
+     clear_tail(d, opr_sz, simd_maxsz(desc));
+ }
+@@ -3307,7 +3307,7 @@ static inline void do_lut_s(void *zd, uint64_t *indexes, uint32_t *table,
  }
  
--target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_estat)(CPULoongArchState *env, target_ulong val)
+ #define DO_SME2_LUT(ISIZE, NREG, SUFF, ESIZE) \
+-void helper_sme2_luti##ISIZE##_##NREG##SUFF                             \
++void HELPER(sme2_luti##ISIZE##_##NREG##SUFF)                            \
+     (void *zd, void *zn, CPUARMState *env, uint32_t desc)               \
+ {                                                                       \
+     unsigned vl = simd_oprsz(desc);                                     \
+@@ -3345,7 +3345,7 @@ DO_SME2_LUT(4,4,s, 4)
+ 
+ #undef DO_SME2_LUT
+ 
+-void helper_sme2_luti4_4b(void *zd, void *zn, CPUARMState *env, uint32_t desc)
++void HELPER(sme2_luti4_4b)(void *zd, void *zn, CPUARMState *env, uint32_t desc)
  {
-     CPUSysState *sys = env_sys(env);
-     int64_t old_v = sys->CSR_ESTAT;
-@@ -118,7 +118,7 @@ target_ulong helper_csrwr_estat(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
+     unsigned vl = simd_oprsz(desc);
+     unsigned strided = extract32(desc, SIMD_DATA_SHIFT, 1);
+diff --git a/target/arm/tcg/vec_helper64.c b/target/arm/tcg/vec_helper64.c
+index 4f43869d9e9..53723fa40b9 100644
+--- a/target/arm/tcg/vec_helper64.c
++++ b/target/arm/tcg/vec_helper64.c
+@@ -23,46 +23,46 @@ DO_3OP(gvec_fdiv_h, float16_div, float16)
+ DO_3OP(gvec_fdiv_s, float32_div, float32)
+ DO_3OP(gvec_fdiv_d, float64_div, float64)
  
--target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_asid)(CPULoongArchState *env, target_ulong val)
- {
-     CPUSysState *sys = env_sys(env);
-     int64_t old_v = sys->CSR_ASID;
-@@ -131,7 +131,7 @@ target_ulong helper_csrwr_asid(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
+-DO_3OP(gvec_fmulx_h, helper_advsimd_mulxh, float16)
+-DO_3OP(gvec_fmulx_s, helper_vfp_mulxs, float32)
+-DO_3OP(gvec_fmulx_d, helper_vfp_mulxd, float64)
++DO_3OP(gvec_fmulx_h, HELPER(advsimd_mulxh), float16)
++DO_3OP(gvec_fmulx_s, HELPER(vfp_mulxs), float32)
++DO_3OP(gvec_fmulx_d, HELPER(vfp_mulxd), float64)
  
--target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_tcfg)(CPULoongArchState *env, target_ulong val)
- {
-     CPUTimerState *timer = env_timer(env);
-     CPUSysState *sys = container_of(timer, CPUSysState, timer_state);
-@@ -142,7 +142,7 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
+-DO_3OP(gvec_recps_h, helper_recpsf_f16, float16)
+-DO_3OP(gvec_recps_s, helper_recpsf_f32, float32)
+-DO_3OP(gvec_recps_d, helper_recpsf_f64, float64)
++DO_3OP(gvec_recps_h, HELPER(recpsf_f16), float16)
++DO_3OP(gvec_recps_s, HELPER(recpsf_f32), float32)
++DO_3OP(gvec_recps_d, HELPER(recpsf_f64), float64)
  
--target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_ticlr)(CPULoongArchState *env, target_ulong val)
- {
-     CPUTimerState *timer = env_timer(env);
-     int64_t old_v = 0;
-@@ -155,7 +155,7 @@ target_ulong helper_csrwr_ticlr(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
+-DO_3OP(gvec_rsqrts_h, helper_rsqrtsf_f16, float16)
+-DO_3OP(gvec_rsqrts_s, helper_rsqrtsf_f32, float32)
+-DO_3OP(gvec_rsqrts_d, helper_rsqrtsf_f64, float64)
++DO_3OP(gvec_rsqrts_h, HELPER(rsqrtsf_f16), float16)
++DO_3OP(gvec_rsqrts_s, HELPER(rsqrtsf_f32), float32)
++DO_3OP(gvec_rsqrts_d, HELPER(rsqrtsf_f64), float64)
  
--target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_pwcl)(CPULoongArchState *env, target_ulong val)
- {
-     uint8_t shift, ptbase;
-     CPUSysState *sys = env_sys(env);
-@@ -180,7 +180,7 @@ target_ulong helper_csrwr_pwcl(CPULoongArchState *env, target_ulong val)
-     return old_v;
- }
+-DO_3OP(gvec_ah_recps_h, helper_recpsf_ah_f16, float16)
+-DO_3OP(gvec_ah_recps_s, helper_recpsf_ah_f32, float32)
+-DO_3OP(gvec_ah_recps_d, helper_recpsf_ah_f64, float64)
++DO_3OP(gvec_ah_recps_h, HELPER(recpsf_ah_f16), float16)
++DO_3OP(gvec_ah_recps_s, HELPER(recpsf_ah_f32), float32)
++DO_3OP(gvec_ah_recps_d, HELPER(recpsf_ah_f64), float64)
  
--target_ulong helper_csrwr_pwch(CPULoongArchState *env, target_ulong val)
-+target_ulong HELPER(csrwr_pwch)(CPULoongArchState *env, target_ulong val)
- {
-     uint8_t has_ptw;
-     CPUSysState *sys = env_sys(env);
-diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
-index fc9c64c20a8..cf7c77b1b05 100644
---- a/target/loongarch/tcg/fpu_helper.c
-+++ b/target/loongarch/tcg/fpu_helper.c
-@@ -90,7 +90,7 @@ static void update_fcsr0(CPULoongArchState *env, uintptr_t pc)
-     update_fcsr0_mask(env, pc, 0);
- }
+-DO_3OP(gvec_ah_rsqrts_h, helper_rsqrtsf_ah_f16, float16)
+-DO_3OP(gvec_ah_rsqrts_s, helper_rsqrtsf_ah_f32, float32)
+-DO_3OP(gvec_ah_rsqrts_d, helper_rsqrtsf_ah_f64, float64)
++DO_3OP(gvec_ah_rsqrts_h, HELPER(rsqrtsf_ah_f16), float16)
++DO_3OP(gvec_ah_rsqrts_s, HELPER(rsqrtsf_ah_f32), float32)
++DO_3OP(gvec_ah_rsqrts_d, HELPER(rsqrtsf_ah_f64), float64)
  
--uint64_t helper_fadd_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fadd_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
+-DO_3OP(gvec_ah_fmax_h, helper_vfp_ah_maxh, float16)
+-DO_3OP(gvec_ah_fmax_s, helper_vfp_ah_maxs, float32)
+-DO_3OP(gvec_ah_fmax_d, helper_vfp_ah_maxd, float64)
++DO_3OP(gvec_ah_fmax_h, HELPER(vfp_ah_maxh), float16)
++DO_3OP(gvec_ah_fmax_s, HELPER(vfp_ah_maxs), float32)
++DO_3OP(gvec_ah_fmax_d, HELPER(vfp_ah_maxd), float64)
  
-@@ -99,7 +99,7 @@ uint64_t helper_fadd_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
+-DO_3OP(gvec_ah_fmin_h, helper_vfp_ah_minh, float16)
+-DO_3OP(gvec_ah_fmin_s, helper_vfp_ah_mins, float32)
+-DO_3OP(gvec_ah_fmin_d, helper_vfp_ah_mind, float64)
++DO_3OP(gvec_ah_fmin_h, HELPER(vfp_ah_minh), float16)
++DO_3OP(gvec_ah_fmin_s, HELPER(vfp_ah_mins), float32)
++DO_3OP(gvec_ah_fmin_d, HELPER(vfp_ah_mind), float64)
  
--uint64_t helper_fadd_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fadd_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
+ DO_3OP(gvec_fmax_b16, bfloat16_max, bfloat16)
+ DO_3OP(gvec_fmin_b16, bfloat16_min, bfloat16)
+ DO_3OP(gvec_fmaxnum_b16, bfloat16_maxnum, bfloat16)
+ DO_3OP(gvec_fminnum_b16, bfloat16_minnum, bfloat16)
+-DO_3OP(gvec_ah_fmax_b16, helper_sme2_ah_fmax_b16, bfloat16)
+-DO_3OP(gvec_ah_fmin_b16, helper_sme2_ah_fmin_b16, bfloat16)
++DO_3OP(gvec_ah_fmax_b16, HELPER(sme2_ah_fmax_b16), bfloat16)
++DO_3OP(gvec_ah_fmin_b16, HELPER(sme2_ah_fmin_b16), bfloat16)
  
-@@ -108,7 +108,7 @@ uint64_t helper_fadd_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
+ #define nop(N, M, S) (M)
  
--uint64_t helper_fsub_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fsub_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
+-DO_FMUL_IDX(gvec_fmulx_idx_h, nop, helper_advsimd_mulxh, float16, H2)
+-DO_FMUL_IDX(gvec_fmulx_idx_s, nop, helper_vfp_mulxs, float32, H4)
+-DO_FMUL_IDX(gvec_fmulx_idx_d, nop, helper_vfp_mulxd, float64, H8)
++DO_FMUL_IDX(gvec_fmulx_idx_h, nop, HELPER(advsimd_mulxh), float16, H2)
++DO_FMUL_IDX(gvec_fmulx_idx_s, nop, HELPER(vfp_mulxs), float32, H4)
++DO_FMUL_IDX(gvec_fmulx_idx_d, nop, HELPER(vfp_mulxd), float64, H8)
  
-@@ -117,7 +117,7 @@ uint64_t helper_fsub_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
+ #undef nop
  
--uint64_t helper_fsub_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fsub_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -126,7 +126,7 @@ uint64_t helper_fsub_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmul_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmul_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -135,7 +135,7 @@ uint64_t helper_fmul_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmul_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmul_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -144,7 +144,7 @@ uint64_t helper_fmul_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fdiv_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fdiv_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -153,7 +153,7 @@ uint64_t helper_fdiv_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fdiv_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fdiv_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -162,7 +162,7 @@ uint64_t helper_fdiv_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmax_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmax_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -171,7 +171,7 @@ uint64_t helper_fmax_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmax_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmax_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -180,7 +180,7 @@ uint64_t helper_fmax_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmin_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmin_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -189,7 +189,7 @@ uint64_t helper_fmin_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmin_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmin_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -198,7 +198,7 @@ uint64_t helper_fmin_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmaxa_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmaxa_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -208,7 +208,7 @@ uint64_t helper_fmaxa_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmaxa_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmaxa_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -217,7 +217,7 @@ uint64_t helper_fmaxa_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmina_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmina_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -227,7 +227,7 @@ uint64_t helper_fmina_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fmina_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fmina_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
- 
-@@ -236,7 +236,7 @@ uint64_t helper_fmina_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fscaleb_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fscaleb_s)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
-     int32_t n = (int32_t)fk;
-@@ -249,7 +249,7 @@ uint64_t helper_fscaleb_s(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fscaleb_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-+uint64_t HELPER(fscaleb_d)(CPULoongArchState *env, uint64_t fj, uint64_t fk)
- {
-     uint64_t fd;
-     int64_t n = (int64_t)fk;
-@@ -262,7 +262,7 @@ uint64_t helper_fscaleb_d(CPULoongArchState *env, uint64_t fj, uint64_t fk)
-     return fd;
- }
- 
--uint64_t helper_fsqrt_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fsqrt_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -271,7 +271,7 @@ uint64_t helper_fsqrt_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_fsqrt_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fsqrt_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -280,7 +280,7 @@ uint64_t helper_fsqrt_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frecip_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frecip_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -289,7 +289,7 @@ uint64_t helper_frecip_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frecip_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frecip_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -298,7 +298,7 @@ uint64_t helper_frecip_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frsqrt_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frsqrt_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     uint32_t fp;
-@@ -309,7 +309,7 @@ uint64_t helper_frsqrt_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frsqrt_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frsqrt_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fp, fd;
- 
-@@ -319,7 +319,7 @@ uint64_t helper_frsqrt_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_flogb_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(flogb_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     uint32_t fp;
-@@ -334,7 +334,7 @@ uint64_t helper_flogb_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_flogb_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(flogb_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     float_status *status = &env->fp_status;
-@@ -348,7 +348,7 @@ uint64_t helper_flogb_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_fclass_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fclass_s)(CPULoongArchState *env, uint64_t fj)
- {
-     float32 f = fj;
-     bool sign = float32_is_neg(f);
-@@ -366,7 +366,7 @@ uint64_t helper_fclass_s(CPULoongArchState *env, uint64_t fj)
+@@ -123,13 +123,13 @@ void HELPER(sve_pmlal_q)(void *vd, void *vn, void *vm, uint32_t desc)
      }
  }
  
--uint64_t helper_fclass_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fclass_d)(CPULoongArchState *env, uint64_t fj)
+-DO_3OP_PAIR(gvec_ah_fmaxp_h, helper_vfp_ah_maxh, float16, H2)
+-DO_3OP_PAIR(gvec_ah_fmaxp_s, helper_vfp_ah_maxs, float32, H4)
+-DO_3OP_PAIR(gvec_ah_fmaxp_d, helper_vfp_ah_maxd, float64, /**/)
++DO_3OP_PAIR(gvec_ah_fmaxp_h, HELPER(vfp_ah_maxh), float16, H2)
++DO_3OP_PAIR(gvec_ah_fmaxp_s, HELPER(vfp_ah_maxs), float32, H4)
++DO_3OP_PAIR(gvec_ah_fmaxp_d, HELPER(vfp_ah_maxd), float64, /**/)
+ 
+-DO_3OP_PAIR(gvec_ah_fminp_h, helper_vfp_ah_minh, float16, H2)
+-DO_3OP_PAIR(gvec_ah_fminp_s, helper_vfp_ah_mins, float32, H4)
+-DO_3OP_PAIR(gvec_ah_fminp_d, helper_vfp_ah_mind, float64, /**/)
++DO_3OP_PAIR(gvec_ah_fminp_h, HELPER(vfp_ah_minh), float16, H2)
++DO_3OP_PAIR(gvec_ah_fminp_s, HELPER(vfp_ah_mins), float32, H4)
++DO_3OP_PAIR(gvec_ah_fminp_d, HELPER(vfp_ah_mind), float64, /**/)
+ 
+ void HELPER(simd_tblx)(void *vd, void *vm, CPUARMState *env, uint32_t desc)
  {
-     float64 f = fj;
-     bool sign = float64_is_neg(f);
-@@ -384,7 +384,7 @@ uint64_t helper_fclass_d(CPULoongArchState *env, uint64_t fj)
-     }
- }
- 
--uint64_t helper_fmuladd_s(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fmuladd_s)(CPULoongArchState *env, uint64_t fj,
-                           uint64_t fk, uint64_t fa, uint32_t flag)
- {
-     uint64_t fd;
-@@ -395,7 +395,7 @@ uint64_t helper_fmuladd_s(CPULoongArchState *env, uint64_t fj,
-     return fd;
- }
- 
--uint64_t helper_fmuladd_d(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fmuladd_d)(CPULoongArchState *env, uint64_t fj,
-                           uint64_t fk, uint64_t fa, uint32_t flag)
- {
-     uint64_t fd;
-@@ -432,7 +432,7 @@ static uint64_t fcmp_common(CPULoongArchState *env, FloatRelation cmp,
- }
- 
- /* fcmp_cXXX_s */
--uint64_t helper_fcmp_c_s(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fcmp_c_s)(CPULoongArchState *env, uint64_t fj,
-                          uint64_t fk, uint32_t flags)
- {
-     FloatRelation cmp = float32_compare_quiet((uint32_t)fj,
-@@ -441,7 +441,7 @@ uint64_t helper_fcmp_c_s(CPULoongArchState *env, uint64_t fj,
- }
- 
- /* fcmp_sXXX_s */
--uint64_t helper_fcmp_s_s(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fcmp_s_s)(CPULoongArchState *env, uint64_t fj,
-                          uint64_t fk, uint32_t flags)
- {
-     FloatRelation cmp = float32_compare((uint32_t)fj,
-@@ -450,7 +450,7 @@ uint64_t helper_fcmp_s_s(CPULoongArchState *env, uint64_t fj,
- }
- 
- /* fcmp_cXXX_d */
--uint64_t helper_fcmp_c_d(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fcmp_c_d)(CPULoongArchState *env, uint64_t fj,
-                          uint64_t fk, uint32_t flags)
- {
-     FloatRelation cmp = float64_compare_quiet(fj, fk, &env->fp_status);
-@@ -458,7 +458,7 @@ uint64_t helper_fcmp_c_d(CPULoongArchState *env, uint64_t fj,
- }
- 
- /* fcmp_sXXX_d */
--uint64_t helper_fcmp_s_d(CPULoongArchState *env, uint64_t fj,
-+uint64_t HELPER(fcmp_s_d)(CPULoongArchState *env, uint64_t fj,
-                          uint64_t fk, uint32_t flags)
- {
-     FloatRelation cmp = float64_compare(fj, fk, &env->fp_status);
-@@ -466,7 +466,7 @@ uint64_t helper_fcmp_s_d(CPULoongArchState *env, uint64_t fj,
- }
- 
- /* floating point conversion */
--uint64_t helper_fcvt_s_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fcvt_s_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -475,7 +475,7 @@ uint64_t helper_fcvt_s_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_fcvt_d_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(fcvt_d_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -484,7 +484,7 @@ uint64_t helper_fcvt_d_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ffint_s_w(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ffint_s_w)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -493,7 +493,7 @@ uint64_t helper_ffint_s_w(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ffint_s_l(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ffint_s_l)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -502,7 +502,7 @@ uint64_t helper_ffint_s_l(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ffint_d_w(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ffint_d_w)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -511,7 +511,7 @@ uint64_t helper_ffint_d_w(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ffint_d_l(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ffint_d_l)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -520,7 +520,7 @@ uint64_t helper_ffint_d_l(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frint_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frint_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -529,7 +529,7 @@ uint64_t helper_frint_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_frint_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(frint_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -538,7 +538,7 @@ uint64_t helper_frint_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrm_l_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrm_l_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -556,7 +556,7 @@ uint64_t helper_ftintrm_l_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrm_l_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrm_l_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -574,7 +574,7 @@ uint64_t helper_ftintrm_l_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrm_w_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrm_w_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -592,7 +592,7 @@ uint64_t helper_ftintrm_w_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrm_w_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrm_w_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -610,7 +610,7 @@ uint64_t helper_ftintrm_w_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrp_l_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrp_l_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -628,7 +628,7 @@ uint64_t helper_ftintrp_l_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrp_l_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrp_l_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -646,7 +646,7 @@ uint64_t helper_ftintrp_l_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrp_w_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrp_w_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -664,7 +664,7 @@ uint64_t helper_ftintrp_w_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrp_w_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrp_w_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -682,7 +682,7 @@ uint64_t helper_ftintrp_w_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrz_l_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrz_l_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -699,7 +699,7 @@ uint64_t helper_ftintrz_l_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrz_l_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrz_l_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -716,7 +716,7 @@ uint64_t helper_ftintrz_l_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrz_w_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrz_w_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -733,7 +733,7 @@ uint64_t helper_ftintrz_w_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrz_w_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrz_w_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint32_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -750,7 +750,7 @@ uint64_t helper_ftintrz_w_s(CPULoongArchState *env, uint64_t fj)
-     return (uint64_t)fd;
- }
- 
--uint64_t helper_ftintrne_l_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrne_l_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -768,7 +768,7 @@ uint64_t helper_ftintrne_l_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrne_l_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrne_l_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -786,7 +786,7 @@ uint64_t helper_ftintrne_l_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrne_w_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrne_w_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -804,7 +804,7 @@ uint64_t helper_ftintrne_w_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftintrne_w_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftintrne_w_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint32_t fd;
-     FloatRoundMode old_mode = get_float_rounding_mode(&env->fp_status);
-@@ -822,7 +822,7 @@ uint64_t helper_ftintrne_w_s(CPULoongArchState *env, uint64_t fj)
-     return (uint64_t)fd;
- }
- 
--uint64_t helper_ftint_l_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftint_l_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -836,7 +836,7 @@ uint64_t helper_ftint_l_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftint_l_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftint_l_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -850,7 +850,7 @@ uint64_t helper_ftint_l_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftint_w_s(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftint_w_s)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -864,7 +864,7 @@ uint64_t helper_ftint_w_s(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--uint64_t helper_ftint_w_d(CPULoongArchState *env, uint64_t fj)
-+uint64_t HELPER(ftint_w_d)(CPULoongArchState *env, uint64_t fj)
- {
-     uint64_t fd;
- 
-@@ -878,7 +878,7 @@ uint64_t helper_ftint_w_d(CPULoongArchState *env, uint64_t fj)
-     return fd;
- }
- 
--void helper_set_rounding_mode(CPULoongArchState *env)
-+void HELPER(set_rounding_mode)(CPULoongArchState *env)
- {
-     set_float_rounding_mode(ieee_rm[(env->fcsr0 >> FCSR0_RM) & 0x3],
-                             &env->fp_status);
-diff --git a/target/loongarch/tcg/iocsr_helper.c b/target/loongarch/tcg/iocsr_helper.c
-index b0f171608bc..be705cebbb1 100644
---- a/target/loongarch/tcg/iocsr_helper.c
-+++ b/target/loongarch/tcg/iocsr_helper.c
-@@ -14,52 +14,52 @@
- #define GET_MEMTXATTRS(cas) \
-         ((MemTxAttrs){.requester_id = env_cpu(cas)->cpu_index})
- 
--uint64_t helper_iocsrrd_b(CPULoongArchState *env, target_ulong r_addr)
-+uint64_t HELPER(iocsrrd_b)(CPULoongArchState *env, target_ulong r_addr)
- {
-     return address_space_ldub(env->address_space_iocsr, r_addr,
-                               GET_MEMTXATTRS(env), NULL);
- }
- 
--uint64_t helper_iocsrrd_h(CPULoongArchState *env, target_ulong r_addr)
-+uint64_t HELPER(iocsrrd_h)(CPULoongArchState *env, target_ulong r_addr)
- {
-     return address_space_lduw_le(env->address_space_iocsr, r_addr,
-                                  GET_MEMTXATTRS(env), NULL);
- }
- 
--uint64_t helper_iocsrrd_w(CPULoongArchState *env, target_ulong r_addr)
-+uint64_t HELPER(iocsrrd_w)(CPULoongArchState *env, target_ulong r_addr)
- {
-     return address_space_ldl_le(env->address_space_iocsr, r_addr,
-                                 GET_MEMTXATTRS(env), NULL);
- }
- 
--uint64_t helper_iocsrrd_d(CPULoongArchState *env, target_ulong r_addr)
-+uint64_t HELPER(iocsrrd_d)(CPULoongArchState *env, target_ulong r_addr)
- {
-     return address_space_ldq_le(env->address_space_iocsr, r_addr,
-                                 GET_MEMTXATTRS(env), NULL);
- }
- 
--void helper_iocsrwr_b(CPULoongArchState *env, target_ulong w_addr,
-+void HELPER(iocsrwr_b)(CPULoongArchState *env, target_ulong w_addr,
-                       target_ulong val)
- {
-     address_space_stb(env->address_space_iocsr, w_addr,
-                       val, GET_MEMTXATTRS(env), NULL);
- }
- 
--void helper_iocsrwr_h(CPULoongArchState *env, target_ulong w_addr,
-+void HELPER(iocsrwr_h)(CPULoongArchState *env, target_ulong w_addr,
-                       target_ulong val)
- {
-     address_space_stw_le(env->address_space_iocsr, w_addr,
-                          val, GET_MEMTXATTRS(env), NULL);
- }
- 
--void helper_iocsrwr_w(CPULoongArchState *env, target_ulong w_addr,
-+void HELPER(iocsrwr_w)(CPULoongArchState *env, target_ulong w_addr,
-                       target_ulong val)
- {
-     address_space_stl_le(env->address_space_iocsr, w_addr,
-                          val, GET_MEMTXATTRS(env), NULL);
- }
- 
--void helper_iocsrwr_d(CPULoongArchState *env, target_ulong w_addr,
-+void HELPER(iocsrwr_d)(CPULoongArchState *env, target_ulong w_addr,
-                       target_ulong val)
- {
-     address_space_stq_le(env->address_space_iocsr, w_addr,
-diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index f98fe4d4a16..44772d03a4b 100644
---- a/target/loongarch/tcg/op_helper.c
-+++ b/target/loongarch/tcg/op_helper.c
-@@ -17,13 +17,13 @@
- #include "cpu-csr.h"
- 
- /* Exceptions helpers */
--void helper_raise_exception(CPULoongArchState *env, uint32_t exception)
-+void HELPER(raise_exception)(CPULoongArchState *env, uint32_t exception)
- {
-     do_raise_exception(env, exception, GETPC());
- }
- 
- /* loongarch assert op */
--void helper_asrtle_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-+void HELPER(asrtle_d)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
- {
-     CPUSysState *sys = env_sys(env);
- 
-@@ -33,7 +33,7 @@ void helper_asrtle_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-     }
- }
- 
--void helper_asrtgt_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-+void HELPER(asrtgt_d)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
- {
-     CPUSysState *sys = env_sys(env);
- 
-@@ -43,7 +43,7 @@ void helper_asrtgt_d(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-     }
- }
- 
--target_ulong helper_crc32(target_ulong val, target_ulong m, uint64_t sz)
-+target_ulong HELPER(crc32)(target_ulong val, target_ulong m, uint64_t sz)
- {
-     uint8_t buf[8];
-     target_ulong mask = ((sz * 8) == 64) ? -1ULL : ((1ULL << (sz * 8)) - 1);
-@@ -53,7 +53,7 @@ target_ulong helper_crc32(target_ulong val, target_ulong m, uint64_t sz)
-     return (int32_t) (crc32(val ^ 0xffffffff, buf, sz) ^ 0xffffffff);
- }
- 
--target_ulong helper_crc32c(target_ulong val, target_ulong m, uint64_t sz)
-+target_ulong HELPER(crc32c)(target_ulong val, target_ulong m, uint64_t sz)
- {
-     uint8_t buf[8];
-     target_ulong mask = ((sz * 8) == 64) ? -1ULL : ((1ULL << (sz * 8)) - 1);
-@@ -62,12 +62,12 @@ target_ulong helper_crc32c(target_ulong val, target_ulong m, uint64_t sz)
-     return (int32_t) (crc32c(val, buf, sz) ^ 0xffffffff);
- }
- 
--target_ulong helper_cpucfg(CPULoongArchState *env, target_ulong rj)
-+target_ulong HELPER(cpucfg)(CPULoongArchState *env, target_ulong rj)
- {
-     return rj >= ARRAY_SIZE(env->cpucfg) ? 0 : env->cpucfg[rj];
- }
- 
--uint64_t helper_rdtime_d(CPULoongArchState *env)
-+uint64_t HELPER(rdtime_d)(CPULoongArchState *env)
- {
- #ifdef CONFIG_USER_ONLY
-     return cpu_get_host_ticks();
-@@ -86,7 +86,7 @@ uint64_t helper_rdtime_d(CPULoongArchState *env)
- }
- 
- #ifndef CONFIG_USER_ONLY
--void helper_ertn(CPULoongArchState *env)
-+void HELPER(ertn)(CPULoongArchState *env)
- {
-     uint64_t csr_pplv, csr_pie;
-     CPUSysState *sys = env_sys(env);
-@@ -115,7 +115,7 @@ void helper_ertn(CPULoongArchState *env)
-     env->lladdr = 1;
- }
- 
--void helper_idle(CPULoongArchState *env)
-+void HELPER(idle)(CPULoongArchState *env)
- {
-     CPUState *cs = env_cpu(env);
- 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 40cc0764248..479c0b208d6 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -310,7 +310,7 @@ static bool loongarch_tlb_search(CPULoongArchState *env, vaddr vaddr,
-     return false;
- }
- 
--void helper_tlbsrch(CPULoongArchState *env)
-+void HELPER(tlbsrch)(CPULoongArchState *env)
- {
-     int index, match;
-     CPUSysState *sys = env_sys(env);
-@@ -330,7 +330,7 @@ void helper_tlbsrch(CPULoongArchState *env)
-     sys->CSR_TLBIDX = FIELD_DP64(sys->CSR_TLBIDX, CSR_TLBIDX, NE, 1);
- }
- 
--void helper_tlbrd(CPULoongArchState *env)
-+void HELPER(tlbrd)(CPULoongArchState *env)
- {
-     LoongArchTLB *tlb;
-     int index;
-@@ -389,7 +389,7 @@ static void update_tlb_index(CPULoongArchState *env, MMUContext *context,
-     *old = new;
- }
- 
--void helper_tlbwr(CPULoongArchState *env)
-+void HELPER(tlbwr)(CPULoongArchState *env)
- {
-     CPUSysState *sys = env_sys(env);
-     int index = FIELD_EX64(sys->CSR_TLBIDX, CSR_TLBIDX, INDEX);
-@@ -469,7 +469,7 @@ static int get_tlb_random_index(CPULoongArchState *env, vaddr addr,
-     return index;
- }
- 
--void helper_tlbfill(CPULoongArchState *env)
-+void HELPER(tlbfill)(CPULoongArchState *env)
- {
-     vaddr entryhi;
-     int index, pagesize;
-@@ -492,7 +492,7 @@ void helper_tlbfill(CPULoongArchState *env)
-     fill_tlb_entry(env, env->tlb + index, &context);
- }
- 
--void helper_tlbclr(CPULoongArchState *env)
-+void HELPER(tlbclr)(CPULoongArchState *env)
- {
-     LoongArchTLB *tlb;
-     int i, index;
-@@ -527,7 +527,7 @@ void helper_tlbclr(CPULoongArchState *env)
-     tlb_flush(env_cpu(env));
- }
- 
--void helper_tlbflush(CPULoongArchState *env)
-+void HELPER(tlbflush)(CPULoongArchState *env)
- {
-     int i, index;
-     CPUSysState *sys = env_sys(env);
-@@ -552,7 +552,7 @@ void helper_tlbflush(CPULoongArchState *env)
-     tlb_flush(env_cpu(env));
- }
- 
--void helper_invtlb_all(CPULoongArchState *env)
-+void HELPER(invtlb_all)(CPULoongArchState *env)
- {
-     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
-         env->tlb[i].tlb_misc = FIELD_DP64(env->tlb[i].tlb_misc,
-@@ -561,7 +561,7 @@ void helper_invtlb_all(CPULoongArchState *env)
-     tlb_flush(env_cpu(env));
- }
- 
--void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
-+void HELPER(invtlb_all_g)(CPULoongArchState *env, uint32_t g)
- {
-     for (int i = 0; i < LOONGARCH_TLB_MAX; i++) {
-         LoongArchTLB *tlb = &env->tlb[i];
-@@ -574,7 +574,7 @@ void helper_invtlb_all_g(CPULoongArchState *env, uint32_t g)
-     tlb_flush(env_cpu(env));
- }
- 
--void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
-+void HELPER(invtlb_all_asid)(CPULoongArchState *env, target_ulong info)
- {
-     uint16_t asid = info & R_CSR_ASID_ASID_MASK;
- 
-@@ -590,7 +590,7 @@ void helper_invtlb_all_asid(CPULoongArchState *env, target_ulong info)
-     tlb_flush(env_cpu(env));
- }
- 
--void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
-+void HELPER(invtlb_page_asid)(CPULoongArchState *env, target_ulong info,
-                              target_ulong addr)
- {
-     int asid = info & 0x3ff;
-@@ -604,7 +604,7 @@ void helper_invtlb_page_asid(CPULoongArchState *env, target_ulong info,
-     }
- }
- 
--void helper_invtlb_page_asid_or_g(CPULoongArchState *env,
-+void HELPER(invtlb_page_asid_or_g)(CPULoongArchState *env,
-                                   target_ulong info, target_ulong addr)
- {
-     int asid = info & 0x3ff;
-@@ -718,7 +718,7 @@ static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
-     return (pte & ~ppn_mask) | ((pte & ppn_mask) & palen_mask);
- }
- 
--target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-+target_ulong HELPER(lddir)(CPULoongArchState *env, target_ulong base,
-                           uint32_t level, uint32_t mem_idx)
- {
-     CPUState *cs = env_cpu(env);
-@@ -759,7 +759,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     return val & palen_mask;
- }
- 
--void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-+void HELPER(ldpte)(CPULoongArchState *env, target_ulong base, target_ulong odd,
-                   uint32_t mem_idx)
- {
-     CPUState *cs = env_cpu(env);
-diff --git a/target/loongarch/tcg/vec_helper.c b/target/loongarch/tcg/vec_helper.c
-index a270998e638..3ada636cd9f 100644
---- a/target/loongarch/tcg/vec_helper.c
-+++ b/target/loongarch/tcg/vec_helper.c
-@@ -2511,8 +2511,8 @@ void HELPER(NAME)(void *vd, void *vj,                    \
-     }                                                    \
- }
- 
--FCLASS(vfclass_s, 32, UW, helper_fclass_s)
--FCLASS(vfclass_d, 64, UD, helper_fclass_d)
-+FCLASS(vfclass_s, 32, UW, HELPER(fclass_s))
-+FCLASS(vfclass_d, 64, UD, HELPER(fclass_d))
- 
- #define FSQRT(BIT, T)                                  \
- static T do_fsqrt_## BIT(CPULoongArchState *env, T fj) \
 -- 
 2.55.0
 
