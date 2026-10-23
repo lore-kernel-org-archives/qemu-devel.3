@@ -1,140 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD36A606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ED1606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZjLiR1IX;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bGlNPs3E
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=HJGnH4Lq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKI3f-00088V-BM; Fri, 23 Oct 2026 12:23:55 -0400
+	id 1xKI0Z-000173-Hg; Fri, 23 Oct 2026 12:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI3L-0007w4-Rs
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:23:42 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKI3J-0003BL-4Q
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:23:35 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NG3ldF2931048
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:23:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 9g2kSnPsen9wzmsMJTdNE2cj4Syh7+oSRmYGPn/T9tg=; b=ZjLiR1IXbKbGEhtc
- o70N50yH/SEdp7TniKk4le2XCox29dA3IJaEqOCrA3nqXxzBzXkWVIifo80yNTda
- TzDBTG7sKRDW0qzwg09Ck7CjJXPqN1S53ph5L7htn6khmiP0I84hWnba7DFYFJPE
- NgbGMerW1Yr5XEBfflP7wNM1TtOL7DjtgyrRyDpbf71MzkV+RquWjO+tvmA4kd0/
- KfeepTPZzCLJLPXcVrlGiNky8bqo+RXx9KPs/zIeOvaRNh/3LofRanW9Vnoctj3A
- Re4Cmu9NsqS7r96ZWogC6hPgA9GBhPu1+DLMqzJWtybtcY/z2YTIqdovDAN1NnDu
- 2RzsNg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgas6r2cu-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:23:32 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93c5ab5c136so169162285a.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:23:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xKI01-0008IW-MD
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:20:11 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xKHzy-0002iy-JR
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:20:09 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48af4d4e61fso693104f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792772611; x=1793377411; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ d=openvz.org; s=google; t=1792772405; x=1793377205; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=9g2kSnPsen9wzmsMJTdNE2cj4Syh7+oSRmYGPn/T9tg=;
- b=bGlNPs3ESeeT9hyd1qKOjj98nPUwGW+FQ2dYVNij7pS/rdXsVzgM9YcyvRw9wOoG+S
- Asn9HFGgoA6YGL6+hfzDu4zTCliooBs7iq/3mh7mZIY/E8sdUGLJZXUWK7zPsVkuRD3B
- TP3/H0EJS5k3UGk9U+0WVg7zGOkUWVoI2S3Nkenc24rsv35f77vNL9VFeTkgKkhXIrg3
- oyTfu1Sq4rbyf7ghiLWddJOW3OzoO7Wx7+AsImXAtcZxFcG08P0oKvGGFYa8FT5PiRhV
- sqjWGRrotH0o3LT7kblVBqGT59V+F9mGIfIShzaFdmLfofHfoPwfEaZbU+peFWy48cd5
- B0og==
+ bh=dKo1kqddUpLDSrGeTLF/PFAH7ID1KB9sJ3DC+s5Jzoc=;
+ b=HJGnH4Lqdy8Nta97e1JpN7Rds0AuSQYS5ncY2psocbHt/FxzMW6LV7RVtMCTeL0uJc
+ yryiuF+t6PHYL8eDQaxwXPblOCws8GFmcAEInrJYUY1c12k4vGjxGZDvz+Gya8FhzMYT
+ uRWo0/x4J+/QQ6EAZMPa+Iakj4xrqdAyj+GHcTX/UFF703krImyxkPqdyackN3kVZJm4
+ bxydlS0wUeu/QndC6iBUGPd10Wy4MB+8KDzNoCFz7pAbXn2MnD4sOjY0141tg6eWKJtq
+ PIPumOlgjBn6FLypyrL+q9rcqwm8PZZUF+kOBnNJ5gnI+qVsuHzMS+a9FQz1m5+DdrIS
+ yk7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792772611; x=1793377411;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9g2kSnPsen9wzmsMJTdNE2cj4Syh7+oSRmYGPn/T9tg=;
- b=hsRpHbaLn6QoxKjrnByP2oBzS887HoWGgFtp/OlvYOMLKxxZ7cqyXC9xaZfyAUOhCJ
- VslU7dnQPuEQA9aNBvKyoej8Tp2QUv2UZ4Bf6MOJb8Kocl1vZdIc8waY6JyItQEP+T+Z
- uDsY0raBz8Ioa0FozrQu5yzdYXerujy5HnlqLybkqGVmVct6HySAJ1bKbMd/Mj+0eSzd
- Ijt1Kc2dtBOBZcUmAfCSTzQw2W4wRJiFliCdevI1HizWIm43vW5/jaOk+tvgZhMeMFJs
- L39iQS5QGeQD62CntfoO/lpK4KcbCwDNann7rOQ6S6XRp4z+DRLs+2h5TM9qZICDE016
- lsuQ==
-X-Gm-Message-State: AFq9FYJQ/wRTEBIV8UQybeAGP1zeJLj7DwPyTuuPB6blAAGZ7uRtGFlN
- mkr47uvah5om8SnI3Pa7bx2EDg/H3PACCFIiNB2iEQ+cWiFWzNEENOuG3PFToooXsSwD+Si67Fk
- micwU33X0vFSoQgD6ptF0owiZHkveQyGcPoULYMxjwc3NTMBCLM8Om0AnkgbMziohB1kU
-X-Gm-Gg: AYBFou33V3OIPpZWDmb9Cm+k8/IDNJWlTS4C+gQK5HkN2PCoFotId11lvdrF5iKe3R+
- OTP6DgJ9gElEpndsHlVUmPUzl2rUlPOs+63lHs4XkkgLPNaVv9KYPiIjd8UgDWC+H5KwzB1s4iC
- HDeT4oCa8rKPzM2P5hKMI0yPy9KOF6HVVoJ/kwc5JUkL0wZ5crD9/UyRlhfBlEWFs+KOeP76Dg8
- /b+vnRQtUXum90l6FvoX+WGDV+dESQG4nuTVc0ndbjlkvdVIZjkP6owPAlqAmSaEfz5dAY/Jg0r
- i3fGO+3SsGtqDyLYwjIm4dRFsLxWcCmY9RbwrTiRD0TqwgEFMH/wZcdoD7dA1rdllk4udWWr0wU
- FeBHXAE4CSxusZH/FiOvJ1bwfQ2GXYRwVvY2PmguS
-X-Received: by 2002:a05:620a:1d09:b0:93c:a191:88fe with SMTP id
- af79cd13be357-93f6f55abedmr488077885a.8.1792772611382; 
- Fri, 23 Oct 2026 09:23:31 -0700 (PDT)
-X-Received: by 2002:a05:620a:1d09:b0:93c:a191:88fe with SMTP id
- af79cd13be357-93f6f55abedmr488072785a.8.1792772610836; 
- Fri, 23 Oct 2026 09:23:30 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ d=1e100.net; s=20260707; t=1792772405; x=1793377205;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dKo1kqddUpLDSrGeTLF/PFAH7ID1KB9sJ3DC+s5Jzoc=;
+ b=U3eG75CSNKi4SJUXRhs95ABfxdlfTXHxPUT/dfOx7gbf9ou0mjcQpro/9Rfnq0KKWo
+ c02VmqdIYEUAIKXTQW9ItlhSlEtDlNvDHTCTjNxSSRtgPQPfqPzoNk6dkYhIKle7enDe
+ xEDaBbfxg/JPDcYHUXX/IY/4wVX7caF+jHbd0gzZSSHlEZUiVFmxip/ES3n3Ji/g8PxL
+ 4uA6i9HJ0TBhzzRlVj6LjjRC6DYfOpSjnx/RGdkfy/MKp/KRuevA5qeEDQFCJK3GhtPt
+ DAPim9FP0PjWXqBsbLJZ5E7joAOyJEpMqhMrvuUZ1gMTf3ZO2EPgn1OFg19E1HkIfgVS
+ J5ww==
+X-Gm-Message-State: AFq9FYLnf419yJZTbWxlUL3utIJaSnEQXHHSDww/3iCmT1VSK55OJJ1t
+ tA3hofCcveTcBxQh50gOK1qFEnNO7Ptkedhp828XUxQGPo/F+lNk7/buDI/DWvC7Zmo45BWcFry
+ iRioO
+X-Gm-Gg: AYBFou39ikind2eHuvxjbkRJuiS8CMEArODpWonRyl19rh+LxgO14qxqFxNvnc6AImo
+ KR70fsUfZTZcJVi08FUo3SYQUsq5hoxNTsC+QNt8ijilrURRz+e36YdemDJYm5RsUm8GTsRzXcP
+ 60BHEIXZT1NmiPUfQWvauFTEh50vOuWCCoJoLM3gg+VrHg1CIDDYGGC7lGkloGQvw5vq0X4DgdO
+ QhgQbKDVv8qzx+66j29BTOSS01DbTAZDqlP8tz/dCw0n4eZdR1LsFP5cajJrLEnPSic93Pso4Lb
+ T64QB04fGAmDaX3JXqqAU6+JagbXId/P3K+A45/8rCh/+A6oAkUE+XN1W3zfyWmGKUajZrG49df
+ oPB9nU746iKCKs25/Ajj45CuNmWVTe2W3/XqEFr44SSO7JrK7K/2xqzrItndQ2TPgBZG46Z8xWB
+ L8jZgBI7YCs4R6kbBggnlxvFZPR8NqU+chGNRRi4ZTrPbFTyWDzzec6VB1IW4lVezkymXrypeTn
+ S5QxTd0uyrXynZbYQQY7GGBNZ4Nm9xXxuQuMf9dIzerel/GjcUO
+X-Received: by 2002:a05:6000:4552:b0:48c:490a:336b with SMTP id
+ ffacd0b85a97d-48e38546c58mr3010498f8f.5.1792772404720; 
+ Fri, 23 Oct 2026 09:20:04 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a960:ee49:ec13:ac39])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d3eefacsm918144f8f.9.2026.10.23.09.23.29
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 23 Oct 2026 09:23:30 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ ffacd0b85a97d-48e3d417e6dsm720356f8f.44.2026.10.23.09.20.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Oct 2026 09:20:04 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 82/83] MAINTAINERS: cover x86 GDB XML files
-Date: Fri, 23 Oct 2026 18:13:30 +0200
-Message-ID: <20261023161332.60153-83-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261023161332.60153-1-philmd@oss.qualcomm.com>
-References: <20261023161332.60153-1-philmd@oss.qualcomm.com>
+Cc: den@openvz.org, qemu-stable@nongnu.org,
+ Ilya Rudakov <irudakov@virtuozzo.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 1/1] virtio-scsi: fix hot-plug event racing device realize
+Date: Fri, 23 Oct 2026 18:19:59 +0200
+Message-ID: <20261023162000.2796947-2-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261023162000.2796947-1-den@openvz.org>
+References: <20261023162000.2796947-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfX7Rx/tdRJYOgD
- omnr3XmnF/FOXE4Jq7O6GPhzjt2t7FeSh8FxIVmtOXMJDYNHngrQ1T/4JbzRLFfDQoReRn0Df14
- d3CmOI3Dgl5fotViptZr+RLqraPvJltsJN2DDSZy12aYYS9yHviWbbXDTj7xbblNCgH2ifftqPW
- lNEAV+IgYM6WUdOKftH36tP6QGGoQCcuE53qJrAIuPEQEQ5/+4OK0EiwFY6NgehkByK9Z2IxJW7
- iQpdfykOaeHdZXVnaMKqOZTpaAP/vLiBpwyLQF8SVxQGng9B0tx5ki5rXVgNsPdIsvxUg9Y8P/K
- IHA/DhXNXsirUoHWyWNNdup8LvolSHiwWFPzfKIe/p3PGrcE+OpPgCl+WR7cO8K+zZDZCZFvbz+
- BIrjjb4BOghU3mxRZPICDaUkB1hBWKo0xLtEzljIsb9MWmRCM9jF7B3FJaQCsEsE0aJN+ejU7gU
- AqAUNl7ZHWbvDXYHnXw==
-X-Authority-Analysis: v=2.4 cv=DK0acCNb c=1 sm=1 tr=0 ts=6adb8a04 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=AC0s2TdIQzFrwImDGQYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: GdxJ6LyV4m3rEho2rYLeIJaQjJBiA961
-X-Proofpoint-ORIG-GUID: GdxJ6LyV4m3rEho2rYLeIJaQjJBiA961
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2NCBTYWx0ZWRfXzqblcoIutfCB
- cNHCQ7gqCXSLqGHhImQijLrmerpo+2cQOOHbG30E4OWoVGqLWdH/LvE4KG1n/rh3kSic5dD1I1b
- 53zFtQsqppRsOSiXC7skbO0UX8xZFwQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230064
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,32 +104,104 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Denis V. Lunev <den@openvz.org>
 
-Add entries so changes to these files are routed to the X86
-maintainers.
+virtio_scsi_hotplug() is the HotplugHandler plug() callback, which
+device_set_realized() calls before it sets dev->realized. The callback
+pushes VIRTIO_SCSI_T_TRANSPORT_RESET/RESCAN to the guest at once, but
+until realized is set the request path ignores the new device:
+virtio_scsi_device_get() -> scsi_device_get() skips unrealized devices,
+and so does REPORT LUNS. A guest that reacts to the event quickly, on a
+vCPU while the request queue is served by an iothread, scans the target
+and gets VIRTIO_SCSI_S_BAD_TARGET.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261022-query-reg-v3-5-7ad902b9a7cf@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Neither Linux nor Windows retries that scan, so the hot-plugged disk or
+CD-ROM stays invisible until somebody rescans the bus by hand. Linux
+calls scsi_scan_target() once from the event handler. Windows storport
+clears its rescan flag before enumerating the bus and never sets it
+again for a failed target.
+
+Push the event, and the REPORTED LUNS CHANGED unit attention that goes
+with it, from a main-loop bottom half instead. It runs under the BQL,
+which device_add holds until device_set_realized() returns, so the guest
+is only told about a device it can reach. The iothread context would not
+do: its bottom half could run before realized is set, and the realized
+check and scsi_bus_set_ua() rely on the BQL as plug() did. The bottom
+half is only scheduled when the guest negotiated VIRTIO_SCSI_F_HOTPLUG,
+as before, so cold-plugged devices do not get one. It still checks that
+the device is realized: nothing orders it against a device_del that
+follows device_add, and an unplugged device has no parent bus.
+
+Fixes: 8ddf958e8d62 ("scsi/scsi-bus: scsi_device_find: don't return unrealized devices")
+Cc: qemu-stable@nongnu.org
+Reported-by: Ilya Rudakov <irudakov@virtuozzo.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ hw/scsi/virtio-scsi.c | 38 +++++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b09c54f9ee0..de3cb9dcaf2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -149,6 +149,7 @@ F: configs/targets/i386-softmmu.mak
- F: configs/targets/x86_64-softmmu.mak
- F: docs/system/i386/
- F: docs/system/target-i386*
-+F: gdbstub/gdb-xml/i386-*.xml
- F: stubs/hmp-cmds-target-i386.c
- F: target/i386/*.[ch]
- F: target/i386/Kconfig
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index d7e2662aa7..9ea1acb84c 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -1151,6 +1151,29 @@ static void virtio_scsi_pre_hotplug(const HotplugHandler *hotplug_dev,
+     sd->hba_supports_iothread = true;
+ }
+ 
++static void virtio_scsi_hotplug_notify_bh(void *opaque)
++{
++    SCSIDevice *sd = opaque;
++    DeviceState *dev = DEVICE(sd);
++
++    /* Nothing orders us against a following device_del */
++    if (qdev_is_realized(dev)) {
++        VirtIOSCSI *s = VIRTIO_SCSI(dev->parent_bus->parent);
++        VirtIOSCSIEventInfo info = {
++            .event   = VIRTIO_SCSI_T_TRANSPORT_RESET,
++            .reason  = VIRTIO_SCSI_EVT_RESET_RESCAN,
++            .address = {
++                .id  = sd->id,
++                .lun = sd->lun,
++            },
++        };
++
++        virtio_scsi_push_event(s, &info);
++        scsi_bus_set_ua(&s->bus, SENSE_CODE(REPORTED_LUNS_CHANGED));
++    }
++    object_unref(OBJECT(sd));
++}
++
+ static void virtio_scsi_hotplug(const HotplugHandler *hotplug_dev, DeviceState *dev,
+                                 Error **errp)
+ {
+@@ -1169,17 +1192,10 @@ static void virtio_scsi_hotplug(const HotplugHandler *hotplug_dev, DeviceState *
+     }
+ 
+     if (virtio_vdev_has_feature(vdev, VIRTIO_SCSI_F_HOTPLUG)) {
+-        VirtIOSCSIEventInfo info = {
+-            .event   = VIRTIO_SCSI_T_TRANSPORT_RESET,
+-            .reason  = VIRTIO_SCSI_EVT_RESET_RESCAN,
+-            .address = {
+-                .id  = sd->id,
+-                .lun = sd->lun,
+-            },
+-        };
+-
+-        virtio_scsi_push_event(s, &info);
+-        scsi_bus_set_ua(&s->bus, SENSE_CODE(REPORTED_LUNS_CHANGED));
++        /* The request path ignores @sd until it is realized, so notify after */
++        object_ref(OBJECT(sd));
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                virtio_scsi_hotplug_notify_bh, sd);
+     }
+ }
+ 
+
+base-commit: b6c4b7e86dec12d07f5cac65265b986d38ee9002
 -- 
-2.55.0
+2.53.0
 
 
