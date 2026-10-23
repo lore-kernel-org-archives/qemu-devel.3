@@ -1,107 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D6E606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 11:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7001B606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 11:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=n8lEY5SR
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=uxX/4Wwc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKDhp-0005Fz-AP; Fri, 23 Oct 2026 07:45:05 -0400
+	id 1xKDnF-0006XC-1O; Fri, 23 Oct 2026 07:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKDhn-0005FM-CJ
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:45:03 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1xKDnD-0006Wj-DV
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:50:39 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKDhl-0006qy-NK
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:45:03 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-8ac525c1f05so7172617b3.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 04:45:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792755900; cv=none;
+ id 1xKDnB-0007dG-SC
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:50:39 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-6768403e9bbso897840d50.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 04:50:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792756236; cv=none;
  d=google.com; s=arc-20260327;
- b=IK4IaPvlpkKB40v40pl5jGOzgJ4pnmVDYBpqx13Ga2FLm6wo6Mdkd6ayFBtZv6zmFA
- O8ndK5uDvjLEhASSf+sv74s6j3dvCerfxbWrRlNX6Y1BULJGHICuKGynx6nr9jhIgtHd
- z2U4MAm9U9tmynuTcN4fa7SPM3ypB14PQDuH4Qo+CG39VyN+CNmfECFIBQbHg2tf5YAF
- PGi+en8UQ7SKM8a69FX010U3mh6qSKdKGRrjaFlK+8FR6YBbDLjC6xfShfRhyC0phAUO
- cuyJiiL+pyhbxW1CqG+Y63tZdk3G2XxdCqPyPw3Y7SrUDFVnSDHM+xIUypP356INLD4C
- jk6g==
+ b=PEdHyT4iraGdG7xNuiK8YS9u1K+7GV6vs0Z4UEoQmL+4ENLTJpT9EFb9ouEpD/JFtN
+ 5N3IJO9NjxfdIweVq7Ah+3We/Elm09hgHkHd+xfMmhQTjy2RLwL/tn9Utl2gMOUqDuqu
+ /yKY++UeHTfxReRu5lxWPZde2i4cJq/OvkiwEYi0mlO48hFOn9D+bw35myLhc2gyDCTq
+ HWSCUlGZjhLqVy8ROUK6A7JIniKFO9h7k9yx/ar6cNGmANFQhX9y3YtbwuyQyUOT2uW2
+ NdR6TXqcswPQO84zCD+BgIdTiSQh3nVPvBDRbhJIOip7bZflm7LKdfzouU2IG+NCxe6C
+ Q2sg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=LJ3/gGSXFuZez0qoiMtJBNrT34Y0qC3xMuJpLq2A+6A=;
- fh=Gq8viepnx+yEcYoCSHA6ZHrNSYBCgdeBPcAy7YLlzFY=;
- b=Cj873Am1xa931EaX1cWVN3f9k4aGDLNPJeQ+xq5qo6HxhpKJ9N9kM0KL9rFcZYWcbV
- SCvwD9I1YgtD+sydDjFhEnGnoVC7nFhAm0nJbCIyCpFUJdUDswLPmSRpT906Y0FsWrYJ
- Lxbw+MDZwXBWECJnvq9EFXjjpXfgQ+/xn2wU2e/6XKndriIfzdPfvb346UnkVZs9khyY
- mVce49W2X6ZibPythE8E29zxCEMIO/2r1Y/znwnHXBc/Es4ix5OOvUbYqGOCz9kWVwF6
- nD8gzHR8ElTiznNIVraulLtR5zOL65+wY74rEHE1GTjGxi5xVAzhsqbZTlLW46RRFum9
- tz8Q==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=HJX5aJ6EOY69DMLcMohvm1D6kKlyZ1YYP9/K9PR+cjA=;
+ fh=v7GkZNMDit7OYETRRZQPxK00jPDHm89GSkx+aMy6LF4=;
+ b=VHqPubdy0vxHcCz48obfEQpNMpLff/NawFRkjzl8pn8a90Zv5u7d8lE274UIVn3+lW
+ 0VwchHOir5eXInkvRKwaYZoMuhaqfJFuhfSPP810vL/tYyijlpvsrCGObOfO3T2nWPkT
+ dbxAiplPWfcDdwqngXdeArKB6kM93d0JgFttjo3358OF/WUJufJBYFNuvHysbW6rW4HP
+ Craf7symcRLjZ9X2atRPKg796C33lVSy+dXhDAORnfRtTveDsSE31fe1VfsA9oiwl8Av
+ vDtDrxcR4b+oQQllEvOiK3KCYpetK7m06+qTBbD2Ys3oZ/oVUggvbhyU/c1l5051EbOI
+ NgWQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792755900; x=1793360700; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=LJ3/gGSXFuZez0qoiMtJBNrT34Y0qC3xMuJpLq2A+6A=;
- b=n8lEY5SRDepQHCpTEVODa9eThVaZwnc4j/kCYFBlKIsHx5Kx3U8C2BHf2ZIC8S8eeN
- 3u8id2Y51/b7VPf5hW0qMjyl0JSDdQSCGLZEM7tx5bE4nxIlIjYNVLs+VvXfx/kQEc61
- lsQMjpS7UICdVHq+qrPenLFyVD1JjH8I5v1oHncGtZmv/WN6+4ZS0ZyJyQVq+ih73nAv
- bgAztgATlm7eIIIuyuyqufk6UeQittR1HQiQrn+8FZwa87gWQ1PLE64cHHhYcKwiMHQi
- N2ktDOduwMcXTM3/c+XBd+MrK63RvrnEXk+7/kTFPIgYaYKJfZzzwwjdYRmhC+whg75l
- 98bA==
+ d=linaro.org; s=google; t=1792756236; x=1793361036; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=HJX5aJ6EOY69DMLcMohvm1D6kKlyZ1YYP9/K9PR+cjA=;
+ b=uxX/4WwcKcGktcTQNOJIQdfBmu+cKzjZnm1gDcQUD/UrimzV3bp0HinbumNeVbR6zq
+ CcQlXmpj4UMLB82sRS1wPPulojwL7DqIhV+7YKW244lcvV+rUgS8ERFSZa36RhiPMKFq
+ ZeG0yb9uUe76ATk+bRJ02XIEHFuB2KUF7JzrEmavt0xlca8hbDnFa16F+KyzDkqODE3F
+ fIl7hKPmCNzPEJM4ZMJs8a0i8RA+dvyJWYVScAraHfXrs0RRGY3nk+tr2sNwBpgk7z1H
+ uI4dS5zfg0ijuVuvOoO2MJDgV4kSLm61zqEPGmj33vJgH559TIVIL5IonZVDZsz0PROt
+ FY2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792755900; x=1793360700;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=LJ3/gGSXFuZez0qoiMtJBNrT34Y0qC3xMuJpLq2A+6A=;
- b=IsYUIM518HiTUc/dDodhbIKPLVYWV/83p8EURfZ36/YmOQYJOhz6BQDhIoxFtnW95V
- KfGP+h3OEreLlOh4Bajv68ge02SuPkrlDesZOp53+J7hiAVa3dOFQGU4NJdc1nja0153
- 9KGbcoc6wx0riddqLQ0oCxBG455g0biMGU+Q1b289vcrI5XcnkkV0UJbTloyND5PpIA2
- 1t0GQ1RvYf42uzKsWL0pKdUlvPc3HRDL9+6E2uEw66KQB5bv+bFCaq1gafpuIyCNYcYK
- 9fVP8xMeFpv76Ci3TC0UjP57roWo52cWfPDe2gCR1ARcTAq7Xp6XkySHvy5f736TPnMc
- Rapw==
+ d=1e100.net; s=20260707; t=1792756236; x=1793361036;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=HJX5aJ6EOY69DMLcMohvm1D6kKlyZ1YYP9/K9PR+cjA=;
+ b=24BPrpVsxjmOMSRl/EUmsGnPGHF0XN0uiBy+pEW6Piuo9mr2WeuKnaYf1ZoqqES5qz
+ 6z7VPsefpmZHarMwcTY2QNReqTCqZrId7SIQzEP4UgM2Il9qYhlPJC1F0tXQwh4zM5hM
+ f8qnjJ/x6wYqGEUpRYu3rCoRPhpVh/FcALU9VBtOvVwzuTLJD2WQjzATWPg52qN/Ngub
+ DD9Q4bhH1wKopEZe0uWh+XfehI/fBmcsHsiGJ2l1mpwYRJTFLC9mW+uxPJlKXhChKq3H
+ Scx4qIC2pZF5895weXAZTp/aMT2lR/Hf9mj3k8C8eTudpu+SdBN1BnW4U5qc5tw853hC
+ T8bw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwMB5zafEURUhleDyDW71KQDbQABIImE8dtzAU/lGb0ghafVPnMfAEb6CEHrXgLseXm6kZ6xiBJJJi8@nongnu.org
-X-Gm-Message-State: AFq9FYJxso5cjPVT/CjP7CgI1GDacWjG9DwXiqu69LymjPY1sMzm/EnL
- ZVSNG2peV7ymHED4rP5AS472nHO/bFqSCsZgswxjl/JB3tBT/1jAUl6oCj4S9xPA7CYXkBw7fES
- SJGhT35kqE7uTt7XXQa2cv1K6FSuq4GDqYkgy+4JXig==
-X-Gm-Gg: AYBFou0Qr0ztY2FkBa1MrB6zL33DRC1oab83nYUnEG/GEmw4+M0PB9Pdnbi0cVwBGXR
- xchiCnm8Kl24w1ZjjH0WCNZOvLITjAN7Go1Xh/I4UbuXlOvm/efZGrclcX70socWawhYJff0WBj
- 93dOfjwyuOzjjnDaaJsiY/M2NHRjV0nhaVPAl7UtZhT3SdPuz7eb3M27f1CoaMWx7xrgMn4hfnF
- MR9YpC1eri7ZDy8ZmCRW6//oGqSBB+24GyFPUv9TPHIyiSxMV3qEFSwO2+4zXPmC8KXV41n3XHy
- 2rMFZIRxVCuzbmhtSSou7inElom42Kb6p3jgPxaz6N2doEWO0RCmJaELpWHr+i8l2CQlxj2Sv8C
- hm0afb/pBEZrSSEQiRSUMZp4H/6kkr0X7t/h6UeUpqC9x+vKUDElGVxxE46edfQZhEJ6RoPvXPp
- Ubbp9sO9jqNmXJBO+8OxiM
-X-Received: by 2002:a05:690c:7108:b0:847:d0cd:11eb with SMTP id
- 00721157ae682-8b157ba2d78mr17589257b3.9.1792755900069; Fri, 23 Oct 2026
- 04:45:00 -0700 (PDT)
+ AKwUvBzPnM+SazOI81A8dsZ2IkYMifKEnMpPos/gbFbX2tWZVQkDdHNdYLPlWcLKlX12ixXTCn5kgI89WWVX@nongnu.org
+X-Gm-Message-State: AFq9FYJM322lfWrF2sshe3kTHJIuW90AY3Z76nHXOb8jpp7iqysmGJIw
+ ujk76YOKoxX0txi+S8ol+BR1t7piiZ/U+aTcmScrzOgNMx2G/DcCYKaxvhVLmSSiCiHhDiBNVap
+ 0MClHcscqxMgPWQu9wB4YZfL8DsnW+ruo7Ew4zdp2oA==
+X-Gm-Gg: AYBFou3vd+JQXRdxTe8hDtH5sC9Dn0lEbXLPMdeEYe0UST2RAUBtVt9OZFWwEZkvM4z
+ lxVPfnGQvgKAefTaasiqkuXjCWNRRDZ0rXEX025BvRWHVjXWBVlpEYpSfxHP4yuYWwnO/z3jbzz
+ 1TiFo3v07oyi8+aCespEulZYIxHpWPZgEq4Uphzd5yMXdK01f/uPQPQ/bmHSBO/azNRRzkxHMmn
+ BqCU4O7xj149TxzHkwUprMWn/6OlXg/9jP6rUkE47GnyNnOYj+khjGLtFaJUJ5JYiRL56gteBCv
+ 2Ad3IEF9u6RnDE/ttsDQpIb5lufHmswpUQUw+Jj4tk9jEg5bF+e7L534DBArhGfxS7wZlXaW27G
+ eadJQC2w2wjlGZECxC/092+QorwPMCkEyaOcmlxmRzonHZxxN0e7BXCHdG7iTAVRxSaB1dVb1Ru
+ 7Pw/kYzZcVfGXOHup1vVWcL5lecqDKbqakiRAeunf7SA==
+X-Received: by 2002:a53:da04:0:b0:676:863f:8ed2 with SMTP id
+ 956f58d0204a3-67a35c43d91mr1196420d50.58.1792756236406; Fri, 23 Oct 2026
+ 04:50:36 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261010133725.642498-1-eric.auger@redhat.com>
-In-Reply-To: <20261010133725.642498-1-eric.auger@redhat.com>
+References: <87zew5j3iv.fsf@pond.sub.org> <ats0_RfeVugAofN9@redhat.com>
+ <CAFEAcA_wabjzp0KF69-ay75QoOk=jE-TygrD-T-b60dw1iOs=g@mail.gmail.com>
+ <attACqgQQ-Lxt5Pj@redhat.com>
+In-Reply-To: <attACqgQQ-Lxt5Pj@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Oct 2026 12:44:48 +0100
-X-Gm-Features: AclHuK-SOddt72tpNNxsXJ62VuaXNgbTq3dc6W6MUQby4pa5991PP5qOVGNvpWA
-Message-ID: <CAFEAcA9XE0TLxp+DNzFSbkxbj7f0M78N+tf1a01cJ5rNkM7NBA@mail.gmail.com>
-Subject: Re: [PATCH v10 00/26] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- kvmarm@lists.linux.dev, shaju.abraham@nutanix.com, khushit.shah@nutanix.com, 
- yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org, 
- sebott@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com, 
- maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com, 
- armbru@redhat.com, berrange@redhat.com, abologna@redhat.com, 
- jdenemar@redhat.com
+Date: Fri, 23 Oct 2026 12:50:24 +0100
+X-Gm-Features: AclHuK_7ofiwimKEAs1WrOZxTSnj_NGsSA3Gx5feeBZQhEu4HY8-m2R0wSrQtgQ
+Message-ID: <CAFEAcA-2Zkw-xhZ59nAfFOEbGz8W2XSOdi8d4eD5F8U4T1YE-Q@mail.gmail.com>
+Subject: Re: qemu-system-x86_64 appears to have sgx-epc,
+ but not memory-backend-epc
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,25 +130,19 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sat, 10 Oct 2026 at 14:37, Eric Auger <eric.auger@redhat.com> wrote:
->
-> This series enhances the current host KVM model with capability to
-> set writable ID reg fields.
->
-> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
-> of a subset of ID regs. The list of writable fields continues to grow.
-> The feature ID range is defined as the AArch64 System register space
-> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
->
-> The end goal is to get more flexibility when migrating guests
-> between different host hardware. This series is a prerequisite for
-> aarch64 named vcpu models.
+On Fri, 23 Oct 2026 at 12:08, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+> The memory backends are all implementing the UserCreatable
+> interface, which provides a "complete" method where they
+> could gracefully report lack of the feature via 'errp'.
 
-To help me with review prioritization -- are you hoping this will
-land for 11.2, or are you expecting it to be 12.0 material? (Given
-the softfreeze date is rapidly approaching, it feels to me like
-12.0 is where it's going to be.)
+I didn't realize UserCreatable was a thing. It seems unfortunate
+that we have accumulated three different kinds of object
+creation/destruction life cycle:
 
-thanks
+- instance_init / instance_finalize
+- instance_init / realize / unrealize / instance_finalize
+- instance_init / complete / prepare_delete / instance_finalize
+
 -- PMM
 
