@@ -1,141 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2459606A324
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F9A606A328
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RXCpxVUk;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Zt5Avs24
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=Fx21mzAT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKHyx-0006Jn-KO; Fri, 23 Oct 2026 12:19:03 -0400
+	id 1xKI0O-0000LP-NB; Fri, 23 Oct 2026 12:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKHyQ-00054q-W8
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:18:34 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKHyN-0002b8-E4
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:18:28 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NG2p2r3228243
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:18:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DhLxB7MEJOaltEhJwCEIexGsl9KAJr8R9xhlHNbSuwo=; b=RXCpxVUkOFNtBvzX
- tQBSoi6CRKHIsQixhG1haa/07CdownfieX73vG7Tdd4c8vvfiqjT6ceauzTyQaiN
- TRZ9vdIQ6LOry4e9STLZoahrqWDbcuCG6ZW+uzJ3B3h7q87IjY5sFeS9qdwoeeJz
- BzvWJ42ukf0ZzuS5VLvlfm4VtLQT/PPAZ9isiREnLdWDpFb0SgJxepEAlCHxYf4J
- GVmeL8WieoPkGW/ZRMhpnIWKwCq+O0v+WA6KUxlAMl9Bw4h9sIHY4aGn6xl8e0DD
- nukW/0jAvie48OmQqH0TerfZwX1JaUGlcL8/fyz7ihDHqVa4jkn6WIFJa3J75QXK
- bLFteg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgart0233-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:18:25 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93cb71b1443so218332485a.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:18:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xKI01-0008IR-LK
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:20:11 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xKHzy-0002ia-Sv
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:20:09 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48e10a70540so670733f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792772305; x=1793377105; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DhLxB7MEJOaltEhJwCEIexGsl9KAJr8R9xhlHNbSuwo=;
- b=Zt5Avs24icWFhP6QosdCTs/tBGNzikO82soUqbEzVgPFlDFhU8F/SF54xSTn4TTu/Y
- 9VXpiJ9+M5+NY3Z4s0Wxy+9QdbcNod69PxtXREtOY3EJvwF4t0JLGFo7P0R7oDuQQAJY
- sJ52EdfKbBCFBY7Se1X1qTarEIn/QAM4QLVBDIdaST1BVv6UhdJ0xIOgz9zLSlRgyfOt
- ScSHgNqGKvKKzUPn5i/o4Ty7i/3978zGsAf9rFpks6GOAzNivN50K2rzN/QZjxGusq1E
- UZXHl1U4GI4G+OMkRAlWbgjUHnI4TamVa71tLz2/IIucJHqA4ekTfStkw6QUzeOJCuE2
- pKpg==
+ d=openvz.org; s=google; t=1792772403; x=1793377203; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=/qmhc/4/Izc8apkJZ4pid8E2TMFU1/dQoi5WwtxVSjY=;
+ b=Fx21mzATrAM0kXhw0w7wj9QvGmQoRjFGeEj3T1JFA6cxkjwyndoZPloo/ye1zKK/bY
+ z8lKeriaSYNcOn7Ur8vdYfq5tTVAjbODnEiUW2DCubP60z6o9OCsYiLLyUFrPWfvFPp0
+ osAReEPkLEPsUJTtLilGwPH/Zi3BOcTWYmzyRRdyR685DcoCtKXxv9J8t5u2MPqEHWSU
+ WUW9W+oYTcFa2v6KKpg5qqK6r+t1njnQaqkNCmkvJGo+GVfoAZP189KVR9YCk+i1PCa+
+ IOEdgzuzRZc5wTsyXwoO8mXUcqqOa+utORocc1xUPhCNE4E87TTj3BI1y8SsB/ftJznk
+ Xs8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792772305; x=1793377105;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=DhLxB7MEJOaltEhJwCEIexGsl9KAJr8R9xhlHNbSuwo=;
- b=pSfWNqPoW3IbQmJB8pe94OtIaZUVhMkV7eLZ4kVVTars4eSrKGFfXsTwtq8Xzn4afi
- g3CijCzMwVqrYIBD8Z6M+zU/ua2scS5V9GD2Ir8GU2jIZKsDaKnxxoYtQZ1e7MFGOL2d
- vDgEd1L4DPXX0dnImwkVevSmrCLc4zFp+IQegE3y3AAfR/Jume8SJZHqQrKjMmcoZy9U
- 0ERrXJyDaEBGUSRrgazjw4ZZUPmiMS8k5FgoLrhsrgJyDGaDxH0zngBdi4LG12XWZhES
- 8oEYTQr5KhkdixTAaCYlzQZMXwhOI2NTRdRNqVeY/MI0+V+I3zGXGR451IHGWtwRn0ye
- amaQ==
-X-Gm-Message-State: AFq9FYJAhk3sYUE0lYWJrfWV16TwWzbC5ifzQOWtVVUoKtHDhbVyUL2o
- vgHu1dNPqp37cFHQA36v/yGqhoHIQXJeCscoL5Gd+6R3eyZJihaSPXocl4Rl8sHg3x3tIzIQLl+
- jFWPBAUwM4odmrQuQ43JNcBeHfo8+C/jv2pnzZ5Ep5YI3o36uqiu/z53nX/B0Qwa6AIcC
-X-Gm-Gg: AYBFou1/ctMgaFJNXIOoBxSiiMRY9u8rD9lnr958c3inmw4yv8l00G9rfZLj4dL8/T/
- rSp1Yqp8db9RgAFBzqD90Y1qFr+55HzWRbxlzlWw3NVefJkpivrpuGzbiqJNj2KLeToQLBd2HRb
- RopjJC+R5iS/IZygGFrZF49eP9doTDP5oOGMeQIqRSBk/gQsarYZ3hedv1ZV/iUO5qptYKmOMha
- hqacW/DnVTtNKPNgKw84EmEyS4rWXH82zDlLa0/0PGzDnk8A6NnKFBYxNlffrtUrsyP8d+Yx8oK
- f9cKAsTNxMurXQMmqqNDMG1zD+PtP1jzYAv3ysuhIKhaMxPMua6vsNN/jzNbgKCaFL68ALJmp8P
- I4g6opiROI6/IDXBo5LtdT0M0RTYWSa/1qbM65vSS
-X-Received: by 2002:a05:620a:2628:b0:93c:b47b:26f with SMTP id
- af79cd13be357-93f6f7fa76dmr499663485a.49.1792772305106; 
- Fri, 23 Oct 2026 09:18:25 -0700 (PDT)
-X-Received: by 2002:a05:620a:2628:b0:93c:b47b:26f with SMTP id
- af79cd13be357-93f6f7fa76dmr499658985a.49.1792772304469; 
- Fri, 23 Oct 2026 09:18:24 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ d=1e100.net; s=20260707; t=1792772403; x=1793377203;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=/qmhc/4/Izc8apkJZ4pid8E2TMFU1/dQoi5WwtxVSjY=;
+ b=14NPKH/MlGWUWdw1Cd+HEnSBx+rGBvlgTSBFy/CBHZQkm8dboluG5hfNXXd8ya/CP9
+ Ozn9rqgGgwcgt5GNd0/fVqKfI25qT1ybKqlHEGR0TEHNHS0WwvnIPRS1PGSkurnKkH7J
+ AA8p70AATGxoyvCxYTCTVnu63SdAW1x7/RLp5rD8MbdQPLFfor86GpCeZLZl1A/HuePC
+ GUJKxH8Qh7O5svo8DYJOd7waOjnDaXnsPlBLpTfalgW3lMB9JKJNFaowLSn+mS16fPqL
+ cKhmIrRQazhznJl02h2gekVsB+CnEKZkllM4n2vK+ccykgcNCkXrqgAHaybB6603Up5Q
+ IfeQ==
+X-Gm-Message-State: AFq9FYK1XKhh11t42//l5MkxwVOalB4V5Q/fvkUOJRHjR0WH9zgFR2ib
+ wZOOmmsu7AtQcRAPczG7/TW445/j519zmu73VRQwFXKxY2lQT6xxts3GFqRJjKsQbsNafgvXieL
+ lallE
+X-Gm-Gg: AYBFou2KwdATu9BwwrHDNsc5MBLfhap2DnHuJxbXP9gBJvQLiAi08irotWhwsicHU8Z
+ MLE7YooRt1kHLR4gE6eem5sh12RUDKuodxBk/RFOSyCVoTm3mOfzpOykV1pbsRWDRkvtke7+Frv
+ svxstIrmHtktIF190H3K1TWrP5dultyFHgAJcRCcV/rN3dls8urUpq2fjjjvA598bnqdnunM+sp
+ n9XYnRdCEemzGwGiFet1HDwsKUcZAxPyEqGRTuYLiKFu1ydniOitvVSZMnMYOwBsctF9DPFBago
+ c2uwcIr8XR7vR1y8kxFoajEQHqVv/2RIv7zAFHHt8j0raNA7ItpkST2Nt3NbExr746dOmd+XqOY
+ rrj3hctj/thsKxtm4zVsxI+MSzNy/JQocmj8UpkpYt/Okpu6kd0xhAzTvV4mplWD8sbf+r/fK+R
+ lSBA6PvxhyYMIR8rIafUcEE855AYkhqLcpYcsVhBYjCIhnJLQ5WQOrIugY+21RnAXx89hvP2xy+
+ 8Bole6D5v/t+Tt/5pAoBbpJWfXSeAhROgG+J7G2efTs4NXUC5af
+X-Received: by 2002:a05:6000:144c:b0:48c:7143:610c with SMTP id
+ ffacd0b85a97d-48e3859a407mr4205863f8f.36.1792772403157; 
+ Fri, 23 Oct 2026 09:20:03 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a960:ee49:ec13:ac39])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3d428372sm844143f8f.53.2026.10.23.09.18.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 23 Oct 2026 09:18:23 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ ffacd0b85a97d-48e3d417e6dsm720356f8f.44.2026.10.23.09.20.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Oct 2026 09:20:02 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/83] target/ppc: Use a static table in powerpc_excp_name()
-Date: Fri, 23 Oct 2026 18:12:48 +0200
-Message-ID: <20261023161332.60153-41-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261023161332.60153-1-philmd@oss.qualcomm.com>
-References: <20261023161332.60153-1-philmd@oss.qualcomm.com>
+Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 0/1] virtio-scsi: fix hot-plug event racing device realize
+Date: Fri, 23 Oct 2026 18:19:58 +0200
+Message-ID: <20261023162000.2796947-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MiBTYWx0ZWRfX1DjXAmtfHx1m
- tH4wQk9V6Coooibg1mNNjHLHGPN4vN1as7vSD8povGjZARuqnxx+NIuOPbp3+5LLHSxc8gNrDtN
- r1tPPN72jd9lkNApTZ8oLvTVK+pjO8+qsw9a4RYOc1Le3EzD+EKaCj5N8f7vqUqC5XoW39z4No2
- WhGMgD3iu5c3NmxEyL0f3sNTCICSQoZFYBUcFXPdYbaVxImDIBvdjFJXC3FVJ8qLZOSuTcIM6v1
- 4bcjna4g4+PhAmgvKfu/cNtEEWx8feOkcsUMyseCD7cg/P5ReXzTUIyhMfRaAGBoAfF6orQnZ+i
- 5tE12CX7Jv21S7p3zbp3MB6PjstRoNVpqq/CwpDbdtd5FnX79N5MbN1ii9LpgZLmBSLBH2gPiCa
- q1QeESnUVGO0GS0ud+nt1nW7eu2aXox1QerjXQFBzxGl7Hzsq0rDiZFUown4Db6a5Zxx19zwKi+
- /9GLYjh5bX2Dp41mj1A==
-X-Authority-Analysis: v=2.4 cv=JI+uIMKb c=1 sm=1 tr=0 ts=6adb88d1 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=ToDOQhdInOzr0WCV1tUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MiBTYWx0ZWRfX0iC3K1eXhvCa
- SJ6AuLihyE68+v9w4BAaBzPnHlt3Xt1u9SuhsKqKVh4eI/QHXHrMkWwuNvpY74LG/azBmx8HpCj
- Uyi6Peov2ZkGY7PW5hU6QF4/zXs0wmI=
-X-Proofpoint-ORIG-GUID: K6FqVyEniPVr7KoMpxzHoiMm6g4zyHr7
-X-Proofpoint-GUID: K6FqVyEniPVr7KoMpxzHoiMm6g4zyHr7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
- phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230062
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,185 +93,61 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UPPERCASE_50_75,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Replace the switch statement with a static lookup table.
+A disk or CD-ROM hot-plugged into virtio-scsi sometimes never shows up
+in the guest. QEMU has the device, the guest has consumed the RESCAN
+event, and a manual bus rescan finds the LUN at once. We see this in CI
+with Windows Server guests (vioscsi) and with Linux guests, always with
+the controller on an iothread.
 
-Unlisted exception codes now return "unknown" instead of reaching
-g_assert_not_reached(), so with '-d int' they are logged instead
-of aborting QEMU. Do this before registering the function as the
-CPUClass::exception_name() handler, which must accept any code.
+The event is pushed from the plug() callback, before the device is
+realized, and the iothread request path does not see unrealized devices
+since 8ddf958e8d62. A guest that scans right away gets BAD_TARGET and
+does not retry. The patch moves the event to a main-loop bottom half.
+The alternative, letting the request path see a plugged but unrealized
+device, would undo what 8ddf958e8d62 protects against.
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261022215115.19680-22-philmd@oss.qualcomm.com>
----
- target/ppc/excp_helper.c | 137 ++++++++++++++++++++-------------------
- 1 file changed, 69 insertions(+), 68 deletions(-)
+There is no test in the patch. The window lies inside a single
+device_add under the BQL, and a qtest or iotests client is served by the
+same main loop, so it cannot send a request in between. To reproduce, I
+booted a Linux guest with virtio-scsi on an iothread, ran QEMU under gdb
+in non-stop mode and stalled the main thread for 3 s in
+scsi_bus_set_ua(), right after the event is pushed, then hot-plugged a
+scsi-cd:
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 895127fb2e6..4892cbaeb07 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/log.h"
-+#include "qemu/cutils.h"
- #include "system/memory.h"
- #include "system/tcg.h"
- #include "system/system.h"
-@@ -37,74 +38,74 @@
- 
- static const char *powerpc_excp_name(int excp)
- {
--    switch (excp) {
--    case POWERPC_EXCP_CRITICAL: return "CRITICAL";
--    case POWERPC_EXCP_MCHECK:   return "MCHECK";
--    case POWERPC_EXCP_DSI:      return "DSI";
--    case POWERPC_EXCP_ISI:      return "ISI";
--    case POWERPC_EXCP_EXTERNAL: return "EXTERNAL";
--    case POWERPC_EXCP_ALIGN:    return "ALIGN";
--    case POWERPC_EXCP_PROGRAM:  return "PROGRAM";
--    case POWERPC_EXCP_FPU:      return "FPU";
--    case POWERPC_EXCP_SYSCALL:  return "SYSCALL";
--    case POWERPC_EXCP_APU:      return "APU";
--    case POWERPC_EXCP_DECR:     return "DECR";
--    case POWERPC_EXCP_FIT:      return "FIT";
--    case POWERPC_EXCP_WDT:      return "WDT";
--    case POWERPC_EXCP_DTLB:     return "DTLB";
--    case POWERPC_EXCP_ITLB:     return "ITLB";
--    case POWERPC_EXCP_DEBUG:    return "DEBUG";
--    case POWERPC_EXCP_SPEU:     return "SPEU";
--    case POWERPC_EXCP_EFPDI:    return "EFPDI";
--    case POWERPC_EXCP_EFPRI:    return "EFPRI";
--    case POWERPC_EXCP_EPERFM:   return "EPERFM";
--    case POWERPC_EXCP_DOORI:    return "DOORI";
--    case POWERPC_EXCP_DOORCI:   return "DOORCI";
--    case POWERPC_EXCP_GDOORI:   return "GDOORI";
--    case POWERPC_EXCP_GDOORCI:  return "GDOORCI";
--    case POWERPC_EXCP_HYPPRIV:  return "HYPPRIV";
--    case POWERPC_EXCP_RESET:    return "RESET";
--    case POWERPC_EXCP_DSEG:     return "DSEG";
--    case POWERPC_EXCP_ISEG:     return "ISEG";
--    case POWERPC_EXCP_HDECR:    return "HDECR";
--    case POWERPC_EXCP_TRACE:    return "TRACE";
--    case POWERPC_EXCP_HDSI:     return "HDSI";
--    case POWERPC_EXCP_HISI:     return "HISI";
--    case POWERPC_EXCP_HDSEG:    return "HDSEG";
--    case POWERPC_EXCP_HISEG:    return "HISEG";
--    case POWERPC_EXCP_VPU:      return "VPU";
--    case POWERPC_EXCP_PIT:      return "PIT";
--    case POWERPC_EXCP_EMUL:     return "EMUL";
--    case POWERPC_EXCP_IFTLB:    return "IFTLB";
--    case POWERPC_EXCP_DLTLB:    return "DLTLB";
--    case POWERPC_EXCP_DSTLB:    return "DSTLB";
--    case POWERPC_EXCP_FPA:      return "FPA";
--    case POWERPC_EXCP_DABR:     return "DABR";
--    case POWERPC_EXCP_IABR:     return "IABR";
--    case POWERPC_EXCP_SMI:      return "SMI";
--    case POWERPC_EXCP_PERFM:    return "PERFM";
--    case POWERPC_EXCP_THERM:    return "THERM";
--    case POWERPC_EXCP_VPUA:     return "VPUA";
--    case POWERPC_EXCP_SOFTP:    return "SOFTP";
--    case POWERPC_EXCP_MAINT:    return "MAINT";
--    case POWERPC_EXCP_MEXTBR:   return "MEXTBR";
--    case POWERPC_EXCP_NMEXTBR:  return "NMEXTBR";
--    case POWERPC_EXCP_ITLBE:    return "ITLBE";
--    case POWERPC_EXCP_DTLBE:    return "DTLBE";
--    case POWERPC_EXCP_VSXU:     return "VSXU";
--    case POWERPC_EXCP_FU:       return "FU";
--    case POWERPC_EXCP_HV_EMU:   return "HV_EMU";
--    case POWERPC_EXCP_HV_MAINT: return "HV_MAINT";
--    case POWERPC_EXCP_HV_FU:    return "HV_FU";
--    case POWERPC_EXCP_SDOOR:    return "SDOOR";
--    case POWERPC_EXCP_SDOOR_HV: return "SDOOR_HV";
--    case POWERPC_EXCP_HVIRT:    return "HVIRT";
--    case POWERPC_EXCP_SYSCALL_VECTORED: return "SYSCALL_VECTORED";
--    case POWERPC_EXCP_PERFM_EBB: return "PERFM_EBB";
--    case POWERPC_EXCP_EXTERNAL_EBB: return "EXTERNAL_EBB";
--    default:
--        g_assert_not_reached();
--    }
-+    static const char * const excp_names[POWERPC_EXCP_NB] = {
-+        [POWERPC_EXCP_CRITICAL] = "CRITICAL",
-+        [POWERPC_EXCP_MCHECK]   = "MCHECK",
-+        [POWERPC_EXCP_DSI]      = "DSI",
-+        [POWERPC_EXCP_ISI]      = "ISI",
-+        [POWERPC_EXCP_EXTERNAL] = "EXTERNAL",
-+        [POWERPC_EXCP_ALIGN]    = "ALIGN",
-+        [POWERPC_EXCP_PROGRAM]  = "PROGRAM",
-+        [POWERPC_EXCP_FPU]      = "FPU",
-+        [POWERPC_EXCP_SYSCALL]  = "SYSCALL",
-+        [POWERPC_EXCP_APU]      = "APU",
-+        [POWERPC_EXCP_DECR]     = "DECR",
-+        [POWERPC_EXCP_FIT]      = "FIT",
-+        [POWERPC_EXCP_WDT]      = "WDT",
-+        [POWERPC_EXCP_DTLB]     = "DTLB",
-+        [POWERPC_EXCP_ITLB]     = "ITLB",
-+        [POWERPC_EXCP_DEBUG]    = "DEBUG",
-+        [POWERPC_EXCP_SPEU]     = "SPEU",
-+        [POWERPC_EXCP_EFPDI]    = "EFPDI",
-+        [POWERPC_EXCP_EFPRI]    = "EFPRI",
-+        [POWERPC_EXCP_EPERFM]   = "EPERFM",
-+        [POWERPC_EXCP_DOORI]    = "DOORI",
-+        [POWERPC_EXCP_DOORCI]   = "DOORCI",
-+        [POWERPC_EXCP_GDOORI]   = "GDOORI",
-+        [POWERPC_EXCP_GDOORCI]  = "GDOORCI",
-+        [POWERPC_EXCP_HYPPRIV]  = "HYPPRIV",
-+        [POWERPC_EXCP_RESET]    = "RESET",
-+        [POWERPC_EXCP_DSEG]     = "DSEG",
-+        [POWERPC_EXCP_ISEG]     = "ISEG",
-+        [POWERPC_EXCP_HDECR]    = "HDECR",
-+        [POWERPC_EXCP_TRACE]    = "TRACE",
-+        [POWERPC_EXCP_HDSI]     = "HDSI",
-+        [POWERPC_EXCP_HISI]     = "HISI",
-+        [POWERPC_EXCP_HDSEG]    = "HDSEG",
-+        [POWERPC_EXCP_HISEG]    = "HISEG",
-+        [POWERPC_EXCP_VPU]      = "VPU",
-+        [POWERPC_EXCP_PIT]      = "PIT",
-+        [POWERPC_EXCP_EMUL]     = "EMUL",
-+        [POWERPC_EXCP_IFTLB]    = "IFTLB",
-+        [POWERPC_EXCP_DLTLB]    = "DLTLB",
-+        [POWERPC_EXCP_DSTLB]    = "DSTLB",
-+        [POWERPC_EXCP_FPA]      = "FPA",
-+        [POWERPC_EXCP_DABR]     = "DABR",
-+        [POWERPC_EXCP_IABR]     = "IABR",
-+        [POWERPC_EXCP_SMI]      = "SMI",
-+        [POWERPC_EXCP_PERFM]    = "PERFM",
-+        [POWERPC_EXCP_THERM]    = "THERM",
-+        [POWERPC_EXCP_VPUA]     = "VPUA",
-+        [POWERPC_EXCP_SOFTP]    = "SOFTP",
-+        [POWERPC_EXCP_MAINT]    = "MAINT",
-+        [POWERPC_EXCP_MEXTBR]   = "MEXTBR",
-+        [POWERPC_EXCP_NMEXTBR]  = "NMEXTBR",
-+        [POWERPC_EXCP_ITLBE]    = "ITLBE",
-+        [POWERPC_EXCP_DTLBE]    = "DTLBE",
-+        [POWERPC_EXCP_VSXU]     = "VSXU",
-+        [POWERPC_EXCP_FU]       = "FU",
-+        [POWERPC_EXCP_HV_EMU]   = "HV_EMU",
-+        [POWERPC_EXCP_HV_MAINT] = "HV_MAINT",
-+        [POWERPC_EXCP_HV_FU]    = "HV_FU",
-+        [POWERPC_EXCP_SDOOR]    = "SDOOR",
-+        [POWERPC_EXCP_SDOOR_HV] = "SDOOR_HV",
-+        [POWERPC_EXCP_HVIRT]    = "HVIRT",
-+        [POWERPC_EXCP_SYSCALL_VECTORED] = "SYSCALL_VECTORED",
-+        [POWERPC_EXCP_PERFM_EBB]        = "PERFM_EBB",
-+        [POWERPC_EXCP_EXTERNAL_EBB]     = "EXTERNAL_EBB",
-+    };
-+
-+    return STR_ARRAY_ELEM_OR_NULL(excp_names, excp) ?: "unknown";
- }
- 
- static void dump_syscall(CPUPPCState *env)
+  break scsi_bus_set_ua
+  commands
+    call (int)usleep(3000000)
+    continue
+  end
+
+Without the patch the guest never enumerated the LUN (3 of 3 runs).
+With the patch the same stall falls after realize and the LUN appeared
+every time (3 of 3). Without the stall both builds pass, which is why
+this only shows up on loaded hosts. tests/qtest virtio-scsi passes.
+
+Every release since 5.2 has the bug, hence qemu-stable.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+
+Denis V. Lunev (1):
+  virtio-scsi: fix hot-plug event racing device realize
+
+ hw/scsi/virtio-scsi.c | 38 +++++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 11 deletions(-)
+
+
+base-commit: b6c4b7e86dec12d07f5cac65265b986d38ee9002
 -- 
-2.55.0
+2.53.0
 
 
