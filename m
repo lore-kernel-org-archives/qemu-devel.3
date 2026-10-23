@@ -1,121 +1,135 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC04606A31D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C23606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IV3VpYiJ;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=3FLZFT8m;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=MTgmQh0n;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=vRZ+NyMZ
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=h36sLCCg;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CaF8G45w
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKHmf-0008TO-LV; Fri, 23 Oct 2026 12:06:21 -0400
+	id 1xKHpq-0000ar-HE; Fri, 23 Oct 2026 12:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xKHma-0008Sq-BV
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:06:16 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xKHmW-0001JC-JI
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:06:14 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5A1131F86C;
- Fri, 23 Oct 2026 16:06:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792771569; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=criWwlOglvQ8sqp0xcLIgocRMur1Su++Ft9R0YXpqug=;
- b=IV3VpYiJ+/OJ89HX2yCypJQVttKJApLQjHJEoQ3imIn4p+0D8GwI0WOP20i2tCUkL2ud51
- CLAwOmqqE47t+MpLmbmMKcoMpiF6Nu58a+3FmW425KWsxDk5msPqUiIt/OfCrLg/a/1C8G
- XQGHbDrVhWiy5SO59U+Kot6Lmnu9vok=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792771569;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=criWwlOglvQ8sqp0xcLIgocRMur1Su++Ft9R0YXpqug=;
- b=3FLZFT8mW8JqA5YeytPi3xs29YReGbBx7buGioIxSR0V/BdFiHPuIxrwyhm+80/BDKVKgr
- eLhc9Um5FBISRDDA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MTgmQh0n;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vRZ+NyMZ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1792771568; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=criWwlOglvQ8sqp0xcLIgocRMur1Su++Ft9R0YXpqug=;
- b=MTgmQh0nBc91wMXPUrBAhJcoBHB82tncTNVT9VppT3WOLzksMMjZnaK7aXJvLt80Zg1adN
- iA7+uPkEip/19qtssfdkhQ7vJjn7K3Ru+8wgWn4qyPYL2kt6psmIbvVH/GReTZoAZ7Jk4f
- Aqx3c/0m7x24ny4u0jZBOv969dxcBGg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1792771568;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=criWwlOglvQ8sqp0xcLIgocRMur1Su++Ft9R0YXpqug=;
- b=vRZ+NyMZnBARxTyGGUkH62WTfdpxUBZHACtnOeUlbR3TSw4mBLKqq3SAbvHGPBMYuP87bO
- XppgeJQ+MjLZXUCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CA422133F6;
- Fri, 23 Oct 2026 16:06:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aJuNG++F22pDcAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Oct 2026 16:06:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@oss.qualcomm.com>, mjt@tls.msk.ru, peterx@redhat.com
-Subject: Re: [PATCH v3 1/3] tests/docker/dockerfiles: add release.docker
-In-Reply-To: <20261014005338.34657-2-pierrick.bouvier@oss.qualcomm.com>
-References: <20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com>
- <20261014005338.34657-2-pierrick.bouvier@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 13:06:05 -0300
-Message-ID: <87ecdgl7v6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xKHpm-0000aF-BA
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:09:35 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xKHpc-0001Tf-8q
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:09:28 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69NG3her2931009
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:09:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=PyWN7bLF2TyiAwLh470NhPLfJrR1BKCM+Lh
+ 39S5T91I=; b=h36sLCCg01TfkQ2Sw6wEAt1Do7TTgKt5Uc+vcaEMjoklj21Akv3
+ fW9aeMy1xMoY9QugBBG6Loi5DbOPsM66eo/9Pbof+NfAA+4j7ZOBcLZZnenSC3ap
+ ylUADRiD72yeCQ19X55RAN1cPhhhg4Uahe3yS0uoDcaRMSSRjeKvpzPhOaEqMbMG
+ jfDLoPfxUFwOZlbXV/MivhzUqFJz/wsSuzOdVX76Id6IyY+GKkY1FsAOY3+93wqB
+ 1wPCdxMXgAH5Xq8dzgAnmXurpeizP41aJ/0/pffgrf12JW/zxAhJCc9BIcPMADUO
+ /Ud2kXcNmDr9r1bK34TxyxX9Ydvm+xIiW2Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgas6r0ps-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:09:20 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-91c25513b2aso22200626d6.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:09:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792771760; x=1793376560; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PyWN7bLF2TyiAwLh470NhPLfJrR1BKCM+Lh39S5T91I=;
+ b=CaF8G45wVjuMrXcjySJAM4LtEfbZt7SjPqcENT0Q1t4RMo1QFIPfhqS37dQ0CVzfxf
+ qEovzvmlxf+ZUNiCKMIfSjp72zuhpx+R7Blu++am9onAw242flfY++FhMxhX7tEUxMWz
+ xvTJa+1Uv17RN0BJblglTnHp5OWUwwLi+xhLj23lU18a9+UxBy37KpTPPbyHllRq5UtV
+ 1txUQWZLMoWqS75h3Verd8AQ5/Esz2xgKjNUHhtrHys5nmzIcsZQ3DBhVyvbuFNiSJFD
+ I2zz3432T4oOStBlCKWhQrkiMsR4rOCuMHirxlJCaLRmyqur/6r3coa+q5qL9mwwC9N/
+ Vdvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792771760; x=1793376560;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=PyWN7bLF2TyiAwLh470NhPLfJrR1BKCM+Lh39S5T91I=;
+ b=ThfWcuY+MqFl9XRgre2w8YUXNB8YI65zUorAlSp414rz5jPccHdCZMZGlT6fQBaoEa
+ TxTAUeQT/P9/HuW61tqMqvcUQPLB5VDIH4pXeBMYkAVu9dVwPbOVMM60THoL1GrAt4l+
+ YH+nzKGgjZ1+Y5fKsoHbyCBD5Bqac2vqZbrJegY70Re3gLv5LuxYmkGZghcuJcl4KCqj
+ 4FnDCVYTaU40W1i7eJWYce4mC44M0VuoeAQRmd1wOJX2QlcSpQDp6Iv4WZggJUGDpLKs
+ 1d2Mpfwxmg82tZHu19cm2UKQyTFRFHTOO8CxCb/7I2v8M6ns9Pvfs8K9/ffNy/Edtnyv
+ M3jg==
+X-Gm-Message-State: AFq9FYIKC3vKWZQgFULDn5ECKVpLEL2dxwuev2oEBstuZaa9yfazoKHK
+ oSNQ7Jv9763A4PxMEPep2zvINcNWl56dklmHddQIlYlp1i9EdFjEoKKtnoJDdkwa16A/nQEgPYt
+ XOouNtVULQD3l88VEuk8+vGl/0DvRqAcgUpuR2mKMz8DLWiQwDE56p+s0mLjrGO007A==
+X-Gm-Gg: AYBFou2U6CNrTm8wqq0En6+oWoBK1soOnQ4bP6XB1XvWVTJVLq0MunlcORF50b/ArxT
+ cpxtfe2/wMTk+Ir98UdEVhIoRGSHTUHy0H2n+nf1tfY8LvX8GG5aKSpkTZMLLQYOZkCmmlynDK6
+ svJt5dxBHwQeAPaEeEiv0zFU8AjGuhi6Byu0vRerXWv4AaXGIrcv3PJfYyJdAO5gNz4al6QiERG
+ gMDAIR/imjeqx/4i84/mlMTGvWDQPTHR1uIHWmxpP3rabyQO70bZealE878QGOhiARoUCpZ3aMw
+ f2IuGFn/mRaIjBfdX0ofQu5v3/1OkJNjHXOwlERPm3iJ1AmDs0gxdRRwtG76p2vxnEOXi7ACqcH
+ 5pQx1xI0VKmdk6tSsssJihlqPD9Jlg8F5clqjrQ==
+X-Received: by 2002:ad4:5aed:0:b0:91b:a0ab:824 with SMTP id
+ 6a1803df08f44-91c3acc68f8mr37254946d6.56.1792771760001; 
+ Fri, 23 Oct 2026 09:09:20 -0700 (PDT)
+X-Received: by 2002:ad4:5aed:0:b0:91b:a0ab:824 with SMTP id
+ 6a1803df08f44-91c3acc68f8mr37254056d6.56.1792771759368; 
+ Fri, 23 Oct 2026 09:09:19 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([152.234.125.162])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91c4524f226sm5063406d6.27.2026.10.23.09.09.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Oct 2026 09:09:18 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 0/6] hw/riscv: riscv-server-ref refinements
+Date: Fri, 23 Oct 2026 13:09:07 -0300
+Message-ID: <20261023160913.24992-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 5A1131F86C
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-9.71 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- SEM_URIBL(3.50)[ubuntu.com:url]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- BAD_REP_POLICIES(0.10)[]; MX_GOOD(-0.01)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- R_DKIM_ALLOW(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email, suse.de:dkim,
- canonical.com:url, imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo,
- gitlab.com:url, qemu.org:url, ubuntu.com:url]
-X-Spam-Score: -9.71
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MiBTYWx0ZWRfXy7ydsGk2XISw
+ tZTiX5GscAql6IDL4iEFGYz1ctrSgQDw6fFW+YVupxa5j93cDewb0kggUX5FVlPXYo2AzdufOMB
+ qkWtCsONaw1Q+8l7B83EiH4AL+Cao3k8gZAXL00ElDuUfuFnBlJ9axUYeZdjXC2zQc9S0K2rgG2
+ 6i1K4Kro9eRMt35Cue9H98NKOjzp7yGOZoU1D3HXRw7zPIYZQwdBlcKHyEzewJi1dHoMu4hzlxp
+ F9Lyqfqdoi4pNj4H+VRicvSojjBT6iCK6Bwll4k5/vLkDmpe6Ka8hOkV0Ir0KGhTWJQ1G1iiO8g
+ 3gZdhJSTAkRK/A7vk/3GSSz8BeC/zkG9aT0zu5pWRAhSTo99QJf+KbtqkU/CJYreoHxTeNMQ2Cx
+ cQPIeWBlM7pZO/Wgtm5OD4qrSqJHMFBrNoIjPFY20lVgenDYde1r/X5olG7zx98C2dmwpmYeL0+
+ 1hShp6tw8QAR3RSQSnA==
+X-Authority-Analysis: v=2.4 cv=DK0acCNb c=1 sm=1 tr=0 ts=6adb86b0 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=AgQEunjic7gIBKSbIeB6Ag==:17
+ a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=dteICpJC5C4Zh8-mQl8A:9
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: TPtxAAJhWR2Iod1rVS4cY6BmGOxW9qXZ
+X-Proofpoint-ORIG-GUID: TPtxAAJhWR2Iod1rVS4cY6BmGOxW9qXZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MiBTYWx0ZWRfX6IEw6AaMGErM
+ 4Wg0pLleUX1ElhSVdnH1W1cRQG226+xo+d+GdiNMOSMb2KFLMgC2RGmv1DpHlwIWIXPt2jXiXCC
+ TAoPkKhxkKlIs+bFfuPgdLfXUxpWDXw=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230062
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,192 +142,45 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Hello,
 
-> This new dockerfile allows to build a distroless image containing only
-> qemu stripped release binaries, their lib dependencies, and installed
-> artifacts (roms, keymap, ...). There is no shell, no python, nothing
-> else. This is achieved thanks to a multi-stage build, where we add qemu
-> binaries, artifacts and libraries in a new scratch image. Image has
-> the minimal size possible.
->
-> This is based on Ubuntu, which has the advantage to have working
-> containers available up to 12.04. Debian old old stable have broken apt
-> sources for instance. Ubuntu 10.04 binaries segfault due to missing
-> vsyscall emulation on modern kernels, so 12.04 is the lowest possible.
->
-> This unique dockerfile works for all qemu versions, with 0.12.0 being the
-> oldest we can build today (based on ubuntu 12.04). Previous ones need an
-> older compiler.
->
-> To build the image, you need to provide a qemu and ubuntu version:
-> $ podman build -f release.Dockerfile --build-arg QEMU_VERSION=v11.1.0 --build-arg UBUNTU_VERSION=24.04 -t qemu/v11.1.0
->
-> To run it, as there is no shell, and no defined entrypoint, you need to
-> choose the binary you want explicitely:
-> $ podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
->
-> Notes: We could optimize a bit further, by creating a base container for
-> each ubuntu version, that is reused between all qemu versions built with
-> it. Given that recent QEMU have around 800MB of binaries + artifacts,
-> and only 100MB of library dependency, I don't think it's worth the extra
-> complexity.
->
-> Notes: Also, I considered create one image per binary. Problem is
-> that qemu depends on other artifacts (rom, keymap, etc) and it's not
-> easy to identify what is needed for one binary. Thus, I think it's
-> better to stick to one container with all binaries per release.
->
+This is a small and trivial follow-up after the upstreaming of the base
+model for the riscv-server-ref board.
 
-Yeah, it's fine this way.
+Patch 5 contains a fix for the virt machine similar to what was done in
+the riscv-server-ref machine in patch 4.  Note that there were no test
+changes for the virt change, in contrast to the equivalent
+riscv-server-ref patch, because there were no Linux/userspace visible
+changes in the baud rate for the virt case.
 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  tests/docker/dockerfiles/release.docker | 76 +++++++++++++++++++++++++
->  1 file changed, 76 insertions(+)
->  create mode 100644 tests/docker/dockerfiles/release.docker
->
-> diff --git a/tests/docker/dockerfiles/release.docker b/tests/docker/dockerfiles/release.docker
-> new file mode 100644
-> index 00000000000..611ecca9859
-> --- /dev/null
-> +++ b/tests/docker/dockerfiles/release.docker
-> @@ -0,0 +1,76 @@
-> +ARG UBUNTU_VERSION="UBUNTU_VERSION_build_arg_must_be_set"
-> +FROM ubuntu:$UBUNTU_VERSION as build
+Patches based on alistair/riscv-to-apply.next.
 
-I believe FROM should be capitalized the same as AS.
+Daniel Henrique Barboza (6):
+  hw/riscv: do not realize the device in riscv_create_iommu_sys()
+  hw/riscv/server_platform_ref: set iommu hpm counters to 4
+  hw/riscv: make UART FDT helper consider baud rate
+  hw/riscv/server_platform_ref: fix UART baud rate
+  hw/riscv/virt.c: fix base baud in serial_mm_init()
+  MAINTAINERS: add contact for the RISC-V server-ref machine
 
-> +ARG UBUNTU_VERSION
+ MAINTAINERS                                 |  8 +++++++
+ hw/riscv/fdt-common.c                       | 19 +++++++++++++++--
+ hw/riscv/riscv-iommu-sys.c                  |  3 +--
+ hw/riscv/server_platform_ref.c              | 18 ++++++++++++----
+ hw/riscv/virt.c                             | 23 ++++++++++++++-------
+ include/hw/riscv/fdt-common.h               |  1 +
+ include/hw/riscv/virt.h                     |  2 ++
+ tests/functional/riscv64/test_server_ref.py |  3 +++
+ 8 files changed, 61 insertions(+), 16 deletions(-)
 
-Is this duplicated?
+-- 
+2.43.0
 
-> +
-> +# add deb-src for apt build-dep
-> +RUN sed -e 's/Types: deb/Types: deb deb-src/' -i /etc/apt/sources.list.d/* || true
-> +RUN sed -e 's/# deb-src/deb-src/' -i /etc/apt/sources.list
-> +# archive.canonical.com is not reachable anymore, and cause a long timeout
-> +RUN sed -e '/archive.canonical.com/d' -i /etc/apt/sources.list
-> +# LTS < 14.04 are hosted on https://old-releases.ubuntu.com/releases/
-> +RUN if [ $(echo $UBUNTU_VERSION | cut -f 1 -d '.') -lt 14 ]; then \
-> +    sed -e 's/archive/old-releases/g' -i /etc/apt/sources.list; \
-> +fi
-
-Hm, so I imagine these containers have reached end-of-life? I wonder
-whether we should cap how further back we go based on this. It's one
-thing to workaround a few installation bugs we list/install our
-dependencies, another thing is the distro image poiting to dead URLs.
-
-> +
-> +# use apt-get since apt was missing -y option in some ancient distro
-
-Ok, this is a reasonable issue to encounter and fix in the dockerfile. I
-pointed at this on the cover letter, but we don't gain much in knowing
-exactly which apt version has -y or not.
-
-> +RUN apt-get update && \
-> +env DEBIAN_FRONTEND=noninteractive apt-get install -y git build-essential
-> +RUN apt-get update && \
-> +env DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --arch-only qemu
-> +# additional dependencies that are missing at some point in history
-> +RUN apt-get update && \
-> +env DEBIAN_FRONTEND=noninteractive apt-get install -y ninja-build flex bison libpixman-1-dev
-
-So a discrepancy on which QEMU version and how the distro packaged it at
-the time vs. which dependencies we had. Is this something that would
-have been solved by lcitool? (Hm, did we even use it back then?)
-
-> +# python3-venv didn't exist in ancient ubuntu distro
-> +RUN apt-get update && \
-> +if apt-cache show python3-venv; then \
-> +    env DEBIAN_FRONTEND=noninteractive apt-get install -y python3-venv; \
-> +fi
-
-Maybe good to know which version so we know when to drop this block?
-
-I see some of these check the ubuntu version, some not, I wonder how
-easy it will be to break an older image's build when trying to fix a new
-one. I find it a bit confusing.
-
-> +
-> +# patch cc and c++ to inject warning suppression options
-> +RUN mv /usr/bin/cc /usr/bin/cc.real
-> +RUN echo "#!/usr/bin/env bash" > /usr/bin/cc && \
-> +echo "exec /usr/bin/cc.real \"\$@\" -Wno-error -Wno-int-conversion" >> /usr/bin/cc && \
-> +chmod +x /usr/bin/cc
-> +RUN mv /usr/bin/c++ /usr/bin/c++.real
-> +RUN echo "#!/usr/bin/env bash" > /usr/bin/c++ && \
-> +echo "exec /usr/bin/c++.real \"\$@\" -Wno-error -Wno-int-conversion" >> /usr/bin/c++ && \
-> +chmod +x /usr/bin/c++
-> +
-
-This assumes this dockerfile will not be used to test a current
-build. Probably ok.
-
-> +# 2.9.0 => 3.1.0: clone git submodules from expired url, replace them with gitlab.
-> +# 2.9.0 => 2.11.0: issue with libfdt version, solved with dtc submodule, which
-> +#                  was removed later.
-> +# Ubuntu < 14.04: git has no --single-branch, so perform manual fetch after clone.
-
-See how unstructured this has become? A comment here, the code down
-there, nothing actually checks the version, the sed happens for all
-versions, etc. Dockerfiles are bad at this kind of thing.
-
-> +ARG QEMU_VERSION
-> +RUN echo "QEMU_VERSION=${QEMU_VERSION:?QEMU_VERSION build arg must be set}"
-
-In order to build local trees I added at this point:
-
-RUN --mount=type=bind,from=qemu-src,target=/tmp/qemu-src,rw \
-cd /tmp && \
-if echo "${QEMU_VERSION}" | grep -q "\."; then \
-    git clone https://gitlab.com/qemu-project/qemu.git --depth 1 && cd qemu && \
-    git fetch origin "${QEMU_VERSION}" --depth 1 && \
-    git checkout FETCH_HEAD; \
-else \
-    git clone qemu-src qemu && cd qemu && \
-    git checkout "${QEMU_VERSION}"; \
-fi && \
-
-
-> +RUN cd /tmp && \
-> +git clone https://gitlab.com/qemu-project/qemu.git --depth 1 && cd qemu && \
-> +git fetch origin "${QEMU_VERSION}" --depth 1 && \
-> +git checkout FETCH_HEAD && \
-> +sed -e 's#git://git.qemu.org#https://gitlab.com/qemu-project/#' -i .gitmodules && \
-> +sed -e 's#git://git.qemu-project.org#https://gitlab.com/qemu-project/#' -i .gitmodules && \
-> +sed -e 's#https://git.qemu.org/git/#https://gitlab.com/qemu-project/#' -i .gitmodules && \
-> +sed -e 's#git://github.com#https://github.com#' -i .gitmodules && \
-> +if grep -q dtc .gitmodules; then git submodule update --init dtc; fi && \
-> +./configure --prefix=/opt/qemu --disable-docs && \
-> +make install -j $(nproc) && \
-> +strip /opt/qemu/bin/* && \
-> +rm -rf /tmp/*
-> +
-> +# retrieve runtime dependencies (libs + loader)
-> +RUN ldd /opt/qemu/bin/* | grep '=>' | sed -e 's/.*=>//' -e 's/(.*//' | sort -u > /opt/qemu/libs.links
-> +RUN find /lib*/ld-linux* >> /opt/qemu/libs.links
-> +RUN cat /opt/qemu/libs.links | xargs -n1 readlink -f > /opt/qemu/libs.realpath
-> +# store them in /deps
-> +RUN mkdir /deps && cp --parents $(cat /opt/qemu/libs.*) /deps/
-> +
-> +################################################################################
-> +FROM scratch
-> +
-> +# copy qemu and all associated artifacts (roms, ...)
-> +COPY --from=build /opt/qemu /usr
-> +COPY --from=build /deps /
-> +
-> +# build with:
-> +# podman build -f release.docker --build-arg QEMU_VERSION=v11.1.0 --build-arg UBUNTU_VERSION=24.04 -t qemu/v11.1.0
-> +# run with:
-> +# podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
 
