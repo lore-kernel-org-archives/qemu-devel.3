@@ -1,100 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47A6606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 12:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8311606A31E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 12:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=KxC/x3AB
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=sE/hJgCW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKEGB-0004yN-Ht; Fri, 23 Oct 2026 08:20:37 -0400
+	id 1xKEI7-0005jN-Rd; Fri, 23 Oct 2026 08:22:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKEG6-0004tM-QJ
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:20:31 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1xKEI6-0005iV-4V
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:22:34 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKEG5-0003Cy-2a
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:20:30 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b056d58f2aso7505077b3.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 05:20:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792758027; cv=none;
+ id 1xKEI4-0003el-Am
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 08:22:33 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-8b0f59a5fdeso7210477b3.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 05:22:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792758151; cv=none;
  d=google.com; s=arc-20260327;
- b=Astj+yo1+cBsD6qf8G8flEmIaeRBAe0SgxM7zsZlSHjAaDhwhrMJG+9nXSPzZ6GHmI
- 16tn05Amx820Mmb05il3/JIZGeKmXEKegbExJnWJPko2qP7MUeeFGX1AHr1ho0EGA3Qa
- 4HYCIQzFOzyQoMXrOEq5lLcLJGXzSJ8M+E20f0fvAzUF08WlGrOqPtn3OrAh706WYLV/
- OR+w09KbZqPMBFCUpkar/SO5prCRa89+7NIH9z80bBJS4PcxB9yUNCJEl36h7V26Y72l
- tyqD7+DO1rop2O+U6auKd3IQsVamZs5MImzpjbAH8G3H0g3KBxi5OR2hoXNHsrtftLiy
- 9Whg==
+ b=sD6v7Ecuz9Fl5iG0oZ93V31fkyLpjq9EQfjEiSBjqSxG9sl7vYBuhPgBtdaaRucKZG
+ 13VZoB5ey3PKcWoDuiSOebZy6cN/WgPy3AKNVdJZpi6yQCGRGMwJnFFwSMzZeCTGT1/D
+ gy8oSAPqfc5r3yuX2nJeHlwot3wnKU7El3xrTHWwX9MwFg6Mw3VXsVXUQHTpV6M8HYD0
+ bOIRsAoc1uSzBZPcydfJpfqCuz+mJr+Fs/tY9cG8RAB71HlszE08JhgZ+GkocOKuB7/i
+ zO2nPyibZOfNvwBVecK/A4Ef8KgDdlituJ7SXxn5jYXwLA1LQkpuFOYpOvFif8aiUxqM
+ R4MQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=VisH/MgOPy1gOs4xUqtHlpe4s/DAlIc1J9+gozYPrFw=;
+ bh=Si/zMrYbvAA1FBGBmaojS43YWyPfsmCfr5xq6CLJxHE=;
  fh=Ooov+i9AeS1BcC1vonK1zlp0+cy8hPMIIb5HY6/nc/g=;
- b=Q7Zh9DPZr+VinzujrV7eif8Hsfbd/MTLHf48TxhtN7WFKKbCqbn9iTaYsxOZBipZ2k
- CfxGa7gDt7mJwylTsAfro7sNmhr7Un+ZXsc43kQbD4A/Xm4QGupxyzoRbDrAOq8IAQKz
- O5yHQ+cn6HsTbxP8SWpizXAmGa/gmcpWYaD4v9piO3FdhGUOqk/sQ+kS2f0BfI2SYEYU
- MQp7f3eSud8RuPniBuEECFPvdNoUX+fLSlkEDO64/4MgKtNBDrr9sj32Nyrhz76LCnuX
- 2QHB9YLOImMz3uaGv4WqazSkLsF+LQy6IxohJp7Urg0QaFgY82Z/+buXFkNjy/NpoQja
- GVvg==; darn=nongnu.org
+ b=E+auM4kB1WLTK6kuMDUI8NkCtOuxPTZPzKnL3+hlXHXda0Kny2Eakn39+50hhh3oxK
+ 7gkBJB/VOKoqi2+h9S0JGqxsVUDx6tsNuppGcJP+em1xPpKZYBtwsuDvP2Wdb5Et7x+m
+ oc93XpsRYwc+CO4RBV+/kvOP/VWkAxUVkbEcddfJ/WNTN88pSWTs5zTc3euTKUFOEum7
+ QWf+zQrVQrepexqqflP7Gynh+vJEdUPLDMl0XwXWNK0PP/CZWpt4/RTOXbZu9YF/ZQfZ
+ +QewF9c/ud4cLAZ5xJvh9d12FBf5XbeSo3xj5YIvHHhJ15POJo46/bKKTUl1FSwMIZaC
+ JwYw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792758027; x=1793362827; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792758151; x=1793362951; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=VisH/MgOPy1gOs4xUqtHlpe4s/DAlIc1J9+gozYPrFw=;
- b=KxC/x3ABU9DHLcpfsMvW5WFTsPB9a1JzeLCgubpqhF+pSTE2+WGdvrzeXEKTGlmcpb
- Z7MzFosaQNVm408ldgAiTHV9wshnvRwWBh999NbHew8EjOhQKnj4UxG6y2AzjSESJwEA
- 5XePYJ0sNiylqgCrtau57q1jIzrTp124uyVrfmNPtinrUZRypjuiL+ENyjlzFkNIInOZ
- 3uu8qsKN3ruKSYKhsfZNxyfWZateK+UkmG+6F3jtcxOKOSbxtjeVSuL3v4bt3Ug+xzYz
- oghAzXwsVYTwuooomC7lFpEMLbZ+LxKtnp2F1TnYnER6QMNOWJLwvyR2q3UrhlbMfvwx
- 5SoA==
+ :content-type; bh=Si/zMrYbvAA1FBGBmaojS43YWyPfsmCfr5xq6CLJxHE=;
+ b=sE/hJgCWJErTBDdKQt1XByFTlZ6B1qP/7+cwtnSNL22egyM27vhp+424i5zXPsj/Lk
+ TA/bkxhZHD/C0pMv0C7fRePaf8ZB5YBDYxfJDln61FXIPW47u6WEjzAXxmBA20QAUXcP
+ xuy/26X/rQD05rSohaFvzs4rg52CA/Dt4MRItlA1OUCeIXZYMJy6rXnXBWWT4DATu+rj
+ rzKe76Y/IXjwlOGvcezKfXe6zbsqt2LUymcE7DFtYivLPVPXtVia4zvd/MX5N6HwkVpB
+ dCMM/7LnO0peOzahBNFWKifqtKDssC61N6DAvMOQe3UvLLzuDOD2BtDyDLSby4yJKan/
+ n61A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792758027; x=1793362827;
+ d=1e100.net; s=20260707; t=1792758151; x=1793362951;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=VisH/MgOPy1gOs4xUqtHlpe4s/DAlIc1J9+gozYPrFw=;
- b=wNytwyohWed5ivr35bXCpyiK5yLfjy9FXluNw7q8c9ofpAZTDHkLGK5M6KqTYLMj7m
- c1tBXgOuQ/qY+v0kqkBoX5uqFv53w3Qx7A1U2ytsfeWAp7fR0suoSiwF0qMg9Qo73eeu
- Kk26sv0oqAtjiioOlj+hztw451yQTsisdSLMbajvy6nSzHFmsWhU7zhelpk8aEtexbIN
- 8fKIamyF7DnoZKbtgOE+vKDUSaqarraeloiBxlZOh6MV0kclRmqXH6vVYhqmBrGfs84J
- VKGNDkwHwne3Cu792zJqflYuCg7K0fWBNrCQtgX1XBXmxYIB3cNc1mxCo7fUHT2hLkLe
- Jtqw==
-X-Gm-Message-State: AFq9FYImAKVm9jXKmuVrC6A9LoucMcETUuxBGL3M4ebTYuXIWciJ9kJd
- HxvjWyTV/whu+aOGssLBxhVWCpnRyd7omuB+mJhF7V+f16nmaz17wQyQYFtxzget2GMmabeCFOA
- 6L0GH5Ha3sMcfIFF1jX6racn87E42hkzxvx+QS8Jxcg==
-X-Gm-Gg: AYBFou1Md6SaasXyV+8Lcg/aC4pPtV+bfw1+Z5OJ6+L5nxUB1jB+wn6Bz9zlOgbCwK+
- 92xoVHFkZnDZq0wY9aKNmB08xhyZsnXGioJFsHgr7lcISLrWNgbjV9xqUkP5BHyJnhhgE9n8OUi
- u9y4LeqNvz4WONFKOL9tTRtD3mMcD0ls1l7fCmxgQQKwCEyt4kJ7oAVihf4+tinaaOUuO191pxy
- POOtxcBogRcTOC2BN/vv0NPBLJEccSwxIvOt5FL/m7WJJnZC900I9ueX2FL9lEbhvEvteBBkYEX
- vedciz5N4hc2QPhiXXjxferoKBB5yexErvsGJhUQHJEGoNzhOt/jvAWLIurYSvtpl2TWqmmoZAc
- X98FRu7hp8IC0UQZO7dNAyoeeOjzSIO34OIHVynzZB2HaucaExa2O0jPMVgS1Ke0UETkFrqxQGT
- Hx26w1hn4VROfn0c7I3IJM
-X-Received: by 2002:a05:690c:c50f:b0:8b0:ce9f:2993 with SMTP id
- 00721157ae682-8b157c709c0mr15122257b3.5.1792758026703; Fri, 23 Oct 2026
- 05:20:26 -0700 (PDT)
+ bh=Si/zMrYbvAA1FBGBmaojS43YWyPfsmCfr5xq6CLJxHE=;
+ b=pF0S+Ozh6OmmLDom4UjQ2JErEsXyrPKPnNBr6RJcLfT8AJ2M/rScO7z22yJY6pG2W5
+ pp6Y/E1edJ3r7/cL9T00d1Ss2C0SIYtiKpgiqjtkzyIPq20To7AIjfsJkrrvE3WW1DC4
+ zpGzs2QX7g+DsKuBiLVw8x9X9n3itwQ85sC5hCkZVQZB9QogNcODIpJUgqdxWZcFhYVz
+ z2iNdfUgZIdCWbOcl4+4HW1EZltvvIH8CwjYITkSaJmAU11Xk9Rc0E7FlPSMverOkqor
+ Fsxu0aI2zQpVAKxF44cMiKMzPI4CCAaCOnHAe3NJ2yXrWB5BZyFSXEQTYSwIh+ABf4/2
+ C3oA==
+X-Gm-Message-State: AFq9FYJx7Ehp3tcB87OEck1Ypf9XeIgkrbkBGIPeYHU31cJaCIvtb2Mr
+ txJmNDp1fXhevUHe3fffpIuY5IO3Wq1cZ6N1EEFJDlWjhTsxOM6MGNx3ppkKNWFrFQrofy+Dxf9
+ wM6tnjmdz/8JYJCI3hhyu22jeUURdPjMvGBkqHpH11w==
+X-Gm-Gg: AYBFou0WbGaokM+9UhrcVIBaBypA6xYrkKJq08uvB824LK6lJWqSiSg6tV5dL17pGQQ
+ VN6F+Hh9XPDxkHlluYpdH0aSuJ//WRlsyLu85UDpqvr0run5vHnxRAOA5UzlhS4sYhUGxODTMvr
+ QWTPnoBCPaWnYeIgp3Zl1ItuRfRE/8axJJSiuZPnb0varKEJ4Kf6BB3rA1Jw+zv+UWVug/50oKc
+ 49cCVdhaaD+fnPThN1jBM++ggXsiCh0/qo9Qh6NxtbdS48/uRVLgwdnij3zetj/NpTfESBoR7Gx
+ ldaCzOJX2Wb1nAsjgssN1IJRKrgvmnw682FR11cImKfz7awHjdTyUEZ7gzWn4uPJAfJp3xjQd7s
+ ZUqhQ4U52TvsqERq5ZXmKSY+YSvF+insGm/dlSLSrfH2S0nNGvx0ih3JxG3DWVmBVPgtxLvO6qI
+ 10GF/+CqPnl/IOQKXawL5zVdpMjfgLHLLsREGdKiBIOg==
+X-Received: by 2002:a05:690c:c505:b0:8a8:c71e:d83c with SMTP id
+ 00721157ae682-8b157da8f62mr17192697b3.14.1792758151161; Fri, 23 Oct 2026
+ 05:22:31 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261022213647.21665-1-mohamed@unpredictable.fr>
- <20261022213647.21665-4-mohamed@unpredictable.fr>
-In-Reply-To: <20261022213647.21665-4-mohamed@unpredictable.fr>
+ <20261022213647.21665-5-mohamed@unpredictable.fr>
+In-Reply-To: <20261022213647.21665-5-mohamed@unpredictable.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Oct 2026 13:20:14 +0100
-X-Gm-Features: AclHuK_gUlrIYavqGAGJF8KAe0KTrT_YjnkSiPP5zRjveaSLV6lPq3OKJ4pRRuQ
-Message-ID: <CAFEAcA91zAWyYXMFErTdB-Xw+BnJeC7dLp8+Qpq84GnwNcZtzg@mail.gmail.com>
-Subject: Re: [PATCH 3/6] hvf: arm: save/restore SME state only when SME on
+Date: Fri, 23 Oct 2026 13:22:19 +0100
+X-Gm-Features: AclHuK9iBuR0ekiA_HJtYvV8btVvIBsUx7iXXm1qL7f0P09OUTY9vDkbVDrlKJc
+Message-ID: <CAFEAcA-Vw5z1qe-=a-JPLSX4q+8b+Fet-7ek7taoBEd6Mi117g@mail.gmail.com>
+Subject: Re: [PATCH 4/6] hvf: arm: remove broken ID_AA64PFR0_EL1.GIC sync
 To: Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,48 +113,21 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On Thu, 22 Oct 2026 at 22:36, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
-> When SME is disabled as part of the CPU configuration, do not restore SME state.
+> The GIC is only realised after this executes
+> in arm_gicv3_common_realize.
 >
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->  target/arm/hvf/hvf.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index b00a7e1a84..df047b5dcc 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1394,7 +1394,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->      int i;
->
->      if (__builtin_available(macOS 15.2, *)) {
-> -        if (hvf_arm_sme2_supported()) {
-> +        if (hvf_arm_sme2_supported() && cpu_isar_feature(aa64_sme, arm_cpu)) {
->              sregs_match_len += ARRAY_SIZE(hvf_sreg_list_sme2) + 1;
->          }
->
-> @@ -1444,7 +1444,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->          }
->      }
->      if (__builtin_available(macOS 15.2, *)) {
-> -        if (hvf_arm_sme2_supported()) {
-> +        if (hvf_arm_sme2_supported() && cpu_isar_feature(aa64_sme, arm_cpu)) {
->              for (i = 0; i < ARRAY_SIZE(hvf_sreg_list_sme2); i++) {
->                  hv_sys_reg_t hvf_id = hvf_sreg_list_sme2[i].sreg;
->                  uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
 
-Do we need to check both, or at the point where this code is
-called will we already have updated the ID registers to
-not report aa64_sme if the host hvf doesn't have sme2 support?
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
