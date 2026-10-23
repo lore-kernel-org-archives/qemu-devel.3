@@ -1,150 +1,49 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D0C606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=NM0eKsZH;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=A3mpIygu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CA6E606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 19:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKKgc-0001NG-8p; Fri, 23 Oct 2026 15:12:18 -0400
+	id 1xKKlQ-00033d-JN; Fri, 23 Oct 2026 15:17:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKKgY-0001MW-Bp
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:12:14 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1xKKlD-0002zs-Hu
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:03 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKKgW-0001ar-Gg
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:12:14 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NIZY934064881
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 19:12:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EgX5xS0Uwf9Zi74wj+cU1i9EJvzf5UHbErqmdcMLpUw=; b=NM0eKsZHLrBu4bpl
- whWuMPtSluhnkbdxKUJeWRfWFsgX2QZwTqIqLwN5BLTQmidyENyx49FwLXNc1kgW
- /ONtK86bb0L+1F+QOuk/bWZB5aZSzWbcKszIeNqICjHY77TJVA6P9BQwWG1P+Srg
- z5lUnJOf/TqjlX6lpLQ3oKhtLxTSK6mMpFPheU7uKDEdJKWcfGgu5/BOzfcKWB8o
- 44vDg/1XSp88ifUne55OwSSlqTkzUnuxwQtyHjAEb5CqwDquW3FEyXnQnqHN2Y7n
- HFyyzhRUZpMqhQ/IU1myScXNEwPiZeir4z7OdVhm0eq0Rn4mx+2mjXaD8SX0qUaO
- A0tzfg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgarugppw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 19:12:10 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91256a7b7b3so23555176d6.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 12:12:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792782730; x=1793387530; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=EgX5xS0Uwf9Zi74wj+cU1i9EJvzf5UHbErqmdcMLpUw=;
- b=A3mpIyguEJX8SoWJxAMNNqUfambw/bBqUsjCvp1g74dyczg7xKN6LXHJ/U+0eHs22u
- rhDxZk9qf4AOkL4ppl939m9PdCaPlQTyKCOXFTGBZRe2fqLqtWz4trzxALn7q9AeoA1k
- hr6FJWALJNjbJSCmuOs57zOfgwGAoyVEiBE+7rlUFsIwosdjl4wuuU6L3OnSZEa5yVI9
- ylahO7UYf74gu4xxYKOmyUck5xpmwg7yw0OT5sn9V/Tkb7R7eYEvLQh3apjf4sMxHI8u
- 7XrhVo7q9c055WOGasd5OMu9p75W4zncTAGXWiJ9Ltbx5Ayce9ZFYb8QQwGlLqATzMzq
- xnHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792782730; x=1793387530;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=EgX5xS0Uwf9Zi74wj+cU1i9EJvzf5UHbErqmdcMLpUw=;
- b=0vRfaeeeRVA8RYLAQIRFYOXwuapjzgTPUfoZLVT5RCkxSU17rddrkmiG/y9hC+Rrwe
- 2N0bi0v/FJAbx6nENKDbLRFt0MqhIFC2am5gzPesUTSURo7mCvGFigEWKzT44MGyMSow
- UBuiWJ6K2tDa8S8AJG0c/Hm7Ad8LtoPT6dEhYarvxfpAGpKPHahp0C+QzMdYC+fSGX47
- lbol/5nTqNnCIjKU/7dRkHN0GBQCAe8/g6RcH/RUKayjM9AvgT4Ts8fynEbKX0Yp+5Tf
- a4flK2k797kMD6LLV8jhS5ZJdtPQ69957uQDUfKWsO8e7y6XoZpptI214KMCHYyFnnmW
- l9Pg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwZeSOWUsuclW9w3g9bwuS0QmPDgFLjqKBgBoTzscivFNKp8hKA2Ko0vmyXswwWXLOs9FcJrEOyN2IT@nongnu.org
-X-Gm-Message-State: AFq9FYLkhPnhBI61TY8WYE4Vj36NPEBph9nuXzvf0D9v6ghG+/6FWObQ
- Y/WZ9QAn35mCYfTI//fHA/SacwLBmqBh5iSE3JwrMp1WVpT/nhJF1w7N3BAiN/Ryu618QHyksGr
- uU41cj1yGaQeq/uml3U20s74LnLUsMM6wujuk5R72QMBhy3bd3vMwCNtitQ==
-X-Gm-Gg: AYBFou3zWQHWNiYD0f1aUnhuW+Je/WtCmLwXZdiOGS/UaMSIs0z3Pn8XNDTr4ekTKEr
- BtL6j62CcA4IKFXYv/9nJveTDtSLUJ0J0e1LgbFv0j/kVOrQVu5cEqcZpX6dfOj7/ZXtNWdTnBp
- lIYyMhDx9458VO3CKRthXe1Jhj/V2H2dkrzz8s8y1CAgvSfGYw0e8OBzjT4mbooNPtm1+LJu05y
- 45j5QwfURKLEjaHcfrGDSZaxQVSxdPrOdJjeAgGHOqLCKAPaK3N8Uv70bReI6ANAg++twF/dW+F
- cWWwnaDMlc84Dmk2I6Tmgai3ljRyNn+q3GyjPlyWf2BB3qhtnckXtazzHU+uircqQlVS+qtqwFj
- fgi9ApGsrOVqs58zd7/fYtW0DBER+KXuAmDba
-X-Received: by 2002:a05:6214:da5:b0:91b:90a2:df1f with SMTP id
- 6a1803df08f44-91c3aa06c2bmr47222056d6.49.1792782729949; 
- Fri, 23 Oct 2026 12:12:09 -0700 (PDT)
-X-Received: by 2002:a05:6214:da5:b0:91b:90a2:df1f with SMTP id
- 6a1803df08f44-91c3aa06c2bmr47221496d6.49.1792782729333; 
- Fri, 23 Oct 2026 12:12:09 -0700 (PDT)
-Received: from [192.168.68.104] ([152.234.125.162])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91c47a7cd7esm2521466d6.2.2026.10.23.12.12.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 12:12:08 -0700 (PDT)
-Message-ID: <fa0fb912-d470-42b5-b029-b3b8680dc8fe@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 16:12:05 -0300
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1xKKl9-00022U-HT
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 15:17:03 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1xKKl5-00000007BFB-1gvj; Fri, 23 Oct 2026 21:16:55 +0200
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2 05/13] vfio/migration: Parallelize device state transitions
+Date: Fri, 23 Oct 2026 21:16:16 +0200
+Message-ID: <192e01ee9a2d89825c8455e48cdfa7ee893173cb.1792758435.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <cover.1792758435.git.maciej.szmigiero@oracle.com>
+References: <cover.1792758435.git.maciej.szmigiero@oracle.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] target/riscv/kvm: create kvm_riscv_aia_access_reg
-To: Wang Yechao <wang.yechao255@zte.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Xuemei Liu <liu.xuemei1@zte.com.cn>
-References: <20261023021237.486091-1-wang.yechao255@zte.com.cn>
- <20261023021237.486091-2-wang.yechao255@zte.com.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261023021237.486091-2-wang.yechao255@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA3NSBTYWx0ZWRfX+HzAJNgCrLZW
- 3oy91QKN6Qx9F0BeEa206+ntM3q/Zl+jS9VxlKYC+/93cVBoqUBQFRTZHoKhV55MdN9axygpam9
- 74bnFUAscRpR+SvM04k8uAvB7k2UZZs=
-X-Proofpoint-GUID: w9i_Rinn2A82BF_vf10aNm9e09QDNu99
-X-Authority-Analysis: v=2.4 cv=SK7Xx+vH c=1 sm=1 tr=0 ts=6adbb18a cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=AgQEunjic7gIBKSbIeB6Ag==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=1RTuLK3dAAAA:8 a=EUspDBNiAAAA:8 a=MIYIJ5hYJWVnXa0tc0AA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=kRpfLKi8w9umh8uBmg1i:22
-X-Proofpoint-ORIG-GUID: w9i_Rinn2A82BF_vf10aNm9e09QDNu99
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA3NSBTYWx0ZWRfX2LZm3ieTIyz6
- /SnZfsKciVOzhWox+q9ecUucRULVEEm27Xh9XyNm2A+vFlEAXcazef7E0L3Qxq96H583r0nYqsP
- ac/hGXzPfsvBEJuY7qmw7YhfvhIEsSe0LfeGaTdNWItH20Y6y2Ocqlsn/7GjI6UY4MIHQj5Qj3W
- sHVj6H19qAmDL8zrTRIn/z+3Qu8C1pPf66OsnTiWd9zJOB0LqUGDYlZiV4ocraMDGkcFM7uSVOS
- B6ClhGpJvOmjBflR0tSaritOFAG57Hnj25cxkeMSWRPjCdsnYH19a85L+sA4N6qmcOuZRszq329
- A0aiHnRr2hmTcv+3hsJt2EPOKn/DMpV8PUjJwBaFU9D/D+QLvlPGgD/ofMxZLoxZsT9nVAI4h20
- xwN0MRNm+bzCqSVMXSUN9puCfhlhl+LfAGT8A9IzNzJaaClTJ52ga4NNNWMwYis7t1Zg6evcOhN
- FLSCOxdsEne8D9umRcQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230075
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,74 +55,416 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
+When multiple VFIO devices are present in a VM the fact that their state
+transitions on migration happen sequentially has a visible impact on
+migration downtime.
 
-On 10/22/2026 11:12 PM, Wang Yechao wrote:
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> 
-> Create common function kvm_riscv_aia_access_reg to access APLIC
-> and IMSIC regs
-> 
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
-> ---
+This is because both PRE_COPY -> PRE_COPY_P2P -> STOP_COPY transitions on
+the source and RESUMING -> RUNNING_P2P -> RUNNING transitions on the target
+happen during the switchover phase.
+During this phase the VM is stopped so the downtime is ticking.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+These device state transitions are performed by VM state change handlers
+registered by the VFIO device migration code.
 
->   target/riscv/kvm/kvm-cpu.c   | 7 ++++++-
->   target/riscv/kvm/kvm_riscv.h | 1 +
->   2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index c085b22b23..3ed94f7586 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -58,6 +58,7 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
->   
->   static bool cap_has_mp_state;
->   static bool mp_state_reset;
-> +static int aia_fd = -1;
->   
->   #define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
->                                            type | idx)
-> @@ -1924,13 +1925,17 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
->                                       "auto");
->   }
->   
-> +void kvm_riscv_aia_access_reg(int group, uint64_t addr, void *val, bool write)
-> +{
-> +    kvm_device_access(aia_fd, group, addr, val, write, &error_abort);
-> +}
-> +
->   void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
->                             uint64_t aia_irq_num, uint64_t aia_msi_num,
->                             uint64_t aplic_base, uint64_t imsic_base,
->                             uint64_t guest_num)
->   {
->       int ret, i;
-> -    int aia_fd = -1;
->       uint64_t default_aia_mode;
->       uint64_t socket_count = riscv_socket_count(machine);
->       uint64_t max_hart_per_socket = 0;
-> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-> index aef681f0a2..8649219e0e 100644
-> --- a/target/riscv/kvm/kvm_riscv.h
-> +++ b/target/riscv/kvm/kvm_riscv.h
-> @@ -29,6 +29,7 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu);
->    * @level: %0 to clear the interrupt, non-zero to set it.
->    */
->   void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level);
-> +void kvm_riscv_aia_access_reg(int group, uint64_t addr, void *val, bool write);
->   void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
->                             uint64_t aia_irq_num, uint64_t aia_msi_num,
->                             uint64_t aplic_base, uint64_t imsic_base,
+Instead of performing these state transitions synchronously launch a
+per-device thread performing them at VM_CHANGE_STATE_PRI_HIGH.
 
+Since no VFIO device should start the second state transition until
+all VFIO devices have completed the first transition also register a
+single VM_CHANGE_STATE_PRI_SYNC handler common for all VFIO devices that
+serves as a synchronization point/barrier between these transitions.
+
+This synchronization point also serves to fulfill similar requirement with
+respect to non-VFIO devices that require particular sequencing with respect
+to running their VM state change handlers versus VFIO devices.
+In particular, this requirement applies to DMA-generating devices and
+interrupt controllers.
+
+These VFIO device state change threads are joined (waited for) from a
+per-device VM_CHANGE_STATE_PRI_NORMAL handler.
+
+This way these state transitions can happen in parallel not only with
+respect to other VFIO device instances but also ordinary (serialized)
+handlers for other devices at other qdev tree depths - as long as these
+handlers at other qdev tree depths would be previously ordered earlier than
+the synchronous VFIO device state change handler.
+
+Data used by common VM_CHANGE_STATE_PRI_SYNC handler is shared between
+all TYPE_VFIO_PCI_DEVICE instances, so it is kept in its VFIOPCIDeviceClass
+struct as new "vm_state_change_sync" field.
+This data is allocated on demand during initialization of the migration
+part of the first migratable VFIO device.
+Since derived classes (like TYPE_VFIO_PCI and TYPE_VFIO_PCI_NOHOTPLUG)
+inherit this class field as a shallow copy, one extra level of pointer
+indirection is necessary for this data.
+
+Enable the feature by default since it has no impact on the migration bit
+stream protocol - it shouldn't need disabling for anything else but
+debugging scenarios.
+
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ hw/vfio/migration.c               | 228 +++++++++++++++++++++++++++++-
+ hw/vfio/pci.c                     |   6 +
+ hw/vfio/pci.h                     |   4 +
+ hw/vfio/trace-events              |   2 +
+ hw/vfio/vfio-migration-internal.h |   2 +
+ include/hw/vfio/vfio-device.h     |   1 +
+ 6 files changed, 237 insertions(+), 6 deletions(-)
+
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 76ede0efbf02..2300a6e3ec16 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -1053,6 +1053,202 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+                               mig_state_to_str(new_state));
+ }
+ 
++typedef struct VMStateChangeThreadData {
++    VFIODevice *vbasedev;
++    VFIOVMStateChangeSync *sync;
++    bool running;
++    RunState state;
++} VMStateChangeThreadData;
++
++struct VFIOVMStateChangeSync {
++    VMChangeStateEntry *vm_state;
++
++    /* Only counts devices with parallel state change ON */
++    unsigned int device_count;
++    unsigned int thread_count;
++
++    unsigned int p2p_done_count;
++    QemuEvent p2p_all_done;
++    QemuEvent final_transition_start;
++};
++
++static void vfio_vmstate_change_sync_handler(void *opaque, bool running,
++                                             RunState state)
++{
++    VFIOVMStateChangeSync *sync = opaque;
++
++    assert(qatomic_read(&sync->thread_count) ==
++           qatomic_read(&sync->device_count));
++
++    trace_vfio_vmstate_change_sync_wait();
++    qemu_event_wait(&sync->p2p_all_done);
++
++    trace_vfio_vmstate_change_sync_done();
++    qemu_event_set(&sync->final_transition_start);
++}
++
++static VFIOVMStateChangeSync **
++vfio_vmstate_change_sync_ptr(VFIODevice *vbasedev)
++{
++    VFIOPCIDevice *vdev = vfio_pci_from_vfio_device(vbasedev);
++    VFIOPCIDeviceClass *vpc;
++
++    assert(vdev);
++    vpc = VFIO_PCI_DEVICE_GET_CLASS(vdev);
++    assert(vpc);
++    assert(vpc->vm_state_change_sync);
++
++    return vpc->vm_state_change_sync;
++}
++
++static VFIOVMStateChangeSync *
++vfio_vmstate_change_sync_ref(VFIODevice *vbasedev)
++{
++    VFIOVMStateChangeSync **syncp = vfio_vmstate_change_sync_ptr(vbasedev);
++    VFIOVMStateChangeSync *sync = *syncp;
++
++    if (!sync) {
++        sync = g_new0(VFIOVMStateChangeSync, 1);
++        qemu_event_init(&sync->p2p_all_done, false);
++        qemu_event_init(&sync->final_transition_start, false);
++
++        sync->vm_state = qemu_add_vm_change_state_handler_prio(
++            vfio_vmstate_change_sync_handler, sync,
++            VM_CHANGE_STATE_PRI_SYNC);
++
++        *syncp = sync;
++    }
++
++    qatomic_fetch_inc(&sync->device_count);
++
++    return sync;
++}
++
++static void vfio_vmstate_change_sync_unref(VFIODevice *vbasedev)
++{
++    VFIOVMStateChangeSync **syncp = vfio_vmstate_change_sync_ptr(vbasedev);
++    VFIOVMStateChangeSync *sync = *syncp;
++    unsigned int device_count;
++
++    assert(sync);
++
++    device_count = qatomic_fetch_dec(&sync->device_count);
++    assert(device_count > 0);
++
++    if (device_count != 1) {
++        return;
++    }
++
++    assert(qatomic_read(&sync->thread_count) == 0);
++
++    qemu_del_vm_change_state_handler(sync->vm_state);
++    qemu_event_destroy(&sync->final_transition_start);
++    qemu_event_destroy(&sync->p2p_all_done);
++
++    g_clear_pointer(syncp, g_free);
++}
++
++static VFIOVMStateChangeSync *
++vfio_vmstate_change_sync_get(VFIODevice *vbasedev)
++{
++    VFIOVMStateChangeSync *sync = *vfio_vmstate_change_sync_ptr(vbasedev);
++
++    assert(sync);
++
++    return sync;
++}
++
++static void
++vfio_vmstate_change_sync_thread_pre_start(VFIOVMStateChangeSync *sync)
++{
++    if (qatomic_fetch_inc(&sync->thread_count) == 0) {
++        /*
++         * Reset the sync data at the first thread launch time since
++         * the whole struct survives VM start/stop sequence.
++         */
++        qatomic_set(&sync->p2p_done_count, 0);
++        qemu_event_reset(&sync->p2p_all_done);
++        qemu_event_reset(&sync->final_transition_start);
++    }
++}
++
++static void
++vfio_vmstate_change_sync_p2p_done(VFIOVMStateChangeSync *sync)
++{
++    unsigned int done;
++
++    done = qatomic_fetch_inc(&sync->p2p_done_count) + 1;
++    if (done == qatomic_read(&sync->device_count)) {
++        qemu_event_set(&sync->p2p_all_done);
++    }
++
++    qemu_event_wait(&sync->final_transition_start);
++}
++
++static void
++vfio_vmstate_change_sync_thread_finished(VFIOVMStateChangeSync *sync)
++{
++    unsigned int thread_count;
++
++    thread_count = qatomic_fetch_dec(&sync->thread_count);
++    assert(thread_count > 0);
++}
++
++static void *vfio_vmstate_change_thread(void *opaque)
++{
++    g_autofree VMStateChangeThreadData *data = opaque;
++    VFIOMigration *migration = data->vbasedev->migration;
++
++    if (migration->mig_flags & VFIO_MIGRATION_P2P) {
++        vfio_vmstate_change_prepare(data->vbasedev, data->running, data->state);
++    }
++
++    vfio_vmstate_change_sync_p2p_done(data->sync);
++
++    vfio_vmstate_change(data->vbasedev, data->running, data->state);
++
++    return NULL;
++}
++
++static void vfio_vmstate_change_thread_launch(void *opaque, bool running,
++                                              RunState state)
++{
++    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++    VMStateChangeThreadData *data = g_new(VMStateChangeThreadData, 1);
++    VFIOVMStateChangeSync *sync = vfio_vmstate_change_sync_get(vbasedev);
++
++    data->vbasedev = vbasedev;
++    data->sync = sync;
++    data->running = running;
++    data->state = state;
++
++    assert(!migration->vm_state_thread_running);
++    migration->vm_state_thread_running = true;
++
++    vfio_vmstate_change_sync_thread_pre_start(sync);
++
++    qemu_thread_create(&migration->vm_state_thread,
++                       "vfio_vmstate_change",
++                       vfio_vmstate_change_thread, data,
++                       QEMU_THREAD_JOINABLE);
++}
++
++static void vfio_vmstate_change_thread_join(void *opaque, bool running,
++                                            RunState state)
++{
++    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++    VFIOVMStateChangeSync *sync = vfio_vmstate_change_sync_get(vbasedev);
++
++    assert(migration->vm_state_thread_running);
++
++    qemu_thread_join(&migration->vm_state_thread);
++    migration->vm_state_thread_running = false;
++
++    vfio_vmstate_change_sync_thread_finished(sync);
++}
++
+ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
+                                          MigrationEvent *e, Error **errp)
+ {
+@@ -1069,6 +1265,8 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
+          * MigrationNotifyFunc may not return an error code and an Error
+          * object for MIG_EVENT_FAILED. Hence, report the error
+          * locally and ignore the errp argument.
++         * This state change is not parallelized as it is not expected to be
++         * performance critical.
+          */
+         ret = vfio_migration_set_state_or_reset(vbasedev,
+                                                 VFIO_DEVICE_STATE_RUNNING,
+@@ -1209,13 +1407,25 @@ static bool vfio_migration_init(VFIODevice *vbasedev, Error **errp)
+     register_savevm_live(id, VMSTATE_INSTANCE_ID_ANY, 1, &savevm_vfio_handlers,
+                          vbasedev);
+ 
+-    if (migration->mig_flags & VFIO_MIGRATION_P2P) {
+-        migration->vm_state_prepare = qdev_add_vm_change_state_handler_full(
+-            vbasedev->dev, vfio_vmstate_change_prepare, NULL, vbasedev,
+-            VM_CHANGE_STATE_PRI_HIGH);
++    if (vbasedev->migration_parallel_states) {
++        vfio_vmstate_change_sync_ref(vbasedev);
++        migration->vm_state_prepare =
++            qdev_add_vm_change_state_handler_full(
++                vbasedev->dev, vfio_vmstate_change_thread_launch, NULL,
++                vbasedev, VM_CHANGE_STATE_PRI_HIGH);
++        migration->vm_state = qdev_add_vm_change_state_handler(
++            vbasedev->dev, vfio_vmstate_change_thread_join, NULL, vbasedev);
++    } else {
++        if (migration->mig_flags & VFIO_MIGRATION_P2P) {
++            migration->vm_state_prepare =
++                qdev_add_vm_change_state_handler_full(
++                    vbasedev->dev, vfio_vmstate_change_prepare, NULL,
++                    vbasedev, VM_CHANGE_STATE_PRI_HIGH);
++        }
++        migration->vm_state = qdev_add_vm_change_state_handler(
++            vbasedev->dev, vfio_vmstate_change, NULL, vbasedev);
+     }
+-    migration->vm_state = qdev_add_vm_change_state_handler(
+-        vbasedev->dev, vfio_vmstate_change, NULL, vbasedev);
++
+     migration_add_notifier(&migration->migration_state,
+                            vfio_migration_state_notifier);
+ 
+@@ -1292,6 +1502,12 @@ static void vfio_migration_deinit(VFIODevice *vbasedev)
+     migration_remove_notifier(&migration->migration_state);
+     qemu_del_vm_change_state_handler(migration->vm_state_prepare);
+     qemu_del_vm_change_state_handler(migration->vm_state);
++
++    if (vbasedev->migration_parallel_states) {
++        assert(!migration->vm_state_thread_running);
++        vfio_vmstate_change_sync_unref(vbasedev);
++    }
++
+     unregister_savevm(VMSTATE_IF(vbasedev->dev), "vfio", vbasedev);
+     vfio_migration_free(vbasedev);
+     vfio_unblock_multiple_devices_migration();
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 31699422f238..e9794a5964aa 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3839,9 +3839,13 @@ static void vfio_pci_init(Object *obj)
+ 
+ static void vfio_pci_device_class_init(ObjectClass *klass, const void *data)
+ {
++    VFIOPCIDeviceClass *vpc = VFIO_PCI_DEVICE_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+ 
++    /* Derived classes inherit this field as a copy */
++    vpc->vm_state_change_sync = g_new0(VFIOVMStateChangeSync *, 1);
++
+     dc->desc = "VFIO PCI base device";
+     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+     pdc->exit = vfio_exitfn;
+@@ -3902,6 +3906,8 @@ static const Property vfio_pci_properties[] = {
+                             ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_SIZE("x-migration-max-queued-buffers-size", VFIOPCIDevice,
+                      vbasedev.migration_max_queued_buffers_size, UINT64_MAX),
++    DEFINE_PROP_BOOL("x-migration-parallel-states", VFIOPCIDevice,
++                     vbasedev.migration_parallel_states, true),
+     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
+                      vbasedev.migration_events, false),
+     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index 70c46add8fe4..598472050f59 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -120,10 +120,14 @@ typedef struct VFIOMSIXInfo {
+     MemoryRegion *pba_region;
+ } VFIOMSIXInfo;
+ 
++typedef struct VFIOVMStateChangeSync VFIOVMStateChangeSync;
++
+ OBJECT_DECLARE_TYPE(VFIOPCIDevice, VFIOPCIDeviceClass, VFIO_PCI_DEVICE)
+ 
+ struct VFIOPCIDeviceClass {
+     PCIDeviceClass parent_class;
++
++    VFIOVMStateChangeSync **vm_state_change_sync;
+ };
+ 
+ struct VFIOPCIDevice {
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index bfdaf229e42b..6225d7661c67 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -183,6 +183,8 @@ vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_in
+ vfio_send_init_data_flag(const char *name) " (%s)"
+ vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+ vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
++vfio_vmstate_change_sync_wait(void) ""
++vfio_vmstate_change_sync_done(void) ""
+ 
+ #iommufd.c
+ 
+diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
+index b3c2f86cae78..5be321527a42 100644
+--- a/hw/vfio/vfio-migration-internal.h
++++ b/hw/vfio/vfio-migration-internal.h
+@@ -40,6 +40,8 @@ typedef struct VFIOMigration {
+     struct VFIODevice *vbasedev;
+     VMChangeStateEntry *vm_state_prepare;
+     VMChangeStateEntry *vm_state;
++    QemuThread vm_state_thread;
++    bool vm_state_thread_running;
+     NotifierWithReturn migration_state;
+     uint32_t device_state;
+     int data_fd;
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 8472420d3fac..5a96aab20700 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -69,6 +69,7 @@ typedef struct VFIODevice {
+     OnOffAuto migration_multifd_transfer;
+     OnOffAuto migration_load_config_after_iter;
+     uint64_t migration_max_queued_buffers_size;
++    bool migration_parallel_states;
+     bool migration_events;
+     bool use_region_fds;
+     VFIODeviceOps *ops;
 
