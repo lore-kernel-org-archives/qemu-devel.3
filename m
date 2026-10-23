@@ -1,86 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD9C606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5777B606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vQTYcklx
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=n87dpCUV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKG3I-0003J4-HA; Fri, 23 Oct 2026 10:15:24 -0400
+	id 1xKG3N-0003OQ-K8; Fri, 23 Oct 2026 10:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3E-0003Hi-IJ
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:20 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1xKG3A-0003HQ-FZ
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:18 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3C-0006ZM-I2
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:20 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a1fbd52ab6so6008195e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:16 -0700 (PDT)
+ id 1xKG38-0006Yp-8e
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:16 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4a20bde60a0so7753015e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792764915; x=1793369715; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792764913; x=1793369713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=nMZCAfOiai7Ly46dhWrHulyOMP97F/Q502GP+Kb+6S0=;
- b=vQTYcklxa6h81wsjdQmQUdPUZ+6cKqSwvVZ0r5DbbpZeTyL0vwv7e5JLmq0fj/rVma
- vLey2ZqChFi39DyyJPaa2HdEkviKUWFKBDDGb9dC02xoS7qQH5vUYz5ancJxditC9Jnu
- nPeR7yT+YVLZjV54CLq50dOffqsogPQSmv0YCi0fKVrmNKn4KKtbmBPIat0Ig/hiU5Hf
- mxGkth3FQC8ZKOSJFyOBVEgy4i42I14lmbPjSI+gAm66YINCMTw8zvCbmzliq9ZsuX0S
- vW+TQAHHzDXYnAI4tr0ZtbW329i1BST+EmA9W2VlqBmgZlduLajWXr7Qs13J8TqyDIZe
- zG9Q==
+ bh=syDevahi+gLt3lC9ZT789aLDCSxqDn+34Mwp/R4yeME=;
+ b=n87dpCUVSX21oWpJOg/K/UsUEHDd9HNZKVRArI8pYcUzkhPx4/u4bX31uYOBJ9JHa6
+ bZ+cjxk9tlIEg8zOQJ2inNYfsoWeEWMI9orQbxv/fBrgEraiBn5eOvNzvwDNTHfFfvTY
+ LEWGkjtHw5nLPJBjH/fd47JCbvJU8B2BKwUxnN7ggiouRMMXvlA0R1UizqhooefR3WNQ
+ g9eZYYUMaacE0lBUXT8TG5+XEBMgxzxtCm6GPN9VzfGkLr/L48HLfg1fuGzzQiX+uyfL
+ 4HMk2Ty7fyW9aLNopMPFomyXt1huozRj0X7tYWN93TYrUzO7TfSQFqSR8iOGs+Ko/OmW
+ AZKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792764915; x=1793369715;
+ d=1e100.net; s=20260707; t=1792764913; x=1793369713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=nMZCAfOiai7Ly46dhWrHulyOMP97F/Q502GP+Kb+6S0=;
- b=AyY3ZgwTnrzFvDWwjNbo86xV4992flBC5PEkLj04ayY+9G30PcMBLKMFgbTBlDmPzK
- B8AzjsuV643muJWgRdhfn/28RA/xtX5yRXb7e35uFPnq5A25FjAIqZl4vmdpkYR+u9gy
- RFmVnxUY5pKzI/lPYR4qLVL822MpKdJ/Dido9D4tOqXSUYVIWLXonPFibJebsRGxQ6N4
- MMdh1Cz8YdZbJuu8hMpxK4wstcGrMDpfej4U24YGGs6qKyCdN3Hy0z0EWX6JYd99ZSa4
- WsfBczEP8uUZxGcOq5+pNAIKL/+VW0jsbukNwF3paVFT+rn4sgjXEBQGIl1DARyUEZCF
- RS8w==
-X-Gm-Message-State: AFq9FYIhxyxM/nYB2ESCXzhkXRBFUJYZGgmgTA3RWXiBAcU0eu0ZfiTJ
- 4xetifXekT/0yTb6cWLNn0UuXoeuwcqThb0p5T35VNpqwdNwbrk/4yAguYd5H09GzEMBwmvp8ou
- PMKnEYYk=
-X-Gm-Gg: AYBFou2uEktKnRUIAxzDVqmTxkFuxtkPolq7NyrsFe2mD18uKyx3Kk9zh6qzj416U7K
- CYRFNsIvrCpWk6OR2ThyFkFo8GVkizcmzvjtr/sBJ3x4gLK3xY4hRYi5WaxkLlwCqC0YO9eTmfN
- 1tODLXbwE17TkKQm/anDIYxb0IkcPhCoy8OkGXzeYyJXwtVeoLnZdyQvoOadMzuhn9qO6fGFeOI
- WgrcJpQQbsj8teuF4BaIQrefq7UMmckZVSgDnZxAUZObwdD8klaAEmCGa9LzZO3jBmEPVDaCVVw
- lx7C2P0VWl+pgr4FzajDEt2MEEaP80PKUfwgfaetkVkLOaF/Rf/Hae/xF69XiM/o+UofnKaRXsT
- pN8mDm1PWNJ+OfLAR/PcxEA+huo144AaB7i6ajP2U0G3/F0K+XWqxfvgfoR8Be5WHRKDt5idNgu
- ISxc3bc1XH7RyRQNRycmjfSR9KyIn6Mj6gjfWRVXP7akJlCqJJDAIPP7LrJqMixlSh1sWoBRWMK
- reyEgmXaoHxLPI0Evng/x6ckpNIT5axYNsUcG+O/NJ5OZ3NzptK9X7PX3a4SWrJEWftLsSxqyDS
- YXsE6pBFCo3YWDCbCfhuM24t2WBl+VerIXFTy/YDVIVU2GLFpObG2Df4Sx1s
-X-Received: by 2002:a05:600c:83ca:b0:4a2:e0c:2b10 with SMTP id
- 5b1f17b1804b1-4a211ce3bc2mr39985915e9.19.1792764915275; 
- Fri, 23 Oct 2026 07:15:15 -0700 (PDT)
+ bh=syDevahi+gLt3lC9ZT789aLDCSxqDn+34Mwp/R4yeME=;
+ b=2YnRbbRe9JGopATaM+4kSh/4yiQFkWNUR6TrHKsrWRXIQonhw/+KUWDkRHrikA79sT
+ i4RNceW93x8E1v59vmaEwgz7Wg30Plq3IlcbkaRP4weLv3xxfkTwyHsi9W+1XaPb8WOS
+ SxjyWz2Pv7upxnOO2XK6Dr29RbSF0YJqNl9Ml2HhmE88Dh5qCKGwUpvLu2JTk6QrUnvg
+ jW3fK2ZQEt8syTBKk0D5u4WBvD1Aig0Gq8cK3S0V2uCcQvTAFrfiuSB2/tD/X69oNgcd
+ ZCiCzS9eqXAQsMc727x6+lVI1WWttFxPLLY0ahKB4NOQMVDrxRIEHzml7qP8KLl1zskk
+ u9LQ==
+X-Gm-Message-State: AFq9FYJ4l7mytzDAUEe9JQXdoQP/LlVTzshoiokYheuAmEPjXt4TDuTd
+ mEM8HBQCQ44NjbalTdeVow9uWqiriNPu3HoigM/s1OLLk7+rUn4Fu2iqHH4psYYZgjlwBdcV02S
+ HvmQuf3c=
+X-Gm-Gg: AYBFou08LPy+ApfAD1xV7CaOeCL3XSHb/1muMrM7gyYo6a7/U7EhICFW0orBbR3Suqh
+ ddMaUDq6pSO7awjI65MKd3jf6+l/ia3249g7MTMNcyvdfWPxc7M81Pk6GHYkoqQB+tGbS2GwvW9
+ CYKow3Z7/6lutozC11k0xDiBn2KBRyrcWCfTzXFY6NSPA0YbmrTWbE3GAJ5S1G2sgjabDPtAiSm
+ pejym7txk3RC3Qxt1p99G+puWwz/vg6o+do4YS2RvkHFEj+acJNPw9KZLWzErOIYuyyjCOxZQ8T
+ Za9B/atiCmDSHmScxYwi2hKIVA+Fbto+wFEWT7jrX7AUFZx+lnD4m1LsKJ1i0njyNn1YD4SgAk/
+ ZCbwiP0iK0t+ZfCusCPpddAZSo6Dt9gcq5R0Pn4sb67aJeHD5DHbHFVI6I0O2CAUGlzPefctsPG
+ +XMzcfUMHrY4mKZaQw8aEoNo0NrEW9DZ38nFyCtBZFPwd60lt1sx2BgZnGRqfiAsBspH0YOjttQ
+ Apo6XQOrLtbz6gHu9wGakC7FYkqGxCWARu9N/kOuEpTQmwUgGFvAfgPkUcPnmxteL2icgEoLadH
+ Wdv/QgKsauoag6mxEUSgg1ZCGnevYTnLzpeh20uyYC9mI/3skTah634QqvPL
+X-Received: by 2002:a05:600c:c110:b0:4a2:ae8:3dff with SMTP id
+ 5b1f17b1804b1-4a211f007eemr30797245e9.34.1792764912702; 
+ Fri, 23 Oct 2026 07:15:12 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.14
+ 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 07:15:14 -0700 (PDT)
+ Fri, 23 Oct 2026 07:15:11 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/16] hw/gpio: Add EINT CFG to Allwinner GPIO,
- fix interrupt handling
-Date: Fri, 23 Oct 2026 15:14:53 +0100
-Message-ID: <20261023141503.1397009-7-peter.maydell@linaro.org>
+Subject: [PULL 04/16] hw/arm/bcm2838: enable BCM2838 thermal sensor
+Date: Fri, 23 Oct 2026 15:14:51 +0100
+Message-ID: <20261023141503.1397009-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261023141503.1397009-1-peter.maydell@linaro.org>
 References: <20261023141503.1397009-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,170 +105,95 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+From: Marcelo Manzo <marcelomanzo@gmail.com>
 
-The original Allwinner GPIO implementation assumed pin had to be
-configured as input (CFG 0x0) in order to be able to handle interrupts
-on interrupt-capable pins.
-However, libgpiod configures those pins in EINT mode (CFG 0x06) when
-gpiomon is used, so this patch fixes interrupt path to expect pin
-configuration to be set to EINT.
+Wire the BCM2838 thermal sensor (added in the previous patch) into
+the SoC: instantiate it in the peripherals block and map its
+register region at the real BCM2711 physical address. Also stop
+raspi4b from masking out the "brcm,bcm2711-thermal" device-tree
+node, now that the sensor it describes is actually implemented.
 
-Also update interrupt handling tests for the correct functionality.
+Adapted from patch 17/41 of Sergey Kambalin's Raspberry Pi 4B series
+(patchwork series 829638) against current QEMU master.
 
-Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Message-id: 20261017-allwinner-gpio-eint-v2-1-82906f440378@gmail.com
+Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20261015181111.60491-5-marcelomanzo@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/gpio/allwinner-gpio-regs.h |  5 +----
- hw/gpio/allwinner-gpio.c              | 19 ++++++++++++-----
- tests/qtest/allwinner-gpio-test.c     | 30 +++++++++++++--------------
- 3 files changed, 30 insertions(+), 24 deletions(-)
+ include/hw/arm/bcm2838_peripherals.h |  2 ++
+ hw/arm/bcm2838_peripherals.c         | 11 +++++++++++
+ hw/arm/raspi4b.c                     |  1 -
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/gpio/allwinner-gpio-regs.h b/include/hw/gpio/allwinner-gpio-regs.h
-index a435b87ec49..5e969c23f62 100644
---- a/include/hw/gpio/allwinner-gpio-regs.h
-+++ b/include/hw/gpio/allwinner-gpio-regs.h
-@@ -73,9 +73,6 @@ static const AWPortResetVals aw_gpio_port_reset[] = {
- #define DEFAULT_DRV_MASK    0xffffffff
- #define DEFAULT_PUL_MASK    0xffffffff
+diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
+index 15423527e80..a720eea8216 100644
+--- a/include/hw/arm/bcm2838_peripherals.h
++++ b/include/hw/arm/bcm2838_peripherals.h
+@@ -11,6 +11,7 @@
  
--#define CFG_INPUT_MASK      0x0
--#define CFG_OUTPUT_MASK     0x1
--#define CFG_IO_MASK         0x1
- #define CFG_PIN_STRIDE      4
- #define CFG_PINS_PER_REG    (AW_GPIO_PIN_COUNT / CFG_PIN_STRIDE)
+ #include "hw/arm/bcm2835_peripherals.h"
+ #include "hw/misc/bcm2838_rng200.h"
++#include "hw/misc/bcm2838_thermal.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/gpio/bcm2838_gpio.h"
  
-@@ -172,7 +169,7 @@ typedef enum AWGPIOLevel {
- typedef enum AWGPIOCfg {
-     AW_GPIO_CFG_IN = 0,
-     AW_GPIO_CFG_OUT = 1,
--    AW_GPIO_CFG_FUN = 2,
-+    AW_GPIO_CFG_EINT = 6,
- } AWGPIOCfg;
+@@ -66,6 +67,7 @@ struct BCM2838PeripheralState {
+     MemoryRegion mphi_mr_alias;
  
- typedef enum AWGPIOIrqCfg {
-diff --git a/hw/gpio/allwinner-gpio.c b/hw/gpio/allwinner-gpio.c
-index e3bda7cb762..19176e7c56f 100644
---- a/hw/gpio/allwinner-gpio.c
-+++ b/hw/gpio/allwinner-gpio.c
-@@ -114,7 +114,7 @@ static inline bool gpio_is_output(AWPortMap *port, uint32_t pin)
-     uint32_t cfg_n = pin / CFG_PINS_PER_REG;
-     uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-     return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
--        CFG_OUTPUT_MASK);
-+        AW_GPIO_CFG_OUT);
- }
+     BCM2838Rng200State rng200;
++    Bcm2838ThermalState thermal;
+     SDHCIState emmc2;
+     BCM2838GpioState gpio;
  
- static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
-@@ -122,7 +122,15 @@ static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
-     uint32_t cfg_n = pin / CFG_PINS_PER_REG;
-     uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-     return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
--        CFG_INPUT_MASK);
-+        AW_GPIO_CFG_IN);
-+}
+diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
+index 35e2fc005ca..f4e9cb88f1f 100644
+--- a/hw/arm/bcm2838_peripherals.c
++++ b/hw/arm/bcm2838_peripherals.c
+@@ -38,6 +38,9 @@ static void bcm2838_peripherals_init(Object *obj)
+     /* Random Number Generator */
+     object_initialize_child(obj, "rng200", &s->rng200, TYPE_BCM2838_RNG200);
+ 
++    /* Thermal */
++    object_initialize_child(obj, "thermal", &s->thermal, TYPE_BCM2838_THERMAL);
 +
-+static inline bool gpio_is_eint(AWPortMap *port, uint32_t pin)
-+{
-+    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
-+    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-+    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
-+        AW_GPIO_CFG_EINT);
- }
+     /* GPIO */
+     object_initialize_child(obj, "gpio", &s->gpio, TYPE_BCM2838_GPIO);
  
- static inline int int_ctl_cfg(AWGPIOState *s, int irq_line)
-@@ -155,8 +163,8 @@ static void allwinner_gpio_set_int_line(AWGPIOState *s, int port,
-         return;
-     }
+@@ -72,6 +75,7 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
+     BCMSocPeripheralBaseState *s_base = BCM_SOC_PERIPHERALS_BASE(dev);
+     MemoryRegion *rng200_mr;
+     qemu_irq rng_200_irq;
++    MemoryRegion *thermal_mr;
+     int n;
  
--    /* if this signal isn't configured as an input signal, nothing to do */
--    if (!gpio_is_input(&o->ports[port], line)) {
-+    /* if this signal isn't configured as an EINT, nothing to do */
-+    if (!gpio_is_eint(&o->ports[port], line)) {
-         return;
-     }
+     bcm_soc_peripherals_common_realize(dev, errp);
+@@ -96,6 +100,13 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
+                                          BCM2835_IC_GPU_IRQ, INTERRUPT_RNG);
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->rng200), 0, rng_200_irq);
  
-@@ -225,7 +233,8 @@ static void allwinner_gpio_set(void *opaque, int port, int line, int level)
-     AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-     AWGPIOLevel aw_level = level ? AW_GPIO_LEVEL_HIGH : AW_GPIO_LEVEL_LOW;
++    /* THERMAL */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->thermal), errp)) {
++        return;
++    }
++    thermal_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->thermal), 0);
++    memory_region_add_subregion(&s->peri_low_mr, 0x15D2000, thermal_mr);
++
+     /* Extended Mass Media Controller 2 */
+     object_property_set_uint(OBJECT(&s->emmc2), "sd-spec-version", 3,
+                              &error_abort);
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 87fcba036d8..61adccded97 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -64,7 +64,6 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
+     /* Temporarily disable following devices until they are implemented */
+     const char *nodes_to_remove[] = {
+         "brcm,bcm2711-pcie",
+-        "brcm,bcm2711-thermal",
+         "brcm,bcm2711-genet-v5",
+     };
  
--    if (gpio_is_input(&o->ports[port], line)) {
-+    if (gpio_is_input(&o->ports[port], line) ||
-+        gpio_is_eint(&o->ports[port], line)) {
- 
-         trace_allwinner_gpio_set(portname(port), line, aw_level);
- 
-diff --git a/tests/qtest/allwinner-gpio-test.c b/tests/qtest/allwinner-gpio-test.c
-index c048f0f88b9..7ad89f6e0a3 100644
---- a/tests/qtest/allwinner-gpio-test.c
-+++ b/tests/qtest/allwinner-gpio-test.c
-@@ -251,9 +251,9 @@ static void test_irq_pin_rising(const void *data)
- 
-     qtest_irq_intercept_in(s, "/machine/soc");
- 
--    /* Configure as input and set pin low */
--    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
--    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    /* Configure as EINT and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-     qtest_set_irq_in(s,
-                      "/machine/soc/gpio", in_name, port_pin,
-                      AW_GPIO_LEVEL_LOW);
-@@ -296,9 +296,9 @@ static void test_irq_pin_falling(const void *data)
- 
-     qtest_irq_intercept_in(s, "/machine/soc");
- 
--    /* Configure as input and set pin high */
--    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
--    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    /* Configure as EINT and set pin high */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-     qtest_set_irq_in(s,
-                      "/machine/soc/gpio", in_name, port_pin,
-                      AW_GPIO_LEVEL_HIGH);
-@@ -341,9 +341,9 @@ static void test_irq_pin_high_level(const void *data)
- 
-     qtest_irq_intercept_in(s, "/machine/soc");
- 
--    /* Configure as input and set pin low */
--    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
--    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    /* Configure as EINT and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-     qtest_set_irq_in(s,
-                      "/machine/soc/gpio", in_name, port_pin,
-                      AW_GPIO_LEVEL_LOW);
-@@ -394,9 +394,9 @@ static void test_irq_pin_low_level(const void *data)
- 
-     qtest_irq_intercept_in(s, "/machine/soc");
- 
--    /* Configure as input and set pin high */
--    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
--    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    /* Configure as EINT and set pin high */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-     qtest_set_irq_in(s,
-                      "/machine/soc/gpio", in_name, port_pin,
-                      AW_GPIO_LEVEL_HIGH);
-@@ -447,9 +447,9 @@ static void test_irq_pin_both_edge(const void *data)
- 
-     qtest_irq_intercept_in(s, "/machine/soc");
- 
--    /* Configure as input and set pin low */
--    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
--    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
-+    /* Configure as EINT and set pin low */
-+    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-+    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
-     qtest_set_irq_in(s,
-                      "/machine/soc/gpio", in_name, port_pin,
-                      AW_GPIO_LEVEL_LOW);
 -- 
 2.43.0
 
