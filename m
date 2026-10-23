@@ -1,85 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC343606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62420606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=HmdTaM7S
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IRl5rlwG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKG3L-0003JI-88; Fri, 23 Oct 2026 10:15:27 -0400
+	id 1xKG3S-0003WP-7N; Fri, 23 Oct 2026 10:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3G-0003Ie-1M
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:22 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1xKG3P-0003SY-DH
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:31 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3E-0006Zh-7Z
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:21 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4a2072b9832so10141765e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:19 -0700 (PDT)
+ id 1xKG3N-0006lo-Ie
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4a214c5c4c0so5627515e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792764918; x=1793369718; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792764928; x=1793369728; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=bHvg5vLtilEbH362SGfQ07XtLH6+Mu4m6qQdaRSRzq4=;
- b=HmdTaM7SYmjTVdNZbvMhLD8XX8Fed8uDBjoIkB8eieaSI/HQliKsqdyTnpoUoqRHjv
- DLRcoFDOyvcUbaHdHLjK1U+ZCAoPrceojHcLclqBMFWnqAWDTlOKAHoMiar908Qb8iYe
- sUF7F6zn/WRKHgRg9sxGrQnx0/A+VSoI4Tb52QK6AcMHuJ7prEYZqJoLKs9ECL96ReQW
- CniQaLGhhzbxbSZ2lsVKtrcOegBF0fs8+r9AgQmaAdAGWielAYvfdp9nSE8s5bwNQF90
- 0XIHgtpNihjMmrr+RAu4p1WJVGc9QgmDzccbLNanZO1DJhMOBukU80kW4ppMKivKAEQr
- cX9w==
+ bh=Cb10u2JOaNw7G+QXdySRhYmW9Zq6GXGNxz+7xwTMOhg=;
+ b=IRl5rlwGB6g5JDGwAT/RJ/iIXMB17yQsP4+XtCq/2uySSo+v32AGmkcfZFMBN8Frlo
+ IPRegbMzivnzpBR/5bZA8WjRmNoc9GCTrFjy5bBNKBg0kECave81RL8+l2nsT0ao1qH2
+ DzDH+QN89eif/VC8p+xXW2Jpe79uxjLrTlfxWtt2RY4r+9j+8OQaxfq+xN2daEHYUh2P
+ bzw4GcnBeX97cjRvYjoCuKKvKerNNvVDo6EOolY06tP18RZGPSTTac5O+LYIccixWksx
+ 8pKrMyg+NGPieqAkkVj/Nr9Vuh52c4bBVkuqxYhgnh2iOX8QFlYbse7divI9sLYg61bL
+ //lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792764918; x=1793369718;
+ d=1e100.net; s=20260707; t=1792764928; x=1793369728;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=bHvg5vLtilEbH362SGfQ07XtLH6+Mu4m6qQdaRSRzq4=;
- b=xaPjZNz5sWLKf0jtS2AYzdqLW4oTNVo8fsFdvFuFshL5NftKngHk23Hos/VzekX+ml
- +GMTm1lO8LbHwGGvvgwAbqBX9B4yNTsJqYsPXIBouIZIx701RgWdp1B9ZaBafW2olMy2
- JEqigP0EV18AA1hvTacAvKTuy6Wf8SjsP0RNmK4uN3b5Yh5C93eyyWTZzE45LzBWCLOV
- r/sh30iyPOnZRafMmotR8mImeh7XFhgpBCOgZz2CXV+75Wc8ox6wb89reCJD16PkvzFJ
- pX4j7cuD136+OqYX5aoB3nTbVmU4yj6xzOJJTGs7FOto13YlNMrytS8mInGHwYXEVnEz
- kbSQ==
-X-Gm-Message-State: AFq9FYJ3sLs8uR4rA6YJ12u9ktL45TKUiKIxYFp5JELTNiMR4SWsgOy2
- 7FHavQWmgOMmINWj56zYbAyYi4r+nPFP0Pl3xPIcF9o+aEeqbGZL2Ja3Aj6c0g83w9QvJFRvdIp
- 5Dr5drX4=
-X-Gm-Gg: AYBFou1ryYHVdo/vdgKZ1RZrUy6OQeOUvFnyfv8Vat3EYFExgmoBJUIkNg0C3REd9tT
- hbX27DmWKA1r3w7EClUryLbyk1j8gbLw/3uT74atA6xRPhUTbl+OFqFbZX4w6afI0I3x37Uq1MI
- wnjkoR5js79GvKS2stBgdGEWK8D/wtr1TS2ypWcr21eauZKcokNi0Phd3lcH8UkXfDcH8UhqxsO
- iie2wD0FofnNQrlIPmF1uTG2nnjqWZIpYicqpe5CAN1PrXZ5tSo3XkHklAiR4urzJiY9ApvVjlP
- hoxWcmEwbYhmnlNZjK4k60inOEhfK/GVG4PWKFiekKehl+PkSPATYwk8P7RcBql9E5eyGnx3C4f
- MbT3nfc3sx3sG84jCsWe8eW+1m/idFsBEgKI8dgQT44kd3lEO4fwSxiBlFsnDsAyrJn+SgdtM2F
- 83lKiLtHQ+xMNq0AqFi2n3v7CWW5R2vdRurHXBwogJdOHsq3WMPcEtugZ2xapQbEqS+3hLtwsaQ
- hM1HxC59w4uGVcFIXe3PEakZQixRXs7gC5cG5fLlzXBSwJBymh5eq3sZ/KJ7Smb7TAHzzxcUVKz
- jHAu1OcAZj1CKwUpS8bfIhOBfmvD5EIDJrZftLZXNdn7oVhFcHlJljslZ8Qm
-X-Received: by 2002:a05:600c:6289:b0:49e:6581:7baf with SMTP id
- 5b1f17b1804b1-4a211bf040emr41131275e9.2.1792764918504; 
- Fri, 23 Oct 2026 07:15:18 -0700 (PDT)
+ bh=Cb10u2JOaNw7G+QXdySRhYmW9Zq6GXGNxz+7xwTMOhg=;
+ b=HdKUExxF7NFYpilJNR7LTTeQWisa86sWlhHk+ZcJS2WaujpI1WoT9gBNrO+bIJ3zVG
+ OC1QxsYbPNs33u6rDvVDlnT4c2+tdb178woFDwT4OePtaj2r+LZoVPZ0lUNl/+Fd8k+4
+ 15IfLssvwnErnBVMrktZ0NflKy0kESYngHseaRlji4IszEIjB8byJDsYHG3WyluTJGZz
+ MlZ3Nw03FBzAu4krAYjepycv5ZxEFGrjjlmtShfxfo1XP+d68aUsaFN0bmn9tuWnSwCn
+ DpB376qgrHT05Qvxs1C8nzzK0X6uQznS3I/dvF5qqQcXwRs8TOs4RwKPxNBM1WVvVnT4
+ U0PQ==
+X-Gm-Message-State: AFq9FYLRgtMFNCtjORSr/prA3KvLpOOSA0D3NNfuabAJ/Nag3lGG3c07
+ yosVSTGub9CS0evwvS7ZolUPdg/ebXKk16U44zN1nK5qgS+xbTQLoKHwj/QaEAbJn11mhdL+ll2
+ /l+/dkXM=
+X-Gm-Gg: AYBFou2mIP6TFeKRG3oYALllme/1IG1djOSfc3JwbLQaSK7kOzldkWN6UBKiMtRK6nm
+ Ha0ydFfcx45YbOm4FzDNb6h54nqLIsa3nAT1kplPatlipNSC7pXRcXtNpnBURNC2ec2C13AU2bx
+ UQMEbpTYsj0AhALLFLHVim/0ltfIj1cvqXSb7PUOd/ZtwJBOXfg/6NMpF2phrVXQpdxitRJrShC
+ SxQUhKgYt1DCNQRCm76ka7ZrO3f8pBWYXkWLhygvMXDwxUxI7CrRRkGQFTxaoMjmOPCexhyaHPD
+ dmCCTX2i62aeBR6RHtMNgHmMA0ipXBT8bvXar0GBRWd92rZxBdRAdq+287WxELOaO6Y6FgMvHNA
+ 3wARhq9+J50JV6D/m39lYLTH5xQacGtUt6ohD8krKGIyTB9NeAoDwXbr4mW4ONn+eaJTDM9Qtfh
+ PHkjctGK8/kRAkd66AWYnljdtbqwzsggfvXtkfIsq2Sgy7Dd/jxc7clOa+LzTzR64bSuo884wEa
+ iguYEp8lnN9aI/TikpZykVsTNEE51vrJLpczhjV2r51ueJhN4W6RO1kWqlp/71e/x35wQNFSo5Q
+ J7Vpp7t1EmK5Q9NCvrnGb+7P2J3xZ+YiE2U5eRKzeuz18Lu7LFLkAK13998P
+X-Received: by 2002:a05:600c:4f56:b0:4a2:729:f7ce with SMTP id
+ 5b1f17b1804b1-4a211caf297mr53245395e9.8.1792764927852; 
+ Fri, 23 Oct 2026 07:15:27 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.16
+ 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 07:15:17 -0700 (PDT)
+ Fri, 23 Oct 2026 07:15:26 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/16] target/arm: Deprecate using named CPU models with KVM
-Date: Fri, 23 Oct 2026 15:14:55 +0100
-Message-ID: <20261023141503.1397009-9-peter.maydell@linaro.org>
+Subject: [PULL 14/16] hw/intc/exynos4210_combiner: Make reg_set[] only as
+ large as it needs to be
+Date: Fri, 23 Oct 2026 15:15:01 +0100
+Message-ID: <20261023141503.1397009-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261023141503.1397009-1-peter.maydell@linaro.org>
 References: <20261023141503.1397009-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,84 +106,39 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently when using KVM on Arm, the normal thing is to use either
-the 'host' or 'max' CPU types, both of which give the guest the same
-CPU as the host.  We also for legacy reasons allow 'cortex-a53' and
-'cortex-a57' CPU types, which will only work when the host CPU is
-exactly that matching CPU.  This is because the original idea of the
-KVM ABI was that userspace would request a particular CPU type by
-setting the target field in the KVM_ARM_VCPU_INIT ioctl to an
-appropriate KVM_ARM_TARGET_* constant.  However, it quickly became
-clear that this was a bad idea, and now everything uses
-KVM_ARM_TARGET_GENERIC_V8; the tiny number of existing CPU-specific
-target values behave identically to GENERIC_V8 except that they will
-only work if the host CPU matches them.
+The reg_set[] array holds the register values for registers in the
+"sets of 4 registers IIESRn, IIECRn, IISTRn, IIMSRn" part of this
+device, not the extra non-grouped ICIPSRn registers at the end.  It
+therefore needs at most 0x40 entries (for registers at offset 0x0 up
+to offset 0xFC), but we oversized it at 0x41.
 
-Future support for "show the KVM guest a CPU type that's not
-identical to the host" is going to work by telling it different ID
-register values.  Real Cortex-A53 and A57 CPUs are now all over a
-decade old and not in widespread use.  Deprecate the ability to use
-'-cpu cortex-a53' and '-cpu cortex-a57' with KVM, to get rid of this
-odd legacy corner and open up the opportunity in future to support
-named CPU types via ID register settings if we want that.
-
-For any situation where the cortex-a53 and cortex-a57 CPU types
-currently work with KVM, '-cpu host' or '-cpu max' will have
-identical behaviour.  (Though note that if you are using "KVM, but
-fall back to TCG" then the fallback under TCG will be different.)
+Reduce the size to what it ought to be. This is a migration break,
+but we don't care for the exynos boards.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
-Message-id: 20261013105147.1070641-1-peter.maydell@linaro.org
+Message-id: 20261019162217.3272337-4-peter.maydell@linaro.org
 ---
- docs/about/deprecated.rst | 13 +++++++++++++
- target/arm/kvm.c          |  7 +++++++
- 2 files changed, 20 insertions(+)
+ include/hw/intc/exynos4210_combiner.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ccbc4219497..153fe118151 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -234,6 +234,19 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
- but for consistency these will get removed in a future release, too.
- Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
+diff --git a/include/hw/intc/exynos4210_combiner.h b/include/hw/intc/exynos4210_combiner.h
+index b1db48cb880..94177827196 100644
+--- a/include/hw/intc/exynos4210_combiner.h
++++ b/include/hw/intc/exynos4210_combiner.h
+@@ -39,7 +39,11 @@ OBJECT_DECLARE_SIMPLE_TYPE(Exynos4210CombinerState, EXYNOS4210_COMBINER)
+ /* Number of groups and total number of interrupts for the internal combiner */
+ #define IIC_NGRP 64
+ #define IIC_NIRQ (IIC_NGRP * 8)
+-#define IIC_REGSET_SIZE 0x41
++/*
++ * Number of registers in the IIESRn, IIECRn, IISTRn, IIMSRn part
++ * of the register map.
++ */
++#define IIC_REGSET_SIZE 0x40
  
-+``cortex-a53`` and ``cortex-a57`` CPU names with KVM on Arm (since 11.2)
-+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+QEMU currently allows the CPU name to be set to ``cortex-a53`` or
-+``cortex-a57`` when using KVM; this is identical to using ``host`` or
-+``max``, but it will only work when the host CPU is a Cortex-A53 or
-+Cortex-A57.  These CPUs are now over 10 years old, and the ability to
-+use the named CPU type like this is part of a legacy corner of the KVM
-+API, which doesn't work with any other host CPU types. Using these CPU
-+names with KVM enabled is deprecated; use ``host`` or ``max`` instead,
-+which will have identical behaviour on the hosts where using
-+``cortex-a53`` or ``cortex-a57`` works.
-+
- System emulator machines
- ------------------------
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 3d905f8565d..de09d63d2e3 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2015,6 +2015,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return -EINVAL;
-     }
- 
-+    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
-+        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
-+        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
-+                         "with KVM is deprecated. Use the max or host CPU "
-+                         "types instead.");
-+    }
-+
-     qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
- 
-     /* Determine init features for this CPU */
+ struct Exynos4210CombinerState {
+     SysBusDevice parent_obj;
 -- 
 2.43.0
 
