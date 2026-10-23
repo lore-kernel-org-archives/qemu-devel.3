@@ -1,86 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD823606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD9C606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 14:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Xlyci+7P
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vQTYcklx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKG3W-0003Yl-MH; Fri, 23 Oct 2026 10:15:38 -0400
+	id 1xKG3I-0003J4-HA; Fri, 23 Oct 2026 10:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3T-0003Y3-Nt
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:35 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1xKG3E-0003Hi-IJ
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:20 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKG3R-0006oj-Uy
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:35 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a208d93758so9783135e9.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:33 -0700 (PDT)
+ id 1xKG3C-0006ZM-I2
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 10:15:20 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4a1fbd52ab6so6008195e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 07:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792764932; x=1793369732; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792764915; x=1793369715; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=pbY7jpGacYCdIJDtDEhCiCEAguIOoPsfCSBqScFiK74=;
- b=Xlyci+7Psi4O6ozROsd8Ykv/+pPXNMUItifyEF/QN5TsbbSCHCaWuZf+4QoKZilYtu
- MUe7K5R8ctOsWxnw3LT/nPfQXTvlXS6AASmJSvVo7iYewe470xxG2ZGvj+6ai3zMgvOo
- kL5dSYKEea7dtK7dF45hOXmvAGfsumQ/GFGeRC+lt0U3rwtUcjejNRM7Fc2yj37T3t6t
- MJDm3Fjn0av9uHDMOA2Zu/fMVc63FuUMjVrZmrMFW7zTya6KpbZuXYYNjuo/tAkONa2T
- JD5G8cnId/8X6wWBqSXvSsNf9eE/93JkjkwqXa9Y3wQMfJBHAFSLaBkyb9ftvI4f/T4l
- 3MuA==
+ bh=nMZCAfOiai7Ly46dhWrHulyOMP97F/Q502GP+Kb+6S0=;
+ b=vQTYcklxa6h81wsjdQmQUdPUZ+6cKqSwvVZ0r5DbbpZeTyL0vwv7e5JLmq0fj/rVma
+ vLey2ZqChFi39DyyJPaa2HdEkviKUWFKBDDGb9dC02xoS7qQH5vUYz5ancJxditC9Jnu
+ nPeR7yT+YVLZjV54CLq50dOffqsogPQSmv0YCi0fKVrmNKn4KKtbmBPIat0Ig/hiU5Hf
+ mxGkth3FQC8ZKOSJFyOBVEgy4i42I14lmbPjSI+gAm66YINCMTw8zvCbmzliq9ZsuX0S
+ vW+TQAHHzDXYnAI4tr0ZtbW329i1BST+EmA9W2VlqBmgZlduLajWXr7Qs13J8TqyDIZe
+ zG9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792764932; x=1793369732;
+ d=1e100.net; s=20260707; t=1792764915; x=1793369715;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=pbY7jpGacYCdIJDtDEhCiCEAguIOoPsfCSBqScFiK74=;
- b=DV1MkUirPKJYgrgZMA/GHTgZH5J0PPUOUS3Ls/Z/9tBNZjsm/gP1o7w9bq2bLlmAMN
- dV1aE5p411iKiZbw/0yrGKkpgm3QnwHD4p+vKlAF84CuVLiGkVOiN/i7sLO96ed+lHND
- FhkyGTcnzpbggCG9tncEmiofDm4zgso1gjqY+o2k54FIvjdbcn4cIw14Ge5wQ2uT/UAI
- lDhI8WpDr8UeH9sJDiY1Cx4YbE2i2KPrwJe/0P0Q3qTMPfy3jiChvpH/A+InkSmhq6T/
- YGNQJkgooqJeNkwNRW5C9cf1NTXh7Dx3U9by/Px57Coear/mKuJlBl2nNEXFfSJaC8a9
- xzyQ==
-X-Gm-Message-State: AFq9FYKqh1M/+l82NFjCbz76o0OAkUMZh6VXf+IPoxVAe3WqyAys9+NC
- bxh/DXAfIzPjUay5wX6GMxITzaTPc/I3lti2KYcokck+zdpm/qTq5uF8Ftpwml3FNlQxcxjfKIT
- nUTowhg4=
-X-Gm-Gg: AYBFou38OWZZYtsB1jaiAL3siDvOyM009TS+zrNgXBqgVrkCcC/qLVIdBBUZmBccJkQ
- amgyZ0IFSEh00hDisA5VlNuf6PESvA2qnQ+rWFQhwLWaX29mrRSigssxl6gXUUnOj4NolA/MVNu
- 87L7tet/awRK5OBrZ2caYqs1Hb8R2Zpb07usRTpp35UkLpwT4PZFfvRBCH9/xVtHeJAFZBXFN3I
- xCBQVNTV1vTI5QpY78Zm0mDPcyUywHw0z64OOILctsOEe0SSyTOa+i+sTN+uRUxQAXFoTEKkrVq
- YaKUm65EGWarYCDlShn8+V26bjYggzmtyvTyRw3013nB48goD3fkDMv/HPg5cAJSjqhtSNLf2po
- O/OeYvnwH5NCVLf8chBuvQVoQgIIY2XeR7t3SlkZoWyJ/8aIvbIkRYCV3Jt2xm/VOtOm9nytYes
- EPBSLgGCUET0Jcuk2bLfJwUBNPFj9fDj39Yk2vzUFitovVK13xZKydvMiwm0hoqx5sLTbLiVzXU
- 22j60AO7854Oy/KpaAkuYGCvuBYE5N/tYgFgpnlFu7tf5dapHC0BZpISS9NEsjBpyehQf4v1yMS
- 97HOm7DdHOQhjuW+NxcMRbB19EyB9JeNJyzFG5+xv7d2K+YNERe5CtxX2boqUA==
-X-Received: by 2002:a05:600c:c0d5:b0:4a2:150f:15fc with SMTP id
- 5b1f17b1804b1-4a2150f1778mr30576755e9.5.1792764929588; 
- Fri, 23 Oct 2026 07:15:29 -0700 (PDT)
+ bh=nMZCAfOiai7Ly46dhWrHulyOMP97F/Q502GP+Kb+6S0=;
+ b=AyY3ZgwTnrzFvDWwjNbo86xV4992flBC5PEkLj04ayY+9G30PcMBLKMFgbTBlDmPzK
+ B8AzjsuV643muJWgRdhfn/28RA/xtX5yRXb7e35uFPnq5A25FjAIqZl4vmdpkYR+u9gy
+ RFmVnxUY5pKzI/lPYR4qLVL822MpKdJ/Dido9D4tOqXSUYVIWLXonPFibJebsRGxQ6N4
+ MMdh1Cz8YdZbJuu8hMpxK4wstcGrMDpfej4U24YGGs6qKyCdN3Hy0z0EWX6JYd99ZSa4
+ WsfBczEP8uUZxGcOq5+pNAIKL/+VW0jsbukNwF3paVFT+rn4sgjXEBQGIl1DARyUEZCF
+ RS8w==
+X-Gm-Message-State: AFq9FYIhxyxM/nYB2ESCXzhkXRBFUJYZGgmgTA3RWXiBAcU0eu0ZfiTJ
+ 4xetifXekT/0yTb6cWLNn0UuXoeuwcqThb0p5T35VNpqwdNwbrk/4yAguYd5H09GzEMBwmvp8ou
+ PMKnEYYk=
+X-Gm-Gg: AYBFou2uEktKnRUIAxzDVqmTxkFuxtkPolq7NyrsFe2mD18uKyx3Kk9zh6qzj416U7K
+ CYRFNsIvrCpWk6OR2ThyFkFo8GVkizcmzvjtr/sBJ3x4gLK3xY4hRYi5WaxkLlwCqC0YO9eTmfN
+ 1tODLXbwE17TkKQm/anDIYxb0IkcPhCoy8OkGXzeYyJXwtVeoLnZdyQvoOadMzuhn9qO6fGFeOI
+ WgrcJpQQbsj8teuF4BaIQrefq7UMmckZVSgDnZxAUZObwdD8klaAEmCGa9LzZO3jBmEPVDaCVVw
+ lx7C2P0VWl+pgr4FzajDEt2MEEaP80PKUfwgfaetkVkLOaF/Rf/Hae/xF69XiM/o+UofnKaRXsT
+ pN8mDm1PWNJ+OfLAR/PcxEA+huo144AaB7i6ajP2U0G3/F0K+XWqxfvgfoR8Be5WHRKDt5idNgu
+ ISxc3bc1XH7RyRQNRycmjfSR9KyIn6Mj6gjfWRVXP7akJlCqJJDAIPP7LrJqMixlSh1sWoBRWMK
+ reyEgmXaoHxLPI0Evng/x6ckpNIT5axYNsUcG+O/NJ5OZ3NzptK9X7PX3a4SWrJEWftLsSxqyDS
+ YXsE6pBFCo3YWDCbCfhuM24t2WBl+VerIXFTy/YDVIVU2GLFpObG2Df4Sx1s
+X-Received: by 2002:a05:600c:83ca:b0:4a2:e0c:2b10 with SMTP id
+ 5b1f17b1804b1-4a211ce3bc2mr39985915e9.19.1792764915275; 
+ Fri, 23 Oct 2026 07:15:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.27
+ 5b1f17b1804b1-4a2fe31a7a4sm1310675e9.0.2026.10.23.07.15.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 07:15:28 -0700 (PDT)
+ Fri, 23 Oct 2026 07:15:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/16] hw/intc/exynos4210_combiner: write default case is
- unreachable, not guest error
-Date: Fri, 23 Oct 2026 15:15:02 +0100
-Message-ID: <20261023141503.1397009-16-peter.maydell@linaro.org>
+Subject: [PULL 06/16] hw/gpio: Add EINT CFG to Allwinner GPIO,
+ fix interrupt handling
+Date: Fri, 23 Oct 2026 15:14:53 +0100
+Message-ID: <20261023141503.1397009-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261023141503.1397009-1-peter.maydell@linaro.org>
 References: <20261023141503.1397009-1-peter.maydell@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,35 +106,170 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In exynos4210_combiner_write(), we rule out "reg_n > 1" before we
-start doing anything as being an invalid guest access.  The default
-case in the later "switch (reg_n)" is therefore unreachable, because
-it has explicit cases for 0 and 1.  Use g_assert_not_reached()
-instead of a LOG_GUEST_ERROR.
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 
+The original Allwinner GPIO implementation assumed pin had to be
+configured as input (CFG 0x0) in order to be able to handle interrupts
+on interrupt-capable pins.
+However, libgpiod configures those pins in EINT mode (CFG 0x06) when
+gpiomon is used, so this patch fixes interrupt path to expect pin
+configuration to be set to EINT.
+
+Also update interrupt handling tests for the correct functionality.
+
+Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Message-id: 20261017-allwinner-gpio-eint-v2-1-82906f440378@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261019162217.3272337-5-peter.maydell@linaro.org
 ---
- hw/intc/exynos4210_combiner.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ include/hw/gpio/allwinner-gpio-regs.h |  5 +----
+ hw/gpio/allwinner-gpio.c              | 19 ++++++++++++-----
+ tests/qtest/allwinner-gpio-test.c     | 30 +++++++++++++--------------
+ 3 files changed, 30 insertions(+), 24 deletions(-)
 
-diff --git a/hw/intc/exynos4210_combiner.c b/hw/intc/exynos4210_combiner.c
-index 2bdb9a0152c..8d1ed4a4bd2 100644
---- a/hw/intc/exynos4210_combiner.c
-+++ b/hw/intc/exynos4210_combiner.c
-@@ -242,10 +242,7 @@ static void exynos4210_combiner_write(void *opaque, hwaddr offset,
-         exynos4210_combiner_update(s, grp_quad_base_n + 3);
-         break;
-     default:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "exynos4210.combiner: unallowed write access at offset 0x"
--                      HWADDR_FMT_plx "\n", offset);
--        break;
-+        g_assert_not_reached();
-     }
+diff --git a/include/hw/gpio/allwinner-gpio-regs.h b/include/hw/gpio/allwinner-gpio-regs.h
+index a435b87ec49..5e969c23f62 100644
+--- a/include/hw/gpio/allwinner-gpio-regs.h
++++ b/include/hw/gpio/allwinner-gpio-regs.h
+@@ -73,9 +73,6 @@ static const AWPortResetVals aw_gpio_port_reset[] = {
+ #define DEFAULT_DRV_MASK    0xffffffff
+ #define DEFAULT_PUL_MASK    0xffffffff
+ 
+-#define CFG_INPUT_MASK      0x0
+-#define CFG_OUTPUT_MASK     0x1
+-#define CFG_IO_MASK         0x1
+ #define CFG_PIN_STRIDE      4
+ #define CFG_PINS_PER_REG    (AW_GPIO_PIN_COUNT / CFG_PIN_STRIDE)
+ 
+@@ -172,7 +169,7 @@ typedef enum AWGPIOLevel {
+ typedef enum AWGPIOCfg {
+     AW_GPIO_CFG_IN = 0,
+     AW_GPIO_CFG_OUT = 1,
+-    AW_GPIO_CFG_FUN = 2,
++    AW_GPIO_CFG_EINT = 6,
+ } AWGPIOCfg;
+ 
+ typedef enum AWGPIOIrqCfg {
+diff --git a/hw/gpio/allwinner-gpio.c b/hw/gpio/allwinner-gpio.c
+index e3bda7cb762..19176e7c56f 100644
+--- a/hw/gpio/allwinner-gpio.c
++++ b/hw/gpio/allwinner-gpio.c
+@@ -114,7 +114,7 @@ static inline bool gpio_is_output(AWPortMap *port, uint32_t pin)
+     uint32_t cfg_n = pin / CFG_PINS_PER_REG;
+     uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
+     return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
+-        CFG_OUTPUT_MASK);
++        AW_GPIO_CFG_OUT);
  }
  
+ static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
+@@ -122,7 +122,15 @@ static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
+     uint32_t cfg_n = pin / CFG_PINS_PER_REG;
+     uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
+     return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
+-        CFG_INPUT_MASK);
++        AW_GPIO_CFG_IN);
++}
++
++static inline bool gpio_is_eint(AWPortMap *port, uint32_t pin)
++{
++    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
++    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
++    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
++        AW_GPIO_CFG_EINT);
+ }
+ 
+ static inline int int_ctl_cfg(AWGPIOState *s, int irq_line)
+@@ -155,8 +163,8 @@ static void allwinner_gpio_set_int_line(AWGPIOState *s, int port,
+         return;
+     }
+ 
+-    /* if this signal isn't configured as an input signal, nothing to do */
+-    if (!gpio_is_input(&o->ports[port], line)) {
++    /* if this signal isn't configured as an EINT, nothing to do */
++    if (!gpio_is_eint(&o->ports[port], line)) {
+         return;
+     }
+ 
+@@ -225,7 +233,8 @@ static void allwinner_gpio_set(void *opaque, int port, int line, int level)
+     AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
+     AWGPIOLevel aw_level = level ? AW_GPIO_LEVEL_HIGH : AW_GPIO_LEVEL_LOW;
+ 
+-    if (gpio_is_input(&o->ports[port], line)) {
++    if (gpio_is_input(&o->ports[port], line) ||
++        gpio_is_eint(&o->ports[port], line)) {
+ 
+         trace_allwinner_gpio_set(portname(port), line, aw_level);
+ 
+diff --git a/tests/qtest/allwinner-gpio-test.c b/tests/qtest/allwinner-gpio-test.c
+index c048f0f88b9..7ad89f6e0a3 100644
+--- a/tests/qtest/allwinner-gpio-test.c
++++ b/tests/qtest/allwinner-gpio-test.c
+@@ -251,9 +251,9 @@ static void test_irq_pin_rising(const void *data)
+ 
+     qtest_irq_intercept_in(s, "/machine/soc");
+ 
+-    /* Configure as input and set pin low */
+-    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
+-    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    /* Configure as EINT and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
+     qtest_set_irq_in(s,
+                      "/machine/soc/gpio", in_name, port_pin,
+                      AW_GPIO_LEVEL_LOW);
+@@ -296,9 +296,9 @@ static void test_irq_pin_falling(const void *data)
+ 
+     qtest_irq_intercept_in(s, "/machine/soc");
+ 
+-    /* Configure as input and set pin high */
+-    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
+-    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    /* Configure as EINT and set pin high */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
+     qtest_set_irq_in(s,
+                      "/machine/soc/gpio", in_name, port_pin,
+                      AW_GPIO_LEVEL_HIGH);
+@@ -341,9 +341,9 @@ static void test_irq_pin_high_level(const void *data)
+ 
+     qtest_irq_intercept_in(s, "/machine/soc");
+ 
+-    /* Configure as input and set pin low */
+-    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
+-    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    /* Configure as EINT and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
+     qtest_set_irq_in(s,
+                      "/machine/soc/gpio", in_name, port_pin,
+                      AW_GPIO_LEVEL_LOW);
+@@ -394,9 +394,9 @@ static void test_irq_pin_low_level(const void *data)
+ 
+     qtest_irq_intercept_in(s, "/machine/soc");
+ 
+-    /* Configure as input and set pin high */
+-    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
+-    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    /* Configure as EINT and set pin high */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
+     qtest_set_irq_in(s,
+                      "/machine/soc/gpio", in_name, port_pin,
+                      AW_GPIO_LEVEL_HIGH);
+@@ -447,9 +447,9 @@ static void test_irq_pin_both_edge(const void *data)
+ 
+     qtest_irq_intercept_in(s, "/machine/soc");
+ 
+-    /* Configure as input and set pin low */
+-    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
+-    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_IN);
++    /* Configure as EINT and set pin low */
++    update_cfg_reg(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
++    assert_cfg_regval(s, gpio_port, port_pin, AW_GPIO_CFG_EINT);
+     qtest_set_irq_in(s,
+                      "/machine/soc/gpio", in_name, port_pin,
+                      AW_GPIO_LEVEL_LOW);
 -- 
 2.43.0
 
