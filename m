@@ -1,144 +1,135 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F4D606A319
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 01:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2A5606A319
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 01:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Yda/PteC;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bx5x87lR
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=processmission.com header.i=@processmission.com header.a=rsa-sha256 header.s=selector1 header.b=JRT9L4Ip
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xK4Sp-0005id-Hy; Thu, 22 Oct 2026 21:52:59 -0400
+	id 1xK4Ur-0006M7-Tw; Thu, 22 Oct 2026 21:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xK4RM-0001l3-62
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:51:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xK4Up-0006Lc-Ez; Thu, 22 Oct 2026 21:55:03 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xK4RK-0006KZ-9t
- for qemu-devel@nongnu.org; Thu, 22 Oct 2026 21:51:27 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69N1ErvY2376056
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 01:51:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1tvJx4Gi2s99eA+sQCfV1Wz9PB560tGbzaE1xKyRfpU=; b=Yda/PteCkeBVeWix
- Bih75hnusaR78IOZyv3Ww/qhPBex29N04MAoE6bMgHUYxaYQP9+53yC/J9N3IS1m
- Q1G41TCpn8URzy1XgfO2Dyzvm6P/Yxawl4X3SgaNduupEdaa3zLw453J8FARyH9K
- h/AXN/T1dwiZyTQWaV2TMTPoNgxol6C2i34ECFZEWAI/6topCzDh5aR2DX2mZJjB
- imdW5gbnUKOAMNyapv+qzBbdr8HRmHCaYt/jXNBvOy11NnPSqByckKmoBQVonwPu
- 3G4vKzU0fcdtjWe3YXMyc8/I060O/nYYUmFvvFOlF4KksWwEeKATikpVgqnFltlF
- QN7vtg==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqmr9btf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 01:51:14 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-359b81ad4e8so549796eec.0
- for <qemu-devel@nongnu.org>; Thu, 22 Oct 2026 18:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792720274; x=1793325074; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=1tvJx4Gi2s99eA+sQCfV1Wz9PB560tGbzaE1xKyRfpU=;
- b=bx5x87lRS6n8wbeopS3/tC42Wi6Q3QigM+k8XNGAnbP/TJeGwhc3WMP3YLglAAcVVG
- G2xpdpgsqwM4bAjuNS5vvUWf+d52RbMBTRKgckyuS9IT44ubdWtZ3TXwN5QYOlKeWWuu
- //+zcJnHVkCTq1Eov/NT6zpQ2hdAf1glK6Iui+L5yzr7wSblIxxkLgqBxuJHldi0R2BT
- ZnR6QfVWR3YofNfNl6U42sNGW57BBH2yc/0boe9fuXOzMHLgX/vlG8gR3D2VnwDninYy
- sjDGKTLo/iBY1ud2UpxuEAxCDQSzM3kylUT1NuIpNgTAtJC8tSk1k3iMkHUhYXymn8P1
- mmcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792720274; x=1793325074;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=1tvJx4Gi2s99eA+sQCfV1Wz9PB560tGbzaE1xKyRfpU=;
- b=V0cKbRgUqYRI+Gjjek0cRCymOn2lYgPOXWnoiISKeTMNCP079IdzVm/pXDeBom+USm
- n38Q2Q97rA0xPCaPMdn2OwYHFtG085kNN/LbZJG0Ztmm1Hr3hP1SuXefQByawqvamFEp
- 6ZappKeZzZypLUrx9Uke1PMar75Xv6dMooUOH3+YqDS1Ez1s8gSCpCY7Jk8s73Rec28G
- BhjDho5b0FOSVPD6eIJ+/z4+Id3vN0SVliYzIXDAQMlMti3Y7LI4+D/ZdVWSqON4u17P
- xh+ti6nwOnRQVGYR8vJjaGdcOdDhLyiKcAoIomEQSf62iPSEdYBPyk+8cUWTVKfmd6Ns
- dimA==
-X-Gm-Message-State: AFq9FYIzSmZqd7Hoq3JymHkMqBxjv2yK45UomTqj36I5s+OzhKWGlo7b
- GwjPb6jeXO5L5oHbT2uHfpP74PF+Tmmt2StwXrlGDWLxJC6Q0YP11QAvEzsvS8FCnz2lZpr3kl4
- uMMRFf4MqgWVVxqnDYJxuBc1s7H2qCMx75IZtPWePWVcmYPcrRBn/GgpnG4mCnD4LkA==
-X-Gm-Gg: AYBFou3heqn6wfyYjYgvsIAI1DCdABFbk7TnPllRJAfES8Ugu4PIlF1REMAvf2BLpcY
- xelHR7gC3zrvcx8rXngthj/cIhqKpt81URcZMxk0xvZD3iMNhoj0Fc+XboiJ4G/vfLoT9OAqMjp
- NrQEDypdwB5mS1/41aZM39jK58ZxeE5Srvg+4KopzaB46qo7VbOgdMqAOYGFtsQ5+z3Yl+OiqG9
- znQX9XF1n7RrJ42VEQdEB2MWalySYlt/JsD47E+qVZdPWkdh8pdWDdYw67t2MqusLKtJHoUTUko
- g1wDckJsN5yWJBRfQDwPDLAUkr3R0oRcDzEIBM4viog+LqR73uOHVEFdcg8ggrkMkfztYMuiu0f
- +bs8Wd5ae3oYctNKFmXIq5OpD6tU6ERkMoPFpsusQGxSNdKku
-X-Received: by 2002:a05:7300:c00e:20b0:35e:c56b:fd73 with SMTP id
- 5a478bee46e88-369d98e4cb8mr1159731eec.38.1792720274106; 
- Thu, 22 Oct 2026 18:51:14 -0700 (PDT)
-X-Received: by 2002:a05:7300:c00e:20b0:35e:c56b:fd73 with SMTP id
- 5a478bee46e88-369d98e4cb8mr1159706eec.38.1792720273524; 
- Thu, 22 Oct 2026 18:51:13 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369d9d5fadbsm1948565eec.8.2026.10.22.18.51.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2026 18:51:12 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 18/43] target/hexagon: fix semihosting STAT filename handling
-Date: Thu, 22 Oct 2026 18:50:15 -0700
-Message-Id: <20261023015040.2473105-19-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261023015040.2473105-1-brian.cain@oss.qualcomm.com>
-References: <20261023015040.2473105-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
+ id 1xK4Un-0006tX-J1; Thu, 22 Oct 2026 21:55:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LNcnNdDMcscHhw+Qh/IQhWz0l3cRmarv8AzMY8DuqhG+Jq0T5FMhXYjeIfNmCexzlDpMFNDRBEuK1cAKinEOqtZLer21Ni+vmRsvYgixBqCJWfpm6Yh8TAlEUL709x5CPwjpFgPO+7JqS9rCpcmsyYX3AEydutP8DWN/fxGGhvgz6VUYHk6W3k0upCUxwKeWGzI4B70QazDFKUJrAsWCdngz/8WoCqted60H3VLMIAMH3dpMJSs0OPH5ssd2smSBKaLxZQqwRgUfzX8g3oa94zTTCt0kW4xJQH3tHgEfxvg6ddIAV7pepPsklfkFS4PeC1QrHTNug1jRtQJumk6ncA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QB8zFAZEsqira6pnJreUPqoTVCdDfgVI2chuPl7jeMw=;
+ b=mI6uFgajsRe8FPO7E1C6eRpFmiHKuIEE99EWbANj8qsPyNCI1rO13iOF9+0/TY8OE/vhkcNTQw0LHCshKYLbSl8hFqY7W9409rsI8XHSa4KeKoiAM4fy3+te0rxe0JMAI8yNkQxQUue240VrxuxJJCcSY+iRy2YIl7AOxGYIqHsDDdzmXrH6SxgJgQzzN5cKBAHcabbjWE/hWFk/Pl6RH7MDUkkFAbZn8uipddStgaQaDzkH4Yp+SExaYBDGDwfJz5CANAlBMEv7JJPbWqxJ3ffiF+H9QZzVRQdzlYO/NcLbMrRW1CUPKIWLNN4dM0DuAfchxVc3EuvHzIspN8/89A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QB8zFAZEsqira6pnJreUPqoTVCdDfgVI2chuPl7jeMw=;
+ b=JRT9L4IpKslTNIjDDItJA+qzh5FF6FsHafG0n+vlQYL9y0gIY+/N7jloD039p8mLUeplt3Ft4vgiIN1i9wsLPNo71ec5zcuQxI+Q5R7oPuzGlNjSk1xkkhKDHl1XPJwKZBbfucr/nEaQH7CN2lKlDAWdMTvhWGF8toqCPr6YsFF5dPtiqM75tFvSN6xnQJ1Xb4kunx17HfSO3wb8Xy/1OcznA5mxiYmnettun93sw0CYE9TBn/a5Yj1AMlW+UcbH0sH6bvX0rRMslSPGeLNlglJHAEl07hJxN3JiKQIUsD8ycPTPyImt0PAVr/Tbhb/cq6OxSVWAy5YHhUXuwYpPug==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
+ by KUZPR02MB9089.apcprd02.prod.outlook.com (2603:1096:d10:60::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.16; Fri, 23 Oct
+ 2026 01:54:52 +0000
+Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
+ ([fe80::e5f3:5fb7:3d29:5934%6]) with mapi id 15.21.0546.012; Fri, 23 Oct 2026
+ 01:54:52 +0000
+Date: Fri, 23 Oct 2026 09:54:45 +0800
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v3 23/33] target/riscv: Register
+ CPUClass::exception_name() handler
+Message-ID: <atq-TxRhT_Ns_nvV@MacBook-Pro-4.local>
+References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
+ <20261022215115.19680-24-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20261022215115.19680-24-philmd@oss.qualcomm.com>
+X-ClientProxiedBy: PH8P223CA0025.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:510:2db::13) To TYNPR02MB9351.apcprd02.prod.outlook.com
+ (2603:1096:405:3d0::15)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: XICdhMQAl_Bp9U7W7OOLcfxPK-AP4Mbt
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDAwNyBTYWx0ZWRfX5BfBSh0agyY8
- KrkY11qnm9RDV3CCTJClD1QNmijB/2vZXOTnpw3wjhAuyzK8bAYTLFqhlgYTMqvTZQG6Av51Pll
- LszjeiQ/SRFmZoTW9hz2jZe0cyvxams=
-X-Authority-Analysis: v=2.4 cv=VNZIDNPX c=1 sm=1 tr=0 ts=6adabd92 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=vW8nx58EJidmct_-KksA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDAwNyBTYWx0ZWRfXyIYjML4lq/18
- HFg3pc8l1wGPJNWhjyNedOsYVt5/keia0rB+jbgaPi7Up3ek5ARemuJr/7Ldc7KA4kP0OrFfBUk
- FerNcv25hTIJRJSqQTGH1+4NxIcMesBdly8w9kltAf2nUtRP95xadxgfGxAR6KzuzU0WeZGTm/i
- prkcOthICpKzl5l/peEN714xcyEWQZyeVflYt97Lp/jca7wHhIidB3cUJcWxs5CErb+0mlNbtXd
- FgfbP3IK0Qee0DOQ33PeVTfU7Jc5a2aIKCE6Ffv6xmkBmoo7Yh/n9E47R11+AACmyQg7+ydkXTy
- f2NLOkl+OCWAPGoJyQOcgeJ26OSBT4JmPu9oNz9OTltur16A4pu/jv6pnQRxdsciBUPZJExy8eD
- N9WP/VziS94DnSBN5SHkP7eApc7M99OSnVfXtedvcS5M8lIehzXAiQTeWv4BbCSGKNNVi8DMeUC
- PFdBuqTxVNKZsb/pZ1Q==
-X-Proofpoint-ORIG-GUID: XICdhMQAl_Bp9U7W7OOLcfxPK-AP4Mbt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-23_01,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610230007
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|KUZPR02MB9089:EE_
+X-MS-Office365-Filtering-Correlation-Id: df59ce95-0c81-40b1-c528-08df30a8a105
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|23010399003|261022105027099003|261022075727099003|56012099006|261009223027099003|4143699003|261021123027099003|261021121427099003|10067099003|18002099003|22082099003|6133799003;
+X-Microsoft-Antispam-Message-Info: lRez5ANXvms0fhRwJwiku0IAQvwkFGo0FB/qcMLXgbE5WMKorjtlwqYmPA+WaC4T9sqaUU9r8oWPertA8UUi1piuBrgn+CkE1WMW9meiPYHUcP4fL8Ex30tU8XZymurlppWO8shm9ThF6la45Dq+MJ7tU4gckteS1fuLMi0radL4uB89aHW3+9mBNnPcCX4URhMs3dfBf8kz2kr2ulDfgQ7zu9lBZe5MwDTaKHtJgNfSHe9sTbzRnahYzVQB0m/Sm0ieU6XoatmEcMS1SOJT8r0zO5xTKNzGUUblgSSCLcfghT7MI3zop44DCQRTYcMfBWu65KS9LF1qRyOsL2KPUqXLpxmwS6cZcbu5qPQbXnt6Nt8f5YN+6fcnKwz5QgLLvOtG/HowxGMPyxPU6lAlnoWSUKdmGM9LOCU0+dikL0vlk/v/HPgWheIR23atJ87rmAbE2i/wstwYL/KTKbPF/UQ36Jx6TSctrqi9WyuzST+llt8cndjhXtKPGs7KphwNrxLzZzHs1/8Ou6ZHsXlfSukQG+KJmNsLBuxBsQGKSXhmBapnuPfwrl8eGd9AkAPBajbWnoVXwSVrwFw97Kkwoq8yJL8otyWSFO1r3goyWCS1rnkxpZgM3ScEGTcnVvGSUC3J+fWEqaHUEJaFXMkpEJO9+QaxMno9SiP4d0isRWc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(261022105027099003)(261022075727099003)(56012099006)(261009223027099003)(4143699003)(261021123027099003)(261021121427099003)(10067099003)(18002099003)(22082099003)(6133799003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?oVV5Kp0D8QjGLBGThfz7UuMYeLj0deD3YBSVNDG9PIDHJV2BRv15TmRTMh?=
+ =?iso-8859-1?Q?VsV7Kb6spLwVLGd2sri/mHITojezEUIZK0qk40crk1rjqyoL95MjQHdySG?=
+ =?iso-8859-1?Q?a+/tIrsvx/aT6gCNmhU2OMIBElEo0jUd83almGS9ww3ucRkDdtGNzMPy+A?=
+ =?iso-8859-1?Q?u6xsMGsCCLEZwbpgJPmUJC4RFSLrkmHtBCkhqkm+YVKNnhmgSRwqPM4khB?=
+ =?iso-8859-1?Q?uFCpkk2mhDuSDTX0QfJ9icuLrxfADiWjvbRAcxA3hDjbol1oOjSrb6lOz8?=
+ =?iso-8859-1?Q?qtMZSf5Qi9mt5eZ/wu4DupgOpj2PihB3R2B8GSvqqvDK0kKIUZMbeG00XS?=
+ =?iso-8859-1?Q?jtALXgXPsJHx/Spd8HBplXae3MnTjA6dpzKZasY2v9bUxKZD8zRqRhQ0YC?=
+ =?iso-8859-1?Q?l/XzT1DngEqx1C3tBvLOitSYjqQ7dRoAl5zhuJ26YQQJ5GCDBbcysVdVaF?=
+ =?iso-8859-1?Q?aY15aMjkfhnqsO1SUXW8lKdPd/Jm95cygsuxRFjBfFlY9TFPs6ffyRcrUC?=
+ =?iso-8859-1?Q?LO12342TIerjolifrqZQaFVY0a8oMrR23wQu2bKpnAv69SVgldTU25l9nd?=
+ =?iso-8859-1?Q?rjzkNxPx+/UiAnZAaU5DEY5VYjftokrAmHVa+UTncfKBmtgofBxt5OIK9R?=
+ =?iso-8859-1?Q?SeLTd29MvW4GbUcNJi6Cv/y5LCYEaz9uWcDdn/YHi6N+XoxB6j204um6HP?=
+ =?iso-8859-1?Q?V84EAoE4NnAesd9X9Hr5CgOVsOtiKC+RG5p4Rs6mvHgkyfzaZjw7hIwbXj?=
+ =?iso-8859-1?Q?HYgplfAkW7oA+e898mQYfHVYy/GLjqFrf4OGoUpnavyorIA7VQEziL8fJb?=
+ =?iso-8859-1?Q?KAdR/x3gJWZ4VFVyXTz231FtUcdDXuwZHIswMxbRlcdFY33fuWhtAX8EIZ?=
+ =?iso-8859-1?Q?jUgmqgEjksllnZMtlS5YvzEXrYzfefBUKKzoBuOfLXO+KIHfTYzLS7591X?=
+ =?iso-8859-1?Q?EH4VR2pCgLf4zTQUajt/SR6REpdI5LcQ23HxW7g3tU4uDdGhRi4XKI0zDG?=
+ =?iso-8859-1?Q?yeSdgtvHXA/Z2Ca7x6ThlGEvizwZlp+sTMd8Gx6qUPZxonnijX+XQdzjIu?=
+ =?iso-8859-1?Q?+46QxyDp7MRR/0S7DupCBggwPPnAjc9FkwHc9N3uSDdRnwcghEfAMzVGZV?=
+ =?iso-8859-1?Q?Cxvo9flEbMsWwEKSCV794x7GZiX6HayHKXDpeEgISIsFv9nhVgwfNgfyoq?=
+ =?iso-8859-1?Q?5+l+h1MMRUXVRb+JeiweS1kjJI6IaPWGs7l3wTca2UtbgIq7O1+nsvpC4S?=
+ =?iso-8859-1?Q?A3rzijYhuonLJ3szFkzNmXB+FpYYmFCcaEIQZE7VxUdcLJ+rwmB8hBTaLf?=
+ =?iso-8859-1?Q?M5u8/SQSEHWMvxnpQW72Ov40T6RVsG05NhNunp3vN837/6wavt4yYM2WDu?=
+ =?iso-8859-1?Q?bthH/+S5ZCceR4/+bGleEI8+ZPguK7zc4OXzujFoAtPnWENRLWeAzD2nr3?=
+ =?iso-8859-1?Q?XSpLl7DKKQxqB9yzdUoPgMx2scE2zreGhMVA4J7QX3y00ykVflUFVXl9+h?=
+ =?iso-8859-1?Q?RbrdIwSvNpnPOcVAB+gMgf1cCXvPVP+Z7CdnvQKD7/q7AXB8Z4YrYrXmmY?=
+ =?iso-8859-1?Q?gFBMjwBcM0fNfxCFLpBTneqshtCIJ8xZh1QY8P4p/pZMrld/McXYv5vCwQ?=
+ =?iso-8859-1?Q?AKmoSu0yJKLsruosdO/wuLs+OBKogEF1q8DcqCEVET3udVXXPeYPN4J+JY?=
+ =?iso-8859-1?Q?OH3Xa084cSf3kgNkV7H0FOx6NkVkN95ZOYrRrcLC6+AviL7jO3MaVurGY0?=
+ =?iso-8859-1?Q?wVkqLIwTrrkjtkUbwh6CgW//SujX8LJ38o0GFhVVMYZjMCXfxEowy227gA?=
+ =?iso-8859-1?Q?inv0rgN2vVWYdRbLVSq0RHbmU/9bjlc=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: df59ce95-0c81-40b1-c528-08df30a8a105
+X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 01:54:52.5640 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gb6haxYYl1Sxg+msKW/gSjpa0Wwls0RWDTr8hxOOjfl1DXUw52/Y5DGwF4KkRZeiGrN25Sh//uoVm/Zpnbr4JnBUNFrFV974QH3+51g0G08=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KUZPR02MB9089
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=chao.liu@processmission.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,47 +140,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Chao Liu <chao.liu@processmission.com>
+From:  Chao Liu via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-SEVYX1NZU19TVEFUIGNvdWxkIHBhc3MgYW4gdW50ZXJtaW5hdGVkIGxvY2FsIGZpbGVuYW1lIGJ1
-ZmZlciB0byBzdGF0KCkKd2hlbiB0aGUgZ3Vlc3Qgc3RyaW5nIGZpbGxlZCBpdC4gVXNlIGxvY2tf
-dXNlcl9zdHJpbmcoKSB0byBtYXAgdGhlIGd1ZXN0CnN0cmluZyBzYWZlbHkuCgpGaXhlczogNzcx
-MWZkYmE4OGIgKCJ0YXJnZXQvaGV4YWdvbjogYWRkIG1haW4gYXJjaC1zcGVjaWZpYyBzZW1paG9z
-dGluZyBvcGVyYXRpb25zIikKTGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsL0NBRkVB
-Y0E5TU9zNlZmSGYyVUhaOHo0Y2R2YUIrN0RZNmhKYjJlbVlaMmFMU2UtdDZpd0BtYWlsLmdtYWls
-LmNvbS8KU3VnZ2VzdGVkLWJ5OiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5v
-cmc+ClJldmlld2VkLWJ5OiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+
-ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4K
-LS0tCiB0YXJnZXQvaGV4YWdvbi9oZXhzd2kuYyB8IDE1ICsrKysrKystLS0tLS0tLQogMSBmaWxl
-IGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90
-YXJnZXQvaGV4YWdvbi9oZXhzd2kuYyBiL3RhcmdldC9oZXhhZ29uL2hleHN3aS5jCmluZGV4IDBi
-ZTFjMTMwMWU3Li5lYTU1MmExZjFkZiAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vaGV4c3dp
-LmMKKysrIGIvdGFyZ2V0L2hleGFnb24vaGV4c3dpLmMKQEAgLTU2OCw3ICs1NjgsNyBAQCBzdGF0
-aWMgdm9pZCBzaW1faGFuZGxlX3RyYXAwKENQVUhleGFnb25TdGF0ZSAqZW52KQogICAgICAgICBz
-dHJ1Y3Qgc3RhdCBzdF9idWY7CiAgICAgICAgIHVpbnQ4X3QgKnN0X2J1ZnB0ciA9ICh1aW50OF90
-ICopJnN5c19zdGF0OwogICAgICAgICBpbnQgcmMsIGVyciA9IDA7Ci0gICAgICAgIGNoYXIgZmls
-ZW5hbWVbQlVGU0laXTsKKyAgICAgICAgY2hhciAqZmlsZW5hbWU7CiAgICAgICAgIHRhcmdldF91
-bG9uZyBwaHlzaWNhbF9maWxlbmFtZV9hZGRyOwogICAgICAgICB0YXJnZXRfdWxvbmcgc3RhdEJ1
-ZmZlckFkZHI7CiAgICAgICAgIGlmIChnZXRfdXNlcl91MzIocGh5c2ljYWxfZmlsZW5hbWVfYWRk
-ciwgc3dpX2luZm8pIHx8CkBAIC01NzcsMTUgKzU3NywxNCBAQCBzdGF0aWMgdm9pZCBzaW1faGFu
-ZGxlX3RyYXAwKENQVUhleGFnb25TdGF0ZSAqZW52KQogICAgICAgICB9CiAKICAgICAgICAgaWYg
-KHdoYXRfc3dpID09IEhFWF9TWVNfU1RBVCkgewotICAgICAgICAgICAgaW50IGkgPSAwOwotICAg
-ICAgICAgICAgZG8gewotICAgICAgICAgICAgICAgIGlmIChnZXRfdXNlcl91OChmaWxlbmFtZVtp
-XSwgcGh5c2ljYWxfZmlsZW5hbWVfYWRkciArIGkpKSB7Ci0gICAgICAgICAgICAgICAgICAgIGdv
-dG8gZG9fZmF1bHQ7Ci0gICAgICAgICAgICAgICAgfQotICAgICAgICAgICAgICAgIGkrKzsKLSAg
-ICAgICAgICAgIH0gd2hpbGUgKChpIDwgQlVGU0laKSAmJiBmaWxlbmFtZVtpIC0gMV0pOworICAg
-ICAgICAgICAgZmlsZW5hbWUgPSBsb2NrX3VzZXJfc3RyaW5nKHBoeXNpY2FsX2ZpbGVuYW1lX2Fk
-ZHIpOworICAgICAgICAgICAgaWYgKCFmaWxlbmFtZSkgeworICAgICAgICAgICAgICAgIHNlbWlf
-Y2IoY3MsIC0xLCBFRkFVTFQpOworICAgICAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAg
-fQogICAgICAgICAgICAgcmMgPSBzdGF0KGZpbGVuYW1lLCAmc3RfYnVmKTsKICAgICAgICAgICAg
-IGVyciA9IGVycm5vOworICAgICAgICAgICAgdW5sb2NrX3VzZXIoZmlsZW5hbWUsIHBoeXNpY2Fs
-X2ZpbGVuYW1lX2FkZHIsIDApOwogICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgaW50IGZk
-ID0gcGh5c2ljYWxfZmlsZW5hbWVfYWRkcjsKICAgICAgICAgICAgIEd1ZXN0RkQgKmdmID0gZ2V0
-X2d1ZXN0ZmQoZmQpOwotLSAKMi4zNC4xCgo=
+On Thu, Oct 22, 2026 at 11:51:03PM +0800, Philippe Mathieu-Daudé wrote:
+> Factor riscv_excp_name() and riscv_intr_name() out of
+> riscv_cpu_get_trap_name(). Register riscv_excp_name()
+> as the CPUClass::exception_name() handler, so the common
+> exception logging can resolve RISCV exception codes to names.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+
+Thanks,
+Chao
+
+> ---
+>  target/riscv/cpu.h           |  1 +
+>  target/riscv/cpu.c           | 20 ++++++++++----------
+>  target/riscv/tcg/op_helper.c |  2 +-
+>  3 files changed, 12 insertions(+), 11 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index b65d6319940..49a1186bdbb 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -672,6 +672,7 @@ G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+>  bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                          MMUAccessType access_type, int mmu_idx,
+>                          bool probe, uintptr_t retaddr);
+> +const char *riscv_excp_name(int excp);
+>  char *riscv_isa_string(RISCVCPU *cpu);
+>  int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
+>  bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname);
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 08a4d14ea1f..e1652bd2a40 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -18,6 +18,7 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "qemu/cutils.h"
+>  #include "qemu/qemu-print.h"
+>  #include "qemu/ctype.h"
+>  #include "qemu/log.h"
+> @@ -398,6 +399,11 @@ static const char * const riscv_excp_names[] = {
+>      [RISCV_EXCP_SEMIHOST] = "semihost",
+>  };
+>  
+> +const char *riscv_excp_name(int excp)
+> +{
+> +    return STR_ARRAY_ELEM_OR_NULL(riscv_excp_names, excp) ?: "unknown";
+> +}
+> +
+>  static const char * const riscv_intr_names[] = {
+>      [IRQ_U_SOFT] = "u_software",
+>      [IRQ_S_SOFT] = "s_software",
+> @@ -417,17 +423,10 @@ static const char * const riscv_intr_names[] = {
+>  
+>  const char *riscv_cpu_get_trap_name(uint64_t cause, bool async)
+>  {
+> -    if (async) {
+> -        if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[cause]) {
+> -            return riscv_intr_names[cause];
+> -        }
+> -    } else {
+> -        if ((cause < ARRAY_SIZE(riscv_excp_names)) && riscv_excp_names[cause]) {
+> -            return riscv_excp_names[cause];
+> -        }
+> -    }
+> +    const char *name = async ? STR_ARRAY_ELEM_OR_NULL(riscv_intr_names, cause)
+> +                             : STR_ARRAY_ELEM_OR_NULL(riscv_excp_names, cause);
+>  
+> -    return "(unknown)";
+> +    return name ?: "unknown";
+>  }
+>  
+>  void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext)
+> @@ -3128,6 +3127,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+>                                         &mcc->parent_phases);
+>  
+>      cc->class_by_name = riscv_cpu_class_by_name;
+> +    cc->exception_name = riscv_excp_name;
+>      cc->dump_state = riscv_cpu_dump_state;
+>      cc->set_pc = riscv_cpu_set_pc;
+>      cc->get_pc = riscv_cpu_get_pc;
+> diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+> index b8b3e43ccd5..f85f5cd83c9 100644
+> --- a/target/riscv/tcg/op_helper.c
+> +++ b/target/riscv/tcg/op_helper.c
+> @@ -41,7 +41,7 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+>      CPUState *cs = env_cpu(env);
+>  
+>      trace_riscv_exception(exception,
+> -                          riscv_cpu_get_trap_name(exception, false),
+> +                          riscv_excp_name(exception),
+>                            env->pc);
+>  
+>      cs->exception_index = exception;
+> -- 
+> 2.55.0
+> 
 
