@@ -1,73 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5282606A323
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FC3606A322
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 11:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=NMWEwh/N
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=t8OIoPY4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKDbX-0006kg-Iz; Fri, 23 Oct 2026 07:38:35 -0400
+	id 1xKDbV-0006k1-NB; Fri, 23 Oct 2026 07:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3NUfbagoKCo4ABs53wG1zCy66y3w.u648w4C-vwDw3565y5C.69y@flex--stanleyjhu.bounces.google.com>)
- id 1xKDbW-0006kW-Fo
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:38:34 -0400
-Received: from mail-pj1-x1045.google.com ([2607:f8b0:4864:20::1045])
+ <3MUfbagoKCoo67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com>)
+ id 1xKDbT-0006jd-2X
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:38:31 -0400
+Received: from mail-pf1-x448.google.com ([2607:f8b0:4864:20::448])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3NUfbagoKCo4ABs53wG1zCy66y3w.u648w4C-vwDw3565y5C.69y@flex--stanleyjhu.bounces.google.com>)
- id 1xKDbU-00065t-S4
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:38:34 -0400
-Received: by mail-pj1-x1045.google.com with SMTP id
- 98e67ed59e1d1-3ac77c3ff6aso1233920a91.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 04:38:31 -0700 (PDT)
+ <3MUfbagoKCoo67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com>)
+ id 1xKDbR-00065h-5u
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 07:38:30 -0400
+Received: by mail-pf1-x448.google.com with SMTP id
+ d2e1a72fcca58-8a086f5d91aso1133858b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 04:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1792755510; x=1793360310; darn=nongnu.org;
+ d=google.com; s=20251104; t=1792755506; x=1793360306; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=RUaKTbpmPG8VxZ+o56N38oJAR54dG27ARraYuWWXJpg=;
- b=NMWEwh/N6jCmoOtPhaLC0n3/gO+11PCjAAbiVI+paI/dHD8oxFB8Gw0xpmo+cPYlPq
- ixzQdrJg2bavWQbK3AzVPvn5yuJnW0ToIoqPNIVdpV6Ys4ml8hEAxnqDEQ3AkCbEOs+U
- aabf4qq1jozfqfucPY61H3RvS+ppq5AGA+Pak6/ifNnrs6QNCJx8fX2c24kaLAM+pBK0
- dVWBkPT+eIZsFgV+ay0Yh6WARzCTGsGKzFOExAlXhrBAN0vepOoCK3S8muOUlOvVL6BX
- OhWXKxqjA43TyJituNvHCPwLW+4BGhrw+6djQmM4jYGcxwEyIOLu2iBpZbBwCNuF9e6A
- qjVg==
+ :content-type; bh=FuBSe9OJwzfKrXcET3rvLFGX0WB83waI2spgmyz9HSQ=;
+ b=t8OIoPY4EseRVpgsyoshBrTdIi0NDijidXhDRgLa93XX3i92iYwemiVBEy5S684D1A
+ 0M6PPcnqSl+7AN3E0FlD7mSFoYle8HO+0CP6HRK/Loj7J9iAuTOEzyHNe2daG0iLr4rb
+ My5aTO5zdXjKezotWEftH10khxpH6eGOAtoozQ105stw0tWZfy/qVcsy59fh03BweYIM
+ bspdlNVHSJS6zzLpPTvtwVvNNg2KvWS9a9w/W1o6AdpNBxce1DuZLGnP0ljZGXKHYJTk
+ XVZE84VUFE5N3N43no7Qi6QcheKRxtzFkFKvF6iWrveVPnR0F/fz1sq3uQ/KCgZEIhw/
+ RY0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792755510; x=1793360310;
+ d=1e100.net; s=20260707; t=1792755506; x=1793360306;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RUaKTbpmPG8VxZ+o56N38oJAR54dG27ARraYuWWXJpg=;
- b=tKpeE14N1wQGe5opkXjec/7p6CUWZWbighUhgYSh39C9Jo2JML+19I6vf55Kgvp8xF
- GDQzBti5L5GRrjLnapuNapVedhFs8QZv7RrxuDDrVAcZlMHIwlGwGkqEquuDTXogOKk2
- 6Rdrbut/3YI2zS61c9Al9DDJZzoM4zO1G2D9eh059P5XjYwe8Kww9eG5EuY/ebUcSu/3
- q9seABCMMJ6TTAAsv/YCLghVlWtZrvx2VGBt5n40LzknfxOwEsUhpAc13t+PfCmYUmU7
- qa52bsNlPoT3geNoWHUXzqu5DfhqcCtrkzYzQHplhLIPzqLONr6UeOdLGFMDPZLXdsEE
- X7XQ==
+ bh=FuBSe9OJwzfKrXcET3rvLFGX0WB83waI2spgmyz9HSQ=;
+ b=UnuI8DPk23BGKHc8yi6Vygm2UZrhP+ktZWJyXJhKjBdxfjQAvS6oVzdJqx9ZOBRGKE
+ D2heDg7WSK/YzB3iDOU7lHlY4P7K7Yayco12YE84CKRKxoeH6OGqx82/xvO3ig1a1sPl
+ jkSuV7PT0tKyPKiXlmguM6N0JMf6i6tK/QoxuJxcC+HbzOwi99c2wyPMW8jmOfJVrbCs
+ POlWuIVgrogYnayFR8lbn5JHRWpH/jXr8WIj7NYGeYkU36aAu4oAtFeesK/nTnLLfKuo
+ jm38f7oS7NnLJhsp+BOyD1UX/Va60cCyK1gNCNbEfpdQSkCDExOmn4SuZtMW2MnHeYhd
+ Xvhw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzi+1xkhUhxL6vfgU4A53ktMaF5dOpeQVRsq1DCpVm3p+XwkHo021rR5ZYlcOSZrbghX3Tn/zFa/WHw@nongnu.org
-X-Gm-Message-State: AFq9FYJS73zwVjtK4gQSLcKYcLBTVlFBgoujY7Bt0/dy4N1ZF7Nm4+Rq
- +kFIgJIplsnELWm2Hga8HCakJXRtOQdBvS7pyyslu8ydpILxEfVMYiNadIXJIHfpTxsbxsQbJai
- OzBM1dU50KfJgdx8dt8zJTg==
-X-Received: from pjnm13.prod.google.com ([2002:a17:90a:858d:b0:3ad:cb89:dd82])
+ AKwUvBwYQwCNVbn3LL4zhX4yPykT24VU3aKrMHmapgjtwk8t1lzO9CywQwVAoR/WWZOD9DfZFvTpDIL5qf1G@nongnu.org
+X-Gm-Message-State: AFq9FYI/kwzi53shhr0JrgOW1ZJ31IIulfwM1fNbUSYDrrpw0wMeQZWp
+ kL9KECQ379IADYg5reTF+3ftswCtXwCTTqETMxjADnfw9peaXF5L99Fly25hGYJekEsl6RasQrS
+ gIolzET8JNTd7MqwuV+Lp6A==
+X-Received: from pfgs22.prod.google.com ([2002:a05:6a00:1796:b0:89e:78fd:6ab9])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:3e4b:b0:3ac:74b3:a8f3 with SMTP id
- 98e67ed59e1d1-3adce811622mr1609636a91.44.1792755509988; 
- Fri, 23 Oct 2026 04:38:29 -0700 (PDT)
-Date: Fri, 23 Oct 2026 19:38:28 +0800
-In-Reply-To: <20261023080134epcms2p2148696f3da2f7eae77b698010a406808@epcms2p2>
+ 2002:a05:6a00:9504:b0:89d:7f51:6492 with SMTP id
+ d2e1a72fcca58-8a2c6f7f9demr1687503b3a.32.1792755505608; 
+ Fri, 23 Oct 2026 04:38:25 -0700 (PDT)
+Date: Fri, 23 Oct 2026 19:38:23 +0800
+In-Reply-To: <20261023080005epcms2p344c865eea89ea2129bd55804a36bef0c@epcms2p3>
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
 References: <20261022074513.2292281-1-stanleyjhu@google.com>
- <20261022074513.2292281-9-stanleyjhu@google.com>
- <20261023080134epcms2p2148696f3da2f7eae77b698010a406808@epcms2p2>
+ <20261022074513.2292281-2-stanleyjhu@google.com>
+ <20261023080005epcms2p344c865eea89ea2129bd55804a36bef0c@epcms2p3>
 X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
-Message-ID: <20261023113828.3368495-1-stanleyjhu@google.com>
-Subject: Re: [PATCH v2 8/8] tests/qtest/ufs-test: Add QOM fault injection task
- abort test
+Message-ID: <20261023113823.3367624-1-stanleyjhu@google.com>
+Subject: Re: [PATCH v2 1/8] hw/ufs: Add experimental fault injection
+ properties for holding requests
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Daejun Park <daejun7.park@samsung.com>
 Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>,
@@ -77,9 +77,9 @@ Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1045;
- envelope-from=3NUfbagoKCo4ABs53wG1zCy66y3w.u648w4C-vwDw3565y5C.69y@flex--stanleyjhu.bounces.google.com;
- helo=mail-pj1-x1045.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::448;
+ envelope-from=3MUfbagoKCoo67o1zsCxv8u22uzs.q204s08-rs9sz121u18.25u@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pf1-x448.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -105,38 +105,33 @@ X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, 23 Oct 2026 17:01:34 +0900, Daejun Park wrote:
-> All three new tests use mcq_test_opts, and UFS_FAULT_INJECT_TAG_ANY is
-> used only with ssu-timeout. To see what is covered, I removed each of
-> the following on top of the series. Each build succeeded, and the UFS
-> qtests still passed 29/29:
->
-> - the legacy half of the abort-success branch in ufs_fault_inject_tmr()
->   (2/8)
-> - the READ_10/WRITE_10 match for TAG_ANY in ufs_fault_inject_exec_req()
->   (1/8)
-> - the body of ufs_fault_inject_sq_cleanup() (2/8)
->
-> Could the fault injection cases also run with io_test_opts, and could
-> one case cover TAG_ANY with a READ(10) below and above
-> UFS_FAULT_INJECT_MIN_LBA?
+On Fri, 23 Oct 2026 17:00:05 +0900, Daejun Park wrote:
+> Linux sd switches zoned LUs to 16-byte READ/WRITE
+> (drivers/scsi/sd_zbc.c:607-609, "READ16/WRITE16/SYNC16 is mandatory
+> for ZBC devices"). On a zoned LU from the series this one is based on,
+> TAG_ANY therefore never holds anything. Could READ_16/WRITE_16 be
+> matched as well, with the LBA from ldq_be_p(&cdb[2])?
 
 Done.
 
-> Minor:
->
-> - 7/8 and 8/8 drop G_GNUC_UNUSED but keep the old continuation indent
->   of ufs_send_tmr() and ufs_mcq_send_scsi_cmd_async()
->   (tests/qtest/ufs-test.c:1903-1905 and 1932 after the series). If each
->   helper is added in the patch that first uses it, 5/8 does not need
->   G_GNUC_UNUSED.
-> - 6/8, tests/qtest/ufs-test.c:2014: the comment says the queue
->   status/pointers "remain 0" after HCE=1, but only the HCE bit is
->   checked after it.
+> Task tags are 8 bits, but any value is accepted here.
+> "-device ufs,x-fault-inject-tag=300" realizes, and after qom-set to
+> 4096, qom-get returns 4096. Such a tag never matches a request. Could
+> values above 255, other than UFS_FAULT_INJECT_TAG_NONE and
+> UFS_FAULT_INJECT_TAG_ANY, be rejected here?
 
-Fixed the continuation indentation of both helpers. We kept the helpers
-in patch 5/8 with G_GNUC_UNUSED so patch 5/8 stays a self-contained
-preparation patch.
+Done.
+
+> Optional: the mode could be an enum property. A QEnumLookup with
+> qdev_propinfo_get_enum/set_enum, as qdev_prop_spdm_trans does
+> (backends/spdm-socket.c:255-262), replaces ufs_fault_inject_parse_mode(),
+> ufs_fault_inject_realize(), the get/set/release handlers and the
+> u->fault_inject_mode copy. I tried it on top of the whole series: 31
+> insertions and 118 deletions over ufs.c, ufs.h, ufs-pci.c and
+> ufs-sysbus.c. With .realized_set_allowed = true, qom-set still works
+> after realize, an unknown name is rejected, and the UFS qtests pass
+> 29/29. It needs hw/core/qdev-prop-internal.h, and
+> trace_ufs_fault_inject_set_mode would need a small wrapper to stay.
 
 Done.
 
