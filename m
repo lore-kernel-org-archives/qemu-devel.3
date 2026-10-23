@@ -1,84 +1,79 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAA2606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8928A606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 18:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=BfydVS4r
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZcAjF8Ks
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKJeL-0006fC-P4; Fri, 23 Oct 2026 14:05:53 -0400
+	id 1xKJeL-0006fB-PE; Fri, 23 Oct 2026 14:05:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeF-0006aK-Ts
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:48 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1xKJeH-0006bl-SB
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:49 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xKJeD-0004WZ-1A
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:47 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4a1dede3c2cso13453725e9.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:44 -0700 (PDT)
+ id 1xKJeG-0004XP-1A
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 14:05:49 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-48dfdd0678dso821215f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 11:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792778743; x=1793383543; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792778746; x=1793383546; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=zO/QvGlb4mMzF7FTz1lc+Wyn9pl4Kh4AW7io/4UesVQ=;
- b=BfydVS4rZ6WrFNRMZIOTtUFKIIOAa3yiZdzrTpztBpDI6bNyv9ce1p53DNqeRajlZj
- Bb0KhAjyhWQep5lLVfpMBVWyXGcwT3fmJfZLs60UgVpC/XbthgbXMF7uNgcsEBrx0gTm
- rz7VY7ZlPO3joBr5MtP6S/s8vAlbQE4k+NrgmTLxnakLNX293w4t9zD3f9pb07v6iAAR
- vbpxeYWb9m7bGdvf3LQptI4380Y3TkICnDbYUw6jLFvnSKi8TeTWNLQF8mezoGRlza/O
- fp5jSowOy/RTrNGSyzkIb1Q0fk27idwo9T4endEDeCWazFHRljXLbRxTbf6XshLZgME3
- tveA==
+ bh=dDBE42hvIIwsppuMCaf4q+QPN7mc7NNkXRYhnpn7ico=;
+ b=ZcAjF8KsqPZJ/eYHrIEp/GR2jZqunCCoHVSITkv0YuiP9/Hl8U4hyd7olJW3nW2wDL
+ ZRGhFoVFf597HugurHQxX+yMeA/Qq8mUUgVHzqVQmjQSu7495T+6aOGE4qlCIXrLVEoS
+ b64LpOHxmSrAsRTurku4AaMReYwQUARezx6dSct7seDVhpJiorYIS7Qj0j1qMuFUVTjo
+ Hd47Oh7+DvlfoCQH1LSvJUSFzDKjNQOEMRHf6iDRJmYVIFYDBlgKO1IezaiXwgO/wArr
+ A1RmcdLBNFy+3FmbNFyzHhDNaGx2YRsvnX4UfToUvJ1pgdN9fL9Z/PAcdkeFVLYUOh5I
+ pJcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792778743; x=1793383543;
+ d=1e100.net; s=20260707; t=1792778746; x=1793383546;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=zO/QvGlb4mMzF7FTz1lc+Wyn9pl4Kh4AW7io/4UesVQ=;
- b=qt4W3lDfOW0DU4UDu0pgn6vsUDZ9vfaxndEhClJRc7lhbxDRa7Y0Jf9obW0MAKsIWp
- 7FKgk5wsC4rORymxpC/ueSyJJy6gOoqkWTFmedywVbxdczODw9yufTsBHPy/+58aMR1p
- p/qgHSeUG5cuI2fzRpJ1y8gYv58OdQ22bMunlCXI3+pFIsTD7dURs6eRcGTtLTqbhfPm
- XwuQUlQiznOJiS8xFid6HI5aOJcYuzVRNzQOPEMCyPBzttvQ+t0IyjDn7SGtAlCnLMab
- vGRFNKTMKwmkxMfOb62FqCZUefsmamc6mIfiO+yKFT/uRb39oi3yHRFNOTtoZJVPcvky
- I9lA==
-X-Gm-Message-State: AFq9FYLT9Jsuz0paCDpKl5+wajrhoqYaMWMkyCsiz47u4f51ZP+r/O7S
- AhXH3SQWFS7vjF5AAU5FXEBsmdKRqHIRdQL90JTmI3BySrc0UTaXDeKC44tvd0rU9fs=
-X-Gm-Gg: AYBFou3ekWYtxkyw8ZU+xeiv8iVq4nqte+qVl9cQ5HYbPTHQUDrD99Wj+kwAS5miql3
- LvH1zdDNt1M+e0zRuT7liIZhb7bTh5c3CFcSDexoYHes4yY1hg6wkjjz1BBf2vt4D7PUU3DIy1C
- MVU9GxWUKdzqlY+kyxljc2AH0WlHHvu8bWhiEVLDM1E1OO81Rl1dG5wTR6oKVd2EYZvnih7wVOu
- /OHE/ytv4m5MSjHQQvo12SK8HthCj5/jPKSa7lmCG/IMfjw3Y1p//0ln0yiuhh8gMVcK2TnAHq/
- EPz68xgY14o2A8ARvnssDNOBOvx9+YZyKLGQaJX78gJazaKXmE0w6kZFyeGnxcHNkLHWmFzcqMN
- lnkLqeLT2aO5FNXLs/sL9NZJwwpt4paZzErFE6VjA+IZeV62hgwy8BEWHI8NF9dTcum1idn7B39
- kZjRJ9y6aNtUP+AGSek2oQGdmeefaF/uIA6IxHGl6AfU7SgoZffZL8NZk5CHXJsYlX4n5i9T1Mx
- XeRi17+k8R1WQLc8+y73DRIoZdHArSCJiVV3HJmh3XcXqLbuRNn+f8=
-X-Received: by 2002:a05:600d:82c7:b0:4a1:fe55:88ef with SMTP id
- 5b1f17b1804b1-4a211ee56ecmr56940995e9.20.1792778743543; 
- Fri, 23 Oct 2026 11:05:43 -0700 (PDT)
+ bh=dDBE42hvIIwsppuMCaf4q+QPN7mc7NNkXRYhnpn7ico=;
+ b=T07wHERuwlanIybw3h54ae1d+k23sKfNPb3Bij6m7Bm0qPhGjVOFW/FZ944qdNyRcU
+ dwIdXs3h5ETmRUNXAPDuJKSDrnUXxAdsTgU4mUMLUMIyBcUsA+HJbJn65aDkCcFTcJtr
+ dcSOY2PdBTWzBCds9b6LFQ5wKmO1Q92rNr0Xt6jOc/9+zoIDj2XOYhR+E8nJucS/MT4Z
+ EH6ZDiy/GqE/B9a/b+SjWVxP7vURHAv8PqV4GkAk7Q38lKG5rYt+d7BDZ78bE2HmLWmi
+ +/MfP8De4W2Dk3FL79xHaxU/oQQ+5PN95kakpYpQvdQNjlhouu4UUWjTvfkf0TwvVP6N
+ 3sgA==
+X-Gm-Message-State: AFq9FYK/FN8EFNA8Byw1maxnyL3MsrpdF2cXJVk15dHbU3lWdFGlK5AB
+ AD3mJlC0JQfgfZlu+Baa2coSR4qtnnEsPHtk8T9IbnbBnVxY1fOZMTekfxc0HZdFyas=
+X-Gm-Gg: AYBFou1+/EfEUsHBdc0MhL5ioY56GC4qV7U2uJ3CYbSwcORs8Rz3re8uzqfqt1isGb0
+ TYC/ItKJKjxjeJtEnENbuayHuBVaqGRUs36Rfez5Vvbx6jMLBXBWPL9vsarCVhHEyvEB/rrbbVx
+ zUWdikU98ZfY1WKllSECbn1AyGyPv9+kfVM0757WEU2oUwREmxaHdIOsi7VLI4/9XDxacOrf4Zx
+ XzSjXap7je/sHnXNaStFkG/3SOKRHa5BQ/vWUO42OLwVUH9M1yatquUU8xH7i1C26MPww8mSC2R
+ g3gbiJ7eFCxOq2fas4aA7b4tesaHmCahxRyfSpU3R9zTqXYGpHxfQczKhA+pxZJTwbyIvEI/opH
+ GhVTUPAKCh4PYTpFMX5pBJ9V6W+MCDENQaZnFMzRRxjuGWvSNvKzE6w6UtqPG6U50FPwbgecNEs
+ ASYQxG3XVdAzpYWGqZF0AC4rweVpYfYTa6072BpS/3gcaFuBwYsHonKnBTNPHTHaG3n93IuQURR
+ KqYPzvl1KAH8V04aru5uBLIKAOAjAlPpjwPnfNMGUuYdC53xvg1F98bYWcDMXQ9/MJaSX3FIIts
+X-Received: by 2002:a05:6000:ac7:b0:48e:37e:470f with SMTP id
+ ffacd0b85a97d-48e385ab6b7mr4002557f8f.51.1792778746461; 
+ Fri, 23 Oct 2026 11:05:46 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359fc1207sm49825e9.1.2026.10.23.11.05.40
+ ffacd0b85a97d-48e3d400365sm1298229f8f.25.2026.10.23.11.05.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 11:05:41 -0700 (PDT)
+ Fri, 23 Oct 2026 11:05:44 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C51D060A1F;
- Fri, 23 Oct 2026 19:05:39 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 420D360FA6;
+ Fri, 23 Oct 2026 19:05:40 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 04/19] meson: move gdb detection into the top level build file
-Date: Fri, 23 Oct 2026 19:05:22 +0100
-Message-ID: <20261023180539.1574134-5-alex.bennee@linaro.org>
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 08/19] tests/guest-debug: convert gdb_cmd to an array
+Date: Fri, 23 Oct 2026 19:05:26 +0100
+Message-ID: <20261023180539.1574134-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20261023180539.1574134-1-alex.bennee@linaro.org>
 References: <20261023180539.1574134-1-alex.bennee@linaro.org>
@@ -86,8 +81,8 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,80 +108,80 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently gdb is only used by TCG based tests but hypervisors want to
-use gdbstub too. To be able to test this case we need to always probe
-and report the gdb we have.
+Passing a plain string to subprocess involves making sure the escaping
+is correct so the underlying shell doesn't get confused. This can be
+tricky to track across multiple  processes. To simplify this build the
+command as an array and execute gdb directly without involving the
+shell.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20261019192704.3220373-5-alex.bennee@linaro.org>
+We add a mini-helper to make the log output a bit more copy and paste
+friendly.
+
+Suggested-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20261019192704.3220373-9-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/meson.build b/meson.build
-index bbef9d9c293..4f29bc6cc33 100644
---- a/meson.build
-+++ b/meson.build
-@@ -163,6 +163,12 @@ else
-   iasl = find_program(get_option('iasl'), required: true)
- endif
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index 838c1c26971..ab3e3dc9ed5 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -51,6 +51,10 @@ def log(output, msg):
+         print(msg)
  
-+if get_option('gdb') == ''
-+  gdb = find_program(['gdb-multiarch', 'gdb'], required: false)
-+else
-+  gdb = find_program(get_option('gdb'), required: true)
-+endif
+ 
++def format_cmd(cmd):
++    return " ".join(shlex.quote(arg) for arg in cmd)
 +
- edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu', 'riscv64-softmmu', 'loongarch64-softmmu' ]
- unpack_edk2_blobs = false
- foreach target : edk2_targets
-@@ -4710,14 +4716,7 @@ summary(summary_info, bool_yn: true, section: 'Directories')
- summary_info = {}
- summary_info += {'python':            '@0@ (version: @1@)'.format(python.full_path(), python.language_version())}
- summary_info += {'sphinx-build':      sphinx_build}
++
+ if __name__ == '__main__':
+     args = get_args()
+ 
+@@ -98,32 +102,32 @@ def log(output, msg):
+     inferior = subprocess.Popen(shlex.split(cmd))
+ 
+     # Now launch gdb with our test and collect the result
+-    gdb_cmd = "%s %s" % (args.gdb, args.binary)
++    gdb_cmd = [args.gdb, args.binary]
+     if args.gdb_args:
+-        gdb_cmd += " %s" % (args.gdb_args)
++        gdb_cmd.extend(shlex.split(args.gdb_args))
++
+     # run quietly and ignore .gdbinit
+-    gdb_cmd += " -q -n -batch"
++    gdb_cmd.extend(["-q", "-n", "-batch"])
+     # disable pagination
+-    gdb_cmd += " -ex 'set pagination off'"
++    gdb_cmd.extend(["-ex", "set pagination off"])
+     # disable prompts in case of crash
+-    gdb_cmd += " -ex 'set confirm off'"
++    gdb_cmd.extend(["-ex", "set confirm off"])
+     # connect to remote
+-    gdb_cmd += " -ex 'target remote %s'" % (socket_name)
++    gdb_cmd.extend(["-ex", f"target remote {socket_name}"])
+     # finally the test script itself
+     if args.test:
+         if args.test_args:
+-            gdb_cmd += f" -ex \"py sys.argv={args.test_args}\""
+-        gdb_cmd += " -x %s" % (args.test)
 -
--# FIXME: the [binaries] section of machine files, which can be probed
--# with find_program(), would be great for passing gdb and genisoimage
--# paths from configure to Meson.  However, there seems to be no way to
--# hide a program (for example if gdb is too old).
--if config_host.has_key('GDB')
--  summary_info += {'gdb':             config_host['GDB']}
--endif
-+summary_info += {'gdb':               gdb}
- summary_info += {'iasl':              iasl}
- summary_info += {'genisoimage':       config_host['GENISOIMAGE']}
- if host_os == 'windows' and have_ga
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index c7362dd00ef..68c601d4036 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -83,9 +83,8 @@ foreach speed : ['quick', 'thorough']
-                      separator : ':')
++            gdb_cmd.extend(["-ex", f"py sys.argv={args.test_args}"])
++        gdb_cmd.extend(["-x", args.test])
  
-     # Define the GDB environment variable if gdb is available.
--    gdb = get_option('gdb')
--    if gdb != ''
--      test_env.set('QEMU_TEST_GDB', gdb)
-+    if gdb.found()
-+      test_env.set('QEMU_TEST_GDB', gdb.full_path())
-     endif
+     sleep(1)
+-    log(output, "GDB CMD: %s" % (gdb_cmd))
++    log(output, "GDB CMD: %s" % (format_cmd(gdb_cmd)))
  
-     foreach test : target_tests
-diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-index 1cd2d421cea..06f013fbe3d 100644
---- a/tests/tcg/meson.build
-+++ b/tests/tcg/meson.build
-@@ -1,11 +1,6 @@
- env = find_program('env')
+     gdb_env = dict(os.environ)
+     gdb_pythonpath = gdb_env.get("PYTHONPATH", "").split(os.pathsep)
+     gdb_pythonpath.append(os.path.dirname(os.path.realpath(__file__)))
+     gdb_env["PYTHONPATH"] = os.pathsep.join(gdb_pythonpath)
+-    result = subprocess.call(gdb_cmd, shell=True, stdout=output, stderr=stderr,
++    result = subprocess.call(gdb_cmd, stdout=output, stderr=stderr,
+                              env=gdb_env)
  
- docker_wrapper = find_program('../docker/docker.py')
--if get_option('gdb') != ''
--  gdb = find_program(get_option('gdb'), required: true)
--else
--  gdb = find_program(['gdb-multiarch', 'gdb'], required: false)
--endif
- prog_check_plugin_output = find_program('./scripts/check_plugin_output.sh')
- prog_gdb_test = find_program('../guest-debug/run-test.py')
- prog_record_replay = find_program('./scripts/record_replay.sh')
+     # A result of greater than 128 indicates a fatal signal (likely a
 -- 
 2.47.3
 
