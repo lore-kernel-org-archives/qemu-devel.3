@@ -1,30 +1,30 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274AD606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 20:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24431606A31B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 20:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKLdU-00007l-EP; Fri, 23 Oct 2026 16:13:10 -0400
+	id 1xKLdc-0000MN-E3; Fri, 23 Oct 2026 16:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLd3-0008Pb-01
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:41 -0400
+ id 1xKLd5-0008QC-Nv
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:47 -0400
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <parthiban@linumiz.com>)
- id 1xKLd0-0006uV-FB
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:40 -0400
+ id 1xKLd3-0006uV-Es
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 16:12:43 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G8jzh+uK89/A8KKkWkh3NU6OVpn4vSiIn+QNZ2P45Lz+Knco0w5tZ0+LoyVxLTzaXaDGL2CTnm7asJTLz/UEfrz+Dg/nbc9fICYaqvBVmOWPq+9Wq3wJVIARoZhX3iVL0wz4L4qeaAIhAMJL4BRxR4fhtoR2m7Ja0lWlVMbGObRT9JbyLKnVuy7avMiF1Ldrf2FtThsda2tZHASK49FdmMvT3BU8KZ1MsBsQNM9E8lNj1KjDBeAO1tKMfar9lj0chiBiO/lkP6vZoh6Dp1GxBptb0UT9Hbdh27aFwzKU5yjZ43gljYuM0d5ryjbHd986rQ3FlCiC+0W/Nh3dxbJZtg==
+ b=vIoXRqoniHxG3DmH1Cxft94rOGMrTJi0MkeoBRZuCsdq4wFZHzwIthZ2xIghu+sVgtj/0z62nYg7sScpunXqre7A8VSm80pRy+EDY9jcxZwpK2Pa0YM4DjDfbEs1yUGhtxLo/orIp23bQmaGl9hzwn6yf1ZNPC5x+7/Uzzgj9UI0Ti06ieifUEoClON4b4P+t2q8tTIL5WmBf4SIm2BHJBXrSKG4z1OJjwlzGPt452FN1s8yZ86zUKJqHVMlUjQcf7/6W0DDx19nrLf9Jmxu7RHiredcbbJvNKzYLM/Rl8hb7hZ0JckB4jkHLVEnBLTnRVIUVomVU2c4NXVP90NZ2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MtK/Ke6BGmIFGwVOnHAfj9tfGFY1mH+O+sRt1JSHUvo=;
- b=RrI1Bt/sI0SG6WrFrwwhLJJct5D+1/cEdFrkSdyMELLshaZzWKyWtkEc5RtkI2AVxnz5Qzq8aRT4eo7kwRx4Ch5YELwGbx2BIaRUoYNu9RicS/fSAyVyKvzPts6Deycj/TsAqS2kiawI48Ob7Ee+cKBi5X+zJrgpQ1djZ9E7OKk8GqvomVpRCXzceTACaznjoJhC7OlSMYRfgA9WyVP/18Re6dEkILkkKC4WQkzRxYurLGlIiCMYK6P36k8hAxa6EHTIm2gyYuELkxlhbl4ukZ6lzgSApH66FYhdKlk88FJfoZBKEatJnykbO0q3f8Dsi6+M3z+VmmIzubwxnV+tWw==
+ bh=3uF8ZYrYrVqzGUciNK0Q3K+sVcaI3hq+/WEhsmERaRQ=;
+ b=L9iPqx+tzNeM9yxx9QanML6d7rNmJXIrw+ipgZA7BWBvKbyBNAtdmf1gYDIuSW7WLMpdjZ4aZeiZVSXqwlfcZ6WKEcp5K7QIVN5ctwxrm+PiVIe7aawlOKrGQPpBUC66mDEVZ+TMLNKJ82h4Q5OXmAeLgLfACFFeFYHSXr0LcTEAnGqaQQB2x3BHyBkg4T9arNZxb+TFp6lv1jEO2KXld6eheB0YW3Sqb0etTcDbE+KUfmHOa47xVxtHx1YBjLodyT1eRKgh6B0iJudGUCv92/FAZo7dKLo+JaOzYWcniKHTI2THdqZ+V5cpNRhfPTlj4Dcf9A0drq/DWxFtyGRdFA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=linumiz.com; dmarc=pass action=none header.from=linumiz.com;
  dkim=pass header.d=linumiz.com; arc=none
@@ -34,17 +34,17 @@ Received: from TYZPR06MB6935.apcprd06.prod.outlook.com (2603:1096:405:3c::9)
  by SE3PR06MB9019.apcprd06.prod.outlook.com (2603:1096:101:31f::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.2; Fri, 23 Oct
- 2026 20:12:22 +0000
+ 2026 20:12:24 +0000
 Received: from TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01]) by TYZPR06MB6935.apcprd06.prod.outlook.com
  ([fe80::30b6:5b0d:1b00:5a01%4]) with mapi id 15.21.0569.002; Fri, 23 Oct 2026
- 20:12:22 +0000
+ 20:12:24 +0000
 From: Parthiban Nallathambi <parthiban@linumiz.com>
-Date: Sat, 24 Oct 2026 01:41:58 +0530
-Subject: [PATCH v2 4/9] hw/char: add TriCore ASCLIN UART controller
+Date: Sat, 24 Oct 2026 01:41:59 +0530
+Subject: [PATCH v2 5/9] hw/timer: add TriCore System Timer Module (STM)
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-4-c722e4ca5661@linumiz.com>
+Message-Id: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-5-c722e4ca5661@linumiz.com>
 References: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 In-Reply-To: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
 To: qemu-devel@nongnu.org
@@ -55,14 +55,13 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Dineshkumar Selvaraj <Dineshkumar.Selvaraj@infineon.com>, 
  Christoph Seitz <christoph.seitz@infineon.com>, 
  Sivashanmugam Natarajan <Sivashanmugam.Natarajan@infineon.com>, 
- Parthiban Nallathambi <parthiban@linumiz.com>, 
- David Brenken <david.brenken@efs-auto.de>
+ Parthiban Nallathambi <parthiban@linumiz.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=19306;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792786334; l=13235;
  i=parthiban@linumiz.com; s=20241125; h=from:subject:message-id;
- bh=oHtMhMpFzB4haa1xvByIoAaP0CMpyK12JAxcimCT7l8=;
- b=lhOxmy4SmohhVSyjPKleUmYtAq9oVtKI6cvRiZCL9m7cWr0FNNkYAbOK6mvJWSAKqxuTxZOVc
- cu/EoftMn7yCAa9FTe9CiaptOMIp9Er9OC5aKEWoQ/vHiCOsNJeuTyu
+ bh=bsfXReBIGrr9yPJ123FLIgD06Dh2cUB61qqP2aJu2Z8=;
+ b=OmQceIm3IO/4sTw/bumhYK9zPcX0LT5oIhb0+BrdwuNIL0uj9g4x67LfogW94YYCxJsfDDy2V
+ Tg6xxZnailYBhssfW+SRbIDnOkgMfgBVSyisFuoAQ+BjkhUt2PRGEVb
 X-Developer-Key: i=parthiban@linumiz.com; a=ed25519;
  pk=PrcMZ/nwnHbeXNFUFUS833wF3DAX4hziDHEbBp1eNb8=
 X-ClientProxiedBy: MA5P287CA0172.INDP287.PROD.OUTLOOK.COM
@@ -72,66 +71,66 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: TYZPR06MB6935:EE_|SE3PR06MB9019:EE_
-X-MS-Office365-Filtering-Correlation-Id: 95472c79-d731-4172-4c16-08df3141f2ab
+X-MS-Office365-Filtering-Correlation-Id: 934f62a9-3904-4e58-68c7-08df3141f3a5
 X-LD-Processed: 808466aa-232a-41f4-ac23-289e3a6840d4,ExtAddr
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|52116014|23010399003|376014|38350700014|261021123027099003|261009223027099003|260925021311599003|260925021911599003|260925022911599003|261021121427099003|10067099003|22082099003|56012099006|18002099003|6133799003|261022105027099003|3023799007|261022075727099003;
-X-Microsoft-Antispam-Message-Info: /K6Vg6sBL/tN0z05agYqKHq/WEx3yu6Zxlu34wAnR/pndkmsK+7iQAmcCDNX82+rCsqVftgkVh6Fg/yOta9T3GQmCbBU0oEW9NxVYHSaic0Du5h726uUMagEgIvZ5vaFDBtO0oZhVgOVRnQ2qJAoKhqVc4anYyiif6sRB07DyezNW0Dxwrc7YViHdoeKEnttMoOUFsNN94naFZ9nlG0prCleB52M4R5qj7mhi44cEeVlwiwbfzdjskN7/cnUO3CjRl0+SoJGK0jMftqwscIXCoPpU2DEwVuZqbkM3J2jOZzfMS/xSdVNrp2TdYPXwpwE9Mqbisnxx6wrRX59f4UM/4HMAze5yPEJOxDTbNQud2irEmoBOPnOJmnpzNoMBg9qtpXMJkVpyMTnUYlgvQ1DZTbpUBPO8zaEWmW6uLS5z6VEFIq84eE+wNw/DCgj/45C0WBPKBcmMUt8g7fujo2sp1DFRrx8o5Cpy4ACsR4gcZ1C9tV+sHXdDY5a94XCQeAAXvSTPx+6l2wS7kEYJtWWA5Q2UIjGTvMPpSB6ydRF435FKnEkyx/gVUqwALBba5FwQ/Wq5LSTiPnKi4WaYfD0BwJu3KUmDPZGuADalGiQEvjVQxxTPl8vZvXaOvqRRAMlzK7wauMz7zOGcnoB6i81Ogp1OKhyIKM+5tjX1iLtSZ4IITOQiNCzy+gXMT61A/CiY1prAS6eiNiG9BaVkxSazuhuEtPxRzfQQ+YycgyUeTM=
+ ARA:13230040|1800799024|366016|52116014|23010399003|376014|38350700014|261009223027099003|260925021311599003|260925021911599003|260925022911599003|261021121427099003|10067099003|22082099003|56012099006|18002099003|261022105027099003|261022075727099003;
+X-Microsoft-Antispam-Message-Info: c43JtvJp6/AcTpZu45c5NKViHi8kwQi2ZKNzlRWW8q6ElfA+yWpAJsuboJDRkUvTYoeeYLZFs3rxdEe9RVZVMzfY4aSRFI3k2XoTo7Sef9+4DXJHz9udXRpODP0KQ+jdjBUOMMAnmi/JREreBJXssvOiLutZ5j4oonX+LPTJUpkBT6mvpnFQyGJoVmsLeXDi5cW15jtGFuHwO/UvuKOA7X0ClrzHzeKuHI46orkbwopYDUXqSFtGjq7FJZHbMkWrDmpQgENW9u8UXOm0KQ5pED5D1diTy+bmZj/mlDk0ljI5ua0NHDs9V9OXEUksXTnWIoGDmg6Cp/xhok3+VrO/x/QuzjAUUU+d6b2mHeSo3GBRoDcH9jS/wXxqAmpVacU055YRNs3aVK2Lpo+I+d7zp9beG96x/nUbaC7fZWKxdTnca72jfFCNFdiefuoHY8rXACN3xGoc8XzLC1bgva8Rnh+4T+6WNMvGefpeXmMcqFMLZRpO4/+Bbj35EPACN7DTTiZJ8nyGmcbWGT3mfQqk6eyJKO9IG5qvWd4NoyUTWOravO8D2SjM9tOoZoAoiJWC25ShXrJlsaEhh+HMiiKaOrVP9C3siYnVmKAszcy6Lk/l15GAWqS6WQ5N1BziEefRvWp96M1d3F1sJivI1CPm+giUrC2UtyVxByRB2jqJxgJxX7+0cw2eG6KGYqLvZRqpXSepwdFa75eIdAq1LtJpc2T+MpKwG4m/vz/a3j9l6uc=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB6935.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(52116014)(23010399003)(376014)(38350700014)(261021123027099003)(261009223027099003)(260925021311599003)(260925021911599003)(260925022911599003)(261021121427099003)(10067099003)(22082099003)(56012099006)(18002099003)(6133799003)(261022105027099003)(3023799007)(261022075727099003);
+ SFS:(13230040)(1800799024)(366016)(52116014)(23010399003)(376014)(38350700014)(261009223027099003)(260925021311599003)(260925021911599003)(260925022911599003)(261021121427099003)(10067099003)(22082099003)(56012099006)(18002099003)(261022105027099003)(261022075727099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SWZpUlFIMVkwZERpSkwyRWR6U1dQMW40L2xBbDlrSkt1QzZDb0xHODJ6Y05m?=
- =?utf-8?B?OHM0VzZIVmZ0blJZNWt2QWNKZkJndlN6NU1yeno4d0ZYSHExNWZETzljdUUx?=
- =?utf-8?B?TUNDbmphZVI4dHA3ZWI0dENINThzZmd5d2w2bXFOb3N5MnRwc0pkaXRCOENj?=
- =?utf-8?B?T1BGVXRYQUZiVUxDcytqWWxXSU5zWE5BaHhsWWRQV3N3N2grVDFwNytrUWlS?=
- =?utf-8?B?Y0RvWldLVXMxaGRoVVEyYy9keGQ3YkN2Z2hraTdTSy83N2dQYUQvb3EyY2dX?=
- =?utf-8?B?ZUppb0hQZkRseVkxRXRuNHVvVXRzWk5kUjlwK3kzVjhkOE1rSGhCdjRNUDFw?=
- =?utf-8?B?NFRVc1ljUC8wUTJiVVBDMXFOTHV5TlJidG1OaSt1S3Rtc2hjbDJrY1dQalZv?=
- =?utf-8?B?YnNxakk4Z1ZyRVY5dW4wOXVuOTRabWcvTjQ4R04xYTZ4dzJtVDNvUWsrYThG?=
- =?utf-8?B?UUE2VDlZTGoxMWF3THB6N1BTRGNSSlhqN09zemlNb2JvZWpKci9Ja1JCWXNG?=
- =?utf-8?B?Q2x3MndzK1dnbEVqWHBFVFRBUVJ1T0lsd2k1VldnVnRWakRsUGV0b3VqVW5o?=
- =?utf-8?B?UXJMNlZaN0NvSWRianF5anRod0Y1Qms5WGdZalNjVmdpRG5NaTdZbDVKVmNB?=
- =?utf-8?B?c2VwRzk1VnhJTTFsUURsQjBhMjFwZVFKaVdscmxSeEZZcjVNZk5WYS81K1dt?=
- =?utf-8?B?Z1Y1d2hvTDk4OXpVa0R1N2JtK09hVDE5U0lrSEtqa0VQQ0FwTGJna05IRVV5?=
- =?utf-8?B?K09BZzRVc1NkWE8xdTZUeGp3akZwaVVNZFJ6dGpFMGZaTWtBNmNXV2lUbDd3?=
- =?utf-8?B?SXFZa0RISE5Yc0JLTkJmdDBTTzNkRWR5QTJxWkNOM3E0aG1lL0JZREFjS1U0?=
- =?utf-8?B?UlUvb2REaDc4WWZtdkd0dHZ2TDM5MHp6NWFMZDZBaVhvWkpGVFFHSUtHNTZR?=
- =?utf-8?B?RjdTWVpXNVp0RUhZaHZmYVBmdFFLZjc4VCtaOWtUSGl2c0ZlU3hlS0NFMmdX?=
- =?utf-8?B?NGpHUTZkUk1Ca2dwZ2xkM3l2bWpXeVRHMWNXcXFGY3BhWGZacjJMNU9SV0ZU?=
- =?utf-8?B?c2ZkMjQxYmdOckRhMmgwY0pBTWVnMWlBRlpaM3NiOUJ0cWdXWmROUGFxS2Jt?=
- =?utf-8?B?RzdkV1VXZmlXc1BSQmJGOVJ3UTJmUFN1ZGhLVUs0RG4xNjVNOGMxRVZLRmF6?=
- =?utf-8?B?ZGhCNWlTQTdVaGJvSStSdHZDUWszL0l1YmlsdWdKcnAyOEtScHZrckxzZFU2?=
- =?utf-8?B?ZzR3TlU2V1BsaEFNK3M1UWFMS3R4Z2laNHZ2US96M0IvbkVMNWEwUEFQZ0ox?=
- =?utf-8?B?bGtwUXFSaGdhckhteDRkeTJGelkxWTlkL1VKcFJZdkxESzRNcGFvTDF6L0FP?=
- =?utf-8?B?UWpwTWR2SkdzT2E0WlhoZmNGQWMwVmZpaHJRNUF1NnJhS1FFVjFwQ0dCZUY0?=
- =?utf-8?B?V0hYMFJDTXVNSW93UUVDeXU2LzV3dyszMktHbTViMU5INVZWYUJvU2Q2Vm53?=
- =?utf-8?B?Z1dOR0t0bisvYlBjUisxcURIL29zR2tYUkVTQ2pIVERrT2hESTZWaXVGQzZU?=
- =?utf-8?B?UCttbzIxOXQ1dlVJc2hlcXNXTTkrY1RXYnduUWlHTUJxMytET2VDMlRJLy9n?=
- =?utf-8?B?V3FZZHFiRVExQzhMRk9sZ1NKUWJRSkpLZ3hXOEhGcGhweCtKRHlsbzVxU2tE?=
- =?utf-8?B?bWhZaCtqaEZ0VUpacnlUWGRPcklvTll4VllhSnhrVUZtNWMrWnF5VkpudEhX?=
- =?utf-8?B?U3ovME55V0lMVEFNUFFYMFVVU0ozQkh6aEpCakJWR0hsMGxjUWxWb2I1YmhY?=
- =?utf-8?B?bDEvbTNHencwUzlXMWZ3M3RSZ0xkRXltMXZlek9NN25ieWtRd2g5U2Jab1Jl?=
- =?utf-8?B?RGNITmI2SzJRcUk2bmk1RFBWL2FGN2VVMHErdWlLclpEQUc5aGpVQ2JsV2lI?=
- =?utf-8?B?TDhuaDlrZWRiWlNJajc5SEdxSll1K0RQQXhQbU9YaDR2eGY3RUE1eEFFcWJi?=
- =?utf-8?B?MFNHQ3VWeEtxNm9JWk44aWNEQmRrV2Z5eFVJQ3NjamFjbmZ3bkdQMFBVV1Jv?=
- =?utf-8?B?SGNyS2orYzNkcE9GR0o3Y3M2WTZIbzZTbmNESnFya1RsSVJ2ajBCRkdlc0R2?=
- =?utf-8?B?SE1hdXBJa09PZ2g4Sk1DVXdvQzllVVlueXlkZ0Z5MGt3eUtTY1l1NjJCWW9r?=
- =?utf-8?B?bTFyM2kvb2dtYkJ4Sm1CRXQwVjI3VVVEaHB2Q1NJRHhMZC9zclJrRnhlbmZk?=
- =?utf-8?B?eEZXMDl1MkdjZ1VHa0pJbGZDaWZQNDBLTzRRV2pxUEdJano0cnViZDVpY09z?=
- =?utf-8?B?K3F2YXdaQW1ONWYzajlrSG9FWGV5dUJtZVZteGZJSmt2OUNpZEtkZz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TlBZWFFjV1dDeE9BdmRvSEdJZjl3eUVSd1NBSXRkcnczUWJpVWxHdXR2VmI3?=
+ =?utf-8?B?ZnI2Z2NTdDkxSTJremtrbkErTFJyL0ZRUHp2ak5uZFh1SG9KZ2ZDbFFlNWwr?=
+ =?utf-8?B?cDQ1V0lTVFBMbFY1U3Bia2EwbktyYWhReVVmQzFBeTZBVnBiYmF2dWRseHFi?=
+ =?utf-8?B?TjVORkxkQVowYXNWSzNrU2dQZGl6bUIwSkxQZDRsUkcwdFVCclRBN295MDhJ?=
+ =?utf-8?B?eWx2ZlpoUDZQVWJIOFhOcnZrTVhuYlVwclVOWnNRSkFVTkh0NXVwRm5BVWNM?=
+ =?utf-8?B?ejV6N3FuTWZHUi9lQXFTKzlCNFMvUW1NaTN4dnBWUG9Rcm42OUszMU1NTU9x?=
+ =?utf-8?B?dVJvRXRJbHY1bUJJV3d4UGY3V0lSTmNHNk9QQjhqYWdtczJjK3BpOXhIcmhh?=
+ =?utf-8?B?MFVuSHRaL0M1SWVJclBNMXlubjAwajlvK2xvSFYyeDFRZ2RSV2ErNGVpVEtB?=
+ =?utf-8?B?NnFwR280aFpxRHc4V1VQZHg5c2hDY2t4ckdFNjk3QUZpaFp5MWRiS012b2Nr?=
+ =?utf-8?B?R2ZKNFBxdElnSGZjSW5DQ29DTlo5c1ZnL2dkRVZ5RHRzQWlKdEprZDdZWGdl?=
+ =?utf-8?B?Ny9JYi9KS2tXQjJJSk90SlNmcVdlSVpBUDRPM05OK2orcjJSZENGVHpucndI?=
+ =?utf-8?B?aVowTlU4ckh4NGYyaDlhb0M0MXQ4TlVlWWUwa2ZFK01EQ0UrUDhiRFNyQlI3?=
+ =?utf-8?B?SUJua2s2VStsU1lmMXpPdVZFc3ozVFNvM0hrOEJaZlp4MkhIeXhUWjVLSmh6?=
+ =?utf-8?B?TEVaT21iZ3JaSUxjQTBpMlJLNmkyVmFQU0VKL3JrYzFQckRaV0lhcFBWeE8r?=
+ =?utf-8?B?V3NFNXBjRTJOWkhqczUzNnFCNUVKd01xZHhyam13aXZ6YlplbitGNkZTOCs4?=
+ =?utf-8?B?M1NIM0lXaFhSUmRYZlNwMDhVcXNyY3F0WS9DS2dkTEg0bUVQb1BFeitGYkNj?=
+ =?utf-8?B?VXpPQWVEbktKY21VMHNVd2FuSWkrRGdTV2ZyN2xxeGxPaG4vVkdOQnBJaWoz?=
+ =?utf-8?B?aENoUE41MVhNaWYvVUxYWE5tNzYycEZzSlN5bVZ5Z2ZoYjg0UUk5cDlaa0NF?=
+ =?utf-8?B?WWRvTm14cndWTXVhWFJJNC9xMmltMnRJNDg5RlNRTzVTWkZQbU5FeExldWhv?=
+ =?utf-8?B?bTN3cythRFlrQnEyQVd3bGt1WENyUUlVbkJwR283L0xIOVJjUXRVNTRLc3pQ?=
+ =?utf-8?B?TU00NlVzYS9FSzhqaWl3b042cWFIUlhTblpjYTM3QWxabHROY3JqVFc2S3I1?=
+ =?utf-8?B?RVJJNVFodVJQMEdDQ1Z3VUlUZ2lET2VyTEhlWFA3Z0FNYWZsNDE2Y2VZNFpn?=
+ =?utf-8?B?TWM4ZkFGUDRLTGM1SWZ1RHhDOXF2VnBiZ2s5c0t5U2dhZENBek5JbjA3SXFL?=
+ =?utf-8?B?dk0yTnpXaTBTWnJVWkpGVjVlcVZrb2lxMVVhWTBnaVd3WUs0RVIvZVJIeENR?=
+ =?utf-8?B?NWpIVjVVWlNZd0F0R3dUT2RFYjM4dVY0OUVuRFNtS1cyQ05VV0hBMFFaNGg1?=
+ =?utf-8?B?bDRIRTdEQVBhQnNNbWdTVDVRZVVRZGxBOWJkRTNOUzhZWG1odE5Xby9EMDlQ?=
+ =?utf-8?B?Z3lkQ2kyY0UwYXRTQ2UvQjZSQVlHeWcza1hyT0tCazUyaTdPUHl5KzRVWEZP?=
+ =?utf-8?B?RU9BZ2dYaFVFWkdHWWdweFZ6TjhsRENYVFFvS2tiTndYVGtHOXBCR3dsTnc1?=
+ =?utf-8?B?WW00a3Z3RkRQY01IYkJYWWlJRWc4U2JabzZ4Tk5EM2pCdmFYYmdWdDlBRDhU?=
+ =?utf-8?B?UW83bmpaYk1GRCtVS3k3bDBtTVhEdUMwTXB2M1ZweCs1YWNuVk1CbmN0dU9U?=
+ =?utf-8?B?NVlPd243aEp2ZFZ0S2owUkxCbUZSMVdvOXVCTm9wYW9lS0d2YlpNVTZhVEVl?=
+ =?utf-8?B?czFxZDA2Z2JDMHVieGdKbWtFdlo2Mkx6ajNjVWoya2ozYWhKUGVPZmp3SXE3?=
+ =?utf-8?B?a1ZxaGFGSytoVi9JSUFQSDhPOWNkUWlMOVdLZHMzNU13TkdaRDQzZkNjZDZw?=
+ =?utf-8?B?Snh1S3MwdGIvN3lZdWp0ZThkTjRRM1luUCtJeGpkMnRtdnYrT1RMaXdBV2px?=
+ =?utf-8?B?cHFiVll3dzhmQmlld2RuWERlWG1CODd5SzNpUWNpcCsyYTM1SEc0QzJ0WjZJ?=
+ =?utf-8?B?dHlnYUxESng0UWdKUmFMdFRMTXhPTXlUMjBqdlZiUzRxYVpQSnMxTDFocDBs?=
+ =?utf-8?B?UlJGamphSWtMNTRtN2ZzeHByRXlyMy9VeStLZGhRQ0ROM0V6bHEwNmVHUmU5?=
+ =?utf-8?B?dy9kWUJrWHVqNTFhcC9pck81dXIzTTdYZmNhMnYwWU5aQy9JWTBscURFVDdX?=
+ =?utf-8?B?Qk04aE5QZGNCQmxCaWNjS0ROSmIrT25nbFhxZThLTU41VHNpVlB0dz09?=
 X-OriginatorOrg: linumiz.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95472c79-d731-4172-4c16-08df3141f2ab
+X-MS-Exchange-CrossTenant-Network-Message-Id: 934f62a9-3904-4e58-68c7-08df3141f3a5
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB6935.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:22.5433 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Oct 2026 20:12:24.1215 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 808466aa-232a-41f4-ac23-289e3a6840d4
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5nQBiOXVUf5/tBTJrks0+SFLUttHOOXCuKvsmA/R7N29WghJe7Rky9RdlvdloabkFt8WDC+1OFETz3pabaVCbQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: TLtvbyYkSCIDfkUUaS57ox7pVrHEw7UM+zTqn/LbBXkxKsCTEQOMMtD1Uz+QEDc/xHvqLTNcFBzFSaBeA73BQg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE3PR06MB9019
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=parthiban@linumiz.com;
@@ -159,646 +158,464 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Model the ASCLIN in UART mode.  TX writes go to the chardev
-backend, RX fills a ring buffer.  FLAGS tracks FIFO status and
-three sysbus IRQ lines (TX, RX, ERR) are pulsed on flag edges.
+Free-running 64-bit counter with compare match interrupt.
+TIM0..TIM6 give shifted views of the counter, CMP0 fires
+when the masked counter matches the programmed value.
 
-Originally-by: David Brenken <david.brenken@efs-auto.de>
+Originally-by: Christoph Seitz <christoph.seitz@infineon.com>
 Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 ---
- MAINTAINERS                      |   2 +
- hw/char/Kconfig                  |   3 +
- hw/char/meson.build              |   1 +
- hw/char/tricore_asclin.c         | 537 +++++++++++++++++++++++++++++++++++++++
- include/hw/char/tricore_asclin.h |  41 +++
- 5 files changed, 584 insertions(+)
+ MAINTAINERS                    |   2 +
+ hw/timer/Kconfig               |   3 +
+ hw/timer/meson.build           |   1 +
+ hw/timer/tricore_stm.c         | 365 +++++++++++++++++++++++++++++++++++++++++
+ include/hw/timer/tricore_stm.h |  34 ++++
+ 5 files changed, 405 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d9209f043f..5f985ad4e3 100644
+index 5f985ad4e3..540325d78c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -478,6 +478,8 @@ S: Orphan
- F: target/tricore/
- F: hw/tricore/
+@@ -480,6 +480,8 @@ F: hw/tricore/
  F: include/hw/tricore/
-+F: hw/char/tricore_asclin.c
-+F: include/hw/char/tricore_asclin.h
+ F: hw/char/tricore_asclin.c
+ F: include/hw/char/tricore_asclin.h
++F: hw/timer/tricore_stm.c
++F: include/hw/timer/tricore_stm.h
  F: tests/docker/dockerfiles/debian-tricore-cross.docker
  F: tests/tcg/tricore/
  
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 7040040641..11eca70181 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -99,3 +99,6 @@ config IP_OCTAL_232
- config DW8250
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index e1b751a54a..bf6e79d0b5 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -68,3 +68,6 @@ config AVR_TIMER16
+ 
+ config HEX_QTIMER
      bool
-     select SERIAL_MM
 +
-+config TRICORE_ASCLIN
++config TRICORE_STM
 +    bool
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index b2250ee6ae..97025d933b 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_UART', if_true: files('sifive_uart.c'))
- system_ss.add(when: 'CONFIG_SH_SCI', if_true: files('sh_serial.c'))
- system_ss.add(when: 'CONFIG_STM32F2XX_USART', if_true: files('stm32f2xx_usart.c'))
- system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'))
-+system_ss.add(when: 'CONFIG_TRICORE_ASCLIN', if_true: files('tricore_asclin.c'))
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
- system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
-diff --git a/hw/char/tricore_asclin.c b/hw/char/tricore_asclin.c
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 8323efaf46..f376814593 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -36,3 +36,4 @@ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
+ system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
+ 
+ system_ss.add(when: 'CONFIG_HEX_QTIMER', if_true: files('qct-qtimer.c'))
++system_ss.add(when: 'CONFIG_TRICORE_STM', if_true: files('tricore_stm.c'))
+diff --git a/hw/timer/tricore_stm.c b/hw/timer/tricore_stm.c
 new file mode 100644
-index 0000000000..0142756cc9
+index 0000000000..733a8e6ef6
 --- /dev/null
-+++ b/hw/char/tricore_asclin.c
-@@ -0,0 +1,537 @@
++++ b/hw/timer/tricore_stm.c
+@@ -0,0 +1,365 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * TriCore ASCLIN (Asynchronous/Synchronous Interface) UART controller
++ * QEMU TriCore System Timer Module (STM)
 + *
-+ * Copyright (c) 2017 David Brenken <david.brenken@efs-auto.de>
-+ * Copyright (c) 2024 Siemens AG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (c) 2024 Infineon Technologies AG
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/core/sysbus.h"
++#include "hw/core/clock.h"
 +#include "hw/core/irq.h"
-+#include "hw/core/registerfields.h"
-+#include "chardev/char-fe.h"
-+#include "chardev/char-serial.h"
-+#include "migration/vmstate.h"
-+#include "hw/char/tricore_asclin.h"
-+#include "hw/core/qdev-properties-system.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/timer/tricore_stm.h"
++#include "qemu/bitops.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/timer.h"
 +
-+/*
-+ * Register offsets (byte address / 4) for TC3x ASCLIN.
-+ * Each register occupies one 4-byte slot from 0x00 to 0x50.
-+ */
 +enum {
-+    R_CLC = 0,
-+    R_IOCR,
++    R_CLC,
++    R_RESERVED1,
 +    R_ID,
-+    R_TXFIFOCON,
-+    R_RXFIFOCON,
-+    R_BITCON,
-+    R_FRAMECON,
-+    R_DATCON,
-+    R_BRG,
-+    R_BRD,
-+    R_LINCON,
-+    R_LINBTIMER,
-+    R_LINHTIMER,
-+    R_FLAGS,
-+    R_FLAGSSET,
-+    R_FLAGSCLEAR,
-+    R_FLAGSENABLE,
-+    R_TXDATA,
-+    R_RXDATA,
-+    R_CSR,
-+    R_RXDATAD,
++    R_RESERVED2,
++    R_TIM0,
++    R_TIM1,
++    R_TIM2,
++    R_TIM3,
++    R_TIM4,
++    R_TIM5,
++    R_TIM6,
++    R_CAP,
++    R_CMP0,
++    R_CMP1,
++    R_CMCON,
++    R_ICR,
++    R_ISCR,
++    R_RESERVED3,
++    R_TIM0SV  = 0x50 / 4,
++    R_CAPSV,
++    R_RESERVED4,
++    R_OCS     = 0xE8 / 4,
++    R_KRSTCLR,
++    R_KRST1,
++    R_KRST0,
++    R_ACCEN1,
++    R_ACCEN0,
 +};
 +
-+/* FLAGS register bits */
-+#define ASCLIN_FLAGS_TH     (1u << 0)
-+#define ASCLIN_FLAGS_TR     (1u << 1)
-+#define ASCLIN_FLAGS_RH     (1u << 2)
-+#define ASCLIN_FLAGS_RR     (1u << 3)
-+#define ASCLIN_FLAGS_FED    (1u << 5)
-+#define ASCLIN_FLAGS_RED    (1u << 6)
-+#define ASCLIN_FLAGS_PE     (1u << 16)
-+#define ASCLIN_FLAGS_TC     (1u << 17)
-+#define ASCLIN_FLAGS_FE     (1u << 18)
-+#define ASCLIN_FLAGS_HT     (1u << 19)
-+#define ASCLIN_FLAGS_RT     (1u << 20)
-+#define ASCLIN_FLAGS_BD     (1u << 21)
-+#define ASCLIN_FLAGS_LP     (1u << 22)
-+#define ASCLIN_FLAGS_LA     (1u << 23)
-+#define ASCLIN_FLAGS_LC     (1u << 24)
-+#define ASCLIN_FLAGS_CE     (1u << 25)
-+#define ASCLIN_FLAGS_RFO    (1u << 26)
-+#define ASCLIN_FLAGS_RFU    (1u << 27)
-+#define ASCLIN_FLAGS_RFL    (1u << 28)
-+#define ASCLIN_FLAGS_TFO    (1u << 30)
-+#define ASCLIN_FLAGS_TFL    (1u << 31)
++#define MASK_ICR_CMP0EN     0x01
++#define MASK_ICR_CMP0IR     0x02
++#define MASK_ICR_CMP1IR     0x20
 +
-+/* RXFIFOCON bits */
-+#define ASCLIN_RXFIFOCON_FLUSH  0x1
-+#define ASCLIN_RXFIFOCON_ENI    0x2
++#define MASK_ISCR_CMP0IRR   0x1
++#define MASK_ISCR_CMP0IRS   0x2
++#define MASK_ISCR_CMP1IRR   0x4
++#define MASK_ISCR_CMP1IRS   0x8
 +
-+/* TXFIFOCON.INW: bytes written to the Tx FIFO per bus write */
-+#define ASCLIN_TXFIFOCON_INW_SHIFT  6
-+#define ASCLIN_TXFIFOCON_INW_MASK   (0x3u << ASCLIN_TXFIFOCON_INW_SHIFT)
++#define MASK_CMCON_MSIZE0   0x1F
++#define MASK_CMCON_MSTART0  0x1F00
 +
-+/* Interrupt line grouping masks */
-+#define ASCLIN_TX_INT_MASK  (ASCLIN_FLAGS_TH | ASCLIN_FLAGS_TR | \
-+                             ASCLIN_FLAGS_TFL)
-+#define ASCLIN_RX_INT_MASK  (ASCLIN_FLAGS_RH | ASCLIN_FLAGS_RR | \
-+                             ASCLIN_FLAGS_RFL)
-+#define ASCLIN_ERR_INT_MASK (ASCLIN_FLAGS_FED | ASCLIN_FLAGS_RED | \
-+                             ASCLIN_FLAGS_PE  | ASCLIN_FLAGS_TC  | \
-+                             ASCLIN_FLAGS_FE  | ASCLIN_FLAGS_HT  | \
-+                             ASCLIN_FLAGS_RT  | ASCLIN_FLAGS_BD  | \
-+                             ASCLIN_FLAGS_LP  | ASCLIN_FLAGS_LA  | \
-+                             ASCLIN_FLAGS_LC  | ASCLIN_FLAGS_CE  | \
-+                             ASCLIN_FLAGS_RFO | ASCLIN_FLAGS_RFU | \
-+                             ASCLIN_FLAGS_TFO)
++/* Reset values */
++#define RESET_TRICORE_STM_CLC       0x0
++#define RESET_TRICORE_STM_ID        0x0000C000
++#define RESET_TRICORE_STM_TIM0      0x0
++#define RESET_TRICORE_STM_TIM1      0x0
++#define RESET_TRICORE_STM_TIM2      0x0
++#define RESET_TRICORE_STM_TIM3      0x0
++#define RESET_TRICORE_STM_TIM4      0x0
++#define RESET_TRICORE_STM_TIM5      0x0
++#define RESET_TRICORE_STM_TIM6      0x0
++#define RESET_TRICORE_STM_CAP       0x0
++#define RESET_TRICORE_STM_CMP0      0x0
++#define RESET_TRICORE_STM_CMP1      0x0
++#define RESET_TRICORE_STM_CMCON     0x0
++#define RESET_TRICORE_STM_ICR       0x0
++#define RESET_TRICORE_STM_ISCR      0x0
++#define RESET_TRICORE_STM_TIM0SV    0x0
++#define RESET_TRICORE_STM_CAPSV     0x0
++#define RESET_TRICORE_STM_OCS       0x0
++#define RESET_TRICORE_STM_KRSTCLR   0x0
++#define RESET_TRICORE_STM_KRST1     0x0
++#define RESET_TRICORE_STM_KRST0     0x0
++#define RESET_TRICORE_STM_ACCEN1    0x0
++#define RESET_TRICORE_STM_ACCEN0    0xFFFFFFFF
 +
-+/* FIFO depth and FILL field position in TX/RXFIFOCON */
-+#define ASCLIN_HW_FIFO_DEPTH    16
-+#define ASCLIN_FILL_SHIFT       16
-+#define ASCLIN_FILL_MASK        (0x1fu << ASCLIN_FILL_SHIFT)
-+
-+static void asclin_rx_buf_reset(TriCoreASCLINState *s)
++static void tricore_stm_tim_update(TriCoreSTMState *s)
 +{
-+    memset(s->rxbuf, 0, ASCLIN_RX_BUF_SIZE);
-+    s->rx_rdidx = 0;
-+    s->rx_wridx = 0;
++    int64_t now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++
++    s->tim_counter += clock_ns_to_ticks(s->fstm, now - s->tim_base_ns);
++    s->tim_base_ns = now;
 +}
 +
-+static uint32_t asclin_rx_buf_used(TriCoreASCLINState *s)
++static void tricore_stm_timer_update(TriCoreSTMState *s)
 +{
-+    return ((s->rx_wridx + ASCLIN_RX_BUF_SIZE) - s->rx_rdidx)
-+           % ASCLIN_RX_BUF_SIZE;
-+}
++    uint32_t mstart = (s->regs[R_CMCON] & MASK_CMCON_MSTART0) >> 8;
++    uint32_t msize = s->regs[R_CMCON] & MASK_CMCON_MSIZE0;
++    uint32_t nbits = msize + 1;
++    uint64_t tim_target = s->tim_counter;
 +
-+static uint32_t asclin_rx_buf_free(TriCoreASCLINState *s)
-+{
-+    return (ASCLIN_RX_BUF_SIZE - 1) - asclin_rx_buf_used(s);
-+}
-+
-+/*
-+ * Pulse the appropriate IRQ line for each flag bit that is both
-+ * set and enabled.  The TriCore interrupt router is edge-triggered.
-+ */
-+static void asclin_pulse_irq(TriCoreASCLINState *s, uint32_t pulse_mask)
-+{
-+    uint32_t fired = pulse_mask & s->regs[R_FLAGSENABLE];
-+
-+    if (fired & ASCLIN_TX_INT_MASK) {
-+        qemu_irq_pulse(s->irq_tx);
-+    }
-+    if (fired & ASCLIN_RX_INT_MASK) {
-+        qemu_irq_pulse(s->irq_rx);
-+    }
-+    if (fired & ASCLIN_ERR_INT_MASK) {
-+        qemu_irq_pulse(s->irq_err);
-+    }
-+}
-+
-+static unsigned asclin_tx_inlet_bytes(TriCoreASCLINState *s)
-+{
-+    static const uint8_t inw_bytes[] = { 0, 1, 2, 4 };
-+
-+    return inw_bytes[(s->regs[R_TXFIFOCON] & ASCLIN_TXFIFOCON_INW_MASK) >>
-+                     ASCLIN_TXFIFOCON_INW_SHIFT];
-+}
-+
-+/*
-+ * Watch callback: retries TX when the chardev was previously busy.
-+ */
-+static gboolean asclin_tx_watch(void *do_not_use, GIOCondition cond,
-+                                void *opaque)
-+{
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
-+    int ret;
-+
-+    s->watch_tag = 0;
-+
-+    ret = qemu_chr_fe_write_all(&s->chr, (uint8_t *)&s->txbuf,
-+                                asclin_tx_inlet_bytes(s));
-+    if (ret <= 0) {
-+        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
-+                                             G_IO_OUT | G_IO_HUP,
-+                                             asclin_tx_watch, s);
-+        if (!s->watch_tag) {
-+            goto drained;
-+        }
-+        return G_SOURCE_REMOVE;
-+    }
-+
-+drained:
-+    qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
-+    asclin_pulse_irq(s, ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
-+    return G_SOURCE_REMOVE;
-+}
-+
-+/*
-+ * Transmit TXFIFOCON.INW bytes immediately.  Re-asserts TFL and TC flags
-+ * so that interrupt-driven drivers can continue filling the FIFO.
-+ */
-+static void asclin_txdata_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    unsigned len = asclin_tx_inlet_bytes(s);
-+    int ret;
-+
-+    if (!len) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: TXFIFOCON.INW is 0, data dropped\n", __func__);
++    if (!(s->regs[R_ICR] & MASK_ICR_CMP0EN) &&
++        (s->regs[R_ICR] & MASK_ICR_CMP0IR)) {
 +        return;
 +    }
 +
-+    s->txbuf = cpu_to_le32(value);
-+    ret = qemu_chr_fe_write_all(&s->chr, (uint8_t *)&s->txbuf, len);
-+    if (ret <= 0) {
-+        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
-+                                             G_IO_OUT | G_IO_HUP,
-+                                             asclin_tx_watch, s);
-+        if (!s->watch_tag) {
-+            goto drained;
++    /* Calculate the target TIM value */
++    if (mstart) {
++        tim_target = deposit64(tim_target, 0, mstart, 0);
++    }
++    tim_target = deposit64(tim_target, mstart, nbits,
++                           (uint64_t)s->regs[R_CMP0]);
++
++    /* Wrap around if needed */
++    if (tim_target <= s->tim_counter) {
++        tim_target += (1ULL << (mstart + nbits));
++    }
++
++    timer_mod(s->timer,
++              s->tim_base_ns +
++              clock_ticks_to_ns(s->fstm, tim_target - s->tim_counter));
++}
++
++static void tricore_stm_clock_update(void *opaque, enum ClockEvent event)
++{
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++
++    if (event == ClockPreUpdate) {
++        tricore_stm_tim_update(s);
++    } else {
++        tricore_stm_timer_update(s);
++    }
++}
++
++static void tricore_stm_write(void *opaque, hwaddr offset,
++                              uint64_t value, unsigned size)
++{
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++    hwaddr reg_addr = offset >> 2;
++
++    switch (reg_addr) {
++    case R_CLC:
++    case R_ID:
++    case R_TIM0:
++    case R_TIM1:
++    case R_TIM2:
++    case R_TIM3:
++    case R_TIM4:
++    case R_TIM5:
++    case R_TIM6:
++    case R_CAP:
++        s->regs[reg_addr] = value;
++        break;
++    case R_CMP0:
++        s->regs[reg_addr] = value;
++        tricore_stm_tim_update(s);
++        tricore_stm_timer_update(s);
++        break;
++    case R_CMP1:
++    case R_ICR:
++        s->regs[reg_addr] = value;
++        tricore_stm_timer_update(s);
++        break;
++    case R_CMCON:
++        s->regs[reg_addr] = value;
++        tricore_stm_tim_update(s);
++        tricore_stm_timer_update(s);
++        break;
++    case R_ISCR:
++        if (value & MASK_ISCR_CMP0IRR) {
++            qatomic_and(&s->regs[R_ICR], ~MASK_ICR_CMP0IR);
 +        }
-+        return;
-+    }
-+
-+drained:
-+    qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
-+    asclin_pulse_irq(s, ASCLIN_FLAGS_TFL | ASCLIN_FLAGS_TC);
-+}
-+
-+static void asclin_txfifocon_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    /* FILL field is read-only hardware status */
-+    s->regs[R_TXFIFOCON] = value & ~(ASCLIN_FILL_MASK | ASCLIN_RXFIFOCON_FLUSH);
-+}
-+
-+static uint32_t asclin_txfifocon_read(TriCoreASCLINState *s)
-+{
-+    /* Instant-TX model: FILL always reads as 0 */
-+    return s->regs[R_TXFIFOCON] & ~ASCLIN_FILL_MASK;
-+}
-+
-+static void asclin_rxfifocon_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    s->regs[R_RXFIFOCON] = value & ~(ASCLIN_FILL_MASK | ASCLIN_RXFIFOCON_FLUSH);
-+
-+    if (value & ASCLIN_RXFIFOCON_FLUSH) {
-+        asclin_rx_buf_reset(s);
-+    }
-+    if (value & ASCLIN_RXFIFOCON_ENI) {
-+        qemu_chr_fe_accept_input(&s->chr);
++        if (value & MASK_ISCR_CMP1IRR) {
++            qatomic_and(&s->regs[R_ICR], ~MASK_ICR_CMP1IR);
++        }
++        if (value & MASK_ISCR_CMP0IRS) {
++            qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP0IR);
++        }
++        if (value & MASK_ISCR_CMP1IRS) {
++            qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP1IR);
++        }
++        tricore_stm_timer_update(s);
++        break;
++    case R_TIM0SV:
++    case R_CAPSV:
++    case R_OCS:
++    case R_KRSTCLR:
++    case R_KRST1:
++    case R_KRST0:
++    case R_ACCEN1:
++    case R_ACCEN0:
++        s->regs[reg_addr] = value;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "tricore_stm: write to unknown register 0x%"
++                      HWADDR_PRIx "\n", offset);
++        break;
 +    }
 +}
 +
-+static uint32_t asclin_rxfifocon_read(TriCoreASCLINState *s)
++static uint64_t tricore_stm_read(void *opaque, hwaddr offset,
++                                 unsigned size)
 +{
-+    uint32_t used = asclin_rx_buf_used(s);
-+    uint32_t fill = MIN(used, ASCLIN_HW_FIFO_DEPTH);
++    TriCoreSTMState *s = TRICORE_STM(opaque);
++    uint64_t r = 0;
++    hwaddr reg_addr = offset >> 2;
 +
-+    return (s->regs[R_RXFIFOCON] & ~ASCLIN_FILL_MASK) |
-+           (fill << ASCLIN_FILL_SHIFT);
-+}
-+
-+static uint32_t asclin_rxdata_read(TriCoreASCLINState *s, bool peek)
-+{
-+    uint32_t r;
-+
-+    if (s->rx_rdidx == s->rx_wridx) {
-+        return 0;
++    if ((reg_addr >= R_TIM0 && reg_addr <= R_TIM6) ||
++        reg_addr == R_TIM0SV) {
++        tricore_stm_tim_update(s);
++        s->regs[R_CAP] = (uint32_t)(s->tim_counter >> 32);
 +    }
 +
-+    r = s->rxbuf[s->rx_rdidx];
-+    if (!peek) {
-+        s->rx_rdidx = (s->rx_rdidx + 1) % ASCLIN_RX_BUF_SIZE;
++    switch (reg_addr) {
++    case R_CLC:
++    case R_ID:
++        r = s->regs[reg_addr];
++        break;
++    case R_TIM0:
++    case R_TIM1:
++    case R_TIM2:
++    case R_TIM3:
++    case R_TIM4:
++    case R_TIM5:
++    case R_TIM6:
++        r = s->tim_counter << (reg_addr - R_TIM0) * 4;
++        break;
++    case R_CAP:
++        r = s->regs[R_CAP];
++        break;
++    case R_ISCR:
++        r = 0;
++        break;
++    case R_CMP0:
++    case R_CMP1:
++    case R_CMCON:
++    case R_ICR:
++        r = s->regs[reg_addr];
++        break;
++    case R_TIM0SV:
++        r = s->tim_counter;
++        break;
++    case R_CAPSV:
++        r = s->regs[R_CAP];
++        break;
++    case R_OCS:
++    case R_KRSTCLR:
++    case R_KRST1:
++    case R_KRST0:
++    case R_ACCEN1:
++    case R_ACCEN0:
++        r = s->regs[reg_addr];
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "tricore_stm: read from unknown register 0x%"
++                      HWADDR_PRIx "\n", offset);
++        r = 0;
++        break;
 +    }
++
 +    return r;
 +}
 +
-+static uint32_t asclin_csr_read(TriCoreASCLINState *s)
++static void tricore_stm_reset(DeviceState *dev)
 +{
-+    uint32_t csr = s->regs[R_CSR];
++    TriCoreSTMState *s = TRICORE_STM(dev);
 +
-+    /* CLKSEL valid: set CON bit (bit 31) when a clock is selected */
-+    if (csr & 0x1f) {
-+        csr |= (1u << 31);
-+    }
-+    return csr;
++    s->regs[R_CLC] = RESET_TRICORE_STM_CLC;
++    s->regs[R_ID] = RESET_TRICORE_STM_ID;
++    s->regs[R_TIM0] = RESET_TRICORE_STM_TIM0;
++    s->regs[R_TIM1] = RESET_TRICORE_STM_TIM1;
++    s->regs[R_TIM2] = RESET_TRICORE_STM_TIM2;
++    s->regs[R_TIM3] = RESET_TRICORE_STM_TIM3;
++    s->regs[R_TIM4] = RESET_TRICORE_STM_TIM4;
++    s->regs[R_TIM5] = RESET_TRICORE_STM_TIM5;
++    s->regs[R_TIM6] = RESET_TRICORE_STM_TIM6;
++    s->regs[R_CAP] = RESET_TRICORE_STM_CAP;
++    s->regs[R_CMP0] = RESET_TRICORE_STM_CMP0;
++    s->regs[R_CMP1] = RESET_TRICORE_STM_CMP1;
++    s->regs[R_CMCON] = RESET_TRICORE_STM_CMCON;
++    s->regs[R_ICR] = RESET_TRICORE_STM_ICR;
++    s->regs[R_ISCR] = RESET_TRICORE_STM_ISCR;
++    s->regs[R_TIM0SV] = RESET_TRICORE_STM_TIM0SV;
++    s->regs[R_CAPSV] = RESET_TRICORE_STM_CAPSV;
++    s->regs[R_OCS] = RESET_TRICORE_STM_OCS;
++    s->regs[R_KRSTCLR] = RESET_TRICORE_STM_KRSTCLR;
++    s->regs[R_KRST1] = RESET_TRICORE_STM_KRST1;
++    s->regs[R_KRST0] = RESET_TRICORE_STM_KRST0;
++    s->regs[R_ACCEN1] = RESET_TRICORE_STM_ACCEN1;
++    s->regs[R_ACCEN0] = RESET_TRICORE_STM_ACCEN0;
++
++    s->tim_counter = 0;
++    s->tim_base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
 +}
 +
-+static void asclin_flagsset_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    qatomic_or(&s->regs[R_FLAGS], value);
-+    asclin_pulse_irq(s, value);
-+}
-+
-+static void asclin_flagsclear_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    qatomic_and(&s->regs[R_FLAGS], ~value);
-+}
-+
-+/*
-+ * FLAGSENABLE write: newly-enabled bits whose FLAGS is already set
-+ * must produce a rising edge on the corresponding interrupt line.
-+ */
-+static void asclin_flagsenable_write(TriCoreASCLINState *s, uint32_t value)
-+{
-+    uint32_t old_en = s->regs[R_FLAGSENABLE];
-+    uint32_t newly_enabled = value & ~old_en;
-+
-+    s->regs[R_FLAGSENABLE] = value;
-+    asclin_pulse_irq(s, newly_enabled & s->regs[R_FLAGS]);
-+}
-+
-+static uint32_t asclin_reg_read(TriCoreASCLINState *s, hwaddr offset)
-+{
-+    hwaddr reg = offset >> 2;
-+
-+    switch (reg) {
-+    case R_CLC:
-+    case R_IOCR:
-+    case R_ID:
-+    case R_BITCON:
-+    case R_FRAMECON:
-+    case R_DATCON:
-+    case R_BRG:
-+    case R_BRD:
-+    case R_LINCON:
-+    case R_LINBTIMER:
-+    case R_LINHTIMER:
-+    case R_FLAGS:
-+    case R_FLAGSENABLE:
-+        return s->regs[reg];
-+    case R_TXFIFOCON:
-+        return asclin_txfifocon_read(s);
-+    case R_RXFIFOCON:
-+        return asclin_rxfifocon_read(s);
-+    case R_FLAGSSET:
-+    case R_FLAGSCLEAR:
-+        return 0;
-+    case R_TXDATA:
-+        return 0;
-+    case R_RXDATA:
-+        return asclin_rxdata_read(s, false);
-+    case R_CSR:
-+        return asclin_csr_read(s);
-+    case R_RXDATAD:
-+        return asclin_rxdata_read(s, true);
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: read from unknown offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
-+        return 0;
-+    }
-+}
-+
-+static uint64_t asclin_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    TriCoreASCLINState *s = opaque;
-+
-+    return extract32(asclin_reg_read(s, offset), (offset & 3) * 8, size * 8);
-+}
-+
-+static void asclin_write(void *opaque, hwaddr offset, uint64_t value,
-+                         unsigned size)
-+{
-+    TriCoreASCLINState *s = opaque;
-+    hwaddr reg = offset >> 2;
-+    unsigned shift = (offset & 3) * 8;
-+    uint32_t val;
-+
-+    /*
-+     * 8/16-bit writes: merge into the stored register, except for the
-+     * write-only action registers where unwritten bytes must stay 0.
-+     */
-+    if (reg >= ASCLIN_R_MAX || reg == R_FLAGSSET || reg == R_FLAGSCLEAR ||
-+        reg == R_TXDATA) {
-+        val = value << shift;
-+    } else {
-+        val = deposit32(s->regs[reg], shift, size * 8, value);
-+    }
-+
-+    switch (reg) {
-+    case R_CLC:
-+    case R_IOCR:
-+    case R_ID:
-+    case R_BITCON:
-+    case R_FRAMECON:
-+    case R_DATCON:
-+    case R_BRG:
-+    case R_BRD:
-+    case R_LINCON:
-+    case R_LINBTIMER:
-+    case R_LINHTIMER:
-+        s->regs[reg] = val;
-+        break;
-+    case R_TXFIFOCON:
-+        asclin_txfifocon_write(s, val);
-+        break;
-+    case R_RXFIFOCON:
-+        asclin_rxfifocon_write(s, val);
-+        break;
-+    case R_FLAGS:
-+        /* read-only hardware status */
-+        break;
-+    case R_FLAGSSET:
-+        asclin_flagsset_write(s, val);
-+        break;
-+    case R_FLAGSCLEAR:
-+        asclin_flagsclear_write(s, val);
-+        break;
-+    case R_FLAGSENABLE:
-+        asclin_flagsenable_write(s, val);
-+        break;
-+    case R_TXDATA:
-+        asclin_txdata_write(s, val);
-+        break;
-+    case R_RXDATA:
-+    case R_RXDATAD:
-+        /* read-only */
-+        break;
-+    case R_CSR:
-+        s->regs[R_CSR] = val;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write to unknown offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps asclin_ops = {
-+    .read = asclin_read,
-+    .write = asclin_write,
++static const MemoryRegionOps tricore_stm_ops = {
++    .read = tricore_stm_read,
++    .write = tricore_stm_write,
 +    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
++        .min_access_size = 4,
 +        .max_access_size = 4,
 +    },
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +};
 +
-+static void asclin_uart_rx(void *opaque, const uint8_t *buf, int size)
++static void tricore_stm_timer_hit(void *opaque)
 +{
-+    TriCoreASCLINState *s = opaque;
++    TriCoreSTMState *s = TRICORE_STM(opaque);
 +
-+    while (size > 0) {
-+        if (asclin_rx_buf_free(s) == 0) {
-+            qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_RFO);
-+            asclin_pulse_irq(s, ASCLIN_FLAGS_RFO);
-+            break;
-+        }
-+        s->rxbuf[s->rx_wridx] = *buf++;
-+        s->rx_wridx = (s->rx_wridx + 1) % ASCLIN_RX_BUF_SIZE;
-+        size--;
++    qatomic_or(&s->regs[R_ICR], MASK_ICR_CMP0IR);
++
++    if (s->regs[R_ICR] & MASK_ICR_CMP0EN) {
++        qemu_irq_pulse(s->irq);
 +    }
 +
-+    if (s->rx_rdidx != s->rx_wridx) {
-+        qatomic_or(&s->regs[R_FLAGS], ASCLIN_FLAGS_RFL);
-+        asclin_pulse_irq(s, ASCLIN_FLAGS_RFL);
-+    }
++    tricore_stm_tim_update(s);
++    tricore_stm_timer_update(s);
 +}
 +
-+static int asclin_uart_can_rx(void *opaque)
++static void tricore_stm_realize(DeviceState *dev, Error **errp)
 +{
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
++    TriCoreSTMState *s = TRICORE_STM(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
 +
-+    if ((s->regs[R_RXFIFOCON] & ASCLIN_RXFIFOCON_ENI) &&
-+        asclin_rx_buf_free(s) > 0) {
-+        return 1;
-+    }
-+    return 0;
-+}
++    s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, tricore_stm_timer_hit, s);
++    s->tim_base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    s->tim_counter = 0;
 +
-+static void asclin_uart_reset_hold(Object *obj, ResetType type)
-+{
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(obj);
-+    int i;
-+
-+    for (i = 0; i < ASCLIN_R_MAX; i++) {
-+        s->regs[i] = 0;
-+    }
-+    asclin_rx_buf_reset(s);
-+}
-+
-+static void asclin_uart_realize(DeviceState *dev, Error **errp)
-+{
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(dev);
-+
-+    qemu_chr_fe_set_handlers(&s->chr, asclin_uart_can_rx,
-+                             asclin_uart_rx, NULL,
-+                             NULL, s, NULL, true);
-+}
-+
-+static void asclin_uart_init(Object *obj)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &asclin_ops, s,
-+                          TYPE_TRICORE_ASCLIN, 0x100);
 +    sysbus_init_mmio(sbd, &s->iomem);
-+    sysbus_init_irq(sbd, &s->irq_rx);
-+    sysbus_init_irq(sbd, &s->irq_tx);
-+    sysbus_init_irq(sbd, &s->irq_err);
++    sysbus_init_irq(sbd, &s->irq);
 +}
 +
-+static int asclin_uart_post_load(void *opaque, int version_id)
++static void tricore_stm_init(Object *obj)
 +{
-+    TriCoreASCLINState *s = TRICORE_ASCLIN(opaque);
++    TriCoreSTMState *s = TRICORE_STM(obj);
 +
-+    if (s->regs[R_FLAGS] & ASCLIN_FLAGS_TFL) {
-+        s->watch_tag = qemu_chr_fe_add_watch(&s->chr,
-+                                             G_IO_OUT | G_IO_HUP,
-+                                             asclin_tx_watch, s);
-+    }
-+    return 0;
++    memory_region_init_io(&s->iomem, OBJECT(s), &tricore_stm_ops, s,
++                          "tricore_stm", 0x100);
++    s->fstm = qdev_init_clock_in(DEVICE(s), "fstm",
++                                 tricore_stm_clock_update, s,
++                                 ClockPreUpdate | ClockUpdate);
 +}
 +
-+static const VMStateDescription vmstate_asclin_uart = {
-+    .name = TYPE_TRICORE_ASCLIN,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = asclin_uart_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, TriCoreASCLINState, ASCLIN_R_MAX),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static const Property asclin_uart_properties[] = {
-+    DEFINE_PROP_CHR("chardev", TriCoreASCLINState, chr),
-+};
-+
-+static void asclin_uart_class_init(ObjectClass *klass, const void *data)
++static void tricore_stm_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    dc->realize = asclin_uart_realize;
-+    rc->phases.hold = asclin_uart_reset_hold;
-+    dc->vmsd = &vmstate_asclin_uart;
-+    device_class_set_props(dc, asclin_uart_properties);
++    dc->legacy_reset = tricore_stm_reset;
++    dc->realize = tricore_stm_realize;
 +}
 +
-+static const TypeInfo asclin_uart_info = {
-+    .name = TYPE_TRICORE_ASCLIN,
++static const TypeInfo tricore_stm_info = {
++    .name = TYPE_TRICORE_STM,
 +    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(TriCoreASCLINState),
-+    .instance_init = asclin_uart_init,
-+    .class_init = asclin_uart_class_init,
++    .instance_size = sizeof(TriCoreSTMState),
++    .instance_init = tricore_stm_init,
++    .class_init = tricore_stm_class_init,
 +};
 +
-+static void asclin_uart_register_types(void)
++static void tricore_stm_register_types(void)
 +{
-+    type_register_static(&asclin_uart_info);
++    type_register_static(&tricore_stm_info);
 +}
 +
-+type_init(asclin_uart_register_types)
-diff --git a/include/hw/char/tricore_asclin.h b/include/hw/char/tricore_asclin.h
++type_init(tricore_stm_register_types)
+diff --git a/include/hw/timer/tricore_stm.h b/include/hw/timer/tricore_stm.h
 new file mode 100644
-index 0000000000..50642fd0f8
+index 0000000000..b9a0538963
 --- /dev/null
-+++ b/include/hw/char/tricore_asclin.h
-@@ -0,0 +1,41 @@
++++ b/include/hw/timer/tricore_stm.h
+@@ -0,0 +1,34 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * TriCore ASCLIN (Asynchronous/Synchronous Interface) UART controller
++ * QEMU TriCore System Timer Module (STM)
 + *
-+ * Copyright (c) 2017 David Brenken <david.brenken@efs-auto.de>
-+ * Copyright (c) 2024 Siemens AG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (c) 2024 Infineon Technologies AG
 + */
 +
-+#ifndef HW_TRICORE_ASCLIN_H
-+#define HW_TRICORE_ASCLIN_H
++#ifndef HW_TRICORE_STM_H
++#define HW_TRICORE_STM_H
 +
-+#include "chardev/char-fe.h"
++#include "hw/core/clock.h"
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
++#include "qemu/timer.h"
 +
-+#define ASCLIN_R_MAX        21
-+#define ASCLIN_RX_BUF_SIZE  8192
++#define TYPE_TRICORE_STM "tricore_stm"
++OBJECT_DECLARE_SIMPLE_TYPE(TriCoreSTMState, TRICORE_STM)
 +
-+#define TYPE_TRICORE_ASCLIN "tricore_asclin"
-+OBJECT_DECLARE_SIMPLE_TYPE(TriCoreASCLINState, TRICORE_ASCLIN)
++#define STM_R_MAX           (0x100 / 4)
 +
-+struct TriCoreASCLINState {
++struct TriCoreSTMState {
 +    SysBusDevice parent_obj;
 +
 +    MemoryRegion iomem;
-+    CharFrontend chr;
-+    qemu_irq irq_rx;
-+    qemu_irq irq_tx;
-+    qemu_irq irq_err;
++    QEMUTimer *timer;
++    Clock *fstm;
++    qemu_irq irq;
 +
-+    guint watch_tag;
-+    uint32_t regs[ASCLIN_R_MAX];
-+    uint32_t txbuf;
-+
-+    uint8_t rxbuf[ASCLIN_RX_BUF_SIZE];
-+    uint32_t rx_wridx;
-+    uint32_t rx_rdidx;
++    uint32_t regs[STM_R_MAX];
++    uint64_t tim_counter;
++    int64_t tim_base_ns;
 +};
 +
-+#endif
++#endif /* HW_TRICORE_STM_H */
 
 -- 
 2.47.3
