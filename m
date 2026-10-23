@@ -1,90 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B69E606A31A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 08:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62823606A31A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 09:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=wdV40zej
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oqRMqC/q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKAvD-0005nb-W6; Fri, 23 Oct 2026 04:46:44 -0400
+	id 1xKBCD-0008Rt-8U; Fri, 23 Oct 2026 05:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKAv4-0005kv-OG
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:46:37 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1xKBCC-0008Rf-4f
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:04:16 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKAv1-0002gl-Q7
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 04:46:34 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-48e20ed3b9dso504970f8f.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 01:46:29 -0700 (PDT)
+ id 1xKBCA-0004h5-Cd
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 05:04:15 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-8b09e07e149so6037517b3.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 02:04:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792746253; cv=none;
+ d=google.com; s=arc-20260327;
+ b=fZOdUVcqmOobwuaaucbu98Fzjj+QxwTkzsHB2+hfpDAFQsm7thE2+u3elaViJhaSHy
+ /BLGXNTmixod7LifSoADxtgjQdUYqD4vaoO8CFYLxcQSFxOBidl0D+rEnJFtNnofSMNg
+ 1k24jEx3HkaZqIRMEgQldlaY/2fTuso7EGkD07M9ZWMogYNuh2fZdLJtn78NxmrjCbGK
+ VAc4bNz0AzTNyn+oq3sg5mFkqrARVFsBSxIaZ4HKonARUzj/MrTnPOR5R/QUh0kdrILi
+ C2OK++gxbcKE4OSWVorbncMiKegUp+qACM2xpQ6Mb6tLF4rFiZelwG66u4JK33EzWAbr
+ yhtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Os6ZGdyP1xZgWKkKP2tEW6WxnVaIoC5joHapGphjUA4=;
+ fh=BKDbynig6z8bGWxdtJN665Y7PKmXnL7W9fHt/EQT2S4=;
+ b=LjsdSmorFP6kPL1G7uWGLrrA3pKi6RX0m+NrYkoXDySW3UqU66ZsbUeGlR3wSBDhWh
+ H8YW+N34In6Bp3o6wttM0qjVTbdQUbkLcldb7DgqvjjNJ7g6yqrFnFVHq9NFJ/1vO2yN
+ k3NwH1WLU+3P5llHAtHe1RaUDz+kqPmO50zznG/R5E5o2YYrLKLYRUqfT+6cblFSQy3y
+ L6u7/stWFyU+6v9wCigEo7kVc+9IYxxw6hGG4St6Jmw/D2uSBQSlZvQIgstlTMXRiKaF
+ vhdL51sGtmolCHSyP4mi+V5nSBCLCFGcbpsYR601clgP9G5jqr8kbcxg+KrGSvLPjNY4
+ ZwLg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792745188; x=1793349988; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=D6qAmQw1v40FmaaCYxocryhRTXKhVgPq3CvD3sqy214=;
- b=wdV40zejM0ZNqyVoaELhNFXk92LNpBVr9iEmxHXE4akCSHWwFWHc6qXKCFpEBhQBGs
- bXE5lTP6o/uJDDhUg+tjxnWM0Pycd6g6cTJ0EFNUKakDUcyUxTmWE126XMG73VrALs0z
- SdVmliTACqoU+fEJuvyFsh3weAs+S8YU0g5Gl7drgYiNYXlym4ERgB+5trMe73jDAP8o
- 1WPYm9wuXF/4rmQP4Yzdh5RCCI30HMsNA2b00qTS1s3C0Kw/K2PW3SxNYkTb1XvjFK70
- ykkeWNJxOg0m+2xQM/bz4ajArhf4YuPF/oF9PSL2FCsW/dkXd8XN2yaLPU59FSPapAU9
- /4Yg==
+ d=linaro.org; s=google; t=1792746253; x=1793351053; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Os6ZGdyP1xZgWKkKP2tEW6WxnVaIoC5joHapGphjUA4=;
+ b=oqRMqC/qnmBAuhKoTDICwqyR4n3/L/gNFmnLC5LXdJdDpOlxEaqi5egnxn6ZdtNsql
+ Kt5ULXVksOOV/++QJhmMPFNWHthbPRKn1S07X8ZH3hudwr3ICgrGzLchrgDqpvmKgfQj
+ DPa8tPghgZNd+Z73649TiSbSxE7tG3+j0obHtq+jxNhxkAJ8rSVLKErCA8v0NWUhdig3
+ DDhUqi6J1uFUxZ+QOlBl7ifta1Y/oI6Np3KS2bd8StD7ukvvKIhymcLoQ40z13n65DD8
+ W3LWPj4GzNtSEmNNdVUrSyUnDS2mreGlT9zmvs9LrpcllgD5btQGJYPEGp12CZ1ej3b0
+ oURA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792745188; x=1793349988;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=D6qAmQw1v40FmaaCYxocryhRTXKhVgPq3CvD3sqy214=;
- b=vAgClzT3yKrBKbf1XRz/PMEAadY01sihAj7F+4vpaj0RMMKz6O6OepL5l6Dvouiwsv
- 8JLNyVFDO3nPH6yfkJ5aHzVXo6mrEhPDDL6hmW8B/wzRVImel4wcWQR2eGaO3Zyn/ef1
- brqtDz9B2DkjzgBGUiJRcGuyhGJjK+b6zbQBHKHf7FjTptd2YmVv0Ym8L/Yvp3jxXzP0
- +j8pT7fQs+wwE7+zCDO4XRzvHV8fhpnksfSvMZtO3CsQCbbiZlO4B/adl5D/8OJQlTCv
- Cvl+0iXMw6NJ6vsNl3ZwNifWRfz7i07CGIZs2xkM8SqPxR/qFwNZQ967cmKEwqhyri+L
- Ij4Q==
-X-Gm-Message-State: AFq9FYI2Kf59EA6Y6zgOkk+vBcvjjw4xRilXaEeSPFdIPN4ZdEGYoUQa
- CdbBtOngZ9848+TcU/X/bAisp2e7P663OrkfCcEK7ujDUFuHJ1IJyK7smrBE8reujoZjz+RgggW
- bgzSIylw=
-X-Gm-Gg: AYBFou1aLVnsSl0blrjBMGu8YKg7BuRbfRfTYDpQ3M4QqXpjtzQDuq94wJB3/t5To4n
- UAyd8hXv4db2D1aXGQ2+3OFyOgHGedu+UxK8IkUFVYvzQVhp43hv9+K/aes7F91/pNKkXxW7dWF
- fB4cs5ipZM7TVXCu9kJayToXkWyVZ9xvjpUlVXyzAI9RT4jdavqdYsSr2eV/1f7RytQ8YGKhSyg
- ArRMNSKlbrvVFpZ83hGtHVsVgWugD1EwkZahYbWcUVGdTgCDdANuziHg37QJUEPgM9IxL3DQVhe
- A+H8fXSXaxxu+NDt7qs2IbYF+j2hh5byJ27gvB57IPEkVaVWs7X0A+ffELna8V+mO867wS2xyB5
- Zvdn+qMMcZ2cCtdPnwexECQd2WhkWX3orZTHTw9xmtQhHaySoNwil629ul9OJREReK2EGI019qz
- xal9QFaMK5yPXgoSJzgj1EpOhtzLPuvhimlwKyFXgVfrAc/XJtOcwFJq2X2pR8KrVuXOAFRRlDB
- l3VFP7f+dPkhBjL747y6tt5NjQEAzt5dcqmHCpT3ap1m0mUywkpBFHPv41yaRt5WQkzz8ioH/Qn
- RpYgjjAEdMVGkjx2BNVN/GVkXVZyXEgqA3ngXHwlibNzdyvwZIhFnXuURbX6
-X-Received: by 2002:a05:6000:220d:b0:48e:1e03:687f with SMTP id
- ffacd0b85a97d-48e385a79c6mr2731472f8f.31.1792745188234; 
- Fri, 23 Oct 2026 01:46:28 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3805c596sm3848197f8f.49.2026.10.23.01.46.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 01:46:26 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] hw/intc/hex-l2vic: avoid shift into sign bit
-Date: Fri, 23 Oct 2026 09:46:24 +0100
-Message-ID: <20261023084624.1063258-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20260707; t=1792746253; x=1793351053;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Os6ZGdyP1xZgWKkKP2tEW6WxnVaIoC5joHapGphjUA4=;
+ b=WoHYNRC5pXJA/xoVksSJOOAjq2SKDqijN0Gvfkza9sKJLKvS//IKMJHr6dd8kHR2UP
+ 5R1fys8sPFFaGhrASUbABA/VNc2Ba02S5QFPX9SRj3qRi/1ANw9KBdpyFcwfVHzbOgYp
+ 9XPzR0cBE1mILVBgR0MbLTuWXdGrMb4t+tkhuQyrjVzrmw8O2ivy6Os5xbv07yslv0QV
+ MmSn605Uv//sL3LKO//bOrUMWkM7biU/TtyR0tTxFkZkExjwAfQ6ww1mLcDFRfw8DQzU
+ ytFPP4ZIEIhC9y6+rKoNuvnKJldUir25TA+3w9L3vWS5ZzyrMmTp/KwDkP3VVDVFiQLJ
+ xGoQ==
+X-Gm-Message-State: AFq9FYKPqFr5GIWBTVWp4jxvCPzFi4amikMmn7rv6FwfSZXPqVG+B21d
+ uT9vHojJiHk3quAzhFVDG6a8cxfBQXK18W7R5O6GMRgBOCwcju7aDtLQKRfvdT4lYEigG7YLDl9
+ mp0LzzpkbKW6L9XCvns7tvbdf5WGgO1bvUQJJ2hm8IA==
+X-Gm-Gg: AYBFou0b1L4AIO5xvjkF8UPwA+2QeWsj4m3gblQl6raFwUVj/YPHXvV9qWJWGZ1pm3v
+ JGMEUqlDeUr6phx2rviFcgswbVW6j9G76c4oxA1F4G604ZSA5vRSz3jscBKsYNw/SF5vDTFYM2Q
+ tYB2kdfcuAt3A97/8GSz+trkYq4ymHPB0ncf+qrPHQFupQf2RcrrWjXG+EfEJuK1eeIxaY0PKFq
+ asuTVNvDMK56pPlT7Afxc1dEeVefa9xPz2aQfJBSyi15VaBfLrs0zNQC/Ncm6qwm6E7/LVsJDe3
+ P+nTEIPdyEQYYmN6nR5a0rWcSRsPKy5pYWE1iW1vyU1ppeGU+yNpFwIhG0X0amTmqWB4qs7/4If
+ TgTiGwMfnDq1EXCPJx7q5ZlBTPV3hlP5BcKFbjCZAh0xfGVNz+ii3om/kgrV7d/nfgR/6SLm1U2
+ 5/fwMDb4wOcw0WX13bzoi3
+X-Received: by 2002:a05:690c:d94:b0:8b0:df71:44d1 with SMTP id
+ 00721157ae682-8b157bc3377mr13355387b3.6.1792746252593; Fri, 23 Oct 2026
+ 02:04:12 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+References: <20261020211529.99689-1-conti.manuele@gmail.com>
+In-Reply-To: <20261020211529.99689-1-conti.manuele@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Oct 2026 10:04:01 +0100
+X-Gm-Features: AclHuK8qDtXOuSISYR0ttUn5MaoQGNLKPegAsm20y0fZbW4OotFmm-JnTxvy1TI
+Message-ID: <CAFEAcA-kevPYzVCMRXej27Z9ZK0FPneZFVjpwN30hS=WLAr20A@mail.gmail.com>
+Subject: Re: [PATCH] hw/adc/stm32f2xx_adc: fix left-aligned conversion results
+To: Manuele Conti <conti.manuele@gmail.com>
+Cc: qemu-devel@nongnu.org, alistair@alistair23.me, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,43 +111,31 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In fastl2vic_write() we do:
-   val = 1 << (irq % 32);
+On Tue, 20 Oct 2026 at 22:15, Manuele Conti <conti.manuele@gmail.com> wrote:
+>
+> Left-aligned regular conversion results must occupy bits [15:4],
+> [15:6], or [15:8] for 12-, 10-, or 8-bit resolution respectively.
+> At 6-bit resolution the result is aligned within a byte, in bits [7:2].
+>
+> The current single-bit shift and 0xFFF0 mask both misalign the result
+> and discard significant sample bits. Select the shift according to RES
+> and keep the existing right-aligned sample generation unchanged.
+>
+> Signed-off-by: Manuele Conti <conti.manuele@gmail.com>
+> ---
+>  hw/adc/stm32f2xx_adc.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
 
-Because '1' is a signed integer, this can shift into the sign
-bit of 'int'; the cast to uint64_t to assign to 'val' then
-results in all the high bits being set. This happens to cause
-no visible problems because l2vic_write never looks at those
-bits, but it's obviously not intended. Use 1ULL so that we
-do the shift as 64 bits unsigned.
+Applied to target-arm.next, thanks. I expanded the comment
+a little and added brackets round the "4 + 2 * resolution"
+for clarity.
 
-Resolves: Coverity CID 1685261
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/intc/hex-l2vic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/intc/hex-l2vic.c b/hw/intc/hex-l2vic.c
-index 736f1be3b1d..89b44200928 100644
---- a/hw/intc/hex-l2vic.c
-+++ b/hw/intc/hex-l2vic.c
-@@ -381,7 +381,7 @@ static void fastl2vic_write(void *opaque, hwaddr offset, uint64_t val,
-         uint32_t cmd = (val >> 16) & 0x3;
-         uint32_t irq = val & 0x3ff;
-         uint32_t slice = (irq / 32) * 4;
--        val = 1 << (irq % 32);
-+        val = 1ULL << (irq % 32);
- 
-         if (cmd == FASTL2VIC_ENABLE) {
-             l2vic_write(opaque, L2VIC_INT_ENABLE_SETn + slice, val, size);
--- 
-2.43.0
-
+-- PMM
 
