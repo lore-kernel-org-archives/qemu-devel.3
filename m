@@ -1,135 +1,130 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CC6606A31B
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDD1606A31D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Oct 2026 16:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=T8Lrj/op;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LwvOEHNV
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Z68inwUz;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RKj2ljgp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKHqr-0000nY-4l; Fri, 23 Oct 2026 12:10:42 -0400
+	id 1xKHtn-0003ng-Sm; Fri, 23 Oct 2026 12:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKHq7-0000ds-Of
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:09:59 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKHtk-0003nB-VF
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:13:40 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xKHq1-0001Uz-8W
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:09:53 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKHti-000246-H1
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 12:13:40 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NE5wob2109142
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:09:32 GMT
+ 69NG6EiP2215922
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:13:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=9cxXdeYXoSj
- 5qiwMX3CVbxaJApluvZXN6CyEkrkon6w=; b=T8Lrj/op7M2fd5oTuucQh6lLkLa
- q6Y5gz+T3nsdfaJMSJUc/X8+yIYIsww9Ote8gJ2Gsmsq1TVBt3D7A6gvv8egQIgT
- Rb9BHcFdS4rQE6nKqXxV7GiT/aDjrgb5W1gROgpxuEEe0dEFVdv2S/Co293aVTwT
- 75AtluH31q1mErY1pnXWAazp5fxAxvTn4fkZ/SaCYRAtLdXe+gNicP2YZrDyS0tT
- zKGy3r1mlaULzdzU5TN2RctbGltIt8B5gsl6pswuEe7kKa4Nae9R+TW2Hi2G/OsF
- RQvFPTSAEfj+6fT+9r9PW/g6y+8csk4nrFA0Rri97YZ30oSbG1SucmUJSdg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hfqms4fgt-1
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=TKl2fpB4lJjp9FTQCce1Se
+ jvDyoouYKYU8tg7GosBWI=; b=Z68inwUzMccVwPpJ5fRLffroBlq5u9+wkAkGDj
+ hgrV70/WsXe4EiuwFmRMjoQKIOpT77bzQ6wGn9XNcbjnHnWFUl6iwj9S/E8E/DI4
+ tLZ7qhyjNTlXBEl1BspmjKE6P6K05oBm3uZFhdJr70vbg+X8/pXZ841MVWnG5vga
+ iEfcUq6Ywf745fYfLvJN6qTtBPskCUpu7uqXW1umN+6f1qTrq1aTUF6CGsEb88Zf
+ iLVZVZL94Dv7AJtJDaruD2cb52UNF6A8zg08G3K+1Mi51BaV0zCb4vE9c29BnSDQ
+ tLN4IzwrfCUqlfsfN8rvuPkA0pGYVOncj7JnTUOxtnP3rnGw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgatc8107-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:09:32 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-535131e4c25so23092011cf.3
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:09:32 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 16:13:36 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93c5ab5c136so167282585a.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 09:13:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792771771; x=1793376571; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=9cxXdeYXoSj5qiwMX3CVbxaJApluvZXN6CyEkrkon6w=;
- b=LwvOEHNVy4p/0wr564n+uXEIOu2hCDTYuuNdEu4SQ/UqNAhClO/9x523EhXAdgoxBB
- TmxN5u7Q6BNnaOYixE9vISyTAjhqJmNcQ2jmR5vxNZpPt9QB5BO2g6ouUtDihG621LaZ
- owlnVgT031XUOG4Y6UcxIJtBM+bVYdfbx2WNOnq/NZcdGY/oCBCgGx7K+H5hU39zpSjd
- s6lUt2lK/vplJFHeMPF+z8EGP0al+yoxPRTJ0dpKVzQ25dVPJOXmBXSAMN5yVL6I8ziH
- XKTH7F9E5qqLTn6+1JIuZ6en+RXQkC3OISej/24OKMemSs01SldVxMd7N5Nw5OmqTA6h
- vbTQ==
+ d=oss.qualcomm.com; s=google; t=1792772016; x=1793376816; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=TKl2fpB4lJjp9FTQCce1SejvDyoouYKYU8tg7GosBWI=;
+ b=RKj2ljgpBl1upVx9y1a8ynuNCNB0LxI+5bI14Lowgbn2Fuk2QBKQe0tJKLpH9xX4dW
+ fQ3PL17UvnhKjPsHQ9PpGFmbbiCgZ97ZWbAKpGzcG5WQslpqIt2VWiE/bc2GrftJF/Gh
+ 4qT7fgW1yHmIu3+1oZcIb3wkcY1qgCk5wINlLFTEUeLaNFl40T8yjqbfyNFGRPOMrLdr
+ NzzJLptfVK8hXMURN3t3gNxWTBhN7rsrbh7hXmqdfTHCkzsX8YJo6NQl1nv1pXjjntG8
+ /QwMGw1+XmZ8FUmA6vVggQpEGVZMMiH8vmK3cwftLgu5q0qAEe3B63HJLGfsQnc6fMWM
+ QC8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792771771; x=1793376571;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=9cxXdeYXoSj5qiwMX3CVbxaJApluvZXN6CyEkrkon6w=;
- b=hbcyx/KRCr8NLr9TXltoJTGea3TEnx5b+hPpAxo2lUqZOxye+BRwdMZlaeWIgT/EfL
- 2FJaHKy9l9wD5ebI709q6SCHl/aZyLg7EQ2ZNXameernSgXjRrDECePjQkq4zogIkHt3
- ZiLHlntIiZlKgfHy/qoCwcd/HlZkVnwQY9Hpuene7uiaGD5ojiBSbyAfF2/vHxuDs5nd
- vFCpYEX2WQf5VrHuR5rbcZ4E1HuCrAvZK2WXmwffJzp2PUp/P2huaPMm2Ry4jLwH081M
- pP9CyQ3vALxySDST4OazZ998EWmEzsQRAnCiqDzPCQqqPj8pxLqpIx6Y67lybggjRBB1
- aU+A==
-X-Gm-Message-State: AFq9FYK7uKjByy9kNJKvRRZlpKc6v8yghJ9JKKqO2SRNAMAVhkiet705
- HWFRvc8pCPMXcvdT91EFf667j0UrdMw0f+us2I9W8LFx1ggFNc3EA5/M2M0DAt6yXFgZmCVrKr+
- 9I6Jom6pJ/Y4sDoxacLGs3ZDnOg5IdZ6nBzvbsdZEkc/iOIyIR/cnAMnUq1iBRdVwew==
-X-Gm-Gg: AYBFou0UkHeahAlyKedd5SJqhZQASATUaOdZ38zwOLy20BtRgMTUCpSpwH/QrCCnZW1
- HDwuU43chxn8WmfXAPvnXSbbFz4O7UO/ZcqcyHmhryPZtTjraJAX756mMY4a2NSdNDc/0+VMV1u
- BM+flS/lAqOwfQgFKHbvHBAWcLxbt21pYzriBSRqAkRjBHNA/6DLYxy8f9fAd7PfpYPrM7CjrBJ
- ZTZlGfaXet0tUS/I8jSW+TbujiP7kQ/Y6SE4a9Y0kJO2CwXm1VLrD11XfkjFNYlDIe1s2PEMMd9
- eNFD3OLn9/J6I3GD2IJnYh4R9XVIX4AcJQxC0MNrwc1ogYHFp6TFxz3VX6NblP22u7DOURGq1Hr
- YYfUx++tVAIGwCQO4w9k7E1xwuzn+1vb8eu81tg==
-X-Received: by 2002:a05:622a:2586:b0:536:4cf:4875 with SMTP id
- d75a77b69052e-536c2964993mr36232401cf.71.1792771771031; 
- Fri, 23 Oct 2026 09:09:31 -0700 (PDT)
-X-Received: by 2002:a05:622a:2586:b0:536:4cf:4875 with SMTP id
- d75a77b69052e-536c2964993mr36231751cf.71.1792771770500; 
- Fri, 23 Oct 2026 09:09:30 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([152.234.125.162])
+ d=1e100.net; s=20260707; t=1792772016; x=1793376816;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=TKl2fpB4lJjp9FTQCce1SejvDyoouYKYU8tg7GosBWI=;
+ b=a4lV23hxjfPchHdzfasHp9k6w8wrp8mOzgSo5uQsOKC5VRJWrkizCjtiQiXFciB2PU
+ BjDNh9P3BwnuPTogwTgcIqeFkipXWKOJMNLFadtYaARFnD0c7312Y4/jXNAkCsMEsI4+
+ u5Tc0w4TT9vHEnegAwBL6ZN3cvHAzdNqta+9U7w9lOtMjmgIhQpPHt6bYfwoe5ACRpY4
+ S866Gl9gFEGfbrjAc5KICVLYTIUL1PCgsYKIv72TeNtOgVJGwWzLp7On5L62JSIMfKGB
+ BKFmEMbQwSbjgvPjtzuNEfYwxWFyYR3sXUWt+inqkIi82kJxakMbmjZnGguiRtftacSb
+ xMUA==
+X-Gm-Message-State: AFq9FYL7Wm3F8DSKIbTb+T/AWYAp3uiXGSamstZS7DAUUvLDnGXJy/W1
+ JTRoruFe1uhB2+nKFs9qAC6a2xwNSO14KSJuX5CE/UPkZ30kWicXEBqAz3KRhPipUhLI1MY7BOE
+ TLGG1dNaMiV6Dv6xp8asDG5IFZTNDsRndffxIN5Of0Eth2FGjYy6wUPFN03fzlJRojBYG
+X-Gm-Gg: AYBFou1a0j62tSHdUGw8Xtxok80iew+VN6oIrBbta4gimVTxQmodJts36kQgJ5X0SyJ
+ YKYmTUsL1WtK9b8TpZk9IsS6jMaax4PZlwN99nGf/OLFJmk9yM2wZuEGctxbJUee09gHvlWJeUV
+ uVCMLjSN1/tJ4zd+Aj4Op4t4gATDUDJkHyauA042oDF84PQw1vjt41Rog4PtVyWafi1olAvER2Y
+ a2UltrZCyaLvLo79XHQIxxTi5qVX+SHf/RQCXgCxQRIh1Dkawn5HrOMffL9WBm7yz/YBpdACXQE
+ g6MiI+RwxV6oI/3ujE146CgqxzQr2tAIo356Z8G6ZL2mtLm4YhNpyWImm/xZ53Eulr9um6sAJw0
+ uPBvs9QJ5cy3AutGfrJ7W7I1gXW16aWZEG9p2dD8X
+X-Received: by 2002:a05:620a:46ac:b0:93e:c12c:f137 with SMTP id
+ af79cd13be357-93f6f86563amr496559685a.82.1792772015714; 
+ Fri, 23 Oct 2026 09:13:35 -0700 (PDT)
+X-Received: by 2002:a05:620a:46ac:b0:93e:c12c:f137 with SMTP id
+ af79cd13be357-93f6f86563amr496552985a.82.1792772014949; 
+ Fri, 23 Oct 2026 09:13:34 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-91c4524f226sm5063406d6.27.2026.10.23.09.09.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 09:09:29 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ ffacd0b85a97d-48e3d410708sm704437f8f.38.2026.10.23.09.13.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 23 Oct 2026 09:13:34 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 4/6] hw/riscv/server_platform_ref: fix UART baud rate
-Date: Fri, 23 Oct 2026 13:09:11 -0300
-Message-ID: <20261023160913.24992-5-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261023160913.24992-1-daniel.barboza@oss.qualcomm.com>
-References: <20261023160913.24992-1-daniel.barboza@oss.qualcomm.com>
+Subject: [PULL 00/83] Misc target/ patches for 2026-10-23
+Date: Fri, 23 Oct 2026 18:12:08 +0200
+Message-ID: <20261023161332.60153-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX1lS7WD1C8DoD
- hIer83c1LmT4bcNYSC6roULKRAz7tSNvE8TFhPatAgHxUGGuy31UHhWhhlRr74y0IWsodfaJL15
- iQyGomwBLeZhvZ45ADLNo4gceV8XltjOFusKA0uoO7DmyfzdpV4+ZBE7PPJXahALH3EpynGu28P
- g4aZh+lVvlRC3ewhi5TRiG2ZS7PRTU0joxPOPwHZN3kgWaHiU71W/975i+AE4D6WVVvqT9sxJcW
- PVbEOcArzbxcC5vBo/h7WMY1xcCczm1LSo79F9WZxZPVZt9bVWe226Vh3KKxTapHoyKaM/iqn37
- ihhCDSXj1oz/VRTztU4jMKR6UVOLmjYMIYd+1jUsKUToPRa7p7qdDYLoCAyVC2+mjOtcc8PXVrY
- kGqmcEF/bapiCpxtzbARt+Z4n+ssIcT05k7J4nuewNF5FRQQTpa1KBpBEhYbHP1sMcdCXV9VWzv
- HIG6MyjCVi8af/Iy2Gw==
-X-Proofpoint-GUID: XNueuQpxOYy2mBAn6DK_OeJqs487JHg2
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX6MG//nHjld4a
- rzaYEM7BkmuM4EBdZUWNP3jHA95ZENaocQ01H5mPUn1Z6ORl3q1Gia6bcpZ/f7KMC+w8tmJG0uf
- LBCSGyP9XhMy9/WTQDLWLgwI5o7Clss=
-X-Authority-Analysis: v=2.4 cv=UdbE26SN c=1 sm=1 tr=0 ts=6adb86bc cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=AgQEunjic7gIBKSbIeB6Ag==:17
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=HwFc7jivAAAA:8
- a=EUspDBNiAAAA:8 a=HyuSmn1QhchWdNVMt-0A:9 a=a_PwQJl-kcHnX1M80qC6:22
- a=kr7TZk85JJIQSqC0cl8G:22
-X-Proofpoint-ORIG-GUID: XNueuQpxOYy2mBAn6DK_OeJqs487JHg2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfXx5smscUEQTFR
+ t5fbTZrok2Y2yPJqJnwxi7AxyH5t9s9+hF1YxeUlfw34MIw6UIcNQZMpFLQE6TXITrQ06LYKOBG
+ OaET/YmxHiBKenXS/AdlyYIPNtuJzpQzzYj/PkZkGcOUi6l1CCkt/XqypWfVRiuQrLaA0e5Jmrt
+ wZOo1b7QS47Cqyq7HLC+gIXBpOGaVD0hmAkNkoVgSJVAHuDnBsg5z7jRaknBrPa6+8ddwR9Wkwg
+ aB8tZhQV1Ba+xdet0N+HgYlIbseAazcDloqlmpVc32POE0j920dtVQ4/aO01hfXdP4dZt8yBPWT
+ dJ5GDoAMeJFEzDKHeWsCx2Z++OtPIQUdpUCLHr62E2N4T0pRe5ItuoyPGBMBqwlqcJCG/n029Wj
+ +lzSnzml4BzDbeCnuuaeSxDwesxvPY4sp/rGE4xKv6m1rRV4rqHeZA/3BbmI7HoMMxjI360NqYD
+ fsFEMgPnxcUrr9dIp3A==
+X-Proofpoint-GUID: S0jhHVSxOidcezm5GRbAWv_teL8NRasP
+X-Authority-Analysis: v=2.4 cv=Scxi5fRu c=1 sm=1 tr=0 ts=6adb87b0 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8 a=xMIVGifLfBi6bESdB8EA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: S0jhHVSxOidcezm5GRbAWv_teL8NRasP
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA2MyBTYWx0ZWRfX1Z45GiumRIdx
+ yQMlaG8DF77LPVdWMdr2l/CtCaYkyXRcwWmRHG96iZ4A2wjSKmEKGPDbvLJB9b0Rw8qIEdeyFx0
+ LbGjkDVas8G4sNggp9yeLWlt7lKex5U=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-23_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 bulkscore=0 clxscore=1015 adultscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
  definitions=main-2610230063
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -148,86 +143,305 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The riscv-server 1.0 spec requires an UART with 115200 baud, per rule
-"HPER_020" described in [1].
+The following changes since commit b6c4b7e86dec12d07f5cac65265b986d38ee9002:
 
-At this moment we're doing two things: the FDT is being created using
-the default UART base baud of 230400, and the device itself is being
-created using a baud of 399193.  This odd value was inherited from the
-RISC-V 'virt' machine when implementing the first interaction of the
-riscv-server-ref board.  Linux doesn't seem to care: dmesg reports a
-base baud of 230400, a value derived from what we're writing in the DT,
-and the serial seems to work fine.
+  Merge tag 'pbouvier/pr/tcg_tests-20261022' of https://gitlab.com/p-b-o/qemu into staging (2026-10-23 09:09:11 +0200)
 
-Straight everything up by setting the required base baud of 115200
-everywhere applicable.  And for good measure let's also change the boot
-test to be sure that userpace is reading the intended serial base baud.
+are available in the Git repository at:
 
-[1] https://docs.riscv.org/reference/server-soc/v1.0/server_soc_requirements.html
+  https://github.com/philmd/qemu.git tags/target-misc-20261023
 
-Fixes: c2fa4320803b ("hw/riscv: server platform reference machine")
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/server_platform_ref.c              | 8 +++++---
- tests/functional/riscv64/test_server_ref.py | 3 +++
- 2 files changed, 8 insertions(+), 3 deletions(-)
+for you to fetch changes up to a0deb11baf6e5818ccd641088d9465e0e0eac9b7:
 
-diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
-index 3191615c02..e86c37400d 100644
---- a/hw/riscv/server_platform_ref.c
-+++ b/hw/riscv/server_platform_ref.c
-@@ -68,6 +68,7 @@
- 
- #define RVSERVER_PLATFORM_BUS_NUM_IRQS         8
- #define RVSERVER_IOMMU_HPM_COUNTERS            4
-+#define RVSERVER_UART_BASE_BAUD                115200
- 
- #define TYPE_RISCV_SERVER_REF_MACHINE MACHINE_TYPE_NAME("riscv-server-ref")
- OBJECT_DECLARE_SIMPLE_TYPE(RISCVServerRefMachineState, RISCV_SERVER_REF_MACHINE)
-@@ -315,7 +316,7 @@ static void finalize_fdt(RISCVServerRefMachineState *s)
- 
-     riscv_create_fdt_uart(ms->fdt, &rvserver_ref_memmap[RVSERVER_UART0],
-                           RVSERVER_UART0_IRQ, AIA_TYPE_APLIC_IMSIC,
--                          0,
-+                          RVSERVER_UART_BASE_BAUD,
-                           irq_mmio_phandle);
-     name = riscv_fdt_get_uart_nodename(rvserver_ref_memmap[RVSERVER_UART0].base);
-     qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-@@ -614,8 +615,9 @@ static void rvserver_ref_machine_init(MachineState *machine)
-                                                     RVSERVER_PLATFORM_BUS_NUM_IRQS);
- 
-     serial_mm_init(system_memory, memmap[RVSERVER_UART0].base,
--        0, qdev_get_gpio_in(mmio_irqchip, RVSERVER_UART0_IRQ), 399193,
--        serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+                   0, qdev_get_gpio_in(mmio_irqchip, RVSERVER_UART0_IRQ),
-+                   RVSERVER_UART_BASE_BAUD,
-+                   serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-     sysbus_create_simple("goldfish_rtc", memmap[RVSERVER_RTC].base,
-         qdev_get_gpio_in(mmio_irqchip, RVSERVER_RTC_IRQ));
-diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/functional/riscv64/test_server_ref.py
-index ad29094dbe..fa7225ccc1 100755
---- a/tests/functional/riscv64/test_server_ref.py
-+++ b/tests/functional/riscv64/test_server_ref.py
-@@ -71,6 +71,9 @@ def do_test_boot_linux_test(self, tpmstate_dir=None):
-         wait_for_console_pattern(self, 'Linux version')
-         wait_for_console_pattern(self, 'Machine model: RISC-V Server Platform')
- 
-+        # Check that we have the intended base baud for the serial
-+        wait_for_console_pattern(self, 'base_baud = 115200')
-+
-         # Test e1000e network card functionality
-         wait_for_console_pattern(self, 'e1000e')
-         wait_for_console_pattern(self, 'Network Connection')
+  MAINTAINERS: cover riscv GDB XML files (2026-10-23 17:52:30 +0200)
+
+----------------------------------------------------------------
+Misc target patches queue
+
+- Make TCG halt-to-exec transition explicit and remove cpu_exec_halt()
+- Various conversions to translate_for_debug()
+- Add common CPUClass::exception_name() handler
+- multi-target: prefix helpers with target prefix
+- Remove target_long_bits() from GDB register reads
+- MAINTAINERS updates
+----------------------------------------------------------------
+
+Marc-André Lureau (3):
+  MAINTAINERS: cover m68k GDB XML files
+  MAINTAINERS: cover x86 GDB XML files
+  MAINTAINERS: cover riscv GDB XML files
+
+Matt Turner (2):
+  target/alpha: Record masked exceptions in FPCR for /S insns
+  target/alpha: Determine tininess from the delivered result
+
+Peter Maydell (10):
+  target/alpha: Convert to translate_for_debug
+  target/avr: Convert to translate_for_debug
+  target/or1k: Convert to translate_for_debug
+  target/rx: Convert to translate_for_debug
+  target/tricore: Convert to translate_for_debug
+  target/hexagon: Convert to translate_for_debug
+  target/hppa: Convert to translate_for_debug
+  target/loongarch: Convert to translate_for_debug
+  target/m68k: Convert to translate_for_debug
+  target/mips: Convert to translate_for_debug
+
+Philippe Mathieu-Daudé (50):
+  accel/tcg: Refactor poll-while-halted flow in cpu_exec()
+  accel/tcg: Introduce poll_during_halt() and leaving_halt()
+  target/arm: Split leaving-halt handling from arm_cpu_exec_halt()
+  target/arm: Convert cpu_exec_halt() to leaving_halt()
+  target/i386: Split APIC polling from x86_cpu_exec_halt()
+  target/i386: Split leaving-halt handling from x86_cpu_exec_halt()
+  target/i386: Use generic halt transition handlers
+  accel/tcg: Remove the redundant cpu_exec_halt() hook
+  target/sparc/gdbstub: Replace gdb_get_regl() by gdb_get_reg64()
+  target/mips/gdbstub: Reduce to a single gdb_get_regl() call
+  target/mips/gdbstub: Replace target_long_bits() by mips_env_is_64bit()
+  target/ppc: Factor ppc_env_is_64bit() out
+  target/ppc/gdbstub: Replace target_long_bits() by ppc_env_is_64bit()
+  target/ppc/gdbstub: Replace gdb_get_regl() by ppc_env_is_64bit()
+  target/riscv: Factor riscv_gdb_get_reg_mxl() out
+  target/riscv: Replace gdb_get_regl() by riscv_gdb_get_reg_mxl()
+  target/hexagon: Expand gdb_get_regl() -> gdb_get_reg32() again
+  gdbstub: Remove unused gdb_get_regl()
+  include: Remove TARGET_LONG_SIZE definition
+  qemu/osdep: Document ARRAY_SIZE() macro rejects pointers
+  util/cutils: Add STR_ARRAY_ELEM_OR_NULL() for string table lookups
+  cpus: Add helper to log raised exceptions with '-d int'
+  cpus: Introduce CPUClass::exception_name() handler
+  target/alpha: Register CPUClass::exception_name() handler
+  target/alpha: Use a static table in alpha_exception_name()
+  target/arm: Register CPUClass::exception_name() handler
+  target/avr: Implement and register CPUClass::exception_name()
+  target/hexagon: Register CPUClass::exception_name() handler
+  target/hppa: Register CPUClass::exception_name() handler
+  target/i386: Replace magic value by proper EXCP0E_PAGE definition
+  target/i386: Implement and register CPUClass::exception_name()
+  target/loongarch: Register CPUClass::exception_name() handler
+  target/m68k: Register CPUClass::exception_name() handler
+  target/m68k: Use a static table in m68k_exception_name()
+  target/microblaze: Implement and register CPUClass::exception_name()
+  target/mips: Remove EXCP_LAST, use ARRAY_SIZE(excp_names)
+  target/mips: Register CPUClass::exception_name() handler
+  target/or1k: Register CPUClass::exception_name() handler
+  target/ppc: Name the EBB exceptions
+  target/ppc: Use a static table in powerpc_excp_name()
+  target/ppc: Register CPUClass::exception_name() handler
+  target/riscv: Register CPUClass::exception_name() handler
+  target/rx: Unify BRK and INT trap handling
+  target/rx: Register CPUClass::exception_name() handler
+  target/s390x: Implement and register CPUClass::exception_name()
+  target/sh4: Register CPUClass::exception_name() handler
+  target/sh4: Use a static table in sh4_exception_name()
+  target/sparc: Remove always-defined DEBUG_PCALL
+  target/sparc: Register CPUClass::exception_name() handler
+  target/xtensa: Implement and register CPUClass::exception_name()
+
+Pierrick Bouvier (16):
+  target/alpha: define and call helpers using HELPER macro
+  target/arm: define and call helpers using HELPER macro
+  target/avr: define and call helpers using HELPER macro
+  target/hppa: define and call helpers using HELPER macro
+  target/i386: define and call helpers using HELPER macro
+  target/loongarch: define and call helpers using HELPER macro
+  target/m68k: define and call helpers using HELPER macro
+  target/microblaze: define and call helpers using HELPER macro
+  target/mips: define and call helpers using HELPER macro
+  target/or1k: define and call helpers using HELPER macro
+  target/ppc: define and call helpers using HELPER macro
+  target/riscv: define and call helpers using HELPER macro
+  target/s390x: define and call helpers using HELPER macro
+  target/sh4: define and call helpers using HELPER macro
+  target/sparc: define and call helpers using HELPER macro
+  target/tricore: define and call helpers using HELPER macro
+
+Yonggang Luo (2):
+  target/rx: Define exception vector constants
+  target/sh4: Define exception vector constants
+
+ MAINTAINERS                             |   4 +
+ include/accel/tcg/cpu-ops.h             |  36 +-
+ include/exec/target_long.h              |   8 +-
+ include/gdbstub/helpers.h               |  18 -
+ include/hw/core/cpu.h                   |   2 +
+ include/qemu/cutils.h                   |  17 +
+ include/qemu/osdep.h                    |   9 +
+ include/user/tswap-target.h             |   2 +-
+ target/alpha/cpu.h                      |   4 +-
+ target/arm/cpu.h                        |   4 +-
+ target/arm/internals.h                  |   3 -
+ target/arm/tcg/vec_internal.h           |   5 +-
+ target/avr/cpu.h                        |   5 +-
+ target/hexagon/cpu_bits.h               |   2 +
+ target/hppa/cpu.h                       |   5 +-
+ target/i386/cpu.h                       |   2 +
+ target/i386/ops_sse.h                   | 401 +++++++-------
+ target/i386/tcg/helper-tcg.h            |   3 +-
+ target/loongarch/cpu-mmu.h              |   3 +-
+ target/loongarch/internals.h            |   3 +-
+ target/m68k/cpu.h                       |   5 +-
+ target/microblaze/cpu.h                 |   2 +
+ target/mips/cpu.h                       |   4 +-
+ target/mips/internal.h                  |   8 +-
+ target/mips/tcg/tcg-internal.h          |   2 -
+ target/or1k/cpu.h                       |   5 +-
+ target/ppc/cpu.h                        |   2 +
+ target/ppc/internal.h                   |  18 +-
+ target/riscv/cpu.h                      |   1 +
+ target/riscv/internals.h                |   5 -
+ target/rx/cpu.h                         |  17 +-
+ target/rx/helper.h                      |   3 +-
+ target/s390x/cpu.h                      |   2 +
+ target/s390x/s390x-internal.h           |   1 -
+ target/sh4/cpu.h                        |  22 +
+ target/sparc/cpu.h                      |   1 +
+ target/tricore/cpu.h                    |   3 +-
+ target/xtensa/cpu.h                     |   2 +
+ accel/tcg/cpu-exec-common.c             |  36 ++
+ accel/tcg/cpu-exec.c                    |  20 +-
+ target/alpha/clk_helper.c               |   2 +-
+ target/alpha/cpu.c                      |   4 +-
+ target/alpha/fpu_helper.c               | 130 +++--
+ target/alpha/helper.c                   |  78 ++-
+ target/alpha/int_helper.c               |  38 +-
+ target/alpha/sys_helper.c               |  12 +-
+ target/alpha/vax_helper.c               |  42 +-
+ target/arm/cpu.c                        |  21 +-
+ target/arm/helper.c                     |  77 ++-
+ target/arm/tcg/cpu-v7m.c                |   1 -
+ target/arm/tcg/helper-a64.c             |   6 +-
+ target/arm/tcg/mve_helper.c             |  28 +-
+ target/arm/tcg/psci.c                   |   2 +-
+ target/arm/tcg/sme_helper.c             |   4 +-
+ target/arm/tcg/sve_helper.c             | 141 ++---
+ target/arm/tcg/tlb_helper.c             |   2 +-
+ target/arm/tcg/vec_helper.c             |  72 +--
+ target/arm/tcg/vec_helper64.c           |  64 +--
+ target/avr/cpu.c                        |  20 +-
+ target/avr/helper.c                     |  23 +-
+ target/hexagon/cpu.c                    |  51 +-
+ target/hexagon/gdbstub.c                |   4 +-
+ target/hexagon/hexswi.c                 |  30 +-
+ target/hppa/cpu.c                       |  45 +-
+ target/hppa/fpu_helper.c                |   2 +-
+ target/hppa/int_helper.c                |  48 +-
+ target/hppa/mem_helper.c                |  21 +-
+ target/hppa/op_helper.c                 |   2 +-
+ target/hppa/sys_helper.c                |   6 +-
+ target/i386/cpu.c                       |  30 ++
+ target/i386/tcg/bpt_helper.c            |   6 +-
+ target/i386/tcg/cc_helper.c             |  14 +-
+ target/i386/tcg/excp_helper.c           |  15 +-
+ target/i386/tcg/fpu_helper.c            | 182 +++----
+ target/i386/tcg/int_helper.c            |  34 +-
+ target/i386/tcg/mem_helper.c            |   4 +-
+ target/i386/tcg/misc_helper.c           |  16 +-
+ target/i386/tcg/mpx_helper.c            |  12 +-
+ target/i386/tcg/seg_helper.c            |  43 +-
+ target/i386/tcg/system/bpt_helper.c     |   6 +-
+ target/i386/tcg/system/misc_helper.c    |  32 +-
+ target/i386/tcg/system/seg_helper.c     |  21 +-
+ target/i386/tcg/system/smm_helper.c     |  12 +-
+ target/i386/tcg/system/svm_helper.c     |  16 +-
+ target/i386/tcg/tcg-cpu.c               |   3 +-
+ target/i386/tcg/user/seg_helper.c       |   4 +-
+ target/loongarch/cpu.c                  |  42 +-
+ target/loongarch/cpu_helper.c           |  12 +-
+ target/loongarch/tcg/csr_helper.c       |  22 +-
+ target/loongarch/tcg/fpu_helper.c       | 126 ++---
+ target/loongarch/tcg/iocsr_helper.c     |  16 +-
+ target/loongarch/tcg/op_helper.c        |  18 +-
+ target/loongarch/tcg/tcg_cpu.c          |  42 --
+ target/loongarch/tcg/tlb_helper.c       |  26 +-
+ target/loongarch/tcg/vec_helper.c       |   4 +-
+ target/m68k/cpu.c                       |   4 +-
+ target/m68k/helper.c                    |  16 +-
+ target/m68k/op_helper.c                 | 161 +++---
+ target/microblaze/cpu.c                 |  16 +-
+ target/microblaze/op_helper.c           |  46 +-
+ target/mips/cpu.c                       |   4 +-
+ target/mips/gdbstub.c                   |  85 +--
+ target/mips/system/physaddr.c           |  13 +-
+ target/mips/tcg/dsp_helper.c            | 187 +++----
+ target/mips/tcg/exception.c             |  18 +-
+ target/mips/tcg/fpu_helper.c            | 291 +++++-----
+ target/mips/tcg/ldst_helper.c           |  18 +-
+ target/mips/tcg/lmmi_helper.c           |  98 ++--
+ target/mips/tcg/msa_helper.c            | 690 ++++++++++++------------
+ target/mips/tcg/octeon_crypto.c         | 100 ++--
+ target/mips/tcg/op_helper.c             |  34 +-
+ target/mips/tcg/system/cp0_helper.c     | 276 +++++-----
+ target/mips/tcg/system/lcsr_helper.c    |   8 +-
+ target/mips/tcg/system/special_helper.c |  12 +-
+ target/mips/tcg/system/tlb_helper.c     |  14 +-
+ target/mips/tcg/vr54xx_helper.c         |  30 +-
+ target/or1k/cpu.c                       |   4 +-
+ target/or1k/exception.c                 |  22 +
+ target/or1k/fpu_helper.c                |  16 +-
+ target/or1k/interrupt.c                 |  19 +-
+ target/or1k/mmu.c                       |  21 +-
+ target/ppc/cpu_init.c                   |   4 +-
+ target/ppc/dfp_helper.c                 |  52 +-
+ target/ppc/excp_helper.c                | 140 ++---
+ target/ppc/fpu_helper.c                 | 396 +++++++-------
+ target/ppc/gdbstub.c                    |  38 +-
+ target/ppc/int_helper.c                 | 292 +++++-----
+ target/ppc/mem_helper.c                 |  28 +-
+ target/ppc/misc_helper.c                |  56 +-
+ target/ppc/mmu-hash64.c                 |  18 +-
+ target/ppc/mmu_helper.c                 |  70 +--
+ target/ppc/power8-pmu.c                 |  14 +-
+ target/ppc/tcg-excp_helper.c            |  56 +-
+ target/ppc/timebase_helper.c            |  54 +-
+ target/riscv/cpu.c                      |  22 +-
+ target/riscv/gdbstub.c                  |  35 +-
+ target/riscv/tcg/debug.c                |   2 +-
+ target/riscv/tcg/fpu_helper.c           | 196 +++----
+ target/riscv/tcg/op_helper.c            |  76 +--
+ target/riscv/tcg/tcg-cpu.c              |   1 -
+ target/rx/cpu.c                         |   4 +-
+ target/rx/helper.c                      |  72 ++-
+ target/rx/op_helper.c                   |  17 +-
+ target/rx/translate.c                   |  23 +-
+ target/s390x/cpu-system.c               |   2 +-
+ target/s390x/cpu.c                      |   2 +-
+ target/s390x/interrupt.c                |  16 +
+ target/s390x/tcg/excp_helper.c          |   6 +-
+ target/s390x/tcg/mem_helper.c           |   2 +-
+ target/s390x/tcg/misc_helper.c          |   3 +-
+ target/sh4/cpu.c                        |   2 +-
+ target/sh4/helper.c                     | 109 ++--
+ target/sh4/op_helper.c                  |  92 ++--
+ target/sparc/cpu.c                      |   2 +-
+ target/sparc/fop_helper.c               | 106 ++--
+ target/sparc/gdbstub.c                  |  13 +-
+ target/sparc/helper.c                   |  22 +-
+ target/sparc/int32_helper.c             |  22 +-
+ target/sparc/int64_helper.c             |  48 +-
+ target/sparc/ldst_helper.c              |  14 +-
+ target/sparc/vis_helper.c               |  94 ++--
+ target/sparc/win_helper.c               |  38 +-
+ target/tricore/cpu.c                    |   3 +-
+ target/tricore/fpu_helper.c             |  32 +-
+ target/tricore/helper.c                 |  13 +-
+ target/tricore/op_helper.c              | 220 ++++----
+ target/xtensa/cpu.c                     |  25 +-
+ target/xtensa/exc_helper.c              |   3 +-
+ util/cutils.c                           |   6 +
+ target/ppc/translate/vsx-impl.c.inc     |   2 +-
+ 170 files changed, 3773 insertions(+), 3422 deletions(-)
+
 -- 
-2.43.0
+2.55.0
 
 
