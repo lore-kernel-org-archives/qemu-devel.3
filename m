@@ -1,147 +1,56 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54354606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 02:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53805606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 05:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Ad56BbO1;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dXqScCuY
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=J3bURhhm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKRqg-0006nN-2t; Fri, 23 Oct 2026 22:51:10 -0400
+	id 1xKUfs-0007Br-WC; Sat, 24 Oct 2026 01:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xKRqd-0006nA-Nx
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:51:07 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xKUfl-0007B7-KJ
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 01:52:06 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xKRqc-00060o-1P
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:51:07 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69O1tHKt1377181
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 02:51:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /uuxD0EvKzq17VFvuZ8ElpTT70cUkG5Ut4jk3T4J5D0=; b=Ad56BbO1RtnfMW2k
- 4x7aYuEjVibPtwXHbRKlGkx5fn7S98sXgWLSQLTgcB2xqngq0OXmkHquMIuZrf1I
- G3YeADAVkD9efei0h27qgq12E0f9RlgEIuqHoPvcSSSKVgrB/D4smc6JYtsxvdaz
- ooFqXyW3wak+r7FUmYNxyA6CITt0WskHMQLMmovCamJS27IL0inDgHhdeIv1kybn
- IxPa/czSiW/uxImutXVlxJshOcqyaGsXWeuXqxe98laUZHboUmHzN3m0TF3d7YOc
- SMse4eVrA9vzKxn9Odr7dMs3a1t6R1u6qujuQjX5H1IIpyh+HW7oZhu5nGxom9mn
- A/61FQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgjcgr7xv-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 02:51:01 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93f1f2fafeaso199080685a.2
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 19:51:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792810260; x=1793415060; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=/uuxD0EvKzq17VFvuZ8ElpTT70cUkG5Ut4jk3T4J5D0=;
- b=dXqScCuYlh57NcTUL5iNvwa3u1t7XdbUOULOh6ld10goa6/BztRNU+3NVbb1s0HT9Y
- gZe27L7mDqvTs34xsxoCaX81po/onWflaIP9fq3VT3RL3Qqt+M+2xCXx5L9s/sh/CLGi
- K3RTePNGZLU9lcA/F8+oDPCuPxAgdJvLuGWq0A7s7vT5dS7A7TW405UeZlSoJIFPgfgg
- SIXQdq8MQ2VQSKbisy/vywWldNjDSusXgJmWST/NJDBqnkfUEqe3mNPGyds6Wko/DDwX
- IUU1l6Kg+YbBL2ZFVWdxO+GFmrIRcnKLqVJIgS3lICXV7GGqhJsTmWdAToqMZQuEua3T
- Lf5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792810260; x=1793415060;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/uuxD0EvKzq17VFvuZ8ElpTT70cUkG5Ut4jk3T4J5D0=;
- b=BDHSr2R60B6H5pafYWFzj5/BlgFgsh+sFUEdhmfaqcSlq8vdLRVhvD0wDntNOhMgkk
- xWOH2pSzyEyUbj4est0Vz5fOOBajSClosZupB8/5E6yw/qGOpEO+LkBXtu0sXl/JyUGJ
- TtjUJDLKHY/K3Toi6+CGHqWqP6S/OHSs4rbvM7epclkypSVN1NLi363Ee6EFUOliaXzF
- /0s6C7Yh+rKEhJIXVoSzGHwTgbg6UhKFR1JS5mlgNUEZ46vyYa7ITFbmqhmCehDUABum
- MB0f7yIgH3XioR3MJiqKXM3VdEVORnnW8u7c0qsZMi0aB0YW6OK/x7h3VbSw+eWpfwQC
- 87IA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxoYubaIzOam36wqzG5ZEnRoaCnu79FT2pK6JXQyBvKzu702Q36IBVXZ7XRpkC78FvGG+M79kl1z0yU@nongnu.org
-X-Gm-Message-State: AFq9FYKCvMRX6w+dK3KShgBPP/hMiKfsX7LksAFLelHBzIKPlWjsdQeW
- GxG4kWmEg9nUON8D3VXbXuMJLNKmS+yR7NdjkgyCxVrv+ghDbmwXynO9SjgOa/yo3opWOasDQih
- Ac+kSekQogmiczYlBWZ+A0NUjHhTWii2PsrwJGzzhOqbCsf6UccpQkNfDFw==
-X-Gm-Gg: AYBFou2ufNXnpMS5TMQSl55uLG1q6E9EbsJKhfKmE/on8x9OGt3PRwc0+FvFL+3+kSQ
- km45A+v8j2mau55z2veRP4tXa8EAEct+lFYOtW79TRtjjYf3YID662xsWyX3OdmiddTYbOuF6U8
- ekEJzDfBeDM2tB60AzZ00JLken8OQ2QMWUfsEsxssdnwzh7FtbIbAAGAdnSozPOEzPk125guk9w
- k1Vjw6mu3uNzjaY9Y7ykNyde0U8cPiEgnAjAx/EphdZCbYTScq3L5danvbjtwKid/xUtWawut6q
- VUWVZ9KTq0Em9GUilLXvnSRvFFD7Bhaun7bWm7SGOErHv5PjoLh6A9bTI4Ro6j8eDnWJKf15axy
- Ca0U9qjRMUtJwst/WV61TJkkq2lrpxmsl6kQuHP94zNkWLl4BgAJ5AjmZF5If8DM0fimyg5yYUg
- FWSNE=
-X-Received: by 2002:a05:620a:480a:b0:93f:3120:6c71 with SMTP id
- af79cd13be357-940ef956f4amr137328585a.44.1792810260508; 
- Fri, 23 Oct 2026 19:51:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:480a:b0:93f:3120:6c71 with SMTP id
- af79cd13be357-940ef956f4amr137326885a.44.1792810260023; 
- Fri, 23 Oct 2026 19:51:00 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-940f0787f33sm72154885a.25.2026.10.23.19.50.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 19:50:59 -0700 (PDT)
-Message-ID: <485a1e1d-063a-4f8e-a1a0-dfcc57c19029@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 21:50:57 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1xKUfi-0002k9-Md
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 01:52:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1792821117; bh=KHAyM9NCoeJvdlm1NZrUUY5fDEGS6cRceGmriqDQDEI=;
+ h=Date:To:Cc:From:Subject;
+ b=J3bURhhmu70bsda5Wz5ILwF6j6IM9j1xM3qjVl5OwLjYpLDjh3nU9eusyLI+GN4eP
+ imNEsykUtBtFddJ8zh8kpHjABl3BJhOeiThOGiCI/ADVAL6a5LdVZqNL1ejc/uNbCc
+ kT9VA/GGQfe/Jq+JFRr1ZPGbjO/p2aM7hw8LKLMGpDPzfko2/h5XaZ596xp52LfR9w
+ b28UAKsD+xpb5NR8iw/EK+fO9pNaFZLGXXs6rlbpjjQ5U+Yl5i4tOPF3eI3WKnMReC
+ 3ZcOlwqD+pPInjc1/w4D6EkHRcoaKmyXgx9GMlfnN7oT9JW68OqnU2V5t8oKHfPK2c
+ hcptfdKNxXatw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D7E9D1E0975;
+ Sat, 24 Oct 2026 08:51:57 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CB187449AEC;
+ Sat, 24 Oct 2026 08:51:57 +0300 (MSK)
+Message-ID: <c9bcda59-f2f9-4036-8aeb-1e36e1b68498@tls.msk.ru>
+Date: Sat, 24 Oct 2026 08:51:57 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] tests/tcg/hexagon: tests for v{79,81} HVX
- vcvt2,fp8,qf16
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>
-References: <20261023225820.330905-1-brian.cain@oss.qualcomm.com>
- <20261023225820.330905-5-brian.cain@oss.qualcomm.com>
- <ec4e8c96-f82b-4cc5-83cc-a80574cc1e01@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <ec4e8c96-f82b-4cc5-83cc-a80574cc1e01@oss.qualcomm.com>
+Content-Language: en-US, ru-RU
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: linux-user/vdso: reproducible?
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDAxMSBTYWx0ZWRfXwrRULxjZQtEj
- se0nvaQ5qOJU26pNObwnxu/hBftFlitobRoiZKiTL7bWUaAYS5/Zb1hG9qu1UH7WmDN4HjDS65m
- V2ZQgUMjx1NDAawM9cZilK1QtpUgnUk=
-X-Proofpoint-GUID: TdFKjMp7QXqGJD7fCb2ay5NiKEFkp9eb
-X-Authority-Analysis: v=2.4 cv=JvhkP84C c=1 sm=1 tr=0 ts=6adc1d15 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=jDYh71mHBIHKOrmpQT4A:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDAxMSBTYWx0ZWRfX3Npfx/N6rqG7
- zKWdUvIc0eETgusyVj41mB3RRzjF57+7wK1szUPmTbtgvkxdUskJk5wxmOWps6OMhaixaWp4rtv
- LDqCvHQqph2XbGFzxVKeK0BAHI+OvWJ7ctN6StWfi2z16Hwi2m2ti+HGjbLZ+yoSHuU1TN+OEu4
- 3nQa7u0TWVbJwwAlYAY8WqNT0+SemCELWDxXRDu+3ydhVUY8XdtusQys63nNDazTXjlfQMvppp8
- ymvLN7nHAx/fNr0qBzklCLLty1Ca1qVl62Tj9UtcC0eTD2jgaiUnsLX78j/ZAwoWnxsxgTq931x
- ez+fdW9SJVu5/FMpQcPlpCwijDTRgld2qBnf7lJefjXtIHjWD9/pyaxo4S6PNWS1u68OvxaY+r+
- tG39ZmjeuHAhMa4lX+sGd/iv8SAJ8fDAhnf21fMjR0mdo32d6oT2dNvvDRn4KGZh6GUH2WxDADz
- dGZeSuaeH4hlhSV5W9w==
-X-Proofpoint-ORIG-GUID: TdFKjMp7QXqGJD7fCb2ay5NiKEFkp9eb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-24_01,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240011
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,35 +63,173 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Hi!
 
-On 10/23/2026 7:17 PM, Pierrick Bouvier wrote:
-> On 10/23/2026 3:58 PM, Brian Cain wrote:
->> Cover the V6_vcvt2_*, V6_*_f8, V6_vconv_qf16_f8, V6_vconv_f8_qf16
->> instructions with tests.
->>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   tests/tcg/hexagon/check_rev_gating.c |  30 ++
->>   tests/tcg/hexagon/fp_hvx_v79.c       | 478 +++++++++++++++++++++++++++
->>   tests/tcg/hexagon/qfloat_v81.c       | 121 +++++++
->>   tests/tcg/hexagon/meson.build        |   2 +
->>   4 files changed, 631 insertions(+)
->>   create mode 100644 tests/tcg/hexagon/fp_hvx_v79.c
->>
-> Would that be possible to split and squash that with each concerned patch?
+Once again I'm trying to fix a long-standing issue in debian & ubuntu with
+vdso files build.
 
-Sure, makes sense.
+One of the requirements here is to build everything from source, ensuring
+the things can be rebuild and are reproducible (that is, the shipped binaries
+can actually be produced from the provided source and not something else
+with a hidden backdoor).
 
+It'd be nice to just build the vdso.so files during regular package build.
+But this does not work correctly neither in debian nor in ubuntu infrastructure
+due to several reasons.  The main problem is that to build all vdso files,
+one need to have cross-compilers for all architectures on every host
+architecture for which qemu-user packages are produced, which is problematic
+(especially for lower-power, or "small", architectures).
 
->
-> Regards,
-> Pierrick
+Additionally, llvm/clang, which can produce binaries for multiple architectures
+and is available on all host architectures on debian, does not handle sh4 and
+hpps which are currently needed to rebuild vdso files in qemu, so it is also
+not an option, at least not yet (sh4 support hopefully will be available soon).
+
+I'm using tricks to build vdso files on one architecture and use the result
+when building linux-user packages on all architectures.  But this does not
+work correctly neither in debian nor in ubuntu.
+
+An alternative is to actually use the binaries provided in qemu source
+tarball.  However in order to do that, I have to actually verify if the
+binaries are produced from the actual source shipped with these binaries.
+It doesn't seem to be a difficult task because of the similicity of the
+sources - it is a simple assembler-language file which - in theory -
+should be trivially reproducible.
+
+However, when I build a vdso file locally with the same compiler options
+and compare it with the binary shipped with qemu, I see this:
+
+linux-user/aarch64 $ diffoscope vdso-be.so*
+2026-10-23 18:59:46 E: diffoscope.comparators.elf: Command '['objdump --line-numbers --disassemble --demangle --reloc --no-show-raw-insn 
+--section=.text {}']' returned non-zero exit status 1.
+2026-10-23 18:59:46 E: diffoscope.comparators.elf: Command '['objdump --disassemble --demangle --no-show-raw-insn --section=.text {}']' returned 
+non-zero exit status 1.
+--- vdso-be.so
++++ vdso-be.so.mjt
+├── readelf --wide --symbols {}
+│ @@ -19,15 +19,15 @@
+│       6: 0000000000000380     0 SECTION LOCAL  DEFAULT    6 .gnu.hash
+│       7: 00000000000003b8     0 SECTION LOCAL  DEFAULT    7 .dynstr
+│       8: 0000000000000430     0 SECTION LOCAL  DEFAULT    8 .gnu.version
+│       9: 0000000000000440     0 SECTION LOCAL  DEFAULT    9 .gnu.version_d
+│      10: 0000000000000478     0 SECTION LOCAL  DEFAULT   10 .eh_frame_hdr
+│      11: 0000000000000490     0 SECTION LOCAL  DEFAULT   11 .eh_frame
+│      12: 00000000000004b8     0 SECTION LOCAL  DEFAULT   12 .text
+│ -    13: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS cc0Lcfxq.o
+│ +    13: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS ccuckKYd.o
+│      14: 0000000000000158     0 NOTYPE  LOCAL  DEFAULT    1 $d
+│      15: 00000000000004b8     0 NOTYPE  LOCAL  DEFAULT   12 $x
+│      16: 00000000000004f0     0 NOTYPE  LOCAL  DEFAULT   12 sigreturn_region_start
+│      17: 00000000000004f4     0 NOTYPE  LOCAL  DEFAULT   12 sigreturn_region_end
+│      18: 00000000000004a4     0 NOTYPE  LOCAL  DEFAULT   11 $d
+│      19: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS
+│      20: 00000000000001a0     0 OBJECT  LOCAL  DEFAULT  ABS _DYNAMIC
+├── strings --all --bytes=8 {}
+│ @@ -1,14 +1,14 @@
+│  __kernel_gettimeofday
+│  __kernel_clock_gettime
+│  __kernel_clock_getres
+│  __kernel_rt_sigreturn
+│  linux-vdso.so.1
+│  LINUX_2.6.39
+│ -cc0Lcfxq.o
+│ +ccuckKYd.o
+│  sigreturn_region_start
+│  sigreturn_region_end
+│  _DYNAMIC
+│  __GNU_EH_FRAME_HDR
+│  _GLOBAL_OFFSET_TABLE_
+│  LINUX_2.6.39
+│  __kernel_clock_getres
+├── readelf --wide --decompress --hex-dump=.strtab {}
+│ @@ -1,10 +1,10 @@
+│
+│  Hex dump of section '.strtab':
+│ -  0x00000000 00636330 4c636678 712e6f00 24640024 .cc0Lcfxq.o.$d.$
+│ +  0x00000000 00636375 636b4b59 642e6f00 24640024 .ccuckKYd.o.$d.$
+│    0x00000010 78007369 67726574 75726e5f 72656769 x.sigreturn_regi
+│    0x00000020 6f6e5f73 74617274 00736967 72657475 on_start.sigretu
+│    0x00000030 726e5f72 6567696f 6e5f656e 64005f44 rn_region_end._D
+│    0x00000040 594e414d 4943005f 5f474e55 5f45485f YNAMIC.__GNU_EH_
+│    0x00000050 4652414d 455f4844 52005f47 4c4f4241 FRAME_HDR._GLOBA
+│    0x00000060 4c5f4f46 46534554 5f544142 4c455f00 L_OFFSET_TABLE_.
+│    0x00000070 4c494e55 585f322e 362e3339 005f5f6b LINUX_2.6.39.__k
+
+So basically, the difference is just in the temporary .o filename
+used during the build process, and that name is random.
+
+After stripping both files from debug info (aarch64-linux-gnu-strip),
+things becomes exactly the same.
+
+Can't we strip them during build anyway?
+
+(I'm not an expert with these reproducible build thing, maybe they
+have more ways to handle differences like this, and maybe more
+suggestions to further improve the situation besides stripping -
+asked them too).
+
+It's interesting that adding -s switch to gcc produces slightly different
+binary than not using -s and stripping after the link explicitly.
+
+linux-user/aarch64$ diffoscope --tool-prefix-binutils=aarch64-linux-gnu-  vdso-be.so*
+2026-10-23 19:06:01 E: diffoscope.comparators.elf: Command '['objdump --line-numbers --disassemble --demangle --reloc --no-show-raw-insn 
+--section=.text {}']' returned non-zero exit status 1.
+2026-10-23 19:06:01 E: diffoscope.comparators.elf: Command '['objdump --disassemble --demangle --no-show-raw-insn --section=.text {}']' returned 
+non-zero exit status 1.
+--- vdso-be.so
++++ vdso-be.so.mjt
+│┄ xxd not available in path. Falling back to Python hexlify.
+│┄ Format-specific differences are supported for ELF binaries but no file-specific differences were detected; falling back to a binary diff. file(1) 
+reports: ELF 64-bit MSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=ba5dd46a2ef8dde79536f81dd8126e0ee2f3df39, stripped
+@@ -6,15 +6,15 @@
+  00000000000004f40000000000001000000000020000000400000000000001a0
+  00000000000001a000000000000001a000000000000001000000000000000100
+  00000000000000086474e5500000000400000000000004780000000000000478
+  0000000000000478000000000000001400000000000000140000000000000004
+  0000000400000004000000000000015800000000000001580000000000000158
+  0000000000000044000000000000004400000000000000080000000400000010
+  00000005474e5500c00000000000000400000003000000000000000400000014
+-00000003474e5500ba5dd46a2ef8dde79536f81dd8126e0ee2f3df3900000000
++00000003474e550047654bef50c6d25c99110c67c0eddb8e67b78bab00000000
+  000000000000000e000000000000005a00000000000000040000000000000350
+  000000006ffffef50000000000000380000000000000000500000000000003b8
+  000000000000000600000000000002a0000000000000000a0000000000000077
+  000000000000000b0000000000000018000000006ffffffc0000000000000440
+  000000006ffffffd0000000000000002000000006ffffff00000000000000430
+  0000000000000000000000000000000000000000000000000000000000000000
+  0000000000000000000000000000000000000000000000000000000000000000
+
+So, can we at least strip the files?
+
+Something like this (for all files):
+
+diff --git a/linux-user/aarch64/Makefile.vdso b/linux-user/aarch64/Makefile.vdso
+index 82ed2011087..e5655888eb4 100644
+--- a/linux-user/aarch64/Makefile.vdso
++++ b/linux-user/aarch64/Makefile.vdso
+@@ -10,7 +10,9 @@ LDFLAGS = -nostdlib -shared -Wl,-h,linux-vdso.so.1 \
+           -Wl,-z,max-page-size=4096 -Wl,-T,$(SUBDIR)/vdso.ld
+
+  $(SUBDIR)/vdso-be.so: vdso.S vdso.ld
+-       $(CC) -o $@ $(LDFLAGS) -mbig-endian $<
++       $(CC) -o $@.tmp $(LDFLAGS) -mbig-endian $<
++       $(STRIP) $@.tmp && mv -f $@.tmp $@
+
+  $(SUBDIR)/vdso-le.so: vdso.S vdso.ld
+-       $(CC) -o $@ $(LDFLAGS) -mlittle-endian $<
++       $(CC) -o $@.tmp $(LDFLAGS) -mlittle-endian $<
++       $(STRIP) $@.tmp && mv -f $@.tmp $@
+
+Or maybe we can use something else to make this "more reproducible".
+
+Thanks,
+
+/mjt
 
