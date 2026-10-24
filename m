@@ -1,127 +1,129 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B233606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 07:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70550606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 07:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=YgqHwnNx;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IZvJGUNL
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=O4GNDzvA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=MfG3VYSV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKVts-00005V-TW; Sat, 24 Oct 2026 03:10:44 -0400
+	id 1xKVto-0008WQ-4Z; Sat, 24 Oct 2026 03:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKVtp-0008WV-Av
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:10:42 -0400
+ id 1xKVtm-0008W2-Co
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:10:38 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKVtm-0000M2-0D
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:10:41 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xKVtj-0000Lp-T3
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:10:38 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69O4C27t048125
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 07:10:36 GMT
+ 69O3Yg71529153
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 07:10:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=l3Bn8vLJbJZ
- tKVSgzkIG8bLE+0u9GPyJrEXamyZh7yo=; b=YgqHwnNxEs612yAalO1+c8AFMWG
- Sfn5DW8stALUkUUSzizEAxvFVxuqgzrcDzAjEibnZuo+KhYc3Qyab4Lbbt9n3yU4
- xaiDV5B8XY/7ko93Gh/QMchZN/opq8BzQ/bBQxqcHkfpxglCOrRgniwiwqdAsRPY
- 6CgDrHwyX09Tkpx0Fdx4v+f6mE7vsP2AtEkQe+S1bbUWdBBZaHS6bJniBqcg5hwc
- wAnOXH1gOOUQrLdjnpReh6ZIu+f0phBq07kPX9kqzpWdHfmmvbmbrOXML4eVHqMc
- XDR3qkRtUI2mfWTWLqlXIHOmuMowHw5g/m9LNTZ66tCr2E174Q5SSoo9PkQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgnehga2m-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=oGd5wKK0Jpf
+ 26AXx2qVXar86xbVQGY5fVfut+QuC17I=; b=O4GNDzvAmU/aYmv09+bA0LXN0fO
+ O3xHMwgtueGgOutFJ8hC0ZMoH9um0noG3kgwCKDtpJL7P9/vW8MRLSVsaCgpnR3H
+ MZXc2LpF9juj3fKYDZkgZA8JPANDoS9BsHsRlyZZ7PVBdVAWW9yuUfW6fvx5rc4c
+ cUtviQjMht4oL7pBUyqDRKtRfa92CN/g5d7Dq4qJTaqM9nJVWKXn9eCor/z0WbUi
+ jK3qOo4U2JkjtbvCU5y+UOUxD2Kwhu9zxzNugYBtCmVJ6Papfq/MnTdVBQKjUt4D
+ SAAyXF+37azHtkUwB1SUmjlqrdsCPqOoutY01P9es/K8G1NRrSrV8S91XWg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgmw3gcfr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 07:10:36 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-3aaf955db5fso2394577a91.0
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:10:36 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 07:10:34 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-3ad98380ccfso2337736a91.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792825836; x=1793430636; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792825834; x=1793430634; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=l3Bn8vLJbJZtKVSgzkIG8bLE+0u9GPyJrEXamyZh7yo=;
- b=IZvJGUNLCSUZmFryFH7SG9JFj/c6rwnmvwa+fPm3rBTgnkb9CHSHDWhGWU0tt6WvEh
- IvlwS0O9bkoIxsxrbmkfq2SdZFZ7kqpATDjDd/8QDCkrEdVwMWsAbGFJ1Srf20+f95OI
- z7Qb2fyjZi8b9hiLJx8n3iDHn+ucG20P0wIa+w+wut3qWiD717Q8rBL6+o+UEIkC19Ja
- j3FvOlUlWGwEWGg7rL7vpFX9aaexz1fU+6OwHUNqfT7poRPGBCW08bXwnQXjlT/OQxKe
- E9iQo7DQ3trck5Dq1G75YvXE9jxxthvjZ4v4aUJwUfexQIUkaRGuJP+Wp4gvu2Ucdn6z
- 3zFw==
+ bh=oGd5wKK0Jpf26AXx2qVXar86xbVQGY5fVfut+QuC17I=;
+ b=MfG3VYSVpnIKv3FMQ+BhLZ8bY5eUBqDHCyzUzvv8dTh99e4n6ICAE2kTM0PumpiFBI
+ c5OqcUJ8NTSBD+Krtst87nHmSySUe3kafJT69UVS08zUbe0Gq8t6azqqIm4j7ROBOU4D
+ x6RAJqGrcxG6/ia52KE92vq3gLO3n7K67a3aq+lLZGaPkt4cDBgvpS3HHliJv6VA4asf
+ 8SjodcB05AGau1juxGnLHuZDuSyewwdaH8E373gs+5wiHLgxHIKHA+RHxhIXo2WJdjyI
+ 3tiv45RnO2r2eSAQSpEQIU094L6aFvkLH7/N5PzSsKnZmyUqw7Kw5dJrV0rrNDLNki+K
+ MV7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792825836; x=1793430636;
+ d=1e100.net; s=20260707; t=1792825834; x=1793430634;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=l3Bn8vLJbJZtKVSgzkIG8bLE+0u9GPyJrEXamyZh7yo=;
- b=p3PZmz3TI14m5FyvOTDBeyYccTihchluEx6oK0e495p+U1Cn/Vn5tpsA2JG+Bqcj/b
- ticQi9WS+ZSV1V+EZuf4JQlWO6XUfQhqAS775U5N9pC/mKAEOIC8gvC/Uf4H1bHiqFeB
- 3HV0urWdTuyW0Ojjf1TdB3EkvMbfSdc0zXKgPCHydeEEeCl2eWuoEn/jDPT5xeMqbZpO
- DbzsmK0ydTGPw8VuisXzPboBUDtqP/XFYq9yKbvEKTzqScL1sbBJyMZjwiMXNcoPMSqH
- HZ/ZHE/bfwaYudv8SPRtj9U6EUJcqRYR+wxwPjl/GPMMsCMn0YABT1o02YgB/eT4YheE
- FzrQ==
-X-Gm-Message-State: AFq9FYIlBXifc0E6iYeMbepzM6K3v9eh67KZJiPLjblt/yHnLpaRNqH9
- Tq+zGUuyabsESY4Q0nc92PNNm48EYTZfdPKCSFLiYmm0uaLyu0GvTFK1v3ABR85pIzq1mBkhWaI
- zARgXM3Ib/P+rMgJEAR2XVcT/08WXeA6ErVhEWROgopACdLLdRjefHETZ6o4uFLLM2A==
-X-Gm-Gg: AYBFou34WCWY+sePtdHsFIbv2IuyBMyIEFrC31b9FYpn0mJ1SbzVt8gSpigYz5DxF5q
- XuMMPWGi/8V7gqKfg2dSdDRdqmWaYRc+zrk4l7FdvCIULaFQBqw9cTxr/9aVrRcfhHEs52Vvsds
- M82FbHE85tFJMUSStmfQqDQ55I46UwwKTzymIWHNtsy2QYc6nIrVLmSMKyYpbhkTibqw75kQKN5
- O+EpwM1joTRSEPIdDejPyv5lR+ENcERqxEWFIzEutRieqxXMuSZeX3RoNOJoy0OpIJSBUbrT0il
- AHk8//C/sxF1Xr+KYBL6SS+8VZgs/67DXeR1tFQwU323LDD/obCrYSDSmn781bWDBVWQpGvMO/V
- jsAiL1kcF8gZS1W/VX+DNQZsM/vqi59PiiQc89kBHmvAakDohfc4kOOQOkktbZPk=
-X-Received: by 2002:a17:90b:3846:b0:3ac:945c:7f69 with SMTP id
- 98e67ed59e1d1-3adeb162362mr1182055a91.66.1792825835503; 
- Sat, 24 Oct 2026 00:10:35 -0700 (PDT)
-X-Received: by 2002:a17:90b:3846:b0:3ac:945c:7f69 with SMTP id
- 98e67ed59e1d1-3adeb162362mr1182033a91.66.1792825834828; 
- Sat, 24 Oct 2026 00:10:34 -0700 (PDT)
+ bh=oGd5wKK0Jpf26AXx2qVXar86xbVQGY5fVfut+QuC17I=;
+ b=dddanHjrAknZqU9ZJVu1+UMSTc5U0cNRe+nYuwgH5DAkuK37+wYYYBOdV0DDfv1Xjm
+ H59ye/03xv4np2O3NsE9MKtpUwLFdw7s6P/46WzjEZFed8IM/s3N1jlr8A3pBq8fVTxo
+ 2NkYQmMY2Dmw0YsAeMvDm9NQHEEZX3QiKdki68QGQD0ngpj/JMLhtX/IaEhJW+0VqbqD
+ 2orhcVE2MTFAjUAvKMGgsgetNhuWl4IFIusp2I2mJ5H1COSjYS70Tu2J4fMZoLM97BLG
+ fHbI7/++MlNfYe0UzPMA4j3Qx/WDMcAv3DdIvGQvAMQwdhybvQx8zlialw1AZ1HwSAMJ
+ CN8w==
+X-Gm-Message-State: AFq9FYLJHcwV++MILyasaOHj8HxrASeie98FApfT/KM8cHoaIOrJHBUi
+ JEcEgSs5lEwbdm4Rr1xPxr8vONpFxVL8Wdyxo6ivZEmtTm8Ij8+Q8zKUsol5AM3M2sa+6y2izgu
+ MXw4lzfPwu3JIw96ni6DQtKwBSis4GcRlrcAClhgH9fh4QfHj7Aqx1sSaGZN/GTOPfA==
+X-Gm-Gg: AYBFou3I6XOtWV8xbX67SGGChMoVHRE4f7uC8GdUw9gdZzcWCIl1w4/9wuKQmEZczz/
+ 7kYIYQ2p5X3GSfEfRVw6lkTJVbjmIt8kdNvXhJIEVX+ub7TWv0FQheYnSJy5CjtrGSLoGGxQQKU
+ MU6JxIFp3AiKrEbZunxq6KB3FOec3meQXWBjGPyOWCCP1GCgIbmTI3QDXxXKLv8OgdCMuiAmbXO
+ Elc5ftcKDBa+LDe2zItzHUU6tJ212fPbI0G0BbtRWLvXlcyMAEOLW59KCVo2XGU55dSgjVkDi9z
+ 9q6U7vB2RhdAtrVyEZGCgGqnQOprj3XdmwJhM1VKJ3nSMksy/yjtbSR4yc37QQFPXdhsq6C1p5/
+ QrSMM4HiU3+61I2cup5m7rIk8dvHwRv+YWMbxphuLkWd+4O/7BgltPljB3FTdHjQ=
+X-Received: by 2002:a17:90b:524d:b0:3a7:b260:9ccc with SMTP id
+ 98e67ed59e1d1-3adeafdd84cmr1164673a91.65.1792825833902; 
+ Sat, 24 Oct 2026 00:10:33 -0700 (PDT)
+X-Received: by 2002:a17:90b:524d:b0:3a7:b260:9ccc with SMTP id
+ 98e67ed59e1d1-3adeafdd84cmr1164658a91.65.1792825833415; 
+ Sat, 24 Oct 2026 00:10:33 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3adebb0639bsm1936919a91.12.2026.10.24.00.10.33
+ 98e67ed59e1d1-3adebb0639bsm1936919a91.12.2026.10.24.00.10.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Oct 2026 00:10:33 -0700 (PDT)
+ Sat, 24 Oct 2026 00:10:32 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 3/3] tests/tcg: remove global meson variables
-Date: Sat, 24 Oct 2026 07:10:26 +0000
-Message-ID: <20261024071026.5092-4-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 2/3] tests/tcg/loongarch64/system: reenable gdb-memory test on
+ aarch64 hosts
+Date: Sat, 24 Oct 2026 07:10:25 +0000
+Message-ID: <20261024071026.5092-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261024071026.5092-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261024071026.5092-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDAyOCBTYWx0ZWRfX+WvGxxFb6xBh
- z34j4+440CGgbaaruu5EmNnWuM1QwqgjzGQoCJG4mr3/rDWabMHfqcEc4XMGl7DJqeLFGbljao/
- C8mKKduaA9UPRdZRrBU1lB6xXCRB+o0=
-X-Proofpoint-ORIG-GUID: L1rBz_MbpB949vOgmy3cdA9kld7NZrWv
-X-Authority-Analysis: v=2.4 cv=d5tgWhjE c=1 sm=1 tr=0 ts=6adc59ec cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Proofpoint-GUID: zIIMH5AvngKlGLSZTFAtfcG-kX94h8cG
+X-Proofpoint-ORIG-GUID: zIIMH5AvngKlGLSZTFAtfcG-kX94h8cG
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDAyOCBTYWx0ZWRfX0iFFqfK1Tirf
+ m15f2zHbb75KEqvCIWyrUD9rqbQjMQuUCa2UXdu/LsLPwYZjldj+ixfRsEdVbLOjX72Kifk1kin
+ 0W2szguk9uXzYJQcCprn9SdH7SfLl0s=
+X-Authority-Analysis: v=2.4 cv=HqHjiETS c=1 sm=1 tr=0 ts=6adc59ea cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=4RIeDs6z6I20CdcLo6MA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDAyOCBTYWx0ZWRfX9JG93FVbYqKt
- jW529IaZGmsCRaHtHQmj+sNxe7DuiW3QXP5/Y3gcvFouRuJTfWE0uzt6LkRQVhI63EQKKz5jjyC
- lDCSK0zb7KyOf9D+UtvJac+51IsZA62M/1gAKLAGUj9fLWaJuwhf4bA/TXC26jVFxGoLoVpXk/T
- d5dgy6bH3HJbkiwtzR18rDQdU7i2t/PfApz9f9cpDUWkUVI1NmOtqYkNx6xiLBv/sBHe/qH51lj
- gU+bO3pwgaZKIFMokKc+UcVbWNUS/B1/06ZP8xk8eNQpK6+Bt+/QpsnxiV53X30gG/5RSsbfq3X
- htrglphO4UKyWUbz0THBk7lm2Nwu0siHLgbnvN1MncFnRl0OxbY6YnDNSVl8pO2ACdRfv3Adceg
- dami5m/l4nMzNXFxexGyVIM+vLT+YO4rQvZc5yCnGI/oAXiaeHDZnv2Cp2Tti0v5yOwfQlyCNOq
- fuYH4OwGqFlrACf7UYw==
-X-Proofpoint-GUID: L1rBz_MbpB949vOgmy3cdA9kld7NZrWv
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=-f14e7MdJ4CnexN5ccYA:9
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDAyOCBTYWx0ZWRfX3hzODau83NYq
+ kEpZ5QMziZh2IvdyMC62QwqxK2ZvHUXD7wKlaj7ycoXoxSG5OMKp/46mrYQYmfkiAB2wSn6+pFb
+ /f+CQ/eiT0fUSQvLiwT/facUb4jDpDSMYBvupY8fz/45CfOvfjwYCZ6M1kRkmMMkKC9+d6VZcW7
+ WZPSFqTHo7oyXjJa3qdKMmAEi8C6rKsdJHGJkhP8HJOZGc51gBUVM6SwC+sRJ5pYXBXUqgaIyGJ
+ j9M9S79ONtUjzl8W154Wjyx6mN/SR+SHfs52OOKt7oU74LQwIR8jgFVeUJZHb+Lo38yMd925vgY
+ dQcwIepiuB5ftWJsFLWnMpUdpPX2OOVEaSvo/msWEGy9DgLbjKhSssDvwv6Eb5Sw43i1X3xB16b
+ lScvjheXS82hP0lggdqLNoo4o3OxvaBSm+vV45hSzCSgBanZbCWEybBLgc5+kiOdfZt933VbHC/
+ x336jYcvaaex0ASSqGw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-24_01,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 adultscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240028
 Received-SPF: pass client-ip=205.220.168.131;
@@ -145,656 +147,45 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When writing the conversion, I tried to factorize some definitions
-between linux-user and softmmu and variants of a target. Unfortunately,
-as meson has (sadly) no support for local variables, this required to
-use global variables.
-As a consequence, those variables are also exposed between targets, and
-this resulted in some entries being wrongly set (cc_feat_cflags or
-gdb_feat_version, for instance, wrongly set on target not defining
-them).
+Thanks to check introduced in previous commit, we can get rid of this.
 
-Being bitten by this while writing the two previous patches, I decided
-it was time to clean this up and not rely on global variables.
-This patch inlines required entries directly in test suite definition.
+At the time, my aarch64 host had gdb 15.1 installed, while my x64 host
+had gdb 16.3. This already exposed the problem fixed in previous commit.
+Unfortunately, I didn't investigate enough to notice it was related to
+this, being busy upstreaming tcg tests series, and instead assumed we
+had a bug somewhere in our gdbstub.
 
-Change is correct since all keys modified here are checked during meson
-configuration, so we can't forget a definition.
-
-Link: https://lore.kernel.org/qemu-devel/20261022201733.1941651-4-pierrick.bouvier@oss.qualcomm.com
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4567
+Link: https://lore.kernel.org/qemu-devel/20261022201733.1941651-3-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/aarch64/meson.build            | 46 ++++++++++--------------
- tests/tcg/aarch64/system/meson.build     | 16 ++++++---
- tests/tcg/aarch64_be/meson.build         |  1 -
- tests/tcg/alpha/meson.build              |  7 ++--
- tests/tcg/alpha/system/meson.build       |  4 +--
- tests/tcg/arm/meson.build                |  7 ++--
- tests/tcg/arm/system/meson.build         |  4 +--
- tests/tcg/hppa/meson.build               |  1 -
- tests/tcg/i386/meson.build               |  7 ++--
- tests/tcg/i386/system/meson.build        |  4 +--
- tests/tcg/loongarch64/meson.build        | 19 ++++------
- tests/tcg/loongarch64/system/meson.build | 10 ++++--
- tests/tcg/m68k/meson.build               |  1 -
- tests/tcg/mips/meson.build               |  1 -
- tests/tcg/mipsel/meson.build             |  2 --
- tests/tcg/or1k/meson.build               |  1 -
- tests/tcg/ppc64/meson.build              | 11 +++---
- tests/tcg/ppc64le/meson.build            |  5 ++-
- tests/tcg/riscv32/meson.build            |  3 --
- tests/tcg/riscv32/system/meson.build     |  4 +--
- tests/tcg/riscv64/meson.build            | 10 ++----
- tests/tcg/riscv64/system/meson.build     |  6 ++--
- tests/tcg/s390x/meson.build              | 21 ++++-------
- tests/tcg/s390x/system/meson.build       |  7 ++--
- tests/tcg/sh4/meson.build                |  1 -
- tests/tcg/x86_64/meson.build             | 10 ++----
- tests/tcg/x86_64/system/meson.build      |  6 ++--
- tests/tcg/xtensa/meson.build             |  6 ++--
- 28 files changed, 89 insertions(+), 132 deletions(-)
+ tests/tcg/loongarch64/system/meson.build | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/tests/tcg/aarch64/meson.build b/tests/tcg/aarch64/meson.build
-index 1cec335df04..52eb67ae6ac 100644
---- a/tests/tcg/aarch64/meson.build
-+++ b/tests/tcg/aarch64/meson.build
-@@ -1,26 +1,3 @@
--cc = 'aarch64-linux-gnu-gcc'
--cc_alt = ['aarch64-redhat-linux-gcc']
--cc_dockerfile = 'debian-all-test-cross'
--
--cc_feat_cflags = {
--  'aes': '-march=armv8-a+aes',
--  'sve': '-march=armv8.1-a+sve',
--  'sve2': '-march=armv8.1-a+sve2',
--  'v8.2': '-march=armv8.2-a',
--  'v8.3': '-march=armv8.3-a',
--  'v8.5': '-march=armv8.5-a',
--  'bti':  '-mbranch-protection=standard',
--  'mte':  '-march=armv8.5-a+memtag',
--  'sme':  '-Wa,-march=armv9-a+sme',
--  'fprcvt': '-march=armv9-a+fprcvt',
--}
--
--gdb_feat_version = {
--  'sme-tiles': '14.1',
--  'mte': '15.1',
--  'mte-baremetal': '16.0',
--}
--
- subdir('system')
- 
- tests = []
-@@ -196,13 +173,26 @@ tests += {
- if 'qemu-aarch64' in emulators
-   tcg_tests += {
-     'aarch64-linux-user': {
--      'cc': cc,
--      'cc_alt': cc_alt,
--      'cc_dockerfile': cc_dockerfile,
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc': 'aarch64-linux-gnu-gcc',
-+      'cc_alt': ['aarch64-redhat-linux-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-+      'cc_feat_cflags': {
-+        'aes': '-march=armv8-a+aes',
-+        'sve': '-march=armv8.1-a+sve',
-+        'sve2': '-march=armv8.1-a+sve2',
-+        'v8.2': '-march=armv8.2-a',
-+        'v8.3': '-march=armv8.3-a',
-+        'v8.5': '-march=armv8.5-a',
-+        'bti':  '-mbranch-protection=standard',
-+        'mte':  '-march=armv8.5-a+memtag',
-+        'sme':  '-Wa,-march=armv9-a+sme',
-+      },
-       'folder': 'aarch64',
-       'gdb_arch': 'aarch64',
--      'gdb_feat_version': gdb_feat_version,
-+      'gdb_feat_version': {
-+        'sme-tiles': '14.1',
-+        'mte': '15.1',
-+      },
-       'qemu': emulators['qemu-aarch64'],
-       'tests': tests,
-     }
-diff --git a/tests/tcg/aarch64/system/meson.build b/tests/tcg/aarch64/system/meson.build
-index 270d4d6c311..8710ebfdad3 100644
---- a/tests/tcg/aarch64/system/meson.build
-+++ b/tests/tcg/aarch64/system/meson.build
-@@ -108,13 +108,19 @@ tests += {
- if 'qemu-system-aarch64' in emulators
-   tcg_tests += {
-     'aarch64-softmmu': {
--      'cc': cc,
--      'cc_alt': cc_alt + ['aarch64-elf-gcc'],
--      'cc_dockerfile': cc_dockerfile,
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc': 'aarch64-linux-gnu-gcc',
-+      'cc_alt': ['aarch64-redhat-linux-gcc', 'aarch64-elf-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-+      'cc_feat_cflags': {
-+        'sve': '-march=armv8.1-a+sve',
-+        'v8.3': '-march=armv8.3-a',
-+        'mte':  '-march=armv8.5-a+memtag',
-+      },
-       'folder': 'aarch64/system',
-       'gdb_arch': 'aarch64',
--      'gdb_feat_version': gdb_feat_version,
-+      'gdb_feat_version': {
-+        'mte-baremetal': '16.0',
-+      },
-       'qemu': emulators['qemu-system-aarch64'],
-       'tests': tests,
-     }
-diff --git a/tests/tcg/aarch64_be/meson.build b/tests/tcg/aarch64_be/meson.build
-index 509408de8e7..c1873cd5606 100644
---- a/tests/tcg/aarch64_be/meson.build
-+++ b/tests/tcg/aarch64_be/meson.build
-@@ -12,7 +12,6 @@ if 'qemu-aarch64_be' in emulators
-       'cc': 'aarch64-linux-gnu-gcc',
-       'cc_alt': ['aarch64-redhat-linux-gcc'],
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'aarch64_be',
-       'gdb_arch': 'aarch64_be',
-       'qemu': emulators['qemu-aarch64_be'],
-diff --git a/tests/tcg/alpha/meson.build b/tests/tcg/alpha/meson.build
-index 30ea2a6978e..970b845ac21 100644
---- a/tests/tcg/alpha/meson.build
-+++ b/tests/tcg/alpha/meson.build
-@@ -1,6 +1,3 @@
--cc = 'alpha-linux-gnu-gcc'
--cc_dockerfile = 'debian-all-test-cross'
--
- subdir('system')
- 
- tests = []
-@@ -42,8 +39,8 @@ tests += {
- if 'qemu-alpha' in emulators
-   tcg_tests += {
-     'alpha-linux-user': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'alpha-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'alpha',
-       'gdb_arch': 'alpha',
-       'qemu': emulators['qemu-alpha'],
-diff --git a/tests/tcg/alpha/system/meson.build b/tests/tcg/alpha/system/meson.build
-index 5388e17a2f7..80a629a9385 100644
---- a/tests/tcg/alpha/system/meson.build
-+++ b/tests/tcg/alpha/system/meson.build
-@@ -35,8 +35,8 @@ endforeach
- if 'qemu-system-alpha' in emulators
-   tcg_tests += {
-     'alpha-softmmu': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'alpha-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'alpha/system',
-       'gdb_arch': 'alpha',
-       'qemu': emulators['qemu-system-alpha'],
-diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
-index fd82b5c7a63..6e498232f0d 100644
---- a/tests/tcg/arm/meson.build
-+++ b/tests/tcg/arm/meson.build
-@@ -1,6 +1,3 @@
--cc = 'arm-linux-gnueabihf-gcc'
--cc_dockerfile = 'debian-all-test-cross'
--
- subdir('system')
- 
- tests = []
-@@ -69,8 +66,8 @@ tests += {
- if 'qemu-arm' in emulators
-   tcg_tests += {
-     'arm-linux-user': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'arm-linux-gnueabihf-gcc',
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'arm',
-       'gdb_arch': 'arm',
-       'qemu': emulators['qemu-arm'],
-diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
-index 80c5461e620..c20818f0893 100644
---- a/tests/tcg/arm/system/meson.build
-+++ b/tests/tcg/arm/system/meson.build
-@@ -69,9 +69,9 @@ tests += {
- if 'qemu-system-arm' in emulators
-   tcg_tests += {
-     'arm-softmmu': {
--      'cc': cc,
-+      'cc': 'arm-linux-gnueabihf-gcc',
-       'cc_alt': ['arm-none-eabi-gcc'],
--      'cc_dockerfile': cc_dockerfile,
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'arm/system',
-       'gdb_arch': 'arm',
-       'qemu': emulators['qemu-system-arm'],
-diff --git a/tests/tcg/hppa/meson.build b/tests/tcg/hppa/meson.build
-index 01d4554d993..8c1813636c4 100644
---- a/tests/tcg/hppa/meson.build
-+++ b/tests/tcg/hppa/meson.build
-@@ -11,7 +11,6 @@ if 'qemu-hppa' in emulators
-     'hppa-linux-user': {
-       'cc': 'hppa-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'hppa',
-       'gdb_arch': 'hppa',
-       'qemu': emulators['qemu-hppa'],
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index 84bd68067a5..e7c30958608 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -1,6 +1,3 @@
--cc = 'i686-linux-gnu-gcc'
--cc_dockerfile = 'debian-i686-cross'
--
- subdir('system')
- 
- tests = []
-@@ -47,8 +44,8 @@ tests += {
- if 'qemu-i386' in emulators
-   tcg_tests += {
-     'i386-linux-user': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'i686-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-i686-cross',
-       'folder': 'i386',
-       'gdb_arch': 'i386',
-       'qemu': emulators['qemu-i386'],
-diff --git a/tests/tcg/i386/system/meson.build b/tests/tcg/i386/system/meson.build
-index 91c6e887191..44e86a12cdd 100644
---- a/tests/tcg/i386/system/meson.build
-+++ b/tests/tcg/i386/system/meson.build
-@@ -41,9 +41,9 @@ tests += {
- if 'qemu-system-i386' in emulators
-   tcg_tests += {
-     'i386-softmmu': {
--      'cc': cc,
-+      'cc': 'i686-linux-gnu-gcc',
-       'cc_alt': ['i686-elf-gcc'],
--      'cc_dockerfile': cc_dockerfile,
-+      'cc_dockerfile': 'debian-i686-cross',
-       'folder': 'i386/system',
-       'gdb_arch': 'i386',
-       'qemu': emulators['qemu-system-i386'],
-diff --git a/tests/tcg/loongarch64/meson.build b/tests/tcg/loongarch64/meson.build
-index bff30cb49c8..152bb1d4edb 100644
---- a/tests/tcg/loongarch64/meson.build
-+++ b/tests/tcg/loongarch64/meson.build
-@@ -1,12 +1,3 @@
--cc = 'loongarch64-unknown-linux-gnu-gcc'
--cc_dockerfile = 'debian-loongarch-cross'
--
--gdb_feat_version = {
--  # previous version report "Architecture rejected target-supplied
--  # description", exposing a mismatch between our gdbstub and gdb.
--  'loongarch64': '16.1',
--}
--
- subdir('system')
- 
- tests = []
-@@ -32,11 +23,15 @@ tests += {
- if 'qemu-loongarch64' in emulators
-   tcg_tests += {
-     'loongarch64-linux-user': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'loongarch64-unknown-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-loongarch-cross',
-       'folder': 'loongarch64',
-       'gdb_arch': 'loongarch64',
--      'gdb_feat_version': gdb_feat_version,
-+      'gdb_feat_version': {
-+        # previous version report "Architecture rejected target-supplied
-+        # description", exposing a mismatch between our gdbstub and gdb.
-+        'loongarch64': '16.1',
-+      },
-       'qemu': emulators['qemu-loongarch64'],
-       'tests': tests,
-     }
 diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
-index 93e76b696ed..37b72bafc4d 100644
+index 0f81ef9cfe3..93e76b696ed 100644
 --- a/tests/tcg/loongarch64/system/meson.build
 +++ b/tests/tcg/loongarch64/system/meson.build
-@@ -39,11 +39,15 @@ endforeach
- if 'qemu-system-loongarch64' in emulators
-   tcg_tests += {
-     'loongarch64-softmmu': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'loongarch64-unknown-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-loongarch-cross',
-       'folder': 'loongarch64/system',
-       'gdb_arch': 'loongarch64',
--      'gdb_feat_version': gdb_feat_version,
-+      'gdb_feat_version': {
-+        # previous version report "Architecture rejected target-supplied
-+        # description", exposing a mismatch between our gdbstub and gdb.
-+        'loongarch64': '16.1',
-+      },
-       'qemu': emulators['qemu-system-loongarch64'],
-       'tests': tests,
-     }
-diff --git a/tests/tcg/m68k/meson.build b/tests/tcg/m68k/meson.build
-index 4b73d7fc57d..b34cb032446 100644
---- a/tests/tcg/m68k/meson.build
-+++ b/tests/tcg/m68k/meson.build
-@@ -12,7 +12,6 @@ if 'qemu-m68k' in emulators
-     'm68k-linux-user': {
-       'cc': 'm68k-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'm68k',
-       'gdb_arch': 'm68k',
-       'qemu': emulators['qemu-m68k'],
-diff --git a/tests/tcg/mips/meson.build b/tests/tcg/mips/meson.build
-index 2164f143ea8..88d598a4f89 100644
---- a/tests/tcg/mips/meson.build
-+++ b/tests/tcg/mips/meson.build
-@@ -14,7 +14,6 @@ if 'qemu-mips' in emulators
-     'mips-linux-user': {
-       'cc': 'mips-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'mips',
-       'gdb_arch': 'mips',
-       'qemu': emulators['qemu-mips'],
-diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
-index 3ac47117480..c9e869b000f 100644
---- a/tests/tcg/mipsel/meson.build
-+++ b/tests/tcg/mipsel/meson.build
-@@ -181,7 +181,6 @@ if 'qemu-mipsel' in emulators
-     'mipsel-linux-user': {
-       'cc': 'mipsel-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'mipsel',
-       'gdb_arch': 'mipsel',
-       'qemu': emulators['qemu-mipsel'],
-@@ -207,7 +206,6 @@ if 'qemu-mipsel' in emulators
-     'mips32r5el-linux-user': {
-       'cc': 'mips32r5el-buildroot-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'mipsel',
-       'gdb_arch': 'mipsel',
-       'qemu': emulators['qemu-mipsel'],
-diff --git a/tests/tcg/or1k/meson.build b/tests/tcg/or1k/meson.build
-index c89bb372b47..f1124609b88 100644
---- a/tests/tcg/or1k/meson.build
-+++ b/tests/tcg/or1k/meson.build
-@@ -61,7 +61,6 @@ if 'qemu-or1k' in emulators
-     'or1k-linux-user': {
-       'cc': 'or1k-none-linux-musl-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'or1k',
-       'gdb_arch': 'or1k',
-       'qemu': emulators['qemu-or1k'],
-diff --git a/tests/tcg/ppc64/meson.build b/tests/tcg/ppc64/meson.build
-index d9b4b153d94..fb0bb7fa56b 100644
---- a/tests/tcg/ppc64/meson.build
-+++ b/tests/tcg/ppc64/meson.build
-@@ -1,8 +1,3 @@
--cc_feat_cflags = {
--  'power8': '-mcpu=power8',
--  'power10': '-mcpu=power10',
--}
--
- tests = []
- 
- # Multi arch tests
-@@ -50,10 +45,12 @@ if 'qemu-ppc64' in emulators
-     'ppc64-linux-user': {
-       'cc': 'powerpc64-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc_feat_cflags': {
-+        'power8': '-mcpu=power8',
-+        'power10': '-mcpu=power10',
-+      },
-       'folder': 'ppc64',
-       'gdb_arch': 'ppc64',
--      'gdb_feat_version': gdb_feat_version,
-       'qemu': emulators['qemu-ppc64'],
-       'tests': tests,
-     }
-diff --git a/tests/tcg/ppc64le/meson.build b/tests/tcg/ppc64le/meson.build
-index 9f386287e7a..b474bf4eee5 100644
---- a/tests/tcg/ppc64le/meson.build
-+++ b/tests/tcg/ppc64le/meson.build
-@@ -4,7 +4,10 @@ if 'qemu-ppc64le' in emulators
-       'cc': 'powerpc64le-linux-gnu-gcc',
-       'cc_alt': ['ppc64le-redhat-linux-gcc'],
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc_feat_cflags': {
-+        'power8': '-mcpu=power8',
-+        'power10': '-mcpu=power10',
-+      },
-       'folder': 'ppc64le',
-       'gdb_arch': 'ppc64le',
-       'qemu': emulators['qemu-ppc64le'],
-diff --git a/tests/tcg/riscv32/meson.build b/tests/tcg/riscv32/meson.build
-index 862f1349c2b..8af80d5e66e 100644
---- a/tests/tcg/riscv32/meson.build
-+++ b/tests/tcg/riscv32/meson.build
-@@ -1,6 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--cc = 'riscv64-linux-gnu-gcc'
--cc_dockerfile = 'debian-all-test-cross'
--
- subdir('system')
-diff --git a/tests/tcg/riscv32/system/meson.build b/tests/tcg/riscv32/system/meson.build
-index f8e55ad3d4e..117ae6fbce4 100644
---- a/tests/tcg/riscv32/system/meson.build
-+++ b/tests/tcg/riscv32/system/meson.build
-@@ -25,8 +25,8 @@ tests += {
- if 'qemu-system-riscv32' in emulators
-   tcg_tests += {
-     'riscv32-softmmu': {
--      'cc': cc,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'riscv64-linux-gnu-gcc',
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'riscv32',
-       'gdb_arch': 'riscv32',
-       'qemu': emulators['qemu-system-riscv32'],
-diff --git a/tests/tcg/riscv64/meson.build b/tests/tcg/riscv64/meson.build
-index 91c840b0058..0766f4e3ff0 100644
---- a/tests/tcg/riscv64/meson.build
-+++ b/tests/tcg/riscv64/meson.build
-@@ -1,7 +1,3 @@
--cc = 'riscv64-linux-gnu-gcc'
--cc_alt = ['riscv64-redhat-linux-gnu-gcc']
--cc_dockerfile = 'debian-all-test-cross'
--
- subdir('system')
- 
- tests = []
-@@ -26,9 +22,9 @@ tests += {
- if 'qemu-riscv64' in emulators
-   tcg_tests += {
-     'riscv64-linux-user': {
--      'cc': cc,
--      'cc_alt': cc_alt,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'riscv64-linux-gnu-gcc',
-+      'cc_alt': ['riscv64-redhat-linux-gnu-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'riscv64',
-       'gdb_arch': 'riscv64',
-       'qemu': emulators['qemu-riscv64'],
-diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
-index 3e1c9703820..728526dc7a3 100644
---- a/tests/tcg/riscv64/system/meson.build
-+++ b/tests/tcg/riscv64/system/meson.build
-@@ -80,9 +80,9 @@ tests += {
- if 'qemu-system-riscv64' in emulators
-   tcg_tests += {
-     'riscv64-softmmu': {
--      'cc': cc,
--      'cc_alt': cc_alt + ['riscv64-elf-gcc'],
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'riscv64-linux-gnu-gcc',
-+      'cc_alt': ['riscv64-redhat-linux-gnu-gcc', 'riscv64-elf-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 'riscv64',
-       'gdb_arch': 'riscv64',
-       'qemu': emulators['qemu-system-riscv64'],
-diff --git a/tests/tcg/s390x/meson.build b/tests/tcg/s390x/meson.build
-index f2328d9e5cf..15a63c7dea4 100644
---- a/tests/tcg/s390x/meson.build
-+++ b/tests/tcg/s390x/meson.build
-@@ -1,12 +1,3 @@
--cc = 's390x-linux-gnu-gcc'
--cc_alt = ['s390x-redhat-linux-gcc']
--cc_dockerfile = 'debian-all-test-cross'
--
--cc_feat_cflags = {
--  'z14': '-march=z14',
--  'z15': '-march=z15',
--}
--
- tests_s390x_pgm = [
-   'br-odd.S',
-   'cgrl-unaligned.S',
-@@ -140,13 +131,15 @@ tests += {
- if 'qemu-s390x' in emulators
-   tcg_tests += {
-     's390x-linux-user': {
--      'cc': cc,
--      'cc_alt': cc_alt,
--      'cc_dockerfile': cc_dockerfile,
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc': 's390x-linux-gnu-gcc',
-+      'cc_alt': ['s390x-redhat-linux-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-+      'cc_feat_cflags': {
-+        'z14': '-march=z14',
-+        'z15': '-march=z15',
-+      },
-       'folder': 's390x',
-       'gdb_arch': 's390x',
--      'gdb_feat_version': gdb_feat_version,
-       'qemu': emulators['qemu-s390x'],
-       'tests': tests,
-     }
-diff --git a/tests/tcg/s390x/system/meson.build b/tests/tcg/s390x/system/meson.build
-index 359d124cc78..d45975d8044 100644
---- a/tests/tcg/s390x/system/meson.build
-+++ b/tests/tcg/s390x/system/meson.build
-@@ -81,10 +81,9 @@ endforeach
- if 'qemu-system-s390x' in emulators
-   tcg_tests += {
-     's390x-softmmu': {
--      'cc': cc,
--      'cc_alt': cc_alt,
--      'cc_dockerfile': cc_dockerfile,
--      'cc_feat_cflags': cc_feat_cflags,
-+      'cc': 's390x-linux-gnu-gcc',
-+      'cc_alt': ['s390x-redhat-linux-gcc'],
-+      'cc_dockerfile': 'debian-all-test-cross',
-       'folder': 's390x',
-       'gdb_arch': 's390x',
-       'qemu': emulators['qemu-system-s390x'],
-diff --git a/tests/tcg/sh4/meson.build b/tests/tcg/sh4/meson.build
-index 12b24fffc77..1e96c78afb1 100644
---- a/tests/tcg/sh4/meson.build
-+++ b/tests/tcg/sh4/meson.build
-@@ -14,7 +14,6 @@ if 'qemu-sh4' in emulators
-     'sh4-linux-user': {
-       'cc': 'sh4-linux-gnu-gcc',
-       'cc_dockerfile': 'debian-all-test-cross',
--      'cc_feat_cflags': cc_feat_cflags,
-       'folder': 'sh4',
-       'gdb_arch': 'sh4',
-       'qemu': emulators['qemu-sh4'],
-diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-index 95c7ee676eb..ad4d1f558a7 100644
---- a/tests/tcg/x86_64/meson.build
-+++ b/tests/tcg/x86_64/meson.build
-@@ -1,7 +1,3 @@
--cc = 'x86_64-linux-gnu-gcc'
--cc_alt = ['x86_64-redhat-linux-gcc']
--cc_dockerfile = 'debian-amd64-cross'
--
- subdir('system')
- 
- tests = []
-@@ -73,9 +69,9 @@ tests += {
- if 'qemu-x86_64' in emulators
-   tcg_tests += {
-     'x86_64-linux-user': {
--      'cc': cc,
--      'cc_alt': cc_alt,
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'x86_64-linux-gnu-gcc',
-+      'cc_alt': ['x86_64-redhat-linux-gcc'],
-+      'cc_dockerfile': 'debian-amd64-cross',
-       'folder': 'x86_64',
-       'gdb_arch': 'x86_64',
-       'qemu': emulators['qemu-x86_64'],
-diff --git a/tests/tcg/x86_64/system/meson.build b/tests/tcg/x86_64/system/meson.build
-index 7d61257b771..46a35d227d0 100644
---- a/tests/tcg/x86_64/system/meson.build
-+++ b/tests/tcg/x86_64/system/meson.build
-@@ -51,9 +51,9 @@ tests += {
- if 'qemu-system-x86_64' in emulators
-   tcg_tests += {
-     'x86_64-softmmu': {
--      'cc': cc,
--      'cc_alt': cc_alt + ['x86_64-elf-gcc'],
--      'cc_dockerfile': cc_dockerfile,
-+      'cc': 'x86_64-linux-gnu-gcc',
-+      'cc_alt': ['x86_64-redhat-linux-gcc', 'x86_64-elf-gcc'],
-+      'cc_dockerfile': 'debian-amd64-cross',
-       'folder': 'x86_64/system',
-       'gdb_arch': 'x86_64',
-       'qemu': emulators['qemu-system-x86_64'],
-diff --git a/tests/tcg/xtensa/meson.build b/tests/tcg/xtensa/meson.build
-index 5ff9c6cd548..627fb14a7f5 100644
---- a/tests/tcg/xtensa/meson.build
-+++ b/tests/tcg/xtensa/meson.build
-@@ -78,13 +78,11 @@ foreach core: cores
-   tests_per_core += {core: tests}
- endforeach
- 
--cc_dockerfile = 'debian-xtensa-cross'
--
- if 'qemu-system-xtensa' in emulators
-   tcg_tests += {
-     'xtensa-softmmu': {
-       'cc': 'xtensa-dc232b-elf-gcc',
--      'cc_dockerfile': cc_dockerfile,
-+      'cc_dockerfile': 'debian-xtensa-cross',
-       'folder': 'xtensa',
-       'gdb_arch': 'xtensa',
-       'qemu': emulators['qemu-system-xtensa'],
-@@ -97,7 +95,7 @@ if 'qemu-system-xtensaeb' in emulators
-   tcg_tests += {
-     'xtensaeb-softmmu': {
-       'cc': 'xtensa-test_kc705_be-elf-gcc',
--      'cc_dockerfile': cc_dockerfile,
-+      'cc_dockerfile': 'debian-xtensa-cross',
-       'folder': 'xtensa',
-       'gdb_arch': 'xtensaeb',
-       'qemu': emulators['qemu-system-xtensaeb'],
+@@ -24,11 +24,6 @@ foreach t: tcg_tests['multiarch-softmmu']['tests']
+     new_cflags = cflags
+     if fs.stem(src) == 'memory'
+       new_cflags += '-DCHECK_UNALIGNED=0'
+-      # TODO: memory test hangs on aarch64 host
+-      # https://gitlab.com/qemu-project/qemu/-/work_items/4567
+-      if host_machine.cpu_family() == 'aarch64' and 'gdb_test' in setup
+-        continue
+-      endif
+     endif
+     if 'gdb_test' in setup
+       setup += {'gdb_feat': 'loongarch64'}
 -- 
 2.43.0
 
