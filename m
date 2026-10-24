@@ -1,88 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15838606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 06:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A969606A31D
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 06:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=tIHuhFYR
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=VeCTsN8u
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKVP5-0003qW-V5; Sat, 24 Oct 2026 02:38:57 -0400
+	id 1xKVR1-0004qz-88; Sat, 24 Oct 2026 02:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKVP2-0003lq-9R
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 02:38:53 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1xKVQx-0004ql-MS
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 02:40:53 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKVP0-0006NO-LA
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 02:38:52 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-48e00eee27dso920140f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 23:38:50 -0700 (PDT)
+ id 1xKVQv-0006gR-M2
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 02:40:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4a35d5d4a20so1348895e9.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 23:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792823929; x=1793428729; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792824047; x=1793428847; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tzwfCITsu2Smsw/ib3keCgTPFWgsI4+f9+SUjGo4ofg=;
- b=tIHuhFYRRMTcBbkdgYwFsIgRzUT2su0tZtr9DtwO+K4PvSk1QS/lrWQiE6UX5PYPpT
- whoqLJlxvCkPouounrlFfB+8RWf19MI7GVUDDoWg/VSHXr6nv6Bfq0Kt0U+ffAmejgSr
- eLuKGImfcrTraK8RD1Z2FBX+XjiJpXrTg6lFaoLY/93faQXxpc2To7IpxhNin32rjDKg
- S8SF8rKj3cPgSCfEEYS6544ok8S+R4z8usmgCFYL96rTfkEk7+iWuObRdLezdn7c3IzT
- +WhSDFBc7lvIlHAAtBvZgxbgchuR6uxiE3NcbB+QVw317Cfq8UxyTZ/kb9kIvfNM8xLm
- qSqA==
+ bh=QKKk5lVa+Sps3t5rws74SVErFUIjMd7rm338gTk+hNc=;
+ b=VeCTsN8uqRX9Z6x6AO5nb4f8xJBH4JhwKcVZz6iv8XqxnR6txfW7Ic1MgiDrk2tjrC
+ ohmxQyMkL6xU73lefawuSAgkd9LQ+QhANlaYFnN7iEVOVjQ5JQTY2Ah9ntLmWIJW+o7m
+ WmZDvuDXwU0ekHfKhQoq3plZRz+HSvPyZ6sbTMl5qEZqFcPioa+NOdIwXkc8w/z1TLGq
+ h5j1pBBmALlWw8B5Z1gziRd0lMGlcuJo+06bhzMKK9A3F+pg60/sFoHMbYoTfDnfxeZD
+ ONe02cE6826Pa1nbOw6bIXgGIK2ZZuVBDyfRQe1Pk3WIkri+jQ9KH9mOyDCV6rH9vkp1
+ I5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792823929; x=1793428729;
+ d=1e100.net; s=20260707; t=1792824047; x=1793428847;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=tzwfCITsu2Smsw/ib3keCgTPFWgsI4+f9+SUjGo4ofg=;
- b=AoialajBoFDVDYOPFVZcZBLnVx4izgWcGueDI6fLuuqgOHx9HBGoDBu+8i/UhAWePx
- 7OUOMkriEmg5JoiGA4sRj2xGSs8rRaU84K3ZN4hn1zurSupsPShBMyYOfff6qHT2Eh20
- cDmzUn4iQyxIVY7uDsz4WZMDvW/AWj0NMYGJSUS84gJw6TWH2yHsaJwB2sg4SWip0j7D
- PpT8gvoKGt7v9XiPdwfrt5kNci/o/Hs66w1TwHO5Z3mQarH/hvPKh0yCgR3+l3nhB3P2
- q0t0wJs5i1N353lJGk4PXl0mx1NxdFgBHTvLyfPtUHKJnkJqgbc7qkcqRXgK+nHXHwfJ
- iVDg==
-X-Gm-Message-State: AFq9FYI/lq029ZdkgLGsJRLximR8NEkjet3zfrNtic7eB//oKOFUsVzi
- yqdcCrXJ+FS3CXik3GvNisTlNW+iSu4abjDLz8THmobEBPk3hETFJwYR6EH1vRAykRpxfN/dW25
- rMJh5fzI=
-X-Gm-Gg: AYBFou0CnH1ytq8nNL/BgQpBoFiXpIyyXnIkGNw4MKBBV2K4vqB7WuF71Bj8/ExiS7Q
- ieP4zJSq+26P2Mmts7Pozd8e7wCFEiRi5y/guxZlGX6Mt0lfbdjpYF2L2pmTd+Qfd5dL+gf5j8g
- 2lZD6+d5an4futWsZMiYwBByVWTAoztrUoCl3hhD/oWrYbNIFNmkMLg7IWsDrTphHD7SCZbB2wx
- fzaR4aRda6vTIZDJU4haYGeL+bemHVxrm2Nu91k49NwJy7ER7i3XjaiPjbNT4vjjzp2K8DOtL1+
- LVs07o3Ey+KTEFOETm3hMFg+ZuT+aELard+eukq0BV06sjypF5a1lcK+dJsoGckWEWA+5TGYJpZ
- 8hlb69EU4kSIC5LgN9nePu59hQbsv+vGc1IWUHdyraep1cvnk17JDIgEsXvqmRyHUIpTeFo2TXG
- +7R1PZ5klWk32DCZW9dOoZO1bjIDO+wL3IQaFMhlOfoAwpOBxw2NXEXxNIxTIwtpLqliL754cj4
- n0hUJXvzkj1PIsyo4Aj6nbCAgKuJYcEZNiLKZ7wZks9Jxwd2R12zqRUmYa6MfKYnKcnI8dbhzaI
- cxXOLEgizbL6mA==
-X-Received: by 2002:adf:f712:0:b0:48e:791:1cb with SMTP id
- ffacd0b85a97d-48e3eb93468mr1154397f8f.35.1792823928556; 
- Fri, 23 Oct 2026 23:38:48 -0700 (PDT)
+ bh=QKKk5lVa+Sps3t5rws74SVErFUIjMd7rm338gTk+hNc=;
+ b=M9beUUao0XomJeI1KEJE6+OOA+ArKRNdcyby09wE2Aw25GuRr8MN7RP/VE9VWrlh0j
+ LkEEbnb0Ht1QvmJEj3KVBRfUhg2I0HWuCrBgLeykUUN7mcLikzkWiJpEnKUvWzfriHEJ
+ e9wT034HPjAQ+ROGC1qw3oHHkbTH/wB7Mr0HFsZSBQVKcMwjqNZX39B0tjp5KAbxVX4q
+ oOsPjqoYerizBlTXhM0JvvgqNjsbz0tcQao2wP97mmwj3Ce/cqbvoxrUtbnkFmJ8ou+J
+ hcxQEpVlSAGSNqwkcebIOi+wWypLcpfZJ1LkgdvJlQR777g7PS/4ihdjgF9Gwl/zPD7m
+ +3Dw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxqtlb/Na4TssodS1WAHPUCFzKomgy8YADAhyN9BauSbXDQHcN79hGxHM4jpjnK4eyVovPc4jMVjz26@nongnu.org
+X-Gm-Message-State: AFq9FYKyjfcg6MvXQaBA5pToiPwVHpTKMMM1768LPo1UbmTTLXGwlpN3
+ nQpD/c9nrPvDucUln13IPVupyaEw+/luyZer/mp10qSuFR9rKOFjUwzeiD50zXt3XheocQGS5qY
+ /jkQT1ww=
+X-Gm-Gg: AYBFou12uo0QOW6FplizLQD3DmRcKfDVUUk41mMqj5XTQ38w8jWyF71iVUBXYNzkYG8
+ grRxD1vOS/qjHh7w8XW/g3fWLtZk5Z75KRJl2paNLrNbyTDUcOL52CBAx9L0I9bQqiIFTuWz6Ge
+ VTEOkpgvCK5ZBAZ3DXt6goGVZrHjLlkMBvLsu6eGFQAcW2dMWlsBQClkvjMgH0i8SGXJby7M1Zh
+ bOLq2dAHxnK483jesnCtIMnwR774T4EWNLN4euXusoRElnMLkqF2eoGSzOR7G7A2kquq1oRN+Z9
+ dnRDhN8BMolkWhFlc/XUA2wvyCy9qmgmh049JyaU+VvMSLRPz7Y9+9iWJITZNgyPHQhGW1Qepi5
+ BjZ6CVFxArEIKVxw6IEz6/OJV6l1NU1bTJYu+9mS388Ndj/rMHZJqiWr1AkoiTsyV/8sTWmy8dL
+ 0lm596xGY7waWXjURY/4MR2HDh6SjgfY/VjbxFoLrt2Q9TDTNOCUYOqYnTWP9I+eDQM+bk/56mu
+ djMb1SYEbV2gdUeZSiLzpQusqfa+yxf6zH4u908K+mYczakE2qXOlgBg40AxMfW4PYA8nTO5SuZ
+ Sondn2S7JQrKjg==
+X-Received: by 2002:a05:600c:4e87:b0:4a1:f99e:f22d with SMTP id
+ 5b1f17b1804b1-4a35acafe0dmr18868115e9.6.1792824047269; 
+ Fri, 23 Oct 2026 23:40:47 -0700 (PDT)
 Received: from [172.20.4.74] ([176.95.65.245])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebd4ba7sm2371590f8f.33.2026.10.23.23.38.47
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-48e3ebcb902sm2600144f8f.24.2026.10.23.23.40.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 23:38:48 -0700 (PDT)
-Message-ID: <adf8fe0e-8eaa-4a5b-90b7-93e9e92c21d5@linaro.org>
-Date: Sat, 24 Oct 2026 08:38:46 +0200
+ Fri, 23 Oct 2026 23:40:46 -0700 (PDT)
+Message-ID: <1720ce05-f58e-4795-a2f5-3212b017784d@linaro.org>
+Date: Sat, 24 Oct 2026 08:40:45 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/10] pull-loongarch-20261023 queue
-To: qemu-devel@nongnu.org
-References: <20261023014931.4055823-1-maobibo@loongson.cn>
+Subject: Re: [PULL 00/43] hex queue
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+References: <20261023015040.2473105-1-brian.cain@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261023014931.4055823-1-maobibo@loongson.cn>
+In-Reply-To: <20261023015040.2473105-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +111,38 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/23/26 03:49, Bibo Mao wrote:
-> The following changes since commit ed698be7700160c74d24ef7830adccd2a28d840a:
+On 10/23/26 03:49, Brian Cain wrote:
+> The following changes since commit 4f4225874d4d3747ec1142e935dbd314218992fa:
 > 
->    Merge tag 'firmware-20261021-pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2026-10-22 08:20:10 +0200)
+>    Merge tag 'pull-request-2026-10-22' ofhttps://gitlab.com/thuth/qemu into staging (2026-10-22 12:47:21 +0200)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/bibo-mao/qemu.git tags/pull-loongarch-20261023
+>    https://github.com/qualcomm/qemu tags/pull-hex-20261022
 > 
-> for you to fetch changes up to b8cb88aaa32d8e1ff55c5bc347bae7da09f2e63f:
+> for you to fetch changes up to c8798f02fd9800b9a439b3175b0c94be09cf52cf:
 > 
->    target/loongarch: Select sys state by VM level (2026-10-23 09:28:51 +0800)
+>    target/hexagon: fix semihosting ACCESS filename handling (2026-10-22 18:49:07 -0700)
 > 
 > ----------------------------------------------------------------
-> pull-loongarch-20261023 queue
+> hexagon: v85, DSP machines, singlestep, bugfixes
+> 
+> - v85 scalar: atomics, CFI/_rb, vector stack
+> - new DSP machines: SM8975 NSP, SA8797P NSP0, SC8480XP NSP0, SA8775P CDSP0,
+> QCS6490 CDSP.
+> - bugfixes:
+>      - coverity, ubsan findings in semihosting, decoder
+>      - handling framekey w/dealloc_return
+> - handle singlestep exception
+> - performance improvements: TLB flush, l2vic
+> - test coverage
+> - MTTCG fixes: enabling MTTCG exposed races in lock/interrupts and ciad.
 
-Applied, thanks.
+This fails one of the hexagon tests:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/17413671779#L1159
+https://gitlab.com/qemu-project/qemu/-/jobs/17412765117#L1159
+
 
 r~
 
