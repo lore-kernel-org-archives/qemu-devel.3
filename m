@@ -1,92 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A463606A31B
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FC1606A31B
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dBzyXPsT;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jl/I1QKj
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OCfSqMTA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RNDIp9EC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKegI-0000yj-29; Sat, 24 Oct 2026 12:33:18 -0400
+	id 1xKegL-0000zf-Fe; Sat, 24 Oct 2026 12:33:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKegG-0000xv-1P
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:33:16 -0400
+ id 1xKegK-0000zH-C0
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:33:20 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKegE-0002OC-7l
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:33:15 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xKegI-0002Op-NY
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:33:20 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69OF07mw1563523
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:33:13 GMT
+ 69OF0BP72450776
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:33:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- r5HkXPLS8FwYqhVS5d6jorZZ3pKwNDdkYQnJymKqIBM=; b=dBzyXPsTCW7i/q7Y
- 8e7Di5/7aaQBMbLqWoIdc2VLbrgvI90RsUgiTbP0Z5GL3CeHjl1R4mA0VKZJ/7Q8
- dReM4ZJ/4sIAy9sdhVrAfHaTovEyg+03c5/LJ/sZuZOV6H+QQMbEyptVLKeUkpKJ
- jF1UrbvIK37GXOfvUjTHuX1sbsTTTqLwg67VRQV+XjO9SqEhLCDMX7LjCEoXahYb
- dKsVEwG+rqGjfhOzBaWDziUuGN6DKItRCXVDG5fjJfSO4/Z4bvPhBoVY4vcywvFW
- pTXrrERj/C6LBvzOyhFmfbq12CKJSuZevdvKlgBY9UdicObQkAGIhCHuVTakSHEt
- 8IvfPA==
+ XzFQ1RcHeXNBr18shSueqc4AYkRUJOl6+5D2bFMv8QA=; b=OCfSqMTAodexBH0h
+ z8mUg1nSAQaNeW5FIAfzYhS2hHafLDy9pt4IOqmOmwBddTuGTf0MAPRSqPUsHX0y
+ QbgxvR47j+lSs1m76sa4ZEsH+HzM2onwmllIYWRGlcqGKMGZdsfaCRs5Mm2sLofb
+ UfVwL1Fl02z5RHxGJRAq6rKKwCs8vgMQ93QalW+0lVFwHI5ZaVrPcezDBv0UBJOK
+ yghRCak7BApkS6ZuzDLeZx1FUxsstdNuycoPPjJe1bwcPQ5kRvDEBhxVMWuG6ShI
+ l05BVM0HFQHh3tSFuMjtkwP4aBhrbLfpS8KO+zkt/a841A8msX7aTSTtE8bQfV6e
+ v54Ipw==
 Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
  [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgm0gheyq-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgm8xhd4q-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:33:13 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:33:17 +0000 (GMT)
 Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-3adc5b185bfso1955547a91.3
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 09:33:13 -0700 (PDT)
+ 98e67ed59e1d1-3a6d30f66c9so2012131a91.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 09:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792859592; x=1793464392; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792859597; x=1793464397; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=r5HkXPLS8FwYqhVS5d6jorZZ3pKwNDdkYQnJymKqIBM=;
- b=jl/I1QKj0Q7AWDxiOitE3nYDT1BwFxyUWltB+v9wVxuXXETbePljlqoF0NIFOLkISr
- WslM+L+3hEGQ7ArKQHWIjJwCA7eNQhx48T+c5pbC223e9lGwEp0Ur7kQJhTCMbijhWTt
- RdC9AEgxlKqYB483rWXAg8CiQhxN8vO0TV4cR7TwSRQieTghQXJjXwGviLm5Aoqq+Uy0
- LIe1Jr8BY1lvMMgddajXPXwIQWi7aD9xZ5ERgpTXnB0U73pJE9GKQkxjUPC0pKr+OsO+
- rmU8KxrzyFC6tRXTJVQbpww41AJhwZsFMBdsIzd61yLFS2fll3ZM/vhdPTad3tBKVFCm
- UtTg==
+ bh=XzFQ1RcHeXNBr18shSueqc4AYkRUJOl6+5D2bFMv8QA=;
+ b=RNDIp9ECvOnHhPY/a5U1mG/DYB2co7xLzexs6dluE2pQ8sTSFTghWau7/XCgEq7nh1
+ zRdiQZ2C5l0NBEwTrFDHaplj7NvCW8s9JcNHkHra5Ovjc/TPqxraGRmIoYDc1Q+MVWHL
+ 6xktFdqUcBPQIsIwtJgUG/JrhT6gctjNce0dEU1q3NmanrzQSvh8AYzF++tgL1dau2SN
+ xVTgS9H61ELhDIdpyQBwSnJS9PJ6tV3rz9tmSudb9xOFFIoZCEkRLx3QfD34Tz0TDlja
+ J9er2l9j5GazS8aay6k1wJrvVqar2ZlbU/lFeDmppYUyg77ZaDPgb8IDSVWTcoRogIlg
+ xlpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792859592; x=1793464392;
+ d=1e100.net; s=20260707; t=1792859597; x=1793464397;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=r5HkXPLS8FwYqhVS5d6jorZZ3pKwNDdkYQnJymKqIBM=;
- b=Hn3HUwmoDVeAqY2jnj44BBQbmKL/Ee015jdBk7kTz4nmp6JTrlFgwD+d3mwLDkhVWb
- oSzXkG0CBaxurN2ZxeeMwa5Pzi/y1voWanb8FeeL0WzheWkPvhVewuurUCzMQiYcw5O5
- CljhZ2ap8ceG9dhp2DQACqiZpNNgusvfLWPTlYKR1kcPPd1MFpvtHVl9dwYYIToMLCrE
- a29cf+fEOFXI03l5bARR2gKnAjuKta2gp8NC5fwpeBCklh9M8Gm8RKG1BwOhfZLcUbBc
- QAEUyYbgRNxplK7xKeiNK6L/c6QTwDl5dzigwwHs+Vids+fwClJyYFZzginTh+qfeGdo
- 5Oew==
-X-Gm-Message-State: AFq9FYI/9J/fHb9EYx2Ffc7LAQ5uSXA/IqCrc0h4XM3/9WwZ8+iS6Xg9
- ZZSPg8nSuBOpNpeqT+FjXl85+kUi8aDApqh5UEfSTzYB+k2ah08d6y5UAzdSsDGBPYbbAaxFetd
- 3wsoh5v1jfLvXMu6hzbUlJuG1Ef1bAwgIAS0O6mP8gV3ZYnuttvFd2GsIi1Zh8yxaDg==
-X-Gm-Gg: AYBFou2rvfsnY73IVm+gs3K7yKPhaieC/Gad5ctzSUj4+I/DA66bOgyjOXyzgS+C0h5
- Em2/tOpJVtqlIsM+2q7+WR2Glj0dPe+LFSrWBRDV6BI+Zj6V1jnxL+c39dB3oC0ouxEFlfSlfzG
- DByLFJRA5Y1cAGH4sq1DJayp1c6Lb9/cORHILnZniaiAigWDOplUfShK0QXXa0/UnOjUhleXu71
- XOREDvNtYXHXDqh67Tk1YfNa2G2Tprt91jVurMdmZdkFj9zb2NnKPZxX1rM76Tw8+Sf+RPZ8lN0
- Xhm/lGwvszH9PpB/X/Kw71CDndPqiX4byJ2ym/B9DloCswUSCBLPFSjHaYLFszwEnpmN+kKSw6y
- up9aD5Fwn+WHRajf+PKieo8xUVaPXGzYYa56sOyhlhnzWjH/uNFte8oLG9upvBUM=
-X-Received: by 2002:a17:90b:4d06:b0:3ac:7f4c:a68c with SMTP id
- 98e67ed59e1d1-3adeb0ff8d0mr2288983a91.49.1792859592206; 
- Sat, 24 Oct 2026 09:33:12 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d06:b0:3ac:7f4c:a68c with SMTP id
- 98e67ed59e1d1-3adeb0ff8d0mr2288971a91.49.1792859591740; 
- Sat, 24 Oct 2026 09:33:11 -0700 (PDT)
+ bh=XzFQ1RcHeXNBr18shSueqc4AYkRUJOl6+5D2bFMv8QA=;
+ b=G5s1CqEDOnJxSBhKRbip/YLBxUKX/DnH5iGMjnmbs8j0LuySefbBUs0vvZ3Krw3U/+
+ RjA7HOzpv424qOCO1zJYlPqVhYnnOJL04UERmidKhcmm6DqSrEIrrFUkIHyaR13WTayY
+ ChErTvkRl+9ybUs/EqZHg99fR2GIt2XeNYb0sx/AtGCUi2X78ei9wxLp0uRF2Fj8ZI4B
+ ylYKZ3zpklJcm8TU74x+R12iXYD1Jhz0EXFSXSnwC6Ml976NliWoyhjGHdmHycz8wt6S
+ O2DMh8n0EpwaPoybAdhwaTzv1Cyd4XV2zdvZUfL7JGZMyVnUFWQdhAFHKWs1hkiKxnBl
+ 5gjA==
+X-Gm-Message-State: AFq9FYIVoGUkDqAg77vvrzzVv77bt3dpO85jOlk2ggFrROd5Q/Sj/WIy
+ IsbxmDwK5BcmSDMZ9+NkH/7D1jEvD7gWxsXC100lmhYgeLrezW1dLRVVPPav57nWcGT0gBYNAMt
+ Gdx43715VKqFdqe3N3cajjSmJ3rTUQnMa8jUqV8Qg29UXtB0BCjYi/zrDcb8A5fp0/A==
+X-Gm-Gg: AYBFou05QnKfQl7dALiS9cf03eOn3A8CijAJiqcVA99nBa6jmb3QNXzaZ0Dy4Q5g5dK
+ jdD3BlHiKX4SdXjft9tMLNWffO9T2TnouLlY++U9aqjXCfpWgAgVzIM8URm1f/FQ/148ozHi+tN
+ ndqxn8xytCh0nofjfWSXVrmXtNWdBJ9IzpdoSFqunQ3yTYp9CXNgmMKwkwlzj1jrVwqHCC6+ulp
+ jR5kIqvzYjKQpfKnPJeRwKH6vJBwexpIEOHLIpVrkskgRmmm5609DTX+PeSrHg+JbjjtdCqDGWW
+ FSSiK1NnFUS/EQzO+G8VRbUCd7rWINomq6eUMyvRtJ3aTw7FWvYnroowYeNbpJDN5y4f/gWKR7G
+ SsdlRw02XDPLJAth94l6CccCFuqMjjztT+TZ65L9CUSaI7Pq3JlEpYj7I0kLk+Sk=
+X-Received: by 2002:a17:90b:3c05:b0:3ac:36c7:c144 with SMTP id
+ 98e67ed59e1d1-3adeb5e3aa7mr1280352a91.28.1792859596383; 
+ Sat, 24 Oct 2026 09:33:16 -0700 (PDT)
+X-Received: by 2002:a17:90b:3c05:b0:3ac:36c7:c144 with SMTP id
+ 98e67ed59e1d1-3adeb5e3aa7mr1280343a91.28.1792859595888; 
+ Sat, 24 Oct 2026 09:33:15 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3adebad93c5sm1932270a91.2.2026.10.24.09.33.09
+ 98e67ed59e1d1-3adebad93c5sm1932270a91.2.2026.10.24.09.33.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Oct 2026 09:33:10 -0700 (PDT)
+ Sat, 24 Oct 2026 09:33:15 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
@@ -94,9 +94,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>,
  Yonggang Luo <luoyonggang@gmail.com>
-Subject: [PATCH v2 04/11] tcg: prefix helpers with target base architecture
-Date: Sat, 24 Oct 2026 16:32:42 +0000
-Message-ID: <20261024163249.77855-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 07/11] target/hppa: remove explicit target specific prefix
+Date: Sat, 24 Oct 2026 16:32:45 +0000
+Message-ID: <20261024163249.77855-8-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261024163249.77855-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261024163249.77855-1-pierrick.bouvier@oss.qualcomm.com>
@@ -104,31 +104,31 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: TyNp8cd_CAn4y0K1nwxc8JjjheMpsPMM
-X-Authority-Analysis: v=2.4 cv=UfTE26SN c=1 sm=1 tr=0 ts=6adcddc9 cx=c_pps
+X-Proofpoint-GUID: WFiTd1bIgOfDVLHn2M35QrCGyGhUW_Lv
+X-Authority-Analysis: v=2.4 cv=Ra0FmFtv c=1 sm=1 tr=0 ts=6adcddcd cx=c_pps
  a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=OX9GZYkf9iRtFPWvzqIA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=xJBkFjxltbiK57tzlAwA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: TyNp8cd_CAn4y0K1nwxc8JjjheMpsPMM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfX2WDSWAEMJA2h
- kgm/zNpA5kDDzk5+L63sYjnkyFVNK/aK6ZJg8SIx/ndyMAwc2nacuIgn1tfbwO5Qm12ssDK1AZt
- VTR6DCvFMpsPBFhr5VbgBCdU4WGy7V8FhRKZCfnVkwnHhdL4eXBYvr2/NrFxEkyATU02+jgsYr6
- nKys4oaw+vEtULiHlK0ZVBU1FNAZZjcCSVyHZcYFsjzbZw6Y/rhtmYymL6dFh8FWkD+lihjfZNW
- YuIm2o3ltBS9i0w3r/tClyLX7lifbdhlXLBmG3deUEWk4ar+I9NmKhEQWQYqzfsCjFuWDgp4egR
- MWH/GaojSEGUPe6SjJ7TZjy3FeOWGcGhcr0iuAlGlT/cOLMkZ4mewNHklgDdEcxi3q5z3l3vmcg
- 9savpQMHWavYH4tUyaJ9iQZj2Nlkq7mWcfTcvTnjZ1R8NUH4TUUWB4ZpsdFS/ATPg8IsKsmdf0f
- j4Y1NWZPLcK5v4TEu1A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfX2BNkqlBKLEaO
- X6uxAEavRLbmEcScGGYb6nx3dmDo5hbwzAa20vMjcr6DCCEOH2jKICA+TpL0KGZg0z99mvKKVJZ
- BqLNC1FQ6dgCjUHCyoRudqLczMlTWE0=
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfX0EkDOE80g60M
+ WFY4TBBssGw1Q6wsx4DqeyXkh0Cc5bY4KUO66Ctn4UXl9BJ4oQhiMUskECW4N5/g1dySsks2jk0
+ UPRd2Ot02zGe4gkG4qeAya7T4nYY31E=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfX+jpNbJNC1G81
+ m5oR4UDK/th9eHWKhuvkLWYm9Qqqqk2823Qd/6gV/Zy03ADkQ6GG9hqOQD5u0REaiVpvQsfI0XA
+ SIRrCKR1c2UqDgT2yM4MqKwcQtaPVTUCUK7e4O8vbaEsd7zDQlX4/HjQNeYKMRZHSviEgJeD7/b
+ Gk5okn7B/vikRlBWHzWv5vwWy2yIr2UzaY7usnl+lA5bSVBrEH11HZ+enMb44ZPJ8UvtVWuuXFw
+ QyUgLNAkToC5FWN/loDoKlg2kTvSmZgbNgaGc9t2/+IoNFDP2ayGfS8wycEIwSsDtfxocc0mmZE
+ U5K/30/txKjoRomQ+9dxdEVwGeEuS3KmYi4DF5AOJcQz4pIi3CqmiOjEht/SZpP/I4ZxPiHKMUO
+ RGW5K4FNF7vbxaFRAWzGwKvY8FPbB4menGmdobrwlVTZomNeHxy3JTIDiDShFocun2MZU0JesZ5
+ pe3A+dBjXbuHNpKIGyg==
+X-Proofpoint-ORIG-GUID: WFiTd1bIgOfDVLHn2M35QrCGyGhUW_Lv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-24_02,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
- suspectscore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ spamscore=0 adultscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240065
 Received-SPF: pass client-ip=205.220.180.131;
@@ -159,119 +159,122 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Now we made sure all helpers and helper_info are defined and used using
-HELPER/HELPER_INFO macros, we are ready to introduce a target prefix.
+Now that we have a generic mechanism to prefix all helpers, we can undo the
+recent changes that fixed conflicts between targets in multi-target set.
 
-We can't reuse TARGET_ARCH since it's not defined for common code, and
-it's also poisoned. So introduce a new TARGET_ARCH_PREFIX which is
-defined for all target code (whether it's common or target specific),
-and use it as prefix.
+This reverts commit cd095f35b148f3fa0b2000a36af0c9efe2299806
+"target/hppa: prefix helpers conflicting with other arch"
 
-On some hosts (found it on sparc), predefined macros exist for the base
-architecture names we use, and their value is 1. (#define sparc 1). So,
-we can't use them directly or it would create a illformed identifier for
-function names. So to prevent any problem, use additional "target",
-which gives -DTARGET_ARCH_PREFIX=target_<TARGET_ARCH>.
-
-Finally there is one last catch: beyond target helpers, tcg also has
-common helpers. For those ones, we want an empty prefix, since they are
-defined on tcg side and not target side.
-
-With this, we now have target prefixed helpers, preventing symbol
-conflicts when linking targets together.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Acked-by: Yonggang Luo <luoyonggang@gmail.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/exec/helper-gen-common.h   | 7 +++++++
- include/exec/helper-head.h.inc     | 9 +++++++--
- include/exec/helper-proto-common.h | 7 +++++++
- meson.build                        | 2 ++
- 4 files changed, 23 insertions(+), 2 deletions(-)
+ target/hppa/helper.h     | 6 +++---
+ target/hppa/op_helper.c  | 4 ++--
+ target/hppa/sys_helper.c | 8 ++++----
+ target/hppa/translate.c  | 6 +++---
+ 4 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/include/exec/helper-gen-common.h b/include/exec/helper-gen-common.h
-index 834590dc4e5..12e220c8ce9 100644
---- a/include/exec/helper-gen-common.h
-+++ b/include/exec/helper-gen-common.h
-@@ -7,8 +7,15 @@
- #ifndef HELPER_GEN_COMMON_H
- #define HELPER_GEN_COMMON_H
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 8d7fa1ae348..8369855d78e 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -1,4 +1,4 @@
+-DEF_HELPER_2(hppa_excp, noreturn, env, int)
++DEF_HELPER_2(excp, noreturn, env, int)
  
-+#include "exec/helper-head.h.inc"
-+
-+/* Common helpers are built once, without a target prefix. */
-+#pragma push_macro("HELPER_PREFIX")
-+#undef HELPER_PREFIX
-+#define HELPER_PREFIX
- #define HELPER_H "accel/tcg/tcg-runtime.h"
- #include "exec/helper-gen.h.inc"
- #undef  HELPER_H
-+#pragma pop_macro("HELPER_PREFIX")
+ DEF_HELPER_FLAGS_3(stby_b, TCG_CALL_NO_WG, void, env, tl, tl)
+ DEF_HELPER_FLAGS_3(stby_b_parallel, TCG_CALL_NO_WG, void, env, tl, tl)
+@@ -82,8 +82,8 @@ DEF_HELPER_FLAGS_4(fmpynfadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64, i64)
+ DEF_HELPER_FLAGS_0(read_interval_timer, TCG_CALL_NO_RWG, tl)
  
- #endif /* HELPER_GEN_COMMON_H */
-diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
-index be1d79cf017..fd03b1f1704 100644
---- a/include/exec/helper-head.h.inc
-+++ b/include/exec/helper-head.h.inc
-@@ -8,8 +8,13 @@
+ #ifndef CONFIG_USER_ONLY
+-DEF_HELPER_1(hppa_halt, noreturn, env)
+-DEF_HELPER_1(hppa_reset, noreturn, env)
++DEF_HELPER_1(halt, noreturn, env)
++DEF_HELPER_1(reset, noreturn, env)
+ DEF_HELPER_1(rfi, void, env)
+ DEF_HELPER_1(rfi_r, void, env)
+ DEF_HELPER_FLAGS_2(b_gate_priv, TCG_CALL_NO_WG, i64, env, i64)
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index ea0680aa9eb..ec7f2a48e4d 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -30,7 +30,7 @@
+ #include "user/page-protection.h"
+ #endif
  
- #include "fpu/softfloat-types.h"
+-G_NORETURN void HELPER(hppa_excp)(CPUHPPAState *env, int excp)
++G_NORETURN void HELPER(excp)(CPUHPPAState *env, int excp)
+ {
+     CPUState *cs = env_cpu(env);
  
--#define HELPER(name) glue(helper_, name)
--#define HELPER_INFO(name) glue(helper_info_, name)
-+#ifdef TARGET_ARCH_PREFIX
-+ #define HELPER_PREFIX glue(TARGET_ARCH_PREFIX, _)
-+#else
-+ #define HELPER_PREFIX
-+#endif
-+#define HELPER(name) glue(HELPER_PREFIX, glue(helper_, name))
-+#define HELPER_INFO(name) glue(HELPER_PREFIX, glue(helper_info_, name))
+@@ -341,7 +341,7 @@ target_ulong HELPER(probe)(CPUHPPAState *env, target_ulong addr,
+         if (excp == EXCP_DTLB_MISS) {
+             excp = EXCP_NA_DTLB_MISS;
+         }
+-        HELPER(hppa_excp)(env, excp);
++        HELPER(excp)(env, excp);
+     }
+     return (want & prot) != 0;
+ #endif
+diff --git a/target/hppa/sys_helper.c b/target/hppa/sys_helper.c
+index ccfc2b48816..4a8bbf32591 100644
+--- a/target/hppa/sys_helper.c
++++ b/target/hppa/sys_helper.c
+@@ -48,16 +48,16 @@ void HELPER(write_interval_timer)(CPUHPPAState *env, target_ulong val)
+     timer_mod(cpu->alarm_timer, timeout);
+ }
  
- /* Some types that make sense in C, but not for TCG.  */
- #define dh_alias_i32 i32
-diff --git a/include/exec/helper-proto-common.h b/include/exec/helper-proto-common.h
-index 76e6c25becb..4433ba47a82 100644
---- a/include/exec/helper-proto-common.h
-+++ b/include/exec/helper-proto-common.h
-@@ -9,9 +9,16 @@
+-void HELPER(hppa_halt)(CPUHPPAState *env)
++void HELPER(halt)(CPUHPPAState *env)
+ {
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+-    HELPER(hppa_excp)(env, EXCP_HLT);
++    HELPER(excp)(env, EXCP_HLT);
+ }
  
- #include "qemu/atomic128.h"  /* for HAVE_CMPXCHG128 */
+-void HELPER(hppa_reset)(CPUHPPAState *env)
++void HELPER(reset)(CPUHPPAState *env)
+ {
+     qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+-    HELPER(hppa_excp)(env, EXCP_HLT);
++    HELPER(excp)(env, EXCP_HLT);
+ }
  
-+#include "exec/helper-head.h.inc"
-+
-+/* Common helpers are built once, without a target prefix. */
-+#pragma push_macro("HELPER_PREFIX")
-+#undef HELPER_PREFIX
-+#define HELPER_PREFIX
- #define HELPER_H "accel/tcg/tcg-runtime.h"
- #include "exec/helper-proto.h.inc"
- #undef  HELPER_H
-+#pragma pop_macro("HELPER_PREFIX")
+ target_ulong HELPER(swap_system_mask)(CPUHPPAState *env, target_ulong nsm)
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index befdb58e9a6..41300c0dd73 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -726,7 +726,7 @@ static void install_link(DisasContext *ctx, unsigned link, bool with_sr0)
  
- #include "accel/tcg/getpc.h"
+ static void gen_excp_1(int exception)
+ {
+-    gen_helper_hppa_excp(tcg_env, tcg_constant_i32(exception));
++    gen_helper_excp(tcg_env, tcg_constant_i32(exception));
+ }
  
-diff --git a/meson.build b/meson.build
-index 4f29bc6cc33..ad537e0c18f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4167,6 +4167,7 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
-   # prevent common code to access cpu compile time definition,
-   # but still allow access to cpu.h
-   target_c_args = ['-DCPU_DEFS_H']
-+  target_c_args += ['-DTARGET_ARCH_PREFIX=target_' + target_base_arch.to_lower()]
-   target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
- 
-   if target_base_arch in target_common_arch
-@@ -4290,6 +4291,7 @@ foreach target : target_dirs
-   arch_deps = []
-   c_args = ['-DCOMPILING_PER_TARGET',
-             '-DCONFIG_TARGET="@0@-config-target.h"'.format(target),
-+            '-DTARGET_ARCH_PREFIX=target_' + target_base_arch.to_lower(),
-   ]
-   link_args = emulator_link_args
- 
+ static void gen_excp(DisasContext *ctx, int exception)
+@@ -2450,7 +2450,7 @@ static bool trans_halt(DisasContext *ctx, arg_halt *a)
+ #ifndef CONFIG_USER_ONLY
+     set_psw_xb(ctx, 0);
+     nullify_over(ctx);
+-    gen_helper_hppa_halt(tcg_env);
++    gen_helper_halt(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return nullify_end(ctx);
+ #endif
+@@ -2462,7 +2462,7 @@ static bool trans_reset(DisasContext *ctx, arg_reset *a)
+ #ifndef CONFIG_USER_ONLY
+     set_psw_xb(ctx, 0);
+     nullify_over(ctx);
+-    gen_helper_hppa_reset(tcg_env);
++    gen_helper_reset(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return nullify_end(ctx);
+ #endif
 -- 
 2.43.0
 
