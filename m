@@ -1,113 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967FC606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 13:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3C7606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 13:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Weh7/w7G
+	dkim=pass (2048-bit key, unprotected) header.d=ens-lyon.org header.i=@ens-lyon.org header.a=rsa-sha256 header.s=dkim header.b=XQxWHP29;
+	dkim=pass (2048-bit key) header.d=ens-lyon.org header.i=@ens-lyon.org header.a=rsa-sha256 header.s=dkim header.b=XQxWHP29
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKbfR-0006I7-UH; Sat, 24 Oct 2026 09:20:13 -0400
+	id 1xKbhs-0007ry-0r; Sat, 24 Oct 2026 09:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xKbfI-00069I-JC
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 09:20:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <SRS0=in2V=IO=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1xKbgs-0007TD-0C
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 09:21:47 -0400
+Received: from domu-toccata.ens-lyon.fr ([140.77.166.138]
+ helo=sonata.ens-lyon.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xKbfG-0000VQ-6h
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 09:20:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792847999;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UQAn78vPWEXTirZf0lDhu6gpbpKqpdAp+lS6Rf8H9Go=;
- b=Weh7/w7GIuU+905Ov5J+LbblMN/ND347k596BFWyC/3ygMLFKSr8b8uCg98MhObFm0pCYg
- miKHu2SwxvsnKl/PHBbJj5nTQ0VcckXOI8ozgdkc2T92/4FOEjSjT2iTtsfsqqdiUUbkar
- O5OXCy+DuPuzFG3Ge6KL0YDdzT53hrk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-gGp9DRFHPOSzLZzhK-QuSw-1; Sat,
- 24 Oct 2026 09:19:55 -0400
-X-MC-Unique: gGp9DRFHPOSzLZzhK-QuSw-1
-X-Mimecast-MFC-AGG-ID: gGp9DRFHPOSzLZzhK-QuSw_1792847992
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (Exim 4.90_1) (envelope-from
+ <SRS0=in2V=IO=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org>)
+ id 1xKbgn-0000nb-7s
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 09:21:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by sonata.ens-lyon.org (Postfix) with ESMTP id 75C73A21A4;
+ Sat, 24 Oct 2026 15:21:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1792848090; bh=ewqXXEtSBcgdz9aje68pnERu5F6BZ2hU8qp2R6jhb2s=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=XQxWHP29s1hJAfRFAVR2wb300fCGDgeFnZbvSrecxkpeXh9tslETIYM24xq+bFb0i
+ Dk8XlUP79eq+57oWnNDeOGg+xU0j+Uukx5a5p7znrubrFeacY8v4kmC0zmfP6xGX2H
+ BTvH5Hu+k2+A3xkAtW67P8iJ38RE1q+Mr7vnDEN7DVDUZc4ZPOS07MDBNsWRTfz8gv
+ 7R5s5L9z/JDuXXRMjaksbdUnFG15EAgkR1QEpY3rvn8EEtFVEhWN2ACaXjb6oKzhXf
+ 4ELlg1hTNTMY/9VzFKKr5WROMyAAW6bhppraxY0u2L8RLLvKKd2koDNq4XHjQ32Lrv
+ /ABqGzPD1Wydw==
+Received: from sonata.ens-lyon.org ([127.0.0.1])
+ by localhost (sonata.ens-lyon.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id f0Fjzj3vbRsA; Sat, 24 Oct 2026 15:21:30 +0200 (CEST)
+Received: from end (lfbn-bor-1-980-210.w90-120.abo.wanadoo.fr [90.120.173.210])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76B921800767; Sat, 24 Oct 2026 13:19:51 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0EE2472; Sat, 24 Oct 2026 13:19:47 +0000 (UTC)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by sonata.ens-lyon.org (Postfix) with ESMTPSA id 3B007A04FB;
+ Sat, 24 Oct 2026 15:21:30 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ens-lyon.org; s=dkim;
+ t=1792848090; bh=ewqXXEtSBcgdz9aje68pnERu5F6BZ2hU8qp2R6jhb2s=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=XQxWHP29s1hJAfRFAVR2wb300fCGDgeFnZbvSrecxkpeXh9tslETIYM24xq+bFb0i
+ Dk8XlUP79eq+57oWnNDeOGg+xU0j+Uukx5a5p7znrubrFeacY8v4kmC0zmfP6xGX2H
+ BTvH5Hu+k2+A3xkAtW67P8iJ38RE1q+Mr7vnDEN7DVDUZc4ZPOS07MDBNsWRTfz8gv
+ 7R5s5L9z/JDuXXRMjaksbdUnFG15EAgkR1QEpY3rvn8EEtFVEhWN2ACaXjb6oKzhXf
+ 4ELlg1hTNTMY/9VzFKKr5WROMyAAW6bhppraxY0u2L8RLLvKKd2koDNq4XHjQ32Lrv
+ /ABqGzPD1Wydw==
+Received: from samy by end with local (Exim 4.100.1)
+ (envelope-from <samuel.thibault@ens-lyon.org>)
+ id 1xKbgf-00000002b0l-2rhd; Sat, 24 Oct 2026 15:21:29 +0200
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 2/2] baum: send device identity and cell count on protocol
+ off/on
+Date: Sat, 24 Oct 2026 15:21:28 +0200
+Message-ID: <20261024132128.618909-3-samuel.thibault@ens-lyon.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261024132128.618909-1-samuel.thibault@ens-lyon.org>
+References: <20261024132128.618909-1-samuel.thibault@ens-lyon.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 03/19] .dir-locals: include QEMU code in PYTHONPATH
-From: marcandre.lureau@redhat.com
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Peter Xu <peterx@redhat.com>, Warner Losh <imp@bsdimp.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>, Keith Busch <kbusch@kernel.org>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>, 
- Anders Roxell <anders.roxell@linaro.org>, qemu-arm@nongnu.org, 
- Song Gao <gaosong@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Laurent Vivier <laurent@vivier.eu>, qemu-s390x@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Brad Smith <brad@comstyle.com>, Brian Cain <brian.cain@oss.qualcomm.com>, 
- Halil Pasic <pasic@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Yoshinori Sato <yoshinori.sato@nifty.com>, Klaus Jensen <its@irrelevant.dk>, 
- John Snow <jsnow@redhat.com>
-In-Reply-To: <20261019192704.3220373-4-alex.bennee@linaro.org>
-References: <20261019192704.3220373-1-alex.bennee@linaro.org>
- <20261019192704.3220373-4-alex.bennee@linaro.org>
-Date: Sat, 24 Oct 2026 17:19:42 +0400
-Message-Id: <179284798267.974117.15393556178297449546.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=578;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+BCH9Z5mi72LJRQQiI+wiipLZ10r6xp2UXzIrS0MH7o=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq3LBwPQxpHHYOlsWSa1wnMYpNNwBR4SikLPv0B
- 72grWoCbJ2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatywcAAKCRDa6OEJdZac
- 5fXOEACXn9STtHcGucUYh/53ncUXUamteDNxZb6I76VMHjln7vp+PnhTVURFKkq/5UgvhRaUIbW
- uwv2lSPCAloX7tiM7l6dELDAYH0GnAE3zsZWO6P0LrsG5DuOJi5ncw2jkz8R8Py1NrckkFnKZFw
- vtq1q0SBr0hTfFyD2m1BeFCW2iQw2FoNzK+f+Prcd3uDmnI0bF1uLruFGiB65Ob6yWlObNpfU+V
- 0FMgKd/rPy+KrNUKt7Asr9fyrqi4S8LeHOexNvltPBiZh31ZuZ+bNL/EPiZ/7p3k3FzziWcpLiq
- 8QWjAgM6fT9Qyt9aDePQ8z67fuVc66QouRmHSlsSl2YMratptakedYRAl5td0RGBqTFDTrTTjk0
- oWJC1w54ISLOXMO/84D1qYGyNmQ0WJP1QRbM/Tr+dHU5nB3TY4knreojfCDawMHfPC5gloNVvWR
- LpKkPBAu6lDwQuq/L9Mh5rYTgdL7FIsWcgfvTRN6rbjGGQ0mK91HmD7gK6iaME99hY60hAQy1zX
- VXKEVute4DImc8W1044Msx6J6cozydVu5s/pb1CmVbVdo3SwoJkwiE4kUWplyLPx4joFrlNqiYj
- qdDftXJhgS0OdqqYVFHBNPrEnzl9Qwl3MBdM/m7YjVkgR3XDOZzxLgeMyiazbvIoYDS7ryMgWzl
- 9UUny4IlsnUDpRQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=140.77.166.138;
+ envelope-from=SRS0=in2V=IO=ens-lyon.org=samuel.thibault@bounce.ens-lyon.org;
+ helo=sonata.ens-lyon.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,27 +92,95 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 19 Oct 2026 20:26:48 +0100, Alex Bennée <alex.bennee@linaro.org> wrote:
-> When editing python code the linters tools have a hard time with our
-> imports as they can't be found. To ease this we can expand a
-> PYTHONPATH in .dir-locals so at least Emacs users can have less
-> warnings in their editor.
-> 
-> I still get complaints from python-mypy about missing library stubs
-> that mean it can't do proper type analysis though.
-> 
-> [...]
+The hardware devices do identify themselves when the driver turns the
+protocol off and on again. NVDA expects to get it.
 
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ chardev/baum.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
+diff --git a/chardev/baum.c b/chardev/baum.c
+index 166d6f2f09..93775faf81 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -95,9 +95,12 @@ struct BaumChardev {
+ 
+     brlapi_handle_t *brlapi;
+     brlapi_fileDescriptor brlapi_fd;
++
++    /* Initialized in baum_deferred_init */
+     unsigned int x, y;
+     bool deferred_init;
+ 
++    bool protocol_on;
+     uint8_t in_buf[BUF_SIZE];
+     uint8_t in_buf_used;
+     uint8_t out_buf[BUF_SIZE];
+@@ -337,13 +340,27 @@ static void baum_write_packet(BaumChardev *baum, const uint8_t *buf, int len)
+     }
+ }
+ 
++static void baum_send_cell_count(BaumChardev *baum)
++{
++    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
++    baum_write_packet(baum, cell_count, sizeof(cell_count));
++}
++
++static void baum_send_device_identity(BaumChardev *baum)
++{
++    uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
++        'B','a','u','m',' ','V','a','r','i','o' };
++    identity[11] = '0' + baum->x / 10;
++    identity[12] = '0' + baum->x % 10;
++    baum_write_packet(baum, identity, sizeof(identity));
++}
++
+ /* Called when the other end seems to have a wrong idea of our display size */
+ static void baum_cellCount_timer_cb(void *opaque)
+ {
+     BaumChardev *baum = BAUM_CHARDEV(opaque);
+-    uint8_t cell_count[] = { BAUM_RSP_CellCount, baum->x * baum->y };
+     DPRINTF("Timeout waiting for DisplayData, sending cell count\n");
+-    baum_write_packet(baum, cell_count, sizeof(cell_count));
++    baum_send_cell_count(baum);
+ }
+ 
+ /* Try to interpret a whole incoming packet */
+@@ -441,17 +458,18 @@ static int baum_eat_packet(BaumChardev *baum, const uint8_t *buf, int len)
+         uint8_t protocol;
+         DPRINTF("SetProtocol\n");
+         EAT(protocol);
+-        /* ignore */
++        if (!baum->protocol_on && protocol) {
++            /* Switching on, answer with device identity and cell count */
++            baum_send_device_identity(baum);
++            baum_send_cell_count(baum);
++        }
++        baum->protocol_on = protocol;
+         break;
+     }
+     case BAUM_REQ_GetDeviceIdentity:
+     {
+-        uint8_t identity[17] = { BAUM_RSP_DeviceIdentity,
+-            'B','a','u','m',' ','V','a','r','i','o' };
+         DPRINTF("GetDeviceIdentity\n");
+-        identity[11] = '0' + baum->x / 10;
+-        identity[12] = '0' + baum->x % 10;
+-        baum_write_packet(baum, identity, sizeof(identity));
++        baum_send_device_identity(baum);
+         break;
+     }
+     case BAUM_REQ_GetVersionNumber:
 -- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+2.53.0
 
 
