@@ -1,93 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14259606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 07:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F3B606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 08:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Z2Dll7mR
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=e6YxjOYa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKW5G-0002YL-Rv; Sat, 24 Oct 2026 03:22:30 -0400
+	id 1xKWzp-00016Y-6k; Sat, 24 Oct 2026 04:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xKW5F-0002YB-8t
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:22:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xKW5E-0001DZ-0V
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 03:22:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1792826546;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H0EDGrbjdaAR9t8v8JyOSfK6Z1RQz1W/HigtjeUOWx4=;
- b=Z2Dll7mRkPHrvTmhQrwyNJL3lginYit/L6NWyXn/NJyzUoAz9SoIULB2VEpBohzYB5GhGE
- +z/8g+ZwkhD0oxmAlyIlrAhpK+xRTou95Wrr9Z65EWwoSKLz9V7GEudrQOaxoerwdqEOyI
- Ka4Yv4xizWJFfLsIwUCtbwh8h55zHDw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-I5LBOTTcOySSG-AEr30Xzw-1; Sat,
- 24 Oct 2026 03:22:24 -0400
-X-MC-Unique: I5LBOTTcOySSG-AEr30Xzw-1
-X-Mimecast-MFC-AGG-ID: I5LBOTTcOySSG-AEr30Xzw_1792826543
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 036571954B3B; Sat, 24 Oct 2026 07:22:23 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D40071956089; Sat, 24 Oct 2026 07:22:21 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xKWzZ-000166-O7
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 04:20:43 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xKWzV-00064r-UT
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 04:20:39 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6b4213059d4so1583929a12.2
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 01:20:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792830034; cv=none;
+ d=google.com; s=arc-20260327;
+ b=igroxHefTQAUOycinvqzCciuNXGcUa6wllmWfzFr5bYfwWtkjxI02TFTPkV/4X6Dc3
+ Soa1p1//4a4cDJYSuYrH6rROh5gvp9oBqP6gGpaEVwwyKhdQ+vLfBHgE0bG71/48Giin
+ td5MuGhBDf0OSMoixwjktPQjnmjQj0+w9OY4/COJJLC6h7VbV2mKl1RPNzH2JvE5RyZM
+ r4b/gyLSXaa8sI53K2UXELhf8YghbD0WcA+FEv7FVFWsA53gGTEVHxR5PyxRej9guwDx
+ tBOCAuCObjWISke0CQhlvUkI+cKsPZzFrISPB7Qxn3PbSJEq1DiCGjib5nF7vrtTtAzs
+ FBwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :reply-to:in-reply-to:references:mime-version:dkim-signature;
+ bh=pToyZEsMQcnnK/K9SHbtCiiY1SOcsA947piF/MF4FdA=;
+ fh=s78ZTenUdEUgKjwGhjomvA2uKRL+ofyF24hx+ILH2nw=;
+ b=HgqC7db/SQnGY4UBkAFkE9W1vtX+swAA2TgYBygennU6c8Zmb80NI+UxB6hCFGkI2G
+ tz7SnCreDRnpyROkqHqfs31+ssyRGlOSSl4NWosU8ZG/PwXgkV6+NoFfY0Gnu/Rgo7J8
+ OZGuP9oPuGb3/qSv7p5mmJlpRoEE9DYcTQYb7blb8A/s+Yl2gFmVPm/YvR8zJqbDAbHK
+ vm/fYKYxxHgOxhtQjCAAWgIhNA/lOG1Ay2edwQ9ajU5dLKM6y+cv0vww9fiCuz+EYOAm
+ XBwzfyAYM8dnqAf6o77s5BMPchiUFF8Ll2agCs/1xNii310xJ7WYEU+Ln9nIi+HcKG0C
+ vRUQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792830034; x=1793434834; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pToyZEsMQcnnK/K9SHbtCiiY1SOcsA947piF/MF4FdA=;
+ b=e6YxjOYaJMAAYjjjr6Aj/95R59qgUMFzKaNO8HDJFxvwJyPm8j6LKnTuYmw+wPCENR
+ MjJv0N5VcwTYs5AR8tIgvuMxnBqQrV+Udn2hLw0K33FxlNTpqbSemi7K//U+h9oPDTYs
+ HQpz4QTblLcHUYcK2ucI8gXJW7Om11CdD2G5J3PRV25FLKznLI6u91YRP+wauCskGrPt
+ y64NzwJa9qMiVmGz8HPpZn03OY47JgEYM/6MkSlI3CHYT4CDuSCdiP5Sti6osIN9eZKn
+ MdeqOMFefZmmM4JE+oLRBB6/U/noD8uwRCKKbqHWk4eyGRT9fMU8Pm8gFQot4e/ug8IO
+ 3SiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792830034; x=1793434834;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pToyZEsMQcnnK/K9SHbtCiiY1SOcsA947piF/MF4FdA=;
+ b=hQTZAptyj0zh89Gdy+jNzSS+cgpX/G5SZvsovmL/eTJx/uNJ1tWRAhwLuEQOUdbdeR
+ aAQfbzGALfAlYNI9C+4v7qfAWlO+7cowF+2VxneQFOYujq4Zrtf5eMC/c8meHYV3rnAu
+ Ur93P6mXHULyxFCAWPtVS+bJfN4R75tG8HSjM//AxNzOvUgFmk5K3whGiHm4AqId3j5e
+ g9W81nOc8DoKZQRs2cNhBQai+D3lQ1MYpUY/Z2a4RTSG6Pme5aUlKhr3I/f+bNASUWDQ
+ OL0t4Mpf+VbSygRLT98L6I9sflL61BV07K0jeMRwIGD8SLRDLNVA76wVuq4aRE/+OS5S
+ K3IA==
+X-Gm-Message-State: AFq9FYIFNrej3ztupmWoHhR+pb49Vl39Uq/2cDum9fjH6U82bNXVy1rZ
+ HdH9t9TAazAF1iJMCzpdj1uYq9ue/Y/pntygriYvq02sUGVVRuCvEy+PkS2c9j37o4ayUar8wO3
+ LbvWxxNn1BUoxLWyxeUCI+1aH6QfuwZ8=
+X-Gm-Gg: AYBFou3Q7Q7L9P32hITFEd3dhN2TeqRLQsOeLJijYXvQ6Y2cAoIbMxs+GRlwvPWkmjo
+ NBTS+LJpErXEAdazbqRpYdVorZFGAUBNVC08R/jwIWZjb57g8dKUOpt8p75yKjxYkmIHQRdIC2P
+ tfFm2QFMrNWYgWpHomXsQlZJ6Ne28gW1SIhdi6IC9NRaqymD4qyWG6ZyC/bD1DY+1ZA/rNDaxJc
+ Y+Jn6WBRAHGJf50fgbGbWnrkctLjjYvwMjXL+cSIjBVwIKD6iDcC4E672xxaqulTQKGr0q4MdvK
+ jIACnDLJoQ159PH/MAQek1FY7aStjDWJd0As9yQGSBDMVilLdSJp9+oV6Xxhb0TYPJ1WLlBrlcY
+ 4vdsSqIIL0DnyrZrAMJpRKNSzSjh69pzf8pZhMqxODUvuf7aWzxweRzclVg==
+X-Received: by 2002:a05:6402:a50b:10b0:6b4:208d:21f2 with SMTP id
+ 4fb4d7f45d1cf-6b442a82c9amr1193663a12.2.1792830033438; Sat, 24 Oct 2026
+ 01:20:33 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCHv2] baum: send device identity and cell count on
- protocol off/on
-From: marcandre.lureau@redhat.com
-To: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, pbonzini@redhat.com
-In-Reply-To: <20261022220537.2424009-1-samuel.thibault@ens-lyon.org>
-References: <20261022220537.2424009-1-samuel.thibault@ens-lyon.org>
-Date: Sat, 24 Oct 2026 11:22:16 +0400
-Message-Id: <179282653682.902758.13964197815589518895.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=120;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=jmziiGCgXfvYdHCHF4hXkvrBjvqE0xJfhlIG7lasPPE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq3FyqbMhm5IZZ3mCuLA+mm4KYLTAL3twCeRo87
- r2ydrAlHzGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCatxcqgAKCRDa6OEJdZac
- 5Q3uD/sHAD7cKpKLOTvBOje4yAjcf4DByaL7UOPrfIeRBX6KwwKPceJCrZBUOeYWvl0JX8M3MUn
- g89p+vccJomDzSM361qa+SiHZPTVwMDV43PSTl2OGxq7ZYXhUdxnDHP+8cOyW1wIeyTuOAYRZBR
- yBQRzUIc4+pncoTSbisefuJYcICngA5mS2csJw+cw5lCD4pzBT7Xi8/7i8u45SfD2wbv85meiSE
- Gu39qNQ5gSytwUtwaDSGuLvDWpHMb2Q4fuRoGhJTsQ6py0DkCcNK5dkpHTVvjkFlisgGr1JhJON
- llT4ro5hdcxeXBcH04+VhkObOPkuDxv/J4mP4IYSq5LDjn0/6l8iR16iwrxrrccmY08P6W4/d9r
- dZ3XGCEn4iqnoe6srPG9B2VL6CHcNOkR7uZ/PaDrIP75su9KvOKyfBHksApz4rfauWqlD+D28j8
- S0vb2yN0lF0eqeCLUgsI2CvIEKA2GyhIGrRwONSczU6GCZLmoHvd0W4eJPaalexpiz/Ce91rA9B
- TKyzRNOQG0S4qEdG2Oc4vmo0SJkGyFJl2rXCg3lobxwEs0k9A/ip5dkKdQdUqfyhQlIYWz5xdyH
- yufkefgdFyumJ8ix27+thFy3No/WMMfkW/yYGLgH+ia0K6KpXc3M0P6RU5IA5gylDJlo+1qRVWJ
- XxNbkZKAanV5L8Q==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261024061616.27381-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261024061616.27381-8-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261024061616.27381-8-pierrick.bouvier@oss.qualcomm.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Sat, 24 Oct 2026 16:20:21 +0800
+X-Gm-Features: AclHuK9V7Uwx6zg_JiVJqEyKT0IPIDyqujdcN4VTu33Zl-YLmWJrfgYWDru6rFE
+Message-ID: <CAE2XoE-BzqTvMR24V-h02xf1EouSe-jW7AVmC-LPVCc7icrypw@mail.gmail.com>
+Subject: Re: [PATCH v3 7/9] target/riscv/kvm: restrict kvm-accel-riscv-cpu to
+ riscv targets
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Anton Johansson <anjo@rev.ng>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,17 +117,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Sat, Oct 24, 2026 at 2:19=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On riscv hosts:
+> $ ./build/tests/unit/test-multi-target
+> Type 'kvm-accel-riscv-cpu' is missing its parent 'accel-riscv-cpu'
+> Aborted
+>
+> Parent type is conditionally registered from current target:
+> register_accel_target_type uses '"accel-" + target_cpu_type()' as type
+> name. Thus, accelerator specific cpu types must only be registered for
+> riscv targets.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 45ad5e1525a..f28d9115c82 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -26,6 +26,7 @@
+>  #include "qapi/error.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/main-loop.h"
+> +#include "qemu/target-info.h"
+>  #include "qapi/visitor.h"
+>  #include "system/system.h"
+>  #include "system/kvm.h"
+> @@ -2208,6 +2209,7 @@ static const TypeInfo kvm_cpu_accel_type_info =3D {
+>
+>      .parent =3D TYPE_ACCEL_CPU,
+>      .class_init =3D kvm_cpu_accel_class_init,
+> +    .is_available =3D target_base_riscv,
+>      .abstract =3D true,
+>  };
+>  static void kvm_cpu_accel_register_types(void)
+> --
+> 2.43.0
+>
+>
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+This is my way
 
+[PATCH 07/34] target-info: prepare the QOM target list before
+module_call_init(MODULE_INIT_QOM)
+https://lore.kernel.org/qemu-devel/20261014093152.834-8-luoyonggang@gmail.c=
+om/
+
+[PATCH 09/34] accel: register CPU parent for each target
+https://lore.kernel.org/qemu-devel/20261014093152.834-10-luoyonggang@gmail.=
+com/
+
+with this, you have no need to repeat the
+`.is_available =3D target_base_riscv`, work and then remove the latter.
+
+
+ prepare the QOM target list before module_call_init(MODULE_INIT_QOM) is ne=
+eded
+because we can not query the target list within the type_init.
+
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
 
