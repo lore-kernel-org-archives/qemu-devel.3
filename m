@@ -1,142 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD86B606A31B
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 10:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEF8606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 10:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XOwHJDwU;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=EzsV5iPE
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=LSLASWYk;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TFtNwURJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKYhN-0004yI-BE; Sat, 24 Oct 2026 06:10:01 -0400
+	id 1xKYu0-00077Q-4d; Sat, 24 Oct 2026 06:23:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKYhM-0004y2-BJ
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 06:10:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xKYtu-00076n-Gf
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 06:22:58 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xKYhK-0005r2-GP
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 06:10:00 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xKYts-0006t0-Nf
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 06:22:58 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69O8o1AL819335
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:09:56 GMT
+ 69O8ojUr2218331
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:22:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- KsWjU7F1NFhVMBPhUYsfzzR2U/03SHKYUuehpvIJtLw=; b=XOwHJDwUD20068s4
- O6hjt8+518Ba43iWIz7yuU80I64Ik+41GfZMGKvjQQcDLcmTntlPG49OM8TbRqN4
- jK1ih6ZPiYCERWNmzAEI6FxyrDmPG/P2IyexE80YeJTmz0xJo7w8dWrUdg9Ie++q
- r19CKmqsXcwpQETB3jfAeuKQeGVG4vXYJybh1m2yzGgciYWW3hca015AvVc+KNzi
- xqaQcMbz4HRzbuGxlSWyGkrtztPStmoK1h9rVq0S2zwvzDKNGVRb9H8MTP+7Y93r
- JZ08blm8FFHelxjGHm8Cw+d/8sI/ORifLlrc4k+FgwcfZsXeWq94gnONpABn9ODN
- I0EdjA==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgm0ggt0t-1
+ 1minxUn4IZAgnpnGlDwD3RZGp5L86f15srgJVVeRZaQ=; b=LSLASWYkm4H0a2Um
+ uI+y5xGUNjPlQvjtNLyp4rwqe30EB1I8NiBHNG9tWo5k3kKBfgZ032iUaAMvaa0J
+ C5x+Ksvm1nd9MdBr4A4UbDcGCNWEZ1DNJtg50fIxM7zQcphDifOP1kDAPvKruBVS
+ haAgGwrf9+t4m7yiRd5PKuaven4VgyLzhaWjHx9dEdeWL7urcQ9FJY9/mwMb+H5c
+ +MPRFxrAzr4cCWPP962ASxlCRzOZD2e8MvPrE8BoZy8GENewQ/+HankdIplE1RTp
+ ETtLsFyeeTdswVES39kQpzd5bkoR+kRbnKlBupvrAqTxVknk/4rEXhLSCtVUEvzn
+ 5zDT+g==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgjcgs1bh-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:09:56 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93dd3c3badbso419860985a.2
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 03:09:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:22:53 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5352436cd78so9704541cf.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 03:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792836596; x=1793441396; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1792837373; x=1793442173; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=KsWjU7F1NFhVMBPhUYsfzzR2U/03SHKYUuehpvIJtLw=;
- b=EzsV5iPE8/q4HEpG8/IvbhUbDXQLubB5mDVXGCOZWEspsnQzH5UXYR1mRzAEUrJ3zd
- sRSdftRtD81n0hInZ5s128Els217aBNJPvRY/25AJMbfDfjL7b8IsLdm+fGn92JNiRdy
- 33wr6ZT6vmqFYCW2pr1gbLwTvfibEYC9KTWNg/0BSY1bequklJMBwC5irfJ3UjNdkZ0I
- 5P7LAERXr3hiE+E2oRiPI9F1zZZGmF9Ujv2IpAUBptD6HlRhA4/sbnNiDCUmCoS7sBlK
- EvgK192/VMw7ltLf+O9dOsNUP3YBrMQiR1KFxl+9vUiwl9dvYTaRPpKeLOdG4p2MQPju
- OjzQ==
+ bh=1minxUn4IZAgnpnGlDwD3RZGp5L86f15srgJVVeRZaQ=;
+ b=TFtNwURJLc8454QN3lvfSNNhFKSIpCc9WTTnp0lY6Jb0G6OXkKDXCRRq5JkQSQRgRI
+ X3Go0BYqsBuXbgw+IehU6/79kf5k9M9Xtzu8x8I60U8ldTOCyPawNvrhf3QQgMiuoYv/
+ 5LDfXXkcdlmIdxZp2xXKXlfB8am0abqEEJZZkbUHZZVuvzcnwkrU/SKoov1+wln3QiCO
+ Kceb1i82L6LaRGv6quv7ehnXURGJ1U08+S3NDIl6zCYIPtoy7cT4yJFLfc13yKaGP6iE
+ ptw+tLPL8ELCtpe2LVyYaOKe20YAbh+5A7kLF/r3Sd6SARtl76Y75BSZzgztGD6ody00
+ VLMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792836596; x=1793441396;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1792837373; x=1793442173;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=KsWjU7F1NFhVMBPhUYsfzzR2U/03SHKYUuehpvIJtLw=;
- b=dCF1nHmgTVU+yxQ6qeALL9JDpGxHOfH3EXlzCHW+MkI/GxUAq6/GD07m/akBcMy3pV
- 5a3AEsSco+nzjA1Qkwygqbbg25IKVsZK1UHg61zjMG39ckescsDRkPsW1y279FZKmQqY
- NpbYo1dvxXsyieNOlcN8uJ1NNMpwLrWKp8ipG43BiKdgJ/jofhaxz0HipPUDl9V+PLVB
- ZqThWsa8RMbYRX79x0xYeT9iZnteJZksrUMTMjo9ijCegVabxz9tm8THzJDvqEmM1dGK
- Pa4rPNs4kk/2IBYFi2scBqJHOwrCETMKRUIQDWtXSRErfKwjQY0r+toeAe2rFh4J1Qhu
- a26g==
+ bh=1minxUn4IZAgnpnGlDwD3RZGp5L86f15srgJVVeRZaQ=;
+ b=uzesI1OEJsYlYIgCV4njNjg1Gj9dbGZc45S5KiIO2PPrKseKnyDMZs6PPTXRMlnyy0
+ Cfd8UgHvbotH+JeDqiGZR0oq01EPozb+tiyyDfhsal92syAdPwM4BuvAqL/wzWfUv+yY
+ hqxk6i7GdHcBY07chza1Jspv6L7JZ9pyZETMoX3NE0Hkr+6A8eeKfVP+IGIu/Sx2GU5X
+ nSGD0iZzX1R3eQT/UD35ByTUc83HTP18W1R8ubW/65RDoJ97EGhdrp3Ipm3rMWBts8Un
+ Z3+ZSoR54ZpLwBQBFJsYujhuS0C+uqZNoAtYjNtI3kg7Wf1fP2OOG5qg4YfFtb2sN8Bl
+ PBPA==
 X-Forwarded-Encrypted: i=1;
- AKwUvByKJGYcsP6B2Hx2cWfLrOlAtP9hni+7smzMWe5yCp5DUX5XqbcYLrophlVs1jIRpHSncJlqoV9rnKMo@nongnu.org
-X-Gm-Message-State: AFq9FYLeveLxz65I6s16iXF4pULKli3AEne6WO6uSXV+EgAhsENE6ECy
- d5EvyjBumfrHIaEaNLyoigfn0b5VaSfSv+2zrNz2952rMnpYn5g/mR3BjYeeVtBpXQ16XELA3o9
- lwKp64ksUsk293KOaPQld09TZEAnNsqlhfFgS3cMeHrv9TfZwVBmd+Q3TNQ==
-X-Gm-Gg: AYBFou0jX2vGOxo8o11W2wwd46mYIzZzvoK+xNokhPtQIyKqRfMgi07lUrBuZ4uoROB
- cjhU1Kql+5kYuPWDKt2XGXZ6LIlNFE9zsg9UDLquwrsM+1d4isH1d9+GpbZSQsjxNUI1Dh9eAxy
- HJf0STLu4ROVBP/w7HeS8WSNrV0VOFjTQcqOCm5J/JMBloeETCiS/VJALdNe3fAVBRv1nmyZ+td
- p0hBx35gWcswoLo1oyLRN7da02rw8TaB7PxuvnvrYC+BuPm/wMUeSbM5mh3WSt9+HtJFFKIA+Kp
- mU1WLLD+Yv3NlvVy36raJVUhDdxdeaqK6socNGSC9SUvNk1K8rKntHxkFy/notfbk6Rr6GoqIWe
- Z/vYblp8DN3zRJdFR3gQZax87/Rt7Cc25hg==
-X-Received: by 2002:a05:620a:3715:b0:93e:ee21:70ec with SMTP id
- af79cd13be357-940ef9e6f89mr209858785a.80.1792836596007; 
- Sat, 24 Oct 2026 03:09:56 -0700 (PDT)
-X-Received: by 2002:a05:620a:3715:b0:93e:ee21:70ec with SMTP id
- af79cd13be357-940ef9e6f89mr209856585a.80.1792836595551; 
- Sat, 24 Oct 2026 03:09:55 -0700 (PDT)
+ AKwUvBzmok4FPtWxzWlr8sQIlGzSd6TJHGNNUH4KX5RnuJHjns02jTz0cgrB7A9yNdt5ob8djAUQALKbxRu+@nongnu.org
+X-Gm-Message-State: AFq9FYKd1Gw/INJwlYxJg4rq360nv1Fs0LTY8uLWks4b48k8vxHWGmEQ
+ 6sK/f7fYmi1HEg4dq4bcbfRMOjmlJiy1c45qa02mFhgDy+zYXfMzv19YBcIIn6hJ2sYQ+yC4/jJ
+ 760uI/UpEDCe8biD5cyy0lUqvAhF2nVXXxldWn3wb+b5t4LDwpg2wD9csWA==
+X-Gm-Gg: AYBFou2dvT8LC4H4EOINA3HnBdi+DpU+didmRJqjOSTwL6BSUXAOnLXOiH8S81Opqpt
+ tWtrbHG4JhDNdby/lPUc/a0819YUoq36d8URpN85HZm08pC6JBXPY8A8I7DkQ5TdavcGmxGCZYL
+ noRCO1QFiKyyGZfQXDy89LnVfUlE/45iyFYCjkvFIlI5sxwQSk6UTgC/nyRjDbKgDIqij/rKbyi
+ JDtoSOq2RkcOXzH1pI5vINbA08uuRkjZ2FudUIfmKwneuYoViPVjYJTkRPpRWt1hi3fgwPPOWYy
+ jEJ220Q8KdnRtdpS612MFwQxh1ZWeBNxIuMGq/BBNaw8WcciTzkHXW3CMe2zfILghgsALOOanSy
+ SgO04arZiHnNaJ7GsvBXEE8GRe5Lcx13hZw==
+X-Received: by 2002:ac8:59ce:0:b0:536:6ec7:9f57 with SMTP id
+ d75a77b69052e-5383b554149mr20807111cf.38.1792837372967; 
+ Sat, 24 Oct 2026 03:22:52 -0700 (PDT)
+X-Received: by 2002:ac8:59ce:0:b0:536:6ec7:9f57 with SMTP id
+ d75a77b69052e-5383b554149mr20806871cf.38.1792837372465; 
+ Sat, 24 Oct 2026 03:22:52 -0700 (PDT)
 Received: from [192.168.69.209] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359f3e00asm83302625e9.0.2026.10.24.03.09.54
+ 5b1f17b1804b1-4a359fb08d5sm85567605e9.1.2026.10.24.03.22.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Oct 2026 03:09:54 -0700 (PDT)
-Message-ID: <b5c44bcc-6642-4f64-8e76-bea11f05bdec@oss.qualcomm.com>
-Date: Sat, 24 Oct 2026 12:09:53 +0200
+ Sat, 24 Oct 2026 03:22:51 -0700 (PDT)
+Message-ID: <1fe11fc0-e84f-48a1-8529-81980e1f9af9@oss.qualcomm.com>
+Date: Sat, 24 Oct 2026 12:22:50 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/cadence_gem: Check guest-provided queue numbers in
- screening registers
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Jason Wang <jasowangio@gmail.com>
-References: <20261023153106.1710228-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v2 7/9] hw/tricore: wire peripherals into tc27x SoC
 Content-Language: en-US
-In-Reply-To: <20261023153106.1710228-1-peter.maydell@linaro.org>
+To: Parthiban Nallathambi <parthiban@linumiz.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Saravanan Sekar <saravanan@linumiz.com>,
+ Dineshkumar Selvaraj <Dineshkumar.Selvaraj@infineon.com>,
+ Christoph Seitz <christoph.seitz@infineon.com>,
+ Sivashanmugam Natarajan <Sivashanmugam.Natarajan@infineon.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-0-c722e4ca5661@linumiz.com>
+ <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-7-c722e4ca5661@linumiz.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261024-dev-ifx-tricore-upstream-rebase-minimal-v2-7-c722e4ca5661@linumiz.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: _tFPmj16ppV9XAwkeqy0ME4to5MJlIWA
-X-Authority-Analysis: v=2.4 cv=UfTE26SN c=1 sm=1 tr=0 ts=6adc83f4 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA0MSBTYWx0ZWRfX+IQU9dYooXQy
+ OU7IMHIe281i1YB2EwPCNVaFt2wFOvX/g7nx/wuwuyDS9ykYeTwsuAi8sId1IWll4YBcs0fBA+9
+ o72Bmp3WtI3en5dJoa23vANJmOt/DW0=
+X-Proofpoint-GUID: CDUzI2UhPcBdQRbDL4_aHI0IqeOAoDcf
+X-Authority-Analysis: v=2.4 cv=JvhkP84C c=1 sm=1 tr=0 ts=6adc86fe cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=p0WdMEafAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=QGRAimw5JShAxdOTMG4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: _tFPmj16ppV9XAwkeqy0ME4to5MJlIWA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA0MCBTYWx0ZWRfX9rADfiZFuSnp
- SFTqTCRyNILHXfOFrf7EOubfexCkG8YwQuTG51/kxtqvHQgSPgUE5ILfxi+jfC4ftMBv4yJ70Jq
- HiiHJ4x7bknLqqYf9lLzdViTlZPxA5NkhoH9FPphMl3MJ7z2Q3WIP/kojwjxgpb871rTqUcHdQY
- d3RpGq/6QRLpNscAUEN9uz08RamreXTcSXBz0XDbo8kvJNiXSiHKX5xFaI1d7EFMMVMKlo1P75D
- SRYlrZqfWsMTJiQCJjOF9O55bGd9FpeQyBV9SvWgNZFYRltesn/WQf+0j2V44P76xkCB+kh6TBn
- tVhXrymBq8NWBdgnvXZ+jkIl968Mod6w4mosvndiAVdVm5SXE3ryTZqW6E5XfDkwMs9gZ2VmsUz
- DEERh6VdfoS70RDtrCM8wKhBLe7Fb+SOUk76pfJgzsYgzahmOS1WUI3gip6CiuFn6vbB+8Hue9R
- /aaAXz3C6dxQWg3QUgQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA0MCBTYWx0ZWRfX7JZUszujSfSv
- uDIQ9j90F9h5NGkPE9m03g9Ej+QZQIasKiZvUt2P9CaylZWb2xeI/Bjbmql6kvFKihMRoMx+f2I
- scy1/s9aVxKmFDtIMs6psyL6ydpv6VM=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=vU9dKmh3AAAA:8 a=hsfp0Rftoc65CmXm3EYA:9 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=rsP06fVo5MYu2ilr0aT5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA0MSBTYWx0ZWRfXyb2ps5w6z10t
+ tYfz0BHsB+3n/SniCO42EXa/yhouhfngvPcNpos4hf87Snl0jMLpW80h0/X+xfe3w2LA0dptQOL
+ 8bvuFdu+E4mAyB6LXAYtsA00GjiqhcXbMovu0OemsPL/9e7+kFCDSbKbtK5DWbewVONjKA5en8U
+ V9vqh3tezse3lBmkcXRUrt2zXQB6dPd7CjoEKVxY2TW/ar4+Saq5jSg6JAU8GfGq+mWKhELmECO
+ Mc++sc2FwOzV9OZAYJ3tecaDcrTVcoAKeNRU2x4Pjxjxj0QUtlPi13Dg+CZDa4U69GQ4/8I3qX3
+ Ins4YJumLwG6ierCQKRQBhoRrYG3CN2W/cZeuMI3GUAW6F7WMwhRjzst/qk+DNK5KUuZWmjPHP8
+ MLEeUnd3e2i1j4dAQJo9BsT0Z1ZdBgX9YNmAnTLGjmdhntT54fIPkVYWXM+QcOsRQa8k+C75U8N
+ /5qA12Neyz6168WC4mQ==
+X-Proofpoint-ORIG-GUID: CDUzI2UhPcBdQRbDL4_aHI0IqeOAoDcf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-24_01,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
- suspectscore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240040
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240041
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,34 +157,90 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 23/10/26 17:31, Peter Maydell wrote:
-> The Cadence GEM allows the guest to program "screening registers"
-> which control which queue received network data should be sent to.
-> The field for the queue number in these registers is 4 bits, but the
-> device might not actually have that many queues.  We weren't checking
-> this, which meant the guest could program a value that caused us to
-> index off the end of various arrays.
+On 23/10/26 22:12, Parthiban Nallathambi wrote:
+> Map STM, ASCLIN and SCU into the tc27x SoC at their hardware
+> addresses.  ASCLIN0 gets serial_hd(0).
 > 
-> Check against num_priority_queues, and treat out-of-range values
-> as if the screen didn't match (i.e. go to queue 0). (This is a
-> best guess at reasonable behaviour since I don't have access to
-> a datasheet for this device.)
+> Peripheral IRQ lines are left unconnected; the interrupt router
+> and CPU interrupt delivery follow in a separate series.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: e8e4994313b7 ("cadence_gem: Add support for screening")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4363
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Parthiban Nallathambi <parthiban@linumiz.com>
 > ---
->   hw/net/cadence_gem.c | 21 +++++++++++++++++----
->   1 file changed, 17 insertions(+), 4 deletions(-)
+>   hw/tricore/Kconfig             |  3 +++
+>   hw/tricore/tc27x_soc.c         | 32 ++++++++++++++++++++++++++++++++
+>   include/hw/tricore/tc27x_soc.h |  9 +++++++++
+>   3 files changed, 44 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+> @@ -182,6 +188,8 @@ static void tc27x_soc_init_memory_mapping(DeviceState *dev_soc)
+>   static void tc27x_soc_realize(DeviceState *dev_soc, Error **errp)
+>   {
+>       TC27XSoCState *s = TC27X_SOC(dev_soc);
+> +    TC27XSoCClass *sc = TC27X_SOC_GET_CLASS(s);
+> +    Clock *fstm;
+>       Error *err = NULL;
+>   
+>       qdev_realize(DEVICE(&s->cpu), NULL, &err);
+> @@ -191,6 +199,27 @@ static void tc27x_soc_realize(DeviceState *dev_soc, Error **errp)
+>       }
+>   
+>       tc27x_soc_init_memory_mapping(dev_soc);
+> +
+> +    /* STM clock: 50 MHz (fSTM derived from fSPB) */
+> +    fstm = clock_new(OBJECT(dev_soc), "fstm");
+> +    clock_set_hz(fstm, 50000000);
+> +    qdev_connect_clock_in(DEVICE(&s->stm), "fstm", fstm);
+> +
+> +    /* Connect ASCLIN to first serial device */
+> +    qdev_prop_set_chr(DEVICE(&s->asclin), "chardev", serial_hd(0));
+
+Only board layer should call serial_hd(). asclin_uart_properties[]
+correctly use DEFINE_PROP_CHR(), at the SoC level we should expose
+the SCILIN UART chardev in tc27x_soc_init() (see below).
+
+> +    /* Realize peripherals */
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->stm), &error_fatal);
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->asclin), &error_fatal);
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->scu), &error_fatal);
+
+Either &error_abort (programming error) or propagate via @errp to
+the caller.
+
+> +
+> +    /* Map peripheral MMIO regions */
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->stm), 0,
+> +                    sc->memmap[TC27XD_STM0].base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->asclin), 0,
+> +                    sc->memmap[TC27XD_ASCLIN0].base);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->scu), 0,
+> +                    sc->memmap[TC27XD_SCU].base);
+>   }
+>   
+>   static void tc27x_soc_init(Object *obj)
+> @@ -199,6 +228,9 @@ static void tc27x_soc_init(Object *obj)
+>       TC27XSoCClass *sc = TC27X_SOC_GET_CLASS(s);
+>   
+>       object_initialize_child(obj, "tc27x", &s->cpu, sc->cpu_type);
+> +    object_initialize_child(obj, "stm", &s->stm, TYPE_TRICORE_STM);
+> +    object_initialize_child(obj, "asclin", &s->asclin, TYPE_TRICORE_ASCLIN);
+
+       object_property_add_alias(obj, "serial0",
+                                 OBJECT(&s->asclin), "chardev");
+
+Then in triboard_machine_tc397b_init():
+
+   qdev_prop_set_chr(DEVICE(&ms->tc39xb_soc), "serial0", serial_hd(0));
+
+> +    object_initialize_child(obj, "scu", &s->scu, TYPE_TRICORE_SCU);
+>   }
+
+LGTM otherwise!
 
