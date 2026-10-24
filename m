@@ -1,55 +1,67 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1731C606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 20:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAFD606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 21:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NAUU3CM1
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JTZzv2QE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKiKH-0005jC-JZ; Sat, 24 Oct 2026 16:26:49 -0400
+	id 1xKjLg-0006Ax-Uo; Sat, 24 Oct 2026 17:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xKiKF-0005i3-S7
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 16:26:48 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xKjLa-0006Aa-Oj; Sat, 24 Oct 2026 17:32:15 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xKiKD-0006dl-JB
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 16:26:47 -0400
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xKjLZ-0004rr-48; Sat, 24 Oct 2026 17:32:14 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 1A530436E8;
- Sat, 24 Oct 2026 20:26:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8CF11F01825;
- Sat, 24 Oct 2026 20:26:35 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 4697B40A28;
+ Sat, 24 Oct 2026 21:32:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DE71F01825;
+ Sat, 24 Oct 2026 21:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792873597;
- bh=0ZPfkwD3Efjl9oAFfI7L82kv1ZC8oIEpcm83zienuYA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NAUU3CM141MzmuXcJ6/a2caynb8XnIZtnnR7o9MDYho4KCn6mnnkiyoTsoFJo7NUU
- 2DpkO5lrKc+4i0LFXTRZKiGxIiBWnzqe7I0t6qZc/PeTPUStfPZceMLgVm4oATpesu
- j5d8kND6AVySGP2OEwhxvG055CO4hEq1hxeqnLzikkHojilA4zl10EK31DhxlcFn6m
- ijTOVocRudoC6bO+1cHa7d493wdA/o0JMzfsXqGWw3Mb42oFhpD0Jb+AOQof8dYgyJ
- BiYce8DPbTc4cEuhKLE1jGaYchrq/WcqO+9W67z8n6ap8qtSotuVxTDPAeeLuGk+cR
- RMvc5GYtTShQw==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 1/2] linux-user/loongarch64: In extframe_alloc,
- align before subtracting sctx_info size
-Date: Sat, 24 Oct 2026 22:26:31 +0200
-Message-ID: <20261024202632.103711-2-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261024202632.103711-1-deller@kernel.org>
-References: <20261024202632.103711-1-deller@kernel.org>
+ s=k20260515; t=1792877528;
+ bh=dcG7MExrLIDX9pNtwa7kbxNBvrB4lAR88Md+OGTBxkI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=JTZzv2QEsF0yZNx4KWMFMA5ZhI1JVQbSlMv8GVGNssVmRqEAsC/4qxZIa+8Y9aeHp
+ 6Np8joGNVu0m6PI0c4UsN6xVg+XrHbK7UdcL8ln/EMCyF+aBUtZgYFY7SKhOhxW8Vz
+ YbD88m9HsFxYnFpdXButSIBMzSUMZwqIPgGbwVSNOINM7kDRa0e6PYFTl40TTawOKI
+ LVJERHlALebrmwJH2Dlc0qyElXtxPE2UP8ACJ06aMLs4t0h70olRXjHt4erONDJju8
+ 7wE4uL0DxdlDMyLkS1vKLuYzF/SIq6J6Sfcn4EEgGVr6uItlpCl6LSvMinXe5vUPsx
+ 7HWOVoO38Gk7g==
+Date: Sat, 24 Oct 2026 14:32:06 -0700
+From: Drew Fustini <fustini@kernel.org>
+To: Sunil V L <sunilvl@oss.qualcomm.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "anup.patel@oss.qualcomm.com" <anup.patel@oss.qualcomm.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "shankar.c@oss.qualcomm.com" <shankar.c@oss.qualcomm.com>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>,
+ "prajwal.n@oss.qualcomm.com" <prajwal.n@oss.qualcomm.com>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>
+Subject: Re: [PATCH v2 0/4] RISC-V: ACPI: Add PPTT support
+Message-ID: <at0j1iQQVBCvcSI4@thelio>
+References: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
+ <91f1cd890aac1907f335ce3fdd22e6adf685c594.camel@wdc.com>
+ <CAB19ukGtrbCV8s_WKnE2vDF5P4iiyPXYhyyJjqTu-S0823mjUg@mail.gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+In-Reply-To: <CAB19ukGtrbCV8s_WKnE2vDF5P4iiyPXYhyyJjqTu-S0823mjUg@mail.gmail.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
@@ -68,81 +80,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On Fri, Oct 23, 2026 at 05:28:31PM +0530, Sunil V L wrote:
+> On Thu, Oct 22, 2026 at 10:23 AM Alistair Francis
+> <Alistair.Francis@wdc.com> wrote:
+> >
+> > On Thu, 2026-10-15 at 12:19 +0530, Sunil V L wrote:
+> > > Hi alil,
+> > >
+> > > This series adds ACPI Processor Properties Topology Table (PPTT)
+[..]
+> > > future, it can be enhanced to support vendor cpu/soc specific cache
+> > > information to override this default hardcoded cache details.
+> >
+> > Why not add a vendor cpu/soc specific one to a vendor board? That way
+> > it actually model hardware instead of just providing the guest some
+> > made up information.
+> >
+> Thanks for the feedback!
+> 
+> Just to make sure I understand your suggestion correctly: should we avoid
+> defining a hardcoded cache topology for the generic CPU on virt, and generate
+> PPTT cache information only for CPU models that provide an appropriate cache
+> hierarchy?
+> 
+> I can certainly omit the cache information for the generic CPU. The consequence
+> is that Drew's CBQRI series, which requires cache information, would need a
+> suitable CPU model before it can be used with virt. Drew, please share
+> your thoughts.
 
-In extframe_alloc() we allocate space on the guest stack for a
-context struct, which consists of a target_sctx_info plus a more
-specific struct such as target_lasx_context.  The specific struct may
-have a higher alignment requirement than the basic target_sctx_info.
+RQSC is a RISC-V standard so I think it would be nice for the generic
+cpu to have a set of caches defined. This would allow the ACPI virt
+machine to produce a PPTT with cache IDs that RQSC can reference, and it
+would simplify testing for the RISC-V QoS support that I am trying to
+upstream into Linux.
 
-The Linux kernel code for this is in arch/loongarch/kernel/signal.c
-in extframe_alloc():
-
-       unsigned long new_base = base - size;
-
-       new_base = round_down(new_base, (align < 16 ? 16 : align));
-       new_base -= sizeof(struct sctx_info);
-
-and it first adjusts the base (SP) address down by the size of the
-specific struct, then rounds that down to provide the required
-alignment, and finally subtracts the size of the sctx_info.
-
-QEMU's version does this in the wrong order, subtracting both the
-specific struct size and the sctx_info size before rounding down for
-alignment.  This means that for the target_lasx_context which needs
-32-alignment, we instead give the start of sctx_info 32-alignment,
-which (since that is 16 bytes long) means that the
-target_lasx_context is only 16-aligned.
-
-This manifests as a failure in the TCG tests such as
-loongarch64-linux-user-signals.test if you build with the clang
-sanitizers enabled:
-
-../../linux-user/loongarch64/signal.c:182:13: runtime error: member access within misaligned address 0x7dc793950b90 for type 'struct target_lasx_context', which requires 32 byte alignment
-0x7dc793950b90: note: pointer points here
- 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00
-              ^
-    #0 0x57216113d881 in setup_sigframe /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:182:13
-    #1 0x57216113d881 in setup_rt_frame /home/pm215/qemu/build/clang/../../linux-user/loongarch64/signal.c:389:5
-    #2 0x5721612a5041 in handle_pending_signal /home/pm215/qemu/build/clang/../../linux-user/signal.c:1349:9
-    #3 0x5721612a46ef in process_pending_signals /home/pm215/qemu/build/clang/../../linux-user/signal.c:1401:17
-    #4 0x57216113baa3 in cpu_loop /home/pm215/qemu/build/clang/../../linux-user/loongarch64/cpu_loop.c:121:9
-
-Correct setup_extcontext() to match the order the kernel does it.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 9d5cd6587a70d613 ("linux-user: Add LoongArch signal support")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/loongarch64/signal.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/linux-user/loongarch64/signal.c b/linux-user/loongarch64/signal.c
-index eff75bcdc8..04015e06fd 100644
---- a/linux-user/loongarch64/signal.c
-+++ b/linux-user/loongarch64/signal.c
-@@ -111,9 +111,10 @@ static abi_ptr extframe_alloc(struct extctx_layout *extctx,
- {
-     abi_ptr sp = orig_sp;
- 
--    sp -= sizeof(struct target_sctx_info) + size;
-+    sp -= size;
-     align = MAX(align, CONTEXT_INFO_ALIGN);
-     sp = ROUND_DOWN(sp, align);
-+    sp -= sizeof(struct target_sctx_info);
-     sctx->gaddr = sp;
- 
-     size = orig_sp - sp;
--- 
-2.54.0
-
+Thanks,
+Drew
 
