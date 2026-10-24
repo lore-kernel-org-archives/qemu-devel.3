@@ -1,130 +1,126 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF36606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 00:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E04B606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 00:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=b1h1VFXq;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Ui5Gv2Uj
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=DdKv5Dsx;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YNOXYStQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKPFi-0002Y7-TR; Fri, 23 Oct 2026 20:04:50 -0400
+	id 1xKPG2-0002Zw-Db; Fri, 23 Oct 2026 20:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKPFh-0002Xy-T3
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 20:04:49 -0400
+ id 1xKPFz-0002ZU-Eo
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 20:05:07 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKPFf-0001EK-V6
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 20:04:49 -0400
+ id 1xKPFw-0001GT-Cj
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 20:05:07 -0400
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69NLvLcO3117159
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:04:46 GMT
+ 69NLv1lK3116026
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:05:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yzksfDjo7mtvpCtJcXuOkEEdrvKAp3QCYdAR1RWDlUU=; b=b1h1VFXqrdP1i2je
- Op2bqQJP8YfBbrrTSE3n+e0r2LDyTCbal22Me3+X8ZMCfOc0uhpXf6QmSLOri2aC
- 6mEWVZAvL4hLQR9VHRxJrB/Mzpq6UZy5OrzG3jdXpCFvz+U8SoPwEhfFRNveGnLT
- xVPizvrPoFyFkzkVtOEh/HzTKDv91HKaf7Oi3xu1NcHvdmRCauJA8051FBZa5JyB
- LgpmRe/hqcszCA7oQ8T/Fygs6Wc52XNHG9hA8/xvTrpWCW+Lu1OEzLFdarmCIaOn
- xY7xIv5RU8rkUAsaHJYlfrjbDdqYQMrN7oATVlv8Iu5+vPiKDMPkJo5N4p6xwgx7
- YR2gbw==
+ vDpSj5pvSv1dVJu84V8GQt0GugkjKdpxPD5J/deaihs=; b=DdKv5DsxEwZxc8+d
+ HcswwMRikmeOpG8Ewb31s3PMduS8nvpFjR8TeaHHZQUjh2PuukSftBwTdjElzqie
+ 7SjuyYqydIE4SpMTtCY8IbhSu1Z8FV9nAG3Uc8czq/O5F92c8XDIUnff5lGtgYXP
+ 6c0ufIvjlBolmunpdX79EmvYaRVf4ZcJbJHWSA4S7XMaWg8Ml3VL4yoVGDNxET6d
+ EUf7uaOd1dKlZ/a9Y/R01M+7h9Ay2RkACRV/iBdVvLcMJrJxgyCqmDFdWBkOPHSY
+ cBnujtbM3w50HwxnFRmv+t/WKZG8UgCZ7K9CTvoFArZbsjkx0L0QZb8yqkBHkP2e
+ RXBBMw==
 Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
  [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgcrt8y0n-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgcrt8y1e-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:04:45 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 00:05:03 +0000 (GMT)
 Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-36637676140so2250833eec.0
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 17:04:45 -0700 (PDT)
+ 5a478bee46e88-3510d0baf63so3448000eec.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 17:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792800285; x=1793405085; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792800302; x=1793405102; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=yzksfDjo7mtvpCtJcXuOkEEdrvKAp3QCYdAR1RWDlUU=;
- b=Ui5Gv2Uj4n8NNIsJeITuKUvoRvY2xSQxxxX8tmRJVMaIqVBtm9I/q7EZtCf8fMjbKP
- C7JuJLp6E09IlHUULd4IXB+RJ3lh9mSHJsu2w+B9W3tfwEjB15zdFDU60mFB8gGx/9Cj
- SVqEEtIkgP59uLaxFBK1JeBTU5oDmj8K6T6Z73zgXtRw8JiRLd5RXAd5BWD8VCAnni54
- 6Ai9XOXOhrzM13gG8SJV99Orl+AXN/OTIND2lnfM8XAb4LDxzhAOpompDi/UND5hG/aV
- 2tfF4d8h2DOzGGM2BnXxJsl0XoUs6QyqGVWYWqfrXxTHvVpx9puXVy3mG+ASK70vER0B
- sTAA==
+ bh=vDpSj5pvSv1dVJu84V8GQt0GugkjKdpxPD5J/deaihs=;
+ b=YNOXYStQtWCuc/uOW0cP8yho1AgLpWZCsr9Untgtgjy1QDSW2trcLpDIypoT94LRfh
+ dZxECSA2Xe3Ir2DPgrPw0oJJGtpGbRVEG1PYwXJAEz5WDXB7RZdms2ubU0BliGlOP7cT
+ RBTqyoCumW51XjUxlu3+DzF0dBv9pQRhRnk7pg42EG/rWJDeBm+87gLNhc0T5afbWY3e
+ JTjQzP/Al+W7aqG+Rehwyp8J8/96YWg3gMBvvbQ7605UtCsT8wrcuCKjZYgR0BHbXEqV
+ OIaug8FGW+k1Pzo/Xlh6d6qP2AEO69n9NYBWSZj2WuhE93hO1cgdU198bjlMsu0frcjk
+ rcqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792800285; x=1793405085;
+ d=1e100.net; s=20260707; t=1792800302; x=1793405102;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=yzksfDjo7mtvpCtJcXuOkEEdrvKAp3QCYdAR1RWDlUU=;
- b=m8BTMIUcUDuG4amMAkDnAFg6fMeqtILnl40IcIdeR7s+qBcsckjkz0BjiApwlVy/wW
- qRkp0RMi25fA3jDA6GCaQLjHiQo3S7lg2MzkclPieMmg1CuIaZTvWJq00rOJM44h+F4U
- LKLKcsMERSkOXtcG92AYHaPMCln1sHmt/ZNbhiqNx2gjDv/tWYkQQH5+YSbMWT7GG3Al
- BAPOzyRSxaK3csUuwXSowij3NMqoEOXL3M9Z8+zdt28iSngXymz7FyGUP28bjMEwCgIB
- YeeI/uE4bGw73LSCIdwhUQyVUb15UrgMcH4ByoFu8CVJ5JygW8nMOQBfLYdDv0f+Ok7V
- 8rUw==
-X-Gm-Message-State: AFq9FYINIvbLfUdAhxvd9qtikpIESxlDsSWuKWPVWiJlKUYiKVULaryj
- DTJv47fCaiak30yohmlqVPPpUVNAjtQnTJ1lZ9L/kolXCgnVpzn+zrreFeBx/BYfvAr2UAGPKU7
- YWX8ba5AkwwQLcwRInMj24WJ2MUswM7NqnDZUcWvCdavOpsiXWoUgdCNd8Von3qWr2A==
-X-Gm-Gg: AYBFou0chbn3D1x9v0Z8OZ00o/SubD9/qhEooOW0v5CMWRS/6HWlqxJd+gOLM/Zq/5d
- nbQqyOmC7iInOWZeUUDTU9C60Ja6N9KzbBXv9Cff4X/oJQxeK4n1Fc8BgMF9V3V49dCBnLFBQYn
- J2JY9tGwEVOXK4zVNOTu8Sf/N8mVcP9lKk7NAFhewp10Xl3efMcML5QS13/n1ClvD7EBwSQQu6N
- 6MbTyfyk6dDEi+rwEBj75clhn2BI55qva+kV2JHrPOP1rT0EaHhnkxtG9L+3gzpyb97PY2fjz9u
- 603HjEUcc6Zy4qwCSBsT2BtJ0AznnoK4T6+9FtfpTRKsCremMkEuul8vYpjyCtJFnwpJhuewd/O
- BLNott1HfRjrRsDCJifwavHgxewzl1x08BQCV3PWNDXPZvFT/PKbomnUnYgdiDRvjnzQiFw==
-X-Received: by 2002:a05:7300:3d13:b0:351:7e5d:2de9 with SMTP id
- 5a478bee46e88-369e837c6b1mr1195049eec.1.1792800285174; 
- Fri, 23 Oct 2026 17:04:45 -0700 (PDT)
-X-Received: by 2002:a05:7300:3d13:b0:351:7e5d:2de9 with SMTP id
- 5a478bee46e88-369e837c6b1mr1195008eec.1.1792800284443; 
- Fri, 23 Oct 2026 17:04:44 -0700 (PDT)
+ bh=vDpSj5pvSv1dVJu84V8GQt0GugkjKdpxPD5J/deaihs=;
+ b=muHA8xC8zFP3iYHtKKKSNgruu79OqN3Q/Z4Te4RW6GlelJOjEan4iPCwJqTmjUfzpo
+ 1d8CUlbSd9knkt/9L3jPHgBWkJvdTUr7ATM1KDRLproeTgXN27h3CL8UyNVa9xF6S8Od
+ WOMmEnG3BjYIHV0eNubU4qqtfaQHA2IBBg3h/1x2naM/6+K4s1JeYAsKL8A2ZSx+vyv3
+ m09Z4fbNjFoc/C9gKF3HVJf5VSyvQgmP2oyvnnpIhvo2KnIGLyWyw4AeT0VGiXF8usNG
+ JneETwkM7vEP/X3Gs5uOIOa4mTjkGCB8/e5BciHui6eRKePc7pigdHp/usgqqKEpmCft
+ WXZw==
+X-Gm-Message-State: AFq9FYK3w+IdfWPdOswZH5kOD83d5euo1srOuSEThjgNBEOMACTx1uym
+ dpl7+UGmP0sHfgfFu4ckRU8bVoxI7eV9U2Y7pZfQmFxHwdAy5H1kG5X6fZ+t9jyvnu68zBjfbuW
+ M29xdYHeI0fPGlpf15QwMZU9+yamJpOS5ONuq9Dm4pLQpaLvba4uSyU3tGo5CZfyuKQ==
+X-Gm-Gg: AYBFou22guHwmyIfWP72HjSmfr9GlR72XGKJa6pPUfBVxKkPkmUVSyhrvqyKpp3xBG+
+ tQ7WoQ16V+HhfImybGQOm20FVzQfb1g41ijX4h7WEYSgs8qAyi+cwMAugl9b6UspBNWGpys98ZQ
+ UQtYFiFes5C9KUNqp1ecyAfUAo3oQebUYQmuaOMHMI5hdoqNJ+tn9K5Wi2pqiEtWvTX/GWsXF2B
+ TBnIiLtD9Dm+DOYuA2MJh/GwRMt210qr/DRnc0ZNTx2osLnciWb5lEjP0AyMIXyluRDZJZ8BTty
+ 5jIACFc137Wlr+blKEynxuSKhN/2VXRmsRBCIL4LXdSblKtl1YRSYIY6Lh19lJov7r2bP164uy4
+ l6xsF2PkZhIqFd5g4OjH6ozmWEqj3DVse88OzT2ZWuE6Wa6SJ2vTgt2xwpfSfaeTDQohb2g==
+X-Received: by 2002:a05:7301:514a:b0:343:ff9f:26f3 with SMTP id
+ 5a478bee46e88-369e842b597mr1037214eec.9.1792800302200; 
+ Fri, 23 Oct 2026 17:05:02 -0700 (PDT)
+X-Received: by 2002:a05:7301:514a:b0:343:ff9f:26f3 with SMTP id
+ 5a478bee46e88-369e842b597mr1037168eec.9.1792800301406; 
+ Fri, 23 Oct 2026 17:05:01 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369e8d9307bsm1854727eec.14.2026.10.23.17.04.43
+ 5a478bee46e88-369e8db450bsm1473181eec.17.2026.10.23.17.05.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Oct 2026 17:04:43 -0700 (PDT)
-Message-ID: <96c23be3-7809-43ce-9ad4-920f2b46687a@oss.qualcomm.com>
-Date: Fri, 23 Oct 2026 17:04:42 -0700
+ Fri, 23 Oct 2026 17:05:00 -0700 (PDT)
+Message-ID: <c69390c0-1e25-4639-ac51-b46f1929bad2@oss.qualcomm.com>
+Date: Fri, 23 Oct 2026 17:04:59 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] multi-target: remove qmp_query_cpu_model_expansion
- duplication
+Subject: Re: [PATCH v5 00/21] multi-target: remove dump functions duplication
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com>
+ anjo@rev.ng
+References: <20261021181244.867840-1-pierrick.bouvier@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261016162509.24854-1-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20261021181244.867840-1-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDIzMDA5NCBTYWx0ZWRfX20nj8iM1ymaq
- GWz4Ul4tFLGrFhj/Ey/2pddsoHI44p2UZFGt8oDeP3zP+hU0C1qRzkpmiBc/yZUnHqCAgpqjO7R
- lwQM1xJLz1TS4Im0fXzsQ0bS3OHJQP0=
-X-Proofpoint-ORIG-GUID: ubCnaWCIrdlOeqSxMqUS5gUfWcY5YCYZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDIzMDA5NCBTYWx0ZWRfXyXYAbr0qo+C0
- vvJv3wAzPtIxT46AEJMP85D7a/3XduHPFE25Z1lsgu6N+FnBKNkyoAp016F9ZxKUvILCs/jC4JN
- uvUuvjhTeW4hlA+8g3K0cT2duzfIvp/T5P6nokpPGqfki4DqJCermGr/xKZ+VdlWk7BMJ1ePc5n
- EkJtxdWXP5m8Gldx8/QmAMEoaz9++muVYYEq3bVsKDa+AtW1j4wJNV+X5PtzNq5nRiG6e5tTsk5
- 5nsV5lh3IxdV3G/CltHQxvxvRQFAtyfNWJm62JZ7LB4jQDloS4RsyPW1YIHJf2+1m02MrJpdPOV
- 4dGclHAtQzD0KioIhJFe808TYWkTJ+DqMpZABLVACcZJABKPRhXP4H25S8diBxwqBOfGve6i63k
- +lkHvDIi0xeXud0aFfdL2h4wwxEoVt3ak7BuD9Hi+slmSfDJ7Nie30vSXfB4z0sLngdSBeVHM7z
- AgnOCbiUkEZ2/Q7EyNw==
-X-Authority-Analysis: v=2.4 cv=E7lYNqdl c=1 sm=1 tr=0 ts=6adbf61d cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDAwMCBTYWx0ZWRfX3ZZg8r0Z0ih+
+ ud4NDx3Jt5LJ5Mutj96DMg3qUBTt5SverAcbLlwNkKFI9IR34lJMk+U6hYzfE7gZvSJxoV7LhFU
+ OCCQ+j3cpCX2Zykto/GusRx9nnpUiT8=
+X-Proofpoint-ORIG-GUID: 5xS-Wdh-qTmzwQiBK6mbh5ugeEF54DIT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDAwMCBTYWx0ZWRfXxFSX5A75HzyZ
+ o/NwPMeyrjypreImNbfYh+4Vx8CMabsrm/oxyH2yAaLy7fdLdCFSZHBFT2Yib9bdzhWI/btUaV0
+ /SPI5SUct0IeN+NVgVhszyLFmKo4aTWXM7jfiUE3Lp5amVcHdVlw1jW/N3OTsIbiIUXLuhc0spO
+ RyKkHNsoDreQmeC7zjS2OWCGHWw0e9wG/16eMS24bUqP55EqCsDFiFuaru5gbBDILBIPidD4Evf
+ tjc4/w2209XC8JB3Pc1KD11rhz+Uo1UBg9EMJktZKWd+BQtPqAaTGCteFgZuEfbgMEZL5U6EdIn
+ L6XLcBqrDwdoDcXESfPTQmtXZbM9WLavfjqy8/XTQaxei8KF25MSFwP/4XNrBTT52ZfTKTMxwPm
+ 1CbrZGddBy/dTXCfx7PHqX7+w5kyhfsvX6Xl/G30i58ohZI+fxUsUTLIYBFAOCfs/b0yyKIJXi3
+ 5+TUVelV0C1JXWGP3sA==
+X-Authority-Analysis: v=2.4 cv=E7lYNqdl c=1 sm=1 tr=0 ts=6adbf62f cx=c_pps
  a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=JEbRuu-vPki5EhdbkP4A:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: ubCnaWCIrdlOeqSxMqUS5gUfWcY5YCYZ
+ a=FEzH-yfZ0SP5dq0QMlYA:9 a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: 5xS-Wdh-qTmzwQiBK6mbh5ugeEF54DIT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-23_06,2026-10-21_02,2025-10-01_01
@@ -133,7 +129,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
  impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610230094
+ definitions=main-2610240000
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -162,46 +158,102 @@ X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/16/2026 9:25 AM, Pierrick Bouvier wrote:
-> This series allows to link multiple targets that define
-> qmp_query_cpu_definitions. It simply replaces the duplicated definitions with
-> target-specific ones and a single dispatcher.
+On 10/21/2026 11:12 AM, Pierrick Bouvier wrote:
+> This series removes duplication of cpu_get_note_size and cpu_get_dump_info per
+> target. For this, we define a new sysemu operations for a given cpu, and
+> implement it per target.
 > 
-> It follows the exact same approach and structure than:
-> https://lore.kernel.org/qemu-devel/20261015005355.62406-1-pierrick.bouvier@oss.qualcomm.com/,
-> which was merged yesterday.
+> Existing implementations were using first_cpu, which is what we continue to do.
+> When we'll work on heterogeneous later, we can revisit this to either forbid a
+> dump, or perform a dump for each target active. Meanwhile, add a check if we run
+> heterogeneous emulation, and refuse to dump if that's the case.
 > 
-> Pierrick Bouvier (6):
->   target/arm: rename qmp_query_cpu_model_expansion to
->     qmp_query_arm_cpu_model_expansion
->   target/i386: rename qmp_query_cpu_model_expansion to
->     qmp_query_i386_cpu_model_expansion
->   target/loongarch: rename to qmp_query_loongarch_cpu_model_expansion
->   target/riscv: rename qmp_query_cpu_model_expansion to
->     qmp_query_riscv_cpu_model_expansion
->   target/s390x: rename qmp_query_cpu_model_expansion to
->     qmp_query_s390x_cpu_model_expansion
->   qmp: reimplement qmp_query_cpu_model_expansion as a dispatcher
->     function
+> v5
+> --
 > 
->  hw/core/machine-qmp-cmds.c            | 26 ++++++++++++++++++++++++++
->  include/system/qmp-cpu.h              | 21 +++++++++++++++++++++
->  stubs/meson.build                     |  1 -
->  stubs/qmp-cpu-arm.c                   |  8 ++++++++
->  stubs/qmp-cpu-i386.c                  |  8 ++++++++
->  stubs/qmp-cpu-loongarch.c             |  8 ++++++++
->  stubs/qmp-cpu-riscv.c                 |  8 ++++++++
->  stubs/qmp-cpu-s390x.c                 |  8 ++++++++
->  stubs/qmp-cpu.c                       | 14 --------------
->  target/arm/arm-qmp-cmds.c             |  7 ++++---
->  target/i386/cpu-system.c              |  7 ++++---
->  target/loongarch/loongarch-qmp-cmds.c |  7 ++++---
->  target/mips/system/mips-qmp-cmds.c    |  9 ---------
->  target/ppc/ppc-qmp-cmds.c             |  9 ---------
->  target/riscv/riscv-qmp-cmds.c         |  7 ++++---
->  target/s390x/cpu_models_system.c      |  7 ++++---
->  16 files changed, 107 insertions(+), 48 deletions(-)
->  delete mode 100644 stubs/qmp-cpu.c
+> - remove redundant typedefs for ArchDumpInfo and GuestPhysBlockList
+> - make new sysemu op infallible (get_dump_info has no return, and get_note_size
+>   return size_t). Keep fallible global wrappers.
+> 
+> v4
+> --
+> 
+> - define global wrapper for cpu_get_dump_info and cpu_get_note_size, both using
+>   the sysemu op we introduced.
+> 
+> v3
+> --
+> 
+> - riscv_get_dump_info: add const to riscv cpu
+> - use forward decl for ArchDumpInfo instead of including system/dump.h
+> - use forward decl for GuestPhysBlockList instead of including system/memory_mapping.h
+> - update comment for get_note_size sysemu ops
+> - add target_heterogeneous to target_info: returns false for now
+> - edit commit description for dump_init changes about why we can have first_cpu null
+> - add target_heterogeneous check in dump_init
+> - rebased on master (previous "based on" is not needed anymore)
+> 
+> v2
+> --
+> 
+> - Add new ops to existing SysEmuOps instead of a new DumpOps.
+> 
+> Pierrick Bouvier (21):
+>   target-info: add target_heterogeneous
+>   dump/dump: do not dump machine if doing heterogeneous emulation
+>   include/qemu/typedefs: add ArchDumpInfo
+>   include/qemu/typedefs: add GuestPhysBlockList
+>   hw/core/sysemu-cpu-ops: add get_dump_info
+>   target/arm: implement get_dump_info sysemu op
+>   target/i386: implement get_dump_info sysemu op
+>   target/ppc/cpu: constify cpu parameter for
+>     ppc_interrupts_little_endian
+>   target/ppc: implement get_dump_info sysemu op
+>   target/riscv: implement get_dump_info sysemu op
+>   target/s390x: implement get_dump_info sysemu op
+>   target/loongarch: implement get_dump_info sysemu op
+>   dump: reimplement cpu_get_dump_info using get_dump_info sysemu op
+>   hw/core/sysemu-cpu-ops: add get_note_size
+>   target/arm: implement get_note_size sysemu op
+>   target/i386: implement get_note_size sysemu op
+>   target/ppc: implement get_note_size sysemu op
+>   target/riscv: implement get_note_size sysemu op
+>   target/s390x: implement get_note_size sysemu op
+>   target/loongarch: implement get_note_size sysemu op
+>   dump: reimplement cpu_get_note_size using get_note_size sysemu op
+> 
+>  dump/dump.c                      | 14 ++++++++++----
+>  hw/core/cpu-system.c             | 19 +++++++++++++++++++
+>  include/hw/core/cpu.h            | 24 ++++++++++++++++++++++++
+>  include/hw/core/sysemu-cpu-ops.h | 12 ++++++++++++
+>  include/qemu/target-info.h       |  8 ++++++++
+>  include/qemu/typedefs.h          |  2 ++
+>  include/system/dump-arch.h       |  9 ++-------
+>  include/system/memory_mapping.h  |  4 ++--
+>  stubs/dump.c                     | 27 ---------------------------
+>  stubs/meson.build                |  1 -
+>  target-info.c                    |  6 ++++++
+>  target/arm/arch_dump.c           | 22 +++++++---------------
+>  target/arm/cpu.c                 |  2 ++
+>  target/arm/internals.h           |  4 ++++
+>  target/i386/arch_dump.c          | 14 +++++++-------
+>  target/i386/cpu-internal.h       |  5 +++++
+>  target/i386/cpu.c                |  2 ++
+>  target/loongarch/arch_dump.c     |  9 ++++-----
+>  target/loongarch/cpu.c           |  2 ++
+>  target/loongarch/internals.h     |  5 +++++
+>  target/ppc/arch_dump.c           | 18 ++++++------------
+>  target/ppc/cpu.h                 |  6 +++---
+>  target/ppc/cpu_init.c            |  2 ++
+>  target/ppc/internal.h            |  7 +++++++
+>  target/riscv/arch_dump.c         | 20 +++++++-------------
+>  target/riscv/cpu.c               |  2 ++
+>  target/riscv/internals.h         |  4 ++++
+>  target/s390x/arch_dump.c         |  8 ++++----
+>  target/s390x/cpu-system.c        |  2 ++
+>  target/s390x/s390x-internal.h    |  5 +++++
+>  30 files changed, 165 insertions(+), 100 deletions(-)
+>  delete mode 100644 stubs/dump.c
 > 
 
 This was merged into master (3745b15e090e3dbcfcf28fc96928abba8fd2ed2a).
