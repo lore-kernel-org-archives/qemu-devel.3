@@ -1,80 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68415606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAD5606A31D
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 02:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=OA9BSl10
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=e5grbRur
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKRMG-0001ee-8t; Fri, 23 Oct 2026 22:19:44 -0400
+	id 1xKRM9-0001dU-K3; Fri, 23 Oct 2026 22:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xKRMD-0001dy-Lm
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:19:41 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1xKRM8-0001dK-Ul
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:19:36 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1xKRMB-0002fp-GF
- for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:19:41 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-8ab43af5e97so15279667b3.1
- for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 19:19:39 -0700 (PDT)
+ id 1xKRM5-0002fY-Kq
+ for qemu-devel@nongnu.org; Fri, 23 Oct 2026 22:19:36 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6768403e9bbso1583071d50.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Oct 2026 19:19:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792808378; x=1793413178; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792808372; x=1793413172; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IIMOL2hjU9bJMKjDYWGXJpshdP5KEsMeXp6HZd9a8vU=;
- b=OA9BSl10VjP+C/Uf1CDWWccZla2KTBGlWr6IBjh4npYdFXugmh6oOzebfMP9DsWTO2
- Qha49Wmw/n0uVHCuXpT2zbMzSMx2pHYF8C7p5z122fxEbLJyNBSekJT1+DUjXeXzl18+
- 4xvvBw9es5Ub9OylwITO5eaGUoddkmlBmEL4KpqtREWPe3rGtui2wqIw922fX93k8W0a
- 5OSJwswZzeFA/jERiaPKS/cDU/GVlXFqd3tW5p5Hu1JlvQL2T3P1teCxnnV7BdMdM3UI
- XcNlBk3+Nlh1BazYoAezUok6uz82ww4g4hXPtXsCMsyxZB68sbbMACzMwOLYT7d0/yi7
- jqKw==
+ bh=UE2Frc2kqLcoawgb2wKSXr6MfkU9KQjspmswVI0apew=;
+ b=e5grbRurj3PlsfB8XgBtu3Lrv5+lqo1+H0RkwMm4TeL1ekB4idDtSbaq+SxXMohmpb
+ 1MhKW/ULeVx9wn4vAsz3HcBk1L6Pj6D7wBDGXhB/KC/xf8NCiMzZua9yrRJAd8LHrj4C
+ ZgtmqvScjSUcfg2Mk5opWwH2pW5zH+eALRPDKv0DyXB4PCp6692JpuNFj+lFGsEYlih7
+ eWj2SXhsB2CW9XujsCsCUgnpQ6Q99JlPe9IqMg3lhFDjyNZWpUzKqlVRjWfPnTPMSE6f
+ dYBeKWbPSq6AFEvSX3ADcshhgFUwFtgXLkzLpz0AKfK6IFoGKOmbXc91qVLHx4WIvaKt
+ 0QjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792808378; x=1793413178;
+ d=1e100.net; s=20260707; t=1792808372; x=1793413172;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=IIMOL2hjU9bJMKjDYWGXJpshdP5KEsMeXp6HZd9a8vU=;
- b=O2zgUDyZKLukFdI4j6fVJStlPDuMUuXF8o3OurpoYEzOTOXfV5AUM9emiJDvIWQlY0
- qIDGBPx49Y5NBccsGAymzLyGK8Vkxn6iKc/aOdzPm33KtQQOTXfzLTHIvf0NZagSFW4J
- bP/99h/eMtLRD6PtupZppVwFzeFpNF+fGSsfc5HXZf/mw+AC8T3pjTQX/oJks+TefSEZ
- sKAX90q/ulAK8piZpKeFlTsJvCYRJRFAWeoeaWifzgzw9dGFf3vduRUgk0GXHbqRMoQS
- NOIgzv5Q2a45+CIniUN4v3HtT+dyycN60FZx/sTMgwFMGd/Cllo7MiMlG/XN3sUa+dZl
- svbQ==
-X-Gm-Message-State: AFq9FYK9DXkbaso+1QvV2NCj8Ncp+XB4noaN72ixh8QeZWAOeiArafTm
- 0kB+bCdyFABnhI7twqELbcOFYvo0/IKzkLE2V/jhH3F7wJezpz13XXhA
-X-Gm-Gg: AYBFou1ode2H9cPw6NohDeNPaZ3JS+dhLTFztjTuSrJ+BiR/SKfwpLdH9WW5KHK5yEi
- lIgEob1jE9iXeU83wzNUbfG6ZMOnmuFqvYxjFke6iip/QwQXj76ajJBSVQOEkCIqW2qbhr8OjKU
- VHM9Op17Dwub94w3ns89RetbW7kZbGlduqNcwlKpYieX+ISueIadpJfKdnI6X0yKPrDiwYD0ttG
- tb8cg/vGeUUJQB2rVZk2iAgO5IP4chofoOu56ruS4Vyzd/RFQMATY6EZ1m24/Fr5JISgunaC07a
- r/K55y0/gaaRYLc6FOF+pwzrD46uGwnfvgeW4YFV1ICr0YFGQ7JyWIQwE86DOLsOQzygY6fvH2o
- KWv0Gq+GQP6lG85U7L4rgEXss+aus4yOjQC/voFyNdbKczj7oxupGEM7V61QyNE4gR5ytxU8tQf
- nMtr2kRBCFKscpj/pZ7ZD1uPchpIbX7SE6K5pyhw00V36nZrHzu74bH97+XRTXeSkCIfH+8JMUK
- LJ1AUhCIRLmpCO+ZLC6o6I8zpQl4Aim56ksQ9De1W1y+uHB4X+7EKQm4y1Fo+Z0NUhwsskdwXvx
- 1dkQ9MTIPz9AQBrAXARrA5wZ2EhTkcHKad/f
-X-Received: by 2002:a05:690c:9d:b0:8ab:390f:8d36 with SMTP id
- 00721157ae682-8b1673b6d19mr6442857b3.35.1792808378369; 
- Fri, 23 Oct 2026 19:19:38 -0700 (PDT)
+ bh=UE2Frc2kqLcoawgb2wKSXr6MfkU9KQjspmswVI0apew=;
+ b=kMiktxKsyixGWkOD9EpsO+6g7Q01GCSNPrXr7MqALKTwdZZknbuaEDFT+7/dn/0Oxi
+ xwJOL35VIfT8AzwX/uVQPWmXsdhGcjN5x1CpEiO3w+QcSEUGOk1lxaN9vRyWKMzMepTR
+ 78XH94bS0V7xq3N8YjZvjEHJgQxWQGC+2VBif7gzyU0mvCOypWOk1huLR9iq0AvUPQSU
+ YF+pFzIrBtCEP+9O1kgiRLnTpFJhQDOBwUmDE4WuJR4pWyC07yuN02389FKnrBkI/7Lz
+ la1xEGXs9b5MVsLN3sAaNM+FSqdmLnldxTQmoE9a+tY08uuOZ7zIGtcx+kT6XxZc0Qsr
+ KKmQ==
+X-Gm-Message-State: AFq9FYIhaoI9/71DTc7Bhw6F4rDJpX0JuiwwB93lwkc9SDejmeX3ZsAo
+ Mk5kYHw5zJrP1jOq1X/sZ4J7s4r4JTihcKbpGDeLYaWjELZWyNaINUk7
+X-Gm-Gg: AYBFou1fAt3LM683U+Hpjp6nqWeX2GemNrnfALf+EQ9QksY8lSzs7uOhKFobw1DTEoy
+ Pf+tCyNYacg+kolb2UZ1KuQ/wnKYEvd/9RqIBEgYR0vhdCGrluvJsqEu3RkYVgG2PAEtn8g5gfx
+ RbOrGJvtzZhi8N4MOov74//cPGNVSuX6qDzwWtgn3MRqs2YK1nEB9EBbri4UKf8mg43BlBTqdpF
+ MI2fsXdVluhbEVjTt7ONAfESWYzwlQjmPUYdcq6ppTBQORTQ6f+0vXRAKTM+7jxCC6OZCLwSj6q
+ DHD55/fAZz+yFY1X0iHBFOKaR7z3k/3GFd/DQ0Owfq+/0T9fnc2hzcTSQEmp6pl+rn/znx/9LAB
+ 86JdMFmqHWbV6ywu+P0J2BdBrOnDFU/kJMdAlccxxsBPaU09/6bFnRsE7/Cphj1gyoRhEcm3WSw
+ HIFlR5TzsmDC68fIS/pCdKrHURtqpbtf4KvYBea2F5vvHJbZaLPQAZMbOtOEFV8dQjNKNZIVDtu
+ cJZxJkZ6rfKg+igUaVdJh16Lc/GYBpA88sSPS108hIv/4v6+Un6lVN0k3gHyXcGSM+BXKf5Xt1c
+ MvVaMsNOGkpK6Pi3Y9bihRI8edmee2wzc8GQSA==
+X-Received: by 2002:a05:690e:4390:b0:677:c605:b736 with SMTP id
+ 956f58d0204a3-67a453d1aefmr609655d50.43.1792808372213; 
+ Fri, 23 Oct 2026 19:19:32 -0700 (PDT)
 Received: from localhost ([2600:1702:7a90:6f9f:8bc4:8aec:108d:7a04])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b166e53e34sm4855887b3.29.2026.10.23.19.19.35
+ 00721157ae682-8b166dcf529sm4872937b3.12.2026.10.23.19.19.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Oct 2026 19:19:36 -0700 (PDT)
+ Fri, 23 Oct 2026 19:19:30 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
-Date: Fri, 23 Oct 2026 22:19:29 -0400
-Subject: [PATCH v3 3/3] target/alpha: Determine tininess from the delivered
- result
+Date: Fri, 23 Oct 2026 22:19:27 -0400
+Subject: [PATCH v3 1/3] target/alpha: Report invalid for an overflowing
+ CVTTQ/SV in linux-user
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261023-alpha-fpcr-status-s-v3-3-7d11facb8a50@gmail.com>
+Message-Id: <20261023-alpha-fpcr-status-s-v3-1-7d11facb8a50@gmail.com>
 References: <20261023-alpha-fpcr-status-s-v3-0-7d11facb8a50@gmail.com>
 In-Reply-To: <20261023-alpha-fpcr-status-s-v3-0-7d11facb8a50@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,18 +83,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Matt Turner <mattst88@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9964; i=mattst88@gmail.com;
- h=from:subject:message-id; bh=/C9N0iOgAC/6X2QEQjf7xOfGJBUfr2HAeBhLf6ZpC4E=;
- b=owGbwMvMwCW25rVmCc8sv+mMp9WSGLLuiK5jtJz+/EFklZ9V96Qbi1TUlr9qyhHjn+R1Znf0t
- 4P/5Nb/7vjIwiDGxTBTTJElbr0iy6y2HUt9Tkv/gpnDygQyRFqkgQEIWBj4chPzSo10jPRMtQ31
- DIEMHaN4iJweg0ZmcXFpapFuWkGRQ15+SWJJZn5esV5+QWpeQXqBXlpmWklGRn5RcSrQCL281BJ
- TV0c3I0MDE0tHCzMnC0dTE2dnJ0MnN0dHZ1cnI0tzEwNnS0cTV0tzBi5OAZhrLNYwMvRb3Wdz4w
- mxyG3yZJd9+t/KwO+7h97Mi4arYnSkPmZIOzAyHCj09tTayn5lCWcS45Mbn9qXSgjHbrnnWn+27
- kZzqcJCPgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=24994; i=mattst88@gmail.com;
+ h=from:subject:message-id; bh=/sav0xGkFvsk2IScISf7gfmqdnngL4ZH4R265MeD85Q=;
+ b=kA0DAAoWrOspdAyaTpcByyZiAGrcFa6i4GVxA92EmYg0w0IVi5Ba79Y8TUxpgOL+bJTYMbrAX
+ 4jxBAAWCgCZFiEEXq8hBJqGuKVMyxv6rOspdAyaTpcFAmrcFa4bFIAAAAAABAAObWFudTIsMi41
+ KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9wZW5wZ3AuZmlmdGhob3J
+ zZW1hbi5uZXQ1RUFGMjEwNDlBODZCOEE1NENDQjFCRkFBQ0VCMjk3NDBDOUE0RTk3AAoJEKzrKX
+ QMmk6XsdwBALFvybAcVjRmheua6bNBMvcENGj0gzaR6tte3soZHWj5AQC+J9EymYXkoPirjQi+r
+ MsJIwpAkZMGj/zojw+lpNfYBg==
 X-Developer-Key: i=mattst88@gmail.com; a=openpgp;
  fpr=3BB639E56F861FA2E86505690FDD682D974CA72A
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,259 +122,688 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Alpha raises underflow only if the result it delivers is tiny.
-softfloat implements IEEE 754 tininess after rounding, which rounds as
-if the exponent range were unbounded. The two disagree about a result
-that rounds up to the smallest normal:
+A CVTTQ whose result overflows sets IOV and INE in the FPCR. With /V
+the IOV traps, and with /S the kernel completes the instruction in
+software. Its emulation reports the overflow as an invalid operation,
+so on hardware the program sees FE_INVALID. For example, (int64_t)0x1p63
+compiled with gcc -mieee is a CVTTQ/SVC and raises FE_INVALID.
 
-  0x4p-1024 / 0x1.0000000000001p+0 in FE_UPWARD = 0x4p-1024
+linux-user stands in for the kernel here, but it records the IOV
+unchanged. glibc maps that to no FE_* flag, so the program sees no
+exception.
 
-The binade below DBL_MIN has a finer spacing than the denormals, so
-with an unbounded exponent the quotient rounds to a value below
-DBL_MIN and softfloat raises underflow. Alpha does not. glibc marks
-math/test-float32x-float64-div as XFAIL on Alpha because of this
-(glibc commit a32db99a38), and under qemu that test unexpectedly
-passes.
+When an IOV traps for software completion in linux-user, report INV as
+the kernel does. Since Linux v7.3 the kernel also drops the INE that
+the hardware recorded alongside the IOV, because its emulation does not
+raise it (commit bcfe3187412e, "alpha: don't leak hardware-fabricated
+FP exception bits to user space"), so drop it too. The IOV itself stays
+in the FPCR, as it does on hardware. System mode is unchanged, since
+there the guest kernel does the completion.
 
-Every result that is tiny by Alpha's rule is also tiny by the IEEE
-one, so there is no need for another tininess mode in softfloat. Pass
-soft_to_fpcr_exc whether the delivered result is normal, and drop
-underflow when it is. Only the S and T format add, sub, mul, div and
-cvtts helpers can underflow; the rest pass false.
+Update the float_convd and float_convs reference files, whose
+out-of-range integer conversions now report INVALID. The new output
+for those conversions matches an AlphaServer ES47 (EV7) running Linux
+v7.3.
 
-An insn with a denormal operand is different. Unless DNZ is set it
-traps for software completion and the kernel computes the result, and
-the kernel's emulation raises underflow in the same situation:
+tests/tcg/alpha/test-cvttq expected IOV and INE for an overflowing
+CVTTQ/SVIC, the bits the hardware records before the trap. On the
+ES47 the program reads back IOV and INV, which is what it gets now.
+Update its expectations.
 
-  0x3.ffffffffffffcp-1024 / 0x1.fffffffffffffp-1 in FE_UPWARD
-    = 0x4p-1024, FPCR_UNF set
-
-That result is tiny whether tininess is detected before rounding, as
-math-emu did until Linux commit b74843b38da8 ("alpha: determine tininess
-after rounding in the FP emulation"), or after rounding, as math-emu and
-softfloat both do now. linux-user computes these results in the helper
-instead of trapping, so keep softfloat's underflow when
-float_flag_input_denormal_used is set. That check is for
-CONFIG_USER_ONLY only: in system mode gen_ieee_input raises the trap
-before the helper runs, and with DNZ set the operand is flushed rather
-than used.
-
-For a denormal operand, keeping softfloat's underflow also matches a
-kernel with b74843b38da8 when the result is not tiny once rounded: on
-the ES47, 0x3.ffffffffffffcp-1024 * 0x1.0000000000001p+0 = 0x4p-1024
-raises inexact but not underflow, as it does under qemu.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 ---
- target/alpha/fpu_helper.c | 60 +++++++++++++++++++++++++++++++----------------
- 1 file changed, 40 insertions(+), 20 deletions(-)
+ target/alpha/fpu_helper.c       |  10 ++
+ tests/tcg/alpha/float_convd.ref | 256 ++++++++++++++++++++--------------------
+ tests/tcg/alpha/float_convs.ref | 160 ++++++++++++-------------
+ tests/tcg/alpha/test-cvttq.c    |   6 +-
+ 4 files changed, 221 insertions(+), 211 deletions(-)
 
 diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
-index ce4f635cd4..c5635171c0 100644
+index 529eadca9f..eb2bd51a66 100644
 --- a/target/alpha/fpu_helper.c
 +++ b/target/alpha/fpu_helper.c
-@@ -38,7 +38,11 @@ void helper_setflushzero(CPUAlphaState *env, uint32_t val)
- #define CONVERT_BIT(X, SRC, DST) \
-     (SRC > DST ? (X) / (SRC / DST) & (DST) : ((X) & SRC) * (DST / SRC))
- 
--static uint32_t soft_to_fpcr_exc(CPUAlphaState *env)
-+/*
-+ * NORMAL is whether the delivered result is normal. Operations that
-+ * cannot underflow pass false.
-+ */
-+static uint32_t soft_to_fpcr_exc(CPUAlphaState *env, bool normal)
+@@ -88,6 +88,16 @@ void helper_fp_exc_raise_s(CPUAlphaState *env, uint32_t ignore, uint32_t regno)
  {
-     FloatExceptionFlags exc = get_float_exception_flags(&FP_STATUS);
-     uint32_t ret = 0;
-@@ -48,8 +52,24 @@ static uint32_t soft_to_fpcr_exc(CPUAlphaState *env)
-         ret |= CONVERT_BIT(exc, float_flag_invalid, FPCR_INV);
-         ret |= CONVERT_BIT(exc, float_flag_divbyzero, FPCR_DZE);
-         ret |= CONVERT_BIT(exc, float_flag_overflow, FPCR_OVF);
--        ret |= CONVERT_BIT(exc, float_flag_underflow, FPCR_UNF);
-         ret |= CONVERT_BIT(exc, float_flag_inexact, FPCR_INE);
-+
-+        /*
-+         * Alpha raises no underflow when the delivered result is normal.
-+         * softfloat does when that result was rounded up to the smallest
-+         * normal, so drop it. In user mode, a denormal operand means the
-+         * result is the one the kernel's software completion would compute,
-+         * and that does raise underflow.
-+         */
-+        if (exc & float_flag_underflow) {
-+            bool tiny = !normal;
+     uint32_t exc = env->error_code & ~ignore;
+     if (exc) {
 +#ifdef CONFIG_USER_ONLY
-+            tiny |= exc & float_flag_input_denormal_used;
-+#endif
-+            if (tiny) {
-+                ret |= FPCR_UNF;
-+            }
++        /*
++         * An integer overflow that is not ignored traps for software
++         * completion. The kernel's emulation reports it as invalid and
++         * drops the inexact that the hardware recorded with it.
++         */
++        if (exc & FPCR_IOV) {
++            exc = (exc & ~FPCR_INE) | FPCR_INV;
 +        }
-     }
- 
-     return ret;
-@@ -237,7 +257,7 @@ uint64_t helper_adds(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_add(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -249,7 +269,7 @@ uint64_t helper_subs(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_sub(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -261,7 +281,7 @@ uint64_t helper_muls(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_mul(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -273,7 +293,7 @@ uint64_t helper_alpha_divs(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = s_to_float32(a);
-     fb = s_to_float32(b);
-     fr = float32_div(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -284,7 +304,7 @@ uint64_t helper_sqrts(CPUAlphaState *env, uint64_t a)
- 
-     fa = s_to_float32(a);
-     fr = float32_sqrt(fa, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return float32_to_s(fr);
- }
-@@ -314,7 +334,7 @@ uint64_t helper_addt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_add(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -326,7 +346,7 @@ uint64_t helper_subt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_sub(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -338,7 +358,7 @@ uint64_t helper_mult(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_mul(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -350,7 +370,7 @@ uint64_t helper_divt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     fa = t_to_float64(a);
-     fb = t_to_float64(b);
-     fr = float64_div(fa, fb, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float64_is_normal(fr));
- 
-     return float64_to_t(fr);
- }
-@@ -361,7 +381,7 @@ uint64_t helper_sqrtt(CPUAlphaState *env, uint64_t a)
- 
-     fa = t_to_float64(a);
-     fr = float64_sqrt(fa, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return float64_to_t(fr);
- }
-@@ -378,7 +398,7 @@ uint64_t helper_cmptun(CPUAlphaState *env, uint64_t a, uint64_t b)
-     if (float64_unordered_quiet(fa, fb, &FP_STATUS)) {
-         ret = 0x4000000000000000ULL;
-     }
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return ret;
- }
-@@ -394,7 +414,7 @@ uint64_t helper_cmpteq(CPUAlphaState *env, uint64_t a, uint64_t b)
-     if (float64_eq_quiet(fa, fb, &FP_STATUS)) {
-         ret = 0x4000000000000000ULL;
-     }
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return ret;
- }
-@@ -410,7 +430,7 @@ uint64_t helper_cmptle(CPUAlphaState *env, uint64_t a, uint64_t b)
-     if (float64_le(fa, fb, &FP_STATUS)) {
-         ret = 0x4000000000000000ULL;
-     }
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return ret;
- }
-@@ -426,7 +446,7 @@ uint64_t helper_cmptlt(CPUAlphaState *env, uint64_t a, uint64_t b)
-     if (float64_lt(fa, fb, &FP_STATUS)) {
-         ret = 0x4000000000000000ULL;
-     }
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return ret;
- }
-@@ -439,7 +459,7 @@ uint64_t helper_cvtts(CPUAlphaState *env, uint64_t a)
- 
-     fa = t_to_float64(a);
-     fr = float64_to_float32(fa, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, float32_is_normal(fr));
- 
-     return float32_to_s(fr);
- }
-@@ -451,7 +471,7 @@ uint64_t helper_cvtst(CPUAlphaState *env, uint64_t a)
- 
-     fa = s_to_float32(a);
-     fr = float32_to_float64(fa, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return float64_to_t(fr);
- }
-@@ -459,7 +479,7 @@ uint64_t helper_cvtst(CPUAlphaState *env, uint64_t a)
- uint64_t helper_cvtqs(CPUAlphaState *env, uint64_t a)
- {
-     float32 fr = int64_to_float32(a, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
- 
-     return float32_to_s(fr);
- }
-@@ -514,7 +534,7 @@ uint64_t helper_cvttq_c(CPUAlphaState *env, uint64_t a)
- uint64_t helper_cvtqt(CPUAlphaState *env, uint64_t a)
- {
-     float64 fr = int64_to_float64(a, &FP_STATUS);
--    env->error_code = soft_to_fpcr_exc(env);
-+    env->error_code = soft_to_fpcr_exc(env, false);
-     return float64_to_t(fr);
- }
- 
++#endif
+         env->fpcr |= exc;
+         exc &= env->fpcr_exc_enable;
+         /*
+diff --git a/tests/tcg/alpha/float_convd.ref b/tests/tcg/alpha/float_convd.ref
+index 75c2139d60..437c08660c 100644
+--- a/tests/tcg/alpha/float_convd.ref
++++ b/tests/tcg/alpha/float_convd.ref
+@@ -19,34 +19,34 @@ from double: f64(-inf:0x00fff0000000000000)
+   to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (OK)
+-   to int32: 0 ()
+-   to int64: 5575456338684674048 ()
+-  to uint32: 0 ()
+-  to uint64: 5575456338684674048 ()
++   to int32: 0 (INVALID)
++   to int64: 5575456338684674048 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 5575456338684674048 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (OK)
+-   to int32: 0 ()
+-   to int64: 7936327705845301248 ()
+-  to uint32: 0 ()
+-  to uint64: 7936327705845301248 ()
++   to int32: 0 (INVALID)
++   to int64: 7936327705845301248 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 7936327705845301248 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+@@ -205,22 +205,22 @@ from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
+   to uint64: 2147483647 (OK)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 0 (INVALID)
+@@ -266,34 +266,34 @@ from double: f64(-inf:0x00fff0000000000000)
+   to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (OK)
+-   to int32: 0 ()
+-   to int64: 5575456338684674048 ()
+-  to uint32: 0 ()
+-  to uint64: 5575456338684674048 ()
++   to int32: 0 (INVALID)
++   to int64: 5575456338684674048 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 5575456338684674048 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (OK)
+-   to int32: 0 ()
+-   to int64: 7936327705845301248 ()
+-  to uint32: 0 ()
+-  to uint64: 7936327705845301248 ()
++   to int32: 0 (INVALID)
++   to int64: 7936327705845301248 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 7936327705845301248 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+@@ -452,22 +452,22 @@ from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
+   to uint64: 2147483647 (OK)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 0 (INVALID)
+@@ -513,34 +513,34 @@ from double: f64(-inf:0x00fff0000000000000)
+   to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (OK)
+-   to int32: 0 ()
+-   to int64: 5575456338684674048 ()
+-  to uint32: 0 ()
+-  to uint64: 5575456338684674048 ()
++   to int32: 0 (INVALID)
++   to int64: 5575456338684674048 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 5575456338684674048 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (OK)
+-   to int32: 0 ()
+-   to int64: 7936327705845301248 ()
+-  to uint32: 0 ()
+-  to uint64: 7936327705845301248 ()
++   to int32: 0 (INVALID)
++   to int64: 7936327705845301248 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 7936327705845301248 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+@@ -699,22 +699,22 @@ from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
+   to uint64: 2147483647 (OK)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 0 (INVALID)
+@@ -760,34 +760,34 @@ from double: f64(-inf:0x00fff0000000000000)
+   to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffffffffff0000000p+1023:0x00ffefffffffffffff)
+   to single: f32(-inf:0xff800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000)
+   to single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(-0x1.1874b135ff6540000000p+103:0x00c661874b135ff654)
+   to single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59) (OK)
+-   to int32: 0 ()
+-   to int64: 5575456338684674048 ()
+-  to uint32: 0 ()
+-  to uint64: 5575456338684674048 ()
++   to int32: 0 (INVALID)
++   to int64: 5575456338684674048 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 5575456338684674048 (INVALID)
+ from double: f64(-0x1.c0bab523323b90000000p+99:0x00c62c0bab523323b9)
+   to single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b) (OK)
+-   to int32: 0 ()
+-   to int64: 7936327705845301248 ()
+-  to uint32: 0 ()
+-  to uint64: 7936327705845301248 ()
++   to int32: 0 (INVALID)
++   to int64: 7936327705845301248 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 7936327705845301248 (INVALID)
+ from double: f64(-0x1.00000000000000000000p+1:0x00c000000000000000)
+   to single: f32(-0x1.00000000000000000000p+1:0xc0000000) (OK)
+    to int32: -2 (OK)
+@@ -946,22 +946,22 @@ from double: f64(0x1.fffffffc000000000000p+30:0x0041dfffffffc00000)
+   to uint64: 2147483647 (OK)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000)
+   to single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(0x1.fffffffffffff0000000p+1023:0x007fefffffffffffff)
+   to single: f32(inf:0x7f800000) (OVERFLOW )
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from double: f64(inf:0x007ff0000000000000)
+   to single: f32(inf:0x7f800000) (OK)
+    to int32: 0 (INVALID)
+diff --git a/tests/tcg/alpha/float_convs.ref b/tests/tcg/alpha/float_convs.ref
+index 3c9f29faf9..aa8f7d7d20 100644
+--- a/tests/tcg/alpha/float_convs.ref
++++ b/tests/tcg/alpha/float_convs.ref
+@@ -19,22 +19,22 @@ from single: f32(-inf:0xff800000)
+   to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (OK)
+@@ -157,16 +157,16 @@ from single: f32(0x1.ffc10000000000000000p+16:0x47ffe080)
+   to uint64: 131009 (OK)
+ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+   to double: f64(0x1.c0bab600000000000000p+99:0x00462c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 0 (INVALID)
+@@ -206,22 +206,22 @@ from single: f32(-inf:0xff800000)
+   to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (OK)
+@@ -344,16 +344,16 @@ from single: f32(0x1.ffc10000000000000000p+16:0x47ffe080)
+   to uint64: 131009 (OK)
+ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+   to double: f64(0x1.c0bab600000000000000p+99:0x00462c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 0 (INVALID)
+@@ -393,22 +393,22 @@ from single: f32(-inf:0xff800000)
+   to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (OK)
+@@ -531,16 +531,16 @@ from single: f32(0x1.ffc10000000000000000p+16:0x47ffe080)
+   to uint64: 131009 (OK)
+ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+   to double: f64(0x1.c0bab600000000000000p+99:0x00462c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 0 (INVALID)
+@@ -580,22 +580,22 @@ from single: f32(-inf:0xff800000)
+   to uint64: 0 (INVALID)
+ from single: f32(-0x1.fffffe00000000000000p+127:0xff7fffff)
+   to double: f64(-0x1.fffffe00000000000000p+127:0x00c7efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.1874b200000000000000p+103:0xf30c3a59)
+   to double: f64(-0x1.1874b200000000000000p+103:0x00c661874b20000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.c0bab600000000000000p+99:0xf1605d5b)
+   to double: f64(-0x1.c0bab600000000000000p+99:0x00c62c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(-0x1.31f75000000000000000p-40:0xab98fba8)
+   to double: f64(-0x1.31f75000000000000000p-40:0x00bd731f7500000000) (OK)
+    to int32: 0 (OK)
+@@ -718,16 +718,16 @@ from single: f32(0x1.ffc10000000000000000p+16:0x47ffe080)
+   to uint64: 131009 (OK)
+ from single: f32(0x1.c0bab600000000000000p+99:0x71605d5b)
+   to double: f64(0x1.c0bab600000000000000p+99:0x00462c0bab60000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(0x1.fffffe00000000000000p+127:0x7f7fffff)
+   to double: f64(0x1.fffffe00000000000000p+127:0x0047efffffe0000000) (OK)
+-   to int32: 0 ()
+-   to int64: 0 ()
+-  to uint32: 0 ()
+-  to uint64: 0 ()
++   to int32: 0 (INVALID)
++   to int64: 0 (INVALID)
++  to uint32: 0 (INVALID)
++  to uint64: 0 (INVALID)
+ from single: f32(inf:0x7f800000)
+   to double: f64(inf:0x007ff0000000000000) (OK)
+    to int32: 0 (INVALID)
+diff --git a/tests/tcg/alpha/test-cvttq.c b/tests/tcg/alpha/test-cvttq.c
+index d1ad995312..1a75012205 100644
+--- a/tests/tcg/alpha/test-cvttq.c
++++ b/tests/tcg/alpha/test-cvttq.c
+@@ -56,9 +56,9 @@ int main (void)
+         {  1.5,  1, FPCR_INE },
+         {  0x1.0p32,   0x0000000100000000ul, 0 },
+         { -0x1.0p63,   0x8000000000000000ul, 0 },
+-        {  0x1.0p63,   0x8000000000000000ul, FPCR_IOV | FPCR_INE },
+-        {  0x1.0p64,   0x0000000000000000ul, FPCR_IOV | FPCR_INE },
+-        {  0x1.cccp64, 0xccc0000000000000ul, FPCR_IOV | FPCR_INE },
++        {  0x1.0p63,   0x8000000000000000ul, FPCR_IOV | FPCR_INV },
++        {  0x1.0p64,   0x0000000000000000ul, FPCR_IOV | FPCR_INV },
++        {  0x1.cccp64, 0xccc0000000000000ul, FPCR_IOV | FPCR_INV },
+         { __builtin_inf(), 0, FPCR_INV },
+         { __builtin_nan(""), 0, FPCR_INV },
+     };
 
 -- 
 2.55.0
