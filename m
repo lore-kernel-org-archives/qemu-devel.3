@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683E4606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF022606A321
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 15:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AIvZN1zx
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Gn59wB/q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKdQc-0008A7-9x; Sat, 24 Oct 2026 11:13:02 -0400
+	id 1xKdQo-0008Bp-RR; Sat, 24 Oct 2026 11:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKdQY-00089c-KC
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:12:58 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <takano32@gmail.com>)
+ id 1xKdQn-0008BZ-2D
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:13:13 -0400
+Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKdQW-0003WQ-S8
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:12:58 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4a3517554f7so7061215e9.2
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 08:12:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <takano32@gmail.com>)
+ id 1xKdQk-0003XL-EO
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:13:12 -0400
+Received: by mail-dy1-x1335.google.com with SMTP id
+ 5a478bee46e88-35f036b17easo3761612eec.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 08:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792854773; x=1793459573; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=bHmzIiamyXGFkuAm13j814cI3oNHsVTGk/DbCM6elsI=;
- b=AIvZN1zxivaMw2M+DCse91IBI14ZjXaHs2Raly0rdul+AlqzM6Xbz7bIMh3Z6OVUxa
- gi5fcgfRCz1uekzh4Xq3BXjhAHVx2sBX1N5EPZA2n1lG7l4t5KE13GBa/fCTEjBLBYTK
- QRriRvnpyb7dUi/EgkR9BpC1x9byTi6oSa0Q1V3VUsbPhDoBhtLoIGfnEc908PMg62Qo
- pdSSZJZAwkJ9p0/meea2gmHNCcDyqGOi5v5/zoe07xOXoAlSDe39VP/pKKrJR13WRFw9
- wUu5cjARD5ayms09bqLwDmQc0B5/WGvxNCJZUl2ER82meYiGh6gnqKfy5rvvjdoUDXoQ
- AnXA==
+ d=gmail.com; s=20251104; t=1792854786; x=1793459586; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=5MgAObAt2kGe6ofnsOmOtna1PX8XasUe2TTb/NY/xW8=;
+ b=Gn59wB/qhb3VJc1R4tD/YiBTPhkdElRoNhYuwp0c8uSCcFNyVgAO7XZNZk62hDApxc
+ e78cFAV0PEqgeW/D9l8EubYJPAlDJzhuOsQ1xNDlaamxbzRp4xF80sOw6vyy3mntYTUU
+ uZH+Tn6P3RGeBJ4af0mm1tBrc6bV30NKZN86JkczbD6W+Pgs3Rr6k/NfRfvIbAqm7YZI
+ I/1K53PnBiOERXq6OwwoWIh4lLwr+RrQ3yIn1lFqS7c23Na0xh7TllXlVy87hpPBwpOv
+ 9KOZqYIjF8qcKv8ultVsH9zGocA3YjyGweZIPE4mddOfGvgpS0B9fYe8f4K8uxztmemM
+ lQDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792854773; x=1793459573;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=bHmzIiamyXGFkuAm13j814cI3oNHsVTGk/DbCM6elsI=;
- b=CPOtUBQb3W6WfXNqir/8ITHZOYY/3gHVEYc1Mq5/WsMeXnoHUsc95qfVVC6aB24xj6
- TyW8dUkPssLZrejPiIZqhUZ9KRacW4FM2bDT8jFeNHXmcHMrH03Dppw0tCL5aBjDcOTI
- C7/LC0cmZyIPrNVd3oAY3moJb2tmramgXe2EF22fwiU7y1c8G2UALV4gHDJ39GVuRzpl
- vah+axoAlZtM7sD+aqezKGogEjz0WKG4ExNZrCxxaScEHuaYoTLz6nSSBxkGfeK5UPhf
- f5SjDnLUd7eJ15wnfMGICHPYGkeumdByleCEprSYxHQyWqstOy0Kz3TY+kCYxEBIiY1q
- 1XyQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwGqC1LaqSEvTAVkdAs649qIVuA4+B7beON63w6DDpACscGoUz7Tp/999AJAqYIEKtmdELrcJ5CXkYy@nongnu.org
-X-Gm-Message-State: AFq9FYL0aUIAst0Sf6KlOaN1lSihKEl+/zAe5rfiivxwwKce7tUdul2h
- SoledvxrftEngZXmB8LILLrLCAHz7/tXMohM73MIL1VcJ39Vv0nE89NF82uxrSD14Oc=
-X-Gm-Gg: AYBFou1Pze4vzkvQQHa83NuGLr30V5v3av4LsBsI7ZgRvkihHTK5TYre103Efv6D5wj
- Gw1ZQ51ngy0Zw+uDztpssfyDlR3la7deFd3jbGIb1u9IkEzewj1lZ1+3mMaz+ZvLBOlnUbd7gpP
- 7qZFYICc76vGNYHK217+eA2a9120m9TrmKUd4PETFZzYF45vLfL0mZstoLdF6m31ttUKlI09xlT
- xICSpVY+qWXINrODKAh+EWwjjARfiROcuH2yh7+FDw5+j4DD4fdzFrmwhCq8CdubxDwbQs4CaGC
- LtH7EOjZ72MAyKGWzYvwJqi3nS5UpH7F+UpCXD0VC0GTTF4qBYu52rTK/nMzohlIOC8c+SNgz1U
- gngG8Q17TtWJNSXkUI7WUFn88nxL9qfgldOMfy1d+6QjMvtCzgWFQySkJm9RfUQJKLQT22Re147
- P8DjGqUC1xj1hWorxWpardZnigpHMJsQWUJtkHAlcPmGdPGfRwAiMN/ZaIKaVf8Ij2q9WZCel+I
- OABYBYIfJu23rb9yLNfzOs8GVQnW7msD2df+pEzVBBlweq3upZ0MlU7FXWYiMPLC85X
-X-Received: by 2002:a05:600c:a318:b0:4a3:5aee:2c25 with SMTP id
- 5b1f17b1804b1-4a35aee2cfdmr26019665e9.31.1792854773027; 
- Sat, 24 Oct 2026 08:12:53 -0700 (PDT)
-Received: from [172.20.4.74] ([176.95.65.245])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359fbb725sm60977215e9.0.2026.10.24.08.12.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Oct 2026 08:12:52 -0700 (PDT)
-Message-ID: <7b03da0d-89ee-46b7-8a1b-f9c3876c3ecd@linaro.org>
-Date: Sat, 24 Oct 2026 17:12:50 +0200
+ d=1e100.net; s=20260707; t=1792854786; x=1793459586;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=5MgAObAt2kGe6ofnsOmOtna1PX8XasUe2TTb/NY/xW8=;
+ b=xJFHw/159D02BmddZqlaHnRutIxMmkTNzMOcpsTrJXVZLpzPVIjMjzJTZ8fL0y9OJJ
+ wAtBAl66dmQXmNdj5bWtb/IeKsBww7YBNGFj/bTLKbUYhv4VmwjMFuWQIkjoDK2hfFHw
+ lgejuam5Uso2cCQCqPM5IYbRoB6Ko8l0nqTB8PBAEtzFGhyibbQ2lkbt/nPmPQa4LNnC
+ 6jZRuClBiqOeI35BZHVpfJAn1Ss+Ps//Cbpve0JmmtN0LkP1AVtKKA5hxqsZV39ah01z
+ kgN7cIhMeF4lkqTaYGwyvqmqdjPN4jxswRqtHlsX4cwyxDYGiO3+L3aq4PBRMEFjyqeU
+ 4N7Q==
+X-Gm-Message-State: AFq9FYKY/Jtpk5t2X6tvlJM17FBaTzQhmvV2L9ZWvepuCSo8b1k6sQUU
+ nGv80IDcGzm8T+VHDy94c1jPJPa+d2eXIarPzDYOKx2cmFCt/lZN1hraRO3MWQ==
+X-Gm-Gg: AYBFou1p/4BDObsNf68aGUYXg/o7R4ZNAjhQ1TkGjorwoa23BaqNmwpUX8Ok0g/HQo6
+ v1t8fr9LlXEp4R3D1GufZQx6RZaxBM/Yigr2alZPeq56RwrT3gAS6SiYRhnoEhrVb9YCKtXTPlU
+ O9UEgr1+PNLosARF6P0aIr92UtXF5B2ddjNQ/8Gdu8ZJB90ORTzha/bySkd1sJaF/JmPex5WrOt
+ /O/U0h+cqdawOaabekQuDnNcyL61GeG/6BLYjz3Q1J5guFZQdPHeRe3lyZqF2IlFeDY/Akr2CwR
+ m6UYEQxaEMD/CUq/UxWrxZMC+M/zc/6ZXbT2Yz9OLYOlXo9PW50yya6cT3b4s6gGlMvYeng4H8b
+ UQ+yei1DAr3/lm2MXLxYQ+/x4EEC/jDbqfEczYMEmo07s00IMEZaYPF4txi+8bw3TojcFAxmCm1
+ Pk10tknJETgvD+MnZmX/LjZTVw4lMMydeVpk60HqhhE3JH+kbT3Gc34CI8VsMZix9seTQZKr1gg
+ J3LL/e/LhdhPUd3nRFiq34sdH79PwenJi72ooNWKLdSqJA=
+X-Received: by 2002:a05:7300:2442:b0:358:2e30:8e5 with SMTP id
+ 5a478bee46e88-369e836b382mr3881382eec.1.1792854785692; 
+ Sat, 24 Oct 2026 08:13:05 -0700 (PDT)
+Received: from a1-free ([161.33.196.121]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-369e8d5b841sm9578168eec.9.2026.10.24.08.13.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 Oct 2026 08:13:05 -0700 (PDT)
+From: TAKANO Mitsuhiro <takano32@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: TAKANO Mitsuhiro <takano32@gmail.com>, Helge Deller <deller@gmx.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2] linux-user/i386: reject bad CS/SS selectors on
+ rt_sigreturn
+Date: Sat, 24 Oct 2026 15:13:02 +0000
+Message-ID: <20261024151303.586126-1-takano32@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261024134118.474313-1-takano32@gmail.com>
+References: <20261024134118.474313-1-takano32@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] testing updates (tcg, gdbstub)
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20261023180539.1574134-1-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261023180539.1574134-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
+ envelope-from=takano32@gmail.com; helo=mail-dy1-x1335.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,41 +101,34 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/23/26 20:05, Alex Bennée wrote:
-> The following changes since commit b6c4b7e86dec12d07f5cac65265b986d38ee9002:
-> 
->    Merge tag 'pbouvier/pr/tcg_tests-20261022' ofhttps://gitlab.com/p-b-o/qemu into staging (2026-10-23 09:09:11 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/stsquad/qemu.git tags/pull-11.2-gdbstub-kvm-231026-1
-> 
-> for you to fetch changes up to e0a7139b213487a59023d88e7d56b7e95d90d553:
-> 
->    tests/functional: add tuxrun kvm gdb test for s390x (2026-10-23 17:32:05 +0100)
-> 
-> ----------------------------------------------------------------
-> testing updates (tcg, gdbstub):
-> 
->    - make sure we have TCG to run test_acpi_bits
->    - fix overflow in linux-sigrtminmax
->    - make .dir-locals aware of PYTHONPATH
->    - detect gdb in top-level meson
->    - fetch kernel assets with symbols for x86, aarch64 and s390 tuxruns
->    - use arrays in gdb run-test to make quoting less messy
->    - add support for --symbols and --kargs to gdbstub run-test.py
->    - restore old kvm gdb test script with a few fixes
->    - add tuxrun_kvm_gdb tests for x86,aarch64 and s390
+Hi Helge,
 
-Applied, thanks.
+please drop this patch -- it is not needed on master, and I should have
+checked that before posting.
 
-r~
+The abort reproduces on 10.2.1, but not on master: since
+
+  9097087147 ("linux-user: make syscall emulation interruptible")
+
+a #GP raised while a syscall is being emulated no longer longjmps out of
+cpu_exec(), so a frame with zeroed CS/SS already ends up as SIGSEGV in the
+guest and qemu survives.  I checked this on a clean master build
+(8967b2fe1b): the same frame exits 0 with the SIGSEGV handler running,
+while a v10.2.1 build aborts with the cpu == current_cpu assertion.
+
+The same holds for the v1 of this series -- please disregard both.
+
+So the fix for 10.2.x is a backport of 9097087147, not this patch, and for
+master there is nothing to fix.
+
+Sorry for the noise, and thanks for catching the name.
+
+Takano
 
