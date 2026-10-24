@@ -1,129 +1,131 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8112A606A31B
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 17:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ECC606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 17:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=VbTZPJmH;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=OVeR3BDs
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ChGM8uvf;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=JpcycdED
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKfgS-00046X-Uu; Sat, 24 Oct 2026 13:37:32 -0400
+	id 1xKfgD-00040u-IV; Sat, 24 Oct 2026 13:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKfgL-00043x-IG
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:37:25 -0400
+ id 1xKfg3-0003yD-Bi
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:37:08 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKfgJ-0008K7-Qf
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:37:25 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1xKffz-0008H4-5S
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:37:07 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69OExqj61353386
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:37:12 GMT
+ 69OExnpR996398
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:37:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=Wqf0dSnUfCG
- lONgOWw6fTnGlfMMyVqUygUlILWGUw2E=; b=VbTZPJmHt99+0mbF/XcG97bKGy8
- SPJj+hshe6/IGaSj9dXmz3u+w7O3rJvlcvuhOyoWjTbYLl8k1KB15mQ3/aZFx1ur
- RKsjniXZcfRYG7cF+/omAZX+eEyjE2fh0hIddEiAp5JPlLwvp+4YKtRhh2sHNXqu
- 3VCdO5jD5S3t/OFk7OtteEFNOesJ+WF4ueNO5oOPNB/YwCvr/KxJS5KT/6xx2Ciq
- lgaD551eL07F+aZLAjYDeQOcPpIBvJp4dO574r3kPmjVX5/JdfzK4OyrazBr+ZDG
- dol9BmHJHr/GMsfCGnrnWZFaeUxMAKDFnhBxU6NwmMgPo0vhPorZE+AkGpw==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ vAdYAi43xpUovS4YOqs2Qx2PqnUEKIciVzLpIcDpZHk=; b=ChGM8uvfj/deR99R
+ QRTC81D2Uv6/retBGt05QoKFH978rf5LNiherrOwSog675MMdoDzk+p+YHgundJY
+ KRHvvqYhWLuJ6n2E41VwZKOZOKGqI5fx+Cuq+ZOV7riK6hO87fgLhUHTOvzWA6HH
+ 0p3U01KLyRfhnC89FtX00RRiIR042pgrjU3/pxFL4VEy3HLGruIa+h5c6zDPEUX6
+ GIPNnTyQ2v8DaTrNdxlgKXe7Ob89jjN8t0Ic2HoJxKh8+eFZIGWdgt8aMNU3dgJ+
+ JTLJEQlgLi0ouB+sm1Ji7rywp47lwEUosRVUuZ+yF3ALi/NU216L+dwlAwHHJ17l
+ BI/ntw==
 Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
  [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgnehhc7u-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgny9sakq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:37:12 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:37:00 +0000 (GMT)
 Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3ab2395f104so1544888a91.2
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:37:12 -0700 (PDT)
+ 98e67ed59e1d1-3ac0ae43900so1923506a91.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792863432; x=1793468232; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Wqf0dSnUfCGlONgOWw6fTnGlfMMyVqUygUlILWGUw2E=;
- b=OVeR3BDswpNc1Aq2ZG+Y2tY0uGQBFp9j7WaT2aScuabj5DApM2sRsyIUEy227QWnCO
- VxEwb5lOWAWhG/zex4JoMqk4FoftgPVVD61R/yjF/kdci3NBzLft/MUd8y0KFc7yZ1Ny
- I4+1ys/ET4FwQaQOoJgRjMcEPOUdeyfJw+EmyIwBGgLqOvuB94JcGJG8eYrC+Qf8/wnp
- LhcHTqnPJr6p9i8fSRlqetx3rSaRM4B7zzuTvdAlEesW5KSE2bbB2KWnwXfjBYrdYqL5
- 43JsQ3dgMqCEmZNE6AUg0+pjTqlZpkQ3kP8QK+zC0JFY5kDMHIc6LWJuymCJ52pZ28Tf
- Ra/g==
+ d=oss.qualcomm.com; s=google; t=1792863420; x=1793468220; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=vAdYAi43xpUovS4YOqs2Qx2PqnUEKIciVzLpIcDpZHk=;
+ b=JpcycdEDeEHPuFHpmuSs8neawtG39q62+7zWhCRB87LClX/fo3ynUQwHj3K1tC1qtC
+ pgvPUb8GFX1wAqQNvtd9YXryDFE+AW2t/BAutzspq9cAGcjXT0TAOfiuIT98tidXJ5t7
+ /UKnRywNC3vAeBWy+dxLgRPPRYZXLJAkyOmuiH6PE7ZEqvWJCh39gSpL0DIv8YauOMEh
+ TSP2jFu3KPsCL6NYtHINNaV6AHCRKBNYKQMWyPKxUuMxBq+CT33yu+5RSLhBNwo6Fh+z
+ +293pgr4n/2e15cFqNsXNNTUPgh87ROcqvPC1MFhfiK6ibl7/OF/Nz11SBg0+PC0Cu/n
+ h03g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792863432; x=1793468232;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Wqf0dSnUfCGlONgOWw6fTnGlfMMyVqUygUlILWGUw2E=;
- b=Lb6UrLNpp8ncH85K5J5elnTAj4sKouP4NPhbHNtCmMhgWatSpTK9CClP1hPVoFvRYy
- 7dZImQp6ZFuY7KWpt5MvJ44FmompVHJnl0cJjrkHQdx4eCXj+8+ujLI5p4RrtPo6gvQ4
- NbZsGGwrumSFdZU9MeiUV5bMtYSYpQlG57j3GyNJU5Ki2Kd8dMZArdVuVwKldCV6ej/a
- h4wbqAkGAINzv8UfSsK2Xv60Xcdyf7ftglO1jVSluoAH+hwsAFDyRc4DO6pNFJ+dzqBn
- LH7kGzixKkO+w9c97ggNMgtzpV+DC12j+DX/7+Lvchtoh9hLn7DTqSH7kkfN6n0T7Izz
- 5IIA==
-X-Gm-Message-State: AFq9FYI6oIhFTbl8SLd6GrBCQ2qjwfMK8QogGHe749idMUxjx7gj5o6g
- bOzJVINfGSraMt8U37CsVDFI+21TbD6JijJdJAQaLhs3bt0/q7APrXSZEFik7+F2sqtMNfyhBy5
- q3uUiPWAkRNTWH0t339jGAARXgusLfGOvcoz2xDSSXwJTIA82gFt61ehzqtnCFu2bSw==
-X-Gm-Gg: AYBFou1qD46gpooTTAFuEDJiCoc2xm0gc4RjPGNlkl8rcib0hgUzHlMkCbazgrO4j7n
- jB2MaHR0hrGO55dl4P04FhLcbceP0eWl/obtuvxKuG6ixTYFQJU52jauWHxVGDRtEd2l8mb3RLV
- 4It+ZkgV51DtKlLX6QR5Y3XskZfqvYL3p8NMhpEhqqNd03dgLHidE1WI7COivWIlLZNwjQT9QRf
- Bo6eZ58304yAXDp0Aas/ZMLgcv41vvAuez3gVrJCcQupBPmRtlbGN/bOgBgEBdD+kf9FUSiRwOB
- TA5GFGLorQ/W0iV8k8KmPUK7cLxuQemXOkgSeUJbenuye3OV7OnfMx3t3skofb7zPy2LfTFR8/X
- 9HdME9rF2DwkgpZDTGoUXHpMnaoBFF/LHy9D1PwuS3c1OG8RdOz09jLuF6NRT15g=
-X-Received: by 2002:a17:90b:56ce:b0:3ab:be66:ddc7 with SMTP id
- 98e67ed59e1d1-3adea89911amr2416696a91.10.1792863431737; 
- Sat, 24 Oct 2026 10:37:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:56ce:b0:3ab:be66:ddc7 with SMTP id
- 98e67ed59e1d1-3adea89911amr2416677a91.10.1792863431182; 
- Sat, 24 Oct 2026 10:37:11 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792863420; x=1793468220;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=vAdYAi43xpUovS4YOqs2Qx2PqnUEKIciVzLpIcDpZHk=;
+ b=alDguYEKX4JYwxIS8iNoF/KqaQMJrD3fZJbrLfnYZd1hmxqiq5ojsCdc1sp47N77X0
+ upNSK6mzkqejW5vS75Zy2NIKcxpdpPv8V0j08IJLH9ZloyfintSCq0OwlHpH9dAW8aiP
+ iM/y2BqcR4uB7Xa4yi793qfBmx3AF57nzFQ6Mv3IxRCjERqHHnk9p1eZCMkJTpYH3KBU
+ q1oN2Kqs0uC24bPl/D4oHI5eE7dRSC6JwD/nWaVzvsZcX76uKfcoZSE95GSCQpqH+mqe
+ cKOxy2qOkAci9j1SIodoAlWQnQiovGWpBe/qT9TW/qnHaFyXjDoDOsPrGWYKhgxUK8wX
+ QI0w==
+X-Gm-Message-State: AFq9FYIkdkFLB0sUuIKkMwlfbZIjD3BLQlqIshAtw9wda/sS9UQ3Dz7o
+ 7aS5UY/ZLKnUN5QBqzXNyaGT7aQXR3ojL6wO3czcQHKmf+F2G05KQM1zRcapn9wWG+2tZEJDtnu
+ C19uAAFpwcwPGZnowgBimgn9zw1V+Yov7ndbBTrKqZQDEybJAee6E3S5cnD/3Wz8nQA==
+X-Gm-Gg: AYBFou3phscGmo87yIQbL6Vp+OxPYpieaczwHlbKD93LfiAVNHMkx5eo8xO8uSW7JSV
+ mNBhyurqd7wlJLHtPDlJq3wqsB7tWEklJyRRJ6BFcy8brNonDdya0+NxEokXzhYruNrAvkYHS8W
+ lDd5IxPTfbQbSXf1GmdYINRtmoTtfuzA62LPLC2FGAbFLR8AFYNzXaB68DqUIOkbtBJDA0bY1rV
+ 8vLHBMqltwGKR9QrHKlC5ZVbM9xegWpHNwXkRJ2DnLyaQC1D+/OGGP5TdN1z1Oo+SqteK7lVzWP
+ 7walr1sOd+NluJnD08Q3GWUw43OTpLpRZZXdhbqIqlxtjlWZMdeePaKnECCW1k+k150lMhn43uD
+ zCfvTz8nA2YzMxqbdDSPlc2NJzrWReu0UQkhh/v4vBA5Y3KKA6WX1YOHWpFCBFJc=
+X-Received: by 2002:a17:90a:da85:b0:3ab:c370:3684 with SMTP id
+ 98e67ed59e1d1-3adead45d61mr2156322a91.30.1792863420160; 
+ Sat, 24 Oct 2026 10:37:00 -0700 (PDT)
+X-Received: by 2002:a17:90a:da85:b0:3ab:c370:3684 with SMTP id
+ 98e67ed59e1d1-3adead45d61mr2156316a91.30.1792863419677; 
+ Sat, 24 Oct 2026 10:36:59 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3adebbb1a13sm3324093a91.2.2026.10.24.10.37.10
+ 98e67ed59e1d1-3adebbb1a13sm3324093a91.2.2026.10.24.10.36.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Oct 2026 10:37:10 -0700 (PDT)
+ Sat, 24 Oct 2026 10:36:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 17/20] target/riscv/tcg: restrict tcg-accel-riscv-cpu to riscv
- targets
-Date: Sat, 24 Oct 2026 17:36:46 +0000
-Message-ID: <20261024173649.7405-18-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 02/20] tcg: introduce HELPER_INFO macro
+Date: Sat, 24 Oct 2026 17:36:31 +0000
+Message-ID: <20261024173649.7405-3-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261024173649.7405-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20261024173649.7405-1-pierrick.bouvier@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA3MCBTYWx0ZWRfX019+KD2IaNp+
- eTrgSQ1tY+3K0TBmv1PaxuzT/5i6MbD38o9xj6v6eE6mp7X/YAvP/s7LT0jNgymkgAph/zRJAts
- j1f3m3oFjaDq+OsWSgK/ISkh1b5jUTY=
-X-Proofpoint-ORIG-GUID: sTa_taE24Q7jNJ9QnQ8ndwW8dKuz1vNF
-X-Authority-Analysis: v=2.4 cv=d5tgWhjE c=1 sm=1 tr=0 ts=6adcecc8 cx=c_pps
+X-Proofpoint-GUID: PcEDweQ6mtFxXfjiN3V9AnO1j_chbDqH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA3MCBTYWx0ZWRfX82qwHYHMIOTV
+ z2Qz1LKmL0c1tqgUTmcM8rtITfLJ9lTY3AFrXQA/eQ48jhtQm/yjkVe0C3600YYgS3CQjx0XWtp
+ VxGFMyeYzXW5G7kRYRh0s6QX2Uu4f3DxtXGjKDU50qorVJgZc3O8urb3i1CuVMqex5drbRQ6xQJ
+ u+wnzEeyBgXhfqqiFin5/eCy056rcvrdv8cjGJScJkKPAJoS9MWIbt5htIQmIXugirBi85B5Mg1
+ 8qNfORDYqPUF4u81fdHUCxXblhjOobo4IEiVllazUiF5/CtjJvnCfv2s1MUcsmuqFVk8vvKqdZM
+ ZYnsk8FUOiI9VaQZbNXA7NiB8o73ZjIcl6//51+mWPukwT9F33IJ6dqQ9XHOni22EC8pdOF3Xnz
+ UAO/BzZt7ihlatgjL5fl1c0QF73WAe1LHyHDiqiyPT1n7ZDvTtgJh9k3LMDkO4/sD4T4GcAv9ia
+ cmjdsMIIpK7bKZBBKVA==
+X-Authority-Analysis: v=2.4 cv=PqcG/AM3 c=1 sm=1 tr=0 ts=6adcecbc cx=c_pps
  a=RP+M6JBNLl+fLTcSJhASfg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=JF9118EUAAAA:8 a=_sBhEEXM5gZMwKb8aCgA:9
- a=iS9zxrgQBfv6-_F4QbHw:22 a=xVlTc564ipvMDusKsbsT:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA3MCBTYWx0ZWRfX+oIpxIOj2DCk
- HB687COYjCUvv61h+N9pvBw0an1LrX8cdVqHDsE+qjB6yHCtihTq5b42sK9Fo4CLpeGz4d1q6Kl
- yw64IwUr3O2MwRojI6DRmpbOF47q0BFbEeZPXEVE+n3XkLrac8xx7VkbPHr5wsvh0qdjY1FVo+L
- +V6/Uxpy2tOTF6zCw4QwLbb4lRNuZHM//T0QnAbyPYa4fZHimeOvC1GGaReRRzbJSH8O505xUGe
- Ep3DL8o+OA2UwVT4U0iqt7dKUwu/KpywJ498sgi0XSqe6QoacZ+slZ8m5RwEZeHgk6mRK91/clb
- VGdvM6xgniJQaziKnpqEOUjny2a9fkpXOpcLb3l9LwjqeIaqZ1K3lsnDznQbT4/eDtd28Fyak6W
- 22Jqs15/pRUwNlYgHEwQudC3By8Wn5cNLEVIMlcR/mbwjKtlJ07Lsw+DmgTLv/3Cem9ryWwdOiZ
- kOgxsFGev4zI1wQz+ig==
-X-Proofpoint-GUID: sTa_taE24Q7jNJ9QnQ8ndwW8dKuz1vNF
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=ighA3CKJURImTjC3cZkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: PcEDweQ6mtFxXfjiN3V9AnO1j_chbDqH
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA3MCBTYWx0ZWRfX0TpUxVj5Lih5
+ TBrftAsQYv6mDGav0qU5IoNg3Lqaxljh/JV6JyDGz/2OEBVP4B4C0ANhAnAqtAdJ/wf7QJihCGH
+ dlttNKqsvcA+O2w9Qss+28InwVTJk9Y=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-24_02,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 adultscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ clxscore=1015 adultscore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 phishscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240070
 Received-SPF: pass client-ip=205.220.168.131;
@@ -154,35 +156,224 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-$ ./build/tests/unit/test-multi-target
-Type 'tcg-accel-riscv-cpu' is missing its parent 'accel-riscv-cpu'
-Aborted
+In next commit, we'll prefix all helpers and helper_info with target
+base architecture. Make sure helper_info symbol name is defined in a
+single place before that.
 
-Parent type is conditionally registered from current target:
-register_accel_target_type uses '"accel-" + target_cpu_type()' as type
-name. Multi-target test takes the first target available, which is not
-riscv in current state.
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Link: https://lore.kernel.org/qemu-devel/20261024061616.27381-7-pierrick.bouvier@oss.qualcomm.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Acked-by: Yonggang Luo <luoyonggang@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/20261024163249.77855-3-pierrick.bouvier@oss.qualcomm.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/exec/helper-gen.h.inc  | 48 +++++++++++++++++-----------------
+ include/exec/helper-head.h.inc |  1 +
+ include/exec/helper-info.c.inc | 16 ++++++------
+ 3 files changed, 33 insertions(+), 32 deletions(-)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 80c04636175..cbff18afb5c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1748,6 +1748,7 @@ static const TypeInfo riscv_tcg_cpu_accel_type_info = {
+diff --git a/include/exec/helper-gen.h.inc b/include/exec/helper-gen.h.inc
+index dabe138e205..95715bde1ef 100644
+--- a/include/exec/helper-gen.h.inc
++++ b/include/exec/helper-gen.h.inc
+@@ -11,88 +11,88 @@
+ #include "exec/helper-head.h.inc"
  
-     .parent = TYPE_ACCEL_CPU,
-     .class_init = riscv_tcg_cpu_accel_class_init,
-+    .is_available = target_base_riscv,
-     .abstract = true,
- };
+ #define DEF_HELPER_FLAGS_0(name, flags, ret)                            \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl0(ret))        \
+ {                                                                       \
+-    tcg_gen_call0(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret));            \
++    tcg_gen_call0(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret));                  \
+ }
  
+ #define DEF_HELPER_FLAGS_1(name, flags, ret, t1)                        \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1))                                                 \
+ {                                                                       \
+-    tcg_gen_call1(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call1(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1));                                       \
+ }
+ 
+ #define DEF_HELPER_FLAGS_2(name, flags, ret, t1, t2)                    \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2))                             \
+ {                                                                       \
+-    tcg_gen_call2(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call2(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2));                        \
+ }
+ 
+ #define DEF_HELPER_FLAGS_3(name, flags, ret, t1, t2, t3)                \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3))         \
+ {                                                                       \
+-    tcg_gen_call3(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call3(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3));         \
+ }
+ 
+ #define DEF_HELPER_FLAGS_4(name, flags, ret, t1, t2, t3, t4)            \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2),                             \
+     dh_arg_decl(t3, 3), dh_arg_decl(t4, 4))                             \
+ {                                                                       \
+-    tcg_gen_call4(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call4(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2),                         \
+                   dh_arg(t3, 3), dh_arg(t4, 4));                        \
+ }
+ 
+ #define DEF_HELPER_FLAGS_5(name, flags, ret, t1, t2, t3, t4, t5)        \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3),         \
+     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5))                             \
+ {                                                                       \
+-    tcg_gen_call5(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call5(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
+                   dh_arg(t4, 4), dh_arg(t5, 5));                        \
+ }
+ 
+ #define DEF_HELPER_FLAGS_6(name, flags, ret, t1, t2, t3, t4, t5, t6)    \
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3),         \
+     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5), dh_arg_decl(t6, 6))         \
+ {                                                                       \
+-    tcg_gen_call6(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call6(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
+                   dh_arg(t4, 4), dh_arg(t5, 5), dh_arg(t6, 6));         \
+ }
+ 
+ #define DEF_HELPER_FLAGS_7(name, flags, ret, t1, t2, t3, t4, t5, t6, t7)\
+-extern TCGHelperInfo glue(helper_info_, name);                          \
++extern TCGHelperInfo HELPER_INFO(name);                                 \
+ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
+     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3),         \
+     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5), dh_arg_decl(t6, 6),         \
+     dh_arg_decl(t7, 7))                                                 \
+ {                                                                       \
+-    tcg_gen_call7(glue(helper_info_,name).func,                         \
+-                  &glue(helper_info_,name), dh_retvar(ret),             \
++    tcg_gen_call7(HELPER_INFO(name).func,                               \
++                  &HELPER_INFO(name), dh_retvar(ret),                   \
+                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
+                   dh_arg(t4, 4), dh_arg(t5, 5), dh_arg(t6, 6),          \
+                   dh_arg(t7, 7));                                       \
+diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
+index 7dec5f5b067..be1d79cf017 100644
+--- a/include/exec/helper-head.h.inc
++++ b/include/exec/helper-head.h.inc
+@@ -9,6 +9,7 @@
+ #include "fpu/softfloat-types.h"
+ 
+ #define HELPER(name) glue(helper_, name)
++#define HELPER_INFO(name) glue(helper_info_, name)
+ 
+ /* Some types that make sense in C, but not for TCG.  */
+ #define dh_alias_i32 i32
+diff --git a/include/exec/helper-info.c.inc b/include/exec/helper-info.c.inc
+index c551736d49f..4e1ab61e5ce 100644
+--- a/include/exec/helper-info.c.inc
++++ b/include/exec/helper-info.c.inc
+@@ -16,21 +16,21 @@
+ #define str(s) #s
+ 
+ #define DEF_HELPER_FLAGS_0(NAME, FLAGS, RET)                            \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0)                                 \
+     };
+ 
+ #define DEF_HELPER_FLAGS_1(NAME, FLAGS, RET, T1)                        \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+     };
+ 
+ #define DEF_HELPER_FLAGS_2(NAME, FLAGS, RET, T1, T2)                    \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+@@ -38,7 +38,7 @@
+     };
+ 
+ #define DEF_HELPER_FLAGS_3(NAME, FLAGS, RET, T1, T2, T3)                \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+@@ -46,7 +46,7 @@
+     };
+ 
+ #define DEF_HELPER_FLAGS_4(NAME, FLAGS, RET, T1, T2, T3, T4)            \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+@@ -55,7 +55,7 @@
+     };
+ 
+ #define DEF_HELPER_FLAGS_5(NAME, FLAGS, RET, T1, T2, T3, T4, T5)        \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+@@ -64,7 +64,7 @@
+     };
+ 
+ #define DEF_HELPER_FLAGS_6(NAME, FLAGS, RET, T1, T2, T3, T4, T5, T6)    \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
+@@ -74,7 +74,7 @@
+     };
+ 
+ #define DEF_HELPER_FLAGS_7(NAME, FLAGS, RET, T1, T2, T3, T4, T5, T6, T7) \
+-    TCGHelperInfo glue(helper_info_, NAME) = {                          \
++    TCGHelperInfo HELPER_INFO(NAME) = {                                 \
+         .func = HELPER(NAME), .name = str(NAME),                        \
+         .flags = FLAGS | dh_callflag(RET),                              \
+         .typemask = dh_typemask(RET, 0) | dh_typemask(T1, 1)            \
 -- 
 2.43.0
 
