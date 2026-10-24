@@ -1,80 +1,127 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5FE606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 15:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83C0606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=treblig.org header.i=@treblig.org header.a=rsa-sha256 header.s=bytemarkmx header.b=qsnK4fTI
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kUHi1Fpa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKe26-0000YG-CR; Sat, 24 Oct 2026 11:51:46 -0400
+	id 1xKeJZ-0004eE-IT; Sat, 24 Oct 2026 12:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1xKe1w-0000Wh-42; Sat, 24 Oct 2026 11:51:37 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1xKe1t-0006uJ-QV; Sat, 24 Oct 2026 11:51:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=V4iZYoxy+XBZp3nhXDfm6iYmskBq0641TnPqJV9mKII=; b=qsnK4fTI54UGvy5h
- SVyQCel19WB/uH+ugCafgD1oOx9FcElkHdOU1eIZ9mjNNxk5mA/3j7P5GZF4T3beoBRK5fK5ghWGY
- SArNTN9/pS4E1kGdOzo+d9Rv0d0qjtht2h7xlHWgqy/m3vZolZMi9WVZn/j0YGuNcVNIFEdX7cWe3
- fNlnUg3HvMaYkMb9AkN1F0dlzTiiU9r622oNLXE5ZjGnNT7DR0/SX37ioF5+1/HY7Diuiue0YYGC8
- BRcGhu1Re38gk4erAm/hDe5qGWLzdaY7g11470NYZ4/o+3FWIOr5RkKFLuNrEEHhfz/HTVVLW8JCF
- bpYdLJKvLQ1yziw3lw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1xKe1j-00000002QqZ-1uLX;
- Sat, 24 Oct 2026 15:51:23 +0000
-Date: Sat, 24 Oct 2026 15:51:23 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Max Filippov <jcmvbkbc@gmail.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
-Subject: Re: [PATCH v3 00/18] monitor/hmp: replace MonitorDef with GDB
- registers
-Message-ID: <atzT-0QHYWByMhEg@gallifrey>
-References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
+ (Exim 4.90_1) (envelope-from <adrien.kohlbecker@gmail.com>)
+ id 1xKdxj-00082T-RZ
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:47:15 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <adrien.kohlbecker@gmail.com>)
+ id 1xKdxh-0006ae-Fu
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:47:15 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1f31c63ebso4844439a12.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 08:47:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792856831; x=1793461631; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:subject:references
+ :in-reply-to:message-id:cc:to:from:date:mime-version:feedback-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+PC1BPGG8wRFBnlRszmhJMWM19lUGInf67vrhi7bNg0=;
+ b=kUHi1FparqOc8DSSumpd2yvUC75wkSP/+FndJUiKgKaK2UfJlB3+GIZ/t0icbB5FBl
+ lO+Hi3rf1pttjps18wLfMcdDQB294C7krZpkM3S3LJQrDP+28QDGWO4DAZCCsAdzcZNm
+ 14F7eJrn6Rd+PW/ulk9c3NAFqVo1MPAqSvZWiOuazqtXbLtg8TD9V5Aopx3T8LVNMRr8
+ LJ74DXwzLatf2N5sDnwL8shSe0EVdHfUKZ9ZP4mRFsuYi2kHU41h0NoOBjKjCCChvoHi
+ cfCMYLSB1hOp69GGwWHfb9f2Z87cIrHeyTvhH3h1zn/sNVFxsro1AF2Qoe8sAfVTICEC
+ jkWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792856831; x=1793461631;
+ h=content-transfer-encoding:content-type:subject:references
+ :in-reply-to:message-id:cc:to:from:date:mime-version:feedback-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=+PC1BPGG8wRFBnlRszmhJMWM19lUGInf67vrhi7bNg0=;
+ b=NiSNx3vhF0BDAfoC4UY/39I04/o8eXIISyu5TOEskpTyIeljS1ljq6PTG3fGEgiWOp
+ /elJudkypwBaO892LQ0gWxvdxgEt6Ot7Hk1rO6NSVb5leBMe+UFIUg6iNBLppP+gMZnX
+ KJsN36xP3AW7dm4zl4uqfNKdia6kUqjal2opMfPs5RqmPd3C2Fpu98WngAN5EksuyZkj
+ keD2XZA11mpq+A5omHEdm3iTewwI+ggvki1ZTATdhIORnzOKWAfZjukGVrsdK6cSexj/
+ erEL4sw7GyjQL4ltI9aDlgVEBnS31Alg/2mNf6FNyIRUTtGusBfep8UrVF0Q9bEopaoB
+ XliA==
+X-Gm-Message-State: AFq9FYJM4yMGWi9S7s54przn8SxQ20daNDiZrai6wfNRJ2FDuW/ckp7s
+ PwkeksS4IeczLZvVu9hdRMd2g3NZSqiaF92MgliEKO2TwNJS/RXKn18J
+X-Gm-Gg: AYBFou2mYvd9EDBEjcghuNvclebUWeShvZ6J3VFlPSUZJ1qtl9W83Iot0yZfdlQlbAj
+ CrqJbAC6JXr1Q64aJHOwX8HrT6QJXLOhHhOhDOjip+KEtrc8OpGoCkj7Sl6XX2vcws2f5A021Zg
+ MDEsTqfYg8FxqFUiH2YLoG8cmDVj1FBRoP4CgGgFJDaH4Udp5pTO1LQpwFze/56CHefgaSI8juz
+ am7486pnhwYurDZYB5deEvMKpbhG8I++0mvcmjO5faYmaIDrqTGJZSnqpwfmZ1AUwinfgTphrfC
+ jJEpX1QgXMdQeJ5jFqOpCkaMTZQIBOYcEZKOYO6nvXRk5/G4qSe5bOfX4i4Mqwrgw7IiD203rkf
+ lEdNncG96IQamgqPAhte9hXlgt2++mlhPVnIrf2DUp9CCGoWD6JB3Zr5nz2JcDAcT0PUFrlSCom
+ tWGJ22GuUNw5JpHR55q3CHiwJ/PAclwLzcXAsBZWm7PFuucVspQ1DoXa7h6DQaFCtcazgcdmKNn
+ 7LV86piFXGaWBG6hlZLGLu4Ge+JwZGLWZMBb/G0xyVKGOsI4IggkrmMnH30CuQ5PZJUA3VKGpl6
+ c9jOA4W4XY2wbnqUzGMIKYYSG0nIMEPbURm4Tlbxwj0aXuZP6wGmMgmPfR2Q/EkOWFcz5th/Sw=
+ =
+X-Received: by 2002:a17:907:868c:b0:c3f:8c92:3b54 with SMTP id
+ a640c23a62f3a-c46bd956b63mr283516166b.0.1792856830427; 
+ Sat, 24 Oct 2026 08:47:10 -0700 (PDT)
+Received: from fauth-c1-smtp.messagingengine.com
+ (fauth-c1-smtp.messagingengine.com. [204.75.18.200])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c46bd795bf8sm101695666b.70.2026.10.24.08.47.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 Oct 2026 08:47:09 -0700 (PDT)
+Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
+ by mailfauth.ams.internal (Postfix) with ESMTP id 4BB15198003A;
+ Sat, 24 Oct 2026 11:47:08 -0400 (EDT)
+Received: from ams-imap-01 ([10.64.2.21])
+ by ams-compute-01.internal (MEProxy); Sat, 24 Oct 2026 11:47:08 -0400
+X-ME-Sender: <xms:-9Lcaq3U7L3RaEbHSe7UCu05_ywSeZdCWAL9RYRJI6wEzGaLhzjWJA>
+ <xme:-9Lcan7P9JWd1a9OvM0gH5gJCm_8RPEU-X-Y5Vcdn5HPT3xd4HrGEt76GabmC0tYM
+ Fg0otUD5Vj9HeXbowYS0TWQ1FAUZIBHYwsTOK00FbEJxyV5B_b61Pp->
+X-ME-Proxy-Cause: dmFkZTEihKyTpVw3x928/Nt/0fe8JiaEakK7FRyRYDodG7XVtlBLdoLDJulfDZIUgO6LmX
+ /hqiSYx5JWhUzyWJCT2gKkxadDiHWj8NKtX0EWUEzsOEoUPXLR/XXZXeZ3w+lwzlRfXcPu
+ 8SHjDwNh43Xumlcx22SSDDGG6IJkAHUHMZafQrhrzeV9xWiwAog9HJPK6Vt7j+flG4stYX
+ ov85472BLMOXKqpEcKcMfA4cFJR0Rtf97QUhLBvZ+Tg14ZHoE+bAWrnVDUu+yGQh4y8xO1
+ D4Avqf+Rf8aVL5i7ufZHvum/vsyKxvyELFZdG8wP+dVMZ9qixJlSObd+1AELHxGIzJEcY8
+ 37moUNv4yl75vs3qRVuNWRz/5rwPwF0c9XGIg1eS1sNoNXgydV/Es67+qunGkzes9skKG7
+ HHxs0wFqX76gzI98SZoZA3zfE2hLP2ycGZD/an09mGEEuRn6tmHZ/7TKal6VKzzMAl+Kod
+ BIVffZuWTU3pj4DBbPg4K9N7YJDoiGK97qFN0pg4WGdZTWMh8gomGAK5uRZP5btMS+1nMQ
+ HWa0Dy7kceE5OtPtyur17HtoUEZVbUASc2dKvuSxr6NDMqT6dIMVNpfeAg9bmwZLwN3QXJ
+ Ow2D8Bs5JvS/RA0vDfZs82zr6LhX3V0S5hAPy/vquwZwmQacDj8YHj+E/IJA
+X-ME-Proxy: <xmx:_NLcasjJZZp6xS0mRK6q1Jxn-LS7XqlWACNVG5-MoL5vnvenpc_F2g>
+ <xmx:_NLcar6ALcCGLXc1kn_3nW4pPEWTfUP8fY867ulx2q0XODLrG-GGfw>
+ <xmx:_NLcasYXRcsuQlSY7ttLHM9bkhH9LThubKNPPFOIuklU7GXX3BHtaQ>
+ <xmx:_NLcao4t8MPBXPP55wDP6LrsNsrA1iyJoXl9O4kIZk5Ig6Kq6pRFVQ>
+ <xmx:_NLcanC2Lo50asohfOSmBzaL9tfRHWMUpHULjVBRcmFUDZ55RQcE9yYm>
+Feedback-ID: i51ae481e:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+ id EA155FA008F; Sat, 24 Oct 2026 11:47:06 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.113+deb13-amd64 (x86_64)
-X-Uptime: 15:50:55 up 8 days, 1:11, 2 users, load average: 0.11, 0.04, 0.01
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Date: Sat, 24 Oct 2026 17:46:46 +0200
+From: "Adrien Kohlbecker" <adrien.kohlbecker@gmail.com>
+To: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Mohamed Mediouni" <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, "Alexander Graf" <agraf@csgraf.de>,
+ qemu-arm@nongnu.org
+Message-Id: <6dcdb40d-e74e-4034-ba6e-5cccd57b71ab@app.fastmail.com>
+In-Reply-To: <CAFEAcA8GicYKBQDACcGzR+baM8Zi49uN+dfhu-GDH9Pgiq8J3g@mail.gmail.com>
+References: <20261022213647.21665-1-mohamed@unpredictable.fr>
+ <20261022213647.21665-3-mohamed@unpredictable.fr>
+ <CAFEAcA8GicYKBQDACcGzR+baM8Zi49uN+dfhu-GDH9Pgiq8J3g@mail.gmail.com>
+Subject: Re: [PATCH 2/6] target/arm: sync vCPU state after PSCI CPU_ON reset
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=adrien.kohlbecker@gmail.com; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 24 Oct 2026 12:09:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,149 +132,119 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-* Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
-> Hi,
-> 
-> HMP monitor supports printing $register expression. The lookup
-> was done via GDB stub registers, and supplementary MonitorDef
-> HMP-specific tables.
+Hi Peter,
 
-Why don't you get the first ~3 of these merged and then you can take the
-others through the individual targets at their own pace.
+Thanks for the review. I should say I'm not very familiar with QEMU's
+internals: I hit this as a user, while trying to kexec in an HVF guest
+on a Mac, and the patch is the smallest change I found that made it
+work. So I can't really answer your questions about which sync call is
+the right one, and I'd defer to you and Mohamed on that.
 
-Dave
+On KVM: the same kexec works for me on KVM (an AWS Graviton host), but
+I don't know why, so the KVM sentence in the commit message is a guess
+and I'm happy to drop it.
 
-> Migrate HMP registers to use the GDB infrastructure and remove the
-> legacy HMP MonitorDef. Internal registers aren't exposed to GDB.
-> This also drops HMP $pc x86 fallback (use $eip/$rip instead).
-> 
-> Known behavioural changes on RISC-V: CSR lookup is now case-sensitive
-> and vector registers now report "unkown register" instead of a
-> target-specific message ("Unable to print the value of vector vreg 'v0'
-> from this API")
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> Changes in v3:
-> - added x86 GDB register patches
->   - fix the x87 FPU tag word returned by the GDB stub
->   - split SSE registers into a separate org.gnu.gdb.i386.sse feature
->   - expose AVX/AVX-512 registers (ymm/zmm upper halves and opmask)
->   - expose more system registers to HMP
-> - renamed i386-segments.xml to i386-system.xml and registered it as an
->   internal feature, like the other targets
-> - moved the HMP $pc removal to its own patch and documented it in
->   removed-features.rst
-> - moved each target's MonitorDef removal into its target patch; the final
->   patch now only removes the generic MonitorDef infrastructure
-> - added MAINTAINERS entries
-> - rebased onto current master
-> - Link to v2: https://lore.kernel.org/qemu-devel/20261013-query-reg-v2-0-6f95a2e139a9@redhat.com
-> 
-> Changes in v2:
-> - dropped v1 patch 5 (CPUClass::get_pc fallback for $pc)
-> - new patch gdb_register_internal_coprocessor() to hide registers from GDB
-> - SPARC64, m68k, RISC-V aliases now use internal registration
-> - pickup trailer tags
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260911-query-reg-v1-0-0c04f0c02cf3@redhat.com
-> 
-> ---
-> Marc-André Lureau (18):
->       hmp: don't crash on invalid register
->       gdbstub: fix next register base after register gaps
->       gdbstub: set feature->base_reg for dynamic features
->       gdbstub: add gdb_register_internal_coprocessor()
->       MAINTAINERS: cover x86 GDB XML files
->       target/i386: expose segment limits register to monitors via gdbstub
->       target/i386: fix FPU tag word in GDB register read
->       target/i386: split SSE registers into separate GDB feature
->       target/i386: expose system registers to monitors via gdbstub
->       target/i386: expose AVX/AVX-512 registers to GDB
->       target/i386: drop HMP $pc
->       MAINTAINERS: cover m68k GDB XML files
->       target/m68k: expose system registers to monitors via gdbstub
->       target/sparc64: expose system registers to monitors via gdbstub
->       target/riscv: bypass smstateen check in debugger mode
->       MAINTAINERS: cover riscv GDB XML files
->       target/riscv: expose register aliases to monitors via gdbstub
->       monitor/hmp: remove legacy MonitorDef infrastructure
-> 
->  MAINTAINERS                               |   4 +
->  configs/targets/i386-bsd-user.mak         |   2 +-
->  configs/targets/i386-linux-user.mak       |   2 +-
->  configs/targets/i386-softmmu.mak          |   2 +-
->  configs/targets/m68k-softmmu.mak          |   2 +-
->  configs/targets/riscv32-linux-user.mak    |   2 +-
->  configs/targets/riscv32-softmmu.mak       |   2 +-
->  configs/targets/riscv64-bsd-user.mak      |   2 +-
->  configs/targets/riscv64-linux-user.mak    |   2 +-
->  configs/targets/riscv64-softmmu.mak       |   2 +-
->  configs/targets/sparc64-softmmu.mak       |   2 +-
->  configs/targets/x86_64-bsd-user.mak       |   2 +-
->  configs/targets/x86_64-linux-user.mak     |   2 +-
->  configs/targets/x86_64-softmmu.mak        |   2 +-
->  docs/about/removed-features.rst           |   8 +
->  gdbstub/gdb-xml/i386-32bit-avx.xml        |  20 ++
->  gdbstub/gdb-xml/i386-32bit-avx512.xml     |  31 +++
->  gdbstub/gdb-xml/i386-32bit-sse.xml        |  54 +++++
->  gdbstub/gdb-xml/i386-32bit.xml            |  46 +---
->  gdbstub/gdb-xml/i386-64bit-avx.xml        |  28 +++
->  gdbstub/gdb-xml/i386-64bit-avx512.xml     | 108 +++++++++
->  gdbstub/gdb-xml/i386-64bit-sse.xml        |  62 +++++
->  gdbstub/gdb-xml/i386-64bit.xml            |  50 ----
->  gdbstub/gdb-xml/i386-system.xml           |  53 +++++
->  gdbstub/gdb-xml/m68k-system.xml           |  32 +++
->  gdbstub/gdb-xml/riscv-32bit-alias.xml     | 105 +++++++++
->  gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml |  40 ++++
->  gdbstub/gdb-xml/riscv-64bit-alias.xml     | 105 +++++++++
->  gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml |  46 ++++
->  gdbstub/gdb-xml/sparc64-system.xml        |  22 ++
->  gdbstub/gdbstub.c                         |  85 +++++--
->  include/exec/gdbstub.h                    |  21 ++
->  include/hw/core/cpu.h                     |   5 +-
->  include/hw/core/sysemu-cpu-ops.h          |  16 --
->  include/monitor/hmp.h                     |   6 -
->  include/qemu/typedefs.h                   |   1 -
->  monitor/hmp.c                             |  45 +---
->  target/arm/gdbstub.c                      |   8 +-
->  target/arm/gdbstub64.c                    |  10 +-
->  target/i386/cpu-dump.c                    |   5 +-
->  target/i386/cpu.c                         |  60 +++--
->  target/i386/cpu.h                         |  25 ++
->  target/i386/gdbstub.c                     | 373 +++++++++++++++++++++++++++---
->  target/i386/tcg/fpu_helper.c              |  24 +-
->  target/m68k/cpu.c                         |  22 --
->  target/m68k/helper.c                      |  49 +++-
->  target/ppc/gdbstub.c                      |   2 +-
->  target/riscv/cpu.c                        |   1 -
->  target/riscv/gdbstub.c                    |  57 ++++-
->  target/riscv/internals.h                  |   3 -
->  target/riscv/monitor.c                    | 140 -----------
->  target/riscv/tcg/csr.c                    |   3 +-
->  target/sparc/cpu.c                        |  19 --
->  target/sparc/gdbstub.c                    |  38 +++
->  target/xtensa/cpu.c                       |   2 +-
->  tests/qtest/test-hmp.c                    |   1 -
->  56 files changed, 1383 insertions(+), 478 deletions(-)
-> ---
-> base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
-> change-id: 20260910-query-reg-80cd59cf4707
-> 
-> Best regards,
-> --  
-> Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+What I can offer is a simple way to reproduce it. Boot the Ubuntu
+24.04 arm64 cloud image on an Apple Silicon Mac with
+"-M virt -accel hvf -cpu host -smp 2", then as root:
+
+  echo 0 > /sys/devices/system/cpu/cpu1/online
+  echo 1 > /sys/devices/system/cpu/cpu1/online
+
+With QEMU 11.0.1 the guest panics on the second command ("kernel BUG
+at arch/arm64/kernel/smp.c:388", in cpu_die()). It did that every
+time I tried (5 runs). With my patch applied, CPU1 comes back and the
+guest keeps running.
+
+I also tried calling cpu_synchronize_state() before cpu_reset()
+instead of cpu_synchronize_post_reset() after it, in case that is a
+better fit. That fixes the reproducer too (4 runs).
+
+I'm happy to test whatever version you think is right.
+
+Thanks,
+Adrien
+
+On Fri, Oct 23, 2026, at 14:19, Peter Maydell wrote:
+> On Thu, 22 Oct 2026 at 22:36, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>>
+>> From: Adrien Kohlbecker <adrien.kohlbecker@gmail.com>
+>>
+>> arm_set_cpu_on_async_work() resets the target CPU and sets its entry
+>> point and context ID in CPUARMState, but never tells the accelerator
+>> that the register state changed. TCG reads CPUARMState directly, and
+>> KVM re-pushes state on reset, but HVF only writes CPUARMState back to
+>> the hardware vCPU when cpu->vcpu_dirty is set.
+>
+> My first reaction to "this works on KVM but HVF does something
+> differently and it doesn't work" is "so why are we doing things
+> differently?".
+>
+>> A vCPU that reached PSCI_OFF is left clean: its last hv_vcpu_run() exit
+>> was a WFI or a cancel, and flush_cpu_state() cleared the flag. A later
+>> CPU_ON then resets and re-points only the QEMU-side copy. The vCPU
+>> resumes in its old context, with the old MMU state and vector table, and
+>> never runs the requested entry point.
+>>
+>> This shows up when a guest that already onlined and offlined its
+>> secondary CPUs boots another kernel, for example kexec on Apple Silicon:
+>> the new kernel logs "CPUn: failed to come online" for every secondary.
+>> Fresh vCPUs are created dirty and single-CPU guests never issue CPU_ON,
+>> so the ordinary boot path is unaffected.
+>>
+>> Call cpu_synchronize_post_reset() after resetting the target, in both
+>> arm_set_cpu_on_async_work() and arm_set_cpu_on_and_reset_async_work().
+>> It is a no-op for TCG.
+>>
+>> Signed-off-by: Adrien Kohlbecker <adrien.kohlbecker@gmail.com>
+>> ---
+>>  target/arm/arm-powerctl.c | 3 +++
+>>  1 file changed, 3 insertions(+)
+>>
+>> diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+>> index ef14a1f8a9..e197a0ebda 100644
+>> --- a/target/arm/arm-powerctl.c
+>> +++ b/target/arm/arm-powerctl.c
+>> @@ -16,6 +16,7 @@
+>>  #include "qemu/log.h"
+>>  #include "qemu/main-loop.h"
+>>  #include "system/tcg.h"
+>> +#include "system/hw_accel.h"
+>>  #include "target/arm/multiprocessing.h"
+>>  #include "trace.h"
+>>
+>> @@ -80,6 +81,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
+>>
+>>      /* Start the new CPU at the requested address */
+>>      cpu_set_pc(target_cpu_state, info->entry);
+>> +    cpu_synchronize_post_reset(target_cpu_state);
+>
+> This isn't a CPU reset, so do we really need
+> cpu_synchronize_post_reset ?
+>
+>>      g_free(info);
+>>
+>> @@ -189,6 +191,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
+>>
+>>      /* Initialize the cpu we are turning on */
+>>      cpu_reset(target_cpu_state);
+>> +    cpu_synchronize_post_reset(target_cpu_state);
+>
+> I'm not sure whether cpu_synchronize_post_reset() is supposed to be
+> "after we just did a full system reset" (the way i386 uses it) or
+> also "after we did a single cpu reset" (the way s390 uses it).
+>
+>>      target_cpu_state->halted = 0;
+>>
+>>      /* Finally set the power status */
+>
+> -- PMM
 
