@@ -1,140 +1,142 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC6F606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3A1606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 17:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=J+fZ9Ctj;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YmydDSD3
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=lbPsYTs6;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Jg3UVWZZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKehT-0003gH-0K; Sat, 24 Oct 2026 12:34:31 -0400
+	id 1xKf6n-00088n-DL; Sat, 24 Oct 2026 13:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKehR-0003YT-7B
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:34:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKf6j-00088e-UJ
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:00:38 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xKehO-0002TA-Hp
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:34:28 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xKf6h-0005GL-8U
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 13:00:37 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69OF02fX839103
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:34:25 GMT
+ 69OExpPM1353375
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:00:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- y/CUFPofGs+0NAYVy0fNcO2jY9OoJpCTTU1ELPVSbN0=; b=J+fZ9CtjJ6gveSba
- CCZZagN+CIitiZzoh3GMRgGipv9yR7s0tOmdYBjloJTemT0nLCiLuXYaS9PutiwT
- 8CBKfG9Uh9hhCClLiov9rl2DoqFAJA5y+euAtHvxb+5XaUfF+qCSCE/f4kzEJgRf
- zUU+QL4AfMtL1bAusq7Ce1g80EA/86iO7HHmRzQpcQ6DGIpo4NmeDCoKPYdRa6Mk
- CT27W3hXsCEBcFfubqtZfOeHZtPp8dSiCuNgGIUnNQFNY9xERQYdtJWAfSdqnvys
- +awhit1WjNPmsrsq6FlK2gIKlEzIvtZeqlstClk3RZtPUD+d9MesScSLm2MxH0M1
- jK3+Gg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgn27samg-1
+ A9FvPuRKqzCUgsTK37vm+IpjsqTyedNShIkkx1Pc9WM=; b=lbPsYTs6f9LHMVxI
+ OPhhX99Tra5KclpmQf9XeU3ymtc/znwSM88wzUlZ6Fm7oy849OYOWIG0lBwGm+a2
+ lv69urFkngT0wgEA6Gy6Cj5vP0Wcw8eYiOYp9XW6bpYoowo6QFxpPpJMTS4byG+Y
+ +Gj82U9GBtmc4rhRjfqv9Ejv/UcXVw9AIrktReDPFVLRBLVAVGQNL0zGQ2sZTCjE
+ P1A/xDAVbecMtgCCPch7dRV2eESLYk7j400BXJoG8knIGnIbqPgNqtvczyperPCV
+ J/cI0z6xf2VPYZjHr3gRUPSo/NBd+gAL+Idy53/AeVunDtIF/Fn5lGM2ZOgY2z/R
+ MjQEsA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgnehha46-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 16:34:25 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-3ad436a9d00so1591493a91.0
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 09:34:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 17:00:30 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93f32050e72so251657885a.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 10:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1792859664; x=1793464464; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1792861225; x=1793466025; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=y/CUFPofGs+0NAYVy0fNcO2jY9OoJpCTTU1ELPVSbN0=;
- b=YmydDSD36I84iWRh3T8llJhhg22dBL+FiwKl/pmJ8givFGs/2v14sQwQRlrHzb8wWs
- qGOgqj4P2eB7bU8FzLWsjq45KNq8oE22dSmTbAASXypmXTlTpEh83ivp/EKsUpU0DbjZ
- SaOhCeyTZI5Q069Q6Fb+yOgnxcT3dqgPBv4azScf/i7215M/VfN9y9PawSyI4WZH3Y/A
- 1DmoDArUkoIdEB1POy7RkujQEzVTnpOm5MwboePSor2ElmRYT5OAHeviO5uUhH0wq5df
- fKKzUE/lLv4XERWxKzeMoZcU8rZpn8B7ZjmM0wU8VwffUO7NlOArxBfpx8HJWFB53vfx
- 9eZQ==
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=A9FvPuRKqzCUgsTK37vm+IpjsqTyedNShIkkx1Pc9WM=;
+ b=Jg3UVWZZmJn3C+Aznp0kB6496V6qwLyh4qalJ+5igLrZvlIaKY+Yopo4k7CVgfV8g1
+ +7gPiG9KWLJestuPiPKLYhamY6zmymPQzzZzhy+CLoQC0g+C+re8Ny+ByREOHWiSvWk0
+ KUUb8q3EBBOlJC4pRI3cg0fpK9tmPIljyjB6tVckCdpS080ystGwabFjLpty8tgefOA4
+ Jmy+GX/07kLsRSD7IHyVj/DVjDhc7nfC9xNaCIo3/bvnRlatdCw2/1az1pd7pUUhkaFD
+ x2Zo+5qSGJvPBf35+3c93QtymaqkW/BxFVY/EQcpTn0bH06nKYh1QJoLtA++D/Esr75R
+ AA9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792859664; x=1793464464;
+ d=1e100.net; s=20260707; t=1792861225; x=1793466025;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=y/CUFPofGs+0NAYVy0fNcO2jY9OoJpCTTU1ELPVSbN0=;
- b=r3ifYbG3uwFjhVYtlJSdngrPrRuSB3/MU+Kkd31o4WMteEEggJfTFJv34yv+drJ8jF
- EEZBH5DxMPE2dXV35XJ/7vlqfdWDEn4+O8Fb3C/1PU1V2axsu4k3WtW9cZWTzQjWmXDr
- pbyZdRxlDKfytnS3mo7C2XVgZGoYcpCzluZAljozcdSBjn/95wAF6DwlCdW4WD2OEbpF
- z4URMwSMpDSL0mZktjo9CFVkamFLJiioBIkQ6rr+Vm2xC3ifCe9VUqFR5pIuDVkN237q
- TNNnw+zZEHUIIyURb3ubvlBJQuTCCqivqZPDuJN6YAKkYCMp9uHzKgMgtFv5EK0b7r3R
- fGhA==
-X-Gm-Message-State: AFq9FYJNrJObALksUsqo6OE4LD1GnNFXY7UCavVNDVLbWYQzxfXnccSW
- BIy7sJkX++d+VekbKyZdqeD/X3mfDfIlKpOZHOXVYjeZeuJ6M0lNKo2cefIx1IdTi5weBFIveXi
- Cjufo+SMSbaBPBgHrbCKkj8oUua4pb5273N1lTpyeoGJmZUypx7u/NemfFW6ey9yF8g==
-X-Gm-Gg: AYBFou0TnzIJ3QVZJKCxzKAGttiOXXVSSPueVaUi90Ut5quGHca+HMj0DQtQHwUGQ4F
- BaKgKC+29UB7kAlE0llcs8Vbboy8PIKuyd2oZPwt64wDAHf9KwKIM1dwZsS2d+pFaXQ9RHGygPr
- kcILhp2LEFkO4Rsf+AtZ2BgTpeCTrfuw6HIy0sVepxgWYvYkuMsOptn91H3KnlWsO6fAuWNT+48
- DYEpF0Z3ju5/gDyRfriK7zpPOH/hZq/Mumu+yr3w6a5Gn7i381MxK7OqxavXoxNIMF0Ry7+tiWg
- nwWdyh8+oXOBQtGjWhYYWlJFxA2K+XPSV/ZVAShCNAx9jbtzZs7qzDnsRl3C5aRBI8XSf9S6xqK
- rWaZdVHl1kIRNoULx2q8N+x8o4XX5vth3dXoHPCEw3vNwBWkmtF5YMXda
-X-Received: by 2002:a17:90b:4d8c:b0:3ac:a521:95e with SMTP id
- 98e67ed59e1d1-3adead4f7ebmr2395314a91.47.1792859664452; 
- Sat, 24 Oct 2026 09:34:24 -0700 (PDT)
-X-Received: by 2002:a17:90b:4d8c:b0:3ac:a521:95e with SMTP id
- 98e67ed59e1d1-3adead4f7ebmr2395296a91.47.1792859663951; 
- Sat, 24 Oct 2026 09:34:23 -0700 (PDT)
-Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3adebfa53c3sm3255022a91.13.2026.10.24.09.34.22
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=A9FvPuRKqzCUgsTK37vm+IpjsqTyedNShIkkx1Pc9WM=;
+ b=u+VttWkLx0bmdVtg5fLHj90cBFk+tR7UWUiFQSGRkxFLILGtB5j97Gam/PV15Exffa
+ VvHEWw9w7eaK5Xab/U4U+u8juLrKvz69WuGVs6JNpxm9zH6uOYqKep/KL3W80XcS2Btv
+ Q9T2ChwKZUG98i2evc3mu3xMsA/kYmW2rC/D6sP2Lvj5U2wJbZ/AFvK649FWkmnnqniP
+ ElQ2EB+TcJug5ue47NHzgYVKSIotOycECK9m9wORWwtvGHcfbD7OV5CvC4oZEP0Jzdrh
+ IdVRv/whGURGfWv7JlDUSolORGcV74AuyLDD8tLVzCQrI1SPzZwRbId3OR0FFKBLVlQq
+ 6QyQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxTuZblJ5e7vnHkgnJvavq5anbvqdYswoY4lOp9tRD0pHf44fZLDuoKZBdOIcAjvsOphnU0nDuoI/39@nongnu.org
+X-Gm-Message-State: AFq9FYKutELf54nZsqZ+f0BQjH2kh1XEr+1oLhPQT+zHFmrgvFil8t0B
+ 7c9mgsBjsl2pk9T/qZpwjByg3bwqAowqvt4Xn4ZOs3Z3DWfzA4pMGHBz0s0byvlo6l0fKVcNoZE
+ vLXP34D7lFb7IRDPO2wf3SELTGZxT9EaUN2hVqa4KUkjl1eAJYUw52+HM1Q==
+X-Gm-Gg: AYBFou3iiaisrCcpZyrPT+obcCe2d7p4vG0ZX8xA3y2+ks6tTIsTslk9MXmHZzV7bLl
+ yDAAMexyLFknKCZP0WB1ICiThzku6GbSMEIAk2DZfQV89ljZTGvBaV4WImxWftyT2QWosxc232f
+ DSazMHE+9swPgo2AbZOTZKrEssyKMFFL6fIxt0U4fdKsANBEIPIyF0WGU9kEt9u7OVbQUmd2P/+
+ 2AAIl/s9l82xaZPsw5MGDZUrKm+XBzld4HsV0D9sTahPtMVkGd4Cbmt1sN0zOBfkGY5gzmUF+Xu
+ OF54YSRAVm1ZGFTja8Hc1/85kF2Lj1HkBnMeeDvSz5OGZAE3c+RgQPkBnwNB5AM7TISD/dYABfx
+ pqI4v48EuPtFDWltjYaLzDR2mJF8/opTT2g==
+X-Received: by 2002:a05:620a:7008:b0:93e:4d60:d389 with SMTP id
+ af79cd13be357-940ef8be856mr347636385a.25.1792861224643; 
+ Sat, 24 Oct 2026 10:00:24 -0700 (PDT)
+X-Received: by 2002:a05:620a:7008:b0:93e:4d60:d389 with SMTP id
+ af79cd13be357-940ef8be856mr347626485a.25.1792861223719; 
+ Sat, 24 Oct 2026 10:00:23 -0700 (PDT)
+Received: from [192.168.69.209] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a35a04ad39sm179043725e9.1.2026.10.24.10.00.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Oct 2026 09:34:22 -0700 (PDT)
-Message-ID: <e72bae56-54fe-40f1-94ec-2b30faa66d1c@oss.qualcomm.com>
-Date: Sat, 24 Oct 2026 09:34:22 -0700
+ Sat, 24 Oct 2026 10:00:22 -0700 (PDT)
+Message-ID: <9ca6f711-e886-46a5-80ea-a6c750696a93@oss.qualcomm.com>
+Date: Sat, 24 Oct 2026 19:00:21 +0200
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] multi-target: prefix helpers with target prefix
+Subject: Re: [PATCH v2] tcg/riscv64: Fix vector constant matching for logical
+ ops
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+To: Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
+ "open list:RISC-V TCG target" <qemu-riscv@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20261010174742.3552498-1-aurelien@aurel32.net>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261010174742.3552498-1-aurelien@aurel32.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=G7GJgNk5 c=1 sm=1 tr=0 ts=6adcde11 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=l_izkvoGNv_PDKXs6_8A:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: bvc88iCjUhns_KKYcrgGPb0L3xx5m8NV
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfXzU83XN926AQf
- QmEbEraObOW291AuHH9ACWn6Dv+FTX1qmGUm9VZYkEcDYrtkHbujtbCk8E49y0bN5XUJKlhucp7
- yVGyO82Qq0w0DJdmtTLtptF93sDBiPM=
-X-Proofpoint-GUID: bvc88iCjUhns_KKYcrgGPb0L3xx5m8NV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA2NSBTYWx0ZWRfX5tqaQQO35hE0
- MDL6x5BbujpvjRzW+mvnhVIlz93ZLPF4ej4T/epqrK5hQB6M5pvigl8irC2ctyL+kyZAqH3JIud
- 6ZrApVQVs4koGNJPYCYcAuJJJpNCko7QEBhWQcM9sXxUkxie4l9ixUMWCM1gHKVeJSeEchyOMlD
- +qPA3mdaJ2e8TbwFS93Z3ua7i1nvjKpnt+vCp3fSnPGKpoASwPlqxlVRjMyoPssG5Ewn+pCx3Mc
- KqLTNo/jgL/vQ5wTuUbkKSfiiHfMJ7FS8Pr+aCJJjaMMCHmlKuD1sC3FJLt/ZFdIfMtnBb5QzCF
- BVD936/PO31U8D1ge+GUWfVVesNn60YWTCuD5fxhfpC2SSuhclvyMQhBc8Ix12cp5RozTgr5Rnw
- yG4Dffr2o66GJ+/tIWDCXIW5OTubFDxK/uRQFyqYoRKJOlxMRwZ48njlXVEWw6lJo0U7PLSxe5r
- jp2w1INbyj+s04C7ZUQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI0MDA2NyBTYWx0ZWRfX3dYSSMhl3kqx
+ UVtAzyyBEYONTrMpC/d0mxTWQIYd2rn8NsRJ6SO/PTTnDMVffllO1jYswg1wsNvmV1AQnOCps3b
+ noLPUc+kUDsTmxUrMaRPNsb3XlifznU=
+X-Proofpoint-ORIG-GUID: W48vzRh1_IbR2iTb_2N__NaYe5FiTCmh
+X-Authority-Analysis: v=2.4 cv=d5tgWhjE c=1 sm=1 tr=0 ts=6adce42e cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=hXZgYZo4AAAA:8 a=q0Y7SH5cVIXpF_u_vNMA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=37BJPeUnzxYkbV1yBC-1:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI0MDA2NyBTYWx0ZWRfX6qiEhbKb3heG
+ CE0tvUI8uVg5RGqqFPOTPR7SMPAvbfro6UV9CXauarKBuC7UgtNhroThEeW9CtgCnCzvJghHLfy
+ KT9WzXX1js/lvT5wNCL6xIdTPE7nE4uV28o98YxCSTa7yyE9VXEs/rFq0jonrj+QW1pdIt0yOO+
+ fxqUapXubKKQxg5/na/4gEvs4IlEuMyEMni2tRncCQ7conc/ud19mxPw/0K4Me2l/I1EQR6xX0j
+ iocq5Xf1dxiUcHMO2yMbhTwd6I9YlyT7BhXV2VnTgBQOx8OkbiniDAdIgSRZkmHlPkzzuUamN4d
+ dPR6Zx7KJkfp+CvvH87tgsQ6U+GLe0xqC6GPIYOxx/zqdS+F9XJyi7viIEctauWdHtUoY9teMS8
+ v80ZwZ3g3gjm8LgkmPsGIEzHdLsbrgD9ZCeLQZyLUqr0QIQ2GlhoXwQUkP9PQ3tc9ebmrHnunLx
+ AKymSPfGMnJubIoI5Xg==
+X-Proofpoint-GUID: W48vzRh1_IbR2iTb_2N__NaYe5FiTCmh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-24_02,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
- priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610240065
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610240067
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -153,180 +155,130 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/19/26 2:20 PM, Pierrick Bouvier wrote:
-> When linking multiple targets together, we usually have conflicts with helper
-> names. So far, it was solved using ad-hoc renaming, but multiple people pointed it
-> would be better to have a general mechanism for it, so here it is.
+On 10/10/26 19:46, Aurelien Jarno wrote:
+> For logical vector operations (in the case of the RISC-V backend that
+> corresponds to and_vec, or_vec and xor_vec), VECE is unused. However,
+> tcg_target_const_match() always treat it as an element size to extract
+> the corresponding constant element from the whole constant.
 > 
-> A previous series attempted that:
-> https://lore.kernel.org/qemu-devel/20260930073935.712-1-luoyonggang@gmail.com/,
-> but it was relying on (binary) symbol renaming, which is not a portable solution.
-> Instead, this series approaches the problem from source code directly.
-> It requires more change, but it's cleaner IMHO.
+> This causes the following aarch64 instruction
+>    bic v4.8h, #0xf0
+> to be translated into the following op:
+>    ...
+>    and_vec v128,e8,tmp5,tmp4,v128$0xff0fff0fff0fff0f
+>    ...
+> which is then translated to the following RISC-V instruction:
+>    vand.vi v1,v1,15
 > 
-> Series follows these steps:
+> Fix that by, when VECE is 0 aka MO_8, only extracting the element if the
+> it can actually be represented as a duplicated constant.
 > 
-> First, we make sure all helpers and definition are using HELPER() macro. A lot
-> of helpers were already defined this way, we just make sure it's exhaustive.
-> After that we don't have any 'helper_' left on any target code. This is a big
-> change touching the whole codebase, but it's a simple mechanical change. As long
-> as it compiles and links, we know it's correct.
+> Fixes: 5a63f5998791 ("tcg/riscv: Add support for basic vector opcodes")
+> Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
+> ---
+>   tcg/riscv64/tcg-target.c.inc | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
 > 
-> Then, we introduce the prefix for target helpers. For this , we add a new define
-> (from meson) that applies to all target related code. It could later be used to
-> prefix other symbols also, that's why it's not named "TCG".
+> Changes v1 -> v2:
+> - Use dup_const() instead of open coding the constant duplication.
 > 
-> Finally, we cleanup the previous manual helpers prefix that were added in
-> codebase.
-> 
-> Pierrick Bouvier (26):
->    target/alpha: define and call helpers using HELPER macro
->    target/arm: define and call helpers using HELPER macro
->    target/avr: define and call helpers using HELPER macro
->    target/hppa: define and call helpers using HELPER macro
->    target/i386: define and call helpers using HELPER macro
->    target/loongarch: define and call helpers using HELPER macro
->    target/m68k: define and call helpers using HELPER macro
->    target/microblaze: define and call helpers using HELPER macro
->    target/mips: define and call helpers using HELPER macro
->    target/or1k: define and call helpers using HELPER macro
->    target/ppc: define and call helpers using HELPER macro
->    target/riscv: define and call helpers using HELPER macro
->    target/rx: define and call helpers using HELPER macro
->    target/s390x: define and call helpers using HELPER macro
->    target/sh4: define and call helpers using HELPER macro
->    target/sparc: define and call helpers using HELPER macro
->    target/tricore: define and call helpers using HELPER macro
->    tcg: introduce HELPER_INFO macro
->    tcg: prefix helpers with target base architecture
->    target/alpha: remove explicit target specific prefix
->    target/hexagon: remove explicit target specific prefix
->    target/hppa: remove explicit target specific prefix
->    target/microblaze: remove explicit target specific prefix
->    target/or1k: remove explicit target specific prefix
->    target/rx: remove explicit target specific prefix
->    target/tricore: remove explicit target specific prefix
-> 
->   include/exec/helper-gen-common.h        |   7 +
->   include/exec/helper-gen.h.inc           |  48 +-
->   include/exec/helper-head.h.inc          |   8 +-
->   include/exec/helper-info.c.inc          |  16 +-
->   include/exec/helper-proto-common.h      |   7 +
->   meson.build                             |   2 +
->   target/alpha/clk_helper.c               |   2 +-
->   target/alpha/fpu_helper.c               |  60 +--
->   target/alpha/helper.c                   |   6 +-
->   target/alpha/helper.h                   |   2 +-
->   target/alpha/int_helper.c               |  38 +-
->   target/alpha/sys_helper.c               |  12 +-
->   target/alpha/translate.c                |   4 +-
->   target/alpha/vax_helper.c               |  42 +-
->   target/arm/tcg/helper-a64.c             |   6 +-
->   target/arm/tcg/mve_helper.c             |  28 +-
->   target/arm/tcg/psci.c                   |   2 +-
->   target/arm/tcg/sme_helper.c             |   4 +-
->   target/arm/tcg/sve_helper.c             | 141 ++---
->   target/arm/tcg/tlb_helper.c             |   2 +-
->   target/arm/tcg/vec_helper.c             |  72 +--
->   target/arm/tcg/vec_helper64.c           |  64 +--
->   target/arm/tcg/vec_internal.h           |   5 +-
->   target/avr/helper.c                     |  12 +-
->   target/hexagon/gen_tcg.h                |   2 +-
->   target/hexagon/gen_tcg_sys.h            |   2 +-
->   target/hexagon/helper.h                 |   4 +-
->   target/hexagon/op_helper.c              |   4 +-
->   target/hexagon/translate.c              |   4 +-
->   target/hppa/fpu_helper.c                |   2 +-
->   target/hppa/helper.h                    |   6 +-
->   target/hppa/op_helper.c                 |   4 +-
->   target/hppa/sys_helper.c                |  10 +-
->   target/hppa/translate.c                 |   6 +-
->   target/i386/ops_sse.h                   | 401 +++++++-------
->   target/i386/tcg/bpt_helper.c            |   6 +-
->   target/i386/tcg/cc_helper.c             |  14 +-
->   target/i386/tcg/excp_helper.c           |   8 +-
->   target/i386/tcg/fpu_helper.c            | 182 +++----
->   target/i386/tcg/int_helper.c            |  34 +-
->   target/i386/tcg/mem_helper.c            |   4 +-
->   target/i386/tcg/misc_helper.c           |  16 +-
->   target/i386/tcg/mpx_helper.c            |  12 +-
->   target/i386/tcg/seg_helper.c            |  32 +-
->   target/i386/tcg/system/bpt_helper.c     |   6 +-
->   target/i386/tcg/system/misc_helper.c    |  32 +-
->   target/i386/tcg/system/seg_helper.c     |   4 +-
->   target/i386/tcg/system/smm_helper.c     |  12 +-
->   target/i386/tcg/system/svm_helper.c     |  16 +-
->   target/i386/tcg/user/seg_helper.c       |   4 +-
->   target/loongarch/tcg/csr_helper.c       |  22 +-
->   target/loongarch/tcg/fpu_helper.c       | 126 ++---
->   target/loongarch/tcg/iocsr_helper.c     |  16 +-
->   target/loongarch/tcg/op_helper.c        |  18 +-
->   target/loongarch/tcg/tlb_helper.c       |  26 +-
->   target/loongarch/tcg/vec_helper.c       |   4 +-
->   target/m68k/op_helper.c                 |   2 +-
->   target/microblaze/helper.h              |  10 +-
->   target/microblaze/op_helper.c           |  46 +-
->   target/microblaze/translate.c           |  10 +-
->   target/mips/tcg/dsp_helper.c            | 187 +++----
->   target/mips/tcg/exception.c             |   8 +-
->   target/mips/tcg/fpu_helper.c            | 291 +++++-----
->   target/mips/tcg/ldst_helper.c           |  18 +-
->   target/mips/tcg/lmmi_helper.c           |  98 ++--
->   target/mips/tcg/msa_helper.c            | 690 ++++++++++++------------
->   target/mips/tcg/octeon_crypto.c         | 100 ++--
->   target/mips/tcg/op_helper.c             |  34 +-
->   target/mips/tcg/system/cp0_helper.c     | 276 +++++-----
->   target/mips/tcg/system/lcsr_helper.c    |   8 +-
->   target/mips/tcg/system/special_helper.c |  12 +-
->   target/mips/tcg/system/tlb_helper.c     |  14 +-
->   target/mips/tcg/vr54xx_helper.c         |  30 +-
->   target/or1k/fpu_helper.c                |  16 +-
->   target/or1k/helper.h                    |   2 +-
->   target/or1k/interrupt_helper.c          |   2 +-
->   target/or1k/translate.c                 |   2 +-
->   target/ppc/dfp_helper.c                 |  52 +-
->   target/ppc/fpu_helper.c                 | 396 +++++++-------
->   target/ppc/int_helper.c                 | 292 +++++-----
->   target/ppc/internal.h                   |   7 +-
->   target/ppc/mem_helper.c                 |  28 +-
->   target/ppc/misc_helper.c                |  56 +-
->   target/ppc/mmu-hash64.c                 |  18 +-
->   target/ppc/mmu_helper.c                 |  70 +--
->   target/ppc/power8-pmu.c                 |  14 +-
->   target/ppc/tcg-excp_helper.c            |  56 +-
->   target/ppc/timebase_helper.c            |  54 +-
->   target/ppc/translate/vsx-impl.c.inc     |   2 +-
->   target/riscv/tcg/debug.c                |   2 +-
->   target/riscv/tcg/fpu_helper.c           | 196 +++----
->   target/riscv/tcg/op_helper.c            |  74 +--
->   target/rx/helper.h                      |  12 +-
->   target/rx/op_helper.c                   |  62 +--
->   target/rx/translate.c                   |  14 +-
->   target/s390x/tcg/mem_helper.c           |   2 +-
->   target/sh4/op_helper.c                  |  76 +--
->   target/sparc/fop_helper.c               | 106 ++--
->   target/sparc/helper.c                   |  22 +-
->   target/sparc/int64_helper.c             |   6 +-
->   target/sparc/ldst_helper.c              |  14 +-
->   target/sparc/vis_helper.c               |  94 ++--
->   target/sparc/win_helper.c               |  38 +-
->   target/tricore/fpu_helper.c             |  32 +-
->   target/tricore/helper.h                 |  14 +-
->   target/tricore/op_helper.c              | 220 ++++----
->   target/tricore/translate.c              |  14 +-
->   107 files changed, 2789 insertions(+), 2739 deletions(-)
-> 
+> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+> index 14a397117a..1262b71a62 100644
+> --- a/tcg/riscv64/tcg-target.c.inc
+> +++ b/tcg/riscv64/tcg-target.c.inc
+> @@ -392,8 +392,15 @@ static bool tcg_target_const_match(int64_t val, int ct,
+>           return 1;
+>       }
+>       if (type >= TCG_TYPE_V64) {
+> -        /* Val is replicated by VECE; extract the highest element. */
+> -        val >>= (-8 << vece) & 63;
+> +        /*
+> +         * For vector logical operations, VECE is unused and equals to 0, so
+> +         * we need to check that the constant can properly be represented after
+> +         * replication.
+> +         */
+> +        if ((vece != MO_8) || (val == dup_const(vece, val))) {
+> +            /* Val is replicated by VECE; extract the highest element. */
+> +            val >>= (-8 << vece) & 63;
+> +        }
+>       }
 
-Sent v2, after partial merge:
-https://lore.kernel.org/qemu-devel/20261024163249.77855-1-pierrick.bouvier@oss.qualcomm.com/T/#t
+This fixes the BIC case, but I don't think it is sufficient.
 
-Regards,
-Pierrick
+I tested with qemu-aarch64 built for a riscv64 host, run under
+qemu-riscv64 -cpu max, guest -cpu max,sve-default-vector-length=16.
+
+NEON bic v0.8h, #0xf0 // fail on master, now OK
+
+add z1.b; and z0.d, #0xf // FAIL
+add z1.d; and z0.b, #0xf // FAIL
+add z1.b; orr z0.d, #-16 // FAIL
+add z1.d; eor z0.b, #0xf // FAIL
+
+Not accepting constants for and/or/xor_vec at all
+(using C_O1_I2(v, v, v) to get them loaded into registers)
+makes all five cases pass (I'm not sure we want to keep
+the .vi forms):
+
+-- >8 --
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -2779,15 +2779,15 @@ static void tcg_out_vec_op(TCGContext *s, 
+TCGOpcode opc,
+      case INDEX_op_and_vec:
+          set_vtype_len(s, type);
+-        tcg_out_opc_vv_vi(s, OPC_VAND_VV, OPC_VAND_VI, a0, a1, a2, c2);
++        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2);
+          break;
+      case INDEX_op_or_vec:
+          set_vtype_len(s, type);
+-        tcg_out_opc_vv_vi(s, OPC_VOR_VV, OPC_VOR_VI, a0, a1, a2, c2);
++        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2);
+          break;
+      case INDEX_op_xor_vec:
+          set_vtype_len(s, type);
+-        tcg_out_opc_vv_vi(s, OPC_VXOR_VV, OPC_VXOR_VI, a0, a1, a2, c2);
++        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2);
+          break;
+      case INDEX_op_not_vec:
+          set_vtype_len(s, type);
+@@ -2976,15 +2976,15 @@ tcg_target_op_def(TCGOpcode op, TCGType type, 
+unsigned flags)
+      case INDEX_op_rotli_vec:
+          return C_O1_I1(v, v);
+      case INDEX_op_add_vec:
+-    case INDEX_op_and_vec:
+-    case INDEX_op_or_vec:
+-    case INDEX_op_xor_vec:
+      case INDEX_op_ssadd_vec:
+      case INDEX_op_sssub_vec:
+      case INDEX_op_usadd_vec:
+      case INDEX_op_ussub_vec:
+          return C_O1_I2(v, v, vK);
+      case INDEX_op_sub_vec:
+          return C_O1_I2(v, vK, v);
++    case INDEX_op_and_vec:
++    case INDEX_op_or_vec:
++    case INDEX_op_xor_vec:
+      case INDEX_op_mul_vec:
+      case INDEX_op_shlv_vec:
+      case INDEX_op_shrv_vec:
+      case INDEX_op_sarv_vec:
+      case INDEX_op_rotlv_vec:
+      case INDEX_op_rotrv_vec:
+      case INDEX_op_smax_vec:
+      case INDEX_op_smin_vec:
+      case INDEX_op_umax_vec:
+      case INDEX_op_umin_vec:
+          return C_O1_I2(v, v, v);
+---
 
