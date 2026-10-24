@@ -1,127 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83C0606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3137606A31A
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 16:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kUHi1Fpa
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=U76ia/BU;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=1SemCuw1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKeJZ-0004eE-IT; Sat, 24 Oct 2026 12:09:49 -0400
+	id 1xKeMp-00062n-BE; Sat, 24 Oct 2026 12:13:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adrien.kohlbecker@gmail.com>)
- id 1xKdxj-00082T-RZ
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:47:15 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <adrien.kohlbecker@gmail.com>)
- id 1xKdxh-0006ae-Fu
- for qemu-devel@nongnu.org; Sat, 24 Oct 2026 11:47:15 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6b1f31c63ebso4844439a12.0
- for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 08:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792856831; x=1793461631; darn=nongnu.org;
- h=content-transfer-encoding:content-type:subject:references
- :in-reply-to:message-id:cc:to:from:date:mime-version:feedback-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+PC1BPGG8wRFBnlRszmhJMWM19lUGInf67vrhi7bNg0=;
- b=kUHi1FparqOc8DSSumpd2yvUC75wkSP/+FndJUiKgKaK2UfJlB3+GIZ/t0icbB5FBl
- lO+Hi3rf1pttjps18wLfMcdDQB294C7krZpkM3S3LJQrDP+28QDGWO4DAZCCsAdzcZNm
- 14F7eJrn6Rd+PW/ulk9c3NAFqVo1MPAqSvZWiOuazqtXbLtg8TD9V5Aopx3T8LVNMRr8
- LJ74DXwzLatf2N5sDnwL8shSe0EVdHfUKZ9ZP4mRFsuYi2kHU41h0NoOBjKjCCChvoHi
- cfCMYLSB1hOp69GGwWHfb9f2Z87cIrHeyTvhH3h1zn/sNVFxsro1AF2Qoe8sAfVTICEC
- jkWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792856831; x=1793461631;
- h=content-transfer-encoding:content-type:subject:references
- :in-reply-to:message-id:cc:to:from:date:mime-version:feedback-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=+PC1BPGG8wRFBnlRszmhJMWM19lUGInf67vrhi7bNg0=;
- b=NiSNx3vhF0BDAfoC4UY/39I04/o8eXIISyu5TOEskpTyIeljS1ljq6PTG3fGEgiWOp
- /elJudkypwBaO892LQ0gWxvdxgEt6Ot7Hk1rO6NSVb5leBMe+UFIUg6iNBLppP+gMZnX
- KJsN36xP3AW7dm4zl4uqfNKdia6kUqjal2opMfPs5RqmPd3C2Fpu98WngAN5EksuyZkj
- keD2XZA11mpq+A5omHEdm3iTewwI+ggvki1ZTATdhIORnzOKWAfZjukGVrsdK6cSexj/
- erEL4sw7GyjQL4ltI9aDlgVEBnS31Alg/2mNf6FNyIRUTtGusBfep8UrVF0Q9bEopaoB
- XliA==
-X-Gm-Message-State: AFq9FYJM4yMGWi9S7s54przn8SxQ20daNDiZrai6wfNRJ2FDuW/ckp7s
- PwkeksS4IeczLZvVu9hdRMd2g3NZSqiaF92MgliEKO2TwNJS/RXKn18J
-X-Gm-Gg: AYBFou2mYvd9EDBEjcghuNvclebUWeShvZ6J3VFlPSUZJ1qtl9W83Iot0yZfdlQlbAj
- CrqJbAC6JXr1Q64aJHOwX8HrT6QJXLOhHhOhDOjip+KEtrc8OpGoCkj7Sl6XX2vcws2f5A021Zg
- MDEsTqfYg8FxqFUiH2YLoG8cmDVj1FBRoP4CgGgFJDaH4Udp5pTO1LQpwFze/56CHefgaSI8juz
- am7486pnhwYurDZYB5deEvMKpbhG8I++0mvcmjO5faYmaIDrqTGJZSnqpwfmZ1AUwinfgTphrfC
- jJEpX1QgXMdQeJ5jFqOpCkaMTZQIBOYcEZKOYO6nvXRk5/G4qSe5bOfX4i4Mqwrgw7IiD203rkf
- lEdNncG96IQamgqPAhte9hXlgt2++mlhPVnIrf2DUp9CCGoWD6JB3Zr5nz2JcDAcT0PUFrlSCom
- tWGJ22GuUNw5JpHR55q3CHiwJ/PAclwLzcXAsBZWm7PFuucVspQ1DoXa7h6DQaFCtcazgcdmKNn
- 7LV86piFXGaWBG6hlZLGLu4Ge+JwZGLWZMBb/G0xyVKGOsI4IggkrmMnH30CuQ5PZJUA3VKGpl6
- c9jOA4W4XY2wbnqUzGMIKYYSG0nIMEPbURm4Tlbxwj0aXuZP6wGmMgmPfR2Q/EkOWFcz5th/Sw=
- =
-X-Received: by 2002:a17:907:868c:b0:c3f:8c92:3b54 with SMTP id
- a640c23a62f3a-c46bd956b63mr283516166b.0.1792856830427; 
- Sat, 24 Oct 2026 08:47:10 -0700 (PDT)
-Received: from fauth-c1-smtp.messagingengine.com
- (fauth-c1-smtp.messagingengine.com. [204.75.18.200])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c46bd795bf8sm101695666b.70.2026.10.24.08.47.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Oct 2026 08:47:09 -0700 (PDT)
-Received: from ams-compute-01.internal (ams-compute-01.internal [10.64.2.61])
- by mailfauth.ams.internal (Postfix) with ESMTP id 4BB15198003A;
- Sat, 24 Oct 2026 11:47:08 -0400 (EDT)
-Received: from ams-imap-01 ([10.64.2.21])
- by ams-compute-01.internal (MEProxy); Sat, 24 Oct 2026 11:47:08 -0400
-X-ME-Sender: <xms:-9Lcaq3U7L3RaEbHSe7UCu05_ywSeZdCWAL9RYRJI6wEzGaLhzjWJA>
- <xme:-9Lcan7P9JWd1a9OvM0gH5gJCm_8RPEU-X-Y5Vcdn5HPT3xd4HrGEt76GabmC0tYM
- Fg0otUD5Vj9HeXbowYS0TWQ1FAUZIBHYwsTOK00FbEJxyV5B_b61Pp->
-X-ME-Proxy-Cause: dmFkZTEihKyTpVw3x928/Nt/0fe8JiaEakK7FRyRYDodG7XVtlBLdoLDJulfDZIUgO6LmX
- /hqiSYx5JWhUzyWJCT2gKkxadDiHWj8NKtX0EWUEzsOEoUPXLR/XXZXeZ3w+lwzlRfXcPu
- 8SHjDwNh43Xumlcx22SSDDGG6IJkAHUHMZafQrhrzeV9xWiwAog9HJPK6Vt7j+flG4stYX
- ov85472BLMOXKqpEcKcMfA4cFJR0Rtf97QUhLBvZ+Tg14ZHoE+bAWrnVDUu+yGQh4y8xO1
- D4Avqf+Rf8aVL5i7ufZHvum/vsyKxvyELFZdG8wP+dVMZ9qixJlSObd+1AELHxGIzJEcY8
- 37moUNv4yl75vs3qRVuNWRz/5rwPwF0c9XGIg1eS1sNoNXgydV/Es67+qunGkzes9skKG7
- HHxs0wFqX76gzI98SZoZA3zfE2hLP2ycGZD/an09mGEEuRn6tmHZ/7TKal6VKzzMAl+Kod
- BIVffZuWTU3pj4DBbPg4K9N7YJDoiGK97qFN0pg4WGdZTWMh8gomGAK5uRZP5btMS+1nMQ
- HWa0Dy7kceE5OtPtyur17HtoUEZVbUASc2dKvuSxr6NDMqT6dIMVNpfeAg9bmwZLwN3QXJ
- Ow2D8Bs5JvS/RA0vDfZs82zr6LhX3V0S5hAPy/vquwZwmQacDj8YHj+E/IJA
-X-ME-Proxy: <xmx:_NLcasjJZZp6xS0mRK6q1Jxn-LS7XqlWACNVG5-MoL5vnvenpc_F2g>
- <xmx:_NLcar6ALcCGLXc1kn_3nW4pPEWTfUP8fY867ulx2q0XODLrG-GGfw>
- <xmx:_NLcasYXRcsuQlSY7ttLHM9bkhH9LThubKNPPFOIuklU7GXX3BHtaQ>
- <xmx:_NLcao4t8MPBXPP55wDP6LrsNsrA1iyJoXl9O4kIZk5Ig6Kq6pRFVQ>
- <xmx:_NLcanC2Lo50asohfOSmBzaL9tfRHWMUpHULjVBRcmFUDZ55RQcE9yYm>
-Feedback-ID: i51ae481e:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
- id EA155FA008F; Sat, 24 Oct 2026 11:47:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xKeMm-00062a-N5
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:13:09 -0400
+Received: from mx2.catap.net ([65.21.79.163])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xKeMi-00007l-Rv
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 12:13:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=g+6W54Y
+ c5qvz+O30YNNCxRAttE2w2NaA7J594XHOteVGJl211N+IOAqBMTaryDok1rmd1CBVYHs4x
+ tyMutYeulCd9yVEnmWOr+myaf9wJyKN/8B7jvY+SQ2hS3rAlbfVvUJoHU9CgzkusKU7nWh
+ IeTy7bn7Tf0y7SUwEEyu1JQX8IZwH/y4GXmcqt2tkLBzvzzn1nQ3Bg2GNVSu9rrDox3VfS
+ b/aS6+eZdjG1JU36MDvAJ8dM8RmwUTW5JDjKpbs+4A4ICyFgWiN1Mr755NENwwnRUxvdyB
+ uligV4HkfODAT3TlZDmRKAFm5DcVDIqX5f+ag+ouJK7Y3ZLHWaBRHlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=y
+ 0hpN4T1oqxAf1t7jA1aVrDADXlRPgZAXZHOJqK1rvU=;
+ h=date:subject:cc:to:
+ from:dkim-signature:dkim-signature; d=mx.catap.net; b=TfoLjaBLIMMaXLG0
+ F56YdlE7k8VjDsfdx7+ULUdwIAQtEafLqsCuZj/G9yAHoFLdqPALVzq5TcXxqTydPb99C4
+ 9sva1Kk3jxNUCf3EBHH5GpInAT6if++o7vXUUudck1RclynZGvkqmezmsJkFzrFgXl4WEV
+ SfhkGoqVOmaFUFShRB/5YtsIxA0/iM6a8nKztZJoqA49ZchyU5O7Et3Gj59NmnEt7aHEbb
+ zgGufYhjaivPz9+yGmj9oTlJaCXGZ+Wufp9RoRmUVXbRNaHOH/qh2/8jPG4Vcbx7cLjTZ3
+ nNPLhhZuV0qvmfqd4lJW9fwN4MN9wIN78f+SAKdfFgvBoQ==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=U76ia/BU; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=1SemCuw1;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=y0hpN4T1
+ oqxAf1t7jA1aVrDADXlRPgZAXZHOJqK1rvU=; h=date:subject:cc:to:from;
+ d=korins.ky; b=U76ia/BUFHnAX/34xUbKp6PrYU1r4x/9O4VaJ+kLQwBK9fTMToRHJoo
+ F+5dz1GylgdIUxjPraStBM6XtnrtBNgz3wbJ01CPASt+IRrD6eWNxWEMc6H75YbI7/SQme
+ hNGWp4QDQCJKDuKWhaUEdGauXzi5bbhRiZmqoTzj9VoRdunPmShfM64KMK2N7MM+u7lQBu
+ bwToVheGovp+NGR2Tn60bDo1rJeE2AtN6PoSazjAOBkQt6uo7TTGCKp0yMo4BzjjQ+kYeU
+ yd0UlK5Usp3R6UPziyqPLaPXOPrDoPC2n/3jsjQPY0FWYYtzuhV/t8UMDahnU3bbW0ae5M
+ RiIVM0g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=y0hpN4T1oqxAf1t7jA1aVrDADXlRPgZAXZHOJqK1rvU=; h=date:subject:cc:to:
+ from; d=korins.ky; b=1SemCuw1xL7klXZugqfE2a8z23Bva2rcspsjTYDtq7jnkP2wl
+ /UeQKmyirgg/zt+KkEEnnO44XDD/qVRwU0MCA==
+Received: by mx2.catap.net (OpenSMTPD) id 51f4377e;
+ Sat, 24 Oct 2026 18:12:58 +0200 (CEST)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 20157f49;
+ Sat, 24 Oct 2026 18:12:56 +0200 (CEST)
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Kirill A . Korinsky" <kirill@korins.ky>
+Subject: [PATCH] target/hppa: restore lazy FPU context isolation
+Date: Sat, 24 Oct 2026 18:11:26 +0200
+Message-ID: <20261024161240.66707-1-kirill@korins.ky>
+X-Mailer: git-send-email 2.55.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 24 Oct 2026 17:46:46 +0200
-From: "Adrien Kohlbecker" <adrien.kohlbecker@gmail.com>
-To: "Peter Maydell" <peter.maydell@linaro.org>,
- "Mohamed Mediouni" <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, "Alexander Graf" <agraf@csgraf.de>,
- qemu-arm@nongnu.org
-Message-Id: <6dcdb40d-e74e-4034-ba6e-5cccd57b71ab@app.fastmail.com>
-In-Reply-To: <CAFEAcA8GicYKBQDACcGzR+baM8Zi49uN+dfhu-GDH9Pgiq8J3g@mail.gmail.com>
-References: <20261022213647.21665-1-mohamed@unpredictable.fr>
- <20261022213647.21665-3-mohamed@unpredictable.fr>
- <CAFEAcA8GicYKBQDACcGzR+baM8Zi49uN+dfhu-GDH9Pgiq8J3g@mail.gmail.com>
-Subject: Re: [PATCH 2/6] target/arm: sync vCPU state after PSCI CPU_ON reset
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=adrien.kohlbecker@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 24 Oct 2026 12:09:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -132,119 +90,639 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-21.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Peter,
+From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-Thanks for the review. I should say I'm not very familiar with QEMU's
-internals: I hit this as a user, while trying to kexec in an HVF guest
-on a Mac, and the patch is the smallest change I found that made it
-work. So I can't really answer your questions about which sync call is
-the right one, and I'd defer to you and Mohamed on that.
+Raise assist emulation trap 22 when CCR disables FP execution;
+this restores lazy FPU context isolation, stabilizes OpenBSD/hppa, and
+fixes unexplained SSH "incorrect signature" failures.
 
-On KVM: the same kexec works for me on KVM (an AWS Graviton host), but
-I don't know why, so the KVM sentence in the commit message is a guess
-and I'm happy to drop it.
+I keep FP enabled on firmware entry because SeaBIOS uses FP registers
+before configuring CCR.
 
-What I can offer is a simple way to reproduce it. Boot the Ubuntu
-24.04 arm64 cloud image on an Apple Silicon Mac with
-"-M virt -accel hvf -cpu host -smp 2", then as root:
+The regression test is based on lazy.elf and eager.elf, compiled from
+firmware.ld and fpu-state.s with OpenBSD/hppa 8.0's patched GCC 4.2.1
+and BFD 2.17.
 
-  echo 0 > /sys/devices/system/cpu/cpu1/online
-  echo 1 > /sys/devices/system/cpu/cpu1/online
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4715
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+---
+ hw/hppa/machine.c                     |   2 +
+ target/hppa/cpu.c                     |   1 +
+ target/hppa/cpu.h                     |   1 +
+ target/hppa/helper.h                  |   1 +
+ target/hppa/mem_helper.c              |  15 ++
+ target/hppa/translate.c               |  59 +++-
+ tests/functional/hppa/test_seabios.py |   6 +-
+ tests/qtest/hppa-fpu-test.c           | 371 ++++++++++++++++++++++++++
+ tests/qtest/meson.build               |   2 +
+ 9 files changed, 454 insertions(+), 4 deletions(-)
+ create mode 100644 tests/qtest/hppa-fpu-test.c
 
-With QEMU 11.0.1 the guest panics on the second command ("kernel BUG
-at arch/arm64/kernel/smp.c:388", in cpu_die()). It did that every
-time I tried (5 runs). With my patch applied, CPU1 comes back and the
-guest keeps running.
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 0b0a8047ed..96d57b9b0f 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -842,6 +842,8 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+ 
+         cpu_set_pc(cs, firmware_entry);
+         cpu[i]->env.psw = PSW_Q;
++        /* Firmware uses FP registers before configuring CCR. */
++        cpu[i]->env.cr[CR_SCRCCR] = 0xc0;
+         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
+     }
+ 
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 9d64322398..83104ae0c7 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -91,6 +91,7 @@ static TCGTBCPUState hppa_get_tb_cpu_state(CPUState *cs)
+ #ifdef CONFIG_USER_ONLY
+     flags |= TB_FLAG_UNALIGN * !env_cpu(env)->prctl_unalign_sigbus;
+ #else
++    flags |= TB_FLAG_FPU_DISABLED * !(env->cr[CR_SCRCCR] & 0xc0);
+     if ((env->sr[4] == env->sr[5])
+         & (env->sr[4] == env->sr[6])
+         & (env->sr[4] == env->sr[7])) {
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 8818d47dcd..c0ba787974 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -372,6 +372,7 @@ hwaddr hppa_abs_to_phys_pa2_w1(uint8_t phys_addr_bits, vaddr addr);
+ #define TB_FLAG_PRIV_SHIFT  8
+ #define TB_FLAG_UNALIGN     0x400
+ #define TB_FLAG_SPHASH      0x800
++#define TB_FLAG_FPU_DISABLED 0x1000
+ #define CS_BASE_DIFFPAGE    (1 << 12)
+ #define CS_BASE_DIFFSPACE   (1 << 13)
+ 
+diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+index 8d7fa1ae34..449818f9dd 100644
+--- a/target/hppa/helper.h
++++ b/target/hppa/helper.h
+@@ -82,6 +82,7 @@ DEF_HELPER_FLAGS_4(fmpynfadd_d, TCG_CALL_NO_RWG, i64, env, i64, i64, i64)
+ DEF_HELPER_FLAGS_0(read_interval_timer, TCG_CALL_NO_RWG, tl)
+ 
+ #ifndef CONFIG_USER_ONLY
++DEF_HELPER_5(fpu_mem, noreturn, env, tl, i32, i32, i32)
+ DEF_HELPER_1(hppa_halt, noreturn, env)
+ DEF_HELPER_1(hppa_reset, noreturn, env)
+ DEF_HELPER_1(rfi, void, env)
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index 2393a15507..a5da0bc851 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -427,6 +427,21 @@ raise_exception_with_ior(CPUHPPAState *env, int excp, uintptr_t retaddr,
+     cpu_loop_exit(cs);
+ }
+ 
++G_NORETURN void HELPER(fpu_mem)(CPUHPPAState *env, target_ulong addr,
++                               uint32_t mmu_idx, uint32_t mop, uint32_t type)
++{
++    hwaddr phys;
++    int prot, excp;
++
++    /* Memory faults take priority over the assist emulation trap. */
++    excp = hppa_get_physical_address(env, addr, mmu_idx, type, mop, &phys, &prot);
++    if (excp < 0) {
++        excp = EXCP_ASSIST_EMU;
++    }
++    raise_exception_with_ior(env, excp, GETPC(), addr,
++                             MMU_IDX_MMU_DISABLED(mmu_idx));
++}
++
+ void hppa_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                      vaddr addr, unsigned size,
+                                      MMUAccessType access_type,
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index befdb58e9a..fcdcf5d44c 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -1711,8 +1711,30 @@ static bool do_floadw(DisasContext *ctx, unsigned rt, unsigned rb,
+     return nullify_end(ctx);
+ }
+ 
++static bool gen_fmem_excp(DisasContext *ctx, arg_ldst *a, MemOp mop, int type)
++{
++#ifndef CONFIG_USER_ONLY
++    TCGv_i64 addr, ofs;
++
++    nullify_over(ctx);
++    form_gva(ctx, &addr, &ofs, a->b, a->x,
++             a->scale ? mop & MO_SIZE : 0, a->disp, a->sp, a->m,
++             MMU_DISABLED(ctx));
++    gen_helper_fpu_mem(tcg_env, addr, tcg_constant_i32(ctx->mmu_idx),
++                       tcg_constant_i32(mop | ctx->mo_align | mo_endian(ctx)),
++                       tcg_constant_i32(type));
++    ctx->base.is_jmp = DISAS_NORETURN;
++    return nullify_end(ctx);
++#else
++    g_assert_not_reached();
++#endif
++}
++
+ static bool trans_fldw(DisasContext *ctx, arg_ldst *a)
+ {
++    if (ctx->tb_flags & TB_FLAG_FPU_DISABLED) {
++        return gen_fmem_excp(ctx, a, MO_UL, PAGE_READ);
++    }
+     return do_floadw(ctx, a->t, a->b, a->x, a->scale ? 2 : 0,
+                      a->disp, a->sp, a->m);
+ }
+@@ -1738,6 +1760,9 @@ static bool do_floadd(DisasContext *ctx, unsigned rt, unsigned rb,
+ 
+ static bool trans_fldd(DisasContext *ctx, arg_ldst *a)
+ {
++    if (ctx->tb_flags & TB_FLAG_FPU_DISABLED) {
++        return gen_fmem_excp(ctx, a, MO_UQ, PAGE_READ);
++    }
+     return do_floadd(ctx, a->t, a->b, a->x, a->scale ? 3 : 0,
+                      a->disp, a->sp, a->m);
+ }
+@@ -1767,6 +1792,9 @@ static bool do_fstorew(DisasContext *ctx, unsigned rt, unsigned rb,
+ 
+ static bool trans_fstw(DisasContext *ctx, arg_ldst *a)
+ {
++    if (ctx->tb_flags & TB_FLAG_FPU_DISABLED) {
++        return gen_fmem_excp(ctx, a, MO_UL, PAGE_WRITE);
++    }
+     return do_fstorew(ctx, a->t, a->b, a->x, a->scale ? 2 : 0,
+                       a->disp, a->sp, a->m);
+ }
+@@ -1787,6 +1815,9 @@ static bool do_fstored(DisasContext *ctx, unsigned rt, unsigned rb,
+ 
+ static bool trans_fstd(DisasContext *ctx, arg_ldst *a)
+ {
++    if (ctx->tb_flags & TB_FLAG_FPU_DISABLED) {
++        return gen_fmem_excp(ctx, a, MO_UQ, PAGE_WRITE);
++    }
+     return do_fstored(ctx, a->t, a->b, a->x, a->scale ? 3 : 0,
+                       a->disp, a->sp, a->m);
+ }
+@@ -2311,8 +2342,9 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtctl *a)
+ #endif
+         break;
+ 
++    case CR_SCRCCR:
+     case CR_EIEM:
+-        /* Exit to re-evaluate interrupts in the main loop. */
++        /* Exit to re-evaluate translation flags and interrupts. */
+         ctx->base.is_jmp = DISAS_IAQ_N_STALE_EXIT;
+         /* FALLTHRU */
+     default:
+@@ -4721,6 +4753,29 @@ static void hppa_tr_insn_start(DisasContextBase *dcbase, CPUState *cs)
+     ctx->insn_start_updated = false;
+ }
+ 
++static bool decode_insn(DisasContext *ctx, uint32_t insn)
++{
++    if (ctx->tb_flags & TB_FLAG_FPU_DISABLED) {
++        switch (insn >> 26) {
++        case 0x0b:
++            /* Both floating-point uids trap when the coprocessor is disabled. */
++            insn &= ~0x40;
++            break;
++        case 0x0c:
++            if (extract32(insn, 7, 2)) {
++                break;
++            }
++            /* fall through */
++        case 0x06:
++        case 0x0e:
++        case 0x26:
++        case 0x2e:
++            return gen_excp_iir(ctx, EXCP_ASSIST_EMU);
++        }
++    }
++    return decode(ctx, insn);
++}
++
+ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+@@ -4754,7 +4809,7 @@ static void hppa_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+             ret = DISAS_NEXT;
+         } else {
+             ctx->insn = insn;
+-            if (!decode(ctx, insn)) {
++            if (!decode_insn(ctx, insn)) {
+                 gen_illegal(ctx);
+             }
+             ret = ctx->base.is_jmp;
+diff --git a/tests/functional/hppa/test_seabios.py b/tests/functional/hppa/test_seabios.py
+index bdb9d534ef..9fd42d70ac 100755
+--- a/tests/functional/hppa/test_seabios.py
++++ b/tests/functional/hppa/test_seabios.py
+@@ -20,8 +20,10 @@ def boot_seabios(self):
+         self.vm.add_args('-no-shutdown')
+         self.vm.set_console()
+         self.vm.launch()
+-        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Firmware')
+-        wait_for_console_pattern(self, f'Emulated machine:     HP {mach} ({bits}-bit')
++        wait_for_console_pattern(self, f'SeaBIOS PA-RISC {bits}-bit Firmware',
++                                 failure_message='SeaBIOS: Detected trap')
++        wait_for_console_pattern(self, f'Emulated machine:     HP {mach} ({bits}-bit',
++                                 failure_message='SeaBIOS: Detected trap')
+ 
+     def test_hppa_32(self):
+         self.set_machine('B160L')
+diff --git a/tests/qtest/hppa-fpu-test.c b/tests/qtest/hppa-fpu-test.c
+new file mode 100644
+index 0000000000..af4ff2a162
+--- /dev/null
++++ b/tests/qtest/hppa-fpu-test.c
+@@ -0,0 +1,371 @@
++/*
++ * HPPA CCR floating-point enable and lazy context switching tests.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define BOOT 0x1000
++#define CODE 0x1100
++#define FP_CODE 0x1300
++#define ASSIST 0x1400
++#define UNEXPECTED 0x1500
++#define HALT 0x1600
++#define DATA 0x1800
++#define RESULT 0x1900
++#define LOG 0x1a00
++
++/* Enable interruption-state collection through IPSW before entering CODE. */
++static const uint32_t bootstrap[] = {
++    0x34010010, /* ldi 8,r1 */
++    0x02c11840, /* mtctl r1,ipsw */
++    0x02201840, /* mtctl r0,iiasq */
++    0x02201840, /* mtctl r0,iiasq */
++    0x34012200, /* ldi 0x1100,r1 */
++    0x02411840, /* mtctl r1,iiaoq */
++    0x34012208, /* ldi 0x1104,r1 */
++    0x02411840, /* mtctl r1,iiaoq */
++    0x00000c00, /* rfi */
++};
++
++/*
++ * r20 counts assists. After the first call, the shared CCR writer is entered
++ * with FP enabled. Alternating its input must reselect the next translation.
++ */
++static const uint32_t fp_guest[] = {
++    0x34011000, /* ldi 0x800,r1 */
++    0x01c11840, /* mtctl r1,iva */
++    0x08000240, /* nop */
++    0x34103000, /* ldi 0x1800,r16 */
++    0x34113200, /* ldi 0x1900,r17 */
++    0x341a3400, /* ldi 0x1a00,r26 */
++    0x34140000, /* ldi 0,r20 */
++    0x34010180, /* ldi 0xc0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x2e00100c, /* fldd 0(r16),fr12 */
++    0x34010000, /* ldi 0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x08142880, /* cmpclr,= r20,r0,r0: nullify the next instruction */
++    0x08000240, /* replaced by the FP instruction under test */
++    0x6a340008, /* stw r20,4(r17) */
++    0x34010180, /* ldi 0xc0,r1 */
++    0xe8400370, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340010, /* stw r20,8(r17) */
++    0x34010000, /* ldi 0,r1 */
++    0xe8400350, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340018, /* stw r20,12(r17) */
++    0x34010180, /* ldi 0xc0,r1 */
++    0xe8400330, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340020, /* stw r20,16(r17) */
++    0x34010000, /* ldi 0,r1 */
++    0xe8400310, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340028, /* stw r20,20(r17) */
++    0x34010180, /* ldi 0xc0,r1 */
++    0xe84002f0, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340030, /* stw r20,24(r17) */
++    0x34010000, /* ldi 0,r1 */
++    0xe84002d0, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340038, /* stw r20,28(r17) */
++    0x34010180, /* ldi 0xc0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x2e10120c, /* fstd fr12,8(r16) */
++    0x36100010, /* ldo 8(r16),r16 */
++    0x2e10120d, /* fstd fr13,8(r16) */
++    0x34010002, /* ldi 1,r1 */
++    0x6a210000, /* stw r1,0(r17): completion */
++    0xe8000882, /* b,n 0x1600 */
++};
++
++static const uint32_t fp_site[] = {
++    0x01411840, /* mtctl r1,ccr */
++    0x08000240, /* replaced by the FP instruction under test */
++    0xe840c002, /* bv,n 0(rp) */
++};
++
++/* r20 and r26 are outside the shadow register set restored by rfir. */
++static const uint32_t assist_handler[] = {
++    0x026008a1, /* mfctl iir,r1 */
++    0x6b410000, /* stw r1,0(r26) */
++    0x024008a1, /* mfctl iiaoq,r1 */
++    0x6b410008, /* stw r1,4(r26) */
++    0x028008a1, /* mfctl isr,r1 */
++    0x6b410010, /* stw r1,8(r26) */
++    0x02a008a1, /* mfctl ior,r1 */
++    0x6b410018, /* stw r1,12(r26) */
++    0x375a0020, /* ldo 16(r26),r26 */
++    0x36940002, /* ldo 1(r20),r20 */
++    0x34010180, /* ldi 0xc0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x00000ca0, /* rfir: retry the faulting instruction */
++};
++
++static const uint32_t unexpected_handler[] = {
++    0x026008a1, /* mfctl iir,r1 */
++    0x6a210008, /* stw r1,4(r17) */
++    0x024008a1, /* mfctl iiaoq,r1 */
++    0x6a210010, /* stw r1,8(r17) */
++    0x028008a1, /* mfctl isr,r1 */
++    0x6a210018, /* stw r1,12(r17) */
++    0x02a008a1, /* mfctl ior,r1 */
++    0x6a210020, /* stw r1,16(r17) */
++    0x6a380000, /* stw r24,0(r17): 0x100 | exception number */
++    0xe80001aa, /* b,n 0x1600 */
++};
++
++/* r18 owns the live FP state; r19 requests the next logical context. */
++static const uint32_t lazy_guest[] = {
++    0x34011000, /* ldi 0x800,r1 */
++    0x01c11840, /* mtctl r1,iva */
++    0x08000240, /* nop */
++    0x34123000, /* ldi 0x1800,r18: owner A */
++    0x34113200, /* ldi 0x1900,r17 */
++    0x34140000, /* ldi 0,r20 */
++    0x34010180, /* ldi 0xc0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x2e40100c, /* fldd 0(r18),fr12 */
++    0x318c0e0c, /* fadd,d fr12,fr12,fr12: A = 2 */
++    0x34173240, /* ldi 0x1920,r23 */
++    0x34133020, /* ldi 0x1810,r19: request B */
++    0xe8400390, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x318c0e0c, /* fadd,d fr12,fr12,fr12: B = 32 */
++    0x36f70010, /* ldo 8(r23),r23 */
++    0x34133000, /* ldi 0x1800,r19: request A */
++    0xe8400368, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x318c0e0c, /* fadd,d fr12,fr12,fr12: A = 4 */
++    0x36f70010, /* ldo 8(r23),r23 */
++    0x34133020, /* ldi 0x1810,r19: request B */
++    0xe8400340, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x318c0e0c, /* fadd,d fr12,fr12,fr12: B = 64 */
++    0x36f70010, /* ldo 8(r23),r23 */
++    0x34133000, /* ldi 0x1800,r19: request A */
++    0xe8400318, /* bl 0x1300,rp */
++    0x08000240, /* nop */
++    0x6a340008, /* stw r20,4(r17) */
++    0x34010002, /* ldi 1,r1 */
++    0x6a210000, /* stw r1,0(r17) */
++    0xe80008f2, /* b,n 0x1600 */
++};
++
++static const uint32_t lazy_site[] = {
++    0x01401840, /* mtctl r0,ccr */
++    0x2ee0120c, /* fstd fr12,0(r23) */
++    0xe840c002, /* bv,n 0(rp) */
++};
++
++static const uint32_t lazy_handler[] = {
++    0x34010180, /* ldi 0xc0,r1 */
++    0x01411840, /* mtctl r1,ccr */
++    0x2e40120c, /* fstd fr12,0(r18): save owner */
++    0x2e60100c, /* fldd 0(r19),fr12: restore requested context */
++    0x08130252, /* copy r19,r18 */
++    0x36940002, /* ldo 1(r20),r20 */
++    0x00000ca0, /* rfir */
++};
++
++static void write_words(QTestState *qts, uint32_t addr,
++                        const uint32_t *words, size_t count)
++{
++    for (size_t i = 0; i < count; i++) {
++        qtest_writel(qts, addr + 4 * i, words[i]);
++    }
++}
++
++static uint32_t branch(uint32_t pc, uint32_t target)
++{
++    uint32_t d = (target - pc - 8) / 4;
++
++    return 0xe8000002 | ((d & 0x10000) >> 16) | ((d & 0xf800) << 5) |
++           ((d & 0x400) >> 8) | ((d & 0x3ff) << 3);
++}
++
++static QTestState *start_guest(bool retry_assist)
++{
++    QTestState *qts = qtest_init("-machine none -cpu pa-7300lc -m 1M "
++                                "-S -accel tcg -no-shutdown "
++                                "-device loader,addr=0x1000,cpu-num=0");
++
++    write_words(qts, BOOT, bootstrap, G_N_ELEMENTS(bootstrap));
++    /* Shutdown may re-enter this TB before the main loop stops the CPU. */
++    qtest_writel(qts, HALT, 0xfffdead0);
++    write_words(qts, UNEXPECTED, unexpected_handler,
++                G_N_ELEMENTS(unexpected_handler));
++    for (unsigned int i = 0; i < 32; i++) {
++        uint32_t pc = 0x800 + i * 32;
++        uint32_t target = retry_assist && i == 22 ? ASSIST : UNEXPECTED;
++
++        qtest_writel(qts, pc, 0x34180000 | ((0x100 | i) << 1));
++        qtest_writel(qts, pc + 4, branch(pc + 4, target));
++    }
++    return qts;
++}
++
++static void run_guest(QTestState *qts, uint32_t expected)
++{
++    uint32_t result;
++
++    qtest_qmp_assert_success(qts, "{'execute':'cont'}");
++    qtest_qmp_eventwait(qts, "SHUTDOWN");
++    result = qtest_readl(qts, RESULT);
++    g_test_message("completion=0x%x, result[1]=0x%x, result[2]=0x%x",
++                   result, qtest_readl(qts, RESULT + 4),
++                   qtest_readl(qts, RESULT + 8));
++    g_assert_cmphex(result, ==, expected);
++}
++
++typedef struct FPTest {
++    const char *name;
++    uint32_t instruction;
++    bool memory;
++    uint64_t fr13;
++} FPTest;
++
++static const FPTest fp_tests[] = {
++    { "fldw", 0x2600100c, true },
++    { "fstw", 0x2600120c, true },
++    { "fldd", 0x2e00100c, true },
++    { "fstd", 0x2e00120c, true },
++    { "fid", 0x30000000 },
++    { "fadd-double", 0x318c0e0d, false, 0x4010000000000000ULL },
++    { "fadd-double-extended", 0x398c0e0d, false, 0x4010000000000000ULL },
++    { "fmpyadd-single", 0x188541e6 }, /* fr20L,fr21L,fr22L,fr23L,fr24L */
++    { "fmpysub-double", 0x988541c6 }, /* fr4,fr5,fr6,fr7,fr8 */
++};
++
++static void test_fp(const void *opaque)
++{
++    const FPTest *test = opaque;
++    static const uint32_t counts[] = { 0, 0, 1, 1, 2, 2, 3 };
++    QTestState *qts = start_guest(true);
++
++    write_words(qts, CODE, fp_guest, G_N_ELEMENTS(fp_guest));
++    write_words(qts, FP_CODE, fp_site, G_N_ELEMENTS(fp_site));
++    write_words(qts, ASSIST, assist_handler, G_N_ELEMENTS(assist_handler));
++    qtest_writel(qts, CODE + 13 * 4, test->instruction);
++    qtest_writel(qts, FP_CODE + 4, test->instruction);
++    qtest_writeq(qts, DATA, 0x4000000000000000ULL); /* double 2 */
++    run_guest(qts, 1);
++    for (size_t i = 0; i < G_N_ELEMENTS(counts); i++) {
++        g_assert_cmpuint(qtest_readl(qts, RESULT + 4 + 4 * i), ==, counts[i]);
++    }
++    for (unsigned int i = 0; i < 3; i++) {
++        g_assert_cmphex(qtest_readl(qts, LOG + 16 * i), ==, test->instruction);
++        g_assert_cmphex(qtest_readl(qts, LOG + 16 * i + 4), ==, FP_CODE + 4);
++        if (test->memory) {
++            g_assert_cmphex(qtest_readl(qts, LOG + 16 * i + 8), ==, 0);
++            g_assert_cmphex(qtest_readl(qts, LOG + 16 * i + 12), ==, DATA);
++        }
++    }
++    g_assert_cmphex(qtest_readq(qts, DATA + 8), ==, 0x4000000000000000ULL);
++    g_assert_cmphex(qtest_readq(qts, DATA + 16), ==, test->fr13);
++    qtest_quit(qts);
++}
++
++static void test_lazy(void)
++{
++    static const uint64_t markers[] = {
++        0x4030000000000000ULL, /* B = 16 */
++        0x4000000000000000ULL, /* A = 2 */
++        0x4040000000000000ULL, /* B = 32 */
++        0x4010000000000000ULL, /* A = 4 */
++    };
++    QTestState *qts = start_guest(true);
++
++    write_words(qts, CODE, lazy_guest, G_N_ELEMENTS(lazy_guest));
++    write_words(qts, FP_CODE, lazy_site, G_N_ELEMENTS(lazy_site));
++    write_words(qts, ASSIST, lazy_handler, G_N_ELEMENTS(lazy_handler));
++    qtest_writeq(qts, DATA, 0x3ff0000000000000ULL); /* A = 1 */
++    qtest_writeq(qts, DATA + 16, markers[0]);
++    run_guest(qts, 1);
++    g_assert_cmpuint(qtest_readl(qts, RESULT + 4), ==, 4);
++    for (size_t i = 0; i < G_N_ELEMENTS(markers); i++) {
++        g_assert_cmphex(qtest_readq(qts, RESULT + 32 + 8 * i), ==, markers[i]);
++    }
++    g_assert_cmphex(qtest_readq(qts, DATA), ==, 0x4010000000000000ULL);
++    g_assert_cmphex(qtest_readq(qts, DATA + 16), ==, 0x4050000000000000ULL);
++    qtest_quit(qts);
++}
++
++static const uint32_t fault_guest[] = {
++    0x34011000, /* ldi 0x800,r1 */
++    0x01c11840, /* mtctl r1,iva */
++    0x34103000, /* ldi 0x1800,r16: replaced for unaligned cases */
++    0x34113200, /* ldi 0x1900,r17 */
++    0x01401840, /* mtctl r0,ccr */
++    0x08000240, /* replaced by ssm 2,r0 for data translation */
++    0x08000240, /* replaced by the FP instruction under test */
++    0x34010002, /* ldi 1,r1 */
++    0x6a210000, /* stw r1,0(r17): unexpectedly completed */
++    0xe80009aa, /* b,n 0x1600 */
++};
++
++typedef struct FaultTest {
++    const char *name;
++    uint32_t instruction;
++    unsigned int exception;
++    uint32_t address;
++    bool dtlb;
++    bool memory;
++} FaultTest;
++
++static const FaultTest fault_tests[] = {
++    { "unaligned-load", 0x2e00100c, 28, DATA + 2, false, true },
++    { "unaligned-store", 0x2e00120c, 28, DATA + 2, false, true },
++    { "dtlb-load", 0x2e00100c, 15, DATA, true, true },
++    { "dtlb-store", 0x2e00120c, 15, DATA, true, true },
++    { "disabled-uid1-arithmetic", 0x30000040, 22, DATA, false, false },
++    { "disabled-uid1-memory", 0x2e00104c, 22, DATA, false, true },
++};
++
++static void test_fault(const void *opaque)
++{
++    const FaultTest *test = opaque;
++    uint32_t addr = test->address;
++    QTestState *qts = start_guest(false);
++
++    write_words(qts, CODE, fault_guest, G_N_ELEMENTS(fault_guest));
++    qtest_writel(qts, CODE + 8, 0x34100000 | (addr << 1));
++    if (test->dtlb) {
++        qtest_writel(qts, CODE + 20, 0x00020d60); /* ssm 2,r0 */
++    }
++    qtest_writel(qts, CODE + 24, test->instruction);
++    run_guest(qts, 0x100 | test->exception);
++    g_assert_cmphex(qtest_readl(qts, RESULT + 4), ==, test->instruction);
++    g_assert_cmphex(qtest_readl(qts, RESULT + 8), ==, CODE + 24);
++    if (test->memory) {
++        g_assert_cmphex(qtest_readl(qts, RESULT + 12), ==, 0);
++        g_assert_cmphex(qtest_readl(qts, RESULT + 16), ==, addr);
++    }
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    if (!qtest_has_accel("tcg")) {
++        g_test_skip("TCG accelerator required");
++        return 0;
++    }
++    for (size_t i = 0; i < G_N_ELEMENTS(fp_tests); i++) {
++        g_autofree char *name = g_strdup_printf("fpu/%s", fp_tests[i].name);
++
++        qtest_add_data_func(name, &fp_tests[i], test_fp);
++    }
++    qtest_add_func("fpu/lazy-contexts", test_lazy);
++    for (size_t i = 0; i < G_N_ELEMENTS(fault_tests); i++) {
++        g_autofree char *name = g_strdup_printf("fpu/%s", fault_tests[i].name);
++
++        qtest_add_data_func(name, &fault_tests[i], test_fault);
++    }
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 46685d6d46..9d422886d8 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -158,6 +158,8 @@ qtests_alpha = ['boot-serial-test'] + \
+ qtests_avr = [ 'boot-serial-test' ]
+ 
+ qtests_hppa = \
++  (config_all_accel.has_key('CONFIG_TCG') and \
++   config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hppa-fpu-test'] : []) + \
+   qtests_filter + \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
+ 
+-- 
+2.55.0
 
-I also tried calling cpu_synchronize_state() before cpu_reset()
-instead of cpu_synchronize_post_reset() after it, in case that is a
-better fit. That fixes the reproducer too (4 runs).
-
-I'm happy to test whatever version you think is right.
-
-Thanks,
-Adrien
-
-On Fri, Oct 23, 2026, at 14:19, Peter Maydell wrote:
-> On Thu, 22 Oct 2026 at 22:36, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->>
->> From: Adrien Kohlbecker <adrien.kohlbecker@gmail.com>
->>
->> arm_set_cpu_on_async_work() resets the target CPU and sets its entry
->> point and context ID in CPUARMState, but never tells the accelerator
->> that the register state changed. TCG reads CPUARMState directly, and
->> KVM re-pushes state on reset, but HVF only writes CPUARMState back to
->> the hardware vCPU when cpu->vcpu_dirty is set.
->
-> My first reaction to "this works on KVM but HVF does something
-> differently and it doesn't work" is "so why are we doing things
-> differently?".
->
->> A vCPU that reached PSCI_OFF is left clean: its last hv_vcpu_run() exit
->> was a WFI or a cancel, and flush_cpu_state() cleared the flag. A later
->> CPU_ON then resets and re-points only the QEMU-side copy. The vCPU
->> resumes in its old context, with the old MMU state and vector table, and
->> never runs the requested entry point.
->>
->> This shows up when a guest that already onlined and offlined its
->> secondary CPUs boots another kernel, for example kexec on Apple Silicon:
->> the new kernel logs "CPUn: failed to come online" for every secondary.
->> Fresh vCPUs are created dirty and single-CPU guests never issue CPU_ON,
->> so the ordinary boot path is unaffected.
->>
->> Call cpu_synchronize_post_reset() after resetting the target, in both
->> arm_set_cpu_on_async_work() and arm_set_cpu_on_and_reset_async_work().
->> It is a no-op for TCG.
->>
->> Signed-off-by: Adrien Kohlbecker <adrien.kohlbecker@gmail.com>
->> ---
->>  target/arm/arm-powerctl.c | 3 +++
->>  1 file changed, 3 insertions(+)
->>
->> diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
->> index ef14a1f8a9..e197a0ebda 100644
->> --- a/target/arm/arm-powerctl.c
->> +++ b/target/arm/arm-powerctl.c
->> @@ -16,6 +16,7 @@
->>  #include "qemu/log.h"
->>  #include "qemu/main-loop.h"
->>  #include "system/tcg.h"
->> +#include "system/hw_accel.h"
->>  #include "target/arm/multiprocessing.h"
->>  #include "trace.h"
->>
->> @@ -80,6 +81,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
->>
->>      /* Start the new CPU at the requested address */
->>      cpu_set_pc(target_cpu_state, info->entry);
->> +    cpu_synchronize_post_reset(target_cpu_state);
->
-> This isn't a CPU reset, so do we really need
-> cpu_synchronize_post_reset ?
->
->>      g_free(info);
->>
->> @@ -189,6 +191,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
->>
->>      /* Initialize the cpu we are turning on */
->>      cpu_reset(target_cpu_state);
->> +    cpu_synchronize_post_reset(target_cpu_state);
->
-> I'm not sure whether cpu_synchronize_post_reset() is supposed to be
-> "after we just did a full system reset" (the way i386 uses it) or
-> also "after we did a single cpu reset" (the way s390 uses it).
->
->>      target_cpu_state->halted = 0;
->>
->>      /* Finally set the power status */
->
-> -- PMM
 
