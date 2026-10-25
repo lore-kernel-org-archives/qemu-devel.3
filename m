@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0269606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FD2606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL24d-0001eJ-K9; Sun, 25 Oct 2026 13:32:01 -0400
+	id 1xL24T-0001KY-HQ; Sun, 25 Oct 2026 13:31:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL247-0000zW-QR; Sun, 25 Oct 2026 13:31:32 -0400
+ id 1xL24F-00011t-NF; Sun, 25 Oct 2026 13:31:40 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL244-0007Jt-Kn; Sun, 25 Oct 2026 13:31:26 -0400
+ id 1xL24B-0007KH-Tz; Sun, 25 Oct 2026 13:31:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=5lAUCxqfG8sM6pOnbDX8sosTn48tzyKLtxywQ8LbM24=; b=qpersZEHRvUV9jM1xJzaiUMuHi
- CiL/qfcCM5FKOv5Rfp1Xlw6n435igvmrIRVyQ8CRouqu8O2pTN2K9gtz+Jd0+4O+qe49WyDZgp96W
- 2z8IFOsI0xaUAN+Fh2/rm2DVb8YL757VmgNqjEdkMXkGf1SuPTPry1ZcqjzOz89oTbmZjJc/lIAzK
- 0OrukJ6ypqXXOPRZEQMfwbkhB4rd9C/FCu1G+xmCMh+JgT80VTpQRpXY0NjmqUuvZHchoxydwpMoq
- 2iDXPLUyco/QILEXVFETOAXtNnb/XGg1JTVYxYK8xaw1rpTl296Bl9oWeyb4eaHeHGWVsBxF9Msuw
- tqTHvAeA==;
+ bh=TJhWO4twA+q0Mnq7aJRbN28RUXMesXN++2z4xQUh/gs=; b=BEFncQeW+OlvBGK47gLABhfBet
+ USgQGVvgEZNWLYUXAwFgFH17D+IOPlXTPC9McqAMfDSBFtayCthgRFOJ2DY5y8Fcgkri5kNYK63oq
+ JUN5ftVkll5T9RAoRT+9hO5ZOGPGonuYm6Mdw2iFm0Nz2RIKWP92/YlHDIsQEIMbiq4Qj7+A63g27
+ zS5Wglxmr6kPgGF5Oaq6MZpEq/3g87YIFKXOfmKGfHpODD2v9PFZOrjTUqzX9KDvXe4BH7sYH1qZ0
+ KYfVBtb7wK9oDHnKbJuinB4Kvc208l2spjzBkBnIfV86SZdDCbBz3ZLO6omMnKy7lZakPXc6duA6G
+ H74TB8YQ==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1fa-0008yR-1K; Sun, 25 Oct 2026 18:06:06 +0100
+ id 1xL1fb-0008yw-30; Sun, 25 Oct 2026 18:06:07 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vv-000OzG-2p; Sun, 25 Oct 2026 17:56:07 +0100
+ id 1xL1Vv-000OzG-33; Sun, 25 Oct 2026 17:56:07 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:26 +0100
-Subject: [PATCH v2 10/31] target/rx: add DPUSHM and DPOPM
+Date: Sun, 25 Oct 2026 17:55:27 +0100
+Subject: [PATCH v2 11/31] target/rx: add RXv3 DMOV half transfers
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-10-9e846577cad0@sayyadumar.com>
+Message-Id: <20261025-umar-rx-series-v2-11-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5451;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5611;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=Wr9yanjeQH4HzJhPTxohXUfqcGg2ndZ7wmxp4QcEUFk=;
- b=yNN1oCQLIg3maC97yJlXSkVkFfvA+LDJpaF+oxgfYDbJn1sgKIw7N6C3NzDDTiZd5+AvLehrx
- XL1zpd6Go7MD3U6vs0g2QXLtI19dOvzpoTQ868QKqGJSdObaDV6k/F5
+ bh=sAMrIHHRa+h0HS7FS3WgGhc0E07+OCrCoDvFa2X40Eg=;
+ b=q9s363Ecd6PsSg/64M+z0zheCB38xMFw4RSG6X067CitybUIB5X/SDr9S7i7kC/SsAMv4w6jb
+ SoUQUp0SU/uC8oGzoxtM/zT4O4hV5RwFOG/ATJ6dA2Vv+hcVDELbsL+
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -85,53 +85,53 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-DPUSHM/DPOPM push and pop a range of DR registers onto the stack;
-the .L forms do the same for the DPFPU control registers. The encoded
-rnum field holds (last - first), so the range covers rnum + 1
-registers; pushes run from the highest register down so the lowest
-ends up at the lowest address.
+Add the DMOV.L/DMOV.D forms that move data between GPRs and the high
+or low 32-bit halves of DR registers: DMOV.L rs/DRLs,rd, DMOV.D rs,DRHd
+(which clears the low half, materialising doubles with a zero low
+word) and DMOV.L DRLs/DRHs,rd.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
- target/rx/disas.c      | 29 +++++++++++++++++++
- target/rx/insns.decode |  9 ++++++
- target/rx/translate.c  | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 113 insertions(+)
+ target/rx/disas.c      | 30 +++++++++++++++++++++
+ target/rx/insns.decode | 15 +++++++++++
+ target/rx/translate.c  | 73 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 118 insertions(+)
 
 diff --git a/target/rx/disas.c b/target/rx/disas.c
-index 85de0a0f09..5a0d7180b5 100644
+index 5a0d7180b5..20ef165832 100644
 --- a/target/rx/disas.c
 +++ b/target/rx/disas.c
-@@ -1309,6 +1309,35 @@ static bool trans_FTOD(DisasContext *ctx, arg_FTOD *a)
+@@ -1338,6 +1338,36 @@ static bool trans_DPOPM_l(DisasContext *ctx, arg_DPOPM_l *a)
      return true;
  }
  
-+static bool trans_DPUSHM(DisasContext *ctx, arg_DPUSHM *a)
++static bool trans_DMOV_rdrl(DisasContext *ctx, arg_DMOV_rdrl *a)
 +{
-+    prt("dpushm.d\tdr%d-dr%d", a->drd, a->drd + a->rnum);
++    prt("dmov.l\tr%d, drl%d", a->rs, a->drd);
 +    return true;
 +}
 +
-+static bool trans_DPOPM(DisasContext *ctx, arg_DPOPM *a)
++static bool trans_DMOV_rdrh(DisasContext *ctx, arg_DMOV_rdrh *a)
 +{
-+    prt("dpopm.d\tdr%d-dr%d", a->drd, a->drd + a->rnum);
++    prt("dmov.l\tr%d, drh%d", a->rs, a->drd);
 +    return true;
 +}
 +
-+/* RXv3 disassembly: remaining DPFPU, bit field and register bank ops */
-+static const char dcrname[][6] = { "dpsw", "dcmr", "decnt", "depc" };
-+
-+static bool trans_DPUSHM_l(DisasContext *ctx, arg_DPUSHM_l *a)
++static bool trans_DMOVD_rdrh(DisasContext *ctx, arg_DMOVD_rdrh *a)
 +{
-+    prt("dpushm.l\t%s-%s", dcrname[a->dcrd & 3],
-+        dcrname[(a->dcrd + a->rnum) & 3]);
++    prt("dmov.d\tr%d, drh%d", a->rs, a->drd);
 +    return true;
 +}
 +
-+static bool trans_DPOPM_l(DisasContext *ctx, arg_DPOPM_l *a)
++static bool trans_DMOV_drlr(DisasContext *ctx, arg_DMOV_drlr *a)
 +{
-+    prt("dpopm.l\t%s-%s", dcrname[a->dcrd & 3],
-+        dcrname[(a->dcrd + a->rnum) & 3]);
++    prt("dmov.l\tdrl%d, r%d", a->drs, a->rd);
++    return true;
++}
++
++static bool trans_DMOV_drhr(DisasContext *ctx, arg_DMOV_drhr *a)
++{
++    prt("dmov.l\tdrh%d, r%d", a->drs, a->rd);
 +    return true;
 +}
 +
@@ -139,109 +139,120 @@ index 85de0a0f09..5a0d7180b5 100644
      do {                                                        \
          char dsp[8];                                            \
 diff --git a/target/rx/insns.decode b/target/rx/insns.decode
-index 58f8aa6dfd..48325d7ebd 100644
+index 48325d7ebd..86f726849a 100644
 --- a/target/rx/insns.decode
 +++ b/target/rx/insns.decode
-@@ -34,6 +34,8 @@
- &drrr		drd drs1 drs2
- &dcmpd		drs1 drs2 cd
+@@ -36,6 +36,9 @@
  &idr		rs drd
-+&dppm		drd rnum
-+&dcppm		dcrd rnum
+ &dppm		drd rnum
+ &dcppm		dcrd rnum
++# RXv3 DPFPU: GPR/control-register/memory/immediate transfers
++&rdrh		rd drs
++&drhr		drd rs
  ########
  %b1_bdsp	24:3 !function=bdsp_s
  
-@@ -665,3 +667,10 @@ DTOF		0111 0110 1001 0000 drs:4 1101 drd:4 1100	&drr
- ITOD		1111 1101 0111 0111 1000 rs:4 drd:4 1001	&idr
- FTOD		1111 1101 0111 0111 1000 rs:4 drd:4 1010	&idr
- UTOD		1111 1101 0111 0111 1000 rs:4 drd:4 1101	&idr
+@@ -674,3 +677,15 @@ DPOPM		0111 0101 1011 1000 drd:4 rnum:4		&dppm
+ # DPUSHM.L/DPOPM.L: same, for the DPFPU control registers
+ DPUSHM_l	0111 0101 1010 0000 dcrd:4 rnum:4		&dcppm
+ DPOPM_l		0111 0101 1010 1000 dcrd:4 rnum:4		&dcppm
 +
-+# DPUSHM.D/DPOPM.D: push/pop range of DR registers (3-byte: 0x75 prefix)
-+DPUSHM		0111 0101 1011 0000 drd:4 rnum:4		&dppm
-+DPOPM		0111 0101 1011 1000 drd:4 rnum:4		&dppm
-+# DPUSHM.L/DPOPM.L: same, for the DPFPU control registers
-+DPUSHM_l	0111 0101 1010 0000 dcrd:4 rnum:4		&dcppm
-+DPOPM_l		0111 0101 1010 1000 dcrd:4 rnum:4		&dcppm
++########
++# RXv3: remaining DPFPU transfers
++#
++# GPR -> DR half (0xFD 0x77 prefix): byte3 low nibble is the source GPR,
++# byte4 high nibble the destination DR.
++DMOV_rdrl	1111 1101 0111 0111 1000 rs:4 drd:4 0000	&drhr
++DMOV_rdrh	1111 1101 0111 0111 1000 rs:4 drd:4 0010	&drhr
++DMOVD_rdrh	1111 1101 0111 0111 1000 rs:4 drd:4 0011	&drhr
++# DR half -> GPR (0xFD 0x75 prefix): byte3 low nibble is the destination GPR.
++DMOV_drlr	1111 1101 0111 0101 1000 rd:4 drs:4 0000	&rdrh
++DMOV_drhr	1111 1101 0111 0101 1000 rd:4 drs:4 0010	&rdrh
 diff --git a/target/rx/translate.c b/target/rx/translate.c
-index 0bef8f36f8..33e41ccab3 100644
+index 33e41ccab3..2c1971b234 100644
 --- a/target/rx/translate.c
 +++ b/target/rx/translate.c
-@@ -2175,6 +2175,81 @@ static bool trans_FTOD(DisasContext *ctx, arg_FTOD *a)
+@@ -1964,6 +1964,21 @@ static void dr_write(int n, TCGv_i64 val)
+     tcg_gen_mov_i64(cpu_dregs[n], val);
+ }
+ 
++/* Write val into the high or low 32-bit half of DRn, preserving the other. */
++static void drh_write(int n, TCGv_i32 val)
++{
++    TCGv_i64 t = tcg_temp_new_i64();
++    tcg_gen_extu_i32_i64(t, val);
++    tcg_gen_deposit_i64(cpu_dregs[n], cpu_dregs[n], t, 32, 32);
++}
++
++static void drl_write(int n, TCGv_i32 val)
++{
++    TCGv_i64 t = tcg_temp_new_i64();
++    tcg_gen_extu_i32_i64(t, val);
++    tcg_gen_deposit_i64(cpu_dregs[n], cpu_dregs[n], t, 0, 32);
++}
++
+ /* dadd DRdrs1, DRdrd, DRdrs2  (DRdrd = DRdrs1 + DRdrs2) */
+ static bool trans_DADD(DisasContext *ctx, arg_DADD *a)
+ {
+@@ -2250,6 +2265,64 @@ static bool trans_DPOPM_l(DisasContext *ctx, arg_DPOPM_l *a)
      return true;
  }
  
++/* dmov.l rs, DRLd  -- write the low half of DRd, preserving the high half */
++static bool trans_DMOV_rdrl(DisasContext *ctx, arg_DMOV_rdrl *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    drl_write(a->drd, cpu_regs[a->rs]);
++    return true;
++}
++
++/* dmov.l rs, DRHd -- write the high half of DRd, preserving the low half */
++static bool trans_DMOV_rdrh(DisasContext *ctx, arg_DMOV_rdrh *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    drh_write(a->drd, cpu_regs[a->rs]);
++    return true;
++}
++
 +/*
-+ * dpushm.d DRn-DRm / dpopm.d DRn-DRm.
-+ * The encoded rnum field holds (last - first), so the range covers
-+ * rnum + 1 registers. Pushes run from the highest register down so that
-+ * the lowest-numbered register ends up at the lowest address.
++ * dmov.d rs, DRHd -- write the high half of DRd and clear the low half.
++ * This is the single-instruction way to materialise a double whose low
++ * word is zero, which covers the common literals (1.0, 0.5, 2.0, ...).
 + */
-+static bool trans_DPUSHM(DisasContext *ctx, arg_DPUSHM *a)
++static bool trans_DMOVD_rdrh(DisasContext *ctx, arg_DMOVD_rdrh *a)
 +{
-+    int i;
++    TCGv_i64 t;
 +
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    for (i = a->drd + a->rnum; i >= a->drd; i--) {
-+        TCGv_i32 hi = tcg_temp_new_i32();
-+        TCGv_i32 lo = tcg_temp_new_i32();
-+        tcg_gen_extr_i64_i32(lo, hi, cpu_dregs[i & (NUM_DREGS - 1)]);
-+        tcg_gen_subi_i32(cpu_sp, cpu_sp, 4);
-+        rx_gen_st(ctx, MO_32, hi, cpu_sp);
-+        tcg_gen_subi_i32(cpu_sp, cpu_sp, 4);
-+        rx_gen_st(ctx, MO_32, lo, cpu_sp);
-+    }
++    t = tcg_temp_new_i64();
++    tcg_gen_extu_i32_i64(t, cpu_regs[a->rs]);
++    tcg_gen_shli_i64(cpu_dregs[a->drd], t, 32);
 +    return true;
 +}
 +
-+static bool trans_DPOPM(DisasContext *ctx, arg_DPOPM *a)
++/* dmov.l DRLs, rd */
++static bool trans_DMOV_drlr(DisasContext *ctx, arg_DMOV_drlr *a)
 +{
-+    int i;
-+
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    for (i = a->drd; i <= a->drd + a->rnum; i++) {
-+        TCGv_i64 dr = tcg_temp_new_i64();
-+        TCGv_i32 hi = tcg_temp_new_i32();
-+        TCGv_i32 lo = tcg_temp_new_i32();
-+        rx_gen_ld(ctx, MO_32, lo, cpu_sp);
-+        tcg_gen_addi_i32(cpu_sp, cpu_sp, 4);
-+        rx_gen_ld(ctx, MO_32, hi, cpu_sp);
-+        tcg_gen_addi_i32(cpu_sp, cpu_sp, 4);
-+        tcg_gen_concat_i32_i64(dr, lo, hi);
-+        tcg_gen_mov_i64(cpu_dregs[i & (NUM_DREGS - 1)], dr);
-+    }
++    tcg_gen_extrl_i64_i32(cpu_regs[a->rd], cpu_dregs[a->drs]);
 +    return true;
 +}
 +
-+/* dpushm.l DCRn-DCRm / dpopm.l DCRn-DCRm (DPFPU control registers) */
-+static bool trans_DPUSHM_l(DisasContext *ctx, arg_DPUSHM_l *a)
++/* dmov.l DRHs, rd */
++static bool trans_DMOV_drhr(DisasContext *ctx, arg_DMOV_drhr *a)
 +{
-+    int i;
-+
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    for (i = a->dcrd + a->rnum; i >= a->dcrd; i--) {
-+        tcg_gen_subi_i32(cpu_sp, cpu_sp, 4);
-+        rx_gen_st(ctx, MO_32, cpu_dcregs[i & (NUM_DCREGS - 1)], cpu_sp);
-+    }
-+    return true;
-+}
-+
-+static bool trans_DPOPM_l(DisasContext *ctx, arg_DPOPM_l *a)
-+{
-+    int i;
-+
-+    if (!require_isa(ctx, RX_ISA_V3)) {
-+        return false;
-+    }
-+    for (i = a->dcrd; i <= a->dcrd + a->rnum; i++) {
-+        rx_gen_ld(ctx, MO_32, cpu_dcregs[i & (NUM_DCREGS - 1)], cpu_sp);
-+        tcg_gen_addi_i32(cpu_sp, cpu_sp, 4);
-+    }
++    tcg_gen_extrh_i64_i32(cpu_regs[a->rd], cpu_dregs[a->drs]);
 +    return true;
 +}
 +
