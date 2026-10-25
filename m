@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1DA606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3626606A31D
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL268-0003bM-PF; Sun, 25 Oct 2026 13:33:33 -0400
+	id 1xL26R-0004At-8p; Sun, 25 Oct 2026 13:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL24s-00020U-26; Sun, 25 Oct 2026 13:32:24 -0400
+ id 1xL25c-0002mU-3Y; Sun, 25 Oct 2026 13:33:07 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL24p-0007Ms-CT; Sun, 25 Oct 2026 13:32:13 -0400
+ id 1xL25U-0007PH-S2; Sun, 25 Oct 2026 13:32:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=GxJrCy/LdeDAONZG12nA19YVEW5dzWPG1qWZXEC0Bn0=; b=CAbFIGWLim+3n5Gs+WvhNEaxBK
- 8LztGE2K5MjlDTDwShWlASsJ0sKhSpWHIQYXqr4KHfH3k4bb94xtBunSCKxnkOgWQmEO+qu5tJ+t9
- mstGX5PvYyWODc44NRG7DbooX3jdcDlvBpVugPmUALK/1p8eZkntvnTLWKA7S6EWIa71+j7O0IIp5
- A7TjTxIZPzDMkStnzFpXVWhHLixczQqEhlh6+xaWVYQk25efvrFj945yVQed3MZtWw1kWd5ONOlWP
- aitrDN0rHsH1tWobf/yvCW0jCpXTgckv73mvj1tig/a8Cq5k3Y7t0pcBMnN1+vkNn+Bb+fREJuMej
- lkYtf2HA==;
+ bh=sY4MR7u4WQyIj7u5DGvAixmNpQq9Lbb541rx1qnoJFQ=; b=BmgO8FCcOtzJmi1y0VWIWvZNGI
+ eOiwKBAS8taHEIVsGHn1baXcNsT3hvhyX/WcydtlE0Hh2uj+bJC1qS7OalQrI1H8cojccJLw78Q3u
+ +p3i6VJDPHrjk5Pasy1HmQSlvsyE30aS1m/KzDgU3S3MsdDnsAGsKTJnKDwdZ3tntkktgGXtwcWJD
+ B2AaKbEppDh7IQQtMUsbjc4QcSDPZ2uY4pOmoJpG52kkPji9KJHDlR3zvUXNaUnCvnP2RUu27EDYj
+ SyOzIoYAYzsgYtHbpbNUjCFloxAY6UMk0Mgz95Ngp8MDzA34E85Vexr3QithOlotuA0DaPrl/pflP
+ 31h/Q7hA==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gP-00097n-1w; Sun, 25 Oct 2026 18:06:57 +0100
+ id 1xL1gO-00097Q-2S; Sun, 25 Oct 2026 18:06:56 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vw-000OzG-2W; Sun, 25 Oct 2026 17:56:08 +0100
+ id 1xL1Vw-000OzG-3B; Sun, 25 Oct 2026 17:56:08 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:39 +0100
-Subject: [PATCH v2 23/31] hw/adc: add Renesas RX S12AD
+Date: Sun, 25 Oct 2026 17:55:42 +0100
+Subject: [PATCH v2 26/31] hw/misc: add Renesas RX CRC calculator
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261025-umar-rx-series-v2-23-9e846577cad0@sayyadumar.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261025-umar-rx-series-v2-26-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=14830;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=10526;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=mXNG5bfdB0ucEzpAoK3TRQluqD0DgUtKo7c7wbd5deY=;
- b=om/kPpwZRbotmeMwu/aWRtZhewl2l17bNgM9f9ddt9WxBiZQbzv2Zhy+a+HQFkVhY6bETpYzD
- Yh0EUoaUZVsCosecIB1Fa3sOoSsea5DsFGb4jt2dAGDCYIQUzpjTFk2
+ bh=ney1/4QnelinSnzRtjLVg9AamFVDbqHOGMb9pIs8gNo=;
+ b=yYI3PPFDwEX38Vdkjr3E0ztHrZ3vxaLIG6UXgIngjaxnqaFnAKvOkGXt+W7h3SuN8ZMFzwRra
+ 03S5DD+U25XCm8v46U/7CpMYnixeUSrmbhQQNZyTULAEidt8YYkdWhy
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -85,463 +85,328 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the 12-bit successive approximation A/D converter, Section 40 of
-the RX65N hardware manual.
+Add the RX CRCA, section 42 of the RX65N hardware manual.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
  MAINTAINERS                            |   2 +
  configs/devices/rx-softmmu/default.mak |   1 +
- hw/adc/Kconfig                         |   3 +
- hw/adc/meson.build                     |   1 +
- hw/adc/renesas_s12ad.c                 | 324 +++++++++++++++++++++++++++++++++
- include/hw/adc/renesas_s12ad.h         |  61 +++++++
- 6 files changed, 392 insertions(+)
+ hw/misc/Kconfig                        |   3 +
+ hw/misc/meson.build                    |   1 +
+ hw/misc/renesas_rx_crc.c               | 219 +++++++++++++++++++++++++++++++++
+ include/hw/misc/renesas_rx_crc.h       |  30 +++++
+ 6 files changed, 256 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index e747530308..8f552c69cc 100644
+index b8bbb0e749..efeb40ee01 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3081,12 +3081,14 @@ F: include/hw/timer/renesas_*.h
- Renesas RX peripherals
- R: Yoshinori Sato <yoshinori.sato@nifty.com>
- S: Orphan
-+F: hw/adc/renesas_s12ad.c
- F: hw/dma/renesas_rx_*.c
+@@ -3086,6 +3086,7 @@ F: hw/dma/renesas_rx_*.c
  F: hw/dma/renesas_rx_dtc.c
  F: hw/gpio/renesas_rx_gpio.c
  F: hw/intc/rx_icu.c
++F: hw/misc/renesas_rx_*.c
+ F: hw/rtc/renesas_rx_rtc.c
  F: hw/rx/
- F: hw/timer/renesas_mtu3.c
-+F: include/hw/adc/renesas_s12ad.h
- F: include/hw/dma/renesas_rx_*.h
+ F: hw/ssi/renesas_rspi.c
+@@ -3095,6 +3096,7 @@ F: include/hw/dma/renesas_rx_*.h
  F: include/hw/dma/renesas_rx_dtc.h
  F: include/hw/gpio/renesas_rx_gpio.h
+ F: include/hw/intc/rx_icu.h
++F: include/hw/misc/renesas_rx_*.h
+ F: include/hw/rtc/renesas_rx_rtc.h
+ F: include/hw/rx/
+ F: include/hw/ssi/renesas_rspi.h
 diff --git a/configs/devices/rx-softmmu/default.mak b/configs/devices/rx-softmmu/default.mak
-index 9e0e1ef31d..59f124f0d3 100644
+index cbc4641143..c8419d64cc 100644
 --- a/configs/devices/rx-softmmu/default.mak
 +++ b/configs/devices/rx-softmmu/default.mak
-@@ -6,3 +6,4 @@ CONFIG_RENESAS_MTU3=y
- CONFIG_RENESAS_RX_GPIO=y
- CONFIG_RENESAS_RX_DMAC=y
- CONFIG_RENESAS_RX_DTC=y
-+CONFIG_RENESAS_S12AD=y
-diff --git a/hw/adc/Kconfig b/hw/adc/Kconfig
-index 25d2229fb8..cfe2c48262 100644
---- a/hw/adc/Kconfig
-+++ b/hw/adc/Kconfig
-@@ -1,2 +1,5 @@
- config STM32F2XX_ADC
+@@ -9,3 +9,4 @@ CONFIG_RENESAS_RX_DTC=y
+ CONFIG_RENESAS_S12AD=y
+ CONFIG_RENESAS_RSPI=y
+ CONFIG_RENESAS_RX_RTC=y
++CONFIG_RENESAS_RX_CRC=y
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 7abd22869a..b1c4fd7cba 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -267,3 +267,6 @@ config SOPHGO_CV1800B_CLK
      bool
+ 
+ source macio/Kconfig
 +
-+config RENESAS_S12AD
++config RENESAS_RX_CRC
 +    bool
-diff --git a/hw/adc/meson.build b/hw/adc/meson.build
-index 7f7acc1619..446cd3a3f0 100644
---- a/hw/adc/meson.build
-+++ b/hw/adc/meson.build
-@@ -2,3 +2,4 @@ system_ss.add(when: 'CONFIG_STM32F2XX_ADC', if_true: files('stm32f2xx_adc.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_adc.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_adc.c'))
- system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq-xadc.c'))
-+system_ss.add(when: 'CONFIG_RENESAS_S12AD', if_true: files('renesas_s12ad.c'))
-diff --git a/hw/adc/renesas_s12ad.c b/hw/adc/renesas_s12ad.c
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 90f3f89de7..22f933a17e 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -181,3 +181,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
+ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+ 
+ system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
++system_ss.add(when: 'CONFIG_RENESAS_RX_CRC', if_true: files('renesas_rx_crc.c'))
+diff --git a/hw/misc/renesas_rx_crc.c b/hw/misc/renesas_rx_crc.c
 new file mode 100644
-index 0000000000..e01d9ececd
+index 0000000000..f06ac4a64e
 --- /dev/null
-+++ b/hw/adc/renesas_s12ad.c
-@@ -0,0 +1,324 @@
++++ b/hw/misc/renesas_rx_crc.c
+@@ -0,0 +1,219 @@
 +/*
-+ * Renesas RX65N 12-bit Successive Approximation A/D Converter (S12AD)
++ * Renesas RX CRC Calculator (CRCA)
 + *
 + * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), Section 40
++ *            (Rev.2.40 R01UH0590EJ0240), section 42
 + *
 + * Copyright (c) 2026 Umar, Sayyad Mahammad
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
++ * Writing to CRCDIR runs the selected polynomial over the data and leaves the
++ * result in CRCDOR, which doubles as the initial value: it is zero out of
++ * reset, DORCLR puts it back, and firmware wanting a different seed writes it
++ * directly. There is no final XOR, so the familiar CRC-32 of a message is
++ * obtained by seeding CRCDOR with all ones and inverting the result.
++ *
++ * CRCCR.LMS picks the bit order. MSB first is the plain shift-left form; LSB
++ * first is the reflected form, computed with the reversed polynomial. The two
++ * worked examples in section 42.3 pin this down: with the CCITT polynomial and
++ * a cleared CRCDOR, feeding 0xf0 gives 0xef1f MSB first and 0xf78f LSB first.
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qemu/log.h"
-+#include "hw/core/irq.h"
++#include "qemu/bitops.h"
++#include "hw/misc/renesas_rx_crc.h"
 +#include "hw/core/registerfields.h"
 +#include "hw/core/qdev-properties.h"
-+#include "hw/adc/renesas_s12ad.h"
 +#include "migration/vmstate.h"
 +
-+/*
-+ * Register offsets from device base (0x00089000).
-+ * Reference: RX65N Group Hardware Manual Table 40.1
-+ */
-+REG16(ADCSR,   0x00)
-+  FIELD(ADCSR, DBLANS,  0, 5)   /* double trigger channel */
-+  FIELD(ADCSR, GBADIE,  6, 1)   /* group B scan end interrupt enable */
-+  FIELD(ADCSR, DBLE,    7, 1)   /* double trigger enable */
-+  FIELD(ADCSR, EXTRG,   8, 1)   /* trigger select (0=sync, 1=async) */
-+  FIELD(ADCSR, TRGE,    9, 1)   /* trigger start enable */
-+  FIELD(ADCSR, ADHSC,  10, 1)   /* high-speed conversion */
-+  FIELD(ADCSR, ADIE,   12, 1)   /* group A end interrupt enable */
-+  FIELD(ADCSR, ADCS,   13, 2)   /* scan mode */
-+  FIELD(ADCSR, ADST,   15, 1)   /* start conversion (W1 to start, hw clears) */
++REG8(CRCCR, 0)
++    FIELD(CRCCR, GPS, 0, 3)
++    FIELD(CRCCR, LMS, 6, 1)
++    FIELD(CRCCR, DORCLR, 7, 1)
 +
-+REG16(ADANSA0, 0x04)   /* channel select 0 (AN000-AN015) */
-+REG16(ADANSA1, 0x06)   /* channel select 1 (AN016-AN020) */
-+REG16(ADADS0,  0x08)   /* average enable 0 */
-+REG16(ADADS1,  0x0A)   /* average enable 1 */
-+REG8(ADADC,    0x0C)   /* average count */
-+REG16(ADCER,   0x0E)   /* control extended */
-+REG16(ADSTRGR, 0x10)   /* start trigger select */
-+REG16(ADEXICR, 0x12)   /* extended input */
-+REG16(ADANSB0, 0x14)   /* group B channel select 0 */
-+REG16(ADANSB1, 0x16)   /* group B channel select 1 */
-+REG16(ADDBLDR, 0x18)   /* double-buffer result */
-+REG16(ADRD,    0x1E)   /* temperature sensor / internal Vref result */
-+/* ADDR0–ADDR15 at offsets 0x20–0x3E (16-bit each) */
-+#define A_ADDR_BASE   0x20
-+#define A_ADDR_END    0x3E   /* inclusive */
-+#define A_ADSAMPR     0x63
-+#define A_ADSAM       0x6e
++#define R_CRCDIR    0x04
++#define R_CRCDOR    0x08
++
++/* CRCCR is read/write apart from the write-only DORCLR bit. */
++#define CRCCR_RW_MASK   (R_CRCCR_GPS_MASK | R_CRCCR_LMS_MASK)
 +
 +/*
-+ * Simulated conversion time: ~1 µs (typical for 12-bit at 60 MHz PCLK).
-+ * Real hardware takes ~1–17 µs depending on mode and clock.
++ * Generating polynomials selected by CRCCR.GPS, without the implicit top
++ * term. Entries 0, 6 and 7 select "no calculation".
 + */
-+#define CONV_TIME_NS   1000
-+
-+/* Fixed mid-scale return value for all channels: 0x0800 = 2048 (12-bit) */
-+#define DUMMY_RESULT   0x0800
-+
-+static void s12ad_conv_done(void *opaque)
-+{
-+    RX65NS12ADState *s = opaque;
-+
-+    /* Clear ADST, set results */
-+    s->adcsr = FIELD_DP16(s->adcsr, ADCSR, ADST, 0);
-+
-+    /* Fill result registers with mid-scale dummy value */
-+    for (int i = 0; i < S12AD_NR_CHANNELS; i++) {
-+        if (s->adansa0 & (1u << i)) {
-+            s->addr[i] = DUMMY_RESULT << 4; /* left-justified by default */
-+        }
-+    }
-+    s->adrd = DUMMY_RESULT << 4;
-+
-+    /* Fire end-of-scan interrupt if enabled */
-+    if (FIELD_EX16(s->adcsr, ADCSR, ADIE)) {
-+        qemu_irq_pulse(s->irq[S12AD_IRQ_S12ADI]);
-+    }
-+    if (FIELD_EX16(s->adcsr, ADCSR, GBADIE)) {
-+        qemu_irq_pulse(s->irq[S12AD_IRQ_GBADI]);
-+    }
-+}
-+
-+static uint64_t s12ad_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RX65NS12ADState *s = opaque;
-+
-+    if (addr >= 0x70 && addr + size <= 0xf0) {
-+        uint8_t *p = &s->ext_regs[addr - 0x70];
-+
-+        return size == 1 ? *p : lduw_le_p(p);
-+    }
-+
-+    if (addr >= A_ADDR_BASE && addr <= A_ADDR_END) {
-+        int ch = (addr - A_ADDR_BASE) / 2;
-+        return (ch < S12AD_NR_CHANNELS) ? s->addr[ch] : UINT64_MAX;
-+    }
-+
-+    switch (addr) {
-+    case A_ADCSR:
-+        return s->adcsr;
-+    case A_ADANSA0:
-+        return s->adansa0;
-+    case A_ADANSA1:
-+        return s->adansa1;
-+    case A_ADADS0:
-+        return s->adads0;
-+    case A_ADADS1:
-+        return s->adads1;
-+    case A_ADADC:
-+        return s->adadc;
-+    case A_ADCER:
-+        return s->adcer;
-+    case A_ADSTRGR:
-+        return s->adstrgr;
-+    case A_ADEXICR:
-+        return s->adexicr;
-+    case A_ADANSB0:
-+        return s->adansb0;
-+    case A_ADANSB1:
-+        return s->adansb1;
-+    case A_ADDBLDR:
-+        return 0;
-+    case 0x1a:  /* ADTSDR */
-+    case 0x1c:  /* ADOCDR */
-+        return DUMMY_RESULT << 4;
-+    case A_ADRD:
-+        return s->adrd;
-+    case A_ADSAMPR:
-+        return s->adsampr == 3 ? 1 : 0;
-+    case A_ADSAM:
-+        return s->adsampr == 3 ? s->adsam : 0;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "renesas_s12ad: read 0x%" HWADDR_PRIX
-+                      " not implemented\n",
-+                      addr);
-+        return UINT64_MAX;
-+    }
-+}
-+
-+static void s12ad_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
-+{
-+    RX65NS12ADState *s = opaque;
-+
-+    if (addr >= 0x70 && addr + size <= 0xf0) {
-+        uint8_t *p = &s->ext_regs[addr - 0x70];
-+
-+        if (size == 1) {
-+            *p = val;
-+        } else {
-+            stw_le_p(p, val);
-+        }
-+        return;
-+    }
-+
-+    switch (addr) {
-+    case A_ADCSR:
-+        s->adcsr = val & ~FIELD_DP16(0, ADCSR, ADST, 1); /* keep ADST for now */
-+        s->adcsr |= (val & FIELD_DP16(0, ADCSR, ADST, 1));
-+        if (FIELD_EX16(val, ADCSR, ADST)) {
-+            /* Software-triggered start: schedule conversion completion */
-+            timer_mod(&s->conv_timer,
-+                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + CONV_TIME_NS);
-+        }
-+        break;
-+    case A_ADANSA0:
-+        s->adansa0  = val;
-+        break;
-+    case A_ADANSA1:
-+        s->adansa1  = val;
-+        break;
-+    case A_ADADS0:
-+        s->adads0   = val;
-+        break;
-+    case A_ADADS1:
-+        s->adads1   = val;
-+        break;
-+    case A_ADADC:
-+        s->adadc    = val;
-+        break;
-+    case A_ADCER:
-+        s->adcer    = val;
-+        break;
-+    case A_ADSTRGR:
-+        s->adstrgr  = val;
-+        break;
-+    case A_ADEXICR:
-+        s->adexicr  = val;
-+        break;
-+    case A_ADANSB0:
-+        s->adansb0  = val;
-+        break;
-+    case A_ADANSB1:
-+        s->adansb1  = val;
-+        break;
-+    case A_ADSAMPR:
-+        s->adsampr = val & 0x3;
-+        break;
-+    case A_ADSAM:
-+        if (s->adsampr == 3) {
-+            s->adsam = val & 0x20;
-+        }
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "renesas_s12ad: write 0x%" HWADDR_PRIX
-+                      " not implemented\n",
-+                      addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps s12ad_ops = {
-+    .read  = s12ad_read,
-+    .write = s12ad_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 2,
-+    },
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 2,
-+    },
++static const struct {
++    uint32_t poly;
++    uint8_t width;
++} crc_gps[8] = {
++    [1] = { 0x07,       8  },   /* X8 + X2 + X + 1                          */
++    [2] = { 0x8005,     16 },   /* X16 + X15 + X2 + 1                       */
++    [3] = { 0x1021,     16 },   /* X16 + X12 + X5 + 1                       */
++    [4] = { 0x04c11db7, 32 },   /* X32 + X26 + X23 + ... + X2 + X + 1       */
++    [5] = { 0x1edc6f41, 32 },   /* X32 + X28 + X27 + ... + X8 + X6 + 1      */
 +};
 +
-+static void s12ad_reset(DeviceState *dev)
++static uint32_t bitreverse(uint32_t value, unsigned width)
 +{
-+    RX65NS12ADState *s = RENESAS_S12AD(dev);
-+    int i;
-+
-+    s->adcsr   = 0x0000;
-+    s->adansa0 = 0x0000;
-+    s->adansa1 = 0x0000;
-+    s->adads0  = 0x0000;
-+    s->adads1  = 0x0000;
-+    s->adadc   = 0x00;
-+    s->adcer   = 0x0000;
-+    s->adstrgr = 0x0000;
-+    s->adexicr = 0x0000;
-+    s->adansb0 = 0x0000;
-+    s->adansb1 = 0x0000;
-+    s->adrd    = 0x0000;
-+    s->adsam   = 0x0000;
-+    s->adsampr = 0x00;
-+    memset(s->ext_regs, 0, sizeof(s->ext_regs));
-+    for (i = 0; i < S12AD_NR_CHANNELS; i++) {
-+        s->addr[i] = 0x0000;
-+    }
-+    timer_del(&s->conv_timer);
++    return revbit32(value) >> (32 - width);
 +}
 +
-+static void s12ad_init(Object *obj)
++/* Run nbits of data through the selected polynomial. */
++static void crc_feed(RenesasRxCrcState *s, uint32_t data, unsigned nbits)
 +{
-+    SysBusDevice *d = SYS_BUS_DEVICE(obj);
-+    RX65NS12ADState *s = RENESAS_S12AD(obj);
-+    int i;
++    unsigned gps = FIELD_EX8(s->crccr, CRCCR, GPS);
++    uint32_t poly = crc_gps[gps].poly;
++    unsigned width = crc_gps[gps].width;
++    uint32_t mask, crc;
 +
-+    /* Includes the conversion-time registers at offsets 0x63 and 0x6e. */
-+    memory_region_init_io(&s->memory, obj, &s12ad_ops, s,
-+                          "renesas-s12ad", 0xf0);
-+    sysbus_init_mmio(d, &s->memory);
-+
-+    for (i = 0; i < S12AD_NR_IRQ; i++) {
-+        sysbus_init_irq(d, &s->irq[i]);
++    if (width == 0) {
++        return;             /* GPS selects no calculation */
 +    }
-+    timer_init_ns(&s->conv_timer, QEMU_CLOCK_VIRTUAL, s12ad_conv_done, s);
++    if (nbits > width) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "renesas-rx-crc: %u-bit write to CRCDIR with a %u-bit "
++                      "polynomial selected\n", nbits, width);
++        nbits = width;
++    }
++
++    mask = width == 32 ? UINT32_MAX : (1u << width) - 1;
++    crc = s->crcdor & mask;
++
++    if (FIELD_EX8(s->crccr, CRCCR, LMS)) {
++        /* MSB first: shift up, align the data with the top of the register. */
++        crc ^= (data << (width - nbits)) & mask;
++        while (nbits--) {
++            crc = (crc & (mask ^ (mask >> 1))) ? ((crc << 1) ^ poly) & mask
++                                               : (crc << 1) & mask;
++        }
++    } else {
++        /* LSB first: the reflected form, so shift down with a reversed poly. */
++        uint32_t rpoly = bitreverse(poly, width);
++
++        crc ^= data & mask;
++        while (nbits--) {
++            crc = (crc & 1) ? (crc >> 1) ^ rpoly : crc >> 1;
++        }
++    }
++
++    s->crcdor = crc;
 +}
 +
-+static const VMStateDescription vmstate_s12ad = {
-+    .name = "renesas-s12ad",
++static uint64_t crc_read(void *opaque, hwaddr offset, unsigned size)
++{
++    RenesasRxCrcState *s = opaque;
++
++    switch (offset) {
++    case A_CRCCR:
++        /* DORCLR always reads back as 0. */
++        return s->crccr & CRCCR_RW_MASK;
++    case R_CRCDIR:
++        /*
++         * CRCDIR is documented readable, but the hardware keeps no separate
++         * copy of the data written to it, so nothing meaningful comes back.
++         */
++        return 0;
++    case R_CRCDOR:
++        if (size >= 4) {
++            return s->crcdor;
++        }
++        return s->crcdor & ((1u << (size * 8)) - 1);
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "renesas-rx-crc: read from unmapped offset 0x%"
++                      HWADDR_PRIx "\n", offset);
++        return 0;
++    }
++}
++
++static void crc_write(void *opaque, hwaddr offset, uint64_t value,
++                      unsigned size)
++{
++    RenesasRxCrcState *s = opaque;
++
++    switch (offset) {
++    case A_CRCCR:
++        s->crccr = value & CRCCR_RW_MASK;
++        if (FIELD_EX8(value, CRCCR, DORCLR)) {
++            s->crcdor = 0;
++        }
++        break;
++    case R_CRCDIR:
++        crc_feed(s, value, size * 8);
++        break;
++    case R_CRCDOR:
++        /* Writable so firmware can seed the calculation. */
++        if (size >= 4) {
++            s->crcdor = value;
++        } else {
++            uint32_t m = (1u << (size * 8)) - 1;
++            s->crcdor = (s->crcdor & ~m) | (value & m);
++        }
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "renesas-rx-crc: write to unmapped offset 0x%"
++                      HWADDR_PRIx "\n", offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps crc_ops = {
++    .read = crc_read,
++    .write = crc_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = { .min_access_size = 1, .max_access_size = 4 },
++    .valid = { .min_access_size = 1, .max_access_size = 4 },
++};
++
++static void rx_crc_reset(DeviceState *dev)
++{
++    RenesasRxCrcState *s = RENESAS_RX_CRC(dev);
++
++    s->crccr = 0;
++    s->crcdor = 0;
++}
++
++static void rx_crc_init(Object *obj)
++{
++    RenesasRxCrcState *s = RENESAS_RX_CRC(obj);
++
++    memory_region_init_io(&s->memory, obj, &crc_ops, s,
++                          "renesas-rx-crc", RX_CRC_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->memory);
++}
++
++static const VMStateDescription vmstate_rx_crc = {
++    .name = "renesas-rx-crc",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(adcsr,   RX65NS12ADState),
-+        VMSTATE_UINT16(adansa0, RX65NS12ADState),
-+        VMSTATE_UINT16(adansa1, RX65NS12ADState),
-+        VMSTATE_UINT16(adads0,  RX65NS12ADState),
-+        VMSTATE_UINT16(adads1,  RX65NS12ADState),
-+        VMSTATE_UINT8(adadc,    RX65NS12ADState),
-+        VMSTATE_UINT16(adcer,   RX65NS12ADState),
-+        VMSTATE_UINT16(adstrgr, RX65NS12ADState),
-+        VMSTATE_UINT16(adexicr, RX65NS12ADState),
-+        VMSTATE_UINT16(adansb0, RX65NS12ADState),
-+        VMSTATE_UINT16(adansb1, RX65NS12ADState),
-+        VMSTATE_UINT16(adrd,    RX65NS12ADState),
-+        VMSTATE_UINT16(adsam,   RX65NS12ADState),
-+        VMSTATE_UINT8(adsampr,  RX65NS12ADState),
-+        VMSTATE_UINT8_ARRAY(ext_regs, RX65NS12ADState, 0x80),
-+        VMSTATE_UINT16_ARRAY(addr, RX65NS12ADState, S12AD_NR_CHANNELS),
-+        VMSTATE_TIMER(conv_timer, RX65NS12ADState),
++        VMSTATE_UINT8(crccr, RenesasRxCrcState),
++        VMSTATE_UINT32(crcdor, RenesasRxCrcState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static const Property s12ad_properties[] = {
-+    DEFINE_PROP_UINT64("input-freq", RX65NS12ADState, input_freq, 0),
-+};
-+
-+static void s12ad_class_init(ObjectClass *klass, const void *data)
++static void rx_crc_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->vmsd = &vmstate_s12ad;
-+    device_class_set_legacy_reset(dc, s12ad_reset);
-+    device_class_set_props(dc, s12ad_properties);
++    dc->vmsd = &vmstate_rx_crc;
++    device_class_set_legacy_reset(dc, rx_crc_reset);
 +}
 +
-+static const TypeInfo s12ad_info = {
-+    .name          = TYPE_RENESAS_S12AD,
++static const TypeInfo rx_crc_info = {
++    .name          = TYPE_RENESAS_RX_CRC,
 +    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RX65NS12ADState),
-+    .instance_init = s12ad_init,
-+    .class_init    = s12ad_class_init,
++    .instance_size = sizeof(RenesasRxCrcState),
++    .instance_init = rx_crc_init,
++    .class_init    = rx_crc_class_init,
 +};
 +
-+static void s12ad_register_types(void)
++static void rx_crc_register_types(void)
 +{
-+    type_register_static(&s12ad_info);
++    type_register_static(&rx_crc_info);
 +}
 +
-+type_init(s12ad_register_types)
-diff --git a/include/hw/adc/renesas_s12ad.h b/include/hw/adc/renesas_s12ad.h
++type_init(rx_crc_register_types)
+diff --git a/include/hw/misc/renesas_rx_crc.h b/include/hw/misc/renesas_rx_crc.h
 new file mode 100644
-index 0000000000..2f85e0660f
+index 0000000000..1c41b6bd4b
 --- /dev/null
-+++ b/include/hw/adc/renesas_s12ad.h
-@@ -0,0 +1,61 @@
++++ b/include/hw/misc/renesas_rx_crc.h
+@@ -0,0 +1,30 @@
 +/*
-+ * Renesas RX65N 12-bit Successive Approximation A/D Converter (S12AD)
-+ *
-+ * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), Section 40
++ * Renesas RX CRC Calculator (CRCA)
 + *
 + * Copyright (c) 2026 Umar, Sayyad Mahammad
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_ADC_RENESAS_S12AD_H
-+#define HW_ADC_RENESAS_S12AD_H
++#ifndef HW_MISC_RENESAS_RX_CRC_H
++#define HW_MISC_RENESAS_RX_CRC_H
 +
-+#include "qemu/timer.h"
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RENESAS_S12AD "renesas-s12ad"
-+typedef struct RX65NS12ADState RX65NS12ADState;
-+DECLARE_INSTANCE_CHECKER(RX65NS12ADState, RENESAS_S12AD, TYPE_RENESAS_S12AD)
++#define TYPE_RENESAS_RX_CRC "renesas-rx-crc"
++OBJECT_DECLARE_SIMPLE_TYPE(RenesasRxCrcState, RENESAS_RX_CRC)
 +
-+#define S12AD_NR_CHANNELS   16  /* AN000–AN015 */
++/* CRCCR, CRCDIR and CRCDOR occupy 0x8280, 0x8284 and 0x8288. */
++#define RX_CRC_SIZE     0x10
 +
-+enum {
-+    S12AD_IRQ_S12ADI = 0,  /* end of scan (group A) */
-+    S12AD_IRQ_GBADI  = 1,  /* end of scan (group B) */
-+    S12AD_NR_IRQ     = 2,
-+};
-+
-+struct RX65NS12ADState {
-+    /*< private >*/
++struct RenesasRxCrcState {
 +    SysBusDevice parent_obj;
-+    /*< public >*/
 +
 +    MemoryRegion memory;
-+    uint64_t input_freq;
 +
-+    /* Registers */
-+    uint16_t adcsr;     /* A/D Control/Status */
-+    uint16_t adansa0;   /* Channel select 0 (AN000–AN015) */
-+    uint16_t adansa1;   /* Channel select 1 (AN016–AN020) */
-+    uint16_t adads0;    /* Average enable 0 */
-+    uint16_t adads1;    /* Average enable 1 */
-+    uint8_t  adadc;     /* Average count */
-+    uint16_t adcer;     /* Control extended */
-+    uint16_t adstrgr;   /* Start trigger select */
-+    uint16_t adexicr;   /* Extended input */
-+    uint16_t adansb0;   /* Group B channel select 0 */
-+    uint16_t adansb1;   /* Group B channel select 1 */
-+    uint16_t addr[S12AD_NR_CHANNELS]; /* Result registers AN000–AN015 */
-+    uint16_t adrd;      /* Temperature sensor / internal ref result */
-+    uint16_t adsam;     /* Conversion time setting */
-+    uint8_t adsampr;    /* ADSAM write protection */
-+    uint8_t ext_regs[0x80]; /* Extended configuration, offsets 0x70-0xef */
-+
-+    qemu_irq irq[S12AD_NR_IRQ];
-+    QEMUTimer conv_timer; /* models conversion delay */
++    uint8_t crccr;      /* control: GPS[2:0], LMS, DORCLR */
++    uint32_t crcdor;    /* running result, also the initial value */
 +};
 +
-+#endif /* HW_ADC_RENESAS_S12AD_H */
++#endif /* HW_MISC_RENESAS_RX_CRC_H */
 
 -- 
 2.53.0
