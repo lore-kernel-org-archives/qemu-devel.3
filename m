@@ -1,106 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A146A606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 09:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF42606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 11:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=RYLw719D
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AmTDQ4dQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKuyD-00031D-I9; Sun, 25 Oct 2026 05:56:53 -0400
+	id 1xKw6A-0004Io-PM; Sun, 25 Oct 2026 07:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKuxu-000308-30
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 05:56:36 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1xKw64-0004Hm-4t
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 07:09:04 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xKuxq-0000yE-M9
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 05:56:33 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-8ab43af5e97so20253927b3.1
- for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 02:56:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1792922189; cv=none;
- d=google.com; s=arc-20260327;
- b=mV9MhW77bLUpf5SEdZfuKjTnznuJmixMbkuubyt3g1pnCZL6PEffVZCR0Ujo5K54jS
- GDz0K5UNHBunH1dinnRRqNYF1jRBCaGbaY8xTcyqgDTQJ22OZzr6Q1q6Vs2fWn0WYkbx
- n9ODtpv/2tDnGsBIrvhQTaVqkKR1MZmW+5OccOz1B3yjyeZWB0Clqazql2oRHeV01os8
- UHCjHU2vWihRhFD8MI3icwhJt2bMWDi2hrbpj4QkfRgMXVqGBFh9husLtQwrchGGZqGZ
- zTUc02vzVBP6b4Ec+TpxSfvR8hlgXG09g96TtJUynS/aukOKKiwfile2h4xb1WRVU8Kj
- 2h8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=h0l+ojj5sB1J/f1DDKsR0fDF26ZMQzeqNQMEOYiQMT8=;
- fh=9vbVNIdRsO0paNhZWc2/4JcInsvPbgZ5nIOMIbgIuW4=;
- b=TlU22Kr1xhSE1Ntg94u4/dYvU243nPVfthMmbAwkfGRIZb1R0bzCoMcq2JrE/CNK3v
- 2TPGFNgRkWgjb+CHw76n8H1630AbkD9nlQrBGteIUxfHSemQiycKDMEQtbCnYAFGZsjH
- GDM1m9js66hHc5fRyohYIdJ6s1MtH21q7gciGS2hCiRUGp9fpzod4M1XYAwJsuacs/uH
- nwJ7+7Ntf/W2fLor4fhai7XbRTnEI8ar0pbe3avmvgUGiR2dXFoDTrAXcXmzu5Jersca
- KJ+cWHfjevrSLVNDrXKVmvdUmaU5vmXnGwYQ2P7ffzoZ+vV5u9bQvDPWubo2ZcGiUX9x
- t8Lw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1xKw62-0006qp-2I
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 07:09:03 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4a5036bbac7so2742205e9.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 04:09:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792922189; x=1793526989; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=h0l+ojj5sB1J/f1DDKsR0fDF26ZMQzeqNQMEOYiQMT8=;
- b=RYLw719DpzL+9Hu9NFU5LY1neySe2fPd9nYnuolM6v8ZY9Jm1MQCidRnvAtqtmLDRx
- 3/pctZrLlQHOMd1mXJj0M9+tlbobnahsd2qTVEIgUMz9YCnN0AuSaqS2ylRRaMhxYulU
- VZPGY3ehXbACTEdiYaqmEryCEJKzhx8wQBLtYjveez+bhEGlETSA+kDnU8MOth6sDrql
- Qhaa9UjgrTrEaoIUCHLXonHUT8nIaiR+eCmyTBskFNp+oWUyLgq8ZUTOE3Yz+7R2jfnZ
- Bsh56qGFbopP315ryNW8JM5cpN98dm9yxz1s5IIOCL8IjOWeUzj5z75riZlJGqs+LOg8
- c2wA==
+ d=linaro.org; s=google; t=1792926539; x=1793531339; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WoMlfAVsgxjLbhMp/I+SWkPFRmU2OtMZl8vdn0WvOuw=;
+ b=AmTDQ4dQze1xlmIVaNeAG9mhs2dcw8XYhvsi9agh5s5cJaVVpLj9ooKoP+PjaBThll
+ plB/6MbJa88Hgb5vyng4IitgKsguh1W5jqQoanPmcUsJf8/wcdYmbO+Z5Qfu/bari/cE
+ zPmCrpSFIdLS20ho5ttgWbYu01uRCrblEep+r9IbdwCS1YTZJmRDn6lAmvyI7o/VlT0C
+ HEL8ci17OuusrPL0dxHEhHEosIk193/YQxv+HdVNjSGh3vQAQ0IfVQn0xA+tSIaZZotA
+ welW7ebaekv0aYUCL3KLIYvP3yHStwz8VnAOHevQrQM+TNzFTZ3Fase802+w+/Kj77gu
+ MQUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792922189; x=1793526989;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=h0l+ojj5sB1J/f1DDKsR0fDF26ZMQzeqNQMEOYiQMT8=;
- b=iKiK1bBHv8ygfCvyNUDdXlX9g7EUL7Qk2uoN/A5OiQGFvPks0nU0DhPqRpWukedCuZ
- rbpn6Cuo+pgmIoqHqiJL5+ds15N6dtuW/9FmxmoOA6NGN26fOv1cAmcYVkZfI+dsGi7M
- SnZZKK2Rk/rcQsSfMwJuj0F4u6OWDIumAgaKA9/EmH0FXKV0X/RxpzalxTIG8dnNttAv
- 8OJLKnpe+vB/mrHejiwrmRV2REy6vkx/IfjDEWShze7XgiyGz5jvPNpi9BK+iCHWDUSE
- dxZUdbfzVXdENlxgWkr1c/+BpGiN/Kg+aUKGPzp/Jn1fIU18wHXgb07vAr2QMAPiZ4f2
- LwgQ==
-X-Gm-Message-State: AFq9FYJty/XRPy/RVYBtcV19kcuXKsXAu2bhOwwHv2RKoNxzx5IJHml5
- 1s5vZLb5In2VcJM/4FaVwTujxsxY3co0vT5R+nOOCBOUM+Fn8GsIEAl+xd40vc81qcJOWmDwFRI
- xKo+HinWh8IDC16z+ebmXxsUGClF4pIMXLrHuXh58Bg==
-X-Gm-Gg: AYBFou3vMleumofI6qBuhY2+Z8t5QXvpq1gqcPxdEi+bFZcuDR7nSKfmdUiuDxj2jz7
- B7mEQrvwFhg8NJOG5P9hLCvQ5lHXtf3ilUrB0iIckhMRCStucPlg4WSDRKu6hi0xsdE8Nvk0+pw
- 0+XRdmMFybwYyxo30FmIYSyzb8gHgyamJdCYYnMV4LwfzmEPnefQjuM/CO2igWK+6/4NYs5zwy2
- 1PdbE5XbYczsMopkxFcqiM+5QTmiBlPk2/l8CmpQbeD6/ilQ673wQE6jvk8ZN+bLyXZ7tXfeCUU
- ffzNwJJXnYveTlAi6AAKRaQ5LTzhB8ULKEDWheGnKAQZ84TWpZQNpE6LsqC2Yjo/T3FKFU6Yox3
- jJv8Lx5tcUMubKxCrj9DdQgaZAy2V5m7hiaMlNJ1oYE+/9e04KJXVKlFwjSsdyDf6qNootf/bj3
- B2qet9gBzCEra+jif4eFE2
-X-Received: by 2002:a05:690c:28b:b0:8b0:d206:16c1 with SMTP id
- 00721157ae682-8b1672b8498mr30220497b3.24.1792922189011; Sun, 25 Oct 2026
- 02:56:29 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1792926539; x=1793531339;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WoMlfAVsgxjLbhMp/I+SWkPFRmU2OtMZl8vdn0WvOuw=;
+ b=M1JXrM3hKuBJGn4sf/ZgoSfQsJ3KMc4HdwwB8LL+FoW3pxWtKTvGRgbHHaHxjxlR6i
+ 9BJXIDnEv/8th0wiekwka+TnWab8z+rWfaeyJz5U5pykzlo4iW4BGuPrH8c8sa+BKIes
+ 2bfKc6XeV8+Z8KiVXdmkxAOY921CW7cyG8OpTInYBWdEYhZyhRWBI0QnmC+6g09ZrD41
+ i40PtoxpZO72RWDYUsOaRTTWEJk/XE8lpvVTEnixGgtYbjHYqY3gmyllGcZgL1oK42fi
+ iD4T+REOGeaMG/sdW1xsWvXyWBadAAlEpmkWplqlPUleIw6YvaqatbGFIPbkENRkopgt
+ uMgw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxXUQZuQ71KRBVRf4OZdzU4XeSXcLtTMUkzPV9DGnMsSjN6Meeuyw0aGrXztk2ptyc9vSWFYsoTqfyE@nongnu.org
+X-Gm-Message-State: AFq9FYJsHvTZqzs2oKEdTKkRl/F7CIHQKLI3M6gBgQi6KH0LMlxDzdtL
+ VFkyh8SKG0UxPzKTONnqMGAqqjQzhHvWwXENTxK6fM35qEku5Kn92f0rlMoXl3nYKRk=
+X-Gm-Gg: AYBFou2qFqvKFfjPwYJssDHzVv5f58gV1M5ak/qQcm8owG13FqiOE3WTE6RjiLBghTH
+ vqkkXWFE96UjLx68nYtjuY0Po4DC5jS1R1HFmIQiSYniPRLtfRd3E8RnGfo8G09X3H6+knzHDdj
+ vJuSRAZQSLWNjnfWWe+AgjToOEedsZujITYQ9N1wPvIUkVyi/xsddMwWR19+fCUIUqe/sIlCe08
+ WTkuosIUXWpnw3LfmF1OjmcJesdfIAs/B5DD0O01OWlhBCKoivCFB5S9JxkA4Gwj7ATglI1JIxX
+ Milzj7iWhY8MVmDwxdQUBFNRWO8thaoy0W/WBf7DuhFmpiz5vQndd1Dc2CIzt0LNwlAwt6EJveu
+ g0GJkNfPHF/gmkuYf6+2fxfln8TmX7wRVxXygDkdpfgj9IlvJ+liCqiO3pxnQ4LfQ6K5Dy1vrmK
+ w6LLxM7PjTnBlDkSc6hOB/sxwYj+TCcdnMecIOmG3+EnEaEtXFpIVJMpYeoqwuc0niapVDAdomg
+ mR3Ow19K1N2NsIDSu1Ob9vDbul204E5SD5Pid/1SA8Y7EKIxMnCjMKaxnoA/Ohc3zTXNQc9NDNJ
+ PEGZ7BPZ9TMNh6/FW/jRAyal6rRq5iL02OdTr4oBZOGkQ0KKKpF6g+xCfOkR
+X-Received: by 2002:a05:600c:8b86:b0:4a1:dfaf:f43e with SMTP id
+ 5b1f17b1804b1-4a35ac38af8mr64839175e9.1.1792926539452; 
+ Sun, 25 Oct 2026 04:08:59 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a359f3e00asm210762515e9.0.2026.10.25.04.08.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Oct 2026 04:08:58 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH] hw/dma/xlnx_dpdma: Don't allow DMA off end of host buffers
+Date: Sun, 25 Oct 2026 11:08:57 +0000
+Message-ID: <20261025110857.1973128-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <DB8PR04MB7177C8ED1A20409414A573EF87622@DB8PR04MB7177.eurprd04.prod.outlook.com>
-In-Reply-To: <DB8PR04MB7177C8ED1A20409414A573EF87622@DB8PR04MB7177.eurprd04.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 25 Oct 2026 09:56:16 +0000
-X-Gm-Features: AclHuK-ObOQZb4FNm3SbmMLELXO4FWJlsv3oNzCJC-28TZNxR6bY0K-dU6hWuPM
-Message-ID: <CAFEAcA-dpfXTLk9KNJ0OsOEaCYppcZLLgcnOCqhUXmOVE2jfaw@mail.gmail.com>
-Subject: Re: [RFC] target/arm: Correct MPIDR.MT handling for i.MX95 Cortex-A55
- Aff1 topology
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: QEMU <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,78 +98,190 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
 	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, 25 Oct 2026 at 07:14, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
-> I am looking for guidance on the appropriate scope for correcting Cortex-A55 MPIDR topology in QEMU.
-> I have enabled and tested i.MX95 machine model that boots the complete NXP firmware/software stack from the emulated boot ROM:
->
->   Boot ROM
->     -> System Manager firmware (SCP) running on Cortex-M33
->     -> A55 SPL
->     -> TF-A / BL31
->     -> U-Boot
->     -> Linux
->
-> For testing, I am using the Yocto-generated WIC image from NXP's official i.MX95 Yocto BSP as the emulated SD-card image.
-> i.MX95 represents its Cortex-A55 CPUs using Aff1 as the core identifier, with Aff0 fixed at zero.
->
-> Current QEMU returns these Aff1-based affinity values through MPIDR_EL1 with MT clear. It is not sufficient for the i.MX95
-> firmware and Linux secondary-CPU startup path.
+The xlnx_dpdma DMA engine allows the guest to do DMA to host buffers
+for audio and graphics data.  These buffers are set up by the xlnx_dp
+device, which calls xlnx_dpdma_set_host_data_location() to tell the
+DMA engine where they are.  However, this API doesn't provide any way
+to say how big the host buffers are, and the DMA engine does not
+check whether the guest is trying to write off the end of the buffer.
 
-This is https://gitlab.com/qemu-project/qemu/-/work_items/1608
+Add a length argument to xlnx_dpdma_set_host_data_location(), and
+bounds check the guest's DMA writes against it.  The DPDMA ISR has
+bits for each channel for "descriptor payload is too large", so we
+report such overflows there.
 
-but fixing it is complicated, because it runs into complexity
-with how it should interact with user-specified CPU topology
-command line arguments.
+Cc: qemu-stable@nongnu.org
+Fixes: d3c6369a96a8 ("introduce xlnx-dpdma")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4134
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I couldn't see anywhere else in the tree that wants to use
+surface_data_size(), so I've left it as a local function
+(especially since we probably want to backport this fix).
+We can move it to surface.h later if some other user appears.
+---
+ include/hw/dma/xlnx_dpdma.h |  5 +++--
+ hw/display/xlnx_dp.c        | 30 ++++++++++++++++++++++++------
+ hw/dma/xlnx_dpdma.c         | 13 ++++++++++++-
+ 3 files changed, 39 insertions(+), 9 deletions(-)
 
-Some of the discussion on this old thread may be relevant:
-https://lore.kernel.org/qemu-devel/20240419183135.12276-1-dorjoychy111@gmail.com/
+diff --git a/include/hw/dma/xlnx_dpdma.h b/include/hw/dma/xlnx_dpdma.h
+index 7cf67aef6e1..0fc24e23ad3 100644
+--- a/include/hw/dma/xlnx_dpdma.h
++++ b/include/hw/dma/xlnx_dpdma.h
+@@ -38,6 +38,7 @@ struct XlnxDPDMAState {
+     MemoryRegion iomem;
+     uint32_t registers[XLNX_DPDMA_REG_ARRAY_SIZE];
+     uint8_t *data[6];
++    uint64_t datalen[6];
+     bool operation_finished[6];
+     qemu_irq irq;
+ };
+@@ -69,10 +70,10 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+  * @s The DPDMA state.
+  * @channel The channel associated to the pointer.
+  * @p The buffer where to store the data.
++ * @len: The length of the buffer in bytes.
+  */
+-/* XXX: add a maximum size arg and send an interrupt in case of overflow. */
+ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+-                                       void *p);
++                                       void *p, uint64_t len);
+ 
+ /*
+  * xlnx_dpdma_trigger_vsync_irq: Trigger a VSYNC IRQ when the display is
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 98126ef320d..06594980292 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -333,9 +333,11 @@ static inline void xlnx_dp_audio_activate(XlnxDPState *s)
+                    & DP_TX_AUD_CTRL) != 0);
+     audio_be_set_active_out(s->audio_be, s->amixer_output_stream, activated);
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(0),
+-                                      &s->audio_buffer_0);
++                                      &s->audio_buffer_0,
++                                      sizeof(s->audio_buffer_0));
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_AUDIO_DMA_CHANNEL(1),
+-                                      &s->audio_buffer_1);
++                                      &s->audio_buffer_1,
++                                      sizeof(s->audio_buffer_1));
+ }
+ 
+ static inline void xlnx_dp_audio_mix_buffer(XlnxDPState *s)
+@@ -566,6 +568,18 @@ static void xlnx_dp_aux_set_command(XlnxDPState *s, uint32_t value)
+     s->core_registers[DP_INTERRUPT_SIGNAL_STATE] |= 0x04;
+ }
+ 
++/*
++ * Return the size of the surface in bytes. Pixman doesn't provide
++ * a helper function/accessor for this, so we must calculate it
++ * from the stride and height. Note that a pixman stride can
++ * potentially be negative, hence the abs().
++ */
++static inline uint64_t surface_data_size(DisplaySurface *s)
++{
++    /* Can't overflow because stride and height are both int */
++    return (uint64_t)abs(surface_stride(s)) * surface_height(s);
++}
++
+ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
+                               Error **errp)
+ {
+@@ -580,7 +594,8 @@ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
+         DisplaySurface *surface = qemu_console_surface(s->console);
+         XlnxDPDMAState *dma = XLNX_DPDMA(val);
+         xlnx_dpdma_set_host_data_location(dma, DP_GRAPHIC_DMA_CHANNEL,
+-                                          surface_data(surface));
++                                          surface_data(surface),
++                                          surface_data_size(surface));
+     }
+ }
+ 
+@@ -644,9 +659,11 @@ static void xlnx_dp_recreate_surface(XlnxDPState *s)
+         }
+ 
+         xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
+-                                            surface_data(s->g_plane.surface));
++                                          surface_data(s->g_plane.surface),
++                                          surface_data_size(s->g_plane.surface));
+         xlnx_dpdma_set_host_data_location(s->dpdma, DP_VIDEO_DMA_CHANNEL,
+-                                            surface_data(s->v_plane.surface));
++                                          surface_data(s->v_plane.surface),
++                                          surface_data_size(s->v_plane.surface));
+     }
+ }
+ 
+@@ -1396,7 +1413,8 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
+     s->console = qemu_graphic_console_create(dev, 0, &xlnx_dp_gfx_ops, s);
+     surface = qemu_console_surface(s->console);
+     xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
+-                                      surface_data(surface));
++                                      surface_data(surface),
++                                      surface_data_size(surface));
+ 
+     as.freq = 44100;
+     as.nchannels = 2;
+diff --git a/hw/dma/xlnx_dpdma.c b/hw/dma/xlnx_dpdma.c
+index 32f56036a4c..9d8e7593698 100644
+--- a/hw/dma/xlnx_dpdma.c
++++ b/hw/dma/xlnx_dpdma.c
+@@ -589,6 +589,7 @@ static void xlnx_dpdma_reset(DeviceState *dev)
+ 
+     for (i = 0; i < 6; i++) {
+         s->data[i] = NULL;
++        s->datalen[i] = 0;
+         s->operation_finished[i] = true;
+     }
+ }
+@@ -760,6 +761,14 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             int64_t transfer_len = xlnx_dpdma_desc_get_transfer_size(&desc);
+             uint32_t line_size = xlnx_dpdma_desc_get_line_size(&desc);
+             uint32_t line_stride = xlnx_dpdma_desc_get_line_stride(&desc);
++
++            if (transfer_len > s->datalen[channel]) {
++                s->registers[DPDMA_ISR] |= ((1 << 18) << channel);
++                xlnx_dpdma_update_irq(s);
++                DPRINTF("Descriptor payload too large..\n");
++                goto update_descriptor;
++            }
++
+             if (xlnx_dpdma_desc_is_contiguous(&desc)) {
+                 source_addr[0] = xlnx_dpdma_desc_get_source_address(&desc, 0);
+                 while (transfer_len != 0) {
+@@ -809,6 +818,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+             }
+         }
+ 
++    update_descriptor:
+         if (xlnx_dpdma_desc_update_enabled(&desc)) {
+             /* The descriptor need to be updated when it's completed. */
+             DPRINTF("update the descriptor with the done flag set.\n");
+@@ -831,7 +841,7 @@ size_t xlnx_dpdma_start_operation(XlnxDPDMAState *s, uint8_t channel,
+ }
+ 
+ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+-                                         void *p)
++                                       void *p, uint64_t len)
+ {
+     if (!s) {
+         qemu_log_mask(LOG_UNIMP, "DPDMA client not attached to valid DPDMA"
+@@ -841,6 +851,7 @@ void xlnx_dpdma_set_host_data_location(XlnxDPDMAState *s, uint8_t channel,
+ 
+     assert(channel <= 5);
+     s->data[channel] = p;
++    s->datalen[channel] = len;
+ }
+ 
+ void xlnx_dpdma_trigger_vsync_irq(XlnxDPDMAState *s)
+-- 
+2.43.0
 
-> With MPIDR_EL1.MT clear:
->
->   - The complete ROM-to-Linux boot chain reaches Linux.
->   - Linux begins bringing up its secondary CPUs.
->   - CPU1 reaches Linux secondary initialization.
->   - CPU2 through CPU4 time out and fail to come online.
->
-> With MPIDR_EL1.MT set while retaining the same Aff1 affinity values, the same complete boot chain succeeds and all secondary CPUs presented
-> to Linux come online.
-
-This seems a bit odd and maybe worth investigation as to why exactly
-the secondaries don't boot. What QEMU presents is architecturally
-correct even if it doesn't precisely match the real CPU, so
-if it causes some bit of software to not work right that software
-is perhaps buggy and perhaps being unnecessarily specific to
-the exact CPU behaviour. Or is this perhaps a "DTB encodes
-affinity values that don't match what QEMU uses" problem?
-
-> I found QEMU issue #1608 and the previous qemu-devel discussion about Cortex-A55 using MT=1 with the core index in Aff1. The discussion suggests
-> that this should eventually be a generic CPU-model correction.
->
-> If there is already a planned patch for resolving this, I would prefer to align the i.MX95 work with it.
-
-No, there's no planned patch. Somebody needs to think properly
-about the intersection with the user topology stuff, which has
-just never seemed to me to be worth the time and effort for a
-corner-case of "we don't quite do what the real CPU does".
-Since you've found some real-world software that does care,
-we should probably look again at it.
-
-> Otherwise, would a generic 'mpidr_core_in_aff1' like property, initially used by the i.MX95 machine and later extended to the other affected CPU
-> models, be a reasonable direction?
-
-I don't think this should be machine-specific. We know what the CPUs
-which should behave like this are, and how they ought to behave.
-We probably need a QOM property for backwards compatibility
-for versioned machine types, but that can get set by the usual
-back-compat machinery.
-
-thanks
--- PMM
 
