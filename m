@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5DF606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BE7606A31B
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL22d-0008AY-VN; Sun, 25 Oct 2026 13:30:00 -0400
+	id 1xL22v-0008GI-QO; Sun, 25 Oct 2026 13:30:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL22M-0008A3-46; Sun, 25 Oct 2026 13:29:40 -0400
+ id 1xL22k-0008D6-1j; Sun, 25 Oct 2026 13:30:04 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL22I-0006zC-Bc; Sun, 25 Oct 2026 13:29:37 -0400
+ id 1xL22h-00070Z-VX; Sun, 25 Oct 2026 13:30:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=QUzDBbWGriGvUgeOxWEeMEAaKiQGIQw8SDrh1kgEPSg=; b=UpfsTByNVgxrfuP0jpwix+y/ef
- OUJzUEUGAH4AOG9YlXn/11QZDUBzR1sgRwJ16kBCwsPv/75fSp6vVygdb4L7xMgLsTJ3QBPmkYY2R
- xa7tgssCGwdmafE28Jsvy6DbNyuR0LBa3QcuPcORnI5O+Ux4TrDbWYHCEwLO2ShfU4LZjDc6NxYsP
- Z6a7ckBq97GcpStx1VfXOyqIe3fPsXYQ8sTALccPz69Pxlgc6lK3oLoDtbULonoke7g4PWpdA3B7p
- uzxN31VjpeEQrDHODhH2gwpYXg3LXYVQV6LkTTyKbrgYZb+xhkNwSBut73bfBO+qivBwc1AyoNUAr
- 2ELIbdIQ==;
+ bh=eoSGlRI6QnxEjFBlNl7mQ5JMdFgVNNFKt4Fx6vMGRTE=; b=ceJ7CUsgjCgic/BY4U0BqMXngo
+ cNKEDW+L0NIBThq/or4UxYdopMGeDCcop1kdNBIPktW4w+1Q3s4jfYHNG1CTtEu7HUkxO4KLuexHf
+ 04iwP1QFbWK6BRwibcGkDyOrbCGXQTmpoBeO4vNuE3tquZIyFhz+U5kGsXK2uiydA3MJlPvFg+WU/
+ V0BEQdlVqaWvl7/x+i4eTkK9okfRrdWxWMzNPGkZ2nCmTzZD+pM9FcgQEUmjR23D6vRhKHgNfu6Kb
+ K8liTq89k2mW8/jBLk8eZKD0lQspluS9B/e+M/2Y+VPRUZ4cenYclIc3sFSdqnasz5O2MvMXF+Xl5
+ piEcePcw==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gF-00095C-15; Sun, 25 Oct 2026 18:06:47 +0100
+ id 1xL1gQ-000985-1O; Sun, 25 Oct 2026 18:06:58 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vx-000OzG-13; Sun, 25 Oct 2026 17:56:08 +0100
+ id 1xL1Vw-000OzG-0U; Sun, 25 Oct 2026 17:56:07 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:46 +0100
-Subject: [PATCH v2 30/31] hw/net: add Renesas RX ETHERC and EDMAC
+Date: Sun, 25 Oct 2026 17:55:30 +0100
+Subject: [PATCH v2 14/31] target/rx: add RXv3 DMOV.D memory forms
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20261025-umar-rx-series-v2-30-9e846577cad0@sayyadumar.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261025-umar-rx-series-v2-14-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=33030;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5430;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=LqLRMR6D21vHW02t8nxLuVR14cXWY0qZgqQlYCmICfk=;
- b=FYSW07KGtMRbGJ6f/f350b8+I9/flYYrhfUktCaMOUsGGj9FriJKQUl0ZvK8X7zcYRzqf/JDN
- SH9T78GXd0jCp5D/RLZHkMy14kQX/C9+3UcaX2+ZovREwpgPPtcOMai
+ bh=+eL1uk9DE6Tu7ZrsMwQLngcFL/6W69z5Bv/25M9tB2Q=;
+ b=w5hgKHIzwR26ZZ9awhVUC+iCmSXm/1/xz+P6coKNoL2lJxECbtluYLXuxcd0tP5x7ZHVe5rLS
+ PMedx2xzBPRDt38sBsabFDZ1FRR3KKGKZ4MaT6NF6CLrdAhTjE4O6Xm
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -85,1144 +85,172 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the RX65N Ethernet Controller and Ethernet DMA Controller,
-Sections 32-33 of the RX65N hardware manual.
+Add DMOV.D DRs,dsp[Rd] and DMOV.D dsp[Rs],DRd. The DR operand sits in
+a trailing post-byte that follows the displacement, so it is read
+during translation rather than by decodetree. Per the RXv3 manual the
+.D displacement is scaled by 4, not by the 8-byte transfer size.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
- MAINTAINERS                            |   2 +
- configs/devices/rx-softmmu/default.mak |   1 +
- hw/net/Kconfig                         |   3 +
- hw/net/meson.build                     |   1 +
- hw/net/renesas_etherc.c                | 955 +++++++++++++++++++++++++++++++++
- include/hw/net/renesas_etherc.h        | 109 ++++
- 6 files changed, 1071 insertions(+)
+ target/rx/disas.c      | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ target/rx/insns.decode |  8 +++++++
+ target/rx/translate.c  | 50 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 117 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6af2849a1a..db2f373b2f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3090,6 +3090,7 @@ F: hw/misc/renesas_rx_*.c
- F: hw/misc/renesas_rx_romcache.c
- F: hw/misc/renesas_rx_fcu.c
- F: hw/misc/rx65n_sysclk.c
-+F: hw/net/renesas_etherc.c
- F: hw/rtc/renesas_rx_rtc.c
- F: hw/rx/
- F: hw/ssi/renesas_rspi.c
-@@ -3103,6 +3104,7 @@ F: include/hw/misc/renesas_rx_*.h
- F: include/hw/misc/renesas_rx_romcache.h
- F: include/hw/misc/renesas_rx_fcu.h
- F: include/hw/misc/rx65n_sysclk.h
-+F: include/hw/net/renesas_etherc.h
- F: include/hw/rtc/renesas_rx_rtc.h
- F: include/hw/rx/
- F: include/hw/ssi/renesas_rspi.h
-diff --git a/configs/devices/rx-softmmu/default.mak b/configs/devices/rx-softmmu/default.mak
-index 562dce7b85..530db7fae1 100644
---- a/configs/devices/rx-softmmu/default.mak
-+++ b/configs/devices/rx-softmmu/default.mak
-@@ -13,3 +13,4 @@ CONFIG_RENESAS_RX_CRC=y
- CONFIG_RENESAS_RX_ROMCACHE=y
- CONFIG_RENESAS_RX_FCU=y
- CONFIG_RX65N_SYSCLK=y
-+CONFIG_RENESAS_ETHERC=y
-diff --git a/hw/net/Kconfig b/hw/net/Kconfig
-index b56a173eed..31a0dadd87 100644
---- a/hw/net/Kconfig
-+++ b/hw/net/Kconfig
-@@ -162,3 +162,6 @@ config CAN_FLEXCAN
-     bool
-     depends on IMX
-     select CAN_BUS
-+
-+config RENESAS_ETHERC
-+    bool
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 63b0e96245..0f8c28e57f 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -71,3 +71,4 @@ if have_hmp
- endif
+diff --git a/target/rx/disas.c b/target/rx/disas.c
+index fba5d2ea57..e9e504fc9b 100644
+--- a/target/rx/disas.c
++++ b/target/rx/disas.c
+@@ -1410,6 +1410,65 @@ static bool trans_DMOVD_irh(DisasContext *ctx, arg_DMOVD_irh *a)
+     return true;
+ }
  
- subdir('can')
-+system_ss.add(when: 'CONFIG_RENESAS_ETHERC', if_true: files('renesas_etherc.c'))
-diff --git a/hw/net/renesas_etherc.c b/hw/net/renesas_etherc.c
-new file mode 100644
-index 0000000000..2a95469ab2
---- /dev/null
-+++ b/hw/net/renesas_etherc.c
-@@ -0,0 +1,955 @@
-+/*
-+ * Renesas RX65N Ethernet Controller (ETHERC) + Ethernet DMA Controller (EDMAC)
-+ *
-+ * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), Sections 32–33
-+ *
-+ * Copyright (c) 2026 Umar, Sayyad Mahammad
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/core/irq.h"
-+#include "hw/net/renesas_etherc.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "net/net.h"
-+#include "system/dma.h"
-+
-+/*
-+ * Register offsets within one channel's 0x200-byte MMIO window.
-+ * EDMAC occupies offsets 0x000-0x0ff; ETHERC occupies 0x100-0x1ff.
-+ * RX65N/RX72M/RX72N channel 0 starts at 0x000c0000. RX72M/RX72N
-+ * channel 1 starts at 0x000c0200 and must use a separate device instance.
-+ * References: RX65N hardware manual sections 34/35; RX72M/RX72N 36/38.
-+ */
-+/* ETHERC */
-+#define R_ECMR      0x100
-+#define R_RFLR      0x108
-+#define R_ECSR      0x110
-+#define R_ECSIPR    0x118
-+#define R_PIR       0x120
-+#define R_PSR       0x128
-+#define R_RDMLR     0x140
-+#define R_IPGR      0x150
-+#define R_APR       0x154
-+#define R_MPR       0x158
-+#define R_RFCF      0x160
-+#define R_TPAUSER   0x164
-+#define R_TPAUSECR  0x168
-+#define R_BCFRR     0x16C
-+#define R_MAHR      0x1C0
-+#define R_MALR      0x1C8
-+#define R_TROCR     0x1D0
-+#define R_CDCR      0x1D4
-+#define R_LCCR      0x1D8
-+#define R_CNDCR     0x1DC
-+#define R_CEFCR     0x1E4
-+#define R_FRECR     0x1E8
-+#define R_TSFRCR    0x1EC
-+#define R_TLFRCR    0x1F0
-+#define R_RFCR      0x1F4
-+#define R_MAFCR     0x1F8
-+/* EDMAC */
-+#define R_EDMR      0x000
-+#define R_EDTRR     0x008
-+#define R_EDRRR     0x010
-+#define R_TDLAR     0x018
-+#define R_RDLAR     0x020
-+#define R_EESR      0x028
-+#define R_EESIPR    0x030
-+#define R_TRSCER    0x038
-+#define R_RMFCR     0x040
-+#define R_TFTR      0x048
-+#define R_FDR       0x050
-+#define R_RMCR      0x058
-+#define R_TFUCR     0x064
-+#define R_RFOCR     0x068
-+#define R_IOSR      0x06C
-+#define R_FCFTR     0x070
-+#define R_RPADIR    0x078
-+#define R_TRIMD     0x07C
-+#define R_RBWAR     0x0C8
-+#define R_RDFAR     0x0CC
-+#define R_TBRAR     0x0D4
-+#define R_TDFAR     0x0D8
-+
-+/* ECMR bits */
-+#define ECMR_PRM    (1u << 0)   /* promiscuous */
-+#define ECMR_DM     (1u << 1)   /* full duplex */
-+#define ECMR_TE     (1u << 5)   /* transmit enable */
-+#define ECMR_RE     (1u << 6)   /* receive enable */
-+
-+/* PIR bits */
-+#define PIR_MDC     (1u << 0)
-+#define PIR_MDO     (1u << 2)
-+#define PIR_MMD     (1u << 1)   /* direction: 1=SoC drives MDO */
-+#define PIR_MDI     (1u << 3)   /* MDI input (read-only) */
-+
-+/* EESR / EESIPR bits */
-+#define EESR_CERF   (1u << 0)
-+#define EESR_RMAF   (1u << 7)
-+#define EESR_RFOF   (1u << 21)
-+#define EESR_RDE    (1u << 22)
-+#define EESR_FR     (1u << 23)
-+#define EESR_TFUF   (1u << 25)
-+#define EESR_TDE    (1u << 26)
-+#define EESR_TC     (1u << 27)
-+#define EESR_TWB    (1u << 31)
-+
-+/* TX descriptor word 0 (TD0) bits */
-+#define TD0_TACT    (1u << 31)
-+#define TD0_TDLE    (1u << 30)
-+#define TD0_TFP1    (1u << 29)
-+#define TD0_TFP0    (1u << 28)
-+#define TD0_TFE     (1u << 27)
-+#define TD0_TWBI    (1u << 26)
-+#define TD0_TBL     0x0000FFFFu
-+
-+/* RX descriptor word 0 (RD0) bits */
-+#define RD0_RACT    (1u << 31)
-+#define RD0_RDLE    (1u << 30)
-+#define RD0_RFP1    (1u << 29)
-+#define RD0_RFP0    (1u << 28)
-+#define RD0_RBL     0x0000FFFFu
-+
-+/* Descriptor size (EDMR.DL = 00 → 4 words = 16 bytes) */
-+#define DESC_SIZE   16
-+
-+/*
-+ * PHY simulation
-+ * Emulates a generic 100BASE-TX PHY at addresses 0 and 1, always link-up.
-+ */
-+static uint16_t mdio_phy_read(RX65NEthercState *s, int phy, int reg)
++/* Fetch n more instruction bytes into the dump buffer and return them. */
++static uint32_t disas_fetch(DisasContext *ctx, int n)
 +{
-+    /* Accept both PHY station addresses used by RX firmware variants. */
-+    if (phy != 0 && phy != 1) {
-+        return 0xFFFF;
-+    }
-+    switch (reg) {
-+    case 0:
-+        /*Basic Control: FD, 100Mbps */
-+        return 0x3100;
-+    case 1:
-+        /*Basic Status: link up, AN complete */
-+        return 0x786D;
-+    case 2:
-+        /*PHY ID 1 */
-+        return 0x0022;
-+    case 3:
-+        /*PHY ID 2 */
-+        return 0x1550;
-+    case 4:
-+        /*ANAR */
-+        return 0x05E1;
-+    case 5:
-+        /*ANLPAR */
-+        return 0x45E1;
-+    default: return s->mdio.phy_regs[reg < 32 ? reg : 0];
-+    }
-+}
++    uint32_t addr = ctx->addr;
++    uintptr_t len = ctx->len;
++    uint32_t val = 0;
++    int i;
 +
-+static void mdio_phy_write(RX65NEthercState *s, int phy, int reg, uint16_t val)
-+{
-+    if ((phy == 0 || phy == 1) && reg < 32) {
-+        s->mdio.phy_regs[reg] = val;
++    g_assert(len + n <= ARRAY_SIZE(ctx->bytes));
++    ctx->addr += n;
++    ctx->len += n;
++    ctx->dis->read_memory_func(addr, ctx->bytes + len, n, ctx->dis);
++    for (i = n - 1; i >= 0; i--) {
++        val = (val << 8) | ctx->bytes[len + i];
 +    }
++    return val;
 +}
 +
 +/*
-+ * MDIO bit-bang state machine.
-+ *
-+ * Invoked on every PIR write that has a MDC rising edge.
-+ * Accumulates the MDIO frame header (SOF + OP + PHYADDR + REGADDR = 13
-+ * master bits after the preamble-terminating 0), decodes read/write,
-+ * and then either: schedules slave-driven MDI bits for reads, or
-+ * accumulates the TA + DATA bits for writes.
-+ *
-+ * MDI is updated in pir immediately so the firmware can read it back.
++ * DMOV.D displacements are scaled by 4 (see the note in translate.c), which
++ * rx_index_addr() cannot express, so decode them here.
 + */
-+static void mdio_do_rising(RX65NEthercState *s, bool mdo, bool mden)
++static void dmov_index_addr(DisasContext *ctx, char out[12], int ld)
 +{
-+    MDIOState *m = &s->mdio;
-+
-+    /* ---- Slave output phase (read response) ---- */
-+    if (m->out_cnt >= 0) {
-+        /*
-+         * out_cnt 0  → TA[1]: floating pull-up (MDI=1)
-+         * out_cnt 1  → TA[0]: slave drives 0    (MDI=0)
-+         * out_cnt 2–17 → DATA[15:0] MSB-first
-+         */
-+        if (m->out_cnt == 0) {
-+            m->mdi = true;
-+        } else if (m->out_cnt == 1) {
-+            m->mdi = false;
-+        } else {
-+            int bit = 17 - m->out_cnt;           /* 15 down to 0 */
-+            m->mdi = (m->read_data >> bit) & 1;
-+        }
-+        m->out_cnt++;
-+        if (m->out_cnt >= 18) {
-+            m->out_cnt = -1;
-+            m->in_cnt  = -1;
-+            m->preamble = 0;
-+        }
++    if (ld == 0) {
++        out[0] = '\0';
 +        return;
 +    }
-+
-+    if (!mden) {
-+        return;    /* master not driving; ignore (should be in output phase) */
-+    }
-+
-+    /* ---- Preamble phase ---- */
-+    if (m->in_cnt == -1) {
-+        if (mdo) {
-+            m->preamble++;
-+        } else if (m->preamble >= 32) {
-+            /* SOF[0] = 0 detected, start header accumulation */
-+            m->in_cnt  = 0;
-+            m->sr      = 0;
-+            m->write_cnt = -1;
-+        } else {
-+            m->preamble = 0;
-+        }
-+        return;
-+    }
-+
-+    /* ---- Header accumulation (13 bits after SOF[0]) ---- */
-+    if (m->in_cnt < 13) {
-+        m->sr = (m->sr << 1) | (mdo ? 1 : 0);
-+        m->in_cnt++;
-+
-+        if (m->in_cnt == 13) {
-+            /*
-+             * sr[12] = SOF[1]
-+             * sr[11:10] = OP  (10=read, 01=write)
-+             * sr[9:5]   = PHYADDR
-+             * sr[4:0]   = REGADDR
-+             */
-+            int sof1  = (m->sr >> 12) & 1;
-+            int op    = (m->sr >> 10) & 3;
-+            int paddr = (m->sr >> 5) & 0x1F;
-+            int raddr = m->sr & 0x1F;
-+
-+            if (sof1 != 1) {
-+                m->in_cnt = -1;
-+                m->preamble = 0;
-+                return;
-+            }
-+            if (op == 2) {
-+                m->is_read = true;
-+                m->read_data = mdio_phy_read(s, paddr, raddr);
-+                /* Slave output starts on the next rising edge. */
-+                m->out_cnt = 0;
-+            } else if (op == 1) {
-+                m->is_read = false;
-+                m->write_paddr = paddr;
-+                m->write_raddr = raddr;
-+                m->write_data = 0;
-+                m->write_cnt = 0;
-+            }
-+        }
-+        return;
-+    }
-+
-+    /* ---- Write: TA (2) + DATA (16) = 18 master bits ---- */
-+    if (!m->is_read && m->write_cnt >= 0 && m->write_cnt < 18) {
-+        if (m->write_cnt >= 2) {
-+            m->write_data = (m->write_data << 1) | (mdo ? 1 : 0);
-+        }
-+        m->write_cnt++;
-+        if (m->write_cnt == 18) {
-+            mdio_phy_write(s, m->write_paddr, m->write_raddr, m->write_data);
-+            m->in_cnt   = -1;
-+            m->write_cnt = -1;
-+            m->preamble = 0;
-+        }
-+    }
++    snprintf(out, 12, "%u", disas_fetch(ctx, ld) << 2);
 +}
 +
-+static void etherc_pir_write(RX65NEthercState *s, uint32_t val)
++/* The DR operand of the DMOV.D memory forms sits in a trailing post-byte. */
++static int dmov_postbyte(DisasContext *ctx)
 +{
-+    bool old_mdc = !!(s->pir & PIR_MDC);
-+    bool new_mdc = !!(val & PIR_MDC);
-+    bool new_mden = !!(val & PIR_MMD);
-+    bool new_mdo  = !!(val & PIR_MDO);
-+
-+    /* Update writable bits, keep MDI */
-+    s->pir = (val & ~PIR_MDI) | (s->pir & PIR_MDI);
-+
-+    if (!old_mdc && new_mdc) {
-+        /* Rising edge: run state machine and update MDI */
-+        mdio_do_rising(s, new_mdo, new_mden);
-+        s->pir = (s->pir & ~PIR_MDI) | (s->mdio.mdi ? PIR_MDI : 0);
-+    }
++    return disas_fetch(ctx, 1) >> 4;
 +}
 +
++static bool trans_DMOV_mst(DisasContext *ctx, arg_DMOV_mst *a)
++{
++    char dsp[12];
++    int dr;
++
++    dmov_index_addr(ctx, dsp, a->ld);
++    dr = dmov_postbyte(ctx);
++    prt("dmov.d\tdr%d, %s[r%d]", dr, dsp, a->rd);
++    return true;
++}
++
++static bool trans_DMOV_mld(DisasContext *ctx, arg_DMOV_mld *a)
++{
++    char dsp[12];
++    int dr;
++
++    dmov_index_addr(ctx, dsp, a->ld);
++    dr = dmov_postbyte(ctx);
++    prt("dmov.d\t%s[r%d], dr%d", dsp, a->rs, dr);
++    return true;
++}
++
+ #define BOP_IM(name, reg)                                       \
+     do {                                                        \
+         char dsp[8];                                            \
+diff --git a/target/rx/insns.decode b/target/rx/insns.decode
+index d60d97b682..e2a3c5601a 100644
+--- a/target/rx/insns.decode
++++ b/target/rx/insns.decode
+@@ -42,6 +42,8 @@
+ &rdcr		rd dcrs
+ &dcrr		dcrd rs
+ &dmovi		drd imm
++&dmovst		rd ld
++&dmovld		rs ld
+ ########
+ %b1_bdsp	24:3 !function=bdsp_s
+ 
+@@ -705,3 +707,9 @@ DMOV_drhr	1111 1101 0111 0101 1000 rd:4 drs:4 0010	&rdrh
+ MVFDC		1111 1101 0111 0101 1000 rd:4 dcrs:4 0100	&rdcr
+ MVTDC		1111 1101 0111 0111 1000 rs:4 dcrd:4 0100	&dcrr
+ MVFDR		0111 0101 1001 0000 0001 1011
++
++# DMOV.D DRs, dsp[Rd] / DMOV.D dsp[Rs], DRd.
++# The DR register is supplied by a trailing post-byte that follows the
++# displacement, so it is read during translation rather than by decodetree.
++DMOV_mst	1111 1100 0111 10 ld:2 rd:4 1000		&dmovst
++DMOV_mld	1111 1100 1100 10 ld:2 rs:4 1000		&dmovld
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 9c26f5608e..f16fc8fb6c 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -2391,6 +2391,56 @@ static bool trans_DMOVD_irh(DisasContext *ctx, arg_DMOVD_irh *a)
+     return true;
+ }
+ 
 +/*
-+ * Interrupt management
-+ */
-+static void etherc_update_irq(RX65NEthercState *s)
-+{
-+    qemu_set_irq(s->irq[ETHERC_IRQ_EINT], !!(s->eesr & s->eesipr));
-+}
-+
-+/*
-+ * TX path: walk descriptor ring, send frames, update EESR.
-+ */
-+static void etherc_tx_run(RX65NEthercState *s)
-+{
-+    bool did_tx = false;
-+
-+    for (;;) {
-+        uint32_t td0, td1;
-+        dma_memory_read(&address_space_memory, s->tx_cur,
-+                        &td0, 4, MEMTXATTRS_UNSPECIFIED);
-+        dma_memory_read(&address_space_memory, s->tx_cur + 4,
-+                        &td1, 4, MEMTXATTRS_UNSPECIFIED);
-+        td0 = le32_to_cpu(td0);
-+        td1 = le32_to_cpu(td1);
-+
-+        if (!(td0 & TD0_TACT)) {
-+            /* CPU owns descriptor: TX descriptor list exhausted */
-+            s->eesr |= EESR_TDE;
-+            break;
-+        }
-+
-+        uint32_t buf_addr = td1;
-+        uint32_t buf_len  = td0 & TD0_TBL;
-+
-+        if (buf_len > 0 && (s->ecmr & ECMR_TE)) {
-+            uint8_t *buf = g_malloc(buf_len);
-+            dma_memory_read(&address_space_memory, buf_addr,
-+                            buf, buf_len, MEMTXATTRS_UNSPECIFIED);
-+            qemu_send_packet(qemu_get_queue(s->nic), buf, buf_len);
-+            g_free(buf);
-+        }
-+
-+        /* Return descriptor to CPU: clear TACT, mark SOF+EOF */
-+        td0 &= ~TD0_TACT;
-+        td0 |= TD0_TFP1 | TD0_TFP0;
-+        uint32_t w = cpu_to_le32(td0);
-+        dma_memory_write(&address_space_memory, s->tx_cur,
-+                         &w, 4, MEMTXATTRS_UNSPECIFIED);
-+
-+        s->eesr |= EESR_TC;
-+        if (td0 & TD0_TWBI) {
-+            s->eesr |= EESR_TWB;
-+        }
-+        did_tx = true;
-+
-+        if (td0 & TD0_TDLE) {
-+            s->tx_cur = s->tdlar;
-+        } else {
-+            s->tx_cur += DESC_SIZE;
-+        }
-+    }
-+
-+    if (did_tx) {
-+        s->edtrr &= ~0x1u;
-+        etherc_update_irq(s);
-+    }
-+}
-+
-+/*
-+ * RX path: called by QEMU net layer on packet arrival.
-+ */
-+static bool etherc_can_receive(NetClientState *nc)
-+{
-+    RX65NEthercState *s = qemu_get_nic_opaque(nc);
-+    return !!(s->edrrr & 0x1) && !!(s->ecmr & ECMR_RE);
-+}
-+
-+static ssize_t etherc_receive(NetClientState *nc, const uint8_t *buf,
-+                              size_t len)
-+{
-+    RX65NEthercState *s = qemu_get_nic_opaque(nc);
-+
-+    if (!(s->edrrr & 0x1) || !(s->ecmr & ECMR_RE)) {
-+        return -1;
-+    }
-+
-+    /* Walk descriptor ring to find an EDMAC-owned (RACT=1) entry */
-+    uint32_t start = s->rx_cur;
-+    for (;;) {
-+        uint32_t rd0, rd1;
-+        dma_memory_read(&address_space_memory, s->rx_cur,
-+                        &rd0, 4, MEMTXATTRS_UNSPECIFIED);
-+        dma_memory_read(&address_space_memory, s->rx_cur + 4,
-+                        &rd1, 4, MEMTXATTRS_UNSPECIFIED);
-+        rd0 = le32_to_cpu(rd0);
-+        rd1 = le32_to_cpu(rd1);
-+
-+        if (rd0 & RD0_RACT) {
-+            break;   /* found a free descriptor */
-+        }
-+
-+        /* Descriptor is CPU-owned: advance */
-+        bool last = !!(rd0 & RD0_RDLE);
-+        s->rx_cur = last ? s->rdlar : s->rx_cur + DESC_SIZE;
-+
-+        if (s->rx_cur == start) {
-+            /* Wrapped all the way around: no free descriptors */
-+            s->eesr  |= EESR_RDE;
-+            s->rmfcr += 1;
-+            etherc_update_irq(s);
-+            return -1;
-+        }
-+    }
-+
-+    /* Read the free descriptor */
-+    uint32_t rd0, rd1;
-+    dma_memory_read(&address_space_memory, s->rx_cur,
-+                    &rd0, 4, MEMTXATTRS_UNSPECIFIED);
-+    dma_memory_read(&address_space_memory, s->rx_cur + 4,
-+                    &rd1, 4, MEMTXATTRS_UNSPECIFIED);
-+    rd0 = le32_to_cpu(rd0);
-+    rd1 = le32_to_cpu(rd1);
-+
-+    uint32_t buf_addr = rd1;
-+    uint32_t buf_len  = rd0 & RD0_RBL;
-+    size_t   copy_len = MIN(len, buf_len);
-+
-+    dma_memory_write(&address_space_memory, buf_addr,
-+                     buf, copy_len, MEMTXATTRS_UNSPECIFIED);
-+
-+    /* Write back descriptor: clear RACT, mark SOF+EOF, write RFL in RD2 */
-+    rd0 &= ~RD0_RACT;
-+    rd0 |= RD0_RFP1 | RD0_RFP0;
-+
-+    uint32_t w0 = cpu_to_le32(rd0);
-+    uint32_t w2 = cpu_to_le32((uint32_t)copy_len << 16);
-+    dma_memory_write(&address_space_memory, s->rx_cur,
-+                     &w0, 4, MEMTXATTRS_UNSPECIFIED);
-+    dma_memory_write(&address_space_memory, s->rx_cur + 8,
-+                     &w2, 4, MEMTXATTRS_UNSPECIFIED);
-+
-+    s->eesr |= EESR_FR;
-+    if (buf[0] & 0x01) {
-+        s->eesr |= EESR_RMAF;
-+    }
-+
-+    if (rd0 & RD0_RDLE) {
-+        s->rx_cur = s->rdlar;
-+    } else {
-+        s->rx_cur += DESC_SIZE;
-+    }
-+
-+    etherc_update_irq(s);
-+    return (ssize_t)len;
-+}
-+
-+/*
-+ * Filtering: honour promiscuous mode and MAC address.
-+ */
-+static bool etherc_accept_frame(RX65NEthercState *s, const uint8_t *buf)
-+{
-+    uint8_t mac[6];
-+
-+    if (s->ecmr & ECMR_PRM) {
-+        return true;
-+    }
-+    /* Build our 6-byte MAC from MAHR/MALR */
-+    mac[0] = (s->mahr >> 24) & 0xFF;
-+    mac[1] = (s->mahr >> 16) & 0xFF;
-+    mac[2] = (s->mahr >>  8) & 0xFF;
-+    mac[3] = s->mahr & 0xFF;
-+    mac[4] = (s->malr >> 24) & 0xFF;
-+    mac[5] = (s->malr >> 16) & 0xFF;
-+
-+    if (buf[0] & 0x01) {
-+        return true;   /* multicast / broadcast */
-+    }
-+    return memcmp(buf, mac, 6) == 0;
-+}
-+
-+static ssize_t etherc_receive_filter(NetClientState *nc,
-+                                     const uint8_t *buf, size_t len)
-+{
-+    RX65NEthercState *s = qemu_get_nic_opaque(nc);
-+    if (!etherc_accept_frame(s, buf)) {
-+        return len;    /* silently discard */
-+    }
-+    return etherc_receive(nc, buf, len);
-+}
-+
-+/*
-+ * EDMAC software reset
-+ */
-+static void etherc_sw_reset(RX65NEthercState *s)
-+{
-+    s->eesr   = 0;
-+    s->edtrr  = 0;
-+    s->edrrr  = 0;
-+    s->tx_cur = s->tdlar;
-+    s->rx_cur = s->rdlar;
-+    etherc_update_irq(s);
-+}
-+
-+/*
-+ * MMIO read
-+ */
-+static uint64_t etherc_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    RX65NEthercState *s = opaque;
-+
-+    switch (addr) {
-+    /* ETHERC */
-+    case R_ECMR:
-+        return s->ecmr;
-+    case R_RFLR:
-+        return s->rflr;
-+    case R_ECSR:
-+        return s->ecsr;
-+    case R_ECSIPR:
-+        return s->ecsipr;
-+    case R_PIR:
-+        return s->pir;
-+    case R_PSR:
-+        /*link up */
-+        return 0x0001;
-+    case R_RDMLR:
-+        return s->rdmlr;
-+    case R_IPGR:
-+        return s->ipgr;
-+    case R_APR:
-+        return s->apr;
-+    case R_MPR:
-+        return s->mpr;
-+    case R_RFCF:
-+        return 0;
-+    case R_TPAUSER:
-+        return s->tpauser;
-+    case R_TPAUSECR:return 0;
-+    case R_BCFRR:
-+        return s->bcfrr;
-+    case R_MAHR:
-+        return s->mahr;
-+    case R_MALR:
-+        return s->malr;
-+    case R_TROCR:
-+        return s->trocr;
-+    case R_CDCR:
-+        return s->cdcr;
-+    case R_LCCR:
-+        return s->lccr;
-+    case R_CNDCR:
-+        return s->cndcr;
-+    case R_CEFCR:
-+        return s->cefcr;
-+    case R_FRECR:
-+        return s->frecr;
-+    case R_TSFRCR:
-+        return s->tsfrcr;
-+    case R_TLFRCR:
-+        return s->tlfrcr;
-+    case R_RFCR:
-+        return s->rfcr;
-+    case R_MAFCR:
-+        return s->mafcr;
-+    /* EDMAC */
-+    case R_EDMR:
-+        return s->edmr;
-+    case R_EDTRR:
-+        return s->edtrr;
-+    case R_EDRRR:
-+        return s->edrrr;
-+    case R_TDLAR:
-+        return s->tdlar;
-+    case R_RDLAR:
-+        return s->rdlar;
-+    case R_EESR:
-+        return s->eesr;
-+    case R_EESIPR:
-+        return s->eesipr;
-+    case R_TRSCER:
-+        return s->trscer;
-+    case R_RMFCR:
-+        return s->rmfcr;
-+    case R_TFTR:
-+        return s->tftr;
-+    case R_FDR:
-+        return s->fdr;
-+    case R_RMCR:
-+        return s->rmcr;
-+    case R_TFUCR:
-+        return s->tfucr;
-+    case R_RFOCR:
-+        return s->rfocr;
-+    case R_FCFTR:
-+        return s->fcftr;
-+    case R_RPADIR:
-+        return s->rpadir;
-+    case R_TRIMD:
-+        return s->trimd;
-+    case R_RBWAR:
-+        return s->rx_cur;
-+    case R_RDFAR:
-+        return s->rx_cur;
-+    case R_TBRAR:
-+        return s->tx_cur;
-+    case R_TDFAR:
-+        return s->tx_cur;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "renesas_etherc: read 0x%" HWADDR_PRIX " unimplemented\n",
-+                      addr);
-+        return UINT64_MAX;
-+    }
-+}
-+
-+/*
-+ * MMIO write
-+ */
-+static void etherc_write(void *opaque, hwaddr addr, uint64_t val, unsigned size)
-+{
-+    RX65NEthercState *s = opaque;
-+
-+    switch (addr) {
-+    /* ETHERC */
-+    case R_ECMR:
-+        s->ecmr   = val;
-+        break;
-+    case R_RFLR:
-+        s->rflr   = val;
-+        break;
-+    case R_ECSR:
-+        /*W0C */
-+        s->ecsr  &= ~val;
-+        break;
-+    case R_ECSIPR:
-+        s->ecsipr = val;
-+        break;
-+    case R_PIR:
-+        etherc_pir_write(s, val);
-+        break;
-+    case R_RDMLR:
-+        s->rdmlr  = val;
-+        break;
-+    case R_IPGR:
-+        s->ipgr   = val;
-+        break;
-+    case R_APR:
-+        s->apr    = val;
-+        break;
-+    case R_MPR:
-+        s->mpr    = val;
-+        break;
-+    case R_TPAUSER:
-+        s->tpauser = val;
-+        break;
-+    case R_BCFRR:
-+        s->bcfrr  = val;
-+        break;
-+    case R_MAHR:
-+        s->mahr   = val;
-+        break;
-+    case R_MALR:
-+        s->malr   = val;
-+        break;
-+    case R_TROCR:
-+        /*write clears counter */
-+        s->trocr  = 0;
-+        break;
-+    case R_CDCR:
-+        s->cdcr   = 0;
-+        break;
-+    case R_LCCR:
-+        s->lccr   = 0;
-+        break;
-+    case R_CNDCR:
-+        s->cndcr  = 0;
-+        break;
-+    case R_CEFCR:
-+        s->cefcr  = 0;
-+        break;
-+    case R_FRECR:
-+        s->frecr  = 0;
-+        break;
-+    case R_TSFRCR:
-+        s->tsfrcr = 0;
-+        break;
-+    case R_TLFRCR:
-+        s->tlfrcr = 0;
-+        break;
-+    case R_RFCR:
-+        s->rfcr   = 0;
-+        break;
-+    case R_MAFCR:
-+        s->mafcr  = 0;
-+        break;
-+
-+    /* EDMAC */
-+    case R_EDMR:
-+        s->edmr = val;
-+        if (val & 0x1) {   /* SWR: software reset */
-+            etherc_sw_reset(s);
-+            s->edmr &= ~0x1u;
-+        }
-+        break;
-+    case R_EDTRR:
-+        s->edtrr = val;
-+        if (val & 0x1) {
-+            s->tx_cur = s->tdlar;
-+            etherc_tx_run(s);
-+        }
-+        break;
-+    case R_EDRRR:
-+        s->edrrr = val;
-+        if (val & 0x1) {
-+            s->rx_cur = s->rdlar;
-+            qemu_flush_queued_packets(qemu_get_queue(s->nic));
-+        }
-+        break;
-+    case R_TDLAR:
-+        s->tdlar  = val;
-+        s->tx_cur = val;
-+        break;
-+    case R_RDLAR:
-+        s->rdlar  = val;
-+        s->rx_cur = val;
-+        break;
-+    case R_EESR:
-+        /*W0C */
-+        s->eesr  &= ~val;
-+        etherc_update_irq(s);
-+        break;
-+    case R_EESIPR:
-+        s->eesipr = val;
-+        etherc_update_irq(s);
-+        break;
-+    case R_TRSCER:
-+        s->trscer = val;
-+        break;
-+    case R_RMFCR:
-+        s->rmfcr  = 0;
-+        break;
-+    case R_TFTR:
-+        s->tftr   = val;
-+        break;
-+    case R_FDR:
-+        s->fdr    = val;
-+        break;
-+    case R_RMCR:
-+        s->rmcr   = val;
-+        break;
-+    case R_TFUCR:
-+        s->tfucr  = 0;
-+        break;
-+    case R_RFOCR:
-+        s->rfocr  = 0;
-+        break;
-+    case R_FCFTR:
-+        s->fcftr  = val;
-+        break;
-+    case R_RPADIR:
-+        s->rpadir = val;
-+        break;
-+    case R_TRIMD:
-+        s->trimd  = val;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "renesas_etherc: write 0x%" HWADDR_PRIX
-+                      " unimplemented\n",
-+                      addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps etherc_ops = {
-+    .read  = etherc_read,
-+    .write = etherc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl  = { .min_access_size = 4, .max_access_size = 4 },
-+    .valid = { .min_access_size = 4, .max_access_size = 4 },
-+};
-+
-+/*
-+ * NIC callbacks
-+ */
-+static NetClientInfo etherc_net_info = {
-+    .type         = NET_CLIENT_DRIVER_NIC,
-+    .size         = sizeof(NICState),
-+    .can_receive  = etherc_can_receive,
-+    .receive      = etherc_receive_filter,
-+};
-+
-+/*
-+ * Device lifecycle
-+ */
-+static void etherc_reset(DeviceState *dev)
-+{
-+    RX65NEthercState *s = RENESAS_ETHERC(dev);
-+
-+    s->ecmr    = 0;
-+    s->rflr    = 0x05EE;   /* 1518 bytes max frame length (reset value) */
-+    s->ecsr    = 0;
-+    s->ecsipr  = 0;
-+    s->pir     = 0;
-+    s->rdmlr   = 0;
-+    s->ipgr    = 0x0014;
-+    s->apr     = 0x0000FFFF;
-+    s->mpr     = 0;
-+    s->tpauser = 0;
-+    s->bcfrr   = 0;
-+    s->mahr    = 0;
-+    s->malr    = 0;
-+    s->trocr   = 0; s->cdcr  = 0; s->lccr  = 0; s->cndcr = 0;
-+    s->cefcr   = 0; s->frecr = 0; s->tsfrcr = 0; s->tlfrcr = 0;
-+    s->rfcr    = 0; s->mafcr = 0;
-+
-+    s->edmr    = 0;
-+    s->edtrr   = 0;
-+    s->edrrr   = 0;
-+    s->tdlar   = 0;
-+    s->rdlar   = 0;
-+    s->eesr    = 0;
-+    s->eesipr  = 0;
-+    s->trscer  = 0;
-+    s->rmfcr   = 0;
-+    s->tftr    = 0;
-+    s->fdr     = 0x0707;
-+    s->rmcr    = 0;
-+    s->tfucr   = 0; s->rfocr = 0;
-+    s->fcftr   = 0;
-+    s->rpadir  = 0;
-+    s->trimd   = 0;
-+
-+    s->tx_cur  = 0;
-+    s->rx_cur  = 0;
-+
-+    memset(&s->mdio, 0, sizeof(s->mdio));
-+    s->mdio.in_cnt  = -1;
-+    s->mdio.out_cnt = -1;
-+    s->mdio.write_cnt = -1;
-+
-+    etherc_update_irq(s);
-+}
-+
-+static void etherc_init(Object *obj)
-+{
-+    SysBusDevice *d = SYS_BUS_DEVICE(obj);
-+    RX65NEthercState *s = RENESAS_ETHERC(obj);
-+
-+    memory_region_init_io(&s->memory, obj, &etherc_ops, s,
-+                          "renesas-etherc", ETHERC_MMIO_SIZE);
-+    sysbus_init_mmio(d, &s->memory);
-+
-+    sysbus_init_irq(d, &s->irq[ETHERC_IRQ_EINT]);
-+}
-+
-+static void etherc_realize(DeviceState *dev, Error **errp)
-+{
-+    RX65NEthercState *s = RENESAS_ETHERC(dev);
-+
-+    qemu_macaddr_default_if_unset(&s->conf.macaddr);
-+    s->nic = qemu_new_nic(&etherc_net_info, &s->conf,
-+                          object_get_typename(OBJECT(dev)),
-+                          dev->id, &dev->mem_reentrancy_guard, s);
-+    qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-+
-+    /* Pre-load MAC address registers from NICConf */
-+    const uint8_t *m = s->conf.macaddr.a;
-+    s->mahr = ((uint32_t)m[0] << 24) | ((uint32_t)m[1] << 16) |
-+              ((uint32_t)m[2] <<  8) | m[3];
-+    s->malr = ((uint32_t)m[4] << 24) | ((uint32_t)m[5] << 16);
-+}
-+
-+/*
-+ * VMState
-+ */
-+static const VMStateDescription vmstate_mdio = {
-+    .name = "renesas-etherc-mdio",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(preamble,    MDIOState),
-+        VMSTATE_INT32(in_cnt,      MDIOState),
-+        VMSTATE_UINT32(sr,         MDIOState),
-+        VMSTATE_BOOL(is_read,      MDIOState),
-+        VMSTATE_INT32(write_cnt,   MDIOState),
-+        VMSTATE_INT32(write_paddr, MDIOState),
-+        VMSTATE_INT32(write_raddr, MDIOState),
-+        VMSTATE_UINT16(write_data, MDIOState),
-+        VMSTATE_UINT16(read_data,  MDIOState),
-+        VMSTATE_INT32(out_cnt,     MDIOState),
-+        VMSTATE_BOOL(mdi,          MDIOState),
-+        VMSTATE_UINT16_ARRAY(phy_regs, MDIOState, 32),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription vmstate_etherc = {
-+    .name = "renesas-etherc",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(ecmr,    RX65NEthercState),
-+        VMSTATE_UINT32(rflr,    RX65NEthercState),
-+        VMSTATE_UINT32(ecsr,    RX65NEthercState),
-+        VMSTATE_UINT32(ecsipr,  RX65NEthercState),
-+        VMSTATE_UINT32(pir,     RX65NEthercState),
-+        VMSTATE_UINT32(rdmlr,   RX65NEthercState),
-+        VMSTATE_UINT32(ipgr,    RX65NEthercState),
-+        VMSTATE_UINT32(apr,     RX65NEthercState),
-+        VMSTATE_UINT32(mpr,     RX65NEthercState),
-+        VMSTATE_UINT32(tpauser, RX65NEthercState),
-+        VMSTATE_UINT32(bcfrr,   RX65NEthercState),
-+        VMSTATE_UINT32(mahr,    RX65NEthercState),
-+        VMSTATE_UINT32(malr,    RX65NEthercState),
-+        VMSTATE_UINT32(edmr,    RX65NEthercState),
-+        VMSTATE_UINT32(edtrr,   RX65NEthercState),
-+        VMSTATE_UINT32(edrrr,   RX65NEthercState),
-+        VMSTATE_UINT32(tdlar,   RX65NEthercState),
-+        VMSTATE_UINT32(rdlar,   RX65NEthercState),
-+        VMSTATE_UINT32(eesr,    RX65NEthercState),
-+        VMSTATE_UINT32(eesipr,  RX65NEthercState),
-+        VMSTATE_UINT32(trscer,  RX65NEthercState),
-+        VMSTATE_UINT32(rmfcr,   RX65NEthercState),
-+        VMSTATE_UINT32(tftr,    RX65NEthercState),
-+        VMSTATE_UINT32(fdr,     RX65NEthercState),
-+        VMSTATE_UINT32(rmcr,    RX65NEthercState),
-+        VMSTATE_UINT32(fcftr,   RX65NEthercState),
-+        VMSTATE_UINT32(rpadir,  RX65NEthercState),
-+        VMSTATE_UINT32(trimd,   RX65NEthercState),
-+        VMSTATE_UINT32(tx_cur,  RX65NEthercState),
-+        VMSTATE_UINT32(rx_cur,  RX65NEthercState),
-+        VMSTATE_STRUCT(mdio, RX65NEthercState, 1, vmstate_mdio, MDIOState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const Property etherc_properties[] = {
-+    DEFINE_NIC_PROPERTIES(RX65NEthercState, conf),
-+};
-+
-+static void etherc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = etherc_realize;
-+    dc->vmsd    = &vmstate_etherc;
-+    device_class_set_legacy_reset(dc, etherc_reset);
-+    device_class_set_props(dc, etherc_properties);
-+    set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
-+}
-+
-+static const TypeInfo etherc_info = {
-+    .name          = TYPE_RENESAS_ETHERC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RX65NEthercState),
-+    .instance_init = etherc_init,
-+    .class_init    = etherc_class_init,
-+};
-+
-+static void etherc_register_types(void)
-+{
-+    type_register_static(&etherc_info);
-+}
-+
-+type_init(etherc_register_types)
-diff --git a/include/hw/net/renesas_etherc.h b/include/hw/net/renesas_etherc.h
-new file mode 100644
-index 0000000000..c35a7b3f6e
---- /dev/null
-+++ b/include/hw/net/renesas_etherc.h
-@@ -0,0 +1,109 @@
-+/*
-+ * Renesas RX65N Ethernet Controller (ETHERC) + Ethernet DMA Controller (EDMAC)
++ * The DMOV.D memory forms name their DR operand in a post-byte that follows
++ * the displacement, so it can only be read once rx_index_addr() has consumed
++ * the displacement bytes.
 + *
-+ * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), Sections 32–33
-+ *
-+ * Copyright (c) 2026 Umar, Sayyad Mahammad
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Per the RXv3 ISA manual the .D displacement is scaled by 4, not by the
++ * 8-byte transfer size: dsp:8 reaches 1020 (255 * 4) and dsp:16 reaches
++ * 262140 (65535 * 4). Note that binutils gas disagrees, scaling by 8 and
++ * requiring 8-byte alignment; the manual is taken as authoritative here.
 + */
++#define DMOV_DSP_SHIFT 2
++static int dmov_postbyte_dr(DisasContext *ctx)
++{
++    uint8_t b = translator_ldub(ctx->env, &ctx->base, ctx->base.pc_next);
++    ctx->base.pc_next += 1;
++    return b >> 4;
++}
 +
-+#ifndef HW_NET_RENESAS_ETHERC_H
-+#define HW_NET_RENESAS_ETHERC_H
++/* dmov.d DRs, dsp[rd] */
++static bool trans_DMOV_mst(DisasContext *ctx, arg_DMOV_mst *a)
++{
++    TCGv_i32 mem, addr;
++    int drs;
 +
-+#include "hw/core/sysbus.h"
-+#include "net/net.h"
-+#include "qom/object.h"
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    mem = tcg_temp_new_i32();
++    addr = rx_index_addr(ctx, mem, a->ld, DMOV_DSP_SHIFT, a->rd);
++    drs = dmov_postbyte_dr(ctx);
++    tcg_gen_qemu_st_i64(cpu_dregs[drs], addr, 0, MO_LEUQ);
++    return true;
++}
 +
-+#define TYPE_RENESAS_ETHERC "renesas-etherc"
-+typedef struct RX65NEthercState RX65NEthercState;
-+DECLARE_INSTANCE_CHECKER(RX65NEthercState, RENESAS_ETHERC, TYPE_RENESAS_ETHERC)
++/* dmov.d dsp[rs], DRd */
++static bool trans_DMOV_mld(DisasContext *ctx, arg_DMOV_mld *a)
++{
++    TCGv_i32 mem, addr;
++    int drd;
 +
-+/* MMIO covers ETHERC (0x000–0x1FF) + EDMAC (0x200–0x3FF) */
-+#define ETHERC_MMIO_SIZE    0x200
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    mem = tcg_temp_new_i32();
++    addr = rx_index_addr(ctx, mem, a->ld, DMOV_DSP_SHIFT, a->rs);
++    drd = dmov_postbyte_dr(ctx);
++    tcg_gen_qemu_ld_i64(cpu_dregs[drd], addr, 0, MO_LEUQ);
++    return true;
++}
 +
-+enum {
-+    ETHERC_IRQ_EINT = 0,  /* EDMAC interrupt (vector 32) */
-+    ETHERC_NR_IRQ   = 1,
-+};
-+
-+/* MDIO bit-bang state machine */
-+typedef struct {
-+    int     preamble;       /* consecutive MDO=1 count */
-+    int     in_cnt;         /* master bits received (-1 = idle) */
-+    uint32_t sr;            /* shift register for header bits */
-+    bool    is_read;        /* current transaction is a read */
-+    int     write_cnt;      /* write data/TA bits accumulated */
-+    int     write_paddr;
-+    int     write_raddr;
-+    uint16_t write_data;
-+    uint16_t read_data;     /* latched PHY register value */
-+    int     out_cnt;        /* slave output bit counter (-1 = idle) */
-+    bool    mdi;            /* current MDI output level */
-+    uint16_t phy_regs[32];  /* shared register bank for PHY addresses 0 and 1 */
-+} MDIOState;
-+
-+struct RX65NEthercState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    /*< public >*/
-+
-+    MemoryRegion memory;
-+    NICState *nic;
-+    NICConf conf;
-+
-+    qemu_irq irq[ETHERC_NR_IRQ];
-+
-+    /* ETHERC registers (offsets 0x000–0x0FF) */
-+    uint32_t ecmr;
-+    uint32_t rflr;
-+    uint32_t ecsr;
-+    uint32_t ecsipr;
-+    uint32_t pir;
-+    uint32_t rdmlr;
-+    uint32_t ipgr;
-+    uint32_t apr;
-+    uint32_t mpr;
-+    uint32_t tpauser;
-+    uint32_t bcfrr;
-+    uint32_t mahr;
-+    uint32_t malr;
-+    uint32_t trocr;
-+    uint32_t cdcr;
-+    uint32_t lccr;
-+    uint32_t cndcr;
-+    uint32_t cefcr;
-+    uint32_t frecr;
-+    uint32_t tsfrcr;
-+    uint32_t tlfrcr;
-+    uint32_t rfcr;
-+    uint32_t mafcr;
-+
-+    /* EDMAC registers (offsets 0x200–0x2FF) */
-+    uint32_t edmr;
-+    uint32_t edtrr;
-+    uint32_t edrrr;
-+    uint32_t tdlar;
-+    uint32_t rdlar;
-+    uint32_t eesr;
-+    uint32_t eesipr;
-+    uint32_t trscer;
-+    uint32_t rmfcr;
-+    uint32_t tftr;
-+    uint32_t fdr;
-+    uint32_t rmcr;
-+    uint32_t tfucr;
-+    uint32_t rfocr;
-+    uint32_t fcftr;
-+    uint32_t rpadir;
-+    uint32_t trimd;
-+
-+    /* DMA ring state */
-+    uint32_t tx_cur;
-+    uint32_t rx_cur;
-+
-+    MDIOState mdio;
-+};
-+
-+#endif /* HW_NET_RENESAS_ETHERC_H */
+ static void rx_bsetm(DisasContext *ctx, TCGv_i32 mem, TCGv_i32 mask)
+ {
+     TCGv_i32 val;
 
 -- 
 2.53.0
