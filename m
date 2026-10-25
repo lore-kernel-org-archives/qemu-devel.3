@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F71606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E44F606A31A
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL26V-0004fq-M3; Sun, 25 Oct 2026 13:33:55 -0400
+	id 1xL26R-0004Ar-7q; Sun, 25 Oct 2026 13:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25H-0002R5-Sm; Sun, 25 Oct 2026 13:32:43 -0400
+ id 1xL256-0002Ga-3z; Sun, 25 Oct 2026 13:32:33 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25F-0007OL-Uj; Sun, 25 Oct 2026 13:32:39 -0400
+ id 1xL253-0007Na-Ls; Sun, 25 Oct 2026 13:32:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=yqiVQm2uxF8h7YlBOlfy8QpJTGMKaJUh8ewNs/GVT9I=; b=n/0L0XAMfCMIojXN48SrIrHSjy
- 1zJ8gXCIOQpJmU8NEkBi15Bt2IwKNjvNybW1EHNW/n0Lvly4/4ceBaUsdRXMftVxcdxAV3cvLscnf
- nFknGhhuDeMHVPoskGURm1gKQRVMCJPayy6ZRClzUidUpes7natMSSruB0JzGmkM5cG9NPt0fbgHf
- YE5e850GexKNlSDgubk97tos65U69lvvJgThD3oYQqtyMq20uH+kiAeGOHQqQ4aH52D1iwAlsPcpL
- tc/6HVApJi09fwUGqgrxGmVUFC2KnouRvnqDiDFcZdak9cXKRE+0SAetMIRvyOQksueB/ILEyjMmQ
- cOSnTBnA==;
+ bh=lbzJF1O3YQcacJJEF1mYlL8VRz0jmpheZ+u8N/OQgqc=; b=pqo+pYsCXsyclYs4VvGg5+Igt2
+ y47uxHglz80v6kZoHDEd3EZfeZmDRbHkIizxBjF+S4AZKK3RfO8n8cP5EB8WkN/xR7Vie+KiRg7Hl
+ 0qgpQf+4lSThDTZ09hDc3fsiIuGJSpcdI6rwdh+xuI2UeUBmwH0W85t0mI56/9zC2XdhmprdgKutQ
+ by7dUGol0xd3krZxaCUhWo1vlQX3o4s3w6yBqDK+mECjm6T7Cuxg5KBooEdexipk95cXgPbU3owA5
+ rwvuBbEBR54Zw/TBHiX0eXDLCVBBnK+BenxSGwqzXywoeajxQ5DPH5UXdOshqK+hx/L+GBvQLcm9W
+ 8C7WNqAA==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gO-00097I-17; Sun, 25 Oct 2026 18:06:56 +0100
+ id 1xL1gW-0009Bq-0x; Sun, 25 Oct 2026 18:07:04 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vw-000OzG-2I; Sun, 25 Oct 2026 17:56:08 +0100
+ id 1xL1Vw-000OzG-2x; Sun, 25 Oct 2026 17:56:08 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:38 +0100
-Subject: [PATCH v2 22/31] hw/dma: add Renesas RX DTC
+Date: Sun, 25 Oct 2026 17:55:41 +0100
+Subject: [PATCH v2 25/31] hw/rtc: add Renesas RX RTC
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-22-9e846577cad0@sayyadumar.com>
+Message-Id: <20261025-umar-rx-series-v2-25-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=8844;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=13568;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=0IDDL1GJ4GvlVMGRInc97lXLw7QBPz6EVLbNUCbsUts=;
- b=7rFCijpryNlnxTgwOqXZP4ul+d1/L0dwP0tqsfk0IX0DjcH7PkFe+xY7kKFDhafkP4nRczNKL
- 82rIYAlkJcNC3mPpJiwr1vShDkFZgXeGRZY0soNYRaFwvTGNlqRpZNE
+ bh=MPVMNbV464XJ/wqcmUFINttLcnLcrJGzEtEvthVjwbI=;
+ b=8OnN8pugUvEb8Dx2xHKYl/SUkI4V0L1ZIYeFxfvFYsfKBD50S2RkblnR38ndjuteeAIUxGX0Y
+ daYAVOKzV4SDI1dqby7byDr8Hz0pFgLxQK+uNUeotODyuDyCDYspR5w
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -81,256 +81,419 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the RX Data Transfer Controller, section 18 (DTC) of the RX65N
-hardware manual.
+Add the RX realtime clock, section 26 (RTC) of the RX65N hardware
+manual.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
  MAINTAINERS                            |   2 +
  configs/devices/rx-softmmu/default.mak |   1 +
- hw/dma/Kconfig                         |   3 +
- hw/dma/meson.build                     |   1 +
- hw/dma/renesas_rx_dtc.c                | 169 +++++++++++++++++++++++++++++++++
- include/hw/dma/renesas_rx_dtc.h        |  42 ++++++++
- 6 files changed, 218 insertions(+)
+ hw/rtc/Kconfig                         |   3 +
+ hw/rtc/meson.build                     |   1 +
+ hw/rtc/renesas_rx_rtc.c                | 330 +++++++++++++++++++++++++++++++++
+ include/hw/rtc/renesas_rx_rtc.h        |  52 ++++++
+ 6 files changed, 389 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d36aa0afa1..e747530308 100644
+index bd2de8abd5..b8bbb0e749 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3082,11 +3082,13 @@ Renesas RX peripherals
- R: Yoshinori Sato <yoshinori.sato@nifty.com>
- S: Orphan
- F: hw/dma/renesas_rx_*.c
-+F: hw/dma/renesas_rx_dtc.c
+@@ -3086,6 +3086,7 @@ F: hw/dma/renesas_rx_*.c
+ F: hw/dma/renesas_rx_dtc.c
  F: hw/gpio/renesas_rx_gpio.c
  F: hw/intc/rx_icu.c
++F: hw/rtc/renesas_rx_rtc.c
  F: hw/rx/
+ F: hw/ssi/renesas_rspi.c
  F: hw/timer/renesas_mtu3.c
- F: include/hw/dma/renesas_rx_*.h
-+F: include/hw/dma/renesas_rx_dtc.h
+@@ -3094,6 +3095,7 @@ F: include/hw/dma/renesas_rx_*.h
+ F: include/hw/dma/renesas_rx_dtc.h
  F: include/hw/gpio/renesas_rx_gpio.h
  F: include/hw/intc/rx_icu.h
++F: include/hw/rtc/renesas_rx_rtc.h
  F: include/hw/rx/
+ F: include/hw/ssi/renesas_rspi.h
+ F: include/hw/timer/renesas_mtu3.h
 diff --git a/configs/devices/rx-softmmu/default.mak b/configs/devices/rx-softmmu/default.mak
-index f14a65dac7..9e0e1ef31d 100644
+index 269b035b9d..cbc4641143 100644
 --- a/configs/devices/rx-softmmu/default.mak
 +++ b/configs/devices/rx-softmmu/default.mak
-@@ -5,3 +5,4 @@
- CONFIG_RENESAS_MTU3=y
- CONFIG_RENESAS_RX_GPIO=y
- CONFIG_RENESAS_RX_DMAC=y
-+CONFIG_RENESAS_RX_DTC=y
-diff --git a/hw/dma/Kconfig b/hw/dma/Kconfig
-index 2c95b8696d..8c70bc18c2 100644
---- a/hw/dma/Kconfig
-+++ b/hw/dma/Kconfig
-@@ -36,3 +36,6 @@ config K230_GSDMA
- 
- config RENESAS_RX_DMAC
+@@ -8,3 +8,4 @@ CONFIG_RENESAS_RX_DMAC=y
+ CONFIG_RENESAS_RX_DTC=y
+ CONFIG_RENESAS_S12AD=y
+ CONFIG_RENESAS_RSPI=y
++CONFIG_RENESAS_RX_RTC=y
+diff --git a/hw/rtc/Kconfig b/hw/rtc/Kconfig
+index 315b0e4ecc..0d732417aa 100644
+--- a/hw/rtc/Kconfig
++++ b/hw/rtc/Kconfig
+@@ -31,3 +31,6 @@ config RS5C372_RTC
      bool
+     depends on I2C
+     default y if I2C_DEVICES
 +
-+config RENESAS_RX_DTC
++config RENESAS_RX_RTC
 +    bool
-diff --git a/hw/dma/meson.build b/hw/dma/meson.build
-index 1fb06fb13d..671b9aba29 100644
---- a/hw/dma/meson.build
-+++ b/hw/dma/meson.build
-@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_SIFIVE_PDMA', if_true: files('sifive_pdma.c'))
- system_ss.add(when: 'CONFIG_XLNX_CSU_DMA', if_true: files('xlnx_csu_dma.c'))
- system_ss.add(when: 'CONFIG_K230_GSDMA', if_true: files('k230_gsdma.c'))
- system_ss.add(when: 'CONFIG_RENESAS_RX_DMAC', if_true: files('renesas_rx_dmac.c'))
-+system_ss.add(when: 'CONFIG_RENESAS_RX_DTC', if_true: files('renesas_rx_dtc.c'))
-diff --git a/hw/dma/renesas_rx_dtc.c b/hw/dma/renesas_rx_dtc.c
+diff --git a/hw/rtc/meson.build b/hw/rtc/meson.build
+index 6c87864dc0..10b0bb7f78 100644
+--- a/hw/rtc/meson.build
++++ b/hw/rtc/meson.build
+@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_LS7A_RTC', if_true: files('ls7a_rtc.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-rtc.c'))
+ system_ss.add(when: 'CONFIG_MC146818RTC', if_true: files('mc146818rtc.c'))
+ system_ss.add(when: 'CONFIG_RS5C372_RTC', if_true: files('rs5c372.c'))
++system_ss.add(when: 'CONFIG_RENESAS_RX_RTC', if_true: files('renesas_rx_rtc.c'))
+diff --git a/hw/rtc/renesas_rx_rtc.c b/hw/rtc/renesas_rx_rtc.c
 new file mode 100644
-index 0000000000..10ac87be9a
+index 0000000000..69cfa19d81
 --- /dev/null
-+++ b/hw/dma/renesas_rx_dtc.c
-@@ -0,0 +1,169 @@
++++ b/hw/rtc/renesas_rx_rtc.c
+@@ -0,0 +1,330 @@
 +/*
-+ * Renesas RX Data Transfer Controller (DTC)
++ * Renesas RX Realtime Clock (RTC)
 + *
 + * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), section 18 (DTC)
++ *            (Rev.1.00 R01UH0590EJ0100), section 26 (RTC)
 + *
 + * Copyright (c) 2026 Umar, Sayyad Mahammad
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
 + *
-+ * Register-level model of the DTC. The DTC fetches RAM-resident transfer
-+ * descriptors when activated by a peripheral interrupt; that activation path is
-+ * not modelled, so the control/status registers behave as storage and the
-+ * module always reports idle. This lets FIT/RTOS drivers configure and enable
-+ * the DTC (and fall back to interrupt-driven transfers) without faulting.
++ * Calendar-count-mode model. The time/date registers are BCD-encoded and the
++ * counter advances once per second (driven by a host timer) while RCR2.START is
++ * set. Seeded from host wall-clock time at reset. Periodic/alarm/carry
++ * interrupts are not generated.
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qemu/log.h"
-+#include "hw/dma/renesas_rx_dtc.h"
-+#include "hw/core/qdev-properties.h"
++#include "qemu/timer.h"
++#include "qemu/bcd.h"
++#include "hw/rtc/renesas_rx_rtc.h"
 +#include "migration/vmstate.h"
++#include "system/rtc.h"
++#include "system/system.h"
 +
-+#define R_DTCCR     0x00    /* 8-bit  */
-+#define R_DTCVBR    0x04    /* 32-bit */
-+#define R_DTCADMOD  0x08    /* 8-bit  */
-+#define R_DTCST     0x0C    /* 8-bit  */
-+#define R_DTCSTS    0x0E    /* 16-bit */
-+#define R_DTCIBR    0x10    /* 32-bit */
-+#define R_DTCOR     0x14    /* 8-bit  */
-+#define R_DTCEXBR   0x18    /* 16-bit */
++/* Register offsets from the RTC base (0x0008C400), calendar count mode. */
++#define R_R64CNT    0x00    /* 8-bit  64 Hz counter (read-only)  */
++#define R_RSECCNT   0x02    /* 8-bit  seconds  (BCD)             */
++#define R_RMINCNT   0x04    /* 8-bit  minutes  (BCD)             */
++#define R_RHRCNT    0x06    /* 8-bit  hours    (BCD)             */
++#define R_RWKCNT    0x08    /* 8-bit  day of week                */
++#define R_RDAYCNT   0x0A    /* 8-bit  day      (BCD)             */
++#define R_RMONCNT   0x0C    /* 8-bit  month    (BCD)             */
++#define R_RYRCNT    0x0E    /* 16-bit year     (BCD)             */
++#define R_RSECAR    0x10
++#define R_RMINAR    0x12
++#define R_RHRAR     0x14
++#define R_RWKAR     0x16
++#define R_RDAYAR    0x18
++#define R_RMONAR    0x1A
++#define R_RYRAR     0x1C
++#define R_RCR1      0x22    /* 8-bit  control 1                  */
++#define R_RCR2      0x24    /* 8-bit  control 2                  */
++#define R_RCR3      0x26    /* 8-bit  control 3                  */
++#define R_RCR4      0x28    /* 8-bit  control 4                  */
 +
-+static uint64_t dtc_read(void *opaque, hwaddr offset, unsigned size)
++#define RCR2_START  (1u << 0)
++#define RCR2_RESET  (1u << 1)
++
++static int days_in_month(int mon, int year)
 +{
-+    RenesasRxDtcState *s = opaque;
++    static const int d[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
++    if (mon == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)) {
++        return 29;
++    }
++    return d[(mon - 1) % 12];
++}
++
++static void rtc_seed_from_host(RenesasRxRtcState *s)
++{
++    struct tm now;
++
++    qemu_get_timedate(&now, 0);
++    s->sec = now.tm_sec;
++    s->min = now.tm_min;
++    s->hour = now.tm_hour;
++    s->wday = now.tm_wday;
++    s->mday = now.tm_mday;
++    s->mon = now.tm_mon + 1;
++    s->year = now.tm_year + 1900;
++}
++
++static void rtc_advance_second(RenesasRxRtcState *s)
++{
++    if (++s->sec < 60) {
++        return;
++    }
++    s->sec = 0;
++    if (++s->min < 60) {
++        return;
++    }
++    s->min = 0;
++    if (++s->hour < 24) {
++        return;
++    }
++    s->hour = 0;
++    s->wday = (s->wday + 1) % 7;
++    if (++s->mday <= days_in_month(s->mon, s->year)) {
++        return;
++    }
++    s->mday = 1;
++    if (++s->mon <= 12) {
++        return;
++    }
++    s->mon = 1;
++    s->year++;
++}
++
++static void rtc_timer_tick(void *opaque)
++{
++    RenesasRxRtcState *s = opaque;
++
++    if (!(s->rcr2 & RCR2_START)) {
++        return;
++    }
++    rtc_advance_second(s);
++    timer_mod(s->timer,
++              qemu_clock_get_ms(rtc_clock) + 1000);
++}
++
++static void rtc_arm_timer(RenesasRxRtcState *s)
++{
++    if (s->rcr2 & RCR2_START) {
++        timer_mod(s->timer, qemu_clock_get_ms(rtc_clock) + 1000);
++    } else {
++        timer_del(s->timer);
++    }
++}
++
++static uint64_t rtc_read(void *opaque, hwaddr offset, unsigned size)
++{
++    RenesasRxRtcState *s = opaque;
 +
 +    switch (offset) {
-+    case R_DTCCR:
-+        return s->dtccr;
-+    case R_DTCVBR:
-+        return s->dtcvbr;
-+    case R_DTCADMOD:
-+        return s->dtcadmod;
-+    case R_DTCST:
-+        return s->dtcst;
-+    case R_DTCSTS:
-+        /*ACT=0: never busy */
-+        return s->dtcsts;
-+    case R_DTCIBR:
-+        return s->dtcibr;
-+    case R_DTCOR:
-+        return s->dtcor;
-+    case R_DTCEXBR:
-+        return s->dtcexbr;
++    case R_R64CNT:
++        return 0;
++    case R_RSECCNT:
++        return to_bcd(s->sec);
++    case R_RMINCNT:
++        return to_bcd(s->min);
++    case R_RHRCNT:
++        return to_bcd(s->hour);
++    case R_RWKCNT:
++        return s->wday;
++    case R_RDAYCNT:
++        return to_bcd(s->mday);
++    case R_RMONCNT:
++        return to_bcd(s->mon);
++    case R_RYRCNT:
++        return to_bcd(s->year % 100) | (to_bcd(s->year / 100) << 8);
++    case R_RSECAR:
++        return s->secar;
++    case R_RMINAR:
++        return s->minar;
++    case R_RHRAR:
++        return s->hrar;
++    case R_RWKAR:
++        return s->wkar;
++    case R_RDAYAR:
++        return s->dayar;
++    case R_RMONAR:
++        return s->monar;
++    case R_RYRAR:
++        return s->yrar;
++    case R_RCR1:
++        return s->rcr1;
++    case R_RCR2:
++        return s->rcr2;
++    case R_RCR3:
++        return s->rcr3;
++    case R_RCR4:
++        return s->rcr4;
 +    default:
-+        qemu_log_mask(LOG_UNIMP, "renesas-rx-dtc: read unimplemented 0x%"
++        qemu_log_mask(LOG_UNIMP, "renesas-rx-rtc: read unimplemented 0x%"
 +                      HWADDR_PRIx "\n", offset);
 +        return 0;
 +    }
 +}
 +
-+static void dtc_write(void *opaque, hwaddr offset, uint64_t value,
++static void rtc_write(void *opaque, hwaddr offset, uint64_t value,
 +                      unsigned size)
 +{
-+    RenesasRxDtcState *s = opaque;
++    RenesasRxRtcState *s = opaque;
 +
 +    switch (offset) {
-+    case R_DTCCR:
-+        s->dtccr = value;
++    case R_RSECCNT:
++        s->sec = from_bcd(value & 0x7f);
 +        break;
-+    case R_DTCVBR:
-+        s->dtcvbr = value;
++    case R_RMINCNT:
++        s->min = from_bcd(value & 0x7f);
 +        break;
-+    case R_DTCADMOD:
-+        s->dtcadmod = value;
++    case R_RHRCNT:
++        s->hour = from_bcd(value & 0x3f);
 +        break;
-+    case R_DTCST:
-+        s->dtcst = value;
++    case R_RWKCNT:
++        s->wday = value & 7;
 +        break;
-+    case R_DTCIBR:
-+        s->dtcibr = value;
++    case R_RDAYCNT:
++        s->mday = from_bcd(value & 0x3f);
 +        break;
-+    case R_DTCOR:
-+        s->dtcor = value;
++    case R_RMONCNT:
++        s->mon = from_bcd(value & 0x1f);
 +        break;
-+    case R_DTCEXBR:
-+        s->dtcexbr = value;
++    case R_RYRCNT:
++        s->year = 2000 + from_bcd(value & 0xff);
 +        break;
-+    case R_DTCSTS:
-+        /*status, read-only */
++    case R_RSECAR:
++        s->secar = value;
++        break;
++    case R_RMINAR:
++        s->minar = value;
++        break;
++    case R_RHRAR:
++        s->hrar = value;
++        break;
++    case R_RWKAR:
++        s->wkar = value;
++        break;
++    case R_RDAYAR:
++        s->dayar = value;
++        break;
++    case R_RMONAR:
++        s->monar = value;
++        break;
++    case R_RYRAR:
++        s->yrar = value;
++        break;
++    case R_RCR1:
++        s->rcr1 = value;
++        break;
++    case R_RCR2:
++        if (value & RCR2_RESET) {
++            s->sec = s->min = s->hour = 0;
++        }
++        s->rcr2 = value & ~RCR2_RESET;
++        rtc_arm_timer(s);
++        break;
++    case R_RCR3:
++        s->rcr3 = value;
++        break;
++    case R_RCR4:
++        s->rcr4 = value;
 +        break;
 +    default:
-+        qemu_log_mask(LOG_UNIMP, "renesas-rx-dtc: write unimplemented 0x%"
++        qemu_log_mask(LOG_UNIMP, "renesas-rx-rtc: write unimplemented 0x%"
 +                      HWADDR_PRIx "\n", offset);
 +        break;
 +    }
 +}
 +
-+static const MemoryRegionOps dtc_ops = {
-+    .read = dtc_read,
-+    .write = dtc_write,
++static const MemoryRegionOps rtc_ops = {
++    .read = rtc_read,
++    .write = rtc_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = { .min_access_size = 1, .max_access_size = 4 },
-+    .valid = { .min_access_size = 1, .max_access_size = 4 },
++    .impl = { .min_access_size = 1, .max_access_size = 2 },
++    .valid = { .min_access_size = 1, .max_access_size = 2 },
 +};
 +
-+static void rx_dtc_reset(DeviceState *dev)
++static void rx_rtc_reset(DeviceState *dev)
 +{
-+    RenesasRxDtcState *s = RENESAS_RX_DTC(dev);
++    RenesasRxRtcState *s = RENESAS_RX_RTC(dev);
 +
-+    s->dtccr = 0x08;    /* RRS = 1 out of reset */
-+    s->dtcvbr = 0;
-+    s->dtcadmod = 0;
-+    s->dtcst = 0;
-+    s->dtcsts = 0;
-+    s->dtcibr = 0;
-+    s->dtcor = 0;
-+    s->dtcexbr = 0;
++    rtc_seed_from_host(s);
++    s->secar = s->minar = s->hrar = s->wkar = s->dayar = s->monar = 0;
++    s->yrar = 0;
++    s->rcr1 = 0;
++    s->rcr2 = 0;
++    s->rcr3 = 0;
++    s->rcr4 = 0;
++    timer_del(s->timer);
 +}
 +
-+static void rx_dtc_init(Object *obj)
++static void rx_rtc_realize(DeviceState *dev, Error **errp)
 +{
-+    RenesasRxDtcState *s = RENESAS_RX_DTC(obj);
++    RenesasRxRtcState *s = RENESAS_RX_RTC(dev);
 +
-+    memory_region_init_io(&s->mr, obj, &dtc_ops, s,
-+                          "renesas-rx-dtc", RX_DTC_REGS_SIZE);
++    s->timer = timer_new_ms(rtc_clock, rtc_timer_tick, s);
++}
++
++static void rx_rtc_init(Object *obj)
++{
++    RenesasRxRtcState *s = RENESAS_RX_RTC(obj);
++
++    memory_region_init_io(&s->mr, obj, &rtc_ops, s,
++                          "renesas-rx-rtc", RX_RTC_REGS_SIZE);
 +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mr);
 +}
 +
-+static const VMStateDescription vmstate_rx_dtc = {
-+    .name = "renesas-rx-dtc",
++static const VMStateDescription vmstate_rx_rtc = {
++    .name = "renesas-rx-rtc",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(dtccr, RenesasRxDtcState),
-+        VMSTATE_UINT32(dtcvbr, RenesasRxDtcState),
-+        VMSTATE_UINT8(dtcadmod, RenesasRxDtcState),
-+        VMSTATE_UINT8(dtcst, RenesasRxDtcState),
-+        VMSTATE_UINT16(dtcsts, RenesasRxDtcState),
-+        VMSTATE_UINT32(dtcibr, RenesasRxDtcState),
-+        VMSTATE_UINT8(dtcor, RenesasRxDtcState),
-+        VMSTATE_UINT16(dtcexbr, RenesasRxDtcState),
++        VMSTATE_INT32(sec, RenesasRxRtcState),
++        VMSTATE_INT32(min, RenesasRxRtcState),
++        VMSTATE_INT32(hour, RenesasRxRtcState),
++        VMSTATE_INT32(wday, RenesasRxRtcState),
++        VMSTATE_INT32(mday, RenesasRxRtcState),
++        VMSTATE_INT32(mon, RenesasRxRtcState),
++        VMSTATE_INT32(year, RenesasRxRtcState),
++        VMSTATE_UINT8(secar, RenesasRxRtcState),
++        VMSTATE_UINT8(minar, RenesasRxRtcState),
++        VMSTATE_UINT8(hrar, RenesasRxRtcState),
++        VMSTATE_UINT8(wkar, RenesasRxRtcState),
++        VMSTATE_UINT8(dayar, RenesasRxRtcState),
++        VMSTATE_UINT8(monar, RenesasRxRtcState),
++        VMSTATE_UINT16(yrar, RenesasRxRtcState),
++        VMSTATE_UINT8(rcr1, RenesasRxRtcState),
++        VMSTATE_UINT8(rcr2, RenesasRxRtcState),
++        VMSTATE_UINT8(rcr3, RenesasRxRtcState),
++        VMSTATE_UINT8(rcr4, RenesasRxRtcState),
++        VMSTATE_TIMER_PTR(timer, RenesasRxRtcState),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static void rx_dtc_class_init(ObjectClass *klass, const void *data)
++static void rx_rtc_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    dc->vmsd = &vmstate_rx_dtc;
-+    device_class_set_legacy_reset(dc, rx_dtc_reset);
++    dc->realize = rx_rtc_realize;
++    dc->vmsd = &vmstate_rx_rtc;
++    device_class_set_legacy_reset(dc, rx_rtc_reset);
 +}
 +
-+static const TypeInfo rx_dtc_info = {
-+    .name = TYPE_RENESAS_RX_DTC,
++static const TypeInfo rx_rtc_info = {
++    .name = TYPE_RENESAS_RX_RTC,
 +    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RenesasRxDtcState),
-+    .instance_init = rx_dtc_init,
-+    .class_init = rx_dtc_class_init,
++    .instance_size = sizeof(RenesasRxRtcState),
++    .instance_init = rx_rtc_init,
++    .class_init = rx_rtc_class_init,
 +};
 +
-+static void rx_dtc_register_types(void)
++static void rx_rtc_register_types(void)
 +{
-+    type_register_static(&rx_dtc_info);
++    type_register_static(&rx_rtc_info);
 +}
 +
-+type_init(rx_dtc_register_types)
-diff --git a/include/hw/dma/renesas_rx_dtc.h b/include/hw/dma/renesas_rx_dtc.h
++type_init(rx_rtc_register_types)
+diff --git a/include/hw/rtc/renesas_rx_rtc.h b/include/hw/rtc/renesas_rx_rtc.h
 new file mode 100644
-index 0000000000..aa02bf5d66
+index 0000000000..762d8cea51
 --- /dev/null
-+++ b/include/hw/dma/renesas_rx_dtc.h
-@@ -0,0 +1,42 @@
++++ b/include/hw/rtc/renesas_rx_rtc.h
+@@ -0,0 +1,52 @@
 +/*
-+ * Renesas RX Data Transfer Controller (DTC)
++ * Renesas RX Realtime Clock (RTC)
 + *
 + * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.1.00 R01UH0590EJ0100), section 18 (DTC)
++ *            (Rev.1.00 R01UH0590EJ0100), section 26 (RTC)
 + *
 + * Copyright (c) 2026 Umar, Sayyad Mahammad
 + *
@@ -338,36 +501,46 @@ index 0000000000..aa02bf5d66
 + *
 + */
 +
-+#ifndef HW_DMA_RENESAS_RX_DTC_H
-+#define HW_DMA_RENESAS_RX_DTC_H
++#ifndef HW_RTC_RENESAS_RX_RTC_H
++#define HW_RTC_RENESAS_RX_RTC_H
 +
 +#include "hw/core/sysbus.h"
 +#include "qom/object.h"
 +
-+#define TYPE_RENESAS_RX_DTC "renesas-rx-dtc"
-+typedef struct RenesasRxDtcState RenesasRxDtcState;
-+DECLARE_INSTANCE_CHECKER(RenesasRxDtcState, RENESAS_RX_DTC, TYPE_RENESAS_RX_DTC)
++#define TYPE_RENESAS_RX_RTC "renesas-rx-rtc"
++typedef struct RenesasRxRtcState RenesasRxRtcState;
++DECLARE_INSTANCE_CHECKER(RenesasRxRtcState, RENESAS_RX_RTC, TYPE_RENESAS_RX_RTC)
 +
-+#define RX_DTC_REGS_SIZE    0x20
++#define RX_RTC_REGS_SIZE    0x40
 +
-+struct RenesasRxDtcState {
++struct RenesasRxRtcState {
 +    /*< private >*/
 +    SysBusDevice parent_obj;
 +    /*< public >*/
 +
 +    MemoryRegion mr;
++    QEMUTimer *timer;
 +
-+    uint8_t  dtccr;     /* control                    */
-+    uint32_t dtcvbr;    /* vector base address        */
-+    uint8_t  dtcadmod;  /* address mode               */
-+    uint8_t  dtcst;     /* module start               */
-+    uint16_t dtcsts;    /* status                     */
-+    uint32_t dtcibr;    /* index table base           */
-+    uint8_t  dtcor;     /* operation                  */
-+    uint16_t dtcexbr;   /* extended repeat-area base  */
++    /* Current time held as binary fields (converted to/from BCD on access). */
++    int sec;
++    int min;
++    int hour;
++    int wday;       /* 0 = Sunday */
++    int mday;       /* 1..31 */
++    int mon;        /* 1..12 */
++    int year;       /* full year, e.g. 2024 */
++
++    /* Alarm match registers (raw BCD as written). */
++    uint8_t secar, minar, hrar, wkar, dayar, monar;
++    uint16_t yrar;
++
++    uint8_t rcr1;
++    uint8_t rcr2;
++    uint8_t rcr3;
++    uint8_t rcr4;
 +};
 +
-+#endif /* HW_DMA_RENESAS_RX_DTC_H */
++#endif /* HW_RTC_RENESAS_RX_RTC_H */
 
 -- 
 2.53.0
