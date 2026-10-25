@@ -1,85 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686D4606A31B
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 13:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576A7606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 13:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=hCY/5M2U
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=kGpcZ0KF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKyiN-0002Mz-R5; Sun, 25 Oct 2026 09:56:48 -0400
+	id 1xKyii-0002Oe-Ah; Sun, 25 Oct 2026 09:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xKyiG-0002MS-3g
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 09:56:43 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ id 1xKyiW-0002O3-TW
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 09:56:58 -0400
+Received: from mail-dl1-x1236.google.com ([2607:f8b0:4864:20::1236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <waysorrypub@gmail.com>)
- id 1xKyiE-0006nU-82
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 09:56:39 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-3282db206d3so4116003eec.0
- for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 06:56:37 -0700 (PDT)
+ id 1xKyiV-0007A8-45
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 09:56:56 -0400
+Received: by mail-dl1-x1236.google.com with SMTP id
+ a92af1059eb24-14fd9dafb0dso2044285c88.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 06:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1792936597; x=1793541397; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1792936613; x=1793541413; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=TVH0gvdLy7zbg+V54YHJIXHcOybC0qqa8Ry38RS5x9Q=;
- b=hCY/5M2Uxw2VmBJX0qvNcG0+VrueiAtlBcqge2jdQ6JpiwcAaOsPkfiWR97kDbQ0oi
- BW9NNRA26XI8+Gi3GxQGuw03fmqkjHJSiMxLcuuvBa06LC7HxlGC7IfTgPQo1r0TTLJV
- nsAvGvJKoWyOU1BAECuS1EgZMp0L6KJtSVSuKHzDCJV3sjvEE0ijAfWb6ql+BMQamUlS
- iKjqxgrNjUnOxgAsF70Lee9HlN5AVu4ZYJIGvl49rP6nmxrdQ6h1NP8vX5joNGvgsg5Q
- k6OnJgyICyVPpkzr9j8ABl+EAXWzxQna8V+pf54v0c37yDlh4uGvr8s7tlns+MvWAdid
- oewA==
+ bh=4EWM1G1c2qc5lLr1N3ONQq9f/pRQSWgCuLcc+P2MFVU=;
+ b=kGpcZ0KFu/WynAKrQyQL/XlbBop+kFTrYt+u70hCUZfmzrW4QX8UhTUvYEMLNbfaRw
+ e7MScFpZE0pjch6v+MYLdTiQ9fVwLI62iUAy3rlysHz71VlNDWb0iWma5t0eLp4NZTZa
+ WzTbICzKjCSrQn5iZfd8dlK0NALUB2ZNZKp1/3d9+nwHrQo/A4jcId3PttryYzxGwoXD
+ neZvqAEfVzahIvy4xxegdQCWk3IYGDrpCUpZlfgx4SDrnkFjCnYXJN0/tQjipXtGJnWo
+ g+QObKl1BDnLBJEJU0sYfQa1LXSY3nCs/CtxOWCK/4UphffDDj0lHgpp9LUTwtePWYIM
+ 55Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792936597; x=1793541397;
+ d=1e100.net; s=20260707; t=1792936613; x=1793541413;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=TVH0gvdLy7zbg+V54YHJIXHcOybC0qqa8Ry38RS5x9Q=;
- b=FbVpNeeRQSe3AGYovyn06XJjfXcUtTkB6GpY4l4ElAtYsk1R07aDNw2n+D01LZXtjE
- PVDVtgmjzJTlvOijpxACjySgjddoBWtKYUnr8HcfJgk/6QmyGM8crj+lWlwbxZkw9fbv
- tZQOrVYb5/U2Km/pAdbvD5dPsTP7IBCOMgYuscFNGQDVCole1mcKLRkwPcZ7Ahz5Mtui
- luEh0bfG/h9UB+vK+FiT74YMT03eolXx2GIOVb+qKxb/PTT9n4Jelhal4Nhf9TX0/6vG
- +w0z5l7w3JLWj0aR8OMcXOdxg3x81MmcWUn+g/dWCsXqhx6tDT+paE6RZkAzjzrsbMKc
- ec9Q==
-X-Gm-Message-State: AFq9FYL5NbL7d4EbvEOerp7vz9dMYlFI13nekt8s1lkqeXdQuz7Su4c8
- 1fRnKULibu8v/RH715WEGBdMNcWwhnI2WkSAQ/9E7JDsU92QpPmkwVshI1ATJbZf
-X-Gm-Gg: AYBFou1hWWlGz4IZfdxBwjvSUGFc8fqNsr5DvieRMJ86F1MinPxn1c+240kTx2mdPoX
- BTknIJqp8x7AyzK7MCR0/cHeuhSuzFet50PntuDAVrCpJIuHhI0Z780ijye3Srx/eQVB/wszRls
- Vw33fHnv2ZAneF0pvcdwwNgR7BFHDGGGMfV991p3HxOwgXY+bHlfr+Bvv/nDh/U4yZD6bt5ZAZG
- rgLrUE6rNK6Q99UNvE1OMXIb4lEpHVk7LJvYaWN9MA9pRZHvgXmxftu7pUQ983lt2tebf2Ekruu
- M+E8tliAmjPpUbmlM/SDShd/uWcmM3S4TXNtw57b2M+rCLjSIe3TEBMDpN2hPzgFQrOWZ940u1g
- Q3XCgvUYab7NoBeY9Z1pB20sK5lCDqJQUcRNXg0bhELJ7vEM8tZu+shT80waziXIVF4DhG/NVMw
- omXS/bincz/rutRCjQ+bENflNk57zA1BeK3bKFvm4ktA4ES7XqgGSx+SDvh9j8qtJp4j/m7nD0v
- 7GJCkAVaQdJiUwHCx2hJAK8eXUKRb9RPVBLMJnNl12JF6OgGXHJnVUcbsQDPg==
-X-Received: by 2002:a05:7300:80ca:b0:369:e918:3c95 with SMTP id
- 5a478bee46e88-369e9184604mr10740598eec.4.1792936596415; 
- Sun, 25 Oct 2026 06:56:36 -0700 (PDT)
+ bh=4EWM1G1c2qc5lLr1N3ONQq9f/pRQSWgCuLcc+P2MFVU=;
+ b=W+kFS/xKJwF8q/GcIMgVctMuoFm0QBxpnudhSOyisOAQDPhwUPWzIeYDm/VFyP1XU9
+ nt9VrL2mLxzbhjyYJBECaCUMPfUCaD6hSLo3wEI5hJm9P13mH/JqN5T2l8ZJE1L2KcT8
+ +tsXY/36P9EqCpvuyU6HPXBGu8gnmKGbVVBFMVWoIb4+9Mh+BWEBNmqVL0JFHKftghNP
+ OhFG7E+DO/wHFAKHHewMoLmOQ4DDgWfTxsZE3Huipkz0FSDHzZz9f5djc6i+Z1J0t7u2
+ nkjmzRTUnmuVyIoiwgeg5ypQM3sk6rzi1qdpMpt2QeEQz+OisZIamF2I+mxqEcKn88EO
+ tgjA==
+X-Gm-Message-State: AFq9FYIBqeDhe0A6MKZ6L9BcJGUz8hwWerrH56WsighT48hPtJpB/4E6
+ QxIw6yqqhf31CRCPiH7uRIjJC+ofgpEMiXpBw9YRbAdN+ojADZesQK253Wpnxtfz
+X-Gm-Gg: AYBFou2Eylw+a1w6bqYjwu1hPXsYj45fhHuuOpytDhZmdHT0176sPCLOpOHeaa826L+
+ CFojsIs4zDSvHXcX2JzYOxbj/v7eZXWYb42IPJ9vYmeAcgaZOgFqBTOtIBp/7+Ol8UAqU4P+NK1
+ nsTxMMwgVl32+QY+91KLiiZOtzCcixsAeTMVo4ixbKbT9bEKQX/rmw8VmMat8OY0nLyutIELT4p
+ dMfiLMva9kfi4woeHhNR8QhXc3X8T+W1M+8vs1Kd6TiOFjkQDx5Rn+LWrWCaldsQcHpT+i6oZrf
+ 2vHvCpExNfpwITL41Q/NHHgxSdmWghji1zkrEQ+Qzh+rWy20d+rv+26qy4Nb6JeLfxn8JKHvWcJ
+ tMTQzGsgiEj/rYxwvw1p2chcjQD2AhJor9y/jSjmpuE50AUwyDK1GUlHY/L0kT6DAF0NAQ1NF+5
+ K7tkPCHXWsrG4UVFqz7RkCVaBl1VgUDWzMZa2OydaoXKJ3Zdy0O0IOBgn5+Ik72Ug5R9jjYzbbo
+ chxE8D5nMxHoYPdTM+mbX0PW0+S6iRtcy7BDMwxrLnXjaOjgZaosTlyIWFYhg==
+X-Received: by 2002:a05:693c:88d2:10b0:369:f0de:259f with SMTP id
+ 5a478bee46e88-369f0de264emr4578470eec.35.1792936613236; 
+ Sun, 25 Oct 2026 06:56:53 -0700 (PDT)
 Received: from archlinux ([2409:8949:4c8c:84e:a337:63b8:1a6e:7a9b])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369e8d845ddsm16795724eec.11.2026.10.25.06.56.31
+ 5a478bee46e88-369e8d845ddsm16795724eec.11.2026.10.25.06.56.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Oct 2026 06:56:36 -0700 (PDT)
+ Sun, 25 Oct 2026 06:56:52 -0700 (PDT)
 From: pillow <waysorrypub@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: 17746591750@163.com, maobibo@loongson.cn, lixianglai@loongson.cn,
  jiaxun.yang@flygoat.com, mst@redhat.com, imammedo@redhat.com,
  anisinha@redhat.com, waysorrypub@gmail.com
-Subject: [PATCH v5 1/5] bios-tables-test-allowed-diff.h: Allow LoongArch DSDT.*
-Date: Sun, 25 Oct 2026 21:55:55 +0800
-Message-ID: <20261025135559.236356-2-waysorrypub@gmail.com>
+Subject: [PATCH v5 3/5] hw/loongarch/virt-acpi-build: Drop UART _CCA
+ declaration
+Date: Sun, 25 Oct 2026 21:55:57 +0800
+Message-ID: <20261025135559.236356-4-waysorrypub@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261025135559.236356-1-waysorrypub@gmail.com>
 References: <20261025135559.236356-1-waysorrypub@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=waysorrypub@gmail.com; helo=mail-dy1-x1333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1236;
+ envelope-from=waysorrypub@gmail.com; helo=mail-dl1-x1236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,26 +102,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,TVD_SPACE_RATIO,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Remove the _CCA property from the UART device. _CCA describes a
+device's DMA cache coherency attributes. This UART does not support
+DMA, so there is no need to declare this property.
+
 Signed-off-by: pillow <waysorrypub@gmail.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/loongarch/virt-acpi-build.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523..2ed837f 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,5 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/loongarch64/virt/DSDT",
-+"tests/data/acpi/loongarch64/virt/DSDT.memhp",
-+"tests/data/acpi/loongarch64/virt/DSDT.numamem",
-+"tests/data/acpi/loongarch64/virt/DSDT.topology",
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 981e609..c560f25 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -324,7 +324,6 @@ static void build_uart_device_aml(Aml *table, int index)
+     dev = aml_device("COM%d", index);
+     aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+     aml_append(dev, aml_name_decl("_UID", aml_int(index)));
+-    aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
+     crs = aml_resource_template();
+     aml_append(crs,
+         aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
 -- 
 2.56.0
 
