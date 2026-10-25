@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CD0606A321
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24F4606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL24K-0000vJ-0h; Sun, 25 Oct 2026 13:31:43 -0400
+	id 1xL24L-0000xB-Jz; Sun, 25 Oct 2026 13:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL23P-0000HC-MF; Sun, 25 Oct 2026 13:30:43 -0400
+ id 1xL23m-0000j2-KD; Sun, 25 Oct 2026 13:31:12 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL23N-0007Fd-VV; Sun, 25 Oct 2026 13:30:43 -0400
+ id 1xL23k-0007IB-38; Sun, 25 Oct 2026 13:31:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=tjlHXAYu6T2OQDLpLXGFNMgX95x51z0dwpgRMAGDPEA=; b=jo5DYIeXo5CtKPqV0wioV7vlOi
- yPoJe6BWfy0p8rTFsqLWJVKTeEVx8XyQOhpPUr696+A6DyyJxU+e6He/5hn2gdt8bKY00wo6vTOiM
- 4P8ZeRIBHxEMMtOKTooR8aq90+37feCR3FlAa4VmLak8oGXqGd/r10b70IDAi1wNdtJbicNYSU7//
- Dq5uwOZAWPF6ypegD9qopHKfhnNla8K+Fi9CRZBXhbuTqjvG2X1QYSUL3TU2a9siVv3Ivhxf9fl8P
- oJUe+aH1TYilHW/ubiofImK0sinIWlMzNU1xgKp70LPTl7lMJDFGd84DoZDLYO/h9F2I6ldudQ+0+
- eFn3wiYw==;
+ bh=j3TyNMZ+FhVgZXveP5/NoYhCpKoL34F2hog7VU2itRY=; b=sG8+vDw8X3E/8kwbKlNSf7O03U
+ //l8hBKvd82vvkR6IZ+IWT2yzpHp/RBWlZ05T6xH1DTOV6VSzoCcWvjCbpLbThLk3EczhlFcvf/g7
+ kSOT9uPgCMig0rI7SD3ZwJsED9cmjSfLPWu1Z9R1uEBhECBT2TwcbwnxrDlCGk0r8AMd4wna3DHxp
+ w/5SF/NHbPbCNxwXGOQLE92vxf0qF0qtHDDpXbioVhUM3fQtnZrOyI0kA506lrmxfwrSP3Antkl0j
+ qYRvHm/hthIDeuzceTvgb3Pe3WDgCBsASv5/PTI1cIDIJ+tUFaBEBzBSYQtjoNpz0VHed1+P1iNvF
+ NRkQPJHg==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vv-0006kh-1e; Sun, 25 Oct 2026 17:56:07 +0100
+ id 1xL1Vv-0006kb-1A; Sun, 25 Oct 2026 17:56:07 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vv-000OzG-2N; Sun, 25 Oct 2026 17:56:07 +0100
+ id 1xL1Vv-000OzG-1u; Sun, 25 Oct 2026 17:56:07 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:24 +0100
-Subject: [PATCH v2 08/31] target/rx: add DPFPU conversions DTOI, DTOU and DTOF
+Date: Sun, 25 Oct 2026 17:55:22 +0100
+Subject: [PATCH v2 06/31] target/rx: add DPFPU arithmetic instructions
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-8-9e846577cad0@sayyadumar.com>
+Message-Id: <20261025-umar-rx-series-v2-6-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5605;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=13328;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=U7cqq6UpxZ0wYslg1hQq8NWb0FvvoCV3wrMHW5fbsaU=;
- b=CgtdfY7xrhjw3AEhY4b8+DvKWQmhpbtPCvZe1CH1YGbkLb0vHkidAUYS/p72uW0svaVT0UQyL
- W9nlBrae9a/D4e2ikHAEmeJRUL2WGX6iBGTv42Kp8DsTDlbwzOvAc4m
+ bh=vLMbC4PdMzmegJKQfm9hB0POYJK4eI93AwogTOJ8C/A=;
+ b=0EfVuxwwmMd87eP2njcwbo1lg1xAcBq6hFEfNIAI0CziXEK/9DXBl9MrsUIIsomnhnaHZhgSe
+ 0AoVsrGwm0vBMDxLgbNalsVFBK29KNpZ/NbNtLZhasb7iZlL4yyAlL9
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -81,47 +81,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-DTOI/DTOU convert a DR operand to signed/unsigned int32 and DTOF
-narrows to single precision; all three write the 32-bit result to the
-low half of the destination DR register (the high half is cleared)
-and record exceptions in DPSW like the other DP arithmetic.
+Add DADD, DSUB, DMUL, DDIV and DCMP. The DPFPU has its own status
+word, so double-precision arithmetic runs on a separate float_status:
+dp_begin() applies DPSW's rounding mode and update_dpsw() records the
+outcome in the DC*/DF* bits. DCMP records its result in DCMR.RES
+rather than touching the PSW.
+
+The DPFPU exists on the RX64M/RX71M (RXv2) and RX72M (RXv3); the only
+RXv2 model currently in QEMU, the RX65N, has no FPU at all, so these
+instructions are gated on RX_ISA_V3 for now.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
- target/rx/disas.c      | 18 +++++++++++++++++
- target/rx/helper.h     |  3 +++
- target/rx/insns.decode |  5 +++++
- target/rx/op_helper.c  | 31 +++++++++++++++++++++++++++++
- target/rx/translate.c  | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 111 insertions(+)
+ target/rx/disas.c      |  34 +++++++++++
+ target/rx/helper.h     |   6 ++
+ target/rx/insns.decode |  15 +++++
+ target/rx/op_helper.c  | 155 +++++++++++++++++++++++++++++++++++++++++++++++++
+ target/rx/translate.c  |  78 +++++++++++++++++++++++++
+ 5 files changed, 288 insertions(+)
 
 diff --git a/target/rx/disas.c b/target/rx/disas.c
-index a3101ac534..82900774ab 100644
+index 34cfe6f0ec..98882044be 100644
 --- a/target/rx/disas.c
 +++ b/target/rx/disas.c
-@@ -1273,6 +1273,24 @@ static bool trans_DROUND(DisasContext *ctx, arg_DROUND *a)
+@@ -133,6 +133,9 @@ static const char cond[][4] = {
+     "eq", "ne", "c", "nc", "gtu", "leu", "pz", "n",
+     "ge", "lt", "gt", "le", "o", "no", "ra", "f"
+ };
++static const char dcmp_cond[8][3] = {
++    "", "un", "eq", "", "lt", "", "le", ""
++};
+ static const char psw[] = {
+     'c', 'z', 's', 'o', 0, 0, 0, 0,
+     'i', 'u', 0, 0, 0, 0, 0, 0,
+@@ -1209,6 +1212,37 @@ static bool trans_UTOF(DisasContext *ctx, arg_UTOF *a)
      return true;
  }
  
-+static bool trans_DTOI(DisasContext *ctx, arg_DTOI *a)
++/* RXv2 DPFPU disassembly */
++static bool trans_DADD(DisasContext *ctx, arg_DADD *a)
 +{
-+    prt("dtoi\tdr%d, dr%d", a->drs, a->drd);
++    prt("dadd\tdr%d, dr%d, dr%d", a->drs1, a->drs2, a->drd);
 +    return true;
 +}
 +
-+static bool trans_DTOU(DisasContext *ctx, arg_DTOU *a)
++static bool trans_DSUB(DisasContext *ctx, arg_DSUB *a)
 +{
-+    prt("dtou\tdr%d, dr%d", a->drs, a->drd);
++    prt("dsub\tdr%d, dr%d, dr%d", a->drs1, a->drs2, a->drd);
 +    return true;
 +}
 +
-+static bool trans_DTOF(DisasContext *ctx, arg_DTOF *a)
++static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
 +{
-+    prt("dtof\tdr%d, dr%d", a->drs, a->drd);
++    prt("dmul\tdr%d, dr%d, dr%d", a->drs1, a->drs2, a->drd);
++    return true;
++}
++
++static bool trans_DDIV(DisasContext *ctx, arg_DDIV *a)
++{
++    prt("ddiv\tdr%d, dr%d, dr%d", a->drs1, a->drs2, a->drd);
++    return true;
++}
++
++static bool trans_DCMP(DisasContext *ctx, arg_DCMP *a)
++{
++    prt("dcmp%s\tdr%d, dr%d", dcmp_cond[a->cd & 7], a->drs1, a->drs2);
 +    return true;
 +}
 +
@@ -129,133 +157,308 @@ index a3101ac534..82900774ab 100644
      do {                                                        \
          char dsp[8];                                            \
 diff --git a/target/rx/helper.h b/target/rx/helper.h
-index 60e8d18288..5e7306d86e 100644
+index 63cfe48e6b..e39f4b65ae 100644
 --- a/target/rx/helper.h
 +++ b/target/rx/helper.h
-@@ -23,6 +23,9 @@ DEF_HELPER_2(dabs, f64, env, f64)
- DEF_HELPER_2(dneg, f64, env, f64)
- DEF_HELPER_2(dsqrt, f64, env, f64)
- DEF_HELPER_2(dround, f64, env, f64)
-+DEF_HELPER_2(dtoi, i32, env, f64)
-+DEF_HELPER_2(dtou, i32, env, f64)
-+DEF_HELPER_2(dtof, f32, env, f64)
+@@ -13,6 +13,12 @@ DEF_HELPER_2(ftou, i32, env, f32)
+ DEF_HELPER_2(round, i32, env, f32)
+ DEF_HELPER_2(itof, f32, env, i32)
+ DEF_HELPER_2(utof, f32, env, i32)
++/* RXv3 double-precision FPU (DPFPU) helpers */
++DEF_HELPER_3(dadd, f64, env, f64, f64)
++DEF_HELPER_3(dsub, f64, env, f64, f64)
++DEF_HELPER_3(dmul, f64, env, f64, f64)
++DEF_HELPER_3(ddiv, f64, env, f64, f64)
++DEF_HELPER_4(dcmp, void, env, i32, f64, f64)
  DEF_HELPER_2(set_fpsw, void, env, i32)
  DEF_HELPER_2(racw, void, env, i32)
  DEF_HELPER_2(set_psw_rte, void, env, i32)
 diff --git a/target/rx/insns.decode b/target/rx/insns.decode
-index a7d66fba67..e1121e950d 100644
+index e9ace9624c..e22536a9e0 100644
 --- a/target/rx/insns.decode
 +++ b/target/rx/insns.decode
-@@ -653,3 +653,8 @@ DNEG		0111 0110 1001 0000 drs:4 1100 drd:4 0010	&drr
- # Unary ops group B (1101): DSQRT, DROUND
- DSQRT		0111 0110 1001 0000 drs:4 1101 drd:4 0000	&drr
- DROUND		0111 0110 1001 0000 drs:4 1101 drd:4 1101	&drr
-+# DTOI/DTOU/DTOF convert within the DPFPU: the result lands in a DR register
-+# and is moved out to a GPR with DMOV.L DRLn, Rd.
-+DTOI		0111 0110 1001 0000 drs:4 1101 drd:4 1000	&drr
-+DTOU		0111 0110 1001 0000 drs:4 1101 drd:4 1001	&drr
-+DTOF		0111 0110 1001 0000 drs:4 1101 drd:4 1100	&drr
+@@ -29,6 +29,9 @@
+ &mi		rs ld mi imm
+ &mr		rs ld mi rs2
+ &mcnd		ld sz rd cd
++# RXv3 DPFPU argument types
++&drrr		drd drs1 drs2
++&dcmpd		drs1 drs2 cd
+ ########
+ %b1_bdsp	24:3 !function=bdsp_s
+ 
+@@ -628,3 +631,15 @@ XOR_ir		1111 1101 0111 ..00 1101 ....		@b3_rd_li
+ XOR_mr		1111 1100 0011 01.. .... ....		@b3_rd_ld_ub
+ # XOR dsp[rs], rd
+ XOR_mr		0000 0110 ..10 00.. 0000 1101 .... ....	@b4_rd_ldmi
++
++########
++# RXv2 DPFPU instructions
++# All 4-byte register-to-register ops use prefix 0x76 0x90
++#
++# Binary ops: 0111 0110 1001 0000 drs2:4 op:4 drd:4 drs1:4
++# Result: DRdrd = DRdrs1 op DRdrs2
++DADD		0111 0110 1001 0000 drs2:4 0000 drd:4 drs1:4	&drrr
++DSUB		0111 0110 1001 0000 drs2:4 0001 drd:4 drs1:4	&drrr
++DMUL		0111 0110 1001 0000 drs2:4 0010 drd:4 drs1:4	&drrr
++DDIV		0111 0110 1001 0000 drs2:4 0101 drd:4 drs1:4	&drrr
++DCMP		0111 0110 1001 0000 drs2:4 1000 cd:4  drs1:4	&dcmpd
 diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
-index da2d71fa32..e684a4bfb9 100644
+index 114cc235f3..61277b7581 100644
 --- a/target/rx/op_helper.c
 +++ b/target/rx/op_helper.c
-@@ -342,6 +342,37 @@ float64 helper_dround(CPURXState *env, float64 t0)
-     return ret;
- }
+@@ -18,6 +18,7 @@
  
-+uint32_t helper_dtoi(CPURXState *env, float64 t0)
-+{
-+    uint32_t ret;
+ #include "qemu/osdep.h"
+ #include "qemu/bitops.h"
++#include "qemu/log.h"
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+ #include "accel/tcg/cpu-ldst.h"
+@@ -152,6 +153,160 @@ FLOATOP(rx_fsub, float32_sub)
+ FLOATOP(rx_fmul, float32_mul)
+ FLOATOP(rx_fdiv, float32_div)
+ 
++/*
++ * RXv3 double-precision FPU helpers.
++ *
++ * The DPFPU has its own status word: "The single-precision floating-point
++ * status word (FPSW) is neither referred to nor updated in double-precision
++ * floating-point arithmetic operations." DPSW carries its own rounding mode
++ * (DRM) and denormal handling (DDN), so double precision runs on a separate
++ * softfloat state rather than sharing fp_status. The PSW is not touched
++ * either; DCMP records its answer in DCMR and MVFDR moves it to PSW.Z.
++ */
++#define SET_DPSW(b)                                                     \
++    do {                                                                \
++        dpsw = FIELD_DP32(dpsw, DPSW, DC ## b, 1);                      \
++        if (!FIELD_EX32(dpsw, DPSW, DE ## b)) {                         \
++            dpsw = FIELD_DP32(dpsw, DPSW, DF ## b, 1);                  \
++        }                                                               \
++    } while (0)
 +
-+    dp_begin(env);
-+    ret = float64_to_int32_round_to_zero(t0, &env->dp_status);
-+    update_dpsw(env);
-+    return ret;
++/* Apply DPSW's rounding mode and clear the sticky softfloat flags. */
++static void dp_begin(CPURXState *env)
++{
++    static const int roundmode[] = {
++        float_round_nearest_even,
++        float_round_to_zero,
++        float_round_up,
++        float_round_down,
++    };
++    uint32_t dpsw = env->dcr[RX_DCR_DPSW];
++
++    set_float_rounding_mode(roundmode[FIELD_EX32(dpsw, DPSW, DRM)],
++                            &env->dp_status);
++    set_float_exception_flags(0, &env->dp_status);
 +}
 +
-+uint32_t helper_dtou(CPURXState *env, float64 t0)
++/*
++ * Record the outcome of a DP arithmetic instruction in DPSW. Every such
++ * instruction except DABS and DNEG recomputes the DC* cause bits, so they
++ * are cleared first; the DF* flags accumulate and are only set while the
++ * matching DE* enable is clear.
++ */
++static void update_dpsw(CPURXState *env)
 +{
-+    uint32_t ret;
++    uint32_t decnt = env->dcr[RX_DCR_DECNT];
++    uint32_t dpsw = env->dcr[RX_DCR_DPSW];
++    int xcpt = get_float_exception_flags(&env->dp_status);
++    int cause, enable;
 +
-+    dp_begin(env);
-+    ret = float64_to_uint32_round_to_zero(t0, &env->dp_status);
-+    update_dpsw(env);
-+    return ret;
++    /* DPSW and DEPC stop updating while exception info is preserved. */
++    if (FIELD_EX32(decnt, DECNT, EHM) && FIELD_EX32(decnt, DECNT, EHS)) {
++        return;
++    }
++
++    dpsw = FIELD_DP32(dpsw, DPSW, CAUSE, 0);
++
++    if (xcpt & float_flag_invalid) {
++        SET_DPSW(V);
++    }
++    if (xcpt & float_flag_divbyzero) {
++        SET_DPSW(Z);
++    }
++    if (xcpt & float_flag_overflow) {
++        SET_DPSW(O);
++    }
++    if (xcpt & float_flag_underflow) {
++        SET_DPSW(U);
++    }
++    if (xcpt & float_flag_inexact) {
++        SET_DPSW(X);
++    }
++    /*
++     * A denormal the DPFPU cannot handle is an unimplemented processing
++     * exception, which is reported only while DDN says denormals are to be
++     * treated as denormals.
++     */
++    if ((xcpt & (float_flag_input_denormal_flushed
++                 | float_flag_output_denormal_flushed))
++        && !FIELD_EX32(dpsw, DPSW, DDN)) {
++        dpsw = FIELD_DP32(dpsw, DPSW, DCE, 1);
++    }
++
++    dpsw = FIELD_DP32(dpsw, DPSW, DFS,
++                      FIELD_EX32(dpsw, DPSW, FLAGS) != 0);
++    env->dcr[RX_DCR_DPSW] = dpsw;
++
++    /*
++     * An enabled DP exception is delivered as an interrupt request to the
++     * interrupt controller rather than as a CPU exception, and suppresses
++     * the write to the destination register. Neither is modelled: the cause
++     * and flag bits above are correct, but the interrupt is not raised and
++     * the destination is written regardless.
++     */
++    cause = FIELD_EX32(dpsw, DPSW, CAUSE);
++    enable = FIELD_EX32(dpsw, DPSW, ENABLE);
++    if (cause & enable) {
++        qemu_log_mask(LOG_UNIMP,
++                      "rx: enabled DPFPU exception (DPSW=0x%08x) does not "
++                      "raise an interrupt\n", dpsw);
++    }
 +}
 +
-+/* dtof narrows to single precision but is a DPFPU instruction: DPSW. */
-+float32 helper_dtof(CPURXState *env, float64 t0)
++#define FLOATOP64(op, func)                                             \
++    float64 helper_##op(CPURXState *env, float64 t0, float64 t1)        \
++    {                                                                   \
++        float64 ret;                                                    \
++        dp_begin(env);                                                  \
++        ret = func(t0, t1, &env->dp_status);                            \
++        update_dpsw(env);                                               \
++        return ret;                                                     \
++    }
++
++FLOATOP64(dadd, float64_add)
++FLOATOP64(dsub, float64_sub)
++FLOATOP64(dmul, float64_mul)
++FLOATOP64(ddiv, float64_div)
++
++/*
++ * dcmp<cm> src, src2 -- compare src2 against src as directed by cm and
++ * record the answer in DCMR.RES.
++ *
++ * Mind the operand order: the manual defines every relation as src2 REL
++ * src, so LT is true when the *second* operand is the smaller one. src is
++ * the first encoded register (drs1) and src2 the second (drs2).
++ *
++ * The PSW is left alone -- C, Z, S and O are all listed as unchanged --
++ * which is why MVFDR exists to move DCMR.RES into PSW.Z.
++ *
++ * The condition field is a mask of the relations that make RES true, which
++ * is why LE (6) is LT (4) | EQ (2); it agrees with the manual on all four
++ * documented conditions. UN is defined as isNaN(src) || isNaN(src2), which
++ * is exactly what an unordered comparison reports. The comparison is quiet
++ * because testing for unordered is one of the conditions on offer.
++ */
++void helper_dcmp(CPURXState *env, uint32_t cm, float64 src, float64 src2)
 +{
-+    float32 ret;
++    int st;
++    bool res = false;
 +
 +    dp_begin(env);
-+    ret = float64_to_float32(t0, &env->dp_status);
++    st = float64_compare_quiet(src2, src, &env->dp_status);
++
++    if ((cm & RX_DCMP_UN) && st == float_relation_unordered) {
++        res = true;
++    }
++    if ((cm & RX_DCMP_EQ) && st == float_relation_equal) {
++        res = true;
++    }
++    if ((cm & RX_DCMP_LT) && st == float_relation_less) {
++        res = true;
++    }
++    env->dcr[RX_DCR_DCMR] = deposit32(env->dcr[RX_DCR_DCMR],
++                                      RX_DCMR_RES_BIT, 1, res);
 +    update_dpsw(env);
-+    return ret;
 +}
 +
  void helper_rx_fcmp(CPURXState *env, float32 t0, float32 t1)
  {
      int st;
 diff --git a/target/rx/translate.c b/target/rx/translate.c
-index 9bf70c96c6..d524a29d64 100644
+index 43fd88b15d..2eb0b7b39e 100644
 --- a/target/rx/translate.c
 +++ b/target/rx/translate.c
-@@ -2085,6 +2085,60 @@ static bool trans_DROUND(DisasContext *ctx, arg_DROUND *a)
+@@ -1949,6 +1949,84 @@ static bool trans_UTOF(DisasContext *ctx, arg_UTOF * a)
      return true;
  }
  
 +/*
-+ * dtoi / dtou / dtof convert within the DPFPU: the 32-bit result is written
-+ * to the low half of the destination DR register, from where DMOV.L moves it
-+ * out to a GPR. The high half is cleared.
++ * RXv3 DPFPU register access. DR0-DR15 are dedicated 64-bit registers,
++ * architecturally distinct from the general purpose registers; DRHn and
++ * DRLn name the high and low 32-bit halves of DRn.
 + */
-+static void dr_write_low32(int n, TCGv_i32 val)
++static TCGv_i64 dr_read(int n)
 +{
-+    TCGv_i64 t = tcg_temp_new_i64();
-+    tcg_gen_extu_i32_i64(t, val);
-+    tcg_gen_mov_i64(cpu_dregs[n], t);
++    return cpu_dregs[n];
 +}
 +
-+/* dtoi DRdrs, DRdrd -- convert double to signed int32 */
-+static bool trans_DTOI(DisasContext *ctx, arg_DTOI *a)
++static void dr_write(int n, TCGv_i64 val)
 +{
-+    TCGv_i32 res;
++    tcg_gen_mov_i64(cpu_dregs[n], val);
++}
 +
++/* dadd DRdrs1, DRdrd, DRdrs2  (DRdrd = DRdrs1 + DRdrs2) */
++static bool trans_DADD(DisasContext *ctx, arg_DADD *a)
++{
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    res = tcg_temp_new_i32();
-+    gen_helper_dtoi(res, tcg_env, dr_read(a->drs));
-+    dr_write_low32(a->drd, res);
++    TCGv_i64 s1 = dr_read(a->drs1);
++    TCGv_i64 s2 = dr_read(a->drs2);
++    TCGv_i64 d  = tcg_temp_new_i64();
++    gen_helper_dadd(d, tcg_env, s1, s2);
++    dr_write(a->drd, d);
 +    return true;
 +}
 +
-+/* dtou DRdrs, DRdrd -- convert double to unsigned int32 */
-+static bool trans_DTOU(DisasContext *ctx, arg_DTOU *a)
++static bool trans_DSUB(DisasContext *ctx, arg_DSUB *a)
 +{
-+    TCGv_i32 res;
-+
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    res = tcg_temp_new_i32();
-+    gen_helper_dtou(res, tcg_env, dr_read(a->drs));
-+    dr_write_low32(a->drd, res);
++    TCGv_i64 s1 = dr_read(a->drs1);
++    TCGv_i64 s2 = dr_read(a->drs2);
++    TCGv_i64 d  = tcg_temp_new_i64();
++    gen_helper_dsub(d, tcg_env, s1, s2);
++    dr_write(a->drd, d);
 +    return true;
 +}
 +
-+/* dtof DRdrs, DRdrd -- convert double to float32 */
-+static bool trans_DTOF(DisasContext *ctx, arg_DTOF *a)
++static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
 +{
-+    TCGv_i32 res;
-+
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    res = tcg_temp_new_i32();
-+    gen_helper_dtof(res, tcg_env, dr_read(a->drs));
-+    dr_write_low32(a->drd, res);
++    TCGv_i64 s1 = dr_read(a->drs1);
++    TCGv_i64 s2 = dr_read(a->drs2);
++    TCGv_i64 d  = tcg_temp_new_i64();
++    gen_helper_dmul(d, tcg_env, s1, s2);
++    dr_write(a->drd, d);
++    return true;
++}
++
++static bool trans_DDIV(DisasContext *ctx, arg_DDIV *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    TCGv_i64 s1 = dr_read(a->drs1);
++    TCGv_i64 s2 = dr_read(a->drs2);
++    TCGv_i64 d  = tcg_temp_new_i64();
++    gen_helper_ddiv(d, tcg_env, s1, s2);
++    dr_write(a->drd, d);
++    return true;
++}
++
++static bool trans_DCMP(DisasContext *ctx, arg_DCMP *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    gen_helper_dcmp(tcg_env, tcg_constant_i32(a->cd),
++                    cpu_dregs[a->drs1], cpu_dregs[a->drs2]);
 +    return true;
 +}
 +
