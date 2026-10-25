@@ -1,93 +1,127 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B43C606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 07:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA119606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 08:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vi370DGH
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=hunKJo7r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKsem-0003Uq-RG; Sun, 25 Oct 2026 03:28:41 -0400
+	id 1xKtYg-0006ev-Ui; Sun, 25 Oct 2026 04:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKscy-0008OE-Na
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:26:54 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xKtYc-0006e9-Pm
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 04:26:22 -0400
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKscx-0004am-6O
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:26:48 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-49d05d51553so14075245e9.2
- for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 00:26:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1xKtYY-0000r4-UQ
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 04:26:22 -0400
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-35c76e9614aso3389362eec.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 01:26:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792916775; cv=none;
+ d=google.com; s=arc-20260327;
+ b=J7pBtFfLhribM/0dJvtlUAc80AoAEVlYeGMuDWLRSboQ3aj61t2/lEwbSk3kFtr5Is
+ AIOE9cExzowhdaMc2/ugwIG1EUc44VwWBcBRhvGl2zbZYEEpU5AgImP4WEscpELUUp48
+ IUdeX3fBSa7xUpdPqTFgB5fspkWex1iHUKjZWjSpTN9og0awrrmpSStD9Szg65X7ZDYX
+ UQpqLrQGE/Ey5L+toMxo3jEZn3UN7NTUvXXbnTVS0eBgwbiyHZ6t5ELR5TRtWp1Ot8LM
+ oFCalYQQvXWoCeNCvY57snEvqw8ezZGnKo21FQyWb96pJIHiKMCbyzKdI+h6rUGQ534J
+ kK3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZnGa7SOHhZOD2c2MNAhv8nHktB8mtvvnR4wT5dbXRNU=;
+ fh=tjQa57cinwaGf5qo3LtCbKPt/KGEQHTUdBoNEnQyOE4=;
+ b=UvdVlzcXeAVRNMVg4TA1DmPY06kBCHPIoYoDWa3pV4hjIa2Q5EGpZVV8gvG+YFclkD
+ TE/2VU/zkn1DqU4QxZYdBlujnZ4BZ0Lkd1p5XOB2U8x6JtbeU1MmIzLlj02KEJuIGy4e
+ X3z1fNEuh7zxb8iMNZ/TZwVXQ9fH+SvnCLW2rhRz6Wno/vmOelfFCFOhHLNqhrLAGhJS
+ howbiUmmjtoyKa29EcRO0dtdZ/oRLOBb9+PY5lAM4CImyDeNPiwK+B+oS3vfhetBmwUc
+ u65nPnGd06tx0513hwYYE+FiK5DuHfHdutV/ZTVV5dCTIVogQ1cadiMymVO/Tz4yizq4
+ nuGQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792913206; x=1793518006; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=redhat.com; s=google; t=1792916775; x=1793521575; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=J2OOytdLxjcBr2KE2PVj8H+OEqtzVt09d96YCgCDvHo=;
- b=vi370DGHUDhZVwiB/VxNP5znWU/bze6pLwVHW9/Vzk0CvOu5oLHACv1S/jwTJFrGnD
- QlPvEZNebNiWh39sGyDwqT+U/GvAfJ8CnDTwJmr1GhNmC+uRE1Q+mhrMtFWkgI8OBmOx
- ewv/DWKzBzV58qurQfX6AYgUYdg74EvPw521mDJqkrxfNM0jF2kRoJM+WQ182I8AeXPq
- 4uhGulfly2NC5I34evvkae18w/sPsSIZqrSnGvefFN32Fbzz6Zvtp7UBrWWV63RZFyLA
- iHt33imLjJNsHJzqzemaIXYKDdf9YuUb1sjgZgXkuYxsUt873FNu7ED3pzQxaQt4rzoh
- D27A==
+ bh=ZnGa7SOHhZOD2c2MNAhv8nHktB8mtvvnR4wT5dbXRNU=;
+ b=hunKJo7rMqlh4IrUiVWQJtOkjWX6qSJDSc9+M2AcvR2zHfsWyxZoo7CeMRlnk0+Paw
+ pe2rD+5e6V0jsUKaDTHnqdKSDUi7aSuxdgLr6A4pgPFaamfR9G3w0PBonZ5qzSfUQ10p
+ 7zyaroJRitBoAn7N4J3bqub6J0q8g915pAeO8AV0Eh7oYSBfiVjmLmNwjrZ/o0AH0raA
+ SEnDeycu1KBX25ESiKmbrmhbynZyayDsinlYfSXhdfJEV6WP+EnB0rkhEI1imYM/JTpe
+ 1nrEk7xXBDyDsOsFW2g9Wn6NdIj87sefvpJjs1Z8fs4kzpaqde7UGtfiLijJ4jNrHPe0
+ LbGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792913206; x=1793518006;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20260707; t=1792916775; x=1793521575;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=J2OOytdLxjcBr2KE2PVj8H+OEqtzVt09d96YCgCDvHo=;
- b=lVRlZDKdNdMWqaaOF5xit2Z+FV13F2S4ZGeDjagvMXGX1R3JHAXpNaXahKlq/Sxn9p
- OW1yBsXlKYvPo+F+ePvHTazuTNcgr7p+RRbzpH1Sl4uRzkhU0ewy++BBL7cFGV89lpuD
- O9qjLNG+EScvWt2XnmKpjhfWXO6GjdO1o3m8o/cfhnMjZSjMrrrzA/XyNk62GBJxNRzn
- Yad0RWvN8Z7i8Ez/BGFmlbCshzER+8Q1pZtBakPYB4vOf9SpOfPYdzsk/JUaRe7IT1P4
- Z08rUjcA+bUivHsLUwFfXUxYNqVwpkYzB4vOlSFTZaODuwDvrPsFrm0gVuK76Zs6cBKV
- aHxg==
-X-Gm-Message-State: AFq9FYJVIcK96SAn62xYD+b7bgOGtg7KxMWrQkA2fBznZ3f7j1bui47V
- P7FBigl+t0VVHA1zQUPir8G+YBaIWBlHxrmmIImFZ3zd10GmBlOdVYqY7yt7lUt7Y74VRndsQDh
- PLFBcC6s=
-X-Gm-Gg: AYBFou04KCqmViorG3f/yD4hSFk+JAnsULwiIKusw2QghgpugxbdA+KF6/3+CtwRy7x
- PMosq33/W3LSvd7rEnWI3jGBNYJg0isuZYqHlmOOkD6wHygAe53AwAAvyo+fxN4bmtqJRFV5CeS
- deT899ZnUVbso0+UzMfUqG7cf8/PR1cloCpFp/qHWWdNPGFSSaieLVAwgE32OXCJeFjxZrJison
- I7zL+nE3kL1AAb3ZrrYJahJV6DFa53VJ78rq3Ux/1Etieyw3RgHoXa+ml0X8Zo2Buq/rfqgd0Se
- 9Ni5ksxTrSlMGKiM+bBeXX1nKfPUfubUiOjO7U9pK7ywoBcQqAACHlwEpwRfyM7A78ZYAl2kGDE
- pgU03SCZEO+7OYdQSi3mfRGsiiU7h86CShBLhl6/43WjH5P0bpyhGrr1wwiz8ONFp1Qo+J2bblt
- Vin6xZhJf8IvFIchJHz3HVWX0DWkL9cu1dQ0sgiwmvkGpeUHZNT3sf2uGp3cjGsMbdQCHf6qiXS
- 8xr7FuV4eHigRPDnBH4gNSqHFjBGyr69Er2IcjE9Xsf3cL/IDt0ewKvWUQ=
-X-Received: by 2002:a05:600c:6098:b0:4a2:fe11:9a8a with SMTP id
- 5b1f17b1804b1-4a35aae5dccmr60784165e9.0.1792913205629; 
- Sun, 25 Oct 2026 00:26:45 -0700 (PDT)
-Received: from stoup ([176.95.65.245]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359fc1207sm82923745e9.1.2026.10.25.00.26.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Oct 2026 00:26:45 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Matt Turner <mattst88@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 085/100] tcg: Split out tcg_gen_bitswap
-Date: Sun, 25 Oct 2026 08:19:00 +0100
-Message-ID: <20261025071915.1123867-86-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261025071915.1123867-1-richard.henderson@linaro.org>
-References: <20261025071915.1123867-1-richard.henderson@linaro.org>
+ bh=ZnGa7SOHhZOD2c2MNAhv8nHktB8mtvvnR4wT5dbXRNU=;
+ b=nJOEzdenHuoEd8mwrdxK4gzdokZbdew2o57QkSxTaTXWztIZ28lhB3QqJ8JR9xFnhQ
+ jUuYW6XWvUOWO2XToGM55meK/Pjtlss75XFm/qaeH6Mj/GHsGkwfU1eF6kQK/ODjhSAX
+ usC6fdoX7mw15k1+kCrKSsykcW/Al1ItgaAEb8MXMXgwYgfJVWjwsYFYGvmYf4boCKjo
+ iWDzFgC5Rs8hW3/17TrWFNAbw7svZ2fFjsb/ZbYptKcgX8RdFo7KjZZARMbLsmI+GP/F
+ pTv84jwuGd+z/IjO5OwRYVMCFAgM8/WRR8JE1G48/o/8mwQc3y9VfBp01Q4uJ7Gx/nDx
+ Tgcw==
+X-Gm-Message-State: AFq9FYK8XrpPNcSJMdACGubb3KRQXZmT5/A1LHuinMwy/ZxhiYN3LW28
+ Ebk7SNBcrlRizzvtYDeq/0TU/NMlQYsaSSujFOkmwqJZbH2sk6hz67LBnyV37CQ/DowQ775EKgb
+ UaoUT+uDDAqBpOKeg38Xsz2++Ti15rAI=
+X-Gm-Gg: AYBFou3lsCiHM+SfdAsGWBPk2+2OMdk4Xd0Ce8r98REiO9jno/RWKDYBINixQD3nlUT
+ gDsAZ7CplNry0p2KXjh4/vfryzVcQOGzyU/cEizjLfStDxtRqI0goE8l0pCMNvwIAQnomDMH3ZV
+ SNHCrtVUOYHCANTL6Z4St5dT8VoSMp0QJFKIHRNqdf+nuiGMJB6OuDVQhdBUx3tyj728gnPmMf1
+ 7DQdadvnsEbF1J16z+24SPcRIGJc22B0Ree2bNfEvmtZCmzou8eQdMsFMVIhg1s5iM1j7xz9vey
+ zQobT39quYGVNSW5cEqCObqC/gurvjhpoH5t76hHV6wEWqrb8QaOaJn5xctv0KwD4l3V4hezyXT
+ r/vtGCDmjzXtAuzCmX3PRKlKrdVVI7sEmGjabUVJbWYHCvGWEEz9FPsFcXiIAyMBaxHx4
+X-Received: by 2002:a05:7301:1694:b0:368:da6c:4fb6 with SMTP id
+ 5a478bee46e88-369e84ba936mr7875483eec.18.1792916775387; Sun, 25 Oct 2026
+ 01:26:15 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20261022-query-reg-v3-0-7ad902b9a7cf@redhat.com>
+ <atzT-0QHYWByMhEg@gallifrey>
+In-Reply-To: <atzT-0QHYWByMhEg@gallifrey>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Sun, 25 Oct 2026 12:26:03 +0400
+X-Gm-Features: AclHuK8YlbKxm0tXouRrKwXKkmpePE2xkf6pIN5p4Y1ucRE-bI4KaKUftFUxkSw
+Message-ID: <CAJ+F1CJWJc=5okkvBYuKhFjU4=iZGWECYmTMMFDbeawA-GGN7A@mail.gmail.com>
+Subject: Re: [PATCH v3 00/18] monitor/hmp: replace MonitorDef with GDB
+ registers
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1333.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,103 +133,165 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-We'll need this for other generic expansions.
+Hi
 
-Reviewed-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/tcg-op.c | 58 ++++++++++++++++++++++------------------------------
- 1 file changed, 25 insertions(+), 33 deletions(-)
+On Sat, Oct 24, 2026 at 7:52=E2=80=AFPM Dr. David Alan Gilbert <dave@trebli=
+g.org> wrote:
+>
+> * Marc-Andr=C3=A9 Lureau (marcandre.lureau@redhat.com) wrote:
+> > Hi,
+> >
+> > HMP monitor supports printing $register expression. The lookup
+> > was done via GDB stub registers, and supplementary MonitorDef
+> > HMP-specific tables.
+>
+> Why don't you get the first ~3 of these merged and then you can take the
+> others through the individual targets at their own pace.
 
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index b0be44d499..0d33313517 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -290,6 +290,27 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
- #undef DEF5
- #undef DEF6
- 
-+/*
-+ * Internal helper for bit and byte reversal.
-+ * Given a repeating matched block of 1's and 0's, swap the bits within
-+ * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-+ * right 8 bits.
-+ */
-+static void tcg_gen_bitswap(TCGType type, TCGTemp *dst,
-+                            TCGTemp *src, uint64_t mask)
-+{
-+    g_autoptr(TCGTemp) t0 = tcg_temp_new_ebb(type);
-+    g_autoptr(TCGTemp) t1 = tcg_temp_new_ebb(type);
-+    TCGTemp *tmask = tcg_constant_internal(type, mask);
-+    TCGTemp *tshift = tcg_constant_internal(type, cto64(mask));
-+
-+    tcg_gen_and(type, t0, src, tmask);
-+    tcg_gen_shr(type, t1, src, tshift);
-+    tcg_gen_shl(type, t0, t0, tshift);
-+    tcg_gen_and(type, t1, t1, tmask);
-+    tcg_gen_or(type, dst, t0, t1);
-+}
-+
- /*
-  * Generic expansions for templated operations.
-  * We have used compiler type checks to ensure all TCGTemp
-@@ -1290,43 +1311,14 @@ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2)
-     tcg_temp_free_i64(t1);
- }
- 
--/*
-- * Internal helper for bit and byte reversal.
-- * Given a repeating matched block of 1's and 0's, swap the bits within
-- * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
-- * right 8 bits.
-- */
--static void gen_bitswap_i32(TCGv_i32 ret, TCGv_i32 arg, uint32_t mask)
-+static void gen_bitswap_i32(TCGv_i32 dst, TCGv_i32 src, uint32_t mask)
- {
--    TCGv_i32 t0 = tcg_temp_ebb_new_i32();
--    TCGv_i32 t1 = tcg_temp_ebb_new_i32();
--    int sh = cto32(mask);
--
--    tcg_gen_andi_i32(t0, arg, mask);
--    tcg_gen_shri_i32(t1, arg, sh);
--    tcg_gen_shli_i32(t0, t0, sh);
--    tcg_gen_andi_i32(t1, t1, mask);
--    tcg_gen_or_i32(ret, t0, t1);
--
--    tcg_temp_free_i32(t0);
--    tcg_temp_free_i32(t1);
-+    tcg_gen_bitswap(TCG_TYPE_I32, tcgv_i32_temp(dst), tcgv_i32_temp(src), mask);
- }
- 
--/* Similarly for 64-bit operands. */
--static void gen_bitswap_i64(TCGv_i64 ret, TCGv_i64 arg, uint64_t mask)
-+static void gen_bitswap_i64(TCGv_i64 dst, TCGv_i64 src, uint64_t mask)
- {
--    TCGv_i64 t0 = tcg_temp_ebb_new_i64();
--    TCGv_i64 t1 = tcg_temp_ebb_new_i64();
--    int sh = cto64(mask);
--
--    tcg_gen_andi_i64(t0, arg, mask);
--    tcg_gen_shri_i64(t1, arg, sh);
--    tcg_gen_shli_i64(t0, t0, sh);
--    tcg_gen_andi_i64(t1, t1, mask);
--    tcg_gen_or_i64(ret, t0, t1);
--
--    tcg_temp_free_i64(t0);
--    tcg_temp_free_i64(t1);
-+    tcg_gen_bitswap(TCG_TYPE_I64, tcgv_i64_temp(dst), tcgv_i64_temp(src), mask);
- }
- 
- /*
--- 
-2.53.0
+Because I am not a GDB stub or HMP maintainer. Should I send a PR
+regardless for those? they can be reviewed & applied at a maintainer
+pace. If you think it's too slow, I can agree :)
 
+>
+> Dave
+>
+> > Migrate HMP registers to use the GDB infrastructure and remove the
+> > legacy HMP MonitorDef. Internal registers aren't exposed to GDB.
+> > This also drops HMP $pc x86 fallback (use $eip/$rip instead).
+> >
+> > Known behavioural changes on RISC-V: CSR lookup is now case-sensitive
+> > and vector registers now report "unkown register" instead of a
+> > target-specific message ("Unable to print the value of vector vreg 'v0'
+> > from this API")
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> > Changes in v3:
+> > - added x86 GDB register patches
+> >   - fix the x87 FPU tag word returned by the GDB stub
+> >   - split SSE registers into a separate org.gnu.gdb.i386.sse feature
+> >   - expose AVX/AVX-512 registers (ymm/zmm upper halves and opmask)
+> >   - expose more system registers to HMP
+> > - renamed i386-segments.xml to i386-system.xml and registered it as an
+> >   internal feature, like the other targets
+> > - moved the HMP $pc removal to its own patch and documented it in
+> >   removed-features.rst
+> > - moved each target's MonitorDef removal into its target patch; the fin=
+al
+> >   patch now only removes the generic MonitorDef infrastructure
+> > - added MAINTAINERS entries
+> > - rebased onto current master
+> > - Link to v2: https://lore.kernel.org/qemu-devel/20261013-query-reg-v2-=
+0-6f95a2e139a9@redhat.com
+> >
+> > Changes in v2:
+> > - dropped v1 patch 5 (CPUClass::get_pc fallback for $pc)
+> > - new patch gdb_register_internal_coprocessor() to hide registers from =
+GDB
+> > - SPARC64, m68k, RISC-V aliases now use internal registration
+> > - pickup trailer tags
+> > - Link to v1: https://lore.kernel.org/qemu-devel/20260911-query-reg-v1-=
+0-0c04f0c02cf3@redhat.com
+> >
+> > ---
+> > Marc-Andr=C3=A9 Lureau (18):
+> >       hmp: don't crash on invalid register
+> >       gdbstub: fix next register base after register gaps
+> >       gdbstub: set feature->base_reg for dynamic features
+> >       gdbstub: add gdb_register_internal_coprocessor()
+> >       MAINTAINERS: cover x86 GDB XML files
+> >       target/i386: expose segment limits register to monitors via gdbst=
+ub
+> >       target/i386: fix FPU tag word in GDB register read
+> >       target/i386: split SSE registers into separate GDB feature
+> >       target/i386: expose system registers to monitors via gdbstub
+> >       target/i386: expose AVX/AVX-512 registers to GDB
+> >       target/i386: drop HMP $pc
+> >       MAINTAINERS: cover m68k GDB XML files
+> >       target/m68k: expose system registers to monitors via gdbstub
+> >       target/sparc64: expose system registers to monitors via gdbstub
+> >       target/riscv: bypass smstateen check in debugger mode
+> >       MAINTAINERS: cover riscv GDB XML files
+> >       target/riscv: expose register aliases to monitors via gdbstub
+> >       monitor/hmp: remove legacy MonitorDef infrastructure
+> >
+> >  MAINTAINERS                               |   4 +
+> >  configs/targets/i386-bsd-user.mak         |   2 +-
+> >  configs/targets/i386-linux-user.mak       |   2 +-
+> >  configs/targets/i386-softmmu.mak          |   2 +-
+> >  configs/targets/m68k-softmmu.mak          |   2 +-
+> >  configs/targets/riscv32-linux-user.mak    |   2 +-
+> >  configs/targets/riscv32-softmmu.mak       |   2 +-
+> >  configs/targets/riscv64-bsd-user.mak      |   2 +-
+> >  configs/targets/riscv64-linux-user.mak    |   2 +-
+> >  configs/targets/riscv64-softmmu.mak       |   2 +-
+> >  configs/targets/sparc64-softmmu.mak       |   2 +-
+> >  configs/targets/x86_64-bsd-user.mak       |   2 +-
+> >  configs/targets/x86_64-linux-user.mak     |   2 +-
+> >  configs/targets/x86_64-softmmu.mak        |   2 +-
+> >  docs/about/removed-features.rst           |   8 +
+> >  gdbstub/gdb-xml/i386-32bit-avx.xml        |  20 ++
+> >  gdbstub/gdb-xml/i386-32bit-avx512.xml     |  31 +++
+> >  gdbstub/gdb-xml/i386-32bit-sse.xml        |  54 +++++
+> >  gdbstub/gdb-xml/i386-32bit.xml            |  46 +---
+> >  gdbstub/gdb-xml/i386-64bit-avx.xml        |  28 +++
+> >  gdbstub/gdb-xml/i386-64bit-avx512.xml     | 108 +++++++++
+> >  gdbstub/gdb-xml/i386-64bit-sse.xml        |  62 +++++
+> >  gdbstub/gdb-xml/i386-64bit.xml            |  50 ----
+> >  gdbstub/gdb-xml/i386-system.xml           |  53 +++++
+> >  gdbstub/gdb-xml/m68k-system.xml           |  32 +++
+> >  gdbstub/gdb-xml/riscv-32bit-alias.xml     | 105 +++++++++
+> >  gdbstub/gdb-xml/riscv-32bit-fpu-alias.xml |  40 ++++
+> >  gdbstub/gdb-xml/riscv-64bit-alias.xml     | 105 +++++++++
+> >  gdbstub/gdb-xml/riscv-64bit-fpu-alias.xml |  46 ++++
+> >  gdbstub/gdb-xml/sparc64-system.xml        |  22 ++
+> >  gdbstub/gdbstub.c                         |  85 +++++--
+> >  include/exec/gdbstub.h                    |  21 ++
+> >  include/hw/core/cpu.h                     |   5 +-
+> >  include/hw/core/sysemu-cpu-ops.h          |  16 --
+> >  include/monitor/hmp.h                     |   6 -
+> >  include/qemu/typedefs.h                   |   1 -
+> >  monitor/hmp.c                             |  45 +---
+> >  target/arm/gdbstub.c                      |   8 +-
+> >  target/arm/gdbstub64.c                    |  10 +-
+> >  target/i386/cpu-dump.c                    |   5 +-
+> >  target/i386/cpu.c                         |  60 +++--
+> >  target/i386/cpu.h                         |  25 ++
+> >  target/i386/gdbstub.c                     | 373 ++++++++++++++++++++++=
++++++---
+> >  target/i386/tcg/fpu_helper.c              |  24 +-
+> >  target/m68k/cpu.c                         |  22 --
+> >  target/m68k/helper.c                      |  49 +++-
+> >  target/ppc/gdbstub.c                      |   2 +-
+> >  target/riscv/cpu.c                        |   1 -
+> >  target/riscv/gdbstub.c                    |  57 ++++-
+> >  target/riscv/internals.h                  |   3 -
+> >  target/riscv/monitor.c                    | 140 -----------
+> >  target/riscv/tcg/csr.c                    |   3 +-
+> >  target/sparc/cpu.c                        |  19 --
+> >  target/sparc/gdbstub.c                    |  38 +++
+> >  target/xtensa/cpu.c                       |   2 +-
+> >  tests/qtest/test-hmp.c                    |   1 -
+> >  56 files changed, 1383 insertions(+), 478 deletions(-)
+> > ---
+> > base-commit: 8967b2fe1b2aaae3c29e207d85fab901d580a2dc
+> > change-id: 20260910-query-reg-80cd59cf4707
+> >
+> > Best regards,
+> > --
+> > Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> --
+>  -----Open up your eyes, open up your mind, open up your code -------
+> / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \
+> \        dave @ treblig.org |                               | In Hex /
+>  \ _________________________|_____ http://www.treblig.org   |_______/
+>
 
