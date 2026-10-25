@@ -1,63 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3626606A31D
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2070606A31B
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL26R-0004At-8p; Sun, 25 Oct 2026 13:33:51 -0400
+	id 1xL26T-0004St-E6; Sun, 25 Oct 2026 13:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25c-0002mU-3Y; Sun, 25 Oct 2026 13:33:07 -0400
+ id 1xL25g-0002nU-3h; Sun, 25 Oct 2026 13:33:14 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25U-0007PH-S2; Sun, 25 Oct 2026 13:32:56 -0400
+ id 1xL25e-0007Q4-47; Sun, 25 Oct 2026 13:33:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
- Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=sY4MR7u4WQyIj7u5DGvAixmNpQq9Lbb541rx1qnoJFQ=; b=BmgO8FCcOtzJmi1y0VWIWvZNGI
- eOiwKBAS8taHEIVsGHn1baXcNsT3hvhyX/WcydtlE0Hh2uj+bJC1qS7OalQrI1H8cojccJLw78Q3u
- +p3i6VJDPHrjk5Pasy1HmQSlvsyE30aS1m/KzDgU3S3MsdDnsAGsKTJnKDwdZ3tntkktgGXtwcWJD
- B2AaKbEppDh7IQQtMUsbjc4QcSDPZ2uY4pOmoJpG52kkPji9KJHDlR3zvUXNaUnCvnP2RUu27EDYj
- SyOzIoYAYzsgYtHbpbNUjCFloxAY6UMk0Mgz95Ngp8MDzA34E85Vexr3QithOlotuA0DaPrl/pflP
- 31h/Q7hA==;
-Received: from sslproxy01.your-server.de ([78.46.139.224])
+ d=sayyadumar.com; s=default2511; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=9V6WqJ0lisQW5LW8pfgAcMCHZOVg8jFdL3JLCLERuYI=; b=rHa0hHnB1WjOiJQ2lvGGbhDxu1
+ 1igss0We6AonfSFc6LQ/NR8qlXjihbhIHWRXkMjEPGFPTBcxUx8RYKpXiw8+4ozAU1HkKiGpe9QRf
+ tOyS1WEc1jiQdSl3mmWQ9PbTXpsYl2g0FvE0HxS9MAkUqRvnNa4frqluAKDkZZz4AoFB3Hk3jeIkj
+ 69Dl9qcmLoEy4VgaVPoTlg1KgXODs20JvZDCtV1Qv3D91YNvjxAnQQ8//bwSczZvhTjDjLwaiEm5J
+ 5c8EcGYbwLvXqzMHN+Xpb6vbk2jSd8a7CptYsjLJfUVyq6vDx0au+2/VBvbLj0ubrfauko3UIWP3V
+ dLnCI45w==;
+Received: from sslproxy03.your-server.de ([88.198.220.132])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gO-00097Q-2S; Sun, 25 Oct 2026 18:06:56 +0100
+ id 1xL1es-0008qf-35; Sun, 25 Oct 2026 18:05:22 +0100
 Received: from localhost ([127.0.0.1])
- by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ by sslproxy03.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vw-000OzG-3B; Sun, 25 Oct 2026 17:56:08 +0100
-From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:42 +0100
-Subject: [PATCH v2 26/31] hw/misc: add Renesas RX CRC calculator
+ id 1xL1es-0006cY-0w; Sun, 25 Oct 2026 18:05:22 +0100
+Message-ID: <cd09d506-75f1-4b82-bfe6-a45707609b3f@sayyadumar.com>
+Date: Sun, 25 Oct 2026 18:05:22 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-26-9e846577cad0@sayyadumar.com>
-References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
-In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
-To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>, 
- qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=10526;
- i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=ney1/4QnelinSnzRtjLVg9AamFVDbqHOGMb9pIs8gNo=;
- b=yYI3PPFDwEX38Vdkjr3E0ztHrZ3vxaLIG6UXgIngjaxnqaFnAKvOkGXt+W7h3SuN8ZMFzwRra
- 03S5DD+U25XCm8v46U/7CpMYnixeUSrmbhQQNZyTULAEidt8YYkdWhy
-X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
- pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/rx: add RXv2/RXv3 CPU support
+To: yoshinori.sato@nifty.com
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>,
+ qemu-arm@nongnu.org
+References: <20260913-umar-rx-series-v1-0-5a5841a5d1e9@sayyadumar.com>
+ <87o6e06pqs.wl-yoshinori.sato@nifty.com>
+ <c31dd9df-b82b-4cbc-814c-35d299f19c5c@sayyadumar.com>
+ <87tsn0s609.wl-yoshinori.sato@nifty.com>
+Content-Language: en-US
+From: "Umar, Sayyad Mahammad" <contact@sayyadumar.com>
+In-Reply-To: <87tsn0s609.wl-yoshinori.sato@nifty.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
 Received-SPF: pass client-ip=85.10.213.182;
  envelope-from=contact@sayyadumar.com; helo=www675.your-server.de
@@ -78,337 +73,123 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-15.1 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the RX CRCA, section 42 of the RX65N hardware manual.
 
-Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
----
- MAINTAINERS                            |   2 +
- configs/devices/rx-softmmu/default.mak |   1 +
- hw/misc/Kconfig                        |   3 +
- hw/misc/meson.build                    |   1 +
- hw/misc/renesas_rx_crc.c               | 219 +++++++++++++++++++++++++++++++++
- include/hw/misc/renesas_rx_crc.h       |  30 +++++
- 6 files changed, 256 insertions(+)
+On 10/5/26 14:09, yoshinori.sato@nifty.com wrote:
+> On Mon, 05 Oct 2026 06:16:54 +0900,
+> Umar, Sayyad Mahammad wrote:
+>> On 9/14/26 13:23, yoshinori.sato@nifty.com wrote:
+>>> On Mon, 14 Sep 2026 03:21:04 +0900,
+>>> Sayyad Mahammad Umar wrote:
+>>>> This series extends the RX target with RXv2 and RXv3 CPU support,
+>>>> forming the foundation for the RX65N, RX651, and RX72M machine models.
+>>>>
+>>>> The first patch adds the CPU definitions, instruction support, and
+>>>> translator changes required by the newer RX cores.
+>>>>
+>>>> The second patch adds the initial RX machine and peripheral support.
+>>>>
+>>>> Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
+>>>> ---
+>>>> Sayyad Mahammad Umar (2):
+>>>>         target/rx: add RXv2 and RXv3 CPU support
+>>>>         hw/rx: add common RX peripherals
+>>>>
+>>>>    MAINTAINERS                           |   20 +
+>>>>    hw/adc/renesas_s12ad.c                |  324 +++++++++
+>>>>    hw/dma/renesas_rx_dmac.c              |  317 +++++++++
+>>>>    hw/dma/renesas_rx_dtc.c               |  169 +++++
+>>>>    hw/gpio/renesas_rx_gpio.c             |  256 +++++++
+>>>>    hw/misc/renesas_rx_crc.c              |  219 ++++++
+>>>>    hw/misc/renesas_rx_fcu.c              |  985 ++++++++++++++++++++++++++
+>>>>    hw/misc/renesas_rx_romcache.c         |  139 ++++
+>>>>    hw/misc/rx65n_sysclk.c                |  190 +++++
+>>>>    hw/net/renesas_etherc.c               |  955 +++++++++++++++++++++++++
+>>>>    hw/rtc/renesas_rx_rtc.c               |  330 +++++++++
+>>>>    hw/ssi/renesas_rspi.c                 |  319 +++++++++
+>>>>    hw/timer/renesas_mtu3.c               |  509 ++++++++++++++
+>>>>    hw/watchdog/renesas_rx_wdt.c          |  193 ++++++
+>>>>    include/hw/adc/renesas_s12ad.h        |   61 ++
+>>>>    include/hw/dma/renesas_rx_dmac.h      |   57 ++
+>>>>    include/hw/dma/renesas_rx_dtc.h       |   42 ++
+>>>>    include/hw/gpio/renesas_rx_gpio.h     |   64 ++
+>>>>    include/hw/misc/renesas_rx_crc.h      |   30 +
+>>>>    include/hw/misc/renesas_rx_fcu.h      |  191 +++++
+>>>>    include/hw/misc/renesas_rx_romcache.h |   30 +
+>>>>    include/hw/misc/rx65n_sysclk.h        |   37 +
+>>>>    include/hw/net/renesas_etherc.h       |  109 +++
+>>>>    include/hw/rtc/renesas_rx_rtc.h       |   52 ++
+>>>>    include/hw/ssi/renesas_rspi.h         |   61 ++
+>>>>    include/hw/timer/renesas_mtu3.h       |   73 ++
+>>>>    include/hw/watchdog/renesas_rx_wdt.h  |   48 ++
+>>>>    target/rx/cpu-param.h                 |    3 +
+>>>>    target/rx/cpu-qom.h                   |    2 +
+>>>>    target/rx/cpu.c                       |   57 +-
+>>>>    target/rx/cpu.h                       |  124 ++++
+>>>>    target/rx/disas.c                     |  383 ++++++++++-
+>>>>    target/rx/gdbstub.c                   |   44 +-
+>>>>    target/rx/helper.c                    |   56 +-
+>>>>    target/rx/helper.h                    |   22 +
+>>>>    target/rx/insns.decode                |  125 +++-
+>>>>    target/rx/meson.build                 |    6 +-
+>>>>    target/rx/op_helper.c                 |  357 ++++++++++
+>>>>    target/rx/translate.c                 | 1225 ++++++++++++++++++++++++++-------
+>>>>    39 files changed, 7873 insertions(+), 311 deletions(-)
+>>>> ---
+>>>> base-commit: ff1d2d19d7e24893e2012d879f8e73077e17b9bd
+>>>> change-id: 20260913-umar-rx-series-0bfbbfe6b074
+>>>>
+>>>> Best regards,
+>>>> --
+>>>> Sayyad Mahammad Umar <contact@sayyadumar.com>
+>>>>
+>>> Thanks.
+>>> I also implemented some peripheral functions to emulate the actual board.
+>>> I haven't verified every single change, but if there are any missing features,
+>>> it would be best to combine them with my changes.
+>> Hi Mr Sato,
+>>
+>> Sorry for the late reply, i was sick for couple of weeks.
+>>
+>> I have now started to work on splitting my last patch series from 2
+>> patches to about ~31 smaller patches.
+>>
+>> I will be submitting those in the coming days after i test the changes
+>> with real firmware.
+>>
+>> The real hardware i want to support are rx65n-2mb, rx660-tb and rx72m-rsk.
+>>
+>> Which boards/peripherals are you working on ?
+>>
+>> Regards,
+>>
+>> Umar
+>>
+> OK. I have high hopes.
+>
+> I am implementing this targeting an RX62N board.
+> This board was released only in Japan, but it is no longer available.
+> While this board allows for the use of almost all the RX62N's features,
+> I wanted to use USB, Ethernet, and SPI, so I implemented those functions
+> along with some GPIOs.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b8bbb0e749..efeb40ee01 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3086,6 +3086,7 @@ F: hw/dma/renesas_rx_*.c
- F: hw/dma/renesas_rx_dtc.c
- F: hw/gpio/renesas_rx_gpio.c
- F: hw/intc/rx_icu.c
-+F: hw/misc/renesas_rx_*.c
- F: hw/rtc/renesas_rx_rtc.c
- F: hw/rx/
- F: hw/ssi/renesas_rspi.c
-@@ -3095,6 +3096,7 @@ F: include/hw/dma/renesas_rx_*.h
- F: include/hw/dma/renesas_rx_dtc.h
- F: include/hw/gpio/renesas_rx_gpio.h
- F: include/hw/intc/rx_icu.h
-+F: include/hw/misc/renesas_rx_*.h
- F: include/hw/rtc/renesas_rx_rtc.h
- F: include/hw/rx/
- F: include/hw/ssi/renesas_rspi.h
-diff --git a/configs/devices/rx-softmmu/default.mak b/configs/devices/rx-softmmu/default.mak
-index cbc4641143..c8419d64cc 100644
---- a/configs/devices/rx-softmmu/default.mak
-+++ b/configs/devices/rx-softmmu/default.mak
-@@ -9,3 +9,4 @@ CONFIG_RENESAS_RX_DTC=y
- CONFIG_RENESAS_S12AD=y
- CONFIG_RENESAS_RSPI=y
- CONFIG_RENESAS_RX_RTC=y
-+CONFIG_RENESAS_RX_CRC=y
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 7abd22869a..b1c4fd7cba 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -267,3 +267,6 @@ config SOPHGO_CV1800B_CLK
-     bool
- 
- source macio/Kconfig
-+
-+config RENESAS_RX_CRC
-+    bool
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 90f3f89de7..22f933a17e 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -181,3 +181,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
- 
- system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-+system_ss.add(when: 'CONFIG_RENESAS_RX_CRC', if_true: files('renesas_rx_crc.c'))
-diff --git a/hw/misc/renesas_rx_crc.c b/hw/misc/renesas_rx_crc.c
-new file mode 100644
-index 0000000000..f06ac4a64e
---- /dev/null
-+++ b/hw/misc/renesas_rx_crc.c
-@@ -0,0 +1,219 @@
-+/*
-+ * Renesas RX CRC Calculator (CRCA)
-+ *
-+ * Datasheet: RX65N Group, RX651 Group User's Manual: Hardware
-+ *            (Rev.2.40 R01UH0590EJ0240), section 42
-+ *
-+ * Copyright (c) 2026 Umar, Sayyad Mahammad
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Writing to CRCDIR runs the selected polynomial over the data and leaves the
-+ * result in CRCDOR, which doubles as the initial value: it is zero out of
-+ * reset, DORCLR puts it back, and firmware wanting a different seed writes it
-+ * directly. There is no final XOR, so the familiar CRC-32 of a message is
-+ * obtained by seeding CRCDOR with all ones and inverting the result.
-+ *
-+ * CRCCR.LMS picks the bit order. MSB first is the plain shift-left form; LSB
-+ * first is the reflected form, computed with the reversed polynomial. The two
-+ * worked examples in section 42.3 pin this down: with the CCITT polynomial and
-+ * a cleared CRCDOR, feeding 0xf0 gives 0xef1f MSB first and 0xf78f LSB first.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/bitops.h"
-+#include "hw/misc/renesas_rx_crc.h"
-+#include "hw/core/registerfields.h"
-+#include "hw/core/qdev-properties.h"
-+#include "migration/vmstate.h"
-+
-+REG8(CRCCR, 0)
-+    FIELD(CRCCR, GPS, 0, 3)
-+    FIELD(CRCCR, LMS, 6, 1)
-+    FIELD(CRCCR, DORCLR, 7, 1)
-+
-+#define R_CRCDIR    0x04
-+#define R_CRCDOR    0x08
-+
-+/* CRCCR is read/write apart from the write-only DORCLR bit. */
-+#define CRCCR_RW_MASK   (R_CRCCR_GPS_MASK | R_CRCCR_LMS_MASK)
-+
-+/*
-+ * Generating polynomials selected by CRCCR.GPS, without the implicit top
-+ * term. Entries 0, 6 and 7 select "no calculation".
-+ */
-+static const struct {
-+    uint32_t poly;
-+    uint8_t width;
-+} crc_gps[8] = {
-+    [1] = { 0x07,       8  },   /* X8 + X2 + X + 1                          */
-+    [2] = { 0x8005,     16 },   /* X16 + X15 + X2 + 1                       */
-+    [3] = { 0x1021,     16 },   /* X16 + X12 + X5 + 1                       */
-+    [4] = { 0x04c11db7, 32 },   /* X32 + X26 + X23 + ... + X2 + X + 1       */
-+    [5] = { 0x1edc6f41, 32 },   /* X32 + X28 + X27 + ... + X8 + X6 + 1      */
-+};
-+
-+static uint32_t bitreverse(uint32_t value, unsigned width)
-+{
-+    return revbit32(value) >> (32 - width);
-+}
-+
-+/* Run nbits of data through the selected polynomial. */
-+static void crc_feed(RenesasRxCrcState *s, uint32_t data, unsigned nbits)
-+{
-+    unsigned gps = FIELD_EX8(s->crccr, CRCCR, GPS);
-+    uint32_t poly = crc_gps[gps].poly;
-+    unsigned width = crc_gps[gps].width;
-+    uint32_t mask, crc;
-+
-+    if (width == 0) {
-+        return;             /* GPS selects no calculation */
-+    }
-+    if (nbits > width) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "renesas-rx-crc: %u-bit write to CRCDIR with a %u-bit "
-+                      "polynomial selected\n", nbits, width);
-+        nbits = width;
-+    }
-+
-+    mask = width == 32 ? UINT32_MAX : (1u << width) - 1;
-+    crc = s->crcdor & mask;
-+
-+    if (FIELD_EX8(s->crccr, CRCCR, LMS)) {
-+        /* MSB first: shift up, align the data with the top of the register. */
-+        crc ^= (data << (width - nbits)) & mask;
-+        while (nbits--) {
-+            crc = (crc & (mask ^ (mask >> 1))) ? ((crc << 1) ^ poly) & mask
-+                                               : (crc << 1) & mask;
-+        }
-+    } else {
-+        /* LSB first: the reflected form, so shift down with a reversed poly. */
-+        uint32_t rpoly = bitreverse(poly, width);
-+
-+        crc ^= data & mask;
-+        while (nbits--) {
-+            crc = (crc & 1) ? (crc >> 1) ^ rpoly : crc >> 1;
-+        }
-+    }
-+
-+    s->crcdor = crc;
-+}
-+
-+static uint64_t crc_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    RenesasRxCrcState *s = opaque;
-+
-+    switch (offset) {
-+    case A_CRCCR:
-+        /* DORCLR always reads back as 0. */
-+        return s->crccr & CRCCR_RW_MASK;
-+    case R_CRCDIR:
-+        /*
-+         * CRCDIR is documented readable, but the hardware keeps no separate
-+         * copy of the data written to it, so nothing meaningful comes back.
-+         */
-+        return 0;
-+    case R_CRCDOR:
-+        if (size >= 4) {
-+            return s->crcdor;
-+        }
-+        return s->crcdor & ((1u << (size * 8)) - 1);
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "renesas-rx-crc: read from unmapped offset 0x%"
-+                      HWADDR_PRIx "\n", offset);
-+        return 0;
-+    }
-+}
-+
-+static void crc_write(void *opaque, hwaddr offset, uint64_t value,
-+                      unsigned size)
-+{
-+    RenesasRxCrcState *s = opaque;
-+
-+    switch (offset) {
-+    case A_CRCCR:
-+        s->crccr = value & CRCCR_RW_MASK;
-+        if (FIELD_EX8(value, CRCCR, DORCLR)) {
-+            s->crcdor = 0;
-+        }
-+        break;
-+    case R_CRCDIR:
-+        crc_feed(s, value, size * 8);
-+        break;
-+    case R_CRCDOR:
-+        /* Writable so firmware can seed the calculation. */
-+        if (size >= 4) {
-+            s->crcdor = value;
-+        } else {
-+            uint32_t m = (1u << (size * 8)) - 1;
-+            s->crcdor = (s->crcdor & ~m) | (value & m);
-+        }
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "renesas-rx-crc: write to unmapped offset 0x%"
-+                      HWADDR_PRIx "\n", offset);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps crc_ops = {
-+    .read = crc_read,
-+    .write = crc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = { .min_access_size = 1, .max_access_size = 4 },
-+    .valid = { .min_access_size = 1, .max_access_size = 4 },
-+};
-+
-+static void rx_crc_reset(DeviceState *dev)
-+{
-+    RenesasRxCrcState *s = RENESAS_RX_CRC(dev);
-+
-+    s->crccr = 0;
-+    s->crcdor = 0;
-+}
-+
-+static void rx_crc_init(Object *obj)
-+{
-+    RenesasRxCrcState *s = RENESAS_RX_CRC(obj);
-+
-+    memory_region_init_io(&s->memory, obj, &crc_ops, s,
-+                          "renesas-rx-crc", RX_CRC_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->memory);
-+}
-+
-+static const VMStateDescription vmstate_rx_crc = {
-+    .name = "renesas-rx-crc",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(crccr, RenesasRxCrcState),
-+        VMSTATE_UINT32(crcdor, RenesasRxCrcState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void rx_crc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->vmsd = &vmstate_rx_crc;
-+    device_class_set_legacy_reset(dc, rx_crc_reset);
-+}
-+
-+static const TypeInfo rx_crc_info = {
-+    .name          = TYPE_RENESAS_RX_CRC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RenesasRxCrcState),
-+    .instance_init = rx_crc_init,
-+    .class_init    = rx_crc_class_init,
-+};
-+
-+static void rx_crc_register_types(void)
-+{
-+    type_register_static(&rx_crc_info);
-+}
-+
-+type_init(rx_crc_register_types)
-diff --git a/include/hw/misc/renesas_rx_crc.h b/include/hw/misc/renesas_rx_crc.h
-new file mode 100644
-index 0000000000..1c41b6bd4b
---- /dev/null
-+++ b/include/hw/misc/renesas_rx_crc.h
-@@ -0,0 +1,30 @@
-+/*
-+ * Renesas RX CRC Calculator (CRCA)
-+ *
-+ * Copyright (c) 2026 Umar, Sayyad Mahammad
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_MISC_RENESAS_RX_CRC_H
-+#define HW_MISC_RENESAS_RX_CRC_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_RENESAS_RX_CRC "renesas-rx-crc"
-+OBJECT_DECLARE_SIMPLE_TYPE(RenesasRxCrcState, RENESAS_RX_CRC)
-+
-+/* CRCCR, CRCDIR and CRCDOR occupy 0x8280, 0x8284 and 0x8288. */
-+#define RX_CRC_SIZE     0x10
-+
-+struct RenesasRxCrcState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion memory;
-+
-+    uint8_t crccr;      /* control: GPS[2:0], LMS, DORCLR */
-+    uint32_t crcdor;    /* running result, also the initial value */
-+};
-+
-+#endif /* HW_MISC_RENESAS_RX_CRC_H */
+Hello Mr Sato,
 
--- 
-2.53.0
+I have now sent my second patch series. Please have a look.
+
+I have added support for  Ethernet and SPI. It would be good to have USB 
+as well i guess.
+
+Regards,
+
+Umar
+
+
 
 
