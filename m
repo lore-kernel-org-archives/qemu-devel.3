@@ -1,83 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE3C606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9982606A31B
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 07:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=LhbmI9zs
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pI5v5IE1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKsfX-0004Ch-Ij; Sun, 25 Oct 2026 03:29:33 -0400
+	id 1xKsam-0002Pl-D5; Sun, 25 Oct 2026 03:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKsd7-0008VI-R9
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:27:03 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1xKsZr-0006hK-DD
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:23:38 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xKsd6-0004cE-4k
- for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:26:57 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a214c5c4c0so14890565e9.3
- for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 00:26:55 -0700 (PDT)
+ id 1xKsZo-00048m-Ke
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 03:23:34 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4a20a37703bso15869635e9.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 00:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1792913215; x=1793518015; darn=nongnu.org;
+ d=linaro.org; s=google; t=1792913010; x=1793517810; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=i/AH5B2OjNsOhTogWEH0XnxXxXTldLEYEpRrnqfWpYE=;
- b=LhbmI9zsyXxjan/+j2gYadNoOiismCnUFNNyhTD4+f8g0pqqXBxSwKuB/bFPeCAOAS
- RzLV2uOt6EXpIPzaNYxgCZ8X9ND5HinF/haBOkeoDJxYxrdhRiDPmXVgiC0iLKauETjj
- 7JgXWsCLV/hZrhHL17zMQWS3ht/2c9Nk1Zq64G9s/xATI3liRr89GiBa0HaRbsxNyQCd
- wpy/27jwRQTK2Y/C276dGhhmLAhLKl4kZWu8E4XSVcNRSB9mNBu+Llp7k8Tj7F83vWnt
- uGb5EoYOJlutWA8kcvi9s/cOUSlqez01jgQTd6ZPx1Ytxt6oJY8tg1NcONboRG2Tm6QD
- wXLg==
+ bh=GDaoX5/AtoP79ijTs1l26nizqOF4tg6tNu2tAHVvXlg=;
+ b=pI5v5IE1VMwN2drFV9SN9RDWR72e4s+a6ABSLmdhawllU8KbdWFLOW8WBBP7iWIym/
+ 9V9qfZi3kYthFc39/bgDaOmuLhL6EpKE9jeKgj3xJ7G720CPPP82R/2wcdyU9e9UGaxc
+ CUy5K/wTMVQLfVkqC4z3x8C51vO9VwYQbBY+lwE9a7KSkTWBbSeVqI55nRzAB6yTNbHd
+ 9J7SAN/vDyaH2NipVvEoOWDS4hvn6XDUsmErICiV8VcIWoyur1hs7/nsK5/O/SlX3YZu
+ 7L5KU532adJyj0IfrwP1kyM256EFZtKfO7jfTcgcdkj6+xNrk0x9v1fZYzONzt7SYmDV
+ +MJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1792913215; x=1793518015;
+ d=1e100.net; s=20260707; t=1792913010; x=1793517810;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=i/AH5B2OjNsOhTogWEH0XnxXxXTldLEYEpRrnqfWpYE=;
- b=QdT9Z15IM0XJKjklMuaRkrWSkKYDd+bnWlZN2RO4pcVr8lFBJGALsE77L6WGKM1f82
- aln3jQSm685nuphY1QmdbCwPHZP0BdGQ+kOLVHSOe0kil6X0ccxQkCSM1yjZnJsk8wXb
- MQo0Jm9GkWJfsPxCROIQyB2Nxmh7oEgiTzyoOe3IpRLptXZiY9c/U+oHVrgwyViBUtxf
- 6YDdW0gQUdu3th8R6AIy/IwnduqsGuCHMVGKffRDeGZbN0/q2fVdNnxR7AepN40BrYV8
- Qe29+5MGx9mgJSzVXZVHjME9FL/mUYpHw3dq2pXAgId+rft4TsW9MEcegGXmBH7Q2y9R
- BQjA==
-X-Gm-Message-State: AFq9FYJOI3fHdXpPg7UfPZkBW7yuML6HflTx19GfB/eKoeQBOUFDTTe4
- 8FLLM+vyYaJfg6DU70nmOq0bhCS7uvNWFDp7yRqPuoNcUykBiQbmSJfaqFMCEfjRtoRvhKI1Dqz
- vkoD3C4E=
-X-Gm-Gg: AYBFou36giReM89X8UxlRHNKFL4Oh6hKKbVyXuPSZlT7ubDZVJtRvTIl6HUdRTZfosq
- VTJKo3dVaX54vcs6FYmYBredKdAhZxTjuzuJxoNtD1m47wOZw3cYrDpLFzlXaImLBkZjJmHvThZ
- TxDMSIiciCnOwEyZvuYeDz942Yb3LI1Yp+G3+Mp9j5QqPh2f7wGvFS3tytJAuFymlksuON9b073
- g+XH2WPwQr3dzNGNKQgTywcpI7Q3oNFwgn7mVlPgVb+P2VJQxyjIsqWo+QyaTyAAq/dJpo7kpSX
- FEMHZsei6JtUPEIa+L3PZNzzv/AhBr3ijC7JmppulixlEIaKGsDGDc9eAYGbSLTMqBhLdL2Fi5d
- K20qf+xCUnqGn85fcspjTdlnC7xo2tFj4SMUFgDJzP3TKPH/vo67h+eKvRwH8IfwhI39sffVGbp
- zJ8ttSuchI/Sw/3GhTTVY91H8w4/KjjN5Xnw5UA3Dt+pIZPBLCAmbZuo7mSZ1A31HWzcow58Glz
- gwezuYSmGphaGww81rRgiMMhkhORAJctXRqkZPBlVSZMdcjGYcbWPu59lk=
-X-Received: by 2002:a05:600c:3487:b0:4a1:fba8:b13d with SMTP id
- 5b1f17b1804b1-4a35ac8c231mr63522485e9.9.1792913214771; 
- Sun, 25 Oct 2026 00:26:54 -0700 (PDT)
+ bh=GDaoX5/AtoP79ijTs1l26nizqOF4tg6tNu2tAHVvXlg=;
+ b=ZKK2G0p0ucTtgnskv6w+EfU3Jye1oDU89P8bIxQMks8tto0yu0/ZuHXzZgRQI4J8Z7
+ SYXUPxEK59HELLuq6xOwlb+4+CCsLMBy1gzSOOkfV5bjbQSw4hCVhof1N6+zak11Z2Ih
+ wZUjbRIDZEkd0kPLoApUqn85RWz/VXfs5NWXJ/ltlEtOLQX5tHo/+lcVP68Mf1nLpFQq
+ Zhmdq7xXgVywQEHAkIJPxRER6fReuCwPtAy5zcUMt0kPNyg0qoR7/HTf5it2Befn+Nfp
+ oDAlxEutWgpAbCYu/GjxJrl9I4RVQIMjpMy+93d+FrlvzZtZ6Jp8Qv98Rmn0aztY8Gqz
+ A4zw==
+X-Gm-Message-State: AFq9FYJrkyBr2M9/au1M+rSLE4aGfjgUrU1tpa7Gkz9yoqp+ZKwuiEnt
+ vK3c6pQiGFk8eQlFFMFVTVkfAFwzm1FfKPD/J+EEMSiYrj3n6/t2eKtXfObNc8mSzHNEwYTOItm
+ MwFluevw=
+X-Gm-Gg: AYBFou2G2QIcdOhMsTMqTkyf8KUPiBoiC1Tw9mQxtEKC0YlKfpwZs7mUk3wkU0AFCDI
+ 0+7eKX8D/3+dU8kc6GFgF2gobzQCbpuqRYAcOWynx6PATetfiO9qWAnr3PQjuWi2zTt+fjYs+0l
+ FsEVp0R4f+cFrA9o3LgZuXZl6xf6waqEHYZtZk+zVp4opJNwl4ss9yT3fxPYMlEXSECFF+e3TEd
+ VUHSjyOEdAlXirQoQwQGPXYcS4pvhY50kfBKrZw+3fEZYXp4OvkmDdQA0/J2UFLhHOJa3bxgekB
+ Lf5s6VSj1f0xyxAPXgr3Nuy07yITIgX6bRGQdgpcq/D/ZFlk0AjRrQJgX3BIyodFpDcp/Q3T+NR
+ MXwEu0NRKPHJkojydmLlvVZ14LPCyNJgp7BzDYCBFzK8OC+XyFKB6WNqnbFBwltd6NfC5nlD6nJ
+ NVrrNJsHyzxJiqO7B4A5dCq1Tq1ORYvQAawN4XCV0syNaZvobLH5C8abOh2m5TPa7cgpNMsm7vr
+ +oJb5LykKfRyMEhV6dZhGWpbI16KIN9FQytr9Ar9CbtFGGjTI+2RZ1oDXgO
+X-Received: by 2002:a05:600c:3b25:b0:4a2:1a:a128 with SMTP id
+ 5b1f17b1804b1-4a35ac9f1ecmr63349005e9.19.1792913010191; 
+ Sun, 25 Oct 2026 00:23:30 -0700 (PDT)
 Received: from stoup ([176.95.65.245]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359fc1207sm82923745e9.1.2026.10.25.00.26.53
+ 5b1f17b1804b1-4a35a09434esm103085895e9.0.2026.10.25.00.23.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Oct 2026 00:26:54 -0700 (PDT)
+ Sun, 25 Oct 2026 00:23:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Matt Turner <mattst88@gmail.com>
-Subject: [PULL 093/100] tcg: Generic expansion of tcg_gen_st8_*
-Date: Sun, 25 Oct 2026 08:19:08 +0100
-Message-ID: <20261025071915.1123867-94-richard.henderson@linaro.org>
+Subject: [PULL 070/100] tcg: Generic expansion of tcg_gen_smin_*
+Date: Sun, 25 Oct 2026 08:18:45 +0100
+Message-ID: <20261025071915.1123867-71-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261025071915.1123867-1-richard.henderson@linaro.org>
 References: <20261025071915.1123867-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,81 +108,93 @@ Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
  include/tcg/tcg-op-common.h  |  2 --
  include/tcg/tcg-op-def.h.inc |  1 +
- tcg/tcg-op.c                 | 15 +++++----------
- 3 files changed, 6 insertions(+), 12 deletions(-)
+ tcg/tcg-op.c                 | 27 +++++++++------------------
+ 3 files changed, 10 insertions(+), 20 deletions(-)
 
 diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 469b925fe0..cd66b0d7de 100644
+index 911b94f9c4..54ad54b0da 100644
 --- a/include/tcg/tcg-op-common.h
 +++ b/include/tcg/tcg-op-common.h
-@@ -140,7 +140,6 @@ void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg);
- /* Replicate a value of size @vece from @in to all the lanes in @out */
- void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in);
- 
--void tcg_gen_st8_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
- void tcg_gen_st16_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
- /* 64 bit ops */
-@@ -159,7 +158,6 @@ void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
- /* Replicate a value of size @vece from @in to all the lanes in @out */
- void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in);
- 
--void tcg_gen_st8_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- void tcg_gen_st16_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- void tcg_gen_st32_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset);
- 
+@@ -146,7 +146,6 @@ void tcg_gen_mulsu2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_bswap16_i32(TCGv_i32 ret, TCGv_i32 arg, int flags);
+ void tcg_gen_bswap32_i32(TCGv_i32 ret, TCGv_i32 arg);
+ void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg);
+-void tcg_gen_smin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+@@ -189,7 +188,6 @@ void tcg_gen_bswap32_i64(TCGv_i64 ret, TCGv_i64 arg, int flags);
+ void tcg_gen_bswap64_i64(TCGv_i64 ret, TCGv_i64 arg);
+ void tcg_gen_hswap_i64(TCGv_i64 ret, TCGv_i64 arg);
+ void tcg_gen_wswap_i64(TCGv_i64 ret, TCGv_i64 arg);
+-void tcg_gen_smin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
 diff --git a/include/tcg/tcg-op-def.h.inc b/include/tcg/tcg-op-def.h.inc
-index 514967f91d..90bcf9e5ab 100644
+index f9812c1f88..1486066728 100644
 --- a/include/tcg/tcg-op-def.h.inc
 +++ b/include/tcg/tcg-op-def.h.inc
-@@ -71,6 +71,7 @@ DEF3(shri, TCGV, TCGV, TINT)
- DEF3(smax, TCGV, TCGV, TCGV)
- DEF3(smin, TCGV, TCGV, TCGV)
- DEF3(st, TCGV, TCGv_ptr, tcg_target_long)
-+DEF3(st8, TCGV, TCGv_ptr, tcg_target_long)
+@@ -55,6 +55,7 @@ DEF3(shl, TCGV, TCGV, TCGV)
+ DEF3(shli, TCGV, TCGV, TINT)
+ DEF3(shr, TCGV, TCGV, TCGV)
+ DEF3(shri, TCGV, TCGV, TINT)
++DEF3(smin, TCGV, TCGV, TCGV)
  DEF3(sub, TCGV, TCGV, TCGV)
  DEF3(subi, TCGV, TCGV, TINT)
- DEF6(sub2, TCGV, TCGV, TCGV, TCGV, TCGV, TCGV)
+ DEF3(subfi, TCGV, TINT, TCGV)
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index ea0d281902..6925b1ef2d 100644
+index 11676eff30..24e7d6da50 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -1257,6 +1257,11 @@ void tcg_gen_st(TCGType type, TCGTemp *val, TCGTemp *base, tcg_target_long ofs)
-     tcg_gen_op_tti(INDEX_op_st, type, val, base, ofs);
+@@ -1013,6 +1013,15 @@ void tcg_gen_shri(TCGType type, TCGTemp *dst, TCGTemp *src1, int64_t src2)
+     }
  }
  
-+void tcg_gen_st8(TCGType type, TCGTemp *dst, TCGTemp *base, tcg_target_long ofs)
++void tcg_gen_smin(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
 +{
-+    tcg_gen_op_tti(INDEX_op_st8, type, dst, base, ofs);
++    if (tcg_op_supported(INDEX_op_smin, type, 0)) {
++        tcg_gen_op_ttt(INDEX_op_smin, type, dst, src1, src2);
++    } else {
++        tcg_gen_movcond(type, TCG_COND_LT, dst, src1, src2, src1, src2);
++    }
 +}
 +
  void tcg_gen_sub(TCGType type, TCGTemp *dst, TCGTemp *src1, TCGTemp *src2)
  {
      tcg_gen_op_ttt(INDEX_op_sub, type, dst, src1, src2);
-@@ -1408,11 +1413,6 @@ void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg)
+@@ -1329,15 +1338,6 @@ void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg)
      }
  }
  
--void tcg_gen_st8_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset)
+-void tcg_gen_smin_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
 -{
--    tcg_gen_ldst_op_i32(INDEX_op_st8, arg1, arg2, offset);
+-    if (tcg_op_supported(INDEX_op_smin, TCG_TYPE_I32, 0)) {
+-        tcg_gen_op3_i32(INDEX_op_smin, ret, a, b);
+-    } else {
+-        tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, a, b);
+-    }
 -}
 -
- void tcg_gen_st16_i32(TCGv_i32 arg1, TCGv_ptr arg2, tcg_target_long offset)
+ void tcg_gen_umin_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
  {
-     tcg_gen_ldst_op_i32(INDEX_op_st16, arg1, arg2, offset);
-@@ -1430,11 +1430,6 @@ void tcg_gen_ld32s_i64(TCGv_i64 ret, TCGv_ptr arg2, tcg_target_long offset)
-     tcg_gen_ldst_op_i64(INDEX_op_ld32s, ret, arg2, offset);
+     if (tcg_op_supported(INDEX_op_umin, TCG_TYPE_I32, 0)) {
+@@ -1869,15 +1869,6 @@ void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
+     tcg_temp_free_i64(t2);
  }
  
--void tcg_gen_st8_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset)
+-void tcg_gen_smin_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
 -{
--    tcg_gen_ldst_op_i64(INDEX_op_st8, arg1, arg2, offset);
+-    if (tcg_op_supported(INDEX_op_smin, TCG_TYPE_I64, 0)) {
+-        tcg_gen_op3_i64(INDEX_op_smin, ret, a, b);
+-    } else {
+-        tcg_gen_movcond_i64(TCG_COND_LT, ret, a, b, a, b);
+-    }
 -}
 -
- void tcg_gen_st16_i64(TCGv_i64 arg1, TCGv_ptr arg2, tcg_target_long offset)
+ void tcg_gen_umin_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
  {
-     tcg_gen_ldst_op_i64(INDEX_op_st16, arg1, arg2, offset);
+     if (tcg_op_supported(INDEX_op_umin, TCG_TYPE_I64, 0)) {
 -- 
 2.53.0
 
