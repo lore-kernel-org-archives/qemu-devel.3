@@ -1,72 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36125606A31B
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100B2606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 18:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=WpipN0oo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL26Z-00055n-0J; Sun, 25 Oct 2026 13:33:59 -0400
+	id 1xL2eN-00079w-8b; Sun, 25 Oct 2026 14:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25C-0002Lw-0E; Sun, 25 Oct 2026 13:32:41 -0400
-Received: from www675.your-server.de ([85.10.213.182])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL25A-0007Nt-92; Sun, 25 Oct 2026 13:32:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
- Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=TY0Jn3aK3Ti5HSMQlldYcdXQ6y1AR8/gUUGr8QWJmNs=; b=kkBoMoFPkPNsp+ydqAVdfay5la
- 4mHXvLtMGmSPLUFE1G/BC8XIxme/RS1onNiXHyaxVFOQ7PTm9LYyzV+thYlewlC9HzXAdAF7TvsAD
- oXOCAuowu5AO+8sKNZc6M9GHocj4UjMnFBd1rV0vfXETdi/z+7mxkVqjQeD9AZ6CkuAhSDKCj/dzr
- S7hBCZsCQXaWRacS3hWS9dawawGBEeknIW+a5AheBAVS+gUBduW5UjmZujPMQ093vfpDa98XSQlQb
- p2J19phufdgU0f/gaFRNl6eY/XLKtr+td/HzFd6hyKdgsYRm4kRnjp2HMzwHCpmNlgpFnzhds53P9
- OWYtIapg==;
-Received: from sslproxy01.your-server.de ([78.46.139.224])
- by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gT-00099W-23; Sun, 25 Oct 2026 18:07:01 +0100
-Received: from localhost ([127.0.0.1])
- by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vw-000OzG-1M; Sun, 25 Oct 2026 17:56:07 +0100
-From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:34 +0100
-Subject: [PATCH v2 18/31] target/rx: add RXv2 accumulator context save/restore
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xL2eL-00079f-1b
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 14:08:53 -0400
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xL2eJ-0001py-CM
+ for qemu-devel@nongnu.org; Sun, 25 Oct 2026 14:08:52 -0400
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-91b83459526so29826556d6.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 11:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1792951729; x=1793556529; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ib6BXzLlfrOULkf6YT/MLqXrgK2vkerO1gO3o0Pv2yc=;
+ b=WpipN0ooeM6myOyvoNotbtyXB8XUI0a1n/jJoby3KHDln6P9f6VDOYUMOZkstzNfpD
+ F0YAaVrL9qvgUZj4DI+RmgQ1j5PpI2pPxInsa8lsP5bBH/Bdojehgfzc2tU6hEDfMesT
+ /4E9Fyu5CfnVTvy/AmtH+58OQghqQnBWyB8VR2+BBwqiN1uLx9TPZYg8hWYkdXNn/u5A
+ HN4Q6EXEdhPAIJ8oN0LS+nUq6OZl6VIQ/OYj3xbwGRfYyBHxfBNzdPOjj6rusr/QTgdy
+ WKPGp97K5MeQqH0JMDOWTbiSWSi8S73m5s/F/GCCXztDV2F/cT9vRoQmNFrXPKENfc9A
+ wVpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792951729; x=1793556529;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=ib6BXzLlfrOULkf6YT/MLqXrgK2vkerO1gO3o0Pv2yc=;
+ b=mcBaTIlsP0o9u0naUwl16DunI7HqtrKvpDAzPJddWrK1UgKBdmYWF1Qe7q3jYJVv9T
+ +HDSojKqA1V7JGh5P6k9f3cJBbeYpxzzswrpCDRquxiy7P71WP9/Y0E/gVLB3YPaxUtb
+ CFE6efsMPA66DkE2qOgjswZWlP9Fggn6AvQCpzARzScdXroQBxWyYsQaFhv22rs/9JBF
+ Zo+arDXFPlFOZ872BYIearSZorUUflVSoTOtY1KRDBJKEGDx16LiYJohbKyOoRPq3LEx
+ U/GSxViCDDAb5V1/QcbQXg1nYQ3NpsZxTfSLQd+3DKlRTNWXaSk+wyLMe032AMtlp8pu
+ pR/g==
+X-Gm-Message-State: AFq9FYISFSoH/pphrELxw3kMenN7E/eLBBrfdvY7/O1VeJawgGePhXZF
+ v4dW+M+w/SHqRsOesUBAg4XrypIBMi48lPqaO8ZjKPWHgijBJmffPt+Z
+X-Gm-Gg: AYBFou2qf5GAJ56R+D0Or8FD6sMaQZGQeqdEQNtaXzLdQLE9hYa2sVSmQxr0aW6AUbS
+ svweH5cJpkAoWLIeN67jbnvI3PVH2CLlFUshKMmdMtBFziV5xERUFMyMfAPbofzmtklTG+tMeIl
+ DgrsHaHpMQrnrNxtKoSPSvNO1kMUsw1Br/7yHxqUk4W30OhgmOafOXP0WHKLL91E89vISCbLv2o
+ kaziB2YbMHOzOQmaRIC0uJ5NNZk1MnIwrL8Wmrct3XaA/bRT0KgfNZwYi8IB9Ft8CHFIKQhfGqz
+ Fesh/k1m7+logoBrkhN3KUL60XK31MxSqOUN3IVsIF7kHgz1nUfW3OiBuwEbb7HaFL53qNaaAKU
+ KXl1HUNmde58InQ8rPDdd9Ulaw2ZtJtXZ2dmeX2XJBRBbu9xeQbnjJqN3w3095R9Du971HI8qXd
+ 4EBqiWApN3AMtOZrYdr0EWXnceOP+MZI5+h179DuLdPfSbhHXTIG5y3cuk/8KPbCGjbzIVOhfk7
+ Ho7o345GSdo0KxD0Tf/MnBM/B9YBRY5vM8HXIIi95Rdhjah0WF+mcy/Rd7G/PtfInx4Qr+YuhJJ
+ MsgfX/7BDiyBlAM=
+X-Received: by 2002:a05:6214:8085:b0:91c:61cc:179d with SMTP id
+ 6a1803df08f44-91c61cc17e8mr7021656d6.14.1792951728624; 
+ Sun, 25 Oct 2026 11:08:48 -0700 (PDT)
+Received: from [127.0.1.1] (95-24-99-141.broadband.corbina.ru. [95.24.99.141])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91c47c50e10sm51043246d6.25.2026.10.25.11.08.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Oct 2026 11:08:48 -0700 (PDT)
+From: Timur Maksimov <gessingate@gmail.com>
+Date: Sun, 25 Oct 2026 21:08:26 +0300
+Subject: [PATCH] hw/misc/i2c-echo: fix quick smbus transfer
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-18-9e846577cad0@sayyadumar.com>
-References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
-In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
+Message-Id: <20261025-i2c-echo-quick-fix-v1-1-0e93185c150b@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MWwqAIBAArxL73YJuZdBVog/TLZegh1IE0d2TP
+ mdg5oHEUThBVzwQ+ZIk25pBlwW4YNeZUXxmIEVGKyIUcsgubHic4hac5MbKt9r4ZjQ1WcjhHjn
+ rf9oP7/sBGgbaZGQAAAA=
+X-Change-ID: 20261022-i2c-echo-quick-fix-3d716d5b642a
 To: qemu-devel@nongnu.org
-Cc: Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowangio@gmail.com>, 
- qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5269;
- i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=BCdk7j+5Gvx8i8magLOKhKZfS2VNjWBKQV/wbnEgUL0=;
- b=3fVbqjpMu96IbdvfDW/uJIu8xm86Tr0OaMzD2i2LXK+LUZHV5FzSdCUrnveFlynCP7PiCfp5u
- gHOsy5Gg3YdBiH3Ovl35LFraYiNoQBwGtFafBvsooYx0P22icIUsoBo
-X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
- pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
-X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
-Received-SPF: pass client-ip=85.10.213.182;
- envelope-from=contact@sayyadumar.com; helo=www675.your-server.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: Klaus Jensen <its@irrelevant.dk>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Timur Maksimov <gessingate@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792951727; l=1108;
+ i=gessingate@gmail.com; s=20261022; h=from:subject:message-id;
+ bh=fU9C2o+5MePoZ4VFoNXPuURh4jbqKbl0yMza4y9NmLY=;
+ b=1zh5O9JA0skQKy/Q7c54jGcZaa1gGKmnBS9mn9PtLNBxrAAnoOBl/nnMFuGIxmHt3PbOJygV7
+ dBHaGkZAjP7DIeq4NOikraFlgSATSVj9dpt4joPqpeDWzeRCYNcR7so
+X-Developer-Key: i=gessingate@gmail.com; a=ed25519;
+ pk=xF4NKIzSbKMdte17nQ66S/q9m/A2gu6GiEWc8ZnyJmo=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=gessingate@gmail.com; helo=mail-qv1-xf33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,185 +109,47 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-RXv2 adds ACC1 and 8-bit guard fields to the accumulators, with
-instructions to move them for interrupt context save/restore:
-MVTACHI/MVTACLO A1, MVTACGU, MVFACHI A1, MVFACLO and MVFACGU. The
-moves read the raw, unshifted accumulator values.
+Don't start asynchronous transfer when no tx data is provided.
 
-Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4457
+Signed-off-by: Timur Maksimov <gessingate@gmail.com>
 ---
- target/rx/cpu.h        |  2 ++
- target/rx/disas.c      | 36 ++++++++++++++++++++++++++
- target/rx/insns.decode |  8 ++++++
- target/rx/translate.c  | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 116 insertions(+)
+ hw/misc/i2c-echo.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-index 0d2ebe1bda..c934ee8005 100644
---- a/target/rx/cpu.h
-+++ b/target/rx/cpu.h
-@@ -207,6 +207,8 @@ typedef struct CPUArchState {
-     uint32_t fintv;
-     uint32_t fpsw;
-     uint64_t acc;
-+    uint64_t acc1;
-+    uint32_t acc_guard[2]; /* Sign-extended 8-bit RXv2 guard fields. */
+diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
+index 54d07db6fa..c02098cb70 100644
+--- a/hw/misc/i2c-echo.c
++++ b/hw/misc/i2c-echo.c
+@@ -90,9 +90,11 @@ static int i2c_echo_event(I2CSlave *s, enum i2c_event event)
+         break;
  
-     /* RXv3 double-precision FPU (DPFPU) */
-     uint64_t dr[NUM_DREGS];     /* DR0-DR15 */
-diff --git a/target/rx/disas.c b/target/rx/disas.c
-index 924cfdd382..714031eef4 100644
---- a/target/rx/disas.c
-+++ b/target/rx/disas.c
-@@ -1077,6 +1077,42 @@ static bool trans_MVTACLO(DisasContext *ctx, arg_MVTACLO *a)
-     return true;
- }
- 
-+static bool trans_MVTACHI_A1(DisasContext *ctx, arg_MVTACHI_A1 *a)
-+{
-+    prt("mvtachi\tr%d, a%d", a->r, 1);
-+    return true;
-+}
-+
-+static bool trans_MVTACLO_A1(DisasContext *ctx, arg_MVTACLO_A1 *a)
-+{
-+    prt("mvtaclo\tr%d, a%d", a->r, 1);
-+    return true;
-+}
-+
-+static bool trans_MVTACGU(DisasContext *ctx, arg_MVTACGU *a)
-+{
-+    prt("mvtacgu\tr%d, a%d", a->r, a->a);
-+    return true;
-+}
-+
-+static bool trans_MVFACHI_A1(DisasContext *ctx, arg_MVFACHI_A1 *a)
-+{
-+    prt("mvfachi\t#0, a%d, r%d", 1, a->r);
-+    return true;
-+}
-+
-+static bool trans_MVFACLO(DisasContext *ctx, arg_MVFACLO *a)
-+{
-+    prt("mvfaclo\t#0, a%d, r%d", a->a, a->r);
-+    return true;
-+}
-+
-+static bool trans_MVFACGU(DisasContext *ctx, arg_MVFACGU *a)
-+{
-+    prt("mvfacgu\t#0, a%d, r%d", a->a, a->r);
-+    return true;
-+}
-+
- /* racw #imm */
- static bool trans_RACW(DisasContext *ctx, arg_RACW *a)
- {
-diff --git a/target/rx/insns.decode b/target/rx/insns.decode
-index 4ac849d32a..bdb2e11ec0 100644
---- a/target/rx/insns.decode
-+++ b/target/rx/insns.decode
-@@ -734,3 +734,11 @@ RSTR_i		1111 1101 0111 0110 1111 0000 imm:8		&svi
- ########
- # RXv3: three-operand XOR
- XOR_rrr		1111 1111 0110 .... .... ....		@b3_rd_rs_rs2
-+
-+# RXv2 accumulator context save/restore (unshifted reads).
-+MVTACHI_A1 1111 1101 0001 0111 1000 r:4
-+MVTACLO_A1 1111 1101 0001 0111 1001 r:4
-+MVTACGU 1111 1101 0001 0111 a:1 011 r:4
-+MVFACHI_A1 1111 1101 0001 1111 1000 r:4
-+MVFACLO 1111 1101 0001 1111 a:1 001 r:4
-+MVFACGU 1111 1101 0001 1111 a:1 011 r:4
-diff --git a/target/rx/translate.c b/target/rx/translate.c
-index 7b5f74fb5e..027495d4fc 100644
---- a/target/rx/translate.c
-+++ b/target/rx/translate.c
-@@ -1833,6 +1833,76 @@ static bool trans_MVTACLO(DisasContext *ctx, arg_MVTACLO *a)
-     return true;
- }
- 
-+/* RXv2 accumulator moves used by interrupt context save/restore. */
-+static bool rx_acc_move(DisasContext *ctx, int reg, int acc,
-+                        int part, bool write)
-+{
-+    TCGv_i64 value;
-+    int offset;
-+
-+    if (!require_isa(ctx, RX_ISA_V2)) {
-+        return false;
-+    }
-+    if (part == 2) {
-+        offset = offsetof(CPURXState, acc_guard) + acc * sizeof(uint32_t);
-+        if (write) {
-+            TCGv_i32 guard = tcg_temp_new_i32();
-+            tcg_gen_ext8s_i32(guard, cpu_regs[reg]);
-+            tcg_gen_st_i32(guard, tcg_env, offset);
-+        } else {
-+            tcg_gen_ld_i32(cpu_regs[reg], tcg_env, offset);
+     case I2C_FINISH:
+-        state->pos = 0;
+-        state->state = I2C_ECHO_STATE_START_SEND;
+-        i2c_bus_master(state->bus, state->bh);
++        if (state->pos > 0) {
++            state->pos = 0;
++            state->state = I2C_ECHO_STATE_START_SEND;
++            i2c_bus_master(state->bus, state->bh);
 +        }
-+        return true;
-+    }
-+    value = acc ? tcg_temp_new_i64() : cpu_acc;
-+    if (acc) {
-+        tcg_gen_ld_i64(value, tcg_env, offsetof(CPURXState, acc1));
-+    }
-+    if (write) {
-+        TCGv_i64 src = tcg_temp_new_i64();
-+        tcg_gen_extu_i32_i64(src, cpu_regs[reg]);
-+        tcg_gen_deposit_i64(value, value, src, part * 32, 32);
-+        if (acc) {
-+            tcg_gen_st_i64(value, tcg_env, offsetof(CPURXState, acc1));
-+        }
-+    } else if (part) {
-+        tcg_gen_extrh_i64_i32(cpu_regs[reg], value);
-+    } else {
-+        tcg_gen_extrl_i64_i32(cpu_regs[reg], value);
-+    }
-+    return true;
-+}
-+
-+static bool trans_MVTACHI_A1(DisasContext *ctx, arg_MVTACHI_A1 *a)
-+{
-+    return rx_acc_move(ctx, a->r, 1, 1, true);
-+}
-+
-+static bool trans_MVTACLO_A1(DisasContext *ctx, arg_MVTACLO_A1 *a)
-+{
-+    return rx_acc_move(ctx, a->r, 1, 0, true);
-+}
-+
-+static bool trans_MVTACGU(DisasContext *ctx, arg_MVTACGU *a)
-+{
-+    return rx_acc_move(ctx, a->r, a->a, 2, true);
-+}
-+
-+static bool trans_MVFACHI_A1(DisasContext *ctx, arg_MVFACHI_A1 *a)
-+{
-+    return rx_acc_move(ctx, a->r, 1, 1, false);
-+}
-+
-+static bool trans_MVFACLO(DisasContext *ctx, arg_MVFACLO *a)
-+{
-+    return rx_acc_move(ctx, a->r, a->a, 0, false);
-+}
-+
-+static bool trans_MVFACGU(DisasContext *ctx, arg_MVFACGU *a)
-+{
-+    return rx_acc_move(ctx, a->r, a->a, 2, false);
-+}
-+
- /* racw #imm */
- static bool trans_RACW(DisasContext *ctx, arg_RACW *a)
- {
+ 
+         trace_i2c_echo_event(DEVICE(s)->canonical_path, "I2C_FINISH");
+         break;
+
+---
+base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
+change-id: 20261022-i2c-echo-quick-fix-3d716d5b642a
 
 -- 
-2.53.0
+Timur Maksimov <gessingate@gmail.com>
 
 
