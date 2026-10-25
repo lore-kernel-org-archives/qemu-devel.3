@@ -1,73 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAFD606A31A
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Oct 2026 21:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EE8606A31A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 03:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=JTZzv2QE
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=aFw7ko97;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=bsl9Hi6D
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xKjLg-0006Ax-Uo; Sat, 24 Oct 2026 17:32:20 -0400
+	id 1xKoqB-0007gJ-SB; Sat, 24 Oct 2026 23:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xKjLa-0006Aa-Oj; Sat, 24 Oct 2026 17:32:15 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xKoq9-0007f6-JI
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 23:24:09 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1xKjLZ-0004rr-48; Sat, 24 Oct 2026 17:32:14 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4697B40A28;
- Sat, 24 Oct 2026 21:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DE71F01825;
- Sat, 24 Oct 2026 21:32:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1792877528;
- bh=dcG7MExrLIDX9pNtwa7kbxNBvrB4lAR88Md+OGTBxkI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=JTZzv2QEsF0yZNx4KWMFMA5ZhI1JVQbSlMv8GVGNssVmRqEAsC/4qxZIa+8Y9aeHp
- 6Np8joGNVu0m6PI0c4UsN6xVg+XrHbK7UdcL8ln/EMCyF+aBUtZgYFY7SKhOhxW8Vz
- YbD88m9HsFxYnFpdXButSIBMzSUMZwqIPgGbwVSNOINM7kDRa0e6PYFTl40TTawOKI
- LVJERHlALebrmwJH2Dlc0qyElXtxPE2UP8ACJ06aMLs4t0h70olRXjHt4erONDJju8
- 7wE4uL0DxdlDMyLkS1vKLuYzF/SIq6J6Sfcn4EEgGVr6uItlpCl6LSvMinXe5vUPsx
- 7HWOVoO38Gk7g==
-Date: Sat, 24 Oct 2026 14:32:06 -0700
-From: Drew Fustini <fustini@kernel.org>
-To: Sunil V L <sunilvl@oss.qualcomm.com>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "anup.patel@oss.qualcomm.com" <anup.patel@oss.qualcomm.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "shankar.c@oss.qualcomm.com" <shankar.c@oss.qualcomm.com>,
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>,
- "prajwal.n@oss.qualcomm.com" <prajwal.n@oss.qualcomm.com>,
- "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
- "mst@redhat.com" <mst@redhat.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>
-Subject: Re: [PATCH v2 0/4] RISC-V: ACPI: Add PPTT support
-Message-ID: <at0j1iQQVBCvcSI4@thelio>
-References: <20261015064957.4076464-1-sunilvl@oss.qualcomm.com>
- <91f1cd890aac1907f335ce3fdd22e6adf685c594.camel@wdc.com>
- <CAB19ukGtrbCV8s_WKnE2vDF5P4iiyPXYhyyJjqTu-S0823mjUg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1xKoq8-0001Sv-6z
+ for qemu-devel@nongnu.org; Sat, 24 Oct 2026 23:24:09 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69P16Bfj2050600
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 03:24:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ mC8jl7vyVvYi+vhoijubMe1xPjMvd4/tlNPZMUbwGZ8=; b=aFw7ko97Zkl4BOCU
+ ksxqw+UR3B9LPLQMv2nZi7mHEgKaQS5rqPom5mfh/qmRP7qgdxMF74NWQn5XxWpZ
+ BUyS3zK3MindDVy1PFm0iNvc6kve64/a57SGsbG7/QEySDQk1Da98o/Ox4fd8a6E
+ ZJ9uhIu7AIgQOCJPq73kNCT2sZ546hzKdNaI+ew0KmMnnv0RbuyT0Ybh5tSzfSIj
+ g2o6yaHEEwIT94ij8Hx5xAhiq+cLTZTQLnbf53VqtCJBWGA6AdHwtjcXQNKwb75P
+ sH+/Z3u6amvC0aKc0JCb6wHhUc16okl5hUAbakPSdL09KAyg/5l5Vk7bYcWRj2d/
+ DzJVEg==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hgn27t9y5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 25 Oct 2026 03:24:06 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-18b5ee75447so8483233c88.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Oct 2026 20:24:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1792898646; x=1793503446; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=mC8jl7vyVvYi+vhoijubMe1xPjMvd4/tlNPZMUbwGZ8=;
+ b=bsl9Hi6DJ5jDuOWuzjA/ThmTBB1UEp9xsswAkDCMP37L0fK1arCL0Lr56KS2Fp1jX+
+ /WBBBdA/AC6g/vrrYLQniEPO19zja6HoIC5Lp2kLeIT9BvftYBwg+Ck91Gwl1w2c1vLM
+ Oo6Y5g73HQ1z+eq0YI8c3MiCBNO9Khyd/XaViCxxkF9eKy0dY8GYKuG9YRHii55wCcD5
+ ZLCVqF90Rioy7GZ2uTMeoOp+bq72O4ss8v4CO1NlCH/2lioHBX9D9KdxSkzCzFYAprXq
+ SzSlUExNw4vZXu6UWHgKoQBxbHypkwgds/PgDp4WzX5liL2I0kLaiPopBsb84VZEvQV3
+ qDvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1792898646; x=1793503446;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mC8jl7vyVvYi+vhoijubMe1xPjMvd4/tlNPZMUbwGZ8=;
+ b=zGDRU8aeqYn5A/+bwpczs5QCEWjcNiUq4v3PUxsGMpS7ri2P6lsAueQHX5uzSybQCU
+ EzzontfMZW9r52cNPa1HQi7MLXZUcvjoHPQnJchPQXahzj+r6I9DJkSZxWkK7xNrOcp3
+ QHP85y2re1IgXyhO/YPneK2FVO3IRVvzSZBcQ2XWipt3b2Pnw364rVkTL21ToJFC11Ot
+ 6VZGfIt5XMuIy/4zFpjdJOpfHl4tH1qvqQj/B2Nyfwoae/ay3bbXFw338UEh3wyi0MnO
+ DLLMLxX7IGdZyApe6OrzAhhqXvIkVo5C4zUJ5veD8JwkbI0pE7T7TX2wOjz/IXKDyDmf
+ pNtQ==
+X-Gm-Message-State: AFq9FYJ/GLmHQvPEQiOmdr3z0Weg0w1t86ibhaNi+F9smgIwOs/cAdKH
+ KG7nExO4OCVeRi+fEjx23So9LetvM7BfX4WZlvKYgdjZNJzEe92erQS+eC+cmsbwfFHK5sd/7M0
+ y9GJZ/neBMuqEB0+KjZE5wmOI71DJ+rylT+K2/+wLrLk5KREJdMU5cU5qusSeKSyd0g==
+X-Gm-Gg: AYBFou2OniF2IAidT7l/b5OEQx8/GFMpXp44Slye3vaF/82bIUT9ziCLakzJoOO0UXA
+ V5RiJRGrmytRGG9H74wT2RFnT0uGozWys2h1rH1iUgA151GVhITJgBxJRMPJHN6niyoH9uD+Oj8
+ f6lOYuFVHrt43xHZB7poj06FGQsvTTG9Lj1oeK26FxLH2X3t2nKX84XJbwQ9q+R/ZG/d2+6t8PI
+ UOjbbGhrJ0c+JUmj7oEUb9gzMPBgeaCEcOakwf1Ph9/cvpPleZgCOKXQNEG9cXePbXjSxGr0U7y
+ jW3w2IuqL4/a5AdqPdAxihwCTNH3xttXTRophkHLFmRC1qZsYVRYCaANmEkGQaqDrD8xvmD56fp
+ enmI67JaELC+pzqA15ZAAa0BT8fhKsdZ+cl7ZdjCYt27Y7sg=
+X-Received: by 2002:a05:7022:5f07:b0:17a:e684:b497 with SMTP id
+ a92af1059eb24-1992a062241mr4694951c88.5.1792898645820; 
+ Sat, 24 Oct 2026 20:24:05 -0700 (PDT)
+X-Received: by 2002:a05:7022:5f07:b0:17a:e684:b497 with SMTP id
+ a92af1059eb24-1992a062241mr4694937c88.5.1792898645311; 
+ Sat, 24 Oct 2026 20:24:05 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-198a249c331sm26812581c88.17.2026.10.24.20.24.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 Oct 2026 20:24:04 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+Cc: brian.cain@oss.qualcomm.com,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
+Subject: [PULL v2 07/40] linux-user/hexagon: report ISA HWCAP through v85
+Date: Sat, 24 Oct 2026 20:23:13 -0700
+Message-Id: <20261025032346.2917451-8-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20261025032346.2917451-1-brian.cain@oss.qualcomm.com>
+References: <20261025032346.2917451-1-brian.cain@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAB19ukGtrbCV8s_WKnE2vDF5P4iiyPXYhyyJjqTu-S0823mjUg@mail.gmail.com>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Authority-Analysis: v=2.4 cv=G7GJgNk5 c=1 sm=1 tr=0 ts=6add7656 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=RcCyqxnK1iORyYYg75cA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-ORIG-GUID: y3E8nfrMO4Utc4m7WacRx-t5gTrz0inE
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI1MDAxMiBTYWx0ZWRfX+A4Vo1x3s6Jz
+ Z3whXNkun5ioZGVQa+EkvjG+HWEz1SohD8FquxhEszIZ+3k65ZHy+n0UdV0WSGKhldZ0zmsDcZg
+ xtEB3C9uo+9oeUgmd3ev1Is3s21tWXM=
+X-Proofpoint-GUID: y3E8nfrMO4Utc4m7WacRx-t5gTrz0inE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI1MDAxMiBTYWx0ZWRfXyvZZFL4mhDiA
+ AoebADLo3AdblTkbfj5q5E5BlDA8EURaKuc6yybQT0IwAzUGk49S+DxCd/B+lBfZpkpLw2m6Yaa
+ rb0PWuP4vbJvRM8fVx75NvZVHCKIxywnje+4PsCADqtBf4hOAeg4vr3uUCuCmFNq3jNeixDheXO
+ TwQGF6D4GcnhaDAtfptKyrJD0IC76kOzENzftiafZW9haTALe3XvY5fFH6yoV/yFavAT0f9RlkG
+ 3pUym0peXtzSa6pS5IXAfckKY45PMTPYiHK9wmVT2TTUBEYesAQ5YgKUW4/rQ99rnx8uF5Sksc6
+ g5TXohc0QZ8pI8F+RNw/WnwvvjCW1D+CtfHJaxKSc7lQXA3rcYH91KRXZW5sy5Ro/hRaX71E9ji
+ WO0Q9CfiYA2ee3od0TropBXCZc44kkIE2ibW+LtzQgmDNGOFarOM3kDCHFnICh9AjTo/IvbdADj
+ HRs2GSXpZOV8SXnxf7Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-25_01,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610250012
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,47 +151,36 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Fri, Oct 23, 2026 at 05:28:31PM +0530, Sunil V L wrote:
-> On Thu, Oct 22, 2026 at 10:23 AM Alistair Francis
-> <Alistair.Francis@wdc.com> wrote:
-> >
-> > On Thu, 2026-10-15 at 12:19 +0530, Sunil V L wrote:
-> > > Hi alil,
-> > >
-> > > This series adds ACPI Processor Properties Topology Table (PPTT)
-[..]
-> > > future, it can be enhanced to support vendor cpu/soc specific cache
-> > > information to override this default hardcoded cache details.
-> >
-> > Why not add a vendor cpu/soc specific one to a vendor board? That way
-> > it actually model hardware instead of just providing the guest some
-> > made up information.
-> >
-> Thanks for the feedback!
-> 
-> Just to make sure I understand your suggestion correctly: should we avoid
-> defining a hardcoded cache topology for the generic CPU on virt, and generate
-> PPTT cache information only for CPU models that provide an appropriate cache
-> hierarchy?
-> 
-> I can certainly omit the cache information for the generic CPU. The consequence
-> is that Drew's CBQRI series, which requires cache information, would need a
-> suitable CPU model before it can be used with virt. Drew, please share
-> your thoughts.
-
-RQSC is a RISC-V standard so I think it would be nice for the generic
-cpu to have a set of caches defined. This would allow the ACPI virt
-machine to produce a PPTT with cache IDs that RQSC can reference, and it
-would simplify testing for the RISC-V QoS support that I am trying to
-upstream into Linux.
-
-Thanks,
-Drew
+UmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAb3NzLnF1YWxj
+b21tLmNvbT4KUmV2aWV3ZWQtYnk6IE1hcmNvIExpZWJlbCA8bWFyY28ubGllYmVsQG9zcy5xdWFs
+Y29tbS5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxj
+b21tLmNvbT4KLS0tCiBsaW51eC11c2VyL2hleGFnb24vdGFyZ2V0X2VsZi5oIHwgMiArKwogbGlu
+dXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYyAgICB8IDYgKysrKysrCiAyIGZpbGVzIGNoYW5nZWQs
+IDggaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2xpbnV4LXVzZXIvaGV4YWdvbi90YXJnZXRf
+ZWxmLmggYi9saW51eC11c2VyL2hleGFnb24vdGFyZ2V0X2VsZi5oCmluZGV4IDkwZTUwMzJkNWFh
+Li5iMWViNWVhNTAzNyAxMDA2NDQKLS0tIGEvbGludXgtdXNlci9oZXhhZ29uL3RhcmdldF9lbGYu
+aAorKysgYi9saW51eC11c2VyL2hleGFnb24vdGFyZ2V0X2VsZi5oCkBAIC00Myw2ICs0Myw4IEBA
+IGVudW0gewogICAgIEhXQ0FQX0hFWEFHT05fSVNBX1Y3NyAgICAgICAgICAgPSAxNiwKICAgICBI
+V0NBUF9IRVhBR09OX0lTQV9WNzkgICAgICAgICAgID0gMTcsCiAgICAgSFdDQVBfSEVYQUdPTl9J
+U0FfVjgxICAgICAgICAgICA9IDE4LAorICAgIEhXQ0FQX0hFWEFHT05fSVNBX1Y4MyAgICAgICAg
+ICAgPSAxOSwKKyAgICBIV0NBUF9IRVhBR09OX0lTQV9WODUgICAgICAgICAgID0gMjAsCiAgICAg
+SFdDQVBfSEVYQUdPTl9IVlggICAgICAgICAgICAgICA9IDEgPDwgNywKICAgICBIV0NBUF9IRVhB
+R09OX0NBQkFDICAgICAgICAgICAgID0gMSA8PCA4LAogICAgIEhXQ0FQX0hFWEFHT05fSFZYX0xF
+TkdUSF8xMjhCICAgPSAxIDw8IDksCmRpZmYgLS1naXQgYS9saW51eC11c2VyL2hleGFnb24vZWxm
+bG9hZC5jIGIvbGludXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYwppbmRleCA5Zjk4YWQ4ZmI4Ni4u
+ZGIwYmYyOTljYzAgMTAwNjQ0Ci0tLSBhL2xpbnV4LXVzZXIvaGV4YWdvbi9lbGZsb2FkLmMKKysr
+IGIvbGludXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYwpAQCAtNjIsNiArNjIsMTIgQEAgYWJpX3Vs
+b25nIGdldF9lbGZfaHdjYXAoQ1BVU3RhdGUgKmNzKQogICAgIGNhc2UgSEVYX1ZFUl9WODE6CiAg
+ICAgICAgIGh3Y2FwcyA9IEhXQ0FQX0hFWEFHT05fSVNBX1Y4MTsKICAgICAgICAgYnJlYWs7Cisg
+ICAgY2FzZSBIRVhfVkVSX1Y4MzoKKyAgICAgICAgaHdjYXBzID0gSFdDQVBfSEVYQUdPTl9JU0Ff
+VjgzOworICAgICAgICBicmVhazsKKyAgICBjYXNlIEhFWF9WRVJfVjg1OgorICAgICAgICBod2Nh
+cHMgPSBIV0NBUF9IRVhBR09OX0lTQV9WODU7CisgICAgICAgIGJyZWFrOwogICAgIGRlZmF1bHQ6
+CiAgICAgICAgIHJldHVybiAwOwogICAgIH0KLS0gCjIuMzQuMQoK
 
