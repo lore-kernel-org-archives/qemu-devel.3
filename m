@@ -1,47 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D32606A31A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E51D606A31D
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Oct 2026 17:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xL22w-0008HA-Ee; Sun, 25 Oct 2026 13:30:14 -0400
+	id 1xL24S-0001Ea-EO; Sun, 25 Oct 2026 13:31:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL22v-0008Fo-5Z; Sun, 25 Oct 2026 13:30:13 -0400
+ id 1xL23t-0000oP-Dz; Sun, 25 Oct 2026 13:31:15 -0400
 Received: from www675.your-server.de ([85.10.213.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <contact@sayyadumar.com>)
- id 1xL22t-0007D0-3m; Sun, 25 Oct 2026 13:30:12 -0400
+ id 1xL23r-0007IS-FF; Sun, 25 Oct 2026 13:31:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=sayyadumar.com; s=default2511; h=Cc:To:In-Reply-To:References:Message-Id:
  Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=ZaNDMhNHX8odw4RDhctG2uu4XIjXG6Yg0otveYbOIq4=; b=gke5FCCi3LtBTG2xgHpNPVk4tt
- XTaaPkuwNp6ZI61ikFJ6/uBMFNU6TaAAp6jJBBJYJnpWmDVLdJa9LAUwhAjAfEGItBemI+hbnm4v3
- rpi5dzdif4ViYqg2lJS7zMfcJx7gZhaElzQe3weMCsV0NBLlqLwZVDSXkOLqs9XULtiW3/T++qmEQ
- lUiakzhDlX0NUy790wvSexHdIwZMHE+nv86cg3nWfaB485Jj4VNPRDmrrBnTBIEzvlsB11Rco28XS
- /qDRiRCFyjDBC+zK6q27Gjw6VN2taAbfrUmXFWCCm9InGf0qAkEjJa2MNG5HSV3HmMkEpl2oxvyI1
- DmQ/smYQ==;
+ bh=kq4S0CHEh4mR5sHe7MvzD0z+QBUr1Ccb1XT0I1isRM0=; b=YLTKJrqbKjgZTsvY4UUCB3f/Xn
+ +xfTP7BqiqIujhUsqcOpE/CweENYnJO+uHXIlFFDJP9+xuN2iiZxnB1Q/kU6eopRUbELYGkK9Jd/Z
+ ZOdJpb67ACBKONljn3Jwri33mK2+fCYWsRKDL/zttI9KtLuAbsfoN2os/Tgs6WQOpU4Dg5mUehiUG
+ ngV6CU5VB2SL+jeJwYcCxmCebljsMLz+uBxxCzTLq2FFV+D5VAlXkXX0Bw+hju4qvj/vvhlgwKRVD
+ vQFlef4xsYQSAXQxv8fTbGEKono8hCNAkOLZrNt8xPnOLsZiZKdYmuD/4KCD31KBic6FYrXB2r9IQ
+ CgoEoSJg==;
 Received: from sslproxy01.your-server.de ([78.46.139.224])
  by www675.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96.2) (envelope-from <contact@sayyadumar.com>)
- id 1xL1gS-00098j-1f; Sun, 25 Oct 2026 18:07:00 +0100
+ id 1xL1Vv-0006kj-1u; Sun, 25 Oct 2026 17:56:07 +0100
 Received: from localhost ([127.0.0.1])
  by sslproxy01.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.96) (envelope-from <contact@sayyadumar.com>)
- id 1xL1Vw-000OzG-19; Sun, 25 Oct 2026 17:56:07 +0100
+ id 1xL1Vv-000OzG-2b; Sun, 25 Oct 2026 17:56:07 +0100
 From: Sayyad Mahammad Umar <contact@sayyadumar.com>
-Date: Sun, 25 Oct 2026 17:55:33 +0100
-Subject: [PATCH v2 17/31] target/rx: add RXv3 three-operand XOR
+Date: Sun, 25 Oct 2026 17:55:25 +0100
+Subject: [PATCH v2 09/31] target/rx: add DPFPU conversions ITOD, UTOD and FTOD
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261025-umar-rx-series-v2-17-9e846577cad0@sayyadumar.com>
+Message-Id: <20261025-umar-rx-series-v2-9-9e846577cad0@sayyadumar.com>
 References: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 In-Reply-To: <20261025-umar-rx-series-v2-0-9e846577cad0@sayyadumar.com>
 To: qemu-devel@nongnu.org
@@ -51,11 +51,11 @@ Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
  qemu-arm@nongnu.org, Sayyad Mahammad Umar <contact@sayyadumar.com>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=2034;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1792947366; l=5103;
  i=contact@sayyadumar.com; s=qemu; h=from:subject:message-id;
- bh=w6vs/90JD9TcnPg/pZanjClEzzVtyRseMPTK06o8ss8=;
- b=/9R4Hsu3TpoNfQXXsosJWc9fgNHGKXsM9s5DoxOXxom8WwrXdhxMYulQFeqcey5skg6bjGiDA
- lLvj/wA7v0SDtg0H3TiAkVzHzuZdxXZS3z6eb0QLVcZg812n0ilNdSk
+ bh=t1cH/7XKN5UXePdp0hwM0v6QjHKBYUidKT1ocpMSz9s=;
+ b=2hV5WeRieGtwGl3iadsfIvqYlJFLOJ/HnoeFq71J1Sv28TQKZ0l96zvsNEJ/ePuGUsEpIJs3t
+ DKqkmcIDqDkBhzuLhTONYRHLEwfsZTFCxPp1lEzOw14xn2Igd57fzby
 X-Developer-Key: i=contact@sayyadumar.com; a=ed25519;
  pk=CsAjTLRCB7+pnzmj8902JER4gL8CTzNQFxlMZTl4wDk=
 X-Virus-Scanned: Clear (ClamAV 1.4.6/28164/Sun Oct 25 07:24:12 2026)
@@ -81,64 +81,170 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=unavailable autolearn_force=no version=4.0.1
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the XOR rs,rs2,rd form, reusing the existing rx_xor helper and
-the three-operand register template.
+ITOD and UTOD convert signed/unsigned int32 to double, and FTOD
+widens single to double precision, into a DR register. Like the other
+DP arithmetic they run on dp_status and record exceptions in DPSW.
 
 Signed-off-by: Sayyad Mahammad Umar <contact@sayyadumar.com>
 ---
- target/rx/disas.c      |  6 ++++++
- target/rx/insns.decode |  4 ++++
- target/rx/translate.c  | 10 ++++++++++
- 3 files changed, 20 insertions(+)
+ target/rx/disas.c      | 18 ++++++++++++++++++
+ target/rx/helper.h     |  3 +++
+ target/rx/insns.decode |  7 +++++++
+ target/rx/op_helper.c  | 30 ++++++++++++++++++++++++++++++
+ target/rx/translate.c  | 36 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 94 insertions(+)
 
 diff --git a/target/rx/disas.c b/target/rx/disas.c
-index 46148c4087..924cfdd382 100644
+index 82900774ab..85de0a0f09 100644
 --- a/target/rx/disas.c
 +++ b/target/rx/disas.c
-@@ -1519,6 +1519,12 @@ static bool trans_RSTR_i(DisasContext *ctx, arg_RSTR_i *a)
+@@ -1291,6 +1291,24 @@ static bool trans_DTOF(DisasContext *ctx, arg_DTOF *a)
      return true;
  }
  
-+static bool trans_XOR_rrr(DisasContext *ctx, arg_XOR_rrr *a)
++static bool trans_ITOD(DisasContext *ctx, arg_ITOD *a)
 +{
-+    prt("xor\tr%d, r%d, r%d", a->rs, a->rs2, a->rd);
++    prt("itod\tr%d, dr%d", a->rs, a->drd);
++    return true;
++}
++
++static bool trans_UTOD(DisasContext *ctx, arg_UTOD *a)
++{
++    prt("utod\tr%d, dr%d", a->rs, a->drd);
++    return true;
++}
++
++static bool trans_FTOD(DisasContext *ctx, arg_FTOD *a)
++{
++    prt("ftod\tr%d, dr%d", a->rs, a->drd);
 +    return true;
 +}
 +
  #define BOP_IM(name, reg)                                       \
      do {                                                        \
          char dsp[8];                                            \
+diff --git a/target/rx/helper.h b/target/rx/helper.h
+index 5e7306d86e..5bf0ed0aa2 100644
+--- a/target/rx/helper.h
++++ b/target/rx/helper.h
+@@ -26,6 +26,9 @@ DEF_HELPER_2(dround, f64, env, f64)
+ DEF_HELPER_2(dtoi, i32, env, f64)
+ DEF_HELPER_2(dtou, i32, env, f64)
+ DEF_HELPER_2(dtof, f32, env, f64)
++DEF_HELPER_2(itod, f64, env, i32)
++DEF_HELPER_2(utod, f64, env, i32)
++DEF_HELPER_2(ftod, f64, env, f32)
+ DEF_HELPER_2(set_fpsw, void, env, i32)
+ DEF_HELPER_2(racw, void, env, i32)
+ DEF_HELPER_2(set_psw_rte, void, env, i32)
 diff --git a/target/rx/insns.decode b/target/rx/insns.decode
-index 450949a4bc..4ac849d32a 100644
+index e1121e950d..58f8aa6dfd 100644
 --- a/target/rx/insns.decode
 +++ b/target/rx/insns.decode
-@@ -730,3 +730,7 @@ SAVE_r		1111 1101 0111 0110 1100 rs:4 0000 0000		&svr
- RSTR_r		1111 1101 0111 0110 1101 rs:4 0000 0000		&svr
- SAVE_i		1111 1101 0111 0110 1110 0000 imm:8		&svi
- RSTR_i		1111 1101 0111 0110 1111 0000 imm:8		&svi
+@@ -33,6 +33,7 @@
+ &drr		drd drs
+ &drrr		drd drs1 drs2
+ &dcmpd		drs1 drs2 cd
++&idr		rs drd
+ ########
+ %b1_bdsp	24:3 !function=bdsp_s
+ 
+@@ -658,3 +659,9 @@ DROUND		0111 0110 1001 0000 drs:4 1101 drd:4 1101	&drr
+ DTOI		0111 0110 1001 0000 drs:4 1101 drd:4 1000	&drr
+ DTOU		0111 0110 1001 0000 drs:4 1101 drd:4 1001	&drr
+ DTOF		0111 0110 1001 0000 drs:4 1101 drd:4 1100	&drr
 +
-+########
-+# RXv3: three-operand XOR
-+XOR_rrr		1111 1111 0110 .... .... ....		@b3_rd_rs_rs2
++# GPR/float-to-DR conversions using 0xFD 0x77 prefix
++# Note: 0xFD 0x77 with byte2 in 0x00-0x0F is MVTC_i (li=01); no conflict with 0x8x
++ITOD		1111 1101 0111 0111 1000 rs:4 drd:4 1001	&idr
++FTOD		1111 1101 0111 0111 1000 rs:4 drd:4 1010	&idr
++UTOD		1111 1101 0111 0111 1000 rs:4 drd:4 1101	&idr
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index e684a4bfb9..cd686d8546 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -373,6 +373,36 @@ float32 helper_dtof(CPURXState *env, float64 t0)
+     return ret;
+ }
+ 
++float64 helper_itod(CPURXState *env, uint32_t t0)
++{
++    float64 ret;
++
++    dp_begin(env);
++    ret = int32_to_float64((int32_t)t0, &env->dp_status);
++    update_dpsw(env);
++    return ret;
++}
++
++float64 helper_utod(CPURXState *env, uint32_t t0)
++{
++    float64 ret;
++
++    dp_begin(env);
++    ret = uint32_to_float64(t0, &env->dp_status);
++    update_dpsw(env);
++    return ret;
++}
++
++float64 helper_ftod(CPURXState *env, float32 t0)
++{
++    float64 ret;
++
++    dp_begin(env);
++    ret = float32_to_float64(t0, &env->dp_status);
++    update_dpsw(env);
++    return ret;
++}
++
+ void helper_rx_fcmp(CPURXState *env, float32 t0, float32 t1)
+ {
+     int st;
 diff --git a/target/rx/translate.c b/target/rx/translate.c
-index 93174f5e1c..7b5f74fb5e 100644
+index d524a29d64..0bef8f36f8 100644
 --- a/target/rx/translate.c
 +++ b/target/rx/translate.c
-@@ -2543,6 +2543,16 @@ static bool trans_RSTR_r(DisasContext *ctx, arg_RSTR_r *a)
+@@ -2139,6 +2139,42 @@ static bool trans_DTOF(DisasContext *ctx, arg_DTOF *a)
      return true;
  }
  
-+/* xor rs, rs2, rd */
-+static bool trans_XOR_rrr(DisasContext *ctx, arg_XOR_rrr *a)
++/* itod rs, DRdrd -- convert signed int32 to double */
++static bool trans_ITOD(DisasContext *ctx, arg_ITOD *a)
 +{
 +    if (!require_isa(ctx, RX_ISA_V3)) {
 +        return false;
 +    }
-+    rx_gen_op_rrr(rx_xor, a->rd, a->rs, a->rs2);
++    TCGv_i64 d = tcg_temp_new_i64();
++    gen_helper_itod(d, tcg_env, cpu_regs[a->rs]);
++    dr_write(a->drd, d);
++    return true;
++}
++
++/* utod rs, DRdrd -- convert unsigned int32 to double */
++static bool trans_UTOD(DisasContext *ctx, arg_UTOD *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    TCGv_i64 d = tcg_temp_new_i64();
++    gen_helper_utod(d, tcg_env, cpu_regs[a->rs]);
++    dr_write(a->drd, d);
++    return true;
++}
++
++/* ftod rs, DRdrd -- convert float32 to double */
++static bool trans_FTOD(DisasContext *ctx, arg_FTOD *a)
++{
++    if (!require_isa(ctx, RX_ISA_V3)) {
++        return false;
++    }
++    TCGv_i64 d = tcg_temp_new_i64();
++    gen_helper_ftod(d, tcg_env, cpu_regs[a->rs]);
++    dr_write(a->drd, d);
 +    return true;
 +}
 +
