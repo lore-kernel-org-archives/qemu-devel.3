@@ -1,93 +1,81 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E368A606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B94606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=j2fNMNH5
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SfE4x0pB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLOie-0004yt-Rf; Mon, 26 Oct 2026 13:42:48 -0400
+	id 1xLOqg-000138-JW; Mon, 26 Oct 2026 13:51:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiR-0004j4-4k
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:35 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiO-0001ZB-EK
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:34 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-48e09aa5264so1800137f8f.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:42:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793036550; x=1793641350; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Alg/vYLqLfwkGDQOiDDSdhoe903yH8cFTvhjI7EQ/DQ=;
- b=j2fNMNH5ShvjWh9ADzlBarb9DXWNpLRhQHv6ufs+/mNtlLjgMupGAHl/8U1beffv3T
- Dt5HyxsBlt1fevPemMd/n1fPBMTHAt8g3RUQp5Jhry60NYTPQQaUHLbU5hWAA7b6CBIG
- /lNzsXaXhyhrDJjwVEBTbpTeI0mFZefowAu5y6EMhQqvrYsAoSzKXk7p+jS0Q9FmM8un
- ucxuSR0ILtc6jpRCa4fXI5/eWPORQNF8d9c2OhF26lLo9PqZ0v6d/sRr2bxwt+NY2vfA
- Q3InVibvPKGlrS70/tYwpYkqEQAbetf9njE6dNafScwhdUVPmra0Zsu/eu7oXIc3FxZT
- vj9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793036550; x=1793641350;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Alg/vYLqLfwkGDQOiDDSdhoe903yH8cFTvhjI7EQ/DQ=;
- b=cLhTZKEtwjSOp328Caov26GFl9OFxuR+En66C0meRD2cpOi4oJAXI+Kd08xftDWx9d
- f9UnR1CXLkjQzYsUesV5w2Bx0Tfknq0tOtKjMKuskAzvJCj6wcmTV1+RC3gMKkop/qNu
- dWfn9vamFE0PEcbZ0GZdoSnXelL9XgO7FFz1o3HN9NgXqgcUZqthDlFD/+YylLowGvCH
- yW0slU6ClxNq4GaPNQurnCt8Zse9G4U1DtW0ryPLfBFW4sZbLHHLOMhp65N/q/dFZOFY
- IZHlG3EzdS7HLQaaT//yiL5Li92oYkJIHycW9maIV0xMBbHoHDXWHgpeZuUY5Gao4rdL
- n87g==
-X-Gm-Message-State: AFq9FYIfSo4JuJM/rKgULOM7dMWrsWvK/it2m94BcJd608CT4uz/G38k
- 7N7XumQWqJqtzT/+XwI9QK8VhV4oYOL6w2odsksWaTQixJievt0ExfOD0Hp7OE5HScrsb0uG9E3
- 2t6ds
-X-Gm-Gg: AYBFou2XAilIKpPRJVhzCNjmKSDqVWZUqfy6I31UERBE/Dq4vTuoJNDxa1CljVlhd9w
- vSFhvcD1dVCcjJAQJ7Q/pQaeLpbSRoEcfF36fZerurmCNx3t9dROBd/62KDEYz0vAJ4hgCuqov3
- FqO+nkKNOm80iMOWlTlUytnUGiDu2hGOqgSBSYffk1X4y5Jv6iK6ifUEHE/DDoeIhBJwk6kSKd+
- XIPbStNen29OKaBrB0RidVpj2OwzRJTw+pLmfPi3MzYkSZkbqkG70q6/kAj4t7v974cSfVZ6tLG
- SWQR8km5kzII+wPtsCBpLUxFfl3ikFxhOqXJ7mb0ctZKlPk43ABkj8SW/85hZLXzpTfRzI5LREB
- iCvnLooAzsOYxuKZ8kn/maWBhIL/6YIVHFfnodjMIWKJO3uYrQaDSrom93FbaFU7GcLg+G0yuPU
- b04PjNz+9ir4nMfntFR6zBzyqb5/TyLdqCCKGBRZHg+i+YHCEeVWLcbZs5PHEH6whyQpfdSe91v
- 6vCb+4/xg2W4JTL1l/tfbKz4O/dpiRMYVsgV/4BQFuojbFla8U=
-X-Received: by 2002:a5d:4282:0:b0:48d:f851:ee5f with SMTP id
- ffacd0b85a97d-48e3eb89d0cmr9387729f8f.24.1793036550094; 
- Mon, 26 Oct 2026 10:42:30 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:1a6:7f7f:f573:ba9e])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebcb90dsm16169111f8f.22.2026.10.26.10.42.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 10:42:29 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org,
-	qemu-block@nongnu.org
-Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 5/5] virtio-scsi-test: test UNMAP and WRITE SAME during
- inactivation
-Date: Mon, 26 Oct 2026 18:42:19 +0100
-Message-ID: <20261026174220.674460-6-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261026174220.674460-1-den@openvz.org>
-References: <20261026174220.674460-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xLOqX-00010G-K5; Mon, 26 Oct 2026 13:51:00 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xLOqT-0002pc-Bt; Mon, 26 Oct 2026 13:50:57 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id E2A0B43C1A;
+ Mon, 26 Oct 2026 17:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931711F031E0;
+ Mon, 26 Oct 2026 17:50:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793037043;
+ bh=OfQQsDC6f5tJTw5ugPurknrHZAuDKYGTYWQqgo3XAJE=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc;
+ b=SfE4x0pBFkjyEf/P2HMB+/fS7IUERGi4g2to0wyUYxOmllpvAsVX8tXXwTGJK3/gt
+ ATvSofn7k05Ppqz4FIn7dhk0ESvlfbLHULxW3PE63qG4SufhRnYYiEcJJDlO+apJvX
+ ukADAfo/1GoEWfS1ald+EtUfdEkdb2KCODNFO88z9iqI3csSt9jL+bYoe+w35TkdqL
+ 9n+nEg8GkCpiac/gVjSWV0ENE1BosZV/96u5k7ik+i6ad+gWl+wZ0P5DrcMs9I5E/E
+ B+JhmOKToKiHXDS73MIjvf3ya0v5OTDvOtRhKAjPdDHn8fOpNHRIsKN+N6N7achnrJ
+ Cdw9oO6vqnAxg==
+From: Drew Fustini <fustini@kernel.org>
+Date: Mon, 26 Oct 2026 10:47:22 -0700
+Subject: [PATCH v6 2/6] hw/riscv: define capabilities of CBQRI controllers
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=den@openvz.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Message-Id: <20261026-riscv-ssqosid-cbqri-v6-2-1a367a35cd0e@kernel.org>
+References: <20261026-riscv-ssqosid-cbqri-v6-0-1a367a35cd0e@kernel.org>
+In-Reply-To: <20261026-riscv-ssqosid-cbqri-v6-0-1a367a35cd0e@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Sunil V L <sunilvl@oss.qualcomm.com>, 
+ Anup Patel <anup.patel@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Nicolas Pitre <npitre@baylibre.com>, 
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
+ Atish Patra <atish.patra@linux.dev>, 
+ =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <radim.krcmar@oss.qualcomm.com>, 
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
+ guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
+ Drew Fustini <fustini@kernel.org>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3539; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=/SK0G6b9PWqth5SWrj5qcpO4A6e6jR4Se3WVTjI2Rkg=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWTdn/RpKc+X9zt/b+qdbrn+rd10dv01vRYBST/zHENje
+ ZaGKK160lHKwiDGxSArpsiy6UPehSVeoV8XzH+xDWYOKxPIEAYuTgGYyEt5Robbkm9D5n68vKX/
+ xdwHMpLHm5bqOMp2CewK3cST/lj55Vlmhn86uq0HWna2raxreegozJ1wcEvMjWId7UNpkxfdDF3
+ r9I8TAA==
+X-Developer-Key: i=fustini@kernel.org; a=openpgp;
+ fpr=1B6F948213EA489734F3997035D5CD577C1E6010
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,145 +87,126 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Denis V. Lunev <den@openvz.org>
+From: Nicolas Pitre <npitre@baylibre.com>
 
-Inactivate all nodes while a multi-descriptor UNMAP, or a WRITE SAME
-spanning several chunks, is in flight on a slow node and check that the
-command completes. QEMU used to abort when the drain in
-bdrv_inactivate_all() ended and resumed the request queued for the next
-descriptor or chunk on an inactive node.
+Define structs to represent the hardware capabilities of capacity and
+bandwidth controllers according to the RISC-V Capacity and Bandwidth QoS
+Register Interface (CBQRI).
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Laurent Vivier <lvivier@redhat.com>
+Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Radim Krčmář <radim.krcmar@oss.qualcomm.com>
+Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- tests/qtest/virtio-scsi-test.c | 88 ++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+ MAINTAINERS              |  7 +++++
+ include/hw/riscv/cbqri.h | 70 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 77 insertions(+)
 
-diff --git a/tests/qtest/virtio-scsi-test.c b/tests/qtest/virtio-scsi-test.c
-index 40f1d569d8..e30b7f2440 100644
---- a/tests/qtest/virtio-scsi-test.c
-+++ b/tests/qtest/virtio-scsi-test.c
-@@ -269,6 +269,68 @@ static void test_unmap_large_lba(void *obj, void *data,
-     qvirtio_scsi_pci_free(vs);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4ca1751e30f5..2984779ce43a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -403,6 +403,13 @@ F: target/riscv/XVentanaCondOps.decode
+ F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+ F: disas/riscv-xventana*
  
-+static void inactivate_during_command(QVirtioSCSIPCI *scsi_pci,
-+                                      QGuestAllocator *t_alloc,
-+                                      const uint8_t *cdb,
-+                                      uint8_t *data_out, size_t data_out_len)
-+{
-+    QVirtioSCSIQueues *vs;
-+    VirtioSCSICmd cmd;
-+    struct virtio_scsi_cmd_resp resp;
++RISC-V QoS (Ssqosid ext and CBQRI spec)
++M: Nicolas Pitre <npitre@baylibre.com>
++M: Drew Fustini <fustini@kernel.org>
++L: qemu-riscv@nongnu.org
++S: Supported
++F: include/hw/riscv/cbqri.h
 +
-+    alloc = t_alloc;
-+    vs = qvirtio_scsi_init(scsi_pci->scsi.vdev);
+ RISC-V SiFive (Xsf*) extensions
+ M: Max Chou <max.chou@sifive.com>
+ L: qemu-riscv@nongnu.org
+diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+new file mode 100644
+index 000000000000..68d894f97220
+--- /dev/null
++++ b/include/hw/riscv/cbqri.h
+@@ -0,0 +1,70 @@
++/*
++ * RISC-V Capacity and Bandwidth QoS Register Interface
++ * URL: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
++ *
++ * Copyright (c) 2023 BayLibre SAS
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    virtio_scsi_submit_command(vs, cdb, NULL, 0, data_out, data_out_len,
-+                               &cmd);
-+    qtest_qmp_assert_success(scsi_pci->pci_vdev.pdev->bus->qts,
-+                             "{'execute': 'blockdev-set-active',"
-+                             " 'arguments': {'active': false}}");
++#ifndef HW_RISCV_CBQRI_H
++#define HW_RISCV_CBQRI_H
 +
-+    /* The drain must have waited for the whole command */
-+    virtio_scsi_wait_command(vs, &cmd, &resp, 0);
-+    g_assert_cmphex(resp.response, ==, 0);
-+    g_assert_cmphex(resp.status, ==, GOOD);
++#include "qemu/typedefs.h"
 +
-+    qvirtio_scsi_pci_free(vs);
-+}
++#define RISCV_CBQRI_VERSION_MAJOR   1
++#define RISCV_CBQRI_VERSION_MINOR   0
 +
-+static void test_unmap_inactivate(void *obj, void *data,
-+                                  QGuestAllocator *t_alloc)
-+{
-+    const uint8_t unmap[VIRTIO_SCSI_CDB_SIZE] = {
-+        0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x48, 0x00
-+    };
-+    uint8_t unmap_params[0x48] = {
-+        0x00, 0x46, /* unmap data length */
-+        0x00, 0x40, /* unmap block descriptor data length */
-+    };
-+    int i;
++#define TYPE_RISCV_CBQRI_CC         "riscv.cbqri.capacity"
++#define TYPE_RISCV_CBQRI_BC         "riscv.cbqri.bandwidth"
 +
-+    for (i = 0; i < 4; i++) {
-+        uint8_t *desc = &unmap_params[8 + i * 16];
++/* Capacity Controller hardware capabilities */
++typedef struct RiscvCbqriCapacityCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
 +
-+        desc[7] = i * 8;    /* LBA */
-+        desc[11] = 1;       /* sector count */
-+    }
++    uint16_t ncblks;
 +
-+    inactivate_during_command(obj, t_alloc, unmap, unmap_params,
-+                              sizeof(unmap_params));
-+}
++    bool supports_at_data:1;
++    bool supports_at_code:1;
 +
-+static void test_write_same_inactivate(void *obj, void *data,
-+                                       QGuestAllocator *t_alloc)
-+{
-+    /* 2 MiB of non-zero data is written in 512 KiB chunks */
-+    const uint8_t write_same[VIRTIO_SCSI_CDB_SIZE] = {
-+        0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00
-+    };
-+    uint8_t buf[512];
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++    bool supports_alloc_op_flush_rcid:1;
 +
-+    memset(buf, 0xa5, sizeof(buf));
-+    inactivate_during_command(obj, t_alloc, write_same, buf, sizeof(buf));
-+}
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
 +
- static void test_write_to_cdrom(void *obj, void *data,
-                                 QGuestAllocator *t_alloc)
- {
-@@ -398,6 +460,20 @@ static void *virtio_scsi_setup_4k(GString *cmd_line, void *arg)
-     return arg;
- }
- 
-+/* Each request must outlast the kick-to-QMP round trip on a loaded host */
-+static void *virtio_scsi_setup_slow(GString *cmd_line, void *arg)
-+{
-+    g_string_append_printf(cmd_line,
-+                           " -blockdev null-co,node-name=null0,read-zeroes=on"
-+                           " -blockdev blkdebug,image=null0,node-name=dbg,"
-+                           "discard=unmap,inject-error.0.event=none,"
-+                           "inject-error.0.iotype=%s,inject-error.0.errno=0,"
-+                           "inject-error.0.delay-ns=100000000"
-+                           " -device scsi-hd,drive=dbg,lun=0,scsi-id=1",
-+                           (const char *)arg);
-+    return arg;
-+}
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_occupancy:1;
++} RiscvCbqriCapacityCaps;
 +
- static void *virtio_scsi_setup_cd(GString *cmd_line, void *arg)
- {
-     g_string_append(cmd_line,
-@@ -435,6 +511,18 @@ static void register_virtio_scsi_test(void)
-     opts.before = virtio_scsi_setup_cd;
-     qos_add_test("write-to-cdrom", "virtio-scsi", test_write_to_cdrom, &opts);
- 
-+    /* ioeventfd=off starts the command before the kick returns */
-+    opts.before = virtio_scsi_setup_slow;
-+    opts.edge = (QOSGraphEdgeOptions) {
-+        .extra_device_opts = "ioeventfd=off",
-+    };
-+    opts.arg = (void *)"discard";
-+    qos_add_test("unmap-inactivate", "virtio-scsi-pci",
-+                 test_unmap_inactivate, &opts);
-+    opts.arg = (void *)"write";
-+    qos_add_test("write-same-inactivate", "virtio-scsi-pci",
-+                 test_write_same_inactivate, &opts);
++/* Bandwidth Controller hardware capabilities */
++typedef struct RiscvCbqriBandwidthCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
 +
-     opts.before = virtio_scsi_setup_iothread;
-     opts.edge = (QOSGraphEdgeOptions) {
-         .extra_device_opts = "iothread=thread0",
++    uint16_t nbwblks;
++    uint16_t mrbwb;
++
++    bool supports_at_data:1;
++    bool supports_at_code:1;
++
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
++
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_rdwr_count:1;
++    bool supports_mon_evt_id_rdonly_count:1;
++    bool supports_mon_evt_id_wronly_count:1;
++} RiscvCbqriBandwidthCaps;
++
++DeviceState *riscv_cbqri_cc_create(hwaddr addr,
++                                   const RiscvCbqriCapacityCaps *caps,
++                                   const char *target_name);
++DeviceState *riscv_cbqri_bc_create(hwaddr addr,
++                                   const RiscvCbqriBandwidthCaps *caps,
++                                   const char *target_name);
++#endif
+
 -- 
-2.53.0
+2.43.0
 
 
