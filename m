@@ -1,50 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A133606A327
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1315606A31F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=nzEDtAv8
+	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=OcWHPa6Q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLOQg-0007M1-E7; Mon, 26 Oct 2026 13:24:14 -0400
+	id 1xLOR4-0007TD-PY; Mon, 26 Oct 2026 13:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xLOQd-0007LV-07
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:24:11 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ id 1xLOQv-0007N5-02
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:24:31 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1xLOQZ-0007FH-JT
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:24:10 -0400
+ id 1xLOQt-0007GK-3i
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:24:28 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sWrcCLF10NpQWOsj3QNFYHPvpJV6r/V3YStD1niE8WcGiK9ai/jUFsnpEZ+uiGPmspMKDJmANSrSdyvBc9isUsG7w45/F2SgL7y18ZpXc7xMSKe0JiFYUvrlZCsHVm5Oeg1X3G5PWVWLCT7pLZ+Bk+22JqnLaYzmirJpz95zqi9MbljGXkaDapSDL2ucc5VsUoyNOvXWaerNu4khp4/VgPB/0MNEDixjmBrX7VYmq1fQQWykYNIepk8fO/iYSEW03R7k3/Uz5eqptpn9S56FAhnFkP/zJR7rIiTXqRPyjyJW792tt5VD+OC4Tz/jp87lSx/QKQi8DZanCjf1tmX6Ig==
+ b=tV9men4rkt1lw4yxVuBxalDJDwmXz3ipqIEvTkz2708iYLBO5nQSV+lspwsor5kbTpTae4THMF2Hnpz4/NVucovOcRPpWsLlbohFhPgpPBLAZv1VtJRFaBuvxes8NnT1Z00XDUC3Ggt81pwE7gXrrKI4EAYQuOn6iaI2k/Oxg03AsqA+ma4QOuNnVJV/OJpYgHFk6XZivAyKV6aScntr+18pKTIOD/XjhwKn5I3rC1DrCxL7tZiMSWteP9OzZntyqR/EigohOYcaV2ghzLGffNturVaI8ernaJqQ0j/aPYyzvEp2CQeIy0yomHD3bSqmxPJM43Gy2kV9wHlmOdOsqw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YF8Yj1CiyQDNKPHEXLgQH3IMA1Bt2ycL43QWAVSOvGs=;
- b=k4AcZSwxaCapu5sUubBLdbJQvSwAFpwxBnsW98vbZJK3YxhqgT+0yKvjy9uoYt2thzH7AxCOnxofnPSW7h/bXhYkGo60O5SP4yw5XCEdHdL0n93J0pbAgzRjnU34ks/ZIbHa4B7mR4/Wnd9KksOjtgBqehCBGmJWQKqC4o8Vi9nvWpG0rO8+ftNzHGSWYbBBAkK/N03m0cZv/I9gIrjUofKen+S3rdJ4ZSvvwmoulasvoaMhFrK/UOGB+hYUVnowhphgN7MPucosHNghHeCHa7Fn+bqua38d75O+PMPHBA6FlLUWZ4shjEDR+D5D5Lgbch2C4xHtObMSBDOQ49oW0g==
+ bh=e8GBiUtmAHnfg3kH79SSMByFny7bcN4DvB/ldo/Lfi0=;
+ b=P6jK8Skb3Lr+2dcrK3VwFmpPl9LEnWBT08eOCOqxKCWdjpHKE7ovdT25fBnc4SeVtbt2XhkI79HUaQOoaJYXQVgkrEGH4OkMLgGVU55Qh/Cz5WFgUk86pVfCPmPciIBaOIjYK1VYnb+pM2z0DqjIYa3etOAzk1zeVRauU5OXkYk0g159FMZeTz1UKBhVDdQiR7GMYvyhRzp0+gNGu9ObLPwCPHFyKN9KfgUNbg6XVSz2ixZ0j8HIvqoMibVxzblVGaxu1U++KXChuZY/PBcUannabY2jlwyTD5+yiDHiVKrVLP/0+HSgSUEJrfczuYwqbRraSzIsqe5DeIqPXRSttw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YF8Yj1CiyQDNKPHEXLgQH3IMA1Bt2ycL43QWAVSOvGs=;
- b=nzEDtAv8ZfeVVhOJO4rZf9u6uRRfMmbqyBUA3CZu8MbEWrhWIZY4NTOz1enoEdOr87A5GWMYrKa9EOZc2uCiAZpNy6Kjtxz+psQU/52+i0Jq6Aev/IwLJfkcY540GL9l/XstMSGgIRen9upT9lUzjSe3iAjPjZ6nBg4l4+w5la0=
-Received: from DS7P221CA0015.NAMP221.PROD.OUTLOOK.COM (2603:10b6:8:25c::6) by
- DS4PR12MB258939.namprd12.prod.outlook.com (2603:10b6:8:506::22) with
+ bh=e8GBiUtmAHnfg3kH79SSMByFny7bcN4DvB/ldo/Lfi0=;
+ b=OcWHPa6QuuE0slVGYBjD5IjQ05YYyiDr8YCC51urCGqkMaih/sjARrqpSRxV9tvNF6QIUpFIyqc6AnIwS4+d0YPYty2Wlk1qrIFItPLuSNVWaZBSlNZuQe6sKSQqdFiL5SZsBmoSnZl9kdxngUVVtjcm+6Uke4zG7w0VMTNAArM=
+Received: from DM6PR04CA0021.namprd04.prod.outlook.com (2603:10b6:5:334::26)
+ by MW4PR12MB7031.namprd12.prod.outlook.com (2603:10b6:303:1ef::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Mon, 26 Oct
- 2026 17:24:01 +0000
-Received: from CY7PEPF000000EC.namprd04.prod.outlook.com
- (2603:10b6:8:25c:cafe::1a) by DS7P221CA0015.outlook.office365.com
- (2603:10b6:8:25c::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.21; Mon, 26 Oct
+ 2026 17:24:20 +0000
+Received: from DS8PEPF000000E0.namprd05.prod.outlook.com
+ (2603:10b6:5:334:cafe::5) by DM6PR04CA0021.outlook.office365.com
+ (2603:10b6:5:334::26) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Mon,
- 26 Oct 2026 17:24:01 +0000
+ 26 Oct 2026 17:24:20 +0000
 X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
  is 165.204.84.17) smtp.mailfrom=amd.com;
  dkim=none (message not signed)
@@ -53,20 +53,21 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- CY7PEPF000000EC.mail.protection.outlook.com (10.167.247.168) with Microsoft
+ DS8PEPF000000E0.mail.protection.outlook.com (10.167.23.203) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.4 via Frontend Transport; Mon, 26 Oct 2026 17:24:01 +0000
+ 15.21.569.4 via Frontend Transport; Mon, 26 Oct 2026 17:24:20 +0000
 Received: from localhost (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Mon, 26 Oct
- 2026 12:23:58 -0500
+ 2026 12:24:19 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <pbonzini@redhat.com>, <berrange@redhat.com>, <eduardo@habkost.net>,
  <armbru@redhat.com>, <thomas.lendacky@amd.com>, <huibo.wang@amd.com>
-Subject: [PATCH v3 1/3] hw/cpu: Add async_run_on_cpu_after_accel()
-Date: Mon, 26 Oct 2026 12:21:47 -0500
-Message-ID: <20261026172300.2061829-2-michael.roth@amd.com>
+Subject: [PATCH v3 2/3] accel/kvm: Add kvm_immediate_exit callback
+ infrastructure
+Date: Mon, 26 Oct 2026 12:21:48 -0500
+Message-ID: <20261026172300.2061829-3-michael.roth@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261026172300.2061829-1-michael.roth@amd.com>
 References: <20261026172300.2061829-1-michael.roth@amd.com>
@@ -78,32 +79,32 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY7PEPF000000EC:EE_|DS4PR12MB258939:EE_
-X-MS-Office365-Filtering-Correlation-Id: c75c83a7-0cb7-41a2-6bb9-08df3385ed71
+X-MS-TrafficTypeDiagnostic: DS8PEPF000000E0:EE_|MW4PR12MB7031:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3843f10a-df29-464f-998b-08df3385f86a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|30052699003|36860700016|82310400026|261026140227099003|11063799006|56012099006|261009223027099003|261022105027099003|261022075727099003|261021121427099003|10067099003|261026121527099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info: iUMEsu0tVvDEPPdCqsv+9QZ6Y9EvgrtotFA7BXnj0Y5o7cQSBtL8XeLjLdRmPbkx+JO194+I7PlcrxrtprKT8I1Mvuzy1wVnAWWQkqOe1rXZU8G7tAZ7tMokXjk476HDbyH9G2DsZyuPGFWLIyLPI699n5VKEeFbjCsOIR8P8Y7aAYua50cA4BXsb32DPxbDJr6CYEF8uRgZzu/L6p3ouo54PIQGEoOelwFyU9Ic7BcQNoqC7WvHQMT6kwXVNhZeUV9DiPbjke5jSJ3juRpa2LwOFX0LTvOLnV3kJI0ZZnXfrQdd1OyruiTkOGVH8rSNgz4igx0UCZLaExM3MEK6dmswmQ5YWuM7MGUvo+CGofYsTZ5j61IaZ3uv7vgniYncVISI/2+rgHg6md6XW1lW0PO5g+u8Ifgpm1eNADuP5yFJvdsfpsN+K6yTHC80XQBWlTe5tjoohFCcSirhgDfqTWIkYaUgMijjS2PO3NawqNGlrCsxln4MmKobdZkqt6+qKQeL1GnA1CefAuPqSWJDCSJ8TWqQ4sw5Z3eKTcRoM7WScKp1jNQ8cHZCgON4yfDovJRn24i8oMff80c7nKQKIEg6IDNRqjGYGyk+ce50nCVF0Z7BYPj5P6+V+bibL9iHuxNRLfb1qY4NkYMDTtAYo1G2TaCz4AKjTkr5eok2ZEmdTdgKf8NotUdBkIZTkgYwgiEUnqy6RMyuPUlA0h9N0g==
+ ARA:13230040|376014|82310400026|36860700016|23010399003|1800799024|18002099003|22082099003|261026140227099003|56012099006|11063799006|261022105027099003|10067099003|261021121427099003|261009223027099003|261022075727099003|261026121527099003;
+X-Microsoft-Antispam-Message-Info: z4hJLSPQBjq69cZ12ov+s5AI28puFytp/EGshhAc2qMVqv6cEJjTS63xbJfzHOMcUewQfZ73hON5vHg/6RsTM82gQ4wq/X7vQaFSce0jQ8Zw62xqTBIS//joByndXb9Sz9szH+PVUIEisUMxndUg5friulRW/fBG2TDqxEohVPr4xcERiTrIG+A5T0YQc1vbEpNcMIS66Un8IBokm44RNWqnUAOfjdooAMkp1fdnj+u5wWB35RLdi2dMb1ce50PNvr+BCuE6BXO7hXC39wRQdtgDHBpXGKwJOnzTnfUTmZIzkYZ0xrrU9sldMYyOD12um5fAOf00OiKZ4xeTV4Q1z4uRFZVE0ABFvGuZQJtSVTY5ls0CGVbTxbA+xL6k3LXxPrHX0kctHwu+5850CNKDsMIVKiqQArXgX552y6GmPVUgIwISmwnsMkKosoMUTVesSFEcU44h8TZXCMitfwNj+lAkUniExrJSSXKFoeF37eICeaUz/JXX2o0qLTBNOmOHVfvo/cVpWv7o0MRTOambGtwry37OxPvp1rWxtw5RuuF0fdC994QCbl63OT6WsK/XgSY8tJ8G6rtEeyeCVHNNNSLbclFngUQIKyE3lSPxGAty4C/JlZd05kcdop8gyu2IA37DBvdtFGSaJLOlPaJ8moWPtu3e9/0nXuwytcYv4GBO3qyDdRUn/C3ybZrhiv5U+N3L5ctsBVVi4BRC3YcCCg==
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(30052699003)(36860700016)(82310400026)(261026140227099003)(11063799006)(56012099006)(261009223027099003)(261022105027099003)(261022075727099003)(261021121427099003)(10067099003)(261026121527099003)(18002099003)(22082099003)(6133799003);
+ SFS:(13230040)(376014)(82310400026)(36860700016)(23010399003)(1800799024)(18002099003)(22082099003)(261026140227099003)(56012099006)(11063799006)(261022105027099003)(10067099003)(261021121427099003)(261009223027099003)(261022075727099003)(261026121527099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: CgfUfJe0JHiXCVXUS7kMgfp53xyepGMnS0kv7s2UTqCynyc/V2MAHIII2QtqF+1BOXo2QyNZbNNKELooE8wys/hPt0fkXBBTQkYm3yjpQwF0d9ezU8U9XBKGIDub4xuXdTEk1Rb/1S4nEnfwQQDZbiRT1H7jX2eNt5JTfkDXqVjoX4DeUyi15Svc9R2PJzoQRwyaecuNCgRELvTX4573mjrDvztNpqi4JExgSSHDXlgIQxvWjUEqFgg/kHAW3KizieGm/1a5NZFwGNFIRFKciRidGt4Og/wsFj5w0s5wW2NwsGBTaOEpsOCMo7L2sncGDwF+hDr9bKT97WrP20ilMDP7ciLPkyskmAoPveE1EYa14WZ0O8JaT+GVy48XHVcMlaEksb0OGsYU76nlvgUENczGoJk9XpJ2NSsnFg7f4y9s6yOV4nUkhwwXP0eWJ1h2
+X-MS-Exchange-AntiSpam-MessageData-0: Q8vuvBuumro7c0f898HuCmZJcywoe4o9KK9VZZDzNH/eXaV0pYq8/qE7NHQtJlFuyQewW6/uPrIuyeWgNOYPtmM7dAkOroi21Z7dx65ZzThAiFHLxqzWambo7hVFjQAoyPC7ECZvxahXTHeMvSoX15pAx00ZdDQKVw3XisUoveh+Q1tqBbLY26ZGOx/Ln1mQ9LEphkQTyYEyVLMudHhlBMcDxXRHItQV+8oSDID4/bHwTRFeypt7rkZx85iaZZPJ3zpDdbtGmeUQjRB/ntB/N5C68mgQmNGPWJ8MQKs86a5Wvq4nu851vREjX42fi81DuRfQmbMgfhNbZ+Uu88JOH1XDo7kl/gVdUPcJK2AxT6rP0yyDJX1/RrB0ApaNaJA+UM8A6PSeQTPdyuRXl7h0n9gMhqm5ltZ2gQXvRe80B/jUD/yv5Gc6jRdDAJ2C9req
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 17:24:01.6323 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c75c83a7-0cb7-41a2-6bb9-08df3385ed71
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Oct 2026 17:24:20.0884 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3843f10a-df29-464f-998b-08df3385f86a
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY7PEPF000000EC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS8PEPF000000E0.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB258939
-Received-SPF: pass client-ip=2a01:111:f403:c112::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7031
+Received-SPF: pass client-ip=2a01:111:f403:c001::2;
  envelope-from=Michael.Roth@amd.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -129,213 +130,88 @@ X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-For some operations, hypervisors/accelerators like KVM might requiring
-calling back into the accelerator code prior to userspace being able to
-complete handling of certains operations. One common example is I/O
-emulation where the accelerator call may be necessary to complete
-pending work on the accelerator side and confirming completion to
-userspace via another exit, which (for this particular case) already has
-handling in KVM-specific code.
+Provide a generic mechanism so that users of struct kvm_run's
+'immediate_exit' flag can register a callback that can be issued after
+returning from KVM. Utilize the recently-added
+async_run_on_cpu_after_accel() interface, with a small wrapper to set
+the 'immediate_exit' to arm any new callbacks.
 
-In some cases however, userspace may need to perform additional work on
-behalf of the vCPU after the accelerator exists, requiring some kind of
-per-vCPU callback mechanism. async_run_on_cpu() already provides
-something very similar, but it forces an exit from the inner loop, and
-is processed at the start of the outer loop, so those callbacks might
-be issued before the accelerator has a chance to get called again.
-
-Introduce a new variant, async_run_on_cpu_after_accel(), that is
-designed to queue up work to be processed after the next accelerator
-exit, and without unnecessarily forcing an exit from the inner loop. The
-handling is via process_queued_cpu_accel_work(), which is left to
-accelerator/arch-specific code to implement in their inner loops where
-appropriate.
-
-KVM will use this general per-vCPU infrastructure to handle callbacks
-for these cases. Other accelerators maybe have other uses in the future.
+As with async_run_on_cpu_after_accel(), these callbacks are not run with
+the BQL held; that is left to individual callback implementations when
+needed.
 
 Signed-off-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Melody Wang <huibo.wang@amd.com>
 ---
- cpu-common.c          | 66 +++++++++++++++++++++++++++++++++++++++++++
- hw/core/cpu-common.c  |  2 ++
- include/hw/core/cpu.h | 33 ++++++++++++++++++++++
- 3 files changed, 101 insertions(+)
+ accel/kvm/kvm-all.c  | 20 ++++++++++++++++++++
+ include/system/kvm.h | 11 +++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/cpu-common.c b/cpu-common.c
-index adb76b3a78..0e735da673 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -141,6 +141,23 @@ static void queue_work_on_cpu(CPUState *cpu, struct qemu_work_item *wi)
-     cpu_exit(cpu);
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index db8fba53f3..a6bc0b3bed 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3449,6 +3449,19 @@ out_unref:
+     return ret;
  }
  
 +/*
-+ * Queue work on a CPU to run after the next accelerator exit.
++ * Queue up CPU work to run after the next call to KVM_RUN.
 + *
-+ * This helper intentionally leaves the inner loop running rather than forcing
-+ * an exit via cpu_exit(), since the intention is to immediately call back into
-+ * the accelerator to process pending events, and then upon exiting issue
-+ * callbacks/notifications to any CPUs that need to complete any work that is
-+ * pending on that accelerator call/exit.
++ * Requires KVM_CAP_IMMEDIATE_EXIT.
 + */
-+static void queue_accel_work_on_cpu(CPUState *cpu, struct qemu_work_item *wi)
++void kvm_add_immediate_exit_callback(CPUState *cpu, run_on_cpu_func cb,
++                                     run_on_cpu_data data)
 +{
-+    assert(wi->free);
-+    qemu_mutex_lock(&cpu->work_mutex);
-+    QSIMPLEQ_INSERT_TAIL(&cpu->accel_work_list, wi, node);
-+    qemu_mutex_unlock(&cpu->work_mutex);
++    assert(kvm_immediate_exit);
++    async_run_on_cpu_after_accel(cpu, cb, data);
++    kvm_cpu_kick(cpu);
 +}
 +
- void do_run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data,
-                    QemuMutex *mutex)
+ int kvm_cpu_exec(CPUState *cpu)
  {
-@@ -178,6 +195,24 @@ void async_run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data)
-     queue_work_on_cpu(cpu, wi);
- }
+     struct kvm_run *run = cpu->kvm_run;
+@@ -3511,6 +3524,13 @@ int kvm_cpu_exec(CPUState *cpu)
+             if (run_ret == -EINTR || run_ret == -EAGAIN) {
+                 trace_kvm_io_window_exit();
+                 kvm_eat_signals(cpu);
++                /*
++                 * This will process any events queued by
++                 * kvm_add_immediate_exit_callback(). This is intentionally run
++                 * after 'immediate_exit' field is cleared by kvm_eat_signal()
++                 * so that queued accel work can requeue itself if needed.
++                 */
++                process_queued_cpu_accel_work(cpu);
+                 ret = EXCP_INTERRUPT;
+                 break;
+             }
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index d29624034c..2c08992bce 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -21,6 +21,7 @@
+ #include "qemu/accel.h"
+ #include "accel/accel-route.h"
+ #include "qom/object.h"
++#include "hw/core/cpu.h"
  
-+void async_run_on_cpu_after_accel(CPUState *cpu, run_on_cpu_func func,
-+                                  run_on_cpu_data data)
-+{
-+    struct qemu_work_item *wi;
-+
-+    wi = g_new0(struct qemu_work_item, 1);
-+
-+    /*
-+     * Only asynchronous accelerator work items are allowed. I.e. wi->free
-+     * must be true. Subsequent code will assert this.
-+     */
-+    wi->func = func;
-+    wi->data = data;
-+    wi->free = true;
-+
-+    queue_accel_work_on_cpu(cpu, wi);
-+}
-+
- /* Wait for pending exclusive operations to complete.  The CPU list lock
-    must be held.  */
- static inline void exclusive_idle(void)
-@@ -349,6 +384,37 @@ void free_queued_cpu_work(CPUState *cpu)
-     }
- }
+ #ifdef COMPILING_PER_TARGET
+ # ifdef CONFIG_KVM
+@@ -594,4 +595,14 @@ void kvm_vcpufd_add_change_notifier(NotifierWithReturn *n);
+  */
+ void kvm_vcpufd_remove_change_notifier(NotifierWithReturn *n);
  
-+void free_queued_cpu_accel_work(CPUState *cpu)
-+{
-+    while (!QSIMPLEQ_EMPTY(&cpu->accel_work_list)) {
-+        struct qemu_work_item *wi = QSIMPLEQ_FIRST(&cpu->accel_work_list);
-+        QSIMPLEQ_REMOVE_HEAD(&cpu->accel_work_list, node);
-+        assert(wi->free);
-+        g_free(wi);
-+    }
-+}
++/**
++ * kvm_add_immediate_exit_callback - register a callback to be performed after
++ * the next call to KVM_RUN (with immediate_exit set via kvm_cpu_kick()).
++ * @cpu: CPU to run the callback on.
++ * @cb: The callback to run.
++ * @data: The data to pass to the callback.
++ */
++void kvm_add_immediate_exit_callback(CPUState *cpu, run_on_cpu_func cb,
++                                     run_on_cpu_data data);
 +
-+void process_queued_cpu_accel_work(CPUState *cpu)
-+{
-+    struct qemu_work_item *wi;
-+
-+    qemu_mutex_lock(&cpu->work_mutex);
-+
-+    while (!QSIMPLEQ_EMPTY(&cpu->accel_work_list)) {
-+        wi = QSIMPLEQ_FIRST(&cpu->accel_work_list);
-+        QSIMPLEQ_REMOVE_HEAD(&cpu->accel_work_list, node);
-+
-+        qemu_mutex_unlock(&cpu->work_mutex);
-+        wi->func(cpu, wi->data);
-+        qemu_mutex_lock(&cpu->work_mutex);
-+
-+        assert(wi->free);
-+        g_free(wi);
-+    }
-+
-+    qemu_mutex_unlock(&cpu->work_mutex);
-+}
-+
- void process_queued_cpu_work(CPUState *cpu)
- {
-     struct qemu_work_item *wi;
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 4f4c87f33a..599963a85d 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -304,6 +304,7 @@ static void cpu_common_initfn(Object *obj)
-     qemu_mutex_init(&cpu->work_mutex);
-     qemu_lockcnt_init(&cpu->in_ioctl_lock);
-     QSIMPLEQ_INIT(&cpu->work_list);
-+    QSIMPLEQ_INIT(&cpu->accel_work_list);
-     QTAILQ_INIT(&cpu->breakpoints);
-     QTAILQ_INIT(&cpu->watchpoints);
- 
-@@ -332,6 +333,7 @@ static void cpu_common_finalize(Object *obj)
-     }
  #endif
-     free_queued_cpu_work(cpu);
-+    free_queued_cpu_accel_work(cpu);
-     /* If cleanup didn't happen in context to gdb_unregister_coprocessor_all */
-     if (cpu->gdb_regs) {
-         g_array_free(cpu->gdb_regs, TRUE);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 5b7c330047..8c55269074 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -523,6 +523,7 @@ struct CPUState {
- 
-     QemuMutex work_mutex;
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
-+    QSIMPLEQ_HEAD(, qemu_work_item) accel_work_list;
- 
-     struct CPUAddressSpace *cpu_ases;
-     AddressSpace *as;
-@@ -968,6 +969,24 @@ void run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data);
-  */
- void async_run_on_cpu(CPUState *cpu, run_on_cpu_func func, run_on_cpu_data data);
- 
-+/**
-+ * async_run_on_cpu_after_accel:
-+ * @cpu: The vCPU to run on.
-+ * @func: The function to be executed.
-+ * @data: Data to pass to the function.
-+ *
-+ * Schedules the function @func for execution on the vCPU @cpu asynchronously,
-+ * to be handled only after the next invocation of the configured accelerator.
-+ * Unlike async_run_on_cpu(), @func will not be run with the BQL held and is
-+ * instead left to @func itself to take if needed.
-+ *
-+ * This does not guarantee any sort of expedited exiting from the accelerator
-+ * or the inner loop; this aspect is instead left up to
-+ * accelerator/arch-specific code.
-+ */
-+void async_run_on_cpu_after_accel(CPUState *cpu, run_on_cpu_func func,
-+                                  run_on_cpu_data data);
-+
- /**
-  * async_safe_run_on_cpu:
-  * @cpu: The vCPU to run on.
-@@ -1115,12 +1134,26 @@ void cpu_remove_sync(CPUState *cpu);
-  */
- void free_queued_cpu_work(CPUState *cpu);
- 
-+/**
-+ * free_queued_cpu_accel_work() - free all items on CPU accel work queue
-+ * @cpu: The CPU which accel work queue to free.
-+ */
-+void free_queued_cpu_accel_work(CPUState *cpu);
-+
- /**
-  * process_queued_cpu_work() - process all items on CPU work queue
-  * @cpu: The CPU which work queue to process.
-  */
- void process_queued_cpu_work(CPUState *cpu);
- 
-+/**
-+ * process_queued_cpu_accel_work() - process all items on CPU accel work queue
-+ * @cpu: The CPU which work queue to process.
-+ *
-+ * Must be called without the BQL held.
-+ */
-+void process_queued_cpu_accel_work(CPUState *cpu);
-+
- /**
-  * cpu_exec_start:
-  * @cpu: The CPU for the current thread.
 -- 
 2.43.0
 
