@@ -1,54 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78B2606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE3606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=jzf9br+2
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=aI59n0Jq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLEa-0004f7-0D; Mon, 26 Oct 2026 09:59:34 -0400
+	id 1xLLEJ-0003wi-75; Mon, 26 Oct 2026 09:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLEE-0003il-Ne; Mon, 26 Oct 2026 09:59:12 -0400
+ id 1xLLE7-0003ZR-2y; Mon, 26 Oct 2026 09:59:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLED-0000bz-3T; Mon, 26 Oct 2026 09:59:10 -0400
+ id 1xLLE5-0000YE-9E; Mon, 26 Oct 2026 09:59:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=C9d5EFViCgN8OstTe6/pK2fwQKpVZ3sUF6rnBMvUFBc=;
+ t=1793022944; bh=+QPRYrgJje2Xiy+M3lvolT3LsgK3X+p0Dm6gibHq57w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jzf9br+2jnTKffGXlr/BTt49iIH+Mk9k2TcXBiVxJrTbhqiaeXZoQxyRyfnOjli2A
- Lm2lkpjPt1FbcRDhHqlbCNnXfY2BX94XdxhDyrKi5b8O5Rd7PgKW+G2tW7wBMULbNA
- 8h8y0a7BIdl223X7DS9xjKg+QpI267GnoEYTs1IrBJTG3UhGe6G9lDpJfEFj7CeZx+
- +IFXLZhrsOCY0Yzv7GOXhRV+2mYv1zxAz0BCXhod38YZ2zfUB+BbG2b16RR3g8u0vQ
- 9C3jKf83LpGawhofsqicnnYecMlL7kjkbv4HmK+M04p8qzsy6cTFNZExq9VQ1CFamn
- vxhEOja3wO28Q==
+ b=aI59n0JqkmNfpnKbAHxfybtbiAdvG+leX9mb/egwqFn98pC7lFN1MGcB88JaN6nun
+ CR0Ksk4MgZwOLypkdGsXmUYW8eQy+SsZ8GPoamtQITRY0kAUQYkSTP4EpC03oOQa94
+ v4OOPvJaX/F3OenFGDrI6kFVzpy8sylqYqsLYwSROibtYSJ/aW+0KBcfLKTh2uo24x
+ w3FktOUuoPdNgjNJNYnbzL82ScMc4QfpsXQ1CC4cMN6RKkUaa7gEuwZu4A4zhfcNCp
+ YnF46nZwIc8V3xPH/aMW1h9ovI7+Tb2u/Fcg1H9RvFniR5g0Ji6wvwkqXKpD3d+XsM
+ FINIVyaZJiQSQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 499321E12AD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 392311E12A9;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4779F44B8FE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36D2A44B8FA;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 2040E934E1; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ id 14B2B934D9; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Luc Michel <luc@lmichel.fr>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 96/98] hw/misc/bcm2835_cprman: Treat invalid clock
- mux source select as GND
-Date: Mon, 26 Oct 2026 16:55:23 +0300
-Message-ID: <20261026135529.1019772-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 92/98] usb-host: delete bottom halves during
+ unrealize
+Date: Mon, 26 Oct 2026 16:55:19 +0300
+Message-ID: <20261026135529.1019772-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -77,37 +75,54 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Haotian Jiang <sundayjiang@tencent.com>
 
-The clock mux control registers in bcm2835_cprman have a 4 bit SRC
-field that selects the input clock source to use.  There are only 10
-valid SRC values.  Treat the invalid values as producing no clock
-output, as if the GND clock source was used or the mux was disabled.
-This avoids reading off the end of the mux->srcs[] array.
+usb_host_nodev() lazily creates s->bh_nodev and
+usb_host_post_load() lazily creates s->bh_postld, but
+usb_host_unrealize() never calls qemu_bh_delete() on either.  If a BH
+is still pending when unrealize returns, its callback dereferences the
+freed USBHostDevice.
 
+Delete both BHs in usb_host_unrealize() after usb_host_close()
+returns.  They must be deleted after close because usb_host_close()
+can process libusb callbacks that call usb_host_nodev(), which lazily
+recreates bh_nodev.  Deleting it before close could therefore leave a
+recreated BH alive after unrealize.
+
+Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/3595
+Fixes: 95efb20c7148 ("usb-host: live migration support for the libusb version")
+Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <sundayjiang@tencent.com>
+Signed-off-by: Haotian Jiang <sundayjiang@tencent.com>
 Cc: qemu-stable@nongnu.org
-Fixes: fc9840850ba ("hw/misc/bcm2835_cprman: implement clock mux behaviour")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4695
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Luc Michel <luc@lmichel.fr>
-Message-id: 20261019161900.3271815-1-peter.maydell@linaro.org
-(cherry picked from commit be67e61e29a8e432a563489eb38f44a218af8a44)
+(cherry picked from commit a86338565ceaede2fd7d90a8e0376131a20f0655)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/bcm2835_cprman.c b/hw/misc/bcm2835_cprman.c
-index 8220f7a6b4b..d11e65aec0c 100644
---- a/hw/misc/bcm2835_cprman.c
-+++ b/hw/misc/bcm2835_cprman.c
-@@ -271,7 +271,7 @@ static void clock_mux_update(CprmanClockMuxState *mux)
- 
-     *mux->reg_ctl = FIELD_DP32(*mux->reg_ctl, CM_CLOCKx_CTL, BUSY, enabled);
- 
--    if (!enabled) {
-+    if (!enabled || src >= ARRAY_SIZE(mux->srcs)) {
-         clock_update(mux->out, 0);
-         return;
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index 735d7c1844a..8dbf66f37b0 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -1278,6 +1278,21 @@ static void usb_host_unrealize(USBDevice *udev)
+         QTAILQ_REMOVE(&hostdevs, s, next);
      }
+     usb_host_close(s);
++    /*
++     * Delete bottom halves after usb_host_close().  During close,
++     * libusb callbacks (usb_host_req_complete_ctrl/data) can call
++     * usb_host_nodev() which lazily creates bh_nodev.  If we
++     * deleted them before close, a newly created BH would leak and
++     * fire after unrealize, dereferencing freed USBHostDevice.
++     */
++    if (s->bh_nodev) {
++        qemu_bh_delete(s->bh_nodev);
++        s->bh_nodev = NULL;
++    }
++    if (s->bh_postld) {
++        qemu_bh_delete(s->bh_postld);
++        s->bh_postld = NULL;
++    }
+ }
+ 
+ static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
 -- 
 2.47.3
 
