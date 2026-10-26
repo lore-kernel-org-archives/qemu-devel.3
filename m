@@ -1,117 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F87606A326
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1658606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm1 header.b=ezOxSeWo;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=rIT/sJqF
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W6goCWtq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLJQN-0006x8-7A; Mon, 26 Oct 2026 08:03:35 -0400
+	id 1xLJZo-00006j-Go; Mon, 26 Oct 2026 08:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xLJQD-0006wS-RD
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 08:03:27 -0400
-Received: from fhigh-b3-smtp.messagingengine.com ([202.12.124.154])
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xLJZm-00005h-2t; Mon, 26 Oct 2026 08:13:18 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1xLJQ8-0004gt-1z
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 08:03:22 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 3AAD27A01C5
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 08:03:17 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Mon, 26 Oct 2026 08:03:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1793016196; x=
- 1793102596; bh=SvF+8ZYpjaVC0XYjFpvVb/CDzz30b0ppn2lujJXcQOA=; b=e
- zOxSeWog8bgi2dAfxV/4EV+tF4NPEHSIqc/Og0L5IsFKw65sFai121WVtviD9Y6H
- C6WYqQlBKrh/J1p72rlBqeqa7RxR0nSVbPVc+uTnMOCxOkia4VMjLitQ3FkiQqL8
- vSGsyLqOJWIcFopmkc/7zGdQIMILyaQ1v0UwaQouazGSywePdV9rmutdu7SlksW2
- BHx2rl8sMpoVHF8LXAVMLnB7nWzqNzDaiwKoeREMQkOt8lsmEFMpXIfOqtVEuOam
- oSL/UIE+VrvmAXh+izdBVzZeBKy6LRYwnQXcpkwClCYV6i/sStbVHXKYB4eaW7Zf
- +Iqsl+VVtuXPStMDhr0dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1793016196; x=1793102596; bh=SvF+8ZYpjaVC0XYjFpvVb/CDzz30b0ppn2l
- ujJXcQOA=; b=rIT/sJqFlVeei3DW2fEigYHDRgKWYnf+DTc/3g+8cXQnW19ohaJ
- 3e+GFo62r6G535xCNGLVZL+KOx9oicUZIF22i7ROn5Bh+3fnc1nuZ+R+TRzUPwr4
- TwX7XF9GiXuRyGBU/5eg3l9n65h2QL/64I/yn3fRWQm0EcH+gAQc+dSruIvJdpwU
- P9qTEegV4mACoDY6oOUsYNy0ylxZKFOyMRK66eCg7dbIaKUDXm2tJBYxZXkJ8JHq
- mbgqTjvu9wcrqcOrxwrvP6Cl05hd6cxgNso3MPtx8KfCeKzObmXzi7XxXI7HdYtA
- aS1pqLdCdQQNL2VTAzxxZZYSVYLq169U8yA==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=sign d=irrelevant.dk a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793016196; d=irrelevant.dk;
- mf=PGl0c0BpcnJlbGV2YW50LmRrPg==;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm1:rsa-sha256:ZoOelggraQWB+qERTb8U5lgwtI0uTw8XkHozLlqRYCUgy81
- dBsk1M8SXO9pgsl/5NDDb4U+yipvhkQKI9w8CzDPJqkLnH1mjQiEVl3JGu8UjTb4
- 0SFJlXIjhL6sZy1iKpbZViQpAUkDDPNxqJfH0sCl/tMkqPQanYbbizf1OpdTMEi2
- MOE3C8x1bFurSxTMtLNENCCMlg4lS9dds3eY9EtinWvXJzddLNcIvF+JlGCrOpUE
- 0Si/uzWbmMAl99CcSZSJBYGbO1XMeaVl2v1ajiWySdcypzP6Qk9CLp5GzpVYxPQv
- gpGhLjp2YM0uhcmmZoywk7U77z82lccqI+7lEEw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=mi-m=1; hc=12;
- hn=cc,content-disposition,content-type,date,feedback-id,from,
- in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1;
- h=sha256:yVnozFzZPQi07ZvO1P2RD097yaYA6bK88eqjmxITdKc=:btXtSpt1q5iPwXIK0vsyVaxnWfPMeoHqaor9ayKhUac=;
-X-ME-Sender: <xms:hEHfagqbZfx3F0iibuyLP2sQlXF59-AOYqwSHGJ41guHxSCg9H53mQ>
- <xme:hEHfal0akSnGdNkwS-5QBkVVEmyqwVGLFPgmZs_l66YqW37EixQR3wEGfeQgjgnxP
- GBGbmT88sMx_6tgWyZypCfqJigoVMrsjOJ9JG4kT-6qtPSMIHU0NUWF0A>
-X-ME-Received: <xmr:hEHfan4yZcEO0WVbDfBter0JW0KxYCHrA9SnWZOZIZhi9kpGbk0DZrl2udD8>
-X-ME-Proxy-Cause: dmFkZTGrV8QQ62CJhkh4FtVr7v/vEB8pFP62TV5hz/9lv7dUQMoN5Exk3GK76aYrAFcaKD
- oVILAMb/qHggC9SzwQHHEZf0Pso0NRQ7M3dlczbjdf4y7qKqncbMToDH/44bjffnIVIWdf
- ssdZkpmk6WkqvKY51my3DfzWMntARk4aCzsPh9aEhf3YX2pn/BSuZXFZB6sH8OsGgBZwOj
- ducWMD0KU9+5hIqOCkxxqE6F6uJDfOx8jov4BRUcWyjReiXnE5EQt8tvomNK+xpUQbCSZF
- FR9m/s6bJbvmY8X128JOYV6kn278xRzJi5hnaGq/j2hKAeOy2mq7h9t+CkmVvoa4XIqojI
- bDCYBCuj3AWoBuhWDRoLzlQRmgmWKY6zgGI5IP8dP3m/r1hhXqAyfuZN2p6I9pAffpRhyM
- HX+2KogxrjAncPn7qDvA5tlfwORK5xw4rQlnxkal9j+u57cEBVZbyvMpgoRvc+m0VG+xG/
- 0qUmJ1klXucncgar2L2G9ojKld9tTWpW4lPDLVP/tAcoNciujcFLRQcJ/ZgvsQUriJxSw6
- PplFpV8xMTI6zl6u/8cPMBEIfOT/TULohWrHjbRLXyBvPixYbyyrWwd+Ts0si0NWj8745G
- 1BSPtVk4GXB+p1trHccKUqXroMiicMXZYkYO5TqspAfjIspnWROZEGXBsaew
-X-ME-Proxy: <xmx:hEHfahTt7NvOwsH4CGaWXaVTAu6f3cbRrK3fs_tfTkIVoDZljgZVkA>
- <xmx:hEHfasUm_5m1NwhTY-IJhkIlQJkpMhM_9S-QaelpDI9XIK8hxaZE0w>
- <xmx:hEHfamEWn6jMuBqGezj4hxCG6MjQoIpYcpyAvu61ZiNQB2DFYtRcBA>
- <xmx:hEHfavd-QqS2HZUbPU5kbuyCDAsphPBSkmVFYUmaz9YLUqQKB5lGVQ>
- <xmx:hEHfavorYNEbYmwmAo3Zw6cdSFhm7ZNZgHmtTQeriyW71kJK8I-Aau57>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Oct 2026 08:03:15 -0400 (EDT)
-Date: Mon, 26 Oct 2026 13:03:14 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Daniel Gomez <da.gomez@kernel.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
-Subject: Re: [PATCH RESEND v3 0/7] hw/nvme: lift IOV_MAX limit in DMA path
-Message-ID: <at9AJGxUZvRoBrBw@AALNPWKJENSEN.aal.scsc.local>
-References: <20261026-align-nvme-mdts-with-linux-v3-0-a33bd7c32df9@samsung.com>
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1xLJZk-0005xj-2m; Mon, 26 Oct 2026 08:13:17 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id C45C343AC7;
+ Mon, 26 Oct 2026 12:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0D11F01825;
+ Mon, 26 Oct 2026 12:13:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793016792;
+ bh=1Y7NAzHaRtInXa6woXKE3nGA0pc0QenHLP8Prpyxf/E=;
+ h=From:To:Cc:Subject:Date;
+ b=W6goCWtqxFVK0hPPEOxXO7d0Y8/d0/LAF5N65kE5Jsvo5j2SXMNOvbuyOtNa/0eyh
+ hzgVxKbQFPJgcntw58PD1lqxxgqm0dijoW+MI5zQTUmHzTxOcofFcP9Z+Gq4N29l+R
+ 1ylsXhT32Tlh1wZ0QjlNhY6Um8zJ7cWpvBE7mTQT1C84On4qXPF768f9JiI5giKIeZ
+ R8EAzD6q5FcngqggrvB0jWor/9M5ASucKGip8cFz2elOro+7j96eawwpl2BrGfGgi4
+ d6CwcSXnUvcvY7RVzkWr+Syls+gsOhiryxhvqq2rRRuOPNGwmm3xaeA05OPzyQMxGe
+ xb829xh2/UM7g==
+From: Niklas Cassel <cassel@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Niklas Cassel <cassel@kernel.org>, dlemoal@kernel.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>
+Subject: [PATCH v15 0/7] Add full zoned storage emulation to the qcow2 driver
+Date: Mon, 26 Oct 2026 13:12:48 +0100
+Message-ID: <20261026121259.3354561-1-cassel@kernel.org>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="9meNJhmufUKKcH75"
-Content-Disposition: inline
-In-Reply-To: <20261026-align-nvme-mdts-with-linux-v3-0-a33bd7c32df9@samsung.com>
-Received-SPF: pass client-ip=202.12.124.154; envelope-from=its@irrelevant.dk;
- helo=fhigh-b3-smtp.messagingengine.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,142 +68,138 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---9meNJhmufUKKcH75
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch series adds a new extension - zoned format - to the
+qcow2 driver, allowing full zoned storage emulation on a qcow2
+image file. A user can attach such an image to a guest and have
+it appear as a host-managed zoned block device.
 
-On Oct 26 11:11, Daniel Gomez wrote:
-> Raise the QEMU NVMe controller's MDTS beyond the 2 MiB cap.
->=20
-> Commit 53493c1f83 ("hw/nvme: cap MDTS value for internal limitation")
-> needed the 2 MiB cap because dma_blk_io() submitted the full sglist
-> in one preadv()/pwritev() call, which the host kernel rejects when the
-> iovec count exceeds IOV_MAX. This series moves the IOV_MAX bound down to
-> dma_blk_cb(), where we batch in IOV_MAX chunks when necessary.
->=20
-> dma_blk_cb() now breaks its accumulation at IOV_MAX and submits the
-> next chunk via the existing re-entry path. With that the DMA-path
-> nvme_map_addr() guard and the MDTS cap are removed. The cap stays only
-> for CMB/PMR, whose transfers go through a different path and are still
-> bounded by IOV_MAX.
->=20
-> This series builds cleanly under ubsan with large mdts and passes the
-> following fio tests on a 4k LBA QEMU NVMe device:
->=20
-> fio \
->     --name=3Dmdts-stress \
->     --filename=3D/mnt/mdts/stress.fio \
->     --rw=3Drandwrite \
->     --bs=3D8M \
->     --ioengine=3Dpsync \
->     --direct=3D0 \
->     --numjobs=3D8 \
->     --time_based \
->     --runtime=3D600 \
->     --fsync=3D8 \
->     --end_fsync=3D1 \
->     --group_reporting \
->     --refill_buffers \
->     --norandommap \
->     --offset_align=3D32k
->=20
-> fio --name=3Ddemo --filename=3D/dev/nvme0n1 \
->     --rw=3Dwrite --bs=3D8M --size=3D8M --direct=3D1 \
->     --iomem_align=3D4 --verify=3Dcrc32c --do_verify=3D0
->=20
-> fio --name=3Ddemo --filename=3D/dev/nvme0n1 \
->     --rw=3Dwrite --bs=3D8M --size=3D8M --direct=3D1 \
->     --verify=3Dcrc32c --verify_only
->=20
-> ---
-> Changes in v3:
-> - Apply review/ack trailers from Keith and Jesper
-> - Drop reproducer in commit message from patch 1 as unrelated
-> - Apply nvme_mdts_max_iovs() helper from Jesper
-> - Use params local instead of n->params in CMB/PMR check.
-> - Update commit message from last patch
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260819-align-nvme-mdts=
--with-linux-v2-0-351ac2dfed64@samsung.com
->=20
-> Changes in v2:
-> - Update cover letter.
-> - Rebase on top of nvme.next branch, tree:
-> https://gitlab.com/birkelund/qemu
-> - Keep the 2 MiB mdts cap for CMB/PMR configurations (Klaus)
-> - Fix the `mem` leak reported by Keith
-> - Drop NVME_MDTS_MAX, ie. unlimited mdts as long as Linux host supports
-> it.
-> Allowing larger mdts, also meant we needed to:
-> - Clamp the mdts and zasl shifts to stay within uint64_t
-> - Cap qemu_iovec_init() to IOV_MAX when the sg list is large
-> - Keep IO chunks aligned when chunking at IOV_MAX
-> - Fix the wrong bytes being discarded in the discard path
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260529-align-nvme-mdts=
--with-linux-v1-0-221d4d21ab43@samsung.com
->=20
-> To: qemu-devel@nongnu.org
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@mailo.com>
-> Cc: Keith Busch <kbusch@kernel.org>
-> Cc: Klaus Jensen <its@irrelevant.dk>
-> Cc: Klaus Jensen <k.jensen@samsung.com>
-> Cc: Jesper Devantier <foss@defmacro.it>
-> Cc: qemu-block@nongnu.org
-> Cc: Daniel Gomez <da.gomez@kernel.org>
-> Cc: Daniel Gomez <da.gomez@samsung.com>
-> Cc: GOST <gost.dev@samsung.com>
-> Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
->=20
-> ---
-> Daniel Gomez (7):
->       dma-helpers: fix unaligned discard_back
->       dma-helpers: ensure IOV_MAX chunks end aligned
->       dma-helpers: cap iovec allocation at IOV_MAX
->       dma-helpers: chunk dma_blk_cb at IOV_MAX
->       hw/nvme: clamp mdts and zasl shifts
->       hw/nvme: drop DMA-path IOV_MAX guard
->       hw/nvme: cap mdts for CMB/PMR-only
->=20
->  hw/nvme/ctrl.c       | 25 +++++++++++++++++--------
->  system/dma-helpers.c | 19 ++++++++++++++++---
->  2 files changed, 33 insertions(+), 11 deletions(-)
-> ---
-> base-commit: 7a34f7b8794b29cd1bd4dfa45f7d8e8daba7cff5
-> change-id: 20260528-align-nvme-mdts-with-linux-67d618f6730b
->=20
-> Best regards,
-> --=20
-> Daniel Gomez <da.gomez@samsung.com>
->=20
->=20
+The zoned format is opt-in through a new qcow2 header extension
+that pins the zone geometry. Behind the extension is a dedicated
+zoned metadata region that stores one 8-byte write pointer (WP)
+per zone. The extension is gated by an incompatible bit, so an
+older qcow2 implementation cannot accidentally open the image.
 
-I've been holding out on this because I'd really like an Acked-by from a
-Memory API maintainer (system/dma-helpers.c).
+Each write pointer is routed through the write pointer cache,
+a Qcow2Cache object. The write pointer cache is written to disk
+after the qcow2 metadata is written, thus guaranteeing that
+the write pointer is updated after the corresponding data is
+written.
 
---9meNJhmufUKKcH75
-Content-Type: application/pgp-signature; name=signature.asc
+Zone states are in memory. Read-only and offline states are
+device-internal events, which are not modelled in qcow2
+emulation for simplicity. The other zone states
+(closed, empty, full) can be inferred from write pointer
+values, persistent across QEMU reboots. The open states are
+kept in memory using open zone lists.
 
------BEGIN PGP SIGNATURE-----
+To create a qcow2 file with the zoned format:
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmrfQYIACgkQTeGvMW1P
-Del2IAf/YABNyu+yG+5BiAbC5wansZdhDJRNFnMWcTQtA2Bkh1d52X/NnyeHfHz7
-8UfIazQeXWJKw6+T3p6Hnv2Dp0SsTZLismwHXfMkCfmlOcX5S1iYNeejXbJPO7vi
-8pvSr4GIU5ABnsI0ZZEX17L6AP4KaAjyO2t/wpnq4g6ehvo6lgb1MrBMDzvs/gsK
-YLnWoxxD3IlDobNMcSHkMImwz6zTVFtLxcFkEbzxZgy4B8HU0Z83Ze0eNiARmnru
-qaYZwBPOK/bYJ49MT/VyNIMUKCT3X7o13DOXhJLDCnEingReEFmda3HCV9BzYFxN
-24FXSn/IZdZQyyLPo2TTxXIpBqX+iw==
-=DZml
------END PGP SIGNATURE-----
+    qemu-img create -f qcow2 zbc.qcow2 \
+        -o size=768M \
+        -o zone.size=64M \
+        -o zone.capacity=64M \
+        -o zone.conventional_zones=0 \
+        -o zone.max_open_zones=6 \
+        -o zone.max_active_zones=8 \
+        -o zone.mode=host-managed
 
---9meNJhmufUKKcH75--
+Then attach it to a guest via the QEMU command line:
+    -blockdev node-name=drive1,driver=qcow2,file.driver=file,file.filename=zbc.qcow2 \
+    -device virtio-blk-pci,drive=drive1 \
+
+Tested with blktests, fio, zbd_state (an internal test suite) and
+zonefs, comparing a zoned qcow2 image attached via virtio-blk with
+zloop, null_blk and scsi_debug (passed/failed/skipped):
+
+    +--------------------+----------+---------+-----------+---------+
+    | Testrun            | blktests | fio     | zbd_state | zonefs  |
+    +--------------------+----------+---------+-----------+---------+
+    | zloop              | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    | null_blk           | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    | scsi_debug         | 10/0/12  | 61/0/14 | 29/0/8    | 113/0/0 |
+    | virtio-blk + qcow2 | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
+    +--------------------+----------+---------+-----------+---------+
+
+This series depends on the (still not merged) series "block: fix the
+zone write granularity and the zone append limit":
+https://lore.kernel.org/qemu-devel/20260921142819.2916043-1-cassel@kernel.org/
+
+Git branch which includes the dependency series can be found at:
+https://github.com/floatious/qemu/tree/qcow2-v15
+
+Based-on: <20260921142819.2916043-1-cassel@kernel.org>
+
+v14->v15:
+- rebase on the series above, which now contains the v14 patches
+  "block: widen BlockLimits.zone_size to uint64_t" and "virtio-blk: do
+  not merge writes across a zone boundary", and which moves the zone
+  append checks to the block layer
+- drop zone.max_append_bytes; zonedmeta_offset moves to bytes 24-31 of
+  the zoned header extension, so images created with v14 are not
+  compatible
+- require a version 3 image, a zone size that is a multiple of the
+  cluster size, and a zone capacity that is a multiple of the zone
+  write granularity
+- report zone errors with dedicated errnos (new patch) instead of EIO,
+  EINVAL and EBUSY
+- manage the zone resources as in NVMe ZNS (2.1.1.4.1) and ZBC-3, and
+  fix OPEN ZONE of a full zone, writes that fill a closed zone, writes
+  from a conventional into a sequential zone, conventional zone and
+  zone capacity reporting, and a shorter last zone
+- validate the zoned header extension, and the write pointer table (new
+  patch), when opening an image
+- account for the zoned metadata in qemu-img check
+- report zone errors with their zone status codes in virtio-blk (new
+  patch)
+- extend the iotest with zone errors, zone resources and image checks
+
+Niklas Cassel (3):
+  block: define errnos for zone protocol errors
+  qcow2: validate the write pointer table when opening an image
+  virtio-blk: report zone errors with their zone status codes
+
+Sam Li (4):
+  docs/qcow2: add the zoned format feature
+  qcow2: add configurations for zoned format extension
+  qcow2: add zoned emulation capability
+  iotests: test the zoned format feature for qcow2 file
+
+ MAINTAINERS                                   |    1 +
+ block/io.c                                    |   13 +-
+ block/qcow2-cache.c                           |   11 +-
+ block/qcow2-refcount.c                        |   18 +
+ block/qcow2.c                                 | 1674 ++++++++++++++++-
+ block/qcow2.h                                 |   86 +-
+ block/trace-events                            |    2 +
+ docs/interop/qcow2.rst                        |  115 +-
+ docs/system/qemu-block-drivers.rst.inc        |   44 +
+ hw/block/block.c                              |    7 +
+ hw/block/virtio-blk.c                         |   48 +-
+ include/block/block-common.h                  |   16 +
+ include/block/block-io.h                      |    6 +
+ include/block/block_int-common.h              |   12 +
+ include/qemu/osdep.h                          |    3 +
+ qapi/block-core.json                          |   86 +-
+ tests/qemu-iotests/031.out                    |    8 +-
+ tests/qemu-iotests/036.out                    |    4 +-
+ tests/qemu-iotests/061.out                    |   14 +-
+ tests/qemu-iotests/082.out                    |  108 ++
+ tests/qemu-iotests/303.out                    |    4 +-
+ tests/qemu-iotests/tests/qcow2-encryption.out |    4 +-
+ tests/qemu-iotests/tests/zoned-qcow2          |  362 ++++
+ tests/qemu-iotests/tests/zoned-qcow2.out      |  265 +++
+ 24 files changed, 2874 insertions(+), 37 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
+ create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
+
+-- 
+2.56.0
+
 
