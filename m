@@ -1,111 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ACE606A31D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377E1606A320
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lBId3Ts5
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=YROjYjbU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLJR-0000UN-Py; Mon, 26 Oct 2026 10:04:33 -0400
+	id 1xLLP2-0002Z7-3E; Mon, 26 Oct 2026 10:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLH7-00079P-4l; Mon, 26 Oct 2026 10:02:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLH4-00019Z-Jk; Mon, 26 Oct 2026 10:02:08 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QBEXLp3272999; Mon, 26 Oct 2026 14:02:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=OifMq1jrva8jHy4qD
- FY/28sA7BVKIpBk/6NKF9X0PaU=; b=lBId3Ts5NlMuh4hGU+w21VCNsEUrsCjem
- qXTUioRptDguM1TIRBQQUBsswtoClWUVevHFh21qxDR/rMfCt95BdShi1Az5SxwQ
- 6Ye1c1JR7HFGCbrrOsAEzV0MhFhd0lA1xvU0tdWHNtqFv2hDm9jj0H7IpxD80ImQ
- LW0UnU/3//5oh/Q7cbYpzCAuJIeocpdo0vGJd0M8DTb5gAdKV6Qi+X7Wm4TVbOeA
- X7DbozPHgeGtlUcTuBgC/Z2uOIVWsy2wd+cAQRYSNRT3dazIpDZk841L6Y2vTZIN
- gNDEhIdWYYDWft7D1Ka6RHPmoOOpQKhbYTU1YAa/ucn05LrQg6i/w==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3m2gg1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:02:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QB5LKi2503111; Mon, 26 Oct 2026 14:02:03 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hh9py5xv7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:02:03 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69QE21YF13238866
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Oct 2026 14:02:01 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1E4058059;
- Mon, 26 Oct 2026 14:02:01 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DB86258043;
- Mon, 26 Oct 2026 14:02:00 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
- [9.61.109.57]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 26 Oct 2026 14:02:00 +0000 (GMT)
-From: Eric Farman <farman@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Joshua Daley <jdaley@linux.ibm.com>
-Subject: [PULL 6/6] MAINTAINERS: Update s390 boot reviewer
-Date: Mon, 26 Oct 2026 10:01:53 -0400
-Message-ID: <20261026140153.2072253-7-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261026140153.2072253-1-farman@linux.ibm.com>
-References: <20261026140153.2072253-1-farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLLOW-0002U9-21
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 10:09:50 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLLOU-0002EJ-6W
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 10:09:47 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-48c4649b35bso3143169f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 07:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793023784; x=1793628584; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aULPKl9qSVaw10b8fVCSR3N//3y36NIH+jzufg8zy/s=;
+ b=YROjYjbUTD7MeXe6X9fUchyPUHQZnzM7YFMVIjnU8uLFCydSRh6rME2zG9MYlNPoZg
+ EK1fPXf/bmcmf2PD8+8iANKzEsj9uW9juvQeS/RJRnYWNeP4i0ORKtX5OENhpWZf8N8+
+ vh4j5+I1uEWtvXPjhKkhjJ7tKKn+KBSyrLVt9krkeIyOo+ju/+KcBSbPcKcJZ2c4rDdz
+ g2vPvN5Pu82FttmUVGHd2XE8ugxTEukhlemwbx9KHbg3qHuLv1wHLDpo02SKlZuB/z1M
+ +EoiQ3TvJ29wqS8ZQxmFOWSMABK9n3r7DjjfeSMXtb8ZNqyM0CyXuAmN0JuLqjoAmAf0
+ UBaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793023784; x=1793628584;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=aULPKl9qSVaw10b8fVCSR3N//3y36NIH+jzufg8zy/s=;
+ b=Vmv+inIj9r3+HXkVEG9GUEUY+6MMx8k5WYqkGc3T8lZju1ANHY859CDM0nCU8lKdJs
+ vHF1JNqauRNwklv8B469pmWb+UhIBktyQ2zU12qhrUpkqnKxmb/ojiZlWeys6LCxs6I0
+ EM9yZXco7taCA2NKnK3SY2GjQsAD6p/mRBkD4N8vvBv9fQpA9G4NW5COE8FqSqEe1El4
+ ajejgrZ26oINQUm0BFJ7g8v3tTYtQedQhxuhtrad8Kd2NJPW+o8wd0d3KA55nRBes9Nu
+ gw37M9qkReCQtjKeY9Vz9u+ceAMGbXAUAusYFMitqJT1t/yBWX8PJxMZIqptoA/EJ35R
+ QTSQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxi11APDx8aLi3TslUHvJMYyMxA/GtnLICfhzZ+eOceyqXfnYu6kCOeEOSuqbVjJMShM7eyBamiNPqh@nongnu.org
+X-Gm-Message-State: AFq9FYKQKnMLMBM+iMD1z54ha9WhXrBdFtHvYHCZ0GytBjP+JH9A2T52
+ zeB/QRBYkrYS/XKQDlehLa4W6rcKptIvaDOXRvylhmMovxLVr9mkrJRA3cweQTUFZ98=
+X-Gm-Gg: AYBFou2+mUy1nn3jUsouOibtWV8ABlK09Nf35PPRx6i9Oh4vvh4jqLaavIiVlE7YBjZ
+ ZwB7HO+r+wktmK6emHb2wr/etlZGTvE+xWbWjUxKa6H2TmJ/5osF7He+0Dv0BtlGWkWg05IowVv
+ lYzel1e3TI5UA7EHascN9Q4jsAUNzYPisUePxRvGYk/Sh2whCQqP94KK3Kqbj/104fMOUqfxTyZ
+ qMMa34jAiQ1Jh3kULfrhuQ2BLPKx6KyiHPh/kLE+e1RIIstlIIwBdQhUY50U+4hbK576LV52CmH
+ X+zETrfSbvfCuGUHqz4E6dIGD2MfhBqrUiAkzHhsgy8+p321xDZ/K5RLt++7BqfzwbhH+rgABuQ
+ 1lpq6CqF87IlHHwS6pTsCJNwJgRfedDM0HS4Z8xWWfrfeQYR/6FEYwjXTVofUMK01yOQRyZazC0
+ Q5NSOxsVgk8dNF7O4OnDAw7icp6BXmaua+TtplJ0R1On7yAuzlSIcqcOtsHNvlmZvIkqLJTvZ1V
+ TVO5JYs/qEwoMZHOFJO+2UtavgBphgS7v0e/kk38iX68PqCpfc/qZecsCfpETMmUSSuUazT/oIp
+ rWCpKCPH1olIngZgQtfVWSzPC7Ab4BTBm6HdcfobSPWgzyhBliHrPDbWohws
+X-Received: by 2002:a05:6000:491c:b0:48e:4395:2dc with SMTP id
+ ffacd0b85a97d-48e439506a9mr12075950f8f.22.1793023784242; 
+ Mon, 26 Oct 2026 07:09:44 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e4115f496sm15814077f8f.5.2026.10.26.07.09.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Oct 2026 07:09:43 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/arm: For linux-user,
+ prioritize PC misalignment fault over insn abort
+Date: Mon, 26 Oct 2026 14:09:42 +0000
+Message-ID: <20261026140942.2768950-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfX4qjmvIrAABVH
- qkxDJ46cxY7R6pZi2fhXG6sAtxoUiughBMRrPmBazoFLd79k0R4MjedRJ6JxBf1SuyTrB64rddj
- qEvg0TYDtDQRacm6pD6quyFav1YmAOI=
-X-Proofpoint-ORIG-GUID: sV5BPAdO0uFrcRJQqFJKlfd0R85yVpLt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfX63bAM9Oy5hCQ
- eI4dfq6SKke0yzaouUv+rRa4eBjeQO2s5FCJd51FYLyTLZ9nzVFSUqTRw3RYyMkx0tPw6LA6nEa
- /1s5Pb/oMOFEsWrcHIZDhHnEOICq3k66pW/Z4CQH6CZA72fvxFOSCZUhV4oMZ/CKQRVyBLOzNpB
- UYEsQu0B5zOHnd10pbsYN/pdUIXTQdzc3mIQvj0PY58iJyLtPahWTeRQ3UGUgt9dxTUQS6BE7rP
- yrGSULUfuX1ytJgce3d621j6LgLAn8mX3isUsC8iTyX/yX+lheIU/MwYVLmCcdMse/w//b5+qjZ
- HWBn4Ht+zN3BbPe5+YIxBG7Wa4hjWdmToRI0xmJ7Tnaw28u09I1zTBh40GTuN4uUiMR195ZqWwq
- HgF4+UXUmiosvHkQCn5knSkIUMwYeQ==
-X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6adf5d5c cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=KLxLvsQGpjq_ZAk5-FcA:9
-X-Proofpoint-GUID: sV5BPAdO0uFrcRJQqFJKlfd0R85yVpLt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 suspectscore=0 phishscore=0 spamscore=0
- malwarescore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2610190000 definitions=main-2610260054
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,44 +98,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Josh picked up some recent fixes in this area, and offered to help
-with reviews as well. Let's free up some of Jason's plate.
+The Arm architecture requires that for PC alignment fault exceptions
+take precedence over Instruction Abort exceptions.  We get this wrong
+for linux-user mode, because QEMU detects the lack of any backing
+memory via probe_access_internal(), and calls
+arm_cpu_record_sigsegv(), which always reports either a Translation
+or Permission fault:
 
-Thank you, both!
+#3  0x0000649548976b94 in arm_deliver_fault (cpu=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, mmu_idx=0, fi=0x7fff87e4c940)
+    at ../../target/arm/tcg/tlb_helper.c:274
+#4  0x0000649548976d69 in arm_cpu_record_sigsegv (cs=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, maperr=true, ra=0)
+    at ../../target/arm/tcg/tlb_helper.c:421
+#5  0x0000649548c97650 in cpu_loop_exit_sigsegv (cpu=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, maperr=true, ra=0)
+    at ../../linux-user/signal.c:761
+#6  0x00006495488f8235 in probe_access_internal (env=0x649555ce99a0, addr=1, fault_size=1, access_type=MMU_INST_FETCH, nonfault=false, ra=0)
+    at ../../accel/tcg/user-exec.c:790
+#7  0x00006495488f850d in get_page_addr_code_hostp (env=0x649555ce99a0, addr=1, hostp=0x7fff87e4ca70) at ../../accel/tcg/user-exec.c:828
+#8  0x00006495488e5433 in get_page_addr_code (env=0x649555ce99a0, addr=1) at ../../accel/tcg/internal-common.h:116
+#9  0x00006495488e56bd in tb_htable_lookup (cpu=0x649555ce5920, s=...) at ../../accel/tcg/cpu-exec.c:206
+#10 0x00006495488e58c8 in tb_lookup (cpu=0x649555ce5920, s=...) at ../../accel/tcg/cpu-exec.c:251
+#11 0x00006495488e5d2a in helper_lookup_tb_ptr (env=0x649555ce99a0) at ../../accel/tcg/cpu-exec.c:398
+#12 0x00007d973c000270 in code_gen_buffer ()
 
-Cc: Jared Rossi <jrossi@linux.ibm.com>
-Cc: Jason Herne <jjherne@linux.ibm.com>
-Cc: Joshua Daley <jdaley@linux.ibm.com>
-Acked-by: Jared Rossi <jrossi@linux.ibm.com>
-Acked-by: Joshua Daley <jdaley@linux.ibm.com>
-Acked-by: Cornelia Huck <cohuck@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261023151229.1196404-3-farman@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Make arm_cpu_record_sigsegv() report a PC alignment fault for
+MMU_INST_FETCH accesses to non-4-aligned addresses for A64 and A32,
+matching the logic used in arm_cpu_tlb_fill_align() for system
+emulation.  (Unaligned PC faults can't happen for Thumb.) This is
+then passed to the guest binary as SIGBUS rather than SIGSEGV.
+
+(The Fixes tag is for the commit that introduced this function, but
+the bug was also present in the previous implementation.  It's an odd
+corner case so it's not worth the effort to try to backport the fix
+beyond that.)
+
+Cc: qemu-stable@nongnu.org
+Fixes: 9b12b6b44250c2 ("target/arm: Implement arm_cpu_record_sigsegv")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4699
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/tlb_helper.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 040d27a94f..d240e1fe60 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1987,7 +1987,7 @@ S390-ccw boot
- M: Jared Rossi <jrossi@linux.ibm.com>
- R: Zhuoying Cai <zycai@linux.ibm.com>
- R: Christian Borntraeger <borntraeger@linux.ibm.com>
--R: Jason Herne <jjherne@linux.ibm.com>
-+R: Joshua Daley <jdaley@linux.ibm.com>
- S: Supported
- F: hw/s390x/ipl.*
- F: hw/s390x/cert-store.[ch]
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index 4c3f16dc2aa..2e84b1cb369 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -418,6 +418,10 @@ void arm_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+      * For now, it's easiest to deliver the fault normally.
+      */
+     cpu_restore_state(cs, ra);
++    if (access_type == MMU_INST_FETCH && !cpu->env.thumb && (addr & 3)) {
++        /* Misaligned PC faults take precedence over insn abort */
++        fi.type = ARMFault_Alignment;
++    }
+     arm_deliver_fault(cpu, addr, access_type, MMU_USER_IDX, &fi);
+ }
+ 
 -- 
-2.56.0
+2.43.0
 
 
