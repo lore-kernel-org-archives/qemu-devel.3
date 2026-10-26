@@ -1,101 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CDD606A324
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE39606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=UHxt5G6P
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=fujitsu.com header.i=@fujitsu.com header.a=rsa-sha256 header.s=fj2 header.b=esb9FSl2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLJcQ-00046m-SQ; Mon, 26 Oct 2026 08:16:06 -0400
+	id 1xLJbP-0002Sn-TE; Mon, 26 Oct 2026 08:15:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xLJbv-0003iL-Bv
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 08:15:33 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xLJbq-0006HW-5f
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 08:15:29 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6a642495d81so4187515a12.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 05:15:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793016922; x=1793621722; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=4johF67sE5MfY9zt0bmfEG2YtJbZ7EYM7PYAvmM4dRg=;
- b=UHxt5G6Pn9v7v+u5HHWBWzc01zkBIwWIVmb9UEfjdSvQJSoeX1fq/xT0CLNwtiTXxf
- qGOJzj9emvSwjzafxQF/X43xRWaNfknwWUpADg+y/kaaAQKVTlLES61dW6NNFoD4nOjh
- WvQjun+2whXboNKPWSLA/+VxIUmNK3QRMzB9hGQFvMR2Ss8jISPzgl8J0EBH/5vAZO3F
- suypdY9Aeyll4KH8d0QDoLAmwsIE4fN+1HSQkuRxjsM1Ln05g4oCjYOtGK3Kj0SleFNh
- qGDo3uCeQFW2Nk11ciBM7wrt0pSQnomMXwy9ZjuBz2f3adED++Hg7Xvu7CrymWgnZaIx
- cj9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793016922; x=1793621722;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=4johF67sE5MfY9zt0bmfEG2YtJbZ7EYM7PYAvmM4dRg=;
- b=eje1yMojcpIiW+ylyjsxirZuEG9ZzwbEuNxiSb/nGJeGsYD9jHdfINUYZTFbpeKdlD
- ZcA8zkZJIgRHxZ9zcPvkySt2VNIVqq+oq4B+0SZMEIDVtufCbNQ9/kyDul5+7w5M6GHD
- H2Bjs9KJRG5oMbuhvYAhBCYk+7xz5S2/LGYBy/cs038/Zy3l6Ejnoe4uuto6RQFSnWBW
- tB1fH70keaxzRuzs1AwA46XcsIm2U0/77c2qvvK6vCj8hXkd3MQwoQTzzn4Ivvtef8uM
- IqtIUXdOeZbzC3nmipSdvhZ9GFxk61e6uZ2vsJiA8+gENwNgkLYXTD1w0XVEqWgDwYuJ
- vsFQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzbPfpHFwB7x1I3FTZuqKDtzgfnDQrR5z3HODuLoKR39+vpqdgk91cBiZnryUQcURAQAaw7lNGihvMn@nongnu.org
-X-Gm-Message-State: AFq9FYKK0pCcjJgpnb+p79tTYyzelpBBGX/yHmtyRKbHyuJrrig/UHnC
- tch+PNLXj0re8looR6b+iafrM7kqMXx+1nc1UTBw7cN0FAXpO9Iandn3/64qEQ==
-X-Gm-Gg: AYBFou3j6SBaDKt+RQ1a0cluUV8qlf8aeRYGCve001Xl69SH+5cImGRAVSj7DC2KBxH
- c6tREAe+EaqzXf68OZfIRqL0rVT49bhEoGeqTMsMU6jmRTw+fOiZlktG/0mYEg4ly9u9bdUA5F1
- Xbm3SRJzckvGB2JbNWuz8jtbKnyqbJ8BnKWHZQ5BzVGdj4wJ3jn5hUPv8csWU8ta6WbGFGCisTJ
- XcKXby1+78KoTWSPcvOUkp5uFVe9h4Yj1leLKRPozFEQbnglK6uJ5Iz0IYVDLq7STWeuBVVOAh6
- AiQbQ3KDtIcTLi5+Dfw2B/U45xniNXNZnbJq1cM2yRvdWLP150eY6MO/NDAAFx8sB3F70x/6gWv
- rcdoyFHP6M+mUIPOYENDNV8yGDYn8JL4zCVtld5n9OYK8+GgI/qqtE9nYtL52Q4TUiQAJOe+Yth
- cIzZ/zVbIoUZc/kLkfUaMWOtJdIVkhlFTXeoaUayRheJbkTtsGV9TkFXvOwg5yO6IBqVlo49wX7
- iiE3wnJbh2ajoJ7eX0NaJXUqjZwLALD8IEZB1nBHxv7mDSZgJq9siN+IgkSlWCBPcoH/+Jj1005
- iAaWN6sIG6Az0Dr87dqfSHF4od5zPPKMdWV2BLigEk5iJUg=
-X-Received: by 2002:a17:907:72c7:b0:c46:7643:ae91 with SMTP id
- a640c23a62f3a-c46bdbeff8emr741397366b.8.1793016922216; 
- Mon, 26 Oct 2026 05:15:22 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (business-090-187-110-129.90.187.pools.vodafone-ip.de. [90.187.110.129])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c46bd4ea608sm304747766b.21.2026.10.26.05.15.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 05:15:21 -0700 (PDT)
-Date: Mon, 26 Oct 2026 11:43:31 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Bin Meng <bin.meng@processmission.com>,
- QEMU <qemu-devel@nongnu.org>
-CC: Jean-Christophe Dubois <jcd@tribudubois.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v4_09/10=5D_docs/system/arm=3A?=
- =?US-ASCII?Q?_Document_MCIMX6UL-EVK_Buildroot_boot?=
-In-Reply-To: <8713C764-0DB7-4C17-ACB8-F2A4987963C1@gmail.com>
-References: <20261014045605.399684-1-bin.meng@processmission.com>
- <20261014045605.399684-10-bin.meng@processmission.com>
- <8713C764-0DB7-4C17-ACB8-F2A4987963C1@gmail.com>
-Message-ID: <ED24EF65-6D3E-43A2-BB80-C8CE87404390@gmail.com>
+ (Exim 4.90_1) (envelope-from <fj2110jc@fujitsu.com>)
+ id 1xLHPB-0002lz-T2
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:54:15 -0400
+Received: from esa2.hc1455-7.c3s2.iphmx.com ([207.54.90.48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fj2110jc@fujitsu.com>)
+ id 1xLHPA-00080m-3m
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:54:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1793008458; x=1824544458;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=Zq89hgzs7m9+iM8Br2P62CYeN5DC4Ml4L5UACTlprZ4=;
+ b=esb9FSl2FiVBv9bi9BtJdSdmifZlGy3LOeScy4G7U4p+6ykME18nhyHI
+ wyyBbzr+FGUU1zT0CRMz23Mei/DDqXqQWCPA36Uk6HmmxOTJ+Cn0hpXhp
+ XQU7Jd1lv7O98hDcIIWBMbjzFzPy1mB+J8maSJlK17MgbMoV235/UgFTO
+ 9+4Iix0+kZ6j4WGZHxwWpwwqxmibjVHtHDTXGiBa/NkHIHul3CtHR8RAs
+ JhaUMOS8oOns4184X4/cJi+ZY/TtUdfAaPmjFhBXw3U1lXPViHPXRyDx9
+ 221SCyCynZNQ6mevepMrZ3JA7gBVdsRpfoss/72D4uYsLrqX0sqOy8Rhf A==;
+X-CSE-ConnectionGUID: 9S1GTztWQOCIcYFBFYZ8pQ==
+X-CSE-MsgGUID: QS+0TY4dQiWlZLwG43rcoA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11946"; a="259472557"
+X-IronPort-AV: E=Sophos;i="6.27,179,1786978800"; d="scan'208";a="259472557"
+Received: from gmgwuk01.global.fujitsu.com ([172.187.114.235])
+ by esa2.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Oct 2026 18:54:16 +0900
+Received: from az2uksmgm4.o.css.fujitsu.com (unknown [10.151.22.201])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by gmgwuk01.global.fujitsu.com (Postfix) with ESMTPS id B14111C1C700
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:54:09 +0000 (UTC)
+Received: from m3003.s.css.fujitsu.com (unknown [10.128.233.114])
+ by az2uksmgm4.o.css.fujitsu.com (Postfix) with ESMTP id 2744814003A9
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:54:09 +0000 (UTC)
+Received: from tanjiro.soft.fujitsu.com (unknown [10.118.236.61])
+ by m3003.s.css.fujitsu.com (Postfix) with ESMTP id E8F7A202EBDE;
+ Mon, 26 Oct 2026 18:54:07 +0900 (JST)
+To: qemu-devel@nongnu.org
+Cc: Yukiya Takaki <fj2110jc@fujitsu.com>, Anisa Su <anisa.su@samsung.com>,
+ Jonathan Cameron <jic23@kernel.org>, Junjie Cao <junjie.cao@intel.com>,
+ linux-cxl@vger.kernel.org, "Wolski, Tomasz" <tomasz.wolski@fujitsu.com>,
+ lizhijian@fujitsu.com, y-goto@fujitsu.com, yukiya.takaki@gmail.com
+Subject: [PATCH RFC 2/7] QEMU/hw/cxl:add HPA offset tracking for CXL Type 3
+ devices
+Date: Mon, 26 Oct 2026 19:03:23 +0900
+Message-ID: <6172d168ed84f0b968661e7bf41dad01526d9d0a.1793003983.git.fj2110jc@fujitsu.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <cover.1793003983.git.fj2110jc@fujitsu.com>
+References: <cover.1793003983.git.fj2110jc@fujitsu.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=207.54.90.48; envelope-from=fj2110jc@fujitsu.com;
+ helo=esa2.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 26 Oct 2026 08:14:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,154 +86,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yukiya Takaki <fj2110jc@fujitsu.com>
+From:  Yukiya Takaki via qemu development <qemu-devel@nongnu.org>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+E820, SRAT and HDM decoder programming in this series all need per‑device
+host physical address (HPA) information for CXL Type 3 memory. Today,
+CXLType3Dev does not expose this in a convenient way.
 
+This patch adds minimal state to CXLHost and CXLType3Dev, plus a helper
+to walk from a Type 3 device back to its host, so that each CXL Type 3
+device can be assigned a stable HPA offset within the CFMW window and an
+index that later code can rely on when building firmware tables and
+regions.
 
-Am 22=2E Oktober 2026 22:50:11 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
->
->
->Am 14=2E Oktober 2026 04:55:59 UTC schrieb Bin Meng <bin=2Emeng@processmi=
-ssion=2Ecom>:
->>Provide verified instructions for U-Boot and direct Linux boot using
->>Buildroot images=2E
->>
->>Signed-off-by: Bin Meng <bin=2Emeng@processmission=2Ecom>
->>
->>---
->>
->>(no changes since v3)
->>
->>Changes in v3:
->>- Document the RAM limits and firmware geometry rounding
->>
->> docs/system/arm/mcimx6ul-evk=2Erst | 72 +++++++++++++++++++++++++++++++=
+Co-developed-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Yukiya Takaki <fj2110jc@fujitsu.com>
+---
+ hw/mem/cxl_type3.c          | 37 +++++++++++++++++++++++++++++++++++++
+ include/hw/cxl/cxl.h        |  2 ++
+ include/hw/cxl/cxl_device.h |  2 ++
+ 3 files changed, 41 insertions(+)
+
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index b65ddd264d..d08a4255c9 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -732,9 +732,39 @@ static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
+     }
+ }
+ 
 +
->> 1 file changed, 72 insertions(+)
->>
->>diff --git a/docs/system/arm/mcimx6ul-evk=2Erst b/docs/system/arm/mcimx6=
-ul-evk=2Erst
->>index 8871138ab3=2E=2Ea84b447019 100644
->>--- a/docs/system/arm/mcimx6ul-evk=2Erst
->>+++ b/docs/system/arm/mcimx6ul-evk=2Erst
->>@@ -3,3 +3,75 @@ NXP MCIMX6UL-EVK (``mcimx6ul-evk``)
->>=20
->> The ``mcimx6ul-evk`` machine models the NXP i=2EMX6UltraLite Evaluation=
- Kit
->> MCIMX6UL-EVK development board=2E It has a single Cortex-A7 CPU=2E
->>+
->>+The minimum RAM size is 16 MiB and the maximum is 2 GiB=2E
->>+The MMDC geometry reports the largest power-of-two capacity
->>+not exceeding the configured RAM size to firmware=2E Direct Linux
->>+boot uses the full configured RAM size=2E
->>+
->>+Booting Buildroot images
->>+------------------------
->>+
->>+Build the SD card image with the tested Buildroot version:
->>+
->>+=2E=2E code-block:: bash
->>+
->>+  $ git clone https://gitlab=2Ecom/buildroot=2Eorg/buildroot=2Egit
->>+  $ cd buildroot
->>+  $ git checkout 2026=2E05
->>+  $ make imx6ulevk_defconfig
->>+  $ make
->>+
->>+The following examples use images generated by Buildroot::
->>+
->>+  IMAGES=3D/path/to/buildroot/output/images
->>+  QEMU_BUILD=3D/path/to/qemu/build
->>+
->>+The generated raw ``sdcard=2Eimg`` is about 84 MiB, which is not a capa=
-city
->>+supported by QEMU's SD card model=2E Resize the image in place to 128 M=
-iB::
->>+
->>+  "$QEMU_BUILD/qemu-img" resize -f raw "$IMAGES/sdcard=2Eimg" 128M
->>+
->>+This modifies the Buildroot output image; rebuilding the image restores=
- its
->>+original size=2E
->>+
->>+The SD card must be attached to USDHC2 with ``index=3D1``=2E It is cons=
-equently
->>+named ``mmc1`` by U-Boot and ``mmcblk1`` by Linux=2E The first partitio=
-n contains
->>+the kernel and device tree, while the second partition contains the roo=
-t file
->>+system=2E
->>+
->>+U-Boot boot
->>+~~~~~~~~~~~
->>+
->>+The machine does not model the i=2EMX6UL Boot ROM or its SPL loading se=
-quence=2E
->>+Load U-Boot proper at its linked address::
->
->Extra ':' which prevents the code block being rendered correctly=2E Remov=
-ing it fixes it=2E
->
->>+
->>+=2E=2E code-block:: bash
->>+
->>+  "$QEMU_BUILD/qemu-system-arm" \
->>+      -M mcimx6ul-evk -m 512M \
->
->The `-m 512M` will become redundant once my imx cleanup series lands=2E S=
-ame in the command below=2E
->
->>+      -device loader,file=3D"$IMAGES/u-boot=2Ebin",addr=3D0x87800000,cp=
-u-num=3D0 \
->>+      -drive file=3D"$IMAGES/sdcard=2Eimg",if=3Dsd,index=3D1,format=3Dr=
-aw \
->>+      -nographic
->>+
->>+The default Buildroot U-Boot environment selects ``mmc1``, loads ``zIma=
-ge``
->>+and ``imx6ul-14x14-evk=2Edtb`` from the first partition, and starts Lin=
-ux with
->>+``/dev/mmcblk1p2`` as the root file system=2E A ``bad CRC`` warning whi=
-le loading
->>+an uninitialized persistent U-Boot environment is expected; U-Boot cont=
-inues
->>+with its compiled-in defaults=2E
->>+
->>+Direct Linux boot
->>+~~~~~~~~~~~~~~~~~
->>+
->>+QEMU can load the Buildroot kernel and device tree directly=2E The kern=
-el then
->>+mounts the second SD card partition as its root file system::
->
->Extra ':' here, too=2E
++static CXLHost *ct3d_to_cxl_pxb(DeviceState *dev)
++{
++    BusState *bus = dev->parent_bus;
++
++    DeviceState *cxl_rp_dev = NULL;
++    if (bus && bus->parent) {
++        cxl_rp_dev = bus->parent;
++    }
++    assert(cxl_rp_dev);
++
++    DeviceState *cxl_host_dev = NULL;
++    if (cxl_rp_dev) {
++        BusState *rp_bus = cxl_rp_dev->parent_bus;
++        if (rp_bus && rp_bus->parent) {
++            cxl_host_dev = rp_bus->parent;
++        }
++    }
++    assert(cxl_host_dev);
++
++    if (cxl_host_dev &&
++        object_dynamic_cast(OBJECT(cxl_host_dev), TYPE_PXB_CXL_HOST)) {
++        CXLHost *host = PXB_CXL_HOST(cxl_host_dev);
++        return host;
++    }
++
++    return NULL;
++}
++
+ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+ {
+     DeviceState *ds = DEVICE(ct3d);
++    CXLHost *host = ct3d_to_cxl_pxb(ds);
+ 
+     if (!ct3d->hostmem && !ct3d->hostvmem && !ct3d->hostpmem
+         && !ct3d->dc.num_regions) {
+@@ -816,6 +846,13 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         g_free(p_name);
+     }
+ 
++    if (ct3d->program_hdm_decoder) {
++        ct3d->hpa_offset = host->unused_hpa_offset;
++        ct3d->idx = host->unused_dev_num;
++        host->unused_hpa_offset += ct3d->cxl_dstate.static_mem_size;
++        host->unused_dev_num++;
++    }
++
+     ct3d->dc.total_capacity = 0;
+     if (ct3d->dc.num_regions > 0) {
+         MemoryRegion *dc_mr;
+diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
+index 7cf3dc622c..b8b3071f81 100644
+--- a/include/hw/cxl/cxl.h
++++ b/include/hw/cxl/cxl.h
+@@ -67,6 +67,8 @@ struct CXLHost {
+ 
+     CXLComponentState cxl_cstate;
+     bool passthrough;
++    hwaddr unused_hpa_offset;
++    int unused_dev_num;
+ };
+ 
+ #define TYPE_PXB_CXL_HOST "pxb-cxl-host"
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index a2c830d181..c3a729f8c5 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -778,6 +778,8 @@ struct CXLType3Dev {
+     bool hdmdb;
+ 
+     bool program_hdm_decoder;
++    hwaddr hpa_offset;
++    int idx;
+ 
+     struct dynamic_capacity {
+         HostMemoryBackend *host_dc;
+-- 
+2.52.0
 
-With the above fixes:
-
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
-
->
->Best regards,
->Bernhard
->
->>+
->>+=2E=2E code-block:: bash
->>+
->>+  "$QEMU_BUILD/qemu-system-arm" \
->>+      -M mcimx6ul-evk -m 512M \
->>+      -kernel "$IMAGES/zImage" \
->>+      -dtb "$IMAGES/imx6ul-14x14-evk=2Edtb" \
->>+      -append "console=3Dttymxc0,115200 root=3D/dev/mmcblk1p2 rootwait =
-rw" \
->>+      -drive file=3D"$IMAGES/sdcard=2Eimg",if=3Dsd,index=3D1,format=3Dr=
-aw \
->>+      -nographic
 
