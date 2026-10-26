@@ -1,140 +1,131 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21802606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21525606A31D
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=It6aQntl;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PS10Uxsf
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=XDQraffH;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=L9sTrtgo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLNRL-0008TJ-0V; Mon, 26 Oct 2026 12:20:51 -0400
+	id 1xLNRG-0008OJ-3w; Mon, 26 Oct 2026 12:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNRI-0008R1-ST
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:20:48 -0400
+ id 1xLNRC-0008MU-Re
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:20:42 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNRG-0000Sn-Ts
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:20:48 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1xLNRA-0000ST-Nx
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:20:42 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QEvowY4168190
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:20:46 GMT
+ 69QEvlOU4098826
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:20:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- veNFh+Ah8cBEvcVLwZqeSFeqxYngP7EtU6xw8tnxB7A=; b=It6aQntlLzKr97y7
- EArbWk0+PuVIM60dXthBFtaJ24O0d1H2OKGAOFuIXxSZcyY5zSxU7MxKz0D5xWmF
- JIMJ3e30wWyefKgoCtAUH/CtuFdfVGPRbkBkRT1VAJm7+lCIEMQVo342S78RNaOa
- pPY6P+OtNIUwWOnvxmTqgDy32UlBoTKuDDuwQiilDwL91qaMn1hFwVXa7WFCs689
- S5sGpsyCpyROR/Czz3uGma8U6n0aoomjF/I65iQyKgK39zDWdq5zgV6ms2HXj205
- 9wguYSdm/20MTPM5v9BYZx/6xzyDugUZSmUuW6MGqvHYGdTryXcRxvyWXPotS5+L
- lMryMA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj4sf1epa-1
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=MQnPqndRovZIjl7Bw00yB0
+ HCwoM1YtvyEcPBlTAZOYA=; b=XDQraffHaWyeCy6csR+fpJJdWz74Q16+3q1Zlv
+ mDqAmM302y8x6A8Kv6JTTzQumle3znRP48pISs+LHjs/xHjMW0esCuuoyCsgHifM
+ ojSkgn55NH+kgt/AWRIZaMNayy3A0xErn/D4ahTpbywTgGtKU2y1bXjEqlXrM7nm
+ r4Cs+z3M47lbz//SRpdguLNwxQumadDueJ9nhiYW4+pzDHh2EWSpq3AqOyxdMXLB
+ 5d8I61MNOf4+C43FAzRLyuYYUopws3pLjHFrpa7HwNnSyVAkCmqSlS5OEsLNvmEU
+ kgaBW58tcmgY05mu5QyKBQ/3Wjy2PVNvA02QaDe1uvz0iv4g==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj4s91g5u-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:20:45 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93f2373e9b4so339123585a.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:20:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:20:38 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-91b92acedd9so58217736d6.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:20:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793031645; x=1793636445; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=veNFh+Ah8cBEvcVLwZqeSFeqxYngP7EtU6xw8tnxB7A=;
- b=PS10Uxsf3LUZacqr2tsZN1vxIyqHwb4jhFFispe5ItuZ8yiTZHP6NkIFF9rTwkpYmQ
- yBgtn6OXb5wlhATypi4SoA4k9anryMQr2gY0td4YybybZ8bQISaDxfV1aqUkko3pBkMx
- 3WG6zlJSqntyJ3Wq4Yc6y8Y1r5L0c6iWZpcj3hyBg0+LS4ONd9mvO6Tb/JP96/vwMAPO
- S25dshJTuXoE3W5cAsJN1PzUKG1RBKqlbhWdxQWqdWdzssPdxLnxLVAtbKKcgi8qoXyO
- OTIawvkyTrYxBnjx1ks7B0VTrtcoe7NnlyjEzZ8bfYvkXxRdnqsdO61cnYG+EWdzhcUC
- 4F8Q==
+ d=oss.qualcomm.com; s=google; t=1793031637; x=1793636437; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=MQnPqndRovZIjl7Bw00yB0HCwoM1YtvyEcPBlTAZOYA=;
+ b=L9sTrtgo99uhTOJUpu0oELu/19jYFy7u5iJC3Qg2xghkQ/1nS28YKaMdMGERtEaw9s
+ XYFVcJupRb5Vi+W1nI6uMyFFQO4c0YByPZviGVNrnJg5VJV1fPxlq6MfeDOT+TM0Q+Ya
+ bKKOD5FdTPF35LWw0NPo4x1u573TokhZWlJcxgDhYbhmCekIopLuPqhTmLHsSLoVER3n
+ wx4J6HtvHUKBq0mU8kNn28NkgvpC1TxMKGvm4N/bIELeQvoARK4lGz+uIhqz9Qn5zRn4
+ 5sTRtMRFGxfEJf67SB5CoprSCTik6xUspeY8Xpv8OOkJBj0QhoDrSKQX2p8p/30w+iRx
+ UcIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793031645; x=1793636445;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=veNFh+Ah8cBEvcVLwZqeSFeqxYngP7EtU6xw8tnxB7A=;
- b=QXgkkxwSNI7xNcI9z27E45RGjyr+3YWR8WeIzfYR242+2fUnXqU/887wCGfIhrU8+q
- u6UH6TqNqXbqD2vphsAycQwxqCu/6sBi79z/VVPbjdE9i2eo2NMVSu4jicqHJHDmOTh3
- vN4fMvvfSvPdgmdRUnvHpwTS0lmduS0qIcFwGo0WilmT5HtHWOFmijGKIdVCsakrPJkB
- oWEv/gtu1jS/EPGo+ruUWK0CcuoFi4Q3LYmxOpvNElggjbB//+IRN6BvK21IyoLUpP1s
- RIt0VBui8P+YbIX7sQrX96i/9pGWe+nuNP3fZl9cdKwNFbRUqrf7/XZAU9z1qlevtx6M
- gbFg==
-X-Gm-Message-State: AFq9FYKHt5mdb9AlpbUCI3qRyJV3EO+728DrkO1APonQa87SB/Irmon1
- Rf78n/PBFi9QcymrAxy900hGhawlY+qINrYZsU8SuzE8WgEeGj56Df+JXMhJc5/laMyvWgrhrPX
- 1T26oE1JkLLHHWexedl13OWFPi/dAPjJfn+cM/y1hE2yUZVjs/BSYIRe/nZd+Wp7xTw==
-X-Gm-Gg: AYBFou1lS3MACGJSxhIS2fZtGShJ3dLRVapbDudNcUPxOzQ5Z4DnuaFq7ENI69B6Qm1
- U54QtcqYNBKIRX0WVt3ZshZXfAJ2p6lIvUZUEaJRUqUvFxSEP+0fASrBnYpcyOKdgsMG5CATBpo
- PrI/gcxbIlrvl7JC9dThTlmudUDXilRp2D8dtxHAFisMu1RGX9voGW9wIQ2YsIcVWszqrhNCO9j
- hX6KcYFoekK5ujOXcS6qj+t7zAGI1qib7h9V0TWHCAlAdQnZ5XB6yU+CQd0A1+YSonMS87p0V//
- jNidDN6obsyNkR+CriDV/XtkwfRicNQ8W9qh+fIMgV/175bm728oQo8fyFuwpoAXmgI4tsjEyRo
- Q1Dibp+WevNVxNRpYuvNwzu6gvFUeeUxB3RJZ5j6jQQiQC8p6BJFlS48gwGr9Gkq6yxnCWCkFEQ
- qcbqQ71RR0OX84Lw==
-X-Received: by 2002:a05:620a:4542:b0:93f:2bc8:283d with SMTP id
- af79cd13be357-940ef95fe8bmr983436785a.47.1793031644899; 
- Mon, 26 Oct 2026 09:20:44 -0700 (PDT)
-X-Received: by 2002:a05:620a:4542:b0:93f:2bc8:283d with SMTP id
- af79cd13be357-940ef95fe8bmr983430985a.47.1793031644302; 
- Mon, 26 Oct 2026 09:20:44 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793031637; x=1793636437;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MQnPqndRovZIjl7Bw00yB0HCwoM1YtvyEcPBlTAZOYA=;
+ b=Al2mFAmVRXMYb07n1ul8devxpURORgWlQNwJ3a/i9kkxVh1wEFatf/irYerAIEpaWT
+ Ri8XdK1kQDvGh/5j3vo5pk2q+BQMGTmsMkWv+Bn7e9kLY6ONzjTdVCqfKbGNMG70pEfs
+ 5ibMOJw4I562UbMVFdGYW9g/QM5p/If9YJtX8PLwScny1R9M/qO/uuwTk8wFWkLUHXtf
+ CQTweBDmdYjkTdv2dOtMuS8m3wOK8/P7xxmUoa9oPzmVc42xeVzygsdLKgKpqN27v0U9
+ ZNQZnSNw0ydzKB+fHRUtc3hUmN3H60G9PmqLElbhNxALHq/lc1lhgzD2sRCkJWv9AGVL
+ BnKw==
+X-Gm-Message-State: AFq9FYJ+pO1rJirOvozSVKUxcUmBxmD2BplY0Thv2A7gDk7oFf6dpgjY
+ mbMqX8a+kX05nwa+ADYWT3KNrXOefsOtg1a2w7zG+1yAuLzDOQBZH4z/mQEKMBX6Vgp88PSsWHQ
+ yCCkF9jodDGRTj4xea0Wz4T0vMj6j+t0l1pK5dxRIFbOH1C7fnxxYt3gFS3tZVo2kjQ==
+X-Gm-Gg: AYBFou1fWpqaGSYsGa8j5Cf6irpuW2CBOM2LGqI2RlwCPJ62R7ccmKGhHh/Hlo/uFTN
+ iRsTMvg4xoM4VjrtNBaWB5tjizhvJn4dBYevYmQAYzrhOw/ThYtnrr6BXwIcGPAgo4jlS8aAbzQ
+ jzDJyvrgUhSP7p4GlyotWNlF4kgnAP6kJ05W+xoB6WP5y4ak4QAobyh5qplea0I/KzmfTKTb5qv
+ SM7HpzShFE+c9e2s9p+it8+NJ51Kq7X7U/aDgF+jk/F3p7ZeafgIUrM8RyKKmgCrdLxquuKn1tq
+ 6tHCqOVf4cTH+XAaEu8GAaXtHMBEjji4wVNgH4CAKjyx9iqTwG6odD+uU/XdEY50chPnlkL82T6
+ Hb0KuqYHbI9GX2SrjzVw5ZgJJq8eln+jyag+zrV1n
+X-Received: by 2002:a05:620a:6499:b0:93c:b420:c2b8 with SMTP id
+ af79cd13be357-940ef914b6bmr1018981285a.61.1793031637434; 
+ Mon, 26 Oct 2026 09:20:37 -0700 (PDT)
+X-Received: by 2002:a05:620a:6499:b0:93c:b420:c2b8 with SMTP id
+ af79cd13be357-940ef914b6bmr1018977285a.61.1793031636954; 
+ Mon, 26 Oct 2026 09:20:36 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a35a04ad39sm539622035e9.1.2026.10.26.09.20.42
+ ffacd0b85a97d-48e3ebcb99esm16669808f8f.23.2026.10.26.09.20.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Oct 2026 09:20:43 -0700 (PDT)
+ Mon, 26 Oct 2026 09:20:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 01/14] target/mips: Call translator_ld() in
- translate_insn() callees
-Date: Mon, 26 Oct 2026 17:20:20 +0100
-Message-ID: <20261026162034.32711-2-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v4 00/14] target/mips: Start converting MIPS16e/micro/nanoMIPS
+ to decodetree
+Date: Mon, 26 Oct 2026 17:20:19 +0100
+Message-ID: <20261026162034.32711-1-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261026162034.32711-1-philmd@oss.qualcomm.com>
-References: <20261026162034.32711-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfXxUcAUL77UI9R
- gAFFk43x06+bq8sJgXrtQVumZQStGAS7/tjWKaZGwPb3ab/Fwi57p6pLFsilOub/kwPBz0dUE94
- HZzl6upRBrD8gky8COmTFfE5brVIBjk=
-X-Authority-Analysis: v=2.4 cv=ZOdCCn7b c=1 sm=1 tr=0 ts=6adf7ddd cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfXy9ktdMon7haA
+ WPezIg0BoXhkHYlpzWRVDgKTdlRnArtxaHX6J+BV8xUJ1a/Q0pmC03BJ/013OkDLA1Uv6drfMmc
+ ZTZhLWlT3YfItOu+Gj4kvrPgzlf0Mlk3q7lydlqtR1ZmRuOLUb9caS5ekwBSass1XSW9uRwIyDt
+ 7BOpUIfcmZx8xKUW5HNcmc1hOarQ8+z7f3GOrZOwvFhh8Nzg4qEOcyJLX6ySCFbJz4M2s/ey+FC
+ qm/b5+xDTewise1NINLTmsfs9n9KeGIK9jftDb0mdLG4YXVq3PJ604fgZq5K3k+paDIpSfX9qIz
+ P4Mu6XHUMWiHE9okw+XzAMAji7zPla8h7sTu4LOuTwh6EaBAaicX7zjlwoYZTkL/puH9r5Ltn0E
+ uq7RGAebcCaq/Sg05JjT7r2h3d5CV+xRm0wvW63v8P95kb0ahgN33yUgGm0jAghj3UbhmMeGlVZ
+ ZF7ws9BWNCWETrxZfKw==
+X-Proofpoint-ORIG-GUID: CwtrGeWi08rGAS6VP0GrQxeEjH57I_64
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX0YIfnHV4vb9V
+ Q/T1iLCCJ6Z0BlYQDFtZZ/e6AnxBnm6kR2BN7FKlokWubvqO6rqeT68xI/3p3ozS/QdreOrcUn1
+ cN1hR9xmgpHGrphPT1u1/g31BaET1Hg=
+X-Proofpoint-GUID: CwtrGeWi08rGAS6VP0GrQxeEjH57I_64
+X-Authority-Analysis: v=2.4 cv=HKhWhYtv c=1 sm=1 tr=0 ts=6adf7dd6 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=DdBj6WcCB6XYcVw86CkA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: NROQWuLJWyh8e08Ch9CkduNNXKxVpVUa
-X-Proofpoint-ORIG-GUID: NROQWuLJWyh8e08Ch9CkduNNXKxVpVUa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX4Wpv+PVVDbwP
- Od8CQArM8NTLijzffpBJDLtZxkezR0ggGI5uhx8wKtxMlNOrXGpZS/e2UiIeDhnCMRJ/aNIPUUk
- /YyWcSu0cwhuEnUiMJ9513ezo1wARLjIutWAVEo6RAauA1jb//t/+SXoFUrpJ17nC8r+8Lj0vnr
- FNzJgqaDdSdlfvfxxcKD9S439nIPw3iKC6YiGjT9QC4ibG1dHUUjl7ABAo/Ad+f7IHvKZ7v3zoM
- 8wU+EG+ccMLMrwjvIuXeOAQTNqDtNzTQumVLMWVpIvv+wH8zMA0vZlk2eWl9ZUTzYRBAstqsrxw
- RDEVpVAHnYX7e6i3MjfWTcpUE4jw7YmuJdisR3+cw7YuqAscUfnVevEKOVUqrrTKo2gc2fwItLo
- lo3xhb41p2rM6wuoxKTYIXS2Lt1oSEqM9P086uoOTu5E9KltRq6LlwTuV7drNj68MIl5GB5/Lxw
- Dh9kUhGuNpilwVycmMw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=oiSss8nPy0L6DFi72B4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-26_03,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 spamscore=0 bulkscore=0 impostorscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610260065
+ suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260065
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -155,164 +146,88 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Missing review: patches 3, 4, 10, 13, 14
 
-Historically we were only calling decode_opc() from the MIPS
-translate_insn() handler. Then variable instruction length
-ISAs were added, we kept using the same pattern but call
-yet more translator_ld() in the callees when necessary.
-
-This is cumbersome and bug prone, so better move all
-translator_ld() calls to the callees where it is more
-logical.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
 Since v3:
-- Rebased on translator_ld*_end() API, passing mo_endian()
----
- target/mips/tcg/translate.c               | 11 +++--------
- target/mips/tcg/micromips_translate.c.inc |  4 ++++
- target/mips/tcg/mips16e_translate.c.inc   |  9 ++++++---
- target/mips/tcg/nanomips_translate.c.inc  | 13 ++++++++++---
- 4 files changed, 23 insertions(+), 14 deletions(-)
+- Rebased; v3 patches 1-3 and 5 were merged
+- Use translator_ld*_end() with mo_endian()
+- Select decoders from the instruction size (Richard)
+- New patch 4, computing the microMIPS size up front (Richard)
+- Treat MIPS16e JAL/JALX as 32-bit
+- Add micromips32_r6.decode; LSA no longer accepted on pre-R6
+  microMIPS CPUs
+- Fix MIPS16e EXT-RI LI immediate field order
+- Fix nanoMIPS LI[16] register map and unsigned immediate
+- Fix nanoMIPS LI[48] immediate halfword order; split the NMS
+  check into trans_LI_nnms(), reusing check_nms()
+- New patch 10, sharing the MIPS16e/microMIPS GPR xlat map
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 936f8c4eddc4..69c82af046a0 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15050,6 +15050,9 @@ static void decode_opc(CPUMIPSState *env, DisasContext *ctx)
-         gen_set_label(l1);
-     }
- 
-+    ctx->opcode = translator_ldl_end(env, &ctx->base, ctx->base.pc_next,
-+                                     mo_endian(ctx));
-+
-     /* Transition to the auto-generated decoder.  */
- 
-     /* Vendor specific extensions */
-@@ -15175,21 +15178,13 @@ static void mips_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
- 
-     is_slot = ctx->hflags & MIPS_HFLAG_BMASK;
-     if (ctx->insn_flags & ISA_NANOMIPS32) {
--        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
--                                          mo_endian(ctx));
-         insn_bytes = decode_isa_nanomips(env, ctx);
-     } else if (!(ctx->hflags & MIPS_HFLAG_M16)) {
--        ctx->opcode = translator_ldl_end(env, &ctx->base, ctx->base.pc_next,
--                                         mo_endian(ctx));
-         insn_bytes = 4;
-         decode_opc(env, ctx);
-     } else if (ctx->insn_flags & ASE_MICROMIPS) {
--        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
--                                          mo_endian(ctx));
-         insn_bytes = decode_isa_micromips(env, ctx);
-     } else if (ctx->insn_flags & ASE_MIPS16) {
--        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
--                                          mo_endian(ctx));
-         insn_bytes = decode_ase_mips16e(env, ctx);
-     } else {
-         gen_reserved_instruction(ctx);
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index 07172a6c7fe0..0984b8a505dd 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -2979,6 +2979,7 @@ static void decode_micromips32_opc(CPUMIPSState *env, DisasContext *ctx)
- 
- static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
- {
-+    uint32_t opcode;
-     uint32_t op;
- 
-     /* make sure instructions are on a halfword boundary */
-@@ -2988,6 +2989,9 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-         return 2;
-     }
- 
-+    opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                 mo_endian(ctx));
-+    ctx->opcode = opcode;
-     op = (ctx->opcode >> 10) & 0x3f;
-     /* Enforce properly-sized instructions in a delay slot */
-     if (ctx->hflags & MIPS_HFLAG_BDS_STRICT) {
-diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-index e83587971d4e..eb77326acf6b 100644
---- a/target/mips/tcg/mips16e_translate.c.inc
-+++ b/target/mips/tcg/mips16e_translate.c.inc
-@@ -453,12 +453,9 @@ static void decode_i64_mips16(DisasContext *ctx,
- 
- static int decode_extended_mips16_opc(CPUMIPSState *env, DisasContext *ctx)
- {
--    int extend = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 2,
--                                     mo_endian(ctx));
-     int op, rx, ry, funct, sa;
-     int16_t imm, offset;
- 
--    ctx->opcode = (ctx->opcode << 16) | extend;
-     op = (ctx->opcode >> 11) & 0x1f;
-     sa = (ctx->opcode >> 22) & 0x1f;
-     funct = (ctx->opcode >> 8) & 0x7;
-@@ -659,6 +656,8 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-     int funct;
-     int n_bytes;
- 
-+    ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                      mo_endian(ctx));
-     op = (ctx->opcode >> 11) & 0x1f;
-     sa = (ctx->opcode >> 2) & 0x7;
-     sa = sa == 0 ? 8 : sa;
-@@ -1105,6 +1104,10 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-         }
-         break;
-     case M16_OPC_EXTEND:
-+        ctx->opcode <<= 16;
-+        ctx->opcode |= translator_lduw_end(env, &ctx->base,
-+                                           ctx->base.pc_next + 2,
-+                                           mo_endian(ctx));
-         decode_extended_mips16_opc(env, ctx);
-         n_bytes = 4;
-         break;
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index 4b0b01ba37ad..421f26a192cb 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -4463,10 +4463,11 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
- 
- static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
- {
-+    uint64_t opcode;
-     uint32_t op;
--    int rt = decode_gpr_gpr3(NANOMIPS_EXTRACT_RT3(ctx->opcode));
--    int rs = decode_gpr_gpr3(NANOMIPS_EXTRACT_RS3(ctx->opcode));
--    int rd = decode_gpr_gpr3(NANOMIPS_EXTRACT_RD3(ctx->opcode));
-+    int rt;
-+    int rs;
-+    int rd;
-     int offset;
-     int imm;
- 
-@@ -4478,6 +4479,12 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
-         return 2;
-     }
- 
-+    opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                 mo_endian(ctx));
-+    ctx->opcode = opcode;
-+    rt = decode_gpr_gpr3(NANOMIPS_EXTRACT_RT3(ctx->opcode));
-+    rs = decode_gpr_gpr3(NANOMIPS_EXTRACT_RS3(ctx->opcode));
-+    rd = decode_gpr_gpr3(NANOMIPS_EXTRACT_RD3(ctx->opcode));
-     op = extract32(ctx->opcode, 10, 6);
-     switch (op) {
-     case NM_P16_MV:
+Prepare the build system and the per-ISA dispatchers so MIPS16e,
+microMIPS and nanoMIPS opcodes can be decoded with the decodetree
+script, then convert the first opcodes: LSA and LI.
+
+v3: https://lore.kernel.org/qemu-devel/20241126140003.74871-1-philmd@linaro.org/
+
+Philippe Mathieu-Daudé (14):
+  target/mips: Call translator_ld() in translate_insn() callees
+  target/mips: Decode LSA shift amount using decodetree function
+  target/mips: Introduce decode tree bindings for MIPS16e ASE
+  target/mips: Determine microMIPS insn size before delay slot check
+  target/mips: Introduce decodetree bindings for microMIPS ISA
+  scripts/decodetree: Add support for 48-bit instructions
+  target/mips: Introduce decode tree bindings for nanoMIPS ISA
+  target/mips: Convert microMIPS LSA opcode to decodetree
+  target/mips: Convert nanoMIPS LSA opcode to decodetree
+  target/mips: Share MIPS16e/microMIPS 3-bit GPR xlat mapping
+  target/mips: Add gen_li() helper
+  target/mips: Convert microMIPS LI opcode to decodetree
+  target/mips: Convert MIPS16e LI opcodes to decodetree
+  target/mips: Convert nanoMIPS LI opcodes to decodetree
+
+ target/mips/tcg/translate.h               |  11 ++
+ target/mips/tcg/micromips16.decode        |  18 +++
+ target/mips/tcg/micromips32.decode        |  11 ++
+ target/mips/tcg/micromips32_r6.decode     |  19 +++
+ target/mips/tcg/mips16e_16.decode         |  17 +++
+ target/mips/tcg/mips16e_32.decode         |  18 +++
+ target/mips/tcg/msa.decode                |   3 +-
+ target/mips/tcg/nanomips16.decode         |  17 +++
+ target/mips/tcg/nanomips32.decode         |  14 ++
+ target/mips/tcg/nanomips48.decode         |  16 +++
+ target/mips/tcg/rel6.decode               |   5 +-
+ target/mips/tcg/comput_translate.c        |  21 +++
+ target/mips/tcg/micromips_translate.c     |  37 ++++++
+ target/mips/tcg/mips16e_translate.c       |  21 +++
+ target/mips/tcg/msa_translate.c           |   4 +-
+ target/mips/tcg/nanomips_translate.c      |  46 +++++++
+ target/mips/tcg/rel6_translate.c          |   9 +-
+ target/mips/tcg/translate.c               |  24 ++--
+ target/mips/tcg/micromips_translate.c.inc | 152 +++++++++++-----------
+ target/mips/tcg/mips16e_translate.c.inc   |  56 ++++----
+ target/mips/tcg/nanomips_translate.c.inc  |  56 ++++----
+ scripts/decodetree.py                     |   4 +
+ target/mips/tcg/meson.build               |  12 ++
+ 23 files changed, 447 insertions(+), 144 deletions(-)
+ create mode 100644 target/mips/tcg/micromips16.decode
+ create mode 100644 target/mips/tcg/micromips32.decode
+ create mode 100644 target/mips/tcg/micromips32_r6.decode
+ create mode 100644 target/mips/tcg/mips16e_16.decode
+ create mode 100644 target/mips/tcg/mips16e_32.decode
+ create mode 100644 target/mips/tcg/nanomips16.decode
+ create mode 100644 target/mips/tcg/nanomips32.decode
+ create mode 100644 target/mips/tcg/nanomips48.decode
+ create mode 100644 target/mips/tcg/comput_translate.c
+ create mode 100644 target/mips/tcg/micromips_translate.c
+ create mode 100644 target/mips/tcg/mips16e_translate.c
+ create mode 100644 target/mips/tcg/nanomips_translate.c
+
 -- 
 2.55.0
 
