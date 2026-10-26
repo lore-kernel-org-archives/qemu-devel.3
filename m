@@ -1,53 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E15B606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 13:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48046606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 13:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=hw3yOUtE
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=cApENMaL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLDO-0001fD-J9; Mon, 26 Oct 2026 09:58:19 -0400
+	id 1xLLCj-0008L8-E1; Mon, 26 Oct 2026 09:57:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLD5-0000ws-Ca; Mon, 26 Oct 2026 09:57:59 -0400
+ id 1xLLBt-0007Al-Op; Mon, 26 Oct 2026 09:56:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLD2-0000PG-FJ; Mon, 26 Oct 2026 09:57:58 -0400
+ id 1xLLBq-0000F2-UU; Mon, 26 Oct 2026 09:56:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=YVF/PHv5ZNDU+cQi1RnZS7M9AIoxSqHmyy10tLCXm6k=;
+ t=1793022903; bh=Fkt/W5PoF4OBMqFA6sEJQedA3sGGKfiDG5RKEokHqec=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hw3yOUtEbAo1EmhRAO6Qx2ZFYR0WTmfRXs/uY2jUyhCUJ+Pxvywog9SCAq/jNbFck
- ji3TffsiCXB/mqTE4bhiRsIsKfYnQXE0W/dsdsoFoSAEGz2F6UKQcI9NaPh7TCDL4H
- 56nFjqmmdDhRWph13D/hNoyo5qAefJC7jNuEa8fnv5ItGD4Pxb2zcrw13HWpKrXBdc
- 5FJK3RJTmmjrWBmxipAncP3jVwWHNVoijkVhDAXBiyCHYpf+VpRZ/B86CZL9vzdTk7
- Cnfev3y1qeFIbZXBBINjoRHIMfpg0WfNiiNIEDIh3Dxy8T07ZvWLCWgw8WNyj0BNl/
- SougvvkAlt82g==
+ b=cApENMaL1bSKqAfytQNcDbWxhb9gKEbG4QChPtuRLBz+KodDM+6hBwn3nxoa2Y1S4
+ 2/qjws+P72oOZ/MfQLQT+GAMlMFeXukYitjpvQDuNdehemdB0VTRwM1T/U46TgmfTZ
+ VOiuBNAATs1//lqz+8z8makSrb+a9M4fom4mxm6koPcMKtgD1+3IUZH3sCNk/R+FXA
+ 8kxXycmPkxiw/3E4HpLywTY0I74t5VB4IAhWAUvDR6aVIdWqlJ69UX83p7DWwHG715
+ /Vo8GEEwjvPI+xLm2PR0q/NiUwrlnTPJGYyPXHptspJSWvab/FPrWOD3WvFw/FoPjJ
+ /sGxCHrAmDjgg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BFD11E129F;
- Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DFB651E128C;
+ Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09D4344B8F0;
- Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD26044B8D8;
+ Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EB7D0934C5; Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
+ id B7C86934A7; Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifano@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 82/98] iotests/migrate-bitmaps-postcopy-test: add a
- bitmap on a second node
-Date: Mon, 26 Oct 2026 16:55:09 +0300
-Message-ID: <20261026135529.1019772-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 v2 86/91] hw/usb/dev-mtp: Fix heap OOB read in
+ usb_mtp_write_metadata()
+Date: Mon, 26 Oct 2026 16:54:29 +0300
+Message-ID: <20261026135441.1019505-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
-References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
+References: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -70,97 +68,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Tommaso Califano <tcalifano@redhat.com>
 
-All bitmaps in the test live on drive0, so the source never switches
-nodes after setup and the destination never resolves a node name from
-the postcopy listen thread. Add a second drive with one bitmap and check
-that it arrives intact.
+usb_mtp_write_metadata() computed the number of filename characters as
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20261006170738.453977-4-den@openvz.org>
-[eblake: squash in fix to pass even after aborted run left behind stale
-fifo, and to avoid check-python-minreqs lint failure]
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit faa80b9847b9f326d7570c512d52e0a22a5bd5b3)
+  filename_chars = dlen - offsetof(ObjectInfo, filename)
+
+where dlen is the amount of data copied by the last USB packet of the
+transfer, not the size of the ObjectInfo dataset. If the final packet has
+fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
+utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
+process memory.
+
+Use d->length instead: it is the size of the buffer holding the dataset,
+and usb_mtp_write_metadata() is only reached once all d->length bytes
+have been received.
+
+d->length is guest-controlled, so reject datasets too small to hold the
+fixed part of ObjectInfo before dereferencing it. The check is "<="
+rather than "<" because a dataset of exactly offsetof(ObjectInfo,filename)
+bytes would yield an empty filename.
+
+Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Message-ID: <20261007143738.58509-1-tcalifano@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 6ab4cd2f13debf7682106ff1d9917478814dda10)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-index 33ff2b861f7..bae35864b72 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-@@ -27,6 +27,8 @@ debug = False
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 8ebff713085..6bb1fc575e8 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1699,7 +1699,7 @@ close:
+     s->write_pending = false;
+ }
  
- disk_a = os.path.join(iotests.test_dir, 'disk_a')
- disk_b = os.path.join(iotests.test_dir, 'disk_b')
-+disk_a1 = os.path.join(iotests.test_dir, 'disk_a1')
-+disk_b1 = os.path.join(iotests.test_dir, 'disk_b1')
- size = '256G'
- fifo = os.path.join(iotests.test_dir, 'mig_fifo')
- 
-@@ -97,16 +99,26 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
-         self.vm_b.shutdown()
-         os.remove(disk_a)
-         os.remove(disk_b)
-+        os.remove(disk_a1)
-+        os.remove(disk_b1)
-         os.remove(fifo)
- 
-     def setUp(self):
-+        if os.path.exists(fifo):
-+            os.remove(fifo)
-         os.mkfifo(fifo)
-         qemu_img('create', '-f', iotests.imgfmt, disk_a, size)
-         qemu_img('create', '-f', iotests.imgfmt, disk_b, size)
-+        qemu_img('create', '-f', iotests.imgfmt, disk_a1, '1G')
-+        qemu_img('create', '-f', iotests.imgfmt, disk_b1, '1G')
-         self.vm_a = iotests.VM(path_suffix='a').add_drive(disk_a,
-                                                           'discard=unmap')
-         self.vm_b = iotests.VM(path_suffix='b').add_drive(disk_b,
-                                                           'discard=unmap')
-+        self.drive1_sha256 = ""
-+        # A bitmap on a second node makes postcopy switch nodes after setup
-+        self.vm_a.add_drive(disk_a1)
-+        self.vm_b.add_drive(disk_b1)
-         self.vm_b.add_incoming("exec: cat '" + fifo + "'")
-         self.vm_a.launch()
-         self.vm_b.launch()
-@@ -127,6 +139,13 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
-                                node='drive0', name='bitmap0')
-         empty_sha256 = result['return']['sha256']
- 
-+        self.vm_a.cmd('block-dirty-bitmap-add', node='drive1',
-+                      name='bitmap0', granularity=granularity)
-+        self.vm_a.hmp_qemu_io('drive1', 'write 0 64k')
-+        result = self.vm_a.qmp('x-debug-block-dirty-bitmap-sha256',
-+                               node='drive1', name='bitmap0')
-+        self.drive1_sha256 = result['return']['sha256']
+-static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
++static void usb_mtp_write_metadata(MTPState *s)
+ {
+     MTPData *d = s->data_out;
+     ObjectInfo *dataset = (ObjectInfo *)d->data;
+@@ -1707,7 +1707,15 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
+     MTPObject *o;
+     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
+     uint32_t next_handle = s->next_handle;
+-    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
++    size_t filename_chars;
 +
-         apply_discards(self.vm_a, discards1)
++    if (d->length <= offsetof(ObjectInfo, filename)) {
++        usb_mtp_queue_result(s, RES_INVALID_OBJECTINFO, d->trans,
++                             0, 0, 0, 0);
++        return;
++    }
++
++    filename_chars = d->length - offsetof(ObjectInfo, filename);
  
-         result = self.vm_a.qmp('x-debug-block-dirty-bitmap-sha256',
-@@ -212,6 +231,9 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
- 
-         # check that bitmaps are migrated and persistence works
-         check_bitmaps(self.vm_b, nb_bitmaps)
-+        result = self.vm_b.qmp('x-debug-block-dirty-bitmap-sha256',
-+                               node='drive1', name='bitmap0')
-+        self.assert_qmp(result, 'return/sha256', self.drive1_sha256)
-         self.vm_b.shutdown()
-         # recreate vm_b, so there is no incoming option, which prevents
-         # loading bitmaps from disk
+     /*
+      * filename is utf-16. We're intentionally doing
+@@ -1804,7 +1812,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+         if (d->data_offset == d->length) {
+             /* The operation might have already failed */
+             if (!s->result) {
+-                usb_mtp_write_metadata(s, dlen);
++                usb_mtp_write_metadata(s);
+             }
+             usb_mtp_data_free(s->data_out);
+             s->data_out = NULL;
 -- 
 2.47.3
 
