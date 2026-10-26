@@ -1,73 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639DE606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 13:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD19606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 13:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BQ8leHpk
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Wvsy0wCy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLKNt-00079o-Ju; Mon, 26 Oct 2026 09:05:05 -0400
+	id 1xLKOq-0007dr-JP; Mon, 26 Oct 2026 09:06:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLKNq-00079H-U8; Mon, 26 Oct 2026 09:05:02 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLKOo-0007dH-Tg
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 09:06:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLKNo-0003Pf-UJ; Mon, 26 Oct 2026 09:05:02 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 9A65743DB6;
- Mon, 26 Oct 2026 13:04:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22ED1F01825;
- Mon, 26 Oct 2026 13:04:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793019898;
- bh=pzz8OvT1i49oPyK6pMVHCq6SdOgT/6pfNQ1mXReD5R8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=BQ8leHpk6dM1TTNjXedaROeyPxFro5CBu/zFHpKE7KlCRTLVQvLhd7MLYD7O2x7Qf
- a+3yIA4AHk1NzeLAffoY59A6S+5MbPlNFmF8nIj/jzqFQDgDszSGRvo4FeklsHJVNa
- UHeR2WseOw4LBxHUdPTcYMeuN0dOBaYUqZCqc+DlTIkzw7zzI7cPi8GB/v4krcfQcb
- JuVClrw5xyARn9SCDIIufJpWkEXBqSJW2tvz8fKW2lMElD77yy5aOptrVZeWOSRPxq
- eKnmxFP4vwcPW4OvTW2vmy+qSGxf6eF/oK8kF+3OI/ubTJ7aolXk9z7PsN+3OIoQpz
- Oco4XN9OxLG4w==
-Date: Mon, 26 Oct 2026 14:04:52 +0100
-From: Niklas Cassel <cassel@kernel.org>
-To: Daejun Park <daejun7.park@samsung.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Jeuk Kim <jeuk20.kim@samsung.com>, "farosas@suse.de" <farosas@suse.de>,
- "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "kwolf@redhat.com" <kwolf@redhat.com>,
- "hreitz@redhat.com" <hreitz@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
- "stanleyjhu@google.com" <stanleyjhu@google.com>,
- Keoseong Park <keosung.park@samsung.com>,
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- John Snow <jsnow@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>
-Subject: Re: [PATCH v3 0/6] Support for Zoned UFS
-Message-ID: <at9P9OWMQUQR501_@ryzen>
-References: <CGME20261020001647epcms2p52cd58173164a43e252c33a3eb5935dc8@epcms2p5>
- <20261020001647epcms2p52cd58173164a43e252c33a3eb5935dc8@epcms2p5>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLKOm-0003eR-SB
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 09:06:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793019959;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=otbfljhxfYkYBtLne0TVo7GVkIqovKYL/MGWs9iy258=;
+ b=Wvsy0wCyz1lf5+GSU7QWLrHqwdAGMN+nqca/KmXLIOWMV7nYI7BanEAoQ5nX6ahxcsvsFj
+ a7fFmBg7gLMthgFYp4uZpllyDgndLsxNeeATWNFPHzdt2uWC+ty1QU+p2GW2VYUkHHf/J2
+ It53bD6xQoCQyFQrmupslscS0RDcLHU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-296-NlqMtO8JMH29cHonN0shmg-1; Mon,
+ 26 Oct 2026 09:05:54 -0400
+X-MC-Unique: NlqMtO8JMH29cHonN0shmg-1
+X-Mimecast-MFC-AGG-ID: NlqMtO8JMH29cHonN0shmg_1793019953
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F005E1955BF9; Mon, 26 Oct 2026 13:05:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E450F18004D2; Mon, 26 Oct 2026 13:05:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9F58521E6A04; Mon, 26 Oct 2026 14:05:49 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jinjie Ruan <2118537295@qq.com>
+Cc: anisinha@redhat.com,  eblake@redhat.com,  imammedo@redhat.com,
+ michael.roth@amd.com,  mst@redhat.com,  pbonzini@redhat.com,
+ peter.maydell@linaro.org,  qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
+ ruanjinjie@huawei.com
+Subject: Re: [PATCH 36/37] qapi: Add MPAM cache introspection schema and stub
+In-Reply-To: <tencent_E9186FE529AD6EC21F51EF364CEA6426EF05@qq.com> (Jinjie
+ Ruan's message of "Fri, 16 Oct 2026 18:10:56 +0800")
+References: <20261016101058.1900808-1-2118537295@qq.com>
+ <tencent_E9186FE529AD6EC21F51EF364CEA6426EF05@qq.com>
+Date: Mon, 26 Oct 2026 14:05:49 +0100
+Message-ID: <87fqxs1uj6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261020001647epcms2p52cd58173164a43e252c33a3eb5935dc8@epcms2p5>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,69 +86,239 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hello Daejun,
+Jinjie Ruan <2118537295@qq.com> writes:
 
-On Tue, Oct 20, 2026 at 09:16:47AM +0900, Daejun Park wrote:
-> This series lets a ufs-lu be a host-managed zoned block device (ZBC)
-> with zoned=on, so that the zoned storage stack, for example f2fs on
-> host-managed zones, can be tested on UFS without zoned UFS hardware.
-> Patches 1-3 fix the command path that the zoned code relies on and can
-> be merged first; patch 4 documents zoned logical units, patch 5 adds
-> them and patch 6 the tests.
-> 
-> Not modelled: persistent zone state, conventional and gap zones, and the
-> zoned UFS descriptor bits.
-> 
-> Tested with the UFS qtests (also under ASan and UBSan) and with Linux
-> 7.3-rc7 and android17-6.18 guests, legacy doorbell and MCQ: fio
-> --zonemode=zbd with verification, blkzone, and f2fs on android17-6.18.
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>
+> Add the query-mpam-cache QMP command schema: the MpamBm bitmap
+> type, the per-RIS MpamRegs state and the MpamCacheInfo summary of
+> a cache MSC, plus an optional cache level filter.  The command is
+> stubbed to return NULL so the generated marshal links; the real
+> implementation walks the device tree in the next patch.
+>
+> Based on an RFC series by Jonathan Cameron, adapted to the current
+> qapi documentation rules.
+>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-This series does not appear to be making use of the zoned block layer APIs
-that currently exist in QEMU (see e.g. include/block/block-common.h and
-block/io.c).
+[...]
 
-I know that NVMe currently does not use it, but I don't think we should
-allow adding zoned storage support in additional storage protocols, if
-they do not make use of the QEMU zoned block layer APIs.
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index a46269b..c6663e5 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -42,6 +42,7 @@ qapi_all_modules =3D [
+>    'machine-s390x',
+>    'migration',
+>    'misc',
+> +  'mpam',
+>    'net',
+>    'pragma',
+>    'qom',
+> diff --git a/qapi/mpam.json b/qapi/mpam.json
+> new file mode 100644
+> index 0000000..ff476a1
+> --- /dev/null
+> +++ b/qapi/mpam.json
+> @@ -0,0 +1,120 @@
+> +# -*- Mode: Python -*-
+> +# vim: filetype=3Dpython
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +##
+> +# =3D ARM MPAM State Introspection
+> +##
 
-Sam Li has a series that converts NVMe to use the QEMU zoned block layer
-APIs, even though that series seems to have stalled:
-https://lore.kernel.org/qemu-devel/20240122190013.41302-1-faithilikerun@gmail.com/
+Special QAPI doc markup that hasn't been recognized in more than a year.
+Please build with --enable-docs, and examine
+docs/manual/interop/qemu-qmp-ref.html to guard against such mishaps.
 
+Use standard reST markup instead:
 
-Currently, it is only virtio-blk which is making use of the QEMU zoned
-block layer APIs, and the only supported backend is file-posix.c.
+   ##
+   # ****************************
+   # ARM MPAM State Introspection
+   # ****************************
+   ##
 
-However, there is work in progress to add qcow2 backend support for
-the QEMU zoned block layer APIs:
-https://lore.kernel.org/qemu-devel/20261026121259.3354561-1-cassel@kernel.org/
-Which requires the (still not merged...) prep series:
-https://lore.kernel.org/qemu-devel/20260921142819.2916043-1-cassel@kernel.org/
+Are you *sure* this ought to be between "Miscellanea" and "Audio" and at
+the same heading level?  Or should it be deeper and/or elsewhere?
 
+> +
+> +##
+> +# @MpamBm:
+> +#
+> +# A bitmap control value, as used by MPAM cache-portion (CPBM) and
+> +# memory-bandwidth-portion (MBW_PBM) controls.  The value is
+> +# carried as an array of 32-bit words, least significant first.
+> +#
 
-If you make use of the QEMU zoned block layer APIs, you will get support
-for conventional zones, and will not need to add a UFS property for
-max_open_zones. Once the qcow2 series lands, you will also get persistence.
+Anti-pattern: the introduction (above) discusses the value of a member
+(below).
 
+> +# @words: The bitmap, one element per 32-bits of the control
+> +#
+> +# Since: 10.1
 
-If you want inspiration, you can see how virtio_blk_zone_report_complete()
-(hw/block/virtio-blk.c) converts between the QEMU zoned block layer zone
-states BLK_ZS_* and the virtio-blk VIRTIO_BLK_ZS_* defined zone states.
+11.2 now.  Same elsewhere, not noting it again.
 
-If you want futher inspiration, you could look at my (work in progress)
-branch (note: this branch is going to be rebased multiple times), which
-converts between the QEMU zoned block layer zone states BLK_ZS_* and the
-zone states defined by the Zone ATA Commands (ZAC) specification:
-https://github.com/floatious/qemu/tree/zac/
+> +##
+> +{ 'struct': 'MpamBm',
+> +  'data' : { 'words' : [ 'int' ]
 
+The description says it's 32 bit words.  Shouldn't you use 'uint32'
+then?
 
-Kind regards,
-Niklas
+> +           }
+> +}
+> +
+> +##
+> +# @MpamRegs:
+> +#
+> +# Per RIS register state of an emulated MPAM Memory System Component.
+
+Please use the current syntax for introductions:
+
+   ##
+   # @name: introduction, best to keep it brief, but you may continue it
+   #     like this if necessary.  If your text need to refer to
+   #     arguments, it's almost certainly not brief introduction
+   #     anymore.
+
+Same elsewhere, not noting it again.
+
+> +#
+> +# @idr: MPAMF_IDR, the MPAM features identification register
+> +#
+> +# @iidr: MPAMF_IIDR, the MPAM implementer identification register
+> +#
+> +# @aidr: MPAMF_AIDR, the MPAM architecture identification register
+> +#
+> +# @cpor-idr: MPAMF_CPOR_IDR, cache-portion feature register
+> +#
+> +# @ccap-idr: MPAMF_CCAP_IDR, cache-capacity feature register
+> +#
+> +# @mbw-idr: MPAMF_MBW_IDR, memory-bandwidth feature register
+> +#
+> +# @pri-idr: MPAMF_PRI_IDR, priority feature register
+> +#
+> +# @partid-nrw-idr: MPAMF_PARTID_NRW_IDR, PARTID narrowing register
+> +#
+> +# @msmon-idr: MPAMF_MSMON_IDR, monitor feature register
+> +#
+> +# @csumon-idr: MPAMF_CSUMON_IDR, cache-usage monitor register
+> +#
+> +# @mbwumon-idr: MPAMF_MBWUMON_IDR, memory-bandwidth monitor register
+> +#
+> +# @ecr: MPAMF_ECR, the error control register
+> +#
+> +# @esr: MPAMF_ESR, the error status register
+> +#
+> +# @cfg-part-sel: MPAMCFG_PART_SEL, the partition-selection register
+> +#
+> +# @cfg-cpbm: The configured cache-portion bitmaps, one per
+> +#     internal PARTID
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'struct' : 'MpamRegs',
+> +  'data' : { 'idr' : 'int',
+> +             'iidr' : 'int',
+> +             'aidr' : 'int',
+> +             'cpor-idr': 'int',
+> +             'ccap-idr': 'int',
+> +             'mbw-idr': 'int',
+> +             'pri-idr': 'int',
+> +             'partid-nrw-idr': 'int',
+> +             'msmon-idr': 'int',
+> +             'csumon-idr': 'int',
+> +             'mbwumon-idr': 'int',
+> +             'ecr': 'int',
+> +             'esr': 'int',
+> +             'cfg-part-sel': 'int',
+> +             'cfg-cpbm': ['MpamBm']#lazy
+
+Is the comment an accident?
+
+How wide are these registers?  Is 'int' the appropriate type?
+
+> +          }
+> +}
+> +
+> +##
+> +# @MpamCacheInfo:
+> +#
+> +# Information about an MPAM cache Memory System Component.
+> +#
+> +# @cpu: First CPU of the set associated with the cache
+> +#
+> +# @level: Level of cache
+> +#
+> +# @type: Type of cache
+> +#
+> +# @regs: The per RIS register state
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'struct': 'MpamCacheInfo',
+> +  'data' : { 'cpu' : 'int',
+> +             'level' : 'int',
+> +             'type' : 'int',
+> +             'regs' : ['MpamRegs']
+> +           }
+> +}
+> +
+> +##
+> +# @query-mpam-cache:
+> +#
+> +# Get a list of MpamCacheInfo for all Cache related MSC
+> +#
+> +# @level: Provide a cache level to filter against
+
+What exactly does this argument filter out?
+
+Is it really needed?  How large can unfiltered output become?
+
+> +#
+> +# Returns: a list of @MpamCacheInfo describing all
+> +#   the MPAM cache MSC instances
+
+This gets rendered like
+
+    Return: [MpamCacheInfo] =E2=80=93 a list of MpamCacheInfo describing al=
+l the
+            MPAM cache MSC instances
+
+As is, the description is mostly redundant.  Do you need a description?
+Try building without it, and see how it comes out.
+
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'command': 'query-mpam-cache',
+> +  'data': { '*level': 'int' },
+> +  'returns' : ['MpamCacheInfo'],
+> +  'allow-preconfig': true }
+> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+> index b93dd68..cef175d 100644
+> --- a/qapi/qapi-schema.json
+> +++ b/qapi/qapi-schema.json
+> @@ -64,6 +64,7 @@
+>  { 'include': 'replay.json' }
+>  { 'include': 'yank.json' }
+>  { 'include': 'misc.json' }
+> +{ 'include': 'mpam.json' }
+>  { 'include': 'misc-arm.json' }
+>  { 'include': 'misc-i386.json' }
+>  { 'include': 'audio.json' }
+
 
