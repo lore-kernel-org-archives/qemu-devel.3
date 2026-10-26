@@ -1,149 +1,122 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0678E606A31F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC47C606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PpIvruJJ;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MCQJ07kz
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=c8K8nFTG;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=NZC/6XBR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLH6z-0008HU-S6; Mon, 26 Oct 2026 05:35:26 -0400
+	id 1xLHOO-0002h8-Gt; Mon, 26 Oct 2026 05:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xLH6u-0008GG-MS
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:35:20 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xLHOM-0002gt-VY
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:53:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xLH6s-0006Wh-Ly
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:35:20 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1xLHOL-0007zC-4t
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:53:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793007317;
+ s=mimecast20190719; t=1793008399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=O8+j6SIiQfiELw1Cjww5LLGcfodYNp9TwgZKpwIfVak=;
- b=PpIvruJJdaoy7ZdmdnxkPcS7VOyO/ab2LeibqAe/5JWASsiUjk/raE36irfYQzR/LYyGmF
- GvTh1S8hbkcIZhAOxtkYPvX6TBhzIrECoo5ttib6vNXdbA7qVo0FGKkwUU5pBqvW34r3VG
- YFb9ehCzyAryCxJnolxr2PQ+ROQcjaM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
+ b=c8K8nFTGE4JqauGAD5ZYkcsiu+kqAKtWIWZwpaHxtO5rt6Gllq8r61rikJLHg31H1Z41D/
+ y897g0ro772n/26TnzxokisPKW6+xphur/sfGrFxAH2G2cO2WyeodDXsxoRvOwA1AA5OQQ
+ Cr7yxbLnCE2Es66DpP3htu9v6kj0C9Y=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-UIWp9KbHNPydrY-Cho3u_Q-1; Mon, 26 Oct 2026 05:35:15 -0400
-X-MC-Unique: UIWp9KbHNPydrY-Cho3u_Q-1
-X-Mimecast-MFC-AGG-ID: UIWp9KbHNPydrY-Cho3u_Q_1793007314
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48df02b91f9so2534902f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 02:35:15 -0700 (PDT)
+ us-mta-640-8Buu03pPM_m_E83wYkJSXQ-1; Mon, 26 Oct 2026 05:53:17 -0400
+X-MC-Unique: 8Buu03pPM_m_E83wYkJSXQ-1
+X-Mimecast-MFC-AGG-ID: 8Buu03pPM_m_E83wYkJSXQ_1793008396
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cc4216aee8fso3237834a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 02:53:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793008396; cv=none;
+ d=google.com; s=arc-20260327;
+ b=hcoPC+J5N5Kb1vGFME29KKf966OAiA3S/8v2p39PdBELpjpdoXq4DvvrJtzPzKNJzN
+ enzZfSPG6arW1Ld3IxLDKdZCq09e37rZY8C6+EPu6uAt08WBTAZQAzRpYs/2UxH1yTCg
+ Ta/sTjHx6lxZwYo9Dsv+H5HYGKeNkliQM38ij3ouJBIXR2xmaj6rYzMakG51YVMUYgTC
+ OyYLb1RbaBnAGFdSapjR/A6guYEm9ULE5ghafug1zL8QlKAQtolSf5CP9sRjwkqM7mio
+ D3qcHVyav12O+2NFQWUp6QFKWCPv/35ZjjnMfgrnjyDQbrD7GGzXtTKO3sYr6qvg7yhz
+ mqzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
+ fh=hVASSgkNmitpEdg8v1p79VPmMNKmW0a7Fs1op1MhlO0=;
+ b=l74dZQoATePGc0XxFDfvJijfGVR69Cjgo1nKdhm2eunMyVXXS2oq84y7YEA7pDb+5r
+ KIMM59umhzH1lkZHzLkUMrFinV6FxlsdoMcRlib1E7K1Ls0bzyQpGtAppxCaXeKzXd0b
+ 65pHgW75OJkWvF5zKs/BznxOetyxhAk7vMF0zFAPLwblYZkn5qFKQZMMhLYtmyxoKyE4
+ nsiayRObcQhJEsJMoTjef3HkQmS5WJAhnwlj4U9wbwYGtXf3dTVyz0CZcYrKYEt3I8Lg
+ EUt2LnbOXwcfbtjyI7z2q/l4GSVZqunFKAoQsxHXd3p3qQPZ0r9zXljUUaRbW6/7kx7f
+ ibAg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793007314; x=1793612114; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=O8+j6SIiQfiELw1Cjww5LLGcfodYNp9TwgZKpwIfVak=;
- b=MCQJ07kzG512NQZTp0iEPN4T5t3zqxgtr9GHpatchwB9Ukr9/eUIbacnJwsi1F8Sd1
- DdLhoSUDKYFCKJK3jtZ/accZv1jvsQcQOGIEZag6UFdxYW1m4EDwHe838ARe30yaTaTi
- 1QrtaoY64btD9cEkrHqiCbugdxyc6jvC84FOG1Q40ii/CXTuK3RF7YY69QwK3smoWUqf
- MLLXcfYgbWL7rzQtALnrrmIhyvGDUDatRhlpnqeUPwpmpDmqL4JZJ3OjuzwGF8EktF6/
- 9It0l3j9W8ZTYUQbBbbUuifSiAsYC9FVsgMi+71rlN2LQQ187DA9QA8YRNSTqc3SddH8
- cqjA==
+ d=redhat.com; s=google; t=1793008396; x=1793613196; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
+ b=NZC/6XBRp3T0p3sKBy83fF8M3PqSQcWspW0KeGbJ8eBOnRIVcSH+MOUGKloLdGEXHX
+ /l9f/JoASweQ27Ox7SnVEzdFumgiIST6DEpRo5OGJ6JQKwx9QGFBU2QUuLOmUHF8AdE/
+ VkALJ4A9LxNc78zfk3QfY3vBeXbKMm2j9iKlmLSU+Hyksbp9iQW/waJi8Duey4CZTlYZ
+ vUbji85MJxmQCqbS8trn6L5scmHNk8SosEugXgoyV2x4m1cvTRJT63RDQw2nIpdb7ZPQ
+ nNxUHV9puTB/AC12XBFbRI1A0B+0OwH/c8AutcCLyKPL7UxhFIcQUYvidZFxMcESpx+p
+ XL8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793007314; x=1793612114;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=O8+j6SIiQfiELw1Cjww5LLGcfodYNp9TwgZKpwIfVak=;
- b=KzmaUfXw3E/mO4zMXnnorJFe0+Ybe0qKkGhpGORosGLQUTSm7lJyrklhcTXWfmAJy0
- cpb8lQa7pdAg7KjAeG0xDvQcWyW6Fxmx9Nvz3ACJOxHqdIO2IG2H8Ckv8FruRYgKWbCr
- yC44G814djuzyga6AKfW7/xfcsYU4AatYJr0JE9DgNYTIYeKKKpaXk9oBsShj52syhVi
- fIpr6tuEsl6ErGQuZsCQFYoznB+BhDUmnFxacAV2hdX6vI6s36oIxI4tMBiV6yU4Sj8N
- IUk15dGcgFu+Fbs6TMB9nTewKUyVi2pPrwVaAPD4rZ92uO9jOrtX7gA8SohHc8rKBz5P
- I2gg==
+ d=1e100.net; s=20260707; t=1793008396; x=1793613196;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
+ b=JLXXMf8KrsSvAUcSBHEhKTau+RSmSu0/B32h+mRHYdnIgUA6bQMFuejEFDjIBajS/K
+ eFkBzM3WHIHKoWVL9L0bKYP6koqZTKt1sWr9fuQVJFHR9WiWY5b1qclHszs+L49vraSp
+ eUViVFdEVln85sadU2w8P6E+ekm7YhOtkVUAePyz1uC/YOBvpE4aJV1JD41u3vyMENKs
+ fGmav0A+MnpbDwn9qN5XfANn9jqRa8CrlJjXhN+PvXTTTAcDp04+xAJB/gXJYUy443tX
+ xcDMX9L7vhtuGHRlfgQzqTFwfXaj7QydSg48lY4OonwBwzy/jKjWP1rkoBHEppzKZbOl
+ H8PQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxfEoTlBL9djMSdTaLBwwypt6/oGl2mtsqyCtEYfSzKkDeNQx7yx0dXjGudPLA0bEkRmZiZsxPoIsIM@nongnu.org
-X-Gm-Message-State: AFq9FYL8+AEoJCfoQYBmwDhZDBObKpmnG2V8hklKg0J2Uc7zDBIMEMQI
- 66I31wO0wMjyEQaCRXTQ8RZHZlmhLLBZwFIdG+TPrQGg+fns5DnzBdXg9ZKCYVaIkltGYcXGqFp
- JMlgimGhEDOcdxe+v6GVHku/s2EKDR0MRjbVVzVZTEaINuswFa0ugHL/l
-X-Gm-Gg: AYBFou0Qzre0LIej7vyt/B5B8IyimEQ/GqE4nMomdC/c7ziTXlDFp/EAt8D/DAItw2x
- aBn2kyePc9AE2gyK9RMG9+HHkfJ4iNUVQqGNu1H2PWaCCMpSj/In96H2HnLNvnkREzCp5ThDl3f
- +l+FSHRrF5w475Fr4NWIOxZPw61nVknDvaRDo3VmvjPqPxhWabmTOsxW8xY0ZDqYZcu3nMA2VH8
- grGJnUuhq45p7TTKpi6uEmZSM19tMXGYy/n27L3PPYJX6hxzRLn0mnoAc+kM18vhdFv/kUg7llj
- sKGvwjgZ1Y1O2bsqbhX1b0iPGr/YT8vLq4JaqpMoih43ooB2N/GaKgui6ibUbsqOw0GJ5rA=
-X-Received: by 2002:a05:600c:3145:b0:4a1:88df:8a2a with SMTP id
- 5b1f17b1804b1-4a35aea3be1mr127039955e9.13.1793007314273; 
- Mon, 26 Oct 2026 02:35:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:3145:b0:4a1:88df:8a2a with SMTP id
- 5b1f17b1804b1-4a35aea3be1mr127039485e9.13.1793007313813; 
- Mon, 26 Oct 2026 02:35:13 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.112.93]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a35a55e9aasm184786935e9.5.2026.10.26.02.35.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 02:35:13 -0700 (PDT)
-Message-ID: <97f60010-c6fb-4d21-92fd-754d2c791928@redhat.com>
-Date: Mon, 26 Oct 2026 10:35:12 +0100
+ AKwUvBywNDt2qW0zpkOEOOHvH4elwmQ0jyWCi4g13gwFMSvaMEYxlmoqMPhyB2BosOA+pEjX6K27qE1d53UZ@nongnu.org
+X-Gm-Message-State: AFq9FYKIao03dmdDSlAijE2elZaOPcVXLRE2OcOjmDNx1l9PZg3l4B/N
+ cNL6LL2bNCCur7ZMEy9H6hwe6ESi1Eb1LYPuwMC8DdeWU2yldXy37Pbf3IR3P5a7flQVuw5CgFw
+ FbeCuesACD/zqsWkfoF7QFNxsdUV0ygTMK/f+8QnC+uPbcSikUaoEKcLmV0tCpi7cGmUyMNhC8i
+ BKJ7V6z+AGfh2mBTLeN9bYLdp0N+TS0/c=
+X-Gm-Gg: AYBFou0wT15Y50/dJ4MRokTXu20PAD36xY5dlsW++AMbN8HBI0P7A5gLDUF3f2v5qE8
+ 5PBKdv0D3LjdHI7iarZJryf3t9X6cpv/6/PqGQAJDfsTYSbwfF4td/Au1c2nWZKp4QeZ2XQpyYV
+ ofh59yXlJI5tQVCvkV01BQmUr45YyioKNrr1l2fXbbRV0kR/rVoqeAGLVMVQ==
+X-Received: by 2002:a05:6a21:4d91:b0:3e2:3392:5414 with SMTP id
+ adf61e73a8af0-3e7bfc0bfccmr4793722637.48.1793008396326; 
+ Mon, 26 Oct 2026 02:53:16 -0700 (PDT)
+X-Received: by 2002:a05:6a21:4d91:b0:3e2:3392:5414 with SMTP id
+ adf61e73a8af0-3e7bfc0bfccmr4793710637.48.1793008395842; Mon, 26 Oct 2026
+ 02:53:15 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/9] tests/9p-race: add 9p race test suite (race FID-path
- mutations)
-From: Thomas Huth <thuth@redhat.com>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- "open list:RISC-V" <qemu-riscv@nongnu.org>
-References: <cover.1792420035.git.qemu_oss@crudebyte.com>
- <2296ed61d2a38b5198d2fd9fe88056be4cd4adba.1792420035.git.qemu_oss@crudebyte.com>
- <cf0650c4-e6ed-4dda-9b8f-fed5a2762251@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <cf0650c4-e6ed-4dda-9b8f-fed5a2762251@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+References: <20261023152357.1614817-1-peter.maydell@linaro.org>
+ <0d30d085-0c38-41f6-84d8-3473b0635e5d@redhat.com>
+In-Reply-To: <0d30d085-0c38-41f6-84d8-3473b0635e5d@redhat.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Mon, 26 Oct 2026 10:53:04 +0100
+X-Gm-Features: AclHuK8xiukV32XVhjQeZ6Umf_1omgzX202kf5qMw3e9BJjhe1FHva2uJmlEjX0
+Message-ID: <CAGxU2F5a2dCcYcVyjGdTS5cZ-F4cMW4V8ybZ19PuOCLEWFH1Tw@mail.gmail.com>
+Subject: Re: [PATCH] scripts/checkpatch.pl: Don't complain about spaces before
+ Fixes tags
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Chao Liu <chao.liu@processmission.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -151,7 +124,7 @@ X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,109 +136,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 26/10/2026 09.44, Thomas Huth wrote:
-> On 19/10/2026 16.27, Christian Schoenebeck wrote:
->> Add a qtest-based stress test suite racing 9pfs server-side state.
->>
->> This patch adds the first race test "race/fid-path" for this new
->> test suite: it races (per round) one Tlcreate (which is mutating
->> the FID path) against a number of reader requests (Twalk and
->> Txattrwalk) on the same FID.
->>
->> This very first 9pfs race test guards CVE-2026-93834 (fixed by
->> commit fe9e30899f "hw/9pfs: Use read-write lock for protecting fid
->> path.").
->>
->> Hitting the small race window is timing dependant, so this is a
->> probabilistic test, not a deterministic one. During my tests the
->> (unpatched) vulnerability triggered sometimes after few hundred
->> rounds, and sometimes after >100k rounds. Furthermore, it expects
->> QEMU being compiled with a sanitizer (e.g. ASan) which is
->> supposed to detect the actual race (e.g. by memory violation):
->>
->>    ../configure --enable-virtfs --enable-debug \
->>    --extra-cflags="-fsanitize=address -fno-omit-frame-pointer" \
->>    --extra-ldflags="-fsanitize=address" ...
->>
->> Even though this is a new test suite, in the codebase separate
->> from the already existing deterministic 9pfs test cases (while
->> 9p test client code being shared between the two test suites),
->> this new race test suite is run with the same binary as the
->> other qtests. However being a very slow test, it is registered
->> as such, so the -m slow argument is required for this race test
->> to run (as it is skipped by default):
->>
->>    ASAN_OPTIONS=detect_leaks=0 \
->>    tests/qtest/qos-test -m slow
->>
->> Or if you only want to run this single race test (e.g. on x86_64):
->>
->>    ASAN_OPTIONS=detect_leaks=0 \
->>    tests/qtest/qos-test -m slow -p \
->>    /x86_64/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-9p-pci/virtio-9p/ 
->> virtio-9p-tests/race/fid-path
->>
->> On other systems, use `tests/qtest/qos-test -l` to get the correct
->> (arch dependent) full test name.
->>
->> `ASAN_OPTIONS=detect_leaks=0` is currently required, it suppresses
->> a memory leak error at the end of each race test, which is a known
->> QEMU shutdown memory leak, unrelated to 9p server or this race test
->> suite. The official QEMU CI pipeline sets
->> `ASAN_OPTIONS=detect_leaks=0` by default for this reason.
->>
->> There are some knobs that can be controlled via environment
->> variables:
->>
->>    V9FS_RACE: skip test suite by setting to 0 or force running by
->>               setting to 1
->>
->>    V9FS_RACE_ROUNDS: total amount of rounds to run
->>                      (default: 20000)
->>
->>    V9FS_RACE_NCONCURRENT: amount of concurrent reader requests
->>                           (default: 4)
->>
->> A full run with 20000 rounds took around 7 minutes on my test
->> machine. If you can't hit the (narrow) race window with
->> unpatched QEMU, it might help to either add some load on the
->> host system and/or turning the two knobs above.
->>
->> Link: https://lore.kernel.org/qemu- 
->> devel/4a0eff0539f16434b48728cd8e5a89f906c293d8.1791368962.git.qemu_oss@crudebyte.com
->> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
->> ---
->>   MAINTAINERS                       |   1 +
->>   tests/qtest/meson.build           |   1 +
->>   tests/qtest/virtio-9p-race-test.c | 575 ++++++++++++++++++++++++++++++
->>   3 files changed, 577 insertions(+)
->>   create mode 100644 tests/qtest/virtio-9p-race-test.c
->   Hi Christian!
-> 
-> Since this has been merged, I'm now seeing timeouts of the qos-test when I 
-> run "make -j8 check-qtest SPEED=thorough" ... can we please fix this 
-> somehow, e.g. by increasing the timeout setting of the qos-test, or by 
-> decreasing the default number of rounds that this test is trying to do? WDYT?
-FWIW, when I allow the tests to run longer, these are the current testing 
-times on my machine:
+On Mon, 26 Oct 2026 at 09:42, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+>
+> On 10/23/26 17:23, Peter Maydell wrote:
+> > The checkpatch.pl script insists that Fixes tags are at the start of
+> > each line of its input. Although this is where they ought to be
+> > in the commit message, it is not where the script will see them
+> > in common usage patterns like
+> >
+> >    git show <hash> | ./scripts/checkpatch.pl -
+>
+> ah. I didn't think of that usage ...
 
-  qemu:qtest-arm/qos-test               : 373.06s   167 subtests passed
-  qemu:qtest-aarch64/qos-test           : 391.52s   148 subtests passed
-  qemu:qtest-i386/qos-test              : 407.43s   154 subtests passed
-  qemu:qtest-loongarch64/qos-test       : 405.79s   146 subtests passed
-  qemu:qtest-ppc64/qos-test             : 407.26s   134 subtests passed
-  qemu:qtest-x86_64/qos-test            : 393.14s   154 subtests passed
-  qemu:qtest-riscv32/qos-test           : 767.21s   216 subtests passed
-  qemu:qtest-riscv64/qos-test           : 684.54s   216 subtests passed
+For the reference, I hit with `./scripts/checkpatch.pl --branch master..HEA=
+D`.
 
-  Thomas
+Thanks,
+Stefano
+
+>
+> > because 'git show' prefaces each line of the commit message body with
+> > four spaces.  Allow spaces before the Fixes tag; this matches how we
+> > check for e.g.  Signed-off-by: tags.
+> >
+> > Reported-by: Stefano Garzarella <sgarzare@redhat.com>
+> > Fixes: 910e1d41be6b2 ("scripts/checkpatch: validate Fixes: tag format a=
+nd commit ancestry")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > I just ran into this myself today as well so wrote up the patch
+> > ---
+> >   scripts/checkpatch.pl | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> > index 5df266acb17..82f62f60212 100755
+> > --- a/scripts/checkpatch.pl
+> > +++ b/scripts/checkpatch.pl
+> > @@ -1889,7 +1889,7 @@ sub process {
+> >
+> >                       if ($line !~ /^\s*Fixes:\s+CVE/i) {
+> >                               my $tag_case =3D not ($tag eq "Fixes:");
+> > -                             my $tag_space =3D not ($line =3D~ /^fixes=
+:? [0-9a-f]{5,40}/i);
+> > +                             my $tag_space =3D not ($line =3D~ /^\s*fi=
+xes:? [0-9a-f]{5,40}/i);
+> >                               my $id_length =3D not ($orig_commit =3D~ =
+/^[0-9a-f]{12,40}$/);
+> >                               my $id_case =3D not ($orig_commit !~ /[A-=
+F]/);
+> >
+>
+>
+>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>
+> Thank for the fix,
+>
+> C.
+>
 
 
