@@ -1,49 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325FA606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF58606A31A
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 13:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=B38uRWCw
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=xOLdClt4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLAM-0004w5-Iv; Mon, 26 Oct 2026 09:55:10 -0400
+	id 1xLLDF-0001Ck-91; Mon, 26 Oct 2026 09:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLAJ-0004vX-Dc; Mon, 26 Oct 2026 09:55:07 -0400
+ id 1xLLCd-00080N-Im; Mon, 26 Oct 2026 09:57:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLAH-0008QE-E0; Mon, 26 Oct 2026 09:55:07 -0400
+ id 1xLLCb-0000N6-Iu; Mon, 26 Oct 2026 09:57:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022903; bh=ZaPPVuSz2E+5qAWhGseGkifevMW7vTPEYCQWuES+7js=;
+ t=1793022943; bh=087usjzI6fY1D3Sv6h6tpBZAo/RbQPxHz4eKU2TC4ls=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B38uRWCwEDusf+ydhb4Wd9m+Zi79esRBL/fc5KLJGtqf7vz0QO0ZTnin+H+jq6I/6
- TySG5g8fpIxVybjJtD8ET6xK/gSFoccIFmoDzzol9QiHcYvNFeU3PgXW3Ekgn5gwY/
- UZ1GAPwRZpFrtFVHzk76m7bE7FD+nTiBqQWFmNtf2FDPzGDlAS2mikZJmz8vlRCB4z
- g4De7mwghxdntflG9tSRA5YkWFVUHHFy/dkSB4xCuKqSCCSXPb+3vhnew9z/L7xO0s
- n6QeGQlh/m2CPVZ+iwF9qevxwv7Q2xkLef95Bo4BOtpTch2O+YjIZT+5pfIK9Cvpfe
- F9ImXM3T1e8TQ==
+ b=xOLdClt4hSRXzIqCy8vhFWuUVoY/qVUT0xLXRaaPFW8mCOiiW3hcXXlujQlMQ1dkO
+ SSUPDDmeWUnSLroebSsVQvXSqJO6pPpaSWrh5pAH009OZz8Y3qKzN3sA+rLkNfvUej
+ P3zyWVaRXgDZNi8TXqil+FMx7us5IiPhgcQExbzPlzhf9t+WHuqIUlyBRCQh8HJYhu
+ +UADqXv4pYQ/RdNWZ8M1RbxM4zxFE63xo6QW0czx8f8r5qjXL2g3AXPkr1lVJdHAY5
+ jKuRfkShNuTnxE1WzDxJ7ux6dldFJ/iZ3c1dZY37tLViB8d1CkYnuhK67mtv+WI4i8
+ Ge8qXMFgeQMbg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8BA3C1E1279;
- Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F3CAF1E129C;
+ Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 896D244B8C5;
- Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F173A44B8ED;
+ Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 7EBC993481; Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+ id E21E6934BF; Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
  Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.15 v2 67/91] iotests.py: add filter_qemu()
-Date: Mon, 26 Oct 2026 16:54:10 +0300
-Message-ID: <20261026135441.1019505-4-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 79/98] qemu-img: convert: flush target image after
+ copying
+Date: Mon, 26 Oct 2026 16:55:06 +0300
+Message-ID: <20261026135529.1019772-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
-References: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
+References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -75,31 +76,95 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Fiona Ebner <f.ebner@proxmox.com>
 
-Add a filter_qemu() helper function for replacing the QEMU program
-name with 'QEMU_PROG' in test's log messages.
+With 'qemu-img convert', when using a cache mode with 'cache.no-flush
+= off', the expectation is that the data is flushed to the disk, which
+happens since commit 80ccf93b88 ("qemu-img: let 'qemu-img convert'
+flush data"). This expectation also encompasses that failure to do so
+is properly reported, so ensure that 'qemu-img convert' exits with a
+non-zero status code when the target image cannot be flushed.
+
+In particular, the reproducer below [0], based on a report by
+Ing. Alfonso Kuen Arroyo [1], would result in
+> rc=0
+> Content mismatch at offset XYZ!
+before this change, and in
+> rc=1
+> Content mismatch at offset XYZ!
+after this change.
+
+Note that this change does not affect the (default) 'unsafe' cache
+mode, because bdrv_co_flush() still skips flush to disk for that cache
+mode.
+
+[0]:
+> #!/bin/bash -x
+> dd if=/dev/urandom of=src.raw bs=1M count=500
+> truncate -s 500M dst.img
+> LOOP=$(losetup --find --show dst.img)
+> SIZE=$(blockdev --getsz $LOOP)
+> dd if=/dev/zero of=$LOOP bs=1M count=500 conv=fsync status=none
+> sync
+> echo 3 > /proc/sys/vm/drop_caches
+> dmsetup create flk --table "0 $SIZE flakey $LOOP 0 5 5"
+> qemu-img convert -t writeback -p -r 100M -f raw -O raw src.raw /dev/mapper/flk
+> echo rc=$?
+> sleep 5
+> dmsetup remove flk
+> qemu-img compare src.raw $LOOP
+> losetup -d $LOOP
+> rm src.raw dst.img
+
+[1]: https://lore.proxmox.com/pve-devel/178961792132.43804.17173233935297903311@idkmanager.com/
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260930132140.2342574-3-f.ebner@proxmox.com>
+Message-ID: <20260930132140.2342574-5-f.ebner@proxmox.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit 9d2cdc4d3b716cf5c19af522237e8d3597d079c2)
+(cherry picked from commit 901ac73874c2129a17b6e54482aee800a0f9b2d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index 7292c8b342a..f225bc5f89b 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -596,6 +596,10 @@ def filter_qemu_io(msg):
-     return qemu_io_re.sub("X ops; XX:XX:XX.X "
-                           "(XXX YYY/sec and XXX ops/sec)", msg)
+diff --git a/qemu-img.c b/qemu-img.c
+index 2f63d311413..edf75e43aba 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -2245,7 +2245,7 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+     Error *local_err = NULL;
+     bool writethrough, src_writethrough, image_opts = false,
+          skip_create = false, progress = false, tgt_image_opts = false;
+-    int64_t ret = -EINVAL;
++    int64_t ret = -EINVAL, ret2;
+     bool force_share = false;
+     bool explict_min_sparse = false;
+     bool bitmaps = false;
+@@ -2872,6 +2872,12 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+         ret = convert_copy_bitmaps(blk_bs(s.src[0]), out_bs, skip_broken);
+     }
  
-+qemu_re = re.compile(r"%s" % os.path.basename(qemu_prog))
-+def filter_qemu(msg):
-+    return qemu_re.sub("QEMU_PROG", msg)
++    ret2 = blk_flush(s.target);
++    if (ret2 < 0) {
++        error_report("Failed to flush target image: %s", strerror(-ret2));
++        ret = ret != 0 ? ret : ret2;
++    }
 +
- chown_re = re.compile(r"chown [0-9]+:[0-9]+")
- def filter_chown(msg):
-     return chown_re.sub("chown UID:GID", msg)
+ out:
+     if (!ret) {
+         qemu_progress_print(100, 0);
+diff --git a/tests/qemu-iotests/122.out b/tests/qemu-iotests/122.out
+index 84283f24343..38794f96ac2 100644
+--- a/tests/qemu-iotests/122.out
++++ b/tests/qemu-iotests/122.out
+@@ -267,9 +267,10 @@ qemu-img convert exited with status 0
+ 
+ === failing flush after convert with 'writeback' cache mode ===
+ 
++qemu-img: Failed to flush target image: Input/output error
+ qemu-img: Failed flush for 'json:{ /* filtered */ }' during close: Input/output error
+ qemu-img: Failed to flush the L2 table cache: Input/output error
+ qemu-img: Failed to flush the refcount block cache: Input/output error
+ qemu-img: Failed flush for 'json:{ /* filtered */ }' during close: Input/output error
+-qemu-img convert exited with status 0
++qemu-img convert exited with status 1
+ *** done
 -- 
 2.47.3
 
