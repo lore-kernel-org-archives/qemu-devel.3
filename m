@@ -1,152 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38111606A31D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 15:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A5B606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:03:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TTqd4Blh;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PaoFXSvz
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=GkdUa4TU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLN5l-0000MH-Kb; Mon, 26 Oct 2026 11:58:35 -0400
+	id 1xLN8D-0001wT-1Z; Mon, 26 Oct 2026 12:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xLN5L-0000AW-QX
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:58:10 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xLN5J-0006Z6-1l
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:58:07 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QEvbKU2544091
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 15:57:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xktMsnWMTysAQtH+xfYLE1WAfmWRrEoehsIlZMviCLI=; b=TTqd4Blh3nqYrYMk
- mQT51TeMg0gPs2U8x+g+crdqaabDUNanTl1Yo6+L3qa/CnKAnrg4oVnYqC1PmW9s
- VdaxUTSir/5OU6YbSBN3BiC1FeDTrbH1h2Xkzlrk3591EDKQkTkcBsvG3HwKiDHH
- ozJ97053rwjQSGB/+qXXC9sgmgaV1lF5O2eT95RQptFqhI5yW0mhqdVqAZRwb0A7
- idFeQCynMTnMrRd3y+lkKvi1+YH3M2TYo/nZQhSG5FyQ9SOteLB0B0LyUVUHGE2Y
- M5ej92UUqlR2KFEi7keu8LdvzFN9Ol8nUNg95Mp5IWOUC7iSdJWsYlmjSBEofNol
- iQp8CA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj8smratq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 15:57:58 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-36637676140so5243954eec.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 08:57:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLN86-0001q1-2l
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:00:59 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLN82-0006wT-Rd
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:00:57 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8ab38a051aaso29211097b3.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:00:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793030453; cv=none;
+ d=google.com; s=arc-20260327;
+ b=p64SgCZZaycL6viYDyV3J9wPtpTjpmvQ0A9DPmjJBw/rVH29bwhLnHjnFwiZindLF3
+ B4xFhldvsX+6DHubQttQW/Wju/9Xn0nh1jF1NxloUDDC8UJ/xEk/2N9VCCIdvn3l4BBg
+ IZnN8scuSm0n9yQxk1/IjddUEqQobUB0OPO74HoU5teDf+44/FyxLMTgb7YHGJw06C3l
+ 5qMVMJSYYKXwEHSoM1wnGsoDZ4zJD34KRbu8him2RKJzVm2czlZA+0yFxQ++LSRTHfP3
+ lpPh0ahGyBmNWXRKUN0eDXusqa8UnsP8QgfdZz41VOvlK5dBIPoGbN6OCI2xxxoHTcNq
+ eZ6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Ht0DlD2jz0BhiyL89WWcOw/7JBEQL+kkfL4oV/WrCvI=;
+ fh=gREritCzZWvcfaWqpktBp3/OUmb0rOUSRfa2BWEvW68=;
+ b=HPuKCVudDltb5mkFo/lPKiyZgKcJMZcXzoo4V35AdK2u4Vt+Hbr6m9iDNzfZYZK4qs
+ jG23e0UePWXdOZ18WJ8JLDllaKqFfJauD2/aIAnN8GJjxP1Muhv4hrVZElTYLmHS2kx0
+ BYfliw9zwhn204cqs//YERNEpr4NGWbK9WiZxYQQJNsq4w8aFmYEa1yeYIgLC+nIIeLF
+ uXb754/LbgpxaI3Ym1AbnhJlvqYk5aKMl1LQSUT1Bsuhx92bdne/18CJlFj/N2+C4FMh
+ w8WSlnIN6lGPN7dzell5Rk8O253CMRKKpgV7SrvrgWSjOKW36S4JttI0g8X93ZWQGBVf
+ a+kg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793030278; x=1793635078; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xktMsnWMTysAQtH+xfYLE1WAfmWRrEoehsIlZMviCLI=;
- b=PaoFXSvz+dorN7PPxc3BkUrHx1PZNfFPgOp+gNYvRYkeRYvdvtd7LI8FkmnwTuyI0I
- 0pLKi/znWIcAsjsydiB494bByHskDEQJK89KwzLRkKz5GeRMQiFli9VAgXVxOmC1Owdz
- HVBVdSCy7rNzXjKYBtxKZ/muMvpH+QLLFs9u5meKKQnoERoOf3/t2W1Nf2Dgn7XlfuCJ
- EZOv5kOY9y6LFovYUBkj1QtUD2+/wjK+VRVPeNxjbCOvH0sbAaY7eTnDmHr5NspBk2c6
- aX++AGFIr+cDOQSNXn4hCpFkD179AMMiNpB8BJg/fUmPUK9tYZU31tRlvXAMpvcVOLtb
- jPtw==
+ d=linaro.org; s=google; t=1793030453; x=1793635253; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Ht0DlD2jz0BhiyL89WWcOw/7JBEQL+kkfL4oV/WrCvI=;
+ b=GkdUa4TU+MDJLybmM8JQ5+c4UVbTJ5tcTJpsPgbgPdU0VyeXl3a7QcKxJtoCqM0Ye+
+ ttsBhHN5UhWvUC4iOfIN+wj9+mGbmJ3TmgEWpeT9cz+gqrpTsNQ2BLj9+/DwbWXyxNdQ
+ cZxphTOP4TzybaX7GVmGLIp6icvZBEjd14jZpUixMDLl8j2fVBEOStmtDHYxATV5EQW4
+ z2NBU7bwuHdtghGgHXPmomOAkgtYdHLeAESvUUxW7fF3E8xIlF/2wNHGEEQr2Rdp6Nyp
+ 14Igw/J8u/U833Vpxzut9DtzGVkL+kRK5oi8rG7Gk7cLEdeicaF8iqQr5GfyNG44ZUtZ
+ EUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793030278; x=1793635078;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xktMsnWMTysAQtH+xfYLE1WAfmWRrEoehsIlZMviCLI=;
- b=ERLvzxINlMDlc3PYzQoLFbL+e62hnVU8QXBAdN5UNFd0pBgNYGOS/W8K99GatkNOeO
- 2O4ZVTuUEcNxHLBDtLXE6lvOSIMyE1HJNa2W5ghf5oz3MBoIsoKYsH9U5vCi3p5yiUOK
- EPiUyx00VlCO2Ys9fo1ARgAR/bYCC+vX6vCnNQb9iEWdYRkhpPDBGnN8Rju9hw04aDfX
- ZKgLrbO5Ehgc6TQXnvoGwNbE2YbNWJjRbRrCO0ChucK+7TM+35sXmkJ3FNJIenF1XLrN
- q5xz62TkZK3eggaYMkyZdUDJsnD6JByLyiQHFyfVXOPsgbJgrMThIEjLznInf1h/aGRW
- zPvg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzcU0Pi2UEefisyHNE3pUnBWEnrWdEZ2UuNsB4BZl907b6BzaJ9EO9FvY7syPzsMAHCYU0WQYDvuT2X@nongnu.org
-X-Gm-Message-State: AFq9FYJat7y17OFXV657tnIxUMvCXYSYfMHoiI2GnSA3NiAnijk5H+dc
- R3gmBJ6AbTD9X7haegSHrqyi40uhP92rsEV6EJ6Rp46kopAnvY/HFxFmyEiy3scJJlEV8e768p/
- Lm/aBF2YE2NX8ic5Eg1smWmSWgT9JugsQcduBVUHYLCBKqG73Dy+MC2dZOA==
-X-Gm-Gg: AYBFou0gJQmH9BtVGgVW5wYJwmYDX3Jt4Q0hwODr6WoDygDTaGYtkfkenQmAz4Iphbf
- U5Fiupjk1i29w/R8vcf4glFpfgEcaDXiCVT4O/4GnLfw3dqjRa5EL2Hsty8ujRiX3E2LvaS2fot
- Atoq/GGhKtL2YxyX3cEYrrFYzdXD+9pIX/N3iiO0I2Wr+qbq7p4CQU1CWfC2QVtXrMA4E7BubD/
- S/mtG+3MTRnQ7kloJC4qczZrZJgHTud/h9asoVpLZ4suRankMBIBnWq6dg+71Cb6U9WnA2fBvTM
- 7tpJ50lr10+6p7liJYrMQMZqa116Ued2nZ8RskNmgkoizUIF0E1Y3g8E48wvDoItpfOrCHnzkwY
- QHkuz9RV0oVuw1H0+mL1tyM1jzQYWYF/31VUV6Br4VM/C6d2AlirzsveTfU8zW+bvTvQfKvBgw1
- hgcNALv8O7m8CRjbJ+pwn0ruqJF4/4vYle9djNA5jjBdw=
-X-Received: by 2002:a05:693c:4015:b0:369:d992:e3 with SMTP id
- 5a478bee46e88-369e8660a6bmr10269969eec.32.1793030277366; 
- Mon, 26 Oct 2026 08:57:57 -0700 (PDT)
-X-Received: by 2002:a05:693c:4015:b0:369:d992:e3 with SMTP id
- 5a478bee46e88-369e8660a6bmr10269935eec.32.1793030276664; 
- Mon, 26 Oct 2026 08:57:56 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369e8ec865esm23947874eec.26.2026.10.26.08.57.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 08:57:56 -0700 (PDT)
-Message-ID: <a30ab0fc-f54f-429b-9a04-a6fbb3a1d5c8@oss.qualcomm.com>
-Date: Mon, 26 Oct 2026 07:57:55 -0800
+ d=1e100.net; s=20260707; t=1793030453; x=1793635253;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Ht0DlD2jz0BhiyL89WWcOw/7JBEQL+kkfL4oV/WrCvI=;
+ b=qVk6CfpGPy3lxwkr7uif1MbGj9n6qXMAIsJe78Ja8Rw0CmdBAi0XLFWBmLu+4GS0/n
+ LAxIpwToaWch9cTuf3xTNhVYj1TivhqAncjzg1AzZnlyzgbLUkH5IYxF0WNUwa3UyPx0
+ wMIBp9brz6EerJIfQVrIVucYHfhaZOfk9itv5+KFKePaSUwS7bUBJxoMqClHeriLJbcw
+ hTxYKAUTIQL+Eu723vnjqo9Dsk3RczE3veGcmO32rfOe6d50NoyDJ/LbhXhGaYEvVrGq
+ H0bPdXT8QrmpWn8KWaE9RRN1hP0i/flID9hWDTGAXFxZ93weL/KuqKB+NvBkXo7pnoqb
+ vq/g==
+X-Gm-Message-State: AFq9FYJA+CM/h6MoMywK63zhe+Sjts57rSkdApk5RQwsWYp+45XJhR5r
+ n4c5KlEhpl4MzLU0rUOVGkLrJEbxsnd7uZvucyIAEStD4V1eM0Ii7JacEoXaSVDma5S69KnpFJN
+ 224eZAJ9B1s4i7jSznjfTbQAUyOIxtvvbx5fDW24iPg==
+X-Gm-Gg: AYBFou1H+lJtaMhY46NTqCNfiW1edVpbyz+5FHCO1PJ0BaKzw3gj3zTzyeRCcnYBavT
+ ebcpISOWfMsOrfqIfS7X0O+x5kMIEKYlIB4BYjXcLm/+gNgguPP8q3Lh3gpTYI5Ynz+cE9lzBYk
+ 4c55sWOfduHA+ZQOMPpFmgVm/2JK1yTVUZA7G32R4iHL1dZfRuJPunZdko8Eb3iIinMWj+YXHwY
+ OcnmPApHOEPwfUXl1E7VFl2ErJ+tm8yrDlLEK3wgu4kKsZYdW6G4MzGRsBt5XyGLWgt6racDZ1y
+ deC8BH65YMULy3Hy/O12QBud3X6pijkdZzyi3lMa/REmpCqxzTGAf4PvE7sf7qBRWMTofkJYA+Z
+ xjsLJQmSmzf6eYxgo1lC/CRsS+u/GS9RkI0N+lUUTBGuZIGsFTw0Eb7YUveI0sALgaJragrIQSg
+ jPaeYjvOJY5Q9kRG3KKMmV
+X-Received: by 2002:a05:690c:e1d7:20b0:8b0:e207:34b4 with SMTP id
+ 00721157ae682-8b166b86c4bmr37271907b3.18.1793030453302; Mon, 26 Oct 2026
+ 09:00:53 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] tests/docker/dockerfiles: add release.docker
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- mjt@tls.msk.ru, peterx@redhat.com
-References: <20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com>
- <20261014005338.34657-2-pierrick.bouvier@oss.qualcomm.com>
- <87ecdgl7v6.fsf@suse.de>
- <9aca799c-3f3b-4234-a38b-725879818755@oss.qualcomm.com>
- <8733tsleiy.fsf@suse.de>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <8733tsleiy.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: wc8YotmcjzGp9Bus9FbGN_uhLJ_GE-w5
-X-Authority-Analysis: v=2.4 cv=Sfti5fRu c=1 sm=1 tr=0 ts=6adf7886 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=fxJcL_dCAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=DfNHnWVPAAAA:8
- a=xqZ1NVhh4CuaIEV_J8UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22 a=rjTVMONInIDnV1a_A2c_:22
-X-Proofpoint-GUID: wc8YotmcjzGp9Bus9FbGN_uhLJ_GE-w5
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2MyBTYWx0ZWRfX7zHDSQwbHIHk
- eTBt9QH2WAj/s+I3ymUa+wwsLGr9rKdHXrjkhk1Q9n/CA2wzBa3brYW5LXF3C/e5P2j1mq9niFJ
- JzOW3GTFU5Il0gYvjfVIpXzSzsyrPRU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2MyBTYWx0ZWRfX4qApVEIQliW1
- qxKEpEmzvTXZ5/aarcXZHNm8LysTLMmHrUVWy5mEu87XynWLDQP6+Ys8Fr6DSuwlUaFae3YZvEM
- 2gsSJbe0CuSTNuMlY8A2onSIopOU99Tcsoj92tXrygrJthO9Vf/6Q22ZEex0L1/LtYL+Ssv2VfE
- PPZrEhIFeGCw+PZmq0NhpZhLMq1/YL5vyy8pH3haG9R6hhCXzAhYSZ0sYgdzkLpV6sRcx046u6U
- VM5ABJOiXC8f1ZpZToE9wIj88DPARKb4cyt9SoAKsZySWEBueKJLeM7HWM62ubMiF+ideggu3FO
- Ngh+zzxQYX4/2+AO+oLKhX5NFFHr99zncTrmZTLfhIOvliwBuQtPbDmg+yyMK5Y9vOwjxBt9Aaf
- A8Ir2wuSKCKdyuSUTygD3+MiGbVF4D16nvF1Mo80dpndaN/Rzgove2ta3Z4RxSd4NZAJMUSUPPY
- sdmIOvBmRCmhdfH62qw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260063
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261023135924.64990-1-marcelomanzo@gmail.com>
+ <20261023135924.64990-15-marcelomanzo@gmail.com>
+In-Reply-To: <20261023135924.64990-15-marcelomanzo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Oct 2026 16:00:41 +0000
+X-Gm-Features: AclHuK9o60JzHiCJZzowU7s1dRU7NXr3BatvrBD-chA8mQ3rE9i4thT6yVt3MLg
+Message-ID: <CAFEAcA9Y5=m=prR9+8nftf8yAE9BDkNttiTh1fj0Wo9G1s+sdg@mail.gmail.com>
+Subject: Re: [PATCH v5 13/16] hw/net/bcm2838_genet: implement GENET RX path
+To: Marcelo Manzo <marcelomanzo@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, philmd@oss.qualcomm.com, 
+ Sergey Kambalin <serg.oker@gmail.com>,
+ Sergey Kambalin <sergey.kambalin@auriga.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,291 +115,67 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/26/2026 6:31 AM, Fabiano Rosas wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> On 10/23/2026 9:06 AM, Fabiano Rosas wrote:
->>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>
->>>> This new dockerfile allows to build a distroless image containing only
->>>> qemu stripped release binaries, their lib dependencies, and installed
->>>> artifacts (roms, keymap, ...). There is no shell, no python, nothing
->>>> else. This is achieved thanks to a multi-stage build, where we add qemu
->>>> binaries, artifacts and libraries in a new scratch image. Image has
->>>> the minimal size possible.
->>>>
->>>> This is based on Ubuntu, which has the advantage to have working
->>>> containers available up to 12.04. Debian old old stable have broken apt
->>>> sources for instance. Ubuntu 10.04 binaries segfault due to missing
->>>> vsyscall emulation on modern kernels, so 12.04 is the lowest possible.
->>>>
->>>> This unique dockerfile works for all qemu versions, with 0.12.0 being the
->>>> oldest we can build today (based on ubuntu 12.04). Previous ones need an
->>>> older compiler.
->>>>
->>>> To build the image, you need to provide a qemu and ubuntu version:
->>>> $ podman build -f release.Dockerfile --build-arg QEMU_VERSION=v11.1.0 --build-arg UBUNTU_VERSION=24.04 -t qemu/v11.1.0
->>>>
->>>> To run it, as there is no shell, and no defined entrypoint, you need to
->>>> choose the binary you want explicitely:
->>>> $ podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
->>>>
->>>> Notes: We could optimize a bit further, by creating a base container for
->>>> each ubuntu version, that is reused between all qemu versions built with
->>>> it. Given that recent QEMU have around 800MB of binaries + artifacts,
->>>> and only 100MB of library dependency, I don't think it's worth the extra
->>>> complexity.
->>>>
->>>> Notes: Also, I considered create one image per binary. Problem is
->>>> that qemu depends on other artifacts (rom, keymap, etc) and it's not
->>>> easy to identify what is needed for one binary. Thus, I think it's
->>>> better to stick to one container with all binaries per release.
->>>>
->>>
->>> Yeah, it's fine this way.
->>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>>> ---
->>>>  tests/docker/dockerfiles/release.docker | 76 +++++++++++++++++++++++++
->>>>  1 file changed, 76 insertions(+)
->>>>  create mode 100644 tests/docker/dockerfiles/release.docker
->>>>
->>>> diff --git a/tests/docker/dockerfiles/release.docker b/tests/docker/dockerfiles/release.docker
->>>> new file mode 100644
->>>> index 00000000000..611ecca9859
->>>> --- /dev/null
->>>> +++ b/tests/docker/dockerfiles/release.docker
->>>> @@ -0,0 +1,76 @@
->>>> +ARG UBUNTU_VERSION="UBUNTU_VERSION_build_arg_must_be_set"
->>>> +FROM ubuntu:$UBUNTU_VERSION as build
->>>
->>> I believe FROM should be capitalized the same as AS.
->>>
->>
->> Dockerfile instructions are not case sensitive, but yes, AS would be
->> more consistent, I'll change it.
->>
-> 
-> Docker emits a warning about the mismatch.
+On Fri, 23 Oct 2026 at 15:00, Marcelo Manzo <marcelomanzo@gmail.com> wrote:
 >
-
-👍
-
->>>> +ARG UBUNTU_VERSION
->>>
->>> Is this duplicated?
->>>
->>
->> ARG have to be duplicated for each stage of the build.
->> In this case:
->> - pre-stage (to be used in first FROM)
->> - first-stage (to be used inside this stage)
->>
-> 
-> Got it.
-> 
->>>> +
->>>> +# add deb-src for apt build-dep
->>>> +RUN sed -e 's/Types: deb/Types: deb deb-src/' -i /etc/apt/sources.list.d/* || true
->>>> +RUN sed -e 's/# deb-src/deb-src/' -i /etc/apt/sources.list
->>>> +# archive.canonical.com is not reachable anymore, and cause a long timeout
->>>> +RUN sed -e '/archive.canonical.com/d' -i /etc/apt/sources.list
->>>> +# LTS < 14.04 are hosted on https://old-releases.ubuntu.com/releases/
->>>> +RUN if [ $(echo $UBUNTU_VERSION | cut -f 1 -d '.') -lt 14 ]; then \
->>>> +    sed -e 's/archive/old-releases/g' -i /etc/apt/sources.list; \
->>>> +fi
->>>
->>> Hm, so I imagine these containers have reached end-of-life? I wonder
->>> whether we should cap how further back we go based on this. It's one
->>> thing to workaround a few installation bugs we list/install our
->>> dependencies, another thing is the distro image poiting to dead URLs.
->>>
->>
->> If we want to cap it, then 14.04 is the lowest limit with fixed url.
->> Note that archive.canonical.com still has to be removed, it's present in
->> some LTS > 14.04 and create a long timeout for apt update.
->>
->>>> +
->>>> +# use apt-get since apt was missing -y option in some ancient distro
->>>
->>> Ok, this is a reasonable issue to encounter and fix in the dockerfile. I
->>> pointed at this on the cover letter, but we don't gain much in knowing
->>> exactly which apt version has -y or not.
->>>
->>>> +RUN apt-get update && \
->>>> +env DEBIAN_FRONTEND=noninteractive apt-get install -y git build-essential
->>>> +RUN apt-get update && \
->>>> +env DEBIAN_FRONTEND=noninteractive apt-get build-dep -y --arch-only qemu
->>>> +# additional dependencies that are missing at some point in history
->>>> +RUN apt-get update && \
->>>> +env DEBIAN_FRONTEND=noninteractive apt-get install -y ninja-build flex bison libpixman-1-dev
->>>
->>> So a discrepancy on which QEMU version and how the distro packaged it at
->>> the time vs. which dependencies we had. Is this something that would
->>> have been solved by lcitool? (Hm, did we even use it back then?)
->>>
->>
->> It's new dependencies added by QEMU over time, that distro didn't
->> reflect yet at a past date. (ninja introduction, or recently hexagon
->> target which requires flex/bison for idef tool).
->>
-> 
-> Right, and they may never add it, because it's either already in the
-> past or because they simply don't need that dependency for their
-> package.
-> 
-> If we're around release time and for some reason they change what's in
-> their package, it would be annoying to have to figure this out to
-> unbreak CI or something similar.
-> 
-> It's a situation that tends to degenerate to that last line simply
-> becoming the full list of dependencies. There's also the whack-a-mole-y
-> job of removing packages (for tidyness) from the last line if they end
-> up being provided by build-dep.
+> From: Sergey Kambalin <serg.oker@gmail.com>
 >
-It's only needed in the time frame where a new dependency is added until
-next LTS catches up with it, so it will never be the full list of
-dependencies. As you can see in current patch, we are talking about 5
-packages over 15 years of history.
-
-Also, all "extra" packages installed manually are still valid today. I
-feel confident that 15 years of history is enough to prove it's a
-sustainable approach, with a result more maintainable than a manual list
-of dependencies for each release.
-
-> Granted it's containers and there may be little expectation of things
-> working indefinitely without code changes, so I'll let the maintainers
-> do what they prefer.
-> 
->>>> +# python3-venv didn't exist in ancient ubuntu distro
->>>> +RUN apt-get update && \
->>>> +if apt-cache show python3-venv; then \
->>>> +    env DEBIAN_FRONTEND=noninteractive apt-get install -y python3-venv; \
->>>> +fi
->>>
->>> Maybe good to know which version so we know when to drop this block?
->>>
->>> I see some of these check the ubuntu version, some not, I wonder how
->>> easy it will be to break an older image's build when trying to fix a new
->>> one. I find it a bit confusing.
->>>
->>
->> Good point, I think I had this written *before* trying to go before
->> 14.04, thus the inconsistency.
->>
->>>> +
->>>> +# patch cc and c++ to inject warning suppression options
->>>> +RUN mv /usr/bin/cc /usr/bin/cc.real
->>>> +RUN echo "#!/usr/bin/env bash" > /usr/bin/cc && \
->>>> +echo "exec /usr/bin/cc.real \"\$@\" -Wno-error -Wno-int-conversion" >> /usr/bin/cc && \
->>>> +chmod +x /usr/bin/cc
->>>> +RUN mv /usr/bin/c++ /usr/bin/c++.real
->>>> +RUN echo "#!/usr/bin/env bash" > /usr/bin/c++ && \
->>>> +echo "exec /usr/bin/c++.real \"\$@\" -Wno-error -Wno-int-conversion" >> /usr/bin/c++ && \
->>>> +chmod +x /usr/bin/c++
->>>> +
->>>
->>> This assumes this dockerfile will not be used to test a current
->>> build. Probably ok.
->>>
->>
->> Why is it a problem? It just disables werror in a systematic way,
->> without relying on configure --disable-werror that was not always there.
->>
-> 
-> Depends on how we use this image. If it runs early in some CI it might
-> be better to let it catch the warnings.
+> Implement the receive DMA ring handling: qemu_can_receive()/
+> receive() callbacks for the NIC's netdev peer, copying incoming
+> frame data into descriptor buffers on the active RX ring,
+> classifying broadcast/multicast, and raising the RXDMA_MBDONE
+> interrupt as descriptors complete.
 >
-
-Even in this case, I think that ignoring the warnings is the right thing
-to do, as you want this to build at any point of history.
-
-Classical example is a new LTS release is published, and new warnings
-appear breaking compilation. It's something we want to deal with
-existing image containers (ubuntu, fedora, ...) and not with a unified
-dockerfile for past releases.
-
->>>> +# 2.9.0 => 3.1.0: clone git submodules from expired url, replace them with gitlab.
-> 
-> This sentence may need rewording.
-> 
->>>> +# 2.9.0 => 2.11.0: issue with libfdt version, solved with dtc submodule, which
->>>> +#                  was removed later.
->>>> +# Ubuntu < 14.04: git has no --single-branch, so perform manual fetch after clone.
->>>
->>> See how unstructured this has become? A comment here, the code down
->>> there, nothing actually checks the version, the sed happens for all
->>> versions, etc. Dockerfiles are bad at this kind of thing.
->>>
->>
->> This one is just a comment, and the code below has a single
->> implementation that works over all versions.
->> We could have ifs with multiple code paths, just a question of personal
->> taste I suppose.
->>
-> 
-> Could be.
-> 
->> Out of the if on ubuntu version at the beginning, the general approach
->> was to have a single code path for all versions of QEMU/Ubuntu, without
->> ifs per version.
->>
-> 
-> Ok, makes sense.
+> Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
+> networking series (patchwork series 829638, posted to qemu-devel in
+> 2024, never merged). Carried forward and completed by Marcelo Manzo.
 >
-
-From the conversation on v2, I feel that the right thing to do is to
-restrict this to versions >= v3.1.0, which simplifies a lot the code of
-the Dockerfile (no if on UBUNTU_VERSION, no submodule hacks, and
-checkout process gets unified).
-
->>>> +ARG QEMU_VERSION
->>>> +RUN echo "QEMU_VERSION=${QEMU_VERSION:?QEMU_VERSION build arg must be set}"
->>>
->>> In order to build local trees I added at this point:
->>>
->>> RUN --mount=type=bind,from=qemu-src,target=/tmp/qemu-src,rw \
->>> cd /tmp && \
->>> if echo "${QEMU_VERSION}" | grep -q "\."; then \
->>>     git clone https://gitlab.com/qemu-project/qemu.git --depth 1 && cd qemu && \
->>>     git fetch origin "${QEMU_VERSION}" --depth 1 && \
->>>     git checkout FETCH_HEAD; \
->>> else \
->>>     git clone qemu-src qemu && cd qemu && \
->>>     git checkout "${QEMU_VERSION}"; \
->>> fi && \
->>>
->>
->> We can extend to support any sha-1 (it's just a matter of doing full vs
->> shallow clone).
->>
-> 
-> +1
+> While carrying this forward, make these changes to the original code:
 >
-
-I'll make sure this can take any version.
-
->> For the local build, I don't like the idea to build from local state, it
->> has zero guarantee for reproducibility, which goes against what
->> dockerfiles are IMHO.
->>
-> 
-> Could this be crafted to take the git repo url as argument, then? Your
-> point is valid, but once this image is used for something that exposes a
-> bug, it's natural to want to re-execute with a modified codebase to
-> debug or test a fix.
+>  - Report no hardware-computed RX checksum (rx_csum = 0). The original
+>    stored the IPv4 header checksum in host byte order, but the guest's
+>    CHECKSUM_COMPLETE path expects a running checksum over the L4
+>    payload, which made the guest reject otherwise-valid inbound
+>    packets ("hw csum failure" in bcmgenet_rx_poll()) and broke
+>    DHCP/connectivity intermittently. With 0 the guest verifies
+>    checksums in software instead.
+>  - Fill in the per-packet status block with stl_le_p() rather than by
+>    casting the packet buffer to a C struct, which is undefined
+>    behaviour for a misaligned buffer and wrong on big-endian hosts.
+>  - Refresh the link state once a BMCR autonegotiation restart has been
+>    handled by the MDIO code (moved here from the MDIO patch, where the
+>    function it calls does not exist yet).
+>  - Validate the guest-programmed descriptor indexes against the size
+>    of the descriptor array, and limit the DMA write to the size of our
+>    packet buffer, so that a guest-controlled register can't make us
+>    access memory outside them.
 >
+> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
+> ---
 
-Yes that's easy to add, I'll add an option for it.
+>  static NetClientInfo bcm2838_genet_client_info = {
+>      .type = NET_CLIENT_DRIVER_NIC,
+> -    .size = sizeof(NICState)
+> +    .size = sizeof(NICState),
+> +    .receive = bcm2838_genet_receive,
+> +    .link_status_changed = bcm2838_genet_set_link,
 
-Regards,
-Pierrick
+A very tiny nit -- if the earlier patch had the trailing
+',' on the .size initializer line here, we wouldn't need
+to edit that line in this patch. (This is why we prefer
+trailing comma even on the last initializer in a list, as
+a general rule.)
+
+But anyway
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
