@@ -1,106 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451BD606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 21:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6BE606A31F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 21:30:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pZIQjqwI
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QKMUS9mK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLS36-0007Me-78; Mon, 26 Oct 2026 17:16:08 -0400
+	id 1xLSG0-0001Kn-Va; Mon, 26 Oct 2026 17:29:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <strahinjapjankovic@gmail.com>)
- id 1xLS33-0007L4-SL
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:16:05 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xLSFp-0001Jx-9c
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:29:17 -0400
+Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <strahinjapjankovic@gmail.com>)
- id 1xLS31-00069n-Tm
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:16:05 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b06c0794cfso29933967b3.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 14:16:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793049362; cv=none;
- d=google.com; s=arc-20260327;
- b=M0kp7oOiDZwip0ixzGqYMP8X+yKxlbqV3vSYo5FHDblgGczNNiUHJ65sul/B/JYpz+
- zK2fDBaDDD8kBmrBWZxx0PTEwYonjC2vpojb64SC+XZ68GQSgfTZ7XL0+i1UuTs3ZI+V
- b49hmZNa8PnOguo1n12mIemgluW1YPEXjUo86byYbr2h6f6M16t11X5JrDb14ZX9rhhX
- 98eAkLO5uuGS55nQT4OKpcueN9l++rCLt+LwCgi72ImZ/x32GpW4S/v5CKDwk/rEN2Sy
- SYxA1hIUa9wb/AzV0MtTHLxuYJkotLrHUqu0Ytxg75kvPkpx6GW1z9xdD/I6siChT41B
- FfkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
- fh=i/7RqEP4WRR2x+xnf5oVJS8DzcNyzognBo+4XJldFoI=;
- b=sG1Z9G2X7Q/nAmwtRyEIhWJVqwnQLS26sfuPRTFU43KHb5u44oG1ltoEv8dGMu1Y7b
- 5zl2FumE0LAB5NDybn0OHg4tlfME1gVhsde87DayCpi1Kdk7Vzh3FHaSwUQRWmmxpzdn
- Hu70pd4SKkAGnca4mhBL1WrCGWE2Wo8Vh/gYK220p+HqEfG/Erzd0iku09efnnOyg9pN
- sN0CdJa6Vml719kRYXK064LJ3OPv+q/9j403JMVDGPEy0Qf8zJUEMZHE2GaHaFPwDT5n
- OstK5CkdJ0JpOdnNPVWxmoguiimXs0HQ50+ZbPBcNrn8Nd9vywT3Zo5L7loq1pcYlzjL
- LxMQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xLSFn-00076h-II
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:29:16 -0400
+Received: by mail-qv1-xf2c.google.com with SMTP id
+ 6a1803df08f44-91ba8fcc684so33767886d6.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 14:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793049362; x=1793654162; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
- b=pZIQjqwIIa95TGudJEyl5L0grBGV8twnjGuPV9q6QGKm8C7IR+6B6h5E8sLQ7vRmaM
- f4xAMppsY9SF4evEOIFdGmD8uqT5bfwXSqajgZF7IW5U71w30TTSLX1kcH6Y9Ux7T6DU
- 6W4sjREGPv3YUn4rIuDISoVtyWhw3wj8V4bXXBJCK197vVV1znpeUR7NRfXbb3mKQyZk
- HfmeM7f/OAOkzN2l9EpJieAVRgidiSVMVqvxuIsn2l2tT9JOu5v0mjzxb4NSgmyETbaS
- +WEIMuRFtI9O1mwVucef7dgkOH5i/N9gokSkDCrmb8AYjImOEvt0l1dMBRlahRBFZlIK
- MVCw==
+ d=gmail.com; s=20251104; t=1793050154; x=1793654954; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=umrR5N6op3TzUxoaxinr6ylUSq+sThPpBf14p8okNYA=;
+ b=QKMUS9mKh/yIMG40VOJtO4+WcLFT/uZrvhOBudC9OFdADsQx7+r6nkqAb/Zuaa5Kb7
+ eGs9Ai2YzQ2/B0hfuncunnU7bl6dLhe2qxKff5h6ZHqSYLMen2f9u7mLp6dsr5UnETGB
+ FxwLbsMcuqI0OAgXaNF1wxSn4ZHB54nxlyzJTd/7rZDG23HTO6kiVaOf8HnUdgwbj171
+ I70yk/+wXKxXrEpUZtWw8pkEA4tSsSD9gVKRbrpBLQAvl/4RUH1liA2rrHAS1j79JuEa
+ bIhJoav+YDwQhJ41ByWKodgULlzzvdhRvM8cJK+7hfA251JFchYeovva6tOGe5VfYP+k
+ 1lYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793049362; x=1793654162;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20260707; t=1793050154; x=1793654954;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
- b=I4umYR43lbUN5c5ap+nZK4ryysN/gIGXE06jdZ3eOs2V/8he3yxZAWDXJRkB+PLjUz
- E3/h+D6YdnMFAExHeHfDYoFi/Hu8gvutHHFjb6xjeMyBHZ1MvU42JTBSyWQOqWyl8wsv
- LNoMpTEx24UKMmqeym6VjQ+u5P4sYIsKDocKPVoe+F+ytkIrNsNacgcCeGtipDGJ6mQt
- qzaRKHzeIhPOAmKm/Y0cTSK9lChfobOd24JUPbENmOdlWIbUNteJ2/xKUA4e5KAm3uG3
- VhGutyhGVXc65g3/dQb5Te0VGANvicGvTg+r5OzlD6jz0L8bfJoD5OG1mc4j1BOHYEyg
- Y9Lw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBykr7DZb9q+99dh7Skn0sNn9G2lsvSUhf5sanEpGraHxe4CqXeUF1WUuCcZhgn7HWl+strS785EBN+q@nongnu.org
-X-Gm-Message-State: AFq9FYJlXDI9Dc8o7GZmCoZwvPb7Jy5+ZtXRtywaTe/cKBBgtROWzS5v
- YjoGi4Ze0u/+q4PeOjD0hSjqB2p9oablteG3ipVSASxqPOojUS8KR1Jyf2STztp06ijAX4JrcHY
- zKZKQz5U7e1inv14HQRlfVvTW5NM8s6I=
-X-Gm-Gg: AYBFou2ovOl5uIzT6oQBhpU0URc7PkInaJ1g038HS6n5/QPmOD7ewCCFZ2tcsgtE629
- BIeJ/vsLoBxvgRzqBqk3QqkNYyP7U3OVBUhlvx894epUfGg/X/AYgIx4eY9R8SA5KKHeM0jFyjv
- ig6J3fq/LIy037QO0M4DFjXTOJ78NVI/z2xLVZElhc2gvpzPl2XRpY5/cbbYo0Yf6C/yh32WTG9
- 0p0ddlbMfr79+OkG+l39jb2EbJ5r2jvTLP3sSXqG8DH5+4DNaza1/OPz76cmflaICBByYtHQ1Lw
- M4i4w5uhwONu69EN4FlGe+ksY+xyTx0TNtxoU2DUyGXCIoqlSQbP/IlmtXmEfWUKNWnKqW9koyR
- V1PTM8wD1PAf+GfZoWevAlxPgQ1z9Gm5QAnu2bmI=
-X-Received: by 2002:a05:690c:dd6:b0:8b0:cee8:53cf with SMTP id
- 00721157ae682-8b1669cb374mr65640797b3.3.1793049362240; Mon, 26 Oct 2026
- 14:16:02 -0700 (PDT)
+ bh=umrR5N6op3TzUxoaxinr6ylUSq+sThPpBf14p8okNYA=;
+ b=c1X00yUmeDMNjGO0YqFf5uUB5R2FVpKaiI6hX6fQoYXHDTX0AZ1qqc2Gpq3MDSMOH4
+ CQbZsP+eKoXcdxO2fAoc3h5qa72GwMOx84+MPdMpukG5X15MquWrp828uecYzyTcOmJV
+ V55KxnoOqXrAed4z5viOZTj39fm4loPR1t3udXD+/SrtTTfvEeeeKykf0NIu0tlbmybm
+ uP/keeqxrHoZIizBKwR48psYAGw+j1pG6KHINrHx42qecAnIfyq3RKhT12o5ar5hgYuD
+ BuEvecpCd7tEJhHxCHpo1pAQq3g0NuY51EV9KtIlxnJYQ/G66XNzDv/IA+Ruk+oU5rAJ
+ Hyrw==
+X-Gm-Message-State: AFq9FYJcmVtVDnCU0AtgcmiOXU4EdH4dUYZtbChOkPyCuTqZ0N4KsZMp
+ wYAeFnE09VPSbpp/WneD3MkwdYRbpOlgxuQa0Dr13FeaCoOfyD7nRZjg
+X-Gm-Gg: AYBFou2Oa2h+vKCjIgzukQHX8BDjeuJxFi/GmZ5bzf8tGCv+SrhIKmfQwW4GD2xLVZe
+ mGFlfiocmp+HxTd3JyzSQPtvmQY1jqmdShWHLVaJXg5PxtmQf7XF6u4N5oTjE9EXZnNjJHwcxq1
+ pmaOXOHHqODHiH1dctkAeBTiMZnImPPdF7jN4tyMZUyHYLQ1dapAK/DLWoAILyK7qXHshnOsoxB
+ c6zCfwb/KfF8O0U94nXg6G+/EjrfIFTq74xdxPMbJLqQbwHxYQ0jwvwlcVZeO5ZDXKpEIoVGSuH
+ txhzXXEY9CJIRe9ldKRaF+gYoj9qzxKBU6GK4Wt3qZUN20tu2rBxYz2oXqogQg+mjdmV/iSusN8
+ 9i2EM0/iBNf1vnjezFRxAHoseCL6/q6+M7jfeySn4NfTGvEAii64cF8j8XwV7zPwNZG3MvPa7WT
+ ZVMIzmaeBoEuS+JpEBaw6SH9AxzwgTJiDxPfu9Xp0VwuWTiRHmElRq31k2VuUNubFhEKmxMKLvc
+ uUkJQxRz5rxZgDSw4PHBfZx95pn7Bp30i9bmgLTkvv6Z2/FMRCj25jXn7QukJvWaYxRm0f3aJqN
+ wO0LclK9rpFNQB0YYQo7pwSSa4bdiaSC+shP
+X-Received: by 2002:a05:6214:300c:b0:917:8c86:6608 with SMTP id
+ 6a1803df08f44-91c48e85ddemr148146836d6.42.1793050154081; 
+ Mon, 26 Oct 2026 14:29:14 -0700 (PDT)
+Received: from [127.0.1.1] (95-24-99-141.broadband.corbina.ru. [95.24.99.141])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91c47c6f3bcsm85206376d6.29.2026.10.26.14.29.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Oct 2026 14:29:13 -0700 (PDT)
+From: Timur Maksimov <gessingate@gmail.com>
+Subject: [PATCH 0/6] hw/i2c/aspeed: fix non-packet transfer modes
+Date: Tue, 27 Oct 2026 00:28:36 +0300
+Message-Id: <20261027-aspeed-i2c-nonpkt-fix-v1-0-076cdde514f8@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261023153150.1710372-1-peter.maydell@linaro.org>
-In-Reply-To: <20261023153150.1710372-1-peter.maydell@linaro.org>
-From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Date: Mon, 26 Oct 2026 22:15:51 +0100
-X-Gm-Features: AclHuK94R0hhYGC6zq59C2BXJk6qgATQeFl2N8vU2ICxvVDt68RMgdhW2zQWzj8
-Message-ID: <CABtshVSC3gw+juhvnr9AYUdro-ADkBZRgEhrJPC443OrFmtOkA@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc/allwinner-h3-dramc: Avoid shift by negative amount
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Niek Linnenbank <nieklinnenbank@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000004d1c7e065ec4d65b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=strahinjapjankovic@gmail.com; helo=mail-yw1-x112c.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAIBAAvxJ7bsGWDOsr0cFsqyUw0Ygg/HvSc
+ QZmXkgchRMM1QuRb0ly+gJNXYHbrd8YZSkMpKhrFGm0KTAvKOTQnz4cF67yoOlno2nWzrQWShs
+ iF/1/xynnDyjeKAZnAAAA
+X-Change-ID: 20261025-aspeed-i2c-nonpkt-fix-89b852b5c84a
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Timur Maksimov <gessingate@gmail.com>, 
+ "Timur Maksimov gessingate"@gmail.com
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793050151; l=1174;
+ i=gessingate@gmail.com; s=20261022; h=from:subject:message-id;
+ bh=vQB/m+mwXlfMF6EIdAnPWApC6H43j3gKu4LTgJOq4Qw=;
+ b=3vDDVoKFL5ykQBmc1PRHJZENnz18rce9kpPkFwODsOFLONbwBkeSD86SS7zyVMHkU1fEclTJi
+ lAn5x8wzk6tCGWcVfSUsBp9zSTJw0SrMfQRgZC5AMPr5o2q61qYot58
+X-Developer-Key: i=gessingate@gmail.com; a=ed25519;
+ pk=xF4NKIzSbKMdte17nQ66S/q9m/A2gu6GiEWc8ZnyJmo=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
+ envelope-from=gessingate@gmail.com; helo=mail-qv1-xf2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,119 +113,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---0000000000004d1c7e065ec4d65b
-Content-Type: text/plain; charset="UTF-8"
+Some Aspeed I2C modes are broken,
+probably because no available driver currently uses them.
+This patch fixes them, so byte, buffer, and DMA transfer modes
+work correctly for both register modes.
+Tests are provided to prevent possible regressions.
 
-Looks good to me.
+Signed-off-by: Timur Maksimov <gessingate@gmail.com>
+---
+Timur Maksimov (6):
+      hw/i2c: add dummy device
+      hw/i2c/aspeed: fix CMD register reading
+      hw/i2c/aspeed: fix buffer transfer in a non-packet mode
+      hw/i2c/aspeed: fix DMA transfer in non-packet mode
+      hw/i2c/aspeed: fix BUSY status reading in new register mode
+      tests/qtest: Add cases for 32-bit Aspeed I2C controllers
 
-On Fri, Oct 23, 2026, 17:31 Peter Maydell <peter.maydell@linaro.org> wrote:
+ hw/i2c/Kconfig                |   5 +
+ hw/i2c/aspeed_i2c.c           |  23 +-
+ hw/i2c/i2c-dummy-device.c     | 168 +++++++++
+ hw/i2c/meson.build            |   3 +-
+ tests/qtest/aspeed_i2c-test.c | 836 ++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   2 +
+ 6 files changed, 1029 insertions(+), 8 deletions(-)
+---
+base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
+change-id: 20261025-aspeed-i2c-nonpkt-fix-89b852b5c84a
 
-> In allwinner_h3_dramc_map_rows(), we take a row_bits count from a
-> register, and calculate (1 << (row_bits - 3)).  If the guest programs
-> row_bits to less than 3 then this is undefined behaviour.
->
-> Treat overly small row_bits values as "doesn't match actual RAM
-> size".
->
-> Fixes: b71d0385e97e ("hw/arm/allwinner-h3: add SDRAM controller device")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4210
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/misc/allwinner-h3-dramc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/misc/allwinner-h3-dramc.c b/hw/misc/allwinner-h3-dramc.c
-> index 10d929a3039..2a4b33aa182 100644
-> --- a/hw/misc/allwinner-h3-dramc.c
-> +++ b/hw/misc/allwinner-h3-dramc.c
-> @@ -78,7 +78,7 @@ static void allwinner_h3_dramc_map_rows(AwH3DramCtlState
-> *s, uint8_t row_bits,
->          }
->      }
->
-> -    if (s->ram_size == (1 << (row_bits - 3))) {
-> +    if (row_bits >= 3 && s->ram_size == (1 << (row_bits - 3))) {
->          /* When row bits is the expected value, remove the mirror */
->          memory_region_set_enabled(&s->row_mirror_alias, false);
->          trace_allwinner_h3_dramc_rowmirror_disable();
-> --
-> 2.43.0
->
+-- 
+Timur Maksimov <gessingate@gmail.com>
 
-
-Reviewed-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-
-Best regards,
-Strahinja
-
->
-
---0000000000004d1c7e065ec4d65b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Looks good to me.<br><br><div class=3D"gmail_quote" dir=
-=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Oct 23, 2026, 17:31=
- Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_b=
-lank" rel=3D"noreferrer">peter.maydell@linaro.org</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
- #ccc solid;padding-left:1ex">In allwinner_h3_dramc_map_rows(), we take a r=
-ow_bits count from a<br>
-register, and calculate (1 &lt;&lt; (row_bits - 3)).=C2=A0 If the guest pro=
-grams<br>
-row_bits to less than 3 then this is undefined behaviour.<br>
-<br>
-Treat overly small row_bits values as &quot;doesn&#39;t match actual RAM<br=
->
-size&quot;.<br>
-<br>
-Fixes: b71d0385e97e (&quot;hw/arm/allwinner-h3: add SDRAM controller device=
-&quot;)<br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/4210=
-" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://gitlab=
-.com/qemu-project/qemu/-/work_items/4210</a><br>
-Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">peter.maydell@linaro.org<=
-/a>&gt;<br>
----<br>
-=C2=A0hw/misc/allwinner-h3-dramc.c | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-diff --git a/hw/misc/allwinner-h3-dramc.c b/hw/misc/allwinner-h3-dramc.c<br=
->
-index 10d929a3039..2a4b33aa182 100644<br>
---- a/hw/misc/allwinner-h3-dramc.c<br>
-+++ b/hw/misc/allwinner-h3-dramc.c<br>
-@@ -78,7 +78,7 @@ static void allwinner_h3_dramc_map_rows(AwH3DramCtlState =
-*s, uint8_t row_bits,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--=C2=A0 =C2=A0 if (s-&gt;ram_size =3D=3D (1 &lt;&lt; (row_bits - 3))) {<br>
-+=C2=A0 =C2=A0 if (row_bits &gt;=3D 3 &amp;&amp; s-&gt;ram_size =3D=3D (1 &=
-lt;&lt; (row_bits - 3))) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* When row bits is the expected value, r=
-emove the mirror */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_set_enabled(&amp;s-&gt;row_=
-mirror_alias, false);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_allwinner_h3_dramc_rowmirror_disabl=
-e();<br>
--- <br>
-2.43.0<br></blockquote></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">Reviewed-by: Strahinja Jankovic &lt;<a href=3D"=
-mailto:strahinja.p.jankovic@gmail.com">strahinja.p.jankovic@gmail.com</a>&g=
-t;</div><div dir=3D"auto"><br></div><div dir=3D"auto">Best regards,</div><d=
-iv dir=3D"auto">Strahinja</div><div class=3D"gmail_quote" dir=3D"auto"><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
-cc solid;padding-left:1ex"></blockquote></div></div>
-
---0000000000004d1c7e065ec4d65b--
 
