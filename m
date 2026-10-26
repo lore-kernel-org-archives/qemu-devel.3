@@ -1,95 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E0B606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 15:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9CB606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 15:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Ob5XpyAe
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ly8iidoX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLMVO-0000Yr-2m; Mon, 26 Oct 2026 11:20:58 -0400
+	id 1xLMYc-00016w-3b; Mon, 26 Oct 2026 11:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xLMVK-0000YW-Ke
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:20:55 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLMYZ-00016W-KV
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:24:15 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xLMVF-0002kV-Kn
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:20:54 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4a5720b0a57so60705e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 08:20:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLMYW-0002u8-H7
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:24:15 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4a1b07c3c5fso28430725e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 08:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793028048; x=1793632848; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=Tw+pvYg4j5N12O7EgEsJlMS+MFy0VcD+mDXxr2XgBJk=;
- b=Ob5XpyAel8yviIRZ0fdWPi/Xjtly9sG/w5dLfMpCpdIU/sZWsxF69dcqK9IUpMm9g3
- 0OSc9IXYx3I6aWWQjq/FCIHqYrEcTYa6ABumZ2a9NfccpHNkurY+1hSFc7Z3Jn1HFYRm
- xVZC6AZUq1U9ps0ZK4hjVfJfitMYXiIaHp6+vs15RL26cSI18ptSJ/Y+vXTeG+KHiNsC
- bm+rLueVGe2rkgUpCA6zYMyYPL8sqI3tv8B5ZsUeKaQCF8B0MaEn317nrxMmt1lxX7FQ
- dbT8Jsf5phST6VkRCc8qFXRn6W4l2uEqt6XYXHPCTZ2KNotkv1xVXxFiYm2lkP06K8Fz
- FFLg==
+ d=linaro.org; s=google; t=1793028251; x=1793633051; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iHLjy8pJ8iyfK3sYq9Xi7wXXIOu6Z3yiwwBHVaC73dA=;
+ b=ly8iidoXA6GgO2sXQLJMVkzsqhv2ExjLUwChcPCVP7R172gT6lcjnNL4Z4jCLTHC+E
+ DdPKt9JF4XbcuSnBVh1ep6vMOwF93eTU6Tail3M/kfl+LogJrIF8A+FKO6whj6fYtGXu
+ oxSbqVMSwWc/A6WkfIIxo7PFty1ReqwE8gHUJ18aIBlDUejW3vQgQi060fMV1D8xhMKg
+ HDqp+Q++KxsM5cTTtd2FV5qkJqKrEn0xYgh/zsdq8Q0w3Ej4iPEVxEHUJGjoBzzPwvm3
+ 5uHrsGr9+XSFkHnkE+rxyOYIeNd05BEA/ClgItF4PETB5gMFMN4u11rK19GlD/7IuqZx
+ THEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793028048; x=1793632848;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Tw+pvYg4j5N12O7EgEsJlMS+MFy0VcD+mDXxr2XgBJk=;
- b=OlTZyJvfxIjkJ1uD/3vzh/nX/hmNmfGwPBJJVpuzNYotgPWKlTKg1nqhJs3DLyrq58
- OdsJJekKyppR9dlsBdC9MyR7U1JGNMsVCBdv2VDDwwo284lYUYZGIChF5bq8QcyHgjNq
- 8/lcmClkUU/VjnCokT9iOtX5N2mvLw8ubdoYD9+qs5WEO7+GFL0PLF80PupNc3U3mbcK
- uebmdiXe/j09jYTGH0E+6ZyACejG7KzPrI8FecKrfABYwbS+kCu+Gbazi4QHY0DlgssM
- NSm1eVVx/e0oReJqu0Bx7R/w+fyCAqlS/iATsfqERUQ7tHCuqvbNQvLA7u9kIiXOx/cf
- BP9g==
+ d=1e100.net; s=20260707; t=1793028251; x=1793633051;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iHLjy8pJ8iyfK3sYq9Xi7wXXIOu6Z3yiwwBHVaC73dA=;
+ b=yRpUoZAyXmJB/YOyQP+qBlYqszR+EqPqg7I2XveAJ8zAat9E5ye5IVOAlIXR8O4LnQ
+ n6bFvLdgm+qDqAZGdDTpgjkW1/uiWSPQoSbPrfjrXhoazKTZjlYsA06O+JuoypJHjUhe
+ v0DZKR3hOsyIhhnRW7wXRBISZGeLBN/HOf1a3+6nAmXx7PrmZtu0kdD3pb+zNGeOKzox
+ FC7jnWTEIbTCTGZ3hWtBxQ54J2tvX/IPQgCqIxOBfQcD09GbqZ3Cg/oaIigcK0dftzbQ
+ JCfoDfudFIeBA9zuUEEa8X/JLGHpGyIvZqCJm9QyU6jOzpssGhY7qdAw/oBZF5+QjePt
+ N5Rw==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzO+bKop1RxjOJf3XItFHkaKT633GBFTrBascJmwV4LcziaUs1qXYFGQNW6+VnGv7kv42v0PCmdc/hT@nongnu.org
-X-Gm-Message-State: AFq9FYLkYcJVTiGnR/bgRQXaiZoBcWafZcCK40+f/HgA3OSLIUW4ZBBC
- PSQP6B5YYCPobLUdWqwyFzQMRmUU92j/vpLZS9k7rqTY2eLR1XqvzaBqymkpfph3XYsr6CFPHz1
- 4+AO6xvU=
-X-Gm-Gg: AYBFou3feU+5iln7KwRr8fK4kDbtIrNo3sQdDpxNuwCZe/2hATHYrL2vp07/1fRulnT
- vqI5FDDRypsBrutpOm+ICbNIoh0cLSIMs6oDHk6P3LM1Lq9TDCm+VIU8TnstO8QAnFgApXspZ0H
- dJqJsUhQ1urqPqRa5Ix7ZsGMKaXg7qMJfcXdWzTtxvXF4ap2zTC41q7TqfZGF+DH2bkA5EECua1
- fjjRdgosI++qbBz/vnNxT6eCCc4SAM1giEazRotUomBVDor2xi5twbnxBAQvIlDVvaIHhFYTAdh
- P/oDM7VG2TlHwuHQ38jtpdw7sqr+SNBvbzgXwftDuLjtcBCq5TmgjdegcQbkhiorp0dBt8uiOb4
- Ybgq1CGw25SXnSyI/JM9paoyr2DlG3z3dIhmOyL0pYZxJ9N/tjzkuqAyHpjzb2Rdy39hRytrNSQ
- yTyXuWg9Qdjm6McvnzIQTOyScRXpoHIkQA7OQkwz3gJ3+lfdtBQuDMX7BNbzF5nbycTVYm6efgo
- nGxEI2Xo8L2clzgVZcFqF6g6eb5C9X7oSMdo10dDllH4Vfls0s4K54=
-X-Received: by 2002:a05:600c:3e14:b0:49f:c5aa:9ef4 with SMTP id
- 5b1f17b1804b1-4a35ae8806amr137515215e9.8.1793028047655; 
- Mon, 26 Oct 2026 08:20:47 -0700 (PDT)
-Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359f3e00asm352284135e9.0.2026.10.26.08.20.46
+ AKwUvBwL8akzFf3DkyfqzZaw0WsO1CzVD0uMZupZvMfZhK8GkcSzjsV5bO+UPin5qDrfH4TX6+KH2oJe3Qht@nongnu.org
+X-Gm-Message-State: AFq9FYKbgNSChHmd/X7cEOdGDCE1tmBATKtOxbhB3DrDfe6mwBxn+Hxs
+ z7CP/f1hxsw5bGtWWpovdU6rx0vJkO99jf+mEsf15zt53AywzHd0iSgnPXU0fRC4vpU=
+X-Gm-Gg: AYBFou2p+RNbyxdlLlgD2T3SLSlj+3JXxINlz0fgUIwLhryf0Jy3FA79Zd8f37WF0jy
+ IKDX/MsVr7BlMZAM8xVfhtz9JE0gQ8oBfe4Wn/Tb1zsLC5PIv5bFwPINf6Xu4le2BzyaQiqNszI
+ X0bdemKk74yy5Scvbu3zinrPCfbvehCydr7nEoDtwOl5fygerDK5xWBTiCYIFQhiqspFS6XdnMG
+ LfWrzwc9Hc+29Bn+T14I1lnMdmaBXwgiB2lYAxoGHiquAhDApGJVHsLcD6FyUEilarcmfclF1hq
+ WIh/Qcr8TnaUY2arZe5zmP28XGNY56xbgiN+x+1e7a1GbJH2aQlWx+qb9lpObqA9NfMv2WAiAv+
+ uwKlTA/5/k0/HtleviAEG1Q7kBPl0VM6LYMh+ZcyyABPBHrZGEN8DSkn5xJz+5//8C9+BUQZPuk
+ f9gvB74g6zayqUEsRarEKImDOQAAka7P8HyDnbcx9zF+Wk6LfRiZRYnBZpgLbxnBjgfJ4nFJfIM
+ EjGsqdGoKQHpWSwOpnMuZ80G5mIfR5lUzhnwpWwlABSzF9FfCTpwnLI44zen3wHz+9vQVobl2PW
+ eDNaSImE8bphn5tukythzbi0i7jISTWstQaA5TTtLID7ts13Uzo9uCZgYBCH
+X-Received: by 2002:a05:600c:4e8b:b0:4a0:23f:8b0d with SMTP id
+ 5b1f17b1804b1-4a35ac3cb16mr131069025e9.2.1793028250760; 
+ Mon, 26 Oct 2026 08:24:10 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a359f3e00asm352717525e9.0.2026.10.26.08.24.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 08:20:46 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 560355F7FF;
- Mon, 26 Oct 2026 15:20:46 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/qtest: Increase the timeout of the
- device-introspect-test
-In-Reply-To: <ffdb16f1-7a5a-487e-a9d6-74767ee399b8@redhat.com> (Thomas Huth's
- message of "Mon, 26 Oct 2026 12:30:51 +0100")
-References: <20261026092313.480889-1-thuth@redhat.com>
- <87fqxs67ut.fsf@draig.linaro.org>
- <ffdb16f1-7a5a-487e-a9d6-74767ee399b8@redhat.com>
-User-Agent: mu4e 1.14.4; emacs 30.1
-Date: Mon, 26 Oct 2026 15:20:46 +0000
-Message-ID: <87y0bk4hf5.fsf@draig.linaro.org>
+ Mon, 26 Oct 2026 08:24:10 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH] hw/display/xlnx_dp: Make assertions clearer
+Date: Mon, 26 Oct 2026 15:24:09 +0000
+Message-ID: <20261026152409.2869104-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,69 +98,55 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Thomas Huth <thuth@redhat.com> writes:
+The xlnx_dp code has some assertions in its read and write functions
+guarding the fallback "read from core_registers[]" codepath.  The
+array can't be overrun because of the defined size of the memory
+region, but the read assert is confusingly written and the write
+assert seems to be completely garbled.
 
-> On 26/10/2026 12.04, Alex Benn=C3=A9e wrote:
->> Thomas Huth <thuth@redhat.com> writes:
->>=20
->>> I'm occasionally seeing timeouts of the device-introspect-test for
->>> the aarch64 target when running "make check SPEED=3Dthorough" - looks
->>> like the 720 seconds aren't enough anymore nowadays. Add 2 more
->>> minutes to give some more headroom.
->> What is taking so long, I can run all the introspect builds in under
->> 10
->> seconds:
->>    =E2=9E=9C  time ./run meson test --suite qtest "*device-introspect*"
->
-> You've got to run the tests in slow/thorough mode:
->
-> G_TEST_SLOW=3D1 time ./run meson test --suite qtest "*device-introspect*"
->
-> otherwise a lot of the tests will be skipped and the tests will finish
-> fast.
+Replace both with a simple check against the size the array, which
+makes it clear that we're asserting that we won't overflow it.
 
-  env G_TEST_SLOW=3D1 QTEST_QEMU_BINARY=3D./qemu-system-aarch64 ./run time =
-strace -e trace=3Dread,write,recvfrom,sendto -c /home/alex/lsrc/qemu.git/bu=
-ilds/testing/tests/qtest/device-introspect-test --tap -k
-  ...
-  # slow test /aarch64/device/introspect/concrete/nodefaults/raspi0 execute=
-d in 30.19 secs
-  # End of nodefaults tests
-  # End of concrete tests
-  # End of introspect tests
-  # End of device tests
-  # End of aarch64 tests
-  % time     seconds  usecs/call     calls    errors syscall
-  ------ ----------- ----------- --------- --------- ----------------
-   99.61  793.101303           1 420646079           recvfrom
-    0.28    2.229951           3    619529           sendto
-    0.11    0.840259           4    179705           write
-    0.00    0.000000           0        14           read
-  ------ ----------- ----------- --------- --------- ----------------
-  100.00  796.171513           1 421445327           total
-  926.31user 3944.47system 1:28:16elapsed 91%CPU (0avgtext+0avgdata 1132064=
-maxresident)k
-  43824inputs+0outputs (324major+7978563minor)pagefaults 0swaps
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4586
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/display/xlnx_dp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-So it looks like the majority of the runtime is just ploughing through
-420M unix socket calls introspecting the same large set of non user
-creatable devices for every machine type. This will just get bigger and
-bigger every new device or machine we add.
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 06594980292..ad6c4952065 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -812,10 +812,10 @@ static uint64_t xlnx_dp_read(void *opaque, hwaddr offset, unsigned size)
+         ret = 0;
+         break;
+     default:
+-        assert(offset <= (0x3AC >> 2));
+         if (offset == (0x3A8 >> 2) || offset == (0x3AC >> 2)) {
+             ret = s->core_registers[DP_INT_MASK];
+         } else {
++            assert(offset < ARRAY_SIZE(s->core_registers));
+             ret = s->core_registers[offset];
+         }
+         break;
+@@ -986,7 +986,7 @@ static void xlnx_dp_write(void *opaque, hwaddr offset, uint64_t value,
+         xlnx_dp_update_irq(s);
+         break;
+     default:
+-        assert(offset <= (0x504C >> 2));
++        assert(offset < ARRAY_SIZE(s->core_registers));
+         s->core_registers[offset] = value;
+         break;
+     }
+-- 
+2.43.0
 
-I think we need to reconsider exactly what it is we are trying to test
-here.
-
->
->  Thomas
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
