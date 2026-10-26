@@ -1,108 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB784606A31E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6866D606A322
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=AtZ0OVjy
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=HJT/hCHi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLGjp-0004sW-5g; Mon, 26 Oct 2026 05:11:29 -0400
+	id 1xLGqp-0005oQ-22; Mon, 26 Oct 2026 05:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLGji-0004rR-7F
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:11:23 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xLGpy-0005lN-JA
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:17:57 -0400
+Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLGje-0004FI-Rc
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:11:21 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b0cf2c0785so23592037b3.3
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 02:11:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793005876; cv=none;
+ (Exim 4.90_1) (envelope-from <timpambor@gmail.com>)
+ id 1xLGpw-0004oL-1w
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:17:50 -0400
+Received: by mail-dy1-x132a.google.com with SMTP id
+ 5a478bee46e88-36661f953e4so5276812eec.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 02:17:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793006265; cv=none;
  d=google.com; s=arc-20260327;
- b=Qodw/BrVz2n1lzaU7m69ooIXz7soWSvtcyppxvRs/KS/Kx/6jS9Licpl/X13Nwm630
- 9PHTREXXj3IRTXdlZWbTlV94tLkzRddVtAUKhqkUqXTLAPt5fS/WvwYNdI5UCZtO0c0R
- SQt7P2u3/Ukd7tb2LtNS4wlgaKXeLA2R4yN85Uizdx0gdeC6u3C4s48j68UhxZW/Ppz5
- XgdaCKmS7PgtUZF1uc5ENGv583Yh8b4NvrLaAeM24PDkNoZJwh89qx1I4o1D2M1K/MDx
- lByI+5y4ZRr/Ibpd1IpBs+iLPZbYR2YRAH/ef6qPZksX/96pRa7vmD0G3xvCKH8nW6Zb
- Yx5Q==
+ b=JQQMeTumnbl56lqtNNS+rAqjZ/4VMoJlEjDG/f4YX3KMakthvebdcyUXnN1Gv+1MwE
+ I59/+qY2TZHiBFuUpVIpNSODbOH30XUVTOl8icunjXHN4yJYH/JUoJKQnbqA7HzJxlaC
+ vuKJoSLpMM5V/rmHFYFraeBMCfGYX+eoM49fKyUQdjcPwOfUmyGBDhBHaKba4s2OVNuR
+ 5FqgZ/53aNCsn9HjZoPQOH2lxq62KBZnWPHybYSVZB0fxGF11NEyYy70g7y2Rah+jp2g
+ U6ZgD4/zpqgZKJUmaxob7y3wSNDgnx6ZSMRzv5djDAsPnetgsswgUY1INK8a9JFFt8sn
+ exYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=eDeNvKeCV/tDlmDcxXb6YryVSIxCk02/d9zxIElrqhc=;
- fh=vPJYHFjiYVPFwgN3DHyHW8sDW+Hs0owe6lEF+QM3sHY=;
- b=VN3hNuOcKagjhMvL12kF0kZyK9R50Pe6fIRuwyw4SZd7B2lnU5D2QHzql919/KGE14
- 0+YO9PWaUkfM6upsdvKFWyv4N9qRWlp1QPhGsoFC7v+Qz3OsaiECKjFW0kfYoTvmFjw4
- jid6TsnPpUGcIl/2AYANUudLh5tWGzbyPAky0mEllG6/FOnQnOsxRsNhmXiZmWLlPuZ6
- mtSikBPew2+JKstTum7LotRX7oY3LdGENZsy0XUVS/h7htV225H47Sor8uoR4dcfNrOW
- aZ6hCLAgYzH+4HSUZOcWcs2s7s/gpGzwJ6DIWYE4W2AJTewJ3SaqqEmFRE/8bjx5sCGu
- CPlQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=W6rvK67moC6hyQUbtHGWpff68w7w4FCM6nIJYnM3ahw=;
+ fh=Xs7UDclMpig/LHrW8E8AqtL+L3vnLZ534+RVhLm6KD0=;
+ b=Rp+Y2oHOLP0p0/xG6KETaCpdnH6w3dGwTyHd/yJ3pIMKxklgU9PEE8rooXUY4pkAHb
+ TRYswd9LTiOznXQaOmvOq1sJB6xcG+yBJ7lQmkE5mVrKJOBU5awrtqFv/UmygGCQNdZ2
+ 9uTXnZvizb8DpJUBlhfauTMsajxtJ/McR6RleFeFhHRkdP3jvPiSeQ/hRX8tOC2bkcDW
+ oPc6U694O84p7Qh3gX6k1pFtyJ9X6Hp3yMukREHFGNlmUX2yUV6dfHyIfBhxlBeTW4S7
+ HV1vEfDoZb2D2qgqwaDE/5+/Ea1tpvpxwTVoyo5vDcFzuiD/PZ4lQoL2LnRLTt2cJimN
+ 7OiA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793005876; x=1793610676; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=eDeNvKeCV/tDlmDcxXb6YryVSIxCk02/d9zxIElrqhc=;
- b=AtZ0OVjyw7v/QgLZfv+9rJ7awJgT8wCp9U64rvTERFlw3QyAUoBD5761kFgdyNgGye
- vJfX8eysb3lKKdpCISoLgAuMF/N8/qQJceLlyhWh+jPWnF+hSRHDzC+pGrAM2/ksurh9
- xeNlFINbqgiXX/doLivlpYzZkmyF+Kv03VEzRdqu0gA0bhlN5iR19GLAY4/o1OhbMPWf
- nGIwvh9WyeWZ9lxU9bcgg6WU7MqWwHjcyvUm3kWVXxZ6X2pfeyiVqRDJBJH8vP2813Jg
- 6BTA2xfB6jAHbuUq9smYr1VLtUiX/J6DLtuUcdwWOMHHNUEz3oFKZlqdCaI8PyBM0lg1
- XtoA==
+ d=gmail.com; s=20251104; t=1793006265; x=1793611065; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=W6rvK67moC6hyQUbtHGWpff68w7w4FCM6nIJYnM3ahw=;
+ b=HJT/hCHi7rMUms9AsJUqVtrwsmlokswBaabBobIdNdlzlNxCpgR9CHDhxu/KLv1jsO
+ D/GmL3EbtyHKjT9HSegyaRMefN9lmj1AVCqgiBu1MlKHutLfJyhvufy1gw6JwdxT3t2m
+ geVl9YEaX2BzScNtxWbdebOrYlALKquyPJWyckFmGmIc5F7/adGjjF0i6xLrXJc38Il+
+ rgLIHHtW42pAwZXJUEJAEvVZ3J2SFbIGoMqFEstyBCV3hoNYjq0hewbNWtrQQFWHyzuH
+ MROme3KfRTych5COScLzjL+5+nGzgAZVddS4fffUQ7bVVJhQz/qqqou6YXuR98YAwfvT
+ 1S6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793005876; x=1793610676;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=eDeNvKeCV/tDlmDcxXb6YryVSIxCk02/d9zxIElrqhc=;
- b=fPKI3E5+ko4iDChfOsNANH1JfuKot9wft71feSKG/C1MWV+z793bG3y/lE3/oCwkQE
- wEIdUwQbMmtAWstEYOQU7YBmLWOJhOOG2hW9zYRugZyM2iJLCu8kepmbcxWatefZnrQq
- 8s+8R6tH/YDcfYYTlaZCzjBDvGvjyNAoCDf6BjfiTbaF2qLVbS5vdRaG5sgwx1KF0LW5
- paM9DUcxtJpObp1oAhDTJh0gp7ZFJjCN/Q/c6LujO+wcBrlDS6f8DdPSmQJKk9+tdTHP
- 7+XRjpOXePKCCx6yLPob/7blSXl7He7MxMRQrRU7B0DQQjCtZ2Plw1DJXrWZgx9ITXPu
- 9myg==
-X-Gm-Message-State: AFq9FYKbL1abGjm9pMSKYHPz0I6e1oMfzvI9pdoPGNRsK5J8B4X0j9qG
- k5wNnfCtjFgkJFX7G9Yn83AWjhsjl4EH+F4GvHbrG4oJVlpjLeq6Ed36vS/zgOUNWOl0h78Jze4
- SUB41VtgMlYqC1K8CoqRExXQ/IQ/goaMexiBv+W/2Nw==
-X-Gm-Gg: AYBFou0D0UBPieHUYMv2EySwKxSTDjrFnPYMumVnP/0LTpwIjWZ5Udd6F8b5ZnTnya/
- 2+59892xCZ/JL0z8zvpXXCrwICRxJSl31jj0FTn10SpkgKh0q9I9LjlJVIsqdg13SdN8RbC4eDR
- /mBhW4KpUllGUx+hDlnZ/G9FRPNXjPiBbQnhyOL5RCOrCAtys0ph294SNhXQUBrmjX1wbyUdLxS
- AwwxIvrfL1iIFqXS3JcHIY2Hen/OTPpNXcP1017+D9XFXjR5R40r89FBfdT01Kn0sTtZKWv/LWL
- J+NPcnj4Emfb9EIIjwXXLBt6Mx2BXaClCSbviJzrAn1YZsVdVr5+MjcPhQ/sLaF9MD2Ul/Gc0A+
- 3Y/WzhrxbMhrEvtjBBw512AQoLm86fZMH3ClvoiSPRXRPSswMuLlzfOmeg1GKcu4T9PC0tu7T1a
- i9Z/M/0MBlJDYNY/8emw0R
-X-Received: by 2002:a05:690c:4002:b0:8b1:6c0e:35b6 with SMTP id
- 00721157ae682-8b16c0e748bmr25192297b3.32.1793005876356; Mon, 26 Oct 2026
- 02:11:16 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793006265; x=1793611065;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=W6rvK67moC6hyQUbtHGWpff68w7w4FCM6nIJYnM3ahw=;
+ b=K2X56MI6IvAl31W0LbvkVG3V1ll2KjGOrxiSWT63fdQy9WNuLoC44QL/Wt96giLFf7
+ 3VWlHROf4gwoxteoOYDSAYDcUL98QdjcubQaUEI6pcP4Gz56b4vboGjUqlmvERtAssIz
+ V83fGYeDx4av7M8MhKXw8AgoDWXxLP09OhPJdiLLlVpTuQB1Jz+ccVkM5Br7Qh2X1aFt
+ NyhV0+sEBjLj7YRLHDkD0V/GgawXiXj0BSujzCJyNRKM7tk8z1XmodZdRvJyOtpZRNzy
+ ramvagcUZBro2AmSx7Qz+lsyeVnBVFWhcPyMcYx/F8ODl23JdrUDA9LUvQbnE7Rehe+k
+ jgKA==
+X-Gm-Message-State: AFq9FYIrvplc6MD6aZXtFvzuk2e2KoWMPqPhMLNn9dnvn3CCg1u9jAPY
+ fnQ08bQort0BWW1pYTvQg/HTt2UcCn73EObibCx6CY3vxa8QMK+BThapg0oTdUcTUUvTEcM13Xr
+ eh5Tz/MvVlSAocvtmkM3wAfB6RsWII04=
+X-Gm-Gg: AYBFou0aSS1SDFi8iYcCgVcnRs60vZj5fv1/cljmBREOwRKkPh5a2GGJ8Al0Lkmsg0Y
+ JCjIpjo+XLR2a9AeWvbl46ZOhDuLEF+3gU8w91JTJAK33QwAcfNvX19OP3u3Yc3390Z3k6p5Biz
+ yIxiwrdurEhjfZuMumOJMWVjee6RqJcrRRbUbwg0MR6MlEckj3EsQZVh0vp6sQ676deNLTANZWn
+ EZidym2D8PXajMJhoQVAEUnSckvfzNssqXGWiavmFl1tyr7K3g/u6W3TkWph6hyLruUXQ7KNmf5
+ hvKZpXArhUXr86d7SUnRy1yPTCQEZNRonEvvB7ywRj/I+zJvFYil4F+ytdAUFu5KamPR9ZtQHJF
+ iinFp/T3jVBb2FUH/CK4tn41bjK4nKZw/p/pytgK97unZkU+YCS9mvkjiJ9a/GDp1NS9PxSJ7dS
+ TYM6XegRU2ioKhIinJUQ==
+X-Received: by 2002:a05:7301:1530:b0:35e:da0a:75b0 with SMTP id
+ 5a478bee46e88-369e84e94a7mr9821475eec.25.1793006265084; Mon, 26 Oct 2026
+ 02:17:45 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261025173625.3372689-1-tristan@talencesecurity.com>
-In-Reply-To: <20261025173625.3372689-1-tristan@talencesecurity.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Oct 2026 09:11:03 +0000
-X-Gm-Features: AclHuK8YBZ8HpxYPF-pfENIyDwU4UEmGuviAZeOwc_Jni72YR74eL-LE_066aBk
-Message-ID: <CAFEAcA_7CsFhHhj629tXdPkfz=a0NmU24zMOaTuoznf9VEF36Q@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Fix OOB access and overflow bugs in display, audio
- and SCSI device emulation
-To: Tristan Madani <tristmd@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- richard.henderson@linaro.org, hpoussin@reactos.org, arikalo@gmail.com, 
- balaton@eik.bme.hu, qemu-ppc@nongnu.org, deller@gmx.de, pbonzini@redhat.com, 
- fam@euphon.net, mark.cave-ayland@ilande.co.uk, kraxel@redhat.com, 
- berrange@redhat.com
+References: <20261022-vhost-user-posix-v1-0-0bd4d450d23c@gmail.com>
+ <CAGxU2F7nP2jOTiod1bu4Ao1XgNL7fVz_Dk2hnY32TMnCgpYT=w@mail.gmail.com>
+In-Reply-To: <CAGxU2F7nP2jOTiod1bu4Ao1XgNL7fVz_Dk2hnY32TMnCgpYT=w@mail.gmail.com>
+From: Tim Pambor <timpambor@gmail.com>
+Date: Mon, 26 Oct 2026 10:17:32 +0100
+X-Gm-Features: AclHuK83V-2ZsURGraKjp9YlMkP9anaRYXC_NCbFCZSdBaUsx1PWgKsIRHfkERg
+Message-ID: <CAOX+r5-9SHjsHZqwiH925ATh4WA5cO0G3V8V6k23=kF6KcoR8g@mail.gmail.com>
+Subject: Re: [PATCH 0/8] vhost-user: another try at supporting any POSIX system
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowangio@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ qemu-block@nongnu.org, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Brad Smith <brad@comstyle.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ David Hildenbrand <david@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
+ envelope-from=timpambor@gmail.com; helo=mail-dy1-x132a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -116,39 +124,68 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, 25 Oct 2026 at 19:14, Tristan Madani <tristmd@gmail.com> wrote:
->
-> This series fixes eight security bugs across display, audio, and SCSI
-> device emulation backends. All were found by manual source code audit
-> and reported via GitLab confidential issues (since made public per
-> maintainer request).
->
-> Summary of fixes:
->
->   - Patches 1-2: ATI Rage128 2D blitter integer overflow and
->     width-vs-stride mismatch leading to heap OOB writes
->   - Patch 3: G364 framebuffer top_of_screen OOB read
->   - Patch 4: SM501 framebuffer/cursor address OOB reads
->   - Patch 5: NCR710 SCRIPTS engine infinite loop (CVE-2023-0330 variant)
->   - Patch 6: TCX blitter source address OOB read (host memory disclosure)
->   - Patch 7: Artist display off-by-one OOB read
->   - Patch 8: GUS 16-bit DMA heap and stack buffer overflow
->
-> Each patch includes a Resolves: tag pointing to the corresponding
-> GitLab issue. Patches 1-2, 6, and 8 are Cc'd to qemu-stable as they
-> fix the most severe bugs (heap OOB write, host memory disclosure,
-> heap overflow).
+Hi Stefano,
 
-Have you read our AI policy?
+On Fri, Oct 23, 2026 at 6:01=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
+>
+> On Thu, 22 Oct 2026 at 15:48, Tim Pambor <timpambor@gmail.com> wrote:
+> >
+> > This series continues the work started by Stefano [1] to add support
+> > for any POSIX system to vhost-user.
+>
+> Cool, thanks for doing this!
+>
+> >
+> > Three patches from his original series were never applied due to failin=
+g
+> > tests [2]. I was able to reproduce these test failures on current maste=
+r.
+>
+> Oh, nice, I'm curious, how did you arrive at the fix?
 
-https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-generated-content
+I was only able to reproduce it under high CPU load, so I looked into what
+changes with load. Looking at the trace of a failing run, QEMU sat in poll(=
+)
+waiting for an event from the moment of the disconnect until the test faile=
+d.
+Only then did it notice the disconnect, because the test=E2=80=99s other so=
+ckets,
+e.g. the qtest control socket, were closed when the test died. The vhost-us=
+er
+chardev had no reader, so before the fix its only poll interest was G_IO_HU=
+P,
+which does not wake poll() on FreeBSD. The qtest chardev has a front-end
+that reads, so it was also polled with G_IO_IN, and that close did wake the
+loop.
 
--- PMM
+I also checked why it passes under low load. There, the disconnect coincide=
+s
+with the DRIVER_OK handshake (virtio_net_setup -> qvirtio_set_driver_ok).
+That access wakes the event loop, where the already pending hang-up is
+reported in the same poll() return, and the disconnect gets processed in ti=
+me.
+Under high load this no longer lines up: the status read-back is already ov=
+er
+when the close happens, and nothing is left to wake the event loop.
+
+>
+> >
+> > Patch 4 contains a fix for this problem. Patches 1-3 fix further issues=
+ I
+> > identified on macOS. Patches 5-7 are the three unmodified patches from
+> > Stefano's patch series. Patch 8 contains another bugfix I came across
+> > while testing.
+>
+> Great, I'll review next week.
+
+Thanks,
+Tim
 
