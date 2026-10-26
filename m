@@ -1,112 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1827606A338
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A94606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=dYeOBzEn
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=CZP4ggE4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLIg-00083J-2B; Mon, 26 Oct 2026 10:03:54 -0400
+	id 1xLLER-0004WY-9a; Mon, 26 Oct 2026 09:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLH4-00070R-FU; Mon, 26 Oct 2026 10:02:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xLLEE-0003iU-ND; Mon, 26 Oct 2026 09:59:12 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLH0-00018P-AG; Mon, 26 Oct 2026 10:02:05 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QBEPmR3336318; Mon, 26 Oct 2026 14:02:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9pD3UfzElZjtaGhX/
- pW8fR97w+l+l0IDYd95IWSM1Ss=; b=dYeOBzEnJXuvS0SQeX4+gxcjs6GPbtuQ4
- BYUi+JogW61PIVOv/ib5VS7v7vHu/hb2iVTQ2ve055lHqFp8STtas+YOFg/cJHN4
- /mqNHNOMDJxNusedGgq1gN7YvdU4qpha5Pw/PG4eVYCp3gu3b2l6pzgBNdZeIgOX
- CzQ13BK/TcdyvbwEceE2B1XuhoP1FhLJoSiIroq4JmywZKvXYVq2tRz4999kepbs
- nlniKaw+27q7fLGNr3Qta7UgyWNSRPHPUu1J7BNWcUYSpCMu02nBlTR5ejFOQShp
- BorRIPZR6vkMJqu5ZTg4a1yVHM0b2apeuAYe79JB0/EZs3yJPi8AQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmd6tan7-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:02:00 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QB4ttG1270400; Mon, 26 Oct 2026 14:01:59 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hh97gp11g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:01:59 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69QE1AIF30933598
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Oct 2026 14:01:10 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0537258063;
- Mon, 26 Oct 2026 14:01:58 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A6DE58053;
- Mon, 26 Oct 2026 14:01:57 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
- [9.61.109.57]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 26 Oct 2026 14:01:57 +0000 (GMT)
-From: Eric Farman <farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xLLEB-0000bX-LR; Mon, 26 Oct 2026 09:59:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793022944; bh=UDnDMnLnLl3+57q5E5txBnc2S4YpUwsC9RJss/m3DZ8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=CZP4ggE4SZ9nN/5ESLZdVMxDODwGT/huUrZN3X8R3OIYz+5WCYYD8m12JzvVKrLsm
+ tZCE1asg6joq9DLmMrQoPoYf8CfwcmMpvkXHhk92t+qPfpDaDgUUz4jJrumKoRA8dW
+ Asri/YSv+OL4nta5yNKTbcrhmrcGC/E9F5uR1+tDt0J4J/xDlwZR22iE8ndUoalJW6
+ FKBMZiLVrqMaclJxZUqH4bih+baQOggg26gALQDANx50C0SEJx769g3GkYo1B442rr
+ UiGutOnsCcpMujLg/wUdvELDiTF1AXA63vLwl+vT0b6vI7KTO9dIs9r725NFNeTWh+
+ 2ggxUe935Q1BA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 459BC1E12AC;
+ Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 436D544B8FD;
+ Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id 1D6B8934DF; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Collin Walling <walling@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 2/6] target/s390x: mark feats dependent on deprecated feats as
- deprecated
-Date: Mon, 26 Oct 2026 10:01:49 -0400
-Message-ID: <20261026140153.2072253-3-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261026140153.2072253-1-farman@linux.ibm.com>
-References: <20261026140153.2072253-1-farman@linux.ibm.com>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Nikhil Agrawal <nikhil.agrawal@mettlelabs.ai>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 95/98] hw/usb/hcd-xhci: More reentrancy guard fixes
+ for the XHCI code
+Date: Mon, 26 Oct 2026 16:55:22 +0300
+Message-ID: <20261026135529.1019772-22-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
+References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ZYOIpcVA c=1 sm=1 tr=0 ts=6adf5d58 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=q5U61L9vTmfSjpBbcYAA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfXwKLTDXBfcft1
- DapG0Z6SMvAFttt3ax+fO2t7cxHGPZUyb3T+ddVEKPHsNsErmEwVjmqOgYca+vKHm3ouOnPfh7T
- 0KrGIC3ksx5TZXewqlodergUe0kNbQczdZ3k0wWeGKHWMJT3RZvJDVUq2z2lbBGqZwyFV+ihPLd
- nyS0kUzEx/e1lf8xAMcSkQW1KFdwEWtERjmOTZlsZCLC6COCfMAo0gCKA/rfU9bku+fxiigLOrc
- 0SX4tRW9sDcohppFzertYW+1sGwAUQzMCgmlPnb968lDeKB7W0oci6XWdtFAGPwMJt6EVdU98x3
- 9l+HzSdOlGXY1AXI31ypE8/d1hjM3p08KkFlqi1arPJ+Uw7CxI9YcK+uL8dW+8nDD0lLXmxklfA
- FlxTDiUxtorHGdPBBWGqV6cubdNYPSUKy/DhaLo32mZpPtK/0EncpiJAxalYp43AoJVETRpGNfr
- X4+MkfxrU7eNaqq+zQg==
-X-Proofpoint-GUID: 6XqKTYFmTgZkmuxxaXzbKA2-w9uMKcy3
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfX8Qeom+3aopeN
- YYbi4UsBm1W5ElA/+w06WtUavcM8KakvGeOvjMkNgJuV+39TGagZUvmqKa76a+8Jtg1gSZeITgV
- fKloLgD/f0tgymVwdld5frRv19ExX2M=
-X-Proofpoint-ORIG-GUID: 6XqKTYFmTgZkmuxxaXzbKA2-w9uMKcy3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260054
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,70 +68,153 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Collin Walling <walling@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 
-There are certain CPU model features that depend on other features
-that are flagged for deprecation. For example `ineff_nc_tx` depends
-on the `te` deprecated feature.
+The XHCI controller's USB port and bus callbacks -- xhci_complete(),
+xhci_wakeup_endpoint(), xhci_attach(), xhci_detach(), and
+xhci_wakeup() -- can be invoked from outside any MMIO handler context.
+The device's mem_reentrancy_guard is therefore not engaged during
+this processing.
 
-If a user defines a VM with the current list of deprecated features
-disabled, the following warning occurs:
+A malicious guest can exploit this gap via MSI-X self-targeting: it
+programs the MSI-X vector's message address to point at the XHCI
+doorbell register array (both reside in the same BAR0 MemoryRegion).
+When any of these callbacks posts an event via xhci_event() ->
+xhci_intr_raise(), the resulting msix_notify() -> pci_msi_trigger()
+issues an address_space_stl_le() that writes doorbell 0, triggering
+xhci_process_commands() reentrantly. A CR_DISABLE_SLOT command
+planted on the command ring then frees XHCITransfer/XHCIEPContext
+objects that the outer call stack still references, causing a
+heap use-after-free.
 
-	warning: 'ineff_nc_tx' requires 'te'
+Fix this by setting engaged_in_io on the device's mem_reentrancy_guard
+around the processing in all five callbacks. The guard is set
+conditionally (only when not already engaged) because these callbacks
+may also be reached from within a guarded MMIO context.
 
-To alleviate this, add these "dependent features" to the deprecated
-features list. This allows the user to see *all* features that should
-be disabled to ensure a successful migration to a host system that
-may not support certain deprecated features.
+xhci_child_detach() is intentionally left unguarded: it only calls
+xhci_detach_slot() which passes report=0 to xhci_ep_nuke_xfers(),
+suppressing event generation, so it never reaches xhci_event().
 
-Fixes: 6e55b32d45 ("target/s390x: flag te and cte as deprecated")
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
-Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Tested-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20261009185559.144750-3-walling@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
----
- target/s390x/cpu_features.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Note: This is similar to the fixes done for CVE-2026-17588, see
+f91b0544fe ("Set reentrancy guard in timer functions").
+(Mjt: this is commit ed582623e237 in 11.1.x series)
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index 20f9947c7b..babee7f5ba 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -360,10 +360,23 @@ void s390_get_deprecated_features(S390FeatBitmap features)
-          S390_FEAT_TRANSACTIONAL_EXE
-     };
-     int i;
-+    bool restart;
+CVE: CVE-2026-111819
+Message-ID: <20261020114031.687929-1-thuth@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4625
+Reported-by: Ken Hsu, Royce Lu, and Bo Qu of Palo Alto Networks
+Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/4642
+Reported-by: Nikhil Agrawal <nikhil.agrawal@mettlelabs.ai>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit cfa70f3a82f581ad758586ecf408fe7f3602850f)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index 376bc00264d..5d7a77b8bcf 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -3251,49 +3251,73 @@ static const MemoryRegionOps xhci_doorbell_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
-     for (i = 0; i < ARRAY_SIZE(feats); i++) {
-         set_bit(feats[i], features);
-     }
++static bool xhci_engage_reentrancy_guard(XHCIState *xhci)
++{
++    bool prev_engaged = xhci->parent.mem_reentrancy_guard.engaged_in_io;
 +
-+    /* Mark features that depend on any deprecated feature */
-+    do {
-+        restart = false;
-+        for (i = 0; i < s390_feat_deps_len; i++) {
-+            if (test_bit(s390_feat_deps[i][1], features) &&
-+                !test_and_set_bit(s390_feat_deps[i][0], features)) {
-+                /* Restart in case set features have other dependencies */
-+                restart = true;
-+            }
-+        }
-+    } while (restart);
++    xhci->parent.mem_reentrancy_guard.engaged_in_io = true;
++    return prev_engaged;
++}
++
++static void xhci_restore_reentrancy_guard(XHCIState *xhci, bool engaged)
++{
++    xhci->parent.mem_reentrancy_guard.engaged_in_io = engaged;
++}
++
+ static void xhci_attach(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged = xhci_engage_reentrancy_guard(xhci);
+ 
+     xhci_port_update(port, 0);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
  }
  
- #define FEAT_GROUP_INIT(_name, _group, _desc)        \
+ static void xhci_detach(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged = xhci_engage_reentrancy_guard(xhci);
+ 
+     xhci_detach_slot(xhci, usbport);
+     xhci_port_update(port, 1);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_wakeup(USBPort *usbport)
+ {
+     XHCIState *xhci = usbport->opaque;
+     XHCIPort *port = xhci_lookup_port(xhci, usbport);
++    bool prev_engaged;
+ 
+     assert(port);
+     if (get_field(port->portsc, PORTSC_PLS) != PLS_U3) {
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     set_field(&port->portsc, PLS_RESUME, PORTSC_PLS);
+     xhci_port_notify(port, PORTSC_PLC);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_complete(USBPort *port, USBPacket *packet)
+ {
+     XHCITransfer *xfer = container_of(packet, XHCITransfer, packet);
++    XHCIState *xhci = xfer->epctx->xhci;
++    bool prev_engaged;
+ 
+     if (packet->status == USB_RET_REMOVE_FROM_QUEUE) {
+         xhci_ep_nuke_one_xfer(xfer, 0);
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     xhci_try_complete_packet(xfer);
+     xhci_kick_epctx(xfer->epctx, xfer->streamid);
+     if (xfer->complete) {
+         xhci_ep_free_xfer(xfer);
+     }
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static void xhci_child_detach(USBPort *uport, USBDevice *child)
+@@ -3345,6 +3369,7 @@ static void xhci_wakeup_endpoint(USBBus *bus, USBEndpoint *ep,
+ {
+     XHCIState *xhci = container_of(bus, XHCIState, bus);
+     int slotid;
++    bool prev_engaged;
+ 
+     DPRINTF("%s\n", __func__);
+     slotid = ep->dev->addr;
+@@ -3353,7 +3378,9 @@ static void xhci_wakeup_endpoint(USBBus *bus, USBEndpoint *ep,
+         DPRINTF("%s: oops, no slot for dev %d\n", __func__, ep->dev->addr);
+         return;
+     }
++    prev_engaged = xhci_engage_reentrancy_guard(xhci);
+     xhci_kick_ep(xhci, slotid, xhci_find_epid(ep), stream);
++    xhci_restore_reentrancy_guard(xhci, prev_engaged);
+ }
+ 
+ static USBBusOps xhci_bus_ops = {
 -- 
-2.56.0
+2.47.3
 
 
