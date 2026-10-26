@@ -1,64 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD44A606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 20:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D891606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 20:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mkTDGsDW
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n3Jb9rzd
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLR7e-0008Vh-QG; Mon, 26 Oct 2026 16:16:46 -0400
+	id 1xLRdO-0005wp-OB; Mon, 26 Oct 2026 16:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1xLR7Q-0008T3-AJ; Mon, 26 Oct 2026 16:16:35 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1xLRdM-0005vX-78; Mon, 26 Oct 2026 16:49:32 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
- id 1xLR7K-0007ke-Ja; Mon, 26 Oct 2026 16:16:28 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id EC6874393F;
- Mon, 26 Oct 2026 20:16:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5CD1F031E2;
- Mon, 26 Oct 2026 20:16:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793045783;
- bh=pYaaAlDYFRTqZ+wj+MoY8oeV2RM2hXXqdqz1u0tqFJk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To;
- b=mkTDGsDWEivILxDWV6hR6+cMZa2rgf+7WwOtYHAIMkchj+eFPIwHBiCR8AKXhZ0zt
- 0ORx4WBw4GI0C3T3mg+ekWd/94Sgt/v6u28/HDxh7z2v8F1SMSZayn8jCnc0fBBQ9C
- cxji/J6ib0dvxtWYXspflSwJjTXUJ2mSuiHf6hPcwxhbSm9ys6xdBlM4MYlQW01Vc+
- MeIHudJTnZYckF+xwUu5xkXkU/IB/JhjMP909B9uoXDlgQCsQFGQzZQXG+3192N2t9
- oVbdWmPkr0k38GPPh79sUJsybEv1k+EedKGb9sa6f3zlWAjtzjj3hD80lAB3A8hNsY
- r7C81yjgDFjpg==
-Date: Mon, 26 Oct 2026 14:16:21 -0600
-From: Keith Busch <kbusch@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Daniel Gomez <da.gomez@kernel.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
-Subject: Re: [PATCH RESEND v3 4/7] dma-helpers: chunk dma_blk_cb at IOV_MAX
-Message-ID: <at-1FYnLI6_MUWiX@kbusch-mbp>
-References: <20261026-align-nvme-mdts-with-linux-v3-0-a33bd7c32df9@samsung.com>
- <20261026-align-nvme-mdts-with-linux-v3-4-a33bd7c32df9@samsung.com>
- <20261026201126.GD629414@shajnocz.csb>
+ (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
+ id 1xLRdK-000289-Et; Mon, 26 Oct 2026 16:49:31 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69QJENd1370535; Mon, 26 Oct 2026 20:49:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=RVQ6J1
+ 41ytrvuWrL7nfA0Hr29vhmnyHsW8ZMKBeIlio=; b=n3Jb9rzdw/reMBAk/nuSiX
+ 83/vbUxLGVZ53PfJg/B1AkFVFQY7gMu48KPtBOkIYn1cr+UoqggPWRos+lmKT6Vd
+ R2MIHS0n8nzzKEKHo3mPOBpt0NH8Cw6Zm3LBC5ygUOOhLfpxOAwB0+itFtlh3Tt/
+ BFz/s9zJ+dIIqikygCuCrtRw7W3rpCyhGc6c35xflR1b2AAa++KLCf15zxHJ5Ose
+ 8P65OxUV3jjc4KnU1N6ZoGx86PpCmAuso3NxvfNblqV8Kuw5/UT6JV8gDOMIEN3v
+ DKNmcNW9p8SvcbfO3J9fAwZMAElZ13wXTec0qzVCEQ/QH2zs0brToSGeKAu624Gw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgm63vcx2-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 26 Oct 2026 20:49:26 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69QIov5O2939298; Mon, 26 Oct 2026 20:49:25 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh80jfvrr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Oct 2026 20:49:25 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69QKnO0d4915732
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Oct 2026 20:49:24 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B574A58056;
+ Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2273658052;
+ Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
+Received: from [9.61.248.120] (unknown [9.61.248.120])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
+Message-ID: <e7c1b33e-a26c-4975-abf7-8ae4cd53f417@linux.ibm.com>
+Date: Mon, 26 Oct 2026 16:49:23 -0400
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261026201126.GD629414@shajnocz.csb>
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=kbusch@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] s390/pci: Change reset method from legacy to
+ resettable exit
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
+ qemu-stable@nongnu.org
+References: <20261026171325.876-1-alifm@linux.ibm.com>
+Content-Language: en-US
+From: Omar Elghoul <oelghoul@linux.ibm.com>
+In-Reply-To: <20261026171325.876-1-alifm@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4MiBTYWx0ZWRfX4dr77y4fuAj9
+ YW9BBqsiv9ibG/lHDV06tt0gIo0IUe2DI5oFzJ8fPbSAO00mU7VPhqTyQ/SjhkIzgmOZMKstRp0
+ tYwkNY3XCwunbeo9TiO8b+PSpRmlvOk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4MiBTYWx0ZWRfX/fyV6wbYkCLN
+ qwOpoldPkA4bLv42c4xFvy27ujHaJaEOeBa4UUerahHzA5sR2wGB1pvg9oZ69Fu6UiwqYkYj5Hw
+ aAtAK+SaaQ/d3XiQGMGqLNKvCEi7b5nyOybHjSncNODvKVIUN8qU34CGt9iO8rLnBMemGsmgixt
+ pjV+oFbfE/hFkU+ygo64q4WaYsy/SinF198YBgoAhDWinY8VzSLq/15muFvrTJ0VgRjGCTJI5CW
+ DuAiMOCcJmUN8FC6cf31U7UASyanLYxRxRRdC5+Xuot3aCr0nVPaXw0tw5tAqaOQJc125Z+SzR2
+ MQ3xQiTkab4/DhqPr5CuRvt2ga/iL0vyAVHHZwpDXfLZe9HwSCWgWSYPvtpSF2A5iQdAVLh69l8
+ 6U16ZeycR+xEhEBv6CRZdgaxCmXj5hT/tNgkx9/jZyE/W1dUnCDok3HkiuNNaMOlTx8AF+mfQ6r
+ E2ndE3yHKiRZh7at1fA==
+X-Proofpoint-ORIG-GUID: VQLMffYKwkdkeCHydvcwLH6WkblFUYsm
+X-Authority-Analysis: v=2.4 cv=Uu32pOwB c=1 sm=1 tr=0 ts=6adfbcd6 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8
+ a=VnNF1IyMAAAA:8 a=dxUtY4db0SHtNY8ba_oA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: VQLMffYKwkdkeCHydvcwLH6WkblFUYsm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260082
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,25 +122,39 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, Oct 26, 2026 at 04:11:26PM -0400, Stefan Hajnoczi wrote:
-> What happens when two large writes to the same sector run concurrently?
-> Before, the result was either write A or write B. Now it's possible to
-> get an interleaving of write A and B's data. 
+On 10/26/26 1:13 PM, Farhan Ali wrote:
+> On subsystem reset of the s390 PCI host bridge (TYPE_S390_PCI_HOST_BRIDGE),
+> child buses S390PCIBus and PCIBus are reset in order. Because S390PCIBus
+> devices are reset first via the legacy reset hook, IOMMU mappings are torn
+> down before the PCI device itself is reset. For a PCI passthrough device
+> this opens a window where the device may issue DMA to addresses that no
+> longer have valid IOMMU mappings, causing an error (PEC 0x7) on the host.
+> 
+> The QEMU reset documentation (docs/devel/reset.rst) specifies that IOMMUs
+> should perform teardown in the resettable 'exit' phase, after all devices
+> have completed their 'hold' phase. Move the S390PCIBusDevice reset logic
+> from the legacy reset hook to the resettable exit phase to close this
+> window.
+> 
+> Fixes: 3e5cfba3ca0a ("s390x/pci: introduce S390PCIBusDevice qdev")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+I was able to reliably reproduce the failure you described in just a
+handful of iterations by running iperf3 on a guest with a passthrough
+mlx5 device, with options to iperf3 for high parallelism and large
+message size to saturate DMA usage, doing a sysrq hard-reset while the
+test is still running, and repeating these steps in a tight loop.
 
-That result is consistent with the storage hardware specs, too.
+After applying your patch, no PCI error events were observed across the
+200 test iterations. Thank you!
 
-> I think this violates block device semantics and corrupts data. A
-> serialization mechanism is needed if you want to do this.
+Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
 
-Seems like overkill and you still don't get a deterministic outcome: you
-get either A or B, but you the host doesn't know which. If you need
-deterministic data, then the onus is usually on the host side to not
-send overlapping writes.
 
