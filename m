@@ -1,63 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F22606A31D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148D0606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n7LpA5W7
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PQ7a5pRa
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLJZv-00008x-4O; Mon, 26 Oct 2026 08:13:27 -0400
+	id 1xLJaX-0000I1-8Z; Mon, 26 Oct 2026 08:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLJZs-000084-9Q; Mon, 26 Oct 2026 08:13:24 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xLJaU-0000GE-E1; Mon, 26 Oct 2026 08:14:02 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLJZq-0005zg-MZ; Mon, 26 Oct 2026 08:13:24 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id BE91D601FE;
- Mon, 26 Oct 2026 12:13:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A65F1F031E0;
- Mon, 26 Oct 2026 12:13:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793016801;
- bh=Yyr8Vef3hJZm81XPHmzhgHQDPuVtINKQOKAaS7xtcP8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n7LpA5W7ocCvzkJ9gpWIYGIo9Bwocn3ZJnoNkuQio6jbRMgqDAdspA6qOkjry+TNR
- wDklcfkjoiGXR/6d1jWIPxhrlUsQBe8C4iHSncAmv5g9FSH6MfHWOj8eb2ytDq8Dqr
- 8qtqa4DFy9Fiwfxvj4iCUIcHdpVSepLR/a0oQBYVv61WJVoBCpvTEzevMpPcA1QLQs
- 6tellwjfvnrvJ0nrzUoc5g5y/MRQW+HaVKbKjT9qaToPChs3ET18g5EbWnbcNJ04YN
- wjAPapbpX2sDCw0+zzB0o7lz0U8v1sBz4MHa7s9NWvCcPrp+Ee2Ge0BP8SNVJ/S4iD
- KxEz/ttsvSMOA==
-From: Niklas Cassel <cassel@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Niklas Cassel <cassel@kernel.org>, dlemoal@kernel.org,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
- Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v15 3/7] block: define errnos for zone protocol errors
-Date: Mon, 26 Oct 2026 13:12:51 +0100
-Message-ID: <20261026121259.3354561-4-cassel@kernel.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261026121259.3354561-1-cassel@kernel.org>
-References: <20261026121259.3354561-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xLJaR-00064e-OP; Mon, 26 Oct 2026 08:14:01 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69QBEmsa3273344; Mon, 26 Oct 2026 12:13:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dlZy1b
+ Ej4zfOHfxyTzMV4iEEKUEaZ/mS7tpqGsYbK3U=; b=PQ7a5pRalS95EnhExlO1Kt
+ L2SQSUsGjCSuHQEN6p7016ettgrDtO+BKCCML1QlBK5D0HjNGxwZctAOhJyqHfv5
+ j8pUYm269N2iYhX9Oc4IxetHOJ67FlEL2ls5Rk8bF+wU/ib6SejhmDfEhgNRpt7L
+ gSUj5dhiY2j5X8pxWcF4kM11xmzMQsX5cSuyp6HUYsEFMhNYUp4Fxf0zf2LIx0Ms
+ qtP3ElWoKoIksBejcbmBXz1jSvo3Nj5x1B3o6j6QVX8nnUI3aSuSc6FQ1vWt8Jj2
+ 9OzPagOQnvdG0msO4y+TKirFdBBKPPM137WAF6B3XpdScXIb5alyxJJ4V7gcA4kg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgj3m1xjq-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 26 Oct 2026 12:13:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69QB4xYD2500625; Mon, 26 Oct 2026 12:13:55 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh8ggwny2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Oct 2026 12:13:55 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69QCDsLd31523460
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Oct 2026 12:13:54 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C82DF58057;
+ Mon, 26 Oct 2026 12:13:54 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7728B58058;
+ Mon, 26 Oct 2026 12:13:54 +0000 (GMT)
+Received: from [9.61.109.57] (unknown [9.61.109.57])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 26 Oct 2026 12:13:54 +0000 (GMT)
+Message-ID: <6b713f11-4f90-4441-83c4-304f657a9b1f@linux.ibm.com>
+Date: Mon, 26 Oct 2026 08:13:53 -0400
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] s390x MAINTAINERS updates
+To: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20261023151229.1196404-1-farman@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20261023151229.1196404-1-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA0NiBTYWx0ZWRfX1Waa4XKy5xjX
+ VinRY1zh0+B0MueukQ/iznMVqTiQGz7O4Ya5DmNqBToYCVzNe7JuaJ1w3Nm9anP/3jm48LEFPyn
+ Jum3haCe+nCay/pcZV0l/gqwd52c3ag=
+X-Proofpoint-ORIG-GUID: mUDkAdxJlNSejXpQhPp_UEFwakpHbueW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA0NiBTYWx0ZWRfXxdRaaRFGDvxd
+ XuqQUUrmwytDWTN+j42Dbj3CG45J4BuCecFb8ORTYcuUCZ/8EChcIotIX2b0h4x94Iad8YQCLLS
+ T+4K1Lu8eqAvsJbOoLN2tvoe8riAk9JcaGtRaU/zU5AK92JFnXh5qg+woVzTRj8Hdqb0ZNMQQ8G
+ QUmIsbFEzRC5rgVDUL+BtPhseUdZkSee2/41ThRCf+EQD6h0NxY84Y8fdiKg1SqhzVf0hdKQTBB
+ q+2R3i9poYPUFlV4GkHtvsVdKWLbVVYpYnDjADgsDnLr+PBGhu5KHQDeFBzSTbSPk9h4NgRwRd6
+ 3eZHo1Aq1DhyfRN5pZEUc8Z+TGtTyTU/DaeiKD05A6p42mKWIjYD7sHCbRrhQ9g+WZyD18NtgTO
+ PNk5XRF9SQmmNnm1fpbh3e/UMnhzLv5gjC4VU4Y+Tt3jQDu77TpP3hdRT8sin/I2vpQb8QqYwPK
+ XFdvB1PecDZz44NIOpw==
+X-Authority-Analysis: v=2.4 cv=G7uJgNk5 c=1 sm=1 tr=0 ts=6adf4404 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=0VemMcr8nS1dSNF8c3oA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: mUDkAdxJlNSejXpQhPp_UEFwakpHbueW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260046
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,89 +163,25 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A block driver that emulates zones (e.g. qcow2 with the zoned format
-feature) rejects requests that violate the zone protocol, and the device
-model has to report each of these to the guest with the matching zone
-error (ZAC/ZBC sense data, virtio-blk zone status codes, ...). It can
-only do so if each condition comes with an errno of its own, rather than
-a generic one such as EIO.
 
-Define one for each condition:
 
-  BLK_ZE_UNALIGNED_WRITE  ESPIPE        write not at the write pointer
-  BLK_ZE_BOUNDARY         ERANGE        write past the zone capacity
-  BLK_ZE_OPEN_RESOURCE    ETOOMANYREFS  open zone limit reached
-  BLK_ZE_ACTIVE_RESOURCE  EOVERFLOW     active zone limit reached
+On 10/23/26 11:12 AM, Eric Farman wrote:
+> Two quick updates to MAINTAINERS
+> 
+> Eric Farman (2):
+>    MAINTAINERS: Add other s390x tree
+>    MAINTAINERS: Update s390 boot reviewer
+> 
+>   MAINTAINERS | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
 
-ETOOMANYREFS and EOVERFLOW are what Linux returns for
-BLK_STS_ZONE_OPEN_RESOURCE and BLK_STS_ZONE_ACTIVE_RESOURCE, so a host
-zoned device used through file-posix already reports the same values.
-For the boundary case, ERANGE is used rather than EFBIG, which the host
-file system can legitimately return for an image file.
-
-A write that is not at the write pointer gets ESPIPE, which file and
-block device I/O never return, rather than EINVAL, which a zoned driver
-also uses for invalid requests such as an invalid zone state
-transition. So a device model can map each of these errnos to its zone
-error without having to know which request failed.
-
-ETOOMANYREFS is not POSIX, so provide a fallback for hosts that lack it.
-
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
----
- include/block/block-common.h | 16 ++++++++++++++++
- include/qemu/osdep.h         |  3 +++
- 2 files changed, 19 insertions(+)
-
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index 3932ff8615..6e4b2eb3ce 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -125,6 +125,22 @@ typedef struct BlockZoneDescriptor {
-     BlockZoneState state;
- } BlockZoneDescriptor;
- 
-+/*
-+ * Errors that zoned block drivers report for zone protocol violations, as
-+ * positive errno values (drivers return them negated). Each condition has an
-+ * errno of its own that zoned block drivers do not return for anything else,
-+ * so that device models can report the matching zone error to the guest
-+ * whichever request failed. In particular, EINVAL is not used, as it also
-+ * reports invalid requests, such as an invalid zone state transition. The
-+ * zone resource errors are the errnos Linux uses for BLK_STS_ZONE_OPEN_RESOURCE
-+ * and BLK_STS_ZONE_ACTIVE_RESOURCE, so a host zoned device accessed through
-+ * file-posix reports the same values.
-+ */
-+#define BLK_ZE_UNALIGNED_WRITE  ESPIPE       /* write not at write pointer */
-+#define BLK_ZE_BOUNDARY         ERANGE       /* write past zone capacity */
-+#define BLK_ZE_OPEN_RESOURCE    ETOOMANYREFS /* open zone limit reached */
-+#define BLK_ZE_ACTIVE_RESOURCE  EOVERFLOW    /* active zone limit reached */
-+
- /*
-  * Track write pointers of a zone in bytes.
-  */
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 50c7ce33b6..7925c28ac3 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -345,6 +345,9 @@ void QEMU_ERROR("code path is reachable")
- #if !defined(ESHUTDOWN)
- #define ESHUTDOWN 4099
- #endif
-+#if !defined(ETOOMANYREFS)
-+#define ETOOMANYREFS 4100
-+#endif
- 
- #define RETRY_ON_EINTR(expr) \
-     (__extension__                                          \
--- 
-2.56.0
-
+Applied to queue for 11.2; thanks!
 
