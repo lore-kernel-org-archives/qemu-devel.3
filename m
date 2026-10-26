@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC56606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A820606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=s+/0u19r
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Zq4g5+9+
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLEH-0003q1-Uz; Mon, 26 Oct 2026 09:59:14 -0400
+	id 1xLLDm-0002kP-4b; Mon, 26 Oct 2026 09:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLEB-0003fY-Ay; Mon, 26 Oct 2026 09:59:10 -0400
+ id 1xLLDj-0002do-F5; Mon, 26 Oct 2026 09:58:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLE8-0000b2-Sf; Mon, 26 Oct 2026 09:59:07 -0400
+ id 1xLLDh-0000Xd-H9; Mon, 26 Oct 2026 09:58:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=HCQLGzfCtgtuHcWFKau6tGMrrrnHHyVffev4DUYjRsw=;
+ t=1793022944; bh=ES7TJidJTboctxLWDO/F00v9No8M3DqcYrTnDFd1RWQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=s+/0u19rn5dZGqqUkOrQxVcBaXYCSjPsn06KNoGLpLAmucIihjCWBGET7FWRwt/p9
- f501kW+O1OVA6q3BuIGQUXOgzzzBsxxQpDLtPu8pgykndpyAHR3PEzSF2n1+MnSp/E
- nDG5Vg+DKMmD0fEHab1vqWYUXYsnxWBbg8KdZVw+EL5X8FhNP+vpbU4DviDwnIi1Y0
- 5oBzXPmpMOJXeztgq//m3D1P4U0cXDd9j4z9CtMWABwyTDhGGALgs3iLsnO7sYnAYV
- INgEIpuQJdg9+U3gVE6dMIAkB7OBkOPFH6HzJVUW+xcMqcDoyom7Cs1hliOXPLyRUY
- S3qqiBJ8NoUSg==
+ b=Zq4g5+9+nqoDUEKOh4p/03u+dPKZEXjuHAsO/aDMfrrgg2tHQW1XjkwEFrSJygeLS
+ MAHVBZIXhL00zqWIkedolAWNlvWQqMH8AgNCZtr4Es/qCnSS9oAqkRttWtdRivcTU/
+ 0mssl63vJRXfFolQHqr1rt5yJ0xVvBhpY8M95RyCw6RZHUGRAlIwGXDOAbUyG7SB2M
+ coZmDOM2R6BGCtaQ9fILozvvNG4j08j/9OUaC6udjBvs4NjJGNXPUdo3jpiPsI+uAa
+ XL/8bki9anmALcRMNbjkfP83m9RmiuRQcP9tDUePVuHDKUwJt3GUwvKhPRrHzzoRsP
+ N9DdFbksSS3Ug==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 418231E12AB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2FFF31E12A7;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F76D44B8FC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2E0A144B8F8;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1A672934DD; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ id 0EF54934D5; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifano@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 94/98] hw/usb/dev-mtp: Fix heap OOB read in
- usb_mtp_write_metadata()
-Date: Mon, 26 Oct 2026 16:55:21 +0300
-Message-ID: <20261026135529.1019772-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@linux.dev>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 90/98] tests/qtest/usb-hcd-xhci: test interrupt
+ pacing above 2^32
+Date: Mon, 26 Oct 2026 16:55:17 +0300
+Message-ID: <20261026135529.1019772-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
@@ -68,83 +67,110 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tommaso Califano <tcalifano@redhat.com>
+From: Junjie Cao <junjie.cao@linux.dev>
 
-usb_mtp_write_metadata() computed the number of filename characters as
+Commit bfb82d57e7 ("hw/usb/hcd-xhci: fix interval alignment after
+MFINDEX passes 2^32") fixed both isoch and interrupt scheduling, but
+the regression test only covers the isoch path.
 
-  filename_chars = dlen - offsetof(ObjectInfo, filename)
+Queue a keyboard report on an interrupt IN endpoint after stepping
+past 2^32 microframes. Check that the transfer remains pending until
+the next interval boundary, then completes with the expected report.
+With the old 32-bit mask, it completes as soon as the doorbell is rung.
 
-where dlen is the amount of data copied by the last USB packet of the
-transfer, not the size of the ObjectInfo dataset. If the final packet has
-fewer than 53 bytes, filename_chars underflows to SIZE_MAX, causing
-utf16_to_str() to read far beyond the heap buffer, leaking QEMU host
-process memory.
-
-Use d->length instead: it is the size of the buffer holding the dataset,
-and usb_mtp_write_metadata() is only reached once all d->length bytes
-have been received.
-
-d->length is guest-controlled, so reject datasets too small to hold the
-fixed part of ObjectInfo before dereferencing it. The check is "<="
-rather than "<" because a dataset of exactly offsetof(ObjectInfo,filename)
-bytes would yield an empty filename.
-
-Fixes: 90c1a74271ce ("usb-mtp: Limit filename to object information size")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3992
-Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Message-ID: <20261007143738.58509-1-tcalifano@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/52c9f935428f2cfc65e4dee7e37638fcb965c6b2.1789968699.git.junjie.cao@intel.com/
+Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+Message-ID: <20261004044803.9740-1-junjie.cao@linux.dev>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 6ab4cd2f13debf7682106ff1d9917478814dda10)
+(cherry picked from commit 432f505fa65ee12544d34998f56f4754115f605f)
+(Mjt: this is commit 273bb4dcdebe in 11.1.x series)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 9048cddaaba..8507e516ab1 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -1696,7 +1696,7 @@ close:
-     s->write_pending = false;
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index 2e173af7506..add2290bffa 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -48,6 +48,7 @@
+ #define TRB_GET_CCODE(status)   ((status) >> 24)
+ #define TRB_GET_SLOT(control)   ((control) >> 24)
+ 
++#define TR_NORMAL              1
+ #define TR_ISOCH                5
+ #define CR_ENABLE_SLOT          9
+ #define CR_ADDRESS_DEVICE       11
+@@ -59,6 +60,7 @@
+ #define EP_TYPE_ISOCH_OUT       1
+ #define EP_TYPE_CONTROL         4
+ #define EP_TYPE_ISOCH_IN        5
++#define EP_TYPE_INTR_IN         7
+ 
+ #define XHCI_RING_TRBS          64
+ #define XHCI_MICROFRAME_NS      125000
+@@ -392,6 +394,48 @@ static void test_xhci_isoch_mfindex_32bit(void)
+     xhci_test_end(&x);
  }
  
--static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
-+static void usb_mtp_write_metadata(MTPState *s)
- {
-     MTPData *d = s->data_out;
-     ObjectInfo *dataset = (ObjectInfo *)d->data;
-@@ -1704,7 +1704,15 @@ static void usb_mtp_write_metadata(MTPState *s, uint64_t dlen)
-     MTPObject *o;
-     MTPObject *p = usb_mtp_object_lookup(s, s->dataset.parent_handle);
-     uint32_t next_handle = s->next_handle;
--    size_t filename_chars = dlen - offsetof(ObjectInfo, filename);
-+    size_t filename_chars;
++static void test_xhci_intr_mfindex_32bit(void)
++{
++    const unsigned int interval = 6;
++    const uint8_t expected[] = { 0, 0, 4, 0, 0, 0, 0, 0 };
++    uint8_t report[sizeof(expected)];
++    uint32_t status, control;
++    uint64_t ring, data;
++    XHCITest x;
 +
-+    if (d->length <= offsetof(ObjectInfo, filename)) {
-+        usb_mtp_queue_result(s, RES_INVALID_OBJECTINFO, d->trans,
-+                             0, 0, 0, 0);
++    if (!xhci_test_supported("usb-kbd")) {
 +        return;
 +    }
 +
-+    filename_chars = d->length - offsetof(ObjectInfo, filename);
++    xhci_test_start(&x, "-device usb-kbd");
++    ring = xhci_configure_ep(&x, 3, EP_TYPE_INTR_IN, interval, 8);
++    data = xhci_alloc_page(&x);
++
++    qtest_clock_step(x.qts, ((1ULL << 32) + 5) * XHCI_MICROFRAME_NS);
++    /* A ready report makes an early transfer observable. */
++    qtest_qmp_assert_success(x.qts,
++        "{'execute': 'input-send-event', 'arguments': {'events': ["
++        "{'type': 'key', 'data': {'down': true, "
++        "'key': {'type': 'qcode', 'data': 'a'}}}]}}");
++
++    xhci_write_trb(&x, ring, data, sizeof(report),
++                   TRB_TYPE(TR_NORMAL) | TRB_TR_IOC | TRB_C);
++    xhci_writel(&x, x.doorbell + 4 * x.slot, 3);
++    g_assert_false(xhci_next_event(&x, NULL, NULL));
++
++    qtest_clock_step(x.qts,
++                     ((1U << interval) - 5) * XHCI_MICROFRAME_NS - 1);
++    g_assert_false(xhci_next_event(&x, NULL, NULL));
++    qtest_clock_step(x.qts, 1);
++    g_assert_true(xhci_next_event(&x, &status, &control));
++    g_assert_cmpuint(TRB_GET_TYPE(control), ==, ER_TRANSFER);
++    g_assert_cmpuint(TRB_GET_CCODE(status), ==, CC_SUCCESS);
++    qtest_memread(x.qts, data, report, sizeof(report));
++    g_assert_cmpmem(report, sizeof(report), expected, sizeof(expected));
++
++    xhci_test_end(&x);
++}
++
+ /*
+  * The endpoint type in the endpoint context is whatever the guest says. Tell
+  * the controller that the interrupt endpoint of usb-kbd is isoch. The idle
+@@ -439,6 +483,8 @@ int main(int argc, char **argv)
+     }
+     qtest_add_func("/xhci/pci/isoch/mfindex-32bit",
+                    test_xhci_isoch_mfindex_32bit);
++    qtest_add_func("/xhci/pci/intr/mfindex-32bit",
++                   test_xhci_intr_mfindex_32bit);
+     qtest_add_func("/xhci/pci/isoch/ep-type-mismatch",
+                    test_xhci_isoch_ep_type_mismatch);
  
-     /*
-      * filename is utf-16. We're intentionally doing
-@@ -1801,7 +1809,7 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
-         if (d->data_offset == d->length) {
-             /* The operation might have already failed */
-             if (!s->result) {
--                usb_mtp_write_metadata(s, dlen);
-+                usb_mtp_write_metadata(s);
-             }
-             usb_mtp_data_free(s->data_out);
-             s->data_out = NULL;
 -- 
 2.47.3
 
