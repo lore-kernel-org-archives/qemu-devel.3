@@ -1,137 +1,162 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C77A606A327
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 10:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE0E606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 11:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PxRd4i4M
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CJOYdUar;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=H33wEBq7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLHoy-00058I-FR; Mon, 26 Oct 2026 06:20:53 -0400
+	id 1xLISv-0002VK-L9; Mon, 26 Oct 2026 07:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xLHop-00057E-QN; Mon, 26 Oct 2026 06:20:43 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLISp-0002Uo-Ab
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 07:02:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1xLHol-0002Dq-UZ; Mon, 26 Oct 2026 06:20:42 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69Q2icNl1991022; Mon, 26 Oct 2026 10:20:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UeGzPK
- LxDdhOQn8niTkuoSrs3QSxWkclNHZxW20pb5A=; b=PxRd4i4M4b6mWdvsLJogJu
- JhGoBEv+bKwQ2nS3OI/SCCgre6Oq6gd6b0HjLYZdlACYttFsa49/tVcN9XQxL3xX
- NbmRJvd0/jxJjm3ete8ts1JGpj0UZVEXYgmADQw4oz1n8RSzc+doBiawPKuS0GiQ
- O0L9srL74/4TAT0xACwE5347ZrH99MIROKqECVy9XMZxQ4I5ggugkqikRizhq9k0
- zLQv0G2j1T3pRadqpU74YoEW2cv8XJSOC24c9OInxCJ9ieqmU/6ykXYm2mvPnIKl
- /nwnm0rAgHvcTVxxYUqH7EwSEncuuBeve+OXpA5BGXmlK4I0ZfAjBpUd7wBiy9lA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmd6s8j1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 10:20:01 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69Q7Ilwr1866617; Mon, 26 Oct 2026 10:20:00 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh7cvddqq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 10:20:00 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69QAJuXE46268792
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Oct 2026 10:19:56 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BE2E20079;
- Mon, 26 Oct 2026 10:19:56 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAFFB20078;
- Mon, 26 Oct 2026 10:19:54 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.87.153.24])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 26 Oct 2026 10:19:54 +0000 (GMT)
-Message-ID: <5b8057e1-7b45-40d6-b4ec-17178432c220@linux.ibm.com>
-Date: Mon, 26 Oct 2026 11:19:54 +0100
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLISm-0006Md-2W
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 07:02:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793012517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=gxUdhUcAcRmEKCI+4bnTroamqomFCkAl4WhPv8a8VhA=;
+ b=CJOYdUaryHGDgcKYrtzQS0FDnhRuNw2l7e5yXSj4fvzClp/pdgG95CzFUpOHgUseyFj8I7
+ bD7nscMlU31E5Yfj+1/6rSL3qogCCSkNbWDCdIJr1UePRF6I5yKtQEnE1KuSfCZvoNE6yj
+ vjmvV8kOZKzbJsVMmp55XDhqGorFxwc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-U3-IsndTMAy5p26hDsVkEQ-1; Mon, 26 Oct 2026 07:01:56 -0400
+X-MC-Unique: U3-IsndTMAy5p26hDsVkEQ-1
+X-Mimecast-MFC-AGG-ID: U3-IsndTMAy5p26hDsVkEQ_1793012515
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a028616bebso22593905e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 04:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793012515; x=1793617315; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=gxUdhUcAcRmEKCI+4bnTroamqomFCkAl4WhPv8a8VhA=;
+ b=H33wEBq7DNoeAKmmgnOrS1agMxTNsWs7y0+Pzxj8VDWDhBKUCMB4dfzozGAZ/WEHqB
+ Ko7ygFgqudYBJjL8gNKnWKw/nn2pBR/kC3ybCpmvwTZz50vlNDZKpQGQGdJiiXNr15A5
+ a98RWINH+XXPJ0V1UNgsX1JYTqKSKadLKX3RDnXENWaGfgfIr0BVAuLKkrnzRW/bKigy
+ 44g8dHcmC7g5QoEOo8xx6sun1FZnXnHGUhrPKifu3K5uXdmeKEHGL0EiSHrEaXpGDzUx
+ vY0qnHX6GSlRX9Ty6BM1NqKUwv0DxfrkQQg6ayFenCLN5DthAWEW/uiQZkoqx+nYdgWo
+ 8CEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793012515; x=1793617315;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gxUdhUcAcRmEKCI+4bnTroamqomFCkAl4WhPv8a8VhA=;
+ b=B8DQgN17IhVmYh1kXiR0k0gICk21hcJi6efLltm0HbvmYx8pOFsKB5u0iUA+ZdoYUe
+ pmoWdaynQVYI9BeYsv1C49MYO/rS+LgpYOMTNy4DaVi1Ee1iQTgx9kry+dGNFUnQQgxm
+ zU39Py0sAhpLwRYRHD0LaThqFAJE/ixGbCV2Hh1YnX1lYoCTfn99Q8buYh8iAIj0QZ4g
+ jquIKobgnaTOhe5C9XVulSHfeKNZ8KDIKaLVoFBCGcaUp84RvgqLyPogQt8FG79IDhwM
+ vSzQYk+PM9rshwter8RZeWf9ItR4Sx66WXAIyAMM3+C5v9S+16czNnM8M7eNTtGtqD98
+ b7YA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzUMThWg9aD4lGpxslgvm5PDjd365VXKX87znU8sCuV+rxL4OG5BlamiTuS2ed8iWzl0ab0TcqwvARl@nongnu.org
+X-Gm-Message-State: AFq9FYLVe8qO22ORPt8dV9G+uiL5VEbGc33IULQADIl7kA3zbEu3XRF6
+ LAJ2Q0wwbcVSHUQMmOCPgeOjVPPkA5tJAA8jNdR2j3CnWJhaUxDPtT0SDSBZUdd9pxtQ4C9pAxv
+ 0oCoEo/V/01IsOzn6UuVDMqHUjZHUfJBAN4ZVsFMlmn/hVAhT/wCW9w/j
+X-Gm-Gg: AYBFou1Q1yZ3JMyL2U3xywQoKl14RVx5UbJJE+Mmy1vo0hLiTPtqKSP8CMq++KczNZY
+ qMVbned17BVOGuX5tD/PqfBkO7Mk0bV6NseFD4t0kfBCZapIJPAY96jl1Sbj5QkUlM8HrSBnyvD
+ 7Q5Y6yepBvxXLSiPatXCOJNfLFx2DjtUh6cOHayPoL2DnEheNsN656agjOK6T80xUcOGRPNFyE8
+ Jnn1hLA2iR3vNvA3rMa8d1v34Xj8rG1JirGQfwAIuJrNB5vuBpXRmj8eQdqR/LTla9LoU1VYVXT
+ 8IRJmygnMEAxKQveUIaVNGPeznUE+xxxZx+9kvTtIBJM0UgxTtWHzHm3LIYmYgVI1vLTa19etUP
+ kErx9s2K4iJBNGTq6xs9uBsIKw4gzSCC93PWMwruJ
+X-Received: by 2002:a05:600c:c173:b0:4a2:191f:7cbd with SMTP id
+ 5b1f17b1804b1-4a35ac8bbd5mr117343175e9.11.1793012514970; 
+ Mon, 26 Oct 2026 04:01:54 -0700 (PDT)
+X-Received: by 2002:a05:600c:c173:b0:4a2:191f:7cbd with SMTP id
+ 5b1f17b1804b1-4a35ac8bbd5mr117342575e9.11.1793012513755; 
+ Mon, 26 Oct 2026 04:01:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d?
+ ([2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a35a58a293sm186105755e9.12.2026.10.26.04.01.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Oct 2026 04:01:52 -0700 (PDT)
+Message-ID: <b5463880-2471-4c7b-b9e4-dd554c32bb92@redhat.com>
+Date: Mon, 26 Oct 2026 12:01:51 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/19] tests/functional: teach tuxrun about launching
- gdb tests
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- Thomas Huth <th.huth+qemu@posteo.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Peter Xu <peterx@redhat.com>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Keith Busch <kbusch@kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Ani Sinha <anisinha@redhat.com>,
- Anders Roxell <anders.roxell@linaro.org>, qemu-arm@nongnu.org,
- Song Gao <gaosong@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-s390x@nongnu.org,
+Subject: Re: [PATCH v6 0/4] vfio-user: support multiple FDs backing region
+ mmaps
+To: Naman Gulati <namangulati@google.com>, qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Alex Williamson <alex@shazbot.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brad Smith <brad@comstyle.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-References: <20261019192704.3220373-1-alex.bennee@linaro.org>
- <20261019192704.3220373-13-alex.bennee@linaro.org>
- <41147e0a-c8a2-4060-903e-695e3977c8cd@linux.ibm.com>
- <87h5iezskx.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <87h5iezskx.fsf@draig.linaro.org>
+ Matt Evans <matt@ozlabs.org>
+References: <20261023223902.1275539-1-namangulati@google.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20261023223902.1275539-1-namangulati@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ZYOIpcVA c=1 sm=1 tr=0 ts=6adf2951 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=ZgqDKXDW9tkgL_YUEYwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA0MCBTYWx0ZWRfX+++t5kuZCeno
- JIhkCfpGm35CLzHBzI6LSmCRMtVs0y4LzPA60ZJnvhr/BjkmaftlLu/CdbNBHtHq6+/QkwjsAie
- 82i5HXyE1AF6fd4NZAXPITT6bDJZHPXRjn/trctUNYaCy9Y+O8NlF0/Cai+bYZNpk+h8+9+gWaw
- lFZYckV8kzv6nwNbweOikEtzxxeXTKSfxY/bBrX5he8H+HTI8+Taui7CeC6mk64l0xX26bRBkWC
- VR0N8H3upzs+nYyZ5GRMvArD2a502eFwIJCBsl+8TBDZd8afrtXSwJdgCKaU4LOAIxSCsND4DF0
- 5Ycn31VonPm/lmnJiCL1AGR8haR5hoCHV82nUt53MprN0kj3AN447JMET7XCCjDHd6V+HTtDsum
- SWBdf3oI5pP5zpxdrQeYbzhmz8VTsx8EyDcjso4fIi9dsKAIs/pHs/FrKu8w0ayhVyrwd4YUIrf
- QuNu3fSINDyGelQjJCQ==
-X-Proofpoint-GUID: 5YLaX7kGiWRZWc8vx9Yc-si7W36qKMxA
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA0MCBTYWx0ZWRfX8R0fqu5dGUKa
- 00FWXmQSLBoTcBhimubYcvoJSVpFfEzoRRfQgTflCK5ASWoiZl/LWyvFUkQP8rtDoH9JC/pXpGr
- 0hepax5oj0X+Z/r1UXJWWtVyniZU0Pg=
-X-Proofpoint-ORIG-GUID: 5YLaX7kGiWRZWc8vx9Yc-si7W36qKMxA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_01,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260040
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,107 +168,125 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-On 10/21/26 22:50, Alex Bennée wrote:
-> Ilya Leoshkevich <iii@linux.ibm.com> writes:
+On 10/24/26 00:38, Naman Gulati wrote:
+> This series extends the vfio-user protocol specification to allow
+> servers to pass multiple file descriptors for different sparse memory
+> areas to be mmap'ed within a single device region.
 > 
->> On 10/19/26 21:26, Alex Bennée wrote:
->>> This resurrects the hand run test script from d84842be6c5 (tests:
->>> remove test-gdbstub.py) and modernises it to use the shared test
->>> infrastructure for run-test.
->>> We then tweak the common tuxrun code to over an alternative "launch
->>> via gdbstub" helper which reuses the existing code but:
->>>     - needs a vmlinux with symbols
->>>     - drops kaslr because it doesn't play nice with symbols
->>>     - extend qargs with stuff normally added by vm.launch
->>>     - passes kargs directly
->>>     - runs with the gdb run-test script
->>>     - log the run-test output to the console log
->>>     - makes --binary not mandatory
->>> Message-ID: <20260930164649.433573-13-alex.bennee@linaro.org>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>> v3
->>>     - mention the nokaslr in the commit message
->>>     - add a comment about it to the shared kernel args
->>>     - drop unused failcount
->>>     - remove stale comment about hbreak
->>>     - always delete the watch point pass or fail
->>>     - fix unbalanced tuple in sh4's direct call of fetch_tuxrun_assets
->>>     - simplify the symbol to watchpoint logic
->>>     - drop the mandatory --binary
->>>     - make the command copy and paste friendly
->>> v2
->>>     - add self.vm._machine to qargs
->>>     - drop leading spaces in print () calls
->>>     - add register read tests
->>>     - use gdb.Breakpoint for hwbreak as for swbreak
->>>     - drop flaky symbol evaluation, verify hit_count instead
->>>     - explicit gdb.BP_BREAKPOINT for CatchBreakpoint
->>> ---
->>>    .../functional/gdb-scripts/kernel_gdb_test.py | 162 ++++++++++++++++++
->>>    tests/functional/qemu_test/tuxruntest.py      |  97 ++++++++++-
->>>    tests/functional/sh4/test_tuxrun.py           |   4 +-
->>>    tests/guest-debug/run-test.py                 |  14 +-
->>>    4 files changed, 261 insertions(+), 16 deletions(-)
->>>    create mode 100644 tests/functional/gdb-scripts/kernel_gdb_test.py
->>
->> [...]
->>
->>> @@ -132,10 +144,77 @@ def common_tuxrun(self,
->>>            special with the command line we can process most things using
->>>            the tag metadata.
->>>            """
->>> -        (kernel, disk, dtb) = self.fetch_tuxrun_assets(kernel_asset, rootfs_asset,
->>> -                                                       dtb_asset)
->>> +        (kernel, disk, dtb, _) = self.fetch_tuxrun_assets(kernel_asset,
->>> +                                                          rootfs_asset,
->>> +                                                          dtb_asset)
->>>              self.prepare_run(accel, kernel, disk, drive, dtb,
->>> console_index)
->>>            self.vm.launch()
->>>            self.run_tuxtest_tests(haltmsg)
->>>            os.remove(disk)
->>> +
->>> +    def common_tuxrun_gdb(self,
->>> +                          kernel_asset,
->>> +                          vmlinux_asset,
->>> +                          rootfs_asset,
->>> +                          accel=None,
->>> +                          dtb_asset=None,
->>> +                          drive="virtio-blk-device",
->>> +                          haltmsg="reboot: System halted",
->>> +                          console_index=0):
->>> +        """
->>> +        Common path for LKFT tests under gdb. Unlike the common_tuxrun
->>> +        function we need to launch with the gdb test script and deal
->>> +        with munging the arguments for that especially.
->>> +        """
->>> +        (kernel, disk, dtb, vmlinux) = self.fetch_tuxrun_assets(kernel_asset,
->>> +                                                                rootfs_asset,
->>> +                                                                dtb_asset,
->>> +                                                                vmlinux_asset)
->>> +
->>> +        gdb_path = os.getenv("QEMU_TEST_GDB")
->>
->> By the way, there is a minor usability issue: if I set QEMU_TEST_GDB to
->> a non-existent binary, the test hangs instead of exiting with an error
->> message.
+> This extension is intended for exposing paravirtualized PCI devices via
+> a vfio-user server that may have multiple unique sub-regions in a BAR
+> backed by some mmap'able buffers sourced from distinct file descriptors.
 > 
-> I can add a guard - but in normal invocation meson should take care only
-> to pass the env variable if configure detects gdb.
+> This change introduces a new capability:
+>    VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS
+> 
+> Unlike VFIO_REGION_INFO_CAP_SPARSE_MMAP (which maps all sparse areas
+> from a single open file descriptor), this new capability defines an
+> array of sparse mmap areas where each area contains an index into the
+> array of file descriptors.
+> 
+> When all sparse areas share a single file descriptor, servers may
+> continue to emit VFIO_REGION_INFO_CAP_SPARSE_MMAP and send exactly one
+> file descriptor in SCM_RIGHTS for backwards compatibility with older
+> clients.
+> 
+> The extensions in this series also lays the groundwork to make use of
+> the in-development series [1] extending vfio-pci to return distinct
+> dmabuf FDs for discrete regions of a device's BAR. A vfio-user server
+> may choose to return dmabuf FDs for various regions of a device's BAR to
+> map a vfio passthrough device into the guest, in order to retain control
+> of the device and be able to revoke mappings passed to the VM.
+> 
+> libvfio-user server side changes WIP on github [2].
+> 
+> 
+> [1] https://lore.kernel.org/all/20260715174737.15287-1-matt@ozlabs.org
+> [2] https://github.com/NamanGulati/libvfio-user/tree/multi-region-fd
+> 
+> ---
+> Changes from v5:
+>    - Renamed vfio_default_setup_sparse_mmaps() to
+>      vfio_region_setup_sparse_mmaps(). (Cedric)
+>    - Verified msgp->index == info->index in vfio_user_get_region_info()
+>      before copying the reply into info. (Cedric)
+>    - Documented the 0x8000 capability ID namespace in relation to kernel
+>      VFIO in hw/vfio-user/protocol.h. (John)
+>    - Link to v5: https://lore.kernel.org/qemu-devel/20261014211041.1087331-1-namangulati@google.com
+> 
+> Changes from v4:
+>    - Set .setup_sparse_mmaps = vfio_default_setup_sparse_mmaps in
+>      vfio_device_io_ops_ioctl. (Cedric)
+>    - Return -EINVAL in vfio_user_device_io_get_region_info() when
+>      VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS is present without received
+>      FDs. (Cedric)
+>    - Dropped redundant VFIO_USER_MAX_REGIONS bounds checks in
+>      vfio_user_device_io_get_region_info() and
+>      vfio_user_device_io_setup_sparse_mmaps(). (Thanos)
+>    - Validated sparse_fds->nr_areas against info->argsz and switched to
+>      g_try_new0() for region->mmaps. (Thanos)
+>    - Included area info in invalid area error message and added comments
+>      for recv_fds resets in hw/vfio-user/proxy.c. (Thanos)
+>    - Link to v4: https://lore.kernel.org/qemu-devel/20261009175314.1823347-1-namangulati@google.com
+> 
+> Changes from v3:
+>    - Added "sparse_mmap_fds" capability to VFIO_USER_VERSION so servers
+>      know whether the client supports
+>      VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS. (Thanos)
+>    - Changed VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS capability ID to 0x8001. (Thanos)
+>    - Clarified and enforced that VFIO_REGION_INFO_CAP_SPARSE_MMAP and
+>      VFIO_REGION_INFO_CAP_SPARSE_MMAP_FDS are mutually exclusive per region,
+>      number of FDs in SCM_RIGHTS must not exceed nr_areas, zero-sized areas
+>      are not permitted, offset + size must not exceed the region size, and
+>      areas must not overlap. (Thanos)
+>    - Link to v3: https://lore.kernel.org/qemu-devel/20261007000833.2445641-1-namangulati@google.com
+> 
+> Changes from v2:
+>    - As suggested by Cedric: kept core VFIO changes minimal by only
+>      extending VFIOMMmap to hold each mmap subregion's fd & fd_offset.
+>    - Moved multi-FD management and capability parsing into hw/vfio-user,
+>      and using VFIOUserProxy to hold region multi-fds.
+>    - Resend: rebased to head.
+>    - Link to v2: https://lore.kernel.org/qemu-devel/20260826050039.2068138-1-namangulati@google.com
+> 
+> Changes from RFC:
+>    - Refactored the get_region_info callback to keep vbasedev constant
+>      and take in a VFIORegionFDs* out parameter to store the received fds.
+>    - Link to RFC: https://lore.kernel.org/qemu-devel/20260811233930.401797-1-namangulati@google.com
+> ---
+> 
+> Naman Gulati (4):
+>    vfio-user: add multi-fd region mmap capability
+>    vfio: add 'fd' and 'fd_offset' to VFIOMmap
+>    vfio: add setup_sparse_mmaps hook to VFIODeviceIOOps
+>    vfio-user: support multiple FDs for sparse mmap regions
+> 
+>   docs/interop/vfio-user.rst    |  86 +++++++++++++++++++++--
+>   hw/vfio-user/protocol.h       |  39 +++++++++--
+>   hw/vfio-user/proxy.h          |   2 +
+>   hw/vfio/vfio-region.h         |   9 ++-
+>   include/hw/vfio/vfio-device.h |  16 +++++
+>   hw/vfio-user/device.c         | 126 ++++++++++++++++++++++++++++++++--
+>   hw/vfio-user/proxy.c          |  52 ++++++++++++--
+>   hw/vfio/device.c              |   1 +
+>   hw/vfio/pci.c                 |   2 +
+>   hw/vfio/region.c              |  45 +++++++++---
+>   10 files changed, 346 insertions(+), 32 deletions(-)
+> 
 
-I haven't debugged this, but I wonder if it would rather be possible to
-structure the code in a way that does not lead to a hang on GDB failure.
-I suspect that GDB crashes or GDB script errors may also lead to hangs.
+Applied to
+
+     https://github.com/legoater/qemu vfio-next
+
+Thanks,
+
+C.
 
 
