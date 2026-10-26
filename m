@@ -1,69 +1,61 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DB5606A335
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:11:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=lInpV4nN
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F30606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLQ4-0003dC-Fk; Mon, 26 Oct 2026 10:11:24 -0400
+	id 1xLLVz-0005jN-4K; Mon, 26 Oct 2026 10:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qingbozhang@linux.alibaba.com>)
- id 1xLLQ1-0003cy-6p
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 10:11:21 -0400
-Received: from [115.124.30.110] (helo=out30-110.freemail.mail.aliyun.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qingbozhang@linux.alibaba.com>)
- id 1xLLPw-0002ZD-KE
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 10:11:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1793023856; h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type;
- bh=5D6p2tf1I6OrDzN9uWry2RB8tFV194S8Vc9zbZ3bC4E=;
- b=lInpV4nNe9DMT+pE12OrCVujKPjViS9t0rwrH4tNfBXEHzT1cKRNNAQ/z8W+vGqDWe3DI7TE20KFFYgRNlxoWMCcr3uPl51bjy/QcHIZ3yoN4gtcyleDygUmx/ozqDsDL3Tn36C9y+Rwrz0Ge6DBg3fKkLjP0hfKTbtucuKy3d8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R981e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=qingbozhang@linux.alibaba.com; NM=1; PH=DW; RN=7; SR=0;
- TI=W4_0.2.3_v5ForWebDing_21250D67_1793023825822_o7001c1504; 
-Received: from WS-web
- (qingbozhang@linux.alibaba.com[W4_0.2.3_v5ForWebDing_21250D67_1793023825822_o7001c1504]
- cluster:ay36) at Mon, 26 Oct 2026 22:10:50 +0800
-Date: Mon, 26 Oct 2026 22:10:50 +0800
-From: "QingboZhang" <qingbozhang@linux.alibaba.com>
-To: "=?UTF-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=" <philmd@oss.qualcomm.com>, 
- "qemu-devel" <qemu-devel@nongnu.org>
-Cc: "pbonzini" <pbonzini@redhat.com>,
- "richard.henderson" <richard.henderson@linaro.org>, "mst" <mst@redhat.com>,
- "jan.kiszka" <jan.kiszka@siemens.com>, "mohamed" <mohamed@unpredictable.fr>
-Message-ID: <99666107-a0ea-44e2-bf99-f7738dc38cdb.qingbozhang@linux.alibaba.com>
-Subject: =?UTF-8?B?5Zue5aSN77yaW1BBVENIXSBody9pMzg2L3ZhcGljOiBmaXggYSBkZWFkbG9jayBiZXR3ZWVu?=
- =?UTF-8?B?IHZhcGljX3dyaXRlKCkgYW5kIG1hY2hpbmUgcmVzZXQ=?=
-X-Mailer: [Alimail-Mailagent revision 74][W4_0.2.3][v5ForWebDing][Safari]
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xLLVc-0005hq-Vk; Mon, 26 Oct 2026 10:17:10 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <tanchi25@mails.ucas.ac.cn>)
+ id 1xLLVY-00038d-1Z; Mon, 26 Oct 2026 10:17:07 -0400
+Received: from k3-03 (unknown [159.226.43.8])
+ by APP-03 (Coremail) with SMTP id rQCowABHTz3MYN9qFyK6Cw--.1361S2;
+ Mon, 26 Oct 2026 22:16:52 +0800 (CST)
+From: Tan Chi <tanchi25@mails.ucas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ Tan Chi <tanchi25@mails.ucas.ac.cn>
+Subject: [PATCH v2] target/riscv/kvm: Translate MSI addresses through the IOMMU
+Date: Mon, 26 Oct 2026 22:16:42 +0800
+Message-ID: <20261026141642.113731-1-tanchi25@mails.ucas.ac.cn>
+X-Mailer: git-send-email 2.53.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-x-aliyun-im-through: {"version":"v1.0"}
-References: <20261026100933.12715-1-QingboZhang@linux.alibaba.com>,
- <3b1e0087-fd62-4149-b8dc-273885ee9e14@oss.qualcomm.com>
-x-aliyun-mail-creator: W4_0.2.3_v5ForWebDing_NjATW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfNykgQXBwbGVXZWJLaXQvNjA1LjEuMTUgKEtIVE1MLCBsaWtlIEdlY2tvKSBWZXJzaW9uLzE4LjEuMSBTYWZhcmkvNjA1LjEuMTU=XQ
-In-Reply-To: <3b1e0087-fd62-4149-b8dc-273885ee9e14@oss.qualcomm.com>
-x-aliyun-mailtrack: {"foreign-track":"0"}
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.110 (deferred)
-Received-SPF: pass client-ip=115.124.30.110;
- envelope-from=qingbozhang@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: rQCowABHTz3MYN9qFyK6Cw--.1361S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw13tF1rKF4xCF43Ww15urg_yoWrWrWxpr
+ ZIkrW3CrWrt39Iv393XF1kJr15XFWkWa45G3y7Awn3tw4rXrW3urs7K347tFy5J3W8Gw1j
+ ga1UAFW5ur12qw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9m14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26F1j6w1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+ 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
+ Cq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+ 0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Gr0_Cr
+ 1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IE
+ rcIFxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_Xryl42xK82IYc2Ij64vIr41l4I
+ 8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
+ xVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
+ AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8I
+ cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
+ 1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUv9a9UUUUU=
+X-CM-SenderInfo: pwdquxrlsvqzpdlo2hpxfd2hldfou0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=tanchi25@mails.ucas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,35 +66,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: QingboZhang <qingbozhang@linux.alibaba.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	UNPARSEABLE_RELAY,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-SGkgUGhpbGlwcGUsCgpUaGFua3MgZm9yIHRoZSByZXZpZXchICBCcmllZiByZXBsaWVzIGlubGlu
-ZS4KCk9uIDI2LzEwLzIwMjYgMTE6NTcsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOgo+
-PiBGaXggdGhpcyBieSBwYXRjaGluZyBvbiB0aGUgY3VycmVudCB2Q1BVIHZpYSBhc3luY19zYWZl
-X3J1bl9vbl9jcHUoKSBbLi4uXQo+IE1heWJlIHdvcnRoIGNpdGluZyBzaW1pbGFyIFRDRyBmaXgg
-aW4gY29tbWl0IGNiNThhNmQzNjExYi4KCkNpdGVkIGluIHYyLgoKPj4gK3N0YXRpYyB2b2lkIGRv
-X3ZhcGljX25vcF9wYXRjaChDUFVTdGF0ZSAqY3MsIHJ1bl9vbl9jcHVfZGF0YSBkYXRhKQo+IFJl
-bmFtZSBhcyBkb19wYXRjaF90cmlnZ2VyX25vcD8gQW5kIG1lbnRpb24gdGhpcyBydW5zIGluIGV4
-Y2x1c2l2ZSBzZWN0aW9uPwoKRG9uZSBpbiB2MiAocmVuYW1lZCwgYW5kIG5vdGVkIGl0IHJ1bnMg
-aW4gYW4gZXhjbHVzaXZlIHNlY3Rpb24pLgoKPj4gKyAgICB0YXJnZXRfdWxvbmcgYWRkciA9ICh0
-YXJnZXRfdWxvbmcpZGF0YS50YXJnZXRfcHRyOwo+IFByZS1leGlzdGluZywgcGF0Y2hfYnl0ZSgp
-IHNob3VsZCB0YWtlIGEgdmFkZHIsIHRoZW4gdGhpcyBjYXN0IGlzIG5vdCBuZWVkZWQuCgpBZ3Jl
-ZWQuICBJJ2xsIGFkZHJlc3MgaXQgaW4gYSBzZXBhcmF0ZSBmb2xsb3ctdXAgY2xlYW51cCBwYXRj
-aC4KCj4gRm9yIG5vbi14ODYgZXhwZXJ0czogIC8qIDItYnl0ZSBOT1AgKi8KCkFkZGVkIGluIHYy
-LgoKPj4gKyAgICAgICAgICAgIGFzeW5jX3NhZmVfcnVuX29uX2NwdShjdXJyZW50X2NwdSwgZG9f
-dmFwaWNfbm9wX3BhdGNoLAo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFJV
-Tl9PTl9DUFVfVEFSR0VUX1BUUihpcCkpOwo+IFdoeSBjaGFuZ2Ugb24gY3VycmVudF9jcHUsIGNh
-bid0IHdlIHNpbXBseSB1c2UgQ1BVKGNwdSk/IE90aGVyd2lzZToKPiBSZXZpZXdlZC1ieTogUGhp
-bGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBvc3MucXVhbGNvbW0uY29tPgoKSW5kZWVkLCBz
-d2l0Y2hlZCB0byBDUFUoY3B1KSBpbiB2Mi4gIEknbGwgY2FycnkgeW91ciBSZXZpZXdlZC1ieSB0
-aGVuOwpwbGVhc2UgdGVsbCBtZSBpZiB5b3Ugd291bGQgcmF0aGVyIEkgZHJvcCB0aGUgdGFnLiAg
-SSdsbCBwb3N0IHYyIHNob3J0bHkuCgpUaGFua3MsClFpbmdibw==
+KVM irqfd bypasses the PCI device's IOMMU AddressSpace, so MSI
+addresses requiring translation may fail to reach the guest IMSIC.
+
+Translate MSI addresses through the device's IOMMU AddressSpace when
+setting up KVM routes. Only direct mappings to an IMSIC MemoryRegion
+are installed in KVM routes.
+
+Other IOMMU MSI remapping forms are not converted to KVM routes and
+continue to use the existing userspace MSI delivery path.
+
+Select PCI for RISCV64 KVM builds, as QEMU currently enables the
+RISC-V KVM target only for riscv64-softmmu builds and the MSI route
+fixup requires PCI support. Also trace translation failures to help
+diagnose route setup failures.
+
+Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+---
+
+The AddressSpace translation follows the existing
+kvm_arch_fixup_msi_route() implementation on ARM.
+
+Changes in v2:
+- Select PCI for RISCV64 KVM builds.
+- Add trace events for MSI translation failures.
+
+ target/riscv/Kconfig       |  2 ++
+ target/riscv/kvm/kvm-cpu.c | 54 ++++++++++++++++++++++++++++++++++++++
+ target/riscv/trace-events  |  4 +++
+ 3 files changed, 60 insertions(+)
+
+diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+index 11bc09b414..0cf2c8e1c4 100644
+--- a/target/riscv/Kconfig
++++ b/target/riscv/Kconfig
+@@ -7,3 +7,5 @@ config RISCV64
+     bool
+     select ARM_COMPATIBLE_SEMIHOSTING if TCG
+     select DEVICE_TREE # needed by boot.c
++    # kvm_arch_fixup_msi_route() needs to access PCIDevice
++    select PCI if KVM
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 45ad5e1525..7c3d3c8c69 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1507,6 +1507,60 @@ int kvm_arch_release_virq_post(int virq)
+ int kvm_arch_fixup_msi_route(struct kvm_irq_routing_entry *route,
+                              uint64_t address, uint32_t data, PCIDevice *dev)
+ {
++    AddressSpace *as;
++    hwaddr xlat, len = sizeof(uint32_t), translated;
++    MemoryRegionSection section;
++    MemoryRegion *mr;
++    Object *owner;
++
++    if (!dev) {
++        return 0;
++    }
++
++    as = pci_device_iommu_address_space(dev);
++    if (as == &address_space_memory) {
++        return 0;
++    }
++
++    RCU_READ_LOCK_GUARD();
++
++    mr = address_space_translate(as, address, &xlat, &len, true,
++                                 MEMTXATTRS_UNSPECIFIED);
++
++    if (!mr) {
++        trace_kvm_riscv_fixup_msi_route_failed(address,
++                                               "address translation failed",
++                                               "none");
++        return 1;
++    }
++
++    /*
++     * Only direct IMSIC writes can be represented by a KVM MSI route.
++     * MSI page-table translations instead target the RISC-V IOMMU trap
++     * region, which requires further BASIC/MRIF processing.
++     */
++    owner = memory_region_owner(mr);
++    if (!owner || !object_dynamic_cast(owner, TYPE_RISCV_IMSIC)) {
++        trace_kvm_riscv_fixup_msi_route_failed(address,
++                                               "non-IMSIC target",
++                                               memory_region_name(mr));
++        return 1;
++    }
++
++    section = memory_region_find(mr, xlat, 1);
++    if (!section.mr) {
++        trace_kvm_riscv_fixup_msi_route_failed(address,
++                                               "memory region lookup failed",
++                                               memory_region_name(mr));
++        return 1;
++    }
++
++    translated = section.offset_within_address_space;
++    memory_region_unref(section.mr);
++
++    route->u.msi.address_lo = translated;
++    route->u.msi.address_hi = translated >> 32;
++    trace_kvm_riscv_fixup_msi_route_translated(address, translated);
+     return 0;
+ }
+ 
+diff --git a/target/riscv/trace-events b/target/riscv/trace-events
+index 93837f82a1..50980c031d 100644
+--- a/target/riscv/trace-events
++++ b/target/riscv/trace-events
+@@ -12,3 +12,7 @@ mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write msecc
+ 
+ # op_helper.c
+ riscv_exception(uint32_t exception, const char *desc, uint64_t epc) "%u (%s) on epc 0x%"PRIx64""
++
++# kvm-cpu.c
++kvm_riscv_fixup_msi_route_translated(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
++kvm_riscv_fixup_msi_route_failed(uint64_t iova, const char *reason, const char *region) "MSI iova = 0x%"PRIx64" failed: %s (region=%s)"
+-- 
+2.53.0
+
 
