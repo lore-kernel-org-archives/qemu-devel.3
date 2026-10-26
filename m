@@ -1,68 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888DA606A331
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C74606A332
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 10:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n2kAJSKT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=olUua58Z;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ROZAT/nz
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLHjR-0000ss-7D; Mon, 26 Oct 2026 06:15:09 -0400
+	id 1xLHjX-0001Rl-4i; Mon, 26 Oct 2026 06:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1xLHif-00006T-Om; Mon, 26 Oct 2026 06:14:27 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLHjS-00010q-08
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 06:15:10 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1xLHic-0001Yz-0N; Mon, 26 Oct 2026 06:14:21 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 6574340F2E;
- Mon, 26 Oct 2026 10:14:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842B31F01828;
- Mon, 26 Oct 2026 10:14:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793009655;
- bh=Rlz6sg2epMlNWbEykes8mVRO1HyWEVjutqVapdsf0qU=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=n2kAJSKT36KiXk9ZR5FBY+VLYDAk/J1//3uBDWKNIRxRnCl/4ZGDKeeisBbmI8hOh
- o9kIeZ/0e1Ti4Rm1yWuctaNEKrJVtUhQv7WjD4je6h3q2g3hBFDdJadRIvl26Opto8
- e7/DTzygDAuaO+MK+5jP+xLnTOXh75hQg0ScI+0x0hGxzMjCrxl2iVZNgCmGvaJE1C
- 11Zs/fthq6LzFrcIPJQ2Sgae3wGeO9jC/ksnRZ2QwDcHvj34jyRFMT61HxKgk06Vro
- cMPsrB5IuNzbz/Hy1tC2iaFbNfxiooSR4llPbHb5/oVHUahjI7g3ujZg1AazPpO+hj
- HZpHz2wMIlnxA==
-From: Daniel Gomez <da.gomez@kernel.org>
-Date: Mon, 26 Oct 2026 11:13:59 +0100
-Subject: [PATCH RESEND 4/5] hw/nvme: add multiple atomicity mode support
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLHjQ-0001bZ-Ar
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 06:15:09 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69Q4aPr32222502
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:15:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xpl6u8RMcQ6e8P+ND0XugC5IUXDENblf0En6nGh7F0M=; b=olUua58ZdwGGyOKU
+ 3SADzDMMOs3ra4g4bxepBZ4BYmannbgGOWLFDbYNHyUui1SJl9TRrxGrO5lpK7pX
+ 4xR5jus6ApLzsAKqv1zm5xm5bNmfELvMOBY+Q/vAST42jfp9g2rV5pIGsUuFspZh
+ rcnhNZ8USsqskSvV2vA+JiTCQvy198fLvI1doJSxI+g9dZ6qqv1o6ndiiN3QbS6C
+ gZSs7JT2/tlVuH1+VEBDNS1Qypjz0Up2hdFOBq187KYIW4zY3oe9QKHoEmnD7bv6
+ elmwh5YB4yPYqqDCopR3bMXFjkfPcu3MgoDqpcEnLUoLCGa6b9w1HVcy6zlJONpg
+ EGPelw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hhvdd9muv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:15:06 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-91b994cb09fso72262456d6.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 03:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793009706; x=1793614506; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xpl6u8RMcQ6e8P+ND0XugC5IUXDENblf0En6nGh7F0M=;
+ b=ROZAT/nzTTj3O5BvyPWSVQKariP8TJJMoXsvruhb3b53vpxdE0wKH+3z2z2EmJD9tz
+ lsWxkrqgwmPKHuu2a7mL78O2dRVb/4dONXnmrTFPJexFXMhkDKyc7NK4OeYP0ZOtje8Q
+ Ou5/5poXbyxH1LG7JQbXWDoc5GwGJT5Kp5nqtv8V51hfRijRyL1RqFc1qqG7BLafx0dK
+ Y+GCrN0Wc3UHYq3BursIxFa9q9+6w5Uuw3wA30C45+HmPxR+eMisG17xetcDGUBWu4PD
+ UWRM02Qi88aaSqLVcD5XUr09A3aHHga7ag99IgPVyKniyiWqVDogn0i3YQT5zpCltyKh
+ 38+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793009706; x=1793614506;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=xpl6u8RMcQ6e8P+ND0XugC5IUXDENblf0En6nGh7F0M=;
+ b=Usjj9DxV8fC9fsWBg4A8bPVn3vw3dVl/C/fbBZAwtRsTvkFgUmvW7ceY7Rp2gvYGLZ
+ Z0KmmIvHyBWCVbyu5/1gcLgcst5vzmC77aDRWt1kZAZkfuuRNAHuXUsLyZMLN8SecO6B
+ JQXT5PdNTFc/kmQS7UQclHojxata1l17/tO9YRRQKdHep4wFR2NFCrvE4+o2WQd5XuVx
+ rlhl1oYeM9L0V9VgoLCzb5dEWXtxjPjq2ybKLCWdpNoOoPlcLINI5VgPjb/RxBijgXMx
+ xj/OoFVfbvDhL12mfsyyziOAbjqFyIgSY1YEJJcLNrEt82dlyyjAl2wwHvPHfZ6P7WCQ
+ u2jA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBy5vyY2pcY2GN3iEjngDD/LSSRibEVtNTytGLHs1AsGxItvD7qhm6ZUmmEv7/eU2h1N4qKpS1IwuL0B@nongnu.org
+X-Gm-Message-State: AFq9FYLwzEeSEkB1snpn/ZZdzzXhufDeDxq1D1374rVh9Jn+Y+EVhm15
+ oPcHDvyZFj6zf8VLDp1s8U5lNd7QS2aq82bMb/uBH9P6iLrG6XHbJgQlf+4xEX85+THf5oPjp/a
+ Y37fFgMWILSWdVOV/0gb6q9G280ohyqZ44EJJ2sN+9Lm+m8S9k3jxYJ09JQ==
+X-Gm-Gg: AYBFou0eD5pyYdfvcCj3K3D35c4FC6OeAjtFMVNJRITE9Uk2MY5Bzs03V06bPtv3ZY+
+ obL9WvZYEzkJZA8iFf3GSU8ZygSmI39mSTAnEckDmvvmjTSVR+jQrDW0dNQgCPfEeYevulCCigj
+ y6XIE4WXxrC4hAqpwCdu1vvW0upnopggnY4jLi5tEdUyFGyI35Ox+6ehdMII1XN/MHm3z9JXKAs
+ OcFUSeHux4OyYJtyNItF/C1g3uhhANA39YbPiJTezkZs/JF0QIOLrqskQ+e9GYLx43suKhF6Gdv
+ AGdX2gRFeecFuUMpfw6v4IPq/bBVY6svTtkzMuZ6qooVN+tLBBINqQMswVnw68mhtYxeaCeEft+
+ WYLg515nwIFa9seQHHgPDkv6zn0mK2W64IA==
+X-Received: by 2002:a05:620a:6016:b0:93f:43a4:a48c with SMTP id
+ af79cd13be357-940ef964acbmr948917885a.45.1793009706007; 
+ Mon, 26 Oct 2026 03:15:06 -0700 (PDT)
+X-Received: by 2002:a05:620a:6016:b0:93f:43a4:a48c with SMTP id
+ af79cd13be357-940ef964acbmr948915185a.45.1793009705536; 
+ Mon, 26 Oct 2026 03:15:05 -0700 (PDT)
+Received: from [192.168.69.230] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e3ebd4bc5sm15352772f8f.34.2026.10.26.03.15.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Oct 2026 03:15:04 -0700 (PDT)
+Message-ID: <13944dd6-82d8-4917-aad3-2a1c259114ed@oss.qualcomm.com>
+Date: Mon, 26 Oct 2026 11:15:03 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261026-nvme-mam-v1-4-5d53b5529ffa@samsung.com>
-References: <20261026-nvme-mam-v1-0-5d53b5529ffa@samsung.com>
-In-Reply-To: <20261026-nvme-mam-v1-0-5d53b5529ffa@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Klaus Jensen <k.jensen@samsung.com>, Jesper Devantier <foss@defmacro.it>, 
- Daniel Gomez <da.gomez@kernel.org>, Daniel Gomez <da.gomez@samsung.com>, 
- GOST <gost.dev@samsung.com>, qemu-block@nongnu.org
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793009644; l=5312;
- i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=h/ImcKoqql35lEHU5Ym3ikhk3FjEt45HaFcrFsMz+4E=;
- b=oNDkdEphFo0t8v4rV+bgDgcw52e4dzB8nqfwd3PvxAmcqikpJ+6/G8VfpBcC+WUkKawn7tO/e
- KIlrUeD5YrwBuUJ5pcjP+ut5bFLSdp2haC3UCH8qtgMj8C1z8xET1N5
-X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
- pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests: Add a target to run all tests in thorough mode
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20261026093034.516604-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261026093034.516604-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: _g6JLCn9VyeFY2IHmiuKi2QLmcQgITm0
+X-Proofpoint-GUID: _g6JLCn9VyeFY2IHmiuKi2QLmcQgITm0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA0MCBTYWx0ZWRfX++36+xN+wUJZ
+ ExORs8TTxyh6PkvHnhkFkMOluVOUWjehWkjVmTeHdFLP8Vi/Vko2B4dhZQsqrcslEtJNo739iSO
+ RhPfwXYSJHVStZwkJ/rNTfaOElQ8nSHmP5ZsDzOwbui8ciuLpgcPqqNSxFwdxTyMkzYvFXjitWo
+ Phrl9bqxgAhe9SS4qBYhSJKL4dxsrlt260yCIOML8rMIDdaI3W25PWTLYIizw4YLAdMbrdQ30kw
+ bRjxgsk+y4wI4Ff+B2Pasclgl+AwHSEukRb/PAp8E8H4bJB6c91CCLTO1hgDRPeH4V5E2eulzEL
+ P1plJhUmggx2F3GW7RALKLR3+zB0TN98VvygxBdaJhfJK1xYSSuPqr896cIMVJ+UhRP/9twmJmx
+ beq4HlqtOFQXhGlac7/NE9HxhliNTGXCIYYsrzAws4e1ZqQlk08PaMo8lHpxNDJllBcKFU7vAh8
+ 4uTKH4FeFJPHbSxgD5A==
+X-Authority-Analysis: v=2.4 cv=N8+8hG9B c=1 sm=1 tr=0 ts=6adf282a cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA0MCBTYWx0ZWRfXyOnmyQVEWgbr
+ yDIpbk1Kb/ucTQsiNQDu7gACnPgrYoTj9hS8fS7zcRVO6mzTdHkKt4xaHehGxUys3j+CRx/dCkR
+ kuP+DGa/AtCH9slPYAaD+t70sdC2LdQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-26_01,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260040
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,151 +151,24 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daniel Gomez <da.gomez@samsung.com>
+On 26/10/26 10:30, Thomas Huth wrote:
+> "make check SPEED=thorough" is a little bit clunky to type and many
+> people are not aware of this nice possibility to run almost all test
+> in parallel this way. So add a "check-thorough" target that makes this
+> way of running the tests a little bit more accessible.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/Makefile.include | 13 ++++++++++---
+>   1 file changed, 10 insertions(+), 3 deletions(-)
 
-NVMe spec defines Multiple Atomicity Mode (MAM) as a superset of Single
-Atomicity Mode (SAM) where the controller works in either mode. In this
-mode, a write command that crosses the Namespace Atomic Boundaries is
-divided at those boundaries into atomic LBA subranges, each written
-atomically, although the full command is not atomic as a whole.
-
-Add an "atomic.mam" nvme-ns boolean that sets the existing
-NVME_ID_NS_NSFEAT_MAM bit once the configured geometry satisfies the
-mode's requirements: NSABP, with a nonzero NABSN/NABSPF and ==
-NAWUN/NAWUPF.
-
-This lets a guest use the atomic-write/MAM path with the following
-emulated NVMe option atomic.mam=on, e.g.:
-
-  -device nvme,serial=foo,id=nvme0\
-  -drive file=nvme0.qcow2,if=none,format=qcow2,id=nvme0-ns0\
-  -device nvme-ns,drive=nvme0-ns0,bus=nvme0,atomic.nawun=7,\
-  atomic.nawupf=7,atomic.nabsn=7,atomic.nabspf=7,atomic.mam=on
-
-Note that for MAM emulation, the atomic boundaries limits are skipped and
-the whole command is serialized as one atomic write.
-
-Also, fix a typo in the error message reported when nabspf and nawupf
-are checked when setting the Namespace Atomic Boundaries.
-
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
----
- hw/nvme/ctrl.c |  7 +++++--
- hw/nvme/ns.c   | 27 ++++++++++++++++++++++++++-
- hw/nvme/nvme.h |  1 +
- 3 files changed, 32 insertions(+), 3 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 3baf57af634..c912a4df8da 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -56,6 +56,7 @@
-  *              zoned.max_active=<N[optional]>, \
-  *              zoned.max_open=<N[optional]>, \
-  *              zoned.cross_read=<true|false[optional]>, \
-+ *              atomic.mam=<on|off[optional]>, \
-  *              atomic.nabo=<N[optional]>, \
-  *              atomic.nabsn=<N[optional]>, \
-  *              atomic.nabspf=<N[optional]>, \
-@@ -7830,6 +7831,8 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-     NvmeAtomic *atomic)
- {
-     NvmeRwCmd *rw = (NvmeRwCmd *)cmd;
-+    NvmeNamespace *ns = nvme_ns(n, le32_to_cpu(cmd->nsid));
-+    bool mam = ns && (ns->id_ns.nsfeat & NVME_ID_NS_NSFEAT_MAM);
-     uint64_t slba = le64_to_cpu(rw->slba);
-     uint32_t nlb = (uint32_t)le16_to_cpu(rw->nlb);
-     uint64_t elba = slba + nlb;
-@@ -7837,14 +7840,14 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-     int i;
- 
-     if ((cmd->opcode == NVME_CMD_READ) || ((cmd->opcode == NVME_CMD_WRITE) &&
--        ((nlb + 1) > atomic->atomic_max_write_size))) {
-+        !mam && ((nlb + 1) > atomic->atomic_max_write_size))) {
-         cmd_atomic_wr = false;
-     }
- 
-     /*
-      * Check if a write crosses an atomic boundary.
-      */
--    if (cmd->opcode == NVME_CMD_WRITE) {
-+    if (cmd->opcode == NVME_CMD_WRITE && !mam) {
-         if (!nvme_atomic_boundary_check(n, cmd, atomic)) {
-             cmd_atomic_wr = false;
-         }
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 7f0f9ac7662..344c16d1aa0 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -769,7 +769,7 @@ static bool nvme_ns_set_nab(NvmeCtrl *n, NvmeNamespace *ns, Error **errp)
-         }
- 
-         if (nabspf && nabspf < le16_to_cpu(id_ns->nawupf)) {
--            error_setg(errp, "nabspf must be great than or equal to nawupf");
-+            error_setg(errp, "nabspf must be greater than or equal to nawupf");
-             return false;
-         }
-     }
-@@ -787,6 +787,30 @@ static bool nvme_ns_set_nab(NvmeCtrl *n, NvmeNamespace *ns, Error **errp)
- 
-     nvme_ns_atomic_configure_boundary(n->dn, nabsn, nabspf, &ns->atomic);
- 
-+    if (ns->params.atomic.mam) {
-+        uint16_t nawupf = le16_to_cpu(id_ns->nawupf);
-+        uint16_t nawun = le16_to_cpu(id_ns->nawun);
-+
-+        if (!(id_ns->nsfeat & NVME_ID_NS_NSFEAT_NSABP)) {
-+            error_setg(errp, "atomic.mam requires per-namespace atomic writes");
-+            return false;
-+        }
-+
-+        if (!nabsn || !nabspf) {
-+            error_setg(errp, "atomic.mam requires a nonzero atomic.nabsn and "
-+                             "atomic.nabspf");
-+            return false;
-+        }
-+
-+        if (nabsn != nawun || nabspf != nawupf || nawun != nawupf) {
-+            error_setg(errp, "atomic.mam requires atomic.nabsn == atomic.nawun "
-+                             "== atomic.nabspf == atomic.nawupf");
-+            return false;
-+        }
-+
-+        id_ns->nsfeat |= NVME_ID_NS_NSFEAT_MAM;
-+    }
-+
-     return true;
- }
- 
-@@ -1096,6 +1120,7 @@ static const Property nvme_ns_props[] = {
-     DEFINE_PROP_UINT16("atomic.nabsn", NvmeNamespace, params.atomic.nabsn, 0),
-     DEFINE_PROP_UINT16("atomic.nabspf", NvmeNamespace, params.atomic.nabspf, 0),
-     DEFINE_PROP_UINT16("atomic.nabo", NvmeNamespace, params.atomic.nabo, 0),
-+    DEFINE_PROP_BOOL("atomic.mam", NvmeNamespace, params.atomic.mam, 0),
- };
- 
- static void nvme_ns_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 43e3c916f73..edc84f347b3 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -232,6 +232,7 @@ typedef struct NvmeNamespaceParams {
-         uint16_t nabsn;
-         uint16_t nabspf;
-         uint16_t nabo;
-+        bool mam;
-     } atomic;
- } NvmeNamespaceParams;
- 
-
--- 
-2.56.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
