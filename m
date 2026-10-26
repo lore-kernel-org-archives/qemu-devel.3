@@ -1,86 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F3C606A31B
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 15:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E0B606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 15:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PGNm/IGY
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Ob5XpyAe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLMIf-0006Js-Bx; Mon, 26 Oct 2026 11:07:49 -0400
+	id 1xLMVO-0000Yr-2m; Mon, 26 Oct 2026 11:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1xLMId-0006JW-8H
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:07:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1xLMIb-0000vy-En
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:07:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793027263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n4+Ffk4wprt+o3trRNuzv5I3+qSJGmf+pmv/f4y6jU4=;
- b=PGNm/IGYKEsmaQCnAZSizBgtYrreblPf+RBWuJg3+CXm2lJUOpiLj78aQ2PauPbYRFwoE7
- mOf5qCiH7Oe1TKhTvdl836ZwJc5LtzbCcf1MpoEMOHJ3bxMcFZiR/RrvVuIRvnyhVzeLSX
- lyB+iZZ6YnhFQz74z/y8UhmMrW4pduo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-U0TkVwbPMaaUr8YT-zq-9Q-1; Mon,
- 26 Oct 2026 11:07:33 -0400
-X-MC-Unique: U0TkVwbPMaaUr8YT-zq-9Q-1
-X-Mimecast-MFC-AGG-ID: U0TkVwbPMaaUr8YT-zq-9Q_1793027252
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 246551955E95; Mon, 26 Oct 2026 15:07:32 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D70C767; Mon, 26 Oct 2026 15:07:31 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xLMVK-0000YW-Ke
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:20:55 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1xLMVF-0002kV-Kn
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 11:20:54 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4a5720b0a57so60705e9.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 08:20:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793028048; x=1793632848; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=Tw+pvYg4j5N12O7EgEsJlMS+MFy0VcD+mDXxr2XgBJk=;
+ b=Ob5XpyAel8yviIRZ0fdWPi/Xjtly9sG/w5dLfMpCpdIU/sZWsxF69dcqK9IUpMm9g3
+ 0OSc9IXYx3I6aWWQjq/FCIHqYrEcTYa6ABumZ2a9NfccpHNkurY+1hSFc7Z3Jn1HFYRm
+ xVZC6AZUq1U9ps0ZK4hjVfJfitMYXiIaHp6+vs15RL26cSI18ptSJ/Y+vXTeG+KHiNsC
+ bm+rLueVGe2rkgUpCA6zYMyYPL8sqI3tv8B5ZsUeKaQCF8B0MaEn317nrxMmt1lxX7FQ
+ dbT8Jsf5phST6VkRCc8qFXRn6W4l2uEqt6XYXHPCTZ2KNotkv1xVXxFiYm2lkP06K8Fz
+ FFLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793028048; x=1793632848;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Tw+pvYg4j5N12O7EgEsJlMS+MFy0VcD+mDXxr2XgBJk=;
+ b=OlTZyJvfxIjkJ1uD/3vzh/nX/hmNmfGwPBJJVpuzNYotgPWKlTKg1nqhJs3DLyrq58
+ OdsJJekKyppR9dlsBdC9MyR7U1JGNMsVCBdv2VDDwwo284lYUYZGIChF5bq8QcyHgjNq
+ 8/lcmClkUU/VjnCokT9iOtX5N2mvLw8ubdoYD9+qs5WEO7+GFL0PLF80PupNc3U3mbcK
+ uebmdiXe/j09jYTGH0E+6ZyACejG7KzPrI8FecKrfABYwbS+kCu+Gbazi4QHY0DlgssM
+ NSm1eVVx/e0oReJqu0Bx7R/w+fyCAqlS/iATsfqERUQ7tHCuqvbNQvLA7u9kIiXOx/cf
+ BP9g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzO+bKop1RxjOJf3XItFHkaKT633GBFTrBascJmwV4LcziaUs1qXYFGQNW6+VnGv7kv42v0PCmdc/hT@nongnu.org
+X-Gm-Message-State: AFq9FYLkYcJVTiGnR/bgRQXaiZoBcWafZcCK40+f/HgA3OSLIUW4ZBBC
+ PSQP6B5YYCPobLUdWqwyFzQMRmUU92j/vpLZS9k7rqTY2eLR1XqvzaBqymkpfph3XYsr6CFPHz1
+ 4+AO6xvU=
+X-Gm-Gg: AYBFou3feU+5iln7KwRr8fK4kDbtIrNo3sQdDpxNuwCZe/2hATHYrL2vp07/1fRulnT
+ vqI5FDDRypsBrutpOm+ICbNIoh0cLSIMs6oDHk6P3LM1Lq9TDCm+VIU8TnstO8QAnFgApXspZ0H
+ dJqJsUhQ1urqPqRa5Ix7ZsGMKaXg7qMJfcXdWzTtxvXF4ap2zTC41q7TqfZGF+DH2bkA5EECua1
+ fjjRdgosI++qbBz/vnNxT6eCCc4SAM1giEazRotUomBVDor2xi5twbnxBAQvIlDVvaIHhFYTAdh
+ P/oDM7VG2TlHwuHQ38jtpdw7sqr+SNBvbzgXwftDuLjtcBCq5TmgjdegcQbkhiorp0dBt8uiOb4
+ Ybgq1CGw25SXnSyI/JM9paoyr2DlG3z3dIhmOyL0pYZxJ9N/tjzkuqAyHpjzb2Rdy39hRytrNSQ
+ yTyXuWg9Qdjm6McvnzIQTOyScRXpoHIkQA7OQkwz3gJ3+lfdtBQuDMX7BNbzF5nbycTVYm6efgo
+ nGxEI2Xo8L2clzgVZcFqF6g6eb5C9X7oSMdo10dDllH4Vfls0s4K54=
+X-Received: by 2002:a05:600c:3e14:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-4a35ae8806amr137515215e9.8.1793028047655; 
+ Mon, 26 Oct 2026 08:20:47 -0700 (PDT)
+Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a359f3e00asm352284135e9.0.2026.10.26.08.20.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Oct 2026 08:20:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 560355F7FF;
+ Mon, 26 Oct 2026 15:20:46 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Richard Henderson
- <richard.henderson@linaro.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Subject: Re: [PATCH v3 27/33] target/s390x: Implement and register
- CPUClass::exception_name()
-In-Reply-To: <20261022215115.19680-28-philmd@oss.qualcomm.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
- <20261022215115.19680-28-philmd@oss.qualcomm.com>
-User-Agent: Notmuch/0.40 (https://notmuchmail.org)
-Date: Mon, 26 Oct 2026 16:07:29 +0100
-Message-ID: <8733ts33gu.fsf@redhat.com>
+Subject: Re: [PATCH] tests/qtest: Increase the timeout of the
+ device-introspect-test
+In-Reply-To: <ffdb16f1-7a5a-487e-a9d6-74767ee399b8@redhat.com> (Thomas Huth's
+ message of "Mon, 26 Oct 2026 12:30:51 +0100")
+References: <20261026092313.480889-1-thuth@redhat.com>
+ <87fqxs67ut.fsf@draig.linaro.org>
+ <ffdb16f1-7a5a-487e-a9d6-74767ee399b8@redhat.com>
+User-Agent: mu4e 1.14.4; emacs 30.1
+Date: Mon, 26 Oct 2026 15:20:46 +0000
+Message-ID: <87y0bk4hf5.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,35 +108,69 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 22 2026, Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> =
-wrote:
+Thomas Huth <thuth@redhat.com> writes:
 
-> Implement s390x_exception_name() and register it as the
-> CPUClass::exception_name() handler, so the common exception
-> logging can resolve s390x exception codes to names.
+> On 26/10/2026 12.04, Alex Benn=C3=A9e wrote:
+>> Thomas Huth <thuth@redhat.com> writes:
+>>=20
+>>> I'm occasionally seeing timeouts of the device-introspect-test for
+>>> the aarch64 target when running "make check SPEED=3Dthorough" - looks
+>>> like the 720 seconds aren't enough anymore nowadays. Add 2 more
+>>> minutes to give some more headroom.
+>> What is taking so long, I can run all the introspect builds in under
+>> 10
+>> seconds:
+>>    =E2=9E=9C  time ./run meson test --suite qtest "*device-introspect*"
 >
-> Use the new helper in s390_cpu_do_interrupt() and helper_exception().
+> You've got to run the tests in slow/thorough mode:
 >
-> With '-d int', s390_cpu_do_interrupt() now logs the exception
-> name in parentheses after its number.
+> G_TEST_SLOW=3D1 time ./run meson test --suite qtest "*device-introspect*"
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  target/s390x/cpu.h             |  2 ++
->  target/s390x/cpu.c             |  1 +
->  target/s390x/interrupt.c       | 16 ++++++++++++++++
->  target/s390x/tcg/excp_helper.c |  6 ++++--
->  target/s390x/tcg/misc_helper.c |  3 ++-
->  5 files changed, 25 insertions(+), 3 deletions(-)
+> otherwise a lot of the tests will be skipped and the tests will finish
+> fast.
 
-Acked-by: Cornelia Huck <cohuck@redhat.com>
+  env G_TEST_SLOW=3D1 QTEST_QEMU_BINARY=3D./qemu-system-aarch64 ./run time =
+strace -e trace=3Dread,write,recvfrom,sendto -c /home/alex/lsrc/qemu.git/bu=
+ilds/testing/tests/qtest/device-introspect-test --tap -k
+  ...
+  # slow test /aarch64/device/introspect/concrete/nodefaults/raspi0 execute=
+d in 30.19 secs
+  # End of nodefaults tests
+  # End of concrete tests
+  # End of introspect tests
+  # End of device tests
+  # End of aarch64 tests
+  % time     seconds  usecs/call     calls    errors syscall
+  ------ ----------- ----------- --------- --------- ----------------
+   99.61  793.101303           1 420646079           recvfrom
+    0.28    2.229951           3    619529           sendto
+    0.11    0.840259           4    179705           write
+    0.00    0.000000           0        14           read
+  ------ ----------- ----------- --------- --------- ----------------
+  100.00  796.171513           1 421445327           total
+  926.31user 3944.47system 1:28:16elapsed 91%CPU (0avgtext+0avgdata 1132064=
+maxresident)k
+  43824inputs+0outputs (324major+7978563minor)pagefaults 0swaps
 
+So it looks like the majority of the runtime is just ploughing through
+420M unix socket calls introspecting the same large set of non user
+creatable devices for every machine type. This will just get bigger and
+bigger every new device or machine we add.
+
+I think we need to reconsider exactly what it is we are trying to test
+here.
+
+>
+>  Thomas
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
