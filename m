@@ -1,55 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F31C606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FAF606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=hLN1+yFU
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ra1cOYQI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLCs-0000cG-VQ; Mon, 26 Oct 2026 09:57:47 -0400
+	id 1xLLEG-0003jv-BF; Mon, 26 Oct 2026 09:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLCg-00082E-Sy; Mon, 26 Oct 2026 09:57:35 -0400
+ id 1xLLEA-0003ch-0P; Mon, 26 Oct 2026 09:59:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLCf-0000OL-0p; Mon, 26 Oct 2026 09:57:34 -0400
+ id 1xLLE8-0000Yj-7q; Mon, 26 Oct 2026 09:59:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=91kVtgRrbs9t1K5xFBFf3hxbGQ6ksftEUEGye2OL2nY=;
+ t=1793022944; bh=t21KsQ44QOhSVrHR+Ud3K4EGLuhu7HucZTA1uptMvo0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hLN1+yFU+kryXOPW6moh6/xwjlD8BKM7x16mtfLkjYMNYYGvShKBU8ceKkcon9DSA
- jy+87v35QDVKNh1mjZ+6K0+zkTcq90VtTWa+gS2BalBbqu1Qgxoe/EY2bHZy8A76nD
- LCu2ySPiMQBgJqn6O2eEU8Szd2X2oNphKKKYq2vz22qMhoo8DgOMYA1TiuJzK/5Zib
- kAm92y6ahJKnyIuKxfzX+QuaxUubPeQCAbeyCN9o9/4NekEJa5j77L6JIR8OoqdHUX
- Sy12HURzggIGNDyWp0TrAZipjdGfOaeHcWtkwmymbyUtCWq5a3jbrISGq/gzxnvM+6
- Rw2r+FuaTWhbQ==
+ b=ra1cOYQIThGZZpBOB8U+VE2ACKMX5ClPYHLwxcwVNKh2fB283IUGchPMPWNZoe+c0
+ +ccdSeAxHc4r0IwrRclQI/WCfGFPklM6z0ocfzh7CqswIUk/sVyXx9oPLDLwDU99H9
+ IJlxU8vTYzL0RzsK3Yc78paZwK/zDADA0sxuWM2VPJS//n6H3PRPSgpdy99y7oMn7C
+ nT9ydk4LqnU9WdTznzCVVGuD9JJgCa27boC8PpQ2II/qYKgoNZ5Jwe9/UZS0n/JRM3
+ zblF8eTqK0RJ3poWzeg4G0fYbUP48w4E0rCVpvyxliaU83kx6maYAbumwgaKW1c5L0
+ cp5rtNr1F7eUA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03BC71E129D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3D9121E12AA;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 019E444B8EE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3B48E44B8FB;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E54A4934C1; Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
+ id 1793C934DB; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 80/98] migration: add QEMU_COUNTED_STRING_SIZE for
- counted string buffers
-Date: Mon, 26 Oct 2026 16:55:07 +0300
-Message-ID: <20261026135529.1019772-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifano@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 93/98] hw/usb/dev-mtp: Fix assert crash on short
+ CMD_SEND_OBJECT
+Date: Mon, 26 Oct 2026 16:55:20 +0300
+Message-ID: <20261026135529.1019772-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,89 +70,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Tommaso Califano <tcalifano@redhat.com>
 
-A counted string carries its length in one byte, so the buffer that
-qemu_get_counted_string() fills must hold 256 bytes. The dirty bitmap
-load state spells that size as a bare 256 for both of its alias buffers.
-Name it next to the qemu_get_counted_string() prototype and use it there,
-in the length assert of qemu_put_counted_string() and in DBMLoadState.
+In usb_mtp_get_data() there is a guest-triggerable assertion that fires
+when a guest declares a large object size in CMD_SEND_OBJECT_INFO but
+sends fewer bytes in the subsequent CMD_SEND_OBJECT. The assertion
+compares the declared size against the actual bytes received.
 
-Suggested-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-stable@nongnu.org
-Message-ID: <20261006170738.453977-2-den@openvz.org>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit 319cd41f110ada2cbb7dd17700893327a3cb925e)
+If the guest sends CMD_SEND_OBJECT_INFO with size=1000 and then
+CMD_SEND_OBJECT with only 50 bytes (short, non-64-byte-aligned
+final USB packet) the assertion fires, killing QEMU.
+
+To prevent that is sufficient to remove the assertion, because the case
+is handled by usb_mtp_write_data() which returns RES_INCOMPLETE_TRANSFER.
+
+Fixes: 3e096650a64d ("dev-mtp: Add support for > 4GB file transfers")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3993
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261008122936.45081-1-tcalifano@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 1ccf17e9dc6bba38a9bddd3d66fdab458a50c906)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/migration/qemu-file-types.h b/include/migration/qemu-file-types.h
-index adec5abc071..2a073bed299 100644
---- a/include/migration/qemu-file-types.h
-+++ b/include/migration/qemu-file-types.h
-@@ -163,7 +163,11 @@ static inline void qemu_get_sbe64s(QEMUFile *f, int64_t *pv)
-     qemu_get_be64s(f, (uint64_t *)pv);
- }
- 
--size_t coroutine_mixed_fn qemu_get_counted_string(QEMUFile *f, char buf[256]);
-+/* Buffer size for a string whose length is sent as a single byte */
-+#define QEMU_COUNTED_STRING_SIZE 256
-+
-+size_t coroutine_mixed_fn
-+qemu_get_counted_string(QEMUFile *f, char buf[QEMU_COUNTED_STRING_SIZE]);
- 
- void qemu_put_counted_string(QEMUFile *f, const char *name);
- 
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index 1b8f39c12bb..1386f436355 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -145,8 +145,8 @@ typedef struct LoadBitmapState {
- /* State of the dirty bitmap migration (DBM) during load process */
- typedef struct DBMLoadState {
-     uint32_t flags;
--    char node_alias[256];
--    char bitmap_alias[256];
-+    char node_alias[QEMU_COUNTED_STRING_SIZE];
-+    char bitmap_alias[QEMU_COUNTED_STRING_SIZE];
-     char bitmap_name[BDRV_BITMAP_MAX_NAME_SIZE + 1];
-     BlockDriverState *bs;
-     BdrvDirtyBitmap *bitmap;
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index f30e13c66d7..eb0d63d54be 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -830,7 +830,8 @@ uint64_t qemu_get_be64(QEMUFile *f)
-  *          else 0
-  *          (Note a 0 length string will return 0 either way)
-  */
--size_t coroutine_mixed_fn qemu_get_counted_string(QEMUFile *f, char buf[256])
-+size_t coroutine_mixed_fn
-+qemu_get_counted_string(QEMUFile *f, char buf[QEMU_COUNTED_STRING_SIZE])
- {
-     size_t len = qemu_get_byte(f);
-     size_t res = qemu_get_buffer(f, (uint8_t *)buf, len);
-@@ -848,7 +849,7 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
- {
-     size_t len = strlen(str);
- 
--    assert(len < 256);
-+    assert(len < QEMU_COUNTED_STRING_SIZE);
-     qemu_put_byte(f, len);
-     qemu_put_buffer(f, (const uint8_t *)str, len);
- }
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index cbc2be3317f..9048cddaaba 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1813,9 +1813,6 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+         d->offset += dlen;
+         d->data_offset += dlen;
+         if ((p->iov.size % 64) || !p->iov.size) {
+-            assert((s->dataset.size == 0xFFFFFFFF) ||
+-                   (s->dataset.size == d->offset));
+-
+             if (d->length == MTP_WRITE_BUF_SZ) {
+                 d->write_status = WRITE_END;
+             } else {
 -- 
 2.47.3
 
