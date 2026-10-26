@@ -1,47 +1,50 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE3606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F31C606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=aI59n0Jq
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=hLN1+yFU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLEJ-0003wi-75; Mon, 26 Oct 2026 09:59:15 -0400
+	id 1xLLCs-0000cG-VQ; Mon, 26 Oct 2026 09:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLE7-0003ZR-2y; Mon, 26 Oct 2026 09:59:05 -0400
+ id 1xLLCg-00082E-Sy; Mon, 26 Oct 2026 09:57:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLE5-0000YE-9E; Mon, 26 Oct 2026 09:59:02 -0400
+ id 1xLLCf-0000OL-0p; Mon, 26 Oct 2026 09:57:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=+QPRYrgJje2Xiy+M3lvolT3LsgK3X+p0Dm6gibHq57w=;
+ t=1793022944; bh=91kVtgRrbs9t1K5xFBFf3hxbGQ6ksftEUEGye2OL2nY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aI59n0JqkmNfpnKbAHxfybtbiAdvG+leX9mb/egwqFn98pC7lFN1MGcB88JaN6nun
- CR0Ksk4MgZwOLypkdGsXmUYW8eQy+SsZ8GPoamtQITRY0kAUQYkSTP4EpC03oOQa94
- v4OOPvJaX/F3OenFGDrI6kFVzpy8sylqYqsLYwSROibtYSJ/aW+0KBcfLKTh2uo24x
- w3FktOUuoPdNgjNJNYnbzL82ScMc4QfpsXQ1CC4cMN6RKkUaa7gEuwZu4A4zhfcNCp
- YnF46nZwIc8V3xPH/aMW1h9ovI7+Tb2u/Fcg1H9RvFniR5g0Ji6wvwkqXKpD3d+XsM
- FINIVyaZJiQSQ==
+ b=hLN1+yFU+kryXOPW6moh6/xwjlD8BKM7x16mtfLkjYMNYYGvShKBU8ceKkcon9DSA
+ jy+87v35QDVKNh1mjZ+6K0+zkTcq90VtTWa+gS2BalBbqu1Qgxoe/EY2bHZy8A76nD
+ LCu2ySPiMQBgJqn6O2eEU8Szd2X2oNphKKKYq2vz22qMhoo8DgOMYA1TiuJzK/5Zib
+ kAm92y6ahJKnyIuKxfzX+QuaxUubPeQCAbeyCN9o9/4NekEJa5j77L6JIR8OoqdHUX
+ Sy12HURzggIGNDyWp0TrAZipjdGfOaeHcWtkwmymbyUtCWq5a3jbrISGq/gzxnvM+6
+ Rw2r+FuaTWhbQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 392311E12A9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 03BC71E129D;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36D2A44B8FA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 019E444B8EE;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 14B2B934D9; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ id E54A4934C1; Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Haotian Jiang <sundayjiang@tencent.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 92/98] usb-host: delete bottom halves during
- unrealize
-Date: Mon, 26 Oct 2026 16:55:19 +0300
-Message-ID: <20261026135529.1019772-19-mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 80/98] migration: add QEMU_COUNTED_STRING_SIZE for
+ counted string buffers
+Date: Mon, 26 Oct 2026 16:55:07 +0300
+Message-ID: <20261026135529.1019772-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
@@ -67,62 +70,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Haotian Jiang <sundayjiang@tencent.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-usb_host_nodev() lazily creates s->bh_nodev and
-usb_host_post_load() lazily creates s->bh_postld, but
-usb_host_unrealize() never calls qemu_bh_delete() on either.  If a BH
-is still pending when unrealize returns, its callback dereferences the
-freed USBHostDevice.
+A counted string carries its length in one byte, so the buffer that
+qemu_get_counted_string() fills must hold 256 bytes. The dirty bitmap
+load state spells that size as a bare 256 for both of its alias buffers.
+Name it next to the qemu_get_counted_string() prototype and use it there,
+in the length assert of qemu_put_counted_string() and in DBMLoadState.
 
-Delete both BHs in usb_host_unrealize() after usb_host_close()
-returns.  They must be deleted after close because usb_host_close()
-can process libusb callbacks that call usb_host_nodev(), which lazily
-recreates bh_nodev.  Deleting it before close could therefore leave a
-recreated BH alive after unrealize.
-
-Buglink: https://gitlab.com/qemu-project/qemu/-/work_items/3595
-Fixes: 95efb20c7148 ("usb-host: live migration support for the libusb version")
-Reported-by: Haotian Jiang of Tencent Security (Yunding Lab) <sundayjiang@tencent.com>
-Signed-off-by: Haotian Jiang <sundayjiang@tencent.com>
+Suggested-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: qemu-stable@nongnu.org
-(cherry picked from commit a86338565ceaede2fd7d90a8e0376131a20f0655)
+Message-ID: <20261006170738.453977-2-den@openvz.org>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+(cherry picked from commit 319cd41f110ada2cbb7dd17700893327a3cb925e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-index 735d7c1844a..8dbf66f37b0 100644
---- a/hw/usb/host-libusb.c
-+++ b/hw/usb/host-libusb.c
-@@ -1278,6 +1278,21 @@ static void usb_host_unrealize(USBDevice *udev)
-         QTAILQ_REMOVE(&hostdevs, s, next);
-     }
-     usb_host_close(s);
-+    /*
-+     * Delete bottom halves after usb_host_close().  During close,
-+     * libusb callbacks (usb_host_req_complete_ctrl/data) can call
-+     * usb_host_nodev() which lazily creates bh_nodev.  If we
-+     * deleted them before close, a newly created BH would leak and
-+     * fire after unrealize, dereferencing freed USBHostDevice.
-+     */
-+    if (s->bh_nodev) {
-+        qemu_bh_delete(s->bh_nodev);
-+        s->bh_nodev = NULL;
-+    }
-+    if (s->bh_postld) {
-+        qemu_bh_delete(s->bh_postld);
-+        s->bh_postld = NULL;
-+    }
+diff --git a/include/migration/qemu-file-types.h b/include/migration/qemu-file-types.h
+index adec5abc071..2a073bed299 100644
+--- a/include/migration/qemu-file-types.h
++++ b/include/migration/qemu-file-types.h
+@@ -163,7 +163,11 @@ static inline void qemu_get_sbe64s(QEMUFile *f, int64_t *pv)
+     qemu_get_be64s(f, (uint64_t *)pv);
  }
  
- static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
+-size_t coroutine_mixed_fn qemu_get_counted_string(QEMUFile *f, char buf[256]);
++/* Buffer size for a string whose length is sent as a single byte */
++#define QEMU_COUNTED_STRING_SIZE 256
++
++size_t coroutine_mixed_fn
++qemu_get_counted_string(QEMUFile *f, char buf[QEMU_COUNTED_STRING_SIZE]);
+ 
+ void qemu_put_counted_string(QEMUFile *f, const char *name);
+ 
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 1b8f39c12bb..1386f436355 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -145,8 +145,8 @@ typedef struct LoadBitmapState {
+ /* State of the dirty bitmap migration (DBM) during load process */
+ typedef struct DBMLoadState {
+     uint32_t flags;
+-    char node_alias[256];
+-    char bitmap_alias[256];
++    char node_alias[QEMU_COUNTED_STRING_SIZE];
++    char bitmap_alias[QEMU_COUNTED_STRING_SIZE];
+     char bitmap_name[BDRV_BITMAP_MAX_NAME_SIZE + 1];
+     BlockDriverState *bs;
+     BdrvDirtyBitmap *bitmap;
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index f30e13c66d7..eb0d63d54be 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -830,7 +830,8 @@ uint64_t qemu_get_be64(QEMUFile *f)
+  *          else 0
+  *          (Note a 0 length string will return 0 either way)
+  */
+-size_t coroutine_mixed_fn qemu_get_counted_string(QEMUFile *f, char buf[256])
++size_t coroutine_mixed_fn
++qemu_get_counted_string(QEMUFile *f, char buf[QEMU_COUNTED_STRING_SIZE])
+ {
+     size_t len = qemu_get_byte(f);
+     size_t res = qemu_get_buffer(f, (uint8_t *)buf, len);
+@@ -848,7 +849,7 @@ void qemu_put_counted_string(QEMUFile *f, const char *str)
+ {
+     size_t len = strlen(str);
+ 
+-    assert(len < 256);
++    assert(len < QEMU_COUNTED_STRING_SIZE);
+     qemu_put_byte(f, len);
+     qemu_put_buffer(f, (const uint8_t *)str, len);
+ }
 -- 
 2.47.3
 
