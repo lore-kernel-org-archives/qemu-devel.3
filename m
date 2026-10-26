@@ -1,48 +1,47 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3134A606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70795606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:07:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=ZuEWWM79
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=heN9Nyve
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLF8-00050w-PJ; Mon, 26 Oct 2026 10:00:19 -0400
+	id 1xLLDH-0001I2-TA; Mon, 26 Oct 2026 09:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLEd-0004ic-Km; Mon, 26 Oct 2026 09:59:37 -0400
+ id 1xLLDC-00018a-Uc; Mon, 26 Oct 2026 09:58:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xLLEa-0000cn-AI; Mon, 26 Oct 2026 09:59:35 -0400
+ id 1xLLD7-0000Sa-E1; Mon, 26 Oct 2026 09:58:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793022944; bh=Scx4v/clv6/HS4/9gaShWrC8B8kxeuS8K4lXDoZwXOg=;
+ t=1793022944; bh=oHasC5blXTrn5nihKRt0Fti12j69/TrUoXoaBASeo3U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZuEWWM79lE5hbRpiIgvdNlNJmVec9Y/fdrb5l6RYpOX/xSHYP0JSszGiLhg/7BnLL
- q07VJrLAGcqGHfn3fUeAFhBFsUsamnVFbZzZiAkFSwks3fTAKE0MARNy8Ri0vbwhDU
- gjC5e+/Q73YN0H4YI47geJftU+64dUaxvcu0VSZF4CoYAs1I5OZqXsrW2KS76jNzko
- 0Vg0gjmSew6dUTkhefeD1jp/e50spnfXac7IFpo7mBCO4gsdqelwki4oY4HoS1cvM3
- ddQJtwLOKVe52T4+RW3BgHTNXJlbLe0I3WV3NhCRcgRm3L9eBJx3MNwwtv3KBMNz1N
- wggTtej9RsBUw==
+ b=heN9NyvexotVoRua441hBaC841KwiNi2808aoNWOviWonDE0ZkxyIHeVy4s+kQoBy
+ dw0Rnjt7Orr7ZIqFFDsKw7aXVla2kGIXEETYizbdy8YpDwFr+UKTUgqS5M+DlVBg6f
+ IykvPUO6Nd9wbz/ZrEqBHVILuHSNr20yhJA3WqORShJonHk7BigsovqRo8W+HqkPXZ
+ dgQ7edxRXcqrI7rmnsifaZ+th8YCArHAztL80e0p0bpUdfEYUltGeYCXqSLOqEmZSf
+ bKGL6I+VNGWQyglwYhD4xDKJlaHIBNvFdraER9iBdJN0kjoMiyp8/wGKuxVlE+96af
+ nZMOiLu1KjVuA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4DE0E1E12AE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 158811E12A1;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B9F144B8FF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 12D2044B8F2;
  Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 23322934E3; Mon, 26 Oct 2026 16:55:44 +0300 (MSK)
+ id F15DB934C9; Mon, 26 Oct 2026 16:55:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.3 v2 97/98] hw/intc/exynos4210_combiner: Fix group
- register range check
-Date: Mon, 26 Oct 2026 16:55:24 +0300
-Message-ID: <20261026135529.1019772-24-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Martin Pitt <martin@amutable.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.3 v2 84/98] hw/uefi: fix ContentInfo detection in
+ wrap_pkcs7()
+Date: Mon, 26 Oct 2026 16:55:11 +0300
+Message-ID: <20261026135529.1019772-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
 References: <qemu-stable-11.1.3-20261026165135@cover.tls.msk.ru>
@@ -76,73 +75,42 @@ X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Martin Pitt <martin@amutable.com>
 
-The exynos4210 combiner has registers arranged in sets of 4:
- offset 0x0: IIESR0 (handles interrupt groups 0..3)
- offset 0x4: IIECR0
- offset 0x8: IISTR0
- offset 0xc: IIMSR0
- offset 0x10: IIESR1 (handles interrupt groups 4..7)
- offset 0x14: IIECR1
+Fix wrap_pkcs7()'s detection for an already present PKCS ContentInfo
+envelope: It previously compared byte 15 with 0x0a (ASN.1
+ENUMERATED) instead of 0xa0 (the [0] EXPLICIT context tag of
+ContentInfo.content). See the original edk2 function [1] where this was
+taken from.
 
-and so on for a total of 16 sets of registers, which puts the final
-IIMSR15 at offset 0xfc.  After that come two registers which aren't
-grouped, ICIPSR0 at 0x100 and ICIPSR1 at 0x104.  The entire register
-memory region is thus 0x108 bytes.
+Due to that typo, an already wrapped signature got wrapped a second
+time, and gnutls_pkcs7_import() rejected it. This breaks Secure Boot key
+enrollment with .auth files carrying the envelope, as created by
+systemd's "bootctl --secure-boot-auto-enroll".
 
-The logic which separates out the "offset is in one of the sets of
-registers" from "offset is one of the ICIPSRn registers" is
-incorrect, and so a write to offset 0x10448100 (which should be
-ICIPSR0) falls through into the code for handling accesses to a set
-of registers, and indexes off the end of the s->group[] array.
+[1] https://github.com/tianocore/edk2/blob/8f8372439d8ec5f565dbda1548c18deb068e0080/CryptoPkg/Library/BaseCryptLib/Pk/CryptPkcs7VerifyCommon.c#L68
 
-For an input offset of, say, 0x3C, req_quad_base_n is 0x3, because
-this is in the 3rd set of registers.  grp_quad_base_n is then 0xC,
-because this set of registers handles interrupt groups 12..15, and we
-will index s->group[] with grp_quad_base_n through to grp_quad_base_n
-+ 3.  IIC_NGRP is the size of the group[] array, and so we need to
-check grp_quad_base_n against it, not req_quad_base_n.
-
-Fix the bounds check, and add an assertion that the code path
-where we are beyond the register-set range isn't going to
-overrun its array, which we know to be true because of the
-size used for the MemoryRegion.
-
+Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
 Cc: qemu-stable@nongnu.org
-Fixes: 8e03cf1eeb1f9e0 ("ARM: exynos4210: IRQ subsystem support.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4709
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20261019162217.3272337-2-peter.maydell@linaro.org
-(cherry picked from commit ab6579bf73b5ffb7f2e9d1c28c1e6c1d9fccd5ed)
+Signed-off-by: Martin Pitt <martin@amutable.com>
+Message-ID: <atUllV8bSaHylfKv@piware.de>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit e90644eea1ce545482b923b81809b3b96bac1be3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/exynos4210_combiner.c b/hw/intc/exynos4210_combiner.c
-index dbbdee4d316..4f079fedaff 100644
---- a/hw/intc/exynos4210_combiner.c
-+++ b/hw/intc/exynos4210_combiner.c
-@@ -91,8 +91,9 @@ exynos4210_combiner_read(void *opaque, hwaddr offset, unsigned size)
-     grp_quad_base_n = req_quad_base_n << 2;
-     reg_n = (offset - (req_quad_base_n << 4)) >> 2;
- 
--    if (req_quad_base_n >= IIC_NGRP) {
--        /* Read of ICIPSR register */
-+    if (grp_quad_base_n >= IIC_NGRP) {
-+        /* Read of ICIPSR register. MR size ensures this must be in bounds */
-+        assert(reg_n < ARRAY_SIZE(s->icipsr));
-         return s->icipsr[reg_n];
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index 8a1f1395a2f..a47f36492ff 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -80,7 +80,7 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+         pkcs7->data[4] == 0x06 &&
+         pkcs7->data[5] == 0x09 &&
+         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
+-        pkcs7->data[15] == 0x0a &&
++        pkcs7->data[15] == 0xa0 &&
+         pkcs7->data[16] == 0x82) {
+         return;
      }
- 
-@@ -184,7 +185,7 @@ static void exynos4210_combiner_write(void *opaque, hwaddr offset,
-     grp_quad_base_n = req_quad_base_n << 2;
-     reg_n = (offset - (req_quad_base_n << 4)) >> 2;
- 
--    if (req_quad_base_n >= IIC_NGRP) {
-+    if (grp_quad_base_n >= IIC_NGRP) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "exynos4210.combiner: unallowed write access at offset 0x"
-                       HWADDR_FMT_plx "\n", offset);
 -- 
 2.47.3
 
