@@ -1,37 +1,37 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1658606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F22606A31D
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:14:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W6goCWtq
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=n7LpA5W7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLJZo-00006j-Go; Mon, 26 Oct 2026 08:13:20 -0400
+	id 1xLJZv-00008x-4O; Mon, 26 Oct 2026 08:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLJZm-00005h-2t; Mon, 26 Oct 2026 08:13:18 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1xLJZs-000084-9Q; Mon, 26 Oct 2026 08:13:24 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1xLJZk-0005xj-2m; Mon, 26 Oct 2026 08:13:17 -0400
+ id 1xLJZq-0005zg-MZ; Mon, 26 Oct 2026 08:13:24 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id C45C343AC7;
- Mon, 26 Oct 2026 12:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0D11F01825;
- Mon, 26 Oct 2026 12:13:10 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id BE91D601FE;
+ Mon, 26 Oct 2026 12:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A65F1F031E0;
+ Mon, 26 Oct 2026 12:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793016792;
- bh=1Y7NAzHaRtInXa6woXKE3nGA0pc0QenHLP8Prpyxf/E=;
- h=From:To:Cc:Subject:Date;
- b=W6goCWtqxFVK0hPPEOxXO7d0Y8/d0/LAF5N65kE5Jsvo5j2SXMNOvbuyOtNa/0eyh
- hzgVxKbQFPJgcntw58PD1lqxxgqm0dijoW+MI5zQTUmHzTxOcofFcP9Z+Gq4N29l+R
- 1ylsXhT32Tlh1wZ0QjlNhY6Um8zJ7cWpvBE7mTQT1C84On4qXPF768f9JiI5giKIeZ
- R8EAzD6q5FcngqggrvB0jWor/9M5ASucKGip8cFz2elOro+7j96eawwpl2BrGfGgi4
- d6CwcSXnUvcvY7RVzkWr+Syls+gsOhiryxhvqq2rRRuOPNGwmm3xaeA05OPzyQMxGe
- xb829xh2/UM7g==
+ s=k20260515; t=1793016801;
+ bh=Yyr8Vef3hJZm81XPHmzhgHQDPuVtINKQOKAaS7xtcP8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=n7LpA5W7ocCvzkJ9gpWIYGIo9Bwocn3ZJnoNkuQio6jbRMgqDAdspA6qOkjry+TNR
+ wDklcfkjoiGXR/6d1jWIPxhrlUsQBe8C4iHSncAmv5g9FSH6MfHWOj8eb2ytDq8Dqr
+ 8qtqa4DFy9Fiwfxvj4iCUIcHdpVSepLR/a0oQBYVv61WJVoBCpvTEzevMpPcA1QLQs
+ 6tellwjfvnrvJ0nrzUoc5g5y/MRQW+HaVKbKjT9qaToPChs3ET18g5EbWnbcNJ04YN
+ wjAPapbpX2sDCw0+zzB0o7lz0U8v1sBz4MHa7s9NWvCcPrp+Ee2Ge0BP8SNVJ/S4iD
+ KxEz/ttsvSMOA==
 From: Niklas Cassel <cassel@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Niklas Cassel <cassel@kernel.org>, dlemoal@kernel.org,
@@ -41,15 +41,17 @@ Cc: Niklas Cassel <cassel@kernel.org>, dlemoal@kernel.org,
  Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
  Sam Li <faithilikerun@gmail.com>
-Subject: [PATCH v15 0/7] Add full zoned storage emulation to the qcow2 driver
-Date: Mon, 26 Oct 2026 13:12:48 +0100
-Message-ID: <20261026121259.3354561-1-cassel@kernel.org>
+Subject: [PATCH v15 3/7] block: define errnos for zone protocol errors
+Date: Mon, 26 Oct 2026 13:12:51 +0100
+Message-ID: <20261026121259.3354561-4-cassel@kernel.org>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261026121259.3354561-1-cassel@kernel.org>
+References: <20261026121259.3354561-1-cassel@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=cassel@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
@@ -70,135 +72,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This patch series adds a new extension - zoned format - to the
-qcow2 driver, allowing full zoned storage emulation on a qcow2
-image file. A user can attach such an image to a guest and have
-it appear as a host-managed zoned block device.
+A block driver that emulates zones (e.g. qcow2 with the zoned format
+feature) rejects requests that violate the zone protocol, and the device
+model has to report each of these to the guest with the matching zone
+error (ZAC/ZBC sense data, virtio-blk zone status codes, ...). It can
+only do so if each condition comes with an errno of its own, rather than
+a generic one such as EIO.
 
-The zoned format is opt-in through a new qcow2 header extension
-that pins the zone geometry. Behind the extension is a dedicated
-zoned metadata region that stores one 8-byte write pointer (WP)
-per zone. The extension is gated by an incompatible bit, so an
-older qcow2 implementation cannot accidentally open the image.
+Define one for each condition:
 
-Each write pointer is routed through the write pointer cache,
-a Qcow2Cache object. The write pointer cache is written to disk
-after the qcow2 metadata is written, thus guaranteeing that
-the write pointer is updated after the corresponding data is
-written.
+  BLK_ZE_UNALIGNED_WRITE  ESPIPE        write not at the write pointer
+  BLK_ZE_BOUNDARY         ERANGE        write past the zone capacity
+  BLK_ZE_OPEN_RESOURCE    ETOOMANYREFS  open zone limit reached
+  BLK_ZE_ACTIVE_RESOURCE  EOVERFLOW     active zone limit reached
 
-Zone states are in memory. Read-only and offline states are
-device-internal events, which are not modelled in qcow2
-emulation for simplicity. The other zone states
-(closed, empty, full) can be inferred from write pointer
-values, persistent across QEMU reboots. The open states are
-kept in memory using open zone lists.
+ETOOMANYREFS and EOVERFLOW are what Linux returns for
+BLK_STS_ZONE_OPEN_RESOURCE and BLK_STS_ZONE_ACTIVE_RESOURCE, so a host
+zoned device used through file-posix already reports the same values.
+For the boundary case, ERANGE is used rather than EFBIG, which the host
+file system can legitimately return for an image file.
 
-To create a qcow2 file with the zoned format:
+A write that is not at the write pointer gets ESPIPE, which file and
+block device I/O never return, rather than EINVAL, which a zoned driver
+also uses for invalid requests such as an invalid zone state
+transition. So a device model can map each of these errnos to its zone
+error without having to know which request failed.
 
-    qemu-img create -f qcow2 zbc.qcow2 \
-        -o size=768M \
-        -o zone.size=64M \
-        -o zone.capacity=64M \
-        -o zone.conventional_zones=0 \
-        -o zone.max_open_zones=6 \
-        -o zone.max_active_zones=8 \
-        -o zone.mode=host-managed
+ETOOMANYREFS is not POSIX, so provide a fallback for hosts that lack it.
 
-Then attach it to a guest via the QEMU command line:
-    -blockdev node-name=drive1,driver=qcow2,file.driver=file,file.filename=zbc.qcow2 \
-    -device virtio-blk-pci,drive=drive1 \
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ include/block/block-common.h | 16 ++++++++++++++++
+ include/qemu/osdep.h         |  3 +++
+ 2 files changed, 19 insertions(+)
 
-Tested with blktests, fio, zbd_state (an internal test suite) and
-zonefs, comparing a zoned qcow2 image attached via virtio-blk with
-zloop, null_blk and scsi_debug (passed/failed/skipped):
-
-    +--------------------+----------+---------+-----------+---------+
-    | Testrun            | blktests | fio     | zbd_state | zonefs  |
-    +--------------------+----------+---------+-----------+---------+
-    | zloop              | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    | null_blk           | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    | scsi_debug         | 10/0/12  | 61/0/14 | 29/0/8    | 113/0/0 |
-    | virtio-blk + qcow2 | 9/0/10   | 57/0/18 | 29/0/8    | 113/0/0 |
-    +--------------------+----------+---------+-----------+---------+
-
-This series depends on the (still not merged) series "block: fix the
-zone write granularity and the zone append limit":
-https://lore.kernel.org/qemu-devel/20260921142819.2916043-1-cassel@kernel.org/
-
-Git branch which includes the dependency series can be found at:
-https://github.com/floatious/qemu/tree/qcow2-v15
-
-Based-on: <20260921142819.2916043-1-cassel@kernel.org>
-
-v14->v15:
-- rebase on the series above, which now contains the v14 patches
-  "block: widen BlockLimits.zone_size to uint64_t" and "virtio-blk: do
-  not merge writes across a zone boundary", and which moves the zone
-  append checks to the block layer
-- drop zone.max_append_bytes; zonedmeta_offset moves to bytes 24-31 of
-  the zoned header extension, so images created with v14 are not
-  compatible
-- require a version 3 image, a zone size that is a multiple of the
-  cluster size, and a zone capacity that is a multiple of the zone
-  write granularity
-- report zone errors with dedicated errnos (new patch) instead of EIO,
-  EINVAL and EBUSY
-- manage the zone resources as in NVMe ZNS (2.1.1.4.1) and ZBC-3, and
-  fix OPEN ZONE of a full zone, writes that fill a closed zone, writes
-  from a conventional into a sequential zone, conventional zone and
-  zone capacity reporting, and a shorter last zone
-- validate the zoned header extension, and the write pointer table (new
-  patch), when opening an image
-- account for the zoned metadata in qemu-img check
-- report zone errors with their zone status codes in virtio-blk (new
-  patch)
-- extend the iotest with zone errors, zone resources and image checks
-
-Niklas Cassel (3):
-  block: define errnos for zone protocol errors
-  qcow2: validate the write pointer table when opening an image
-  virtio-blk: report zone errors with their zone status codes
-
-Sam Li (4):
-  docs/qcow2: add the zoned format feature
-  qcow2: add configurations for zoned format extension
-  qcow2: add zoned emulation capability
-  iotests: test the zoned format feature for qcow2 file
-
- MAINTAINERS                                   |    1 +
- block/io.c                                    |   13 +-
- block/qcow2-cache.c                           |   11 +-
- block/qcow2-refcount.c                        |   18 +
- block/qcow2.c                                 | 1674 ++++++++++++++++-
- block/qcow2.h                                 |   86 +-
- block/trace-events                            |    2 +
- docs/interop/qcow2.rst                        |  115 +-
- docs/system/qemu-block-drivers.rst.inc        |   44 +
- hw/block/block.c                              |    7 +
- hw/block/virtio-blk.c                         |   48 +-
- include/block/block-common.h                  |   16 +
- include/block/block-io.h                      |    6 +
- include/block/block_int-common.h              |   12 +
- include/qemu/osdep.h                          |    3 +
- qapi/block-core.json                          |   86 +-
- tests/qemu-iotests/031.out                    |    8 +-
- tests/qemu-iotests/036.out                    |    4 +-
- tests/qemu-iotests/061.out                    |   14 +-
- tests/qemu-iotests/082.out                    |  108 ++
- tests/qemu-iotests/303.out                    |    4 +-
- tests/qemu-iotests/tests/qcow2-encryption.out |    4 +-
- tests/qemu-iotests/tests/zoned-qcow2          |  362 ++++
- tests/qemu-iotests/tests/zoned-qcow2.out      |  265 +++
- 24 files changed, 2874 insertions(+), 37 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/zoned-qcow2
- create mode 100644 tests/qemu-iotests/tests/zoned-qcow2.out
-
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index 3932ff8615..6e4b2eb3ce 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -125,6 +125,22 @@ typedef struct BlockZoneDescriptor {
+     BlockZoneState state;
+ } BlockZoneDescriptor;
+ 
++/*
++ * Errors that zoned block drivers report for zone protocol violations, as
++ * positive errno values (drivers return them negated). Each condition has an
++ * errno of its own that zoned block drivers do not return for anything else,
++ * so that device models can report the matching zone error to the guest
++ * whichever request failed. In particular, EINVAL is not used, as it also
++ * reports invalid requests, such as an invalid zone state transition. The
++ * zone resource errors are the errnos Linux uses for BLK_STS_ZONE_OPEN_RESOURCE
++ * and BLK_STS_ZONE_ACTIVE_RESOURCE, so a host zoned device accessed through
++ * file-posix reports the same values.
++ */
++#define BLK_ZE_UNALIGNED_WRITE  ESPIPE       /* write not at write pointer */
++#define BLK_ZE_BOUNDARY         ERANGE       /* write past zone capacity */
++#define BLK_ZE_OPEN_RESOURCE    ETOOMANYREFS /* open zone limit reached */
++#define BLK_ZE_ACTIVE_RESOURCE  EOVERFLOW    /* active zone limit reached */
++
+ /*
+  * Track write pointers of a zone in bytes.
+  */
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 50c7ce33b6..7925c28ac3 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -345,6 +345,9 @@ void QEMU_ERROR("code path is reachable")
+ #if !defined(ESHUTDOWN)
+ #define ESHUTDOWN 4099
+ #endif
++#if !defined(ETOOMANYREFS)
++#define ETOOMANYREFS 4100
++#endif
+ 
+ #define RETRY_ON_EINTR(expr) \
+     (__extension__                                          \
 -- 
 2.56.0
 
