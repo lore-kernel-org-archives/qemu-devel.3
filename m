@@ -1,103 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C642606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1115606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mRNiIpCW;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LiiVSx2/
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pEcGfuCJ;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=S1fjNbeP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLNSh-0001is-40; Mon, 26 Oct 2026 12:22:16 -0400
+	id 1xLNSv-00034a-DD; Mon, 26 Oct 2026 12:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNSQ-00017H-1H
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:22:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xLNSs-0002pd-PN
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:22:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNSM-0000cd-S8
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:21:57 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xLNSq-0000eo-Lc
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:22:26 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QEvtYp3567341
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:21:53 GMT
+ 69QEvcxV465825
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:22:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xFKlv/viOHvkjCoNEGti7ttWLhvnoRE4h/jdafN8Bv0=; b=mRNiIpCWbb3Dsdoy
- nk7Q6DvQaaZVwcEq4WQi+A3t6zAFG9yRutrWFcoXkJ6ssik5qF/nvdrZqAoSxOm5
- kbcBsejCFwl1HBmTBHttOicaLju0YSB5887telzWHrigLU87ts2BLn3XQtzcc8eC
- Wlhw5pStGJ+TdVo80ych14yiJhPi02Ra9rjnle+cUenATBDlBPrGNmz9iqXef1Zb
- 7xlDWJfvgifeUAY8IcE6HOOQzmPhILG97abza4NO4vdOWkRRJ94JFZwoMoufAlHF
- P6jvh5H5y1N+ucRCgjS8qBbkv6IKTlAwbI5ry8ATZCsIWoXZskQ5KdUEkxtvOWzJ
- hpTuYA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj56y1aah-1
+ k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=; b=pEcGfuCJCgtxx1Y5
+ zA9QwcvWZHEVYxWcIs1lFsp5gV4xlH4uT8Fmm4BQgiVf/iao2yI0Zs63R52dHqHd
+ bC/+GTklGzCb8CHuQKLR6S84aljpfVZhg5nt5SufLGOa166gScbppecdZVla/POf
+ q7u9GcK2tV0hsUwccGCA9YhPydl76iuv+2s5Vh5JIfU1Awo82DSJ9zXaYd54CuSy
+ RFuUJDh/saweAMkEh/80FGDKSMKx1VEfqz0PyL2/OFi5X0O3F7o0WDu4wMK4QH3s
+ kP+6Qrv4Fdo+ofz8FDQW6EsNMhv5beYFtdcflEv1rlTE0jcolYy/wWgzM3z79hKp
+ kJQ8Ag==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hhshpuacs-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:21:53 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93f5844e383so567751085a.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:21:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:22:23 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-7c10b8abe29so3136355137.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793031713; x=1793636513; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793031742; x=1793636542; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xFKlv/viOHvkjCoNEGti7ttWLhvnoRE4h/jdafN8Bv0=;
- b=LiiVSx2/rwrnMa0fuAIXWgzlCN50/LhfkCMOycipNUga2QLnGpD4et14/mSi6u1Xqw
- zi5OhhYBczC/J97L2Hs7rzs/WrKbzxWBLltbuIZUvwm/cMuXgfYYZ0ZP504YB6N/8E51
- htJoZGfEPaZX4ITrbrJVmwDBUTq70zHHzWnI1J+ydV1YcGBECvxpR12Uvdo9pDuu3HSx
- VelC5vMtMids/8Dybv3TSM9AtWitX1xane63GieUFVy37H/8hUUtMG1iQ0bML3wI0x13
- 25HVKnsp5LKv3+WxDNNc7iLPaedAT2M0tuer9HUEUDTRZd39orgpBdhayZsjdBUvtyGa
- ztHQ==
+ bh=k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=;
+ b=S1fjNbePlSyC5yKHJJLk1GGF/4o1tpl4w0OkRzCGp1yoho6t05HGa6KI7MomoU9EVw
+ 0RNaRrFb44higDhi6hr3IxSZBd5PwB6v7RyPClkJJMcFwdawJPuHw5f8MWTqxVv+8CZF
+ 8aKHwqpLjEDu8FTuAEjuJbfwckKJIgJU/xfRyUE0CnPDSMqIxUzLx7//gl7WBTMfGYMP
+ fpC8WRHd+JUfsVZMJPAbWEUpsganN1sQyeC4cJ1XFatpjqn8LS+kk3xp0i31MB4CyQ2l
+ Vvd1HC3tewLIYC84HhX3LtZl0AT96PUdkQ2XWMOlpM5X3QZ2FgFgVHutSq50PVb3iTPd
+ GvQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793031713; x=1793636513;
+ d=1e100.net; s=20260707; t=1793031742; x=1793636542;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xFKlv/viOHvkjCoNEGti7ttWLhvnoRE4h/jdafN8Bv0=;
- b=D/Ct9rLZGtQI2s8swyNjCUd4hzb1nCWB7IjBxGcnrRxyXCf/uvWjCcoz0dT/3uigZR
- cIfrUDKfZHv28tz6x0qw4ZNL3oy16Yidf3efup50l9XQb8NSk34naAAQTUSnT8l8RdQY
- kC6yrxTwsAnhI8+qQ9aMYf3N+87LtnCzQQeuP2FR08jJxdQLLXFCBDKPoSdCWVXZrfWy
- VcBcBCNYM9joAqNeVYDrW0v6164jkjOBaWpFMZDc7s5dWOSzWGg2CtmBDb3QBRw+PQeH
- K+CBeA2gRfgoupFeV2sMfhf7tgr1IoNtGg9MMABq9qYjMaJsqCWiNq8orMeaJr5zinAL
- qvGQ==
-X-Gm-Message-State: AFq9FYIn62TGIJkbSGrLujG1REXzLT9sLSIZ+r/2o7CvxjYt0PC1zblj
- JfdKilE1lPeNQ+AvtYEKEfB8yo156Gx9rUKd4CrfS6KSEkOx7q1gts5+IPNYLGDQyGQArkrGcHb
- Pw1XWlyiCTUi/wz2xiN3z7EucKuUdPh+BQQhYvKHM5uXpSasxGIdEMwrvmtKeJR3UJw==
-X-Gm-Gg: AYBFou0J4UXJvrBJKdfCDM/S9EreAtNk4mb2tjvwXPQTlYPH4UE79KivHg79B+CEbGf
- WUa5oeDcp2maQvTDFqzcVYd0meG9/8PjZqe3JiHLKR1jvFsGNqPMtXyNyLIEToX1V1ndQsVpMfP
- gxXphvsMcKNuyT4mrKYp6RVKuYjBe3/2IwO6sLjLjj+BHxT97p2WCrUhLP0WJ+Zhh3eIellc061
- wNbw0zoZOL5l5s/qSvAa7L7vt5kWeEGDyK6abNLbBGD3126J9b7yf2wH7asmdgIPGHGieNvt06F
- Arpr8hVV7Bpr5U7XlhEZfs9lblQtnuP6OahYMOk5gRZE0Tnx8aIjBfbL1Jo7uvVmM7lL1j8k+zx
- xpGX222dn/dkL43jldlKRym7l8yboRtQE+q4J+XrG
-X-Received: by 2002:a05:620a:1a26:b0:93e:942f:b8b1 with SMTP id
- af79cd13be357-940ef9b8bcdmr1027395185a.64.1793031712324; 
- Mon, 26 Oct 2026 09:21:52 -0700 (PDT)
-X-Received: by 2002:a05:620a:1a26:b0:93e:942f:b8b1 with SMTP id
- af79cd13be357-940ef9b8bcdmr1027388085a.64.1793031711660; 
- Mon, 26 Oct 2026 09:21:51 -0700 (PDT)
+ bh=k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=;
+ b=p3JvDz1+SQiPP+tJ0YZPeL9CiG8cmIV7/HbVCBmq0T7Pw0LvrBOwF7bq/JtavZJPln
+ edflYpYpzcV43NOTfoVX2NPIg6UpWZVcC3s9pnnDbN8iA2Hq0AHmCWBAeehQsohuBkYy
+ 88IMaSNtdfC8K9V0k1Zw1SnhDZ7b7RNR2jkvLi3PiPZ2gI4H+ynndYecJ+8MwXGSBxBi
+ vjB3gO53BVuBZnYxS/XNfZzNZmvW/H22mY2mr3rTH8kWDASe4OgvTDHMyQCtoBsQCAGg
+ w9e+HjdwVUgS3f+juhF+RQf1l8pqSIYsJ/Y9oRaL7SjsHEResNpC4TIoD7Mw6/mHldpD
+ b54g==
+X-Gm-Message-State: AFq9FYKCmJVApVew38rj35OdXX8EOrbQmdFY3Riob5gmA1sdCQzMLhSq
+ JyNVNLrWfZDyX2hdElrjFA8ns+4LSoycV7qbDJE5Zy/yxOSC0WugLOGrwZg6u4OOTrJ4cTLRJv4
+ vSojbPfJcu+6h9QFBcI1mgtn57mvxR3eSqQLFWRClRxFnJs/XFJeVIssxPU6XmUvHNg==
+X-Gm-Gg: AYBFou20l/08DdPppHETOLQ6/ALLe8cVc7b6U57qjxuH1JI2bIHIpvwXXYhXQflbMl1
+ yT05dxRTnuY5/wg1vi1h8yHXeCtgNKMx/4v1DnvyPd7w7osnNqqUYJZXWRFmrA/cshPuhZLvJyi
+ TWZCLWiLp50lM1YGMK0aDLJZs/xr8wA1BkLcmxwxpFbkxI2QF3lifjCp6HDW5r1nBFP39rY936Q
+ scYjnaxSox7OqqSun9d50oOlKbP4MVW8oavuVuTuuJUlMZH8w47r3N3hA/VcsS3xGqxibp+TLas
+ VCsDEOXl3Xe8ivR4iszxAsQgxRfeHG1v+PkwTOMqL4TlgdGIpR2/LAHKNqiYykACHYbG1n2SXHR
+ iGQIe3oYTYATE2WWgqnGBp10F7uhpcTNx5cWIWxPf
+X-Received: by 2002:a05:6102:4455:b0:7cb:70ed:ff90 with SMTP id
+ ada2fe7eead31-7ce5cd94757mr1832852137.26.1793031741909; 
+ Mon, 26 Oct 2026 09:22:21 -0700 (PDT)
+X-Received: by 2002:a05:6102:4455:b0:7cb:70ed:ff90 with SMTP id
+ ada2fe7eead31-7ce5cd94757mr1832838137.26.1793031741414; 
+ Mon, 26 Oct 2026 09:22:21 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a35a04ad39sm539728095e9.1.2026.10.26.09.21.50
+ 5b1f17b1804b1-4a35a59d998sm212196885e9.15.2026.10.26.09.22.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Oct 2026 09:21:50 -0700 (PDT)
+ Mon, 26 Oct 2026 09:22:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 10/14] target/mips: Share MIPS16e/microMIPS 3-bit GPR xlat
- mapping
-Date: Mon, 26 Oct 2026 17:20:29 +0100
-Message-ID: <20261026162034.32711-11-philmd@oss.qualcomm.com>
+Subject: [PATCH v4 14/14] target/mips: Convert nanoMIPS LI opcodes to
+ decodetree
+Date: Mon, 26 Oct 2026 17:20:33 +0100
+Message-ID: <20261026162034.32711-15-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261026162034.32711-1-philmd@oss.qualcomm.com>
 References: <20261026162034.32711-1-philmd@oss.qualcomm.com>
@@ -105,35 +106,35 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX8z3FuPXJDxYP
- dv2jePM4hY5y5kFdf5nrssKcFYjpwxJAbYQrgn0CrwKiY/b6sYxZ8nGpghqelTaJXWxlNqjHGYP
- uqIZU5M7CQqdepVTgRZ2munbmCGqftM=
-X-Authority-Analysis: v=2.4 cv=eMeGH3p1 c=1 sm=1 tr=0 ts=6adf7e21 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX7HTlzvF6yMMT
+ DIo/sHJ6wZ0BVQ/9ayBoat1YGUchvmT/ZHyE3nKX6vVZdt0/V6joL/zO90I2fC70D8FlyU2gqBp
+ XqJLZHaYtYdg6fcICEksHbAKrrm3ylI=
+X-Proofpoint-GUID: qZ1PQDi84VLM-o5StcXA9IxrmcPgL59S
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX8nCxTflb+Umk
+ 0O1sjcQ/q533ELOtzvxWJCypfQfxmypu1upODcBQagX1iMivxsF7aV7aoM42B+2YPpyXBJS5W8t
+ PKtGBAEUReHAJoukhyjrMpNA5R8MUuyYjDIotMOnpbIs1mCw7988Ea7hkOorwwNxQ9c7S7oUQph
+ 6mTN8fODrmdYnA/JAWFAz9pq66+zHsd283AyZOhjyHgbxG0iypfQh+T5tvLxb1wrWTqdUlHDwus
+ R7IHOSctsLjGjaXuggKQ90tT5cSsokP58K9+lEH51G5LyT/rElD/wBkfBRcMHKEOp6rlla80o88
+ Zx4njyvBnSP54wKPbcHohA1SUwqKJOeIgDxvvdj/DwHOjNzmTsb62CmE9GrNrlMgumAGDkLvbLC
+ +u2l9ycXF+5+wrYHaRZrxbDiNVX5OoiIfocQwov+tErUgjwNMozOtzUpwJIMQeNaoFGYeiJEYmt
+ bBNeShCRIoRyl1BAKiA==
+X-Authority-Analysis: v=2.4 cv=HZWB3SE8 c=1 sm=1 tr=0 ts=6adf7e3f cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=m3IZ4kzmJbVghjqrMy4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfXwMvpAO4/2Wu8
- QFCsDziyDG76S3cyG6JJnoDkOMY7+8P+zQ3h971yCdNO0q20d5L04T5BHLOeZSzCgOYKU65gEy1
- B27OpFuhqOQvA82xMzMviU3XGMuS8MZ/MoVAPmdFIt2ioNzUTldDWJYSGJOZnocYC29m/qZ0NfO
- ked5EkFTV0FXJRfR02u/Jb5jaFHyb5oDEz9wtyDIVQNeMjnIRJZNoBENAwV1uLz8A5n1kIcryA5
- PtFJcdmouZlwgrkfjzNr+MPcJILyCjZ4oKuXSYi4hDrClqUbd32j6a5RuwJAUy53cYX5uPsCkNB
- sWPoNTkHvkauCxwK4Ky8ewh6C4bKQ5ENTstkgONan7atsPdiJRILGqq/0GKlLAtGsxBgvlVv3uP
- lN7+NVu2Fkrx7rN9Tg4VZeNqkoEPipNf/N8pkd0nxy+QQv8rsdL8+wPD+TP/4tYMWVNgeNPY5GD
- 2AuLHRstoXLsMd2Qigg==
-X-Proofpoint-GUID: o_MWbVoO0XN44RlCA-VJooyOmNvB_LCK
-X-Proofpoint-ORIG-GUID: o_MWbVoO0XN44RlCA-VJooyOmNvB_LCK
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=afSiZASKlENp3Nq3tvsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: qZ1PQDi84VLM-o5StcXA9IxrmcPgL59S
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-26_03,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260065
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,303 +160,180 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The 3-bit register fields of MIPS16e and microMIPS 16-bit
-encodings map to the same 8 GPRs. The map is duplicated,
-and we want to re-use it for nanoMIPS. Rename as common
-gpr3_m16() helper, using the decodetree !function signature
-so both the legacy and the decodetree decoders can call it.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Convert LI[16] and LI[48]. LI[16] decodes its 3-bit register
+with gpr3() and its immediate with s_eu() (0x7f encodes -1).
+LI[48] takes a 32-bit immediate and is not available in NMS
+cores; handle it in trans_LI_nnms(), which checks NMS before
+calling trans_LI(). Expose check_nms() for that purpose.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/translate.h               |  1 +
- target/mips/tcg/translate.c               | 11 ++++
- target/mips/tcg/micromips_translate.c.inc | 61 ++++++++++-------------
- target/mips/tcg/mips16e_translate.c.inc   | 19 +++----
- 4 files changed, 45 insertions(+), 47 deletions(-)
+Since v3:
+- Fix LI[16] register decoding, using the gpr3() mapping
+- Fix LI[16] immediate, extracted unsigned
+- Fix LI[48] immediate halfword order
+- Replace the not_in_nms argument by trans_LI_nnms()
+- Reuse check_nms() from translate.c
+---
+ target/mips/tcg/translate.h              |  1 +
+ target/mips/tcg/nanomips16.decode        |  9 ++++++++
+ target/mips/tcg/nanomips48.decode        |  8 ++++++++
+ target/mips/tcg/nanomips_translate.c     | 26 ++++++++++++++++++++++++
+ target/mips/tcg/translate.c              |  2 +-
+ target/mips/tcg/nanomips_translate.c.inc | 17 ----------------
+ 6 files changed, 45 insertions(+), 18 deletions(-)
 
 diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index d11b2f32f009..50b62b9dfd28 100644
+index 71370f336dc1..0af9f2fb3603 100644
 --- a/target/mips/tcg/translate.h
 +++ b/target/mips/tcg/translate.h
-@@ -224,6 +224,7 @@ void mxu_translate_init(void);
- bool decode_ase_mxu(DisasContext *ctx, uint32_t insn);
+@@ -152,6 +152,7 @@ void check_cp1_enabled(DisasContext *ctx);
+ void check_cp1_64bitmode(DisasContext *ctx);
+ void check_cp1_registers(DisasContext *ctx, int regs);
+ void check_cop1x(DisasContext *ctx);
++void check_nms(DisasContext *ctx);
  
- bool decode_64bit_enabled(DisasContext *ctx);
-+int gpr3_m16(DisasContext *ctx, int x);
+ void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset);
+ void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index);
+diff --git a/target/mips/tcg/nanomips16.decode b/target/mips/tcg/nanomips16.decode
+index f68fb57022a5..70db007e820b 100644
+--- a/target/mips/tcg/nanomips16.decode
++++ b/target/mips/tcg/nanomips16.decode
+@@ -6,3 +6,12 @@
+ #
+ # Reference: nanoMIPS32 Instruction Set Technical Reference Manual
+ #            (Document Number: MD01247)
++
++&rd_imm             rd imm
++
++%rt3                7:3 !function=gpr3
++%s_eu               0:7 !function=s_eu
++
++@rt3_s          ...... ... .......          &rd_imm         rd=%rt3 imm=%s_eu
++
++LI              110100 ... .......          @rt3_s          # LI[16]
+diff --git a/target/mips/tcg/nanomips48.decode b/target/mips/tcg/nanomips48.decode
+index 0ab33ce5a952..4c9fe695a869 100644
+--- a/target/mips/tcg/nanomips48.decode
++++ b/target/mips/tcg/nanomips48.decode
+@@ -6,3 +6,11 @@
+ #
+ # Reference: nanoMIPS32 Instruction Set Technical Reference Manual
+ #            (Document Number: MD01247)
++
++&rd_imm     rd  imm                                                  !extern
++
++%imm        0:s16 16:16
++
++@rd_imm     ...... rd:5  ..... ................ ................    &rd_imm imm=%imm
++
++LI_nnms     011000 ..... 00000 ................ ................    @rd_imm
+diff --git a/target/mips/tcg/nanomips_translate.c b/target/mips/tcg/nanomips_translate.c
+index 6b8aaedb5477..c9ef142fe73f 100644
+--- a/target/mips/tcg/nanomips_translate.c
++++ b/target/mips/tcg/nanomips_translate.c
+@@ -9,6 +9,18 @@
+ #include "qemu/osdep.h"
+ #include "translate.h"
  
- /* decodetree generated */
- bool decode_isa_micromips16(DisasContext *ctx, uint16_t insn);
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 69c82af046a0..74c571c1c125 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1623,6 +1623,17 @@ bool decode_64bit_enabled(DisasContext *ctx)
-     return ctx->hflags & MIPS_HFLAG_64;
- }
- 
-+/*
-+ * Map the 3-bit register field of MIPS16e and microMIPS
-+ * 16-bit encodings to a GPR index.
-+ */
-+int gpr3_m16(DisasContext *ctx, int x)
++static int gpr3(DisasContext *ctx, int x)
 +{
-+    static const int map[8] = { 16, 17, 2, 3, 4, 5, 6, 7 };
++    static const int map[8] = { 16, 17, 18, 19, 4, 5, 6, 7 };
 +
 +    return map[x];
 +}
 +
- /*
-  * This code generates a "reserved instruction" exception if cpu is not
-  * 64-bit or 64-bit instructions are not enabled.
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index 6eb8e79ec57b..88ec1668bd8b 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -605,13 +605,6 @@ enum {
-     ADDIUR1SP = 0x1
- };
- 
--static int mmreg(int r)
--{
--    static const int map[] = { 16, 17, 2, 3, 4, 5, 6, 7 };
--
--    return map[r];
--}
--
- /* Used for 16-bit store instructions.  */
- static int mmreg2(int r)
++static int s_eu(DisasContext *ctx, int x)
++{
++    return x == 0x7f ? -1 : x;
++}
++
+ /* Include the auto-generated decoders.  */
+ #include "decode-nanomips16.c.inc"
+ #include "decode-nanomips32.c.inc"
+@@ -18,3 +30,17 @@ static bool trans_LSA(DisasContext *ctx, arg_r *a)
  {
-@@ -637,7 +630,7 @@ static int mmreg2(int r)
- 
- static void gen_addiur1sp(DisasContext *ctx)
- {
--    int rd = mmreg(uMIPS_RD(ctx->opcode));
-+    int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
- 
-     gen_arith_imm(ctx, OPC_ADDIU, rd, 29, ((ctx->opcode >> 1) & 0x3f) << 2);
+     return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
  }
-@@ -645,8 +638,8 @@ static void gen_addiur1sp(DisasContext *ctx)
- static void gen_addiur2(DisasContext *ctx)
++
++static bool trans_LI(DisasContext *ctx, arg_rd_imm *a)
++{
++    gen_li(ctx, a->rd, a->imm);
++
++    return true;
++}
++
++static bool trans_LI_nnms(DisasContext *ctx, arg_rd_imm *a)
++{
++    check_nms(ctx);
++
++    return trans_LI(ctx, a);
++}
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 74c571c1c125..10811db827c9 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1712,7 +1712,7 @@ static inline void check_cp0_mt(DisasContext *ctx)
+  * This code generates a "reserved instruction" exception if the
+  * Config5 NMS bit is set.
+  */
+-static inline void check_nms(DisasContext *ctx)
++void check_nms(DisasContext *ctx)
  {
-     static const int decoded_imm[] = { 1, 4, 8, 12, 16, 20, 24, -1 };
--    int rd = mmreg(uMIPS_RD(ctx->opcode));
--    int rs = mmreg(uMIPS_RS(ctx->opcode));
-+    int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+    int rs = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
+     if (unlikely(ctx->CP0_Config5 & (1 << CP0C5_NMS))) {
+         gen_reserved_instruction(ctx);
+diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
+index 028ef49ea053..c883b5514f1c 100644
+--- a/target/mips/tcg/nanomips_translate.c.inc
++++ b/target/mips/tcg/nanomips_translate.c.inc
+@@ -57,7 +57,6 @@ enum {
  
-     gen_arith_imm(ctx, OPC_ADDIU, rd, rs, decoded_imm[ZIMM(ctx->opcode, 1, 3)]);
- }
-@@ -681,8 +674,8 @@ static void gen_andi16(DisasContext *ctx)
- {
-     static const int decoded_imm[] = { 128, 1, 2, 3, 4, 7, 8, 15, 16,
-                                  31, 32, 63, 64, 255, 32768, 65535 };
--    int rd = mmreg(uMIPS_RD(ctx->opcode));
--    int rs = mmreg(uMIPS_RS(ctx->opcode));
-+    int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+    int rs = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-     int encoded = ZIMM(ctx->opcode, 0, 4);
+     NM_POOL32S      = 0x30,
+     NM_P_BRI        = 0x32,
+-    NM_LI16         = 0x34,
+     NM_SWGP16       = 0x35,
+     NM_P16_BR       = 0x36,
  
-     gen_logic_imm(ctx, OPC_ANDI, rd, rs, decoded_imm[encoded]);
-@@ -734,8 +727,8 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
+@@ -86,7 +85,6 @@ enum {
  
- static void gen_pool16c_insn(DisasContext *ctx)
- {
--    int rd = mmreg((ctx->opcode >> 3) & 0x7);
--    int rs = mmreg(ctx->opcode & 0x7);
-+    int rd = gpr3_m16(ctx, (ctx->opcode >> 3) & 0x7);
-+    int rs = gpr3_m16(ctx, ctx->opcode & 0x7);
- 
-     switch (((ctx->opcode) >> 4) & 0x3f) {
-     case NOT16 + 0:
-@@ -872,8 +865,8 @@ static inline void gen_movep(DisasContext *ctx, int enc_dest, int enc_rt,
- 
- static void gen_pool16c_r6_insn(DisasContext *ctx)
- {
--    int rt = mmreg((ctx->opcode >> 7) & 0x7);
--    int rs = mmreg((ctx->opcode >> 4) & 0x7);
-+    int rt = gpr3_m16(ctx, (ctx->opcode >> 7) & 0x7);
-+    int rs = gpr3_m16(ctx, (ctx->opcode >> 4) & 0x7);
- 
-     switch (ctx->opcode & 0xf) {
-     case R6_NOT16:
-@@ -2853,7 +2846,7 @@ static void decode_micromips32_opc(CPUMIPSState *env, DisasContext *ctx)
-             }
-         } else {
-             /* ADDIUPC */
--            int reg = mmreg(ZIMM(ctx->opcode, 23, 3));
-+            int reg = gpr3_m16(ctx, ZIMM(ctx->opcode, 23, 3));
-             offset = SIMM(ctx->opcode, 0, 23) << 2;
- 
-             gen_addiupc(ctx, reg, offset, 0, 0);
-@@ -3041,9 +3034,9 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-     switch (op) {
-     case POOL16A:
-         {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
--            int rs1 = mmreg(uMIPS_RS1(ctx->opcode));
--            int rs2 = mmreg(uMIPS_RS2(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+            int rs1 = gpr3_m16(ctx, uMIPS_RS1(ctx->opcode));
-+            int rs2 = gpr3_m16(ctx, uMIPS_RS2(ctx->opcode));
-             uint32_t opc = 0;
- 
-             switch (ctx->opcode & 0x1) {
-@@ -3067,8 +3060,8 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
+ /* P48I instruction pool */
+ enum {
+-    NM_LI48        = 0x00,
+     NM_ADDIU48     = 0x01,
+     NM_ADDIUGP48   = 0x02,
+     NM_ADDIUPC48   = 0x03,
+@@ -3665,12 +3663,6 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
+                                        mo_endian(ctx));
+             target_long addr_off = extract32(ctx->opcode, 0, 16) | insn << 16;
+             switch (extract32(ctx->opcode, 16, 5)) {
+-            case NM_LI48:
+-                check_nms(ctx);
+-                if (rt != 0) {
+-                    tcg_gen_movi_tl(cpu_gpr[rt], addr_off);
+-                }
+-                break;
+             case NM_ADDIU48:
+                 check_nms(ctx);
+                 if (rt != 0) {
+@@ -4628,15 +4620,6 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
+             break;
+         }
          break;
-     case POOL16B:
+-    case NM_LI16:
+-        {
+-            imm = extract32(ctx->opcode, 0, 7);
+-            imm = (imm == 0x7f ? -1 : imm);
+-            if (rt != 0) {
+-                tcg_gen_movi_tl(cpu_gpr[rt], imm);
+-            }
+-        }
+-        break;
+     case NM_ANDI16:
          {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
--            int rs = mmreg(uMIPS_RS(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+            int rs = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int amount = (ctx->opcode >> 1) & 0x7;
-             uint32_t opc = 0;
-             amount = amount == 0 ? 8 : amount;
-@@ -3094,7 +3087,7 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case LWGP16:
-         {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-             int rb = 28;            /* GP */
-             int16_t offset = SIMM(ctx->opcode, 0, 7) << 2;
- 
-@@ -3115,8 +3108,8 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case LBU16:
-         {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4);
-             offset = (offset == 0xf ? -1 : offset);
- 
-@@ -3125,8 +3118,8 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case LHU16:
-         {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4) << 1;
- 
-             gen_ld(ctx, OPC_LHU, rd, rb, offset);
-@@ -3143,8 +3136,8 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case LW16:
-         {
--            int rd = mmreg(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rd = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4) << 2;
- 
-             gen_ld(ctx, OPC_LW, rd, rb, offset);
-@@ -3153,7 +3146,7 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-     case SB16:
-         {
-             int rd = mmreg2(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4);
- 
-             gen_st(ctx, OPC_SB, rd, rb, offset);
-@@ -3162,7 +3155,7 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-     case SH16:
-         {
-             int rd = mmreg2(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4) << 1;
- 
-             gen_st(ctx, OPC_SH, rd, rb, offset);
-@@ -3180,7 +3173,7 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-     case SW16:
-         {
-             int rd = mmreg2(uMIPS_RD(ctx->opcode));
--            int rb = mmreg(uMIPS_RS(ctx->opcode));
-+            int rb = gpr3_m16(ctx, uMIPS_RS(ctx->opcode));
-             int16_t offset = ZIMM(ctx->opcode, 0, 4) << 2;
- 
-             gen_st(ctx, OPC_SW, rd, rb, offset);
-@@ -3225,14 +3218,14 @@ static int decode_isa_micromips(CPUMIPSState *env, DisasContext *ctx)
-     case BNEZ16: /* BNEZC16 */
-     case BEQZ16: /* BEQZC16 */
-         gen_compute_branch(ctx, op == BNEZ16 ? OPC_BNE : OPC_BEQ, 2,
--                           mmreg(uMIPS_RD(ctx->opcode)),
-+                           gpr3_m16(ctx, uMIPS_RD(ctx->opcode)),
-                            0, sextract32(ctx->opcode, 0, 7) << 1,
-                            (ctx->insn_flags & ISA_MIPS_R6) ? 0 : 4);
- 
-         break;
-     case LI16:
-         {
--            int reg = mmreg(uMIPS_RD(ctx->opcode));
-+            int reg = gpr3_m16(ctx, uMIPS_RD(ctx->opcode));
-             int imm = ZIMM(ctx->opcode, 0, 7);
- 
-             imm = (imm == 0x7f ? -1 : imm);
-diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-index dfb4312f1835..ed2bbbc66be9 100644
---- a/target/mips/tcg/mips16e_translate.c.inc
-+++ b/target/mips/tcg/mips16e_translate.c.inc
-@@ -120,13 +120,6 @@ enum {
-   RR_RY_CNVT_SEW = 0x6,
- };
- 
--static int xlat(int r)
--{
--  static const int map[] = { 16, 17, 2, 3, 4, 5, 6, 7 };
--
--  return map[r];
--}
--
- static void decr_and_store(DisasContext *ctx, unsigned regidx, TCGv t0)
- {
-     TCGv t1 = tcg_temp_new();
-@@ -459,8 +452,8 @@ static int decode_extended_mips16_opc(CPUMIPSState *env, DisasContext *ctx)
-     op = (ctx->opcode >> 11) & 0x1f;
-     sa = (ctx->opcode >> 22) & 0x1f;
-     funct = (ctx->opcode >> 8) & 0x7;
--    rx = xlat((ctx->opcode >> 8) & 0x7);
--    ry = xlat((ctx->opcode >> 5) & 0x7);
-+    rx = gpr3_m16(ctx, (ctx->opcode >> 8) & 0x7);
-+    ry = gpr3_m16(ctx, (ctx->opcode >> 5) & 0x7);
-     offset = imm = (int16_t) (((ctx->opcode >> 16) & 0x1f) << 11
-                               | ((ctx->opcode >> 21) & 0x3f) << 5
-                               | (ctx->opcode & 0x1f));
-@@ -676,9 +669,9 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
- 
-     sa = (ctx->opcode >> 2) & 0x7;
-     sa = sa == 0 ? 8 : sa;
--    rx = xlat((ctx->opcode >> 8) & 0x7);
-+    rx = gpr3_m16(ctx, (ctx->opcode >> 8) & 0x7);
-     cnvt_op = (ctx->opcode >> 5) & 0x7;
--    ry = xlat((ctx->opcode >> 5) & 0x7);
-+    ry = gpr3_m16(ctx, (ctx->opcode >> 5) & 0x7);
-     op1 = offset = ctx->opcode & 0x1f;
- 
-     n_bytes = 2;
-@@ -831,7 +824,7 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-                 break;
-             case I8_MOV32R:
-                 {
--                    int rz = xlat(ctx->opcode & 0x7);
-+                    int rz = gpr3_m16(ctx, ctx->opcode & 0x7);
- 
-                     reg32 = (((ctx->opcode >> 3) & 0x3) << 3) |
-                         ((ctx->opcode >> 5) & 0x7);
-@@ -910,7 +903,7 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case M16_OPC_RRR:
-         {
--            int rz = xlat((ctx->opcode >> 2) & 0x7);
-+            int rz = gpr3_m16(ctx, (ctx->opcode >> 2) & 0x7);
-             int mips32_op;
- 
-             switch (ctx->opcode & 0x3) {
+             uint32_t u = extract32(ctx->opcode, 0, 4);
 -- 
 2.55.0
 
