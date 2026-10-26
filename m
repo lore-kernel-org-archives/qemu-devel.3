@@ -1,115 +1,118 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D891606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 20:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8A6606A31B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 21:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n3Jb9rzd
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=jebU6uRM;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Psh60bbC;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=tV0wBGIZ;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=EQcqUn2s
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLRdO-0005wp-OB; Mon, 26 Oct 2026 16:49:34 -0400
+	id 1xLRqF-00028R-I9; Mon, 26 Oct 2026 17:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1xLRdM-0005vX-78; Mon, 26 Oct 2026 16:49:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1xLRdK-000289-Et; Mon, 26 Oct 2026 16:49:31 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QJENd1370535; Mon, 26 Oct 2026 20:49:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=RVQ6J1
- 41ytrvuWrL7nfA0Hr29vhmnyHsW8ZMKBeIlio=; b=n3Jb9rzdw/reMBAk/nuSiX
- 83/vbUxLGVZ53PfJg/B1AkFVFQY7gMu48KPtBOkIYn1cr+UoqggPWRos+lmKT6Vd
- R2MIHS0n8nzzKEKHo3mPOBpt0NH8Cw6Zm3LBC5ygUOOhLfpxOAwB0+itFtlh3Tt/
- BFz/s9zJ+dIIqikygCuCrtRw7W3rpCyhGc6c35xflR1b2AAa++KLCf15zxHJ5Ose
- 8P65OxUV3jjc4KnU1N6ZoGx86PpCmAuso3NxvfNblqV8Kuw5/UT6JV8gDOMIEN3v
- DKNmcNW9p8SvcbfO3J9fAwZMAElZ13wXTec0qzVCEQ/QH2zs0brToSGeKAu624Gw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgm63vcx2-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 20:49:26 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QIov5O2939298; Mon, 26 Oct 2026 20:49:25 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh80jfvrr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 20:49:25 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69QKnO0d4915732
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Oct 2026 20:49:24 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B574A58056;
- Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2273658052;
- Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
-Received: from [9.61.248.120] (unknown [9.61.248.120])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 26 Oct 2026 20:49:24 +0000 (GMT)
-Message-ID: <e7c1b33e-a26c-4975-abf7-8ae4cd53f417@linux.ibm.com>
-Date: Mon, 26 Oct 2026 16:49:23 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1xLRqD-00027x-D2; Mon, 26 Oct 2026 17:02:49 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1xLRqA-0004pk-JE; Mon, 26 Oct 2026 17:02:49 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7FE4E22124;
+ Mon, 26 Oct 2026 21:02:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793048562; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vF/1BOUXatDELo21OIW5VThMGNaOhzvFhUi9cc6/DIk=;
+ b=jebU6uRMSVMyQzuKesgdfz7qiJDLNfiVYeOIkO8SwBUFvxkLwhIVhYr1K54EunGm7g+2EL
+ oNslYVpvLNxhlit64BGJzTQs+Ome+GfZ17f/6PT/F3XtdEXJFM16txg7cg71qdBB5AJ1XV
+ oAPjsNf/4oqyKob5aGukYsY1nUqODl0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793048562;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vF/1BOUXatDELo21OIW5VThMGNaOhzvFhUi9cc6/DIk=;
+ b=Psh60bbCYT4kVycf9YrpGvAb69rvhkoLXjm+DBDdMOxul9jCh9w+bK5L0FWGv3tKW43mHJ
+ F2Ijr+f4SVx7isDg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793048561; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vF/1BOUXatDELo21OIW5VThMGNaOhzvFhUi9cc6/DIk=;
+ b=tV0wBGIZ7Y3z3QSK8yofa3iRE1t0oKfmTPH2prEx/18iP7BqhMy29hLtW0oX6qfrvyWGw1
+ 9OGxm6Fj2EPhIIWAayOa5wt8rczAix8hlp4080uBSGb6FeT+zad+5/Vbs83oc8x/4+fGMi
+ 0SF9MGybAtAvlEUjD8evv1+7ZYywfAk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793048561;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vF/1BOUXatDELo21OIW5VThMGNaOhzvFhUi9cc6/DIk=;
+ b=EQcqUn2sb94sMGAVRLuoou2XbPB5crqMM8Yw8gjp4DBJCT2FPX8T+HST+0VJEn4RX0lW4f
+ /dtm/Gak5MmR1MAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D264413319;
+ Mon, 26 Oct 2026 21:02:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id vKcDHfC/32rSUgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 26 Oct 2026 21:02:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Elliot Berman
+ <elliotjb+anduril@elliotjb.com>, qemu-devel@nongnu.org, Peter Xu
+ <peterx@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, Alex =?utf-8?Q?Benn?=
+ =?utf-8?Q?=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] hw/block/pflash: invalidate TBs on flash update
+In-Reply-To: <f54905bf-8641-4554-ac44-6d526266876c@oss.qualcomm.com>
+References: <20261016-pflash-update-invalidate-tbs-v1-1-3cf1ecaa76bc@elliotjb.com>
+ <f54905bf-8641-4554-ac44-6d526266876c@oss.qualcomm.com>
+Date: Mon, 26 Oct 2026 18:02:34 -0300
+Message-ID: <87wlr4jhud.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] s390/pci: Change reset method from legacy to
- resettable exit
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: mjrosato@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
- qemu-stable@nongnu.org
-References: <20261026171325.876-1-alifm@linux.ibm.com>
-Content-Language: en-US
-From: Omar Elghoul <oelghoul@linux.ibm.com>
-In-Reply-To: <20261026171325.876-1-alifm@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4MiBTYWx0ZWRfX4dr77y4fuAj9
- YW9BBqsiv9ibG/lHDV06tt0gIo0IUe2DI5oFzJ8fPbSAO00mU7VPhqTyQ/SjhkIzgmOZMKstRp0
- tYwkNY3XCwunbeo9TiO8b+PSpRmlvOk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4MiBTYWx0ZWRfX/fyV6wbYkCLN
- qwOpoldPkA4bLv42c4xFvy27ujHaJaEOeBa4UUerahHzA5sR2wGB1pvg9oZ69Fu6UiwqYkYj5Hw
- aAtAK+SaaQ/d3XiQGMGqLNKvCEi7b5nyOybHjSncNODvKVIUN8qU34CGt9iO8rLnBMemGsmgixt
- pjV+oFbfE/hFkU+ygo64q4WaYsy/SinF198YBgoAhDWinY8VzSLq/15muFvrTJ0VgRjGCTJI5CW
- DuAiMOCcJmUN8FC6cf31U7UASyanLYxRxRRdC5+Xuot3aCr0nVPaXw0tw5tAqaOQJc125Z+SzR2
- MQ3xQiTkab4/DhqPr5CuRvt2ga/iL0vyAVHHZwpDXfLZe9HwSCWgWSYPvtpSF2A5iQdAVLh69l8
- 6U16ZeycR+xEhEBv6CRZdgaxCmXj5hT/tNgkx9/jZyE/W1dUnCDok3HkiuNNaMOlTx8AF+mfQ6r
- E2ndE3yHKiRZh7at1fA==
-X-Proofpoint-ORIG-GUID: VQLMffYKwkdkeCHydvcwLH6WkblFUYsm
-X-Authority-Analysis: v=2.4 cv=Uu32pOwB c=1 sm=1 tr=0 ts=6adfbcd6 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=dxUtY4db0SHtNY8ba_oA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: VQLMffYKwkdkeCHydvcwLH6WkblFUYsm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260082
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-11.80 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; SUSPICIOUS_RECIPS(1.50)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; TAGGED_RCPT(0.00)[anduril];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[9]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ qualcomm.com:email]
+X-Spam-Score: -11.80
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,39 +125,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/26/26 1:13 PM, Farhan Ali wrote:
-> On subsystem reset of the s390 PCI host bridge (TYPE_S390_PCI_HOST_BRIDGE),
-> child buses S390PCIBus and PCIBus are reset in order. Because S390PCIBus
-> devices are reset first via the legacy reset hook, IOMMU mappings are torn
-> down before the PCI device itself is reset. For a PCI passthrough device
-> this opens a window where the device may issue DMA to addresses that no
-> longer have valid IOMMU mappings, causing an error (PEC 0x7) on the host.
-> 
-> The QEMU reset documentation (docs/devel/reset.rst) specifies that IOMMUs
-> should perform teardown in the resettable 'exit' phase, after all devices
-> have completed their 'hold' phase. Move the S390PCIBusDevice reset logic
-> from the legacy reset hook to the resettable exit phase to close this
-> window.
-> 
-> Fixes: 3e5cfba3ca0a ("s390x/pci: introduce S390PCIBusDevice qdev")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-I was able to reliably reproduce the failure you described in just a
-handful of iterations by running iperf3 on a guest with a passthrough
-mlx5 device, with options to iperf3 for high parallelism and large
-message size to saturate DMA usage, doing a sysrq hard-reset while the
-test is still running, and repeating these steps in a tight loop.
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-After applying your patch, no PCI error events were observed across the
-200 test iterations. Thank you!
+> Hi Elliot,
+>
+> On 16/10/26 21:15, Elliot Berman wrote:
+>> When pflash_cfi01/02 are out of Read Array mode and being reprogrammed
+>> or erased (such as a firmware update) by a guest under TCG, TBs from
+>> when the guest was executing instructions from the pflash are never
+>> invalidated. After re-enabling Read Array, the guest continues to
+>> execute instructions from the stale TBs.
+>>=20
+>> Call memory_region_flush_rom_device() from pflash_update() so the TBs
+>> over the updated range are invalidated.
+>>=20
+>> memory_region_flush_rom_device() asserted that the memory region was in
+>> romd_mode (i.e. Read Array mode), but the pflash is not in romd_mode
+>> when processing MemoryRegionOps->write() commands. Since the RAM can
+>> change even when !romd_mode, relax the assertion so it only checks
+>> rom_device.
+>>=20
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4490
+>> Suggested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Signed-off-by: Elliot Berman <elliotjb+anduril@elliotjb.com>
+>> ---
+>>   hw/block/pflash_cfi01.c | 5 ++++-
+>>   hw/block/pflash_cfi02.c | 3 +++
+>>   system/physmem.c        | 2 +-
+>>   3 files changed, 8 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+>> index 486fc6350d..66ecdb0969 100644
+>> --- a/hw/block/pflash_cfi01.c
+>> +++ b/hw/block/pflash_cfi01.c
+>> @@ -388,12 +388,15 @@ static uint32_t pflash_read(PFlashCFI01 *pfl, hwad=
+dr offset,
+>>       return ret;
+>>   }
+>>=20=20=20
+>> -/* update flash content on disk */
+>> +/* update flash content on disk and invalidate the guest view of RAM */
+>
+>   /*
+>    * Flush modified flash content: mark the range dirty, invalidate the
+>    * TBs translated from it, and write it back to the block backend.
+>    */
+>
+>>   static void pflash_update(PFlashCFI01 *pfl, int offset,
+>>                             int size)
+>>   {
+>>       int offset_end;
+>>       int ret;
+>> +
+>> +    memory_region_flush_rom_device(&pfl->mem, offset, size);
+>> +
+>>       if (pfl->blk) {
+>>           offset_end =3D offset + size;
+>>           /* widen to sector boundaries */
+>
+> I'd like feedback from migration maintainers: could we be writing
+> staled content during live migration? Or maybe we are already safe.
+> invalidate_and_set_dirty() gets DIRTY_MEMORY_MIGRATION set via the
+> memory_region_get_dirty_log_mask call. Hmm so this change also fixes
+> migration then. If confirmed, worth mentioning in the patch description:
+>
+>
+>    Direct writes to the flash RAM were not marked dirty for migration,
+>    so pages reprogrammed during pre-copy were not re-sent, and
+>    postload_update_cb() wrote the stale content to the block backend.
+>    The memory_region_flush_rom_device() call now also fixes this.
+>
 
-Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
+Yes, this does seem to be the case. I couldn't find any path where the
+writes from pflash_write() are invalidated.
 
 
