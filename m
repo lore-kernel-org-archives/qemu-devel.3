@@ -1,139 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4021E606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2A7606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GKJFprp2;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PERJ+T1e
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BIL+YZeq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLOsK-0002F9-Pt; Mon, 26 Oct 2026 13:52:49 -0400
+	id 1xLOql-00015k-42; Mon, 26 Oct 2026 13:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLOrz-00024o-Mg
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:52:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xLOqX-00010E-Gb; Mon, 26 Oct 2026 13:51:00 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLOry-0002vQ-64
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:52:27 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QEw6743584367
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 17:52:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=2Px0aPx8t7UM+uij9z7bW4
- Tuh8rXa2BAdWWDddT8704=; b=GKJFprp2PZ5uaDX1s1jXyHgcNbLeqmg7Y3rnrZ
- SBMJ/r3LDJeru51HdRexYjope1t0LFDus3eLGFjku8D4apKOGKZYMBsf6f5h12mp
- b+hRWjjUp8/AIqSOYIDqNOaCQbSkcErjpGXLH8WJWmhmTonwwVAn1lHos03x761e
- sUKxfZQU15SnovcKDR7ORjbvczxfrSh4n2Ei1QAPf9IEVtXyhjhYw7aWucjvTGzS
- zop26Uf6ucFUq6cHWs5uTjUkHWEo2jT1B6J/f2vKaRLwI2tm8TAytNvr8cgpQseO
- UZNlYZGb/e+DlMOfz1wHbOu2S/ktuYyrOTEER5WF8Ok7+YLQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hhvddbef2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 17:52:23 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-91c66913ad0so18461826d6.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793037143; x=1793641943; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=2Px0aPx8t7UM+uij9z7bW4Tuh8rXa2BAdWWDddT8704=;
- b=PERJ+T1eVPUC0y0QRSV0IP1KdFJHfWFVKKynmzer935syqMxKvARUsQBE8IszPmk8x
- 4zobWKycT/Gg4x4X/oYSKrZ1uTyNw+G8Y0ABscCnUQBRj87TXI6pcw+U3k+IF/ZjKKvL
- riQrfaKzCd9L5EfPqpNTZURbusv8WGey0lO03hegT49xfA24W/N9rRxHzOVzA39tK68i
- JymO9RTgVWAytac7mIUxqx0my/dK5IH0m6hxzRBGucIiPqYgqRcVWVDvP5Wdwh5mSzCw
- p517I9/pHmjTch9Xx4uhP2vN2/JlPgm4fHgxxa1wylNwP4y+cBPNM6G9dRzXY7hF6ScA
- P5aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793037143; x=1793641943;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2Px0aPx8t7UM+uij9z7bW4Tuh8rXa2BAdWWDddT8704=;
- b=YEtWz+kiD4pBJk61OJEBwIETHqm6FJr5C7axMvJ4NvaV06rCD8b1RlfcAUmEATkv6z
- Cl4AN5Tf6VAzrhBQSXtBF41yDqwUs/Cv3CdW4Xdf8FI9qoGfl12/+6KicObq6etFICAI
- QWJC83X7Vsk69Y+iamqqMLZRrTnr+Ge20is+muuaWI6LkSl4iJlnTJ+dCMDDfa2MzTxy
- JEfiw2CEG801jVIYRK7DbCXMR9Y0CD0ESI4iHwJG5dERCPad/2U938eaX047pe5/MTPf
- 9dHQEJzRqlDzYIIgofEhL/4xp9T2ciwuy/L6UF2yhYirxm/2Q8cEAHsBpRicKz+RPVph
- gRyg==
-X-Gm-Message-State: AFq9FYIKy7C0hcxKUsxM6NgHsVM674QzjWRP3xSAW6ooHs7q5xQJOLJb
- ftoar5C+LDIn7ABYHZkIULFzjDJYnV423RgiiVwOe16qiAHo8eHRUP0SF+XSOeQASHKWsQRUv/k
- UVrT4Zi0C/KYghJ/aaNfDirHZSDWfvVJJyX9/WLl4ZF61ikOwMN/PWa3yzCQcuhi1QA==
-X-Gm-Gg: AYBFou3Qmx0jMkk/t17al8xojJnwMxKDt5wd3LXaz6cMp+xqKAMJttrQTAKVy1QqLRd
- MfyZZHir1Ce5pTLLaqML1ZI39QSsNGOuN1KAqkm6cOxwL/gZfaroI94nIDi2ulbxPqHEbCXErmN
- 9ueOiO3ccLS7nDZYhp9yBkOGjO0OV4tj6vM9kIKFTrzBIeO0qex5y7BeZwYuzZUIVc7tENe4D3f
- bcFvmCyUtQBnn/JlQ15W9mVnoRhMCYmnFGADBZsE1AxnMrtT5JCphpQnG15AWQZpGvXJbjq4qGg
- EFVVLrfM+m7poo7L+V/EiAtrhBdEV2rqIPjaSkkuhNh7icIOqudvC9w0jDLlMnwxoZQWGe5juj7
- P9AlOB6rBwPV0iby/r5S+fELJJsPPA9NS/qqX2lpq
-X-Received: by 2002:a05:620a:1b98:b0:93f:18ba:bf78 with SMTP id
- af79cd13be357-940ef94aa26mr1123183385a.69.1793037143390; 
- Mon, 26 Oct 2026 10:52:23 -0700 (PDT)
-X-Received: by 2002:a05:620a:1b98:b0:93f:18ba:bf78 with SMTP id
- af79cd13be357-940ef94aa26mr1123178485a.69.1793037142866; 
- Mon, 26 Oct 2026 10:52:22 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd354asm16866466f8f.43.2026.10.26.10.52.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Oct 2026 10:52:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Samyuktha K <samyu@qti.qualcomm.com>,
- Sritam Paltasingh <spaltasi@qti.qualcomm.com>
-Subject: [PATCH] target/arm: Initialize SMCR_EL1.EZT0 for linux-user
-Date: Mon, 26 Oct 2026 18:52:20 +0100
-Message-ID: <20261026175220.85545-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1xLOqT-0002pg-BL; Mon, 26 Oct 2026 13:50:56 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 7425D601EF;
+ Mon, 26 Oct 2026 17:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AAF1F01825;
+ Mon, 26 Oct 2026 17:50:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793037043;
+ bh=ZTc6si4DyJXSacFrG9xhxXRvgniyY58GS4y0Q7RjLNo=;
+ h=From:Subject:Date:To:Cc;
+ b=BIL+YZeq9y0wsQqDzB3aqGel4sRBFVRAAYUf8X9wleRzSOCGU/99f3M/Nvx4nquNi
+ eicJNPEJi217QzieYsbg6XhTI0vNOGPVtXWf/lxM+6czod6TF0npVDUM11IO4B6kTh
+ uyUT7epvYZs3wf1orhvNuhwVi2+24PoSKwiwacsOLfd/OPev2RVBQ3clsme+hWNDzg
+ TIxE2RDfeOmzQnPiVPkUiY9kHUz8fBbUvT1BAx8/GAynj8sUxKBy9V5oxjXt1Uyg8j
+ PEOfyCGiJDMoZQJ1PdFWKU2E2tR7RCqH1vsj00UHX+5Ss7Iw3NFxyxNkLO6LeAYnF2
+ 0ukSTwkkalg7g==
+From: Drew Fustini <fustini@kernel.org>
+Subject: [PATCH v6 0/6] riscv: implement Ssqosid extension and CBQRI
+ controllers
+Date: Mon, 26 Oct 2026 10:47:20 -0700
+Message-Id: <20261026-riscv-ssqosid-cbqri-v6-0-1a367a35cd0e@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: kcr3XnIEvm-fwenBrewBwuCDqOJSbprj
-X-Proofpoint-GUID: kcr3XnIEvm-fwenBrewBwuCDqOJSbprj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA3MSBTYWx0ZWRfX8pwGP+qxHuUl
- yOdpMfxKER/WcJxr1kZi+rq4iZz+EXZJX14RkgpH73dNbkAVhxujGJz0IiUg/nucvVzJLaBpe6j
- Q4FFbPtTeNRwOelUhormwVwkTC49bOBw5zv9YX7qwb3lhE+QPStiETwjjIS4+8pCYFhO+34N/fj
- ARUXJRyaOMd+OISTlyZ8GkA+gvNyRUkNzC/ft3ivErFrMSyfkvVcYltIIS9Wvr5qiXnpZUhdH26
- bqby8qZ/zjNdPLQLls9oqycGvVRV5WegL41OiGE5LlMPh78KjKQKW2/RfDHG1YhPPRUwDDTue13
- sVb202nN60ndT0PU30I9u3cnTFndC0Z3ZpN8OJneI1Nx1KCqnnJ5b+tBJEzQElSOe91b0/3vH1+
- EGWMepW00BflZ25OCk/iqGeEzAcVbApzlT31UHoiB61EVsneZMAiSeDHRV5f0YZtxlirfG6fFuc
- xilbO1rFCWtvazVP9Ow==
-X-Authority-Analysis: v=2.4 cv=N8+8hG9B c=1 sm=1 tr=0 ts=6adf9358 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=XLJSLKbTjuxEe3lMcToA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA3MSBTYWx0ZWRfX+aPdbSVk5OaF
- HLuvPoARuG4wmAMv4RxPa5MfR181QvQwv5NXtRzLyKSbIr1X5a8QPNo0QIxOxCvXG+EptgbVhAD
- TakpgXj5sJlwInqwiJO2ojgQc5+Jzsk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260071
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-B4-Tracking: v=1; b=H4sIACiS32oC/23NQQ6CMBCF4auQrq1pB0rVlfcwLiodYKKh0jGNh
+ nB3CxtjwvJ/yXwzCcZIyOJUTCJiIqYw5Kh3hWh6N3QoyecWoMBogKOMxE2SzGNg8rK5jZGkQwS
+ w2pTQtiJfPiO29F7VyzV3T/wK8bM+SdWyLl6ttDKbXqqkkkfnbW2192gP5zvGAR/7EDuxgMn8E
+ FB6GzEZAVuiqxxoq8o/ZJ7nL8GHrfD8AAAA
+X-Change-ID: 20251229-riscv-ssqosid-cbqri-aee2271532ff
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Sunil V L <sunilvl@oss.qualcomm.com>, 
+ Anup Patel <anup.patel@oss.qualcomm.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Nicolas Pitre <npitre@baylibre.com>, 
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
+ Atish Patra <atish.patra@linux.dev>, 
+ =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <radim.krcmar@oss.qualcomm.com>, 
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
+ guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
+ Drew Fustini <fustini@kernel.org>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13769; i=fustini@kernel.org;
+ h=from:subject:message-id; bh=NcSBW/RgZYORWTypx5nUASVfcrX+QbNsuknwvjztTII=;
+ b=owGbwMvMwCV2+43O4ZsaG3kYT6slMWTdn/Qp8T7X7MDN56o7dUv1In6b5ezatmDujw/df+4Le
+ /jqTpk7vaOUhUGMi0FWTJFl04e8C0u8Qr8umP9iG8wcViaQIQxcnAIwkflTGRkmeXSsf//s36lP
+ JrNnnzy9gqnvjHFfEBdHqtSzo4KBx2aFMzK8NnnL/KLkS7VqzxzVzH093Q9uOkTPua6bsU32qR2
+ zlQEbAA==
+X-Developer-Key: i=fustini@kernel.org; a=openpgp;
+ fpr=1B6F948213EA489734F3997035D5CD577C1E6010
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,48 +91,292 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On SME2 systems, Linux sets SMCR_EL1.EZT0 in cpu_enable_sme2()
-to allow user space to access ZT0.
+This series implements the RISC-V Quality-of-Service Identifiers
+(Ssqosid) extension [1] which adds the srmcfg register. It also
+implements the RISC-V Capacity and Bandwidth Controller QoS Register
+Interface (CBQRI) specification [2]. Quality of Service (QoS) in this
+context is concerned with shared resources on an SoC such as cache
+capacity and memory bandwidth.
 
-linux-user already initializes SMCR_EL1.LEN and FA64 to match the
-kernel's setup, but leaves EZT0 clear (see commit 3aad4bc8beb9
-"target/arm: Add zt0_excp_el to DisasContext"). Set EZT0 when SME2
-is present to keep the emulated EL1 state consistent with Linux.
+Ssqosid srmcfg CSR
+------------------
+The srmcfg CSR configures a hart with two identifiers:
 
-This has no functional effect because CONFIG_USER_ONLY omits the
-ZT0 trap checks.
+ - Resource Control ID (RCID)
+ - Monitoring Counter ID (MCID)
 
-Reported-by: Samyuktha K <samyu@qti.qualcomm.com>
-Suggested-by: Sritam Paltasingh <spaltasi@qti.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+These identifiers accompany each request issued by the hart to shared
+resource controllers. This allows the capacity and bandwidth resources
+used by a software workload (e.g. a process or a set of processes) to be
+controlled and monitored.
+
+CBQRI controllers
+-----------------
+CBQRI defines operations to configure resource usage limits, in the form
+of capacity or bandwidth, for an RCID. CBQRI also defines operations to
+configure counters to track the resource utilization per MCID.
+
+This series implements a CBQRI capacity controller and a CBQRI
+bandwidth controller which can be configured from the command line:
+
+  $ qemu-system-riscv64 -M virt ... \
+      -device riscv.cbqri.capacity,mmio_base=0x04828000[,...] \
+      -device riscv.cbqri.bandwidth,mmio_base=0x04829000[,...]
+
+The mmio_base option is mandatory, the others are optional.
+
+As many -device arguments as wanted can be provided as long as their
+mmio regions don't conflict.
+
+To see all possible options:
+
+  $ qemu-system-riscv64 -device riscv.cbqri.capacity,help
+  riscv.cbqri.capacity options:
+    alloc_op_config_limit=<bool> -  (default: true)
+    alloc_op_flush_rcid=<bool> -  (default: true)
+    alloc_op_read_limit=<bool> -  (default: true)
+    at_code=<bool>         -  (default: true)
+    at_data=<bool>         -  (default: true)
+    max_mcids=<uint16>     -  (default: 256)
+    max_rcids=<uint16>     -  (default: 64)
+    mmio_base=<uint64>     -  (default: 0)
+    mon_evt_id_none=<bool> -  (default: true)
+    mon_evt_id_occupancy=<bool> -  (default: true)
+    mon_op_config_event=<bool> -  (default: true)
+    mon_op_read_counter=<bool> -  (default: true)
+    ncblks=<uint16>        -  (default: 16)
+    target=<str>
+
+  $ qemu-system-riscv64 -device riscv.cbqri.bandwidth,help
+  riscv.cbqri.bandwidth options:
+    alloc_op_config_limit=<bool> -  (default: true)
+    alloc_op_read_limit=<bool> -  (default: true)
+    at_code=<bool>         -  (default: true)
+    at_data=<bool>         -  (default: true)
+    max_mcids=<uint16>     -  (default: 256)
+    max_rcids=<uint16>     -  (default: 64)
+    mmio_base=<uint64>     -  (default: 0)
+    mon_evt_id_none=<bool> -  (default: true)
+    mon_evt_id_rdonly_count=<bool> -  (default: true)
+    mon_evt_id_rdwr_count=<bool> -  (default: true)
+    mon_evt_id_wronly_count=<bool> -  (default: true)
+    mon_op_config_event=<bool> -  (default: true)
+    mon_op_read_counter=<bool> -  (default: true)
+    nbwblks=<uint16>       -  (default: 1024)
+    target=<str>
+
+Boolean options correspond to hardware capabilities that can be
+disabled.
+
+Example SoC for CBQRI
+---------------------
+An example SoC with the following CBQRI controller configuration can be
+used to test the implementation:
+
+  - L2 cache controllers
+    - Resource type: Capacity
+    - Number of capacity blocks (NCBLKS): 12
+        - In the context of a set-associative cache, the number of
+          capacity blocks can be thought of as the number of ways
+    - Number of access types: 2 (code and data)
+    - Usage monitoring not supported
+    - Capacity allocation operations: CONFIG_LIMIT, READ_LIMIT
+
+  - Last-level cache (LLC) controller
+    - Resource type: Capacity
+    - Number of capacity blocks (NCBLKS): 16
+    - Number of access types: 2 (code and data)
+    - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+    - Event IDs supported: None, Occupancy
+    - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
+
+  - Memory controllers
+    - Resource type: Bandwidth
+    - Number of bandwidth blocks (NBWBLKS): 1024
+       - Bandwidth blocks do not have a unit but instead represent a
+         portion of the total bandwidth resource. For NBWBLKS of 1024,
+         each block represents about 0.1% of the bandwidth resource.
+    - Maximum reserved bandwidth blocks (MRBWB): 819 [80% of NBWBLKS]
+    - Number of access types: 1 (no code/data differentiation)
+    - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+    - Event IDs supported: None, Total read/write byte count, Total
+                           read byte count, Total write byte count
+    - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
+
+The memory map used for the example SoC:
+
+  Base addr  Size
+  0x4820000  4KB  Cluster 0 L2 cache controller
+  0x4821000  4KB  Cluster 1 L2 cache controller
+  0x4828000  4KB  Memory controller 0
+  0x4829000  4KB  Memory controller 1
+  0x482a000  4KB  Memory controller 2
+  0x482b000  4KB  Shared LLC cache controller
+
+This configuration is meant to provide a "concrete" example for software
+(like Linux) to test against. It represents just one of many possible
+ways for hardware to implement the CBQRI spec.
+
+The example SoC configuration is created with the following:
+
+  qemu-system-riscv64 \
+        -M virt \
+        -nographic \
+        -smp 8 \
+        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04820000 \
+        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=12,alloc_op_flush_rcid=false,mon_op_config_event=false,mon_op_read_counter=false,mon_evt_id_none=false,mon_evt_id_occupancy=false,mmio_base=0x04821000 \
+        -device riscv.cbqri.capacity,max_mcids=256,max_rcids=64,ncblks=16,mmio_base=0x0482b000 \
+        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04828000 \
+        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x04829000 \
+        -device riscv.cbqri.bandwidth,max_mcids=256,max_rcids=64,nbwblks=1024,mrbwb=819,mmio_base=0x0482a000
+
+In addition, please note that this series only implements the register
+interface that CBQRI specifies. It does not attempt to emulate the
+performance impact of configuring limits on shared resources like cache
+and memory bandwidth. Similarly, the code does not attempt to emulate
+cache and memory bandwidth utilization, like what would be observed on a
+real hardware system implementing CBQRI.
+
+Linux support for the srmcfg CSR from the Ssqosid extension is upstream
+since v7.3. There is a Linux kernel patch series [3] which adds CBQRI
+cache allocation with resctrl integration. It is also available as a
+branch named cbqri-cache-alloc-dt [4]. That series only supports
+capacity controllers. Linux support for bandwidth controllers was last
+posted as an RFC [5], and I plan to rebase it on the resctrl generic
+schema v2 proof-of-concept [6].
+
+[1] https://github.com/riscv/riscv-ssqosid/releases/tag/v1.0
+[2] https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+[3] https://lore.kernel.org/all/20261003-dfustini-atl-sc-cbqri-dt-v9-0-52fd8be98dcf@kernel.org/
+[4] https://git.kernel.org/pub/scm/linux/kernel/git/fustini/linux.git/log/?h=cbqri-cache-alloc-dt
+[5] https://lore.kernel.org/all/20260601-ssqosid-cbqri-rqsc-v7-0-v6-0-baf00f50028a@kernel.org/
+[6] https://lore.kernel.org/all/d258a32f-12d5-464d-abe9-4720fb3e44b3@intel.com/
+
+Changes since v5:
+ - Rebase on riscv-to-apply.next
+ - Report version 1.0 in cc_capabilities and bc_capabilities
+ - Use MAKE_64BIT_MASK() and QEMU_ALIGN_DOWN() instead of UL constants
+ - Check that the sum of Rbwb across all RCIDs doesn't exceed MRBWB
+ - Set the mrbwb property in riscv_cbqri_bc_create()
+ - Add comments that the counter is marked INVALID
+ - Link to v5: https://lore.kernel.org/qemu-devel/20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org
+
+Changes since v4:
+ - Add read and write wrappers to support 32-bit access size as the spec
+   states that "CBQRI registers are defined so that software can perform
+   two individual 4 byte accesses". Thanks to Radim for suggesting this
+   solution.
+ - Link to v4: https://lore.kernel.org/qemu-devel/20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org
+
+Changes since v3:
+ - NOTE: I should have used version v3 for the previous version posted
+   on Nov 19, 2025 given there was already v1/v2 back in 2023. Therefore
+   I am using v4 in this new revision.
+ - Rebase on current master as of Dec 29 (942b0d378a1d) and update
+   include paths for qdev-properties.h and sysbus.h
+ - Add Rb tags from Daniel
+ - Squash the Kconfig and meson.build patches together per Daniel
+ - Use riscv_cpu_cfg() instead of env_archcpu() in check_srmcfg()
+ - Add check for mstateen0.SRMCFG in check_srmcfg()
+ - Increase ISA_EXT_DATA_ENTRY() for ssqosid from PRIV_VERSION_1_12_0
+   to PRIV_VERSION_1_13_0 as it was added in Privileged Arch 1.13
+ - Calculate the size of the capacity controller MMIO space based on
+   on cc->ncblks and roundup to be aligned to the 4KB page boundary.
+ - Remove rpfx, p and cunits properties that were added in the previous
+   revision as I have decided to not support those optional features in
+   this capacity controller implementation.
+ - Update riscv_cbqri_cc_read to set 0 for RPFX, P and CUNITS in
+   cc_capabilities. This indicates that this capacity controller
+   implementation does not support RCID-prefixed mode and nor does it
+   support capacity unit limits.
+ - Add cc_cunits register after cc_block_mask register in the
+   alloc_blockmasks array and adjust logic in get_blockmask_offset,
+   riscv_cbqri_cc_read, riscv_cbqri_cc_write. Since capacity units is
+   not supported, the cc_cunits register will always be 0.
+ - Only assign capacity for rcid 0 in riscv_cbqri_cc_reset and do not
+   touch allocation for other rcid values as they are unspecified
+   following a reset.
+ - Change CC_ALLOC_OP_FLUSH_RCID to be a no-op instead of calling
+   alloc_blockmask_init() as the spec states that the configured
+   capacity block allocation or the capacity unit limit is not
+   changed by the flush operation.
+ - Add comment to explain that, while the spec only requires the busy
+   field to be reset to 0, the entire contents of the cc->cc_mon_ctl
+   and cc->cc_alloc_ctl registers are set to 0 simplify the code in
+   riscv_cbqri_cc_reset().
+ - Simplify the access type logic for blockmask initialization in
+   riscv_cbqri_cc_reset().
+ - Add static inline helpers get_bmw() and get_slots().
+ - Add check to bandwidth_config() that rbwb is not greater than mrbwb.
+ - Link to v3: https://lore.kernel.org/qemu-devel/20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org
+
+Changes since v2:
+ - NOTE: I should have used version v3 for this version posted on Nov 19
+   as there were already v1 and v2 back in 2023.
+ - Rebase on master which is currently at version v10.1.50
+ - Add fields that were not in the draft used for the proof of concept
+   and introduced in final CBQRI 1.0 spec: capacity units (cunits) and
+   RCID-prefixed mode (RPFX) along with parameter P (prefixed bits)
+ - Fix check_srmcfg() to check if virtualization is enabled, and if so,
+   return virt instruction fault, otherwise return smode()
+ - Fix indentation in read_srmcfg()
+ - Add SPDX headers
+ - Add MAINTAINERS entries
+ - Link to v2: https://lore.kernel.org/qemu-devel/20230425203834.1135306-1-dfustini@baylibre.com/
+
+Changes since v1:
+ - Rebase on current master (8.0.50) instead of 8.0.0-rc4
+ - Configure CBQRI controllers based on device properties in command
+   line arguments instead of a fixed example SoC configuration.
+ - Move TYPE_RISCV_CBQRI_BC and TYPE_RISCV_CBQRI_CC into header so that
+   machines may use it (suggested by Alistair).
+ - Change 'select RISC_CBQRI' to 'imply RISCV_CBQRI' for RISCV_VIRT.
+ - Patches 8/9 could be dropped as they are not needed for the CBQRI
+   proof-of-concept to work. They are only meant to serve as an example
+   for those implementing new machines.
+ - Link to v1: https://lore.kernel.org/qemu-devel/20230416232050.4094820-1-dfustini@baylibre.com/
+
+Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- target/arm/cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Kornel Dulęba (1):
+      riscv: implement Ssqosid extension and srmcfg CSR
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 62262d742a27..851c9a81f3cb 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -387,6 +387,10 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-                 env->vfp.smcr_el[1] = FIELD_DP64(env->vfp.smcr_el[1],
-                                                  SMCR, FA64, 1);
-             }
-+            if (cpu_isar_feature(aa64_sme2, cpu)) {
-+                env->vfp.smcr_el[1] = FIELD_DP64(env->vfp.smcr_el[1],
-+                                                 SMCR, EZT0, 1);
-+            }
-         }
-         /*
-          * Enable 48-bit address space (TODO: take reserved_va into account).
--- 
-2.55.0
+Nicolas Pitre (5):
+      hw/riscv: define capabilities of CBQRI controllers
+      hw/riscv: implement CBQRI capacity controller
+      hw/riscv: implement CBQRI bandwidth controller
+      hw/riscv: add CBQRI to Kconfig and build if enabled
+      hw/riscv: add CBQRI controllers to virt machine
+
+ MAINTAINERS                       |   9 +
+ disas/riscv.c                     |   1 +
+ hw/core/sysbus-fdt.c              |   4 +
+ hw/riscv/Kconfig                  |   4 +
+ hw/riscv/cbqri_bandwidth.c        | 658 ++++++++++++++++++++++++++++++++++
+ hw/riscv/cbqri_capacity.c         | 727 ++++++++++++++++++++++++++++++++++++++
+ hw/riscv/meson.build              |   2 +
+ hw/riscv/virt.c                   |   3 +
+ include/hw/riscv/cbqri.h          |  70 ++++
+ target/riscv/cpu.c                |   3 +
+ target/riscv/cpu.h                |   3 +
+ target/riscv/cpu_bits.h           |   9 +
+ target/riscv/cpu_cfg_fields.h.inc |   1 +
+ target/riscv/tcg/csr.c            |  37 ++
+ 14 files changed, 1531 insertions(+)
+---
+base-commit: de0a6d778b30fffafa222e3b39f384b53c7e3b78
+change-id: 20251229-riscv-ssqosid-cbqri-aee2271532ff
+
+Best regards,
+--  
+Drew Fustini <fustini@kernel.org>
 
 
