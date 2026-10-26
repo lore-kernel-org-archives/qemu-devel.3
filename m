@@ -1,111 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A4606A325
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E4E606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 12:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=VfNHcQ+r
+	dkim=pass (2048-bit key, unprotected) header.d=bosc.ac.cn header.i=@bosc.ac.cn header.a=rsa-sha256 header.s=default header.b=DITI4er3
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLJMb-0005Ri-3H; Mon, 26 Oct 2026 07:59:41 -0400
+	id 1xLJNK-00061T-0j; Mon, 26 Oct 2026 08:00:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLJMZ-0005RH-Lg
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 07:59:39 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLJMX-00044a-VR
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 07:59:39 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-8b0e21048f8so25060477b3.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 04:59:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793015976; cv=none;
- d=google.com; s=arc-20260327;
- b=JZWBwKXc0sIpD/16axM8TUf2O+E73oBvNUoNdUINGfgtwiLN+qEm+4bDzx0HdWgTTa
- DDy87q4EALlZeV7SjQDHO59vAm5r+fyhQ3yqq270wsPMF6nwbNrviY2T5wYjdVScq4zM
- 3SlCVnH0ZWETGXT1GTdf506m8Cx2n8DXKdWanvLvRdxd7ZmE9Q8RO7TnCkJudySiTOv1
- eFIf4HzZBobhxocWcyoDgCXrzgrvDmMRw57Rhk8XdWAc7xiaIW8Z1d1kPKqhnB2GMKNT
- nXPlJd7tp6psa7QX9KUlhlN/y5UHdQu8rswJ6Cll523LnR9Uo7PrVi3si6b/m3uTQc4+
- decQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=899Dii2gSLoNjy8fOpby8R6kcqlhk0ZLuIwDdFI4jD8=;
- fh=9vbVNIdRsO0paNhZWc2/4JcInsvPbgZ5nIOMIbgIuW4=;
- b=AWBml0QjsoXJ3glK/sgZq7mNxSsnyxUrXckQwVx1AeAKBnOT7pF1Q6BHEGHCycLo7o
- zZqAgf9mMaGo7akuU9AjT7oay3CPyIh4Iow2hjKvjV7OjdjddxUy85g+GlzbIL3Z1yUk
- Y1Zp11fjJhKEDK0ZOdtpkXh75YEDOw+AvUkuPf6cruYeGDwJrYBhSGjhAz2LThJSpyv0
- ZOEAZ2N3Xv4i+3zUXeRRzemRBM0epIr59KAmR43dLLJ36bnHfhchLkCjUyL8ux+SUTVA
- qBHswHUn2PaO5TankMwWEyBbxDwn5yVSoO7YarWPvMFh4BPw/R/fLlSd7YYM4UlOhTWK
- tazA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793015976; x=1793620776; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=899Dii2gSLoNjy8fOpby8R6kcqlhk0ZLuIwDdFI4jD8=;
- b=VfNHcQ+rZU6gwteBwPci0hux7T7ZA7Y72bfOmepDFPlsWz+j4c9H24ZT3SxplyelBV
- qXBBORvXznxNW24/zz1zGhqv8RgKssPnLk7kDzyo/G997WYz7YjWXwm8ImCdzeZOIVA5
- OFlqeh3Fj7XpOnRGyTL6o3Xufhc94t5tGyp+/ZidRAK5o+WFd1KeDwVm4G3EsKWSo5rd
- lhad5ESWgiBniIXlR9KDrx553/JSRA5TBZ+m9cU0gMECjkH9zMOJ/GRAvp3xuL9QYq8f
- uPfZqte5aNptwpIBG/D4cOxWTYDfFgeFW93wr72p5JdVBwl09G4Wylrq5ekABqWoYAxK
- HErg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793015976; x=1793620776;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=899Dii2gSLoNjy8fOpby8R6kcqlhk0ZLuIwDdFI4jD8=;
- b=iJOGeE9Pr1Pce16srDTAXJttbuLlEophWdguGAFJSUxJ2TKK4l9LrmVRSMwH07+StE
- IWsBfNgbOvT0XlPY6e+MhTdq0NpT3W2y8DEhG0yVHOu73aYRTHa4nRdViKoOXg5PQYSO
- Lp1nOAxUgYhSui3mZ1LccB90dgqZExLcWdFbHz00Fv1lPCjEOGKGWr8QNwl6a0S8LNfD
- VO1F9qlHDBZ9pc/XELd5rwU2r9WQ9Oz8Pq14dDQuEZrWuWavqaOBjoEXC6dLDs3BGBh8
- 6H30lltQbH8Zd8imUGY/QA+m7VYJryw37Bd8qo5Lqfigp/sXZelDPWToE7EZCoBXMJ3K
- wCTw==
-X-Gm-Message-State: AFq9FYIhS0e3KzOnGcuvo9tRu8G6SzrjuSBttd7pd+OzCO85A4UhOb89
- wWYGhVk6t/BrlTz+QfBLegaER/fJ1CzM56sK9D2Ok2JXxeDrxNbNkELGN1OzN/XY7Xq+cMJjwCm
- MjvYp5DQ2zlDXNscVnpUooW6UatT3p1Yl/Ohv5ciIkg==
-X-Gm-Gg: AYBFou0JFTwuBGgRsHR3VD96ZHDqM4sE9kd/A7I0iJbDjJFi8yAtlUSPvGIuU9xsMQg
- /xNr4Vzr9/z+GKaHqN8CE5zmCdUQxEN0pwzLzF7esBD32xASWLAw4JKQ2Zu39Fkt6CvxuHce9LC
- 6G+OWsYYCd/TtcW46Ka5JsmwRiKBA04n5kK9UNtruFdGP5Zd7QepSVm2pPwBhIhTryrYNYnD0j6
- j7TI14ru0qgSd1lVNfDinGWLQuhjXoob699UrsTONxJeS5WDk5ZTAyAomLrOrw1Lo0tUNbBy8tc
- wkkceaI3knBrdXttFIpntQ1DJGuqSfG2I+TyN+QeSbtx7A0HprIPZfW1l2ot/aD5qV1s+npUzm6
- htXuTe+s8V6QXmTxcQpaGJKchsJ9T+PtjXBS9EGGpmBIm+FwRyszS6z9lD1mEWujOH4yUdfuey+
- KnPO2qyjFNBi1TcoyK1pN+
-X-Received: by 2002:a05:690c:45c5:b0:8ab:4a67:71b9 with SMTP id
- 00721157ae682-8b166c442femr54428217b3.29.1793015976296; Mon, 26 Oct 2026
- 04:59:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hushunchao@bosc.ac.cn>)
+ id 1xLJNG-0005yL-Bp; Mon, 26 Oct 2026 08:00:23 -0400
+Received: from [115.124.28.218] (helo=out28-218.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hushunchao@bosc.ac.cn>)
+ id 1xLJN9-0003qA-BD; Mon, 26 Oct 2026 08:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bosc.ac.cn; s=default;
+ t=1793015755; h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To;
+ bh=Rf+MEEdbDA9KoCY/rQ+br8LXo2PEnR959iH6Cocwrjw=;
+ b=DITI4er3KAbcwWjpXxoQGHgTYxDg8ynwRW4NYLlbezvH6t9LLE3/L53NX9D+TA7w2Ap1ZkPLEofAtjAqI2t3bvmA0GJxCA06u6rIBoTO+NeYfLFHIXcgpGk2093RbGmIrcgQeIvTKBKxTSOSR4c4m2/GbNkx+WIsLh/1z/utyujfW+kVhaA3ymv9BvX2u1CHvLVIP+0nMIPNPiUyC2moDrUuJFe4ZOuYVTL+iUibVWqQ+KOXVKV9wXUdbndWtinZ3dKhe8CQPkFNq4t8y16FdEZ/w5ygob8e9f6PvHrIS0wtGNMUF1/bV2Z65Wo0vUyxE6JflbJt0z6GLXdy7p+U9g==
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07439265|-1; CH=green;
+ DM=|CONTINUE|false|;
+ DS=CONTINUE|ham_regular_dialog|0.145594-0.00143457-0.852971;
+ FP=3521614369658846810|0|0|0|0|-1|-1|-1; HT=maildocker-contentspam033045099153;
+ MF=hushunchao@bosc.ac.cn; NM=1; PH=DS; RN=10; RT=10; SR=0;
+ TI=SMTPD_---.jprvNuO_1793015752; 
+Received: from 127.0.1.1(mailfrom:hushunchao@bosc.ac.cn
+ fp:SMTPD_---.jprvNuO_1793015752 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 26 Oct 2026 19:55:53 +0800
+From: Shunchao Hu <hushunchao@bosc.ac.cn>
+Date: Mon, 26 Oct 2026 19:55:42 +0800
+Subject: [PATCH v3] target/riscv: add hgatp-specific WARL legalization
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <DB8PR04MB7177C8ED1A20409414A573EF87622@DB8PR04MB7177.eurprd04.prod.outlook.com>
- <CAFEAcA-dpfXTLk9KNJ0OsOEaCYppcZLLgcnOCqhUXmOVE2jfaw@mail.gmail.com>
- <DB8PR04MB7177409A95BDC85AC5446A6687612@DB8PR04MB7177.eurprd04.prod.outlook.com>
-In-Reply-To: <DB8PR04MB7177409A95BDC85AC5446A6687612@DB8PR04MB7177.eurprd04.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Oct 2026 11:59:23 +0000
-X-Gm-Features: AclHuK96NYsbOwrJ_CwKJkxVnXzBkRPE56daCWYEA1F3VH1nRe1rxjVL4lJEKdQ
-Message-ID: <CAFEAcA_BNjFC4vEJ2h62NytzYQXKE0o4MvB2jpN74S05kHRLMg@mail.gmail.com>
-Subject: Re: [EXT] Re: [RFC] target/arm: Correct MPIDR.MT handling for i.MX95
- Cortex-A55 Aff1 topology
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: QEMU <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261026-riscv-hgatp-warl-v3-1-4a1a962f3fca@bosc.ac.cn>
+X-B4-Tracking: v=1; b=H4sIAL0/32oC/33OzQ6CMAwH8FchOzvD6gfDk+9hPJRSYEaBrDg1h
+ neX4UUT4/Hfj1/7VMLesahd8lSegxPXtVNYLRJFDbY1a1dOWUEK2zSHVHsnFHRT49DrG/qzNry
+ 2VbkCY6xV01rvuXL3mTwc31muxYlpiE6cKFBYFx5bamLpgjKwj43GydD5x/xMMBH4czcYbTTwB
+ qrMkk0h2xed0BJpSa2KhwN8CpsfAkQBMUfMMmOp/BLGcXwBXIUDAB4BAAA=
+X-Change-ID: 20260920-riscv-hgatp-warl-1e48fd321188
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org, 
+ Tianze Wu <wutianze@ict.ac.cn>, Shunchao Hu <hushunchao@bosc.ac.cn>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793015752; l=4508;
+ i=hushunchao@bosc.ac.cn; s=default; h=from:subject:message-id;
+ bh=g9w8pVguEoMz2M1YuxUC7yJqrbHGK7pb2Y6yFfp8AMI=;
+ b=AjGNWF5cidOfxL7DGt1y7W5OmtAbBb3uB1s/orwBxs6/Dq8KNZzH70iBCUZZE6asNh/WuCU1d
+ lcKXxmEn3uYCwOmvJ+7VVCakeqnEuDMg6ypVmnQaufqUb2/m+BDTMNf
+X-Developer-Key: i=hushunchao@bosc.ac.cn; a=ed25519;
+ pk=OyMXRGlCgZVrm0K+KasRMUzjwUAmDW79SvlVdwZt4f4=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.218 (deferred)
+Received-SPF: pass client-ip=115.124.28.218;
+ envelope-from=hushunchao@bosc.ac.cn; helo=out28-218.mail.aliyun.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RDNS_NONE=0.793,
+ SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,50 +81,140 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT autolearn=unavailable
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 26 Oct 2026 at 11:26, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote=
-:
-> I investigated why the secondaries don't start with MPIDR_EL1.MT clear.
-> The final DT passed to Linux has cpu@0 ... cpu@500 with reg =3D 0x000 ...=
- 0x500, matching the mp-affinity values of the QEMU CPU objects. So, this i=
-s not a DT-versus-QEMU affinity mismatch.
->
-> The MT dependence is in OP-TEE. The i.MX95 build uses the generic get_cor=
-e_pos_mpidr() in https://github.com/OP-TEE/optee_os/blob/master/core/arch/a=
-rm/kernel/misc_a64.S-.  So,
->
-> With MT set, OP-TEE reads Aff1 as the core and Aff2 as the cluster.
-> With MT clear, it assumes the core is in Aff0 and shifts everything up on=
-e level, so Aff1 is read as the cluster.
->
-> With MT clear - OP-TEE gets the wrong core position for CPU2 (example - 8=
- instead of 2), loads an empty page table, and faults forever when it enabl=
-es the MMU.
->
-> This is OP-TEE's generic implementation rather than i.MX-specific code. T=
-he implementation is appropriate for the conventional layouts it
-> supports:
->
->   MT=3D0: Aff0=3Dcore, Aff1=3Dcluster
->   MT=3D1: Aff0=3Dthread, Aff1=3Dcore, Aff2=3Dcluster
->
-> Therefore, I think the problem is not limited specifically to i.MX95. Ano=
-ther platform could encounter the same issue if QEMU presents a core ID in =
-Aff1 with Aff0 fixed at zero while leaving MT clear, and the guest uses the=
- generic OP-TEE core-position implementation.
+According to the Hypervisor Extension in RISC-V spec:
+- VMIDMAX is 7 bits for RV32 and 14 bits for RV64
+- the fields of hgatp are WARL in the normal way
+- the lowest two bits of the physical page number
+  (PPN) in hgatp always read as zeros
 
-But shouldn't QEMU's Aff0/Aff1 be the MT=3D0 arrangement? That's
-how arm_build_mp_affinity() sets them up, for instance.
+These behaviors differ from those of the satp CSR,
+so hgatp cannot reuse legalize_xatp(). Add a dedicated
+legalize_hgatp() helper to implement the hgatp-specific
+WARL semantics.
 
-Is your SoC model specifically overriding the default values
-to something else via the mp-affinity QOM property?
+Co-authored-by: Tianze Wu <wutianze@ict.ac.cn>
+Signed-off-by: Tianze Wu <wutianze@ict.ac.cn>
+Signed-off-by: Shunchao Hu <hushunchao@bosc.ac.cn>
+---
+Changes in v3:
+- Keep the hgatp masks and legalization helpers in 64-bit arithmetic,
+  fixing the riscv32 build where the RV64 field masks do not fit in
+  target_ulong. No functional change.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260925-riscv-hgatp-warl-v2-1-2aa9aa7718cd@bosc.ac.cn
 
-thanks
--- PMM
+Changes in v2:
+- Reword the comment to clarify that retaining the previous MODE is
+  QEMU's WARL legalization choice, not a requirement of the spec.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260920-riscv-hgatp-warl-v1-1-2e52f78c8027@bosc.ac.cn
+---
+ target/riscv/cpu_bits.h |  8 ++++++++
+ target/riscv/tcg/csr.c  | 50 +++++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 56 insertions(+), 2 deletions(-)
+
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index c01050ce2b..c4a914411b 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -711,6 +711,14 @@ typedef enum {
+ #define SATP64_ASID         0x0FFFF00000000000ULL
+ #define SATP64_PPN          0x00000FFFFFFFFFFFULL
+ 
++/* hgatp CSR field masks */
++#define HGATP32_MODE        SATP32_MODE
++#define HGATP32_VMID        0x1FC00000
++#define HGATP32_PPN         SATP32_PPN
++#define HGATP64_MODE        SATP64_MODE
++#define HGATP64_VMID        0x03FFF00000000000ULL
++#define HGATP64_PPN         SATP64_PPN
++
+ /* RNMI mnstatus CSR mask */
+ #define MNSTATUS_NMIE       0x00000008
+ #define MNSTATUS_MNPV       0x00000080
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 061bc9db77..0e92a78c1f 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -5050,17 +5050,63 @@ static RISCVException read_hgeip(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++/*
++ * Masks must be 64-bit: env->hgatp is a uint64_t and the RV64 field
++ * masks do not fit in target_ulong when built for riscv32.
++ */
++static uint64_t hgatp_mask(CPURISCVState *env)
++{
++    uint64_t mask;
++
++    if (riscv_cpu_mxl(env) == MXL_RV32) {
++        mask = HGATP32_MODE | HGATP32_VMID | HGATP32_PPN;
++    } else {
++        mask = HGATP64_MODE | HGATP64_VMID | HGATP64_PPN;
++    }
++
++    /* G-stage x4 root page tables are always 16 KiB aligned. */
++    return mask & ~(uint64_t)3;
++}
++
++static uint64_t legalize_hgatp(CPURISCVState *env,
++                               uint64_t old_hgatp,
++                               uint64_t val)
++{
++    uint64_t mode_mask = riscv_cpu_mxl(env) == MXL_RV32 ?
++                         HGATP32_MODE : HGATP64_MODE;
++    uint64_t hgatp = val & hgatp_mask(env);
++    uint64_t mode = get_field(hgatp, mode_mask);
++
++    /*
++     * hgatp.MODE is a WARL field, so an unsupported value must be
++     * legalized rather than causing the entire write to be ignored.
++     * The specification does not require a particular legal value,
++     * QEMU here chooses to keep the previous mode while accepting
++     * writes to the remaining WARL fields.
++     */
++    if (!validate_vm(env, mode)) {
++        hgatp = set_field(hgatp, mode_mask,
++                          get_field(old_hgatp, mode_mask));
++    }
++
++    if (hgatp != old_hgatp) {
++        tlb_flush(env_cpu(env));
++    }
++
++    return hgatp;
++}
++
+ static RISCVException read_hgatp(CPURISCVState *env, int csrno,
+                                  target_ulong *val)
+ {
+-    *val = env->hgatp;
++    *val = env->hgatp & hgatp_mask(env);
+     return RISCV_EXCP_NONE;
+ }
+ 
+ static RISCVException write_hgatp(CPURISCVState *env, int csrno,
+                                   target_ulong val, uintptr_t ra)
+ {
+-    env->hgatp = legalize_xatp(env, env->hgatp, val);
++    env->hgatp = legalize_hgatp(env, env->hgatp, val);
+     return RISCV_EXCP_NONE;
+ }
+ 
+
+---
+base-commit: c1c18d1e640b64292859ce9f30f3c344edfb0294
+change-id: 20260920-riscv-hgatp-warl-1e48fd321188
+
+Best regards,
+--  
+Shunchao Hu <hushunchao@bosc.ac.cn>
+
 
