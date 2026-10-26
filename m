@@ -1,145 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32D7606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 21:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451BD606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 21:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=GS6kUiFg;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jD6sItqf
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=pZIQjqwI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLRxJ-0005wi-Qr; Mon, 26 Oct 2026 17:10:09 -0400
+	id 1xLS36-0007Me-78; Mon, 26 Oct 2026 17:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xLRxG-0005wO-5B
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:10:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xLRxD-0005WK-74
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:10:04 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QIoF5q986050
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 21:10:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gX9yG9jIqQwkWiUDPbtQunYMKSLpCSW+8K0BoNG2hzg=; b=GS6kUiFg2aN+9zvg
- 8g1l+kR4i5KprvFv64T9olQwVj1w7PzBmu/4qwhNluYsHddBvgmtl/0SmGYUWBWG
- jA17W+JBMGsf0hWLLxYN3KaS3tUQqwEfv8ekDUOfAtBDp//DEgoXRgERmu1z6w8V
- a37rdPc7500/QaSlw608SmmSwjbHv8cuTndKmXgbvUlauJz6TjeCISaFhvkxRZN3
- SdObPYt+S5Wipylbc1RzWm/MbquANMQtQlR78yNfoVk0kMeN0+zsUphF49TE1DRo
- upkMlDf5DaI/l33OJV9qYeWMw/tcn8zEe4k+rsZ4PNGbChvWfb+MrsORqRD6CdID
- FgbvIA==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj53q2ddd-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 21:10:01 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-35cbea41088so5503136eec.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 14:10:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <strahinjapjankovic@gmail.com>)
+ id 1xLS33-0007L4-SL
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:16:05 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <strahinjapjankovic@gmail.com>)
+ id 1xLS31-00069n-Tm
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 17:16:05 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-8b06c0794cfso29933967b3.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 14:16:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793049362; cv=none;
+ d=google.com; s=arc-20260327;
+ b=M0kp7oOiDZwip0ixzGqYMP8X+yKxlbqV3vSYo5FHDblgGczNNiUHJ65sul/B/JYpz+
+ zK2fDBaDDD8kBmrBWZxx0PTEwYonjC2vpojb64SC+XZ68GQSgfTZ7XL0+i1UuTs3ZI+V
+ b49hmZNa8PnOguo1n12mIemgluW1YPEXjUo86byYbr2h6f6M16t11X5JrDb14ZX9rhhX
+ 98eAkLO5uuGS55nQT4OKpcueN9l++rCLt+LwCgi72ImZ/x32GpW4S/v5CKDwk/rEN2Sy
+ SYxA1hIUa9wb/AzV0MtTHLxuYJkotLrHUqu0Ytxg75kvPkpx6GW1z9xdD/I6siChT41B
+ FfkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
+ fh=i/7RqEP4WRR2x+xnf5oVJS8DzcNyzognBo+4XJldFoI=;
+ b=sG1Z9G2X7Q/nAmwtRyEIhWJVqwnQLS26sfuPRTFU43KHb5u44oG1ltoEv8dGMu1Y7b
+ 5zl2FumE0LAB5NDybn0OHg4tlfME1gVhsde87DayCpi1Kdk7Vzh3FHaSwUQRWmmxpzdn
+ Hu70pd4SKkAGnca4mhBL1WrCGWE2Wo8Vh/gYK220p+HqEfG/Erzd0iku09efnnOyg9pN
+ sN0CdJa6Vml719kRYXK064LJ3OPv+q/9j403JMVDGPEy0Qf8zJUEMZHE2GaHaFPwDT5n
+ OstK5CkdJ0JpOdnNPVWxmoguiimXs0HQ50+ZbPBcNrn8Nd9vywT3Zo5L7loq1pcYlzjL
+ LxMQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793049001; x=1793653801; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gX9yG9jIqQwkWiUDPbtQunYMKSLpCSW+8K0BoNG2hzg=;
- b=jD6sItqf9pQMJ+rsTAHPYi+CvxiJl8lQG5shI5dXIZ3ayfuF572Rhl2dVWYv9ME5n7
- G9du8Tk8a2PHd3tNJS07VeEvnFvp41gMuFLraGv6jlYkJUGB2A/9T97+pEBummqm0ZSe
- Qls7RM0Miwgx5SojIQNhfnazddW7pqey3nYmCnCj/n86uEqcY1DEleEywpCfSuxnmXe+
- 8dlX8UFbDYBbtagp6YUdXQo7cdHmtmFfy2GBAJUggQD0kEMtfUSPHc1t1h/NIqvZ5lKs
- Xolg8A8dQAISM64saZIvF2cKYG/Sz+J+WEs/i2oaHc7HboNYw36m33NOYR9hBmh/3YOo
- Y4PA==
+ d=gmail.com; s=20251104; t=1793049362; x=1793654162; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
+ b=pZIQjqwIIa95TGudJEyl5L0grBGV8twnjGuPV9q6QGKm8C7IR+6B6h5E8sLQ7vRmaM
+ f4xAMppsY9SF4evEOIFdGmD8uqT5bfwXSqajgZF7IW5U71w30TTSLX1kcH6Y9Ux7T6DU
+ 6W4sjREGPv3YUn4rIuDISoVtyWhw3wj8V4bXXBJCK197vVV1znpeUR7NRfXbb3mKQyZk
+ HfmeM7f/OAOkzN2l9EpJieAVRgidiSVMVqvxuIsn2l2tT9JOu5v0mjzxb4NSgmyETbaS
+ +WEIMuRFtI9O1mwVucef7dgkOH5i/N9gokSkDCrmb8AYjImOEvt0l1dMBRlahRBFZlIK
+ MVCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793049001; x=1793653801;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=gX9yG9jIqQwkWiUDPbtQunYMKSLpCSW+8K0BoNG2hzg=;
- b=kaE05WakqlcaDrAdR846b0GPXezeuWoVw9n6q00F7sa7dUuen6Esw6Cacen2xW7vHu
- g1V+qFpY9zJo4ILqU0Cng51uDxFTlTdq2Et+Y1MJZMiAd2ySJKuyfqZylrfEgLXDkbfN
- Ed8SyReAmYmXnRo1dIFojsSSjXEzJDvlv8TJ8CW1yOXvtuk8A/CNum+L3at5L4lvL3OZ
- OwAsvwM2eg3+g8ipm9ZyXCtpp8gMolpMgNFnhMQ1VgvxT88ru+FUUp36tqgOuURcooP4
- G/m5q6cm7EwueEzmxhRrLSDHGu+ii4aQgCaQq/XS5+qdRtJ1xPUTBQaZsFdJkG7KLOd1
- RujQ==
-X-Gm-Message-State: AFq9FYKyAqcvbxww4YcEezrixlxxbyiPQ2LCPAiFR0QwsbuY+xYGp2De
- DPzjlPYvmjY3ls90tyfzXgpdXFEkp0wcCxmKg0LLMpo8kvb156sU+47TpP0ZBdyiWeLrUhZjLJ0
- k6gWLl/V2xvRTjszoqRb9xTJny2yIMqdkhQDM2eXty7a3xhkaukzrCIpo66USY2DRQg==
-X-Gm-Gg: AYBFou1e45QWLVvAenotWom8R+Bx4KyLrG4Gv4pYtpjUoi7iOerLXqNPVmPKNXajJAc
- Ha+7V3J9w2SUqriDFfWR0KeDaeHrKiqA/KD+ujY4VpihwV4DIArpxb4vSblomUCX+2qYEZuPpTF
- p2l2w3HImdpdwahSrlHwB5FH9h1Ej88EMS/vI56g7KWj8qsHBjaNPdZQmDIIgrf6cn3FsIdr1HY
- eU8UUYFdgY3ZDiOAs861XJ2fHLeGj0JXThxBeOicLdnM+iImGcyTi5OoFZDaOytVIAEQGTmDtSV
- QQ33RWxGYonjEw12/4Swht9K9M3k4cVN1uMGakvMS36LjzSaz2LeOtz4zAp+sWVoueItK58/r5Q
- tZhVaN6pVODH/lUDcd99Vxmozy1s7paJ9fsOsoxUaKvHARVW5CJJNbMfLayozNArvklyWhccLRB
- 6UucEJWxbOQ1nHIcf3dHxt8EBVNZOVZuon+wTU88YdBJY=
-X-Received: by 2002:a05:7301:a08:b0:367:23b6:94e1 with SMTP id
- 5a478bee46e88-369e861e0b3mr12556454eec.41.1793048995974; 
- Mon, 26 Oct 2026 14:09:55 -0700 (PDT)
-X-Received: by 2002:a05:7301:a08:b0:367:23b6:94e1 with SMTP id
- 5a478bee46e88-369e861e0b3mr12556421eec.41.1793048995474; 
- Mon, 26 Oct 2026 14:09:55 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-369e8ee72c0sm42152965eec.29.2026.10.26.14.09.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 14:09:55 -0700 (PDT)
-Message-ID: <42a4f687-d066-4a65-9dc8-a87bcbe0fba3@oss.qualcomm.com>
-Date: Mon, 26 Oct 2026 13:09:54 -0800
+ d=1e100.net; s=20260707; t=1793049362; x=1793654162;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=41yFpMtqE3wplLn2MAYf8R+uso8EnJb09++TCDSfjGI=;
+ b=I4umYR43lbUN5c5ap+nZK4ryysN/gIGXE06jdZ3eOs2V/8he3yxZAWDXJRkB+PLjUz
+ E3/h+D6YdnMFAExHeHfDYoFi/Hu8gvutHHFjb6xjeMyBHZ1MvU42JTBSyWQOqWyl8wsv
+ LNoMpTEx24UKMmqeym6VjQ+u5P4sYIsKDocKPVoe+F+ytkIrNsNacgcCeGtipDGJ6mQt
+ qzaRKHzeIhPOAmKm/Y0cTSK9lChfobOd24JUPbENmOdlWIbUNteJ2/xKUA4e5KAm3uG3
+ VhGutyhGVXc65g3/dQb5Te0VGANvicGvTg+r5OzlD6jz0L8bfJoD5OG1mc4j1BOHYEyg
+ Y9Lw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBykr7DZb9q+99dh7Skn0sNn9G2lsvSUhf5sanEpGraHxe4CqXeUF1WUuCcZhgn7HWl+strS785EBN+q@nongnu.org
+X-Gm-Message-State: AFq9FYJlXDI9Dc8o7GZmCoZwvPb7Jy5+ZtXRtywaTe/cKBBgtROWzS5v
+ YjoGi4Ze0u/+q4PeOjD0hSjqB2p9oablteG3ipVSASxqPOojUS8KR1Jyf2STztp06ijAX4JrcHY
+ zKZKQz5U7e1inv14HQRlfVvTW5NM8s6I=
+X-Gm-Gg: AYBFou2ovOl5uIzT6oQBhpU0URc7PkInaJ1g038HS6n5/QPmOD7ewCCFZ2tcsgtE629
+ BIeJ/vsLoBxvgRzqBqk3QqkNYyP7U3OVBUhlvx894epUfGg/X/AYgIx4eY9R8SA5KKHeM0jFyjv
+ ig6J3fq/LIy037QO0M4DFjXTOJ78NVI/z2xLVZElhc2gvpzPl2XRpY5/cbbYo0Yf6C/yh32WTG9
+ 0p0ddlbMfr79+OkG+l39jb2EbJ5r2jvTLP3sSXqG8DH5+4DNaza1/OPz76cmflaICBByYtHQ1Lw
+ M4i4w5uhwONu69EN4FlGe+ksY+xyTx0TNtxoU2DUyGXCIoqlSQbP/IlmtXmEfWUKNWnKqW9koyR
+ V1PTM8wD1PAf+GfZoWevAlxPgQ1z9Gm5QAnu2bmI=
+X-Received: by 2002:a05:690c:dd6:b0:8b0:cee8:53cf with SMTP id
+ 00721157ae682-8b1669cb374mr65640797b3.3.1793049362240; Mon, 26 Oct 2026
+ 14:16:02 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] releases: build and run any QEMU release easily!
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- mjt@tls.msk.ru, peterx@redhat.com, Fabiano Rosas <farosas@suse.de>
-References: <20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA4NCBTYWx0ZWRfXzs0K38CyLXb+
- DRunKuxWwtTVG2lUOLrKjUb41kYVBj1X2XUM7CLi39JppuAW2v+TmetMScNHiJ5aYFAtxnCddtb
- gajVJrFg7t68mw+EYULa0lXHq+k9noQ=
-X-Proofpoint-ORIG-GUID: EvhwmhXwab-YVPi7BgPR4QwNgUuW3NfA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA4NCBTYWx0ZWRfX+I/AYWFFudwG
- 6uDXsSu17bGPMpaEogGZoypzE6KZxtc6qJh2ghwPwKsIiUeG+sCcuc3njMn/zGthgIV3JcrAlRS
- wsfwCp/Ad0FQ+XjOfVAN5NOdebuNj9kiB3tOP37qmZIooVaPnK82ch2BP6AhQ/5etwmipFLRfUX
- UNKiL4I0CMj7Txw0wnVTpT/Iq1PWdqjhjMhjVzUzvJoyIrFB1e5bTc11X4BofCEsah8BgcMw8g9
- TkSUZEEKvb+3wW4f7Ui4HTX7wjuY2g9zZCBi9ade9iQP9ps8b6kYyylE42FbeEZyTRn9HgCrz5x
- vrBzVn1pEAAuqdqJB3XCoHslHrNYbsVZU/aKAKDJI2cKvq0hM4N43SFMNgVyam2SZ7qprZ/jVoo
- OP4RJX+Z/qrsqBKfizzMt96P+jh8Ts/r9cx1N6OsUJw6WmRNoCOaM99ssDB9ZqeODr/RM1DIIfz
- bEr+XUNd5qudQeIIyuA==
-X-Authority-Analysis: v=2.4 cv=D93SufRj c=1 sm=1 tr=0 ts=6adfc1a9 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=OIFsrwvNeoVN5IPXstAA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-GUID: EvhwmhXwab-YVPi7BgPR4QwNgUuW3NfA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_04,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 suspectscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260084
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20261023153150.1710372-1-peter.maydell@linaro.org>
+In-Reply-To: <20261023153150.1710372-1-peter.maydell@linaro.org>
+From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+Date: Mon, 26 Oct 2026 22:15:51 +0100
+X-Gm-Features: AclHuK94R0hhYGC6zq59C2BXJk6qgATQeFl2N8vU2ICxvVDt68RMgdhW2zQWzj8
+Message-ID: <CABtshVSC3gw+juhvnr9AYUdro-ADkBZRgEhrJPC443OrFmtOkA@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/allwinner-h3-dramc: Avoid shift by negative amount
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Niek Linnenbank <nieklinnenbank@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000004d1c7e065ec4d65b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=strahinjapjankovic@gmail.com; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,17 +113,119 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Sent v4, simplifying release dockerfile, and supporting to build any
-version with any git repository:
-https://lore.kernel.org/qemu-devel/20261026210801.179790-1-pierrick.bouvier@oss.qualcomm.com/T/#t
+--0000000000004d1c7e065ec4d65b
+Content-Type: text/plain; charset="UTF-8"
 
-Regards,
-Pierrick
+Looks good to me.
+
+On Fri, Oct 23, 2026, 17:31 Peter Maydell <peter.maydell@linaro.org> wrote:
+
+> In allwinner_h3_dramc_map_rows(), we take a row_bits count from a
+> register, and calculate (1 << (row_bits - 3)).  If the guest programs
+> row_bits to less than 3 then this is undefined behaviour.
+>
+> Treat overly small row_bits values as "doesn't match actual RAM
+> size".
+>
+> Fixes: b71d0385e97e ("hw/arm/allwinner-h3: add SDRAM controller device")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4210
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/misc/allwinner-h3-dramc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/misc/allwinner-h3-dramc.c b/hw/misc/allwinner-h3-dramc.c
+> index 10d929a3039..2a4b33aa182 100644
+> --- a/hw/misc/allwinner-h3-dramc.c
+> +++ b/hw/misc/allwinner-h3-dramc.c
+> @@ -78,7 +78,7 @@ static void allwinner_h3_dramc_map_rows(AwH3DramCtlState
+> *s, uint8_t row_bits,
+>          }
+>      }
+>
+> -    if (s->ram_size == (1 << (row_bits - 3))) {
+> +    if (row_bits >= 3 && s->ram_size == (1 << (row_bits - 3))) {
+>          /* When row bits is the expected value, remove the mirror */
+>          memory_region_set_enabled(&s->row_mirror_alias, false);
+>          trace_allwinner_h3_dramc_rowmirror_disable();
+> --
+> 2.43.0
+>
+
+
+Reviewed-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
+
+Best regards,
+Strahinja
+
+>
+
+--0000000000004d1c7e065ec4d65b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Looks good to me.<br><br><div class=3D"gmail_quote" dir=
+=3D"auto"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Oct 23, 2026, 17:31=
+ Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_b=
+lank" rel=3D"noreferrer">peter.maydell@linaro.org</a>&gt; wrote:<br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
+ #ccc solid;padding-left:1ex">In allwinner_h3_dramc_map_rows(), we take a r=
+ow_bits count from a<br>
+register, and calculate (1 &lt;&lt; (row_bits - 3)).=C2=A0 If the guest pro=
+grams<br>
+row_bits to less than 3 then this is undefined behaviour.<br>
+<br>
+Treat overly small row_bits values as &quot;doesn&#39;t match actual RAM<br=
+>
+size&quot;.<br>
+<br>
+Fixes: b71d0385e97e (&quot;hw/arm/allwinner-h3: add SDRAM controller device=
+&quot;)<br>
+Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/4210=
+" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://gitlab=
+.com/qemu-project/qemu/-/work_items/4210</a><br>
+Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org=
+" rel=3D"noreferrer noreferrer" target=3D"_blank">peter.maydell@linaro.org<=
+/a>&gt;<br>
+---<br>
+=C2=A0hw/misc/allwinner-h3-dramc.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/misc/allwinner-h3-dramc.c b/hw/misc/allwinner-h3-dramc.c<br=
+>
+index 10d929a3039..2a4b33aa182 100644<br>
+--- a/hw/misc/allwinner-h3-dramc.c<br>
++++ b/hw/misc/allwinner-h3-dramc.c<br>
+@@ -78,7 +78,7 @@ static void allwinner_h3_dramc_map_rows(AwH3DramCtlState =
+*s, uint8_t row_bits,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 if (s-&gt;ram_size =3D=3D (1 &lt;&lt; (row_bits - 3))) {<br>
++=C2=A0 =C2=A0 if (row_bits &gt;=3D 3 &amp;&amp; s-&gt;ram_size =3D=3D (1 &=
+lt;&lt; (row_bits - 3))) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* When row bits is the expected value, r=
+emove the mirror */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memory_region_set_enabled(&amp;s-&gt;row_=
+mirror_alias, false);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trace_allwinner_h3_dramc_rowmirror_disabl=
+e();<br>
+-- <br>
+2.43.0<br></blockquote></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+<br></div><div dir=3D"auto">Reviewed-by: Strahinja Jankovic &lt;<a href=3D"=
+mailto:strahinja.p.jankovic@gmail.com">strahinja.p.jankovic@gmail.com</a>&g=
+t;</div><div dir=3D"auto"><br></div><div dir=3D"auto">Best regards,</div><d=
+iv dir=3D"auto">Strahinja</div><div class=3D"gmail_quote" dir=3D"auto"><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
+cc solid;padding-left:1ex"></blockquote></div></div>
+
+--0000000000004d1c7e065ec4d65b--
 
