@@ -1,105 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F374606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31AC606A31D
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 14:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BPZBBBkD
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=AjfB0Tyy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLLHU-0007VA-FJ; Mon, 26 Oct 2026 10:02:40 -0400
+	id 1xLLCD-0007KQ-Ty; Mon, 26 Oct 2026 09:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLH0-0006vP-4T; Mon, 26 Oct 2026 10:02:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xLLBW-0006il-2T; Mon, 26 Oct 2026 09:56:24 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1xLLGy-000184-4j; Mon, 26 Oct 2026 10:02:01 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QBEJQR3357291; Mon, 26 Oct 2026 14:01:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Rb9XlNe+zANcwXq40SkqmcTNaGuLVSdYjxbaa0AAc
- /0=; b=BPZBBBkDDX+NYuMLb3RkowoTUWehos3bEM3B7xDbAsNxOIfC6GTlXyM0s
- FpeSKXyLbrdG+DYweoBhj96E05LBHdkEKOZgvOxEl4uCHL2JoVK5pkSEBI9x1+Ek
- 674fNhJOn0xDCdAaMbiCxBrXdGnRrmsEzNkkXNkXnl//HZudiAbOwGIbVN6zipi+
- ya/pgDH6O0clP3ZT1TZjE/X8ouVwgMoqq9nCbkqEHEvvR1F9yBWA7rlRC45+/Chs
- TgTAxZC7urycaSWZnhg3aMyU+Ebv8jMadatTxSGyPcaxvzfuCGb6mxkUKXM8KAPQ
- xSWus1CpTt01rAMPZy0JkVwxE8Qxg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmav9xfb-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:01:57 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QB4wPT2500610; Mon, 26 Oct 2026 14:01:57 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh8ggx4nu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Oct 2026 14:01:57 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69QE1uVm3605316
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Oct 2026 14:01:56 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0C35D5805F;
- Mon, 26 Oct 2026 14:01:56 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6995658053;
- Mon, 26 Oct 2026 14:01:55 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
- [9.61.109.57]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 26 Oct 2026 14:01:55 +0000 (GMT)
-From: Eric Farman <farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xLLBU-0000Ed-2r; Mon, 26 Oct 2026 09:56:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793022903; bh=E4PWn5uK180bcql0tuua37kJsFMuhkALznhWin5Riao=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=AjfB0Tyy9NPKaBxjejrI5CzbRTPv8QHeWfyGQAz0jj07kFH8n75HxTWcux/U4lxOS
+ Oj0kO8Py7g+WhkV+GB3DzzSdobWXcOWT7t2YgsbBgnPqxbL/5oazkptGVdLIzyi4h8
+ JR7P2w6Kro1adIDgMnqNtYBpBa7Um7xZ1/hIoCKF5bOnUAiyIGSrlvce6yM64pi+18
+ 1ecWspJ9nIP3iro9BvfXUjg5QhL1bzhPOgm0gYDyDlhbVFD5qj8VaaaKOGnlukn6yy
+ kIdhGHQCn3TuAI89RTRYX3JZIS3JIE1jCPqvw6q0xRzwIcU4MqFM34krTuV2CqN53o
+ GtNCGXgexoUvw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DB5511E128B;
+ Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D91C944B8D7;
+ Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id B4BB4934A5; Mon, 26 Oct 2026 16:55:03 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 0/6] s390x queue for 11.2
-Date: Mon, 26 Oct 2026 10:01:47 -0400
-Message-ID: <20261026140153.2072253-1-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.56.0
+Cc: qemu-stable@nongnu.org, Tommaso Califano <tcalifano@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.15 v2 85/91] hw/usb/dev-mtp: Fix assert crash on short
+ CMD_SEND_OBJECT
+Date: Mon, 26 Oct 2026 16:54:28 +0300
+Message-ID: <20261026135441.1019505-22-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
+References: <qemu-stable-10.0.15-20261026165128@cover.tls.msk.ru>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfXyWCf5x+rB7OE
- WmD7Dryt34l98a96KB/Q6f+tHM8CL4z7IpGEYqA8AvETKbsB5GQgKStputyKNKO0eExcHSOQDv4
- q2ShTdffNjRLms0DsuLE7Rhl9O7g5DM=
-X-Authority-Analysis: v=2.4 cv=P8SvFSAu c=1 sm=1 tr=0 ts=6adf5d55 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=p0WdMEafAAAA:8 a=OHoHsdKHgrCAsEdHe_UA:9
-X-Proofpoint-ORIG-GUID: v5aG6ZNBf4T67eR56kVTR3B7rzYhNJ5t
-X-Proofpoint-GUID: v5aG6ZNBf4T67eR56kVTR3B7rzYhNJ5t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA1NCBTYWx0ZWRfX/WeeBPSAMsod
- O3gt4tz+55HHV9YoRnN+0mBG2tou4UWR+BLXvOM7l8sbCQBnk2B9t9R9WMCcJKZt0EugdJlXXrM
- gfrDavwP8kRrpoJSzaDFhs0sypHb6k3LafJi5i+SU0VWj6oAQc6cngcqykBJxVlN+LgppV6cmlC
- LXTSOQZ5gdJ1fpQLf3nRlo02IM0DPyQJqCyn4cZtYnAVfxpRG4UR4BkOf/i8ryBK4C7/e1pPpfn
- VNaqw8pOpUS0ACm7NWhrNgcU9cjLcNIWa7xWXviMVnRIJzpuff1irP8Y36vF02QImdGHY3KmJ9Q
- x2gTo46uRJrEoDahRob5U3pIgn+Kh5cl7jDFYRaTSltZleTb3IxoA4Y7ugEHvdyU1Qn4hzaHvXm
- nUQzNPwV5KRBVFOftbGWAEYDrAMZIg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 phishscore=0 spamscore=0 bulkscore=0
- suspectscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2610190000 definitions=main-2610260054
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,58 +70,53 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The following changes since commit 288b6c9e78913401fac4880b3281ce431540b8df:
+From: Tommaso Califano <tcalifano@redhat.com>
 
-  Merge tag 'pull-nbd-2026-10-08-v4' of https://gitlab.com/ebblake/qemu into staging (2026-10-19 10:54:44 +0200)
+In usb_mtp_get_data() there is a guest-triggerable assertion that fires
+when a guest declares a large object size in CMD_SEND_OBJECT_INFO but
+sends fewer bytes in the subsequent CMD_SEND_OBJECT. The assertion
+compares the declared size against the actual bytes received.
 
-are available in the Git repository at:
+If the guest sends CMD_SEND_OBJECT_INFO with size=1000 and then
+CMD_SEND_OBJECT with only 50 bytes (short, non-64-byte-aligned
+final USB packet) the assertion fires, killing QEMU.
 
-  https://gitlab.com/efarman/qemu.git tags/s390x-20261026
+To prevent that is sufficient to remove the assertion, because the case
+is handled by usb_mtp_write_data() which returns RES_INCOMPLETE_TRANSFER.
 
-for you to fetch changes up to 2ddae8799cc52591846f3a0a901a77e2284f8751:
+Fixes: 3e096650a64d ("dev-mtp: Add support for > 4GB file transfers")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3993
+Signed-off-by: Tommaso Califano <tcalifano@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20261008122936.45081-1-tcalifano@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 1ccf17e9dc6bba38a9bddd3d66fdab458a50c906)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  MAINTAINERS: Update s390 boot reviewer (2026-10-26 08:10:58 -0400)
-
-----------------------------------------------------------------
-s390x fixes/features for 11.2:
- - Implement resizable vt220 console
- - Deprecate dependencies of deprecated features
- - Reclaim DMA slots during, for example, guest reboot
- - MAINTAINERS updates
-
-----------------------------------------------------------------
-
-Collin L. Walling (2):
-  target/s390x: externalize feat dependency array
-  target/s390x: mark feats dependent on deprecated feats as deprecated
-
-Eric Farman (2):
-  MAINTAINERS: Add other s390x tree
-  MAINTAINERS: Update s390 boot reviewer
-
-Maximilian Immanuel Brandtner (1):
-  s390x/sclpconsole: implement resizing for vt220 consoles
-
-Omar Elghoul (1):
-  s390x/pci: reclaim DMA slots upon IOMMU disable
-
- MAINTAINERS                 |   3 +-
- hw/char/sclpconsole.c       |  76 ++++++++++++++++++--
- hw/s390x/s390-pci-bus.c     |   8 +++
- target/s390x/cpu_features.c | 139 ++++++++++++++++++++++++++++++++++++
- target/s390x/cpu_features.h |   4 ++
- target/s390x/cpu_models.c   | 133 ++--------------------------------
- 6 files changed, 230 insertions(+), 133 deletions(-)
-
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 190eb6bd1fd..8ebff713085 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -1816,9 +1816,6 @@ static void usb_mtp_get_data(MTPState *s, mtp_container *container,
+         d->offset += dlen;
+         d->data_offset += dlen;
+         if ((p->iov.size % 64) || !p->iov.size) {
+-            assert((s->dataset.size == 0xFFFFFFFF) ||
+-                   (s->dataset.size == d->offset));
+-
+             if (d->length == MTP_WRITE_BUF_SZ) {
+                 d->write_status = WRITE_END;
+             } else {
 -- 
-2.56.0
+2.47.3
 
 
