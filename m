@@ -1,86 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F508606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B00606A31E
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 17:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=TRTXmUj4
+	dkim=pass (2048-bit key, unprotected) header.d=openvz.org header.i=@openvz.org header.a=rsa-sha256 header.s=google header.b=KRtDFd1r
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLOid-0004ut-AD; Mon, 26 Oct 2026 13:42:47 -0400
+	id 1xLOig-00051m-5c; Mon, 26 Oct 2026 13:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiO-0004fD-AT
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:33 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiP-0004gw-J5
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:34 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiJ-0001Y8-VY
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:31 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-48e4831c028so1722728f8f.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:42:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1xLOiL-0001YR-S2
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 13:42:33 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4a1fbd52ab6so21023205e9.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 10:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1793036546; x=1793641346; darn=nongnu.org;
+ d=openvz.org; s=google; t=1793036548; x=1793641348; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZFHh1KrwXYFyl60EMkKojcslQKXq/Q6X7Dy91KFQf6E=;
- b=TRTXmUj4vacKuzdz5QJRWdBMHsTrSGpaX0iW9IFToIhTkytA4ZW0OXSCPBYvvYGe/u
- R2xin6F1MEORalZp2WvuTL/dD3uQHFWaFRO30QPe9usCOIFpkQYiKnWzCD5DAk2S25u+
- hJKPfiWTPXhvnlwVXmGlmQm5sAd23AsEpOZY/5XCuZtnbRmARA+OYOyGOLu34wG77Eyo
- RbrVeCQsWm2MydU2wqJj1g5NixWCzg5dk77ViXWxwAQ47ARJlUmpS8wkm1fTKj4HDT9q
- ly2Ss07gaphZTBdO48FT8vF1ZJtDQg27aJ/EScuODAUM9PIaTMbulAjxdshBMaP6JR2/
- OxCg==
+ bh=Q8sDLIOEQXmcxGYUBBmtxWI0/4UuEh9OphnjFBPGIyI=;
+ b=KRtDFd1rtthAM4ww4dc6SDdlf5U/RWJZpoMYBAStj9f7EMNIReUS7lq1fHW88MgX5N
+ VCfktTGHpZNDTi1UNYrxXfkljJVCpF0JmwksZTsUvSxh+pbe7bh87o+L2pCa+m0Q8FSA
+ EMJkYFxqP9tqbkioQupZwFQdwmHaxrJ/rJ0ITmfIm2K81DJxK7RDsv/ZfnudzJvy9PJT
+ enokZPqyV0gzPy3hfyuIlZuYFJ2W3JFY2QoWr597ZKx85gci3oH8ZAN8E0MbwCH1Fu7k
+ 17yyeTPLM+NOAQOgORkbOvAAOhst+ADncSyqe26qjFs3vlNlk2zc8h9CXiuPoQoMZbPc
+ g1DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793036546; x=1793641346;
+ d=1e100.net; s=20260707; t=1793036548; x=1793641348;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZFHh1KrwXYFyl60EMkKojcslQKXq/Q6X7Dy91KFQf6E=;
- b=mMno7bpScc2XsTGihAxaQfYqZT/BQTgSg+dk3ON0ELju9VNnyDpdH/IwzHgwfzE5Hq
- 6YSNYXJ5EOwQkMGivXVfSGYr1GmwHkTgjQG5d5KZXNanv4I0/LPHFxE4KwJSOFF7crG7
- e6H8cYhc4RkX/Ko8IaGyOa4a+iDk31h04Et49UtbJNgB0RXALF88dUqcodgNkMWvxQJE
- kU41bnde/VpakQq0o6wURS7ZwythrCAMdtoyLkN6KFrt3undSVEZj3NksTfuOxQ+THwu
- UF65Zsa9IZkQdydj6CzST+fg8739+fhNiRvm3IgQtTUorKpVfhbuYjesb7lJ+nHmxmV9
- AA+w==
-X-Gm-Message-State: AFq9FYLzbX3UFHCxGcQz2ZQ1nEwkj6+8LrCfm8ljEZJBefYay8Rs9vpr
- NzvdBZPZ1VH/kDW/NuCQdfqdRJTHHyFzOhAJZt1bS1+PTPZOI4hKzO5YAVkQWOWtrD+vhn3Zv8l
- 3U6mJ
-X-Gm-Gg: AYBFou00Ua942Pr+4lx9RrCniGBgCDLc4PU5UoF+IhV8oMZGJiN9O69gj4DE2Lte0eD
- frQSZAry0f+8EW7oLfwCVb2MR2VUiWQsrYFqBY7YzofRKjXBualABDgXSTn1Sa8SDP8KnQTgQB1
- l4nzRmm14GKnJR/1s+0OFTmUH9M0gQTE55NtvY5rkJ3P2OrNeN12v5D0jO234MnPrzkq7Hpduxk
- hlOnwI08lP1COfk2JIBFiRNMZO3ByftWc3+A/GP8aqsFxHCaTGCcrhbvZb9lbvuu2bguLp2gAKH
- TlEJ4ulc1kXxPM/aGo9Hn+zTi8ZEx9j+pW8iGV9+C9hPF5B2VIJupyK7T/1GZxmoVDHxLN62PQt
- dwYpX8899BlDXMn3ehyrORtnNG/zlurk3bm+iNeEurlOZRJ0XPvVi1Ai5Dd5qklQFjGhdzR2LIP
- rjZOq04AmL/d9/tSw+FA3DcrDHsQa1siZrO5CEWDCL20LVSskg7XxbO5t8wIqoFp4gCf3xsxkES
- BRZ/TEdqJn+LYWxJhgiNMqKQKC3InzNEP+5xgUPARySS4WASTA=
-X-Received: by 2002:a05:6000:2404:b0:48e:314:f9f2 with SMTP id
- ffacd0b85a97d-48e3eb2bdcdmr13182088f8f.8.1793036546318; 
- Mon, 26 Oct 2026 10:42:26 -0700 (PDT)
+ bh=Q8sDLIOEQXmcxGYUBBmtxWI0/4UuEh9OphnjFBPGIyI=;
+ b=kK0JAVky4ZkDn+wgNM9J8ChOCZ4ukyDsD/dU/HTfIaIHXn9dOcqc0DDa7jppEaCD+p
+ BU7Fx8y7MJv9YhsEqj5FwJ7uOMOmQDwlbXtlPSpC4WRCBWl/oK1LqB84kJoYEnTEGaUG
+ PA8NIV+hJCgHS1HZtXbEqGeqoYYXR78/NEDQhyB+IoMEunAL/ikiFuzs9OFBgztaIP1T
+ qJrluPpznyexicIidoyuuiYURFz0N2pjCb4i9GKRsu4KVbTlONWTJFi3n1r1Hfb5I4yV
+ Yx5CdieDGISum5h7Wda+9I0dyYKolQ6O9vl60lPyd2bC+sWHLtBGf9w9bo9RQk+3hCPi
+ bPZw==
+X-Gm-Message-State: AFq9FYIcy8P5xdBRDr36nQ7ipx/ZrMwenFr7isHqlivqZw7uX9N0jn9A
+ GyogxAjVE5F+ujyxjeQ3x5FIYMrVONDEQQ3GtC/TSejQHWcbeOmZLyPDaYU1Vr8sskekYqgCh1q
+ vl7qR
+X-Gm-Gg: AYBFou3PPi4ZZ1qUxwEpTYcZFxhIlDArumkKJFvTGj7ppwOCHjTxTi+fTfw+3obtddb
+ ke5eyfcLS1TIzvfLucCXlws3IP1WQQ/GTtDtggxipZ5Ut+IOZd+u90Ij2wgdWw0YWyUIw296oxo
+ qZQbtt4snREaH/E6kZRnW0fgxBF3DpW/R042LdUDpGbBQ634TZbotXU41rC+tYHXxs0rjpAVAP3
+ k2lVQaxHQQ6vlqjnhu8qwsJEsuGiKY2iNODUmCxu4EkmBJiWrR0BLkc9b7xzj7bAaPpL8Sfa50o
+ wg12Rg04KvBWVOilt8JsnIZe3sfTEBY3ICuGLSWiI3m/Cj6zCxgwiVaFdE7etcG2Nlw+5ZS4NMd
+ kD5kQZK1WIQlFM/yU8N89zjzhmp9BsmIUz+Ahd03TMsbKDJgfWT2eNSW3GfAEVt9AkkyG7tRs/E
+ LHD2KLrzq3XHThT6HJO9YeMlLcuZKnT/kECSbqRBGuHPCH5wkxzZ2KJ021kKs1Xfm8Y7EMvw2J4
+ rCyrY4B+X6zY2kwM89i4yZAueV6t6m8aNdCcctGck0p+FxyNX4=
+X-Received: by 2002:a05:600c:83c7:b0:4a1:83f0:7c91 with SMTP id
+ 5b1f17b1804b1-4a35aca186amr136837005e9.18.1793036547525; 
+ Mon, 26 Oct 2026 10:42:27 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:1a6:7f7f:f573:ba9e])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebcb90dsm16169111f8f.22.2026.10.26.10.42.24
+ ffacd0b85a97d-48e3ebcb90dsm16169111f8f.22.2026.10.26.10.42.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 10:42:25 -0700 (PDT)
+ Mon, 26 Oct 2026 10:42:27 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: den@openvz.org, Paolo Bonzini <pbonzini@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-stable@nongnu.org
-Subject: [PATCH 2/5] scsi-disk: fix UNMAP racing with inactivation of block
- nodes
-Date: Mon, 26 Oct 2026 18:42:16 +0100
-Message-ID: <20261026174220.674460-3-den@openvz.org>
+Subject: [PATCH 3/5] scsi-disk: fix WRITE SAME racing with inactivation of
+ block nodes
+Date: Mon, 26 Oct 2026 18:42:17 +0100
+Message-ID: <20261026174220.674460-4-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261026174220.674460-1-den@openvz.org>
 References: <20261026174220.674460-1-den@openvz.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=den@openvz.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=den@openvz.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,34 +108,21 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Denis V. Lunev <den@openvz.org>
 
-scsi-disk turns a multi-descriptor UNMAP into one discard per
-descriptor and submits the next one from the completion callback of
-the previous. Nothing holds the BlockBackend in-flight counter between
-two descriptors, so a drain only waits for the discard currently in
-flight. When that discard completes inside drained_begin, the callback
-submits the next one, blk_wait_while_drained() queues it, and the drain
-returns with the UNMAP half done.
-
-bdrv_inactivate_all() drains, inactivates the nodes and ends the drain,
-which resumes the queued discard on an inactive node:
+WRITE SAME with a non-zero pattern is written in SCSI_WRITE_SAME_MAX
+chunks, and each chunk is submitted from the completion callback of the
+previous one. As with UNMAP, a drain only waits for the chunk in
+flight, the next one is queued by blk_wait_while_drained(), and
+bdrv_inactivate_all() resumes it on an inactive node:
 
   bdrv_co_write_req_prepare: Assertion
   `!(bs->open_flags & BDRV_O_INACTIVE)' failed.
 
-A guest that issues UNMAP at the end of a live migration, or around
-blockdev-set-active, takes QEMU down this way.
+Write the chunks from scsi_disk_co_aio_start() with BDRV_REQ_NO_QUEUE,
+so a drain waits for the whole command. werror=ignore still goes on
+with the next chunk.
 
-Handle UNMAP the way commit 095c08a7ba handles IDE TRIM: process the
-descriptors in a coroutine between blk_co_start_request() and
-blk_end_request() and submit them with BDRV_REQ_NO_QUEUE. A drain now
-waits for the whole command instead of a single descriptor, the same
-trade-off IDE makes. The coroutine is wrapped in an AIOCB that stays in
-r->req.aiocb, so cancellation keeps working as before.
-
-A failed descriptor ends the loop, and the completion applies the
-rerror/werror policy as before. werror=ignore is handled inside the
-loop, so the remaining descriptors are still discarded as the callback
-chain did.
+The sector count becomes int64_t on the way: the old int overflowed for
+a WRITE SAME(16) of 2^31 or more 512-byte sectors.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
@@ -143,210 +130,144 @@ Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
 Cc: qemu-stable@nongnu.org
 ---
- hw/scsi/scsi-disk.c | 159 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 112 insertions(+), 47 deletions(-)
+ hw/scsi/scsi-disk.c | 102 +++++++++++++++++---------------------------
+ 1 file changed, 39 insertions(+), 63 deletions(-)
 
 diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 73c1ecba0b..dbf8829fb1 100644
+index dbf8829fb1..952d7cf917 100644
 --- a/hw/scsi/scsi-disk.c
 +++ b/hw/scsi/scsi-disk.c
-@@ -1752,61 +1752,134 @@ static inline bool check_lba_range(SCSIDiskState *s,
-             sector_num + nb_sectors <= s->qdev.max_lba + 1);
+@@ -1938,52 +1938,52 @@ invalid_field:
+     scsi_check_condition(r, SENSE_CODE(INVALID_FIELD));
  }
  
--typedef struct UnmapCBData {
-+typedef struct SCSIDiskCoAIOCB SCSIDiskCoAIOCB;
-+
-+typedef int coroutine_fn SCSIDiskCoFunc(SCSIDiskCoAIOCB *iocb);
-+
-+struct SCSIDiskCoAIOCB {
-+    BlockAIOCB common;
-     SCSIDiskReq *r;
--    uint8_t *inbuf;
--    int count;
--} UnmapCBData;
-+    SCSIDiskCoFunc *fn;
-+    int ret;
-+    bool canceled;
-+};
-+
-+static void scsi_disk_co_aio_cancel(BlockAIOCB *acb)
-+{
-+    SCSIDiskCoAIOCB *iocb = container_of(acb, SCSIDiskCoAIOCB, common);
-+
-+    iocb->canceled = true;
-+}
- 
--static void scsi_unmap_complete(void *opaque, int ret);
-+static const AIOCBInfo scsi_disk_co_aiocb_info = {
-+    .aiocb_size         = sizeof(SCSIDiskCoAIOCB),
-+    .cancel_async       = scsi_disk_co_aio_cancel,
-+};
- 
--static void scsi_unmap_complete_noio(UnmapCBData *data, int ret)
-+static void scsi_disk_co_aio_bh(void *opaque)
+-typedef struct WriteSameCBData {
+-    SCSIDiskReq *r;
+-    int64_t sector;
+-    int nb_sectors;
+-    QEMUIOVector qiov;
+-    struct iovec iov;
+-} WriteSameCBData;
+-
+-static void scsi_write_same_complete(void *opaque, int ret)
++static int coroutine_fn scsi_write_same_co(SCSIDiskCoAIOCB *iocb)
  {
+-    WriteSameCBData *data = opaque;
 -    SCSIDiskReq *r = data->r;
--    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+    SCSIDiskCoAIOCB *iocb = opaque;
-+    BlockBackend *blk = iocb->r->req.dev->conf.blk;
- 
--    assert(r->req.aiocb == NULL);
-+    iocb->common.cb(iocb->common.opaque, iocb->ret);
-+    qemu_aio_unref(iocb);
- 
--    if (data->count > 0) {
--        uint64_t sector_num = ldq_be_p(&data->inbuf[0]);
--        uint32_t nb_sectors = ldl_be_p(&data->inbuf[8]) & 0xffffffffULL;
--        r->sector = sector_num * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
--        r->sector_count = nb_sectors * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
-+    /* Paired with blk_co_start_request in scsi_disk_co_aio_entry() */
-+    blk_end_request(blk);
-+}
- 
--        block_acct_start(blk_get_stats(s->qdev.conf.blk), &r->acct,
--                         r->sector_count * BDRV_SECTOR_SIZE,
--                         BLOCK_ACCT_UNMAP);
-+static void coroutine_fn scsi_disk_co_aio_entry(void *opaque)
-+{
-+    SCSIDiskCoAIOCB *iocb = opaque;
- 
--        r->req.aiocb = blk_aio_pdiscard(s->qdev.conf.blk,
--                                        r->sector * BDRV_SECTOR_SIZE,
--                                        r->sector_count * BDRV_SECTOR_SIZE,
--                                        scsi_unmap_complete, data);
--        data->count--;
--        data->inbuf += 16;
--        return;
--    }
-+    /* Paired with blk_end_request in scsi_disk_co_aio_bh() */
-+    blk_co_start_request(iocb->r->req.dev->conf.blk);
-+    iocb->ret = iocb->fn(iocb);
-+    aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
-+                            scsi_disk_co_aio_bh, iocb);
-+}
- 
--    scsi_req_complete(&r->req, GOOD);
-+static void scsi_disk_co_aio_complete(void *opaque, int ret)
-+{
-+    SCSIDiskReq *r = opaque;
-+
-+    assert(r->req.ctx == qemu_get_current_aio_context());
-+    assert(r->req.aiocb != NULL);
-+    r->req.aiocb = NULL;
-+
-+    if (!scsi_disk_req_check_error(r, ret, true)) {
-+        scsi_req_complete(&r->req, GOOD);
-+    }
-     scsi_req_unref(&r->req);
--    g_free(data);
- }
- 
--static void scsi_unmap_complete(void *opaque, int ret)
-+/* fn must submit with BDRV_REQ_NO_QUEUE and stop once iocb->canceled */
-+static void scsi_disk_co_aio_start(SCSIDiskReq *r, SCSIDiskCoFunc *fn)
- {
--    UnmapCBData *data = opaque;
--    SCSIDiskReq *r = data->r;
++    SCSIDiskReq *r = iocb->r;
      SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+    SCSIDiskCoAIOCB *iocb;
++    BlockBackend *blk = s->qdev.conf.blk;
++    uint8_t *inbuf = r->iov.iov_base;
++    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
++    int64_t sector = r->req.cmd.lba * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
++    int64_t nb_sectors = (int64_t)scsi_data_cdb_xfer(r->req.cmd.buf) *
++                         (s->qdev.blocksize / BDRV_SECTOR_SIZE);
++    size_t size = MIN(nb_sectors * BDRV_SECTOR_SIZE, SCSI_WRITE_SAME_MAX);
++    uint8_t *buf = blk_blockalign(blk, size);
++    int ret = 0;
++    size_t i, l;
++
++    for (i = 0; i < size; i += l) {
++        l = MIN(buflen, size - i);
++        memcpy(&buf[i], inbuf, l);
++    }
  
 -    assert(r->req.aiocb != NULL);
 -    r->req.aiocb = NULL;
-+    iocb = blk_aio_get(&scsi_disk_co_aiocb_info, s->qdev.conf.blk,
-+                       scsi_disk_co_aio_complete, r);
-+    iocb->r = r;
-+    iocb->fn = fn;
-+    iocb->ret = 0;
-+    iocb->canceled = false;
++    while (nb_sectors > 0) {
++        size_t chunk = MIN(nb_sectors * BDRV_SECTOR_SIZE, size);
  
 -    if (scsi_disk_req_check_error(r, ret, true)) {
--        scsi_req_unref(&r->req);
--        g_free(data);
--    } else {
--        block_acct_done(blk_get_stats(s->qdev.conf.blk), &r->acct);
--        scsi_unmap_complete_noio(data, ret);
-+    /* The matching unref is in scsi_disk_co_aio_complete */
-+    scsi_req_ref(&r->req);
-+    r->req.aiocb = &iocb->common;
-+    aio_co_enter(qemu_get_current_aio_context(),
-+                 qemu_coroutine_create(scsi_disk_co_aio_entry, iocb));
-+}
-+
-+/* Report like scsi_handle_rw_error(), but let werror=ignore go on */
-+static bool scsi_disk_ignore_error(SCSIDiskReq *r, int ret)
-+{
-+    BlockBackend *blk = r->req.dev->conf.blk;
-+    BlockErrorAction action = blk_get_error_action(blk, false, -ret);
-+
-+    if (action != BLOCK_ERROR_ACTION_IGNORE) {
-+        return false;
-+    }
-+    blk_error_action(blk, action, false, -ret);
-+    return true;
-+}
-+
-+static int coroutine_fn scsi_unmap_co(SCSIDiskCoAIOCB *iocb)
-+{
-+    SCSIDiskReq *r = iocb->r;
-+    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-+    BlockBackend *blk = s->qdev.conf.blk;
-+    uint8_t *p = r->iov.iov_base;
-+    int count = lduw_be_p(&p[2]) >> 4;
-+    int i, ret;
-+
-+    for (i = 0; i < count; i++) {
-+        uint64_t sector_num = ldq_be_p(&p[8 + i * 16]);
-+        uint32_t nb_sectors = ldl_be_p(&p[8 + i * 16 + 8]);
-+
+-        goto done;
+-    }
 +        if (iocb->canceled) {
-+            return -ECANCELED;
++            ret = -ECANCELED;
++            break;
 +        }
-+
-+        r->sector = sector_num * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
-+        r->sector_count = nb_sectors * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
-+
-+        block_acct_start(blk_get_stats(blk), &r->acct,
-+                         r->sector_count * BDRV_SECTOR_SIZE,
-+                         BLOCK_ACCT_UNMAP);
-+
-+        ret = blk_co_pdiscard(blk, r->sector * BDRV_SECTOR_SIZE,
-+                              r->sector_count * BDRV_SECTOR_SIZE,
-+                              BDRV_REQ_NO_QUEUE);
-+        if (ret < 0 && !scsi_disk_ignore_error(r, ret)) {
-+            return ret;
+ 
+-    block_acct_done(blk_get_stats(s->qdev.conf.blk), &r->acct);
++        block_acct_start(blk_get_stats(blk), &r->acct, chunk,
++                         BLOCK_ACCT_WRITE);
++        ret = blk_co_pwrite(blk, sector << BDRV_SECTOR_BITS, chunk, buf,
++                            BDRV_REQ_NO_QUEUE);
++        if (ret < 0) {
++            if (!scsi_disk_ignore_error(r, ret)) {
++                break;
++            }
++            ret = 0;
 +        }
 +        block_acct_done(blk_get_stats(blk), &r->acct);
+ 
+-    data->nb_sectors -= data->iov.iov_len / BDRV_SECTOR_SIZE;
+-    data->sector += data->iov.iov_len / BDRV_SECTOR_SIZE;
+-    data->iov.iov_len = MIN(data->nb_sectors * BDRV_SECTOR_SIZE,
+-                            data->iov.iov_len);
+-    if (data->iov.iov_len) {
+-        block_acct_start(blk_get_stats(s->qdev.conf.blk), &r->acct,
+-                         data->iov.iov_len, BLOCK_ACCT_WRITE);
+-        /* Reinitialize qiov, to handle unaligned WRITE SAME request
+-         * where final qiov may need smaller size */
+-        qemu_iovec_init_external(&data->qiov, &data->iov, 1);
+-        r->req.aiocb = blk_aio_pwritev(s->qdev.conf.blk,
+-                                       data->sector << BDRV_SECTOR_BITS,
+-                                       &data->qiov, 0,
+-                                       scsi_write_same_complete, data);
+-        return;
++        sector += chunk / BDRV_SECTOR_SIZE;
++        nb_sectors -= chunk / BDRV_SECTOR_SIZE;
      }
-+
-+    return 0;
+ 
+-    scsi_req_complete(&r->req, GOOD);
+-
+-done:
+-    scsi_req_unref(&r->req);
+-    qemu_vfree(data->iov.iov_base);
+-    g_free(data);
++    qemu_vfree(buf);
++    return ret;
  }
  
- static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-@@ -1814,7 +1887,6 @@ static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
-     uint8_t *p = inbuf;
-     int len = r->req.cmd.xfer;
--    UnmapCBData *data;
-     int count;
-     int i;
+ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+@@ -1992,9 +1992,6 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
+     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
+     uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
+-    WriteSameCBData *data;
+-    uint8_t *buf;
+-    int i, l;
  
-@@ -1853,14 +1925,7 @@ static void scsi_disk_emulate_unmap(SCSIDiskReq *r, uint8_t *inbuf)
-         }
+     /* Fail if PBDATA=1 or LBDATA=1 or ANCHOR=1.  */
+     if (nb_sectors == 0 || (req->cmd.buf[1] & 0x16)) {
+@@ -2026,28 +2023,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+         return;
      }
  
--    data = g_new0(UnmapCBData, 1);
+-    data = g_new0(WriteSameCBData, 1);
 -    data->r = r;
--    data->inbuf = &p[8];
--    data->count = count;
+-    data->sector = r->req.cmd.lba * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
+-    data->nb_sectors = nb_sectors * (s->qdev.blocksize / BDRV_SECTOR_SIZE);
+-    data->iov.iov_len = MIN(data->nb_sectors * BDRV_SECTOR_SIZE,
+-                            SCSI_WRITE_SAME_MAX);
+-    data->iov.iov_base = buf = blk_blockalign(s->qdev.conf.blk,
+-                                              data->iov.iov_len);
+-    qemu_iovec_init_external(&data->qiov, &data->iov, 1);
 -
--    /* The matching unref is in scsi_unmap_complete, before data is freed.  */
+-    for (i = 0; i < data->iov.iov_len; i += l) {
+-        l = MIN(buflen, data->iov.iov_len - i);
+-        memcpy(&buf[i], inbuf, l);
+-    }
+-
 -    scsi_req_ref(&r->req);
--    scsi_unmap_complete_noio(data, 0);
-+    scsi_disk_co_aio_start(r, scsi_unmap_co);
-     return;
+-    block_acct_start(blk_get_stats(s->qdev.conf.blk), &r->acct,
+-                     data->iov.iov_len, BLOCK_ACCT_WRITE);
+-    r->req.aiocb = blk_aio_pwritev(s->qdev.conf.blk,
+-                                   data->sector << BDRV_SECTOR_BITS,
+-                                   &data->qiov, 0,
+-                                   scsi_write_same_complete, data);
++    scsi_disk_co_aio_start(r, scsi_write_same_co);
+ }
  
- invalid_param_len:
+ static void scsi_disk_emulate_write_data(SCSIRequest *req)
 -- 
 2.53.0
 
