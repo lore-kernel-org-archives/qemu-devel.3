@@ -1,130 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC47C606A31D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=c8K8nFTG;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=NZC/6XBR
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED25606A327
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 09:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLHOO-0002h8-Gt; Mon, 26 Oct 2026 05:53:24 -0400
+	id 1xLHSz-0003TV-Qm; Mon, 26 Oct 2026 05:58:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xLHOM-0002gt-VY
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:53:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1xLHOL-0007zC-4t
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:53:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793008399;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
- b=c8K8nFTGE4JqauGAD5ZYkcsiu+kqAKtWIWZwpaHxtO5rt6Gllq8r61rikJLHg31H1Z41D/
- y897g0ro772n/26TnzxokisPKW6+xphur/sfGrFxAH2G2cO2WyeodDXsxoRvOwA1AA5OQQ
- Cr7yxbLnCE2Es66DpP3htu9v6kj0C9Y=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-8Buu03pPM_m_E83wYkJSXQ-1; Mon, 26 Oct 2026 05:53:17 -0400
-X-MC-Unique: 8Buu03pPM_m_E83wYkJSXQ-1
-X-Mimecast-MFC-AGG-ID: 8Buu03pPM_m_E83wYkJSXQ_1793008396
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-cc4216aee8fso3237834a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 02:53:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793008396; cv=none;
- d=google.com; s=arc-20260327;
- b=hcoPC+J5N5Kb1vGFME29KKf966OAiA3S/8v2p39PdBELpjpdoXq4DvvrJtzPzKNJzN
- enzZfSPG6arW1Ld3IxLDKdZCq09e37rZY8C6+EPu6uAt08WBTAZQAzRpYs/2UxH1yTCg
- Ta/sTjHx6lxZwYo9Dsv+H5HYGKeNkliQM38ij3ouJBIXR2xmaj6rYzMakG51YVMUYgTC
- OyYLb1RbaBnAGFdSapjR/A6guYEm9ULE5ghafug1zL8QlKAQtolSf5CP9sRjwkqM7mio
- D3qcHVyav12O+2NFQWUp6QFKWCPv/35ZjjnMfgrnjyDQbrD7GGzXtTKO3sYr6qvg7yhz
- mqzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
- fh=hVASSgkNmitpEdg8v1p79VPmMNKmW0a7Fs1op1MhlO0=;
- b=l74dZQoATePGc0XxFDfvJijfGVR69Cjgo1nKdhm2eunMyVXXS2oq84y7YEA7pDb+5r
- KIMM59umhzH1lkZHzLkUMrFinV6FxlsdoMcRlib1E7K1Ls0bzyQpGtAppxCaXeKzXd0b
- 65pHgW75OJkWvF5zKs/BznxOetyxhAk7vMF0zFAPLwblYZkn5qFKQZMMhLYtmyxoKyE4
- nsiayRObcQhJEsJMoTjef3HkQmS5WJAhnwlj4U9wbwYGtXf3dTVyz0CZcYrKYEt3I8Lg
- EUt2LnbOXwcfbtjyI7z2q/l4GSVZqunFKAoQsxHXd3p3qQPZ0r9zXljUUaRbW6/7kx7f
- ibAg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793008396; x=1793613196; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
- b=NZC/6XBRp3T0p3sKBy83fF8M3PqSQcWspW0KeGbJ8eBOnRIVcSH+MOUGKloLdGEXHX
- /l9f/JoASweQ27Ox7SnVEzdFumgiIST6DEpRo5OGJ6JQKwx9QGFBU2QUuLOmUHF8AdE/
- VkALJ4A9LxNc78zfk3QfY3vBeXbKMm2j9iKlmLSU+Hyksbp9iQW/waJi8Duey4CZTlYZ
- vUbji85MJxmQCqbS8trn6L5scmHNk8SosEugXgoyV2x4m1cvTRJT63RDQw2nIpdb7ZPQ
- nNxUHV9puTB/AC12XBFbRI1A0B+0OwH/c8AutcCLyKPL7UxhFIcQUYvidZFxMcESpx+p
- XL8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793008396; x=1793613196;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=lFsqw8EN+vQzyKbyEmX1FhwZIZ68kFxNL5DZjtuMWYo=;
- b=JLXXMf8KrsSvAUcSBHEhKTau+RSmSu0/B32h+mRHYdnIgUA6bQMFuejEFDjIBajS/K
- eFkBzM3WHIHKoWVL9L0bKYP6koqZTKt1sWr9fuQVJFHR9WiWY5b1qclHszs+L49vraSp
- eUViVFdEVln85sadU2w8P6E+ekm7YhOtkVUAePyz1uC/YOBvpE4aJV1JD41u3vyMENKs
- fGmav0A+MnpbDwn9qN5XfANn9jqRa8CrlJjXhN+PvXTTTAcDp04+xAJB/gXJYUy443tX
- xcDMX9L7vhtuGHRlfgQzqTFwfXaj7QydSg48lY4OonwBwzy/jKjWP1rkoBHEppzKZbOl
- H8PQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBywNDt2qW0zpkOEOOHvH4elwmQ0jyWCi4g13gwFMSvaMEYxlmoqMPhyB2BosOA+pEjX6K27qE1d53UZ@nongnu.org
-X-Gm-Message-State: AFq9FYKIao03dmdDSlAijE2elZaOPcVXLRE2OcOjmDNx1l9PZg3l4B/N
- cNL6LL2bNCCur7ZMEy9H6hwe6ESi1Eb1LYPuwMC8DdeWU2yldXy37Pbf3IR3P5a7flQVuw5CgFw
- FbeCuesACD/zqsWkfoF7QFNxsdUV0ygTMK/f+8QnC+uPbcSikUaoEKcLmV0tCpi7cGmUyMNhC8i
- BKJ7V6z+AGfh2mBTLeN9bYLdp0N+TS0/c=
-X-Gm-Gg: AYBFou0wT15Y50/dJ4MRokTXu20PAD36xY5dlsW++AMbN8HBI0P7A5gLDUF3f2v5qE8
- 5PBKdv0D3LjdHI7iarZJryf3t9X6cpv/6/PqGQAJDfsTYSbwfF4td/Au1c2nWZKp4QeZ2XQpyYV
- ofh59yXlJI5tQVCvkV01BQmUr45YyioKNrr1l2fXbbRV0kR/rVoqeAGLVMVQ==
-X-Received: by 2002:a05:6a21:4d91:b0:3e2:3392:5414 with SMTP id
- adf61e73a8af0-3e7bfc0bfccmr4793722637.48.1793008396326; 
- Mon, 26 Oct 2026 02:53:16 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4d91:b0:3e2:3392:5414 with SMTP id
- adf61e73a8af0-3e7bfc0bfccmr4793710637.48.1793008395842; Mon, 26 Oct 2026
- 02:53:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xLHSx-0003TM-IQ
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:58:07 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xLHSt-00008d-Oo
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 05:58:07 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8BxLtMiJN9qHXAZAA--.8153S3;
+ Mon, 26 Oct 2026 17:57:55 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJCxNs0hJN9qFk4wAA--.21773S2;
+ Mon, 26 Oct 2026 17:57:54 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Replace sys_state with vm_level
+Date: Mon, 26 Oct 2026 17:59:22 +0800
+Message-ID: <20261026095922.241092-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261023152357.1614817-1-peter.maydell@linaro.org>
- <0d30d085-0c38-41f6-84d8-3473b0635e5d@redhat.com>
-In-Reply-To: <0d30d085-0c38-41f6-84d8-3473b0635e5d@redhat.com>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Mon, 26 Oct 2026 10:53:04 +0100
-X-Gm-Features: AclHuK8xiukV32XVhjQeZ6Umf_1omgzX202kf5qMw3e9BJjhe1FHva2uJmlEjX0
-Message-ID: <CAGxU2F5a2dCcYcVyjGdTS5cZ-F4cMW4V8ybZ19PuOCLEWFH1Tw@mail.gmail.com>
-Subject: Re: [PATCH] scripts/checkpatch.pl: Don't complain about spaces before
- Fixes tags
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- Chao Liu <chao.liu@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxNs0hJN9qFk4wAA--.21773S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZFW8Xw18GryUWF15tw15WrX_yoW8XFWrpr
+ Z7Zw1agr48GFZ2yanrJ3s8WFn8Wrn7Gw129a9Ik3sYyFs8Jry5WFnYy3yDCF4UJay8WFyf
+ Xa10yrn8JF42gacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUkFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
+ Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s02
+ 6x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0x
+ vE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE
+ 42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6x
+ kF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UWHqcUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,71 +69,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 26 Oct 2026 at 09:42, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> On 10/23/26 17:23, Peter Maydell wrote:
-> > The checkpatch.pl script insists that Fixes tags are at the start of
-> > each line of its input. Although this is where they ought to be
-> > in the commit message, it is not where the script will see them
-> > in common usage patterns like
-> >
-> >    git show <hash> | ./scripts/checkpatch.pl -
->
-> ah. I didn't think of that usage ...
+Int type vm_level is more meaningful than pointer type sys_state,
+and it is easy to get current mode from value of vm_level.
 
-For the reference, I hit with `./scripts/checkpatch.pl --branch master..HEA=
-D`.
+Here replace sys_state with vm_level, and use vm_level directly.
 
-Thanks,
-Stefano
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ target/loongarch/cpu.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
->
-> > because 'git show' prefaces each line of the commit message body with
-> > four spaces.  Allow spaces before the Fixes tag; this matches how we
-> > check for e.g.  Signed-off-by: tags.
-> >
-> > Reported-by: Stefano Garzarella <sgarzare@redhat.com>
-> > Fixes: 910e1d41be6b2 ("scripts/checkpatch: validate Fixes: tag format a=
-nd commit ancestry")
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I just ran into this myself today as well so wrote up the patch
-> > ---
-> >   scripts/checkpatch.pl | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> > index 5df266acb17..82f62f60212 100755
-> > --- a/scripts/checkpatch.pl
-> > +++ b/scripts/checkpatch.pl
-> > @@ -1889,7 +1889,7 @@ sub process {
-> >
-> >                       if ($line !~ /^\s*Fixes:\s+CVE/i) {
-> >                               my $tag_case =3D not ($tag eq "Fixes:");
-> > -                             my $tag_space =3D not ($line =3D~ /^fixes=
-:? [0-9a-f]{5,40}/i);
-> > +                             my $tag_space =3D not ($line =3D~ /^\s*fi=
-xes:? [0-9a-f]{5,40}/i);
-> >                               my $id_length =3D not ($orig_commit =3D~ =
-/^[0-9a-f]{12,40}$/);
-> >                               my $id_case =3D not ($orig_commit !~ /[A-=
-F]/);
-> >
->
->
->
-> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
->
-> Thank for the fix,
->
-> C.
->
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 5cc2370da2..57cb893d95 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -429,7 +429,7 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
+-    CPUSysState sys_states[1];
++    CPUSysState sys_states[VM_LEVELS];
+     uint32_t cpucfg[21];
+     uint32_t pv_features;
+     uint64_t vendor_id;
+@@ -440,7 +440,7 @@ typedef struct CPUArchState {
+     AddressSpace *address_space_iocsr;
+     uint32_t mp_state;
+ #endif
+-    CPUSysState *sys_state;
++    int vm_level;
+     unsigned int irq_nr;
+ } CPULoongArchState;
+ 
+@@ -510,12 +510,14 @@ struct LoongArchCPUClass {
+ 
+ static inline CPUSysState *env_sys(CPULoongArchState *env)
+ {
+-    return env->sys_state;
++    return env->sys_states + env->vm_level;
+ }
+ 
+ static inline void set_sys(CPULoongArchState *env, int vm_level)
+ {
+-    env->sys_state = &env->sys_states[vm_level];
++    if (vm_level >= 0 && vm_level <  VM_LEVELS) {
++        env->vm_level = vm_level;
++    }
+ }
+ 
+ static inline CPUTimerState *env_timer(CPULoongArchState *env)
+
+base-commit: d73149283205645625bfa9fe029cfb68e4c4a9ae
+-- 
+2.54.0
 
 
