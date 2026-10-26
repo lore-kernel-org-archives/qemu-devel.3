@@ -1,104 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48834606A32E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 08:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54359606A31D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 08:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FeLfrSCw;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=fHWEqd7P
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NZ6Z5vWd;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MHrbrMQr
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLGG3-00083F-9o; Mon, 26 Oct 2026 04:40:43 -0400
+	id 1xLGHf-0008Si-OS; Mon, 26 Oct 2026 04:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLGFu-00081A-VL
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 04:40:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLGHY-0008SQ-6x
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 04:42:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLGFt-0000pL-8F
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 04:40:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLGHV-0000sv-1F
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 04:42:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793004030;
+ s=mimecast20190719; t=1793004132;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1CrW8x33z9AhnGp+CokjZAy+LS4ExWINABJaFhGB3fs=;
- b=FeLfrSCwPfaigG4JESCjKXAM7H+khZEw2T7SJWZzh9vFvj/U/VzjFgvcV8pm0pBjLahUu2
- m/thhdab4LihRiqWyxAWS24JeDQXhs66vj8NXRDqHHin6gryCuKo7ovBpURPz77Dq43IZr
- OoG2V6aHKxch9FOzv8VJRrsdaHcDXfQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DKWVbQAd/0lUr4JdXKmRfezL4msu+wHHkKekAX/VhIo=;
+ b=NZ6Z5vWdrN/iU6+1tGjMJ2KuXInghn4BajX6ol6Xkx1SGIDprWkJWpGZo4v96bRctJ+KHj
+ qj+JuSVRPgY1KQUD8Cfd+FpF6l5E1+lFLouK5USXNrVyXm9pNt2/qoZjhoWqygy0s7o2CV
+ qVNg6Uz1wYs3zy2kWvdMgJxJUxG1Ixk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-Is83kk5DMC6ZB2q0L0L0bg-1; Mon, 26 Oct 2026 04:40:28 -0400
-X-MC-Unique: Is83kk5DMC6ZB2q0L0L0bg-1
-X-Mimecast-MFC-AGG-ID: Is83kk5DMC6ZB2q0L0L0bg_1793004027
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4a4af69e06fso7955185e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 01:40:28 -0700 (PDT)
+ us-mta-287-3zq3GAhgO4CAO8iVKKYWjA-1; Mon, 26 Oct 2026 04:42:04 -0400
+X-MC-Unique: 3zq3GAhgO4CAO8iVKKYWjA-1
+X-Mimecast-MFC-AGG-ID: 3zq3GAhgO4CAO8iVKKYWjA_1793004123
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48dfa054f26so2316221f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 01:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793004027; x=1793608827; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793004123; x=1793608923; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=1CrW8x33z9AhnGp+CokjZAy+LS4ExWINABJaFhGB3fs=;
- b=fHWEqd7PfE/eIWqmuSqkb5xOexh5OqTeLvbpCYpWljCQPOFakONCkyIYtZqmddXmLM
- g5g47RJr0DssCJ0O34jSiJN1WkLXoDwdlfrBwForCnR1JRkGujSu5f90TI4+pa0FTVD3
- ZP1nQ+dVbk6SlBYHQIzmmvtOpx4tr8uCm2T/PpRS4qsseNPc/aPXGYaTBZ50Br5lQP3j
- PElE+LHa0+9ODvJKx4c6Dde9TJCl9oSsG9dnsTaz9Mzqejn0EZ626/C0whaMQUDk9+1A
- lTwiyIPtTdOp4xx36OQhoO3qLh8BBcTOFBRmyt6BnjSPAhhl5aTuwfBHlAYZ9ll2xWB4
- UGzw==
+ bh=DKWVbQAd/0lUr4JdXKmRfezL4msu+wHHkKekAX/VhIo=;
+ b=MHrbrMQrpoaYhylIV6fEz+Dn2Mab0em9+fknM49LkMyEUi0P8z/IdkEUgG/1fUMO7r
+ 1PJJSTG1yF+ri0UepPXj3yi6RCyHnAY1Th7T7SYb+U7Z3MH/Q/kx/WPHAPkQW4YEQE9A
+ /+XOq3RPX+dj4LB1EUbs9QtnEk++tp+sz6/jxW5FYcZkhXHq8SOkh/LEaxkr1MYG+Kbv
+ e42W3inqwchSq1hMCsoWHc8U6Exw6ydk72PAq1GaDOWvleeBHV3bqpEOtd5dUtKRt2xq
+ i+5hYg/oaeybzC6gK9Xa18/O3MVgsRFAVKRPh5RrcjCXWaZqGpvjqgLeaP8n8CIUDNzz
+ SZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793004027; x=1793608827;
+ d=1e100.net; s=20260707; t=1793004123; x=1793608923;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=1CrW8x33z9AhnGp+CokjZAy+LS4ExWINABJaFhGB3fs=;
- b=UgwyhfNnslnar4tFdFh16iO1N3MSR9esSosYzbNaaUOfSyS/Be0S89RIrauMVDTjm/
- bk8S2XhDhlRBIEOK48OkOrb4vOrUKM1eY6YjEWsVwPfoeGch0S0bLp9TRceXalD5UX1+
- 4Frwcg9Diu+nhr78HW9KzJp90mPILD1Grn5htZy8ovJJjt/ixUeHJ6xozyZc8GUe2i7L
- tw/6NtDHjIzLqZiqDRHKXKiMyuRjgFma7sYw2LG7jgVBYLMGdBbjqifVZ3urhyFSsHnE
- ZCNOTVfIq9Z1rhbV9uNEVQwC9zsiQmqSshfGdZcL4+Hq4xo+fHIOR13Vj39Y0QXrmOfG
- pIHg==
+ bh=DKWVbQAd/0lUr4JdXKmRfezL4msu+wHHkKekAX/VhIo=;
+ b=vP1AKy5qGl0oiJnJX5r3bnLqjk5FkIbP7uhtUAgYiHgpJ3OHw+/m8UkHFVnuE5rg+K
+ ZNQGjEBuMd8tAAcmIk3y4DRrynJdbwrocplmFhc7IHQY2ZXShYnLuzqKZmkXOKr9ZLpd
+ 73Nmux64a9gnUEHeQBhXAK3qu1qIUn//jKKLb+Iqnxm+3IDF9eUj2Y0vuQc4JQdAp9Kn
+ T+sn/lwzZvR4ONByC9+umyhj4AozrxgCFncjdbfwe8RTkltQXI6WSpnsDqCrD2eUbsr3
+ y2+F1EXxO/klAon/w3UoBKgzEV7pFYW0y1tigfcQehmNu5bJYea8zWlju1DQ70lMifI7
+ 7G+g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwRC9UwfOxmc4KQxogaWgkdMFwx5xvNwqIN5dWfeRzxU9UY4Yu1d100fL9ZlA4I3Ezz8xFLNYVsLj60@nongnu.org
-X-Gm-Message-State: AFq9FYIhXB6F7/6/E1ZxPHG2k026HEPxjIqSOufHPV/IMpTUoAoBDGba
- i7SaVNY8ozWxBxTOYcrF6QdwwXpT8fH533fZioTuMBSpw90OZC+RijrMtP8+dUKY858i2CIpdu6
- ztCctuT+w8Q0Ek/Y8VMLjfCLj4yTSx5BhsAHgzzMgBmIWwjJdAYGs2bkp
-X-Gm-Gg: AYBFou1ho/YSspBBQkKkEmp1TD20DxA7nF3Wnu4E6Z2LFo5/4/rn9wCSj3XURBRr0H8
- rRS6WAIo4dwu6vM9gQ6gAqqUd5p2FRmsyeI5DdU66aA9qC95Ic0r8K7xnDuvLW8OaOM/wupaJOV
- DkbXBEnV7WIaR2PjaayQTP/TkBjdZlbI3TQs+S5A+w5NmL0BXv+o8DSvW7UI6qeTk71NQQFDvdO
- 1XzXB4Eo4AUOs4AtiUMZsNYWaqzix9HPnP8rdgXj8W3n06dv7KTBabWk0VC/3eEWfngmlF0UHBa
- TYBviXqyPbYfT42jEpXvdCUM8bLv9thki2ZiKVqxdbyWgFAnHdcZ2JILPxmgKrmY7/sLocycbkt
- iN1sltYxiSgBluDC8V+Osjlm323IMAcXw3LE/cXHn
-X-Received: by 2002:a05:600c:4f89:b0:4a2:150f:160f with SMTP id
- 5b1f17b1804b1-4a35aca4e43mr108844905e9.25.1793004027382; 
- Mon, 26 Oct 2026 01:40:27 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f89:b0:4a2:150f:160f with SMTP id
- 5b1f17b1804b1-4a35aca4e43mr108844505e9.25.1793004026935; 
- Mon, 26 Oct 2026 01:40:26 -0700 (PDT)
+ AKwUvBxXvdq1i0QUZHCLz7YCu33uPjNp0DlvwkOR3HBxuMVDO8xzaKfKA7YbPViyK38asR5lMEMdohfjM9tj@nongnu.org
+X-Gm-Message-State: AFq9FYLlnbnNS1UGa6W5yW91CML+Jm8INAlrPMVq781Pm2kDVfRM1wK5
+ ppKQfZgE5B0Sm3HoZCZxD33qrRKbE0cUExJ1wPMBOVr9Ro+t7FXyDgB5UTeV98NHN9OjVBJk/ky
+ 7nXYG6B7tx9eZgK6P7gYg/tnygZ0NEMVczUT5d3QAFKPEbQFAlK4xOW2E
+X-Gm-Gg: AYBFou1omYm+twsu8HWkzH9utGoSLc962Fbcz4IRWQLyrCEkwCtjJzNjzAoU1G5tvdT
+ IliNmMYNpA47lxbFiPekop4K6VD11LKpj9Qs+E+yF8+8hTRy/hbwf7nLHSHHN1eAwOXTymgjmqv
+ o5U/WbL8OXuXgDpJekukpztbpUykEsa2J+Xj0IFtWI4UxqAbtfur60g7g8MIBgwVmpmyyoPRkU3
+ 3qHKdm7FNg7Kot00YCrGn1zvaXf2VHh1DfJRc1UqxYDTRy8hodKdf2D+BiHSiix/KEbEpnN5Fci
+ zKgOdQyotz73Fwwrvy1K7vS/qaDiE7qGdqDiy+++oWEqODr9QDwXl7Tyc+1KbVwfehx/2DnyjyZ
+ 17I+YBbRGV9dLQRkzVTsiv9tNmZzClvbke74d2L1C
+X-Received: by 2002:a05:6000:188b:b0:48a:fbcf:6f43 with SMTP id
+ ffacd0b85a97d-48e3eb9e44fmr11747080f8f.54.1793004123459; 
+ Mon, 26 Oct 2026 01:42:03 -0700 (PDT)
+X-Received: by 2002:a05:6000:188b:b0:48a:fbcf:6f43 with SMTP id
+ ffacd0b85a97d-48e3eb9e44fmr11747033f8f.54.1793004122993; 
+ Mon, 26 Oct 2026 01:42:02 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d?
  ([2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a35a30e11bsm215049045e9.1.2026.10.26.01.40.26
+ ffacd0b85a97d-48e3ebc3dd7sm14577559f8f.15.2026.10.26.01.42.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 01:40:26 -0700 (PDT)
-Message-ID: <45364e55-9ac8-4d34-8a98-71bb9ed57937@redhat.com>
-Date: Mon, 26 Oct 2026 09:40:25 +0100
+ Mon, 26 Oct 2026 01:42:02 -0700 (PDT)
+Message-ID: <0d30d085-0c38-41f6-84d8-3473b0635e5d@redhat.com>
+Date: Mon, 26 Oct 2026 09:42:01 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] scripts/checkpatch.pl: Don't complain about spaces before
  Fixes tags
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu@processmission.com>,
  Stefano Garzarella <sgarzare@redhat.com>
 References: <20261023152357.1614817-1-peter.maydell@linaro.org>
- <3cd34f4a-ee45-428e-a4e0-55ed6aadce37@oss.qualcomm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,18 +142,18 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3cd34f4a-ee45-428e-a4e0-55ed6aadce37@oss.qualcomm.com>
+In-Reply-To: <20261023152357.1614817-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,59 +173,48 @@ X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/23/26 17:59, Philippe Mathieu-Daudé wrote:
-> On 23/10/26 17:23, Peter Maydell wrote:
->> The checkpatch.pl script insists that Fixes tags are at the start of
->> each line of its input. Although this is where they ought to be
->> in the commit message, it is not where the script will see them
->> in common usage patterns like
->>
->>    git show <hash> | ./scripts/checkpatch.pl -
->>
->> because 'git show' prefaces each line of the commit message body with
->> four spaces.  Allow spaces before the Fixes tag; this matches how we
->> check for e.g.  Signed-off-by: tags.
->>
->> Reported-by: Stefano Garzarella <sgarzare@redhat.com>
->> Fixes: 910e1d41be6b2 ("scripts/checkpatch: validate Fixes: tag format and commit ancestry")
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->> I just ran into this myself today as well so wrote up the patch
->> ---
->>   scripts/checkpatch.pl | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->> index 5df266acb17..82f62f60212 100755
->> --- a/scripts/checkpatch.pl
->> +++ b/scripts/checkpatch.pl
->> @@ -1889,7 +1889,7 @@ sub process {
->>               if ($line !~ /^\s*Fixes:\s+CVE/i) {
->>                   my $tag_case = not ($tag eq "Fixes:");
->> -                my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
->> +                my $tag_space = not ($line =~ /^\s*fixes:? [0-9a-f]{5,40}/i);
->>                   my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
->>                   my $id_case = not ($orig_commit !~ /[A-F]/);
+On 10/23/26 17:23, Peter Maydell wrote:
+> The checkpatch.pl script insists that Fixes tags are at the start of
+> each line of its input. Although this is where they ought to be
+> in the commit message, it is not where the script will see them
+> in common usage patterns like
 > 
-> ERROR: line over 90 characters
-> #36: FILE: scripts/checkpatch.pl:1882:
-> +                my $tag_space = not ($line =~ /^\s*fixes:? [0-9a-f]{5,40}/i);
-> WARNING: Please use correct Fixes: style 'Fixes: <12+ chars of sha1> ("<title line>")' - ie: 'Fixes: 471d4930470a ("target-alpha: Set fpcr_exc_status even for disabled exceptions")'
-> #24:
->      Fixes: 471d493047 ("target-alpha: Set fpcr_exc_status even for disabled exceptions")
+>    git show <hash> | ./scripts/checkpatch.pl -
+
+ah. I didn't think of that usage ...
+  
+> because 'git show' prefaces each line of the commit message body with
+> four spaces.  Allow spaces before the Fixes tag; this matches how we
+> check for e.g.  Signed-off-by: tags.
 > 
-> $ git log -1 --format='Fixes: %h (\"%s\")%nCc: %aE' 471d493047
-> Fixes: 471d4930470 (\"target-alpha: Set fpcr_exc_status even for disabled exceptions\")
+> Reported-by: Stefano Garzarella <sgarzare@redhat.com>
+> Fixes: 910e1d41be6b2 ("scripts/checkpatch: validate Fixes: tag format and commit ancestry")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I just ran into this myself today as well so wrote up the patch
+> ---
+>   scripts/checkpatch.pl | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Cédric, what is the format we have to use? (why mine default to 11
-> chars and yours to 12?)
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 5df266acb17..82f62f60212 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -1889,7 +1889,7 @@ sub process {
+>   
+>   			if ($line !~ /^\s*Fixes:\s+CVE/i) {
+>   				my $tag_case = not ($tag eq "Fixes:");
+> -				my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
+> +				my $tag_space = not ($line =~ /^\s*fixes:? [0-9a-f]{5,40}/i);
+>   				my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
+>   				my $id_case = not ($orig_commit !~ /[A-F]/);
+>   
 
 
-12 chars is mentioned in the doc :
 
-docs/devel/submitting-a-patch.rst:add an additional line with "Fixes: <at-least-12-digits-of-SHA-commit-id
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks,
+Thank for the fix,
 
 C.
 
