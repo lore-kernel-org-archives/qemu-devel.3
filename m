@@ -1,147 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1115606A31A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E28A606A31A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 16:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=pEcGfuCJ;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=S1fjNbeP
+	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=wnfXalj8
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLNSv-00034a-DD; Mon, 26 Oct 2026 12:22:29 -0400
+	id 1xLNSi-0001iA-3S; Mon, 26 Oct 2026 12:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNSs-0002pd-PN
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:22:26 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <QingboZhang@linux.alibaba.com>)
+ id 1xLNSB-0000xn-GJ
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:21:47 -0400
+Received: from [115.124.30.130] (helo=out30-130.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLNSq-0000eo-Lc
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:22:26 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69QEvcxV465825
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:22:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=; b=pEcGfuCJCgtxx1Y5
- zA9QwcvWZHEVYxWcIs1lFsp5gV4xlH4uT8Fmm4BQgiVf/iao2yI0Zs63R52dHqHd
- bC/+GTklGzCb8CHuQKLR6S84aljpfVZhg5nt5SufLGOa166gScbppecdZVla/POf
- q7u9GcK2tV0hsUwccGCA9YhPydl76iuv+2s5Vh5JIfU1Awo82DSJ9zXaYd54CuSy
- RFuUJDh/saweAMkEh/80FGDKSMKx1VEfqz0PyL2/OFi5X0O3F7o0WDu4wMK4QH3s
- kP+6Qrv4Fdo+ofz8FDQW6EsNMhv5beYFtdcflEv1rlTE0jcolYy/wWgzM3z79hKp
- kJQ8Ag==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
- [209.85.217.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hhshpuacs-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 16:22:23 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id
- ada2fe7eead31-7c10b8abe29so3136355137.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 09:22:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <QingboZhang@linux.alibaba.com>)
+ id 1xLNS6-0000Z9-D4
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 12:21:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793031742; x=1793636542; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=;
- b=S1fjNbePlSyC5yKHJJLk1GGF/4o1tpl4w0OkRzCGp1yoho6t05HGa6KI7MomoU9EVw
- 0RNaRrFb44higDhi6hr3IxSZBd5PwB6v7RyPClkJJMcFwdawJPuHw5f8MWTqxVv+8CZF
- 8aKHwqpLjEDu8FTuAEjuJbfwckKJIgJU/xfRyUE0CnPDSMqIxUzLx7//gl7WBTMfGYMP
- fpC8WRHd+JUfsVZMJPAbWEUpsganN1sQyeC4cJ1XFatpjqn8LS+kk3xp0i31MB4CyQ2l
- Vvd1HC3tewLIYC84HhX3LtZl0AT96PUdkQ2XWMOlpM5X3QZ2FgFgVHutSq50PVb3iTPd
- GvQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793031742; x=1793636542;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=k/ZV/W69xco6YBhRL3yKOVP87/iS58eMGzHNLJp5VqY=;
- b=p3JvDz1+SQiPP+tJ0YZPeL9CiG8cmIV7/HbVCBmq0T7Pw0LvrBOwF7bq/JtavZJPln
- edflYpYpzcV43NOTfoVX2NPIg6UpWZVcC3s9pnnDbN8iA2Hq0AHmCWBAeehQsohuBkYy
- 88IMaSNtdfC8K9V0k1Zw1SnhDZ7b7RNR2jkvLi3PiPZ2gI4H+ynndYecJ+8MwXGSBxBi
- vjB3gO53BVuBZnYxS/XNfZzNZmvW/H22mY2mr3rTH8kWDASe4OgvTDHMyQCtoBsQCAGg
- w9e+HjdwVUgS3f+juhF+RQf1l8pqSIYsJ/Y9oRaL7SjsHEResNpC4TIoD7Mw6/mHldpD
- b54g==
-X-Gm-Message-State: AFq9FYKCmJVApVew38rj35OdXX8EOrbQmdFY3Riob5gmA1sdCQzMLhSq
- JyNVNLrWfZDyX2hdElrjFA8ns+4LSoycV7qbDJE5Zy/yxOSC0WugLOGrwZg6u4OOTrJ4cTLRJv4
- vSojbPfJcu+6h9QFBcI1mgtn57mvxR3eSqQLFWRClRxFnJs/XFJeVIssxPU6XmUvHNg==
-X-Gm-Gg: AYBFou20l/08DdPppHETOLQ6/ALLe8cVc7b6U57qjxuH1JI2bIHIpvwXXYhXQflbMl1
- yT05dxRTnuY5/wg1vi1h8yHXeCtgNKMx/4v1DnvyPd7w7osnNqqUYJZXWRFmrA/cshPuhZLvJyi
- TWZCLWiLp50lM1YGMK0aDLJZs/xr8wA1BkLcmxwxpFbkxI2QF3lifjCp6HDW5r1nBFP39rY936Q
- scYjnaxSox7OqqSun9d50oOlKbP4MVW8oavuVuTuuJUlMZH8w47r3N3hA/VcsS3xGqxibp+TLas
- VCsDEOXl3Xe8ivR4iszxAsQgxRfeHG1v+PkwTOMqL4TlgdGIpR2/LAHKNqiYykACHYbG1n2SXHR
- iGQIe3oYTYATE2WWgqnGBp10F7uhpcTNx5cWIWxPf
-X-Received: by 2002:a05:6102:4455:b0:7cb:70ed:ff90 with SMTP id
- ada2fe7eead31-7ce5cd94757mr1832852137.26.1793031741909; 
- Mon, 26 Oct 2026 09:22:21 -0700 (PDT)
-X-Received: by 2002:a05:6102:4455:b0:7cb:70ed:ff90 with SMTP id
- ada2fe7eead31-7ce5cd94757mr1832838137.26.1793031741414; 
- Mon, 26 Oct 2026 09:22:21 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a35a59d998sm212196885e9.15.2026.10.26.09.22.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Oct 2026 09:22:20 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ d=linux.alibaba.com; s=default;
+ t=1793031683; h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type;
+ bh=/CVHODtE/nvC7A4eYWk9Re+gaSG7SSbUiCPUCP2pTOg=;
+ b=wnfXalj8D2Gp+5QL0AG3ZQ+zo7BMb+TjIgI06dRtoOBbwuqak+veZUydknBt5a5o4PXXtXAuEmMScLADaD7VWtcZwoUjQ9HVx70cTbCMFUxpiIbYVCuk4SjUBhQWTBMjJ3ZOP0Iw3w4Oa4PIF9pX3MWHNIJPL/5xskotfIU6uP4=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=qingbozhang@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0XDb-ry7_1793031681; 
+Received: from localhost.localdomain(mailfrom:QingboZhang@linux.alibaba.com
+ fp:SMTPD_---0XDb-ry7_1793031681 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 27 Oct 2026 00:21:22 +0800
+From: Qingbo Zhang <QingboZhang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH v4 14/14] target/mips: Convert nanoMIPS LI opcodes to
- decodetree
-Date: Mon, 26 Oct 2026 17:20:33 +0100
-Message-ID: <20261026162034.32711-15-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261026162034.32711-1-philmd@oss.qualcomm.com>
-References: <20261026162034.32711-1-philmd@oss.qualcomm.com>
+Cc: philmd@oss.qualcomm.com, pbonzini@redhat.com, richard.henderson@linaro.org,
+ mst@redhat.com, jan.kiszka@siemens.com, mohamed@unpredictable.fr,
+ QingboZhang@linux.alibaba.com
+Subject: [PATCH v2] hw/i386/vapic: fix a deadlock between vapic_write() and
+ machine reset
+Date: Tue, 27 Oct 2026 00:21:18 +0800
+Message-Id: <20261026162118.60423-1-QingboZhang@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX7HTlzvF6yMMT
- DIo/sHJ6wZ0BVQ/9ayBoat1YGUchvmT/ZHyE3nKX6vVZdt0/V6joL/zO90I2fC70D8FlyU2gqBp
- XqJLZHaYtYdg6fcICEksHbAKrrm3ylI=
-X-Proofpoint-GUID: qZ1PQDi84VLM-o5StcXA9IxrmcPgL59S
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI2MDA2NSBTYWx0ZWRfX8nCxTflb+Umk
- 0O1sjcQ/q533ELOtzvxWJCypfQfxmypu1upODcBQagX1iMivxsF7aV7aoM42B+2YPpyXBJS5W8t
- PKtGBAEUReHAJoukhyjrMpNA5R8MUuyYjDIotMOnpbIs1mCw7988Ea7hkOorwwNxQ9c7S7oUQph
- 6mTN8fODrmdYnA/JAWFAz9pq66+zHsd283AyZOhjyHgbxG0iypfQh+T5tvLxb1wrWTqdUlHDwus
- R7IHOSctsLjGjaXuggKQ90tT5cSsokP58K9+lEH51G5LyT/rElD/wBkfBRcMHKEOp6rlla80o88
- Zx4njyvBnSP54wKPbcHohA1SUwqKJOeIgDxvvdj/DwHOjNzmTsb62CmE9GrNrlMgumAGDkLvbLC
- +u2l9ycXF+5+wrYHaRZrxbDiNVX5OoiIfocQwov+tErUgjwNMozOtzUpwJIMQeNaoFGYeiJEYmt
- bBNeShCRIoRyl1BAKiA==
-X-Authority-Analysis: v=2.4 cv=HZWB3SE8 c=1 sm=1 tr=0 ts=6adf7e3f cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=afSiZASKlENp3Nq3tvsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: qZ1PQDi84VLM-o5StcXA9IxrmcPgL59S
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-26_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610260065
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.130 (deferred)
+Received-SPF: pass client-ip=115.124.30.130;
+ envelope-from=QingboZhang@linux.alibaba.com;
+ helo=out30-130.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,188 +68,188 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+A 1-byte write to the VAPIC port 0x7e (vapic_write() case 1, the
+reactivation path) patches the ROM trigger instruction to a NOP under
+pause_all_vcpus() / resume_all_vcpus().
 
-Convert LI[16] and LI[48]. LI[16] decodes its 3-bit register
-with gpr3() and its immediate with s_eu() (0x7f encodes -1).
-LI[48] takes a 32-bit immediate and is not available in NMS
-cores; handle it in trans_LI_nnms(), which checks NMS before
-calling trans_LI(). Expose check_nms() for that purpose.
+The BQL does not serialize this against a machine reset: both
+pause_all_vcpus() and the run_on_cpu() work in the reset path drop the
+BQL while waiting, so a concurrent reactivation's resume_all_vcpus() can
+slip in mid-reset.  It clears the stopped state of every vCPU,
+restarting one the reset had just stopped.  That vCPU re-enters KVM_RUN
+and, if it does not exit to userspace again (e.g. it halts in the
+kernel), holds its vcpu->mutex indefinitely; the reset's
+KVM_SET_VAPIC_ADDR for it then blocks forever, leaving the main thread
+stuck holding the BQL and the whole VM hung, monitor included.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Fix this by patching on the current vCPU via async_safe_run_on_cpu()
+instead of pausing all vCPUs, similarly to commit cb58a6d3611b
+("mttcg/i386: Patch instruction using async_safe_* framework").  The
+patch becomes an exclusive work item that, under KVM, runs before the
+vCPU re-enters the guest; it sleeps the other vCPUs without touching the
+stopped state, so it can no longer restart a vCPU that a concurrent
+reset has stopped.
+
+Reproduced on an 8-vCPU KVM guest issuing 1-byte writes to port 0x7e
+concurrently with machine resets: the unfixed code hangs the VM on the
+first reset, the fixed build survives 500+ resets.
+
+Fixes: e5ad936b0fd7 ("kvmvapic: Introduce TPR access optimization for Windows guests")
+Signed-off-by: Qingbo Zhang <QingboZhang@linux.alibaba.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
-Since v3:
-- Fix LI[16] register decoding, using the gpr3() mapping
-- Fix LI[16] immediate, extracted unsigned
-- Fix LI[48] immediate halfword order
-- Replace the not_in_nms argument by trans_LI_nnms()
-- Reuse check_nms() from translate.c
----
- target/mips/tcg/translate.h              |  1 +
- target/mips/tcg/nanomips16.decode        |  9 ++++++++
- target/mips/tcg/nanomips48.decode        |  8 ++++++++
- target/mips/tcg/nanomips_translate.c     | 26 ++++++++++++++++++++++++
- target/mips/tcg/translate.c              |  2 +-
- target/mips/tcg/nanomips_translate.c.inc | 17 ----------------
- 6 files changed, 45 insertions(+), 18 deletions(-)
+v1->v2 [Philippe Mathieu-Daudé]:
+- Cite the similar TCG conversion cb58a6d3611b in the commit message.
+- Rename do_vapic_nop_patch() to do_patch_trigger_nop().
+- Note the callback runs in an exclusive section; add a 2-byte-NOP comment.
+- Use CPU(cpu) instead of current_cpu (cpu is X86_CPU(current_cpu)).
+- Add Philippe's Reviewed-by.
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index 71370f336dc1..0af9f2fb3603 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -152,6 +152,7 @@ void check_cp1_enabled(DisasContext *ctx);
- void check_cp1_64bitmode(DisasContext *ctx);
- void check_cp1_registers(DisasContext *ctx, int regs);
- void check_cop1x(DisasContext *ctx);
-+void check_nms(DisasContext *ctx);
- 
- void gen_base_offset_addr(DisasContext *ctx, TCGv addr, int base, int offset);
- void gen_base_index_addr(DisasContext *ctx, TCGv addr, int base, int index);
-diff --git a/target/mips/tcg/nanomips16.decode b/target/mips/tcg/nanomips16.decode
-index f68fb57022a5..70db007e820b 100644
---- a/target/mips/tcg/nanomips16.decode
-+++ b/target/mips/tcg/nanomips16.decode
-@@ -6,3 +6,12 @@
- #
- # Reference: nanoMIPS32 Instruction Set Technical Reference Manual
- #            (Document Number: MD01247)
-+
-+&rd_imm             rd imm
-+
-+%rt3                7:3 !function=gpr3
-+%s_eu               0:7 !function=s_eu
-+
-+@rt3_s          ...... ... .......          &rd_imm         rd=%rt3 imm=%s_eu
-+
-+LI              110100 ... .......          @rt3_s          # LI[16]
-diff --git a/target/mips/tcg/nanomips48.decode b/target/mips/tcg/nanomips48.decode
-index 0ab33ce5a952..4c9fe695a869 100644
---- a/target/mips/tcg/nanomips48.decode
-+++ b/target/mips/tcg/nanomips48.decode
-@@ -6,3 +6,11 @@
- #
- # Reference: nanoMIPS32 Instruction Set Technical Reference Manual
- #            (Document Number: MD01247)
-+
-+&rd_imm     rd  imm                                                  !extern
-+
-+%imm        0:s16 16:16
-+
-+@rd_imm     ...... rd:5  ..... ................ ................    &rd_imm imm=%imm
-+
-+LI_nnms     011000 ..... 00000 ................ ................    @rd_imm
-diff --git a/target/mips/tcg/nanomips_translate.c b/target/mips/tcg/nanomips_translate.c
-index 6b8aaedb5477..c9ef142fe73f 100644
---- a/target/mips/tcg/nanomips_translate.c
-+++ b/target/mips/tcg/nanomips_translate.c
-@@ -9,6 +9,18 @@
- #include "qemu/osdep.h"
- #include "translate.h"
- 
-+static int gpr3(DisasContext *ctx, int x)
-+{
-+    static const int map[8] = { 16, 17, 18, 19, 4, 5, 6, 7 };
-+
-+    return map[x];
-+}
-+
-+static int s_eu(DisasContext *ctx, int x)
-+{
-+    return x == 0x7f ? -1 : x;
-+}
-+
- /* Include the auto-generated decoders.  */
- #include "decode-nanomips16.c.inc"
- #include "decode-nanomips32.c.inc"
-@@ -18,3 +30,17 @@ static bool trans_LSA(DisasContext *ctx, arg_r *a)
- {
-     return gen_lsa(ctx, a->rd, a->rt, a->rs, a->sa);
+
+Reproducer: a KVM guest (-smp 8, host kernel 6.12.0, in-kernel irqchip)
+booted via -kernel/-initrd with panic=1, so each reset reboots and
+retries.  /init runs a long unrolled sequence of "outb %al, $0x7e"
+(.rept 200000) on one vCPU (each OUT enters vapic_write() case 1), while
+another vCPU issues machine resets through the i8042 (outb 0xfe -> 0x64)
+after a 200 ms warmup, so the resets race the 0x7e writes.
+
+Result: without the fix the VM hangs on the first reset; the fixed build
+survives 588 resets with the main thread never blocking on
+KVM_SET_VAPIC_ADDR.
+
+Hang analysis (unfixed build, -smp 8, captured at the wedge):
+
+  main thread, State D, ioctl(fd=15, KVM_SET_VAPIC_ADDR):
+    kvm_vcpu_ioctl+0x88/0x7f0 [kvm]     <-- mutex_lock_killable(&vcpu->mutex)
+    __x64_sys_ioctl+0x94/0xd0
+    do_syscall_64+0x7d/0x160
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  the vCPU it targets, "CPU 0/KVM", same fd=15, ioctl(fd=15, KVM_RUN),
+  halted:
+    kvm_vcpu_block+0x4c/0xc0 [kvm]
+    kvm_vcpu_halt+0x185/0x430 [kvm]
+    vcpu_run+0x1d1/0x2a0 [kvm]
+    kvm_arch_vcpu_ioctl_run+0x381/0x520 [kvm]
+    kvm_vcpu_ioctl+0x114/0x7f0 [kvm]    <-- holds vcpu->mutex
+    __x64_sys_ioctl+0x94/0xd0
+    do_syscall_64+0x7d/0x160
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+  Both on fd 15 (the same vCPU): the main thread waits at
+  kvm_vcpu_ioctl+0x88 (mutex_lock_killable) while "CPU 0/KVM" holds that
+  mutex at +0x114 inside KVM_RUN and, being halted, never exits to
+  userspace to release it, so the reset never completes.
+
+Interleaving:
+
+  Three threads are involved:
+    - vCPU1, which runs the guest "outb 0x7e" and so keeps re-entering
+      vapic_write() case 1, where resume_all_vcpus() restarts a vCPU the
+      reset had stopped;
+    - vCPU2, an idle vCPU, halted in KVM_RUN and holding its vcpu->mutex;
+    - the main thread, which performs the machine reset, and is where the
+      deadlock lands: its KVM_SET_VAPIC_ADDR ioctl for vCPU2 must take
+      vCPU2's vcpu->mutex, but vCPU2 holds it in KVM_RUN and never
+      releases it, so the main thread blocks forever holding the BQL,
+      hanging the whole VM.
+  The BQL does not serialize the reset against vapic_write():
+  pause_all_vcpus() (on both threads) and the reset's run_on_cpu() each
+  drop the BQL while waiting (marked "<-- drops the BQL" below), so the
+  two interleave.
+
+  main thread:
+    machine reset
+      main_loop_should_exit()
+        pause_all_vcpus()
+          qemu_cond_wait(&qemu_pause_cond, &bql)     <-- drops the BQL
+        qemu_system_reset()
+          cpu_synchronize_all_states()
+            run_on_cpu(GET) -> do_run_on_cpu()
+              qemu_cond_wait(&qemu_work_cond, &bql)  <-- drops the BQL
+          qemu_devices_reset()
+            apic_reset_common() -> vapic_base_update()
+              kvm_vcpu_ioctl(vCPU2, KVM_SET_VAPIC_ADDR)
+                mutex_lock_killable(&vCPU2->mutex)   <-- blocks forever
+
+  vCPU1:
+    guest "outb 0x7e"
+      kvm_cpu_exec() -> KVM_EXIT_IO -> kvm_handle_io() -> address_space_rw()
+        prepare_mmio_access(): bql_lock()   <-- re-takes the dropped BQL
+        vapic_write() case 1
+          pause_all_vcpus()
+            qemu_cond_wait(&qemu_pause_cond, &bql)   <-- drops the BQL
+          patch_byte() x2  (NOP the ROM trigger)
+          resume_all_vcpus()
+            cpu_resume(vCPU2): cpu->stop = false; cpu->stopped = false
+            qemu_cpu_kick(vCPU2)
+              -> vCPU2 re-enters kvm_cpu_exec() -> KVM_RUN, holding its
+                 vcpu->mutex; being idle it halts in kvm_vcpu_block() and
+                 never exits to userspace, so the mutex is never released.
+
+  So vCPU2, which the reset had stopped, is restarted into KVM_RUN
+  mid-reset; the main thread's KVM_SET_VAPIC_ADDR(vCPU2) blocks on
+  vCPU2's mutex while holding the BQL, and vCPU1 is starved of the BQL,
+  so it can no longer kick vCPU2.  The whole VM hangs.
+
+ hw/i386/vapic.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 5c3911cf9c..98ef3469c3 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -657,6 +657,21 @@ static int vapic_prepare(VAPICROMState *s)
+     return 0;
  }
-+
-+static bool trans_LI(DisasContext *ctx, arg_rd_imm *a)
+ 
++/*
++ * NOP out the option ROM trigger instruction.  Runs in an exclusive
++ * section (queued via async_safe_run_on_cpu()), which holds the other
++ * vCPUs out of guest execution, so none can run the trigger mid-patch.
++ */
++static void do_patch_trigger_nop(CPUState *cs, run_on_cpu_data data)
 +{
-+    gen_li(ctx, a->rd, a->imm);
++    X86CPU *cpu = X86_CPU(cs);
++    target_ulong addr = (target_ulong)data.target_ptr;
 +
-+    return true;
++    /* Overwrite the trigger with a 2-byte NOP (0x66 prefix + 0x90) */
++    patch_byte(cpu, addr, 0x66);
++    patch_byte(cpu, addr + 1, 0x90);
 +}
 +
-+static bool trans_LI_nnms(DisasContext *ctx, arg_rd_imm *a)
-+{
-+    check_nms(ctx);
-+
-+    return trans_LI(ctx, a);
-+}
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 74c571c1c125..10811db827c9 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1712,7 +1712,7 @@ static inline void check_cp0_mt(DisasContext *ctx)
-  * This code generates a "reserved instruction" exception if the
-  * Config5 NMS bit is set.
-  */
--static inline void check_nms(DisasContext *ctx)
-+void check_nms(DisasContext *ctx)
+ static void vapic_write(void *opaque, hwaddr addr, uint64_t data,
+                         unsigned int size)
  {
-     if (unlikely(ctx->CP0_Config5 & (1 << CP0C5_NMS))) {
-         gen_reserved_instruction(ctx);
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index 028ef49ea053..c883b5514f1c 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -57,7 +57,6 @@ enum {
- 
-     NM_POOL32S      = 0x30,
-     NM_P_BRI        = 0x32,
--    NM_LI16         = 0x34,
-     NM_SWGP16       = 0x35,
-     NM_P16_BR       = 0x36,
- 
-@@ -86,7 +85,6 @@ enum {
- 
- /* P48I instruction pool */
- enum {
--    NM_LI48        = 0x00,
-     NM_ADDIU48     = 0x01,
-     NM_ADDIUGP48   = 0x02,
-     NM_ADDIUPC48   = 0x03,
-@@ -3665,12 +3663,6 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
-                                        mo_endian(ctx));
-             target_long addr_off = extract32(ctx->opcode, 0, 16) | insn << 16;
-             switch (extract32(ctx->opcode, 16, 5)) {
--            case NM_LI48:
--                check_nms(ctx);
--                if (rt != 0) {
--                    tcg_gen_movi_tl(cpu_gpr[rt], addr_off);
--                }
--                break;
-             case NM_ADDIU48:
-                 check_nms(ctx);
-                 if (rt != 0) {
-@@ -4628,15 +4620,6 @@ static int decode_isa_nanomips(CPUMIPSState *env, DisasContext *ctx)
-             break;
-         }
-         break;
--    case NM_LI16:
--        {
--            imm = extract32(ctx->opcode, 0, 7);
--            imm = (imm == 0x7f ? -1 : imm);
--            if (rt != 0) {
--                tcg_gen_movi_tl(cpu_gpr[rt], imm);
+@@ -709,16 +724,9 @@ static void vapic_write(void *opaque, hwaddr addr, uint64_t data,
+              * Oddly enough, KVM increments EIP _before_ the execution
+              * of the instruction is finished.
+              */
+-            pause_all_vcpus();
+-            if (!kvm_enabled()) {
+-                patch_byte(cpu, env->eip, 0x66);
+-                patch_byte(cpu, env->eip + 1, 0x90);
 -            }
--        }
--        break;
-     case NM_ANDI16:
-         {
-             uint32_t u = extract32(ctx->opcode, 0, 4);
+-            else {
+-                patch_byte(cpu, env->eip - 2, 0x66);
+-                patch_byte(cpu, env->eip - 1, 0x90);
+-            }
+-            resume_all_vcpus();
++            target_ulong ip = kvm_enabled() ? env->eip - 2 : env->eip;
++            async_safe_run_on_cpu(CPU(cpu), do_patch_trigger_nop,
++                                  RUN_ON_CPU_TARGET_PTR(ip));
+         }
+ 
+         if (s->state == VAPIC_ACTIVE) {
 -- 
-2.55.0
+2.39.5 (Apple Git-154)
 
 
