@@ -1,63 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3A5606A330
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 10:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECC6606A321
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Oct 2026 10:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ivrHdm03
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=BL6GenAw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLHjL-0000aH-Hh; Mon, 26 Oct 2026 06:15:05 -0400
+	id 1xLHjR-0000tU-Fs; Mon, 26 Oct 2026 06:15:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1xLHiZ-0008Vt-Vl; Mon, 26 Oct 2026 06:14:23 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1xLHiW-0008Ua-CQ; Mon, 26 Oct 2026 06:14:16 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1xLHiW-0001YN-F0; Mon, 26 Oct 2026 06:14:14 -0400
+ id 1xLHiR-0001YB-Mj; Mon, 26 Oct 2026 06:14:09 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id BCF2A404C9;
- Mon, 26 Oct 2026 10:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB71B1F01825;
+ by tor.source.kernel.org (Postfix) with ESMTP id B6F7E60A5F;
  Mon, 26 Oct 2026 10:14:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69731F01828;
+ Mon, 26 Oct 2026 10:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793009648;
- bh=06kZN96W0Fky4x0ckmWfnaBpOAPPCwfW81AIcrztJV8=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=ivrHdm03xJAj3nVUKx4DcGbuQ0Sc1Xf803fAMymErSVJoZ/J3l5PaoQSzOpifCEBT
- 9vNf+f6+XtSIGHWaqdjiAWHOV1A7xfSA2XevBbqN8XP+f0+hUnU0Aeao2Ppt7XaUwI
- qCUEMUJes96Jwyi8Ep7XzaD3T3zGYeDGumDew8hD3kTOBKU+TqYjKrgbg2jehA2qy9
- 6yDL+0k7erBvY2RcxtjLakQu6EOT7Yq3Tn3B0ufXioAl06iJswexqRniBAO/ZM2XjY
- +s4whgkd/gdZUOL4Y48o2E8RyALtY5SwDG7FCM3fAPm5+IclMPIxQ12zGUvuZdgS0p
- WkN1CyWStmExQ==
+ s=k20260515; t=1793009646;
+ bh=YP2jrpk+FEY0LPgCnf+trGUMiWEqye5ido4reWw+rr0=;
+ h=From:Subject:Date:To:Cc;
+ b=BL6GenAwNk1UZHauR3mq/f0bMWSNXVBXSAagw2QQ1InW0yAFWo751fz51uyJ7RdGp
+ hYtqF8TWjbCzf6Cvxsa1nTcjgTykurBpy9fVxfqFHx9mqfrzR//KQFCaUapVO7zrhP
+ qZIRSGlFL/jOCiKKZ43GaXP4x6FQWGPCDhBJbT6NetBpD1rnN2IpelCnbB8RzHErPq
+ 4YLAg9k06r45/wuQlXCuaQZc+K8OHvWo7viUMmxio43bWWbeDOLHkS1C0teu1iYiX1
+ 5jcMcJRdf4l0cwiwoReg7TJo9BZRZLXUxSpvrSXEyKuj4itKMOkAwTMZ17YIMCx7UR
+ hH8fw1kUQt2RA==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Mon, 26 Oct 2026 11:13:56 +0100
-Subject: [PATCH RESEND 1/5] hw/nvme: fix endianness handling in the atomic
- write path
+Subject: [PATCH RESEND 0/5] Add Multiple Atomicity Mode (MAM) support
+Date: Mon, 26 Oct 2026 11:13:55 +0100
+Message-Id: <20261026-nvme-mam-v1-0-5d53b5529ffa@samsung.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261026-nvme-mam-v1-1-5d53b5529ffa@samsung.com>
-References: <20261026-nvme-mam-v1-0-5d53b5529ffa@samsung.com>
-In-Reply-To: <20261026-nvme-mam-v1-0-5d53b5529ffa@samsung.com>
 To: qemu-devel@nongnu.org
 Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
  Klaus Jensen <k.jensen@samsung.com>, Jesper Devantier <foss@defmacro.it>, 
  Daniel Gomez <da.gomez@kernel.org>, Daniel Gomez <da.gomez@samsung.com>, 
  GOST <gost.dev@samsung.com>, qemu-block@nongnu.org
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793009644; l=3074;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793009644; l=2288;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=hcZnxiyOddDYkYIcf5kC/OwheUIkcjOWEc63dAMui+o=;
- b=IDzreIbqH7YzqnMAAQqXr1ayU73YS3SKRtabZq/wJUkxrrSzpTtejooLjbDqU4x8/oXLQVNN8
- 6TdCL5OSvh3DnUPinp+2H2tKOWoBc/0Ho/eMjGSYiDPLNVcQyV7AdA0
+ bh=Vzv2gtFqJBcDO2/t7W35ilDoCZAsg94Vug/E2Lxl6iA=;
+ b=0f1c2OXx2BCirsF+XfUaLmln2XoUAwDtInBPFIxFQan80vtXEY/MepP5AiGb4oDqP54/E7ilE
+ nvKDstfA9tPD1qD+o2MrffFMoGPQUF+QrG7SybYgcD4SNBk/umHS3Qo
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
@@ -76,99 +73,66 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-24.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daniel Gomez <da.gomez@samsung.com>
+Add Multiple Atomicity Mode (MAM) emulation support. MAM is a superset
+of Single Atomicity Mode (SAM): per the NVMe spec, a write command that
+crosses a Namespace Atomic Boundary is divided into LBA subranges, each
+written atomically. The emulation reuses the atomic write support from
+commit ebd1568fc732 ("hw/nvme: add atomic write support"): when MAM is
+enabled, the size and boundary limits that decide whether a write is
+atomic no longer apply, so the whole command is serialized as one atomic
+write.
 
-NvmeCmd, NvmeRwCmd, and NvmeIdCtrl are NVMe data structures in
-little-endian, fix the cases where their fields are used as host values.
+A namespace enables it with atomic.map=on alongside
+the existing per-namespace atomicity parameters. Example:
 
-Note that in the case of nvme_atomic_configure_max_write_size() we now
-pass the clamped AWUPF instead of the unclamped one.
+    -device nvme,serial=foo,id=nvme0 \
+    -drive file=nvme0.qcow2,if=none,format=qcow2,id=nvme0-ns0 \
+    -device nvme-ns,drive=nvme0-ns0,bus=nvme0,atomic.nawun=7,\
+      atomic.nawupf=7,atomic.nabsn=7,atomic.nabspf=7,atomic.mam=on
 
-Fixes: ebd1568fc732 ("hw/nvme: add atomic write support")
-Fixes: 3b41acc96299 ("hw/nvme: enable ns atomic writes")
+Quering the result with nvme-cli:
+nvme id-ns -H /dev/nvme0n1 | head
+NVME Identify Namespace 1:
+nsze    : 0x500000      Total size in logical blocks
+ncap    : 0x500000      Maximum size in logical blocks
+nuse    : 0x500000      Current size in logical blocks
+nsfeat  : 0x76
+  [7:7] : 0     NPRG, NPRA and NORS are Not Supported
+  [6:6] : 0x1   Multiple Atomicity Mode applies to write operations
+
+While at it, fix endianness issues on the atomic write command path
+(first patch) and update hw/nvme docs with atomic writes section.
+
+Baseline: nvme.next branch; tree: https://gitlab.com/birkelund/qemu
 
 Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 ---
- hw/nvme/ctrl.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+Daniel Gomez (5):
+      hw/nvme: fix endianness handling in the atomic write path
+      hw/nvme: add missing atomic.* fields in usage
+      docs: add hw/nvme atomics section
+      hw/nvme: add multiple atomicity mode support
+      docs: update hw/nvme atomics with mam
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 4893cf7e741..c884ca8a181 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7832,7 +7832,7 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-     int i;
- 
-     if ((cmd->opcode == NVME_CMD_READ) || ((cmd->opcode == NVME_CMD_WRITE) &&
--        ((rw->nlb + 1) > atomic->atomic_max_write_size))) {
-+        ((nlb + 1) > atomic->atomic_max_write_size))) {
-         cmd_atomic_wr = false;
-     }
- 
-@@ -7869,7 +7869,7 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
- 
-             if (((req_rw->opcode == NVME_CMD_WRITE) ||
-                  (req_rw->opcode == NVME_CMD_READ)) &&
--                (cmd->nsid == req->ns->params.nsid)) {
-+                (le32_to_cpu(cmd->nsid) == req->ns->params.nsid)) {
-                 req_slba = le64_to_cpu(req_rw->slba);
-                 req_nlb = (uint32_t)le16_to_cpu(req_rw->nlb);
-                 req_elba = req_slba + req_nlb;
-@@ -7895,7 +7895,7 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
- 
- static NvmeAtomic *nvme_get_atomic(NvmeCtrl *n, NvmeCmd *cmd)
- {
--    NvmeNamespace *ns = nvme_ns(n, cmd->nsid);
-+    NvmeNamespace *ns = nvme_ns(n, le32_to_cpu(cmd->nsid));
- 
-     if (ns && ns->atomic.atomic_writes) {
-         return &ns->atomic;
-@@ -8889,6 +8889,7 @@ static void nvme_init_state(NvmeCtrl *n)
-     NvmeSecCtrlEntry *sctrl;
-     PCIDevice *pci = PCI_DEVICE(n);
-     NvmeIdCtrl *id = &n->id_ctrl;
-+    uint16_t awun, awupf;
-     uint8_t max_vfs;
-     int i;
- 
-@@ -8950,19 +8951,20 @@ static void nvme_init_state(NvmeCtrl *n)
-     }
- 
-     /* Atomic Write */
--    id->awun = cpu_to_le16(n->params.atomic_awun);
--    id->awupf = cpu_to_le16(n->params.atomic_awupf);
-     n->dn = n->params.atomic_dn;
-+    awun = n->params.atomic_awun;
-+    awupf = n->params.atomic_awupf;
- 
--    if (id->awun || id->awupf) {
--        if (id->awupf > id->awun) {
--            id->awupf = 0;
-+    if (awun || awupf) {
-+        if (awupf > awun) {
-+            awupf = 0;
-         }
- 
--        nvme_atomic_configure_max_write_size(n->dn, n->params.atomic_awun,
--                                             n->params.atomic_awupf,
--                                             &n->atomic);
-+        nvme_atomic_configure_max_write_size(n->dn, awun, awupf, &n->atomic);
-     }
-+
-+    id->awun = cpu_to_le16(awun);
-+    id->awupf = cpu_to_le16(awupf);
- }
- 
- static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
+ docs/system/devices/nvme.rst | 47 ++++++++++++++++++++++++++++++++++++++++++--
+ hw/nvme/ctrl.c               | 40 +++++++++++++++++++++++--------------
+ hw/nvme/ns.c                 | 27 ++++++++++++++++++++++++-
+ hw/nvme/nvme.h               |  1 +
+ 4 files changed, 97 insertions(+), 18 deletions(-)
+---
+base-commit: 7a34f7b8794b29cd1bd4dfa45f7d8e8daba7cff5
+change-id: 20260824-nvme-mam-3af8616d6e37
 
+Best regards,
 -- 
-2.56.0
+Daniel Gomez <da.gomez@samsung.com>
 
 
