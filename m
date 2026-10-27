@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4078606A32C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC62606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Ryjj9Vsg
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j4E4Ikj7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmJr-0001XN-Aj; Tue, 27 Oct 2026 14:54:48 -0400
+	id 1xLmJY-0001Un-MG; Tue, 27 Oct 2026 14:54:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLmJo-0001Ws-Hk
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:44 -0400
-Received: from mail-dy2-x07.google.com ([2607:f8b0:4864:36::7])
+ id 1xLmJW-0001UM-8K
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:26 -0400
+Received: from mail-dl2-x08.google.com ([2607:f8b0:4864:38::8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLmJm-0007aB-Le
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:44 -0400
-Received: by mail-dy2-x07.google.com with SMTP id
- 5a478bee46e88-369ef2c6802so22995eec.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 11:54:42 -0700 (PDT)
+ id 1xLmJU-0007ZE-3c
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:25 -0400
+Received: by mail-dl2-x08.google.com with SMTP id
+ a92af1059eb24-1379d236149so40681c88.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 11:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793127281; x=1793732081; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793127262; x=1793732062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=98SbGHmY4D/VMnEnKemu/JVpBBO0e9iAHNEyWCXPuM4=;
- b=Ryjj9VsgsPdsd9TTeOMfX9qgccEQ6LFj4qUgOXyay4jqXt57yAg27SgGUgMn4gVTkA
- 91iRyJt7JnSiPPoTn9QLSvhKq393ys1T+hNBpzoMqESJf0Fwp+fWK54ZIHEhMxprBVot
- qvjHVfXQqHvfHnEEdjgThJ43hvrHDovfOZzYKTNRqYDnVRNUYvysCRJ7/c3XdgH1Tigq
- VQwA/xVZwhag/qn341CoZJDtqN3zjOMOhXD51jWX+ZxUP63UR8fkgkXI0jaGOIcj3sfZ
- SeBhClTFqHFcdYDm0iu3xkFFXVBIjzVZwA0p2ylxbr0dbXvDai4CDV2aO8replVngyAo
- vcEw==
+ bh=+TwibmVIavdS0qeo/uNI7cmJJcasYaxVzwwl7p9xbfE=;
+ b=j4E4Ikj7wdBwWFDZy5oXM4XT4EdYgjMM5Qh1ffd/TBqYXeYWogde1ju9LDW+HjOq20
+ 0zW5H1jEaTDS3m4QEH5F/vzjhW7P3lJv0AAKY6V5AVuOGvGFx8/e8TXjFaHHWp+8e+sq
+ COvK/kZoyFRHknDjIqbplpSo1Kdbcb74ZTwT8oVMJePaF4L51Gz0XFH6fs4KlVTElwdN
+ CizsgFRMglQqWLTHBv7fl7ITNuyNbQtP5rYHAbkqoIJ/AyrZV9JEkLRKNvHOiLTg3aC/
+ 1HTvM3OW5d2UBPH9ioPS3HqbOnba/dqBsdMkzioRmNBK4prPUt5LcQKStEJmrVQO7ZvK
+ f9uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793127281; x=1793732081;
+ d=1e100.net; s=20260707; t=1793127262; x=1793732062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=98SbGHmY4D/VMnEnKemu/JVpBBO0e9iAHNEyWCXPuM4=;
- b=o0NkH70PffitWrIJeen6t8ba/hHFNyNIJqUEhuXfdeVX1S4dMMHswOfvRkjlrBtF8p
- TQt4UsSgmMzD+Zk9QJr2tykpMcr29pD0fwXWQH/ClfbenM50SdtVEaK24292UAEHyTVV
- rQaAd/dLPOobjmNAmOCXbjgHdHpNBI3HBunHHQQcXubPLciaAksdeULYyQKRAeDPH1ee
- vGk3nuSfEx5j19wVdJYlrxvz5B/afkahlkW5h+71wsPk70xxt/sd4DAM/CwlTjJeEVAb
- /DhyIvsRuN8N0X4nddYDaULn/grEeLda1JH8BtKAc99S6s4XRoBBiJb1Tsp+yUemRw2Z
- KNOw==
-X-Gm-Message-State: AFq9FYI243OC8x6KY4hTYsbeCAZ31tH4KxTrcML+hI36jCriRmQyQUER
- 2ehrfDZNcwIH/3/cHWYGga8AJ6ap9gEkdtlXsEJFtWMZOZu1V6JmDr78mhdCG81jXOY=
-X-Gm-Gg: AYBFou0jlNh19dCQSd9vN+1gVB9TqiKRIsyO3Fu/VJMPJzhCQTamEhOrOBhsV+pmvyr
- Zr+h94vAagqdAFQNVAxKx5MkQIEwNr5oGImpMmc76pIk1/KhprH5qK/ZWjJEYHkgh+1UGa00Wox
- UmD41x8mLvyTl+l7+XcNb9KlTLf6ecN7LMLmabWEyMWUH953pWAcwgrLxu2ceIAHfoJtgdCOuzz
- vqdVx7KLr7Pm1ch4UcDHaYd6Pb79c+dByDwtWIg102DBnppMIAMiKpQDCSkXEcUWNvZo4fbpOQ9
- 2O3Om8obNkrIgwVooYILGPiyEP21oxhJZvFHptkxyZ0YfMxcSwjFJ1fIQDbWcjU25fgdwgvRkOI
- 9cX7hTFQqIl2w7VZex0aoMTzSZTzQqWDzTEDbOgn7FN+IuKGygSuCTBvhRzow2vKWr7uaYh2J6m
- cQ+z6LcpJ4VimWSkxbgEbXfzdev09ufiiWBmPjzY6SEwFdmVN8QaHyPaDqqyAJJEnXtx25cJy1x
- Q5wP+Dv24r1AovVMGPl4s09Xp3qCgyq9r5ofl6FZ9uG7F8XjqZbxV+9H1hNSv2hFz5Lrxid9xId
- ZCtXeNEJZpHO1QE4JazGqLQJzoBOAETjeTLxHifgqtUqCW96ueUUng91u/tFWZId9EwryYQ0x3r
- VXQYAJkh1KkRJbdgYukDraFiFZCW7x1VlV1GT3W6+aLorJ+77sw==
-X-Received: by 2002:a05:701b:205b:10b0:151:7831:e403 with SMTP id
- a92af1059eb24-1a6ccaf8b2cmr150904c88.13.1793127280470; 
- Tue, 27 Oct 2026 11:54:40 -0700 (PDT)
+ bh=+TwibmVIavdS0qeo/uNI7cmJJcasYaxVzwwl7p9xbfE=;
+ b=Vf1e145TJ15MfEyN2d0oe9JgJa4rgrx4k522TBJMGCEADgdIQ5tKvg5R7d69fGl7w2
+ zbSFkAy9F6RhZrv2m+M5KluvQTTHg9Um9eKILB/NFwFHLE09wEXFVZF3OYgnH0bvhYgW
+ pTf1ks/lYwdRG39dlT20Ebb9w0PNeZhaYR3+Uk2hkCV9pRT7l2UQb7BE642mgPvaeVC1
+ PZZi+t83Y/27qQbw5VxetbEwdz+QAnlUEKQTqJBNV7e1J1R2rImk6Cbbm7yKJ0TG1Fu0
+ wbM57epUclZ1F7FLkhnhSIU5GZyJbTx1xAXgVF3DaM5TcC7YzGbOeEnDVhvfwRmC8rB0
+ /iiw==
+X-Gm-Message-State: AFq9FYJptykiSqJR7VMH1GSeP51vIu3rhXmF82OA5tfUqX50TDoS/L8/
+ wgtYEWtABq3/k5478b0oYu66vtgp5UcV0Ym9FEwXUl8FU63d+aBmJD4gnp6huSnu1To=
+X-Gm-Gg: AYBFou34U8K9Zr3j0pDRBmJdvy7W57GHRL/8C9A2j2I0d4wBiM3J4Hi7XtxVUx6mDdg
+ 585OLJ9LXzqhLAKFwIxk0E2rfJSxlFIzNgnZHg9HRwGhWz0P9C/3ixhZ68mkhp+OI9i5zEtQLU7
+ HYCWyxQID4zat5xp1LVisCtcsKbw4Z470FJdE8aWTSVx2L/ONOjBhLXdoX65sBVRSCYlWXqhwvp
+ LjahWMfO6f5E8zj57wX505vkVoPD6pGW7uTNVUiw+Py3qrB9Og3pheoE3iiALJMbxvvoBYpS5Bx
+ 76u+w/bFhk/eIjPdogTNvkaaHmWcNBUhuMYAbXPOcDb4IE2xUwdvHpS9I0Qy/Ai9Etv0dPix5Hy
+ KVZrVXsDZXo+t1d3utCyP501Pnlbdl/GCF5dBApHp27Pf7JJAeFwBaoJftkld7iqd9tBYTn8vzT
+ fD2R161jAIcD1L+AlFKs7BcJr5SiS6Pz5nPOM0FlkwZDDWcHzdJJK7bbjCGvTmdsj3BNQvO7ejQ
+ tNh37DuXnqJo+TilkgUwv+UkRgjCIYrap2pcp17zS3gZGxXYvnyN9EpnT7rYUkTmmgvy85loAjd
+ BTcoa18uKbWu248BYcjcBJbeI+LLhNcElVgbkGFMt7ONl8yLoEO5IZUHAkLLrirWGUyLBlSYj51
+ aKikfKUBX5Fd3U/SD2VbuxozRejOj2gY3scWWRiCr+OhhwMyEbw==
+X-Received: by 2002:a05:701b:4203:20b0:160:a80f:3ed2 with SMTP id
+ a92af1059eb24-1a6cbf75033mr162666c88.10.1793127262190; 
+ Tue, 27 Oct 2026 11:54:22 -0700 (PDT)
 Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1a6da44c132sm75324c88.18.2026.10.27.11.54.36
+ a92af1059eb24-1a6da44c132sm75324c88.18.2026.10.27.11.54.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 11:54:39 -0700 (PDT)
+ Tue, 27 Oct 2026 11:54:21 -0700 (PDT)
 From: soumyajyotisarkar23@gmail.com
 To: qemu-devel@nongnu.org,
 	sarkarsoumyajyoti23@gmail.com
@@ -75,18 +75,17 @@ Cc: Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 5/8] hw/input/hid: accept high-resolution vertical scroll
- events
-Date: Wed, 28 Oct 2026 00:18:54 +0530
-Message-ID: <20261027184857.60775-6-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH 1/8] ui/input: add high-resolution scroll input event
+Date: Wed, 28 Oct 2026 00:18:50 +0530
+Message-ID: <20261027184857.60775-2-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261027184857.60775-1-soumyajyotisarkar23@gmail.com>
 References: <20261027184857.60775-1-soumyajyotisarkar23@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::7;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dy2-x07.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:38::8;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dl2-x08.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -116,196 +115,318 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-Keep the pending vertical wheel movement in 1/120 detent units instead
-of whole detents, and let the HID mouse receive scroll events directly
-by setting INPUT_EVENT_MASK_SCROLL.  Wheel button clicks now add a full
-detent (120 units).
+The input layer can only describe wheel movement as WHEEL_UP/DOWN/
+LEFT/RIGHT button clicks, one per detent.  Host UIs that receive
+smooth scroll deltas (touchpads, free-spinning or high-resolution
+wheels) have to round them to whole clicks, and the guest never sees
+the finer movement.
 
-hid_pointer_poll() still reports whole detents, so the guest-visible
-behaviour does not change yet.  The sub-detent remainder is kept in a
-per-device residual so that slow scrolling adds up instead of being
-dropped, and whole detents that do not fit into the 8-bit report field
-stay queued for the next poll as before.
+Add a new 'scroll' input event kind carrying a scroll axis (vertical
+or horizontal) and a distance in 1/120 of a wheel detent, the same
+unit Windows uses for WHEEL_DELTA and Linux for REL_WHEEL_HI_RES.
+Positive values scroll down or right.
 
-The residual is migrated in a new optional subsection, which is only
-sent while wheel movement is pending.  Because the unit of the queued
-dz values changes, an incoming stream without the subsection (from an
-older QEMU, or with no wheel movement pending) has its queued dz values
-converted from detents to 1/120 units in post_load.
+Scroll events are routed to the handler that receives pointer button
+events for the console.  Handlers that do not set
+INPUT_EVENT_MASK_SCROLL keep working unchanged: the input core
+accumulates the distance and emits one wheel button click per full
+detent.
+
+Also wire the new event into input-send-event, tracing and
+record/replay.
 
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 ---
- hw/input/hid.c         | 97 +++++++++++++++++++++++++++++++++++++++---
- include/hw/input/hid.h |  2 +
- 2 files changed, 93 insertions(+), 6 deletions(-)
+ include/ui/input.h    |  6 ++++
+ qapi/ui.json          | 45 ++++++++++++++++++++++--
+ replay/replay-input.c |  8 +++++
+ ui/input.c            | 82 ++++++++++++++++++++++++++++++++++++++++++-
+ ui/trace-events       |  1 +
+ 5 files changed, 139 insertions(+), 3 deletions(-)
 
-diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 0f28827554..2855f6a3d9 100644
---- a/hw/input/hid.c
-+++ b/hw/input/hid.c
-@@ -145,15 +145,21 @@ static void hid_pointer_event(DeviceState *dev, QemuConsole *src,
-         if (evt->btn.down) {
-             e->buttons_state |= bmap[evt->btn.button];
-             if (evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
--                e->dz--;
-+                e->dz -= INPUT_EVENT_SCROLL_DETENT;
-             } else if (evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
--                e->dz++;
-+                e->dz += INPUT_EVENT_SCROLL_DETENT;
-             }
-         } else {
-             e->buttons_state &= ~bmap[evt->btn.button];
-         }
-         break;
- 
-+    case INPUT_EVENT_KIND_SCROLL:
-+        if (evt->scroll.axis == INPUT_SCROLL_AXIS_VERTICAL) {
-+            e->dz += evt->scroll.value;
-+        }
-+        break;
+diff --git a/include/ui/input.h b/include/ui/input.h
+index a1560cac0f..daedb547ff 100644
+--- a/include/ui/input.h
++++ b/include/ui/input.h
+@@ -9,6 +9,9 @@
+ #define INPUT_EVENT_MASK_REL   (1<<INPUT_EVENT_KIND_REL)
+ #define INPUT_EVENT_MASK_ABS   (1<<INPUT_EVENT_KIND_ABS)
+ #define INPUT_EVENT_MASK_MTT   (1<<INPUT_EVENT_KIND_MTT)
++#define INPUT_EVENT_MASK_SCROLL (1 << INPUT_EVENT_KIND_SCROLL)
 +
-     default:
++#define INPUT_EVENT_SCROLL_DETENT 120
+ 
+ #define INPUT_EVENT_ABS_MIN    0x0000
+ #define INPUT_EVENT_ABS_MAX    0x7FFF
+@@ -31,6 +34,7 @@ typedef struct QemuInputEvent {
+         InputMoveEvent rel;
+         InputMoveEvent abs;
+         InputMultiTouchEvent mtt;
++        InputScrollEvent scroll;
+     };
+ } QemuInputEvent;
+ 
+@@ -80,6 +84,8 @@ int qemu_input_scale_axis(int value,
+ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value);
+ void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
+                           int min_in, int max_in);
++void qemu_input_queue_scroll(QemuConsole *src, InputScrollAxis axis,
++                             int value);
+ void qemu_input_queue_mtt(QemuConsole *src, InputMultiTouchType type, int slot,
+                           int tracking_id);
+ void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 9e3e80a3d7..e31fd74f87 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1120,6 +1120,34 @@
+               'axis'       : 'InputAxis',
+               'value'      : 'int' } }
+ 
++##
++# @InputScrollAxis:
++#     Scroll axis of a pointer input device.
++#
++# @vertical: vertical wheel
++#
++# @horizontal: horizontal wheel (pan)
++#
++# Since: 11.2
++##
++{ 'enum'  : 'InputScrollAxis',
++  'data'  : [ 'vertical', 'horizontal' ] }
++
++##
++# @InputScrollEvent:
++#     High-resolution scroll input event.
++#
++# @axis: Which scroll axis is referenced by @value.
++#
++# @value: Scroll distance in 1/120 of a wheel detent.  Positive
++#     values scroll down (vertical) or right (horizontal).
++#
++# Since: 11.2
++##
++{ 'struct'  : 'InputScrollEvent',
++  'data'  : { 'axis'    : 'InputScrollAxis',
++              'value'   : 'int' } }
++
+ ##
+ # @InputEventKind:
+ #
+@@ -1133,10 +1161,12 @@
+ #
+ # @mtt: a multi-touch input event
+ #
++# @scroll: a high-resolution scroll input event (since 11.2)
++#
+ # Since: 2.0
+ ##
+ { 'enum': 'InputEventKind',
+-  'data': [ 'key', 'btn', 'rel', 'abs', 'mtt' ] }
++  'data': [ 'key', 'btn', 'rel', 'abs', 'mtt', 'scroll' ] }
+ 
+ ##
+ # @InputKeyEventWrapper:
+@@ -1178,6 +1208,16 @@
+ { 'struct': 'InputMultiTouchEventWrapper',
+   'data': { 'data': 'InputMultiTouchEvent' } }
+ 
++##
++# @InputScrollEventWrapper:
++#
++# @data: High-resolution scroll input event
++#
++# Since: 11.2
++##
++{ 'struct': 'InputScrollEventWrapper',
++  'data': { 'data': 'InputScrollEvent' } }
++
+ ##
+ # @InputEvent:
+ #     Input event union.
+@@ -1193,7 +1233,8 @@
+               'btn'     : 'InputBtnEventWrapper',
+               'rel'     : 'InputMoveEventWrapper',
+               'abs'     : 'InputMoveEventWrapper',
+-              'mtt'     : 'InputMultiTouchEventWrapper' } }
++              'mtt'     : 'InputMultiTouchEventWrapper',
++              'scroll'  : 'InputScrollEventWrapper' } }
+ 
+ ##
+ # @input-send-event:
+diff --git a/replay/replay-input.c b/replay/replay-input.c
+index c86e00af0e..188c43a137 100644
+--- a/replay/replay-input.c
++++ b/replay/replay-input.c
+@@ -45,6 +45,10 @@ void replay_save_input_event(QemuInputEvent *evt)
+         replay_put_dword(evt->mtt.axis);
+         replay_put_qword(evt->mtt.value);
+         break;
++    case INPUT_EVENT_KIND_SCROLL:
++        replay_put_dword(evt->scroll.axis);
++        replay_put_qword(evt->scroll.value);
++        break;
+     case INPUT_EVENT_KIND__MAX:
          /* keep gcc happy */
          break;
-@@ -349,6 +355,18 @@ void hid_pointer_activate(HIDState *hs)
-     }
+@@ -80,6 +84,10 @@ QemuInputEvent *replay_read_input_event(void)
+         evt->mtt.axis = (InputAxis)replay_get_dword();
+         evt->mtt.value = replay_get_qword();
+         break;
++    case INPUT_EVENT_KIND_SCROLL:
++        evt->scroll.axis = (InputScrollAxis)replay_get_dword();
++        evt->scroll.value = replay_get_qword();
++        break;
+     case INPUT_EVENT_KIND__MAX:
+         /* keep gcc happy */
+         break;
+diff --git a/ui/input.c b/ui/input.c
+index f40a988370..f9ae49e275 100644
+--- a/ui/input.c
++++ b/ui/input.c
+@@ -181,7 +181,12 @@ void qmp_input_send_event(const char *device,
+     for (e = events; e != NULL; e = e->next) {
+         InputEvent *event = e->value;
+ 
+-        if (!qemu_input_find_handler(1 << event->type, con)) {
++        uint32_t mask = 1 << event->type;
++
++        if (event->type == INPUT_EVENT_KIND_SCROLL) {
++            mask |= INPUT_EVENT_MASK_BTN;
++        }
++        if (!qemu_input_find_handler(mask, con)) {
+             error_setg(errp, "Input handler not found for "
+                              "event type %s",
+                             InputEventKind_str(event->type));
+@@ -217,6 +222,10 @@ void qmp_input_send_event(const char *device,
+             evt.mtt = *qapi->u.mtt.data;
+             break;
+ 
++        case INPUT_EVENT_KIND_SCROLL:
++            evt.scroll = *qapi->u.scroll.data;
++            break;
++
+         default:
+             g_assert_not_reached();
+         }
+@@ -235,6 +244,7 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+     InputBtnEvent *btn;
+     InputMoveEvent *move;
+     InputMultiTouchEvent *mtt;
++    InputScrollEvent *scroll;
+ 
+     if (src) {
+         idx = qemu_console_get_index(src);
+@@ -265,6 +275,12 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+         name = mtt->axis < INPUT_AXIS__MAX ? InputAxis_str(mtt->axis) : "invalid";
+         trace_input_event_mtt(idx, name, mtt->value);
+         break;
++    case INPUT_EVENT_KIND_SCROLL:
++        scroll = &evt->scroll;
++        name = scroll->axis < INPUT_SCROLL_AXIS__MAX ?
++            InputScrollAxis_str(scroll->axis) : "invalid";
++        trace_input_event_scroll(idx, name, scroll->value);
++        break;
+     case INPUT_EVENT_KIND__MAX:
+         /* keep gcc happy */
+         break;
+@@ -342,12 +358,62 @@ static void qemu_input_queue_sync(QemuInputEventQueueHead *queue)
+     queue_count++;
  }
  
-+static int hid_scroll_counts(int32_t *pending, int32_t *residual, int mult)
++static void qemu_input_scroll_to_btn(QemuInputHandlerState *s,
++                                     QemuConsole *src, QemuInputEvent *evt)
 +{
-+    int unit = INPUT_EVENT_SCROLL_DETENT / mult;
-+    int32_t acc = *pending + *residual;
-+    int counts = int_clamp(acc / unit, -127, 127);
++    static int residual[INPUT_SCROLL_AXIS__MAX];
++    QemuInputEvent btn = { .type = INPUT_EVENT_KIND_BTN };
++    InputScrollAxis axis = evt->scroll.axis;
 +
-+    acc -= counts * unit;
-+    *residual = acc % unit;
-+    *pending = acc - *residual;
-+    return counts;
++    if (axis >= INPUT_SCROLL_AXIS__MAX) {
++        return;
++    }
++
++    residual[axis] += evt->scroll.value;
++    while (abs(residual[axis]) >= INPUT_EVENT_SCROLL_DETENT) {
++        bool fwd = residual[axis] > 0;
++
++        if (axis == INPUT_SCROLL_AXIS_VERTICAL) {
++            btn.btn.button = fwd ? INPUT_BUTTON_WHEEL_DOWN
++                                 : INPUT_BUTTON_WHEEL_UP;
++        } else {
++            btn.btn.button = fwd ? INPUT_BUTTON_WHEEL_RIGHT
++                                 : INPUT_BUTTON_WHEEL_LEFT;
++        }
++        residual[axis] -= fwd ? INPUT_EVENT_SCROLL_DETENT
++                              : -INPUT_EVENT_SCROLL_DETENT;
++
++        btn.btn.down = true;
++        qemu_input_event_trace(src, &btn);
++        s->handler->event(s->dev, src, &btn);
++        btn.btn.down = false;
++        qemu_input_event_trace(src, &btn);
++        s->handler->event(s->dev, src, &btn);
++        s->events++;
++    }
 +}
 +
- int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
+ void qemu_input_event_send_impl(QemuConsole *src, QemuInputEvent *evt)
  {
-     int dx, dy, dz, l;
-@@ -373,8 +391,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
-         dx = e->xdx;
-         dy = e->ydy;
-     }
--    dz = int_clamp(e->dz, -127, 127);
--    e->dz -= dz;
-+    dz = hid_scroll_counts(&e->dz, &hs->ptr.wheel_residual, 1);
+     QemuInputHandlerState *s;
  
-     if (hs->n &&
-         !e->dz &&
-@@ -513,7 +530,8 @@ static const QemuInputHandler hid_keyboard_handler = {
+     qemu_input_event_trace(src, evt);
  
- static const QemuInputHandler hid_mouse_handler = {
-     .name  = "QEMU HID Mouse",
--    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-+    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL |
-+             INPUT_EVENT_MASK_SCROLL,
-     .event = hid_pointer_event,
-     .sync  = hid_pointer_sync,
- };
-@@ -585,11 +603,74 @@ static const VMStateDescription vmstate_hid_ptr_queue = {
-     }
- };
- 
-+/*
-+ * Wheel movement used to be queued in whole detents and is now kept in
-+ * 1/120 detent units.  Without this subsection the source either was an
-+ * older QEMU or had no wheel state pending, so rescaling dz is safe.
-+ */
-+static bool hid_ptr_wheel_needed(void *opaque)
-+{
-+    HIDState *s = opaque;
-+    int i;
-+
-+    if (s->ptr.wheel_residual) {
-+        return true;
-+    }
-+    for (i = 0; i < QUEUE_LENGTH; i++) {
-+        if (s->ptr.queue[i].dz) {
-+            return true;
++    if (evt->type == INPUT_EVENT_KIND_SCROLL) {
++        s = qemu_input_find_handler(INPUT_EVENT_MASK_BTN |
++                                    INPUT_EVENT_MASK_SCROLL, src);
++        if (!s) {
++            return;
 +        }
-+    }
-+    return false;
-+}
-+
-+static int hid_ptr_pre_load(void *opaque)
-+{
-+    HIDState *s = opaque;
-+
-+    s->ptr.wheel_state_loaded = false;
-+    return 0;
-+}
-+
-+static int hid_ptr_wheel_post_load(void *opaque, int version_id)
-+{
-+    HIDState *s = opaque;
-+
-+    s->ptr.wheel_state_loaded = true;
-+    return 0;
-+}
-+
-+static int hid_ptr_post_load(void *opaque, int version_id)
-+{
-+    HIDState *s = opaque;
-+    int i;
-+
-+    if (!s->ptr.wheel_state_loaded) {
-+        for (i = 0; i < QUEUE_LENGTH; i++) {
-+            s->ptr.queue[i].dz *= INPUT_EVENT_SCROLL_DETENT;
++        if (s->handler->mask & INPUT_EVENT_MASK_SCROLL) {
++            s->handler->event(s->dev, src, evt);
++            s->events++;
++        } else {
++            qemu_input_scroll_to_btn(s, src, evt);
 +        }
++        return;
 +    }
-+    return hid_post_load(opaque, version_id);
++
+     /* send event */
+     s = qemu_input_find_handler(1 << evt->type, src);
+     if (!s) {
+@@ -518,6 +584,20 @@ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
+     qemu_input_event_send(src, &evt);
+ }
+ 
++void qemu_input_queue_scroll(QemuConsole *src, InputScrollAxis axis,
++                             int value)
++{
++    QemuInputEvent evt = {
++        .type = INPUT_EVENT_KIND_SCROLL,
++        .scroll = {
++            .axis = axis,
++            .value = value,
++        },
++    };
++
++    qemu_input_event_send(src, &evt);
 +}
 +
-+static const VMStateDescription vmstate_hid_ptr_wheel = {
-+    .name = "HIDPointerDevice/wheel",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = hid_ptr_wheel_needed,
-+    .post_load = hid_ptr_wheel_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(ptr.wheel_residual, HIDState),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_hid_ptr_device = {
-     .name = "HIDPointerDevice",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .post_load = hid_post_load,
-+    .pre_load = hid_ptr_pre_load,
-+    .post_load = hid_ptr_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_STRUCT_ARRAY(ptr.queue, HIDState, QUEUE_LENGTH, 0,
-                              vmstate_hid_ptr_queue, HIDPointerEvent),
-@@ -598,6 +679,10 @@ const VMStateDescription vmstate_hid_ptr_device = {
-         VMSTATE_INT32(protocol, HIDState),
-         VMSTATE_UINT8(idle, HIDState),
-         VMSTATE_END_OF_LIST(),
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_hid_ptr_wheel,
-+        NULL
-     }
- };
+ void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
+                           int min_in, int max_in)
+ {
+diff --git a/ui/trace-events b/ui/trace-events
+index 339a61f341..638096607a 100644
+--- a/ui/trace-events
++++ b/ui/trace-events
+@@ -132,6 +132,7 @@ input_event_btn(int conidx, const char *btn, bool down) "con %d, button %s, down
+ input_event_rel(int conidx, const char *axis, int value) "con %d, axis %s, value %d"
+ input_event_abs(int conidx, const char *axis, int value) "con %d, axis %s, value 0x%x"
+ input_event_mtt(int conidx, const char *axis, int value) "con %d, axis %s, value 0x%x"
++input_event_scroll(int conidx, const char *axis, int value) "con %d, axis %s, value %d"
+ input_event_sync(void) ""
  
-diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
-index 6a9d7bf466..1e29f4ada4 100644
---- a/include/hw/input/hid.h
-+++ b/include/hw/input/hid.h
-@@ -22,6 +22,8 @@ typedef void (*HIDEventFunc)(HIDState *s);
- typedef struct HIDMouseState {
-     HIDPointerEvent queue[QUEUE_LENGTH];
-     int mouse_grabbed;
-+    int32_t wheel_residual;
-+    bool wheel_state_loaded;
- } HIDMouseState;
- 
- typedef struct HIDKeyboardState {
+ # sdl2-input.c
 -- 
 2.56.0
 
