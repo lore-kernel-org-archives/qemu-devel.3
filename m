@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A586C606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 20:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A774606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 20:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OnwcWIkf
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hBxWB/AO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLnyM-000137-Sb; Tue, 27 Oct 2026 16:40:44 -0400
+	id 1xLnyP-00013J-0d; Tue, 27 Oct 2026 16:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xLnxa-0000mF-HV
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 16:39:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xLny1-0000qS-66
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 16:40:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1xLnxW-0001Kx-JL
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 16:39:53 -0400
+ id 1xLnxg-0001Mf-3c
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 16:40:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793133589;
+ s=mimecast20190719; t=1793133599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Lk5+7UNA+reYS/eYjIEoN9VAHU4As+vDYwlwHo+VTic=;
- b=OnwcWIkfvp4ZJp3TLiLGx4AWZl3un+4ZX6QVRWYwgzuv/b1nwOi5C8Rm9ixzWchgrL34Lx
- esqkTKTxON2ve58JsAEkWR0TcBNUVgKAgk+DypKmEq7odqbpppB68au4nXOHIA0eQ/7xoX
- fedMCDDIgYELAKn7MjwG38wAmmfjN9I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=PqkQQvp/vNM9bI0E0N8gi3g2ERwb+7178kZaVEn8CJE=;
+ b=hBxWB/AO0iQaaPuTUUv9g3MKFJAaYA09UwbthVgREgrvIXZ+8F4P/MMACeKcdbyTpeQ+jA
+ k8dmWoEIpB5d781ecYEX6fLVYa8yw9xJHmyeQLCFLndJ4JJ19Ij3CQOlsCNQesJr0j3GTj
+ ghBkqJZ7X9CdmCGIHK0vN/ZUbvfVY5I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-v_lb7_pKPsuXyGKIxjZzSw-1; Tue,
- 27 Oct 2026 16:39:45 -0400
-X-MC-Unique: v_lb7_pKPsuXyGKIxjZzSw-1
-X-Mimecast-MFC-AGG-ID: v_lb7_pKPsuXyGKIxjZzSw_1793133584
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-f1eRO3YRMnu2sKmVpCmtTQ-1; Tue,
+ 27 Oct 2026 16:39:57 -0400
+X-MC-Unique: f1eRO3YRMnu2sKmVpCmtTQ-1
+X-Mimecast-MFC-AGG-ID: f1eRO3YRMnu2sKmVpCmtTQ_1793133595
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC6D1180058F; Tue, 27 Oct 2026 20:39:43 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB36E195411E; Tue, 27 Oct 2026 20:39:55 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8759E410; Tue, 27 Oct 2026 20:39:43 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 70C2F1800586; Tue, 27 Oct 2026 20:39:55 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
@@ -56,24 +56,25 @@ Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Niklas Cassel <cassel@kernel.org>
-Subject: [PULL 04/15] block: add a helper to check if a zone is conventional
-Date: Tue, 27 Oct 2026 16:39:22 -0400
-Message-ID: <20261027203933.1066759-5-stefanha@redhat.com>
+Subject: [PULL 12/15] block: remove BlockLimits.max_append_sectors
+Date: Tue, 27 Oct 2026 16:39:30 -0400
+Message-ID: <20261027203933.1066759-13-stefanha@redhat.com>
 In-Reply-To: <20261027203933.1066759-1-stefanha@redhat.com>
 References: <20261027203933.1066759-1-stefanha@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,80 +95,71 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Niklas Cassel <cassel@kernel.org>
 
-Whether a zone is conventional is encoded in the most significant bit of
-the write pointer that the block layer keeps for it, so a caller that
-wants to know has to reach into bs->wps->wp[] and apply BDRV_ZT_IS_CONV()
-to the raw value. virtio-blk does that, which means a device model both
-knows how a block driver stores its write pointers and knows what one of
-the bits of a write pointer means.
+The field described the largest zone append that a backend accepts. It
+had one writer and one reader, and neither is left.
 
-Add an accessor next to bdrv_zone_index() and use it there, so that the
-encoding stays with the code that chose it.
+file-posix filled it from the zone_append_max_bytes queue attribute,
+which bounds REQ_OP_ZONE_APPEND, an operation it never issues: Linux has
+no userspace interface for one, so raw_co_zone_append() substitutes the
+write pointer of the zone for the offset and the request reaches the
+host as a plain pwritev().
 
-Unlike bdrv_zone_is_full(), this does not need the write pointer lock.
-get_zones_wp() only ever sets the bit for a conventional zone and never
-clears it, and a zone does not change type, so the answer cannot become
-stale. The rest of the word does change, on every write, which is what
-the lock is there for.
+The transfer limit does not apply either, no more than it does to an
+ordinary write. This driver reports max_hw_transfer but never sets
+BlockLimits.max_transfer, which is what bdrv_aligned_pwritev() splits
+by, so a request of any size goes to the host kernel whole and is split
+there: on a null_blk device whose zone_append_max_bytes is 130560, a
+16 MiB append completes and advances the write pointer by 16 MiB. That
+is safe for a sequential zone, as Linux issues the fragments of a split
+write in order, with zone write plugging since 6.10 and zone write
+locking before that.
+
+virtio-blk was the reader, and now takes what it reports to a guest from
+a property instead.
+
+Remove the field and the assignment that filled it. Keeping it would be
+worse than not having it: a driver that set it, believing something
+enforced it, would be silently ignored.
 
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20260921142819.2916043-5-cassel@kernel.org
+Message-id: 20260921142819.2916043-13-cassel@kernel.org
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/block/block-io.h | 6 ++++++
- block/io.c               | 7 +++++++
- hw/block/virtio-blk.c    | 2 +-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ include/block/block_int-common.h | 3 ---
+ block/file-posix.c               | 5 -----
+ 2 files changed, 8 deletions(-)
 
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 9d1c0eb7fbc..e469df70610 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -128,6 +128,12 @@ int coroutine_fn GRAPH_RDLOCK bdrv_co_zone_append(BlockDriverState *bs,
-                                                   BdrvRequestFlags flags);
- /* The index of the zone that @offset falls in. */
- uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset);
-+/*
-+ * True if the zone at @index is a conventional zone, which can be written
-+ * anywhere in any order. The type of a zone does not change, so unlike
-+ * bdrv_zone_is_full() this does not need the write pointer lock.
-+ */
-+bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index);
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 6bfdcbfe86b..0c7746a5441 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -914,9 +914,6 @@ typedef struct BlockLimits {
+     /* total number of zones */
+     uint32_t nr_zones;
  
- bool bdrv_can_write_zeroes_with_unmap(BlockDriverState *bs);
+-    /* maximum sectors of a zone append write operation */
+-    uint32_t max_append_sectors;
+-
+     /* maximum number of open zones */
+     uint32_t max_open_zones;
  
-diff --git a/block/io.c b/block/io.c
-index 8ba0b3c9626..d08956105c2 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3378,6 +3378,13 @@ uint32_t bdrv_zone_index(BlockDriverState *bs, uint64_t offset)
-     return offset >> bs->bl.zone_size_bits;
- }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 703ec686a35..4749d965865 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1508,11 +1508,6 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+     }
+     bs->bl.nr_zones = ret;
  
-+bool bdrv_zone_is_conv(BlockDriverState *bs, uint32_t index)
-+{
-+    IO_CODE();
-+
-+    return BDRV_ZT_IS_CONV(bs->wps->wp[index]);
-+}
-+
- void *qemu_blockalign(BlockDriverState *bs, size_t size)
- {
-     IO_CODE();
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 6e4a7a4076c..dd69d81532b 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -524,7 +524,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
-         }
- 
-         index = bdrv_zone_index(bs, offset);
--        if (BDRV_ZT_IS_CONV(bs->wps->wp[index])) {
-+        if (bdrv_zone_is_conv(bs, index)) {
-             *status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-             return false;
-         }
+-    ret = get_sysfs_long_val(st, "zone_append_max_bytes");
+-    if (ret > 0) {
+-        bs->bl.max_append_sectors = ret >> BDRV_SECTOR_BITS;
+-    }
+-
+     ret = get_sysfs_long_val(st, "zone_write_granularity");
+     if (ret >= 0) {
+         bs->bl.write_granularity = ret;
 -- 
 2.56.0
 
