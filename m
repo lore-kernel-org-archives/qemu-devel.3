@@ -1,89 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9CC606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1E3606A31A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 22:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Kr2HZs75
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=JFrrkWNA
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLpcL-0002Sa-7l; Tue, 27 Oct 2026 18:26:05 -0400
+	id 1xLpcG-0002Rv-Ld; Tue, 27 Oct 2026 18:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xLpcG-0002SG-8K
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:26:00 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ id 1xLpc3-0002Qz-Ql
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:25:49 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xLpcC-00039e-Rw
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:26:00 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-6fe4372c5f3so289788eaf.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:25:54 -0700 (PDT)
+ id 1xLpbz-000391-M5
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:25:46 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-6de2f213b7aso233429eaf.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793139954; x=1793744754; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793139942; x=1793744742; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=DTrArx4Wg5lkx68TXL73TFXJli23Uy3pE3zSZ0XVCR8=;
- b=Kr2HZs75d7MWEP7j4HagAZdTuljpvsKfq2f4x0bh1bvrqwR99PF5ygoe36bTOsZoYH
- haRml3jO4ok97XZrxzLe9asWTpxnZ15WGo7EPmnMq3Fu4oPwe7G7HSTPyNyE9Mb6RFTO
- IoiogSX6b3I0WxSnIt7i6JPQlEOttZvFqsTI3QAtq3iGTDhzckj79gvMPPDj/eyjBKU3
- Ji4oZcL/ijzwOpbd4MptlVFzmttwmFmkkJg2gtDWPWy5JBmtSKm+LYVucGnsCGmtPKVA
- yYCJsFBE0zrTm8g7DIdUZPKRA4EHzdk4OI36ODdUipxv5kbXD8A1vdnKVL05D8iKzTNk
- 1L5w==
+ bh=AHEdzxP53w6gXeHKfqR1/SqMcsr59rLohwICBaccrbA=;
+ b=JFrrkWNAsBt/ep07jcKgZtN0aM3lqAV27Cj78D0xK6LF2RF9xrnohoxQ3nrpzC6Wom
+ 8KmFzpKS0CvZA7qgYRt9KGE+nRFMoQfX7aR/0ukSqHC9x+YbAU4f+i7E7sp3X+8w8qIK
+ 43TfOOQIaiJt9KkLiTOlO+VREO6inVi7VCXdv6QFSUK2+Tg18XeX+OoVtG+aoDyuOCHZ
+ HyUQM80wN3rZxTmpNo9qCH+zr8ENjsuwQswC7Ni+h0fMZxwVsPaUzjtGM87ilgbEXQ17
+ Qw6rRuPMvHpMftfvJHmSudwoBAtvg3FBGSlvDtpTu4eMMV6SprnSzWBLLA3QQetS7+jZ
+ YBWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793139954; x=1793744754;
+ d=1e100.net; s=20260707; t=1793139942; x=1793744742;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DTrArx4Wg5lkx68TXL73TFXJli23Uy3pE3zSZ0XVCR8=;
- b=nc5eXtQ2Ej1YvyO5g90iB2996atPmszlF+ea7tU2lTgCPUQwtaDqHrl3NqV+vXabU4
- yCvInh63aa6mWLqZTzsgNdMXvwc5vLLH3oCJZApiGmXHg0+rKoMt7BVzWuGqru3n+2Dt
- vkast3cp3z5mcrg16y926UWcj0gzFbPGpuTHazExiBfxXqRPOUG7tDzDu+d1CqYddCqf
- 51FnrYxwf3v1T3CXIuXC/qDf4NNRGlVS8sq1IEMZFBq/J+7oIKFW6nqsCWLo31DDk1iu
- KkqUalCXkqmAnFpk7V+c9l9daLILOslTBxrIG5eWMmoKBVMM3Mr0f3txAM/8l9RYN/UH
- VZ3Q==
+ bh=AHEdzxP53w6gXeHKfqR1/SqMcsr59rLohwICBaccrbA=;
+ b=TzZ1rDgldz9BjArenc4iT3xEJ2NSj5rfJn3gvtoMtAG+/HVHdSPCxDN7at18MVRCRY
+ K1itoSTP7DG+j9W30a+QzWm72CL5ovbAkMTAJ9/XRvZR9YLl/n8xuncDA3/Y7ToI8GF/
+ xiT2vr9BP034QONIx/0HSbvFFsQY16roh/k20kA+xn+Af5Tm/cJ3PAF3Hq9AVP5aSGIO
+ GJEwnehR9NGuMFBtMb5OZugAxJaQhpgTkZI0emBWb6Cv/J9EqU3yztOKRbM/3LteiGDV
+ PGg4S+NXN1FVGe9RUPU0GMQddW/5+/6QQ0CxjoQ2Pmp5Fr9qTxhNHqtl+AnSHEaLu/an
+ SE4g==
 X-Forwarded-Encrypted: i=1;
- AKwUvBxc46qQQNNwG9hjRfPIufu3wudWXjezK4DprUQziLCS4wBcTkpkwVoZXRUDVLV2Fy5z911ywIXzn4d7@nongnu.org
-X-Gm-Message-State: AFq9FYLwRN41748z6KK4o44SjhaUNoxbKHsWAzetw7oUmV7OeCczwrhx
- 4UX8RDArWaMAuh2oOJn35Kz55+byiUuXDNmgsj788SCZuHXr98Kpr9q3ND+NMsmrX6dvmtcQv2O
- HFXD7
-X-Gm-Gg: AYBFou2SKz0bmfXbS+O95/MVhDskdmsQZbrYwS/3NSm1NJDqpWoqZ+emudhxYIsF+Re
- /TujwtgCJ3zR8FQJAodSMqmvoYGFJvngt86lFGZ7V+U1TYIPUYHhb7TeaPB3irrNkqUn/NFKkiW
- wepmix8O8pV/BzXeBKqn2azp7Ta/kVhtOJpNs/YDbfAS+96CSScYFuIuvor9OS2b4+HhCOGI0ES
- PNJdH/7kB8YDH/gXUvEi70wTFEvnhJoo5hOnK/R07cBRebUyIT2S8CNpJE543e68LBEfREhnlkN
- /p2NvX1bK8F2Zyom/6hd0EhqiysZVWk0xrQd9wGOcKKQqyUQY0ZbysqFHWEjnnI1BbDvg03yXFX
- 9PrQNEIvfEXk231dqAbn+Ss3RD5LOkzgcZMom/7DZ6435BYFCFvs/GLKFxAudlPpa37anJrbdxN
- di1xY1/zvB6x0aQQbt7ziQVsKdU54WiNravKk1oyLqaNEMXMSy3VQm8u8KrPYlvHdtknv0cQGF1
- 4hZTSX85GWe2+vp19OzAZQzWVn4t+rk3d4rhmRO4RUBHMnqHKIkIP4JuLUOIQwvDyZ5KYM=
-X-Received: by 2002:a05:6820:a299:10b0:70b:1217:4aa3 with SMTP id
- 006d021491bc7-713eaf5bc42mr291951eaf.5.1793139953798; 
- Tue, 27 Oct 2026 15:25:53 -0700 (PDT)
+ AKwUvBzu1RADkHZGFanLmvoI2pY2Im8+6m4SS/csr6g2bQ23zZTuNIRahBjp/BETk4jWruAoHcR7m0DMMfux@nongnu.org
+X-Gm-Message-State: AFq9FYLLwYhAX0Q7OyJqYqKaCyqLdLCikhfvHv5ytGmBjazcp7LaCPk6
+ SnMKDAlLeSNpop0yTDqdScFAeLJAl8kOCejGxKQeCoPgbemzWr5C+RIRwAf8t0X1bDw=
+X-Gm-Gg: AYBFou0oiBhMkuZqLOV+ohQMz9+qpA60LUtrxmvSetlxs7vXhp9Gro8COtNH6Abb4wT
+ xMFrEnC6Dff4VaFokkl31ojUM6xAvBtqAkloknLrRivWGvnsYR6fCHfH91VaGmgH9gHTxaIK5UE
+ 85IjnSUOMhvdxttXXhFJXFnhDYQkB2MicCHJMUkgsBMeU6szJIIjhgF515ifarCx4xyGGNXBN73
+ PO8R85dFy3i1XKP+T4jp+YQQV53vUJ8QyHQQQGthA43cS7z1K58oo5t5rYY8CT4L3paPolcSBGX
+ PR2htA0ZcINpVKSjFYjT0vQgD8AOIqFao/cm6P4x4vY7zkgLgTsfZIj/JVk0xbbO/dX7gXbkcqu
+ ntduHTKq2pnQEHTC33hLT+MUhc8F6XURx48UPLjw4L8x0z5nGy/fqycg+5vggzsltLTCG2Upfcr
+ h25lhH51eYqCQcuI1iD2Ht+BPQiFRriVWQt/LZHnwVlrXR3nEKh7MOv5zi73F3Ds/LwdCo2CPRG
+ Ym8O65HxSOuy1m54SSKFDKxXTLv6H1TaY5yCgHJen1qEQTnsFlumblUyb/LxLMfpgD1Yds=
+X-Received: by 2002:a05:6820:f00e:b0:6f6:61c5:d929 with SMTP id
+ 006d021491bc7-713ee668f41mr337378eaf.38.1793139941644; 
+ Tue, 27 Oct 2026 15:25:41 -0700 (PDT)
 Received: from [192.168.129.53] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-850f8458d8esm12219371a34.1.2026.10.27.15.25.52
+ 586e51a60fabf-4a8b793fe7csm1055007fac.15.2026.10.27.15.25.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 15:25:53 -0700 (PDT)
-Message-ID: <9d78d6fe-2e7a-4979-9fc9-77616a7102e6@linaro.org>
-Date: Tue, 27 Oct 2026 17:25:51 -0500
+ Tue, 27 Oct 2026 15:25:41 -0700 (PDT)
+Message-ID: <3b159884-d374-42a2-a940-91dcd6576af7@linaro.org>
+Date: Tue, 27 Oct 2026 17:25:39 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/29] riscv-to-apply queue
-To: alistair23@gmail.com, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-References: <20261027062808.1995205-1-alistair.francis@wdc.com>
+Subject: Re: [PULL 0/6] s390x queue for 11.2
+To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20261026140153.2072253-1-farman@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
+In-Reply-To: <20261026140153.2072253-1-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,43 +110,25 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/27/26 01:27, alistair23@gmail.com wrote:
-> From: Alistair Francis<alistair.francis@wdc.com>
+On 10/26/26 09:01, Eric Farman wrote:
+> The following changes since commit 288b6c9e78913401fac4880b3281ce431540b8df:
 > 
-> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9ae:
-> 
->    Merge tag 'samuel-thibault' ofhttps://people.debian.org/~sthibault/qemu into staging (2026-10-24 16:09:37 +0200)
+>    Merge tag 'pull-nbd-2026-10-08-v4' ofhttps://gitlab.com/ebblake/qemu into staging (2026-10-19 10:54:44 +0200)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20261027
+>    https://gitlab.com/efarman/qemu.git tags/s390x-20261026
 > 
-> for you to fetch changes up to bf67d56f282c1ee25b67dfda3f8ca54d2bd4648e:
+> for you to fetch changes up to 2ddae8799cc52591846f3a0a901a77e2284f8751:
 > 
->    target/riscv: Fix CPU state access on big-endian hosts (2026-10-27 10:26:46 +1000)
+>    MAINTAINERS: Update s390 boot reviewer (2026-10-26 08:10:58 -0400)
 > 
 > ----------------------------------------------------------------
-> RISC-V PR for 11.2
-> 
-> * Add experimental Zvabd extension support
-> * Mask vsepc according to IALIGN
-> * Reset vCPU on VM reset via MP_STATE_INIT_RECEIVED
-> * Improve modeling of the Atlantis UART
-> * Fix IOMMU entry leak with ioatc-limit=0
-> * Fix integer handling issues in k230_gsdma and k230_decomp_gzip
-> * Reclaim invalidated IOATC entries for IOMMU
-> * Duct tape fix for QMP and RV profiles introspection
-> * Move RISC-V 'Z' CPU properties section to removed features
-> * Use TSO barriers instead of full barriers for Ztso
-> * Make mnstatus.MNPELP writable with Zicfilp
-> * Gate envcfg CBO fields on extensions
-> * Fix stale PMP state across reset
-> * Use 1ULL for a value we're going to shift by 63
-> * Remove unused IMISC macro
-> * Encode debug translation ranges in IOMMU
-> * Allow regular mstatus MPV/GVA writes again
-> * Fix uninitialised upper half in pmu_timer_trigger_irq
-> * Fix CPU state access on big-endian hosts
+> s390x fixes/features for 11.2:
+>   - Implement resizable vt220 console
+>   - Deprecate dependencies of deprecated features
+>   - Reclaim DMA slots during, for example, guest reboot
+>   - MAINTAINERS updates
 
 Applied, thanks.
 
