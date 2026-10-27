@@ -1,115 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E536606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F192606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=qgIVQf/r;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=us4o/ZTU;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=TSFPErL+;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=dVJqfkKm
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=aliCq/7G
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLjE7-000235-6d; Tue, 27 Oct 2026 11:36:39 -0400
+	id 1xLjId-0003Th-Rz; Tue, 27 Oct 2026 11:41:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xLjE4-00022o-9F
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:36:36 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xLjE0-0003Uz-J4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:36:36 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9EBC221C1B;
- Tue, 27 Oct 2026 15:36:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793115391; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BCINiWHvZwszE1H10YxUyN09cHXePHvPVDM8IsKQw54=;
- b=qgIVQf/rBTfr2K3HuTH5x3TdbnAk/9iNuPpaTMSGlWhuCjzaRj3QZcwATxV/OcKLt5RTsL
- aD0QMyIsVZtYqZRmB6+Wi4JTvcLaJutyvfMO9lk817P/eq0iGOW17G+OweVuOH0XQ1nPHX
- C7HMk+PVwvWAn6dKz8VvHXJgtSPgJT4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793115391;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BCINiWHvZwszE1H10YxUyN09cHXePHvPVDM8IsKQw54=;
- b=us4o/ZTUBzxVtTsYlqCDJUlU7NmAS0leBHTgIZnBr2jJgW/BxUlOQta1IGkOAxwkcHm+6O
- 4mjdRBo7zqrGoZAA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793115389; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BCINiWHvZwszE1H10YxUyN09cHXePHvPVDM8IsKQw54=;
- b=TSFPErL+qk6NJMFFJvg6G4Q1haPtmNpypvrkFShnxe67/oVk2H+VT9ACxK9fK/LthqaL+z
- LJhHvbiAyraB9UG64MAek0Ge5ASO6neb5vXiVcehGpBoMOl4O5axlWRe3KzrMc2CnigVQN
- I1SaY/T8z2sthPObxszcCZnL5DHR/kg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793115389;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BCINiWHvZwszE1H10YxUyN09cHXePHvPVDM8IsKQw54=;
- b=dVJqfkKmrDUQFMOE8ahp1YqZzhG4lNU66rVGrt/PUqCi73afk1irWLz8YlLQjqX7IPynYs
- wDt0Zavo81/G7BAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CAF113319;
- Tue, 27 Oct 2026 15:36:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lrgDLfzE4GqbUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 27 Oct 2026 15:36:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>, mjt@tls.msk.ru, peterx@redhat.com
-Subject: Re: [PATCH v3 0/3] releases: build and run any QEMU release easily!
-In-Reply-To: <786c36d6-d321-46f0-9e66-eb5847baabe9@oss.qualcomm.com>
-References: <20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com>
- <87h5icl9dw.fsf@suse.de>
- <c4b4213c-6013-4a96-aa13-509778bbb6eb@oss.qualcomm.com>
- <87zew0jud9.fsf@suse.de>
- <786c36d6-d321-46f0-9e66-eb5847baabe9@oss.qualcomm.com>
-Date: Tue, 27 Oct 2026 12:36:18 -0300
-Message-ID: <87fqxrjgul.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xLjIb-0003TQ-TR; Tue, 27 Oct 2026 11:41:17 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xLjIZ-0003x1-4A; Tue, 27 Oct 2026 11:41:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nVTkwDoZ9eRn8HUI2Chh1HEVKnNOQzr0c17s2OOPpaCwjoAory3nFJSK2mYcPat9a1HhxXnkxlUzSOgSmUOSjEqJ1H3TP8ckdWf7Yhy06pBeQxKrJkur9gyiFdMi+JVkbDYhJ7nXYUMHA69WV57QFvGkYqlOkCNuaaRwQsiiMTB4YMnPQ/wo/4x3I9cCjWwMq62XKcVu21oEAl645/qemkT5IKIC+DHc/EN5/AUZsL7t/utQ1XCqaQ905gn7Hr+jY9bpCz5IgdSFq6u4E5viF3uv+cyZr87FiB3sLULdxuKo7ptKpcS4Ya7WhQooeDugcsHtb15wEkd38eWX2mimfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=D/WiDhgc9qK5DJcxBUcRT9HKJ2W/KXrbnB6b8h3qyow=;
+ b=CVI36VV7bV4zeX7kh52ZM4C/WzRMvuen3S/c9DZCrdT5C15pnTJhsz26Y4qSJ1hMavEBYsY9WslG+5l3J0bYrbFKVzW6VGsnhQKK3bsk6FFJLscqyAcweAVDvqHMk13ZkUOvATAH0chTJZUO1lo+lAmskVDUVWuu9+/PlvCpR3MrDPX65BnyEL2ASUbU1NuOgL5govs5ppzjrtECLf2JReN5iLbacFBbd29e4FIN6e5tP29Z20qh3xBYQMN6ZkIoYh+lHVkiTwF4xhRJkXPDcW/QBwowOPlaa8W5FEsNmfef10GigKx4nYe+Gs5P7at3zIJHShlB/Jz5YAlXPc3eFQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=D/WiDhgc9qK5DJcxBUcRT9HKJ2W/KXrbnB6b8h3qyow=;
+ b=aliCq/7Gq+Xmv8ZxijAQWikLZYU2eH0HIm1Wrgk3UWY69iyVYWv7U92fJIXkDEeXoxHn0lNUufEWuBXhUlCB11VttwLNbz6xlkCiGRzN7cnAI1ReJzrUUnn7Y6el58ABOky4INYVIl3k9pinic9K2By6SMXCSmFIqU77FStkBs9fXZIjqKw4IcggSHsh0olep/YFdPDao8NBUtSr3nX7tbooK1U+XynAe3Yiti7iC/2LZx1Zo7ouzowlBQ491y0PqWTok8hx+z8NmmgVe1wzA0SwbS5tuPju8eGLobEcS/NKMkRy0cZKrKXFeMG8oJfgDt8rG652vhgw//z1VYPttw==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by SA5PPFD8C5D7E64.namprd12.prod.outlook.com
+ (2603:10b6:80f:fc04::8e3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 15:41:10 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 15:41:09 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Tushar Dave <tdave@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel@redhat.com" <marcel@redhat.com>, "devel@edk2.groups.io"
+ <devel@edk2.groups.io>, Alex Williamson <alwilliamson@nvidia.com>, Jason
+ Gunthorpe <jgg@nvidia.com>
+Subject: RE: [PATCH 2/5] pci: add validation for fixed BAR configuration
+Thread-Topic: [PATCH 2/5] pci: add validation for fixed BAR configuration
+Thread-Index: AQHdRg0Jn25715AK0EKzvM/+JyH4lbcRxhqw
+Date: Tue, 27 Oct 2026 15:41:09 +0000
+Message-ID: <SJ0PR12MB86142EC759980E479AF528CDAB602@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260916185554.917526-1-tdave@nvidia.com>
+ <20260916185554.917526-3-tdave@nvidia.com>
+In-Reply-To: <20260916185554.917526-3-tdave@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|SA5PPFD8C5D7E64:EE_
+x-ms-office365-filtering-correlation-id: de974de3-5370-4811-b255-08df3440b91c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|376014|1800799024|366016|18002099003|6133799003|261026121527099003|22082099003|56012099006|261022075727099003|4143699003|5023799004|11063799006|10067099003|261009223027099003|261021123027099003|261021121427099003|261022105027099003|261022113327099003|260925022911599003|261026140227099003|38070700021|260925021911599003|260925021311599003;
+x-microsoft-antispam-message-info: TuswsFjFL9J8RgGWn6ta9WyA7bkRlwqXdch31Y1pTlS8bkm86vZntk1+H/TN19UmGeqpwDy3KK9IhaZ5tN4DUh9uSBbzztrBK+FjjV9Ly6BQ9BCJQAYoElBWyMjW5wpWXfnCneGFVwLmB7EfwMMRTSVqMfsanZ/DRW2hNuiqM+GrvCVG9VknxSFVVoez1C2AmkFcvBweqsnsPlSq95NASSUYEiDT3QYnFVXDmIZ3LWW+Sy3ZC6QOShDGRmcPJcuzcqmFd8TEnAJk23b1jxXua0wl9d+769hJGOJbOLP4ABkQM57Zci4W3oUW8GczI7WesR4xlmxCr4u1vi0Vpt0Mo9gk+wks/69WPX6EoQEc8gaEv/Tda/oXX/vlD1TYTu3bZT+g2ZhcL0O7CFKm+hGU/3Aaxz9amJOIsw8kopBGZoou/H9ymISmMboGcp+1JZLLRcnHftL3/xcTaiKz/J0cB45Z7TEGidfr7HF3Zz1WK4X11r15jSqXim3gsv5j4hBr1PX4HCVfXAg1cH9DohzsrUsfcV+C+h5jPwDC/GDNdfdk0xJpL5XH76NNvJKkrp3S5nYppL7cN+UKuAFN5xoUQodR04p8RuKpiP3tp6qBGtg5YLf66oMT1RbExbRKXKoAfvJ6WLd/vdijYXRQ6vGH36mAnXxymE7HqB7h9dgen1S0bV4RafqRUsY0kl+HWWLPG/hEaN1jgN6gHXb03zU00oqrGTYeXtrEhlT+r0/iU9I=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(18002099003)(6133799003)(261026121527099003)(22082099003)(56012099006)(261022075727099003)(4143699003)(5023799004)(11063799006)(10067099003)(261009223027099003)(261021123027099003)(261021121427099003)(261022105027099003)(261022113327099003)(260925022911599003)(261026140227099003)(38070700021)(260925021911599003)(260925021311599003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?c1FwQmh0MGJlMi9BNHlZUWdMQWRMcEFzNCtNV3hJelMwaTdtemNLUTRvWVUz?=
+ =?utf-8?B?MjEwZzN6MW9maXVTa2M4M0hsbU9FRk9NMVk5SjFVekw0dGFvekh4cWNWcHQr?=
+ =?utf-8?B?NFJhK0RRcE9wSC91VW9BOERFYWMvVXZKRkNtUHdPTHY2dmZ0bENKbytIZ1Nu?=
+ =?utf-8?B?ZFFXZVoyZHhZejRMNlFKeWJ6MGI2THM0QUd2ZVc1VDhqM0FiU3pWNTJiTW4w?=
+ =?utf-8?B?RFRKMlc5SWlsMWlBNTRZZ0pkWjJuUnIzdW5vZXh0YnJNeG54TklOb1BrZWxr?=
+ =?utf-8?B?QnRkeFM4WEZmMTMwd1N0cFozeUR1Yzg2bW5tbEpDQkU5VEFjMCt5eEtEeWlj?=
+ =?utf-8?B?TmJQL3NIb054aU1hcWNVOGNIeEU2Vi9ycTBsTFU4Rm1RK3dnTXEzTVNXd0F5?=
+ =?utf-8?B?b0M0Z0IxTmJUOXVKcVN1S1ArTHljL2x5ai9VVmF0VUMzbXZsTTVBMDExL0w4?=
+ =?utf-8?B?T3ppKzlLMElWNnMzZXRscmlpUmxoS0kzb2VzMUt2bDlYRjFvODA3N0tnaDVi?=
+ =?utf-8?B?YWh3d29RcTRGSjFiKzY1TlBTVmFLck1xNVQ4UURQZ1p5MTE0YzVsSURnNTR3?=
+ =?utf-8?B?UFFiMVVNcThJd1ErMGowNXg0enZhNW5NU3NjckgvU0xJV1hiVkdpRDBueFgw?=
+ =?utf-8?B?a1kwN0R5d0tHVmw2UGlLNDNmZTN6ZTFYVUNza2kzVmJvdGFqeERwOWNYRm5B?=
+ =?utf-8?B?cTNremVIU1o1cW44cTJTRnNmVUt6MG5HYTV0Rm9PQnJXNkVxQlBjbGJXMGxt?=
+ =?utf-8?B?ZWVSZ3Z2S0JJZTV0TlBiVTd5Ull4YUY3andSdk05SnhFRXFSMjc2TlBxWmd5?=
+ =?utf-8?B?KzEvZzJFVVJCZTZnTUV1M1pUZDY5Y3I4dzczdlNTV2MyRlYwNldQS1M3aUg5?=
+ =?utf-8?B?Ky8vSm1RVFcwdDE3SmdSaHE3eGxkZkFHT2ZMSW5NcWx5dHB2YVQxazlLaThr?=
+ =?utf-8?B?MVFBNnhSM2RWeGVnTUVud1BqTFg2SnFwRmhJdUFHT0VZVlhPUExCWDVIV0Ju?=
+ =?utf-8?B?QWxpb0RtYkhWaFpLMTdBQmcwam50YmI1RVlSRjRjT05CNHdCbk9HVWtwV3BR?=
+ =?utf-8?B?cE5pMEd6SXI5MmlSMFV0UmJTVTlFMnh6MlV5VlV1ajFEeWFSNkZMZHNVS2lC?=
+ =?utf-8?B?MnJaMzkyMExkUVNjeGVsdUt2Y25TYTJkdnBTbGdrZ3RvNENmYWViMWlFaVFS?=
+ =?utf-8?B?L3lJT1JPWit6WUtNNStZc2VKL2RxcDR3akhrWUY5cytianZqYU1PWEFPRkdz?=
+ =?utf-8?B?ZjBCRjYwcVVMVXprV05BZWdzTW4zb1B6NVQ3M0IxQjM2SDdQNkNVV1A2R2lo?=
+ =?utf-8?B?Q2RqcXAvL2pNR3Bodld5bWJNTDFNUWpCUHlZdlRLbkdtMUtHNURHbHZzaU5B?=
+ =?utf-8?B?akhNZnVGQVVsemg3NXVPbDJJNkVKaFllZU9PdlV6SEkza3dtTThrTHdhNlJG?=
+ =?utf-8?B?bmpGMVc0algrL2dtNk5BSUszdjM3azRyQmJZN2p4RFh1RlczdStDVys4VU9k?=
+ =?utf-8?B?MElpQ3pFV056b3E1MFJkYUJHdXBZMC8zOUJ4eE1Ddk1NWi93bjFWWEF2eG5R?=
+ =?utf-8?B?SzMvaHU1VW5Jd3RDQXV0c29TR2NHVEtBK0pqYWRNbWNBT25SbXhSNElWWlJP?=
+ =?utf-8?B?eFo4aDJNWHdPRXNCWXl4RGxjL2RzQVlWVVI1MnlWeXJONVVyd3VBcmVkQmRL?=
+ =?utf-8?B?eGVFa0ZpRy9wdHlDN2p5Q3lYVW1oYWxnSUdKMkxkMHRRRk01ZjhiVDZTUmtj?=
+ =?utf-8?B?WEVDZ1FhRUozeWp4K3JwR1dFM3R4MFhNV2JSVkJsbWxxQzBmWkRVcHZ5Q3B2?=
+ =?utf-8?B?QkZhSFdhNGpHY2dyUnYxN3hxaU1kS2VZOXRLTEl4c2Z3RHVsVW1WdXBBdG9O?=
+ =?utf-8?B?YWtnTE5QTDVlMEJZK0dhRWVRbTlxU3EzWGlKTFVhQjEzcndscnV4MUxZUXpM?=
+ =?utf-8?B?TWZKclF4Y3NONnlvNHFvWjhpV0JSLzlWWUNURFArc2xSdFJvMXpWSllXMnRI?=
+ =?utf-8?B?MjBIOER0RkpFZ3J5cFZoMWpsWVJ6T0FqaWtSSUlaMmpWNU9rVEF1M3ozTitt?=
+ =?utf-8?B?bDVEZlh2TGRGS091L25OOEJwbklGNnlsQnNyMUliY0Ryc002VnhsTEw1WHZD?=
+ =?utf-8?B?YmZLd25NSDBxVFB2TnFrbk9IQTlQSkRyb3lnUmVvMS90aHhqKy96ZkxUKzZ4?=
+ =?utf-8?B?UHRCS3JTTjM2SDRCaE5uS1BJQk9mSFBEbHRpS2dOVjlpN3A5cTNOYTV0bkw2?=
+ =?utf-8?B?VXVUUGc4Y3ZZd0VFWTBzNU1aVlY0SFpvd1p1SmVmS1gyak5tMGVXdXMyU0ph?=
+ =?utf-8?B?UnVXbVpDcDhLZlI1QmEyaHNUTEN4S0U5VGo2Mmx4S3VMcmpyMjdDdz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-13.10 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- SUBJECT_ENDS_EXCLAIM(0.20)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[generate_release_links.sh:url,
- imap1.dmz-prg2.suse.org:helo, build_release_container.sh:url,
- qualcomm.com:email]
-X-Spam-Score: -13.10
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de974de3-5370-4811-b255-08df3440b91c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Oct 2026 15:41:09.6681 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 129bu2BIg1z0ZyrZASto1lfjKrKTndev6NXGgEm7GQRPN9TgoS/0Azl9o+YdYEUjtxU6SEgEa4Gf/qVOtHBOyw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPFD8C5D7E64
+Received-SPF: pass client-ip=2a01:111:f403:c001::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,383 +151,205 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-
-> On 10/26/2026 8:32 AM, Fabiano Rosas wrote:
->> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->> 
->>> On 10/23/2026 8:33 AM, Fabiano Rosas wrote:
->>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
->>>>
->>>>> This series was inspired by a recent post from Fabiano to provide container
->>>>> images for migration tests:
->>>>> https://lore.kernel.org/qemu-devel/24d04a1f-344d-4b90-a307-b582dd9a1128@oss.qualcomm.com/T/#m353f119dc1a24fa437dde8a96d1891629e64303c
->>>>>
->>>>> The idea to be able to build and run any QEMU (past) release with containers was
->>>>> in my mind for some time, so I gave it a shot. Finally, it was easier than
->>>>> expected to obtain a single dockerfile (with a few hacks) that works over all
->>>>> our releases.
->>>>>
->>>>
->>>> Good stuff, thanks for this work. I'm just not sure how much of it fits
->>>> upstream in the current shape, let's discuss...
->>>>
->>>> You say this was in your mind for a while, could you elaborate a bit on
->>>> how you think this could benefit the project?
->>>>
->>>
->>> First usage that comes to my mind is that it would greatly help for
->>> migration, allowing automatic testing in CI, by just downloading any
->>> previous QEMU, dump a machine, and restore it on current version.
->> 
->> Don't we also build QEMU several times over in CI? Maybe I'm wrong, but
->> it might allow us to decouple a few tests from the build steps.
->>
->
-> This is for current version, not past ones. I'm not sure it's worth
-> adding an identical build for past versions on every pipeline.
->
-
-I thought we re-built current qemu a few times, no? We have containers
-for various distros and then make; make check inside of them. The
-question was whether a step 0 to build the binary container for this
-release would allow some builds to be skipped.
-
->>> We could do it for last 10 releases to ensure migration from packaged
->>> versions in all supported distros (red hat, alpine, ubuntu, ...) work
->>> as expected.
->>>
->> 
->> It's a nice idea but potentially a costly one. I don't think there is a
->> guarantee that the downstream package is migration-compatible with the
->> upstream package.
->>
->
-> What would be costly? It seems it would just be a download + savevm
-> through monitor, and a loadvm from current version tested.
->
-
-Setting it up would be simple. Working with it, not so much. It's a test
-that once it fails, then it becomes a tedious job of figuring out
-whether the issue is a failure on our side or if it's merely an
-incompatibility between upstream vs. downstream. The packaged QEMU can
-have all sorts of tweaks, extra patches, fewer patches, different code
-entirely, different machine type ABI, etc (their own QMP commands
-even). The distro can guarantee it all works inside their environment.
-
-When a problem happens on the intersection between the two binaries, if
-it's on our side, we'd need to determine whether to fix it or tell the
-distro "don't do that". If it's on their side then we open a bug report
-and hope that this is even a priority for them.
-
-So overall I'm in favor, but I don't expect it to be game changing.
-
->>> It could be a enhancement compared to the manual process done once per
->>> release. I read many times in review "it breaks the migration", that
->>> yes, it would be nice to have CI saying "this series broke the migration
->>> from qemu x.y".
->>>
->> 
->> Most of the "breaks migration" issues are due to device migration. What
->> we have today in terms of migration testing cannot detect most of those.
->>
->
-> Ok.
->
->>> Beyond that, I think we could also offer a "rebase on steroids" tool. We
->>> could extend list of containers published to all top merge commits (git
->>> log --first-parent), and provide a fast rebase, based on download only.
->> 
->> Bisect requires a test of some sort. Will this cause the opposite
->> problem than what migration-test encounters? I.e. instead of "old QEMU
->> needs old OS" you'd have "new test needs QEMU from new OS". One
->> alternative would be to build the tests into an image as well. Or
->> perhaps it wouldn't be a problem in practice.
->>
->
-> I don't think adding tests in image has a specific value. What we want
-> is to keep the same test source, but just change the binary used. In
-> this case, the container just acts as a binary.
->
-
-There are requirements such as QEMU command line, external binaries,
-maybe even the code itself, in the case of unit tests. Exchanging the
-QEMU binary while keeping the same test (whether binary or not) may not
-work.
-
-- At some point we added the -audio command line option and updated
-libqtest to include the option by default. Now older binaries can't
-start when called by the new test code.
-
-- If a test is sensitive to qemu output, deprecation warnings and error
-message format changes might break it.
-
-- qemu-img and qemu-io might have implicit dependencies on a range of
-versions.
-
-If we're being rigorous, two commits with completely different test and
-QEMU code could still test the same functionality. That's how we do
-normal bisect anyway. The requirement of test compatibility across QEMU
-versions is something we probably never thought about before. I have
-just recently started thinking about what can be done to libqtest to
-allow more flexibility in this case.
-
->>> See it as a giant immutable precompiled cache. Dockerhub storage is free
->>> and unlimited.
->>> Some quick math: Since 8.0, there are ~2000 top merge commits. Each
->>> image is < 250MB compressed, so the whole thing would be < 500GB.
->>>
->>> Finally, in my personal case, while working on single binary, I had to
->>> compare output of qemu help between versions. I'm also interested to
->>> track QEMU binary size evolution over time. And some personal fun with
->>> software archeology on the project too for anyone.
->>>
->>>> To be clear, my use-case is simply to produce a few containers for
->>>> testing migration on my workstation. Your series can help a lot with
->>>> that, but from my point of view, some parts are clearly extra and some
->>>> are missing.
->>>>
->>>> Also beware that what you're touching here is both "infrastructure" and
->>>> "publishing". This has implications for how people consume the work of
->>>> the project. There's a chance that people see this as "official QEMU
->>>> containers" and try to use them in all sorts of weird scenarios that we
->>>> as a community are not prepared to maintain. You might get some
->>>> push-back on that basis.
->>>>
->>>
->>> Sure, it was free to generate all images and push them on my personal
->>> dockerhub, and it's now automated to push any feature release also in a
->>> GitHub nightly job. If we want to make it more official, it should
->>> really be hosted on an official account.
->>>
->>>>> The oldest functional distro we can find nowadays is ubuntu 12.04. Because of
->>>>> this, the oldest QEMU release we can build is v0.12.0. Previous ones require an
->>>>> environment we can't get easily today.
->>>>>
->>>>
->>>> I think the ability to go all the way back is very cool, but unless we
->>>> want to look at this from a archival or heritage perspective, I'd say
->>>> there's a line somewhere to how old we should go. I don't see an
->>>> use-case for very old binaries. Even knowing if they still work would
->>>> already incur in a maintenance cost.
->>>>
->>>
->>> Agree, mostly was a fun challenge. I was also curious to see until when
->>> we can go back in past from 2026.
->>>
->>> For the "maintenance" a scheduled CI job running nightly is a free thing
->>> for me, but I understand opinions on "maintenance cost" may differ. I
->>> also co-maintain tests/docker with Alex, so I'll be the one taking the
->>> load, and I'm fine with it.
->> 
->> Fair enough.
->> 
->>>   >> Images have the absolute minimal content possible. It's only qemu
->>> binaries,
->>>>> artifacts (roms, keymap, ...), and libraries. There is no shell or any other
->>>>> tool included. As a result, images have a size from 149MB (v0.12.0) to 1.48GB
->>>>> (v11.1.2).
->>>>>
->>>>
->>>> No shell means the first thing to do if one wants to debug the image is
->>>> to rebuild with a shell in. Not sure how frequent it will be, maybe it's
->>>> ok like this.
->>>>
->>>
->>> We could leave a base system, for only ~100MB per image, which is not
->>> the end of the world (+10% in size). Personally, I appreciate to have no
->>> shell, it reduces possibility of exploit when running an older QEMU
->>> having CVEs.
->>>
->>>>> This series adds 3 pieces:
->>>>> - a unique dockerfile to build any QEMU release. User has to provide an explicit
->>>>>   Ubuntu version when building a given QEMU version.
->>>>
->>>> This is the tricky part. We'll be carrying code (script+dockerfile) that
->>>> only works on master. If we tag today and tomorrow the old distro repo
->>>> breaks, we obviously cannot fix it retroactively. So we need to be
->>>> careful of where we direct the maintenance effort.
->>>>
->>>> 1) I'd suggest first of all to keep the release image entirely separate
->>>> from the ubuntu image. Treat release.docker as we treat the other
->>>> dockerfiles and update it to work for the current release without
->>>> looking at past ones. Have it clone, checkout, build and gather
->>>> deps. Allow the configure to be tweaked via parameter in case we need to
->>>> disable something in an older build.
->>>>
->>>> The script would then build a distro image (or dockerfile) with the
->>>> knowledge that it has about ubuntu depending on the QEMU tag vs. ubuntu
->>>> version combination. This would allow us to track the cludges more
->>>> precisely instead of "some ancient distro" as the dockerfile currently
->>>> says.
->>>>
->>>> This is more of a layering concern and how easy it will be to drop/add
->>>> version-specific fixes.
->>>>
->>>
->>> IIUC I think that's the approach Fabiano took, to use Dockerfile from
->>> previous versions, and the conclusion was that it requires some seds and
->>> hacks to have something that work. Internet state is not immutable.
->>> IMHO, building previous QEMU with past Dockerfiles is doomed to fail.
->>>
->> 
->> That's not what I'm suggesting here. I'm saying that "current
->> dockerfile" should have less tweaks and "current
->> build_release_container.sh" should be the one responsible for doing the
->> ubuntu-version-to-tweak mapping.
->>
->
-> Got you.
->
->> But maybe you meant to reply to the second point below. In that case,
->> yes the past dockerfiles require tweaks, but they also provide most of
->> the time the exact list of dependencies for the previous QEMU, and that
->> work was already done by the people from the past.
->> 
->>> Only thing you can control/guarantee is that "current dockerfile on
->>> master works".
->>>
->>>> 2) I wonder if the usage of apt-get build-dep might be a convenience
->>>> trap. In theory, some of the adaptations that are required (such as
->>>> tweaking dependencies) have already been done by us when working on that
->>>> development window.  If we take the dockerfiles from the git tag, those
->>>> changes don't need to be done again and for the issues that didn't exist
->>>> at the time, we can map them to the git tag instead of ubuntu version;
->>>> (we tend to know more about QEMU releases than ubuntu releases).
->>>>
->>>> Another issue with buid-dep is that it lists _ubuntu package_
->>>> dependencies. The distro can change how it builds the package without us
->>>> noticing. There is already some work done by lcitool, I imagine that it
->>>> would then be duplicated. Or worse(!) be different because build-dep
->>>> might be listing way more packages that what we need for the default
->>>> build.
->>>>
->>>> This is more of a push towards using existing infra because those pieces
->>>> are already looked after for other purposes.
->>>>
->>>>> - A script build_release_container.sh which automatically detects which ubuntu
->>>>>   version a given release should be buildable on (based on date). It works
->>>>>   great, and the heuristic works for all our versions.
->>>>> - a script generate_release_links.sh which creates wrapper scripts automatically
->>>>>   using prebuilt images (hosted on my dockerhub).
->>>>>
->>>
->>> Sure, lcitool could work to express all that. Would I like to spend time
->>> to rewrite all the missing bits in yaml when debian did it for me? not
->>> really.
->>>
->> 
->> I may have misled you. I'm not suggesting to use lcitool for the missing
->> bits, I'm suggesting we consume what's already in
->> tests/docker/dockerfiles. That point you already got.
->>
->
-> Oh I see ok. Like extract the list of packages, and inject that.
-> Well, I'm not sure it will be simpler than just doing an apt build-dep
-> to be honest, and not sure what we gain from taking this information
-> from our sources.
->
-
-Just so you're aware of my reasoning:
-
-It's information we control, add/remove packages, pin package versions,
-write a big commit message explaining why, etc. While apt build-dep is
-simple and it works great, it's still a little piece in the hands of a
-third party that has their own policies and goals. No one on their side
-(whatever distro it is) is thinking "what happens with QEMU CI if I
-change this". It makes the project more robust if we limit that kind of
-exposure.
-
->>>>
->>>> It would be nice if these two could take any hash, instead of just a
->>>> tag. This is one of the things that will depend on what you intend to
->>>> achieve with this series.
->>>>
->>>
->>> Very easy, it just needs a non shallow clone.
->>>
->>> ---
->>>
->>> After reading and answering to this message, I feel there are two topics
->>> we can discuss:
->>> 1. the current implementation
->>> 2. what would we like
->>>
->>> 1. Personally, I just posted this series as an example of "yes it's
->>> possible with very limited amount of code", and I don't mind having
->>> something completely different. I feel it's probably not worth reviewing
->>> every line at this point.
->>>
->>> 2. The biggest question seems to be the direction with:
->>> 'do we want to provide a single dockerfile that covers all versions' (a)
->>> VS 'having a dockerfile at a time of history for current version' (b).
->>>
->> 
->> It's probably (b), because the "all versions" part spontaneously spawned
->> to life. If you take a recent-ish QEMU version there will be few or no
->> tweaks at all and then it all becomes a question of "why base this on
->> ubuntu when we already have dockerfiles written for several
->> distros?".
->> 
->> UPDATE: You just replied that you think build-dep is consistently close
->> to the real deps enough that it would be less work to maintain. You
->> could very well be right and we're approaching the hair-splitting zone
->> around this topic. I suggest you carry on using your best judgement and
->> let's leave it to time.
->>
->
-> We can also decide to settle on fedora, alpine, debian, suse, or any
-> distro. In terms of images, ubuntu was just the most convenient (tried
-> with debian first, which required updating apt sources for older versions).
->
->>> I think (b) is what we have now (current ubuntu/suse/debian/alpine image
->>> works for current revision, since it's used in CI), and it was already
->>> proven it fails from Fabiano's feedback.
->> 
->> But the tweaks may be necessary either way. This series adds an
->> indirection to choose an ubuntu version just to be able to issue (some)
->> commands unconditionally in the dockerfile. It could just as well check
->> the qemu version directly.
->>
->
-> That's maybe where the philosophy differs. Key idea of this series is to
-> tweak the environment so it works all time, and not do specific things
-> per version.
->
-
-Sure, but the "all the time" part doesn't convince much. Anyway, that's
-only one point and we've discussed it enough. If it fails miserably
-you'll learn something, otherwise, I will. =)
-
->> (yes, there's potentially dealing with all the other distros and lcitool
->> and all _that_, I get it)
->> 
->>> It seems to be that's what you propose also from your answer above.
->>>
->> 
->> Fabiano and I are the same person. =)
->>
->
-> Sorry, got confused as Peter answered on v2, and I assumed he was the
-> one who answered on v3 also.
->
-
-I'm flattered, thanks.
-
->>> This series goes in another direction (a), adding a unique dockerfile
->>> covering all versions, independently of all the dockerfiles we have now.
->>>
->>> If we agree (a) is a better direction, unique dockerfile approach can be
->>> vastly simplified by restricting ourselves to qemu >= 3.1.0. If not, no
->>> hard feelings, it's just a proposal.
->
-> Regards,
-> Pierrick
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogVHVzaGFyIERhdmUgPHRk
+YXZlQG52aWRpYS5jb20+DQo+IFNlbnQ6IDE2IFNlcHRlbWJlciAyMDI2IDE5OjU2DQo+IFRvOiBx
+ZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IHFlbXUtYXJtQG5vbmdudS5vcmc7IHBldGVyLm1h
+eWRlbGxAbGluYXJvLm9yZzsgbXN0QHJlZGhhdC5jb207DQo+IG1hcmNlbEByZWRoYXQuY29tOyBk
+ZXZlbEBlZGsyLmdyb3Vwcy5pbzsgQWxleCBXaWxsaWFtc29uDQo+IDxhbHdpbGxpYW1zb25AbnZp
+ZGlhLmNvbT47IEphc29uIEd1bnRob3JwZSA8amdnQG52aWRpYS5jb20+OyBTaGFtZWVyDQo+IEtv
+bG90aHVtIFRob2RpIDxza29sb3RodW10aG9AbnZpZGlhLmNvbT4NCj4gU3ViamVjdDogW1BBVENI
+IDIvNV0gcGNpOiBhZGQgdmFsaWRhdGlvbiBmb3IgZml4ZWQgQkFSIGNvbmZpZ3VyYXRpb24NCj4g
+DQo+IFZhbGlkYXRlIHRoZSBmaXhlZCBCQVIgY29uZmlndXJhdGlvbiBzcGVjaWZpZWQgdGhyb3Vn
+aCB0aGUNCj4gZml4ZWQtYmFyLU4gcHJvcGVydGllcyBvbiBQQ0kgZW5kcG9pbnQgZGV2aWNlcy4N
+Cj4gDQo+IENvbmZpZ3VyaW5nIGFueSBmaXhlZC1iYXItTiBwcm9wZXJ0eSBvbiBhbiBlbmRwb2lu
+dCBkZXZpY2UgcmVxdWlyZXMNCj4gZXZlcnkgbWVtb3J5IEJBUiBvbiB0aGF0IGRldmljZSB0byBo
+YXZlIGEgZml4ZWQgYWRkcmVzcy4gVmFsaWRhdGUNCj4gdGhhdCBlYWNoIGFzc2lnbmVkIGFkZHJl
+c3M6DQo+IA0KPiAtIGlzIGFsaWduZWQgdG8gaXRzIEJBUiBzaXplOw0KPiAtIGlzIHdpdGhpbiB0
+aGUgYXBwcm9wcmlhdGUgUENJZSBNTUlPIGFwZXJ0dXJlOyBhbmQNCj4gLSBkb2VzIG5vdCBvdmVy
+bGFwIGFueSBvdGhlciBmaXhlZCBCQVIuDQo+IA0KPiBVbmRlciBhIFBDSWUgdG9wb2xvZ3kgd2l0
+aCBhIHJvb3QgcG9ydCwgZml4ZWQgQkFSIHBsYWNlbWVudCBpcw0KPiBhbGwtb3Itbm90aGluZyB3
+aXRoaW4gdGhhdCByb290IHBvcnQncyBzdWJ0cmVlLiBJZiBhbnkgb25lIGVuZHBvaW50DQo+IGRl
+dmljZSBiZWxvdyB0aGUgcm9vdCBwb3J0IGhhcyBhIGZpeGVkIEJBUiwgZXZlcnkgb3RoZXIgZW5k
+cG9pbnQNCj4gZGV2aWNlIGJlbG93IHRoYXQgc2FtZSByb290IHBvcnQgd2l0aCBhIG1lbW9yeSBC
+QVIgbXVzdCBoYXZlIGFsbCBvZg0KPiBpdHMgbWVtb3J5IEJBUnMgZml4ZWQgdG9vLg0KPiANCj4g
+RW5kcG9pbnQgZGV2aWNlcyB3aXRoIG5vIHJvb3QgcG9ydCBpbiB0aGVpciBhbmNlc3RyeSwgc3Vj
+aCBhcyB0aG9zZQ0KPiBhdHRhY2hlZCBkaXJlY3RseSB0byB0aGUgaG9zdCBicmlkZ2UsIGFyZSBu
+b3QgcmVxdWlyZWQgdG8gbWF0Y2gNCj4gdGhlaXIgc2libGluZyBkZXZpY2VzLiBPbmUgc3VjaCBk
+ZXZpY2UgbWF5IHVzZSBmaXhlZC1iYXItTiBmb3IgYWxsDQo+IG9mIGl0cyBtZW1vcnkgQkFScyB3
+aGlsZSBhbm90aGVyIHNpYmxpbmcgZGV2aWNlIG9uIHRoZSBzYW1lIGhvc3QNCj4gYnJpZGdlIHVz
+ZXMgbm9uZSBhdCBhbGwuIFBlci1kZXZpY2UgY29tcGxldGVuZXNzIHN0aWxsIGFwcGxpZXMNCj4g
+cmVnYXJkbGVzcyBvZiBhbmNlc3RyeS4gT25jZSBhbnkgZml4ZWQtYmFyLU4gcHJvcGVydHkgaXMg
+c2V0IG9uIGENCj4gZGV2aWNlLCBldmVyeSBtZW1vcnkgQkFSIG9uIHRoYXQgZGV2aWNlIG11c3Qg
+YmUgZml4ZWQuDQo+IA0KPiBBYm9ydCBRRU1VIGlmIGFueSB2YWxpZGF0aW9uIGZhaWxzLg0KPiAN
+Cj4gU2lnbmVkLW9mZi1ieTogVHVzaGFyIERhdmUgPHRkYXZlQG52aWRpYS5jb20+DQo+IC0tLQ0K
+PiAgaHcvcGNpL21lc29uLmJ1aWxkICAgICAgICAgICAgICB8ICAgMSArDQo+ICBody9wY2kvcGNp
+LWZpeGVkLWJhci12YWxpZGF0ZS5jIHwgMzI2DQo+ICsrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrDQo+ICBody9wY2kvcGNpLWZpeGVkLWJhci12YWxpZGF0ZS5oIHwgIDIxICsrDQo+ICAz
+IGZpbGVzIGNoYW5nZWQsIDM0OCBpbnNlcnRpb25zKCspDQo+ICBjcmVhdGUgbW9kZSAxMDA2NDQg
+aHcvcGNpL3BjaS1maXhlZC1iYXItdmFsaWRhdGUuYw0KPiAgY3JlYXRlIG1vZGUgMTAwNjQ0IGh3
+L3BjaS9wY2ktZml4ZWQtYmFyLXZhbGlkYXRlLmgNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9wY2kv
+bWVzb24uYnVpbGQgYi9ody9wY2kvbWVzb24uYnVpbGQNCj4gaW5kZXggOTg0YzczMjdlNS4uMTUw
+MDg1Yzk5NyAxMDA2NDQNCj4gLS0tIGEvaHcvcGNpL21lc29uLmJ1aWxkDQo+ICsrKyBiL2h3L3Bj
+aS9tZXNvbi5idWlsZA0KPiBAQCAtMTksNiArMTksNyBAQCBlbmRpZg0KPiAgcGNpX3NzLmFkZChm
+aWxlcygncGNpZS5jJywgJ3BjaWVfYWVyLmMnKSkNCj4gIHBjaV9zcy5hZGQoZmlsZXMoJ3BjaWVf
+ZG9lLmMnKSkNCj4gIHN5c3RlbV9zcy5hZGQod2hlbjogJ0NPTkZJR19QQ0lfRVhQUkVTUycsIGlm
+X3RydWU6IGZpbGVzKCdwY2llX3BvcnQuYycsDQo+ICdwY2llX2hvc3QuYycpKQ0KPiArc3lzdGVt
+X3NzLmFkZCh3aGVuOiAnQ09ORklHX1BDSV9FWFBSRVNTJywgaWZfdHJ1ZTogZmlsZXMoJ3BjaS1m
+aXhlZC1iYXItDQo+IHZhbGlkYXRlLmMnKSkNCj4gIHN5c3RlbV9zcy5hZGRfYWxsKHdoZW46ICdD
+T05GSUdfUENJJywgaWZfdHJ1ZTogcGNpX3NzKQ0KPiANCj4gIHN0dWJfc3MuYWRkKGZpbGVzKCdw
+Y2ktc3R1Yi5jJykpDQo+IGRpZmYgLS1naXQgYS9ody9wY2kvcGNpLWZpeGVkLWJhci12YWxpZGF0
+ZS5jIGIvaHcvcGNpL3BjaS1maXhlZC1iYXItdmFsaWRhdGUuYw0KPiBuZXcgZmlsZSBtb2RlIDEw
+MDY0NA0KPiBpbmRleCAwMDAwMDAwMDAwLi4wYjViYWFkOGEwDQo+IC0tLSAvZGV2L251bGwNCj4g
+KysrIGIvaHcvcGNpL3BjaS1maXhlZC1iYXItdmFsaWRhdGUuYw0KPiBAQCAtMCwwICsxLDMyNiBA
+QA0KPiArLyoNCj4gKyAqIENvcHlyaWdodCAoYykgMjAyNiBOVklESUEgQ09SUE9SQVRJT04gJiBB
+RkZJTElBVEVTLiBBbGwgcmlnaHRzDQo+IHJlc2VydmVkDQo+ICsgKiBCQVIgYWRkcmVzcyB2YWxp
+ZGF0aW9uIGZvciBmaXhlZC1CQVIgcGxhY2VtZW50Lg0KPiArICoNCj4gKyAqIFdyaXR0ZW4gYnkg
+VHVzaGFyIERhdmUNCj4gKyAqDQo+ICsgKiBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIu
+MC1vci1sYXRlcg0KPiArICovDQo+ICsNCj4gKyNpbmNsdWRlICJxZW11L29zZGVwLmgiDQo+ICsj
+aW5jbHVkZSAiaHcvcGNpL3BjaS5oIg0KPiArI2luY2x1ZGUgImh3L3BjaS9wY2lfYnJpZGdlLmgi
+DQo+ICsjaW5jbHVkZSAiaHcvcGNpL3BjaV9ob3N0LmgiDQo+ICsjaW5jbHVkZSAiaHcvcGNpL3Bj
+aWVfcG9ydC5oIg0KPiArI2luY2x1ZGUgInFlbXUvZXJyb3ItcmVwb3J0LmgiDQo+ICsjaW5jbHVk
+ZSAicWVtdS9yYW5nZS5oIg0KPiArI2luY2x1ZGUgInFlbXUvdW5pdHMuaCINCj4gKyNpbmNsdWRl
+ICJwY2ktaW50ZXJuYWwuaCINCj4gKyNpbmNsdWRlICJwY2ktZml4ZWQtYmFyLXZhbGlkYXRlLmgi
+DQo+ICsNCj4gKy8qDQo+ICsgKiBDbGFpbWVkIEJBUiByYW5nZXMg4oCUIGRldGVjdCBpbnRlci1k
+ZXZpY2UgYW5kIGludGVyLWhpZXJhcmNoeSBvdmVybGFwcw0KPiArICogYWNyb3NzIGFsbCBmaXhl
+ZCBCQVJzIHN5c3RlbS13aWRlLg0KPiArICovDQo+ICsNCj4gK3R5cGVkZWYgc3RydWN0IHsNCj4g
+KyAgICB1aW50NjRfdCAgICBzdGFydDsNCj4gKyAgICB1aW50NjRfdCAgICBlbmQ7DQo+ICsgICAg
+Y29uc3QgY2hhciAqb3duZXI7ICAvKiBkZXZpY2UgbmFtZSwgZm9yIGVycm9yIG1lc3NhZ2VzICov
+DQo+ICsgICAgaW50ICAgICAgICAgYmFyOw0KPiArfSBGaXhlZENsYWltOw0KPiArDQo+ICtzdGF0
+aWMgR0FycmF5ICpmaXhlZF9jbGFpbXM7DQoNCkNhbiB0aGlzIGxpdmUgaW4gdGhlIEZpeGVkQmFy
+c0luZm8gaW5zdGVhZD8gSUlVQywgdGhlIGluZm8gY29udGV4dCBpcw0KYWxyZWFkeSBwYXNzZWQg
+dGhyb3VnaCB0aGUgd2FsaywgYW5kIHRoZSBjbGFpbXMgb25seSBuZWVkIHRvIGV4aXN0DQpmb3Ig
+dGhhdCB2YWxpZGF0aW9uIHBhc3M/DQoNCj4gKw0KPiArc3RhdGljIHZvaWQgZml4ZWRfY2xhaW1z
+X2luaXQodm9pZCkNCj4gK3sNCj4gKyAgICBpZiAoZml4ZWRfY2xhaW1zKSB7DQo+ICsgICAgICAg
+IGdfYXJyYXlfZnJlZShmaXhlZF9jbGFpbXMsIHRydWUpOw0KPiArICAgIH0NCj4gKyAgICBmaXhl
+ZF9jbGFpbXMgPSBnX2FycmF5X25ldyhmYWxzZSwgdHJ1ZSwgc2l6ZW9mKEZpeGVkQ2xhaW0pKTsN
+Cj4gK30NCj4gKw0KPiArc3RhdGljIHZvaWQgZml4ZWRfY2xhaW1zX2ZyZWUodm9pZCkNCj4gK3sN
+Cj4gKyAgICBnX2FycmF5X2ZyZWUoZml4ZWRfY2xhaW1zLCB0cnVlKTsNCj4gKyAgICBmaXhlZF9j
+bGFpbXMgPSBOVUxMOw0KPiArfQ0KPiArDQo+ICtzdGF0aWMgYm9vbCBmaXhlZF9jbGFpbXNfb3Zl
+cmxhcCh1aW50NjRfdCBzdGFydCwgdWludDY0X3QgZW5kLA0KPiArICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgY29uc3QgY2hhciAqKm93bmVyX291dCwgaW50ICpiYXJfb3V0LA0KPiAr
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDY0X3QgKnN0YXJ0X291dCwgdWlu
+dDY0X3QgKmVuZF9vdXQpDQo+ICt7DQo+ICsgICAgRml4ZWRDbGFpbSAqYzsNCj4gKyAgICBndWlu
+dCBpOw0KPiArDQo+ICsgICAgZm9yIChpID0gMDsgaSA8IGZpeGVkX2NsYWltcy0+bGVuOyBpKysp
+IHsNCj4gKyAgICAgICAgYyA9ICZnX2FycmF5X2luZGV4KGZpeGVkX2NsYWltcywgRml4ZWRDbGFp
+bSwgaSk7DQo+ICsgICAgICAgIGlmIChyYW5nZXNfb3ZlcmxhcChzdGFydCwgZW5kIC0gc3RhcnQg
+KyAxLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgYy0+c3RhcnQsIGMtPmVuZCAtIGMt
+PnN0YXJ0ICsgMSkpIHsNCj4gKyAgICAgICAgICAgICpvd25lcl9vdXQgPSBjLT5vd25lcjsNCj4g
+KyAgICAgICAgICAgICpiYXJfb3V0ICAgPSBjLT5iYXI7DQo+ICsgICAgICAgICAgICAqc3RhcnRf
+b3V0ID0gYy0+c3RhcnQ7DQo+ICsgICAgICAgICAgICAqZW5kX291dCAgID0gYy0+ZW5kOw0KPiAr
+ICAgICAgICAgICAgcmV0dXJuIHRydWU7DQo+ICsgICAgICAgIH0NCj4gKyAgICB9DQo+ICsgICAg
+cmV0dXJuIGZhbHNlOw0KPiArfQ0KPiArDQo+ICtzdGF0aWMgdm9pZCBmaXhlZF9jbGFpbXNfYWRk
+KHVpbnQ2NF90IHN0YXJ0LCB1aW50NjRfdCBlbmQsDQo+ICsgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIGNvbnN0IGNoYXIgKm93bmVyLCBpbnQgYmFyKQ0KPiArew0KPiArICAgIEZpeGVkQ2xh
+aW0gY2w7DQo+ICsNCj4gKyAgICBjbC5zdGFydCA9IHN0YXJ0Ow0KPiArICAgIGNsLmVuZCAgID0g
+ZW5kOw0KPiArICAgIGNsLm93bmVyID0gb3duZXI7DQo+ICsgICAgY2wuYmFyICAgPSBiYXI7DQo+
+ICsgICAgZ19hcnJheV9hcHBlbmRfdmFsKGZpeGVkX2NsYWltcywgY2wpOw0KPiArfQ0KPiArDQo+
+ICtzdGF0aWMgYm9vbCB2YWxpZGF0ZV9iYXJzKFBDSURldmljZSAqcGRldiwgRml4ZWRCYXJzSW5m
+byAqaW5mbywNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBpc19maXhlZF9zdWJ0
+cmVlKQ0KPiArew0KPiArICAgIGNvbnN0IGNoYXIgICpkZXZuYW1lID0gREVWSUNFKHBkZXYpLT5p
+ZCA/IERFVklDRShwZGV2KS0+aWQgOiBwZGV2LQ0KPiA+bmFtZTsNCj4gKyAgICBjb25zdCBjaGFy
+ICAqb3ZlcmxhcF9vd25lcjsNCj4gKyAgICBjb25zdCBjaGFyICAqd25hbWU7DQo+ICsgICAgYm9v
+bCAgICAgICAgIGhhc19maXhlZF9iYXJzID0gZmFsc2U7DQo+ICsgICAgYm9vbCAgICAgICAgIGlz
+XzY0Yml0Ow0KPiArICAgIHVpbnQ2NF90ICAgICBhZGRyLCBlbmQsIHdiYXNlLCB3bGltLCBvdmVy
+bGFwX3N0YXJ0LCBvdmVybGFwX2VuZDsNCj4gKyAgICBQQ0lJT1JlZ2lvbiAqcjsNCj4gKyAgICBp
+bnQgICAgICAgICAgb3ZlcmxhcF9iYXI7DQo+ICsgICAgaW50ICAgICAgICAgIGk7DQo+ICsNCj4g
+KyAgICBmb3IgKGkgPSAwOyBpIDwgUENJX05VTV9SRUdJT05TIC0gMTsgaSsrKSB7DQo+ICsgICAg
+ICAgIGlmIChwZGV2LT5maXhlZF9iYXJfYWRkcltpXSAhPSBQQ0lfQkFSX1VOTUFQUEVEKSB7DQo+
+ICsgICAgICAgICAgICBoYXNfZml4ZWRfYmFycyA9IHRydWU7DQo+ICsgICAgICAgICAgICBicmVh
+azsNCj4gKyAgICAgICAgfQ0KPiArICAgIH0NCj4gKw0KPiArICAgIGlmIChpc19maXhlZF9zdWJ0
+cmVlICYmICFoYXNfZml4ZWRfYmFycykgew0KPiArICAgICAgICBlcnJvcl9yZXBvcnQoImZpeGVk
+LWJhcjogJXMgWyUwMng6JTAyeC4leF0gdW5kZXIgZml4ZWQtYmFyIHJvb3QgIg0KPiArICAgICAg
+ICAgICAgICAgICAgICAgInBvcnQgaGFzIG1lbW9yeSBCQVJzIGJ1dCBubyBmaXhlZC1iYXItTj0g
+c3BlY2lmaWVkIiwNCj4gKyAgICAgICAgICAgICAgICAgICAgIGRldm5hbWUsIHBjaV9kZXZfYnVz
+X251bShwZGV2KSwNCj4gKyAgICAgICAgICAgICAgICAgICAgIFBDSV9TTE9UKHBkZXYtPmRldmZu
+KSwgUENJX0ZVTkMocGRldi0+ZGV2Zm4pKTsNCj4gKyAgICAgICAgZXhpdCgxKTsNCj4gKyAgICB9
+DQo+ICsNCj4gKyAgICBpZiAoIWhhc19maXhlZF9iYXJzKSB7DQo+ICsgICAgICAgIHJldHVybiBm
+YWxzZTsNCj4gKyAgICB9DQo+ICsNCj4gKyAgICAvKiBDb21wbGV0ZW5lc3M6IGV2ZXJ5IG1lbW9y
+eSBCQVIgbXVzdCBoYXZlIGFuIGFkZHJlc3MuICovDQo+ICsgICAgZm9yIChpID0gMDsgaSA8IFBD
+SV9OVU1fUkVHSU9OUyAtIDE7IGkrKykgew0KPiArICAgICAgICByID0gJnBkZXYtPmlvX3JlZ2lv
+bnNbaV07DQo+ICsgICAgICAgIGlmICghci0+c2l6ZSB8fCAoci0+dHlwZSAmIFBDSV9CQVNFX0FE
+RFJFU1NfU1BBQ0VfSU8pKSB7DQo+ICsgICAgICAgICAgICBjb250aW51ZTsNCj4gKyAgICAgICAg
+fQ0KPiArICAgICAgICBpZiAocGRldi0+Zml4ZWRfYmFyX2FkZHJbaV0gPT0gUENJX0JBUl9VTk1B
+UFBFRCkgew0KPiArICAgICAgICAgICAgZXJyb3JfcmVwb3J0KCJmaXhlZC1iYXI6ICVzIFslMDJ4
+OiUwMnguJXhdIEJBUiVkICINCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAibWlzc2luZyBh
+IGZpeGVkLWJhci1OPSB2YWx1ZSIsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgZGV2bmFt
+ZSwgcGNpX2Rldl9idXNfbnVtKHBkZXYpLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgIFBD
+SV9TTE9UKHBkZXYtPmRldmZuKSwgUENJX0ZVTkMocGRldi0+ZGV2Zm4pLCBpKTsNCj4gKyAgICAg
+ICAgICAgIGV4aXQoMSk7DQo+ICsgICAgICAgIH0NCj4gKyAgICB9DQo+ICsNCj4gKyAgICAvKiBQ
+ZXItQkFSIGNoZWNrczogYWxpZ25tZW50LCBNTUlPIHdpbmRvdywgb3ZlcmxhcC4gKi8NCj4gKyAg
+ICBmb3IgKGkgPSAwOyBpIDwgUENJX05VTV9SRUdJT05TIC0gMTsgaSsrKSB7DQo+ICsgICAgICAg
+IHIgPSAmcGRldi0+aW9fcmVnaW9uc1tpXTsNCj4gKyAgICAgICAgaWYgKCFyLT5zaXplIHx8IChy
+LT50eXBlICYgUENJX0JBU0VfQUREUkVTU19TUEFDRV9JTykpIHsNCj4gKyAgICAgICAgICAgIGNv
+bnRpbnVlOw0KPiArICAgICAgICB9DQo+ICsNCj4gKyAgICAgICAgaXNfNjRiaXQgPSAhIShyLT50
+eXBlICYgUENJX0JBU0VfQUREUkVTU19NRU1fVFlQRV82NCk7DQo+ICsgICAgICAgIGFkZHIgICAg
+ID0gKHVpbnQ2NF90KXBkZXYtPmZpeGVkX2Jhcl9hZGRyW2ldOw0KPiArDQo+ICsgICAgICAgIGlm
+IChyLT5zaXplIC0gMSA+IFVJTlQ2NF9NQVggLSBhZGRyKSB7DQo+ICsgICAgICAgICAgICBlcnJv
+cl9yZXBvcnQoImZpeGVkLWJhcjogJXMgWyUwMng6JTAyeC4leF0gQkFSJWQgIg0KPiArICAgICAg
+ICAgICAgICAgICAgICAgICAgICJhZGRyPTB4JSJQUkl4NjQiICsgc2l6ZT0weCUiUFJJeDY0IiBv
+dmVyZmxvd3MiLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgIGRldm5hbWUsIHBjaV9kZXZf
+YnVzX251bShwZGV2KSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICBQQ0lfU0xPVChwZGV2
+LT5kZXZmbiksIFBDSV9GVU5DKHBkZXYtPmRldmZuKSwNCj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICBpLCBhZGRyLCByLT5zaXplKTsNCj4gKyAgICAgICAgICAgIGV4aXQoMSk7DQo+ICsgICAg
+ICAgIH0NCj4gKyAgICAgICAgZW5kID0gYWRkciArIHItPnNpemUgLSAxOw0KPiArDQo+ICsgICAg
+ICAgIGlmIChpc182NGJpdCAmJiAhKHItPnR5cGUgJiBQQ0lfQkFTRV9BRERSRVNTX01FTV9QUkVG
+RVRDSCkgJiYNCj4gKyAgICAgICAgICAgICFwY2lfYnVzX2lzX3Jvb3QocGNpX2dldF9idXMocGRl
+dikpICYmIGFkZHIgPj0gNCAqIEdpQikgew0KPiArICAgICAgICAgICAgZXJyb3JfcmVwb3J0KCJm
+aXhlZC1iYXI6ICVzIFslMDJ4OiUwMnguJXhdIEJBUiVkIGlzIGEgIg0KPiArICAgICAgICAgICAg
+ICAgICAgICAgICAgICJub24tcHJlZmV0Y2hhYmxlIDY0LWJpdCBCQVIgYmVoaW5kIGEgUENJIGJy
+aWRnZSAiDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgImFuZCBjYW5ub3QgYmUgcGxhY2Vk
+IGFib3ZlIDRHQiIsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgZGV2bmFtZSwgcGNpX2Rl
+dl9idXNfbnVtKHBkZXYpLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgIFBDSV9TTE9UKHBk
+ZXYtPmRldmZuKSwgUENJX0ZVTkMocGRldi0+ZGV2Zm4pLCBpKTsNCj4gKyAgICAgICAgICAgIGV4
+aXQoMSk7DQo+ICsgICAgICAgIH0NCj4gKw0KPiArICAgICAgICAvKg0KPiArICAgICAgICAgKiB3
+YmFzZS93bGltIGFyZSBib3RoIGluY2x1c2l2ZSBib3VuZHMgKG1taW8qX2xpbWl0ID0gYmFzZStz
+aXplLTEsDQo+ICsgICAgICAgICAqIHNldCBieSB0aGUgY2FsbGVyIGFsb25nc2lkZSBtbWlvKl9i
+YXNlKSwgbWF0Y2hpbmcgZW5kJ3Mgb3duDQo+ICsgICAgICAgICAqIGluY2x1c2l2ZSBjb21wdXRh
+dGlvbiBhYm92ZS4NCj4gKyAgICAgICAgICovDQo+ICsgICAgICAgIGlmIChpc182NGJpdCkgew0K
+PiArICAgICAgICAgICAgd2Jhc2UgPSBpbmZvLT5tbWlvNjRfYmFzZTsNCj4gKyAgICAgICAgICAg
+IHdsaW0gID0gaW5mby0+bW1pbzY0X2xpbWl0Ow0KPiArICAgICAgICAgICAgd25hbWUgPSAiNjQt
+Yml0IE1NSU8iOw0KPiArICAgICAgICB9IGVsc2Ugew0KPiArICAgICAgICAgICAgd2Jhc2UgPSBp
+bmZvLT5tbWlvMzJfYmFzZTsNCj4gKyAgICAgICAgICAgIHdsaW0gID0gaW5mby0+bW1pbzMyX2xp
+bWl0Ow0KPiArICAgICAgICAgICAgd25hbWUgPSAiMzItYml0IE1NSU8iOw0KPiArICAgICAgICB9
+DQo+ICsNCj4gKyAgICAgICAgaWYgKGFkZHIgJiAoci0+c2l6ZSAtIDEpKSB7DQo+ICsgICAgICAg
+ICAgICBlcnJvcl9yZXBvcnQoImZpeGVkLWJhcjogJXMgWyUwMng6JTAyeC4leF0gQkFSJWQgIg0K
+PiArICAgICAgICAgICAgICAgICAgICAgICAgICJhZGRyPTB4JSJQUkl4NjQiIG5vdCBhbGlnbmVk
+IHRvIHNpemU9MHglIlBSSXg2NCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICBkZXZuYW1l
+LCBwY2lfZGV2X2J1c19udW0ocGRldiksDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgUENJ
+X1NMT1QocGRldi0+ZGV2Zm4pLCBQQ0lfRlVOQyhwZGV2LT5kZXZmbiksDQo+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgaSwgYWRkciwgci0+c2l6ZSk7DQo+ICsgICAgICAgICAgICBleGl0KDEp
+Ow0KPiArICAgICAgICB9DQo+ICsNCj4gKyAgICAgICAgaWYgKGFkZHIgPCB3YmFzZSB8fCBlbmQg
+PiB3bGltKSB7DQoNClRoaXMgd2lsbCByZWplY3QgYSA2NC1iaXQgQkFSIHdob3NlIHJlcXVlc3Rl
+ZCBhZGRyZXNzIGZhbGxzIHdpdGhpbg0KdGhlIGxvdyBNTUlPIGFwZXJ0dXJlLiBUaGF0IGlzIGEg
+dmFsaWQgcGxhY2VtZW50LCByaWdodD8NCg0KSXMgcmVzdHJpY3RpbmcgNjQtYml0IEJBUnMgdG8g
+dGhlIGhpZ2ggYXBlcnR1cmUgaW50ZW50aW9uYWw/DQoNCj4gKyAgICAgICAgICAgIGVycm9yX3Jl
+cG9ydCgiZml4ZWQtYmFyOiAlcyBbJTAyeDolMDJ4LiV4XSBCQVIlZCAiDQo+ICsgICAgICAgICAg
+ICAgICAgICAgICAgICAgIlsweCUiUFJJeDY0Ii4uMHglIlBSSXg2NCJdIG91dHNpZGUgJXMgd2lu
+ZG93ICINCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAiWzB4JSJQUkl4NjQiLi4weCUiUFJJ
+eDY0Il0iLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgIGRldm5hbWUsIHBjaV9kZXZfYnVz
+X251bShwZGV2KSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICBQQ0lfU0xPVChwZGV2LT5k
+ZXZmbiksIFBDSV9GVU5DKHBkZXYtPmRldmZuKSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAg
+ICBpLCBhZGRyLCBlbmQsIHduYW1lLCB3YmFzZSwgd2xpbSk7DQo+ICsgICAgICAgICAgICBleGl0
+KDEpOw0KPiArICAgICAgICB9DQo+ICsNCj4gKyAgICAgICAgaWYgKGZpeGVkX2NsYWltc19vdmVy
+bGFwKGFkZHIsIGVuZCwgJm92ZXJsYXBfb3duZXIsICZvdmVybGFwX2JhciwNCj4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICZvdmVybGFwX3N0YXJ0LCAmb3ZlcmxhcF9lbmQpKSB7
+DQo+ICsgICAgICAgICAgICBlcnJvcl9yZXBvcnQoImZpeGVkLWJhcjogJXMgWyUwMng6JTAyeC4l
+eF0gQkFSJWQgIg0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICJbMHglIlBSSXg2NCIuLjB4
+JSJQUkl4NjQiXSBvdmVybGFwcyAlcyBCQVIlZCAiDQo+ICsgICAgICAgICAgICAgICAgICAgICAg
+ICAgIlsweCUiUFJJeDY0Ii4uMHglIlBSSXg2NCJdIiwNCj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICBkZXZuYW1lLCBwY2lfZGV2X2J1c19udW0ocGRldiksDQo+ICsgICAgICAgICAgICAgICAg
+ICAgICAgICAgUENJX1NMT1QocGRldi0+ZGV2Zm4pLCBQQ0lfRlVOQyhwZGV2LT5kZXZmbiksDQo+
+ICsgICAgICAgICAgICAgICAgICAgICAgICAgaSwgYWRkciwgZW5kLCBvdmVybGFwX293bmVyLCBv
+dmVybGFwX2JhciwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICBvdmVybGFwX3N0YXJ0LCBv
+dmVybGFwX2VuZCk7DQo+ICsgICAgICAgICAgICBleGl0KDEpOw0KDQpNYXkgYmUgYmV0dGVyIGlm
+IHdlIGNvdWxkIHBhc3MgYW4gRXJyb3IgKiplcnJwIHRocm91Z2ggdGhlIGhlbHBlcnMgaW5zdGVh
+ZA0Kb2YgY2FsbGluZyBleGl0KDEpIGhlcmUgYW5kIGxldCB0aGUgbWFjaGluZSBjb2RlIGhhbmRs
+ZSB0aGUgZXJyb3I/DQoNClRoYW5rcywNClNoYW1lZXINCg==
 
