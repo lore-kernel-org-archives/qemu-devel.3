@@ -1,125 +1,126 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEB9606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA93606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CwqgVUjK;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=TksdNJhF
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=L4fj5jGd;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=T6EMIsJv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLj07-0006e8-A3; Tue, 27 Oct 2026 11:22:11 -0400
+	id 1xLj67-0007qu-5P; Tue, 27 Oct 2026 11:28:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xLj03-0006dn-V2
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:22:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xLj5m-0007pn-8o
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:28:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xLj00-00021d-FM
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:22:07 -0400
+ id 1xLj5b-0002Wd-QF
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:27:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793114523;
+ s=mimecast20190719; t=1793114870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kevmq0/xY751NfDKZ7eV/LG3X2rtlRAaENKccFoSxOQ=;
- b=CwqgVUjKO/szAw6A61uxbD7OaE8yH/a2VOynfxRlbv8NeZQGAU5FeoxzrzdLjyDqsgO0Dj
- 8SFrVsTwSXGlVbYC4f3RQ6jwmCFk1WNLjcQ8MA2VVEcX3O1bS9mJhNQnFQtCcBweTDabXD
- l2Qy8xHfjbyGW39BIjfMRYi9XZcu9jU=
+ bh=vO335+XqSaMPiYB2isxssJwWJ8cU1Oq46q4+NvIyoWM=;
+ b=L4fj5jGdi4v0KhKsJ4uWwRVa1F/aPvRq+cbNE0mt7CIs+MYjbrfcwD2l5VmfHlN2eAAPSS
+ L7ei9YK6TVf4K30UISMWMS2/Ap4zBVZEAqTiavfJcwygb80NXewzj3LQrNp9SNMQqT4UKU
+ mqPe8XBcOI/ygnvhMwdWRuNQF0DNuBE=
 Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
  [74.125.82.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-v2IIyl4_M5a9a8m4p6kCqA-1; Tue, 27 Oct 2026 11:22:01 -0400
-X-MC-Unique: v2IIyl4_M5a9a8m4p6kCqA-1
-X-Mimecast-MFC-AGG-ID: v2IIyl4_M5a9a8m4p6kCqA_1793114521
+ us-mta-113-c0s5lEhxN4Gx8dV5AMPuig-1; Tue, 27 Oct 2026 11:27:48 -0400
+X-MC-Unique: c0s5lEhxN4Gx8dV5AMPuig-1
+X-Mimecast-MFC-AGG-ID: c0s5lEhxN4Gx8dV5AMPuig_1793114867
 Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-3580c07911eso3034111eec.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:22:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793114521; cv=none;
+ 5a478bee46e88-30c0d568830so11195236eec.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:27:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793114867; cv=none;
  d=google.com; s=arc-20260327;
- b=cBKnYpYRMuxy0a0INtfwCjO21bxGqrcA8GOX8VGR0VnupHesknfbr7U1DIGBDq7i0A
- 9+W3ujIl2NBPM9IbtAV5SbOVFuyJt/5GzS9CpvEsFVCOLr/owXEOOsCwDxLInsBwZ30M
- GPeG9UYXYLsXzKkLIPAmN5NTfAkbC4R6w8pLfbmk/4y+gPyEYytV+xvyZAljxxN+ZTJA
- uypisJ3oYtwEn88EaahBnbuZQ0PWBoE/1/we/ikRDt1AEcn9Ba0s1BjYgjkUUHxc9tcD
- raXmWTWiDzK1dBpXzC4/9f7hwXYCMSWYqii7p3pw6hVjsC9Gl3ec465adZUVbzeqS3r2
- YqFg==
+ b=qKgvJXtN54IOw+rVirnxUTSwWAwZzBXlEPj5hNAkMZcg6jukF6Pq1Qz9HpJdHE3LL8
+ peS8uRN8LIvzVJUBqv7Y1vySqRT/yr8cUQGAFFHsFSGPcJE8uRl1sCQqDgvp+PNJa+BE
+ IMNhrwN666HrKs9IDznNLIBcEYroUzr7hsT5sM1a6b7PrY4FYeTfU/8PqYeEjLhITh6+
+ /oqShbNp3Oea9uUzStv1HC18QVVighabn0rK2JtGw23WWmjnOVwRc6byAdWVk2N8Qoks
+ QqxjMNIaFfRcektGVZrfkOuhBZnj1oRxaNa5B0vIkt12yCeOtv7GZlyJ+rpIV9P4d78M
+ /xMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=kevmq0/xY751NfDKZ7eV/LG3X2rtlRAaENKccFoSxOQ=;
- fh=/0Wb58sJwXLecFJv96KTWthDCBNd+wSY38/+/9JPL1M=;
- b=RMDQQm7aH/0B3ZcPWKrUKKFkqG74ZS4P48LwA1HMWXIugRzUo3R3qPyTv3iWbMMKdZ
- 4oS1/ouJ9huu9kgXnKVkf/jTV8tyQYnQRfZ9Bf6P1BIOAWBzS+rNtOk1A3UtG3NRY4pf
- sxQXOxeDxXTg/jOkr9prgqzHVWguuMe8HkVbZkdbaGBS4VKman24ifQBILfY5qYK0Xt4
- yTnJH2F1EqMw2aJPHaYrPw2ZrrduyJj7NAB1jKxl6fB2a9CXueo8O35s+5SupMRucMKW
- XNcsTJ58W4j/0ffjlIgXCbFiGpg1+1qWtwjZbCX22h9vUaI9wQlfcLUa1YkeVgS9l8pl
- ZYMg==; darn=nongnu.org
+ bh=vO335+XqSaMPiYB2isxssJwWJ8cU1Oq46q4+NvIyoWM=;
+ fh=7+TMJ2Yg423AStOeItkvWjwS2P6hzHITMCZ8X7RwWFE=;
+ b=QMmjdPQnakNs3fsBSeFIa9+AcKesEvp2hPglkGFmwe+2Jee1OxdK3LY14SI3EZZm+P
+ BnHwPZqjyNtTn9oCLO9n9/mHXEvZJmEtWwpH0CSiOzELt/UP7oSitJmzJuzCVm7gZ+YC
+ GMuTKDxHUOo/d2umjZ3TLloRHxZdDlfHUFDg87IM1dBhbZJ3bhLWJFMHCiLxK+KR6xu0
+ oUUkBzhQI+3v3eRubsbyVe6cc+fHd5+9HFQJr97BXELr6u+CVya1+cBp934cdOFupd/9
+ Wq0kIy0/IuWggH3jed6Fx3uJ6Mx2Nzp6Ijs63RHM70eV3FDjqyE0WlmQev8sRMc/YeO8
+ Ma4w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793114521; x=1793719321; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793114867; x=1793719667; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=kevmq0/xY751NfDKZ7eV/LG3X2rtlRAaENKccFoSxOQ=;
- b=TksdNJhFjZNydo3ok9dW3/EVjRIw23RP2Un1oA0i/LSuBlb739+jLrJWpVIyf7OMGa
- idVHPW4kosytRmm4sWPb5vNCB4eFcLZIyihWWeyitjb33vhA4T8FzAtaH1Ym3fIaqn1b
- rLoI5xAOxO7PmctCKfmM1NSdVt3ECQbKY6Be2CDuuDvyVSMNypu0KMrGK5SyxGXZF05k
- JotwG4Y4Sx6NDvAb0FYrm2CdEBKedzd8q/emKGWmUYmP0Q/IZk9TDoPn0AjGphykO03n
- NbnZu2n3G9ylmfaN3dmbNgMZyG5vxk3SvU+yk0LjCZe2dR2/ufwNLyU3hvJOfuO7yeQt
- VYnA==
+ :content-type; bh=vO335+XqSaMPiYB2isxssJwWJ8cU1Oq46q4+NvIyoWM=;
+ b=T6EMIsJvyOeai/a34gmFc+Hvw20n8I8UooDbIKB6BQ/tNAIYlq2vAcioE8PDCtOPRv
+ Ua8bQksLd5xBEab1wVlHinzcS5QQo3oCRHU6GBRbuZy67rxC/t5zMjRQ2Mca5TNvjj4m
+ 7xcig0FJ262trstaQfLIt+UpYFyyAZyVJ8ZNgujcc+uLBtrej7siLW+4nbVKvQs1Qx/d
+ ZCSb2mnHbwpL6ZY6f2GXyNm1oQCnLA96th+0oRcO7adn3C/0PpGlCVA41Hq7kDimzrO3
+ riEmpc6lBrJ9oYWvjcxcj69k/XgBysrGoB5HvTqbHwPwj+Am1ffxYTBHNhXXCshC9qjp
+ I7OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793114521; x=1793719321;
+ d=1e100.net; s=20260707; t=1793114867; x=1793719667;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=kevmq0/xY751NfDKZ7eV/LG3X2rtlRAaENKccFoSxOQ=;
- b=eydm49sjFHH6sRWKiOe23mqWokCSUfsAIz0Ku1e63Pd1nKw2tqe2q+W4XWAhiXz5ko
- Jc0eFY/IqxyoiUo+QCu8Cpj5VfrEQFHLYOhzo2RthAf7o9yil9HqWi23ndGMqAA/3YsS
- m1aUoTAZgHcGIg0wKRFZhXgLsjkh7R78ijFo+gtAFDmKKE01j2yUOVRnXAH4BzgWLrB9
- LI+bwQBtIGKr3dkcXiTOIpZWJXRTQCGJ2f4D0OPKKsvhZJrURag60jeU6Ha1bVeJoPRK
- Mm+WuOM44WzPeSEB7egvpTCFxW4qBd9cXoOwKdfUoGpSWTiIMdDPNMQUmMXeT0QbLEKm
- W6LA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzzs9xxGL6xKkO4i/UHI6bxllaaV8pSCrhi5Dr2EW9Rsc8HSxAwzBs8xLgK6egonZ5xNu8xvbPE7bz3@nongnu.org
-X-Gm-Message-State: AFq9FYLHNno5jsAmwJhU9yLHm986RD16t4cRAY9cLQi/5e8zCvhSYyzH
- sfaZTWX83/qbg3WIUl7ENgAEpF0nU8BZ/NeLVKqD65oAWrJdBfzp3ZeHV2B/LVbdp2bNoEtzF8v
- GONZYnjwcaOFfgB5ZSHmeTitjFYbNmLrgJJmSKXLWLkk2SGBERf1rvH87gJy3kZFXltWqpHRfzb
- dWbqZY8u7f4mvyHtrX9+BYh6EqHWVkKhE=
-X-Gm-Gg: AYBFou1rOlt6l6Hv3haI2nfd4dMo7qpw2pGBPmRHLTpLj2VSdSZW6MuJXaB7awAUMps
- C3SpzDq5GWGr30MUmRHsw5annrenjL5JuhRWKAxDNe6tuJOogBK8ZfOrO+zX8fPBuAmm11QTQMq
- t35nM3+Rox0zI5b7zWey/b0BWEGL3r4Wje+tqrZLVju6Rj3dMCPYX4zhGjNjXH5iiFMR/uEF+zw
- BX20yc5ZXzG/S3zLQ==
-X-Received: by 2002:a05:7300:c735:b0:36a:1427:3933 with SMTP id
- 5a478bee46e88-36a142742c6mr2717875eec.16.1793114520375; 
- Tue, 27 Oct 2026 08:22:00 -0700 (PDT)
-X-Received: by 2002:a05:7300:c735:b0:36a:1427:3933 with SMTP id
- 5a478bee46e88-36a142742c6mr2717848eec.16.1793114519728; Tue, 27 Oct 2026
- 08:21:59 -0700 (PDT)
+ bh=vO335+XqSaMPiYB2isxssJwWJ8cU1Oq46q4+NvIyoWM=;
+ b=mYoKvmWhpa/oqu/KkiP1fX3Ia0+wkea3H7WctZQUwi4VzIIASJrcdIzhlZLYsYCj1z
+ StiRmiFcJQ4fye/m9+XFqoLeQs28Ont3Wb0s7em5hg80gNPqEuSawzbe18KonHb3Hyu0
+ DUYuiJcFW7om76WxLHTpIdBkPe3Xc21YA+GVfHUFBMvsZmCtRhdYBnXuR770t6zJGaSA
+ cMrpTYq655lJhhy0nMr1DXQD+ZKqO4Bih828RUygDhyCJUrJAljnRlMYGqVaqJnjJ7/+
+ Wx8fznVLpJQDHULkuAdPThFdlq56V6cge0uja66WGu0xUK2w+l3pSehBbqMmHLZqqx4q
+ mUBQ==
+X-Gm-Message-State: AFq9FYKP4LlnZLvxqvsCSfCx2yeY9Zymzj+qEZo0GrTme/am0Y2/cPBS
+ i+v1EWadM35pY8xtkxdk9raPmGLSaaH4eszwoHC84k9g6g/L1iJS2KJp1Lt/a5A8Xun6Z74fytd
+ Ah7DqqQyHfj00NCdgoCINDKD/aQZmh+7vwcHzDbo3i+pox4/2YHnGMbN5ds+A/ludLlLFG+z7lA
+ lU9GYynQpt9T809b3RYCz4EvDLWT92RzA=
+X-Gm-Gg: AYBFou1O17QX7gyR5aHXBJKHoR6BNl+m8X1sVqlhfzZwVVqQEYNuUUXGTc72ZR5NtWj
+ mIFhoQ+9H2T/6nNTlxvwqXalGa/0y/U9YjHxvKJyhDtBKcBRbBOR2+9CE6g2TKJzk2Tp/uk5tsP
+ LWQjEkMT1BL+MEI791vEOqO5ITZu5pakpaDD2eix7NFiqhdxqUugakXDhwonI935dVRz7ORXcCT
+ u0TqvYwEufiJgG+lA==
+X-Received: by 2002:a05:7301:d183:b0:369:d8e1:7bb6 with SMTP id
+ 5a478bee46e88-369e84dd32fmr16447519eec.25.1793114867008; 
+ Tue, 27 Oct 2026 08:27:47 -0700 (PDT)
+X-Received: by 2002:a05:7301:d183:b0:369:d8e1:7bb6 with SMTP id
+ 5a478bee46e88-369e84dd32fmr16447473eec.25.1793114866024; Tue, 27 Oct 2026
+ 08:27:46 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20260917154901.321702-1-aagbaria@redhat.com>
- <CAJ+F1C+dJ-UM1+u1kn+oZJ1rh=6BTP8dZVbembGyTR636teZ5Q@mail.gmail.com>
-In-Reply-To: <CAJ+F1C+dJ-UM1+u1kn+oZJ1rh=6BTP8dZVbembGyTR636teZ5Q@mail.gmail.com>
+References: <20261027133049.2522944-2-marcandre.lureau@redhat.com>
+ <CAPMcbCr=gsBr9Wnw1rK+4HEcTwdCxOinKqeC=0yE1ZUa-hwHWw@mail.gmail.com>
+ <CAJ+F1CLHzMuGW_m9kkU2r3YW-Vv1eQAYQ3YkJSfKm_QsoZbQWQ@mail.gmail.com>
+ <CAPMcbCqG9sEHaeEeiPV7TnN4fVbKdKsUCXTXvejdArPjXEkzRg@mail.gmail.com>
+ <CAMxuvazUb78qP6X8YV13+8ggYpgdFu3=7OnDiwN3De+Xcd7jNg@mail.gmail.com>
+In-Reply-To: <CAMxuvazUb78qP6X8YV13+8ggYpgdFu3=7OnDiwN3De+Xcd7jNg@mail.gmail.com>
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 27 Oct 2026 17:21:46 +0200
-X-Gm-Features: AclHuK9pY9piqxlYnLgRGVhs_GtnbOvvy7Uha88QQbZDT2S-oIqHqFl6qYuvLwk
-Message-ID: <CAPMcbCocjKcR=XyQyCXiLTzG6xCtn7SRLwuEcvLSNDfKOp7deg@mail.gmail.com>
-Subject: Re: [PATCH v2] qga/vss-win32: remove orphaned VSS provider service
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: Abed Agbaria <aagbaria@redhat.com>, qemu-devel@nongnu.org,
- michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000fd94ec065ed4010f"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Date: Tue, 27 Oct 2026 17:27:33 +0200
+X-Gm-Features: AclHuK-E3S0Y0gVV44_O2k_tMgik1gZoUEUpvJupUJ00ztT61Fr9SjWzGzcLRYM
+Message-ID: <CAPMcbCpHCcHW7K70bOC5F1LPq-Cokbnd=FUd-wxwWQr=2qdJMA@mail.gmail.com>
+Subject: Re: [PATCH] qga/vss: fix provider handling of snapshots
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, gillian.anton@cohesity.com, qemu-stable@nongnu.org, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000a19c7e065ed416d9"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -133,612 +134,1090 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-18.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	HTML_MESSAGE,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000fd94ec065ed4010f
+--000000000000a19c7e065ed416d9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-
-On Fri, Sep 18, 2026 at 9:57=E2=80=AFAM Marc-Andr=C3=A9 Lureau <
-marcandre.lureau@gmail.com> wrote:
+On Tue, Oct 27, 2026 at 5:04=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
+marcandre.lureau@redhat.com> wrote:
 
 > Hi
 >
-> On Thu, Sep 17, 2026 at 7:49=E2=80=AFPM Abed Agbaria <aagbaria@redhat.com=
+> On Tue, Oct 27, 2026 at 6:56=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redh=
+at.com>
 > wrote:
 > >
-> > COMRegister() probes the COM+ catalog to decide whether to unregister
-> > first, but it is the SCM that blocks installation when a service of the
-> > same name is left over.  If the COM+ application is gone and the servic=
-e
-> > survives, install fails with 0x80070431 and never recovers.
 > >
-> >  - Check the SCM as well as the COM+ catalog in COMRegister().
-> >  - Delete the provider service in COMUnregister() and at the
-> >    DllUnregisterServer() call sites in DllRegisterServer().
 > >
-> > Opening the SCM, opening the provider service and closing both handles
-> > is boilerplate that StopService() already contains, so move it into
-> > QGAProviderOpenService(), which returns a single service handle and
-> > reports the win32 error through an out parameter, and convert
-> > StopService() to it.  The service handle stays valid after the SCM
-> > handle is closed, so the helper closes it and each caller is left with
-> > one handle to release.
 > >
-> > While at it, fix two pre-existing problems in StopService():
-> >
-> >  - It logged errmsg(E_FAIL, ...) and returned E_FAIL for every failure,
-> >    discarding the GetLastError() value.  It now passes the win32 error
-> >    code to errmsg() and returns HRESULT_FROM_WIN32().
-> >  - It opened the SCM with SC_MANAGER_ALL_ACCESS, which implies
-> >    SC_MANAGER_CREATE_SERVICE and is therefore refused to
-> >    non-administrators, and passed that same SCM mask to OpenService()
-> >    as a service access mask.  Each operation now requests only what it
-> >    needs: SC_MANAGER_CONNECT on the SCM, and SERVICE_QUERY_CONFIG,
-> >    DELETE or SERVICE_STOP on the service.
-> >
-> > StopService()'s return value changes from E_FAIL to a specific
-> > HRESULT_FROM_WIN32(); its only caller, in requester.cpp, ignores it.
-> >
-> > Signed-off-by: Abed Agbaria <aagbaria@redhat.com>
->
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> (you could have easily made a small series, I'll let other decide if
-> it is necessary)
->
-> thanks
->
-> > ---
-> >  qga/vss-win32/install.cpp | 122 ++++++++++++++++++++++++++++++++------
-> >  1 file changed, 105 insertions(+), 17 deletions(-)
-> >
-> > v1:
-> https://lore.kernel.org/qemu-devel/20260915145320.215663-1-aagbaria@redha=
-t.com/
-> >
-> > v2:
-> >  - Pass win32 error codes to errmsg() consistently instead of mixing
-> >    error codes and HRESULTs (Marc-Andr=C3=A9)
-> >  - Factor the SCM/OpenService boilerplate into QGAProviderOpenService()
-> >    and convert the existing StopService() to it (Marc-Andr=C3=A9)
-> >  - Restrict StopService() to the access rights it actually needs
-> >
-> > Tested on a Windows guest by replacing the installed build with this
-> > one and running a full install/uninstall cycle, including installation
-> > over a leftover provider service.
-> >
-> > diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> > index 5b7a8e9bc5..cfafc2d95e 100644
-> > --- a/qga/vss-win32/install.cpp
-> > +++ b/qga/vss-win32/install.cpp
-> > @@ -241,6 +241,96 @@ out:
-> >      return hr;
-> >  }
-> >
-> > +/*
-> > + * Open the QGA VSS provider service with the requested access rights.
-> > + *
-> > + * On success, return a service handle which the caller must release
-> with
-> > + * CloseServiceHandle().  On failure, return NULL and store the win32
-> error
-> > + * code in *err.  ERROR_SERVICE_DOES_NOT_EXIST just means the service
-> is not
-> > + * installed, which is a normal condition for all callers, so it is no=
+> > On Tue, Oct 27, 2026 at 4:02=E2=80=AFPM Marc-Andr=C3=A9 Lureau <
+> marcandre.lureau@redhat.com> wrote:
+> >>
+> >> Hi
+> >>
+> >> On Tue, Oct 27, 2026 at 5:54=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@r=
+edhat.com>
+> wrote:
+> >> >
+> >> >
+> >> >
+> >> > On Tue, Oct 27, 2026 at 3:31=E2=80=AFPM <marcandre.lureau@redhat.com=
+> wrote:
+> >> >>
+> >> >> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >> >>
+> >> >> Since commit 374f4676788c, the provider's GetSnapshotProperties()
+> >> >> returns S_OK for any snapshot ID without filling in the properties.
+> VSS
+> >> >> consults every registered provider when a requester looks up a
+> snapshot,
+> >> >> so lookups of snapshots owned by other providers now succeed with a=
+n
+> >> >> all-zero VSS_SNAPSHOT_PROP. Backup software relying on it fails, e.=
+g.
+> >> >> Veeam: "Original volume name is not specified for the shadow (shado=
+w
+> >> >> volume id: '{00000000-0000-0000-0000-000000000000}')".
+> >> >>
+> >> >> Simply reverting is not an option: 374f4676788c switched to S_OK
+> because
+> >> >> returning VSS_E_OBJECT_NOT_FOUND unconditionally broke qemu-ga's ow=
+n
+> >> >> snapshot sets. The provider must answer for its own snapshots only.
+> It
+> >> >> does not create real shadow copies, but it does take part in the
+> >> >> snapshot set during qemu-ga fsfreeze cycles. Remember the snapshot
+> IDs
+> >> >> received in BeginPrepareSnapshot(), return their
+> >> >> (minimal) properties, and return VSS_E_OBJECT_NOT_FOUND for anythin=
+g
+> >> >> else.
+> >> >>
+> >> >> Entries are dropped when VSS deletes the snapshots or the set, or
+> when
+> >> >> the set is aborted (AbortSnapshots()).
+> >> >>
+> >> >> COM+ may hand out several CQGAVssProvider instances (and serve
+> several
+> >> >> client processes), so this registry is module-global. It is
+> per-process
+> >> >> by design and safe because the COM+ application is hosted by a
+> single NT
+> >> >> service (see CreateServiceForApplication() in install.cpp): COM+
+> forbids
+> >> >> pooling and recycling for service-hosted applications, so exactly o=
+ne
+> >> >> surrogate process ever hosts the provider.
+> >> >>
+> >> >> On the requester side, the snapshot set is created in the persisten=
 t
-> > + * reported here; the caller decides what it means.
-> > + */
-> > +static SC_HANDLE QGAProviderOpenService(DWORD access, DWORD *err)
-> > +{
-> > +    qga_debug_begin;
-> > +
-> > +    SC_HANDLE service =3D NULL;
-> > +    SC_HANDLE manager =3D OpenSCManager(NULL, NULL, SC_MANAGER_CONNECT=
-);
-> > +
-> > +    *err =3D ERROR_SUCCESS;
-> > +
-> > +    if (!manager) {
-> > +        *err =3D GetLastError();
-> > +        errmsg(*err, "Failed to open service manager");
-> > +        goto out;
-> > +    }
-> > +
-> > +    service =3D OpenService(manager, QGA_PROVIDER_NAME, access);
-> > +    if (!service) {
-> > +        *err =3D GetLastError();
-> > +        if (*err !=3D ERROR_SERVICE_DOES_NOT_EXIST) {
-> > +            errmsg(*err, "Failed to open service");
-> > +        }
-> > +    }
-> > +
-> > +out:
-> > +    if (manager) {
-> > +        CloseServiceHandle(manager);
-> > +    }
-> > +    qga_debug_end;
-> > +    return service;
-> > +}
-> > +
-> > +/* Check whether the QGA VSS provider service is registered with the
-> SCM */
-> > +static bool QGAProviderServiceExists(void)
-> > +{
-> > +    qga_debug_begin;
-> > +
-> > +    DWORD err;
-> > +    SC_HANDLE service =3D QGAProviderOpenService(SERVICE_QUERY_CONFIG,
-> &err);
-> > +
-> > +    if (service) {
-> > +        CloseServiceHandle(service);
-> > +    }
-> > +
-> > +    qga_debug_end;
-> > +    return service !=3D NULL;
-> > +}
-> > +
-> > +/* Delete a QGA VSS provider service that COM+ no longer owns */
-> > +static HRESULT QGAProviderRemoveService(void)
-> > +{
-> > +    qga_debug_begin;
-> > +
-> > +    HRESULT hr =3D S_OK;
-> > +    DWORD err;
-> > +    SC_HANDLE service =3D QGAProviderOpenService(DELETE, &err);
-> > +
-> > +    if (!service) {
-> > +        if (err !=3D ERROR_SERVICE_DOES_NOT_EXIST) {
-> > +            hr =3D HRESULT_FROM_WIN32(err);
-> > +        }
-> > +        goto out;
-> > +    }
-> > +
-> > +    qga_debug("Removing service: %s", QGA_PROVIDER_NAME);
-> > +
-> > +    if (!DeleteService(service)) {
-> > +        err =3D GetLastError();
-> > +        if (err !=3D ERROR_SERVICE_MARKED_FOR_DELETE) {
-> > +            hr =3D HRESULT_FROM_WIN32(err);
-> > +            errmsg(err, "Failed to delete service");
-> > +        }
-> > +    }
-> > +
-> > +out:
-> > +    if (service) {
-> > +        CloseServiceHandle(service);
-> > +    }
-> > +    qga_debug_end;
-> > +    return hr;
-> > +}
-> > +
-> >  /* Unregister this module from COM+ Applications Catalog */
-> >  STDAPI COMUnregister(void);
-> >  STDAPI COMUnregister(void)
-> > @@ -251,6 +341,7 @@ STDAPI COMUnregister(void)
+> >> >> VSS_CTX_APP_ROLLBACK context, so VSS keeps it after the freeze/thaw
+> >> >> cycle and may keep querying providers about it. The provider regist=
+ry
+> >> >> does not outlive the cycle (requester_thaw() stops the hosting
+> service,
+> >> >> and the provider process with it), so later queries would get "not
+> >> >> found" for a set VSS still believes exists. Make requester_thaw()
+> delete
+> >> >> the snapshot set explicitly at the end of the cycle, whatever its
+> >> >> outcome (including BackupComplete() failure and aborted snapshot
+> sets).
+> >> >> A failure to delete is only logged, since the guest filesystems hav=
+e
+> >> >> already been thawed.
+> >> >>
+> >> >> Cc: qemu-stable@nongnu.org
+> >> >> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4584
+> >> >> Buglink: https://redhat.atlassian.net/browse/RHEL-250662
+> >> >> Fixes: 374f4676788c ("qga: Fix VSS provider GetSnapshotProperties
+> return value")
+> >> >> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >> >> ---
+> >> >>  qga/vss-win32/install.cpp   |   1 +
+> >> >>  qga/vss-win32/provider.cpp  | 153
+> +++++++++++++++++++++++++++++++++++-
+> >> >>  qga/vss-win32/requester.cpp |  26 ++++++
+> >> >>  3 files changed, 179 insertions(+), 1 deletion(-)
+> >> >>
+> >> >> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+> >> >> index 09d94edd4f53..3b58dc840520 100644
+> >> >> --- a/qga/vss-win32/install.cpp
+> >> >> +++ b/qga/vss-win32/install.cpp
+> >> >> @@ -331,6 +331,7 @@ STDAPI COMRegister(void)
+> >> >>      chk(put_Value(pObj, L"Authentication",
+>  short(6)));
+> >> >>      chk(put_Value(pObj, L"AuthenticationCapability",
+>  short(2)));
+> >> >>      chk(put_Value(pObj, L"ImpersonationLevel",
+>  short(2)));
+> >> >> +    /* NT-service-hosted apps have ConcurrentApps=3D1 enforced */
+> >> >>      chk(pApps->SaveChanges(&n));
+> >> >>
+> >> >>      /* The app should be deleted if something fails after
+> SaveChanges */
+> >> >> diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cp=
+p
+> >> >> index 1c8eb236e57f..ad2f3ee763e6 100644
+> >> >> --- a/qga/vss-win32/provider.cpp
+> >> >> +++ b/qga/vss-win32/provider.cpp
+> >> >> @@ -11,6 +11,11 @@
+> >> >>   */
+> >> >>
+> >> >>  #include "qemu/osdep.h"
+> >> >> +
+> >> >> +#include <vector>
+> >> >> +#include <algorithm>
+> >> >> +#include <string>
+> >> >> +
+> >> >>  #include "vss-common.h"
+> >> >>  #include "vss-debug.h"
+> >> >>  #ifdef HAVE_VSS_SDK
+> >> >> @@ -138,6 +143,123 @@ STDMETHODIMP
+> CQGAVSSEnumObject::Clone(IVssEnumObject **ppenum)
+> >> >>      return E_NOTIMPL;
+> >> >>  }
+> >> >>
+> >> >> +/* Registry of the snapshot IDs for this provider */
+> >> >> +class QGAVssSnapshotRegistry
+> >> >> +{
+> >> >> +public:
+> >> >> +    bool Track(VSS_ID set_id, VSS_ID snapshot_id,
+> >> >> +               VSS_PWSZ volume_name, LONG context);
+> >> >> +    HRESULT GetProperties(VSS_ID snapshot_id, VSS_SNAPSHOT_PROP
+> *prop) const;
+> >> >> +    LONG RemoveSet(VSS_ID set_id); /* returns how many were remove=
+d
+> */
+> >> >> +    bool Remove(VSS_ID snapshot_id);
+> >> >> +
+> >> >> +private:
+> >> >> +    struct Entry {
+> >> >> +        VSS_ID set_id;
+> >> >> +        VSS_ID snapshot_id;
+> >> >> +        std::wstring volume_name;
+> >> >> +        LONG context;
+> >> >> +    };
+> >> >> +
+> >> >> +    std::vector<Entry> m_entries;
+> >> >> +    mutable SRWLOCK m_lock =3D SRWLOCK_INIT;
+> >> >> +};
+> >> >> +
+> >> >> +static QGAVssSnapshotRegistry qga_vss_registry;
+> >> >> +
+> >> >> +bool QGAVssSnapshotRegistry::Track(VSS_ID set_id, VSS_ID
+> snapshot_id,
+> >> >> +                                   VSS_PWSZ volume_name, LONG
+> context)
+> >> >> +{
+> >> >> +    bool ok;
+> >> >> +
+> >> >> +    AcquireSRWLockExclusive(&m_lock);
+> >> >> +    try {
+> >> >> +        m_entries.push_back(Entry { set_id, snapshot_id,
+> volume_name,
+> >> >> +                                    context });
+> >> >> +        ok =3D true;
+> >> >> +    } catch (...) {
+> >> >> +        ok =3D false;
+> >> >> +    }
+> >> >> +    ReleaseSRWLockExclusive(&m_lock);
+> >> >> +    return ok;
+> >> >> +}
+> >> >> +
+> >> >> +HRESULT QGAVssSnapshotRegistry::GetProperties(VSS_ID snapshot_id,
+> >> >> +                                              VSS_SNAPSHOT_PROP
+> *prop) const
+> >> >> +{
+> >> >> +    HRESULT hr =3D S_OK;
+> >> >> +
+> >> >> +    AcquireSRWLockShared(&m_lock);
+> >> >> +    auto it =3D std::find_if(m_entries.begin(), m_entries.end(),
+> >> >> +        [&](const Entry &e) {
+> >> >> +            return IsEqualGUID(e.snapshot_id, snapshot_id);
+> >> >> +        });
+> >> >> +    if (it =3D=3D m_entries.end()) {
+> >> >> +        hr =3D VSS_E_OBJECT_NOT_FOUND;
+> >> >> +        goto out;
+> >> >> +    }
+> >> >> +
+> >> >> +    {
+> >> >> +        const Entry &e =3D *it;
+> >> >> +        size_t len =3D (e.volume_name.size() + 1) * sizeof(WCHAR);
+> >> >> +        VSS_PWSZ volume =3D (VSS_PWSZ)CoTaskMemAlloc(len);
+> >> >
+> >> >
+> >> > I'm afraid of this part. We allocate memory but don't call
+> CoTaskMemFree.
+> >> > This function is called from
+> IVssBackupComponents::GetSnapshotProperties
+> >> > From
+> https://learn.microsoft.com/en-us/windows/win32/api/vsbackup/nf-vsbackup-=
+ivssbackupcomponents-getsnapshotproperties
+> >> > "When the structure is no longer needed, the software provider is
+> responsible for freeing these strings by calling the
+> VssFreeSnapshotProperties function."
+> >> >
+> >> > So we allocate memory but don't free it with
+> VssFreeSnapshotProperties or CoTaskMemFree.
+> >>
+> >> I also wondered, but this is apparently what is expected:
+> >>
+> >>
+> https://github.com/MicrosoftDocs/sdk-api/blob/docs/sdk-api-src/content/vs=
+s/ns-vss-vss_object_prop.md
+> >>
+> >>
+> >> A requester obtains VSS_OBJECT_PROP structures by using
+> >> IVssEnumObject::Next to iterate over the list of objects returned by a
+> >> call to IVssBackupComponents::Query.
+> >>
+> > Yes, but there is nothing about cleaning memory
 > >
-> >      DllUnregisterServer();
-> >      chk(QGAProviderFind(QGAProviderRemove, NULL));
-> > +    chk(QGAProviderRemoveService());
-> >  out:
-> >      qga_debug_end;
-> >      return hr;
-> > @@ -286,7 +377,7 @@ STDAPI COMRegister(void)
-> >      }
 > >
-> >      chk(QGAProviderFind(QGAProviderCount, (void *)&count));
-> > -    if (count) {
-> > +    if (count || QGAProviderServiceExists()) {
-> >          qga_debug("QGA VSS Provider is already installed. Attempting t=
-o
-> unregister first.");
-> >          hr =3D COMUnregister();
-> >          if (FAILED(hr)) {
-> > @@ -499,6 +590,7 @@ STDAPI DllRegisterServer(void)
-> >                                       g_gProviderVersion);
-> >      if (hr =3D=3D (long int) VSS_E_PROVIDER_ALREADY_REGISTERED) {
-> >          DllUnregisterServer();
-> > +        QGAProviderRemoveService();
-> >          hr =3D pVssAdmin->RegisterProvider(g_gProviderId,
-> CLSID_QGAVSSProvider,
-> >                                           const_cast<WCHAR * >
-> >                                           (QGA_PROVIDER_LNAME),
-> > @@ -515,6 +607,7 @@ STDAPI DllRegisterServer(void)
-> >  out:
-> >      if (FAILED(hr)) {
-> >          DllUnregisterServer();
-> > +        QGAProviderRemoveService();
-> >      }
-> >
-> >      qga_debug_end;
-> > @@ -575,29 +668,24 @@ STDAPI StopService(void)
-> >      qga_debug_begin;
-> >
-> >      HRESULT hr =3D S_OK;
-> > -    SC_HANDLE manager =3D OpenSCManager(NULL, NULL,
-> SC_MANAGER_ALL_ACCESS);
-> > -    SC_HANDLE service =3D NULL;
-> > -
-> > -    if (!manager) {
-> > -        errmsg(E_FAIL, "Failed to open service manager");
-> > -        hr =3D E_FAIL;
-> > -        goto out;
-> > -    }
-> > -    service =3D OpenService(manager, QGA_PROVIDER_NAME,
-> SC_MANAGER_ALL_ACCESS);
-> > +    DWORD err;
-> > +    SC_HANDLE service =3D QGAProviderOpenService(SERVICE_STOP, &err);
-> >
-> >      if (!service) {
-> > -        errmsg(E_FAIL, "Failed to open service");
-> > -        hr =3D  E_FAIL;
-> > +        hr =3D HRESULT_FROM_WIN32(err);
-> >          goto out;
-> >      }
-> > -    if (!(ControlService(service, SERVICE_CONTROL_STOP, NULL))) {
-> > -        errmsg(E_FAIL, "Failed to stop service");
-> > -        hr =3D E_FAIL;
-> > +
-> > +    if (!ControlService(service, SERVICE_CONTROL_STOP, NULL)) {
-> > +        err =3D GetLastError();
-> > +        hr =3D HRESULT_FROM_WIN32(err);
-> > +        errmsg(err, "Failed to stop service");
-> >      }
-> >
-> >  out:
-> > -    CloseServiceHandle(service);
-> > -    CloseServiceHandle(manager);
-> > +    if (service) {
-> > +        CloseServiceHandle(service);
-> > +    }
-> >      qga_debug_end;
-> >      return hr;
-> >  }
-> > --
-> > 2.55.0
-> >
+> >>
+> >> As its members are filled by a COM interface, prior to deleting the
+> >> property structures VSS_SNAPSHOT_PROP and VSS_PROVIDER_PROP, the
+> >> memory they contain must be released by calling CoTaskMemFree for
+> >> every string and byte array value contained in each structure.
+> >>
+> >> In the case of VSS_SNAPSHOT_PROP, this can be done manually, or the
+> >> utility function VssFreeSnapshotProperties can be used.
+> >>
+> > but we don't store the pointers
+>
+> I don't follow you.
 >
 >
-> --
-> Marc-Andr=C3=A9 Lureau
+> https://learn.microsoft.com/en-us/windows/win32/api/vsprov/nf-vsprov-ivss=
+softwaresnapshotprovider-getsnapshotproperties
+>
+> "All members are required except m_pwszExposedName and
+> m_pwszExposedPath, which the provider can set to NULL. The provider
+> allocates memory for all string members that it sets in the structure.
+> When the structure is no longer needed, the caller is responsible for
+> freeing these strings by calling the VssFreeSnapshotProperties
+> function."
+>
+> So it looks like we should actually fill the other fields too
+>
+>
+I love MSFT docs.
+
+Ok, let me test this.
+
+
+> >
+> >>
+> >>
+> >> >
+> >> >> +
+> >> >> +        if (!volume) {
+> >> >> +            hr =3D E_OUTOFMEMORY;
+> >> >> +            goto out;
+> >> >> +        }
+> >> >> +        memcpy(volume, e.volume_name.c_str(), len);
+> >> >> +
+> >> >> +        /* not a real snapshot: no device object, exposure or
+> timestamp */
+> >> >> +        memset(prop, 0, sizeof(*prop));
+> >> >> +        prop->m_SnapshotId =3D e.snapshot_id;
+> >> >> +        prop->m_SnapshotSetId =3D e.set_id;
+> >> >> +        prop->m_lSnapshotsCount =3D std::count_if(m_entries.begin(=
+),
+> >> >> +            m_entries.end(), [&](const Entry &o) {
+> >> >> +                return IsEqualGUID(o.set_id, e.set_id);
+> >> >> +            });
+> >> >> +        prop->m_pwszOriginalVolumeName =3D volume;
+> >> >> +        prop->m_ProviderId =3D g_gProviderId;
+> >> >> +        prop->m_lSnapshotAttributes =3D e.context;
+> >> >> +        prop->m_eStatus =3D VSS_SS_CREATED;
+> >> >> +    }
+> >> >> +
+> >> >> +out:
+> >> >> +    ReleaseSRWLockShared(&m_lock);
+> >> >> +    return hr;
+> >> >> +}
+> >> >> +
+> >> >> +LONG QGAVssSnapshotRegistry::RemoveSet(VSS_ID set_id)
+> >> >> +{
+> >> >> +    LONG removed;
+> >> >> +
+> >> >> +    AcquireSRWLockExclusive(&m_lock);
+> >> >> +    auto it =3D std::remove_if(m_entries.begin(), m_entries.end(),
+> >> >> +        [&](const Entry &e) {
+> >> >> +            return IsEqualGUID(e.set_id, set_id);
+> >> >> +        });
+> >> >> +    removed =3D m_entries.end() - it;
+> >> >> +    m_entries.erase(it, m_entries.end());
+> >> >> +    ReleaseSRWLockExclusive(&m_lock);
+> >> >> +    return removed;
+> >> >> +}
+> >> >> +
+> >> >> +bool QGAVssSnapshotRegistry::Remove(VSS_ID snapshot_id)
+> >> >> +{
+> >> >> +    bool found;
+> >> >> +
+> >> >> +    AcquireSRWLockExclusive(&m_lock);
+> >> >> +    auto it =3D std::find_if(m_entries.begin(), m_entries.end(),
+> >> >> +        [&](const Entry &e) {
+> >> >> +            return IsEqualGUID(e.snapshot_id, snapshot_id);
+> >> >> +        });
+> >> >> +    found =3D it !=3D m_entries.end();
+> >> >> +    if (found) {
+> >> >> +        m_entries.erase(it);
+> >> >> +    }
+> >> >> +    ReleaseSRWLockExclusive(&m_lock);
+> >> >> +    return found;
+> >> >> +}
+> >> >>
+> >> >>  /* QGAVssProvider */
+> >> >>
+> >> >> @@ -266,7 +388,7 @@ STDMETHODIMP CQGAVssProvider::SetContext(LONG
+> lContext)
+> >> >>  STDMETHODIMP CQGAVssProvider::GetSnapshotProperties(
+> >> >>      VSS_ID SnapshotId, VSS_SNAPSHOT_PROP *pProp)
+> >> >>  {
+> >> >> -    return S_OK;
+> >> >> +    return qga_vss_registry.GetProperties(SnapshotId, pProp);
+> >> >>  }
+> >> >>
+> >> >>  STDMETHODIMP CQGAVssProvider::Query(
+> >> >> @@ -286,6 +408,27 @@ STDMETHODIMP CQGAVssProvider::DeleteSnapshots(
+> >> >>      VSS_ID SourceObjectId, VSS_OBJECT_TYPE eSourceObjectType,
+> >> >>      BOOL bForceDelete, LONG *plDeletedSnapshots, VSS_ID
+> *pNondeletedSnapshotID)
+> >> >>  {
+> >> >> +    LONG deleted =3D 0;
+> >> >> +
+> >> >> +    switch (eSourceObjectType) {
+> >> >> +    case VSS_OBJECT_SNAPSHOT:
+> >> >> +        if (qga_vss_registry.Remove(SourceObjectId)) {
+> >> >> +            deleted =3D 1;
+> >> >> +        }
+> >> >> +        break;
+> >> >> +    case VSS_OBJECT_SNAPSHOT_SET:
+> >> >> +        deleted =3D qga_vss_registry.RemoveSet(SourceObjectId);
+> >> >> +        break;
+> >> >> +    default:
+> >> >> +        break;
+> >> >> +    }
+> >> >> +
+> >> >> +    if (deleted > 0) {
+> >> >> +        *plDeletedSnapshots =3D deleted;
+> >> >> +        *pNondeletedSnapshotID =3D GUID_NULL;
+> >> >> +        return S_OK;
+> >> >> +    }
+> >> >> +
+> >> >>      *plDeletedSnapshots =3D 0;
+> >> >>      *pNondeletedSnapshotID =3D SourceObjectId;
+> >> >>      return S_OK;
+> >> >> @@ -295,6 +438,13 @@ STDMETHODIMP
+> CQGAVssProvider::BeginPrepareSnapshot(
+> >> >>      VSS_ID SnapshotSetId, VSS_ID SnapshotId,
+> >> >>      VSS_PWSZ pwszVolumeName, LONG lNewContext)
+> >> >>  {
+> >> >> +    if (!pwszVolumeName) {
+> >> >> +        return E_INVALIDARG;
+> >> >> +    }
+> >> >> +    if (!qga_vss_registry.Track(SnapshotSetId, SnapshotId,
+> >> >> +                                pwszVolumeName, lNewContext)) {
+> >> >> +        return E_OUTOFMEMORY;
+> >> >> +    }
+> >> >>      return S_OK;
+> >> >>  }
+> >> >>
+> >> >> @@ -411,6 +561,7 @@ STDMETHODIMP
+> CQGAVssProvider::PostFinalCommitSnapshots(VSS_ID SnapshotSetId)
+> >> >>
+> >> >>  STDMETHODIMP CQGAVssProvider::AbortSnapshots(VSS_ID SnapshotSetId)
+> >> >>  {
+> >> >> +    qga_vss_registry.RemoveSet(SnapshotSetId);
+> >> >>      return S_OK;
+> >> >>  }
+> >> >>
+> >> >> diff --git a/qga/vss-win32/requester.cpp
+> b/qga/vss-win32/requester.cpp
+> >> >> index 1b0155c691ef..565eefcfb283 100644
+> >> >> --- a/qga/vss-win32/requester.cpp
+> >> >> +++ b/qga/vss-win32/requester.cpp
+> >> >> @@ -52,6 +52,7 @@ static t_VssFreeSnapshotProperties
+> pVssFreeSnapshotProperties;
+> >> >>  static struct QGAVSSContext {
+> >> >>      IVssBackupComponents *pVssbc;  /* VSS requester interface */
+> >> >>      IVssAsync *pAsyncSnapshot;     /* async info of VSS snapshot
+> operation */
+> >> >> +    VSS_ID idSnapshotSet;          /* snapshot set created for thi=
+s
+> cycle */
+> >> >>      HANDLE hEventFrozen;           /* notify fs/writer freeze from
+> provider */
+> >> >>      HANDLE hEventThaw;             /* request provider to thaw */
+> >> >>      HANDLE hEventTimeout;          /* notify timeout in provider *=
+/
+> >> >> @@ -116,6 +117,7 @@ static void requester_cleanup(void)
+> >> >>          vss_ctx.pVssbc->Release();
+> >> >>          vss_ctx.pVssbc =3D NULL;
+> >> >>      }
+> >> >> +    vss_ctx.idSnapshotSet =3D GUID_NULL;
+> >> >>      vss_ctx.cFrozenVols =3D 0;
+> >> >>      qga_debug_end;
+> >> >>  }
+> >> >> @@ -446,6 +448,7 @@ void requester_freeze(int *num_vols, void
+> *mountpoints, ErrorSet *errset)
+> >> >>          err_set(errset, hr, "failed to start snapshot set");
+> >> >>          goto out;
+> >> >>      }
+> >> >> +    vss_ctx.idSnapshotSet =3D guidSnapshotSet;
+> >> >>
+> >> >>      if (mountpoints) {
+> >> >>          PWCHAR volume_name_wchar;
+> >> >> @@ -680,6 +683,29 @@ void requester_thaw(int *num_vols, void
+> *mountpints, ErrorSet *errset)
+> >> >>          err_set(errset, hr, "failed to do snapshot set");
+> >> >>      }
+> >> >>
+> >> >> +    /*
+> >> >> +     * The snapshot set is created in VSS_CTX_APP_ROLLBACK context=
+,
+> so
+> >> >> +     * it is persistent: if it was committed, VSS keeps it (and
+> keeps
+> >> >> +     * querying providers about it) until it is explicitly deleted=
+.
+> The
+> >> >> +     * freeze/thaw cycle is over whatever the outcome above, so
+> delete
+> >> >> +     * it now. Failure is not fatal here, only log it.
+> >> >> +     */
+> >> >> +    {
+> >> >> +        LONG lDeletedSnapshots =3D 0;
+> >> >> +        VSS_ID idNonDeletedSnapshot;
+> >> >> +        HRESULT hrDelete;
+> >> >> +
+> >> >> +        hrDelete =3D
+> vss_ctx.pVssbc->DeleteSnapshots(vss_ctx.idSnapshotSet,
+> >> >> +
+>  VSS_OBJECT_SNAPSHOT_SET,
+> >> >> +                                                   TRUE,
+> >> >> +
+>  &lDeletedSnapshots,
+> >> >> +
+>  &idNonDeletedSnapshot);
+> >> >> +        if (FAILED(hrDelete)) {
+> >> >> +            qga_debug("failed to delete snapshot set after thaw,"
+> >> >> +                      " hr=3D0x%08lx", hrDelete);
+> >> >> +        }
+> >> >> +    }
+> >> >> +
+> >> >>      if (err_is_set(errset)) {
+> >> >>          vss_ctx.pVssbc->AbortBackup();
+> >> >>      }
+> >> >> --
+> >> >> 2.56.0.116.g6de20f6092dc
+> >> >>
+> >>
 >
 >
 
---000000000000fd94ec065ed4010f
+--000000000000a19c7e065ed416d9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div><br clear=3D"all"></div><br><div><br clear=3D"all"></=
-div>Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.c=
-om">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_quote gmail_qu=
-ote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Sep 18, 2026 a=
-t 9:57=E2=80=AFAM Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
-reau@gmail.com">marcandre.lureau@gmail.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">Hi<br>
+<div dir=3D"ltr"><div dir=3D"ltr"><div><br clear=3D"all"></div><div><div di=
+r=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><br></div></div></div>=
+<br></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"=
+ltr" class=3D"gmail_attr">On Tue, Oct 27, 2026 at 5:04=E2=80=AFPM Marc-Andr=
+=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com">marcandre.=
+lureau@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">Hi<br>
 <br>
-On Thu, Sep 17, 2026 at 7:49=E2=80=AFPM Abed Agbaria &lt;<a href=3D"mailto:=
-aagbaria@redhat.com" target=3D"_blank">aagbaria@redhat.com</a>&gt; wrote:<b=
-r>
+On Tue, Oct 27, 2026 at 6:56=E2=80=AFPM Kostiantyn Kostiuk &lt;<a href=3D"m=
+ailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt; wr=
+ote:<br>
 &gt;<br>
-&gt; COMRegister() probes the COM+ catalog to decide whether to unregister<=
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; On Tue, Oct 27, 2026 at 4:02=E2=80=AFPM Marc-Andr=C3=A9 Lureau &lt;<a =
+href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank">marcandre.lur=
+eau@redhat.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; Hi<br>
+&gt;&gt;<br>
+&gt;&gt; On Tue, Oct 27, 2026 at 5:54=E2=80=AFPM Kostiantyn Kostiuk &lt;<a =
+href=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</=
+a>&gt; wrote:<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; On Tue, Oct 27, 2026 at 3:31=E2=80=AFPM &lt;<a href=3D"mailto=
+:marcandre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com=
+</a>&gt; wrote:<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcan=
+dre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt=
+;<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Since commit 374f4676788c, the provider&#39;s GetSnapshot=
+Properties()<br>
+&gt;&gt; &gt;&gt; returns S_OK for any snapshot ID without filling in the p=
+roperties.=C2=A0 VSS<br>
+&gt;&gt; &gt;&gt; consults every registered provider when a requester looks=
+ up a snapshot,<br>
+&gt;&gt; &gt;&gt; so lookups of snapshots owned by other providers now succ=
+eed with an<br>
+&gt;&gt; &gt;&gt; all-zero VSS_SNAPSHOT_PROP. Backup software relying on it=
+ fails, e.g.<br>
+&gt;&gt; &gt;&gt; Veeam: &quot;Original volume name is not specified for th=
+e shadow (shadow<br>
+&gt;&gt; &gt;&gt; volume id: &#39;{00000000-0000-0000-0000-000000000000}&#3=
+9;)&quot;.<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Simply reverting is not an option: 374f4676788c switched =
+to S_OK because<br>
+&gt;&gt; &gt;&gt; returning VSS_E_OBJECT_NOT_FOUND unconditionally broke qe=
+mu-ga&#39;s own<br>
+&gt;&gt; &gt;&gt; snapshot sets. The provider must answer for its own snaps=
+hots only. It<br>
+&gt;&gt; &gt;&gt; does not create real shadow copies, but it does take part=
+ in the<br>
+&gt;&gt; &gt;&gt; snapshot set during qemu-ga fsfreeze cycles. Remember the=
+ snapshot IDs<br>
+&gt;&gt; &gt;&gt; received in BeginPrepareSnapshot(), return their<br>
+&gt;&gt; &gt;&gt; (minimal) properties, and return VSS_E_OBJECT_NOT_FOUND f=
+or anything<br>
+&gt;&gt; &gt;&gt; else.<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Entries are dropped when VSS deletes the snapshots or the=
+ set, or when<br>
+&gt;&gt; &gt;&gt; the set is aborted (AbortSnapshots()).<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; COM+ may hand out several CQGAVssProvider instances (and =
+serve several<br>
+&gt;&gt; &gt;&gt; client processes), so this registry is module-global. It =
+is per-process<br>
+&gt;&gt; &gt;&gt; by design and safe because the COM+ application is hosted=
+ by a single NT<br>
+&gt;&gt; &gt;&gt; service (see CreateServiceForApplication() in install.cpp=
+): COM+ forbids<br>
+&gt;&gt; &gt;&gt; pooling and recycling for service-hosted applications, so=
+ exactly one<br>
+&gt;&gt; &gt;&gt; surrogate process ever hosts the provider.<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; On the requester side, the snapshot set is created in the=
+ persistent<br>
+&gt;&gt; &gt;&gt; VSS_CTX_APP_ROLLBACK context, so VSS keeps it after the f=
+reeze/thaw<br>
+&gt;&gt; &gt;&gt; cycle and may keep querying providers about it. The provi=
+der registry<br>
+&gt;&gt; &gt;&gt; does not outlive the cycle (requester_thaw() stops the ho=
+sting service,<br>
+&gt;&gt; &gt;&gt; and the provider process with it), so later queries would=
+ get &quot;not<br>
+&gt;&gt; &gt;&gt; found&quot; for a set VSS still believes exists. Make req=
+uester_thaw() delete<br>
+&gt;&gt; &gt;&gt; the snapshot set explicitly at the end of the cycle, what=
+ever its<br>
+&gt;&gt; &gt;&gt; outcome (including BackupComplete() failure and aborted s=
+napshot sets).<br>
+&gt;&gt; &gt;&gt; A failure to delete is only logged, since the guest files=
+ystems have<br>
+&gt;&gt; &gt;&gt; already been thawed.<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_=
+blank">qemu-stable@nongnu.org</a><br>
+&gt;&gt; &gt;&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu=
+/-/work_items/4584" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com=
+/qemu-project/qemu/-/work_items/4584</a><br>
+&gt;&gt; &gt;&gt; Buglink: <a href=3D"https://redhat.atlassian.net/browse/R=
+HEL-250662" rel=3D"noreferrer" target=3D"_blank">https://redhat.atlassian.n=
+et/browse/RHEL-250662</a><br>
+&gt;&gt; &gt;&gt; Fixes: 374f4676788c (&quot;qga: Fix VSS provider GetSnaps=
+hotProperties return value&quot;)<br>
+&gt;&gt; &gt;&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mail=
+to:marcandre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.c=
+om</a>&gt;<br>
+&gt;&gt; &gt;&gt; ---<br>
+&gt;&gt; &gt;&gt;=C2=A0 qga/vss-win32/install.cpp=C2=A0 =C2=A0|=C2=A0 =C2=
+=A01 +<br>
+&gt;&gt; &gt;&gt;=C2=A0 qga/vss-win32/provider.cpp=C2=A0 | 153 ++++++++++++=
++++++++++++++++++++++++-<br>
+&gt;&gt; &gt;&gt;=C2=A0 qga/vss-win32/requester.cpp |=C2=A0 26 ++++++<br>
+&gt;&gt; &gt;&gt;=C2=A0 3 files changed, 179 insertions(+), 1 deletion(-)<b=
+r>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/in=
+stall.cpp<br>
+&gt;&gt; &gt;&gt; index 09d94edd4f53..3b58dc840520 100644<br>
+&gt;&gt; &gt;&gt; --- a/qga/vss-win32/install.cpp<br>
+&gt;&gt; &gt;&gt; +++ b/qga/vss-win32/install.cpp<br>
+&gt;&gt; &gt;&gt; @@ -331,6 +331,7 @@ STDAPI COMRegister(void)<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 chk(put_Value(pObj, L&quot;Authentica=
+tion&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sh=
+ort(6)));<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 chk(put_Value(pObj, L&quot;Authentica=
+tionCapability&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0short(2)));<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 chk(put_Value(pObj, L&quot;Impersonat=
+ionLevel&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0short(2)));<=
 br>
-&gt; first, but it is the SCM that blocks installation when a service of th=
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 /* NT-service-hosted apps have ConcurrentA=
+pps=3D1 enforced */<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 chk(pApps-&gt;SaveChanges(&amp;n));<b=
+r>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 /* The app should be deleted if somet=
+hing fails after SaveChanges */<br>
+&gt;&gt; &gt;&gt; diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/p=
+rovider.cpp<br>
+&gt;&gt; &gt;&gt; index 1c8eb236e57f..ad2f3ee763e6 100644<br>
+&gt;&gt; &gt;&gt; --- a/qga/vss-win32/provider.cpp<br>
+&gt;&gt; &gt;&gt; +++ b/qga/vss-win32/provider.cpp<br>
+&gt;&gt; &gt;&gt; @@ -11,6 +11,11 @@<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0*/<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 #include &quot;qemu/osdep.h&quot;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +#include &lt;vector&gt;<br>
+&gt;&gt; &gt;&gt; +#include &lt;algorithm&gt;<br>
+&gt;&gt; &gt;&gt; +#include &lt;string&gt;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt;=C2=A0 #include &quot;vss-common.h&quot;<br>
+&gt;&gt; &gt;&gt;=C2=A0 #include &quot;vss-debug.h&quot;<br>
+&gt;&gt; &gt;&gt;=C2=A0 #ifdef HAVE_VSS_SDK<br>
+&gt;&gt; &gt;&gt; @@ -138,6 +143,123 @@ STDMETHODIMP CQGAVSSEnumObject::Clo=
+ne(IVssEnumObject **ppenum)<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 return E_NOTIMPL;<br>
+&gt;&gt; &gt;&gt;=C2=A0 }<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; +/* Registry of the snapshot IDs for this provider */<br>
+&gt;&gt; &gt;&gt; +class QGAVssSnapshotRegistry<br>
+&gt;&gt; &gt;&gt; +{<br>
+&gt;&gt; &gt;&gt; +public:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 bool Track(VSS_ID set_id, VSS_ID snapshot_=
+id,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0V=
+SS_PWSZ volume_name, LONG context);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 HRESULT GetProperties(VSS_ID snapshot_id, =
+VSS_SNAPSHOT_PROP *prop) const;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 LONG RemoveSet(VSS_ID set_id); /* returns =
+how many were removed */<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 bool Remove(VSS_ID snapshot_id);<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +private:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 struct Entry {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 VSS_ID set_id;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 VSS_ID snapshot_id;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 std::wstring volume_name;<br=
+>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 LONG context;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 };<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 std::vector&lt;Entry&gt; m_entries;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 mutable SRWLOCK m_lock =3D SRWLOCK_INIT;<b=
+r>
+&gt;&gt; &gt;&gt; +};<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +static QGAVssSnapshotRegistry qga_vss_registry;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +bool QGAVssSnapshotRegistry::Track(VSS_ID set_id, VSS_ID=
+ snapshot_id,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0VSS_PW=
+SZ volume_name, LONG context)<br>
+&gt;&gt; &gt;&gt; +{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 bool ok;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 AcquireSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 try {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 m_entries.push_back(Entry { =
+set_id, snapshot_id, volume_name,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 conte=
+xt });<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ok =3D true;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 } catch (...) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ok =3D false;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 ReleaseSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 return ok;<br>
+&gt;&gt; &gt;&gt; +}<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +HRESULT QGAVssSnapshotRegistry::GetProperties(VSS_ID sna=
+pshot_id,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 VSS_SNAPSHOT_PROP *prop) const<br>
+&gt;&gt; &gt;&gt; +{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 HRESULT hr =3D S_OK;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 AcquireSRWLockShared(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 auto it =3D std::find_if(m_entries.begin()=
+, m_entries.end(),<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 [&amp;](const Entry &amp;e) =
+{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return IsEqual=
+GUID(e.snapshot_id, snapshot_id);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 });<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 if (it =3D=3D m_entries.end()) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D VSS_E_OBJECT_NOT_FOUN=
+D;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 const Entry &amp;e =3D *it;<=
+br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t len =3D (e.volume_nam=
+e.size() + 1) * sizeof(WCHAR);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 VSS_PWSZ volume =3D (VSS_PWS=
+Z)CoTaskMemAlloc(len);<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; I&#39;m afraid of this part. We allocate memory but don&#39;t=
+ call CoTaskMemFree.<br>
+&gt;&gt; &gt; This function is called from IVssBackupComponents::GetSnapsho=
+tProperties<br>
+&gt;&gt; &gt; From <a href=3D"https://learn.microsoft.com/en-us/windows/win=
+32/api/vsbackup/nf-vsbackup-ivssbackupcomponents-getsnapshotproperties" rel=
+=3D"noreferrer" target=3D"_blank">https://learn.microsoft.com/en-us/windows=
+/win32/api/vsbackup/nf-vsbackup-ivssbackupcomponents-getsnapshotproperties<=
+/a><br>
+&gt;&gt; &gt; &quot;When the structure is no longer needed, the software pr=
+ovider is responsible for freeing these strings by calling the VssFreeSnaps=
+hotProperties function.&quot;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; So we allocate memory but don&#39;t free it with VssFreeSnaps=
+hotProperties or CoTaskMemFree.<br>
+&gt;&gt;<br>
+&gt;&gt; I also wondered, but this is apparently what is expected:<br>
+&gt;&gt;<br>
+&gt;&gt; <a href=3D"https://github.com/MicrosoftDocs/sdk-api/blob/docs/sdk-=
+api-src/content/vss/ns-vss-vss_object_prop.md" rel=3D"noreferrer" target=3D=
+"_blank">https://github.com/MicrosoftDocs/sdk-api/blob/docs/sdk-api-src/con=
+tent/vss/ns-vss-vss_object_prop.md</a><br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; A requester obtains VSS_OBJECT_PROP structures by using<br>
+&gt;&gt; IVssEnumObject::Next to iterate over the list of objects returned =
+by a<br>
+&gt;&gt; call to IVssBackupComponents::Query.<br>
+&gt;&gt;<br>
+&gt; Yes, but there is nothing about cleaning memory<br>
+&gt;<br>
+&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; As its members are filled by a COM interface, prior to deleting th=
 e<br>
-&gt; same name is left over.=C2=A0 If the COM+ application is gone and the =
-service<br>
-&gt; survives, install fails with 0x80070431 and never recovers.<br>
-&gt;<br>
-&gt;=C2=A0 - Check the SCM as well as the COM+ catalog in COMRegister().<br=
->
-&gt;=C2=A0 - Delete the provider service in COMUnregister() and at the<br>
-&gt;=C2=A0 =C2=A0 DllUnregisterServer() call sites in DllRegisterServer().<=
-br>
-&gt;<br>
-&gt; Opening the SCM, opening the provider service and closing both handles=
-<br>
-&gt; is boilerplate that StopService() already contains, so move it into<br=
->
-&gt; QGAProviderOpenService(), which returns a single service handle and<br=
->
-&gt; reports the win32 error through an out parameter, and convert<br>
-&gt; StopService() to it.=C2=A0 The service handle stays valid after the SC=
-M<br>
-&gt; handle is closed, so the helper closes it and each caller is left with=
-<br>
-&gt; one handle to release.<br>
-&gt;<br>
-&gt; While at it, fix two pre-existing problems in StopService():<br>
-&gt;<br>
-&gt;=C2=A0 - It logged errmsg(E_FAIL, ...) and returned E_FAIL for every fa=
-ilure,<br>
-&gt;=C2=A0 =C2=A0 discarding the GetLastError() value.=C2=A0 It now passes =
-the win32 error<br>
-&gt;=C2=A0 =C2=A0 code to errmsg() and returns HRESULT_FROM_WIN32().<br>
-&gt;=C2=A0 - It opened the SCM with SC_MANAGER_ALL_ACCESS, which implies<br=
->
-&gt;=C2=A0 =C2=A0 SC_MANAGER_CREATE_SERVICE and is therefore refused to<br>
-&gt;=C2=A0 =C2=A0 non-administrators, and passed that same SCM mask to Open=
-Service()<br>
-&gt;=C2=A0 =C2=A0 as a service access mask.=C2=A0 Each operation now reques=
-ts only what it<br>
-&gt;=C2=A0 =C2=A0 needs: SC_MANAGER_CONNECT on the SCM, and SERVICE_QUERY_C=
-ONFIG,<br>
-&gt;=C2=A0 =C2=A0 DELETE or SERVICE_STOP on the service.<br>
-&gt;<br>
-&gt; StopService()&#39;s return value changes from E_FAIL to a specific<br>
-&gt; HRESULT_FROM_WIN32(); its only caller, in requester.cpp, ignores it.<b=
+&gt;&gt; property structures VSS_SNAPSHOT_PROP and VSS_PROVIDER_PROP, the<b=
 r>
-&gt;<br>
-&gt; Signed-off-by: Abed Agbaria &lt;<a href=3D"mailto:aagbaria@redhat.com"=
- target=3D"_blank">aagbaria@redhat.com</a>&gt;<br>
-<br>
-Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@=
-redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-<br>
-(you could have easily made a small series, I&#39;ll let other decide if<br=
->
-it is necessary)<br>
-<br>
-thanks<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 qga/vss-win32/install.cpp | 122 ++++++++++++++++++++++++++++++++=
-------<br>
-&gt;=C2=A0 1 file changed, 105 insertions(+), 17 deletions(-)<br>
-&gt;<br>
-&gt; v1: <a href=3D"https://lore.kernel.org/qemu-devel/20260915145320.21566=
-3-1-aagbaria@redhat.com/" rel=3D"noreferrer" target=3D"_blank">https://lore=
-.kernel.org/qemu-devel/20260915145320.215663-1-aagbaria@redhat.com/</a><br>
-&gt;<br>
-&gt; v2:<br>
-&gt;=C2=A0 - Pass win32 error codes to errmsg() consistently instead of mix=
-ing<br>
-&gt;=C2=A0 =C2=A0 error codes and HRESULTs (Marc-Andr=C3=A9)<br>
-&gt;=C2=A0 - Factor the SCM/OpenService boilerplate into QGAProviderOpenSer=
-vice()<br>
-&gt;=C2=A0 =C2=A0 and convert the existing StopService() to it (Marc-Andr=
-=C3=A9)<br>
-&gt;=C2=A0 - Restrict StopService() to the access rights it actually needs<=
+&gt;&gt; memory they contain must be released by calling CoTaskMemFree for<=
 br>
+&gt;&gt; every string and byte array value contained in each structure.<br>
+&gt;&gt;<br>
+&gt;&gt; In the case of VSS_SNAPSHOT_PROP, this can be done manually, or th=
+e<br>
+&gt;&gt; utility function VssFreeSnapshotProperties can be used.<br>
+&gt;&gt;<br>
+&gt; but we don&#39;t store the pointers<br>
+<br>
+I don&#39;t follow you.<br>
+<br>
+<a href=3D"https://learn.microsoft.com/en-us/windows/win32/api/vsprov/nf-vs=
+prov-ivsssoftwaresnapshotprovider-getsnapshotproperties" rel=3D"noreferrer"=
+ target=3D"_blank">https://learn.microsoft.com/en-us/windows/win32/api/vspr=
+ov/nf-vsprov-ivsssoftwaresnapshotprovider-getsnapshotproperties</a><br>
+<br>
+&quot;All members are required except m_pwszExposedName and<br>
+m_pwszExposedPath, which the provider can set to NULL. The provider<br>
+allocates memory for all string members that it sets in the structure.<br>
+When the structure is no longer needed, the caller is responsible for<br>
+freeing these strings by calling the VssFreeSnapshotProperties<br>
+function.&quot;<br>
+<br>
+So it looks like we should actually fill the other fields too<br>
+<br></blockquote><div><br></div><div>I love MSFT docs.=C2=A0<br></div><div>=
+<br></div><div>Ok, let me test this.=C2=A0</div><div>=C2=A0</div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">
 &gt;<br>
-&gt; Tested on a Windows guest by replacing the installed build with this<b=
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!volume) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D E_OUTOF=
+MEMORY;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(volume, e.volume_name=
+.c_str(), len);<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* not a real snapshot: no d=
+evice object, exposure or timestamp */<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(prop, 0, sizeof(*prop=
+));<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_SnapshotId =3D e.=
+snapshot_id;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_SnapshotSetId =3D=
+ e.set_id;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_lSnapshotsCount =
+=3D std::count_if(m_entries.begin(),<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 m_entries.end(=
+), [&amp;](const Entry &amp;o) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+return IsEqualGUID(o.set_id, e.set_id);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 });<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_pwszOriginalVolum=
+eName =3D volume;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_ProviderId =3D g_=
+gProviderId;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_lSnapshotAttribut=
+es =3D e.context;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 prop-&gt;m_eStatus =3D VSS_S=
+S_CREATED;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +out:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 ReleaseSRWLockShared(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 return hr;<br>
+&gt;&gt; &gt;&gt; +}<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +LONG QGAVssSnapshotRegistry::RemoveSet(VSS_ID set_id)<br=
+>
+&gt;&gt; &gt;&gt; +{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 LONG removed;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 AcquireSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 auto it =3D std::remove_if(m_entries.begin=
+(), m_entries.end(),<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 [&amp;](const Entry &amp;e) =
+{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return IsEqual=
+GUID(e.set_id, set_id);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 });<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 removed =3D m_entries.end() - it;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 m_entries.erase(it, m_entries.end());<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 ReleaseSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 return removed;<br>
+&gt;&gt; &gt;&gt; +}<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +bool QGAVssSnapshotRegistry::Remove(VSS_ID snapshot_id)<=
+br>
+&gt;&gt; &gt;&gt; +{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 bool found;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 AcquireSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 auto it =3D std::find_if(m_entries.begin()=
+, m_entries.end(),<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 [&amp;](const Entry &amp;e) =
+{<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return IsEqual=
+GUID(e.snapshot_id, snapshot_id);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 });<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 found =3D it !=3D m_entries.end();<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 if (found) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 m_entries.erase(it);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 ReleaseSRWLockExclusive(&amp;m_lock);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 return found;<br>
+&gt;&gt; &gt;&gt; +}<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 /* QGAVssProvider */<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; @@ -266,7 +388,7 @@ STDMETHODIMP CQGAVssProvider::SetCont=
+ext(LONG lContext)<br>
+&gt;&gt; &gt;&gt;=C2=A0 STDMETHODIMP CQGAVssProvider::GetSnapshotProperties=
+(<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 VSS_ID SnapshotId, VSS_SNAPSHOT_PROP =
+*pProp)<br>
+&gt;&gt; &gt;&gt;=C2=A0 {<br>
+&gt;&gt; &gt;&gt; -=C2=A0 =C2=A0 return S_OK;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 return qga_vss_registry.GetProperties(Snap=
+shotId, pProp);<br>
+&gt;&gt; &gt;&gt;=C2=A0 }<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 STDMETHODIMP CQGAVssProvider::Query(<br>
+&gt;&gt; &gt;&gt; @@ -286,6 +408,27 @@ STDMETHODIMP CQGAVssProvider::Delete=
+Snapshots(<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 VSS_ID SourceObjectId, VSS_OBJECT_TYP=
+E eSourceObjectType,<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 BOOL bForceDelete, LONG *plDeletedSna=
+pshots, VSS_ID *pNondeletedSnapshotID)<br>
+&gt;&gt; &gt;&gt;=C2=A0 {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 LONG deleted =3D 0;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 switch (eSourceObjectType) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 case VSS_OBJECT_SNAPSHOT:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qga_vss_registry.Remove(=
+SourceObjectId)) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 deleted =3D 1;=
+<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 case VSS_OBJECT_SNAPSHOT_SET:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 deleted =3D qga_vss_registry=
+.RemoveSet(SourceObjectId);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 default:<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 if (deleted &gt; 0) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 *plDeletedSnapshots =3D dele=
+ted;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 *pNondeletedSnapshotID =3D G=
+UID_NULL;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return S_OK;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 *plDeletedSnapshots =3D 0;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 *pNondeletedSnapshotID =3D SourceObje=
+ctId;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 return S_OK;<br>
+&gt;&gt; &gt;&gt; @@ -295,6 +438,13 @@ STDMETHODIMP CQGAVssProvider::BeginP=
+repareSnapshot(<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 VSS_ID SnapshotSetId, VSS_ID Snapshot=
+Id,<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 VSS_PWSZ pwszVolumeName, LONG lNewCon=
+text)<br>
+&gt;&gt; &gt;&gt;=C2=A0 {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 if (!pwszVolumeName) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_INVALIDARG;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 if (!qga_vss_registry.Track(SnapshotSetId,=
+ SnapshotId,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pwszVolumeName, lNe=
+wContext)) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_OUTOFMEMORY;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 return S_OK;<br>
+&gt;&gt; &gt;&gt;=C2=A0 }<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; @@ -411,6 +561,7 @@ STDMETHODIMP CQGAVssProvider::PostFin=
+alCommitSnapshots(VSS_ID SnapshotSetId)<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 STDMETHODIMP CQGAVssProvider::AbortSnapshots(VSS_ID=
+ SnapshotSetId)<br>
+&gt;&gt; &gt;&gt;=C2=A0 {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 qga_vss_registry.RemoveSet(SnapshotSetId);=
+<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 return S_OK;<br>
+&gt;&gt; &gt;&gt;=C2=A0 }<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/=
+requester.cpp<br>
+&gt;&gt; &gt;&gt; index 1b0155c691ef..565eefcfb283 100644<br>
+&gt;&gt; &gt;&gt; --- a/qga/vss-win32/requester.cpp<br>
+&gt;&gt; &gt;&gt; +++ b/qga/vss-win32/requester.cpp<br>
+&gt;&gt; &gt;&gt; @@ -52,6 +52,7 @@ static t_VssFreeSnapshotProperties pVss=
+FreeSnapshotProperties;<br>
+&gt;&gt; &gt;&gt;=C2=A0 static struct QGAVSSContext {<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 IVssBackupComponents *pVssbc;=C2=A0 /=
+* VSS requester interface */<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 IVssAsync *pAsyncSnapshot;=C2=A0 =C2=
+=A0 =C2=A0/* async info of VSS snapshot operation */<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 VSS_ID idSnapshotSet;=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 /* snapshot set created for this cycle */<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 HANDLE hEventFrozen;=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0/* notify fs/writer freeze from provider */<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 HANDLE hEventThaw;=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* request provider to thaw */<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 HANDLE hEventTimeout;=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 /* notify timeout in provider */<br>
+&gt;&gt; &gt;&gt; @@ -116,6 +117,7 @@ static void requester_cleanup(void)<b=
 r>
-&gt; one and running a full install/uninstall cycle, including installation=
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vss_ctx.pVssbc-&gt;Rele=
+ase();<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vss_ctx.pVssbc =3D NULL=
+;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 vss_ctx.idSnapshotSet =3D GUID_NULL;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 vss_ctx.cFrozenVols =3D 0;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
+&gt;&gt; &gt;&gt;=C2=A0 }<br>
+&gt;&gt; &gt;&gt; @@ -446,6 +448,7 @@ void requester_freeze(int *num_vols, =
+void *mountpoints, ErrorSet *errset)<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err_set(errset, hr, &qu=
+ot;failed to start snapshot set&quot;);<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 vss_ctx.idSnapshotSet =3D guidSnapshotSet;=
 <br>
-&gt; over a leftover provider service.<br>
-&gt;<br>
-&gt; diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-&gt; index 5b7a8e9bc5..cfafc2d95e 100644<br>
-&gt; --- a/qga/vss-win32/install.cpp<br>
-&gt; +++ b/qga/vss-win32/install.cpp<br>
-&gt; @@ -241,6 +241,96 @@ out:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return hr;<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +/*<br>
-&gt; + * Open the QGA VSS provider service with the requested access rights=
-.<br>
-&gt; + *<br>
-&gt; + * On success, return a service handle which the caller must release =
-with<br>
-&gt; + * CloseServiceHandle().=C2=A0 On failure, return NULL and store the =
-win32 error<br>
-&gt; + * code in *err.=C2=A0 ERROR_SERVICE_DOES_NOT_EXIST just means the se=
-rvice is not<br>
-&gt; + * installed, which is a normal condition for all callers, so it is n=
-ot<br>
-&gt; + * reported here; the caller decides what it means.<br>
-&gt; + */<br>
-&gt; +static SC_HANDLE QGAProviderOpenService(DWORD access, DWORD *err)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_begin;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 SC_HANDLE service =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 SC_HANDLE manager =3D OpenSCManager(NULL, NULL, SC_MANA=
-GER_CONNECT);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 *err =3D ERROR_SUCCESS;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!manager) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 *err =3D GetLastError();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(*err, &quot;Failed to open service=
- manager&quot;);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 service =3D OpenService(manager, QGA_PROVIDER_NAME, acc=
-ess);<br>
-&gt; +=C2=A0 =C2=A0 if (!service) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 *err =3D GetLastError();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (*err !=3D ERROR_SERVICE_DOES_NOT_EXIS=
-T) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(*err, &quot;Failed t=
-o open service&quot;);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +out:<br>
-&gt; +=C2=A0 =C2=A0 if (manager) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseServiceHandle(manager);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_end;<br>
-&gt; +=C2=A0 =C2=A0 return service;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* Check whether the QGA VSS provider service is registered with the =
-SCM */<br>
-&gt; +static bool QGAProviderServiceExists(void)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_begin;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 DWORD err;<br>
-&gt; +=C2=A0 =C2=A0 SC_HANDLE service =3D QGAProviderOpenService(SERVICE_QU=
-ERY_CONFIG, &amp;err);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (service) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseServiceHandle(service);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_end;<br>
-&gt; +=C2=A0 =C2=A0 return service !=3D NULL;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* Delete a QGA VSS provider service that COM+ no longer owns */<br>
-&gt; +static HRESULT QGAProviderRemoveService(void)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_begin;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 HRESULT hr =3D S_OK;<br>
-&gt; +=C2=A0 =C2=A0 DWORD err;<br>
-&gt; +=C2=A0 =C2=A0 SC_HANDLE service =3D QGAProviderOpenService(DELETE, &a=
-mp;err);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!service) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (err !=3D ERROR_SERVICE_DOES_NOT_EXIST=
-) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D HRESULT_FROM_WIN32(e=
-rr);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 qga_debug(&quot;Removing service: %s&quot;, QGA_PROVIDE=
-R_NAME);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!DeleteService(service)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D GetLastError();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (err !=3D ERROR_SERVICE_MARKED_FOR_DEL=
-ETE) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D HRESULT_FROM_WIN32(e=
-rr);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(err, &quot;Failed to=
- delete service&quot;);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +out:<br>
-&gt; +=C2=A0 =C2=A0 if (service) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseServiceHandle(service);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 qga_debug_end;<br>
-&gt; +=C2=A0 =C2=A0 return hr;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 /* Unregister this module from COM+ Applications Catalog */<br>
-&gt;=C2=A0 STDAPI COMUnregister(void);<br>
-&gt;=C2=A0 STDAPI COMUnregister(void)<br>
-&gt; @@ -251,6 +341,7 @@ STDAPI COMUnregister(void)<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DllUnregisterServer();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 chk(QGAProviderFind(QGAProviderRemove, NULL));<br>
-&gt; +=C2=A0 =C2=A0 chk(QGAProviderRemoveService());<br>
-&gt;=C2=A0 out:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return hr;<br>
-&gt; @@ -286,7 +377,7 @@ STDAPI COMRegister(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 chk(QGAProviderFind(QGAProviderCount, (void *)&amp=
-;count));<br>
-&gt; -=C2=A0 =C2=A0 if (count) {<br>
-&gt; +=C2=A0 =C2=A0 if (count || QGAProviderServiceExists()) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug(&quot;QGA VSS Provider is =
-already installed. Attempting to unregister first.&quot;);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D COMUnregister();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-&gt; @@ -499,6 +590,7 @@ STDAPI DllRegisterServer(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_gPro=
-viderVersion);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (hr =3D=3D (long int) VSS_E_PROVIDER_ALREADY_RE=
-GISTERED) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 DllUnregisterServer();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 QGAProviderRemoveService();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D pVssAdmin-&gt;RegisterProvide=
-r(g_gProviderId, CLSID_QGAVSSProvider,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (mountpoints) {<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 PWCHAR volume_name_wcha=
+r;<br>
+&gt;&gt; &gt;&gt; @@ -680,6 +683,29 @@ void requester_thaw(int *num_vols, v=
+oid *mountpints, ErrorSet *errset)<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 err_set(errset, hr, &qu=
+ot;failed to do snapshot set&quot;);<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 /*<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0* The snapshot set is created in VSS=
+_CTX_APP_ROLLBACK context, so<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0* it is persistent: if it was commit=
+ted, VSS keeps it (and keeps<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0* querying providers about it) until=
+ it is explicitly deleted. The<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0* freeze/thaw cycle is over whatever=
+ the outcome above, so delete<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0* it now. Failure is not fatal here,=
+ only log it.<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 LONG lDeletedSnapshots =3D 0=
+;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 VSS_ID idNonDeletedSnapshot;=
+<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 HRESULT hrDelete;<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 hrDelete =3D vss_ctx.pVssbc-=
+&gt;DeleteSnapshots(vss_ctx.idSnapshotSet,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0const_cast&lt;WCHAR * &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0VSS_OBJECT_SNAPSHOT_SET=
+,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0(QGA_PROVIDER_LNAME),<br>
-&gt; @@ -515,6 +607,7 @@ STDAPI DllRegisterServer(void)<br>
-&gt;=C2=A0 out:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 DllUnregisterServer();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 QGAProviderRemoveService();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
-&gt; @@ -575,29 +668,24 @@ STDAPI StopService(void)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qga_debug_begin;<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 HRESULT hr =3D S_OK;<br>
-&gt; -=C2=A0 =C2=A0 SC_HANDLE manager =3D OpenSCManager(NULL, NULL, SC_MANA=
-GER_ALL_ACCESS);<br>
-&gt; -=C2=A0 =C2=A0 SC_HANDLE service =3D NULL;<br>
-&gt; -<br>
-&gt; -=C2=A0 =C2=A0 if (!manager) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(E_FAIL, &quot;Failed to open servi=
-ce manager&quot;);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D E_FAIL;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt; -=C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 service =3D OpenService(manager, QGA_PROVIDER_NAME, SC_=
-MANAGER_ALL_ACCESS);<br>
-&gt; +=C2=A0 =C2=A0 DWORD err;<br>
-&gt; +=C2=A0 =C2=A0 SC_HANDLE service =3D QGAProviderOpenService(SERVICE_ST=
-OP, &amp;err);<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (!service) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(E_FAIL, &quot;Failed to open servi=
-ce&quot;);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D=C2=A0 E_FAIL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D HRESULT_FROM_WIN32(err);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -=C2=A0 =C2=A0 if (!(ControlService(service, SERVICE_CONTROL_STOP, NUL=
-L))) {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(E_FAIL, &quot;Failed to stop servi=
-ce&quot;);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D E_FAIL;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!ControlService(service, SERVICE_CONTROL_STOP, NULL=
-)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D GetLastError();<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D HRESULT_FROM_WIN32(err);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(err, &quot;Failed to stop service&=
-quot;);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;<br>
-&gt;=C2=A0 out:<br>
-&gt; -=C2=A0 =C2=A0 CloseServiceHandle(service);<br>
-&gt; -=C2=A0 =C2=A0 CloseServiceHandle(manager);<br>
-&gt; +=C2=A0 =C2=A0 if (service) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseServiceHandle(service);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 return hr;<br>
-&gt;=C2=A0 }<br>
-&gt; --<br>
-&gt; 2.55.0<br>
-&gt;<br>
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TRUE,<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;lDeletedSnapshots,=
 <br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;idNonDeletedSnapsh=
+ot);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(hrDelete)) {<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug(&quo=
+t;failed to delete snapshot set after thaw,&quot;<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 &quot; hr=3D0x%08lx&quot;, hrDelete);<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +=C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; +<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 if (err_is_set(errset)) {<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 vss_ctx.pVssbc-&gt;Abor=
+tBackup();<br>
+&gt;&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;&gt; &gt;&gt; --<br>
+&gt;&gt; &gt;&gt; 2.56.0.116.g6de20f6092dc<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt;<br>
 <br>
--- <br>
-Marc-Andr=C3=A9 Lureau<br>
-<br>
-</blockquote></div>
+</blockquote></div></div>
 
---000000000000fd94ec065ed4010f--
+--000000000000a19c7e065ed416d9--
 
 
