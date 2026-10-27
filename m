@@ -1,67 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE6E606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 21:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9CC606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 22:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=t9ZG9tHM
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Kr2HZs75
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLpCK-0006Tu-3p; Tue, 27 Oct 2026 17:59:13 -0400
+	id 1xLpcL-0002Sa-7l; Tue, 27 Oct 2026 18:26:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
- id 1xLpBx-0006Se-3X; Tue, 27 Oct 2026 17:58:51 -0400
-Received: from hall.aurel32.net ([2001:bc8:30d7:100::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
- id 1xLpBu-0000cF-LT; Tue, 27 Oct 2026 17:58:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
- ; s=202004.hall;
- h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
- Subject:Content-ID:Content-Description:X-Debbugs-Cc;
- bh=PhqQokH4yi1j+DYTamiBorU6dRzvOcTSnWKnhpdmm0Y=; b=t9ZG9tHMFlGuDu9SmBjom+lq3E
- GKksE092FnMgonN20ZxqvgDIazTi5QXknaN2fEnVsN/3+38Hn0mm0VLTI22PA16lebHkHEulNLxMh
- SssNEj+pKk/5WuXAdf4nPZGwcf9AkolTermmjR/q+WMjdITQGa+8z42+Okc0xtQRxOcUJtuzuNU+S
- 356prjGULInavV8MjE81uaE3Rj/v2oQgXsRC2IeJaYRiM/2VkT6PSDBmv4ZjM/Hr9YgIeB5A1CTEz
- OOtB8PGHdZGiLZ2cZivruUYt8jvnC0WuY7YZfhACx10liNvskXVaZrphwd6T6i7atcRRN/FhHi1l7
- lWuFDFkg==;
-Received: from authenticated user by hall.aurel32.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.98.2)
- (envelope-from <aurelien@aurel32.net>) id 1xLpBi-000000044Zx-3OW7;
- Tue, 27 Oct 2026 22:58:34 +0100
-Date: Tue, 27 Oct 2026 22:58:33 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "open list:RISC-V TCG target" <qemu-riscv@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2] tcg/riscv64: Fix vector constant matching for logical
- ops
-Message-ID: <auEeif_51q1K9XOz@aurel32.net>
-References: <20261010174742.3552498-1-aurelien@aurel32.net>
- <9ca6f711-e886-46a5-80ea-a6c750696a93@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xLpcG-0002SG-8K
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:26:00 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xLpcC-00039e-Rw
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 18:26:00 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-6fe4372c5f3so289788eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:25:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793139954; x=1793744754; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DTrArx4Wg5lkx68TXL73TFXJli23Uy3pE3zSZ0XVCR8=;
+ b=Kr2HZs75d7MWEP7j4HagAZdTuljpvsKfq2f4x0bh1bvrqwR99PF5ygoe36bTOsZoYH
+ haRml3jO4ok97XZrxzLe9asWTpxnZ15WGo7EPmnMq3Fu4oPwe7G7HSTPyNyE9Mb6RFTO
+ IoiogSX6b3I0WxSnIt7i6JPQlEOttZvFqsTI3QAtq3iGTDhzckj79gvMPPDj/eyjBKU3
+ Ji4oZcL/ijzwOpbd4MptlVFzmttwmFmkkJg2gtDWPWy5JBmtSKm+LYVucGnsCGmtPKVA
+ yYCJsFBE0zrTm8g7DIdUZPKRA4EHzdk4OI36ODdUipxv5kbXD8A1vdnKVL05D8iKzTNk
+ 1L5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793139954; x=1793744754;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=DTrArx4Wg5lkx68TXL73TFXJli23Uy3pE3zSZ0XVCR8=;
+ b=nc5eXtQ2Ej1YvyO5g90iB2996atPmszlF+ea7tU2lTgCPUQwtaDqHrl3NqV+vXabU4
+ yCvInh63aa6mWLqZTzsgNdMXvwc5vLLH3oCJZApiGmXHg0+rKoMt7BVzWuGqru3n+2Dt
+ vkast3cp3z5mcrg16y926UWcj0gzFbPGpuTHazExiBfxXqRPOUG7tDzDu+d1CqYddCqf
+ 51FnrYxwf3v1T3CXIuXC/qDf4NNRGlVS8sq1IEMZFBq/J+7oIKFW6nqsCWLo31DDk1iu
+ KkqUalCXkqmAnFpk7V+c9l9daLILOslTBxrIG5eWMmoKBVMM3Mr0f3txAM/8l9RYN/UH
+ VZ3Q==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxc46qQQNNwG9hjRfPIufu3wudWXjezK4DprUQziLCS4wBcTkpkwVoZXRUDVLV2Fy5z911ywIXzn4d7@nongnu.org
+X-Gm-Message-State: AFq9FYLwRN41748z6KK4o44SjhaUNoxbKHsWAzetw7oUmV7OeCczwrhx
+ 4UX8RDArWaMAuh2oOJn35Kz55+byiUuXDNmgsj788SCZuHXr98Kpr9q3ND+NMsmrX6dvmtcQv2O
+ HFXD7
+X-Gm-Gg: AYBFou2SKz0bmfXbS+O95/MVhDskdmsQZbrYwS/3NSm1NJDqpWoqZ+emudhxYIsF+Re
+ /TujwtgCJ3zR8FQJAodSMqmvoYGFJvngt86lFGZ7V+U1TYIPUYHhb7TeaPB3irrNkqUn/NFKkiW
+ wepmix8O8pV/BzXeBKqn2azp7Ta/kVhtOJpNs/YDbfAS+96CSScYFuIuvor9OS2b4+HhCOGI0ES
+ PNJdH/7kB8YDH/gXUvEi70wTFEvnhJoo5hOnK/R07cBRebUyIT2S8CNpJE543e68LBEfREhnlkN
+ /p2NvX1bK8F2Zyom/6hd0EhqiysZVWk0xrQd9wGOcKKQqyUQY0ZbysqFHWEjnnI1BbDvg03yXFX
+ 9PrQNEIvfEXk231dqAbn+Ss3RD5LOkzgcZMom/7DZ6435BYFCFvs/GLKFxAudlPpa37anJrbdxN
+ di1xY1/zvB6x0aQQbt7ziQVsKdU54WiNravKk1oyLqaNEMXMSy3VQm8u8KrPYlvHdtknv0cQGF1
+ 4hZTSX85GWe2+vp19OzAZQzWVn4t+rk3d4rhmRO4RUBHMnqHKIkIP4JuLUOIQwvDyZ5KYM=
+X-Received: by 2002:a05:6820:a299:10b0:70b:1217:4aa3 with SMTP id
+ 006d021491bc7-713eaf5bc42mr291951eaf.5.1793139953798; 
+ Tue, 27 Oct 2026 15:25:53 -0700 (PDT)
+Received: from [192.168.129.53] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-850f8458d8esm12219371a34.1.2026.10.27.15.25.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 15:25:53 -0700 (PDT)
+Message-ID: <9d78d6fe-2e7a-4979-9fc9-77616a7102e6@linaro.org>
+Date: Tue, 27 Oct 2026 17:25:51 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <9ca6f711-e886-46a5-80ea-a6c750696a93@oss.qualcomm.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2001:bc8:30d7:100::1;
- envelope-from=aurelien@aurel32.net; helo=hall.aurel32.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, GB_FAKE_RF=0.001,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/29] riscv-to-apply queue
+To: alistair23@gmail.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>
+References: <20261027062808.1995205-1-alistair.francis@wdc.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,164 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=unavailable
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Philippe,
+On 10/27/26 01:27, alistair23@gmail.com wrote:
+> From: Alistair Francis<alistair.francis@wdc.com>
+> 
+> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9ae:
+> 
+>    Merge tag 'samuel-thibault' ofhttps://people.debian.org/~sthibault/qemu into staging (2026-10-24 16:09:37 +0200)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20261027
+> 
+> for you to fetch changes up to bf67d56f282c1ee25b67dfda3f8ca54d2bd4648e:
+> 
+>    target/riscv: Fix CPU state access on big-endian hosts (2026-10-27 10:26:46 +1000)
+> 
+> ----------------------------------------------------------------
+> RISC-V PR for 11.2
+> 
+> * Add experimental Zvabd extension support
+> * Mask vsepc according to IALIGN
+> * Reset vCPU on VM reset via MP_STATE_INIT_RECEIVED
+> * Improve modeling of the Atlantis UART
+> * Fix IOMMU entry leak with ioatc-limit=0
+> * Fix integer handling issues in k230_gsdma and k230_decomp_gzip
+> * Reclaim invalidated IOATC entries for IOMMU
+> * Duct tape fix for QMP and RV profiles introspection
+> * Move RISC-V 'Z' CPU properties section to removed features
+> * Use TSO barriers instead of full barriers for Ztso
+> * Make mnstatus.MNPELP writable with Zicfilp
+> * Gate envcfg CBO fields on extensions
+> * Fix stale PMP state across reset
+> * Use 1ULL for a value we're going to shift by 63
+> * Remove unused IMISC macro
+> * Encode debug translation ranges in IOMMU
+> * Allow regular mstatus MPV/GVA writes again
+> * Fix uninitialised upper half in pmu_timer_trigger_irq
+> * Fix CPU state access on big-endian hosts
 
-On 2026-10-24 19:00, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 10/10/26 19:46, Aurelien Jarno wrote:
-> > For logical vector operations (in the case of the RISC-V backend that
-> > corresponds to and_vec, or_vec and xor_vec), VECE is unused. However,
-> > tcg_target_const_match() always treat it as an element size to extract
-> > the corresponding constant element from the whole constant.
-> >=20
-> > This causes the following aarch64 instruction
-> >    bic v4.8h, #0xf0
-> > to be translated into the following op:
-> >    ...
-> >    and_vec v128,e8,tmp5,tmp4,v128$0xff0fff0fff0fff0f
-> >    ...
-> > which is then translated to the following RISC-V instruction:
-> >    vand.vi v1,v1,15
-> >=20
-> > Fix that by, when VECE is 0 aka MO_8, only extracting the element if the
-> > it can actually be represented as a duplicated constant.
-> >=20
-> > Fixes: 5a63f5998791 ("tcg/riscv: Add support for basic vector opcodes")
-> > Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-> > ---
-> >   tcg/riscv64/tcg-target.c.inc | 11 +++++++++--
-> >   1 file changed, 9 insertions(+), 2 deletions(-)
-> >=20
-> > Changes v1 -> v2:
-> > - Use dup_const() instead of open coding the constant duplication.
-> >=20
-> > diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-> > index 14a397117a..1262b71a62 100644
-> > --- a/tcg/riscv64/tcg-target.c.inc
-> > +++ b/tcg/riscv64/tcg-target.c.inc
-> > @@ -392,8 +392,15 @@ static bool tcg_target_const_match(int64_t val, in=
-t ct,
-> >           return 1;
-> >       }
-> >       if (type >=3D TCG_TYPE_V64) {
-> > -        /* Val is replicated by VECE; extract the highest element. */
-> > -        val >>=3D (-8 << vece) & 63;
-> > +        /*
-> > +         * For vector logical operations, VECE is unused and equals to=
- 0, so
-> > +         * we need to check that the constant can properly be represen=
-ted after
-> > +         * replication.
-> > +         */
-> > +        if ((vece !=3D MO_8) || (val =3D=3D dup_const(vece, val))) {
-> > +            /* Val is replicated by VECE; extract the highest element.=
- */
-> > +            val >>=3D (-8 << vece) & 63;
-> > +        }
-> >       }
->=20
-> This fixes the BIC case, but I don't think it is sufficient.
->=20
-> I tested with qemu-aarch64 built for a riscv64 host, run under
-> qemu-riscv64 -cpu max, guest -cpu max,sve-default-vector-length=3D16.
->=20
-> NEON bic v0.8h, #0xf0 // fail on master, now OK
->=20
-> add z1.b; and z0.d, #0xf // FAIL
-> add z1.d; and z0.b, #0xf // FAIL
-> add z1.b; orr z0.d, #-16 // FAIL
-> add z1.d; eor z0.b, #0xf // FAIL
+Applied, thanks.
 
-This indeed doesn't work. The problem is that while the constant=20
-matching is being passed VECE =3D 0 (as it is unused for logical ops), the=
-=20
-code generation is still being passed a 64-bit size. Therefore for the=20
-eor, it emits:
-  vsetivli                zero,2,e64,m1,ta,ma
-  lui                     t6,3
-  addiw                   t6,t6,-448
-  add                     t6,t6,s0
-  vle64.v                 v1,(t6)
-  vxor.vi                 v1,v1,15
-
-It would make more sense to use 16 e8 elements like in the original ARM=20
-SVE code, but it seems that info is lost at this stage.
-
-> Not accepting constants for and/or/xor_vec at all
-> (using C_O1_I2(v, v, v) to get them loaded into registers)
-> makes all five cases pass (I'm not sure we want to keep
-> the .vi forms):
->=20
-> -- >8 --
-> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-> --- a/tcg/riscv64/tcg-target.c.inc
-> +++ b/tcg/riscv64/tcg-target.c.inc
-> @@ -2779,15 +2779,15 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpco=
-de
-> opc,
->      case INDEX_op_and_vec:
->          set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VAND_VV, OPC_VAND_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv(s, OPC_VAND_VV, a0, a1, a2);
->          break;
->      case INDEX_op_or_vec:
->          set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VOR_VV, OPC_VOR_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv(s, OPC_VOR_VV, a0, a1, a2);
->          break;
->      case INDEX_op_xor_vec:
->          set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VXOR_VV, OPC_VXOR_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv(s, OPC_VXOR_VV, a0, a1, a2);
->          break;
->      case INDEX_op_not_vec:
->          set_vtype_len(s, type);
-> @@ -2976,15 +2976,15 @@ tcg_target_op_def(TCGOpcode op, TCGType type,
-> unsigned flags)
->      case INDEX_op_rotli_vec:
->          return C_O1_I1(v, v);
->      case INDEX_op_add_vec:
-> -    case INDEX_op_and_vec:
-> -    case INDEX_op_or_vec:
-> -    case INDEX_op_xor_vec:
->      case INDEX_op_ssadd_vec:
->      case INDEX_op_sssub_vec:
->      case INDEX_op_usadd_vec:
->      case INDEX_op_ussub_vec:
->          return C_O1_I2(v, v, vK);
->      case INDEX_op_sub_vec:
->          return C_O1_I2(v, vK, v);
-> +    case INDEX_op_and_vec:
-> +    case INDEX_op_or_vec:
-> +    case INDEX_op_xor_vec:
->      case INDEX_op_mul_vec:
->      case INDEX_op_shlv_vec:
->      case INDEX_op_shrv_vec:
->      case INDEX_op_sarv_vec:
->      case INDEX_op_rotlv_vec:
->      case INDEX_op_rotrv_vec:
->      case INDEX_op_smax_vec:
->      case INDEX_op_smin_vec:
->      case INDEX_op_umax_vec:
->      case INDEX_op_umin_vec:
->          return C_O1_I2(v, v, v);
-
-I believe that until TCG is able to propagate VECE even for logical ops,=20
-this is the thing to do. It generates suboptimal code, but correct one.=20
-Therefore
-
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
-Tested-by: Aurelien Jarno <aurelien@aurel32.net>
-
-Cheers
-Aurelien
-
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+r~
 
