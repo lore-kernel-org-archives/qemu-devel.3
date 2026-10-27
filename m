@@ -1,100 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA23B606DA15
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6102606A32E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HWUImX3g;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YX57yWf0
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZAVpvFQB;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=A21XM74s
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLjQW-0005rT-BP; Tue, 27 Oct 2026 11:49:28 -0400
+	id 1xLjSq-0006c6-PD; Tue, 27 Oct 2026 11:51:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLjQU-0005qy-98
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:49:26 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xLjSp-0006bv-8U
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:51:51 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLjQS-0004eK-Ca
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:49:26 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1xLjSn-00051f-Ir
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:51:51 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RFL5Eh1061287
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:49:21 GMT
+ 69RFL9dp2549212
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:51:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- swoChnkZqXznzJYBJxut7/GaNtyqYZsnj1N2o9Z69TQ=; b=HWUImX3gA3Xjaj12
- bvjyfrs2N4+N4keuhi9dPrgdn7wi7kceSyaND97tXoucxElyAT1Q29pTE1ChARAE
- 865z7qo8oXPIz9U8xiefY9pnuE+YjeSIjYKi2GnZSczx8gyL1+S95FeCIseV7O+p
- tZ/4yFgiU+CTAT/1LEbXPavzFPYD/JrMV3X2evOXjoEXHR5PzpaQ3vE56fERJQtR
- nfcP8DfecZJsRKh7Nal7w+ySOeazCI4mi3i4UCWdD7EqwEVF8kziWaqcpyZB5jnx
- K2VWB2BV50RDv/K06EJ8maoaM39BtIgS//HQ+hFOIjcV1pecIYNT7lmSE328+NrG
- ccS1Ug==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjb54mn6y-1
+ IRehan8n0tGvz4jDF566iZsTf/bvYnP6iHjp6VzUn3c=; b=ZAVpvFQBOj5HXCC0
+ hfmoeZMmAyJFrTlsOzyd2yWIea3oUb6olcKgB7eU1GNujlzUMT8QngVA4+sPTXKy
+ ExQgIwug8ZPD62HQDnDov5rPb9gceHzAXs9jPiD+24g0AV3BPM5omi9JP+O+vKv8
+ 00GOd9RhxTKAe9/81OrhbYrtR8GfNUdvdkVIdRbW6hCmPkdBYFfsj/C6+IW01GN1
+ CMZbGjXqv/+HNkV1z915mrzlRhNsynpM+8InO2nM9xdQMq8mq0Lxy1sGOCizwtsQ
+ MBbMmVEEdXcAJgSK6TNRzPnRnsW5FCdU8vJI2sgoZSGQmFbJ0OPKjTytQDHC5tMM
+ 1uIk8g==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjrq69rbr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:49:19 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93caf6c528aso678771285a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:49:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:51:47 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-91c6c1e082bso20081626d6.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:51:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793116157; x=1793720957; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793116307; x=1793721107; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=swoChnkZqXznzJYBJxut7/GaNtyqYZsnj1N2o9Z69TQ=;
- b=YX57yWf0dINBS7DMISZCbeZZcwrqRRRb8hiMALt2iTN24Kk80+a8g4zDLZcKjLSwup
- to+onMrWqMPG5ev7F73481hL8+28dippHV2mNKeonNNJSUhHY5RCzPVKyQrnKDaGkP3Y
- HTHvRllWGOmFOaJ8dMQ9h+OyXvBwHxI9Zvo6XW1EhCBQKcc47q6RiHuq9CFhZL8AFvub
- sJL+fQdQ2zG74fCFClB1U8P4fUN0/gdXlseKoRX4lKOsrSJjig2kXKRN1IYcuRJ2GyH5
- SUu+EKzxP1D2bCySNtJjyD69s/U3UdoaZqH9OwGhHt5NyEM0Iy6f2wHLsCqQKsyRERv9
- 0/zg==
+ bh=IRehan8n0tGvz4jDF566iZsTf/bvYnP6iHjp6VzUn3c=;
+ b=A21XM74sLq0zjKSa8vJen5Xfm1hqgeVmpJZ22MU26k7PUqXaWe3aali0KYKL5KGlxx
+ Z/YpExiDYf+xAlZ8m8hepo7TMpgiQzXDHknGwGrDKw/t1DO0+D0sTJ/QqCnXn1tvR7cT
+ rhs3d+jKIs7rmRlwxKB6jaE2IuspGKnnfSPG/XItVHOKE2lzbyjyBw3hArilv/7FMr44
+ R/GbBTUcHQgU/OjAyWRF23KRLAvUl+lyeF8LBoNcS78kjZi6rp2uAfS9E+sIA/JxBcly
+ Vn6wvdTpOupxZjsUF5UCDNzqnSX9dc5TCREQXmGWiUefg3R6h4I35lAW8hl0FO6U3gsE
+ IZRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793116157; x=1793720957;
+ d=1e100.net; s=20260707; t=1793116307; x=1793721107;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=swoChnkZqXznzJYBJxut7/GaNtyqYZsnj1N2o9Z69TQ=;
- b=l/lVrvrOr6YXTsvkzvsreE8nRd/kvHYc+AsMmpu+VLqkzbVjO/e/Zh8HVghHTdPDrf
- ihVjqlHDpOTPK9q6JKfOVK9FLOjHUfBVvdBTTCeGBBOFt8R8xSfJ+sJ8aYgR/1YHm0PW
- gP9bK/Fe9E8lcLq5ilRQDAGCvVw3I5DzgFlpYsTVU/Kv9nacpq9nk2SspzZZlFRBwMq+
- pdYcvI0oPxvpUmS4edfhj1S+Y8buH8I4emFoaDs5xH2BBLC3yabyb03hQh1yajcFVPmE
- 15Y7k1D4p05eJHAiHWR7hOcXth59nKjsBylGFDT2RR2H/lxKqbe8vo38tO6k9KZfrv55
- MXVQ==
+ bh=IRehan8n0tGvz4jDF566iZsTf/bvYnP6iHjp6VzUn3c=;
+ b=R9CBhzLrqrKH/B51GdgtK2pdcLIUvfRr03QgWJqFx+fiLR1yDWUtoqNYrKdQL+ebu1
+ 6LP+gF9p7xyIOeAY5i8ujnGuDwcID6Qoc4mEjGeIydmI7bE9cWznWTOcSx/KxviPl76e
+ rp5JTigvhnuqy746y+xnu/NCO3Ucwaq4HBFli9agE7N/SleEwzPEfRlbT1vXzzX8D/1F
+ IvrHNRp6z3CDd/6vUtfw4F/Sf57oDYSKuRe7ZoHils6582gUeGMsI7QH7yhCNNOAK6a6
+ kwQ7tXWUfASFhCWFszQS1KUmlr7ifhCzyFWkM5QUzkC20HPDD8C6J7nxE+fPWbeNi5fU
+ tedA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBw0h6DivjoUnhOEiXxLANlqhid+YuO/DAVZLiQ05YxFNpc1lyflXarMgOu+a2Q8lIF5TgIDs3CMklJ8@nongnu.org
-X-Gm-Message-State: AFq9FYKlQiR9EdDlR6+0ne822Z+IHEyHZh95zXZgZbUYkCIcilJ8kDyB
- RlF187Ltv+u5EHu9ylP6792y62quL10a0tWdWEGctNE3YYvWxXgRqkXPmfWuIXmc0PTGkkegvlq
- +VPbdVoifMtFJU8nJpZ+dKDUZ1y5YPnRGXMyDVm7asXXIiaLsRro7csf0KA==
-X-Gm-Gg: AYBFou2yxSZFTRh6km/GwWXz4oEhkUpXnM9aUeuxPaVNru4h2mf5eLNX03NA9gphE1O
- sJLUjyb/xlQ+LyYUMucqu0LqOXWv95+VLRJEQBrFZsuP07vLPRVzxjjGJp4ttpGai5j90ZqenNb
- GkQk+6RJQP1UDdpsHhlYrPDNKuut4SqRSuwTtP6vbk185mmKy1aRyNTuZsX1j8un1mw9Q2r0xbk
- iwYDZdyPvzGzgqp1Tjp/YgpXwIFglfL5tRk4q6XzCfXeeuonC13+Onoyn2WU0niI4yxs8YcuGUY
- Rgop0uElu917DZqaVWe56jMxW5wqstIdp/IWeaIjPAWVkuDQIqVEL+ArvZqR7X47mJ/bSYko9A1
- CvWuo1671Lk7g/uZ9bh4NezDjWCdjYnsgh2BAR4Mcr9wRqS9v3Q==
-X-Received: by 2002:a05:620a:458e:b0:93e:6283:eba6 with SMTP id
- af79cd13be357-940ef955e85mr1716014785a.38.1793116157455; 
- Tue, 27 Oct 2026 08:49:17 -0700 (PDT)
-X-Received: by 2002:a05:620a:458e:b0:93e:6283:eba6 with SMTP id
- af79cd13be357-940ef955e85mr1716011085a.38.1793116156983; 
- Tue, 27 Oct 2026 08:49:16 -0700 (PDT)
+ AKwUvBwdBxkN19Fm3wgv2cB7jSBnTJXyKxPjiPLKD1woZvRd6T5JXxDSBIRpWkjWBAUtx8Xa2DL6Y6xUl4K1@nongnu.org
+X-Gm-Message-State: AFq9FYJ93oRJl86Cy0a/Haruku0f62WSacXzA7LC/VkQ2rU5895kgd6Z
+ dXPuAr10ITRyUeWrRYvYlWgxJB0FRYBa5MFue5yxSKP702W4wks7xlESv+q4Vu5xGo5go7lP9m4
+ gY9U7K3+D6vAoXP/qkLVnK1FQVZhbFIZZg9jOg8OWGupMSIPFFSDFxLQq6w==
+X-Gm-Gg: AYBFou0xITJ4BlSG2ADsnvqI6r4+lMWenDFN5NymZ09RS2ZugH4kt4lzk/PUoPbZ42E
+ VdTWJTsokdVzYhOSabiI7diA/2pat4B4mkFKSycmF8DcbNWINbbB2+MHFMICnJPogu0ZvmdQwLl
+ tKwLNZWgB8HBA+YmopP719ztN8JxXkIVtc3j9DbiT2BpswRRU0c18R7GhZ5cairxxgeP9vT96oh
+ 6nu+UsKrgIuSP+WopxxZsvg6RSFR46BRkYCwfeXvy5bDpwt71x+Fp6r8nR/rQCGfK/rg86WVwyf
+ T8lJPvFBjX539F3/g0EtccvLV8hCibg88AGPBLhADQuCR1xWc7qDpmEYouPstbZzh2slBTmfrLU
+ SJGxGrs1Gr7tO0j/Ct6tdZXm6fGD27GiAs77X2/SkkO+NR8Be6A==
+X-Received: by 2002:a05:620a:402:b0:943:e872:f521 with SMTP id
+ af79cd13be357-943f4b422afmr383527185a.9.1793116307094; 
+ Tue, 27 Oct 2026 08:51:47 -0700 (PDT)
+X-Received: by 2002:a05:620a:402:b0:943:e872:f521 with SMTP id
+ af79cd13be357-943f4b422afmr383524785a.9.1793116306684; 
+ Tue, 27 Oct 2026 08:51:46 -0700 (PDT)
 Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a359fbd830sm137832025e9.1.2026.10.27.08.49.15
+ 5b1f17b1804b1-4a35a0bb112sm293318515e9.8.2026.10.27.08.51.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 08:49:16 -0700 (PDT)
-Message-ID: <cf956195-778d-463d-9c0a-2a828181db59@oss.qualcomm.com>
-Date: Tue, 27 Oct 2026 16:49:15 +0100
+ Tue, 27 Oct 2026 08:51:45 -0700 (PDT)
+Message-ID: <87a9d1c9-728b-41c0-8fe7-d188d3b8da53@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 16:51:44 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/25] hw/mips: add Octeon III EBB7304 support
+Subject: Re: [PATCH v4 06/25] target/mips: accept Octeon PageMask encodings
 Content-Language: en-US
 To: "Kirill A. Korinsky" <kirill@korins.ky>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -103,40 +103,40 @@ To: "Kirill A. Korinsky" <kirill@korins.ky>,
  <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 References: <20261027104433.25720-1-kirill@korins.ky>
+ <20261027104433.25720-7-kirill@korins.ky>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261027104433.25720-1-kirill@korins.ky>
+In-Reply-To: <20261027104433.25720-7-kirill@korins.ky>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA2MiBTYWx0ZWRfX3+BN0egsHxVv
- HXYg2QlIZiMPPhluiKyAxn2j8C7WnAYGrekO+w5wrvM6FdZAZOsjnhDBvXRV1cXdoDE0mheTeT5
- yVYwuilU8sYSLYb5bI4bGX1Fo9lFUNk=
-X-Authority-Analysis: v=2.4 cv=bsnZl0ai c=1 sm=1 tr=0 ts=6ae0c7ff cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=RYwFmFtv c=1 sm=1 tr=0 ts=6ae0c893 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=ID6ng7r3AAAA:8 a=alGDw2F-mSSMp1XgeDQA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=AkheI1RvQwOzcTXhi5f4:22
-X-Proofpoint-ORIG-GUID: 5Aih0Qbh4YFtH87dhGPQoQfS5NqE944t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MiBTYWx0ZWRfXzbQGrTmuwzLU
- +9KRNWg0Sfu6/6gQqYf59S9K29R/8plVrWkudPLDz6kHbup/cV/uUbvZjsTyVh15jJAvobp4kcP
- XPZ/UVbf9gjbUSMSf5Ho/44e1ilAR/rdk9OC//3EFnLtoAKJ2HeMLzdncbaolpLsUsEpUtnRAoN
- W60ux44LSuJLDyUzR+VD9bVspXQs227FEpQnSEdcV8qx+ya1sIJUUM/bR9K8Om0O0tClAsgwhH4
- xKoUlDPwR3dqlJoI428qAjsSWng8/rtQa8TxM41T5VoIs47IeYQK5fQvr1rmpG5Go2fBxvWzLvj
- LGyGz2zQ5Am7HfaYfSWPf1m5oi8GshYHmHeJL9ke498B055AMghKu4TZBYquYfOSmNd4lZB7xsO
- CPFmE1tapzHrL+5+VUJGq+UW84pDFsszChSg3Na04VkzHzOCFQQLzrhdMZkp3/SEiheEYuL39/9
- qsjnmV8ThrueYfjVHpA==
-X-Proofpoint-GUID: 5Aih0Qbh4YFtH87dhGPQoQfS5NqE944t
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=mP7XnoS4S2fQfbuYTI0A:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: dwoJ_jMJ5sgUVPOC3fR-eLJV2CUEOf5I
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfXx6EcoxFeCJoQ
+ dbyB/ig3VX8clgszjFz+iUg96AWgCbVPoJvuvgBdKrwWufwrdZD4gdk3k+X/LiVFMMpxlbQVJNi
+ AXvDbHrbUWREPuEVvGz4Q0eiKTvQ0RY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfX0PEt4pDvv8P9
+ nIWT2wv9o+meZhYP3QhcNLQGLWGU+iFZgCQ8iSVr7dkduJt/Xq70jaKUEsnaOani+vbSNZk2x0s
+ ZHyOzWdbi5ttaMmFGcCKRDSt4e6krlHNNp/6TB3JMxr+1Z36YUGALZtHqwjai87cCmy36gf2BZ8
+ efehsHV3k4+ju+jj9sKAgSXiN7pgWSHTO1mLTDfV0ihw0R0X+n+hMCCC7c0tF6eWypTwfhZaSSW
+ gB3vZNZ8PHRwIoTykx2xVRoyiSbaREVVMBPapKPVH02ziacN97NyBcZpYxhDGtnpnqNosISCVDu
+ w5FHjrSaNV7IejxxSyz9I4fbeyUicwmG/8HbQplEdq64PBM+tpNWaessDOIvSO/03GXUuJsjM9J
+ 7Yf3C/GrSoQP/wFyv5qiyKUV64pcCVFCybrJ0BFpd2zpQbMJaZGYnRGjDVbDwzC0P/9a7tXB7OT
+ qWgaVoV+bdGAGPjDpfQ==
+X-Proofpoint-ORIG-GUID: dwoJ_jMJ5sgUVPOC3fR-eLJV2CUEOf5I
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 spamscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270062
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610270063
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,44 +155,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Kirill,
-
 On 27/10/26 11:41, Kirill A. Korinsky wrote:
+> Octeon firmware programs contiguous PageMask values that do not follow
+> the generic R4K even maskbits rule.
+> 
+> Keep the generic validation rule for other MIPS CPUs, while allowing
+> Octeon CPUs to use the contiguous masks accepted by hardware.
+> ---
+>   target/mips/tcg/system/cp0_helper.c | 15 ++++++++++-----
+>   target/mips/tcg/system/tlb_helper.c |  2 +-
+>   target/mips/tcg/tcg-internal.h      |  2 +-
+>   3 files changed, 12 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+> index 33fb7365d7..046fea6234 100644
+> --- a/target/mips/tcg/system/cp0_helper.c
+> +++ b/target/mips/tcg/system/cp0_helper.c
+> @@ -882,14 +882,19 @@ void HELPER(mtc0_memorymapid)(CPUMIPSState *env, target_ulong arg1)
+>       }
+>   }
+>   
+> -uint32_t compute_pagemask(uint32_t val)
+> +uint32_t compute_pagemask(CPUMIPSState *env, uint32_t val)
+>   {
+>       /* Don't care MASKX as we don't support 1KB page */
+> -    uint32_t mask = extract32(val, CP0PM_MASK, 16);
+> +    uint32_t mask = val >> CP0PM_MASK;
 
->    1. target/mips: make CP0 interrupt state atomic
->    2. target/mips: fix MIPS64 segment access checks
->    3. target/mips: drop hidden TLB shadowing for tlbwr
->    4. target/mips: add Octeon CP0 register state
->    5. target/mips: add Octeon CN73xx CPU model
->    6. target/mips: accept Octeon PageMask encodings
->    7. target/mips: allow Octeon unaligned accesses
->    8. hw/mips: add empty Octeon III machine
->    9. hw/mips: add Octeon CPUs and boot memory
->   10. hw/mips: add Octeon reset controller
->   11. hw/mips: add Octeon CIU3 CPU control
->   12. hw/mips: add Octeon CIU3 interrupt routing
->   13. hw/mips: add Octeon legacy CIU
->   14. hw/mips: add Octeon CSR window
->   15. hw/mips: expose Octeon reset CSRs
->   16. hw/mips: add Octeon MIO boot support
->   17. hw/mips: wire the Octeon UART
->   18. hw/i2c: add Octeon TWSI controller
->   19. hw/mips: add Octeon EMM controller
->   20. hw/mips: add Octeon LMC controllers
->   21. hw/mips: add Octeon boot support registers
->   22. hw/usb: add Octeon USB controller
->   23. hw/pci-bridge: add Octeon PCI host bridge
->   24. hw/pci-bridge: add Octeon PCI memory window
->   25. tests/functional: test Octeon III boot
-All these patches miss your Signed-off-by tag:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#patch-emails-must-include-a-signed-off-by-line
+This changes behaviour for every CPU, not just Octeon.
 
-(You can add it automatically by replying with it to the cover.)
+>       int maskbits = cto32(mask);
+>   
+> -    /* Ensure no more set bit after first zero, and maskbits even. */
+> -    if ((mask >> maskbits) == 0 && maskbits % 2 == 0) {
+> +    /*
+> +     * Generic R4K PageMask values use two mask bits per size step.
+> +     * Octeon accepts contiguous byte masks such as 0x003fffff for
+> +     * two 2 MiB pages.
+> +     */
+> +    if ((mask & (mask + 1)) == 0 &&
+> +        ((env->insn_flags & INSN_OCTEON) || maskbits % 2 == 0)) {
+>           return mask << CP0PM_MASK;
+>       } else {
+>           /* When invalid, set to default target page size. */
+> @@ -899,7 +904,7 @@ uint32_t compute_pagemask(uint32_t val)
+>   
+>   void HELPER(mtc0_pagemask)(CPUMIPSState *env, target_ulong arg1)
+>   {
+> -    env->CP0_PageMask = compute_pagemask(arg1);
+> +    env->CP0_PageMask = compute_pagemask(env, arg1);
+>   }
+
+Preferrably pass @env to compute_pagemask() in a preliminary patch.
 
