@@ -1,137 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1193C606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A97606A31A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 03:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=EzG1baB3;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=ga6NUtZh
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=cmllVrhA;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kLqzohTo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLXsr-00029h-03; Mon, 26 Oct 2026 23:29:57 -0400
+	id 1xLXuI-0005Bn-2Q; Mon, 26 Oct 2026 23:31:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLXsk-00027Y-Tm
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 23:29:52 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLXto-00044Z-1Z
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 23:30:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLXsi-0008If-K0
- for qemu-devel@nongnu.org; Mon, 26 Oct 2026 23:29:50 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLXtl-0000D9-VZ
+ for qemu-devel@nongnu.org; Mon, 26 Oct 2026 23:30:55 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69R2FHjW818812
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:29:47 GMT
+ 69R2ExST866306
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:30:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2cvTVzD7i/Dj3ZjXL/1YgmL/JijYtB2oiPHBNYiZkqM=; b=EzG1baB39t6geu/I
- Z4QjyJzdA5KpHTKp/8UxTuP8OhvwNa1EhoO7Ixxkevejkh5IxTECtjwYwJdXQr1C
- 5A9r1ykrfw1ufk1jrfW2yJNifVR3NXMan0CxOql8HtL7HcSxcTtEZr8qGvCdRSkU
- 1aIVzffZZzwSKsbw41exWpA9qDxlyPOAQdcZIC7hR0dY/R55uncuDwq91w26A7DW
- FULVzvGq/AYqxwUmFAY2q2+V8OpcGx/y0ld5jp9ugOMvGYLxYkyomOvajYWj8kpI
- EUMsA6V3UJMTslieOE+jmnLETuN+QpD+hUHEBR/a2jEDQ/Dit977PrmEw5rV/Ih2
- 1ZUgMA==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj56y3dgq-1
+ qb9a1Xok3KOXSG1HguVlOeAoQK2JjtK/C3APlmIkeD0=; b=cmllVrhAIYJqBA8X
+ xf7LxP9Fsng3AOi1nBh83YUWM62mH7cN2X0CyM06PvqPzIJAlgBAnA48Mn1Ux8H8
+ Vrh8/FyKj4onZcOMv97TlbcBY4IeLE4UJ6tgHBdNlKnSTn1bne1BPp2n/RQcKQRq
+ /Xnx2danrPtLOMKep4DImst5pP7UiS5bVIwT4dz3lkqHR/0+Z6USKAxqthICdV4X
+ CexFGHi4tiRdWXiTQIbZzraT0xBi8N7+EU/8enuD4e6lE2zrBuDvs/k6x06z8eel
+ 39U5WqkGS3RQ00uD+WV7JzH7tf3jhUUAJJXhgbqW3ti7sB5JPxK/+QYhBG3yHV0n
+ M4Ig0A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hj79xtw74-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:29:47 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1383723dfddso6623837c88.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 20:29:47 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:30:47 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-93c5ab5c136so647699485a.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 20:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793071787; x=1793676587; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=2cvTVzD7i/Dj3ZjXL/1YgmL/JijYtB2oiPHBNYiZkqM=;
- b=ga6NUtZhbJUVI3x8ELyHyQ9H5jhxGFzTKFq96Dw2eTSylHd2El8YP+LLgOP8gtP25c
- uI2xPJDc9HTehvwgEhr1KyC6p18Gf4IijLF/VLgynNc43EYJ4Kg9HIu7ovFJY3d1mQBB
- s34osTkJWhb2nMZ6cFc3+jHORLZSD6ACTRNb8T0wKaVrxszQkgtTd89TkKgcRUp0SdRX
- Xr+mSvA5NdGeLus7xxpnYQMgcmFdYR/PqqVcjZJujYDM0n10swDlAgq+LgsGPo8SP1HZ
- Sqfd3qLDRm2YDLK3XwzkJ+C7k7ibqFbnDzNPtxvxzmsETZpKmIcSkKe4LgzeURh/TZc2
- Oc7g==
+ d=oss.qualcomm.com; s=google; t=1793071846; x=1793676646; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=qb9a1Xok3KOXSG1HguVlOeAoQK2JjtK/C3APlmIkeD0=;
+ b=kLqzohTox/3rRbJEiKoWjh4YY3f/t0D2bfuHei3B7EMXhUqpW8KwygivdnLdkYq8yw
+ Coc91WOuTTrXSjaqlmhUwYNVWtxefyF+L6DXNr9v3pQGUt4iEFXD4RO7OMCMlsJsVB7X
+ ycA3e2Cib8Nl1h7Ho1NSKo5J8gRZORIX9Xm3tQP/lilxDGRZxrqi9hY1Iq8eBIJTpdc4
+ gK/SXXxbwCyJtHGVn2TjE5UHSwDBpD84f2XwnoPG62wEAoB3aedmL7TAnxi7kinV9yC6
+ RrF37B+0W1FgjP0VH+giuHNUwUKm1SomVfJkfQ7jok9BbF8QyvnbsAvmHlfmCGF4oajM
+ RgvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793071787; x=1793676587;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=2cvTVzD7i/Dj3ZjXL/1YgmL/JijYtB2oiPHBNYiZkqM=;
- b=eAMcrF2HCJ3/hTtW9r2XbaHZ4S5QGJouttQ4M3pZIB87iQca2EGGfpT/qWLmbNzmOM
- VFwKMxGT6bABYcusx0mEx1bKzsS+tTlixe7HO/HcM0V5VTnN+dRCsi6m++Ki9qoDMlkg
- AV1KtjGWj/Pf/QyvKdoEzBrgLOCesHwrPywbSNmoe+ezW+O3YkjYVvf1NGyp95DUuufW
- CjeST1DExRYsi+M3fQYZ+2Mj3EIsWOl83NAiHKsOUZaes77v3JxCsoXUou0/BnqVct8X
- sm/9RKlPUgPhnmByYpiBezI9Sle8TigFJYfQ3Ro8xU7+BWxNexe/dkPlOH7RhMxSGkqJ
- q3oQ==
-X-Gm-Message-State: AFq9FYLQRCp2YkfQ3L53VtRTlFwEGnqrBNmeKbJk10vL6RNKICI8xNZx
- fwFggsJA9emAYIesBpji1e9sTbfQM5/5irsgIYYwIPFcVRNApKQmveyYfDSTpEbyhcVi38C+Kcc
- 8dFQh/bI71vhCRgrf5KixC3lnLJ9vNCtyaDfC8GjABhpdsHdeJym6WAKmekZP6X5yQw==
-X-Gm-Gg: AYBFou1kng+YD9JDxZQCtk6ZmD7bCMTj2PhrnPb//sFmzXjShF31F/r+h7LJcQB1fWK
- tJ8a4zI8F3y5w9KTaqpBr+kvDIG2MMlqlUqNVijT3qb+vsXdA9Vh96xjPl5awVmnFTmUd0B4C9G
- ukbyxcqsH7/AhhdqUKjM3MNrvwLjCmHBpSLzkTLHmRaNDNdHOr82NOGBMutQ5oV0MmF19rBzBSK
- IgsABfI85wpn6mGrVlaqbn2SpM6snsYKTaHfY/dvSncMWcHqYk+jM54M6ROZogfz47EPsJ2XPQe
- G2nkhvazKyRdbQ8Oxg4K+4GkpX4SqG0XVSM6nnpdoGwACd+xKE1fwbnfPvxxF8saBsbxufqDA0N
- 26QBK4cWlffOgCmCw8cCTqWjMyM0/pZuXjpXe9YubrFIaiqo=
-X-Received: by 2002:a05:7022:2229:b0:149:1feb:6dae with SMTP id
- a92af1059eb24-19937abcc34mr19809979c88.39.1793071786439; 
- Mon, 26 Oct 2026 20:29:46 -0700 (PDT)
-X-Received: by 2002:a05:7022:2229:b0:149:1feb:6dae with SMTP id
- a92af1059eb24-19937abcc34mr19809944c88.39.1793071785807; 
- Mon, 26 Oct 2026 20:29:45 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-19886f790e4sm28479637c88.0.2026.10.26.20.29.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 20:29:43 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
-Subject: [PULL v3 05/41] Hexagon: add v85 CPU model
-Date: Mon, 26 Oct 2026 20:28:51 -0700
-Message-Id: <20261027032927.3055166-6-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261027032927.3055166-1-brian.cain@oss.qualcomm.com>
-References: <20261027032927.3055166-1-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1793071846; x=1793676646;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=qb9a1Xok3KOXSG1HguVlOeAoQK2JjtK/C3APlmIkeD0=;
+ b=UVXfvhLWFxFeNWOU5lkYc/MmB4No5RoTqRSFrt8oHM/y3F2tIlV0UyOh8RuigZWies
+ oji9ymf4XydrB7luiA0AAKkRhu+NJ7Zh3dlQnK6F5N49fg734mBLCI6IUYRoX2H9b4tw
+ pDt0n+GBtahHq44PxfjND/rjdLJUri8jowWpOgrxaGhpa4mGLNLUpf7K9dXwqXK0d9i5
+ v10FAn5XNlMvBTeDf0rBTtryECdMpzkTkrSaeSCd7tgYg9DuOcndPWR4Qr1dhyG/qYut
+ LC3BDpsEFsYnuL5wEXcyhm8tA/UssnU6P/Jfk/wjBrs1lDekxb6gDsG7eKf3szqeVHK3
+ 6uUw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwLR/i+Jy61Ry/FOtFxayPV/WEcki0YNnub0PIQMhSFeVT3GHVc74+b6dI7ZSC4MIVxrKLC20TPK5+c@nongnu.org
+X-Gm-Message-State: AFq9FYIgL7KlCfwizxwK758to2o8Z8bPJzymQc3/r43ccx89vACXzVgO
+ i4rufnjKcmfEnm8mXLrRhv8Qj+gPinNezvGopPaAqS/gVPHED6ljI8CzDTbE05z20KDDfyNnX9h
+ InaaHU6+nXSVGJZKi45C/irqWm/gYN6S4zJPDjcf/FeX6Erw7cwPGR9zG5w==
+X-Gm-Gg: AYBFou1sWk/CErX03jVNPFTCttio7nMgu7fw+ZIb2QEv7QbI6cAlmspz0Xma0rB+q8v
+ F/EsLxjg5ZbeCWH+S5+aYXXkXqCpyubEAqXdeBy7oeQeVdurVwUFOsq2feJO4v7eyZzRGU5D8wE
+ 8EodKX2brbcweClHKdRYkswaqFXvgrvpgCi2QGFVWaEeflUWCvrOGcfxO4FaJXm86W3cG3EL/YG
+ P4I3i6RR/6L7CZx74zoFkmVWt41l3cgz9UsASW9ewHTgEXdijOHr83TMTx3gC8q6BeyJCoF4vjD
+ LNH4mJqK45x7aS6uDw0Qg7CmjjFYGUQ75kUjgM0oijz3GFUm8gq6VK0WCBxH60wR4J4dU9+q6Yt
+ +P+2i0w4DnhyN7ZMtv+I/lO+YlPuaVTPPyw==
+X-Received: by 2002:a05:620a:40d1:b0:93b:d7a0:d9e1 with SMTP id
+ af79cd13be357-940ef980fbemr1269478485a.59.1793071846257; 
+ Mon, 26 Oct 2026 20:30:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:40d1:b0:93b:d7a0:d9e1 with SMTP id
+ af79cd13be357-940ef980fbemr1269476385a.59.1793071845831; 
+ Mon, 26 Oct 2026 20:30:45 -0700 (PDT)
+Received: from [192.168.69.230] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a35a0aa0bcsm294330145e9.4.2026.10.26.20.30.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Oct 2026 20:30:44 -0700 (PDT)
+Message-ID: <16f83269-7894-43b4-9fda-779271e80c4f@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 04:30:43 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAxMyBTYWx0ZWRfX3P/hac+R2rme
- Ew7xSOIFKqNs4Ho/J9vJoWHAongmlRqyuJgyqt1iSFKsmrwm4L/a/zGrvR4f/OhylodEBPec2YC
- ZEVMXMWtLe+TLbf/jaKHpEM5q4yNfDE=
-X-Authority-Analysis: v=2.4 cv=eMeGH3p1 c=1 sm=1 tr=0 ts=6ae01aab cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=6RDhHJMOdHl8aUYkYD8A:9 a=QEXdDO2ut3YA:10
- a=Kq8ClHjjuc5pcCNDwlU0:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAxMyBTYWx0ZWRfX9Zft2BXZGmi5
- 2mLt7OPOa/QzoD1aRgdALxIP0VTRSclZIwUkaQNR5IsJmESIZZeRRy6iT7Oz2uN4SVQ8cqhwv+M
- VwErHH+J4RSGpVaRwcFwZiMMXDHNsmhOkFOkdwONpCP9W//9Gqgyh0XBsZjbVTtEVzQIwHUViQw
- QeG0pM3JICmXnKCWu6jnNoqU126JWFWOx1cV9tFtMIQa0XzP/JwxF1h4cIciguFJMfj4FGch7FB
- wt0fKifL4CGfLywqpOLnmCRbXQ4WXTHHPqeWj2Zmuzp0K1TsjYExeU+9pLuGkV9PY7D2CAtuYKJ
- FiL5/QbM4au3bp3jxV5vqDlQzRiNMGpn9b0raQizjUnQyDew5UKuphYhS4vvG7j9WG2L6Kp8FPD
- r2Z4ZdFAza9D4c21cLQ/6K7xyahDrTqICZnQ5mA2xuKBiK/VT8jIeG0FsJVJGxYI28liGGFwzpO
- DqQqpMfQ/ocHffjQ8MQ==
-X-Proofpoint-GUID: 2qv7FitFYdFo2cmFdXjQbYZk-lec8nTc
-X-Proofpoint-ORIG-GUID: 2qv7FitFYdFo2cmFdXjQbYZk-lec8nTc
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/block/pflash: invalidate TBs on flash update
+Content-Language: en-US
+To: Fabiano Rosas <farosas@suse.de>,
+ Elliot Berman <elliotjb+anduril@elliotjb.com>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20261016-pflash-update-invalidate-tbs-v1-1-3cf1ecaa76bc@elliotjb.com>
+ <f54905bf-8641-4554-ac44-6d526266876c@oss.qualcomm.com>
+ <87wlr4jhud.fsf@suse.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <87wlr4jhud.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: S96dwMYHj8jI-k_40vxXc0LGffuGMxxJ
+X-Proofpoint-GUID: S96dwMYHj8jI-k_40vxXc0LGffuGMxxJ
+X-Authority-Analysis: v=2.4 cv=FPyOVOos c=1 sm=1 tr=0 ts=6ae01ae7 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=-LS97c69AAAA:8
+ a=AZLFTsxzCJd3vtj9kKEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22 a=m2i-bEnOsJtWz63_nIdQ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAxMyBTYWx0ZWRfX57oafssnaYqJ
+ oy5maP8MgOMcOftpqBa5RaRcIaP56+uXX2c2a6ynb41kpgcDUHj71I+v5BAuXlvAxrFhx6giTvI
+ wJCez0V0+RJUg8ttL/cD82FE7via2z40GFV6blzrSfqHZ/HmCmpluEIFCy/N/K4C+ZHUjkatwI1
+ bC/3xVXRJjJxpATQInThwfhIBD32EbUJTmaimwBuo2NQqHAwJz+BRERXGw2upAAI+e2FBqs/E5+
+ ITGzJxYF0+FBU9oi3RS4D4nR5tyxrYtUBoYR69KiaKrqQ/q21sBIssAijpSiW4vaDhxT1inUP7d
+ kcbVVH0jnjaqs5Cae8J07hdLJqIMYbGM7hWUgg1Ga01nck9O5QDQigUq8z7OP9Tu1qJ/lEoaygr
+ G91lFAnwnn6m7DMHlL/lVi7P2ObVN9OKE+urRuHxZv8MMI7D+ePpUvrSHXpv9UNx/+YLgKTlanB
+ PHtRflgajxruVJYdgQw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAxMyBTYWx0ZWRfX8oVnwID4DzZH
+ PlXKulXp4CgkbsdsJqe3BB7/uBtz0UIlK7ht64WK//T8m9wzCXsd+UwpHNC/f7kgdyBQ8tHtrx2
+ oaz9UmjwtxCZ+O+QtarBLQZcWTK7fGo=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_01,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- spamscore=0 phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501 suspectscore=0
+ phishscore=0 adultscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270013
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,60 +157,88 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-UmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAb3NzLnF1YWxj
-b21tLmNvbT4KUmV2aWV3ZWQtYnk6IE1hcmNvIExpZWJlbCA8bWFyY28ubGllYmVsQG9zcy5xdWFs
-Y29tbS5jb20+ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxj
-b21tLmNvbT4KLS0tCiBkb2NzL3N5c3RlbS9oZXhhZ29uL2VtdWxhdGlvbi5yc3QgfCAyICstCiB0
-YXJnZXQvaGV4YWdvbi9jcHUtcW9tLmggICAgICAgICAgfCA0ICsrKysKIGxpbnV4LXVzZXIvaGV4
-YWdvbi9lbGZsb2FkLmMgICAgICB8IDQgKysrKwogdGFyZ2V0L2hleGFnb24vY3B1LmMgICAgICAg
-ICAgICAgIHwgMiArKwogNCBmaWxlcyBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCAxIGRlbGV0
-aW9uKC0pCgpkaWZmIC0tZ2l0IGEvZG9jcy9zeXN0ZW0vaGV4YWdvbi9lbXVsYXRpb24ucnN0IGIv
-ZG9jcy9zeXN0ZW0vaGV4YWdvbi9lbXVsYXRpb24ucnN0CmluZGV4IDEyMzg1MzExYWE0Li5mYjU3
-Yzc3YWU5MCAxMDA2NDQKLS0tIGEvZG9jcy9zeXN0ZW0vaGV4YWdvbi9lbXVsYXRpb24ucnN0Cisr
-KyBiL2RvY3Mvc3lzdGVtL2hleGFnb24vZW11bGF0aW9uLnJzdApAQCAtNiw3ICs2LDcgQEAgSGV4
-YWdvbiBDUFUgYXJjaGl0ZWN0dXJlIHN1cHBvcnQKID09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09CiAKIFFFTVUncyBUQ0cgZW11bGF0aW9uIGluY2x1ZGVzIHN1cHBvcnQgZm9yIHY2NSwg
-djY2LCB2NjcsIHY2OCwgdjY5LCB2NzEsIHY3MywKLXY3NSwgdjc3LCB2NzksIHY4MS4KK3Y3NSwg
-djc3LCB2NzksIHY4MSwgdjgzLCB2ODUuCiBJdCBhbHNvIGhhcyBzdXBwb3J0IGZvciB0aGUgZm9s
-bG93aW5nIGFyY2hpdGVjdHVyZSBleHRlbnNpb25zOgogCiAtIEhWWCAoSGV4YWdvbiBWZWN0b3Ig
-ZVh0ZW5zaW9ucykKZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhhZ29uL2NwdS1xb20uaCBiL3Rhcmdl
-dC9oZXhhZ29uL2NwdS1xb20uaAppbmRleCAyYmZhNGQ1ZDBmYy4uZDRjODQxM2RlZDMgMTAwNjQ0
-Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2NwdS1xb20uaAorKysgYi90YXJnZXQvaGV4YWdvbi9jcHUt
-cW9tLmgKQEAgLTI4LDYgKzI4LDggQEAgdHlwZWRlZiBlbnVtIHsKICAgICBIRVhfVkVSX1Y3NSA9
-IDB4NzUsCiAgICAgSEVYX1ZFUl9WNzkgPSAweDc5LAogICAgIEhFWF9WRVJfVjgxID0gMHg4MSwK
-KyAgICBIRVhfVkVSX1Y4MyA9IDB4ODMsCisgICAgSEVYX1ZFUl9WODUgPSAweDg1LAogICAgIEhF
-WF9WRVJfQU5ZID0gMHhmZiwKIH0gSGV4YWdvblZlcnNpb247CiAKQEAgLTU1LDYgKzU3LDggQEAg
-dHlwZWRlZiBzdHJ1Y3QgewogI2RlZmluZSBUWVBFX0hFWEFHT05fQ1BVX1Y3NSBIRVhBR09OX0NQ
-VV9UWVBFX05BTUUoInY3NSIpCiAjZGVmaW5lIFRZUEVfSEVYQUdPTl9DUFVfVjc5IEhFWEFHT05f
-Q1BVX1RZUEVfTkFNRSgidjc5IikKICNkZWZpbmUgVFlQRV9IRVhBR09OX0NQVV9WODEgSEVYQUdP
-Tl9DUFVfVFlQRV9OQU1FKCJ2ODEiKQorI2RlZmluZSBUWVBFX0hFWEFHT05fQ1BVX1Y4MyBIRVhB
-R09OX0NQVV9UWVBFX05BTUUoInY4MyIpCisjZGVmaW5lIFRZUEVfSEVYQUdPTl9DUFVfVjg1IEhF
-WEFHT05fQ1BVX1RZUEVfTkFNRSgidjg1IikKIAogT0JKRUNUX0RFQ0xBUkVfQ1BVX1RZUEUoSGV4
-YWdvbkNQVSwgSGV4YWdvbkNQVUNsYXNzLCBIRVhBR09OX0NQVSkKIApkaWZmIC0tZ2l0IGEvbGlu
-dXgtdXNlci9oZXhhZ29uL2VsZmxvYWQuYyBiL2xpbnV4LXVzZXIvaGV4YWdvbi9lbGZsb2FkLmMK
-aW5kZXggM2E2YmE0ZTEzMDQuLjlmOThhZDhmYjg2IDEwMDY0NAotLS0gYS9saW51eC11c2VyL2hl
-eGFnb24vZWxmbG9hZC5jCisrKyBiL2xpbnV4LXVzZXIvaGV4YWdvbi9lbGZsb2FkLmMKQEAgLTEx
-Myw2ICsxMTMsMTAgQEAgY29uc3QgY2hhciAqZ2V0X2VsZl9jcHVfbW9kZWwodWludDMyX3QgZWZs
-YWdzKQogICAgICAgICByZXR1cm4gInY3OSI7CiAgICAgY2FzZSAweDgxOgogICAgICAgICByZXR1
-cm4gInY4MSI7CisgICAgY2FzZSAweDgzOgorICAgICAgICByZXR1cm4gInY4MyI7CisgICAgY2Fz
-ZSAweDg1OgorICAgICAgICByZXR1cm4gInY4NSI7CiAgICAgfQogCiAgICAgZXJyID0gc25wcmlu
-dGYoYnVmLCBzaXplb2YoYnVmKSwgInVua25vd24gKDB4JXgpIiwgZWZsYWdzKTsKZGlmZiAtLWdp
-dCBhL3RhcmdldC9oZXhhZ29uL2NwdS5jIGIvdGFyZ2V0L2hleGFnb24vY3B1LmMKaW5kZXggZjM4
-M2ZmZDg4ZTYuLmU3NzA5N2JlZmM4IDEwMDY0NAotLS0gYS90YXJnZXQvaGV4YWdvbi9jcHUuYwor
-KysgYi90YXJnZXQvaGV4YWdvbi9jcHUuYwpAQCAtOTc5LDYgKzk3OSw4IEBAIHN0YXRpYyBjb25z
-dCBUeXBlSW5mbyBoZXhhZ29uX2NwdV90eXBlX2luZm9zW10gPSB7CiAgICAgREVGSU5FX0NQVShU
-WVBFX0hFWEFHT05fQ1BVX1Y3NSwgICAgICAgICAgICAgIEhFWF9WRVJfVjc1KSwKICAgICBERUZJ
-TkVfQ1BVKFRZUEVfSEVYQUdPTl9DUFVfVjc5LCAgICAgICAgICAgICAgSEVYX1ZFUl9WNzkpLAog
-ICAgIERFRklORV9DUFUoVFlQRV9IRVhBR09OX0NQVV9WODEsICAgICAgICAgICAgICBIRVhfVkVS
-X1Y4MSksCisgICAgREVGSU5FX0NQVShUWVBFX0hFWEFHT05fQ1BVX1Y4MywgICAgICAgICAgICAg
-IEhFWF9WRVJfVjgzKSwKKyAgICBERUZJTkVfQ1BVKFRZUEVfSEVYQUdPTl9DUFVfVjg1LCAgICAg
-ICAgICAgICAgSEVYX1ZFUl9WODUpLAogfTsKIAogREVGSU5FX1RZUEVTKGhleGFnb25fY3B1X3R5
-cGVfaW5mb3MpCi0tIAoyLjM0LjEKCg==
+On 26/10/26 22:02, Fabiano Rosas wrote:
+> Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> writes:
+> 
+>> Hi Elliot,
+>>
+>> On 16/10/26 21:15, Elliot Berman wrote:
+>>> When pflash_cfi01/02 are out of Read Array mode and being reprogrammed
+>>> or erased (such as a firmware update) by a guest under TCG, TBs from
+>>> when the guest was executing instructions from the pflash are never
+>>> invalidated. After re-enabling Read Array, the guest continues to
+>>> execute instructions from the stale TBs.
+>>>
+>>> Call memory_region_flush_rom_device() from pflash_update() so the TBs
+>>> over the updated range are invalidated.
+>>>
+>>> memory_region_flush_rom_device() asserted that the memory region was in
+>>> romd_mode (i.e. Read Array mode), but the pflash is not in romd_mode
+>>> when processing MemoryRegionOps->write() commands. Since the RAM can
+>>> change even when !romd_mode, relax the assertion so it only checks
+>>> rom_device.
+>>>
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4490
+>>> Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Signed-off-by: Elliot Berman <elliotjb+anduril@elliotjb.com>
+>>> ---
+>>>    hw/block/pflash_cfi01.c | 5 ++++-
+>>>    hw/block/pflash_cfi02.c | 3 +++
+>>>    system/physmem.c        | 2 +-
+>>>    3 files changed, 8 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+>>> index 486fc6350d..66ecdb0969 100644
+>>> --- a/hw/block/pflash_cfi01.c
+>>> +++ b/hw/block/pflash_cfi01.c
+>>> @@ -388,12 +388,15 @@ static uint32_t pflash_read(PFlashCFI01 *pfl, hwaddr offset,
+>>>        return ret;
+>>>    }
+>>>    
+>>> -/* update flash content on disk */
+>>> +/* update flash content on disk and invalidate the guest view of RAM */
+>>
+>>    /*
+>>     * Flush modified flash content: mark the range dirty, invalidate the
+>>     * TBs translated from it, and write it back to the block backend.
+>>     */
+>>
+>>>    static void pflash_update(PFlashCFI01 *pfl, int offset,
+>>>                              int size)
+>>>    {
+>>>        int offset_end;
+>>>        int ret;
+>>> +
+>>> +    memory_region_flush_rom_device(&pfl->mem, offset, size);
+>>> +
+>>>        if (pfl->blk) {
+>>>            offset_end = offset + size;
+>>>            /* widen to sector boundaries */
+>>
+>> I'd like feedback from migration maintainers: could we be writing
+>> staled content during live migration? Or maybe we are already safe.
+>> invalidate_and_set_dirty() gets DIRTY_MEMORY_MIGRATION set via the
+>> memory_region_get_dirty_log_mask call. Hmm so this change also fixes
+>> migration then. If confirmed, worth mentioning in the patch description:
+>>
+>>
+>>     Direct writes to the flash RAM were not marked dirty for migration,
+>>     so pages reprogrammed during pre-copy were not re-sent, and
+>>     postload_update_cb() wrote the stale content to the block backend.
+>>     The memory_region_flush_rom_device() call now also fixes this.
+>>
+> 
+> Yes, this does seem to be the case. I couldn't find any path where the
+> writes from pflash_write() are invalidated.
+
+Thank you Fabiano for checking and confirming :)
+
 
