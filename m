@@ -1,69 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D787E606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3568D606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=spgnSRw5
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TA8+EEWU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLf6V-0002l0-Pr; Tue, 27 Oct 2026 07:12:31 -0400
+	id 1xLf7X-0003VE-3B; Tue, 27 Oct 2026 07:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLf6U-0002kZ-R6
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:12:30 -0400
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ id 1xLf7W-0003Ue-DT
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:34 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLf6S-0002oX-Sh
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:12:30 -0400
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-156cbe59622so3348297c88.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:12:28 -0700 (PDT)
+ id 1xLf7T-0002y7-Lm
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:34 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-3645f0f3fcdso7290291eec.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793099547; x=1793704347; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=hzZbDFZM/UYJO7c6bpSnID+Nzy+oI4pCYhor9frfI5Y=;
- b=spgnSRw5Tplr2bofpKU2EikdZXwF9n17BTP+ihVJ0iN+QE6k8jCzvR6ZQ1ol0sfAkL
- tEW+hNeOp5xilIaRLlnHS/BcxPpMrfVVUZgDq24tkhneXRhBu8IRHds4wE7WHx5+utv7
- 10+6ImETfc+3F2ujVMGFXVFo2H8BJYcVclXuucBWs7wUr5o5POCeDZXh2tWePsoDhnI6
- olxEvOS4Mz/j8xGS0beNLzBBnddHRLWmARK3r4zbqBBP4X9vxpyy9nEVwcFzzpDJH6pc
- 4mRZU8theSd1y43JnI2cE3cZtos3b7pTTmeuM46CqzSbMo6fCY1EBU6bBeALgMOmBjB+
- 4qEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793099547; x=1793704347;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1793099610; x=1793704410; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=hzZbDFZM/UYJO7c6bpSnID+Nzy+oI4pCYhor9frfI5Y=;
- b=NbSJwq+57Ei6MXKghLPqC0W/w0tzZUDm3mjKLVTeA8aEeQx/Tco59SyakKLmo3Fs0g
- sWSk97C1rA9noT442dxcBfIU2XYHa2u6sG58WzItifeAAlWexOnQKEzBlIH4VPIpir/l
- vjJ09apUxNN2H813+yxLlpeqqXZk2a2tiVXT/lcIsRD22A3lnvdk1/Hkc8mUGIz4BAzn
- LMkZDx2c40LnrcrMsYRjI7GH8voOG6kA7sXwnVFqRljXLS2ZaEH0GN7VzP1WcrGoZ1PF
- DzO/IHDMJWgG4RkGefdZgS4sZCIoL14uiZVk4XWFrQSFcwbh4W9VKBlsduus70hAlXO0
- ZnWQ==
-X-Gm-Message-State: AFq9FYJuCuQNqVEsWXqL7PJQTldGEyw11u7mdXjgzmJTlKi/A7+J3eF1
- WWShxigW7iFJFQ+8YqWK6mmD4v68TVHD/ZCTFtfHtOuLknCOny6GKmuu4rrIICf4
-X-Gm-Gg: AYBFou3ggYlCSA6SJGpPI4UmMmPtrfOGCoMb1TPKGDE636pjNRbXprm1gQnySJRY7o/
- qMCe2VS4wTBjGmvJFGCGmvOVpbFAMHWbcuNtfaJuygHC0eTFNWL0wrNAE6LFrVVXmz2vjVXop1W
- NSanmsIh1XSaE05MG0gXidYOUbJf3u2fUdfaBBGqTFJFRK0k7oJQORsMqy9wV0KlHWgVqbnSgJ/
- by6krw0DvnfuOaPS2W1H0e7843oUsgcC1fCkeUL1NEOSs1O4mOr66iH/wIIyaZK562me/Ka6mga
- BYl2GUJCFguUHszoNQL+fcBcP7wTBVVEeid4dJV4t5ZVxTSQ5O4VpFkUxZuvgAkiobZObT+rCE/
- 3IF+j7m0jSkcsREVq5YSwjbW0D1Jiu/a6Hi2Gfg+DHiooFYF4mUKQzjTiNKbhgkgFAqx54x7fTs
- iUzeLY/2hI4hGOAvivyZbwUkPpU1/JsftyIyESSij1152VNPUDJScjP5FdxcGgMxS0r37X+UxbW
- C03kWKtJ//lxOWoLH27lHt79FcAgmdO78mRli5CbMlDNMdEXZi42GGokAh5oJ0MUC3eyqoqDwgZ
- LAf++bt6a+LQ
-X-Received: by 2002:a05:7023:889:b0:152:9e88:daaa with SMTP id
- a92af1059eb24-19936e34cafmr14125662c88.36.1793099546945; 
- Tue, 27 Oct 2026 04:12:26 -0700 (PDT)
+ bh=L55oApzfxuR3Cb3K6G8G98YWism0iXM6tBC3kMOjIJQ=;
+ b=TA8+EEWUZK33Lgll4R69uhSpxejOeSrjwZrCqp3ZaSBZjPD+K59oz++36NZM7ABSSQ
+ UAnv51tfitWWDMEaiC1x3mjBtma+Q4/5BM5mHPkHUTlX8RcgWdlzSum0uGNmgYK0nOWT
+ 5jrCWcRAMXlt4SmSXC/uc9icoIQFlEOAGo2Q0RBHyMe1++a+9Qdz0RrL7qDObY13tEGx
+ oR1juIb05NJXa+u5Y7vhi+Tejn5pfA77jhGiYuJxh09h91UQTfjJP2DqctpoNvlOPYXp
+ tHaO73nMLfKnfEZuxgCqTiN6xmk9kb2JfVq8u2Rclgdr9YP66oEwfukRVthl3od93BvP
+ m85A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793099610; x=1793704410;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=L55oApzfxuR3Cb3K6G8G98YWism0iXM6tBC3kMOjIJQ=;
+ b=HDz6q/KD9s79cXJ2MM38qGN9t7gL4m4cvb3xkBtSQqUkHjvQNCkQnQ8yvzt9vr0Pmp
+ nu6Cc+pi4NaHUsZ0sXfE1arhsQz6+vS44ubcZoD+LqJja+kjIwYCm7rBdAFbRSFGPzap
+ j777lt97keDCJ8B6L4E/4QTvM06j9hw3xWr5DwWh5s7FYmRR5ZhJmWY6HRESAljpTR+a
+ t1r3IiUItzsR+l2wQKBwruBiDeq3a/cfQvGN12uyZ7IpfS4jZZU0jsgCul9YrSLbVOoQ
+ zf9HC+0jvywNOymdPrdlqblugQZjWJjUGJlmTwfnXjP5IYENHK0nUg0TlXWwOs4HdeTq
+ Eymw==
+X-Gm-Message-State: AFq9FYKLv9V5+9UaeQxy9F6QiNLDoYlpvimyxy88cmoaA90e2yGZSPzX
+ cZG8tQW+IRF+zD5Zzlg8tLATWXM35ygMsf7ieLg+UN1TagMi1NgqaXbpdeUOJKnR
+X-Gm-Gg: AYBFou15R2GTZcmtBvJ2hjAQDwDxVCvlYfE5KWQVmiwRS47LHxexyhO9jmAzeE0fZKD
+ qDgGZhY/CXH6gtQQZh/TWAEMG0oiW3ecFUMYYnIZ+ncq0ApyJa3UDPcemFcOoHbKQl9hBQPJXfH
+ YU3JoRXkkv0/Lx0bCyFcs1fioTs5jwnOr1Wq2kGEiUjyDU4dE86DaVFx9C2atiHBrsGmHh2VSc4
+ itSnR1O5PeLHUOMOM12QwchnVHyyLQKJBlUhv5cANx1nAAm4IzMyVtksS0g84Oxx0kX2wrYLT8C
+ Kiq/upWeWn3MK3FU+sT3D9ol1h7H7kBN1N1YAZ93M3NG9a97cYFOhY1tAozgH5OS8xR9KS6AJWC
+ bD+ZW3uJ/Dv61oc+SrWLQ7ek1TJlmU23IVigrmz0wCxq3TnLYO3KySVflgybiIcfm2s8ClSaVwl
+ xrmb6ZJ3rUhn/ZNk7SQyzSCuEf69Na8h1E2aOnWWFjvBjZsxUhRfkojiMgr/9+kB+gwI33jBJ70
+ p1w14LQ0GBTAuAI0p2+hMETWYXjAdgeyX+C3hhvt2AxVZ0Rc+FmSOIXyTh7MwqndOFId6gqJSI6
+ 4eAlrA19g5Uj+UaS0qUw2kCsUGNCaXsERnePl/Tk2b0q8uyQHI16ChfEmV27AA==
+X-Received: by 2002:a05:7022:309:b0:168:e942:4e62 with SMTP id
+ a92af1059eb24-19937caa524mr19983920c88.40.1793099609786; 
+ Tue, 27 Oct 2026 04:13:29 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-198a0f83cedsm40453042c88.13.2026.10.27.04.12.21
+ a92af1059eb24-198a0f83cedsm40453042c88.13.2026.10.27.04.13.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 04:12:26 -0700 (PDT)
+ Tue, 27 Oct 2026 04:13:29 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
@@ -83,16 +85,18 @@ Cc: Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Eric Blake <eblake@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Laurent Vivier <lvivier@redhat.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v4 00/17] machine: uniquify virt QOM names
-Date: Tue, 27 Oct 2026 19:11:58 +0800
-Message-ID: <20261027111216.392-1-luoyonggang@gmail.com>
+Subject: [PATCH v4 10/17] hw/arm/virt: use unique QOM name
+Date: Tue, 27 Oct 2026 19:12:08 +0800
+Message-ID: <20261027111216.392-11-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
+In-Reply-To: <20261027111216.392-1-luoyonggang@gmail.com>
+References: <20261027111216.392-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x122e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,94 +115,85 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=unavailable
-	autolearn_force=no version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Multiple targets register a virt board as MACHINE_TYPE_NAME("virt").
-Those QOM types collide if more than one board is linked into one
-qemu-system process. This series splits the QOM type from the -M name
-so each virt board can keep a unique type while -M virt, help, and
-migration stay the same.
+Set TYPE_VIRT_MACHINE and the versioned types to arm-virt when
+target_heterogeneous() is true, and to virt otherwise. Keep the
+-M / help / migration name as virt-* via machine_class_set_name().
 
-- Add machine_class_set_name() so boards can set MachineClass::name
-  when it must differ from the QOM type. machine_class_base_init still
-  defaults the name to the QOM type without -machine. Document that
-  MachineClass::name is the -M name, not the QOM type. Sort -M help
-  by that name so order matches the printed names after types are
-  prefixed (arm-virt-11.1-machine vs virt-11.1).
-- When target_heterogeneous() is true, give each colliding virt board
-  a unique QOM type and keep the existing -M name via
-  machine_class_set_name(): riscv-virt, arm-virt, or1k-virt,
-  hexagon-virt, loongarch-virt, m68k-virt, and xtensa-virt. Otherwise
-  keep virt. Versioned ARM, LoongArch, and M68K boards keep virt-<ver>. Latest
-  ARM virt still sets mc->alias to virt.
-  This is for the review from Daniel:
-  Link: https://lore.kernel.org/qemu-devel/ar_dK-_KUS3h2dkL@redhat.com/
-- query-machines returns MachineInfo typename, the QOM type from
-  object_class_get_name(), for qom-list-properties. The -M name alone
-  is not that type once virt boards are prefixed.
-- Use target_heterogeneous() from the base. It still returns false, so
-  qemu-system-<target> keeps the QOM type virt.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ hw/arm/virt.c         | 12 ++++++++----
+ include/hw/arm/virt.h |  5 ++++-
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-Changes v3 -> v4:
-Rebased onto d73149283205645625bfa9fe029cfb68e4c4a9ae, which already
-includes target-info: add target_heterogeneous. The boards.h example
-uses arm-virt only when that returns true.
-
-Changes v2 -> v3:
-The versioned-machine example in boards.h now follows hw/arm/virt.c.
-machine_class_set_name() keeps the -M name as virt-<version>, the QOM type in
-the example is arm-virt, and the latest helper is DEFINE_VIRT_MACHINE_AS_LATEST.
-
-Changes v1 -> v2:
-- query-machines returns MachineInfo typename. v1 returned only the
-  -M name, so a client that appended "-machine" looked up the wrong
-  type for a prefixed board such as arm-virt-11.1-machine versus
-  -M virt-11.1.
-
-Yonggang Luo (17):
-  hw/riscv/virt: move virt TypeInfo into its type_init
-  hw/arm/virt: move virt TypeInfo into its type_init
-  hw/or1k/virt: move virt TypeInfo into its type_init
-  hw/hexagon/virt: move virt TypeInfo into its type_init
-  hw/loongarch/virt: move virt TypeInfo into its type_init
-  hw/m68k/virt: move virt TypeInfo into its type_init
-  hw/xtensa/virt: move virt TypeInfo into its type_init
-  machine: allow -M name to differ from QOM type
-  hw/riscv/virt: use unique QOM name
-  hw/arm/virt: use unique QOM name
-  hw/or1k/virt: use unique QOM name
-  hw/hexagon/virt: use unique QOM name
-  hw/loongarch/virt: use unique QOM name
-  hw/m68k/virt: use unique QOM name
-  hw/xtensa/virt: use unique QOM name
-  qapi: return MachineInfo typename from query-machines
-  machine: match the versioned virt example to arm virt
-
- hw/arm/virt.c               | 53 ++++++++++++++++--------------
- hw/core/machine-qmp-cmds.c  |  1 +
- hw/core/machine.c           |  6 ++++
- hw/hexagon/virt.c           | 21 +++++++-----
- hw/loongarch/virt.c         | 44 +++++++++++++------------
- hw/m68k/virt.c              | 37 ++++++++++++---------
- hw/or1k/virt.c              | 20 +++++++-----
- hw/riscv/virt.c             | 26 +++++++--------
- hw/xtensa/virt.c            | 20 ++++++++++--
- include/hw/arm/virt.h       |  5 ++-
- include/hw/core/boards.h    | 39 ++++++++++++++++------
- include/hw/hexagon/virt.h   |  5 ++-
- include/hw/loongarch/virt.h |  5 ++-
- include/hw/riscv/virt.h     |  5 ++-
- qapi/machine.json           |  6 +++-
- system/vl.c                 |  8 ++---
- tests/qtest/qom-test.c      | 65 +++++++++++++++++++++++++++++++++----
- 17 files changed, 247 insertions(+), 119 deletions(-)
-
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ba55d7c90f3..3e52c23e81a 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -121,23 +121,27 @@ static void arm_virt_compat_default_set(MachineClass *mc)
+         MachineClass *mc = MACHINE_CLASS(oc); \
+         arm_virt_compat_default_set(mc); \
+         MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
+-        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " ARM Virtual Machine"; \
++        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) \
++                   " ARM Virtual Machine"; \
+         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
++        machine_class_set_name(mc, "virt-" MACHINE_VER_STR(__VA_ARGS__)); \
+         if (latest) { \
+             mc->alias = "virt"; \
+         } \
+     } \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+     { \
+-        const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
++        const TypeInfo virt_machine_info = \
+         { \
+-            .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
++            .name = target_heterogeneous() ? \
++                    MACHINE_VER_TYPE_NAME("arm-virt", __VA_ARGS__) : \
++                    MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
+             .parent = TYPE_VIRT_MACHINE, \
+             .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
+             .is_available = target_base_arm, \
+         }; \
+         MACHINE_VER_DELETION(__VA_ARGS__); \
+-        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
++        type_register_static(&virt_machine_info); \
+     } \
+     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 22e66d1a113..4152f8173e7 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -32,6 +32,7 @@
+ 
+ #include "exec/hwaddr.h"
+ #include "qemu/notify.h"
++#include "qemu/target-info.h"
+ #include "hw/core/boards.h"
+ #include "hw/acpi/ghes.h"
+ #include "hw/arm/boot.h"
+@@ -215,7 +216,9 @@ struct VirtMachineState {
+ 
+ #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
+ 
+-#define TYPE_VIRT_MACHINE   MACHINE_TYPE_NAME("virt")
++#define TYPE_VIRT_MACHINE (target_heterogeneous() ? \
++                           MACHINE_TYPE_NAME("arm-virt") : \
++                           MACHINE_TYPE_NAME("virt"))
+ OBJECT_DECLARE_TYPE(VirtMachineState, VirtMachineClass, VIRT_MACHINE)
+ 
+ void virt_acpi_setup(VirtMachineState *vms);
 -- 
 2.52.0.windows.1
 
