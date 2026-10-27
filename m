@@ -1,95 +1,92 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30943606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77961606A333
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=EKsSoZ90
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=KtucHdKK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLiD9-0007Zx-CZ; Tue, 27 Oct 2026 10:31:35 -0400
+	id 1xLiD3-0007UM-S4; Tue, 27 Oct 2026 10:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xLiCU-0007IH-41
+ id 1xLiCU-0007IF-2s
  for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:30:54 -0400
-Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
+Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xLiCQ-000587-SP
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:30:52 -0400
-Received: by mail-qk1-x72f.google.com with SMTP id
- af79cd13be357-93e503815adso447194385a.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:30:50 -0700 (PDT)
+ id 1xLiCN-00057J-Bg
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:30:51 -0400
+Received: by mail-qk1-x72e.google.com with SMTP id
+ af79cd13be357-93cc1ab5f6cso445972385a.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:30:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793111450; x=1793716250; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793111446; x=1793716246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=dyICs8KtURhLh9ERtJL2tsMninZADpeVl6DJ8BnR9IM=;
- b=EKsSoZ900WSyR4Qfily2IzQ5jFgswk6whigIW+0qgbcPHIaSbEGOgi981kzoc0BkLe
- DidV0oOmgZrLMk5Qr8y44dae8JxFuwcMJzzt3HoPZqAFDUV8qglwEPEugXNNYp2haKbe
- 4Z1sI/sex0z/BkPvV/L/KfEbqFz8CXHFdUzt3GCOsy37KxzI34nRWrx9Rcx0GSjO0WM+
- Z6RcxalzHj0/mEHpx6zBp65Uiy4VbhWYQYxmJpjttpi9Li8/Rw87/jnR3c5c3/evLXAw
- /30PLM7rR1UxGW9b5hLPyCPGB6f4s42hRbOYHPz+fF0875GQ4JAWbJ2Ro+ACeYsOkPDc
- J1fQ==
+ bh=csf0U0RhbxwQQltmr3Lieh/UYJFGGnzp3gtbjXPkc6Y=;
+ b=KtucHdKK8DivbwknQtgdudkhiPMls3UxcdkYeQIK6sH0Cc2Q947ncKtvLXLceZYrgH
+ i81o3ubxEda+uwDRAhVMUJXlrXCLftxnz1dP45cAQFBqlUTZCs9YpARqJCu46tAfNT0+
+ RLPNV8Yrz7gGN5amdAUYKl7KOngQQfcUyPpZXOehXZiSfVvuB9NPU/kyB+wG2VrBSqts
+ JxxYYXV8ngwJxvEo4mkMbCtNgs7XhqlfmgVqiXjB+riKVRyIUp821cQ4F9RHIG6YPkqQ
+ lSa66FyigW0c79PG7NoavqFu8fAnGlds5hzcOyct/XypUDn/a0FyoAfjbecbmD0+vHXA
+ l3qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793111450; x=1793716250;
+ d=1e100.net; s=20260707; t=1793111446; x=1793716246;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=dyICs8KtURhLh9ERtJL2tsMninZADpeVl6DJ8BnR9IM=;
- b=Qy4/tO4eCa9hUiVI5MCtO8/2XqXzWSVZbX9Pt5J+/crKOrgyXDgSoA9tAVSVufjGKy
- bFTHqBJTA/e7WkhWWgSCelSQ4Fnz6E4drly4vufCyVN8W6NoOfxfx50CwT0bEDD9fm2F
- 8bCURyJgxT+KOHgvB8f9nRA+ISxD7p1DF094rVSfP/Q3ZwA86DF9RszB9sbQCEFrHEVR
- V0xwtNPgPXgrmZCc+99UVeZopuXHar/5dGgBQtDTiutrMjO5AZG/wEgOa+eCbA4eTUrL
- MV2MwSME45X9qRxJHNsTvtVTEiDLv09I1Ph0rkVBSwQ67Z73o8/tdApDroBnVKkCOxSz
- iSAQ==
-X-Gm-Message-State: AFq9FYK7mXFPzIv0IMzoy2qy08F54Cf2b2GhzSLnJ6aQEPXzca+BDkE2
- ZB7gXvaLR7Nnwnutv1wOQBneLPppkrlGRQ0dAt9WkBDEWXpca2NKSYlYfhYtbGIC
-X-Gm-Gg: AYBFou2nqQwLtczp8q9GcZ890uWJ+Bkq0N7YI3H2xY+CZuJE1FyabyCN6NURkLaK1mU
- Sip2TKy0XG3SeHmOK9YjjQGf5C7z+njRJZDjVbrin21RvZ07IRT3xdz4ijH1m4CahEriJF4vVZp
- I3PPGgB1hKa9ljtRn5AwfkePNlI2ru3n+O6Kye0IHvrd0a/041pR3xvMERJLBWYODC65aXI5rJt
- e5NzBskiWdShxbwsN321AC/IYOjN/xEV7kHlK6jPD5txRL5UEbJBRQMgMYeXz9Qq102X75a//4v
- q6Ao1czpwPpwdw2APNVgO6aY8UFv9VAwoT6a6KwuLVBm7xceqispDkdAZ38FpPtp3HmzVWgEf6w
- LEn1qkZcqlZZt+VCOGQH2C5C6SO153WXnHsnvejqFBthkxknpkmJQ2m7xfTezwachnB31K1Ncco
- n+Al1del1eEtB4mDiY/oRa/pwxgdeJVbL5i282BCznNJ8Rm8jutR7uM+oPoR26iRXKOWUmvtSvi
- smreZXYg1bubL7JkYM5YmuQlXL+0OG2PzFbrfIMT01RuIblzyLx4D4tQVGWjoFVPEl/VJEIPcUk
- IxucxBipi9C3QhruF+qUUTsGnZWjfPfXVyKa1JMm1v3obwdcwPQ=
-X-Received: by 2002:a05:620a:1a14:b0:93f:2658:7e54 with SMTP id
- af79cd13be357-940ef79d4b3mr1495729385a.3.1793111449114; 
- Tue, 27 Oct 2026 07:30:49 -0700 (PDT)
+ bh=csf0U0RhbxwQQltmr3Lieh/UYJFGGnzp3gtbjXPkc6Y=;
+ b=Otye4ZPBK7aF5UGmxtlDAanb85NGfrtZ/fmV4VIANXXHoERJTA6ClnExuTVkrjeTeA
+ h4N/gLFAZF6AIol9HGVK4CWno/ZeY1TbjcLxuSAOZ95MaXrYnea4Jd8fb4tetSbRoNPP
+ /mTgObb9awR5W4dXXGIuNYcJDKkT/fZR8w0Cftda1PlwLXaQX+1BwbagYluY6zdNJQm8
+ 236ZmKsfik+KhkPC7QyyVGyXBOKtDfIhHZCdCSnCL3UxmtSqM/2168OE3+FX7F0YBluT
+ Ka8BH9V0ctK7OC9FSKhPEowRX2z4SbPUxk0x9mIdOVkXwdSrN1w1J6P+wGfjvCPpJ9wX
+ x4fA==
+X-Gm-Message-State: AFq9FYLnZFo5JJtKUQP3aUZjS9uFFV57t922hmD8EKTaShugr9hO5Fhs
+ NA3jYAqpf2lLgtVTaUbEW49TjVjzYhDmm+nEo8xfwQWruWR+YFiXI6XtSFicmdoy
+X-Gm-Gg: AYBFou1XblBF2m1PmNAzB7o1lGGQBHjUgKv+09BbuYFkWSNB90cdFZMYM/IKCCgBqmF
+ fbqFD48TUHyUsCUNprxRG3mFIc3oQKmqn/ZTXN/nWXTMnYFcj6xp1RtLS5GUjfxmHmpkbNsS1w+
+ t9p6qMkO/vSta91sBNovMyU7YctC0yajlHmNqLe/hYpE4MtdWxuiStdSsy6yw7JZI4pZ+5942br
+ 8LLTfVdBtxGiK2jGWVP5HqyEdQVRV948kYqnNTZTfo8uCO0EOJaxA9knIIuT3WaGFHV0xvIgQfv
+ Ytc6RmOoJSk1OGQFTaGZPq/KBvnwbh8nX4dStNAkIbHQAwxvfhAahO4FtbKBa4tfMK6lq31zkX+
+ ca98GVY197GgQuymEVRVZx9LbRg0r487UE2ZtsTUeTi2nEJSi8/ZY9EKCjCE4m844Rt70fV2bvk
+ LfusEitCWmWZnDriezUAIZi/usxXpt7qdjhcwIanNe6JbcuFVoaobxMTgr9owz1Md/AbVuPq9fb
+ ItxqrIOJw5B3/JrDOweQ/qDjP6fKBEHjlYQbK8/61qR7KA76+cKBkCzfYVfrUxbHri8MdQ4spDa
+ k4HUJvWNrJ/nO/GbpFt6ffdK1wNBrC0Vf4YJXjzy57bbCEP1ZfM/Ojq+1rmkrYDoAY5uGcMs
+X-Received: by 2002:a05:620a:2a14:b0:93f:5677:994b with SMTP id
+ af79cd13be357-940ef90fc76mr1598298485a.52.1793111445295; 
+ Tue, 27 Oct 2026 07:30:45 -0700 (PDT)
 Received: from localhost.localdomain ([2606:6d00:159:2900:9872:3600:589:5f3a])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-940f0a78c06sm986400885a.35.2026.10.27.07.30.46
+ af79cd13be357-940f0a78c06sm986400885a.35.2026.10.27.07.30.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 07:30:47 -0700 (PDT)
+ Tue, 27 Oct 2026 07:30:44 -0700 (PDT)
 From: Marcelo Manzo <marcelomanzo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, philmd@oss.qualcomm.com,
- Sergey Kambalin <serg.oker@gmail.com>,
- Sergey Kambalin <sergey.kambalin@auriga.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v6 05/17] hw/net/bcm2838_genet: add GENET register structs,
- part 1/4
-Date: Tue, 27 Oct 2026 10:30:24 -0400
-Message-ID: <20261027143036.44973-6-marcelomanzo@gmail.com>
+ Marcelo Manzo <marcelomanzo@gmail.com>
+Subject: [PATCH v6 03/17] hw/arm/bcm2838: enable BCM2838 PCIe host bridge
+Date: Tue, 27 Oct 2026 10:30:22 -0400
+Message-ID: <20261027143036.44973-4-marcelomanzo@gmail.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027143036.44973-1-marcelomanzo@gmail.com>
 References: <20261027143036.44973-1-marcelomanzo@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qk1-x72f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
+ envelope-from=marcelomanzo@gmail.com; helo=mail-qk1-x72e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,170 +101,150 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+Wire the BCM2838 PCIe host bridge into the SoC's peripheral block:
+instantiate it, map its RC registers and MMIO window.
 
-Add the SYS, GR_BRIDGE, EXT, INTRL0, and INTRL1 register block
-layouts and the top-level BCM2838GenetRegs/BCM2838GenetState
-structs, plus REG32/FIELD accessors for the revision-control and
-interrupt-status registers.
+Per Peter Maydell's review of a later follow-up series, fold in the
+remaining defect from what was originally a separate bugfix here,
+since this device isn't in upstream git yet: the PCI MMIO window was
+mapped at the ARM base address with no address translation, even
+though PCIE_MMIO_OFFSET was defined for exactly that purpose (and
+otherwise unused). The DTB declares CPU 0x600000000 as mapping to PCI
+0xc0000000, so a guest would read PCI address 0 where it expected a
+device BAR. Map an alias at the correct PCI offset instead.
 
-Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
-networking series (patchwork series 829638, posted to qemu-devel in
-2024, never merged). Carried forward and completed by Marcelo Manzo.
-
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/bcm2838_genet.c         | 37 ++++++++++++++++
- include/hw/net/bcm2838_genet.h | 77 +++++++++++++++++++++++++++++++++-
- 2 files changed, 113 insertions(+), 1 deletion(-)
+ hw/arm/bcm2838.c                     |  7 ++++++
+ hw/arm/bcm2838_peripherals.c         | 35 ++++++++++++++++++++++++++++
+ hw/arm/raspi4b.c                     |  1 -
+ include/hw/arm/bcm2838_peripherals.h |  3 +++
+ 4 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index a20a9e7c72..7c4b036224 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -15,10 +15,47 @@
- #include "hw/core/irq.h"
- #include "net/checksum.h"
- #include "system/dma.h"
-+#include "hw/core/registerfields.h"
- #include "hw/core/resettable.h"
- #include "hw/net/bcm2838_genet.h"
- #include "trace.h"
+diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
+index 089af412a3..8f8e107c56 100644
+--- a/hw/arm/bcm2838.c
++++ b/hw/arm/bcm2838.c
+@@ -230,6 +230,13 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
+     qdev_connect_gpio_out(dma_9_10_irq_orgate, 0,
+                           qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_DMA_9_10));
  
-+REG32(GENET_SYS_REV_CTRL,              0)
-+FIELD(GENET_SYS_REV_CTRL, GPHY_REV,    0, 16)
-+FIELD(GENET_SYS_REV_CTRL, MINOR_REV,   16, 4)
-+FIELD(GENET_SYS_REV_CTRL, RSVD_20_23,  20, 4)
-+FIELD(GENET_SYS_REV_CTRL, MAJOR_REV,   24, 4)
-+FIELD(GENET_SYS_REV_CTRL, RSVD_28_31,  28, 4)
++    /* Connect PCIe host bridge to the interrupt controller */
++    for (int n = 0; n < BCM2838_PCIE_NUM_IRQS; n++) {
++        int int_n = GIC_SPI_INTERRUPT_PCI_INT_A + n;
++        sysbus_connect_irq(SYS_BUS_DEVICE(&ps->pcie_host), n,
++                           qdev_get_gpio_in(gicdev, int_n));
++    }
 +
-+REG32(GENET_INTRL_0,                0)
-+FIELD(GENET_INTRL_0, SCB,           0, 1)
-+FIELD(GENET_INTRL_0, EPHY,          1, 1)
-+FIELD(GENET_INTRL_0, PHY_DET_R,     2, 1)
-+FIELD(GENET_INTRL_0, PHY_DET_F,     3, 1)
-+FIELD(GENET_INTRL_0, LINK_UP,       4, 1)
-+FIELD(GENET_INTRL_0, LINK_DOWN,     5, 1)
-+FIELD(GENET_INTRL_0, UMAC,          6, 1)
-+FIELD(GENET_INTRL_0, UMAC_TSV,      7, 1)
-+FIELD(GENET_INTRL_0, TBUF_UNDERRUN, 8, 1)
-+FIELD(GENET_INTRL_0, RBUF_OVERFLOW, 9, 1)
-+FIELD(GENET_INTRL_0, HFB_SM,        10, 1)
-+FIELD(GENET_INTRL_0, HFB_MM,        11, 1)
-+FIELD(GENET_INTRL_0, MPD_R,         12, 1)
-+FIELD(GENET_INTRL_0, RXDMA_MBDONE,  13, 1)
-+FIELD(GENET_INTRL_0, RXDMA_PDONE,   14, 1)
-+FIELD(GENET_INTRL_0, RXDMA_BDONE,   15, 1)
-+FIELD(GENET_INTRL_0, TXDMA_MBDONE,  16, 1)
-+FIELD(GENET_INTRL_0, TXDMA_PDONE,   17, 1)
-+FIELD(GENET_INTRL_0, TXDMA_BDONE,   18, 1)
-+FIELD(GENET_INTRL_0, RSVD_19_22,    19, 4)
-+FIELD(GENET_INTRL_0, MDIO_DONE,     23, 1)
-+FIELD(GENET_INTRL_0, MDIO_ERROR,    24, 1)
-+FIELD(GENET_INTRL_0, RSVD_25_31,    25, 4)
-+
-+REG32(GENET_INTRL_1,              0)
-+FIELD(GENET_INTRL_1, TX_INTRS,    0, 16)
-+FIELD(GENET_INTRL_1, RX_INTRS,    16, 16)
-+
+     /* Pass through inbound GPIO lines to the GIC */
+     qdev_init_gpio_in(dev, bcm2838_gic_set_irq, GIC_NUM_IRQS);
  
- static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
- {
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index 91cf1773d5..af5e8abd2e 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -19,7 +19,82 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
- #define BCM2838_GENET_REV_MINOR         0
+diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
+index 812b5b8480..d923ba968a 100644
+--- a/hw/arm/bcm2838_peripherals.c
++++ b/hw/arm/bcm2838_peripherals.c
+@@ -15,6 +15,11 @@
+ #define CLOCK_ISP_OFFSET        0xc11000
+ #define CLOCK_ISP_SIZE          0x100
  
- typedef struct {
--    uint8_t stub_area[0x10000]; /* temporary stub */
-+    uint32_t rev_ctrl;
-+    uint32_t port_ctrl;
-+    uint32_t rbuf_flush_ctrl;
-+    uint32_t tbuf_flush_ctrl;
-+    uint32_t reserved_0x10[12];
-+} BCM2838GenetRegsSys;
++#define PCIE_RC_OFFSET          0x1500000
++#define PCIE_MMIO_OFFSET        0xc0000000
++#define PCIE_MMIO_ARM_OFFSET    0x600000000
++#define PCIE_MMIO_SIZE          0x40000000
 +
-+typedef struct {
-+    uint32_t reserved_0x0[16];
-+} BCM2838GenetRegsGrBridge;
-+
-+typedef struct {
-+    uint32_t pwr_mgmt;
-+    uint32_t reserved_0x4[2];
-+    uint32_t rgmii_oob_ctrl;
-+    uint32_t reserved_0x10[3];
-+    uint32_t gphy_ctrl;
-+    uint32_t reserved_0x20[24];
-+} BCM2838GenetRegsExt;
-+
-+typedef struct {
-+    uint32_t stat;
-+    uint32_t set;
-+    uint32_t clear;
-+    uint32_t mask_status;
-+    uint32_t mask_set;
-+    uint32_t mask_clear;
-+    uint32_t reserved_0x18[10];
-+} BCM2838GenetRegsIntrl0;
-+
-+typedef struct {
-+    uint32_t stat;
-+    uint32_t set;
-+    uint32_t clear;
-+    uint32_t mask_status;
-+    uint32_t mask_set;
-+    uint32_t mask_clear;
-+    uint32_t reserved_0x18[10];
-+} BCM2838GenetRegsIntrl1;
-+
-+typedef struct {
-+    uint32_t ctrl;
-+    uint32_t reserved_0x4[2];
-+    uint32_t status;
-+    uint32_t reserved_0x10;
-+    uint32_t chk_ctrl;
-+    uint32_t reserved_0x18[31];
-+    uint32_t ovfl_cnt;
-+    uint32_t err_cnt;
-+    uint32_t energy_ctrl;
-+    uint32_t reserved_0xA0[5];
-+    uint32_t size_ctrl;
-+    uint32_t reserved_0xB8[18];
-+} BCM2838GenetRegsRbuf;
-+
-+typedef struct {
-+    uint32_t ctrl;
-+    uint32_t reserved_0x4[2];
-+    uint32_t bp_mc;
-+    uint32_t reserved_0x10;
-+    uint32_t energy_ctrl;
-+    uint32_t reserved_0x18[58];
-+} BCM2838GenetRegsTbuf;
-+
-+typedef struct {
-+    BCM2838GenetRegsSys sys;
-+    BCM2838GenetRegsGrBridge gr_bridge;
-+    BCM2838GenetRegsExt ext;
-+    uint32_t reserved_0x100[64];
-+    BCM2838GenetRegsIntrl0 intrl0;
-+    BCM2838GenetRegsIntrl1 intrl1;
-+    uint32_t reserved_0x280[32];
-+    BCM2838GenetRegsRbuf rbuf;
-+    uint32_t reserved_0x400[128];
-+    BCM2838GenetRegsTbuf tbuf;
-+    uint32_t reserved_0x700[64];
- } BCM2838GenetRegs;
+ /* Lower peripheral base address on the VC (GPU) system bus */
+ #define BCM2838_VC_PERI_LOW_BASE 0x7c000000
  
- struct BCM2838GenetState {
+@@ -35,6 +40,10 @@ static void bcm2838_peripherals_init(Object *obj)
+     /* Extended Mass Media Controller 2 */
+     object_initialize_child(obj, "emmc2", &s->emmc2, TYPE_SYSBUS_SDHCI);
+ 
++    /* PCIe Host Bridge */
++    object_initialize_child(obj, "pcie-host", &s->pcie_host,
++                            TYPE_BCM2838_PCIE_HOST);
++
+     /* GPIO */
+     object_initialize_child(obj, "gpio", &s->gpio, TYPE_BCM2838_GPIO);
+ 
+@@ -67,6 +76,8 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
+     MemoryRegion *mphi_mr;
+     BCM2838PeripheralState *s = BCM2838_PERIPHERALS(dev);
+     BCMSocPeripheralBaseState *s_base = BCM_SOC_PERIPHERALS_BASE(dev);
++    MemoryRegion *regs_mr;
++    MemoryRegion *mmio_mr;
+     int n;
+ 
+     bcm_soc_peripherals_common_realize(dev, errp);
+@@ -182,6 +193,30 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
+     create_unimp(s_base, &s->clkisp, "bcm2835-clkisp", CLOCK_ISP_OFFSET,
+                  CLOCK_ISP_SIZE);
+ 
++    /* PCIe Root Complex */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie_host), errp)) {
++        return;
++    }
++    /* RC registers region */
++    regs_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pcie_host), 0);
++    memory_region_add_subregion(&s->peri_low_mr, PCIE_RC_OFFSET, regs_mr);
++    /*
++     * MMIO region.
++     *
++     * The BCM2711 PCIe controller translates addresses between the ARM and
++     * PCI address spaces: the DTB declares CPU 0x600000000 as mapping to PCI
++     * 0xc0000000. Map an alias of the PCI window starting at that PCI offset
++     * so accesses land on the right addresses; mapping the window directly
++     * would expose PCI address 0 at the ARM base instead, and every BAR
++     * behind the root port would be read at the wrong address.
++     */
++    mmio_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pcie_host), 1);
++    memory_region_init_alias(&s->pcie_mmio_alias, OBJECT(s),
++                             "bcm2838_pcie_mmio_alias", mmio_mr,
++                             PCIE_MMIO_OFFSET, PCIE_MMIO_SIZE);
++    memory_region_add_subregion(get_system_memory(), PCIE_MMIO_ARM_OFFSET,
++                                &s->pcie_mmio_alias);
++
+     /* GPIO */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
+         return;
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 566d64572d..931f2cca67 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -63,7 +63,6 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
+ 
+     /* Temporarily disable following devices until they are implemented */
+     const char *nodes_to_remove[] = {
+-        "brcm,bcm2711-pcie",
+         "brcm,bcm2711-rng200",
+         "brcm,bcm2711-thermal",
+         "brcm,bcm2711-genet-v5",
+diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
+index 0be97e67c7..7fe92789e8 100644
+--- a/include/hw/arm/bcm2838_peripherals.h
++++ b/include/hw/arm/bcm2838_peripherals.h
+@@ -10,6 +10,7 @@
+ #define BCM2838_PERIPHERALS_H
+ 
+ #include "hw/arm/bcm2835_peripherals.h"
++#include "hw/arm/bcm2838_pcie.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/gpio/bcm2838_gpio.h"
+ 
+@@ -65,6 +66,8 @@ struct BCM2838PeripheralState {
+     MemoryRegion mphi_mr_alias;
+ 
+     SDHCIState emmc2;
++    MemoryRegion pcie_mmio_alias;
++    BCM2838PcieHostState pcie_host;
+     BCM2838GpioState gpio;
+ 
+     OrIRQState mmc_irq_orgate;
 -- 
 2.55.0
 
