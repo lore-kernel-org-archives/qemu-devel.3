@@ -1,89 +1,111 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DBA606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFE0606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=Q/eKUhk+;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=RBXk3HmT
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NHLGgyRu;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=KYvzpCLH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLeik-0000v4-Qt; Tue, 27 Oct 2026 06:48:02 -0400
+	id 1xLejQ-0002cc-7C; Tue, 27 Oct 2026 06:48:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLeg9-0005R9-JM
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:22 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xLei0-000756-9q
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:47:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLeg7-0007qu-G5
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Ie/xCwL
- XvwlUktAPGoQweb57CkPUbK2R/ShMIxnypYYuTQkljKoNVcb4mjzbzsix+SaIrRXv8iCrV
- VUYCRB/HfAWVB1DO79c6sV/gfaqFOOkR46NG16E65tZvO8W/SEKtfwtlrWCZxQjpSkINuI
- bY5fwhzO1XqqcpbJElcEmNxtMdya0sZlf92zhAzdgyfwwTwX/SaVXlWxeycym/Mc+l8bXG
- 9oH/HN0nPhugg5cnB50M7Ile0JTYNtfPdygGgPWGSB2bsaWYPHS6syb9TUiM3DPCCuABw1
- cI3N3FnDe+STbUbEC8Rgc74ZY7DsNb8sb1uIhUDRZN7VIiB0dqVjbwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=7
- u7ZiQkCmLmC3l0rS7EzalxHd23Pd1jmH1dvgCTWUoc=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=OsV2YDbD1TubtYb4+I3jvvYdqKWb3+f8PeiHBPQ2qcMYDjpFgaCwIUt/Z7CT80s85JYG
- ZOV03pMY/jh8WGFYAfGi/Op5JyZWJ0pwOICWbnALEEmoFHL4AWAUMQpYXQipkPxc7VYJNx
- bxkJNwGlhAYOUoNWNd9CDSd8gL9Cze7BL69Jndf4hzDYO6jc99h7OVoJOTX6TUHuV4sZla
- 7YKLkkSsQbaktOyv8LSs2ep8F6BHfDHBG15ZuxcYsr8m4Nj+NEgAgE9xGr8kYRz0dpgeZV
- PBNgfhE81OEtsQmZk4yGirNyfgxNRbn5PZis4e5gZjSnF/fUY4y3bSbBlvTX7I/Q==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=Q/eKUhk+; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=RBXk3HmT;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=7u7ZiQkC
- mLmC3l0rS7EzalxHd23Pd1jmH1dvgCTWUoc=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=Q/eKUhk+EwSqCK6sUWyhmQkTPb3lteDBVVP
- fTbHgseTSNsOOm5YydcMN6wgjB4KZL3SlcYcFu8t7ZqRAhmXTGP5IFTXzrQdS6WVK4ttSp
- Zid5NfkiM98gcJV6gR1UHpnP2g4bSw3PgCT6XkSxxcEr0H1oBN/xgOE7XI4nQI1zfA1uWn
- VVveU9FMaVZQpLrcV63aNgRUBheOWYQGtjCn2Os5MlSMWm8L8/KlOCkPx0/8Yzz6JXMS/O
- XPhNBkdq+/cFqKMbtt7IYKdTnlgQsVIcyr16J7B6Og7vaW4oypvRSUdaB1GwnT2KWopbUN
- QUpVt1PEe1h4OJLBYEnYIejWKmA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=7u7ZiQkCmLmC3l0rS7EzalxHd23Pd1jmH1dvgCTWUoc=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=RBXk3HmTxo+y8r+oQh
- tJn2EeKMXso/UJ3bE2jyC09qLcBpUP2UOezmGLudNb2I8Gua50UNTonLmXUCCjpaXfBQ==
-Received: by mx2.catap.net (OpenSMTPD) id d1fa736c;
- Tue, 27 Oct 2026 11:45:02 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 97fce9aa;
- Tue, 27 Oct 2026 11:44:52 +0100 (CET)
-From: "Kirill A. Korinsky" <kirill@korins.ky>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v4 17/25] hw/mips: wire the Octeon UART
-Date: Tue, 27 Oct 2026 11:41:41 +0100
-Message-ID: <20261027104433.25720-18-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261027104433.25720-1-kirill@korins.ky>
-References: <20261027104433.25720-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xLehw-0008Oc-Ng
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:47:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793098017;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mKLxufQdxx6mW5ZQDfnqG9uoMRqbmtQ2JPw6QBj3EM0=;
+ b=NHLGgyRus4CXvAJx6jZQu4YosjWm7vzpjVl3X23WMUWmpmO6hrkPnrms5TRQ7s3JyFq0oG
+ z1eX/NfnNZcyc8aYcxC4hb87b673jgteuFRPZ55sDVeD0lIw4+AiwFJd0qfybVCswgc3GC
+ zfzQg3A+Am/TlqaPRCBQDVAPy7tDzF4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-I0zqAG-0NO-cN6ij0lU1eQ-1; Tue, 27 Oct 2026 06:46:55 -0400
+X-MC-Unique: I0zqAG-0NO-cN6ij0lU1eQ-1
+X-Mimecast-MFC-AGG-ID: I0zqAG-0NO-cN6ij0lU1eQ_1793098014
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48e1ad3cb66so2325519f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:46:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793098014; x=1793702814; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=mKLxufQdxx6mW5ZQDfnqG9uoMRqbmtQ2JPw6QBj3EM0=;
+ b=KYvzpCLHjwG8nu7eJwnMp4o65RJ29cwHvGbA5i8O27L5RQaFfOACbnP4NwljkXOg0R
+ PbFhG8OMbU94rPqFbLj3uSCQxjRydl9GTiXYikZGxB88llkSw4rjmUlpHyA613atmDFW
+ UyLkd6lm+c0NGqFRxgxA6JA/0GPFVuiWLwpfLS67ZEfAkIO152oDdCFcVNmLyfkgYVQq
+ GLcJpRaDs6nHw2/JiMPR5PxqR3xnuV/c34WoY3m6BaQH+Ebi8cOGeHaJNljwUcaEcxrZ
+ A0iLYXSBwcQeWqdfr05J+RiO9AaPA08prweg7GB5k1wRfHvtb+dzKXUYWsiECVv4DOaN
+ pbpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793098014; x=1793702814;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mKLxufQdxx6mW5ZQDfnqG9uoMRqbmtQ2JPw6QBj3EM0=;
+ b=LU89IA0V1q7EwzbY5AInPBjOgHMLYui1wO6tmJgpNpBFcK3DW3KIBOxjH8DHuG6rnC
+ XInRkqdIMewyjRgbKcgkYG5L47XtWNT+66fim8s1IRwvx/FKohx68Qnhh2NpNku9dXqS
+ tJmATVzktAqcenOusAtUw1Y4eN3hBJudprhLBbyPmyyeawkfc81Mqj2bi5NmhZhFrnbe
+ yfaD96ET7w3bRxLtWnYBXR/B6kK2/TerZx06IHi2OaUJ3Sd4g+tpgwgCenpHkfrejTzi
+ 7peaejO3+pM6o9BihYHrw0zUZaQakzHEj/Y/Z7A/tG/yYtQmJNqq4JnoH7PjoQMaUvsU
+ C3mg==
+X-Gm-Message-State: AFq9FYIKeUjpzO9s9gCQ/h28ebtypL2aLS78xC1e+QY1Wf32V5JLgHeB
+ BKNqywx5ox7vVjWDmIhvXrn4DaEOVhHSMrn7jJM8vwfWkoTJY9wbZrjDOEV4tWaEEDjopM6UULA
+ zb7Q+yg6HOcH//Xo/RJDe3nHeF9BoTifrH7hfOJ/xLQB5AMmh1tHyTjwX
+X-Gm-Gg: AYBFou1eyIUXPnEEe8It3Q6ZwSSBHBf/dG0FYZuGQ7MsIvdraCcAr6CauHyYzwmC/35
+ webVcJOvlLrxa5Qb8vLAUu/POhK/AuNJV2gcoi2h7RywaXqd3zJkz3CZXeQNKNZcR0y8vagTACV
+ 5oYIRvJ+1Cu6bqFwhwe7tzUbIMYJatyKS1XY94nyPNuQngxbLTdp3Q2nc66StFHefEj05hjfNTH
+ FsKE/M2/xntIor4aJCpLiPuEASRAer4JQdEHNGkz0ZiN3gFoxqaBIg2bDBLqXC1etn5k8g5Yfjr
+ 6iwvSctAc7YS8yoOiQD/RhDwm/n7exgK4jbY8RRwlCpUobDAx0+M0QTlzVpNACn6Mhk=
+X-Received: by 2002:a05:6000:2999:10b0:488:654b:ccd8 with SMTP id
+ ffacd0b85a97d-48e3eb4685cmr12314817f8f.6.1793098014131; 
+ Tue, 27 Oct 2026 03:46:54 -0700 (PDT)
+X-Received: by 2002:a05:6000:2999:10b0:488:654b:ccd8 with SMTP id
+ ffacd0b85a97d-48e3eb4685cmr12314759f8f.6.1793098013516; 
+ Tue, 27 Oct 2026 03:46:53 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e3ebc3bdbsm18090388f8f.19.2026.10.27.03.46.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Oct 2026 03:46:52 -0700 (PDT)
+Date: Tue, 27 Oct 2026 06:46:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Weqaar Janjua <weqaar.janjua@packetfive.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, peter.maydell@linaro.org,
+ pierrick.bouvier@oss.qualcomm.com, jasowangio@gmail.com,
+ pbonzini@redhat.com, farosas@suse.de, lvivier@redhat.com,
+ marcel.apfelbaum@gmail.com
+Subject: Re: [PATCH v3 0/6] hw: Add Cnuas virtual devices
+Message-ID: <20261027063724-mutt-send-email-mst@kernel.org>
+References: <20260929202358.725310-1-weqaar.janjua@packetfive.com>
+ <20261016153247.1815153-1-weqaar.janjua@packetfive.com>
+ <20261027080746.2468700-1-weqaar.janjua@packetfive.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261027080746.2468700-1-weqaar.janjua@packetfive.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,167 +117,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-6.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Wire the Octeon UART and its alias to the existing serial-mm device.
-Provide the special transmit register window and connect the UART
-interrupt to CIU and CIU3.
----
- hw/mips/Kconfig           |  1 +
- hw/mips/octeon.c          | 69 +++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |  5 +++
- 3 files changed, 75 insertions(+)
+On Tue, Oct 27, 2026 at 08:07:44AM +0000, Weqaar Janjua wrote:
+> Hi,
+> 
+> Ping.
+> 
+> Patches 1 and 4 (PCI IDs) have Gerd's Reviewed-by. Patches 2, 3, 5
+> and 6 (CnuasNIC/CnuasGPU/dev models/qtests) are pending review.
+> 
+> https://lore.kernel.org/qemu-devel/20260929202358.725310-1-weqaar.janjua@packetfive.com/
+> 
+> @Michael, @Jason:
+> Would one of you please be willing to take this series through your 
+> tree once it is reviewed, or could you suggest who should? I am happy 
+> to rework anything needed, and I understand this may now target the 
+> next release given the upcoming soft freeze.
+> 
+> Thanks, appreciated!
+> 
+> Weqaar
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index cb6057fe38..5fe5f885e3 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -72,6 +72,7 @@ config MIPS_OCTEON
-     default y
-     depends on MIPS64 && TARGET_BIG_ENDIAN
-     select PFLASH_CFI02
-+    select SERIAL_MM
- 
- config MIPS_CPS
-     bool
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 59754cb741..133b3636a0 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -10,6 +10,7 @@
- #include "qemu/units.h"
- #include "qemu/datadir.h"
- #include "qapi/error.h"
-+#include "hw/char/serial-mm.h"
- #include "hw/core/clock.h"
- #include "hw/core/irq.h"
- #include "hw/core/boards.h"
-@@ -48,7 +49,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- 
-+#define OCTEON_CSR_32BIT_SIZE       4
- #define OCTEON_CSR_64BIT_SIZE       8
-+#define OCTEON_CSR_HI32_OFFSET      0
- 
- /*
-  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-@@ -155,6 +158,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
- #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
- 
-+#define OCTEON_UART0_BASE           0x1180000000800ULL
-+#define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
-+#define OCTEON_UART_TX_REG          0x40
-+#define OCTEON_UART_TX_HI32_OFFSET  OCTEON_CSR_HI32_OFFSET
-+#define OCTEON_UART_TX_SIZE         OCTEON_CSR_64BIT_SIZE
-+
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -1613,6 +1622,65 @@ static void octeon_init_mio_boot_loc(OcteonState *s)
- }
- 
- 
-+static uint64_t octeon_uart_tx_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void octeon_uart_tx_write(void *opaque, hwaddr addr,
-+                                 uint64_t value, unsigned size)
-+{
-+    OcteonState *s = opaque;
-+
-+    if (size == OCTEON_CSR_32BIT_SIZE &&
-+        addr == OCTEON_UART_TX_HI32_OFFSET) {
-+        return;
-+    }
-+
-+    serial_io_ops.write(&s->uart->serial, 0, value & 0xff, 1);
-+}
-+
-+static const MemoryRegionOps octeon_uart_tx_ops = {
-+    .read = octeon_uart_tx_read,
-+    .write = octeon_uart_tx_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+static void octeon_init_uart(OcteonState *s)
-+{
-+    SerialMM *uart;
-+    qemu_irq uart_irq;
-+    MemoryRegion *uart_mmio;
-+    int baudbase = s->io_hz / 16;
-+
-+    uart_irq = qemu_allocate_irq(octeon_irq_set, s, OCTEON_IRQ_UART);
-+    uart = serial_mm_init(get_system_memory(), OCTEON_UART0_BASE, 3, uart_irq,
-+                          baudbase, serial_hd(0), DEVICE_BIG_ENDIAN);
-+    s->uart = uart;
-+
-+    uart_mmio = sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0);
-+    memory_region_init_alias(&s->uart_alias, NULL, "octeon.uart0-alias",
-+                             uart_mmio, 0, memory_region_size(uart_mmio));
-+    memory_region_add_subregion(get_system_memory(), OCTEON_UART0_ALIAS_BASE,
-+                                &s->uart_alias);
-+
-+    memory_region_init_io(&s->uart_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_tx);
-+    memory_region_init_io(&s->uart_alias_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-alias-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_ALIAS_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_alias_tx);
-+}
-+
-+
- static void octeon_mio_reset_hold(Object *obj, ResetType type)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-@@ -1833,6 +1901,7 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
-                                 &s->intc->ciu3);
- 
-+    octeon_init_uart(s);
-     memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
-                           &octeon_csr_ops, s,
-                           "octeon.csr", OCTEON_CSR_SIZE);
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 7b45daba10..fbe4875d66 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -10,6 +10,7 @@
- #define HW_MIPS_OCTEON_INTERNAL_H
- 
- #include "qemu/typedefs.h"
-+#include "hw/char/serial-mm.h"
- #include "system/memory.h"
- #include "target/mips/cpu.h"
- 
-@@ -64,6 +65,10 @@ struct OcteonState {
-     OcteonRstState *rst;
-     OcteonIntcState *intc;
-     OcteonCsrBankState *csr_bank;
-+    SerialMM *uart;
-+    MemoryRegion uart_alias;
-+    MemoryRegion uart_tx;
-+    MemoryRegion uart_alias_tx;
- };
- 
- guint octeon_uint64_hash(gconstpointer v);
+Thanks for the patches!
+
+Sorry I can merge if someone reviews but I just can't take on reviewing
+a new device right now, I'm buried under AI security reports as it is.
+
+I appreciate that you listed yourself as the sole maintainer but you are
+a first time contributor.
+
+Maybe Jason can review. Try poking other net device maintainers.
+Maybe rdma migration guys? if this is useful to test
+qemu rdma migration then suddenly you have users within the community.
+
+Indeed, next release.
+
+Thanks!
+
 -- 
-2.56.0
+MST
 
 
