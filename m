@@ -1,98 +1,151 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A4606A32D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 17:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44665606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 17:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=e8uMe8QA
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dJk5pGbz;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=dmzvCs7z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLlFu-0006nY-Af; Tue, 27 Oct 2026 13:46:38 -0400
+	id 1xLlHF-0007eJ-Ge; Tue, 27 Oct 2026 13:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLlFp-0006mZ-Iz
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:46:33 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xLlFn-0000if-Fc
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:46:33 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a549cd7fd2so1257075e9.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:46:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xLlGo-0007PH-Ud
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:47:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xLlGl-0000n6-Jn
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:47:34 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69RH08J11743338
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 17:47:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Ty9+fiafXq474hlOFhWxvUr+em4KfWrgfbBqXSifHpI=; b=dJk5pGbzQtAkEjQ7
+ iGw7W88TeZ+1hUUOJOsNtPZmKbUrtyVgkwoiNuKBNRcTjrSSLnlfJ62vAsNB5tk7
+ ijrGAYKg7Qa3obOkRlWKN/Z17VjUq3vg0YqxAaah991tQEMjfNhrLCD6Fl71tA9w
+ SS1E2ReftXV0TIRaA3Q6f8Jt1hy3FusIVEwpI2oza8wimea+guJP+sTy8xxfeVn/
+ n068JWXqvgtghCfe2MvIBiStIuWCudYcsUpvXfOcn9Am1vwk4tJOeSECwx+zBEO9
+ IVLBbCFLzNsUX4oA88CFjjRJ1ve26xopYABUt/vFDkOmjTDgzvBF6ePW9NPO4ulY
+ ke6ldQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjux99es6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 17:47:30 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-36637676140so136698eec.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:47:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793123190; x=1793727990; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3K9rWJJeJ1opaIcb0feWqc4Wlnwrg7nSQ3xZ6D43aPY=;
- b=e8uMe8QAhcacXHhaT4XAWB0ZKdYU0MMH7ZDsVnjOMbYUzrfTDWVmV3//uJieR4CgeD
- +M+8WHdOe7sXhi8nckvQCyaWtM0AdXJBFFkG0PD64L/fXJujDZXu9ZsP65xyOht1cPmK
- mxWSLQFBflnLPcMjTgMfKOMTdp5KhO6cp/GaAugSu/KYiUC0L0Ene+ce8CYHRv1sHDzz
- Ecv7YGrgWIeaOc5s+Tp0H6nrAB9YpiFocI2wYVYOClCk9GGcd2nY9aZpLsnjTWpnUl15
- NnamoYdpnfpDoqXztEIZOybWSQ+UomdK8ozRx6WZTiHC2rlPxyNCyVcwjL2bsoH0bAyB
- wK/g==
+ d=oss.qualcomm.com; s=google; t=1793123249; x=1793728049; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ty9+fiafXq474hlOFhWxvUr+em4KfWrgfbBqXSifHpI=;
+ b=dmzvCs7zi8x8jo70cL0ley0zs0jDyACyBo6nuY19SrUsi6Iq8nK+CbQZhw/MTWa4Yl
+ Do/tQQGZgzd5OEKBROpEbaT2DGtwF07izXQLE1V/hsl0GTLR5oeqA3IYJpB9ztyqLZpz
+ aXqSOy2hetHWECgq2tUC4nCWOtmRjy7jtzKRE8ztVB33PdNRxlOKMU/WL50odcX+xoRt
+ FAG6phtKgj/vVRaP5TN+SfuGMVvAOL3ms5EfqfRJpxnKgxtmhcrzU1/1ApfJt49MsiJg
+ DDxmveqP3eRK54DrvXIh1uyBTe3XEkA0nKWm6dAHExzVwx1oOBsbCRMFJFNYlQEDuwaj
+ DjIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793123190; x=1793727990;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3K9rWJJeJ1opaIcb0feWqc4Wlnwrg7nSQ3xZ6D43aPY=;
- b=QstsfeyCXuL/Vx26lcMfxyt0PQiFFeWyLZCG1BMn+r7WZz/MHZSzsGMoCNGYlkapDq
- J7OXoZse2K9E7g+USVSrD7Z+KBrojKn99f3mlNy33WxLe/KigczGTEDMQTOrec4TO0QZ
- 6pC89UcJediY6FiG020dlVEtZkjRgnWOnmteqfDi0tYsJlz7BESETffxbRE48bj9RHCY
- ZG6mNuq/nMp+MFnzuT1ENv3Wv5v/VfHal6Tp5dIfKDVmkSsTcS5/1XiLuOxMGsbRc1Hd
- M08Sw6/5Det+9U1vyDftct9+zimm/vfJbNunkrbOBRUXsS3MoQa5UOSrNaV2O/ouMVii
- OZfg==
-X-Gm-Message-State: AFq9FYJDKB9kMSUTjnNjy+nmtjUMNOaVBol8G9ByNisQSrnBi8gc8k4W
- WYncqaWyZAKnc+S9DlugdOJRFDL4sw4SLDjC27bNy5rzOCgdncHfrirFx2yhDzraUb67YgfCzmL
- djEuRv6Y=
-X-Gm-Gg: AYBFou2LbsNgrbg2U02fESVlrvmX+BpWjVDVhfZgvJ6HpqBm16+M6XOlhrEWB577GNQ
- HUPeyXrG3zVgh4GC7O4gwjQSHIAFgA9aczKbFTshfUUF1gnaerrANwQaFQWROO/fdxCSw+gL2S+
- xsFHr7eN9fjb+aPlAz+uhQcWEnCEuOEDQSGY1xFbutoxSD4p86C4Tt4U6shXRqwPC65HDwsxz4w
- 4OmcDmkiYOAAQpy7pE/CotKaiNFWBfc++849MBRGlS28HsMqo7BxNk1g+iaMpKJowMUptsjF0X/
- g2U36LtFCTPXS4FsEQVX7GFBkU7HxKxIifJR6RHXXrh3bSh4TNMgsXdVmM5MgShSSjYWdRgNGeM
- bJG+SD7OYX74C6mDEWwYUv/AHH+7WzHsfw94AiQ/rGDCL6Sb19Ya+/AHoSLsTX32LP/p9FUI040
- 8JyuyhyCWuo0MfIa/OQu7GeZrDgpBsNEtldtWiLXWcvbHDTre51Lb1cZ2aFbryaAMVGrqHl+SCy
- 6WR4redV9zj9VXLCzOzUG1jJjJOxfwEtMEdhYzBCfwjwlJxUU0qcN6Qolrotw5LXTgwHZR4TNBf
- tLxpO/8+czr03tQP8SZl2OZqryz06KSplEJtUlOBaUYk1tTYw2EmBQFeqR7j
-X-Received: by 2002:a05:600c:c84:b0:4a2:10f9:37db with SMTP id
- 5b1f17b1804b1-4a7c0a4b2efmr82102805e9.7.1793123189891; 
- Tue, 27 Oct 2026 10:46:29 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a92b8812c5sm5518875e9.10.2026.10.27.10.46.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 10:46:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowangio@gmail.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH 2/4] net: Set do_not_pad for net backends
-Date: Tue, 27 Oct 2026 17:46:23 +0000
-Message-ID: <20261027174625.4025878-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261027174625.4025878-1-peter.maydell@linaro.org>
-References: <20261027174625.4025878-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20260707; t=1793123249; x=1793728049;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ty9+fiafXq474hlOFhWxvUr+em4KfWrgfbBqXSifHpI=;
+ b=O+INBT2Unf1LVFLS8BsPi1/HXtPP2B/Vn5slzE69qCD5cA79DdCsZ7kNO+XGPqJQqU
+ 4mgPS7NtY+4IhhrW6ZQrfvJb1RsGBfQdrp6hJA4i02x07bEMrbVWov5T9nyqqjlCKB7k
+ TyHJ+EgbQKAO7o9BxZYxU7xzZPrq6HNQ5WQNuR3kKHg2UvJoc3YtPsnglCNzoZ9+ssit
+ u1BTHEaUTBgj2fApK/3tWWVaTejn9kA/RimCBZN/sV4on86jTxkfXEcGiWE7AHX7iHNc
+ Bqce5KG6jKSe4I1RSFqNgJnWI6PhMFId+TIUE1ilEuSH/+qnGbAEZ6qhIvkSiLUE/uTJ
+ OI/A==
+X-Gm-Message-State: AFq9FYJ1dkKGT6OjPBoqY68osykejpqnicLGM2UXIAoe+75HyNFKbPI4
+ Q4ngUlokGhRvZb51CRp9Zz+lMA+sEFqzbgEdJ2XaDsOSFvF5QQsRsHA2I+f05hVqeZdzplV0vuT
+ U3QzYPYsZxK4y7aENgwoIk/xewYpnWpKJ/6nHS+dPZgCm51GUBapX6KdMQg==
+X-Gm-Gg: AYBFou2sj7QHim12z/AMyHZ76l1t9mVWAV5chbsBo9mE/Tc684O4g2CIRX2pEig+t0B
+ uWasJ4MUEYKwRCu+SlBWm2fT/A45NQuCt+j5WExLZk6X9AnHDdzyGaNdRdib6p4b4/nKaYV1HIL
+ RxlH5wtivY+wh4k2l4aeEqGCypSWelJ1j91YXHYJjdU4lFHeBMPFBIH3w0XbX9E71MkG4PXJC9x
+ bzVDvC/pFCVIKNNIoRYLHWc34AzAIdJFqZ0UfY4sjELKCAJUbgZD8nXHVUFvTUmlK4sQ7mCBWWq
+ 6MPWojBGHceGDva1zt5f1WcgCjeuqF6dBP9+bNOerN00t3c+ANZyn1ah9xkh6jIefcogLca5Duf
+ ykCMNdm91SRJL0+mOu9kgTVDJiICi6LYdX9iYqEUVvoZ0f4FgwXR9tpC8kH3wv0x736UK4Q==
+X-Received: by 2002:a05:693c:6092:b0:36a:10d:af89 with SMTP id
+ 5a478bee46e88-36a200c3d4emr343741eec.20.1793123249039; 
+ Tue, 27 Oct 2026 10:47:29 -0700 (PDT)
+X-Received: by 2002:a05:693c:6092:b0:36a:10d:af89 with SMTP id
+ 5a478bee46e88-36a200c3d4emr343695eec.20.1793123248395; 
+ Tue, 27 Oct 2026 10:47:28 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-369f27d5bf8sm34193727eec.4.2026.10.27.10.47.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 10:47:27 -0700 (PDT)
+Message-ID: <be4768e2-59d6-4b37-b35c-02c64ea366b4@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 09:47:26 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: defer max-v8 initializer selection until CPU
+ creation
+To: luoyonggang@gmail.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20261013195606.152-1-luoyonggang@gmail.com>
+ <f3649d73-1edf-440a-9534-7b00da4d075d@oss.qualcomm.com>
+ <CAE2XoE828e76zdCEkYVcbjRwhcsaSYZF1_UE4akeaoCTqCK3zg@mail.gmail.com>
+ <baf81ba3-f29f-48f0-a9a2-6dc4f005d433@oss.qualcomm.com>
+ <CAE2XoE9L8tuhU2nieJ8D=Cz9svS=W3oqAH+j30RGtZibjp1G=Q@mail.gmail.com>
+ <bb979f8e-1372-4be4-814e-aa5dcb09942a@oss.qualcomm.com>
+ <CAE2XoE-rJ67RbTem3fSirtNUR0bzEXEBsqt90fRqV1BFmKi2TQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAE2XoE-rJ67RbTem3fSirtNUR0bzEXEBsqt90fRqV1BFmKi2TQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=GYyCDgXL c=1 sm=1 tr=0 ts=6ae0e3b2 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=XDac9du3ME5YGwKxaIkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-ORIG-GUID: rtxXAifBWI4LJ3WL3czY9lujjiGoC0A-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3MCBTYWx0ZWRfX14h9i52bSU0v
+ yX3UuWnxdJOmdcrYxQGbGiVIQhP/HFcIapzCCvdfaIRgEat+/4HAx2+bdTsYYKL4A5jAQizSohT
+ ASV25bnJZaCBmaxiA3A7411zxbKb4SPvSHm/x/2Knhq9r4Q4ICQN9MmsYzwNpx3pqh3Qo/PbHIs
+ VKelyT9ygY8Zj5vdok6Vh8x6AeBQ2IhXwIekfFU7XySwTTzZcyGX5/N/lSleUjibnovs2r/ZpCx
+ fAAuAznOk5HStDPTboPCHG9JYDGF+rucjxAfXJ9vLq1g4dNO66SktH0Q/GEWWF+He6mHZcUsbnR
+ OWKonNo6WYLLuFN+61TkePq9u5+Da5eCqGdo1QATYMplPVwrUmFticMbMxhR40qVyHUhFwzLf51
+ bodXcq3iUN88ke/GJN5bvye14koEd3QaR1BB5YzKE9zhyU4WkBCFXiWx7gMZyyuR+ptsLiCCp8U
+ 9T/UdOhOqWJJaMWsQpQ==
+X-Proofpoint-GUID: rtxXAifBWI4LJ3WL3czY9lujjiGoC0A-
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3MCBTYWx0ZWRfX30fh+A76gV7y
+ f3d6yzuk06O2AFcOs7zDbn04IdelDx6FgWblVCzG0RgLQcmMxQIbsjdP1teRKIID48wNvY4h7Zy
+ fB9/9K+oMuTKKnfh99L90AaPHU0kwxM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_04,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270070
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,127 +158,131 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently our handling of short network packets (i.e.  those which
-are smaller than the minimum ethernet frame size of 60 bytes) is a
-little confused.  The intention is that we allow network device
-models to transmit short packets, but we protect them from having to
-deal with receiving short packets unless they explicitly opt into it.
-This means we don't have to have a lot of code in each network device
-to try to handle the short packet size -- historically that code was
-untested, and often a source of "carefully crafted packet can cause
-an out-of-bounds memory access" bugs.
+On 10/27/2026 6:14 AM, Yonggang Luo wrote:
+> On Wed, Oct 14, 2026 at 5:37 AM Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>
+>> On 10/13/2026 2:30 PM, Yonggang Luo wrote:
+>>> On Wed, Oct 14, 2026 at 5:07 AM Pierrick Bouvier
+>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>
+>>>> On 10/13/26 1:19 PM, Yonggang Luo wrote:
+>>>>> On Wed, Oct 14, 2026 at 4:08 AM Pierrick Bouvier
+>>>>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>>>>
+>>>>>> On 10/13/2026 12:56 PM, Yonggang Luo wrote:
+>>>>>>> This is for avoid "max-v8" qom name conflict in multi-target qemu
+>>>>>>>
+>>>>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+>>>>>>> ---
+>>>>>>>   target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
+>>>>>>>   1 file changed, 13 insertions(+), 4 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
+>>>>>>> index 65f851f2006..d7323ab431c 100644
+>>>>>>> --- a/target/arm/tcg/cpu-max-v8.c
+>>>>>>> +++ b/target/arm/tcg/cpu-max-v8.c
+>>>>>>> @@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
+>>>>>>>   #endif
+>>>>>>>   }
+>>>>>>>
+>>>>>>> +static void max_v8_tcg_initfn(Object *obj)
+>>>>>>> +{
+>>>>>>> +    if (target_aarch64()) {
+>>>>>>> +        aarch64_max_v8_tcg_initfn(obj);
+>>>>>>> +    } else {
+>>>>>>> +        aarch32_max_v8_tcg_initfn(obj);
+>>>>>>> +    }
+>>>>>>> +}
+>>>>>>> +
+>>>>>>>   static void cpu_max_v8_register_type(void)
+>>>>>>>   {
+>>>>>>> -    static const ARMCPUInfo max_v8[2] = {
+>>>>>>> -        { .name = "max-v8", .initfn = aarch32_max_v8_tcg_initfn },
+>>>>>>> -        { .name = "max-v8", .initfn = aarch64_max_v8_tcg_initfn },
+>>>>>>> +    static const ARMCPUInfo max_v8 = {
+>>>>>>> +        .name = "max-v8",
+>>>>>>> +        .initfn = max_v8_tcg_initfn,
+>>>>>>>       };
+>>>>>>> -    arm_cpu_register(&max_v8[target_aarch64()]);
+>>>>>>> +    arm_cpu_register(&max_v8);
+>>>>>>>   }
+>>>>>>>   type_init(cpu_max_v8_register_type)
+>>>>>>
+>>>>>> It works for the current need, but will require further changes for
+>>>>>> heterogeneous emulation. A more versatile solution could be:
+>>>>>>
+>>>>>> arm_cpu_register(&aarch32_max_v8, target_arm);
+>>>>>> arm_cpu_register(&aarch64_max_v8, target_aarch64);
+>>>>>
+>>>>> And another way to handle it is like x86. it's comes with two variant for
+>>>>>
+>>>>> #ifdef TARGET_X86_64
+>>>>> #define TYPE_X86_CPU "x86_64-cpu"
+>>>>> #else
+>>>>> #define TYPE_X86_CPU "i386-cpu"
+>>>>> #endif
+>>>>>
+>>>>> This also solves this issue, which looks more straightforward. no need
+>>>>> .targets magic for CPU.
+>>>>> Anyway, maybe the best way is to merge "x86_64-cpu" and "i386-cpu"
+>>>>> into a single cpu type and
+>>>>> add .targets magic? When I am trying to get x86 works, faced this issue
+>>>>>
+>>>>
+>>>> This solves including i386 or x86_64, but not including both at the same
+>>>> time. Same goes for arm vs aarch64.
+>>>>
+>>>> You can take a look at git history in target/arm, to see which kind of
+>>>> changes we did to make arm and aarch64 targets linkable. You'll notice
+>>>> most of the work was to remove (a lot of) #ifdef TARGET_X.
+>>>
+>>> See it
+>>> SHA-1: ec7e5a90fea996f04ea24e81b680a87bc975354a
+>>> * target/arm: Remove TYPE_AARCH64_CPU
+>>>
+>>> So I am just doing just the reverse direction, I am fixes x86_64 in a way that
+>>> register both "x86_64-cpu" "i386-cpu" variants, though this way seems
+>>> more suitable
+>>> for your heterogeneous emulation, but we need to register
+>>> everything(CPUs) twice.
+>>
+>> We'll have to register this twice anyway for heterogeneous, I don't see
+>> any other solution to have both accessible at the same time. That said,
+> 
+> I am not sure what heterogeneous would be, currently max_v8_tcg_initfn
+> is called for
+> both target_aarch64/target_arm, and call
+> aarch64_max_v8_tcg_initfn/aarch32_max_v8_tcg_initfn
+> depends on   if (target_aarch64()); so basically, when call to
+> max_v8_tcg_initfn, the target
+> is selected even under heterogeneous mode. would under heterogeneous
+> mode, target_info() is a
+> thread local data, if that's true, I think the current PATCH is
+> enough, we do not need two different
+> QOM-type-name for CPU .name = "max-v8",
+>
 
-Our implementation of the padding is currently done when each network
-backend feeds a packet into the system via one of the
-qemu_send_packet family of functions.  This mostly works, except that
-we missed some of the more obscure backends (e.g.  the socket
-backend), and it means code duplication in each backend.  We'd like
-to switch to making qemu_send_packet do the padding itself.  To do
-that, we first need to make sure that all the NetClientState
-implementations which do not want padding set the do_not_pad flag.
-We do this by setting the flag for NetClientState instances created
-by qemu_new_net_client() and qemu_new_net_control_client().  Emulated
-network devices use qemu_new_nic(), which does not set the flag.
+initfn is called through arm_cpu_instance_init from main QEMU thread,
+not from vcpu, thus why I insist to have two distinct types.
 
-Note that this also causes the net/hub client to request no padding.
-This is the right behaviour: we want the hub to accept short packets
-and forward them on to all destinations.  Each destination then gets
-to choose whether it sees a padded packet or the short one.  The
-hub.c code is length-agnostic and doesn't look inside the packets it
-is passing on, so it has no issues with short packets.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/net/net.h |  3 ++-
- net/net.c         | 10 ++++++----
- net/tap.c         |  2 +-
- 3 files changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/include/net/net.h b/include/net/net.h
-index fdf6a2ddd44..3c5b99c806e 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -169,7 +169,8 @@ void qemu_net_client_setup(NetClientState *nc,
-                            const char *model,
-                            const char *name,
-                            NetClientDestructor *destructor,
--                           bool is_datapath);
-+                           bool is_datapath,
-+                           bool do_not_pad);
- NetClientState *qemu_new_net_client(NetClientInfo *info,
-                                     NetClientState *peer,
-                                     const char *model,
-diff --git a/net/net.c b/net/net.c
-index d7fa637ce51..1042a9d3a8e 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -267,7 +267,8 @@ void qemu_net_client_setup(NetClientState *nc,
-                            const char *model,
-                            const char *name,
-                            NetClientDestructor *destructor,
--                           bool is_datapath)
-+                           bool is_datapath,
-+                           bool do_not_pad)
- {
-     nc->info = info;
-     nc->model = g_strdup(model);
-@@ -287,6 +288,7 @@ void qemu_net_client_setup(NetClientState *nc,
-     nc->incoming_queue = qemu_new_net_queue(qemu_deliver_packet_iov, nc);
-     nc->destructor = destructor;
-     nc->is_datapath = is_datapath;
-+    nc->do_not_pad = do_not_pad;
-     QTAILQ_INIT(&nc->filters);
- }
- 
-@@ -301,7 +303,7 @@ NetClientState *qemu_new_net_client(NetClientInfo *info,
- 
-     nc = g_malloc0(info->size);
-     qemu_net_client_setup(nc, info, peer, model, name,
--                          qemu_net_client_destructor, true);
-+                          qemu_net_client_destructor, true, true);
- 
-     return nc;
- }
-@@ -317,7 +319,7 @@ NetClientState *qemu_new_net_control_client(NetClientInfo *info,
- 
-     nc = g_malloc0(info->size);
-     qemu_net_client_setup(nc, info, peer, model, name,
--                          qemu_net_client_destructor, false);
-+                          qemu_net_client_destructor, false, true);
- 
-     return nc;
- }
-@@ -344,7 +346,7 @@ NICState *qemu_new_nic(NetClientInfo *info,
- 
-     for (i = 0; i < queues; i++) {
-         qemu_net_client_setup(&nic->ncs[i], info, peers[i], model, name,
--                              NULL, true);
-+                              NULL, true, false);
-         nic->ncs[i].queue_index = i;
-     }
- 
-diff --git a/net/tap.c b/net/tap.c
-index d71e3dd1175..ada69a21021 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -620,7 +620,7 @@ static TAPState *new_tap(NetClientState *peer,
-     TAPState *s = TAP_NETDEV(object_new(TYPE_TAP_NETDEV));
- 
-     qemu_net_client_setup(&s->nc, &net_tap_info, peer, model, name,
--                          tap_net_client_destructor, true);
-+                          tap_net_client_destructor, true, true);
- 
-     s->queue_index = queue_index;
- 
--- 
-2.43.0
+>> we are not yet there, and current patch solves the actual problem of
+>> having QOM types registered twice.
+>>
+>> I'll let Peter say what he thinks about this.
+>>
+>> Regards,
+>> Pierrick
+> 
+> 
+> 
 
 
