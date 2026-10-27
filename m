@@ -1,75 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB54D606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6790606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0oisvVMd
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FzQH8AVP
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLn51-0006p8-Kb; Tue, 27 Oct 2026 15:43:31 -0400
+	id 1xLn5F-00070K-3p; Tue, 27 Oct 2026 15:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn4x-0006oW-1z
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:27 -0400
+ id 1xLn5D-0006wW-0c
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:43 -0400
 Received: from mail-dy2-x0b.google.com ([2607:f8b0:4864:36::b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn4t-0003tK-TW
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:25 -0400
+ id 1xLn5B-0003up-G3
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:42 -0400
 Received: by mail-dy2-x0b.google.com with SMTP id
- 5a478bee46e88-36a1e794908so45730eec.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:23 -0700 (PDT)
+ 5a478bee46e88-36a1e794908so45900eec.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793130202; x=1793735002; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MqmKANFmF1KWHkD0zN0BNlsIh1qC7oBV5bQeH+b1K10=;
- b=0oisvVMdCRnSKaT7+BlT7He8mluZRL5wau4rKoE4/mMX9G+e6k4LyNqj2wOYKL3j8Z
- NQlMU0NFdki45JGDqkyRifToaL2MS5KVH4/WmKJ8FtY4Ni0Ca8bmRHqYdeAIv7zzQu9l
- asHoHrtiBq6FSb4OJg1UWyqz75uUAN36pZoB9tUUwsVQpmg5ntLfC96q9xKiBN6vPFfk
- dYyjMB1fRin/Xaw0wDVvf9/l037+Dtnf8lZGepvWP5nU3D3n1R6rUO4KkR9ChLiTcdYk
- K9s5v9Y1xReuvqdjbhnoUanSV5E6hmSZfSWGsWlHNFz9jcqwkCusVC9D6NFaczwq6GWv
- KIDQ==
+ d=gmail.com; s=20260707; t=1793130220; x=1793735020; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hLIiTwiniZVNxB7/lQ0mjV3mimZDp0FZmcqxP3kuF9k=;
+ b=FzQH8AVPmaS0fL//kA7WURn8J2TWRal2d0w3tfi1IIt8SD0A5HVZT8srpyp/3RXBKG
+ vQ+JUbGutFpxw3AlVxnuRsr8ciqZRQDnVB9Gw+KA4/Q6EMTJl7Wccp5uuOHhkLoEd89A
+ JY9YGlt6TL8ZLrAOL71HPx7e1ysWmzQvQSNaU+qkzcm9ymMqSmvunMLE7WdGsVUwyqq0
+ zQUFXfwet05no+vCO39AxzZbmTHL1Y+fS1hrJrjg0C/hGCrMYCd8IYjxqaRbvI8FrbnL
+ 6xQXrCM47OZ/8G4CGUhwCDa+cVoAZJba7QFW92StKMyHjN31Z1/OnttXJ75zFjYYxIzu
+ MXxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793130202; x=1793735002;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MqmKANFmF1KWHkD0zN0BNlsIh1qC7oBV5bQeH+b1K10=;
- b=0599HysPBaJIzIcVSCAuBZyvb9Y5M1c+Iy0Vs8C3rNd2hqV+vNViH3XmXda16pUBTj
- fwhSZw/r02Ea0dpyLmyRk6Kas0VHf3Jaw8tEKoqBwDg6EGZ5WA3GFTRqH1rnUsRzu2/c
- 01KMABdT8d2q67PIrKtXAacI29dsNHoVhpRDh7vxccG0gj/U+0UXGNEePw1RAit2nuze
- rkCu6evyQQce1Ypm4jWaazQRQ7ff9zQ2/pSjfDJje3Ts1Ctmjf3zXmxrPF9T2oUITzbq
- oZfbSY9FAbBkQXFgjOFj5xqVNBJb1ZGk8wkXpqaahYCXmhNoQjYRf49JxmAOVI2wvecU
- kPrw==
+ d=1e100.net; s=20260707; t=1793130220; x=1793735020;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hLIiTwiniZVNxB7/lQ0mjV3mimZDp0FZmcqxP3kuF9k=;
+ b=keC23C3S/igc9mjl1RpxTY2yaUeFP76zOm3kZKFLEn+In0EOic1Vj1lZHtqSRr4ubg
+ 1fEd7mURGIsOlNeywieNF8PvQ3limCltFXPU7LHHVi08lOxC61WG6U+whmkG7y6STSkq
+ FxlQJfkiUvP5K/dHKRPFKIgvtVYVrWqKXtwomlY5khjMyt+K+Bve2HkxwFHkZkrMkSUN
+ NNCm/QIB6oSYTUkD/4ymc/bJIuXaQFI5N0vO+oDiEX7anJF3HhqOr1cKDXqWnAf56CUp
+ LvUPu8RqED5HxUHOC0w1gnSg+fcRDnR1dLjEgCTeIuAC5FynOuBWrRiTBxbIo0PJURwB
+ L8ag==
 X-Forwarded-Encrypted: i=1;
- AKwUvByry4zDd01adyxtPmsDQ/CWk+3Lk84tjuKoFAQAWuxUu1MtH9kP1N5YIUeq7O4wCIA1qnLwyoMDB5M+@nongnu.org
-X-Gm-Message-State: AFq9FYIEULUUVzbp3Z0l8OoZL8Vft6fLQkCAL85SRoennOUnmDTs4iIg
- j8veioiz+fTJlViFzcW1rRCF4TIuUiRpd1oqBaFP9PIVpR3AWGzP2Jxc
-X-Gm-Gg: AYBFou3j8BsUnpi3JG5Xi/fwA5MDZVVe/1DN+qFF6sruY98Iaij2FjO64Ln0ysMHL3Z
- Xg9b7GJil1ufN8JjWRm0f+z2eFbPQxgqu8TVkm1CjeqaUu7kZaBmYwuvpEEkq/GHV+E9RuwWOqL
- IKc1UOAIPYb5Ux3EG5BuFp2bkK9nzo8dGeuFdzLAt8RxZb8LWgx90yAFyH/o8MdqNFiQLwsC/x4
- aGpmtEGbVksC1sYWKYFgbCqbHUeu9py5YP85LmJ+ZTMmriIlOUBelSRqLPO1HjYF0F3ibuf/tDu
- lEGre1SS55/wfmQTKeNiVIajDKbjEnBqmWcSWJ1uq9ZEDofje90V22FGRTipuIMLp9t6D1pHtYR
- rZiQVVqqTvqr38R2OE2PinNwq23b2mlWhvYKR3lQFRdFTXlcrZQfzOYbsqGVvxcPRfchGyOgr58
- GfXpPw9rT3c0wxWNOgDp14sDm2w7XT6ouJIgnsWQRkiJMOivFugi+n9Qj+m2Rqoq3NYxGYCnHWf
- Y1gax9JY8lR6sLUOVf+++TCgcZzUA65klMvw4LrnRgqsXlG4jJOFOTQ1osFQtF+DmhHEbrqspg+
- dbcLLpZ1yYkFb1FtRy0iitfszUhPV1OO3DyU4WiwARLy/uE8vzwQNKIDvpezCXvJF/l65vsuBIt
- DxL1cEahauH4a91gGCZspTUZWivEnRbkT5EWIQXbjFqyaKFcnlCoV3Mjy5wMYECXtBSn/+jO781
- Iaxc5oDT+W8PuxkEtevIjQZvw=
-X-Received: by 2002:a05:7300:d0a5:b0:351:31c7:ab1d with SMTP id
- 5a478bee46e88-36a200bea37mr557271eec.16.1793130202415; 
- Tue, 27 Oct 2026 12:43:22 -0700 (PDT)
+ AKwUvBw5T+JeS4SJbVLcLPqmDsy0W0013bRk4YWfJDCmh4RorhAN2nqZS4Knq/qAzYySg3f50TlS/YAA0dGA@nongnu.org
+X-Gm-Message-State: AFq9FYJ7ucS48uY76O+pNZHvEdGTh+2O8aCIeIRt/FYjzx/ETjLzsH8R
+ RgNyXVSe8nODk8B259Wg2Bx/C5rMZeOs2jbLQrrO8OBbGE65osvQwCFT7VwmDPVapl4=
+X-Gm-Gg: AYBFou20FZtACepCVfpqGP7ULX1y8blsZnN/edakJm4sd3vCS7thybYTGAlAsFPxahr
+ dAXy8F23bKK+Pp868KgPFQpBSqEVgGBPokTvbU2m2OT23+01+YJb1qFU8Ge8AbyiX49ZTbp0hfn
+ K8w4v1CaRj++ZlEqA8xj3XoqrUFa7PbS1DAsoIFNPNvosDHng8bpULZT0a3+It1WK9HSdtztzPk
+ uUddM3NZn03CRAJrML5oGnv69RWkE6CB6RZ2omlcdM5dlyOUkdAjiCV5xLU5lakDGNG/tk4HPR1
+ tmh9a4us9uQ/TM5TVn3LP52bjKVCA39PO7NG38G2tmX9WbxqeBef4VQp8H8kwi/GhPxM6sOL5Rg
+ 2e9NuJQRh+fBBS3nJd2szcbUYqrCcEz4XoK/Ad2yVWKHpoGKMB2y2Ngauur9x8DtDBbxG3LJ8IK
+ Ym5T3HMrWS21uBmRrMicc5EHNHs/rrk4NZFP3SddPKKFBPmFVO858ycmLNQAoI0TDUw6uC7ILHj
+ 3qYfaFGOAKIzLCPy3XaCdLHTo+I9nqvejXjd+Bvq4QGoXIzWaoXVm1ObhLtHoYN+teGcfdR8w97
+ gkLaqDRXA8BUtUMCZUzxrLiswWbO/aqjAPVSpTHf2hjrkLtVWBWMVKCDkmbhIUZmlhsY6Rbwtvr
+ bz+ABhv4W9xMcCYehWI3spEXTxttfLIoOluSnBFQawHtzTsVtwQ==
+X-Received: by 2002:a05:7301:4b09:b0:36a:1938:8508 with SMTP id
+ 5a478bee46e88-36a2016e243mr540962eec.38.1793130219959; 
+ Tue, 27 Oct 2026 12:43:39 -0700 (PDT)
 Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.18
+ 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 12:43:21 -0700 (PDT)
+ Tue, 27 Oct 2026 12:43:39 -0700 (PDT)
 From: soumyajyotisarkar23@gmail.com
 To: sarkarsoumyajyoti23@gmail.com,
 	qemu-devel@nongnu.org
@@ -79,16 +77,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH v2 4/8] hw/usb/dev-hid: derive the mouse report descriptor
- length with sizeof()
-Date: Wed, 28 Oct 2026 01:12:52 +0530
-Message-ID: <20261027194256.76031-5-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v2 8/8] hw/input/hid: clear wheel state and mouse_grabbed on
+ reset
+Date: Wed, 28 Oct 2026 01:12:56 +0530
+Message-ID: <20261027194256.76031-9-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
 References: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:36::b;
  envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dy2-x0b.google.com
@@ -121,130 +118,38 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-The HID class descriptors of the mouse interfaces carry the length of
-the report descriptor as a hard-coded 52. Any change to the report
-descriptor then has to update both copies by hand, and Windows stops
-recognising the mouse if the advertised length does not match the
-descriptor exactly.
+hid_reset() clears the pointer event queue but leaves the rest of the
+mouse state alone. After a guest reboot the wheel and pan multipliers
+the previous guest enabled would stay in effect and leftover residuals
+would leak into the first reports of the new boot.
 
-Move qemu_mouse_hid_report_descriptor above the interface descriptors
-and compute the length with sizeof(). 
+Reset the multipliers and residuals together with the queue. Also
+clear mouse_grabbed, so that hid_pointer_activate() activates the input
+handler again when the rebooted guest first polls the device, instead
+of keeping the state from before the reset.
 
-No functional change.
-
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
 Suggested-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 ---
- hw/usb/dev-hid.c | 74 +++++++++++++++++++++++++++---------------------
- 1 file changed, 42 insertions(+), 32 deletions(-)
+ hw/input/hid.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/usb/dev-hid.c b/hw/usb/dev-hid.c
-index ae19d60203..2c10e88c85 100644
---- a/hw/usb/dev-hid.c
-+++ b/hw/usb/dev-hid.c
-@@ -76,6 +76,42 @@ static const USBDescStrings desc_strings = {
-     [STR_SERIAL_KEYBOARD]  = "68284",
- };
- 
-+/*
-+ * The interface descriptors below advertise the length of this report
-+ * descriptor.
-+ * Note: Windows stops recognising the mouse if it does not match
-+ * exactly.
-+ */
-+static const uint8_t qemu_mouse_hid_report_descriptor[] = {
-+    0x05, 0x01,         /* Usage Page (Generic Desktop) */
-+    0x09, 0x02,         /* Usage (Mouse) */
-+    0xa1, 0x01,         /* Collection (Application) */
-+    0x09, 0x01,         /*   Usage (Pointer) */
-+    0xa1, 0x00,         /*   Collection (Physical) */
-+    0x05, 0x09,         /*     Usage Page (Button) */
-+    0x19, 0x01,         /*     Usage Minimum (1) */
-+    0x29, 0x05,         /*     Usage Maximum (5) */
-+    0x15, 0x00,         /*     Logical Minimum (0) */
-+    0x25, 0x01,         /*     Logical Maximum (1) */
-+    0x95, 0x05,         /*     Report Count (5) */
-+    0x75, 0x01,         /*     Report Size (1) */
-+    0x81, 0x02,         /*     Input (Data, Variable, Absolute) */
-+    0x95, 0x01,         /*     Report Count (1) */
-+    0x75, 0x03,         /*     Report Size (3) */
-+    0x81, 0x01,         /*     Input (Constant) */
-+    0x05, 0x01,         /*     Usage Page (Generic Desktop) */
-+    0x09, 0x30,         /*     Usage (X) */
-+    0x09, 0x31,         /*     Usage (Y) */
-+    0x09, 0x38,         /*     Usage (Wheel) */
-+    0x15, 0x81,         /*     Logical Minimum (-0x7f) */
-+    0x25, 0x7f,         /*     Logical Maximum (0x7f) */
-+    0x75, 0x08,         /*     Report Size (8) */
-+    0x95, 0x03,         /*     Report Count (3) */
-+    0x81, 0x06,         /*     Input (Data, Variable, Relative) */
-+    0xc0,               /*   End Collection */
-+    0xc0,               /* End Collection */
-+};
-+
- static const USBDescIface desc_iface_mouse = {
-     .bInterfaceNumber              = 0,
-     .bNumEndpoints                 = 1,
-@@ -93,7 +129,9 @@ static const USBDescIface desc_iface_mouse = {
-                 0x00,          /*  u8  country_code */
-                 0x01,          /*  u8  num_descriptors */
-                 USB_DT_REPORT, /*  u8  type: Report */
--                52, 0,         /*  u16 len */
-+                /*  u16 len */
-+                sizeof(qemu_mouse_hid_report_descriptor) & 0xff,
-+                sizeof(qemu_mouse_hid_report_descriptor) >> 8,
-             },
-         },
-     },
-@@ -124,7 +162,9 @@ static const USBDescIface desc_iface_mouse2 = {
-                 0x00,          /*  u8  country_code */
-                 0x01,          /*  u8  num_descriptors */
-                 USB_DT_REPORT, /*  u8  type: Report */
--                52, 0,         /*  u16 len */
-+                /*  u16 len */
-+                sizeof(qemu_mouse_hid_report_descriptor) & 0xff,
-+                sizeof(qemu_mouse_hid_report_descriptor) >> 8,
-             },
-         },
-     },
-@@ -453,36 +493,6 @@ static const USBDesc desc_keyboard2 = {
-     .msos = &desc_msos_suspend,
- };
- 
--static const uint8_t qemu_mouse_hid_report_descriptor[] = {
--    0x05, 0x01,		/* Usage Page (Generic Desktop) */
--    0x09, 0x02,		/* Usage (Mouse) */
--    0xa1, 0x01,		/* Collection (Application) */
--    0x09, 0x01,		/*   Usage (Pointer) */
--    0xa1, 0x00,		/*   Collection (Physical) */
--    0x05, 0x09,		/*     Usage Page (Button) */
--    0x19, 0x01,		/*     Usage Minimum (1) */
--    0x29, 0x05,		/*     Usage Maximum (5) */
--    0x15, 0x00,		/*     Logical Minimum (0) */
--    0x25, 0x01,		/*     Logical Maximum (1) */
--    0x95, 0x05,		/*     Report Count (5) */
--    0x75, 0x01,		/*     Report Size (1) */
--    0x81, 0x02,		/*     Input (Data, Variable, Absolute) */
--    0x95, 0x01,		/*     Report Count (1) */
--    0x75, 0x03,		/*     Report Size (3) */
--    0x81, 0x01,		/*     Input (Constant) */
--    0x05, 0x01,		/*     Usage Page (Generic Desktop) */
--    0x09, 0x30,		/*     Usage (X) */
--    0x09, 0x31,		/*     Usage (Y) */
--    0x09, 0x38,		/*     Usage (Wheel) */
--    0x15, 0x81,		/*     Logical Minimum (-0x7f) */
--    0x25, 0x7f,		/*     Logical Maximum (0x7f) */
--    0x75, 0x08,		/*     Report Size (8) */
--    0x95, 0x03,		/*     Report Count (3) */
--    0x81, 0x06,		/*     Input (Data, Variable, Relative) */
--    0xc0,		/*   End Collection */
--    0xc0,		/* End Collection */
--};
--
- static const uint8_t qemu_tablet_hid_report_descriptor[] = {
-     0x05, 0x01,		/* Usage Page (Generic Desktop) */
-     0x09, 0x02,		/* Usage (Mouse) */
+diff --git a/hw/input/hid.c b/hw/input/hid.c
+index bc84e99dbc..403cac127e 100644
+--- a/hw/input/hid.c
++++ b/hw/input/hid.c
+@@ -551,6 +551,11 @@ void hid_reset(HIDState *hs)
+     case HID_MOUSE:
+     case HID_TABLET:
+         memset(hs->ptr.queue, 0, sizeof(hs->ptr.queue));
++        hs->ptr.mouse_grabbed = 0;
++        hs->ptr.wheel_multiplier = 0;
++        hs->ptr.pan_multiplier = 0;
++        hs->ptr.wheel_residual = 0;
++        hs->ptr.pan_residual = 0;
+         break;
+     }
+     hs->head = 0;
 -- 
 2.56.0
 
