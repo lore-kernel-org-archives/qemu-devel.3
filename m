@@ -1,145 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CDF606E7A6
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9176606E7D6
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WV2PSfR7;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YOpqJT37
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=sNnvqn7i
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLelY-0007mR-PE; Tue, 27 Oct 2026 06:50:52 -0400
+	id 1xLf0n-0001OX-K6; Tue, 27 Oct 2026 07:06:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLelX-0007mI-IU
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:50:51 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLelT-0000RP-RW
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:50:51 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RAe1BG1921843
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:50:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=; b=WV2PSfR7pOKHqlTL
- 0WT7lIeofMd39iaT5S94j0LJXBNwJGUfkumE1OnD0uFx92XZCdVlYVLXV9fXW01+
- f7nnIOe7Isp5X7cGYeUb/IYpq9oPdecMDPf7ov30KvLQFwW2qmYnOvVcgjdI5YDM
- BF1ZQPkYHDleZJ499ZA+D8FJK6k0aMlFokIkmelDqn/uZCK/k15IP/AkAM2mj9/O
- Dv02yt3CCkChbT14g5Vc3+sCHBq4gR2FWyHpt+t2wyDB+hj8Is89rp2ToY6Hcm3v
- 7fybZHIaLXUC6SN0KcmrxnYTrDKS3+54wss6cPtBbFA1o3FnzlfrzBYey+Aa94zM
- Boed0Q==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjrq68fuk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:50:45 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-934963b2bc0so767052785a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:50:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xLf0k-0001OP-1l
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:06:35 -0400
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xLf0g-0002GD-Lq
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:06:32 -0400
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-54cd7de2d42so2360384b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793098245; x=1793703045; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=;
- b=YOpqJT37t3HnYFiKWB4wjzG+CXjxUOJ8ShIdpV8tiD+lZpurRnXsDkXBgGXge901xe
- tvVh6eNAZ/3t5RsB2Zh3wc/9fQuhEAj3xbch/LR0Uz4QI5ZlmQJqU6y0mctGf94pcLSP
- Fh0eBM08gVIb4EEtfURdksu0TVeuaDPtT7/kiH8I83BTGIL7PRNt4sXRyzY5XiKetZxm
- T7dNBXYTbhgEPP4T7+Ma2Y6sjUh3DwbBK5SMZlNcXlUogNsOrY4j7iQNAv1c7jh+JM8S
- Og+2Zj7HvGjVdBhRaPPR0OQ83ZGJlv9uoj0SDKt2v0q7ECJ5fKYTqGKo86KH9msG7d9A
- l/Sw==
+ d=linaro.org; s=google; t=1793099189; x=1793703989; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0Z2oZvPIKBVby8NnxBGRFYV6KQSqtJxwKK5DnAwS4Wo=;
+ b=sNnvqn7iTq6sy5Ysb4pgmtre6505/Z+bwDnUx0h4e3Sg3QZgH95FnaXrmK4zp8Wscq
+ SBd4j1Z6e0w5N6rONRTMeHqnmzLe15kj9d1NPOAKXU2sviCqI0mden39MPDtQ9fu2X6x
+ bNDo7jqaY29sD4ot5zxe6JY2xACYC4sTef3tT410083Q1ognXlMq19k0V/WE86jIZWQP
+ 53oE3CdRGDGpxZHvZBZKBVr79IqJF0UohtjGG57e82pboWr9psLUAfAEHzinHjDYPZkP
+ +dJH6jBpl4kEoEn/SKwmHCCKxB+/rf44uOGrTt+57K9DXDeZ1WmIU4w+Zup3CX/GLqlU
+ ksxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793098245; x=1793703045;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=;
- b=vlI9gW3xvgCBGeDbYX2xcOVjp2T1LuPpr32ondm4RfX1//mEDGXlbPwuosObztmF9C
- BCUIeQtHP7LvPtZJWH8+v3yegq/799PO6kaglED4RhObIOfuCQTujEjXySy5Vyd9ynyb
- 0hW5BZ0ATfp0VsawsInGw/B/ODLm7mN4lIOaXaRU7Tff6sfrNvVuovhd16/QHbXlH0gI
- 2wtlfCC8UEZ6Rqy0YjPhTxHe5yqaTU332Ns+3Q1sN1YctOKaCAzKaiLKhcL5sxEWabAM
- ztHibfmUxcrhZIkqcqlYF0hamt9+OVmG8cMDROFxF9ykSrlTqK/sQ6DEB7zfNz0XO+gr
- AvkA==
-X-Gm-Message-State: AFq9FYJ7eMDmGYTDrbdp9PA1I4Q/0phRmQaTkmRLCSyALs4umMe+P4LZ
- slHII9u9aNc0gHHk8hJux8OTw7Qo6pRrZHr4DfYAZ2+SfikaUHfQHWXoGcaftZK/7b6LNFlRVe8
- MzivKw8ZPgtFaSZuAWZfn48VVRuJToAO/8iu6y7OKPSMMERijVvTca8wyHQ==
-X-Gm-Gg: AYBFou2sRxBBuWK1i7nhFmsfuJGKg1ubT7Bf0MRZN3dM9RqtXqQtA1WzCmDsUFLvOJC
- /YXv8emty4lOp+ys3zXMc2AYoCgkgbYBgWAbCCJwQsP6HhYzIPfXYb6o7OKnCOKvkbmWkpJ9Yyk
- HWAf0t3Uv5biUA+dJliIARwu4nCDltXM/QXJhZQYWAeEWjiwkxvuH0BrHSKIpRA/9oxoHNpD62j
- t66TC59ywUAqzeHCOzv4R2J7vS8nLR7d1rVmyIrXWE+pc5siPjLQI+CZ8554BRnCfteY8+STwT1
- JBxZiD1w9TLin86cD2Mze8ENMTZOC2GU9Ad3POK2mLnJsIleFDhmIXzsVF63UZNXRTzrRvYzPpO
- tlR2OLlVme7IVl3t+2D8gJ/VftY+iUi6Xe9haM/ZrlSEvlnx0uCsrav3EFaGoO4pDFk/DBqymXf
- hu4xxGShW2n0WcChRHVvaoOS8=
-X-Received: by 2002:a05:620a:4385:b0:93c:70da:e45e with SMTP id
- af79cd13be357-940ef94005bmr1318907885a.36.1793098244699; 
- Tue, 27 Oct 2026 03:50:44 -0700 (PDT)
-X-Received: by 2002:a05:620a:4385:b0:93c:70da:e45e with SMTP id
- af79cd13be357-940ef94005bmr1318902685a.36.1793098243665; 
- Tue, 27 Oct 2026 03:50:43 -0700 (PDT)
-Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd35c2sm21749863f8f.39.2026.10.27.03.50.42
+ d=1e100.net; s=20260707; t=1793099189; x=1793703989;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=0Z2oZvPIKBVby8NnxBGRFYV6KQSqtJxwKK5DnAwS4Wo=;
+ b=GCif4D39FIlGt7Q2JbINZrEZxF/GX32YD8NrF3E+VDjszY6SnhuwHgmM/1NpFUTor+
+ 7/X4X7UrcnRoiepQlWo24WRLO/G76DwOX2LmpGu9Rxt0zuOy0Bak3kdT6P7i0hpdr0Mz
+ UNcWh+1s8+WJ+dC/FlaWRkD1e8xMMdVQ+6MhrX4vNBjRZAcLJl8uOMO7W34PfRa+3PgK
+ eVV2TMlcBVl9e/jrr35mzMWzR2WrA0GgsG3HxojMBM3xq6a5qYBnYxPb/+ngud5/pza2
+ OlRh6/MvR+qsS8pauS3PjeED2kPuKNGVmfrUVQN61aVakseUOx8ZnwyElTefNwmIt12X
+ OHBw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzxHNuaTS/O56H/AFmqkhw92rDWVD7eSDCqSSQsfA62hHs+PRGJMhsFNZsl/wOnRkuaGUWfIKuaQu6R@nongnu.org
+X-Gm-Message-State: AFq9FYKtinKGaV/3RcRVhVhMlhWNCqPqZqXFkbYEBqPbLNOQQvbLDFbq
+ eDUMZ9F1HyskXC6Zra1ndntQpGr9fN5zJ3zi2zMVQYtfk8c5nbCzs+7sEsVMRQQKCas=
+X-Gm-Gg: AYBFou2P+ejFTeFbqn6za+a25V6Pw6iPcd0TJA6a/csUlAZX/ELw3fC9O0g6OLN+b9r
+ MyPCiAM2vrEHnO8+GopzKt/bi2VX2OvuzbWg/cEV+aCxheS2ESmmYrwxNZBELQBwVW8ljuwmk6+
+ 1RJk8nSqkaOVA2U8zBuWJmc487slttzQrCiU3bQLMW6jOWAjCmJlQjjusLGMjhdrTnfLHUiAJxq
+ Jraj/qKiZOIbYe9MTmXzjFpiKrJUqXRjX3K+iN0NUX5eD5tmb8NY0t8vocsIUEGb4+SSlWraYLV
+ PCHsspA8G4hQGc4cZyuGf0J++Heo3aiGseaCFndoEWGYYrICdQAaU08gUY6N/ijhbfIoE47ajO4
+ tJeY9Cc+kGbF0Zz1K5g8ORRF0BBilbDBPdsuG+sRV69lPToKNxRl7Kfvy/O4RhFTziHNkFJKMsU
+ WMdaZn+M0LQooOKfic7cpQLEHWjesN3JTSLGwaLmZ9OA0Bh3VECAKCRbZ5MdzJnvEnNlGeO0Wl+
+ 5xeI/fQ7ploCNEgrhmiNCskLLUrhfAJ8hFHbp6CJIe9qcpP2SYKvGSnvnhl+mPTtEdzV31kppLt
+ GQCMn5nHFW5jVZ7U
+X-Received: by 2002:a05:6808:4f2c:b0:4ec:7639:2ad with SMTP id
+ 5614622812f47-55c002307b5mr5870865b6e.13.1793099188599; 
+ Tue, 27 Oct 2026 04:06:28 -0700 (PDT)
+Received: from [192.168.129.53] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-55c0429c932sm7629911b6e.7.2026.10.27.04.06.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 03:50:42 -0700 (PDT)
-Message-ID: <8adff631-058d-45fa-8b4a-852c80825c40@oss.qualcomm.com>
-Date: Tue, 27 Oct 2026 11:50:41 +0100
+ Tue, 27 Oct 2026 04:06:27 -0700 (PDT)
+Message-ID: <60fc7388-5884-4c38-a2ca-5a09a78d4627@linaro.org>
+Date: Tue, 27 Oct 2026 06:06:24 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] system/memory: keep coalesced MMIO zones when RAM is
- mapped over them
+Subject: Re: [PULL v3 00/41] hex queue
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+References: <20261027032927.3055166-1-brian.cain@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Christian Quante <christian@quante.one>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20261027093223.129015-1-christian@quante.one>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261027093223.129015-1-christian@quante.one>
+In-Reply-To: <20261027032927.3055166-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=RYwFmFtv c=1 sm=1 tr=0 ts=6ae08205 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=VwQbUJbxAAAA:8 a=pMW7FiL9PP9yhA0m-GIA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: DGPNu0Dy8KSqJdQnosf15UvRoxllJJ2R
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA0MyBTYWx0ZWRfX7uRPmMGNe6XG
- nW4/BbCIwOb5PNwZdk3L6QfPdGLr5oLuped+foCmN7zfRtuLLt0Wp4lw+vFF0HUfGuw1vg6nKf4
- WpWTSdcQ1vOzoHTzRQIj+0db1LYLB5Q=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA0MyBTYWx0ZWRfX/saEq5uhDaj4
- pq8RKXIyLLtxd36+SFWwaVwmpQKEo7Ek7T+MUzos5W+J/kvyp3V8v5QKBESg0uD1rSMSfINJzFk
- YPUOq60PF5It2o5tX2vEcaQBqSQQKNQCKX0uWNYF2kqP48w6tiIQDh8Xk459aCkGExL2xWM0/ff
- 3JnmxVNn5c4wQyI4prb7nx66eENoaj9TIfUFoZcID1fMAdxydqrvz7/TKiH74JlFUndJxu0fbyK
- ExcF53XJkIZnjeSoF/AIp43CNq3eh9+IGhwNPVdxfuof7BePol1lIwegpsT5+0NI0wn2CwATWM+
- IZ3CKB41LPYl9f2yZYBI9V8LsyWhjuAgWAsUnmQHb7Q6RhkQ0HVrtsurQ2MAP+zVM7eHfOtDjAD
- Iipthgigqo8rT67hAYNARJUinhzyRX1AqWFpkD/v9MvJ/QP+Z1XV7KEFi6pZFubAwy909DClwLQ
- haMLN17rNVHfhxUjCkw==
-X-Proofpoint-ORIG-GUID: DGPNu0Dy8KSqJdQnosf15UvRoxllJJ2R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270043
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,688 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Christian,
-
-On 27/10/26 10:31, Christian Quante wrote:
-> The coalesced MMIO zones of a region follow its flat ranges.  When RAM
-> is mapped over part of a coalesced region, the flat range of the region
-> changes, and the listeners get coalesced_io_del() for the old range and
-> coalesced_io_add() for the new one.  The VGA devices do this all the
-> time: they map RAM aliases of the video memory into the legacy window
-> 0xa0000-0xbffff, which is coalesced, and remove them when the window
-> must be MMIO.  Cirrus does it for each BitBLT with source data from the
-> CPU and for write modes 4 and 5, among others.  The standard VGA does
-> it when it changes between planar and chain-4 modes, and for each VBE
-> bank switch.
+On 10/26/26 22:28, Brian Cain wrote:
+> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9ae:
 > 
-> For KVM, each change means KVM_UNREGISTER_COALESCED_MMIO and
-> KVM_REGISTER_COALESCED_MMIO, and the following KVM_SET_USER_MEMORY_REGION2
-> for the RAM alias then takes 1.4-2.2 ms instead of about 20 us (strace,
-> Linux 7.0).  The time is spent in the ioctl; I have not found out why.
-
-Have you looked at kernel io-bus device (un)registration? Or ask on the
-KVM devel list :)
-
-> But a zone under writable RAM has no effect for KVM, because accesses
-> to that RAM do not exit as MMIO.
+>    Merge tag 'samuel-thibault' ofhttps://people.debian.org/~sthibault/qemu into staging (2026-10-24 16:09:37 +0200)
 > 
-> So compute the coalesced zones of an address space from the whole flat
-> view, as it is done for the ioeventfds, and tell the listeners only
-> about the zones that really change.  A zone covers the parts where its
-> region is visible, and also the neighbouring flat ranges of writable
-> RAM in whole host pages, which KVM maps (kvm_align_section()).
-
-Is it possible to consolidate that code and avoid copying the KVM logic
-inside the generic memory code?
-
-> So the
-> zones stay the same when the VGA window changes between RAM and MMIO.
-> Overlapping zones are merged, because KVM_UNREGISTER_COALESCED_MMIO
-> removes every zone that contains the given range
-> (virt/kvm/coalesced_mmio.c).  As before, zones are deleted before the
-> flat ranges change and added after that.  The zones are only kept for
-> address spaces with a listener that implements coalesced_io_add() or
-> coalesced_io_del().  The listeners get a MemoryRegionSection without a
-> MemoryRegion; the only users, the KVM listeners, do not use it.
-
-Split as a preliminary refactor, computing zones from the flatview and
-merging overlaps (patch 2).
-
-Keep the debatable KVM zone stretching over RAM as patch 3.
-
+> are available in the Git repository at:
 > 
-> This also replaces flat_range_coalesced_io_notify_listener_add_del(),
-> which stopped at the first coalesced range that does not intersect the
-> flat range.
-
-This is a fix on its own (patch 1), please send first including:
-
-   Cc: qemu-stable.
-   Fixes: 8d3031fa1bfc ("memory: notify hypervisor of all eventfds 
-during listener (de)registration")
-
-> With KVM, a boot sector test that switches the Cirrus window between
-> RAM and MMIO takes 73 us per switch instead of 2073 us.  A Cirrus BitBLT
-> with 4 bytes of source data from the CPU takes 176 us instead of
-> 4076 us, and a VBE bank switch of the standard VGA 309 us instead of
-> 4159 us.  A coalesced write to the window costs the same as before.
+>    https://github.com/qualcomm/qemu tags/pull-hex-20261026
 > 
-> Signed-off-by: Christian Quante <christian@quante.one>
-> ---
+> for you to fetch changes up to f6beebf1bb08b43d9bb8248ae49fbb9bbd4006d5:
 > 
-> Notes:
->      v1: https://lore.kernel.org/qemu-devel/20261018051813.12379-1-christian@quante.one/
->      
->      Changes since v1:
->      - include/system/memory.h: do not indent the second line of @section in
->        the documentation of coalesced_io_add and coalesced_io_del.  Sphinx
->        reported "Unexpected indentation" there, and the docs build failed
->        with -W (werror, the default for builds from git on Linux).
->      - rebased on current master
->      
->      The code is the same as in v1, so I did not repeat the tests below.
->      With v2, the docs build with -W passes.
->      
->      Tests on a Linux 7.0 (x86_64) host:
->       - qtest-x86_64 (some of the slow tests use KVM) and unit tests: no
->         failures.
->       - Guests booted with KVM, with and without the patch: openSUSE
->         Tumbleweed (q35, std VGA) to the desktop, also with e1000 (only with
->         the patch); with vmware-svga to the boot loader (the screen dump does
->         not show the Linux console).  Windows 10 (q35, std VGA): to the lock
->         screen with the patch; without the patch I compared only the zone
->         ioctls.  q35 with OVMF (flash): only the zones, without a boot disk.
->         OS/2 Warp 3 (pc, isa-cirrus-vga, with my Cirrus patches; the first
->         series is <20261018050643.9288-1-christian@quante.one>, the others
->         follow).  With a debug print of the coalesced MMIO ioctls I replayed
->         the register/unregister sequence the way KVM handles it: no
->         overlapping zones, no unregister of an unknown zone, no unregister
->         that removes more than one zone.  The PIO zones are the same as
->         before; only the zones of the VGA window stay registered across the
->         RAM alias changes (a Windows 10 boot did 115 registrations and 114
->         unregistrations of them before, 2 and 1 now).
->       - With KVM, OS/2 Warp 3 with its Cirrus driver opens a folder at once
->         with the patch: from the first click of the double click until the
->         folder is complete, it takes 0.41-0.42 s instead of 0.74-0.91 s.  The
->         double click itself takes 0.4 s in my script; with TCG it also takes
->         0.42 s.
->       - Not tested: other architectures (vga-mmio), confidential guests.
->         Windows NT 4.0 (also with SP6a) does not boot with KVM here, with or
->         without the patch (STOP 0x0000000A in ntoskrnl.exe), so it is not
->         in the list above.
->      
->      The kernel side (why the memory slot update after a coalesced zone change
->      takes so long) I have not looked into.
+>    hw/intc/hex-l2vic: find the next pending irq a word at a time (2026-10-26 18:28:35 -0700)
 > 
->   include/system/memory.h |  19 ++-
->   system/memory.c         | 323 ++++++++++++++++++++++++++++------------
->   2 files changed, 242 insertions(+), 100 deletions(-)
+> v3: added "serialize config table as little endian" fix for test
+> failure in "ubuntu-24.04-s390x-all-system".
 > 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 027ca81bd2..605aede6d0 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -838,11 +838,14 @@ struct MemoryListener {
->        * @coalesced_io_add:
->        *
->        * Called during an address space update transaction,
-> -     * for a section of the address space that has had a new coalesced
-> -     * MMIO range registration since the last transaction.
-> +     * for a range of the address space that has become coalesced
-> +     * since the last transaction.  The range can also cover writable
-> +     * RAM that is mapped over part of a coalesced MMIO region; accesses
-> +     * to that RAM are not MMIO, so the coalescing does not apply to them.
->        *
->        * @listener: The #MemoryListener.
-> -     * @section: The new #MemoryRegionSection.
-> +     * @section: The #MemoryRegionSection of the range (without a
-> +     * #MemoryRegion).
+> ----------------------------------------------------------------
+> hexagon: v85, DSP machines, singlestep, bugfixes
+> 
+> - v85 scalar: atomics, CFI/_rb, vector stack
+> - new DSP machines: SM8975 NSP, SA8797P NSP0, SC8480XP NSP0, SA8775P CDSP0,
+> QCS6490 CDSP.
+> - bugfixes:
+>      - coverity, ubsan findings in semihosting, decoder
+>      - handling framekey w/dealloc_return
+> - handle singlestep exception
+> - performance improvements: TLB flush, l2vic
+> - test coverage
+> - MTTCG fixes: enabling MTTCG exposed races in lock/interrupts and ciad.
 
-A preparatory patch removing section from 
-coalesced_io_add/coalesced_io_del would be cleaner than documenting a 
-half-filled struct.
+Not sure what's going on, but there are new python failures in 
+functional testing:
 
->        * @addr: The starting address for the coalesced MMIO range.
->        * @len: The length of the coalesced MMIO range.
->        */
-> @@ -853,11 +856,12 @@ struct MemoryListener {
->        * @coalesced_io_del:
->        *
->        * Called during an address space update transaction,
-> -     * for a section of the address space that has dropped a coalesced
-> -     * MMIO range since the last transaction.
-> +     * for a range of the address space that is no longer coalesced.
-> +     * It is always a range that was passed to @coalesced_io_add before.
->        *
->        * @listener: The #MemoryListener.
-> -     * @section: The new #MemoryRegionSection.
-> +     * @section: The #MemoryRegionSection of the range (without a
-> +     * #MemoryRegion).
->        * @addr: The starting address for the coalesced MMIO range.
->        * @len: The length of the coalesced MMIO range.
->        */
-> @@ -908,6 +912,9 @@ struct AddressSpace {
->       int ioeventfd_nb;
->       int ioeventfd_notifiers;
->       struct MemoryRegionIoeventfd *ioeventfds;
-> +    int coalesced_nb;
-> +    int coalesced_notifiers;
-> +    struct AddrRange *coalesced;
->       QTAILQ_HEAD(, MemoryListener) listeners;
->       QTAILQ_ENTRY(AddressSpace) address_spaces_link;
->   
-> diff --git a/system/memory.c b/system/memory.c
-> index f1910af8a0..585c8b0a11 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -43,6 +43,7 @@
->   static unsigned memory_region_transaction_depth;
->   static bool memory_region_update_pending;
->   static bool ioeventfd_update_pending;
-> +static bool coalesced_update_pending;
->   unsigned int global_dirty_tracking;
->   
->   static QTAILQ_HEAD(, MemoryListener) memory_listeners
-> @@ -885,91 +886,206 @@ static void address_space_update_ioeventfds(AddressSpace *as)
->   }
->   
->   /*
-> - * Notify the memory listeners about the coalesced IO change events of
-> - * range `cmr'.  Only the part that has intersection of the specified
-> - * FlatRange will be sent.
-> + * Coalescing has no effect on writable RAM that the accelerator maps,
-> + * because accesses to it are not MMIO.  KVM maps RAM only in whole host
-> + * pages (kvm_align_section()).
->    */
-> -static void flat_range_coalesced_io_notify(FlatRange *fr,
-> -                                           const AddressSpace *as,
-> -                                           CoalescedMemoryRange *cmr, bool add)
-> +static bool flat_range_ignores_coalescing(const FlatRange *fr)
->   {
-> -    AddrRange tmp;
-> +    uint64_t page_size = qemu_real_host_page_size();
->   
-> -    tmp = addrrange_shift(cmr->addr,
-> -                          int128_sub(fr->addr.start,
-> -                                     int128_make64(fr->offset_in_region)));
-> -    if (!addrrange_intersects(tmp, fr->addr)) {
-> -        return;
-> -    }
-> -    tmp = addrrange_intersection(tmp, fr->addr);
-> +    return memory_region_is_ram(fr->mr) && !fr->readonly &&
-> +           QEMU_IS_ALIGNED(int128_get64(fr->addr.start), page_size) &&
-> +           QEMU_IS_ALIGNED(int128_get64(fr->addr.size), page_size);
-> +}
->   
-> -    if (add) {
-> -        MEMORY_LISTENER_UPDATE_REGION(fr, as, Forward, coalesced_io_add,
-> -                                      int128_get64(tmp.start),
-> -                                      int128_get64(tmp.size));
-> -    } else {
-> -        MEMORY_LISTENER_UPDATE_REGION(fr, as, Reverse, coalesced_io_del,
-> -                                      int128_get64(tmp.start),
-> -                                      int128_get64(tmp.size));
-> -    }
-> +/* Does @fr map @mr with the region start at address @base? */
-> +static bool flat_range_maps_region_at(const FlatRange *fr, MemoryRegion *mr,
-> +                                      Int128 base)
-> +{
-> +    return fr->mr == mr &&
-> +           int128_eq(int128_sub(fr->addr.start,
-> +                                int128_make64(fr->offset_in_region)), base);
->   }
->   
-> -static void flat_range_coalesced_io_del(FlatRange *fr, const AddressSpace *as)
-> +static int addrrange_cmp(const void *a, const void *b)
->   {
-> -    CoalescedMemoryRange *cmr;
-> +    const AddrRange *r1 = a, *r2 = b;
->   
-> -    QTAILQ_FOREACH(cmr, &fr->mr->coalesced, link) {
-> -        flat_range_coalesced_io_notify(fr, as, cmr, false);
-> +    if (!int128_eq(r1->start, r2->start)) {
-> +        return int128_lt(r1->start, r2->start) ? -1 : 1;
-> +    }
-> +    if (!int128_eq(r1->size, r2->size)) {
-> +        return int128_lt(r1->size, r2->size) ? -1 : 1;
->       }
-> +    return 0;
->   }
->   
-> -static void flat_range_coalesced_io_add(FlatRange *fr, const AddressSpace *as)
-> +/*
-> + * Compute the coalesced zones of @view, sorted and without overlaps.
-> + *
-> + * A coalesced range of a region covers the parts where the region is
-> + * visible, and also the flat ranges next to them that ignore coalescing.
-> + * So the zones do not change when RAM is mapped over part of a coalesced
-> + * region and unmapped again, as the VGA window does with its bank aliases.
-> + * Changing a zone is expensive for KVM.
-> + */
-> +static unsigned flatview_get_coalesced(FlatView *view, AddrRange **pzones)
->   {
-> -    MemoryRegion *mr = fr->mr;
-> -    CoalescedMemoryRange *cmr;
-> +    AddrRange *zones = NULL;
-> +    unsigned nb = 0, i, j;
->   
-> -    if (QTAILQ_EMPTY(&mr->coalesced)) {
-> -        return;
-> +    for (i = 0; i < view->nr; i++) {
-> +        FlatRange *fr = &view->ranges[i];
-> +        CoalescedMemoryRange *cmr;
-> +        Int128 base;
-> +
-> +        if (QTAILQ_EMPTY(&fr->mr->coalesced)) {
-> +            continue;
-> +        }
-> +        base = int128_sub(fr->addr.start, int128_make64(fr->offset_in_region));
-> +        QTAILQ_FOREACH(cmr, &fr->mr->coalesced, link) {
-> +            AddrRange tmp = addrrange_shift(cmr->addr, base);
-> +            Int128 tmp_end = addrrange_end(tmp);
-> +            Int128 start, end;
-> +
-> +            if (!addrrange_intersects(tmp, fr->addr)) {
-> +                continue;
-> +            }
-> +            start = int128_max(tmp.start, fr->addr.start);
-> +            end = int128_min(tmp_end, addrrange_end(fr->addr));
-> +
-> +            for (j = i; j > 0 && int128_gt(start, tmp.start); j--) {
-> +                FlatRange *prev = &view->ranges[j - 1];
-> +
-> +                if (!int128_eq(addrrange_end(prev->addr), start) ||
-> +                    !(flat_range_maps_region_at(prev, fr->mr, base) ||
-> +                      flat_range_ignores_coalescing(prev))) {
-> +                    break;
-> +                }
-> +                start = int128_max(prev->addr.start, tmp.start);
-> +            }
-> +            for (j = i + 1; j < view->nr && int128_lt(end, tmp_end); j++) {
-> +                FlatRange *next = &view->ranges[j];
-> +
-> +                if (!int128_eq(next->addr.start, end) ||
-> +                    !(flat_range_maps_region_at(next, fr->mr, base) ||
-> +                      flat_range_ignores_coalescing(next))) {
-> +                    break;
-> +                }
-> +                end = int128_min(addrrange_end(next->addr), tmp_end);
-> +            }
-> +
-> +            zones = g_renew(AddrRange, zones, nb + 1);
+https://gitlab.com/qemu-project/qemu/-/jobs/17499788773
+https://gitlab.com/qemu-project/qemu/-/jobs/17499572582
 
-Can we count first and alloc or use GArray instead of renewing for each 
-zone?
+As a warning, I'm now going to merge Pierrick's tcg helper patch set, 
+which conflicts with this patch set, so you'll need to fix that up too.
 
-> +            zones[nb++] = addrrange_make(start, int128_sub(end, start));
-> +        }
->       }
->   
-> -    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
-> -        flat_range_coalesced_io_notify(fr, as, cmr, true);
-> +    /*
-> +     * Merge overlapping zones.  KVM_UNREGISTER_COALESCED_MMIO removes every
-> +     * zone that contains the given range, so a zone must not lie inside
-> +     * another one.
-> +     */
-> +    if (nb > 1) {
-> +        qsort(zones, nb, sizeof(*zones), addrrange_cmp);
->       }
-> +    for (i = j = 0; i < nb; i++) {
-> +        if (j && int128_lt(zones[i].start, addrrange_end(zones[j - 1]))) {
-> +            Int128 end = int128_max(addrrange_end(zones[i]),
-> +                                    addrrange_end(zones[j - 1]));
-> +
-> +            zones[j - 1].size = int128_sub(end, zones[j - 1].start);
-> +        } else {
-> +            zones[j++] = zones[i];
-> +        }
-> +    }
-> +
-> +    *pzones = zones;
-> +    return j;
->   }
->   
-> -static void
-> -flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
-> -                                                MemoryRegionSection *mrs,
-> -                                                MemoryListener *listener,
-> -                                                const AddressSpace *as,
-> -                                                bool add)
-> +/* Tell @listener about all coalesced zones of @as when it is (un)registered */
-> +static void listener_notify_coalesced(MemoryListener *listener,
-> +                                      const AddressSpace *as, FlatView *view,
-> +                                      bool add)
->   {
-> -    CoalescedMemoryRange *cmr;
-> -    MemoryRegion *mr = fr->mr;
-> -    AddrRange tmp;
-> -
-> -    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
-> -        tmp = addrrange_shift(cmr->addr,
-> -                              int128_sub(fr->addr.start,
-> -                                         int128_make64(fr->offset_in_region)));
-> +    unsigned i;
->   
-> -        if (!addrrange_intersects(tmp, fr->addr)) {
-> -            return;
-> -        }
-> -        tmp = addrrange_intersection(tmp, fr->addr);
-> +    for (i = 0; i < as->coalesced_nb; i++) {
-> +        hwaddr start = int128_get64(as->coalesced[i].start);
-> +        hwaddr size = int128_get64(as->coalesced[i].size);
-> +        MemoryRegionSection section = (MemoryRegionSection) {
-> +            .fv = view,
-> +            .offset_within_address_space = start,
-> +            .size = as->coalesced[i].size,
-> +        };
->   
->           if (add && listener->coalesced_io_add) {
-> -            listener->coalesced_io_add(listener, mrs,
-> -                                       int128_get64(tmp.start),
-> -                                       int128_get64(tmp.size));
-> +            listener->coalesced_io_add(listener, &section, start, size);
->           } else if (!add && listener->coalesced_io_del) {
-> -            listener->coalesced_io_del(listener, mrs,
-> -                                       int128_get64(tmp.start),
-> -                                       int128_get64(tmp.size));
-> +            listener->coalesced_io_del(listener, &section, start, size);
->           }
->       }
->   }
->   
-> +/*
-> + * Tell the listeners of @as about each zone of @zones that is not in
-> + * @other: as added zones if @add, else as dropped zones.
-> + */
-> +static void address_space_notify_coalesced(AddressSpace *as, FlatView *view,
-> +                                           AddrRange *zones, unsigned nb,
-> +                                           AddrRange *other, unsigned other_nb,
-> +                                           bool add)
-> +{
-> +    MemoryRegionSection section;
-> +    unsigned i, j = 0;
-> +
-> +    for (i = 0; i < nb; i++) {
-> +        while (j < other_nb && addrrange_cmp(&other[j], &zones[i]) < 0) {
-> +            j++;
-> +        }
-> +        if (j < other_nb && addrrange_equal(other[j], zones[i])) {
-> +            continue;
-> +        }
-> +        section = (MemoryRegionSection) {
-> +            .fv = view,
-> +            .offset_within_address_space = int128_get64(zones[i].start),
-> +            .size = zones[i].size,
-> +        };
-> +        if (add) {
-> +            MEMORY_LISTENER_CALL(as, coalesced_io_add, Forward, &section,
-> +                                 int128_get64(zones[i].start),
-> +                                 int128_get64(zones[i].size));
-> +        } else {
-> +            MEMORY_LISTENER_CALL(as, coalesced_io_del, Reverse, &section,
-> +                                 int128_get64(zones[i].start),
-> +                                 int128_get64(zones[i].size));
-> +        }
-> +    }
-> +}
-> +
-> +static void address_space_update_coalesced(AddressSpace *as)
-> +{
-> +    FlatView *view;
-> +    AddrRange *zones;
-> +    unsigned nb;
-> +
-> +    if (!as->coalesced_notifiers) {
-> +        return;
-> +    }
-> +
-> +    view = address_space_get_flatview(as);
-> +    nb = flatview_get_coalesced(view, &zones);
-> +    address_space_notify_coalesced(as, view, as->coalesced, as->coalesced_nb,
-> +                                   zones, nb, false);
-> +    address_space_notify_coalesced(as, view, zones, nb,
-> +                                   as->coalesced, as->coalesced_nb, true);
-> +    g_free(as->coalesced);
-> +    as->coalesced = zones;
-> +    as->coalesced_nb = nb;
-> +    flatview_unref(view);
-> +}
-> +
->   static void address_space_update_topology_pass(AddressSpace *as,
->                                                  const FlatView *old_view,
->                                                  const FlatView *new_view,
-> @@ -1002,7 +1118,6 @@ static void address_space_update_topology_pass(AddressSpace *as,
->               /* In old but not in new, or in both but attributes changed. */
->   
->               if (!adding) {
-> -                flat_range_coalesced_io_del(frold, as);
->                   MEMORY_LISTENER_UPDATE_REGION(frold, as, Reverse, region_del);
->               }
->   
-> @@ -1031,7 +1146,6 @@ static void address_space_update_topology_pass(AddressSpace *as,
->   
->               if (adding) {
->                   MEMORY_LISTENER_UPDATE_REGION(frnew, as, Forward, region_add);
-> -                flat_range_coalesced_io_add(frnew, as);
->               }
->   
->               ++inew;
-> @@ -1101,12 +1215,27 @@ static void address_space_set_flatview(AddressSpace *as)
->   
->       if (!QTAILQ_EMPTY(&as->listeners)) {
->           FlatView tmpview = { .nr = 0 }, *old_view2 = old_view;
-> +        AddrRange *zones = NULL;
-> +        unsigned nb = 0;
->   
->           if (!old_view2) {
->               old_view2 = &tmpview;
->           }
-> +        if (as->coalesced_notifiers) {
-> +            nb = flatview_get_coalesced(new_view, &zones);
-> +            address_space_notify_coalesced(as, old_view2, as->coalesced,
-> +                                           as->coalesced_nb, zones, nb, false);
-> +        }
->           address_space_update_topology_pass(as, old_view2, new_view, false);
->           address_space_update_topology_pass(as, old_view2, new_view, true);
-> +        if (as->coalesced_notifiers) {
-> +            address_space_notify_coalesced(as, new_view, zones, nb,
-> +                                           as->coalesced, as->coalesced_nb,
-> +                                           true);
-> +            g_free(as->coalesced);
-> +            as->coalesced = zones;
-> +            as->coalesced_nb = nb;
-> +        }
->       }
->   
->       /* Writes are protected by the BQL.  */
-> @@ -1160,15 +1289,25 @@ void memory_region_transaction_commit(void)
->               QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
->                   address_space_set_flatview(as);
 
-If we rework address_space_set_flatview() to return a boolean when
-coalesced zones are up to date ...
-
->                   address_space_update_ioeventfds(as);
-> +                if (coalesced_update_pending) {
-
-... then we could skip this extra commit (nothing to find: no
-notification).
-
-> +                    address_space_update_coalesced(as);
-> +                }
->               }
->               memory_region_update_pending = false;
->               ioeventfd_update_pending = false;
-> +            coalesced_update_pending = false;
->               MEMORY_LISTENER_CALL_GLOBAL(commit, Forward);
-> -        } else if (ioeventfd_update_pending) {
-> +        } else if (ioeventfd_update_pending || coalesced_update_pending) {
->               QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
-> -                address_space_update_ioeventfds(as);
-> +                if (ioeventfd_update_pending) {
-> +                    address_space_update_ioeventfds(as);
-> +                }
-> +                if (coalesced_update_pending) {
-> +                    address_space_update_coalesced(as);
-> +                }
->               }
->               ioeventfd_update_pending = false;
-> +            coalesced_update_pending = false;
->           }
->      }
->   }
-> @@ -2330,29 +2469,6 @@ void memory_region_writeback(MemoryRegion *mr, hwaddr addr, hwaddr size)
->       }
->   }
->   
-> -/*
-> - * Call proper memory listeners about the change on the newly
-> - * added/removed CoalescedMemoryRange.
-> - */
-> -static void memory_region_update_coalesced_range(MemoryRegion *mr,
-> -                                                 CoalescedMemoryRange *cmr,
-> -                                                 bool add)
-> -{
-> -    AddressSpace *as;
-> -    FlatView *view;
-> -    FlatRange *fr;
-> -
-> -    QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
-> -        view = address_space_get_flatview(as);
-> -        FOR_EACH_FLAT_RANGE(fr, view) {
-> -            if (fr->mr == mr) {
-> -                flat_range_coalesced_io_notify(fr, as, cmr, add);
-> -            }
-> -        }
-> -        flatview_unref(view);
-> -    }
-> -}
-> -
->   void memory_region_set_coalescing(MemoryRegion *mr)
->   {
->       memory_region_clear_coalescing(mr);
-> @@ -2365,10 +2481,12 @@ void memory_region_add_coalescing(MemoryRegion *mr,
->   {
->       CoalescedMemoryRange *cmr = g_malloc(sizeof(*cmr));
->   
-> +    memory_region_transaction_begin();
->       cmr->addr = addrrange_make(int128_make64(offset), int128_make64(size));
->       QTAILQ_INSERT_TAIL(&mr->coalesced, cmr, link);
-> -    memory_region_update_coalesced_range(mr, cmr, true);
->       memory_region_set_flush_coalesced(mr);
-> +    coalesced_update_pending |= mr->enabled;
-> +    memory_region_transaction_commit();
-
-Does that mean this call has to be run with BQL take? If so, worth
-mentioning in method docstring.
->   }
->   
->   void memory_region_clear_coalescing(MemoryRegion *mr)
-> @@ -2382,12 +2500,14 @@ void memory_region_clear_coalescing(MemoryRegion *mr)
->       qemu_flush_coalesced_mmio_buffer();
->       mr->flush_coalesced_mmio = false;
->   
-> +    memory_region_transaction_begin();
->       while (!QTAILQ_EMPTY(&mr->coalesced)) {
->           cmr = QTAILQ_FIRST(&mr->coalesced);
->           QTAILQ_REMOVE(&mr->coalesced, cmr, link);
-> -        memory_region_update_coalesced_range(mr, cmr, false);
->           g_free(cmr);
->       }
-> +    coalesced_update_pending |= mr->enabled;
-> +    memory_region_transaction_commit();
->   }
->   
->   void memory_region_set_flush_coalesced(MemoryRegion *mr)
-> @@ -2936,15 +3056,13 @@ static void listener_add_address_space(MemoryListener *listener,
->               listener->region_add(listener, &section);
->           }
->   
-> -        /* send coalesced io add notifications */
-> -        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
-> -                                                        listener, as, true);
-> -
->           if (fr->dirty_log_mask && listener->log_start) {
->               listener->log_start(listener, &section, 0, fr->dirty_log_mask);
->           }
->       }
->   
-> +    listener_notify_coalesced(listener, as, view, true);
-> +
->       /*
->        * register all eventfds for this address space for the newly registered
->        * listener.
-> @@ -2981,6 +3099,7 @@ static void listener_del_address_space(MemoryListener *listener,
->           listener->begin(listener);
->       }
->       view = address_space_get_flatview(as);
-> +    listener_notify_coalesced(listener, as, view, false);
->       FOR_EACH_FLAT_RANGE(fr, view) {
->           MemoryRegionSection section = section_from_flat_range(fr, view);
->   
-> @@ -2988,9 +3107,6 @@ static void listener_del_address_space(MemoryListener *listener,
->               listener->log_stop(listener, &section, fr->dirty_log_mask, 0);
->           }
->   
-> -        /* send coalesced io del notifications */
-> -        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
-> -                                                        listener, as, false);
->           if (listener->region_del) {
->               listener->region_del(listener, &section);
->           }
-> @@ -3052,6 +3168,15 @@ void memory_listener_register(MemoryListener *listener, AddressSpace *as)
->           QTAILQ_INSERT_BEFORE(other, listener, link_as);
->       }
->   
-> +    if ((listener->coalesced_io_add || listener->coalesced_io_del) &&
-> +        !as->coalesced_notifiers++) {
-> +        /* The zones are only kept up to date while somebody needs them */
-> +        FlatView *view = address_space_get_flatview(as);
-> +
-> +        as->coalesced_nb = flatview_get_coalesced(view, &as->coalesced);
-> +        flatview_unref(view);
-> +    }
-> +
->       listener_add_address_space(listener, as);
->   
->       if (listener->eventfd_add || listener->eventfd_del) {
-> @@ -3070,6 +3195,12 @@ void memory_listener_unregister(MemoryListener *listener)
->       }
->   
->       listener_del_address_space(listener, listener->address_space);
-> +    if ((listener->coalesced_io_add || listener->coalesced_io_del) &&
-> +        !--listener->address_space->coalesced_notifiers) {
-> +        g_free(listener->address_space->coalesced);
-> +        listener->address_space->coalesced = NULL;
-> +        listener->address_space->coalesced_nb = 0;
-> +    }
->       QTAILQ_REMOVE(&memory_listeners, listener, link);
->       QTAILQ_REMOVE(&listener->address_space->listeners, listener, link_as);
->       listener->address_space = NULL;
-> @@ -3089,6 +3220,9 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
->       as->current_map = NULL;
->       as->ioeventfd_nb = 0;
->       as->ioeventfds = NULL;
-> +    as->coalesced_nb = 0;
-> +    as->coalesced_notifiers = 0;
-> +    as->coalesced = NULL;
->       QTAILQ_INIT(&as->listeners);
->       QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
->       as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
-> @@ -3111,6 +3245,7 @@ static void do_address_space_destroy(AddressSpace *as)
->       flatview_unref(as->current_map);
->       g_free(as->name);
->       g_free(as->ioeventfds);
-> +    g_free(as->coalesced);
->       memory_region_unref(as->root);
->   }
->   
-
+r~
 
