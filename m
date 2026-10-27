@@ -1,70 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A83606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 05:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB16606A322
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 05:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jblSAMdv
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=iRnicRK9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLZvb-0002cU-86; Tue, 27 Oct 2026 01:40:55 -0400
+	id 1xLZvR-0002VS-En; Tue, 27 Oct 2026 01:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLZvU-0002aE-CU
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:49 -0400
-Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
+ id 1xLZvQ-0002VJ-4b
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:44 -0400
+Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLZvR-0004Q8-TJ
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:47 -0400
-Received: by mail-dy1-x1336.google.com with SMTP id
- 5a478bee46e88-3550c917fd3so5615806eec.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 22:40:45 -0700 (PDT)
+ id 1xLZvO-0004Pv-5h
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:43 -0400
+Received: by mail-dy1-x132e.google.com with SMTP id
+ 5a478bee46e88-36a18fc7a38so67009eec.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 22:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793079644; x=1793684444; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1793079640; x=1793684440; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aQ2Puf1sOISM8sL6HalNkRqjVmy85f1gdvZmdOYkrIo=;
- b=jblSAMdv9FBrX5UGTrsK/o0o6BHbCmOZ1RMzflm/p/YWTQFz8q/FYaW4fpaerwPg/8
- H+53dCUiQuLOnDXE5n3di2LG9gbXvUhOGuWZ3IsWAwicgXZGmsOL+UQyRPqe8440xGf5
- 3tLJZsOKmXqM0BvOXZiH9kTvJ9QBkqP57PgyLFEtYCXAIWhwPqypKPsBXp+7rdWm5UGU
- D47aj5JUgFDO6Wp1XyAHSrZKw9RkBq64uIkvUXCRVAmf632mxUwx1mE0f43iQ1MX3tQ9
- B5SzRN9oTCXzZpRBDmE7iz6FLCPSyFjZ1ewKopONPCmkvvpJm+spp76M/4Ut1DP//KId
- UvUw==
+ bh=a6SQL3xSNM0OLLQDcvQFD+UMKkLm4j6wag0wTOZg/+A=;
+ b=iRnicRK9BiXuacX+NRhaxIIo6GhqP7VLRGYKCdB/BX8kT8aNbSBNCxJjtZrUX+8EKr
+ mFE2i7wIOkpIqorrtp+B1wb14tpQ4ZUf7X3YRYGJMOcOkj/Wtz/9ojKiaPXDGsov4tQt
+ nGbZ+soNFiaOE/RNiL7OULGgpSoYQxQdx5/pCVFWUO55zMhrvDquu8fk3ouwLXquh3G7
+ bjMJiX2YTA5tQhXGCNXeonBYH0sWc0FBUUpUDn3b4DRiIvde/nYMhx19/XsOeW5XF/3f
+ cWto2AdlXnYwacZJO9QSw9gTvVj5LNzrjQ8MtNO1TXvEiriZRMhvuxRxgVWwHll5L/u/
+ An+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793079644; x=1793684444;
+ d=1e100.net; s=20260707; t=1793079640; x=1793684440;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aQ2Puf1sOISM8sL6HalNkRqjVmy85f1gdvZmdOYkrIo=;
- b=ZRm1RBcW4i4Mr4uZ/mgdo/XMsEOZUatfTMVFakGWeIMCx1qM3DE3G/h4urIAs7YJ6z
- deLOH02aNLPleeK6Yk45E4vzXCR4+baQyqqZyKDJ7WHTcx/0LAIr+VUNQNvu08N2UZIj
- 4bu7OLqHbv7DvElTHyZitdkT1r0GWEWdwity2n5CpzTEG6i1aCO94lEg2C1OPTLdRj3C
- iOppoig9MQbasJ04QyK0bo/6vn/We2eW2fo3fE6Gyu5eT+osVvj7ELXouqWLcwxJeBa0
- pzkREwi9yJ+9sVVHpXxXFz/LYYJR/rwWx8fnyDJVjSbw1EPDhjdlWtrFwvXhWYc6uJMH
- PKYA==
-X-Gm-Message-State: AFq9FYLs+xnF1GspmuoICPuqf8imgAKgjdAmfP2lRjrI/3OUhEaU/uLd
- zNAbADtH9MjY9avLjepIG4UnVD1yOL5RkFJRu/V5Xtg/dd3fnC4LtRaxTSOIN1IW
-X-Gm-Gg: AYBFou0Kd7Fw5UkNclQGsFtw8kgby5vevrdRbMQDC3PXQ9O60NvHq6I9HYuRjcX7OFv
- SwYBCz+QuWudAlWL3S8s/wJIRWlANqzFtRLC3+jzrgvdfqeiqj7pdoAeio1N8ltcrtu7VBGF7uE
- hQjsIVfnlJ/y4c8AeIIIXaXRRrCi0WqEIysL6ErLQOJ71MuJZ9J1hbFkdCbnbTuHJmSsl77Sqxe
- qfiL24+P6KgcE8UHI2vTZ+snj2Z9liOSFSXCpC2TZvnmLX96LnQZ4SwtrG0oMewXx+AJQQyaeWS
- CDf4XVrsZbxuoMCzFm01xUCdmyOOvFq195/IDBMmOHTHJP2d0l+lRp3UDQdHO6xSdzyRuDL2aio
- egYWnqvFDuCkfOWfcltRldisG+PKPifJ8hb1LI7N0qosmN4INDX3zA5PnumRh8McW939aYdYE1e
- JHyMCBwlQZhDONEE//LoMGeaV0UE8gWMcw/5NPfHOe6Vkfe9cq9FlBKGLEDIxOFEaeYRUjNzqaj
- EBQtlUKhGJR3EYJ7IH2AIjxftXFY7Z+VzgbSJvbpTYKZpoSvmqxszKRybCUeDYK5Po4y2vsmQ29
- hqeJZt2JFrTUTff+YYE6
-X-Received: by 2002:a05:7301:1509:b0:36a:270:ce76 with SMTP id
- 5a478bee46e88-36a0270d1acmr6050803eec.33.1793079644275; 
- Mon, 26 Oct 2026 22:40:44 -0700 (PDT)
+ bh=a6SQL3xSNM0OLLQDcvQFD+UMKkLm4j6wag0wTOZg/+A=;
+ b=p5rxZbCQB47FGfn5SMwQzKE5rGFXbT7Sj0BhhvTVMTndan/UnqrgS/STUBhZyugcfH
+ 926ntQxyxtReI+FEYRfzcJZy1IRRI9L9Z4xjN2hVEDHBJNlmVlzCtl2K58sUqAsbeCR8
+ 936WN9ahEfTG7E8N3l633oAjEGj3rs4A5I49DV3wr81opfxFkBdPUdcX1BeDfzedkL6z
+ 6MN6TxipqjwdeIx+W4WcZyON6WfRofv+zWwotzyjx3H4rdyPcTMkrqVhPXSb/QpgOZwt
+ SKFBQ0P6T4iteRjmzxIWb8VVSxi7kyloCCgoIfSVHcYYC4elil5m2pb/Fg8i9w7Srnxi
+ 7i+A==
+X-Gm-Message-State: AFq9FYJH0yr/6mYyjENDfPY1Tu8EXXE7IBMz0JO16/CGb4ufgbgTEd5K
+ vr9cPCfBrCfrHwuiQbh/Zm2n+dqGSB4b3NkJBLwATF3ZbCAjxq4HuS+ORSFhW2rr
+X-Gm-Gg: AYBFou2WKRgpd26aQPNPiN+kMT6Os4LbunUSIY5hyxBrXJ4fjSuyMNZhN+dAi+NK2Ms
+ JlJy8VjrHzFQUzygf1h9g1X99Go16ZFk3KJY1soV6qGEG4cmDO9emaAGqUpVgJqIo51AlrT3Hdt
+ sLBhQUGVfjgv/b1bSmaqVNELVDQ1F2qaAzYvQ8IgN3onbnHlcoTEC/pkjSuamOe1vc8YmaQD008
+ esungmtaPUB83gC6zsO4+ZUFsOIkmRvXInKZKIRiqiYHidqiAzZFF72i4hYD3jPAVLt/AFluUvn
+ 0Ji4XljhX6EMX0QnzRLYI7aDE9jyjyUyiAWd70wekV9XY7GO7m0BrerZn5tJblzGvVpy7wR8HXg
+ UrcYsWUnUelnV2j2Wnqjq1v10ycR2+m0LKo8ZKW0EKVZZPJcNW+MK+DmWJhGga/9wpBRWLVfD2u
+ psgKXToizB/57/UwPrXsETS9mkHuSA6h+l7USMsjC6cZs71C1WiHrQNNClPzW52Ct2l730yGk7f
+ oaRoB8Sl5Q4xaonMqhE/ulgNy40/WscF1d4O3UFVGXAU2RaPn8vibOauGupKHQr/HYYBwfHtgs=
+X-Received: by 2002:a05:693c:88ce:10b0:36a:e77:aa5b with SMTP id
+ 5a478bee46e88-36a0e77abcdmr2710724eec.4.1793079640450; 
+ Mon, 26 Oct 2026 22:40:40 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-369e8ec9276sm51416372eec.25.2026.10.26.22.40.41
+ 5a478bee46e88-369e8ec9276sm51416372eec.25.2026.10.26.22.40.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 22:40:43 -0700 (PDT)
+ Mon, 26 Oct 2026 22:40:39 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>,
@@ -75,17 +74,18 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  Alexander Bulekov <alxndr@bu.edu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 2/2] accel: register CPU parent for each target
-Date: Tue, 27 Oct 2026 13:40:26 +0800
-Message-ID: <20261027054026.2184-3-luoyonggang@gmail.com>
+Subject: [PATCH 1/2] target-info: cache the QOM target list before
+ MODULE_INIT_QOM
+Date: Tue, 27 Oct 2026 13:40:25 +0800
+Message-ID: <20261027054026.2184-2-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261027054026.2184-1-luoyonggang@gmail.com>
 References: <20261027054026.2184-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x132e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,162 +112,153 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Now we need use the prepared target-list to register different accel-$cpu_type
-parent QOM type. So that multi-target won't error missing parent for different
-accel for different arch.
-
-Also add a test for it in test-multi-target.c
+We can not retrieve target list when do call to MODULE_INIT_QOM
+In latter commit, we need iterate target list inside type_init referenced functions for
+generate all QOM variants depends on target list(without select the target).
+So we have to prepare the QOM target list before MODULE_INIT_QOM
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- accel/accel-common.c           |  6 ++----
- accel/accel-internal.h         |  1 +
- accel/accel-system.c           | 24 ++++++++++++++++++++++++
- accel/accel-user.c             |  7 +++++++
- tests/unit/test-multi-target.c | 15 +++++++++++++++
- 5 files changed, 49 insertions(+), 4 deletions(-)
+ include/qemu/target-info-qom.h |  4 ++++
+ system/vl.c                    |  2 +-
+ target-info-qom.c              | 26 +++++++++++++++++++++++++-
+ tests/qtest/fuzz/fuzz.c        |  2 +-
+ tests/unit/test-multi-target.c | 20 +++++++++++++-------
+ 5 files changed, 44 insertions(+), 10 deletions(-)
 
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 00a400243f0..0f4e202d8f8 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
+diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
+index ba2e4370afb..031d9ce32a5 100644
+--- a/include/qemu/target-info-qom.h
++++ b/include/qemu/target-info-qom.h
+@@ -25,6 +25,10 @@ typedef struct TargetInfoQomClass {
  
- DEFINE_TYPES(accel_types)
+ OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
  
--static void register_accel_target_type(void)
-+void accel_register_cpu_type(const char *cpu_type)
- {
--    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
-+    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
-     const TypeInfo accel_cpu_type = {
-         .name = name,
-         .parent = TYPE_OBJECT,
-@@ -142,5 +142,3 @@ static void register_accel_target_type(void)
++/* Initialize before MODULE_INIT_QOM; cache is owned by this module. */
++void target_info_qom_init(void);
++GSList *target_info_qom_get_targets(void);
++
+ void target_info_qom_set_target(void);
+ void target_info_qom_set_target_info(const TargetInfo *ti);
  
-     type_register_static(&accel_cpu_type);
- }
--
--type_init(register_accel_target_type);
-diff --git a/accel/accel-internal.h b/accel/accel-internal.h
-index d3a4422cbf7..2b6f58526d3 100644
---- a/accel/accel-internal.h
-+++ b/accel/accel-internal.h
-@@ -13,5 +13,6 @@
- #include "qemu/accel.h"
+diff --git a/system/vl.c b/system/vl.c
+index 468a9fc247a..47d5f09d2d7 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2914,7 +2914,7 @@ void qemu_init(int argc, char **argv)
  
- void accel_init_ops_interfaces(AccelClass *ac);
-+void accel_register_cpu_type(const char *cpu_type);
+     os_setup_limits();
  
- #endif /* ACCEL_SYSTEM_H */
-diff --git a/accel/accel-system.c b/accel/accel-system.c
-index 1325b23864c..fdfa85179ee 100644
---- a/accel/accel-system.c
-+++ b/accel/accel-system.c
-@@ -25,6 +25,8 @@
+-    module_call_init(MODULE_INIT_TARGET_INFO);
++    target_info_qom_init();
+     target_info_qom_set_target();
+ 
+     module_init_info(qemu_modinfo);
+diff --git a/target-info-qom.c b/target-info-qom.c
+index aeeedb7e818..8d3f2b7280b 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -8,6 +8,7 @@
  
  #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "qemu/target-info-def.h"
-+#include "qemu/target-info-qom.h"
- #include "qom/compat-properties.h"
- #include "qapi/qapi-commands-accelerator.h"
- #include "monitor/monitor.h"
-@@ -32,6 +34,7 @@
- #include "hw/core/boards.h"
- #include "hw/core/cpu.h"
- #include "accel/accel-ops.h"
-+#include "accel/accel-cpu.h"
- #include "accel/accel-cpu-ops.h"
- #include "system/cpus.h"
- #include "qemu/error-report.h"
-@@ -124,6 +127,27 @@ static const TypeInfo accel_ops_type_info = {
+ #include "qapi/error.h"
++#include "qemu/module.h"
+ #include "qom/object.h"
+ #include "qemu/target-info-def.h"
+ #include "qemu/target-info-init.h"
+@@ -34,6 +35,29 @@ static const TypeInfo target_info_parent_type = {
+ DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
  
- static void accel_system_register_types(void)
- {
-+    GSList *targets = target_info_qom_get_targets();
-+    const TargetInfo *ti, *prev_ti;
+ static const TargetInfo *target_info_ptr;
++static GSList *target_info_classes;
++static bool target_info_initialized;
 +
-     type_register_static(&accel_ops_type_info);
-+
-+    for (GSList *l = targets; l; l = l->next) {
-+        bool duplicate = false;
-+
-+        ti = TARGET_INFO_CLASS(l->data)->target_info;
-+        for (GSList *prev = targets; prev != l; prev = prev->next) {
-+            prev_ti = TARGET_INFO_CLASS(prev->data)->target_info;
-+            if (g_str_equal(prev_ti->cpu_type, ti->cpu_type)) {
-+                duplicate = true;
-+                break;
-+            }
-+        }
-+        if (duplicate) {
-+            continue;
-+        }
-+
-+        accel_register_cpu_type(ti->cpu_type);
-+    }
- }
- type_init(accel_system_register_types);
-diff --git a/accel/accel-user.c b/accel/accel-user.c
-index 7d192306a65..85ede70e5bd 100644
---- a/accel/accel-user.c
-+++ b/accel/accel-user.c
-@@ -9,8 +9,15 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "qemu/target-info.h"
- #include "accel-internal.h"
- 
-+static void register_accel_target_type(void)
++void target_info_qom_init(void)
 +{
-+    accel_register_cpu_type(target_cpu_type());
-+}
-+type_init(register_accel_target_type);
++    if (target_info_initialized) {
++        return;
++    }
 +
- void accel_init_ops_interfaces(AccelClass *ac)
++    module_call_init(MODULE_INIT_TARGET_INFO);
++    /*
++     * Avoid enumerating target-info classes during QOM registration,
++     * which can leave unrelated types incomplete.
++     */
++    target_info_classes = object_class_get_list(TYPE_TARGET_INFO, false);
++    target_info_initialized = true;
++}
++
++GSList *target_info_qom_get_targets(void)
++{
++    assert(target_info_initialized);
++    return target_info_classes;
++}
+ 
+ const TargetInfo *target_info(void)
  {
-     /* nothing */
+@@ -42,7 +66,7 @@ const TargetInfo *target_info(void)
+ 
+ void target_info_qom_set_target(void)
+ {
+-    g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
++    GSList *targets = target_info_qom_get_targets();
+ 
+     size_t num_found = g_slist_length(targets);
+     if (num_found != 1) {
+diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
+index a3a131c80f8..570fc0b45b2 100644
+--- a/tests/qtest/fuzz/fuzz.c
++++ b/tests/qtest/fuzz/fuzz.c
+@@ -173,7 +173,7 @@ int LLVMFuzzerInitialize(int *argc, char ***argv, char ***envp)
+ 
+     /* Initialize qgraph and modules */
+     qos_graph_init();
+-    module_call_init(MODULE_INIT_TARGET_INFO);
++    target_info_qom_init();
+     target_info_qom_set_target();
+     module_call_init(MODULE_INIT_FUZZ_TARGET);
+     module_call_init(MODULE_INIT_QOM);
 diff --git a/tests/unit/test-multi-target.c b/tests/unit/test-multi-target.c
-index a91fe8e6d07..9ace553ca05 100644
+index 89b55bb1632..a91fe8e6d07 100644
 --- a/tests/unit/test-multi-target.c
 +++ b/tests/unit/test-multi-target.c
-@@ -15,6 +15,7 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qemu/target-info.h"
-+#include "qemu/target-info-def.h"
- #include "qemu/target-info-qom.h"
- #include "qom/object.h"
+@@ -30,23 +30,29 @@
+ /* stub for system/main.c */
+ int (*qemu_main)(void);
  
-@@ -41,6 +42,18 @@ static void test_qom_types_are_unique(void)
-     g_assert_true(targets == target_info_qom_get_targets());
++static GSList *targets;
++
+ static void test_qom_types_are_unique(void)
+ {
+-    module_call_init(MODULE_INIT_TARGET_INFO);
+-    g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
+     g_assert(targets);
+-    const TargetInfo *first_ti = TARGET_INFO_CLASS(targets->data)->target_info;
+-    target_info_qom_set_target_info(first_ti);
+-
+-    /* register all types */
+-    module_call_init(MODULE_INIT_QOM);
+     /* trigger type_initialize for all types */
+     object_class_get_list("", false);
++
++    g_assert_true(targets == target_info_qom_get_targets());
  }
  
-+static void test_accel_cpu_parent_per_target(void)
-+{
-+    g_assert(targets);
-+
-+    for (GSList *l = targets; l; l = l->next) {
-+        const TargetInfo *ti = TARGET_INFO_CLASS(l->data)->target_info;
-+        g_autofree char *name = g_strconcat("accel-", ti->cpu_type, NULL);
-+
-+        g_assert_nonnull(object_class_by_name(name));
-+    }
-+}
-+
  int main(int argc, char **argv)
  {
      g_test_init(&argc, &argv, NULL);
-@@ -55,5 +68,7 @@ int main(int argc, char **argv)
- 
++    target_info_qom_init();
++    targets = target_info_qom_get_targets();
++
++    const TargetInfo *first_ti = TARGET_INFO_CLASS(targets->data)->target_info;
++    target_info_qom_set_target_info(first_ti);
++
++    /* register all types */
++    module_call_init(MODULE_INIT_QOM);
++
      g_test_add_func("/multi-targets/qom-types-are-unique",
                     test_qom_types_are_unique);
-+    g_test_add_func("/multi-targets/accel-cpu-parent-per-target",
-+                    test_accel_cpu_parent_per_target);
      return g_test_run();
- }
 -- 
 2.55.0.windows.3
 
