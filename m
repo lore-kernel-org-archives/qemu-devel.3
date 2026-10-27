@@ -1,72 +1,72 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96ED606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 17:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C644606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=IMXRq0Lp
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=DQ0+KM+L
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLlPj-0002W6-Qi; Tue, 27 Oct 2026 13:56:47 -0400
+	id 1xLlUU-0003ZG-E8; Tue, 27 Oct 2026 14:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xLlPi-0002Vi-78
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:56:46 -0400
+ id 1xLlUF-0003YR-4U
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:01:28 -0400
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1xLlPg-0001p1-2o
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 13:56:45 -0400
+ id 1xLlUD-0002JU-0C
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:01:26 -0400
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4a210470b49so984625e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:56:43 -0700 (PDT)
+ 5b1f17b1804b1-4a207b02a2cso1000325e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 11:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793123802; x=1793728602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793124083; x=1793728883; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=pfPfto03nTAA/6E1XOVFQIo2ZsjmIrwuiMIxtQXW/4g=;
- b=IMXRq0LpghlmQEoxNyVcNcXp/dxGNZzH9hrpfkQEwpe6iBM5PSS7w3oB7enue+wdnR
- whjGWdlK4CO+LW3WxtO/n+3jSpBq1iH8xgBcyLOnQpwBOhd4RQzkN+4pgC1qZ6STqcpl
- CSC4Bj+gJoHy05nP9PwcRs2mFRJNOMlmVj9N2Rb6EAHGk+00xEV2TkqaVMLtBKfbEIzj
- +h/ZErLuoWROx05huLn+v4ZXeSWT25uM9b1439DWGha5hjtgbM77Fz8d8zKffnio6zK7
- RMPap2yVTYTLCjuZipn+HNRHqEAJ+ueW1UA8OEacDBvU51pAjU0DqNcN3AO1XSbCJwDY
- L90g==
+ bh=1pJMkL5LbRA7+b3zo03kKDm+u16D80247M1e3FD9EJ0=;
+ b=DQ0+KM+LQs26TkSqJFIDBmjjIE5DxTVsf4CbHG1xCZAi4wtWbaKUsJBMnMmCCZ+51D
+ LpTljo0Y3uaPQRWuMXTUoGtJmLJZP0QM5D5OoEChf4ZRUJH3zqfqH7fzJTPkfbMJXl9X
+ TW9G2xhPSrdBi4rk6wCLatdDhCh8XdD+USJDJaxATdG784eMXKqhKe/KM/14qpREBJi0
+ EkA9qIaDtpnvITxcLRNdBbf2pBnVkmqFMgDRqMhTMV+nfaCZHs7WENkltGLxtGXTyPaf
+ EwWSsqO6/Q4aBCCVYifsN3IdtjZjEe+XtJf1gdf5QmivILOtXAPWL/HQ3HiAqmqlD12p
+ 5ozw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793123802; x=1793728602;
+ d=1e100.net; s=20260707; t=1793124083; x=1793728883;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pfPfto03nTAA/6E1XOVFQIo2ZsjmIrwuiMIxtQXW/4g=;
- b=pcXLFbb13GNIL7c1TU0vAjqpj6O/WhoKIEUIZKpVmxOZLvPIG0RmcuELaV86uY/1Wg
- g/uzuIZwRLUkUsgWFcJEIB+s63StkLGtBtJ+R0Dr5QSKSafoW2LpgZTTQ7b6Nokzie3p
- iNVDIalOYoQq2XrkBk+O+SToA633xVfvg/8uEjkmw3gY0/5C1tweVkcjA+HhnYuOaHmk
- GZXVWmX2kY8AtrzKzRMW7IrJJRuyifah3s2lqkWN4mQvuazMetXKngti9W2tNw+InxpP
- wsuUjpgnvE9RtOPxzPA15b5KuLh+3t/nmLnk33ab30X5DNQk2Jq6t1akVfXuGbmLgP5D
- yjug==
-X-Gm-Message-State: AFq9FYJngKnOrOvZsJ4mOSZYfDzKy+vBUnXk9m3JRG+50BiSozIfYEJE
- wuflUQgXLsLMUqdSwI4SrVnhjynHV0gqv6AY8HPStxRisUV1vZCGo01F2y2deNczUBo=
-X-Gm-Gg: AYBFou2Ih8i5l0aYwEVgCl2nZUmp2lqi3ZLcCNk7fHmQEBrk4JzZGH09sMRQfzdrJc4
- 1/M+Gn04b5+ajO6TrB5wSAOYqhOtYma8AicZh3eFfE8q7dwxIloRLvnOa6dNR6cCLU6c/GqM7Tz
- vz9u7yLM6H1SVwLSkkHrt2/FAj9affP3rE//Z0HEwep7GvVBgWeP1S3cIuAypZ9kV4LGZJD5M2y
- o2uEJsmHxJXeRs9NSmBznxYR0Olwez48VdHRUPlZcsssvmLCgLaaAuuBPdB6ZdzOkSMisdUs3f2
- CJHz8tDjJhsQSwbKgfAYG1WvCj+RHUgU5cLtJ2fvjrZOiEq4x6XnMVXYHrCa3zQpsbcj4v/Xn+4
- wfMOvvKNEwny/ZmLqeKNnE/QE7vhu4Xw5q/me1HuqBvNjjU45yJjbcPQIWjF+O43PtoWqr0O3ls
- 1/V/hF3zkRbX7z+vnSA5ZaKVDVCYkVWRcvd7GeYn07hb3v8+xUGhMs5/43AGEb3rcZVui3FEnup
- F8D1G77EJz1dKZ2/nVst10DmAMsXysdExjHPSlpM/4yHCN7CLzOsvD7qtcP5MeQeiYsvVr3xFiA
-X-Received: by 2002:a05:600c:8183:b0:4a2:8c5:5f2 with SMTP id
- 5b1f17b1804b1-4a35ac99b41mr181733945e9.5.1793123802532; 
- Tue, 27 Oct 2026 10:56:42 -0700 (PDT)
+ bh=1pJMkL5LbRA7+b3zo03kKDm+u16D80247M1e3FD9EJ0=;
+ b=vesYKB9cvcg1I2hAx76mGzxlp56S4ESw92KRwGxS75Ri8zR3VvfgzDy9ZD5yqS2+vy
+ vO7XextLs/THQUMaOWNER//qpIZQ2pzhk+Ko3QffXmPc/m5ZQSxyBtXPoV8zd4f2yw50
+ hTlNKgIWPqOlmweNBuis7ArRvGHLq6bT1alQRJ8HTYrrIqBeG+Da4muOkluz4x6anAlI
+ ki7XjKG2a/7ufkX8pT7yoej2sbfhudUp/n+gD5QjWCQKa51eLKD7zdE831YrVTOBKgJG
+ +PRnF1etO3a+t0mocXKo/jsX7a4Cob3KLPEyCsxEWGt57BGBKLDSISmguINXa2S3Q09O
+ kJNQ==
+X-Gm-Message-State: AFq9FYJDd9F8RokVnrxIdRDidhIsrhY5HOQ6G/Pb0zGElbgw+7rUQhw2
+ 4qKOU4x/No/weIpBA++G6kPF2yIlprMwtjMuiS0Zd9IIAXdMGwdQzzS+0Y9f2mZdofU=
+X-Gm-Gg: AYBFou2rcHu/KG/HjN5z4qkJTnfbaKw/M8M5AZmEE+rIEyybe+EVIa/8fsrN55s+E8z
+ 2JlO93skKyFygiztXmrrADSiM0JYDV3CT/1TIYSnYn+ARWUb65CGH5EoYNZTFlxCsqcfHuU9LLQ
+ USfA13tSyKowL8utxhngcQAsmkH4TWdLjTiXDf6wYZLEfp6O4hqVnalMPWCnvBwUQkWAmS7mFwg
+ ZESHvGp89qBZei75KVnXJYLJbmtFkqBaPGs7cegcTfoiUshyBgcQO9JmJqrg4oo4uxwdk/IrFhf
+ WB/7/ti9zWtcM10eOqqG5vgiF+VzNVI2IMCBR8NCAWUSf+pksZI3epxrZ1dhOIFIEDVOzFw3mEQ
+ +zHCe2WrJH9y21Vcotj6KykA1hh/ESgw3AlzZolDsf7hkwGA7Wp3al+EIYd3ugzDpK6RIQBUhqQ
+ C+KxFwWednZ2Mck061ExAxJH3ThVptyzo6PRuKNH3JpGDFgnhglXxT+FOtuJcRRXjMuVagf/CBA
+ stOddpoXfbYrYt93Lvlw0j2BVAVK2X1DRsFgGybTSKuCsPh3sgg5lG0rNJbgZq7OnVc6OximxLZ
+X-Received: by 2002:a05:600c:3b02:b0:4a3:18ca:806 with SMTP id
+ 5b1f17b1804b1-4a35acb234emr208829675e9.20.1793124082665; 
+ Tue, 27 Oct 2026 11:01:22 -0700 (PDT)
 Received: from draig.lan ([185.124.0.158]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a92eb9b52fsm3255075e9.2.2026.10.27.10.56.41
+ 5b1f17b1804b1-4a92bd50b05sm7951045e9.12.2026.10.27.11.01.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 10:56:41 -0700 (PDT)
+ Tue, 27 Oct 2026 11:01:21 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 87A4B5F81F;
- Tue, 27 Oct 2026 17:56:40 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 1EE095F81F;
+ Tue, 27 Oct 2026 18:01:20 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -76,14 +76,14 @@ Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,
  Rosas <farosas@suse.de>,  Kevin Wolf <kwolf@redhat.com>,  Peter Maydell
  <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,  Philippe
  =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 4/4] AGENTS.md: make the human part of the design process
-In-Reply-To: <20260930085433.830743-5-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Wed, 30 Sep 2026 10:54:33 +0200")
+Subject: Re: [PATCH 1/4] docs/devel: relax policy on AI-generated contributions
+In-Reply-To: <20260930085433.830743-2-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Wed, 30 Sep 2026 10:54:30 +0200")
 References: <20260930085433.830743-1-pbonzini@redhat.com>
- <20260930085433.830743-5-pbonzini@redhat.com>
+ <20260930085433.830743-2-pbonzini@redhat.com>
 User-Agent: mu4e 1.14.4; emacs 30.1
-Date: Tue, 27 Oct 2026 17:56:40 +0000
-Message-ID: <875wynrprb.fsf@draig.linaro.org>
+Date: Tue, 27 Oct 2026 18:01:20 +0000
+Message-ID: <87zevzqaz3.fsf@draig.linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -117,29 +117,77 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> This came out of the experiment with the first version of the AGENTS.md
-> file.  This addition improved the behavior of the agent from the very
-> beginning.  The very first answer to the same prompt was "I'll orient
-> in the codebase first, then we should talk about design choices before
-> I write anything".
->
-> In fact, after thinking it pointed out from the start that this requires
-> pre-arrangement and asked two questions (how to represent the pressure and
-> temperature in the QOM properties, how much of the behavior to implement).
-> Even with a single data point it seems worth trying.
->
-> When asked to commit autonomously, the LLM also clarified that it
-> wouldn't add S-o-b trailers and that pre-arrangement was on me.
-> It included "Message written by an AI and to be rewritten by hand; not
-> for submission as is" in the commit message, a "handover notes"
-> section about design choices that were made without the user input,
-> and the umpteenth reminder that the work may only be posted if a
-> maintainer has agreed beforehand to review them.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Until now QEMU's code provenance policy declined any contribution
+> believed to include or derive from AI-generated content.  A blanket ban
+> was easy to maintain while LLM output was rarely usable on its own, but
+> as the tools improved an absolute prohibition has become harder to
+> justify and enforce.
+<snip>
+> +LLM-assisted and LLM-created contributions
+> +''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Use of generative AI can be classified in the following four buckets:
+> +
+> +- "background" assistance, such as completion and code review.  This does
+> +  not need disclosure.
+> +
+> +- small LLM-assisted bugfixes (as a rule of thumb, below 10 lines of cod=
+e)
+> +  are allowed with disclosure.  Splitting a submission in multiple parts
+> +  is **not** a valid way to bypass this rule; repeated, frequent posting
+> +  of such fixes must follow the rule for full contributions.
+> +
+> +- use of LLMs to help generating parts of a larger patch---test cases,
+> +  adaptations of existing code, boilerplate code for a new API, a tool to
+> +  help performing mechanical changes, etc.  These are generally allowed;
+> +  disclosure is highly recommended for non-trivial, functional code.
+
+Personally I'm happy with the next bit but if there is still
+disagreement about the wording could we merged the policy updates up to
+this point and defer larger contributions until we see what the
+practical effects are on the list?
+
+> +- large, heavily LLM-assisted contributions where LLMs write large parts
+> +  of functional code.  These are only allowed if *pre-arranged*,
+> +  *high-quality* and *well-tested*.
+> +
+> +The last case (*"LLM-created contribution"*) is the one that requires
+> +a more careful approach.  In particular:
+> +
+> +- "Pre-arranged" means that a maintainer has communicated ahead of time,
+> +  for example on `IRC or the QEMU mailing
+> +  list <https://www.qemu.org/contribute/>`__, that they are willing
+> +  to review an LLM-created contribution.
+> +
+> +- "High-quality" means that the contributor must apply the same judgment
+> +  that would be applied to other code changes.  Contributors must invest
+> +  substantial time reviewing their contributions, curating them, and
+> +  understanding them in depth.
+> +
+> +- "Well-tested" means the LLM-created contributions will be held to a
+> +  higher standard than human-created ones, because LLMs make it easier
+> +  to write tests.  There are no exceptions for "writing the tests seems
+> +  hard" or for `yak shaving <https://en.wiktionary.org/wiki/yak_shaving>=
+`__.
+> +
+> +.. note::
+> +    Pre-arrangement ensures maintainers have bandwidth for review before=
+ a
+> +    contributor invests effort in creating a large change.  This is not
+> +    a new concept in QEMU: maintainers have always encouraged early
+> +    alignment on mailing lists or IRC prior to major architecture or
+> +    subsystem refactoring.
+> +
+> +    Maintainers have freedom to determine what constitutes "high quality=
+".
+> +    Because LLMs lower the cost of patch generation, maintainers may dem=
+and
+> +    significantly larger revisions than for purely human-written code.
+<snip>
+
+But for my part have a:
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
