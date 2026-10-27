@@ -1,96 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A508B606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13796606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=fmg9nLsC
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bXtK9XYx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLi48-0004OQ-2C; Tue, 27 Oct 2026 10:22:17 -0400
+	id 1xLi9d-0006EB-BT; Tue, 27 Oct 2026 10:27:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xLi3v-0004Ms-N6
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:22:08 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xLi3t-0004I0-SR
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:22:03 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-6df5e315bd1so2960169eaf.2
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:22:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793110920; x=1793715720; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=8hBc2cr45C6cbVa960jsQEGRROgbvNTrQ9bk+dKhFnc=;
- b=fmg9nLsCGVw8+3evHnn93OqOr7gBh3yKEbvXFQMA8ciGox3tTJMlK3BaUfoLOULhFe
- 0VLz/GV1AsI3GK6G+JVNataNUPEJqQYGNLfoaKafjY4Ci1S7s9vknQuGsgA7NIz4o8ea
- R3L1PSiNCM5FC5OVRHkDyefZivjHn7XPQqRtXlu+c3+pmzPvskbErjADLtCYOXzzaXHJ
- MJEq5dT9vrRtGmCfL/0OaK8fYzHTd+fnenkdszGUJOlp8OOtW724nP44hZsrg8ole3/q
- DZnYHQHSMaN3s1I6otofMsXS/Z4vIrthYiPrqDB64NCXCjg7VVhJm3HeHrCLlSLq0DrU
- nYNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793110920; x=1793715720;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=8hBc2cr45C6cbVa960jsQEGRROgbvNTrQ9bk+dKhFnc=;
- b=w+uHVCm3MacUXdGV0b55R+lj17okT0dNBE9TwCyGZYn+1aY2wp/UQN3nGBlWaNS/rN
- JImEMLmQkXShMzaZsWGLbENSJpwuRZnnWjqs6aX+wOiQs+n5sX0EEo4EdduBi0b6ZlVx
- 414gt7AJY2S6eWmAtXwof5fqWCPlMNX2cBqUuVCvObyzEaP35XWhDckqqCXULFdNEGmK
- hBiFPyaRNN/qw3G+vQfS4o+y8+S3+d6ue462q0Tx6/0gRK1gAMuhxYj5uewkpFsRO9VQ
- 0bb0mp1zQ+wmdtMd5znFjajiyV/14jZGaqkwdnkMfQi0+GoJMvXREBiiaKwygSWzO4DI
- zTNw==
-X-Forwarded-Encrypted: i=1;
- AKwUvBx26uVAJORlEHw8e82PRmpDb6gY87FDdAs7Lo10KEn2vZiLk+z24e8k0TAjqOj05MDjMnTXk5ipPv4v@nongnu.org
-X-Gm-Message-State: AFq9FYJL9cPu76Z7riLE87uFD417BNUPgLTEnBpDU50LsC570GiU08Cq
- d+y9BK95Qny0CWHLErljaYsHSWspYMkrAnoRay7sKx8zJV9jOmksVVyxmV0Hmrp3qfo=
-X-Gm-Gg: AYBFou0jWt1RGb4PM4Hq5Aet8kw2bEnH1vgw3SbnzMqbLM9PDgadGxeZHIMSUarXlGY
- M2PhfYFPEiNohEP2l9LVOpYbn8mYrkjOO3hEXDmzKa77vk0IT59EK+1rJwYLu++ZRnFHG/orkhf
- aMbxs9TvncUPIh+zLkpY0mmE+zsDrvUQsuC05V/OIvEgxxRG71yLqCjNF+7CaDdYolOgMqeOBYL
- 3WcwF9R2CqDqH7rgl3izvedvva6DsTm2aUnTDJNqguYTkn/C5M3BseoxM7xYllrmcRMO20fAaTN
- 4jCz/hZ47juTcY3PARvQBoXBjODBBMh3P6A6XmCatYEopKbLNMY6FRWw0t84PluoPjEPIok3HCc
- by/f6RrUzEA0/2Y2LiFl1sCdZ9uNNf5yV2IOnFRXesGJS+j8ddcQ/8ZNvFBJwAJJpZ0ZGZu0qGj
- eMUkjprtN9l1T5yDhiLokyE59ME1cDtwPycBKo6c8oSBNp7QZ1j/F2dkxY4lItPUybZEtcnOn9H
- fuvPkWrGdzmZVHu2PlJ0lfSCTAsuHJMSaKN0LNzgTL/JZJBuhqGyGRRK6rgR4uy5WwBUuQ=
-X-Received: by 2002:a05:6820:7094:20b0:702:3405:dd86 with SMTP id
- 006d021491bc7-70ba0edc0ddmr3671233eaf.74.1793110920101; 
- Tue, 27 Oct 2026 07:22:00 -0700 (PDT)
-Received: from [192.168.129.53] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-70bfa90c943sm7295828eaf.3.2026.10.27.07.21.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 07:21:59 -0700 (PDT)
-Message-ID: <abf65923-52ad-4515-9a17-3b134faba7f6@linaro.org>
-Date: Tue, 27 Oct 2026 09:21:57 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xLi9a-00069v-OZ
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:27:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xLi9Z-0004kH-Dc
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:27:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793111272;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z99a4y5iq9gxIHyeyXk2VYJFdL+EqNFhNKW6A4NBsA0=;
+ b=bXtK9XYxoxzZV1L62Tw8k1Y5DdNMg/dN6OJ98kuL1NbBTk+uRCMf9llMJBClRRXN0WBD+H
+ GkLiMYyQ6kNpWpr5ftWH46dgmDErkczXX0BCm3phy7zFZ/TaLhVRjboTyAyqsGM2onchPz
+ Cl2ahwBMXHof6Fur58s/fv9QuNCythU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-k_eEqaUhNUK280bmrd_VkA-1; Tue,
+ 27 Oct 2026 10:27:45 -0400
+X-MC-Unique: k_eEqaUhNUK280bmrd_VkA-1
+X-Mimecast-MFC-AGG-ID: k_eEqaUhNUK280bmrd_VkA_1793111264
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 155D41800C3C
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 14:27:44 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DADDB41B; Tue, 27 Oct 2026 14:27:42 +0000 (UTC)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/20] multi-target 20261024
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
- stefanha@redhat.com
-References: <20261024173649.7405-1-pierrick.bouvier@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261024173649.7405-1-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 2/2] crypto: add newline in error hint messages
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
+ Markus Armbruster <armbru@redhat.com>
+In-Reply-To: <20261026111237.660633-3-berrange@redhat.com>
+References: <20261026111237.660633-1-berrange@redhat.com>
+ <20261026111237.660633-3-berrange@redhat.com>
+Date: Tue, 27 Oct 2026 18:27:34 +0400
+Message-Id: <179311125461.913211.8522458022472900188.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=302;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=+lDIuFbopFtmcJyQ2CHR6yOR9O8bTwtAr2cFQm0TZdw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBq4LTZWyfAsxCnOlvG6DsoDotas/i652Z3mBxMu
+ KOCTYbFiJeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCauC02QAKCRDa6OEJdZac
+ 5dpjD/9O+MC+wP9yKOWxiM7Ceqq6ffR2/nXBOxWvVJGYtFqMdu8Ber+32cICOcZo26QGo/pAaAD
+ cYWLsTTDkS+ndNw0icEPHHgFMm/vFejbi/ss6YAkuNLCGI5u7tafGDNfsLVWSny9LE3++IuIege
+ yU3FEJyppgXtmT8Y+yQOheOo3FVxBNGpiBJOAZeySJAyG9bea15/ioSFcWo4zOiGzo7HfCGQzNL
+ PNgxYMJpSQv9N2x4BH1mZPp1L96rM7xgibCTEV9R62Ihe9AvkdzQKd7if2LTAADvfW9qxUWFYMO
+ hOnSRrevPJoCKfoFQ4lVKT6pjhW3Sl8r932kfn2V6D6PWjWAbSOpBiWfCcnEzIQO8wlJh5YpXl2
+ BsJSjAOCAv7DztqBH49myMzaZY+JI1rjz8Cruna8Whu2hlYSvmyhvkg2p7m9xp8XY0urkrhHkKz
+ fbN2eOeY/03ECNgCyc/uv50B/UcXnP1VCZtUCjQUq2HsuChqONV2MZinj6J72OTDIqSxa4HXP8z
+ 1uPxoy+L4pXfKRQcOWMBjcSV47xnaHm/vkMxOQDYR/uPA55/OONv7ja5dOxVxNMh7ZJHG/stvIy
+ Aj26Ms8ab8zjT14r0Go87QS9rVefp4HPzQ3h6QkHeDzZNW5tIIv96q1jE/XvvSgps1M0GCCR1A5
+ d4/J+1m4VMlPJHQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,37 +101,20 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/24/26 12:36, Pierrick Bouvier wrote:
-> The following changes since commit d73149283205645625bfa9fe029cfb68e4c4a9ae:
-> 
->    Merge tag 'samuel-thibault' ofhttps://people.debian.org/~sthibault/qemu into staging (2026-10-24 16:09:37 +0200)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/multi_target-20261024
-> 
-> for you to fetch changes up to 59f954f8277e80065b1286bfe89ca8861c08d1c5:
-> 
->    meson.build: list all remaining softmmu targets as comments (2026-10-24 17:36:09 +0000)
-> 
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH v2 00/11] multi-target: prefix helpers with target prefix (Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>)
->    Link:https://lore.kernel.org/qemu-devel/20261024163249.77855-1- 
-> pierrick.bouvier@oss.qualcomm.com
-> - [PATCH v3 0/9] multi-target: add riscv64-softmmu (Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>)
->    Link:https://lore.kernel.org/qemu-devel/20261024061616.27381-1- 
-> pierrick.bouvier@oss.qualcomm.com
+On Mon, 26 Oct 2026 11:12:37 +0000, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> The error_append_hint() API contract requires messages to end with
+> a newline character.
 
-Applied, thanks.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-r~
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
