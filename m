@@ -1,53 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0410B606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04248606A31D
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 21:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=VeVaJdYg
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=PnnGZGan
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLp5h-0002x7-7U; Tue, 27 Oct 2026 17:52:21 -0400
+	id 1xLp5o-0002yZ-0K; Tue, 27 Oct 2026 17:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5g-0002wg-2j
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:20 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5j-0002xo-T6
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:24 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5e-00007I-JH
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:19 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5i-00007r-7O
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:23 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 87199401BE;
- Tue, 27 Oct 2026 21:52:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2002D1F01825;
- Tue, 27 Oct 2026 21:52:15 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6CF4160136;
+ Tue, 27 Oct 2026 21:52:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72131F01825;
+ Tue, 27 Oct 2026 21:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793137937;
- bh=ncuZGiDq7qjELiRW4lF+A0ExaCCvEQiV272wfgrMbWQ=;
+ s=k20260515; t=1793137941;
+ bh=bTBTtjYW8t5JMYhZRolyj7KJl2yanea6gt+IEaYH3eM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VeVaJdYgXvchzuSfZR+SUShnSHXqgh+/hYAyiUNOvF/70jLochNwFI+4X60ibYrnd
- IT7fLI9oP471f4W81197I2ZdE4yYLHnIHGqWOMK03U/5lNf2CKyncOOyHAGXLvts3D
- MSKNHRDjZP37/TqCb0rRETgD6je5QZvWZEHF6UCC3EHoTgDmapcE7+pTV/Het1lXSH
- /ml9IdQ7OzF0thg29+OUUtkps7mAydvylSKJyMxusptduxswrn2OZYgmJ2xhO1SBQZ
- 3IyHYAGAlsBcr2hwwBDgGgCwyHV1UF3L/YLuCfB39BvoQ45tlbOLtQKywY4usWQG74
- /5Ts8wEjl53Gg==
+ b=PnnGZGanaQwzBu2QDp2ZtwarBF8H22ys/q/4B+pvYFX9W8lxQ4s4L3CSMCW7HXL+S
+ F8OCzFnuBtL6n3denmHikmsUw8m9/u5J+S+xinZKNQFOc7s6YC3DEs0+ib0QEdUitt
+ SK/2oiumLRVp5edUH4IA++ixFl9XbGLOC5UK66lRWFf8TV04l9A/bxV0aeYp3qEKKS
+ KpV8yBdvPqGP24WRhQ8wsqyKrbNHigIsR8nRILI5hgFzLyxjYjtU07JyfDjaw61g41
+ vlnv0W0FOWa7mnj3X4YfXrK/fqVbXqp04HarSgTjNvwTu0l2R1Y/xTLDT7rNmChk9T
+ uU4BowYBU2apw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Keith Monahan <keith@techtravels.org>,
  "Kirill A . Korinsky" <kirill@korins.ky>, Helge Deller <deller@gmx.de>
-Subject: [PATCH 3/8] target/hppa: Only allow 8 BTLB entries for HP-UX 9.05
-Date: Tue, 27 Oct 2026 22:52:04 +0100
-Message-ID: <20261027215209.21150-4-deller@kernel.org>
+Subject: [PATCH 5/8] target/hppa: Preload I/O-space BTLB entries for LASI and
+ the central bus
+Date: Tue, 27 Oct 2026 22:52:06 +0100
+Message-ID: <20261027215209.21150-6-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027215209.21150-1-deller@kernel.org>
 References: <20261027215209.21150-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -75,29 +76,58 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Keith Monahan <keith@techtravels.org>
 
-The physical PA100LC and PA7300LC CPUs implement 8 BTLB entries only.
-HP-UX 9.05 seems to have problems if more are available, so reduce the
-number to 8 entries to allow HP-UX 9.05 to boot.
+Set up the BTLB to allow operating systems to access LASI and central
+bus addresses.
 
 Signed-off-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index c0ba787974..da48a78569 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -248,7 +248,7 @@ typedef struct CPUArchState {
-      * ??? The number of entries isn't specified by the architecture.
-      * BTLBs are not supported in 64-bit machines.
-      */
--#define PA10_BTLB_FIXED         16
-+#define PA10_BTLB_FIXED         8
- #define PA10_BTLB_VARIABLE      0
- #define HPPA_TLB_ENTRIES        256
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 8d378385b2..e403ae5fc9 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -896,6 +896,38 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
+     }
  
++    /*
++     * BTLB equivalence maps for the I/O ranges HP-UX 9 uses
++     * without creating page directory entries: the LASI block and the
++     * central bus (CPU HPA, broadcast).  Must not cover other I/O space, as
++     * HP-UX probes with LPA and skips pdir setup for already mapped pages.
++     */
++    if (!hppa_is_pa20(&cpu[0]->env)) {
++        static const struct { uint32_t start, last; } io_btlb[] = {
++            { 0xf0100000, 0xf01fffff },     /* LASI */
++            { 0xfff80000, 0xffffffff },     /* central bus */
++        };
++        CPUHPPAState *env = &cpu[0]->env;
++
++        for (i = 0; i < ARRAY_SIZE(io_btlb); i++) {
++            HPPATLBEntry *ent = &env->tlb[HPPA_BTLB_ENTRIES(env) - 1 - i];
++
++            ent->itree.start = io_btlb[i].start;
++            ent->itree.last = io_btlb[i].last;
++            ent->pa = io_btlb[i].start;
++            ent->access_id = 0;
++            ent->u = 1;
++            ent->ar_pl2 = 0;
++            ent->ar_pl1 = 0;
++            ent->ar_type = 1;
++            ent->b = 0;
++            ent->d = 1;
++            ent->t = 0;
++            ent->entry_valid = 1;
++            interval_tree_insert(&ent->itree, &env->tlb_root);
++        }
++    }
++
+     cpu[0]->env.gr[26] = ms->ram_size;
+     cpu[0]->env.gr[25] = cpu[0]->env.kernel_entry;
+     cpu[0]->env.gr[24] = cpu[0]->env.cmdline_or_bootorder;
 -- 
 2.54.0
 
