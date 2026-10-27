@@ -1,99 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC62606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1229606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j4E4Ikj7
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TzJb7lha;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=NnOHBrV0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmJY-0001Un-MG; Tue, 27 Oct 2026 14:54:28 -0400
+	id 1xLmU7-0004bp-Bp; Tue, 27 Oct 2026 15:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLmJW-0001UM-8K
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:26 -0400
-Received: from mail-dl2-x08.google.com ([2607:f8b0:4864:38::8])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLmJU-0007ZE-3c
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:54:25 -0400
-Received: by mail-dl2-x08.google.com with SMTP id
- a92af1059eb24-1379d236149so40681c88.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 11:54:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLmU5-0004bb-Ot
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:05:22 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLmU2-0000Is-Fl
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:05:21 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69RIHoXK4036021
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:05:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 45vmp1ssoi1klKZ2hb22+gEefnvbpY9FKmBFUSpyP9U=; b=TzJb7lhaRzbHPrfB
+ pxLUtuLjxtGkTpk44UXaj2yHzFCa2Bmb17y5y6FBzeU3hn40P77if6LUKI96abiS
+ PREnmw1paawBOVTbF03hBkCb7iMPO2AtfFswf15dW6X2YJtoW2lqbikhCuQP7cLk
+ vU6WZXcRRTU28n2xqEc4ZW8+dZdPgCTGPhxpc6IP488JfPbxQMri7HqqAqA6IIl0
+ pfCR497LaKG2I6HR9cEQ8CfJftc40TeLnipZisY5cDFEYyKM3McE38LVCgDkTlgf
+ 03KualuHT3GY28ZXG6KmxAiIIhOXeVxsYv2A/yA1ctELMqzcltVYEfzobpgQJWfX
+ E2jGTQ==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjyjprn72-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:05:15 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-5ead18311ebso87323e0c.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793127262; x=1793732062; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=+TwibmVIavdS0qeo/uNI7cmJJcasYaxVzwwl7p9xbfE=;
- b=j4E4Ikj7wdBwWFDZy5oXM4XT4EdYgjMM5Qh1ffd/TBqYXeYWogde1ju9LDW+HjOq20
- 0zW5H1jEaTDS3m4QEH5F/vzjhW7P3lJv0AAKY6V5AVuOGvGFx8/e8TXjFaHHWp+8e+sq
- COvK/kZoyFRHknDjIqbplpSo1Kdbcb74ZTwT8oVMJePaF4L51Gz0XFH6fs4KlVTElwdN
- CizsgFRMglQqWLTHBv7fl7ITNuyNbQtP5rYHAbkqoIJ/AyrZV9JEkLRKNvHOiLTg3aC/
- 1HTvM3OW5d2UBPH9ioPS3HqbOnba/dqBsdMkzioRmNBK4prPUt5LcQKStEJmrVQO7ZvK
- f9uw==
+ d=oss.qualcomm.com; s=google; t=1793127915; x=1793732715; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=45vmp1ssoi1klKZ2hb22+gEefnvbpY9FKmBFUSpyP9U=;
+ b=NnOHBrV0jgJRwN0cQzb1V/hQc69A6FHVyfqQSZ2YW8FpSiCiEsilQaj4eRbuXFljzR
+ RfxEOUOY2jw7HIcE2cfVeIPk9U2Zls0r+fjWsNgk0WWNGiOvjMINp8BYVmVDXYl7BxyI
+ 4Qmd80Rnf19d2TW/bLjfo0sFaiMOQfVwHKNPbql04d8OsQTXw3E0qQsTalpH2UHxTUbD
+ D4sqyZSRdOWcvo6cIb5O5KCxOy2g181VV8+N5Fk0Q95YO7rTuHABvqLpuwfCEvskMxd9
+ 0m+sLYRTuhmPlFKOoKhSYqaeThmuWRr1Ug+HC32ih1ISh7hpOwCkzGuRHyU0bNfhQXJG
+ utcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793127262; x=1793732062;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+TwibmVIavdS0qeo/uNI7cmJJcasYaxVzwwl7p9xbfE=;
- b=Vf1e145TJ15MfEyN2d0oe9JgJa4rgrx4k522TBJMGCEADgdIQ5tKvg5R7d69fGl7w2
- zbSFkAy9F6RhZrv2m+M5KluvQTTHg9Um9eKILB/NFwFHLE09wEXFVZF3OYgnH0bvhYgW
- pTf1ks/lYwdRG39dlT20Ebb9w0PNeZhaYR3+Uk2hkCV9pRT7l2UQb7BE642mgPvaeVC1
- PZZi+t83Y/27qQbw5VxetbEwdz+QAnlUEKQTqJBNV7e1J1R2rImk6Cbbm7yKJ0TG1Fu0
- wbM57epUclZ1F7FLkhnhSIU5GZyJbTx1xAXgVF3DaM5TcC7YzGbOeEnDVhvfwRmC8rB0
- /iiw==
-X-Gm-Message-State: AFq9FYJptykiSqJR7VMH1GSeP51vIu3rhXmF82OA5tfUqX50TDoS/L8/
- wgtYEWtABq3/k5478b0oYu66vtgp5UcV0Ym9FEwXUl8FU63d+aBmJD4gnp6huSnu1To=
-X-Gm-Gg: AYBFou34U8K9Zr3j0pDRBmJdvy7W57GHRL/8C9A2j2I0d4wBiM3J4Hi7XtxVUx6mDdg
- 585OLJ9LXzqhLAKFwIxk0E2rfJSxlFIzNgnZHg9HRwGhWz0P9C/3ixhZ68mkhp+OI9i5zEtQLU7
- HYCWyxQID4zat5xp1LVisCtcsKbw4Z470FJdE8aWTSVx2L/ONOjBhLXdoX65sBVRSCYlWXqhwvp
- LjahWMfO6f5E8zj57wX505vkVoPD6pGW7uTNVUiw+Py3qrB9Og3pheoE3iiALJMbxvvoBYpS5Bx
- 76u+w/bFhk/eIjPdogTNvkaaHmWcNBUhuMYAbXPOcDb4IE2xUwdvHpS9I0Qy/Ai9Etv0dPix5Hy
- KVZrVXsDZXo+t1d3utCyP501Pnlbdl/GCF5dBApHp27Pf7JJAeFwBaoJftkld7iqd9tBYTn8vzT
- fD2R161jAIcD1L+AlFKs7BcJr5SiS6Pz5nPOM0FlkwZDDWcHzdJJK7bbjCGvTmdsj3BNQvO7ejQ
- tNh37DuXnqJo+TilkgUwv+UkRgjCIYrap2pcp17zS3gZGxXYvnyN9EpnT7rYUkTmmgvy85loAjd
- BTcoa18uKbWu248BYcjcBJbeI+LLhNcElVgbkGFMt7ONl8yLoEO5IZUHAkLLrirWGUyLBlSYj51
- aKikfKUBX5Fd3U/SD2VbuxozRejOj2gY3scWWRiCr+OhhwMyEbw==
-X-Received: by 2002:a05:701b:4203:20b0:160:a80f:3ed2 with SMTP id
- a92af1059eb24-1a6cbf75033mr162666c88.10.1793127262190; 
- Tue, 27 Oct 2026 11:54:22 -0700 (PDT)
-Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1a6da44c132sm75324c88.18.2026.10.27.11.54.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 11:54:21 -0700 (PDT)
-From: soumyajyotisarkar23@gmail.com
-To: qemu-devel@nongnu.org,
-	sarkarsoumyajyoti23@gmail.com
-Cc: Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH 1/8] ui/input: add high-resolution scroll input event
-Date: Wed, 28 Oct 2026 00:18:50 +0530
-Message-ID: <20261027184857.60775-2-soumyajyotisarkar23@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261027184857.60775-1-soumyajyotisarkar23@gmail.com>
-References: <20261027184857.60775-1-soumyajyotisarkar23@gmail.com>
+ d=1e100.net; s=20260707; t=1793127915; x=1793732715;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=45vmp1ssoi1klKZ2hb22+gEefnvbpY9FKmBFUSpyP9U=;
+ b=Op5YqvRg/1tsAttgB+aDBn/c9b21dJHER60QQVDvjTk3sNH+fhC+AsjRmWIlFyzz69
+ Ff0yIMOeT3/fTtc0dPBfmCTqgHWNYxxCLs+xEAMtaMCEt1fwDiI1BjTsHF7UV7UKrbdg
+ itKMGFyBAWF8EVnAEBWz5jad3930mR93hdWgYAAh1JEj4XxwxXP9nmJUZsEwKWCyYjEP
+ zVWMbfih6j1yaFEOygaWqKSZ/ggFrhpQolSmNUkD5yzcTtYPoJ4xfsDyTxFurBsgCgti
+ Z/5D4HY8dLXDp0AwOxhE0+PAZuANNsJyaMdRkHsQ9UkGZ/6okXkfnMzQPaHYdeldHfgi
+ Tn8g==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBx2uYN1haSa4vpAKxuPFTAVbYddIqyI7+iz7684dIODUTP5+/ha7vRtfl7HtyORyoWQtkBp9zmz1xCU@nongnu.org
+X-Gm-Message-State: AFq9FYJ/yFI0DCUc/HNkudklE31+9BuPWYmDT3HMaVAmEbuIHcpOy0eo
+ N1UW8UiFvkOCHegMbV2GC05VXR/e6gYHscjfVVXkw8NabXubJEtd8gFFMj7oALhO9f5r/jyhHiq
+ TZO54K03xEHTDoBBWxV3hBwdR5ghvMJ2LMU1h89yy4t55dE1lKGnb6y4xEg==
+X-Gm-Gg: AYBFou3839LmSarxvGAVKvpb/k8qipvtoeECYYWVrdA14X6a2MTys6+h+GCSdXGXida
+ VAbgPlf8qICt4NpdUCPw6n/WH8yARdXl0RSbAfY9dNA7kwxgvlD93uXQ5K5kNDTWt94IyFQ5vSf
+ uRny/EoZ4b5z4SOiBkeuYV7Nx/6IB5jVM5X3/CqUbtagFVgqILcoXvEpLzJC7xziLGZbSBsd7vr
+ eB1G/wfaKE9PMg0eD4WziykNVwyeROAH+M1d9xwbj2Jx89uU6AXbtU2obEzop+0MSN71kNV4Mp/
+ ytZXH8gyWXUa3sdgI6qNRKlJ6Y6dq2x9475FESkghr7YrtGZthBxhgNAc3Pg5WWzSbjArt2O90f
+ 3zSe2AkC4ZzjkvK/I/qkKeqwsWRi2k1hpNyNmgUL3ePVmZya7fA==
+X-Received: by 2002:a05:6122:894:b0:5ea:f220:fd6e with SMTP id
+ 71dfb90a1353d-5ec4cc889famr57894e0c.11.1793127914710; 
+ Tue, 27 Oct 2026 12:05:14 -0700 (PDT)
+X-Received: by 2002:a05:6122:894:b0:5ea:f220:fd6e with SMTP id
+ 71dfb90a1353d-5ec4cc889famr57865e0c.11.1793127914185; 
+ Tue, 27 Oct 2026 12:05:14 -0700 (PDT)
+Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e3ecd35c2sm23993049f8f.39.2026.10.27.12.05.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 12:05:13 -0700 (PDT)
+Message-ID: <1b1f25e9-89e0-422a-b72b-bfd79c3c1bac@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 20:05:12 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::8;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dl2-x08.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] rust/hw/char: add QUP GENI UART device model
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20261027183823.383806-1-brian.cain@oss.qualcomm.com>
+ <20261027183823.383806-4-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261027183823.383806-4-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NiBTYWx0ZWRfX3KvpLqdAtLxs
+ Tfby2Ytp0OvsrUt7MkuXKmRvb1g+iWhNGNsrbiYV6PTGHjXfHw9qmMgOvpdBYALMC3K+HY4ooP8
+ u83sz8drRVewnrYhfDT4oj+L4UW4f572P7hmhwbBkRSob/4kUOXMk7eocjoVADItn3R7tsdDnT5
+ +oaWx/CS7krq2oAhsOw9S3YHdTJWF1YRP62qMmwcTin6KiJxqSkhLboL+MPCAdnfojClYBpNA36
+ /ntRDpnVhO6RYG6cVl0QbP7+v/NFJR4cRfcLEs0Bj3EKjdkzyrDC8PU0yoyD8s4//rJBftfhBhU
+ sE8MUfYaPgZ3V6wHg7qBMo/fOIx/iS5geaBbLrxh+gZaA7ndf3gi+ebVI2lHbkrdv3meA7eGDwY
+ 3zVJ+t3yfWU7f6iv1pYdADcZ2z1SSas9aRdfPP5RB/CZFy+dgPVYRHj6sLuPyHiqXSQrmX/qQTk
+ NAf6lHIXRpdxIp2h7mw==
+X-Proofpoint-ORIG-GUID: la9MV5b4icHqyRAP8t0umZuO938nCaer
+X-Proofpoint-GUID: la9MV5b4icHqyRAP8t0umZuO938nCaer
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NiBTYWx0ZWRfX+J21ZI2jXT0j
+ VJw2/ZXvZ2S11wJ0wC7RagLKNgoaKu7I2ZVDNb7qH84FZC+X26TCPaQoysf7K3V2iOkOpS5k66d
+ yKFoMN39oakOxl0PiY8SgTzKIpVFQdo=
+X-Authority-Analysis: v=2.4 cv=JodkP84C c=1 sm=1 tr=0 ts=6ae0f5eb cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=9LxoPiivgX8PBtvbXuYA:9 a=QEXdDO2ut3YA:10
+ a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270076
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,329 +153,42 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+On 27/10/26 19:38, Brian Cain wrote:
+> Add a model of the QUP GENI serial engine in UART mode.
+> 
+> Supports FIFO, DMA, loopback modes - DMA via memory link.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   MAINTAINERS                                 |    1 +
+>   docs/system/device-emulation.rst            |    1 +
+>   docs/system/devices/qup.rst                 |   10 +
+>   Cargo.lock                                  |   15 +
+>   Cargo.toml                                  |    1 +
+>   rust/hw/char/Kconfig                        |    4 +
+>   rust/hw/char/meson.build                    |    1 +
+>   rust/hw/char/qup_geni_uart/Cargo.toml       |   27 +
+>   rust/hw/char/qup_geni_uart/meson.build      |   28 +
+>   rust/hw/char/qup_geni_uart/src/device.rs    | 1293 +++++++++++++++++++
 
-The input layer can only describe wheel movement as WHEEL_UP/DOWN/
-LEFT/RIGHT button clicks, one per detent.  Host UIs that receive
-smooth scroll deltas (touchpads, free-spinning or high-resolution
-wheels) have to round them to whole clicks, and the guest never sees
-the finer movement.
+Too big for me to review (not sure if easily splittable), I'll skip.
 
-Add a new 'scroll' input event kind carrying a scroll axis (vertical
-or horizontal) and a distance in 1/120 of a wheel detent, the same
-unit Windows uses for WHEEL_DELTA and Linux for REL_WHEEL_HI_RES.
-Positive values scroll down or right.
-
-Scroll events are routed to the handler that receives pointer button
-events for the console.  Handlers that do not set
-INPUT_EVENT_MASK_SCROLL keep working unchanged: the input core
-accumulates the distance and emits one wheel button click per full
-detent.
-
-Also wire the new event into input-send-event, tracing and
-record/replay.
-
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
----
- include/ui/input.h    |  6 ++++
- qapi/ui.json          | 45 ++++++++++++++++++++++--
- replay/replay-input.c |  8 +++++
- ui/input.c            | 82 ++++++++++++++++++++++++++++++++++++++++++-
- ui/trace-events       |  1 +
- 5 files changed, 139 insertions(+), 3 deletions(-)
-
-diff --git a/include/ui/input.h b/include/ui/input.h
-index a1560cac0f..daedb547ff 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -9,6 +9,9 @@
- #define INPUT_EVENT_MASK_REL   (1<<INPUT_EVENT_KIND_REL)
- #define INPUT_EVENT_MASK_ABS   (1<<INPUT_EVENT_KIND_ABS)
- #define INPUT_EVENT_MASK_MTT   (1<<INPUT_EVENT_KIND_MTT)
-+#define INPUT_EVENT_MASK_SCROLL (1 << INPUT_EVENT_KIND_SCROLL)
-+
-+#define INPUT_EVENT_SCROLL_DETENT 120
- 
- #define INPUT_EVENT_ABS_MIN    0x0000
- #define INPUT_EVENT_ABS_MAX    0x7FFF
-@@ -31,6 +34,7 @@ typedef struct QemuInputEvent {
-         InputMoveEvent rel;
-         InputMoveEvent abs;
-         InputMultiTouchEvent mtt;
-+        InputScrollEvent scroll;
-     };
- } QemuInputEvent;
- 
-@@ -80,6 +84,8 @@ int qemu_input_scale_axis(int value,
- void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value);
- void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
-                           int min_in, int max_in);
-+void qemu_input_queue_scroll(QemuConsole *src, InputScrollAxis axis,
-+                             int value);
- void qemu_input_queue_mtt(QemuConsole *src, InputMultiTouchType type, int slot,
-                           int tracking_id);
- void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 9e3e80a3d7..e31fd74f87 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1120,6 +1120,34 @@
-               'axis'       : 'InputAxis',
-               'value'      : 'int' } }
- 
-+##
-+# @InputScrollAxis:
-+#     Scroll axis of a pointer input device.
-+#
-+# @vertical: vertical wheel
-+#
-+# @horizontal: horizontal wheel (pan)
-+#
-+# Since: 11.2
-+##
-+{ 'enum'  : 'InputScrollAxis',
-+  'data'  : [ 'vertical', 'horizontal' ] }
-+
-+##
-+# @InputScrollEvent:
-+#     High-resolution scroll input event.
-+#
-+# @axis: Which scroll axis is referenced by @value.
-+#
-+# @value: Scroll distance in 1/120 of a wheel detent.  Positive
-+#     values scroll down (vertical) or right (horizontal).
-+#
-+# Since: 11.2
-+##
-+{ 'struct'  : 'InputScrollEvent',
-+  'data'  : { 'axis'    : 'InputScrollAxis',
-+              'value'   : 'int' } }
-+
- ##
- # @InputEventKind:
- #
-@@ -1133,10 +1161,12 @@
- #
- # @mtt: a multi-touch input event
- #
-+# @scroll: a high-resolution scroll input event (since 11.2)
-+#
- # Since: 2.0
- ##
- { 'enum': 'InputEventKind',
--  'data': [ 'key', 'btn', 'rel', 'abs', 'mtt' ] }
-+  'data': [ 'key', 'btn', 'rel', 'abs', 'mtt', 'scroll' ] }
- 
- ##
- # @InputKeyEventWrapper:
-@@ -1178,6 +1208,16 @@
- { 'struct': 'InputMultiTouchEventWrapper',
-   'data': { 'data': 'InputMultiTouchEvent' } }
- 
-+##
-+# @InputScrollEventWrapper:
-+#
-+# @data: High-resolution scroll input event
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'InputScrollEventWrapper',
-+  'data': { 'data': 'InputScrollEvent' } }
-+
- ##
- # @InputEvent:
- #     Input event union.
-@@ -1193,7 +1233,8 @@
-               'btn'     : 'InputBtnEventWrapper',
-               'rel'     : 'InputMoveEventWrapper',
-               'abs'     : 'InputMoveEventWrapper',
--              'mtt'     : 'InputMultiTouchEventWrapper' } }
-+              'mtt'     : 'InputMultiTouchEventWrapper',
-+              'scroll'  : 'InputScrollEventWrapper' } }
- 
- ##
- # @input-send-event:
-diff --git a/replay/replay-input.c b/replay/replay-input.c
-index c86e00af0e..188c43a137 100644
---- a/replay/replay-input.c
-+++ b/replay/replay-input.c
-@@ -45,6 +45,10 @@ void replay_save_input_event(QemuInputEvent *evt)
-         replay_put_dword(evt->mtt.axis);
-         replay_put_qword(evt->mtt.value);
-         break;
-+    case INPUT_EVENT_KIND_SCROLL:
-+        replay_put_dword(evt->scroll.axis);
-+        replay_put_qword(evt->scroll.value);
-+        break;
-     case INPUT_EVENT_KIND__MAX:
-         /* keep gcc happy */
-         break;
-@@ -80,6 +84,10 @@ QemuInputEvent *replay_read_input_event(void)
-         evt->mtt.axis = (InputAxis)replay_get_dword();
-         evt->mtt.value = replay_get_qword();
-         break;
-+    case INPUT_EVENT_KIND_SCROLL:
-+        evt->scroll.axis = (InputScrollAxis)replay_get_dword();
-+        evt->scroll.value = replay_get_qword();
-+        break;
-     case INPUT_EVENT_KIND__MAX:
-         /* keep gcc happy */
-         break;
-diff --git a/ui/input.c b/ui/input.c
-index f40a988370..f9ae49e275 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -181,7 +181,12 @@ void qmp_input_send_event(const char *device,
-     for (e = events; e != NULL; e = e->next) {
-         InputEvent *event = e->value;
- 
--        if (!qemu_input_find_handler(1 << event->type, con)) {
-+        uint32_t mask = 1 << event->type;
-+
-+        if (event->type == INPUT_EVENT_KIND_SCROLL) {
-+            mask |= INPUT_EVENT_MASK_BTN;
-+        }
-+        if (!qemu_input_find_handler(mask, con)) {
-             error_setg(errp, "Input handler not found for "
-                              "event type %s",
-                             InputEventKind_str(event->type));
-@@ -217,6 +222,10 @@ void qmp_input_send_event(const char *device,
-             evt.mtt = *qapi->u.mtt.data;
-             break;
- 
-+        case INPUT_EVENT_KIND_SCROLL:
-+            evt.scroll = *qapi->u.scroll.data;
-+            break;
-+
-         default:
-             g_assert_not_reached();
-         }
-@@ -235,6 +244,7 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
-     InputBtnEvent *btn;
-     InputMoveEvent *move;
-     InputMultiTouchEvent *mtt;
-+    InputScrollEvent *scroll;
- 
-     if (src) {
-         idx = qemu_console_get_index(src);
-@@ -265,6 +275,12 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
-         name = mtt->axis < INPUT_AXIS__MAX ? InputAxis_str(mtt->axis) : "invalid";
-         trace_input_event_mtt(idx, name, mtt->value);
-         break;
-+    case INPUT_EVENT_KIND_SCROLL:
-+        scroll = &evt->scroll;
-+        name = scroll->axis < INPUT_SCROLL_AXIS__MAX ?
-+            InputScrollAxis_str(scroll->axis) : "invalid";
-+        trace_input_event_scroll(idx, name, scroll->value);
-+        break;
-     case INPUT_EVENT_KIND__MAX:
-         /* keep gcc happy */
-         break;
-@@ -342,12 +358,62 @@ static void qemu_input_queue_sync(QemuInputEventQueueHead *queue)
-     queue_count++;
- }
- 
-+static void qemu_input_scroll_to_btn(QemuInputHandlerState *s,
-+                                     QemuConsole *src, QemuInputEvent *evt)
-+{
-+    static int residual[INPUT_SCROLL_AXIS__MAX];
-+    QemuInputEvent btn = { .type = INPUT_EVENT_KIND_BTN };
-+    InputScrollAxis axis = evt->scroll.axis;
-+
-+    if (axis >= INPUT_SCROLL_AXIS__MAX) {
-+        return;
-+    }
-+
-+    residual[axis] += evt->scroll.value;
-+    while (abs(residual[axis]) >= INPUT_EVENT_SCROLL_DETENT) {
-+        bool fwd = residual[axis] > 0;
-+
-+        if (axis == INPUT_SCROLL_AXIS_VERTICAL) {
-+            btn.btn.button = fwd ? INPUT_BUTTON_WHEEL_DOWN
-+                                 : INPUT_BUTTON_WHEEL_UP;
-+        } else {
-+            btn.btn.button = fwd ? INPUT_BUTTON_WHEEL_RIGHT
-+                                 : INPUT_BUTTON_WHEEL_LEFT;
-+        }
-+        residual[axis] -= fwd ? INPUT_EVENT_SCROLL_DETENT
-+                              : -INPUT_EVENT_SCROLL_DETENT;
-+
-+        btn.btn.down = true;
-+        qemu_input_event_trace(src, &btn);
-+        s->handler->event(s->dev, src, &btn);
-+        btn.btn.down = false;
-+        qemu_input_event_trace(src, &btn);
-+        s->handler->event(s->dev, src, &btn);
-+        s->events++;
-+    }
-+}
-+
- void qemu_input_event_send_impl(QemuConsole *src, QemuInputEvent *evt)
- {
-     QemuInputHandlerState *s;
- 
-     qemu_input_event_trace(src, evt);
- 
-+    if (evt->type == INPUT_EVENT_KIND_SCROLL) {
-+        s = qemu_input_find_handler(INPUT_EVENT_MASK_BTN |
-+                                    INPUT_EVENT_MASK_SCROLL, src);
-+        if (!s) {
-+            return;
-+        }
-+        if (s->handler->mask & INPUT_EVENT_MASK_SCROLL) {
-+            s->handler->event(s->dev, src, evt);
-+            s->events++;
-+        } else {
-+            qemu_input_scroll_to_btn(s, src, evt);
-+        }
-+        return;
-+    }
-+
-     /* send event */
-     s = qemu_input_find_handler(1 << evt->type, src);
-     if (!s) {
-@@ -518,6 +584,20 @@ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
-     qemu_input_event_send(src, &evt);
- }
- 
-+void qemu_input_queue_scroll(QemuConsole *src, InputScrollAxis axis,
-+                             int value)
-+{
-+    QemuInputEvent evt = {
-+        .type = INPUT_EVENT_KIND_SCROLL,
-+        .scroll = {
-+            .axis = axis,
-+            .value = value,
-+        },
-+    };
-+
-+    qemu_input_event_send(src, &evt);
-+}
-+
- void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
-                           int min_in, int max_in)
- {
-diff --git a/ui/trace-events b/ui/trace-events
-index 339a61f341..638096607a 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -132,6 +132,7 @@ input_event_btn(int conidx, const char *btn, bool down) "con %d, button %s, down
- input_event_rel(int conidx, const char *axis, int value) "con %d, axis %s, value %d"
- input_event_abs(int conidx, const char *axis, int value) "con %d, axis %s, value 0x%x"
- input_event_mtt(int conidx, const char *axis, int value) "con %d, axis %s, value 0x%x"
-+input_event_scroll(int conidx, const char *axis, int value) "con %d, axis %s, value %d"
- input_event_sync(void) ""
- 
- # sdl2-input.c
--- 
-2.56.0
+>   rust/hw/char/qup_geni_uart/src/lib.rs       |    9 +
+>   rust/hw/char/qup_geni_uart/src/registers.rs |  160 +++
+>   12 files changed, 1550 insertions(+)
+>   create mode 100644 docs/system/devices/qup.rst
+>   create mode 100644 rust/hw/char/qup_geni_uart/Cargo.toml
+>   create mode 100644 rust/hw/char/qup_geni_uart/meson.build
+>   create mode 100644 rust/hw/char/qup_geni_uart/src/device.rs
+>   create mode 100644 rust/hw/char/qup_geni_uart/src/lib.rs
+>   create mode 100644 rust/hw/char/qup_geni_uart/src/registers.rs
 
 
