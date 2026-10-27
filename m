@@ -1,69 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B19F606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:03:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8033606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=UlPK6VtX
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=pNIBymJc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLaH7-00082z-Sa; Tue, 27 Oct 2026 02:03:09 -0400
+	id 1xLaH9-0008G8-NW; Tue, 27 Oct 2026 02:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3Vj7gagoKCrEjkRecVpaYlXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--stanleyjhu.bounces.google.com>)
- id 1xLaG3-0007pe-NI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:06 -0400
-Received: from mail-pf1-x446.google.com ([2607:f8b0:4864:20::446])
+ <3WD7gagoKCrMlmTgeXrcanZhhZeX.VhfjXfn-WXoXeghgZgn.hkZ@flex--stanleyjhu.bounces.google.com>)
+ id 1xLaG7-0007qC-MI
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:09 -0400
+Received: from mail-pg1-x548.google.com ([2607:f8b0:4864:20::548])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3Vj7gagoKCrEjkRecVpaYlXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--stanleyjhu.bounces.google.com>)
- id 1xLaG0-00067x-Vg
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:03 -0400
-Received: by mail-pf1-x446.google.com with SMTP id
- d2e1a72fcca58-8a01ea9e318so5378171b3a.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:02:00 -0700 (PDT)
+ <3WD7gagoKCrMlmTgeXrcanZhhZeX.VhfjXfn-WXoXeghgZgn.hkZ@flex--stanleyjhu.bounces.google.com>)
+ id 1xLaG4-00068K-Ux
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:07 -0400
+Received: by mail-pg1-x548.google.com with SMTP id
+ 41be03b00d2f7-cd0b795aa8cso420550a12.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1793080919; x=1793685719; darn=nongnu.org;
+ d=google.com; s=20251104; t=1793080921; x=1793685721; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=BFY+bA0qsHUbVR6vyGfTOqdgqE3nwT9nGY9B/UCmqYY=;
- b=UlPK6VtXReqCJPfQTQ3UeJWB3LqcKsw6czr/rZPGf+eCbIIXlXpHOF8IsfVJ4l+cLC
- 7xk5JdXri/xfEyzZovu8Mi/dRhjAzSvU1WyBUFVkSiPj8c8x7CF210w46PInC2U30D0j
- Wm9P9bbBQoeOfN+cqR5MJMCIciDnyHWSC+hDkEPVyuWs942QfaLJox267iLFC+iHjLie
- 5u76mcXPdeQlHiqTkAEHsletSYRa0FbxocYRwPzs9rhVAzPdeofaO5mB8zlRZnP7NHDb
- ttbkAvMbnlyryALAgR1A6Zore251l3g9Y/Gk7sj6YPl43jzhQ/tSZl6IXd/puD3pDkWY
- C29A==
+ :content-type; bh=+N8SJHFjywkKiUNGdjZGN9m+mrASByhvUTgzA59edFs=;
+ b=pNIBymJcG2yjWnezhVaouVsJT2asbD2XIjU+AQOnv4hJPudUhdWlsm4oSx2Rwnax9b
+ N6I1mdeQ9YWtVzUC2bGwdiNMWeBuYCuIjktTIV4gWMo98KVLinsoX4TdrE3oyYHsLnKs
+ /giUf+bI0dxhWHQ+/ij85t7c45IAw/hHzDypCrSUgDCWI/o4QVSN0f8fFq07OF7X0BMi
+ z2NFWq9F2XFZq8Y35QPgI71HCvtEIn5nb/mPf2qVTbfdndhPxnsVgU+WJxzzUlan2X5l
+ CnzCqFGRt0+ch2UKP6j/KL2XDJZD9nTlr/SFWlXrdXJybxB6caxtvamY2SSeCTrj3Lxf
+ 6/Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793080919; x=1793685719;
+ d=1e100.net; s=20260707; t=1793080921; x=1793685721;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BFY+bA0qsHUbVR6vyGfTOqdgqE3nwT9nGY9B/UCmqYY=;
- b=AXSpNenOVqj8KluNezn/KsGprplVs99/YRHs2BB4j9icW63fwpRiq9Hm5TsaUT81XD
- 9e/egSZxC2jPJI+Lo6srkX+yfNcyDmcDL2YC0CzFcpN6BGOWrG9cCTFsyNEh1kQX7u+d
- MwJLpoBHk9bcsz28aEYlNAZsGKrU5KWDylR32R/K0GsPcLcvRAYd+HkwCJ1tDFkCgbJP
- 6wyT/ZmUhMFU2Uavoiz1NhtugmA8SFwNlyuq838TegvBsy8uavckAUbADv4ifHGMRU3F
- hTouqhDiXH28VdGyhL9YiosxEyt/7VK+a2RhK5+bdy8M9XF4ypmH6stWyR7uB2d4R9oQ
- 7BhA==
-X-Gm-Message-State: AFq9FYIM32t8p5HI8qv1rG+uT+lYpyCkySZMUhEz35BDYgpoq4owvzb5
- 3DwUQJ5WGd9BkNz+wHxt4Ujtsptc7eiuG/BWxZ7IreqhXAkvnkZnrDyqcKGqNcZ+pe54Yln0O8B
- H5pMa/U5CqFb04Zhqj5WBdg==
-X-Received: from pfbcb8.prod.google.com ([2002:a05:6a00:4308:b0:8a0:8d65:ebfc])
+ bh=+N8SJHFjywkKiUNGdjZGN9m+mrASByhvUTgzA59edFs=;
+ b=27HbJ/4NxHsz9yuNjF3xnvQpVhruYiueDRwwpB6/QiuAZ10nlaCrLY/+8WqpFddD99
+ 0lMwRB2M85inC0ShM/tHDzx9/XMp+pa1WZzzzA5PQc0yB1aFvOD0dElyoCqCRfn+04K1
+ qJGbZGkBGF/6r0I9EWFaxS/7majyegUKWvK4SsXHiAS86wBKLB6wte1ASWiean/8hkbz
+ yosER3a62SDuM/3gOp97C/YKr8KYS6Uro+Gvt8MHPMxMhTFBkshRkMb8muUlKqxvyOH9
+ GJfsSeXml26w2BkZC3L4wsWdquEmNyFnQTC7aidEilGZ1Ng5lQfoE7br9t5Vnir4Tta6
+ sSAA==
+X-Gm-Message-State: AFq9FYLyGn0BMU3MhG55LI838oypAYMzKuhCU4cfLbdbpYeX2ZODa52x
+ BOUovxPN3XXPkoe14g/jP9IIhVG4lV2VAZf/hvgqmsQ2c/mQGoLi1sH7h8OtwLr7ywH3bURQJcm
+ 1lqFkASdhbekawM5XOWh/5Q==
+X-Received: from pfay35.prod.google.com ([2002:a05:6a00:1823:b0:896:c545:14b])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:12d6:b0:89f:7ac5:9d4f with SMTP id
- d2e1a72fcca58-8a364e5d92dmr7137893b3a.2.1793080918670; 
- Mon, 26 Oct 2026 23:01:58 -0700 (PDT)
-Date: Tue, 27 Oct 2026 14:01:47 +0800
+ 2002:a05:6a21:489:b0:3de:3f4d:f2bd with SMTP id
+ adf61e73a8af0-3e8eaa5c3f6mr961661637.6.1793080920628; 
+ Mon, 26 Oct 2026 23:02:00 -0700 (PDT)
+Date: Tue, 27 Oct 2026 14:01:48 +0800
 In-Reply-To: <20261027060153.1842910-1-stanleyjhu@google.com>
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
 References: <20261027060153.1842910-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
-Message-ID: <20261027060153.1842910-3-stanleyjhu@google.com>
-Subject: [PATCH 2/7] hw/ufs: Add RPMB unit descriptor and SECURITY PROTOCOL
- IN/OUT dispatch
+Message-ID: <20261027060153.1842910-4-stanleyjhu@google.com>
+Subject: [PATCH 3/7] tests/qtest/ufs-test: Add RPMB descriptor and CDB
+ validation test
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
@@ -74,9 +74,9 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::446;
- envelope-from=3Vj7gagoKCrEjkRecVpaYlXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--stanleyjhu.bounces.google.com;
- helo=mail-pf1-x446.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::548;
+ envelope-from=3WD7gagoKCrMlmTgeXrcanZhhZeX.VhfjXfn-WXoXeghgZgn.hkZ@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pg1-x548.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -103,377 +103,325 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The UFS device model creates the RPMB well-known logical unit (W-LUN
-0xc4), but leaves bLUEnable set to 0 in RpmbUnitDescriptor, leaves
-bSecurityLU set to 0 in DeviceDescriptor, and rejects SECURITY PROTOCOL
-IN and SECURITY PROTOCOL OUT commands with ILLEGAL REQUEST.
-
-Set bSecurityLU to 0x01 in DeviceDescriptor (JESD220H Table 14.4),
-enable four 4 MiB RPMB regions (32 * 128 KiB each, 256-byte logical
-blocks) in RpmbUnitDescriptor, and populate the big-endian block count
-fields during unit descriptor reads using shared UFS_RPMB_* geometry
-constants. Add per-region state in UfsHc with an embedded Result
-Register frame, wire SECURITY PROTOCOL IN and SECURITY PROTOCOL OUT CDB
-validation, PRDT buffer capacity validation via ufs_fit_data_buffer(),
-and Result Read (0x0005) handling in hw/ufs/rpmb.c per JESD220H Section
-12.4.6.1, and clear volatile RPMB state in ufs_hce_reset(). Requests
-not yet implemented return UFS_RPMB_RES_GENERAL_FAILURE (0x0001).
+Add ufstest_rpmb_descriptor_cdb() to verify bSecurityLU in
+DeviceDescriptor (JESD220H Table 14.4) and RpmbUnitDescriptor fields
+(bLUEnable, bRPMBRegionEnable, bLogicalBlockSize, qLogicalBlockCount,
+bRPMBRegion0Size..3Size, and qPhyMemResourceCount per JESD220H Table
+14.15), initial zeroed Result Register frame reads, ILLEGAL REQUEST /
+INVALID FIELD IN CDB sense responses on invalid security protocol,
+INC_512=1, unaligned transfer length, and out-of-range region 4,
+INVALID_OPCODE rejection of START_STOP on W-LUN 0xc4 and SECURITY
+PROTOCOL IN/OUT on W-LUN 0xd0, and UFS_OCS_MISMATCH_DATA_BUF_SIZE on
+short or empty PRDT buffers.
 
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 ---
- hw/ufs/lu.c         |  34 +++++++++
- hw/ufs/meson.build  |   2 +-
- hw/ufs/rpmb.c       | 170 ++++++++++++++++++++++++++++++++++++++++++++
- hw/ufs/trace-events |   3 +
- hw/ufs/ufs.c        |  21 +++++-
- hw/ufs/ufs.h        |  24 +++++++
- 6 files changed, 250 insertions(+), 4 deletions(-)
- create mode 100644 hw/ufs/rpmb.c
+ tests/qtest/ufs-test.c | 285 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 285 insertions(+)
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 4fe1247547..0e99ec5f7b 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -1137,6 +1137,40 @@ static UfsReqResult ufs_emulate_scsi_cmd(UfsLu *lu, UfsRequest *req)
-                                    true);
-         scsi_status = GOOD;
-         break;
-+    case SECURITY_PROTOCOL_IN:
-+        if (lun == UFS_UPIU_RPMB_WLUN) {
-+            uint32_t transferred_len = 0;
-+            UfsReqResult ret;
-+
-+            ret = ufs_rpmb_sec_in(req->hc, req, &scsi_status, sense_buf,
-+                                  &transferred_len);
-+            if (ret != UFS_REQUEST_SUCCESS) {
-+                return ret;
-+            }
-+            ufs_build_scsi_response_upiu(req, sense_buf, sizeof(sense_buf),
-+                                         transferred_len, scsi_status);
-+            return UFS_REQUEST_SUCCESS;
-+        }
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_OPCODE));
-+        scsi_status = CHECK_CONDITION;
-+        break;
-+    case SECURITY_PROTOCOL_OUT:
-+        if (lun == UFS_UPIU_RPMB_WLUN) {
-+            uint32_t transferred_len = 0;
-+            UfsReqResult ret;
-+
-+            ret = ufs_rpmb_sec_out(req->hc, req, &scsi_status, sense_buf,
-+                                   &transferred_len);
-+            if (ret != UFS_REQUEST_SUCCESS) {
-+                return ret;
-+            }
-+            ufs_build_scsi_response_upiu(req, sense_buf, sizeof(sense_buf),
-+                                         transferred_len, scsi_status);
-+            return UFS_REQUEST_SUCCESS;
-+        }
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_OPCODE));
-+        scsi_status = CHECK_CONDITION;
-+        break;
-     case START_STOP:
-         /* TODO: Revisit it when Power Management is implemented */
-         if (lun == UFS_UPIU_UFS_DEVICE_WLUN) {
-diff --git a/hw/ufs/meson.build b/hw/ufs/meson.build
-index a84627b96a..9e5e6ad913 100644
---- a/hw/ufs/meson.build
-+++ b/hw/ufs/meson.build
-@@ -1,3 +1,3 @@
--system_ss.add(when: 'CONFIG_UFS', if_true: files('ufs.c', 'lu.c'))
-+system_ss.add(when: 'CONFIG_UFS', if_true: files('ufs.c', 'lu.c', 'rpmb.c'))
- system_ss.add(when: 'CONFIG_UFS_PCI', if_true: files('ufs-pci.c'))
- system_ss.add(when: 'CONFIG_UFS_SYSBUS', if_true: files('ufs-sysbus.c'))
-diff --git a/hw/ufs/rpmb.c b/hw/ufs/rpmb.c
-new file mode 100644
-index 0000000000..3032e0e098
---- /dev/null
-+++ b/hw/ufs/rpmb.c
-@@ -0,0 +1,170 @@
-+/*
-+ * QEMU UFS RPMB Well-Known Logical Unit Emulation
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+#include "ufs.h"
-+
-+static void ufs_rpmb_handle_req(UfsHc *u, UfsRpmbRegion *r,
-+                                const UfsRpmbFrame *frames,
-+                                uint32_t nframes)
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index d8f7f502d6..9b43422d4b 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -3975,6 +3975,289 @@ static void *ufs_zufs_test_setup(GString *cmd_line, void *arg)
+     return arg;
+ }
+ 
++static void ufs_rpmb_build_cdb(uint8_t cdb[UFS_CDB_SIZE], uint8_t opcode,
++                               uint8_t protocol, uint16_t spsp, uint32_t len)
 +{
-+    const UfsRpmbFrame *req = &frames[0];
-+    uint16_t req_type = lduw_be_p(&req->req_resp);
-+    uint16_t result = UFS_RPMB_RES_GENERAL_FAILURE;
-+
-+    if (req_type == UFS_RPMB_REQ_READ_RESULT) {
-+        trace_ufs_rpmb_request(req_type, lduw_be_p(&r->resp.result));
-+        return;
-+    }
-+
-+    r->read_pending = false;
-+    memset(&r->resp, 0, sizeof(r->resp));
-+
-+    switch (req_type) {
-+    default:
-+        r->resp.req_resp = cpu_to_be16(req_type);
-+        result = UFS_RPMB_RES_GENERAL_FAILURE;
-+        break;
-+    }
-+
-+    if (r->write_counter == 0xffffffff) {
-+        result |= UFS_RPMB_RES_COUNT_EXPIRED;
-+    }
-+    r->resp.result = cpu_to_be16(result);
-+
-+    trace_ufs_rpmb_request(req_type, result);
++    memset(cdb, 0, UFS_CDB_SIZE);
++    cdb[0] = opcode;
++    cdb[1] = protocol;
++    stw_be_p(&cdb[2], spsp);
++    stl_be_p(&cdb[6], len);
 +}
 +
-+static bool ufs_rpmb_parse_cdb(const uint8_t *cdb, uint8_t *region_out,
-+                               uint32_t *xfer_len_out, uint8_t *sense_buf)
++static void ufs_rpmb_sec_out_frames(QUfs *ufs, uint8_t region,
++                                    const UfsRpmbFrame *frames, size_t nframes,
++                                    UtpUpiuRsp *rsp)
 +{
-+    uint8_t sec_proto = cdb[1];
-+    uint16_t spsp = lduw_be_p(&cdb[2]);
-+    uint8_t region = (spsp >> 8) & 0xff;
-+    uint8_t proto_id = spsp & 0xff;
-+    bool inc_512 = (cdb[4] & 0x80) != 0;
++    uint8_t cdb[UFS_CDB_SIZE];
++    uint16_t spsp = ((uint16_t)region << 8) | UFS_RPMB_SEC_PROTOCOL_ID;
++    uint32_t len = nframes * sizeof(UfsRpmbFrame);
++    enum UtpOcsCodes ocs;
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, UFS_RPMB_SEC_PROTOCOL,
++                       spsp, len);
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                (const uint8_t *)frames, len, NULL, 0, rsp);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++}
++
++static void ufs_rpmb_sec_in_frames(QUfs *ufs, uint8_t region,
++                                   UfsRpmbFrame *frames, size_t nframes,
++                                   UtpUpiuRsp *rsp)
++{
++    uint8_t cdb[UFS_CDB_SIZE];
++    uint16_t spsp = ((uint16_t)region << 8) | UFS_RPMB_SEC_PROTOCOL_ID;
++    uint32_t len = nframes * sizeof(UfsRpmbFrame);
++    enum UtpOcsCodes ocs;
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
++                       spsp, len);
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                NULL, 0, (uint8_t *)frames, len, rsp);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++}
++
++static void ufs_rpmb_read_result(QUfs *ufs, uint8_t region, UfsRpmbFrame *resp)
++{
++    UfsRpmbFrame req = { 0 };
++    UtpUpiuRsp rsp_upiu;
++
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_RESULT);
++    ufs_rpmb_sec_out_frames(ufs, region, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    memset(resp, 0xff, sizeof(*resp));
++    ufs_rpmb_sec_in_frames(ufs, region, resp, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++}
++
++static enum UtpOcsCodes
++ufs_rpmb_send_short_prdt(QUfs *ufs, const uint8_t cdb[UFS_CDB_SIZE],
++                         uint32_t exp_len, uint32_t prdt_bytes, bool is_write)
++{
++    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
++    uint64_t req_upiu_addr =
++        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
++    uint64_t prdt_addr = req_upiu_addr + UTP_PRDT_UPIU_OFFSET;
++    UtpUpiuReq req_upiu = { 0 };
++    uint16_t prd_table_length = 0;
++    UtpTransferReqDesc utrd;
++    enum UtpOcsCodes ocs;
++
++    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_COMMAND;
++    req_upiu.header.flags =
++        is_write ? UFS_UPIU_CMD_FLAGS_WRITE : UFS_UPIU_CMD_FLAGS_READ;
++    req_upiu.header.lun = UFS_UPIU_RPMB_WLUN;
++    req_upiu.header.task_tag = cmd_desc_slot;
++    req_upiu.sc.exp_data_transfer_len = cpu_to_be32(exp_len);
++    memcpy(req_upiu.sc.cdb, cdb, UFS_CDB_SIZE);
++    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
++                   sizeof(req_upiu));
++
++    if (prdt_bytes > 0) {
++        UfshcdSgEntry entry = {
++            .addr = cpu_to_le64(ufs->data_buffer_addr),
++            .size = cpu_to_le32(prdt_bytes - 1),
++        };
++        qtest_memwrite(ufs->dev.bus->qts, prdt_addr, &entry, sizeof(entry));
++        prd_table_length = 1;
++    }
++
++    utrd = ufs_build_req_utrd(
++        req_upiu_addr,
++        is_write ? UFS_UTP_HOST_TO_DEVICE : UFS_UTP_DEVICE_TO_HOST,
++        prd_table_length);
++    ocs = ufs_send_transfer_request_sync(ufs, UFS_UPIU_RPMB_WLUN, &utrd);
++    release_cmd_desc_slot(ufs, cmd_desc_slot);
++    return ocs;
++}
++
++static void ufstest_rpmb_descriptor_cdb(void *obj, void *data,
++                                        QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    UtpUpiuRsp rsp_upiu;
++    enum UtpOcsCodes ocs;
++    DeviceDescriptor dev_desc;
++    const RpmbUnitDescriptor *rpmb_desc;
++    UfsRpmbFrame req = { 0 }, resp, zero_frame;
++    uint8_t cdb[UFS_CDB_SIZE];
++    int i;
++
++    ufs_init(ufs, alloc);
 +
 +    /*
-+     * JESD220H Section 12.4.6.1 (Table 12.14) and Section 12.4.7.1/.2
-+     * (Tables 12.16/12.17; JESD220F Tables 12.21/12.22): when SECURITY
-+     * PROTOCOL is ECh, INC_512 (CDB byte 4 bit 7) shall be set to 0;
-+     * otherwise terminate with CHECK CONDITION / ILLEGAL REQUEST /
-+     * INVALID FIELD IN CDB.
++     * 1. Verify Device Descriptor bSecurityLU (JESD220H Table 14.4) and RPMB
++     *    Unit Descriptor fields (JESD220H Table 14.15).
 +     */
-+    if (sec_proto != UFS_RPMB_SEC_PROTOCOL ||
-+        proto_id != UFS_RPMB_SEC_PROTOCOL_ID ||
-+        region >= UFS_RPMB_MAX_REGIONS || inc_512) {
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_FIELD));
-+        return false;
-+    }
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
++                         UFS_QUERY_DESC_IDN_DEVICE, 0, 0, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    memcpy(&dev_desc, &rsp_upiu.qr.data[0], sizeof(dev_desc));
++    g_assert_cmpuint(dev_desc.length, ==, sizeof(DeviceDescriptor));
++    g_assert_cmpuint(dev_desc.descriptor_idn, ==, UFS_QUERY_DESC_IDN_DEVICE);
++    g_assert_cmpuint(dev_desc.security_lu, ==, 0x01);
 +
-+    *region_out = region;
-+    *xfer_len_out = ldl_be_p(&cdb[6]);
-+    return true;
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
++                         UFS_QUERY_DESC_IDN_UNIT, UFS_UPIU_RPMB_WLUN, 0, 0,
++                         &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    rpmb_desc = (const RpmbUnitDescriptor *)&rsp_upiu.qr.data[0];
++    g_assert_cmpuint(rpmb_desc->length, ==, sizeof(RpmbUnitDescriptor));
++    g_assert_cmpuint(rpmb_desc->descriptor_idn, ==, UFS_QUERY_DESC_IDN_UNIT);
++    g_assert_cmpuint(rpmb_desc->unit_index, ==, UFS_UPIU_RPMB_WLUN);
++    g_assert_cmpuint(rpmb_desc->lu_enable, ==, 0x01);
++    g_assert_cmpuint(rpmb_desc->rpmb_region_enable, ==, 0x0f);
++    g_assert_cmpuint(rpmb_desc->logical_block_size, ==,
++                     UFS_RPMB_LOGICAL_BLOCK_SIZE);
++    g_assert_cmpuint(be64_to_cpu(rpmb_desc->logical_block_count), ==,
++                     UFS_RPMB_MAX_REGIONS * 32 * UFS_RPMB_BLOCKS_PER_UNIT);
++    for (i = 0; i < UFS_RPMB_MAX_REGIONS; i++) {
++        g_assert_cmpuint(rpmb_desc->rpmb_region_size[i], ==, 32);
++    }
++    g_assert_cmpuint(be64_to_cpu(rpmb_desc->phy_mem_resource_count), ==,
++                     UFS_RPMB_MAX_REGIONS * 32 * UFS_RPMB_BLOCKS_PER_UNIT);
++
++    /* 2. Result read before any request returns a zeroed frame */
++    memset(&zero_frame, 0, sizeof(zero_frame));
++    memset(&resp, 0xff, sizeof(resp));
++    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpmem(&resp, sizeof(resp), &zero_frame, sizeof(zero_frame));
++
++    ufs_rpmb_read_result(ufs, 0, &resp);
++    g_assert_cmpmem(&resp, sizeof(resp), &zero_frame, sizeof(zero_frame));
++
++    /*
++     * 3. Invalid protocol, INC_512=1, and unaligned length CDB sense checks.
++     */
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, 0xee,
++                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(req));
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                (const uint8_t *)&req, sizeof(req), NULL, 0,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(req));
++    cdb[4] = 0x80; /* INC_512 = 1 */
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                (const uint8_t *)&req, sizeof(req), NULL, 0,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(resp));
++    cdb[4] = 0x80; /* INC_512 = 1 */
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                NULL, 0, (uint8_t *)&resp, sizeof(resp),
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, 256);
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                (const uint8_t *)&req, 256, NULL, 0,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    /*
++     * 4. START_STOP on RPMB W-LUN (0xc4) and SECURITY PROTOCOL IN/OUT on
++     *    UFS Device W-LUN (0xd0) must fail with INVALID_OPCODE
++     *    (ILLEGAL_REQUEST, ASC 0x20, ASCQ 0x00).
++     */
++    memset(cdb, 0, UFS_CDB_SIZE);
++    cdb[0] = START_STOP;
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
++                                NULL, 0, NULL, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x20);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(resp));
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_UFS_DEVICE_WLUN, cdb,
++                                NULL, 0, (uint8_t *)&resp, sizeof(resp),
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x20);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(req));
++    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_UFS_DEVICE_WLUN, cdb,
++                                (const uint8_t *)&req, sizeof(req), NULL, 0,
++                                &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x20);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    /* 5. Region 4 (out of range 0..3) rejected with INVALID_FIELD */
++    memset(&req, 0, sizeof(req));
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
++    ufs_rpmb_sec_out_frames(ufs, 4, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    ufs_rpmb_sec_in_frames(ufs, 4, &resp, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
++    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
++
++    /*
++     * 6. Short PRDT (256 bytes and empty 0-entry PRDT) for SECURITY PROTOCOL
++     *    OUT and IN must return UFS_OCS_MISMATCH_DATA_BUF_SIZE before any DMA
++     *    or volatile state mutation.
++     */
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_OUT, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, UFS_RPMB_FRAME_LEN);
++    memset(&req, 0, sizeof(req));
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
++    qtest_memwrite(ufs->dev.bus->qts, ufs->data_buffer_addr, &req, 256);
++    ocs = ufs_rpmb_send_short_prdt(ufs, cdb, UFS_RPMB_FRAME_LEN, 256, true);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++    ocs = ufs_rpmb_send_short_prdt(ufs, cdb, UFS_RPMB_FRAME_LEN, 0, true);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++
++    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
++                       UFS_RPMB_SEC_PROTOCOL_ID, UFS_RPMB_FRAME_LEN);
++    ocs = ufs_rpmb_send_short_prdt(ufs, cdb, UFS_RPMB_FRAME_LEN, 256, false);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++    ocs = ufs_rpmb_send_short_prdt(ufs, cdb, UFS_RPMB_FRAME_LEN, 0, false);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
++
++    ufs_exit(ufs, alloc);
 +}
 +
-+void ufs_rpmb_reset(UfsHc *u)
-+{
-+    for (int i = 0; i < UFS_RPMB_MAX_REGIONS; i++) {
-+        u->rpmb[i].read_pending = false;
-+        memset(&u->rpmb[i].resp, 0, sizeof(u->rpmb[i].resp));
-+    }
-+}
-+
-+UfsReqResult ufs_rpmb_sec_out(UfsHc *u, UfsRequest *req, uint8_t *scsi_status,
-+                              uint8_t *sense_buf, uint32_t *transferred_len)
-+{
-+    g_autofree UfsRpmbFrame *frames = NULL;
-+    dma_addr_t residual = 0;
-+    uint8_t region;
-+    uint32_t xfer_len;
-+    uint32_t nframes;
-+    uint8_t max_rw = u->geometry_desc.rpmb_read_write_size;
-+    uint16_t req_type;
-+
-+    *transferred_len = 0;
-+    if (!ufs_rpmb_parse_cdb(req->req_upiu.sc.cdb, &region, &xfer_len,
-+                            sense_buf)) {
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+    if (xfer_len == 0 || (xfer_len % UFS_RPMB_FRAME_LEN) != 0 ||
-+        xfer_len > (uint32_t)max_rw * UFS_RPMB_FRAME_LEN) {
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_FIELD));
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+    if (!ufs_fit_data_buffer(req, xfer_len)) {
-+        return UFS_REQUEST_MISMATCH_DATA_BUF;
-+    }
-+
-+    nframes = xfer_len / UFS_RPMB_FRAME_LEN;
-+    frames = g_new0(UfsRpmbFrame, nframes);
-+    if (dma_buf_write(frames, xfer_len, &residual, req->sg,
-+                      MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+        return UFS_REQUEST_FAIL;
-+    }
-+
-+    req_type = lduw_be_p(&frames[0].req_resp);
-+    if (req_type != UFS_RPMB_REQ_AUTH_DATA_WRITE && nframes != 1) {
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_FIELD));
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+
-+    ufs_rpmb_handle_req(u, &u->rpmb[region], frames, nframes);
-+    *transferred_len = xfer_len - residual;
-+    *scsi_status = GOOD;
-+    return UFS_REQUEST_SUCCESS;
-+}
-+
-+UfsReqResult ufs_rpmb_sec_in(UfsHc *u, UfsRequest *req, uint8_t *scsi_status,
-+                             uint8_t *sense_buf, uint32_t *transferred_len)
-+{
-+    UfsRpmbRegion *r;
-+    dma_addr_t residual = 0;
-+    uint8_t region;
-+    uint32_t alloc_len;
-+    uint32_t in_frames;
-+    uint8_t max_rw = u->geometry_desc.rpmb_read_write_size;
-+
-+    *transferred_len = 0;
-+    if (!ufs_rpmb_parse_cdb(req->req_upiu.sc.cdb, &region, &alloc_len,
-+                            sense_buf)) {
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+    if (alloc_len < UFS_RPMB_FRAME_LEN ||
-+        (alloc_len % UFS_RPMB_FRAME_LEN) != 0 ||
-+        alloc_len > (uint32_t)max_rw * UFS_RPMB_FRAME_LEN) {
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_FIELD));
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+
-+    r = &u->rpmb[region];
-+    in_frames = alloc_len / UFS_RPMB_FRAME_LEN;
-+
-+    if (in_frames != 1) {
-+        scsi_build_sense(sense_buf, SENSE_CODE(INVALID_FIELD));
-+        *scsi_status = CHECK_CONDITION;
-+        return UFS_REQUEST_SUCCESS;
-+    }
-+    if (!ufs_fit_data_buffer(req, alloc_len)) {
-+        return UFS_REQUEST_MISMATCH_DATA_BUF;
-+    }
-+
-+    if (dma_buf_read(&r->resp, alloc_len, &residual, req->sg,
-+                     MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
-+        return UFS_REQUEST_FAIL;
-+    }
-+
-+    *transferred_len = alloc_len - residual;
-+    *scsi_status = GOOD;
-+    return UFS_REQUEST_SUCCESS;
-+}
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index e1d29d6670..cb7aaa765f 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -67,3 +67,6 @@ ufs_zbc_report_zones(uint8_t lun, uint64_t lba, uint32_t alloc_len, uint8_t opti
- ufs_zbc_zone_op(uint8_t lun, uint8_t action, uint64_t zone_id, bool all) "lun 0x%"PRIx8", action 0x%"PRIx8", zone id %"PRIu64", all %d"
- ufs_zbc_write_rejected(uint8_t lun, uint64_t lba, uint32_t len, uint64_t wp, uint8_t cond, uint8_t asc, uint8_t ascq) "lun 0x%"PRIx8", lba %"PRIu64", len %"PRIu32", wp %"PRIu64", cond 0x%"PRIx8", asc 0x%"PRIx8", ascq 0x%"PRIx8""
- ufs_zbc_write_undone(uint8_t lun, uint64_t zone_start, uint64_t wp) "lun 0x%"PRIx8", zone start %"PRIu64", wp back to %"PRIu64""
-+
-+# rpmb.c
-+ufs_rpmb_request(uint16_t req, uint16_t result) "req 0x%04"PRIx16", result 0x%04"PRIx16""
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index f8da7c9554..bc0f2ce4eb 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -961,6 +961,7 @@ static void ufs_hce_reset(UfsHc *u)
-             scsi_device_purge_requests(u->lus[i]->scsi_dev, SENSE_CODE(RESET));
-         }
-     }
-+    ufs_rpmb_reset(u);
+ static void ufs_register_nodes(void)
+ {
+     const char *arch;
+@@ -4068,6 +4351,8 @@ static void ufs_register_nodes(void)
+                  &zufs_test_opts);
+     qos_add_test("zufs-more-cmds", "ufs", ufstest_zufs_more_cmds,
+                  &zufs_test_opts);
++    qos_add_test("rpmb-descriptor-cdb", "ufs", ufstest_rpmb_descriptor_cdb,
++                 &io_test_opts);
+ }
  
-     /* 3. Reset standard request list slots, doorbells, and status registers */
-     for (i = 0; i < u->params.nutrs; i++) {
-@@ -2325,9 +2326,18 @@ static QueryRespCode ufs_exec_query_attr(UfsRequest *req, int op)
- 
- static const RpmbUnitDescriptor rpmb_unit_desc = {
-     .length = sizeof(RpmbUnitDescriptor),
--    .descriptor_idn = 2,
-+    .descriptor_idn = UFS_QUERY_DESC_IDN_UNIT,
-     .unit_index = UFS_UPIU_RPMB_WLUN,
--    .lu_enable = 0,
-+    .lu_enable = 0x01,
-+    .memory_type = 0x0f,
-+    .rpmb_region_enable = (1U << UFS_RPMB_MAX_REGIONS) - 1,
-+    .logical_block_size = UFS_RPMB_LOGICAL_BLOCK_SIZE,
-+    .rpmb_region_size = {
-+        UFS_RPMB_REGION_UNITS,
-+        UFS_RPMB_REGION_UNITS,
-+        UFS_RPMB_REGION_UNITS,
-+        UFS_RPMB_REGION_UNITS,
-+    },
- };
- 
- static QueryRespCode ufs_read_unit_desc(UfsRequest *req)
-@@ -2342,7 +2352,11 @@ static QueryRespCode ufs_read_unit_desc(UfsRequest *req)
-     }
- 
-     if (lun == UFS_UPIU_RPMB_WLUN) {
--        memcpy(&req->rsp_upiu.qr.data, &rpmb_unit_desc, rpmb_unit_desc.length);
-+        RpmbUnitDescriptor desc = rpmb_unit_desc;
-+
-+        desc.logical_block_count = cpu_to_be64(UFS_RPMB_TOTAL_BLOCKS);
-+        desc.phy_mem_resource_count = cpu_to_be64(UFS_RPMB_TOTAL_BLOCKS);
-+        memcpy(&req->rsp_upiu.qr.data, &desc, desc.length);
-     } else {
-         memcpy(&req->rsp_upiu.qr.data, &u->lus[lun]->unit_desc,
-                sizeof(u->lus[lun]->unit_desc));
-@@ -3162,6 +3176,7 @@ static void ufs_init_hc(UfsHc *u)
-     /* TODO: Revisit it when Power Management is implemented */
-     u->device_desc.init_power_mode = 0x01; /* Active Mode */
-     u->device_desc.high_priority_lun = 0x7F; /* Same Priority */
-+    u->device_desc.security_lu = 0x01;
-     u->device_desc.spec_version = cpu_to_be16(UFS_SPEC_VER);
-     u->device_desc.manufacturer_name = 0x00;
-     u->device_desc.product_name = 0x01;
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index a1e63bd0c8..5120ade082 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -245,6 +245,24 @@ typedef struct UfsWb {
-     uint64_t pinned_total_written_bytes;
- } UfsWb;
- 
-+/* Each region unit in bRPMBRegionXSize is 128 KiB = 512 x 256 B blocks */
-+#define UFS_RPMB_REGION_UNITS       32
-+#define UFS_RPMB_REGION_BLOCKS      (UFS_RPMB_REGION_UNITS * \
-+                                     UFS_RPMB_BLOCKS_PER_UNIT)
-+#define UFS_RPMB_REGION_BYTES       (UFS_RPMB_REGION_BLOCKS * \
-+                                     UFS_RPMB_DATA_LEN)
-+#define UFS_RPMB_TOTAL_BLOCKS       (UFS_RPMB_MAX_REGIONS * \
-+                                     UFS_RPMB_REGION_BLOCKS)
-+
-+typedef struct UfsRpmbRegion {
-+    uint8_t key[UFS_RPMB_KEY_MAC_LEN];
-+    uint8_t *storage;
-+    uint32_t write_counter;
-+    bool key_set;
-+    bool read_pending;
-+    UfsRpmbFrame resp;
-+} UfsRpmbRegion;
-+
- typedef struct UfsHc {
-     DeviceState *dev;
-     AddressSpace *dma_as;
-@@ -262,6 +280,7 @@ typedef struct UfsHc {
-     UfsLu dev_wlu;
-     UfsLu boot_wlu;
-     UfsLu rpmb_wlu;
-+    UfsRpmbRegion rpmb[UFS_RPMB_MAX_REGIONS];
-     DeviceDescriptor device_desc;
-     GeometryDescriptor geometry_desc;
-     Attributes attributes;
-@@ -412,6 +431,11 @@ void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
- bool ufs_fit_data_buffer(UfsRequest *req, uint64_t len);
- void ufs_wb_update_avail_buffer(UfsHc *u);
- void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
-+UfsReqResult ufs_rpmb_sec_in(UfsHc *u, UfsRequest *req, uint8_t *scsi_status,
-+                             uint8_t *sense_buf, uint32_t *transferred_len);
-+void ufs_rpmb_reset(UfsHc *u);
-+UfsReqResult ufs_rpmb_sec_out(UfsHc *u, UfsRequest *req, uint8_t *scsi_status,
-+                              uint8_t *sense_buf, uint32_t *transferred_len);
- bool ufs_realize(UfsHc *u, DeviceState *dev, AddressSpace *dma_as,
-                  Error **errp);
- void ufs_unrealize(UfsHc *u);
+ libqos_init(ufs_register_nodes);
 -- 
 2.56.0.307.g5fe7bd680c-goog
 
