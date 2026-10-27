@@ -1,71 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3002F606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376B5606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Lou9VysK
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=cmle0ecR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLf7m-0004HE-Gt; Tue, 27 Oct 2026 07:13:51 -0400
+	id 1xLf7Q-0003MR-GU; Tue, 27 Oct 2026 07:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLf7j-00047A-MC
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:47 -0400
-Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
+ id 1xLf7O-0003IL-Mc
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:26 -0400
+Received: from mail-dy1-x1335.google.com ([2607:f8b0:4864:20::1335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLf7h-0002zg-Ex
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:47 -0400
-Received: by mail-dl1-x1235.google.com with SMTP id
- a92af1059eb24-18cdcfc05ffso4904509c88.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:13:45 -0700 (PDT)
+ id 1xLf7N-0002xD-59
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:13:26 -0400
+Received: by mail-dy1-x1335.google.com with SMTP id
+ 5a478bee46e88-36a1947498bso102735eec.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793099624; x=1793704424; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1793099604; x=1793704404; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=zFuPJ4Lh2s2UUaRsaZOIoszYRr4vBXVOwxsipYqgcZQ=;
- b=Lou9VysKcYLIYaWn55Hi1PFX8F8Oysq9j5mHb9rzPI3a0S/ubK6WqxXaDJiq0kR1Z1
- KXTcOFJBjwnDc/6Q7uHAWiPliBFFBpXQ9EXNTXQF1/KCOYhv791/TF8opU3FCbyXUt1E
- p+OwxULJV5c37Vs9VzLZwugfjgY5b2URyymy9lo+tiRQPCVflT0NIy5XUarZX6tIFKUg
- 1yPNcYjssZP2jg94IziJn6t1zEFx/lB3dH/rTQSTuXljUNizOWS/0vVCd+C5vnRTqPRc
- xr5j72qApDVsGnwdc+XWZz4RrUaU6XL9DBnX+ICaRNj7Yq9K1VtCiB98V011AVjonHWQ
- fmFQ==
+ bh=PGg+cfLxGHyKVYfYPFBfVd5q5GfTBb1T7L/3+Wo2EA8=;
+ b=cmle0ecRmu+G12WV7zPpH7qWuxMlJinRbfAfkPkpCiEOSnmP+4zIDwqYqqzt5Mww/S
+ NzA6sIIVyN/Jz+U+zV1kZS907D5SPjnqoK+eMZB0Fhc2B+Qntj2A53Lq9CSCDDJrzj2k
+ kwOBXtB6UgH5skKerqzagQ+MB3vFQitxVQtVR8DTYP8kN6UZT9DZ1zZpGJIdO8qoL3QB
+ nKRXomx3oXxw0vvI8yLm+ds/EwZxWWRqbXoUYQieSYthTLbX99lD7kA8QvY0g+FOClsS
+ oM1CI2zeVno6x8vyxVdEzsTLReflyYoBLkTol8zDE8XtHiOOee9M1UzAYMrR3J2k9jtw
+ WZDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793099624; x=1793704424;
+ d=1e100.net; s=20260707; t=1793099604; x=1793704404;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=zFuPJ4Lh2s2UUaRsaZOIoszYRr4vBXVOwxsipYqgcZQ=;
- b=pbI99F7NQYeLd0U5ToaN704fuXegEgQGbyTrsYza1hql5B/CkAlpZaBv8+FbmA6Din
- JVaI/Wqk7FsJXerQ4i/nNuQaSUbQ+Lsy7x3/CesFUyBL7uQvP6z2FMRQkBnQbdPYm5u4
- 0GSybMPEWmvwvvsMRTW/ZjNWQmJrUpDAg9dJhIopRiDvLscmeaOvY6R2nq7QIaO6uOrk
- 0glk1wK7jh3q386qGYH1RHIC0zTq6hD++X1eZXaLgr6sdRlw0Gw3HyqKCOBNfDeje4h3
- o5HUS0HEYUEZnErW2CiLoqUSyGVBMa+0HgILAwuhLePKYOaYyTB+6wdBIQ+/55oThi7E
- fnxQ==
-X-Gm-Message-State: AFq9FYIWWUDH6ygWGfP7k/z3FR96TMk4U+tdjBK9ZXUj08IbKEeaBZEx
- xLOuAk1Ak6OUJcKTSCipsTIsG5snJCqo8rSIcjAw2FEVw/ndjhTXv6alER7N7nFE
-X-Gm-Gg: AYBFou0B+TR3A5j2qpjGu4/Abuk9Q5BcQylo2Xyv3w9Ox9GLduHwtAlq2DpdlJ5Supr
- scLWNbib0sed7ahfvo98Tf4t81p/+aJYcFnlVghf+rjlMlETQsNKCotpexszeHWu010uT31tYbw
- YUhFdPIEMjKotsJrEWbdxOlt1UQSQ46xc8dkblrbrsXMG8lNp3dUH3QV2B0UYAhMDT6du2XzRr/
- vrFnSEldN81rl0M8mY5/4BTb2RFwJDcJmxtEZmeexf9R8rih7TeEgnSz78oWQaKuwnqK/DAgMwb
- xJNBjCUXVgbWd6lXNsQuvC08HbgR+w/C4MrWBeevXx0eyw83qwj9RtBY/2Dk/eQt2NfIZjoO4UZ
- EEbJqe3qh4YQvGCjqR/BUwZogO+x0VCjIsC2H7cFmJMeYzKVZVBlVqE9/zLGRMjR6Veza67dzpf
- GY0GPDgwsJDas4cwDqHDvXqYTwDyA1velZuDWe+JmK7WLdGr/GITjB2CaD5hWmB18uDeCBgFX5o
- AbWI9tDbYRXOzYnnBH9VB/683j/ianitHqrtH3u17mLbYr+k+5wsEJ//KXKYEMYJbFo8llTNVzZ
- PwYr3e0zAJF7
-X-Received: by 2002:a05:701b:451c:20b0:1a1:8bac:c1c1 with SMTP id
- a92af1059eb24-1a18bacc218mr6054813c88.15.1793099623592; 
- Tue, 27 Oct 2026 04:13:43 -0700 (PDT)
+ bh=PGg+cfLxGHyKVYfYPFBfVd5q5GfTBb1T7L/3+Wo2EA8=;
+ b=vDa8h8Yjm6Ji+mrPFoiLMTe9QFM49mgGUXV6eYY7ufkLd9SyBxQ8DpEZfgnZsqUXGu
+ DKOnRaxZNsKlWoJmrfgtclhBTT9hpp9CWXnqgzSNKz14TAlxrp6JYQjCB32inddJrKvS
+ YldMtVWSaFIrGWs8a8AsmUK+dZRwGFULhUphE5QBzPfFs+rX5w5ojaZdgrowAZ7P6oAx
+ l2dhOifcEUtsPOUzD3HJa0oqVPjGohaDPb053qx1pAJlXVJCiUySbJO+Ix91Gr1WvbvQ
+ WBdiUM5P8pjHlbk+zIbNh3VttLIE+geGhUTrUMyQORVOTk45MrgYKeRPAeDz9jd6RU7g
+ YhKg==
+X-Gm-Message-State: AFq9FYJtmc/3OSTnXfb40RKLfzPfpgWXmBmAZ4gxGFilEBxFO2fAFx0Z
+ z94Ib+0k894I+/J5lr9rNzQ2/GI32LH6Sd44CAlT+LRJpDWrcqTv0fU/eDMqa4gG
+X-Gm-Gg: AYBFou2Z21QS5pJnPgwvDApdrF3PEJ9bnrVlQyWAKUi3o77ld4MN0iIzO86iuCEdqtn
+ lwttYRpKxy6GzdfJiXgzks2gs72+Cx5Het057sEK72DbhOxMJByZuNc+eG6juunsNDCv0ZQmmF1
+ ceayolTjWNBYY7h6FRYrJefd/6VSd0F6EpSOWVwJn1pJFU6bq+KgIvxohYgZe57BWYT+46LI3gd
+ sncI58Z+bCwe2M4FZ6oL6X7MCA2jDkI2PYwk+QPqw4DCAwJntj17ec3iR9uA9zusmJ4Vt89gUF7
+ dml7QmA3APZKcxdN9k3c87DiuBB9vh9FrhjcWqOAEVycL0JbNUjVrUD0ZkaPNBJlSwUgp1+iEPl
+ SgEUL4uyKPdQoD2nydrLfVt7PPojdffxiLVE2MNUVB5Au9LjDkhZLPgf6AJx0HHsM0XDdtr7+CS
+ CwgiwlXWqe4+cdLxSc34MhdK4YXiqQiylSL9stsFwemHrCVYjTCkickIWdRc8cZ7hxezL9tOkI0
+ nof8Thmfl7VqfihIx4aV7qkmAKwUyqmw8LEbFq9jChEvcfvsbp/IlSRdgxhpZXXwr+/zu/HWnRG
+ y12QgEqMI8HX2x1RWOtuHfQuvgcNDpKN/KqFpIQinC9I7Jx3c5NhAsY1q1n7/Q==
+X-Received: by 2002:a05:7022:ed0c:b0:172:c87c:2c46 with SMTP id
+ a92af1059eb24-19936a606a4mr12554071c88.9.1793099603587; 
+ Tue, 27 Oct 2026 04:13:23 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- a92af1059eb24-198a0f83cedsm40453042c88.13.2026.10.27.04.13.37
+ a92af1059eb24-198a0f83cedsm40453042c88.13.2026.10.27.04.13.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 04:13:42 -0700 (PDT)
+ Tue, 27 Oct 2026 04:13:22 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
@@ -85,9 +85,9 @@ Cc: Markus Armbruster <armbru@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Eric Blake <eblake@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
  Laurent Vivier <lvivier@redhat.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v4 12/17] hw/hexagon/virt: use unique QOM name
-Date: Tue, 27 Oct 2026 19:12:10 +0800
-Message-ID: <20261027111216.392-13-luoyonggang@gmail.com>
+Subject: [PATCH v4 09/17] hw/riscv/virt: use unique QOM name
+Date: Tue, 27 Oct 2026 19:12:07 +0800
+Message-ID: <20261027111216.392-10-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20261027111216.392-1-luoyonggang@gmail.com>
 References: <20261027111216.392-1-luoyonggang@gmail.com>
@@ -95,15 +95,15 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
- envelope-from=luoyonggang@gmail.com; helo=mail-dl1-x1235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1335;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,59 +118,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Set TYPE_HEXAGON_VIRT_MACHINE to hexagon-virt when
-target_heterogeneous() is true, and to virt otherwise. Keep the
--M / help / migration name as virt via machine_class_set_name().
+Define TYPE_RISCV_VIRT_MACHINE as riscv-virt when
+target_heterogeneous() is true, and as virt otherwise. Register
+that type and keep the -M / help / migration name as virt via
+machine_class_set_name().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/hexagon/virt.c         | 1 +
- include/hw/hexagon/virt.h | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ hw/riscv/virt.c         | 3 ++-
+ include/hw/riscv/virt.h | 5 ++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/hexagon/virt.c b/hw/hexagon/virt.c
-index 4823b1d8ac4..7c2fd9cb61a 100644
---- a/hw/hexagon/virt.c
-+++ b/hw/hexagon/virt.c
-@@ -360,6 +360,7 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-     MachineClass *mc = MACHINE_CLASS(oc);
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index f10a051d31b..8a3c85c201c 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1134,6 +1134,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
  
-     mc->desc = "Hexagon Virtual Machine";
+     mc->desc = "RISC-V VirtIO board";
 +    machine_class_set_name(mc, "virt");
-     mc->init = virt_init;
-     mc->default_cpu_type = HEXAGON_CPU_TYPE_NAME("v68");
-     mc->default_ram_size = 4 * GiB;
-diff --git a/include/hw/hexagon/virt.h b/include/hw/hexagon/virt.h
-index 4ca2f1ef859..2383b54ae56 100644
---- a/include/hw/hexagon/virt.h
-+++ b/include/hw/hexagon/virt.h
-@@ -9,6 +9,7 @@
- #define HW_HEXAGONVIRT_H
- 
- #include "hw/hexagon/hexagon.h"
+     mc->init = virt_machine_init;
+     mc->max_cpus = VIRT_CPUS_MAX;
+     mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
+@@ -1199,7 +1200,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+ static void virt_machine_init_register_types(void)
+ {
+     const TypeInfo virt_machine_typeinfo = {
+-        .name       = MACHINE_TYPE_NAME("virt"),
++        .name       = TYPE_RISCV_VIRT_MACHINE,
+         .parent     = TYPE_MACHINE,
+         .class_init = virt_machine_class_init,
+         .instance_init = virt_machine_instance_init,
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index e516898f9ad..7b58af79937 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -24,13 +24,16 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/block/flash.h"
+ #include "hw/intc/riscv_imsic.h"
 +#include "qemu/target-info.h"
- #include "target/hexagon/cpu.h"
  
- #define VIRTIO_DEV_COUNT 8
-@@ -26,7 +27,9 @@ struct HexagonVirtMachineState {
+ #define VIRT_CPUS_MAX_BITS             9
+ #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
+ #define VIRT_SOCKETS_MAX_BITS          2
+ #define VIRT_SOCKETS_MAX               (1 << VIRT_SOCKETS_MAX_BITS)
  
- void hexagon_load_fdt(const struct HexagonVirtMachineState *vms);
- 
--#define TYPE_HEXAGON_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
-+#define TYPE_HEXAGON_VIRT_MACHINE \
-+    (target_heterogeneous() ? MACHINE_TYPE_NAME("hexagon-virt") : \
+-#define TYPE_RISCV_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
++#define TYPE_RISCV_VIRT_MACHINE \
++    (target_heterogeneous() ? MACHINE_TYPE_NAME("riscv-virt") : \
 +                              MACHINE_TYPE_NAME("virt"))
- OBJECT_DECLARE_SIMPLE_TYPE(HexagonVirtMachineState, HEXAGON_VIRT_MACHINE)
- 
- #endif /* HW_HEXAGONVIRT_H */
+ typedef struct RISCVVirtState RISCVVirtState;
+ DECLARE_INSTANCE_CHECKER(RISCVVirtState, RISCV_VIRT_MACHINE,
+                          TYPE_RISCV_VIRT_MACHINE)
 -- 
 2.52.0.windows.1
 
