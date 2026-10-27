@@ -1,137 +1,163 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220F8606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71970606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=EjiqMbtE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XG3OxE2K;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=NUg3yL8V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLjiE-0003je-4M; Tue, 27 Oct 2026 12:07:46 -0400
+	id 1xLjiy-00046Z-Ck; Tue, 27 Oct 2026 12:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1xLjhv-0003Xm-Et; Tue, 27 Oct 2026 12:07:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLjig-0003vA-4a
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 12:08:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1xLjht-0007A1-SO; Tue, 27 Oct 2026 12:07:27 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69REEHgE1518777; Tue, 27 Oct 2026 16:07:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3TJ4b/
- Hd6N04ZVlz86s8b6ppKlGHuIm7hPByEEwmn/A=; b=EjiqMbtETTekPJdPlS8FGK
- HLvFiDdbxjfzUbDHELgvdowrsk0/LnCm0ibFMr+eJcuUiyLGG3tnZ4ZVsvqrzMkq
- RBE15kYKOBQaNHTvn5/S4iwOvqvXobm9pHQWq7ycn676K2Yy9YLJkpvdMVblygjC
- o3+O+jUEFOICkbP3zolWQsIGasRqlnrBqJhNfHu1g6eTBt2C2lm4Ysp/tv2sP+7x
- JP9xenPcrub/NIPI1grH6i8NdDNHHTeCU0k16WSKod2d25mP53f2r6RRHPsk0P7p
- ocP8LrWZ4aX7/nptNeaZ9W98PW6f8Cts7qR4XfdAU3nyuukeYUF9HIsMNov1yPpw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgk3g08uq-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 27 Oct 2026 16:06:59 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RE5NcS050452; Tue, 27 Oct 2026 16:06:59 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh7cvkny3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Oct 2026 16:06:59 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69RG6sn047186300
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Oct 2026 16:06:54 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0783320043;
- Tue, 27 Oct 2026 16:06:54 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B81A2004F;
- Tue, 27 Oct 2026 16:06:53 +0000 (GMT)
-Received: from [9.68.16.159] (unknown [9.68.16.159])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Oct 2026 16:06:53 +0000 (GMT)
-Message-ID: <5d28efce-0344-4172-83bb-ed8e97b802e2@linux.ibm.com>
-Date: Tue, 27 Oct 2026 17:06:52 +0100
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1xLjid-0007Bw-SJ
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 12:08:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793117287;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4jLLpkxhi3RdJB79MsM7OZCHEoq+mhpUraOJvTX/I1Y=;
+ b=XG3OxE2K12MHXA1/8lBH0Nd2gCe7rlNoeeNscHe2aDoxKqoKZ0r0QQDk5FZ6DJNoP33JuY
+ TNuSdlYksnbny7xPltMjRdZFVU31LhWcADD07eqf2FLgkQFLdBRQQLLEgFQM43itw8rsP7
+ QXH/s98gxiufPBC9br7z/tYUDCH6F6k=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-119-ZGc4k8UXM2qKJsZWSEcPew-1; Tue, 27 Oct 2026 12:08:05 -0400
+X-MC-Unique: ZGc4k8UXM2qKJsZWSEcPew-1
+X-Mimecast-MFC-AGG-ID: ZGc4k8UXM2qKJsZWSEcPew_1793117285
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a80bd45e1cso4900645e9.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 09:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793117284; x=1793722084; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=4jLLpkxhi3RdJB79MsM7OZCHEoq+mhpUraOJvTX/I1Y=;
+ b=NUg3yL8V2mgYkl0Qj3NsKqHpbzGIJjpWrib69emCGnPIo8L8+CHJFR217MFN8lC3Xh
+ y3xf9sLrGqBn8EHvoN8WRBM59/mr+3JaaqSYI8v9VVB/TXc6ssoKg1s461Cjd26CgM/v
+ 3K4xlaT+KHHBzjl8YtbFQZY331YJUq9P537tO4Wt3bHeyerc8Z5DL58TnReJGrtF0da/
+ DoMS4cmIsLlc3d3elTkzOuIoN4QyJsFX9Z5Q+i1VUIMU9cmP3WmBXFveIrmxNstxK2re
+ EwnmgjC/aMYY9Uav2XseN/LyOP/WQ4EC8hce4n9cAOUm9uvteNrp/pWaTe6R1s7SE74e
+ nIwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793117284; x=1793722084;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=4jLLpkxhi3RdJB79MsM7OZCHEoq+mhpUraOJvTX/I1Y=;
+ b=cSCemESMeoDVYwF/o2VyPctppbDZ1i94EcRAMODYSVbqVGlAmiUl2ud4TPTDzkORNr
+ IE3qvT3k3Bxy8iQgdurDafr2X8soRd+e3Kar59diDEs0TUbdzwvd+QWUJewBAEeRzBeS
+ sgALOJNpnGtvfVtQbbp6DvhBGZ77W+XC/wP4dxBtwLtzDBBWezZu+YMGfHC7al3iA7Vo
+ i/wQwCxhkTM73pDIUSDsTufeYk378xC93h7aDQ3jL9ujp29Kh/GkvPPnMCPEf1kgMBgX
+ E4PLvQ+sMEJ+JnOLxpT3ld5w5swPcY6x7gOG4LaogDL+2fVbvOIg3e7mFQOKRv3Y9eY0
+ icVA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzSAlPktDy7i6Y7WDJs8QHnVx+GrUKujOMgQxH9/qLEf/jXkffF8dPoH13MWhOgE6PaKFoWy3dY/cZh@nongnu.org
+X-Gm-Message-State: AFq9FYIF8Kl1GFeY6hwq7mwKFgMy0iLyRsZTe+tGQhjgfbKthbA3duiF
+ iN4w+sc996VBqYVqUMhpTKSOpioO5QNojzEW3J079fvS9s3eyvG81bOHQHLLjVSFKda7BB/qkgC
+ e/6J96dBifQpoEM3kOpItPchfQ1gFXbkz1M0vClAR7yO/8O0Z2BJi74NX
+X-Gm-Gg: AYBFou1f6TjKWh5pGCHNPj/DktrWqK6lqgxeaTFJ0Di4uHxyLgPQmmdlfLo+JS9wZrG
+ msNcidWgt/tuk/rnMHTNBOwKQol88i9RYM9vT+jv3675Do2BRxRfb6MXhZPdby5DNiPHIp656gc
+ R6ma1I8noLuAVfrCdRPH3xU1aOGuWlztqVgUaxtRfIJqTTXcwkr1azkK7NijkC9pvpC6DFWDGyU
+ itkybe04W3fPix8cw02iqRqJn28OiYA0tyI2zUa0RUHwoLMCFoQAQYqEHsN1pa0MZuYSuTeo/8l
+ UKmOdtTIxzqFwIFiPaTOtbmFd4MgU1BwWc2egG0bRYqqzVeqo2cZG2CgPRun6uGju5E2ed5bDPz
+ gGQXW0eax1VUsM26uaXP5L2h+mRlwx7UbY+w3sYxK
+X-Received: by 2002:a05:600c:1c22:b0:4a7:9044:a87 with SMTP id
+ 5b1f17b1804b1-4a790440cfdmr96293325e9.27.1793117284441; 
+ Tue, 27 Oct 2026 09:08:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c22:b0:4a7:9044:a87 with SMTP id
+ 5b1f17b1804b1-4a790440cfdmr96292585e9.27.1793117284027; 
+ Tue, 27 Oct 2026 09:08:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d?
+ ([2a01:e0a:11c3:86f0:970c:89f0:ad32:f84d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a92a642494sm674025e9.0.2026.10.27.09.08.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 09:08:03 -0700 (PDT)
+Message-ID: <3cbe37ab-96aa-4489-828a-60ead423791b@redhat.com>
+Date: Tue, 27 Oct 2026 17:08:02 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 19/19] tests/functional: add tuxrun kvm gdb test for
- s390x
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Keith Busch <kbusch@kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Zhao Liu <zhao1.liu@intel.com>,
- Ani Sinha <anisinha@redhat.com>,
- Anders Roxell <anders.roxell@linaro.org>, qemu-arm@nongnu.org,
- Song Gao <gaosong@loongson.cn>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-s390x@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brad Smith <brad@comstyle.com>, Brian Cain <brian.cain@oss.qualcomm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Klaus Jensen <its@irrelevant.dk>, John Snow <jsnow@redhat.com>
-References: <20261019192704.3220373-1-alex.bennee@linaro.org>
- <20261019192704.3220373-20-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20261019192704.3220373-20-alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 2/2] ppc/spapr: Disable VFIO BAR mmap during EEH PE
+ reset
+To: Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, sbhat@linux.ibm.com, mahesh@linux.ibm.com,
+ sourabhjain@linux.ibm.com, adityag@linux.ibm.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com, alex@shazbot.org
+Cc: amachhiw@linux.ibm.com, hbathini@linux.ibm.com, shivangu@linux.ibm.com,
+ anushree.mathur@linux.ibm.com
+References: <20261027160258.48207-1-nnmlinux@linux.ibm.com>
+ <20261027160258.48207-3-nnmlinux@linux.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20261027160258.48207-3-nnmlinux@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=BOMmP1QG c=1 sm=1 tr=0 ts=6ae0cc23 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=KKAkSRfTAAAA:8
- a=20KFwNOVAAAA:8 a=r6AxLgfQxGK4Zs2wc1wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: xDct3LEvUxMBIVwl5hbioPgGSj7tnRQ6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MiBTYWx0ZWRfX3sPulsbWKr5n
- F/fttdqxkIX7mlQGy9cpJphn7uiAvr1nN0FoVW/lwwfxye8pOwvEFk8/FQ2Oqn5NZi1AlBIgPwe
- OkCyh7Q2CQrOdBqSDDxT44ZQnqMFMziHwj+6Xq8jOuMvkG8vbshT+5vY/H9lus2tWkk+dU2m/vj
- BQnNQP8RLpREkXQdnNOoTJdMd8S5BG6CEBr5tuCDB/VvaEbJKow85moFmY3rBUAAk8tNBOFg5j4
- /cIrNhLd0yXTmqf9ICQW6HarPG2eesnTCuB6ubj4P+QxWXO6ZeKImZk9P/SJZQZFPzwpLQjsqfh
- CVLI9l505+L8Zt9KyQ0JNtgY7nclsgZhJPioDgloYclzg1YkCYg1PMsA5O4uuxZy/y5FOq2Xj5z
- Yztjxb1eUK0zPillgtS7U2uZW0zur8UR/I4EnYbUg9f1Qdj9CC3bAQvVDQwfzsEWkoVIX/GeElB
- lgQyKJfXR8adzCI5qaw==
-X-Proofpoint-GUID: xDct3LEvUxMBIVwl5hbioPgGSj7tnRQ6
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA2MiBTYWx0ZWRfX2DYWXk9Wbq5h
- o3aHNWQVHtCR5E/DJpRQpGiTsoBJLChNQvDiFNvnENlvLprPWcCY47IxraAvbZGyJT6gwQEXkAF
- yOEcPi7S3mpOkHk7Ak+f3zQ/CcxDI0o=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 clxscore=1011 spamscore=0
- phishscore=0 adultscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270062
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,51 +169,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Am 19.10.26 um 21:27 schrieb Alex Bennée:
-> As with x86_64 we now have the bits to add a KVM gdb test. A couple of
-> minor wrinkles need to be handled.
-> 
-> The first is applying an offset when loading the symbols to take into
-> account the relocation that happens.
-> 
-> The other minor wrinkle is the s390x only supports WP_WRITE watch
-> points so we skip the other watch point tests lest we get confusing
-> messages about failing to insert HW breakpoints.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> index 428ab2f069..931df22add 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1949,6 +1949,38 @@ static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled)
+>       }
+>   }
+>   
+> +/*
+> + * Prevent a pending INTx mmap timer from restoring BAR mmap while
+> + * the PE is undergoing EEH reset.  Keep BAR accesses on the VFIO
+> + * region read/write path until PE configuration completes.
+> + */
+> +void vfio_pci_eeh_pre_reset(PCIDevice *pdev)
+> +{
+> +    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
+> +
+> +    if (vdev->intx.mmap_timer) {
+> +        timer_del(vdev->intx.mmap_timer);
+> +    }
+> +
+> +    vfio_mmap_set_enabled(vdev, false);
+> +}
+> +
+> +void vfio_pci_eeh_post_configure(PCIDevice *pdev)
+> +{
+> +    VFIOPCIDevice *vdev = VFIO_PCI_DEVICE(pdev);
+> +
+> +    if (vdev->interrupt == VFIO_INT_INTx && vdev->intx.pending) {
+> +        if (vdev->intx.mmap_timer && vdev->intx.mmap_timeout) {
+> +            timer_mod(vdev->intx.mmap_timer,
+> +                      qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
+> +                      vdev->intx.mmap_timeout);
+> +        }
+> +        return;
+> +    }
+> +
+> +    vfio_mmap_set_enabled(vdev, true);
+> +}
+> +
+>   static void vfio_bar_prepare(VFIOPCIDevice *vdev, int nr)
+>   {
+>       VFIOBAR *bar = &vdev->bars[nr];
+> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+> index c9ab949870..63fa378fbc 100644
+> --- a/hw/vfio/pci.h
+> +++ b/hw/vfio/pci.h
+> @@ -266,6 +266,8 @@ struct vfio_pci_hot_reset_info;
+>   
+>   void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
+>   void vfio_pci_post_reset(VFIOPCIDevice *vdev);
+> +void vfio_pci_eeh_pre_reset(PCIDevice *pdev);
+> +void vfio_pci_eeh_post_configure(PCIDevice *pdev);
+>   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
+>   int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
+>                                       struct vfio_pci_hot_reset_info **info_p);
 
+These are POWER-only routines. Why put them under hw/vfio/pci.c ?
 
-Hi Alex,
+C.
 
-on an s390x KVM host, test_s390_kvm_gdb fails on current master
-before gdb is even started:
-
-Traceback (most recent call last):
-   File "/root/REPOS/qemu/tests/functional/s390x/test_tuxrun.py", line 53, in test_s390_kvm_gdb
-     self.common_tuxrun_gdb(kernel_asset=self.ASSET_S390X_KERNEL,
-     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                            vmlinux_asset=self.ASSET_S390X_VMLINUX,
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-     ...<3 lines>...
-                            haltmsg="Requesting system halt",
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                            accel="kvm")
-                            ^^^^^^^^^^^^
-TypeError: TuxRunBaselineTest.common_tuxrun_gdb() got an unexpected keyword argument 'haltmsg'
-
-not ok 3 test_tuxrun.TuxRunS390xTest.test_s390_kvm_gdb
-
-haltmsg was removed after review, but not from this patch.
-
-
-
-In any case, zhank you for enabling s390 gdb testing,
 
