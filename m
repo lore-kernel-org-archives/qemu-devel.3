@@ -1,98 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77AE606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0B2606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=nK+k0uuA;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LrGT3wQA
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=QhtVu7jg;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=FoyaZ89d
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmpW-0001Jr-5o; Tue, 27 Oct 2026 15:27:30 -0400
+	id 1xLmp7-00072v-SM; Tue, 27 Oct 2026 15:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmpT-00017U-EH
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:27:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xLmoo-0004XR-5r
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:26:46 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmpQ-0002Hz-V1
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:27:27 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xLmol-0002Bj-8C
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:26:45 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIHpFC4036054
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:27:23 GMT
+ 69RIHOxV2945716
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:26:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- aCYHpJ/P3Gn3VFwnE21cCPUzNvlBOm/7ggsp3gZuCpQ=; b=nK+k0uuA6bap9OHb
- /XfNP/M3w45QM9aSg5VtEhcPVlRg/13FOTPZy00qLIqAxxeB4bKTc/6E9G2tnu5F
- v3638vgjRmz4YyzAUp67UwJfYl9iMAa4ySaWVg/d4hnuIcXVWxqZNB3PcJsFr2Uo
- t7mO1gxxxtQP9IYQ7q9yfRi1suWHfJfGgbr8kTEG9nW9S2Okf0b5AApPq2hdJheP
- HXlCy9ISdbOHXak0V/9muZk50E6LNN/AUfOqCFQ9Gi5fmiaz6myMFFBJvv49cyhu
- bc7rrCWu8HsMxu+Tx/GRLlcqPkuoGTt/HgjHZDqd4VwYtgdsSs+1ck6qu8Qwea8m
- 27HJBQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjyjprqp9-1
+ gn1qZ8VWVeVW8PyoeeLKU+L9P6KAemHz+IFCpmOFx4w=; b=QhtVu7jgQHqoP1o5
+ 2PvrWr3cnlOC2vZQ8q6iYJEoyn/ivwcw94p9STUc0pnmv4uhx+Xd1EN4ACuMrM9u
+ vC9QF6OKW7bnF86xhV9s/i2efV208lj805AJ+50bqP/fWD+xTlSfLRdkGE0CCeK6
+ shSGgQ9ufu480JZsUWLnfqCsOmTka/fl1TqdeCCbGzQaJaJka+eYZ9V5fBQL/rKm
+ 8aMcpHoyGV8q98AiSnhINtgA6e6NLvLzNc/iWHUm14fr64+GVRAldTfYhhrxM5Yp
+ mJBigMkzzVayP6nnsMZFzuR5XalllfZkrI9N25kT9Zqeq4y/CELMAN1iq9OZ+5XT
+ AWcY5g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjrq6apg0-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:27:23 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cb93c874bso249219085a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:27:23 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:26:42 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93f33438950so27427185a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129242; x=1793734042; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793129202; x=1793734002; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aCYHpJ/P3Gn3VFwnE21cCPUzNvlBOm/7ggsp3gZuCpQ=;
- b=LrGT3wQACcpaVf6zs41SQnxs3h9zmcJo4ArivNfF3YDxj17v0SBbrobhTA8bnJtsJf
- NkLkfzN0ckz2Feq4MjBh7IXA645+Wv4Ay2uRISEPi5XqKhD27TFp279oLvWRbyTf5CKg
- bfTyqO2yhO6yxfBZfQxWryzfXvMC/p3Sab7YMaiNtN9vHjXp52JjtJqBjsTDhei796vQ
- LuaoWMhl1YmvlWvkoUypkkY1w9iZ5O96k/Z/ky4uiwSES9J/M4dTUFM8bZcDXweUripa
- u445Y3sSmRpvEx+BeBA9UMB6zY2t5OeFOZoUicCjuI347oN4npioJwS9oR/P8UIOCULO
- ughA==
+ bh=gn1qZ8VWVeVW8PyoeeLKU+L9P6KAemHz+IFCpmOFx4w=;
+ b=FoyaZ89dtyHI9wYLW0+XU9WiLe5GhI6tTji7CKc+5DMo06rQneeE4OnmHO8JquvjyC
+ uaDDDdGUI/mf02Edu/iizoRE3t14y0l7pAKxHG4/oOGVhiSNyHlNaShDd/2nFrZWTcMN
+ Y8StU/CbUYq3Xe7FThEBZoyXcCXmTXHOUgoy6XY2S+SEbkOZePJNv3UlClpJYWPCTcPN
+ dybhT8nzpO5Q8+I+p0Tn2Q+GHUjxZR6MU2tYtiGz/H08Iok7Gx9a4eYFzTcb+oC0aKNn
+ ztq0++CzOhsqem5AsXf01l8xjo8qctc7dkeO+bmkLomvnDT7npsQ5w/4KQItKF4fSN0v
+ insQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129242; x=1793734042;
+ d=1e100.net; s=20260707; t=1793129202; x=1793734002;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=aCYHpJ/P3Gn3VFwnE21cCPUzNvlBOm/7ggsp3gZuCpQ=;
- b=O6Zv939NoIW788g6/ydGYitwQDwTKDeWysdKIuclujq2sd2A5v6WR1pcOokYviQDya
- xmJ7LWjJqPXvTmSM6wu+x06IIOFImxcPij6nuac1VBYeVeN5Prr+phz0iyIpFScp/RTw
- 0XIKmQv1lUY57wY0QxvWWO9eWj8xJvQry1hnUSwXyVsxXH4Jjk+LzOniBkn/dV8Z86HC
- nNtVgpzehaBfSVNzrlL8Os4OM0IAmuVaUaBIB7Hutt49dQQukgbT1i3FSSRPRdisJRpE
- A+aatheCTN8Wb0cTcztoaqeTb2eU//jzHAyq9p2NphUf97Icit0T6e0H1goo0BHGrw08
- TBcg==
-X-Gm-Message-State: AFq9FYJwTSyaKZ0wLhSUdLHdhVJw+F+yJzlYZbjsF6yYZO4ju2i5rB2I
- NnuN17I86pMwYLjL+5BJWyR1DBibIs8Uc6FNeRrh7ecXQPNJbPlsdADxxAhT1N9JDXu0Ennm+8x
- GXHsdG5TgoxJJID1p+aIkzvzSHNpN7Xj2g3Jfr49pnpCCUDnkYVeY1Qi1pXjT/yvSyg==
-X-Gm-Gg: AYBFou2EUupL0J8yjFkoZ4GgI9O9ME3ZaNjGNxA46tXMwZr+tCXOl/M3SjhwGVHyuln
- FGdDbtnmTfDLw7JjYFB6uZkbYAbEa1SJEqTTIOfQhSLvSx9cHHV/FIbqg+1tAFt9iaCTy9qIVuf
- pwR1cHWPfKaSkB35wJkDJuu4RPGIQeOpZg8N836XOjdxBGvQCb/rkq9raRuxAVLHfPab8AJvkMB
- hULPkwVUxHdV1uWbxQKgv8fwHjSuaZoiV31MUOOcnvK9CJW9RrrWyf1za2YYQRYw97qVf6DGsxy
- ZtZiUk3f1bveEZFLaDNKB/jR22icAHjBBt9vFG2VGVONsfPrJhu1Eddw88msby4X9c5nTYuJIwJ
- tyjoaOSc8nrPZuacIFiIU4X1PRVWfwbvLCjcR9ZPaFSg5xgVkDD98mIkx
-X-Received: by 2002:a05:620a:4054:b0:93c:3863:ff7f with SMTP id
- af79cd13be357-943f3f27babmr643712685a.0.1793129242338; 
- Tue, 27 Oct 2026 12:27:22 -0700 (PDT)
-X-Received: by 2002:a05:620a:4054:b0:93c:3863:ff7f with SMTP id
- af79cd13be357-943f3f27babmr643708185a.0.1793129241545; 
- Tue, 27 Oct 2026 12:27:21 -0700 (PDT)
+ bh=gn1qZ8VWVeVW8PyoeeLKU+L9P6KAemHz+IFCpmOFx4w=;
+ b=x5wxlSj3bTPUG4Ng5VxEcTCP9sDQ709IhpcIvPmNICPmHF8QbYKRDXE9o5O3SZAR6y
+ BsOpmepFNlmKVNMlu2yjOWEzu6Sc66B4MrP4NZ8jIkT9M8o3JTjuV09ugBGazWV/4ulW
+ ATTgPPTej3RFHDtmuYGbLqyXlIL6Rgz2HwGsp13abUNRRkCJyHJKzMb7RGUcUitoa39Z
+ 0UOidWN/fxO73j3zk3YGmTSn/bfJwNz0jnpKc5DM7zVpKzDe+2rY03Mv/jfusb4LItxG
+ 7yg5TKRH3TE6NyqsZpulKi2B9UuT+Mwi6mW1q67LWNlw/eQx9Mz3WQRK3NItTXFNaBrs
+ Xw5g==
+X-Gm-Message-State: AFq9FYKKAGOyNWiq98gEG4ff22KQvsCp0m9GEL65B5HGhggzKDg+g0vU
+ Xa39NdvystztnuLYZLJAaCTTyMOtoTTgzZnKkTbAxtI6Bv10Y9v67iFpZktCgP9Hqxb80Cwcx+Y
+ 62hPAW9ekq6BRz84ldEwoWKueg1cZ/2vcqlgGbbM6RZs+EUhK0euUrzGzPj9gf+xsOg==
+X-Gm-Gg: AYBFou1S6J4JkgupK2zhW86iymOsskYW1eoKlU8azqyt63LY5AUOD8ygUZeZJairekv
+ ePi+3ImeSi4btapL0PRtLyXj5ikHWmJwlP0J9L4JPTW8mV4zfGAE75awJSaZHiz6hrqSQcMvEVl
+ FWorljyyp+AMwIeGeQ64amObmh8KBBN4ST+mcu/OASlojqxPB6h9Vao+ZHgUugG83GT0CaCh7BL
+ IlM0/6wuJ7w3ZyXuCS1yycq1IzFbhut7KEwogqKuRk4z1WR+1iRxlthk5e6db5Xdy+9yVje9swQ
+ yVn+RgKC/TIEs28OTQFMX8vEZDckFYyyYHsF8QFaW9rEnQdl0YwhJvEmaPA+ySNa828FgzBoLgB
+ bvDHT5UZ/tmi6ACR70FBHon97vDv01e4f2DKCiliSED9FFuNh7/qFB8yJ
+X-Received: by 2002:a05:620a:4441:b0:93e:e1fd:b87f with SMTP id
+ af79cd13be357-940ef9c9453mr1581028285a.83.1793129201664; 
+ Tue, 27 Oct 2026 12:26:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:4441:b0:93e:e1fd:b87f with SMTP id
+ af79cd13be357-940ef9c9453mr1581024685a.83.1793129201199; 
+ Tue, 27 Oct 2026 12:26:41 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd3c32sm25200443f8f.47.2026.10.27.12.27.20
+ ffacd0b85a97d-48e3eb8f36asm24749128f8f.1.2026.10.27.12.26.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:27:20 -0700 (PDT)
+ Tue, 27 Oct 2026 12:26:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/59] Kconfig: Extract config GPIO_IMX from config IMX
-Date: Tue, 27 Oct 2026 20:23:13 +0100
-Message-ID: <20261027192341.9197-33-philmd@oss.qualcomm.com>
+Subject: [PULL 26/59] Kconfig: Extract config FSL_IMX7_GPR from config IMX
+Date: Tue, 27 Oct 2026 20:23:07 +0100
+Message-ID: <20261027192341.9197-27-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
 References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
@@ -100,36 +100,37 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX9jEFua//47Gf
- IDPHPJmw0JtTXqcIGxfSYnpQn9kTEMjc3CVCAMm3/loXs/GePA5bPq38ywG5cIADK0GIHa3NGPX
- D8gq257BCGFqdFHyvgXfUhZBNK3E6IJkYbImxCq2tpxX+6oXBsbOUz2HHWpXUIVTRi2cL0iXa0C
- YzI4m774TTEZ/1ORbSoZCIIlCF9LBitCjKCUPeZ+b1g83ukhg7D8UvxKCRyJPrvUTHPGwJZ7cVB
- nMc8LvEuZIU2ZsoJj0bczSgV1YufPiC/mKJmK3qWNfe8dLa4YqVqsmUUSEls2stSWnbAq3oPHh9
- 05eJVNACG0CDB4VMtOfTXooIVC2OJnqXSZgBwGnZhtINUqh8REpKkW5JHJMGFruycgCx9BuQO0O
- X8Lqe1ajVI1I5W1ED/m6jJSMJk1MRn8g8jpahI+c2emddKkJK0ygsvxkGOdG8OtA6+8drx+Eq6/
- QxFygl1mJvz9IqqblLQ==
-X-Proofpoint-ORIG-GUID: nEMw8vK7oRDa9n6Ne2IpKOehd0FWVKyG
-X-Proofpoint-GUID: nEMw8vK7oRDa9n6Ne2IpKOehd0FWVKyG
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX040KBclX5vrU
- RJZiTI/l4bTFzZa0c+xi/ZpqyXhG3NgaId4hKJOeVQbdAEyj4wH6b86/c8130QnZHWLQmwxGHOe
- Tj7Yu3tuLZMrTbtx8G44PhLy7zD14ng=
-X-Authority-Analysis: v=2.4 cv=JodkP84C c=1 sm=1 tr=0 ts=6ae0fb1b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=RYwFmFtv c=1 sm=1 tr=0 ts=6ae0faf2 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=pGLkceISAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=AV7NJlB2dRExfWgJ-qAA:9
- a=egRM8HxTFvu5Bn7Q:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=H4N_Y-AU75W7NKDNhZlT:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=pGLkceISAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=8JKbvHrISIDU7W56SM8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-GUID: nJiSS-EzYr8Oey0BCXTsJXsUTWq7VX5U
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX1/yTCL30g8+T
+ m2gu4ekwdg39kc10CYQugPKdLFv6UU2vNBcF0ZP20ljD6/JCqFNR06R8eh/lOEezdS8F6rZKpDp
+ cEKuBomVu7iKSqfVvYIUthpZ+S2FA9o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX7vHoW4J3HJKx
+ 5ZmAcFjEV2JL/CEbSud75QaVYYvZa4o4AdI/eAoM3SofjmKQOO60aw579PU/jiFZz9bhtvLF5jG
+ tOvtu87JGvwhPpd+c5WvnwrJzaq13ZizCZrmR6+AiDZO8cLigUtYR/glNUfEoO2+IYvL0+x6a+K
+ bR5qqXCmCUcX9qKdXc+FLQa1m4Qi2FxEmoTllbRkOMAaHwU1q9XY9r2n0EkQUEVYgzROl17+GeT
+ tFxM/t2r0giMFyFLap6qoeSA6jA9H5HOVZ5x+ei26xoHOd8ix5N+qk8IZAufHmKxGHHI1hyFmON
+ r8KL+P7O0NewXlGm683XdguPFnKT9OVzuD7m7g56ZEFe9YTS1PIU+l7fnqLJfO0Tq1/yRnWbFg2
+ S7gQ+SeMxBZRle9m09xVhAAF05+QwpJqsve/9yZePtswT5rUodgsA+7UNQMQCU/nu3qDNXkaVhm
+ mB0r6okiDPU5CZnhnTw==
+X-Proofpoint-ORIG-GUID: nJiSS-EzYr8Oey0BCXTsJXsUTWq7VX5U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270078
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610270078
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,110 +160,65 @@ From: Bernhard Beschow <shentey@gmail.com>
 
 Over time, QEMU has grown a number of i.MX boards and the monolithic
 config IMX drags in unneeded dependencies into each SoC model. Extract
-config GPIO_IMX to eventually eliminate config IMX.
+config FSL_IMX7_GPR to eventually eliminate config IMX.
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <20261006083445.30362-28-shentey@gmail.com>
+Message-ID: <20261006083445.30362-22-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/arm/Kconfig      | 7 +++++++
- hw/gpio/Kconfig     | 3 +++
- hw/gpio/meson.build | 2 +-
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ hw/arm/Kconfig      | 1 +
+ hw/misc/Kconfig     | 3 +++
+ hw/misc/meson.build | 2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 4b52df2a324f..92e6e3b4790b 100644
+index 53f723661cf8..55e09e3d9957 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -480,6 +480,7 @@ config FSL_IMX25
-     depends on TCG && ARM
+@@ -579,6 +579,7 @@ config FSL_IMX7
+     imply TEST_DEVICES
      imply I2C_DEVICES
-     select FSL_IMX25_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_AVIC
-     select IMX_EPIT
-@@ -497,6 +498,7 @@ config FSL_IMX31
-     depends on TCG && ARM
-     imply I2C_DEVICES
-     select FSL_IMX31_CCM
-+    select GPIO_IMX
-     select SERIAL_MM
-     select IMX
-     select IMX_AVIC
-@@ -514,6 +516,7 @@ config FSL_IMX6
-     select FSL_IMX6_CCM
-     select FSL_IMX6_SRC
-     select FSL_IMX7_SNVS
-+    select GPIO_IMX
-     select IMX
-     select IMX_EPIT
-     select IMX_FEC
-@@ -594,6 +597,7 @@ config FSL_IMX7
-     select FSL_IMX7_GPR
-     select FSL_IMX7_SNVS
-     select FSL_IMX7_SRC
-+    select GPIO_IMX
+     select A15MPCORE
++    select FSL_IMX7_GPR
      select PCI
      select IMX
      select IMX_FEC
-@@ -616,6 +620,7 @@ config FSL_IMX8MP
-     select FSL_IMX7_SNVS
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_FEC
-     select IMX_GPT
-@@ -643,6 +648,7 @@ config FSL_IMX8MM
-     select FSL_IMX7_SNVS
-     select FSL_IMX8MP_ANALOG
-     select FSL_IMX8MP_CCM
-+    select GPIO_IMX
-     select IMX
-     select IMX_FEC
-     select IMX_GPT
-@@ -684,6 +690,7 @@ config FSL_IMX6UL
-     select FSL_IMX6_SRC
-     select FSL_IMX6UL_CCM
-     select FSL_IMX7_SNVS
-+    select GPIO_IMX
-     select IMX
-     select IMX6UL_LCDIF
-     select IMX_EPIT
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index ea0fb72b4062..5ea2c5f4277f 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -1,6 +1,9 @@
- config PL061
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index d9991494b7fa..b329d6bfda97 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -97,6 +97,9 @@ config IMX
+ config IMX_RNG
      bool
  
-+config GPIO_IMX
++config FSL_IMX7_GPR
 +    bool
 +
- config GPIO_KEY
+ config FSL_IMX8MP_ANALOG
      bool
  
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 8ede5e88ae5e..d60dc42ab303 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -1,3 +1,4 @@
-+system_ss.add(when: 'CONFIG_GPIO_IMX', if_true: files('imx_gpio.c'))
- system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
- system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
- system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
-@@ -6,7 +7,6 @@ system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
- system_ss.add(when: 'CONFIG_ZAURUS_SCOOP', if_true: files('zaurus.c'))
- 
--system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpio.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_gpio.c'))
- system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_gpio.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gpio.c'))
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index cebc5f0d6ef4..d6f1162ff9c6 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -62,6 +62,7 @@ system_ss.add(when: 'CONFIG_AXP2XX_PMU', if_true: files('axp2xx.c'))
+ system_ss.add(when: 'CONFIG_REALVIEW', if_true: files('arm_sysctl.c'))
+ system_ss.add(when: 'CONFIG_ECCMEMCTL', if_true: files('eccmemctl.c'))
+ system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_pmu.c', 'exynos4210_clk.c', 'exynos4210_rng.c'))
++system_ss.add(when: 'CONFIG_FSL_IMX7_GPR', if_true: files('imx7_gpr.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_ANALOG', if_true: files('imx8mp_analog.c'))
+ system_ss.add(when: 'CONFIG_FSL_IMX8MP_CCM', if_true: files('imx8mp_ccm.c'))
+ system_ss.add(when: 'CONFIG_IMX_RNG', if_true: files('imx_rngc.c'))
+@@ -73,7 +74,6 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files(
+   'imx6ul_ccm.c',
+   'imx7_ccm.c',
+   'imx7_src.c',
+-  'imx7_gpr.c',
+   'imx7_snvs.c',
+   'imx_ccm.c',
+ ))
 -- 
 2.55.0
 
