@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C37E606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEA6606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=YHkfE0l5;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=fEo+8YX7
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=DvB4K4qp;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=iQqlojdO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLei0-000715-Ut; Tue, 27 Oct 2026 06:47:13 -0400
+	id 1xLegi-0005gE-2I; Tue, 27 Oct 2026 06:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLeg7-0005QG-Uw
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:22 -0400
-Received: from mx2.catap.net ([2a01:4f9:3b:5410::2])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLeg0-0005Mz-B0
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:11 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLeg5-0007wO-G7
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=R1XYILt
- lsceFyB2Xsk1roOB/O840+tbYfpOsNnb4K6MoX/UNmQHJSDk4hsnQevUX0GXzXsRgb1yfW
- X/Gyvm4rbBN9LwQ3FelxgbAdeNkmuW8xCJ+1ZlE65fFXLsApo4mwrpqTs/lD7BrQslSxhq
- M6OkD1N+Ebzc5iHJz2ijlwngWOYo8R16ObFQxC4HVwEmk5viVPsgoL3664MZPoHR3a9EAU
- AlEg+cQ+Cj/LfIYJIkOobgTxHZG9sDM1/Z8DeR6ThDoxS4DfXw2qog54r5gL6jYN6ro12/
- la5ZtKHJuClIH7RnICRZT5XNs81pMkR6An4Yz0SPJUoI+rk9LYY7q3Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=P
- +mGKrnZfBZ2dtpU1pumlQ4uzbXXM4sfK+yupQv6FKg=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLefy-0007wv-0c
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=t5+HAVg
+ Gnr60LtpxZ877PaBAnAa4WyXQEm1Ub7Ra97aQdlw9kJOo5UmmJuj5dPPFRQWRnZCqVFE7y
+ a/4Hx9KpbmijaiLQ5nKVnOlD9xj+6U411v0x0q3dfhr2jemLljM1C+WX+efdHt+omaskWm
+ 8m9CiIi4McAxGBI71sXeIbdeQH5mD6aMqwlJ89cpGpHeIXNc2xbwOTLlS3nNyBM5Efc5hy
+ U+SE8D7xFFQPTolWLf2t2izD18O61lCO1DS59tTBTPQXmadAN2M9RL4fGrFhu+594olp1g
+ 22SjXnqYoE3tWP0iFIg94ir/ra4l+Nw9UHRlkLsXzHyvwxxiOKSgO7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=o
+ LIjUwA7WvUY1gsw6uFKdKsA+Mzdt30JfZ5RXz2c3HM=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=JSpoO0plureDMRphOlRhATOjRCtIa1OEdEw8lU0cI0R9M9gmFiEW9FZLdHIcPi5/3NH6
- zt2B3K8tEqJkeejr+wcXHne+7Pj3/qLJkAEB9kPOhOi9MCNbm77G0cvZv0CxoULxaSV135
- LupPSA+ZZDJrh31YAaMTM6atWWgIuCcQipH+ch6Oq8yThfraCCLN+4OV+9ChnGNLyD+Ffi
- ufAw8LuX0UEjjgBZ5oibKH2gjZN2XHopWpR2zw6pkMxTakOdiliankUTTMWWaxyPyDidJe
- RH9LufVkfSZKE3EHIFtJGjc4xAT6Lfx6MohcnYrg/rEq450ZsZ2zL+7FjpVXXgKg==
+ b=I5MNGzhMNrp/lW84c6RBhLW0g4nNh1iCHF/2OIzTOPjIrnPENEr2UmEuUdzKOiE1ETsf
+ z1RM0Ck8/XNUzsaxcHVwzUMR1Ca3BfsfxUyInKddqCeRyRzsCmHtFILIe/VsJHX4crsOru
+ k3oAs2imGHlNxrkec4EofDVFG35wrOMrBpIMHPwrHESdbogl1kT2NFo1u/JaSxn6gDQ4A3
+ yabG3PqHmVHo2/K7/57rL8Ny8o/D05Co3khWspAFJZnH0BK+7MNUbX53jrUimp6+FOA794
+ GGUozkqDAB/xH9+eBVxHtX+ZTk7Fc66GDq9PZU5jLh41ps6lGs77TjetPVP13hnw==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=YHkfE0l5; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=fEo+8YX7;
+ header.b=DvB4K4qp; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=iQqlojdO;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=P+mGKrnZ
- fBZ2dtpU1pumlQ4uzbXXM4sfK+yupQv6FKg=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=oLIjUwA7
+ WvUY1gsw6uFKdKsA+Mzdt30JfZ5RXz2c3HM=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=YHkfE0l59hm384c56lCgylUjudJ47mfb6vQ
- EGWZEKCaKXMBo9sAowpqR+ZFuCOg/9RXa1K7se0m+2lF240cKEh+qEHfBaHaTBeOGTKqQv
- a5cUoW9ZzR/Da8EDdg1eOiHdPHtaxhDKM3hd593BtERMTvvsS9MsaLsXkTMyiy9wE79dzs
- ca/nZNVZDQrU4c4NBqFIhfgyFDCENIIlg/vVq8BftoKsxUxuRFbZZeOEUKQLgbCeUvbO/r
- r9zZ8j0V83h0YJg1Al1ioFM0gWeS0C425R2jSU8HtrpdPl21G8GQaZU2YPlxj7ju1fShgz
- JKzZteHZY7dyUha2HO8bDL/PZNQ==
+ subject:cc:to:from; d=korins.ky; b=DvB4K4qpSGQemr0ixge1gYT8tVb5BWh7Tt1
+ XayMpF8idag3wzgOet16NbGkF9ALzqTL7Ot4nMo+lIALePRCXOeOfDslr5/379j0BX/IbP
+ jKCSJn+KM3pBheRkmfOooZXjSPnQ4eePVq7byp2h6ww71QGZyKykOLeqwvG3vIhzki4LAm
+ XMvhgTa6xHi7JYocdHE/f0uyuQ2RVGUan+2d6Mm9u9jN68So/4FNEk8OQDwzxNQ/Mc757V
+ Hqc3QKHZRX8qubiQIye3lwTPlNVsc6OvyZmtPd9i2YKj2lB3BJuuiLUeHos6XA20VIZ7EA
+ ZklIHtB54JwNdpjSlIkEUd63d4g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=P+mGKrnZfBZ2dtpU1pumlQ4uzbXXM4sfK+yupQv6FKg=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=fEo+8YX7EwkIk2JIxh
- 5TfGZcpGxZdnNlqOeRpFN2N5ZggO4Nyc/TbcI6KklzEnTfx+9PFNOgvbE5knRUgMOYBg==
-Received: by mx2.catap.net (OpenSMTPD) id 0d54a543;
- Tue, 27 Oct 2026 11:45:01 +0100 (CET)
+ bh=oLIjUwA7WvUY1gsw6uFKdKsA+Mzdt30JfZ5RXz2c3HM=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=iQqlojdOoRxuxGY/20
+ hQMlbsBrDg/bHzigQxMRUj2rvX1yyiOGzW7+mMUW0tr6jwTnKboI7aRWZoTy+bVsMhDA==
+Received: by mx2.catap.net (OpenSMTPD) id c10fd45c;
+ Tue, 27 Oct 2026 11:44:54 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 6b8e3dad;
- Tue, 27 Oct 2026 11:44:52 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 00723cab;
+ Tue, 27 Oct 2026 11:44:51 +0100 (CET)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -66,23 +66,24 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v4 15/25] hw/mips: expose Octeon reset CSRs
-Date: Tue, 27 Oct 2026 11:41:39 +0100
-Message-ID: <20261027104433.25720-16-kirill@korins.ky>
+Subject: [PATCH v4 05/25] target/mips: add Octeon CN73xx CPU model
+Date: Tue, 27 Oct 2026 11:41:29 +0100
+Message-ID: <20261027104433.25720-6-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261027104433.25720-1-kirill@korins.ky>
 References: <20261027104433.25720-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f9:3b:5410::2;
- envelope-from=kirill@korins.ky; helo=mx2.catap.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,171 +102,66 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Expose reset clock, soft reset and processor power registers through the
-shared CSR window. Keep mutable register state and reset handling in the
-reset controller.
+Add a CN73xx CPU definition for the Octeon III machine. The PRId, FPU
+FIR, and L2 cache geometry come from EdgeRouter Infinity ER-8-XG data;
+the remaining CP0 fields come from a Juniper SRX300 CN70xx/CN71xx dump.
 ---
- hw/mips/octeon.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ target/mips/cpu-defs.c.inc | 42 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 0caf088adf..007fc4b537 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -24,6 +24,8 @@
- #include "system/cpus.h"
- #include "system/memory.h"
- #include "system/reset.h"
-+#include "system/runstate.h"
-+#include "system/system.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/error-report.h"
- #include "qemu/atomic.h"
-@@ -124,6 +126,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_CIU3_UART0_INTSN     0x8000
- #define OCTEON_CSR_BASE             0x1180000000000ULL
- #define OCTEON_CSR_SIZE             0x100000000ULL
-+#define OCTEON_RST_BOOT             0x6001600
-+#define OCTEON_RST_SOFT_RST         0x6001680
-+/* U-Boot uses the reset controller to park and release secondary cores. */
-+#define OCTEON_RST_PP_POWER         0x6001700
-+#define OCTEON_RST_BOOT_C_MUL_SHIFT 30
-+#define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -168,6 +176,7 @@ struct OcteonPeripheralClass {
- 
- struct OcteonRstState {
-     OcteonPeripheralState parent_obj;
-+    GHashTable *regs;
-     uint64_t rst_pp_power;
- };
- 
-@@ -294,11 +303,18 @@ void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
- 
- bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
- {
-+    if (reg == OCTEON_RST_SOFT_RST) {
-+        return octeon_reg_lookup(s->rst->regs, reg, value);
-+    }
-     return octeon_reg_lookup(s->csr_bank->values, reg, value);
- }
- 
- static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
- {
-+    if (reg == OCTEON_RST_SOFT_RST) {
-+        octeon_reg_store(s->rst->regs, reg, value);
-+        return;
-+    }
-     octeon_reg_store(s->csr_bank->values, reg, value);
- }
- 
-@@ -869,6 +885,33 @@ static void octeon_ciu3_nmi(OcteonState *s, uint64_t mask)
-     }
- }
- 
-+static void octeon_rst_pp_power_write(OcteonState *s, hwaddr addr,
-+                                      uint64_t value, unsigned size)
-+{
-+    uint64_t old = s->rst->rst_pp_power;
-+    uint64_t changed;
-+    unsigned int cpu;
-+
-+    value = octeon_write64(old, addr, value, size) &
-+            octeon_present_cpu_mask(s);
-+    s->rst->rst_pp_power = value;
-+    changed = old ^ value;
-+
-+    for (cpu = 1; cpu < s->cpu_count; cpu++) {
-+        uint64_t mask = 1ULL << cpu;
-+
-+        if (!(changed & mask)) {
-+            continue;
-+        }
-+        if (value & mask) {
-+            async_run_on_cpu(CPU(s->cpu[cpu].cpu), octeon_cpu_park_work,
-+                             RUN_ON_CPU_NULL);
-+        } else {
-+            octeon_start_cpu(s, cpu);
-+        }
-+    }
-+}
-+
- static const MemoryRegionOps octeon_ciu_ops = {
-     .read = octeon_ciu_read,
-     .write = octeon_ciu_write,
-@@ -1082,6 +1125,19 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
-     hwaddr reg = addr & ~7ULL;
-     uint64_t value;
- 
-+    switch (reg) {
-+    case OCTEON_RST_BOOT:
-+        value = ((uint64_t)(s->cpu_hz / s->ref_hz) <<
-+                 OCTEON_RST_BOOT_C_MUL_SHIFT) |
-+                ((uint64_t)(s->io_hz / s->ref_hz) <<
-+                 OCTEON_RST_BOOT_PNR_MUL_SHIFT);
-+        return octeon_read64(value, addr, size);
-+    case OCTEON_RST_PP_POWER:
-+        return octeon_read64(s->rst->rst_pp_power, addr, size);
-+    default:
-+        break;
-+    }
-+
-     if (!octeon_csr_lookup(s, reg, &value)) {
-         value = 0;
-     }
-@@ -1095,6 +1151,16 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
-     hwaddr reg = addr & ~7ULL;
-     uint64_t old;
- 
-+    if (reg == OCTEON_RST_SOFT_RST && value) {
-+        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+        return;
-+    }
-+
-+    if (reg == OCTEON_RST_PP_POWER) {
-+        octeon_rst_pp_power_write(s, addr, value, size);
-+        return;
-+    }
-+
-     if (!octeon_csr_lookup(s, reg, &old)) {
-         old = 0;
-     }
-@@ -1354,6 +1420,7 @@ static void octeon_rst_reset_hold(Object *obj, ResetType type)
-         opc->parent_phases.hold(obj, type);
-     }
- 
-+    g_hash_table_remove_all(rst->regs);
-     rst->rst_pp_power = octeon_secondary_cpu_mask(rst->parent_obj.board);
- }
- 
-@@ -1411,6 +1478,16 @@ static GHashTable *octeon_reg_table_new(void)
-                                  g_free, g_free);
- }
- 
-+static void octeon_rst_init(Object *obj)
-+{
-+    OCTEON_RST(obj)->regs = octeon_reg_table_new();
-+}
-+
-+static void octeon_rst_finalize(Object *obj)
-+{
-+    g_hash_table_destroy(OCTEON_RST(obj)->regs);
-+}
-+
- static void octeon_csr_bank_init(Object *obj)
- {
-     OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
-@@ -1594,6 +1671,8 @@ static const TypeInfo octeon_machine_types[] = {
-         .name = TYPE_OCTEON_RST,
-         .parent = TYPE_OCTEON_PERIPHERAL,
-         .instance_size = sizeof(OcteonRstState),
-+        .instance_init = octeon_rst_init,
-+        .instance_finalize = octeon_rst_finalize,
-         .class_init = octeon_rst_class_init,
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index b2ddfa1e82..5afc589a20 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -1023,6 +1023,48 @@ const mips_def_t mips_defs[] =
+         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
+         .mmu_type = MMU_TYPE_R4000,
      },
-     {
++    {
++        /*
++         * Minimal Octeon CN73xx model for EBB7304 firmware. PRId, FPU FIR,
++         * and L2 cache geometry match a Ubiquiti EdgeRouter Infinity
++         * ER-8-XG; the remaining CP0 values are a placeholder Octeon III
++         * model derived from a Juniper SRX300 CN70xx/CN71xx dump.
++         */
++        .name = "OcteonCN73XX",
++        .CP0_PRid = 0x000D9702,
++        .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
++                       (MMU_TYPE_R4000 << CP0C0_MT) | (1 << CP0C0_VI),
++        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
++                       (0x3F << CP0C1_MMU) |
++                       (0 << CP0C1_IS) | (6 << CP0C1_IL) | (7 << CP0C1_IA) |
++                       (0 << CP0C1_DS) | (0 << CP0C1_DL) | (7 << CP0C1_DA) |
++                       (1 << CP0C1_C2) | (1 << CP0C1_PC) |
++                       (1 << CP0C1_WR) | (1 << CP0C1_EP),
++        .CP0_Config2 = MIPS_CONFIG2 | (5 << CP0C2_SS) | (6 << CP0C2_SL) |
++                       (15 << CP0C2_SA),
++        .CP0_Config3 = MIPS_CONFIG3 | (1U << CP0C3_M) |
++                       (1 << CP0C3_BP) | (1 << CP0C3_BI) |
++                       (1 << CP0C3_VZ) | (1 << CP0C3_ULRI) |
++                       (1 << CP0C3_RXI) | (1 << CP0C3_LPA),
++        .CP0_Config4 = MIPS_CONFIG4 | (1U << CP0C4_M) |
++                       (0x3c << CP0C4_KScrExist),
++        .CP0_Config7 = 1 << CP0C7_WII,
++        .CP0_LLAddr_rw_bitmask = 0,
++        .CP0_LLAddr_shift = 4,
++        .CP0_PageGrain = (1 << CP0PG_ELPA),
++        .SYNCI_Step = 32,
++        .CCRes = 1,
++        .CP0_Status_rw_bitmask = 0x36F8FFFF,
++        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_L) | (1 << FCR0_W) |
++                    (1 << FCR0_D) | (1 << FCR0_S) |
++                    (0x97 << FCR0_PRID) | (0x0 << FCR0_REV),
++        .CP1_fcr31 = 0,
++        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
++        .SEGBITS = 42,
++        .PABITS = 49,
++        .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
++        .mmu_type = MMU_TYPE_R4000,
++    },
+ 
+ #endif
+ };
 -- 
 2.56.0
 
