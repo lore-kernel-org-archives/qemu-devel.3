@@ -1,90 +1,150 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDECD606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05D6606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=ip6eMoOA
+	dkim=pass (2048-bit key, unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=P+hNkCRM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLaHH-0008Rd-67; Tue, 27 Oct 2026 02:03:19 -0400
+	id 1xLaJH-0002tK-1M; Tue, 27 Oct 2026 02:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3YD7gagoKCrstubomfzkivhpphmf.dpnrfnv-efwfmopohov.psh@flex--stanleyjhu.bounces.google.com>)
- id 1xLaGH-0007sE-4b
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:22 -0400
-Received: from mail-pg1-x548.google.com ([2607:f8b0:4864:20::548])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3YD7gagoKCrstubomfzkivhpphmf.dpnrfnv-efwfmopohov.psh@flex--stanleyjhu.bounces.google.com>)
- id 1xLaGD-0006A2-M5
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:16 -0400
-Received: by mail-pg1-x548.google.com with SMTP id
- 41be03b00d2f7-cd652c0385bso2338194a12.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:02:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1793080930; x=1793685730; darn=nongnu.org;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Yft30FkmJDDTZVwy0Ny6JZHOmjsTdVtf/Cg87eODgCY=;
- b=ip6eMoOApHT5z2/D/ZILFpBHt3agZ7cyiXqBvZN5LMMBlCK9AtzRBlZVy6Q0I3l8ag
- Uwz6Co1My4/IJIMP3+eg9O0C8QG44oi5LWP2D5pYvs+yjn8xLHYGPnw/udzzwl4qikhn
- 0TES3QMV7hxeGhHF1/iLGlJhltoCQAjpKjjU+5epnnIwgwp00y6XJVU7dRfTyj9i5od4
- P9k3FRjkpVBPtlqMGhqUOKS0lja4IjpqVjDvkFmn+tXMS5gPfW6ETiDlRKvN36DkmiYV
- C/93z5xVkGSBAU5ulR7ZZXG60E3hDS53xGlkp4tYZCb6+ZPKhlb93/eDQzxjZ/aA53ew
- gzCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793080930; x=1793685730;
- h=content-type:cc:to:from:subject:message-id:references:mime-version
- :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Yft30FkmJDDTZVwy0Ny6JZHOmjsTdVtf/Cg87eODgCY=;
- b=PuFKF62tHMSq2rjZm2jYNbh6viAaaNE0kfvlp3L7A8scXNetHnT+vJ56rt88SpR+2I
- 4Vj27Oo+dSdhuiCJHSeLVGMcm71euOfsc4quLTz438MGywHQt6cVILSrai7mLtvDWWmM
- Hn0iQ7xPb3G1fKHxPsRM5D2AJ84c+rkTUD53GEaEkW4X/+h5ule9u68bOY1ymFFrX84Q
- l2QkQ+OmyIhA/V1C0LzCxu5/ilMc03Uaefsvoj7B8EXTmaIM7eHng/fa7QpAs+coU/Kt
- HwVyA8aHeG5oL5WZ/EaJs6bAxSZ3wpmXVo/5p+qw8QvFA9WBPcpZivPjkjbLSWU9gQVm
- gSVA==
-X-Gm-Message-State: AFq9FYKKaXhGpB3i9nDkXAS0k3RqFdxGu3PCCXWIFxd2jE4Htwx5uuk4
- 7eNj9d/7C8Z2Ee+ENwQH7EPtTdjCbrErK9g/qPRBB96ZSS8heNLzJD1T6Hr72MEMhKwppFmCN9p
- uIwF/i3Fm6BU5VaU46zxwzw==
-X-Received: from pgca14-n1.prod.google.com
- ([2002:a05:6a02:638e:10b0:cd8:b4f6:1c8f])
- (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:3c8e:b0:3e2:b295:7678 with SMTP id
- adf61e73a8af0-3e7bfe01e08mr7489422637.50.1793080928680; 
- Mon, 26 Oct 2026 23:02:08 -0700 (PDT)
-Date: Tue, 27 Oct 2026 14:01:52 +0800
-In-Reply-To: <20261027060153.1842910-1-stanleyjhu@google.com>
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xLaJ6-0002md-1Z; Tue, 27 Oct 2026 02:05:14 -0400
+Received: from mail-japaneastazolkn190130003.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::3] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xLaJ4-0006Lt-68; Tue, 27 Oct 2026 02:05:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cN8y+ByAfECjXoFacDrH+nV2EqTPx7ZEOzJ3QwDstIbM03FC4XGXi4EGDXvu/QM8j4CY1gDAY9Mlvl+cZoHqtaRFppZ9kRSv1Gro7H8RKRXsg8En8OPGvgBx4NbSN/YHonNVrD5KLChTsajUoAv3313a0s0XcP4qI4kk2ByidGH8qNfhMFZ/dFWPMQ3yoOPe3lXi0u73mWmsffAvxe4TvtZkzbX7ArXWhtdWTpFL5Y5rU1skUJW6PkyZ6NNItLjIdQ8xRu2oB2+7IJRw9ySCDN+peY74I0k0aFx1LVVQs32AhOskjhaQlw/evM0WFsAWDGwnlxAsZkkAM9NtIIBYmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9SJFDcv2KijFcRomEbfNGdMBnOeDl/YkHDNvca8C9Qs=;
+ b=CpgnLsTMnEej2dvs48lRoYZgRRGfQALP75bZ9LoN4mUI3WXCgRMiHcAY5lDvbSrVIFtqrlUVIx9ooUqlu1DJhZLTpAD4sP7c9NlCShftY3vCQF4eIcOBaVe212DGYIT8l6PBWdUz5KDKvwWdsVopqgwcBUTjsAz2DeCmmHju2sixWXKqAQOrgLMpynxmA4yhhoEpQU30PK5VgtaUVdDnGbvr7ZNqh5sqVHMHPDIr5aKAaejwqUMNZGQqka+LhqiUzQhSXAP79cwz95qYhSMmDqoTiiwReiJtjwXOadqaU2gS+ms86iaLPFa45CRBWzSh1yzmmS6ZWV3lf6GYL0tJGg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9SJFDcv2KijFcRomEbfNGdMBnOeDl/YkHDNvca8C9Qs=;
+ b=P+hNkCRM3HCIE2ZZ58N5zoH0MTEtKotLSEC3fnbkpP20HnKj3jO9vDcOQPH/ZYXQesi8/KjcHmwQLVlKU6CZHKBM0IMEUyBDR/Bz07hu04VcTbBfPdtp2bBFIp+sNKvcPkyBDXQkMHnIi1AwZJeq9pZ4Yj8uHtEcmkaxOH+2dbMqes82ZJaTpYMPtap/FmOrrRicemc9B+9INeSVsuFBZXlH9iB9+EQyDxdvxHslSNfdbiL9b+/FsyA9d6Kp+zskke+aMke4mznovz4/bIDoLSeBQuuhBLsduJSpCoyUBlV/6MpwJt71HMSz5L6cuM33q8K7pZGbXlJMgVEzxUsNNw==
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com (2603:1096:405:40::7)
+ by SI6PR04MB8307.apcprd04.prod.outlook.com (2603:1096:4:23b::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 06:05:00 +0000
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230]) by TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230%3]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 06:04:59 +0000
+Message-ID: <TYZPR04MB74913D01748558160FDBD92AF3602@TYZPR04MB7491.apcprd04.prod.outlook.com>
+Date: Tue, 27 Oct 2026 14:04:51 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/riscv/kvm: Translate MSI addresses through the
+ IOMMU
+To: Tan Chi <tanchi25@mails.ucas.ac.cn>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com
+References: <20261026141642.113731-1-tanchi25@mails.ucas.ac.cn>
+Content-Language: en-US
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20261026141642.113731-1-tanchi25@mails.ucas.ac.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0020.apcprd02.prod.outlook.com
+ (2603:1096:4:1f4::9) To TYZPR04MB7491.apcprd04.prod.outlook.com
+ (2603:1096:405:40::7)
+X-Microsoft-Original-Message-ID: <0a7f128a-568d-4cc6-9768-5a87875bcacf@hotmail.com>
 X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0
-References: <20261027060153.1842910-1-stanleyjhu@google.com>
-X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
-Message-ID: <20261027060153.1842910-8-stanleyjhu@google.com>
-Subject: [PATCH 7/7] tests/qtest/ufs-test: Add RPMB authenticated data read
- and write test
-From: Stanley Jhu <stanleyjhu@google.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Jinyoung Choi <j-young.choi@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::548;
- envelope-from=3YD7gagoKCrstubomfzkivhpphmf.dpnrfnv-efwfmopohov.psh@flex--stanleyjhu.bounces.google.com;
- helo=mail-pg1-x548.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR04MB7491:EE_|SI6PR04MB8307:EE_
+X-MS-Office365-Filtering-Correlation-Id: b535f37f-4259-4362-02f7-08df33f03b44
+X-MS-Exchange-SLBlob-MailProps: AZnQBsB9XmrTkIzDOCxR6E7nJ4I/6XZ7mKclqU2hR2DqDJnyROaBxFFN/2To/eC43ikK3HFWHd8sxuL2rrFeEnlA5suA2q5UF3ryjbSsD6Jod+8tMt7VEMclY/P3YK1FN3PCvcC1EAMirfc6zx9BD7f2jtMyvFcQqd+qg9N3lwwtsC0khwz0tAqnI4xA0kE4+6S48tluJjahtzzfMyRC83gK9zZ5kRxuER0PUrjYju7mFyKvT3qQTutjGdLAGZ7UBh9qGJTsUJkMLpEfprVwaSQm0soXtnerYhKUGLDa4AHq125kCDij1g/bDTrjLDUeqkZOj5L494GDIzp1e5L44Lg5eVYIZHmoXhgkDWTCz9AY0NW1Nyt1TmHw6okdrpD+XV2q1MG2BYWYwzQIWOabUXieo937vkMXhBwDzmLSjwfD8ha81kfrEBaHicJj/T0o9+yuO6mi/U5cu03B2P/ws+RLaZY2FPUEgPFlwrRUSUn6ytuHDJFAvjYZxEg8iEgQ6pYSIOjwkDl8VtdY08M07wFt2ZcrfeB7yZOMAqfpYIwHyB0i2h73dfPHBbKJhzLgAdHhzKzN9PxJaw2XrP6VAERINvFxZ+oz4sMZzpPIzzmUhOsSm8kfUFN91ErM8CNKYXeUIaA7jHpSf4IjqH8HQ4tx0dQPwfQ8Cog98r9CP6SA1NRGxWbm+ZwJjIldzASkf2SIgZJH5/6wl3VmDwJSP5FQnDZOZ3gEgSbGFs26KSF8XSAgek2PuFhHV6YPYU9CYaaJpnYsIFE=
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|19101099003|55001999006|19110799012|41001999006|25010399006|4140399003|8060799015|22091999003|24121999003|6090799003|51005399006|23021999003|5072599009|15080799012|40105399003|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aGtldVVqWWlWbWNvQndxbEE5bmZDSldPd2cvNjBjV1dJWnJ0Y1orVkw3cW5i?=
+ =?utf-8?B?b0ZNY1BLSG1KR1M0NndNTUVRMklPZHZvdmxReGJiN1ZvdVFpZkpHMVZGWHUy?=
+ =?utf-8?B?MHJsckFiZExIWjNxV3VjMXNLNFZ1TlhpZlg1bG41Sks4ZnRBc2c2cE00bytV?=
+ =?utf-8?B?MTFtcXY5c0MzVkhUQTFUa1FuTUl6V1E1bjdKTU11L0h5a3VCbnk4ay9OVzlV?=
+ =?utf-8?B?MVg5S2Jrd3c4azhuVjRmbHYvS3VOWHZ5Z0VzYmo3TEpLbXdqOFJ3MDh2bG01?=
+ =?utf-8?B?ZFovbGY4OGpQRmRSQ1JXYlVCSXl6RGxYV1pMMlNMTWhTUmxKWlVuWk9GSW15?=
+ =?utf-8?B?bUR1VzZwT1VxTm5HbnN4UEREWXBhcmU4QW5NcFo1dkFVKzBxN29UWG42TGgr?=
+ =?utf-8?B?TWQyR1ltb1MzMnVFNzN6M2xMTStzcnZDenlvL2ZmcngvOFdDUldCYWZUM2E1?=
+ =?utf-8?B?RjZzUFIwNlozTHVlQTUxZHJIOWRjVkQ4a2EvWU1HSXY5NzZpUkpMdGY0QTlK?=
+ =?utf-8?B?YUZQZVlGSURwRks3NjBNU2UyUHhzbHc4OXRIamNSOXJpb2xMU0FLdjNnem9n?=
+ =?utf-8?B?TDU0RDNvZDB5TkRCS2dMQUF5NlhGdG4zL0RZVWVvYStrdDBuUmhiVWJ4RDdG?=
+ =?utf-8?B?R1BxUGlDMCs5d0l3cXNON0ZBZTVTVllMdms0UGpNN1F0Rmk1T3FpN01pQVp5?=
+ =?utf-8?B?R1dXTEVCRmwzb1JOZXZRQWJFK0l5MUw0Qm1qVVJKTE9hYVJodUtITE8yQVpj?=
+ =?utf-8?B?MitiZC93ZnRKdzJ4bmxOd2xaNzhJUERqa2k5M0tUUldadk9SNElJVzE3MlBV?=
+ =?utf-8?B?bk1jcDU2aXJISUpqbnBsemVTNTQvUVNvMWJnZ2NubE1PR0swODVNT0dleVJk?=
+ =?utf-8?B?VmRRL0NHZy9vS0gxYXZ5TDdpbWRkdWlTenBVY2tmbGNWNm5tVDV1QTExTFgv?=
+ =?utf-8?B?UGV3L1BLelFtbVU3UkJPaVNaZGwwVGd5dGNOZGd1VzRUNlc1TFlxRzFFc3JM?=
+ =?utf-8?B?NGJwUFEzMEFCSlEwOTY4SXQzNTQxRU1YTEhEOWs4MkowRGk4MDFhUTlSVUJx?=
+ =?utf-8?B?U3ZKVWZaKzBWUngrOE5YU0xSOEVwV1hKcHpsVW1qZU5qN3NxdXVyT3lHV3ov?=
+ =?utf-8?B?TGZQNmN1VnE3ZTdFYm5TeGg1V3RlZk9RUlNiOStNNUhOTmhBUFQ2eTlyWmQv?=
+ =?utf-8?B?WUpzYU5QSCtONlE3amdFLy9aWVFYZE5ja1dXemVTWkpmVE5RNmhlTTNGdGZt?=
+ =?utf-8?B?cjRiQXdIeSsxVXJqbFNmUkR4eUJQUnpvYi9jekx6VzZUcllLSUFERFBrRk1H?=
+ =?utf-8?B?bEIza09ubHRLV01IYXNpajh0cHU3S05aNUw0NDUza2Z1YUovaEhUYWpUMGRn?=
+ =?utf-8?B?QkZWdHJnbjdiRTJHeDVHSjYrSlErN25LTHVYMjZYbVVBeUZsUjExK0prWmN3?=
+ =?utf-8?B?TmZIdzYvR1N4SjJ5MkZiU2k3Z0NsRFljVFcvbU1BPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NXByWmJkd0RpQTg1VVRoeW0xOEN6RDBRWjc1bXVabm4zUVpDUXpWRnRpazd5?=
+ =?utf-8?B?b0wreWpxWUVlaVM4Z3JHa2NFVHNtN3lvemQ0VDlZR3dyVXNTVGdPUDlLS1Ev?=
+ =?utf-8?B?SE14MVZDMTlWeFpWbzV0TDRwbFo3L05kdXVZci9qM1FUeUdMd2dFRitzdlFi?=
+ =?utf-8?B?a2Uzam5kVDYxN2NnaGtSWS9aR1RjS2dzWlFJNkFac1QyOTJwSldkVkpQUGsw?=
+ =?utf-8?B?bCtFU3dBWW55cFRMaW8wNU1YNXR2S3N3VjI3ai9mYm5MMHlEUDBKWml5WnVo?=
+ =?utf-8?B?OVdwandad2tIRWJhSEpicWdwZEFOc0ROVHM2ZW82WE9UWXVQbTRCR2p0NFp1?=
+ =?utf-8?B?R1lhS09XNFVvWWlKaFRXZFVGUmtTR2JjTitCeFRQSnlXeitPY2NTaTJWREJq?=
+ =?utf-8?B?RUpsTlVlN0U5RHk0MGQvOWtPQmV3by9lV00wUjBsa3ZsL3ZvV0N0dzlWREhB?=
+ =?utf-8?B?SmJHVTBGSnk2d0VGbUNMSEtJdHdlVURJV0cwZVdEbEFiNTlxUnZ0bWVXd290?=
+ =?utf-8?B?Yms4NnNTSDBYQ1BaVTZBQnlwZURVbzhPT0lwcE5hZmxadU04L3R4bHRvb2N3?=
+ =?utf-8?B?NDVqRkp2YXk1LytkR0Z4cnhtMkQwTU9teUFoR0NQUWptZnZBam5JWlY3d1d6?=
+ =?utf-8?B?NEU3bHhJNUhCVlByWWlQQ00welRpK255MEFVLzVzSXR2bHRIN0QxZTQ3eGk1?=
+ =?utf-8?B?c1diQU9uUUdDMGp3MUkwRjNBQVBEek10czhpcm9VakZjSUNpZDNrYVBMaGF6?=
+ =?utf-8?B?ZFlWQVo4OTVVOGNRV3Y3VXl6WTFWYm52eWtnRmhpRVdoN1FqNnJKWVQ3R1pF?=
+ =?utf-8?B?WXl5cFEzWGZnRHZ3L3M2V1owN0cvUkpyNVN3VURkTWp5Tlh3Y3VzeGxSWjRh?=
+ =?utf-8?B?c2pRSFFKNmNnbjlGdFVDaWF4NGJiQ1ZjM0NMQUloZTlIOVFPczBINWIrOHRv?=
+ =?utf-8?B?WjVwaS9iaDZUOXBCYms5Z3NnU0hMaUtRSGxMOHpUYTRLNFl0TUZpRHhCSkZD?=
+ =?utf-8?B?c3hNaGJ2QjhxUzE4Z1YwS05LR0w5VnlmNkRUNURnMWdXQk9RWjgxV1oxZVhB?=
+ =?utf-8?B?bUtnZjZZaDVIcjArMzh6Rko2OGYzcTJIKzczVnNvbk1WNEFBSjhZNDBoOXpQ?=
+ =?utf-8?B?eFFEWFBkem13cW1ySWRlM0p0U1Y2a1dxSTNuZWZhc2tpQWlSZlVxVXRHREF5?=
+ =?utf-8?B?a0FaQ3JDelVwTHlNUUIxOHVNUmdQTE4veUVSakh2RktCakxweThHRHBHZFFJ?=
+ =?utf-8?B?TzRVZnJ1aU55ZC9QcGVFY1pYd0lydXFOWWZ6RmNKcThpVmVyWDBORFdnSTB1?=
+ =?utf-8?B?bldEKzRKRU9rbzJYc3VOUm1SMXRnVTM1dERSbm0xbGM0YzkzR1FmNjVmemJm?=
+ =?utf-8?B?QXNUYjNudnJPendTbm1HTnF4Y2xzR3lKQTE1ek5WYnlVWFpQOFhVdUxJVVNz?=
+ =?utf-8?B?NnVYeUdLdUxBMTgrbGlmSVZyZCtKNGM1cERkbjhXY2pzaFpTeS83MTZScTkr?=
+ =?utf-8?B?MHF5dnkraU12d0xyVDdxUDh0eHl1dXFRRERPVkVTcnpMWnkzSk1DdHpPS1FM?=
+ =?utf-8?B?bDYzMjhJUkd1UkxBc1JUOGMyTDYydWI4NE5hMkxwR2I3VHFvVXlxbXNzMWZ3?=
+ =?utf-8?B?QkJtNXJqSUJhclJWS1R3bWNXQmZkYkVTTUU5QkVKeUtwcjFDdGJJdFFTcmZE?=
+ =?utf-8?B?VzVLZlptTlJYbWdNTElmUFBlK3I5S2x0cUkrWUZtQzBXK3ZTU1NyTUVFMzNR?=
+ =?utf-8?B?Qzk0cy9ma0JkS3ZJa2lxcFpCb21pZklBNjlaa0F6OVladDJmUitmajN4OHI1?=
+ =?utf-8?B?VEtUZlVNWVdhaGZtbGJudkpsVW9NaHZOYVB1dUVaWFUrYW51Vm53czkwQkhS?=
+ =?utf-8?Q?cqztWzAIf9Cpi?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: b535f37f-4259-4362-02f7-08df33f03b44
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB7491.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 06:04:59.5577 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI6PR04MB8307
+Received-SPF: pass client-ip=2a01:111:f403:d405::3;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,620 +156,138 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add ufstest_rpmb_read_write() to test single-frame and multi-frame
-(N = 4) authenticated data writes and reads with HMAC-SHA256
-verification, Result Read (0x0005) both after a multi-frame read and
-while a pending 0x0004 read has had no SECURITY PROTOCOL IN (verifying
-zeroed stuff bytes and zero write_counter per JESD220H Figure 12.8),
-residual underflow accounting, JESD220H Sections 12.4.7.3.3 and
-12.4.7.3.4 check ordering and UFS_RPMB_RES_GENERAL_FAILURE (0x0001)
-cases, multi-frame reads past region end, SECURITY PROTOCOL IN block
-count mismatch sense reporting, multi-region key and data isolation
-across regions 0..3, short-PRDT rejection while read_pending is set,
-and HCE 1->0->1 reset clearing volatile state while preserving keys,
-write counters, and stored blocks.
 
-Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
----
- tests/qtest/ufs-test.c | 569 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 569 insertions(+)
+On 10/26/2026 10:16 PM, Tan Chi wrote:
+> KVM irqfd bypasses the PCI device's IOMMU AddressSpace, so MSI
+> addresses requiring translation may fail to reach the guest IMSIC.
+>
+> Translate MSI addresses through the device's IOMMU AddressSpace when
+> setting up KVM routes. Only direct mappings to an IMSIC MemoryRegion
+> are installed in KVM routes.
+>
+> Other IOMMU MSI remapping forms are not converted to KVM routes and
+> continue to use the existing userspace MSI delivery path.
+>
+> Select PCI for RISCV64 KVM builds, as QEMU currently enables the
+> RISC-V KVM target only for riscv64-softmmu builds and the MSI route
+> fixup requires PCI support. Also trace translation failures to help
+> diagnose route setup failures.
+>
+> Signed-off-by: Tan Chi <tanchi25@mails.ucas.ac.cn>
+> ---
+>
+> The AddressSpace translation follows the existing
+> kvm_arch_fixup_msi_route() implementation on ARM.
+>
+> Changes in v2:
+> - Select PCI for RISCV64 KVM builds.
+> - Add trace events for MSI translation failures.
+>
+>   target/riscv/Kconfig       |  2 ++
+>   target/riscv/kvm/kvm-cpu.c | 54 ++++++++++++++++++++++++++++++++++++++
+>   target/riscv/trace-events  |  4 +++
+>   3 files changed, 60 insertions(+)
+>
+> diff --git a/target/riscv/Kconfig b/target/riscv/Kconfig
+> index 11bc09b414..0cf2c8e1c4 100644
+> --- a/target/riscv/Kconfig
+> +++ b/target/riscv/Kconfig
+> @@ -7,3 +7,5 @@ config RISCV64
+>       bool
+>       select ARM_COMPATIBLE_SEMIHOSTING if TCG
+>       select DEVICE_TREE # needed by boot.c
+> +    # kvm_arch_fixup_msi_route() needs to access PCIDevice
+> +    select PCI if KVM
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 45ad5e1525..7c3d3c8c69 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1507,6 +1507,60 @@ int kvm_arch_release_virq_post(int virq)
+>   int kvm_arch_fixup_msi_route(struct kvm_irq_routing_entry *route,
+>                                uint64_t address, uint32_t data, PCIDevice *dev)
+>   {
+> +    AddressSpace *as;
+> +    hwaddr xlat, len = sizeof(uint32_t), translated;
+Seems unnecessary to initialize 'len'.
 
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 9fce5fff82..c118ee86be 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -4361,6 +4361,573 @@ static void ufstest_rpmb_key_counter(void *obj, void *data,
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_rpmb_read_write(void *obj, void *data,
-+                                    QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    UtpUpiuRsp rsp_upiu;
-+    enum UtpOcsCodes ocs;
-+    UfsRpmbFrame req, resp, zero_frame;
-+    UfsRpmbFrame wframes[4], rframes[4];
-+    uint8_t mac[UFS_RPMB_KEY_MAC_LEN];
-+    uint8_t zero_mac[UFS_RPMB_KEY_MAC_LEN] = { 0 };
-+    uint8_t cdb[UFS_CDB_SIZE];
-+    const uint8_t *key = ufs_rpmb_test_key;
-+    uint8_t region_keys[UFS_RPMB_MAX_REGIONS][UFS_RPMB_KEY_MAC_LEN];
-+    int i, j, r;
-+
-+    ufs_init(ufs, alloc);
-+    memset(&zero_frame, 0, sizeof(zero_frame));
-+    ufs_rpmb_program_key(ufs, 0, key);
-+
-+    /* 1. Single-frame authenticated write (block 3, counter 0 -> 1) + read */
-+    memset(&req, 0, sizeof(req));
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        req.data[i] = (uint8_t)(0x5a ^ i);
-+    }
-+    stl_be_p(&req.write_counter, 0);
-+    stw_be_p(&req.addr, 3);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_WRITE);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(lduw_be_p(&resp.addr), ==, 3);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 1);
-+    ufs_rpmb_compute_hmac(key, &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xc3, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 3);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(lduw_be_p(&resp.addr), ==, 3);
-+    g_assert_cmpuint(lduw_be_p(&resp.block_count), ==, 1);
-+    g_assert_cmpmem(resp.nonce, UFS_RPMB_NONCE_LEN,
-+                    req.nonce, UFS_RPMB_NONCE_LEN);
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        g_assert_cmpuint(resp.data[i], ==, (uint8_t)(0x5a ^ i));
-+    }
-+    ufs_rpmb_compute_hmac(key, &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    /* 2. Multi-frame authenticated write (N = 4, addr 10..13, wc 1 -> 2) */
-+    memset(wframes, 0, sizeof(wframes));
-+    for (i = 0; i < 4; i++) {
-+        for (j = 0; j < UFS_RPMB_DATA_LEN; j++) {
-+            wframes[i].data[j] = (uint8_t)((i + 1) * 0x11 + j);
-+        }
-+        stl_be_p(&wframes[i].write_counter, 1);
-+        stw_be_p(&wframes[i].addr, 10);
-+        stw_be_p(&wframes[i].block_count, 4);
-+        stw_be_p(&wframes[i].req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    }
-+    ufs_rpmb_compute_hmac(key, wframes, 4, wframes[3].key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, wframes, 4, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_WRITE);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(lduw_be_p(&resp.addr), ==, 10);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+    ufs_rpmb_compute_hmac(key, &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    /* Multi-frame authenticated read (N = 4, addr 10..13) with MAC check */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xd4, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 10);
-+    stw_be_p(&req.block_count, 4);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    memset(rframes, 0, sizeof(rframes));
-+    ufs_rpmb_sec_in_frames(ufs, 0, rframes, 4, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    for (i = 0; i < 4; i++) {
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].req_resp), ==,
-+                         UFS_RPMB_RESP_AUTH_DATA_READ);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].result), ==, UFS_RPMB_RES_OK);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].addr), ==, 10);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].block_count), ==, 4);
-+        g_assert_cmpmem(rframes[i].nonce, UFS_RPMB_NONCE_LEN,
-+                        req.nonce, UFS_RPMB_NONCE_LEN);
-+        g_assert_cmpmem(rframes[i].data, UFS_RPMB_DATA_LEN,
-+                        wframes[i].data, UFS_RPMB_DATA_LEN);
-+        if (i < 3) {
-+            g_assert_cmpmem(rframes[i].key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                            zero_mac, UFS_RPMB_KEY_MAC_LEN);
-+        }
-+    }
-+    ufs_rpmb_compute_hmac(key, rframes, 4, mac);
-+    g_assert_cmpmem(rframes[3].key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    /*
-+     * READ_RESULT + 1-frame SECURITY PROTOCOL IN after a multi-frame
-+     * AUTH_DATA_READ returns the latched result frame without failing the
-+     * multi-frame block count check.
-+     */
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpmem(resp.stuff, sizeof(resp.stuff),
-+                    zero_frame.stuff, sizeof(resp.stuff));
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 0);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(lduw_be_p(&resp.addr), ==, 10);
-+    g_assert_cmpuint(lduw_be_p(&resp.block_count), ==, 4);
-+    g_assert_cmpmem(&resp, sizeof(resp), &rframes[3], sizeof(resp));
-+
-+    /*
-+     * Pending AUTH_DATA_READ (OUT 0x0004) immediately followed by READ_RESULT
-+     * (OUT 0x0005) + 1-frame SECURITY PROTOCOL IN (512 bytes, with no prior IN
-+     * issued for the read) returns a fully initialized, signed 0x0400 frame
-+     * with stuff[0..195] == 0 and write_counter == 0 per JESD220H Figure 12.8.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xd9, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 3);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpmem(resp.stuff, sizeof(resp.stuff),
-+                    zero_frame.stuff, sizeof(resp.stuff));
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 0);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(lduw_be_p(&resp.addr), ==, 3);
-+    g_assert_cmpuint(lduw_be_p(&resp.block_count), ==, 1);
-+    g_assert_cmpmem(resp.nonce, UFS_RPMB_NONCE_LEN,
-+                    req.nonce, UFS_RPMB_NONCE_LEN);
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        g_assert_cmpuint(resp.data[i], ==, (uint8_t)(0x5a ^ i));
-+    }
-+    ufs_rpmb_compute_hmac(key, &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
-+                       UFS_RPMB_SEC_PROTOCOL_ID, sizeof(resp));
-+    ocs = ufs_send_scsi_command(ufs, UFS_UPIU_RPMB_WLUN, cdb,
-+                                NULL, 0, (uint8_t *)rframes,
-+                                2 * sizeof(UfsRpmbFrame), &rsp_upiu);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(rsp_upiu.header.flags & UFS_UPIU_FLAG_UNDERFLOW, ==,
-+                     UFS_UPIU_FLAG_UNDERFLOW);
-+    g_assert_cmpuint(be32_to_cpu(rsp_upiu.sr.residual_transfer_count), ==,
-+                     sizeof(UfsRpmbFrame));
-+
-+    /*
-+     * 3. Write check order per JESD220H Section 12.4.7.3.3: address range
-+     *    (0x0004) before block count > max (0x0001), MAC (0x0002), and write
-+     *    counter (0x0003), plus N-frame read past region end -> 0x0004 on all
-+     *    returned frames without out-of-bounds read.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    stl_be_p(&req.write_counter, 99);
-+    stw_be_p(&req.addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    req.key_mac[0] ^= 0xff;
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_ADDR_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    /* Bad address + block_count > bRPMB_ReadWriteSize (64) -> 0x0004 */
-+    memset(&req, 0, sizeof(req));
-+    stl_be_p(&req.write_counter, 2);
-+    stw_be_p(&req.addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT);
-+    stw_be_p(&req.block_count, 65);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_ADDR_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    /* Good address + bad MAC (+ bad counter) -> 0x0002 */
-+    memset(&req, 0, sizeof(req));
-+    stl_be_p(&req.write_counter, 99);
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    req.key_mac[0] ^= 0xff;
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_AUTH_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    /* Good address + good MAC + bad counter -> 0x0003 */
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_COUNT_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    memset(wframes, 0, sizeof(wframes));
-+    for (i = 0; i < 2; i++) {
-+        stl_be_p(&wframes[i].write_counter, 2);
-+        stw_be_p(&wframes[i].addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT - 1);
-+        stw_be_p(&wframes[i].block_count, 2);
-+        stw_be_p(&wframes[i].req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    }
-+    ufs_rpmb_compute_hmac(key, wframes, 2, wframes[1].key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, wframes, 2, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_ADDR_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    /* N-frame read near end of region (block_count=0 in OUT, N=2 in IN) */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xe5, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT - 1);
-+    stw_be_p(&req.block_count, 0);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    memset(rframes, 0, sizeof(rframes));
-+    ufs_rpmb_sec_in_frames(ufs, 0, rframes, 2, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_compute_hmac(key, &rframes[0], 1, mac);
-+    for (i = 0; i < 2; i++) {
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].req_resp), ==,
-+                         UFS_RPMB_RESP_AUTH_DATA_READ);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].result), ==,
-+                         UFS_RPMB_RES_ADDR_FAILURE);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].addr), ==,
-+                         32 * UFS_RPMB_BLOCKS_PER_UNIT - 1);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].block_count), ==, 2);
-+        g_assert_cmpmem(rframes[i].nonce, UFS_RPMB_NONCE_LEN,
-+                        req.nonce, UFS_RPMB_NONCE_LEN);
-+        g_assert_cmpmem(rframes[i].key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                        mac, UFS_RPMB_KEY_MAC_LEN);
-+    }
-+
-+    /* N-frame read near end of region (block_count=4 in OUT, N=4 in IN) */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xf6, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT - 2);
-+    stw_be_p(&req.block_count, 4);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    memset(rframes, 0, sizeof(rframes));
-+    ufs_rpmb_sec_in_frames(ufs, 0, rframes, 4, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_compute_hmac(key, &rframes[0], 1, mac);
-+    for (i = 0; i < 4; i++) {
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].req_resp), ==,
-+                         UFS_RPMB_RESP_AUTH_DATA_READ);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].result), ==,
-+                         UFS_RPMB_RES_ADDR_FAILURE);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].addr), ==,
-+                         32 * UFS_RPMB_BLOCKS_PER_UNIT - 2);
-+        g_assert_cmpuint(lduw_be_p(&rframes[i].block_count), ==, 4);
-+        g_assert_cmpmem(rframes[i].nonce, UFS_RPMB_NONCE_LEN,
-+                        req.nonce, UFS_RPMB_NONCE_LEN);
-+        g_assert_cmpmem(rframes[i].key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                        mac, UFS_RPMB_KEY_MAC_LEN);
-+    }
-+
-+    /*
-+     * Read check order per JESD220H Section 12.4.7.3.4: bad address +
-+     * block_count > bRPMB_ReadWriteSize (64) -> 0x0004 (before 0x0001).
-+     */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xf7, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 32 * UFS_RPMB_BLOCKS_PER_UNIT);
-+    stw_be_p(&req.block_count, 65);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_ADDR_FAILURE);
-+
-+    /*
-+     * UFS_RPMB_RES_GENERAL_FAILURE (0x0001) paths:
-+     * (a) 2-frame write with mismatched addr across frames
-+     * (b) 1-frame write with block_count != nframes
-+     * (c) 0x0004 read with valid addr and block_count > bRPMB_ReadWriteSize
-+     * (d) unknown request type 0x0006
-+     */
-+    memset(wframes, 0, sizeof(wframes));
-+    for (i = 0; i < 2; i++) {
-+        stl_be_p(&wframes[i].write_counter, 2);
-+        stw_be_p(&wframes[i].block_count, 2);
-+        stw_be_p(&wframes[i].req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    }
-+    stw_be_p(&wframes[0].addr, 4);
-+    stw_be_p(&wframes[1].addr, 5);
-+    ufs_rpmb_compute_hmac(key, wframes, 2, wframes[1].key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, wframes, 2, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_WRITE);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==,
-+                     UFS_RPMB_RES_GENERAL_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    memset(&req, 0, sizeof(req));
-+    stl_be_p(&req.write_counter, 2);
-+    stw_be_p(&req.addr, 4);
-+    stw_be_p(&req.block_count, 2);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_WRITE);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==,
-+                     UFS_RPMB_RES_GENERAL_FAILURE);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 2);
-+
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0xf8, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 65);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==,
-+                     UFS_RPMB_RES_GENERAL_FAILURE);
-+
-+    memset(&req, 0, sizeof(req));
-+    stw_be_p(&req.req_resp, 0x0006);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==, 0x0006);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==,
-+                     UFS_RPMB_RES_GENERAL_FAILURE);
-+
-+    /*
-+     * 4. Authenticated data read SECURITY PROTOCOL IN block count mismatch
-+     *    sense check.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    stw_be_p(&req.addr, 10);
-+    stw_be_p(&req.block_count, 2);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
-+    g_assert_cmpuint(rsp_upiu.sr.sense_data[2] & 0x0f, ==, ILLEGAL_REQUEST);
-+    g_assert_cmpuint(rsp_upiu.sr.sense_data[12], ==, 0x24);
-+    g_assert_cmpuint(rsp_upiu.sr.sense_data[13], ==, 0x00);
-+
-+    /*
-+     * 5. Multi-region (regions 1..3) key programming and cross-region data
-+     *    isolation at block 0.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        req.data[i] = (uint8_t)(0xa5 ^ i);
-+    }
-+    stl_be_p(&req.write_counter, 2);
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(key, &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    ufs_rpmb_read_result(ufs, 0, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 3);
-+
-+    memcpy(region_keys[0], key, UFS_RPMB_KEY_MAC_LEN);
-+    for (r = 1; r < UFS_RPMB_MAX_REGIONS; r++) {
-+        for (i = 0; i < UFS_RPMB_KEY_MAC_LEN; i++) {
-+            region_keys[r][i] = (uint8_t)(key[i] ^ (r * 0x33));
-+        }
-+        ufs_rpmb_program_key(ufs, r, region_keys[r]);
-+    }
-+
-+    memset(&req, 0, sizeof(req));
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        req.data[i] = (uint8_t)(0x3c ^ i);
-+    }
-+    stl_be_p(&req.write_counter, 0);
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_WRITE);
-+    ufs_rpmb_compute_hmac(region_keys[1], &req, 1, req.key_mac);
-+    ufs_rpmb_sec_out_frames(ufs, 1, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_read_result(ufs, 1, &resp);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_WRITE);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 1);
-+    ufs_rpmb_compute_hmac(region_keys[1], &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    for (r = 0; r < UFS_RPMB_MAX_REGIONS; r++) {
-+        memset(&req, 0, sizeof(req));
-+        memset(req.nonce, (uint8_t)(0x90 + r), sizeof(req.nonce));
-+        stw_be_p(&req.addr, 0);
-+        stw_be_p(&req.block_count, 1);
-+        stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+        ufs_rpmb_sec_out_frames(ufs, r, &req, 1, &rsp_upiu);
-+        g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+        memset(&resp, 0, sizeof(resp));
-+        ufs_rpmb_sec_in_frames(ufs, r, &resp, 1, &rsp_upiu);
-+        g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+        g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                         UFS_RPMB_RESP_AUTH_DATA_READ);
-+        g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+        for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+            uint8_t expected = 0;
-+
-+            if (r == 0) {
-+                expected = (uint8_t)(0xa5 ^ i);
-+            } else if (r == 1) {
-+                expected = (uint8_t)(0x3c ^ i);
-+            }
-+            g_assert_cmpuint(resp.data[i], ==, expected);
-+        }
-+        ufs_rpmb_compute_hmac(region_keys[r], &resp, 1, mac);
-+        g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                        mac, UFS_RPMB_KEY_MAC_LEN);
-+    }
-+
-+    /*
-+     * 6. Short-PRDT SECURITY_PROTOCOL_IN (256 bytes) while read_pending is
-+     *    set must return UFS_OCS_MISMATCH_DATA_BUF_SIZE without clearing
-+     *    read_pending.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_rpmb_build_cdb(cdb, SECURITY_PROTOCOL_IN, UFS_RPMB_SEC_PROTOCOL,
-+                       UFS_RPMB_SEC_PROTOCOL_ID, UFS_RPMB_FRAME_LEN);
-+    ocs = ufs_rpmb_send_short_prdt(ufs, cdb, UFS_RPMB_FRAME_LEN, 256, false);
-+    g_assert_cmpuint(ocs, ==, UFS_OCS_MISMATCH_DATA_BUF_SIZE);
-+    /* read_pending stays armed until a valid IN or reset */
-+    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==,
-+                     UFS_RPMB_RESP_AUTH_DATA_READ);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+
-+    /*
-+     * 7. HCE 1->0->1 reset clears volatile read_pending and Result Register
-+     *    state while keeping programmed keys, write counters, and stored
-+     *    blocks intact.
-+     */
-+    memset(&req, 0, sizeof(req));
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 2);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0x5a, sizeof(req.nonce));
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
-+    ufs_rpmb_sec_out_frames(ufs, 1, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    ufs_wreg(ufs, A_HCE, 0);
-+    ufs_exit(ufs, alloc);
-+    ufs_init(ufs, alloc);
-+
-+    /* read_pending was 2 frames on region 0, so 1-frame IN returns zero */
-+    memset(&resp, 0xff, sizeof(resp));
-+    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpmem(&resp, sizeof(resp), &zero_frame, sizeof(zero_frame));
-+
-+    memset(&resp, 0xff, sizeof(resp));
-+    ufs_rpmb_sec_in_frames(ufs, 1, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpmem(&resp, sizeof(resp), &zero_frame, sizeof(zero_frame));
-+
-+    /* Key, write counter (1), and block 0 data on region 1 still persist */
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0x3c, sizeof(req.nonce));
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
-+    ufs_rpmb_sec_out_frames(ufs, 1, &req, 1, &rsp_upiu);
-+    ufs_rpmb_sec_in_frames(ufs, 1, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 1);
-+    ufs_rpmb_compute_hmac(region_keys[1], &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    memset(&req, 0, sizeof(req));
-+    memset(req.nonce, 0x7e, sizeof(req.nonce));
-+    stw_be_p(&req.addr, 0);
-+    stw_be_p(&req.block_count, 1);
-+    stw_be_p(&req.req_resp, UFS_RPMB_REQ_AUTH_DATA_READ);
-+    ufs_rpmb_sec_out_frames(ufs, 1, &req, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+
-+    memset(&resp, 0, sizeof(resp));
-+    ufs_rpmb_sec_in_frames(ufs, 1, &resp, 1, &rsp_upiu);
-+    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
-+    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
-+    for (i = 0; i < UFS_RPMB_DATA_LEN; i++) {
-+        g_assert_cmpuint(resp.data[i], ==, (uint8_t)(0x3c ^ i));
-+    }
-+    ufs_rpmb_compute_hmac(region_keys[1], &resp, 1, mac);
-+    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
-+                    mac, UFS_RPMB_KEY_MAC_LEN);
-+
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufs_register_nodes(void)
- {
-     const char *arch;
-@@ -4458,6 +5025,8 @@ static void ufs_register_nodes(void)
-                  &io_test_opts);
-     qos_add_test("rpmb-key-counter", "ufs", ufstest_rpmb_key_counter,
-                  &io_test_opts);
-+    qos_add_test("rpmb-read-write", "ufs", ufstest_rpmb_read_write,
-+                 &io_test_opts);
- }
- 
- libqos_init(ufs_register_nodes);
--- 
-2.56.0.307.g5fe7bd680c-goog
+Otherwise,
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
+Thanks,
+Nutty
+> +    MemoryRegionSection section;
+> +    MemoryRegion *mr;
+> +    Object *owner;
+> +
+> +    if (!dev) {
+> +        return 0;
+> +    }
+> +
+> +    as = pci_device_iommu_address_space(dev);
+> +    if (as == &address_space_memory) {
+> +        return 0;
+> +    }
+> +
+> +    RCU_READ_LOCK_GUARD();
+> +
+> +    mr = address_space_translate(as, address, &xlat, &len, true,
+> +                                 MEMTXATTRS_UNSPECIFIED);
+> +
+> +    if (!mr) {
+> +        trace_kvm_riscv_fixup_msi_route_failed(address,
+> +                                               "address translation failed",
+> +                                               "none");
+> +        return 1;
+> +    }
+> +
+> +    /*
+> +     * Only direct IMSIC writes can be represented by a KVM MSI route.
+> +     * MSI page-table translations instead target the RISC-V IOMMU trap
+> +     * region, which requires further BASIC/MRIF processing.
+> +     */
+> +    owner = memory_region_owner(mr);
+> +    if (!owner || !object_dynamic_cast(owner, TYPE_RISCV_IMSIC)) {
+> +        trace_kvm_riscv_fixup_msi_route_failed(address,
+> +                                               "non-IMSIC target",
+> +                                               memory_region_name(mr));
+> +        return 1;
+> +    }
+> +
+> +    section = memory_region_find(mr, xlat, 1);
+> +    if (!section.mr) {
+> +        trace_kvm_riscv_fixup_msi_route_failed(address,
+> +                                               "memory region lookup failed",
+> +                                               memory_region_name(mr));
+> +        return 1;
+> +    }
+> +
+> +    translated = section.offset_within_address_space;
+> +    memory_region_unref(section.mr);
+> +
+> +    route->u.msi.address_lo = translated;
+> +    route->u.msi.address_hi = translated >> 32;
+> +    trace_kvm_riscv_fixup_msi_route_translated(address, translated);
+>       return 0;
+>   }
+>   
+> diff --git a/target/riscv/trace-events b/target/riscv/trace-events
+> index 93837f82a1..50980c031d 100644
+> --- a/target/riscv/trace-events
+> +++ b/target/riscv/trace-events
+> @@ -12,3 +12,7 @@ mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write msecc
+>   
+>   # op_helper.c
+>   riscv_exception(uint32_t exception, const char *desc, uint64_t epc) "%u (%s) on epc 0x%"PRIx64""
+> +
+> +# kvm-cpu.c
+> +kvm_riscv_fixup_msi_route_translated(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+> +kvm_riscv_fixup_msi_route_failed(uint64_t iova, const char *reason, const char *region) "MSI iova = 0x%"PRIx64" failed: %s (region=%s)"
 
