@@ -1,76 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D765606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28611606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HZVi38JQ
+	dkim=pass (1024-bit key, unprotected) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.a=rsa-sha256 header.s=default header.b=f3gxgkJ4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLhGb-0002if-8M; Tue, 27 Oct 2026 09:31:05 -0400
+	id 1xLhNP-0003jN-Lf; Tue, 27 Oct 2026 09:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xLhGY-0002iJ-CO
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:31:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.alibaba.com>)
+ id 1xLcfH-0004tA-RK
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 04:36:16 -0400
+Received: from [115.124.30.124] (helo=out30-124.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1xLhGV-0007bh-DI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:31:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793107856;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=nnDjgW97vP60byO5e2+j7cMYce/RN9nf/dWP/aptmyo=;
- b=HZVi38JQDGz3gD27DiwSHSd8R/2/aG6pqxGBPMGWITCN/weSLo1MAuy4HbR9k6G42d9oTA
- bK3v33LmfYoUQAI5rtIGY4gCe0iNRI3QS/t5+rjxRTJkHpYhaz5EUkiVrD5t4jAXsRPcWd
- 6CJAUdM44m1nZs1miBRG20G7FWdjuvA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-uTpz2nSIOV-pHcBhz5WwyQ-1; Tue,
- 27 Oct 2026 09:30:54 -0400
-X-MC-Unique: uTpz2nSIOV-pHcBhz5WwyQ-1
-X-Mimecast-MFC-AGG-ID: uTpz2nSIOV-pHcBhz5WwyQ_1793107853
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 69F901954B0A; Tue, 27 Oct 2026 13:30:53 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4683B30000E7; Tue, 27 Oct 2026 13:30:51 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, gillian.anton@cohesity.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH] qga/vss: fix provider handling of snapshots
-Date: Tue, 27 Oct 2026 17:30:50 +0400
-Message-ID: <20261027133049.2522944-2-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.alibaba.com>)
+ id 1xLcfB-00032o-97
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 04:36:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1793090146; h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type;
+ bh=s69eFhLNfIQfWLwU4zBQwqmKDaHXyoN/gEXr1hbgJW0=;
+ b=f3gxgkJ4C80VAiDgzWn3U5eN3qfLPqn2VKkxD5A4xRERodRDz0gYU7OMJd+o4ZQt5fJU4RKnZBx3gLNEO0pPYnQ+IpLoXO67jVNNPM9M+ttWxTLsJ/uV1HHyHxFrI4bvScOSEwO0oFPyZZ02mFPno1asb+XpIemsEz6UVmnNBik=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
+ MF=hao.xiang@linux.alibaba.com; NM=1; PH=DW; RN=6; SR=0;
+ TI=alimail_imapd_hao.xiang@linux.alibaba.com-33.37.4.148-367-1793089112; 
+Received: from WS-web
+ (hao.xiang@linux.alibaba.com[alimail_imapd_hao.xiang@linux.alibaba.com-33.37.4.148-367-1793089112]
+ cluster:ay36) at Tue, 27 Oct 2026 16:30:27 +0800
+Date: Tue, 27 Oct 2026 16:30:27 +0800
+From: "Hao Xiang" <hao.xiang@linux.alibaba.com>
+To: "qemu-devel" <qemu-devel@nongnu.org>, "pbonzini" <pbonzini@redhat.com>,
+ "zhao1.liu" <zhao1.liu@intel.com>, "mst" <mst@redhat.com>,
+ "farosas" <farosas@suse.de>, "lvivier" <lvivier@redhat.com>
+Message-ID: <11491981-b61f-453b-9c12-96ec85063c4a.hao.xiang@linux.alibaba.com>
+Subject: =?UTF-8?B?W1BBVENIXSBpMzg2L2NwdTogUmVuYW1lIEFWWDEwX1ZOTklfSU5UIHRvIEFWWDEwX1YxX0FV?=
+ =?UTF-8?B?WA==?=
+X-Mailer: [Alimail-Mailagent revision 74][W4_0.2.3][v5ForWebDing][Chrome]
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+x-aliyun-im-through: {"version":"v1.0"}
+x-aliyun-mail-creator: W4_0.2.3_v5ForWebDing_QvNTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTVfNykgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzE1NS4wLjAuMCBTYWZhcmkvNTM3LjM2La
+x-aliyun-mailtrack: {"foreign-track":"0"}
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.124 (deferred)
+Received-SPF: pass client-ip=115.124.30.124;
+ envelope-from=hao.xiang@linux.alibaba.com;
+ helo=out30-124.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 27 Oct 2026 09:37:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,336 +70,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Hao Xiang <hao.xiang@linux.alibaba.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,UNPARSEABLE_RELAY,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-Since commit 374f4676788c, the provider's GetSnapshotProperties()
-returns S_OK for any snapshot ID without filling in the properties.  VSS
-consults every registered provider when a requester looks up a snapshot,
-so lookups of snapshots owned by other providers now succeed with an
-all-zero VSS_SNAPSHOT_PROP. Backup software relying on it fails, e.g.
-Veeam: "Original volume name is not specified for the shadow (shadow
-volume id: '{00000000-0000-0000-0000-000000000000}')".
-
-Simply reverting is not an option: 374f4676788c switched to S_OK because
-returning VSS_E_OBJECT_NOT_FOUND unconditionally broke qemu-ga's own
-snapshot sets. The provider must answer for its own snapshots only. It
-does not create real shadow copies, but it does take part in the
-snapshot set during qemu-ga fsfreeze cycles. Remember the snapshot IDs
-received in BeginPrepareSnapshot(), return their
-(minimal) properties, and return VSS_E_OBJECT_NOT_FOUND for anything
-else.
-
-Entries are dropped when VSS deletes the snapshots or the set, or when
-the set is aborted (AbortSnapshots()).
-
-COM+ may hand out several CQGAVssProvider instances (and serve several
-client processes), so this registry is module-global. It is per-process
-by design and safe because the COM+ application is hosted by a single NT
-service (see CreateServiceForApplication() in install.cpp): COM+ forbids
-pooling and recycling for service-hosted applications, so exactly one
-surrogate process ever hosts the provider.
-
-On the requester side, the snapshot set is created in the persistent
-VSS_CTX_APP_ROLLBACK context, so VSS keeps it after the freeze/thaw
-cycle and may keep querying providers about it. The provider registry
-does not outlive the cycle (requester_thaw() stops the hosting service,
-and the provider process with it), so later queries would get "not
-found" for a set VSS still believes exists. Make requester_thaw() delete
-the snapshot set explicitly at the end of the cycle, whatever its
-outcome (including BackupComplete() failure and aborted snapshot sets).
-A failure to delete is only logged, since the guest filesystems have
-already been thawed.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4584
-Buglink: https://redhat.atlassian.net/browse/RHEL-250662
-Fixes: 374f4676788c ("qga: Fix VSS provider GetSnapshotProperties return value")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- qga/vss-win32/install.cpp   |   1 +
- qga/vss-win32/provider.cpp  | 153 +++++++++++++++++++++++++++++++++++-
- qga/vss-win32/requester.cpp |  26 ++++++
- 3 files changed, 179 insertions(+), 1 deletion(-)
-
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-index 09d94edd4f53..3b58dc840520 100644
---- a/qga/vss-win32/install.cpp
-+++ b/qga/vss-win32/install.cpp
-@@ -331,6 +331,7 @@ STDAPI COMRegister(void)
-     chk(put_Value(pObj, L"Authentication",                 short(6)));
-     chk(put_Value(pObj, L"AuthenticationCapability",       short(2)));
-     chk(put_Value(pObj, L"ImpersonationLevel",             short(2)));
-+    /* NT-service-hosted apps have ConcurrentApps=1 enforced */
-     chk(pApps->SaveChanges(&n));
- 
-     /* The app should be deleted if something fails after SaveChanges */
-diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
-index 1c8eb236e57f..ad2f3ee763e6 100644
---- a/qga/vss-win32/provider.cpp
-+++ b/qga/vss-win32/provider.cpp
-@@ -11,6 +11,11 @@
-  */
- 
- #include "qemu/osdep.h"
-+
-+#include <vector>
-+#include <algorithm>
-+#include <string>
-+
- #include "vss-common.h"
- #include "vss-debug.h"
- #ifdef HAVE_VSS_SDK
-@@ -138,6 +143,123 @@ STDMETHODIMP CQGAVSSEnumObject::Clone(IVssEnumObject **ppenum)
-     return E_NOTIMPL;
- }
- 
-+/* Registry of the snapshot IDs for this provider */
-+class QGAVssSnapshotRegistry
-+{
-+public:
-+    bool Track(VSS_ID set_id, VSS_ID snapshot_id,
-+               VSS_PWSZ volume_name, LONG context);
-+    HRESULT GetProperties(VSS_ID snapshot_id, VSS_SNAPSHOT_PROP *prop) const;
-+    LONG RemoveSet(VSS_ID set_id); /* returns how many were removed */
-+    bool Remove(VSS_ID snapshot_id);
-+
-+private:
-+    struct Entry {
-+        VSS_ID set_id;
-+        VSS_ID snapshot_id;
-+        std::wstring volume_name;
-+        LONG context;
-+    };
-+
-+    std::vector<Entry> m_entries;
-+    mutable SRWLOCK m_lock = SRWLOCK_INIT;
-+};
-+
-+static QGAVssSnapshotRegistry qga_vss_registry;
-+
-+bool QGAVssSnapshotRegistry::Track(VSS_ID set_id, VSS_ID snapshot_id,
-+                                   VSS_PWSZ volume_name, LONG context)
-+{
-+    bool ok;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    try {
-+        m_entries.push_back(Entry { set_id, snapshot_id, volume_name,
-+                                    context });
-+        ok = true;
-+    } catch (...) {
-+        ok = false;
-+    }
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return ok;
-+}
-+
-+HRESULT QGAVssSnapshotRegistry::GetProperties(VSS_ID snapshot_id,
-+                                              VSS_SNAPSHOT_PROP *prop) const
-+{
-+    HRESULT hr = S_OK;
-+
-+    AcquireSRWLockShared(&m_lock);
-+    auto it = std::find_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.snapshot_id, snapshot_id);
-+        });
-+    if (it == m_entries.end()) {
-+        hr = VSS_E_OBJECT_NOT_FOUND;
-+        goto out;
-+    }
-+
-+    {
-+        const Entry &e = *it;
-+        size_t len = (e.volume_name.size() + 1) * sizeof(WCHAR);
-+        VSS_PWSZ volume = (VSS_PWSZ)CoTaskMemAlloc(len);
-+
-+        if (!volume) {
-+            hr = E_OUTOFMEMORY;
-+            goto out;
-+        }
-+        memcpy(volume, e.volume_name.c_str(), len);
-+
-+        /* not a real snapshot: no device object, exposure or timestamp */
-+        memset(prop, 0, sizeof(*prop));
-+        prop->m_SnapshotId = e.snapshot_id;
-+        prop->m_SnapshotSetId = e.set_id;
-+        prop->m_lSnapshotsCount = std::count_if(m_entries.begin(),
-+            m_entries.end(), [&](const Entry &o) {
-+                return IsEqualGUID(o.set_id, e.set_id);
-+            });
-+        prop->m_pwszOriginalVolumeName = volume;
-+        prop->m_ProviderId = g_gProviderId;
-+        prop->m_lSnapshotAttributes = e.context;
-+        prop->m_eStatus = VSS_SS_CREATED;
-+    }
-+
-+out:
-+    ReleaseSRWLockShared(&m_lock);
-+    return hr;
-+}
-+
-+LONG QGAVssSnapshotRegistry::RemoveSet(VSS_ID set_id)
-+{
-+    LONG removed;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    auto it = std::remove_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.set_id, set_id);
-+        });
-+    removed = m_entries.end() - it;
-+    m_entries.erase(it, m_entries.end());
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return removed;
-+}
-+
-+bool QGAVssSnapshotRegistry::Remove(VSS_ID snapshot_id)
-+{
-+    bool found;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    auto it = std::find_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.snapshot_id, snapshot_id);
-+        });
-+    found = it != m_entries.end();
-+    if (found) {
-+        m_entries.erase(it);
-+    }
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return found;
-+}
- 
- /* QGAVssProvider */
- 
-@@ -266,7 +388,7 @@ STDMETHODIMP CQGAVssProvider::SetContext(LONG lContext)
- STDMETHODIMP CQGAVssProvider::GetSnapshotProperties(
-     VSS_ID SnapshotId, VSS_SNAPSHOT_PROP *pProp)
- {
--    return S_OK;
-+    return qga_vss_registry.GetProperties(SnapshotId, pProp);
- }
- 
- STDMETHODIMP CQGAVssProvider::Query(
-@@ -286,6 +408,27 @@ STDMETHODIMP CQGAVssProvider::DeleteSnapshots(
-     VSS_ID SourceObjectId, VSS_OBJECT_TYPE eSourceObjectType,
-     BOOL bForceDelete, LONG *plDeletedSnapshots, VSS_ID *pNondeletedSnapshotID)
- {
-+    LONG deleted = 0;
-+
-+    switch (eSourceObjectType) {
-+    case VSS_OBJECT_SNAPSHOT:
-+        if (qga_vss_registry.Remove(SourceObjectId)) {
-+            deleted = 1;
-+        }
-+        break;
-+    case VSS_OBJECT_SNAPSHOT_SET:
-+        deleted = qga_vss_registry.RemoveSet(SourceObjectId);
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    if (deleted > 0) {
-+        *plDeletedSnapshots = deleted;
-+        *pNondeletedSnapshotID = GUID_NULL;
-+        return S_OK;
-+    }
-+
-     *plDeletedSnapshots = 0;
-     *pNondeletedSnapshotID = SourceObjectId;
-     return S_OK;
-@@ -295,6 +438,13 @@ STDMETHODIMP CQGAVssProvider::BeginPrepareSnapshot(
-     VSS_ID SnapshotSetId, VSS_ID SnapshotId,
-     VSS_PWSZ pwszVolumeName, LONG lNewContext)
- {
-+    if (!pwszVolumeName) {
-+        return E_INVALIDARG;
-+    }
-+    if (!qga_vss_registry.Track(SnapshotSetId, SnapshotId,
-+                                pwszVolumeName, lNewContext)) {
-+        return E_OUTOFMEMORY;
-+    }
-     return S_OK;
- }
- 
-@@ -411,6 +561,7 @@ STDMETHODIMP CQGAVssProvider::PostFinalCommitSnapshots(VSS_ID SnapshotSetId)
- 
- STDMETHODIMP CQGAVssProvider::AbortSnapshots(VSS_ID SnapshotSetId)
- {
-+    qga_vss_registry.RemoveSet(SnapshotSetId);
-     return S_OK;
- }
- 
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 1b0155c691ef..565eefcfb283 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -52,6 +52,7 @@ static t_VssFreeSnapshotProperties pVssFreeSnapshotProperties;
- static struct QGAVSSContext {
-     IVssBackupComponents *pVssbc;  /* VSS requester interface */
-     IVssAsync *pAsyncSnapshot;     /* async info of VSS snapshot operation */
-+    VSS_ID idSnapshotSet;          /* snapshot set created for this cycle */
-     HANDLE hEventFrozen;           /* notify fs/writer freeze from provider */
-     HANDLE hEventThaw;             /* request provider to thaw */
-     HANDLE hEventTimeout;          /* notify timeout in provider */
-@@ -116,6 +117,7 @@ static void requester_cleanup(void)
-         vss_ctx.pVssbc->Release();
-         vss_ctx.pVssbc = NULL;
-     }
-+    vss_ctx.idSnapshotSet = GUID_NULL;
-     vss_ctx.cFrozenVols = 0;
-     qga_debug_end;
- }
-@@ -446,6 +448,7 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-         err_set(errset, hr, "failed to start snapshot set");
-         goto out;
-     }
-+    vss_ctx.idSnapshotSet = guidSnapshotSet;
- 
-     if (mountpoints) {
-         PWCHAR volume_name_wchar;
-@@ -680,6 +683,29 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
-         err_set(errset, hr, "failed to do snapshot set");
-     }
- 
-+    /*
-+     * The snapshot set is created in VSS_CTX_APP_ROLLBACK context, so
-+     * it is persistent: if it was committed, VSS keeps it (and keeps
-+     * querying providers about it) until it is explicitly deleted. The
-+     * freeze/thaw cycle is over whatever the outcome above, so delete
-+     * it now. Failure is not fatal here, only log it.
-+     */
-+    {
-+        LONG lDeletedSnapshots = 0;
-+        VSS_ID idNonDeletedSnapshot;
-+        HRESULT hrDelete;
-+
-+        hrDelete = vss_ctx.pVssbc->DeleteSnapshots(vss_ctx.idSnapshotSet,
-+                                                   VSS_OBJECT_SNAPSHOT_SET,
-+                                                   TRUE,
-+                                                   &lDeletedSnapshots,
-+                                                   &idNonDeletedSnapshot);
-+        if (FAILED(hrDelete)) {
-+            qga_debug("failed to delete snapshot set after thaw,"
-+                      " hr=0x%08lx", hrDelete);
-+        }
-+    }
-+
-     if (err_is_set(errset)) {
-         vss_ctx.pVssbc->AbortBackup();
-     }
--- 
-2.56.0.116.g6de20f6092dc
-
+UmVuYW1lIEFWWDEwX1ZOTklfSU5UIGlzIHRvIEFWWDEwX1YxX0FVWCB0byBtYXRjaCB0aGUgbW9z
+dCByZWNlbnQgdmVyc2lvbgpvZiB0aGUgQVZYMTAuMiBzcGVjIChyZXZpc2lvbiA3LjApIFsqXS4g
+IEludGVsIHJlbmFtZWQgdGhlIENQVUlEIGZsYWcgdG8KYXBwbHkgdG8gYSB2YXJpZXR5IG9mICJj
+b252ZXJ0IiBpbnN0cnVjdGlvbnMgYXMgd2VsbCBhcyBWTk5JIGluc3RydWN0aW9ucy4KClRoZSBy
+ZWNlbnQgS1ZNIHBhdGNoIGhhcyByZW5hbWVkIEFWWDEwX1ZOTklfSU5UIHRvIEFWWDEwX1YxX0FV
+WC4gUUVNVSBuZWVkcwp0byB1cGRhdGUgdGhlIENQVUlEIG1hY3JvLCBmZWF0dXJlIHByb3BlcnR5
+LCBBVlgxMC4yIGZlYXR1cmUgbW9kZWwgYW5kCkRpYW1vbmQgUmFwaWRzIENQVSBkZWZpbml0aW9u
+LiBLZWVwIHRoZSBDUFVJRCBsb2NhdGlvbiBhbmQgYml0IHVuY2hhbmdlZC4KClsqXSBJbnRlbMKu
+IEFkdmFuY2VkIFZlY3RvciBFeHRlbnNpb25zIDEwLjIgQXJjaGl0ZWN0dXJlIFNwZWNpZmljYXRp
+b24gCihyZXYgNy4wKQoKU2lnbmVkLW9mZi1ieTogSGFvIFhpYW5nIDxoYW8ueGlhbmdAbGludXgu
+YWxpYmFiYS5jb20+Ci0tLQogIHRhcmdldC9pMzg2L2NwdS5jIHwgNiArKystLS0KICB0YXJnZXQv
+aTM4Ni9jcHUuaCB8IDQgKystLQogIDIgZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCA1
+IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9pMzg2L2NwdS5jIGIvdGFyZ2V0L2kz
+ODYvY3B1LmMKaW5kZXggOWI5ZWQyZDFlMy4uZTdlMzVjM2Y1YiAxMDA2NDQKLS0tIGEvdGFyZ2V0
+L2kzODYvY3B1LmMKKysrIGIvdGFyZ2V0L2kzODYvY3B1LmMKQEAgLTEzNjYsNyArMTM2Niw3IEBA
+IEZlYXR1cmVXb3JkSW5mbyBmZWF0dXJlX3dvcmRfaW5mb1tGRUFUVVJFX1dPUkRTXSA9IHsKICAg
+ICAgW0ZFQVRfMjRfMV9FQ1hdID0gewogICAgICAgICAgLnR5cGUgPSBDUFVJRF9GRUFUVVJFX1dP
+UkQsCiAgICAgICAgICAuZmVhdF9uYW1lcyA9IHsKLSAgICAgICAgICAgIFsyXSA9ICJhdngxMC12
+bm5pLWludCIsCisgICAgICAgICAgICBbMl0gPSAiYXZ4MTAtdjEtYXV4IiwKICAgICAgICAgIH0s
+CiAgICAgICAgICAuY3B1aWQgPSB7CiAgICAgICAgICAgICAgLmVheCA9IDB4MjQsCkBAIC0yMzg3
+LDcgKzIzODcsNyBAQCBzdGF0aWMgY29uc3QgQVZYMTBWZXJzaW9uRGVmaW5pdGlvbiAKYnVpbHRp
+bl9hdngxMF9kZWZzW10gPSB7CiAgICAgICAgICAudmVyc2lvbiA9IDIsCiAgICAgICAgICAubWF4
+X3N1YmxlYWYgPSAxLAogICAgICAgICAgLmZlYXR1cmVzID0gKEZlYXR1cmVNYXNrW10pIHsKLSAg
+ICAgICAgICAgIHsgRkVBVF8yNF8xX0VDWCwgICAgICAgICBDUFVJRF8yNF8xX0VDWF9BVlgxMF9W
+Tk5JX0lOVCB9LAorICAgICAgICAgICAgeyBGRUFUXzI0XzFfRUNYLCAgICAgICAgIENQVUlEXzI0
+XzFfRUNYX0FWWDEwX1YxX0FVWCB9LAogICAgICAgICAgICAgIHsgLyogZW5kIG9mIGxpc3QgKi8g
+fQogICAgICAgICAgfQogICAgICB9LApAQCAtNTUzOCw3ICs1NTM4LDcgQEAgc3RhdGljIGNvbnN0
+IFg4NkNQVURlZmluaXRpb24gYnVpbHRpbl94ODZfZGVmc1tdID0gewogICAgICAgICAgICogVGhv
+dWdoIHRoaXMgYml0IHdpbGwgYmUgc2V0IGJ5IGF2eF92ZXJzaW9uPTIsIGl0J3MgYmV0dGVyIHRv
+CiAgICAgICAgICAgKiBleHBsaWNpdGx5IGVudW1lcmF0ZSB0aGlzIGZlYXR1cmUgaGVyZS4KICAg
+ICAgICAgICAqLwotICAgICAgICAuZmVhdHVyZXNbRkVBVF8yNF8xX0VDWF0gPSBDUFVJRF8yNF8x
+X0VDWF9BVlgxMF9WTk5JX0lOVCwKKyAgICAgICAgLmZlYXR1cmVzW0ZFQVRfMjRfMV9FQ1hdID0g
+Q1BVSURfMjRfMV9FQ1hfQVZYMTBfVjFfQVVYLAogICAgICAgICAgLmZlYXR1cmVzW0ZFQVRfODAw
+MF8wMDAxX0VDWF0gPQogICAgICAgICAgICAgIENQVUlEX0VYVDNfTEFIRl9MTSB8IENQVUlEX0VY
+VDNfQUJNIHwgCkNQVUlEX0VYVDNfM0ROT1dQUkVGRVRDSCwKICAgICAgICAgIC5mZWF0dXJlc1tG
+RUFUXzgwMDBfMDAwMV9FRFhdID0KZGlmZiAtLWdpdCBhL3RhcmdldC9pMzg2L2NwdS5oIGIvdGFy
+Z2V0L2kzODYvY3B1LmgKaW5kZXggOWYyMjJhMGM5Zi4uNmY3MjMwMDMxYiAxMDA2NDQKLS0tIGEv
+dGFyZ2V0L2kzODYvY3B1LmgKKysrIGIvdGFyZ2V0L2kzODYvY3B1LmgKQEAgLTExMjYsOCArMTEy
+Niw4IEBAIHVpbnQ2NF90IHg4Nl9jcHVfZ2V0X3N1cHBvcnRlZF9mZWF0dXJlX3dvcmQoWDg2Q1BV
+IAoqY3B1LCBGZWF0dXJlV29yZCB3KTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIENQVUlEXzI0XzBfRUJYX0FWWDEwXzI1NiB8IFwKICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIENQVUlEXzI0XzBfRUJYX0FWWDEwXzUxMikKCi0vKiBB
+VlgxMF9WTk5JX0lOVCBpbnN0cnVjdGlvbiAqLwotI2RlZmluZSBDUFVJRF8yNF8xX0VDWF9BVlgx
+MF9WTk5JX0lOVCAgICAgICAgICgxVSA8PCAyKQorLyogQVZYMTBfVjFfQVVYIGluc3RydWN0aW9u
+ICovCisjZGVmaW5lIENQVUlEXzI0XzFfRUNYX0FWWDEwX1YxX0FVWCAgICAgICAgICAgKDFVIDw8
+IDIpCgogIC8qCiAgICogTmV3IENvbmRpdGlvbmFsIEluc3RydWN0aW9ucyAoTkNJcyksIGV4cGxp
+Y2l0IE5ldyBEYXRhIERlc3RpbmF0aW9uIAooTkREKQotLSAKMi41MS4x
 
