@@ -1,99 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC76606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532E1606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=HgMNAgNI;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=GASOOlb3
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FbhT5lfp;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Bk3HS8ok
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmoF-0003f3-St; Tue, 27 Oct 2026 15:26:13 -0400
+	id 1xLmoI-0003h8-3u; Tue, 27 Oct 2026 15:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmnf-0002y4-01
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:25:42 -0400
+ id 1xLmn8-0002Un-Np
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:25:03 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmnZ-00025W-4e
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:25:32 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1xLmn7-0001rX-3m
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:25:02 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIHWYv1917333
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:25:27 GMT
+ 69RIHqDm2960506
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:25:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gKKf7t/h1QmhB1gSp3dvANRhxukEMn/ZUmcSGNatBOs=; b=HgMNAgNIw1nMOVF0
- ELrN1NrW+dAPIHC1xq8qza0jMumjfkPVHf6yT9QtaHYo5X/Uvftnj6ml3Nvg8x/A
- QzZgmK3iPdElDwMhuj2Mpy0lsEUDyTLqyO+88lzCgXqg294HvAMtPL0kq/O1AYD0
- cu99we5P603L/P07yojZQBlkjIlTiceslLNBbsSQQdmH6Gx7mBtky6CfVP35WZzm
- ihuaFlOCxr2AE9fXeiISQ2qITzXvTvV3y1VEtMcSjvRm9Z9KYB3kqx3VvrweYj7I
- M0dYhGm2jqvd9afKXPBJUEUoEC3VCrXy+3XvMm9I4hJJ8DheuT2DX6dvYh5c80dW
- z1qsLg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjux99uuc-1
+ PdScQ5nmpybeikNoT8uSfv4tN5EFplQchnr6nyolkIY=; b=FbhT5lfp7Dzd8nGy
+ 8i/TtDLHuqd9dbcHG4nvVTv3Tkp5k9WQtO17+AFxeDtF36kAAL0VsSqIeqJFg4tZ
+ BsUvCoyGhqNhiimvETFeZTDUByEm7Nxsh7mo+pAMQ9KHqhtHp6gLplo34mSvYZbe
+ SU9rUbi8A07hD52JhTiWnsYMF4GYj4LnCzeg/ri1Nocz1Tt0JmC5m40KxGMsIlrA
+ 1xx9bU4iFebIxLfAlsWU8liITcQmPAXcO399D5hONYlaWchtJgqaeG4Plej7TkqH
+ 9Fn1khy4MSOmvnnX9cGzcs8Uu8QXlF6R6NHsK94pTled0OWM0/qYxS4uggxSvw5Q
+ unn81g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjy670v1p-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:25:27 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-537548b8342so6535691cf.2
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:25:27 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:59 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9308eafb465so27846885a.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129126; x=1793733926; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793129099; x=1793733899; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gKKf7t/h1QmhB1gSp3dvANRhxukEMn/ZUmcSGNatBOs=;
- b=GASOOlb3p9q+AOhOaIPSO5qjoo4bgH6gvutj2Ue78ypuKDC+9wSkiyv/RfUalsTaWC
- oG7OLaxuNGi7IRiqXG93bDj/EC1pZ7VchiWrpNwZ1jetgI0X7Ip8OecEUkglsNNNAmW/
- 0ysd5zair0YVc/WmvI0vk1XykA8OJkGlHFrrtV3RmC95tfmIhcLKsukWGKyTjZu0NeS0
- M0CgBmBzEjzHxGHMDTIXtN+z8jIeeOGuZE7JAmIAncuDkBPC7kmU1U5eBdaod/nNciHD
- 3cJvDEVdC37x61uB6pEAhMnwzZS3EGzmW2G/sJEAJajmOJVlmeelBATDeGu4ugzcOEMr
- fpmw==
+ bh=PdScQ5nmpybeikNoT8uSfv4tN5EFplQchnr6nyolkIY=;
+ b=Bk3HS8ok0exTe1I4Jj45Mhi5RXsGH68la4C3o48bmPLZFievwYTTK/kfYSWifMlXH/
+ gtSdGNpPDhzbnkn+YZxFukyXgI03xcYsm4rONKMn33uEBsnGJesj31YrA33QJGedXRya
+ Y3nYw84mSN2vCw0mvX/JK7eocv57/Gti7FXd2N1pQ9rIqWpGSk+8bfxp//l7tJ+JDP4D
+ 0k8bw805LAG5BBVFE1bUmZ2XH7/kgODs07YhhbdE30mWmHSb2v8fCt8gdi/bBC+au+jC
+ M7cZ3UuAFaFG2YRQu+F+EKh8pbKhuQlgQBDrRE7EPTH8iHN/0obt7Q3eXRSMl5eJzG7m
+ zCqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129126; x=1793733926;
+ d=1e100.net; s=20260707; t=1793129099; x=1793733899;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gKKf7t/h1QmhB1gSp3dvANRhxukEMn/ZUmcSGNatBOs=;
- b=ltyuzv/A2ZJ45h0B2uXmkxG6WF0uQso2ZGXcaT6XhR5jRHNYwvjmTTpZ2s8R6SZhG0
- QeYKteIN5KtA98Y7OWrTZT32nRtvL36Mr8xspSYqAFyDdsI1vRNIQa40SHGM9tS2imY2
- e6QPotL5VN3bYyFjruxUDhBHBbnQdN+CHt0hR/NdlDp41nPTb7sYRgYj8vkaZ98Z+YXu
- K1kJIBa150y6dmx7fdrUFFa9cXW93nfKSme/AbqOLOxxUW7dXS0JHhTwrZHO7+kip2jP
- wyMFpOXYA3XdlNKkaHLScf2qIJw6JWo783zGAkzW5xgYFQ5rnk0V+1DG8npsEnX8SyCp
- iHTg==
-X-Gm-Message-State: AFq9FYIQ49fHG0XlQkxyXH0hq4cCi2pSRu5l1GC2sXIJMR1kC0nhxJV8
- ZYjcDawpKUtfjww4tsD5YijqOq5sNy3Kv+y6vVDdK4bESKppaFEnyoPzlyNOubMYPybz3KfSFiX
- /FjsjRNmqhoROQ40sXz+fC/LmVmWhsyPEurvYhmzo6TxDRs8RJOJammu6rEvw1Ie3Pg==
-X-Gm-Gg: AYBFou2go9xjW/fftDphDrXK6r+BCcDOhMx2TdM4ZWcNUU0LPDOA+gd57WXBFHWyZo/
- qAxpDNlSHEmqNM8h8/Lk/ucy6I0UDumFO79KhdhU16ND39Ep4J0KVKp5i/vvlhPGXsmyK0mbyhk
- AmESOsIrDeV7jpuqTAEj5P9TeqpF214C5VA2IRZK0sv7NocX8zRra7oQLxDk17lGNivkfJ7YwIq
- cqMn4/2tAiIF3c4pehbPO0D/BksrX2V2RLF7ch1tvlta8RQW7cvijF+wmx4tIxIFNpvAF72gOYb
- D4SVVH0X52YS2qH/cKavYEeoMD9GbHnhcGfPnNb4w+ZxmqNQrWiA1eUv0dvY5QJ+ecdzAIsg8sJ
- bIryi7y5Kildu3YUo1ZyfxjJvJ9XAb/QYC/O8LJh275zlz6OOiIZ3+Sw9AZwBHD5u8fnt0b7DA0
- Duc5+CG8DOnWyanDPuv3RH6Un4GfRq1w==
-X-Received: by 2002:a05:620a:17a4:b0:93f:3163:3e25 with SMTP id
- af79cd13be357-940ef9014bbmr1567403585a.24.1793129126447; 
- Tue, 27 Oct 2026 12:25:26 -0700 (PDT)
-X-Received: by 2002:a05:620a:17a4:b0:93f:3163:3e25 with SMTP id
- af79cd13be357-940ef9014bbmr1567400485a.24.1793129125887; 
- Tue, 27 Oct 2026 12:25:25 -0700 (PDT)
+ bh=PdScQ5nmpybeikNoT8uSfv4tN5EFplQchnr6nyolkIY=;
+ b=IH759+8OZnD5Je7QT/K9YEe9OoQyRXgEbGihxqq1XFsLoeBqbHQRMgJ9oOhIgWT4zv
+ Cv8HHGMpu2ROn7rzxGZ5JrCYhiPJFuaiK+cgPM5Mylsnss3Pp5WVqo8Hnca2D63yP6hV
+ BAp6k/XTWbs6E7fwjPhFKSm2kLNdpKHSoTJ/vS9Hkz0oHahE6kcgkedQtJSx88Wofk/w
+ bp/5ozfGjEHqUr30TurSek0deCPGCK6Ctq34iSLpsnX5JJSIJF2Zdpv5QqGJDetZJlGj
+ w5OnBAO/7Y4ZW3k9i/iRzWiNlNONl/JIhSIEbddhV0lJoJ0b9A6WsNbBFmHPnwKzDhHe
+ jJ/w==
+X-Gm-Message-State: AFq9FYK714lR2rNv/Uw5mh/iWJOhdTMboPZ4+V0eZGXj22TMCQ4mD0cL
+ +PPe+0+ezIEeq8c7/uiIEMziTDrG+Gv42rbym24df1v94Wng2egvz1Jy0FC7CO/vXIXIr/AW/At
+ 5qd5C/YC+bVH6F5z2HqStjUIn2hsNyzNhElljErY/jL00Ez8xpMrHq+RzXh80Fx7LnQ==
+X-Gm-Gg: AYBFou3DZUlZJZRNqs7qdz+pE6QDizwfe8lLwQR55Z0pBqHimgATL+ApTGsq1JYEdC7
+ vp0xw6qDkJnvsa+4cwg6rkwsaJsppSqeic4wzLT7/nxsmglaAhreh079SEY3Ho4U9d9b1dT/RTo
+ LNQX57g+kc1REnMACNTSfnOrFU+24JKOkx/FmZgNLEwzy2J0OAPWU/b9loJdY2kLhl4IgKzynqI
+ sSJdqDjITG/k7ja9ZqNXDokGl3Q50tR5o1rmD5mrNDiQ1wwq22B5H5EROvyKImnjW1IOI84HNHz
+ yRwv22sd709JOi3pgHnLJbKpyM7P4RD3dBqpiWG5l9MT2LArXT3mTWG1phLct3bjPnHqE60wTW8
+ lUsuTmELbJaDQRT3QwmtfyBvryhodzBtXA+Wivgh1yV34SlXUGi5DcK14
+X-Received: by 2002:a05:620a:4556:b0:93e:5cf8:e5aa with SMTP id
+ af79cd13be357-940ef9380d4mr1758399685a.61.1793129099377; 
+ Tue, 27 Oct 2026 12:24:59 -0700 (PDT)
+X-Received: by 2002:a05:620a:4556:b0:93e:5cf8:e5aa with SMTP id
+ af79cd13be357-940ef9380d4mr1758395885a.61.1793129098800; 
+ Tue, 27 Oct 2026 12:24:58 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a94e6b8290sm3024265e9.9.2026.10.27.12.25.25
+ 5b1f17b1804b1-4a951f7f544sm1781525e9.3.2026.10.27.12.24.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:25:25 -0700 (PDT)
+ Tue, 27 Oct 2026 12:24:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/59] hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
-Date: Tue, 27 Oct 2026 20:22:56 +0100
-Message-ID: <20261027192341.9197-16-philmd@oss.qualcomm.com>
+Subject: [PULL 11/59] hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default
+Date: Tue, 27 Oct 2026 20:22:52 +0100
+Message-ID: <20261027192341.9197-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
 References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
@@ -101,34 +100,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=GYyCDgXL c=1 sm=1 tr=0 ts=6ae0faa7 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-ORIG-GUID: sgOMst9mQCvw61T49pE-iV8w4pu2CeSY
+X-Authority-Analysis: v=2.4 cv=QvfLTlyd c=1 sm=1 tr=0 ts=6ae0fa8b cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=pGLkceISAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=N8E37EdMsAxyg1GpHm0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=pGLkceISAAAA:8 a=FRSEYCzRAAAA:8 a=EUspDBNiAAAA:8 a=TiZ8CxiaEXEXIp79E_cA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
  a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-ORIG-GUID: g_cHapVjBEc608H3oSGDQSsBEF8FFUMk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX9iWDQFSq4X8B
- RtfyMp2OzCSNeo/IKJYuwgWXvZRkpmMUWg2aXsfJjgcD/KGxV1iS8lfLt1dCOS4fkSfvvjVvJiM
- qrRIpmgwBU74IknfTWnYkytZOuhURy3UL6yfuVzmES77DwUo9fSpL7jxbv3iyaph3OqKdmqWdEK
- Auyj/1tPr6SoFccpz2pwgsruUVMwgCPwglX9p9iG7xJHO4s9S2Wois2msHTHO3UrWE7kxzQ90zQ
- oPsZDXWkLpCL9Z/aP9Z/1NX3j0TiitYTlb2XDwnOXl0EgzRX83ldA9sRCvpO4t0zIBSlhTEBdsX
- L8hKlY6QuKrikJnrv14O4pT5MElM/ratXDwAY1KVcXXorpjm9cvpvhbGRgLAaEFtYQy4AmBn6Kq
- 03erStMYw9K7sNMDQ719nnNCmpwTwl2fC3M5ywQSJQk/j7HnKencRVhbeoxfGhuk9OfVX0y1rUT
- qI5lCw86sjg0v8GSawA==
-X-Proofpoint-GUID: g_cHapVjBEc608H3oSGDQSsBEF8FFUMk
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX4aSFCBcmCNKi
- O5dioRGV0cVygQyF0ZiQ35HCSih/u95+h+KJ/e0QMJF01YE4T+Bh1wd0/GwvK8qHwayeppA6qnh
- 2uraBnhjrjz5rTujdg2KdS+lVPIXe20=
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX9RZ/EoCazKpn
+ iztvkGtx4y5vO6mSt4T7/mM5/mUX030FUvA60U6cpjydbt4Yu9Udj+7wYbFLc9401lv14o4Ab3z
+ AhzTqRx22EVpfsMvSjbo0/zTewx8mNs=
+X-Proofpoint-GUID: sgOMst9mQCvw61T49pE-iV8w4pu2CeSY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX7pck7cZLIwRg
+ KAQMpSSeOnYhNAD2FCZCez3i5PVFnI+KbNX3u58FYDX6t6WhAEre3o2LhCpRGYeDc+0DwL5aYb+
+ 39xUyZjVpuNSo9PHas+2LSFmYzxseB+wrLNFfXzNUfQNtG6iUezFI/e/XsCoBMApUuoHWqtfMMc
+ JXquHRRIoSOSl4rUT/OzrwQm70CKMBmy2Z0mhMTd/gKCu0k+rKbvBMZTfJijG/TedxGph/MJZhE
+ umR0Rnw9d1dWXFX62VOdVEWOyhnZc/5+K/I+j7WonY6ywHlwyDyfgdK9orQRHAZl9EbE7t03tpo
+ Td9quPS5pMRosH2W6WxSUEAECiYszT9PpS+YFb2sZ2tMOSwf21kf2QhSDR6xNBBj7bHBwlaTNBV
+ /nvQ7r9jH8cfW26QDx4+9YuERdqS5bQE8jyWQ0UrLRqGjh+TlzL1sJd2URnQk5gv1CBYjoZOFoL
+ GbwgwXV8gJkqSXE+E8A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
- malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 impostorscore=0 clxscore=1015 adultscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270078
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270077
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -158,81 +157,33 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Deriving from TYPE_SYS_BUS_DEVICE fixes the SoC object to be reset
-upon machine reset.
+Having 512 MiB of RAM matches real hardware. Fix the machine
+default to make its use more ergonomic and less error-prone.
 
-Remove clearing user-creatable which is implicit for SysBus-based
-devices.
+To reproduce the old default behavior for e.g. migration purposes,
+`-m 128M` needs to be added to the command line.
 
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20261006083445.30362-14-shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-ID: <20261006083445.30362-10-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- include/hw/arm/fsl-imx31.h | 5 ++---
- hw/arm/fsl-imx31.c         | 7 +------
- hw/arm/kzm.c               | 2 +-
- 3 files changed, 4 insertions(+), 10 deletions(-)
+ hw/arm/mcimx6ul-evk.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/arm/fsl-imx31.h b/include/hw/arm/fsl-imx31.h
-index 41232a223733..ea916de15aaf 100644
---- a/include/hw/arm/fsl-imx31.h
-+++ b/include/hw/arm/fsl-imx31.h
-@@ -25,6 +25,7 @@
- #include "hw/i2c/imx_i2c.h"
- #include "hw/gpio/imx_gpio.h"
- #include "hw/watchdog/wdt_imx2.h"
-+#include "hw/core/sysbus.h"
- #include "system/memory.h"
- #include "target/arm/cpu.h"
- #include "qom/object.h"
-@@ -38,10 +39,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX31State, FSL_IMX31)
- #define FSL_IMX31_NUM_GPIOS 3
- 
- struct FslIMX31State {
--    /*< private >*/
--    DeviceState parent_obj;
-+    SysBusDevice parent_obj;
- 
--    /*< public >*/
-     ARMCPU         cpu;
-     IMXAVICState   avic;
-     IMX31CCMState  ccm;
-diff --git a/hw/arm/fsl-imx31.c b/hw/arm/fsl-imx31.c
-index 190f863355d4..dd929c108588 100644
---- a/hw/arm/fsl-imx31.c
-+++ b/hw/arm/fsl-imx31.c
-@@ -224,16 +224,11 @@ static void fsl_imx31_class_init(ObjectClass *oc, const void *data)
- 
-     dc->realize = fsl_imx31_realize;
-     dc->desc = "i.MX31 SOC";
--    /*
--     * Reason: uses serial_hds in realize and the kzm board does not
--     * support multiple CPUs
--     */
--    dc->user_creatable = false;
+diff --git a/hw/arm/mcimx6ul-evk.c b/hw/arm/mcimx6ul-evk.c
+index 40071d2c7b96..4964cb934519 100644
+--- a/hw/arm/mcimx6ul-evk.c
++++ b/hw/arm/mcimx6ul-evk.c
+@@ -73,6 +73,7 @@ static void mcimx6ul_evk_machine_init(MachineClass *mc)
+     mc->desc = "Freescale i.MX6UL Evaluation Kit (Cortex-A7)";
+     mc->init = mcimx6ul_evk_init;
+     mc->max_cpus = FSL_IMX6UL_NUM_CPUS;
++    mc->default_ram_size = 512 * MiB;
+     mc->default_ram_id = "mcimx6ul-evk.ram";
+     mc->auto_create_sdcard = true;
  }
- 
- static const TypeInfo fsl_imx31_type_info = {
-     .name = TYPE_FSL_IMX31,
--    .parent = TYPE_DEVICE,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(FslIMX31State),
-     .instance_init = fsl_imx31_init,
-     .class_init = fsl_imx31_class_init,
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 387bf54ced18..e9cc53ce0172 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -69,7 +69,7 @@ static void kzm_init(MachineState *machine)
- 
-     object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX31);
- 
--    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
- 
-     /* Check the amount of memory is compatible with the SOC */
-     if (machine->ram_size > (FSL_IMX31_SDRAM0_SIZE + FSL_IMX31_SDRAM1_SIZE)) {
 -- 
 2.55.0
 
