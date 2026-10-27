@@ -1,85 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC0F606A322
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A29606A31F
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=LIVR+fF9
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=QZ4eFdwB
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLagD-0001v1-Eg; Tue, 27 Oct 2026 02:29:05 -0400
+	id 1xLagm-0002xI-FW; Tue, 27 Oct 2026 02:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLag2-0001sP-E2
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:28:54 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1xLagc-0002NN-2W
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:31 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLag0-0008AI-Tj
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:28:54 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-3acd21ba21aso2942850a91.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:28:52 -0700 (PDT)
+ id 1xLaga-0008DG-FA
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:29 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3ae1da332bcso675982a91.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793082531; x=1793687331; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1793082567; x=1793687367; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RNDD+ScD3AdYVl6IHt/6cgD0pnuLGi/tjfqp4L4WKTU=;
- b=LIVR+fF9pw9Fh5Bvwm1rUwxms1F2+/kyBgk+SDEfDNxn5UXbzJQ+h1/eNm9OckHCHK
- K+F9D/j5BP7yNuekGAyf+DjaFhEOVZMTJ5POu7Mi+dtj7KRc5tqK3EQ2nDIOxjebcBC6
- NgFV/HwCLznxzhSoD20D3S3vlTV4i1kY17N3BwAl1sq6ml7DNk1n+drkSNxKUr6xTyl3
- PQV66fuF1LbM3nAT7VvBX974yMof9yHVCFiMp2u6yyIbj9Sft7qz9LKeiiwapKj1q+Qs
- hjg+JXWfi1Mcny+sWoI49q4GbNRgufUjDP7+WDhtw6RbJpCH514NS1qgfRJLX9vW2FrH
- aKkA==
+ bh=WHqD3jPXwrwTC/WBM1Eq/5pdVFWNU0i6avwoEeLZZ+w=;
+ b=QZ4eFdwBLRXuZfuLzpAfGi/R1TlCqgPCZ08zDowI/9YoKw839/Ti5BTS+hd3rrP4PE
+ Xjz3b9ID48qeYMidycrYuEBA/BwPmk2atk+FKQuJvYCdhhkSp6nOe5CJcTiXxMFFF8+1
+ 3wodZCrmryk3iBmClgEaTQUfF7BGN32AMQyr6j3e0aM9vAe+cbQUBmSqSmTxKiL8zgEG
+ y5YVVQDvwxh0BrH/8HoJ7vbV6ohyLGbTFYQH4LELzRLzoWyxmX04ylJKP3nA900/zxUa
+ Hl++VDmrnbEvoim6zD5H1nsO+BLSUfHQ+29WYeuXFeodrYLTAPmSZktfeUY8PISitMp6
+ MyVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793082531; x=1793687331;
+ d=1e100.net; s=20260707; t=1793082567; x=1793687367;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RNDD+ScD3AdYVl6IHt/6cgD0pnuLGi/tjfqp4L4WKTU=;
- b=OQlF/KIY+iDPObrT7J2d3faeqB9XebbTrQQxdXs+59g7PniyZubIN10z5LzsPzv7Wu
- /EoihnxvUXA+b6mBbLncD0RhPmbOkNyRS0FYTc2Qbe/RrXaS+wd0hE6bEENKmvKCJwj+
- FcDhElhr2SMAoCc0E7+dY910TDAbEO0HzgW+7iBkBYW4Ix14UVofuqeyU3Q6b4O75A/y
- 8R3ZHq7hrD/CewwCg0L5k3n5A/RT3EJJ038OL444W0ZJxbywcqIOU7bXRf1wWPk5lG1h
- bxh39q4i6TCl5DpBk4BJfSajmXEyWcI26OpAemKJeKP9Nv2zLEuaxsy+J00lxlkETJJ0
- NDNw==
-X-Gm-Message-State: AFq9FYKqv8Se9kO91828YvZmesZwui5P/3LXCFAfFs6fUYUGeBZFmyy3
- 5SUcHLvt9YVZwxqa/W/Tw/0oU6/hN3zjVRWdaoSkkU0rtcUOlojRt9F7S4p7Wg==
-X-Gm-Gg: AYBFou3o38F+M+hn9RFZXcHmML4lhpn0C8ZrelTpnwJ9z9tiZ/vLiBnx1UdizpM7BXt
- MtBNPrW7ow9ROV5Otuy1dt0iXcNP5+l7RQRmbMdv0/k00nLNFl163xtl/YHX6IW2L825xSUBkl+
- KNXoh6VM71jj/MUqeLYScSEfL6yd/ZJYA5ZOnyUsYBHExvUUenBI2jZa+Sb6J221LJF2OvNeOCW
- oSiF8mC8G5t/ApaX8wTwOu1KOO2PUMoH8FR5WZeHJRZflBnYj3XMD1uHmh79Ba18j/i0Oyc7uo+
- kNafoNNdgA2gHvESEb4EDLFUkPIBBCbqw4xUUMZbqWTWr5bbxDFki9rJ6nJeIV4Ebflkz99Q8Nn
- r1PUH2+PQtuCwCXmxZZK3v7SgcDw7qnvBulsXaPSuH1UF6pJi0bmBPxOvdymOC5AXJxAc6KTP/h
- +VUjhbK/iBFz8e5LafJ87OJ53tIe3o6V9WuH4h7cnSmzU9CyJqefnFz6UDHPOlvhTl875vq2Gec
- ueEr1aMlKxd9EUGQmwLQ3I8U0srm4o5iDsEVPjRbgeME4SpYa916z5tFtl+RieZt3Ci+z7feA==
-X-Received: by 2002:a17:90b:4e8c:b0:39d:84af:a0b3 with SMTP id
- 98e67ed59e1d1-3adeac07c4fmr7558585a91.18.1793082531451; 
- Mon, 26 Oct 2026 23:28:51 -0700 (PDT)
+ bh=WHqD3jPXwrwTC/WBM1Eq/5pdVFWNU0i6avwoEeLZZ+w=;
+ b=p+y+Xid/ySc3KzTgfrbwrfQDeBtCDyxcsRVscX17AmCenun6WM0zPKdzZCLs0o5Pmq
+ JQPm////HGMzR36apeagjGV1kgvh1AZCgrrtC2knOC0Pwb/7dW9WkT7vlHPa8Luwz2GL
+ nO4AxgFQuR7yXYeVgPsnOnBfFWp/NWJvEdTRisDmZoD1APLysU39fjieqV2U3BTBzdQI
+ JBB99fAR4cCsLays8anM/ef1GchLOLHn335Sq9HET5HuxLaNtU0gQCaWErjHyErSbBrf
+ ItfLXbP3AX5qty1xSPfrQOLgaWPJi2uBEO10zfM201XkYeZ2OwbA+Ij0xEdTz3JXN/+D
+ 8TTw==
+X-Gm-Message-State: AFq9FYLNo2MyTmbKVCwnNVtSVmGdLcG7cHqk9Hpn1BSjm9CjKzxY2Jio
+ HZuYaiXsDquNSAdXAlq+OFD9sNqY0knKU5WuyjIn/BloPgsarvirHFbtZj0IzQ==
+X-Gm-Gg: AYBFou2V9dDxaZWiziyCa1qQBuYRt5KGApMXYXvcoW9NAWXOCYtynHKj539rW6qIBqj
+ Kwcrjg/z5hW2fr9xZkrUYHCTDQISz+VolxcHV67BLtlk+ZAooplLPJUyyDF5CjuNaleyYOjvFY4
+ jZsVG0E7+jzGXRyGiXstrVsK6uzNQ0YxIlDRNRdJMMw8qnKmaBrFLZjYKC953efxHpG1FmUTS5Y
+ LxdXfsmBQagU+bhESy+K5O+unBvR/qYhoSB85gjJLQH2bXo/rtucn9fhJE9DJgEhDWGUuAr3tPs
+ B3y7O4EfiahsNpo/4erY9WYNta3+y36PfUDkpJvzyIpW/lgKPmpnBuyZw3YsCoBzE+V91jkLSQ3
+ U7YmcbjvOlrtyvNc4faELLqoQs0thGgHVxBx5cpFVovcWKu6CLmCjpGSG6N/3C/3GMUF789Jgnl
+ GqPlyehUiJr0WNIV6eyJ8voZ1zp3Ava8Y6OPGw4/IQRW1EReb+TX9ceb8ruPL5cP1+lJl7VDyXf
+ eUy4/FObl1nLaeJgJxXpcankexPdYVW7dl7LGvvfq1bnQKHxdry5urNONw8thnIRKOQKxcKfoZG
+ 3cnEyza00qa9Fy7f7Yc=
+X-Received: by 2002:a17:90b:6c3:b0:3ac:8897:7b88 with SMTP id
+ 98e67ed59e1d1-3adeaf9c9c2mr7702901a91.58.1793082566668; 
+ Mon, 26 Oct 2026 23:29:26 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.28.49
+ 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 23:28:50 -0700 (PDT)
+ Mon, 26 Oct 2026 23:29:26 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Portia Stephens <portias@oss.tenstorrent.com>,
+Cc: Rick Richard <rick@sloservers.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 08/29] docs/atlantis: Update Atlantis UART documentation
-Date: Tue, 27 Oct 2026 16:27:47 +1000
-Message-ID: <20261027062808.1995205-9-alistair.francis@wdc.com>
+Subject: [PULL 19/29] target/riscv: Use TSO barriers instead of full barriers
+ for Ztso
+Date: Tue, 27 Oct 2026 16:27:58 +1000
+Message-ID: <20261027062808.1995205-20-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
 References: <20261027062808.1995205-1-alistair.francis@wdc.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,43 +111,72 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Portia Stephens <portias@oss.tenstorrent.com>
+From: Rick Richard <rick@sloservers.com>
 
-Update Atlantis documentation to describe the DesignWare UART used.
+With Ztso, plain loads and stores follow RVTSO, but the barriers
+around them use TCG_MO_ALL.  That also orders a store before a later
+load, which TSO doesn't require, and is expensive: on x86 hosts it
+adds a locked instruction around every load and store in a
+multi-threaded guest.
 
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20261015002849.1640109-4-portias@oss.tenstorrent.com>
+The barrier after a load now only keeps later loads and stores
+behind it, and the barrier before a store only keeps earlier loads
+and stores ahead of it.  That is all TSO needs.
+
+Signed-off-by: Rick Richard <rick@sloservers.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Palmer Dabbelt <palmer@dabbelt.com>
+Message-ID: <d6db9f89-36d6-436d-a915-407cd28e1778@sloservers.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/system/riscv/tt_atlantis.rst | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ target/riscv/tcg/insn_trans/trans_rvi.c.inc | 4 ++--
+ target/riscv/tcg/insn_trans/trans_rvv.c.inc | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
-index 539c22354f47..d94d064f4f62 100644
---- a/docs/system/riscv/tt_atlantis.rst
-+++ b/docs/system/riscv/tt_atlantis.rst
-@@ -13,7 +13,7 @@ tt-atlantis QEMU model features
+diff --git a/target/riscv/tcg/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+index cc1b5dbbadc0..4784ea1607e7 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
+@@ -424,7 +424,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+     }
  
- * 8-core Ascalon-X CPU Cluster
- * RISC-V compliant Advanced Interrupt Architecture
--* 16550A compatible UART
-+* DW8250 compatible UART x5
- * 4 PRCMs (Clock and Reset Controllers)
+     if (ctx->ztso) {
+-        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
++        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
+     }
  
- Known limitations
-@@ -25,9 +25,8 @@ real platform. Notably:
- * There is no PCI host bridge, so virtio-pci devices cannot be
-   attached. Boots that need block storage must use ``-initrd`` with
-   an initramfs.
--* The DesignWare UART is modelled with QEMU's ns16550-compatible
--  ``serial_mm`` device; DesignWare-specific registers beyond that
--  set return 0.
-+* The Atlantis platform has 5 UARTs but only ``UART1`` is currently exposed
-+  on the command line serial interface. ``UART1`` is the Ascalon console.
+     return out;
+@@ -485,7 +485,7 @@ static bool gen_store_tl(DisasContext *ctx, arg_sb *a, MemOp memop)
+     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
  
- Supported software
- ------------------
+     if (ctx->ztso) {
+-        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
++        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
+     }
+ 
+     tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
+diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+index 14ef961607f4..7e1295f33e7d 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
+@@ -731,7 +731,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+      * around the loop.
+      */
+     if (is_store && s->ztso) {
+-        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
++        tcg_gen_mb(TCG_MO_LD_ST | TCG_MO_ST_ST | TCG_BAR_STRL);
+     }
+ 
+     mark_vs_dirty(s);
+@@ -739,7 +739,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+     fn(dest, mask, base, tcg_env, desc);
+ 
+     if (!is_store && s->ztso) {
+-        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
++        tcg_gen_mb(TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_BAR_LDAQ);
+     }
+ 
+     finalize_rvv_inst(s);
 -- 
 2.55.0
 
