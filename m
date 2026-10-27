@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99A4606A321
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC89606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 18:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=W1sLKFpi
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cCaOyjmo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLli6-0008Lp-Oh; Tue, 27 Oct 2026 14:15:47 -0400
+	id 1xLljG-0001fJ-9X; Tue, 27 Oct 2026 14:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xLlhF-0007o4-EI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:14:53 -0400
+ id 1xLlhr-0008Gg-SM
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:15:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xLlhB-0003Im-Iy
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:14:53 -0400
+ id 1xLlhp-0003bg-25
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 14:15:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793124889;
+ s=mimecast20190719; t=1793124928;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OR3eA/OEI8JQI9niPlwkL7rz2xDS90J8dFRNMLbMsFA=;
- b=W1sLKFpiMBetT1kw0R/DN3UBA3Uaab2H2GDTQqA+IKkJSV6ke2+YMaJJuKg4eFznU+k8v7
- Gsvnh88ZtNb9hV5s9UaxSl93TJlrADiRK/GjNDxG3fkcfQ33RjifgYNAsAmdtgjZmN4pbc
- DB+4QdfPCIN4hhi9nMIMHHXBx19DmE0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4Pm6nA/KY6PE4TLQmdMM8j973NLZ7jXiNqYHwm4lj4k=;
+ b=cCaOyjmoeXuq5/nPviT5BBp4Q4P/K+VWdBR2m52iOn1NPubdxzL+kH6vBRw799XeKP8TGh
+ hCYVfHBXzrFApN39oTfVfqRa/GcrzSnHKY8oqviQENxywh3xgdVbPuxd2GF57umrBsK0QT
+ PkZapb28EySI+MAJg7S6QyiCD8jrsZA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-hFjnCr8qMIidUk_D93z-dw-1; Tue,
- 27 Oct 2026 14:14:47 -0400
-X-MC-Unique: hFjnCr8qMIidUk_D93z-dw-1
-X-Mimecast-MFC-AGG-ID: hFjnCr8qMIidUk_D93z-dw_1793124882
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-IAhZ7yWWMa6sTZNfrhwzSA-1; Tue,
+ 27 Oct 2026 14:15:24 -0400
+X-MC-Unique: IAhZ7yWWMa6sTZNfrhwzSA-1
+X-Mimecast-MFC-AGG-ID: IAhZ7yWWMa6sTZNfrhwzSA_1793124921
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA8621955BC4; Tue, 27 Oct 2026 18:14:42 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B70581954236; Tue, 27 Oct 2026 18:15:20 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 835921800586; Tue, 27 Oct 2026 18:14:35 +0000 (UTC)
+ id 6FD8418002B1; Tue, 27 Oct 2026 18:15:13 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefano Stabellini <sstabellini@kernel.org>,
@@ -76,9 +76,9 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 04/11] hw/ppc: mark 'pseries' as a secure machine
-Date: Tue, 27 Oct 2026 18:13:53 +0000
-Message-ID: <20261027181400.1752951-5-berrange@redhat.com>
+Subject: [PATCH 09/11] accel/kvm: mark kvm accelerator as secure
+Date: Tue, 27 Oct 2026 18:13:58 +0000
+Message-ID: <20261027181400.1752951-10-berrange@redhat.com>
 In-Reply-To: <20261027181400.1752951-1-berrange@redhat.com>
 References: <20261027181400.1752951-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -114,28 +114,27 @@ X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The 'pseries' ppc machine is already declared secure in
-docs/system/security.rst, due too its intended usage in virtualization
-scenarios.
+KVM is servicing virtualization use cases which must provide security
+and actively maintained.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/ppc/spapr.c | 1 +
+ accel/kvm/kvm-all.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 6d994644865..7fe3202f635 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4750,6 +4750,7 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
-         .name = MACHINE_VER_TYPE_NAME("pseries", __VA_ARGS__),       \
-         .parent = TYPE_SPAPR_MACHINE,                                \
-         .class_init = MACHINE_VER_SYM(class_init, spapr, __VA_ARGS__), \
-+        .secure = true,                                              \
-     };                                                               \
-     static void MACHINE_VER_SYM(register, spapr, __VA_ARGS__)(void)  \
-     {                                                                \
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index db8fba53f33..66bc7f3a83a 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -4353,6 +4353,7 @@ static const TypeInfo kvm_accel_type = {
+     .instance_finalize = kvm_accel_finalize,
+     .class_init = kvm_accel_class_init,
+     .instance_size = sizeof(KVMState),
++    .secure = true,
+ };
+ 
+ static void kvm_type_init(void)
 -- 
 2.56.0
 
