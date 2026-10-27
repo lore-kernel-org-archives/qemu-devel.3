@@ -1,66 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2932960A5BDF
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 12:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5F260A5BFD
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 12:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=S2NmE0W6
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=Nipv305V
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLftt-0003gQ-M7; Tue, 27 Oct 2026 08:03:34 -0400
+	id 1xLftw-0003i4-Nm; Tue, 27 Oct 2026 08:03:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLfsH-0003GG-Iq
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 08:01:59 -0400
-Received: from ci-2007h-snip6-11.eps.apple.com ([2a01:b747:3005:207::53]
+ id 1xLfsH-0003GJ-Rb
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 08:02:01 -0400
+Received: from ci-2007k-snip6-10.eps.apple.com ([2a01:b747:3005:207::70]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLfsE-0007z0-WF
+ id 1xLfsF-0007z1-2i
  for qemu-devel@nongnu.org; Tue, 27 Oct 2026 08:01:53 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPS id
- 49CA4180013B; Tue, 27 Oct 2026 12:01:48 +0000 (UTC)
-X-ICL-RepId: 01a17d3c-f0e8-7ba2-bb5a-836a4b214b15
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0MWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQtIAl4CRQdDCUwLQABGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ 2C83F1808306; Tue, 27 Oct 2026 12:01:47 +0000 (UTC)
+X-ICL-RepId: 01a17d3c-ec40-753b-acfe-178dd1b6d972
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0MWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQtIAl4CRQdDCUwLQAFGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
  s=sig1; t=1793102509; x=1824638509;
- bh=Ul1w2QYA+PK1ywHsUbqg7Wns+SkrfY97/AOuaplBPiA=;
+ bh=t3yktbDRS+iN/ZMXeJYzBu/9fm637dEA1vTo59DjGGQ=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=S2NmE0W6NJcCYHvgWsCO5C27Y02msK4DQ7iAifJhmFHeO4hQ8Cd8fHwWMxUeiBmugqwtwWz9tLBAArk2Lg3NU7u9WhtyJ/kceoix6sfaUKdt55GmxzjYUHrOeLM4fjiIeHLd2mNVPhwYEq2MJNA81hOyL4cLNAJc1i2TuM42tqMuiSUqNiSLeJDp5cqeK+abDvi4EZCB89iC7/ieMH1ulen9RwV2EGDGD6d3tMvbA5dPNng/PYmHlNtYIUXQn79Tn0hnR8DVJBty3AUwRKGD829XXR6Nq1PBDlUxPRPM/cKhopc5nPp2yyCt0gCEiLPao8QKJVmft0hGdsPwWu7u5w==
+ b=Nipv305V+2F6WJQSCf3HT3qOohqjrQu+NOqnfAKw2XND4jbVIwyqUw/K0SzZEtl7YkUWmNqOILeRvqWug+aKEZB2aKDumv7G0vro9jYfnxdQehdg4D0XaQFh9N1vu0aot5djq56mgZMyykrmUvEccEz6UYMpY95nEPmVb97KIWEoEJQoHpwxaPlDHGytIsFQvSFh7Q5nSaagk08cKzJy56vQ5P97hx72iyJACImPQdya9DbV4zmFXZv/mHSE40neBdHmBSH5MtztnRSl5pPIFN6DGx1l776sLV68ihGDSQMtvIj8LZMH9H4U4txTIDEHBCcVKOfzlM3PVI69gwNQQQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPSA id
- E63711801A6A; Tue, 27 Oct 2026 12:01:46 +0000 (UTC)
+ 9F69D180012D; Tue, 27 Oct 2026 12:01:45 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v2 6/6] hvf: arm: sync vCPU state on PSCI reset
-Date: Tue, 27 Oct 2026 13:01:35 +0100
-Message-ID: <20261027120135.53048-7-mohamed@unpredictable.fr>
+Subject: [PATCH v2 5/6] hvf: gic: sync the CPU interface during a vCPU reset
+Date: Tue, 27 Oct 2026 13:01:34 +0100
+Message-ID: <20261027120135.53048-6-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027120135.53048-1-mohamed@unpredictable.fr>
 References: <20261027120135.53048-1-mohamed@unpredictable.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA0NyBTYWx0ZWRfX6U2C+pkxEj99
- 5MLgTRwjw934hAjsHwCNVz01jkuDaETGjr9TjOk0cBdxGdXgnVLO2uBU42FHddtMrjDL6sKqw1B
- GTW79X+V397NAKPonvhcEtFCh7X+g2hL3bYDoUjsyrmTFULoG1nhW1U3O3UgyeQj4xxQ9mjJmJq
- EKYdDX2vd46gPlydMb0thclkd4oYtzkAgVO8KLsUnC8ta2U4vz7nr1yBvhyIDsVb8upACrx5Fm+
- VkpY9RZRmmW2dcJ+o9CGFp6xUKePe5Zns1/hv1jL2ZDI4tmXRS/fKvzmnVjT3mYiGOV7d+6/Us4
- Mdy1zD1cn7+vuRkrv49cytQpZGeRLf11mIPNffNWd0Ga1Mu55ZlyQH4PXBXfWQ=
-X-Authority-Info-Out: v=2.4 cv=Cp6ys34D c=1 sm=1 tr=0 ts=6ae092ac
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA0NyBTYWx0ZWRfX1xh6WJN4JFvG
+ bCIHtqhgyNciRHp8QuC6ZD8HnAr/8RpPR2rT/VMUfyQjMxlGIqITB9aUILo2h9GrTKRTeVG2SRB
+ NVbc2sAXmckQyF+ipS0MT17iV0J4qL9w7oIv9J4FAaDqVAqvkUS39jiGkc5F0+sE/a4eaRNMS2g
+ goJwlUwAArTeOknSo0z7ZuwyWwUUBLiB6cBvs70+Neqx2VIMoT5sKsGkXX7bt7l5DkHOHUg2Mi+
+ 1NSTqydTM28Nd6GWzZ3Ocp16dlKcs5YYwnrOizzAANh28ssbCnZkY6w6JpApGiS6dFrcRbl1o6+
+ UhWX5c07IfxRetpAZAoncXMXYSPNbINNja7GewNM9ZKqI1GhuckV9+00j2pVWA=
+X-Authority-Info-Out: v=2.4 cv=OrZCCi/t c=1 sm=1 tr=0 ts=6ae092ab
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=n0fzTBlYLd8wZCkSMhQA:9
-X-Proofpoint-GUID: 1WPZfiQSlpR9qce5FdCFARweCrLGlONL
-X-Proofpoint-ORIG-GUID: 1WPZfiQSlpR9qce5FdCFARweCrLGlONL
-X-JNJ: AAAAAAAB7IdtTiKjTT7dLaEaE2+zkJlX9WZBXoTjGcLqcEmmMcFU4GLNzktt+1f4VPEWGogAQZ4lVZX8R4wESj9uoG2wajMCu30x8WBkTcMoj0ZWT45IU4RRBElJT42f62e8YC2TZoKMzy8MaxtbZrhAJlBew1RhnAgAWaNknFq7Pg76W/NAYKepglKfq06hJ/IGgtw5qJN3fxoYSu+RILlI1LbmLUR596SkmcZUoGBtifYPpIeviR8OM5cmnNSeTju9KQ8lAlyVR1pmzqSrvpOb7DMfqJXE1ISBNf7m8l6fefjkXVwEs696lnAbeNaEfrG9GJfstSPuMz9gfOtBnR8MoFEow7NMq48xvLpPsQTk0PBNxtTqP/tPZ+BxCjv1xBaYFSkzBMGolHbW9B5RK/0mLe3fH5nAYePFUgATgJK6vmfXN81dnN4Bj563fL23NwXADTeLD/j5Zibi5Fnt1zO9GS0JQdnMD3nuYuNl9ECeNGOo+E/7CFxHoqvPFu+R0u/7TIDdpEVTzZUGqWDWOzlaQTNbBwo4GIlH2tqQCM0Ojpsf8oh7E3jxCnag9wPE4VpmC9KTVbnussh5W+7cRbNi+/ZreVkSISQpBHbBGsvsdL8gm/PyI6MTd4Q7ueR6rG1kDlY2e7g0IDJY6HygBMpLt5/thCeBW2ODr/WoZpoxZLxA+F7JXM6vfiEQuRhOqftDzIOFxwz48KSVa3XXi4p7WuIxcFTR6HnRplZEaFAMhmfB7/XdSKWy7ESkDFpF7jgBKEUKEnbr
-Received-SPF: pass client-ip=2a01:b747:3005:207::53;
+ a=NKy5R9nvzRqnHfWbwMwA:9
+X-Proofpoint-ORIG-GUID: MtVWDRdxyAnf1H00o7qnLwBqDwFGTQ4e
+X-Proofpoint-GUID: MtVWDRdxyAnf1H00o7qnLwBqDwFGTQ4e
+X-JNJ: AAAAAAABRnGLVM1j2mUTsYV1n2CIUbBaJHq7mUyTpeSfy9a5nYHm1Ia2ij4zCKoMQQocFUPxF4B1A0ywRU9b+Iz5MKs28DzVv1Q/rayWcYrJYhWcESkMrm+8yjbpAogVdjgBnpl0JZshhVcvUc96x2yH2MNx5LvdSxkXVLdcfg6Lj2qqp4SjYnQ/9+z62ShO4z3+7pq3KdRst139vfC/8ipVirle5g5uIRQ4Sxl3jKRrBY1BAHNVtJiCsPfgiY/EZn1ZF3RNHRGyVugl/97OUvbBdny8m7ihAV/qy1jRPn1ta3j9A3Qh4/8tNImZRUZFdBgfjwsFG8To7PfokRc02oa3/1YltbqI/ccigdgS0v+ys96alyQg4EFTIKPtTFb2OdLIhe2NMek4IYdZFdvWHfO4Io0zGO9c7IrnpNF3bBF8KAN1aI20D2vQaRcPI6V7/SLm7oPm1t6Hy0vMvsJh1Izub9MZHQuNDFjuyFdJFEC/BYVU9quYxCPF0BaWTF+UBUTmSI9buoYZl9PL79NneMAYLqhPy+aFMlFX1R4urrlU5MGpUeHW6PcQIxIJozZ+68gahlkgnv39iuwtvD3BNgKh0nYElQARtnxnDKmZZg9goBTmgcSgjeMl2pVZcnlLtcyS12C4xkNj8s9KMt4OASAnramo+y51ioE42TuLMezrPMo+b7Vl7ij2bjDrIW3/zDsj26OO78qx9drd9aWJZVh4ra++vOzc/LExNzITj9CrdVtE0hysGAvD9Ps8WGAP5a0xAfsjKCxsm4tOYQ==
+Received-SPF: pass client-ip=2a01:b747:3005:207::70;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,37 +86,155 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-In case of PSCI off followed by a PSCI on which
-is a scenario that happens notably during kexec,
-what happens today is that the state sync does
-not happen and the vCPU becomes in an unexpected state.
+When a vCPU reset happens, we should also
+reset the state of the GIC CPU interface.
 
-Address this via marking the vCPU as dirty during a PSCI power on.
+Otherwise, reboots might not work as expected
+during some circumstances.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/arm/hvf/hvf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/intc/arm_gicv3_hvf.c | 93 ++++++++++++++++++++++++-----------------
+ 1 file changed, 54 insertions(+), 39 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index e1ddfe14c7..7ce2e38df1 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1651,6 +1651,14 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
-         context_id = param[3];
-         ret = arm_set_cpu_on(mpidr, entry, context_id,
-                              hvf_psci_get_target_el(), target_aarch64);
+diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
+index 4876446189..ad6e09b4c9 100644
+--- a/hw/intc/arm_gicv3_hvf.c
++++ b/hw/intc/arm_gicv3_hvf.c
+@@ -257,50 +257,14 @@ static void hvf_gicv3_put_cpu_el2(CPUState *cpu_state, run_on_cpu_data arg)
+     }
+ }
+ 
+-static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
++static void hvf_gicv3_put_cpuif(CPUState *cpu_state, run_on_cpu_data arg)
+ {
+-    uint32_t reg;
+     uint64_t reg64;
+-    int i, num_pri_bits;
+-
++    int num_pri_bits;
+     /* Redistributor state */
+     GICv3CPUState *c = arg.host_ptr;
+     hv_vcpu_t vcpu = c->cpu->accel->fd;
+ 
+-    reg = c->gicr_waker;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
+-
+-    reg = c->gicr_igroupr0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
+-
+-    reg = ~0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICENABLER0, reg);
+-    reg = c->gicr_ienabler0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0, reg);
+-
+-    /* Restore config before pending so we treat level/edge correctly */
+-    reg = half_shuffle32(c->edge_trigger >> 16) << 1;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1, reg);
+-
+-    reg = ~0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICPENDR0, reg);
+-    reg = c->gicr_ipendr0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0, reg);
+-
+-    reg = ~0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICACTIVER0, reg);
+-    reg = c->gicr_iactiver0;
+-    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0, reg);
+-
+-    for (i = 0; i < GIC_INTERNAL; i += 4) {
+-        reg = c->gicr_ipriorityr[i] |
+-            (c->gicr_ipriorityr[i + 1] << 8) |
+-            (c->gicr_ipriorityr[i + 2] << 16) |
+-            (c->gicr_ipriorityr[i + 3] << 24);
+-        hv_gic_set_redistributor_reg(vcpu,
+-            HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, reg);
+-    }
+-
+     /* CPU interface state */
+     hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, c->icc_sre_el1);
+ 
+@@ -320,7 +284,7 @@ static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
+ 
+     switch (num_pri_bits) {
+     case 7:
+-           reg64 = c->icc_apr[GICV3_G0][3];
++        reg64 = c->icc_apr[GICV3_G0][3];
+         hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3, reg64);
+         reg64 = c->icc_apr[GICV3_G0][2];
+         hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2, reg64);
+@@ -349,6 +313,53 @@ static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
+         reg64 = c->icc_apr[GICV3_G1NS][0];
+         hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1, reg64);
+     }
++}
 +
-+        /*
-+         * Mark state as dirty for HVF to sync context
-+         * when the vCPU runs. arm_set_cpu_on() does not
-+         * do it by itself.
-+         */
-+        arm_get_cpu_by_id(mpidr)->vcpu_dirty = true;
++static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
++{
++    uint32_t reg;
++    int i;
 +
-         break;
-     case QEMU_PSCI_0_1_FN_CPU_OFF:
-     case QEMU_PSCI_0_2_FN_CPU_OFF:
++    /* Redistributor state */
++    GICv3CPUState *c = arg.host_ptr;
++    hv_vcpu_t vcpu = c->cpu->accel->fd;
++
++    reg = c->gicr_waker;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
++
++    reg = c->gicr_igroupr0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
++
++    reg = ~0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICENABLER0, reg);
++    reg = c->gicr_ienabler0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0, reg);
++
++    /* Restore config before pending so we treat level/edge correctly */
++    reg = half_shuffle32(c->edge_trigger >> 16) << 1;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1, reg);
++
++    reg = ~0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICPENDR0, reg);
++    reg = c->gicr_ipendr0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0, reg);
++
++    reg = ~0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICACTIVER0, reg);
++    reg = c->gicr_iactiver0;
++    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0, reg);
++
++    for (i = 0; i < GIC_INTERNAL; i += 4) {
++        reg = c->gicr_ipriorityr[i] |
++            (c->gicr_ipriorityr[i + 1] << 8) |
++            (c->gicr_ipriorityr[i + 2] << 16) |
++            (c->gicr_ipriorityr[i + 3] << 24);
++        hv_gic_set_redistributor_reg(vcpu,
++            HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, reg);
++    }
++
++    /* CPU interface state */
++    hvf_gicv3_put_cpuif(cpu_state, arg);
+ 
+     /* Registers beyond this point are with nested virt only */
+     if (c->gic->maint_irq) {
+@@ -629,6 +640,7 @@ static void hvf_gicv3_set_irq(void *opaque, int irq, int level)
+ static void hvf_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     GICv3CPUState *c;
++    run_on_cpu_data data;
+ 
+     c = env->gicv3state;
+     c->icc_pmr_el1 = 0;
+@@ -649,6 +661,9 @@ static void hvf_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+     c->icc_sre_el1 = 0x7;
+     memset(c->icc_apr, 0, sizeof(c->icc_apr));
+     memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
++
++    data.host_ptr = env->gicv3state;
++    run_on_cpu(env_cpu(env), hvf_gicv3_put_cpu, data);
+ }
+ 
+ static void hvf_gicv3_reset_hold(Object *obj, ResetType type)
 -- 
 2.54.0 (Apple Git-157)
 
