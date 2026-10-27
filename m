@@ -1,94 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569E4606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC48606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=Wg6AULDG
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=deADzIeU;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=BmGDrFSx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLags-0003LK-4M; Tue, 27 Oct 2026 02:29:46 -0400
+	id 1xLaqa-000496-Oj; Tue, 27 Oct 2026 02:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagm-00030O-VJ
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:41 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagl-0008EN-7O
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:40 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cd5cd8d89a7so1147261a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLaqZ-00048e-4I
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:39:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLaqX-0000mt-4P
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:39:46 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69R5ZJNt3950112
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 06:39:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ iGhIA3nuLqP0sd/oxi7ybGmv+3c8HTvy02P7/8oCRTg=; b=deADzIeUBd313Nsa
+ r9c5EK4DbZ35/q/bMn12xMyxH7NKCtQASnyC+vubvXKn4dXwsbzdyEnPYRefPkRp
+ xpkWpxT/tDTv9MIyGUmt/qVbaXIL9uzpgs4UDVxvBfTBEBL+kOsGfLwtcDNNA0+2
+ P/tJM7uRP/L74YdEXEobd/58YrhOH33ojrv01zKXoGfB/Kutgy45Am6PBRXkryM8
+ NXW1p1rB0fsL46lXaxYwvkunQa4GtNC9GOoHIe1E2c6h3pTwFa7Is+3MQt6Qp8TQ
+ Bp3NvPDG6Xj6/WY4xBBBjeXK1wJfNe98bdQKydNRslGwctuzuVvvDLnz7xMI2oPn
+ 31d0Hw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjb54jesq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 06:39:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f5844cb60so140012385a.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793082578; x=1793687378; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=RCQq3R5AFdKSB29GiZnMKmupH0O9QiBzGj1yWFSP8UM=;
- b=Wg6AULDG5vIpQseEoAWDleud1Cs1qBTHMWvdFhJvYz58M6vO7hHUHFkQXM8iOfgFBO
- J551SL0ZguO9gw4ZTYolfpzyA9Vtl2Ihh9VNskhNb2w3nOUBZg/9LHOoT6egyR+GKc9i
- zNrl9QfGBgZgYaAo8fsH4r7Br+sM9IWoeYW1SuOk16B7IWB89tB+v9vy3aO2UbYZjW2W
- juTz22GRsJcP307cN5hWZnBK71rm1zpZBjrXbwNnOCSFuLb5aY9ZoT7HDZP9dGdhIMzG
- n9wFoAxNbtQxbmvxUtQ3ml+cOWgtkWvt16jfkURHsm/w/D3IlK+bR3vkGtqS844+BIcm
- nN8w==
+ d=oss.qualcomm.com; s=google; t=1793083179; x=1793687979; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iGhIA3nuLqP0sd/oxi7ybGmv+3c8HTvy02P7/8oCRTg=;
+ b=BmGDrFSx5CW/ICdoznl8zghlWbHQs5GFgZgdSGXa/mVr9PKx6EmGHGGqMc526WSnRK
+ 0JAJCPriqfFeSO0JoeKu7OvjUNYgtZjZc95xGfg2PYhxSafrha3b1MaM/5J+Bf2197Ou
+ yVsUGaj0ZzPlplqXXawxI3F67h6LTV2OBc6XLp2mcZD7Mt+AOTBDU3aARl+uhka3lzEH
+ z+dQkl5tok52qp3ji7zDJukD3t17ymHF13kIW11qDEsOlpNh1lSCwJ2Z0/gaMHlaCPcJ
+ JVYJUUPbH4GGWDZXC4cI8xLLNndvIWTjM7yDqGKlSjgdv+yiljrIsQiXRU8hUfDu4ZzC
+ 4Gdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793082578; x=1793687378;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=RCQq3R5AFdKSB29GiZnMKmupH0O9QiBzGj1yWFSP8UM=;
- b=S+ThuSF4tw55bHAs/UOvce2ANU2AKdgQDrzeZx41tCwJsIYaxAQeWlahpZa5muoBAj
- WvqH6TgfPQA9kAB+iRstdGxFwvxvsDdx7rEtYaE02uY9CBKM/DNyS/q4D1cGoqfFunxw
- WcJZbsCclnBOowSvL10Aa/tfqvZ8SdqtsDNqGTKIlMIx0As2Jo9dcLVbyPW2cq0/SXvH
- aQGpehlrLjcdAxrBX4tn7UDJmi4IhgxWHi07576wA8Gq7E0+eD042oUF344ZSGUlnIes
- imHF+fBUyLRE9egHRaH2dorHdE0oQ5fkselYBr6YZi3W8WLVrkex2U4IrSxVVD8lmz03
- Pv9g==
-X-Gm-Message-State: AFq9FYKW+SeB9UIs7BY2mel6tiYzRgO/ZzVMQ9F+De+w3hFUCOVAD7mJ
- 0RkMuQOxHs59Tm8WkYTWwW53kilar4t8HBokTPIA6yOVJnJCcU/1GsdSpopP2w==
-X-Gm-Gg: AYBFou3T3V2A2MJ7IOTlFQLKG9OOPh0fs+wY92oFQ3bXXOaU8BgHdRNLdn4qtvd/dzB
- +OMDXCNK0jAHaaD4s3cAynFY3mixM+hIIK6NGwyYLlsRrmmGCiZnjGYe9ARCQkTGkukctvSwijd
- Ldwcdj2FHBKXgSD0MHIfLtOTY+PCHaH+E8C7VGZb/64eD9NcnhuVrsSB3s6IPgAzDnAO+an1/Kx
- ejdYR2tCJNdYFSXseezCVi8+pc4+7236DvP9EfSlX3eg4H8E2xoxJw5515lH5y7UwUYYEOMUNbx
- TJNjFGuplktFJyhasL4uVsFTJYf20O2ZyWSXFPjSj9Hv8mdqbNLAlpBUcY6sd297WKiLmNh9D9p
- sE89h+pFsFNzzi2Tsrqvgaj3AYJZ0qMYhNTMWBx89P4AN98kdFRdexZ7U5fFJ7dpFwfiAZVqrrw
- H2dmkwVtwenRlAvFhE8SkoDzkWvJOb5FYQ9lpTqGqTHqC+vh9Bxj7JB9wnvqxPJOetPyAYyBh0V
- RjVpikXIfFAGN7YNmsNFmljLfjRIkaqu9QDRmtU93e6u3MPpJSER/bG5jENMZPkXkVbbSzQfErB
- Ko3no8I8tMmyWkZCC43t8R0lNNsPuH3A7Z67cPyf3OnqO1A=
-X-Received: by 2002:a17:90b:1804:b0:3ab:4e4:e979 with SMTP id
- 98e67ed59e1d1-3adead4fb3cmr7004083a91.36.1793082577568; 
- Mon, 26 Oct 2026 23:29:37 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 23:29:37 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Sebastian Alba Vives <sebasjosue84@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 23/29] target/riscv: pmp: reset the derived PMP bounds and rule
- count
-Date: Tue, 27 Oct 2026 16:28:02 +1000
-Message-ID: <20261027062808.1995205-24-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
-References: <20261027062808.1995205-1-alistair.francis@wdc.com>
+ d=1e100.net; s=20260707; t=1793083179; x=1793687979;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=iGhIA3nuLqP0sd/oxi7ybGmv+3c8HTvy02P7/8oCRTg=;
+ b=bYPYpXX443hn3RTteiYlHGrMyBzkkbiF0nxPXVDbeIxeNHuTrAF1AqJ+Rlluu+dgFN
+ qiEakwa5a5I+BJsFKz5RKpAMpDUS8fHxT22BR5Cbt488mw65p7hUtnn9OZgaJBeVpwt8
+ 5QHDTjzaxpWdPmuog6WJ+Lmrj9XtL/P9St3gLTuwm1ol9Gdt8iSFxiwqkBuW2uAQ1oqZ
+ JPNJE6cZzg64UX2N4N00rKHomM1fiGCoKVzKZYFKWIkXRDPbIbwVPdubPDYIlY2dxxAB
+ l2jjg7ypbnNZSHHfMvn57cizRTNSumjpaWXwBZt2i0O5hvFyrOMf0rpqNcBqJjMPuAWn
+ Y5/A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxktWl0grZu1s4V1FMD+eYm4rf2Cq6g+/xvlXo/ecu4BlCXb+tEBGGvFuCsflznE0wS/TfQmNLiOYeg@nongnu.org
+X-Gm-Message-State: AFq9FYLsghZRxP1eO3UNx6+J4wVuCBY5oE9JQn48b7MmJqdafh5X3VQR
+ YZWJDjlSGX9uuOZca7rk8d7pBWsb6p6ZQt9qSx2s/cypcqiHlSg4LbNO+l3xAYV3Zh/N81RyC+b
+ 9uWWkxdYN62zIZfz+A7QK5gWjJ42J+sgmTvJLQkD+ZkDIGi4ZlalJRaCw1g==
+X-Gm-Gg: AYBFou3zRCr7beCA2Y7Oe6n2UNNq784TabEcEdXn946X5UBsi8snOnFFd9b7/djdRam
+ iyaPPoEh70ZY4FB+o2j8qvmiK7ohX3i/EZxnj68QAtUTnnWxQdtD+rPA2N1qh32Nk/zjZMNm9Nv
+ W3NgqjuDYQABGrC8kNYLPOLihbLG4pk2DJwlnL2SiHXtj1ZzPFb0tQp5C4dHtbPLdM+7BHAqOZu
+ gmPhR4I9ES2sQcH42a7dtAhkorwQFDgMc5TAnmYfmHM38R6eiNhnGE12YuolAnmfs8m05IX8PCn
+ JIlxM3Rm6VGGTJ0LBn0dJIn+wOkxoVqfdY6RyO9IucGmu5ZH0EAwqxwDz0uOY0za0uQ2yZyjvOz
+ ggiPwrpjXH1EZ3E8xgpVE4Nx4YdtsAcZyRp1HiKibE0DrT/fh6Q==
+X-Received: by 2002:a05:620a:288e:b0:93f:3193:ac09 with SMTP id
+ af79cd13be357-943f4b42489mr324755185a.15.1793083179572; 
+ Mon, 26 Oct 2026 23:39:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:288e:b0:93f:3193:ac09 with SMTP id
+ af79cd13be357-943f4b42489mr324753685a.15.1793083179111; 
+ Mon, 26 Oct 2026 23:39:39 -0700 (PDT)
+Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a35a5822a7sm253882185e9.11.2026.10.26.23.39.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Oct 2026 23:39:38 -0700 (PDT)
+Message-ID: <dde68e66-f1c3-4799-b553-4fc0dee786ba@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 07:39:37 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] Widen QEMU_ARCH_* and arch_bitmask to uint64_t
+Content-Language: en-US
+To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20261027061504.2213-1-luoyonggang@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261027061504.2213-1-luoyonggang@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAyNiBTYWx0ZWRfX6iu9TO6nwtGp
+ GMUG2VWGKYZkWiBYXo/XcEh4VB5jtb3eRwQQ24t4KuT1EqIcnraDJ48sBdJmsNxU0zuDSF052pq
+ ec+2Pln9sjcFxBFfjMzyWqoqdoY77mE=
+X-Authority-Analysis: v=2.4 cv=bsnZl0ai c=1 sm=1 tr=0 ts=6ae0472c cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=RbPskAFc9oCiEJBpUSwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: C_-l4-6ZR1mKpOOxMtlwWbStOqJF47vL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAyNiBTYWx0ZWRfXzlmRD2m6fP53
+ vcdA0oEnDL5DB0PJuM7jRm35zyPYDN2SAZHecV5BOHmrHFQCc3wroaGER2qHYKNQLR0ZGI2LyFH
+ LG0VqJgunxLN1CdD+jjRbyeFX+bf9nYGYOvdH0eFpDm8Jrm/hGfiNJ/9hVgyTiZ/4woZl987ke1
+ iIQKjYGEGWhkPWDO2d+thuJVzdzrMNiT+S9SEbRsMmeQDx6zVe69V27nFS1bTXgzTfhTX5PEu4H
+ DVBdamxVFES2jIDL49gZKmS23tkRby0iL50YgDu6IYqsPazM0f9DTdhZgLAcopewX24hjzUO0DU
+ V29MKyVu+VnWoMdrd2vQq7OTkNE3/md0DJZfJaVO3Nf6wEtTMlV+jr/z64BrximQp/CrAcY7T82
+ xZ+LC9GHJXmUjEXbbiYz8lCW9dxawf0y2EH8g3DykfScnqy0OjWqmLiAKDIFhXBWkeIO40ffrfc
+ 4iECRM7bocas+R6rd+g==
+X-Proofpoint-GUID: C_-l4-6ZR1mKpOOxMtlwWbStOqJF47vL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 spamscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610270026
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,61 +154,28 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+On 27/10/26 07:15, Yonggang Luo wrote:
+> QEMU_ARCH_* was defined as (1UL << target).  unsigned long is 32 bits
+> on Windows and 64 bits on LP64 hosts, so the mask width depended on
+> the host data model.  Define the bits with 1ULL and store every
+> arch_bitmask as uint64_t.
+> SYS_EMU_TARGET__MAX is already 29.  With a 32-bit mask, __MAX has to
+> stay at most 31, so there is almost no room for new targets.  A
+> uint64_t mask raises that ceiling to 63.  It stays 63, rather than
+> 64, so the all-targets mask still fits in the int64_t range used by
+> qemu_opt_set_number().
+> 
+> Yonggang Luo (3):
+>    qemu/base-arch-defs: extract QEMU_ARCH_BIT for QEMU_ARCH_* enums
+>    qemu: Use SYS_EMU_TARGET__MAX to define QEMU_ARCH_ALL
+>    qemu: increase width of QEMU_ARCH_* masks enums to be 64 bits
 
-The priv spec only requires the A and L fields to be reset, which the
-previous patch now does for every implemented entry. QEMU additionally
-keeps derived state next to the architectural registers:
-pmp_state.addr[] holds the decoded start and end address of each entry
-and pmp_state.num_rules caches the active rule count. Both are
-recomputed from the pmpaddr and pmpcfg write paths only, never at
-reset.
-
-pmp_is_in_range() compares against addr[].sa and addr[].ea without
-consulting the A field, and the partially-inside check in
-pmp_hart_has_privs() runs before the A field is tested, so a range
-left over from before the reset can still deny an access that
-straddles its boundary once the guest configures any entry again.
-
-Clear the derived state alongside the architectural fields so the two
-cannot disagree.
-
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20261022040258.1509306-3-sebasjosue84@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/tcg/pmp.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-index 061f0e078da0..04df53c23464 100644
---- a/target/riscv/tcg/pmp.c
-+++ b/target/riscv/tcg/pmp.c
-@@ -207,6 +207,14 @@ void pmp_unlock_entries(CPURISCVState *env)
-     for (i = 0; i < pmp_num; i++) {
-         env->pmp_state.pmp[i].cfg_reg &= ~(PMP_LOCK | PMP_AMATCH);
-     }
-+
-+    /*
-+     * addr[] and num_rules are derived from the pmpaddr and pmpcfg write
-+     * paths and are not recomputed at reset. Clear them here so they
-+     * cannot disagree with the architectural fields cleared above.
-+     */
-+    memset(env->pmp_state.addr, 0, sizeof(env->pmp_state.addr));
-+    env->pmp_state.num_rules = 0;
- }
- 
- static void pmp_decode_napot(hwaddr a, hwaddr *sa, hwaddr *ea)
--- 
-2.55.0
-
+Series:Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
