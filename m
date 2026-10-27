@@ -1,157 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1929606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 07:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0E0606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 07:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=WBuKkX4r
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=b4QvLAcI;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=bP7QUS2S
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLbV8-0003X8-0C; Tue, 27 Oct 2026 03:21:42 -0400
+	id 1xLbad-0004GP-2d; Tue, 27 Oct 2026 03:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1xLbV5-0003W4-A3; Tue, 27 Oct 2026 03:21:39 -0400
-Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
- ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xLbaX-0004Fz-JN
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:27:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1xLbV3-0004on-Mo; Tue, 27 Oct 2026 03:21:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ysu0TS4YKONAf67y3ZJmjideB6MfQcpkbqhI9TNnnjSF+IiHSAyUZmjiN6JsJm4pli44jGdipJkJPNBlyHnlX1yFlqGunaKGTG+Yw/roCjOcdbJJgJ53665S6PE+95qLWmzzzeiXU/0HmRm5u4lRSnCQZtSe0bIG1db8okaJCyBpXExU9+T7JhB4Rb/pGSpdKhPIva69ASZcQfjlP3lqs8yxpb13nB8hV8PAUlSKnuxKNEAl0BDSAkDTmPnHh4VUXnz3LOWNfAOhlyKOo91P1nDaZEHbUkVpzbKukUYDP9e8DkGDDt/FT5YwGusvBcQ48/m5AWmnF0G4urDQDHaFDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jb/eDcyAJ09VgkmKP91+NuzrGrh6UZrlt21h6KcI9iw=;
- b=WT/t9gH5TykIbvfiVI46mgzixeDscGgFZWlfnCzw9FVQUwiS1sk6L05J5zPfcl23sa0olEF1Um+X2BarIFhFjF8GekTbsS1Mk2OUSQZzbGNwkqKwUYyxQq/HzMo3gq1pgMe/IrRMcDR7YyOkA3jbqVD6Fe+0un4xFxAjHUFQ73Hq5o0LYLTjScjBI4gJlr5vNGHHmBaombs2psz3Ow/6HBtsbTEgnXfU9BsoBCanzGVJDXhJxmmL6aYJvlp4nCYDpaOqjL2IXb+yhvjqyB60dN+FJ+GouQKy4+9/O+F/PRDx8t7wzePNudsPeDPKKAXB6bqJiunNufj2aKe2p56HlQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jb/eDcyAJ09VgkmKP91+NuzrGrh6UZrlt21h6KcI9iw=;
- b=WBuKkX4rQqr/WACuKZ+JCvJmQb/Wm0jk4+Wdb0uL4EUjbfbEGaGrwlQxf3OF+2Jjk0yhlAQrYKKz2nKlRjpzCnLsGvv/l4yYFoQghwRlrE4v0GX+EBGN534FY+2udT4IA4OaLQ+/utSJsnw4uW7yqPNIC9FTY++W73nd/RKVUrzbOAZqvXq/ueeRVv0TLp+c6VzsDrvdz8OBaROMBTXcT3Nl5ALoI4yHRDNdUzX9FvXHytXAX/iWmr5osgpaKjVndbJaTRrcjN45pUDWrDRouaSSeN9jXRKtdbyYCeX+fjOdKpQzSZuTeCP0ceAZlxGI4aLgujFJ5xc5kAe750PXMw==
-Received: from TYZPR04MB7491.apcprd04.prod.outlook.com (2603:1096:405:40::7)
- by SEZPR04MB6731.apcprd04.prod.outlook.com (2603:1096:101:e8::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 07:21:28 +0000
-Received: from TYZPR04MB7491.apcprd04.prod.outlook.com
- ([fe80::a450:2576:3b21:6230]) by TYZPR04MB7491.apcprd04.prod.outlook.com
- ([fe80::a450:2576:3b21:6230%3]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 07:21:27 +0000
-Message-ID: <TYZPR04MB749147B9360103DD81B3C2E4F3602@TYZPR04MB7491.apcprd04.prod.outlook.com>
-Date: Tue, 27 Oct 2026 15:21:20 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] target/riscv: Only save vmstate_debug when TCG is
- enabled
-To: Wang Yechao <wang.yechao255@zte.com.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Xuemei Liu <liu.xuemei1@zte.com.cn>
-References: <20261023021237.486091-1-wang.yechao255@zte.com.cn>
- <20261023021237.486091-5-wang.yechao255@zte.com.cn>
-Content-Language: en-US
-From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <20261023021237.486091-5-wang.yechao255@zte.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0011.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:2::17) To TYZPR04MB7491.apcprd04.prod.outlook.com
- (2603:1096:405:40::7)
-X-Microsoft-Original-Message-ID: <58aa2e9f-b28f-40d6-b000-ca44ec1f8964@hotmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1xLbaU-0005AE-WD
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:27:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793086034;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hutGR+cJLkN8t93O7y7h/orEEg1YTQ/T36VS5FfF5Lo=;
+ b=b4QvLAcIMA/oaF+LURxWLd/FQtUxGbY3vkHjnpsNKSPT2WO8/+/4VBJK5+5LgzwxD9yUnN
+ AqW7OqXpiebMghMYcveUseBlieUzHS7bU3v+eh0l8karVsFTNSMZHzmJOzFwI7xN/ZoI8L
+ 4rRfy0WUmxKzI9dAc/md/z3Yu+fsq5M=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-199-46YBzIb-MD-Bqc9OBzW8Fw-1; Tue, 27 Oct 2026 03:27:11 -0400
+X-MC-Unique: 46YBzIb-MD-Bqc9OBzW8Fw-1
+X-Mimecast-MFC-AGG-ID: 46YBzIb-MD-Bqc9OBzW8Fw_1793086030
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a2063be13dso32176915e9.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1793086030; x=1793690830; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=hutGR+cJLkN8t93O7y7h/orEEg1YTQ/T36VS5FfF5Lo=;
+ b=bP7QUS2SB17JCeC9GGD9dqXtpf14vrLczEH8KB13ukAkX0V9KCMBUFHgDhDoWNg8W0
+ KnWrRKtNjSQZbtzvH/f8MmpTjGMEn/YyDK3QkfkhwWlMuaR0KcqMACxZnnuABqUGC56V
+ ysQNmS7zFdunpI0mVPbjbupzRKNPVLXy/JjF+2s/uVPWZy5MmjgfGU9Un2V3ol7OW6i3
+ YDJP0+xC1z9XuQfiVwAajbYrTaZanmv1npSQ5is0OQ0+pntsMAPD8mwIINgfoehZL3Dq
+ hYie0eMAfZEC5piuYebho6DtmIglmnl1qKKCMoW6U92VSu5xanjSIr6sNI5EYNE5DSjL
+ Np3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793086030; x=1793690830;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hutGR+cJLkN8t93O7y7h/orEEg1YTQ/T36VS5FfF5Lo=;
+ b=JvVrgrRFWbs9p7YduCte2iim2/n+DdVBUnRQMFFoZbgPV3sz59G+qCNzZPsQRfushd
+ HJ0UdIe9kh/5DHoXW6DYX+hFHVqZv6k90b+WxVq6fpfhTC3B6+rFPM5Ysndll1+swEKC
+ 1fXSmwrEi/K5TPtG8aqDe9Q7m9p4XnjQxBZK1cmWueDj32Qnv11XoueWvSL+CjUbAhp6
+ hJgIDplOA/A0jOylzEV5cuuFgqsAxGfMjlVjxBrDgFpYZhKTlfhR3LSr5Y1Bsr7guTBz
+ coZ8XpA0NFaCnn0Rw/NqYI6etabY3MkU1/+QYDgKSJISEVL/BteGxGXx6UiKhDQ0BQfC
+ +RfA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw2phrNG+cuG1wxLjU7ZtLl/7zu0JVZ1MAAAD/N8CNztzTMG06qZ7+mifCU07vCSnqoIR97u1qGQ+Pz@nongnu.org
+X-Gm-Message-State: AFq9FYIb43lRRq2fF01yUEIJj/qa+HZKVWeAYn9yKEQcff+m0l3NkPKl
+ VTELphcU/u0OS76nU8o4P1oJLGhHJjW38TO5fErWHM+IB37vinBuSOJzNWl2VxlsQazcDwI5j4Q
+ zKQReR9eiso4zoxMsPTVGF4EuzLk+r4JI3N/ra+RIayRYER7SQhnz4HNJwreE/5sf
+X-Gm-Gg: AYBFou3deynWOy5SkRvS5XVcC7d/FeW65wAMVZJ+YcSltKVRbCtRCojPTsL8YOg9lcb
+ /rQ6qZTx7PrCF1e13/KTEnR0QtOJS90Vm1BUOE8DlQZvInWaTAolC32ExuBKJnWKX97dzMAgb8v
+ Iz4TrJ6BcCfkjXFNqqDKyrDPrnDZm7tvZnK8MxG1zN8q8dN3JtfTCHR/dAr+03F8sbGETK+rqid
+ wAJmCxeQhvt2ZuXblf9pq0FOs2Zf3JrXkbfMSJV4BggRdiC4btu2WiKmiHBAYBOCEugWIqzjgiv
+ eQyZoiclOHaJCUl+2+PEeGQSREjF3MkdwAL/MySEZ9F+jaXVfTFKykyGTGREIeiKZb+zVeg=
+X-Received: by 2002:a05:600c:e547:20b0:4a7:4697:dae3 with SMTP id
+ 5b1f17b1804b1-4a74697dafamr44080445e9.24.1793086030289; 
+ Tue, 27 Oct 2026 00:27:10 -0700 (PDT)
+X-Received: by 2002:a05:600c:e547:20b0:4a7:4697:dae3 with SMTP id
+ 5b1f17b1804b1-4a74697dafamr44080145e9.24.1793086029857; 
+ Tue, 27 Oct 2026 00:27:09 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.91]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a35a56992dsm234122345e9.6.2026.10.27.00.27.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 00:27:08 -0700 (PDT)
+Message-ID: <c0cf4c97-6d1e-4550-a567-a84ce3ff7b43@redhat.com>
+Date: Tue, 27 Oct 2026 08:27:07 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYZPR04MB7491:EE_|SEZPR04MB6731:EE_
-X-MS-Office365-Filtering-Correlation-Id: 737f6f84-8d2e-4e88-3487-08df33fae9d3
-X-MS-Exchange-SLBlob-MailProps: YfhX3sd/0TWTq462A1ci1xfPBdi3ebdlUwEnBn9/d4DAtRjxz4e82sS0X5ktfyLuehX0j/CI1i1EHEPBsKFIbwB538lDD3P0+d8oTxArdUc8wAmWuTOfQmgqzqDb5Y3o7CwcSFbC/0EhlFAf2e7uKhMkTBP00JxdHig5B+a99j63jtTjw3GxCWOsWuOaLt++rj6m44mAvcNaUpmWFPfrOLlwm8ibZuvji1LVMHuBsARSFsMAYDdiD0pJSmf5HEOHGN4uxNzocbDh+Jk7x8qeEq7DYsCAREaDBWow5RBgU3bQ2Y2xubOI28/AmuZeUZJFvpBLJ92h2j9tNaC7EAq5/qEoMk7/IInxxunji1okN45pSK/XxxbyZXZ0RsuUnKI5ZwlEum2JvghkqmikAB6mRwGUn2Y/zR6v4KwhdqCbHvULCHRdAHSEbFeuXxwCCHOncjFumArULFtggjPxzKhmBILvd9+hFb0wnZ880R27DjjZcpeoR8LkQ4QFkTbklzl4y1tQZZnPyV1PgaMxtZf8zjU5vKh+GGul7OA7Tp3IwROI5jY4pfAQzeuy+KLN5toX1mLko+JWCeLU3GDNZp/T/96gHYPA1eI/TB2gcMqYml10MqSWRQFrdIIiMrDb7f5CjCNKPmBAQrKaWYPZBcMr2EwEZ6ysPVyOpuf00lpZAYhyNpmBUmpzbPK8AgoWmEwydCpXUe/1+OVIPBi8i27Gbn412dT/s7QlpjvJxUNGYLMvRkVS/4sxWM9mVyDcmKtDbnrilTubSycQad4G/nMi/eUB4031RkULRdQSVK8JjQg=
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|5072599009|6090799003|15080799012|22091999003|23021999003|51005399006|24121999003|41001999006|55001999006|19101099003|25010399006|8060799015|19110799012|4140399003|3412199025|440099028|11031999003|12091999003|40105399003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Qm9Kc1ZpeE95VHorYnJycTNzTmsxNWlPNEx5d09MWkVPSi9QYzBWZWRadmZp?=
- =?utf-8?B?NGNMalVVeFI1TGwrbXFmMllJc0c4dDdnWVpST0xtSm83b2kvYkVUUnM1SWhp?=
- =?utf-8?B?MldzNW84ZUczcVppUDhVdDNvcVoweDhJN1AzaC9MNjdUaWY2SmI5TjBvVkhk?=
- =?utf-8?B?T2FvK3M2MVNML2c1VDNlbTFrak5vRktlQXBzZERucnhLTmxxTE96TDVqWEdm?=
- =?utf-8?B?MklGRWFnamVkVGtHRWpid3k3eHdKZkdtUE5xK1laN2tDY0lvR1Z5Rm1PUDN4?=
- =?utf-8?B?Mm1MNFJGNy92bksxMmRsdjVmNnRkYTJXWXRoSEJaQnk4b01ob3FYZFBGdG16?=
- =?utf-8?B?ZDlGZVFRRlk2WkpZRHVsYU02K3F6VHhkVFdSS2N6cStYaDV1OEVXd3UvYVIy?=
- =?utf-8?B?OFJPV1BWcUdWS21aWENSQXJNYzQyWENNWXhCM0hYZnZzWk9RQ2VpVnN0UkhU?=
- =?utf-8?B?YlFKZTBxdW1aTGNxTk5YRzNHL3pJaTltYWwxQXFhOFlBTi9DdVpYVHVha0Yz?=
- =?utf-8?B?NWo1a3B6QUgrUGxHdU0vblJPaVh6MVVncmVGN1ZCcHd0NVhNOEY2NVA1QmtF?=
- =?utf-8?B?cUs0cENLTnBaK2N3SkkwWUk5MmM0VVlwRHJoakVFU2ZESHdWdTI5b3V5QUZ4?=
- =?utf-8?B?Q0pBQXNyU0tINVJHQ0E1UzJBU2FaSU9OeDVOMTJkQ0FtWkwxVUFReGtJUkNp?=
- =?utf-8?B?bm1ZSTRWT1VyQ21zc3U5UDFoaThUSC9lOVF3NzBKaG1rQzJORllwenFLcU01?=
- =?utf-8?B?WWRvR3U4Tkp1T3hKbFJmUndldDFVVUREQVhRVU41S0NZcTFKOU5IV2ZSMXVU?=
- =?utf-8?B?bFgxMDlMWGVrek5kK1pFaXZVUFFNU0NKak9tcmwraGlHTnpnMkpWSWZyWWdz?=
- =?utf-8?B?cW1BYWdTMFJlcFB0YjJnSm8yakpJNURPR3B0cDZySTRwYUtzMnlqbzBrZ000?=
- =?utf-8?B?MW5qV240aHVEbHEyV1pNT0ZEZ0lkQXpxMWtFZGZwd2RJVmozVFN6TFV3WkFw?=
- =?utf-8?B?YmFjZmFSSnVnSmFRcU9xWjhuTHllamZUN3JuYy9zZE5rZHo5TDliV0gxZU8z?=
- =?utf-8?B?d2N6UjZOTkp0ZXRUTjZSWjRYaEdhckU1eTBZY3FNQU91bStTTHFRSzBIRXVw?=
- =?utf-8?B?MGxOTTE5NHAxQ0JrQ3hrbVBZemVULzBOYzZLdVF3MDNhTVNkanEyNi9vVXZr?=
- =?utf-8?B?VDVoVVdhczVtTFJTM3Z2N1ZOQmtGUlNBWU5MY2kxY2J6S1ovOWJranphUTAv?=
- =?utf-8?B?TzNYMmJWcjNhaEx4YWk0UDRqSmhLTWhxbXNiRk9rMTdXZDR6bmM5Ni91SmR6?=
- =?utf-8?B?OERxWG10Z0IyR2xHdTZiVndDK2Q0djNFd0haSmhVMW1UdW15eDNtd0RHdUdH?=
- =?utf-8?B?MUNld29TdEpvR1VTRUxCTHdlTUlFYjdxUi9Dc3dZOEVVbXpTc3dNM0dKYTlo?=
- =?utf-8?B?QWczWFVXRzZGSWdoYWRncmdHMkl5amRESzRrbXZoa05uZHZSczNJL3B2WXhN?=
- =?utf-8?B?M2ZVTG95bFhzd0psaWp3UkpDQnVJWHJqeDYyUS9zMFZKdFl5ZFQvQkhzekt0?=
- =?utf-8?B?aTBrdz09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?amlpUEZwZy9WV3BEUmN0c1h2VXd5ZG9TdnJVVk5HS0p0aEY3alBPbmhZZGhn?=
- =?utf-8?B?Tk1kOU9MZXZrUnhORnd0VnpVb3NtY2hINExua0wwZ3EvNmhsQ3FQNEVYRUhZ?=
- =?utf-8?B?a252MzhKWkFNOUwrMmxYWFJJSEhwdUpoVnpPMmdlZzBTcmdUZFlqTHFEbnlM?=
- =?utf-8?B?NkppVHF5SUJnY1V2THpsemw1TG52ZUpXbHNqZk1tNWo5VXp5MUxIOVJIUzIx?=
- =?utf-8?B?bTIraGJUMU9ySEl1WmZXcXdMeXozN1E4UHZDWjZSQm8xOWE5bWZDL1Nhdjlj?=
- =?utf-8?B?WnFLSjhNZXNlRk4yY2pWV3FveWhFeFpnS3dDM0ozVUVIRkszNDdHV3VRWGo0?=
- =?utf-8?B?bUVpUTY1RC9ZZkEyWDFMWUxKY0JKb09DSlU2QnNIeGhscFhHa1IrdVMvSG9v?=
- =?utf-8?B?eC9Fc1lvS0NnZTRBMVFsV3NIUGhoZjhRRElzWGsvMjM4YjI3KzA5c1BKK3hK?=
- =?utf-8?B?VEh3ZHZMbkZYYko0Mi8rVmd5ZGtxNFhPVW8wVWFzejFkc3J0U3ZZMGtSVHZ2?=
- =?utf-8?B?UXpWZkg0L29WNFBqMnJKQW1QdDQzZVNTakNlKy9va1d6ZTZDaC9sSThhd3l6?=
- =?utf-8?B?UXZucGpTc2hlM21uVjkyWGRLQlhQdFJvaEdIM25EY1FJdUZxQjJQbSsybDlV?=
- =?utf-8?B?aWxJR2pXWGM0L0IwdVZ1L1ZMdEhGejZsN21XbU41NTlQNUh4cCtvSVFIV1pX?=
- =?utf-8?B?cGp1dkZRdUt5UVp5a2dHczI2a2RjM3FHY0VNWFlMUTk2TGExYW9sVVprV0Nq?=
- =?utf-8?B?YjFGZGJQQXJWZTNZK3JLanI5dFN0MHhQMmlTL3pTY2pWR1JpdHNXTGREMFI4?=
- =?utf-8?B?SnJZVG1vOGNLSkh6SjQ2ajQ3c01YZ3dPalRyTUFROGhTend0K1RaSHZMWEN4?=
- =?utf-8?B?Y2hJQUtNSUpWSXNPem1MeXFjSDBLOEt4VWNwN3hBQWROSzhqeFEzT0hwUGho?=
- =?utf-8?B?K1dPclUwb09MTEtSMmNFdzNmeUhnbk9TTHdoTURxSWY4dm1WdFplalNzSWxQ?=
- =?utf-8?B?U3ZaV3ZhcEplblFaalZNZHYzRW5uLy9uQXVjK05EcjlQMEs3M0JoTXpxR1Np?=
- =?utf-8?B?K0k0dkdrbHh4VFRSQThWelB5bVlNdWlzblJ5RWtUbWZadG1GR2pOZ2Z1SzJo?=
- =?utf-8?B?MzNiZjZNSGxQRHB1WnB5d05VUWJXY3lDT2tKdTlMTWZtekZzcFh1L3BzcGxL?=
- =?utf-8?B?K2xHOHd2Sm5SVFdhaFhKdnE2MWlmazV6THlxTlhSRUdNK2VXVkdRa3ErQXVo?=
- =?utf-8?B?amdLMDkybFZDMExaNUtiVVRhcHg4dzRsRERNcjVISEFnOVpTb0I4aDJKMmJr?=
- =?utf-8?B?Yk02a1Y1cEZVM2Q5ejhIOE9kRUtKeTBrbXdNakk4K3QvWVVwNk5RVnhjUDZN?=
- =?utf-8?B?NzNVL056cUxkVkgwamZleVBic05XVWF6cjU3aWZYMldvUHZSSlBpbzlsZFpH?=
- =?utf-8?B?eS82Z3o4c2YzR0VBZXo1RDB4T3ErTkpXUW5hSXNZc055dVM5dThybU5UT0xv?=
- =?utf-8?B?Snl6SnBoblAraWU5RmdCNlVjazY4Q1FtK2NZRk83SkUvY2IybWRtaTh0RGxo?=
- =?utf-8?B?OHd4VkplM0UzTm44cnduM3dwUi9ONllEQ0dwWlNKOWY4UVA3QlMvM3lWNFY2?=
- =?utf-8?B?Z0F3RUFQRDFLckd0b0k4UHNod0t5eXRmUWxYaDRKRVh6OEttd1J6QmFkWE9k?=
- =?utf-8?B?a3NEL1kydmtXcVZQWWtObUphSGtyQUV2UkRNd0pUU01nZDZtZE40Y0lESGRE?=
- =?utf-8?B?K2UzN2VUL2lYcy9WTmU5UkdPMDdPMTN5bHFrYTUxcGxJNTQ4aWtXUmNRdFZD?=
- =?utf-8?B?WjRrY0kxWmxWY2hUaVYxT3JoNEh1QlFIekVwRWpnbXFhUVNmRUx3ZWM4SmVz?=
- =?utf-8?Q?my+W+vzlyI8EE?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 737f6f84-8d2e-4e88-3487-08df33fae9d3
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB7491.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 07:21:27.5866 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR04MB6731
-Received-SPF: pass client-ip=2a01:111:f403:d405::2;
- envelope-from=nutty.liu@hotmail.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/9] tests/9p-race: add 9p race test suite (race FID-path
+ mutations)
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ "open list:RISC-V" <qemu-riscv@nongnu.org>
+References: <cover.1792420035.git.qemu_oss@crudebyte.com>
+ <cf0650c4-e6ed-4dda-9b8f-fed5a2762251@redhat.com>
+ <97f60010-c6fb-4d21-92fd-754d2c791928@redhat.com>
+ <24565308.6Emhk5qWAg@weasel>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <24565308.6Emhk5qWAg@weasel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,53 +163,147 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On 26/10/2026 17.38, Christian Schoenebeck wrote:
+> On Monday, 26 October 2026 10:35:12 CET Thomas Huth wrote:
+>> On 26/10/2026 09.44, Thomas Huth wrote:
+>>> On 19/10/2026 16.27, Christian Schoenebeck wrote:
+>>>> Add a qtest-based stress test suite racing 9pfs server-side state.
+>>>>
+>>>> This patch adds the first race test "race/fid-path" for this new
+>>>> test suite: it races (per round) one Tlcreate (which is mutating
+>>>> the FID path) against a number of reader requests (Twalk and
+>>>> Txattrwalk) on the same FID.
+>>>>
+>>>> This very first 9pfs race test guards CVE-2026-93834 (fixed by
+>>>> commit fe9e30899f "hw/9pfs: Use read-write lock for protecting fid
+>>>> path.").
+>>>>
+>>>> Hitting the small race window is timing dependant, so this is a
+>>>> probabilistic test, not a deterministic one. During my tests the
+>>>> (unpatched) vulnerability triggered sometimes after few hundred
+>>>> rounds, and sometimes after >100k rounds. Furthermore, it expects
+>>>> QEMU being compiled with a sanitizer (e.g. ASan) which is
+>>>> supposed to detect the actual race (e.g. by memory violation):
+>>>>
+>>>>     ../configure --enable-virtfs --enable-debug \
+>>>>     --extra-cflags="-fsanitize=address -fno-omit-frame-pointer" \
+>>>>     --extra-ldflags="-fsanitize=address" ...
+>>>>
+>>>> Even though this is a new test suite, in the codebase separate
+>>>> from the already existing deterministic 9pfs test cases (while
+>>>> 9p test client code being shared between the two test suites),
+>>>> this new race test suite is run with the same binary as the
+>>>> other qtests. However being a very slow test, it is registered
+>>>> as such, so the -m slow argument is required for this race test
+>>>> to run (as it is skipped by default):
+>>>>
+>>>>     ASAN_OPTIONS=detect_leaks=0 \
+>>>>     tests/qtest/qos-test -m slow
+>>>>
+>>>> Or if you only want to run this single race test (e.g. on x86_64):
+>>>>
+>>>>     ASAN_OPTIONS=detect_leaks=0 \
+>>>>     tests/qtest/qos-test -m slow -p \
+>>>>     /x86_64/pc/i440FX-pcihost/pci-bus-pc/pci-bus/virtio-9p-pci/virtio-9p/
+>>>> virtio-9p-tests/race/fid-path
+>>>>
+>>>> On other systems, use `tests/qtest/qos-test -l` to get the correct
+>>>> (arch dependent) full test name.
+>>>>
+>>>> `ASAN_OPTIONS=detect_leaks=0` is currently required, it suppresses
+>>>> a memory leak error at the end of each race test, which is a known
+>>>> QEMU shutdown memory leak, unrelated to 9p server or this race test
+>>>> suite. The official QEMU CI pipeline sets
+>>>> `ASAN_OPTIONS=detect_leaks=0` by default for this reason.
+>>>>
+>>>> There are some knobs that can be controlled via environment
+>>>> variables:
+>>>>
+>>>>     V9FS_RACE: skip test suite by setting to 0 or force running by
+>>>>                setting to 1
+>>>>
+>>>>     V9FS_RACE_ROUNDS: total amount of rounds to run
+>>>>                       (default: 20000)
+>>>>
+>>>>     V9FS_RACE_NCONCURRENT: amount of concurrent reader requests
+>>>>                            (default: 4)
+>>>>
+>>>> A full run with 20000 rounds took around 7 minutes on my test
+>>>> machine. If you can't hit the (narrow) race window with
+>>>> unpatched QEMU, it might help to either add some load on the
+>>>> host system and/or turning the two knobs above.
+>>>>
+>>>> Link: https://lore.kernel.org/qemu-> >> devel/4a0eff0539f16434b48728cd8e5a89f906c293d8.1791368962.git.qemu_oss@cr
+>>>> udebyte.com Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+>>>> ---
+>>>>    MAINTAINERS                       |   1 +
+>>>>    tests/qtest/meson.build           |   1 +
+>>>>    tests/qtest/virtio-9p-race-test.c | 575 ++++++++++++++++++++++++++++++
+>>>>    3 files changed, 577 insertions(+)
+>>>>    create mode 100644 tests/qtest/virtio-9p-race-test.c
+>>>>
+>>>    Hi Christian!
+>>>
+>>> Since this has been merged, I'm now seeing timeouts of the qos-test when I
+>>> run "make -j8 check-qtest SPEED=thorough" ... can we please fix this
+>>> somehow, e.g. by increasing the timeout setting of the qos-test, or by
+>>> decreasing the default number of rounds that this test is trying to do?
+>>> WDYT?
+>> FWIW, when I allow the tests to run longer, these are the current testing
+>> times on my machine:
+>>
+>>    qemu:qtest-arm/qos-test               : 373.06s   167 subtests passed
+>>    qemu:qtest-aarch64/qos-test           : 391.52s   148 subtests passed
+>>    qemu:qtest-i386/qos-test              : 407.43s   154 subtests passed
+>>    qemu:qtest-loongarch64/qos-test       : 405.79s   146 subtests passed
+>>    qemu:qtest-ppc64/qos-test             : 407.26s   134 subtests passed
+>>    qemu:qtest-x86_64/qos-test            : 393.14s   154 subtests passed
+>>    qemu:qtest-riscv32/qos-test           : 767.21s   216 subtests passed
+>>    qemu:qtest-riscv64/qos-test           : 684.54s   216 subtests passed
+> 
+> Right, I missed when you run the thorough/slow tests trough make, then the
+> meson wrapped qos-test call is guarded by a timeout, which currently is set to
+> 120s for the *entire* qos-test suite (tests/qtest/meson.build), which is fine
+> for regular tests, but insufficient for these new slow 9p race tests.
+> 
+> I thought timeouts were just a thing for the official in-cloud QEMU CI
+> pipeline - which doesn't run any slow test at all, so no problem there.
+> That was actually the point why I explictly registered these new race tests as
+> "slow" ones in the first place.
+> 
+> This is more of a project management question; should these extremely slow 9p
+> race tests either:
+> 
+> a) be skipped entirely on `make check-qtest SPEED=thorough` or
+> b) run shorter (i.e. less rounds, very low probability to hit) or
+> c) increase the meson timeout for qos-test binary?
+> 
+> Personally I don't care too much. These 9p race tests are useful for me, but I
+> also understand if other unrelated developers don't want to spend like 10+
+> mins on each test run for this. I still run them directly via `tests/qtest/
+> qos-test -m slow` ; last line of defense, etc.
+> 
+> Technically it is easy to address:
+> 
+> a) -> set envvar V9FS_RACE=0
+> b) -> set envvar V9FS_RACE_ROUNDS=n
+> c) -> s/'qos-test': 120/'qos-test': n/
+> 
+> all in tests/qtest/meson.build. Your call.
+I think it's maybe best to go with option b), i.e. to (radically) reduce the 
+amount of rounds that is run by default. That way the code still gets at 
+least a little bit exercised when running all tests in thorough mode, 
+without extending the test time too much for everybody.
+Could you send a patch, or want me to do it?
 
-On 10/23/2026 10:12 AM, Wang Yechao wrote:
-> Commit d45b9bc65515 ("target/riscv: move TCG only files to tcg subdir")
-> moved the TCG-only files into the tcg/ subdirectory, so env->tdataX is
-> now only allocated and valid when TCG is enabled.
->
-> However, cfg.debug is always true in riscv_cpu_properties, so
-> debug_needed() unconditionally returned true and the debug vmstate
-> subsection was always considered needed. On --disable-tcg builds the
-> corresponding fields are uninitialized, and attempting to save them
-> triggers an assertion failure in vmstate_save_state_v:
->
->    qemu-system-riscv64: ../migration/vmstate.c:737:
->    vmstate_save_state_v: Assertion `first_elem || !n_elems || !size' failed.
->
-> Fix this by making debug_needed() also require tcg_enabled(), so the
-> debug subsection is only saved when the TCG-only state actually exists.
->
-> Fixes: d45b9bc65515 ("target/riscv: move TCG only files to tcg subdir")
-> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+  Thomas
 
-Thanks,
-Nutty
-> ---
->   target/riscv/machine.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 0de06e9588..c5f0261ba7 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -324,7 +324,7 @@ static bool debug_needed(void *opaque)
->   {
->       RISCVCPU *cpu = opaque;
->   
-> -    return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
-> +    return tcg_enabled() && (cpu->cfg.debug || cpu->cfg.ext_sdtrig);
->   }
->   
->   static bool sdext_needed(void *opaque)
 
