@@ -1,68 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E39606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6E5606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=v1DCRse4
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=UwVIIXnu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLjaC-0002kR-0B; Tue, 27 Oct 2026 11:59:28 -0400
+	id 1xLja1-0002F3-6V; Tue, 27 Oct 2026 11:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjZ1-00011b-Bv
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:16 -0400
-Received: from ci-2002k-snip6-11.eps.apple.com ([2a01:b747:3005:206::71]
+ id 1xLjYx-0000zo-Ij
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:13 -0400
+Received: from ci-2002g-snip6-11.eps.apple.com ([2a01:b747:3005:206::49]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjYx-0005op-C4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:15 -0400
+ id 1xLjYp-0005lW-3k
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:06 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPS id
- 8C38618004A6; Tue, 27 Oct 2026 15:58:03 +0000 (UTC)
-X-ICL-RepId: 01a17e15-3ce4-743c-aa46-33268b46bdfa
-X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQAZcHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
+ 7500918010BD; Tue, 27 Oct 2026 15:57:51 +0000 (UTC)
+X-ICL-RepId: 01a17e15-0d95-7f92-a64b-d5505c6923e8
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQABGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793116685; x=1824652685;
- bh=kXKzF3JxfE1w6BI+AtlgIv6wP7f/bEIQ3Z2YLqyjVko=;
+ s=sig1; t=1793116673; x=1824652673;
+ bh=dSrwibXLl61KPeY0mbb9Kw6Bj1BM0S+HBdlSgsEMB5s=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=v1DCRse4zVEHeJZakipaeFnAQjgRbwvgW0H+MAMG9Pevh53GrvSQTLZHP3Mq7ZDvIU6iR6GXHRmAR6uqkbPzHE1zuGp6TyQHm5l4sW83rsiK0NOtcg931Nzbf+0dAmH6FPJPn8egt+PaLFsjy91N9OS5s+K7dCYMWBYDXHyMftKLwojdP0eHlPe4yPeAglsl52qIlfaveu5cLTG19rFQqPJK3oKtOLS1wUfKjdXFVE4z1VcmiADfmOfE5Zws2PbY1T7wfgFhs5kKwa/ogNm+zHTOnkKqkB5tnIAR24PEkqZjcxFQ5QSo0zRj9QKZFfuH2H8wYy9m9FRJcJPlHMpDhw==
+ b=UwVIIXnuXhpjj78JtsA+RiX5ZiuUA5ZTWtVx3Jt2CVupd1I0kU5sLxqGcHwDCS8K1uV4NKxRJuBtPcbud1bWbrdqMWJtfBu4rjpByymvD0+EvJy3/Zhr0zg3U0blg3lsHeWCIGzPaIHJ01K+OTtaqgBfwNqTCSrG232o0NVEdSZlC49PACOlhEGYUCma2jmpBlfORgGFUI7F4ktNv6IN6spspIdeoRInOIZBFFtmJXKc8Z8A5b7cwbuasllbg04hkN5o8pd1XeDGJJ4omwv733Shi9dG8GmpqEti3Aw0tS22WO24Jvg9XTU0zXBqznqGyVXcFwRRVpco/gVPTZ2i0w==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPSA id
- 0E5AE180015E; Tue, 27 Oct 2026 15:58:01 +0000 (UTC)
+ 9FBDA1800483; Tue, 27 Oct 2026 15:57:49 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v2 16/18] whpx: i386: also save debug registers
-Date: Tue, 27 Oct 2026 16:57:35 +0100
-Message-ID: <20261027155737.59271-17-mohamed@unpredictable.fr>
+Subject: [PATCH v2 06/18] whpx: i386: make nested virtualisation init failure
+ non-fatal
+Date: Tue, 27 Oct 2026 16:57:25 +0100
+Message-ID: <20261027155737.59271-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027155737.59271-1-mohamed@unpredictable.fr>
 References: <20261027155737.59271-1-mohamed@unpredictable.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: _p2AHmLR4nz-NjDpR5X3l2lf-5HLuPKy
-X-Proofpoint-ORIG-GUID: _p2AHmLR4nz-NjDpR5X3l2lf-5HLuPKy
-X-Authority-Info-Out: v=2.4 cv=W9I1lBWk c=1 sm=1 tr=0 ts=6ae0ca0c
+X-Proofpoint-GUID: A58dnvlgiOvqSbcQv6FaqxmbGuihykE_
+X-Authority-Info-Out: v=2.4 cv=CLYnnBrD c=1 sm=1 tr=0 ts=6ae0ca00
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=3nrfYwkK1g5-NatN6WYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfXxLt4zApCY/lZ
- MyLl0hTzuK/gTwuehRdFXaIq6OtPTxtw9eamGPhPMvKArWdIX8o7umUMhxOWQaz87J94doUS2Ti
- ftmvDQGCLfIJg8AZt4Aqs0VI0ygK6CO7te71+lYWhIYiSThJrUFli6mbKAy0Fx+ZK80v7CrVx7d
- 7bgcA7w2ZxPDQT5XN1TrqEeAjbFAGgH9SskXK/YHGG90aalGCfg5VtfEaVKqosyJVyJXntDBnbf
- SElzFohW7GquNdnpQreHGSLKJrc/xFEpDcLblihEgUnWBzGlJYxSgzgKbR+7QPBqvQrC6agHsxb
- Z1RBgbDmWTtkpML5C48cc9e8BT4VD0mE1DFp2N8niSc66YkrevLAvgN1lsdD7M=
-X-JNJ: AAAAAAABs4pI86vesmbGtvks070lj/wrqm6LNmFk2oe1AzKCkYzXS879yYa/dIgWKUq48zfo33VFY+lfJ7f7/7ynYTQGqlPFSB9qPqaETXt6qcP6qb7qSiIyUeG9KIFai46b2y7JQjH9vErBnYw0SGmnOmu2fX4PJ3hOsrCNPykhbqeQ4EK54cpSdT6rkXweNYC2PRGyhpAXMbmpknYsBxJ33tJUGnQLBQTakck4MGknMrjFm8SxntMKgGigg+VLesBgZAyJX89EyzKf/WLLV9bAOAGLAiJisB7je5QWB5hYQVuCjcsEocth/04hvlygq0M9k7ps8aFSAYvQ7UMi/oloGXi0YOjIdNsohKnzTAyLwCMuqe5A6lTFcciMnLEibj6/K8Ae5Y3nwRSxeUIKTMUW3km4jIaHI4bQBXR+kmDsSVyVcqnH7o85ULq5uNvjkN5Zhv0sz107vxi2dtCmXVCj7TJomNYMsEzT2rIVC0vYGOPdKb0KAVC4vPI6uW3HzVysUxBZYOR8CJVyW8DiQyi85jhZLZ93v/8+pRdDbb4cO9qYKqVMzcIIvE46Psv5aTgWAdH5eoKcvPXAEbJD+t9u3KtAjECTcRah4DOl61bEkrSM/lq9JvtgRwQ+MDUMPZbK/WOFkFR8l/duV1blOBQiT4b2VOeX7Qzn0ChaBupvJTaWoJ4eXHHJQjbBPPnVX2FrTk2k0Zqb1x1+sXFxYbfX0Esr32XggHtVrTOKQEstcWFwIOR3nAw4JBguxgLgOlo/Cu30OwWntnAijWmAnba3G5z7BroH+kBo1R7rhfIf0gNL/JA=
-Received-SPF: pass client-ip=2a01:b747:3005:206::71;
+ a=p5XUOwc6s_shZ6Vv324A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfX4dQjRXGgJ0K3
+ 5F8H02tHW+pnQb5rxDp+ZwlLe09apmMzqS86W+uVwkpO0LH3MakX1ww34GnvLapA+F/kdOAbmUz
+ ExbrT/QXXtkPMmWScsKtS1gz2mFgUvanWC+7AEzdNNY4kGkthCVYNYI/aiRLF4aUeX1jj6tV+7d
+ arGOXh46UcRbABgT5iHqg1ydw+ex0O6ZAaYO8DhSmKrhZutgHicNIY57YxQpmAKh0tRPHxS1EG0
+ Kx98WxGoxAd5SsdOsIv2LfDU9FTzJqFLBXPcpTCkUQ+9og6E7GYPLTv2cFJPquGdiqY3eiUdruc
+ G73Np0HUr7kzajqXze++hpBR6uGv/g2Bd/ZD79PaOjqge4j5ERdl8/5roozpgs=
+X-Proofpoint-ORIG-GUID: A58dnvlgiOvqSbcQv6FaqxmbGuihykE_
+X-JNJ: AAAAAAABwOz6lmZeHFYxtIKt6cgMO+56d0raBpnXkbFLh1YE/zrNvf8fCN5MpvhLAvYGGmaIL0RTL8dpuCCEibFc61RUM04H6aRvUr8gaCF59a8T+WOKe5ra8DIGYLTSj9eUHMkvZkV/pOKVuSP//EfMsZcDFJ6oHisPLTDy/j2DLggvGIk3tIuC73JiY8zXnImD1MzEsBVzLAO6utqdlh4j1CvPJKpK6Lq2+CQRQgNeopnPrE2LJ55F1d3MbBv2sTRUaed9vJFhpEaCAob8qfwT04rVzTZhHRLVpxyB2yOdpx379lA77RQcG4l5gfJQpfqXwzCty4P94x8XRzRS2C9oIT5sNo2toX92U4VUP8jh81XN0syLmD9gx1lyYYSeY4RSshqJjeh3tzeASrlqZRvl7kgI40P6ftKs/Jt39M9obi1YPIgGD9YzMmfVwgRDp5cmbqJ9Y6gajXYEZpvGChzfN6x4JHFfQowFzuso9HBiRC+nJvTvUChTA4BuIWMZsjYUIU4hTSDQhzDm7awBuW48HY9nq3QdhenDKa8L9mE94iGb9F1TxfJuHXn6SvfjaOClRNo060BQAJuTZtf/t1BrcGGsh1WI8j42FaQEfm3B4Lq1C9sn0j3F+ynT61hppHq5WjOuWtjq3krd1H30Dz2sFxaCrRzhmTVRwhvFFWAm7VoHoPdCHkoefTWcYI1jmmkD4ITZSHBjX//b4wpfuxNgvR/7FnSTMGDh4Nw0y66UTXE3H9wEdi0xNbRKZv2dF6o8YVvhDcVLvBqiBeUJye0NcfLnOBTgsHv30utiiFCB9D1uNTyj9so=
+Received-SPF: pass client-ip=2a01:b747:3005:206::49;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,86 +90,33 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+On some CPUs too old for Windows 11 (Skylake) support but running
+it anyway, WHP advertises nested virt despite it
+being unavailable.
+
+As such, make failures to initialise nested virt even when advertised
+non-fatal.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 43 +++++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ target/i386/whpx/whpx-all.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 26ca879c89..d2cd8e8001 100644
+index 408a1667e0..d13513985c 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -101,16 +101,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
-     WHvX64RegisterCr3,
-     WHvX64RegisterCr4,
+@@ -3302,9 +3302,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+             &prop,
+             sizeof(WHV_PARTITION_PROPERTY));
+             if (FAILED(hr)) {
+-                error_report("WHPX: Failed to enable nested virtualization, hr=%08lx", hr);
+-                ret = -EINVAL;
+-                goto error;
++                warn_report("WHPX: Failed to enable nested virtualization, hr=%08lx", hr);
+         }
+     }
  
--    /* X64 Debug Registers */
--    /*
--     * WHvX64RegisterDr0,
--     * WHvX64RegisterDr1,
--     * WHvX64RegisterDr2,
--     * WHvX64RegisterDr3,
--     * WHvX64RegisterDr6,
--     * WHvX64RegisterDr7,
--     */
--
-     /* X64 MSRs */
-     WHvX64RegisterEfer,
- #ifdef TARGET_X86_64
-@@ -126,7 +116,12 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
-     WHvX64RegisterCstar,
-     WHvX64RegisterSfmask,
- #endif
--
-+    WHvX64RegisterDr0,
-+    WHvX64RegisterDr1,
-+    WHvX64RegisterDr2,
-+    WHvX64RegisterDr3,
-+    WHvX64RegisterDr6,
-+    WHvX64RegisterDr7
-     /* Interrupt / Event Registers */
-     /*
-      * WHvRegisterPendingInterruption,
-@@ -686,6 +681,19 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         vcxt.values[idx++].Reg64 = env->fmask;
- #endif
- 
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr0);
-+        vcxt.values[idx++].Reg64 = env->dr[0];
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr1);
-+        vcxt.values[idx++].Reg64 = env->dr[1];
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr2);
-+        vcxt.values[idx++].Reg64 = env->dr[2];
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr3);
-+        vcxt.values[idx++].Reg64 = env->dr[3];
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr6);
-+        vcxt.values[idx++].Reg64 = env->dr[6];
-+        assert(whpx_register_names[idx] == WHvX64RegisterDr7);
-+        vcxt.values[idx++].Reg64 = env->dr[7];
-+
-         /* Interrupt / Event Registers - Skipped */
- 
-         assert(idx == RTL_NUMBER_OF(whpx_register_names));
-@@ -1070,6 +1078,19 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     env->fmask = vcxt.values[idx++].Reg64;
- #endif
- 
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr0);
-+    env->dr[0] = vcxt.values[idx++].Reg64;
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr1);
-+    env->dr[1] = vcxt.values[idx++].Reg64;
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr2);
-+    env->dr[2] = vcxt.values[idx++].Reg64;
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr3);
-+    env->dr[3] = vcxt.values[idx++].Reg64;
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr6);
-+    env->dr[6] = vcxt.values[idx++].Reg64;
-+    assert(whpx_register_names[idx] == WHvX64RegisterDr7);
-+    env->dr[7] = vcxt.values[idx++].Reg64;
-+
-     /* Interrupt / Event Registers - Skipped */
- 
-     assert(idx == RTL_NUMBER_OF(whpx_register_names));
 -- 
 2.54.0 (Apple Git-157)
 
