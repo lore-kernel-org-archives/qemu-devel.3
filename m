@@ -1,145 +1,136 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10F6606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E9606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RSJVsYlP;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IngpP6LH
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=b5zFMZgp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLiKn-00029j-P5; Tue, 27 Oct 2026 10:39:29 -0400
+	id 1xLiOr-0003kF-EL; Tue, 27 Oct 2026 10:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLiJX-0007dG-AO
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:38:11 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xLiOp-0003Zg-1R; Tue, 27 Oct 2026 10:43:39 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLiJV-00065s-Ix
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:38:11 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RDoDXY2358407
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 14:38:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- r3WOvdRk6q9uOwIyLgCWCr89tN5UwlkzfMPmHZ8doEE=; b=RSJVsYlPOtvZ1Bpw
- qnggsSwHuw7Hpohlkkl64BKUs6KTQjuouYqrCHtHPvKMKheHkVEpCxvxK52tvLY7
- lSXmhtIaiQjRe7F8iMcqwlv7lklukx5HhL3oQU7bcpuNFkLnInlAofgAPeELQjby
- voG23yFsPjYRVNOlVgRmdj2zam6Q1eFfXuch7Ct4lMoSeHF5SHSGxIeVyZwJCubf
- BD5p0mXMUdq66R+orVshUuNCl2/z5qW8jsyubhrTZQeo97vU+9oMj4lxQ2MZ6MZp
- nO0xaNhemiTLJH/Txg2hM5+Jt33WUUYuuyvbnKLKv/MGuxgGznXlPMM89JYfMCLy
- iz6auA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjfavucmc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 14:38:08 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-cd8b299b0abso477a12.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:38:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793111888; x=1793716688; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=r3WOvdRk6q9uOwIyLgCWCr89tN5UwlkzfMPmHZ8doEE=;
- b=IngpP6LHE/nmYrdnep4BFxqq/BJED0qc1WjoR0PFVpxToPa0Nf7b9uqzlq32VZ4lMf
- OlFHN4V3ibWKIc393uJ67p7mRkfj5tyvPDVQ59icTtlwvLMC/zRtSBMAraVqXcBg7A9R
- DN+TlzfIBNYI8YaJ5z71X/aXH2MWxyvtKYbM7N7jhWpFpX5zFVGu7jqquZm2K/mgAq7X
- Ospx5epUK4BalyFRCOLJ5PwjYBGCU4ycqLcXlnXpZmR5CZa41Kq+lhB/oll5DDMfmbY9
- KRHnX7oViNPwXbWPafamnzo1kvJ5DlW9ogE5xq3txQaWGmQ6bK6Plo4MHEz8nGCxFty0
- Tc0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793111888; x=1793716688;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=r3WOvdRk6q9uOwIyLgCWCr89tN5UwlkzfMPmHZ8doEE=;
- b=bzR3MzAG6kZWKS85VaBmCXnFAHjUsRE853fBK1xFRokASmQ6dgeHrb2cRnatHuqp6J
- SCTY4lOGZI2P76IOibx02hojlAzW7YqcekCw9zxn7MLgKz48g6tg1jl2lfPs9F7YEING
- UKDmOmU6LmP2g80nj3ftL4wfbDuMRN6tZijZgGj/Pu9qVQx55DCcEbEZMR/63g+iIH54
- Ir8fmzSX3WXmeSWwtZtPHOsTYdBriFXEydF7KLe9XAbot/hDiYh3pNWC9fxaX6nJQocb
- faQ/nyNcO/C86Ad7lEIzuqN37nmFFOupRlwaqkSq0r2iab5HmzUEKWkUmxVikiS9R+/S
- udEg==
-X-Gm-Message-State: AFq9FYIcbMjimgtoxam0JZYELISsuNkoJp/o7NSJOPs3mpe4/p+ZY8nP
- AfJ5x/Bq7eOrvD4f2X9HUu2+TNpaPVf1IXr7huYq51iv2YUiXb3ZooPgsqzKiMgUcPbikgxOfyV
- q3Sm0978/47Ix7Tk257gCE531CxnGJjw2XaHZfJc3P83AGLPvDNkybtoNbaLBa3iR6w==
-X-Gm-Gg: AYBFou0m7hy8jmNyE6K5JeXiw2fJQvCUbzyKF9G5+ob5YjlMnTE/k9p2HeRbcBEpwQr
- nji2HuF8967R6DBuigHtMDDFbpj6oZn8HTf2zg9bPiQF42CS3mTDfg0X8SuJUKWkAyC1YstKj4w
- MS25FF58cnnONBS94lZlKrUJwTBpbxL+ew1828NEKKL911qRGORvA/6Yn5LyuxRqgWF4Bffn/rq
- vug9sKDWTkzp3Wb9FygLbsZiTOEh/BBkT2QTSjXJMSsnPFTf3KjRY1ZgIQnh7wBHQsTY+VzrDP/
- Ewba1/UTEzGM3RAJMf+qUFzCjVBAI7YcvVJd9brZNbuE8T1FJ3DgDqar0Qk8aWw5ksW/Pdm5VE2
- +4UuLV98Wq8hyKOLfkSN2p1A136IO1SQx6uHiIFvuzCNDs18=
-X-Received: by 2002:a17:90b:4a51:b0:3ab:2737:3396 with SMTP id
- 98e67ed59e1d1-3adeafc9d9cmr8564237a91.65.1793111887487; 
- Tue, 27 Oct 2026 07:38:07 -0700 (PDT)
-X-Received: by 2002:a17:90b:4a51:b0:3ab:2737:3396 with SMTP id
- 98e67ed59e1d1-3adeafc9d9cmr8564213a91.65.1793111886958; 
- Tue, 27 Oct 2026 07:38:06 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae404dde70sm4056102a91.1.2026.10.27.07.38.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 07:38:05 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL v4 17/42] target/hexagon: fix semihosting STAT filename handling
-Date: Tue, 27 Oct 2026 07:36:56 -0700
-Message-Id: <20261027143721.4125584-18-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261027143721.4125584-1-brian.cain@oss.qualcomm.com>
-References: <20261027143721.4125584-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1xLiOm-0006mS-T1; Tue, 27 Oct 2026 10:43:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IIrvwJ3rzNuPcWZ5efCbzuRj84Wp/kWgjZz1x/mCaKD1Vp1uF2+JH+2smHNmwPvlXIoLUD8Wi1S9CJqg0aJifdFwRt7+Y5GJXiBu5Gpee1JM6CJqvXDdfqbIH+4uq1J8dIofhRQHIBDFkPl/swptl66mSd7ErdLyCqgJI7SX3azUwGXhw6fXYSGB44Y/Ca5KO0Tf1DhTKgR3dv4+kyY6eof/DK8c6RR/zD4Q/9Kp8TCgKO1ehT9TaXDuKX8gdZpug27ABy0nD/UcsLVonWyQuuo9bdaVzZeLaBgB0GCCSiwM45MV9KiYbzMs7Fgy+WX+ChOs4iXO75gQNLw/salPVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yX6lR7hdkPTzJccDzBEqSFj6Jh31ihRqDsYgtI8vbdw=;
+ b=m5TD4KLN0lsEVHVHFCQlQ4b+zATKWoinB5/KgjEG03UNB49YvSWgtHMa7sRWiVNCpeNB8NuD4TmIUow3kld39sNRaxaWPBpjChUNlPeQztJ8ctIurMofys0ifLLJ7ivwiO50NqGfQclTgNl4sjbVUTk+nvkk87lp0xxAxCWD4oO6Ggm6z5Gu34Kszs58wAvlm9O8lvGu4QOtE4EU5Q+FFuX8mcSBC6keIOHycRr8IGTIzidGeTFKgah0aHgGdl+kq/WE3ELt/FadFnx1lzenKDxBojxfpb7NNEhUvxmCPPorSGSCUWokc9UjXo/OZEsb2og/sKGJh0JHz5WrozdkEw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yX6lR7hdkPTzJccDzBEqSFj6Jh31ihRqDsYgtI8vbdw=;
+ b=b5zFMZgpizcN/U1bImLsqUKd700HOpOYs0AVVn4yEjbZBK6YDr4FRaSCxe5ZNT6gsALqKnHhFqYA8RBrlvA1fOxN9B3GJCYlYzV29n0SI8W8XhVPBOsiWysXdCXVgklLhMZkqegtqadM014wunBZZMJFLijND8O9/388MCSGV0ftuLu3X8mb0BAVwrrwPa0el73Knl+Cb3E+UDyiSC+qBu7pnhW1lAjurbdsTfpmmIlJ5rEx20I11Kh44tS1uUvgL1s2UreVs+KxXYsHfXzISMW4Yc3GYA8F9Tp9MmdmO1XhG+sHxjIUQFiBdncagt7GjBIQToEXqnHQyPQyN7cnqQ==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by PH0PR12MB8800.namprd12.prod.outlook.com (2603:10b6:510:26f::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.19; Tue, 27 Oct
+ 2026 14:43:29 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%5]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 14:43:28 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Tushar Dave <tdave@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel@redhat.com" <marcel@redhat.com>, "devel@edk2.groups.io"
+ <devel@edk2.groups.io>, Alex Williamson <alwilliamson@nvidia.com>, Jason
+ Gunthorpe <jgg@nvidia.com>
+Subject: RE: [PATCH 1/5] hw/pci: introduce PCI fixed BAR properties
+Thread-Topic: [PATCH 1/5] hw/pci: introduce PCI fixed BAR properties
+Thread-Index: AQHdRg0IOReaIxB8eEKLKF0CFzAF/bcRtdEw
+Date: Tue, 27 Oct 2026 14:43:28 +0000
+Message-ID: <SJ0PR12MB861469AD6121282858D853C0AB602@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260916185554.917526-1-tdave@nvidia.com>
+ <20260916185554.917526-2-tdave@nvidia.com>
+In-Reply-To: <20260916185554.917526-2-tdave@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|PH0PR12MB8800:EE_
+x-ms-office365-filtering-correlation-id: f9a2b62e-dfb3-4d78-3d78-08df3438aa1b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|1800799024|366016|376014|6133799003|18002099003|22082099003|10067099003|261026140227099003|4143699003|261026121527099003|56012099006|11063799006|261009223027099003|261022075727099003|261022105027099003|261021121427099003|261021123027099003|38070700021;
+x-microsoft-antispam-message-info: LwxVDn449dtfzUzRcBDoDhQrL2o+H71XTTi7RiQluHEsmbXau3v3M/qR1VAR7q0jOg8wmJCacQiWiX49BhVGqYhWjle/SKjkzN8E3QCfMksFBPshNM7RbZgiFOBoqI2EsALkXnq3ssW544ldLqd9RRROsyBZPiDLmFY+CobWMBxXqFlwMsDe64W+r7m+LsPxiWkwvEFuGxV7pcHjcBIL59S1NQ3TmaLISBmmmyTGtfGY4K+2LtdNh2kZZ8WEasOk86wUdG1v51nwOBxffzBdKlz1DT88SvUKpUeYgfCfCGKIHI/b15qmgejXk3C238Fa0jMvsfO5olwD/BIIKRb4VnSb5pwO3MU5ZN4mlTjY/8XM3LVJlptFLM29ypHyMCpTTmDp8s49qfSGG/8ocU6bftBUCCh0eYEigHagqNiQZ2LY7oTgp6PI8sU3QHRcNmkCf/hdwdgzAmbFu9y49lwVs3HwQZpoI4f90a4DZb6w0gey5PgUjwNf4aemKG3qnS7v2y1z+Te3ZeY8km85Myryyye6ARVvemAqWoIAnMmHmusdzWtc4d7BcsfqXyQlef/tan+HedZOSZbpi1c2zRRXbVJHFmUK9gClztxJKORbUxmWiKoGZp8KbXLACw3MyBT7Iu9VZJoTt52UOF2TZkcu7eStk5YZ7voWokG6Rl36Tj4mlLpitYBL+JeGmr+KTa3V82UN/b7C5nStHXbQLBxPIjG/Zx7jCnfs3MsGmwXHCCY=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(1800799024)(366016)(376014)(6133799003)(18002099003)(22082099003)(10067099003)(261026140227099003)(4143699003)(261026121527099003)(56012099006)(11063799006)(261009223027099003)(261022075727099003)(261022105027099003)(261021121427099003)(261021123027099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?YbK++qOC13jHT34k/YMWFWSYgfLvi89DDGmQ16b+8L/LTjw2zTEPznSkb+NR?=
+ =?us-ascii?Q?cdEZupuqzXdu0UeTmAiNstVR22XBjk+lKKC0LML6/QvekJVhAfUugWGSEGo0?=
+ =?us-ascii?Q?gCN4B9/+iZJPaWpQRIuI9jd3QedQdsxd/CdiRn1DS+Fcx6QOKHqrqDWk2LM4?=
+ =?us-ascii?Q?yqYNOI0GG0/XGNjUz2l9mPLZs2qJdVJQvyRm66UucjGxINZILsiuOswZ8mk+?=
+ =?us-ascii?Q?Iy1/Y3dCgG/3rb+VFTXoGmNhB2rwX5DAwUIRCgrbjqQKbWpmYLfGNWIk1S6b?=
+ =?us-ascii?Q?3rMCS4ITMdlBTsDrBqGJ1gQaxJoSnEmRd5iEPxaIxDbDCn+Riu5Wrg1YUwZ9?=
+ =?us-ascii?Q?vI150lB3vUMSFDxTrzphJ0wTyloEUSbI3xYCt47UckbMu/3GfyfYp91X/CoI?=
+ =?us-ascii?Q?R0dIxmpPlswzNn/vxU7HmlZVqErchteQE7Ch5XiLPagv1XMFsDpEfMafcAek?=
+ =?us-ascii?Q?vu2Avw76ET7FrjGTiDuKSwFW/9y2hJmMO10jM9MQv01jfq+gGbrS7zVyMCXj?=
+ =?us-ascii?Q?iMADyNCtymYsJY1V4znVc9Jc6aiC2FoMqX7lEAm57h9fNC8oW78gvjxsyCWT?=
+ =?us-ascii?Q?2kMlBTWkoy/Z0N7o0Ni1O9vh+DaCKIsjePIyg5nrFXIpMCLtWvQiszMq0ndS?=
+ =?us-ascii?Q?oJWh6IiHQAsxlFc8LSwOI3g3CLjWioIPwb+0ScCMXjtYXc1SqlzyDa+t7MpV?=
+ =?us-ascii?Q?Edz7nJMS2U1dKbVsnwaIoXXFyHyVYQvWPOYjDaGh4C0HDAFcO7EKPiGZjz4k?=
+ =?us-ascii?Q?pDsC7XQXR2D2tID21Tnc2Tfah9+j+G7hs5j+36bXW5p0GiNlZ4dJEUJkxC4t?=
+ =?us-ascii?Q?59pGET58VKpfAzaVEdSCvq/k9guHFCVkfyoGzZnEve0C475q9hsNwovjQGVB?=
+ =?us-ascii?Q?xKozVcYHz1Of39aCptjkb7sH03jC6vu5HZLhJ/Zyn7zUmECGt6uLra/VusDd?=
+ =?us-ascii?Q?Ujf6mNedV9FFlOi+tMYlkG81wCq4xgCS1k/V3rjaOPs/NlBy8J88hhGXPl2e?=
+ =?us-ascii?Q?sQ4jCwia0I8N9ZPMeeSzoSvqkjj3l+rQc3sumPb3iTlFZdm0rsnNApXxDNCN?=
+ =?us-ascii?Q?DWr7xg02orjemWt4OMBzvqiLe5S8hsjYF89BDlWt1lbbmtyUuN8XDk4/iTjf?=
+ =?us-ascii?Q?otgPZ84TmcS/AicQ47C5HCfYv//MY4IT4pacygVWRvvyHqI930HshsomaTW+?=
+ =?us-ascii?Q?UPobXD4bnjoJVjhBsD9yNh/B86M8cmRCBNF4XLuGIgt8acgBrslbekoTAMp2?=
+ =?us-ascii?Q?sd4RDn8ggcmDSGgtrsmwXlUEVQcow6UmX6GKjQGOTqe1s+tFJP0s8kJmrLhQ?=
+ =?us-ascii?Q?QcBk1XXRzSVKi+5Qjjgqs9Rx4UkLSYYSxOUCHUU4XDHaCFDH7ENyxh/GUFkY?=
+ =?us-ascii?Q?aGKIsCr5Vexu7jjMwLyY/U1X4n858ERgPJeSdY06t2jv1J/jtl900gW5d2nN?=
+ =?us-ascii?Q?XtssvtiE1XgBwo5Ex6yyB17bQUY+tNOFXlBiDB05cVF7x9MI8/GflVyWL8Ml?=
+ =?us-ascii?Q?4lfY3YwKmVTA7+Km2wkrPBwjlUhLNzxrki0EsKvUPeuTD9UiHJhQgIDC6/Rq?=
+ =?us-ascii?Q?oeVQuBO9BAn4IjwxSAtwpfD1lxCB4qUNyI65cfINDjix3JltbtmMNy+AzHJh?=
+ =?us-ascii?Q?7eAdlG95PI0yNRZpYf0tt4dnjrqYysgQKngpJ+adLpsTXwfmFBeWwCcfrcC+?=
+ =?us-ascii?Q?h4evDVbQ8PclhdgQ0PivgCvZd/btsym+FJ+pdlydZefLohFmhNu5Bq7EsBNA?=
+ =?us-ascii?Q?STZtURK42Q=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: 6rFDrE3MfzOLBK_lsfXyJF-7iWMCKPvt
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfX0fEXUWLjU1tf
- AYCe23k+oSkaAsvfBXqDgtZ5KM10DIRRXMlFPSYp/Tcu8pW5rDAE6lOKAH3iUTRN2lMlRNeh3f9
- wyCAwf5NebVwV/569fUM6pH8kBf6Q04=
-X-Authority-Analysis: v=2.4 cv=EIeTQFZC c=1 sm=1 tr=0 ts=6ae0b750 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=vW8nx58EJidmct_-KksA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 6rFDrE3MfzOLBK_lsfXyJF-7iWMCKPvt
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfX93+3bYqu3Swu
- LvusOENO90jyurL8y0ffrDDo1lVTGyGxKMAID9rTDjwkOuFGe6I3qc0jQ1AjV72R8rKP6o4yrbw
- TduO3m7AX3WPmdtJTc3ZZNbxeixGFpCYYjGMkxLxorN/Is9zv+GqPgAedLX6sEvr6yNrrVwyj5g
- u5wYjZhfVQzJZNR1eVmb9WK/CMRHPrEyodBkox2Y0tCjAs4ErRXi54sUgwWE/RzjF7vO03j8ixj
- axzJ9nOTQcGNXd/o+NNuMWNcFvzDZdtO/skit4cDwS1QGD7xJRE3OeBaX3M1dTd0SnAcg7v7xc8
- LJziRAqqhJfKKKQVX3n0w521kELxr9JRbOH6FF9HqxrE/sPhvdE819fzzVdhaUI/Fcz6dxYgZX6
- oPyuAYw7KCMvJvrzM5tiv/Yg4NJdcB9rrVlDrZGzNDqb81n/wR6gtqz2nN8VZGqqwpHra8l9QU0
- kSo6ec80xvD/+wvpcDw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 suspectscore=0 spamscore=0 phishscore=0
- bulkscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270058
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f9a2b62e-dfb3-4d78-3d78-08df3438aa1b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Oct 2026 14:43:28.6539 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Djbr7xcQizNL56BIHzxxfbGDvFoUIjKvrsOk0MsRkGD6ZXLj8lUJ50Wb3wEmvFv6+QkT4krbf6MU4E450Q5XGw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8800
+Received-SPF: pass client-ip=2a01:111:f403:c001::2;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,46 +142,148 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-SEVYX1NZU19TVEFUIGNvdWxkIHBhc3MgYW4gdW50ZXJtaW5hdGVkIGxvY2FsIGZpbGVuYW1lIGJ1
-ZmZlciB0byBzdGF0KCkKd2hlbiB0aGUgZ3Vlc3Qgc3RyaW5nIGZpbGxlZCBpdC4gVXNlIGxvY2tf
-dXNlcl9zdHJpbmcoKSB0byBtYXAgdGhlIGd1ZXN0CnN0cmluZyBzYWZlbHkuCgpGaXhlczogNzcx
-MWZkYmE4OGIgKCJ0YXJnZXQvaGV4YWdvbjogYWRkIG1haW4gYXJjaC1zcGVjaWZpYyBzZW1paG9z
-dGluZyBvcGVyYXRpb25zIikKTGluazogaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvYWxsL0NBRkVB
-Y0E5TU9zNlZmSGYyVUhaOHo0Y2R2YUIrN0RZNmhKYjJlbVlaMmFMU2UtdDZpd0BtYWlsLmdtYWls
-LmNvbS8KU3VnZ2VzdGVkLWJ5OiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5v
-cmc+ClJldmlld2VkLWJ5OiBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlkZWxsQGxpbmFyby5vcmc+
-ClNpZ25lZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4K
-LS0tCiB0YXJnZXQvaGV4YWdvbi9oZXhzd2kuYyB8IDE1ICsrKysrKystLS0tLS0tLQogMSBmaWxl
-IGNoYW5nZWQsIDcgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90
-YXJnZXQvaGV4YWdvbi9oZXhzd2kuYyBiL3RhcmdldC9oZXhhZ29uL2hleHN3aS5jCmluZGV4IDZl
-ODNkODY3MzNhLi4yZWJhNjAyMWI0YyAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vaGV4c3dp
-LmMKKysrIGIvdGFyZ2V0L2hleGFnb24vaGV4c3dpLmMKQEAgLTU2OCw3ICs1NjgsNyBAQCBzdGF0
-aWMgdm9pZCBzaW1faGFuZGxlX3RyYXAwKENQVUhleGFnb25TdGF0ZSAqZW52KQogICAgICAgICBz
-dHJ1Y3Qgc3RhdCBzdF9idWY7CiAgICAgICAgIHVpbnQ4X3QgKnN0X2J1ZnB0ciA9ICh1aW50OF90
-ICopJnN5c19zdGF0OwogICAgICAgICBpbnQgcmMsIGVyciA9IDA7Ci0gICAgICAgIGNoYXIgZmls
-ZW5hbWVbQlVGU0laXTsKKyAgICAgICAgY2hhciAqZmlsZW5hbWU7CiAgICAgICAgIHRhcmdldF91
-bG9uZyBwaHlzaWNhbF9maWxlbmFtZV9hZGRyOwogICAgICAgICB0YXJnZXRfdWxvbmcgc3RhdEJ1
-ZmZlckFkZHI7CiAgICAgICAgIGlmIChnZXRfdXNlcl91MzIocGh5c2ljYWxfZmlsZW5hbWVfYWRk
-ciwgc3dpX2luZm8pIHx8CkBAIC01NzcsMTUgKzU3NywxNCBAQCBzdGF0aWMgdm9pZCBzaW1faGFu
-ZGxlX3RyYXAwKENQVUhleGFnb25TdGF0ZSAqZW52KQogICAgICAgICB9CiAKICAgICAgICAgaWYg
-KHdoYXRfc3dpID09IEhFWF9TWVNfU1RBVCkgewotICAgICAgICAgICAgaW50IGkgPSAwOwotICAg
-ICAgICAgICAgZG8gewotICAgICAgICAgICAgICAgIGlmIChnZXRfdXNlcl91OChmaWxlbmFtZVtp
-XSwgcGh5c2ljYWxfZmlsZW5hbWVfYWRkciArIGkpKSB7Ci0gICAgICAgICAgICAgICAgICAgIGdv
-dG8gZG9fZmF1bHQ7Ci0gICAgICAgICAgICAgICAgfQotICAgICAgICAgICAgICAgIGkrKzsKLSAg
-ICAgICAgICAgIH0gd2hpbGUgKChpIDwgQlVGU0laKSAmJiBmaWxlbmFtZVtpIC0gMV0pOworICAg
-ICAgICAgICAgZmlsZW5hbWUgPSBsb2NrX3VzZXJfc3RyaW5nKHBoeXNpY2FsX2ZpbGVuYW1lX2Fk
-ZHIpOworICAgICAgICAgICAgaWYgKCFmaWxlbmFtZSkgeworICAgICAgICAgICAgICAgIHNlbWlf
-Y2IoY3MsIC0xLCBFRkFVTFQpOworICAgICAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAg
-fQogICAgICAgICAgICAgcmMgPSBzdGF0KGZpbGVuYW1lLCAmc3RfYnVmKTsKICAgICAgICAgICAg
-IGVyciA9IGVycm5vOworICAgICAgICAgICAgdW5sb2NrX3VzZXIoZmlsZW5hbWUsIHBoeXNpY2Fs
-X2ZpbGVuYW1lX2FkZHIsIDApOwogICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgaW50IGZk
-ID0gcGh5c2ljYWxfZmlsZW5hbWVfYWRkcjsKICAgICAgICAgICAgIEd1ZXN0RkQgKmdmID0gZ2V0
-X2d1ZXN0ZmQoZmQpOwotLSAKMi4zNC4xCgo=
+
+
+> -----Original Message-----
+> From: Tushar Dave <tdave@nvidia.com>
+> Sent: 16 September 2026 19:56
+> To: qemu-devel@nongnu.org
+> Cc: qemu-arm@nongnu.org; peter.maydell@linaro.org; mst@redhat.com;
+> marcel@redhat.com; devel@edk2.groups.io; Alex Williamson
+> <alwilliamson@nvidia.com>; Jason Gunthorpe <jgg@nvidia.com>; Shameer
+> Kolothum Thodi <skolothumtho@nvidia.com>
+> Subject: [PATCH 1/5] hw/pci: introduce PCI fixed BAR properties
+>=20
+> Add fixed-bar-N properties to PCIDevice to allow the guest address
+> of an individual PCI BAR to be explicitly specified. The properties
+> are available for PCI BARs 0 through 5 and accept QEMU size
+> values, for example fixed-bar-0=3D0x40000000 or fixed-bar-0=3D64G.
+>=20
+> e.g.
+> -device some-device,fixed-bar-0=3D<addr>[,fixed-bar-1=3D<addr>]...
+>=20
+> During realize, validate that each specified BAR exists and is a
+> memory BAR, and reject fixed BAR configuration for hot-plugged
+> devices.
+>=20
+> Signed-off-by: Tushar Dave <tdave@nvidia.com>
+> ---
+>  hw/pci/pci.c                | 43 +++++++++++++++++++++++++++++++++++++
+>  include/hw/pci/pci_device.h |  7 ++++++
+>  2 files changed, 50 insertions(+)
+>=20
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 0efb4eb4bb..775fef1beb 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -89,6 +89,12 @@ static const Property pci_props[] =3D {
+>      DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+>      DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
+>      DEFINE_PROP_INT32("rombar",  PCIDevice, rom_bar, -1),
+> +    DEFINE_PROP_SIZE("fixed-bar-0", PCIDevice, fixed_bar_addr[0],
+> PCI_BAR_UNMAPPED),
+> +    DEFINE_PROP_SIZE("fixed-bar-1", PCIDevice, fixed_bar_addr[1],
+> PCI_BAR_UNMAPPED),
+> +    DEFINE_PROP_SIZE("fixed-bar-2", PCIDevice, fixed_bar_addr[2],
+> PCI_BAR_UNMAPPED),
+> +    DEFINE_PROP_SIZE("fixed-bar-3", PCIDevice, fixed_bar_addr[3],
+> PCI_BAR_UNMAPPED),
+> +    DEFINE_PROP_SIZE("fixed-bar-4", PCIDevice, fixed_bar_addr[4],
+> PCI_BAR_UNMAPPED),
+> +    DEFINE_PROP_SIZE("fixed-bar-5", PCIDevice, fixed_bar_addr[5],
+> PCI_BAR_UNMAPPED),
+
+These properties are exposed on all PCI devices, but only virt wires up
+the validation and fw_cfg export in this series. On other machines, a
+valid request would be accepted without placing the BAR, right?
+
+I think it is better we add a mechanism(MachineClass flag ?) and check
+that.
+
+Thanks,
+Shameer
+
+>      DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
+>                      QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
+>      DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
+> @@ -228,6 +234,36 @@ static void pci_bus_unrealize(BusState *qbus)
+>      vmstate_unregister(NULL, &vmstate_pcibus, bus);
+>  }
+>=20
+> +static void pci_check_fixed_bars(PCIDevice *pci_dev, Error **errp)
+> +{
+> +    PCIIORegion *r;
+> +    int i;
+> +
+> +    for (i =3D 0; i < PCI_NUM_REGIONS - 1; i++) {
+> +        if (pci_dev->fixed_bar_addr[i] =3D=3D PCI_BAR_UNMAPPED) {
+> +            continue;
+> +        }
+> +
+> +        if (DEVICE(pci_dev)->hotplugged) {
+> +            error_setg(errp, "fixed-bar-%d is not supported on "
+> +                       "hot-plugged devices", i);
+> +            return;
+> +        }
+> +
+> +        r =3D &pci_dev->io_regions[i];
+> +        if (!r->size) {
+> +            error_setg(errp, "fixed-bar-%d: bar%d does not exist on %s",
+> +                       i, i, pci_dev->name);
+> +            return;
+> +        }
+> +        if (r->type & PCI_BASE_ADDRESS_SPACE_IO) {
+> +            error_setg(errp, "fixed-bar-%d: bar%d on %s is an I/O BAR, "
+> +                       "not a memory BAR", i, i, pci_dev->name);
+> +            return;
+> +        }
+> +    }
+> +}
+> +
+>  static int pcibus_num(PCIBus *bus)
+>  {
+>      if (pci_bus_is_root(bus)) {
+> @@ -2393,6 +2429,13 @@ static void pci_qdev_realize(DeviceState *qdev,
+> Error **errp)
+>          is_default_rom =3D true;
+>      }
+>=20
+> +    pci_check_fixed_bars(pci_dev, &local_err);
+> +    if (local_err) {
+> +        error_propagate(errp, local_err);
+> +        pci_qdev_unrealize(DEVICE(pci_dev));
+> +        return;
+> +    }
+> +
+>      pci_add_option_rom(pci_dev, is_default_rom, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index 5cac6e1688..fc5f50a1c4 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -187,6 +187,13 @@ struct PCIDevice {
+>      uint32_t max_bounce_buffer_size;
+>=20
+>      char *sriov_pf;
+> +
+> +    /*
+> +     * fixed_bar_addr[N] holds the guest address configured via the
+> +     * fixed-bar-N property for memory BAR N. PCI_BAR_UNMAPPED means
+> +     * the BAR's address is not fixed.
+> +     */
+> +    uint64_t  fixed_bar_addr[PCI_NUM_REGIONS - 1];
+>  };
+>=20
+>  static inline int pci_intx(PCIDevice *pci_dev)
+> --
+> 2.34.1
+
 
