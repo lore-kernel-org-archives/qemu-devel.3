@@ -1,140 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91182606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 05:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A83606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 05:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=XsJPbZAf
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=jblSAMdv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLZuj-0002ES-1r; Tue, 27 Oct 2026 01:40:01 -0400
+	id 1xLZvb-0002cU-86; Tue, 27 Oct 2026 01:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xLZuf-0002Dv-Eu; Tue, 27 Oct 2026 01:39:57 -0400
-Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
- ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xLZud-0004Ba-Ch; Tue, 27 Oct 2026 01:39:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E+gRGEumwv+P2BIv7vsUha5zOxnVw/TRknq7lXnIyBx0E66EYtTWi6q2wA2NXzF8huV7z8FlwFUC8/GE99PTenHBAhNkzeqvYSkxGTQpudFlF34V2BpGeZyxODBhl4FAlo1KovJsrVWPtIMeAThKyjiemPZWDAWL8y7lUsXeDegGWhpeGFmrHLPSUt0mDJUw4b38AwM3tUfZhliZGByu4X+PVTMr5fExNKnQDJW2zuGO3KOZrLIXVUVAr1DRv/X5L5Uqr4Qn+sQ1gH6QKnyV8SUvcVYa3/kW2jeqh4hfjcfOgumQZC63VrcZsgV2iM6djJWZL1v8rX1boRNbpHiX7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OgnSx2Ux+NORmV/cwIqLfyVUahfjdvS0MvWJAJ5Nz2A=;
- b=crk1zjmGMKsBUGogaUJmimS7E0hg9utVcu2l5TE2t1GXJsBPcFBVu4b4WrBuwVZfnUkdgBKAM3O7UdPZCf6HDUXoE674fj/eDLKADjkmBG5AIRyYtQJ1cHbSZmSK3qu9vpgfuSu+pv2lVh1WQfMwxrp5MdWZnfAMUcuc+62dEJlvV4uWCrLVhCfJ6y1fdSnhYHdNZvzvmF8exD5jvYI7i463TBpdrn7/iTXGIzaWpYCzdT+1lNb9OgrjMAlsw96/Uu09tGdVCOYrpPA19cm1lNP8/DHLYBpv3dcFlnDPGBiQQkZyNi9GHRux8uHUc/UDoGYGc3YxYEftxyfNcEV9xA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OgnSx2Ux+NORmV/cwIqLfyVUahfjdvS0MvWJAJ5Nz2A=;
- b=XsJPbZAfLPZnPfAJVGhiH4eMyQERgabtU8eC9GWYI3XuZBf/ueTKxv7wYvK8GG8A6tFF+cVNvzoNcaYGqV5spl+Pl5U/qEvFDGUmawFb/JfrK+CfBSy8qNV+wzVx508wyDaJKyizfZFAOOYgvZbYswdxKLt+eUNShzmgeWFJk+hQMGt9ymKc5kteG0k+EEdx7tnr7TaJNF2tT/FZ6YFlmL3/CcVbY2+m+9GRo5sETBNI5TlVyAaR9oejmPVayPdYtAkDJ8NHkOIYu3MgQRR1qMjHP4Csfsz6xaJ1QcpYr5kmQJR720idN5h0iPCHSPnTZMPnETrOD8ybKvxJQ4npaw==
-Received: from TYZPR06MB7373.apcprd06.prod.outlook.com (2603:1096:405:a7::14)
- by SI3PR06MB8732.apcprd06.prod.outlook.com (2603:1096:4:2a6::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.7; Tue, 27 Oct
- 2026 05:39:47 +0000
-Received: from TYZPR06MB7373.apcprd06.prod.outlook.com
- ([fe80::9b90:c4d9:22de:2ac4]) by TYZPR06MB7373.apcprd06.prod.outlook.com
- ([fe80::9b90:c4d9:22de:2ac4%6]) with mapi id 15.21.0569.006; Tue, 27 Oct 2026
- 05:39:46 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-CC: "junjie.cao@linux.dev" <junjie.cao@linux.dev>, "junjie.cao@intel.com"
- <junjie.cao@intel.com>, "marcandre.lureau@redhat.com"
- <marcandre.lureau@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Kane Chen
- <kane_chen@aspeedtech.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>, Troy Lee
- <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
- insertion
-Thread-Topic: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
- insertion
-Thread-Index: AQHdX6uxp6OpQ9yqq0CEeDiwsS34zbcEqZMAgAxB77A=
-Date: Tue, 27 Oct 2026 05:39:46 +0000
-Message-ID: <TYZPR06MB7373C4DABEAE16D546241853FC602@TYZPR06MB7373.apcprd06.prod.outlook.com>
-References: <20261019092448.278079-1-jamin_lin@aspeedtech.com>
- <20261019092448.278079-2-jamin_lin@aspeedtech.com>
- <atXr2J5oxn3BBgb-@nucbdw.ghoffman.csb.home.kraxel.org>
-In-Reply-To: <atXr2J5oxn3BBgb-@nucbdw.ghoffman.csb.home.kraxel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB7373:EE_|SI3PR06MB8732:EE_
-x-ms-office365-filtering-correlation-id: ae0caedc-044e-4149-f26d-08df33ecb5fb
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|366016|22082099003|18002099003|10067099003|56012099006|4143699003|261026121527099003|261021121427099003|261026140227099003|261022105027099003|38070700021;
-x-microsoft-antispam-message-info: sJFDIJ1nliKys6oIWgRElMWgUzGoD4xFC2dftNap2cNpPAh+BeS58yWiWvkxfgJKd9lh0nsahuKIxi7jAnjYuax4Dp5DFalZ+kCSznAAnr0qdFI/P8d2f2bXBrVcrMe2Y5epsphwlKCJ5WoUbf4dBqPjS/D5lA9LLjVLq3GRlEf+5nfQVlPaltdtSu/U5O0rLUiGAyGsKJQf/92/K4qPlgkVTaZICUUvnYLRmejwMLYAnBNglQ+bN+4fb36grvCON0uz/b06jA7N0y98w1w5EuTewmcwDVC3HCHA+Z3YeJtiVf/2E3rktPNVRXPE4wMEohdm0zEPlmKn8hzJDG94arGql66QNLSL5t4tEXvR2FOnMY8+m8qHCj3MwCgDljigO2FajSlq96pR+7sk940qzBV+nzPBoQwt4gFLN/u7oP3H+s1C4qco4avRtdO5rEV19iF0nhCp3u1L7yVecqeogrwGRKbfSD36gyHTAHFHHtNQrCvlQDog45SkrEoHpnmKJl1feDAxzpOYEebpSITMsqxcWGTSqxjbhsdzIAq6TrXrLCModKWgtyUf5ezT5aVfsX07Sbzuug3pR7xjoMvvVqQQ/mmv0ML2fFMh0QK1N4c5PL4pmCX5hUnAhPMV79lV3drlnJTas+7u/xQXljT7SnmJ69nFN1xkZuA96occFugMIIm/uWBzkB/ZFZWwT0H7ljE21GvNp3PfzlkOBZ1M2RH61pe6yDR5VZ8dsIf5WOA=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYZPR06MB7373.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(22082099003)(18002099003)(10067099003)(56012099006)(4143699003)(261026121527099003)(261021121427099003)(261026140227099003)(261022105027099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?lIFnPhSb8+KdOEeNK+Ps2Y0KYwBoXajNpvIcgOwYvwYVbqy8j8ACEgUQz+?=
- =?iso-8859-1?Q?zk3nAc+UjNw9YieAvFFwp3Znbe9C6hznhftgVUTD8ZvCWxHoPlZ7wn4dnz?=
- =?iso-8859-1?Q?iD6pY72oetsjGwg4IXfFsseN+bKpcPhHliUlquYcdwOnOQF6KPcnIhpOxu?=
- =?iso-8859-1?Q?5Q/CL1PLY8hodSBMXhyGSdkFfQr8MDA7FZX7pFD6vJVBXaMSlnl5Q+HjNf?=
- =?iso-8859-1?Q?aHkzba9nnoXoOc/maiYqmzCyKTdZWqYoVcHP2dC6kLwL9QW6shMFmuB/UD?=
- =?iso-8859-1?Q?8c2FHly3Yqj1TQIA1V1Ole9fg0VseDGCZlpKvdBLKcaQG8JKWGXKvzpS1E?=
- =?iso-8859-1?Q?WTeEtOjIKGMDTFZhP4N0wUQjOJUTf9OnEK0orhV5rJrSujaQdKJxD+dBkH?=
- =?iso-8859-1?Q?VJJGvfMws2ZbsgxHLcLDuGfT6Z1bgdIclEjuvky8ZKV7BtWYRrtCt26vRl?=
- =?iso-8859-1?Q?MQxg/1Af8d65A98QfwLR/NuuF9wyhoLbAyt0rEjnjPuoD8d7s2usUdtWB4?=
- =?iso-8859-1?Q?sbd4mQJ3j/Uw+jDMe3LdW2kqS07Ecj9hqY3Jcxq0VlM8q1wm1aiNsLUQlO?=
- =?iso-8859-1?Q?al3jX1PU5hy4Rkp9tVMb00gtmKgN4dQPBIJ3iHkMttkBK/FRGVf03Z9iRY?=
- =?iso-8859-1?Q?w88JKMMkZ0cXbcHIZE+5QKHBXYwF7ol/cFrQG9cQOwDXSBoMqGn9ghN1gP?=
- =?iso-8859-1?Q?ORge7WL7sp9hSebcUzDaDogecmeUS2X/zQef+AoDcYl5R2OUG11DNEfVZu?=
- =?iso-8859-1?Q?CMTf4GNDY3yMt/j+VwfvwBqlXLMWVvPzSV/cCBNchjvkHuKQD2rlDLPzob?=
- =?iso-8859-1?Q?ruGszUGuDDgEMEWZMlwl6BVCrgfDy3jt2wTsfnaPPOlAXTCKElSStI9QHm?=
- =?iso-8859-1?Q?Wr14BkvK2M9va4crsEOcv469JSe72KGtFxIGoYL1g4QX2jjAHfBqANlXz1?=
- =?iso-8859-1?Q?eDbEgmtlPeZb+NyPzU53CvDfIDEbpP7MHOPQxz3OaUm+Tn/K3/5M71sw/z?=
- =?iso-8859-1?Q?zigW8bYa33KggfTK8qq2TMa4gyF1Y+kaYl5N94t1U9LFLFJBSky3jL31u7?=
- =?iso-8859-1?Q?+9Sz8sdpJ5OdJ6ULNLq0tqDhOEUUc2CKeQHXsa3LADV2zNv70mSDEiVaSo?=
- =?iso-8859-1?Q?o4iIuP6aNE5vGRhGFwSUBx8KtEOfhMzES4e6Y10aVHsk39zApAbbf+8cyk?=
- =?iso-8859-1?Q?aH9Ahj28Zg3eaV5AflAPMdNptOmw/VoeMFyzD26W91C+tUjWRxWVe/UUR0?=
- =?iso-8859-1?Q?CDXOUM9tAqo3IQzllWP3mFWhyGl3kbFKA25f8zLEMCrCiL1bS1q3rei0Hg?=
- =?iso-8859-1?Q?WuU46XjAUzCOg0TPz9losQevrvFhyILEIN9Coc27/9v0F+szctdWoR+kEu?=
- =?iso-8859-1?Q?KQXPKQIlm122YJguwbwFnkeJFRJNY+YQL054HNlhXIY1N30jBsdJln16A0?=
- =?iso-8859-1?Q?kxVNlC8x8sA5d8D/qM+o91s8Q5olyOwLN1jVniqZr+JGvvTLl0dk0J8cUV?=
- =?iso-8859-1?Q?666sxSXiHpvc424Vwsg3O29DCQ9A5VecE9fq7bv5hmxqWrQgz/oNjog0UZ?=
- =?iso-8859-1?Q?uTF8C9I1XSqYkmOim0HBLu/io+UCBspaRuoOHFU8IDj3M29yNqNuPhHyj6?=
- =?iso-8859-1?Q?K7OB3Cqk+ydEbkqhyN6bheJMWrH7bSD2xM7ng79SM2wYrUOuz38vtjFK/t?=
- =?iso-8859-1?Q?7FHWT0/0leI6Z2678BeIpEvTBfz9HJ7KRTkMeBv9TjbqmI54q+cqg8MIrE?=
- =?iso-8859-1?Q?z0X7vtJe2BvHgtHyTmoBLA5+30Ss79CJNDC2MnOayvGs7wTCjqCURawLF+?=
- =?iso-8859-1?Q?CPhsGpq8mw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xLZvU-0002aE-CU
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:49 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1xLZvR-0004Q8-TJ
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 01:40:47 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-3550c917fd3so5615806eec.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 22:40:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1793079644; x=1793684444; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=aQ2Puf1sOISM8sL6HalNkRqjVmy85f1gdvZmdOYkrIo=;
+ b=jblSAMdv9FBrX5UGTrsK/o0o6BHbCmOZ1RMzflm/p/YWTQFz8q/FYaW4fpaerwPg/8
+ H+53dCUiQuLOnDXE5n3di2LG9gbXvUhOGuWZ3IsWAwicgXZGmsOL+UQyRPqe8440xGf5
+ 3tLJZsOKmXqM0BvOXZiH9kTvJ9QBkqP57PgyLFEtYCXAIWhwPqypKPsBXp+7rdWm5UGU
+ D47aj5JUgFDO6Wp1XyAHSrZKw9RkBq64uIkvUXCRVAmf632mxUwx1mE0f43iQ1MX3tQ9
+ B5SzRN9oTCXzZpRBDmE7iz6FLCPSyFjZ1ewKopONPCmkvvpJm+spp76M/4Ut1DP//KId
+ UvUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793079644; x=1793684444;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aQ2Puf1sOISM8sL6HalNkRqjVmy85f1gdvZmdOYkrIo=;
+ b=ZRm1RBcW4i4Mr4uZ/mgdo/XMsEOZUatfTMVFakGWeIMCx1qM3DE3G/h4urIAs7YJ6z
+ deLOH02aNLPleeK6Yk45E4vzXCR4+baQyqqZyKDJ7WHTcx/0LAIr+VUNQNvu08N2UZIj
+ 4bu7OLqHbv7DvElTHyZitdkT1r0GWEWdwity2n5CpzTEG6i1aCO94lEg2C1OPTLdRj3C
+ iOppoig9MQbasJ04QyK0bo/6vn/We2eW2fo3fE6Gyu5eT+osVvj7ELXouqWLcwxJeBa0
+ pzkREwi9yJ+9sVVHpXxXFz/LYYJR/rwWx8fnyDJVjSbw1EPDhjdlWtrFwvXhWYc6uJMH
+ PKYA==
+X-Gm-Message-State: AFq9FYLs+xnF1GspmuoICPuqf8imgAKgjdAmfP2lRjrI/3OUhEaU/uLd
+ zNAbADtH9MjY9avLjepIG4UnVD1yOL5RkFJRu/V5Xtg/dd3fnC4LtRaxTSOIN1IW
+X-Gm-Gg: AYBFou0Kd7Fw5UkNclQGsFtw8kgby5vevrdRbMQDC3PXQ9O60NvHq6I9HYuRjcX7OFv
+ SwYBCz+QuWudAlWL3S8s/wJIRWlANqzFtRLC3+jzrgvdfqeiqj7pdoAeio1N8ltcrtu7VBGF7uE
+ hQjsIVfnlJ/y4c8AeIIIXaXRRrCi0WqEIysL6ErLQOJ71MuJZ9J1hbFkdCbnbTuHJmSsl77Sqxe
+ qfiL24+P6KgcE8UHI2vTZ+snj2Z9liOSFSXCpC2TZvnmLX96LnQZ4SwtrG0oMewXx+AJQQyaeWS
+ CDf4XVrsZbxuoMCzFm01xUCdmyOOvFq195/IDBMmOHTHJP2d0l+lRp3UDQdHO6xSdzyRuDL2aio
+ egYWnqvFDuCkfOWfcltRldisG+PKPifJ8hb1LI7N0qosmN4INDX3zA5PnumRh8McW939aYdYE1e
+ JHyMCBwlQZhDONEE//LoMGeaV0UE8gWMcw/5NPfHOe6Vkfe9cq9FlBKGLEDIxOFEaeYRUjNzqaj
+ EBQtlUKhGJR3EYJ7IH2AIjxftXFY7Z+VzgbSJvbpTYKZpoSvmqxszKRybCUeDYK5Po4y2vsmQ29
+ hqeJZt2JFrTUTff+YYE6
+X-Received: by 2002:a05:7301:1509:b0:36a:270:ce76 with SMTP id
+ 5a478bee46e88-36a0270d1acmr6050803eec.33.1793079644275; 
+ Mon, 26 Oct 2026 22:40:44 -0700 (PDT)
+Received: from DESKTOP-Q716RM7 ([103.94.185.75])
+ by smtp.googlemail.com with ESMTPSA id
+ 5a478bee46e88-369e8ec9276sm51416372eec.25.2026.10.26.22.40.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Oct 2026 22:40:43 -0700 (PDT)
+From: Yonggang Luo <luoyonggang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Darren Kenny <darren.kenny@oracle.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ Alexander Bulekov <alxndr@bu.edu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH 2/2] accel: register CPU parent for each target
+Date: Tue, 27 Oct 2026 13:40:26 +0800
+Message-ID: <20261027054026.2184-3-luoyonggang@gmail.com>
+X-Mailer: git-send-email 2.55.0.windows.3
+In-Reply-To: <20261027054026.2184-1-luoyonggang@gmail.com>
+References: <20261027054026.2184-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB7373.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae0caedc-044e-4149-f26d-08df33ecb5fb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Oct 2026 05:39:46.8143 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RfycXoD4DBCX4eMIeLIYx5+OmqHWwIrR2XzJsnxMKBcVsFu0z2WaFwu+vtdluasSx4yUs1eEWc34yD+RJQ2xXDvkMSPwYwMg9Ktaq0s9zIw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI3PR06MB8732
-Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=SEYPR02CU001.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,64 +104,171 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Gerd
+Now we need use the prepared target-list to register different accel-$cpu_type
+parent QOM type. So that multi-target won't error missing parent for different
+accel for different arch.
 
-> Subject: Re: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hu=
-b
-> insertion
->=20
-> On Mon, Oct 19, 2026 at 09:24:50AM +0000, Jamin Lin wrote:
-> > usb_claim_port() inserts a usb-hub when a device is plugged in and
-> > only one port is still free, so that more devices can follow. That is
-> > what a host controller with root ports wants.
->=20
-> Ah, well, not really.  It's there mostly for historical reasons.
->=20
-> The emulated usb hub supports only usb 1.1, so for newer host controllers=
- (ehci
-> / xhci) it does not make much sense and the better approach is to add mor=
-e
-> host controllers if needed.  Which should rarely actually be the case tho=
-ugh
-> given that xhci supports up to 15 root ports.
->=20
-> So if this gets into the way I'm wondering whenever the better approach h=
-ere
-> is to remove this altogether.  You can still add an USB hub manually of n=
-eeded,
-> IIRC there is (or was?) some board with a single-port OHCI where you actu=
-ally
-> need a hub if you want plug in both usb keyboard and usb mouse.  It just
-> would not be automatic any more.
->=20
-> Alternative idea would be to add the config option, but only enable the
-> automatic hub logic for actual usb 1.1 controllers (ohci / uhci), where i=
-t does
-> not matter much for devices whenever they are plugged into an root port o=
-r
-> hub port.
->=20
-> take care,
->   Gerd
+Also add a test for it in test-multi-target.c
 
-Sorry for the late reply.
+Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+---
+ accel/accel-common.c           |  6 ++----
+ accel/accel-internal.h         |  1 +
+ accel/accel-system.c           | 24 ++++++++++++++++++++++++
+ accel/accel-user.c             |  7 +++++++
+ tests/unit/test-multi-target.c | 15 +++++++++++++++
+ 5 files changed, 49 insertions(+), 4 deletions(-)
 
-Yes, it gets in the way. usbredir carries one device per connection, so
-our bus has one port. Plugging that device in adds a hub, and the device
-ends up behind it. That is why I added the flag.
+diff --git a/accel/accel-common.c b/accel/accel-common.c
+index 00a400243f0..0f4e202d8f8 100644
+--- a/accel/accel-common.c
++++ b/accel/accel-common.c
+@@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
+ 
+ DEFINE_TYPES(accel_types)
+ 
+-static void register_accel_target_type(void)
++void accel_register_cpu_type(const char *cpu_type)
+ {
+-    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
++    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
+     const TypeInfo accel_cpu_type = {
+         .name = name,
+         .parent = TYPE_OBJECT,
+@@ -142,5 +142,3 @@ static void register_accel_target_type(void)
+ 
+     type_register_static(&accel_cpu_type);
+ }
+-
+-type_init(register_accel_target_type);
+diff --git a/accel/accel-internal.h b/accel/accel-internal.h
+index d3a4422cbf7..2b6f58526d3 100644
+--- a/accel/accel-internal.h
++++ b/accel/accel-internal.h
+@@ -13,5 +13,6 @@
+ #include "qemu/accel.h"
+ 
+ void accel_init_ops_interfaces(AccelClass *ac);
++void accel_register_cpu_type(const char *cpu_type);
+ 
+ #endif /* ACCEL_SYSTEM_H */
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 1325b23864c..fdfa85179ee 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -25,6 +25,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
++#include "qemu/target-info-def.h"
++#include "qemu/target-info-qom.h"
+ #include "qom/compat-properties.h"
+ #include "qapi/qapi-commands-accelerator.h"
+ #include "monitor/monitor.h"
+@@ -32,6 +34,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/core/cpu.h"
+ #include "accel/accel-ops.h"
++#include "accel/accel-cpu.h"
+ #include "accel/accel-cpu-ops.h"
+ #include "system/cpus.h"
+ #include "qemu/error-report.h"
+@@ -124,6 +127,27 @@ static const TypeInfo accel_ops_type_info = {
+ 
+ static void accel_system_register_types(void)
+ {
++    GSList *targets = target_info_qom_get_targets();
++    const TargetInfo *ti, *prev_ti;
++
+     type_register_static(&accel_ops_type_info);
++
++    for (GSList *l = targets; l; l = l->next) {
++        bool duplicate = false;
++
++        ti = TARGET_INFO_CLASS(l->data)->target_info;
++        for (GSList *prev = targets; prev != l; prev = prev->next) {
++            prev_ti = TARGET_INFO_CLASS(prev->data)->target_info;
++            if (g_str_equal(prev_ti->cpu_type, ti->cpu_type)) {
++                duplicate = true;
++                break;
++            }
++        }
++        if (duplicate) {
++            continue;
++        }
++
++        accel_register_cpu_type(ti->cpu_type);
++    }
+ }
+ type_init(accel_system_register_types);
+diff --git a/accel/accel-user.c b/accel/accel-user.c
+index 7d192306a65..85ede70e5bd 100644
+--- a/accel/accel-user.c
++++ b/accel/accel-user.c
+@@ -9,8 +9,15 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
++#include "qemu/target-info.h"
+ #include "accel-internal.h"
+ 
++static void register_accel_target_type(void)
++{
++    accel_register_cpu_type(target_cpu_type());
++}
++type_init(register_accel_target_type);
++
+ void accel_init_ops_interfaces(AccelClass *ac)
+ {
+     /* nothing */
+diff --git a/tests/unit/test-multi-target.c b/tests/unit/test-multi-target.c
+index a91fe8e6d07..9ace553ca05 100644
+--- a/tests/unit/test-multi-target.c
++++ b/tests/unit/test-multi-target.c
+@@ -15,6 +15,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qemu/target-info.h"
++#include "qemu/target-info-def.h"
+ #include "qemu/target-info-qom.h"
+ #include "qom/object.h"
+ 
+@@ -41,6 +42,18 @@ static void test_qom_types_are_unique(void)
+     g_assert_true(targets == target_info_qom_get_targets());
+ }
+ 
++static void test_accel_cpu_parent_per_target(void)
++{
++    g_assert(targets);
++
++    for (GSList *l = targets; l; l = l->next) {
++        const TargetInfo *ti = TARGET_INFO_CLASS(l->data)->target_info;
++        g_autofree char *name = g_strconcat("accel-", ti->cpu_type, NULL);
++
++        g_assert_nonnull(object_class_by_name(name));
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -55,5 +68,7 @@ int main(int argc, char **argv)
+ 
+     g_test_add_func("/multi-targets/qom-types-are-unique",
+                    test_qom_types_are_unique);
++    g_test_add_func("/multi-targets/accel-cpu-parent-per-target",
++                    test_accel_cpu_parent_per_target);
+     return g_test_run();
+ }
+-- 
+2.55.0.windows.3
 
-If you would rather do one of these, tell me and I will send it:
-
- 1. Remove the automatic hub.
- 2. Keep it, but only for the USB 1.1 controllers, ohci and uhci.
-
-Thanks,
-Jamin
 
