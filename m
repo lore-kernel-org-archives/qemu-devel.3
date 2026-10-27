@@ -1,77 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C60606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E39606A31E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=VtOrzxQ7
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=v1DCRse4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLja4-0002Q8-50; Tue, 27 Oct 2026 11:59:20 -0400
+	id 1xLjaC-0002kR-0B; Tue, 27 Oct 2026 11:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjYx-0000zn-IQ
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:13 -0400
-Received: from ci-2002l-snip6-5.eps.apple.com ([2a01:b747:3005:206::76]
+ id 1xLjZ1-00011b-Bv
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:16 -0400
+Received: from ci-2002k-snip6-11.eps.apple.com ([2a01:b747:3005:206::71]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjYo-0005nA-Q1
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:05 -0400
+ id 1xLjYx-0005op-C4
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:15 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPS id
- 019C01801A4E; Tue, 27 Oct 2026 15:57:58 +0000 (UTC)
-X-ICL-RepId: 01a17e15-2afb-7669-b40a-3d611e7f6f9d
-X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQAZYHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
+ 8C38618004A6; Tue, 27 Oct 2026 15:58:03 +0000 (UTC)
+X-ICL-RepId: 01a17e15-3ce4-743c-aa46-33268b46bdfa
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQAZcHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793116681; x=1824652681;
- bh=/Bt7hZ0a2VCu4N7RYTzyil4HINn1w0nuTQWoluniCN0=;
+ s=sig1; t=1793116685; x=1824652685;
+ bh=kXKzF3JxfE1w6BI+AtlgIv6wP7f/bEIQ3Z2YLqyjVko=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=VtOrzxQ7NbqKhvV7WPu12iOEcnHiui9K8H2IHAE7FGamCpAXDkXG0BjDiqJ7qWDZ/xfCKd/qgI9TRCiw8DLOw6Cygjg65Eg26h6Sc6NEyM30cM7xwM8k1s9kv8EjyMCLOzFlJODJeJR1TYZCdbizhiCM+rA+8RM0zMRCJ9BtQeGDP+1lI0/MTZ9DvxpnfL/uxM9GMokn9C0dMRALNcglatr+PhKyMJysYpGpdFu88GOHNClDvuNMvBX2Dq7xmRmztIc1WRHTzGLIpkzf1QGRKWtsYsqnOUpAwxgXRxhQCPUVeC97y5F3W5j8gqTfa84viNxRdlY0qmBD9He+hqNZsQ==
+ b=v1DCRse4zVEHeJZakipaeFnAQjgRbwvgW0H+MAMG9Pevh53GrvSQTLZHP3Mq7ZDvIU6iR6GXHRmAR6uqkbPzHE1zuGp6TyQHm5l4sW83rsiK0NOtcg931Nzbf+0dAmH6FPJPn8egt+PaLFsjy91N9OS5s+K7dCYMWBYDXHyMftKLwojdP0eHlPe4yPeAglsl52qIlfaveu5cLTG19rFQqPJK3oKtOLS1wUfKjdXFVE4z1VcmiADfmOfE5Zws2PbY1T7wfgFhs5kKwa/ogNm+zHTOnkKqkB5tnIAR24PEkqZjcxFQ5QSo0zRj9QKZFfuH2H8wYy9m9FRJcJPlHMpDhw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPSA id
- 310D218010BC; Tue, 27 Oct 2026 15:57:57 +0000 (UTC)
+ 0E5AE180015E; Tue, 27 Oct 2026 15:58:01 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Kostas Chatzikokolakis <kostas@chatzi.org>
-Subject: [PATCH v2 12/18] whpx: i386: forward the dynamic EBX of CPUID[0xD]
- sub-leaves 0 and 1, not 1 and 2
-Date: Tue, 27 Oct 2026 16:57:31 +0100
-Message-ID: <20261027155737.59271-13-mohamed@unpredictable.fr>
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v2 16/18] whpx: i386: also save debug registers
+Date: Tue, 27 Oct 2026 16:57:35 +0100
+Message-ID: <20261027155737.59271-17-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027155737.59271-1-mohamed@unpredictable.fr>
 References: <20261027155737.59271-1-mohamed@unpredictable.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=acRsXBot c=1 sm=1 tr=0 ts=6ae0ca07
+X-Proofpoint-GUID: _p2AHmLR4nz-NjDpR5X3l2lf-5HLuPKy
+X-Proofpoint-ORIG-GUID: _p2AHmLR4nz-NjDpR5X3l2lf-5HLuPKy
+X-Authority-Info-Out: v=2.4 cv=W9I1lBWk c=1 sm=1 tr=0 ts=6ae0ca0c
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=DGLFwGUCAAAA:8 a=RSavJFEQRcchf7d-p6oA:9 a=4cWXuvdlNTBkoNYRywza:22
-X-Proofpoint-ORIG-GUID: ud3xGrBO3B83400zzdl9KzR2DBUHVnKH
-X-Proofpoint-GUID: ud3xGrBO3B83400zzdl9KzR2DBUHVnKH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfXybd5LVseX9ju
- rvjlWSxe9TrtTemuDn6k10KToEoEz6DnO0H74NbnoEdvBliJNvymscYfyZ6F9oL5NE5tQVLtHS7
- CEBExt9trQvuPgBxSHjb5p2WJ88KFyu4467UsInPyykMnCpwKBs8j7UnOvY5SKxQmu0JId+Igmz
- 4T4aK0RVgkCx/zjdvP6WYLEk6n0pY3A53KDW6tszw0tDTwD2wR5r+mZIyqKpkc+ofRfNACTTFi3
- ZYalur+BsEY8y2SU56rccIjVKWqp0hnkFw6kktjQKQbdA1CASHkDBM/vE5o9HAWQGcgMidDLFE+
- UKTWqtyrrpFa+TF+VMyeZddhqyg+mEt3AHOy68XpkcVJA4KECUZbQO0BsRN89M=
-X-JNJ: AAAAAAAByC0uJ+ZrCULOu1IeC5phFyj2PmSysqofUyGLC23Jp77WGTdP/QQT8iKuKPiteuJUmRjzp5O/ZDwqBvDSgdXobBG7BwFoqtSV9YzctPiUij80/tzTC9faD+1YwFuGt6kKS9DJP0oFxSmr9gnLU3BrgZHUstIpe0vqL2B0Sw88/fShtNNXnRb+lT5dGCRKgX04EdftEqnjAafWvsR90UHN104vvaLcokXKmkvmMaRTwRxHDaFSmT2kc9wSntL+hixlG9f/2+p3BxGNy1OM6cJrQkyQ3hSJ2oCEPj2yuDpsU6Iov5MrJ/NhQm6p5rWW8kaB0AlKyyV2G/y8y7VLc+W242/kZhKiTffcJ4FpsLeI/OYyhZc+ifHFKyP3hgSmY90xn7RIB7JlGf5owkwig6QU28Mh3ar0Qaak5CIZXJn5YbunqaJQsR8cs600AA3kDm5Pt073QXcrRt3PBohKjUc/KgUHqh2SDO1+CsYaJzV+S4s9Yb7RWpSV6TX0xy21zf3yi3pNNJ1JesJMEMdTTZOKkPWXGn4pdjWtIwH0rZdomFWd5JySPaNXMd35ubm7DKyK08A0eVyIgHMv3WvmEUc9WcclBJgkIs8nDPm4CFJxRducT7pZ7nik1JbiAviSEWkcMqciGbWtSH2DgWvRSZczrGMnCN6IDCS8bEvKjManjI+QZX99Tzt2OjDIE9/b2ZsYowJoE5mO2vEtN0Rz+TrAsXLbtLLFZ/k7T31B09C7C+qf1y0QofSue/I07hU3m+/95P1w+Gdl9QenDlxhbk8ML87/SmjeAHvQWAZoZX52WeAejMaLh0TKl57yu2EUgqcVL2Wj6+MB1rr09zrUGWkkqjmf2Feei93eUcssVuVfYY+QDOg3
-Received-SPF: pass client-ip=2a01:b747:3005:206::76;
+ a=3nrfYwkK1g5-NatN6WYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfXxLt4zApCY/lZ
+ MyLl0hTzuK/gTwuehRdFXaIq6OtPTxtw9eamGPhPMvKArWdIX8o7umUMhxOWQaz87J94doUS2Ti
+ ftmvDQGCLfIJg8AZt4Aqs0VI0ygK6CO7te71+lYWhIYiSThJrUFli6mbKAy0Fx+ZK80v7CrVx7d
+ 7bgcA7w2ZxPDQT5XN1TrqEeAjbFAGgH9SskXK/YHGG90aalGCfg5VtfEaVKqosyJVyJXntDBnbf
+ SElzFohW7GquNdnpQreHGSLKJrc/xFEpDcLblihEgUnWBzGlJYxSgzgKbR+7QPBqvQrC6agHsxb
+ Z1RBgbDmWTtkpML5C48cc9e8BT4VD0mE1DFp2N8niSc66YkrevLAvgN1lsdD7M=
+X-JNJ: AAAAAAABs4pI86vesmbGtvks070lj/wrqm6LNmFk2oe1AzKCkYzXS879yYa/dIgWKUq48zfo33VFY+lfJ7f7/7ynYTQGqlPFSB9qPqaETXt6qcP6qb7qSiIyUeG9KIFai46b2y7JQjH9vErBnYw0SGmnOmu2fX4PJ3hOsrCNPykhbqeQ4EK54cpSdT6rkXweNYC2PRGyhpAXMbmpknYsBxJ33tJUGnQLBQTakck4MGknMrjFm8SxntMKgGigg+VLesBgZAyJX89EyzKf/WLLV9bAOAGLAiJisB7je5QWB5hYQVuCjcsEocth/04hvlygq0M9k7ps8aFSAYvQ7UMi/oloGXi0YOjIdNsohKnzTAyLwCMuqe5A6lTFcciMnLEibj6/K8Ae5Y3nwRSxeUIKTMUW3km4jIaHI4bQBXR+kmDsSVyVcqnH7o85ULq5uNvjkN5Zhv0sz107vxi2dtCmXVCj7TJomNYMsEzT2rIVC0vYGOPdKb0KAVC4vPI6uW3HzVysUxBZYOR8CJVyW8DiQyi85jhZLZ93v/8+pRdDbb4cO9qYKqVMzcIIvE46Psv5aTgWAdH5eoKcvPXAEbJD+t9u3KtAjECTcRah4DOl61bEkrSM/lq9JvtgRwQ+MDUMPZbK/WOFkFR8l/duV1blOBQiT4b2VOeX7Qzn0ChaBupvJTaWoJ4eXHHJQjbBPPnVX2FrTk2k0Zqb1x1+sXFxYbfX0Esr32XggHtVrTOKQEstcWFwIOR3nAw4JBguxgLgOlo/Cu30OwWntnAijWmAnba3G5z7BroH+kBo1R7rhfIf0gNL/JA=
+Received-SPF: pass client-ip=2a01:b747:3005:206::71;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,73 +89,86 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Kostas Chatzikokolakis <kostas@chatzi.org>
-
-CPUID[0xD,0].EBX is the size of the XSAVE area for the guest's current
-XCR0, and CPUID[0xD,1].EBX the size for XCR0 | IA32_XSS: those are the
-two values that depend on guest state. For sub-leaf 2 and up, EBX is the
-component's offset in the standard format, a constant.
-
-whpx_vcpu_run() forwards Hyper-V's DefaultResultRbx for sub-leaves 1 and
-2 instead. Sub-leaf 2 is harmless: QEMU's own offset was read from
-Hyper-V at vCPU init. Sub-leaf 0 is not: QEMU computes it from
-env->xcr0, which WHPX refreshes only in whpx_get_registers(), never on
-a CPUID exit, so after the guest's XSETBV the leaf still reports the
-size for the reset XCR0, 576 bytes.
-
-A Linux guest on a host without XSAVES takes that as its kernel XSAVE
-size, fails the consistency check against the size it computed from the
-component offsets, disables XSAVE and panics on the fallback path:
-
-  XSAVE consistency problem: size 832 != kernel_size 576
-  WARNING: CPU: 0 PID: 0 at arch/x86/kernel/fpu/xstate.c:638 fpu__init_system_xstate
-  x86/fpu: XSAVE disabled
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: 0010:fpstate_reset+0x1a/0x90
-  Kernel panic - not syncing: Attempted to kill the idle task!
-
-Every CPU model with XSAVE is affected there (-cpu max, Haswell,
-SandyBridge); models without it (Westmere, Nehalem, qemu64) boot. A host
-with XSAVES boots because Linux takes the compacted size from sub-leaf 1,
-which is forwarded; sub-leaf 0 is stale there too.
-
-Reproduced on an Intel Core i5-4440 (Haswell) under Windows 11 Home
-build 26300 with QEMU 11.1.2 (the code is unchanged on master), guest
-Linux 6.18. With this patch the guest enables xstate 0x7 at 832 bytes
-and boots with -cpu max. An AMD Ryzen 9 7900X under build 26100, not
-affected before, still boots with the patch, enabling 0xe7 (compacted,
-2432 bytes).
-
-Fixes: 79b3cb1f0145 ("whpx: i386: introduce proper cpuid support")
-Signed-off-by: Kostas Chatzikokolakis <kostas@chatzi.org>
-
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ target/i386/whpx/whpx-all.c | 43 +++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 4d4ad0919f..065cfacf3b 100644
+index 26ca879c89..d2cd8e8001 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2733,10 +2733,14 @@ int whpx_vcpu_run(CPUState *cpu)
-                 }
-             }
+@@ -101,16 +101,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
+     WHvX64RegisterCr3,
+     WHvX64RegisterCr4,
  
--            /* CPUID[0xD,{1,2}].EBX are dynamic depending on guest features. */
-+            /*
-+             * CPUID[0xD,{0,1}].EBX are dynamic: the XSAVE area size for the
-+             * guest's current XCR0, resp. XCR0 | IA32_XSS. For sub-leaf >= 2,
-+             * EBX is the component's fixed offset, which QEMU already reports.
-+             */
-             if (vcpu->exit_ctx.CpuidAccess.Rax == 0xd) {
--                if (vcpu->exit_ctx.CpuidAccess.Rcx == 1
--                    || vcpu->exit_ctx.CpuidAccess.Rcx == 2) {
-+                if (vcpu->exit_ctx.CpuidAccess.Rcx == 0
-+                    || vcpu->exit_ctx.CpuidAccess.Rcx == 1) {
-                     reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-                 }
-             }
+-    /* X64 Debug Registers */
+-    /*
+-     * WHvX64RegisterDr0,
+-     * WHvX64RegisterDr1,
+-     * WHvX64RegisterDr2,
+-     * WHvX64RegisterDr3,
+-     * WHvX64RegisterDr6,
+-     * WHvX64RegisterDr7,
+-     */
+-
+     /* X64 MSRs */
+     WHvX64RegisterEfer,
+ #ifdef TARGET_X86_64
+@@ -126,7 +116,12 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
+     WHvX64RegisterCstar,
+     WHvX64RegisterSfmask,
+ #endif
+-
++    WHvX64RegisterDr0,
++    WHvX64RegisterDr1,
++    WHvX64RegisterDr2,
++    WHvX64RegisterDr3,
++    WHvX64RegisterDr6,
++    WHvX64RegisterDr7
+     /* Interrupt / Event Registers */
+     /*
+      * WHvRegisterPendingInterruption,
+@@ -686,6 +681,19 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+         vcxt.values[idx++].Reg64 = env->fmask;
+ #endif
+ 
++        assert(whpx_register_names[idx] == WHvX64RegisterDr0);
++        vcxt.values[idx++].Reg64 = env->dr[0];
++        assert(whpx_register_names[idx] == WHvX64RegisterDr1);
++        vcxt.values[idx++].Reg64 = env->dr[1];
++        assert(whpx_register_names[idx] == WHvX64RegisterDr2);
++        vcxt.values[idx++].Reg64 = env->dr[2];
++        assert(whpx_register_names[idx] == WHvX64RegisterDr3);
++        vcxt.values[idx++].Reg64 = env->dr[3];
++        assert(whpx_register_names[idx] == WHvX64RegisterDr6);
++        vcxt.values[idx++].Reg64 = env->dr[6];
++        assert(whpx_register_names[idx] == WHvX64RegisterDr7);
++        vcxt.values[idx++].Reg64 = env->dr[7];
++
+         /* Interrupt / Event Registers - Skipped */
+ 
+         assert(idx == RTL_NUMBER_OF(whpx_register_names));
+@@ -1070,6 +1078,19 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+     env->fmask = vcxt.values[idx++].Reg64;
+ #endif
+ 
++    assert(whpx_register_names[idx] == WHvX64RegisterDr0);
++    env->dr[0] = vcxt.values[idx++].Reg64;
++    assert(whpx_register_names[idx] == WHvX64RegisterDr1);
++    env->dr[1] = vcxt.values[idx++].Reg64;
++    assert(whpx_register_names[idx] == WHvX64RegisterDr2);
++    env->dr[2] = vcxt.values[idx++].Reg64;
++    assert(whpx_register_names[idx] == WHvX64RegisterDr3);
++    env->dr[3] = vcxt.values[idx++].Reg64;
++    assert(whpx_register_names[idx] == WHvX64RegisterDr6);
++    env->dr[6] = vcxt.values[idx++].Reg64;
++    assert(whpx_register_names[idx] == WHvX64RegisterDr7);
++    env->dr[7] = vcxt.values[idx++].Reg64;
++
+     /* Interrupt / Event Registers - Skipped */
+ 
+     assert(idx == RTL_NUMBER_OF(whpx_register_names));
 -- 
 2.54.0 (Apple Git-157)
 
