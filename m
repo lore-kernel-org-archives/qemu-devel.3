@@ -1,99 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48391606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8276C606A321
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=nyl0r0/C;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=P72bw3Pt
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=IyEckdRR;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=X8FFSeFV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmmN-00016u-7Z; Tue, 27 Oct 2026 15:24:17 -0400
+	id 1xLmmU-0001GT-KR; Tue, 27 Oct 2026 15:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmm3-0000xl-8n
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:23:58 -0400
+ id 1xLmmO-000183-J0
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:17 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmm0-0001m1-PI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:23:54 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1xLmmL-0001nE-Au
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:15 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIHRjq2639280
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:23:51 GMT
+ 69RIHODZ3553869
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SYnvCRTWeVvqgqCOuRt+J26szjQXnl3iQtZUxla0j+E=; b=nyl0r0/CGfLpktGc
- 2aZO/0NOCZQ/pnTAGeD0JoVQP7klKSP4WyH/KXSWEyZcG1pAi6Re/zD6wbMuX9+1
- CPE1OD5TTYV1ihfaP4nEcRhXtlg3aZpJ7gIB5EOilegtwAeMeqAb+1HXMd5sIpMD
- aDZgih62d0x8kLbtFdi6RHaVJfckx5SOwKCwwVq1witX9+8v1C1BHSg2BYf1ulXi
- +j+GhYEZLz0J5t8vJKcsPqRu3S4JblcUhMG1zXDXAp6UzggV9sFXQl3fNpf/gfXp
- QncyFcCZxL37MkmhhDAFWN72Ps86KLyAY78dRj8f2/qP/1FdvG0bNbT9fUNYabsM
- Xp+rPw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjqf5u1gd-1
+ T8s0fnPifKAzRNUMw/DZqxbEDA4l//VDmIcbiHGjQ1Q=; b=IyEckdRRpMiTUL8E
+ 6ZdJ2oLTBttO5r27Ak/GY1i5epSG+snMjUHYqPkifVu26BGjD2JWX4hXgo1Z4tXW
+ pY80EWVIdb0CQD/u/lX14h/00DAo68zm3ghHIZeQmtNcjNXshKxHRqoGDIr9KJ56
+ 7jGD4Trmvnuhe5wzdb1n7ajTyQ3rAXixO3giZ0rMET4VwKpJ7Lv5vd0YeypxiACH
+ SQpYCc+6IbeK6DvdxV9U8afK1NkygTRZQsTdwRmwk6uLRoWLTzksktvEEKpiCVxK
+ w/fj6Al3uJ6Mr4frab3ptjQRVyAPncNI8lWMyDJOjX0sGJiq+rq5No9DMqAZU+TA
+ 2MmwSw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjqw22wcr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:23:51 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5337b591609so4707931cf.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:23:51 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:12 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93f2373e9b4so13759185a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129031; x=1793733831; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793129052; x=1793733852; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SYnvCRTWeVvqgqCOuRt+J26szjQXnl3iQtZUxla0j+E=;
- b=P72bw3Ptwjjvz9l8fQUCPaKJZPjnfuVKMErLUyfLCbChbG8bMuzAI84J3EfdzJlmfb
- JhgxuCE4ODKKooUUsa4SSFLYZjB0z+sBETJcE6NSuDpYoY3d2SxLVH1UrJmhLbjevc73
- qV3abP8WT3y0TcJ2txlptAwwCAlPW1TtfrXp7lmtl29p/mKP4r1cl6wIvPi5NEvFycbt
- /4P/RNTzUc0+5ZpcEO8S7EObgxqo86A3QkU6ni+90exepRwEx2g82Wh2/F3+M+bOVV50
- uyCMtGqaMXmVPB+mp95vNrB6s88iDiVWEzZqDkbFBbcAAeJyLPIbUaNXYw9axdXG3vPQ
- 4g5A==
+ bh=T8s0fnPifKAzRNUMw/DZqxbEDA4l//VDmIcbiHGjQ1Q=;
+ b=X8FFSeFVb3TQtB9+7o+UDGW/IiaoaNCja5wU0gvS1UEO2GTz/oqbHx8fMAB2ddh2uG
+ 6c1700vvccO7fluFto8gcmE5N5dVeRsjnyDSJppDnX8zDi5qiAAJCXAL09FO7ogJ1Uiu
+ PWevJmLmvkL55kg+8y9bMy8aPYhaek3EX+y4ONlx4shFr2wb12K1ikgnowyWoQvPVV5W
+ qsx+Nkco0xPfWwKyDuuqnY88WDTmpV8Dqaq8HyWFc/2+qFJowfUYENqbW32atMW6/hhn
+ CikuqaUPdyICeFqLM+Eg6+UJaEXSJ+LrnbAngepv3cDQcRUGMPYiwImGpXDHAs2/Wspv
+ ZkUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129031; x=1793733831;
+ d=1e100.net; s=20260707; t=1793129052; x=1793733852;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=SYnvCRTWeVvqgqCOuRt+J26szjQXnl3iQtZUxla0j+E=;
- b=GlbZjxSAavRVsokeIySAGGPnFkbGmd2sKNDvPC2jby/sYSGZcp1Di6s1nwY+rkE/f5
- mBGHQBliGkjlDDSX2/teY2KhOq3VfqwdFT+T8SURy0Zl8/m+ZujvnkV25jK+rpLQtaAK
- onF8Msp9uMD8SP55xs618Mlb6VXD6XXfNqhbLQGQd9ZOZfIqQ0nqZf5qlQO5eUgrlF0U
- 8IDIUsA5w2c+QROID3vbSbpgDqDbgBT5AXB3D5ZYDiCRM82+AV4J8ZDrw4vW16nsQb8l
- XeCvhLrGn0+4tr84DsVzFcij+prNYKRMobsjd2zB6bryGR1BK1ZXrp/O5voTBV65LuP4
- VQ0Q==
-X-Gm-Message-State: AFq9FYIhghxwL1/AdXQPKbhO7KoqyBhaNooW9rvH/PPRR8KoBZyUDpzN
- ZlndXi7JrTSdX5JpzU0df2nCSNFQvt739q8sQxSM/2EVm0Oh+F+tD68KqIv448I2ca1doH0uTSq
- VSrxO9EN4AyjvOuUNAR+KZGt2LR9KJeeQwW2aaIGm5dTil5kgQbULT8iAE3XzCLXIlA==
-X-Gm-Gg: AYBFou3xBpN9GB8M70Y/9wBYba+Xjq+U9pYvD4D1UXttNk4tbS3hbr6UwX46MC1iyg1
- HpmfG6bgze7FeNH1TN9i8tWg4CFelRBlcYZ4htkjcaFUEXjvVf1UeggJJKadZ3YEbr4sSzdLxnf
- 3uR2xDX2DhHRLpvQ/RylALy2urqIJH8mU5NtaM0/itOdMspa0dhePz3rWQ0WrIYyU97pVUv/V7Q
- i1pVu8dCzcFdMv6a7mdwGiOHjwdb6AJEb4adLtwxq2V6Ng4Yxql7pjB6+CxkoBEKcORMTG8uSA6
- LgTxtdpH7GnPwlnC/ekZIFbZEU6YIx0ua5NMfFgyFyU/+bTw+tWlZ8UU6DhjyACf9/X6jwVbidF
- ppoWcegXDepWr6NUhBgRbenKYqWjg4ecQUHwt/R981byzu8my0gzEU12M
-X-Received: by 2002:a05:620a:2b4d:b0:93f:32c5:69b0 with SMTP id
- af79cd13be357-940ef995d64mr1618348885a.60.1793129030925; 
- Tue, 27 Oct 2026 12:23:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:2b4d:b0:93f:32c5:69b0 with SMTP id
- af79cd13be357-940ef995d64mr1618345285a.60.1793129030389; 
- Tue, 27 Oct 2026 12:23:50 -0700 (PDT)
+ bh=T8s0fnPifKAzRNUMw/DZqxbEDA4l//VDmIcbiHGjQ1Q=;
+ b=ERn4SUY8QQSltrad71xWs9y2mEjA4yX9HEqmyjkJ9omyi062hEcSqy9tmtf+ahq0ca
+ 8n5hGLPBAps73D/KuUSYvTrZ05NwH8rNntZqI1+O/LFVJrj2qVy32zyeCR8Xuu6GS8Me
+ MUVddnno91na1s4eNsJ/qxjI2TFkUtNSXW2EQxGAfLdZhRllNcyNBJrLblx3oQktK/1a
+ FttL7HsUL4gKH0jUBBjpJeIzKSd68Co8QUD4L+2Sp51HKqneA0ncjNwi2eDFvUiH2DbH
+ 88aNXdp7lCbTDu0ckB24rVMawByVJN01KLupwy6thleHRxLA78FFBLWUEu6njngRre9L
+ zR9Q==
+X-Gm-Message-State: AFq9FYInpq52qqgGtpej2LL78F5vYYTjKICyeNYaBlnpxjgC1kpDgFaK
+ Cr7E7LtGpnRzopzeBnullxBj2RR0f8AlP65iJOi3VwkagPKVjj1dWcXKZ0ndpnjQSljPoggg+Ty
+ j3FGspD+TFja6TSKucJZ/l7dxiQtorIIEgLMQ/iS8nrI4drcDrzoWC9C+caMpCBZOWA==
+X-Gm-Gg: AYBFou2J+WWXFryHsQ8Az/bjcRBcCEoBEHYF/K5Vx4cuT/2QTkTuBGqbw8fN+Mb+m0n
+ a01J9RqhdKrkGZfhXpbhle06fi6UgDL9grY2PayWce5pqtW6PiICWMWLnAmOv2hKNX4laxc1k4I
+ joKldJqizdYvc6I/jTl3jhrckINmg9Xj+9+EmGSjdH8cWJpYMivFUe5yBQdHQ7ZXpHHVks6ywB1
+ emQ8Y2ngSRJ3tEdaqF0xITeizjqaO0TPODMBZYM6xc7751aa2U8fF82lla8jBKdsG2FA5o3JPPe
+ U+InGCOap6HYKvbU+1dvgl4eHng94+gpkuBHvSy0V8jl2vbXjU2SLEKW38Lo4BLxRNQWLzBIrLh
+ AhpWjzNMwVII+iam/1RQ5V2CRh1SApcD174Me6d9/IPNygJCjLRa1xlEC
+X-Received: by 2002:a05:620a:4413:b0:93a:2611:270f with SMTP id
+ af79cd13be357-940ef913c7amr1584500985a.13.1793129051723; 
+ Tue, 27 Oct 2026 12:24:11 -0700 (PDT)
+X-Received: by 2002:a05:620a:4413:b0:93a:2611:270f with SMTP id
+ af79cd13be357-940ef913c7amr1584496585a.13.1793129051202; 
+ Tue, 27 Oct 2026 12:24:11 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc3bdbsm20024947f8f.19.2026.10.27.12.23.48
+ 5b1f17b1804b1-4a94e6b8290sm2952895e9.9.2026.10.27.12.24.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:23:49 -0700 (PDT)
+ Tue, 27 Oct 2026 12:24:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/59] scripts/checkpatch.pl: Don't complain about spaces
- before Fixes tags
-Date: Tue, 27 Oct 2026 20:22:42 +0100
-Message-ID: <20261027192341.9197-2-philmd@oss.qualcomm.com>
+Subject: [PULL 04/59] hw/watchdog/wdt_imx2: Fix handling of write one once WCR
+ bits
+Date: Tue, 27 Oct 2026 20:22:45 +0100
+Message-ID: <20261027192341.9197-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
 References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
@@ -101,32 +101,33 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfXynpVZ7w8TZMH
- OuT7HPJWh9YfsoOF6SuGUFStdfeJLZUagl/F9JFL7K9vsz3MqXs1EfLfAW/5vYCs/iZXSgg3dSK
- HZuj2WFwmUtipX+vQ8EcOwGkpPECzA0=
-X-Proofpoint-ORIG-GUID: MGfvt3AzC8SprHIqfXQxgepMXpaalVAW
-X-Proofpoint-GUID: MGfvt3AzC8SprHIqfXQxgepMXpaalVAW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX/LfJxL+yCMoC
- bMjU6eCDrcRWAiB6qQEE0CK10sEdWKMMzgkuYKSSNQdirlnBHzDMG4/obo7Lj1N9IK9Wv5mXwhs
- 5fGisW5juIvypQXktmZTy6NwzK5Jy8WinVew1xWtkGTsbJv7NkjTGetlyeZUHNWsuL9AYSl0iM4
- j+XyOmZdddJto9xm/+RuXy0Ia6SeHhVp2D3fdqhrrdfLLaDlKF/KgwXFN9JUr8H8VwhE7X2jSG1
- iFRY1xBtvvgsL49roaaCgFmTmL4SqUi+DJk4W2r9WpVCo9k/MLNacL3XT7lD/JnpeaWgZNZgoYz
- yykLS/uMbrp+3gyR1OsR2rCaxLAEyOnbLZLOl3xBwz/ruNgI3SW6U80AOS4iEV5XUIGbHxmF3Bm
- YPkJ7gB1eXNIZFEBT+12hlvtIFHW755W4w2JxqgA2R9oKuZdwvddJiaNKYfufl/TCnh3nHunTBs
- PKolbH2RBYjsPFqpTiQ==
-X-Authority-Analysis: v=2.4 cv=UOFIjyfy c=1 sm=1 tr=0 ts=6ae0fa47 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX6AUgELWh5iaQ
+ h4FW0fdawalz+/s6dyeSYSBNW6xutW0FBuueGSW9DpPOtnuLGKP4E6IbkwjlA9lS2+341wFTtYK
+ grbVxfsZqF0U1ApONkldkPzWl1aT0jSe6MKStLjGDI4v1I8x1RE6NqYPHFm+O3brWe5T+iB3jQG
+ fldrIWsHT2fH4EGsxLDAQYEiCmB8E8DXjV4s1dmMGZbjYnwtyy2qktw80vhiNY+d8BiBafwywiU
+ J7qrvrw0CucQAG3FOGKOm4Kkg+a1WnzmaSBgNfaR2OWFJ7VHEiT0wTipP7Tj6wArPA+Gmy4Pqzu
+ IRGtA3FhlCsq7lv6pbV3aFBIlSQRGXydyz/LjoWhCDsHygauyfhF6rjIZxexpLopVhIXbH/J35X
+ qM2huJt4pspgT1anO0Ev+j8Kay0U0vw79xIF1sTv7bxMrRjAMD738DcNyQNtMYt8ZvOyfATpxBX
+ if5Fskp8AMei6lDWO8Q==
+X-Proofpoint-GUID: EZsCxf47i-A-DFfrkA_okgMcAKwiqneR
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX7mafzEQ+DDL1
+ Yc7Cai24DW/+s6lwKVZP3sas8/IwCikUPJ5Gmm0wcW9uYbusmceDhXXP8IiC5ldi6v7lqKaDb3W
+ 2/JxyFEWs2BCgoNgI5kazWNFCxnhjLg=
+X-Authority-Analysis: v=2.4 cv=PsYG/AM3 c=1 sm=1 tr=0 ts=6ae0fa5c cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=D_gin9fTjPLjegOP6woA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=FRSEYCzRAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=OQTJR_iXj6gm-c6kepUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=H4N_Y-AU75W7NKDNhZlT:22
  a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: EZsCxf47i-A-DFfrkA_okgMcAKwiqneR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0
- spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 clxscore=1015 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270077
 Received-SPF: pass client-ip=205.220.180.131;
@@ -156,44 +157,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The checkpatch.pl script insists that Fixes tags are at the start of
-each line of its input. Although this is where they ought to be
-in the commit message, it is not where the script will see them
-in common usage patterns like
+In locked state, the WDE and WDT bits of the WCR register are one and
+need to be preserved when written. At the moment, the logic is reversed
+such that all but the locked bits are preserved in locked state. Fix
+that.
 
-  git show <hash> | ./scripts/checkpatch.pl -
-
-because 'git show' prefaces each line of the commit message body with
-four spaces.  Allow spaces before the Fixes tag; this matches how we
-check for e.g.  Signed-off-by: tags.
-
-Fixes: 910e1d41be6b2 ("scripts/checkpatch: validate Fixes: tag format and commit ancestry")
-Reported-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-ID: <20261023152357.1614817-1-peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
+Reported-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Bin Meng <bin.meng@processmission.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20261006083445.30362-3-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- scripts/checkpatch.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/watchdog/wdt_imx2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 5df266acb172..82f62f602125 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1889,7 +1889,7 @@ sub process {
- 
- 			if ($line !~ /^\s*Fixes:\s+CVE/i) {
- 				my $tag_case = not ($tag eq "Fixes:");
--				my $tag_space = not ($line =~ /^fixes:? [0-9a-f]{5,40}/i);
-+				my $tag_space = not ($line =~ /^\s*fixes:? [0-9a-f]{5,40}/i);
- 				my $id_length = not ($orig_commit =~ /^[0-9a-f]{12,40}$/);
- 				my $id_case = not ($orig_commit !~ /[A-F]/);
- 
+diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
+index 3283990bbf88..d897ff6e52b0 100644
+--- a/hw/watchdog/wdt_imx2.c
++++ b/hw/watchdog/wdt_imx2.c
+@@ -161,13 +161,13 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
+         s->wcr_locked = true;
+         if (s->wcr_wde_locked) {
+             value &= ~IMX2_WDT_WCR_WDE;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
++            value |= (s->wcr & IMX2_WDT_WCR_WDE);
+         } else if (value & IMX2_WDT_WCR_WDE) {
+             s->wcr_wde_locked = true;
+         }
+         if (s->wcr_wdt_locked) {
+             value &= ~IMX2_WDT_WCR_WDT;
+-            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
++            value |= (s->wcr & IMX2_WDT_WCR_WDT);
+         } else if (value & IMX2_WDT_WCR_WDT) {
+             s->wcr_wdt_locked = true;
+         }
 -- 
 2.55.0
 
