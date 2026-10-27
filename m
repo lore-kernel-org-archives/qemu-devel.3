@@ -1,86 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F83606A324
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF487606A323
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=CyiZGpXI
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=EJGxu3Os
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLagn-000334-Vy; Tue, 27 Oct 2026 02:29:42 -0400
+	id 1xLag7-0001tK-VG; Tue, 27 Oct 2026 02:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagj-0002lS-Tx
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:37 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1xLafz-0001s6-TC
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:28:52 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagi-0008E6-85
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:37 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2e987b4a710so2717555ad.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:35 -0700 (PDT)
+ id 1xLafy-0008A5-8G
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:28:51 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3ac7842c17dso2132114a91.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793082575; x=1793687375; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1793082529; x=1793687329; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xlbSVgmO7fyxbVew3ULaMAxk1dHnZlCGdOD737Opv+s=;
- b=CyiZGpXIUs94DCZcrZWKHke4o+zCiin4NT4hcojZ1E++qAChPR27q69KThXEMso7l1
- YxK7vt3GLqgz+CT627hggTnG1IapYdRs9Gfn24N3yIl35aRtt3JAJFMqGofJYZQTL9yK
- LUFRXntWHr8tps0j5MBjCa2GXVYazrQbzCuepJEcwVQZvvC6w8jBzfHMI4CiPLs4rpAH
- CzlylryLMuCheXfHwmDcHdEaKcW4fAxp9muAl7qQh3gX23NTZAjnfsag7h+iXdNgZ06P
- hPi8e93Ud/6oVE3YAUld8wUezH6uc7hVFd+DjYFrfdLiDQJYXtiyzlTcjmKKz4V660fG
- l8ig==
+ bh=lyTAbKKelFsHvBAZKXGTTlcNG3b6HkNaMhPtW/7lBSc=;
+ b=EJGxu3Os6w9WQFVMezcsZxDsOS8bODbiPLHM7a52O9oeX96c5H/IdFi79mMDzPN994
+ WEH8+zTeHKJcSxXMbKMerLIQLRDxJJq6xa19tmafmDsCv8VKj4I1uauItp73fAojcmuB
+ 9oOU2sPHnkMdRJy/VznE/hhmtKk1bRLGXJspo48MBKXAbwnnzkKpCT7zG3Xdwu1wWoNY
+ Q6IXUlhef3kDCj0TbuGW/5tzWKN30/Yb6KnvMYA6CVuDsYe6dpEpGPMDa71IMd8zWyK1
+ aKQmqgSZfPipEV42+7pq/EmbO/D1Y7pbduv8MaV+CHCzRMf4xdT7IX1Zvnq7HjJclA9h
+ SJEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793082575; x=1793687375;
+ d=1e100.net; s=20260707; t=1793082529; x=1793687329;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xlbSVgmO7fyxbVew3ULaMAxk1dHnZlCGdOD737Opv+s=;
- b=KCCn4rXCRgC4lY0nkXEbor9k2gZchf0rxgb8FfqS+CW/d1uJdk7apl2NK/hmSST9Kl
- CDVbt1fLZ4UwyfBR7nqt236g1oLYSWuyfk8v48xZb/+L5wlFIZF46qiN+Wz39oGwULG7
- C46iLzsvlvAaqOezx8nh7pu+ipvKx+hRdyWqZP5pDMUZyxZeCJrCvhh8tEn0h1P86AJA
- tiYiuC6hx89/6x+LGWHWzBRVnSX4UP6IGY29vVOdnso9Uq9x9krusT6sKUbdhQmbo/Fi
- 6WH0dEZZS0l1PSldd8DVU0PT9YCSc2O3BbB052D+Hm9FNoJTf0eiBovv7yazyJkjmIei
- dUqw==
-X-Gm-Message-State: AFq9FYJ8hm/zvTfQ5BBFJZDBc8Rwt6uckpr+PDy/OTCct10Ntg7fJH+/
- GlOvIiCNzZeF/a5T0WOMXrAZTBlz3L/XXawZI0IhvXOsq+m4V3Yb+troWSI7cA==
-X-Gm-Gg: AYBFou350Ot4lEYVzXsIqwglVKugHK5w4m1UtjDuDOHlUznTlflGfLIVW1daKQLASJT
- auZvctsJF+hS+gFXjRQ8uLwhxsyyfgGTZmA/7lNYT0mQejBsZPckI1le3xYGi2pWCSzCMUY4f27
- xYyIx+J5xiX9gOIC3lSuiSi2aL71PbrjTQbG/S1BNMHjvuw7ki+Sf8ufdqYZCEb2YaSQAJzNcP2
- BSNRFxHOD8U8D2maiveGQov5LVY4sbC2t7BwxsHnW3LKuJQ9RuZn8gD1lDt7Y9gbwKMh/KXM95V
- Yq8tTmQs0kQBChzX1/wjpAtW/OjO62HgO+TOVXpS2IZfLcPxKkIj8ignPovJ+27MGb/PHFZhEZJ
- m1oIrTjCnAnYfsn226Tcv/CZHQ/sUeC1IU/NYeihnCMdLLC9gnugjH1mPfWjmNbSSHnfe1T7J2x
- 6mQLT+Q2g/Z6EK1i9tUQxZoVDOuESZf6t9REVYPViV9UkerT2BSln/kXqS8npU/Fl4IH8cfFs1h
- C9hYxpxTY4Co/FbeP0Ah/vw0FJ/RsKnow3DUwYsTZP3P+sSk9RpGqhhUPFGANRexYb0AdqPcw==
-X-Received: by 2002:a17:90a:d603:b0:3ae:3e9b:5265 with SMTP id
- 98e67ed59e1d1-3ae4029a8f9mr837355a91.26.1793082574821; 
- Mon, 26 Oct 2026 23:29:34 -0700 (PDT)
+ bh=lyTAbKKelFsHvBAZKXGTTlcNG3b6HkNaMhPtW/7lBSc=;
+ b=paQsSdykgcAEdabl6Wya4qgQLASUFB02xrkyRGjBw4PT9Zzg7vj8BSFWiiVOO+UqP5
+ GArSN2aM/Wlv6sDTNOF1pyLmzo+mPm5DnUhhk7WBQRJZmq02BtQ8LNwDT8iXBBNGhtWY
+ IOoOhF78U+1L01g5sFuauyDahXcbY/UVqLaRjXBULMyMToXXsMEyiHSduZ3QtvnJnbMD
+ ap61gBooMxVPvOD700FTyRmpUaWyxHv4YVQAmI5EiD33cK0NACCnGwoV/z6BJN9MnC75
+ PArR3TTTs9RxTE/h9GxKOTHaGs4M/QFdTWxKCBtwKhKF1hTGXzA4ERsEIs4SaWzW76it
+ DU+A==
+X-Gm-Message-State: AFq9FYKDfqd+pIL0mamIROKn1hDMDo3q5HRsJN2T85sk8VJHwhRLtg45
+ DYYiiCbh78IMjmXWkOsb83/OQRXTiKlozLsByjNGuY02ll0hQFK7gf3Er5nDew==
+X-Gm-Gg: AYBFou2C9WVAcVkGhjIaIUHVuv9ygup6wQAPBT/WRntwE0k06Z59ihpYn+Bc5L0tVMO
+ 48zXxp+NLvGGGaIQK/o6REKsxZG8uk8tEFeV0CYN9RI1Kn4Ss5ki1kIWbocGpsmWvNDHGUnS5mq
+ KqrEKyKRT3W5vU6cGj0PeUIOp4aGvmhF8/2tW+QtkHHOAUJ/xbb6HZMjwZGKVahNSsKQS6A/K+S
+ C8Xs15raFy4ojWoGc8SJuiHgsKXXN8V0UOGBYQkBIPLU9/ySlNZWOZ2pR9LF1nYeGqMlQLvhqOe
+ eGi1FsV/hufqG6C8zjGMyQtysv2Ay83bzxQ3iIotvRPlgLChibuYDG4dWKAD37VgRJ2Nb/cdAgo
+ FmSgiy0O2l3ktgMGAvAAWzCQK8YnTkoS9yCp+TOIdpmXnCLn5A4Xyyujj33Tg5ZZzzVNqTmzjsQ
+ 6TCdzrlTYnpH4/NPy35p9p8Owywvj1+8RxF2YTDCxt6Bvxj/Ow768XD0vlVqNq04xJSC3MMBndw
+ ptTpT/hXq1J67HSX/pLGRbKNr2Ut5WFuZ9StH5PiZ0+xL+s+qMA16cCibTfcyS5n2uRKQToiQ==
+X-Received: by 2002:a17:90b:5744:b0:3a6:f1d2:57f3 with SMTP id
+ 98e67ed59e1d1-3adeafaead2mr6964901a91.58.1793082528897; 
+ Mon, 26 Oct 2026 23:28:48 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.32
+ 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.28.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 23:29:34 -0700 (PDT)
+ Mon, 26 Oct 2026 23:28:48 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Sebastian Alba Vives <sebasjosue84@gmail.com>,
+Cc: Portia Stephens <portias@oss.tenstorrent.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 22/29] target/riscv: pmp: clear A and L on every implemented
- PMP entry at reset
-Date: Tue, 27 Oct 2026 16:28:01 +1000
-Message-ID: <20261027062808.1995205-23-alistair.francis@wdc.com>
+Subject: [PULL 07/29] hw/riscv/atlantis: Add all UARTs for Atlantis SoC
+Date: Tue, 27 Oct 2026 16:27:46 +1000
+Message-ID: <20261027062808.1995205-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
 References: <20261027062808.1995205-1-alistair.francis@wdc.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,44 +108,134 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-pmp_unlock_entries() bounds its loop with pmp_get_num_rules(), which
-returns the number of entries whose A field is not OFF rather than the
-number of implemented entries. With a sparse configuration the loop
-stops early: with entries 0 and 1 OFF and entries 2 and 3 locked,
-num_rules is 2, the loop covers i = 0 and i = 1, and entries 2 and 3
-keep their lock and address-match bits across reset.
+Previously only the Ascalon console UART was enabled, this enables all 5
+UARTs on the SoC. Only UART1 is added to the serial interface for now.
 
-riscv_cpu_reset_hold() clears mseccfg, and with it RLB, before calling
-this, so pmp_is_readonly() then silently discards every subsequent
-pmpcfg write to those entries. The stale rules survive for the
-lifetime of the machine.
-
-Bound the loop by the number of implemented regions instead.
-
-Fixes: 4bf501dc0118 ("target/riscv: pmp: Clear pmp/smepmp bits on reset")
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20261022040258.1509306-2-sebasjosue84@gmail.com>
+Message-ID: <20261015002849.1640109-3-portias@oss.tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/pmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/riscv/tt_atlantis.h | 11 ++++++++++-
+ hw/riscv/tt_atlantis.c         | 36 ++++++++++++++++++++++++++--------
+ 2 files changed, 38 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-index 41b55519a8e4..061f0e078da0 100644
---- a/target/riscv/tcg/pmp.c
-+++ b/target/riscv/tcg/pmp.c
-@@ -201,7 +201,7 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index fc7a4337cc21..f965bf23fcde 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -25,6 +25,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(TTAtlantisSoCState, TT_ATLANTIS_SOC)
  
- void pmp_unlock_entries(CPURISCVState *env)
+ #define TT_ATL_NUM_I2C 5
+ #define TT_ATL_NUM_PRCM 4
++#define TT_ATL_NUM_UARTS 5
+ 
+ struct TTAtlantisSoCState {
+     /*< private >*/
+@@ -41,7 +42,7 @@ struct TTAtlantisSoCState {
+     RISCVHartArrayState cpus;
+     DeviceState *irqchip;
+     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
+-    DW8250State uart1;
++    DW8250State uart[TT_ATL_NUM_UARTS];
+     MemoryRegion bootrom;
+     TTAtlantisPRCMState prcm[TT_ATL_NUM_PRCM];
+ 
+@@ -66,7 +67,11 @@ enum {
+     TT_ATL_I2C2_IRQ = 35,
+     TT_ATL_I2C3_IRQ = 36,
+     TT_ATL_I2C4_IRQ = 37,
++    TT_ATL_UART0_IRQ = 38,
+     TT_ATL_UART1_IRQ = 39,
++    TT_ATL_UART2_IRQ = 40,
++    TT_ATL_UART3_IRQ = 41,
++    TT_ATL_UART4_IRQ = 42,
+ };
+ 
+ enum {
+@@ -83,7 +88,11 @@ enum {
+     TT_ATL_MIMSIC,
+     TT_ATL_SAPLIC,
+     TT_ATL_SIMSIC,
++    TT_ATL_UART0,
+     TT_ATL_UART1,
++    TT_ATL_UART2,
++    TT_ATL_UART3,
++    TT_ATL_UART4,
+     TT_ATL_PRCM_RCPU,
+     TT_ATL_PRCM_HSIO,
+     TT_ATL_PRCM_PCIE,
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index dfd6bc6ba6ec..311de64eda55 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -64,7 +64,11 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+     [TT_ATL_I2C2] =             { 0xd4060000,       0x10000 },
+     [TT_ATL_I2C3] =             { 0xd4070000,       0x10000 },
+     [TT_ATL_I2C4] =             { 0xd4080000,       0x10000 },
++    [TT_ATL_UART0] =            { 0xd4100000,       0x10000 },
+     [TT_ATL_UART1] =            { 0xd4110000,       0x10000 },
++    [TT_ATL_UART2] =            { 0xd4120000,       0x10000 },
++    [TT_ATL_UART3] =            { 0xd4130000,       0x10000 },
++    [TT_ATL_UART4] =            { 0xd4140000,       0x10000 },
+     [TT_ATL_PRCM_PCIE] =        { 0xd8000000,         0x100 },
+     [TT_ATL_PRCM_MM] =          { 0xdc000000,        0x1000 },
+     [TT_ATL_PRCM_HSIO] =        { 0xe00c0000,         0x510 },
+@@ -531,13 +535,21 @@ static void tt_atlantis_machine_done(Notifier *n, void *data)
+                               fdt_load_addr);
+ }
+ 
++static inline int tt_atlantis_uart_index(int uart_dev)
++{
++    return uart_dev - TT_ATL_UART0;
++}
++
+ static void tt_atlantis_soc_init(Object *obj)
  {
--    uint32_t pmp_num = pmp_get_num_rules(env);
-+    uint32_t pmp_num = riscv_cpu_cfg(env)->pmp_regions;
-     int i;
+     TTAtlantisSoCState *s = TT_ATLANTIS_SOC(obj);
  
-     for (i = 0; i < pmp_num; i++) {
+     object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
+ 
+-    object_initialize_child(obj, "uart1", &s->uart1, TYPE_DW8250);
++    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
++        object_initialize_child(obj, "uart[*]", &s->uart[i],
++                                TYPE_DW8250);
++    }
+ 
+     object_initialize_child(obj, "prcm-rcpu",
+                             &s->prcm[TT_ATLANTIS_PRCM_DOMAIN_RCPU],
+@@ -682,13 +694,21 @@ static void tt_atlantis_soc_realize(DeviceState *dev, Error **errp)
+             SYS_BUS_DEVICE(&s->prcm[TT_ATLANTIS_PRCM_DOMAIN_MM]), 0));
+ 
+     /* UART1, the soc console (UART0 is for the boot microcontroller) */
+-    qdev_prop_set_chr(DEVICE(&s->uart1), "chardev", serial_hd(0));
+-    sysbus_realize(SYS_BUS_DEVICE(&s->uart1), &error_fatal);
+-    memory_region_add_subregion(s->memory,
+-                                s->memmap[TT_ATL_UART1].base,
+-                                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart1), 0));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart1), 0,
+-                       qdev_get_gpio_in(s->irqchip, TT_ATL_UART1_IRQ));
++    qdev_prop_set_chr(DEVICE(&s->uart[tt_atlantis_uart_index(TT_ATL_UART1)]),
++                      "chardev", serial_hd(0));
++
++    for (int i = 0; i < TT_ATL_NUM_UARTS; i++) {
++        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->uart[i]);
++        if (!sysbus_realize(sbd, errp)) {
++            return;
++        }
++
++        memory_region_add_subregion(s->memory,
++                                    s->memmap[TT_ATL_UART0 + i].base,
++                                    sysbus_mmio_get_region(sbd, 0));
++        sysbus_connect_irq(sbd, 0,
++                           qdev_get_gpio_in(s->irqchip, TT_ATL_UART0_IRQ + i));
++    }
+ 
+     /* I2C */
+     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
 -- 
 2.55.0
 
