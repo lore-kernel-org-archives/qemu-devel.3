@@ -1,72 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19DD606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6BB606A31A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nfeCWzJm
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=m5wkq31O
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLn4f-0006jN-JW; Tue, 27 Oct 2026 15:43:09 -0400
+	id 1xLn4y-0006oc-OG; Tue, 27 Oct 2026 15:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn4e-0006ix-Gu
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:08 -0400
-Received: from mail-dy2-x09.google.com ([2607:f8b0:4864:36::9])
+ id 1xLn4r-0006mm-4G
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:22 -0400
+Received: from mail-dy2-x0a.google.com ([2607:f8b0:4864:36::a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn4c-0003rO-8L
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:08 -0400
-Received: by mail-dy2-x09.google.com with SMTP id
- 5a478bee46e88-35dc2af1f2fso61212eec.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:05 -0700 (PDT)
+ id 1xLn4p-0003sp-Gx
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:20 -0400
+Received: by mail-dy2-x0a.google.com with SMTP id
+ 5a478bee46e88-33e48934fa8so62492eec.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793130184; x=1793734984; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=axdW/tOac228P6zOQN88dVIVns6F/k3LcWVq95PJ8OI=;
- b=nfeCWzJm8+yfN6jY1GAfEx+VU0uidFAllF1xxsuXcZPG1r2HnspHLUrlYw6RP2pz/h
- zE7UrKAfNrp0YZUdaEpJU9ezXKecJ8XwszI90TVVxV7Cxt28aMwJiRDLY3IsKNVjQY8I
- r/DZ94nzhDqoR84Pc7oMEMNTBDZhwxBPrymqZOO6YLuYgwvYcRASEi/s8ExKoG5svkTZ
- qTRbmq7r3YvXx/HYCpwl4gFuO3aDitT6W3FP9YMsaqP0gVKztXKQ+cQVvRkFoBNg1atX
- xxws66EpCFyaPAr8p44RNhFUhOqyGcqRMZWtZnE2cL1LKJ+2qEWulFmMROA4NxstdSfO
- Twrw==
+ d=gmail.com; s=20260707; t=1793130198; x=1793734998; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zILaURUC9gi1c0UUUvY3rQWxg5TmKzPKSbRxjgbExNQ=;
+ b=m5wkq31OfpzQ/4OVf3aI+n96fPdAEEwhSmi+tw/qLpxLuVxJq523jADphBQyo6dsA+
+ VukoqgZfxsw5T1lUaZb/9oDCIl3y94uHE/s34sjLQQ0mlqJc1W1I6wF2S5GfASK0JIol
+ O8RYPy2mCKuwHt4TpaHcV3OpP3cQxSuNlTnKIdrRKDiIluj4E+s1TkpVAUOa8R5FBqly
+ L4lbBVtEj2MV/fzaHgc+jzs3FmLk+aD4bSXmmvc2BMyB9VGw8HTsT9fq8lkhWc0tJqnT
+ TWyMINa2HYSfKzkK/S9dFTREE3EPoF1urjr+qMrVeBcYnGKLKU5AodtZUxA0fpjFk/TJ
+ EfFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793130184; x=1793734984;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=axdW/tOac228P6zOQN88dVIVns6F/k3LcWVq95PJ8OI=;
- b=iqOvPYJ15rwImwdrpPU5OeMMmBV3TFiwoSUre5ZLRdTwcNtZhDyHjqsI97Li2hZ0hv
- McbPPhokYrZ/G1T8UkSYXZUyRDEYlctxXGVZgoqmXN3HaId66C/UdIUYCT6UWxMkHDBr
- UFrU2l5gYDhe9jf/C1vVy/5N3oaSFobwZIRFW8pzYxnUztT4j7kF5nrumeKSJtwBZf2V
- u2hR4Ir21v0nIMUM+B00JfHedM2TCMcfkPyuTa31jiplF6YoK+fy/FkmvxgFpCoNR5es
- XdgtFuiVa5ysUXhVpZ9vChUBMz3ShZDGercVdL4Z3JXdeovDrKAkPj0sHRF6xMTwjfAK
- +TGA==
+ d=1e100.net; s=20260707; t=1793130198; x=1793734998;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zILaURUC9gi1c0UUUvY3rQWxg5TmKzPKSbRxjgbExNQ=;
+ b=P52kMmOegiUBJIBzgJhGXMAxDqd41ytM2IdR1MTiLGpTra+Wd9P89P9cDf6amKGfFW
+ reMav5n0H0MNTA0w1tLkhVIh6/Op0bOS51gbnnW39G4IacQr6AF8HkVLNVgmB+rwsF5P
+ k/F6B/0esni8k0tICEmjAm9LoAjQU88IjmGkR3sDz8xHVmfZTi/tYlF4TI6Crg9BoIGz
+ GFp6oFwbqHMT51h/bDqrq/MPt8tNs/wcuA66MA5t/4/vLVjQsPJT6U/QBtQY767u4ssB
+ sc0IHPElGwsqavdi2VNKOLzy0kLx7vhiHPEpogrjQ440L0ytiHnji+pyqG6V+ITr4xH9
+ p9nA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwa8Y2Lb8aJC0sz7ge9HKKFKUh/TpNsKzW9tUMYDrGysOsO29cVEJkbgSkUPX01d1TcxOYlh6ApNXhj@nongnu.org
-X-Gm-Message-State: AFq9FYLwnF9DDxNKw2uyhZ+YgtVXinAQZLV8LIGpydp81K5UvYeA8MJJ
- LyObi2S6gfE+82fTDot1ZI66fvB3bJ6GJpQqfSUySIuC8BuZan4EhVQz
-X-Gm-Gg: AYBFou3pnpSQcgZYlm3rn3o31NtAkrqlR2ev2STZ1ce9/D0u9cqjLCL+/MCAsc51UVU
- glNNyUY/UMytaweopcgpi3tQIo13g3XApMMcd1B6jyBtlAz53Fmo8AFsYwyvmBMSrAqv5SHi6jl
- qQJHVKEBCoKuww1AHl5WCHqD9UZ2owt0zYGZ+7brUppGprHQQ7ZozP6qLcQZccCxU0HFUK0UeKI
- BNBx8ng2EoFgbCshX2GIxG+32Xf3XVV9PtxzB8DWOzQ3XT3XszdLmIOWAtYn9EuM4CtLcdpIA0A
- puEqsCrLQhGNfOa/pDMHPzJXMIRqW2FzoS81X5zHtW/nJ99SGH8+Za1CmkkbOIdJBgrxMsGquPG
- RjVWtl/fDt+pOvWXBq7PKkkmK648dNX+AePXyQXDnrZElGmS+5dZbaLEvOVJtix437j1kJgxPGT
- gsbJUDq6BSq8b2e2jUSvTwVW3zVsccRfCgLwSyoWJdhj4/afX0mITNRwzhU1ORgoruEUyyt2b1H
- +1Sh0O2k8El02VTojYNO2i4mIJSQi0Zp/+X5UkQ2gah0B/HXPTwY7OSxvQzkNpYHEh+YNFdFzCT
- sRmUlm/Dh31bF7rFcjyj75DaE5VdcnZjpV4lOVGlY5ipR3KFf7oldNws/vqL6w43YIWFkFaJrsd
- nj4m/FdrNR28hJJ8ZnaYFpyMXlxm5vdJ6VFxpzjZqeaRy56O4zio=
-X-Received: by 2002:a05:7300:fd0f:b0:367:363f:6fe4 with SMTP id
- 5a478bee46e88-36a20440ad5mr713599eec.32.1793130183934; 
- Tue, 27 Oct 2026 12:43:03 -0700 (PDT)
+ AKwUvBxOvzYa10K7FWaY54P0xScGBVwCCiB4BL3EGsajfWuDfLaJNYBaMk38Bt0QiPyIf1NdK6QqoENagABy@nongnu.org
+X-Gm-Message-State: AFq9FYJLALx1+s2NOl/n5LkrNH5I7z+hLQ+m1QC6nTavh8teomhqDcx7
+ HvYWL6gjr+4O93J+JX4AYr4axewkdp8MVscgAd3kqf9B6XTtfbe5reXT
+X-Gm-Gg: AYBFou236h2upFKrno3twjdwsJTgXGqona7+aob/6l4qrxR/LGQ8vPDMQAIErTQOYJW
+ fnWlsmpLiZVN+c2HzcrT6NUB2HVFfpyTZ+SgK6S/ZO8VtryZkRf3UjDpJPrd8zO8VbcGN4MR8g6
+ affOb655UHPHIBWqs/ims91v4k3ALiMtr6Dl+R+j0Djkjq8Lu5+6iQhqVNWtvQHUViiXUwlWn3u
+ 7aOuQCfi5TrpF8ToCXzy4UoB34xYrfPVgLnxou9AMiTduNTztEdhYsvDvYj75Z6suI2BbtFueX3
+ tB5TCrsMnkhJvx/0Yjdwg7EyL8RJbijLhlMtvY/Q8TRTkxv7WgAuuYXyjoOGKGuWZfujlqQIzeg
+ CwZHpzdUV0TG9QVltOcXHhwKNZTP8/o4R/2xJWWiK+M9OfMAWFQi4gD03Phct8v6GIIxInNmqvz
+ 4ZWjThEgZRXISH4YVRp6MwV58eOQJWCtccpIaaQdI56C5yf+5jEKzIxF0Yl+jJcmJnT6Jbf0xdX
+ 2wtQ59pkHWzubOsVE01rm2uwWtqHP0xj7f2EngfnIKFPvEMZETukyLM+p4KWw003ACWWdRNpTx9
+ 9Rsy3qOgVcA1gG153C9ccz0nm2OmmlvEsAZ/CxN7MqrAR48f3yQ5p+zTsuIk/n/x/0oaQ1qDqLC
+ qli+7NLKqP2oN1XUbn8JHvWiBsTZtcPSsaPCznAD1jGqS5mSfoteZo4A5wlNOCb9lnpTpJOL3
+X-Received: by 2002:a05:693c:894b:10b0:36a:1b23:a1cd with SMTP id
+ 5a478bee46e88-36a20112454mr533988eec.9.1793130197546; 
+ Tue, 27 Oct 2026 12:43:17 -0700 (PDT)
 Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.00
+ 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 12:43:03 -0700 (PDT)
+ Tue, 27 Oct 2026 12:43:16 -0700 (PDT)
 From: soumyajyotisarkar23@gmail.com
 To: sarkarsoumyajyoti23@gmail.com,
 	qemu-devel@nongnu.org
@@ -75,17 +76,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH v2 0/8] usb-mouse: high-resolution vertical and horizontal
- wheel support
-Date: Wed, 28 Oct 2026 01:12:48 +0530
-Message-ID: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v2 3/8] ui/sdl2: forward precise wheel deltas as
+ high-resolution scroll events
+Date: Wed, 28 Oct 2026 01:12:51 +0530
+Message-ID: <20261027194256.76031-4-soumyajyotisarkar23@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
+References: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:36::9;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dy2-x09.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:36::a;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dy2-x0a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,166 +107,86 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-This series adds high-resolution vertical and horizontal wheel support
-to QEMU's USB HID mouse.
+handle_mousewheel() only looked at the sign of the integer wheel
+deltas and sent a single wheel button click, so any amount of
+scrolling became one detent and the horizontal axis was dropped
+whenever there was vertical movement.
 
-As of now the USB mouse only reports whole wheel detents and has no
-horizontal wheel. Modern touchpads, trackpoints and free-spinning wheels on
-the host produce much finer and often simultaneous horizontal and
-vertical, scroll movement, but the guest never sees it: the GTK and
-SDL ui turn every smooth scroll event into a single wheel button
-click and the HID report has no room for anything finer.
+SDL 2.0.18 added preciseX and preciseY, which carry the wheel movement
+in fractions of a detent. When building against SDL 2.0.18 or newer,
+convert them into 1/120 detent units and send them as scroll events on
+both axes, carrying fractions over to the next event. The direction
+follows SDL's convention (positive x scrolls right, positive y scrolls
+up) and honours SDL_MOUSEWHEEL_FLIPPED. Older SDL versions keep the
+existing button behaviour.
 
-Since Windows Vista, Windows supports Microsoft's enhanced wheel
-protocol: a Resolution Multiplier feature report per wheel axis and
-horizontal scrolling through the Consumer AC Pan usage. Linux
-supports the same multiplier through hid-input. This series
-implements it end to end:
+Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+---
+ ui/sdl2.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
- - Patch 1 adds a 'scroll' input event carrying the distance in 1/120
-   of a detent (WHEEL_DELTA units). Devices that do not handle it
-   keep getting wheel button clicks from the input core, one per
-   detent.
- - Patches 2 and 3 make the GTK and SDL ui forward smooth scroll
-   deltas on both axes as scroll events instead of rounding them to
-   clicks. SDL needs 2.0.18 or newer for preciseX/preciseY.
- - Patch 4 derives the report descriptor length with sizeof() (no
-   functional change).
- - Patch 5 makes the HID mouse accept scroll events and track the
-   wheel in 1/120 detent units. Guest visible behaviour is unchanged.
- - Patch 6 switches the mouse to a report-ID based descriptor with an
-   AC Pan field. Boot protocol keeps the 4-byte report.
- - Patch 7 adds the Resolution Multiplier feature report (ID 2,
-   physical maximum 120). Once the guest enables it, each wheel count
-   is 1/120 of a detent.
- - Patch 8 clears the wheel state and mouse_grabbed on reset.
-
-Sub-count remainders are carried in a residual per axis, so slow
-scrolling adds up instead of being dropped. The new state lives in an
-optional "HIDPointerDevice/wheel" vmstate subsection that is only sent
-while wheel state is in use.
-
-Testing was done with a Windows 10 guest and -device usb-mouse, with
-both -display gtk and -display sdl, using the wheel event viewer at
-https://domeventviewer.com/wheel-event-viewer.html:
-
- - Without the series, deltaY is always +/-100 px (one 120-unit
-   detent). With the multiplier of 4 from v1 it was +/-25 px.
- - With the series, deltaX and deltaY arrive in steps of 0.833 px
-   (one WHEEL_DELTA unit; Edge maps 120 units to 100 px), horizontal
-   scrolling works and both axes can change in the same event.
- - Migration from a QEMU without the series to one with it completes.
-   Migration back to an older QEMU only works while the guest has not
-   enabled the Resolution Multiplier and no wheel movement is pending;
-   otherwise the older QEMU rejects the unknown "HIDPointerDevice/wheel"
-   subsection (see the open questions below).
-
-Why the guest cannot match the host 1:1
----------------------------------------
-The scroll path is now lossless on the QEMU side: every fraction of a
-detent the host UI reports either reaches the guest or is carried over
-to the next report. The guest still cannot reproduce the host's
-pixel deltas exactly, because the smallest step a USB wheel can
-express is one count and with the multiplier enabled one count is
-one WHEEL_DELTA unit (1/120 detent). Windows delivers WM_MOUSEWHEEL
-deltas as integers in the same unit and Chromium turns them into
-pixels as
-
-  deltaY = units * 100 / 120
-
-so the guest sees deltas in steps of 0.833 px. A host movement that
-does not land on a whole unit is split: the whole units are sent now
-and the remainder later. For example, if the host scrolls by the
-equivalent of 26 px:
-
-  26 px * 120 / 100 = 31.2 units
-  sent now: 31 units -> 25.833 px in the guest
-  carried: 0.2 units -> sent with a later report
-
-Per event the guest is therefore off by less than 0.833 px, but no
-movement is lost over time. Movements that are a multiple of 5 px
-(6 units) map exactly.
-
-The remaining per-event differences between host and guest come from
-outside QEMU: host and guest browsers apply different scroll scaling
-and smoothing and several host events can fall into one USB polling
-interval (8-10 ms) and reach the guest as a single report.
-
-Changes since RFC:
- - Patch 4 (new): derive the descriptor length with sizeof() instead
-   of hard-coding it.
- - Keep the report descriptor comments in their existing column
-   instead of moving them.
- - Check "hs->protocol == 1" for report protocol and add boot/report
-   protocol comments in hid_pointer_poll().
- - Replace the 1/4/8/16 divisor switch with multiplier scaling in
-   hid_scroll_counts(); the guest-selected multiplier now increases
-   the resolution instead of dividing it.
- - Drop the stray blank line in hid_pointer_poll().
- - Move the reset changes into their own patch.
- - Move the new migration state into an optional subsection and
-   convert queued wheel movement from older QEMU versions.
- - New input-layer scroll event and GTK/SDL support, so the host's
-   fine-grained scroll actually reaches the device.
-
-Changes since v1:
- - Added proper suggested by.
-
-Reference:
-Enhanced Wheel Support in Windows
-https://download.microsoft.com/download/b/d/1/bd1f7ef4-7d72-419e-bc5c-9f79ad7bb66e/wheel.docx
-
-Open questions/known gaps:
-
- - The descriptor and packet size change is guest visible. A guest
-   migrated from an older QEMU keeps the old 52-byte descriptor until
-   it re-enumerates the device, but receives the new 6-byte reports.
-   Should this be tied to a usb-mouse property that hw_compat_11_1
-   turns off? The same property could keep the wheel subsection from
-   being sent to older machine types, so that migrating back to an
-   older QEMU keeps working after the guest enabled the multiplier.
- - Only the GTK and SDL UIs produce high-resolution scroll events so
-   far. VNC, Spice and Cocoa still send wheel clicks.
- - Linux guests are not tested yet.
-
-Feedback is very welcome!
-
-Thank you,
-Soumyajyotii Ssarkar
-
-Soumyajyotii Ssarkar (8):
-  ui/input: add high-resolution scroll input event
-  ui/gtk: forward smooth scroll deltas as high-resolution scroll events
-  ui/sdl2: forward precise wheel deltas as high-resolution scroll events
-  hw/usb/dev-hid: derive the mouse report descriptor length with
-    sizeof()
-  hw/input/hid: accept high-resolution vertical scroll events
-  hw/usb/dev-hid: report horizontal wheel through AC Pan
-  hw/usb/dev-hid: support the wheel Resolution Multiplier feature report
-  hw/input/hid: clear wheel state and mouse_grabbed on reset
-
- hw/input/hid.c         | 187 ++++++++++++++++++++++++++++++++----
- hw/usb/dev-hid.c       | 209 ++++++++++++++++++++++++++++++++---------
- include/hw/input/hid.h |   8 ++
- include/ui/input.h     |   6 ++
- qapi/ui.json           |  45 ++++++++-
- replay/replay-input.c  |   8 ++
- ui/gtk.c               |  34 ++++---
- ui/input.c             |  82 +++++++++++++++-
- ui/sdl2.c              |  28 ++++++
- ui/trace-events        |   1 +
- 10 files changed, 531 insertions(+), 77 deletions(-)
-
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 1c97d23a47..0a052a8f2d 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -566,12 +566,39 @@ static void handle_mousewheel(SDL_Event *ev)
+ {
+     struct sdl2_console *scon = get_scon_from_window(ev->wheel.windowID);
+     SDL_MouseWheelEvent *wev = &ev->wheel;
++#if SDL_VERSION_ATLEAST(2, 0, 18)
++    static float residual_x, residual_y;
++    float flip;
++    int units;
++#else
+     InputButton btn;
++#endif
+ 
+     if (!scon || !qemu_console_is_graphic(scon->dcl.con)) {
+         return;
+     }
+ 
++#if SDL_VERSION_ATLEAST(2, 0, 18)
++    flip = wev->direction == SDL_MOUSEWHEEL_FLIPPED ? -1.0f : 1.0f;
++
++    residual_y -= flip * wev->preciseY * INPUT_EVENT_SCROLL_DETENT;
++    units = (int)residual_y;
++    residual_y -= units;
++    if (units) {
++        qemu_input_queue_scroll(scon->dcl.con,
++                                INPUT_SCROLL_AXIS_VERTICAL, units);
++    }
++
++    residual_x += flip * wev->preciseX * INPUT_EVENT_SCROLL_DETENT;
++    units = (int)residual_x;
++    residual_x -= units;
++    if (units) {
++        qemu_input_queue_scroll(scon->dcl.con,
++                                INPUT_SCROLL_AXIS_HORIZONTAL, units);
++    }
++
++    qemu_input_event_sync();
++#else
+     if (wev->y > 0) {
+         btn = INPUT_BUTTON_WHEEL_UP;
+     } else if (wev->y < 0) {
+@@ -588,6 +615,7 @@ static void handle_mousewheel(SDL_Event *ev)
+     qemu_input_event_sync();
+     qemu_input_queue_btn(scon->dcl.con, btn, false);
+     qemu_input_event_sync();
++#endif
+ }
+ 
+ static void handle_windowevent(SDL_Event *ev)
 -- 
 2.56.0
 
