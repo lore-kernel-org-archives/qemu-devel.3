@@ -1,76 +1,76 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831FE606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2715B606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 16:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=jEFRFFBw
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=Q0QFnZRt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLjZv-0001zu-Q5; Tue, 27 Oct 2026 11:59:12 -0400
+	id 1xLjZr-0001nP-1M; Tue, 27 Oct 2026 11:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjYh-0000uJ-Ci
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:57:59 -0400
-Received: from ci-2002b-snip6-11.eps.apple.com ([2a01:b747:3005:206::17]
+ id 1xLjZ0-00010J-PP
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:15 -0400
+Received: from ci-2002h-snip6-11.eps.apple.com ([2a01:b747:3005:206::53]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xLjYa-0005kT-0l
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:57:49 -0400
+ id 1xLjYx-0005pF-Bg
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:58:13 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPS id
- 6D200180015E; Tue, 27 Oct 2026 15:57:45 +0000 (UTC)
-X-ICL-RepId: 01a17e14-f613-78f0-b147-fb3e4de34c84
-X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0OWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQARGXx9RGV4IUytHHkkKVgleCEYRWxRWQ1EZDFBNAUMICghHA00XXjJTBF8RUBY=
+ 2DFC1180015E; Tue, 27 Oct 2026 15:58:05 +0000 (UTC)
+X-ICL-RepId: 01a17e15-4704-790f-a1d3-8c21ac4746da
+X-ICL-Out-Info: HUtFAUMEWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0PWFsIWwQPH0wMUQJCBVZeWhEdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkIJSgVcB1kFQQxNBF4ARQdJC08CQAZSHx1WEFIAUg9yBVcIQQhTAlEEWBpfCBkNQE4ZDEodUlZRBUoMXABoD10dWBFd
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793116667; x=1824652667;
- bh=x6QpE31YHSYm3IN5HGzUQG5BULloTc4Z+l5HgHvxa6Y=;
+ s=sig1; t=1793116688; x=1824652688;
+ bh=G9dSVSmpfPjL4JSrrpeJfdulgeFJtL2zLncLmhWQPIg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=jEFRFFBwpXd2DMQrJnzE1Q8AlIgqvDsPtxtPqxnOh3uEKTc0oQ6zuq7PgwoWsuwJQKSR4EZduzUq+ofARFoMc9C5e8ygkHIdhpRg2KCwPabXtLTUAZnsMkK0h7cgqSwugM7l+O6UoBY1e0cluHTk1jBzdGNcVt0qygHHeBBNYy1C+c2sXP8LqUl4g4DLZj7NTdXqI/EnyPZjr5N23UUDB6BuMJ57WtlYFQ4kLDP/sH/8XrMXaWQfHnAzEpE4evQiqufkuhGZdzjMxPhub4v6UOeblu+7pW2uNsrtmIZcZzphaX/aXvZH10hR8i1ly4xt/k+QlZ2XhG7b7lT7di5oLg==
+ b=Q0QFnZRtJBV+9Sne7qwFDdhLyBo5sKuY9vUxhCS6izMPLJDLxwOsTDelr4b7owsxh6vMWyGDBymHbx/D8wI6h9ZVVSnwlzwJ7uDvn+7jkiW4CYiSQT2fTFpYjrtaUC48ohsMFTjx0ZQwNP+YSqPPmnvB8Q4jDRTy8KSjVl8XrTkTT86sRK1ClGUt9nRzOLOTQY26n0dG2of4Je7Fy1XfpU/KNGQnBaujgfrjuI864osAPjFvM372S3aIfZbal9W1JL8AbYSCOBVMGluR5ExsYaWpjBJCTGonvA7qNvh4v94965R24/EJkCJAvadn8tr8MmUmVefZTDd3lQmudVgtwg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-60-percent-8 (Postfix) with ESMTPSA id
- 5774A18004AF; Tue, 27 Oct 2026 15:57:43 +0000 (UTC)
+ 5CBCD180049C; Tue, 27 Oct 2026 15:58:04 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-Subject: [PATCH v2 02/18] target/i386/whpx: whpx_get_xsave_state error handling
-Date: Tue, 27 Oct 2026 16:57:21 +0100
-Message-ID: <20261027155737.59271-3-mohamed@unpredictable.fr>
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v2 18/18] whpx: docs: update for experimental VM save/restore
+ support
+Date: Tue, 27 Oct 2026 16:57:37 +0100
+Message-ID: <20261027155737.59271-19-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027155737.59271-1-mohamed@unpredictable.fr>
 References: <20261027155737.59271-1-mohamed@unpredictable.fr>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=f8hFxeyM c=1 sm=1 tr=0 ts=6ae0c9fa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfX+WMLC9Uw4Ftj
+ vOAV6Cm6r8dDwJNs7b4uc8lXSNBnP6hdhYo5r+yrfLsH08Pa7Xvu2nMfgTgevBhtjW0VwdDLXVn
+ 8G/rlxB0zNAcf1p6sjE25nroQ74ip+5tR8djGzBZD5x5bSIRlCSaZAH68B5I0c9nqFB9WzO49Og
+ ZzMIWuSIf3+eIZICU3m0SNcxTfIxhtwF0948MIo7V6A9w7jL0aeb5OkypKWqMCQdsHfzYFQf1UK
+ 6TbCNyU5dYktE4G43nU2k8iFWo7q3g0gkFbXLSkk+8MsFU+BXmV28Rd69ZJp+XBWGxnrmIWIuJH
+ uBN0XWLWHbWehanuk69HOwHPTYkGtfC+YQctMtB1NUifizVYxpgbCVJX4a73pA=
+X-Authority-Info-Out: v=2.4 cv=KaDfcAYD c=1 sm=1 tr=0 ts=6ae0ca0e
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yMhMjlubAAAA:8 a=CyeGX34NJn-RfCE8euUA:9
-X-Proofpoint-GUID: ROyJbfVHzrtZB_5Oit-_C7PY9EVNoJhk
-X-Proofpoint-ORIG-GUID: ROyJbfVHzrtZB_5Oit-_C7PY9EVNoJhk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MyBTYWx0ZWRfX/YJ7GwVUAnad
- IMpKV0nX27dJCbMtyTzWX0nJBsxlz6Gwg7ylRZTPsdqTwOkjA3L/29xapnuKU+GonLXiKPJMstj
- qW8nT5nKVI+Xqx0PkJr/+xITRgz1lNCwlbayzptyQKn4prJPRq7EzdE75cAbHBmi/Z9aTMYRxfZ
- XdBauyZTOgIqD+Cnofhj7iPver3lJiUSKp6fYXCqOlTgyJa/0LEToaOdOy8fC867SQvuRUqLm8Y
- bEzf0/vQ4egFUBeruTAJl0bKCm8ig8YtclxlmcExdHIArOuf6PqbIfQ3QA4oJzn5l6MkzjVpb+x
- JEkMkasin7B7yQ8GVT4XaCqbBnSHjH1h3seQXQhPwcGdpWiwNASw88nZFY6rO4=
-X-JNJ: AAAAAAABMyChzEYDyXjHvZB6oJrors1IrreOH0yOu632Zv06ULR4oFAzMXPPC8ECD0J9qjVPVnZ1DFI8l6+BIIysSdEd/OCRVREREWCbMtcnxPjGM1hc6OEIgXdYjdDfMZiLeRhFcNFfiDAYfDyiHKeA9j1zoG4KkzDAoH/SWgFo5HMv2ew0WKXhP25EHU6zhuvpAHuqgVemoFhHMGZ9ZmF35JNTsQ1HmZgpDwK0CtFmu4SBMPMHjrwa6mgNdaHs0VxlxCQeMSZ64lskAtPUrZLnJsbEUV+x1EpTMJJnEMqboXkmp31B6a1yXveO1dpDnKyGPUBkCL2YGon5eBATqh0ImaJIv5FqO4pKi5ytzHKuzQ5CB9WxDFDcmG58oNXhPkgOaZJX6opeS3EJSLFvcw4lEzkvRLC3r/Zl8JwFPxirORyJTol67k03KPDzKJ6CefSBHw81Ud7RGzj5n3/KNQ8eYDYtClDThNBhmWhZvprvqeTkDYZsh2kjGECU/NEURWANZgtT41Xqw/H6OMd9txjMvdHJUwPtPlZvocC+oUuuzE+ZfFbX7DcLD6AjxbAMPKsWY5uGEuyt1SPbCMomMGM1FYKkEZXcOAxAMUwsLWAN46N6LfuaTmCluY7Qpi8+KUd2Ob4SC+PTvfgdo9+LLTsDoerc2xtVHqZWMBlEUlYi9eER6TRFBR9CIziO77TZft+9T1FOU4GoPZIouymzVE06NBOAKFuNPgUSKQIUosGRYR6A/biXCmb43Uz6ygjMHqD3tYJ+tYXvlGdqmF2Lz6t+Z69CGtF7G5GhS5Xd0GNe7091vu04N1Y=
-Received-SPF: pass client-ip=2a01:b747:3005:206::17;
+ a=pFNGRcf0QCHyMLCsL3gA:9
+X-Proofpoint-ORIG-GUID: T_EgRzVsBHJZgGW9O11hxl0kRyJcbRuA
+X-Proofpoint-GUID: T_EgRzVsBHJZgGW9O11hxl0kRyJcbRuA
+X-JNJ: AAAAAAAB4hq/IJBzrdjPXpCskXHPyg6J1f4b6f0BEYDOpnsTPMOsjXJ6PlX0gwaYD4RFrsn1Huv+eSafTlFUyhCEHOJCqRyn2F7RfRKrXttHwL7hteFRakt5c/QRW+VdXAzV04sQrBKV267Kx47/6v9C2fvAR08GVhEDD0Hzrpgn97xLXNsdizGI1im8smp6m+dHL0phEhJmOA6bOQxCug7xaeNxCLMPsjuVVQEUN8vun1xw0/QsUnc8ihKJsdQMPA8TK+P8OhlhaxlXpeP2pFkKKu0ZpguAMxyTeZ82XCIql42JEShruC6yt4fS1W7X4/IhGwPivzPzU0fANioOwTRAF+TyMjJ3VSDmA/NdIYsITEXOcl1Iie+AxwBtaXHlaMqv5sSRmXDI7nRghdwiqMhW+lUqwZ+7UNcU3LIFbZ/KQgaYRL51LffHs6aohWEf5yJ5y6ng4OAZg/o13k8y9h1isM5o/msw5sah0cmp9lcXfuFiAl+eFvVEk8gRuwoH1f2oKwOSfRqGyqf93r3a3uXusDoQEydVD5+IFJsKdBkOMmxDgk8FJgHbTDfMIpAtpI3xIimm6NhI0neNHHLbBncf1kYIBUbKPVU9JVcBOjgL5CXGAYf8CZwH+5MTmw/HrnvJXVyaoO5QgVgVP1FP6km2mHjNcXZDIlj9UM+uPw0efPPXYYjPT1HXTr6LWA8JgIxkaNfwiO5U1c+8Hx7OgcUHcqBGwLzDx8SXZYeksMVnDgJewZ+j0m9ANlHVrt9kbDcoO3m7b9GE5Q1t8zNtCpPg4RPce1UGmSb1dqOHaDXkOfvQP9T6
+Received-SPF: pass client-ip=2a01:b747:3005:206::53;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,145 +89,43 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+It's there but still highly experimental for the time being.
 
-Several problems with error handling in whpx_get_xsave_state:
-
-- Does not handle WHV_E_INSUFFICIENT_BUFFER, which occurs frequently
-  in practice for XSAVE state.
-- Does not free xsavec_buf when an error occurs.
-- Error message and return code use errno where they should use hr.
-
-Fixes: cfaa3b6c9597 ("whpx: xsave support")
-
-Signed-off-by: Doug Cook <dcook@microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- include/system/whpx-internal.h |  5 ++-
- target/i386/whpx/whpx-all.c    | 73 +++++++++++++++++++++++++---------
- 2 files changed, 57 insertions(+), 21 deletions(-)
+ docs/system/whpx.rst | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index c295c5a529..b15f3d8faf 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -58,8 +58,9 @@ void whpx_apic_get(APICCommonState *s);
+diff --git a/docs/system/whpx.rst b/docs/system/whpx.rst
+index 9909e86831..9ad1448d04 100644
+--- a/docs/system/whpx.rst
++++ b/docs/system/whpx.rst
+@@ -80,6 +80,8 @@ as in a BTB flush when entering/exiting the guest. This results in a
+ significant MMIO performance increase at the detriment of security
+ mitigations.
  
- #define WHV_E_UNKNOWN_CAPABILITY 0x80370300L
- 
--/* This should eventually come from the Windows SDK */
--#define WHV_E_UNKNOWN_PROPERTY 0x80370302
-+/* These should eventually come from the Windows SDK */
-+#define WHV_E_INSUFFICIENT_BUFFER 0x80370301L
-+#define WHV_E_UNKNOWN_PROPERTY 0x80370302L
- 
- #define LIST_WINHVPLATFORM_FUNCTIONS(X) \
-   X(HRESULT, WHvGetCapability, (WHV_CAPABILITY_CODE CapabilityCode, VOID* CapabilityBuffer, UINT32 CapabilityBufferSizeInBytes, UINT32* WrittenSizeInBytes)) \
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 1386affa9c..68272c5657 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -442,8 +442,8 @@ static int whpx_set_xsave_state(const CPUState *cpu)
- 
-     qemu_vfree(xsavec_buf);
-     if (FAILED(hr)) {
--        error_report("WHPX: Failed to get virtual processor context, hr=%08lx",
--                     hr);
-+        error_report("WHPX: Failed to set xsave state, hr=%08lx", hr);
-+        return -EIO;
-     }
- 
-     return 0;
-@@ -809,9 +809,28 @@ static void whpx_get_legacy_fp_registers(CPUState *cpu, WHPXStateLevel level)
-     idx += 1;
- }
- 
--static int whpx_get_xsave_state(CPUState *cpu)
-+static HRESULT whpx_get_xsave_state_buffer(const CPUState *cpu, void *buf,
-+                                           size_t buf_len,
-+                                           UINT32 *bytes_written)
- {
-     struct whpx_state *whpx = &whpx_global;
++``-cpu host,svm=off,vmx=off`` disables nested virtualisation.
 +
-+    if (!whpx_is_legacy_os()) {
-+        return whp_dispatch.WHvGetVirtualProcessorState(
-+            whpx->partition, cpu->cpu_index,
-+            WHvVirtualProcessorStateTypeXsaveState,
-+            buf,
-+            buf_len, bytes_written);
-+    } else {
-+        return whp_dispatch.WHvGetVirtualProcessorXsaveState(
-+            whpx->partition, cpu->cpu_index,
-+            buf,
-+            buf_len, bytes_written);
-+    }
-+}
-+
-+static int whpx_get_xsave_state(CPUState *cpu)
-+{
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
-     int ret;
-@@ -824,27 +843,43 @@ static int whpx_get_xsave_state(CPUState *cpu)
-     xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-     memset(xsavec_buf, 0, xsavec_buf_len);
+ Known issues on x86_64
+ ----------------------
  
--    if (!whpx_is_legacy_os()) {
--        hr = whp_dispatch.WHvGetVirtualProcessorState(
--            whpx->partition, cpu->cpu_index,
--            WHvVirtualProcessorStateTypeXsaveState,
--            xsavec_buf,
--            xsavec_buf_len, &bytes_written);
--    } else {
--        hr = whp_dispatch.WHvGetVirtualProcessorXsaveState(
--            whpx->partition, cpu->cpu_index,
--            xsavec_buf,
--            xsavec_buf_len, &bytes_written);
-+    bytes_written = 0;
-+    hr = whpx_get_xsave_state_buffer(cpu, xsavec_buf, xsavec_buf_len,
-+                                     &bytes_written);
-+
-+    /*
-+     * whpx_get_xsave_max_len() returns the size of user state components
-+     * enabled in XCR0. The hypervisor returns an XSAVES image, which also
-+     * contains the supervisor state, so the whpx_get_xsave_max_len() size
-+     * may be too small.
-+     */
-+    if (hr == WHV_E_INSUFFICIENT_BUFFER && bytes_written > xsavec_buf_len) {
-+        qemu_vfree(xsavec_buf);
-+        xsavec_buf_len = bytes_written;
-+        xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-+        memset(xsavec_buf, 0, xsavec_buf_len);
-+
-+        bytes_written = 0;
-+        hr = whpx_get_xsave_state_buffer(cpu, xsavec_buf, xsavec_buf_len,
-+                                         &bytes_written);
-     }
--    if (FAILED(hr) || bytes_written == 0) {
--        error_report("failed to get xsave state: %s", strerror(errno));
--        return -errno;
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get xsave state, hr=%08lx", hr);
-+        qemu_vfree(xsavec_buf);
-+        return -EIO;
-+    }
-+
-+    if (bytes_written == 0) {
-+        error_report("WHPX: Failed to get xsave state, no data returned");
-+        qemu_vfree(xsavec_buf);
-+        return -EIO;
-     }
+@@ -114,6 +116,16 @@ disables the PIC. In that configuration, using a UEFI is recommended.
+ On this release, ``-M kernel-irqchip=`` is not expected to be manually
+ set during normal operation. It remains as a debugging option.
  
--    ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
-+    ret = decompact_xsave_area(xsavec_buf, bytes_written, env);
-     qemu_vfree(xsavec_buf);
-     if (ret < 0) {
--        error_report("failed to decompact xsave area");
-+        error_report("WHPX: Failed to decompact xsave area");
-         return ret;
-     }
-     x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
++VM save-restore
++^^^^^^^^^^^^^^^
++VM save-restore is currently highly experimental.
++
++It's currently blocked when using Hyper-V enlightenments, which can be disabled with
++``-accel whpx,hyperv=off`` and is blocked when nested virtualisation is enabled.
++
++Dirty page tracking is absent and it is currently best used with ``-M kernel-irqchip=off``
++especially for SMP configurations.
++
+ Known issues on Windows 11
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
 -- 
 2.54.0 (Apple Git-157)
 
