@@ -1,118 +1,155 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6CE606A31B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38118606A31A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 04:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=alistair23.me header.i=@alistair23.me header.a=rsa-sha256 header.s=fm2 header.b=AxCWX3BL;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=mnJB0EcQ
+	dkim=pass (2048-bit key, unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=aLH6D5qM
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLYhl-0008Fh-5K; Tue, 27 Oct 2026 00:22:33 -0400
+	id 1xLYhM-0008AA-9P; Tue, 27 Oct 2026 00:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xLYhj-0008Ej-Hh
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 00:22:31 -0400
-Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xLYhJ-00089I-PN; Tue, 27 Oct 2026 00:22:05 -0400
+Received: from mail-japaneastazolkn190130003.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::3] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1xLYhh-0004op-KO
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 00:22:31 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 334DA7A00B5
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:22:27 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Tue, 27 Oct 2026 00:22:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1793074946; x=1793161346; bh=OofOTQ7qTFIxaUTnsJ+h/KG/gz9OmhEv
- 9PYhW8EGmYs=; b=AxCWX3BLkyaUBLsJJ9WHV/vCVEQsQJt4dAUSR+wRN9hnPdgv
- 9/omMIwhF6GsoUEVNFJmsQmWZxD+ejPKaA16/sP4LrMy61R8LMHVCGx8zN7AOvOJ
- /abaMR+8mPBCJFC2SYOfA+OLbxj+W2zGMID6ot2PxEiXNF6u+b5vvypjvGkkCVJt
- iikuht/hgyr/p+KVbjTyIvW+OVuL8IQ0eOltthZue2qsX35S0Kis7cZ/q0YTXbNu
- v8FNFWWoPH6iZHzoOs93QQh/1zFheJCnTs+lNd/6b3fTOXniS1VpDHPn95WIvWjp
- DQuzq7+kPRK/7wehWLOvPxQ9cqSIGo0vwFkS+Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1793074946; x=
- 1793161346; bh=OofOTQ7qTFIxaUTnsJ+h/KG/gz9OmhEv9PYhW8EGmYs=; b=m
- nJB0EcQpZIcGg+MPfQ5pOIoPCXz5kBP12N4uE9yRFhUwvtwwKfjGOBUSVK69zCjz
- sj7lTI3hXLvjxy57CysHIH+5M6C9oCUYURrTF32bujpYBwAjSqKr+LUGkrCiDKiY
- mh/NvhyZwJM9u6HrG+SyKIBVcuEN4/nxivKXBW3VUWm8ZM26IdY69CXGbp1LXTSJ
- kkocBehEFYDLKwiI+hdPFrJcMPakxzRZt6ZxMAxfA133z8JhZd8nB2ctUt6N2taQ
- +x/ADJZ2OXAJMlxnpX1+0cHqDth77LQGMUowaU/77zDPYDgYR9vlHHxyV4nVQsfl
- ReIMlPE8d4U1ZEad/bW6w==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=sign d=alistair23.me a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1793074946; d=alistair23.me;
- mf=PGFsaXN0YWlyQGFsaXN0YWlyMjMubWU+;
- rt=PHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4=;
- s=fm2:rsa-sha256:puXpnvRg0Kis0et1dFLmzkuxWw9N1k4OPQ/fVNObqMpb3BU
- QfNy5tpsfixWL3+tNTosB/VNYgkwtmnOnWvv7Lr/A9zTxw/ZoU7y4fMqyVScWFJz
- Q8v87yidAHZ91sdydqPuyiVqGm+yUb6qmbYjLMw+5oewkQA4UTVqegElt4OsNPml
- iYoJ6DgaCS2YFcuALa854wA6rlugmY4cksAIuTxfIdOgJPQ7TzqO7HLfhEkBnz2B
- xGrPtWcQeso+v2yYZ9+K/ZR0KHWop023hufIOWvQtvhtxsSsFxweWwnIRdc3Un5z
- K2Hp4YnmjQ4r7ijzhL+xGUm+QWzW2xr3aHJZ3bA==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-07;
- repo=github.com/dkim2wg/interop; date=2026-10-18; sw=lmtpprox;
- action=mi-m=1; hc=13;
- hn=cc,content-transfer-encoding,content-type,date,feedback-id,
- from,in-reply-to,message-id,mime-version,references,subject,to,
- user-agent;
-Message-Instance: m=1;
- h=sha256:byzuXXWh/QTTkrUVbw+8qK/9mmnoTMZSf8yROaQ2vYU=:OofOTQ7qTFIxaUTnsJ+h/KG/gz9OmhEv9PYhW8EGmYs=;
-X-ME-Sender: <xms:AifgagJ9Vr-1T7j3V3wr7OmqxUxA-fAOqvby2Hqm6TI-EObp6DDToQ>
- <xme:AifgagSHjDAkE4DzlnnWTsQN7hZ8nIQ9uxhOWzgcXDF5W6oebcU8G7JJIjvhf0gsN
- 59dzX9KqgRumeIGXkXWh17vmPMbw4smI5CKJopFSBJcghfpbaG3fyM>
-X-ME-Received: <xmr:AifgaooepkriKE-Y5KhpYW6FEgNDLuOZxyN4HMSbSx-rU7kl73xdhXRZlelCucqs96Ceo_TAMozHd82162qxpFlIsHE>
-X-ME-Proxy-Cause: dmFkZTGVFAHz3eHVRIsPvdT+amZVDCSg/VwFgGsZE7FjK951QP9S1ZvUNVhOywRoJ/0k8k
- P1CzVP73jaDEDdx8Ml6MjRSLw2W+93tLbUo5XIH7bJVv9SMTxN0ZR/v7ICAAvOhdpGUTF+
- Ptv8+hd35FuYr3pQfXlg43Eo2y8j/UZ9RxsPkRb/VanCRLQCZk9Cj5CMm8X3g4bfMIu665
- jiy+0zc3+LTJLaLS5dqpL58kBMgMUB7wXYvHmNMIgLbzlwBmhKC9QiP+AxDM9cLebfYHgX
- cEikMjEvkVXTFcuCqCb9Rs3+T71AtdOvzIlZPqEBU4B1iMZ6qrp7RLETghB8sCw4Jlc/fb
- X56M71OTFei2XvXTqEBfIKxzqfY11nwk69aR1tg3dfXZ6XxaAbZukH1iHNS3KdCRU4bDwW
- gxm5fO5vZbKO5za5RJ0sV8eOafgV5p+8LE2WD/OYLj1vUf+nZVHrZ9eLPjgKq7y27Searu
- qhdztCsS2DN7hKpKGLVFOubHMZeTPU4/tA2qSH5iLjNp15u2lNzhmNFrhZXX43luWhXABN
- +K49U381o+RsBnJBIS9fSraOlGTp00hGUw9hbinxg9JR8C6AFo5gSFSsXbE+KWSwcoNcXn
- JYQCPjvNzXJHWCbd+TbEscDfpzo0qAGW5z5SxB2i+RemtnUna067P0NJvAsQ
-X-ME-Proxy: <xmx:Aifgalq9kT6RCdpt-FV8yZTvTa4YzrLkQnnhhDNdEzDdUHqzSC5sGg>
- <xmx:AifgaiOJDp2DxMWs4AckkVuQ0dEKc2tH_XNh3Z3Zme0n4kaZLzpbdA>
- <xmx:AifgauzjyY16rcaQrG_4ySHFAxKlV55k9TiO8GftpKJyI1Aifcoz9w>
- <xmx:AifgajtJjTT8j17g8e3Drnvp1S60QTS2GDOYJcjZziZh-4agto7rbg>
- <xmx:Aifgapbz1muyMWGYJGHTX8_CDaxRUx4g4gu7rx9Pyrlq-8qTGJIvSAVW>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Oct 2026 00:22:24 -0400 (EDT)
-Message-ID: <aa17d5924ea39fb40ed6fc0ecaa1803daeb819da.camel@alistair23.me>
-Subject: Re: [PATCH] hw/display/xlnx_dp: Make assertions clearer
-From: Alistair <alistair@alistair23.me>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Tue, 27 Oct 2026 14:22:22 +1000
-In-Reply-To: <20261026152409.2869104-1-peter.maydell@linaro.org>
-References: <20261026152409.2869104-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.62.0 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1xLYhI-0004md-4H; Tue, 27 Oct 2026 00:22:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eyNkTRwgcVA2oglnrZLpi6SDq7UCKfOA2ds1WlzyYUjGDcKYhAaT7dA4tcIw7DStqXAH0t1HxfBS8LyiLVXq07aOTvz2lMKYEduMZGzjSCF0tpVI0tXEGyz9s8l4835pXrHNS9AzXYeqMVUQmNXhxSHgO5+7Y/7LgvV48NgQRmkyLwVfPVGXaq6OLK4tJ8Fa9yUt688fg92QSD1b7uCGSpZlsIt48eEOBJ69JX40UM19OSRQ8lhvwhmlFM/fxkqAUkMq+Ts83dxTyu+KDGX3YFdIENQWpj0xRfaiX63i9I0u0oTRD2BbOr0VwrVep8CrY4Tk0uaXIAbI+2kgq1x4Dg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=60l1DkI0HLxRLsFeIUjDC5nU7LHVf9KN9jBNUR/RTS4=;
+ b=icqowNPo6AsPfMEIj43tQdTfXcgHKiUMFQQK0HGos4nvKKG3NBKEVimukiEa8Ko6c1fdL9raS6F2FvYCCUt4k1n/orJvGOE8ZzA4Z1E0RLG2VIsV2ut6vKxnzEFCw8KutfTKju6/X/iaX3aB6jgB3OnG8+yA7QzsRucY/UveJMa43d1PYlpmenskdGtYopx59Ejte1vE42bajYpcQoc0dKablI7P5iGMWcnrRSEtTR8kxH1GghAqtmcesyp2RKnFKgVF+6eYk4XZSDAe/ar0DdIMBHYJszwoHk1UmmzJkdqHTA9Cnp50E2LVxlTCLWVVN2gy2Fb64lp4tifacsjtSA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=60l1DkI0HLxRLsFeIUjDC5nU7LHVf9KN9jBNUR/RTS4=;
+ b=aLH6D5qM+8P9yXBH77Q+mZvxrdYKkL3qx/uIr/tXnI+WdWkb+UCyyO15YjsdNrnGMdCmmniOM7wg3khWB3IFOKyBkF9p59ugpKom89zT0i5mD7ehmci1dTOYRP35TKCuCoRBCMoMqB9M1N/2NicX9GbI6ZaBehGGktZwjAHjmGjuGK/OpyUCkStEeofI5EFr9b90DdEXS4Bm9j6EuXZZJfVxhRm3skyiDkzvTkjD2ndrog5C6ge5eLrhnOFzEOHwXhoisphYWbGQqqr7RhuFca8Rnh3kVu9s6oyEa9btq8RWufXnah+MP1yTFxczrYw56jJiMh+sZDKOfKZJNe1gXg==
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com (2603:1096:405:40::7)
+ by SEZPR04MB9628.apcprd04.prod.outlook.com (2603:1096:101:33a::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 04:21:56 +0000
+Received: from TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230]) by TYZPR04MB7491.apcprd04.prod.outlook.com
+ ([fe80::a450:2576:3b21:6230%3]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 04:21:56 +0000
+Message-ID: <TYZPR04MB749111F86DDAA9B66A416CB1F3602@TYZPR04MB7491.apcprd04.prod.outlook.com>
+Date: Tue, 27 Oct 2026 12:21:47 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] target/riscv/kvm: create kvm_riscv_aia_access_reg
+To: Wang Yechao <wang.yechao255@zte.com.cn>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Xuemei Liu <liu.xuemei1@zte.com.cn>
+References: <20261023021237.486091-1-wang.yechao255@zte.com.cn>
+ <20261023021237.486091-2-wang.yechao255@zte.com.cn>
+Content-Language: en-US
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20261023021237.486091-2-wang.yechao255@zte.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TPYP295CA0050.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:8::12) To TYZPR04MB7491.apcprd04.prod.outlook.com
+ (2603:1096:405:40::7)
+X-Microsoft-Original-Message-ID: <68770c01-ff7b-4aad-983c-a77002b34782@hotmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.152;
- envelope-from=alistair@alistair23.me; helo=fhigh-b1-smtp.messagingengine.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: TYZPR04MB7491:EE_|SEZPR04MB9628:EE_
+X-MS-Office365-Filtering-Correlation-Id: c1772ce1-193d-4ec4-1527-08df33e1d563
+X-MS-Exchange-SLBlob-MailProps: Cq7lScuPrnrlC5lHdFGci+YUsdS3F/CIVZpHyao8/J8KkU3RF3AeJbJPUzTF8YcKVAHub3xEM+WJ3rjkWCQl1kTGX5+ub6f/RaTq8+CiipKYdnV3fh8d0qhiIzL4xt8ZOzn7j2VKmodXcmciUosEgdhCI9S/LCFP+WlZQloDU/Cws07EZtZzXKih4HxXooM9bWoPRovoZPk5irns+FsFJ+issDduN2weQKYtOykTKnnvhRgNyBj2JLz3m6DgErc3np1On+46udxD8KA3l4zpKHOT3FAtx1uTfujZyw11D1CZCdTQOFyHqSTO/rRz8ugu+4Cw20Mx/PtlFRYBRfs42ry90Z+GLhip00m1VMS6MozeKqXHrWlKctq3NUPvIPGyyTwKQe3RDOCY+A2DkOIrQJuxC/YXjd2x0i4ELJq6UCl4CQf4/L4j4GhaXMG38Mr3aosD/XBI5vWsEKUkXLf3Akj5VMW5PIAisekbFUFHCe8ZALbEn/j+XSwXTb507fHpXyszdqap1ThA0trFrE/NNtfZxfmNncSONgexS8xekrOyxGcrOZC+zo1PN4y1VZsgwlcZ9OUOn72wzsy6Pa7Ii2GlnvVzk8CjUfgz7zInApLftbKYSwO/VmHkhxJ1LPTTt1XywMEQrQas/rSjyOesNBZ5ZqTT29n+iA5xeWfdYuDSzd7V0brzvHwD7YxGeb+qgDSEN1tGGeki4OSV00ZciBK9H6xkrND4I2KlOY/yytJ6pM7zB/ErRJzFrzDGPmaeYfaMfSaiCWI=
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|25010399006|4140399003|8060799015|19110799012|22091999003|51005399006|6090799003|24121999003|5072599009|15080799012|23021999003|19101099003|55001999006|40105399003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NU5Ed2cxZVhGSDZkWXVLMEVjQVFxQWpnRjNuekNCb2xUcWZvQXNnQ1hxaGpG?=
+ =?utf-8?B?VkNzbWRFSGtMTFpFc2h2MGZjdjNtdWhzMGZEUk1ETmtSTStTdDcwa1UrVXdP?=
+ =?utf-8?B?c3NKVzRGdDl6cVF2aXFVTVZKZEZzcy9nVHc1QkxRQ0NkMFRCOW4rckZMdS9w?=
+ =?utf-8?B?VFlCT2lIbUFMOGtWR0xjaVMzNXp3aW4wdVoxYUkzY2V6dExvVCtsbTNzeVhE?=
+ =?utf-8?B?eTYyQjVUUEgxdUhQcW9lcTRmaHNjL3RTK0J2SnNTblQ0Q2hFTDI5TEc4ZUFX?=
+ =?utf-8?B?QVRzNUVleEUzZVhSbUJ5anZrdGQzUjRPVUU4RzBaVXYyRUpsQ1N0SzhMZjRl?=
+ =?utf-8?B?QmdyZHdaZFJFbStwOHk4cWIxUm5wNmZkb3l4NVNsZEVNYjRMdHVOdi9tWlli?=
+ =?utf-8?B?NllLYktRcWRrRzR3bkxzcU1tenUzQng4YWYvOFFCQ2JaV21iWkFhNWN6QjI4?=
+ =?utf-8?B?b1hUVlFTdURLaU1pWlVBSUtEb1BhMGk1bDlnRk9BRGFUd01TRUQ3cFVKTjds?=
+ =?utf-8?B?bFVGQzJTQ0pwTjEvb0NYcVVqRzI2cG5PQ1k0RUkwaithb0RFNE81d0ZzaUJH?=
+ =?utf-8?B?YStBN0xaU2x2K0dmeU5RV1R3QlRybWFCbEFUdU1rNFRBemwzMTdjeVpOdXdM?=
+ =?utf-8?B?UTIvQ2Q2NTJmcDh4VUU4ZURPY2dBZDRQSlNzdEEyYkh4c1NmRVdGMndyRWJa?=
+ =?utf-8?B?MFIyRklwQW5lYUd4cEQ5cGh1MzZFR3EyeWw3OERMdkdYM09mMU9mZngyUXZt?=
+ =?utf-8?B?WWdhcXVueXY4Nm05QitNNmgxazNLdnhaZnZNeURsQ1VMVGc4SFhYNFJXZFhq?=
+ =?utf-8?B?T3pvcE5oazlva0h2MXh4aW9ldHhGVGNtczlGK0RZMWoxRC9DMXQrYVdtYlMx?=
+ =?utf-8?B?cmVPbElaVHp1OCtLYTB0ZzUzbm9ySWJlRnNjWnFWOFZWdDFHRWdMeGF6RmZD?=
+ =?utf-8?B?UkJhRGpaMXc0WWVqbEthdTRSVDRuVTBkelE5RDUzcWhDSXdQdGdWekh3Z0M2?=
+ =?utf-8?B?WnprU1VCd2FoU2ZNbDdlTU9xd040SU5SNllKVlBEd0x5YU9xQklsWGNiSmJX?=
+ =?utf-8?B?VXZOd2FhODN6aElYN2lEaW1HdGRURUp0b0JRSTFieS9nK3R2ZGhyOGxrUlUv?=
+ =?utf-8?B?RVd6RUJCL3NZd3RlNFpCUWYwbXB4MmUzR0R3dCtYM3drQjF5VnltOE1GSDM0?=
+ =?utf-8?B?TWk0TG5GSFhqUFY2UEJ6eE1NUVdZNG5aeFJDem4yL09yNFBjR2U3SE8zSTNh?=
+ =?utf-8?B?dkdWSDJpemJTN3VIOGN2RHFCZUp6VHhJSHNPR2REaUZSdGJQRDZEUW1PSjhQ?=
+ =?utf-8?B?RVdRaUhuTFd1QzFxWmNUMWhnbEpWdkt4YnoxZGJaWjRXZVZuWXNIZkxCTUlN?=
+ =?utf-8?B?QnJuM1ArbGNFanJoaUx3NTVoZHZLdmtsd2ptU0I3VlFpb1pGV0REYnQ2L1Rn?=
+ =?utf-8?Q?bfwD2MGR?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bDU3bnJSWlVURkdPT0ZhOEROVU1rMTE3U3VmT0ZDalNwWFhKZk1jc1R6TmtN?=
+ =?utf-8?B?aFF2dDJXdUNGVDVoT1grNEVMRkR0OWFZeVRSTnhOS0RkaVpOMXpndEVYaW1p?=
+ =?utf-8?B?U2xWZlJUVDhXZ3QwT3l3bVIrbTFuY2IyVTlWRXhQcjY5SXJMRVBoTWpnZlJa?=
+ =?utf-8?B?YXFyNHRoYnMrUTFTNmFMQnB1QzFITUVEM2hOTlYwaE50b21Ba0w1MGE1c08r?=
+ =?utf-8?B?MGVMd3k1aWEzaFAwYjU3aFdQeSs1Mm1CSkMzNksrS2hCa1g0WWk3Ym9hek9n?=
+ =?utf-8?B?OVZUNmd3TEErc29NenZia1F3cCtqdE5wTWFQNVhHM002Yi91ZGpKbi9CaHQ4?=
+ =?utf-8?B?cXlhZHhtTFQ2UXp6ak15bXF6TjBLNVQydkxtdEtJZjV0ektaTkUrckt2UzA0?=
+ =?utf-8?B?cDA3QTcxczRCNTl4ekk1cHRjYWlMVGd3SDQzMXJHcDEwQUc1QnRBemhONzI2?=
+ =?utf-8?B?eUVpVktDL0o4Lzl4SkZlMFl2Y2tRVEEyQXk4Y1JnWFZjTXRjTG1BVmY0VmVp?=
+ =?utf-8?B?cmxwYjRWMDFXeUdWM1YzeGRrLzAvUHNFeWpOblloV2JXR2hrZUtjby9OaW1T?=
+ =?utf-8?B?blFNaS9saWc5eU03eHA4cHBhYUhzdzBPcmVpRkNYM2NpUDhPaU44d0VLMWZ3?=
+ =?utf-8?B?UUJhVnBwR3lyaVEvK0JLTUo1QU1mTjNuSXVvVXhZbjNlcjdNZzEzeSsyOExh?=
+ =?utf-8?B?SmhzWEE4eGs1aFZZZ2FaNkFiVnlWTG9uNWVBa0tJb2xwc1VISEhvSmFUQ1Vq?=
+ =?utf-8?B?RVRuTzI4UGxiaHNjZGMzTFprK0oyemVWY2E1bm1TME9kK05xTmZyZ1BENng1?=
+ =?utf-8?B?Zmx3RllIVDZFTnZJYUl5SmIvY2c0RTBwazFFenlMa0Q4YlBYVDdSTzRNRkVv?=
+ =?utf-8?B?ck9nRWNHUXZsZmtJRE1pYlo0U0E0S09udTBnZGZQKzlLZTBNNTBHWTJ1WHlI?=
+ =?utf-8?B?Mm5kaUJSWngvdW5GN2hoOEtmUUpEdE1Ea0RBeUxVNmJZMzcwcnQ0VEp2blFH?=
+ =?utf-8?B?aklGakhCcEpzRWFkc29kODZFampqazgzeWtPcUZ2SjZXdm9kRmhOREtEcnFM?=
+ =?utf-8?B?UXRZdFhTMnBxUEpBMHhNZ3BGUFZhVGpsSXZTRXVvcmZsK0VPTXN6OGpPbGFQ?=
+ =?utf-8?B?SmtyZWp2R3k0eTZMZW93OHZDNVYvSDhlMlZsNHI0TnNudjZ5NEJ1MnpWcWtE?=
+ =?utf-8?B?UXVtTnNJVEdQNFgrZFB5S3Z4Y0w2UEJsdTV3N1Q3bmJ2MUhlSXMyNFBsRnli?=
+ =?utf-8?B?OHI0N2xncmRaTXBUYmllVkljR3lUQVJ5VUhYemRRRjVUaFZnK3E0ZFNDd093?=
+ =?utf-8?B?YkQwV3g0MkQzU1lhN2pNVXkwRFppakdaVVFJdk9SeTBpREtPVXRkd1VIV25m?=
+ =?utf-8?B?RWEvRjNKRllxeHV5SzlPWVhPVUV4NkJPOGp5K0NjWWNWcEk0Yk1GZktiZmZ0?=
+ =?utf-8?B?WkN6VTVvUnlrOG8xWU1nOTZSVUJRU09DVFRER0Q1Qi9FS0ZVUUk2QmdiajFm?=
+ =?utf-8?B?QkY1TzNabnR1YWpzRXpPUVpEY2tQbi9Ycm1CWkVRYkZycGM1cWFnT0pVUUsx?=
+ =?utf-8?B?NDNmVmtMVGp0SmxkZDRlL2hocldNUDFxOUxpdWZOWnJrQXE3UWp6TzZ5N01u?=
+ =?utf-8?B?cHFPZUE1dVZQRlQ4a25JR2Z3OEhkS3RyWi94dlA3MlFUMStGY0ROUzAzQmR4?=
+ =?utf-8?B?Yy9DaXBzcXdpaUJ4Um5kNEROYUxZaUxEY2NIemlPYk9mRzFEbGkxSWk4MDBQ?=
+ =?utf-8?B?UXFzYzF3ZVh6SkZnbkZnQ04xZHBYbWszcDJ4SStJdWltSmVhQURGcmZHUmdh?=
+ =?utf-8?B?OUhzY3o4VEVuMGpRSDFQRDNmbTl6aktLTVMyOVhTM0tLMjh4VlZveXZxMHFu?=
+ =?utf-8?Q?sixaexXYhFUCa?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: c1772ce1-193d-4ec4-1527-08df33e1d563
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR04MB7491.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 04:21:56.6348 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR04MB9628
+Received-SPF: pass client-ip=2a01:111:f403:d405::3;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,68 +161,73 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=unavailable
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Mon, 2026-10-26 at 15:24 +0000, Peter Maydell wrote:
-> The xlnx_dp code has some assertions in its read and write functions
-> guarding the fallback "read from core_registers[]" codepath.=C2=A0 The
-> array can't be overrun because of the defined size of the memory
-> region, but the read assert is confusingly written and the write
-> assert seems to be completely garbled.
->=20
-> Replace both with a simple check against the size the array, which
-> makes it clear that we're asserting that we won't overflow it.
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4586
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+On 10/23/2026 10:12 AM, Wang Yechao wrote:
+> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+>
+> Create common function kvm_riscv_aia_access_reg to access APLIC
+> and IMSIC regs
+>
+> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+> Signed-off-by: Wang Yechao <wang.yechao255@zte.com.cn>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
-Alistair
-
+Thanks,
+Nutty
 > ---
-> =C2=A0hw/display/xlnx_dp.c | 4 ++--
-> =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-> index 06594980292..ad6c4952065 100644
-> --- a/hw/display/xlnx_dp.c
-> +++ b/hw/display/xlnx_dp.c
-> @@ -812,10 +812,10 @@ static uint64_t xlnx_dp_read(void *opaque,
-> hwaddr offset, unsigned size)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D 0;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 default:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert(offset <=3D (0x3AC >> =
-2));
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (offset =3D=3D (0x3A8=
- >> 2) || offset =3D=3D (0x3AC >> 2)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-ret =3D s->core_registers[DP_INT_MASK];
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 asser=
-t(offset < ARRAY_SIZE(s->core_registers));
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-ret =3D s->core_registers[offset];
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> @@ -986,7 +986,7 @@ static void xlnx_dp_write(void *opaque, hwaddr
-> offset, uint64_t value,
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xlnx_dp_update_irq(s);
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 default:
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert(offset <=3D (0x504C >>=
- 2));
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert(offset < ARRAY_SIZE(s-=
->core_registers));
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s->core_registers[offset=
-] =3D value;
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
+>   target/riscv/kvm/kvm-cpu.c   | 7 ++++++-
+>   target/riscv/kvm/kvm_riscv.h | 1 +
+>   2 files changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index c085b22b23..3ed94f7586 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -58,6 +58,7 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level)
+>   
+>   static bool cap_has_mp_state;
+>   static bool mp_state_reset;
+> +static int aia_fd = -1;
+>   
+>   #define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U32 | \
+>                                            type | idx)
+> @@ -1924,13 +1925,17 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
+>                                       "auto");
+>   }
+>   
+> +void kvm_riscv_aia_access_reg(int group, uint64_t addr, void *val, bool write)
+> +{
+> +    kvm_device_access(aia_fd, group, addr, val, write, &error_abort);
+> +}
+> +
+>   void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+>                             uint64_t aia_irq_num, uint64_t aia_msi_num,
+>                             uint64_t aplic_base, uint64_t imsic_base,
+>                             uint64_t guest_num)
+>   {
+>       int ret, i;
+> -    int aia_fd = -1;
+>       uint64_t default_aia_mode;
+>       uint64_t socket_count = riscv_socket_count(machine);
+>       uint64_t max_hart_per_socket = 0;
+> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+> index aef681f0a2..8649219e0e 100644
+> --- a/target/riscv/kvm/kvm_riscv.h
+> +++ b/target/riscv/kvm/kvm_riscv.h
+> @@ -29,6 +29,7 @@ void kvm_riscv_reset_vcpu(RISCVCPU *cpu);
+>    * @level: %0 to clear the interrupt, non-zero to set it.
+>    */
+>   void kvm_riscv_set_irq(RISCVCPU *cpu, int irq, int level);
+> +void kvm_riscv_aia_access_reg(int group, uint64_t addr, void *val, bool write);
+>   void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+>                             uint64_t aia_irq_num, uint64_t aia_msi_num,
+>                             uint64_t aplic_base, uint64_t imsic_base,
 
