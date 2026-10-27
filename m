@@ -1,130 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0544606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80FA606A320
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=zWiVYL89
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=aC1BocWZ;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=ZjZR7rdL
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLefu-0005KF-D5; Tue, 27 Oct 2026 06:45:02 -0400
+	id 1xLefr-0005Ik-FK; Tue, 27 Oct 2026 06:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xLefs-0005JW-Rx; Tue, 27 Oct 2026 06:45:00 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLefp-0005Hv-W0
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:44:58 -0400
+Received: from mx2.catap.net ([65.21.79.163])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xLefr-0007qr-8Z; Tue, 27 Oct 2026 06:45:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ERH8bLU13wHyjSnc/SormUV6gb9xozDbeA2FIs4+p6gBGQMHwHpnGMFINeXP/uNvAvONDesjOKbz5Gf8XWHNU//2DvSAnRLojEka37WYF+07U7U1MHpIIkN/7/urpvj5EZ78ql3tca/s7KaI1iYe0Pr0ad5mZjtDWhfI1TiZVgMvSSnGLp2Onq6du0Ku8o84Ssome91SMqADEydrh/EKs12nH8OHPak0iQIrNko7mNJAyTjLz9buMhRPe3ARMoyUHYyhClw6r9cOf14Bsvds70xo5Ll8xc4QLfGNN8tfMLWW0A8QZ03vZb3xDMFAnTwiurZyFJyVofmMd5/OqJOjSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tOBMO+2GV6U5RptyObnXbWB5av49Joz6bvyZBwDSg7Y=;
- b=Lau1qgCcUhUGGenlbhbVCfWIioNc4GfmmyHsraOrmbTbtl3bWtYHODjvIflfdK27u6lq8GtUJt56Deh/okSL8fluBAh1jDyPMiJbvp7DNRXIbrb/1NfNb6FwiRX0LdRPOmvnn7h6ito1sh20TIjNJISNtkd3NljA5taROXkNpWlLhjCkcdBdy698maf459VRmPJgEz1VFfgzPW3YdVHUnK2uP8hugKqdmi+tTmM6uJrrfBvO5KnYsMZ+XMy1P0vB7Vko8MrBm63Mzp9GTsbfCkdBve94Y6Brrwh9OVQsSYsqFztNIuurThjTN5qOMkeBlWdjP7XGyBtA1OjOltKJHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tOBMO+2GV6U5RptyObnXbWB5av49Joz6bvyZBwDSg7Y=;
- b=zWiVYL89QFtqkIgyyZ2aew2PKNoxmbxsF5OUr285A2UwQCs/4adIuND4IiZAXJ3kM1eA1bEdCIJwW78V5qJCrSHzShHxi2aoZYhKpYDnGryNV+cnJ3DbxWfniQRpxH8B3cNiBkkJWaoFvba0bsfbT/YJVHoM2hB1hPMpG3GkRxTX2HB3zvDyl1z/uDNnKloaNpqoaP6Pp53gz+qG2oByPwZDDh/3XBE7328KnoHIvnpXo3N0g89T9WWIbB9VtGJQqCd+M3rJtfu8g8Sk6tVLq3ST5y4MIBnBnQY/YyYz4rZTpCrFWrAJZJTVSAZhGI46C0TsYBdmk9EzeW1Poxwapw==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS2PR08MB8805.eurprd08.prod.outlook.com
- (2603:10a6:20b:5f5::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 10:44:49 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 10:44:49 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- jean-louis@dupond.be, andrey.drobyshev@virtuozzo.com, den@openvz.org
-Subject: [PATCH 2/3] qcow2: fix snapshot data corruption with
- discard-no-unref=on
-Date: Tue, 27 Oct 2026 12:44:40 +0200
-Message-ID: <20261027104441.830212-3-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
-References: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VIUP296CA0070.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:337::8) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLefn-0007qu-Q2
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:44:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=sammT3q
+ +eTgi8MGRtS1ia1ydCvM/cECCF4LQcWT/8OFiIyFDfJyJFAXsDef9xWp8BxVEwqwA7XPEq
+ 1xJApAj8l9wrxAfWxl3vdYwXd3Ui8MLA0VG8AlX+3xFnxCWSRGzQXuIzAUjixzK2AAfRPQ
+ rQ9MW5baLKpxG/HfAZFwPW95/CnffSsp93dntvoNKNwSWp2FAmPstEFjmyYF2+uqOjwim5
+ k8TXyZgClhq9j3hltZtTI1UrntnFswXTX/vbeJT2AsHxVhKblQjpMm0lBT9trQjBYmxHny
+ GhYcnk893ae4Pfa6yxkq1t12qlzd1IeyWP9uf43dKcC/CGlxuniIC/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=c
+ P8S0C+FJ6pqUKPBKhtcmHvbraVEENST2DoFUhFt+N4=;
+ h=date:subject:cc:to:
+ from:dkim-signature:dkim-signature; d=mx.catap.net; b=MVaf08rUDF4ev8SF
+ xmAiVcNgP6z1k9tc91KFBJ0jrUtISBamD3Iter/AxFR+Ziswvo4wE+BC3Dd3gpDkd1gHfC
+ qvPQU0+FPnJ/6fkCNocQMeihRpzCKg84Nl/4HHd+il8D6mA4Vacm//nS/sqXw0aL04cwz2
+ qoXUfCUf9O2rPcb78LojsM0LoDLRaTo7v28o2lGSLvBK3Qsit0aPjdbV1QYyN4JkWdYQKF
+ Hu/dZMPoWRSOdxTGJVxzRm/UdByI1tjWObLide1KLrEeY8Ag0+aODqWrPhgtyFxv1zSxmU
+ n17cs2KaFsIDLkluXq1P8fEnCHmudxvEOMQZgkqZqhIa/g==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=aC1BocWZ; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=ZjZR7rdL;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=cP8S0C+F
+ J6pqUKPBKhtcmHvbraVEENST2DoFUhFt+N4=; h=date:subject:cc:to:from;
+ d=korins.ky; b=aC1BocWZ4sEWLcEYpAsHd4tdNfAPFF0LIxbq5uFFFs8MNZN3KWBedUq
+ V70SHWO1wQhV6cSMSay+tHURqEv2AnfeSPaCS21cXJYXZ8C7omL1RMlBYAdTAzEg3zZFqU
+ fatSaIBxRvtKGUpNEhi2qOBn4qxmZmOHJ0oiQ2lKwtux3BrKd19l9jNDHruxNeRcZmW++4
+ O3UPartNiK+nLawlSGBlzRIVl8HT+IWoSyH4aOXFOJ71EukJyUDjBIz1146MKbf8fPiPX7
+ Ym8/I+hyTUjRHNo5bM4B0EflUoRT5AUvYwOnG/1JenmB+gwgyifdV96tuLvHMAJ4CIHw7Y
+ 3tMugBg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=cP8S0C+FJ6pqUKPBKhtcmHvbraVEENST2DoFUhFt+N4=; h=date:subject:cc:to:
+ from; d=korins.ky; b=ZjZR7rdL9cI5NaAeKWAgsrmuQLbzDOl8q+mZ92tq0JkjcL4H3
+ CWQPoDAWMDLkvEdourK/A4eXhJ3KfC6IscTAg==
+Received: by mx2.catap.net (OpenSMTPD) id afbfe637;
+ Tue, 27 Oct 2026 11:44:50 +0100 (CET)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 931d4340;
+ Tue, 27 Oct 2026 11:44:48 +0100 (CET)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH v4 0/25] hw/mips: add Octeon III EBB7304 support
+Date: Tue, 27 Oct 2026 11:41:24 +0100
+Message-ID: <20261027104433.25720-1-kirill@korins.ky>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS2PR08MB8805:EE_
-X-MS-Office365-Filtering-Correlation-Id: 02af1e3b-3885-4a45-a064-08df341752e7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|366016|52116014|376014|38350700014|5023799004|56012099006|261009223027099003|261021123027099003|261021121427099003|22082099003|18002099003|10067099003;
-X-Microsoft-Antispam-Message-Info: tjvn4GjkOEZfcMMxTKQJLf9CKYC9Uz0s39KPDTzwzljq3rYKfU01W9GwuaUuDNwhmAONODPkXvjbTnyn4GQoTdDRoWk5F7Wkk/JKWNvzX6kRXWrM5+nRUFSxT2dhFhZRdOQYkIXmasgj7tPe6A/cDeskmAC1USYMQAEbYKSNwCcw2yqE3V2FWXlguBlKWzt9eLuBcniQAGFuL+Dkre2xtIPvU3se3PbBSrZtiY1r9HPp5Ns5pGI8+EN3iA10mmqjeaup9ktDgDuGVFJEWsZETFyC1z12fJCp80+OtKJY1Igka+QIgHk9OmLihVQCGJjPlHwPf4Dc2Y/RaqB+AVB+DoVDt66ZmWGe6zlObB3s6kgK9PYmA79bjThFuet9yWtxqoYu5hL9l34i7dVbajBSceuJ4VvvO97VLvbPu742O0b918afmc/eeE5/57Eo32J3WRszrmJxnFdsu3YOVxjiKA+UIr0gWxF5GdFMxPGoLHuy0W9iOkUPKIGKd688HLmtAumiDDyF56Nm0KfOn2R+1ZrXxLMy0G7sV00kR6zAGYo+096gt8OyJGIbXZYFgBThtLsQen6/VSpwnMNFmbMF8lwhOO4n0vlftoovedMNyUND/I0CI8u4KjVgz6v9U7K2rwiwtGuAfhfxgcnko0/GgVojgUMQuMpMXaEPdC3vcZtbi8UA74b85DYGsmB4+b9ecxCZfXI03rBhxk/TCsHA2E+7k1/dlnxakNJ9YWtJP7w=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(366016)(52116014)(376014)(38350700014)(5023799004)(56012099006)(261009223027099003)(261021123027099003)(261021121427099003)(22082099003)(18002099003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Fn0NNVqkBYEe06a40u7LJ5rQy7OzN5cqHoOta9Ssidol5aWM/WEoaS2FRKTx?=
- =?us-ascii?Q?x2CmTYaFerOAdYBc7MSqC4HunCZwVKyCnISin71TwG/d0aOKB2XW1j/8bMZ2?=
- =?us-ascii?Q?ZmpPUlcO1dUf4wb3LH/YAhnnsrL6m8J/8pMbRAJRAXHYnwJRRNx4R4CP2kkk?=
- =?us-ascii?Q?ZiKC0In/kzP//OKARz5979vNxWLGay5mPedPgt2ltTT9enAbo/kssbYRIBHQ?=
- =?us-ascii?Q?BUEZssesxAjf4w4Dsdoez8s0lhoxqmjdg8bBobASFPxC7/w1zDQhpyevWpRS?=
- =?us-ascii?Q?yl9G5H3opsF3ZohDnp2m9gNowx05SHwiL8+FG7HylWkfw//yx2F3T09hKwMN?=
- =?us-ascii?Q?17UnYrYDyWsAcW38WG8C8mVW0ya2jCwczr841TZj5tLC7L7iQBMUzTrHMnIo?=
- =?us-ascii?Q?/CXN/f28bZyZxUPJ6s+hrnnQUKzuAlXgnEOuSXy62175o4QTxEE5P7dX/Zu/?=
- =?us-ascii?Q?7NNxHm0JajGt3ZFnkSBOjrSGJDlaT0U02HCAAwKHgs2upxkSu1YOdv/beA5o?=
- =?us-ascii?Q?6PoKiMpmCGlGdkWZH6r/Y01AkEmiGcmtU8FAv+Y8RNJHCKaYDfZMoAPDP3Yl?=
- =?us-ascii?Q?zK59ARL73Gro0NRDocRGZQYYxrr0bE86nsgngsE71gQRWQuIrDcOgoZGY2Gt?=
- =?us-ascii?Q?/4zZMR2dwbElcqvGgtLazunOInvrZ8d1/YwzTFIya0Oxap/XgV+TpYzccW3P?=
- =?us-ascii?Q?FhX7wjLeb0+x2W8IVDYlvwxa4vsRoElbT2RYRLpd+oRdfmGdcd4D5KFTQvqn?=
- =?us-ascii?Q?Uewg8CYs2M4u5AS9ssRMwPEIxW3ROuU9vqIyZPwOsX1BOcFgK6V+KrnW/z5O?=
- =?us-ascii?Q?VZzyqunqiZVlTmy7qo+Ct5VduubyVQK/x3YcEQqLzcfOLzGJZf+9odDoOJnx?=
- =?us-ascii?Q?pxqdd8NlR+hKlgQmde8Q9jrP9q1LAKTZgDdr+IJS9h5wylcPEcD89uqPi9oT?=
- =?us-ascii?Q?6VXvlUJoG1iSrIWLZOre4UXewf9OTPr/vPFbx1YKje2buSRUmWpQfTEa2zWN?=
- =?us-ascii?Q?oMd01zIHoAaxUflzas61DYzpCdqyg7zTfd3QzSx0CKbkEFn+feN0fdKXu8iu?=
- =?us-ascii?Q?9lGd+Jmzt3vxBYcLM5M4AB35FQGuBj2H6wLFHN8WynMmniAzDJQXR3KEM8Nd?=
- =?us-ascii?Q?jMnLTjE0kX0t/z1Iakwoin2rP1UvuETAcR51eFLiuJj97yQN9yFzIYv4EX2v?=
- =?us-ascii?Q?8fUnzPU761PI4GgMNLXg1K70sZCuI2kfekEzx375nusgj/q1HDstRiIQwICk?=
- =?us-ascii?Q?rS8+KmPZLvce8m9bkzgn92SRNiWHCqZgKlFsLAY7AiW5mjeFimsHs1nHfHQy?=
- =?us-ascii?Q?oVehdNh9MgBdlqQS4dtfBXba9jNKCZeoyQIMaQEwbfTE0A2k2tpbV6C9JoAO?=
- =?us-ascii?Q?9CARPYPCwNIj63d9MCKI0yJigkFqddtVLFU7dC3MpcyTP8tFWWyxG/Bfsmg6?=
- =?us-ascii?Q?Tg7kMH9je/kccuiaZwzobj0+3tYlMD6q2kPBlKiohBBmW/ArTkDBOFejFBit?=
- =?us-ascii?Q?BuxpYHoNf9UgdRgy/3jCU0CsBH6hc8WxyIGwYPJPu0vSoMuwr0TbpsXFmgWU?=
- =?us-ascii?Q?YWlkmKK7SaDKlbfr/Jk+p4EbbwDldz79Fy8VHcP2QI7esHGn+6+1Wq+XDgMz?=
- =?us-ascii?Q?rFtnSikHBLDVjzCQJJQAekUhAT6Y2ijU8OIpAXIhJLxvwQA39kipBRyNedie?=
- =?us-ascii?Q?Rf/iwT3D32vZSbpzjOYCKmlYAXOw/ljPrCtCNvvzx1PNOSk6fzE1Da+AiQ3h?=
- =?us-ascii?Q?EXegbQEnjK0ULGDO+2aw1PpM2FZrXU0=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02af1e3b-3885-4a45-a064-08df341752e7
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 10:44:49.0752 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: s3+Uq9+ucX7PCa90JGfERYON3Hc4E6HCVS/xxVfhc2LmWxe7NGXH9JMFxcW5MeIyMQYw8q0wjnMWrXpoj0AQp6FYTEKmZy/aCCkAK1kb25o=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB8805
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
+ helo=mx2.catap.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, URIBL_SBL=1.623 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,56 +93,119 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=no autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Whenever option discard-no-unref=on is enabled, we bypass refcount
-machinery and unconditionally punch hole in the data on 'discard' and
-'write -z -u' paths.  However, when this same cluster is also referenced
-by an internal snapshot, such operations lead to problems.  The active L2
-table is copied before it is changed, so the snapshot metadata stays
-correct, but the host range under it is punched out and the snapshot reads
-zeroes there afterwards. qemu-img check finds nothing wrong.
+Greetings,
 
-Fix this by guarding the 'keep_reference' flag by the presence of the
-QCOW_OFLAG_COPIED bit.  I.e. only proceed with unconditional data
-punching if we own this cluster exclusively.
+This is rebased to d73149283205645625bfa9fe029cfb68e4c4a9ae resend.
 
-Fixes: 42a2890a76f4 ("qcow2: add discard-no-unref option")
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- block/qcow2-cluster.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+This series adds enough Cavium Octeon III CN73xx and EBB7304 board
+support for upstream U-Boot 2026.04 to boot OpenBSD/octeon from USB
+storage or through PCI e1000 and TFTP; the same machine also reaches
+the prompt of the vendor U-Boot 2013.07 image from the Ubiquiti
+EdgeRouter Infinity ER-8-XG recovery set. The model intentionally
+covers the hardware exercised by these firmware and operating system
+paths.
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index e02fae6a0c6..cc473c7c796 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1953,6 +1953,7 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
-         QCow2ClusterType cluster_type =
-             qcow2_get_cluster_type(bs, old_l2_entry);
-         bool keep_reference = (cluster_type != QCOW2_CLUSTER_COMPRESSED) &&
-+                              (old_l2_entry & QCOW_OFLAG_COPIED) &&
-                               !full_discard &&
-                               (s->discard_no_unref &&
-                                type == QCOW2_DISCARD_REQUEST);
-@@ -2097,8 +2098,9 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
-         QCow2ClusterType type = qcow2_get_cluster_type(bs, old_l2_entry);
-         bool unmap = (type == QCOW2_CLUSTER_COMPRESSED) ||
-             ((flags & BDRV_REQ_MAY_UNMAP) && qcow2_cluster_is_allocated(type));
--        bool keep_reference =
--            (s->discard_no_unref && type != QCOW2_CLUSTER_COMPRESSED);
-+        bool keep_reference = s->discard_no_unref &&
-+                              type != QCOW2_CLUSTER_COMPRESSED &&
-+                              (old_l2_entry & QCOW_OFLAG_COPIED);
-         uint64_t new_l2_entry = old_l2_entry;
-         uint64_t new_l2_bitmap = old_l2_bitmap;
- 
--- 
-2.47.1
+The vendor recovery image is U-Boot 2013.07, UBNT build
+e1000_002_ef3a9; it reaches:
+
+    Octeon ubnt_e1000(Failsafe)#
+
+This is the expected command prompt of the recovery U-Boot environment;
+"Failsafe" describes the recovery image and does not indicate an
+emulation or boot failure.
+
+Early Octeon investigation used Amir Mehmood's original Octeon
+host.patch as a behavioral reference; the basic machine approach and
+several hardware model ideas come from that work. No code from that
+patch remains in this implementation.
+
+The series starts with three generic MIPS correctness fixes for MTTCG
+interrupt state, MIPS64 segment checks, and architectural tlbwr
+replacement semantics. It then adds Octeon CP0 state, the CN73xx CPU
+model, PageMask handling, and unaligned accesses before introducing an
+empty EBB7304 machine. The remaining patches add the machine state and
+peripherals incrementally, followed by the functional test.
+
+The machine currently models:
+
+* the EBB7304 RAM layout, boot flash aliases, and boot-local RAM;
+* CN73xx CPUs, Octeon CP0 state, CVMSEG, and configurable clocks;
+* reset control, legacy CIU and CIU3 interrupt routing, mailboxes, and
+  secondary CPU release;
+* UART, two TWSI controllers, synthesized DDR4 SPD, four LMC register
+  banks, fuses, RNG, POW, and the firmware probes used during platform
+  initialization;
+* the EMM registers needed for firmware MMC initialization;
+* two UCTL-wrapped DWC3 controllers, sufficient for U-Boot USB storage;
+* a minimal PCIe host bridge, sufficient for a PCI e1000 device.
+
+The functional test starts upstream U-Boot with four CPUs, enumerates
+PCI, obtains a DHCP lease, downloads bsd.rd through user mode TFTP, and
+boots the OpenBSD/octeon 7.9 installer.
+
+The OpenBSD boot and USB stress testing requires additional patch for
+xHCI which I haven't included into this series:
+https://patchew.org/QEMU/20260719215455.96122-1-kirill@korins.ky/
+
+Each submitted commit was built in sequence and given the meaningful
+smoke test available at that point. The final tree was tested with:
+
+    ninja -C build qemu-system-mips64
+    gmake -C build check-qtest-mips64
+    gmake -C build check-functional-mips64
+
+The machine was used to build a few GCC build and full OpenBSD/octeon
+release with LLVM inside OpenBSD/octeon using:
+
+    -m 32G -smp 8 -accel tcg,thread=multi
+
+The longest non interrupted workload was near two weeks.
+
+Known limitations are:
+
+* native Octeon Ethernet is not modelled; the OpenBSD test uses PCI
+  e1000;
+* EMM implements the firmware initialization path, not a complete MMC
+  data path;
+* direct kernel boot through -kernel is not implemented;
+* the newly modelled board and peripheral state lacks VMState
+  descriptions; migration and savevm are not expected to preserve the
+  complete machine state.
+
+Patch layout:
+
+  1. target/mips: make CP0 interrupt state atomic
+  2. target/mips: fix MIPS64 segment access checks
+  3. target/mips: drop hidden TLB shadowing for tlbwr
+  4. target/mips: add Octeon CP0 register state
+  5. target/mips: add Octeon CN73xx CPU model
+  6. target/mips: accept Octeon PageMask encodings
+  7. target/mips: allow Octeon unaligned accesses
+  8. hw/mips: add empty Octeon III machine
+  9. hw/mips: add Octeon CPUs and boot memory
+ 10. hw/mips: add Octeon reset controller
+ 11. hw/mips: add Octeon CIU3 CPU control
+ 12. hw/mips: add Octeon CIU3 interrupt routing
+ 13. hw/mips: add Octeon legacy CIU
+ 14. hw/mips: add Octeon CSR window
+ 15. hw/mips: expose Octeon reset CSRs
+ 16. hw/mips: add Octeon MIO boot support
+ 17. hw/mips: wire the Octeon UART
+ 18. hw/i2c: add Octeon TWSI controller
+ 19. hw/mips: add Octeon EMM controller
+ 20. hw/mips: add Octeon LMC controllers
+ 21. hw/mips: add Octeon boot support registers
+ 22. hw/usb: add Octeon USB controller
+ 23. hw/pci-bridge: add Octeon PCI host bridge
+ 24. hw/pci-bridge: add Octeon PCI memory window
+ 25. tests/functional: test Octeon III boot
+
 
 
