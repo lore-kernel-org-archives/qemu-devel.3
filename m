@@ -1,147 +1,83 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30E0606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BF2606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=oHTfYHnV;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=REsDYsgi
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NqUDhWNl
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLiPA-0004Nk-H5; Tue, 27 Oct 2026 10:44:00 -0400
+	id 1xLiSh-0005UQ-46; Tue, 27 Oct 2026 10:47:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLiP8-0004N4-H4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:43:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xLiSa-0005TX-5N
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:47:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLiP6-0006om-SC
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:43:58 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RDo7Q81486569
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 14:43:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- huHvnpaNPiJUf5Rb7l8/xyuFKZ3wNpG00fMLgi30jlc=; b=oHTfYHnVYEb/Zocy
- tHMi43t9LtEJpvhV2D4JEmhMT7W/Ni+SWTWnjRt8KEKOiDP/dYbTr9nEeSLwyMBC
- B4KvWX4VZuBd4BKZU2qal3rzuRyCdWD5pylZ7LKBepYhVDfrOsoTMJHoxa/WT7lf
- roPzmhepGvQwQaW1SG4V3zd3zl9xLZ0kJMe/BMlqSxNauoK/2mbcZPXyjAAewvGp
- 7JNf2iCr0aeE0Ig4W17rCdCOFVM+9tSLSUdo3duV+DH0PY9N2yFmViEd8keIHuLH
- WAvpWeRkI8fd2EkyGV/xtlrwlezD+2UgN/jbCwo1puQkyjdUKBH413cssCu7cFwI
- kjxzsw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjp2ta30j-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 14:43:54 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-936aa34873bso796459785a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793112234; x=1793717034; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=huHvnpaNPiJUf5Rb7l8/xyuFKZ3wNpG00fMLgi30jlc=;
- b=REsDYsgiaUot9gdowIbqCcx7oVM3onSd0dsKDXBV5gE3L7rsGme95IVhlhFGIcrluU
- w7SqZ37KDAUwmoA2Q2TLmVCijLStxDpYyl4Q3VYx3YoYjC5McrDuaYELm3s0iWCZgeAV
- ekFGIDahQzvMz45zb0YDI8kBZGPv7lunOx36oE5tEqcZRz/aUXAUkIgU4TapEbo5cxKw
- iYEV6CZULO8SZIjiiPFJThNroiZoOugDLBb5uYc7uhwpn4hShhZnUdGgwIdtqV5CKcmH
- kA776zushnX2D19VuRfePrdI/dtJ/ospP1sX7D45WFweci3hMIsq02xDQ0LjNR/ztwD6
- MC6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793112234; x=1793717034;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=huHvnpaNPiJUf5Rb7l8/xyuFKZ3wNpG00fMLgi30jlc=;
- b=ZZVLaTve3o/9+71J5CLZLRhmvcAnXNWM82xBnP9jCVvLnWjrD9mkqWCYDfKB+30mvM
- gFTb6RFxXIuudpD3ospNnq5lbmyFJBc3k/cLupJp1fjH28eOqu78ghTO4xuu8qGSDB7c
- 2WmsTYjynEsRxjlO20NukfKGRO32J1moR+V7TR8T68oPp70FQKMSDet/r0+Z6Fl1D0AD
- EgHfSxAQ8pGCEJY62vgxw0bBlx6wxszgsZ2Bjr6k0QkK21/VavcJz5pi5FnpwEbgoQWK
- Ub+yyyAIvEmN/IHOukP4o5PjuB/0Izpk8fw55Rc3olZZSuEbZd1JTJRmndICJoo+XfpH
- b7XA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBy3DFtt5YDbIWMcJ17ktFLd2zSGBybNVSGImTTjArE7a2ipcoBOHCELSIFIsR/7UgUbRHzGk73vfovy@nongnu.org
-X-Gm-Message-State: AFq9FYLYrGNT708CuthoeY12l6osQbNCVjHDHYsmrIt5HEojPZQfUyIw
- lJ74ZVM8APJ6CUDPlwwzQEAtWw8w5KeB7y3OoDcDS1y5PsWFQwJisWJHXUZI1QjKKXDskm51jSU
- IfKRWd489Pj4rv7QFKWarv4oOVz3amgn3e+PbhcZoecAwXCkUVBZxPzMkPw==
-X-Gm-Gg: AYBFou0KdgIrcCiJyBnBpanljEKLL0QYQjZl9SnVn/itH1wmFULniUNLpM82okXOoWC
- P87LgXHdaYcWheeVxP/yXEuhL9IPKEXQN5ZCQ/e5CaxJcOlbHGvRtLXqPkSteBD+Jc8NZfpFe03
- yjYhN9S8KRK7GzdpwIIUuwSPfHTpWExRmt38YWCvwFCq4Fd6oOU9iDV6T4ZLuybx0b15DjDfjQp
- rmoK5K2+kWtL6zFYbojYVVpF97w0jn6hxfdalJP5BMLnh6YVi3g3cFMJUXhv4PKEbVcAGb4Ch6t
- QZvZDFGRXMcTPs3E11SmLyuXZ1EyuKYiXNSMOoyeEQTmfWC8yGnWRwvK7gIidkRb0LB9wpKnpCQ
- nzlTibzoCnw00o9WBzlg/pupgffkWuLmcKkrArtk6u/CYzn+TxA==
-X-Received: by 2002:a05:620a:1712:b0:93f:5892:e5fd with SMTP id
- af79cd13be357-940ef7d66c8mr1505590485a.1.1793112233731; 
- Tue, 27 Oct 2026 07:43:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:1712:b0:93f:5892:e5fd with SMTP id
- af79cd13be357-940ef7d66c8mr1505585185a.1.1793112233205; 
- Tue, 27 Oct 2026 07:43:53 -0700 (PDT)
-Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc3bdbsm19001949f8f.19.2026.10.27.07.43.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 07:43:52 -0700 (PDT)
-Message-ID: <27104daa-1b42-47d0-b84a-f1458baa620d@oss.qualcomm.com>
-Date: Tue, 27 Oct 2026 15:43:51 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xLiSX-0007C7-Ar
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:47:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793112446;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=b8GrDsLRiJPaIhSzzKanfkCUP6BbyMIBjC3PCmBPbxw=;
+ b=NqUDhWNlthgvEWpnNYjOYBroyfcUnmp5a3H9CsEDqaunNlQ+LqDdT3jhGaEykoxwfTU1Ze
+ +Z0rVB5wiOvbwDYanhOasA9aGba2Tb65F6WtMlMujnyxf4DQiBRc+40lnBCuld7FTQhwnJ
+ YHfa8HwyNQGcam/NyAIXn1zp7vzppzc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-vZyPcORyMOO2KKXRrE1zlQ-1; Tue,
+ 27 Oct 2026 10:47:25 -0400
+X-MC-Unique: vZyPcORyMOO2KKXRrE1zlQ-1
+X-Mimecast-MFC-AGG-ID: vZyPcORyMOO2KKXRrE1zlQ_1793112444
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AB2F1802577; Tue, 27 Oct 2026 14:47:24 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37C1D195608A; Tue, 27 Oct 2026 14:47:22 +0000 (UTC)
+Date: Tue, 27 Oct 2026 14:47:19 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [PULL 02/14] qapi: add 'insecure-types' option for -compat
+ argument
+Message-ID: <auC5d5KoWqEMEomR@redhat.com>
+References: <20260917160525.1275388-1-berrange@redhat.com>
+ <20260917160525.1275388-3-berrange@redhat.com>
+ <877bj3a33b.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/clean_functional_cache: tolerate missing .stamp
- files
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-References: <20261027140305.4027440-1-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261027140305.4027440-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=AJjzCM5L c=1 sm=1 tr=0 ts=6ae0b8aa cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=KS5Bgl_NgPwB0-sxteAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: QPcTqNQbIk52hhg6Sl1aBcjH0EQDJEfv
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfXwIWTNZ1ZHZYs
- b8en9n4SuCcqoN/nsFZHl6zFW6u7CCdTo1fAY8DrdEHBH5Pe8HY0Y+CgQChA5/55F8PBlzB3lBu
- hNhF0WkWGv5bLi8ZM6AiWjxaPZQh/as=
-X-Proofpoint-ORIG-GUID: QPcTqNQbIk52hhg6Sl1aBcjH0EQDJEfv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA1OCBTYWx0ZWRfX4CAMoeE6y7FP
- AFxFAWGokhWL9SB/9GcncYQzanCU5KgfbZlpJ9U3at2s1mUWdp+f7R0gIXvSGR5SqLDEPvW3baj
- UPNpRuB6WGqdqfjN3fhTAAyBy8+FZ7wYC1iMVeiiBvGPM9G5ZTGVyy6UPfPwgo1G35U71t2LMxX
- K2aPxu3xyWcwRfCaGdfnovmAoE3qzgti1sFUv4xY3naS15QcCxViJ/T97+sx98ypzKwITqNwkwZ
- H6kLbXF6O4YRysJ7QNZX/sloSbmAPIdwSMbW8U1pdhdgSGhDY+q3nPgJJvkPBUqVJd2ChfzhaNJ
- 7Uwo1EOBw/RdrQEw9x8rhfo60FBFtOTD9HBGizGRWAEgWJSOA4JMFISo5CRLAXOSpVQieikwcmG
- FMRBpsq2VHLzdBuMn+ElxPGagbJq8qpyRs/5p8PlUr9tZuThqctV3UCC/7BbapoWkWv4fWD05iO
- lgYGuPviYap8AQObZ3g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 bulkscore=0 malwarescore=0 spamscore=0
- clxscore=1015 priorityscore=1501 adultscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270058
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+In-Reply-To: <877bj3a33b.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,34 +89,336 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 27/10/26 15:03, Brian Cain wrote:
-> Assets cached before the stamp files were introduced have no
-> corresponding .stamp file.  The script already copes with that when
-> reading the timestamp, by assuming the QEMU v10.1 release date, which
-> makes such assets eligible for removal.
+On Tue, Oct 27, 2026 at 10:46:00AM +0100, Markus Armbruster wrote:
+> This has long been merged.  I couldn't review it at the time, and
+> merging it without my review was clearly appropriate.
 > 
-> However, since commit c1bb594fe41, removing the asset also
-> unconditionally unlinks its .stamp file.  For these old entries that
-> file does not exist, so unlink() raises FileNotFoundError and the
-> script aborts after deleting the first such asset, leaving the rest of
-> the cache uncleaned and returning an error.
-> 
-> Pass missing_ok=True so that a missing .stamp file is not an error.
-> 
-> Fixes: c1bb594fe415 ("scripts/clean_functional_cache: Remove also .stamp files")
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   scripts/clean_functional_cache.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> I have questions / doubts about the external interface I'd like to
+> discuss now.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+... just in time for freeze if we need any urgent changes
+before this gets into a release.
+
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > This introduces a new 'insecure-types' option for the 'compat'
+> > argument that accepts three values
+> >
+> >  * accept: Allow any usage
+> >  * reject: Reject with an error reported
+> >  * warn: Allow any usage, with a warning reported
+> >
+> > For historical compatibility it defaults to 'accept'.
+> >
+> > The 'reject' and 'warn' values will take effect for any type
+> > that has been explicitly marked insecure, or is lacking an
+> > explicit declaration of its security status.
+> >
+> > This new command line option is currently a no-op, but will
+> > become functional as following patches enable the checks.
+> >
+> > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+
+snip
+
+> > diff --git a/qapi/compat.json b/qapi/compat.json
+> > index 90b8d51cf27..b54f8eb3713 100644
+> > --- a/qapi/compat.json
+> > +++ b/qapi/compat.json
+> > @@ -37,6 +37,23 @@
+> >  { 'enum': 'CompatPolicyOutput',
+> >    'data': [ 'accept', 'hide' ] }
+> >  
+> > +##
+> > +# @CompatPolicySecurity:
+> > +#
+> > +# Policy for handling any devices or backends which do not provide a
+> > +# security boundary to protect against untrusted environments
+> > +#
+> > +# @accept: Allow any usage
+> > +#
+> > +# @reject: Reject with an error reported
+> > +#
+> > +# @warn: Allow any usage, with a warning reported
+> > +#
+> > +# Since: 11.2
+> > +##
+> > +{ 'enum': 'CompatPolicySecurity',
+> > +  'data': [ 'accept', 'reject', 'warn' ] }
+> > +
+> >  ##
+> >  # @CompatPolicy:
+> >  #
+> > @@ -62,10 +79,14 @@
+>    # Policy for handling deprecated management interfaces.
+>    #
+>    # This is intended for testing users of the management interfaces.
+>    #
+>    # Limitation: covers only syntactic aspects of QMP, i.e. stuff tagged
+>    # with feature 'deprecated' or 'unstable'.  We may want to extend it
+>    # to cover semantic aspects and CLI.
+>    #
+>    # Limitation: deprecated-output policy @hide is not implemented for
+>    # enumeration values.  They behave the same as with policy @accept.
+>    #
+>    # @deprecated-input: how to handle deprecated input (default 'accept')
+>    #
+>    # @deprecated-output: how to handle deprecated output (default
+>    #     'accept')
+>    #
+>    # @unstable-input: how to handle unstable input (default 'accept')
+>    #     (since 6.2)
+>    #
+> >  # @unstable-output: how to handle unstable output (default 'accept')
+> >  #     (since 6.2)
+> >  #
+> > +# @insecure-types: how to handle types that are not declared secure
+> > +#     (default 'accept') (since 11.2)
+> 
+> Minor issue: "types" is ambiguous without context.  We call lots of
+> things "types" in our external interfaces.  It's actually QOM types
+> here.  Let's say so.  I can take care of it.
+> 
+> Similar confusion exists elsewhere[*], but let's not digress.
+
+It is currently  QOM types. It might even stay exclusively QOM types,
+but not guaranteed.
+
+The initial focus is mostly on guest visible pieces (-device, -machine)
+with '-object' as an easy extra win that's more backend oriented.
+
+In theory it might be extended to other backend types, which are probably
+modelled in QAPI, but are not neccessarily implemented with QOM. So I
+somewhat intentionally left it fuzzy what 'types' we refer to.
+
+> >  # Since: 6.0
+> >  ##
+> >  { 'struct': 'CompatPolicy',
+> >    'data': { '*deprecated-input': 'CompatPolicyInput',
+> >              '*deprecated-output': 'CompatPolicyOutput',
+> >              '*unstable-input': 'CompatPolicyInput',
+> > -            '*unstable-output': 'CompatPolicyOutput' } }
+> > +            '*unstable-output': 'CompatPolicyOutput',
+> > +            '*insecure-types': 'CompatPolicySecurity' } }
+> 
+> The existing members are all named "wide", and the documentation narrows
+> them.  For instance, the name @deprecated-input could cover *any* input,
+> but its documentation narrows it to "only syntactic aspects of QMP".  I
+> did it this way to let us extend coverage without having to change the
+> external interface.
+> 
+> New member @insecure-types is named "narrow".  Why different?  Why not
+> @insecure-input?
+
+In those existing examples, we're directly refering to data streams,
+whether they're command line / QMP parameters or QMP response, so
+input/output are reasonable terms.
+
+In the security status, we specifically focused on types, regardless
+of whether they're requested explicitly via -device (& friends) or
+arrive implicitly via built-in command line defaults and/or hardcoded
+type relationships (ie built devices in a machine type).  I don't
+find 'input' to be a desired term in that respect.
+
+What is being determined is whether the VM as a whole can be classed
+as secure or not.
+
+> The existing @FOO-input support CompatPolicyInput: "accept", "reject",
+> "crash".  New insecure-types supports CompatPolicySecurity: "accept",
+> "reject", "warn".  Why different?
+
+With deprecations, there is often (but not always) a warning message
+printed unconditioally. eg even if you have 'accept' as policy, you
+are liable to see a deprecation warning message on stderr. This is
+good because even if you want to carry on using it for now, and
+never give a -compat flag, actioning the deprecation warning is
+still essential.
+
+
+With security checks, it is valid to launch QEMU in an insecure
+configuration and use it that way forever, with no action required
+to change anything. As such we must never report any warnings by
+default for insecure types, any warning messages must be strictly
+opt-in.  So "accept" is the default behaviour which is totally
+silent, "warn" lets you know something is bad but does not
+enforce it, and "reject' lets you know something is bad and
+refuses to let it be used. So overall, I think "warn" is justified
+for security checks, while not required for deprecations.
+
+> My rationale for "crash" is in commit dbb675c19aa (qapi: New -compat
+> deprecated-input=crash):
+> 
+>     Bugs in integration tests may mask the error from policy "reject".
+>     Provide a larger hammer: crash outright.  Masking that seems unlikely.
+> 
+> If "crash" can be useful for testing a management application's non-use
+> of deprecated and unstable interfaces, surely it's just as useful for
+> insecure ones.
+
+I'm happy to add 'crash' as an extra option.
+
+> Likewise, "warn".  I didn't provide "warn" at the time, because QMP
+> lacks support for warnings.  Do management applications find warnings on
+> stderr in response to QMP commands useful?
+
+Many deprecations none the less report warnings on stderr - we just
+haven't automated that process from QAPI schema.
+
+I've seen plenty of scenarios where people have paid attention to
+the deprecation warnings in libvirt logs capturing QEMU's stderr.
+It is likely the main way that non-developers find out about the
+deprecations, as few people proactively read the QEMU docs to
+see deprecations, and similarly few use a -compat arg.
+
+
+For the security compat arg, my expectation was that distros which
+wish to restrict what their ship & support (ie RHEL) could use
+the -compat insecure-types arg to validate their configs, and
+could even set libvirt in their distro to pass 'warn' (or even
+'reject') as a safety net against mistakes.
+
+I think it would also be interesting for virt-install (and similar
+tools) to request secure types only by default, at least if KVM
+is used.
+
+> -util.c b/qapi/qapi-util.c
+> > index 3d849fe0347..38b1cec7a41 100644
+> > --- a/qapi/qapi-util.c
+> > +++ b/qapi/qapi-util.c
+> > @@ -14,6 +14,7 @@
+> >  #include "qapi/compat-policy.h"
+> >  #include "qapi/error.h"
+> >  #include "qemu/ctype.h"
+> > +#include "qemu/error-report.h"
+> >  #include "qapi/qmp/qerror.h"
+> >  
+> >  CompatPolicy compat_policy;
+> > @@ -58,6 +59,35 @@ bool compat_policy_input_ok(uint64_t features,
+> >      return true;
+> >  }
+> >  
+> > +bool compat_policy_check_security(const CompatPolicy *policy,
+> > +                                  const char *typename,
+> > +                                  bool is_secure,
+> > +                                  Error **errp)
+> 
+> More minor issues.
+> 
+> The policy functions are named compat_policy_FOO_ok().  Why different?
+
+I wasn't paying close enough attention to the naming convention.
+
+> Their arguments are "relevant facts" (@features), @policy, "stuff for
+> error message" (@error_class, @kind, @name), @errp.  This one has the
+> same things in different order.  Why?
+
+Same lack of close attention as above.
+
+Though I would say I think the 'const CompatPolicy *policy' arg should
+be the first one in all the existing methods, as it is typical convention
+for the first arg type to be associated with the method name.
+
+> 
+> > +{
+> > +    if (is_secure) {
+> > +        return true;
+> > +    }
+> > +
+> > +    switch (policy->insecure_types) {
+> > +    case COMPAT_POLICY_SECURITY_ACCEPT:
+> > +        return true;
+> > +
+> > +    case COMPAT_POLICY_SECURITY_REJECT:
+> > +        error_setg(errp, "Type '%s' does not provide a security boundary "
+> > +                   "to protect against untrusted data or actions", typename);
+> > +        return false;
+> > +
+> > +    case COMPAT_POLICY_SECURITY_WARN:
+> > +        warn_report("Type '%s' does not provide a security boundary "
+> > +                    "to protect against untrusted data or actions", typename);
+> > +        return true;
+> > +
+> > +    default:
+> > +        g_assert_not_reached();
+> > +    }
+> > +}
+> > +
+> > +
+> >  const char *qapi_enum_lookup(const QEnumLookup *lookup, int val)
+> >  {
+> >      assert(val >= 0 && val < lookup->size);
+> 
+> 
+> [*] So I digress in a footnote.  Sue me ;)
+> 
+> While examining the QAPI schema, I found near object-add:
+> 
+>     ##
+>     # @qom-list-properties:
+>     #     List properties associated with a QOM object.
+>     #
+>     # @typename: the type name of an object
+>     [...]
+>     ##
+>     # @object-add:
+>     #     Create a QOM object.
+>     #
+>     # Errors:
+>     #     - If @qom-type is not a valid class name
+>     [...]
+>     ##
+>     # @ObjectOptions:
+>     #     Describes the options of a user creatable QOM object.
+>     #
+>     # @qom-type: the class name for the object to be created
+> 
+> We use "QOM type" and "QOM class".  This is pretty bad; we should pick
+> one and stick with it.
+
+Probably "type" since there is no concept of a "class" in QAPI,
+it is just a schema for describing types and their relationships.
+
+The 'class' is an internal QOM implementation detail of the
+public QAPI 'type'.
+
+> And near device_add:
+> 
+>     ##
+>     # @device-list-properties:
+>     #     List properties associated with a device.
+>     #
+>     # @typename: the type name of a device
+>     [...]
+>     ##
+>     # @device_add:
+>     #     Add a device.
+>     #
+>     # @driver: the name of the new device's driver
+> 
+> We use "driver" and "device type".  Similarly bad.
+
+Kind of wish we just used a plain 'type' in both -object and -device,
+but changing that is not worth the disruption. At least the docs
+could refer to 'QOM type' generally.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
