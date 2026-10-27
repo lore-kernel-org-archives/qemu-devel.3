@@ -1,156 +1,119 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C250E606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51747606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EMLjalLG
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yUYhb+9p
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLiok-0002HI-4o; Tue, 27 Oct 2026 11:10:27 -0400
+	id 1xLips-0003ex-E1; Tue, 27 Oct 2026 11:11:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xLio2-0001w1-Vo
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xLio0-0000jS-Bt
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793113779;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YxsqXTT/2SkHCopDBU3zcdHUWKG0aEgc5S4iUgZigFw=;
- b=EMLjalLGTYrNlCmGo2atTSKdh+ic+WcxN8E92twoOTqF6Og6d7Ro1qC5G68B9x+KITzduw
- qiYY1++St98785pl7l2SO/CwiUAv/+7ZqPLTHo6xDN2dpBAexTzzjZeL5IPdb2fNqv7OC5
- 4yce7LK74VH32Pa60OAsm6URxDJgQqY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-7XFlFRhPPtuZJx-cX-8Sxg-1; Tue,
- 27 Oct 2026 11:09:34 -0400
-X-MC-Unique: 7XFlFRhPPtuZJx-cX-8Sxg-1
-X-Mimecast-MFC-AGG-ID: 7XFlFRhPPtuZJx-cX-8Sxg_1793113770
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46A391954B0B; Tue, 27 Oct 2026 15:09:28 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E918918002B1; Tue, 27 Oct 2026 15:09:01 +0000 (UTC)
-Date: Tue, 27 Oct 2026 15:08:58 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>,
- Junjie Cao <junjie.cao@intel.com>, Anisa Su <anisa.su@samsung.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
- linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Sergio Lopez <slp@redhat.com>, qemu-arm@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
- Xianglai Li <lixianglai@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Alistair Francis <alistair@alistair23.me>,
- Alexander Graf <graf@amazon.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Ani Sinha <anisinha@redhat.com>,
- Luc Michel <luc@lmichel.fr>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Samuel Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>,
- FangSheng Huang <FangSheng.Huang@amd.com>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, Conor Dooley <conor@kernel.org>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- Peter Xu <peterx@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- xen-devel@lists.xenproject.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>,
- Farhan Ali <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Jiri Pirko <jiri@resnulli.us>, Eric Auger <eric.auger@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
-Message-ID: <auC-ilqUJq27neSR@redhat.com>
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
- <atsxLV5YZo8dr-8G@redhat.com>
- <CAMxuvazd7G_NBOM_c6BxZn5PFSw=XQUHueHqBoQQfpzPPgi9qA@mail.gmail.com>
- <87zevz5h4k.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLipV-0003di-NX
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:11:13 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xLipS-00011U-BY
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:11:11 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c498fa2f365so315731666b.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:11:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793113867; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RCHh4iQcyAcLeVoRLQ4V0bLBVQ9B/VDWay2KYrICGtWLDmmcYw3VQsD754op/4w2R0
+ HtkxfIFXnWnIC9QLUt2hiu9x9h3eVSqq/IEN1EgYjrdJduHlAGcG4RVxxQgP+cgNLsn9
+ 3pPt5oJFxkfFOLDH79cAMMVRVgr9yvIBrkB18oaJmKO9raOWweDp2EpIjNFR8mG5Wlng
+ a7C4rP3bxOsDfp/AeYGIhIFOiQnOBi1yIRaNwFNCU71uqmvM5RbvR89xlaFCKIPz08AQ
+ J/TaVgPWmYpjviBKo9xFyaVLdcq9dw+8eSFvXRcCd8+MRA/EBnj7ksw3yIwvDZgwwdW6
+ UpJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fds9GDMUn83ZlV72S6fMtPsNs76zFy5TRTrEwZS5ZfY=;
+ fh=zitqL0Y4bSg66gAz+Nl/+uVjtvbilBhTwkAfC21QsMs=;
+ b=QIl6RPjDznHzlPjT4WNCsavrRkDR2kxwjCaG7P1sLWzyPrqkpLMMH610IHdhYcq2R/
+ U5JgSBWPYk3edKBTqKqY+ci90TURHu0+VR995n6mlSrZEoF196BMTCAeyWoutsi6SLNI
+ zj+UKlTRKqb4JKOfjnM8hnxfgGbT58TzvfuiaHqcGI+6Aa0vX5j6XhirmHlpitVS6afC
+ s9tCWABb3cG3YXLqSLhi1wSKCNMYGuVMx0LbZAA0c9cGORWW075cE4Pd25Y36dbpVf84
+ Sr8QCbz1bRJt0d3cQ2CFwZeyw94nZluq9AxdOZlD1GQf8A1iTdv7xIxEnmGoDzSdtmhG
+ 0lkw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793113867; x=1793718667; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=fds9GDMUn83ZlV72S6fMtPsNs76zFy5TRTrEwZS5ZfY=;
+ b=yUYhb+9piHrqNQIOq/U2EYKYM5XGTan9WfPsGbDeHva5uexRBcD6BhTuZiJay7OkE1
+ Ap7sxGEPhfUa2Lgf7iZge9M5w7sKgDtzTwo6DkSjVv24fJFa8QFph1Zi4RXxhF0cKgcf
+ C3DPCTcJ+DGJfnS5M0ltaErD2+4zWzTovnqdr7Cb9vdCUbKYZgwRy8/YdbyREZHVbCky
+ gbjNiplI6apDHMJ+9S/r3zSpG7OunWANtpqbj6755awkSshJyKNFCoaQl29eFVZ2nhnZ
+ m0dIFVwtJbYqhTF2YslzWGmQTho7nPjHJ6hm1+50qMNhlFEPm32Gygf+hmDgEsbaiEKf
+ T2Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793113867; x=1793718667;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fds9GDMUn83ZlV72S6fMtPsNs76zFy5TRTrEwZS5ZfY=;
+ b=ISX64cYoVRfCfEyWDGEnSXeOswi/clNtP4Anw+FAUpF/Lm7KMUQJJHOaoKdzfJxo4z
+ uEAUw5l4a690p0UwVzP2LYyrhducSOYgMr4S2IqEHhaFVGyzbWxP3/lcb4trKnIwfCFU
+ hEW3Z8LkOWfj9XeUxdVxShxU5j6AJ18vevjuv5KmUrvfpPmifCoICcrof2BKYLBxlxDS
+ 6C30jrLVr5DjsgMkDJdQLNpAWYJD8xRHciONTJNlz+5CUjee5aPmEN6R7rFxndsTIJm4
+ zg3iS886VoXzjdk+teBhCh26XZc2gQo76wQt78YKfBQlwC7PGISnDf7QxM75eThozsPD
+ t2og==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwR+Pyj5WiV+iy5m8prDdKdyobjagFzh1lGVCb0KhQuSzV+mAJe+X/JHAlt/Edym0eP71xMEWisyF2U@nongnu.org
+X-Gm-Message-State: AFq9FYIB///InsMuyzRsO5GqUISVpbiwdRPh5Z1p0OJYf6P2OCwN5OjZ
+ JQO1vNzjS3V8eeZWCGVS8CRrqTH/sHwHrL1nuNh1actW3lSJC73pFcpCz1Ri7xhwOvgDHemqbcw
+ EHLZqkYIGRt5VB1fiFtvF6PnkOcnk98cVWwHaQ/xPEg==
+X-Gm-Gg: AYBFou1gnbaPAQ1S1RQSM44ERs668b1AobWoSePPVlb37x6N6T2f9+kVTNE9latiQYK
+ azG5Hx48rRBXJu/KLK+AIjjwXG0g6BguE5lNCB/sgAZ367//44+0tad4cYwBV9a6WFyXQdgTMsw
+ nuTGwe8Lz7xbILjN94Fhv4XUof23EWmkRdsSJs12unt2w8DsrLlXraTFuE0h4zsdGDecNEGqNsw
+ spoFKXCG5wFQ4b2NXEHtMnauxjdL2IMYGBEmNeejoYRzK+ZF0QEPU/viijrNxl9zABBTwXnq+Js
+ AQ3eCctpLxeQDd5PeOtaC6RGXJW8LxVQ0+aRk/9h/dFMdOFr8eJNqJYItkbd6LAjF86zmm9QaYv
+ Pxu5qRn5sAzxvEQuzHn8ueapX/ZQN+vOYXQBTwGyNQUhCWudgf1hvhSfOZHdc+qs6eZTaHM0nO1
+ B7J2byagqBe/KxmBhS4lwA
+X-Received: by 2002:a17:907:3fa5:b0:c29:5340:182e with SMTP id
+ a640c23a62f3a-c46bdac64a2mr1116029866b.2.1793113867264; Tue, 27 Oct 2026
+ 08:11:07 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zevz5h4k.fsf@pond.sub.org>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261006083445.30362-1-shentey@gmail.com>
+ <2FD6FED6-EBED-47A4-9096-D4FDF2F17406@gmail.com>
+ <735a348c-3eb4-4a9c-bc41-6d347d4330ec@oss.qualcomm.com>
+In-Reply-To: <735a348c-3eb4-4a9c-bc41-6d347d4330ec@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 27 Oct 2026 15:10:52 +0000
+X-Gm-Features: AclHuK8vjiayc19tHooowV3NSNSc6rrFF8pq0wvXg--_cBIczOb-_GJydei8Q7U
+Message-ID: <CAFEAcA-J8qFpD4yVwoH2tYaUUa1RyhY_Bdj=EppK908czPk1tA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/31] i.MX fixes and cleanup
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Bin Meng <bin.meng@processmission.com>,
+ Jean-Christophe Dubois <jcd@tribudubois.net>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-arm@nongnu.org, 
+ Jason Wang <jasowangio@gmail.com>, Alistair Francis <alistair@alistair23.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,80 +124,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Tue, Oct 27, 2026 at 03:54:03PM +0100, Markus Armbruster wrote:
-> Marc-André Lureau <marcandre.lureau@redhat.com> writes:
-> 
-> > Hi
+On Tue, 27 Oct 2026 at 14:21, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 27/10/26 12:22, Bernhard Beschow wrote:
 > >
-> > On Fri, Oct 23, 2026 at 2:04 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > Am 6. Oktober 2026 08:34:12 UTC schrieb Bernhard Beschow <shentey@gmail=
+.com>:
+> >> This series fixes various issues in i.MX device emulation, cleans up i=
+.MX
 > >>
-> >> On Tue, Oct 20, 2026 at 02:46:11PM +0400, Marc-André Lureau wrote:
-> >> > PciDevfn is a bit special, since it accepts integer and string as
-> >> > setter, but only output integer as getter.
-
-snip
-
-> >                                                       But I agree we
-> > could do better.
+> >> Kconfig handling, and improves some code. Functional console tests for=
+ the
+> >>
+> >> remaining i.MX boards are added where images are publicly available, e=
+xcept for
+> >>
+> >> imx6ul which is taken care of in a different series [1]. Fixes which a=
+ppear safe
+> >>
+> >> for backporting are cc'd to qemu-stable.
+>
+>
+> > Ping
 > >
-> > There are multiple options. We could keep declaring the property as
-> > str instead. In this case, the getter should probably return a string
-> > for consistency and correctness. This might surprise some existing
-> > users though.
-> 
-> I.e. ditch numeric suppport for numeric addresses, right?
-> 
-> Incompatible change.  Do we care?
-> 
-> If we don't, we should be honest about it and mark qom-get unstable.
-> 
-> > We could introduce new properties like `devfn-str` and `devfn-int`
-> > that alias the same value.
-> 
-> Compatibility break.  If breaking compatibility is okay, I'd rather use
-> the opportunity to get rid of cleverness, and go with your first option.
-> 
-> > We could also introduce a new structured QAPI type.
-> 
-> What kind of type do you have in mind?
+> > All patches reviewed. One may need improved commit message. Am I suppos=
+ed to resubmit the series or will this be done inline?
+>
+> I'll take care of it, thanks for the ping ;)
+>
+> Peter: I'm queuing this series (simpler for both of us I think).
 
-IMHO the root cause design flaw here was to overload 'addr' as a
-way to set both the slot number and function number, as using
-one property for two pieces of data is a well known anti-pattern
-we caution against.
+Thanks, that's great.
 
-IOW, we should have had 'slot' and 'function' as separate properties
-from the start.
-
-From a CLI POV, we could easily change 'addr' to mean only the slot
-number, since it is always parsed in string format without the
-magic (slot << 4) | function encoding. Then add a 'function' prop
-
-The challenge is the impact on QMP with strict typing, as ideally
-int format would soley represent the slot number, but today the
-int format is encoded (slot << 4) | function.  So anyone relying
-on int format in QMP would silently have a semantic change if we
-altered what 'addr' means. 
-
-Deprecating 'addr' entirely and adding brand new 'slot' and
-'function' properties would be a significant disruption to
-a syntax which has been documented for years (decades).
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+-- PMM
 
