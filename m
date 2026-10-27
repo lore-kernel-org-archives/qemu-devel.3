@@ -1,105 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA15606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A368A606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 07:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=j03jBJjc
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=fvluU8Zt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLb7x-0007ba-Qu; Tue, 27 Oct 2026 02:57:45 -0400
+	id 1xLbBw-0008M2-3S; Tue, 27 Oct 2026 03:01:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLb7t-0007Zz-RH
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:57:42 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1xLbBu-0008Lp-VI
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:01:50 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLb7s-0002XY-9v
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:57:41 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-c46822eefb6so493119666b.2
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:57:39 -0700 (PDT)
+ id 1xLbBt-0002s3-8G
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:01:50 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1aa377c61so4920820a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793084259; x=1793689059; darn=nongnu.org;
+ d=sifive.com; s=google; t=1793084507; x=1793689307; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=dw1sdPL4tbSNXfnNMoDydP+VF2bhdsxJg7+5ckdvWKI=;
- b=j03jBJjcCvh4u8VXendcpNbd3uUN4HNXSWcdfShgPRoT4tAvHfGMG5I12PfhC69D4l
- Wj2IHF7685rcmqTG6GiZp1NwzoSjxcPSIYCuib0LCsesMCrfzKVvnee0p3P1XqVXtObN
- MnJcm+Wey1+pX0aSmqteb48+h8LZVv4zyhpsAgY2hmaagCOyLPrTV3lH9JIF+98MZW4U
- WANe+sdlJzrhNrn52GcpsVANz0qjraLTohngeH0XgDPzlkC9bKc3w6IlNfw4I4QfGPcd
- abSwnPF2bWdx2deuEjBI5L+hFJFCMVuJ+o3Jsnh5/Qd7IEBTjpPrAO479BXaeoICLtyo
- ZlAw==
+ :content-type; bh=3VT6hOBkedohLNvvLn5T4101un/pKxQMYOKhYaFkUv4=;
+ b=fvluU8ZtNyQ5wi4xlHt881hjkcjjGuNRwcBfYw3ujIcQ91G5/733gHincas/9QLZDc
+ p/WEb0ORl/GZ+ms0ztH775+kJ8zwUojkFXgyALYMcYHTTt+BMiaSAb0x1iX6hysZYpp8
+ dSL3lTxSWRD5a1iXw8J808kwqAZP8SBkCNEEEqEn/DqDMr4EjTJQ1TWvx+szHfvPkWvn
+ zKVoTIhzVhf3+dYJ6sGX3XspzY+AL/lmi8fB6wJXS+iB66Q3KtGFO7jYJ9msJYA/2lwQ
+ G1ZIQMxdKg7ejn2cmNb05Fj4p3ermL0huTVkiVGd68wjPntXrIvRpJZRW/ClMPOK+ZKP
+ /Yeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793084259; x=1793689059;
+ d=1e100.net; s=20260707; t=1793084507; x=1793689307;
  h=content-type:cc:to:subject:message-id:date:from:in-reply-to
  :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=dw1sdPL4tbSNXfnNMoDydP+VF2bhdsxJg7+5ckdvWKI=;
- b=ydn7nhvjk/EXcYINLBdq4cQ3QlqGlqZNz73gytNOpzezlRfYhKEUrI5gY/5ZHOK6O/
- k3SOqNMvJxmBkJ2v1br52ccLkxmEL/3PCbwacmuCoaszDD6duZccYaAbwEG3lC29yF9u
- KRebaV9zF0qwUw2+VYqVDT7/k8qIwsziAnce+4HmTmKUHlTF/0Q2J636IwijvHCPS34M
- hzz/0rKzCGxQm9mtHAOGpelJPHL0P840l/N8OySG82+BxWpWL8TsgWF7NFgyBl61pIEG
- rI7NBZ9U4Xan3NBJ7ImNBGKNRPEg6fc2c+d2rCZ6NW+TH1vUbR4T+eoGbjFRDqKu08/J
- BPQg==
-X-Gm-Message-State: AFq9FYIeLWvsLPOn4nbSuSxVSKLPybU2qSXm9hC0Rk+oy8Vfha2gwIvi
- iTlWSEiTvQvKnSL4+EY5g7NwdxbDOEz2+I6foM41rA9A/qBEe+4rGu9YEuKDPBrLt2RziknuuBu
- EyQ+RD65Xhm8GNzjfkUFHKE/o1oO/YXUYxluxbVGeU+3a+Wxf4Zlp6U5PzUeNhnEdjyzzBEn0ht
- uTjkgsBVvX20gHPxm2Fr+pGh1dCwz6+L8DkEtd5JHa8Nw=
-X-Gm-Gg: AYBFou16Eq9/UZ/982vVwY+IK4HuwIwf9tqlpoVLtWnusjo4hlgooWL+8wDF2hbvh4v
- rgXnYa+ujDWXv6w5Zk0Gd0yUiPwMC3HGj+B/iNxlz+V7Afder510rKDD9Wbf/XYh9tNmYeif6JU
- sg+S68di/n2RJWtqurNHjt2li71t9xMEzfG267qJB1XFq7nbCdMvq3he2XRKuCM8ixT6RW14DFb
- JWjJUtxLWGI8qZIXpp9BDvnMSrk6Asl4ih6kWvux4sCy9bYkFrs9vdo/w+u9WESA9WqYSjBn+tV
- vr8hBGlzn9BLGi3OlD9h4qcWAmXmbsLuGa89VvQKcXnKCQ/FRyepIwfzJY3WFKxU3bwiyzuPQm9
- YdX7kGewtIjEem3z9dQj3JyjV5Wl1OblWe+pLIdKA7oQCA4YCDrMdC+Pe/vE/dKR4+AbU8BG36f
- hq5KeBHbBz9lbGf6PP//qffZ2axZRSkvKGNu5hGyWJlwEtIARNz1fhnfJSnXO+b7vbnU7LhqIdl
- AjO7FzYYfmgdd56Um3J0qK26o/CCE0dKqKbYS112bqpEHOjCfMKMIYihngJ0vd580pbjOT5cSBj
- gIQB8RH51ChacARNR/qhvjkC7ECYIYr1hZ79ZMg=
-X-Received: by 2002:a17:907:7208:b0:c40:4965:72c3 with SMTP id
- a640c23a62f3a-c46bde08137mr964695566b.19.1793084258780; 
- Mon, 26 Oct 2026 23:57:38 -0700 (PDT)
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com.
- [209.85.208.50]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c46bd66c2e9sm403927566b.58.2026.10.26.23.57.36
+ bh=3VT6hOBkedohLNvvLn5T4101un/pKxQMYOKhYaFkUv4=;
+ b=haHIe7i1ZE7azytRdybW6iDEkpGIuYy2NhKTcDhRRCgRc95Lr1JTJgxaDUaSz8QCKG
+ W6rTzqoWZxh8ENNeSDMMPDk04//9RnWNMxSDzXxJNBECCGVV+MeeScMOEBfWHjorblr/
+ TN0z6+cgDF40mR7Q5BLQaWSBiYu80s2nRX4/ZKE9uyEyW3XLJK0YD2xJWRBSCF2Y5svF
+ 2kme9kIpQbxIcHelH+WotBCL1odDUgmG4Ya7T95PNFJMJnLHouRLpPRg4BfDIKq1JsGv
+ xDTutfqGH+xmwP1s5WqN1gb15VsFXgoPZVHG9kKPQ4QJmCvp3ig08lwcmsm9wgj1KNZG
+ YPcQ==
+X-Gm-Message-State: AFq9FYKo/In2/ylFoUQtw6rmpYJWHsdvJGzCOTUEwdvEh4laQJiG4WJk
+ +ScJmgsdJH+BPy59baOwxe0WIn9O8HITY+A9txulUhQuVrMHxsQzzNFRnUt6cLKaFpDWrQBt0ND
+ U+iBjAmwY7LFRJgeeTA93M+aixp/ZyVhfyqt2pXzD6pVDv3QXCbm9dPUjhrevnaYZp5xbCJaxAX
+ jkSGAka0nrxTmxS5RAdpPbN6ROclYE8OjtarLOObDGIok=
+X-Gm-Gg: AYBFou2FBkdmlJykNOG7z6OEg+5G68WsSxeq/ma++nUz1jo9sje3TB/+JFuc/fOacx2
+ mymL9FfSMRh1eqpIIAM/+6tGcsXhYifFmswQVU9NnIHNjOT0r9il9RuAC55q5nMchGiSaJP2UKJ
+ VnenBlD3vRwOhR1C77E/28WKOg95SLvhiY5PSk3oNRUboWtAI/3fEC6YOBZ8KH2OdTh+HNOnuJu
+ eCepuB/ltXmfVYnWe9UF9WC3q1kaBXxSPivWJBxObHt4sew9p1svyapSY9NvAZhBmoO7L8EecYF
+ R4F50oi/7iOnjAhPjan0QLxgh5qJ1NYt/WiTWE3O95UawzhCau1bTvYIQf0cwQhVdno93qsVAX6
+ k1l6m5blk/5TwkQVX8aHYFSjKOgAKvYqYJ4Zl+uuIx/LDZk4EdTQLLRM5ouR8xxfHFnK3I6TAdP
+ z40Cn/PAxTbvpxnn22McxUS1e0V9tMmNB0LqSIKMcqGkidw2nuMKLvw+MHzGVsUdK8re0kJDtc7
+ lLislXBc2dj+tz0uKJJIDBlhn1aFQE7zxU/4nMspTku9+n1eERekcScMOg8WYby5YXScu/nZASp
+ eEkXtMl3fzPY98GpZQ==
+X-Received: by 2002:a17:907:60cb:b0:c41:835b:8f24 with SMTP id
+ a640c23a62f3a-c46bdfdd1abmr866073266b.49.1793084507215; 
+ Tue, 27 Oct 2026 00:01:47 -0700 (PDT)
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com.
+ [209.85.208.51]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c46bd64f8b6sm398614566b.48.2026.10.27.00.01.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Oct 2026 23:57:38 -0700 (PDT)
-Received: by mail-ed1-f50.google.com with SMTP id
- 4fb4d7f45d1cf-6b408f2d936so5533903a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:57:36 -0700 (PDT)
-X-Received: by 2002:a05:6402:5514:b0:6b1:b5ea:2590 with SMTP id
- 4fb4d7f45d1cf-6b442fc8bf5mr9881276a12.12.1793084256068; Mon, 26 Oct 2026
- 23:57:36 -0700 (PDT)
+ Tue, 27 Oct 2026 00:01:46 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id
+ 4fb4d7f45d1cf-6b1aa377c61so4920745a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:01:46 -0700 (PDT)
+X-Received: by 2002:a05:6402:4401:b0:6b1:b5ea:2580 with SMTP id
+ 4fb4d7f45d1cf-6b4431163f4mr9830763a12.44.1793084505754; Tue, 27 Oct 2026
+ 00:01:45 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
- <20261021231346.2452179-5-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20261021231346.2452179-5-daniel.barboza@oss.qualcomm.com>
+ <20261021231346.2452179-11-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20261021231346.2452179-11-daniel.barboza@oss.qualcomm.com>
 From: Jay Chang <jay.chang@sifive.com>
-Date: Tue, 27 Oct 2026 14:57:24 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfaHo0X7Sz0=3_eX+CuLcwvrBxJ4TgS_dTc14BKjoA7iuw@mail.gmail.com>
-X-Gm-Features: AclHuK9mRfotUtAyfGtMPcM6tAuszmQ-F2f1TRNlb1iTymLbcf563mtsAYnfOgQ
-Message-ID: <CAMXXpfaHo0X7Sz0=3_eX+CuLcwvrBxJ4TgS_dTc14BKjoA7iuw@mail.gmail.com>
-Subject: Re: [PATCH v4 04/18] hw/riscv/virt.c: add trace encoders and trace
- ram sinks
+Date: Tue, 27 Oct 2026 15:01:34 +0800
+X-Gmail-Original-Message-ID: <CAMXXpfaX=qx6+YBY14xmCFN9zHpDiCmZEDjK1PSw-HaN4nCQHA@mail.gmail.com>
+X-Gm-Features: AclHuK9JgeXVgSefLsjo1LZENULMXqmkNHH9GY8FlNiqBk_OmL7LDmVbbv5GBqY
+Message-ID: <CAMXXpfaX=qx6+YBY14xmCFN9zHpDiCmZEDjK1PSw-HaN4nCQHA@mail.gmail.com>
+Subject: Re: [PATCH v4 10/18] hw/riscv/rv-trace-messages.c: add encoded trap
+ message
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  chao.liu@processmission.com, antikostya2@gmail.com, 
- Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: multipart/alternative; boundary="00000000000022aa24065eccf636"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=jay.chang@sifive.com; helo=mail-ej1-x636.google.com
+ Palmer Dabbelt <palmer@dabbelt.com>, frank.chang@sifive.com
+Content-Type: multipart/alternative; boundary="0000000000000494fd065ecd05a1"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=jay.chang@sifive.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,53 +111,40 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS
-	autolearn=no autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---00000000000022aa24065eccf636
+--0000000000000494fd065ecd05a1
 Content-Type: text/plain; charset="UTF-8"
 
+> +    payload.tvalLow = extract64(trap_addr, 0, 32);
+> +    payload.tvalHigh = extract64(trap_addr, 32, 32)
 >
-> Add the minimal topology required for e-trace support in the virt
-> machine, e.g. each CPU will have a single trace encoder, and each trace
-> encoder will communicate to a single associated trace ram sink.
->
-> At this moment we're not going to support more complex topologies with
-> trace funnels and so on.
->
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->
-
-Reviewed-by: Jay Chang <jay.chang@sifive.com>
+For synchronous exceptions, these fields should contain the trap value (tval),
+but both are currently extracted from trap_addr
 
 Thanks
 Jay Chang
 
---00000000000022aa24065eccf636
+--0000000000000494fd065ecd05a1
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">Add the minimal topology required =
-for e-trace support in the virt<br>
-machine, e.g. each CPU will have a single trace encoder, and each trace<br>
-encoder will communicate to a single associated trace ram sink.<br>
-<br>
-At this moment we&#39;re not going to support more complex topologies with<=
-br>
-trace funnels and so on.<br>
-<br>
-Signed-off-by: Daniel Henrique Barboza &lt;<a href=3D"mailto:daniel.barboza=
-@oss.qualcomm.com" target=3D"_blank">daniel.barboza@oss.qualcomm.com</a>&gt=
-;<br></blockquote><div><br></div>Reviewed-by: Jay Chang &lt;<a href=3D"mail=
-to:jay.chang@sifive.com" target=3D"_blank">jay.chang@sifive.com</a>&gt;<br>=
-<br>Thanks=C2=A0</div><div class=3D"gmail_quote gmail_quote_container">Jay =
-Chang</div></div>
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote gmail=
+_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">+=C2=A0=
+ =C2=A0 payload.tvalLow =3D extract64(trap_addr, 0, 32);<br>
++=C2=A0 =C2=A0 payload.tvalHigh =3D extract64(trap_addr, 32, 32)<br></block=
+quote><div><p class=3D"gmail-wnfdnt10 gmail-_1ibi0s3fd gmail-_1ibi0s3ce gma=
+il-_1ibi0s3eg" dir=3D"auto">For synchronous exceptions, these fields should=
+ contain the trap value (<code>tval</code>), but both are currently extract=
+ed from <code>trap_addr</code></p><p class=3D"gmail-wnfdnt10 gmail-_1ibi0s3=
+fd gmail-_1ibi0s3ce gmail-_1ibi0s3eg">Thanks<br>Jay Chang</p></div><div>=C2=
+=A0</div></div></div>
 
---00000000000022aa24065eccf636--
+--0000000000000494fd065ecd05a1--
 
