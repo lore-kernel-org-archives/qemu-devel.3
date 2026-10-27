@@ -1,93 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC3A606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF007606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 14:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=upRfeq99
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NyP8Lr2z
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLiDN-0007tR-Lu; Tue, 27 Oct 2026 10:31:49 -0400
+	id 1xLiID-0006FN-5c; Tue, 27 Oct 2026 10:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xLiCd-0007Jt-37
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:31:07 -0400
-Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcelomanzo@gmail.com>)
- id 1xLiCY-0005AB-NG
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 10:31:02 -0400
-Received: by mail-qk1-x72e.google.com with SMTP id
- af79cd13be357-93f30660e69so280884985a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 07:30:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793111456; x=1793716256; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=v+pEM49vucUniZ91hu4P6nZaiJK3vE6rW+Hn/Y4ZOJg=;
- b=upRfeq99yGPhmb+I2QCmzt8LtMpzstSSYnaCXjC17t5Q844er9sy+Kvdx98ccNPXyO
- GNMSdQjCMXZomfnm/0JlMeUA0N9At9lIc/y3gUKeCyTbkKXdb3jLJTdG2tzFULzsodjP
- 7NI+kCLa9VHvS3+0LvF6bTeie/PtXSGOgCJ4G8Gyc3aUxwbRBFFkZO6gCjvNh/IXAD2q
- n7IXw9LTBH/HaJhj/xv2Aqva6I0gB05EInEYlzyBHzSyDtqoaRb8h/4Gl6m15JMhj0oS
- XC0MCFxrAT5YRoCMAAVsKnqFpYu+TdhGU6nGvlJxVZlxf7EAQTWq7BvnKt4y33hlDpCQ
- 4K0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793111456; x=1793716256;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=v+pEM49vucUniZ91hu4P6nZaiJK3vE6rW+Hn/Y4ZOJg=;
- b=e79C1JX/o+AdadVX2RiYXDMvJMUrPhKiethXinvVXuw8La9x7AWvPt+q5wnPYz3RA7
- DUVMDCQu2fwsj885LXrEyikCfo5H6i3I5Fo/gy7Yxb5y+d0cQC8cE4Pd8Euw/JQBR7EI
- gQvTYLfD8x9Qap2+9PHYmik47Lyst7BAcJPqh4ESIBR+kqNBcyOfAsHG9Q4Mha2VB647
- bZqol2jJklakKuOhsPNGWwv/slk/LqA1unFeuRigwFRG1mHC66VS29sxrc8gnvW8AG1K
- 1v0hEHSws/NDte7wQqVWtHJ121TO+Qig9ssE2H+YK57EAFFdm+VT94+uhlyu0WRWl6qh
- AqvQ==
-X-Gm-Message-State: AFq9FYL7bGFKJ0wbP3AaohALfzeD7StbVKY2wf00jGGhnGUwP2TW+l0b
- pGoVJJE0wEAsWJnjWpIdeqs8oMel+IlmNZBec5J63zczWXQ01RyAtM4j8czUGv1c
-X-Gm-Gg: AYBFou0kTupqkxTLsaWWoGlyHopWIxuMgjPXpCrfpD8kmJKDvJeOHHbT3e0ppbcue79
- YQ3327j3MoKQ9EP/IzvWZeiSa7ddiCvQzJJd/duXGpTIfKc3ychCXK2eefoHkN6B/GmknHjuYO2
- dt9YCIE3QXh+A3gadFwOJ7FFx8hpQ/DDolDtIpG55Vfttrjbvo0yAGWFRQDECoz5TgVpRG+ERIn
- QKdkx3OzZ42rFpGQDBFVa+SMYuzoai4QQHy0by8cITyKNruCUnyzC6VpEqlTMEuluOSLDpOUr4w
- yfdGR9aCwKx2JxIVwIbFFWMNz5kgfNF4E72n3cZlt4yagGKtJ/oMS2YMKx1tBKeKfqFvKiEZPUA
- 4virI9hiJLS07xPtO0EVBMg2vaKcfykbNIc9vzG8XhKKlrQuzBTCED7rOlCET69UhVnblajs6dW
- mMRA0YqUyh3jgIKJLkVjBOB506lLyl0iuL+iNcXRL7AqNTXbZ3xZgMXHtzQDZrd57+uF3rTXm4T
- ef3FsiNWGszhB+J9Ef3y+3FOZqdfqSx16aXpBS6hcxSQPJf+BS00ho00EMb/bwuVTLpq1qanJAv
- w2caFy8q28zrJG+4uqSALMtWHyEPZSjuHj2vpWTLvNt9VGsp/0g8ZLdWRcpn5c+5uWCMZJa/
-X-Received: by 2002:a05:620a:4689:b0:93f:2e08:6420 with SMTP id
- af79cd13be357-940ef930089mr1550433385a.38.1793111456336; 
- Tue, 27 Oct 2026 07:30:56 -0700 (PDT)
-Received: from localhost.localdomain ([2606:6d00:159:2900:9872:3600:589:5f3a])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-940f0a78c06sm986400885a.35.2026.10.27.07.30.54
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 07:30:55 -0700 (PDT)
-From: Marcelo Manzo <marcelomanzo@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, philmd@oss.qualcomm.com,
- Sergey Kambalin <serg.oker@gmail.com>,
- Sergey Kambalin <sergey.kambalin@auriga.com>,
- Marcelo Manzo <marcelomanzo@gmail.com>, Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v6 10/17] hw/net/bcm2838_genet: implement GENET register ops
-Date: Tue, 27 Oct 2026 10:30:29 -0400
-Message-ID: <20261027143036.44973-11-marcelomanzo@gmail.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261027143036.44973-1-marcelomanzo@gmail.com>
-References: <20261027143036.44973-1-marcelomanzo@gmail.com>
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1xLiI8-0006El-SY; Tue, 27 Oct 2026 10:36:44 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1xLiI6-0005s9-41; Tue, 27 Oct 2026 10:36:44 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 9F31660218;
+ Tue, 27 Oct 2026 14:36:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2271F01825;
+ Tue, 27 Oct 2026 14:36:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1793111800;
+ bh=JGMA7ndsKLYu7/BJrUVeYn2MGUZmeguc8oPK59FGqss=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=NyP8Lr2ztB0qXFIVfWxs4i77kAyWViEEcm5U7CxheXbwwXWc6N1V+LbxaMrBCd7oI
+ svTHzmjfzQRFMIq1d0vfm3lpUyO+rE0GECYadHCCGcNZCcGfKbzvgW0qVZc6iXFE7y
+ OtSh1opavp2ge3SmbNs+rTCgS0vGOJmi2WF45yBv/jCE+WHwaCznSsdf4QtBu3I3cP
+ kQYurdb2zE11TN19zvy1BEJ360p6LiMUwzSxL6+htFFgwsgCljLZB0aW+1WX1qnD8J
+ DF+3kvJp1jsH1p4IP7yCCTezYZvmFAee32hJvr8ofeYl9nurSmEJWcmKmuwJE3eGgO
+ INErjl8v/jwKA==
+Date: Tue, 27 Oct 2026 15:36:33 +0100
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Michael Roth <michael.roth@amd.com>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Kohei Enju <enju.kohei@fujitsu.com>, gshan@redhat.com,
+ berrange@redhat.com, kchamart@redhat.com,
+ pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
+ mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org
+Subject: Re: [RFC v4 03/24] target/arm: Add confidential guest support
+Message-ID: <auC28TE3QWlU0Pcm@red-moon>
+References: <20260903193611.1058589-1-mathieu.poirier@linaro.org>
+ <20260903193611.1058589-4-mathieu.poirier@linaro.org>
+ <dhrvydsmaw22xqx5d5i5s7fdyjxupz27yxp6trv2tesysp4npj@quvzrxjvfipz>
+ <arI197vJkW75p50c@lpieralisi>
+ <arSTQQ5uB6oR-vFe@FCCLS0092175.localdomain> <ataBkrIvULJXj4v6@p14s>
+ <atdKSwvu_uldqwlz@red-moon> <atekhR1Wz03nUCHB@p14s>
+ <fgmu2cuxx2n2cuxqeotas2iu43jk7aou3hldhw4757x4jyv6np@snsceczzajcy>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
- envelope-from=marcelomanzo@gmail.com; helo=mail-qk1-x72e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fgmu2cuxx2n2cuxqeotas2iu43jk7aou3hldhw4757x4jyv6np@snsceczzajcy>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=lpieralisi@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,349 +76,287 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+On Tue, Oct 20, 2026 at 01:12:45PM -0500, Michael Roth wrote:
+> On Tue, Oct 20, 2026 at 11:27:33AM -0600, Mathieu Poirier wrote:
+> > On Tue, Oct 20, 2026 at 01:02:35PM +0200, Lorenzo Pieralisi wrote:
+> > > On Mon, Oct 19, 2026 at 02:46:10PM -0600, Mathieu Poirier wrote:
+> > > > On Thu, Sep 24, 2026 at 12:12:35PM +0900, Kohei Enju wrote:
+> > > > > On 09/22 10:01, Lorenzo Pieralisi wrote:
+> > > > > > On Tue, Sep 15, 2026 at 04:27:21PM -0500, Michael Roth wrote:
+> > > > > > > On Thu, Sep 03, 2026 at 01:35:50PM -0600, Mathieu Poirier wrote:
+> > > > > > > > From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > > > > > > > 
+> > > > > > > > Add a new RmeGuest object, inheriting from ConfidentialGuestSupport, to
+> > > > > > > > support the Arm Realm Management Extension (RME). It is instantiated by
+> > > > > > > > passing on the command-line:
+> > > > > > > > 
+> > > > > > > >   -M virt,confidential-guest-support=<id>
+> > > > > > > >   -object rme-guest,id=<id>
+> > > > > > > > 
+> > > > > > > > This is only the skeleton. Support will be added in following patches.
+> > > > > > > > 
+> > > > > > > > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > > > > > > > Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+> > > > > > > > ---
+> > > > > > > >  docs/system/confidential-guest-support.rst |  1 +
+> > > > > > > >  qapi/qom.json                              | 13 +++++++
+> > > > > > > >  target/arm/kvm-rme.c                       | 42 ++++++++++++++++++++++
+> > > > > > > >  target/arm/meson.build                     |  5 ++-
+> > > > > > > >  4 files changed, 60 insertions(+), 1 deletion(-)
+> > > > > > > >  create mode 100644 target/arm/kvm-rme.c
+> > > > > > > > 
+> > > > > > > > diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
+> > > > > > > > index 562a7c3c2852..abb56923ad13 100644
+> > > > > > > > --- a/docs/system/confidential-guest-support.rst
+> > > > > > > > +++ b/docs/system/confidential-guest-support.rst
+> > > > > > > > @@ -42,5 +42,6 @@ Currently supported confidential guest mechanisms are:
+> > > > > > > >  * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
+> > > > > > > >  * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
+> > > > > > > >  * AWS Nitro Enclaves (see :doc:`nitro`)
+> > > > > > > > +* Arm Realm Management Extension (RME)
+> > > > > > > >  
+> > > > > > > >  Other mechanisms may be supported in future.
+> > > > > > > > diff --git a/qapi/qom.json b/qapi/qom.json
+> > > > > > > > index 776b13027fd8..52997c29a32d 100644
+> > > > > > > > --- a/qapi/qom.json
+> > > > > > > > +++ b/qapi/qom.json
+> > > > > > > > @@ -1288,6 +1288,17 @@
+> > > > > > > >    'data': { '*pretty': 'bool',
+> > > > > > > >              '*close-action': 'MonitorQMPCloseAction' } }
+> > > > > > > >  
+> > > > > > > > +##
+> > > > > > > > +# @RmeGuestProperties:
+> > > > > > > > +#
+> > > > > > > > +# Properties for rme-guest objects.
+> > > > > > > > +#
+> > > > > > > > +# Since: 11.1
+> > > > > > > > +##
+> > > > > > > > +{ 'struct': 'RmeGuestProperties',
+> > > > > > > > +  'base': 'ConfidentialGuestSupportProperties',
+> > > > > > > 
+> > > > > > > Just FYI, based on input from Markus I'm planning to drop this
+> > > > > > > ConfidentialGuestSupportProperties base type from my series
+> > > > > > > since it's probably only SNP/TDX that need to be able to switch
+> > > > > > > it on/off, whereas this series appears to use/require it from
+> > > > > > > the start.
+> > > > > > > 
+> > > > > > > I'm not exactly sure what it will look like for v3 yet, but if you
+> > > > > > > were based on v2 you'd instead probably just do the following in the
+> > > > > > > instance_init function for your rme-guest instance:
+> > > > > > > 
+> > > > > > >   cgs->allow_convert_in_place = true;
+> > > > > > >   cgs->convert_in_place = true;
+> > > > > > > 
+> > > > > > > rather than exposing it as a cmdline option.
+> > > > > > 
+> > > > > > Yep, it won't be an option for CCA Realms anyway since that will be
+> > > > > > the baseline.
+> > > > > 
+> > > > > IIUC, in-place conversion requires RAM backed by a shared/mappable
+> > > > > guest_memfd. If in-place conversion is always enabled for CCA Realms,
+> > > > > could QEMU also select the equivalent of
+> > > > > 
+> > > > >   -object memory-backend-guest-memfd,id=ram0,size=...,share=on
+> > > > > 
+> > > > > automatically for the default RAM, so that specifying the RAM size with
+> > > > > `-m` is sufficient?
+> > > > 
+> > > > Are you suggesting that on Arm, we completely get rid of 
+> > > 
+> > > Nit: obviously on Arm rme-guest configs.
+> > 
+> > Indeed.
+> > 
+> > > 
+> > > >     -object memory-backend-guest-memfd,id=ram0,size=$(RAMSIZE),share=on
+> > > 
+> > > If that's what we want to make a default, I guess we ought to override
+> > > create_default_memdev for arm machines + rme-guest configs ?
+> > > 
+> > > Pros and cons ? I am not sure how well received is setting implicit defaults
+> > > for specific machine configs and what that really buys us eventually.
+> > 
+> > I agree, this entails a fair amount of changes for cosmetic gains only.
+> 
+> I think it will also add some uneccessary confusion. For instance, based
+> on Paolo's feedback[1], we will likely not expose any sort of option to
 
-Replace the stub MMIO read/write handlers with real dispatch over
-the register offsets from the previous patches: SYS revision
-control, INTRL0/1 status/mask registers, UMAC command/MAC-address/
-MDIO-command registers, and TDMA/RDMA ring configuration, wired up
-to the NIC's realize()/reset() and qdev NIC properties
-(DEFINE_NIC_PROPERTIES) so the device gets a MAC address and peer
-netdev from the command line.
+I think that [1] is:
 
-Part of Sergey Kambalin's original Raspberry Pi 4B PCIe/GENET
-networking series (patchwork series 829638, posted to qemu-devel in
-2024, never merged). Carried forward and completed by Marcelo Manzo:
-adapted to the current Property/class_init/Resettable APIs.
+https://lore.kernel.org/kvm/866179b6-8303-4c30-aa59-005fa4554362@redhat.com
 
-While carrying this forward, make these changes to the original code:
+for completeness.
 
- - Access registers as a host-order uint32_t at their byte offset
-   instead of memcpy()ing an arbitrary number of bytes in and out of
-   the register block, which gives the wrong result on big-endian hosts
-   for anything that is not a uint32_t. The HFB filter array becomes a
-   uint32_t array too, so that every register in the block is one.
- - Do not call qemu_macaddr_default_if_unset() when the guest
-   programs a MAC address: it is for realize() to pick a default when
-   the user gave none. Only update the NIC info string.
- - Accept an access that ends exactly at the end of the register block.
+> switch between in-place/out-of-place conversion for SNP/TDX, but instead
+> just use whatever mode the KVM module was actually configured to use.
+> 
+> For in-place conversion, it actually doesn't seem too bad to hook into
+> create_default_memdev to have it default to memory-backend-memfd.
+> However, currently, it used backend-file/backend-ram depending on other
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Signed-off-by: Marcelo Manzo <marcelomanzo@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/net/bcm2838_genet.c         | 196 +++++++++++++++++++++++++++++++--
- include/hw/net/bcm2838_genet.h |  19 +++-
- 2 files changed, 204 insertions(+), 11 deletions(-)
+"it used" - can I ask what "it" refers to please ?
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 091cd38954..1d443e06c1 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -236,25 +236,150 @@ REG16(GENET_PHY_EXP_SEL,           0)
- FIELD(GENET_PHY_EXP_SEL, REG_ID,   0, 8)
- FIELD(GENET_PHY_EXP_SEL, BLOCK_ID, 8, 8)
- 
-+static void bcm2838_genet_set_qemu_mac(BCM2838GenetState *s)
-+{
-+    const MACAddr *addr = &s->nic_conf.macaddr;
-+
-+    s->regs.umac.mac0 = FIELD_DP32(s->regs.umac.mac0, GENET_UMAC_MAC_0,
-+                                   ADDR_0, addr->a[0]);
-+    s->regs.umac.mac0 = FIELD_DP32(s->regs.umac.mac0, GENET_UMAC_MAC_0,
-+                                   ADDR_1, addr->a[1]);
-+    s->regs.umac.mac0 = FIELD_DP32(s->regs.umac.mac0, GENET_UMAC_MAC_0,
-+                                   ADDR_2, addr->a[2]);
-+    s->regs.umac.mac0 = FIELD_DP32(s->regs.umac.mac0, GENET_UMAC_MAC_0,
-+                                   ADDR_3, addr->a[3]);
-+    s->regs.umac.mac1 = FIELD_DP32(s->regs.umac.mac1, GENET_UMAC_MAC_1,
-+                                   ADDR_4, addr->a[4]);
-+    s->regs.umac.mac1 = FIELD_DP32(s->regs.umac.mac1, GENET_UMAC_MAC_1,
-+                                   ADDR_5, addr->a[5]);
-+}
-+
-+static void bcm2838_genet_set_irq_default(BCM2838GenetState *s)
-+{
-+    uint32_t intrl_0_status = s->regs.intrl0.stat;
-+    uint32_t intrl_0_mask = s->regs.intrl0.mask_status;
-+    int level = (intrl_0_status & ~intrl_0_mask) == 0 ? 0 : 1;
-+
-+    qemu_set_irq(s->irq_default, level);
-+}
-+
-+static void bcm2838_genet_set_irq_prio(BCM2838GenetState *s)
-+{
-+    uint32_t intrl_1_status = s->regs.intrl1.stat;
-+    uint32_t intrl_1_mask = s->regs.intrl1.mask_status;
-+    int level = (intrl_1_status & ~intrl_1_mask) == 0 ? 0 : 1;
-+
-+    qemu_set_irq(s->irq_prio, level);
-+}
-+
- static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
- {
-     uint64_t value = ~0;
-+    BCM2838GenetState *s = opaque;
- 
--    qemu_log_mask(
--        LOG_GUEST_ERROR,
--        "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
--        __func__, size, offset);
-+    if (offset + size <= sizeof(s->regs)) {
-+        value = *bcm2838_genet_reg(s, offset);
-+    } else {
-+        qemu_log_mask(
-+            LOG_GUEST_ERROR,
-+            "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
-+            __func__, size, offset);
-+    }
- 
-     trace_bcm2838_genet_read(size, offset, value);
-     return value;
- }
- 
- static void bcm2838_genet_write(void *opaque, hwaddr offset, uint64_t value,
--                                unsigned size) {
--    qemu_log_mask(
--        LOG_GUEST_ERROR,
--        "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
--        __func__, size, offset);
-+                                unsigned size)
-+{
-+    BCM2838GenetState *s = opaque;
-+    MACAddr *mac = &s->nic_conf.macaddr;
-+    NetClientState *ncs = qemu_get_queue(s->nic);
-+
-+    trace_bcm2838_genet_write(size, offset, value);
-+
-+    if (offset + size > sizeof(s->regs)) {
-+        qemu_log_mask(
-+            LOG_GUEST_ERROR,
-+            "%s: out-of-range access, %u bytes @ offset 0x%04" PRIx64 "\n",
-+            __func__, size, offset);
-+        return;
-+    }
-+
-+    switch (offset) {
-+    case BCM2838_GENET_INTRL0_SET:
-+        s->regs.intrl0.stat |= value;
-+        break;
-+    case BCM2838_GENET_INTRL0_CLEAR:
-+        s->regs.intrl0.stat &= ~value;
-+        break;
-+    case BCM2838_GENET_INTRL0_MASK_SET:
-+        s->regs.intrl0.mask_status |= value;
-+        break;
-+    case BCM2838_GENET_INTRL0_MASK_CLEAR:
-+        s->regs.intrl0.mask_status &= ~value;
-+        break;
-+    case BCM2838_GENET_INTRL1_SET:
-+        s->regs.intrl1.stat |= value;
-+        break;
-+    case BCM2838_GENET_INTRL1_CLEAR:
-+        s->regs.intrl1.stat &= ~value;
-+        break;
-+    case BCM2838_GENET_INTRL1_MASK_SET:
-+        s->regs.intrl1.mask_status |= value;
-+        break;
-+    case BCM2838_GENET_INTRL1_MASK_CLEAR:
-+        s->regs.intrl1.mask_status &= ~value;
-+        break;
-+    case BCM2838_GENET_UMAC_CMD:
-+        /* Complete SW reset as soon as it has been requested */
-+        if (FIELD_EX32(value, GENET_UMAC_CMD, SW_RESET) == 1) {
-+            device_cold_reset(DEVICE(s));
-+            value = FIELD_DP32(value, GENET_UMAC_CMD, SW_RESET, 0);
-+        }
-+        break;
-+    /*
-+     * TODO: before changing MAC address we'd better inform QEMU
-+     * network subsystem about freeing previously used one, but
-+     * qemu_macaddr_set_free function isn't accessible for us (marked
-+     * as static in net/net.c), see also https://lists.nongnu.org/
-+     * archive/html/qemu-devel/2022-07/msg02123.html
-+     */
-+    case BCM2838_GENET_UMAC_MAC0:
-+        mac->a[0] = FIELD_EX32(value, GENET_UMAC_MAC_0, ADDR_0);
-+        mac->a[1] = FIELD_EX32(value, GENET_UMAC_MAC_0, ADDR_1);
-+        mac->a[2] = FIELD_EX32(value, GENET_UMAC_MAC_0, ADDR_2);
-+        mac->a[3] = FIELD_EX32(value, GENET_UMAC_MAC_0, ADDR_3);
-+        qemu_format_nic_info_str(ncs, mac->a);
-+        trace_bcm2838_genet_mac_address(ncs->info_str);
-+        break;
-+    case BCM2838_GENET_UMAC_MAC1:
-+        mac->a[4] = FIELD_EX32(value, GENET_UMAC_MAC_1, ADDR_4);
-+        mac->a[5] = FIELD_EX32(value, GENET_UMAC_MAC_1, ADDR_5);
-+        qemu_format_nic_info_str(ncs, mac->a);
-+        trace_bcm2838_genet_mac_address(ncs->info_str);
-+        break;
-+    case BCM2838_GENET_RDMA_CTRL:
-+        s->regs.rdma.status = (~value) & GENET_DMA_ENABLE_MASK;
-+        break;
-+    case BCM2838_GENET_UMAC_MDIO_CMD:
-+    case BCM2838_GENET_TDMA_REGS
-+        ... BCM2838_GENET_TDMA_REGS + sizeof(BCM2838GenetRegsTdma) - 1:
-+        qemu_log_mask(LOG_UNIMP,
-+            "UMAC MDIO and TDMA aren't implemented yet");
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    *bcm2838_genet_reg(s, offset) = value;
-+    if (offset == BCM2838_GENET_RDMA_CTRL &&
-+        FIELD_EX32(value, GENET_DMA_CTRL, EN)) {
-+        qemu_flush_queued_packets(ncs);
-+    }
-+    bcm2838_genet_set_irq_default(s);
-+    bcm2838_genet_set_irq_prio(s);
- }
- 
- static const MemoryRegionOps bcm2838_genet_ops = {
-@@ -265,9 +390,14 @@ static const MemoryRegionOps bcm2838_genet_ops = {
-     .valid = {.min_access_size = 4, .max_access_size = 4},
- };
- 
-+static NetClientInfo bcm2838_genet_client_info = {
-+    .type = NET_CLIENT_DRIVER_NIC,
-+    .size = sizeof(NICState),
-+};
- 
- static void bcm2838_genet_realize(DeviceState *dev, Error **errp)
- {
-+    NetClientState *ncs;
-     BCM2838GenetState *s = BCM2838_GENET(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
-@@ -275,10 +405,46 @@ static void bcm2838_genet_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->regs_mr, OBJECT(s), &bcm2838_genet_ops, s,
-                           "bcm2838_genet_regs", sizeof(s->regs));
-     sysbus_init_mmio(sbd, &s->regs_mr);
-+
-+    /* QEMU-managed NIC (host network back-end connection) */
-+    qemu_macaddr_default_if_unset(&s->nic_conf.macaddr);
-+    s->nic = qemu_new_nic(&bcm2838_genet_client_info, &s->nic_conf,
-+                          object_get_typename(OBJECT(dev)), dev->id,
-+                          &dev->mem_reentrancy_guard, s);
-+    bcm2838_genet_set_qemu_mac(s);
-+    ncs = qemu_get_queue(s->nic);
-+    qemu_format_nic_info_str(ncs, s->nic_conf.macaddr.a);
-+    trace_bcm2838_genet_mac_address(ncs->info_str);
-+
-+    /* Interrupts */
-+    sysbus_init_irq(sbd, &s->irq_default);
-+    sysbus_init_irq(sbd, &s->irq_prio);
-+
-+    /* DMA space */
-+    address_space_init(&s->dma_as, get_system_memory(), "bcm2838_genet_dma");
- }
- 
- static void bcm2838_genet_phy_reset(BCM2838GenetState *s)
- {
-+    memset(&s->phy_regs, 0x00, sizeof(s->phy_regs));
-+    memset(&s->phy_shd_regs, 0x00, sizeof(s->phy_shd_regs));
-+    memset(&s->phy_aux_ctl_shd_regs, 0x00, sizeof(s->phy_aux_ctl_shd_regs));
-+
-+    /* All values below were taken from real HW trace and logs */
-+    s->phy_regs.bmcr = 0x1140;
-+    s->phy_regs.bmsr = 0x7949;
-+    s->phy_regs.sid1 = 0x600D;
-+    s->phy_regs.sid2 = 0x84A2;
-+    s->phy_regs.advertise = 0x01E1;
-+    s->phy_regs.ctrl1000 = 0x0200;
-+    s->phy_regs.estatus = 0x3000;
-+
-+    s->phy_shd_regs.clk_ctl = 0x0200;
-+    s->phy_shd_regs.scr3 = 0x001F;
-+    s->phy_shd_regs.apd = 0x0001;
-+
-+    s->phy_aux_ctl_shd_regs.regs[BCM2838_GENET_PHY_AUX_CTL_MISC] = 0x1E;
-+
-     trace_bcm2838_genet_phy_reset("done");
- }
- 
-@@ -288,11 +454,22 @@ static void bcm2838_genet_reset(Object *obj, ResetType type)
- 
-     memset(&s->regs, 0x00, sizeof(s->regs));
- 
-+    s->regs.sys.rev_ctrl = FIELD_DP32(s->regs.sys.rev_ctrl, GENET_SYS_REV_CTRL,
-+                                      MAJOR_REV, BCM2838_GENET_REV_MAJOR);
-+    s->regs.sys.rev_ctrl = FIELD_DP32(s->regs.sys.rev_ctrl, GENET_SYS_REV_CTRL,
-+                                      MINOR_REV, BCM2838_GENET_REV_MINOR);
-+    s->regs.rdma.status = GENET_DMA_ENABLE_MASK;
-+    s->regs.tdma.status = GENET_DMA_ENABLE_MASK;
-+
-     trace_bcm2838_genet_reset("done");
- 
-     bcm2838_genet_phy_reset(s);
- }
- 
-+static const Property genet_properties[] = {
-+    DEFINE_NIC_PROPERTIES(BCM2838GenetState, nic_conf),
-+};
-+
- static void bcm2838_genet_class_init(ObjectClass *class, const void *data)
- {
-     static ResettablePhases unused_parent_phases;
-@@ -302,6 +479,7 @@ static void bcm2838_genet_class_init(ObjectClass *class, const void *data)
-     dc->realize = bcm2838_genet_realize;
-     resettable_class_set_parent_phases(rc, NULL, bcm2838_genet_reset, NULL,
-                                        &unused_parent_phases);
-+    device_class_set_props(dc, genet_properties);
- }
- 
- static const TypeInfo bcm2838_genet_info = {
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index e0add41aab..ee240213aa 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -293,8 +293,7 @@ typedef struct {
- } BCM2838GenetRegsTdma;
- 
- typedef struct {
--    uint8_t flt[BCM2838_GENET_HFB_FILTER_CNT * BCM2838_GENET_HFB_FILTER_SIZE
--        * sizeof(uint32_t)];
-+    uint32_t flt[BCM2838_GENET_HFB_FILTER_CNT * BCM2838_GENET_HFB_FILTER_SIZE];
-     uint32_t reserved_0x6000[1792];
-     uint32_t ctrl;
-     uint32_t flt_enable[2];
-@@ -388,6 +387,8 @@ struct BCM2838GenetState {
-     SysBusDevice parent_obj;
- 
-     /*< public >*/
-+    NICState *nic;
-+    NICConf nic_conf;
- 
-     MemoryRegion regs_mr;
-     AddressSpace dma_as;
-@@ -402,4 +403,18 @@ struct BCM2838GenetState {
-     qemu_irq irq_prio;
- };
- 
-+/*
-+ * Every field of BCM2838GenetRegs is a uint32_t and the MMIO ops only allow
-+ * naturally aligned 4-byte accesses, so a register can be accessed as a
-+ * host-order uint32_t at its byte offset; the memory API takes care of the
-+ * guest/host byte order difference.
-+ */
-+static inline uint32_t *bcm2838_genet_reg(BCM2838GenetState *s, hwaddr offset)
-+{
-+    QEMU_BUILD_BUG_ON(sizeof(BCM2838GenetRegs) % sizeof(uint32_t) != 0);
-+    assert(offset % sizeof(uint32_t) == 0);
-+
-+    return (uint32_t *)((uint8_t *)&s->regs + offset);
-+}
-+
- #endif /* BCM2838_GENET_H */
--- 
-2.55.0
+> options, and those options are applicable to out-of-place conversion as
+> well where e.g. maybe the user wants to use file-backed hugetlb memory
+> for their shared memory. So we wouldn't want to change the behavior for
+> out-of-place.
 
+So, here you are saying that basically a sensible default for out-of-place
+might not work for convert-in-place and therefore it does not make much
+sense to have a default that does/doesn't work depending on how KVM is
+configured.
+
+> But then, for in-place, if we default to a different backend then stuff
+> like mem-path=... parameters for out-of-place invocations will then
+> become silently ignored, or we will need to generate an error for those,
+> which works against the idea of having a common cmdline that "just
+> works" for in-place/out-of-place.
+
+Yes that makes sense.
+
+> If we (users, management/libvirt, etc.) consolidate around specifying the
+> memfd backend for confidential VMs, then we can have a "default" that is
+> more consistent between in-place vs. out-of-place, which i think is more
+> beneficial than trying to consolidate around a syntacticly simpler
+> cmdline that might not behave as expected when switching between
+> older/newer kernels which may or may not have in-place support.
+
+Can you elaborate on this Michael please ? In particular in relation to a more
+consistent "default" for in-place/out-of-place, are you referring to defining
+a -object memfd option that works for both in-place and out-of-place ? Isn't
+that the case already with your latest v3 (and the VMM detecting the KVM
+underlying config ie in-place vs out-of-place) ?
+
+> So, a longwinded "I agree" from me as well.
+> 
+> Thanks,
+> 
+> Mike
+
+Thanks,
+Lorenzo
+
+> > 
+> > > 
+> > > > or simply to get rid of "size=$(RAMSIZE)" in the above because it is redundant
+> > > > with "-m $(RAMSIZE)"?
+> > > > 
+> > > > Gavin and Michael, what is your take on that suggestion?
+> > > 
+> > > Yes please any feedback on this is welcome.
+> > > 
+> > > Thanks,
+> > > Lorenzo
+> > > 
+> > > > Thanks,
+> > > > Mathieu
+> > > > 
+> > > > > 
+> > > > > Thanks,
+> > > > > Kohei
+> > > > > 
+> > > > > > 
+> > > > > > Thanks,
+> > > > > > Lorenzo
+> > > > > > 
+> > > > > > > Thanks,
+> > > > > > > 
+> > > > > > > Mike
+> > > > > > > 
+> > > > > > > > +  'data': {} }
+> > > > > > > > +
+> > > > > > > >  ##
+> > > > > > > >  # @ObjectType:
+> > > > > > > >  #
+> > > > > > > > @@ -1346,6 +1357,7 @@
+> > > > > > > >      { 'name': 'pr-manager-helper',
+> > > > > > > >        'if': 'CONFIG_LINUX' },
+> > > > > > > >      'qtest',
+> > > > > > > > +    'rme-guest',
+> > > > > > > >      'rng-builtin',
+> > > > > > > >      'rng-egd',
+> > > > > > > >      { 'name': 'rng-random',
+> > > > > > > > @@ -1427,6 +1439,7 @@
+> > > > > > > >        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
+> > > > > > > >                                        'if': 'CONFIG_LINUX' },
+> > > > > > > >        'qtest':                      'QtestProperties',
+> > > > > > > > +      'rme-guest':                  'RmeGuestProperties',
+> > > > > > > >        'rng-builtin':                'RngProperties',
+> > > > > > > >        'rng-egd':                    'RngEgdProperties',
+> > > > > > > >        'rng-random':                 { 'type': 'RngRandomProperties',
+> > > > > > > > diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+> > > > > > > > new file mode 100644
+> > > > > > > > index 000000000000..42e1d1e7b859
+> > > > > > > > --- /dev/null
+> > > > > > > > +++ b/target/arm/kvm-rme.c
+> > > > > > > > @@ -0,0 +1,42 @@
+> > > > > > > > +/*
+> > > > > > > > + * QEMU Arm RME support
+> > > > > > > > + *
+> > > > > > > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > > > > > > + *
+> > > > > > > > + * Copyright Linaro 2026
+> > > > > > > > + */
+> > > > > > > > +
+> > > > > > > > +#include "qemu/osdep.h"
+> > > > > > > > +
+> > > > > > > > +#include "hw/core/boards.h"
+> > > > > > > > +#include "hw/core/cpu.h"
+> > > > > > > > +#include "kvm_arm.h"
+> > > > > > > > +#include "migration/blocker.h"
+> > > > > > > > +#include "qapi/error.h"
+> > > > > > > > +#include "qom/object_interfaces.h"
+> > > > > > > > +#include "system/confidential-guest-support.h"
+> > > > > > > > +#include "system/kvm.h"
+> > > > > > > > +#include "system/runstate.h"
+> > > > > > > > +
+> > > > > > > > +#define TYPE_RME_GUEST "rme-guest"
+> > > > > > > > +OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
+> > > > > > > > +
+> > > > > > > > +struct RmeGuest {
+> > > > > > > > +    ConfidentialGuestSupport parent_obj;
+> > > > > > > > +};
+> > > > > > > > +
+> > > > > > > > +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+> > > > > > > > +                                          CONFIDENTIAL_GUEST_SUPPORT,
+> > > > > > > > +                                          { TYPE_USER_CREATABLE }, { })
+> > > > > > > > +
+> > > > > > > > +static void rme_guest_class_init(ObjectClass *oc, const void *data)
+> > > > > > > > +{
+> > > > > > > > +}
+> > > > > > > > +
+> > > > > > > > +static void rme_guest_init(Object *obj)
+> > > > > > > > +{
+> > > > > > > > +}
+> > > > > > > > +
+> > > > > > > > +static void rme_guest_finalize(Object *obj)
+> > > > > > > > +{
+> > > > > > > > +}
+> > > > > > > > diff --git a/target/arm/meson.build b/target/arm/meson.build
+> > > > > > > > index 0369f96b4cc6..9d322a7aad28 100644
+> > > > > > > > --- a/target/arm/meson.build
+> > > > > > > > +++ b/target/arm/meson.build
+> > > > > > > > @@ -31,7 +31,10 @@ arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
+> > > > > > > >  arm_common_system_ss.add(files(
+> > > > > > > >    'arm-qmp-cmds.c',
+> > > > > > > >  ))
+> > > > > > > > -arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+> > > > > > > > +arm_system_ss.add(when: 'CONFIG_KVM', if_true: files(
+> > > > > > > > +  'hyp_gdbstub.c',
+> > > > > > > > +  'kvm.c',
+> > > > > > > > +  'kvm-rme.c'))
+> > > > > > > >  arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+> > > > > > > >  
+> > > > > > > >  arm_user_ss.add(files('cpu.c'))
+> > > > > > > > -- 
+> > > > > > > > 2.43.0
+> > > > > > > > 
+> > > > > > > > 
 
