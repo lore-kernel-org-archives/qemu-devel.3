@@ -1,98 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F5E606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3F606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=FNFe5M5L;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DY2BvmTw
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=h7IqoofB;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=eVx5gr8q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmmR-00018w-77; Tue, 27 Oct 2026 15:24:19 -0400
+	id 1xLmmV-0001K7-Cy; Tue, 27 Oct 2026 15:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmmG-00015T-GK
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:10 -0400
+ id 1xLmmT-0001Eo-QM
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:21 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmmE-0001mr-VE
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:08 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xLmmS-0001nP-8r
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:21 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIIA433486342
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:05 GMT
+ 69RIHPof3553880
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6AdqAo4llWmP1rCkVU0PS97jOSHLKkWsUiZ31bCQoIY=; b=FNFe5M5LmskZfQPS
- L49ODenY8iE3JgbHT7WlU7nJ63mh5j2yp28fxJOfdBpo8DtPn6F/J8KChzrD2/vd
- vENYXwxpFMpakXGmC2Pecu025heJ/GtEsxUcroYbUArbHJvWY0vVp6UkPCH6eWp7
- 7uQBjP7OqxnEn4UAhE6y6VkRyme5tXrHbNjxiOO/ONSxr96jKQ9XNsdS6JsYsx4Q
- XqHOklrFB/tDK1i2dyrHYLLIbTZRcBXsUQg9W7YJTqFfwuqb7hbcaU2UvcNxOgCB
- mgHwZh+xPOWYjf+iofWO69BbYWlckOipWyPDfd246F+RtrBN9Zw5Jq7XR2YKHdI+
- Wvnl1g==
+ Uy+06dFWCh9kmfbQFfAJ7+iz6nG0WFWA/XD5hnsIVl0=; b=h7IqoofBqM2RLCfi
+ gXSlQvicQndLW1ojJrWDmFyWFgDf+Bxpr7yn4UniN6rMrmpeQmoTmLGuhR8zBwzY
+ lO3zT2dOQvMokRnmO+goju64JugrYS4VAxErL9Nn7NSLRiEdbisn4g7E/CIjiDlg
+ 0hE0xiR87/4v0fszqWgbRDh2A5KV5eSYPbEZbPggI4ZzCjpRIpAEpbsCz0qo6D7a
+ Z8vX9ACwTHk/Utk7fAKgrVIB6dbJPOcP+kIIlX+c13EDhbKs8gbbR2HNj5iM0gsv
+ f7bBrUfJzWcwMTfqpl6cgF3EiTSg40PMhyFw2wwx4oW2vfRbYPJf+itGIe96JLEO
+ LE5hHg==
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjjbtc2nx-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjqw22wd4-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:05 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:19 +0000 (GMT)
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93f559420f3so13639585a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:05 -0700 (PDT)
+ af79cd13be357-93f5844e383so20870185a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129045; x=1793733845; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793129059; x=1793733859; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6AdqAo4llWmP1rCkVU0PS97jOSHLKkWsUiZ31bCQoIY=;
- b=DY2BvmTw/nq3q92fjQMYf9xG/wMS0HeJZGnEHP9wwwIwFVKAO6nxFkgs3CxH2lHtwK
- VnYTR/xT8sYWzjLWvETvTSxIQmtmpT4bO/wHHo7q/DHINqDcMnQAn1QYcQuPlStcpmDF
- 46YGr1Npi/q8ePsHxsCuB4yRIwlLPCbxap0zsHMNetFdvc2VWvexvR8HCce3ni8/+dRy
- F0pKe0vR64QL5J8CcSy6Z88JsKXCzKFTc8Hm8AZabd7TcuCgBzQiWyQNuE6nTqb4gIou
- DEq6yN2oRr0enJGSaX3rBu9jb6s6QLDbuaCIskVfb8cQkQVrLFHw+q2SqCUcmynu54rm
- i4vw==
+ bh=Uy+06dFWCh9kmfbQFfAJ7+iz6nG0WFWA/XD5hnsIVl0=;
+ b=eVx5gr8q4OMjIO6xDX61anyD+bzlEBRnuJ3d4rNs3oaGLbyOYnBZJpNpxRVO61xlob
+ nibPui2OEsuqdBiKD8VjL+sl4ApmYNV9rhdnGlPWX3g9YROCh5Ky36d3jvC0cy9lfv6d
+ 5cw7nnQPpyZGQSr4qyTHAcIQLTMmvJssYqF6Ax10KUx+vDynPOjgHN1ey/K3P66dMKg2
+ r18d+tP/JjfTq0Fmoj3yuNdwLy9emtMA+Eucv8+MKxwUGI1k7n+Bvdnkx/0WW4cybN34
+ KBH05Hyyp1naGEfpyMFfIiWX71PYNoaRij/jECvDfhxT/l74iwedzhpmxVrBkHS8BVP1
+ qoDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129045; x=1793733845;
+ d=1e100.net; s=20260707; t=1793129059; x=1793733859;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=6AdqAo4llWmP1rCkVU0PS97jOSHLKkWsUiZ31bCQoIY=;
- b=MOeTOuBq3k0yWlLh4QZrw2X4m6US4y2AXwUJBahBbvG3EptkHR4nkBBV9T+VGJfgnq
- 7PYE0Nds31hfQzN5zuWsRVTTNpR7vIoL+icn5FeRqLEQNNVoXhhljRKabEhWcepErc3L
- 4IwE5Xiz6W2b/T5omVE/y/UnvDiV+MebfVmVikqH1nVyPeikwjee0zeeiq7/ON9E0ynW
- nlVslI7MQzFUPmTuIkSGOBwq1v4hGZcDu6ZD0TiGyfNDYcGmxpFd47dSnmJNfMzt5G6H
- zre7n5AYm+JlWty+dae1y0yVRB+P61e+bbRFHCNZhuRcq3S1+c05YDNnj47Fe1KLHOUn
- zKgg==
-X-Gm-Message-State: AFq9FYLYacW31EJptxPaw708XuxMMG473PlQA27myxujDojsrSkzlOFo
- Rr7FEHIkWV8ngMm7TtmXhVnt6up3sH6QBGWu8wQlYZz145fbpdZaqlPMMSfCGv4X/MUHjC9KYrn
- +Tnt//aS6LUfXhxvmfs6Lnyi7KjEWMnWxm+LQM0pWwFVlm9N5wuHULFntBRlHtRa/xw==
-X-Gm-Gg: AYBFou2CCGWmVmA8gv0qKaJZu4knT7MoUzuCKvsUMT+nng5YSA2pfAQv5uBarzsxMSt
- 8WfCXgRb36q24JXpi6CBzlX6krZz3nRtkjkk3bXD7AExHPGXpPzbWchXtXFKOXGnYrvXD32a1KU
- zsX7nQ83nsR7MXr76vpaCFxMN1Nzp3ijKzoq6D3eIC6quG51gj9IGk3CYwHAH8MZ8GuHDTdFSf7
- duEDHgFeLfHTK8zOwBDfJLnVUTCpV+2safQMATrCWwJ96SSj+wIvnB4yHTtUi8OEt4ijnLZxC/1
- ArypS151X9dd4M6rzFd9ZHyOY1KXjxP8sybrcAJXHm5rHiJ6vdkuMzwiKTj/WtUjRvlSDCZpeXo
- f/RoeP6Wc7FLI+fn7HRzj8evYjxYJ0SMhv+fcQCZC4leAuGDSaNZQCZS7
-X-Received: by 2002:a05:620a:a407:10b0:943:e946:8c6d with SMTP id
- af79cd13be357-943e9468f08mr778782085a.72.1793129044758; 
- Tue, 27 Oct 2026 12:24:04 -0700 (PDT)
-X-Received: by 2002:a05:620a:a407:10b0:943:e946:8c6d with SMTP id
- af79cd13be357-943e9468f08mr778778585a.72.1793129044172; 
- Tue, 27 Oct 2026 12:24:04 -0700 (PDT)
+ bh=Uy+06dFWCh9kmfbQFfAJ7+iz6nG0WFWA/XD5hnsIVl0=;
+ b=M37DHlC0O567RKa2k98M/FSL62a7NLjmv/kATv+SHYA3c3NIWfDz3+KXi43AKYDsU1
+ YyYQAz0m243bqeGluKeTqM8n9BfffMH+Ck8Yjw47Sty6la0iT8IG4sUP7H4A/u2Z9N2K
+ TlckFiNHj9C5pe5ZWq2Z/HivTpfM264uStpE6CUId8Pbbjj56i6Opft9L7s+775OsACV
+ KyKmBOWIJEOlepqXd8Yezem1ZPsO/RO5rMMfNacyZjl1HxRfKR+hECSbO6D+lzNTH54l
+ clgWe5jbwvfXcL3nbBhu0TKsZl+re2YwT3ZaaxOJq+Nz3nCvvtL6Yq1YzR4V++n55mH5
+ fEMg==
+X-Gm-Message-State: AFq9FYLEOkXPnMCO/cnrl8Rhfu1SwTsg0l//BtBGIokpKnXYC39TcBAD
+ z2HCoMEGNZQgN4+s4p2n1p+Z+57KuMpZZTw/ve6KI/M8rOjSKVxIcrX18senIRChVMWAMj+0DSi
+ YhgVqJCYjZcrLIzumM1PrEEDlFJbWP/N493s5wTjAqYV4ngdkPy4XaEb1AE/dBUjsEQ==
+X-Gm-Gg: AYBFou1/YKvUEgFsGS5oLPsktJsNnDSkCDuKp4k14pkocG3mbG3DjEh04p2O0/nn9lA
+ +GCoU1Q6WzYIFBGxo9t5GDzd/F7prj2BsX+G7Oe1Tzwy+JHnd4EmdM4TV52XQVE+C1KrnLfYBwC
+ FGwHqb7MfSco2SdubJX3l53s6SzL9xIeodoMVSNRzKgL98Zy8rsO195za/Xlx6WA1wdGwdJRhUd
+ 6tiZrFxrcLYkDfjxWJT6c0TYuW+EaNr7L+Fyl0RF53Mz/AaTNjl9jyXyBtXQVBpCkhU1NSnS0af
+ I0uLO5FRjPkRdIcwwA142WoFGHdWAbZHpPj37oiYI3IsoMHc7dSU7xEYzKurP1TZWJuS9JcQE2N
+ pDPX05+uvmP2OlousTCS8iWC0nVo++M6GF6MeFjGjE8fbzsBUmLIBKvPW
+X-Received: by 2002:a05:620a:8004:b0:93c:b10:7243 with SMTP id
+ af79cd13be357-940ef7cd3c8mr1549906585a.5.1793129058655; 
+ Tue, 27 Oct 2026 12:24:18 -0700 (PDT)
+X-Received: by 2002:a05:620a:8004:b0:93c:b10:7243 with SMTP id
+ af79cd13be357-940ef7cd3c8mr1549902185a.5.1793129057945; 
+ Tue, 27 Oct 2026 12:24:17 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a94e1dcd1asm2442115e9.7.2026.10.27.12.24.03
+ ffacd0b85a97d-48e3ebcb8e0sm23754001f8f.29.2026.10.27.12.24.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:24:03 -0700 (PDT)
+ Tue, 27 Oct 2026 12:24:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/59] hw/watchdog/wdt_imx2: Preserve own locked bits in WCR
-Date: Tue, 27 Oct 2026 20:22:44 +0100
-Message-ID: <20261027192341.9197-4-philmd@oss.qualcomm.com>
+Subject: [PULL 05/59] hw/watchdog/wdt_imx2: Clear WDT lock on reset
+Date: Tue, 27 Oct 2026 20:22:46 +0100
+Message-ID: <20261027192341.9197-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
 References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
@@ -100,36 +100,35 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX9qQCMBuM7SFg
- H/gaOg91EGk2qbqAK7alAn4oibrkzfRJKujAtEG8kd+IEpOGRYDmQxK5I4nZZzl7ROILoEI3LFT
- X2R/4OT0xd6BMDTacC38V7kapdu6Aa4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX55M0/CpXnwjI
- uLXJiVXFWm9qQV6oVB1vg2sShtLgpDs4h+E6tr0b/8jEsJzHmr3NB/0PDPPVYmkzrO8+Q70Bq0e
- WNImS+J17Hi07FDfg71OTEI83zwEN5dWa7pVfgz7wR53yYKL1uC/b/pP7ppTIthCxh5yNT/ox3T
- EsdFOAb9mqMfzisXTpbNNfcLHERgczN52/962W9Fhu87WiZmJJ7ckdoDdXDDh87FojUPU4b2BJx
- cUhAqa4AyB2dnaAp4E75c1N04v7Cib74jkf3mv8ZMR+44JQsr7MpJnoJb5PYjNL1s+DG58ctOAb
- 0Fla+ziapld7d+E8zDN6rsgbw8sdtW7Yl9gaB4WWvNxWHExjsCnwIl8xxYaA9sOXjBZxDsBDmHd
- 7Yxhx9YR6WdvU/RI1Xiu5wIZHpACyIQQZ2mLJbILYYT39DoSFikWEt86cPecoycvzWtdiS9/hFu
- YNR9RFVcjuUKqXALeBw==
-X-Proofpoint-ORIG-GUID: TyW3ytFlf4pfUIzi-LzeE8M7WEeA6gjW
-X-Proofpoint-GUID: TyW3ytFlf4pfUIzi-LzeE8M7WEeA6gjW
-X-Authority-Analysis: v=2.4 cv=XaIcX455 c=1 sm=1 tr=0 ts=6ae0fa55 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX355Tx3l+qPF1
+ BNlYgb9YS10M2Ht7rIJpJCGFSs2WqTjdcXSgo7Xu/h0rb2R+pYj6wAxUQiGQxSCCfbKjopIEqry
+ UiJ59iMyTXIieSD9uegRoMW5unCOX4uM+y/NSXfM1JTfaBjrWZ3wexXzQCdvSAGDIOnpahZNwnm
+ eO4kpE94AcwKlkzZwqT1TtBebRC3Yrgt0iE54rabq+ql4flJuM+50XctF9LdNGeCeie+sdBRgT0
+ Hv8kr87aHVW7rEbzgefiRbAWgKHhHlowAJXDGJeN9thHIUeo/ElzPRMxhZk7H5Acpbhr0Jz1WXR
+ HyyBJ6fkzZFj7dN6UQvvONZqXCPUQhburfGW2pqRrXXGUPKg7EodjYE9zLeFAdffScZyarxrzZ8
+ k5OiyUuhZJY7TB1ijnloe14jzvnbM9JIgk6dJr18jWawD5Ne86IUVKymoMA/0RouTdgNZbou2PF
+ sGicz/UAPmz2By8RaHg==
+X-Proofpoint-GUID: _YGjLK6vDIms4jUpRU67EvCTCg_w_fhd
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX09l98oypHkk3
+ lkAbpupq684tLzn5RUlJzbu6Wf8fjt9HU2u3+DCmqio4cgKJpyckRFANnXoo7887BAouT3W2HLv
+ T8ryTbIHSEuV/c1pOMLFmGVLH4CPk5c=
+X-Authority-Analysis: v=2.4 cv=PsYG/AM3 c=1 sm=1 tr=0 ts=6ae0fa63 cx=c_pps
  a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=FRSEYCzRAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=OQTJR_iXj6gm-c6kepUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=H4N_Y-AU75W7NKDNhZlT:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=FRSEYCzRAAAA:8
+ a=EUspDBNiAAAA:8 a=TJlcyGJ42DonENT5ft8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=Fg1AiH1G6rFz08G2ETeA:22 a=cvBusfyB2V15izCimMoJ:22
+ a=H4N_Y-AU75W7NKDNhZlT:22
+X-Proofpoint-ORIG-GUID: _YGjLK6vDIms4jUpRU67EvCTCg_w_fhd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 lowpriorityscore=0 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270077
+ suspectscore=0 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270077
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -159,48 +158,49 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Apparently there is a typo in the WCR locked bits handling: The locked
-values for s->wcr must come from itself rather than from s->wicr, so fix
-that. Without it, guests such as u-boot may experience inadvertent
-reboots when configuring the WCR register.
+The WDT bit gets reset and becomes writeable after power on reset which
+imx2_wdt_reset() represents. While the WDT bit in the WCR register
+already gets reset, its locked attribute wasn't. Fix this inconsistency
+by adding the missing unlock of its locked attribute.
 
 Cc: qemu-stable@nongnu.org
 Fixes: daca13d495a1 ("hw/watchdog: Implement full i.MX watchdog support")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20261006083445.30362-2-shentey@gmail.com>
+Message-ID: <20261006083445.30362-4-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/watchdog/wdt_imx2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/hw/watchdog/wdt_imx2.h | 2 +-
+ hw/watchdog/wdt_imx2.c         | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/watchdog/wdt_imx2.h b/include/hw/watchdog/wdt_imx2.h
+index ad36b8820d84..fc01fc46e736 100644
+--- a/include/hw/watchdog/wdt_imx2.h
++++ b/include/hw/watchdog/wdt_imx2.h
+@@ -85,7 +85,7 @@ struct IMX2WdtState {
+ 
+     bool wcr_locked;            /* affects WDZST, WDBG, and WDW */
+     bool wcr_wde_locked;        /* affects WDE */
+-    bool wcr_wdt_locked;        /* affects WDT (never cleared) */
++    bool wcr_wdt_locked;        /* affects WDT, cleared on POR */
+ };
+ 
+ #endif /* WDT_IMX2_H */
 diff --git a/hw/watchdog/wdt_imx2.c b/hw/watchdog/wdt_imx2.c
-index c83d4107c19f..3283990bbf88 100644
+index d897ff6e52b0..a15f452d4890 100644
 --- a/hw/watchdog/wdt_imx2.c
 +++ b/hw/watchdog/wdt_imx2.c
-@@ -156,18 +156,18 @@ static void imx2_wdt_write(void *opaque, hwaddr addr,
-     case IMX2_WDT_WCR:
-         if (s->wcr_locked) {
-             value &= ~IMX2_WDT_WCR_LOCK_MASK;
--            value |= (s->wicr & IMX2_WDT_WCR_LOCK_MASK);
-+            value |= (s->wcr & IMX2_WDT_WCR_LOCK_MASK);
-         }
-         s->wcr_locked = true;
-         if (s->wcr_wde_locked) {
-             value &= ~IMX2_WDT_WCR_WDE;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDE);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDE);
-         } else if (value & IMX2_WDT_WCR_WDE) {
-             s->wcr_wde_locked = true;
-         }
-         if (s->wcr_wdt_locked) {
-             value &= ~IMX2_WDT_WCR_WDT;
--            value |= (s->wicr & ~IMX2_WDT_WCR_WDT);
-+            value |= (s->wcr & ~IMX2_WDT_WCR_WDT);
-         } else if (value & IMX2_WDT_WCR_WDT) {
-             s->wcr_wdt_locked = true;
-         }
+@@ -60,6 +60,7 @@ static void imx2_wdt_reset(DeviceState *dev)
+     s->wicr_locked = false;
+     s->wcr_locked = false;
+     s->wcr_wde_locked = false;
++    s->wcr_wdt_locked = false;
+ 
+     s->wcr = IMX2_WDT_WCR_WDA | IMX2_WDT_WCR_SRS;
+     s->wsr = 0;
 -- 
 2.55.0
 
