@@ -1,141 +1,98 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27808606A31F
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19DD606A31F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=aXciUVnc;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Rev8sqFE
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nfeCWzJm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmtr-0001qI-Vt; Tue, 27 Oct 2026 15:32:01 -0400
+	id 1xLn4f-0006jN-JW; Tue, 27 Oct 2026 15:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmsU-0001I1-EA
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:30:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmsR-0002ne-PU
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:30:33 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIHWsj2452042
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:30:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iuy5kmfyJfbVBoIPLk2UIrcSnRiKJcgu8ySMSx0JkWs=; b=aXciUVncvEygCdXS
- FtjzFNCxFMVm8w+dH47AmA6xuDTA1bSQQpTKBIhaQiwT/yz4cSV4Iseai5nU6rq3
- rBZ26VPCJlPLYecfLh5qj06jZm75PRH5NhNqG93tCbt+TrEBmAe3VIG+kC6gsKaB
- Did91rp8Xwui6GXze7YgGH4EBR+D3+J+YdzzOTROtTohVExHHKr/IJtad6kMm+dy
- Ov0Q5dza5xIR1jj52gmMmC9OzpzwWV3lVPNUULf3a8oZWSsi3KuNly3YDJHQ9DWG
- NEykRwlPDR75L1ksZRPdAzj8ESiv2WXaORpKG+VyaAlKJUc14j7rGGMx34w4NAY4
- FWX3tA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjy6g0v86-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:30:30 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-93f2005ce21so20983385a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:30:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1xLn4e-0006ix-Gu
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:08 -0400
+Received: from mail-dy2-x09.google.com ([2607:f8b0:4864:36::9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1xLn4c-0003rO-8L
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:08 -0400
+Received: by mail-dy2-x09.google.com with SMTP id
+ 5a478bee46e88-35dc2af1f2fso61212eec.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129429; x=1793734229; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=iuy5kmfyJfbVBoIPLk2UIrcSnRiKJcgu8ySMSx0JkWs=;
- b=Rev8sqFEQabv1TlK6B9GDM+dd+La7JB3VM498qF6q6L2PXaLkL2X+rrE9rOg0peWr6
- roacsmlRpR66ABqvxO6JVGieRhFs1G/+owwsoUMvWPJLjeUEdU0wcsooKCGOI1554hzI
- TVtgOddkBIaYcsoYMkhYkBilSIBkwX8XZPtbQANuBYK9jts0yeiXW+HB/NjTOzIWt9Ft
- TyT2xv+QSLFQye4VTkwyGr9RDFm3p+jXBWySM0N8RXq4HqNSTOOx5FV/C67Xa5LaCU9x
- pK4MOHOEckc2aS372kE5ehrqqd/xM8dGnZRw7i1XZO8wy0Ogrmr9yYEKiFqfyHjFaRDk
- 5STA==
+ d=gmail.com; s=20260707; t=1793130184; x=1793734984; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=axdW/tOac228P6zOQN88dVIVns6F/k3LcWVq95PJ8OI=;
+ b=nfeCWzJm8+yfN6jY1GAfEx+VU0uidFAllF1xxsuXcZPG1r2HnspHLUrlYw6RP2pz/h
+ zE7UrKAfNrp0YZUdaEpJU9ezXKecJ8XwszI90TVVxV7Cxt28aMwJiRDLY3IsKNVjQY8I
+ r/DZ94nzhDqoR84Pc7oMEMNTBDZhwxBPrymqZOO6YLuYgwvYcRASEi/s8ExKoG5svkTZ
+ qTRbmq7r3YvXx/HYCpwl4gFuO3aDitT6W3FP9YMsaqP0gVKztXKQ+cQVvRkFoBNg1atX
+ xxws66EpCFyaPAr8p44RNhFUhOqyGcqRMZWtZnE2cL1LKJ+2qEWulFmMROA4NxstdSfO
+ Twrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129429; x=1793734229;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=iuy5kmfyJfbVBoIPLk2UIrcSnRiKJcgu8ySMSx0JkWs=;
- b=cBVgl9SpiBDTw+LmvOcpyTGGkmFetjRwIyciwUPLB8Ggf9sbrlkQzxUOAPjRckjz8M
- pVphO7hxoH3YIrbNNtmEPOxMoM/MnoFDsh85jAPpBxj/5i3p15FCXpJA24v51jki9MOl
- JP+BZhlaY0al+M7D0T90OmRHM57n5Ub2VDb2OSMdXmRw1HGN29x7YGAIPaZ4PQFHonap
- ayee25RCMVQ2G5jTEsu2O2beMuw+lVQR99gh6/O+WOD95QFJxGKJGWltbqhNG2DpYibr
- h98XLyhr6TAJP9wZUbC9KoBXtRYmET+2620oNuRjK1e2ZqgDR+2+8Fyg4TOq6MWlLsZS
- o6dA==
-X-Gm-Message-State: AFq9FYKvTp4PQPgdJGex/uqrVHs6RzyS4d1QBNuYlCAZuuFhdB2zlQd8
- nwVrJE22Kvzpe3NCFSMjKSHiCTAipi4ocdgRiQCkOWK1ga5N+CPbPQxDEg5WCtpPGiiZdD30FOe
- evo5COn8oUuU9g0xQurialyceWr1lrkrumrUZgjx/ay8WTLJZuCa+/ICIvSLjxuSOYw==
-X-Gm-Gg: AYBFou0wC9lLrykcH/HgYhztLRTa34iIkn0qpCJDHdxjkKJn19bfzCD/zHQloTr/4a/
- xVh/TIyi+CP9a9ZJZGeE3WLtWweCk47fb4496s4I0hpnxMd1W73jM9B8hEBwK7mxP2Hy0t8lyFJ
- RJBseLeF2a/DkMHElpNqQAzN2ClXdQLOA7+KaRbTJk9is+JOSYrQJ0Pj+ZPjXOTI+o5D498PYTx
- 2qP2Q8xAYtA/x1X88oi6FmnJ9W84ciVTPJ9yXZCIQ/Nqasj9UYqVP125qRrv4iYO/M7wz8yrVxO
- QPD9nR59wLsftwlwwo3e44tWBaG9QFOXUVQTvgUsSJtonyJVRXQhfL0MEVHNTxzutjNRrqNdBkO
- A9afImAmsKQ+6f7Ge3F2DMdo8CcntVesNa4YCyAdCwGAtWSa6+BLMvTVZ
-X-Received: by 2002:a05:620a:2b91:b0:93e:fc4e:c48d with SMTP id
- af79cd13be357-940ef99945emr1540576285a.61.1793129429194; 
- Tue, 27 Oct 2026 12:30:29 -0700 (PDT)
-X-Received: by 2002:a05:620a:2b91:b0:93e:fc4e:c48d with SMTP id
- af79cd13be357-940ef99945emr1540565385a.61.1793129428055; 
- Tue, 27 Oct 2026 12:30:28 -0700 (PDT)
-Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecdd5b3sm24304761f8f.53.2026.10.27.12.30.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:30:27 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 59/59] qemu/arch-defs: increase width of QEMU_ARCH_* masks
- enums to be 64 bits
-Date: Tue, 27 Oct 2026 20:23:40 +0100
-Message-ID: <20261027192341.9197-60-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
-References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1793130184; x=1793734984;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=axdW/tOac228P6zOQN88dVIVns6F/k3LcWVq95PJ8OI=;
+ b=iqOvPYJ15rwImwdrpPU5OeMMmBV3TFiwoSUre5ZLRdTwcNtZhDyHjqsI97Li2hZ0hv
+ McbPPhokYrZ/G1T8UkSYXZUyRDEYlctxXGVZgoqmXN3HaId66C/UdIUYCT6UWxMkHDBr
+ UFrU2l5gYDhe9jf/C1vVy/5N3oaSFobwZIRFW8pzYxnUztT4j7kF5nrumeKSJtwBZf2V
+ u2hR4Ir21v0nIMUM+B00JfHedM2TCMcfkPyuTa31jiplF6YoK+fy/FkmvxgFpCoNR5es
+ XdgtFuiVa5ysUXhVpZ9vChUBMz3ShZDGercVdL4Z3JXdeovDrKAkPj0sHRF6xMTwjfAK
+ +TGA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwa8Y2Lb8aJC0sz7ge9HKKFKUh/TpNsKzW9tUMYDrGysOsO29cVEJkbgSkUPX01d1TcxOYlh6ApNXhj@nongnu.org
+X-Gm-Message-State: AFq9FYLwnF9DDxNKw2uyhZ+YgtVXinAQZLV8LIGpydp81K5UvYeA8MJJ
+ LyObi2S6gfE+82fTDot1ZI66fvB3bJ6GJpQqfSUySIuC8BuZan4EhVQz
+X-Gm-Gg: AYBFou3pnpSQcgZYlm3rn3o31NtAkrqlR2ev2STZ1ce9/D0u9cqjLCL+/MCAsc51UVU
+ glNNyUY/UMytaweopcgpi3tQIo13g3XApMMcd1B6jyBtlAz53Fmo8AFsYwyvmBMSrAqv5SHi6jl
+ qQJHVKEBCoKuww1AHl5WCHqD9UZ2owt0zYGZ+7brUppGprHQQ7ZozP6qLcQZccCxU0HFUK0UeKI
+ BNBx8ng2EoFgbCshX2GIxG+32Xf3XVV9PtxzB8DWOzQ3XT3XszdLmIOWAtYn9EuM4CtLcdpIA0A
+ puEqsCrLQhGNfOa/pDMHPzJXMIRqW2FzoS81X5zHtW/nJ99SGH8+Za1CmkkbOIdJBgrxMsGquPG
+ RjVWtl/fDt+pOvWXBq7PKkkmK648dNX+AePXyQXDnrZElGmS+5dZbaLEvOVJtix437j1kJgxPGT
+ gsbJUDq6BSq8b2e2jUSvTwVW3zVsccRfCgLwSyoWJdhj4/afX0mITNRwzhU1ORgoruEUyyt2b1H
+ +1Sh0O2k8El02VTojYNO2i4mIJSQi0Zp/+X5UkQ2gah0B/HXPTwY7OSxvQzkNpYHEh+YNFdFzCT
+ sRmUlm/Dh31bF7rFcjyj75DaE5VdcnZjpV4lOVGlY5ipR3KFf7oldNws/vqL6w43YIWFkFaJrsd
+ nj4m/FdrNR28hJJ8ZnaYFpyMXlxm5vdJ6VFxpzjZqeaRy56O4zio=
+X-Received: by 2002:a05:7300:fd0f:b0:367:363f:6fe4 with SMTP id
+ 5a478bee46e88-36a20440ad5mr713599eec.32.1793130183934; 
+ Tue, 27 Oct 2026 12:43:03 -0700 (PDT)
+Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Oct 2026 12:43:03 -0700 (PDT)
+From: soumyajyotisarkar23@gmail.com
+To: sarkarsoumyajyoti23@gmail.com,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Helge Deller <deller@kernel.org>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Subject: [PATCH v2 0/8] usb-mouse: high-resolution vertical and horizontal
+ wheel support
+Date: Wed, 28 Oct 2026 01:12:48 +0530
+Message-ID: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX9HDt3g4yfHWu
- Rsq6qtgNB4wxwvcECeF7A30WVQTj0O4DvxqF9DY0hqc/Rb6jvPLhZ5q09WpziRSkajG8I5Ilc1b
- EpYA7k9+z4+Lf+cnvUa4aTgDSSa3Kkc0zSq9D58HfoMK8pynCb6F9Q6x+lGBdXbI8xGAy5vO5Jp
- gRNxxm8D7NWB4qUhYGzkGruvrnWSWMRT0QCJTWZNc2Ct8Z/KTIrq06nESnScp0wgYDQy5aUY7YY
- i7R9m2rcjks4cTLHroeuLDzzKqRCVSV+Ibj4hrJRjFN8HHN6l2afcqnnqwkdN+cURIOI6K/oDy0
- idHFE95INZgsSBj91QRq2ALlMuMK1pbwYS6sfOnFae5IVC3rw53DFJFPTF0Qt1npnVEf14chCRG
- sxpiMrcaL1whymKoMIoU4Bd84Ldk7/bsY+QRhn1CE83j69S3fDcx8HN4m5EXRvMB/1GpDToOIFi
- lvR45zw8HO03GLyjLFQ==
-X-Proofpoint-GUID: xWVLvpvQccjpaZVRFvyORsyaiiiCYtyA
-X-Proofpoint-ORIG-GUID: xWVLvpvQccjpaZVRFvyORsyaiiiCYtyA
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3OCBTYWx0ZWRfX5uXs+H07+Em+
- 250ydRYwvLZRmRMOXp2V5GkNTIBEHBl70h8M3U+hBHTauxV847OuGfNrsihzrYdSaIYioG7Owhv
- XgYY22Moo0B94VhZ9wuM/rUteSY+S3s=
-X-Authority-Analysis: v=2.4 cv=dKgzC+Zb c=1 sm=1 tr=0 ts=6ae0fbd6 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=mgfkhx_GbAYBFjwR9pIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270078
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:36::9;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dy2-x09.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,118 +105,167 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Yonggang Luo <luoyonggang@gmail.com>
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 
-SYS_EMU_TARGET__MAX is already 29, nearing the 32-target limit.
-So increase width of QEMU_ARCH_* masks enums and related types;
-So that we can add needed Linux user-mode targets to EmuTarget;
-And also enabled the possibility add more system-mode targets in future.
+This series adds high-resolution vertical and horizontal wheel support
+to QEMU's USB HID mouse.
 
-Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20261027061504.2213-4-luoyonggang@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/qemu/base-arch-defs.h  | 7 ++++---
- monitor/monitor-hmp-internal.h | 2 +-
- system/arch_init.c             | 4 ++--
- system/qdev-monitor.c          | 2 +-
- system/vl.c                    | 2 +-
- 5 files changed, 9 insertions(+), 8 deletions(-)
+As of now the USB mouse only reports whole wheel detents and has no
+horizontal wheel. Modern touchpads, trackpoints and free-spinning wheels on
+the host produce much finer and often simultaneous horizontal and
+vertical, scroll movement, but the guest never sees it: the GTK and
+SDL ui turn every smooth scroll event into a single wheel button
+click and the HID report has no room for anything finer.
 
-diff --git a/include/qemu/base-arch-defs.h b/include/qemu/base-arch-defs.h
-index a6478c2d3fff..f2e3bc542030 100644
---- a/include/qemu/base-arch-defs.h
-+++ b/include/qemu/base-arch-defs.h
-@@ -9,7 +9,7 @@
- 
- #include "qapi/qapi-types-machine.h"
- 
--#define QEMU_ARCH_BIT(target) (1UL << (target))
-+#define QEMU_ARCH_BIT(target) (1ULL << (target))
- 
- enum {
-     QEMU_ARCH_ALPHA =       QEMU_ARCH_BIT(SYS_EMU_TARGET_ALPHA),
-@@ -44,7 +44,8 @@ enum {
-     QEMU_ARCH_ALL =         QEMU_ARCH_BIT(SYS_EMU_TARGET__MAX) - 1,
- };
- 
--QEMU_BUILD_BUG_ON(SYS_EMU_TARGET__MAX > 32);
-+/* Keep target-specific masks within qemu_opt_set_number()'s int64_t range. */
-+QEMU_BUILD_BUG_ON(SYS_EMU_TARGET__MAX > 63);
- 
- /**
-  * qemu_arch_available:
-@@ -52,6 +53,6 @@ QEMU_BUILD_BUG_ON(SYS_EMU_TARGET__MAX > 32);
-  *
-  * Return whether the current target architecture is contained in @arch_bitmask
-  */
--bool qemu_arch_available(uint32_t arch_bitmask);
-+bool qemu_arch_available(uint64_t arch_bitmask);
- 
- #endif
-diff --git a/monitor/monitor-hmp-internal.h b/monitor/monitor-hmp-internal.h
-index 4e2430551abf..b61d27170767 100644
---- a/monitor/monitor-hmp-internal.h
-+++ b/monitor/monitor-hmp-internal.h
-@@ -69,7 +69,7 @@ typedef struct HMPCommand {
-      *     Allow to restrict the command for a particular set of
-      *     target architectures.
-      */
--    uint32_t arch_bitmask;
-+    uint64_t arch_bitmask;
-     bool coroutine;
- } HMPCommand;
- 
-diff --git a/system/arch_init.c b/system/arch_init.c
-index 1ad2f3d6f78b..b8362b12a6d2 100644
---- a/system/arch_init.c
-+++ b/system/arch_init.c
-@@ -26,7 +26,7 @@
- #include "qemu/bitops.h"
- #include "qemu/target-info-qapi.h"
- 
--bool qemu_arch_available(uint32_t arch_bitmask)
-+bool qemu_arch_available(uint64_t arch_bitmask)
- {
--    return extract32(arch_bitmask, target_arch(), 1);
-+    return extract64(arch_bitmask, target_arch(), 1);
- }
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 8185822daa71..b3ca619f3c9f 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -54,7 +54,7 @@ typedef struct QDevAlias
- {
-     const char *typename;
-     const char *alias;
--    uint32_t arch_mask;
-+    uint64_t arch_mask;
- } QDevAlias;
- 
- /* default virtio transport per architecture */
-diff --git a/system/vl.c b/system/vl.c
-index e766402f7e19..c40c0596fde3 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -917,7 +917,7 @@ typedef struct QEMUOption {
-     const char *name;
-     int flags;
-     int index;
--    uint32_t arch_mask;
-+    uint64_t arch_mask;
- } QEMUOption;
- 
- static const QEMUOption qemu_options[] = {
+Since Windows Vista, Windows supports Microsoft's enhanced wheel
+protocol: a Resolution Multiplier feature report per wheel axis and
+horizontal scrolling through the Consumer AC Pan usage. Linux
+supports the same multiplier through hid-input. This series
+implements it end to end:
+
+ - Patch 1 adds a 'scroll' input event carrying the distance in 1/120
+   of a detent (WHEEL_DELTA units). Devices that do not handle it
+   keep getting wheel button clicks from the input core, one per
+   detent.
+ - Patches 2 and 3 make the GTK and SDL ui forward smooth scroll
+   deltas on both axes as scroll events instead of rounding them to
+   clicks. SDL needs 2.0.18 or newer for preciseX/preciseY.
+ - Patch 4 derives the report descriptor length with sizeof() (no
+   functional change).
+ - Patch 5 makes the HID mouse accept scroll events and track the
+   wheel in 1/120 detent units. Guest visible behaviour is unchanged.
+ - Patch 6 switches the mouse to a report-ID based descriptor with an
+   AC Pan field. Boot protocol keeps the 4-byte report.
+ - Patch 7 adds the Resolution Multiplier feature report (ID 2,
+   physical maximum 120). Once the guest enables it, each wheel count
+   is 1/120 of a detent.
+ - Patch 8 clears the wheel state and mouse_grabbed on reset.
+
+Sub-count remainders are carried in a residual per axis, so slow
+scrolling adds up instead of being dropped. The new state lives in an
+optional "HIDPointerDevice/wheel" vmstate subsection that is only sent
+while wheel state is in use.
+
+Testing was done with a Windows 10 guest and -device usb-mouse, with
+both -display gtk and -display sdl, using the wheel event viewer at
+https://domeventviewer.com/wheel-event-viewer.html:
+
+ - Without the series, deltaY is always +/-100 px (one 120-unit
+   detent). With the multiplier of 4 from v1 it was +/-25 px.
+ - With the series, deltaX and deltaY arrive in steps of 0.833 px
+   (one WHEEL_DELTA unit; Edge maps 120 units to 100 px), horizontal
+   scrolling works and both axes can change in the same event.
+ - Migration from a QEMU without the series to one with it completes.
+   Migration back to an older QEMU only works while the guest has not
+   enabled the Resolution Multiplier and no wheel movement is pending;
+   otherwise the older QEMU rejects the unknown "HIDPointerDevice/wheel"
+   subsection (see the open questions below).
+
+Why the guest cannot match the host 1:1
+---------------------------------------
+The scroll path is now lossless on the QEMU side: every fraction of a
+detent the host UI reports either reaches the guest or is carried over
+to the next report. The guest still cannot reproduce the host's
+pixel deltas exactly, because the smallest step a USB wheel can
+express is one count and with the multiplier enabled one count is
+one WHEEL_DELTA unit (1/120 detent). Windows delivers WM_MOUSEWHEEL
+deltas as integers in the same unit and Chromium turns them into
+pixels as
+
+  deltaY = units * 100 / 120
+
+so the guest sees deltas in steps of 0.833 px. A host movement that
+does not land on a whole unit is split: the whole units are sent now
+and the remainder later. For example, if the host scrolls by the
+equivalent of 26 px:
+
+  26 px * 120 / 100 = 31.2 units
+  sent now: 31 units -> 25.833 px in the guest
+  carried: 0.2 units -> sent with a later report
+
+Per event the guest is therefore off by less than 0.833 px, but no
+movement is lost over time. Movements that are a multiple of 5 px
+(6 units) map exactly.
+
+The remaining per-event differences between host and guest come from
+outside QEMU: host and guest browsers apply different scroll scaling
+and smoothing and several host events can fall into one USB polling
+interval (8-10 ms) and reach the guest as a single report.
+
+Changes since RFC:
+ - Patch 4 (new): derive the descriptor length with sizeof() instead
+   of hard-coding it.
+ - Keep the report descriptor comments in their existing column
+   instead of moving them.
+ - Check "hs->protocol == 1" for report protocol and add boot/report
+   protocol comments in hid_pointer_poll().
+ - Replace the 1/4/8/16 divisor switch with multiplier scaling in
+   hid_scroll_counts(); the guest-selected multiplier now increases
+   the resolution instead of dividing it.
+ - Drop the stray blank line in hid_pointer_poll().
+ - Move the reset changes into their own patch.
+ - Move the new migration state into an optional subsection and
+   convert queued wheel movement from older QEMU versions.
+ - New input-layer scroll event and GTK/SDL support, so the host's
+   fine-grained scroll actually reaches the device.
+
+Changes since v1:
+ - Added proper suggested by.
+
+Reference:
+Enhanced Wheel Support in Windows
+https://download.microsoft.com/download/b/d/1/bd1f7ef4-7d72-419e-bc5c-9f79ad7bb66e/wheel.docx
+
+Open questions/known gaps:
+
+ - The descriptor and packet size change is guest visible. A guest
+   migrated from an older QEMU keeps the old 52-byte descriptor until
+   it re-enumerates the device, but receives the new 6-byte reports.
+   Should this be tied to a usb-mouse property that hw_compat_11_1
+   turns off? The same property could keep the wheel subsection from
+   being sent to older machine types, so that migrating back to an
+   older QEMU keeps working after the guest enabled the multiplier.
+ - Only the GTK and SDL UIs produce high-resolution scroll events so
+   far. VNC, Spice and Cocoa still send wheel clicks.
+ - Linux guests are not tested yet.
+
+Feedback is very welcome!
+
+Thank you,
+Soumyajyotii Ssarkar
+
+Soumyajyotii Ssarkar (8):
+  ui/input: add high-resolution scroll input event
+  ui/gtk: forward smooth scroll deltas as high-resolution scroll events
+  ui/sdl2: forward precise wheel deltas as high-resolution scroll events
+  hw/usb/dev-hid: derive the mouse report descriptor length with
+    sizeof()
+  hw/input/hid: accept high-resolution vertical scroll events
+  hw/usb/dev-hid: report horizontal wheel through AC Pan
+  hw/usb/dev-hid: support the wheel Resolution Multiplier feature report
+  hw/input/hid: clear wheel state and mouse_grabbed on reset
+
+ hw/input/hid.c         | 187 ++++++++++++++++++++++++++++++++----
+ hw/usb/dev-hid.c       | 209 ++++++++++++++++++++++++++++++++---------
+ include/hw/input/hid.h |   8 ++
+ include/ui/input.h     |   6 ++
+ qapi/ui.json           |  45 ++++++++-
+ replay/replay-input.c  |   8 ++
+ ui/gtk.c               |  34 ++++---
+ ui/input.c             |  82 +++++++++++++++-
+ ui/sdl2.c              |  28 ++++++
+ ui/trace-events        |   1 +
+ 10 files changed, 531 insertions(+), 77 deletions(-)
+
 -- 
-2.55.0
+2.56.0
 
 
