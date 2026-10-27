@@ -1,53 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBDC606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 21:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE63606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 21:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Oj+rCg1D
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=SNvZQ8/c
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLp5k-0002xe-J7; Tue, 27 Oct 2026 17:52:24 -0400
+	id 1xLp5x-0002zn-2B; Tue, 27 Oct 2026 17:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5h-0002xN-Sw
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:21 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5p-0002z5-Uc
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:30 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5g-00007b-6c
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:21 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xLp5n-00008b-TI
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 17:52:29 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 87B76600C8;
- Tue, 27 Oct 2026 21:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92031F01825;
- Tue, 27 Oct 2026 21:52:17 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 087A1409CA;
+ Tue, 27 Oct 2026 21:52:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5C41F01825;
+ Tue, 27 Oct 2026 21:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793137939;
- bh=M6khnN4p2EYxNVrIWHFbBZ9IyWZpUi0pUO8tKjJnifI=;
+ s=k20260515; t=1793137946;
+ bh=dTZCJTYWVWJqF6kvOj5k8Dq8jE2tqLp4YrotU+lPUFg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Oj+rCg1D5BNCWnuW2eyN0M0vPPCy3E3DgB+x5IEEjyK7nZhzYdKLCyZOYFhdAfFwS
- /zqii5D0thzfZAOH3eeVK3cNmw/P/inl7/WkQP1y5K5b7YqcbYEuIX6UgZTCqZo6Hk
- vgsf8Qjqp+BpjEr656DkfDJDhm30W56XXxRk1//oZp/DZXSmq6pnTMELne3i0Ob6Hm
- AGIQR5spiq7SvYaia7FKw2vOd6Bu5WhZYyCFmIMP9Y0ho6K+3epbUyXqhZf6pRij5r
- xVpwuS/tD/J/ZfACaioZiU7EKdSOhjQabZqngKzd8atikev62yJvEvZ3DQ/C2GIcDM
- dWXTiEtDj6F/g==
+ b=SNvZQ8/c2DF4Ld+ctuJDDbTNOf0Ta7VMRG+87nHtm/TjB0bpL/BD8J2RyGUwt/VEM
+ r9XZJ7O1SR6L9OWaO1Sl6NqqbUGXnJA+UDwWs5t3W3H7IMpQAY/zYFcvYJv2ULIiN9
+ MYMQ52RGiSJIORV3g4dTH+wHBW3t8cPWEWM0/BahJkpdIR7JkNUfScyFsS9uFjfOUB
+ CVxdMbZQF41I3tpE6/11WLnGMUKisqHdX2oCD51kVFykAz0VHTrnOnQefuUqybJt2o
+ tPlkVz/mSAfsHLF1xnKNpqy5KWWqLWTV6ZqN2hz0n9eMkFH8b3dKaIEKMIBrK8vflU
+ F/c+t8if65RCw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Keith Monahan <keith@techtravels.org>,
  "Kirill A . Korinsky" <kirill@korins.ky>, Helge Deller <deller@gmx.de>
-Subject: [PATCH 4/8] target/hppa: Implement local broadcast I/O space
-Date: Tue, 27 Oct 2026 22:52:05 +0100
-Message-ID: <20261027215209.21150-5-deller@kernel.org>
+Subject: [PATCH 8/8] target/hppa: Map CPUs at same addresses as on physical
+ machines
+Date: Tue, 27 Oct 2026 22:52:09 +0100
+Message-ID: <20261027215209.21150-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261027215209.21150-1-deller@kernel.org>
 References: <20261027215209.21150-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -73,85 +74,131 @@ X-Spam-Status: No, score=-19.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+From: Helge Deller <deller@gmx.de>
 
-The local broadcast I/O space is used by older operating systems like HP-UX 9.05
-to send an interrupt to all CPUs, or to issue a system reset.
-Wire it up on the emulated 715 machine to allow HP-UX 9.05 to run.
+SeaBIOS version 26 allows to use random addresses for CPU_HPA, so drop
+the hardcoded CPU_HPA which was used until now for all machines, and use
+individual addresses which correspond to the CPU HPA on the physical
+machines.
 
-Signed-off-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ hw/hppa/machine.c | 23 +++++++++++++----------
+ target/hppa/cpu.h |  1 +
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 96d57b9b0f..8d378385b2 100644
+index e403ae5fc9..f23936fc5b 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -573,6 +573,47 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     cpu[0]->env.kernel_entry = kernel_entry;
- }
+@@ -241,11 +241,11 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/power-button-addr",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
  
-+/*
-+ * Local broadcast I/O space: a write to IO_EIR (offset 0) posts an external
-+ * interrupt on all processors, CMD_RESET (5) written to IO_COMMAND (0x30)
-+ * resets the system.  HP-UX 9 reboots through the latter.
-+ */
-+#define HPPA_BROADCAST_HPA      0xfffc0000
-+#define HPPA_IO_COMMAND         0x30
-+#define HPPA_CMD_RESET          5
-+
-+static uint64_t hppa_broadcast_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void hppa_broadcast_write(void *opaque, hwaddr addr, uint64_t val,
-+                                 unsigned size)
-+{
-+    unsigned int i;
-+
-+    switch (addr) {
-+    case 0:
-+        for (i = 0; i < current_machine->smp.cpus; i++) {
-+            hppa_io_eir_ops.write(cpu[i], 0, val, 4);
-+        }
-+        break;
-+    case HPPA_IO_COMMAND:
-+        if (val == HPPA_CMD_RESET) {
-+            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+        }
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps hppa_broadcast_ops = {
-+    .read = hppa_broadcast_read,
-+    .write = hppa_broadcast_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
+-    val = cpu_to_le64(CPU_HPA + 16);
++    val = cpu_to_le64(cpu[0]->env.cpu_hpa + 16);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/rtc-addr",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+-    val = cpu_to_le64(CPU_HPA + 24);
++    val = cpu_to_le64(cpu[0]->env.cpu_hpa + 24);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/DebugOutputPort",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+@@ -286,7 +286,8 @@ static DinoState *dino_init(MemoryRegion *addr_space)
  /*
-  * Create HP 715/64 workstation
+  * Step 1: Create CPUs and Memory
   */
-@@ -597,6 +638,14 @@ static void machine_HP_715_init(MachineState *machine)
-     isa_bus = hppa_isa_bus(translate(NULL, IDE_HPA));
-     assert(isa_bus);
+-static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
++static TranslateFn *machine_HP_common_init_cpus(MachineState *machine,
++                        target_ulong initial_cpu_hpa)
+ {
+     MemoryRegion *addr_space = get_system_memory();
+     unsigned int smp_cpus = machine->smp.cpus;
+@@ -299,6 +300,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+     /* Create CPUs.  */
+     for (unsigned int i = 0; i < smp_cpus; i++) {
+         cpu[i] = HPPA_CPU(cpu_create(machine->cpu_type));
++        cpu[i]->env.cpu_hpa = initial_cpu_hpa + i * 0x1000;
+     }
  
-+    /* Local broadcast I/O space */
-+    MemoryRegion *dev_mr_bcast = g_new(MemoryRegion, 1);
-+    memory_region_init_io(dev_mr_bcast, NULL, &hppa_broadcast_ops, NULL,
-+                          "local-broadcast", 0x1000);
+     /* Initialize memory */
+@@ -321,7 +323,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+         memory_region_init_io(cpu_region, OBJECT(cpu[i]), &hppa_io_eir_ops,
+                               cpu[i], name, 4);
+         memory_region_add_subregion(addr_space,
+-                                    translate(NULL, CPU_HPA + i * 0x1000),
++                                    translate(NULL, cpu[i]->env.cpu_hpa),
+                                     cpu_region);
+ 
+         if (!hppa_is_pa20(&cpu[0]->env)) {
+@@ -339,7 +341,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+         memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
+                               NULL, cflush_name, 4);
+         memory_region_add_subregion(addr_space,
+-                              translate(NULL, CPU_HPA + i * 0x1000 + 0x500),
++                              translate(NULL, cpu[i]->env.cpu_hpa + 0x500),
+                               cflush);
+     }
+ 
+@@ -347,7 +349,8 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+     cpu_region = g_new(MemoryRegion, 1);
+     memory_region_init_io(cpu_region, OBJECT(cpu[0]), &hppa_io_helper_ops,
+                           cpu[0], "cpu0-io-rtc", 2 * sizeof(uint64_t));
+-    memory_region_add_subregion(addr_space, translate(NULL, CPU_HPA + 16),
 +    memory_region_add_subregion(addr_space,
-+                                translate(NULL, HPPA_BROADCAST_HPA),
-+                                dev_mr_bcast);
-+
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-     hpm->lasi_dev = lasi_dev;
++                                translate(NULL, cpu[0]->env.cpu_hpa + 16),
+                                 cpu_region);
+ 
+     /* Main memory region. */
+@@ -626,7 +629,7 @@ static void machine_HP_715_init(MachineState *machine)
+     ISABus *isa_bus;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfffbe000);
+ 
+     if (hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP 715/64 workstation requires a 32-bit "
+@@ -713,7 +716,7 @@ static void machine_HP_B160L_init(MachineState *machine)
+     PCIBus *pci_bus;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfff10000);
+ 
+     if (hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP B160L workstation requires a 32-bit "
+@@ -810,7 +813,7 @@ static void machine_HP_C3700_init(MachineState *machine)
+     bool is_C3700 = strcmp(mc->name, "C3700") == 0;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfffa0000);
+ 
+     if (!hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP C3000 workstation requires a 64-bit CPU. "
+@@ -893,7 +896,7 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+         cpu[i]->env.psw = PSW_Q;
+         /* Firmware uses FP registers before configuring CCR. */
+         cpu[i]->env.cr[CR_SCRCCR] = 0xc0;
+-        cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
++        cpu[i]->env.gr[5] = cpu[i]->env.cpu_hpa;
+     }
+ 
+     /*
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index da48a78569..7b708a564b 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -272,6 +272,7 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
++    target_ulong cpu_hpa;      /* HPA of this CPU */
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
 -- 
 2.54.0
 
