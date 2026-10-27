@@ -1,79 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF666606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81138606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CqY1GBEs
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=j1UgHHI7
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLnDp-0002oh-Fx; Tue, 27 Oct 2026 15:52:37 -0400
+	id 1xLnE1-0002wW-6O; Tue, 27 Oct 2026 15:52:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
- id 1xLnDi-0002mW-T1
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:31 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1xLnDt-0002qG-Fw
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:42 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
- id 1xLnDg-0004po-I4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:30 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-48df4e9d2d4so137950f8f.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:52:28 -0700 (PDT)
+ id 1xLnDo-0004se-J2
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:40 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-48afcfc4bf5so199276f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793130747; x=1793735547; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793130755; x=1793735555; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+MHRJB5J5iOFxUMzNzx6BYiIhoUyWnvpT0Qsh+j+9P8=;
- b=CqY1GBEsnPngN5uP0GC0K5vJ1y7F10pp+Qb82u+5Lmb3GNh19/XthV9OCRbVolgbhq
- kPTiipmnpTnWy3dgujHbFCJjGoDv7KAWsfDievQ2bZ/toj93E2XKCGQweOqPCLwRwYmj
- AId1pFfa1lyj75Gc6OBioJFAOwcOHg8pNOx7r2KI0nUrqrExjTZLmP1gzz40QmatR94Y
- YT1CIL9Rv9+6bGN2VjKiMW+Ym5K86TdV2BbBDCmsIVodM9dUa736ZCixd3n5vYCc+aOZ
- bFFhSYSdDvTI/KIjUYD7Ky4YybIMEU6433O3dR9ngpX2Zin019TNNU2RZt7TCRLlrbcI
- 9oLw==
+ bh=IpL4p+yzCt4e8PzmmjicXty/+jxSaf2HbZ40OD7j+70=;
+ b=j1UgHHI7CMk1f5X8CfqnATH+f/TcS1KOhByKJ8+Tfeust8YpaoQDoaRsHiwfY3XyPt
+ pVrFcyMFMwvHxgVKajaNKUjI2b0zZmDfyTTFrRlT3TlxeQnOPvSd/WXmRtAky+HUrESd
+ 4tfKj+tLVdMojS8Dqvrk9v8lZHXLa63ZyOK/SfA4vvZSW042xvfyR4LeBb+u3uOyJIGD
+ 8DlfFz6dSupnlRpgZsBIEAILF1/w8jKQFgIg0E05ptDboajCb65CmBpGJz7uU7cDzIow
+ +CaiIszYYa6/GkBBH9QmqQWnlfo+IF4Hl4ibiUmUHPr6Aue4f4MvsS2aX5EcaIoMb9be
+ vpMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793130747; x=1793735547;
+ d=1e100.net; s=20260707; t=1793130755; x=1793735555;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+MHRJB5J5iOFxUMzNzx6BYiIhoUyWnvpT0Qsh+j+9P8=;
- b=pbATEpkzc8NnbAv2H7tBa8+z8AjzsriJKxEqqUQF8/Z+JAbHzFeeqXKKTDOc2xJGxJ
- n+ecmy6SzLBMWb1ITYk0C4+juL7CPTvNTpL2Rz+wxhHXp2GZGpGundAZId0LLMuTO3Ym
- +/ldTUooortGErAkVOAjxXvtA1455zVpd1bk7MVqOlScoyxznA6tgJPmp6zGGzRPMk75
- grWYcbCcaicL05MIp46M3JqtAk/BpcyCTG1XKmeI/h47oUQQru4xKLW3PcFKOj39YRQf
- /6zMC7Ixny/4w8yjPPE4wC9jpxUir21RmHEEczgFdd4nPsqzQeBfxz1/n3aJ7xJemVAe
- rSgQ==
-X-Gm-Message-State: AFq9FYIXL9zE+lPGON8UkZPhwF2xRy+uvUCgeIxDLAIXUVpT8kz80UCE
- iDRsZGdtiix8HRun0yIyraQlGUsQO+I77fXC6DzeXwX+Lb0sjmhONUj2
-X-Gm-Gg: AYBFou0/OAJiamCtXIyCTwBLevs/nWEGD4pLVoz4q5QdiO93H8WhmBAcjUjvO9ALqlr
- UyP+wWD6rswoKMQegr4QwuPsj+ZpchOP1cVQ8R25qxpfi10pymeitdwMVKf8jQgJDYmcQA43cJY
- Hgem0K9tgfxfU7NqhjLWgfCWUjKpv0sRTS9Bk2kYWBHJkRub7ycXOTdMq+cI03gk7OQXkr96iiM
- VYclWk9ZbUF+gCT2RLCCeexfZTGo3FP9knfXDNhLCBd5/MmfauNhji+USUuWUlL0lpUSSnorYmm
- 9spOM/vqvlF141agjnblrlur0dOD3PcVDqgLRmLLhmSPsJFykzflAKNfo4awF+LkyDo82JjCOiJ
- BjCeWfsW+LJWmCM0Decz+MObbny0z9+sSNsYYEcZesfPSOFBO93v8kBnnBdQif7nTLw5W7oWOZQ
- xYiKFWumMvX0guBrZELF0Qf88YWnKyL7w/LJKYDpo9AptQGZK93PMraKGkyDZ5L5k4hDwNWUXxK
- DtKY/LRcTY+FpN7TOZb0UAVxniNRlcRMYbMAq/Q9XPxYEHSk3I2eRCWL2zEvyD1iiJMgv8B/9NJ
- uc+sCCV0fvgFQOk=
-X-Received: by 2002:a05:6000:4006:b0:487:72f:fb41 with SMTP id
- ffacd0b85a97d-48e5d5a4168mr965133f8f.39.1793130747034; 
- Tue, 27 Oct 2026 12:52:27 -0700 (PDT)
+ bh=IpL4p+yzCt4e8PzmmjicXty/+jxSaf2HbZ40OD7j+70=;
+ b=fYE9uJHNqV1zKtScAT3XKzeVzcUIvOJvF7Uyfrokbe3JUIPyEU+T/mLkHBv49FI4nD
+ q1xKmrJdMj1iFbaBW1rRk9yNqDReH5XgZ68U6nOtTFdwTX2v/Kw/Z/roTKcvaIG+OGAc
+ EHudImxwfcwbBsCWmPLJgkCzYkeTlX0RJtbwoH/9nSeXQCPuj0BWsSRqzwMiAz4HWTz2
+ R75uZ+3ZdEkOtAx13kcH2t2qqLIk9jakkbE0Mx8KSXTUzHApj1w1j6BdZIFKRXKhF8DW
+ n7PUqxX7SFbdKKKyPRjyViRPZBi0X2FGEh7FN+XN6BCzg2jwMozbKXRxru3O9nXt07ox
+ siew==
+X-Gm-Message-State: AFq9FYIFuKy4/4/WuAEuTPngVa8qDhQqZos6EeqLFAkcIA4ydwdHrusb
+ gclTANTlhxVmSHIgVxhJ0ZKnPnadxuuZi74F1VNNqHpNcpnv6wBzdxyM
+X-Gm-Gg: AYBFou2hIYACEuBeVEV3ueZRoGZEEW8iCCbOlPbUJsA6Dl28irGBcvl0MJw4+0JOdoC
+ wk4Yhd0kUJhtZszqi8nVVlc1pYFJnSS76JVYgWXwES1QivnVR0nyFOcl/QVQImdj0sCdRumQron
+ oELimWCImExuBCT57b0JxBcuOtn10+OqqLRvimAkgCGDEbeLuyifHOPlTQBkDbN0fwJZCIAxA5i
+ rOjC4S3/jBK106p5lw4Ug256QFU+opN+xLYgLTAFpZnpUVq2yFZAxg6s6/covpzWeihmh7F6SX+
+ LtMID/j0MufOfe/EWtRGh5/+Ni2Nff6PYl+1XD6W4eVrxnhh/zP5dorTqqi7kj8jFWIne6trXYJ
+ c9pjNf/sOmvULPnq92nt0GalkBx4v8QSSYQET20ziL2dOhXS4EqavzMIVC4cfYc0x4yUXkKYq2o
+ xmZW7oDtndTJz/B8O6aCwnIxA2ao4o/BkE/rpeOGVxhDbMKyA+tdvAKaeDQHHXurDRN5vjfth3M
+ ge4oy8fePblvGi2V41vSOGY1EZpVpMmY8jTHpGOhil/+fUUT2s6GCUBfW7BsERitM80Czs5xWWV
+ N7nLCNCPoON8+8U=
+X-Received: by 2002:a05:600c:3f12:b0:4a4:7a8d:c436 with SMTP id
+ 5b1f17b1804b1-4a47a8dc6e6mr198080375e9.11.1793130755030; 
+ Tue, 27 Oct 2026 12:52:35 -0700 (PDT)
 Received: from [127.0.1.1] (95-24-99-141.broadband.corbina.ru. [95.24.99.141])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebcb846sm24746368f8f.25.2026.10.27.12.52.25
+ ffacd0b85a97d-48e3ebcb846sm24746368f8f.25.2026.10.27.12.52.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 12:52:26 -0700 (PDT)
+ Tue, 27 Oct 2026 12:52:34 -0700 (PDT)
 From: Timur Maksimov <gessingate@gmail.com>
-Date: Tue, 27 Oct 2026 22:50:42 +0300
-Subject: [PATCH v2 1/6] hw/i2c: add dummy device
+Date: Tue, 27 Oct 2026 22:50:47 +0300
+Subject: [PATCH v2 6/6] tests/qtest: Add cases for 32-bit Aspeed I2C
+ controllers
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
+Message-Id: <20261027-aspeed-i2c-nonpkt-fix-v2-6-07deed1dff60@gmail.com>
 References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
 In-Reply-To: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,15 +85,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
  Laurent Vivier <lvivier@redhat.com>, Timur Maksimov <gessingate@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1793130744; l=6354;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793130744; l=29583;
  i=gessingate@gmail.com; s=20261022; h=from:subject:message-id;
- bh=sEriCp2nS9mi03/fVztQOGEzJ6I4qYWCuM/TX7A3vm8=;
- b=diB2p7/QGG9sXsVTHSSJyqrabth7keLSd8LeUz9euUpTagc89sf7RnIBDhlscEJw1A59YBnVy
- CPeBp52KjC3BJt8M82xp0nWtHLphUJhFj7Pr7CRIP2ap8wcha00JWUf
+ bh=+hAkXTwOmWPfcYD0V1X5BUlnOQ+1Ekirs+vRjX7A2pg=;
+ b=jhPBP6/hM2kfa3zSrvaFSE5P3Iykr4xdg8g0LLN97hOy3i3PojA5VL2aT7RFYmLP3kAII3om2
+ gunoNAIOwHHC4aw/0lC4ujaaTSL11pr/SNMUvOXOWoinBjJdlt0gUrx
 X-Developer-Key: i=gessingate@gmail.com; a=ed25519;
  pk=xF4NKIzSbKMdte17nQ66S/q9m/A2gu6GiEWc8ZnyJmo=
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=gessingate@gmail.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=gessingate@gmail.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,41 +120,22 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Simple I2C device with QOM properties to access
-transmit and receive buffers.
-Can be used for testing or prototyping.
+Test all supported register and transfer modes.
 
 Signed-off-by: Timur Maksimov <gessingate@gmail.com>
 ---
- hw/i2c/Kconfig            |   5 ++
- hw/i2c/i2c-dummy-device.c | 168 ++++++++++++++++++++++++++++++++++++++++++++++
- hw/i2c/meson.build        |   3 +-
- 3 files changed, 175 insertions(+), 1 deletion(-)
+ tests/qtest/aspeed_i2c-test.c | 836 ++++++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build       |   2 +
+ 2 files changed, 838 insertions(+)
 
-diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
-index 0766130b59..04912671db 100644
---- a/hw/i2c/Kconfig
-+++ b/hw/i2c/Kconfig
-@@ -6,6 +6,11 @@ config I2C_DEVICES
-     # to any board's i2c bus
-     bool
- 
-+config I2C_DUMMY_DEVICE
-+    bool
-+    default y if TEST_DEVICES
-+    depends on I2C
-+
- config SMBUS
-     bool
-     select I2C
-diff --git a/hw/i2c/i2c-dummy-device.c b/hw/i2c/i2c-dummy-device.c
+diff --git a/tests/qtest/aspeed_i2c-test.c b/tests/qtest/aspeed_i2c-test.c
 new file mode 100644
-index 0000000000..645525a572
+index 0000000000..7fb1debb56
 --- /dev/null
-+++ b/hw/i2c/i2c-dummy-device.c
-@@ -0,0 +1,168 @@
++++ b/tests/qtest/aspeed_i2c-test.c
+@@ -0,0 +1,836 @@
 +/*
-+ * QEMU I2C Dummy Device
++ * QTest testcase for Aspeed I2C controller
 + *
 + * Copyright (c) 2026 Timur Maksimov <gessingate@gmail.com>
 + *
@@ -161,182 +143,852 @@ index 0000000000..645525a572
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "hw/core/qdev-properties.h"
-+#include "migration/vmstate.h"
++#include "libqtest-single.h"
++#include "hw/i2c/aspeed_i2c.h"
 +
-+#define TYPE_I2C_DUMMY_DEVICE "i2c-dummy-device"
-+OBJECT_DECLARE_SIMPLE_TYPE(I2CDummyDeviceState, I2C_DUMMY_DEVICE)
++typedef enum TestAspeedI2CMode {
++    TEST_I2C_MODE_OLD,
++    TEST_I2C_MODE_NEW,
++    TEST_I2C_MODE_PKT,
++} TestAspeedI2CMode;
 +
-+#define I2C_DUMMY_ARRAY_SIZE 64
++typedef enum TestAspeedMachine {
++    TEST_MACHINE_AST2400,
++    TEST_MACHINE_AST2500,
++    TEST_MACHINE_AST2600,
++} TestAspeedMachine;
 +
-+struct I2CDummyDeviceState {
-+    I2CSlave parent_obj;
++typedef struct TestData {
++    const char *name;
++    TestAspeedMachine machine;
++    TestAspeedI2CMode mode;
++} TestData;
 +
-+    uint8_t tx[I2C_DUMMY_ARRAY_SIZE];
-+    uint8_t rx[I2C_DUMMY_ARRAY_SIZE];
++typedef struct TestFixture {
++    hwaddr base_addr;
++    hwaddr bus_offset;
++    int irq_no;
++    uint32_t pool_base;
++} TestFixture;
 +
-+    uint8_t tx_pos;
-+    uint8_t rx_pos;
-+    uint8_t event;
-+};
++static const uint8_t tx_data[] = {0x10, 0x11, 0x12};
++static const uint8_t rx_data[] = {0x30, 0x31, 0x32};
 +
-+static void i2c_dummy_device_reset(DeviceState *dev)
++#define DRAM_BASE      0x80000000
++#define DRAM_TX_OFFSET 0x1000
++#define DRAM_RX_OFFSET 0x2000
++
++static void aspeed_i2c_write(TestFixture *f, uint32_t offset, uint32_t val)
 +{
-+    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(dev);
-+
-+    s->tx_pos = 0;
-+    s->rx_pos = 0;
-+    s->event = I2C_FINISH;
-+    memset(s->tx, 0, sizeof s->tx);
-+    /* Don't reset rx as it is a readonly parameter for the model */
++    qtest_writel(global_qtest, f->base_addr + f->bus_offset + offset, val);
 +}
 +
-+static int i2c_dummy_device_event(I2CSlave *i2c, enum i2c_event event)
++static void aspeed_i2c_write_pool(TestFixture *f, uint32_t offset, uint8_t val)
 +{
-+    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
++    qtest_writeb(global_qtest, f->base_addr + f->pool_base + offset, val);
++}
 +
-+    switch (event) {
-+    case I2C_START_SEND:
-+        s->tx_pos = 0;
++static void aspeed_i2c_write_dma(TestFixture *f, uint32_t offset, uint8_t val)
++{
++    qtest_writeb(global_qtest, DRAM_BASE + offset, val);
++}
++
++static uint32_t aspeed_i2c_read(TestFixture *f, uint32_t offset)
++{
++    return qtest_readl(global_qtest, f->base_addr + f->bus_offset + offset);
++}
++
++static uint8_t aspeed_i2c_read_pool(TestFixture *f, uint32_t offset)
++{
++    return qtest_readb(global_qtest, f->base_addr + f->pool_base + offset);
++}
++
++static uint8_t aspeed_i2c_read_dma(TestFixture *f, uint32_t offset)
++{
++    return qtest_readb(global_qtest, DRAM_BASE + offset);
++}
++
++static bool aspeed_i2c_irq(TestFixture *f)
++{
++    return qtest_get_irq(global_qtest, f->irq_no);
++}
++
++static uint32_t aspeed_i2c_ctrl_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_FUN_CTRL;
++    } else {
++        return A_I2CC_FUN_CTRL;
++    }
++}
++
++static uint32_t aspeed_i2c_cmd_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_CMD;
++    } else {
++        return A_I2CM_CMD;
++    }
++}
++
++
++static uint32_t aspeed_i2c_intr_ctrl_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_INTR_CTRL;
++    } else {
++        return A_I2CM_INTR_CTRL;
++    }
++}
++
++static uint32_t aspeed_i2c_intr_sts_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_INTR_STS;
++    } else {
++        return A_I2CM_INTR_STS;
++    }
++}
++
++static uint32_t aspeed_i2c_pool_ctrl_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_POOL_CTRL;
++    } else {
++        return A_I2CC_POOL_CTRL;
++    }
++}
++
++static uint32_t aspeed_i2c_byte_buf_offset(const TestData *td)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        return A_I2CD_BYTE_BUF;
++    } else {
++        return A_I2CC_MS_TXRX_BYTE_BUF;
++    }
++}
++
++static void aspeed_i2c_write_slave_addr(TestFixture *f, const TestData *td,
++                                        uint8_t addr)
++{
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        aspeed_i2c_write(f, A_I2CD_DEV_ADDR, addr);
++    } else {
++        aspeed_i2c_write(f, A_I2CS_DEV_ADDR, addr);
++    }
++}
++
++static void aspeed_i2c_write_dma_addr(TestFixture *f, const TestData *td,
++                                     uint32_t val, bool rx)
++{
++    uint32_t offset;
++
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        offset = A_I2CD_DMA_ADDR;
++    } else {
++        offset = rx ? A_I2CM_DMA_RX_ADDR : A_I2CM_DMA_TX_ADDR;
++    }
++    aspeed_i2c_write(f, offset, val);
++}
++
++static void aspeed_i2c_write_dma_len(TestFixture *f, const TestData *td,
++                                     uint16_t val, bool rx)
++{
++    uint32_t reg;
++
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        aspeed_i2c_write(f, A_I2CD_DMA_LEN, val + 1);
++        return;
++    }
++
++    if (rx) {
++        reg = FIELD_DP32(0, I2CM_DMA_LEN, RX_BUF_LEN_W1T, 1);
++        reg = FIELD_DP32(reg, I2CM_DMA_LEN, RX_BUF_LEN, val);
++    } else {
++        reg = FIELD_DP32(0, I2CM_DMA_LEN, TX_BUF_LEN_W1T, 1);
++        reg = FIELD_DP32(reg, I2CM_DMA_LEN, TX_BUF_LEN, val);
++    }
++    aspeed_i2c_write(f, A_I2CM_DMA_LEN, reg);
++}
++
++static uint8_t aspeed_i2c_get_txstate(TestFixture *f, const TestData *td)
++{
++    uint32_t offset;
++
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        offset = A_I2CD_CMD;
++    } else {
++        offset = A_I2CC_MS_TXRX_BYTE_BUF;
++    }
++    return SHARED_FIELD_EX32(aspeed_i2c_read(f, offset), TX_STATE);
++}
++
++static bool aspeed_i2c_get_busy_sts(TestFixture *f, const TestData *td)
++{
++    uint32_t offset;
++
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        offset = A_I2CD_CMD;
++    } else {
++        offset = A_I2CC_MS_TXRX_BYTE_BUF;
++    }
++    return SHARED_FIELD_EX32(aspeed_i2c_read(f, offset), BUS_BUSY_STS);
++}
++
++/* Write a data byte in a byte mode transfer */
++static
++void aspeed_i2c_write_byte(TestFixture *f, const TestData *td, uint8_t val)
++{
++    aspeed_i2c_write(f, aspeed_i2c_byte_buf_offset(td),
++                     SHARED_FIELD_DP32(0, TX_BUF, val));
++}
++
++/* Read a data byte in a byte mode transfer */
++static uint8_t aspeed_i2c_read_byte(TestFixture *f, const TestData *td)
++{
++    uint32_t reg;
++
++    reg = aspeed_i2c_read(f, aspeed_i2c_byte_buf_offset(td));
++    return SHARED_FIELD_EX32(reg, RX_BUF);
++}
++
++static void aspeed_i2c_send_start(TestFixture *f, const TestData *td,
++                                  uint32_t cmd)
++{
++    cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++}
++
++static uint8_t qom_i2c_dummy_get_uint8(const char *prop)
++{
++    QDict *r;
++    uint8_t u;
++
++    r = qtest_qmp(global_qtest,
++                  "{ 'execute': 'qom-get', 'arguments': "
++                  "{ 'path': 'i2c-dummy', 'property': %s } }",
++                  prop);
++    u = qdict_get_uint(r, "return");
++    qobject_unref(r);
++    return u;
++}
++
++static void qom_i2c_dummy_set_uint8(const char *prop, uint8_t data)
++{
++    QDict *r;
++
++    r = qtest_qmp(global_qtest,
++                  "{ 'execute': 'qom-set', 'arguments': "
++                  "{ 'path': 'i2c-dummy', 'property': %s, 'value': %d } }",
++                  prop, data);
++    qobject_unref(r);
++}
++
++static void qom_i2c_dummy_set_rx(uint8_t idx, uint8_t data)
++{
++    g_autofree char *prop = g_strdup_printf("rx[%d]", idx);
++
++    qom_i2c_dummy_set_uint8(prop, data);
++}
++
++static uint8_t qom_i2c_dummy_get_tx(int8_t idx)
++{
++    g_autofree char *prop = g_strdup_printf("tx[%d]", idx);
++
++    return qom_i2c_dummy_get_uint8(prop);
++}
++
++#define I2C_ADDR_NACK  0x10
++#define I2C_ADDR_DUMMY 0x20
++#define I2C_ADDR_ECHO  0x30
++#define I2C_ADDR_SLAVE 0x40
++
++#define CHECK_I2C_IDLE(f, td) do {                                          \
++    g_assert_cmphex(aspeed_i2c_get_txstate(f, td), ==, I2CD_IDLE);          \
++    g_assert_false(aspeed_i2c_get_busy_sts(f, td));                         \
++    g_assert_cmphex(aspeed_i2c_read(f, aspeed_i2c_intr_sts_offset(td)), ==, \
++                    0);                                                     \
++    g_assert_false(aspeed_i2c_irq(f));                                      \
++} while (0)
++
++#define CHECK_I2C_INTR(f, td, reg) do {                                     \
++    g_assert_true(aspeed_i2c_irq(f));                                       \
++    g_assert_cmphex(aspeed_i2c_read(f, aspeed_i2c_intr_sts_offset(td)), ==, \
++                    reg);                                                   \
++} while (0)
++
++#define CHECK_I2C_BUS_ACTIVE(f, td) do {                                    \
++    g_assert_cmphex(aspeed_i2c_get_txstate(f, td), ==, I2CD_MACTIVE);       \
++    g_assert_true(aspeed_i2c_get_busy_sts(f, td));                          \
++} while (0)
++
++#define CHECK_I2C_ACK(f, td) do {                                           \
++    g_assert_cmphex(aspeed_i2c_get_txstate(f, td), ==, I2CD_MACTIVE);       \
++    g_assert_true(aspeed_i2c_get_busy_sts(f, td));                          \
++    CLEAR_I2C_INTR(f, td, SHARED_FIELD_DP32(0, TX_ACK, 1));                 \
++} while (0)
++
++#define CLEAR_I2C_INTR(f, td, reg) do {                                     \
++    CHECK_I2C_INTR(f, td, reg);                                             \
++    aspeed_i2c_write(f, aspeed_i2c_intr_sts_offset(td), reg);               \
++    g_assert_cmphex(aspeed_i2c_read(f, aspeed_i2c_intr_sts_offset(td)), ==, \
++                    0);                                                     \
++} while (0)
++
++#define SEND_I2C_STOP(f, td) do {                                           \
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td),                          \
++                     SHARED_FIELD_DP32(0, M_STOP_CMD, 1));                  \
++    CLEAR_I2C_INTR(f, td, SHARED_FIELD_DP32(0, NORMAL_STOP, 1));            \
++    CHECK_I2C_IDLE(f, td);                                                  \
++} while (0)
++
++#define CHECK_I2C_DUMMY_DEVICE() do {                                       \
++     for (uint8_t i = 0; i < ARRAY_SIZE(tx_data); i++) {                    \
++        g_assert_cmphex(qom_i2c_dummy_get_tx(i), ==, tx_data[i]);           \
++    }                                                                       \
++    g_assert_cmphex(qom_i2c_dummy_get_uint8("tx-pos"), ==,                  \
++                    ARRAY_SIZE(tx_data));                                   \
++    g_assert_cmphex(qom_i2c_dummy_get_uint8("rx-pos"), ==,                  \
++                    ARRAY_SIZE(rx_data));                                   \
++} while (0)
++
++static void aspeed_i2c_init(TestFixture *f, const TestData *td)
++{
++    uint32_t reg;
++
++    qtest_qmp(global_qtest, "{ 'execute': 'system_reset' }");
++
++    aspeed_i2c_write_slave_addr(f, td, I2C_ADDR_SLAVE);
++
++    reg = FIELD_DP32(0, I2C_CTRL_GLOBAL, SRAM_EN, 1);
++    if (td->mode != TEST_I2C_MODE_OLD) {
++        reg = FIELD_DP32(reg, I2C_CTRL_GLOBAL, REG_MODE, 1);
++    }
++    qtest_writel(global_qtest, f->base_addr + A_I2C_CTRL_GLOBAL, reg);
++
++    reg = SHARED_FIELD_DP32(0, MASTER_EN, 1);
++    reg = SHARED_FIELD_DP32(reg, SLAVE_EN, 1);
++    aspeed_i2c_write(f, aspeed_i2c_ctrl_offset(td), reg);
++
++    /* Enable all interrupts */
++    reg = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    reg = SHARED_FIELD_DP32(reg, TX_NAK, 1);
++    reg = SHARED_FIELD_DP32(reg, RX_DONE, 1);
++    reg = SHARED_FIELD_DP32(reg, ARBIT_LOSS, 1);
++    reg = SHARED_FIELD_DP32(reg, NORMAL_STOP, 1);
++    reg = SHARED_FIELD_DP32(reg, ABNORMAL, 1);
++    if (td->mode != TEST_I2C_MODE_OLD) {
++        reg = FIELD_DP32(reg, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++        reg = FIELD_DP32(reg, I2CM_INTR_STS, PKT_CMD_FAIL, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_intr_ctrl_offset(td), reg);
++
++    for (uint8_t i = 0; i < ARRAY_SIZE(rx_data); i++) {
++        qom_i2c_dummy_set_rx(i, rx_data[i]);
++    }
++}
++
++static uint32_t aspeed_i2c_pkt_set_addr_cmd(const TestData *td, uint8_t addr)
++{
++    uint32_t cmd;
++
++    cmd = FIELD_DP32(0, I2CM_CMD, PKT_OP_EN, 1);
++    cmd = FIELD_DP32(cmd, I2CM_CMD, PKT_DEV_ADDR, addr);
++    return cmd;
++}
++
++static
++uint32_t aspeed_i2c_byte_set_addr_cmd(TestFixture *f, const TestData *td,
++                                      uint8_t addr, bool is_recv)
++{
++    if (td->mode == TEST_I2C_MODE_PKT) {
++        return aspeed_i2c_pkt_set_addr_cmd(td, addr);
++    } else {
++        aspeed_i2c_write_byte(f, td, addr << 1 | (is_recv ? 1 : 0));
++        return SHARED_FIELD_DP32(0, M_TX_CMD, 1);
++    }
++}
++
++static
++uint32_t aspeed_i2c_buf_set_addr_cmd(TestFixture *f, const TestData *td,
++                                     uint8_t addr, bool is_recv)
++{
++    if (td->mode == TEST_I2C_MODE_PKT) {
++        return aspeed_i2c_pkt_set_addr_cmd(td, addr);
++    } else {
++        aspeed_i2c_write_pool(f, 0, addr << 1 | (is_recv ? 1 : 0));
++        return SHARED_FIELD_DP32(0, M_TX_CMD, 1);
++    }
++}
++
++static
++uint32_t aspeed_i2c_dma_set_addr_cmd(TestFixture *f, const TestData *td,
++                                     uint8_t addr, bool is_recv)
++{
++    if (td->mode == TEST_I2C_MODE_PKT) {
++        return aspeed_i2c_pkt_set_addr_cmd(td, addr);
++    } else {
++        aspeed_i2c_write_dma(f, DRAM_TX_OFFSET, addr << 1 | (is_recv ? 1 : 0));
++        return SHARED_FIELD_DP32(0, M_TX_CMD, 1);
++    }
++}
++
++
++static uint32_t aspeed_i2c_send_addr_status(TestFixture *f, const TestData *td)
++{
++    uint32_t sts;
++
++    if (td->mode == TEST_I2C_MODE_PKT) {
++        sts = FIELD_DP32(0, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    } else {
++        sts = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    }
++    return sts;
++}
++
++/*
++ * Send an address byte to a non existing device.
++ * The TX_NAK interrupt should be raised.
++ */
++static void test_nack(TestFixture *f, gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    uint32_t sts, cmd;
++
++    cmd = aspeed_i2c_byte_set_addr_cmd(f, td, I2C_ADDR_NACK, false);
++    aspeed_i2c_send_start(f, td, cmd);
++
++    g_assert_cmphex(aspeed_i2c_get_txstate(f, td), ==, I2CD_MSTART);
++    g_assert_false(aspeed_i2c_get_busy_sts(f, td));
++    sts = SHARED_FIELD_DP32(0, TX_NAK, 1);
++    if (td->mode == TEST_I2C_MODE_PKT) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_FAIL, 1);
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    CLEAR_I2C_INTR(f, td, sts);
++
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td),
++                     SHARED_FIELD_DP32(0, M_STOP_CMD, 1));
++    CLEAR_I2C_INTR(f, td, SHARED_FIELD_DP32(0, NORMAL_STOP, 1));
++    CHECK_I2C_IDLE(f, td);
++    qtest_hmp(global_qtest, "system_reset");
++}
++
++
++static void test_dummy_byte(TestFixture *f, gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    uint32_t cmd, sts;
++    bool pkt_mode = td->mode == TEST_I2C_MODE_PKT;
++
++    /* Write device address (Write) */
++    cmd = aspeed_i2c_byte_set_addr_cmd(f, td, I2C_ADDR_DUMMY, false);
++    aspeed_i2c_send_start(f, td, cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, aspeed_i2c_send_addr_status(f, td));
++
++    /* Write data */
++    sts = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++        cmd = aspeed_i2c_pkt_set_addr_cmd(td, I2C_ADDR_DUMMY);
++    } else {
++        cmd = 0;
++    }
++    cmd = SHARED_FIELD_DP32(cmd, M_TX_CMD, 1);
++    for (uint8_t i = 0; i < ARRAY_SIZE(tx_data); i++) {
++        aspeed_i2c_write_byte(f, td, tx_data[i]);
++        aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++        CHECK_I2C_BUS_ACTIVE(f, td);
++        CLEAR_I2C_INTR(f, td, sts);
++    }
++
++    /* Read data */
++    cmd = aspeed_i2c_byte_set_addr_cmd(f, td, I2C_ADDR_DUMMY, true);
++    cmd = SHARED_FIELD_DP32(cmd, M_RX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    sts = aspeed_i2c_send_addr_status(f, td);
++
++    for (uint8_t i = 0; i < ARRAY_SIZE(rx_data); i++) {
++        cmd = SHARED_FIELD_DP32(cmd, M_RX_CMD, 1);
++        if (i == ARRAY_SIZE(rx_data) - 1) {
++            cmd = SHARED_FIELD_DP32(cmd, M_S_RX_CMD_LAST, 1);
++        }
++        aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++        CHECK_I2C_BUS_ACTIVE(f, td);
++        sts = SHARED_FIELD_DP32(sts, RX_DONE, 1);
++        if (pkt_mode) {
++            sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++            cmd = aspeed_i2c_pkt_set_addr_cmd(td, I2C_ADDR_DUMMY);
++        } else {
++            cmd = 0;
++        }
++        CLEAR_I2C_INTR(f, td, sts);
++        g_assert_cmphex(aspeed_i2c_read_byte(f, td), ==, rx_data[i]);
++        sts = 0;
++    }
++
++    SEND_I2C_STOP(f, td);
++    CHECK_I2C_DUMMY_DEVICE();
++    qtest_hmp(global_qtest, "system_reset");
++}
++
++static void test_dummy_buf(TestFixture *f, gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    uint32_t cmd, sts, pool_ctrl;
++    bool pkt_mode = td->mode == TEST_I2C_MODE_PKT;
++
++    /* Write data with device address */
++    for (uint8_t i = 0; i < ARRAY_SIZE(tx_data); i++) {
++        aspeed_i2c_write_pool(f, i + (pkt_mode ? 0 : 1), tx_data[i]);
++    }
++    pool_ctrl = SHARED_FIELD_DP32(0, TX_COUNT,
++                                  ARRAY_SIZE(tx_data) - (pkt_mode ? 1 : 0));
++    aspeed_i2c_write(f, aspeed_i2c_pool_ctrl_offset(td), pool_ctrl);
++    cmd = aspeed_i2c_buf_set_addr_cmd(f, td, I2C_ADDR_DUMMY, false);
++    cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_TX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, TX_BUFF_EN, 1);
++    sts = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, sts);
++
++    /* Write device address (Read) in non packet mde */
++    if (pkt_mode) {
++        cmd = aspeed_i2c_pkt_set_addr_cmd(td, I2C_ADDR_DUMMY);
++        cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    } else {
++        aspeed_i2c_write_byte(f, td, (I2C_ADDR_DUMMY << 1) | 1);
++        aspeed_i2c_send_start(f, td, SHARED_FIELD_DP32(0, M_TX_CMD, 1));
++        CHECK_I2C_BUS_ACTIVE(f, td);
++        CLEAR_I2C_INTR(f, td, aspeed_i2c_send_addr_status(f, td));
++        cmd = 0;
++    }
++
++    /* Read data */
++    pool_ctrl = SHARED_FIELD_DP32(0, RX_SIZE,
++                                  ARRAY_SIZE(rx_data) - 1);
++    aspeed_i2c_write(f, aspeed_i2c_pool_ctrl_offset(td), pool_ctrl);
++    cmd = SHARED_FIELD_DP32(cmd, M_RX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_S_RX_CMD_LAST, 1);
++    cmd = SHARED_FIELD_DP32(cmd, RX_BUFF_EN, 1);
++    sts = SHARED_FIELD_DP32(0, RX_DONE, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, sts);
++    for (uint8_t i = 0; i < ARRAY_SIZE(rx_data); i++) {
++        g_assert_cmphex(aspeed_i2c_read_pool(f, i), ==, rx_data[i]);
++    }
++
++    SEND_I2C_STOP(f, td);
++    CHECK_I2C_DUMMY_DEVICE();
++    qtest_hmp(global_qtest, "system_reset");
++}
++
++static void test_dummy_dma(TestFixture *f, gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    uint32_t cmd, sts;
++    bool pkt_mode = td->mode == TEST_I2C_MODE_PKT;
++
++    /* Write data with device address*/
++    for (uint8_t i = 0; i < ARRAY_SIZE(tx_data); i++) {
++        aspeed_i2c_write_dma(f, DRAM_TX_OFFSET + (pkt_mode ? 0 : 1) + i,
++                             tx_data[i]);
++    }
++    aspeed_i2c_write_dma_addr(f, td, DRAM_TX_OFFSET, false);
++    aspeed_i2c_write_dma_len(f, td,
++                             ARRAY_SIZE(tx_data) - (pkt_mode ? 1 : 0), false);
++    cmd = aspeed_i2c_dma_set_addr_cmd(f, td, I2C_ADDR_DUMMY, false);
++
++    cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_TX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, TX_DMA_EN, 1);
++    sts = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, sts);
++
++    /* Write device address (Read) in non packet mode */
++    if (pkt_mode) {
++        cmd = aspeed_i2c_pkt_set_addr_cmd(td, I2C_ADDR_DUMMY);
++        cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    } else {
++        aspeed_i2c_write_byte(f, td, (I2C_ADDR_DUMMY << 1) | 1);
++        aspeed_i2c_send_start(f, td, SHARED_FIELD_DP32(0, M_TX_CMD, 1));
++        CHECK_I2C_BUS_ACTIVE(f, td);
++        CLEAR_I2C_INTR(f, td, aspeed_i2c_send_addr_status(f, td));
++        cmd = 0;
++    }
++
++    /* Read data */
++    aspeed_i2c_write_dma_addr(f, td, DRAM_RX_OFFSET, true);
++    aspeed_i2c_write_dma_len(f, td, ARRAY_SIZE(rx_data) - 1, true);
++    cmd = SHARED_FIELD_DP32(cmd, M_RX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_S_RX_CMD_LAST, 1);
++    cmd = SHARED_FIELD_DP32(cmd, RX_DMA_EN, 1);
++    sts = SHARED_FIELD_DP32(0, RX_DONE, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, sts);
++    for (uint8_t i = 0; i < ARRAY_SIZE(rx_data); i++) {
++        g_assert_cmphex(aspeed_i2c_read_dma(f, DRAM_RX_OFFSET + i), ==,
++                        rx_data[i]);
++    }
++
++    SEND_I2C_STOP(f, td);
++    CHECK_I2C_DUMMY_DEVICE();
++    qtest_hmp(global_qtest, "system_reset");
++}
++
++static void test_slave(TestFixture *f, gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    uint32_t cmd, sts, tmp;
++    bool pkt_mode = td->mode == TEST_I2C_MODE_PKT;
++    uint8_t offset = pkt_mode ? 0 : 1;
++
++    aspeed_i2c_write_pool(f, offset + 0, I2C_ADDR_SLAVE);
++    aspeed_i2c_write_pool(f, offset + 1, tx_data[0]);
++    aspeed_i2c_write_pool(f, offset + 2, tx_data[1]);
++
++    tmp = SHARED_FIELD_DP32(0, TX_COUNT, pkt_mode ? 2 : 3);
++    aspeed_i2c_write(f, aspeed_i2c_pool_ctrl_offset(td), tmp);
++
++    cmd = aspeed_i2c_buf_set_addr_cmd(f, td, I2C_ADDR_ECHO, false);
++    cmd = SHARED_FIELD_DP32(cmd, M_START_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, M_TX_CMD, 1);
++    cmd = SHARED_FIELD_DP32(cmd, TX_BUFF_EN, 1);
++    sts = SHARED_FIELD_DP32(0, TX_ACK, 1);
++    if (pkt_mode) {
++        sts = FIELD_DP32(sts, I2CM_INTR_STS, PKT_CMD_DONE, 1);
++    }
++    aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td), cmd);
++    CHECK_I2C_BUS_ACTIVE(f, td);
++    CLEAR_I2C_INTR(f, td, sts);
++
++    /* Send stop and handle i2c-echo response as a slave */
++    if (td->mode == TEST_I2C_MODE_OLD) {
++        aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td),
++                        SHARED_FIELD_DP32(0, M_STOP_CMD, 1));
++        clock_step(1);
++        g_assert_cmphex(aspeed_i2c_read_byte(f, td), ==, I2C_ADDR_SLAVE << 1);
++        sts = SHARED_FIELD_DP32(0, NORMAL_STOP, 1);
++        sts = SHARED_FIELD_DP32(sts, RX_DONE, 1);
++        sts = FIELD_DP32(sts, I2CD_INTR_STS, SLAVE_ADDR_RX_MATCH, 1);
++        CHECK_I2C_INTR(f, td, sts);
++        aspeed_i2c_write(f, aspeed_i2c_intr_sts_offset(td), sts);
++
++        g_assert_cmphex(aspeed_i2c_read_byte(f, td), ==, tx_data[0]);
++        sts = SHARED_FIELD_DP32(0, RX_DONE, 1);
++        CHECK_I2C_INTR(f, td, sts);
++        aspeed_i2c_write(f, aspeed_i2c_intr_sts_offset(td), sts);
++
++        g_assert_cmphex(aspeed_i2c_read_byte(f, td), ==, tx_data[1]);
++        sts = SHARED_FIELD_DP32(0, RX_DONE, 1);
++        CHECK_I2C_INTR(f, td, sts);
++        aspeed_i2c_write(f, aspeed_i2c_intr_sts_offset(td), sts);
++    } else {
++        aspeed_i2c_write(f, A_I2CS_DMA_RX_ADDR, DRAM_RX_OFFSET);
++        tmp = SHARED_FIELD_DP32(0, RX_DMA_EN, 1);
++        aspeed_i2c_write(f, A_I2CS_CMD, tmp);
++
++        aspeed_i2c_write(f, aspeed_i2c_cmd_offset(td),
++                        SHARED_FIELD_DP32(0, M_STOP_CMD, 1));
++        clock_step(1);
++
++        tmp = FIELD_DP32(0, I2CS_DMA_LEN_STS, RX_LEN, 2);
++        g_assert_cmphex(aspeed_i2c_read(f, A_I2CS_DMA_LEN_STS), ==, tmp);
++        for (uint8_t i = 0; i < 2; i++) {
++            g_assert_cmphex(aspeed_i2c_read_dma(f, DRAM_RX_OFFSET + i), ==,
++                            tx_data[i]);
++        }
++    }
++
++    sts = SHARED_FIELD_DP32(0, NORMAL_STOP, 1);
++    CLEAR_I2C_INTR(f, td, sts);
++    CHECK_I2C_IDLE(f, td);
++
++    qtest_hmp(global_qtest, "system_reset");
++}
++
++static void aspeed_i2c_init_fixture(TestFixture *fixture, const TestData *td)
++{
++    switch (td->machine) {
++    case TEST_MACHINE_AST2400:
++        fixture->base_addr = 0x1E78A000;
++        fixture->bus_offset = 0x40;
++        fixture->irq_no = 12;
++        fixture->pool_base = 0x800;
 +        break;
-+
-+    case I2C_START_RECV:
-+        s->rx_pos = 0;
++    case TEST_MACHINE_AST2500:
++        fixture->base_addr = 0x1E78A000;
++        fixture->bus_offset = 0x40;
++        fixture->irq_no = 12;
++        fixture->pool_base = 0x200;
 +        break;
-+
++    case TEST_MACHINE_AST2600:
++        fixture->base_addr = 0x1E78A000;
++        fixture->bus_offset = 0x80;
++        fixture->irq_no = 110;
++        fixture->pool_base = 0xC00;
++        break;
 +    default:
++        return;
++    }
++}
++
++static void aspeed_i2c_init_test(TestFixture *fixture, const TestData *td)
++{
++    aspeed_i2c_init(fixture, td);
++    CHECK_I2C_IDLE(fixture, td);
++}
++
++static void aspeed_i2c_init_new_machine(TestFixture *fixture,
++                                        gconstpointer p_data)
++{
++    const TestData *td = (const TestData *)p_data;
++    const char *machine;
++    const char *irq_dev;
++
++    aspeed_i2c_init_fixture(fixture, td);
++
++    if (global_qtest) {
++        qtest_quit(global_qtest);
++    }
++
++    switch (td->machine) {
++    case TEST_MACHINE_AST2400:
++        machine = "palmetto-bmc";
++        irq_dev = "/machine/soc/vic";
 +        break;
++    case TEST_MACHINE_AST2500:
++        machine = "ast2500-evb";
++        irq_dev = "/machine/soc/vic";
++        break;
++    case TEST_MACHINE_AST2600:
++        machine = "ast2600-evb";
++        irq_dev = "/machine/soc/a7mpcore/gic";
++        break;
++    default:
++        g_test_fail();
++        return;
 +    }
 +
-+    s->event = event;
-+    return 0;
++    global_qtest = qtest_initf(
++        "-machine %s -nographic "
++        "-device i2c-echo,id=i2c-echo,bus=aspeed.i2c.bus.0,address=%d "
++        "-device i2c-dummy-device,id=i2c-dummy,bus=aspeed.i2c.bus.0,address=%d",
++        machine, I2C_ADDR_ECHO, I2C_ADDR_DUMMY);
++    qtest_irq_intercept_in(global_qtest, irq_dev);
++
++    aspeed_i2c_init_test(fixture, td);
 +}
 +
-+static int i2c_dummy_device_send(I2CSlave *i2c, uint8_t data)
++static void aspeed_i2c_init_machine(TestFixture *fixture,
++                                    gconstpointer p_data)
 +{
-+    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
++    const TestData *td = (const TestData *)p_data;
 +
-+    if (s->tx_pos >= I2C_DUMMY_ARRAY_SIZE) {
-+        /*
-+         * The TX buffer is full. NACK the byte.
-+         */
-+        return 1;
-+    }
-+
-+    if (s->event == I2C_START_SEND) {
-+        s->tx[s->tx_pos++] = data;
-+    }
-+
-+    return 0;
++    aspeed_i2c_init_fixture(fixture, td);
++    aspeed_i2c_init_test(fixture, td);
 +}
 +
-+static uint8_t i2c_dummy_device_recv(I2CSlave *i2c)
++static void add_test(const TestData *td, const char *name,
++                     void (*func)(TestFixture *, const void *),
++                     bool setup)
 +{
-+    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
++    g_autofree char *test_name;
 +
-+    if (s->rx_pos >= I2C_DUMMY_ARRAY_SIZE || s->event != I2C_START_RECV) {
-+        /*
-+         * There is no more data available.
-+         */
-+        return 0xff;
-+    }
++    test_name = g_strdup_printf("%s/%s", td->name, name);
 +
-+    return s->rx[s->rx_pos++];
++    qtest_add(test_name, TestFixture, td,
++              setup ? aspeed_i2c_init_new_machine : aspeed_i2c_init_machine,
++              func, NULL);
 +}
 +
-+static void i2c_dummy_device_init(Object *obj)
-+{
-+    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(obj);
++#define ADD_TEST(td, test, new) add_test(td, #test, test_##test, new)
 +
-+    for (int i = 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
-+        g_autofree char *name = g_strdup_printf("tx[%d]", i);
-+
-+        object_property_add_uint8_ptr(
-+            obj, name, &s->tx[i],
-+            OBJ_PROP_FLAG_READWRITE);
-+    }
-+
-+    for (int i = 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
-+        g_autofree char *name = g_strdup_printf("rx[%d]", i);
-+
-+        object_property_add_uint8_ptr(
-+            obj, name, &s->rx[i],
-+            OBJ_PROP_FLAG_READWRITE);
-+    }
-+
-+    object_property_add_uint8_ptr(
-+            obj, "tx-pos", &s->tx_pos,
-+            OBJ_PROP_FLAG_READWRITE);
-+    object_property_add_uint8_ptr(
-+            obj, "rx-pos", &s->rx_pos,
-+            OBJ_PROP_FLAG_READWRITE);
-+}
-+
-+static const VMStateDescription vmstate_i2c_dummy_device = {
-+    .name = TYPE_I2C_DUMMY_DEVICE,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_I2C_SLAVE(parent_obj, I2CDummyDeviceState),
-+
-+        VMSTATE_UINT8_ARRAY(tx, I2CDummyDeviceState,
-+                            I2C_DUMMY_ARRAY_SIZE),
-+
-+        VMSTATE_UINT8_ARRAY(rx, I2CDummyDeviceState,
-+                            I2C_DUMMY_ARRAY_SIZE),
-+
-+        VMSTATE_UINT8(tx_pos, I2CDummyDeviceState),
-+        VMSTATE_UINT8(rx_pos, I2CDummyDeviceState),
-+        VMSTATE_UINT8(event, I2CDummyDeviceState),
-+
-+        VMSTATE_END_OF_LIST()
++static const TestData test_data[] = {
++    {
++        .name = "ast2400",
++        .machine = TEST_MACHINE_AST2400,
++    },
++    {
++        .name = "ast2500",
++        .machine = TEST_MACHINE_AST2500,
++    },
++    {
++        .name = "ast2600",
++        .machine = TEST_MACHINE_AST2600,
++    },
++    {
++        .name = "ast2600-new",
++        .machine = TEST_MACHINE_AST2600,
++        .mode = TEST_I2C_MODE_NEW,
++    },
++    {
++        .name = "ast2600-packet",
++        .machine = TEST_MACHINE_AST2600,
++        .mode = TEST_I2C_MODE_PKT,
 +    },
 +};
 +
-+static void i2c_dummy_device_class_init(ObjectClass *klass, const void *data)
++int main(int argc, char **argv)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    I2CSlaveClass *isc = I2C_SLAVE_CLASS(klass);
++    int ret;
++    bool setup;
 +
-+    device_class_set_legacy_reset(dc, i2c_dummy_device_reset);
++    g_test_init(&argc, &argv, NULL);
 +
-+    dc->vmsd = &vmstate_i2c_dummy_device;
-+
-+    isc->event = i2c_dummy_device_event;
-+    isc->send = i2c_dummy_device_send;
-+    isc->recv = i2c_dummy_device_recv;
-+}
-+
-+static const TypeInfo i2c_dummy_device_info[] = {
-+    {
-+        .name = TYPE_I2C_DUMMY_DEVICE,
-+        .parent = TYPE_I2C_SLAVE,
-+        .instance_size = sizeof(I2CDummyDeviceState),
-+        .instance_init = i2c_dummy_device_init,
-+        .class_init = i2c_dummy_device_class_init,
++    for (int i = 0; i < ARRAY_SIZE(test_data); i++) {
++        setup = i == 0 || test_data[i].machine != test_data[i - 1].machine;
++        ADD_TEST(&test_data[i], nack, setup);
++        ADD_TEST(&test_data[i], dummy_byte, false);
++        ADD_TEST(&test_data[i], dummy_buf, false);
++        if (test_data[i].machine != TEST_MACHINE_AST2400) {
++            ADD_TEST(&test_data[i], dummy_dma, false);
++        }
++        ADD_TEST(&test_data[i], slave, false);
 +    }
-+};
 +
-+DEFINE_TYPES(i2c_dummy_device_info)
-diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
-index 88aea35662..4695cbcd28 100644
---- a/hw/i2c/meson.build
-+++ b/hw/i2c/meson.build
-@@ -1,5 +1,5 @@
- i2c_ss = ss.source_set()
--i2c_ss.add(when: 'CONFIG_I2C', if_true: files('core.c'))
-+i2c_ss.add(when: 'CONFIG_I2C', if_true: files('core.c', 'i2c-dummy-device.c'))
- i2c_ss.add(when: 'CONFIG_SMBUS', if_true: files('smbus_slave.c', 'smbus_master.c'))
- i2c_ss.add(when: 'CONFIG_ACPI_SMBUS', if_true: files('pm_smbus.c'))
- i2c_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('smbus_ich9.c'))
-@@ -19,4 +19,5 @@ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
- i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
- i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
- i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
-+i2c_ss.add(when: 'CONFIG_I2C_DUMMY_DEVICE', if_true: files('i2c-dummy-device.c'))
- system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
++    ret = g_test_run();
++    qtest_quit(global_qtest);
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 46d4fc1d2b..c496b7c3a7 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -233,12 +233,14 @@ qtests_aspeed = \
+   ['aspeed-acry-test',
+    'aspeed_gpio-test',
+    'aspeed_hace-test',
++   'aspeed_i2c-test',
+    'aspeed-sbc-test',
+    'aspeed_scu-test',
+    'aspeed_smc-test']
+ qtests_aspeed64 = \
+   ['ast2700-gpio-test',
+    'ast2700-hace-test',
++   'aspeed_i2c-test',
+    'ast2700-sgpio-test',
+    'ast2700-smc-test']
+ 
 
 -- 
 2.53.0
