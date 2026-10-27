@@ -1,69 +1,69 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DF5606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46AF606A31F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=AMt5qbDe
+	dkim=pass (2048-bit key, unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20251104 header.b=Y4XOmMFV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLaGM-0007rw-SR; Tue, 27 Oct 2026 02:02:26 -0400
+	id 1xLaGy-0007wZ-8G; Tue, 27 Oct 2026 02:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3VD7gagoKCq8hiPcaTnYWjVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--stanleyjhu.bounces.google.com>)
- id 1xLaG3-0007pb-2A
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:03 -0400
-Received: from mail-pg1-x545.google.com ([2607:f8b0:4864:20::545])
+ <3XD7gagoKCrcpqXkibvgerdlldib.Zljnbjr-absbiklkdkr.lod@flex--stanleyjhu.bounces.google.com>)
+ id 1xLaGD-0007rZ-W1
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:15 -0400
+Received: from mail-pf1-x448.google.com ([2607:f8b0:4864:20::448])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3VD7gagoKCq8hiPcaTnYWjVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--stanleyjhu.bounces.google.com>)
- id 1xLaG0-00067X-EI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:02 -0400
-Received: by mail-pg1-x545.google.com with SMTP id
- 41be03b00d2f7-cd68b8579f2so1473324a12.3
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:01:58 -0700 (PDT)
+ <3XD7gagoKCrcpqXkibvgerdlldib.Zljnbjr-absbiklkdkr.lod@flex--stanleyjhu.bounces.google.com>)
+ id 1xLaG9-00068x-Uu
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:02:12 -0400
+Received: by mail-pf1-x448.google.com with SMTP id
+ d2e1a72fcca58-89ff475a0deso3127855b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1793080917; x=1793685717; darn=nongnu.org;
+ d=google.com; s=20251104; t=1793080925; x=1793685725; darn=nongnu.org;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=MvEx57NIAgJI0ijP3mUpfKJH9oHR1otTCVEVwZ8ExXE=;
- b=AMt5qbDeislEFSuMUpj9fgN9bOK7CXZ6+o0cSA7HoPAYBuufT05Cnas6vpGWpDPLIn
- rvCvVg6NDpcvp+KR+fdkdEWZ8aelMsOR9BSObqzHqWudD5iGKrIna4/ci3yYtv07qykp
- bAedDPE218qsp8ZKHyOSrJsjlz0d6E3YEWkpXFl9LNDkFCtsY4Xr1yiIYv+I3XMDOrkP
- vLDDvPEgiIXPRyWTxJQ13nrDabQmWfLFkoInef1zyFLjfrkAFIDowyHKSoD1q/RisgKZ
- 3mr7H84JoF4vbXdfh9Tkdk3BlvCkRbmvETYtWfvH3B1zdxVuz0kWpGmeKgyGoGAWUH4Y
- ERHA==
+ :content-type; bh=6vy9oe1+vFMGFNwMvDWhH9l5IpR7kofBbXkWGlg3dU4=;
+ b=Y4XOmMFVt+/ioGZ2rzXSEbTsVz81dhHhi3QGOz4bNbEP5o79ippzJlq3KbO+INojfo
+ vamObxfu909CFKwY+Tj4jCUtI47TofoO43amtsOzbz8r8Y/Hd3qhn8JUcLMQSINuVAX8
+ aqW2bhKKq1GH0LdLngKRX1oLVKlrW025u9PLhh/8u+2wYANR4HTElx1wRqDXr5zoZM2h
+ Fbxe6/b/I8LSGhU5dugPcDBFtx1z6E7VFQ/zqqZUWv8Csm6jLKADW0F1Hn8doX4J22uC
+ t5rfnI1yzyxf6mObmXB5Ey4PFWGNZ5Y1kTe/uyxJq7NxiEb+c6YFtseQW5ggz5QOtLhR
+ 1VTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793080917; x=1793685717;
+ d=1e100.net; s=20260707; t=1793080925; x=1793685725;
  h=content-type:cc:to:from:subject:message-id:references:mime-version
  :in-reply-to:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MvEx57NIAgJI0ijP3mUpfKJH9oHR1otTCVEVwZ8ExXE=;
- b=r6fdUKImZCM2FDHnZ7/xb1meG8MhLJCuOYXdUxgpAOhHM2Bu28nU7mxBnnYZotawYY
- 5+/J7+ktKabvSOmMG7mUEsOuwB/HWymJZiOVaOe6J4Wn2s0IAqfP3FBuAt0aM3uPqn6/
- a/27Y+S+TCbVIfa41gJXxWjMVNcflbYYuHW39XBGXMLYmPuAdkvgGrXzqerUGz6ddZfs
- 6k76Pcwr0XOCMeYDq5DqwbaLIOIMKcrXTKtVA0AN0hjUX+COvWOMZJ5EGyPyd1lOvc0x
- lEl2I4POJM8EhBvkXuuMPZZZCLCypuJrf0+ITPBgpwU6rIOtNNfLwdKVjthQhl1+8Icm
- 1RvA==
-X-Gm-Message-State: AFq9FYJUGvDmUXC3vbmNe4OTtJVxOFlfGJbdoeI6x7xTuHEKLbWV/VZy
- J4L7WP5ko3CFEeLhuWR8h/f1z79nmVsbmNQo23DYKeHfrf+AtvEU2sClFiakHCRq4JQ1Ez7FBh4
- TgJUQTU318kxrnK3Arn+7AQ==
-X-Received: from pfblc1.prod.google.com ([2002:a05:6a00:4f41:b0:89e:65fd:e92])
+ bh=6vy9oe1+vFMGFNwMvDWhH9l5IpR7kofBbXkWGlg3dU4=;
+ b=1sLD/Er/+djY9cHsQx8A9VHi/D4rrFmBrqWoIqg0AKq+A5Qjb0DnCC3d3ygAfR43G7
+ P8MRU2ryoGcC5RxtTAadq18j4xAoLkWYPPRw11m6g4HLYjMgMgv4cA0WawF0ZabxGoKT
+ Bic/71bnIX7CliBySA+xlFxebzQ7vdfw+td54beo+qVDy8ysB6F6CNB4tiFIbz8lXukf
+ DPTIbRFsg1eQ/UCbcW0r2N76+Eq8IL/EhzlH/OMmfGkVjy1TrHQ5ORhXVIpnpQDq+cdq
+ dunrRt32No1uIbLyHfSTtMLOe5Ww8MJ01QnhRyNq8mnTtrq4nzZ8wUM6HAAqCbewdcqU
+ kbRw==
+X-Gm-Message-State: AFq9FYIqLlVhv6mx+hrmcUXLQDWPWQOBKpzDkmuEtuWGQ2B4KVoe0SlX
+ I2y2juKKJ4V3ZAxiuDPlG2g3k5qe4xXnhzgbsN+rvDTAx3wIo6Gq8VG+T4SRWSuNT7ZjkJGzuLr
+ JXMI8kWwCFjBuDkCDcfIMGg==
+X-Received: from pfbih21.prod.google.com ([2002:a05:6a00:8c15:b0:8a1:d11:a833])
  (user=stanleyjhu job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:3c92:b0:886:9078:546 with SMTP id
- d2e1a72fcca58-8a366c7db93mr6784850b3a.26.1793080916730; 
- Mon, 26 Oct 2026 23:01:56 -0700 (PDT)
-Date: Tue, 27 Oct 2026 14:01:46 +0800
+ 2002:a05:6a00:9512:b0:874:705d:f64e with SMTP id
+ d2e1a72fcca58-8a36689d88amr7171435b3a.28.1793080924447; 
+ Mon, 26 Oct 2026 23:02:04 -0700 (PDT)
+Date: Tue, 27 Oct 2026 14:01:50 +0800
 In-Reply-To: <20261027060153.1842910-1-stanleyjhu@google.com>
 X-Archived-By: <archiver.kernel.org>
 Mime-Version: 1.0
 References: <20261027060153.1842910-1-stanleyjhu@google.com>
 X-Mailer: git-send-email 2.56.0.307.g5fe7bd680c-goog
-Message-ID: <20261027060153.1842910-2-stanleyjhu@google.com>
-Subject: [PATCH 1/7] include/scsi,
- block/ufs: Add security protocol and RPMB definitions
+Message-ID: <20261027060153.1842910-6-stanleyjhu@google.com>
+Subject: [PATCH 5/7] tests/qtest/ufs-test: Add RPMB key programming and write
+ counter test
 From: Stanley Jhu <stanleyjhu@google.com>
 To: Jeuk Kim <jeuk20.kim@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
@@ -74,9 +74,9 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Jinyoung Choi <j-young.choi@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::545;
- envelope-from=3VD7gagoKCq8hiPcaTnYWjVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--stanleyjhu.bounces.google.com;
- helo=mail-pg1-x545.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::448;
+ envelope-from=3XD7gagoKCrcpqXkibvgerdlldib.Zljnbjr-absbiklkdkr.lod@flex--stanleyjhu.bounces.google.com;
+ helo=mail-pf1-x448.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -103,132 +103,147 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-UFS Replay Protected Memory Block (RPMB) accesses are transported over
-SCSI SECURITY PROTOCOL IN (0xa2) and SECURITY PROTOCOL OUT (0xb5)
-commands directed to the RPMB well-known logical unit (W-LUN 0xc4).
-
-Add SECURITY_PROTOCOL_IN and SECURITY_PROTOCOL_OUT in numeric order to
-include/scsi/constants.h, update RpmbUnitDescriptor to expose
-bRPMBRegionEnable and bRPMBRegion0Size..bRPMBRegion3Size per JESD220H
-Table 14.15 while preserving its 35-byte packed layout, and define the
-512-byte UfsRpmbFrame structure, geometry constants, request/response
-types, and operation result codes from JESD220H Section 12.4.
+Add ufstest_rpmb_key_counter() and shared helper ufs_rpmb_program_key()
+to test write counter reads before key programming (0x0007), key
+programming (0x0000 with zeroed Key/MAC per JESD220H Figure 12.5),
+duplicate key programming rejection (0x0005), and authenticated write
+counter reads with HMAC-SHA256 verification.
 
 Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
 ---
- include/block/ufs.h      | 58 +++++++++++++++++++++++++++++++++++++---
- include/scsi/constants.h |  2 ++
- 2 files changed, 57 insertions(+), 3 deletions(-)
+ tests/qtest/ufs-test.c | 105 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
 
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index a0bbe873d6..339c3bf5b4 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -387,6 +387,10 @@ typedef struct QEMU_PACKED UnitDescriptor {
-     uint32_t lu_num_write_booster_buffer_alloc_units;
- } UnitDescriptor;
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 9b43422d4b..9fce5fff82 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -3985,6 +3985,24 @@ static void ufs_rpmb_build_cdb(uint8_t cdb[UFS_CDB_SIZE], uint8_t opcode,
+     stl_be_p(&cdb[6], len);
+ }
  
-+#define UFS_RPMB_MAX_REGIONS            4
-+#define UFS_RPMB_LOGICAL_BLOCK_SIZE     8 /* 2^8 = 256 bytes */
-+#define UFS_RPMB_BLOCKS_PER_UNIT        512 /* 128 KiB / 256 B */
++static void ufs_rpmb_compute_hmac(const uint8_t key[UFS_RPMB_KEY_MAC_LEN],
++                                  const UfsRpmbFrame *frames, size_t nframes,
++                                  uint8_t mac[UFS_RPMB_KEY_MAC_LEN])
++{
++    GHmac *hmac = g_hmac_new(G_CHECKSUM_SHA256, key, UFS_RPMB_KEY_MAC_LEN);
++    size_t mac_len = UFS_RPMB_KEY_MAC_LEN;
++    size_t i;
 +
- typedef struct QEMU_PACKED RpmbUnitDescriptor {
-     uint8_t length;
-     uint8_t descriptor_idn;
-@@ -397,15 +401,62 @@ typedef struct QEMU_PACKED RpmbUnitDescriptor {
-     uint8_t lu_queue_depth;
-     uint8_t psa_sensitive;
-     uint8_t memory_type;
--    uint8_t reserved;
-+    uint8_t rpmb_region_enable;
-     uint8_t logical_block_size;
-     uint64_t logical_block_count;
--    uint32_t erase_block_size;
-+    uint8_t rpmb_region_size[UFS_RPMB_MAX_REGIONS];
-     uint8_t provisioning_type;
-     uint64_t phy_mem_resource_count;
--    uint8_t reserved2[3];
-+    uint8_t reserved[3];
- } RpmbUnitDescriptor;
++    for (i = 0; i < nframes; i++) {
++        g_hmac_update(hmac,
++                      (const guchar *)&frames[i] + UFS_RPMB_HASH_OFFSET,
++                      UFS_RPMB_HASH_LEN);
++    }
++    g_hmac_get_digest(hmac, mac, &mac_len);
++    g_assert_cmpuint(mac_len, ==, UFS_RPMB_KEY_MAC_LEN);
++    g_hmac_unref(hmac);
++}
++
+ static void ufs_rpmb_sec_out_frames(QUfs *ufs, uint8_t region,
+                                     const UfsRpmbFrame *frames, size_t nframes,
+                                     UtpUpiuRsp *rsp)
+@@ -4258,6 +4276,91 @@ static void ufstest_rpmb_descriptor_cdb(void *obj, void *data,
+     ufs_exit(ufs, alloc);
+ }
  
-+#define UFS_RPMB_FRAME_LEN      512
-+#define UFS_RPMB_DATA_LEN       256
-+#define UFS_RPMB_KEY_MAC_LEN    32
-+#define UFS_RPMB_NONCE_LEN      16
-+#define UFS_RPMB_HASH_OFFSET    228
-+#define UFS_RPMB_HASH_LEN       (UFS_RPMB_FRAME_LEN - UFS_RPMB_HASH_OFFSET)
-+
-+#define UFS_RPMB_SEC_PROTOCOL       0xec
-+#define UFS_RPMB_SEC_PROTOCOL_ID    0x01
-+
-+enum UfsRpmbRequest {
-+    UFS_RPMB_REQ_PROGRAM_KEY        = 0x0001,
-+    UFS_RPMB_REQ_READ_COUNTER       = 0x0002,
-+    UFS_RPMB_REQ_AUTH_DATA_WRITE    = 0x0003,
-+    UFS_RPMB_REQ_AUTH_DATA_READ     = 0x0004,
-+    UFS_RPMB_REQ_READ_RESULT        = 0x0005,
-+
-+    UFS_RPMB_RESP_PROGRAM_KEY       = 0x0100,
-+    UFS_RPMB_RESP_READ_COUNTER      = 0x0200,
-+    UFS_RPMB_RESP_AUTH_DATA_WRITE   = 0x0300,
-+    UFS_RPMB_RESP_AUTH_DATA_READ    = 0x0400,
++static const uint8_t ufs_rpmb_test_key[UFS_RPMB_KEY_MAC_LEN] = {
++    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
++    0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
++    0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
++    0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47,
 +};
 +
-+enum UfsRpmbResult {
-+    UFS_RPMB_RES_OK                 = 0x0000,
-+    UFS_RPMB_RES_GENERAL_FAILURE    = 0x0001,
-+    UFS_RPMB_RES_AUTH_FAILURE       = 0x0002,
-+    UFS_RPMB_RES_COUNT_FAILURE      = 0x0003,
-+    UFS_RPMB_RES_ADDR_FAILURE       = 0x0004,
-+    UFS_RPMB_RES_WRITE_FAILURE      = 0x0005,
-+    UFS_RPMB_RES_READ_FAILURE       = 0x0006,
-+    UFS_RPMB_RES_NO_AUTH_KEY        = 0x0007,
-+    UFS_RPMB_RES_COUNT_EXPIRED      = 0x0080,
-+};
++static void ufs_rpmb_program_key(QUfs *ufs, uint8_t region,
++                                 const uint8_t *key)
++{
++    UfsRpmbFrame req = { 0 }, resp;
++    UtpUpiuRsp rsp_upiu;
++    uint8_t zero_mac[UFS_RPMB_KEY_MAC_LEN] = { 0 };
 +
-+typedef struct QEMU_PACKED UfsRpmbFrame {
-+    uint8_t stuff[196];
-+    uint8_t key_mac[UFS_RPMB_KEY_MAC_LEN];
-+    uint8_t data[UFS_RPMB_DATA_LEN];
-+    uint8_t nonce[UFS_RPMB_NONCE_LEN];
-+    uint32_t write_counter;
-+    uint16_t addr;
-+    uint16_t block_count;
-+    uint16_t result;
-+    uint16_t req_resp;
-+} UfsRpmbFrame;
++    memcpy(req.key_mac, key, UFS_RPMB_KEY_MAC_LEN);
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_PROGRAM_KEY);
++    ufs_rpmb_sec_out_frames(ufs, region, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
 +
- typedef struct QEMU_PACKED PowerParametersDescriptor {
-     uint8_t length;
-     uint8_t descriptor_idn;
-@@ -1397,6 +1448,7 @@ static inline void _ufs_check_size(void)
-     QEMU_BUILD_BUG_ON(sizeof(GeometryDescriptor) != 105);
-     QEMU_BUILD_BUG_ON(sizeof(UnitDescriptor) != 45);
-     QEMU_BUILD_BUG_ON(sizeof(RpmbUnitDescriptor) != 35);
-+    QEMU_BUILD_BUG_ON(sizeof(UfsRpmbFrame) != UFS_RPMB_FRAME_LEN);
-     QEMU_BUILD_BUG_ON(sizeof(PowerParametersDescriptor) != 98);
-     QEMU_BUILD_BUG_ON(sizeof(InterconnectDescriptor) != 6);
-     QEMU_BUILD_BUG_ON(sizeof(StringDescriptor) != 254);
-diff --git a/include/scsi/constants.h b/include/scsi/constants.h
-index bb3981a779..5a738e89bf 100644
---- a/include/scsi/constants.h
-+++ b/include/scsi/constants.h
-@@ -127,6 +127,7 @@
- #define WRITE_LONG_16         0x9f
- #define REPORT_LUNS           0xa0
- #define ATA_PASSTHROUGH_12    0xa1
-+#define SECURITY_PROTOCOL_IN  0xa2
- #define MAINTENANCE_IN        0xa3
- #define MAINTENANCE_OUT       0xa4
- #define MOVE_MEDIUM           0xa5
-@@ -142,6 +143,7 @@
- #define SEARCH_HIGH_12        0xb0
- #define SEARCH_EQUAL_12       0xb1
- #define SEARCH_LOW_12         0xb2
-+#define SECURITY_PROTOCOL_OUT 0xb5
- #define READ_ELEMENT_STATUS   0xb8
- #define SEND_VOLUME_TAG       0xb6
- #define READ_DEFECT_DATA_12   0xb7
++    ufs_rpmb_read_result(ufs, region, &resp);
++    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==, UFS_RPMB_RESP_PROGRAM_KEY);
++    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
++    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
++                    zero_mac, UFS_RPMB_KEY_MAC_LEN);
++}
++
++static void ufstest_rpmb_key_counter(void *obj, void *data,
++                                     QGuestAllocator *alloc)
++{
++    QUfs *ufs = obj;
++    UtpUpiuRsp rsp_upiu;
++    UfsRpmbFrame req, resp;
++    uint8_t mac[UFS_RPMB_KEY_MAC_LEN];
++
++    ufs_init(ufs, alloc);
++
++    /* 1. Read write counter before key is programmed -> 0x0007 (NO_AUTH_KEY) */
++    memset(&req, 0, sizeof(req));
++    memset(req.nonce, 0xa1, sizeof(req.nonce));
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
++    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==, UFS_RPMB_RESP_READ_COUNTER);
++    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_NO_AUTH_KEY);
++    g_assert_cmpmem(resp.nonce, UFS_RPMB_NONCE_LEN,
++                    req.nonce, UFS_RPMB_NONCE_LEN);
++
++    /* 2. Program key -> 0x0000 (OK) with zeroed Key/MAC (JESD220H Fig 12.5) */
++    ufs_rpmb_program_key(ufs, 0, ufs_rpmb_test_key);
++
++    /* 3. Re-program key -> 0x0005 (WRITE_FAILURE) */
++    memset(&req, 0, sizeof(req));
++    memcpy(req.key_mac, ufs_rpmb_test_key, UFS_RPMB_KEY_MAC_LEN);
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_PROGRAM_KEY);
++    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ufs_rpmb_read_result(ufs, 0, &resp);
++    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==, UFS_RPMB_RESP_PROGRAM_KEY);
++    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_WRITE_FAILURE);
++
++    /* 4. Read write counter -> 0x0000, counter == 0, valid MAC */
++    memset(&req, 0, sizeof(req));
++    memset(req.nonce, 0xb2, sizeof(req.nonce));
++    stw_be_p(&req.req_resp, UFS_RPMB_REQ_READ_COUNTER);
++    ufs_rpmb_sec_out_frames(ufs, 0, &req, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++
++    ufs_rpmb_sec_in_frames(ufs, 0, &resp, 1, &rsp_upiu);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, GOOD);
++    g_assert_cmpuint(lduw_be_p(&resp.req_resp), ==, UFS_RPMB_RESP_READ_COUNTER);
++    g_assert_cmpuint(lduw_be_p(&resp.result), ==, UFS_RPMB_RES_OK);
++    g_assert_cmpuint(ldl_be_p(&resp.write_counter), ==, 0);
++    g_assert_cmpmem(resp.nonce, UFS_RPMB_NONCE_LEN,
++                    req.nonce, UFS_RPMB_NONCE_LEN);
++    ufs_rpmb_compute_hmac(ufs_rpmb_test_key, &resp, 1, mac);
++    g_assert_cmpmem(resp.key_mac, UFS_RPMB_KEY_MAC_LEN,
++                    mac, UFS_RPMB_KEY_MAC_LEN);
++
++    ufs_exit(ufs, alloc);
++}
++
+ static void ufs_register_nodes(void)
+ {
+     const char *arch;
+@@ -4353,6 +4456,8 @@ static void ufs_register_nodes(void)
+                  &zufs_test_opts);
+     qos_add_test("rpmb-descriptor-cdb", "ufs", ufstest_rpmb_descriptor_cdb,
+                  &io_test_opts);
++    qos_add_test("rpmb-key-counter", "ufs", ufstest_rpmb_key_counter,
++                 &io_test_opts);
+ }
+ 
+ libqos_init(ufs_register_nodes);
 -- 
 2.56.0.307.g5fe7bd680c-goog
 
