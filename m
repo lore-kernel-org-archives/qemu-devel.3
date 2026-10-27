@@ -1,127 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9C4606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BB8606A325
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=r+p4IKWs
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=pqSTQKaC;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=8FDPaFba
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLefq-0005IS-EA; Tue, 27 Oct 2026 06:44:58 -0400
+	id 1xLegk-0005jh-36; Tue, 27 Oct 2026 06:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xLefo-0005Ha-0o; Tue, 27 Oct 2026 06:44:56 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLefz-0005Mi-DA
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:07 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1xLefm-0007qr-Ck; Tue, 27 Oct 2026 06:44:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ACDlpph9Ju+2bF0JZT+JfRUeqlkaV/ZvjXmMf05Ehq5m+/2KvaYQsOND32fcQYqysM6BJ58DMy3QrHbnZii0ALHGmz5BzOYtF+c9GKUxLJt2NAf+ZxQguNH23lG7hSoGFwIo3k/KS44epepFDtLfRUejfme9NeGIMwqhVe2FD/wT+cRyrL8UzHaSjnR+hDcdkYtMZtRUsitDOrv1ws2PesnOjWgKhloTr1kH7ARMPSYAmQZu+3WUtNZ1EIakPYBf4VjijbnwIRWkiyJiiOQbzWPn/92tSnHUSGR9jml1W2qVRxmeAIXCI5s8+GulIAjQ0Uqa1O3FwEApIBqyGEWhKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4OCQWm68N975aLBgeM7SJwe03X0BrozXPkgwDpkCtAg=;
- b=FnR1SeyiL0WbEN1MQHAuANf6dmBkARavQ3R/jRcvFya2sCn1X30d5X84pUJQAIoYl5toJhlj/AjClPCscvttLEwda3zFnGt4JANKi5Kr06IjwL/jpZLqKRVACoo9CEtGYK4e6fOtQTpSqtzXXgU78EWoJGWqs9bplw7adY72y4RfJn0HC8TZTy5YXXqDdoXtz2ow85hbq7yq80/k1RuohuAhX6z6k9vkVyGsKGJDrIxO4LT3tac5soZgGpKPKzSwXCTtwjAaK7HQzNb2YQLUKeRbEcXPXYRfOIYsjQNMtt9YqRfe45z3ebvQkg8+okMDT8bWxv4e7jRylS7KPIBahg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4OCQWm68N975aLBgeM7SJwe03X0BrozXPkgwDpkCtAg=;
- b=r+p4IKWsV4tuV4no1DMdzv+pfkS7R2Y9+unMIzcabc/t7ZZLxFpG58mDzaCJqsrDGmg5v3foHdSs3Tg1ShFPrO0xmtiLgLNnYqlzscaptpMsJwzN6MXVLUpWycV+NwrIcOOgnbmegnlGHhuaSnQyuz4Hc6oQigLHywvce9rq5N1pun4uuDYAZglhlJQ7T4iTgUPOLIX6UkjgL1xdVeHsYoZpE2HQQFLI9VbvOPzDuUCeQKOkPG4JwgrhU4YXp/NduUjF8kCjmJQeA0iyPQDUhp7WwLh2DSiXKRuhJux6NRgT4uQWTUE/K7xMdmqAE1w9TdLuNXJK9M94+7pSUZi0/w==
-Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by AS2PR08MB8805.eurprd08.prod.outlook.com
- (2603:10a6:20b:5f5::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
- 2026 10:44:48 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
- 10:44:48 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- jean-louis@dupond.be, andrey.drobyshev@virtuozzo.com, den@openvz.org
-Subject: [PATCH 0/3] qcow2: fix discard-no-unref=on data corruption
-Date: Tue, 27 Oct 2026 12:44:38 +0200
-Message-ID: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.47.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VIUP296CA0070.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:337::8) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLefw-0007wK-9B
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=UVXGKS5
+ HTyiVmJU+tAfDlFkZMSRB1WhX2Oy3gojMFEJeaVvyvjrcJdH9YXJGA5nWykMxmcZWnFr00
+ nlGCfO/F77xBeizIt3b5e60lk681Ti2i5kapjaYsIDKtKohQO0W7R4jqzVhbjSoYgCKBmH
+ B09+RG1yS1gX8JCaeOf2sTwIOmTippp8Bn7pQGchimN2zouY3RJTE21SUUq+BH622PItNu
+ yG36bxsmOvFlSG3E3JyIFiMhcsEBf5P9RWFinhHJ0BvXC74v3I6+vhbJMsk2VuM/rOU/mN
+ srVOMpGR164yUcJLlXRlpjuJRN4r21FWUXB1+2l3Gm7keFvrj2WzPFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=T
+ DcAAs5Oc653TgJh1RaCbCHacge/ac818Ele1DVgQZI=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=RqgMUApnM0oj9KzJ4q2qGXbTeNZJP1sKXbIyrFF5ISbDMh1QNW8rkpgBLmp01v3KFh82
+ RxNISb39dzSzMzdGvkV2kSuUIHbFtReMbUON+5UlCoIgNrx+hWJiEMMi5zUulC8pMX29Y8
+ cwGzBzsvJ4eOwIhkiQxqrKpbgiBVGE8kHpBvYiZ1T3ox+0+NweRYgd36/MZad+K3MNJPjs
+ vw2dduDdBrur1N+3qlgw7padsgxVy+I9OUmxO7ZQTdGpA384st3tUjl2ihYR8R9VyrqPrG
+ YqbK4YD8K5qUpnsJ4GNnta9rYj4+uGD7i5x2TlV63EE2K859Kks1k55EYc5u/2vw==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=pqSTQKaC; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=8FDPaFba;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=TDcAAs5O
+ c653TgJh1RaCbCHacge/ac818Ele1DVgQZI=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=pqSTQKaCJzLClJgFLJ1MsLYS23njKRM3XNr
+ OwPoounQu9raJNYUAS7/Dm02zKctvCVEA3+gQZ3KXOgrroL3Nj9Ek50TGZmwOsIznVgcle
+ Wn+7TkwG0nnm1ik2RoNJ8uGjd0bz1lQ4GcIH/RZZNTIGcwIgvNkO6eUdSdEI9ZWgNYmdfM
+ O7o0cgXe+bp5mUsLPLiBwR9TDu7hCPyQzcx8FbJYg7uzveEvzRY1nNxwFLISXA7XjG5bnM
+ DjeA0HJoWVbgeQXZmYtceqQPYh0ZVxp4VqrGss0HuQw2pO+Q+teTDjD+KflELqZsdn52rM
+ 0Nmd83qcycm4ysJHN9SEW+z5MOg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=TDcAAs5Oc653TgJh1RaCbCHacge/ac818Ele1DVgQZI=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=8FDPaFbahFwI+JpPa1
+ j+miWyMSpXv/S9Ttu9WTt+f7J9UTEEwmWBeMnLxDAFqKjIUvnpDAMHsWHwq/yL2umMBQ==
+Received: by mx1.catap.net (OpenSMTPD) id 69f1b2d3;
+ Tue, 27 Oct 2026 11:45:02 +0100 (CET)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 6b657cde;
+ Tue, 27 Oct 2026 11:44:52 +0100 (CET)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH v4 16/25] hw/mips: add Octeon MIO boot support
+Date: Tue, 27 Oct 2026 11:41:40 +0100
+Message-ID: <20261027104433.25720-17-kirill@korins.ky>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261027104433.25720-1-kirill@korins.ky>
+References: <20261027104433.25720-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS2PR08MB8805:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d406111-dfdd-4960-3025-08df3417525f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|366016|52116014|376014|38350700014|56012099006|261009223027099003|261021123027099003|261021121427099003|18002099003|10067099003;
-X-Microsoft-Antispam-Message-Info: g+ZUDiEI1Nw5mZHeoC5VL4DkdrQ4CV9ReoYzvwBqAV8cPgHZp3cF2ObZBHgZ3krU8rQrO+SvAfq9UckhzeD/aFTmjjOJ3Xqh9EFmnjAPXSWIzRTLUClQSj5kTArCEHZNrUzUlywUz+0QLyE0rhI2/dXbVqyPJMSziPHKbMsIsQvoO+I7N18zAVuiGhk+sixM1gbLQ+n9drjNzbFM29oyR9T8L4+uxH4uJCPz9gooJz5t6Xmuq/Hbp0FwAcYTu57LnmETgoecB9tJlr5xAulvJWq6XBtNZw8BtsEJqXKh/DGgtVarVJgDINequD2oy2XZzcw3eMM4apSEBPF+74/PRRQcVtAHkIA86MYk2VMjg3gGhutsbR+fDwwkBlGfShvG/DkqUFKNN3ru0APsqctpqE+Fm40D19laBbousz257/OnER6YDw5R3N2hXLNbTqPY6ly7YSjJiYomRSBvIVjMgqrlC12T7htfMvWqqao+IJRsOrP+pAovdZ0XcsS052q+3jvuzoyaMwwfR1soC/UMZgkvvQATLqDfLHNetMiztBo9alSpVnV0BASY6HdwQRj2k39oIGCk8QpRMw6VUMW+gf5w9Zq/ZR1o5zbrUelZ5pBNI8ZHBBTiLQMqjra8iOHymkR0kMW4iiKnbiEc+yQmaqhTVzgKx0ZOVYe2YbSvjQk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(366016)(52116014)(376014)(38350700014)(56012099006)(261009223027099003)(261021123027099003)(261021121427099003)(18002099003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?lFjuo9GJq+KHF6FtP/t/ejwAyMrZNFx7Pfs1/kLMCiIg0aGsKjnpRr8hWHJ1?=
- =?us-ascii?Q?s3Vy8mcgFD0L/6gNFNL9AYKpOOxJT1vhoDUOcjs3cuUXP0yDJExtbGoJbMoW?=
- =?us-ascii?Q?oFNdJqy1xYwqIOIPvXcCEhR7pYS31/hIOSjn5DKRPdFWMB9mdIrI461ujS7p?=
- =?us-ascii?Q?H7e/WNIq1wZQyjwOEhQDI/1DIIf5JqXOYOtrj2uVnABtyESsTAMmmJ529ksS?=
- =?us-ascii?Q?ETGn28mLWnVdvIdFg1q82JD94bD9LofvsKWzNZhcpZnoU36no4LH6agUV/el?=
- =?us-ascii?Q?D37nVvToXQZuQINPI3w4CT+MevT1go6MrrnJn7IPOMXx8JZ+EMGud2JgtpEM?=
- =?us-ascii?Q?rMak6g5P8HxaxhC4B3KZHvH396L+eiBW8wG0PMUB3/lrW/nKJcAg6kiolOiJ?=
- =?us-ascii?Q?IOTE40gpYZqvOt5mXXbfrPKDhUP/T1ZzYyQ8ysWO3mJsnb1ofser+Q58uup5?=
- =?us-ascii?Q?fAAn12XW7KLkA5zllzPmoSItEXXHKmULAQrg7GD9+kNc2aCDWH8rhZ6FV7eK?=
- =?us-ascii?Q?N49CuPiLvohlF6/syBCKAaEbRK73keAeFHv2uttSic23gAukgeQuW9ItY/Vm?=
- =?us-ascii?Q?KH2Ru0Xcuab7qXjQFgV5rHsDk+GyH0jRiHV4SXuegRarjMUcIod2ZBoQFRSt?=
- =?us-ascii?Q?akjQDXGKFHqwxwQ1VGptpk5fhYwx61D2QHl0qCO35C6Xan5bRrRWE5mt1XiC?=
- =?us-ascii?Q?6deTWrfcnVyDkUFh6W27FU83f0lAFVTT4jlTnf31djtpF8Mu8m2lYMcT+jFF?=
- =?us-ascii?Q?UNPKabjlMIQyXWjktIwfV/kDRH51s187nKWxEjs2n37KFPwCzKI0x1B89qXR?=
- =?us-ascii?Q?oS2G7hWekfcHq2PgYtcucBSmtoZfRIgTJw3LWhE1KOag5egA+6r6RUpoH8Fr?=
- =?us-ascii?Q?pmWu2rFx+OCK2USEv0s79Xff2gZt2BEaKWmEQHfN5NBLIZtismwM7FmiKVvf?=
- =?us-ascii?Q?aWwHi+M10vBXc+S85u/EYne74K5iXKMPKt1NiuXpco7FBpkIkIzUCMaWQnP6?=
- =?us-ascii?Q?56gayzNh88DFNjoZ1fabAewHxCOpeIOgrqHvVM5xvpkAfwGTP/n+wLENqPuS?=
- =?us-ascii?Q?k5PWgLvjMtsuv22ziJjsWoI/QI9kmolxsAzH44fYXNyI9UO+gmSGiohekqGa?=
- =?us-ascii?Q?5HnMYwdhhB34jWB13aSkyuczGuOtyRbTsbwINmh3kt7eiqKSLJi2nnU9MUQq?=
- =?us-ascii?Q?WeE4IGZj1ZRL2tj3c+C4QfU9HTX1OWOilH56rWa/z8AKqcZeVtv525ei5y0T?=
- =?us-ascii?Q?3mlUmszd83zFvwWpeUHMm19//sZ44O7dLm/8I4g2F+eJj1ODynWy3XFuj3Cg?=
- =?us-ascii?Q?Ii2v1GHnqxk45lkoXEqx2J5ay7fU6QRgatLgf47muN8uDxC8rCKsJ8pYOgPm?=
- =?us-ascii?Q?Hu1ukdKGIynzFADXmrCauM8wpBqkCPR8i9QCbo31c+Gqv+F2qOUqbGNYQS/+?=
- =?us-ascii?Q?lLJBGippKGPrrUhEdobmVtgI07baCEn2UNzlYt+JHDOk6cUpzEqZsRxvJY3V?=
- =?us-ascii?Q?ijvOLHFALJxYJiHm+dAETU6SyxtBMbmbXwcgzLJqaTjDBKm8OyIKrfdbY5cp?=
- =?us-ascii?Q?Xp1+9S6HVj1u2RXfRZ/MacZmIQo6P661qiQV56uLXpHV3l5YGmrNYclsiqeJ?=
- =?us-ascii?Q?Y23PhZo5inVLAmW3sqZd4HpBklCV5aXkYVjxR74M3SyWQSQjFP+Uo4N3O+tA?=
- =?us-ascii?Q?eGfTTQEYMFq6ZAo2wrpTdAVg0WntHNLr3NVFKDP5l7OUcEyxfwPpKhPWOeye?=
- =?us-ascii?Q?C6ix+sw3VzePCTI3Y9OoWRUQWwoOsgE=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d406111-dfdd-4960-3025-08df3417525f
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 10:44:48.2229 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rNU1ZBMqwTSf0s+COqpW3nn7HBwq3NNzLfq/jdICHObsNMAzrwkiolxuoqgEiK3godgTvpJ9Hr3HR1/t9orgApxjqrFMmvyrX0N1hBfprf4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB8805
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,32 +95,411 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-1st commit with tests is my own old commit from previously unmerged
-subcluster series [1].
-2nd is the actual bug fix, 3rd is the regression test.
+Add MIO boot bus configuration, boot location storage and fuse
+responses. Keep mutable state and memory mappings in a resettable MIO
+device.
+---
+ hw/mips/octeon.c          | 248 +++++++++++++++++++++++++++++++++++++-
+ hw/mips/octeon_internal.h |   4 +
+ 2 files changed, 250 insertions(+), 2 deletions(-)
 
-[1] https://lore.kernel.org/qemu-devel/20240913163942.423050-1-andrey.drobyshev@virtuozzo.com
-
-Andrey Drobyshev (3):
-  iotests/290: add test case to check 'discard-no-unref' option behavior
-  qcow2: fix snapshot data corruption with discard-no-unref=on
-    #VSTOR-151885
-  iotests/290: add 'discard' and 'write -z -u' case with a snapshot
-    #VSTOR-151885
-
- block/qcow2-cluster.c      |  6 +++--
- tests/qemu-iotests/290     | 50 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/290.out | 33 +++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 2 deletions(-)
-
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 007fc4b537..59754cb741 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -39,6 +39,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonMachineState, OCTEON_MACHINE)
+ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
+                     OCTEON_PERIPHERAL)
+ 
++#define TYPE_OCTEON_MIO "octeon-mio"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonMioState, OCTEON_MIO)
+ #define TYPE_OCTEON_RST "octeon-rst"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define TYPE_OCTEON_INTC "octeon-intc"
+@@ -126,12 +128,33 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_CIU3_UART0_INTSN     0x8000
+ #define OCTEON_CSR_BASE             0x1180000000000ULL
+ #define OCTEON_CSR_SIZE             0x100000000ULL
++#define OCTEON_MIO_BOOT_REG_CFGX(x) \
++    (0x0000000 + (x) * OCTEON_CSR_64BIT_SIZE)
++#define OCTEON_MIO_BOOT_REG_CFG_INDEX(reg) \
++    ((reg) / OCTEON_CSR_64BIT_SIZE)
++#define OCTEON_MIO_BOOT_REG_CFG_BASE 0x000000000000ffffULL
++#define OCTEON_MIO_BOOT_LOC_CFGX(x) \
++    (0x0000080 + ((x) & 1) * OCTEON_CSR_64BIT_SIZE)
++#define OCTEON_MIO_BOOT_LOC_CFG_INDEX(reg) \
++    (((reg) - OCTEON_MIO_BOOT_LOC_CFGX(0)) / OCTEON_CSR_64BIT_SIZE)
++#define OCTEON_MIO_BOOT_LOC_ADR     0x0000090
++#define OCTEON_MIO_BOOT_LOC_DAT     0x0000098
++#define OCTEON_MIO_BOOT_LOC_CFG_BASE 0x000000000ffffff8ULL
++#define OCTEON_MIO_BOOT_LOC_CFG_BASE_SHIFT 3
++#define OCTEON_MIO_BOOT_LOC_CFG_EN  0x0000000080000000ULL
++#define OCTEON_MIO_BOOT_LOC_ADR_MASK 0xf8
++/* Fuses are left unprogrammed; firmware only needs reads to complete. */
++#define OCTEON_MIO_FUS_DAT2         0x0001410
++#define OCTEON_MIO_FUS_RCMD         0x0001500
++#define OCTEON_MIO_FUS_RCMD_PEND    0x0000000000001000ULL
++#define OCTEON_MIO_FUS_RCMD_DAT     0x0000000000ff0000ULL
+ #define OCTEON_RST_BOOT             0x6001600
+ #define OCTEON_RST_SOFT_RST         0x6001680
+ /* U-Boot uses the reset controller to park and release secondary cores. */
+ #define OCTEON_RST_PP_POWER         0x6001700
+ #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
+ #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
++
+ /*
+  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
+  * the guest sees the virtual CVMSEG window, not this physical address.
+@@ -153,6 +176,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_FLASH_ENV_OFFSET     \
+     (OCTEON_FLASH_SIZE - OCTEON_FLASH_ENV_SECTOR_SIZE)
+ #define OCTEON_FLASH_WIDTH          2
++#define OCTEON_MIO_BOOT_REG_CFG_RESET_BASE (OCTEON_FLASH_RESET_BASE >> 16)
++#define OCTEON_BOOTBUS_LED_CS       4
++#define OCTEON_BOOTBUS_LED_SIZE     (64 * KiB)
+ 
+ struct OcteonMachineState {
+     MachineState parent_obj;
+@@ -174,6 +200,21 @@ struct OcteonPeripheralClass {
+     ResettablePhases parent_phases;
+ };
+ 
++struct OcteonMioState {
++    OcteonPeripheralState parent_obj;
++    MemoryRegion bootbus_led;
++    MemoryRegion mio_boot_loc;
++    uint64_t mio_boot_reg_cfg[OCTEON_MIO_BOOT_REG_CFG_COUNT];
++    uint64_t mio_boot_loc_cfg[2];
++    uint64_t mio_boot_loc_adr;
++    uint64_t mio_fus_rcmd;
++    hwaddr mio_boot_loc_base;
++    uint8_t mio_boot_loc_data[OCTEON_MIO_BOOT_LOC_SIZE];
++    bool mio_boot_loc_mapped;
++    hwaddr bootbus_led_base;
++    bool bootbus_led_mapped;
++};
++
+ struct OcteonRstState {
+     OcteonPeripheralState parent_obj;
+     GHashTable *regs;
+@@ -318,6 +359,89 @@ static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
+     octeon_reg_store(s->csr_bank->values, reg, value);
+ }
+ 
++static hwaddr octeon_mio_boot_loc_base(uint64_t cfg)
++{
++    uint64_t base = (cfg & OCTEON_MIO_BOOT_LOC_CFG_BASE) >>
++                    OCTEON_MIO_BOOT_LOC_CFG_BASE_SHIFT;
++
++    return base << 7;
++}
++
++static void octeon_mio_boot_loc_update(OcteonState *s)
++{
++    MemoryRegion *sysmem = get_system_memory();
++    bool enabled = s->mio->mio_boot_loc_cfg[0] & OCTEON_MIO_BOOT_LOC_CFG_EN;
++    hwaddr base = octeon_mio_boot_loc_base(s->mio->mio_boot_loc_cfg[0]);
++
++    if (s->mio->mio_boot_loc_mapped) {
++        if (enabled && base == s->mio->mio_boot_loc_base) {
++            return;
++        }
++        memory_region_del_subregion(sysmem, &s->mio->mio_boot_loc);
++        s->mio->mio_boot_loc_mapped = false;
++    }
++
++    if (enabled) {
++        memory_region_add_subregion_overlap(sysmem, base,
++                                            &s->mio->mio_boot_loc, 1);
++        s->mio->mio_boot_loc_base = base;
++        s->mio->mio_boot_loc_mapped = true;
++    }
++}
++
++static hwaddr octeon_mio_boot_reg_cfg_base(uint64_t cfg)
++{
++    return (cfg & OCTEON_MIO_BOOT_REG_CFG_BASE) << 16;
++}
++
++static void octeon_bootbus_led_update(OcteonState *s)
++{
++    MemoryRegion *sysmem = get_system_memory();
++    hwaddr base = octeon_mio_boot_reg_cfg_base(
++        s->mio->mio_boot_reg_cfg[OCTEON_BOOTBUS_LED_CS]);
++
++    if (s->mio->bootbus_led_mapped) {
++        if (base == s->mio->bootbus_led_base) {
++            return;
++        }
++        memory_region_del_subregion(sysmem, &s->mio->bootbus_led);
++        s->mio->bootbus_led_mapped = false;
++    }
++
++    if (base) {
++        memory_region_add_subregion(sysmem, base, &s->mio->bootbus_led);
++        s->mio->bootbus_led_base = base;
++        s->mio->bootbus_led_mapped = true;
++    }
++}
++
++static uint64_t octeon_mio_boot_loc_dat_read(OcteonState *s)
++{
++    unsigned int offset = s->mio->mio_boot_loc_adr &
++                          OCTEON_MIO_BOOT_LOC_ADR_MASK;
++    uint64_t value = ldq_be_p(s->mio->mio_boot_loc_data + offset);
++
++    s->mio->mio_boot_loc_adr =
++        (s->mio->mio_boot_loc_adr + OCTEON_CSR_64BIT_SIZE) &
++        OCTEON_MIO_BOOT_LOC_ADR_MASK;
++    return value;
++}
++
++static void octeon_mio_boot_loc_dat_write(OcteonState *s, hwaddr addr,
++                                          uint64_t value, unsigned size)
++{
++    unsigned int offset = s->mio->mio_boot_loc_adr &
++                          OCTEON_MIO_BOOT_LOC_ADR_MASK;
++    uint64_t old = ldq_be_p(s->mio->mio_boot_loc_data + offset);
++
++    value = octeon_write64(old, addr, value, size);
++    stq_be_p(s->mio->mio_boot_loc_data + offset, value);
++    memory_region_set_dirty(&s->mio->mio_boot_loc, offset, sizeof(value));
++    s->mio->mio_boot_loc_adr =
++        (s->mio->mio_boot_loc_adr + OCTEON_CSR_64BIT_SIZE) &
++        OCTEON_MIO_BOOT_LOC_ADR_MASK;
++}
++
+ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+                                           unsigned int *source)
+ {
+@@ -1125,7 +1249,28 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
+     hwaddr reg = addr & ~7ULL;
+     uint64_t value;
+ 
++    if (reg >= OCTEON_MIO_BOOT_REG_CFGX(0) &&
++        reg < OCTEON_MIO_BOOT_REG_CFGX(OCTEON_MIO_BOOT_REG_CFG_COUNT)) {
++        unsigned int index = OCTEON_MIO_BOOT_REG_CFG_INDEX(reg);
++
++        return octeon_read64(s->mio->mio_boot_reg_cfg[index], addr, size);
++    }
++
+     switch (reg) {
++    case OCTEON_MIO_BOOT_LOC_CFGX(0):
++    case OCTEON_MIO_BOOT_LOC_CFGX(1): {
++        unsigned int index = OCTEON_MIO_BOOT_LOC_CFG_INDEX(reg);
++
++        return octeon_read64(s->mio->mio_boot_loc_cfg[index], addr, size);
++    }
++    case OCTEON_MIO_BOOT_LOC_ADR:
++        return octeon_read64(s->mio->mio_boot_loc_adr, addr, size);
++    case OCTEON_MIO_BOOT_LOC_DAT:
++        return octeon_read64(octeon_mio_boot_loc_dat_read(s), addr, size);
++    case OCTEON_MIO_FUS_DAT2:
++        return 0;
++    case OCTEON_MIO_FUS_RCMD:
++        return octeon_read64(s->mio->mio_fus_rcmd, addr, size);
+     case OCTEON_RST_BOOT:
+         value = ((uint64_t)(s->cpu_hz / s->ref_hz) <<
+                  OCTEON_RST_BOOT_C_MUL_SHIFT) |
+@@ -1156,11 +1301,56 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
+         return;
+     }
+ 
++    if (reg == OCTEON_MIO_BOOT_LOC_CFGX(0) ||
++        reg == OCTEON_MIO_BOOT_LOC_CFGX(1)) {
++        unsigned int index = OCTEON_MIO_BOOT_LOC_CFG_INDEX(reg);
++
++        old = s->mio->mio_boot_loc_cfg[index];
++        s->mio->mio_boot_loc_cfg[index] =
++            octeon_write64(old, addr, value, size);
++        if (index == 0) {
++            octeon_mio_boot_loc_update(s);
++        }
++        return;
++    }
++
++    if (reg == OCTEON_MIO_BOOT_LOC_ADR) {
++        old = s->mio->mio_boot_loc_adr;
++        value = octeon_write64(old, addr, value, size);
++        s->mio->mio_boot_loc_adr = value & OCTEON_MIO_BOOT_LOC_ADR_MASK;
++        return;
++    }
++
++    if (reg == OCTEON_MIO_BOOT_LOC_DAT) {
++        octeon_mio_boot_loc_dat_write(s, addr, value, size);
++        return;
++    }
++
++    if (reg == OCTEON_MIO_FUS_RCMD) {
++        value = octeon_write64(s->mio->mio_fus_rcmd, addr, value, size);
++        s->mio->mio_fus_rcmd = value & ~(OCTEON_MIO_FUS_RCMD_PEND |
++                                    OCTEON_MIO_FUS_RCMD_DAT);
++        return;
++    }
++
+     if (reg == OCTEON_RST_PP_POWER) {
+         octeon_rst_pp_power_write(s, addr, value, size);
+         return;
+     }
+ 
++    if (reg >= OCTEON_MIO_BOOT_REG_CFGX(0) &&
++        reg < OCTEON_MIO_BOOT_REG_CFGX(OCTEON_MIO_BOOT_REG_CFG_COUNT)) {
++        unsigned int index = OCTEON_MIO_BOOT_REG_CFG_INDEX(reg);
++
++        old = s->mio->mio_boot_reg_cfg[index];
++        s->mio->mio_boot_reg_cfg[index] =
++            octeon_write64(old, addr, value, size);
++        if (index == OCTEON_BOOTBUS_LED_CS) {
++            octeon_bootbus_led_update(s);
++        }
++        return;
++    }
++
+     if (!octeon_csr_lookup(s, reg, &old)) {
+         old = 0;
+     }
+@@ -1411,6 +1601,42 @@ static void octeon_init_flash(OcteonState *s)
+                                 &s->boot_flash_alias);
+ }
+ 
++static void octeon_init_mio_boot_loc(OcteonState *s)
++{
++    memory_region_init_ram(&s->mio->bootbus_led, OBJECT(s->mio),
++                           "octeon.bootbus-led",
++                           OCTEON_BOOTBUS_LED_SIZE, &error_fatal);
++    memory_region_init_ram_ptr(&s->mio->mio_boot_loc, OBJECT(s->mio),
++                               "octeon.mio-boot-loc",
++                               OCTEON_MIO_BOOT_LOC_SIZE,
++                               s->mio->mio_boot_loc_data);
++}
++
++
++static void octeon_mio_reset_hold(Object *obj, ResetType type)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
++    OcteonMioState *mio = OCTEON_MIO(obj);
++    OcteonState *s = mio->parent_obj.board;
++
++    if (opc->parent_phases.hold) {
++        opc->parent_phases.hold(obj, type);
++    }
++
++    if (mio->bootbus_led_mapped) {
++        memory_region_del_subregion(get_system_memory(), &mio->bootbus_led);
++        mio->bootbus_led_mapped = false;
++    }
++    memset(mio->mio_boot_reg_cfg, 0, sizeof(mio->mio_boot_reg_cfg));
++    mio->mio_boot_reg_cfg[0] = OCTEON_MIO_BOOT_REG_CFG_RESET_BASE;
++    mio->mio_boot_loc_cfg[0] = 0;
++    mio->mio_boot_loc_cfg[1] = 0;
++    mio->mio_boot_loc_adr = 0;
++    mio->mio_fus_rcmd = 0;
++    memset(mio->mio_boot_loc_data, 0, sizeof(mio->mio_boot_loc_data));
++    octeon_mio_boot_loc_update(s);
++}
++
+ static void octeon_rst_reset_hold(Object *obj, ResetType type)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
+@@ -1498,6 +1724,15 @@ static void octeon_csr_bank_finalize(Object *obj)
+     g_hash_table_destroy(OCTEON_CSR_BANK(obj)->values);
+ }
+ 
++static void octeon_mio_class_init(ObjectClass *klass, const void *data)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    resettable_class_set_parent_phases(rc, NULL, octeon_mio_reset_hold,
++                                       NULL, &opc->parent_phases);
++}
++
+ static void octeon_rst_class_init(ObjectClass *klass, const void *data)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
+@@ -1540,10 +1775,11 @@ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+ 
+ static void octeon_create_peripherals(OcteonState *s)
+ {
++    s->mio = OCTEON_MIO(octeon_new_peripheral(s, TYPE_OCTEON_MIO, 0));
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
+     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
+     s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
+-        s, TYPE_OCTEON_CSR_BANK, 0));
++                                      s, TYPE_OCTEON_CSR_BANK, 0));
+ }
+ 
+ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+@@ -1553,9 +1789,10 @@ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+ 
+ static void octeon_realize_peripherals(OcteonState *s)
+ {
++    octeon_realize_peripheral(&s->csr_bank->parent_obj);
+     octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
+-    octeon_realize_peripheral(&s->csr_bank->parent_obj);
++    octeon_realize_peripheral(&s->mio->parent_obj);
+ }
+ 
+ static void mips_octeon_init(MachineState *machine)
+@@ -1581,6 +1818,7 @@ static void mips_octeon_init(MachineState *machine)
+ 
+     octeon_map_ram(s);
+     octeon_init_flash(s);
++    octeon_init_mio_boot_loc(s);
+     octeon_load_firmware(s);
+     octeon_create_cpus(s);
+ 
+@@ -1667,6 +1905,12 @@ static const TypeInfo octeon_machine_types[] = {
+         .class_init = octeon_peripheral_class_init,
+         .abstract = true,
+     },
++    {
++        .name = TYPE_OCTEON_MIO,
++        .parent = TYPE_OCTEON_PERIPHERAL,
++        .instance_size = sizeof(OcteonMioState),
++        .class_init = octeon_mio_class_init,
++    },
+     {
+         .name = TYPE_OCTEON_RST,
+         .parent = TYPE_OCTEON_PERIPHERAL,
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index 6327103f52..7b45daba10 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -17,6 +17,8 @@
+ #define OCTEON_CIU_GPIO_COUNT       32
+ #define OCTEON_CIU3_CP0_IRQ_COUNT   4
+ #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
++#define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
++#define OCTEON_MIO_BOOT_LOC_SIZE    0x100
+ 
+ typedef enum OcteonIRQ {
+     OCTEON_IRQ_UART,
+@@ -30,6 +32,7 @@ typedef enum OcteonCiu3Source {
+ } OcteonCiu3Source;
+ 
+ typedef struct OcteonState OcteonState;
++typedef struct OcteonMioState OcteonMioState;
+ typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonIntcState OcteonIntcState;
+ typedef struct OcteonCsrBankState OcteonCsrBankState;
+@@ -57,6 +60,7 @@ struct OcteonState {
+     MemoryRegion boot_flash;
+     MemoryRegion boot_flash_alias;
+     MemoryRegion cvmseg;
++    OcteonMioState *mio;
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
+     OcteonCsrBankState *csr_bank;
 -- 
-2.47.1
+2.56.0
 
 
