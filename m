@@ -1,91 +1,75 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EF8606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D765606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=I64rlGZR
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HZVi38JQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLgtZ-0007qg-4J; Tue, 27 Oct 2026 09:07:17 -0400
+	id 1xLhGb-0002if-8M; Tue, 27 Oct 2026 09:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1xLgtX-0007qO-HV
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:07:15 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
- id 1xLgtU-0005Vu-6J
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:07:14 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-5ba3ac592faso2391728e87.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 06:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793106430; x=1793711230; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=w8y8FcrivNxmXSl5ogfZ9P+6PPoIlTcQ8+g6aIw9qqM=;
- b=I64rlGZRBRmmrHm5pDdDCHs06b0qfEyF8LNCSE2vcDMIK13J2PS8yQLDXXqTjqKI5x
- EARTSqdBsdpqPmWvIS88aV5Cs5o4dMi5ApfPCDmwRJrneKm1TS+fe0d5wOhqG1UsH1QA
- TbxoBm5/KIVttD98gB3vmSeYF2keVM9v7ToUeTT57gN2vhD08LMQ7VTh+vIcYtfoByQA
- ThyeujCh622xfF+tUlellWFBKmJjayTvLP9fCpivaF193skT4xWAZfVYClHfqW+Hj1ly
- 8doqk8zvu10dnp0OgIATNc/tXAsHJXdX5Oi8HhCQBBtBy6UVDFpxslT4Qk9yGWpAWc5w
- PFzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793106430; x=1793711230;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=w8y8FcrivNxmXSl5ogfZ9P+6PPoIlTcQ8+g6aIw9qqM=;
- b=o/0o2NXvYSfS1MtJ3Ovo/5wkPUE2KMX2wkxdrglTIukpcAJlYdzmUT/p9RQaEVQLZO
- ijANs29TVIjdaKl2BBqagyuw45PQ9HSVR3s18zR07/ILUyx31AusiZ1KUchG9lErr1e8
- MKOHumqkaGTxObuyc6PnMspopcjUde/Rlb5cVyqIIGP1ppUeyolXj5HD79QZy+E4RlRp
- TBU/GDjniS+Xv1bNV+YCW6PWGFk+SBrLnB7rZZW8jLFTrbl0QfH78TVpjmSmsAqSeR+r
- XxRzbyOUgg5RRSkqoCDw2NmLadbkYNZrqhnmaxWmeZyTXihUFDyFmbM0yx6/ZC7mMs84
- s4Ng==
-X-Gm-Message-State: AFq9FYL8eeOhEZERdgqIOzYXwZVR8vygyT2gs15liy8mAcSy2lbSqG6P
- w91nLzaioQOxPH3/kh64FXKULH8SXytzXQLrU9qC1ECELOpQ2lA25vjAl5LZmTjlCtmarA==
-X-Gm-Gg: AYBFou3r3PQ7X3sVqPKNrFFoJ/KrkuYDMDiUKf846wz9ZH+mTA1soHUt7IuPLAOctDe
- Mq5oAJ4gjXTiDQDHlHIrrayaUUJo3AcZHr3nX8G74g9u9i5MRfx2r/M3p/p+B3tz41h/s5dvjaA
- c4UNqxAuRAn6olr4E6vs3NKCIPl+PMFci1optRcC62oDgPr4jagkEdDyimLf0uMkeoN2Hj2fRyE
- 2mhynpPQ2RdlJClUx/4aZoFqX9BVJpwPMqeJBh0TFZoMzyrxhYeMSC9GcEvxvUab8cM+R/xd73/
- gI7PBo8h/Cc6r5s5LTVunZPOBZLgmtrrZ6+wErzSA8IytMZn4bZbQHv34zsn4zTB/h0pyhVxg8x
- d3fYMsVOlM/UPTqyO3Vr6lhA0dpBN/qoTCI5SbjnApjEouV667MXTGfU0P7UiijH2m0bAE7RlYa
- KaOwe9d5wC0NrNUYRHBUcgTOtm19UNTP8rflXCrj7eGIATA6yTvXssk5V4V58dAnwyN91nL/hy5
- kdj1WoUUBO6wMMF9msQumeroQ0yUJ7xUcgFQtVX/0+sMNQmiRCoIqHTFcZ5ZXhaPqObmSvTx39D
- R3n28wqQYUjQI2Snl6ePce7nme04qf+/VhLO9s4NiFAdiQAqwQ==
-X-Received: by 2002:a05:6512:3b21:b0:5b8:f048:473d with SMTP id
- 2adb3069b0e04-5bfb716dd83mr3119476e87.7.1793106429587; 
- Tue, 27 Oct 2026 06:07:09 -0700 (PDT)
-Received: from qblck ([188.130.155.185]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5bfb7a75a79sm2226308e87.39.2026.10.27.06.07.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 06:07:08 -0700 (PDT)
-From: Artemii Mashanov <ralerrdirsardx@gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xLhGY-0002iJ-CO
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:31:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1xLhGV-0007bh-DI
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:31:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793107856;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nnDjgW97vP60byO5e2+j7cMYce/RN9nf/dWP/aptmyo=;
+ b=HZVi38JQDGz3gD27DiwSHSd8R/2/aG6pqxGBPMGWITCN/weSLo1MAuy4HbR9k6G42d9oTA
+ bK3v33LmfYoUQAI5rtIGY4gCe0iNRI3QS/t5+rjxRTJkHpYhaz5EUkiVrD5t4jAXsRPcWd
+ 6CJAUdM44m1nZs1miBRG20G7FWdjuvA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-uTpz2nSIOV-pHcBhz5WwyQ-1; Tue,
+ 27 Oct 2026 09:30:54 -0400
+X-MC-Unique: uTpz2nSIOV-pHcBhz5WwyQ-1
+X-Mimecast-MFC-AGG-ID: uTpz2nSIOV-pHcBhz5WwyQ_1793107853
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69F901954B0A; Tue, 27 Oct 2026 13:30:53 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4683B30000E7; Tue, 27 Oct 2026 13:30:51 +0000 (UTC)
+From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: Artemii Mashanov <ralerrdirsardx@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] linux-user/x86_64: fix modify_ldt ABI and lm handling
-Date: Tue, 27 Oct 2026 16:06:13 +0300
-Message-ID: <20261027130613.113038-1-ralerrdirsardx@gmail.com>
-X-Mailer: git-send-email 2.55.0
+Cc: kkostiuk@redhat.com, gillian.anton@cohesity.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-stable@nongnu.org, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH] qga/vss: fix provider handling of snapshots
+Date: Tue, 27 Oct 2026 17:30:50 +0400
+Message-ID: <20261027133049.2522944-2-marcandre.lureau@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=ralerrdirsardx@gmail.com; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,201 +81,335 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-21.1 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Linux uses a 16-byte user_desc on x86_64, with a 32-bit base_addr.
-QEMU expects 24 bytes instead and rejects valid modify_ldt writes.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use a 32-bit base_addr and swap it accordingly. Ignore lm when
-building LDT entries, matching Linux. Add a shared i386/x86_64
-regression test for the ABI size and descriptor contents.
+Since commit 374f4676788c, the provider's GetSnapshotProperties()
+returns S_OK for any snapshot ID without filling in the properties.  VSS
+consults every registered provider when a requester looks up a snapshot,
+so lookups of snapshots owned by other providers now succeed with an
+all-zero VSS_SNAPSHOT_PROP. Backup software relying on it fails, e.g.
+Veeam: "Original volume name is not specified for the shadow (shadow
+volume id: '{00000000-0000-0000-0000-000000000000}')".
 
-Based on the diagnosis and proposed fix by naehrwert in issue #4691.
+Simply reverting is not an option: 374f4676788c switched to S_OK because
+returning VSS_E_OBJECT_NOT_FOUND unconditionally broke qemu-ga's own
+snapshot sets. The provider must answer for its own snapshots only. It
+does not create real shadow copies, but it does take part in the
+snapshot set during qemu-ga fsfreeze cycles. Remember the snapshot IDs
+received in BeginPrepareSnapshot(), return their
+(minimal) properties, and return VSS_E_OBJECT_NOT_FOUND for anything
+else.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4691
-Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+Entries are dropped when VSS deletes the snapshots or the set, or when
+the set is aborted (AbortSnapshots()).
+
+COM+ may hand out several CQGAVssProvider instances (and serve several
+client processes), so this registry is module-global. It is per-process
+by design and safe because the COM+ application is hosted by a single NT
+service (see CreateServiceForApplication() in install.cpp): COM+ forbids
+pooling and recycling for service-hosted applications, so exactly one
+surrogate process ever hosts the provider.
+
+On the requester side, the snapshot set is created in the persistent
+VSS_CTX_APP_ROLLBACK context, so VSS keeps it after the freeze/thaw
+cycle and may keep querying providers about it. The provider registry
+does not outlive the cycle (requester_thaw() stops the hosting service,
+and the provider process with it), so later queries would get "not
+found" for a set VSS still believes exists. Make requester_thaw() delete
+the snapshot set explicitly at the end of the cycle, whatever its
+outcome (including BackupComplete() failure and aborted snapshot sets).
+A failure to delete is only logged, since the guest filesystems have
+already been thawed.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4584
+Buglink: https://redhat.atlassian.net/browse/RHEL-250662
+Fixes: 374f4676788c ("qga: Fix VSS provider GetSnapshotProperties return value")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- linux-user/syscall.c               | 10 +----
- linux-user/x86_64/target_syscall.h |  4 +-
- tests/tcg/i386/meson.build         |  1 +
- tests/tcg/i386/modify-ldt.c        | 72 ++++++++++++++++++++++++++++++
- tests/tcg/x86_64/meson.build       |  1 +
- 5 files changed, 78 insertions(+), 10 deletions(-)
- create mode 100644 tests/tcg/i386/modify-ldt.c
+ qga/vss-win32/install.cpp   |   1 +
+ qga/vss-win32/provider.cpp  | 153 +++++++++++++++++++++++++++++++++++-
+ qga/vss-win32/requester.cpp |  26 ++++++
+ 3 files changed, 179 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 0380691..a5d827b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6237,7 +6237,7 @@ static abi_long write_ldt(CPUX86State *env,
-     struct target_modify_ldt_ldt_s ldt_info;
-     struct target_modify_ldt_ldt_s *target_ldt_info;
-     int seg_32bit, contents, read_exec_only, limit_in_pages;
--    int seg_not_present, useable, lm;
-+    int seg_not_present, useable;
-     uint32_t *lp, entry_1, entry_2;
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+index 09d94edd4f53..3b58dc840520 100644
+--- a/qga/vss-win32/install.cpp
++++ b/qga/vss-win32/install.cpp
+@@ -331,6 +331,7 @@ STDAPI COMRegister(void)
+     chk(put_Value(pObj, L"Authentication",                 short(6)));
+     chk(put_Value(pObj, L"AuthenticationCapability",       short(2)));
+     chk(put_Value(pObj, L"ImpersonationLevel",             short(2)));
++    /* NT-service-hosted apps have ConcurrentApps=1 enforced */
+     chk(pApps->SaveChanges(&n));
  
-     if (bytecount != sizeof(ldt_info))
-@@ -6245,7 +6245,7 @@ static abi_long write_ldt(CPUX86State *env,
-     if (!lock_user_struct(VERIFY_READ, target_ldt_info, ptr, 1))
-         return -TARGET_EFAULT;
-     ldt_info.entry_number = tswap32(target_ldt_info->entry_number);
--    ldt_info.base_addr = tswapal(target_ldt_info->base_addr);
-+    ldt_info.base_addr = tswap32(target_ldt_info->base_addr);
-     ldt_info.limit = tswap32(target_ldt_info->limit);
-     ldt_info.flags = tswap32(target_ldt_info->flags);
-     unlock_user_struct(target_ldt_info, ptr, 0);
-@@ -6258,11 +6258,6 @@ static abi_long write_ldt(CPUX86State *env,
-     limit_in_pages = (ldt_info.flags >> 4) & 1;
-     seg_not_present = (ldt_info.flags >> 5) & 1;
-     useable = (ldt_info.flags >> 6) & 1;
--#ifdef TARGET_ABI32
--    lm = 0;
--#else
--    lm = (ldt_info.flags >> 7) & 1;
--#endif
-     if (contents == 3) {
-         if (oldmode)
-             return -TARGET_EINVAL;
-@@ -6309,7 +6304,6 @@ static abi_long write_ldt(CPUX86State *env,
-         ((seg_not_present ^ 1) << 15) |
-         (seg_32bit << 22) |
-         (limit_in_pages << 23) |
--        (lm << 21) |
-         0x7000;
-     if (!oldmode)
-         entry_2 |= (useable << 20);
-diff --git a/linux-user/x86_64/target_syscall.h b/linux-user/x86_64/target_syscall.h
-index 68f55f8..06f3af5 100644
---- a/linux-user/x86_64/target_syscall.h
-+++ b/linux-user/x86_64/target_syscall.h
-@@ -17,7 +17,7 @@
- #if 0 // Redefine this
- struct target_modify_ldt_ldt_s {
- 	unsigned int  entry_number;
--        abi_ulong     base_addr;
-+        abi_uint      base_addr;
- 	unsigned int  limit;
- 	unsigned int  seg_32bit:1;
- 	unsigned int  contents:2;
-@@ -30,7 +30,7 @@ struct target_modify_ldt_ldt_s {
- #else
- struct target_modify_ldt_ldt_s {
- 	unsigned int  entry_number;
--        abi_ulong     base_addr;
-+        abi_uint      base_addr;
- 	unsigned int  limit;
-         unsigned int flags;
- };
-diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
-index e7c3095..b68b219 100644
---- a/tests/tcg/i386/meson.build
-+++ b/tests/tcg/i386/meson.build
-@@ -8,6 +8,7 @@ tests += {
-   'hello-i386.c': {
-     'cflags': ['-ffreestanding', '-fno-stack-protector', '-nostdlib'],
-   },
-+  'modify-ldt.c': {},
-   'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
-   'test-i386-adcox.c': {'cflags': ['-O2']},
-   'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
-diff --git a/tests/tcg/i386/modify-ldt.c b/tests/tcg/i386/modify-ldt.c
-new file mode 100644
-index 0000000..4bfa4ea
---- /dev/null
-+++ b/tests/tcg/i386/modify-ldt.c
-@@ -0,0 +1,72 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#define _GNU_SOURCE
-+#include <asm/ldt.h>
-+#include <assert.h>
-+#include <errno.h>
-+#include <stdint.h>
-+#include <sys/syscall.h>
-+#include <unistd.h>
+     /* The app should be deleted if something fails after SaveChanges */
+diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
+index 1c8eb236e57f..ad2f3ee763e6 100644
+--- a/qga/vss-win32/provider.cpp
++++ b/qga/vss-win32/provider.cpp
+@@ -11,6 +11,11 @@
+  */
+ 
+ #include "qemu/osdep.h"
 +
-+static void check_entry(const struct user_desc *desc, int func,
-+                        uint64_t expected)
++#include <vector>
++#include <algorithm>
++#include <string>
++
+ #include "vss-common.h"
+ #include "vss-debug.h"
+ #ifdef HAVE_VSS_SDK
+@@ -138,6 +143,123 @@ STDMETHODIMP CQGAVSSEnumObject::Clone(IVssEnumObject **ppenum)
+     return E_NOTIMPL;
+ }
+ 
++/* Registry of the snapshot IDs for this provider */
++class QGAVssSnapshotRegistry
 +{
-+    uint64_t entries[2];
++public:
++    bool Track(VSS_ID set_id, VSS_ID snapshot_id,
++               VSS_PWSZ volume_name, LONG context);
++    HRESULT GetProperties(VSS_ID snapshot_id, VSS_SNAPSHOT_PROP *prop) const;
++    LONG RemoveSet(VSS_ID set_id); /* returns how many were removed */
++    bool Remove(VSS_ID snapshot_id);
 +
-+    assert(syscall(SYS_modify_ldt, func, desc, sizeof(*desc)) == 0);
-+    assert(syscall(SYS_modify_ldt, 0, entries, sizeof(entries)) ==
-+           sizeof(entries));
-+    /* Linux sets the accessed bit when installing a descriptor. */
-+    assert((entries[desc->entry_number] & ~(UINT64_C(1) << 40)) == expected);
++private:
++    struct Entry {
++        VSS_ID set_id;
++        VSS_ID snapshot_id;
++        std::wstring volume_name;
++        LONG context;
++    };
++
++    std::vector<Entry> m_entries;
++    mutable SRWLOCK m_lock = SRWLOCK_INIT;
++};
++
++static QGAVssSnapshotRegistry qga_vss_registry;
++
++bool QGAVssSnapshotRegistry::Track(VSS_ID set_id, VSS_ID snapshot_id,
++                                   VSS_PWSZ volume_name, LONG context)
++{
++    bool ok;
++
++    AcquireSRWLockExclusive(&m_lock);
++    try {
++        m_entries.push_back(Entry { set_id, snapshot_id, volume_name,
++                                    context });
++        ok = true;
++    } catch (...) {
++        ok = false;
++    }
++    ReleaseSRWLockExclusive(&m_lock);
++    return ok;
 +}
 +
-+int main(void)
++HRESULT QGAVssSnapshotRegistry::GetProperties(VSS_ID snapshot_id,
++                                              VSS_SNAPSHOT_PROP *prop) const
 +{
-+    struct user_desc desc = {
-+        .entry_number = 1,
-+        .base_addr = 0x89abcdef,
-+        .limit = 0x54321,
-+        .seg_32bit = 1,
-+        .limit_in_pages = 1,
-+        .useable = 1,
-+    };
-+    const unsigned int invalid_sizes[] = {0, 15, 17, 24};
++    HRESULT hr = S_OK;
 +
-+    _Static_assert(sizeof(desc) == 16, "modify_ldt user_desc must be 16 bytes");
-+    for (unsigned int i = 0;
-+         i < sizeof(invalid_sizes) / sizeof(invalid_sizes[0]); i++) {
-+        long ret = syscall(SYS_modify_ldt, 0x11, &desc, invalid_sizes[i]);
-+
-+        /* Linux returns int-sized errors; libc may have translated them. */
-+        assert((int)ret == -EINVAL || (ret == -1 && errno == EINVAL));
++    AcquireSRWLockShared(&m_lock);
++    auto it = std::find_if(m_entries.begin(), m_entries.end(),
++        [&](const Entry &e) {
++            return IsEqualGUID(e.snapshot_id, snapshot_id);
++        });
++    if (it == m_entries.end()) {
++        hr = VSS_E_OBJECT_NOT_FOUND;
++        goto out;
 +    }
-+    for (int func = 1; func <= 0x11; func += 0x10) {
-+        for (int contents = MODIFY_LDT_CONTENTS_DATA;
-+             contents <= MODIFY_LDT_CONTENTS_CODE; contents += 2) {
-+            uint64_t expected = UINT64_C(0x89c5f2abcdef4321);
 +
-+            desc.contents = contents;
-+            if (contents == MODIFY_LDT_CONTENTS_CODE) {
-+                expected |= UINT64_C(1) << 43;
-+            }
-+            if (func == 0x11) {
-+                expected |= UINT64_C(1) << 52;
-+            }
-+            check_entry(&desc, func, expected);
-+#ifdef __x86_64__
-+            desc.lm = 1;
-+            check_entry(&desc, func, expected);
-+            desc.lm = 0;
-+#endif
++    {
++        const Entry &e = *it;
++        size_t len = (e.volume_name.size() + 1) * sizeof(WCHAR);
++        VSS_PWSZ volume = (VSS_PWSZ)CoTaskMemAlloc(len);
++
++        if (!volume) {
++            hr = E_OUTOFMEMORY;
++            goto out;
++        }
++        memcpy(volume, e.volume_name.c_str(), len);
++
++        /* not a real snapshot: no device object, exposure or timestamp */
++        memset(prop, 0, sizeof(*prop));
++        prop->m_SnapshotId = e.snapshot_id;
++        prop->m_SnapshotSetId = e.set_id;
++        prop->m_lSnapshotsCount = std::count_if(m_entries.begin(),
++            m_entries.end(), [&](const Entry &o) {
++                return IsEqualGUID(o.set_id, e.set_id);
++            });
++        prop->m_pwszOriginalVolumeName = volume;
++        prop->m_ProviderId = g_gProviderId;
++        prop->m_lSnapshotAttributes = e.context;
++        prop->m_eStatus = VSS_SS_CREATED;
++    }
++
++out:
++    ReleaseSRWLockShared(&m_lock);
++    return hr;
++}
++
++LONG QGAVssSnapshotRegistry::RemoveSet(VSS_ID set_id)
++{
++    LONG removed;
++
++    AcquireSRWLockExclusive(&m_lock);
++    auto it = std::remove_if(m_entries.begin(), m_entries.end(),
++        [&](const Entry &e) {
++            return IsEqualGUID(e.set_id, set_id);
++        });
++    removed = m_entries.end() - it;
++    m_entries.erase(it, m_entries.end());
++    ReleaseSRWLockExclusive(&m_lock);
++    return removed;
++}
++
++bool QGAVssSnapshotRegistry::Remove(VSS_ID snapshot_id)
++{
++    bool found;
++
++    AcquireSRWLockExclusive(&m_lock);
++    auto it = std::find_if(m_entries.begin(), m_entries.end(),
++        [&](const Entry &e) {
++            return IsEqualGUID(e.snapshot_id, snapshot_id);
++        });
++    found = it != m_entries.end();
++    if (found) {
++        m_entries.erase(it);
++    }
++    ReleaseSRWLockExclusive(&m_lock);
++    return found;
++}
+ 
+ /* QGAVssProvider */
+ 
+@@ -266,7 +388,7 @@ STDMETHODIMP CQGAVssProvider::SetContext(LONG lContext)
+ STDMETHODIMP CQGAVssProvider::GetSnapshotProperties(
+     VSS_ID SnapshotId, VSS_SNAPSHOT_PROP *pProp)
+ {
+-    return S_OK;
++    return qga_vss_registry.GetProperties(SnapshotId, pProp);
+ }
+ 
+ STDMETHODIMP CQGAVssProvider::Query(
+@@ -286,6 +408,27 @@ STDMETHODIMP CQGAVssProvider::DeleteSnapshots(
+     VSS_ID SourceObjectId, VSS_OBJECT_TYPE eSourceObjectType,
+     BOOL bForceDelete, LONG *plDeletedSnapshots, VSS_ID *pNondeletedSnapshotID)
+ {
++    LONG deleted = 0;
++
++    switch (eSourceObjectType) {
++    case VSS_OBJECT_SNAPSHOT:
++        if (qga_vss_registry.Remove(SourceObjectId)) {
++            deleted = 1;
++        }
++        break;
++    case VSS_OBJECT_SNAPSHOT_SET:
++        deleted = qga_vss_registry.RemoveSet(SourceObjectId);
++        break;
++    default:
++        break;
++    }
++
++    if (deleted > 0) {
++        *plDeletedSnapshots = deleted;
++        *pNondeletedSnapshotID = GUID_NULL;
++        return S_OK;
++    }
++
+     *plDeletedSnapshots = 0;
+     *pNondeletedSnapshotID = SourceObjectId;
+     return S_OK;
+@@ -295,6 +438,13 @@ STDMETHODIMP CQGAVssProvider::BeginPrepareSnapshot(
+     VSS_ID SnapshotSetId, VSS_ID SnapshotId,
+     VSS_PWSZ pwszVolumeName, LONG lNewContext)
+ {
++    if (!pwszVolumeName) {
++        return E_INVALIDARG;
++    }
++    if (!qga_vss_registry.Track(SnapshotSetId, SnapshotId,
++                                pwszVolumeName, lNewContext)) {
++        return E_OUTOFMEMORY;
++    }
+     return S_OK;
+ }
+ 
+@@ -411,6 +561,7 @@ STDMETHODIMP CQGAVssProvider::PostFinalCommitSnapshots(VSS_ID SnapshotSetId)
+ 
+ STDMETHODIMP CQGAVssProvider::AbortSnapshots(VSS_ID SnapshotSetId)
+ {
++    qga_vss_registry.RemoveSet(SnapshotSetId);
+     return S_OK;
+ }
+ 
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 1b0155c691ef..565eefcfb283 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -52,6 +52,7 @@ static t_VssFreeSnapshotProperties pVssFreeSnapshotProperties;
+ static struct QGAVSSContext {
+     IVssBackupComponents *pVssbc;  /* VSS requester interface */
+     IVssAsync *pAsyncSnapshot;     /* async info of VSS snapshot operation */
++    VSS_ID idSnapshotSet;          /* snapshot set created for this cycle */
+     HANDLE hEventFrozen;           /* notify fs/writer freeze from provider */
+     HANDLE hEventThaw;             /* request provider to thaw */
+     HANDLE hEventTimeout;          /* notify timeout in provider */
+@@ -116,6 +117,7 @@ static void requester_cleanup(void)
+         vss_ctx.pVssbc->Release();
+         vss_ctx.pVssbc = NULL;
+     }
++    vss_ctx.idSnapshotSet = GUID_NULL;
+     vss_ctx.cFrozenVols = 0;
+     qga_debug_end;
+ }
+@@ -446,6 +448,7 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+         err_set(errset, hr, "failed to start snapshot set");
+         goto out;
+     }
++    vss_ctx.idSnapshotSet = guidSnapshotSet;
+ 
+     if (mountpoints) {
+         PWCHAR volume_name_wchar;
+@@ -680,6 +683,29 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
+         err_set(errset, hr, "failed to do snapshot set");
+     }
+ 
++    /*
++     * The snapshot set is created in VSS_CTX_APP_ROLLBACK context, so
++     * it is persistent: if it was committed, VSS keeps it (and keeps
++     * querying providers about it) until it is explicitly deleted. The
++     * freeze/thaw cycle is over whatever the outcome above, so delete
++     * it now. Failure is not fatal here, only log it.
++     */
++    {
++        LONG lDeletedSnapshots = 0;
++        VSS_ID idNonDeletedSnapshot;
++        HRESULT hrDelete;
++
++        hrDelete = vss_ctx.pVssbc->DeleteSnapshots(vss_ctx.idSnapshotSet,
++                                                   VSS_OBJECT_SNAPSHOT_SET,
++                                                   TRUE,
++                                                   &lDeletedSnapshots,
++                                                   &idNonDeletedSnapshot);
++        if (FAILED(hrDelete)) {
++            qga_debug("failed to delete snapshot set after thaw,"
++                      " hr=0x%08lx", hrDelete);
 +        }
 +    }
-+    desc = (struct user_desc) {
-+        .entry_number = 1,
-+        .read_exec_only = 1,
-+        .seg_not_present = 1,
-+    };
-+#ifdef __x86_64__
-+    desc.lm = 1;
-+#endif
-+    check_entry(&desc, 0x11, 0);
-+    return 0;
-+}
-diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
-index ad4d1f5..56f4e8a 100644
---- a/tests/tcg/x86_64/meson.build
-+++ b/tests/tcg/x86_64/meson.build
-@@ -25,6 +25,7 @@ test_mmx_h = custom_target('test_mmx_h',
-                            output: 'test-mmx.h')
- 
- tests += {
-+  '../i386/modify-ldt.c': {},
-   '../i386/test-i386-ssse3.c': {},
-   '../i386/test-3dnow.c': {
-     'cflags': ['-I', meson.current_build_dir(),
++
+     if (err_is_set(errset)) {
+         vss_ctx.pVssbc->AbortBackup();
+     }
 -- 
-2.55.0
+2.56.0.116.g6de20f6092dc
 
 
