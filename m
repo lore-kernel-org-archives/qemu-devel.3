@@ -1,99 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74114606A31D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF666606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=JbVRppq8
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=CqY1GBEs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLn54-0006qh-3G; Tue, 27 Oct 2026 15:43:34 -0400
+	id 1xLnDp-0002oh-Fx; Tue, 27 Oct 2026 15:52:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn51-0006pQ-RO
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:33 -0400
-Received: from mail-dl2-x04.google.com ([2607:f8b0:4864:38::4])
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xLnDi-0002mW-T1
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:31 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1xLn4y-0003tc-Jq
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:43:30 -0400
-Received: by mail-dl2-x04.google.com with SMTP id
- a92af1059eb24-1922a6f0d23so30335c88.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:43:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xLnDg-0004po-I4
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:52:30 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-48df4e9d2d4so137950f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793130207; x=1793735007; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1793130747; x=1793735547; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kV9MGrhLfQt8+CvLTa6nad43g4dkqoltiDEq1TElRZs=;
- b=JbVRppq86K5HxTn/+d1A0d3ZhkuGEfuzt+In68u3uZg2SaC9yAkQOcmDM6gIYcq0/K
- PKfJUmlK4hCbbD2E1oLVrhF+k4M/MOQLfUaXxfd97GuGAQGooAMzcqJBit45pEjDZoho
- Mc8eJlQhd6DYXDZbaUqLsWjkQRcipS1wEeYOBQlvZTj+N8w2wG+vKSxgGwBF+di8vcG9
- d0zUKY//jEjarGkk3p97yoKo+X3VCVOrLKKy4k07/en9zenr2bsE+H8Gj9diHd2WSFqP
- AOmXYiJgppJxbN/pGxboay8silsH7vS3xSUj2P2/Q1xbZahrgkzad9x7XPMTnE2Lp4pw
- kuEw==
+ bh=+MHRJB5J5iOFxUMzNzx6BYiIhoUyWnvpT0Qsh+j+9P8=;
+ b=CqY1GBEsnPngN5uP0GC0K5vJ1y7F10pp+Qb82u+5Lmb3GNh19/XthV9OCRbVolgbhq
+ kPTiipmnpTnWy3dgujHbFCJjGoDv7KAWsfDievQ2bZ/toj93E2XKCGQweOqPCLwRwYmj
+ AId1pFfa1lyj75Gc6OBioJFAOwcOHg8pNOx7r2KI0nUrqrExjTZLmP1gzz40QmatR94Y
+ YT1CIL9Rv9+6bGN2VjKiMW+Ym5K86TdV2BbBDCmsIVodM9dUa736ZCixd3n5vYCc+aOZ
+ bFFhSYSdDvTI/KIjUYD7Ky4YybIMEU6433O3dR9ngpX2Zin019TNNU2RZt7TCRLlrbcI
+ 9oLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793130207; x=1793735007;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=kV9MGrhLfQt8+CvLTa6nad43g4dkqoltiDEq1TElRZs=;
- b=yZ2VQghshrrnqxERlSVZFAPFrHyIoOe2Peci2nyUttR7OCIIUAyUUr360qayJSdzCP
- OPstpt4OHOQacmu0YLL5SMDEw7HQ1oCrqSdVsCSLPypN9TBgaxkE5G13omor+oZte+GX
- cjj5H2vpkFqgg1S3XZ+54r8YuRPOlMjOwm5jRmwznXgCXwRP53WYwEHB2RyHmgu4hiZe
- vSfBRSBQjHjiaY7ssfcJ92FW2zabgSxaUXdBiZrRrdeYotuIBj94STBskvJbsZIWtDPi
- c5/dWzaKtuJBtu9sXEAHFSI/26aaAsIPRYzxp+cVdAbRO5dzYCefmq5MnTtcCSCxc+yi
- zIlA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxaVy6812dXGK0bFxBsFXb64YLK4ZhAhWWfKnsQQ0ocRT69A37IppPMae1VOM9rBb7VE9n8LP6QbUeh@nongnu.org
-X-Gm-Message-State: AFq9FYJDjTQ5wtKP0qq8XVqmsTWCUUsKcLFPZWfc1ApAPGklvXpo/eM6
- 5u9KgGSjTWS5uoMRbQiL98lmqQ+FE6eIDcpcp0r/phFLs0Cj2AXpgG9y
-X-Gm-Gg: AYBFou3uv14DNkVHTJ9noXZDh48nfUOk3zmKXVvFiRaRAbZ5NgUb52PX2s30IsIkIcY
- DdiwyH6JZvqS69J1XCs9kRQzrJw+h9Dg/wDyV2LMCnsQWOHlyKlmKabXX+t7G50FqcifutlEvJm
- Ryb3V3I8GdhrraaOXJrGepIHrw76zmOs1N1xOJRI9f9WtxZ2oCuNCciIpLumsxPtdsJr2WUpo/X
- PDwD+kmTuC+8GVMNIjleXBLDFLLbKWdpGEkdHt98bQ2wiXuHNmnZ6eGJmgnMedtWZVDRFr6HYkm
- rAZFjtxVixu0AbwdXTCco+FPVu0USbqh08nOxq5V175bfXxKCKy6ODOhzigwsJHKd1yeX2ArrJ0
- hn/+9lPksAaFWVEWb7bahIZkQ4mm6EJMboNgNlUZabvVSoYjC3AZxkt0ICExqT3bpBkzqJAKYTR
- 2/mxe6S/QFEgg5IaOFZIma1uNwaVLBgUFwa3/8ZDyiz7Dx/YDVDAtfdqV/8a7K2t61GsG3Q3Mx9
- p5g/Z8IXixCZpJe8FXc5qYGNt4TYw6rY3/9hBgVSxRh9NVlc1rhtOWfvfBlvpdo3WtpaaWGIS2C
- xXvgQWhaN5hhtc5OaoO9M7dtFocdRveSwUGHyfdu5a82dFY/HzH4pAgrrZdDailWHSnbWUMn+ah
- XxtCOTg5phrsOf7UwifmC+mIut4ttSPbprBgjfG3SqIoJndq+pA==
-X-Received: by 2002:a05:693c:23c4:b0:36a:15c3:2aaa with SMTP id
- 5a478bee46e88-36a200d82ccmr935861eec.29.1793130206717; 
- Tue, 27 Oct 2026 12:43:26 -0700 (PDT)
-Received: from fedora.tail9bb79b.ts.net ([119.82.106.50])
+ d=1e100.net; s=20260707; t=1793130747; x=1793735547;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=+MHRJB5J5iOFxUMzNzx6BYiIhoUyWnvpT0Qsh+j+9P8=;
+ b=pbATEpkzc8NnbAv2H7tBa8+z8AjzsriJKxEqqUQF8/Z+JAbHzFeeqXKKTDOc2xJGxJ
+ n+ecmy6SzLBMWb1ITYk0C4+juL7CPTvNTpL2Rz+wxhHXp2GZGpGundAZId0LLMuTO3Ym
+ +/ldTUooortGErAkVOAjxXvtA1455zVpd1bk7MVqOlScoyxznA6tgJPmp6zGGzRPMk75
+ grWYcbCcaicL05MIp46M3JqtAk/BpcyCTG1XKmeI/h47oUQQru4xKLW3PcFKOj39YRQf
+ /6zMC7Ixny/4w8yjPPE4wC9jpxUir21RmHEEczgFdd4nPsqzQeBfxz1/n3aJ7xJemVAe
+ rSgQ==
+X-Gm-Message-State: AFq9FYIXL9zE+lPGON8UkZPhwF2xRy+uvUCgeIxDLAIXUVpT8kz80UCE
+ iDRsZGdtiix8HRun0yIyraQlGUsQO+I77fXC6DzeXwX+Lb0sjmhONUj2
+X-Gm-Gg: AYBFou0/OAJiamCtXIyCTwBLevs/nWEGD4pLVoz4q5QdiO93H8WhmBAcjUjvO9ALqlr
+ UyP+wWD6rswoKMQegr4QwuPsj+ZpchOP1cVQ8R25qxpfi10pymeitdwMVKf8jQgJDYmcQA43cJY
+ Hgem0K9tgfxfU7NqhjLWgfCWUjKpv0sRTS9Bk2kYWBHJkRub7ycXOTdMq+cI03gk7OQXkr96iiM
+ VYclWk9ZbUF+gCT2RLCCeexfZTGo3FP9knfXDNhLCBd5/MmfauNhji+USUuWUlL0lpUSSnorYmm
+ 9spOM/vqvlF141agjnblrlur0dOD3PcVDqgLRmLLhmSPsJFykzflAKNfo4awF+LkyDo82JjCOiJ
+ BjCeWfsW+LJWmCM0Decz+MObbny0z9+sSNsYYEcZesfPSOFBO93v8kBnnBdQif7nTLw5W7oWOZQ
+ xYiKFWumMvX0guBrZELF0Qf88YWnKyL7w/LJKYDpo9AptQGZK93PMraKGkyDZ5L5k4hDwNWUXxK
+ DtKY/LRcTY+FpN7TOZb0UAVxniNRlcRMYbMAq/Q9XPxYEHSk3I2eRCWL2zEvyD1iiJMgv8B/9NJ
+ uc+sCCV0fvgFQOk=
+X-Received: by 2002:a05:6000:4006:b0:487:72f:fb41 with SMTP id
+ ffacd0b85a97d-48e5d5a4168mr965133f8f.39.1793130747034; 
+ Tue, 27 Oct 2026 12:52:27 -0700 (PDT)
+Received: from [127.0.1.1] (95-24-99-141.broadband.corbina.ru. [95.24.99.141])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a064510b0sm20446558eec.2.2026.10.27.12.43.22
+ ffacd0b85a97d-48e3ebcb846sm24746368f8f.25.2026.10.27.12.52.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 12:43:26 -0700 (PDT)
-From: soumyajyotisarkar23@gmail.com
-To: sarkarsoumyajyoti23@gmail.com,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@kernel.org>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH v2 5/8] hw/input/hid: accept high-resolution vertical scroll
- events
-Date: Wed, 28 Oct 2026 01:12:53 +0530
-Message-ID: <20261027194256.76031-6-soumyajyotisarkar23@gmail.com>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
-References: <20261027194256.76031-1-soumyajyotisarkar23@gmail.com>
+ Tue, 27 Oct 2026 12:52:26 -0700 (PDT)
+From: Timur Maksimov <gessingate@gmail.com>
+Date: Tue, 27 Oct 2026 22:50:42 +0300
+Subject: [PATCH v2 1/6] hw/i2c: add dummy device
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:38::4;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-dl2-x04.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
+References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+In-Reply-To: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Timur Maksimov <gessingate@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1793130744; l=6354;
+ i=gessingate@gmail.com; s=20261022; h=from:subject:message-id;
+ bh=sEriCp2nS9mi03/fVztQOGEzJ6I4qYWCuM/TX7A3vm8=;
+ b=diB2p7/QGG9sXsVTHSSJyqrabth7keLSd8LeUz9euUpTagc89sf7RnIBDhlscEJw1A59YBnVy
+ CPeBp52KjC3BJt8M82xp0nWtHLphUJhFj7Pr7CRIP2ap8wcha00JWUf
+X-Developer-Key: i=gessingate@gmail.com; a=ed25519;
+ pk=xF4NKIzSbKMdte17nQ66S/q9m/A2gu6GiEWc8ZnyJmo=
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=gessingate@gmail.com; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,199 +119,226 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Simple I2C device with QOM properties to access
+transmit and receive buffers.
+Can be used for testing or prototyping.
 
-Keep the pending vertical wheel movement in 1/120 detent units instead
-of whole detents and let the HID mouse receive scroll events directly
-by setting INPUT_EVENT_MASK_SCROLL. Wheel button clicks now add a full
-detent (120 units).
-
-hid_pointer_poll() still reports whole detents, so the guest-visible
-behaviour does not change yet. The sub-detent remainder is kept in a
-per-device residual so that slow scrolling adds up instead of being
-dropped and whole detents that do not fit into the 8-bit report field
-stay queued for the next poll as before.
-
-The residual is migrated in a new optional subsection, which is only
-sent while wheel movement is pending. Because the unit of the queued
-dz values changes an incoming stream without the subsection (from an
-older QEMU, or with no wheel movement pending) has its queued dz values
-converted from detents to 1/120 units in post_load.
-
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Signed-off-by: Timur Maksimov <gessingate@gmail.com>
 ---
- hw/input/hid.c         | 97 +++++++++++++++++++++++++++++++++++++++---
- include/hw/input/hid.h |  2 +
- 2 files changed, 93 insertions(+), 6 deletions(-)
+ hw/i2c/Kconfig            |   5 ++
+ hw/i2c/i2c-dummy-device.c | 168 ++++++++++++++++++++++++++++++++++++++++++++++
+ hw/i2c/meson.build        |   3 +-
+ 3 files changed, 175 insertions(+), 1 deletion(-)
 
-diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 0f28827554..2855f6a3d9 100644
---- a/hw/input/hid.c
-+++ b/hw/input/hid.c
-@@ -145,15 +145,21 @@ static void hid_pointer_event(DeviceState *dev, QemuConsole *src,
-         if (evt->btn.down) {
-             e->buttons_state |= bmap[evt->btn.button];
-             if (evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
--                e->dz--;
-+                e->dz -= INPUT_EVENT_SCROLL_DETENT;
-             } else if (evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
--                e->dz++;
-+                e->dz += INPUT_EVENT_SCROLL_DETENT;
-             }
-         } else {
-             e->buttons_state &= ~bmap[evt->btn.button];
-         }
-         break;
+diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
+index 0766130b59..04912671db 100644
+--- a/hw/i2c/Kconfig
++++ b/hw/i2c/Kconfig
+@@ -6,6 +6,11 @@ config I2C_DEVICES
+     # to any board's i2c bus
+     bool
  
-+    case INPUT_EVENT_KIND_SCROLL:
-+        if (evt->scroll.axis == INPUT_SCROLL_AXIS_VERTICAL) {
-+            e->dz += evt->scroll.value;
-+        }
++config I2C_DUMMY_DEVICE
++    bool
++    default y if TEST_DEVICES
++    depends on I2C
++
+ config SMBUS
+     bool
+     select I2C
+diff --git a/hw/i2c/i2c-dummy-device.c b/hw/i2c/i2c-dummy-device.c
+new file mode 100644
+index 0000000000..645525a572
+--- /dev/null
++++ b/hw/i2c/i2c-dummy-device.c
+@@ -0,0 +1,168 @@
++/*
++ * QEMU I2C Dummy Device
++ *
++ * Copyright (c) 2026 Timur Maksimov <gessingate@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/i2c/i2c.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/vmstate.h"
++
++#define TYPE_I2C_DUMMY_DEVICE "i2c-dummy-device"
++OBJECT_DECLARE_SIMPLE_TYPE(I2CDummyDeviceState, I2C_DUMMY_DEVICE)
++
++#define I2C_DUMMY_ARRAY_SIZE 64
++
++struct I2CDummyDeviceState {
++    I2CSlave parent_obj;
++
++    uint8_t tx[I2C_DUMMY_ARRAY_SIZE];
++    uint8_t rx[I2C_DUMMY_ARRAY_SIZE];
++
++    uint8_t tx_pos;
++    uint8_t rx_pos;
++    uint8_t event;
++};
++
++static void i2c_dummy_device_reset(DeviceState *dev)
++{
++    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(dev);
++
++    s->tx_pos = 0;
++    s->rx_pos = 0;
++    s->event = I2C_FINISH;
++    memset(s->tx, 0, sizeof s->tx);
++    /* Don't reset rx as it is a readonly parameter for the model */
++}
++
++static int i2c_dummy_device_event(I2CSlave *i2c, enum i2c_event event)
++{
++    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
++
++    switch (event) {
++    case I2C_START_SEND:
++        s->tx_pos = 0;
 +        break;
 +
-     default:
-         /* keep gcc happy */
-         break;
-@@ -349,6 +355,18 @@ void hid_pointer_activate(HIDState *hs)
-     }
- }
- 
-+static int hid_scroll_counts(int32_t *pending, int32_t *residual, int mult)
-+{
-+    int unit = INPUT_EVENT_SCROLL_DETENT / mult;
-+    int32_t acc = *pending + *residual;
-+    int counts = int_clamp(acc / unit, -127, 127);
++    case I2C_START_RECV:
++        s->rx_pos = 0;
++        break;
 +
-+    acc -= counts * unit;
-+    *residual = acc % unit;
-+    *pending = acc - *residual;
-+    return counts;
-+}
-+
- int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
- {
-     int dx, dy, dz, l;
-@@ -373,8 +391,7 @@ int hid_pointer_poll(HIDState *hs, uint8_t *buf, int len)
-         dx = e->xdx;
-         dy = e->ydy;
-     }
--    dz = int_clamp(e->dz, -127, 127);
--    e->dz -= dz;
-+    dz = hid_scroll_counts(&e->dz, &hs->ptr.wheel_residual, 1);
- 
-     if (hs->n &&
-         !e->dz &&
-@@ -513,7 +530,8 @@ static const QemuInputHandler hid_keyboard_handler = {
- 
- static const QemuInputHandler hid_mouse_handler = {
-     .name  = "QEMU HID Mouse",
--    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL,
-+    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_REL |
-+             INPUT_EVENT_MASK_SCROLL,
-     .event = hid_pointer_event,
-     .sync  = hid_pointer_sync,
- };
-@@ -585,11 +603,74 @@ static const VMStateDescription vmstate_hid_ptr_queue = {
-     }
- };
- 
-+/*
-+ * Wheel movement used to be queued in whole detents and is now kept in
-+ * 1/120 detent units.  Without this subsection the source either was an
-+ * older QEMU or had no wheel state pending, so rescaling dz is safe.
-+ */
-+static bool hid_ptr_wheel_needed(void *opaque)
-+{
-+    HIDState *s = opaque;
-+    int i;
-+
-+    if (s->ptr.wheel_residual) {
-+        return true;
++    default:
++        break;
 +    }
-+    for (i = 0; i < QUEUE_LENGTH; i++) {
-+        if (s->ptr.queue[i].dz) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
 +
-+static int hid_ptr_pre_load(void *opaque)
-+{
-+    HIDState *s = opaque;
-+
-+    s->ptr.wheel_state_loaded = false;
++    s->event = event;
 +    return 0;
 +}
 +
-+static int hid_ptr_wheel_post_load(void *opaque, int version_id)
++static int i2c_dummy_device_send(I2CSlave *i2c, uint8_t data)
 +{
-+    HIDState *s = opaque;
++    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
 +
-+    s->ptr.wheel_state_loaded = true;
++    if (s->tx_pos >= I2C_DUMMY_ARRAY_SIZE) {
++        /*
++         * The TX buffer is full. NACK the byte.
++         */
++        return 1;
++    }
++
++    if (s->event == I2C_START_SEND) {
++        s->tx[s->tx_pos++] = data;
++    }
++
 +    return 0;
 +}
 +
-+static int hid_ptr_post_load(void *opaque, int version_id)
++static uint8_t i2c_dummy_device_recv(I2CSlave *i2c)
 +{
-+    HIDState *s = opaque;
-+    int i;
++    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(i2c);
 +
-+    if (!s->ptr.wheel_state_loaded) {
-+        for (i = 0; i < QUEUE_LENGTH; i++) {
-+            s->ptr.queue[i].dz *= INPUT_EVENT_SCROLL_DETENT;
-+        }
++    if (s->rx_pos >= I2C_DUMMY_ARRAY_SIZE || s->event != I2C_START_RECV) {
++        /*
++         * There is no more data available.
++         */
++        return 0xff;
 +    }
-+    return hid_post_load(opaque, version_id);
++
++    return s->rx[s->rx_pos++];
 +}
 +
-+static const VMStateDescription vmstate_hid_ptr_wheel = {
-+    .name = "HIDPointerDevice/wheel",
++static void i2c_dummy_device_init(Object *obj)
++{
++    I2CDummyDeviceState *s = I2C_DUMMY_DEVICE(obj);
++
++    for (int i = 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
++        g_autofree char *name = g_strdup_printf("tx[%d]", i);
++
++        object_property_add_uint8_ptr(
++            obj, name, &s->tx[i],
++            OBJ_PROP_FLAG_READWRITE);
++    }
++
++    for (int i = 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
++        g_autofree char *name = g_strdup_printf("rx[%d]", i);
++
++        object_property_add_uint8_ptr(
++            obj, name, &s->rx[i],
++            OBJ_PROP_FLAG_READWRITE);
++    }
++
++    object_property_add_uint8_ptr(
++            obj, "tx-pos", &s->tx_pos,
++            OBJ_PROP_FLAG_READWRITE);
++    object_property_add_uint8_ptr(
++            obj, "rx-pos", &s->rx_pos,
++            OBJ_PROP_FLAG_READWRITE);
++}
++
++static const VMStateDescription vmstate_i2c_dummy_device = {
++    .name = TYPE_I2C_DUMMY_DEVICE,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
-+    .needed = hid_ptr_wheel_needed,
-+    .post_load = hid_ptr_wheel_post_load,
++
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(ptr.wheel_residual, HIDState),
++        VMSTATE_I2C_SLAVE(parent_obj, I2CDummyDeviceState),
++
++        VMSTATE_UINT8_ARRAY(tx, I2CDummyDeviceState,
++                            I2C_DUMMY_ARRAY_SIZE),
++
++        VMSTATE_UINT8_ARRAY(rx, I2CDummyDeviceState,
++                            I2C_DUMMY_ARRAY_SIZE),
++
++        VMSTATE_UINT8(tx_pos, I2CDummyDeviceState),
++        VMSTATE_UINT8(rx_pos, I2CDummyDeviceState),
++        VMSTATE_UINT8(event, I2CDummyDeviceState),
++
 +        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void i2c_dummy_device_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    I2CSlaveClass *isc = I2C_SLAVE_CLASS(klass);
++
++    device_class_set_legacy_reset(dc, i2c_dummy_device_reset);
++
++    dc->vmsd = &vmstate_i2c_dummy_device;
++
++    isc->event = i2c_dummy_device_event;
++    isc->send = i2c_dummy_device_send;
++    isc->recv = i2c_dummy_device_recv;
++}
++
++static const TypeInfo i2c_dummy_device_info[] = {
++    {
++        .name = TYPE_I2C_DUMMY_DEVICE,
++        .parent = TYPE_I2C_SLAVE,
++        .instance_size = sizeof(I2CDummyDeviceState),
++        .instance_init = i2c_dummy_device_init,
++        .class_init = i2c_dummy_device_class_init,
 +    }
 +};
 +
- const VMStateDescription vmstate_hid_ptr_device = {
-     .name = "HIDPointerDevice",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .post_load = hid_post_load,
-+    .pre_load = hid_ptr_pre_load,
-+    .post_load = hid_ptr_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_STRUCT_ARRAY(ptr.queue, HIDState, QUEUE_LENGTH, 0,
-                              vmstate_hid_ptr_queue, HIDPointerEvent),
-@@ -598,6 +679,10 @@ const VMStateDescription vmstate_hid_ptr_device = {
-         VMSTATE_INT32(protocol, HIDState),
-         VMSTATE_UINT8(idle, HIDState),
-         VMSTATE_END_OF_LIST(),
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_hid_ptr_wheel,
-+        NULL
-     }
- };
- 
-diff --git a/include/hw/input/hid.h b/include/hw/input/hid.h
-index 6a9d7bf466..1e29f4ada4 100644
---- a/include/hw/input/hid.h
-+++ b/include/hw/input/hid.h
-@@ -22,6 +22,8 @@ typedef void (*HIDEventFunc)(HIDState *s);
- typedef struct HIDMouseState {
-     HIDPointerEvent queue[QUEUE_LENGTH];
-     int mouse_grabbed;
-+    int32_t wheel_residual;
-+    bool wheel_state_loaded;
- } HIDMouseState;
- 
- typedef struct HIDKeyboardState {
++DEFINE_TYPES(i2c_dummy_device_info)
+diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+index 88aea35662..4695cbcd28 100644
+--- a/hw/i2c/meson.build
++++ b/hw/i2c/meson.build
+@@ -1,5 +1,5 @@
+ i2c_ss = ss.source_set()
+-i2c_ss.add(when: 'CONFIG_I2C', if_true: files('core.c'))
++i2c_ss.add(when: 'CONFIG_I2C', if_true: files('core.c', 'i2c-dummy-device.c'))
+ i2c_ss.add(when: 'CONFIG_SMBUS', if_true: files('smbus_slave.c', 'smbus_master.c'))
+ i2c_ss.add(when: 'CONFIG_ACPI_SMBUS', if_true: files('pm_smbus.c'))
+ i2c_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('smbus_ich9.c'))
+@@ -19,4 +19,5 @@ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
+ i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
+ i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
++i2c_ss.add(when: 'CONFIG_I2C_DUMMY_DEVICE', if_true: files('i2c-dummy-device.c'))
+ system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
+
 -- 
-2.56.0
+2.53.0
 
 
