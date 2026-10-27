@@ -1,106 +1,84 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A50606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EF8606A31D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 13:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=gypHITNa
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=I64rlGZR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLgt9-0007p6-Mr; Tue, 27 Oct 2026 09:06:51 -0400
+	id 1xLgtZ-0007qg-4J; Tue, 27 Oct 2026 09:07:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLgt6-0007ov-6N
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:06:48 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
+ id 1xLgtX-0007qO-HV
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:07:15 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLgt2-0005Kp-A8
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:06:46 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6ae305e3bd9so7188262a12.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 06:06:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793106400; cv=none;
- d=google.com; s=arc-20260327;
- b=nQfzzm4g+sTzgMrc0u8D4IgjehIfQBLcGTuXbDzN861kmDvniN7itzb/Uvxs84MnBB
- yguGZby4R/TIRco1flRokL0JW3hch4Q7OsEcIupJVqNd6hIbKzts9EZD0P+S+DsQPVkX
- Sgmz170TtnutB1FmGt+1zBdwKjPJNBt98i57FHNJbAwic5FdkaOjC7oh0q22ATiwnTE9
- GnAwP8uKxKhZZGezexUpE/pyeRX7twUYNUxlSFgMtgydsKWwzU/ylnfIxXwDb1gs8g32
- G+RZeFpf8swNeq60nBUQWh9Aiew6e5Ane0yo8AInAwZKwkB/M/okMMfNaEkYnu4F2MEV
- 9R1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=nNCCpcY9seP+WQyZ1YKoKkqfU69q1FwbdZ21A/Nmb8A=;
- fh=MPecqsMkaRSl3GhOUqX93KZ8cCVU8vKIFsgDrs5S8Kg=;
- b=rlajI2XjWXscQ0DA8Kz4t0tR6qxU/TqYtYiw6Yylkdl4GeXRZTp6PWddRbkViHEeX8
- qm+ZxzhfEEV3B4tUTxiD7b/GeRm45EBxZZyQEMYEt8TWkw586D3dxpK/8ILOlwA8kC0M
- UdQtwTZ0HSZtYvAIu9HyH8JvgwgPt0icNMVr0ojWWiITk7fYL4D7CutmOx8c1nT+Zwud
- PxlRrYJsFnyiLjt5IrzPsua44m/LjD7fEqXv7SVrIyMumhQz02+wcq0NS5fEZI5zX26J
- N+8jOonGdaoeZkVi2LFUZS3iCpV/666hYxdVJqLbzyXmuNwb5ABvNqemyqYm9hrCud5y
- 8ekQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
+ id 1xLgtU-0005Vu-6J
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 09:07:14 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5ba3ac592faso2391728e87.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 06:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793106400; x=1793711200; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=nNCCpcY9seP+WQyZ1YKoKkqfU69q1FwbdZ21A/Nmb8A=;
- b=gypHITNajASU/jjjpf9zvyzAQw5XGpBhsvygsurOuaKd6E28wn8sfUe90k4r22xzpJ
- OhtluCDzSSEW81EPL7zb4OpPqrjJjqja8Qj7AwLl2ktYlvUFTcRGQkKqj6pOtAnuM0xk
- QO8MC5s/U1LmrP90CAoRupF67o4idlgxwo+nJGJDaPEdt6tvLyNT2ZP5Ec70N/grhiBO
- SNV8YmqkfFpphcgJpfXxl3zTmi3F53kXBgIapI4aPWg6XZSyszabajXZb4U4jkVOcBWh
- xIIuiHiJpBeTmdMI6WhwTvBxa2Z/DbUbHi70mixUJHhvKGx8xA+pYguk+gfNM2DD+ctC
- SNdQ==
+ d=gmail.com; s=20251104; t=1793106430; x=1793711230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=w8y8FcrivNxmXSl5ogfZ9P+6PPoIlTcQ8+g6aIw9qqM=;
+ b=I64rlGZRBRmmrHm5pDdDCHs06b0qfEyF8LNCSE2vcDMIK13J2PS8yQLDXXqTjqKI5x
+ EARTSqdBsdpqPmWvIS88aV5Cs5o4dMi5ApfPCDmwRJrneKm1TS+fe0d5wOhqG1UsH1QA
+ TbxoBm5/KIVttD98gB3vmSeYF2keVM9v7ToUeTT57gN2vhD08LMQ7VTh+vIcYtfoByQA
+ ThyeujCh622xfF+tUlellWFBKmJjayTvLP9fCpivaF193skT4xWAZfVYClHfqW+Hj1ly
+ 8doqk8zvu10dnp0OgIATNc/tXAsHJXdX5Oi8HhCQBBtBy6UVDFpxslT4Qk9yGWpAWc5w
+ PFzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793106400; x=1793711200;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nNCCpcY9seP+WQyZ1YKoKkqfU69q1FwbdZ21A/Nmb8A=;
- b=uCGkgPP9FUvigFIpJLB6+gzMn4ZO0k8zJ/skXb8lRm4GZDU7hWLhu8tqZTIbpu76Vz
- 39Htp1RFcjLNR5YLDWRvMQfcSHge88dgJLXAe2CYct+xdEjNNKZZVLF++yYa8bgRlKLA
- ity8lydVoWVmSCunLdnh9tyThmaBcX6/xRHC3sv4FQMLuOyIRKqjIbPAk9ZvqURcOylM
- ODK68ZFZ9pIgnNXQ/h4Ov+XbhX1KQp5mhL6AG4G3DQ74E8l90l0YpAwFfrTzjgdwhbFY
- skCYE5LBb232JBQz96JAs1gk5EJ4I7e416HkyCUPxpU2FQgBbvjnZ9g4ZSXzbsZtmOwC
- XZPA==
-X-Gm-Message-State: AFq9FYJsFNOcNqrZsM3sJgXhl+QCmoix77DXGbdjglgE5Z0HgOWziUNe
- +9BeH7y2U+lnkDnqJQScy/XfQ6pq2uSg4CPeCDanb+6INZiwQB53yYyihwKsVmAEFKB5S1spO2f
- BaPmu7v4LS1Ad1tQEyVfGkiO4OdNSR9o=
-X-Gm-Gg: AYBFou2+ZGEPGYqRB8nGjwMQCPI126Rn877hGyfPcmyzoWa34LdZj7KNyfv/DoV/U5l
- Bb1APiD8KcQDM6fN2CR9YmGvd4OWZi8ZpTG8ZMR1Z82XZxUhyDPUNDMhnqXdA/86iiNg8oyvXuf
- ipIAEK9IKoKa4wvOV6AtG5Jl0x+qUC44M1ATVTVzcgg1ZLyK/aT+wD+x/cXbYeAPM5/awq5VX78
- kLkkNunZE1HtzztDyCJHugsQMSpEPnEZCRQjDP+oYta2HsSYjkTpUxjgHo8i6cDuOrgG40P+wNb
- N4y9Eneyj4C4fqybVXmGILOYb7MYqvAzXGPjXtkXDOHl91b7EBjZAZQW3u1cRihgyPgHNIYpX7j
- LwNCO/nMlZE3YfF1ZC5p9uNtMxOu0Kx3uLN921k+/qV2fGo+PJNdeTFVZIg==
-X-Received: by 2002:a05:6402:5506:b0:6b1:ef5a:6719 with SMTP id
- 4fb4d7f45d1cf-6b442fcb0f3mr10272399a12.10.1793106400159; Tue, 27 Oct 2026
- 06:06:40 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793106430; x=1793711230;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=w8y8FcrivNxmXSl5ogfZ9P+6PPoIlTcQ8+g6aIw9qqM=;
+ b=o/0o2NXvYSfS1MtJ3Ovo/5wkPUE2KMX2wkxdrglTIukpcAJlYdzmUT/p9RQaEVQLZO
+ ijANs29TVIjdaKl2BBqagyuw45PQ9HSVR3s18zR07/ILUyx31AusiZ1KUchG9lErr1e8
+ MKOHumqkaGTxObuyc6PnMspopcjUde/Rlb5cVyqIIGP1ppUeyolXj5HD79QZy+E4RlRp
+ TBU/GDjniS+Xv1bNV+YCW6PWGFk+SBrLnB7rZZW8jLFTrbl0QfH78TVpjmSmsAqSeR+r
+ XxRzbyOUgg5RRSkqoCDw2NmLadbkYNZrqhnmaxWmeZyTXihUFDyFmbM0yx6/ZC7mMs84
+ s4Ng==
+X-Gm-Message-State: AFq9FYL8eeOhEZERdgqIOzYXwZVR8vygyT2gs15liy8mAcSy2lbSqG6P
+ w91nLzaioQOxPH3/kh64FXKULH8SXytzXQLrU9qC1ECELOpQ2lA25vjAl5LZmTjlCtmarA==
+X-Gm-Gg: AYBFou3r3PQ7X3sVqPKNrFFoJ/KrkuYDMDiUKf846wz9ZH+mTA1soHUt7IuPLAOctDe
+ Mq5oAJ4gjXTiDQDHlHIrrayaUUJo3AcZHr3nX8G74g9u9i5MRfx2r/M3p/p+B3tz41h/s5dvjaA
+ c4UNqxAuRAn6olr4E6vs3NKCIPl+PMFci1optRcC62oDgPr4jagkEdDyimLf0uMkeoN2Hj2fRyE
+ 2mhynpPQ2RdlJClUx/4aZoFqX9BVJpwPMqeJBh0TFZoMzyrxhYeMSC9GcEvxvUab8cM+R/xd73/
+ gI7PBo8h/Cc6r5s5LTVunZPOBZLgmtrrZ6+wErzSA8IytMZn4bZbQHv34zsn4zTB/h0pyhVxg8x
+ d3fYMsVOlM/UPTqyO3Vr6lhA0dpBN/qoTCI5SbjnApjEouV667MXTGfU0P7UiijH2m0bAE7RlYa
+ KaOwe9d5wC0NrNUYRHBUcgTOtm19UNTP8rflXCrj7eGIATA6yTvXssk5V4V58dAnwyN91nL/hy5
+ kdj1WoUUBO6wMMF9msQumeroQ0yUJ7xUcgFQtVX/0+sMNQmiRCoIqHTFcZ5ZXhaPqObmSvTx39D
+ R3n28wqQYUjQI2Snl6ePce7nme04qf+/VhLO9s4NiFAdiQAqwQ==
+X-Received: by 2002:a05:6512:3b21:b0:5b8:f048:473d with SMTP id
+ 2adb3069b0e04-5bfb716dd83mr3119476e87.7.1793106429587; 
+ Tue, 27 Oct 2026 06:07:09 -0700 (PDT)
+Received: from qblck ([188.130.155.185]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5bfb7a75a79sm2226308e87.39.2026.10.27.06.07.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Oct 2026 06:07:08 -0700 (PDT)
+From: Artemii Mashanov <ralerrdirsardx@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Artemii Mashanov <ralerrdirsardx@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] linux-user/x86_64: fix modify_ldt ABI and lm handling
+Date: Tue, 27 Oct 2026 16:06:13 +0300
+Message-ID: <20261027130613.113038-1-ralerrdirsardx@gmail.com>
+X-Mailer: git-send-email 2.55.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261013195606.152-1-luoyonggang@gmail.com>
- <f3649d73-1edf-440a-9534-7b00da4d075d@oss.qualcomm.com>
- <CAE2XoE828e76zdCEkYVcbjRwhcsaSYZF1_UE4akeaoCTqCK3zg@mail.gmail.com>
- <baf81ba3-f29f-48f0-a9a2-6dc4f005d433@oss.qualcomm.com>
- <CAE2XoE9L8tuhU2nieJ8D=Cz9svS=W3oqAH+j30RGtZibjp1G=Q@mail.gmail.com>
- <bb979f8e-1372-4be4-814e-aa5dcb09942a@oss.qualcomm.com>
-In-Reply-To: <bb979f8e-1372-4be4-814e-aa5dcb09942a@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 27 Oct 2026 21:06:26 +0800
-X-Gm-Features: AclHuK8EdUvF4ypjcwRQQ2rjEoP47ej4J7r5TLfR9Bm7zCPrwAifmCLOUY4W3R4
-Message-ID: <CAE2XoE-RcE24+9BNTSUD08QT1ECdbZm464YHiDQ4JJ4xpOE4Ww@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: defer max-v8 initializer selection until CPU
- creation
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-level <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=ralerrdirsardx@gmail.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,132 +96,202 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 14, 2026 at 5:37=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/13/2026 2:30 PM, Yonggang Luo wrote:
-> > On Wed, Oct 14, 2026 at 5:07=E2=80=AFAM Pierrick Bouvier
-> > <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>
-> >> On 10/13/26 1:19 PM, Yonggang Luo wrote:
-> >>> On Wed, Oct 14, 2026 at 4:08=E2=80=AFAM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> On 10/13/2026 12:56 PM, Yonggang Luo wrote:
-> >>>>> This is for avoid "max-v8" qom name conflict in multi-target qemu
-> >>>>>
-> >>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> >>>>> ---
-> >>>>>   target/arm/tcg/cpu-max-v8.c | 17 +++++++++++++----
-> >>>>>   1 file changed, 13 insertions(+), 4 deletions(-)
-> >>>>>
-> >>>>> diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v=
-8.c
-> >>>>> index 65f851f2006..d7323ab431c 100644
-> >>>>> --- a/target/arm/tcg/cpu-max-v8.c
-> >>>>> +++ b/target/arm/tcg/cpu-max-v8.c
-> >>>>> @@ -119,12 +119,21 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
-> >>>>>   #endif
-> >>>>>   }
-> >>>>>
-> >>>>> +static void max_v8_tcg_initfn(Object *obj)
-> >>>>> +{
-> >>>>> +    if (target_aarch64()) {
-> >>>>> +        aarch64_max_v8_tcg_initfn(obj);
-> >>>>> +    } else {
-> >>>>> +        aarch32_max_v8_tcg_initfn(obj);
-> >>>>> +    }
-> >>>>> +}
-> >>>>> +
-> >>>>>   static void cpu_max_v8_register_type(void)
-> >>>>>   {
-> >>>>> -    static const ARMCPUInfo max_v8[2] =3D {
-> >>>>> -        { .name =3D "max-v8", .initfn =3D aarch32_max_v8_tcg_initf=
-n },
-> >>>>> -        { .name =3D "max-v8", .initfn =3D aarch64_max_v8_tcg_initf=
-n },
-> >>>>> +    static const ARMCPUInfo max_v8 =3D {
-> >>>>> +        .name =3D "max-v8",
-> >>>>> +        .initfn =3D max_v8_tcg_initfn,
-> >>>>>       };
-> >>>>> -    arm_cpu_register(&max_v8[target_aarch64()]);
-> >>>>> +    arm_cpu_register(&max_v8);
-> >>>>>   }
-> >>>>>   type_init(cpu_max_v8_register_type)
-> >>>>
-> >>>> It works for the current need, but will require further changes for
-> >>>> heterogeneous emulation. A more versatile solution could be:
-> >>>>
-> >>>> arm_cpu_register(&aarch32_max_v8, target_arm);
-> >>>> arm_cpu_register(&aarch64_max_v8, target_aarch64);
-> >>>
-> >>> And another way to handle it is like x86. it's comes with two variant=
- for
-> >>>
-> >>> #ifdef TARGET_X86_64
-> >>> #define TYPE_X86_CPU "x86_64-cpu"
-> >>> #else
-> >>> #define TYPE_X86_CPU "i386-cpu"
-> >>> #endif
-> >>>
-> >>> This also solves this issue, which looks more straightforward. no nee=
-d
-> >>> .targets magic for CPU.
-> >>> Anyway, maybe the best way is to merge "x86_64-cpu" and "i386-cpu"
-> >>> into a single cpu type and
-> >>> add .targets magic? When I am trying to get x86 works, faced this iss=
-ue
-> >>>
-> >>
-> >> This solves including i386 or x86_64, but not including both at the sa=
-me
-> >> time. Same goes for arm vs aarch64.
-> >>
-> >> You can take a look at git history in target/arm, to see which kind of
-> >> changes we did to make arm and aarch64 targets linkable. You'll notice
-> >> most of the work was to remove (a lot of) #ifdef TARGET_X.
-> >
-> > See it
-> > SHA-1: ec7e5a90fea996f04ea24e81b680a87bc975354a
-> > * target/arm: Remove TYPE_AARCH64_CPU
-> >
-> > So I am just doing just the reverse direction, I am fixes x86_64 in a w=
-ay that
-> > register both "x86_64-cpu" "i386-cpu" variants, though this way seems
-> > more suitable
-> > for your heterogeneous emulation, but we need to register
-> > everything(CPUs) twice.
->
-> We'll have to register this twice anyway for heterogeneous, I don't see
-> any other solution to have both accessible at the same time. That said,
-> we are not yet there, and current patch solves the actual problem of
-> having QOM types registered twice.
->
-> I'll let Peter say what he thinks about this.
+Linux uses a 16-byte user_desc on x86_64, with a 32-bit base_addr.
+QEMU expects 24 bytes instead and rejects valid modify_ldt writes.
 
-Hi Peter, what's your suggest about this?
+Use a 32-bit base_addr and swap it accordingly. Ignore lm when
+building LDT entries, matching Linux. Add a shared i386/x86_64
+regression test for the ABI size and descriptor contents.
 
->
-> Regards,
-> Pierrick
+Based on the diagnosis and proposed fix by naehrwert in issue #4691.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4691
+Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+---
+ linux-user/syscall.c               | 10 +----
+ linux-user/x86_64/target_syscall.h |  4 +-
+ tests/tcg/i386/meson.build         |  1 +
+ tests/tcg/i386/modify-ldt.c        | 72 ++++++++++++++++++++++++++++++
+ tests/tcg/x86_64/meson.build       |  1 +
+ 5 files changed, 78 insertions(+), 10 deletions(-)
+ create mode 100644 tests/tcg/i386/modify-ldt.c
 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 0380691..a5d827b 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6237,7 +6237,7 @@ static abi_long write_ldt(CPUX86State *env,
+     struct target_modify_ldt_ldt_s ldt_info;
+     struct target_modify_ldt_ldt_s *target_ldt_info;
+     int seg_32bit, contents, read_exec_only, limit_in_pages;
+-    int seg_not_present, useable, lm;
++    int seg_not_present, useable;
+     uint32_t *lp, entry_1, entry_2;
+ 
+     if (bytecount != sizeof(ldt_info))
+@@ -6245,7 +6245,7 @@ static abi_long write_ldt(CPUX86State *env,
+     if (!lock_user_struct(VERIFY_READ, target_ldt_info, ptr, 1))
+         return -TARGET_EFAULT;
+     ldt_info.entry_number = tswap32(target_ldt_info->entry_number);
+-    ldt_info.base_addr = tswapal(target_ldt_info->base_addr);
++    ldt_info.base_addr = tswap32(target_ldt_info->base_addr);
+     ldt_info.limit = tswap32(target_ldt_info->limit);
+     ldt_info.flags = tswap32(target_ldt_info->flags);
+     unlock_user_struct(target_ldt_info, ptr, 0);
+@@ -6258,11 +6258,6 @@ static abi_long write_ldt(CPUX86State *env,
+     limit_in_pages = (ldt_info.flags >> 4) & 1;
+     seg_not_present = (ldt_info.flags >> 5) & 1;
+     useable = (ldt_info.flags >> 6) & 1;
+-#ifdef TARGET_ABI32
+-    lm = 0;
+-#else
+-    lm = (ldt_info.flags >> 7) & 1;
+-#endif
+     if (contents == 3) {
+         if (oldmode)
+             return -TARGET_EINVAL;
+@@ -6309,7 +6304,6 @@ static abi_long write_ldt(CPUX86State *env,
+         ((seg_not_present ^ 1) << 15) |
+         (seg_32bit << 22) |
+         (limit_in_pages << 23) |
+-        (lm << 21) |
+         0x7000;
+     if (!oldmode)
+         entry_2 |= (useable << 20);
+diff --git a/linux-user/x86_64/target_syscall.h b/linux-user/x86_64/target_syscall.h
+index 68f55f8..06f3af5 100644
+--- a/linux-user/x86_64/target_syscall.h
++++ b/linux-user/x86_64/target_syscall.h
+@@ -17,7 +17,7 @@
+ #if 0 // Redefine this
+ struct target_modify_ldt_ldt_s {
+ 	unsigned int  entry_number;
+-        abi_ulong     base_addr;
++        abi_uint      base_addr;
+ 	unsigned int  limit;
+ 	unsigned int  seg_32bit:1;
+ 	unsigned int  contents:2;
+@@ -30,7 +30,7 @@ struct target_modify_ldt_ldt_s {
+ #else
+ struct target_modify_ldt_ldt_s {
+ 	unsigned int  entry_number;
+-        abi_ulong     base_addr;
++        abi_uint      base_addr;
+ 	unsigned int  limit;
+         unsigned int flags;
+ };
+diff --git a/tests/tcg/i386/meson.build b/tests/tcg/i386/meson.build
+index e7c3095..b68b219 100644
+--- a/tests/tcg/i386/meson.build
++++ b/tests/tcg/i386/meson.build
+@@ -8,6 +8,7 @@ tests += {
+   'hello-i386.c': {
+     'cflags': ['-ffreestanding', '-fno-stack-protector', '-nostdlib'],
+   },
++  'modify-ldt.c': {},
+   'test-aes.c': {'cflags': ['-O1', '-msse2', '-maes']},
+   'test-i386-adcox.c': {'cflags': ['-O2']},
+   'test-i386-bmi2.c': {'cflags': ['-O2', '-fwrapv']},
+diff --git a/tests/tcg/i386/modify-ldt.c b/tests/tcg/i386/modify-ldt.c
+new file mode 100644
+index 0000000..4bfa4ea
+--- /dev/null
++++ b/tests/tcg/i386/modify-ldt.c
+@@ -0,0 +1,72 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#define _GNU_SOURCE
++#include <asm/ldt.h>
++#include <assert.h>
++#include <errno.h>
++#include <stdint.h>
++#include <sys/syscall.h>
++#include <unistd.h>
++
++static void check_entry(const struct user_desc *desc, int func,
++                        uint64_t expected)
++{
++    uint64_t entries[2];
++
++    assert(syscall(SYS_modify_ldt, func, desc, sizeof(*desc)) == 0);
++    assert(syscall(SYS_modify_ldt, 0, entries, sizeof(entries)) ==
++           sizeof(entries));
++    /* Linux sets the accessed bit when installing a descriptor. */
++    assert((entries[desc->entry_number] & ~(UINT64_C(1) << 40)) == expected);
++}
++
++int main(void)
++{
++    struct user_desc desc = {
++        .entry_number = 1,
++        .base_addr = 0x89abcdef,
++        .limit = 0x54321,
++        .seg_32bit = 1,
++        .limit_in_pages = 1,
++        .useable = 1,
++    };
++    const unsigned int invalid_sizes[] = {0, 15, 17, 24};
++
++    _Static_assert(sizeof(desc) == 16, "modify_ldt user_desc must be 16 bytes");
++    for (unsigned int i = 0;
++         i < sizeof(invalid_sizes) / sizeof(invalid_sizes[0]); i++) {
++        long ret = syscall(SYS_modify_ldt, 0x11, &desc, invalid_sizes[i]);
++
++        /* Linux returns int-sized errors; libc may have translated them. */
++        assert((int)ret == -EINVAL || (ret == -1 && errno == EINVAL));
++    }
++    for (int func = 1; func <= 0x11; func += 0x10) {
++        for (int contents = MODIFY_LDT_CONTENTS_DATA;
++             contents <= MODIFY_LDT_CONTENTS_CODE; contents += 2) {
++            uint64_t expected = UINT64_C(0x89c5f2abcdef4321);
++
++            desc.contents = contents;
++            if (contents == MODIFY_LDT_CONTENTS_CODE) {
++                expected |= UINT64_C(1) << 43;
++            }
++            if (func == 0x11) {
++                expected |= UINT64_C(1) << 52;
++            }
++            check_entry(&desc, func, expected);
++#ifdef __x86_64__
++            desc.lm = 1;
++            check_entry(&desc, func, expected);
++            desc.lm = 0;
++#endif
++        }
++    }
++    desc = (struct user_desc) {
++        .entry_number = 1,
++        .read_exec_only = 1,
++        .seg_not_present = 1,
++    };
++#ifdef __x86_64__
++    desc.lm = 1;
++#endif
++    check_entry(&desc, 0x11, 0);
++    return 0;
++}
+diff --git a/tests/tcg/x86_64/meson.build b/tests/tcg/x86_64/meson.build
+index ad4d1f5..56f4e8a 100644
+--- a/tests/tcg/x86_64/meson.build
++++ b/tests/tcg/x86_64/meson.build
+@@ -25,6 +25,7 @@ test_mmx_h = custom_target('test_mmx_h',
+                            output: 'test-mmx.h')
+ 
+ tests += {
++  '../i386/modify-ldt.c': {},
+   '../i386/test-i386-ssse3.c': {},
+   '../i386/test-3dnow.c': {
+     'cflags': ['-I', meson.current_build_dir(),
+-- 
+2.55.0
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
 
