@@ -1,101 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29F2606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28276606A322
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 19:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=TsKdz6vZ;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=gOZEC+g3
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=m1JnTQxX;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UgcTcMvs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLmn7-0002HW-Pl; Tue, 27 Oct 2026 15:25:03 -0400
+	id 1xLmnV-0002iG-4O; Tue, 27 Oct 2026 15:25:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmmo-00026k-Et
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:42 -0400
+ id 1xLmn4-0002Nv-8i
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:25:01 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xLmmm-0001pW-Px
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:42 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1xLmn1-0001qa-L8
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 15:24:57 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RIHOxF2945716
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:39 GMT
+ 69RIHWBK1917338
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZzoOvsBmnfntGKUtY823SYpacEpuzz8xMV9bPYU9ojc=; b=TsKdz6vZT8WTJ7Xo
- MQnOHfohLOqXyOhhBQ5w1zzgTc8g9QI+g4HQQleDCMHDhuZHgoEUxOjb6UT9GA3c
- xW2Yn/eJ3l1uOcWNV5DaS840ugriggnlvD4zNI4+Tn/nxzqhdxeb3xFxbTdqFsrn
- q2ACp9MiczAN3HTL4g12NR5OAcGN/G33g3XXk5MnCUtaT/ogUAw8C9oY8h2xVkXH
- KZDA9BWp2pNgYo3dlqnbi1mUdikip5SCiBiVSWypss3NDNQE4WIqaXVWZd9WrihT
- JThD42UfQBQwAmBZ6ktSkiT+yCJ2vFiLZzVnIlqjFQUR16uzlwiV34EtTJGlgvTs
- Dz9Gdw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjrq6ap95-1
+ Faq9E98kwTR3wBkz0nF/S3ELSM4kVgaQwwjx3atQvew=; b=m1JnTQxXpVFkSNxN
+ jhG3WSTU4DQ90OePqMQEPuI/fMOYV9+0FtSPJmwq2FgrVI3UjU9U6laIrYMK7NQR
+ RS8JCYqDWVdNaIkrUWWzLwhCC7dGNVxGe4KinLt40eNvmt8gZxiI88Nzti7ogX64
+ Mvnkh6iZkaY8DI+9vJcmbjEUSrt3krscilaP3ANLl8ms6uHtRcT64MtdOjuWV3VP
+ U+ZbgKzckeLgU7AvYcnZihvrvEN/yyjDzh5Y8kMaJL6vSGDaDUE+gJnvkonqEsgZ
+ keyZyvf/SwG5A97N02gK9XtkHFpyxFM4LxDQJg/OibJTakENOYcUl0jlCEz0dhQv
+ yPk2lQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjux99us2-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:39 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93cbf2fd504so19873685a.2
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:39 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 19:24:53 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-93f559420f3so13716085a.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 12:24:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793129079; x=1793733879; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793129092; x=1793733892; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZzoOvsBmnfntGKUtY823SYpacEpuzz8xMV9bPYU9ojc=;
- b=gOZEC+g3IwOT1ZFkJEexzsPYxQC3uIlOR98qsFomSiqtLiro5TlSu1u59wlu3KOqpD
- O732JBv9h7u8IUx0/R4SeGNIt+WcNwb+wiI5zQJXXKmj9CTwDtPtsi4mcBNGbIJGkBbJ
- 6eLGOjS9hXcyitlFMbsmtVtMWg6Lt+jUav6vdfkCPfCOsPSYySbU8ngvym7ngXnAzyRn
- kzMghp/DL8Iew/6C7Ud9aNlAkRzylHNZLUQaw0q9TqwE7a0y3KTSBFUuasnO+cOERg5I
- 1ZCH7gi8Adz4Psa7YZFM2J+5OX6eD/5e1wnYs75IuF7wtZeQo76KJLpC8iYbT6edqo08
- azuw==
+ bh=Faq9E98kwTR3wBkz0nF/S3ELSM4kVgaQwwjx3atQvew=;
+ b=UgcTcMvsobWCPJwc1qhixs/AuOyxmAJi7AfNKG8OHa2Jy75AkNP+2FfZtxRf9agDGc
+ Tj16pdKwkKJKAvAqhRdQP1WpJq7t7cwSe0ue6xwnsrOn4WV4ZfgwlRq/kt4B8D/bLcy+
+ 1SPoIop2Ayc/RTV1MXIoyRHmBOIYVEJhu2jhaR4KtQTn9YqtaJczTSC5p4RwbeDAFCB7
+ zIug9lUKenWgqc+/WIcon7oPAFSkI3kzNtcPtrlNkt2VvCQAk2jrEOiSmxibfxQFso2f
+ OZ8I/NHgrIGLWhA6VSBvDVoXUjfBVXv6TJy+uzsGfH3URPdWceHZ4VwkJkTVR6w0F8aU
+ 3SPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793129079; x=1793733879;
+ d=1e100.net; s=20260707; t=1793129092; x=1793733892;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZzoOvsBmnfntGKUtY823SYpacEpuzz8xMV9bPYU9ojc=;
- b=IhNj9Js3gdF9obQkRJBQDpTyMmqxFHWSJUay7UTicwAQgfKqknNxKusyTHl+Y74Lmq
- wg8K9D5d+croazFQxdu3i4Lz/6sZ0sSOqGsVbL29Imm/pm5ITByLBC1jp8GYeU/8rxMR
- 5oLdHkEy8D2tZ5xv9Mo6odSId8tKYRvin5OYYANuBh7uCvIELkSU8oX7uzl8E5zSfOIb
- X0IywSPieOLOUKDGpU9sTmlOLtvgiXbMbyZDdjUVybNtXfzwIwNSqi1dt/Pd6Y8I8c2T
- 6ke8TaX5Huu8kPyi6SWfJEU/hnJ2mRv1/Cfj5Ema/dm2GOuCVWObPezCfi98SRKmHW8i
- G48A==
-X-Gm-Message-State: AFq9FYLli2XsJjrfAzfPd8MLXOe8goV2fTwcYQsn0TCyQ8zb7u9721o9
- NPu6tYnKMWbNYPoAyT1hVIRcYSrOlzpLQPg+G6keNWUWzRCivt45c2EJNeE+VhlDcX5PLzRC4RW
- Ihv36ENemG/kS/8JlHvXE1FJMJAwHNsx7+Dy2IptfwwXI+SlXntaiIANlJfWq9hDZHQ==
-X-Gm-Gg: AYBFou0C/2SJUGjjdT/0rH+i1vaW9C7cBvuHhkaFqukY8Fu46LD5GsPMn6FUz6J9Qwd
- dqWstTJPtmLTPdQdsHPEDfecP4ngMA5k0h6+Z6MYf59KYkANYwpmrfyqsB99oBMyqDuBIo5hmqS
- an7BjLdigui/1Ke/37rTsL1Q/d4oox34MX6fF1ckd/Aey4zCO1xyxKnda/k2gBqGBJwCPeRj8+d
- cvB8EizDWMLCHTguO2oK3jlCbKbm5Vu1P0R3lsaZVqbdBj5QmJgl1gFVrdZ1IRnOhiRjmNgxoxj
- cUUi7H+Ae9vyjGNz9NWo10ftSAn9U9pMA+cYUH+DGo3UtnS2AWhd2M3a6qnkEBtE/hqnKNiScy5
- AA62VdpPLir8vquK6qzldT5gANUw4RQe+Pvc0FCJzefdcnr8aUZP5HKJlYDAqXDMB727odDWa3e
- jwtkSNG29BN9bw72s2lv+6nAp9paHKpA==
-X-Received: by 2002:a05:620a:2806:b0:93f:1936:b20a with SMTP id
- af79cd13be357-940ef9b179cmr1654856685a.76.1793129078999; 
- Tue, 27 Oct 2026 12:24:38 -0700 (PDT)
-X-Received: by 2002:a05:620a:2806:b0:93f:1936:b20a with SMTP id
- af79cd13be357-940ef9b179cmr1654853485a.76.1793129078489; 
- Tue, 27 Oct 2026 12:24:38 -0700 (PDT)
+ bh=Faq9E98kwTR3wBkz0nF/S3ELSM4kVgaQwwjx3atQvew=;
+ b=nfz/gBd3lkjnamvLgPzTyBfpve/d/YaMJwJPhr3BTbZ5xbAlx1dPDHzlJY206QbFaC
+ jeZZbELW58FnZGptZsgjKvVT8+sUZkXkB6AxP3oeeAKYHoE3rxv4zgNE51DikaPERzy1
+ bBWxXfI2tB+lmSMi4u0PbT2MsN8g1DCfclAhqK9yhyoRpz6EYF85XzZ6K9rDlvnr/yo2
+ h3F3+wzpXv+X4LckNO+GE0TYTiBhlEcxxO2ngbqfvPeokrNYbjEPRMc2HFGiiCEerW6f
+ YYw7FbBln6ebLVFoxr3E4A0iTK/OkDtvGbZjUZERiSqdApiFiwuHbbOVkKc+qFVBZB78
+ 8xSw==
+X-Gm-Message-State: AFq9FYKBqad5ALf3EFgNYlxTn+RpoUl5i7SWnSEJFkpq14cAomimCzqj
+ XJxV7QPO0753awceC6xND7kys0lZyzQHM5joB7NGsBoCQp3cbSZaHBwoVAbSYOQVGQ+D0YtMVO5
+ SecJloLaq1juGrf0Nu5Aqd+N1YZuwCGoKVp6c9qw6Jb1+jBb8oSqkILgd47dxYmqQQA==
+X-Gm-Gg: AYBFou1OagC/WS7erkw4MWw+jF77HuHDIwGz0W6ECYx7N23Xxh+bEQTpCeTobKiDS1A
+ MKD1lXfRjR5hKox/ICHTkcqAckoLA7zdI1/nmr54GS/L7qFPP5uq3dyUeZzD6pEVEzOKaJi7q8o
+ bXDdf2NKRJ52adOVcANUpVh5GzKaCF/rehOf5rEI5+XAA4g1yaa8PUsaydNxhyIbuq0kVzg1VZP
+ 038VU94LRC+WJJXZpisBorFkyWnTaOmn5RfQQqdo2t/CVWQz6lchNcShXcfvXMLj3UtaVJeAt57
+ NqvlBc4T1KMDJ1no/UTdsPBVdJquxxIDjGy79Ogqki0y4nvHYRyyZ1qXbbN5m1eSXtAZ/290JFR
+ pJpUqyfXoOVik8nXMqeI9B2nZReFrYVI6jG5JsnsKsSU8nNi9DJd0tbVoumLi3ZnrIWByVxUgDb
+ x3fb921m2ZINDA4dG7wYnq0ukgrYTLCw==
+X-Received: by 2002:a05:620a:4087:b0:93f:6f8:9d72 with SMTP id
+ af79cd13be357-940ef9d1e95mr1504202785a.77.1793129092551; 
+ Tue, 27 Oct 2026 12:24:52 -0700 (PDT)
+X-Received: by 2002:a05:620a:4087:b0:93f:6f8:9d72 with SMTP id
+ af79cd13be357-940ef9d1e95mr1504199385a.77.1793129091978; 
+ Tue, 27 Oct 2026 12:24:51 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc3932sm25829189f8f.18.2026.10.27.12.24.37
+ ffacd0b85a97d-48e3ebd48eesm24484211f8f.30.2026.10.27.12.24.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Oct 2026 12:24:37 -0700 (PDT)
+ Tue, 27 Oct 2026 12:24:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/59] docs,
- tests/functional: Drop redundant CLI arguments in imx8m*-evk
- invocations
-Date: Tue, 27 Oct 2026 20:22:49 +0100
-Message-ID: <20261027192341.9197-9-philmd@oss.qualcomm.com>
+Subject: [PULL 10/59] tests/functional/arm: Add console test for `sabrelite`
+ machine
+Date: Tue, 27 Oct 2026 20:22:51 +0100
+Message-ID: <20261027192341.9197-11-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027192341.9197-1-philmd@oss.qualcomm.com>
 References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
@@ -103,35 +102,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=RYwFmFtv c=1 sm=1 tr=0 ts=6ae0fa77 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Authority-Analysis: v=2.4 cv=GYyCDgXL c=1 sm=1 tr=0 ts=6ae0fa85 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=FRSEYCzRAAAA:8
- a=E3Kq4i6MJonbbSQa9EIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22 a=H4N_Y-AU75W7NKDNhZlT:22
-X-Proofpoint-GUID: CYWYdZAsY8NBC6Bg5CTkFcDXRiJwmLoo
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX1Q31Z9sS7X9F
- C+UmORisYiP6Eq2wQJcWomk6ZOBhNm5BpRamVj8RgFaP73mk1dvYdNqMkIgV/RlE4pWlmK5BP6D
- HCiLXON+AcncG1XyGyEVuVkkJEKHXfA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX9qGjaWJ1Tr3U
- gMV35yyDptrcSHxhPrGs2sekQ4LkWVDMmZ8ljDc5bMNzODCHE2c8rVutkrJiJHwF6pWgIlwpVUf
- MKrIhaZKowO9Y97hJFEgZAkomQI/AzmsNMCAzuTHg9nh213rpEhqMiBLZGyG360x9tO7mT4gIsn
- YB8O5LF5siu+FhaV7rXwvNuqwWAQcdVw/Sa6AQ+ZUdkUL9KSorDX/lJM1dZjkrz7kjOAloNwwVy
- QM1XI+XO/hBPpSkFb49TI8XJcXGgyZP100Can11iOGeJGduR+PHVdzDTR0I+DZlabi+uWktTjNI
- COgvE1+BeBrIuo15qkLi7e1rSTtY4pCXa1dqsWjwonhJBMMyQ9qZMCkGo26TuGAND5LJcvm5UhX
- tpu9/7hVF20ZP1gpvDAygNRyu3XokBY5GMeDvfMw6UnjIT9FXs4xV7D4o1LCQ7oaxLs1Qbg/4kx
- eNe/okAnRtQzSKhb0sw==
-X-Proofpoint-ORIG-GUID: CYWYdZAsY8NBC6Bg5CTkFcDXRiJwmLoo
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=xNf9USuDAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=FRSEYCzRAAAA:8
+ a=KKAkSRfTAAAA:8 a=t8u_m-V0UNmSaiA-_D4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=H4N_Y-AU75W7NKDNhZlT:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: CI1wnthKms-IpzMa7wulFBkC0uGQM-Qv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX1tPE7miCEyCg
+ JFTxyFm9I7dPMUZNgGubab6keyvKVG0BAYyUm9c80zH//qBKkMnDiQxFOy09b7VHvJcU6W3Sf4l
+ 25PuEIniK0B06IFKCIi+cUHNUG4j4bKeRomcOlE1XCB5vSApIOJ88Stqi68QSJT8vGs/E3qw04y
+ a0L8xlY00ANwqOtfMpO3AbUA04rAr8o/XBcjEwaSfqB++4100tzZ2vEMdEdstJzXUMPDLwEtTs8
+ ZfU30gkbSX+bnQY5+7JuWVSZY8VLPh5OaMkzzg5mzzMG9IvoiX60u1oyZsOoyVOqTHJZ/JWMH2y
+ sNrvrPxttRaDytvatlgjxjKEeSbno3BJpBuCYZ3ep2iMRklqaAg1HyFOrE9d2mFivmQpCgRZyxy
+ R4+U8VFAZyjua8Ws/6m+PSx7pKWrs8bocmTnLEW2S+DPDQJKXV8CNG7fUN/InnZtQBUCp/zdm2f
+ F/AKJIhD2BkW6Cwh83Q==
+X-Proofpoint-GUID: CI1wnthKms-IpzMa7wulFBkC0uGQM-Qv
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA3NyBTYWx0ZWRfX/z630h3y95tj
+ UQGNLYn/iuIz1ua4rGrV6zwOnomLEtXM+i5gYkz+3XYuyMK2VNHFUC2lZrEAHcbzopkcbjhXuDv
+ k4wxCDoF9L2E4UXrXNEQIReh0tGAjyc=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-27_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270077
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270077
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -161,65 +159,107 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Both boards provide defaults matching real hardware. No need to ask
-users to repeat these. Also, remove these redundant arguments from the
-functional tests such that the defaults get tested.
+The test currently exercises the Linux kernel and waits for the first
+daemons to be started. At this point, basic hardware is initialized and
+if the log message is reached, no driver ended up in an endless loop,
+thus the system should be usable.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Bin Meng <bin.meng@processmission.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20261006083445.30362-7-shentey@gmail.com>
+Message-ID: <20261006083445.30362-9-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- docs/system/arm/imx8m.rst                   | 2 +-
- tests/functional/aarch64/test_imx8mm_evk.py | 4 +---
- tests/functional/aarch64/test_imx8mp_evk.py | 4 +---
- 3 files changed, 3 insertions(+), 7 deletions(-)
+ MAINTAINERS                            |  1 +
+ tests/functional/arm/meson.build       |  2 ++
+ tests/functional/arm/test_sabrelite.py | 46 ++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+)
+ create mode 100755 tests/functional/arm/test_sabrelite.py
 
-diff --git a/docs/system/arm/imx8m.rst b/docs/system/arm/imx8m.rst
-index 1bcb8255be57..5348757089c4 100644
---- a/docs/system/arm/imx8m.rst
-+++ b/docs/system/arm/imx8m.rst
-@@ -79,7 +79,7 @@ For i.MX 8M Mini EVK:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4ca1751e30f5..47fbd05db186 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1069,6 +1069,7 @@ F: include/hw/usb/imx-usb-phy.h
+ F: include/hw/arm/fsl-imx6.h
+ F: include/hw/misc/imx6_*.h
+ F: include/hw/ssi/imx_spi.h
++F: tests/functional/arm/test_sabrelite.py
  
- .. code-block:: bash
- 
--  $ qemu-system-aarch64 -M imx8mm-evk -smp 4 -m 2G \
-+  $ qemu-system-aarch64 -M imx8mm-evk \
-       -display none -serial null -serial stdio \
-       -kernel Image \
-       -dtb imx8mm-evk.dtb \
-diff --git a/tests/functional/aarch64/test_imx8mm_evk.py b/tests/functional/aarch64/test_imx8mm_evk.py
-index 86725991f147..73d286167c55 100755
---- a/tests/functional/aarch64/test_imx8mm_evk.py
-+++ b/tests/functional/aarch64/test_imx8mm_evk.py
-@@ -52,9 +52,7 @@ def test_aarch64_imx8mm_evk_usdhc(self):
-         self.require_accelerator("tcg")
-         self.set_machine('imx8mm-evk')
-         self.vm.set_console(console_index=1)
--        self.vm.add_args('-m', '2G',
--                         '-smp', '4',
--                         '-kernel', self.kernel_path,
+ SBSA-REF
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 61b00932db93..989b841555d7 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -24,6 +24,7 @@ test_arm_timeouts = {
+   'quanta_gsj' : 240,
+   'raspi2' : 120,
+   'replay' : 240,
++  'sabrelite' : 240,
+   'tuxrun' : 240,
+   'sx1' : 360,
+ }
+@@ -65,6 +66,7 @@ tests_arm_system_thorough = [
+   'raspi2',
+   'realview',
+   'replay',
++  'sabrelite',
+   'smdkc210',
+   'stellaris',
+   'sx1',
+diff --git a/tests/functional/arm/test_sabrelite.py b/tests/functional/arm/test_sabrelite.py
+new file mode 100755
+index 000000000000..31a0a49eac4d
+--- /dev/null
++++ b/tests/functional/arm/test_sabrelite.py
+@@ -0,0 +1,46 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest, Asset
++
++
++class SabreliteMachine(LinuxKernelTest):
++
++    ASSET_KERNEL = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/vmlinuz'),
++        '5851e9c61465a26db810796db671c4729e66e81c365b3ebb1a4b7f772737605b')
++
++    ASSET_INITRD = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/netboot/initrd.gz'),
++        'fe33f836232a9107716d34dc56d36dea81bab039243a2a42ea6583a50c9b92ca')
++
++    ASSET_DTB = Asset(
++        ('https://ftp.debian.org/debian/dists/bookworm/main/installer-armhf/'
++         '20230607/images/device-tree/imx6q-sabrelite.dtb'),
++        '3ad637c8ea55ebd058a67f686e050b82ccb0d1327bc283623c133c48ad87db44')
++
++    def setUp(self):
++        super().setUp()
++
++        self.kernel_path = self.ASSET_KERNEL.fetch()
++        self.initrd_path = self.ASSET_INITRD.fetch()
++        self.dtb_path = self.ASSET_DTB.fetch()
++
++    def test_console(self):
++        self.require_accelerator("tcg")
++        self.set_machine('sabrelite')
++        self.vm.set_console(console_index=1)
 +        self.vm.add_args('-kernel', self.kernel_path,
-                          '-initrd', self.initrd_path,
-                          '-dtb', self.dtb_path,
-                          '-append', 'root=/dev/mmcblk2p1',
-diff --git a/tests/functional/aarch64/test_imx8mp_evk.py b/tests/functional/aarch64/test_imx8mp_evk.py
-index 99ddcdef8350..2ec421c32632 100755
---- a/tests/functional/aarch64/test_imx8mp_evk.py
-+++ b/tests/functional/aarch64/test_imx8mp_evk.py
-@@ -52,9 +52,7 @@ def test_aarch64_imx8mp_evk_usdhc(self):
-         self.require_accelerator("tcg")
-         self.set_machine('imx8mp-evk')
-         self.vm.set_console(console_index=1)
--        self.vm.add_args('-m', '2G',
--                         '-smp', '4',
--                         '-kernel', self.kernel_path,
-+        self.vm.add_args('-kernel', self.kernel_path,
-                          '-initrd', self.initrd_path,
-                          '-dtb', self.dtb_path,
-                          '-append', 'root=/dev/mmcblk2p1',
++                         '-initrd', self.initrd_path,
++                         '-dtb', self.dtb_path)
++
++        self.vm.launch()
++        self.wait_for_console_pattern('Starting system log daemon:')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.55.0
 
