@@ -1,104 +1,73 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A368A606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 07:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3254606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 07:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=fvluU8Zt
+	dkim=pass (1024-bit key, unprotected) header.d=huawei.com header.i=@huawei.com header.a=rsa-sha256 header.s=dkim header.b=CGKsZWbn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLbBw-0008M2-3S; Tue, 27 Oct 2026 03:01:52 -0400
+	id 1xLbKB-0001UM-OJ; Tue, 27 Oct 2026 03:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLbBu-0008Lp-VI
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:01:50 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLbBt-0002s3-8G
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 03:01:50 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6b1aa377c61so4920820a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793084507; x=1793689307; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3VT6hOBkedohLNvvLn5T4101un/pKxQMYOKhYaFkUv4=;
- b=fvluU8ZtNyQ5wi4xlHt881hjkcjjGuNRwcBfYw3ujIcQ91G5/733gHincas/9QLZDc
- p/WEb0ORl/GZ+ms0ztH775+kJ8zwUojkFXgyALYMcYHTTt+BMiaSAb0x1iX6hysZYpp8
- dSL3lTxSWRD5a1iXw8J808kwqAZP8SBkCNEEEqEn/DqDMr4EjTJQ1TWvx+szHfvPkWvn
- zKVoTIhzVhf3+dYJ6sGX3XspzY+AL/lmi8fB6wJXS+iB66Q3KtGFO7jYJ9msJYA/2lwQ
- G1ZIQMxdKg7ejn2cmNb05Fj4p3ermL0huTVkiVGd68wjPntXrIvRpJZRW/ClMPOK+ZKP
- /Yeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793084507; x=1793689307;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=3VT6hOBkedohLNvvLn5T4101un/pKxQMYOKhYaFkUv4=;
- b=haHIe7i1ZE7azytRdybW6iDEkpGIuYy2NhKTcDhRRCgRc95Lr1JTJgxaDUaSz8QCKG
- W6rTzqoWZxh8ENNeSDMMPDk04//9RnWNMxSDzXxJNBECCGVV+MeeScMOEBfWHjorblr/
- TN0z6+cgDF40mR7Q5BLQaWSBiYu80s2nRX4/ZKE9uyEyW3XLJK0YD2xJWRBSCF2Y5svF
- 2kme9kIpQbxIcHelH+WotBCL1odDUgmG4Ya7T95PNFJMJnLHouRLpPRg4BfDIKq1JsGv
- xDTutfqGH+xmwP1s5WqN1gb15VsFXgoPZVHG9kKPQ4QJmCvp3ig08lwcmsm9wgj1KNZG
- YPcQ==
-X-Gm-Message-State: AFq9FYKo/In2/ylFoUQtw6rmpYJWHsdvJGzCOTUEwdvEh4laQJiG4WJk
- +ScJmgsdJH+BPy59baOwxe0WIn9O8HITY+A9txulUhQuVrMHxsQzzNFRnUt6cLKaFpDWrQBt0ND
- U+iBjAmwY7LFRJgeeTA93M+aixp/ZyVhfyqt2pXzD6pVDv3QXCbm9dPUjhrevnaYZp5xbCJaxAX
- jkSGAka0nrxTmxS5RAdpPbN6ROclYE8OjtarLOObDGIok=
-X-Gm-Gg: AYBFou2FBkdmlJykNOG7z6OEg+5G68WsSxeq/ma++nUz1jo9sje3TB/+JFuc/fOacx2
- mymL9FfSMRh1eqpIIAM/+6tGcsXhYifFmswQVU9NnIHNjOT0r9il9RuAC55q5nMchGiSaJP2UKJ
- VnenBlD3vRwOhR1C77E/28WKOg95SLvhiY5PSk3oNRUboWtAI/3fEC6YOBZ8KH2OdTh+HNOnuJu
- eCepuB/ltXmfVYnWe9UF9WC3q1kaBXxSPivWJBxObHt4sew9p1svyapSY9NvAZhBmoO7L8EecYF
- R4F50oi/7iOnjAhPjan0QLxgh5qJ1NYt/WiTWE3O95UawzhCau1bTvYIQf0cwQhVdno93qsVAX6
- k1l6m5blk/5TwkQVX8aHYFSjKOgAKvYqYJ4Zl+uuIx/LDZk4EdTQLLRM5ouR8xxfHFnK3I6TAdP
- z40Cn/PAxTbvpxnn22McxUS1e0V9tMmNB0LqSIKMcqGkidw2nuMKLvw+MHzGVsUdK8re0kJDtc7
- lLislXBc2dj+tz0uKJJIDBlhn1aFQE7zxU/4nMspTku9+n1eERekcScMOg8WYby5YXScu/nZASp
- eEkXtMl3fzPY98GpZQ==
-X-Received: by 2002:a17:907:60cb:b0:c41:835b:8f24 with SMTP id
- a640c23a62f3a-c46bdfdd1abmr866073266b.49.1793084507215; 
- Tue, 27 Oct 2026 00:01:47 -0700 (PDT)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com.
- [209.85.208.51]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c46bd64f8b6sm398614566b.48.2026.10.27.00.01.46
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 00:01:46 -0700 (PDT)
-Received: by mail-ed1-f51.google.com with SMTP id
- 4fb4d7f45d1cf-6b1aa377c61so4920745a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 00:01:46 -0700 (PDT)
-X-Received: by 2002:a05:6402:4401:b0:6b1:b5ea:2580 with SMTP id
- 4fb4d7f45d1cf-6b4431163f4mr9830763a12.44.1793084505754; Tue, 27 Oct 2026
- 00:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xLbK7-0001Tr-ST; Tue, 27 Oct 2026 03:10:19 -0400
+Received: from canpmsgout07.his.huawei.com ([113.46.200.222])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1xLbK4-0003SN-Au; Tue, 27 Oct 2026 03:10:19 -0400
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+ c=relaxed/relaxed; q=dns/txt; h=From;
+ bh=lKBgr6Y264FiLGGbwD+HLkpSm5Ked5zWr7Zc89h7Lww=;
+ b=CGKsZWbnIHl/XBoKTvebl2RDzL0n0bfikpWslvpGfRF/RNfwDJrr2tGhlxSJ4MFuY+HdXPPPa
+ H3kgcgHVOOGNUS8p4cAqfczSmnehaF7QtCEWcp4KlO3xvz9QiKXlqR/ccDkC7h1vCZI8R3m8fLb
+ Y0hSujpDkvawNcauCmTc1nc=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+ by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4jDM78589JzLlTf;
+ Tue, 27 Oct 2026 15:09:24 +0800 (CST)
+Received: from kwepemk200008.china.huawei.com (unknown [7.202.194.74])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7EBC040561;
+ Tue, 27 Oct 2026 15:09:30 +0800 (CST)
+Received: from [10.67.110.68] (10.67.110.68) by kwepemk200008.china.huawei.com
+ (7.202.194.74) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 27 Oct
+ 2026 15:09:29 +0800
+Message-ID: <d9e9f9dc-3ac4-4455-b27a-f9a450d319bf@huawei.com>
+Date: Tue, 27 Oct 2026 15:09:29 +0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
- <20261021231346.2452179-11-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20261021231346.2452179-11-daniel.barboza@oss.qualcomm.com>
-From: Jay Chang <jay.chang@sifive.com>
-Date: Tue, 27 Oct 2026 15:01:34 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfaX=qx6+YBY14xmCFN9zHpDiCmZEDjK1PSw-HaN4nCQHA@mail.gmail.com>
-X-Gm-Features: AclHuK9JgeXVgSefLsjo1LZENULMXqmkNHH9GY8FlNiqBk_OmL7LDmVbbv5GBqY
-Message-ID: <CAMXXpfaX=qx6+YBY14xmCFN9zHpDiCmZEDjK1PSw-HaN4nCQHA@mail.gmail.com>
-Subject: Re: [PATCH v4 10/18] hw/riscv/rv-trace-messages.c: add encoded trap
- message
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu@processmission.com, antikostya2@gmail.com, 
- Palmer Dabbelt <palmer@dabbelt.com>, frank.chang@sifive.com
-Content-Type: multipart/alternative; boundary="0000000000000494fd065ecd05a1"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=jay.chang@sifive.com; helo=mail-ed1-x535.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/37] Add Arm MPAM emulation
+To: Jonathan Cameron <jic23@kernel.org>, Peter Maydell
+ <peter.maydell@linaro.org>
+CC: Jinjie Ruan <2118537295@qq.com>, <anisinha@redhat.com>,
+ <armbru@redhat.com>, <eblake@redhat.com>, <imammedo@redhat.com>,
+ <michael.roth@amd.com>, <mst@redhat.com>, <pbonzini@redhat.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
+ <jonathan.cameron@oss.qualcomm.com>
+References: <tencent_22E95650AA60C6E59860452C0D61A21F1105@qq.com>
+ <CAFEAcA8MyrqWC7=A5Bw0G5G-2J64iTLmfY33dNDLm0jvmRb+Eg@mail.gmail.com>
+ <27040691-e4b6-44f3-b588-cbbbee13cde2@huawei.com>
+ <CAFEAcA_4xb3CBL9TTAdKMOG_ijWpt9wsveCp0R602VoFaWUH1Q@mail.gmail.com>
+ <tencent_82895B2529E419B263EC95C8349389114407@qq.com>
+ <CAFEAcA-amrQOM8+qnaxgWLyGNM=vp-vKV=OqqU7Qp17PRiH_KA@mail.gmail.com>
+ <501bf5cc-cee1-4593-943d-505003541d41@huawei.com>
+ <CAFEAcA8ffgrbh_gUK7wcZW5E8p=ZC+CC=3U23ah+nWHxOGpjrg@mail.gmail.com>
+ <20261020013906.0ee141e5@jic23-hlaptop>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20261020013906.0ee141e5@jic23-hlaptop>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemk200008.china.huawei.com (7.202.194.74)
+Received-SPF: pass client-ip=113.46.200.222;
+ envelope-from=ruanjinjie@huawei.com; helo=canpmsgout07.his.huawei.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,40 +80,92 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---0000000000000494fd065ecd05a1
-Content-Type: text/plain; charset="UTF-8"
 
-> +    payload.tvalLow = extract64(trap_addr, 0, 32);
-> +    payload.tvalHigh = extract64(trap_addr, 32, 32)
->
-For synchronous exceptions, these fields should contain the trap value (tval),
-but both are currently extracted from trap_addr
 
-Thanks
-Jay Chang
+在 2026/10/20 8:39, Jonathan Cameron 写道:
+> On Mon, 19 Oct 2026 13:28:03 +0100
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+> 
+>> On Mon, 19 Oct 2026 at 13:19, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>>
+>>>
+>>>
+>>> 在 2026/10/19 20:01, Peter Maydell 写道:  
+>>>> On Mon, 19 Oct 2026 at 12:46, Jinjie Ruan <2118537295@qq.com> wrote:  
+>>>>> One honest caveat  
+>>>>
+>>>> Please don't send LLM output to qemu-devel.  
+>>>
+>>> Sorry. Here is my understanding:
+>>>
+>>> As mpam_csu_value() and mpam_mbwu_value() below done, the monitor code
+>>> scales the base value based on the software-configured PBM
+>>> (Partition-Based Monitoring) or MB MAX values, rather than just
+>>> returning zeroes.  
+>>
+>> Thanks. So we report "you're using the full amount the system
+>> is configured to let you use". That seems reasonable.
+>>
+>>> And most of the code are to expose the many MPAM registers, constructing
+>>> the ACPI tables, and building the hardware topology of the memory
+>>> controllers and caches to correctly expose the MSC (Memory System
+>>> Controller) components.  
+>>
+>> OK, that makes sense too -- I guess there's just a lot of pieces
+>> of hardware in there.
+>>
+>> thanks
+>> -- PMM
+>>
+> Hi Peter, ruanjinjie,
 
---0000000000000494fd065ecd05a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Jonathan,
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote gmail=
-_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">+=C2=A0=
- =C2=A0 payload.tvalLow =3D extract64(trap_addr, 0, 32);<br>
-+=C2=A0 =C2=A0 payload.tvalHigh =3D extract64(trap_addr, 32, 32)<br></block=
-quote><div><p class=3D"gmail-wnfdnt10 gmail-_1ibi0s3fd gmail-_1ibi0s3ce gma=
-il-_1ibi0s3eg" dir=3D"auto">For synchronous exceptions, these fields should=
- contain the trap value (<code>tval</code>), but both are currently extract=
-ed from <code>trap_addr</code></p><p class=3D"gmail-wnfdnt10 gmail-_1ibi0s3=
-fd gmail-_1ibi0s3ce gmail-_1ibi0s3eg">Thanks<br>Jay Chang</p></div><div>=C2=
-=A0</div></div></div>
+> 
+> FWIW the much more minimal emulation that I posted years ago and
+> which I few crumbs of in here came up at plumbers this year with
 
---0000000000000494fd065ecd05a1--
+With your foundational patch, it is very convenient to extend
+other functionality.
+
+> an engineer from yet another company asking if I could look at
+> rebasing and upstreaming because they also found it very useful.
+
+Glad to hear that someone else is also interested in QEMU emulation of MPAM.
+
+> I was trying to work out if I could fit that into my todo list
+> or whether to ask a colleague to do it.
+> 
+> As such I'm very pleased to see this surface a few days later!
+> Even what I had was very useful for testing so I'm with this
+
+Feel the same way when developing new features or adapting test cases.
+
+> much extended feature set I'm not surprised to hear even more
+> issues have shaken out.
+> 
+> It might take me a little while to get time to look at this series
+> but I definitely plan on doing so!
+
+Look forward to your review and suggestions.
+
+> 
+> Jonathan
+> 
+> p.s. On off chance that (carefully unnamed) engineer sees this I
+>      had no idea ruanjinjie was working on this.
+> 
+>      Must have been something in the air :)
+
+-- 
+Best regards,
+Jinjie
+
 
