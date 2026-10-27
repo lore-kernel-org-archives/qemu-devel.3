@@ -1,86 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1518606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A73606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=DwFr8rL4
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YTxYe7Cx
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM0GE-0003nh-Bx; Wed, 28 Oct 2026 05:47:58 -0400
+	id 1xM0Oi-000570-T1; Wed, 28 Oct 2026 05:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xM0GC-0003n6-Pa
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:47:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <slp@redhat.com>) id 1xM0Og-00056n-JQ
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xM0G9-0000hd-T6
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:47:56 -0400
+ (Exim 4.90_1) (envelope-from <slp@redhat.com>) id 1xM0Oe-0001oL-Hb
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:56:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793180872;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mYdmvCwTNnx686W1vycwuc0j5Thv6V2Za45Xz5rTE18=;
- b=DwFr8rL4FQZJlVjgJCSFeSDJlBAEnXuMkYFxvcUwA8j3m3sfmuFCZMhBrO8YCgja/QyEXQ
- ozI0ewoopX9ICtv/H9Umplq7Usi3QYF0WlF1D6YdHLWH3ZxoqoKyVnzpfVb8Gv4vrn3T8m
- f+zMJurIlkjxYNrJB5pYG5noJxwIWKk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ s=mimecast20190719; t=1793181399;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HcrCWjOKmoCzFWTBS3JEEtit8pLa0tX6DsyD4nRyUYg=;
+ b=YTxYe7Cxw9d1uMxpt+D7LXPDwICedhwinAxTuCh23c25RRqfB8NZwk5JH4QcVRkgUbBoaB
+ lzzbYu3Jh3L/MD7vHqL1x/otv36O3dp2h8CBHrLgVf0NnTQ3aTfJY3zIDOn0zGVSKTKACy
+ xzvjH5/Rz6xcongQan0wV8QqcmiANME=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-pSjE8TTUMiKG_KaOdTFw8g-1; Wed,
- 28 Oct 2026 05:47:50 -0400
-X-MC-Unique: pSjE8TTUMiKG_KaOdTFw8g-1
-X-Mimecast-MFC-AGG-ID: pSjE8TTUMiKG_KaOdTFw8g_1793180869
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-DcsiVid0MpuVjuJkPRs0YQ-1; Wed,
+ 28 Oct 2026 05:55:33 -0400
+X-MC-Unique: DcsiVid0MpuVjuJkPRs0YQ-1
+X-Mimecast-MFC-AGG-ID: DcsiVid0MpuVjuJkPRs0YQ_1793181332
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26F9A180063A; Wed, 28 Oct 2026 09:47:49 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B06FA1800444; Wed, 28 Oct 2026 09:47:46 +0000 (UTC)
-Date: Wed, 28 Oct 2026 09:47:43 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PULL 51/59] system: Remove deprecated 'debug-threads' option
- for -name
-Message-ID: <auHEv-AQmulcwaad@redhat.com>
-References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
- <20261027192341.9197-52-philmd@oss.qualcomm.com>
- <0dab848f-426e-49af-a28e-8165591b9d03@linaro.org>
- <e84af371-8fce-466c-9df6-c74863c127a4@oss.qualcomm.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 575C31954190
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:55:32 +0000 (UTC)
+Received: from f44vm (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DC171800347; Wed, 28 Oct 2026 09:55:30 +0000 (UTC)
+From: Sergio Lopez <slp@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Sergio Lopez <slp@redhat.com>
+Subject: [RFC PATCH] vsock: optionally enable F_DGRAM support
+Date: Tue, 27 Oct 2026 20:28:28 +0100
+Message-ID: <20261027192828.42642-1-slp@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e84af371-8fce-466c-9df6-c74863c127a4@oss.qualcomm.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=slp@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: 16
+X-Spam_score: 1.6
+X-Spam_bar: +
+X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,80 +76,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 28, 2026 at 08:32:20AM +0100, Philippe Mathieu-Daudé wrote:
-> (Cc'ing migration compat and libvirt teams)
-> 
-> On 28/10/26 02:01, Richard Henderson wrote:
-> > On 10/27/26 14:23, Philippe Mathieu-Daudé wrote:
-> > > 'debug-threads' option for -name was deprecated in v11.0
-> > > (commit 1b65aeed2a0 "system: unconditionally enable thread
-> > > naming") thus can now be removed.
-> > > 
-> > > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> > > Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> > > Reviewed-by: Ján Tomko<jtomko@redhat.com>
-> > > Reviewed-by: Dr. David Alan Gilbert<dave@treblig.org>
-> > > Message-Id:<20261018232917.7716-1-philmd@oss.qualcomm.com>
-> > > ---
-> > >   docs/about/deprecated.rst             |  7 -------
-> > >   docs/about/removed-features.rst       |  9 +++++++--
-> > >   system/vl.c                           | 11 -----------
-> > >   tests/qtest/migration/framework.c     |  4 ++--
-> > >   tests/qtest/migration/precopy-tests.c |  2 +-
-> > >   qemu-options.hx                       |  7 +++----
-> > >   6 files changed, 13 insertions(+), 27 deletions(-)
-> > 
-> > You need to remove this from the testsuite as well:
-> > 
-> > https://gitlab.com/qemu-project/qemu/-/jobs/17523155796#L58
-> 
-> Hmm I was surprised because the pipeline in my fork passed, but then
-> looking clearer this job is marked as "allow_failure: true" for me,
-> why is it blocking on the mainstream repo?
+Add the "dgram" property to optionally expose the VIRTIO_VSOCK_F_DGRAM
+feature to the guest.
 
-It isn't blocking on upstream repo, it is allow_failure: true there
-too. Manual inspection of the job shows it is a real bug though.
+Sent as an RFC until the feature is formalized in the specs and merged
+into the Linux kernel (same reason why the headers have been manually
+updated).
 
-> Back to the test, this is the migration-compat-x86_64 job running
-> previous release binary vs latest one, so I'd think this is the
-> expected behavior, v11.0 and v11.1 have that deprecated option, and
-> we can not test vs v11.2 which removed it.
-> 
-> If we want to change that workflow, then when deprecating on v11.0
-> we also need to remove the tests coverage, so when we remove the
-> feature at $deprecation_release+2 the migration-compat test does not
-> break. Here the question is, do we want to keep testing deprecated
-> features? Maybe yes in the case of unmaintained area when the
-> deprecation process triggers new maintainers stepping in and the
-> deprecation to be cancelled.
-> 
-> We could also mark the feature removed but keep it ignored and
-> undocumented until the next release but we'll likely forget and
-> miss that in workflow so I don't recommend that way.
-> 
-> Maybe there are another ways to resolve that but I'm not seeing
-> them. Ideas?
+Signed-off-by: Sergio Lopez <slp@redhat.com>
+---
+ hw/virtio/vhost-vsock-common.c                | 15 +++++++++++++++
+ hw/virtio/virtio-qmp.c                        |  2 ++
+ include/hw/virtio/vhost-vsock-common.h        |  1 +
+ include/standard-headers/linux/virtio_vsock.h |  2 ++
+ 4 files changed, 20 insertions(+)
 
-'debug-threads=on' has no relationship to live migration data
-stream, it merely gives the threads names. Just remove this
-option from the migration testsuite as it is irrelevant to
-what is being tested.
-
-With regards,
-Daniel
+diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
+index 4ef037627b..1230f9855a 100644
+--- a/hw/virtio/vhost-vsock-common.c
++++ b/hw/virtio/vhost-vsock-common.c
+@@ -21,6 +21,7 @@
+ 
+ const int feature_bits[] = {
+     VIRTIO_VSOCK_F_SEQPACKET,
++    VIRTIO_VSOCK_F_DGRAM,
+     VIRTIO_F_RING_RESET,
+     VIRTIO_F_RING_PACKED,
+     VHOST_INVALID_FEATURE_BIT
+@@ -35,11 +36,23 @@ uint64_t vhost_vsock_common_get_features(VirtIODevice *vdev, uint64_t features,
+         virtio_add_feature(&features, VIRTIO_VSOCK_F_SEQPACKET);
+     }
+ 
++    if (vvc->dgram != ON_OFF_AUTO_OFF) {
++        virtio_add_feature(&features, VIRTIO_VSOCK_F_DGRAM);
++    } else {
++        virtio_clear_feature(&features, VIRTIO_VSOCK_F_DGRAM);
++    }
++
+     features = vhost_get_features(&vvc->vhost_dev, feature_bits, features);
+ 
+     if (vvc->seqpacket == ON_OFF_AUTO_ON &&
+         !virtio_has_feature(features, VIRTIO_VSOCK_F_SEQPACKET)) {
+         error_setg(errp, "vhost-vsock backend doesn't support seqpacket");
++        return features;
++    }
++
++    if (vvc->dgram == ON_OFF_AUTO_ON &&
++        !virtio_has_feature(features, VIRTIO_VSOCK_F_DGRAM)) {
++        error_setg(errp, "vhost-vsock backend doesn't support datagrams");
+     }
+ 
+     return features;
+@@ -289,6 +302,8 @@ static struct vhost_dev *vhost_vsock_common_get_vhost(VirtIODevice *vdev)
+ static const Property vhost_vsock_common_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("seqpacket", VHostVSockCommon, seqpacket,
+                             ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO("dgram", VHostVSockCommon, dgram,
++                            ON_OFF_AUTO_OFF),
+ };
+ 
+ static void vhost_vsock_common_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 5aaeebdd96..4386fd25f8 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -375,6 +375,8 @@ static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
+ static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
+     FEATURE_ENTRY(VIRTIO_VSOCK_F_SEQPACKET, \
+             "VIRTIO_VSOCK_F_SEQPACKET: SOCK_SEQPACKET supported"),
++    FEATURE_ENTRY(VIRTIO_VSOCK_F_DGRAM, \
++            "VIRTIO_VSOCK_F_DGRAM: SOCK_DGRAM supported"),
+     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
+             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
+     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
+diff --git a/include/hw/virtio/vhost-vsock-common.h b/include/hw/virtio/vhost-vsock-common.h
+index 01bf6062af..8235ac6406 100644
+--- a/include/hw/virtio/vhost-vsock-common.h
++++ b/include/hw/virtio/vhost-vsock-common.h
+@@ -39,6 +39,7 @@ struct VHostVSockCommon {
+ 
+     /* features */
+     OnOffAuto seqpacket;
++    OnOffAuto dgram;
+ };
+ 
+ int vhost_vsock_common_start(VirtIODevice *vdev);
+diff --git a/include/standard-headers/linux/virtio_vsock.h b/include/standard-headers/linux/virtio_vsock.h
+index 467e751b17..7b0419f158 100644
+--- a/include/standard-headers/linux/virtio_vsock.h
++++ b/include/standard-headers/linux/virtio_vsock.h
+@@ -40,6 +40,7 @@
+ 
+ /* The feature bitmap for virtio vsock */
+ #define VIRTIO_VSOCK_F_SEQPACKET	1	/* SOCK_SEQPACKET supported */
++#define VIRTIO_VSOCK_F_DGRAM		3	/* SOCK_DGRAM supported */
+ 
+ struct virtio_vsock_config {
+ 	uint64_t guest_cid;
+@@ -69,6 +70,7 @@ struct virtio_vsock_hdr {
+ enum virtio_vsock_type {
+ 	VIRTIO_VSOCK_TYPE_STREAM = 1,
+ 	VIRTIO_VSOCK_TYPE_SEQPACKET = 2,
++	VIRTIO_VSOCK_TYPE_DGRAM = 3,
+ };
+ 
+ enum virtio_vsock_op {
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.55.0
 
 
