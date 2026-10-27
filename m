@@ -1,145 +1,156 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29810606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C250E606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 15:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Rke174Fe;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=C4ZYOt8t
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EMLjalLG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLint-0001uw-48; Tue, 27 Oct 2026 11:09:33 -0400
+	id 1xLiok-0002HI-4o; Tue, 27 Oct 2026 11:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLinq-0001uA-GD
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:30 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xLio2-0001w1-Vo
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1xLino-0000hc-Fo
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:30 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69RF7iFn2570471
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:09:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /M4884aPT4oFNpvxLNFc5sC3u7brSuQcX4ONRj7bubQ=; b=Rke174FeA2ewpMZL
- /w9zgn2c6NDgB9H2BWPLM9UliTyM5x/QQHEXIqiQ3Ki5pgEqtoOFYLVGV91fiEFb
- /gpOSP2ZjOZF0kj7TXe5Ya5Jkm7vIPOP+B8qerXoOz9JMgaiTmM7BD1szvi9nXl/
- pmrAYFAOd4+qsjbJFYS+ww9hqh9ApR7XCxRnBcH0w44gldwFh7L86Kgv/CGFZYJv
- LCU1SpHytPSCRRgtCPc+0nnqmCtQhHzvS8XhHWy5p3Yc6098Tiw22RbNB4HkcFXy
- CvxWu+rdhEtIftC/dTsdIYROQROCaWRmh1YX/S7eFgJg3W8URzB5V8V9UWW82GS1
- LmSXqw==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjst1h7v0-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 15:09:15 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-4f2040e10d8so3894364b6e.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 08:09:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793113754; x=1793718554; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=/M4884aPT4oFNpvxLNFc5sC3u7brSuQcX4ONRj7bubQ=;
- b=C4ZYOt8tQEJz05n6H28yDJqu+UOF0OsSepTsNYeyM8lDoj2aqC7MkSJKq/JvdsLYcN
- HUVZrQa1FkQl8GbZycEAuhMm058pIpfyufYN8k+3EMmDFb+CjFH6TThgQQDN996Epjhz
- d9MjLSXblt4iuCv3qiJc1z9Yy4Mtd9uViQ2qbGfgyXYmnP96BwcieNzLStfpsyPnvvJl
- 5CXBNPyt3gBzNTijZqHn8IHOOzhSzXyVQLpwkxIedv/6iUsPLG6UJG82OG3Vovk52lmT
- Gwejkxt3gJ3OJpSeEe4ht1GiEnpm4cj2ioXpCSZzwnCgXdYmsrMqoAU6J9hdO34dw9wg
- ztPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793113754; x=1793718554;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=/M4884aPT4oFNpvxLNFc5sC3u7brSuQcX4ONRj7bubQ=;
- b=EXppguu/ySUPxY2kzZwBLPiEORPjU1rXyAGokEa229oosG9j+9HIQ3XmtdFLiepeo2
- 7ZrtWQHd9BOatVg/x/shsCJg8r9ex734umKM9aGwdKp49vqBicGqx9j9W4YKQ3xJ/ZdO
- PhYpvPWY6b1wnYp76/9KiopViccxvjUow03wB+euSMtmaIYkVH59Yu3L8Vyb7miizecH
- RFvBfTyIWSo5cJ5YzZ3IfY37nm1orGzHmyABLCR+y8RN2TSS0QioLgcstpyfOgu72hz5
- lttP+SpuFcv8Euuw+C+D6MavLE8b5Av0jnXSOyYvTJbkr08czP4rSd9OMK2ELMZYYz44
- a4DA==
-X-Gm-Message-State: AFq9FYK56hTTgbOqURMYJi3rmscWDJSnLoVXCi+xNUcWyMXY2zc4L4xT
- CsNJuA3Tpy/fSoX+4CHyMTFzfEnZ1uqQl6t9cDNB4kxH35UiqOFRg0jn2arIsUOdpkOVEJt4ud7
- +wOmE6HpE7Qxo6xdPVaw2XgeuKgdKWJdA+MCj4N0IAVSpqxfUjInC4GlemrzxjeZHsQ==
-X-Gm-Gg: AYBFou3LT7hZKewvB9DhnmTBTH+QsclM7mXFnxk2P7yfB6ZOrukSRiG9uOyQRo/In+3
- +VoDJ63OrdkwUezHHwqAGMr05kkuqBP+cmkuNQGHWCmXiJ6KkDDJt8IxGcmAAu482ml4ydl/WDO
- p5jsW7ldJgKTSJIuoEe2YlVaBzuByfN9iRXW52+uQzkyz6gIBA0InpadgOo+Yp78aXb+FNz/yt8
- oZXbsEDolvzJPlNjJ+J8hqmSth7uXkqv5LzSgPixB0Oa0hmUY4qF1P26ID2Vxe8pUpe79Mk8TcF
- pTj/PG/f3refl37kQSVWG5QB1ccwaiD0TNTeHUOq7YrS45bB9C9EKUKO4vS0wWZEoU0wEL3KHDt
- jlihQd65ShU54xOg0CPZ36yb2nd9HiejMw8/h7TnjcrG6oqg=
-X-Received: by 2002:a05:6808:2443:b0:4d6:90f3:74b3 with SMTP id
- 5614622812f47-55c003d2d6fmr6119936b6e.51.1793113754365; 
- Tue, 27 Oct 2026 08:09:14 -0700 (PDT)
-X-Received: by 2002:a05:6808:2443:b0:4d6:90f3:74b3 with SMTP id
- 5614622812f47-55c003d2d6fmr6119914b6e.51.1793113753933; 
- Tue, 27 Oct 2026 08:09:13 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-55c03dc3524sm7673136b6e.0.2026.10.27.08.09.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Oct 2026 08:09:12 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-Cc: brian.cain@oss.qualcomm.com,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL v4 40/42] target/hexagon: only flush the softtlb when SSR.ASID
- changes
-Date: Tue, 27 Oct 2026 07:37:19 -0700
-Message-Id: <20261027143721.4125584-41-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261027143721.4125584-1-brian.cain@oss.qualcomm.com>
-References: <20261027143721.4125584-1-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xLio0-0000jS-Bt
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 11:09:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793113779;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YxsqXTT/2SkHCopDBU3zcdHUWKG0aEgc5S4iUgZigFw=;
+ b=EMLjalLGTYrNlCmGo2atTSKdh+ic+WcxN8E92twoOTqF6Og6d7Ro1qC5G68B9x+KITzduw
+ qiYY1++St98785pl7l2SO/CwiUAv/+7ZqPLTHo6xDN2dpBAexTzzjZeL5IPdb2fNqv7OC5
+ 4yce7LK74VH32Pa60OAsm6URxDJgQqY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-7XFlFRhPPtuZJx-cX-8Sxg-1; Tue,
+ 27 Oct 2026 11:09:34 -0400
+X-MC-Unique: 7XFlFRhPPtuZJx-cX-8Sxg-1
+X-Mimecast-MFC-AGG-ID: 7XFlFRhPPtuZJx-cX-8Sxg_1793113770
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46A391954B0B; Tue, 27 Oct 2026 15:09:28 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E918918002B1; Tue, 27 Oct 2026 15:09:01 +0000 (UTC)
+Date: Tue, 27 Oct 2026 15:08:58 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@intel.com>, Anisa Su <anisa.su@samsung.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
+ linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, qemu-arm@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Alexander Graf <graf@amazon.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Ani Sinha <anisinha@redhat.com>,
+ Luc Michel <luc@lmichel.fr>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Samuel Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Conor Dooley <conor@kernel.org>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Peter Xu <peterx@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ xen-devel@lists.xenproject.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>,
+ Farhan Ali <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Jiri Pirko <jiri@resnulli.us>, Eric Auger <eric.auger@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
+Message-ID: <auC-ilqUJq27neSR@redhat.com>
+References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
+ <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
+ <atsxLV5YZo8dr-8G@redhat.com>
+ <CAMxuvazd7G_NBOM_c6BxZn5PFSw=XQUHueHqBoQQfpzPPgi9qA@mail.gmail.com>
+ <87zevz5h4k.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Authority-Analysis: v=2.4 cv=HJ1WhYtv c=1 sm=1 tr=0 ts=6ae0be9b cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=03mWCbMf3N1Ipu_5KecA:9 a=QEXdDO2ut3YA:10
- a=efpaJB4zofY2dbm2aIRb:22
-X-Proofpoint-ORIG-GUID: Q59mej2m0-y1puWXymujpVWAFW9_pGyp
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA2MCBTYWx0ZWRfX3bNDCxox14I8
- gfeCnUEZ3jPmU7D8A6BKYMukKhXCCyJmoMqhcQgRUigMC+ip4654u8GjvymlNAS+mwX4E5/Lu1t
- tjZiKBxtWg39GKV8NpYXx/KedSURqpk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA2MCBTYWx0ZWRfX9wbMqA/GckWV
- 2FTZY4mQMn5IIJsW3vbEtreXJxL090V7E8JM3AzOYUOKdLtEnY1eK566Y3mLdi5vVDl+DPWfe/0
- iCpdppwZVQKE/Q2WT/noEAkQHM7kvmGm1o+zC04UvBQma6zpwCaKRvjh1r2W/+cwAgCc8Ld2qt3
- cdxqvGBgYVvOfq/Fi1FFw6BOKBaTyzdNKjMmVd7bHPRzRo6WbuCYnLxvOEGREzbIUy+NtQ0o+br
- odAQSzthUeRh+vuKskNE3vMZ8SgePbRCv8+ri3RKJos0uESWZDue5L7Hy1Dculzg3dq7Ka2Zcum
- QM7O8fB76JEtVOwP+fIAnDYVNNCzgfwY3pPkmEQkhmVShiSEx7eslwXnEfoFXy7ikf95lxjCTCL
- hzOkQzWMAry6QnKF1fVujNmYMo+rB50lwB3OtAJnbe8hfTJWhZrlRC3rXo6e/k988ie/crQ9NoW
- p5zT4l1Twg0+z6FnOmQ==
-X-Proofpoint-GUID: Q59mej2m0-y1puWXymujpVWAFW9_pGyp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 spamscore=0 phishscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610270060
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87zevz5h4k.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,80 +161,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-aGV4YWdvbl9tb2RpZnlfc3NyKCkgZmx1c2hlZCB0aGUgc29mdHRsYiBvbiBhbnkgY2hhbmdlIHRv
-IFNTUi5FWCwgVU0sIEdNLApvciBBU0lELCBidXQgb25seSBBU0lEIGFmZmVjdHMgdHJhbnNsYXRp
-b24uICBFWC9VTS9HTSBqdXN0IHBpY2sgdGhlIG1vZGUsCndoaWNoIGlzIGFscmVhZHkgY2FwdHVy
-ZWQgaW4gbW11X2lkeC4KCkVYIHRvZ2dsZXMgb24gZXZlcnkgZXhjZXB0aW9uIGVudHJ5L3J0ZSwg
-c28gdGhlIGZsdXNoIGNyZWF0ZWQgYSBmZWVkYmFjawpsb29wIHdoZXJlIGEgVExCIG1pc3Mgd2lw
-ZWQgdGhlIHNvZnR0bGIgYW5kIGd1YXJhbnRlZWQgdGhlIG5leHQgYWNjZXNzZXMKbWlzc2VkIHRv
-by4KClJlbmFtZSBoZXhfbW11X21vZGVfY2hhbmdlKCkgdG8gaGV4X21tdV9hc2lkX2NoYW5nZSgp
-IHRvIG1hdGNoIHdoYXQgbm93CnRyaWdnZXJzIGl0LCBhbmQgbmFycm93IGl0IHRvIHRoaXMgdGhy
-ZWFkJ3MgbW11IGluZGljZXM6IHRoZSBBU0lEIGxpdmVzIGluCnRoZSB0aHJlYWQncyBwcml2YXRl
-IFNTUiwgc28gb3RoZXIgQ1BVcyBhcmUgdW5hZmZlY3RlZC4KClJldmlld2VkLWJ5OiBQaWVycmlj
-ayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQG9zcy5xdWFsY29tbS5jb20+ClNpZ25lZC1vZmYt
-Ynk6IEJyaWFuIENhaW4gPGJyaWFuLmNhaW5Ab3NzLnF1YWxjb21tLmNvbT4KLS0tCiB0YXJnZXQv
-aGV4YWdvbi9oZXhfbW11LmggICAgfCAgMiArLQogdGFyZ2V0L2hleGFnb24vY3B1X2hlbHBlci5j
-IHwgMTcgKysrLS0tLS0tLS0tLS0tLS0KIHRhcmdldC9oZXhhZ29uL2hleF9tbXUuYyAgICB8ICA3
-ICsrKystLS0KIDMgZmlsZXMgY2hhbmdlZCwgOCBpbnNlcnRpb25zKCspLCAxOCBkZWxldGlvbnMo
-LSkKCmRpZmYgLS1naXQgYS90YXJnZXQvaGV4YWdvbi9oZXhfbW11LmggYi90YXJnZXQvaGV4YWdv
-bi9oZXhfbW11LmgKaW5kZXggMGM0OTQwNDQ0OGMuLjliNmVhNWI5NjdiIDEwMDY0NAotLS0gYS90
-YXJnZXQvaGV4YWdvbi9oZXhfbW11LmgKKysrIGIvdGFyZ2V0L2hleGFnb24vaGV4X21tdS5oCkBA
-IC0xNyw3ICsxNyw3IEBAIGV4dGVybiB2b2lkIGhleF90bGJfaW52YWxpZGF0ZV9hc2lkKENQVUhl
-eGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCBhc2lkKTsKIGV4dGVybiB1aW50MzJfdCBoZXhfdGxi
-X2xvb2t1cChDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWludDMyX3Qgc3NyLCB1aW50MzJfdCBWQSk7
-CiBleHRlcm4gdm9pZCBoZXhfbW11X29uKENQVUhleGFnb25TdGF0ZSAqZW52KTsKIGV4dGVybiB2
-b2lkIGhleF9tbXVfb2ZmKENQVUhleGFnb25TdGF0ZSAqZW52KTsKLWV4dGVybiB2b2lkIGhleF9t
-bXVfbW9kZV9jaGFuZ2UoQ1BVSGV4YWdvblN0YXRlICplbnYpOworZXh0ZXJuIHZvaWQgaGV4X21t
-dV9hc2lkX2NoYW5nZShDUFVIZXhhZ29uU3RhdGUgKmVudik7CiBleHRlcm4gYm9vbCBoZXhfdGxi
-X2ZpbmRfbWF0Y2goQ1BVSGV4YWdvblN0YXRlICplbnYsIHVpbnQzMl90IFZBLAogICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIE1NVUFjY2Vzc1R5cGUgYWNjZXNzX3R5cGUsIGh3YWRkciAq
-UEEsIGludCAqcHJvdCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50NjRfdCAq
-c2l6ZSwgaW50MzJfdCAqZXhjcCwgaW50IG1tdV9pZHgpOwpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hl
-eGFnb24vY3B1X2hlbHBlci5jIGIvdGFyZ2V0L2hleGFnb24vY3B1X2hlbHBlci5jCmluZGV4IDkx
-OWZjYmM3Yzk3Li5iYWZmZTZiYmFhOSAxMDA2NDQKLS0tIGEvdGFyZ2V0L2hleGFnb24vY3B1X2hl
-bHBlci5jCisrKyBiL3RhcmdldC9oZXhhZ29uL2NwdV9oZWxwZXIuYwpAQCAtMTkyLDI3ICsxOTIs
-MTcgQEAgdW5zaWduZWQgaGV4YWdvbl9odnhfc2VsZWN0X2NvbnRleHQoQ1BVSGV4YWdvblN0YXRl
-ICplbnYsIHVpbnQzMl90IHNzcikKIAogdm9pZCBoZXhhZ29uX21vZGlmeV9zc3IoQ1BVSGV4YWdv
-blN0YXRlICplbnYsIHVpbnQzMl90IG5ldywgdWludDMyX3Qgb2xkKQogewotICAgIGJvb2wgb2xk
-X0VYLCBvbGRfVU0sIG9sZF9HTSwgb2xkX0lFOwotICAgIGJvb2wgbmV3X0VYLCBuZXdfVU0sIG5l
-d19HTSwgbmV3X0lFOworICAgIGJvb2wgb2xkX0VYLCBvbGRfSUU7CisgICAgYm9vbCBuZXdfRVgs
-IG5ld19JRTsKICAgICB1aW50OF90IG9sZF9hc2lkLCBuZXdfYXNpZDsKIAogICAgIGdfYXNzZXJ0
-KGJxbF9sb2NrZWQoKSk7CiAKICAgICBvbGRfRVggPSBHRVRfU1NSX0ZJRUxEKFNTUl9FWCwgb2xk
-KTsKLSAgICBvbGRfVU0gPSBHRVRfU1NSX0ZJRUxEKFNTUl9VTSwgb2xkKTsKLSAgICBvbGRfR00g
-PSBHRVRfU1NSX0ZJRUxEKFNTUl9HTSwgb2xkKTsKICAgICBvbGRfSUUgPSBHRVRfU1NSX0ZJRUxE
-KFNTUl9JRSwgb2xkKTsKICAgICBuZXdfRVggPSBHRVRfU1NSX0ZJRUxEKFNTUl9FWCwgbmV3KTsK
-LSAgICBuZXdfVU0gPSBHRVRfU1NSX0ZJRUxEKFNTUl9VTSwgbmV3KTsKLSAgICBuZXdfR00gPSBH
-RVRfU1NSX0ZJRUxEKFNTUl9HTSwgbmV3KTsKICAgICBuZXdfSUUgPSBHRVRfU1NSX0ZJRUxEKFNT
-Ul9JRSwgbmV3KTsKIAotICAgIGlmICgob2xkX0VYICE9IG5ld19FWCkgfHwKLSAgICAgICAgKG9s
-ZF9VTSAhPSBuZXdfVU0pIHx8Ci0gICAgICAgIChvbGRfR00gIT0gbmV3X0dNKSkgewotICAgICAg
-ICBoZXhfbW11X21vZGVfY2hhbmdlKGVudik7Ci0gICAgfQotCiAgICAgYm9vbCB4YV9jaGFuZ2Vk
-ID0gR0VUX1NTUl9GSUVMRChTU1JfWEEsIG5ldykgIT0gR0VUX1NTUl9GSUVMRChTU1JfWEEsIG9s
-ZCk7CiAgICAgYm9vbCB4ZV9jaGFuZ2VkID0gR0VUX1NTUl9GSUVMRChTU1JfWEUsIG5ldykgIT0g
-R0VUX1NTUl9GSUVMRChTU1JfWEUsIG9sZCk7CiAKQEAgLTIyOCw4ICsyMTgsNyBAQCB2b2lkIGhl
-eGFnb25fbW9kaWZ5X3NzcihDUFVIZXhhZ29uU3RhdGUgKmVudiwgdWludDMyX3QgbmV3LCB1aW50
-MzJfdCBvbGQpCiAgICAgb2xkX2FzaWQgPSBHRVRfU1NSX0ZJRUxEKFNTUl9BU0lELCBvbGQpOwog
-ICAgIG5ld19hc2lkID0gR0VUX1NTUl9GSUVMRChTU1JfQVNJRCwgbmV3KTsKICAgICBpZiAobmV3
-X2FzaWQgIT0gb2xkX2FzaWQpIHsKLSAgICAgICAgQ1BVU3RhdGUgKmNzID0gZW52X2NwdShlbnYp
-OwotICAgICAgICB0bGJfZmx1c2goY3MpOworICAgICAgICBoZXhfbW11X2FzaWRfY2hhbmdlKGVu
-dik7CiAgICAgfQogCiAgICAgLyogU2VlIGlmIHRoZSBpbnRlcnJ1cHRzIGhhdmUgYmVlbiBlbmFi
-bGVkIG9yIHdlIGhhdmUgZXhpdGVkIEVYIG1vZGUgKi8KZGlmZiAtLWdpdCBhL3RhcmdldC9oZXhh
-Z29uL2hleF9tbXUuYyBiL3RhcmdldC9oZXhhZ29uL2hleF9tbXUuYwppbmRleCAyZTBlNGFiNzA1
-Yi4uOWEwZTI5YWUyMTIgMTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2hleF9tbXUuYworKysg
-Yi90YXJnZXQvaGV4YWdvbi9oZXhfbW11LmMKQEAgLTczLDExICs3MywxMiBAQCB2b2lkIGhleF9t
-bXVfb2ZmKENQVUhleGFnb25TdGF0ZSAqZW52KQogICAgIHRsYl9mbHVzaChjcyk7CiB9CiAKLXZv
-aWQgaGV4X21tdV9tb2RlX2NoYW5nZShDUFVIZXhhZ29uU3RhdGUgKmVudikKK3ZvaWQgaGV4X21t
-dV9hc2lkX2NoYW5nZShDUFVIZXhhZ29uU3RhdGUgKmVudikKIHsKLSAgICBxZW11X2xvZ19tYXNr
-KENQVV9MT0dfTU1VLCAiSGV4YWdvbiBtb2RlIGNoYW5nZSFcbiIpOwogICAgIENQVVN0YXRlICpj
-cyA9IGVudl9jcHUoZW52KTsKLSAgICB0bGJfZmx1c2goY3MpOworCisgICAgcWVtdV9sb2dfbWFz
-ayhDUFVfTE9HX01NVSwgIkhleGFnb24gQVNJRCBjaGFuZ2UhXG4iKTsKKyAgICB0bGJfZmx1c2hf
-YnlfbW11aWR4KGNzLCBNTVVfSURYX0FMTCk7CiB9CiAKIGJvb2wgaGV4X3RsYl9maW5kX21hdGNo
-KENQVUhleGFnb25TdGF0ZSAqZW52LCB1aW50MzJfdCBWQSwKLS0gCjIuMzQuMQoK
+On Tue, Oct 27, 2026 at 03:54:03PM +0100, Markus Armbruster wrote:
+> Marc-André Lureau <marcandre.lureau@redhat.com> writes:
+> 
+> > Hi
+> >
+> > On Fri, Oct 23, 2026 at 2:04 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >>
+> >> On Tue, Oct 20, 2026 at 02:46:11PM +0400, Marc-André Lureau wrote:
+> >> > PciDevfn is a bit special, since it accepts integer and string as
+> >> > setter, but only output integer as getter.
+
+snip
+
+> >                                                       But I agree we
+> > could do better.
+> >
+> > There are multiple options. We could keep declaring the property as
+> > str instead. In this case, the getter should probably return a string
+> > for consistency and correctness. This might surprise some existing
+> > users though.
+> 
+> I.e. ditch numeric suppport for numeric addresses, right?
+> 
+> Incompatible change.  Do we care?
+> 
+> If we don't, we should be honest about it and mark qom-get unstable.
+> 
+> > We could introduce new properties like `devfn-str` and `devfn-int`
+> > that alias the same value.
+> 
+> Compatibility break.  If breaking compatibility is okay, I'd rather use
+> the opportunity to get rid of cleverness, and go with your first option.
+> 
+> > We could also introduce a new structured QAPI type.
+> 
+> What kind of type do you have in mind?
+
+IMHO the root cause design flaw here was to overload 'addr' as a
+way to set both the slot number and function number, as using
+one property for two pieces of data is a well known anti-pattern
+we caution against.
+
+IOW, we should have had 'slot' and 'function' as separate properties
+from the start.
+
+From a CLI POV, we could easily change 'addr' to mean only the slot
+number, since it is always parsed in string format without the
+magic (slot << 4) | function encoding. Then add a 'function' prop
+
+The challenge is the impact on QMP with strict typing, as ideally
+int format would soley represent the slot number, but today the
+int format is encoded (slot << 4) | function.  So anyone relying
+on int format in QMP would silently have a semantic change if we
+altered what 'addr' means. 
+
+Deprecating 'addr' entirely and adding brand new 'slot' and
+'function' properties would be a significant disruption to
+a syntax which has been documented for years (decades).
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
