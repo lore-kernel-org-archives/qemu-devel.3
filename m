@@ -1,87 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B10606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3AB606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=JOzv2GcX
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=nsXtt10U
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLagO-00026F-VV; Tue, 27 Oct 2026 02:29:17 -0400
+	id 1xLagk-0002nR-Kl; Tue, 27 Oct 2026 02:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagG-0001ya-Jb
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:09 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1xLagY-0002MW-QJ
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:29 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagF-0008BI-5f
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:08 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-3ac78f4c10bso1793364a91.1
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:05 -0700 (PDT)
+ id 1xLagW-0008Cy-Qt
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:26 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3ace9e6e1a5so375298a91.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793082544; x=1793687344; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=K4MWpK5CB0Skv604hvdzJDPtjFWaWttfk33njqHjEEU=;
- b=JOzv2GcXnmXao440e1+exRxWzUlInqa3xrV9dv1DrFm9C0f3B5LHyQxNqr5vVw69gK
- wYglWK98O6cv42hhLMvk+wPH2GW+0tZcflaOtL3xeqFl4Tsd1OmlJR12r1uDBI68XSKb
- 4wFOgwG5K6zMccAUkCgSUmiUqTgF+E6w4m9jgBptfRELlQ5qhAV4dPXMknbZmuu3emFC
- d4CIfCZqm1kI5q4VkQf3w1xl96fQIr2Wsv+79st/cxjAs2/eL/M5FIZldt50DebBeIyJ
- 72LMpHAfpEDnw/cpoEKS2+OprljN3YcB74XstkqDuA9fKqzikBlyvd8QG78mWgbPyRYf
- I0LA==
+ d=gmail.com; s=20251104; t=1793082563; x=1793687363; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=IZihB7hgp8DFN+EGoFV6SItgOtKWC0iVgI7691uXaCc=;
+ b=nsXtt10U7r0WQ5qnhqLL1XFesCTQhnBAA5BNnqdYmbHiH2VXHgTPbKSGcIkAOb5A3N
+ gdHBNXfJ07h4m7r9IoQ5SulZCdNJ7lSpHTnKx7x0mjhWDy1Tu64iLKJGh8jWzB3ffS2J
+ /XDqpGgsnjOCsMM2QQN3ZQ+B25o4QbomkDdw+dMGUdaVLc30XOlmSjxsVP2sZY0gDB1V
+ 0SPTvMhpq3ZXjf0xHeCeU1AKulacbxh1D0eKqwEO9/4gXXFb67j8CjEaMqf9sIAG8h5o
+ 0jnfsvQ6r3UOdgmF9awhOe+6ojNcACVjPxGFh5JlMLfKGgmg+nFT86vl56DPJtK3IkiX
+ qjVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793082544; x=1793687344;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=K4MWpK5CB0Skv604hvdzJDPtjFWaWttfk33njqHjEEU=;
- b=O0ugKIzIb5UF3hN7is7arBEATq9JnhDZtkTUSSci+bSDtH09kpoEGgODU9RBab0Pqy
- jUutPXiYSA0QSe6GMmb8x91AccL09wq/k2CGSjKv1eB6nCdHbY54Kqvg4V43sgv1QePx
- GSX8PTTYvbjbcVxFep50aX36jCBNIbB1iCR2dHNkBGGPMxSIc/jcIDCERcnUuGGz97kH
- N1AXfg6ZbRzvpek/69aJ1wC2FvyeNP8jt0eB+igezJ5J6Nkx6rZ7geG7yvle+2o2zy4B
- lCEkSJFOoM27XF+4Id2s9xNOOuMLPa3bo2V9UDdiDcnqgVnoP3y2GCsTYIhvtEJWx4po
- Ie3Q==
-X-Gm-Message-State: AFq9FYLT8MLha+JN/3Jvj7GkQPfkzmGAqNj35ZXjrIHq8NkBXofK4lPF
- vQg2RMkEHWShPNeyamMxyNer3uRVwOIvrg6sOsHuSAQQePbLVD0eA9lfDvYdjA==
-X-Gm-Gg: AYBFou1NRfWS4IuK6MrMlmGQ6IP5SOd1N4TxMLc4mvr5SkKIUmqYK6YI+iZ9ndYMvdM
- xmCxyS1eiGO8MMfOikTJegGV1GpG2yqpHojp8ffJO/f4R8BV0xcpy5wHqFBSNo1ZIkp97S01hN5
- vf74LOvdlau+3ciI1v1N2s+LKnPZhdmZ8/hqgRuhGpNney5a4Ul9m6Pw/fPP05gIRYReanPkzCP
- cyp6sbgoll913UVpT6CDP8Uh5/dQRJcTONuVvfE1NQn/e6bLUDJq+iMGPYVBVjvqwR/E++Y3wAE
- entQ/EdMyuEKmB4YINCP6kA3d2ShHsEpI/GtQG1+Y0hCXVUxrmp5k5gb/9cLcVZvohj3AIfrgtI
- ucabDXVFExfB4CksF+iftKY0DBpLjI2PUa3wFNahd2ZvJP5NtsuHzfVVjXB7r2FMQi3tL2XbXIT
- mG8LPRxNHIkI1MJFPW3DuhU8ahzbxv/K6RPB4bP+dGkudNai8MRO3o7TDpSbjCAd+Ei+nyTMznq
- MgghiU/46FEpnPIgpqv8OwuNkZ8QOT2KI7gY0wTGBfFRbQr8DLdIVC20TDyww0yB1GrIRLYJCIV
- iw7yBvMV8addRRiexSpxK6G8uShIuZBjgP4pcIAo52y61Ys=
-X-Received: by 2002:a17:90b:5647:b0:39e:6a7e:ee18 with SMTP id
- 98e67ed59e1d1-3adeae8342bmr6692223a91.36.1793082544501; 
- Mon, 26 Oct 2026 23:29:04 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793082563; x=1793687363;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=IZihB7hgp8DFN+EGoFV6SItgOtKWC0iVgI7691uXaCc=;
+ b=MrklhR1+mNUQcZNf+SMhdre1t3n4hdsUpNDvT0mZS0zAO961UKWqfv+6JiKdhefX7A
+ 6Yw/W8J0e4xHs3iRHNLEGmne+nwszYj7kfJKjvGFrp4K51fcjW2c80ebJ/GNWV44dSjt
+ ewpIOnqF1kS0w+hpSu48mAojfQeazaHDKlUpKh8RCxl64iq4lrXX92c5oXNGbu1MtEpn
+ HyuH6Yfq73KQbOPWk0CAFGggZCk73t4kynSx4aULhjRBRy1CpybgrCRfmCzTWgEonUkf
+ uc1Wz7eSo56o3B28etuTL9aqhgh4ZemTPNb0ZnVmrSxQdABtjiPr5xz5zOkATzr88lNg
+ jbfw==
+X-Gm-Message-State: AFq9FYKMjATJvdCcfI0oHVaqQZ8M6z1di5VQiqBsGPU8Rp4WtTAyi2BL
+ Lx/WakJMk9xuDwdZQSMlmaMlYhx/3Rfpur76ya6POdkgysVYg81dOcZ3JmuKrg==
+X-Gm-Gg: AYBFou0jIMlbXWeosYpITg+bwLRv3w3H+DwPmZWy4lpLFRHIHv1DSxNkQ/jHRk+6Udx
+ WZdwPLrPSOPoith2IpyushHm017MBBdqWSBM98iVbdNufiwvtXfJY6SUMIkJlA/FOLKPeWW2pGf
+ 23b47Ipwgq8Oeu8rtREwiZzE/nIUnySPkdE6LG6XIK0S03Nfp/8cdCPjm6WY7ItFAs/af5uy63W
+ MDugunlYtbgj++tw92pFVJIYf3hU1rc5pIrV4pmh3bMx17dJ8Kme90PJ0vN6HDaduR9WzQ37OVf
+ 9U9y7PuSP6ZgxME8ytQUdjLZrX/rjEGiZoNV5wxy/+OanBbd+/vAbgMYZ5iSpN8JcosD+2bwMmP
+ 3PRMmaz3bCGXxjSWKMzBizHm9Z+TN1Gx+LhKg0e+/otdBw+qdjUi9KWivKP6UVuglJlEhyWo2D2
+ XVckjp0gBATWQt70s108h4GLL1u/XKv5j/u81Y/umPT4eiOorgkzRbgz/K8qaViK1MeqShdwLVG
+ UNc6ix4XErqJC9Bx2NJoRqNGK0zXWQsCxGo5lg2aXYMkO6yWHl8oRIOgaE0mRkmxJTb18rtsA==
+X-Received: by 2002:a17:90b:4f84:b0:3a7:a3c8:8f4a with SMTP id
+ 98e67ed59e1d1-3ae402841b1mr976930a91.18.1793082563297; 
+ Mon, 26 Oct 2026 23:29:23 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.02
+ 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 23:29:03 -0700 (PDT)
+ Mon, 26 Oct 2026 23:29:22 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Tao Ding <dingtaodtdt@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>, Tao Ding <dingtao0430@163.com>
-Subject: [PULL 12/29] hw/misc: use hwaddr for the k230_decomp_gzip input
- address
-Date: Tue, 27 Oct 2026 16:27:51 +1000
-Message-ID: <20261027062808.1995205-13-alistair.francis@wdc.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 18/29] docs: Move RISC-V 'Z' CPU properties section to removed
+ features
+Date: Tue, 27 Oct 2026 16:27:57 +1000
+Message-ID: <20261027062808.1995205-19-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
 References: <20261027062808.1995205-1-alistair.francis@wdc.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,31 +112,77 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Tao Ding <dingtaodtdt@gmail.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Use hwaddr for address calculations to avoid 32-bit overflow and
-address truncation.
+RISC-V 'Z' CPU properties were removed in commit 455c0fa9eef,
+for the release v10.1.0. Move the corresponding section from
+deprecated.rst to removed-features.rst, adjusting the wording
+accordingly.
 
+Fixes: 455c0fa9eef ("target/riscv: remove capital 'Z' CPU properties")
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Tao Ding <dingtao0430@163.com>
-Message-ID: <20261018141006.16398-4-dingtao0430@163.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20261020075927.56983-1-philmd@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/misc/k230_decomp_gzip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/about/deprecated.rst       | 24 ------------------------
+ docs/about/removed-features.rst |  7 +++++++
+ 2 files changed, 7 insertions(+), 24 deletions(-)
 
-diff --git a/hw/misc/k230_decomp_gzip.c b/hw/misc/k230_decomp_gzip.c
-index da4dc6f95497..54303c0e7f4a 100644
---- a/hw/misc/k230_decomp_gzip.c
-+++ b/hw/misc/k230_decomp_gzip.c
-@@ -102,7 +102,7 @@ static void k230_decomp_gzip_finish(K230DecompGzipState *s, bool crc_ok)
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 153fe118151c..dab47b6ca38b 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -362,30 +362,6 @@ the addition of volatile memory support, it is now necessary to distinguish
+ between persistent and volatile memory backends.  As such, memdev is deprecated
+ in favor of persistent-memdev.
  
- static bool k230_decomp_gzip_load_input(K230DecompGzipState *s,
--                                        uint32_t addr, uint32_t size)
-+                                        hwaddr addr, uint32_t size)
- {
-     s->input.current_offset = 0;
+-
+-RISC-V CPU properties which start with capital 'Z' (since 8.2)
+-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-
+-All RISC-V CPU properties which start with capital 'Z' are being deprecated
+-starting in 8.2. The reason is that they were wrongly added with capital 'Z'
+-in the past. CPU properties were later added with lower-case names, which
+-is the format we want to use from now on.
+-
+-Users which try to use these deprecated properties will receive a warning
+-recommending to switch to their stable counterparts:
+-
+-- "Zifencei" should be replaced with "zifencei"
+-- "Zicsr" should be replaced with "zicsr"
+-- "Zihintntl" should be replaced with "zihintntl"
+-- "Zihintpause" should be replaced with "zihintpause"
+-- "Zawrs" should be replaced with "zawrs"
+-- "Zfa" should be replaced with "zfa"
+-- "Zfh" should be replaced with "zfh"
+-- "Zfhmin" should be replaced with "zfhmin"
+-- "Zve32f" should be replaced with "zve32f"
+-- "Zve64f" should be replaced with "zve64f"
+-- "Zve64d" should be replaced with "zve64d"
+-
+ Block device options
+ ''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 6a9944a0c794..225841bd9bb9 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1038,6 +1038,13 @@ initial RISC-V QEMU port. Its usage was always been unclear: users don't know
+ what to expect from a CPU called 'any', and in fact the CPU does not do anything
+ special that isn't already done by the default CPUs rv32/rv64.
+ 
++RISC-V CPU properties which start with capital 'Z' (removed in 10.1)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++All RISC-V CPU properties which start with capital 'Z' have been removed.
++They were wrongly added with capital 'Z' in the past. CPU properties
++with lower-case names are used instead.
++
+ Power8E and Power8NVL CPUs (removed in 11.1)
+ ''''''''''''''''''''''''''''''''''''''''''''
  
 -- 
 2.55.0
