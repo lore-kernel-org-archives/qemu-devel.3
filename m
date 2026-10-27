@@ -1,118 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3A4606A327
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 09:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA507606A327
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 09:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=sLStdkty
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iqr4/h4j
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLdjK-0000Ti-Ci; Tue, 27 Oct 2026 05:44:30 -0400
+	id 1xLdl2-0004Sc-C2; Tue, 27 Oct 2026 05:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1xLdjH-0000QW-JA; Tue, 27 Oct 2026 05:44:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLdl0-0004Oc-In
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 05:46:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1xLdjE-0001P9-VG; Tue, 27 Oct 2026 05:44:27 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69R5iL4A1504072; Tue, 27 Oct 2026 09:44:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Pw2Jd3
- kFfWEzw4CvcwbzJPOnbknKylT0X2wi0lbBODY=; b=sLStdktyFLev4csmxUK3ef
- XjsR6l9A82TEQh0RiQeJ41fMwZR4UTgegVkG9UHfK4Ys9OgDJAuARnKeuEJgL4SR
- 5UgtnBcNVPp+lWeiHUxRKP9JblSI2mY94tcnMSzkR7wtMwmLKPhBvP6Kpx5P3Ccy
- qMKGhxQgvujJE/xCZdzmdoGn3Q2q57kSjT0juqDTvt/HCjoBesGv/JmRc8tHa1qx
- PQhMwo9SDC5NaTlOZwWFOR8GeZ8QLqpCigzaGVkLYn4bWVwvRZrErbBBDg74znHs
- VFQYY3O0bbtKh73GSGy2R4aU++TS7tKqOAWJI64W7EVrV3dJngzrxyw7fd5yUUmg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmd6xn7h-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 27 Oct 2026 09:44:14 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69R5npXN3687782; Tue, 27 Oct 2026 09:44:13 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hh7cvj8ct-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Oct 2026 09:44:13 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 69R9iCiC16515662
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Oct 2026 09:44:12 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 95E6E5805E;
- Tue, 27 Oct 2026 09:44:12 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9B02058052;
- Tue, 27 Oct 2026 09:44:11 +0000 (GMT)
-Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Oct 2026 09:44:11 +0000 (GMT)
-From: Saif Abrar <saif.abrar@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
- fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
- cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
- chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
- jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: [PATCH v7 1/9] qtest/phb5: Add testbench for PHB
-Date: Tue, 27 Oct 2026 04:43:42 -0500
-Message-ID: <20261027094350.3645085-2-saif.abrar@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20261027094350.3645085-1-saif.abrar@linux.ibm.com>
-References: <20261027094350.3645085-1-saif.abrar@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLdku-0001ro-TM
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 05:46:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793094368;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mztNzPIwHM8MQ9g92CdzrwCca/RYLMj81HkeAxUn2OY=;
+ b=iqr4/h4ju5CUZdZX5sr4HSK4qcKF9/+AfJR7iIWbx8BQiC6fU9KfDv1JkKzZGD8UA4CHPF
+ W2fW2/e9ith92bjhkYcKVRlZEYU0T4a1n79magzfMD0/B2dKt0aPGfQ/oBL3EKOFnoGc9m
+ uBIicE8xvwaZSV2G22x/MnuQsgIUy+A=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-O7RVcK0WPfiT1V6RMuaRiQ-1; Tue,
+ 27 Oct 2026 05:46:04 -0400
+X-MC-Unique: O7RVcK0WPfiT1V6RMuaRiQ-1
+X-Mimecast-MFC-AGG-ID: O7RVcK0WPfiT1V6RMuaRiQ_1793094363
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87EDC1955DCE; Tue, 27 Oct 2026 09:46:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 027EC1800643; Tue, 27 Oct 2026 09:46:02 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9DE2421E6A04; Tue, 27 Oct 2026 10:46:00 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [PULL 02/14] qapi: add 'insecure-types' option for -compat
+ argument
+In-Reply-To: <20260917160525.1275388-3-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 17 Sep 2026 17:05:13
+ +0100")
+References: <20260917160525.1275388-1-berrange@redhat.com>
+ <20260917160525.1275388-3-berrange@redhat.com>
+Date: Tue, 27 Oct 2026 10:46:00 +0100
+Message-ID: <877bj3a33b.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=ZYOIpcVA c=1 sm=1 tr=0 ts=6ae0726f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=zHMdCkDpksyigQT-iYMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDAzOCBTYWx0ZWRfX6BKJtsVRDoi4
- vpiOy/Sy+338hLAYmVauV0XUWyqAZuoNQMfqOWy+qelq01chqqQWDAn35fSxk9bY2W3+eePjn5O
- Vv/Nl390ZfUBidxkwaBYXtZ4330xGGVtxH/tKP9rDNzSpI400vQIS/s1HptcKzi5L9lWCBeUSql
- uC5z8f1Xs0i/rjyKYNT61W519BdC4iV+gZrqgq6ClvM7cVPITwROCzCjn8FyHpwBQxmxp8mytyP
- LAi15E2RAnbdWM4A6sA6w/opUo33ld7uzwbkd7xuzVfMB8YTf5WPqOAn2kt5wCiqpgSdOf0Ibmz
- C/2K9NsiBTZO5qnAcVLOZjZzaZ5GHswBqTX8YUyeF6hvQNq+hrK+/RkHnZjL7pVwmwASbYh9IhA
- 7hwgmklnJAI3/JG341YMdxYHFYoh3Kan/Uvx07R2h8n6RrNLo/ecRkfjYVSsPw9kKeR+dVj+Xv4
- zM0NAxcBaElTev/FhNw==
-X-Proofpoint-GUID: 73mqtU_XwdAqnfyMCf7f6xQtf_EgsyQn
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDAzOCBTYWx0ZWRfX8PrpvVhNv8Fh
- ejabmFqurpPs20/+zKj5CvQk5ueuVgOh5JqQq4dmhYDQI4Jgiev/inP/vAzcvWXtfomHP4s546u
- q+hgzv+r92UJkG3xAj3GxexEU6s8l+k=
-X-Proofpoint-ORIG-GUID: 0TuA31Vp3mK6w_D_UTv6uHGuwYa8_dcv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 phishscore=0 clxscore=1015
- bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610270038
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.339,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,224 +88,265 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+This has long been merged.  I couldn't review it at the time, and
+merging it without my review was clearly appropriate.
 
-New qtest testbench added for PHB[345].
-Testbench reads PHB Version register and asserts that
-bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
+I have questions / doubts about the external interface I'd like to
+discuss now.
 
-Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
-Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
----
- tests/qtest/meson.build         |  1 +
- tests/qtest/pnv-host-i2c-test.c | 13 +----
- tests/qtest/pnv-phb-test.c      | 99 +++++++++++++++++++++++++++++++++
- tests/qtest/pnv-qtest-common.h  | 24 ++++++++
- tests/qtest/pnv-xive2-common.h  |  7 +--
- 5 files changed, 126 insertions(+), 18 deletions(-)
- create mode 100644 tests/qtest/pnv-phb-test.c
- create mode 100644 tests/qtest/pnv-qtest-common.h
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 46685d6d46..6078366eb4 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -197,6 +197,7 @@ qtests_ppc64 = \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
-   (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
-+  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb-test'] : []) +                  \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
-   (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
-   (slirp.found() ? ['pxe-test'] : []) +              \
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index f97f6f65ee..176e7365da 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -11,18 +11,7 @@
- #include "hw/gpio/pca9554_regs.h"
- #include "hw/gpio/pca9552_regs.h"
- #include "pnv-xscom.h"
--
--#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
--#define PPC_BIT32(bit)          (0x80000000 >> (bit))
--#define PPC_BIT8(bit)           (0x80 >> (bit))
--#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
--#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
--                                 PPC_BIT32(bs))
--
--#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
--#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
--#define SETFIELD(m, v, val) \
--        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
-+#include "pnv-qtest-common.h"
- 
- #define PNV10_XSCOM_I2CM_BASE   0xa0000
- #define PNV10_XSCOM_I2CM_SIZE   0x1000
-diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
-new file mode 100644
-index 0000000000..b4d75a1229
---- /dev/null
-+++ b/tests/qtest/pnv-phb-test.c
-@@ -0,0 +1,99 @@
-+/*
-+ * QTest testcase for PowerNV PHB
-+ *
-+ * Copyright (c) 2026, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/pci-host/pnv_phb4_regs.h"
-+#include "pnv-xscom.h"
-+#include "pnv-qtest-common.h"
-+
-+#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
-+#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
-+
-+#define PHB4_XSCOM              0x40084800ull
-+
-+/* SCOM to PCBA address conversion */
-+#define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
-+
-+/*
-+ * Indirect XSCOM read::
-+ * - Write 'Indirect Address Register' with register-offset to read.
-+ * - Read 'Indirect Data Register' to get the value.
-+ */
-+static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
-+        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
-+        uint64_t reg)
-+{
-+    qtest_writeq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom, indirect_addr)),
-+                 reg);
-+    return qtest_readq(qts, pnv_xscom_addr(chip, SCOM_TO_PCBA(scom,
-+                                                              indirect_data)));
-+}
-+
-+/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
-+static void phb_version_test(const void *data)
-+{
-+    const PnvChip *chip = (PnvChip *)data;
-+    QTestState *qts;
-+    const char *machine = pnv_get_machine_type(chip->chip_type);
-+
-+    /* Defaults to PNV_CHIP_POWER8 */
-+    uint64_t phb_xscom = 0x4809e000;
-+    uint64_t reg_phb_version = PHB_VERSION;
-+    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
-+    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
-+    uint32_t expected_ver = 0xA3;
-+    uint64_t ver;
-+
-+    if (chip->chip_type == PNV_CHIP_POWER9) {
-+        phb_xscom = 0x68084800;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA4;
-+    } else if ((chip->chip_type == PNV_CHIP_POWER10) ||
-+               (chip->chip_type == PNV_CHIP_POWER11)) {
-+        phb_xscom = PHB4_XSCOM;
-+        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-+        indirect_data = PHB_SCOM_HV_IND_DATA;
-+        reg_phb_version |= PPC_BIT(0);
-+        expected_ver = 0xA5;
-+    }
-+
-+    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
-+
-+    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
-+                                indirect_addr, indirect_data, reg_phb_version);
-+
-+    /* PHB Version register bits [24:31] */
-+    ver = GETFIELD(PPC_BITMASK(24, 31), ver);
-+    g_assert_cmpuint(ver, ==, expected_ver);
-+
-+    qtest_quit(qts);
-+}
-+
-+/* Verify versions of all supported PHB's */
-+static void add_phbX_version_test(void)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-+        g_autofree char *tname = g_strdup_printf("pnv-phb/%s",
-+                                      pnv_chips[i].cpu_model);
-+        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
-+    }
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    /* PHB[345] tests */
-+    add_phbX_version_test();
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/pnv-qtest-common.h b/tests/qtest/pnv-qtest-common.h
-new file mode 100644
-index 0000000000..c2d1bae7bb
---- /dev/null
-+++ b/tests/qtest/pnv-qtest-common.h
-@@ -0,0 +1,24 @@
-+/*
-+ * PNV QTest common definitions
-+ *
-+ * Copyright (c) 2026, IBM Corporation.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef TEST_PNV_QTEST_COMMON_H
-+#define TEST_PNV_QTEST_COMMON_H
-+
-+#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-+#define PPC_BIT32(bit)          (0x80000000 >> (bit))
-+#define PPC_BIT8(bit)           (0x80 >> (bit))
-+#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-+#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
-+                                 PPC_BIT32(bs))
-+
-+#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
-+#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
-+#define SETFIELD(m, v, val) \
-+        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
-+
-+#endif
-diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
-index 3b84227424..4b823a57e2 100644
---- a/tests/qtest/pnv-xive2-common.h
-+++ b/tests/qtest/pnv-xive2-common.h
-@@ -9,12 +9,7 @@
- #ifndef TEST_PNV_XIVE2_COMMON_H
- #define TEST_PNV_XIVE2_COMMON_H
- 
--#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
--#define PPC_BIT32(bit)          (0x80000000 >> (bit))
--#define PPC_BIT8(bit)           (0x80 >> (bit))
--#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
--#define PPC_BITMASK32(bs, be)   ((PPC_BIT32(bs) - PPC_BIT32(be)) | \
--                                 PPC_BIT32(bs))
-+#include "pnv-qtest-common.h"
- #include "hw/intc/pnv_xive2_regs.h"
- #include "hw/ppc/xive_regs.h"
- #include "hw/ppc/xive2_regs.h"
--- 
-2.52.0
+> This introduces a new 'insecure-types' option for the 'compat'
+> argument that accepts three values
+>
+>  * accept: Allow any usage
+>  * reject: Reject with an error reported
+>  * warn: Allow any usage, with a warning reported
+>
+> For historical compatibility it defaults to 'accept'.
+>
+> The 'reject' and 'warn' values will take effect for any type
+> that has been explicitly marked insecure, or is lacking an
+> explicit declaration of its security status.
+>
+> This new command line option is currently a no-op, but will
+> become functional as following patches enable the checks.
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  include/qapi/compat-policy.h |  5 +++++
+>  qapi/compat.json             | 23 ++++++++++++++++++++++-
+>  qapi/qapi-util.c             | 30 ++++++++++++++++++++++++++++++
+>  3 files changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/qapi/compat-policy.h b/include/qapi/compat-policy.h
+> index ea65e10744a..f5af2090692 100644
+> --- a/include/qapi/compat-policy.h
+> +++ b/include/qapi/compat-policy.h
+> @@ -24,6 +24,11 @@ bool compat_policy_input_ok(uint64_t features,
+>                              const char *kind, const char *name,
+>                              Error **errp);
+>=20=20
+> +bool compat_policy_check_security(const CompatPolicy *policy,
+> +                                  const char *typename,
+> +                                  bool is_secure,
+> +                                  Error **errp);
+> +
+>  /*
+>   * Create a QObject input visitor for @obj for use with QMP
+>   *
+> diff --git a/qapi/compat.json b/qapi/compat.json
+> index 90b8d51cf27..b54f8eb3713 100644
+> --- a/qapi/compat.json
+> +++ b/qapi/compat.json
+> @@ -37,6 +37,23 @@
+>  { 'enum': 'CompatPolicyOutput',
+>    'data': [ 'accept', 'hide' ] }
+>=20=20
+> +##
+> +# @CompatPolicySecurity:
+> +#
+> +# Policy for handling any devices or backends which do not provide a
+> +# security boundary to protect against untrusted environments
+> +#
+> +# @accept: Allow any usage
+> +#
+> +# @reject: Reject with an error reported
+> +#
+> +# @warn: Allow any usage, with a warning reported
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'enum': 'CompatPolicySecurity',
+> +  'data': [ 'accept', 'reject', 'warn' ] }
+> +
+>  ##
+>  # @CompatPolicy:
+>  #
+> @@ -62,10 +79,14 @@
+   # Policy for handling deprecated management interfaces.
+   #
+   # This is intended for testing users of the management interfaces.
+   #
+   # Limitation: covers only syntactic aspects of QMP, i.e. stuff tagged
+   # with feature 'deprecated' or 'unstable'.  We may want to extend it
+   # to cover semantic aspects and CLI.
+   #
+   # Limitation: deprecated-output policy @hide is not implemented for
+   # enumeration values.  They behave the same as with policy @accept.
+   #
+   # @deprecated-input: how to handle deprecated input (default 'accept')
+   #
+   # @deprecated-output: how to handle deprecated output (default
+   #     'accept')
+   #
+   # @unstable-input: how to handle unstable input (default 'accept')
+   #     (since 6.2)
+   #
+>  # @unstable-output: how to handle unstable output (default 'accept')
+>  #     (since 6.2)
+>  #
+> +# @insecure-types: how to handle types that are not declared secure
+> +#     (default 'accept') (since 11.2)
+
+Minor issue: "types" is ambiguous without context.  We call lots of
+things "types" in our external interfaces.  It's actually QOM types
+here.  Let's say so.  I can take care of it.
+
+Similar confusion exists elsewhere[*], but let's not digress.
+
+> +#
+>  # Since: 6.0
+>  ##
+>  { 'struct': 'CompatPolicy',
+>    'data': { '*deprecated-input': 'CompatPolicyInput',
+>              '*deprecated-output': 'CompatPolicyOutput',
+>              '*unstable-input': 'CompatPolicyInput',
+> -            '*unstable-output': 'CompatPolicyOutput' } }
+> +            '*unstable-output': 'CompatPolicyOutput',
+> +            '*insecure-types': 'CompatPolicySecurity' } }
+
+The existing members are all named "wide", and the documentation narrows
+them.  For instance, the name @deprecated-input could cover *any* input,
+but its documentation narrows it to "only syntactic aspects of QMP".  I
+did it this way to let us extend coverage without having to change the
+external interface.
+
+New member @insecure-types is named "narrow".  Why different?  Why not
+@insecure-input?
+
+The existing @FOO-input support CompatPolicyInput: "accept", "reject",
+"crash".  New insecure-types supports CompatPolicySecurity: "accept",
+"reject", "warn".  Why different?
+
+My rationale for "crash" is in commit dbb675c19aa (qapi: New -compat
+deprecated-input=3Dcrash):
+
+    Bugs in integration tests may mask the error from policy "reject".
+    Provide a larger hammer: crash outright.  Masking that seems unlikely.
+
+If "crash" can be useful for testing a management application's non-use
+of deprecated and unstable interfaces, surely it's just as useful for
+insecure ones.
+
+Likewise, "warn".  I didn't provide "warn" at the time, because QMP
+lacks support for warnings.  Do management applications find warnings on
+stderr in response to QMP commands useful?
+
+-util.c b/qapi/qapi-util.c
+> index 3d849fe0347..38b1cec7a41 100644
+> --- a/qapi/qapi-util.c
+> +++ b/qapi/qapi-util.c
+> @@ -14,6 +14,7 @@
+>  #include "qapi/compat-policy.h"
+>  #include "qapi/error.h"
+>  #include "qemu/ctype.h"
+> +#include "qemu/error-report.h"
+>  #include "qapi/qmp/qerror.h"
+>=20=20
+>  CompatPolicy compat_policy;
+> @@ -58,6 +59,35 @@ bool compat_policy_input_ok(uint64_t features,
+>      return true;
+>  }
+>=20=20
+> +bool compat_policy_check_security(const CompatPolicy *policy,
+> +                                  const char *typename,
+> +                                  bool is_secure,
+> +                                  Error **errp)
+
+More minor issues.
+
+The policy functions are named compat_policy_FOO_ok().  Why different?
+
+Their arguments are "relevant facts" (@features), @policy, "stuff for
+error message" (@error_class, @kind, @name), @errp.  This one has the
+same things in different order.  Why?
+
+> +{
+> +    if (is_secure) {
+> +        return true;
+> +    }
+> +
+> +    switch (policy->insecure_types) {
+> +    case COMPAT_POLICY_SECURITY_ACCEPT:
+> +        return true;
+> +
+> +    case COMPAT_POLICY_SECURITY_REJECT:
+> +        error_setg(errp, "Type '%s' does not provide a security boundary=
+ "
+> +                   "to protect against untrusted data or actions", typen=
+ame);
+> +        return false;
+> +
+> +    case COMPAT_POLICY_SECURITY_WARN:
+> +        warn_report("Type '%s' does not provide a security boundary "
+> +                    "to protect against untrusted data or actions", type=
+name);
+> +        return true;
+> +
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +
+>  const char *qapi_enum_lookup(const QEnumLookup *lookup, int val)
+>  {
+>      assert(val >=3D 0 && val < lookup->size);
+
+
+[*] So I digress in a footnote.  Sue me ;)
+
+While examining the QAPI schema, I found near object-add:
+
+    ##
+    # @qom-list-properties:
+    #     List properties associated with a QOM object.
+    #
+    # @typename: the type name of an object
+    [...]
+    ##
+    # @object-add:
+    #     Create a QOM object.
+    #
+    # Errors:
+    #     - If @qom-type is not a valid class name
+    [...]
+    ##
+    # @ObjectOptions:
+    #     Describes the options of a user creatable QOM object.
+    #
+    # @qom-type: the class name for the object to be created
+
+We use "QOM type" and "QOM class".  This is pretty bad; we should pick
+one and stick with it.
+
+And near device_add:
+
+    ##
+    # @device-list-properties:
+    #     List properties associated with a device.
+    #
+    # @typename: the type name of a device
+    [...]
+    ##
+    # @device_add:
+    #     Add a device.
+    #
+    # @driver: the name of the new device's driver
+
+We use "driver" and "device type".  Similarly bad.
+
+Not today.
 
 
