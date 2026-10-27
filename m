@@ -1,86 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD8A606A31A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FE5606A31A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 06:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=h5O21YVW
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=TreZV6CZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLahT-0003sB-7c; Tue, 27 Oct 2026 02:30:25 -0400
+	id 1xLahk-0004BL-FG; Tue, 27 Oct 2026 02:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLah2-0003Z1-V4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:59 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1xLahA-0003hU-GU
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:30:07 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1xLagr-0008Eo-D2
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:29:46 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cd6a7b62ce8so1135983a12.0
- for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:44 -0700 (PDT)
+ id 1xLah4-0008Fx-Eh
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 02:30:01 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3acd21ba21aso2943579a91.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Oct 2026 23:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793082584; x=1793687384; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1793082596; x=1793687396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=prSJoW7o56XngR0nAmHkQhbkm196zKbIQaVUVG31n4g=;
- b=h5O21YVWR+az1v503DOXNLdTVHox8JnbsSiytTBRG5b2DHmOt6RY6PgekaA0NQ7Hn9
- ldG6IlXaM98pM1ax6BS/BS1Isu/49Jw/s2u9waMPm9XzhzDh4uJpi/XsEDnzKA3TZCEF
- xbxCg+q1A99DTwmfbLwU8axBjLAWie5OHB1tN6+uR8Drs4rBb1uMw6iam9c5coGlsxWx
- l7UR/txaRiuH27h6TAPPEN8luaSNURv3aHN2rHYO5oiBt62IZFqvVpxjXkVymWVOKJfs
- ZYCaJiLQHT3D4937Al6lMyyfVSMao7JGEwc6UMTIGIln7SQ8cJAvGfpIish0/T1oVZoz
- YS7g==
+ bh=USf/TfP9ERCPJ+ymnkptW8vWTYOPnCO9HmQy6PiqzRE=;
+ b=TreZV6CZvElQIUk+fMCPiNGPgP8bA1FSYTRwBXHFcVlTSmOnCEWTbS5vh7C3q4Xtpi
+ 7SrPFog9Pl3r7ag5HBpzJKKm7gvvSxrpBVh5JKsqXFpgrNs2lnNlpW7ykxrJWO7o2YF9
+ TawDDkOnl9D2EnomqLS2PfwWGA1F6qL/rk7cMVg5lAEtWe5mGYIeI+z9fNMBZ4dPuCud
+ nS+HkMU313HpdUFUfMQqwIlP2bA3xCdFa2wdACYOwT2JirU/oN94VCSzcwy++ZOIjXG6
+ QSzgYFnfUJ6KeuLl50OBaSsDbfDuYZ+KoH6H7RpBA1FP3+SML5r4qtRNdhbgV5JWkqsJ
+ CL6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793082584; x=1793687384;
+ d=1e100.net; s=20260707; t=1793082596; x=1793687396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=prSJoW7o56XngR0nAmHkQhbkm196zKbIQaVUVG31n4g=;
- b=qffHeOoG3cjdFP4/E9Pjgka713E77iLpGsb9wMRIaI5PBEn7h0vRiCUwHpU2RB2riu
- on5qH6QW9y6+3IVhRdYMD4uCXjD7f1dOD88Xfg3uoUiHfe3CIeDJt5o/pLCpK2SQwJNp
- 1C/Ie+DI9MbiTQEwO/qP1xFT0zhiRVaxlDRtvNcS7J1/oB7RowIDuS0os9Di1D10O+In
- lrquNDFNMw1HrYf7DbdI7JvZRuo8q5Io4wpnpNMcC4eVGUGnuXHndJQadMOlfQ6Bs2hP
- ImOyHY1YFXmgrWF9jYKDWeDW3EgDGTAQIdKuyMiuckNl2omnh7C498zdfEM/kINnwc8m
- 4JBA==
-X-Gm-Message-State: AFq9FYIuf5D3nhviOBekWFC3HfYxpETOd4Nmea8sVPPNLm7F6NjHJ9kd
- kd2pWugzyuagAnEeKqkxo9mGDvNMAfXBaEKIMIVw51q8AYUV7jRPzhOp6EcJ2A==
-X-Gm-Gg: AYBFou0rAWal+sIoLv0nWMySzb2JAvu6nUFwk/0gHh7tY4crjInU0ZxqVZqI/qinVcK
- rwnPQ8gCbuMbepZ3XE8+8iZ4xWD1eTyW8DxCIiXmjdhfd/tfQPPjdQn2gqc5UTxp/6ffsJa9MkT
- 0sVnO9MJBm/KKS3Zv6hVymyDRo7MnqZ3/35nGu4ULoXY4iRMHRglPn3ElmkMP8klpd38trKLpnW
- TxAeL3IN1YNh4lcT6mcYv5YUzjXFXhxJFhbjNP/d3DIFHbQ1R2xSH8X2M93CnBrG8EGBZNSZ9Ft
- 1Rcdd/ZXzR5PLSsteKSFuNEcAflC0aa+Aq6fn7WPRoSe7AV2Zdo4mjuwpz5PQSYTEi6HPZZizbv
- fYcxm4uDk5OmkYV5nhTiBCob6O0UmGR3qL5y3404nWBB7iewEpUeCwSfG2Y1BNeZ6LGAs6Al0As
- kJr/c2f5PN9zz3dnkdjaQaVynkdONs9Vm32Af4hIu2bMh86TmtfJd+jJ+enqO/SzKjHUhx5kqWd
- YCJNPXwsYYtPEgc0zBlCEcWbvkEP1XkUe8VYWyEheIwGBlUokF4bChmWbWaE+oSH8cwQdJ2Jw==
-X-Received: by 2002:a17:90b:2552:b0:3ab:884b:659e with SMTP id
- 98e67ed59e1d1-3adea8984bamr7005936a91.9.1793082583952; 
- Mon, 26 Oct 2026 23:29:43 -0700 (PDT)
+ bh=USf/TfP9ERCPJ+ymnkptW8vWTYOPnCO9HmQy6PiqzRE=;
+ b=eRKEe9PqOsgxMn9QJjVzusPH/C/5K0a/5zpSB6SPVJb28gHbM7xQ/8pjf6jj7pQCt7
+ YO5eq1je4cdN/0OgOkpYqlm8Ry/vLPDS6x8OD7xhEE8bUt/uX36F71wys2ezg8IeYR2j
+ pwlm9olXO+2tYZPQLJGo043ADwnlcxzjrgvm+BY9qKe/TtUbs0pB1XkidlYZ/S071/fU
+ oE/JpM7Vwy7wpVNWwRbvgMYfpNYtLuEt2DwB0Q+u69elSqkBpJXfZtKd1l+SbKYjBHEt
+ AZcQqr1FjrybUK4HSwcMR/Gg4WM/k1RkIaO8hQNu6wBk3VnnAE7AYFZPz38RK5mz8JeZ
+ 0Dzg==
+X-Gm-Message-State: AFq9FYITCJS4abx3y0S2YQ+ukyk/F2sTalmLAf0uA3NkWyYYiiNp9Vnn
+ Cm6OqbiUkbXN4cnF9n2du1qz7iGqyuL50p2YtruDzykopj+w93d968L2oUofmA==
+X-Gm-Gg: AYBFou1GkrOZ3xXzyzzhAhsenAEXChVR1fBif4L7kaHKQfkeZJqzayEbodjyKXVVl66
+ AIHUu1GxvVmW+J2SbaaXJwFv2R1w5CfQ2z6oSRR8mIHwwKnclHZZYNqJfh3Ej1YgINDBN4RIOOy
+ d6YIfoj2ElqyCgf9MemxX/pIyxtSzw0qh0Zx1aDiUn1GUhzrYcktZeFQdgVNMbhJb5XnP8dCEHJ
+ oIBLTT0p92tQzfvHFaF68J4wM2lnWuLwZjVecC95IFqQNQxGwkydZATWN3DGinaniUvAyJ7Otkx
+ hKGEF6oNuzQhchY+ix5tjmp9oOh+mEQWEFdaxDmGzeir5XnlQ2iPOHCJWtIL3WXDDvOqGGNHn/0
+ 76+bR0tLgdTNwIaTGxFyGsSQ6/C9t9SanY3lExVE/PpI1d2EZ4LvhmgLWHJT1bZaMXZYKDzqM0k
+ 8r3bh9LktQflufUbNenYnM++Vz5TNtYOAuTLJVZnvtnLxS8kMogcuYwrv6QZ1DW4YXRaU6ioR2Q
+ 2Wx2th7SK8mm/O51zd1PzULiR7QMO7CS1hqHEGcsnfY9kVu/eZaU1y0sgtzd/Vpzt5cshdxDbA4
+ OumtP9Bv9n+uFW2Ey84=
+X-Received: by 2002:a17:90b:3dce:b0:3aa:6b5d:a02e with SMTP id
+ 98e67ed59e1d1-3adeafd64c2mr7758839a91.54.1793082596091; 
+ Mon, 26 Oct 2026 23:29:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.41
+ 98e67ed59e1d1-3ae401bf352sm2358541a91.0.2026.10.26.23.29.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Oct 2026 23:29:43 -0700 (PDT)
+ Mon, 26 Oct 2026 23:29:55 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PULL 25/29] include/hw/intc/riscv_imsic.h: remove unused macro
-Date: Tue, 27 Oct 2026 16:28:04 +1000
-Message-ID: <20261027062808.1995205-26-alistair.francis@wdc.com>
+Cc: Anton Johansson <anjo@rev.ng>, Tommaso Califano <tcalifano@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 29/29] target/riscv: Fix CPU state access on big-endian hosts
+Date: Tue, 27 Oct 2026 16:28:08 +1000
+Message-ID: <20261027062808.1995205-30-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261027062808.1995205-1-alistair.francis@wdc.com>
 References: <20261027062808.1995205-1-alistair.francis@wdc.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,31 +108,93 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Anton Johansson <anjo@rev.ng>
 
-Found while reading IMSIC code.
+mstatus and mstatus_hs are uint64_t but accessed through
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+  tcg_gen_[ld|st]_tl(..., offsetof(mstatus))
+
+which on a big-endian host running riscv32 incorrectly accesses the
+top 32 bits rather than the lower bits.
+
+Widen the operations to 64 bit so the lower bits are modified.
+
+Fixes: 284d697c74ef ("target/riscv: Merge m/vsstatus and m/vsstatush into one uint64_t unit")
+Reviewed-by: Tommaso Califano <tcalifano@redhat.com>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20261022181957.21760-1-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20261023063025.8827-1-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/intc/riscv_imsic.h | 1 -
- 1 file changed, 1 deletion(-)
+ target/riscv/tcg/translate.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/intc/riscv_imsic.h b/include/hw/intc/riscv_imsic.h
-index 0a1df1c2f8d6..c74483665728 100644
---- a/include/hw/intc/riscv_imsic.h
-+++ b/include/hw/intc/riscv_imsic.h
-@@ -31,7 +31,6 @@ DECLARE_INSTANCE_CHECKER(RISCVIMSICState, RISCV_IMSIC, TYPE_RISCV_IMSIC)
- #define IMSIC_MMIO_PAGE_SZ             (1UL << IMSIC_MMIO_PAGE_SHIFT)
- #define IMSIC_MMIO_SIZE(__num_pages)   ((__num_pages) * IMSIC_MMIO_PAGE_SZ)
+diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+index ede9c2563f7b..79b0f444efbd 100644
+--- a/target/riscv/tcg/translate.c
++++ b/target/riscv/tcg/translate.c
+@@ -693,7 +693,7 @@ static TCGv get_address_indexed(DisasContext *ctx, int rs1, TCGv offs)
+  */
+ static void mark_fs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
  
--#define IMSIC_MMIO_HART_GUEST_MAX_BTIS 6
- #define IMSIC_MMIO_GROUP_MIN_SHIFT     24
+     if (!has_ext(ctx, RVF)) {
+         return;
+@@ -703,15 +703,15 @@ static void mark_fs_dirty(DisasContext *ctx)
+         /* Remember the state change for the rest of the TB. */
+         ctx->mstatus_fs = EXT_STATUS_DIRTY;
  
- #define IMSIC_HART_NUM_GUESTS(__guest_bits)           \
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_FS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_FS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+         }
+     }
+ }
+@@ -726,21 +726,21 @@ static inline void mark_fs_dirty(DisasContext *ctx) { }
+  */
+ static void mark_vs_dirty(DisasContext *ctx)
+ {
+-    TCGv tmp;
++    TCGv_i64 tmp;
+ 
+     if (ctx->mstatus_vs != EXT_STATUS_DIRTY) {
+         /* Remember the state change for the rest of the TB.  */
+         ctx->mstatus_vs = EXT_STATUS_DIRTY;
+ 
+-        tmp = tcg_temp_new();
+-        tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+-        tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-        tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tmp = tcg_temp_new_i64();
++        tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
++        tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++        tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus));
+ 
+         if (ctx->virt_enabled) {
+-            tcg_gen_ld_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+-            tcg_gen_ori_tl(tmp, tmp, MSTATUS_VS);
+-            tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ld_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
++            tcg_gen_ori_i64(tmp, tmp, MSTATUS_VS);
++            tcg_gen_st_i64(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+         }
+     }
+ }
 -- 
 2.55.0
 
