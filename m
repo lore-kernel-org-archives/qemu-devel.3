@@ -1,89 +1,146 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA51606A31E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CDF606E7A6
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 10:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=H+BKQub/;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=WyDCS0xK
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=WV2PSfR7;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YOpqJT37
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLejN-0002Or-Q2; Tue, 27 Oct 2026 06:48:37 -0400
+	id 1xLelY-0007mR-PE; Tue, 27 Oct 2026 06:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLegM-0005bt-TL
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:33 -0400
-Received: from mx2.catap.net ([65.21.79.163])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLelX-0007mI-IU
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:50:51 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xLegH-0007wv-LY
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:45:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=fyI7oU2
- VcdHT372oYcpLga2jcUuvSnbpxnI6gKwJbmBhMMddpi/bn0pA33wTzv3IeM3nKLQmS3dvF
- C6c1Tgx+I5gBsGDQhy7A2xhZns8RAz9NfqwHOtUzuOsfc3PKyK9HGUpQu3oLNf0qJlkD5u
- buZy85IZ+narT0k5p+IVeaQcLyEfko10uGx457WowcVtRhPXH/lHW/tkLIcrWgKUMw8KMb
- 4nx7gEu51kCIPLyik46Odf6j16VpJi/DIrQifVjiTLAI+M/ldXuHKNaLCF6WIKeHqoNBVT
- PDMUal49+PFRNAZQqcmk4nvyF/tufOfmrkmfhWNuNJZ+tiKCOMvJ0pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=X
- 69Zi4P+WVvc1hOqEgInoGMPbX0LY1KThcCB8zI9OS0=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=aDTIfuvFhEFGzZfhJ6h3+OJ1ZysxDHObh/IwWU+yQ4S+O+Lf6sIbcKZLTOowoOxMogjR
- nmyPgyu/o2EgbeDp7ecXUKNocNNswGP7f7Y1XU4YAFEbdc6v0S/4npu+VK/FA5AaaTXsuO
- IgLCI+uF0GpkDBqbfTEDch2/pCucxauK0g0GVre0Vi59aRB5dgebfgbUpIqK0tdlmcDxvB
- tOf/FBCuM1Q4c6ATSSaUeDIQJECX/EC7epGelCRXNlCg2A1sT6KpQ2cchqGf8Un9ZoT9Vw
- xYHkFd4m8nZiYsJvFJmrcmWJZ9JXFJOBMja3jbqOzv6ZcEZpdmFhC9DbYH+JPkQQ==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=H+BKQub/; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=WyDCS0xK;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=X69Zi4P+
- WVvc1hOqEgInoGMPbX0LY1KThcCB8zI9OS0=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=H+BKQub/4ISESLQvoRywHEvH3m1kMzSLQh7
- u76S10XwRnlJrBer6QVkOx1bs8Vc5AcH3wPoum+dzwoT8necpgxNje02/irxp+buMuAnTa
- 0vDLPTsuPApu8JHMMLmtueFcwk6OGv2H+WlGaQK7TmrgckeZj+JdUBsDzJU+10CKDCj/d/
- 86hzjowuRAgUN6wAODK6FHKuy+VtQ3GR2tS9BBVIKZJ0dultHGCgFQIVb3obHu4mwk2OC9
- aOJny31p1PlP7oJcjGgFnkBsHqEkhTBJHaBlZWqrETNT9mpMsRGk/yz5YZ4ew53LG6B9h1
- exzVkYvEPq6H26n8zc2wnXVWw3g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=X69Zi4P+WVvc1hOqEgInoGMPbX0LY1KThcCB8zI9OS0=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=WyDCS0xKFi4Slt7iWD
- p7zcStAovvIq5WJm6vh6eyPEW+XuNP4SAVeaiK+CFD61+BY+UR+TwHNi1LU783v41kCQ==
-Received: by mx2.catap.net (OpenSMTPD) id adbd378e;
- Tue, 27 Oct 2026 11:45:03 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id ad6f6ed6;
- Tue, 27 Oct 2026 11:44:52 +0100 (CET)
-From: "Kirill A. Korinsky" <kirill@korins.ky>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v4 19/25] hw/mips: add Octeon EMM controller
-Date: Tue, 27 Oct 2026 11:41:43 +0100
-Message-ID: <20261027104433.25720-20-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261027104433.25720-1-kirill@korins.ky>
-References: <20261027104433.25720-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xLelT-0000RP-RW
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 06:50:51 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69RAe1BG1921843
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:50:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=; b=WV2PSfR7pOKHqlTL
+ 0WT7lIeofMd39iaT5S94j0LJXBNwJGUfkumE1OnD0uFx92XZCdVlYVLXV9fXW01+
+ f7nnIOe7Isp5X7cGYeUb/IYpq9oPdecMDPf7ov30KvLQFwW2qmYnOvVcgjdI5YDM
+ BF1ZQPkYHDleZJ499ZA+D8FJK6k0aMlFokIkmelDqn/uZCK/k15IP/AkAM2mj9/O
+ Dv02yt3CCkChbT14g5Vc3+sCHBq4gR2FWyHpt+t2wyDB+hj8Is89rp2ToY6Hcm3v
+ 7fybZHIaLXUC6SN0KcmrxnYTrDKS3+54wss6cPtBbFA1o3FnzlfrzBYey+Aa94zM
+ Boed0Q==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hjrq68fuk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 10:50:45 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-934963b2bc0so767052785a.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 03:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793098245; x=1793703045; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=;
+ b=YOpqJT37t3HnYFiKWB4wjzG+CXjxUOJ8ShIdpV8tiD+lZpurRnXsDkXBgGXge901xe
+ tvVh6eNAZ/3t5RsB2Zh3wc/9fQuhEAj3xbch/LR0Uz4QI5ZlmQJqU6y0mctGf94pcLSP
+ Fh0eBM08gVIb4EEtfURdksu0TVeuaDPtT7/kiH8I83BTGIL7PRNt4sXRyzY5XiKetZxm
+ T7dNBXYTbhgEPP4T7+Ma2Y6sjUh3DwbBK5SMZlNcXlUogNsOrY4j7iQNAv1c7jh+JM8S
+ Og+2Zj7HvGjVdBhRaPPR0OQ83ZGJlv9uoj0SDKt2v0q7ECJ5fKYTqGKo86KH9msG7d9A
+ l/Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793098245; x=1793703045;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YYkQO9+RBLtWYDaH40B9KyPPBhwa37V+5RPRxyoe5cM=;
+ b=vlI9gW3xvgCBGeDbYX2xcOVjp2T1LuPpr32ondm4RfX1//mEDGXlbPwuosObztmF9C
+ BCUIeQtHP7LvPtZJWH8+v3yegq/799PO6kaglED4RhObIOfuCQTujEjXySy5Vyd9ynyb
+ 0hW5BZ0ATfp0VsawsInGw/B/ODLm7mN4lIOaXaRU7Tff6sfrNvVuovhd16/QHbXlH0gI
+ 2wtlfCC8UEZ6Rqy0YjPhTxHe5yqaTU332Ns+3Q1sN1YctOKaCAzKaiLKhcL5sxEWabAM
+ ztHibfmUxcrhZIkqcqlYF0hamt9+OVmG8cMDROFxF9ykSrlTqK/sQ6DEB7zfNz0XO+gr
+ AvkA==
+X-Gm-Message-State: AFq9FYJ7eMDmGYTDrbdp9PA1I4Q/0phRmQaTkmRLCSyALs4umMe+P4LZ
+ slHII9u9aNc0gHHk8hJux8OTw7Qo6pRrZHr4DfYAZ2+SfikaUHfQHWXoGcaftZK/7b6LNFlRVe8
+ MzivKw8ZPgtFaSZuAWZfn48VVRuJToAO/8iu6y7OKPSMMERijVvTca8wyHQ==
+X-Gm-Gg: AYBFou2sRxBBuWK1i7nhFmsfuJGKg1ubT7Bf0MRZN3dM9RqtXqQtA1WzCmDsUFLvOJC
+ /YXv8emty4lOp+ys3zXMc2AYoCgkgbYBgWAbCCJwQsP6HhYzIPfXYb6o7OKnCOKvkbmWkpJ9Yyk
+ HWAf0t3Uv5biUA+dJliIARwu4nCDltXM/QXJhZQYWAeEWjiwkxvuH0BrHSKIpRA/9oxoHNpD62j
+ t66TC59ywUAqzeHCOzv4R2J7vS8nLR7d1rVmyIrXWE+pc5siPjLQI+CZ8554BRnCfteY8+STwT1
+ JBxZiD1w9TLin86cD2Mze8ENMTZOC2GU9Ad3POK2mLnJsIleFDhmIXzsVF63UZNXRTzrRvYzPpO
+ tlR2OLlVme7IVl3t+2D8gJ/VftY+iUi6Xe9haM/ZrlSEvlnx0uCsrav3EFaGoO4pDFk/DBqymXf
+ hu4xxGShW2n0WcChRHVvaoOS8=
+X-Received: by 2002:a05:620a:4385:b0:93c:70da:e45e with SMTP id
+ af79cd13be357-940ef94005bmr1318907885a.36.1793098244699; 
+ Tue, 27 Oct 2026 03:50:44 -0700 (PDT)
+X-Received: by 2002:a05:620a:4385:b0:93c:70da:e45e with SMTP id
+ af79cd13be357-940ef94005bmr1318902685a.36.1793098243665; 
+ Tue, 27 Oct 2026 03:50:43 -0700 (PDT)
+Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e3ecd35c2sm21749863f8f.39.2026.10.27.03.50.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 03:50:42 -0700 (PDT)
+Message-ID: <8adff631-058d-45fa-8b4a-852c80825c40@oss.qualcomm.com>
+Date: Tue, 27 Oct 2026 11:50:41 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=65.21.79.163; envelope-from=kirill@korins.ky;
- helo=mx2.catap.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] system/memory: keep coalesced MMIO zones when RAM is
+ mapped over them
+Content-Language: en-US
+To: Christian Quante <christian@quante.one>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20261027093223.129015-1-christian@quante.one>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20261027093223.129015-1-christian@quante.one>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=RYwFmFtv c=1 sm=1 tr=0 ts=6ae08205 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=pMW7FiL9PP9yhA0m-GIA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: DGPNu0Dy8KSqJdQnosf15UvRoxllJJ2R
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI3MDA0MyBTYWx0ZWRfX7uRPmMGNe6XG
+ nW4/BbCIwOb5PNwZdk3L6QfPdGLr5oLuped+foCmN7zfRtuLLt0Wp4lw+vFF0HUfGuw1vg6nKf4
+ WpWTSdcQ1vOzoHTzRQIj+0db1LYLB5Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI3MDA0MyBTYWx0ZWRfX/saEq5uhDaj4
+ pq8RKXIyLLtxd36+SFWwaVwmpQKEo7Ek7T+MUzos5W+J/kvyp3V8v5QKBESg0uD1rSMSfINJzFk
+ YPUOq60PF5It2o5tX2vEcaQBqSQQKNQCKX0uWNYF2kqP48w6tiIQDh8Xk459aCkGExL2xWM0/ff
+ 3JnmxVNn5c4wQyI4prb7nx66eENoaj9TIfUFoZcID1fMAdxydqrvz7/TKiH74JlFUndJxu0fbyK
+ ExcF53XJkIZnjeSoF/AIp43CNq3eh9+IGhwNPVdxfuof7BePol1lIwegpsT5+0NI0wn2CwATWM+
+ IZ3CKB41LPYl9f2yZYBI9V8LsyWhjuAgWAsUnmQHb7Q6RhkQ0HVrtsurQ2MAP+zVM7eHfOtDjAD
+ Iipthgigqo8rT67hAYNARJUinhzyRX1AqWFpkD/v9MvJ/QP+Z1XV7KEFi6pZFubAwy909DClwLQ
+ haMLN17rNVHfhxUjCkw==
+X-Proofpoint-ORIG-GUID: DGPNu0Dy8KSqJdQnosf15UvRoxllJJ2R
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-27_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610270043
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,668 +152,690 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Model the Octeon EMM command, DMA, switch and buffer registers needed
-by firmware MMC initialization. Give the controller its own reset state
-and route its registers through the shared CSR window.
----
- hw/mips/octeon.c          | 491 ++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |   3 +
- 2 files changed, 494 insertions(+)
+Hi Christian,
 
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 9388bc005b..f3f8a74cbe 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -9,6 +9,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qemu/datadir.h"
-+#include "qemu/host-utils.h"
- #include "qapi/error.h"
- #include "hw/char/serial-mm.h"
- #include "hw/core/clock.h"
-@@ -42,6 +43,8 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
- 
- #define TYPE_OCTEON_MIO "octeon-mio"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonMioState, OCTEON_MIO)
-+#define TYPE_OCTEON_EMM "octeon-emm"
-+OBJECT_DECLARE_SIMPLE_TYPE(OcteonEmmState, OCTEON_EMM)
- #define TYPE_OCTEON_RST "octeon-rst"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
- #define TYPE_OCTEON_INTC "octeon-intc"
-@@ -52,6 +55,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_CSR_32BIT_SIZE       4
- #define OCTEON_CSR_64BIT_SIZE       8
- #define OCTEON_CSR_HI32_OFFSET      0
-+#define OCTEON_CSR_LO32_OFFSET      4
- 
- /*
-  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-@@ -153,6 +157,88 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_MIO_FUS_RCMD         0x0001500
- #define OCTEON_MIO_FUS_RCMD_PEND    0x0000000000001000ULL
- #define OCTEON_MIO_FUS_RCMD_DAT     0x0000000000ff0000ULL
-+#define OCTEON_MIO_EMM_DMA_FIFO_CFG 0x0000160
-+#define OCTEON_MIO_EMM_DMA_FIFO_ADR 0x0000170
-+#define OCTEON_MIO_EMM_DMA_FIFO_CMD 0x0000178
-+#define OCTEON_MIO_EMM_DMA_CFG      0x0000180
-+#define OCTEON_MIO_EMM_DMA_ADR      0x0000188
-+#define OCTEON_MIO_EMM_DMA_INT      0x0000190
-+#define OCTEON_MIO_EMM_CFG          0x0002000
-+#define OCTEON_MIO_EMM_MODEX(x) \
-+    (0x0002008 + (x) * OCTEON_CSR_64BIT_SIZE)
-+#define OCTEON_MIO_EMM_MODE_COUNT   4
-+#define OCTEON_MIO_EMM_INT_EN_OLD   0x0002040
-+#define OCTEON_MIO_EMM_SWITCH       0x0002048
-+#define OCTEON_MIO_EMM_DMA          0x0002050
-+#define OCTEON_MIO_EMM_CMD          0x0002058
-+#define OCTEON_MIO_EMM_RSP_STS      0x0002060
-+#define OCTEON_MIO_EMM_RSP_LO       0x0002068
-+#define OCTEON_MIO_EMM_RSP_HI       0x0002070
-+#define OCTEON_MIO_EMM_INT          0x0002078
-+#define OCTEON_MIO_EMM_WDOG         0x0002088
-+#define OCTEON_MIO_EMM_SAMPLE       0x0002090
-+#define OCTEON_MIO_EMM_STS_MASK     0x0002098
-+#define OCTEON_MIO_EMM_RCA          0x00020a0
-+#define OCTEON_MIO_EMM_BUF_IDX      0x00020e0
-+#define OCTEON_MIO_EMM_BUF_DAT      0x00020e8
-+#define OCTEON_MIO_EMM_DEBUG        0x00020f8
-+#define OCTEON_MIO_EMM_NODE_OFFSET  0x0002000
-+#define OCTEON_MIO_EMM_CMD_VAL      (1ULL << 59)
-+#define OCTEON_MIO_EMM_DMA_VAL      (1ULL << 59)
-+#define OCTEON_MIO_EMM_DMA_BLOCK_CNT_SHIFT 32
-+#define OCTEON_MIO_EMM_DMA_BLOCK_CNT_MASK \
-+    (0xffffULL << OCTEON_MIO_EMM_DMA_BLOCK_CNT_SHIFT)
-+#define OCTEON_MIO_EMM_SWITCH_EXE   (1ULL << 59)
-+#define OCTEON_MIO_EMM_CMD_IDX_SHIFT 32
-+#define OCTEON_MIO_EMM_CMD_IDX_BITS 6
-+#define OCTEON_MIO_EMM_CMD_IDX_MASK \
-+    ((1U << OCTEON_MIO_EMM_CMD_IDX_BITS) - 1)
-+#define OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT 60
-+#define OCTEON_MIO_EMM_BUS_ID_MASK  (OCTEON_MIO_EMM_MODE_COUNT - 1)
-+#define OCTEON_MIO_EMM_RSP_STS_CMD_DONE (1ULL << 0)
-+#define OCTEON_MIO_EMM_RSP_STS_CMD_IDX_SHIFT 1
-+#define OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT (1ULL << 13)
-+#define OCTEON_MIO_EMM_RSP_STS_DMA_VAL (1ULL << 57)
-+#define OCTEON_MIO_EMM_RSP_STS_DMA_PEND (1ULL << 56)
-+#define OCTEON_MIO_EMM_RSP_STS_BUS_ID_SHIFT 60
-+#define OCTEON_MIO_EMM_DMA_INT_DONE (1ULL << 0)
-+#define OCTEON_MIO_EMM_INT_CMD_DONE (1ULL << 1)
-+#define OCTEON_MIO_EMM_INT_CMD_ERR  (1ULL << 3)
-+#define OCTEON_MIO_EMM_INT_DMA_DONE (1ULL << 2)
-+#define OCTEON_MIO_EMM_INT_DMA_ERR  (1ULL << 4)
-+#define OCTEON_MIO_EMM_INT_SWITCH_DONE (1ULL << 5)
-+#define OCTEON_MIO_EMM_INT_SWITCH_ERR  (1ULL << 6)
-+#define OCTEON_MIO_EMM_SWITCH_MODE_MASK ((1ULL << 49) - 1)
-+#define OCTEON_MIO_EMM_CFG_BUS_EN_MASK \
-+    ((1ULL << OCTEON_MIO_EMM_MODE_COUNT) - 1)
-+#define OCTEON_MIO_EMM_LOW_SPEED_HZ    400000
-+#define OCTEON_MIO_EMM_MODE_CLK_LO_MASK 0x000000000000ffffULL
-+#define OCTEON_MIO_EMM_MODE_CLK_HI_MASK 0x00000000ffff0000ULL
-+#define OCTEON_MIO_EMM_MODE_CLK_HI_SHIFT 16
-+#define OCTEON_MIO_EMM_BUF_IDX_INC  (1ULL << 16)
-+#define OCTEON_MIO_EMM_BUF_WORD_SIZE OCTEON_CSR_64BIT_SIZE
-+#define OCTEON_MIO_EMM_BUF_ENTRY_COUNT \
-+    (OCTEON_MIO_EMM_BUF_SIZE / OCTEON_MIO_EMM_BUF_WORD_SIZE)
-+#define OCTEON_MIO_EMM_BUF_IDX_OFF_MASK \
-+    (OCTEON_MIO_EMM_BUF_ENTRY_COUNT - 1)
-+#define OCTEON_MMC_CMD_GO_IDLE_STATE 0
-+#define OCTEON_MMC_CMD_BUSTEST_R    14
-+#define OCTEON_MMC_CMD_BUSTEST_W    19
-+/* SD/MMC CMD19 request patterns and CMD14 response patterns. */
-+#define OCTEON_MMC_BUSTEST_8_REQ0   0x55
-+#define OCTEON_MMC_BUSTEST_8_REQ1   0xaa
-+#define OCTEON_MMC_BUSTEST_8_RESP0  0xaa
-+#define OCTEON_MMC_BUSTEST_8_RESP1  0x55
-+#define OCTEON_MMC_BUSTEST_4_REQ0   0x5a
-+#define OCTEON_MMC_BUSTEST_4_REQ4   0x99
-+#define OCTEON_MMC_BUSTEST_4_REQ5   0x50
-+#define OCTEON_MMC_BUSTEST_4_REQ6   0x0f
-+#define OCTEON_MMC_BUSTEST_4_RESP0  0xa5
-+#define OCTEON_MMC_BUSTEST_1_REQ0   0x80
-+#define OCTEON_MMC_BUSTEST_1_REQ1   0x70
-+#define OCTEON_MMC_BUSTEST_1_REQ2   0x78
-+#define OCTEON_MMC_BUSTEST_1_REQ3   0x01
-+#define OCTEON_MMC_BUSTEST_1_RESP0  0x40
- #define OCTEON_RST_BOOT             0x6001600
- #define OCTEON_RST_SOFT_RST         0x6001680
- /* U-Boot uses the reset controller to park and release secondary cores. */
-@@ -226,6 +312,19 @@ struct OcteonMioState {
-     bool bootbus_led_mapped;
- };
- 
-+struct OcteonEmmState {
-+    OcteonPeripheralState parent_obj;
-+    GHashTable *regs;
-+    uint64_t mio_emm_rsp_sts;
-+    uint64_t mio_emm_rsp_lo;
-+    uint64_t mio_emm_rsp_hi;
-+    uint64_t mio_emm_int;
-+    uint64_t mio_emm_dma_int;
-+    uint16_t mio_emm_buf_idx;
-+    bool mio_emm_buf_inc;
-+    uint8_t mio_emm_buf[OCTEON_MIO_EMM_BUF_SIZE];
-+};
-+
- struct OcteonRstState {
-     OcteonPeripheralState parent_obj;
-     GHashTable *regs;
-@@ -353,8 +452,15 @@ void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
-     g_hash_table_replace(regs, key, stored);
- }
- 
-+static bool octeon_mio_emm_decode(hwaddr reg, hwaddr *ereg);
-+
- bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
- {
-+    hwaddr ereg;
-+
-+    if (octeon_mio_emm_decode(reg, &ereg)) {
-+        return octeon_reg_lookup(s->emm->regs, ereg, value);
-+    }
-     if (reg == OCTEON_RST_SOFT_RST) {
-         return octeon_reg_lookup(s->rst->regs, reg, value);
-     }
-@@ -363,6 +469,12 @@ bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
- 
- static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
- {
-+    hwaddr ereg;
-+
-+    if (octeon_mio_emm_decode(reg, &ereg)) {
-+        octeon_reg_store(s->emm->regs, ereg, value);
-+        return;
-+    }
-     if (reg == OCTEON_RST_SOFT_RST) {
-         octeon_reg_store(s->rst->regs, reg, value);
-         return;
-@@ -453,6 +565,325 @@ static void octeon_mio_boot_loc_dat_write(OcteonState *s, hwaddr addr,
-         OCTEON_MIO_BOOT_LOC_ADR_MASK;
- }
- 
-+static bool octeon_mio_emm_valid_reg(hwaddr reg)
-+{
-+    if (reg >= OCTEON_MIO_EMM_MODEX(0) &&
-+        reg < OCTEON_MIO_EMM_MODEX(OCTEON_MIO_EMM_MODE_COUNT) &&
-+        (reg & (OCTEON_CSR_64BIT_SIZE - 1)) == 0) {
-+        return true;
-+    }
-+
-+    switch (reg) {
-+    case OCTEON_MIO_EMM_DMA_INT:
-+    case OCTEON_MIO_EMM_CFG:
-+    case OCTEON_MIO_EMM_SWITCH:
-+    case OCTEON_MIO_EMM_DMA:
-+    case OCTEON_MIO_EMM_CMD:
-+    case OCTEON_MIO_EMM_RSP_STS:
-+    case OCTEON_MIO_EMM_INT:
-+    case OCTEON_MIO_EMM_DMA_FIFO_CFG:
-+    case OCTEON_MIO_EMM_DMA_FIFO_ADR:
-+    case OCTEON_MIO_EMM_DMA_FIFO_CMD:
-+    case OCTEON_MIO_EMM_DMA_CFG:
-+    case OCTEON_MIO_EMM_DMA_ADR:
-+    case OCTEON_MIO_EMM_INT_EN_OLD:
-+    case OCTEON_MIO_EMM_RSP_LO:
-+    case OCTEON_MIO_EMM_RSP_HI:
-+    case OCTEON_MIO_EMM_WDOG:
-+    case OCTEON_MIO_EMM_SAMPLE:
-+    case OCTEON_MIO_EMM_STS_MASK:
-+    case OCTEON_MIO_EMM_RCA:
-+    case OCTEON_MIO_EMM_BUF_IDX:
-+    case OCTEON_MIO_EMM_BUF_DAT:
-+    case OCTEON_MIO_EMM_DEBUG:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
-+static bool octeon_mio_emm_decode(hwaddr reg, hwaddr *ereg)
-+{
-+    if (octeon_mio_emm_valid_reg(reg)) {
-+        *ereg = reg;
-+        return true;
-+    }
-+
-+    reg -= OCTEON_MIO_EMM_NODE_OFFSET;
-+    if (octeon_mio_emm_valid_reg(reg)) {
-+        *ereg = reg;
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static bool octeon_mio_emm_execute_write(hwaddr addr, unsigned size)
-+{
-+    return size == OCTEON_CSR_64BIT_SIZE ||
-+           (size == OCTEON_CSR_32BIT_SIZE &&
-+            (addr & OCTEON_CSR_LO32_OFFSET));
-+}
-+
-+static void octeon_mio_emm_set_low_speed_mode(OcteonState *s,
-+                                               unsigned int bus_id)
-+{
-+    uint64_t period = DIV_ROUND_UP(s->io_hz, OCTEON_MIO_EMM_LOW_SPEED_HZ);
-+    uint64_t value;
-+
-+    period = MIN(period, UINT16_MAX);
-+    if (!octeon_csr_lookup(s, OCTEON_MIO_EMM_MODEX(bus_id), &value)) {
-+        value = 0;
-+    }
-+
-+    value &= ~(OCTEON_MIO_EMM_MODE_CLK_LO_MASK |
-+               OCTEON_MIO_EMM_MODE_CLK_HI_MASK);
-+    value |= period | (period << OCTEON_MIO_EMM_MODE_CLK_HI_SHIFT);
-+    octeon_csr_store(s, OCTEON_MIO_EMM_MODEX(bus_id), value);
-+}
-+
-+static void octeon_mio_emm_set_bustest(OcteonState *s)
-+{
-+    const uint8_t *buf = s->emm->mio_emm_buf;
-+    bool bus8 = buf[0] == OCTEON_MMC_BUSTEST_8_REQ0 &&
-+                buf[1] == OCTEON_MMC_BUSTEST_8_REQ1;
-+    bool bus4 = buf[0] == OCTEON_MMC_BUSTEST_4_REQ0 &&
-+                buf[4] == OCTEON_MMC_BUSTEST_4_REQ4 &&
-+                buf[5] == OCTEON_MMC_BUSTEST_4_REQ5 &&
-+                buf[6] == OCTEON_MMC_BUSTEST_4_REQ6;
-+    bool bus1 = buf[0] == OCTEON_MMC_BUSTEST_1_REQ0 &&
-+                buf[1] == OCTEON_MMC_BUSTEST_1_REQ1 &&
-+                buf[2] == OCTEON_MMC_BUSTEST_1_REQ2 &&
-+                buf[3] == OCTEON_MMC_BUSTEST_1_REQ3;
-+
-+    memset(s->emm->mio_emm_buf, 0, sizeof(s->emm->mio_emm_buf));
-+    if (bus8) {
-+        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_8_RESP0;
-+        s->emm->mio_emm_buf[1] = OCTEON_MMC_BUSTEST_8_RESP1;
-+    } else if (bus4) {
-+        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_4_RESP0;
-+    } else if (bus1) {
-+        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_1_RESP0;
-+    }
-+}
-+
-+static void octeon_mio_emm_complete_dma(OcteonState *s, uint64_t dma)
-+{
-+    dma &= ~(OCTEON_MIO_EMM_DMA_VAL | OCTEON_MIO_EMM_DMA_BLOCK_CNT_MASK);
-+    octeon_csr_store(s, OCTEON_MIO_EMM_DMA, dma);
-+    s->emm->mio_emm_rsp_sts &= ~(OCTEON_MIO_EMM_RSP_STS_DMA_VAL |
-+                            OCTEON_MIO_EMM_RSP_STS_DMA_PEND);
-+    s->emm->mio_emm_dma_int |= OCTEON_MIO_EMM_DMA_INT_DONE;
-+    s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_DMA_DONE;
-+}
-+
-+static void octeon_mio_emm_command(OcteonState *s, uint64_t cmd)
-+{
-+    unsigned int cmd_idx = (cmd >> OCTEON_MIO_EMM_CMD_IDX_SHIFT) &
-+                           OCTEON_MIO_EMM_CMD_IDX_MASK;
-+    unsigned int bus_id = (cmd >> OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT) &
-+                          OCTEON_MIO_EMM_BUS_ID_MASK;
-+
-+    s->emm->mio_emm_rsp_lo = 0;
-+    s->emm->mio_emm_rsp_hi = 0;
-+    s->emm->mio_emm_rsp_sts =
-+        OCTEON_MIO_EMM_RSP_STS_CMD_DONE |
-+        ((uint64_t)cmd_idx << OCTEON_MIO_EMM_RSP_STS_CMD_IDX_SHIFT) |
-+        ((uint64_t)bus_id << OCTEON_MIO_EMM_RSP_STS_BUS_ID_SHIFT);
-+
-+    switch (cmd_idx) {
-+    case OCTEON_MMC_CMD_GO_IDLE_STATE:
-+    case OCTEON_MMC_CMD_BUSTEST_W:
-+        break;
-+    case OCTEON_MMC_CMD_BUSTEST_R:
-+        octeon_mio_emm_set_bustest(s);
-+        break;
-+    default:
-+        s->emm->mio_emm_rsp_sts |= OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT;
-+        break;
-+    }
-+
-+    s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_CMD_DONE;
-+    if (s->emm->mio_emm_rsp_sts & OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT) {
-+        s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_CMD_ERR;
-+    }
-+}
-+
-+static uint64_t octeon_mio_emm_read(OcteonState *s, hwaddr reg,
-+                                    hwaddr addr, unsigned size)
-+{
-+    uint64_t value;
-+
-+    switch (reg) {
-+    case OCTEON_MIO_EMM_RSP_STS:
-+        value = s->emm->mio_emm_rsp_sts;
-+        break;
-+    case OCTEON_MIO_EMM_RSP_LO:
-+        value = s->emm->mio_emm_rsp_lo;
-+        break;
-+    case OCTEON_MIO_EMM_RSP_HI:
-+        value = s->emm->mio_emm_rsp_hi;
-+        break;
-+    case OCTEON_MIO_EMM_BUF_DAT:
-+        value = ldq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx);
-+        if (s->emm->mio_emm_buf_inc) {
-+            s->emm->mio_emm_buf_idx =
-+                (s->emm->mio_emm_buf_idx + OCTEON_MIO_EMM_BUF_WORD_SIZE) %
-+                OCTEON_MIO_EMM_BUF_SIZE;
-+        }
-+        break;
-+    case OCTEON_MIO_EMM_INT:
-+        value = s->emm->mio_emm_int;
-+        break;
-+    case OCTEON_MIO_EMM_DMA_INT:
-+        value = s->emm->mio_emm_dma_int;
-+        break;
-+    case OCTEON_MIO_EMM_CMD:
-+    case OCTEON_MIO_EMM_SWITCH:
-+    case OCTEON_MIO_EMM_DMA:
-+        if (!octeon_csr_lookup(s, reg, &value)) {
-+            value = 0;
-+        }
-+        break;
-+    case OCTEON_MIO_EMM_MODEX(0):
-+    case OCTEON_MIO_EMM_MODEX(1):
-+    case OCTEON_MIO_EMM_MODEX(2):
-+    case OCTEON_MIO_EMM_MODEX(3):
-+        if (!octeon_csr_lookup(s, reg, &value)) {
-+            value = 0;
-+        }
-+        break;
-+    default:
-+        if (!octeon_csr_lookup(s, reg, &value)) {
-+            value = 0;
-+        }
-+        break;
-+    }
-+
-+    return octeon_read64(value, addr, size);
-+}
-+
-+static void octeon_mio_emm_write(OcteonState *s, hwaddr reg,
-+                                 hwaddr addr, uint64_t value, unsigned size)
-+{
-+    uint64_t old;
-+    uint64_t clear;
-+
-+    switch (reg) {
-+    case OCTEON_MIO_EMM_CMD:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        if (!(value & OCTEON_MIO_EMM_CMD_VAL)) {
-+            return;
-+        }
-+        if (!octeon_mio_emm_execute_write(addr, size)) {
-+            return;
-+        }
-+
-+        octeon_csr_store(s, reg, value & ~OCTEON_MIO_EMM_CMD_VAL);
-+        octeon_mio_emm_command(s, value);
-+        return;
-+    case OCTEON_MIO_EMM_SWITCH:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        if (!(value & OCTEON_MIO_EMM_SWITCH_EXE)) {
-+            return;
-+        }
-+        if (!octeon_mio_emm_execute_write(addr, size)) {
-+            return;
-+        }
-+        octeon_csr_store(s, reg, value & ~OCTEON_MIO_EMM_SWITCH_EXE);
-+        octeon_csr_store(s, OCTEON_MIO_EMM_MODEX(
-+                         (value >> OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT) &
-+                         OCTEON_MIO_EMM_BUS_ID_MASK),
-+                         value & OCTEON_MIO_EMM_SWITCH_MODE_MASK);
-+        s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_SWITCH_DONE;
-+        return;
-+    case OCTEON_MIO_EMM_DMA:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        if (!(value & OCTEON_MIO_EMM_DMA_VAL)) {
-+            return;
-+        }
-+        if (!octeon_mio_emm_execute_write(addr, size)) {
-+            return;
-+        }
-+        octeon_mio_emm_complete_dma(s, value);
-+        return;
-+    case OCTEON_MIO_EMM_INT:
-+        clear = octeon_write64(0, addr, value, size);
-+        s->emm->mio_emm_int &= ~clear;
-+        return;
-+    case OCTEON_MIO_EMM_DMA_INT:
-+        clear = octeon_write64(0, addr, value, size);
-+        s->emm->mio_emm_dma_int &= ~clear;
-+        return;
-+    case OCTEON_MIO_EMM_MODEX(0):
-+    case OCTEON_MIO_EMM_MODEX(1):
-+    case OCTEON_MIO_EMM_MODEX(2):
-+    case OCTEON_MIO_EMM_MODEX(3):
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        return;
-+    case OCTEON_MIO_EMM_CFG:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        if (octeon_mio_emm_execute_write(addr, size)) {
-+            uint64_t enabled = (value & ~old) & OCTEON_MIO_EMM_CFG_BUS_EN_MASK;
-+            unsigned int i;
-+
-+            for (i = 0; i < OCTEON_MIO_EMM_MODE_COUNT; i++) {
-+                if (enabled & (1U << i)) {
-+                    octeon_mio_emm_set_low_speed_mode(s, i);
-+                }
-+            }
-+        }
-+        return;
-+    case OCTEON_MIO_EMM_BUF_IDX:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        s->emm->mio_emm_buf_idx = (value & OCTEON_MIO_EMM_BUF_IDX_OFF_MASK) *
-+                             OCTEON_MIO_EMM_BUF_WORD_SIZE;
-+        s->emm->mio_emm_buf_inc = value & OCTEON_MIO_EMM_BUF_IDX_INC;
-+        return;
-+    case OCTEON_MIO_EMM_BUF_DAT:
-+        old = ldq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx);
-+        value = octeon_write64(old, addr, value, size);
-+        stq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx, value);
-+        if (s->emm->mio_emm_buf_inc) {
-+            s->emm->mio_emm_buf_idx =
-+                (s->emm->mio_emm_buf_idx + OCTEON_MIO_EMM_BUF_WORD_SIZE) %
-+                OCTEON_MIO_EMM_BUF_SIZE;
-+        }
-+        return;
-+    default:
-+        if (!octeon_csr_lookup(s, reg, &old)) {
-+            old = 0;
-+        }
-+        value = octeon_write64(old, addr, value, size);
-+        octeon_csr_store(s, reg, value);
-+        return;
-+    }
-+}
-+
- static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
-                                           unsigned int *source)
- {
-@@ -1258,6 +1689,7 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
- {
-     OcteonState *s = opaque;
-     hwaddr reg = addr & ~7ULL;
-+    hwaddr ereg;
-     uint64_t value;
- 
-     if (reg >= OCTEON_MIO_BOOT_REG_CFGX(0) &&
-@@ -1294,6 +1726,10 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     }
- 
-+    if (octeon_mio_emm_decode(reg, &ereg)) {
-+        return octeon_mio_emm_read(s, ereg, addr, size);
-+    }
-+
-     if (!octeon_csr_lookup(s, reg, &value)) {
-         value = 0;
-     }
-@@ -1305,8 +1741,14 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
- {
-     OcteonState *s = opaque;
-     hwaddr reg = addr & ~7ULL;
-+    hwaddr ereg;
-     uint64_t old;
- 
-+    if (octeon_mio_emm_decode(reg, &ereg)) {
-+        octeon_mio_emm_write(s, ereg, addr, value, size);
-+        return;
-+    }
-+
-     if (reg == OCTEON_RST_SOFT_RST && value) {
-         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-         return;
-@@ -1707,6 +2149,26 @@ static void octeon_mio_reset_hold(Object *obj, ResetType type)
-     octeon_mio_boot_loc_update(s);
- }
- 
-+static void octeon_emm_reset_hold(Object *obj, ResetType type)
-+{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-+    OcteonEmmState *emm = OCTEON_EMM(obj);
-+
-+    if (opc->parent_phases.hold) {
-+        opc->parent_phases.hold(obj, type);
-+    }
-+
-+    g_hash_table_remove_all(emm->regs);
-+    emm->mio_emm_rsp_sts = 0;
-+    emm->mio_emm_rsp_lo = 0;
-+    emm->mio_emm_rsp_hi = 0;
-+    emm->mio_emm_int = 0;
-+    emm->mio_emm_dma_int = 0;
-+    emm->mio_emm_buf_idx = 0;
-+    emm->mio_emm_buf_inc = false;
-+    memset(emm->mio_emm_buf, 0, sizeof(emm->mio_emm_buf));
-+}
-+
- static void octeon_rst_reset_hold(Object *obj, ResetType type)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-@@ -1774,6 +2236,16 @@ static GHashTable *octeon_reg_table_new(void)
-                                  g_free, g_free);
- }
- 
-+static void octeon_emm_init(Object *obj)
-+{
-+    OCTEON_EMM(obj)->regs = octeon_reg_table_new();
-+}
-+
-+static void octeon_emm_finalize(Object *obj)
-+{
-+    g_hash_table_destroy(OCTEON_EMM(obj)->regs);
-+}
-+
- static void octeon_rst_init(Object *obj)
- {
-     OCTEON_RST(obj)->regs = octeon_reg_table_new();
-@@ -1803,6 +2275,15 @@ static void octeon_mio_class_init(ObjectClass *klass, const void *data)
-                                        NULL, &opc->parent_phases);
- }
- 
-+static void octeon_emm_class_init(ObjectClass *klass, const void *data)
-+{
-+    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    resettable_class_set_parent_phases(rc, NULL, octeon_emm_reset_hold,
-+                                       NULL, &opc->parent_phases);
-+}
-+
- static void octeon_rst_class_init(ObjectClass *klass, const void *data)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
-@@ -1846,6 +2327,7 @@ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
- static void octeon_create_peripherals(OcteonState *s)
- {
-     s->mio = OCTEON_MIO(octeon_new_peripheral(s, TYPE_OCTEON_MIO, 0));
-+    s->emm = OCTEON_EMM(octeon_new_peripheral(s, TYPE_OCTEON_EMM, 0));
-     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
-     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
-     s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
-@@ -1862,6 +2344,7 @@ static void octeon_realize_peripherals(OcteonState *s)
-     octeon_realize_peripheral(&s->csr_bank->parent_obj);
-     octeon_realize_peripheral(&s->intc->parent_obj);
-     octeon_realize_peripheral(&s->rst->parent_obj);
-+    octeon_realize_peripheral(&s->emm->parent_obj);
-     octeon_realize_peripheral(&s->mio->parent_obj);
- }
- 
-@@ -1986,6 +2469,14 @@ static const TypeInfo octeon_machine_types[] = {
-         .instance_size = sizeof(OcteonMioState),
-         .class_init = octeon_mio_class_init,
-     },
-+    {
-+        .name = TYPE_OCTEON_EMM,
-+        .parent = TYPE_OCTEON_PERIPHERAL,
-+        .instance_size = sizeof(OcteonEmmState),
-+        .instance_init = octeon_emm_init,
-+        .instance_finalize = octeon_emm_finalize,
-+        .class_init = octeon_emm_class_init,
-+    },
-     {
-         .name = TYPE_OCTEON_RST,
-         .parent = TYPE_OCTEON_PERIPHERAL,
-diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index e9826f1713..a262107b54 100644
---- a/hw/mips/octeon_internal.h
-+++ b/hw/mips/octeon_internal.h
-@@ -20,6 +20,7 @@
- #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
- #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
- #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
-+#define OCTEON_MIO_EMM_BUF_SIZE     512
- #define OCTEON_TWSI_COUNT           2
- #define OCTEON_TWSI_STAT_IDLE       0xf8
- #define OCTEON_SPD_EEPROM_SIZE      139
-@@ -38,6 +39,7 @@ typedef enum OcteonCiu3Source {
- 
- typedef struct OcteonState OcteonState;
- typedef struct OcteonMioState OcteonMioState;
-+typedef struct OcteonEmmState OcteonEmmState;
- typedef struct OcteonRstState OcteonRstState;
- typedef struct OcteonIntcState OcteonIntcState;
- typedef struct OcteonCsrBankState OcteonCsrBankState;
-@@ -68,6 +70,7 @@ struct OcteonState {
-     MemoryRegion boot_flash_alias;
-     MemoryRegion cvmseg;
-     OcteonMioState *mio;
-+    OcteonEmmState *emm;
-     OcteonRstState *rst;
-     OcteonIntcState *intc;
-     OcteonCsrBankState *csr_bank;
--- 
-2.56.0
+On 27/10/26 10:31, Christian Quante wrote:
+> The coalesced MMIO zones of a region follow its flat ranges.  When RAM
+> is mapped over part of a coalesced region, the flat range of the region
+> changes, and the listeners get coalesced_io_del() for the old range and
+> coalesced_io_add() for the new one.  The VGA devices do this all the
+> time: they map RAM aliases of the video memory into the legacy window
+> 0xa0000-0xbffff, which is coalesced, and remove them when the window
+> must be MMIO.  Cirrus does it for each BitBLT with source data from the
+> CPU and for write modes 4 and 5, among others.  The standard VGA does
+> it when it changes between planar and chain-4 modes, and for each VBE
+> bank switch.
+> 
+> For KVM, each change means KVM_UNREGISTER_COALESCED_MMIO and
+> KVM_REGISTER_COALESCED_MMIO, and the following KVM_SET_USER_MEMORY_REGION2
+> for the RAM alias then takes 1.4-2.2 ms instead of about 20 us (strace,
+> Linux 7.0).  The time is spent in the ioctl; I have not found out why.
+
+Have you looked at kernel io-bus device (un)registration? Or ask on the
+KVM devel list :)
+
+> But a zone under writable RAM has no effect for KVM, because accesses
+> to that RAM do not exit as MMIO.
+> 
+> So compute the coalesced zones of an address space from the whole flat
+> view, as it is done for the ioeventfds, and tell the listeners only
+> about the zones that really change.  A zone covers the parts where its
+> region is visible, and also the neighbouring flat ranges of writable
+> RAM in whole host pages, which KVM maps (kvm_align_section()).
+
+Is it possible to consolidate that code and avoid copying the KVM logic
+inside the generic memory code?
+
+> So the
+> zones stay the same when the VGA window changes between RAM and MMIO.
+> Overlapping zones are merged, because KVM_UNREGISTER_COALESCED_MMIO
+> removes every zone that contains the given range
+> (virt/kvm/coalesced_mmio.c).  As before, zones are deleted before the
+> flat ranges change and added after that.  The zones are only kept for
+> address spaces with a listener that implements coalesced_io_add() or
+> coalesced_io_del().  The listeners get a MemoryRegionSection without a
+> MemoryRegion; the only users, the KVM listeners, do not use it.
+
+Split as a preliminary refactor, computing zones from the flatview and
+merging overlaps (patch 2).
+
+Keep the debatable KVM zone stretching over RAM as patch 3.
+
+> 
+> This also replaces flat_range_coalesced_io_notify_listener_add_del(),
+> which stopped at the first coalesced range that does not intersect the
+> flat range.
+
+This is a fix on its own (patch 1), please send first including:
+
+   Cc: qemu-stable.
+   Fixes: 8d3031fa1bfc ("memory: notify hypervisor of all eventfds 
+during listener (de)registration")
+
+> With KVM, a boot sector test that switches the Cirrus window between
+> RAM and MMIO takes 73 us per switch instead of 2073 us.  A Cirrus BitBLT
+> with 4 bytes of source data from the CPU takes 176 us instead of
+> 4076 us, and a VBE bank switch of the standard VGA 309 us instead of
+> 4159 us.  A coalesced write to the window costs the same as before.
+> 
+> Signed-off-by: Christian Quante <christian@quante.one>
+> ---
+> 
+> Notes:
+>      v1: https://lore.kernel.org/qemu-devel/20261018051813.12379-1-christian@quante.one/
+>      
+>      Changes since v1:
+>      - include/system/memory.h: do not indent the second line of @section in
+>        the documentation of coalesced_io_add and coalesced_io_del.  Sphinx
+>        reported "Unexpected indentation" there, and the docs build failed
+>        with -W (werror, the default for builds from git on Linux).
+>      - rebased on current master
+>      
+>      The code is the same as in v1, so I did not repeat the tests below.
+>      With v2, the docs build with -W passes.
+>      
+>      Tests on a Linux 7.0 (x86_64) host:
+>       - qtest-x86_64 (some of the slow tests use KVM) and unit tests: no
+>         failures.
+>       - Guests booted with KVM, with and without the patch: openSUSE
+>         Tumbleweed (q35, std VGA) to the desktop, also with e1000 (only with
+>         the patch); with vmware-svga to the boot loader (the screen dump does
+>         not show the Linux console).  Windows 10 (q35, std VGA): to the lock
+>         screen with the patch; without the patch I compared only the zone
+>         ioctls.  q35 with OVMF (flash): only the zones, without a boot disk.
+>         OS/2 Warp 3 (pc, isa-cirrus-vga, with my Cirrus patches; the first
+>         series is <20261018050643.9288-1-christian@quante.one>, the others
+>         follow).  With a debug print of the coalesced MMIO ioctls I replayed
+>         the register/unregister sequence the way KVM handles it: no
+>         overlapping zones, no unregister of an unknown zone, no unregister
+>         that removes more than one zone.  The PIO zones are the same as
+>         before; only the zones of the VGA window stay registered across the
+>         RAM alias changes (a Windows 10 boot did 115 registrations and 114
+>         unregistrations of them before, 2 and 1 now).
+>       - With KVM, OS/2 Warp 3 with its Cirrus driver opens a folder at once
+>         with the patch: from the first click of the double click until the
+>         folder is complete, it takes 0.41-0.42 s instead of 0.74-0.91 s.  The
+>         double click itself takes 0.4 s in my script; with TCG it also takes
+>         0.42 s.
+>       - Not tested: other architectures (vga-mmio), confidential guests.
+>         Windows NT 4.0 (also with SP6a) does not boot with KVM here, with or
+>         without the patch (STOP 0x0000000A in ntoskrnl.exe), so it is not
+>         in the list above.
+>      
+>      The kernel side (why the memory slot update after a coalesced zone change
+>      takes so long) I have not looked into.
+> 
+>   include/system/memory.h |  19 ++-
+>   system/memory.c         | 323 ++++++++++++++++++++++++++++------------
+>   2 files changed, 242 insertions(+), 100 deletions(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 027ca81bd2..605aede6d0 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -838,11 +838,14 @@ struct MemoryListener {
+>        * @coalesced_io_add:
+>        *
+>        * Called during an address space update transaction,
+> -     * for a section of the address space that has had a new coalesced
+> -     * MMIO range registration since the last transaction.
+> +     * for a range of the address space that has become coalesced
+> +     * since the last transaction.  The range can also cover writable
+> +     * RAM that is mapped over part of a coalesced MMIO region; accesses
+> +     * to that RAM are not MMIO, so the coalescing does not apply to them.
+>        *
+>        * @listener: The #MemoryListener.
+> -     * @section: The new #MemoryRegionSection.
+> +     * @section: The #MemoryRegionSection of the range (without a
+> +     * #MemoryRegion).
+
+A preparatory patch removing section from 
+coalesced_io_add/coalesced_io_del would be cleaner than documenting a 
+half-filled struct.
+
+>        * @addr: The starting address for the coalesced MMIO range.
+>        * @len: The length of the coalesced MMIO range.
+>        */
+> @@ -853,11 +856,12 @@ struct MemoryListener {
+>        * @coalesced_io_del:
+>        *
+>        * Called during an address space update transaction,
+> -     * for a section of the address space that has dropped a coalesced
+> -     * MMIO range since the last transaction.
+> +     * for a range of the address space that is no longer coalesced.
+> +     * It is always a range that was passed to @coalesced_io_add before.
+>        *
+>        * @listener: The #MemoryListener.
+> -     * @section: The new #MemoryRegionSection.
+> +     * @section: The #MemoryRegionSection of the range (without a
+> +     * #MemoryRegion).
+>        * @addr: The starting address for the coalesced MMIO range.
+>        * @len: The length of the coalesced MMIO range.
+>        */
+> @@ -908,6 +912,9 @@ struct AddressSpace {
+>       int ioeventfd_nb;
+>       int ioeventfd_notifiers;
+>       struct MemoryRegionIoeventfd *ioeventfds;
+> +    int coalesced_nb;
+> +    int coalesced_notifiers;
+> +    struct AddrRange *coalesced;
+>       QTAILQ_HEAD(, MemoryListener) listeners;
+>       QTAILQ_ENTRY(AddressSpace) address_spaces_link;
+>   
+> diff --git a/system/memory.c b/system/memory.c
+> index f1910af8a0..585c8b0a11 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -43,6 +43,7 @@
+>   static unsigned memory_region_transaction_depth;
+>   static bool memory_region_update_pending;
+>   static bool ioeventfd_update_pending;
+> +static bool coalesced_update_pending;
+>   unsigned int global_dirty_tracking;
+>   
+>   static QTAILQ_HEAD(, MemoryListener) memory_listeners
+> @@ -885,91 +886,206 @@ static void address_space_update_ioeventfds(AddressSpace *as)
+>   }
+>   
+>   /*
+> - * Notify the memory listeners about the coalesced IO change events of
+> - * range `cmr'.  Only the part that has intersection of the specified
+> - * FlatRange will be sent.
+> + * Coalescing has no effect on writable RAM that the accelerator maps,
+> + * because accesses to it are not MMIO.  KVM maps RAM only in whole host
+> + * pages (kvm_align_section()).
+>    */
+> -static void flat_range_coalesced_io_notify(FlatRange *fr,
+> -                                           const AddressSpace *as,
+> -                                           CoalescedMemoryRange *cmr, bool add)
+> +static bool flat_range_ignores_coalescing(const FlatRange *fr)
+>   {
+> -    AddrRange tmp;
+> +    uint64_t page_size = qemu_real_host_page_size();
+>   
+> -    tmp = addrrange_shift(cmr->addr,
+> -                          int128_sub(fr->addr.start,
+> -                                     int128_make64(fr->offset_in_region)));
+> -    if (!addrrange_intersects(tmp, fr->addr)) {
+> -        return;
+> -    }
+> -    tmp = addrrange_intersection(tmp, fr->addr);
+> +    return memory_region_is_ram(fr->mr) && !fr->readonly &&
+> +           QEMU_IS_ALIGNED(int128_get64(fr->addr.start), page_size) &&
+> +           QEMU_IS_ALIGNED(int128_get64(fr->addr.size), page_size);
+> +}
+>   
+> -    if (add) {
+> -        MEMORY_LISTENER_UPDATE_REGION(fr, as, Forward, coalesced_io_add,
+> -                                      int128_get64(tmp.start),
+> -                                      int128_get64(tmp.size));
+> -    } else {
+> -        MEMORY_LISTENER_UPDATE_REGION(fr, as, Reverse, coalesced_io_del,
+> -                                      int128_get64(tmp.start),
+> -                                      int128_get64(tmp.size));
+> -    }
+> +/* Does @fr map @mr with the region start at address @base? */
+> +static bool flat_range_maps_region_at(const FlatRange *fr, MemoryRegion *mr,
+> +                                      Int128 base)
+> +{
+> +    return fr->mr == mr &&
+> +           int128_eq(int128_sub(fr->addr.start,
+> +                                int128_make64(fr->offset_in_region)), base);
+>   }
+>   
+> -static void flat_range_coalesced_io_del(FlatRange *fr, const AddressSpace *as)
+> +static int addrrange_cmp(const void *a, const void *b)
+>   {
+> -    CoalescedMemoryRange *cmr;
+> +    const AddrRange *r1 = a, *r2 = b;
+>   
+> -    QTAILQ_FOREACH(cmr, &fr->mr->coalesced, link) {
+> -        flat_range_coalesced_io_notify(fr, as, cmr, false);
+> +    if (!int128_eq(r1->start, r2->start)) {
+> +        return int128_lt(r1->start, r2->start) ? -1 : 1;
+> +    }
+> +    if (!int128_eq(r1->size, r2->size)) {
+> +        return int128_lt(r1->size, r2->size) ? -1 : 1;
+>       }
+> +    return 0;
+>   }
+>   
+> -static void flat_range_coalesced_io_add(FlatRange *fr, const AddressSpace *as)
+> +/*
+> + * Compute the coalesced zones of @view, sorted and without overlaps.
+> + *
+> + * A coalesced range of a region covers the parts where the region is
+> + * visible, and also the flat ranges next to them that ignore coalescing.
+> + * So the zones do not change when RAM is mapped over part of a coalesced
+> + * region and unmapped again, as the VGA window does with its bank aliases.
+> + * Changing a zone is expensive for KVM.
+> + */
+> +static unsigned flatview_get_coalesced(FlatView *view, AddrRange **pzones)
+>   {
+> -    MemoryRegion *mr = fr->mr;
+> -    CoalescedMemoryRange *cmr;
+> +    AddrRange *zones = NULL;
+> +    unsigned nb = 0, i, j;
+>   
+> -    if (QTAILQ_EMPTY(&mr->coalesced)) {
+> -        return;
+> +    for (i = 0; i < view->nr; i++) {
+> +        FlatRange *fr = &view->ranges[i];
+> +        CoalescedMemoryRange *cmr;
+> +        Int128 base;
+> +
+> +        if (QTAILQ_EMPTY(&fr->mr->coalesced)) {
+> +            continue;
+> +        }
+> +        base = int128_sub(fr->addr.start, int128_make64(fr->offset_in_region));
+> +        QTAILQ_FOREACH(cmr, &fr->mr->coalesced, link) {
+> +            AddrRange tmp = addrrange_shift(cmr->addr, base);
+> +            Int128 tmp_end = addrrange_end(tmp);
+> +            Int128 start, end;
+> +
+> +            if (!addrrange_intersects(tmp, fr->addr)) {
+> +                continue;
+> +            }
+> +            start = int128_max(tmp.start, fr->addr.start);
+> +            end = int128_min(tmp_end, addrrange_end(fr->addr));
+> +
+> +            for (j = i; j > 0 && int128_gt(start, tmp.start); j--) {
+> +                FlatRange *prev = &view->ranges[j - 1];
+> +
+> +                if (!int128_eq(addrrange_end(prev->addr), start) ||
+> +                    !(flat_range_maps_region_at(prev, fr->mr, base) ||
+> +                      flat_range_ignores_coalescing(prev))) {
+> +                    break;
+> +                }
+> +                start = int128_max(prev->addr.start, tmp.start);
+> +            }
+> +            for (j = i + 1; j < view->nr && int128_lt(end, tmp_end); j++) {
+> +                FlatRange *next = &view->ranges[j];
+> +
+> +                if (!int128_eq(next->addr.start, end) ||
+> +                    !(flat_range_maps_region_at(next, fr->mr, base) ||
+> +                      flat_range_ignores_coalescing(next))) {
+> +                    break;
+> +                }
+> +                end = int128_min(addrrange_end(next->addr), tmp_end);
+> +            }
+> +
+> +            zones = g_renew(AddrRange, zones, nb + 1);
+
+Can we count first and alloc or use GArray instead of renewing for each 
+zone?
+
+> +            zones[nb++] = addrrange_make(start, int128_sub(end, start));
+> +        }
+>       }
+>   
+> -    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
+> -        flat_range_coalesced_io_notify(fr, as, cmr, true);
+> +    /*
+> +     * Merge overlapping zones.  KVM_UNREGISTER_COALESCED_MMIO removes every
+> +     * zone that contains the given range, so a zone must not lie inside
+> +     * another one.
+> +     */
+> +    if (nb > 1) {
+> +        qsort(zones, nb, sizeof(*zones), addrrange_cmp);
+>       }
+> +    for (i = j = 0; i < nb; i++) {
+> +        if (j && int128_lt(zones[i].start, addrrange_end(zones[j - 1]))) {
+> +            Int128 end = int128_max(addrrange_end(zones[i]),
+> +                                    addrrange_end(zones[j - 1]));
+> +
+> +            zones[j - 1].size = int128_sub(end, zones[j - 1].start);
+> +        } else {
+> +            zones[j++] = zones[i];
+> +        }
+> +    }
+> +
+> +    *pzones = zones;
+> +    return j;
+>   }
+>   
+> -static void
+> -flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
+> -                                                MemoryRegionSection *mrs,
+> -                                                MemoryListener *listener,
+> -                                                const AddressSpace *as,
+> -                                                bool add)
+> +/* Tell @listener about all coalesced zones of @as when it is (un)registered */
+> +static void listener_notify_coalesced(MemoryListener *listener,
+> +                                      const AddressSpace *as, FlatView *view,
+> +                                      bool add)
+>   {
+> -    CoalescedMemoryRange *cmr;
+> -    MemoryRegion *mr = fr->mr;
+> -    AddrRange tmp;
+> -
+> -    QTAILQ_FOREACH(cmr, &mr->coalesced, link) {
+> -        tmp = addrrange_shift(cmr->addr,
+> -                              int128_sub(fr->addr.start,
+> -                                         int128_make64(fr->offset_in_region)));
+> +    unsigned i;
+>   
+> -        if (!addrrange_intersects(tmp, fr->addr)) {
+> -            return;
+> -        }
+> -        tmp = addrrange_intersection(tmp, fr->addr);
+> +    for (i = 0; i < as->coalesced_nb; i++) {
+> +        hwaddr start = int128_get64(as->coalesced[i].start);
+> +        hwaddr size = int128_get64(as->coalesced[i].size);
+> +        MemoryRegionSection section = (MemoryRegionSection) {
+> +            .fv = view,
+> +            .offset_within_address_space = start,
+> +            .size = as->coalesced[i].size,
+> +        };
+>   
+>           if (add && listener->coalesced_io_add) {
+> -            listener->coalesced_io_add(listener, mrs,
+> -                                       int128_get64(tmp.start),
+> -                                       int128_get64(tmp.size));
+> +            listener->coalesced_io_add(listener, &section, start, size);
+>           } else if (!add && listener->coalesced_io_del) {
+> -            listener->coalesced_io_del(listener, mrs,
+> -                                       int128_get64(tmp.start),
+> -                                       int128_get64(tmp.size));
+> +            listener->coalesced_io_del(listener, &section, start, size);
+>           }
+>       }
+>   }
+>   
+> +/*
+> + * Tell the listeners of @as about each zone of @zones that is not in
+> + * @other: as added zones if @add, else as dropped zones.
+> + */
+> +static void address_space_notify_coalesced(AddressSpace *as, FlatView *view,
+> +                                           AddrRange *zones, unsigned nb,
+> +                                           AddrRange *other, unsigned other_nb,
+> +                                           bool add)
+> +{
+> +    MemoryRegionSection section;
+> +    unsigned i, j = 0;
+> +
+> +    for (i = 0; i < nb; i++) {
+> +        while (j < other_nb && addrrange_cmp(&other[j], &zones[i]) < 0) {
+> +            j++;
+> +        }
+> +        if (j < other_nb && addrrange_equal(other[j], zones[i])) {
+> +            continue;
+> +        }
+> +        section = (MemoryRegionSection) {
+> +            .fv = view,
+> +            .offset_within_address_space = int128_get64(zones[i].start),
+> +            .size = zones[i].size,
+> +        };
+> +        if (add) {
+> +            MEMORY_LISTENER_CALL(as, coalesced_io_add, Forward, &section,
+> +                                 int128_get64(zones[i].start),
+> +                                 int128_get64(zones[i].size));
+> +        } else {
+> +            MEMORY_LISTENER_CALL(as, coalesced_io_del, Reverse, &section,
+> +                                 int128_get64(zones[i].start),
+> +                                 int128_get64(zones[i].size));
+> +        }
+> +    }
+> +}
+> +
+> +static void address_space_update_coalesced(AddressSpace *as)
+> +{
+> +    FlatView *view;
+> +    AddrRange *zones;
+> +    unsigned nb;
+> +
+> +    if (!as->coalesced_notifiers) {
+> +        return;
+> +    }
+> +
+> +    view = address_space_get_flatview(as);
+> +    nb = flatview_get_coalesced(view, &zones);
+> +    address_space_notify_coalesced(as, view, as->coalesced, as->coalesced_nb,
+> +                                   zones, nb, false);
+> +    address_space_notify_coalesced(as, view, zones, nb,
+> +                                   as->coalesced, as->coalesced_nb, true);
+> +    g_free(as->coalesced);
+> +    as->coalesced = zones;
+> +    as->coalesced_nb = nb;
+> +    flatview_unref(view);
+> +}
+> +
+>   static void address_space_update_topology_pass(AddressSpace *as,
+>                                                  const FlatView *old_view,
+>                                                  const FlatView *new_view,
+> @@ -1002,7 +1118,6 @@ static void address_space_update_topology_pass(AddressSpace *as,
+>               /* In old but not in new, or in both but attributes changed. */
+>   
+>               if (!adding) {
+> -                flat_range_coalesced_io_del(frold, as);
+>                   MEMORY_LISTENER_UPDATE_REGION(frold, as, Reverse, region_del);
+>               }
+>   
+> @@ -1031,7 +1146,6 @@ static void address_space_update_topology_pass(AddressSpace *as,
+>   
+>               if (adding) {
+>                   MEMORY_LISTENER_UPDATE_REGION(frnew, as, Forward, region_add);
+> -                flat_range_coalesced_io_add(frnew, as);
+>               }
+>   
+>               ++inew;
+> @@ -1101,12 +1215,27 @@ static void address_space_set_flatview(AddressSpace *as)
+>   
+>       if (!QTAILQ_EMPTY(&as->listeners)) {
+>           FlatView tmpview = { .nr = 0 }, *old_view2 = old_view;
+> +        AddrRange *zones = NULL;
+> +        unsigned nb = 0;
+>   
+>           if (!old_view2) {
+>               old_view2 = &tmpview;
+>           }
+> +        if (as->coalesced_notifiers) {
+> +            nb = flatview_get_coalesced(new_view, &zones);
+> +            address_space_notify_coalesced(as, old_view2, as->coalesced,
+> +                                           as->coalesced_nb, zones, nb, false);
+> +        }
+>           address_space_update_topology_pass(as, old_view2, new_view, false);
+>           address_space_update_topology_pass(as, old_view2, new_view, true);
+> +        if (as->coalesced_notifiers) {
+> +            address_space_notify_coalesced(as, new_view, zones, nb,
+> +                                           as->coalesced, as->coalesced_nb,
+> +                                           true);
+> +            g_free(as->coalesced);
+> +            as->coalesced = zones;
+> +            as->coalesced_nb = nb;
+> +        }
+>       }
+>   
+>       /* Writes are protected by the BQL.  */
+> @@ -1160,15 +1289,25 @@ void memory_region_transaction_commit(void)
+>               QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
+>                   address_space_set_flatview(as);
+
+If we rework address_space_set_flatview() to return a boolean when
+coalesced zones are up to date ...
+
+>                   address_space_update_ioeventfds(as);
+> +                if (coalesced_update_pending) {
+
+... then we could skip this extra commit (nothing to find: no
+notification).
+
+> +                    address_space_update_coalesced(as);
+> +                }
+>               }
+>               memory_region_update_pending = false;
+>               ioeventfd_update_pending = false;
+> +            coalesced_update_pending = false;
+>               MEMORY_LISTENER_CALL_GLOBAL(commit, Forward);
+> -        } else if (ioeventfd_update_pending) {
+> +        } else if (ioeventfd_update_pending || coalesced_update_pending) {
+>               QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
+> -                address_space_update_ioeventfds(as);
+> +                if (ioeventfd_update_pending) {
+> +                    address_space_update_ioeventfds(as);
+> +                }
+> +                if (coalesced_update_pending) {
+> +                    address_space_update_coalesced(as);
+> +                }
+>               }
+>               ioeventfd_update_pending = false;
+> +            coalesced_update_pending = false;
+>           }
+>      }
+>   }
+> @@ -2330,29 +2469,6 @@ void memory_region_writeback(MemoryRegion *mr, hwaddr addr, hwaddr size)
+>       }
+>   }
+>   
+> -/*
+> - * Call proper memory listeners about the change on the newly
+> - * added/removed CoalescedMemoryRange.
+> - */
+> -static void memory_region_update_coalesced_range(MemoryRegion *mr,
+> -                                                 CoalescedMemoryRange *cmr,
+> -                                                 bool add)
+> -{
+> -    AddressSpace *as;
+> -    FlatView *view;
+> -    FlatRange *fr;
+> -
+> -    QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
+> -        view = address_space_get_flatview(as);
+> -        FOR_EACH_FLAT_RANGE(fr, view) {
+> -            if (fr->mr == mr) {
+> -                flat_range_coalesced_io_notify(fr, as, cmr, add);
+> -            }
+> -        }
+> -        flatview_unref(view);
+> -    }
+> -}
+> -
+>   void memory_region_set_coalescing(MemoryRegion *mr)
+>   {
+>       memory_region_clear_coalescing(mr);
+> @@ -2365,10 +2481,12 @@ void memory_region_add_coalescing(MemoryRegion *mr,
+>   {
+>       CoalescedMemoryRange *cmr = g_malloc(sizeof(*cmr));
+>   
+> +    memory_region_transaction_begin();
+>       cmr->addr = addrrange_make(int128_make64(offset), int128_make64(size));
+>       QTAILQ_INSERT_TAIL(&mr->coalesced, cmr, link);
+> -    memory_region_update_coalesced_range(mr, cmr, true);
+>       memory_region_set_flush_coalesced(mr);
+> +    coalesced_update_pending |= mr->enabled;
+> +    memory_region_transaction_commit();
+
+Does that mean this call has to be run with BQL take? If so, worth
+mentioning in method docstring.
+>   }
+>   
+>   void memory_region_clear_coalescing(MemoryRegion *mr)
+> @@ -2382,12 +2500,14 @@ void memory_region_clear_coalescing(MemoryRegion *mr)
+>       qemu_flush_coalesced_mmio_buffer();
+>       mr->flush_coalesced_mmio = false;
+>   
+> +    memory_region_transaction_begin();
+>       while (!QTAILQ_EMPTY(&mr->coalesced)) {
+>           cmr = QTAILQ_FIRST(&mr->coalesced);
+>           QTAILQ_REMOVE(&mr->coalesced, cmr, link);
+> -        memory_region_update_coalesced_range(mr, cmr, false);
+>           g_free(cmr);
+>       }
+> +    coalesced_update_pending |= mr->enabled;
+> +    memory_region_transaction_commit();
+>   }
+>   
+>   void memory_region_set_flush_coalesced(MemoryRegion *mr)
+> @@ -2936,15 +3056,13 @@ static void listener_add_address_space(MemoryListener *listener,
+>               listener->region_add(listener, &section);
+>           }
+>   
+> -        /* send coalesced io add notifications */
+> -        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
+> -                                                        listener, as, true);
+> -
+>           if (fr->dirty_log_mask && listener->log_start) {
+>               listener->log_start(listener, &section, 0, fr->dirty_log_mask);
+>           }
+>       }
+>   
+> +    listener_notify_coalesced(listener, as, view, true);
+> +
+>       /*
+>        * register all eventfds for this address space for the newly registered
+>        * listener.
+> @@ -2981,6 +3099,7 @@ static void listener_del_address_space(MemoryListener *listener,
+>           listener->begin(listener);
+>       }
+>       view = address_space_get_flatview(as);
+> +    listener_notify_coalesced(listener, as, view, false);
+>       FOR_EACH_FLAT_RANGE(fr, view) {
+>           MemoryRegionSection section = section_from_flat_range(fr, view);
+>   
+> @@ -2988,9 +3107,6 @@ static void listener_del_address_space(MemoryListener *listener,
+>               listener->log_stop(listener, &section, fr->dirty_log_mask, 0);
+>           }
+>   
+> -        /* send coalesced io del notifications */
+> -        flat_range_coalesced_io_notify_listener_add_del(fr, &section,
+> -                                                        listener, as, false);
+>           if (listener->region_del) {
+>               listener->region_del(listener, &section);
+>           }
+> @@ -3052,6 +3168,15 @@ void memory_listener_register(MemoryListener *listener, AddressSpace *as)
+>           QTAILQ_INSERT_BEFORE(other, listener, link_as);
+>       }
+>   
+> +    if ((listener->coalesced_io_add || listener->coalesced_io_del) &&
+> +        !as->coalesced_notifiers++) {
+> +        /* The zones are only kept up to date while somebody needs them */
+> +        FlatView *view = address_space_get_flatview(as);
+> +
+> +        as->coalesced_nb = flatview_get_coalesced(view, &as->coalesced);
+> +        flatview_unref(view);
+> +    }
+> +
+>       listener_add_address_space(listener, as);
+>   
+>       if (listener->eventfd_add || listener->eventfd_del) {
+> @@ -3070,6 +3195,12 @@ void memory_listener_unregister(MemoryListener *listener)
+>       }
+>   
+>       listener_del_address_space(listener, listener->address_space);
+> +    if ((listener->coalesced_io_add || listener->coalesced_io_del) &&
+> +        !--listener->address_space->coalesced_notifiers) {
+> +        g_free(listener->address_space->coalesced);
+> +        listener->address_space->coalesced = NULL;
+> +        listener->address_space->coalesced_nb = 0;
+> +    }
+>       QTAILQ_REMOVE(&memory_listeners, listener, link);
+>       QTAILQ_REMOVE(&listener->address_space->listeners, listener, link_as);
+>       listener->address_space = NULL;
+> @@ -3089,6 +3220,9 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
+>       as->current_map = NULL;
+>       as->ioeventfd_nb = 0;
+>       as->ioeventfds = NULL;
+> +    as->coalesced_nb = 0;
+> +    as->coalesced_notifiers = 0;
+> +    as->coalesced = NULL;
+>       QTAILQ_INIT(&as->listeners);
+>       QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
+>       as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
+> @@ -3111,6 +3245,7 @@ static void do_address_space_destroy(AddressSpace *as)
+>       flatview_unref(as->current_map);
+>       g_free(as->name);
+>       g_free(as->ioeventfds);
+> +    g_free(as->coalesced);
+>       memory_region_unref(as->root);
+>   }
+>   
 
 
