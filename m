@@ -1,98 +1,140 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6751C606A31B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A84B606A31B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Oct 2026 11:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20251104 header.b=rJo+nhqc
+	dkim=pass (2048-bit key, unprotected) header.d=virtuozzo.com header.i=@virtuozzo.com header.a=rsa-sha256 header.s=selector2 header.b=ZwhmnIxG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLfGs-0004A1-2J; Tue, 27 Oct 2026 07:23:14 -0400
+	id 1xLfX9-00073X-Gp; Tue, 27 Oct 2026 07:40:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xLfGp-00049d-D4
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:23:11 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1xLfGn-0004AP-By
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 07:23:11 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-48e0d885929so2690099f8f.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 04:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1793100187; x=1793704987; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UzdvnQE5DogPqm0HZi7myHTOzRWh4hSw+7JgGD38Zjs=;
- b=rJo+nhqcreKZhG7Ou1JjaYwzveGAAl4yThXF4th15P6wICtJ5t7HZQ3SVmckSwHVFx
- f4wJMO9jufqbW2Kig3ROjGlZZnbGc1HF2aBKKqlfGojBGvijvZ1oB5t9WWuAaexY77E0
- yj3TcutkVhzZ1rWrRgXAExRal5liCil8n+kaes6W3boDKGfC8kQLARCw34XU2OLOm7NG
- 6bHyJ+GCCfddqkqW1RJj5xu/DnRBNFDRo2ZTJ0ClHL5UgLzGwBFnEBoCaf70Zee6pvAE
- ddGxENAwsnpIVkanX3R40GWrM8XwqJ9QgkwCr6xY2xCoSxLXKtbVr4/pvUOdp9GYuHDK
- HEVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793100187; x=1793704987;
- h=content-transfer-encoding:content-type:mime-version:message-id
- :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UzdvnQE5DogPqm0HZi7myHTOzRWh4hSw+7JgGD38Zjs=;
- b=Ng8HyJMJ5ErZAryrVRKutzHdaOe9lt+dBmfuPi9OF35k6aPPiIB/ekXAIU4k99e7vm
- OvDHkmZglrzDf7DYK9yPTxf+RESS46M698TdhF1ICQIGX3z8O50jcn0fexpardIK7ReF
- 2VOHUuu7L4pZ9pIF8DUPuBabM+6GdR4C5O7Dy/cytySYFtZq22rjZcy9oEdOZQWQtOPK
- 7EkbiDFI+tCKS+YGAx40dTmEgvmfvrJlFDlohZVqPjCaAJs56iKgtsN7Pc8R0js+vpCX
- Kf0FYSN4/TUwOsUMbNZsV9Z3VxRrJkyjueFADkIFikt2lqglJh/nzglnhjUv+gGK1y45
- 7C3g==
-X-Gm-Message-State: AFq9FYI3yT4UsPS0fjNk1CNG66mk5VHrjifA+InBGUFWdJJw0h9/MeoC
- dOV5xUDS7110za31xoS8zTah71v91h9gEPe1fBi4tGSFzapdtiBiJ6fW/1Aukg==
-X-Gm-Gg: AYBFou1PoBYg+SsgHqz4iH1MFy+dh1u4FUIldLtTGtzEsGgIdmxicYjn5WHsK3+lTUJ
- uvzo8t9jYdfQiuLuRPWjpjOQDp2JE/W6nNbbyeHG5UbtovwIk7pwtYTj+2tjbq/Ut0MvWCw7a4m
- eSzKwSwJTy+B+z4ZXBaMagXJp+/y1NDwhuZftVZhn063FK12df8brgQCQD5hcGdTLAlRELWviup
- 82LG+cbkojdj+E/gnUTD8JLw5kqveNMQ2u/s9sj3xy4WPRlOmDPsxWFjHug3nICJXJF/7BWdSvL
- KdNFvrZ2oZo69R0BkItaMEYzflMDstnConTDZZyyKqU5qkYx5AVQmJWW4Z7FT6e/pWcyvYqNe7T
- ZKoF/wi57mCR7FaEVpLMb5CxU9ENkH5tCciYpf2yrH0oQu+ZNBGUWE3MC6hS0XsARIJ6+ofOGG2
- 9wd1bWku875G57fkJW970wX2P4EDApcRSdz6qO5dzN+c2CurIa1tmbQ52GeO5JJDJWjL7II6q1v
- s+lrJ+HtheH1+IoRF8LJzWFFD8I8bpLA3EJCb/KfqNfPZ8hR1NjEKEwN4rc7w==
-X-Received: by 2002:a05:6000:27c9:10b0:48e:d88:55e5 with SMTP id
- ffacd0b85a97d-48e3eb457f9mr13604159f8f.6.1793100187282; 
- Tue, 27 Oct 2026 04:23:07 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([213.138.33.179])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd3555sm21703165f8f.42.2026.10.27.04.23.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 04:23:06 -0700 (PDT)
-Date: Tue, 27 Oct 2026 11:22:35 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Bin Meng <bin.meng@processmission.com>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-arm@nongnu.org,
- Jason Wang <jasowangio@gmail.com>, Alistair Francis <alistair@alistair23.me>
-Subject: Re: [PATCH v4 00/31] i.MX fixes and cleanup
-In-Reply-To: <20261006083445.30362-1-shentey@gmail.com>
-References: <20261006083445.30362-1-shentey@gmail.com>
-Message-ID: <2FD6FED6-EBED-47A4-9096-D4FDF2F17406@gmail.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xLfX1-000721-QF; Tue, 27 Oct 2026 07:39:56 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1xLfWz-0005bY-Us; Tue, 27 Oct 2026 07:39:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qMJjRIdiWxnAGpIgXWvtMQITd16mnC16sOGEx3v6T7poAfEuEHDJcc9jnuPbzVGhEqrPWfGcofbShZQPrcnN7AEbRyRrLvTXLPnwyKyHZcIuE2HXSnTmHkk5jsM8D3SdvUirc1XmI1KLXd0Ug3YS6916ixVBmgU40JcpUdaN4nHkf7qjnM7TiPEg6VwuQpABBJFIT9QyUUp6oDf+U2gFoJrL4jB1tqrlQgALU1hDUAOQNvOw0penCwrhMKh2levNg/AbRTKrAGB1wvLHfARe0iy41RO1Z2LnHRBj5gOZPvRD9eCy6DVlPyeU5lbyExxZVqDzM8ui5z+smZnM/TGCNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GVqSQbtB19S7zCz3i/ysmRvV23RkgjUlho5C8piiElU=;
+ b=lfRRt8/ZidjnfVglx44k79Ov3ZReYSUq9iW9v7ZwgtJZkpq/PnawXyTdfevXwvuun8RrIUy2Yw06VbELIAp4t9YthNKJElBKJ6ZtcmU833wFlwdWC40xxnHAKdQmv1rXJXDRkxN0XhxDBJhS00Sb2wn4spKBbWC5cRW9rWp/k+mpJULlB5kIuw2c3B0QKMqf+osevfo0p9Z4qHLmN8hSubll1fLOzalDAfAFTYkGVbDcCkZgg2OT6zO4O/1QRQenE3DffIopeDhUGoah0nVohskTKDVgdFgKu0D+vstvu8bMT7zQXZYXvspH4M6NGBs5JbYQr4VLwL0wAH0RaQYU2A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GVqSQbtB19S7zCz3i/ysmRvV23RkgjUlho5C8piiElU=;
+ b=ZwhmnIxGE0rUBHc/cjA3E7XDPSwBY7/CeGe4HNOc82+nTb6NfFRJBRrCIgHaVNayVX5xvQEe3bgOwrIrmYHjq0ASHnGwQKxd/iv7ToL/bfPCsJaNV7s/MMXZZD33ciIP9vAq0P99qgfcawUE/8+lAwx/60GUQNPSPQSfdyq80/vjoF/jc9vRo+5XAugRxykhJDVEc6r90zwePk0j+9IE6xbFJkuf8OMXmCB3tB/IEdLmNMfdtq5wAwdOs++K4A/Qs8NY+L4g6u6RL+adYAA/nIJzvov3V7/H5G3nqj3xRERdd6NTPb+mr/+dV8eHaoV4arRGRqyLeNHpP+SXbtgIqg==
+Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB8699.eurprd08.prod.outlook.com (2603:10a6:10:3d1::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.546.22; Tue, 27 Oct
+ 2026 11:39:46 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%5]) with mapi id 15.21.0546.021; Tue, 27 Oct 2026
+ 11:39:46 +0000
+Message-ID: <58b2ddec-7dd0-4001-9708-185021f474ea@virtuozzo.com>
+Date: Tue, 27 Oct 2026 12:39:45 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] qcow2: fix discard-no-unref=on data corruption
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ jean-louis@dupond.be, den@openvz.org
+References: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VIVP296CA0048.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:353::18) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x431.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB8699:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52361a89-4e89-418b-41fb-08df341f004c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|10070799003|366016|376014|1800799024|56012099006|261021121427099003|261009223027099003|261021123027099003|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: z6FviBbISr/EEAD5d1OQ9L8iVV/bmiSdMzM6kIGhORJxTkfn4KudrdWLrxf1RB8m0Tr5D1VaSrVv0xXrUjq2Iv0WIoMPMsdxvQoFqrjby2PdkteKlW/uwYAn1IPfrjaMTEh3/VaMKwlUyiaWDSQ6msTWfqPgC0c2n4SQ8B5QmJaTNZZuUUjdYrCn9OjXUbZhGn2JD90gzYfonvy8foTS7pgGba2FXOgDoccDmORelj1LAdM7mJ31VMvZk+r/AJOmbfNkodjaoRmcfmi7MJbniKVHIYD/GwHtRQYPPNrrEqfiPMKYdpL1nHylZ8sl1+vnWy/mNPD2bSeM0eyOvnswYDhApFoIWnlGgiSsa+tSz9tQmIu1lSgytDqepfNzCvK2Fn+JRu1L0nAtHCFnlLW1t2InujKbN3WKdcIy83asXnt9zltrGt47fq0r25u354vb2YBah1WmoZQ7hGGN4uNLqIxV26n5GrHb4ntbsIfAY1tLVX1SlpMstvFTuwqfMC6EwW2Q6Jh5kXRNXmu/kg6xewRYrY++fR3eAjcbnBck9OQQLMfsiasqgb86OHdfeUSFNEanT7zAbit8vMFVgvXlHl+rlQDtlw94Wjb9N09eHvA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(10070799003)(366016)(376014)(1800799024)(56012099006)(261021121427099003)(261009223027099003)(261021123027099003)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S1VzbFdCTUdTMjZSUDcwMjMwU1RIZmE0NTNKRGVqd3lpc3c2UTZtaWpNR0po?=
+ =?utf-8?B?QkN0b2VRdHBJSWdRYms1anJyOHJKN0J3R2xuYlJvLzF1K2xsSXVyT2VaTGJZ?=
+ =?utf-8?B?VzlxUGNkNzNXOGxCenFyMlowbzFjTDZyOHpkaWIxbUVPL2w5SU5ZQ2wreDg4?=
+ =?utf-8?B?bkh6Z1F6MEc3djJRbzVuK1BJdFAva3NKZ2ViN3hzeERPYURvUWhjcDFrMVhZ?=
+ =?utf-8?B?UFA2MFVPU2dhbzZHVE1EeGozR2xoUXdBVC9DMUNHWXNEcFUxcGxZVEx1UUR5?=
+ =?utf-8?B?a3lWSVVObXd0ZHhscGZybEZPcithak1TVGhMR1VXbXM0VTN3cllXT1YzN2ZX?=
+ =?utf-8?B?em8xWlpuZlFja1Bzc3FzYzN1TTdBeFBxZ3U5ck4zbWRXWEhBQUVYS09TRWtB?=
+ =?utf-8?B?ZG5XVDU0ZEN3MENtb2FJQUlGMXRnUm5zTFdaNzIvRDcxdkcza1VyTTNQeDFP?=
+ =?utf-8?B?QmdTd1NwOHhxbXRIcGRGSlBpVmRycnVRbzkwNVFTcGpsVlpjVkgxZkhvVXR3?=
+ =?utf-8?B?WUJIcDA1czlLbFpvZytuaWtsNWFsT2M2Z3pkc3BhTXk0by8xR0JNKzJqWGJ3?=
+ =?utf-8?B?L2dQVUdRQWxjeHpSU3NNK2gxcVVickJWc1lhOTA4dVBsNGFNQW5ueDFFSm56?=
+ =?utf-8?B?ck9zUnVRZlcxeEN3OUlYZ1R0V2p4clN1aHUzOG85Vk9aMk9YYlN6cS8yOTRv?=
+ =?utf-8?B?OFRkYWhzdzR4WFZVNzg4VUNaRzQ3dWF2OWl6ZWhnSkh6Y0hHY0VWT2E5V1B6?=
+ =?utf-8?B?MlB4N0JERStqNWg5QVZTU0lQd0lJRGlOWlE2RzBmcStrWk5LNE9PR28wMTJn?=
+ =?utf-8?B?b3MrMzRtWmkva3B6S2ZmdUxiazE4Tmc0REhQb08yaGhMUEFBM2JOaVBRTjUy?=
+ =?utf-8?B?VjlPNkt4dGJzRTRmcmVGVkZadkxldzIzMVRwQ3FKM1huRVpBMjRTeE4vSkJy?=
+ =?utf-8?B?VGtvN3BYSXA4aDdHaTNodHVlTUJRazhEUjFZRUF3dU5Kc0VkcDk2dWtDNnFZ?=
+ =?utf-8?B?V1IzWEIwc3FWWU9iaUVNRnI2OUZGUTZYeGlNdTI5OC8rZGpyOEsrOFplWVY5?=
+ =?utf-8?B?NjZxVlpnMGNURE9oN25nUDhHc0xKYm9SK3lWV0lsQzBqL3h4b2dxbVRIWUp3?=
+ =?utf-8?B?V05IZElMOWlwZnB2VDlEaDdnUExlUUU3Q1dIbURFODVGRWVZU0dwdTBoK1RN?=
+ =?utf-8?B?V3dkSzNUeDk5eG1XN2hKRFhqT09LZ3lMVGI4OWZ5STZJT0NIU004K2I0MlU0?=
+ =?utf-8?B?dllDUnVnOHh1OHNPcEp3ZDd5cVlpUUltY2lSd3o2N1dwcjF5V1RESW03eTBs?=
+ =?utf-8?B?NVBDeFppOFIzSVgwQnZiQnhlT0lHci9NSUxxTmIrNzkrM2svaHVIdjU3SlA4?=
+ =?utf-8?B?V2QyU2xWUUJYVmJtTmFhdlBuTXJxdjVuQzZNZDF6YmdGTGJhK2JXa2psTlli?=
+ =?utf-8?B?ZkZ3Vmc2REpRVWVCbGN3N3pGcGN1TEwrRDlIZmVocCtZb3BTc1l1RWxkRytI?=
+ =?utf-8?B?Uk5HeUFteDEwTWVPR3p2Ujc1alAzc2ZuNUtyai9pSDVPMUVEcjdoWG8xc3Ry?=
+ =?utf-8?B?NWtyTHplYUk5MFZ1QTVMYmpiRWNsWmdoQ3dDVnR3bE41anFraEZqM2NFSlI5?=
+ =?utf-8?B?dktLWExLSEhFRjMwN3g1NWZDQ2lKRmxHeksweW9mUERiRXRXZ1VQTGx3bVVq?=
+ =?utf-8?B?ZHdnV0ZHaHcwV3c2ZFZEd2Y2MmtEMzVlb1NKSDdMaXlqdXJEbDgrWEZyWjRy?=
+ =?utf-8?B?WWlnbEYyVmRhRGtLbzlqUHR5K3p5YUg5Ly9MYnN2Ym56MTdnZWJjRk1nb1Vw?=
+ =?utf-8?B?NWluRHJBNkQ4UDM3WVN4NVpBQUROLzIwb0JYWkVIRVp2djdRZEdBR1FFd3NK?=
+ =?utf-8?B?QmNVNndrVzRaMUYvenJWQ0hxbUg4M01aNFlUOGt3T250dW54blRtS2lkVXFJ?=
+ =?utf-8?B?TW1XMTRKQm1ibFpNZGhmY2dCUHFGUkJsbFl6VXBIM1JBbTlCTW9DRTFhU1BC?=
+ =?utf-8?B?QVNCcG9RTTNYbFVhOVhTS2tyaitzVXh1VG5NdWZjdVNnWUNjRUlibmhKcXFE?=
+ =?utf-8?B?ekhqeWQ3Q0lMOTBlUHJwYjdiYis3SjRHdmRxc2RUblpTWG5EdkYwL3p1OWNB?=
+ =?utf-8?B?eXZidUhJNjBFMjZvbm16dEZCK1JQOVJpLzR1VzFTTUZNV1pHbkU2SHJRbE45?=
+ =?utf-8?B?a3huaGlGeVNkM005SkkzQXp6M21BZFhBZU9VczhFOWdENzIrcDUzbzNoRkRP?=
+ =?utf-8?B?SXFlRXAyTko2aTFTNml1OU9zMmpxQWdBb3p2eFNONG1jd0trNUFDVDUxNFR3?=
+ =?utf-8?B?R2pwNTdwVHdNZXZNMG9DZDIrcjJJKzVpYmtMSEE0bmhCM3o0bzRIdytzYmNO?=
+ =?utf-8?Q?UszL94S/hQN5aXju0jBLpP3khG4WVtWaLdYyy?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52361a89-4e89-418b-41fb-08df341f004c
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Oct 2026 11:39:46.4539 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: i+eyjrmNKQ5oki/sI0C0q9uP4Gav3rriq0Uu6tyFKpObikNNI7o5NA+8QqtZwbYfckbb7C+OEyNphiwtQI5N/Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB8699
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,317 +146,32 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-
-
-Am 6=2E Oktober 2026 08:34:12 UTC schrieb Bernhard Beschow <shentey@gmail=
-=2Ecom>:
->This series fixes various issues in i=2EMX device emulation, cleans up i=
-=2EMX
->
->Kconfig handling, and improves some code=2E Functional console tests for =
-the
->
->remaining i=2EMX boards are added where images are publicly available, ex=
-cept for
->
->imx6ul which is taken care of in a different series [1]=2E Fixes which ap=
-pear safe
->
->for backporting are cc'd to qemu-stable=2E
->
->
->
->The series is structured as follows: Patches 1-5 fix some issues and are
-=
->
->mostly marked for backporting=2E Patch 4 is a follow-up on patches 1-3 an=
-d
->
->should not be backported since it breaks migration=2E
->
->
->
->Patches 6-11 add and improve functional tests for i=2EMX devices=2E While=
- at it,
->
->saner defaults for the amount of RAM and number of CPUs are established=
-=2E
->
->
->
->Patches 12-16 turn the remaining i=2EMX SoC device models into SySBus dev=
-ices
->
->which fixes their reset behavior=2E
->
->
->
->Patches 17-30 are Kconfig cleanups where CONFIG_IMX gets split into dedic=
-ated
->
->config items=2E
->
->
->
->The last commit just fixes some typos in the code=2E
->
->
->
->Changes in v4:
->
->* Fix triggering of watchdog_perform_action() (Bin)
->
->* Pick up R-b tags
->
->
->
->Testing done:
->
->* `make check-functional-aarch64`
->
->* `make check-functional-arm`
->
->
->
-
-Ping
-
-All patches reviewed=2E One may need improved commit message=2E Am I suppo=
-sed to resubmit the series or will this be done inline?
-
-Best regards
-Bernhard
-
->Changes in v3:
->
->* Add dedicated patch fixing write one once WCR bits, cc'd to qemu-stable=
- (Bin)
->
->Done as yet another patch to tell the issues apart=2E
->
->* Add and fix some commit messages (Bin)
->
->* Add functional tests to 'tests_arm_system_thorough' (Bin)
->
->* Fix typo in functional tests for mcimx7d-sabre machine (Bin)
->
->* Use sysbus_realize() rather than sysbus_realize_and_unref() in case of
-=
->
->embedded SoC struct (Bin)
->
->* Pick up R-b tags
->
->
->
->Changes in v2:
->
->* Remove patch adding `mc->ignore_memory_transaction_failures =3D true;` =
-(Peter)
->
->* Rework wdt_imx2 patches (Peter)
->
->* Remove all but "hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from =
-config
->
->IMX" already queued by Phil=2E The preserved patch is required to remove =
-all
->
->dependencies from CONFIG_IMX such that it can be removed=2E
->
->* Pick up R-b tags
->
->* Rebase onto latest master
->
->
->
->[1]
->
->https://lore=2Ekernel=2Eorg/qemu-devel/20261004090500=2E3082641-1-bin=2E
-=
->
->meng@processmission=2Ecom/
->
->
->
->base-commit: d7a65d1793d691d356a56833620f7d1e6f5d653b
->
->
->
->Bernhard Beschow (31):
->
->  hw/watchdog/wdt_imx2: Preserve own locked bits in WCR
->
->  hw/watchdog/wdt_imx2: Fix handling of write one once WCR bits
->
->  hw/watchdog/wdt_imx2: Clear WDT lock on reset
->
->  hw/watchdog/wdt_imx2: Remove redundant attributes
->
->  hw/arm/imx8mm-evk: Fix reference count of SoC object
->
->  docs, tests/functional: Drop redundant CLI arguments in imx8m*-evk
->
->    invocations
->
->  hw/arm/sabrelite: Have 4 CPUs and 1 GiB of RAM by default
->
->  tests/functional/arm: Add console test for `sabrelite` machine
->
->  hw/arm/mcimx6ul-evk: Have 512 MiB of RAM by default
->
->  hw/arm/mcimx7d-sabre: Have 2 CPUs and 2 GiB of RAM by default
->
->  tests/functional/arm: Add console test for `mcimx7d-sabre` machine
->
->  hw/arm/fsl-imx25: Derive from TYPE_SYS_BUS_DEVICE
->
->  hw/arm/fsl-imx31: Derive from TYPE_SYS_BUS_DEVICE
->
->  hw/arm/fsl-imx6: Derive from TYPE_SYS_BUS_DEVICE
->
->  hw/arm/fsl-imx6ul: Derive from TYPE_SYS_BUS_DEVICE
->
->  hw/arm/fsl-imx7: Derive from TYPE_SYS_BUS_DEVICE
->
->  hw/misc/Kconfig: Remove redundant USB_EHCI_SYSBUS from config IMX
->
->  Kconfig: Extract config IMX_AVIC from config IMX
->
->  Kconfig: Extract config IMX_GPCV2 from config IMX
->
->  Kconfig: Extract config IMX_RNG from config IMX
->
->  Kconfig: Extract config FSL_IMX7_GPR from config IMX
->
->  Kconfig: Extract config FSL_IMX{6, 7}_SRC from config IMX
->
->  Kconfig: Extract config FSL_IMX7_SNVS from config IMX
->
->  Kconfig: Extract dedicated config FSL_IMXx_CCM from config IMX
->
->  Kconfig: Extract config IMX_GPT from config IMX
->
->  Kconfig: Extract config IMX_EPIT from config IMX
->
->  Kconfig: Extract config GPIO_IMX from config IMX
->
->  Kconfig: Extract config IMX_SPI from config IMX
->
->  Kconfig: Extract config IMX_SERIAL from config IMX
->
->  Kconfig: Remove config IMX
->
->  hw/arm/fsl-imx8m: Fix typo
->
->
->
-> MAINTAINERS                                 |  2 +
->
-> docs/system/arm/imx8m=2Erst                   |  2 +-
->
-> docs/system/arm/sabrelite=2Erst               |  4 +-
->
-> include/hw/arm/fsl-imx25=2Eh                  |  5 +-
->
-> include/hw/arm/fsl-imx31=2Eh                  |  5 +-
->
-> include/hw/arm/fsl-imx6=2Eh                   |  5 +-
->
-> include/hw/arm/fsl-imx6ul=2Eh                 |  5 +-
->
-> include/hw/arm/fsl-imx7=2Eh                   |  5 +-
->
-> include/hw/arm/fsl-imx8mm=2Eh                 |  4 +-
->
-> include/hw/arm/fsl-imx8mp=2Eh                 |  4 +-
->
-> include/hw/watchdog/wdt_imx2=2Eh              |  2 -
->
-> hw/arm/fsl-imx25=2Ec                          |  7 +--
->
-> hw/arm/fsl-imx31=2Ec                          |  7 +--
->
-> hw/arm/fsl-imx6=2Ec                           |  4 +-
->
-> hw/arm/fsl-imx6ul=2Ec                         |  4 +-
->
-> hw/arm/fsl-imx7=2Ec                           |  5 +-
->
-> hw/arm/fsl-imx8mm=2Ec                         |  2 +-
->
-> hw/arm/fsl-imx8mp=2Ec                         |  2 +-
->
-> hw/arm/imx25_pdk=2Ec                          |  2 +-
->
-> hw/arm/imx8mm-evk=2Ec                         |  4 +-
->
-> hw/arm/kzm=2Ec                                |  2 +-
->
-> hw/arm/mcimx6ul-evk=2Ec                       |  3 +-
->
-> hw/arm/mcimx7d-sabre=2Ec                      |  4 +-
->
-> hw/arm/sabrelite=2Ec                          |  5 +-
->
-> hw/watchdog/wdt_imx2=2Ec                      | 21 ++------
->
-> hw/arm/Kconfig                              | 56 ++++++++++++++++++---
->
-> hw/char/Kconfig                             |  3 ++
->
-> hw/char/meson=2Ebuild                         |  2 +-
->
-> hw/gpio/Kconfig                             |  3 ++
->
-> hw/gpio/meson=2Ebuild                         |  2 +-
->
-> hw/intc/Kconfig                             |  6 +++
->
-> hw/intc/meson=2Ebuild                         |  3 +-
->
-> hw/misc/Kconfig                             | 41 +++++++++++++--
->
-> hw/misc/meson=2Ebuild                         | 24 ++++-----
->
-> hw/net/Kconfig                              |  2 +-
->
-> hw/ssi/Kconfig                              |  4 ++
->
-> hw/ssi/meson=2Ebuild                          |  2 +-
->
-> hw/timer/Kconfig                            | 10 ++++
->
-> hw/timer/meson=2Ebuild                        |  4 +-
->
-> tests/functional/aarch64/test_imx8mm_evk=2Epy |  4 +-
->
-> tests/functional/aarch64/test_imx8mp_evk=2Epy |  4 +-
->
-> tests/functional/arm/meson=2Ebuild            |  4 ++
->
-> tests/functional/arm/test_mcimx7d_sabre=2Epy  | 46 +++++++++++++++++
->
-> tests/functional/arm/test_sabrelite=2Epy      | 46 +++++++++++++++++
->
-> 44 files changed, 273 insertions(+), 108 deletions(-)
->
-> create mode 100755 tests/functional/arm/test_mcimx7d_sabre=2Epy
->
-> create mode 100755 tests/functional/arm/test_sabrelite=2Epy
->
->
->
->-- >
->2=2E56=2E0
->
->
->
+On 10/27/26 11:44, Andrey Drobyshev wrote:
+> 1st commit with tests is my own old commit from previously unmerged
+> subcluster series [1].
+> 2nd is the actual bug fix, 3rd is the regression test.
+>
+> [1] https://lore.kernel.org/qemu-devel/20240913163942.423050-1-andrey.drobyshev@virtuozzo.com
+>
+> Andrey Drobyshev (3):
+>   iotests/290: add test case to check 'discard-no-unref' option behavior
+>   qcow2: fix snapshot data corruption with discard-no-unref=on
+>     #VSTOR-151885
+>   iotests/290: add 'discard' and 'write -z -u' case with a snapshot
+>     #VSTOR-151885
+>
+>  block/qcow2-cluster.c      |  6 +++--
+>  tests/qemu-iotests/290     | 50 ++++++++++++++++++++++++++++++++++++++
+>  tests/qemu-iotests/290.out | 33 +++++++++++++++++++++++++
+>  3 files changed, 87 insertions(+), 2 deletions(-)
+>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
 
