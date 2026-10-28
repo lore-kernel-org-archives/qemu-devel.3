@@ -1,69 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A73606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B4606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 10:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YTxYe7Cx
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JJ5CFMAu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM0Oi-000570-T1; Wed, 28 Oct 2026 05:56:44 -0400
+	id 1xM0j2-0008Vz-TY; Wed, 28 Oct 2026 06:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <slp@redhat.com>) id 1xM0Og-00056n-JQ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:56:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM0j0-0008VU-MD
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 06:17:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <slp@redhat.com>) id 1xM0Oe-0001oL-Hb
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:56:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM0iy-0003yV-M7
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 06:17:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793181399;
+ s=mimecast20190719; t=1793182658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=HcrCWjOKmoCzFWTBS3JEEtit8pLa0tX6DsyD4nRyUYg=;
- b=YTxYe7Cxw9d1uMxpt+D7LXPDwICedhwinAxTuCh23c25RRqfB8NZwk5JH4QcVRkgUbBoaB
- lzzbYu3Jh3L/MD7vHqL1x/otv36O3dp2h8CBHrLgVf0NnTQ3aTfJY3zIDOn0zGVSKTKACy
- xzvjH5/Rz6xcongQan0wV8QqcmiANME=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m3mVGLjy1uMvHqnFZYdvic6+tZbuuSBebyHGoQZ7158=;
+ b=JJ5CFMAu3ZU7Kx9vc+pmHuVZJEkG0AF3wqRw9yQnlk9uEQHxjDpvmoS5WoDhTSsnkmlm9J
+ hFzvgYuwPMJgid4WOB3UP5rNdLnIJGYALFGcTaaWfp01tf5dUoLgSNm+5bIndivMP951q+
+ mjcH5HYIXa574MZ3K+UGjQs63pXBlsU=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-DcsiVid0MpuVjuJkPRs0YQ-1; Wed,
- 28 Oct 2026 05:55:33 -0400
-X-MC-Unique: DcsiVid0MpuVjuJkPRs0YQ-1
-X-Mimecast-MFC-AGG-ID: DcsiVid0MpuVjuJkPRs0YQ_1793181332
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-0d3bNWMlOq6q0EwM5SjAWQ-1; Wed,
+ 28 Oct 2026 06:17:34 -0400
+X-MC-Unique: 0d3bNWMlOq6q0EwM5SjAWQ-1
+X-Mimecast-MFC-AGG-ID: 0d3bNWMlOq6q0EwM5SjAWQ_1793182653
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 575C31954190
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:55:32 +0000 (UTC)
-Received: from f44vm (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8DC171800347; Wed, 28 Oct 2026 09:55:30 +0000 (UTC)
-From: Sergio Lopez <slp@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Sergio Lopez <slp@redhat.com>
-Subject: [RFC PATCH] vsock: optionally enable F_DGRAM support
-Date: Tue, 27 Oct 2026 20:28:28 +0100
-Message-ID: <20261027192828.42642-1-slp@redhat.com>
+ id 433A41955F0D; Wed, 28 Oct 2026 10:17:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86D351956086; Wed, 28 Oct 2026 10:17:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2F16A21E6A04; Wed, 28 Oct 2026 11:17:29 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Timur Maksimov <gessingate@gmail.com>,  qemu-devel@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,  Kane Chen
+ <kane_chen@aspeedtech.com>,  qemu-arm@nongnu.org,  Fabiano Rosas
+ <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,  Corey Minyard
+ <cminyard@mvista.com>
+Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
+In-Reply-To: <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Wed, 28 Oct 2026 09:54:13 +0100")
+References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+ <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
+ <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
+Date: Wed, 28 Oct 2026 11:17:29 +0100
+Message-ID: <874ie6ku2u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=slp@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 16
-X-Spam_score: 1.6
-X-Spam_bar: +
-X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
  RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -77,120 +90,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add the "dgram" property to optionally expose the VIRTIO_VSOCK_F_DGRAM
-feature to the guest.
+C=C3=A9dric Le Goater <clg@kaod.org> writes:
 
-Sent as an RFC until the feature is formalized in the specs and merged
-into the Linux kernel (same reason why the headers have been manually
-updated).
+> + Corey for I2C feed back.
+>
+> + Markus for QOM
+>
+> The brute-force solution to expose the contents of the device array
+> with 128 properties has a slight AI smell. I find it ugly but I am
+> human :)
 
-Signed-off-by: Sergio Lopez <slp@redhat.com>
----
- hw/virtio/vhost-vsock-common.c                | 15 +++++++++++++++
- hw/virtio/virtio-qmp.c                        |  2 ++
- include/hw/virtio/vhost-vsock-common.h        |  1 +
- include/standard-headers/linux/virtio_vsock.h |  2 ++
- 4 files changed, 20 insertions(+)
+Timur, have you read docs/devel/code-provenance.rst section "Use of
+AI-generated content"?
 
-diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
-index 4ef037627b..1230f9855a 100644
---- a/hw/virtio/vhost-vsock-common.c
-+++ b/hw/virtio/vhost-vsock-common.c
-@@ -21,6 +21,7 @@
- 
- const int feature_bits[] = {
-     VIRTIO_VSOCK_F_SEQPACKET,
-+    VIRTIO_VSOCK_F_DGRAM,
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_RING_PACKED,
-     VHOST_INVALID_FEATURE_BIT
-@@ -35,11 +36,23 @@ uint64_t vhost_vsock_common_get_features(VirtIODevice *vdev, uint64_t features,
-         virtio_add_feature(&features, VIRTIO_VSOCK_F_SEQPACKET);
-     }
- 
-+    if (vvc->dgram != ON_OFF_AUTO_OFF) {
-+        virtio_add_feature(&features, VIRTIO_VSOCK_F_DGRAM);
-+    } else {
-+        virtio_clear_feature(&features, VIRTIO_VSOCK_F_DGRAM);
-+    }
-+
-     features = vhost_get_features(&vvc->vhost_dev, feature_bits, features);
- 
-     if (vvc->seqpacket == ON_OFF_AUTO_ON &&
-         !virtio_has_feature(features, VIRTIO_VSOCK_F_SEQPACKET)) {
-         error_setg(errp, "vhost-vsock backend doesn't support seqpacket");
-+        return features;
-+    }
-+
-+    if (vvc->dgram == ON_OFF_AUTO_ON &&
-+        !virtio_has_feature(features, VIRTIO_VSOCK_F_DGRAM)) {
-+        error_setg(errp, "vhost-vsock backend doesn't support datagrams");
-     }
- 
-     return features;
-@@ -289,6 +302,8 @@ static struct vhost_dev *vhost_vsock_common_get_vhost(VirtIODevice *vdev)
- static const Property vhost_vsock_common_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("seqpacket", VHostVSockCommon, seqpacket,
-                             ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("dgram", VHostVSockCommon, dgram,
-+                            ON_OFF_AUTO_OFF),
- };
- 
- static void vhost_vsock_common_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 5aaeebdd96..4386fd25f8 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -375,6 +375,8 @@ static const qmp_virtio_feature_map_t virtio_i2c_feature_map[] = {
- static const qmp_virtio_feature_map_t virtio_vsock_feature_map[] = {
-     FEATURE_ENTRY(VIRTIO_VSOCK_F_SEQPACKET, \
-             "VIRTIO_VSOCK_F_SEQPACKET: SOCK_SEQPACKET supported"),
-+    FEATURE_ENTRY(VIRTIO_VSOCK_F_DGRAM, \
-+            "VIRTIO_VSOCK_F_DGRAM: SOCK_DGRAM supported"),
-     FEATURE_ENTRY(VHOST_F_LOG_ALL, \
-             "VHOST_F_LOG_ALL: Logging write descriptors supported"),
-     FEATURE_ENTRY(VHOST_USER_F_PROTOCOL_FEATURES, \
-diff --git a/include/hw/virtio/vhost-vsock-common.h b/include/hw/virtio/vhost-vsock-common.h
-index 01bf6062af..8235ac6406 100644
---- a/include/hw/virtio/vhost-vsock-common.h
-+++ b/include/hw/virtio/vhost-vsock-common.h
-@@ -39,6 +39,7 @@ struct VHostVSockCommon {
- 
-     /* features */
-     OnOffAuto seqpacket;
-+    OnOffAuto dgram;
- };
- 
- int vhost_vsock_common_start(VirtIODevice *vdev);
-diff --git a/include/standard-headers/linux/virtio_vsock.h b/include/standard-headers/linux/virtio_vsock.h
-index 467e751b17..7b0419f158 100644
---- a/include/standard-headers/linux/virtio_vsock.h
-+++ b/include/standard-headers/linux/virtio_vsock.h
-@@ -40,6 +40,7 @@
- 
- /* The feature bitmap for virtio vsock */
- #define VIRTIO_VSOCK_F_SEQPACKET	1	/* SOCK_SEQPACKET supported */
-+#define VIRTIO_VSOCK_F_DGRAM		3	/* SOCK_DGRAM supported */
- 
- struct virtio_vsock_config {
- 	uint64_t guest_cid;
-@@ -69,6 +70,7 @@ struct virtio_vsock_hdr {
- enum virtio_vsock_type {
- 	VIRTIO_VSOCK_TYPE_STREAM = 1,
- 	VIRTIO_VSOCK_TYPE_SEQPACKET = 2,
-+	VIRTIO_VSOCK_TYPE_DGRAM = 3,
- };
- 
- enum virtio_vsock_op {
--- 
-2.55.0
+>          That said I don't know if there are better alternatives.
+> My approach would have been to use a string property :
+>
+>       object_property_add_str(obj, "tx",
+>                               i2c_dummy_device_get_tx, NULL);
+>       object_property_add_str(obj, "rx",
+>                               i2c_dummy_device_get_rx,
+>                               i2c_dummy_device_set_rx);
+>  Any better ideas ?
+
+I believe you're talking about this function:
+
+[...]
+
+>> +static void i2c_dummy_device_init(Object *obj)
+>> +{
+>> +    I2CDummyDeviceState *s =3D I2C_DUMMY_DEVICE(obj);
+>>
+>> +    for (int i =3D 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
+>> +        g_autofree char *name =3D g_strdup_printf("tx[%d]", i);
+>> +
+>> +        object_property_add_uint8_ptr(
+>> +            obj, name, &s->tx[i],
+>> +            OBJ_PROP_FLAG_READWRITE);
+>> +    }
+>> +
+>> +    for (int i =3D 0; i < I2C_DUMMY_ARRAY_SIZE; i++) {
+>> +        g_autofree char *name =3D g_strdup_printf("rx[%d]", i);
+>> +
+>> +        object_property_add_uint8_ptr(
+>> +            obj, name, &s->rx[i],
+>> +            OBJ_PROP_FLAG_READWRITE);
+>> +    }
+>> +
+>> +    object_property_add_uint8_ptr(
+>> +            obj, "tx-pos", &s->tx_pos,
+>> +            OBJ_PROP_FLAG_READWRITE);
+>> +    object_property_add_uint8_ptr(
+>> +            obj, "rx-pos", &s->rx_pos,
+>> +            OBJ_PROP_FLAG_READWRITE);
+>
+> alignment could be improved.
+
+Yes, this style is unusual in QEMU, and should therefore be avoided.
+
+>> +}
+
+The function adds properties "tx-pos", "tx[0]", ... "tx[63]", and same
+for rx.
+
+The commit message tells us this is a "Simple I2C device with QOM
+properties to access transmit and receive buffers [...] for testing or
+prototyping."  It doesn't tell us how it could be used, and I can't see
+any documentation, either.  So let's start right there: please show us
+how this device could be used.  This should help me understand what the
+properties are for.  Only then can I advise on proper QOM usage.
+
+[...]
 
 
