@@ -1,123 +1,161 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA707606A31D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 21:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D3606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 21:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Okho/uEW
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=LqYY7DGB;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=glEaw5nc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMBQu-0007sf-MZ; Wed, 28 Oct 2026 17:43:44 -0400
+	id 1xMBRz-0008JX-9K; Wed, 28 Oct 2026 17:44:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMBQm-0007s5-Kh
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 17:43:36 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMBQj-0001f1-7w
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 17:43:36 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6b203527bceso2361540a12.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:43:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793223811; cv=none;
- d=google.com; s=arc-20260327;
- b=cdIeLSXtUIcbq8mPM1eRlVyETf0C5VO4Sa3WJykzK78ybhHvpuHdy59GNLJ+rVTgY5
- Psdwg+ZslAXqPbm2S3r/hn3thKcuTbXA3OMMJ+nwHRoQsBIerwiXfkHoEGHAnZOr3Wbv
- BiehByN8ffQK0R8rG6PxeuaxyMBAJbdTM4ooE/iqUAuqZM0c9fOUliipfIQ6PTclDT+d
- 4ceAfEmhFhu7V8uvobPF49FFHp1GBKndkevBE/7MU1kQjmlCK0bDN+/1BCEyG2+RzUua
- MVjysRTTI8kyjqeM09TtGR4if2HX6zIqeN6DPIoeC/ZKwnUG/v4ol5KUDLm4791B/P+d
- Wlzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:references:in-reply-to:reply-to
- :mime-version:dkim-signature;
- bh=2QkRb89H+Ut888aLaIpYViCWlMZuuCKvKRmvorfSwNo=;
- fh=1stUxD1Ij/Sj+Oq9y2U6io3By6cL4m+HLXIctlUzfcQ=;
- b=OzvUhJoncqZij+dmVT63UznxRDiK7EFrdF4600vfi75+YZo9nTke/HJMz2e+r2wwgk
- 40N3WWFRCtOdQb2j+/1BBC9r/xQs+3wokKFBf8zYymYehpWJFh6XZgIyI8CDTJsYQHOR
- ATI6UL6/XMzrwgGQAkv01xzo4jDFztkhCMBpXZ/ampnAgtV+zvJEHzvsOZwMlUJ4D3Sk
- yEZcWV3VC2UUmcf797TybypuXSsBSNDyEvmdq60OILbLKxwncDgtllk9slI5P3psycWj
- gGZ3YPVsdnsdu69GO+LUie96Wsin2Wfb7RdJ0DtWoMckXShGFELwS4hMK3TXSp3N/7xZ
- nXYQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMBRx-0008JA-6k
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 17:44:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMBRv-0001iK-K7
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 17:44:48 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69SIcLb11918635
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 21:44:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Zg0hmOj9aMW9T1A6MPbF+6VFWcnu0Fwji/PPaUeTYAo=; b=LqYY7DGBouhvvblO
+ +4ELGWkxXIkGez4fKF0Rh5TJj4QcxsSGc/6ZmVJWOG4kWsap9dB8U3jsqpo4qrSm
+ KCDsWw2wHP1BtdjKdCrUi24KfEFWTn9i2wAK/WjQdSIV7Qpq9hfOu9gBXGGMT6lb
+ wS01vkl6qGRY4pWEplZ3fyyLAjLC5mJsfftI/re6DIPb2L1A/aEM7z3pCv1H7L96
+ BdI8Oa7jDHzp7u3Z/joP5/bNa4PMysqTPqsdyfEYAfn1bNtHJBdE9N7AzcGSNinU
+ wpNjFvPSY7kSpK9VoSPGUS+fxX4vVKWK4w/2jRERhl/lDLKb8KFH0oF4h3SjueAI
+ Y78B9A==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkpgprkd8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 21:44:45 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-3425098ae4bso201286eec.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793223811; x=1793828611; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:references
- :in-reply-to:reply-to:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=2QkRb89H+Ut888aLaIpYViCWlMZuuCKvKRmvorfSwNo=;
- b=Okho/uEWXxdppCUVDJ3jCURmEFz39TVEwRv0havlODuQSFs20ffjuA+uKySWzSYVhT
- 4VXF0LiQJb94UYaidFPdgzwdhuSTOjq5ZFwR0xK+GID05b8kcibMP1X1CMUJ81RzA95R
- xPN2VCkiePETtLSpNfpAq0+M1Wp16cBXmoqwVvefb7yPzbKYSx1ki6odnm0nEl2tP4KW
- DTpExqQ8cUG5wEPHJLMxpAYOdY93K1hYn5B09ssPPtXKmldrl+ei3Q9ZLYeRNvlQc+jM
- n6+D6rayGagar+ZyOasdJbcufB61siln1zd3lIj9m5J1bpY+on5ArWeGDtZlzSvbyGPe
- YxyA==
+ d=oss.qualcomm.com; s=google; t=1793223885; x=1793828685; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Zg0hmOj9aMW9T1A6MPbF+6VFWcnu0Fwji/PPaUeTYAo=;
+ b=glEaw5ncXNoGhfuFv1lYuVNbHFhWyytL+0SZEobdsm9WeYT1vBG6O+Ye1jj6+EG9ob
+ FMFNEloSsIao9iMXMDrRIqRdHiCl9KNbY7Dts62Ikvb1Qn+nxwK6TrTB9tY0Wrii8SM/
+ KA7yLtNAqT6/Z4ezOT9JTifHqs79HOnw7QEbpAYy9lR8tVdkaU0VNbwmZd/gSQVL9JFe
+ HKS/GJkBpC6fOlko/ZPymAxyS0xh8FKTS2UjqemA8zyXdw1geAswaTD9EzAdB0zF1WA9
+ UWtNRf3kP1xpG9dsj3RU6v1tsk33m7nB3yU+omU4Q/MkIj+raP5LL1scasqvMwcJiHkj
+ F9NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793223811; x=1793828611;
- h=content-type:cc:to:subject:message-id:date:from:references
- :in-reply-to:reply-to:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2QkRb89H+Ut888aLaIpYViCWlMZuuCKvKRmvorfSwNo=;
- b=Q0GXNdxglEFX6LkHHCKWmuWF9lDviPa4U02kRz5l1GvFiMehYpzmVNZAzVoehmW/f7
- i+jqiAKnyhu4Rz044PMx+FWcqAw2DiS+sxPMNytC/APmdKFSiR6algQ86YP9VUykZpoa
- 3zKPiq6sFJSRgzE2xJU7g/nRlR5ODakEgrP3u+PTFqN6plC3BNGzp0eAeedDyrRySU6h
- 9SuhqcRtod38HII+o57u7UCrLZDxzTGkEXiTtnFUB/35hNdye/eB2teOEhCod7jzdXgs
- 4mPRXE5TzGS7Eoly2ZanyajQQLUJ327ukc4mfK5iNhw8nGkJ7/xAwxK2umLUj7GpfOHB
- eOHg==
-X-Gm-Message-State: AFq9FYL7NkFwzXBdo7v2x5/Ctvnfo8aWKKnCjQDQB56gr8+lQUDg0bhR
- XhIt7iOfYI9oxBPiA2cqKhEaCr8aH6VdCCaRn+3t2xPFJcMWvvXKK/lXJefL1qe030GltOkdPDa
- r1qZ6+9rX0cKjWZpRaXSoFxfrt9mUAgA=
-X-Gm-Gg: AYBFou1UcJCcWCfFs188x2zSImmVswuO2gKyQPSsIlzsWo8TcjJDsmI9zMsYTifUbn5
- DQPFDgxaD+HLY8zPJFDceFVIh6fmble0gvYwADM8gwmi0LpQtFeeUR5Tqr5Xrn9pTfgPBpapwOL
- 1CzFSDKav9Dq/bWZ4kEXZ8YI6tB5j5821s+V9ir163MG0YpOkWlDulhH4dDxA80xYzxjMT0VjjQ
- oogRG73Niv9woZKoZij84rJ3Srg62bkwoXnUuhR0PowY6+ReDxomiFHvjsPECM6aXh1F9nLJfIT
- aB3U3jUpJyT4Hr1ILI+7xjzoTyyAUYGGgEGeZnxwBR0YUlIInaRTHHuMGfxMrQ3kn++MuyeITaT
- WFMFDDEDImdegqYDKFj7dZroyGLTORTLitbgE
-X-Received: by 2002:a05:6402:5194:b0:6b3:c089:5806 with SMTP id
- 4fb4d7f45d1cf-6b49cb4f1e5mr2644930a12.4.1793223811356; Wed, 28 Oct 2026
- 14:43:31 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793223885; x=1793828685;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Zg0hmOj9aMW9T1A6MPbF+6VFWcnu0Fwji/PPaUeTYAo=;
+ b=OCXi9CslPHkMoKqLhKMfT/YbUG71hG/A/lA2kCO8vdaGzH/BRVBrH1nZ3zuLFa+bul
+ ZopX5tKH9NBp/PtzYM6u+akgo3096serYYTKd/eZKhgZqozwf9FEPmxFklcnt1Ivj/Xa
+ GIQbeLwKNoLhsoTZn9CKZItV650ZDmMEbunLvkhqfgpdNWR877pBYR6NFHnpJu1mH1Le
+ xVoyTlp4n9KFzKb+lfQX9BMgednZYV4k6FhwWTzTKUekxpfT61/aikx7uAJDGpMlCCGT
+ dvLoV8GpTthN/0lEAMbKO1vaG7ZeSq0+hpYRvgAviKZ4xAy7rG6hFexU+tkNHkHjBS2G
+ F8Yg==
+X-Gm-Message-State: AFq9FYKrphmY86oaW3NskY74dM421l+w5q9Zu1ZKnMVgw/SHTCDyOlsQ
+ m3iDFcB5+QIiHf5/VUDUC5j/w+Pei2Re/SaBhFwttsAeCooUuzLxXiszvyO2fATYovzb+bevWv3
+ xSUftEO44zECINqUR4EFhXOFexCkj7i+Ezd2erMff+YC8bik94u6rS3+0Kw==
+X-Gm-Gg: AYBFou1pSQv2EHuO2dy79FD2p6k3HP0WmvdMnW5sdPSox4T95zaXJyKiof8IqwbXp9u
+ 7uYyVzyiMydwBdVl73iSR07yYyxhmyIW8ijdSjyEVO+an5WloALknylwp5soj+64kGwYSodXGFD
+ vO5ZCsvsiFlOfxN2CMrpLmiWgucHMTMHfOpnI4pK7dfQevPNSNzS2TB+J4H8zfLaRrgXMCZ24wg
+ BHAKW72NHq/pmn0K++96HkT4Ie3i+Xb6HWPNe9kzcb6A4IvqOFuetIrrlxhdaSl6a0Vr6uu4a2U
+ qJTWSOOx7SXhYw4143s9G5gWToHCbHfTYADZKbj4YGT3aGhHOz/ahpE0+zER1eUJDd8Puw+bv4B
+ VolxFF0Rqbta6t5kYg1mvPt+RP6UgfZh6efU3pdv/6/GKqJIQGKYqRTAQF3G9gmCSlkIsD9DPFr
+ h+J7oGxXfymg11FJNtunoGernSbd7KKYkQovEjRk0PDCo=
+X-Received: by 2002:a05:701b:2508:b0:199:4d4d:d3c9 with SMTP id
+ a92af1059eb24-1a94b0a7b59mr793629c88.25.1793223884725; 
+ Wed, 28 Oct 2026 14:44:44 -0700 (PDT)
+X-Received: by 2002:a05:701b:2508:b0:199:4d4d:d3c9 with SMTP id
+ a92af1059eb24-1a94b0a7b59mr793592c88.25.1793223883976; 
+ Wed, 28 Oct 2026 14:44:43 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1a75c814aa1sm15601173c88.7.2026.10.28.14.44.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Oct 2026 14:44:43 -0700 (PDT)
+Message-ID: <88bbbcd6-1826-4dd1-9bda-4d193966b67c@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 13:44:42 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received: by 2002:a05:7208:378b:b0:110:91ae:907c with HTTP; Wed, 28 Oct 2026
- 14:43:29 -0700 (PDT)
-In-Reply-To: <b59162fe-5f8d-4923-b6ff-133b8fbf1a41@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/12] hw/virtio: register s390x virtio-blk-pci and
+ virtio-net-pci variants
+To: luoyonggang@gmail.com
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Farman
+ <farman@linux.ibm.com>, Song Gao <17746591750@163.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
+ Fam Zheng <fam@euphon.net>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@oss.qualcomm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Philippe Mathieu-Daude <philmd@mailo.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20261028201557.2688-1-luoyonggang@gmail.com>
  <20261028201557.2688-10-luoyonggang@gmail.com>
  <b59162fe-5f8d-4923-b6ff-133b8fbf1a41@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Thu, 29 Oct 2026 05:43:29 +0800
-X-Gm-Features: AclHuK9BagxZRH6MjZ4MmD_wDGyUnLjabxwZ0z6Km__e0lGMGW5kUyVx9kfEvXg
-Message-ID: <CAE2XoE8vapLZzawuDMQEnOGZsymec+EVUkoWhxUKxbrqmAHoOg@mail.gmail.com>
-Subject: Re: [PATCH 09/12] hw/virtio: register s390x virtio-blk-pci and
- virtio-net-pci variants
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- David Hildenbrand <david@kernel.org>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Eric Farman <farman@linux.ibm.com>, Song Gao <17746591750@163.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Fam Zheng <fam@euphon.net>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>, 
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000475d3e065eed7450"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <CAE2XoE8vapLZzawuDMQEnOGZsymec+EVUkoWhxUKxbrqmAHoOg@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAE2XoE8vapLZzawuDMQEnOGZsymec+EVUkoWhxUKxbrqmAHoOg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4NiBTYWx0ZWRfX4m0+6fubkD5h
+ fenANXyvOhHuDV56Ju3PhIz0CUh/mpOEf3ydFAc96zkBBNzL1KJO20tLFNIuDPUqxiSWbees2kK
+ aihcHmVg7b/Z7K637g85M4Deqi6NpsQK5RDyei/PALNBjc9XlTDI/ubgYRWQQ4rFVEQSZ1CYV+M
+ YIR4jx2JSWrdcKbsLY5m5xRLqdHhIFdB6UV8G/IxnTyBr6BhRCT3DtueDge67HOzdX+Q+LOpxB3
+ hC40SNxINlr4t/RP7tCK8KgKrC0aA72hOMYkHsJFVAiHg2jDohQf5GMjaBF9iJM2c5JBxI7Q0Lo
+ nZqhk9l0cJ+LswF91QbVHat4Ye06QkX5ccMEiaFZ4QlqfLNyJMAmExZ7syZTj65YntMJgJfBgck
+ vkQAg7yycvIZkYrV61pUdhcWGC2/guGTRUPOLqaMqgOfiVMRZvp73i9099E1lC2BI5U/bUTXGic
+ Ub7A1kz0I+oDndoN7mw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4NiBTYWx0ZWRfX19fWKtDSNBJ9
+ sxfXCTyvaiJUrDps7l+EhAgIEIThPiMfluR30hEW3/HwqMq4cw96m/5l64qEH+zNVERr3cdy52T
+ ayBuvRpxvLtDHBgRgWYq+XXmjtoXRps=
+X-Proofpoint-ORIG-GUID: lhyA76-tEUTmVxf6q_b_pKNIuDEj9DHS
+X-Proofpoint-GUID: lhyA76-tEUTmVxf6q_b_pKNIuDEj9DHS
+X-Authority-Analysis: v=2.4 cv=T4oZ3PKQ c=1 sm=1 tr=0 ts=6ae26ccd cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=7iWLHl1a1dHi_J-wnTwA:9 a=lqcHg5cX4UMA:10
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280086
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,97 +166,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000475d3e065eed7450
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thursday, October 29, 2026, Pierrick Bouvier <
-pierrick.bouvier@oss.qualcomm.com> wrote:
-
-> On 10/28/2026 12:15 PM, Yonggang Luo wrote:
-> > virtio-blk-pci and virtio-net-pci added the s390x loadparm property
-> > from class_init when target_s390x() was true. Register each
-> > VirtioPCIDeviceTypeInfo twice. The s390x variant calls
-> > pci_qdev_property_add_specifics(), which now always adds loadparm,
-> > and the other variant does not. target_s390x() and target_not_s390x()
-> select
-> > the two.
-> >
-> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> > ---
-> >  hw/pci/pci.c               | 13 +++++--------
-> >  hw/virtio/virtio-blk-pci.c | 22 +++++++++++++++++++++-
-> >  hw/virtio/virtio-net-pci.c | 22 +++++++++++++++++++++-
-> >  3 files changed, 47 insertions(+), 10 deletions(-)
-> >
->
+On 10/28/2026 1:43 PM, Yonggang Luo wrote:
+> 
+> 
+> On Thursday, October 29, 2026, Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com
+> <mailto:pierrick.bouvier@oss.qualcomm.com>> wrote:
+> 
+>     On 10/28/2026 12:15 PM, Yonggang Luo wrote:
+>     > virtio-blk-pci and virtio-net-pci added the s390x loadparm property
+>     > from class_init when target_s390x() was true. Register each
+>     > VirtioPCIDeviceTypeInfo twice. The s390x variant calls
+>     > pci_qdev_property_add_specifics(), which now always adds loadparm,
+>     > and the other variant does not. target_s390x() and
+>     target_not_s390x() select
+>     > the two.
+>     >
+>     > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com
+>     <mailto:luoyonggang@gmail.com>>
+>     > ---
+>     >  hw/pci/pci.c               | 13 +++++--------
+>     >  hw/virtio/virtio-blk-pci.c | 22 +++++++++++++++++++++-
+>     >  hw/virtio/virtio-net-pci.c | 22 +++++++++++++++++++++-
+>     >  3 files changed, 47 insertions(+), 10 deletions(-)
+>     >
+> 
 > target_not_s390x will be duplicated at many place, is that fine?
-
-
-Fine for me, let's see what virtio maintainers think about it.
->
-> Regards,
-> Pierrick
 >
 
+Good for me.
+  
+> 
+>     Fine for me, let's see what virtio maintainers think about it.
+> 
+>     Regards,
+>     Pierrick
+> 
+> 
+> 
+> -- 
+>          此致
+> 礼
+> 罗勇刚
+> Yours
+>     sincerely,
+> Yonggang Luo
+> 
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---000000000000475d3e065eed7450
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<br><br>On Thursday, October 29, 2026, Pierrick Bouvier &lt;<a href=3D"mail=
-to:pierrick.bouvier@oss.qualcomm.com">pierrick.bouvier@oss.qualcomm.com</a>=
-&gt; wrote:<br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
-;border-left:1px #ccc solid;padding-left:1ex">On 10/28/2026 12:15 PM, Yongg=
-ang Luo wrote:<br>
-&gt; virtio-blk-pci and virtio-net-pci added the s390x loadparm property<br=
->
-&gt; from class_init when target_s390x() was true. Register each<br>
-&gt; VirtioPCIDeviceTypeInfo twice. The s390x variant calls<br>
-&gt; pci_qdev_property_add_<wbr>specifics(), which now always adds loadparm=
-,<br>
-&gt; and the other variant does not. target_s390x() and target_not_s390x() =
-select<br>
-&gt; the two.<br>
-&gt; <br>
-&gt; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoyonggang@gmail.co=
-m">luoyonggang@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/pci/pci.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| 13 +++++--------<br>
-&gt;=C2=A0 hw/virtio/virtio-blk-pci.c | 22 +++++++++++++++++++++-<br>
-&gt;=C2=A0 hw/virtio/virtio-net-pci.c | 22 +++++++++++++++++++++-<br>
-&gt;=C2=A0 3 files changed, 47 insertions(+), 10 deletions(-)<br>
-&gt;<br>
-<br></blockquote><div><span style=3D"color:rgb(0,123,53);font-size:14px">ta=
-rget_not_s390x will be duplicated at many place, is that fine?</span></div>=
-<div>=C2=A0</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-Fine for me, let&#39;s see what virtio maintainers think about it.<br>
-<br>
-Regards,<br>
-Pierrick<br>
-</blockquote><br><br>-- <br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 =E6=AD=A4=E8=
-=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=
-=A0 sincerely,<br>Yonggang Luo<br><br>
-
---000000000000475d3e065eed7450--
 
