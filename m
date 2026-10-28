@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F08606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B73606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=N3uAb78t;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TItBCfLg
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=RxF9Y6MX;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=jhhS/Cwv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMASy-0007ri-Q8; Wed, 28 Oct 2026 16:41:49 -0400
+	id 1xMAUr-0008Ua-74; Wed, 28 Oct 2026 16:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMASv-0007r4-00
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:41:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xMAUj-0008Sj-UF
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:43:37 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMASr-0004hG-Ak
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:41:44 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1xMAUh-0004ni-Gn
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:43:36 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69SIPJcm1942031
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:41:38 GMT
+ 69SIPjFX1580418
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:43:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- awXBHGvqWbYn8GyhNq6f8Jj03PU5qHpf9Ldg8qm2978=; b=N3uAb78tgBc5Or15
- ZXwNYfU6MLn/tVVnjoR6OOrhlzxP9d0VVMNGm5cKNl2tBVoJ5HRbitEO5m2eZmBp
- Qe9XKWmlgfaCVDTNjzQdOEu8SvBRwJ8xku4yVeQvznGMCcl/GGw5Ve0PnfM42XjJ
- k5DaiNPGJe+x8DiHcMv2NMu1k/puHiV3EZI0x+6nK1rCmmlvUPvxsziwyAzskabr
- bBKYIgT+fXDL+zgX0rfzgWcpqN2GT0AFd25JDeeH5Kn7QHSux/zXG1iroHAVZLDj
- D3ZVUsWK3qyO2X+C4g/UuTEfHW+dgcUhCdbcOVoBBos5F9KrONTiN/+GQSmamwVb
- yepADw==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkbhwbds8-1
+ kyt6K2lZP9sCD8AT4GMJSwWF4qM2WeyRv5tYs/sYS8o=; b=RxF9Y6MXnuT/FmVt
+ 47ojWVjcMoZhxOIPZ3zdy3SbQZ+/sCNkEmZyx7EfE7SAB4lftnewFLBjr8q2kWWA
+ M1jVb5zZpWKQwOsZWjOeCq6vqtp3t/K6ILLVp7+862KKQmbAJY5toealYH6BnPZF
+ VMhTFcWDmnHS2nextEC1QZrh/41057YxEgGZEonw8+EGtnnBv7jTRDOLVLYg9dmC
+ YDcw5JXsV6hNbAmE0eCweDfqSEN5UXW7r5lX+1vR7R0qOPjdZfR4jvlkBZFPc5L7
+ FPbCqatXHtpE/bSflFYruSIKWjrkSfW0r1OHYPJs95aMSS779F/hmhncjzRrErVX
+ TiEfNw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hknkp8p7k-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:41:38 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-1a71dd190b0so4035135c88.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:41:38 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:43:34 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-36a223755e4so4451974eec.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793220098; x=1793824898; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793220213; x=1793825013; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=awXBHGvqWbYn8GyhNq6f8Jj03PU5qHpf9Ldg8qm2978=;
- b=TItBCfLgdNdYCMWKfBNrDLQlEkuD1b1Im7VzQuCbpBff0eJOy84+aGc+JM8zveTzUD
- GsWqt+heQRc7P8LfCgH8fyaaLJEPjF5cIP56tu4frqCChbOQBImD/nQQcalHGdawiEco
- M4MCBPFWKUpEIK/qmd0p75xXDVqV30Ha93wtAH6AB+xFLfDjPyLVueYpUwiIyCXVCsQb
- dq3NTYTsF7surltwxNf5K29QmP/eNOKuyEfWm5oz2zzBM4l3Hjdw3/cOPeY+13h1ZUxj
- MXVyFdB25jmrr/AVDI37PJkIp9PoEF76Zx9Bc6Tjqf9jmsLoJjHyabgIEmfETyVqdOmw
- I5Uw==
+ bh=kyt6K2lZP9sCD8AT4GMJSwWF4qM2WeyRv5tYs/sYS8o=;
+ b=jhhS/Cwv+lptR7xw2HD8VwsjbxK40VYrUyTVDT55UvpNvdb3fM8iHKVGjEDUSCKo0f
+ 668HQ1de4by8A35DMKCUIyNIMlWUDazIW4HZg6EwmYTkomjEmVaqVBWLjY+WFehKVvrf
+ Q+Z4Ta+H4rhIeTBEHyTAjo0PyDSKvcJRJlm47LCDkbSPCBDArx3Qcgjdq8e7yALmS4xK
+ czdqY6W4xs0I04DbiTNoZD30nl/kr3vmKIuH0JvVhRXIuSNDoQQUtWNo179QEootPw9P
+ expVd6PPuocPJ92RoJDfgLLhR+1NiGCmdATBv6I1z/JTIyv6EUS8IAo+XHY/WzFXypyn
+ zbKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793220098; x=1793824898;
+ d=1e100.net; s=20260707; t=1793220213; x=1793825013;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=awXBHGvqWbYn8GyhNq6f8Jj03PU5qHpf9Ldg8qm2978=;
- b=Qou0geqUxFzDKX3yPuZCmqibPJugNnOjBsex+1stSSTK6mPGu0kVDgmlOV2zwlk6VR
- J5GZPoBfCVX68q9NfoHGyHmqpctEQHofMVrUjxLLbz/LWFRzqid/pY9oLViJXff9EKeM
- HHEvogx6tq9/taaiefWPcwmDOcQFGnJOV7QRMCJN2TNldbGAK3PGuRABVifz+xwBstUO
- dmvU3FPu7L80pUgbOw/4QZIm/lWDmWp72aa84Qm8mj3+/hP68o6ySvr5R+RkS5dwKejc
- uNpAYDj9IZivZatkVGLmsBRbvLVAXZah3vvCmfJ0vdEl7d8/3CvN/IaztIwYaBODZ65S
- 2CyQ==
+ bh=kyt6K2lZP9sCD8AT4GMJSwWF4qM2WeyRv5tYs/sYS8o=;
+ b=w4bHoqsXf2RssBz9IP8csXUfS0/AmaHwmMGKVQFhpxbBrAPdegs7e1fFZoTQxTX6hD
+ Fp/PGg1788TgfUsd45EahlH8tGEenZl5vo9pNN97xk98hovafoSJMid7kCYf91kZAKqk
+ zqgrDXhTh/HQfIURMqAbjTs8cmjihdIKCK52Ta6DXKUSdkyCP9DHFjFBb5V3AlmDGX23
+ t+VPfOAlpWtlq7CtVVpq61BCXI+tm3AK2rjAhr97UgryWw2tkZumeve1rBUE95z/YAuF
+ Lbj8zWKKYgS7pbUFTjbINbYwAoYEr9LZs9Qd825n8IlB+fGtCTdghQk7JE6ZNb/IDQIs
+ f2Ow==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzrEBqc643Js8oofdhnWVvXxOo+wUuB+tXKQ0Q4JIuxAjTzsFV0v/V5+1MUEBNb8jiG7Iw0urUg6FuW@nongnu.org
-X-Gm-Message-State: AFq9FYJ6ZYOBE9XQKnWg880w3G+GA46V5CK954GrtW5/2AXlpbDW5dEk
- o+mPu5c1+gWC6v+joGXxZ9+IMs9hn1+eEB7cD4FtJX7WxZQv4+xr86IHM6H+SdO97vqVwNUmU4Z
- zvUuOMtxF1nJMd6pNXlaVx3X9AkxT4zgHOIwwynYyfdaDsvqcXzUuK4On5w==
-X-Gm-Gg: AYBFou3oVrHBkrJ8Ik+RDBaKxK7nLCZpZVloOsJJLt2Q3/u5kk9I3KZP/LCIkOuJiQ0
- kPXiTKOZu+m5Se6ii+hXM4aMnGK0QlDR1u0gfXOM+hF0gsWhi5HYecBa9rlusAdaPzQ2blLbpRM
- rsOa7oGXXHHsATX0dB+ncEMIQsJnx3Kr3DGtUgGTNyMkUc3HNHNMJOkCP/X2hi0/pO8pkaZAuzt
- /BayRfs+NHyE85oj6SdMUhhk5c2ZyBdHtrotSyo5boMWm3T+M06V5dRdw/0+2Bs2xoGhTgph3QB
- dFfwX69JRbxc152fgywKn/cCy+q9ydlpriMtUrKn1X1VttLhNY15cxBcDE3DiZWQyyxxuKcZOpE
- i1uZFocl5xPRQ24PnlFFLKAjO8kRkO790Vvmy332kzouhM8wYkVDsWWrW1Ld5KQLkGhR3Nfhtfh
- 9WocgPyYFS6MDsSqQ4kGdt0T7Cn/C8X3JqpKad/b3Ngno=
-X-Received: by 2002:a05:7022:f50f:b0:196:e2d0:129 with SMTP id
- a92af1059eb24-1a6c84dc756mr4755349c88.2.1793220097448; 
- Wed, 28 Oct 2026 13:41:37 -0700 (PDT)
-X-Received: by 2002:a05:7022:f50f:b0:196:e2d0:129 with SMTP id
- a92af1059eb24-1a6c84dc756mr4755320c88.2.1793220096865; 
- Wed, 28 Oct 2026 13:41:36 -0700 (PDT)
+ AKwUvByDbJ0JqGZnkFqZ6H4A2EIvTojqvOBUwcbehAWY84XirtHEFCSyv2nd8YU9Dl+6k4ZFRiMo1naWOjuZ@nongnu.org
+X-Gm-Message-State: AFq9FYIfWkYTB4QawRt7ZzQJZGqAorScXBjwDN4dMP6MFbCmqNapO6nT
+ rxsaRTxQMDPDNAkxtcRxjVxJhxPL3+GI2DsaSHBRfa1WWgy4UutvQ0loP12nBLokeeLyGnXvdep
+ EhlGdztsPapvqToWhRhZtiKpe7cUL17wadbaTlvZgph201Mx5NYIywMqiMQ==
+X-Gm-Gg: AYBFou1HfuznWy2c46NLiIhyfydImvd5Lb/t0kNhh7jTGhwd8IOqdP++RZYIEocriFm
+ dLQ5W7uWys8KmGsdSDic8VnbmZC6JMRSq8n4r/YUycfsPGBwyj7EdrzzErYsz2IENjxbcTRHCRQ
+ 4h4WlgkfXHy35/F7pm7RJRCgQmN2eNMPfkBI39vLlwRmNG0LjJcalNlD2mCZWIu4Ki/BfofvEau
+ EpTwLT2WSdBDqcgrkBBVdxHqOT5USMeQ6QElHqsAyBfrxSwls7DT3eGycTrsFozJnJSmq3yqFzF
+ 0GwbG9iILgc33XFGWAADUniDMy2D70vyVTWTpRw7LxtsyHnZAiENvHSvJCJp7Q0q/B+hFKfPn6A
+ KEt+CqTh7J/ksDJJxx2p6OAF48+09CeYRkIUSpGY3Ej1HtctTwtcd8P1NqMjLUNWYeeoUPamUwx
+ 7MoBNudkIagIvR5yl81289EhF3drdMY9lPBgaytzFX+RA=
+X-Received: by 2002:a05:7301:105:b0:369:efd5:9cad with SMTP id
+ 5a478bee46e88-36a203aaf3cmr5404717eec.8.1793220213087; 
+ Wed, 28 Oct 2026 13:43:33 -0700 (PDT)
+X-Received: by 2002:a05:7301:105:b0:369:efd5:9cad with SMTP id
+ 5a478bee46e88-36a203aaf3cmr5404686eec.8.1793220212593; 
+ Wed, 28 Oct 2026 13:43:32 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1a75e5c6d4fsm14750292c88.14.2026.10.28.13.41.35
+ 5a478bee46e88-36a2390c6dbsm8187368eec.13.2026.10.28.13.43.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 13:41:36 -0700 (PDT)
-Message-ID: <7e6c2d31-9bca-41ae-84b9-10b6dd11c6d3@oss.qualcomm.com>
-Date: Wed, 28 Oct 2026 12:41:35 -0800
+ Wed, 28 Oct 2026 13:43:32 -0700 (PDT)
+Message-ID: <f734a320-c884-4cdf-8fd8-16b7d8c522c0@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 12:43:31 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] tests/tcg/mips64el: Move R5900 tests to system
- mode and build with meson
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2 7/9] target/mips: Describe gdbstub registers with XML
+ features
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
@@ -104,42 +104,43 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  <arikalo@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
  Fredrik Noring <noring@nocrew.org>, Aurelien Jarno <aurelien@aurel32.net>
 References: <20261028192538.31600-1-philmd@oss.qualcomm.com>
- <20261028192538.31600-6-philmd@oss.qualcomm.com>
- <aff7564f-c8e6-4c56-8e1e-cd7f7613eefe@oss.qualcomm.com>
+ <20261028192538.31600-8-philmd@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <aff7564f-c8e6-4c56-8e1e-cd7f7613eefe@oss.qualcomm.com>
+In-Reply-To: <20261028192538.31600-8-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8f0gPtTSBv9Lkx6IvzI7eEu7H1Ol2iLS
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4MiBTYWx0ZWRfX5QbkJ5A0QGoy
- eDnPJ0o8ogBwr1wtPFbnWrHmZQ8UYu5EnwXBkuC8gXfeepRk2l091DDfANtEMblQwk5LWvVyOjP
- BvHoQDZ64QKvyNwmGTgDr8L+0B7PaTE=
-X-Authority-Analysis: v=2.4 cv=V+joQuni c=1 sm=1 tr=0 ts=6ae25e02 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Authority-Analysis: v=2.4 cv=Ju9kP84C c=1 sm=1 tr=0 ts=6ae25e76 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=EgU4di2TmvYpUD7sGBAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-ORIG-GUID: 8f0gPtTSBv9Lkx6IvzI7eEu7H1Ol2iLS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4MiBTYWx0ZWRfX13kJ6cVqAHWu
- RUkMCT7NGUrmdpCz4UwAhJsnp2V11BKBWc1cmLPwJat6aEwTZIRYhLI9GU/MOl12Y2s4utpYNlK
- F8QpYcHYdVrqoYY0llwNaV3Kyt7iK0/Bb5s/TdM7YUbYGBJHsDNrGRJT4jNzJSuVGvnCzrFob0v
- nJW8X1e7Zd/7+dP7OWaffjm/jdpqPthx3WvFWw6Yr9TSczoazvi6fvaOollUDWl+s9OBofJbURS
- 1BuHb+Lculc7yG3ozpXIqttTLQO/9or2UGybBqGdBlYSu5Dv5qsfOmBxcUmUzscWCqSt3I6zzD1
- I/fxZIZp14zbtwLL+dR4yyzQouk+OUBeXW51Snv5YECKa2UWUmuLYPE/3ZhFdd/HaVJZv22yvb1
- wt4Y9z47QukvSe2kJ9EwSlMpxVpgl469vG9z1Buf5wXpt0BQGvb/cok1/xGdgRdispTpz5l2LE+
- RhXi9BePE5E+szuGUxA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=CbWQ0NMC1jNkEBtz2-0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: AOu43zVh5CebjZcWL3oAjEx-BcIYCm3J
+X-Proofpoint-GUID: AOu43zVh5CebjZcWL3oAjEx-BcIYCm3J
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4MiBTYWx0ZWRfX5UTghjFtdHHP
+ Ksk5BhTZXI9FDt0Rhg2t6pJP/y7qU1jLO6dxG/yyVUNohrGfdBkZHOntZD4qJt93h+yss+mMKwW
+ GQpXKBPYhQDa0/FdbaE2WrR0qSoADQI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4MiBTYWx0ZWRfX/rcRi7nOFjb5
+ zjYH3NbSR2/58OHjqRKvmR+67yb4m/ON5yJYHum4ydIU65GoJB+yyUI92vlHdSb5pVo56MPZbeL
+ dDlGcEmDVQ8XstKvaZoQsVgxR2le136Yh+v8XG+6PsZd/Zzv+RazjL+jQNXWuHWYg81/Nai3nax
+ T59YZW7RsUYz+PqfQoMYPxSDTfvODvoqR9HJZw/5NcBftpG6gEMzKAWT27jZbRK8hS6eRFqyD5P
+ rmib9d1ZNEeDIEEedqwkNnVIABqJUcZFMs4NowRMJ6mtoqDZmV1wYP5pLb4bw9Ide1uSot99f5x
+ 1PjZbpNXnIZAVu0nQT0LbDIN5++5UKHskdrwyaPhHRgWXRMgPvxS4OC+LGQt50mhbraxTBl1LU4
+ GoeAiX8Ne0WUZMNTBhnHuJ4yIK+KzLZAMZ02pcdo2znSRg9qgJVvUq8/dj2wdb0+p61gHLodZQa
+ fCNcuL5U61M47TlPZNA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1015 bulkscore=0
- phishscore=0 impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280082
-Received-SPF: pass client-ip=205.220.168.131;
+ impostorscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610280082
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -166,156 +167,46 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/2026 12:39 PM, Pierrick Bouvier wrote:
-> On 10/28/2026 11:25 AM, Philippe Mathieu-Daudé wrote:
->> The Makefile needs a toolchain we do not have and qemu-mipsel,
->> which no longer provides the R5900 CPU. Move the tests next to
->> the bare-metal harness, register them in meson.build, and remove
->> the Makefile and the obsolete README.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> ---
->>  .../system}/test_r5900_div1.c                 |  0
->>  .../system}/test_r5900_divu1.c                |  0
->>  .../system}/test_r5900_madd.c                 |  0
->>  .../system}/test_r5900_maddu.c                |  0
->>  .../system}/test_r5900_mflohi1.c              |  0
->>  .../system}/test_r5900_mtlohi1.c              |  0
->>  .../system}/test_r5900_mult.c                 |  0
->>  .../system}/test_r5900_multu.c                |  0
->>  tests/tcg/mips/user/isa/r5900/Makefile        | 32 -------------------
->>  tests/tcg/mips/user/isa/r5900/README          |  6 ----
->>  tests/tcg/mips64el/system/meson.build         | 20 ++++++++++++
->>  11 files changed, 20 insertions(+), 38 deletions(-)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_div1.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_divu1.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_madd.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_maddu.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_mflohi1.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_mtlohi1.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_mult.c (100%)
->>  rename tests/tcg/{mips/user/isa/r5900 => mips64el/system}/test_r5900_multu.c (100%)
->>  delete mode 100644 tests/tcg/mips/user/isa/r5900/Makefile
->>  delete mode 100644 tests/tcg/mips/user/isa/r5900/README
->>
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_div1.c b/tests/tcg/mips64el/system/test_r5900_div1.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_div1.c
->> rename to tests/tcg/mips64el/system/test_r5900_div1.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_divu1.c b/tests/tcg/mips64el/system/test_r5900_divu1.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_divu1.c
->> rename to tests/tcg/mips64el/system/test_r5900_divu1.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_madd.c b/tests/tcg/mips64el/system/test_r5900_madd.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_madd.c
->> rename to tests/tcg/mips64el/system/test_r5900_madd.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_maddu.c b/tests/tcg/mips64el/system/test_r5900_maddu.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_maddu.c
->> rename to tests/tcg/mips64el/system/test_r5900_maddu.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_mflohi1.c b/tests/tcg/mips64el/system/test_r5900_mflohi1.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_mflohi1.c
->> rename to tests/tcg/mips64el/system/test_r5900_mflohi1.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_mtlohi1.c b/tests/tcg/mips64el/system/test_r5900_mtlohi1.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_mtlohi1.c
->> rename to tests/tcg/mips64el/system/test_r5900_mtlohi1.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_mult.c b/tests/tcg/mips64el/system/test_r5900_mult.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_mult.c
->> rename to tests/tcg/mips64el/system/test_r5900_mult.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/test_r5900_multu.c b/tests/tcg/mips64el/system/test_r5900_multu.c
->> similarity index 100%
->> rename from tests/tcg/mips/user/isa/r5900/test_r5900_multu.c
->> rename to tests/tcg/mips64el/system/test_r5900_multu.c
->> diff --git a/tests/tcg/mips/user/isa/r5900/Makefile b/tests/tcg/mips/user/isa/r5900/Makefile
->> deleted file mode 100644
->> index bff360df6c97..000000000000
->> --- a/tests/tcg/mips/user/isa/r5900/Makefile
->> +++ /dev/null
->> @@ -1,32 +0,0 @@
->> --include ../../../../config-host.mak
->> -
->> -CROSS=mipsr5900el-unknown-linux-gnu-
->> -
->> -SIM=qemu-mipsel
->> -SIM_FLAGS=-cpu R5900
->> -
->> -CC      = $(CROSS)gcc
->> -CFLAGS  = -Wall -mabi=32 -march=r5900 -static
->> -
->> -TESTCASES  = test_r5900_div1.tst
->> -TESTCASES += test_r5900_divu1.tst
->> -TESTCASES += test_r5900_madd.tst
->> -TESTCASES += test_r5900_maddu.tst
->> -TESTCASES += test_r5900_mflohi1.tst
->> -TESTCASES += test_r5900_mtlohi1.tst
->> -TESTCASES += test_r5900_mult.tst
->> -TESTCASES += test_r5900_multu.tst
->> -
->> -all: $(TESTCASES)
->> -
->> -%.tst: %.c
->> -	$(CC) $(CFLAGS) $< -o $@
->> -
->> -check: $(TESTCASES)
->> -	@for case in $(TESTCASES); do \
->> -        echo $(SIM) $(SIM_FLAGS) ./$$case;\
->> -        $(SIM) $(SIM_FLAGS) ./$$case; \
->> -	done
->> -
->> -clean:
->> -	$(RM) -rf $(TESTCASES)
->> diff --git a/tests/tcg/mips/user/isa/r5900/README b/tests/tcg/mips/user/isa/r5900/README
->> deleted file mode 100644
->> index 18ecfc3bd0a5..000000000000
->> --- a/tests/tcg/mips/user/isa/r5900/README
->> +++ /dev/null
->> @@ -1,6 +0,0 @@
->> -This test suite can't be run at the moment. We don't have a qemu target for this
->> -architecture, which has single-float arithmetic, and custom 128-bit registers.
->> -Also, a specific toolchain has to be compiled for it.
->> -
->> -We keep the tests here in case someone is interested one day to resurrect this
->> -architecture.
->> diff --git a/tests/tcg/mips64el/system/meson.build b/tests/tcg/mips64el/system/meson.build
->> index 265a2eca4ff1..fd5a759c20fa 100644
->> --- a/tests/tcg/mips64el/system/meson.build
->> +++ b/tests/tcg/mips64el/system/meson.build
->> @@ -19,6 +19,26 @@ qemu_args = ['-M', 'none', '-cpu', 'R5900', '-m', '16M',
->>  gdb_test = ['--gdb-args=-ex "set remoteaddresssize 64"',
->>              '--test', files('test-r5900.py')]
->>  
->> +# o32: 32-bit pointers, 32-bit GPRs are enough
->> +foreach t: [
->> +  'div1',
->> +  'divu1',
->> +  'madd',
->> +  'maddu',
->> +  'mflohi1',
->> +  'mtlohi1',
->> +  'mult',
->> +  'multu',
->> +]
->> +  tests += {
->> +    'test_r5900_' + t + '.c': {
->> +      'cflags': cflags + ['-mabi=32'],
->> +      'qemu_args': qemu_args,
->> +      'gdb_test': gdb_test,
->> +    }
->> +  }
+On 10/28/2026 11:25 AM, Philippe Mathieu-Daudé wrote:
+> MIPS has no XML target description, so extra features can not
+> be registered. Expose the cpu, cp0 and fpu registers as the GDB
+> standard features, mapped to the legacy register numbers.
 > 
-> Just a small nit, please keep full file name in the original array
-> (s/div1/div1.c), All other meson.build for tcg/tests do this also.
->
-
-(s/div1/test_5900_div1.c)
-
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Registers are sized by the target long size (mips32-*.xml or
+> mips64-*.xml) instead of the CPU: a 32-bit CPU on a 64-bit target
+> now reports 64-bit registers. FPU registers are single-precision
+> on 32-bit targets.
 > 
-> Regards,
-> Pierrick
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>  MAINTAINERS                              |  1 +
+>  configs/targets/mips-linux-user.mak      |  1 +
+>  configs/targets/mips-softmmu.mak         |  1 +
+>  configs/targets/mips64-linux-user.mak    |  1 +
+>  configs/targets/mips64-softmmu.mak       |  1 +
+>  configs/targets/mips64el-linux-user.mak  |  1 +
+>  configs/targets/mips64el-softmmu.mak     |  1 +
+>  configs/targets/mipsel-linux-user.mak    |  1 +
+>  configs/targets/mipsel-softmmu.mak       |  1 +
+>  configs/targets/mipsn32-linux-user.mak   |  1 +
+>  configs/targets/mipsn32el-linux-user.mak |  1 +
+>  target/mips/internal.h                   |  2 +
+>  target/mips/cpu.c                        |  4 ++
+>  target/mips/gdbstub.c                    | 86 ++++++++++++++++++++++++
+>  gdbstub/gdb-xml/mips32-cp0.xml           |  9 +++
+>  gdbstub/gdb-xml/mips32-cpu.xml           | 42 ++++++++++++
+>  gdbstub/gdb-xml/mips32-fpu.xml           | 41 +++++++++++
+>  gdbstub/gdb-xml/mips64-cp0.xml           |  9 +++
+>  gdbstub/gdb-xml/mips64-cpu.xml           | 42 ++++++++++++
+>  gdbstub/gdb-xml/mips64-fpu.xml           | 41 +++++++++++
+>  20 files changed, 287 insertions(+)
+>  create mode 100644 gdbstub/gdb-xml/mips32-cp0.xml
+>  create mode 100644 gdbstub/gdb-xml/mips32-cpu.xml
+>  create mode 100644 gdbstub/gdb-xml/mips32-fpu.xml
+>  create mode 100644 gdbstub/gdb-xml/mips64-cp0.xml
+>  create mode 100644 gdbstub/gdb-xml/mips64-cpu.xml
+>  create mode 100644 gdbstub/gdb-xml/mips64-fpu.xml
+> 
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
