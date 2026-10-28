@@ -1,127 +1,113 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D697606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A53606A31D
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YOHLGJpJ;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=CeZkvPZ0
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BwqY4V7o;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=taT65RwZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM2Cb-0002Gq-PW; Wed, 28 Oct 2026 07:52:21 -0400
+	id 1xM2CO-0002Er-L4; Wed, 28 Oct 2026 07:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xM2Ca-0002Gb-A5
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:52:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM2CN-0002EI-2U
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:52:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xM2CY-0005jJ-5O
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:52:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM2CK-0005iW-Ou
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:52:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793188337;
+ s=mimecast20190719; t=1793188323;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0nWirlGLAVuivdixLMUrtQLDUbBTFR2qlRjFO0qFdfc=;
- b=YOHLGJpJ+U5LHsNJYgi5IgoLFk9pZiK1v07Oeatvj/1+nsunuOgpGdYtSWnMoNo7cZX0w7
- t1Yj/SDFAEkgBmXNSNks9SXhkXurmOMMQznz0DJ+vmljxLigdiAjjXQGavXc9YxZcExz4F
- 4uqcaZ7qPpdvPIrvkAKG71wTVQcm1E0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bjmnUGkeyLoXxGVFg7ovRnmwZpAVgjnKV4mAyoDFHGY=;
+ b=BwqY4V7ogq+UWeRa43ZRiN3CNIAY1xL1MTfDXucXMlNWGyB5AsAF2aiK7Krl0UHBoEW6b3
+ KDmUJapQ0ie+SZRQ3MDgZQB/JXBtc558qXmb5u+RBpoltL5U1ieVb1eQWZfduPsBuJtRG/
+ a2uGAqN+2xT/FrT05tWFHWkrSJrWytg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-114-RBPDjcmAPva41T_9nqzwfQ-1; Wed, 28 Oct 2026 07:52:10 -0400
-X-MC-Unique: RBPDjcmAPva41T_9nqzwfQ-1
-X-Mimecast-MFC-AGG-ID: RBPDjcmAPva41T_9nqzwfQ_1793188329
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-91c71966998so12655606d6.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 04:52:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793188329; cv=none;
- d=google.com; s=arc-20260327;
- b=ivIEjNSRI7BFvOGM87ktPJjQE1kJMDUXdZ8T8hRSBPk7R366My4iam3s3Se3MElqC2
- oRSSefyBW7tsjs7Cv1AtVooF5yo8hRAGjqLigKWpJXRVnabmxwk0lSr4K4lei2CpU3aC
- RCQWeKSTHR0beXuSgSOUuBPIoQJMWYHA+YwBiymnKx3s7o++8+DwW+MHyLf3ArJlIpC7
- jClZOqdDV9tg+24Ri1OTgMcOgyRsBtdwVkVrGY3ZF/rSudMCsp0z/7A15ih5K4cp4CSR
- r/oMhaqJ+H9FAUnJoM7JVCxRteqF1hvgxY45hKBZ1vf7trS8FlqrVztjmyA7yDqnK9FU
- Gdkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0nWirlGLAVuivdixLMUrtQLDUbBTFR2qlRjFO0qFdfc=;
- fh=imijeT+aVG2r2Xt8VOah32Rs98N2YS7U/06n20RFiqo=;
- b=kMv0AO3nGRDYEe0bIGjY9Yv5DWkuwfXz+ABvOngV9dQAVplJJ4JASERoxRJt81gj4Q
- RxZdhn0L+RW0DqblmMG89nAbtWtayLXuRvcrH5TiSWLME8ekOIBk6vHSSnvK0LPed1Ld
- KZiWokm4bGqUtfQGfK0+1OHoqwQq+li2fADO0cvrfDVMiCv0jeiAn1cK4vlQrTAu5NRj
- SWh7dvFZMv55smlJbImmXcevVJL0uLIjNSjeTNcRkVabYNmS09TX1SB84jCKD8Y+Zq8+
- zHbANt02/5OM8owEVaWKTVuGZztuioxh+SH/8PBxHxGgOOy+SnUeE/+9mKB919mB4Yav
- NtDQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-563-owFL4B2pMViR91MPOfLBeg-1; Wed, 28 Oct 2026 07:51:56 -0400
+X-MC-Unique: owFL4B2pMViR91MPOfLBeg-1
+X-Mimecast-MFC-AGG-ID: owFL4B2pMViR91MPOfLBeg_1793188315
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48b00febba3so551882f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 04:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793188329; x=1793793129; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=0nWirlGLAVuivdixLMUrtQLDUbBTFR2qlRjFO0qFdfc=;
- b=CeZkvPZ0GRKNN6UL56cHasQOKO5WToEsbnlRcBv++lvHq9bukri/Zo2/lCp9UdMWEY
- /m3vpC0WDxSHeZtneMHpjvx6SNEc4hKaKtkiCtJwAW5nv9/tzNxKqlC6K8mIXgrjfaIt
- 6B+W26iK0U1CQbSkjD8d5kvy3tjdvk+VswDv9muuDKdibZpGJ9wHoluARLy/1NF/scCk
- 7RuISUpftT5MHW/HurMeby8gLZhZKOxyCKmYhM41P9HBK5H/OvBU0H2wKn4dk94SJRuM
- M0v6gTqhj26Y2mb6FHLFtAU86qcYOFS4CtT/iSNfa28h+i2atXeh+QXduv3IZ3D5SOsR
- BYVw==
+ d=redhat.com; s=google; t=1793188315; x=1793793115; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=bjmnUGkeyLoXxGVFg7ovRnmwZpAVgjnKV4mAyoDFHGY=;
+ b=taT65RwZ/D2D7vHNO5EjN4hZh2y3lT4xl+hUBm/Ho0KkbSvIupf5YAOPJbTaXJRz2y
+ GRPXY70+uqjVvrisQXh4aOJ+X+/Ez0TpegqSRjNqU31QKhaxvwTouig/7si7XFQML8Z5
+ eT0+qZIxGzu3CuONOzKNYij/6fXtK5TkzzVhj29uLd98tHSNl9Y41K2JVF0SsizMaf9x
+ B0q0nJZfmN+rsTGPZD2WX710UiKpDggDM6by2o/esrLKW1W5L0ab4LKDPFaQ7kMgaN4L
+ U1kt8jLV7IcuIcHWEpFBzgTrxATahGDDq+e+/5qxL8qdEcjYB4vNOgnUalqpszMJvJt5
+ Jylg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793188329; x=1793793129;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0nWirlGLAVuivdixLMUrtQLDUbBTFR2qlRjFO0qFdfc=;
- b=LvH+IEwa5sG3M7hcIWH84SGDZdRdpcU+VVTUSk5NBk7syv+14deLzY6ZkujqUJ41Z1
- a9I9sOgtTuT+Qt9LpIy8niqTtTfihfEBTfGy3NOAZQfGVcHsFgvkVU9H9Anl7XhWey1U
- qwbpnrN2cJmlsEJmek7wQ5EI7BQ76xoBFLQ4lZQoZeWKvz+Tkygv2Jhx7XnO/XCpcsyc
- YoSE3/qXhPVX5slirhjKgX+/oKqnSAX81LzxVxNjB4EWJzhkbCc83memgHo6TeabPOaL
- FYiFex1blqu+kPcDCWsIUbaEtjhn65YQE9kk8GXU1UFjr3Mis9gaAnxrgmQS73jDLIjW
- XdEQ==
-X-Gm-Message-State: AFq9FYKbnncO+Fnz9ePymF32i+IDWml+Q2Em9pkDdsRkmsLOn+zJ9MIw
- 1VPHiXGQ+T5l5oBlzXRV/Kj0znYj6U9Kw5FQ8ZlkHrE5oGNlpl6NOI8HnDSiWVVvTVCg4g76AeG
- ZXqIuagjE5wtayXFkUxdNIg09DiMnRmAgneZlQjXxZyDqGRtadNFkUmeKh7ihhv2PlfC7jl0F3X
- qEAARN2pur4kbwbxJdXBPIb8M0qC6LE7/QOGP2Cp4ddg==
-X-Gm-Gg: AYBFou1n/YUsENEHyGzrfl1xsK+iwKtqd/nxyID9kaO9ZmWq8R2ePUKE9ufC1QIqNwS
- senDHo4Ogqbv38EiuXSvFJ423jYCkWRPoq2WPGTyOdLmOQ8G2cs/Mk7e58ht+ZZw3gB+zZ0LksX
- 1AGZDEjsUmPd/iD699NXFQyaSlKx6LXd9MDl0f6mphVB7POCkT30UD0kpgb9Zv+qBOeiHUf1dDn
- dkO69vOWeshzZUV2A1HB4sFdnR/cHAiuneHdVKoX+Bs3HeMX2ZvDhv5y9rP6EyWPLX8pT5QV+IQ
-X-Received: by 2002:ad4:5c87:0:b0:91c:6258:ec97 with SMTP id
- 6a1803df08f44-91c7cf270famr34348026d6.11.1793188329132; 
- Wed, 28 Oct 2026 04:52:09 -0700 (PDT)
-X-Received: by 2002:ad4:5c87:0:b0:91c:6258:ec97 with SMTP id
- 6a1803df08f44-91c7cf270famr34347686d6.11.1793188328418; Wed, 28 Oct 2026
- 04:52:08 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793188315; x=1793793115;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=bjmnUGkeyLoXxGVFg7ovRnmwZpAVgjnKV4mAyoDFHGY=;
+ b=2r5lJWScty8zFZiXWOGMHfs+XXo0gp/vmWIX5rYSClNxAXGs/iLcHrjP5iByqm2s2d
+ V1ltOdy1PLk9n/KLV9FxFhld7762ANA9ohGHFE0moAT1ej1CtlSVtIi5KrSYxMHn9LnS
+ gxGa91KTyscsZH6nbj49tn3Kl+sgO9P6suKmJrrqBcVFeke5y8lrPoH+qNpvw1a7pyrW
+ 6MPEHv/GbEYUnio4gJeBcQYbfUAW/ubuMxDDnu3cdrT9hQarny9GBmQkkZkDruytAbJb
+ RVmmxFJwNMjbgDaJgp0qBcV8mOPy9vHcDzVJijlgMKbk5TPa7HCMTkTXRohmtKwcHqyR
+ 483A==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBw5phTzvxxONNcveIVXK7nt4761FFmPIvyB9FVVzJ2zbnFFZu3KlhVlDRsC5ck1HzMiItESykyMfB/A@nongnu.org
+X-Gm-Message-State: AFq9FYIrabDRWnVBy5k+SDQGfkYf8uP2TXbdiy4IrQZXhME/6cjG5Le/
+ fJ/LMlULM6cRUGtMSmVjiO3HVaW0L6kdpV9nmIs1FgVDMTUnT4erElT45ICLdvTxNZ5GyJTR4qy
+ LBQn70jSRPJKSaz70c17SY/naLhwYNYEoseJPgwAmXlIYS0NTlc/bkwPR
+X-Gm-Gg: AYBFou1JG0B0f8WNFH8gurOfrdU1ORbEc55J7iGXTfigf7nBD7dV+suMDzsWd1DT8EY
+ 4bWLwQd/BQPYJvgciM2reafwX3Lg/JTL6O0BjfWZevRdo70lb2B/hN/tpzuWEz3Blz+sYX6mKWI
+ kBg/TJMzVjh9E6hrpWTSDG7JCuuE57Kj1vVeFEh58E5ji5eLI+LrLPR6b7HHQYBPSIGHOC6Sx0T
+ fcBbF9e8nh7wxk5oJNzHKC6PcWAPYYd5relxslwsLGmPQGWpSwqEbnAB9ri6AiyIWkhzjl2QXyy
+ blza4BtLTEfYVxsd3E0uuLGpMd3aw6wvLeFkmhQW9R6PzKSFuihRHuICWRvMd7NJdqflOlWwCyf
+ ZHu0wpPFwzjZKxwbYPrCQx+q/yjjmEQGc2RtTybcy
+X-Received: by 2002:a05:6000:b85:b0:48c:43a3:6a74 with SMTP id
+ ffacd0b85a97d-48e5d5c3a6amr4102579f8f.12.1793188314756; 
+ Wed, 28 Oct 2026 04:51:54 -0700 (PDT)
+X-Received: by 2002:a05:6000:b85:b0:48c:43a3:6a74 with SMTP id
+ ffacd0b85a97d-48e5d5c3a6amr4102537f8f.12.1793188314120; 
+ Wed, 28 Oct 2026 04:51:54 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e3ecdf9bdsm27014415f8f.55.2026.10.28.04.51.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Oct 2026 04:51:53 -0700 (PDT)
+Date: Wed, 28 Oct 2026 07:51:51 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel Paziyski <danielpaziyski@gmail.com>
+Cc: qemu-stable@nongnu.org,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] pcie_sriov: register user created virtual function
+ before realizing it
+Message-ID: <20261028074508-mutt-send-email-mst@kernel.org>
+References: <20260905122924.53813-1-danielpaziyski@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261015142342.50436-1-bogorodskiy@gmail.com>
- <CAPMcbCpMtRgkWkEPj5xns7xMVCzDOjBcwp8m944q+tTtEPj1Tg@mail.gmail.com>
- <auHU4RuV_XTSV0Vn@tulp>
- <CAPMcbCpCJU=960Jj97nC9uZe+ihAZHe=Goj47YvT-Kde2=mTnw@mail.gmail.com>
-In-Reply-To: <CAPMcbCpCJU=960Jj97nC9uZe+ihAZHe=Goj47YvT-Kde2=mTnw@mail.gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 28 Oct 2026 13:51:56 +0200
-X-Gm-Features: AclHuK_KOfShMMYgK7Tcb3tuHoZeNoDB5kEbAapIhOdT3pZBVODGktb0g-LyYng
-Message-ID: <CAPMcbCqwQh024GfCcY4zTQXpY=zubwDYrBDB1fvdkGaCSmtg=w@mail.gmail.com>
-Subject: Re: [PATCH v2] qga: do not run hwclock(8) on non-Linux POSIX OSes
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Cc: qemu-devel@nongnu.org, Brad Smith <brad@comstyle.com>, 
- Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="00000000000054d1af065ee53136"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260905122924.53813-1-danielpaziyski@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,268 +119,256 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---00000000000054d1af065ee53136
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sat, Sep 05, 2026 at 02:29:24PM +0200, Daniel Paziyski wrote:
+> There are two ways of creating virtual functions: by using the sriov-pf device
+> parameter (this way, creating a user created VF and binding it to a PF), or
+> by using a device specific parameter, where the device manually creates a given
+> amount of VFs.
+> 
+> When a PCI device is realized, the device specific realize function is called
+> first, and then the pcie_sriov_register_device function is called, which checks
+> whether the device that has been created is a user created VF, and if it is the
+> case and the device allows this kind of VFs, it inserts it into a hashmap, with
+> the key being the ID of the PF, and the items being arrays of VFs.
+> 
+> User created VFs are instantiated independently, and later, when the PF calls
+> pcie_sriov_pf_init_from_user_created_vfs, it discovers its VFs from the hashmap
+> mentioned previously, and sets up in their PCIDevice.ex.sriov_pf structure
+> the pointer to the PF. This means that, during realization, VFs have no access
+> to the PF.
+> 
+> Device created VFs are instantiated during or after PF realization using the
+> pcie_sriov_pf_init function, which sets up for the VFs the pointer to the PF
+> before their realization, so when they're realized, they can access the PF
+> with no issues.
+> 
+> The problem here is that pcie_sriov_register_device is called after the
+> realization, and not before. This means that when a user created VF is created
+> for a device which does not support user created VFs, but supports device
+> created VFs, the realize function will notice that a VF is being created, and
+> may try to access the PF, causing a null pointer dereference fault.
+> 
+> Fix this by placing the user created VF check and registering before the
+> realization. This way, incorrectly created user created VFs will be noticed,
+> and device creation will be aborted.
+> 
+> Additionally, remove from the pcie_sriov_register_device function the top
+> check. It seems that this check is done to error out if the PF failed for some
+> reason to initialize its list of user created VFs. However, in such situations,
+> the pcie_sriov_pf_init_from_user_created_vfs function will error during
+> realization, and it will be caught before the check is done at all. Moreover,
+> since now pcie_sriov_register_device is called before realization, the check
+> will always fail for PFs with user created VFs, because the list will be
+> populated during realization.
+> 
+> The rest of the function though, correctly errors out if a user created VF
+> is created for an unsupported device type, if a VF is created for a non-PCIe
+> device, or if the PF is already instantiated, with now the advantage being
+> that the check is done before the VF instantiation.
+> 
+> Moreover, move the unregistering of a device's acpi-index and the removal
+> of a VF from its PF list from pci_qdev_unrealize to do_pci_unregister_device.
+> We do the former so that the acpi-index is unclaimed on user created VF
+> creation error, and the latter to not have extra code on the device specific
+> realization error path.
+> 
+> When instantiating a user created VF for a NVME controller:
+> 
+> Command line:
+> 
+>     qemu-system-x86_64 -device nvme-subsys,id=subsys0 \
+>     -device nvme,id=vctrl0,sriov-pf=ctrl0,subsys=subsys0 \
+>     -device nvme,id=ctrl0,subsys=subsys0,serial=s
+> 
+> ASAN splat:
+> 
+> ../hw/nvme/ctrl.c:9613:28: runtime error: member access within null pointer of type 'struct NvmeCtrl'
+> AddressSanitizer:DEADLYSIGNAL
+> =================================================================
+> ==91050==ERROR: AddressSanitizer: SEGV on unknown address 0x000000001cf0 (pc 0x7f79a8573dcd bp 0x7ffd622c1bc0 sp 0x7ffd622c1b68 T0)
+> ==91050==The signal is caused by a READ memory access.
+>     #0 0x7f79a8573dcd  (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>     #1 0x5644c6c0266e in nvme_realize ../hw/nvme/ctrl.c:9613
+>     #2 0x5644c6c67213 in pci_qdev_realize ../hw/pci/pci.c:2316
+>     #3 0x5644c7a2cfc1 in device_set_realized ../hw/core/qdev.c:514
+>     #4 0x5644c7a4f767 in property_set_bool ../qom/object.c:2484
+>     #5 0x5644c7a48d0b in object_property_set ../qom/object.c:1548
+>     #6 0x5644c7a568a5 in object_property_set_qobject ../qom/qom-qobject.c:28
+>     #7 0x5644c7a49385 in object_property_set_bool ../qom/object.c:1618
+>     #8 0x5644c7a2aeb0 in qdev_realize ../hw/core/qdev.c:277
+>     #9 0x5644c735f29f in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+>     #10 0x5644c735f3ab in qdev_device_add ../system/qdev-monitor.c:758
+>     #11 0x5644c72b1901 in device_init_func ../system/vl.c:1217
+>     #12 0x5644c829d4a3 in qemu_opts_foreach ../util/qemu-option.c:1148
+>     #13 0x5644c72bc33e in qemu_create_cli_devices ../system/vl.c:2762
+>     #14 0x5644c72bcaa1 in qmp_x_exit_preconfig ../system/vl.c:2822
+>     #15 0x5644c72c3241 in qemu_init ../system/vl.c:3862
+>     #16 0x5644c801abf8 in main ../system/main.c:71
+>     #17 0x7f79a8427780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>     #18 0x7f79a84278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+>     #19 0x5644c5f0a1f4 in _start (BuildId: 8483f952216d9e345c3744300d0aefa38feb50d7)
+> 
+> ==91050==Register values:
+> rax = 0x00007e49988640f0  rbx = 0x00007e49988640f0  rcx = 0x00000fc9b3104828  rdx = 0x0000000000000058
+> rdi = 0x00007e49988640f0  rsi = 0x0000000000001cf0  rbp = 0x00007ffd622c1bc0  rsp = 0x00007ffd622c1b68
+>  r8 = 0x00000fc9b3104829   r9 = 0x00000fc9b3104828  r10 = 0x00000fc9b310481e  r11 = 0x00000fc9b310481e
+> r12 = 0x0000000000001cf0  r13 = 0x00000f6f32e78578  r14 = 0x00000000ffffffff  r15 = 0x00007ffd622c1c10
+> AddressSanitizer can not provide additional info.
+> SUMMARY: AddressSanitizer: SEGV (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> ==91050==ABORTING
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+> Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+/scm/qemu/build/qemu-system-x86_64 -nodefaults -machine q35 -device
+e1000e,addr=0.0 -device e1000e,addr=0.0
 
-On Wed, Oct 28, 2026 at 1:51=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redhat=
-.com>
-wrote:
+crashes with this:
 
-> Make sense
-> Thanks for explanation
->
->
->
-> Best Regards,
-> Kostiantyn Kostiuk.
->
->
-> On Wed, Oct 28, 2026 at 12:57=E2=80=AFPM Roman Bogorodskiy <bogorodskiy@g=
-mail.com>
-> wrote:
->
->>   Kostiantyn Kostiuk wrote:
->>
->> > On Thu, Oct 15, 2026 at 5:24=E2=80=AFPM Roman Bogorodskiy <
->> bogorodskiy@gmail.com>
->> > wrote:
->> >
->> > > Currently, qmp_guest_set_time() sets system time using
->> > > the settimeofday(2) system call and then runs the hwclock(8)
->> > > util to set hardware time.
->> > >
->> > > hwclock(8) is Linux only, so current implementation
->> > > always fails while trying to run it on non-Linux POSIX OSes,
->> > > such as BSDs (FreeBSD, OpenBSD, NetBSD) and illumos.
->> > >
->> > > Update the code not to run it on non-Linux. The settimeofday(2)
->> > > call sets both system and hardware time on these systems.
->> > > For example, on FreeBSD settimeofday() calls settime()
->> > > which calls resettodr() [1] which updates RTC clock [2].
->> > > It is similar on OpenBSD and NetBSD, though implementations
->> > > differ a bit.
->> > >
->> > > Additional detail: on FreeBSD RTC clock setting can be
->> > > disabled with the `machdep.disable_rtc_set` sysctl.
->> > > As we cannot do anything about it, do not handle that
->> > > case separately.
->> > >
->> > > Non-Linux POSIX OSes do not provide a common utility
->> > > equivalent to hwclock -s, so report an unsupported operation
->> > > when no time is supplied.
->> > >
->> > > 1: https://cgit.freebsd.org/src/tree/sys/kern/kern_time.c
->> > > 2: https://cgit.freebsd.org/src/tree/sys/kern/subr_rtc.c
->> > >
->> > > Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
->> > > ---
->> > > Changes since v1:
->> > >
->> > > Replace "#if defined(CONFIG_BSD)" condition with
->> > > "#if !defined(CONFIG_LINUX)" as hwclock(8) is Linux only.
->> > >
->> > >  qga/commands-posix.c | 14 ++++++++++++++
->> > >  1 file changed, 14 insertions(+)
->> > >
->> > > diff --git a/qga/commands-posix.c b/qga/commands-posix.c
->> > > index 837e285b6d..ffd1744b74 100644
->> > > --- a/qga/commands-posix.c
->> > > +++ b/qga/commands-posix.c
->> > > @@ -322,6 +322,20 @@ void qmp_guest_set_time(bool has_time, int64_t
->> > > time_ns, Error **errp)
->> > >          }
->> > >      }
->> > >
->> > > +#if !defined(CONFIG_LINUX)
->> > > +    /*
->> > > +     * BSDs (FreeBSD, OpenBSD, NetBSD) and illumos do not have the
->> > > +     * hwclock(8) tool. These systems update hardware clock when
->> > > +     * settimeofday() sets system time, so no additional actions
->> > > +     * are needed. Setting system time from RTC is not supported.
->> > > +     */
->> > > +    if (!has_time) {
->> > > +        error_setg(errp, "Setting system time from RTC is not
->> supported");
->> > > +    }
->> > > +
->> > > +    return;
->> > > +#endif
->> > > +
->> > >
->> >
->> > As only Linux (not POSIX) and Windows support this function
->> > lets move qmp_guest_set_time to commands-linux and update QAPI with
->> > 'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
->>
->> Hi Kostiantyn,
->>
->> Sorry if my commit message does not explain the situation clearly enough=
-.
->>
->> BSDs and illumos do support "guest-set-time" with "time" specified.
->> On these systems, calling settimeofday() is enough for that, it sets
->> both system time and hardware clock, so lack of the hwclock(8) does not
->> prevent it from working as intended.
->>
->> Only "guest-set-time" without the "time" argument (i.e. setting system
->> time
->> from the hardware clock) is not supported indeed, which we indicate with
->> an error message.
->>
->> Therefore I think keeping qmp_guest_set_time() in commands-posix.c and
->> keeping the proposed conditional behavior is appropriate.
->>
->> >
->> > Best Regards,
->> > Kostiantyn Kostiuk.
->>
->>
+- With the patch: SIGSEGV (exit 139), backtrace at hw/pci/pci.c:2334 in pci_qdev_realize.
+- Without the patch: exit 1: PCI: slot 0 function 0 not available for e1000e, in use by mch,id=(null).
 
---00000000000054d1af065ee53136
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, O=
-ct 28, 2026 at 1:51=E2=80=AFPM Kostiantyn Kostiuk &lt;<a href=3D"mailto:kko=
-stiuk@redhat.com">kkostiuk@redhat.com</a>&gt; wrote:<br></div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>Make sense=C2=A0=
-<br></div><div>Thanks for explanation<br><br></div><div><br><br></div><div>=
-<div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regar=
-ds,</div><div>Kostiantyn Kostiuk.</div></div></div></div><br></div><br><div=
- class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 28=
-, 2026 at 12:57=E2=80=AFPM Roman Bogorodskiy &lt;<a href=3D"mailto:bogorods=
-kiy@gmail.com" target=3D"_blank">bogorodskiy@gmail.com</a>&gt; wrote:<br></=
-div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">=C2=A0 Kostiantyn Kos=
-tiuk wrote:<br>
-<br>
-&gt; On Thu, Oct 15, 2026 at 5:24=E2=80=AFPM Roman Bogorodskiy &lt;<a href=
-=3D"mailto:bogorodskiy@gmail.com" target=3D"_blank">bogorodskiy@gmail.com</=
-a>&gt;<br>
-&gt; wrote:<br>
-&gt; <br>
-&gt; &gt; Currently, qmp_guest_set_time() sets system time using<br>
-&gt; &gt; the settimeofday(2) system call and then runs the hwclock(8)<br>
-&gt; &gt; util to set hardware time.<br>
-&gt; &gt;<br>
-&gt; &gt; hwclock(8) is Linux only, so current implementation<br>
-&gt; &gt; always fails while trying to run it on non-Linux POSIX OSes,<br>
-&gt; &gt; such as BSDs (FreeBSD, OpenBSD, NetBSD) and illumos.<br>
-&gt; &gt;<br>
-&gt; &gt; Update the code not to run it on non-Linux. The settimeofday(2)<b=
-r>
-&gt; &gt; call sets both system and hardware time on these systems.<br>
-&gt; &gt; For example, on FreeBSD settimeofday() calls settime()<br>
-&gt; &gt; which calls resettodr() [1] which updates RTC clock [2].<br>
-&gt; &gt; It is similar on OpenBSD and NetBSD, though implementations<br>
-&gt; &gt; differ a bit.<br>
-&gt; &gt;<br>
-&gt; &gt; Additional detail: on FreeBSD RTC clock setting can be<br>
-&gt; &gt; disabled with the `machdep.disable_rtc_set` sysctl.<br>
-&gt; &gt; As we cannot do anything about it, do not handle that<br>
-&gt; &gt; case separately.<br>
-&gt; &gt;<br>
-&gt; &gt; Non-Linux POSIX OSes do not provide a common utility<br>
-&gt; &gt; equivalent to hwclock -s, so report an unsupported operation<br>
-&gt; &gt; when no time is supplied.<br>
-&gt; &gt;<br>
-&gt; &gt; 1: <a href=3D"https://cgit.freebsd.org/src/tree/sys/kern/kern_tim=
-e.c" rel=3D"noreferrer" target=3D"_blank">https://cgit.freebsd.org/src/tree=
-/sys/kern/kern_time.c</a><br>
-&gt; &gt; 2: <a href=3D"https://cgit.freebsd.org/src/tree/sys/kern/subr_rtc=
-.c" rel=3D"noreferrer" target=3D"_blank">https://cgit.freebsd.org/src/tree/=
-sys/kern/subr_rtc.c</a><br>
-&gt; &gt;<br>
-&gt; &gt; Signed-off-by: Roman Bogorodskiy &lt;<a href=3D"mailto:bogorodski=
-y@gmail.com" target=3D"_blank">bogorodskiy@gmail.com</a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt; Changes since v1:<br>
-&gt; &gt;<br>
-&gt; &gt; Replace &quot;#if defined(CONFIG_BSD)&quot; condition with<br>
-&gt; &gt; &quot;#if !defined(CONFIG_LINUX)&quot; as hwclock(8) is Linux onl=
-y.<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 qga/commands-posix.c | 14 ++++++++++++++<br>
-&gt; &gt;=C2=A0 1 file changed, 14 insertions(+)<br>
-&gt; &gt;<br>
-&gt; &gt; diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-&gt; &gt; index 837e285b6d..ffd1744b74 100644<br>
-&gt; &gt; --- a/qga/commands-posix.c<br>
-&gt; &gt; +++ b/qga/commands-posix.c<br>
-&gt; &gt; @@ -322,6 +322,20 @@ void qmp_guest_set_time(bool has_time, int64=
-_t<br>
-&gt; &gt; time_ns, Error **errp)<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt;<br>
-&gt; &gt; +#if !defined(CONFIG_LINUX)<br>
-&gt; &gt; +=C2=A0 =C2=A0 /*<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* BSDs (FreeBSD, OpenBSD, NetBSD) and illumo=
-s do not have the<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* hwclock(8) tool. These systems update hard=
-ware clock when<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* settimeofday() sets system time, so no add=
-itional actions<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0* are needed. Setting system time from RTC i=
-s not supported.<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; &gt; +=C2=A0 =C2=A0 if (!has_time) {<br>
-&gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Setting syste=
-m time from RTC is not supported&quot;);<br>
-&gt; &gt; +=C2=A0 =C2=A0 }<br>
-&gt; &gt; +<br>
-&gt; &gt; +=C2=A0 =C2=A0 return;<br>
-&gt; &gt; +#endif<br>
-&gt; &gt; +<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; As only Linux (not POSIX) and Windows support this function<br>
-&gt; lets move qmp_guest_set_time to commands-linux and update QAPI with<br=
->
-&gt; &#39;if&#39;: { &#39;any&#39;: [&#39;CONFIG_LINUX&#39;, &#39;CONFIG_WI=
-N32&#39;] }<br>
-<br>
-Hi Kostiantyn,<br>
-<br>
-Sorry if my commit message does not explain the situation clearly enough.<b=
-r>
-<br>
-BSDs and illumos do support &quot;guest-set-time&quot; with &quot;time&quot=
-; specified.<br>
-On these systems, calling settimeofday() is enough for that, it sets<br>
-both system time and hardware clock, so lack of the hwclock(8) does not<br>
-prevent it from working as intended.<br>
-<br>
-Only &quot;guest-set-time&quot; without the &quot;time&quot; argument (i.e.=
- setting system time<br>
-from the hardware clock) is not supported indeed, which we indicate with<br=
->
-an error message.<br>
-<br>
-Therefore I think keeping qmp_guest_set_time() in commands-posix.c and<br>
-keeping the proposed conditional behavior is appropriate.<br>
-<br>
-&gt; <br>
-&gt; Best Regards,<br>
-&gt; Kostiantyn Kostiuk.<br>
-<br>
-</blockquote></div>
-</blockquote></div>
 
---00000000000054d1af065ee53136--
+> ---
+> 
+> This patch is the same as
+> https://lore.kernel.org/qemu-devel/20260901153721.10292-1-danielpaziyski@gmail.com/
+> , which improves the original patch by releasing the acpi-index on failure, as
+> pointed out by Michael S. Tsirkin <mst@redhat.com> on the replies of
+> https://lore.kernel.org/qemu-devel/20260805124519.30054-4-danielpaziyski@gmail.com/
+> ("[PATCH 3/3] pcie_sriov: register user created virtual function before realizing it")
+> posted on the series
+> https://lore.kernel.org/qemu-devel/20260805124519.30054-1-danielpaziyski@gmail.com/
+> ("[PATCH 0/3] NVMe hotunplug and PCI SR-IOV fixes").
+> 
+> I am sending this as a patch separate from the series, since imo it was a mistake
+> for me to mix unrelated patches on the same series.
+> 
+>  hw/pci/pci.c        | 42 ++++++++++++++++++++++++------------------
+>  hw/pci/pcie_sriov.c |  6 ------
+>  2 files changed, 24 insertions(+), 24 deletions(-)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index c15f2b9f08..06c432292f 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -1223,6 +1223,19 @@ static void pci_config_free(PCIDevice *pci_dev)
+>      g_free(pci_dev->used);
+>  }
+>  
+> +static void pci_unregister_acpi_index(PCIDevice *pci_dev)
+> +{
+> +    if (pci_dev->acpi_index) {
+> +        GSequence *used_indexes = pci_acpi_index_list();
+> +
+> +        g_sequence_remove(g_sequence_lookup(used_indexes,
+> +                          GINT_TO_POINTER(pci_dev->acpi_index),
+> +                          g_cmp_uint32, NULL));
+> +
+> +        pci_dev->acpi_index = 0;
+> +    }
+> +}
+> +
+>  static void do_pci_unregister_device(PCIDevice *pci_dev)
+>  {
+>      pci_get_bus(pci_dev)->devices[pci_dev->devfn] = NULL;
+> @@ -1236,6 +1249,9 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
+>                                      &pci_dev->bus_master_enable_region);
+>      }
+>      address_space_destroy(&pci_dev->bus_master_as);
+> +
+> +    pcie_sriov_unregister_device(pci_dev);
+> +    pci_unregister_acpi_index(pci_dev);
+>  }
+>  
+>  /* Extract PCIReqIDCache into BDF format */
+> @@ -1487,7 +1503,6 @@ static void pci_qdev_unrealize(DeviceState *dev)
+>  
+>      pci_unregister_io_regions(pci_dev);
+>      pci_del_option_rom(pci_dev);
+> -    pcie_sriov_unregister_device(pci_dev);
+>  
+>      if (pc->exit) {
+>          pc->exit(pci_dev);
+> @@ -1497,17 +1512,6 @@ static void pci_qdev_unrealize(DeviceState *dev)
+>      do_pci_unregister_device(pci_dev);
+>  
+>      pci_dev->msi_trigger = NULL;
+> -
+> -    /*
+> -     * clean up acpi-index so it could reused by another device
+> -     */
+> -    if (pci_dev->acpi_index) {
+> -        GSequence *used_indexes = pci_acpi_index_list();
+> -
+> -        g_sequence_remove(g_sequence_lookup(used_indexes,
+> -                          GINT_TO_POINTER(pci_dev->acpi_index),
+> -                          g_cmp_uint32, NULL));
+> -    }
+>  }
+>  
+>  void pci_register_bar(PCIDevice *pci_dev, int region_num,
+> @@ -2318,8 +2322,15 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>      pci_dev = do_pci_register_device(pci_dev,
+>                                       object_get_typename(OBJECT(qdev)),
+>                                       pci_dev->devfn, errp);
+> -    if (pci_dev == NULL)
+> +    if (pci_dev == NULL) {
+> +        pci_unregister_acpi_index(pci_dev);
+
+So this passes NULL to pci_unregister_acpi_index.
+
+
+
+>          return;
+> +    }
+> +
+> +    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> +        do_pci_unregister_device(pci_dev);
+> +        return;
+> +    }
+>  
+>      if (pc->realize) {
+>          pc->realize(pci_dev, &local_err);
+> @@ -2330,11 +2341,6 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>          }
+>      }
+>  
+> -    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> -        pci_qdev_unrealize(DEVICE(pci_dev));
+> -        return;
+> -    }
+> -
+>      /*
+>       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+>       * associate only Device 0 with the device attached to the bus
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index c41ac95bee..69930c7b8c 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -357,12 +357,6 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+>  
+>  bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+>  {
+> -    if (!dev->exp.sriov_pf.vf && dev->qdev.id &&
+> -        pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
+> -        error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+> -        return false;
+> -    }
+> -
+>      if (dev->sriov_pf) {
+>          PCIDevice *pci_pf;
+>          GPtrArray *pf;
+> -- 
+> 2.55.0
 
 
