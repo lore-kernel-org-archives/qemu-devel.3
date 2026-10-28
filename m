@@ -1,127 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67194606A329
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 13:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F134460A2602
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 13:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=MLd4bEt/;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Pm4F78bM;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=0r8sMvQZ;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=BiNZQVMD
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=XgXKZtx4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM3iy-0002K4-AX; Wed, 28 Oct 2026 09:29:52 -0400
+	id 1xM3jo-0002k2-K3; Wed, 28 Oct 2026 09:30:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xM3ix-0002Ju-De
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:29:51 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xM3jf-0002h8-Nd
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:30:35 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xM3iv-0006sA-Bs
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:29:51 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 65A452211D;
- Wed, 28 Oct 2026 13:29:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793194187; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u0001oTc49Ugg0a6W96NJP7IZnakZ2rNConViXEMVnM=;
- b=MLd4bEt/AL94nk3O7Pu1fpyLqWgloakIhzJKwi2Tj9D7S1zqr9fGhAC1KK604d5oSThkqF
- OkNRiM6AJUCo9NN2OGkwY7DZrRwnrIVJ/BcyN9cElqtQ3p8nTc4WqHiU+JTr9Y7ccl6+gI
- 33fxmgHQRFgXK1SvQlfnYS06/Rusu60=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793194187;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u0001oTc49Ugg0a6W96NJP7IZnakZ2rNConViXEMVnM=;
- b=Pm4F78bMgdAVl/7jld9nRljedIEwd1NT9Mnz7WgHNzEnvjSBGoz6TbtZyguYmNnTtr3CIw
- iT8V+FoBzbmuAlDw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0r8sMvQZ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BiNZQVMD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793194186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u0001oTc49Ugg0a6W96NJP7IZnakZ2rNConViXEMVnM=;
- b=0r8sMvQZRpWP8NL5d5SYOWsHMIvP8tefWjXNRN62SsyTp+f6/2V5xN4kd3c9G9MSpo8Fnl
- 7OHRc4XNzhRNBppj9khAqdkODBAennP0NcLRTzM746y76L/g4n/k43geyXLAYfgu0a8RYD
- PqVBpJs6IJ5wSbdvSHeDeMbiUCDy0Vg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793194186;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=u0001oTc49Ugg0a6W96NJP7IZnakZ2rNConViXEMVnM=;
- b=BiNZQVMDPMTWIyuw+UpVyt2OQLzAI8KmP82zukGaEJU/feB8PfkoWpqPvJ4ZHiWBmOTZjN
- q5FRq2oMpWIVYcBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CF70113419;
- Wed, 28 Oct 2026 13:29:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id RgyyHMn44WrEOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Oct 2026 13:29:45 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Jason Wang <jasowangio@gmail.com>, Samuel
- Thibault <samuel.thibault@ens-lyon.org>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Dani?=
- =?utf-8?Q?el_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Zhang Chen
- <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 1/4] tests/qtest: Make netfilter tests accept padded
- ethernet packets
-In-Reply-To: <20261027174625.4025878-2-peter.maydell@linaro.org>
-References: <20261027174625.4025878-1-peter.maydell@linaro.org>
- <20261027174625.4025878-2-peter.maydell@linaro.org>
-Date: Wed, 28 Oct 2026 10:29:42 -0300
-Message-ID: <87a4nyj6m1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xM3jd-000764-Az
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:30:35 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-8b10ac6ab7bso8147987b3.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 06:30:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793194231; cv=none;
+ d=google.com; s=arc-20260327;
+ b=RErvvf8enK21oCwmu5DYEDwTuFx5ZJ/fHu7c8UekUSBvOFeFYJLVL7zwbvUzqpH2jy
+ kQIwr98xrWTCPQCf6S1EPQE+0jXGJyIY5KxFo/w0kyqmV/dEWIpxRutWG7h4GyeW/d5s
+ Sxzk/HZPLreLLx5/ppJ0Q6dsMSFv+g7M+dsJ65w4N/BlXvOgZzIA7uHCwX7i4k4QefgY
+ gws1l5J8ZWbfvXpQW/2IuK74HyObd4tfaalNaPmER1CDH6THYZ9gSjr827ysrscGIYVO
+ 9/02x/pouZtOojMkb0Voc9h7qmqu4NNpEu2e/QuvnOFm3iKwLa3afQh0rIn9dqKJCa1/
+ TraA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=JG7fWrsQcGlWAZCRdOPzbm5SVFbGQj9zRpQSsOTwW4g=;
+ fh=WtfYBioCERIpilaIlgQ8CdUwqaZjijWidHTN6miTi2I=;
+ b=F8616E1oRF3i/+foUXwIDwPZyvYS/os65LoSLQH+cC2ZOz+OaARRkmAH3b1t7oRO+W
+ 3jCQguxN89fPaHleS1rk+aF5s+xAZ3JvGtYmHGS1fQZFUbZOkQwfneYL2KdIUeF117TW
+ YEGn+TtnOarmzl7yKxTmAAnvibEI0svzRtwVWWUPLi8/LkFfX51VjVrJbuRKkZXMSjc+
+ PE8cos3nAUuV9GheECnLCx4J4NN+yCNSGDMIJArK2eardixwpjP1f+B6rRmBJcJB2jqm
+ ETO9XGcxmR+9+m2JxMx4/B/+z/Tw2SRkIo6qCRgCJDcDp+Z1GRnrfgZwnqGa9uiLi4lk
+ CSHQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793194231; x=1793799031; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=JG7fWrsQcGlWAZCRdOPzbm5SVFbGQj9zRpQSsOTwW4g=;
+ b=XgXKZtx4fKKY1i+MgTBoKqxnzROT34XPfCBuGbCiA+xDFjUIhPouKsImKdMqPAXNvH
+ iPB7FFF9nfSCb3H8kZAEofz+5yKTiK06y4mTrvbuIC9GJ38QGXTLjLGfwIHm9IGWiSKB
+ NxRm1L+FbEX1PH/Hf0YnIiGux9l6W5nbaVPt7yI72nMB0RD3BcDrwtjm8DQRUYCDCp3w
+ wkKgnPf0q+o9zYuUAb3nVzp/tNts4kd1o9u5TqxAfZCmv/ncO4aMuvwTsA1Ip+1z4nhn
+ 20lYhh/e0DykpmiWWFmbYaIIJwvRUzD/X3zJThHUlrlGGMFEMSxINMDawQ1qiVUmW+9R
+ XnTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793194231; x=1793799031;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=JG7fWrsQcGlWAZCRdOPzbm5SVFbGQj9zRpQSsOTwW4g=;
+ b=w9hDq+T6nXe45ca1j3egw0SldFCO0i1v/DIld+9ZEvinhp99va01+Mm6tu5ylTZcMk
+ 0XAYq4/VXm1ektgQlXphWmYuYXzxs41BIP7Rsm0vQ7VQ5W35nh24baducJtYJDvKAV5t
+ PjLUQ8ygzQXSpmtK1+yzzSXEW5jr14XjdBSyy6XYPT4LwrD2KM8fDHC4CI184zXX+yeU
+ Wa0KBpSmFBu+viyDWPhPttO426ja3qb+ZCxLnlEUHL1HB6RtXSe9Lxr4JMg+rsvRAtKg
+ B3XXmZHgIUIS82/AoARskTWFZFWJQfr8qb9ocxI1gBB6TWBOFiM1OXDzC3vXYxsPJgzG
+ rU8A==
+X-Gm-Message-State: AFq9FYLgEr4b+fnYKeZsZ9DvECl7XhqW7nPPvCOhG8vOfoZqgojEVNXp
+ LcBWUVL5L3BEemZJOrMIRr5KHUNqGbVMjHQ7QDG+mhZxUTGdEBfG9Ci/sHvFDLg2BudUBbfu11t
+ 5OB5Tp7n0+TueKtJX2VoKrLKXlU6bdOle+DUAOC8/8w==
+X-Gm-Gg: AYBFou1qlkpcX7+rap98rO/OYO9mXsKKScjWx7GMHEg1mKjMg3jZIDOELqeXZUxJr55
+ 5m8xqGaWe5S0yJ4GRKWcCh3hJi4vwDpyyfv+c2QOhRw3SDjU4198tYVykEHEJLCN31Ae1NbKzrv
+ JDkerFfbA2K4mIVzar2OnNMUunuNUmcAcfwXSQRI5LAoIL5ETOeM9sHOJaap+NUf7h5YKfpP5ht
+ jvv45MyBdRHWbY8zrGy9UuvaqlX1gpdn0JKOuttymQwlsweCo5kZ2C8iXhHG9Vnca/M0NLI5eeM
+ ukkqJZqyT8JTBCv9zUqxoq01QCD4QjsPu5ogGJ4z6MM7469D90ASjABbWoCa9EBWnr1ywtJCLjT
+ 2PkFVDJ0N1R+BBf8U1CkbdCjXksWmkfgJ5jc0VtFF8DC0qTYHf81wOv9w72arZ8aNTuTOCbjgZf
+ 2eo8kVBKtC9dk17lr4CZQG
+X-Received: by 2002:a05:690c:92:b0:8b1:8aba:afe5 with SMTP id
+ 00721157ae682-8b1b5c90bffmr15017687b3.28.1793194230973; Wed, 28 Oct 2026
+ 06:30:30 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-12.01 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; SUSPICIOUS_RECIPS(1.50)[];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FREEMAIL_CC(0.00)[gmail.com,rsg.ci.i.u-tokyo.ac.jp,ens-lyon.org,redhat.com,fujitsu.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_SEVEN(0.00)[11];
- TAGGED_RCPT(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, nongnu.org:email, suse.de:email, suse.de:dkim,
- linaro.org:email]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -12.01
-X-Rspamd-Queue-Id: 65A452211D
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260721131457.3062767-1-farosas@suse.de>
+ <CAFEAcA9GDRQoqEXAt5-Mnm7jTPvpkZ6EPPvxiL7h_mFZOMuW6w@mail.gmail.com>
+ <87ik2njjqn.fsf@suse.de>
+In-Reply-To: <87ik2njjqn.fsf@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 28 Oct 2026 13:30:18 +0000
+X-Gm-Features: AclHuK_kBYe9fwHQGukSw2enyU7g0eSP18HbU1S9kLIhczcJgLROaZtq3dYiQpU
+Message-ID: <CAFEAcA8vq-zFsou=A4H+XDZ-zsWKJK3-RzASs6aV_s9efFyQyw@mail.gmail.com>
+Subject: Re: [PATCH v2] docs: Add security considerations for migration
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,108 +115,90 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Tue, 27 Oct 2026 at 14:33, Fabiano Rosas <farosas@suse.de> wrote:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Tue, 21 Jul 2026 at 14:15, Fabiano Rosas <farosas@suse.de> wrote:
+> >> +* **migration/snapshots**. Migration failures and snapshot load
+> >> +  failures are considered part of normal operation as long as the
+> >> +  source virtual machine and savevm file, respectively, are still
+> >> +  functional. Aborting the QEMU process at the migration/snapshot
+> >> +  destination is similarly not considered a security issue. The
+> >> +  migration stream is assumed to be secure as long as the design
+> >> +  principles described in the Architecture section are held, in
+> >> +  which case plain manipulation of the stream is not considered as
+> >> +  an attack vector.
+> >
+> > Reading this (which is now in our docs), it seems unclear to me
+> > about whether it intends to say that any and all bugs that can
+> > be triggered only by manipulating the migration stream are outside
+> > the security scope, or only some of them.
+> >
+>
+> All of them, but we're talking specifically about feeding bad data into
+> QEMU from the host level.
+>
+> > It says "plain manipulation of the stream is not considered as
+> > an attack vector", which suggests "everything is out of scope".
+>
+> By "plain manipulation", we mean that if someone loads a compromised
+> loadvm image or if they have access to the infrastructure and proceed to
+> inject bytes into the migration stream that is considered out of the
+> scope of what we considered a security issue. The premise is that
+> migration is a special process that requires a secure network and the
+> usage of encryption. If you migrate in plain text over the internet,
+> that's on you.
+>
+> The other scenario, this one in scope, would be an attack that starts on
+> the guest operating system and trips the migration code to cause an
+> effect. This would be an indirect stream manipulation, if we want to
+> call it that.
 
-> Currently the various netfilter tests assume and assert that the data
-> they get from the filter is an exact match for the data that they
-> send in to it via the net socket backend.  This happens to be the
-> case currently because the net socket backend fails to pad frames to
-> the ethernet minimum when the device expects that (unlike e.g.  the
-> tap backend).  When we fix the socket backend to honour the device's
-> request for padding, the netfilter will see padded packets for
-> devices that require them (which is most of them), and not for those
-> that don't (notably virtio-net).
->
-> This seems best considered as a test error: if you're using netfilter
-> to look at what a particular network device is receiving, you want to
-> actually see what it is receiving.  And most real-world users of
-> filtering will be doing it with the backends like TAP that were
-> already doing pad-before-filter; it's only the oddball backends like
-> 'socket' that forgot to pad.
->
-> Make the test cases accept as valid both padded and unpadded frames.
->
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  tests/qtest/test-filter-buffer.c     | 4 +++-
->  tests/qtest/test-filter-mirror.c     | 4 +++-
->  tests/qtest/test-filter-redirector.c | 4 +++-
->  3 files changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/tests/qtest/test-filter-buffer.c b/tests/qtest/test-filter-buffer.c
-> index 441cbb975ca..418caccf00a 100644
-> --- a/tests/qtest/test-filter-buffer.c
-> +++ b/tests/qtest/test-filter-buffer.c
-> @@ -11,6 +11,7 @@
->  #include "qobject/qdict.h"
->  #include "qemu/iov.h"
->  #include "qemu/sockets.h"
-> +#include "net/eth.h"
->  
->  /*
->   * Test that changing interval at runtime affects packet release timing.
-> @@ -148,7 +149,8 @@ static void test_change_interval_timer(void)
->      ret = recv(recv_sock, &len, sizeof(len), 0);
->      g_assert_cmpint(ret, ==, sizeof(len));
->      len = ntohl(len);
-> -    g_assert_cmpint(len, ==, sizeof(send_buf));
-> +    /* The snooped network device might or might not have asked for padding */
-> +    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
->  
->      ret = recv(recv_sock, recv_buf, len, 0);
->      g_assert_cmpint(ret, ==, len);
-> diff --git a/tests/qtest/test-filter-mirror.c b/tests/qtest/test-filter-mirror.c
-> index 723d2c2f291..9972712cb49 100644
-> --- a/tests/qtest/test-filter-mirror.c
-> +++ b/tests/qtest/test-filter-mirror.c
-> @@ -15,6 +15,7 @@
->  #include "qemu/sockets.h"
->  #include "qemu/error-report.h"
->  #include "qemu/main-loop.h"
-> +#include "net/eth.h"
->  
->  static void test_mirror(void)
->  {
-> @@ -58,7 +59,8 @@ static void test_mirror(void)
->      g_assert_cmpint(ret, ==, sizeof(len));
->      len = ntohl(len);
->  
-> -    g_assert_cmpint(len, ==, sizeof(send_buf));
-> +    /* The snooped network device might or might not have asked for padding */
-> +    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
->      recv_buf = g_malloc(len);
->      ret = recv(recv_sock[0], recv_buf, len, 0);
->      g_assert_cmpint(ret, ==, len);
-> diff --git a/tests/qtest/test-filter-redirector.c b/tests/qtest/test-filter-redirector.c
-> index 5540c232c0b..a4f9b73c72a 100644
-> --- a/tests/qtest/test-filter-redirector.c
-> +++ b/tests/qtest/test-filter-redirector.c
-> @@ -57,6 +57,7 @@
->  #include "qemu/sockets.h"
->  #include "qemu/error-report.h"
->  #include "qemu/main-loop.h"
-> +#include "net/eth.h"
->  
->  static void test_redirector_tx(void)
->  {
-> @@ -115,7 +116,8 @@ static void test_redirector_tx(void)
->      g_assert_cmpint(ret, ==, sizeof(len));
->      len = ntohl(len);
->  
-> -    g_assert_cmpint(len, ==, sizeof(send_buf));
-> +    /* The snooped network device might or might not have asked for padding */
-> +    g_assert(len == sizeof(send_buf) || len == MAX(sizeof(send_buf), ETH_ZLEN));
->      recv_buf = g_malloc(len);
->      ret = recv(recv_sock, recv_buf, len, 0);
->      g_assert_cmpint(ret, ==, len);
+Thanks. I think we could maybe make the text clearer. Here's my
+suggestion, that splits out the cases into a set of bullet points:
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+* **migration/snapshots**. The user must deploy QEMU following the
+  design principles described in the Architecture section to ensure
+  that the migration stream is secure. Plain manipulation of the stream
+  is not considered to be an attack vector. This means that:
+  * Migration failures and snapshot load failures are part of normal
+    operation; these are not bugs as long as the source virtual machine
+    or savevm file are still functional
+  * Aborts, crashes or misbehaviour of the destination QEMU due to
+    an externally manipulated migration stream are bugs, but not
+    security issues
+  * A crash of the destination QEMU that can be triggered by a guest
+    manipulating a device on the source QEMU before a migration may
+    be a security issue, if it meets the other criteria we document
+    for security issues
+
+How does that sound?
+
+I think we should also:
+
+ * add a subsection to the "Sensitive configurations" part of this
+   document at the bottom, that makes it clear that the user needs
+   to be careful about the migration stream and loadvm files
+   (to parallel the one that says "it's your job to lock down
+   monitor access")
+ * update the part at the to of the document that includes in
+   its list of untrusted entities "Network protocols (e.g. NBD,
+   live migration)" as this suggests the opposite of what the
+   later text says. I guess just delete "live migration" ?
+
+We also have 15 or so existing bugs that are labelled "confidential"
+but which are "crafted migration stream can exploit the destination
+QEMU". Unless you object I'll mark all those as non-confidential
+non-security issues.
+
+thanks
+-- PMM
 
