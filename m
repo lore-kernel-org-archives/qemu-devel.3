@@ -1,64 +1,112 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB02606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE551606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 13:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Yg50ZF02
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=vXtNjArk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM39l-0001Fd-9q; Wed, 28 Oct 2026 08:53:29 -0400
+	id 1xM3IT-0004CM-KW; Wed, 28 Oct 2026 09:02:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xM39j-0001FG-Qz
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:27 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xM39h-0003N9-6h
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:27 -0400
-Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c09f4.dip0.t-ipconnect.de
- [62.156.9.244])
- by linux.microsoft.com (Postfix) with ESMTPSA id B11F820B7169;
- Wed, 28 Oct 2026 05:53:09 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com B11F820B7169
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1793191992;
- bh=ysLqVAbYfxKCz2a7+IxW7TWxV16fVnF2peR7YvfIyws=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Yg50ZF02CYV8BnKdaCh5SsQWl1cEC4OW+kPjyurGDbS69AFg+XQYxQkpwLwyTJRuS
- /I6DlSSvcVx9ldG8akoeuX2cqt2Mpu2AowAuYw4E+tXgFzuafgBGWlmIKP/aMQZAEP
- ON1RCpvvzaKJrtoleENYFhuHb3BVh2lRVDFP7ziA=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Wei Liu <liuwe@microsoft.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 3/4] target/i386/mshv: deliver legacy PIC interrupts
-Date: Wed, 28 Oct 2026 13:53:07 +0100
-Message-Id: <20261028125308.147630-4-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
-References: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xM3Hc-00046F-NG
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:01:44 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1xM3Ha-0004Al-VR
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:01:36 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-8ac9d666d4eso7996447b3.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 06:01:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793192493; cv=none;
+ d=google.com; s=arc-20260327;
+ b=I8I8CoNRU/j1sXp1YFsKnMhx2AzgSOnaWg3td28BQGqXLJFSDpGoRKzxN4A2CMT8pz
+ TAO+/uufvLRI3iaiG4BrxzKEOXdC8iptbhovl+huq5PBiSZHNjNolsX1bXbs1JZn8yxs
+ 6IPSWYkMROd9Q3MyNTj89eyUNx7bpNbyYa6Lf66oa8kpJ2NDPY1WW9BWNjnw5W+eqgwo
+ YPCQB3gkbWtf1R2bhOlWl+Dw34yQcNhUbUdPTp0eQjdx5nUYCLjqkr1KIDDLMNL+yDIW
+ MOgOmmPn5vQ2q2cqfIQubwwu/Mao4sIOliFg/z4KL5FoCWDtazzTaVCclNDRv2Z12Zgo
+ chqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fZg6f4KrLfn7joNSBQ6CYhCigv3VSj17jUoJg/q+lEk=;
+ fh=6kA7zD1fEbjvrCBaI6MtrsnL+a6Nmdg7AZiPql1yqgM=;
+ b=BOJB1qM5jhxqvlIS5AXDjo+KXfZaaa7Ru8t9+dPxZ8DxO5I9qDh+HR2arBRPhEAhwK
+ EiQjGH6vuAs7BsmpH5+/fnI2uAJshUIC3+E7MqTNRH/Vu7/IngUlamvDCYF68Uyzb0SE
+ mj1+tii34Xu5SRjIwhMXzLfLgoZvvAVx+mR4+8bZxzaHMCgPFyyzgyD+MAP+l5jlb6Xi
+ RBTvp2u8B9X6Kkawlbr9pbs/29W5IzJ7wtDy2rtWv4InrBit7NJwIRiBhZjZakBoSkxO
+ bsVpihZeFmme2PjmYVCSJBsxh/0Jss41jSIYtr/GtVhI64UcdR4z4h4XiQx9bhbJycsC
+ N8hA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793192493; x=1793797293; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=fZg6f4KrLfn7joNSBQ6CYhCigv3VSj17jUoJg/q+lEk=;
+ b=vXtNjArkY2FItXcKVWjlyfn+ew9EEj79P04EK0434EsQM+suaFih6QpSzHhwFMEJ8+
+ U4iJEwUS46N7HGL83lG81pz8fYuXQ0uc4v9CxPKXDZjo76ToAa+7zv9UPN/FlaRL3yID
+ voEWdUCaslIpcrZNjhEqMpLGaJl7gd0FTwQg0+1u0tUmTngKi4Nj3qzBkYX7CMRnHAO/
+ vwxY1hbEXJr1kZK2bfWI+8aMqu5IYTs/Ya8ePLjyjxvpdLfZUe9AKZerZLz6Ldbkgop/
+ /j5XcXG+csElz5STAQcwYzItmQwK8RLLHdWC862SEyF/Gg8l9bDCWJPgEv/CudFVkb79
+ ZZ8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793192493; x=1793797293;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=fZg6f4KrLfn7joNSBQ6CYhCigv3VSj17jUoJg/q+lEk=;
+ b=Cg9ic/2jTMeBmoL9TVFpHahNv3MqVInufHbV5ILfBd9kkiuaj4z9Qm5kmXAbvATjrE
+ ZnqBOZzTBfr2BVV1o14awPHnsyjtIRTfawIvNGy0KkcLo0w8SlKzbcAOixpsH31DvJHF
+ wV4pBrjs5wfdKpk6r444PO8XfvZ/uXN/jqh2AHKps7iTltXK0Wjjw9eeQPhzrjxlbYwf
+ WVc9998BKBr1zsDB8OTIy9XRehjJiZxj5ljF4EugqkHU9Ntj3COjBqBKA9wkHrhBkCmb
+ JzH22+vaWJfj4Ji0zbV/QVZo+u++2VlegWFiupyhUWZXqFbN+1rmldF1VHgfMnvNk0g7
+ mm7Q==
+X-Gm-Message-State: AFq9FYJAscI6uJp9NozohOPIrH77xuxPdahqi7ezN1CaqZwyErK3sO6M
+ ZhT6z3KQVlAAWTI71bKwbSx03P0uhDefScrPdDmEidV/S5Ez0sHnIdO8pcrHJ3K0hgMkGtcmdMN
+ yK9FNI+tTj/9XfGPgUaDt0Xxs8gy1qW7Fd2q2/2NAapoP9Dy4Konhxo8hHg==
+X-Gm-Gg: AYBFou0mGRg4wrco3gBydqAJY1YbWpN11xVD3u5h/uGTrkh2NEHi89hjWlOTkwlW//+
+ yLgeZ5vL3/8lurSnQfhxR+WDpSE6vbtfPANyZz4R7REVs++goHMU++7bixCEzSaDCUYp8Yr7Y+I
+ 0zM7rB5HelN+2DVsiMfUs3ksrY2F+btxrlJ3T6nzTqGzsKfUVWUVpImgrZGoUETktRHZlXUpLtb
+ 24KbeqgmkvYUU+e9toPAGghdF9GhhoYl7p243rnsO2X6N3lpRNURxzqA2QecZVv7UusJk/34hjv
+ g1PUQzqVEX81wQ9dUmXwVfBHtLwFsXBNyZG3W89xGZozQPKWUaY6dh66lpBxpuScgStrENHrB5e
+ hb8OHiCKiR28yoJJSq5dibrb8SNB/zKK1FWugyrh06IIG0qB8PQN/sTdCf2LmP5Apl8CzVeiepH
+ WhqQ8gZxPusZjriwJ8IpYD
+X-Received: by 2002:a05:690c:ec5:b0:8b0:cd30:ce86 with SMTP id
+ 00721157ae682-8b1b5ca1240mr14369037b3.78.1793192491836; Wed, 28 Oct 2026
+ 06:01:31 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20261027174625.4025878-1-peter.maydell@linaro.org>
+In-Reply-To: <20261027174625.4025878-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 28 Oct 2026 13:01:20 +0000
+X-Gm-Features: AclHuK_Z9vADds8jxMY9NyleyR7fnceQqPk0dvKETScacgyV7uKcn_L7sJ9XuG4
+Message-ID: <CAFEAcA8+PtkOn=2FP_OTT2s=eL--4Y-51gCM3w2SOQn1WMDbxw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] net: Consistently pad short packets for all backends
+To: qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Jason Wang <jasowangio@gmail.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
+ Bin Meng <bmeng.cn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,396 +119,41 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-To inject legacy interrupts in the MSHV accelerator, we have to request
-a "deliverability notification" once the PIC asserts an interrupt. Once
-we receive a INTERRUPTION_DELIVERABLE exit from the hypervisor we can
-proceed to acknowledge the interrupt and write to the PENDING_EVENT0
-register with EXT_INT event type and the respective vector.
+On Tue, 27 Oct 2026 at 17:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> The net core code design is that by default packets are padded out to
+> the ethernet frame minimum before being handed to a network device
+> model, unless that device explicitly opted in by setting do_not_pad.
+> This avoids a whole class of bugs where network device receive code
+> has to be very careful about handling short packets.
+>
+> However, at the moment we do this check manually in the network
+> backend code before it calls qemu_send_packet() or
+> qemu_send_packet_async(), and we forgot to do it in all backends.  So
+> you get the padding for the slirp, tap and vmnet backends, but not
+> for the "minor" backends like 'passt', 'socket' and 'dgram', or if
+> you configure two network devices connected by an emulated hub.
+>
+> This series fixes this by moving the padding code to
+> qemu_send_packet()/qemu_sendv_packet(), so that it always happens
+> regardless of the backend.
+>
+> The main bug this is fixing is
+> https://gitlab.com/qemu-project/qemu/-/work_items/2362
+> but it's been re-reported multiple times for various combinations
+> of network devices and backends.
+>
+> The whole series is cc stable because without the padding you can
+> provoke various bugs in different network device models.
 
-Since an interrupt is supposed to wake a vCPU stopped by HLT, we do
-clear the halt_suspend field of the INTERNAL_ACTIVITY_STATE register.
+This has now been assigned CVE-2026-118490.
 
-We also need to consider pending EXT_INT events in migration,
-splitting the mapping of pending_exc into two discrete EXCEPTION and
-EXT_INT event types.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- hw/i386/x86-cpu.c              |   9 +-
- include/hw/hyperv/hvgdk_mini.h |  42 ++++++++-
- include/system/mshv_int.h      |   1 +
- meson.build                    |   1 +
- target/i386/mshv/mshv-cpu.c    | 155 +++++++++++++++++++++++++++++++--
- target/i386/mshv/trace-events  |   7 ++
- target/i386/mshv/trace.h       |   2 +
- 7 files changed, 200 insertions(+), 17 deletions(-)
- create mode 100644 target/i386/mshv/trace-events
- create mode 100644 target/i386/mshv/trace.h
-
-diff --git a/hw/i386/x86-cpu.c b/hw/i386/x86-cpu.c
-index fba313376c..7b9299272a 100644
---- a/hw/i386/x86-cpu.c
-+++ b/hw/i386/x86-cpu.c
-@@ -46,12 +46,8 @@ static void pic_irq_request(void *opaque, int irq, int level)
- 
-     trace_x86_pic_interrupt(irq, level);
- 
--    if (mshv_irqchip_in_kernel()) {
--        return;
--    }
--
-     if (cpu_is_apic_enabled(cpu->apic_state) && !kvm_irqchip_in_kernel() &&
--        !whpx_irqchip_in_kernel()) {
-+        !mshv_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
-         CPU_FOREACH(cs) {
-             cpu = X86_CPU(cs);
-             if (apic_accept_pic_intr(cpu->apic_state)) {
-@@ -77,7 +73,8 @@ int cpu_get_pic_interrupt(CPUX86State *env)
-     X86CPU *cpu = env_archcpu(env);
-     int intno;
- 
--    if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
-+    if (!kvm_irqchip_in_kernel() && !mshv_irqchip_in_kernel() &&
-+        !whpx_irqchip_in_kernel()) {
-         intno = apic_get_interrupt(cpu->apic_state);
-         if (intno >= 0) {
-             return intno;
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 0983e3a58d..e585661b2c 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -30,10 +30,11 @@ typedef enum hv_register_name {
-     HV_REGISTER_INTERNAL_ACTIVITY_STATE = 0x00000004,
- 
-     /* Pending Interruption Register */
--    HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
--    HV_REGISTER_INTERRUPT_STATE      = 0x00010003,
--    HV_REGISTER_PENDING_EVENT0       = 0x00010004,
--    HV_REGISTER_PENDING_EVENT1       = 0x00010005,
-+    HV_REGISTER_PENDING_INTERRUPTION         = 0x00010002,
-+    HV_REGISTER_INTERRUPT_STATE              = 0x00010003,
-+    HV_REGISTER_PENDING_EVENT0               = 0x00010004,
-+    HV_REGISTER_PENDING_EVENT1               = 0x00010005,
-+    HV_REGISTER_DELIVERABILITY_NOTIFICATIONS = 0x00010006,
- 
-     /* X64 User-Mode Registers */
-     HV_X64_REGISTER_RAX     = 0x00020000,
-@@ -313,6 +314,21 @@ union hv_x64_pending_exception_event {
-     };
- };
- 
-+#define HV_X64_PENDING_EVENT_EXCEPTION 0
-+#define HV_X64_PENDING_EVENT_EXT_INT   5
-+
-+union hv_x64_pending_ext_int_event {
-+    uint64_t as_uint64[2];
-+    struct {
-+        uint64_t event_pending:1;
-+        uint64_t event_type:3;
-+        uint64_t reserved0:4;
-+        uint64_t vector:8;
-+        uint64_t reserved1:48;
-+        uint64_t reserved2;
-+    };
-+};
-+
- union hv_x64_pending_virtualization_fault_event {
-     uint64_t as_uint64[2];
-     struct {
-@@ -443,6 +459,17 @@ union hv_x64_interrupt_state_register {
-     };
- };
- 
-+union hv_x64_deliverability_notifications_register {
-+    uint64_t as_uint64;
-+    struct {
-+        uint64_t nmi_notification:1;
-+        uint64_t interrupt_notification:1;
-+        uint64_t interrupt_priority:4;
-+        uint64_t reserved:42;
-+        uint64_t sints:16;
-+    };
-+};
-+
- union hv_intercept_suspend_register {
-     uint64_t as_uint64;
-     struct {
-@@ -469,6 +496,7 @@ typedef union hv_register_value {
-     union hv_x64_pending_interruption_register pending_interruption;
-     union hv_x64_msr_npiep_config_contents npiep_config;
-     union hv_x64_pending_exception_event pending_exception_event;
-+    union hv_x64_pending_ext_int_event pending_ext_int_event;
-     union hv_x64_pending_virtualization_fault_event
-         pending_virtualization_fault_event;
-     union hv_x64_register_sev_control sev_control;
-@@ -715,6 +743,12 @@ struct hv_x64_intercept_message_header {
-     uint64_t rflags;
- } QEMU_PACKED;
- 
-+struct hv_x64_interruption_deliverable_message {
-+    struct hv_x64_intercept_message_header header;
-+    uint32_t deliverable_type;
-+    uint32_t reserved;
-+} QEMU_PACKED;
-+
- union hv_x64_io_port_access_info {
-     uint8_t as_uint8;
-     struct {
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 1f77ffd152..d527cd8d77 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -45,6 +45,7 @@ typedef struct MshvHvCallArgs {
- struct AccelCPUState {
-     int cpufd;
-     MshvHvCallArgs hvcall_args;
-+    bool pic_interrupt_window;
- };
- 
- typedef struct MshvMemoryListener {
-diff --git a/meson.build b/meson.build
-index bbef9d9c29..24caec97a9 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3686,6 +3686,7 @@ if have_system or have_user
-     'target/hppa',
-     'target/i386',
-     'target/i386/kvm',
-+    'target/i386/mshv',
-     'target/i386/whpx',
-     'target/loongarch',
-     'target/mips/tcg',
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index e3c155da2e..7032e0f6ac 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -771,6 +771,7 @@ static int get_vcpu_events(CPUState *cpu)
-     union hv_x64_pending_interruption_register pending_int;
-     union hv_x64_interrupt_state_register int_state;
-     union hv_x64_pending_exception_event pending_exc;
-+    union hv_x64_pending_ext_int_event pending_ext_int;
-     int ret;
- 
-     ret = mshv_get_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
-@@ -782,6 +783,7 @@ static int get_vcpu_events(CPUState *cpu)
-     pending_int.as_uint64 = assocs[0].value.reg64;
-     int_state.as_uint64 = assocs[1].value.reg64;
-     pending_exc = assocs[2].value.pending_exception_event;
-+    pending_ext_int = assocs[2].value.pending_ext_int_event;
- 
-     /* Clear previous state. injected ints/excs are blanked w/ -1 */
-     env->interrupt_injected    = -1;
-@@ -841,14 +843,25 @@ static int get_vcpu_events(CPUState *cpu)
-         env->hflags2 &= ~HF2_NMI_MASK;
-     }
- 
--    /* HV_REGISTER_PENDING_EVENT0: pending exception not yet injected */
-+    /* HV_REGISTER_PENDING_EVENT0: event not yet injected */
-     if (pending_exc.event_pending) {
--        env->exception_pending     = 1;
--        env->exception_nr          = pending_exc.vector;
--        env->has_error_code        = pending_exc.deliver_error_code;
--        env->error_code            = pending_exc.error_code;
--        env->exception_has_payload = (pending_exc.exception_parameter != 0);
--        env->exception_payload     = pending_exc.exception_parameter;
-+        switch (pending_exc.event_type) {
-+        case HV_X64_PENDING_EVENT_EXCEPTION:
-+            env->exception_pending     = 1;
-+            env->exception_nr          = pending_exc.vector;
-+            env->has_error_code        = pending_exc.deliver_error_code;
-+            env->error_code            = pending_exc.error_code;
-+            env->exception_has_payload = pending_exc.exception_parameter != 0;
-+            env->exception_payload     = pending_exc.exception_parameter;
-+            break;
-+        case HV_X64_PENDING_EVENT_EXT_INT:
-+            env->interrupt_injected = pending_ext_int.vector;
-+            break;
-+        default:
-+            error_report("unknown pending event type %u",
-+                         pending_exc.event_type);
-+            return -EINVAL;
-+        }
-     }
- 
-     /*
-@@ -2091,6 +2104,119 @@ static int handle_exception_interrupt(CPUState *cpu,
-     return 0;
- }
- 
-+static int set_pic_interrupt_window(CPUState *cpu, bool enabled)
-+{
-+    union hv_x64_deliverability_notifications_register notifications = { 0 };
-+    struct hv_register_assoc assoc = { 0 };
-+    AccelCPUState *cpu_state = cpu->accel;
-+    int ret;
-+
-+    notifications.interrupt_notification = enabled;
-+
-+    assoc.name        = HV_REGISTER_DELIVERABILITY_NOTIFICATIONS;
-+    assoc.value.reg64 = notifications.as_uint64;
-+
-+    /* we are already waiting for a PIC interrupt window */
-+    if (cpu_state->pic_interrupt_window == enabled) {
-+        return 0;
-+    }
-+
-+    trace_mshv_set_pic_interrupt_window(cpu->cpu_index, enabled);
-+
-+    ret = mshv_set_generic_regs(cpu, &assoc, 1);
-+    if (ret < 0) {
-+        error_report("failed to set deliverability notifications register");
-+        return ret;
-+    }
-+
-+    cpu_state->pic_interrupt_window = enabled;
-+    return 0;
-+}
-+
-+static inline int request_pic_interrupt_window(CPUState *cpu)
-+{
-+    return set_pic_interrupt_window(cpu, true);
-+}
-+
-+static inline int clear_pic_interrupt_window(CPUState *cpu)
-+{
-+    return set_pic_interrupt_window(cpu, false);
-+}
-+
-+static int handle_interrupt_deliverable(CPUState *cpu,
-+                                        const struct hyperv_message *msg)
-+{
-+    CPUX86State *env = &X86_CPU(cpu)->env;
-+    struct hv_x64_interruption_deliverable_message info;
-+    union hv_x64_pending_ext_int_event event = { 0 };
-+    struct hv_register_assoc assocs[2] = { 0 };
-+    struct hv_register_assoc *event_assoc = &assocs[0],
-+                             *activity_assoc = &assocs[1];
-+    union hv_internal_activity_register activity;
-+    bool is_suspended;
-+    int ret, vector;
-+
-+    memcpy(&info, msg->payload, sizeof(info));
-+    if (info.deliverable_type != MSHV_HV_INTERRUPTION_TYPE_EXT_INT) {
-+        error_report("unexpected deliverable interruption type %u",
-+                     info.deliverable_type);
-+        return -1;
-+    }
-+
-+    ret = clear_pic_interrupt_window(cpu);
-+    if (ret < 0) {
-+        error_report("failed to clear PIC interrupt window");
-+        return -1;
-+    }
-+
-+    bql_lock();
-+    cpu_reset_interrupt(cpu, CPU_INTERRUPT_HARD);
-+    vector = cpu_get_pic_interrupt(env);
-+    bql_unlock();
-+
-+    /* vector == -1 means the PIC has no longer a pending interrupt */
-+    if (vector < 0) {
-+        return 0;
-+    }
-+
-+    trace_mshv_pic_interrupt(cpu->cpu_index, vector);
-+
-+    /* we check whether the vcpu is halted first */
-+    activity_assoc->name = HV_REGISTER_INTERNAL_ACTIVITY_STATE;
-+    ret = mshv_get_generic_regs(cpu, activity_assoc, 1);
-+    if (ret < 0) {
-+        error_report("failed to read activity state before PIC delivery");
-+        return -1;
-+    }
-+
-+    event.event_pending = 1;
-+    event.event_type    = HV_X64_PENDING_EVENT_EXT_INT;
-+    event.vector        = vector;
-+
-+    event_assoc->name                        = HV_REGISTER_PENDING_EVENT0;
-+    event_assoc->value.pending_ext_int_event = event;
-+
-+    /*
-+     * If the vcpu was hlt suspended we clear the suspend bit, otherwise we
-+     * only set the pending event.
-+     */
-+    activity = activity_assoc->value.internal_activity;
-+    is_suspended = activity.halt_suspend;
-+    if (is_suspended) {
-+        activity.halt_suspend = 0;
-+        activity_assoc->value.internal_activity = activity;
-+    }
-+
-+    ret = mshv_set_generic_regs(cpu, assocs, is_suspended ? 2 : 1);
-+    if (ret < 0) {
-+        error_report("failed to set pending event%s",
-+                     is_suspended ? " and activity state" : "");
-+        return ret;
-+    }
-+
-+    return 0;
-+}
-+
- /*
-  * Flip RFLAGS.TF like WHPX. Set it only on the live register, not env->eflags,
-  * so a later store won't put it back.
-@@ -2139,6 +2265,14 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-         }
-     }
- 
-+    if (cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD)) {
-+        ret = request_pic_interrupt_window(cpu);
-+        if (ret < 0) {
-+            error_report("failed to request PIC interrupt window");
-+            return -1;
-+        }
-+    }
-+
-     ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-     if (ret < 0) {
-         if (errno == EINTR) {
-@@ -2185,6 +2319,13 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-             return -1;
-         }
-         return 0;
-+    case HVMSG_X64_INTERRUPTION_DELIVERABLE:
-+        ret = handle_interrupt_deliverable(cpu, msg);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+        *exit = MshvVmExitIgnore;
-+        return 0;
-     default:
-         break;
-     }
-diff --git a/target/i386/mshv/trace-events b/target/i386/mshv/trace-events
-new file mode 100644
-index 0000000000..347ce040ab
---- /dev/null
-+++ b/target/i386/mshv/trace-events
-@@ -0,0 +1,7 @@
-+# Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+mshv_run_vcpu_eintr(uint32_t cpu) "cpu_index=%d"
-+mshv_set_pic_interrupt_window(uint32_t cpu, bool enabled) "cpu_index=%d enabled=%d"
-+mshv_pic_interrupt(uint32_t cpu, uint8_t vector) "cpu_index=%d vector=0x%x"
-diff --git a/target/i386/mshv/trace.h b/target/i386/mshv/trace.h
-new file mode 100644
-index 0000000000..81b6b655c7
---- /dev/null
-+++ b/target/i386/mshv/trace.h
-@@ -0,0 +1,2 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "trace/trace-target_i386_mshv.h"
--- 
-2.34.1
-
+-- PMM
 
