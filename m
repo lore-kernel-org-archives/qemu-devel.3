@@ -1,105 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48B4606A326
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AC5606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RY3HDwSz;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=mBI4Hlnu
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AS4Bwgmz;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MyGRtq6u
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Ik-0007rB-1x; Wed, 28 Oct 2026 13:19:02 -0400
+	id 1xM7HJ-0002fR-7U; Wed, 28 Oct 2026 13:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HW-0003wj-3u
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GB-0000il-Gm
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HT-00044O-Lr
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G9-0003sp-UP
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207863;
+ s=mimecast20190719; t=1793207781;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
- b=RY3HDwSzMSHGdsyDsD0kWjx9qRoAwrjlCIT/v9DaOMkEl22xdZEvzvMAV737/Mu3SzulJ9
- E9MduxbHoXiGJn6uRO84SB8r6QLsePcbnfaWfdGlrjUD+9eAblP3OOvcaCDzh9sFKQh/VL
- 5hiA6TRmNlpab9pa5rPzeKYKn/lL6Tw=
+ bh=Q+bRAQtX4XauEOMurYgBrtffJ14p2XN3tBRrNFvqLGg=;
+ b=AS4BwgmztyRJanzuEwH+fMpzSp21ntu2aoxBILQfvZPNHaBGm7GPX3hgY4Au2YjR2/1Us1
+ Em4r2LgxAnmygmAW/B53eqH0B1m8Jub8Ph35CEcW8A7v3Ps/2kIV9fcvuerW/uxyEnSl7s
+ j7AR0YuSi5fPO8teISjyB3VDUgEeEfE=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-hAaxDm8IP6mvcndFSV00jg-1; Wed, 28 Oct 2026 13:17:41 -0400
-X-MC-Unique: hAaxDm8IP6mvcndFSV00jg-1
-X-Mimecast-MFC-AGG-ID: hAaxDm8IP6mvcndFSV00jg_1793207860
+ us-mta-412-UO-qeiP7PUGyShP_241Pjg-1; Wed, 28 Oct 2026 13:16:19 -0400
+X-MC-Unique: UO-qeiP7PUGyShP_241Pjg-1
+X-Mimecast-MFC-AGG-ID: UO-qeiP7PUGyShP_241Pjg_1793207778
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e1d839ddaso799786f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:41 -0700 (PDT)
+ ffacd0b85a97d-48e1ad3cb66so763123f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207860; x=1793812660; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
- b=mBI4HlnuDn4qMDGy1q7bdcdAVeIWOTN6Wp3y+ZU7d2ekU1YF9Sb3rmL6RZZj9pIT8e
- E/LiBBtaoiOfiUobgnOjKD0yFfr6ZsbMo6YJRK51W/S9+zPJkc3jyXNe9aIeKx4BuyNp
- qe/bsQkVB5M2RYId2V2g/zMRg/W85AwovCXuALFUCBkDJDkY8emryhM7TXbR5Zu7Mv1Y
- /J4C5rsUi6PTlf9kQXDInNemiLd4szP9RQxL5NEO2I2y5mT1yFY9bw7lxaRbIVQBHbx/
- aSZKWlHGdB/KXdCJbM8LYP+H2uyZ6PWAN74iJc2TbJqie8ri974RchvfO59JG2T1x9ok
- YylA==
+ d=redhat.com; s=google; t=1793207778; x=1793812578; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Q+bRAQtX4XauEOMurYgBrtffJ14p2XN3tBRrNFvqLGg=;
+ b=MyGRtq6uUokpguPQ698FzCwdzWfeiVNrFEIqji2ZD7aS7Ue2CJMK2r3QmcudJLHign
+ 1myPuiLKBNVxHtNnAbiVlXR24wb4uFkx/wZ6037PhvuOEPkolyBaozQCcn5b539qU8tC
+ t8WwOeT6SbD0WxtwKFnOaemtjw40dotJsAX4KpQ9SvkiCwFBee2mhSkHMUJtlETRWeHf
+ Kx3pIZMwKMQOu5oJylPBnC2R8/3DCDMlB4z9LBak+Pl/pW5N+oTE4t6UmEuYyJ7PdcEs
+ ulwa9WmuitTrs+2c3IeAg9hsDQUFVAQmh/cEMpIgxxWwC2z4Zd5yDQO/BxjhZpieThLH
+ e5Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207860; x=1793812660;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
- b=IUyPlZ9vPa3fCcsoNcqtenKo0bWDI7W24FDvcLnv6oH+WoIJaEIV/W8N6D69LVHqTQ
- 3VOSmZr13/wFEUdmxdBJXk+ZrETDkss0FsmVWZt4jP13/CB58buOLdH/HYIbDauUyw28
- IEzIDqCt3WRj67IAjcZb6WkMgdajqHz7oVM+U284WuUYBCKBAwplYBPpFOW/NLXJAfQU
- SbActMN4VRMQg4tTE4M1xxe5222jgoIY1e0vsy5GsRuc2IA73BaMFjb2B4mULRR3hUmU
- nAKZUUv6Nq4gL2F19kk3ujTzNwL34aJgNxF2lvktYFNwyTTTx5cz9XyxFAx1Ou4gznRC
- x3DQ==
-X-Gm-Message-State: AFq9FYJEaj8bedlOTxbazY/2wz5fw5fVcPvQjrP3FtNPTYDhXtNHxuaW
- ogwn7r1ST70t49Er+eoz02++Dp5GciYSv2OvK2CJJF2V1dDOJWyCCaPzMsz7GB6WDFeB23HNFUw
- ELqlG0gQNJF1GI8zwzfnzqitkLoL+/aBsus5geHH1SMtoXLQibmzpAf3bWGMtun8l/AQCXT+nkE
- EG39crGAMZaU7dSKcAfoUapBOPdg4WBgqqJA==
-X-Gm-Gg: AYBFou0sAwsQz1u6mYYM9j1nGNyk4fOJGX+uS/QiRSdewwJqAiKFlZ9Zw/6MvqZ7HXw
- YETwH45azezlwcsargG2R+tUIc5tyAP9VsfPOzmJcOeHS2klwJMpdUqWjUW7rAIdLBBhin+Z/qO
- 1cfZsX4u1lvKrP+TY99Pb5mGzLSBO+ZiUUL84MKm4KNInBQJ6trO2fg7+TWhIipmgidj/8yaPvd
- ctmihXi6QWuLPmLfWFukSCDobTajAtF8gnPdjaD9rXkGF7Ats6DOZ7kZHXBfIE0HZKm9k+dYZlF
- FONs5tqx6/CeM836ADOs93EcetPGioAJFOqktuC2xitvSzvJC1BN84gq69Irhj0Q2VT1mwvvTA2
- 5NYs4vY1TCNOBkozE42soem5QmnVdU2bmk+x20TQ7
-X-Received: by 2002:a05:6000:981:b0:48e:63fc:25d9 with SMTP id
- ffacd0b85a97d-48e63fc2670mr1508366f8f.38.1793207859999; 
- Wed, 28 Oct 2026 10:17:39 -0700 (PDT)
-X-Received: by 2002:a05:6000:981:b0:48e:63fc:25d9 with SMTP id
- ffacd0b85a97d-48e63fc2670mr1508264f8f.38.1793207859263; 
- Wed, 28 Oct 2026 10:17:39 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207778; x=1793812578;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Q+bRAQtX4XauEOMurYgBrtffJ14p2XN3tBRrNFvqLGg=;
+ b=hGEZIrI82y89Uge5wRlysZC0/NbNZoVZ9CZhBNVBJDYXs8RkPeh/hqNv3sP9rRABMg
+ U5DSKPcFZqtY1sBdDiE49y0z/4I7kNWFAz6qNs0z+g1R7fxWnqRBuyMTk0dwgSfcYbOK
+ kDZKFk82Cq/Z5POziaZ0s2RK6ARBsinlrDB3KojW81BJgL14Joh5lOFvLTzSrr4wLILK
+ 9+vjileeFlDpRbmWoNjBezq04iKigrbvyc8otCKqDnops++15OpgFIsFBzyxILCJY6x+
+ HWfA9pgoyLDJnp8c1zgthZMDMu0ZC9TAz2Olb7bGoeF2Re0ZUbpA27HbE0n/XpSctM5j
+ dDDA==
+X-Gm-Message-State: AFq9FYJyi9WJZBDGBC7RVKoNQCAF7u9V3k1DPteyDhJlv5unJ4nU98iY
+ ps7ZXajzAxbAgx4cNitNPzwhadh0ghJRd4FncpMCxH/+W4OAm5f4RDiRJXKC1cKkXXWVpO6FAI5
+ gVd4jTGu93lbuuKJnJs6V0FOg1na/A3veNZYL3ZrZJG6Y+Lry1jm2g7dPrK6kjwMkzkp3NKJQyL
+ sAzyX6bOjQG3t7XVNIUsDecw58Ub5FpMTFng==
+X-Gm-Gg: AYBFou3E1W8IHqEirdfH71iO6sHMK/HRzGmNve2+Ak60zVUtfjof5JAZLFKAEUHxQaA
+ UWYkpdz//6nancO+bDXtDX/HqW1uXtCLjHY2AAXGJ5IEZDKrF2zaYBgOmJ8XUe+cY3Cr9mqJORm
+ ENyA15Ey/vFTtisDNvKX/rSQa0WM7i5Pj3QKmggKnYkpMQQHwp2wTjiBtHjxgTjZsxrRUnSq7qh
+ r7Ps0YM4Zwb2sfyV6GTEuQl/CerqVneFuWFpj7LWdJfWLpxxB4tcKDeRsOQ0UBNB3SxiRnv4Wfj
+ XV77fWprpDDnzjBwnpCkmZDZxZa+um8r2ZfHxbOQ/MAG/NvYc5Lx18ggPqhNP+XJRU3ZYaPhNsG
+ waawmy3ctA/FNRJJsB6h+id10OInBZMmfS1cZeTQ9
+X-Received: by 2002:a05:600c:4f89:b0:4a1:ac66:6059 with SMTP id
+ 5b1f17b1804b1-4a967e8d598mr60601555e9.26.1793207778215; 
+ Wed, 28 Oct 2026 10:16:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f89:b0:4a1:ac66:6059 with SMTP id
+ 5b1f17b1804b1-4a967e8d598mr60600875e9.26.1793207777764; 
+ Wed, 28 Oct 2026 10:16:17 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd37f4sm35268435f8f.44.2026.10.28.10.17.37
+ 5b1f17b1804b1-4aa82516a45sm5951375e9.15.2026.10.28.10.16.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:17:38 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:17:37 -0400
+ Wed, 28 Oct 2026 10:16:17 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nariman Sayed <narimansayed28@gmail.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 78/78] virtio-net: add mtu-from-tap property for automatic MTU
- detection
-Message-ID: <c155e7e9e025b60ce17e26a7c382d86f3f9c9fee.1793207602.git.mst@redhat.com>
+ Li RongQing <lirongqing@baidu.com>
+Subject: [PULL 53/78] pcie_aer: fix pci_set_long overflow into PCI_EXP_LNKCAP
+Message-ID: <17c8a60aed5560e482d56ae834e46563346212d5.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -130,83 +124,40 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Nariman Sayed <narimansayed28@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-Currently, exposing the host tap device's MTU to the guest via
-VIRTIO_NET_F_MTU requires manually specifying host_mtu= on the
-virtio-net-pci device, duplicating the MTU already configured on
-the host's tap interface.
+pcie_aer_inject_uncor_error() wrote inj->devsta (a uint16_t) into
+PCI_EXP_DEVSTA using pci_set_long(), which writes 4 bytes. PCI_EXP_DEVSTA
+is a 16-bit register at offset 0x0a; the extra 2 bytes written by
+pci_set_long() land at offset 0x0c, the low half of PCI_EXP_LNKCAP,
+zeroing the link speed/width capability fields on every uncorrectable
+error injection.
 
-Add a new mtu-from-tap boolean property (default off, preserving
-existing behavior). When enabled, the netdev peer's MTU is queried
-via the generic qemu_get_mtu() and used to set net_conf.mtu and
-enable VIRTIO_NET_F_MTU, regardless of the backend's type.
+Use pci_set_word() instead, matching the correctable error path in
+pcie_aer_inject_cor_error().
 
-This detection must happen in virtio_net_device_realize(), before
-virtio_net_set_config_size() computes the virtio config space
-size from host_features. Performing the detection later (e.g. in
-the get_features_ex() callback, which runs after the NIC and its
-config space are already sized) results in the mtu config field
-falling outside the sized config space, and the guest reading
-back an unmapped garbage value (0xffff) instead of the intended
-MTU.
-
-Since qemu_new_nic() has not yet been called at this point in
-realize(), the peer is accessed via n->nic_conf.peers.ncs[0]
-(populated during property parsing, before realize() runs, via
-the netdev= property) rather than through n->nic.
-
-Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
-Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+Fixes: 34e65944c035 ("pcie/aer: helper functions for pcie aer capability")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261007050718.926-4-narimansayed28@gmail.com>
+Message-ID: <20260915072908.2197-1-lirongqing@baidu.com>
 ---
- include/hw/virtio/virtio-net.h |  1 +
- hw/net/virtio-net.c            | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+ hw/pci/pcie_aer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 8c967760c2..fed37245be 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -52,6 +52,7 @@ typedef struct virtio_net_conf
-     uint16_t rx_queue_size;
-     uint16_t tx_queue_size;
-     uint16_t mtu;
-+    bool mtu_from_tap;
-     int32_t speed;
-     char *duplex_str;
-     uint8_t duplex;
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 4794496b96..54e42cfec9 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -4006,6 +4006,15 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
+diff --git a/hw/pci/pcie_aer.c b/hw/pci/pcie_aer.c
+index 22497b1fd6..43b14c1f22 100644
+--- a/hw/pci/pcie_aer.c
++++ b/hw/pci/pcie_aer.c
+@@ -589,7 +589,7 @@ static bool pcie_aer_inject_uncor_error(PCIEAERInject *inj, bool is_fatal)
+     if (inj->unsupported_request) {
+         inj->devsta |= PCI_EXP_DEVSTA_URD;
      }
+-    pci_set_long(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
++    pci_set_word(dev->config + dev->exp.exp_cap + PCI_EXP_DEVSTA, inj->devsta);
  
-+    if (n->net_conf.mtu_from_tap) {
-+        NetClientState *peer = n->nic_conf.peers.ncs[0];
-+        int mtu = qemu_get_mtu(peer);
-+        if (mtu > 0) {
-+            n->net_conf.mtu = mtu;
-+            n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
-+        }
-+    }
-+
-     if (n->net_conf.duplex_str) {
-         if (strncmp(n->net_conf.duplex_str, "half", 5) == 0) {
-             n->net_conf.duplex = DUPLEX_HALF;
-@@ -4386,6 +4395,7 @@ static const Property virtio_net_properties[] = {
-     DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_size,
-                        VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
-     DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
-+    DEFINE_PROP_BOOL("mtu-from-tap", VirtIONet, net_conf.mtu_from_tap, false),
-     DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
-     DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
-     DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
+     if (inj->aer_cap) {
+         uint32_t mask = pci_get_long(inj->aer_cap + PCI_ERR_UNCOR_MASK);
 -- 
 MST
 
