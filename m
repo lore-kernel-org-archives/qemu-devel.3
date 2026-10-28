@@ -1,101 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B1E606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BE6606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OVQRk4Oo;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=JexMZkPg
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OuhV02KZ;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=GNCM08IJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7G9-0000Ud-ES; Wed, 28 Oct 2026 13:16:21 -0400
+	id 1xM7Fx-0007mR-V9; Wed, 28 Oct 2026 13:16:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FO-0006rn-T4
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FZ-00074n-Hp
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FN-0003mu-BM
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FW-0003ns-DR
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207732;
+ s=mimecast20190719; t=1793207741;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C82Df0CVZiltYQMNBJ4Ez/GeXw7e26DSg3uA8bAJFsI=;
- b=OVQRk4OoMjnjh2S+oOFNYOQgvdwbUnG4RhizXYLTe+82zXhhuQDXxgL4IoWxqO6/nHfjyq
- 2VYFr5JTiT5g8v9KOGKC3f4j3eZdCirFub+P9IWPfEtFZ9Ton9oL8DH9E2Vx/Qk7Ed8XmN
- Trbf0+vWniCDnGxn6FO0XNIKxzBL6aU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hfdjEyoG61tuakbg4/yBZZhWaC5HdS0ABbWHQxKkv70=;
+ b=OuhV02KZJ8/uq62vS9RhyYAF4EYLkVqkZDQ2gwrQ3Xl8td2cZwadClt2FTd5xiDXosycGh
+ JTbw1IW+ufBS6TeKYsCIrPpk4YwmSMRgb+XbCLf7qtBBHnm3hkXUdDd9nNGmvXLP0N+g/+
+ C1qH58bVTRGj/Gp4XA4SGHrvYKrZKg0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-oTRtbriFMcy8RTB2J_LqFw-1; Wed, 28 Oct 2026 13:15:30 -0400
-X-MC-Unique: oTRtbriFMcy8RTB2J_LqFw-1
-X-Mimecast-MFC-AGG-ID: oTRtbriFMcy8RTB2J_LqFw_1793207729
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48c7fe9736eso1033150f8f.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:30 -0700 (PDT)
+ us-mta-672-OHg9gdj2MH2rZjfbXcWhAQ-1; Wed, 28 Oct 2026 13:15:40 -0400
+X-MC-Unique: OHg9gdj2MH2rZjfbXcWhAQ-1
+X-Mimecast-MFC-AGG-ID: OHg9gdj2MH2rZjfbXcWhAQ_1793207739
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a9d51dc486so4496905e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207729; x=1793812529; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=C82Df0CVZiltYQMNBJ4Ez/GeXw7e26DSg3uA8bAJFsI=;
- b=JexMZkPg09j2R2bzMhYKUtTjeOlyGijE01CfQKUt6V00AClX3jEqikfoWZrWKLcogd
- qDUK5JzLAJCcBABd6KhUVy3Zt6onUenBHRpKhLThADPYH7DDqs6Oi94oc1AS6k7F+G8B
- T/DA8lH9pcoNwmvErmbEn1zvvSHkA59lE4LNE7yivxrCjNzlnoeWVI+HPEzn0OusdKXg
- ZcpCSxN6ZWoC8iguiMDmaH5Mq4qIOOHQwSmcYug7cQ0BpUS9blClITqT2wtjjapBQSwt
- PQYx80axTzU61mcvatDXnhVV79Nkdyi1XU9xZYEgTyWc+Ejo7C3LIeuNyFbeUU8boiTQ
- JBlQ==
+ d=redhat.com; s=google; t=1793207739; x=1793812539; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=hfdjEyoG61tuakbg4/yBZZhWaC5HdS0ABbWHQxKkv70=;
+ b=GNCM08IJmB5jc5T/8FcOX+Yw0z7jz6v9Kn5q+YxqbQjKN/ZrA2COumMChyo0tcKMjb
+ Pr0cMB5AkyuFZJvXMsBNlal/aIJFwXvFIIrLYTc/AKvviOG0EEwTjorQ4VR2iEM6FD3a
+ cBw234RAIPaT5O+KXprXjFF1reqSbgx5k4gGnjVLk9rTvvNUW3ivzXE7gQXVxWLzOnnV
+ 3xHT7Aal1faq7Ud1ZL+1Y9sHpw56MibMqC1HXl5MMY6vwpXdbVFXlkGQlyFZiJ8UiEfh
+ c0YKqlDDrsPr6cTNrjhFEaY34sj1KDrVhkklRANISzpVo5CxfSPyYQiWXbKZcVrsrdGZ
+ oTbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207729; x=1793812529;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=C82Df0CVZiltYQMNBJ4Ez/GeXw7e26DSg3uA8bAJFsI=;
- b=G1CYm1duM4YXRIbWG6+v46R0P1p1yU3gaEZXQwwGlRD7JFP+3QBqSr0DZY03n64uFL
- ip3V5W1cuvjtpRfK9jdHyc0wRaDFAS7Dd8eh/Fm7PX3DjQxWhvfr1VNvOTMxjMHhR41+
- nbakaOX4iXlpBi7ilpwfW58Ah/5gx6JEwZRlA43zj7qPGtuq+vhHeAx8Fl1uJsEgsCT3
- EeIw0GoJLWyzyQsmnhTNTOkYGv4ORbLn4j70U/rjRQwkYx97/UtrAN1r6dgtqG2ycVx1
- UIaxdt7YE9GUGRLvQAjhmN+8S71KFGd2IgziiImYy1dkp02SZ7SZi+Vtv2dddZfOtomZ
- ebjg==
-X-Gm-Message-State: AFq9FYKOQvSdVC2hf81jkmx3ZaGlPcJDAkXC8xGS3/tYZsEaywkwwiKr
- 6OCVslQHYSLjBM6IkYlzuvIwDSpugRN7P2y+YPtOHbhKb7D3cm+uTvf9eerrEtNI7SG83IuJxda
- 1/MidsfQ8RjiI1VNZmj34oFKL+2UBII8+yfhY+wMYbfI6Zlc0aq6OAAoNkiDq8nEvRUsoFmM3Nh
- 3PnEYNpSyKfk4zwDgtTeoMQOAHZLskovFwZA==
-X-Gm-Gg: AYBFou1dcin3uOx2l5Vpd4VbybTSFuF1YIgCFrpWvNfxedDizkOzFHPbBC2Vzs/MjpD
- fDYf6GKZecjLegNbFCuKARvScovzOmvMxJtceJWqsZ6m4druipcPw5KnwY7wolRRdTYx8/V7uyM
- +WkifjSpRchHt3sYNVssxcXFlQMioNTiOTZEZFLsQeo/PAA0jqy1s7YbItM99CFwF8Qvlowjz5W
- otE5WFsGzjYHUr9G1CV3dw+BdNUqm9jX2BOt2goAMKly7cszU5T1UBHYK34jGagrK43ka1KEsM6
- Hq4tYVMVeMC/71n0uXha5SDxNKdAr8sEDAlQaE2JZPkeQnF/v9JGM+6l98YTGBZ8ccDpo/G+NDE
- TfMplAsxFRrC2CRDD/jPTkEwRG/Q2RpqAtIrvQr2l
-X-Received: by 2002:a05:600c:4452:b0:4a2:fe3:121b with SMTP id
- 5b1f17b1804b1-4aa4eb767d1mr24065015e9.28.1793207729100; 
- Wed, 28 Oct 2026 10:15:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:4452:b0:4a2:fe3:121b with SMTP id
- 5b1f17b1804b1-4aa4eb767d1mr24063965e9.28.1793207728544; 
- Wed, 28 Oct 2026 10:15:28 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207739; x=1793812539;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=hfdjEyoG61tuakbg4/yBZZhWaC5HdS0ABbWHQxKkv70=;
+ b=RXjhqTylR48y2wXhV1mDtayv0KOTI+3SFpX2nYdxV3aI5tnwVIwN5n8jXcg4KkpScY
+ mVT+4Nb3Rd6VYV6JVx/qIJWTi+IUKdFtgW9wsMHDXa3U9o7HCH5naYa1BdxZXIHoesqb
+ IpebUDbHqT/+tU3wn8Emko9+tiL9RdjOl7W7gX9orGmDWWKjOf+CHHR5cThxaEI5bj40
+ urQw7PGswxbJZeZuJXdTmbxiny8CxJkqBvrP/u44jYyOumy9tMWCpOtXunfJ3mAgr4p2
+ YimvvqrN5lml+arQsRKBuJ9zoM/GUDGjkP3jFcS92H48Zqj+zkoHNnwQZnFCGzbRD0mt
+ SU7A==
+X-Gm-Message-State: AFq9FYJPCcPXAaUk6D6zgKbvHAyvhVQx5ualFt07EBHvYaw3tfXfXL2u
+ CrQLTzSs9x05L/tBjS1K9Hfg/GNFrLwBy6Ew11lVuOtoB6kU4rBNF+8HBCeKPl7F4LyP9sjuyfW
+ Nsr+GBSYXqIjImBbMP63OqoaAohKY8F/BKayWEu4Pf6mVxhKC4wuwJgCERYEipCLuuHeGJlNHJf
+ S4+iaNOoOORKM1pwUTYvV9PwmJt13PcOifIg==
+X-Gm-Gg: AYBFou15vUdBpyxaCN21ThQTw8/UujqXwwqWnyC7FRXLyvl8RsCNH9i2NYE5Ii88HdZ
+ vXSqUAmxG2lwJjVE1TMjHJxA+p8Jlo7T9cU0PLyK4fTTvONZHjnpSVN4m7L5AHJdRVm/P0gjMrQ
+ dpuJA1fdv8vmaX/+i9cMUrPB9CIBWtq/PePoU1/LM3CS8ezm1IP0dP7I8lL8c+KhN1Ppg81RJlx
+ NjSSQUKrDgalwMyBjq5sOAUMDbaYL3qXOOS7ZVzJJbfbmQYgo7sRzwPmfBl9AjhlCZ6dY54eliH
+ TlATv8Bg3LRqARzBJlJNsKMZ5rlqxj8wTm8A2wiGK5bcSewwPasJZ+14iPEVoqe9a70HA0Pye7j
+ Wdgv0oxW7VIgo14Q6vfFjZ2zeQcGqUIJp2/6XL0rT
+X-Received: by 2002:a05:600c:34ce:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-4aa871e8bf8mr4457705e9.8.1793207738965; 
+ Wed, 28 Oct 2026 10:15:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:34ce:b0:49f:c5aa:9ef4 with SMTP id
+ 5b1f17b1804b1-4aa871e8bf8mr4456515e9.8.1793207738373; 
+ Wed, 28 Oct 2026 10:15:38 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa80286fc6sm6260745e9.15.2026.10.28.10.15.26
+ 5b1f17b1804b1-4a94f5311bdsm72122205e9.5.2026.10.28.10.15.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:15:27 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:15:25 -0400
+ Wed, 28 Oct 2026 10:15:37 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:15:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Nikolay Kuratov <kniv@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 33/78] qapi/monitor: Handle missing vhost-user protocol features
-Message-ID: <7d09b0224d2794dfcd3e00956dd8563945a8ff51.1793207602.git.mst@redhat.com>
+ Junjie Cao <junjie.cao@intel.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@linux.dev>, Anisa Su <anisa.su@samsung.com>,
+ linux-cxl@vger.kernel.org
+Subject: [PULL 37/78] hw/cxl: discard in-flight sanitize state on mailbox
+ teardown
+Message-ID: <1f5103eb7b2a24e8b5340052ff860ce17dbe59e8.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -126,73 +131,81 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Commit f9a8f5812607 moved protocol_features to the vhost-user backend.
-As a result, VhostStatus.protocol_features is only populated for
-vhost-user devices.
+Per CXL r4.0 Section 8.2.9.4, "Background commands do not continue to
+execute across Conventional Resets."  If a Media Operations sanitize is
+in progress when the device is reset, the background timer is cancelled
+and freed via cxl_destroy_cci(), but the per-operation state
+(media_op_sanitize) is heap-allocated separately and would be leaked.
 
-For an active kernel vhost device, HMP info virtio-status and QMP
-x-query-virtio-status crashes now because of unset protocol-features.
+Free it from cxl_destroy_mailbox_t3(): the timer that advances the
+operation lives in the CCI torn down there, so the operation can never
+complete once the mailbox is gone; preserving the heap state has no
+benefit and would leak it the next time media_op_sanitize is assigned.
+Routing the discard through the mailbox teardown also covers device
+unrealize, where ct3_exit() previously leaked an in-flight sanitize.
 
-Make protocol-features optional in VhostStatus and skip dumping a
-missing object in HMP.
+The completion path in __do_sanitize() frees the same state; factor the
+free into a cxl_discard_media_op_sanitize() helper used by both places,
+so the whole media_op_sanitize lifecycle now stays within
+cxl-mailbox-utils.c.
 
-This is a compatibility break.  Okay, since VhostStatus is only used
-by x-query-virtio-status, which is unstable.
+Note that Section 8.2.10.9.5.1 additionally requires a device whose
+Sanitize was interrupted by reset to remain in the Media Disabled state
+until a successful Sanitize completes.  That latch is not modelled here
+(reset re-enables media via memdev_reg_init_common()) and is left for
+future work; this patch only addresses the resource leak.
 
-Fixes: f9a8f5812607 ("vhost: move protocol_features to vhost_user")
-Co-authored-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260922213210.1429435-4-vsementsov@yandex-team.ru>
+Message-ID: <20260729144645.1552511-6-junjie.cao@intel.com>
 ---
- qapi/virtio.json            | 5 +++--
- hw/virtio/virtio-hmp-cmds.c | 6 ++++--
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 0a4753cc34..f6876a5de1 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -82,7 +82,8 @@
- #
- # @acked-features: vhost_dev acked_features
- #
--# @protocol-features: vhost_dev protocol_features
-+# @protocol-features: vhost-user protocol features.  Present only for
-+#     vhost-user devices.
- #
- # @max-queues: vhost_dev max_queues
- #
-@@ -101,7 +102,7 @@
-             'vq-index': 'int',
-             'features': 'VirtioDeviceFeatures',
-             'acked-features': 'VirtioDeviceFeatures',
--            'protocol-features': 'VhostDeviceProtocols',
-+            '*protocol-features': 'VhostDeviceProtocols',
-             'max-queues': 'uint64',
-             'backend-cap': 'uint64',
-             'log-enabled': 'bool',
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index e5da6f0069..5b08a06ec4 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -176,8 +176,10 @@ void hmp_virtio_status(MonitorHMP *hmp, const QDict *qdict)
-         hmp_virtio_dump_features(hmp, s->vhost_dev->features);
-         monitor_hmp_printf(hmp, "    Acked features:\n");
-         hmp_virtio_dump_features(hmp, s->vhost_dev->acked_features);
--        monitor_hmp_printf(hmp, "    Protocol features:\n");
--        hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-+        if (s->vhost_dev->protocol_features) {
-+            monitor_hmp_printf(hmp, "    Protocol features:\n");
-+            hmp_virtio_dump_protocols(hmp, s->vhost_dev->protocol_features);
-+        }
-     }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index bc00fec9f8..cbd6ebf9fe 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -2636,6 +2636,12 @@ static int sanitize_range(CXLType3Dev *ct3d, uint64_t dpa_addr, size_t length,
+     return address_space_set(as, dpa_addr, fill_value, length, mem_attrs);
+ }
  
-     qapi_free_VirtioStatus(s);
++static void cxl_discard_media_op_sanitize(CXLType3Dev *ct3d)
++{
++    g_free(ct3d->media_op_sanitize);
++    ct3d->media_op_sanitize = NULL;
++}
++
+ /* Perform the actual device zeroing */
+ static void __do_sanitize(CXLType3Dev *ct3d)
+ {
+@@ -2653,8 +2659,7 @@ static void __do_sanitize(CXLType3Dev *ct3d)
+         }
+     }
+ exit:
+-    g_free(ct3d->media_op_sanitize);
+-    ct3d->media_op_sanitize = NULL;
++    cxl_discard_media_op_sanitize(ct3d);
+     return;
+ }
+ 
+@@ -4848,6 +4853,12 @@ void cxl_destroy_mailbox_t3(CXLType3Dev *ct3d)
+     if (ct3d->cci.initialized) {
+         cxl_destroy_cci(&ct3d->cci);
+     }
++    /*
++     * An in-flight Media Operations sanitize is only advanced by this CCI's
++     * background timer; with the CCI gone the operation can never complete,
++     * so its state would otherwise be leaked (CXL r4.0 Section 8.2.9.4).
++     */
++    cxl_discard_media_op_sanitize(ct3d);
+ }
+ 
+ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
 -- 
 MST
 
