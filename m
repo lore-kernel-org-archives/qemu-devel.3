@@ -1,59 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294B6606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A171A606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=q6DeWMwT
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=XQk3VM+5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLzYm-0000Wj-WF; Wed, 28 Oct 2026 05:03:05 -0400
+	id 1xLzZ9-0000h4-E5; Wed, 28 Oct 2026 05:03:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzYk-0000Vc-Il
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:02 -0400
-Received: from smtpout4.mo538.mail-out.ovh.net ([51.210.91.33])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzZ7-0000g3-QO
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:25 -0400
+Received: from smtpout7.mo537.mail-out.ovh.net ([51.210.91.26])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzYi-0003av-GA
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:02 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4jF1bj2WgDz6DYN;
- Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alistair@alistair23.me>; Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.53])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jF1bj18gxz1xqK; Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzZ4-0003ch-FQ
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:25 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4jF1c73PgMz49tc;
+ Wed, 28 Oct 2026 09:03:19 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 28 Oct 2026 09:03:19 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.6])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4jF1c72cxpz6Mb7;
+ Wed, 28 Oct 2026 09:03:19 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 3E9B019231F4; Wed, 28 Oct 2026 09:02:55 +0000 (UTC)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ E6D0624031E8; Wed, 28 Oct 2026 09:03:17 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S00311948785-e9b5-4531-8901-b70805559acb,
+ (GARM-101G004537b4d05-9986-421c-82e4-9b8feb9b26d4,
  E08929C5676352A1F51837021B168DD299C323AB) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <1db3970e-5e8c-40d1-9a6c-87aca288c6d8@kaod.org>
-Date: Wed, 28 Oct 2026 10:02:54 +0100
+Message-ID: <04b8eaa9-9d73-46e3-a1bc-83e0173dc114@kaod.org>
+Date: Wed, 28 Oct 2026 10:03:17 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/13] hw/arm/aspeed: Add AST1040 FMC/SPI controllers
- and unimplemented devices
+Subject: Re: [PATCH v1 0/9] hw/arm/aspeed: Add AST1080 SoC and EVB support
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Kane Chen <kane_chen@aspeedtech.com>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:Block layer core" <qemu-block@nongnu.org>
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+References: <20261015063625.186708-1-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,30 +96,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20261015063625.186708-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 13421008368489573421
+x-ovh-tracer-id: 13427200816943639667
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF/cy3wNeUwtFnfXAjGNTzp/VwYaMb9X5uTwQ3AUMnoafam+VI4u9sLUndSLCWEf7UDSABYuJLMXxWAaybgfjDMbgteyLR10TRQEdnR4s4HMGOWOnX+6MRR7s3aW2suM2JjBDSGojnfWazZXqaUI33FnrwsZC2lbmBotzMwo63HsQ4Fy8Z+sKEGblreC+ejB3zmZu8rYOILUMC4PoHgp6LUWdSACf75L2IJ2/YXIq6njsBdtR+y1KsbP1v6jQU4SSZZkJ9FZBfj/KbsQ081XCLjTGunKJ+TuJLjXqM+pJo5gdsepXteqwcrqNtZa00HDfAi4Fk1VfMYIOdjYptB5m2OspXn+SK0Sgndj6iy8yFQfF6seM88YtBPlKKXURyfHktHpBUWXgBO8mtuUQsJobe+V7erGKMnBQ7hkLG8OQno3E+AM65FPIImh33jXKOkmM49YXII3MtBQjofczn5Vf83JzrNdB/tySF0Uy5QJAYsDSKIx5NGrH7HILPAyE8FmHSljc2aJWtzkBbMgEjUAs98WPOMuprqgTyACoO9SlOVQKcDpDPWceKTXcfqFoFEL7cDaxM1r7bB7Gf1rZJbyYYjZVdQOe0BMj9bVdRXaeqif6bhITJKy0sKEIkZvS9UpyR7jo3X1R/nrMih0Q8TubE31cPa1Hkp6h6K3ysnGP78nQ
-DKIM-Signature: a=rsa-sha256; bh=DVzxAO9HLlHPapkyUcxqJFhHiYiFnzprl3r9Jqc3pOA=; 
+X-VR-SPAMCAUSE: dmFkZTFY36iqFBf3ApkUwA3KCVJmcjr83TNT/n/4ny41vqutSQ0CHkQe8oA0tt7mmewVYwQubfK8BWUVKHG5wPk0+9neNyzNjKyImOOtx0zqk5AB0a2ZzS7KWUT5rfnqMbQdV5SWcHwzX4yvYa9le1Zg85gY+8R2K5NDxfJNjfLd+BL91ULcX3KpGivfS0N0Crv4u5TjZ3+YZTqae11FofaP1/V2j58sFIzZhMhI8tLjik+dXwvUzvb6I20DR3b+JWaPWYOlEGLcgew3ZqRAuJOelOMVGZedaWrhNeyyVGrmmqCT4szeRUq30EllYjaiYrCELf6LJrYYi++/qfCv8DCcmv4ulGfn/5Y/1DPxhK9ke19szbnsKYBaqt8OozvaarGIHo1M+eDuhVcCJ01GqM7TbA2q8Kdpp2LfvrW2hdNGpJbW+jT4ZqyvH+Jo1dEaJAKlwKkCLJEJZV7HMQwPxRF03/X2IPR/zVq8NpoXuJ6WG3BIUUqjVaoqKZnAlqirYZwrNmkACtTcjD7uFSxdDa0ViLw6IolRuPr1V/pYBoBSQa9oWEj0gYGgQO31GkSP3fYLWugEilr5wRXG3wYxdDR3rBDIRM1iKGyMHEque9qegxSF4Egyck8nnttr61wcZ3kga0+ts4JkRjhI/jAhYAwXHYRn64Wm3qNOqxhwZuRROi0c+g
+DKIM-Signature: a=rsa-sha256; bh=EV+575AkA3Nf9jEoBugzkXneo6TEDcXgMoAkDFIvzi4=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1793178178; v=1;
- b=q6DeWMwTyZBRHAVv85AJJzgViiiw2k2mkH3+vKWqRnJkC1GouyayAq149XRjOb4/j+fVoC2y
- GKIhmOi9+Q2kGGFm3/MZp+k/k/JjlEsZwkkVrwtkk3y3/cCGh00VuLJJTIdV/RfubY2rWIbEUEZ
- QhvcpjeSkKiy910DONa1vM7MG5szFv9xkI/X5CcI6/7rQRkniTsW8RQSmTSF+58SXfe7Nm7xAm1
- mFTaM9MNR9uziWozXRajIs5V3ZiyTyd7Z/oyJgmYKgJDEWg241+VF6S6yw9o8wHgOH8R7qNTEPf
- tKcPLQBvsilD6BKYyd20GTkCpuqc1wHCMCfAr2y04O2zA==
-Received-SPF: pass client-ip=51.210.91.33; envelope-from=clg@kaod.org;
- helo=smtpout4.mo538.mail-out.ovh.net
+ t=1793178200; v=1;
+ b=XQk3VM+5isCtiSbwY3K34aFrETR6JJq/Sh+rCXkQ81DowPHzDVc6egeUxTXrB3HrfhQslAjC
+ muTUiboo1OY+v5CgI54Ra/D/NwZ52AlIDKDxAcjbhwgWm4apue9KJs0OlsDLh+xM97gXZF9+G8R
+ bR2pc0tC/yCzXz1KZ9df7kIjYVxd8IP1Cast/DjgLI32R5VJlRG4Ajtpce3o53r11VM6e4Kzo4u
+ LGzy/Kpo1XXorqehc21xbYSVD+xcG5+weBJ5iVgYsTWvlDMx/v9yudI4rc9WSO6b9dwR6TQ4ah4
+ 6CItWD8bhN84YIveUSmOjn1Kab/t2ZmQxJYFs/p7ym+0w==
+Received-SPF: pass client-ip=51.210.91.26; envelope-from=clg@kaod.org;
+ helo=smtpout7.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,49 +139,55 @@ X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/26 03:31, Jamin Lin wrote:
-> v1:
->   1. Fix AST2700 segment end address decoding
->   2. Fix AST2700 DMA flash address mask
->   3. Rename w25q32dw to w25q33pw and add the SFDP table for the W25Q33PW,
->   4. Correct the AST1040 A0 silicon revision ID
->   5. Add FMC and SPI controllers
->   6. Add the FMC/SPI filters, OTP, ATC, I3C and Caliptra register
->      regions as unimplemented device
->   7. Update the AST1040 functional test to use the official pre-built
->      image from aspeed-mcu-fw-hub v01.00.
+On 10/15/26 08:36, Jamin Lin wrote:
+> This series adds support for the AST1080 Platform Root of Trust SoC
+> and its evaluation board.
 > 
-> v2:
->    1. Add w25q33pw as a separate flash model instead of renaming w25q32dw.
->    2. Add the AST1040 SMC reset value table.
+> This series depends on:
 > 
-> Jamin Lin (13):
->    hw/ssi/aspeed_smc: Fix AST2700 segment end address decoding
->    hw/ssi/aspeed_smc: Fix AST2700 DMA flash address mask
->    hw/block/m25p80: Add Winbond W25Q33PW flash
->    hw/misc/aspeed_scu: Correct AST1040 A0 revision ID
->    hw/ssi/aspeed_smc: Add AST1040 FMC and SPI controllers
->    hw/arm/aspeed_ast1040: Add FMC and SPI controllers
->    hw/arm/aspeed_ast1040: Add FMC and SPI filters as unimplemented
->      devices
->    hw/arm/aspeed_ast1040: Add OTP as an unimplemented device
->    hw/arm/aspeed_ast1040: Add Anti-Tamper Controller (ATC) as an
->      unimplemented device
->    hw/arm/aspeed_ast1040: Add I3C as an unimplemented device
->    hw/arm/aspeed_ast1040: Add Caliptra as an unimplemented device
->    tests/qtest/aspeed_smc: Add AST1040 SMC tests
->    tests/functional/arm/test_aspeed_ast1040: Update AST1040 image to
->      aspeed-mcu-fw-hub v01.00
+> [v1,00/14] hw/arm/aspeed: Add AST1040 FMC/SPI controllers and unimplemented devices
+> https://patchwork.kernel.org/project/qemu-devel/cover/20261015055642.106204-1-jamin_lin@aspeedtech.com/
 > 
->   hw/block/m25p80_sfdp.h                      |   1 +
->   include/hw/misc/aspeed_scu.h                |   2 +-
->   hw/arm/aspeed_ast1040.c                     |  45 +++++++
->   hw/block/m25p80.c                           |   2 +
->   hw/block/m25p80_sfdp.c                      |  36 ++++++
->   hw/ssi/aspeed_smc.c                         | 131 +++++++++++++++++++-
->   tests/qtest/aspeed_smc-test.c               |  61 +++++++++
->   tests/functional/arm/test_aspeed_ast1040.py |  12 +-
->   8 files changed, 278 insertions(+), 12 deletions(-)
+> and is based on the aspeed-next branch:
+> https://github.com/legoater/qemu/commits/aspeed-next
+> 
+> The AST1080 shares most of its design with the AST1040, so the AST1040
+> init and realize code is first split into common functions. The
+> AST1080 SoC is then added with its own unimplemented devices (QSPI
+> filters and I2C filter).
+> 
+> v1
+>   1. Add common init function for AST1040/AST1080 SoCs
+>   2. Add common realize function for AST1040/AST1080 SoCs
+>   3. Add AST1080 SOC and EVB machine
+>   4. Add AST1080 functional test.
+>   
+> Jamin Lin (9):
+>    hw/arm/aspeed_ast1040: Add common init function for AST1040/AST1080
+>      SoCs
+>    hw/arm/aspeed_ast1040: Add common realize function for AST1040/AST1080
+>      SoCs
+>    hw/misc/aspeed_scu: Add AST1080 A0 silicon revision definition
+>    hw/arm/aspeed_ast1040: Add AST1080 SoC support
+>    hw/arm/aspeed_ast1040: Add AST1080 QSPI filters as unimplemented
+>      device
+>    hw/arm/aspeed_ast1040: Add AST1080 I2C filter as an unimplemented
+>      device
+>    hw/arm/aspeed_ast1040_evb: Add AST1080 EVB machine support
+>    tests/functional/arm/aspeed: Add AST1080 test with ASPEED MCU FW Hub
+>      v01.00
+>    docs/system/arm/aspeed: Add AST1080 Platform Root of Trust evaluation
+>      board
+> 
+>   docs/system/arm/aspeed.rst                  |   8 +-
+>   include/hw/misc/aspeed_scu.h                |   1 +
+>   hw/arm/aspeed_ast1040.c                     | 154 +++++++++++++++-----
+>   hw/arm/aspeed_ast1040_evb.c                 |  23 +++
+>   hw/misc/aspeed_scu.c                        |   1 +
+>   tests/functional/arm/meson.build            |   1 +
+>   tests/functional/arm/test_aspeed_ast1080.py |  37 +++++
+>   7 files changed, 186 insertions(+), 39 deletions(-)
+>   create mode 100644 tests/functional/arm/test_aspeed_ast1080.py
 > 
 
 Applied to
