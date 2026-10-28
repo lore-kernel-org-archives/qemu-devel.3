@@ -1,83 +1,85 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF5E606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D9E606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Pv8V9knv
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=WdVvL+XF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM6a5-0006PF-5q; Wed, 28 Oct 2026 12:32:53 -0400
+	id 1xM6aK-0006Wy-Kf; Wed, 28 Oct 2026 12:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM6a3-0006Oa-JC
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:32:51 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1xM6aI-0006Vw-1X
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:33:06 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM6a1-0007Um-L6
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:32:51 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-8490a7d6696so699412a34.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:32:48 -0700 (PDT)
+ id 1xM6aG-0007YM-9b
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:33:05 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-84621d8c7aaso582506a34.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793205168; x=1793809968; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=RF2SJln8Zj7EGwqoqwvHvZoZiCZaaOXwNHuWxEa4YFQ=;
- b=Pv8V9knv/dOpIn8Xo2j/Vy6D6xMpM+rzkWIjJShPpfHwCiuGg8sSacmzgbZhxXOh7o
- MombOGHHbN6vgXxo85c4T0ekl6gKpkLNdvewHCJmMNT5yBaACwVWOqNnp0YKSUEuVrK3
- dRz7nS4dmyEKw1AiCm3SlKYXQG8haIaJbM0gX8S6gRNCp9GwHH+2111CgHREsFledVaP
- L0f3XoOtOmxlfU0g5EBl/ZYzW63bII3XXeGIdE+nDMFDS9N0v8SCeVSk7NPWSD7lpUqc
- dLneaFLFfo0dnrRrt5EOuxLwjnl27GGKpEVs2b+mAwFrZipoJzs4pHPMzAexGhzVWnPe
- 7RZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793205168; x=1793809968;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1793205183; x=1793809983; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=RF2SJln8Zj7EGwqoqwvHvZoZiCZaaOXwNHuWxEa4YFQ=;
- b=tKczY6KI2hZ+URTCHALyrSALognLfvqa0n2bgqTBOiVwbrC5E0I4CGW3GMNrSCgpy7
- JvhwP0KMCCjwxse44V+mg7vIVcawsLOm3VP2mBnMLOhrBaaUAuQCYw+do6K8gk7jp38N
- 6Q9dfUhSMNYXMwrF3XxfoJEDSZB/pZom0AsULvh5EseDbVFqoSNSJOXdxaitjGY3TTxg
- AvX/y26reWCVLMs2RhGQzw2pc1AuT88r4KQp35sznkfO5h9azuetH6sJSN/Zg3jKXzCW
- QUZkbFWHBEPzG0fVocIFs5p7H/RLWnAF0iMTxfAwlCcM8pdzve0WV0Go+T3UcvC970l+
- h6yQ==
-X-Gm-Message-State: AFq9FYKP8GJ+cf4/dM788bMOvwAQJDHEv1u4MWiExLDM1wlCa2GcLblJ
- AeNoYCeUdSILsFpSYfR4lHI4lm5Pig8Dt3u+3pei2+SaZIGoOajVhxVxhEk/TJ9R8RO9W7h9ac2
- VXNBe
-X-Gm-Gg: AYBFou0qNMScB74l9QEDIaJfnmgqMdSgvxRpprYiMf+pJuWF3Q7Jy0CbZwEKnPcYdUn
- iu3/j1LXVDMDXWCIImgDSc//7/sE2ICBIhZTC1fvja8DbV43+0Eb9egIwC1jCCNIcDSdXKINlsY
- QgUe8/cASdlDRvwbhcg/WrReWEHh2F8QrAT9t7RQONH9nE8qbX/FpELUId6UFUgOlt0nkUnOGBB
- J3Dd7ahP05g34WP3fXttwyfYo9iy8Y5OxZtAuVqX7cG9OjWD2BZzWONEYxfkZsLawLdnpsx9j01
- POZbfwuFPHUvlHXgXMd9YaQgfY3Ck/6DuwBE4haCATv2DYJkOyDpBqwXRVCJmVyefyjUKf9GTOU
- ArXK7v2WiTrAnn8VfoFFpvg9NPxaCIQgOL87yTH3ZJonJbMG7I0SxqUACXuIWOL2H7quF4RcRuW
- Z18+DeBjwGrYJPTexlAeMv3ZwPepTezlM0/Z8Jjvpvg1C8C0RUyDpgBfO8lf83eqr1c3J+sON/D
- aJ4QDCaFJHwXCy0SX+VR9Oz/aBkMpFNNpf07lu8ZM+UiycqobU1GrvbU/3QOMjPFGMFnjweLpaD
- qMUc3aaJw/MiBtvgj4OFkGz76EbT0bvGLQ==
-X-Received: by 2002:a05:6830:4120:b0:826:1ccc:8bb9 with SMTP id
- 46e09a7af769-85ab7040645mr2571730a34.6.1793205167529; 
- Wed, 28 Oct 2026 09:32:47 -0700 (PDT)
+ bh=D2fdLlvb+BRbVtRIo4uLPfcunyMOSQZp2TZDVBOzWlg=;
+ b=WdVvL+XF73LN1OfLkluP7XTTEbOYV1FoYesA5lFX8cV3k+q/TM58qjrqRhFQW/qW+K
+ r1kxxS/ums9xTDwqXyTKGmCehNRl8zBwhRqzthNLkrZO4S2E55cFwM8Se2A4qPWJNZnv
+ TokFW2OHpDzPzQjllualjP8bwtaDBox3hcvsRPmLIg1klHha0crqYxSr6XrgujarIP7j
+ gt658kuN875z35bHGGaDKLmliTWZF5yvNb7nIr5H3QuWeQmBt86B2XpOF8+WDRxdnD4I
+ Wx0o9MoR922MMgqd9DRPSFwg82yQEo+iQtWs7TS76pSornPh82T7COHKGG6zJS0/Gziu
+ 5YKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793205183; x=1793809983;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=D2fdLlvb+BRbVtRIo4uLPfcunyMOSQZp2TZDVBOzWlg=;
+ b=u8KrwSB/yzRWaYDt+4JIz8tovS82fJ3fbejD1bj9WAkMQEqxxIiG2Ts91+Lt+XDgaP
+ Tw5kWcwiOJ3L0XVQSMsa+x5r+KVQYViANjoXk58JPG9sw+76mQU9PKmcHyCEhCPVIr3A
+ Xk90dnTLLJBnPd8EX+hk7ApBzuSz8wK9t5mPFa34AqKtCxPw5DIi23YXuAIlb8/aNLto
+ s9JiQcJ1yzeCd6KExgd5oxgexmr5j47iZ9NWg/Q+4PPvvxaqfz/nEH41AkIcKQCw1zKP
+ UvEtOZOOaa4781a0i9uzJ62gSLIAzT1knzlPBix6+opjkDa1D10vIBkBITku0HeDFjQG
+ pykg==
+X-Gm-Message-State: AFq9FYJCRQxxVclHsfLFSk0LEkvcOxXxjDO3b8/0c9+e8FqkmLfBlU7o
+ oZCq8UsrIek4wM+w59YUISoXdmRR56evl6+UupDcH1SFyDxdBKcec5yCTYnTRWwEDsvJIxq9ub2
+ ravy7
+X-Gm-Gg: AYBFou3FZUGS9jE980fDXCFcYdVh2ILwOpYe9e93HuMvUKCzN8WfjuGNs1ArrVOP54g
+ XQldQEM2GhhvT6pjCga9YyCio9+s0y+5hBnN1B6Uhuf9WXpAK8Ad6i+PVUtig+gSlBzY+y0nxip
+ gOmWSkE7rR6P8dlux33tZh8pbOc4Zp1Ji3RmdvumYsmMfZ3y5bW4UEYhJBr1XtOc3gjFjER84kk
+ rZoy0yXJ0nRrBZvCFPTZ9/kN38yyTZdU1J+MuekB/AefyhcZoeNpuA3IWzkWx5OmIZ3Vi7xHmqH
+ P+GMFckAuBN0rOQ6TblvTR4FIlm7qtq0edG2omal0QP89IJVrsPOMZ/MWbDlaNBSYaHEbOYSN+R
+ LTExbTJ8oGBGzOp3vuo4RI0BVY/bCRnMKvBSpUR9jqDHMZnGQ2C57sWC2vtHfHodx2rh9o3gyzS
+ uSepr1NSll6IZDwOkt8gO4mXICo6Wu7z/Ks9694uMUN5GOGPkMB57zdRFhunD/gXkFwu/O6Iu6v
+ V3qy/bWs5rGCWQYfPuoF0pCSl8z4skP0UZ0Soo5lVYjgYyUDbcyis/hqRZ6qFsAwoC39520MLzi
+ RxrM0+r1eJcrtm27OOW4RIPOaIKjcCsiBg==
+X-Received: by 2002:a05:6830:25d1:b0:82f:5471:4dd7 with SMTP id
+ 46e09a7af769-85ac11bfa1cmr2611687a34.30.1793205182730; 
+ Wed, 28 Oct 2026 09:33:02 -0700 (PDT)
 Received: from stoup ([2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85b1f4368f3sm2538965a34.7.2026.10.28.09.32.46
- for <qemu-devel@nongnu.org>
+ 46e09a7af769-85b1f4368f3sm2538965a34.7.2026.10.28.09.33.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 09:32:47 -0700 (PDT)
+ Wed, 28 Oct 2026 09:33:00 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v3 00/16] tcg: Introduce INDEX_op_lea
-Date: Wed, 28 Oct 2026 11:32:29 -0500
-Message-ID: <20261028163245.1031673-1-richard.henderson@linaro.org>
+Cc: Matt Turner <mattst88@gmail.com>
+Subject: [PATCH v3 12/16] tcg/loongarch64: Import SLADD insns
+Date: Wed, 28 Oct 2026 11:32:41 -0500
+Message-ID: <20261028163245.1031673-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261028163245.1031673-1-richard.henderson@linaro.org>
+References: <20261028163245.1031673-1-richard.henderson@linaro.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,95 +98,96 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add a complex addressing mode primitive, and some trivial use cases.
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/loongarch64/tcg-insn-defs.c.inc | 30 ++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-This came up in conversation with Matt Turner re his inline jump cache
-expansion.  In particular,
-
--    tcg_gen_shli_i64(h, h, 4);
--    tcg_gen_add_i64(ent, jc, ent);
-+    tcg_gen_lea_i64(ent, jc, h, 4, 0);
-
-With the use case in target/i386/tcg, we get nearly full coverage of
-all the possible use cases.  The only thing I didn't immediately see
-is shifts > 3, which could be visible with loongarch64 guests.
-
-There are plenty of other places in target/ that could use this, but
-the shift/add/imm extraction/generation are inconveniently separated.
-E.g. m68k address generation, arm add-shifted, etc.
-
-It may not even be worth converting those, but instead adding some
-trivial peepholing along the lines of Matt's user-only guest displacement.
-
-Changes in v3:
-  - Rebased to master, which now has the prereq series.
-
-
-r~
-
-
-Philippe Mathieu-Daudé (1):
-  target/mips: Use tcg_gen_lea() for [D]LSA and MXU S32LD*V opcodes
-
-Richard Henderson (15):
-  tcg: Add INDEX_op_lea
-  tcg: Add tcg_gen_lea_{i32,i64,tl}
-  tcg/optimize: Handle INDEX_op_lea
-  target/alpha: Use tcg_gen_lea_i64 for S{4,8}ADD{L,Q}
-  target/loongarch: Use tcg_gen_lea_tl for ALSL
-  target/riscv: Use tcg_gen_lea_tl for SH*ADD
-  target/s390x: Use tcg_gen_lea_i64 in get_address
-  target/i386: Use tcg_gen_lea_tl in gen_lea_modrm_1
-  tcg/x86_64: Introduce TCG_REG_NONE
-  tcg/x86_64: Implement INDEX_op_lea
-  tcg/loongarch64: Import SLADD insns
-  tcg/loongarch64: Implement INDEX_op_lea
-  tcg/aarch64: Implement INDEX_op_lea
-  tcg/riscv64: Implement INDEX_op_lea
-  tcg/s390x: Implement INDEX_op_lea
-
- docs/devel/tcg-ops.rst                        |  4 +
- include/tcg/tcg-op.h                          |  2 +
- include/tcg/tcg-opc.h                         |  1 +
- tcg/aarch64/tcg-target-has.h                  |  3 +
- tcg/loongarch64/tcg-target-has.h              |  3 +
- tcg/ppc64/tcg-target-has.h                    |  3 +
- tcg/riscv64/tcg-target-has.h                  | 11 +++
- tcg/s390x/tcg-target-has.h                    |  4 +
- tcg/sparc64/tcg-target-has.h                  |  3 +
- tcg/tci/tcg-target-has.h                      |  3 +
- tcg/x86_64/tcg-target-con-set.h               |  1 +
- tcg/x86_64/tcg-target-has.h                   |  3 +
- tcg/x86_64/tcg-target.h                       |  3 +
- include/tcg/tcg-op-def.h.inc                  |  1 +
- target/alpha/translate.c                      | 20 ++---
- target/i386/tcg/translate.c                   | 27 ++++---
- target/mips/tcg/mxu_translate.c               |  3 +-
- target/mips/tcg/translate_addr_const.c        |  6 +-
- target/s390x/tcg/translate.c                  |  4 +-
- tcg/optimize.c                                | 66 +++++++++++++++-
- tcg/tcg-op.c                                  | 43 ++++++++++
- tcg/tcg.c                                     | 22 ++++++
- .../tcg/insn_trans/trans_arith.c.inc          |  4 +-
- target/riscv/tcg/insn_trans/trans_rvb.c.inc   |  5 +-
- tcg/aarch64/tcg-target.c.inc                  | 11 +++
- tcg/loongarch64/tcg-insn-defs.c.inc           | 30 ++++++-
- tcg/loongarch64/tcg-target.c.inc              | 15 ++++
- tcg/ppc64/tcg-target.c.inc                    |  3 +
- tcg/riscv64/tcg-target.c.inc                  | 17 ++++
- tcg/s390x/tcg-target.c.inc                    | 14 ++++
- tcg/sparc64/tcg-target.c.inc                  |  3 +
- tcg/tci/tcg-target.c.inc                      |  4 +
- tcg/x86_64/tcg-target.c.inc                   | 79 +++++++++++--------
- 33 files changed, 346 insertions(+), 75 deletions(-)
-
+diff --git a/tcg/loongarch64/tcg-insn-defs.c.inc b/tcg/loongarch64/tcg-insn-defs.c.inc
+index e907fc755f..ececc6a3dd 100644
+--- a/tcg/loongarch64/tcg-insn-defs.c.inc
++++ b/tcg/loongarch64/tcg-insn-defs.c.inc
+@@ -4,7 +4,7 @@
+  *
+  * This file is auto-generated by genqemutcgdefs from
+  * https://github.com/loongson-community/loongarch-opcodes,
+- * from commit 1b95bb8c443ad71e266120fd97bd227df2d8ecfc.
++ * from commit 2d84c975e8894afc8b3ee9b8559f10308a658440.
+  * DO NOT EDIT.
+  */
+ 
+@@ -24,6 +24,7 @@ typedef enum {
+     OPC_REVBIT_D = 0x00005400,
+     OPC_SEXT_H = 0x00005800,
+     OPC_SEXT_B = 0x00005c00,
++    OPC_SLADD_W = 0x00040000,
+     OPC_ADD_W = 0x00100000,
+     OPC_ADD_D = 0x00108000,
+     OPC_SUB_W = 0x00110000,
+@@ -62,6 +63,7 @@ typedef enum {
+     OPC_MOD_D = 0x00228000,
+     OPC_DIV_DU = 0x00230000,
+     OPC_MOD_DU = 0x00238000,
++    OPC_SLADD_D = 0x002c0000,
+     OPC_SLLI_W = 0x00408000,
+     OPC_SLLI_D = 0x00410000,
+     OPC_SRLI_W = 0x00448000,
+@@ -619,6 +621,18 @@ encode_djk_insn(LoongArchInsn opc, TCGReg d, TCGReg j, TCGReg k)
+     return encode_djk_slots(opc, d, j, k);
+ }
+ 
++static int32_t __attribute__((unused)) encode_djkua2_insn(LoongArchInsn opc,
++                                                          TCGReg d, TCGReg j,
++                                                          TCGReg k,
++                                                          uint32_t ua2)
++{
++    tcg_debug_assert(d >= 0 && d <= 0x1f);
++    tcg_debug_assert(j >= 0 && j <= 0x1f);
++    tcg_debug_assert(k >= 0 && k <= 0x1f);
++    tcg_debug_assert(ua2 <= 0x3);
++    return encode_djka_slots(opc, d, j, k, ua2);
++}
++
+ static int32_t __attribute__((unused))
+ encode_djsk12_insn(LoongArchInsn opc, TCGReg d, TCGReg j, int32_t sk12)
+ {
+@@ -1426,6 +1440,13 @@ static void __attribute__((unused)) tcg_out_opc_sext_b(TCGContext *s, TCGReg d,
+     tcg_out32(s, encode_dj_insn(OPC_SEXT_B, d, j));
+ }
+ 
++/* Emits the `sladd.w d, j, k, ua2` instruction.  */
++static void __attribute__((unused))
++tcg_out_opc_sladd_w(TCGContext *s, TCGReg d, TCGReg j, TCGReg k, uint32_t ua2)
++{
++    tcg_out32(s, encode_djkua2_insn(OPC_SLADD_W, d, j, k, ua2));
++}
++
+ /* Emits the `add.w d, j, k` instruction.  */
+ static void __attribute__((unused)) tcg_out_opc_add_w(TCGContext *s, TCGReg d,
+                                                       TCGReg j, TCGReg k)
+@@ -1692,6 +1713,13 @@ static void __attribute__((unused)) tcg_out_opc_mod_du(TCGContext *s, TCGReg d,
+     tcg_out32(s, encode_djk_insn(OPC_MOD_DU, d, j, k));
+ }
+ 
++/* Emits the `sladd.d d, j, k, ua2` instruction.  */
++static void __attribute__((unused))
++tcg_out_opc_sladd_d(TCGContext *s, TCGReg d, TCGReg j, TCGReg k, uint32_t ua2)
++{
++    tcg_out32(s, encode_djkua2_insn(OPC_SLADD_D, d, j, k, ua2));
++}
++
+ /* Emits the `slli.w d, j, uk5` instruction.  */
+ static void __attribute__((unused)) tcg_out_opc_slli_w(TCGContext *s, TCGReg d,
+                                                        TCGReg j, uint32_t uk5)
 -- 
 2.53.0
 
