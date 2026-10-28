@@ -1,97 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4949606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E8C606A31C
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gMQkcLC6;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=oQt9zhNE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=UZCc33s1;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Xp+Wgk+o
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7HL-0002uG-AS; Wed, 28 Oct 2026 13:17:35 -0400
+	id 1xM7HL-0002uK-DI; Wed, 28 Oct 2026 13:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GE-0000sg-3P
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GZ-0001Be-1A
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GC-0003tG-D6
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GS-0003ux-A1
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207783;
+ s=mimecast20190719; t=1793207796;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
- b=gMQkcLC6aP8TUCT4karKKE+/m+zLt+yj3+Y2Ymd0WjWv+3LhPJJ9kQ5k/2KwZXdT58eYxT
- YXnbhe3ceWWOwQwBL/52RIFOu4xu5BEOyY5eH/9pTrU7aSFw9TbBjrYDpdAD9KUsa7iif/
- VuDXzosd/qD8D3Ocq/r2T+TuYH9UnUo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AOOjb2+T7Uz3dqto95pa8UMd7Sn0XzzF+CFE3iv5nxI=;
+ b=UZCc33s1je6Smk6XEXaEpH5Ob37xQzTRJLJnXCmqoPSROnNEUPLW1bRAhKZXi3lIsWf6EM
+ iuf2VEuNzT43bRHOCuaNjbpPDK+fgWbFNOwpZ+VNVJbQ96ruzBKtHsjL5SL1XzuPiTBar1
+ vDYwei7sczWnAfSwiOlsbFbZLBEwlS4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-6nfarlJqOJml40iSw5pZkA-1; Wed, 28 Oct 2026 13:16:15 -0400
-X-MC-Unique: 6nfarlJqOJml40iSw5pZkA-1
-X-Mimecast-MFC-AGG-ID: 6nfarlJqOJml40iSw5pZkA_1793207774
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48df5b058ddso814018f8f.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:15 -0700 (PDT)
+ us-mta-563-XXCrA4jcN9mFToHT416KTQ-1; Wed, 28 Oct 2026 13:16:34 -0400
+X-MC-Unique: XXCrA4jcN9mFToHT416KTQ-1
+X-Mimecast-MFC-AGG-ID: XXCrA4jcN9mFToHT416KTQ_1793207793
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48e29c25101so712741f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207774; x=1793812574; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207793; x=1793812593; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
- b=oQt9zhNEcJxU7xJmdG6gQBymJazdm2n4Fc2DDTchmcF2rBN8bP9cZtCSprRwlzSKb8
- jb+8If78zpYFAzs8C3pW8NBMx4sF2FwOo5nXUKLvHOIkc0TypuBjVERDEu/jI+GWnQ69
- TPxsmASR+2TuMrYTpfLNQVs1BbBBrxhYHZQiOl1ZbIq/yMbZrm/gj3XZFbewm6orPyXq
- QOJkMrX42dDjCbdCfIYqOYv9NjbKHcJwmmaM6TitmPsblnbVKoqFSqCumn++OuZv5Sf+
- asYY8vJN9YQkr8K1a56DpDf18Fj387gMZCohpaiZzlE3LRi7UDUrCJePkE1BA4YKqb6J
- KD4w==
+ bh=AOOjb2+T7Uz3dqto95pa8UMd7Sn0XzzF+CFE3iv5nxI=;
+ b=Xp+Wgk+otIsuqvnZ9faiTOHDdVqtokV4W11WccV4bnpDAZ/oTefArdWmJMIooMpgjR
+ 83UUaurR6Jf8hiXUzXf2lMH4PJWu4QsBUnmU5+bvSzSy1URcUWU5drou9isk0PjN0UQu
+ pK6vKm8pKZnndd65Fk6K42pF4qL0S72nUcraDRAugmtvhzfCGgcQqicqfbQ0XSG5oawx
+ xT2ppjaRHw4vFMf3MD2whp2TYsT11DKuFndGWDmcx4UE18nL15m/vjc5pFKMR6iisZd3
+ sM7p4aHcuwgCW9oA7yxbAEhK9GcglsZRmCglOQ6KRzI+wPmONXw3lwfLv60nDa9sEfAU
+ W9XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207774; x=1793812574;
+ d=1e100.net; s=20260707; t=1793207793; x=1793812593;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
- b=GyO4vFIHLXFkesBhUnLYx1mpYzrY2Ni4ROyqvO9601WoJUw0UV26vmJY2z0JkN8U6Z
- sndmbPgmZ/dEE/0ghzNZTAGdNXGnl/zC20nFAxWVdTYFxWOYZus/yRGWZ1h7Qir1PdDp
- fRLAjZO53cWEyPoom9sxtj2hjt4DlaNnOkoMya3fB0NcIQMRuVCvW4/isAOoql2f9nk+
- RYM6tQCY3MObaZmL2LDc/B4r4B9RMHLxsbSTWXPloCmYP1fXPfiSlhG9hsi43V4cJfBx
- XUAqLwEgGycPH6NFBZ2SsqzBSNPztKK4PVnPo2LlnDeBca86fIsbaGP8Qm7ulwbz21fz
- 4gPA==
-X-Gm-Message-State: AFq9FYIAeGNYRLipNJM9TO/ONCyJ0ZgzaLwYQDhx8JMveKx6qR72adtp
- WwwZcDHiTNOQmFzo3wDkxJc6PanUfW+DUjn8r76mrqr71sLeU3EAT3QPb/FnosctX1L1KyirqUt
- C1F1RovlhT+Y6xyeZ3k2MGBf0/EPhHh/Dh5/heJROeVIFLyw9WebNdA8K7K+dpcZlt7j7z3coMI
- o1opIM4v+t7aodLJgIt727UApQffWVCWdjAA==
-X-Gm-Gg: AYBFou2tzknBRYuAbcUT7ZFKyxhh+PpWgUjP8xHp0EFh7kDGsjfJr+DYm6kec82s0QF
- tjTPVVNZbU++Bi1mur3mWkSjGNrpIGkR1P6Dtle2B36/nwdlk0eauX1EFZDOo1EDHWLmAv0+ULA
- U8sSai2zki3IYO88OYLQDuqhqXGhNgDsAGZefIMcpoXlg+fvWuaO1hU2XXM3KGCG3OJ6HXUGD6P
- dwnJsExMMhlp2RC/OdRXgY5tYgOq3OBoKZDPk7d3ivc/lWu0IGt1RBwZBP0V+60lAKtgizUUezZ
- ultT9ZzcIlHjjLH/kf8BCMIiXoJRBG5Xhlx0XNxU1GDzsHVMkklEeG6G0ro9Ce61XNctmVeenU3
- E2mj2XIg7GmUhPRDmonOTYUtz9ARtLRaJGx0mkn5o
-X-Received: by 2002:a05:6000:2207:b0:48e:61c9:4e32 with SMTP id
- ffacd0b85a97d-48e61c94e5emr2679199f8f.32.1793207773914; 
- Wed, 28 Oct 2026 10:16:13 -0700 (PDT)
-X-Received: by 2002:a05:6000:2207:b0:48e:61c9:4e32 with SMTP id
- ffacd0b85a97d-48e61c94e5emr2679102f8f.32.1793207773145; 
- Wed, 28 Oct 2026 10:16:13 -0700 (PDT)
+ bh=AOOjb2+T7Uz3dqto95pa8UMd7Sn0XzzF+CFE3iv5nxI=;
+ b=BBWauHDtquTTsysLlxxpQXbbKkt44U1v6BJXINwl/j8XVDmotL/uv8rWY/ZbaWjog3
+ m0ulAUdpqdth3pL/j8iRCU9MEENde77uWuguJ/btygx5o6eLs6OAV/Owd2foJ3SHn1QI
+ YDFWC6l09iqNYXS076JfBo1grJR8ytbLaeUqLLf/cQDR4+sRR1ATDiANEF7nDng9kiOJ
+ SPpirzVblvwnRhPp8vraKodMt/A4B6P8FLnWP+LLpDoVgm2e31Ztb4U6hSY5P5Ub3odF
+ RpWuK6uqy9EKhvGaO4hznOEQtOGDAswx7F5dGRYu3av19zASODjUinOVvChBdJnarWDd
+ FIXw==
+X-Gm-Message-State: AFq9FYLWTxWsfQ27tEKUrNKi3vI6SFplqEifXm+3KJIa5bnKkE5f7hyY
+ xiwKyYzQbsIq4Z/bCZz2MwJs6gXRUxcTZnuKMiJPU8dmQ2gj6KGYgyKVjBBvHwUS0LLjmXfnY9q
+ y/eAdSBApUdPHkP+qSj7hICxmxsSht6fMJroQhvRtjhcKrNMDDGhUBmtnuYAgkdX3fxWDIQ13sI
+ f3XbiQxnTq7rxofGPy29lzOGJ1iivWVL0xVw==
+X-Gm-Gg: AYBFou0+CHmQAs/0I0uijAC3iAIe6bDRGNfgpEXLsYfxENVqmWlO8ZSZ8U9ME6QhWkj
+ 1eQhOBJJAv40TQxhRimlGT9KwQrhmeTMsx6UOQAktOutrluDP6B/IBCdN8laf/Ze+ycVLIxOwd3
+ zxuKAt/TLciQYuqCpFWYJY8Uv98lrVo6QCHctINB74Qcs4GchL2Rk6NGdRTrWSVyUCZrEkaiFhR
+ spL0+tAWvyOT1U5GIC1llT1OQn0xuR7LCdcHuttioiJvdkboyF6AAUwAujKM83FojmwyLEyok9m
+ anvZX79F27HwbmmHR1tjP2jsPkygvdRgo07FZIpc89xDE3jAABG//7bSMkZGUobQK9IsmlgZfB7
+ HzRjiN8Z/mzN/5jr+CSpFYynfDoKWIgXwZJbWxbwm
+X-Received: by 2002:a05:6000:178b:b0:48b:5e2:52dd with SMTP id
+ ffacd0b85a97d-48e5d5c3874mr8409619f8f.11.1793207793051; 
+ Wed, 28 Oct 2026 10:16:33 -0700 (PDT)
+X-Received: by 2002:a05:6000:178b:b0:48b:5e2:52dd with SMTP id
+ ffacd0b85a97d-48e5d5c3874mr8409524f8f.11.1793207792283; 
+ Wed, 28 Oct 2026 10:16:32 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebd4be6sm27065740f8f.37.2026.10.28.10.16.11
+ ffacd0b85a97d-48e4806e208sm23942614f8f.40.2026.10.28.10.16.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:12 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:11 -0400
+ Wed, 28 Oct 2026 10:16:31 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 51/78] contrib/vhost-user-bridge: Use stderr for debug output
-Message-ID: <00c714b33b5ee1b0ced551ab72971191d8b928f6.1793207602.git.mst@redhat.com>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ =?utf-8?Q?Cl=C3=A9ment?= Chigot <chigot@adacore.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, vhost-user@lists.linux.dev
+Subject: [PULL 58/78] vhost: move skip-drain feature check to vhost-user
+Message-ID: <1272a3d91519108ebcb9e5a8f5f1b838ea2ecb24.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -101,14 +101,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,40 +128,66 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
 
-Since vhost-user-bridge is solely used for testing, and
-logging to stderr ensures proper interleaving of debug
-output in automated testing, modify the DPRINT macro to
-write to stderr instead of stdout.
+Currently, do_vhost_virtqueue_stop() calls
+vhost_user_has_protocol_feature(), causing a link failure with
+--disable-vhost-user when other vhost backends are enabled.
 
-Message ID of relevant thread:
-<20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
+Move the assertion to vhost_user_get_vring_base_skip_drain(), keeping
+the protocol feature check in the vhost-user backend and removing
+the dependency from the common vhost code.
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Reported-by: Clément Chigot <chigot@adacore.com>
+Fixes: 5eb2347867ee ("vhost-user: add skip_drain param to do_vhost_virtqueue_stop")
+Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260914165250.88382-2-yodel.eldar@yodel.dev>
+Message-ID: <20260929122223.2164612-1-dtalexundeer@yandex-team.ru>
 ---
- contrib/vhost-user-bridge/vhost-user-bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-user.c | 4 +---
+ hw/virtio/vhost.c      | 5 -----
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
-index 3f0fd0fa49..a6f7ec226c 100644
---- a/contrib/vhost-user-bridge/vhost-user-bridge.c
-+++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
-@@ -41,7 +41,7 @@
- #define DPRINT(...) \
-     do { \
-         if (VHOST_USER_BRIDGE_DEBUG) { \
--            printf(__VA_ARGS__); \
-+            fprintf(stderr, __VA_ARGS__); \
-         } \
-     } while (0)
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 3402accc6f..402d9603c0 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1463,9 +1463,7 @@ static int vhost_user_get_vring_base_skip_drain(struct vhost_dev *dev,
+     bool skip_drain_supported = vhost_user_has_protocol_feature(dev,
+                                VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN);
  
+-    if (!skip_drain_supported) {
+-        return 0;
+-    }
++    assert(skip_drain_supported);
+ 
+     return get_vring_base(dev, ring, true);
+ }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index cbf6e82afb..b25919c5c7 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -23,7 +23,6 @@
+ #include "qemu/log.h"
+ #include "standard-headers/linux/vhost_types.h"
+ #include "hw/virtio/virtio-bus.h"
+-#include "hw/virtio/vhost-user.h"
+ #include "hw/mem/memory-device.h"
+ #include "migration/blocker.h"
+ #include "migration/misc.h"
+@@ -1554,10 +1553,6 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+                                    unsigned idx, bool force,
+                                    bool skip_drain)
+ {
+-    if (skip_drain) {
+-        assert(vhost_user_has_protocol_feature(dev,
+-               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_SKIP_DRAIN));
+-    }
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_state state = {
+         .index = vhost_vq_index,
 -- 
 MST
 
