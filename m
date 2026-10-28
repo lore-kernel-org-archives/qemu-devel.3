@@ -1,106 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B369606A321
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 13:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77116606A31F
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 13:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=GuPLAqmj;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=fx3GL2gw
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ss8tKBTa;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=rt9BaywK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM3zt-0002ST-Of; Wed, 28 Oct 2026 09:47:22 -0400
+	id 1xM43g-0003Sw-2w; Wed, 28 Oct 2026 09:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM3zm-0002RX-DJ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:47:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM43e-0003Sg-Hf
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:51:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM3zk-0000FT-J7
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:47:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM43c-0000bX-VU
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 09:51:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793195230;
+ s=mimecast20190719; t=1793195472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oKwPo2y1+9LCt0tDpALKvVNZXvNd47CM65evbfSeNys=;
- b=GuPLAqmjcDYImQglTZXjRkAzeEi5i6ilus5/taMDwVqjJno2myu2m9u+ye5TinGIqAUZT2
- RCy80/0IScTd4zwyoXffHnF5dtlJpHnwwudIIZZgFepIUWfEhLR4bZnsVuIvRtzQoBzSBF
- /CqQ7LCYoo6Ea90Dpgx5BtZ4k9VR8jQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Nt+13qME/1X5ke5/6lX5gWZQNlRov/02/r9MJgmxQK8=;
+ b=Ss8tKBTa33dECwdmOQ7Mgfze0Mp21h2xCXbLPvoK0fZ5tEbQ4s9C9xvy3lYk+BWblSUFpH
+ 9yAC+qVZctqTnIKPyvQEDjH99FpneiDaIMW5U1DOMMzrKgt2St/YcNTXTrn7S2Hxd77a52
+ cx31RklW477RRhMfrMgoCGASSvSoyWo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-n5qsPLzMNFC5qP--BOM0yQ-1; Wed, 28 Oct 2026 09:47:09 -0400
-X-MC-Unique: n5qsPLzMNFC5qP--BOM0yQ-1
-X-Mimecast-MFC-AGG-ID: n5qsPLzMNFC5qP--BOM0yQ_1793195228
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48b00febba3so633419f8f.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 06:47:09 -0700 (PDT)
+ us-mta-319-gJSP4R2rOCuzoyY_2jFcHQ-1; Wed, 28 Oct 2026 09:51:10 -0400
+X-MC-Unique: gJSP4R2rOCuzoyY_2jFcHQ-1
+X-Mimecast-MFC-AGG-ID: gJSP4R2rOCuzoyY_2jFcHQ_1793195469
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48c430f0f01so821789f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 06:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793195228; x=1793800028; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oKwPo2y1+9LCt0tDpALKvVNZXvNd47CM65evbfSeNys=;
- b=fx3GL2gwEqFDt1CQRACZEGasioo/pItNv1Y2xIAPPCA1xR1+O2SMpPb1OxrpO2OUcq
- Mb1E78SXUoC1K5SbtIRxYVs0AIbV9jA8tF/9wOcRK46hZMOAGKJbyv3ZplmdgYXU8rcm
- O/HH7+ERSdjZ6pyNLpQuISDLrR+aCQ2CybG4gjdt90L0pYkP7LoWMVQthKXkmhmrKD6D
- QTGc0Tl0g39jXx5kyCTtzg4qn62q/Ts9bJbyCQOnR3M+V8tT1S9bpRM8hF9lxYMH0NfK
- G/EoPhqvUztpilc1qkE8q7De2Fzs/gPI/b0xNzYFbFHHoUTTT5sPWXQgTeQ8tR+kq9oz
- LdOw==
+ d=redhat.com; s=google; t=1793195469; x=1793800269; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Nt+13qME/1X5ke5/6lX5gWZQNlRov/02/r9MJgmxQK8=;
+ b=rt9BaywK5wHeGHUZvJF8GPsPYH+Gdt90vyCRKcAhK+81Tnk6n3HNUc0futGCgrvBKV
+ Gr6pb7i5MTmkYD2wwa1odAuB/inbdrfYUT2PNwlrDV0Ty2gx1q/Sm6SxPKdblRc98hsc
+ zRAffJM9SOuIp5CuG5T23q73H6/EEnygBj3Cb2QfnXNMoFLhXnu49R7h/TX/UC9CyuQ9
+ aIYoAu0fC1p7DeyZaOxY/f2kx/70MiaVGT63cgMf0nubgG2gRy9h5hzOSHdCgwDBDvH+
+ aM2QrL0uY119p06jG/75VvthC/bLFtDhFOyx6Eg4fIxP05RqV8KYwb0aBchmn3v83+yr
+ 0S0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793195228; x=1793800028;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oKwPo2y1+9LCt0tDpALKvVNZXvNd47CM65evbfSeNys=;
- b=1SZfYWu+PtOH6qt9odBzr8HDene8/eSiIXqxOL/q+HsU6P8KuFs5bbEWTCzRfSA6pM
- psFwxscaBlBnKz4yFK0hlls+PPnTm7CvAHR5BlA25VXZ3a4e6WMjzDztvw2jPOIzXpBh
- NkDrYYYJC0gSVPrkEO7UtpZfZJCZkLvyG5dpX7zsb2d8Y1dxtB6QFwAhObLsr1SE5pDu
- hBZzfjtfIBdVH0CEEtGtpEm0+Mul6oKJ6G9D4eOSJAh3tf5iZyVBqDSlC226CvQIPwS4
- L7iAxA61cz2fE8/vJho0TOuNVFx7JbOdSk8YYXsH4Bmoc4bY1VYddac4Lzac5S8p5UG9
- RhzQ==
-X-Gm-Message-State: AFq9FYIoNyZNRPqaI/64poxRCVVm7ytRnZblqYGQD78f91BKSmbFdqCi
- 8oRqTEzPfg/4RspABf2hycInDgQvQzqcf0EF/mfdkus75T4wgGaHy927+i/zXwV5P1PUrWcItIU
- c6Bzy8Gd+i4/NCujDtYCVSOXdOzmjsjgh36StVPdFptKUegJDQwVDFLih
-X-Gm-Gg: AYBFou0BlT7dGqtX9H0/Xu/QtFen5Y+bZYdwaWMQ++0rk+tNHqT+p9PHz2/JpBusQL8
- I7cm9uoP5d/CgxPKD3bPuBNmfDqZquXCzGKRAVcjOx8AyoFOYLm6W+BytlolZ7Dz+ovo1GpPANr
- M3Tcg1mWd65HGj/72VqOOSsbMAduYic+2EktbB0fvWVW+FAInWMANYpiFw0kHUXdSqx3mMEXOpW
- W3CEEMFjYosReZeo17UVllCg20qp4V40FsQ4ZF1X6oa4cJ1kmTmz9TK3IWklqJZv5mTUOtCktXK
- teU1W5BgMWIsCGT1zyunCiWJdjLghsjhNuXlPGJfwp+cUQnZUE6qMAWPKnzWCMexDsFr6SsW8Qc
- TLDflhKpyjVHbNaogs0Fci105BvTk71a2Slql1sVj
-X-Received: by 2002:a05:6000:2508:b0:48e:5ea1:260a with SMTP id
- ffacd0b85a97d-48e5ea18152mr4937597f8f.3.1793195227771; 
- Wed, 28 Oct 2026 06:47:07 -0700 (PDT)
-X-Received: by 2002:a05:6000:2508:b0:48e:5ea1:260a with SMTP id
- ffacd0b85a97d-48e5ea18152mr4937525f8f.3.1793195227116; 
- Wed, 28 Oct 2026 06:47:07 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793195469; x=1793800269;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Nt+13qME/1X5ke5/6lX5gWZQNlRov/02/r9MJgmxQK8=;
+ b=zQiZfzPwkIL2lz/F6WUe0m2cHgXvr6r4amXQ8Dq8h9kdGSeu4YlweK8oJ23uqX/slN
+ PWCCIbmRrQdsN/VHG8iewGRUgwtXXf92RZvbKLo4yaSkM4FDE8ZFEsqCFmoet6drZp0Q
+ TI931/E38P3KCFfgTTMn/YZoDj8yUZUPXCbIBrSYimu2z7vT619Vf1OKVxGfrQdPUSlx
+ 6rFk5zKhmttLa58gcC52YukNTLhE+lAE1WkrHO6i0Gkw/APygHan17a1s/oBF8mEp2a/
+ SHxrxhD7+T9ZEksy1X1OyHMsGVj1p7RyIGjx3oPSrsk0G3Mu10k+mNPRtNXnPwEzHbP7
+ kxow==
+X-Gm-Message-State: AFq9FYLTFfNZEcEGNN1H6ue2nqf4YSRViPmi8HU/rvFh2s16eEGtYeGG
+ Owr/V66kDX5HMLrPKItUztbLUz1hb40df4YfEVBGiCNkI5Fe9T/NXl/RB3NISyq+R3tIW/pGXRt
+ SK4NVWnG3H5n4RqSChHGeuZIOUfId/wvEltogWZun4NGScu8rlQAYcSmF
+X-Gm-Gg: AYBFou0GSBUXrOQSiLpNVjfiOqJBPuuaJcvOgTodPLVavG1wkJuCmosU+h0R3hi0gzu
+ m17W0ANV+zKkKH0GNX8ZWOidrT4vCP+6iCWPUtnv6FcZLra9F8/UkwANNHHVRjiHoyzLCu/1fHi
+ uszj6rAIr2SaCOtsX2+Tb6Y4o/EOzltTXtpCM1qm+4B0t78ZH7kIKT/KG4cL4yS0Ze6VTo9op4u
+ 3I9EVQrJiPmW/FrFot1yj5WXqNAo4/3ByIvC4Q07p796gx0IkG9NPstFvkvQI2ApDH+zKCW0LE1
+ j+XKCTJd8D8q/GZzNWn15YEWHRf03QZRw7fP2g0HHZK5gJUuMyiTk8E40X7O20ipKlG+LCKP7KS
+ QZpP0HMg3dsXUrLyQyQkxZxFnBUHPar2/x0gdgA//
+X-Received: by 2002:a05:600c:1913:b0:4a2:1655:87db with SMTP id
+ 5b1f17b1804b1-4a96552db88mr50908605e9.0.1793195469149; 
+ Wed, 28 Oct 2026 06:51:09 -0700 (PDT)
+X-Received: by 2002:a05:600c:1913:b0:4a2:1655:87db with SMTP id
+ 5b1f17b1804b1-4a96552db88mr50908195e9.0.1793195468624; 
+ Wed, 28 Oct 2026 06:51:08 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc39b3sm29535147f8f.10.2026.10.28.06.47.04
+ 5b1f17b1804b1-4a97c9f150fsm43553245e9.10.2026.10.28.06.51.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 06:47:06 -0700 (PDT)
-Date: Wed, 28 Oct 2026 09:47:03 -0400
+ Wed, 28 Oct 2026 06:51:07 -0700 (PDT)
+Date: Wed, 28 Oct 2026 09:51:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Sunil V L <sunilvl@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Anup Patel <anup.patel@oss.qualcomm.com>, Drew Fustini <fustini@kernel.org>
-Subject: Re: [PATCH 0/4] RISC-V: ACPI: Add PPTT support
-Message-ID: <20261028094619-mutt-send-email-mst@kernel.org>
-References: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
+To: =?iso-8859-1?Q?Cl=E9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "odaki@rsg.ci.i.u-tokyo.ac.jp" <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH] pcie_sriov: Avoid capability structure overflow in PF
+ reset
+Message-ID: <20261028095024-mutt-send-email-mst@kernel.org>
+References: <20260921055917.715685-1-clement.mathieu--drif@bull.com>
+ <20261028091349-mutt-send-email-mst@kernel.org>
+ <c86e267518a07ddf993127c0427dce1543410b4f.camel@bull.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20261011182552.1071742-1-sunilvl@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c86e267518a07ddf993127c0427dce1543410b4f.camel@bull.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -128,66 +126,96 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Sun, Oct 11, 2026 at 11:55:48PM +0530, Sunil V L wrote:
-> From: Sunil V L <sunilvl@oss.qualcomm.com>
+On Wed, Oct 28, 2026 at 01:40:24PM +0000, Clément MATHIEU--DRIF wrote:
 > 
-> Hi all,
+> On Wed, 2026-10-28 at 09:14 -0400, Michael S. Tsirkin wrote:
+> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> > 
+> > 
+> > On Mon, Sep 21, 2026 at 05:59:23AM +0000, Clément MATHIEU--DRIF wrote:
+> > 
+> > > The SR-IOV PCIe capability exposes 6 regions (no ROM), each with a
+> > > dedicated 32-bit configuration field. Fix the reset loop to write
+> > > 32 bits instead of 64 bits and stop after PCI_SRIOV_NUM_BARS iterations.
+> > > 
+> > > As a side effect of this change, update PCIESriovPF::vf_bar_type
+> > > to match the number of regions exposed by SR-IOV and rework the
+> > > associated assert statements.
+> > > 
+> > > Fixes: c8bc4db403e1 ("pcie_sriov: Reset SR-IOV extended capability")
+> > > Signed-off-by: Clement Mathieu--Drif <[clement.mathieu--drif@bull.com](mailto:clement.mathieu--drif@bull.com)>
+> > 
+> > 
+> > I queued another patch fixing this, yours will become a cleanup.  
+> > Once my pull is merged, pls rebase and report.
+> > 
+> > Thanks!
 > 
-> This series adds ACPI Processor Properties Topology Table (PPTT) support to
-> the RISC-V virt machine. PPTT allows the guest to discover the processor and
-> cache topology exposed by the machine, which is useful for making better
-> scheduling and cache-management decisions.
+> Hi Michael,
 > 
-> The implementation describes the RISC-V virt cache hierarchy with separate
-> L1 instruction and data caches, followed by unified L2 and L3 caches. It also
-> enables the corresponding cache and cluster properties in the machine SMP
-> description and wires the generated PPTT into the existing ACPI table
-> build.
+> Do you want version rebased on master or another ref?
 > 
-> Unlike ARM, RISC-V doesn't have a way to discover the Cache
-> topology from registers. Hence, I am hardcoding default values for the
-> cache topology structures. These cache topology structures are added in
-> virt.c itself so that a future series can add support for DT as well.
-> 
-> The series also updates the bios-tables-test data and removes the temporary
-> PPTT entry from the allowed-diff list. The generated table is 96 bytes and
-> describes the package, cluster, and processor hierarchy for the virt machine.
-> 
-> This work follows the discussion and earlier work shared here:
-> https://lists.gnu.org/archive/html/qemu-riscv/2024-01/msg00928.html
-> 
-> I have retained the contribution from Sia Jee Heng and added his
-> Signed-off-by tag to the relevant patch.
-> 
-> To enable cache structures in the PPTT, one should use similar to below
-> command line option.
+> cmd
 
+pci branch in my tree will do
 
-acpi side's tiny here. that
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-
-> -M virt,smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluster,smp-cache.3.cache=l3,smp-cache.3.topology=socket
-> 
-> lscpu -C in linux can be used to display these cache structures.
-> 
-> Sunil V L (4):
->   tests/qtest/bios-tables-test: Allow PPTT for RISC-V
->   hw/riscv/virt: Add ACPI PPTT table
->   tests/qtest/bios-tables-test: Update riscv64 virt PPTT golden
->     reference
->   MAINTAINERS: Update Sunil's email id
-> 
->  MAINTAINERS                       |   2 +-
->  hw/riscv/virt-acpi-build.c        |   7 ++++
->  hw/riscv/virt.c                   |  54 ++++++++++++++++++++++++++++++
->  include/hw/riscv/virt.h           |   4 +++
->  tests/data/acpi/riscv64/virt/PPTT | Bin 0 -> 96 bytes
->  5 files changed, 66 insertions(+), 1 deletion(-)
->  create mode 100644 tests/data/acpi/riscv64/virt/PPTT
-> 
-> -- 
-> 2.43.0
+> > 
+> > 
+> > > ---
+> > >  hw/pci/pcie_sriov.c         | 9 +++++----
+> > >  include/hw/pci/pcie_sriov.h | 2 +-
+> > >  2 files changed, 6 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> > > index c41ac95bee..df61f281ea 100644
+> > > --- a/hw/pci/pcie_sriov.c
+> > > +++ b/hw/pci/pcie_sriov.c
+> > > @@ -229,8 +229,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
+> > > 
+> > >      assert(sriov_cap > 0);
+> > >      assert(region_num >= 0);
+> > > -    assert(region_num < PCI_NUM_REGIONS);
+> > > -    assert(region_num != PCI_ROM_SLOT);
+> > > +    assert(region_num < PCI_SRIOV_NUM_BARS);
+> > > 
+> > >      wmask = ~(size - 1);
+> > >      addr = sriov_cap + PCI_SRIOV_BAR + region_num * 4;
+> > > @@ -344,6 +343,8 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+> > >      dev->exp.sriov_pf.vf = vfs;
+> > >      dev->exp.sriov_pf.vf_user_created = true;
+> > > 
+> > > +    assert(vfs[0]->io_regions[PCI_ROM_SLOT].size == 0);
+> > > +
+> > >      for (i = 0; i < PCI_NUM_REGIONS; i++) {
+> > >          PCIIORegion *region = &vfs[0]->io_regions[i];
+> > > 
+> > > @@ -463,8 +464,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
+> > >       */
+> > >      pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
+> > > 
+> > > -    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
+> > > -        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
+> > > +    for (uint16_t i = 0; i < PCI_SRIOV_NUM_BARS; i++) {
+> > > +        pci_set_long(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
+> > >                       dev->exp.sriov_pf.vf_bar_type[i]);
+> > >      }
+> > >  }
+> > > diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+> > > index b0ea6a62c7..5f81e3b1bb 100644
+> > > --- a/include/hw/pci/pcie_sriov.h
+> > > +++ b/include/hw/pci/pcie_sriov.h
+> > > @@ -16,7 +16,7 @@
+> > >  #include "hw/pci/pci.h"
+> > > 
+> > >  typedef struct PCIESriovPF {
+> > > -    uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+> > > +    uint8_t vf_bar_type[PCI_SRIOV_NUM_BARS];   /* Store type for each VF bar */
+> > >      PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+> > >      bool vf_user_created; /* If VFs are created by user */
+> > >  } PCIESriovPF;
+> > > --
+> > > 2.55.0
+> > 
+> > 
 
 
