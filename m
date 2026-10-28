@@ -1,144 +1,127 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A3E606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 07:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C72606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 07:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Kj8rqiQg
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=EC1y5p4i
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLxrP-00031E-4u; Wed, 28 Oct 2026 03:14:11 -0400
+	id 1xLxx9-0004EE-0d; Wed, 28 Oct 2026 03:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLxrO-00030r-1R
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 03:14:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLxx7-0004Do-A3
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 03:20:05 -0400
+Received: from smtpout6.mo537.mail-out.ovh.net ([51.210.91.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xLxrL-0001F9-9H
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 03:14:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793171646;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QxmQ5AxN89rC1HiyefFy0FHMMxtlG6Y/Map2WM9XKmw=;
- b=Kj8rqiQgXInB5MESDsA+2KTrGy89kosKe4U37flKN5NA8VT6scQcInSQraPlpZrNtBScJM
- WBhzJLFoKMEB3tNvFP9kSI46ziasagnqiD/aQGy3hy+3fPKUyjDXNt7nVDP2QrgeS/Qmxk
- FPNUTTmtRysuJsvmHoKDXgvlH+k7RhI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-aPtTQLUAOnmRkcQac9q43w-1; Wed,
- 28 Oct 2026 03:14:01 -0400
-X-MC-Unique: aPtTQLUAOnmRkcQac9q43w-1
-X-Mimecast-MFC-AGG-ID: aPtTQLUAOnmRkcQac9q43w_1793171635
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EEAC1955EA3; Wed, 28 Oct 2026 07:13:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11B5A1800257; Wed, 28 Oct 2026 07:13:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8C76D21E6A04; Wed, 28 Oct 2026 08:13:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org,
- Michael Roth <michael.roth@amd.com>,  John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Mauro Carvalho Chehab
- <mchehab+huawei@kernel.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  David Hildenbrand <david@kernel.org>,  Igor Mammedov
- <imammedo@redhat.com>,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jason Wang <jasowangio@gmail.com>,  Marcelo Tosatti
- <mtosatti@redhat.com>,  kvm@vger.kernel.org,  Alberto Garcia
- <berto@igalia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>,
- Zhao Liu <zhao1.liu@intel.com>,  Jonathan Cameron <jic23@kernel.org>,
- Junjie Cao <junjie.cao@intel.com>,  Anisa Su <anisa.su@samsung.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,  Jagannathan Raman
- <jag.raman@oracle.com>,  John Levon <john.levon@nutanix.com>,  Thanos
- Makatos <thanos.makatos@nutanix.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,  Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-block@nongnu.org,  linux-cxl@vger.kernel.org,
- qemu-s390x@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Sergio
- Lopez <slp@redhat.com>,  qemu-arm@nongnu.org,  Palmer Dabbelt
- <palmer@dabbelt.com>,  Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,  Daniel Henrique Barboza
- <daniel.barboza@oss.qualcomm.com>,  Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>,  Chao Liu <chao.liu@processmission.com>,
- qemu-riscv@nongnu.org,  Song Gao <17746591750@163.com>,  Bibo Mao
- <maobibo@loongson.cn>,  Xianglai Li <lixianglai@loongson.cn>,  Jiaxun Yang
- <jiaxun.yang@flygoat.com>,  Pedro Barbuda <pbarbuda@microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,  Nicholas Piggin
- <npiggin@gmail.com>,  Harsh Prateek Bora <harshpb@linux.ibm.com>,  Amit
- Machhiwal <amachhiw@linux.ibm.com>,  qemu-ppc@nongnu.org,  Zhang Chen
- <zhangckid@gmail.com>,  Li Zhijian <lizhijian@fujitsu.com>,  Alistair
- Francis <alistair@alistair23.me>,  Alexander Graf <graf@amazon.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,  zhenwei pi
- <zhenwei.pi@linux.dev>,  Ani Sinha <anisinha@redhat.com>,  Luc Michel
- <luc@lmichel.fr>,  =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,  Jamin
- Lin
- <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,  Samuel
- Tardieu <sam@rfc1149.net>,  "Denis V. Lunev" <den@openvz.org>,  FangSheng
- Huang <FangSheng.Huang@amd.com>,  Tyrone Ting <kfting@nuvoton.com>,  Hao
- Wu <wuhaotsh@google.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
- <its@irrelevant.dk>,  Jesper Devantier <foss@defmacro.it>,  Aditya Gupta
- <adityag@linux.ibm.com>,  Glenn Miles <milesg@linux.ibm.com>,  Conor
- Dooley <conor@kernel.org>,  Sebastian Huber
- <sebastian.huber@embedded-brains.de>,  Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,  Jason Herne
- <jjherne@linux.ibm.com>,  Titus Rwantare <titusr@google.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Anthony PERARD
- <anthony@xenproject.org>,  Peter Xu <peterx@redhat.com>,  Chinmay Rath
- <rathc@linux.ibm.com>,  Hendrik Brueckner <brueckner@linux.ibm.com>,
- xen-devel@lists.xenproject.org,  Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,  Fam Zheng <fam@euphon.net>,
- Farhan Ali <alifm@linux.ibm.com>,  Alex Williamson <alex@shazbot.org>,
- Tao Tang <tangtao1634@phytium.com.cn>,  Stefan Berger
- <stefanb@linux.vnet.ibm.com>,  Fabiano Rosas <farosas@suse.de>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Artyom Tarasenko
- <atar4qemu@gmail.com>,  Yoshinori Sato <yoshinori.sato@nifty.com>,  Jiri
- Pirko <jiri@resnulli.us>,  Eric Auger <eric.auger@redhat.com>,  Laurent
- Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
-In-Reply-To: <auC-ilqUJq27neSR@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 27 Oct 2026 15:08:58 +0000")
-References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
- <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
- <atsxLV5YZo8dr-8G@redhat.com>
- <CAMxuvazd7G_NBOM_c6BxZn5PFSw=XQUHueHqBoQQfpzPPgi9qA@mail.gmail.com>
- <87zevz5h4k.fsf@pond.sub.org> <auC-ilqUJq27neSR@redhat.com>
-Date: Wed, 28 Oct 2026 08:13:44 +0100
-Message-ID: <87o6ce47rr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLxx4-0001md-4x
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 03:20:05 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [79.137.60.221])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4jDzJs1dXdz49kT;
+ Wed, 28 Oct 2026 07:19:57 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Wed, 28 Oct 2026 07:19:57 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.121])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jDzJs0P21z6MbR; Wed, 28 Oct 2026 07:19:57 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 50A211B43259;
+ Wed, 28 Oct 2026 07:19:55 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-114S0082a39c006-71ed-4d84-abf0-fbee0c3ba053,
+ E08929C5676352A1F51837021B168DD299C323AB) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.66.77.115
+Message-ID: <bb954a2d-4ab7-4007-b73b-324788230098@kaod.org>
+Date: Wed, 28 Oct 2026 08:19:54 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/13] hw/arm/aspeed: Add AST1040 FMC/SPI controllers
+ and unimplemented devices
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 11681493009582173229
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGhYhZIoHZM34CGe2uu7K5VJDQZJZHS1cyQwy6SyoInkXzagW0yp/+sRUDl/2fSNz7QwKpH+w5LPKzcrrr/SyE/IH2Y6fcATpOl+2/9uYIYHOXINPzogmYjk9VapH4elqgI9hcPiz0TTHDxuQTm4U6iB0lhWUknsaaZL/mJWznG82XoD3xzbgPzL5yQgCmnDHn/pxveP87I7dtsa7Y4Wil41OFkCmQXuRM2n/ku1Hafajq94azed8mV4BxRiBvUhZa+jw8BL8MJ8gP7Cg9nbUmVyKyRtNc/oDdghaAs7icFpzoDOecZc0NXqeOlkSkZFO6w8qLkOxd23YL/nX0g6qiMguX880+EuV8P3C5GXJgkKzJPePGGLUT0esu400pxQC3nxFAD8WOblrEjfsSVhvO5E4Mkcs308GZAxFCN3kHlfBNsf2gID8ytjzDhJCvuPchoqyLVJQmAnLKY911Weu/upO8Hbisr9WiHgbkugpaAZUcI7mgr7JS4sDYGjo0i10Zjo+jsCyFgBFkOfkugX+BeEiqSPwCLQB0ekGACrcOnICnuaxU81ecq10Iwt8HVn3mPJtOFHy5hbFcHa/HrVJJs18ODGCnhPpccu39vqvyyRojWKlpJujAa9PAeqYMsvPNQ0lskTdmSiatv5COUIsQj/cCkdp2nJCitW78iIqc6Ag
+DKIM-Signature: a=rsa-sha256; bh=3wjhpN+608LaVaqog1a6YqIAg8OjyWtJtcAsAiZOz4Q=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1793171998; v=1;
+ b=EC1y5p4imAjwVKg8dv+gcP2fVmfcKaQG1s1kvHg+unL4ML2PsL9hWz/Rsf/9SjOLiWzIrysS
+ TqjWkoMMDgi+drvLiAPBoeShVlO+KvoGdC5V8LvNQZiHlKeszIbsFo6lFCooPcwTSG0N3kTL5nW
+ LhUZ7DkVpisbtarsvsizvBJTyMzhuzoAMShTHWTSXK1CyuMhJquEIBb2CJrWk6Ku09Autnwy8rd
+ AB4zQUb/g9GShjn7tspvcnSEle+3bnmhNFWVk2iCu1rULqWo+tqtsX8cIR3gGYF7rFc0/IUssgv
+ 0ojcRZJKYVt/BbRVEy2OXnWgJWvRTw4CZlCkWOjCE2fXQ==
+Received-SPF: pass client-ip=51.210.91.25; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo537.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,109 +133,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 10/28/26 03:31, Jamin Lin wrote:
+> v1:
+>   1. Fix AST2700 segment end address decoding
+>   2. Fix AST2700 DMA flash address mask
+>   3. Rename w25q32dw to w25q33pw and add the SFDP table for the W25Q33PW,
+>   4. Correct the AST1040 A0 silicon revision ID
+>   5. Add FMC and SPI controllers
+>   6. Add the FMC/SPI filters, OTP, ATC, I3C and Caliptra register
+>      regions as unimplemented device
+>   7. Update the AST1040 functional test to use the official pre-built
+>      image from aspeed-mcu-fw-hub v01.00.
+> 
+> v2:
+>    1. Add w25q33pw as a separate flash model instead of renaming w25q32dw.
+>    2. Add the AST1040 SMC reset value table.
+> 
+> Jamin Lin (13):
+>    hw/ssi/aspeed_smc: Fix AST2700 segment end address decoding
+>    hw/ssi/aspeed_smc: Fix AST2700 DMA flash address mask
+>    hw/block/m25p80: Add Winbond W25Q33PW flash
+>    hw/misc/aspeed_scu: Correct AST1040 A0 revision ID
+>    hw/ssi/aspeed_smc: Add AST1040 FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI filters as unimplemented
+>      devices
+>    hw/arm/aspeed_ast1040: Add OTP as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Anti-Tamper Controller (ATC) as an
+>      unimplemented device
+>    hw/arm/aspeed_ast1040: Add I3C as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Caliptra as an unimplemented device
+>    tests/qtest/aspeed_smc: Add AST1040 SMC tests
+>    tests/functional/arm/test_aspeed_ast1040: Update AST1040 image to
+>      aspeed-mcu-fw-hub v01.00
+> 
+>   hw/block/m25p80_sfdp.h                      |   1 +
+>   include/hw/misc/aspeed_scu.h                |   2 +-
+>   hw/arm/aspeed_ast1040.c                     |  45 +++++++
+>   hw/block/m25p80.c                           |   2 +
+>   hw/block/m25p80_sfdp.c                      |  36 ++++++
+>   hw/ssi/aspeed_smc.c                         | 131 +++++++++++++++++++-
+>   tests/qtest/aspeed_smc-test.c               |  61 +++++++++
+>   tests/functional/arm/test_aspeed_ast1040.py |  12 +-
+>   8 files changed, 278 insertions(+), 12 deletions(-)
+> 
 
-> On Tue, Oct 27, 2026 at 03:54:03PM +0100, Markus Armbruster wrote:
->> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->>=20
->> > Hi
->> >
->> > On Fri, Oct 23, 2026 at 2:04=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com> wrote:
->> >>
->> >> On Tue, Oct 20, 2026 at 02:46:11PM +0400, Marc-Andr=C3=A9 Lureau wrot=
-e:
->> >> > PciDevfn is a bit special, since it accepts integer and string as
->> >> > setter, but only output integer as getter.
->
-> snip
->
->> >                                                       But I agree we
->> > could do better.
->> >
->> > There are multiple options. We could keep declaring the property as
->> > str instead. In this case, the getter should probably return a string
->> > for consistency and correctness. This might surprise some existing
->> > users though.
->>=20
->> I.e. ditch numeric suppport for numeric addresses, right?
->>=20
->> Incompatible change.  Do we care?
->>=20
->> If we don't, we should be honest about it and mark qom-get unstable.
->>=20
->> > We could introduce new properties like `devfn-str` and `devfn-int`
->> > that alias the same value.
->>=20
->> Compatibility break.  If breaking compatibility is okay, I'd rather use
->> the opportunity to get rid of cleverness, and go with your first option.
->>=20
->> > We could also introduce a new structured QAPI type.
->>=20
->> What kind of type do you have in mind?
->
-> IMHO the root cause design flaw here was to overload 'addr' as a
-> way to set both the slot number and function number, as using
-> one property for two pieces of data is a well known anti-pattern
-> we caution against.
->
-> IOW, we should have had 'slot' and 'function' as separate properties
-> from the start.
 
-Fair.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Our modeling of PCI is old and weird.
+Thanks,
 
-What we call "pci-device" isn't a device, it's a function, where
-function 0 sort of stands in for the device.
-
-Its "addr" isn't a PCI address, it's the address of the function on its
-PCI bus, i.e. the tail of a PCI address.
-
-> From a CLI POV, we could easily change 'addr' to mean only the slot
-> number, since it is always parsed in string format without the
-> magic (slot << 4) | function encoding. Then add a 'function' prop
-
-In CLI, HMP and QMP string (not integer), value "5" is shorthand for
-"5.0", and means device 5, function 0.
-
-We could deprecate the .FN part in favor of a new property "function".
-
-Once we drop support for .FN from "addr", its name becomes even more
-misleading than it always was.
-
-> The challenge is the impact on QMP with strict typing, as ideally
-> int format would soley represent the slot number, but today the
-> int format is encoded (slot << 4) | function.  So anyone relying
-> on int format in QMP would silently have a semantic change if we
-> altered what 'addr' means.=20
-
-That's a no-go.
-
-> Deprecating 'addr' entirely and adding brand new 'slot' and
-> 'function' properties would be a significant disruption to
-> a syntax which has been documented for years (decades).
-
-What about this:
-
-* No change to PCIDevice member @devfn: encodes slot and function as an
-  integer.
-
-* New "pci-device" properties "slot" and "function".  "slot" sets just
-  the slot bits of @devfn, and "function" sets just the function bits.
-  Both default to zero, so specifying just "slot" gives you
-  PCI_DEVFN(slot, 0), which makes sense.
-
-* Deprecate "pci-device" property "addr" for QMP.  We can keep it around
-  for longer than the required grace period if that helps.
-
-* Declare it legacy for CLI and HMP, with no intent to remove it.
+C.
 
 
