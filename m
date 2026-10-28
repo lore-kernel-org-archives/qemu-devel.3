@@ -1,101 +1,57 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23233606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78EE606A31F
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=l0eAN80u
+	dkim=fail reason="signature verification failed" (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=m1NrmLs1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM6BX-0000uj-TU; Wed, 28 Oct 2026 12:07:31 -0400
+	id 1xM6By-0001Bx-DE; Wed, 28 Oct 2026 12:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM6BP-0000u3-Ny
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:07:24 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xM6Bp-00017Q-TT
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:07:50 -0400
+Received: from out-185.mta1.migadu.com ([95.215.58.185] helo=mta1.migadu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM6BO-00058V-7D
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:07:23 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-8b0f59a5fdaso11168057b3.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793203641; x=1793808441; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=csupwtguHGj40ZjGNsO/cWJDb7VvOw9ZCsf9ca+ttVs=;
- b=l0eAN80uhQxWJiiw9ZieJv0Z9yqXzevIOnltbtFC6HTvcIMho7XquMbjqdkGE/kZNg
- 6DIyxJMxRai0E2RqCPg5hP41irfXogFRTzWIciT19QcZaZnJbogZ1WLL4GjCbi463ocJ
- Y5JXlZfIlkZKDTNOhSYxvpPMLVLrdvUiQbacOtV+RpEFhGcCXjChzVc/byew2phNvmKy
- TcxiTunenW2WeV9/g5YAGI1869BD1sYAJ0ZVkieGQzGod8cY7tDtUCOqkW1kiEENmUNN
- KIq1FJA6V3/3RsPAEMFRby4NJPIIgbLaPNOTdA8QOpPxNZtT/2ZSFT1lD7dLQh0uKQod
- M4qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793203641; x=1793808441;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=csupwtguHGj40ZjGNsO/cWJDb7VvOw9ZCsf9ca+ttVs=;
- b=O2p4WxTOUr5mL7Gq6CEJaDogV4btgwZq/zUbU/albDgFRdMCAR1jj1oiUHZx8MFRsC
- 3RJcg7lSp+1CIy+fT5qrA3AnOXxjEdfB9NkLW3kv82yui3W89ux9MXi3cFxdvYK3+p66
- Cax1Y07STK2kLPKCUMPZPcEbkoqyDTrsKPXbI8kJrvIIh68cH5Tt9oasGOwmr/V2dQxt
- l8ogAyK+SV2ImgWtsvN9fbe0Ua8yWkPgeVCNckucmtRlj8vRfBdKr5iYKRe3IftuNLsL
- CRlEfvNAcQCuhTsV3DIGR+DaSPPJZ/247/8/mk5juTqdbV63W5Oy1l4pks9z5ZXeYWee
- a0dg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzW2LT7YFtsH3m7dFZhf05p/JFkfcD/EFn5V+KEaHj2g/6gxy5j50v65rmqcg8Sf5KtjT3Jmn/EbevI@nongnu.org
-X-Gm-Message-State: AFq9FYJ0iYB+3UT8qE1VI6YH5zZNAWETq1ugB8bKzji0MAs+IGzq6guW
- 9SzD6CjhnveFaMmj2rzx726LSix3MStbkE5BE/O1PLSsPsjGD+FvFqdbBpz+M8xXbF0=
-X-Gm-Gg: AYBFou1Mj1JEaxTl2TuHy1jDnLFtrhOtBqX102JTLDfgYBToAMflV/VNM+VrxIlctrh
- ZK8+/9ja82ixTksavKuIEQ06rhuiJMpy3eFTZHzmjzR6QafcG0Nqkks1Aw0tw6+IKpUwrC0gFvq
- vtxFOHdythOJsjET18JdFsCnCVxG7GUF1MLeXPrGcoi+mnlEU/LPSnNwOnoJKWv0SHru3q4NR0R
- LrAbuC0ymKphKGqxr48gAyVUhvICGN2LuSOggMr9Ai8zOTFcUhH2uBmxFW+81ztvU6k56knSCrN
- OfRNCqGStrDbNYWKK9fEb2HCucpeRKOUJ4ImBL6T15QPi5DurFUSTs9YAJbd+tG0QYlgD0L38Yg
- V42lmbm5iSu04aHghtRlL9xCsB3WwAdvwxcTxdFB9DsywuqDbXqwJiGSViqhRfodEI8AFjCHrQ9
- xq4QCLtrvXSYTC9ypXAl4uWoA3tf9DX+wyTRt1zUFvLqzQoN8cjsvI4gmHYWDDPsiUb2FWY6s8q
- FE8llufAi3XSZehc4evu2guJ+AfRdFLW69SWjbm0WH/BfzpNt1zRIftb8RZbChWjuH9jN87TDYz
- fDK6rIA15fIeSdMDMkT7ZxvQywlHcnarTH1AHDriQnNsJZzYzku2GZFB6zFFk7jzXvDHTQZMIys
- zIE/24Nb0UAs=
-X-Received: by 2002:a05:690c:4dc5:20b0:88e:edf8:e375 with SMTP id
- 00721157ae682-8b1b599b9a9mr16829697b3.5.1793203640653; 
- Wed, 28 Oct 2026 09:07:20 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6?
- ([2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-8b19e5c7d50sm31104697b3.30.2026.10.28.09.07.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 09:07:20 -0700 (PDT)
-Message-ID: <5dd0039d-dc77-4d45-bf84-2ccdf6c0762f@linaro.org>
-Date: Wed, 28 Oct 2026 11:07:18 -0500
+ (Exim 4.90_1) (envelope-from <junjie.cao@linux.dev>)
+ id 1xM6Bl-00059V-DB
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:07:48 -0400
+X-Envelope-To: qemu-devel@nongnu.org
+DKIM-Signature: a=rsa-sha256; bh=CC+n9M+e/BqssdwLRIy9oa/TvpyF3v8MjmdKwGPjIAA=; 
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793203661; v=1; x=1793808461;
+ b=m1NrmLs15iMTkYaqr/Vw+QYHnL1TDN60XK6ijlh3V2/fzipbzDGwqffzhl6fmE/HDJTBZZyg
+ bsOorfInTJ+sLzKEYCd6GWyn5aVfpSrzSaGtN7RTGvW7w3Abl6A2CYVMdlYfSp4gy4zRmz+Xha8
+ RZFZsdjQRF8qqtEcxH9GxT+A=
+X-Envelope-To: qemu-devel@nongnu.org
+Received: by smtp.migadu.com with ESMTPS id b1889528c61227af;
+ Wed, 28 Oct 2026 16:07:41 +0000
+X-Mizu-Trace-ID: b1889528c61227af
+X-Migadu-Flow: FLOW_OUT
+From: Junjie Cao <junjie.cao@linux.dev>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, marcandre.lureau@redhat.com, sundayjiang@tencent.com,
+ kraxel@redhat.com, fa1rid@live.com, qemu-stable@nongnu.org,
+ junjie.cao@linux.dev
+Subject: [PATCH] usb-host: reset the open retry count after a successful open
+Date: Wed, 28 Oct 2026 11:07:27 -0500
+Message-ID: <20261028160727.780978-1-junjie.cao@linux.dev>
+X-Mailer: git-send-email 2.43.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/14] target/mips: Share MIPS16e/microMIPS 3-bit GPR
- xlat mapping
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20261026162034.32711-1-philmd@oss.qualcomm.com>
- <20261026162034.32711-11-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261026162034.32711-11-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=95.215.58.185; envelope-from=junjie.cao@linux.dev;
+ helo=mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,30 +64,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-21.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/26/26 11:20, Philippe Mathieu-Daudé wrote:
-> The 3-bit register fields of MIPS16e and microMIPS 16-bit
-> encodings map to the same 8 GPRs. The map is duplicated,
-> and we want to re-use it for nanoMIPS. Rename as common
-> gpr3_m16() helper, using the decodetree !function signature
-> so both the legacy and the decodetree decoders can call it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> ---
->   target/mips/tcg/translate.h               |  1 +
->   target/mips/tcg/translate.c               | 11 ++++
->   target/mips/tcg/micromips_translate.c.inc | 61 ++++++++++-------------
->   target/mips/tcg/mips16e_translate.c.inc   | 19 +++----
->   4 files changed, 45 insertions(+), 47 deletions(-)
+usb_host_auto_check() gives up on a matching device once three opens
+have failed, and clears the failure count only when a scan finds no
+matching device at all. A device that re-enumerates, e.g. after a
+firmware reboot, is closed on NO_DEVICE and usb_host_close() rescans at
+once, while libusb still lists the old address: that open fails and
+counts, the next 2 s scan opens the new address, and nothing clears the
+count. After the third such cycle the device is skipped until a scan
+finds it absent or the usb-host device is re-added.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Clear the count once an open succeeds. A device that cannot be opened at
+all still stops after three attempts.
 
-r~
+The source-level fixture attached to #4673 reproduces the same sequence;
+its remaining cases expect a failure budget per enumerated device, which
+this change does not add.
+
+Fixes: 3ee886c5ba77 ("usb-host: limit open retries")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4631
+Buglink: https://gitlab.com/qemu-project/qemu/-/issues/4673
+Cc: qemu-stable@nongnu.org
+Reported-by: Farid <fa1rid@live.com>
+Reported-by: Prateek Rungta <https://gitlab.com/prateek2>
+Suggested-by: Farid <fa1rid@live.com>
+Signed-off-by: Junjie Cao <junjie.cao@linux.dev>
+---
+The source-level fixture attached to #4673: 15 tests, 7 failures on
+master d29412cca5, 5 with this change. The two reconnect scenarios pass
+(repeated-reconnects, success-resets-own-budget). Of the other five,
+four expect a failure budget per enumerated device and one expects a
+libusb_get_device_list() error not to reset the count; both are outside
+this change.
+
+Farid's attached patch resets the count inside usb_host_open(); this one
+keeps it next to the failure count in usb_host_auto_check().
+
+ hw/usb/host-libusb.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index 8f7ced95cf..5a369e2ebf 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -1924,6 +1924,7 @@ static void usb_host_auto_check(void *unused)
+                     s->errcount++;
+                     continue;
+                 }
++                s->errcount = 0;
+                 break;
+             }
+         }
+-- 
+2.43.0
+
 
