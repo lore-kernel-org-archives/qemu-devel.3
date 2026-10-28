@@ -1,111 +1,117 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C5F606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D90606A31F
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HSG99Rjk;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=hMASPbQy
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ZNCy3NnP;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=MUhdpZiu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7IN-0005rm-Uo; Wed, 28 Oct 2026 13:18:40 -0400
+	id 1xM7G1-000872-Px; Wed, 28 Oct 2026 13:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HO-0003QJ-Ml
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FW-000706-0e
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HM-00043B-I5
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FT-0003nQ-UY
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207855;
+ s=mimecast20190719; t=1793207739;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
- b=HSG99RjkouZR0ICMKeaU2h9n8SozE3bIe1rfB9WMCwPB+sJDiRsTKt/jtDo6HNKdmk7+V3
- XPjA6mwewucTaPddqFFfJ9Sr+XC0UFOKj2AICogfkbCGVPHLU9OrXRoVhRLNpHhOGViLSK
- 7Osk1fe4eGjEML/0hVKwxuce/qjqd3c=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CjpUzIsNOb0Gi1AMTefZD+fS3OB+LfiwSls4fdj5fMg=;
+ b=ZNCy3NnPihT5CLy/a3Fcrp1QrMmOW0II4PHj2Prsv0c8OOD/nJZcEzgmkOFYE9DqJWCEti
+ 840fnG+MBgyJ9msbzlsYHfYGhuc0GkbYAqzzOvSk1zT/Xr3dVi6mBbgRtQBclKPD5c5R4K
+ HdN+7vxNlDdvg4nPIsN/Lln7GHoAAok=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-Cu074L3cMmi4gRJ3vNvqQQ-1; Wed, 28 Oct 2026 13:17:34 -0400
-X-MC-Unique: Cu074L3cMmi4gRJ3vNvqQQ-1
-X-Mimecast-MFC-AGG-ID: Cu074L3cMmi4gRJ3vNvqQQ_1793207852
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4a35e1d2dddso11376025e9.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:33 -0700 (PDT)
+ us-mta-576-SFHbFDREMv-d4vY1cJBULQ-1; Wed, 28 Oct 2026 13:15:38 -0400
+X-MC-Unique: SFHbFDREMv-d4vY1cJBULQ-1
+X-Mimecast-MFC-AGG-ID: SFHbFDREMv-d4vY1cJBULQ_1793207736
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a204ac318aso7501475e9.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207852; x=1793812652; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
- b=hMASPbQyoxOg2YSe9Nkb7p6ull4rV/xOzs69gpFCbpht88oJY92VpB05noi/vbEAiR
- fpayAKa9kmqI7H7hYxPRZevdPPH1T8nrr6Sr2tk/dJD3uF+MQguDgbhGHoNp0iQovupY
- dNa/+fKzhrA5/D24aa1UV0x8dvp/tpJnynt5AtP3xZnzv2p4r3CKD/GGI8eRSv+2B6cZ
- I9EGJaJ4wFOkyRM9EafUijzAzBseB+Yz4WUxpTf5WVqXY0UY+Yavp0zwXCSLi+qg6CGy
- 7uepn/rFUIULX+DrGPIIYJd9ZvwFilXdkzRs/KctprJRM/DfQV+SFd7ETD1o2kz1+42q
- mgHQ==
+ d=redhat.com; s=google; t=1793207736; x=1793812536; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=CjpUzIsNOb0Gi1AMTefZD+fS3OB+LfiwSls4fdj5fMg=;
+ b=MUhdpZiu0B8xoBVk6k2cZ45Y95RalXhehS8lZWECkRWq0IZRnG++F7CEM7VQszkcex
+ WxXPfX7Caxe4L/jWear+62xoEYqAJJTIWukplIz7hETSCXDvhqKDy39tKN6J5tawO3o9
+ U1wm3X6Wyd7tN8GmYoK4ezPrctclFK276wBF1c3+F9BXXB9evadZVxQIRhXBUA7r5Wdn
+ cCvD1L3h8JSZr8pq/mNxn5ysDY104CyBgr4prjEpd5rRVBhNsc9YypkGKQ+6WzpIhK2c
+ umk+kXZH8J7NH0IhXQa9P4w2minjGOQ/ZWzxmOhiQHWFdChiH3/av6jYj4ruO/4cy4/U
+ Z6tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207852; x=1793812652;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
- b=bHbeeqM2hJa8OQn3uPE93AAEjKuV0tHIEyRQ8Z/NMNrRUbYDrDyoUhZgrI0LjMA8b3
- 2vjYwK05Iu8rsa4T24cdcZ0hCG4Ze8pve7ntw8iEqWeRDWUm7uAVhjijwIjj4eocYTUz
- jW2GfsOiQH9OfZ1OmJYY1AwkxfmjFMQvg2OmklDS0cD9C/gCafAkfINIaIVzgDtqI7lm
- Vyp7/vjWzE56a6v3w7iE+OlfRFilOE31EI4r9TsiBL/ztEScJ1dYBfq0HnjLS7hRosEo
- Smu8XzbPe0eU3X3xx6a2GMANbsu98/krQcJ7ZLx+86CGJ1lvqhHa5LSvu5KK8l3+YK3B
- 68uQ==
-X-Gm-Message-State: AFq9FYLFKOhjtAKt9UO/vhLFETHV64/S6h0yfa+AmADR62lJrQfHmxG0
- cKlaacrRZgwFYAUg0xdR7J4u04ZAWfe9X0GddBYTbXzEnO34igiz4Dc3bymhEbrKBBF35XNSwTa
- 1L/7eaAtIm0yCKEsojwB8W7h34lvilFGCj4PWK4+R/f5h70auZtpG+1x0J6VaL69nTYDQ5MhmGJ
- eAC8q/Vj+XdJJXebxa8oiw/wByVEDoo2qCrg==
-X-Gm-Gg: AYBFou2RLe2oqV4/b6AZJIRIEcS4nRSJRpe24Q7N9tmECMjaIw7IgeW/k6gLx0GadVG
- Ov5/zg7D0+zZyJFL2Mr8wuR03It1LCKm5MQQfB3EnhXX6YvxUJZvKhX7kVyupoi8SF+sM4VLXeU
- P6wKDeHjCXXe0XOjOJkZzXB3EiLCUV0EvLB75tztE0NiNHW0zsWRVvZdy4AFMLv/n8OaUOF4McA
- FQ2zAxGWYIkJ2cUG9+8FaQVD7z4hMGVCYzBD5/2b3fZly3q0Jx+Dkcjmy99pq+XgG1s1f4vWwWC
- o4nn6BkKPVlkQw7SztIPb+EUJMTQAgq/qlNbINlKMMNMRkxJzdulH6Bw0Mw/O9cmcMXmV/GlAae
- 0/sTOMPMo1+su4qTtpCNfTdcH3KfkpgwZDtk0oXip
-X-Received: by 2002:a05:600c:37c3:b0:4a2:1867:10e8 with SMTP id
- 5b1f17b1804b1-4a96701830cmr66182545e9.25.1793207852188; 
- Wed, 28 Oct 2026 10:17:32 -0700 (PDT)
-X-Received: by 2002:a05:600c:37c3:b0:4a2:1867:10e8 with SMTP id
- 5b1f17b1804b1-4a96701830cmr66181835e9.25.1793207851556; 
- Wed, 28 Oct 2026 10:17:31 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207736; x=1793812536;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=CjpUzIsNOb0Gi1AMTefZD+fS3OB+LfiwSls4fdj5fMg=;
+ b=tdjH+lra1VmXbAToVVJ5/D5C01Blwl+Aow0ZmjmnTGqfOD7YjpBTEkWXaU+9Hn6rvS
+ uIgUrU9yrgTVuzBDwV09Uy7axIsktvk//tsRa7CPClQn2zKEGmhIrKDwckgaEhkVCBCd
+ WSWPWV7g6pq4dsOTA+cI4K3jSmTg6xoQCRCTSBL7YMm7DHPtuyjdxBAHl+D9fxXbYMlz
+ W2ggQBrXjuB9FA47ous8sQEwJRslPyZvxXuo9xonBmzL2hvBtSVDDPqYw/YytqgtcayD
+ 3kUrXAE40ZIkbUgPiP5ADDtEtyG+Hi2jBNIR49usJB+4bghD/8kBZK2LWxuQcuBt18t+
+ UrQg==
+X-Gm-Message-State: AFq9FYLDaXAlTJHfgEwAB6sP6UwTkApSRKhcRxyly+L43P6LOeQCiIKz
+ hJsZWblWICMD8c9HpG6JIkqkA+L2B5CddpbcuI9J7ozW0MQpoD8DtCawHikpF3UO0Ot2J4o7jrd
+ T9PjDaRqR14IfIOCotmGWmOzmGrmre9SoXavr37EYSOF04FJ8UxyOykYopqrLHPhf2LLFAxTver
+ w+TaKNwKYCB7T558sVfruVIPQMGA6AmUfPwQ==
+X-Gm-Gg: AYBFou1I/rTaBTBDmpqNM3gVnvgFXu8KBqhHqSUIHna+R4uA+2PufoHQLOJEpQGDUzm
+ +jscOzZvdZXAOnT7ZNpQWfmiFfWLwLWXaOmT9eIXwEMFnagGp+WrDAUqDCk3fC8a3QrEDNsD9JX
+ TueE/t2gPrkzy6H7vvd7HeKU2ItkA9kz0EReEcPFx14hEaxNOCfFiaO0VGVaMiBxme4DENSNWp8
+ 5tUZJxLiXaZTFvCEp8pFd/852Bl4SbtdhqrM7FkqQMk7U+2Gr5tTDLNKud70QV5FFpU+JEvBY4u
+ hQ367ssq+A+p5co0pgz8gbPCPI9xpZhRowNoXliKd/u9Tw0DFCefFygQ75ehZN54ZYfZr8/TPqy
+ MPeeLDuGEeGUMIJDQDDqiq688Ny3xqDvNBEHgkSG4
+X-Received: by 2002:a05:600c:3556:b0:4a2:1cc:6551 with SMTP id
+ 5b1f17b1804b1-4a9678c3cadmr71204515e9.35.1793207736298; 
+ Wed, 28 Oct 2026 10:15:36 -0700 (PDT)
+X-Received: by 2002:a05:600c:3556:b0:4a2:1cc:6551 with SMTP id
+ 5b1f17b1804b1-4a9678c3cadmr71203535e9.35.1793207735736; 
+ Wed, 28 Oct 2026 10:15:35 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7f418afbsm6877935e9.6.2026.10.28.10.17.30
+ 5b1f17b1804b1-4aa7f7f52e2sm6898845e9.9.2026.10.28.10.15.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:17:30 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:17:29 -0400
+ Wed, 28 Oct 2026 10:15:35 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:15:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PULL 75/78] hw/virtio/virtio-mem: Fix error message on invalid NUMA
- node
-Message-ID: <3650cf4f7c7cdd013bb801d5945e57899da195d4.1793207602.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Junjie Cao <junjie.cao@intel.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@linux.dev>, Anisa Su <anisa.su@samsung.com>,
+ linux-cxl@vger.kernel.org
+Subject: [PULL 36/78] hw/cxl: add cxl_destroy_mailbox_t3() as the mailbox
+ teardown counterpart
+Message-ID: <a900c591ce1d3d5a017044f34d658b5b632000db.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,38 +131,89 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Gavin Shan <gshan@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Add space as the separator between "exceeds" and "the number of numa
-nodes:". Otherwise, we will see error message with twisted format like
-below.
+The primary CCI teardown is open-coded, guarded by .initialized, at
+the two places that need it: the reset path (before
+cxl_device_register_init_t3() brings the mailbox back up) and
+ct3_exit().
 
-  qemu-system-aarch64: -device virtio-mem-pci,id=vmem1,bus=pcie.3, \
-  memdev=virtio-mem1-mem,requested-size=0,node=1: 'node' property  \
-  has value '1', which exceedsthe number of numa nodes: 1
+Factor it into cxl_destroy_mailbox_t3(), the teardown counterpart of
+cxl_initialize_mailbox_t3(), keeping the .initialized guard inside the
+helper: the primary CCI is only brought up from the reset path, so the
+first reset after realize and an unrealize before any reset must both
+skip the teardown.
 
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: David Hildenbrand <david@kernel.org>
+No functional change.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261020012404.191329-1-gshan@redhat.com>
+Message-ID: <20260729144645.1552511-5-junjie.cao@intel.com>
 ---
- hw/virtio/virtio-mem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/cxl/cxl_device.h | 1 +
+ hw/cxl/cxl-mailbox-utils.c  | 7 +++++++
+ hw/mem/cxl_type3.c          | 8 ++------
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 7130ed852d..ee6a0c206a 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -846,7 +846,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-     if ((nb_numa_nodes && vmem->node >= nb_numa_nodes) ||
-         (!nb_numa_nodes && vmem->node)) {
-         error_setg(errp, "'%s' property has value '%" PRIu32 "', which exceeds"
--                   "the number of numa nodes: %d", VIRTIO_MEM_NODE_PROP,
-+                   " the number of numa nodes: %d", VIRTIO_MEM_NODE_PROP,
-                    vmem->node, nb_numa_nodes ? nb_numa_nodes : 1);
-         return;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index b7e20e3fe4..608d05165a 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -325,6 +325,7 @@ CXL_DEVICE_CAPABILITY_HEADER_REGISTER(MEMORY_DEVICE,
+                                           CXL_DEVICE_CAP_REG_SIZE * 2)
+ 
+ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
++void cxl_destroy_mailbox_t3(CXLType3Dev *ct3d);
+ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+                                   DeviceState *d, size_t payload_max);
+ void cxl_init_cci(CXLCCI *cci, size_t payload_max);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 603677a97b..bc00fec9f8 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -4843,6 +4843,13 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+     cxl_init_cci(cci, payload_max);
+ }
+ 
++void cxl_destroy_mailbox_t3(CXLType3Dev *ct3d)
++{
++    if (ct3d->cci.initialized) {
++        cxl_destroy_cci(&ct3d->cci);
++    }
++}
++
+ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
+     [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
+     [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 734397da62..04558a114f 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1076,9 +1076,7 @@ static void ct3_exit(PCIDevice *pci_dev)
+     cxl_doe_cdat_release(cxl_cstate);
+     msix_uninit_exclusive_bar(pci_dev);
+     g_free(regs->special_ops);
+-    if (ct3d->cci.initialized) {
+-        cxl_destroy_cci(&ct3d->cci);
+-    }
++    cxl_destroy_mailbox_t3(ct3d);
+     if (ct3d->vdm_fm_owned_ld_mctp_cci.initialized) {
+         cxl_destroy_cci(&ct3d->vdm_fm_owned_ld_mctp_cci);
      }
+@@ -1344,9 +1342,7 @@ static void ct3d_reset_hold(Object *obj, ResetType type)
+                               ct3d->flitmode);
+     cxl_component_register_init_common(reg_state, write_msk,
+                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
+-    if (ct3d->cci.initialized) {
+-        cxl_destroy_cci(&ct3d->cci);
+-    }
++    cxl_destroy_mailbox_t3(ct3d);
+     cxl_device_register_init_t3(ct3d, CXL_T3_MSIX_MBOX);
+ 
+     /*
 -- 
 MST
 
