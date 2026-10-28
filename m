@@ -1,59 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E81606A320
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 22:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBFA606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 23:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=ZaVmHYpF
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=O24GHJbx;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=up+PJvAm;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=O24GHJbx;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=up+PJvAm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMCRW-0001tv-AR; Wed, 28 Oct 2026 18:48:26 -0400
+	id 1xMCdN-0005iX-51; Wed, 28 Oct 2026 19:00:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRV-0001tP-2J
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:25 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRT-0007cn-LJ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:24 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3F57140C1F;
- Wed, 28 Oct 2026 22:48:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF531F01828;
- Wed, 28 Oct 2026 22:48:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793227702;
- bh=0yiUY2Z9qQHK+/rTlkffNQL8k1/sn9HIstSC9OkeCc0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZaVmHYpFM5pgd3Q007lMKsHusEtsu+Xx/zqrv3/CBhlFEtDkzvsWN278xLCaykZF4
- t65Zr9A0KOYY8REFnwZbLE3NYDSB2ajP7/ZuSDudeRp4hiA5b/Ctzwx6Y8jF7bg8a7
- Y+qDm2I+kp7JGSBzwhNxtlAJfapbV2vB2IgTVODAkLhg5LQJN0B5VQYkQRcsEzQyk+
- kdXmWykJL8InIcRjahjt1loOtwUl4iC3ydsTNldQlvMY7FvyBoR5RRivWq4n23akyS
- IEoSUfL8n9F1kENz70uB7cIdWcrfqQtUIg3ClzyVL8kU8rnrOjB/gzFo7S/1fY8lwr
- Ddg9JDZce9q4w==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Keith Monahan <keith@techtravels.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH 2/4] hw/audio: Wire up the harmony driver in meson and Kconfig
-Date: Wed, 28 Oct 2026 23:48:13 +0100
-Message-ID: <20261028224815.32502-3-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20261028224815.32502-1-deller@kernel.org>
-References: <20261028224815.32502-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMCdI-0005i9-Gw
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 19:00:37 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMCdG-0001In-NK
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 19:00:36 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 321AE1F821;
+ Wed, 28 Oct 2026 23:00:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793228430; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ykMIalSQ6CUVG/XUhKXADTssgnkQs6JTAR+57EPJzfc=;
+ b=O24GHJbxAsNBOv+kshFb9sEw5dXIrQng78Q6uJPWCueH2ed9bt5bHkLYIh4ZZUf4gJRph3
+ WqyZ1XXHDl3XmitAvslXhPvGiO02cJQBii7JbeUaoaYq/CT5LL6HCv/skE42asslamMXFV
+ b+PZDaXXvR+LyW24/uoqR/i5YF3SqAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793228430;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ykMIalSQ6CUVG/XUhKXADTssgnkQs6JTAR+57EPJzfc=;
+ b=up+PJvAmQ7RBMEZyH32hd8rEhqwrOzZsjZZA9+kM5/Pp+RJV/owc4r16BGIS1WnhLRAdTU
+ JNC0bj5XBx/XjwBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793228430; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ykMIalSQ6CUVG/XUhKXADTssgnkQs6JTAR+57EPJzfc=;
+ b=O24GHJbxAsNBOv+kshFb9sEw5dXIrQng78Q6uJPWCueH2ed9bt5bHkLYIh4ZZUf4gJRph3
+ WqyZ1XXHDl3XmitAvslXhPvGiO02cJQBii7JbeUaoaYq/CT5LL6HCv/skE42asslamMXFV
+ b+PZDaXXvR+LyW24/uoqR/i5YF3SqAE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793228430;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ykMIalSQ6CUVG/XUhKXADTssgnkQs6JTAR+57EPJzfc=;
+ b=up+PJvAmQ7RBMEZyH32hd8rEhqwrOzZsjZZA9+kM5/Pp+RJV/owc4r16BGIS1WnhLRAdTU
+ JNC0bj5XBx/XjwBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A56EF13419;
+ Wed, 28 Oct 2026 23:00:29 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id VnttEo1+4mr1BgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 Oct 2026 23:00:29 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, mjt@tls.msk.ru,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v4 2/2] scripts: add build_release_container.sh
+In-Reply-To: <20261026210801.179790-3-pierrick.bouvier@oss.qualcomm.com>
+References: <20261026210801.179790-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261026210801.179790-3-pierrick.bouvier@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 20:00:27 -0300
+Message-ID: <874ie5jur8.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-13.30 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ qualcomm.com:email]
+X-Spam-Score: -13.30
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,46 +117,113 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Signed-off-by: Keith Monahan <keith@techtravels.org
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- hw/audio/Kconfig     | 3 +++
- hw/audio/meson.build | 1 +
- 2 files changed, 4 insertions(+)
+> This script allows to easily build a qemu release container, based on
+> dockerfile introduced in previous commit.
+>
+> It names image "qemu/$version" and automatically detects which ubuntu
+> version should be used to build it.
+>
+> $ ./scripts/build_release_container.sh v3.1.0
+> $ podman run -it --rm qemu/v3.1.0 qemu-system-arm --version
+> QEMU emulator version 3.1.0 (-dirty)
+> Copyright (c) 2003-2018 Fabrice Bellard and the QEMU Project developers
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  scripts/build_release_container.sh | 63 ++++++++++++++++++++++++++++++
+>  1 file changed, 63 insertions(+)
+>  create mode 100755 scripts/build_release_container.sh
+>
+> diff --git a/scripts/build_release_container.sh b/scripts/build_release_container.sh
+> new file mode 100755
+> index 00000000000..ae57aa21db3
+> --- /dev/null
+> +++ b/scripts/build_release_container.sh
+> @@ -0,0 +1,63 @@
+> +#!/usr/bin/env bash
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +set -euo pipefail
+> +
+> +script_dir=$(dirname $(readlink -f $0))
+> +
+> +# The oldest buildable release we support is v3.1.0, as previous ones require
+> +# additional tweaks in Dockerfile.
+> +# For building previous releases (down to v0.12.0),
+> +# see: 20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com
+> +oldest_release=v3.1.0
+> +
+> +if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+> +    echo "usage: version [git_repo]"
+> +    echo
+> +    echo "- version: tag or sha-1 (>= v3.1.0)"
+> +    echo "- git_repo: (optional) QEMU repository URL"
+> +    exit 1
+> +fi
+> +version=$1;shift
+> +
+> +git_repo="https://gitlab.com/qemu-project/qemu.git"
+> +if [ $# -eq 1 ]; then
+> +    git_repo=$1;shift
+> +fi
+> +
+> +year=$(date +%Y)
+> +month=$(date +%m)
+> +if git rev-parse $version >& /dev/null; then
+> +    year=$(git log -1 --format='%cd' --date='format:%Y' $version)
+> +    month=$(git log -1 --format='%cd' --date='format:%m' $version)
+> +fi
+> +
+> +# Ubuntu LTS are published every (even) two years in April.
+> +ubuntu=
+> +if [ $((year % 2)) -eq 1 ]; then
+> +    # pick latest LTS from previous year
+> +    ubuntu=$((year - 1))
+> +elif [ $month -gt 6 ]; then
+> +    # LTS published this year should work
+> +    ubuntu=$year
+> +else
+> +    # pick latest LTS from two years ago
+> +    ubuntu=$((year - 2))
+> +fi
+> +if [ $ubuntu -lt 2014 ]; then
+> +    # oldest ubuntu release available with containers is 14.04
+> +    ubuntu=2014
+> +fi
+> +ubuntu=$((ubuntu - 2000))
+> +ubuntu_version=$ubuntu.04
+> +
+> +dockerfile=$script_dir/../tests/docker/dockerfiles/release.docker
+> +docker=$($script_dir/../tests/docker/docker.py probe)
 
-diff --git a/hw/audio/Kconfig b/hw/audio/Kconfig
-index ed93fa2698..ba6f66342e 100644
---- a/hw/audio/Kconfig
-+++ b/hw/audio/Kconfig
-@@ -51,3 +51,6 @@ config VIRTIO_SND
-     bool
-     default y
-     depends on VIRTIO
-+
-+config HARMONY
-+    bool
-diff --git a/hw/audio/meson.build b/hw/audio/meson.build
-index 3312bcec10..f440324cdf 100644
---- a/hw/audio/meson.build
-+++ b/hw/audio/meson.build
-@@ -6,6 +6,7 @@ system_ss.add(when: 'CONFIG_CS4231', if_true: files('cs4231.c'))
- system_ss.add(when: 'CONFIG_CS4231A', if_true: files('cs4231a.c'))
- system_ss.add(when: 'CONFIG_ES1370', if_true: files('es1370.c'))
- system_ss.add(when: 'CONFIG_GUS', if_true: files('gus.c', 'gusemu_hal.c', 'gusemu_mixer.c'))
-+system_ss.add(when: 'CONFIG_HARMONY', if_true: files('harmony.c'))
- system_ss.add(when: 'CONFIG_HDA', if_true: files('intel-hda.c', 'hda-codec.c'))
- system_ss.add(when: 'CONFIG_PCSPK', if_true: files('pcspk.c'))
- system_ss.add(when: 'CONFIG_PL041', if_true: files('pl041.c', 'lm4549.c'))
--- 
-2.54.0
+For docker this gives:
 
+ ERROR: docker: 'docker buildx build' requires 1 argument                                                                                                                      
+ Usage:  docker buildx build [OPTIONS] PATH | URL | -
+
+I think it expects a . or - since the dockerfile is passed with -f
+below. Going back to
+
+  docker=$script_dir/../tests/docker/docker.py
+
+makes it work.
+
+> +
+> +set -x
+> +$docker build \
+> +    -f $dockerfile \
+> +    --build-arg QEMU_VERSION=$version \
+> +    --build-arg UBUNTU_VERSION=$ubuntu_version \
+> +    --build-arg QEMU_REPO="$git_repo" \
+> +    -t qemu/$version
 
