@@ -1,53 +1,53 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD97606A322
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 18:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DC3606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 18:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=TiQO5PwU
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KmpJBpAY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM8Mu-0005c8-GK; Wed, 28 Oct 2026 14:27:24 -0400
+	id 1xM8Mw-0005ch-Tx; Wed, 28 Oct 2026 14:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8Ml-0005aj-Vm
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 14:27:17 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8Ml-0005ah-6Z
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 14:27:16 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8Mc-0003J3-WF
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8Md-0003Jv-00
  for qemu-devel@nongnu.org; Wed, 28 Oct 2026 14:27:12 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 92219407F1;
- Wed, 28 Oct 2026 18:26:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523A81F01825;
- Wed, 28 Oct 2026 18:26:58 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id E18D443CD9;
+ Wed, 28 Oct 2026 18:27:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17761F01825;
+ Wed, 28 Oct 2026 18:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793212019;
- bh=ncuZGiDq7qjELiRW4lF+A0ExaCCvEQiV272wfgrMbWQ=;
+ s=k20260515; t=1793212025;
+ bh=TdxpH9LqEk8teunsiMxYnCMRFckdheAuMSAcz8Ybunk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TiQO5PwUMaqY3e+DWoF6yN5pKMeSBdAZnp2Y4wyoFLWKCNESk1IIpta3UxMuEAECQ
- Nvb92a5r9J9N272cWXe8bleupG0wlPijkTF+jhboHwMc8kx0P1pAMj52nkDr4GhoiP
- ydUlCtVHiA/n2qaC13CLV6AOoM5ltEyO2jI2Mrl5uh6XVJMbann8hhFa4ouhV75A7j
- l6At5uHp0pMqEoS+9Zs5bw2doeTN91REilQKx+71/V1nuN1pBTIjR5QvkAw4/cWrAZ
- w420J8rX8ukUJfGUUUxJM0J7YyhawISNbNDEoDUTx5qCPorLz05SUlgGcZyXmc7DcK
- nGZjk5FAv4hmg==
+ b=KmpJBpAYgTQ67DAeWzSLzdEcHdJgEnHq9ePiK5J1eGPcRCbbTxN9KBP6H5cIEF8P/
+ 2eOjkCepC3qQs61w3FD0o/1uAWCAxw+GA51QX+h9GGIHzXI8T3iIQHKOcdhSPYS8iA
+ MmtVIwxinHgFPHHQq7GosyscxoUjVSSXVU6oswQrKo0xA89KB0+ZRHxdGa9Vm5S5tF
+ HRntAP6+4NwyeAI5giXhhbTBTc9lgU2ca8CASgelVEY/He5VhCmxKbQlVt2Q2porO+
+ D7x1BO3qyy9bNU1pLP9qPmZqzgiCdMMDHThDsWXoxLxNmRYdbK0uff5YvhKz9ifF2d
+ CAKXn/ANnj/ow==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: "Kirill A . Korinsky" <kirill@korins.ky>,
  Keith Monahan <keith@techtravels.org>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 3/9] target/hppa: Only allow 8 BTLB entries for HP-UX 9.05
-Date: Wed, 28 Oct 2026 19:26:45 +0100
-Message-ID: <20261028182651.5950-4-deller@kernel.org>
+Subject: [PULL 7/9] hw/misc/lasi: LASI Harmony Audio presence emulation
+Date: Wed, 28 Oct 2026 19:26:49 +0100
+Message-ID: <20261028182651.5950-8-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261028182651.5950-1-deller@kernel.org>
 References: <20261028182651.5950-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -73,31 +73,61 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+From: Helge Deller <deller@gmx.de>
 
-The physical PA100LC and PA7300LC CPUs implement 8 BTLB entries only.
-HP-UX 9.05 seems to have problems if more are available, so reduce the
-number to 8 entries to allow HP-UX 9.05 to boot.
+HP-UX 9 beeps through the harmony audio chip, and it panics if there
+isn't one, because the 715/64 has no HIL keyboard to beep through
+instead. Emulate the bare minimum of the chip's registers and report a
+running audio clock. There's still no sound.
+In the long run we plan to add a Harmony driver, but for now this is
+sufficient.
 
-Signed-off-by: Keith Monahan <keith@techtravels.org>
+Suggested-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- target/hppa/cpu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/misc/lasi.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index c0ba787974..da48a78569 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -248,7 +248,7 @@ typedef struct CPUArchState {
-      * ??? The number of entries isn't specified by the architecture.
-      * BTLBs are not supported in 64-bit machines.
-      */
--#define PA10_BTLB_FIXED         16
-+#define PA10_BTLB_FIXED         8
- #define PA10_BTLB_VARIABLE      0
- #define HPPA_TLB_ENTRIES        256
+diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
+index f0dfd78b4d..76029804e1 100644
+--- a/hw/misc/lasi.c
++++ b/hw/misc/lasi.c
+@@ -36,8 +36,7 @@ static bool lasi_chip_mem_valid(void *opaque, hwaddr addr,
+     case LASI_IAR:
  
+     case LASI_LPT:
+-    case LASI_AUDIO:
+-    case LASI_AUDIO + 4:
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
+     case LASI_UART:
+     case LASI_LAN:
+     case LASI_LAN + 12: /* LASI LAN MAC */
+@@ -87,6 +86,13 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
+         val = s->iar;
+         break;
+ 
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
++        /*
++         * Harmony audio not yet emulated.  DIAG (0x3c) reports a running
++         * sample clock, which HP-UX 9 checks before using the beeper.
++         */
++        val = (addr == LASI_AUDIO + 0x3c);
++        break;
+     case LASI_LPT:
+     case LASI_UART:
+     case LASI_LAN:
+@@ -158,9 +164,8 @@ static MemTxResult lasi_chip_write_with_attrs(void *opaque, hwaddr addr,
+     case LASI_LPT:
+         /* XXX: reset parallel port */
+         break;
+-    case LASI_AUDIO:
+-    case LASI_AUDIO + 4:
+-        /* XXX: reset audio port */
++    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
++        /* XXX: Harmony audio is not emulated */
+         break;
+     case LASI_UART:
+         /* XXX: reset serial port */
 -- 
 2.54.0
 
