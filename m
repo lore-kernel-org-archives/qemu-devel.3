@@ -1,105 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1C9606A322
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4EC606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=VXgTy4w+;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=KTk0SnfI
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dnvTk8KF;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=M1zj4r7Q
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Fy-0007rR-VR; Wed, 28 Oct 2026 13:16:11 -0400
+	id 1xM7Fl-0007Ej-6z; Wed, 28 Oct 2026 13:15:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FU-0006zo-MA
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7F3-0005nj-5J
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7FS-0003nI-VE
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7F1-0003jG-0B
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207738;
+ s=mimecast20190719; t=1793207710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pf8PmGwR2YJ387k0YNnxAMREMMMwLfksgc13IZc+PLg=;
- b=VXgTy4w+TW8Px4EKB0lW1LwkGLMMwEm/hvbKUI4v+7Mm/XC8zV6tPtoAGpRKDky0LciUPN
- vGqyZTfkxjtRuOuwEl4p2D78PTa6T7a12t8MIabgw/rcC2I6unRYSh55DFRjBxfl7QydsK
- zL4PJ/XSDtg1Y4bNrvqkDLGxPNbroC4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ONBqiIIeXuqhfBEs1ZPmh1Yj9HtXJ7T1cWYaW2ga7lE=;
+ b=dnvTk8KFqnh0eHX6X0O1JIvFaX2VEnxiIerZJQF8O+xIfKLCjOP68j3hwMZLvZNoglmYZf
+ ckPqDgiTlRarpw2vgZvAYQST++T6fav0JqFMyZkegHYa98JjxQS19HdEqQtjZlYlAanQhL
+ ENprSLUm58PTALKq+/dQgwLvV6bSA6A=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-PjNBj-zAOJmSiAD7-SPqfg-1; Wed, 28 Oct 2026 13:15:35 -0400
-X-MC-Unique: PjNBj-zAOJmSiAD7-SPqfg-1
-X-Mimecast-MFC-AGG-ID: PjNBj-zAOJmSiAD7-SPqfg_1793207734
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48e00f3929bso1386180f8f.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:35 -0700 (PDT)
+ us-mta-21-idX3cU0NMXCCI-vfUi0Qqg-1; Wed, 28 Oct 2026 13:15:02 -0400
+X-MC-Unique: idX3cU0NMXCCI-vfUi0Qqg-1
+X-Mimecast-MFC-AGG-ID: idX3cU0NMXCCI-vfUi0Qqg_1793207702
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a9d51dc486so4491805e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207734; x=1793812534; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pf8PmGwR2YJ387k0YNnxAMREMMMwLfksgc13IZc+PLg=;
- b=KTk0SnfIx39/+qIxlYnxahwqg73OYo8LUUWtPc3mdrn3ShelzsKlSp9JOWbZlqKA09
- 7EolxKhhgde6cohHiqB8TFyRZNSxIAayxMj3tcooQDeaDpaccZkiChjln6liLSqo8D0T
- Qa4trm2s+9WQr7+ZMfFDJSPISyZDIMw/H8yGOSXApqZVJz6gVDnzrNNFpo0mxc3psD9B
- pmGAoydtDKWJPHqaOHdr4ejxHBJbRZS26QOT6KXSvLXkZ2i1pf71BVtSMAvh7qz/+asj
- UiwDZ3Unxh6mcd+bQxM5XQVB78+LJu1Cn97nhkxvExDQgJrWaIgAje1TGM+nRjAMnPfG
- pE5A==
+ d=redhat.com; s=google; t=1793207701; x=1793812501; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ONBqiIIeXuqhfBEs1ZPmh1Yj9HtXJ7T1cWYaW2ga7lE=;
+ b=M1zj4r7QERfVK+Di3c+v94scbWDnSfVNMbLCUUjXpC73tq99LDBRt0mzghj1PdxsGJ
+ MXG7jCizxrk1zLzkenIoDw5fV8yG7ruzUVobC5OEY0wgrVCi/4npUBmFaIF2B898vUrn
+ gZHvvIXBxWFkca0bkpiTkfisAEk0140FBFkbwq51min9AeGDlWpLYDi2JQAcyx2LoIIP
+ fC4svjO6nQv61eK5pEjrqnDw2s6oftz/LupbyEIqWM4T8M8/wf62CUx30sVE2i1S7yWO
+ s7es4tItPuy6FqNjjHmAB4XYTBBNN55QksJ5ueY6AUKJp+Yi3sm6L2PNpE1niJx31/NU
+ XWOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207734; x=1793812534;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=pf8PmGwR2YJ387k0YNnxAMREMMMwLfksgc13IZc+PLg=;
- b=wkj+w1jHn2HHu/02BzRG8vwwjtWcoMzazr0A5xbE3f4EUqd7qpJwJ0rGOCItfBs53T
- g3BMkk1LN3d3qNdqU38ExJG0fJfc5femtlGRJHvQcXVCdQ0mvqe1gvfVyQ6WDbZJFAAs
- ZGgwWskEuzk0Geaf0qh/aEGazA9wFDbopIlERWkacuYpNRjLsxYo1WZTEj1w09h9aqfW
- IdVK9PCjIRcLozulHG93MqnqaBB7q/HqLbplXi+G9emLibV7Yvsft3+BdPal8BkNnxQq
- pKWue4qm7cnYJKsfMD0/eJP0pfIHZTqRhUHTJruNKsflbH/bbju/X3ZBGo/zYF8j3AKL
- yXaA==
-X-Gm-Message-State: AFq9FYKqQk0l04AxZSx+zuVeURK1BY3xaiVHxZHLO5BS6twGpVSKe9A6
- lzwL42utfbzsPn3jkW1V028d3QDImqR7ry6Snj6vaomc5pU5CBEa8h/0WfVh+kS08+AYXa8wUnp
- XddOK7ppY+cUc2zx09FVB/5uOSZoo2jqGmCe6oTnTeQSQ3mMThLO8+SRwuud48gOM2PpBFMU/4K
- VCp7r3BDD8t6D7X+HjGYAKsxOwxE8eJIK+BA==
-X-Gm-Gg: AYBFou19xKmapTHEGu1kLidbFc6dwSLqYZ5zEY2AaX+CvusHsiLbdeothQbk3Pvmb9H
- +jyRXaJ1y02xh99/2uxEd75btuG+fu/8GPzfsTLxSMKkW3H3d6vJIQoxRbEhjKxV++4JVSSxnSv
- ecG4fxRjDHqpb4RWZ6eOj++o+tkSMMv8l5nu8/JesMpueMxCOUB4CFGM40MgkemOIpJsukSV27u
- YsFF+f0DX5fa2poDfStzW6UMw7z0QiqAaCRLMow+dGSezbLMEqgRjoPX/IIpJHOq2NkdaSt/cVI
- VBxbX+XqsVFi0QJm2Q27X3FhVG/sF+aynT6QuA1AFdh457bU5FsHOz6EjRHTmB8NXQu5cipg9/9
- /TOUdmQFVdB0VMyUwlknPetLROoPQm64euTdiHO0X
-X-Received: by 2002:a05:6000:2285:b0:48d:ed0e:6bb4 with SMTP id
- ffacd0b85a97d-48e6494c244mr494914f8f.4.1793207734093; 
- Wed, 28 Oct 2026 10:15:34 -0700 (PDT)
-X-Received: by 2002:a05:6000:2285:b0:48d:ed0e:6bb4 with SMTP id
- ffacd0b85a97d-48e6494c244mr494832f8f.4.1793207733364; 
- Wed, 28 Oct 2026 10:15:33 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207701; x=1793812501;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ONBqiIIeXuqhfBEs1ZPmh1Yj9HtXJ7T1cWYaW2ga7lE=;
+ b=kpODty0kv/7w78sD5Yogq6E4cbQU1ZfwAeTpN7TywIFRaq1Qq4d8WkrNQR6ymtX5uH
+ ZPaiqzwiFF7HCeM6/3mxFR+60FX9D4dxX7b2+sZz13cIbk5va/p3mqf/vFXmsMbJRt6D
+ Au4If2kR3B6tSRXxlaiaEHyUfYct0D2SsbaJSelK1i1oenKQ12oc7m0TeyG4Qa56vkkK
+ YS1WR5+bMWFcduTNjHST0wIJJki8VJ35XS1i8eDyjD4z4oLnvhOI9Qr4P9QNylW4DMn3
+ DRPhPUxvd/4fo1jJBEMgN4cTMXKj9yLjSwrz5OvTZpLKopFCRSiUi4ko0GwOhlt4hENF
+ vkLg==
+X-Gm-Message-State: AFq9FYJEkpMxpRtdnZ4azQ+eLwqi7hb4fgR5TthoAJXFya3A8j0FValB
+ Sn2aXTx4ABXdjsIciFmzSzhikoVifFLMW2NonQ/SgxxWbqfVuLOxJl6D+qm83Fobn4VTuK/I/Fs
+ W82zSjG6RP9k3tocDywxrgueBD1lN5rErYxOOF4vTs4R4gzcGvsw4BYDJIjWML9Bq9lcuzcLVQQ
+ KBfVNnQuX0sI8xSCMXajMw+xG+slpztW8mAA==
+X-Gm-Gg: AYBFou1TKMDYliED8GPgXX6spd2+81IVTDBdD+kYRlXumD8/0Y1qMB0r2i7MbxZrQEF
+ EPAfhGMbYx+l0LEEOo/SEGzfCTfh88Grqnyg0gQ1rE0kjNt39WViM+cmZoNYsFe2hxbHBaVpwvD
+ Ht+rgQtjT8n5bTn0b8sRtQAB9Zt2sAyA6rOvYoPJUM++NxgdDLnLlueP3l5kkPaat/+D5YC1yTx
+ 3+2uaZjOa9s3XPHfbAnnPtvbE9OgNlUN4JwTcLQcULYUckDca04nK5DOgLK6hc6NwcUNggo2pXo
+ 6xImH6bPZICosPzdSuKgjeHjp4OPqG7tgsYr3ARqZPAXI9v+RwCV5AZtO2SXqkotOnWOC96IlmA
+ xsyfdaGBbCduQxNquLKWxWvxtHnphrOduyWWzeP05
+X-Received: by 2002:a05:600c:540f:b0:49e:65f2:db64 with SMTP id
+ 5b1f17b1804b1-4aa871e8bd4mr5895535e9.5.1793207701343; 
+ Wed, 28 Oct 2026 10:15:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:540f:b0:49e:65f2:db64 with SMTP id
+ 5b1f17b1804b1-4aa871e8bd4mr5894375e9.5.1793207700653; 
+ Wed, 28 Oct 2026 10:15:00 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd3705sm35312066f8f.45.2026.10.28.10.15.31
+ 5b1f17b1804b1-4aa813d295csm5240885e9.7.2026.10.28.10.14.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:15:32 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:15:31 -0400
+ Wed, 28 Oct 2026 10:15:00 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:14:58 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Junjie Cao <junjie.cao@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Jonathan Cameron <jic23@kernel.org>,
- Junjie Cao <junjie.cao@linux.dev>, Anisa Su <anisa.su@samsung.com>,
- linux-cxl@vger.kernel.org
-Subject: [PULL 35/78] hw/cxl: convert cxl-type3 to three-phase reset
-Message-ID: <a59e80eb792ade6efc48aac5bf0589587e02a5e6.1793207602.git.mst@redhat.com>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 23/78] vhost: add vhost_dev_is_initialized() helper
+Message-ID: <c6f0c17d1617f9869caf80f0b9b08099f369a042.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -130,91 +126,74 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Replace the deprecated device_class_set_legacy_reset() registration
-with the three-phase resettable interface, following the pattern
-already established by the CXL root port (cxl_rp_reset_hold).
+The upcoming CPR support for vhost-vsock defers the full vhost_dev_init()
+to .post_load(). On an incoming CPR .realize() only sets up the backend,
+so we need a way to tell a fully initialized vhost device from a partially
+initialized one.
 
-Only the hold phase is needed; enter and exit are left NULL.  The
-parent hold phase is chained for correctness: TYPE_PCI_DEVICE installs
-no hold phase today, so parent_phases.hold is currently NULL and the
-chained call is a no-op, but capturing and invoking it is the correct
-forward-compatible pattern and mirrors cxl_rp_reset_hold().
+Add an explicit 'bool initialized' field, set once vhost_dev_init()
+succeeds, and cleared only in vhost_dev_cleanup() (by memset(0)). Also add
+a public vhost_dev_is_initialized() helper.
 
-No functional change — the reset body is identical; only the
-registration path and function signature change.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260729144645.1552511-4-junjie.cao@intel.com>
+Message-ID: <20261012-up-vsock-vhost-v5-v16-14-36c38bd15ffc@virtuozzo.com>
 ---
- include/hw/cxl/cxl_device.h |  2 ++
- hw/mem/cxl_type3.c          | 16 ++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ include/hw/virtio/vhost.h | 14 ++++++++++++++
+ hw/virtio/vhost.c         |  2 ++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ba551fa5f9..b7e20e3fe4 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -805,6 +805,8 @@ struct CXLType3Class {
-     /* Private */
-     PCIDeviceClass parent_class;
- 
-+    ResettablePhases parent_phases;
-+
-     /* public */
-     uint64_t (*get_lsa_size)(CXLType3Dev *ct3d);
- 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 363ac632f9..734397da62 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1329,13 +1329,18 @@ MemTxResult cxl_type3_write(PCIDevice *d, hwaddr host_addr, uint64_t data,
-     return address_space_write(as, dpa_offset, attrs, &data, size);
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 8127a9a5a2..73ea130d7e 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -109,6 +109,8 @@ struct vhost_dev {
+     uint64_t backend_cap;
+     /* @started: is the vhost device started? */
+     bool started;
++    /* @initialized: has the full vhost_dev_init() completed? */
++    bool initialized;
+     bool log_enabled;
+     uint64_t log_size;
+     Error *migration_blocker;
+@@ -248,6 +250,18 @@ static inline bool vhost_dev_is_started(struct vhost_dev *hdev)
+     return hdev->started;
  }
  
--static void ct3d_reset(DeviceState *dev)
-+static void ct3d_reset_hold(Object *obj, ResetType type)
++/**
++ * vhost_dev_is_initialized() - report init status of vhost device
++ * @hdev: common vhost_dev structure
++ *
++ * Return true if the full vhost_dev_init() has completed successfully
++ * (and vhost_dev_cleanup() has not run since).
++ */
++static inline bool vhost_dev_is_initialized(struct vhost_dev *hdev)
++{
++    return hdev->initialized;
++}
++
+ static inline int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
  {
--    CXLType3Dev *ct3d = CXL_TYPE3(dev);
-+    CXLType3Dev *ct3d = CXL_TYPE3(obj);
-+    CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(obj);
-     uint32_t *reg_state = ct3d->cxl_cstate.crb.cache_mem_registers;
-     uint32_t *write_msk = ct3d->cxl_cstate.crb.cache_mem_regs_write_mask;
+     if (!hdev->vhost_ops->vhost_set_vring_enable) {
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 56fa434588..c01ccc800c 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1834,6 +1834,8 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
+     }
  
--    pcie_cap_fill_link_ep_usp(PCI_DEVICE(dev), ct3d->width, ct3d->speed,
-+    if (cvc->parent_phases.hold) {
-+        cvc->parent_phases.hold(obj, type);
-+    }
++    hdev->initialized = true;
 +
-+    pcie_cap_fill_link_ep_usp(PCI_DEVICE(obj), ct3d->width, ct3d->speed,
-                               ct3d->flitmode);
-     cxl_component_register_init_common(reg_state, write_msk,
-                                        CXL2_TYPE3_DEVICE, ct3d->hdmdb);
-@@ -2467,6 +2472,7 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(oc);
-     PCIDeviceClass *pc = PCI_DEVICE_CLASS(oc);
-     CXLType3Class *cvc = CXL_TYPE3_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
+     trace_vhost_dev_init_out(hdev);
  
-     pc->realize = ct3_realize;
-     pc->exit = ct3_exit;
-@@ -2480,9 +2486,11 @@ static void ct3_class_init(ObjectClass *oc, const void *data)
- 
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     dc->desc = "CXL Memory Device (Type 3)";
--    device_class_set_legacy_reset(dc, ct3d_reset);
-     device_class_set_props(dc, ct3_props);
- 
-+    resettable_class_set_parent_phases(rc, NULL, ct3d_reset_hold, NULL,
-+                                       &cvc->parent_phases);
-+
-     cvc->get_lsa_size = get_lsa_size;
-     cvc->get_lsa = get_lsa;
-     cvc->set_lsa = set_lsa;
+     return 0;
 -- 
 MST
 
