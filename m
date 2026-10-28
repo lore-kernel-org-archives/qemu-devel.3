@@ -1,97 +1,145 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBE9606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103D1606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 18:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=N2jNH1uT
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jCJLQf3g;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=K1RXaxEV
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7v6-0005UO-Q9; Wed, 28 Oct 2026 13:58:40 -0400
+	id 1xM7xS-0006RC-Ri; Wed, 28 Oct 2026 14:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xM7v5-0005UG-QV
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:58:39 -0400
-Received: from st-2005j-snip6-2.eps.apple.com ([2a01:b747:3001:202::66]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xM7xQ-0006QC-9m
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 14:01:04 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1xM7v4-0000B4-CJ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:58:39 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPS id
- E722118014CB; Wed, 28 Oct 2026 17:58:33 +0000 (UTC)
-X-ICL-RepId: 01a183a9-ec6a-7699-8b02-eec1d980add0
-X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0ISxMFUgddTVYNRw9YHlwUFwtHQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wNOgtfdi4ENRQ6clgPRgZGDUAeVQ9aBF16SnFVci9wRAA5BFt3HlwASx1XBFQfUxJVHR0LRVUSBEAIVlBUHkEEVhVsCVgGUxlX
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1793210317; x=1824746317;
- bh=pKSd2pgp6CIxP5wK238H7KRXK/Yzyvb0yFwBI0LrgPY=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=N2jNH1uTUbIFSCd2jeamYJbWNS/KD/jByF2Gt/PXB2GobrcBqszSU9ihmBjYjq+L3OKBqQsqjWr+Dde7TAJXBBvk0b85tMRFPhOpxG5Kealdd64qjbSf8x61hstGWIQpiJxkbu7KCAjkZHDHFe44kut9R4HngxE9cbi/0OTEHq6LDxylXE6+HOU1mXvOhx0S1L5kdkEPU58gKeQzY3vCLOLV7OQN3w5IIP6Rh8nBbv75k6lTvNEMHiXvY+VXnW267AELqDDAAXLc11IFNhI7IW4SBDYNkwxcrP5ctQmCL+mGzAf5mwYKNvoe2qO+uHt3Hk6rStOOmow7iR1zWuUcSQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.216.30])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPSA id
- 96BFF180052A; Wed, 28 Oct 2026 17:58:31 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-X-Archived-By: <archiver.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
-Subject: Re: [PATCH 2/4] accel/mshv: stop VM on vCPU execution errors
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20261028125308.147630-3-magnuskulke@linux.microsoft.com>
-Date: Wed, 28 Oct 2026 18:58:21 +0100
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xM7xO-0000au-DF
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 14:01:04 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69SF9uH42542927
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 18:01:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ d6E0CkKZ7LJHRPQOHef8IEj3L9QR2jbYZoNocidlmrM=; b=jCJLQf3g8MI6UnmU
+ J6VtozRgwt8PoLVrogAeS3Kp6ooXUHp53TbnYkm3f7wA/nkeaBv2C96GXQ6+yFOH
+ SYM93tOWwInxPNWY/VFTODlpgO+o/9jE0EviVUpp8I8jS44DBUEciPjAQkjh+zhh
+ ugCxi5JQMNpLJyfgpRQD7mSmNVKUvelMRL1ATAJ/kfIh/HzO1+Fr9mW6NvbviFf6
+ ogrYn8ys+n1peqUiSpxOcXEXVz+TCzjO6pL6ffV0bI3L/JK74hdDqbgu3duKaOAV
+ S5njZ7EtDWNwT+bI+acTDp4bCYhsIN4y7DvLsS5e0BoyFbafwUtVMZM3CKm1oBIP
+ 5kK29g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkkehrsr4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 18:01:01 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93f5844e383so185834285a.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 11:01:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793210460; x=1793815260; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=d6E0CkKZ7LJHRPQOHef8IEj3L9QR2jbYZoNocidlmrM=;
+ b=K1RXaxEVA2ejV9x+V3vN0jWhqpK8kBeCZ0GGEgFpTg9/8be0U7UozvHqup+255jF3S
+ rv3qq0hrUZpou/doz4wMpu69/CwmlUCgcj3NHiAL/MTbWET9554nDukaMQ2K9jUhXEop
+ CtFP3fdgpvoZGEkq6aQ/x8VXaqfjxgrJ+zEqJRnphbfwuQu99b8rUVhXpZxpEK0ehE5d
+ VMSSfcD+pdOawn3G+fNV8dXrybrDh9L+odLUBQYaJ8h53ewC80CtoZf8zKNZ/xgzuTA1
+ slO+RgsQf2kAJYqnTnvzbjdgKHYO/849dkelZA8Ts54apSpFTC5pA6crl1kz25R/tX5z
+ kQpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793210460; x=1793815260;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=d6E0CkKZ7LJHRPQOHef8IEj3L9QR2jbYZoNocidlmrM=;
+ b=p5i41T4m0yDc/POOmplYMcuF4+ai0wuMQ+lrhrMp4jnTjkDM8+CLvqE3r1Sz3GHeTr
+ 60OZq8oNy4rFgZjZ0NRymn2KddUWe0EeM9mSgcF/pub+t/u9b2gyzS7LTa452XQyP94C
+ JGtLlbUYJMdDQq1ixw2fGAwEKXaj6LQT8+8tmagk7Ig/89dxMk8Jol2czhaIzJaFs64B
+ uY0Zmgmx49jqflpOZXCSXWwaqHlGmiEgxLLSZRVr5aikFmumU3ESOR0tnAj2VN5J8Hl9
+ caHbIVg3C/aKlMkoDIrlmF4scf0QmIz4L42qXSNvZWEGHCVxzDvM9mgvejZT/O79qkHx
+ C51w==
+X-Gm-Message-State: AFq9FYLkVpDLkueC90rIUTaAnREkFd9LKoYJct+l9xmWWPhj3LcY3uky
+ JfQyWjEnLU5WmGzaoHy9O7JXYGNO/ZtXajC9uVpx7IemEM01I6+JiHDX442PnY3ipV5d1kK7VVq
+ vzyUFMKtW7CSbhVPJfdpK5TvL/DHwy+Q+ZNYMh9F2AYDbpnO1h0mrykFmlsHzzw08VhgX
+X-Gm-Gg: AYBFou0LFaWtJoVCqps1jqXqjVWR0PvWztT49iEzsYneX2YQz822w6i+ZXRMDErVS98
+ FSziqMr7SgXcVVNe1Aw20PkxtB8+qaMlDXGMyN+dvnZP6ngPGmRoiSZ0FY/Xh0QfIyc1l62GBAC
+ pGCWqmWtam5LYc4A9YnmRlovc1bqCq+MOpQuYnNVYmYwB02zFzdRz9PxntwLH4ru/6XvCgCVzc9
+ v46ZueTGBLE1C8DPCVm27xZdeEagRziaUV5lbmXNZZitbVRlyJ41iGHWb6NnPmFVuW+CuXsGfdW
+ NzlPIjpmc2uXdZE0yJ0R92ESCO7/SIz99tJR6P8Esa+blRO8y95rDM/vkiHCbH2tlQ33/xvNCzX
+ 8Jfm3JYslC5+ytgWWKRuCBwM/JJ6XM8ze702IEsTd6dalAZlJp2inXzR//VxJPB4JW29dIHCEn6
+ Aa8xJoOZtJcTAkrQaC8p4HfKa1P5HGjw==
+X-Received: by 2002:a05:620a:170f:b0:93f:3120:6c71 with SMTP id
+ af79cd13be357-94408a6b161mr476659985a.44.1793210459847; 
+ Wed, 28 Oct 2026 11:00:59 -0700 (PDT)
+X-Received: by 2002:a05:620a:170f:b0:93f:3120:6c71 with SMTP id
+ af79cd13be357-94408a6b161mr476652785a.44.1793210459282; 
+ Wed, 28 Oct 2026 11:00:59 -0700 (PDT)
+Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a96a32eef4sm38053105e9.3.2026.10.28.11.00.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 28 Oct 2026 11:00:58 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <doru.blanzeanu@microsoft.com>,
- =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Wei Liu <liuwe@microsoft.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Magnus Kulke <magnuskulke@microsoft.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4B82AE6E-BA58-4648-8816-C2B8EDB49A76@unpredictable.fr>
-References: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
- <20261028125308.147630-3-magnuskulke@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3901.200.71.1.16)
-X-Proofpoint-GUID: fgMa-1X53w9AP4kQaFg-fRFQU_ouXTs0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA3MSBTYWx0ZWRfX8UkjQfQZCxEN
- oR+KyJbn4GsriG9bKGiStsqe5PMA44Pm+mwymTE4K5MvUZJIGCCN+co59fD+a9HOdZaD53Q9HyB
- W7be2obPXZM65s/nE21VKPqIWQH/KE54pDdDPDRg9+3DN59eXy54w1EcCn4F6aV7wWlQv+JfQ5A
- xH7BXG8GpzlnUZvHrRa+MDCVHXJ7DJned7D78/b50jlncj9MNthVv0JvcIbfmRX3EhAJrJw4KUX
- 3XQQXEiP4Ae1bV0esH8l9qdg5YzThaN2zpHQ3I5AS/ESzYGHIfPZhH0l//NadTlQWg9lxCb/M9H
- 38JiKU5oTIlAWctidIsM3rQU3vwedN+yG8u8RpEkBRt5+Mv0Ypw/B4BtCSsoBA=
-X-Authority-Info-Out: v=2.4 cv=L70QguT8 c=1 sm=1 tr=0 ts=6ae237cb
- cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
- a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=kj9zAlcOel0A:10 a=660iZSQnnn4A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=EuFfdPxwKaHQyvU2GcMA:9
- a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: fgMa-1X53w9AP4kQaFg-fRFQU_ouXTs0
-X-JNJ: AAAAAAAB97Ou3ZNsROesVX3DWxkB8rUec7ZFWY5xcfB1koAAf4cqujlcT/AvCVNdYjJNnT
- 95GXWOcJu7ezPQ4G/68M1oYcecgPuATAOxsn3wyYUKNJLOMfjHcSg+29kRsEXZEy4KVV23
- n1CSgFRKYNxZ9PrajctSAJDFq020KJtQhkmV1BryQqDW318q2VwLNyL/IL4zfEMPjO5QYE
- ikb1Qn3QcHOYfVZ6PK3CTwD0Ab3VvpXLcPFnO7JksfX8wBNgaStXNzrGNCYpf7//pBlv7d
- pzKc9QvBsBclPvORBWI29bG1CzLSAypvNCW+vt4+ItX3W+DO0twLqhnnAtlsk3QyYS3sF/
- aFXJcp5RbnP5mOlgSwRYqNK2npv99B5Onr61d+z+/CaU2zu51lktuMkX/MM7P6FyiyAfFn
- u0c7khKFxSpcg5WZTahoM99n2VZ8EtRoz6fpxGc8vlzivTAz+mV/QR5SebJ/piRzqP0/b+
- DLRnHI94oqcoXk7Mt4oB8u8ZmEPleHpKLDPWeWYgDpodtd/YTt08gv/mVUevgQVkwf1OIU
- Hx20+zxu7ZwMFjoGM6iHA8nTmyDpnUS+QmBnkTfQgKq9YhFeLX0njqdEwLm2/qP1dbd2cA
- jqxFFTgVT/px5MtdW/pSZWTXtt5wUeXDrb7UTLlGqvm7VknsWBCYQn5EXPhPf8aFOmq9el
- vTnPJy/3oZVPxURZ9CRkyUln6+72xR6phb8LIQ5E/++SZn80vsAe/GNfYd6RO3HfmMIl/a
- TCGTaAQl/9cnLl5Z+887symAdes4JIySSNS2y7iQI63u682ythAnHyhhjID/J2jcrwcZtv
- DZ9mqStOugvHT2Fb5jgUFnMfjXSfn35HVjSneRmhXgdHQAYuf2paIXN74rGSb+4oXClyJk
- l7SmnKaZvmUTADg7hVoSnR
-Received-SPF: pass client-ip=2a01:b747:3001:202::66;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH 2/5] target/mips: Constify get_physical_address()
+Date: Wed, 28 Oct 2026 19:00:36 +0100
+Message-ID: <20261028180040.22848-3-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261028180040.22848-1-philmd@oss.qualcomm.com>
+References: <20261028180040.22848-1-philmd@oss.qualcomm.com>
+X-Archived-By: <archiver.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: TIRdTQf4H20PCVhWofQfJc_qu67U92Dh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA3MSBTYWx0ZWRfXyqU6h0zCe7+O
+ fPObz4aVfKELhv4FughBDxtPVlPVyJxcprAVbOW97VzRniToCTEXyOSNAiyNWbTE7fW9/9nYsgw
+ mlXuWqaVHOPQXmsfyzU5dP34rHKxEIPjt/DPzFl0R3UUoODd0QlWk08L+vaGw8Lhk7ZdBa1FkNv
+ 44+yejVKP6P3XjfouOz/8yHjJ8qSFXkypldV4dLQQPY/pWZqo6jTfBsf/pVsaQXcOlTJ09BIjAB
+ GAtPm1k/+eITbHFrvQYxngp+ZxWXw2gfFinJTSMFpsEjTEJp8BLOpw6CPA4FbcrSfF/H5WYKAFG
+ /MKQN5EaeV2y5Xh6DnK/vj5u69873v5rNQpEG+zR6mJFZKzTKT2+l2wCGFZ/tydPFux5Pwf8K/Z
+ 3MlcPDf1q1qKsf9/mqIuxpRRz306Dblc+OJ2a7CI7FY0+KUyTvBTVOizTkm+NgDvdK8rgg5tbR5
+ fL5eLiCWrwvXbW2yEHA==
+X-Proofpoint-GUID: TIRdTQf4H20PCVhWofQfJc_qu67U92Dh
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA3MSBTYWx0ZWRfX1dgVurE8WPKf
+ CC5R6rAUBhLonAYvBMLhn9zg1wQvvqlyWOexoR13VRFf6yggumKbskQz4MEX2me5+jFqSgx66t+
+ Jqgsi9yIQuV8wZBrCjlqOK/N7/T2Ij4=
+X-Authority-Analysis: v=2.4 cv=bYv+w+PB c=1 sm=1 tr=0 ts=6ae2385d cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=ab2e3UV3xNEu_U-M5WsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-28_05,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280071
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,59 +152,70 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+get_physical_address() and its static helpers only read the
+CPU state, make their CPUMIPSState argument const.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/mips/internal.h        | 2 +-
+ target/mips/system/physaddr.c | 9 +++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-> On 28. Oct 2026, at 13:53, Magnus Kulke =
-<magnuskulke@linux.microsoft.com> wrote:
->=20
-> Currently we abort the process immediately if the ioctl returns an
-> error, so the error handling routine outside the loop cannot be =
-reached.
-> We also enumerate the enum variants explicitly to make it obvious how
-> every exit reason is being handled.
->=20
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
-> accel/mshv/mshv-all.c | 7 ++++---
-> 1 file changed, 4 insertions(+), 3 deletions(-)
->=20
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index d820a67b95..7289c8d1c2 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -778,8 +778,8 @@ static int mshv_cpu_exec(CPUState *cpu)
->=20
->         ret =3D mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, =
-&exit_reason);
->         if (ret < 0) {
-> -            error_report("Failed to run on vcpu %d", cpu->cpu_index);
-> -            abort();
-> +            error_report("Failed to run on vCPU %d", cpu->cpu_index);
-> +            break;
->         }
->=20
->         switch (exit_reason) {
-> @@ -788,7 +788,8 @@ static int mshv_cpu_exec(CPUState *cpu)
->         case MshvVmExitDebug:
->             ret =3D EXCP_DEBUG;
->             break;
-> -        default:
-> +        case MshvVmExitSpecial:
-> +        case MshvVmExitShutdown:
->             ret =3D EXCP_INTERRUPT;
->             break;
->         }
-> --=20
-> 2.34.1
->=20
->=20
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 177fe5cadaef..2c152e246a24 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -115,7 +115,7 @@ enum {
+     TLBRET_MATCH = 0
+ };
+ 
+-int get_physical_address(CPUMIPSState *env, hwaddr *physical,
++int get_physical_address(const CPUMIPSState *env, hwaddr *physical,
+                          int *prot, target_ulong real_address,
+                          MMUAccessType access_type, int mmu_idx);
+ bool mips_cpu_translate_for_debug(CPUState *cpu, vaddr addr,
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index 6f11e70ba804..523197f02090 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -75,7 +75,7 @@ static int is_seg_am_mapped(unsigned int am, bool eu, int mmu_idx)
+     };
+ }
+ 
+-static int get_seg_physical_address(CPUMIPSState *env, hwaddr *physical,
++static int get_seg_physical_address(const CPUMIPSState *env, hwaddr *physical,
+                                     int *prot, target_ulong real_address,
+                                     MMUAccessType access_type, int mmu_idx,
+                                     unsigned int am, bool eu,
+@@ -99,8 +99,9 @@ static int get_seg_physical_address(CPUMIPSState *env, hwaddr *physical,
+     }
+ }
+ 
+-static int get_segctl_physical_address(CPUMIPSState *env, hwaddr *physical,
+-                                       int *prot, target_ulong real_address,
++static int get_segctl_physical_address(const CPUMIPSState *env,
++                                       hwaddr *physical, int *prot,
++                                       target_ulong real_address,
+                                        MMUAccessType access_type, int mmu_idx,
+                                        uint16_t segctl, target_ulong segmask)
+ {
+@@ -113,7 +114,7 @@ static int get_segctl_physical_address(CPUMIPSState *env, hwaddr *physical,
+                                     pa & ~(hwaddr)segmask);
+ }
+ 
+-int get_physical_address(CPUMIPSState *env, hwaddr *physical,
++int get_physical_address(const CPUMIPSState *env, hwaddr *physical,
+                          int *prot, target_ulong real_address,
+                          MMUAccessType access_type, int mmu_idx)
+ {
+-- 
+2.55.0
 
 
