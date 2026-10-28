@@ -1,98 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D9C606A32A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F4606A33C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dbehamj0;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=f30LbTrC
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Cybjgd1s;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=POPIv/Zw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7F6-00060f-KO; Wed, 28 Oct 2026 13:15:16 -0400
+	id 1xM7Hh-0004Dg-M6; Wed, 28 Oct 2026 13:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ea-00054e-WD
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G2-0008K8-FF
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EX-0003Uh-Og
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G0-0003rO-GU
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207681;
+ s=mimecast20190719; t=1793207771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3OSUT2xSumvpPMiOOBEsvAcJhkOMnkF1J1FA5y4DMEM=;
- b=dbehamj0izw9rdPHNoTDDtx9a4l/fm+mxOKPaZXgzX80A0CGZUrfJ4H29E2WGJ3fPBZ6Im
- qOiypDvg2RWjX+/8N2nAN3CyDZb3tQ3LIq8Rtv6phNm9jCsEJI1V2JlVY4eEBMJlqUCRGI
- /GtA1AqUBnizCBsrkd02FnL1DSow4xA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WuWjhEJMTOpZxB6niRJEcwhK7CIR3d2EGQIrtVaGOzM=;
+ b=Cybjgd1sZDiJWrH3Ca3ERyOPr46+iMPSKiw0yUGsdQ8S6cfirwzHPsd5kp+FD1JLJU4+45
+ k3ncHwQyl3LKVVOhX7iNsYuYrB8vJg+1Al1VSBTzhPoKuZTu54NE3qavD6C+C1AXSxS0JQ
+ MnA2fX/XDxSNs3VkLuwuF716aA22NcY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-KL80lNBGPsiOGUKQsxrstg-1; Wed, 28 Oct 2026 13:14:39 -0400
-X-MC-Unique: KL80lNBGPsiOGUKQsxrstg-1
-X-Mimecast-MFC-AGG-ID: KL80lNBGPsiOGUKQsxrstg_1793207678
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e1d839ddaso797522f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:39 -0700 (PDT)
+ us-mta-658-pUrtaA4sOHGDgijxSJEFKw-1; Wed, 28 Oct 2026 13:16:07 -0400
+X-MC-Unique: pUrtaA4sOHGDgijxSJEFKw-1
+X-Mimecast-MFC-AGG-ID: pUrtaA4sOHGDgijxSJEFKw_1793207767
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-48af4046a3bso1029956f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207678; x=1793812478; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207766; x=1793812566; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=3OSUT2xSumvpPMiOOBEsvAcJhkOMnkF1J1FA5y4DMEM=;
- b=f30LbTrCuBhTr1cEKwEFwZUZgYF+CbpLbggsGXZGtzC1EyN3qPLcrJcznO1F9Vf4nh
- Ysdn51PREmxkWbc8zeY3kvFodrXr7dAswfc1n3d0MNalpkN7di4GTN5xW+Syh4TMmTSe
- InqQQxrIA0GIuwCIt3DGxWwNzPc4mcafzI3qY+39pfQMX2XV+k4KgMTNatTvDE4CL55N
- qf6gkPGCQGfuHXch1fPfrbtk1YOsGNnLFVM1NdPf4mrKIP1+2FjxZFW+HLj6gl3BZkcS
- S9BA3ScJ+v0/5QDY9z8Ukq9/oo2a9URpSSmj+T2PfWK36HIOXmhP6VYr+/MknPrcNh8N
- K9wA==
+ bh=WuWjhEJMTOpZxB6niRJEcwhK7CIR3d2EGQIrtVaGOzM=;
+ b=POPIv/Zwkp4ffrUe2yU3UiCs0kOUfD1HO1+A9G6XE1g8VMSRPNHVXFybRttM6a2+hg
+ u/18ImkheLE81ZhK76EoTD7xSMH9S/K3URZL0hqcU6d4qLamt7La8P/2NWkLXh2CODal
+ C8lvtiLIJIYk3XqzEaqQUSzSlImmcNijYVRY96s0qNZSCjOMod3kwrAIvnVv6Pq+Eb8V
+ ROQ86yxiAViyTdmNUf3femZHBGEhMoq4iT0oHY7SZvlOnp8zH2PiPJQKf00dwRCex7Hh
+ VKt/btXLfcEFfZLpxhj91nwA4mEd7i1VQX299MsjhC3koW258SIrS0o4dRvj7H9ypzCT
+ lARg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207678; x=1793812478;
+ d=1e100.net; s=20260707; t=1793207766; x=1793812566;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=3OSUT2xSumvpPMiOOBEsvAcJhkOMnkF1J1FA5y4DMEM=;
- b=pd+ZN9d2w/FOgDMC4ZeA+WUTGrGBiX08vXch/GHQhJBlTmWoBUsj29G7x1WKPGna3N
- dHRLyMUB02+/hkGeGljo/LQp5AqE0HURpWIfJg+M1FIY2nkAxoPDxFB6qmQUP+UXOIVZ
- tuSmVX4m4OvdwZiFzWdFT4SyJIbebXQxdWk7pZwRyqAXshHrWRRFfgJaOs72Z5sqdJr1
- huh/EuWtU8QKy4rlycZNO2KVnzqX4vEb97vpwCC/H6QGPnZTzV2MLtk0JnrXKxtCepAK
- wOWCSFiLQFO/wEdToN7f06BNZH79g4I5TMxao8cNw3OtU/WKHh312Ohxa196cDZ7geC8
- 13uA==
-X-Gm-Message-State: AFq9FYKR4WrrhY0GunhByEMTH80yT63q8IYRTh1UwrUcr0TzgQyAeIhb
- i28Wn22mAPqUAv6aNnUujReLVtmi7Zt2gdSePltwe+W8YcktMLKqz61rWZpxNQcgW5aMwVLb+jo
- BWVlFH79prYr0APmOeEnZyyjtu2c1qdwLm3wW27FICzhHmq00puV9QFcsLMTn28Lj5aMuaTHmlE
- RNBpzM/G5B4y9eR6ajeI5d/z8KUFFupF189A==
-X-Gm-Gg: AYBFou3vKpdC5nAEZObMMvY64Al01VBuDTyD5POf6TUzreMgCv10ouS0YaTb37FCZHw
- petuIU+gauyzf6Y6kBeEthq1aESIqkY3zbjCO5tAhOpZ4K5Gfi57N8f/XmWRM1/EWx1mCXpGWI6
- EiUN6F61M3K6mUsFuhd30d7OIDwQd1oKBXBVCMIBa17eGKj14SDoMKTCossBnOlngawVHgaFQN9
- 6ndgkmD7eovw1AqbQ+RHlJaJFd2yPxyI6RbSOQVc45wVUxjaiFmA2ak8O9Ovb9kOFzpLjXxDj0n
- RKHaDqXs2+uLWLQi2azYPlan6I7zWn1ooC6ygvNwrhon3R+hnCzscqC5bETyzCup7psJZScMzL1
- 5hlEbGBCEE+x7bS760QITah+wkyoswUYjyo56wLdH
-X-Received: by 2002:a05:6000:2dc3:b0:48d:ee0d:8b3d with SMTP id
- ffacd0b85a97d-48e5d5979b3mr7303191f8f.28.1793207678237; 
- Wed, 28 Oct 2026 10:14:38 -0700 (PDT)
-X-Received: by 2002:a05:6000:2dc3:b0:48d:ee0d:8b3d with SMTP id
- ffacd0b85a97d-48e5d5979b3mr7303088f8f.28.1793207677471; 
- Wed, 28 Oct 2026 10:14:37 -0700 (PDT)
+ bh=WuWjhEJMTOpZxB6niRJEcwhK7CIR3d2EGQIrtVaGOzM=;
+ b=NO56qNoqPXhTU3xHmMaXVj2Zq0VV2c0pIerw/OBtyBHsLT6sXBd0mA1M1hPhcQph7t
+ dO1nQYcl7KOmtzmyGj2DjvCJXyWmIrr1MrbvOyw1AEFAqceaTuOV32RH89BNDIxy/3CA
+ 4j/T6amPzy34ozV4+pvf59v+nvtZtzrQNBSE46P/JdG2IaGQH8Q/XP0AKQbBBAIj4FvK
+ +bK0jgPnP2AomW8Mxf/JUVAdCi5miaU2XHMDlle+LXeJeOWbtmo+ZbyhVTurwE4Icbw5
+ U3GUBYLt17AJgaZldfR714/UqEaX6uT+VdSf4iLSI2LsDdOfLEPkqktT4ObAgFATgXak
+ RP9Q==
+X-Gm-Message-State: AFq9FYIA7lWAb3wPIe8zevHUe/4zoUO5mpJkNx7bA677D++m27nXunCy
+ wFOuMFxHNsFG+g1ku8/qr7LSZnC9kLyP07KrubL8BNmqxO0k+oHcTMODlatI+ZctCbNTxRdnI0v
+ TgK6A7Cm0nL+4TJymjh4q9pORSIPRPGLrhyHEGHvAeHJtxQYq0SGzxXq72tIuW6rdc25FjCCFNH
+ B+IMlC/5b4Xivb3/pKQINkjQ5UZHuS3fNRLg==
+X-Gm-Gg: AYBFou1HbtcQB0bmZYJch4ISXqA1KRYY1LrcRuPcaMy2TqBjNWVAHN9jlECOfHzqwkz
+ OuCV4e36klTyHAyxvSjUfJuQVEcytXcbqycNbNH/O3viCgJ99pWoqNGumZO4oWhU8XVRAl3H8tN
+ /+5VibpGy8KVRaesO2dGVX39VUnQLt1UG9IcgQHVVBtJ1CULzaWAt18fd+yLKClbgao6q6t+VAJ
+ +RlOi0X1U0tbR9Xal2xZKRUkrf2YGFxVqwxxd/Vv+GPJbCwtbpABuE4Wxg4UAJYeBdTSO2+zmrT
+ CPF+pWrP4KiJF/yi0dBIRdbyoGtW+18np7+fIWnfRc427GteOUo74ybStV/F6FheYWRGM+YC4UN
+ g2TWz1eokWdpT7WMQIriTSkNnwlkc7JN6iuHH239h
+X-Received: by 2002:a05:6000:4312:b0:48e:5fde:8437 with SMTP id
+ ffacd0b85a97d-48e5fde8536mr4959409f8f.56.1793207766341; 
+ Wed, 28 Oct 2026 10:16:06 -0700 (PDT)
+X-Received: by 2002:a05:6000:4312:b0:48e:5fde:8437 with SMTP id
+ ffacd0b85a97d-48e5fde8536mr4959308f8f.56.1793207765638; 
+ Wed, 28 Oct 2026 10:16:05 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebcb8d5sm31063061f8f.28.2026.10.28.10.14.35
+ ffacd0b85a97d-48e3ebd4bc5sm29492213f8f.34.2026.10.28.10.16.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:14:36 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:14:35 -0400
+ Wed, 28 Oct 2026 10:16:05 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Mark Kanda <mark.kanda@oracle.com>,
- Steve Sistare <steven.sistare@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 16/78] vhost: add vhost_reset_owner op
-Message-ID: <fbba41b890d7c65b82fe611cf26ac6631a464703.1793207602.git.mst@redhat.com>
+ Li RongQing <lirongqing@baidu.com>
+Subject: [PULL 48/78] pcie_sriov: fix wrong write width and off-by-one in
+ pf_reset
+Message-ID: <1482c4bfad87d5ca741706ff5c9ea677dfd152e1.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -128,71 +125,81 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-Add a VhostOps callback issuing VHOST_RESET_OWNER, wired up for the kernel
-backend.  The CPR (checkpoint-restore) path uses it to release device
-ownership on the source so the destination can reclaim it later with
-VHOST_SET_OWNER.
+pcie_sriov_pf_reset() restores the VF BAR type registers using
+pci_set_quad() with a 4-byte stride. Since each VF BAR register is
+4 bytes wide, the 8-byte write also covers the following BAR
+register. Although subsequent iterations overwrite most of the
+unintended writes, the access is incorrect and the final iteration
+can write beyond the VF BAR registers.
 
-Originally-by: Mark Kanda <mark.kanda@oracle.com>
-Originally-by: Steve Sistare <steven.sistare@oracle.com>
-Originally-by: Ben Chaney <bchaney@akamai.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+SR-IOV defines six VF BAR registers and does not provide a VF ROM BAR.
+However, several SR-IOV code paths use PCI_NUM_REGIONS, which includes
+the ROM slot and therefore has a value of seven.
+
+In particular, the final iteration in pcie_sriov_pf_reset() currently
+writes a quadword at the offset of the seventh region. This starts at
+the byte immediately following the six VF BAR registers and can
+overwrite subsequent fields in the SR-IOV capability.
+
+Use pci_set_long() to match the 4-byte VF BAR register width, and use
+PCI_SRIOV_NUM_BARS when iterating over SR-IOV VF BARs. This also makes
+the BAR count consistent with the assertion in
+pcie_sriov_pf_init_vf_bar().
+
+Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+Fixes: c8bc4db403e1 ("pcie_sriov: Reset SR-IOV extended capability")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261012-up-vsock-vhost-v5-v16-7-36c38bd15ffc@virtuozzo.com>
+Message-ID: <20260918063526.2191-1-lirongqing@baidu.com>
 ---
- include/hw/virtio/vhost-backend.h | 2 ++
- hw/virtio/vhost-kernel.c          | 6 ++++++
- 2 files changed, 8 insertions(+)
+ hw/pci/pcie_sriov.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index daa979a1aa..fb580aa417 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -104,6 +104,7 @@ typedef int (*vhost_get_features_op)(struct vhost_dev *dev,
-                                      uint64_t *features);
- typedef int (*vhost_set_backend_cap_op)(struct vhost_dev *dev);
- typedef int (*vhost_set_owner_op)(struct vhost_dev *dev);
-+typedef int (*vhost_reset_owner_op)(struct vhost_dev *dev);
- typedef int (*vhost_reset_device_op)(struct vhost_dev *dev);
- typedef int (*vhost_get_vq_index_op)(struct vhost_dev *dev, int idx);
- typedef int (*vhost_set_vring_enable_op)(struct vhost_dev *dev,
-@@ -205,6 +206,7 @@ typedef struct VhostOps {
-     vhost_get_features_op vhost_get_features;
-     vhost_set_backend_cap_op vhost_set_backend_cap;
-     vhost_set_owner_op vhost_set_owner;
-+    vhost_reset_owner_op vhost_reset_owner;
-     vhost_reset_device_op vhost_reset_device;
-     vhost_get_vq_index_op vhost_get_vq_index;
-     vhost_set_vring_enable_op vhost_set_vring_enable;
-diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
-index 3390b48c6f..55d316b88e 100644
---- a/hw/virtio/vhost-kernel.c
-+++ b/hw/virtio/vhost-kernel.c
-@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
-     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
- }
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 69930c7b8c..6a748c3626 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -229,7 +229,7 @@ void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
  
-+static int vhost_kernel_reset_owner(struct vhost_dev *dev)
-+{
-+    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
-+}
-+
- static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
- {
-     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
-         .vhost_get_features_ex = vhost_kernel_get_features,
-         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
-         .vhost_set_owner = vhost_kernel_set_owner,
-+        .vhost_reset_owner = vhost_kernel_reset_owner,
-         .vhost_get_vq_index = vhost_kernel_get_vq_index,
-         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
-         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+     assert(sriov_cap > 0);
+     assert(region_num >= 0);
+-    assert(region_num < PCI_NUM_REGIONS);
++    assert(region_num < PCI_SRIOV_NUM_BARS);
+     assert(region_num != PCI_ROM_SLOT);
+ 
+     wmask = ~(size - 1);
+@@ -308,7 +308,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+             return -1;
+         }
+ 
+-        for (size_t j = 0; j < PCI_NUM_REGIONS; j++) {
++        for (size_t j = 0; j < PCI_SRIOV_NUM_BARS; j++) {
+             if (vfs[i]->io_regions[j].size != vfs[0]->io_regions[j].size ||
+                 vfs[i]->io_regions[j].type != vfs[0]->io_regions[j].type) {
+                 error_setg(errp, "inconsistent SR-IOV BARs");
+@@ -344,7 +344,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+     dev->exp.sriov_pf.vf = vfs;
+     dev->exp.sriov_pf.vf_user_created = true;
+ 
+-    for (i = 0; i < PCI_NUM_REGIONS; i++) {
++    for (i = 0; i < PCI_SRIOV_NUM_BARS; i++) {
+         PCIIORegion *region = &vfs[0]->io_regions[i];
+ 
+         if (region->size) {
+@@ -457,8 +457,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
+      */
+     pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
+ 
+-    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
+-        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
++    for (uint16_t i = 0; i < PCI_SRIOV_NUM_BARS; i++) {
++        pci_set_long(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
+                      dev->exp.sriov_pf.vf_bar_type[i]);
+     }
+ }
 -- 
 MST
 
