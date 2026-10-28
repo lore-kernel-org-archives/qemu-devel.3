@@ -1,70 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0CD606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B55606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=m93TdaKW
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ogAxHUST
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMA4n-0005AC-Jq; Wed, 28 Oct 2026 16:16:49 -0400
+	id 1xMA5N-0005aD-Sp; Wed, 28 Oct 2026 16:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMA4h-00055v-Ka
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:16:43 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
+ id 1xMA5D-0005Nb-5E
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:17:16 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xMA4g-0002Gb-38
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:16:43 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-36661f953e4so2232841eec.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:16:41 -0700 (PDT)
+ id 1xMA59-0002LQ-I1
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:17:13 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-3550c917fd3so2012405eec.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793218600; x=1793823400; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793218630; x=1793823430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=obAwicYQArWnw8mdM95mb/RZp67/7GPYWgLKlbu+5L4=;
- b=m93TdaKWpxlq1SrL06/yZi3GhlLaT46g/ce3U12RM5aCmVTZ3LFuUEwbhCANuuO9GH
- 4fvcXB/rOavcCzaHhmbsAKZhE7Mz1f6gVeAmCgQRPwChGhZWL1uqPPl9uka356ZE8kb6
- a2mAFe5uLjV5Lhv2LxHR5dVQO1rHCfWAEXIQY3OzMnjBZUMppuVPCs8YI9QTF64KWMCs
- Th/pQKSP8vCaxDjEfHvV7d0h0dq992102eDbR43GS30F61P7cmT2ht3JIODjBZPHd1OG
- FnGTpFjY7ekY9M73Fgs+wPLQmKzpwFfIuFcV/V7cLm3TJ1EOyp4kEysacE59chgNPAlx
- KERg==
+ bh=Pd8ISBmCsatho7AhV+Cur/SqnrJPTwwxEIzKAKYv7CU=;
+ b=ogAxHUSTaoIUduopi+eKeRwwr60xzFWpUmxvzAKaZDjn+qCsyC3m8xXC4wLMtdpxUu
+ TNZUvve+RseQ2gLf5r12uRZ6WcDX+Zqv8obIbIp90Q4vO762S62M+fKnS+aDuPAKN42A
+ Opos/uQKK5new+lPNTto84+2a1No8QJij9UP36LpFaUDR3Qf/6+pA/sxefDr/+3XP+h5
+ 0ZjUqgrV0ToPdr7Faw3kcm0SSslhl7Xwc2WMvphHoaKNeDd474pNJQlRPQ6lpc7nUltx
+ vJzfHDRuupOxnbppTQQWkTTpxJkS/BnJ6b5uQR+y1JcrVyf2WNOnprX4Ee/aF3hvW1lW
+ lx5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793218600; x=1793823400;
+ d=1e100.net; s=20260707; t=1793218630; x=1793823430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=obAwicYQArWnw8mdM95mb/RZp67/7GPYWgLKlbu+5L4=;
- b=e7m5juUIDD9APBmuOoMW4TCZMHoUQNvAppX5le1MDMhVVmGDQ37JpUoVjfyoDmzERi
- gHHUBa9DUH2JHPl+PAHySAy7gbwpP9I8GTGeORGrW+Qp2r7/gnmLiaOo6LbUELVw5CuE
- 7PmakJ0StDtMv7jQ4DmA+QMvAZ0cybb14pyblyYyY+9F/kHH0+zVva5KR4P6PlJnwgrq
- YgGc0rvMTMnRY3db44ZDE4zLiLyMEN+WFOtdx7oG5zi5KNN8Leu5Uur+nAT0jx2EgMOR
- 8juTdGSzEvYhAdirBAeKW3BLBjvELpgDgex4fnm+15BUYJQYom2AxH77yZGlKChot1WP
- cXKw==
-X-Gm-Message-State: AFq9FYIdcmSullFCOsUaJT6aiAMKi3GqqByri1qFM7KOoLgcL0jPT8Dn
- paCgqohse1sYzA4Qc+qHcO3kKZO80jgLh2Y56UnyHvUcvfo7psF2+Mq3kw6+H48g
-X-Gm-Gg: AYBFou124bMyTe1SETgubsusz3JjldutZOcemH7jN5YmU1drZMnvrL5HNR9gVQUnrXD
- Ju76w/RLGQYNq9IcPQqe3zmFiBdMpiMMhMTK7R2GIEZxBez4z7tj7rdsM8KIdrJueHzg2ocv05e
- AvAoGRSt23TaLQESPswMuWQoTy7vPdwve8jT8Se1frqVy+yUtCzuJgY6tnBQEBeFCnrIGxNksvM
- CfVS9mxLx/dEm2zfQiit9K4ubr9AXJ8pbrk6No/vxeLUQTBr7xnCcKlqgKXP0S9ZaztFkZgbOA2
- N0tlGgZfE5p+Smu/oHsYViEwY1BG0ZAy3ROEHQ2kpAXXUruvckXGtD6Y2DNBApBXm98VxDlgsqu
- /Rd1zCzaTfrJ6HuoCVGIGlG4t1x23TYY2UtyEVMFUoX9Amaa+GDxq0xnH2uSG3F5qS0DGrtS6+I
- vDL5kPK/7n/61ssSJIe8SXSz/6r/ResOVPWE0W4bUQBZexJ5vhPao3a9B1bKm4E847zSCrTE31V
- a2Mx6c0VUuZW7J0LhObm7xWSi8u0JuxSBDk3REXTNdcEAVz4flDaG5CM8+g1buH5IauqzrNcunz
- ol4nYvMpez+wR0yWn0+mOAiShL7jcjCHeImFN6LUKZk6FiAu
-X-Received: by 2002:a05:7300:7312:b0:358:ec5c:bef1 with SMTP id
- 5a478bee46e88-36a204773c0mr6758751eec.39.1793218599863; 
- Wed, 28 Oct 2026 13:16:39 -0700 (PDT)
+ bh=Pd8ISBmCsatho7AhV+Cur/SqnrJPTwwxEIzKAKYv7CU=;
+ b=QWjhr5udjeodKnzil14rcB+/Q9Bbuh1E0iW89fq5fuKo/y6YUYk/mxPEIBcqfUjMwH
+ F2YBqIFpuMvU/+/0z7lS0vt/QWmKFNSxhiwOSU7iHlCaUn9Xt1Z1f0F+8xex+YGGs99r
+ sLoSUj8wIQBoM2mZo2EiX8aJBml1E8+KVWR5ZwC4rFziBXsKVo8OTZRAAYT4eCdDTsXp
+ Al2aaifrqLAIqySESwELA8UfY9nYELnccOk4u6GApO91eGmIVHj1xhQmXLl5HFqzYPsJ
+ TJwqXHOrqaRS7XUbvon/xRYmOdqrAaE+ppaMYDDMRT/sqk++Shy8Oq0mxdWxMhgaCK+I
+ kvzA==
+X-Gm-Message-State: AFq9FYImKyJnEMrgFmtD57g9GOdKHkphq6CUIvOKF9IgsuQalfWjKYO/
+ 5fmxpcaPM/PqmScLpfXpY1dnnmA545N05GxL3IqoCUQ3jC9j1LeonjHTAFs47/+U
+X-Gm-Gg: AYBFou16em1oHAqVSseQrrea1JK/H04vQJmTcbn3rXhJJ+yJ9JHV5qzDgcDlxvolsDQ
+ s6s1UOOpm4uPFWgcBzHWOmJlvs5F9Ba2J9LjXKVdad9KebTIap6YvWOoHqgeYHSapBbA0IiHt+p
+ DttKLo5OQrLMLAawmfjZ872ePQQX9yykcUMSMJTZdXLHilzB15/dn4z68soMM70h8WMV7M/XToc
+ Sh1IddPbwtq/IF3eJCsnEDvUSFUAzCDgVz+P0YnIldB8fX8O4Qvh2RlsLFW+PuTELsZap8N/FTx
+ EqOYY1O7+Tn8CLsRFxBWS1dybFwlx6kMKsb1fttfMrlVfGk40wk1yZcchMeI/Wz8GMHsqPxRMgv
+ YgI1hSdU21mURq31VWHoWCfD9MnBXOV4FvctQncWMjtXU++N9BBp21fQIBu14HAl7+UxHDzZnzj
+ 25wMCZku2yOoBM8hzqVQ8fkixrhJk3S1kbfY29IZaDQftK8zzumoqvXJMSFzo1pTaLls0IcmjXL
+ 3ocVcUxmruzNk6ZlDl8rXz5q+x2QqqdMKGpt6XR9yTJX5bh2OWvnmimJalzg8Iz7gbz3y0DdwyG
+ XK8InAmeOf5Be01vPrYTwZGp5PGbUybPZ/OVfQjzzxKhWarN
+X-Received: by 2002:a05:7300:d589:b0:35e:a225:3ba6 with SMTP id
+ 5a478bee46e88-36a203909ffmr4540193eec.13.1793218629989; 
+ Wed, 28 Oct 2026 13:17:09 -0700 (PDT)
 Received: from DESKTOP-Q716RM7 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-36a23951e00sm12016896eec.20.2026.10.28.13.16.34
+ 5a478bee46e88-36a23951e00sm12016896eec.20.2026.10.28.13.17.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 13:16:38 -0700 (PDT)
+ Wed, 28 Oct 2026 13:17:09 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -80,18 +80,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Philippe Mathieu-Daude <philmd@mailo.com>, qemu-arm@nongnu.org,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 05/12] target/arm: register separate max-v8 CPU types for arm
- and aarch64
-Date: Thu, 29 Oct 2026 04:15:49 +0800
-Message-ID: <20261028201557.2688-6-luoyonggang@gmail.com>
+Subject: [PATCH 10/12] target-info: add target_base_i386() and
+ target_not_base_i386()
+Date: Thu, 29 Oct 2026 04:15:54 +0800
+Message-ID: <20261028201557.2688-11-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.55.0.windows.3
 In-Reply-To: <20261028201557.2688-1-luoyonggang@gmail.com>
 References: <20261028201557.2688-1-luoyonggang@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=luoyonggang@gmail.com; helo=mail-dy1-x1336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,73 +113,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-max-v8 was one TypeInfo whose instance initializer was chosen from the
-selected target at registration. Register both initializers, and let
-target_arm() and target_aarch64() select which type is available.
+target_base_arm(), target_base_ppc() and target_base_riscv() report
+whether the selected target belongs to a CPU family. Add the same
+predicate for i386 and x86_64, and target_not_base_i386() as its negation.
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- target/arm/cpu.c            |  1 +
- target/arm/cpu.h            |  1 +
- target/arm/tcg/cpu-max-v8.c | 16 ++++++++++++----
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ include/qemu/target-info.h | 14 ++++++++++++++
+ target-info.c              | 16 ++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 510fc9eeb3b..6eb55242980 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2695,6 +2695,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
-         .instance_init = arm_cpu_instance_init,
-         .class_init = info->class_init ?: cpu_register_class_init,
-         .class_data = info,
-+        .is_available = info->is_available,
-     };
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 4bc25789d8d..48206d01ba9 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -57,6 +57,20 @@ bool target_heterogeneous(void);
+  */
+ bool target_base_arm(void);
  
-     type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index add993ef101..3240a8633ee 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1203,6 +1203,7 @@ typedef struct ARMCPUInfo {
-     const char *deprecation_note;
-     void (*initfn)(Object *obj);
-     void (*class_init)(ObjectClass *oc, const void *data);
-+    bool (*is_available)(void);
- } ARMCPUInfo;
- 
- /**
-diff --git a/target/arm/tcg/cpu-max-v8.c b/target/arm/tcg/cpu-max-v8.c
-index 65f851f2006..e819d07e6ce 100644
---- a/target/arm/tcg/cpu-max-v8.c
-+++ b/target/arm/tcg/cpu-max-v8.c
-@@ -121,10 +121,18 @@ void aarch32_max_v8_tcg_initfn(Object *obj)
- 
- static void cpu_max_v8_register_type(void)
- {
--    static const ARMCPUInfo max_v8[2] = {
--        { .name = "max-v8", .initfn = aarch32_max_v8_tcg_initfn },
--        { .name = "max-v8", .initfn = aarch64_max_v8_tcg_initfn },
-+    static const ARMCPUInfo max_v8_aarch32 = {
-+        .name = "max-v8",
-+        .initfn = aarch32_max_v8_tcg_initfn,
-+        .is_available = target_arm,
-     };
--    arm_cpu_register(&max_v8[target_aarch64()]);
-+    static const ARMCPUInfo max_v8_aarch64 = {
-+        .name = "max-v8",
-+        .initfn = aarch64_max_v8_tcg_initfn,
-+        .is_available = target_aarch64,
-+    };
++/**
++ * target_base_i386:
++ *
++ * Returns whether the target architecture is i386 or x86_64.
++ */
++bool target_base_i386(void);
 +
-+    arm_cpu_register(&max_v8_aarch32);
-+    arm_cpu_register(&max_v8_aarch64);
++/**
++ * target_not_base_i386:
++ *
++ * Returns whether the target architecture is not i386 or x86_64.
++ */
++bool target_not_base_i386(void);
++
+ /**
+  * target_arm:
+  *
+diff --git a/target-info.c b/target-info.c
+index d9e15c939d6..32ba85691b7 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -59,6 +59,22 @@ bool target_base_arm(void)
+     }
  }
- type_init(cpu_max_v8_register_type)
+ 
++bool target_base_i386(void)
++{
++    switch (target_arch()) {
++    case SYS_EMU_TARGET_I386:
++    case SYS_EMU_TARGET_X86_64:
++        return true;
++    default:
++        return false;
++    }
++}
++
++bool target_not_base_i386(void)
++{
++    return !target_base_i386();
++}
++
+ bool target_arm(void)
+ {
+     return target_arch() == SYS_EMU_TARGET_ARM;
 -- 
 2.55.0.windows.3
 
