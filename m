@@ -1,97 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D78606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A1B606A321
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 16:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Uew2ccJn
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=hn1PzVRw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM68y-0008WG-SC; Wed, 28 Oct 2026 12:04:52 -0400
+	id 1xM6Aa-0000eL-JP; Wed, 28 Oct 2026 12:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM68x-0008V7-E1
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:04:51 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1xM6AV-0000e7-Qk
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:06:28 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM68v-0004bt-W6
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:04:51 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-845f3fa7f38so531150a34.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:04:49 -0700 (PDT)
+ id 1xM6AN-0004tY-R2
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 12:06:23 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6768403e9bbso1142673d50.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 09:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793203488; x=1793808288; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793203577; x=1793808377; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=BATZNDQYJoLrMC1fMQI8aRV1vjz5BNw4x6hWVLbWsCU=;
- b=Uew2ccJnKwXSOhQXxVwxWMinXspvldflBGwjWmNjCJzzD9sh8GPF/EwfB55QG11xO0
- DbdSH0NGTkKgq6OqiKYijBSM5yKec5EYUVtcjeim3jCubx450H+I4PfqwFNeVB8mXZwG
- eag0sNdjnqmCoMstZkv6ICyIPmPscUAQ0UvNuBDz2cLlS48vBFI3xTCOFmb7NaTZ4ee+
- mXctNbGleD2NX9/ZVTFiqebeWmjBkm2zZHIeDQtKgD174b+xfSB+fywJqoQrfk8ygyjc
- xPZpjCFptIONzywXApdE4jmWij7lwo3KMCA+zU9y+484MsjJP/OfH5OrRZqZAbj0z/dj
- O6nQ==
+ bh=eDgPxF2vMsf0ZGmqcmz75ycsEOh/DZQhtVRMh8yAd+s=;
+ b=hn1PzVRwwu13noqvkMPcT/GPvVgsHyU1RTDbWMt6gjY0Wdedi5pDv1jAGdiRQzWk0S
+ 9MrTV0lozZGzXGeb+c6GRklOuudwoD9eZBD8KoEDu0TYEJwQXNG12jbWIMUMZ2x3ClQt
+ N335S2ZeX2MiRgmqSlaH20gr7+lwqR33nfEQHfxDjVhrkb+CLF45B60XGNY7amkrZo56
+ ufHZcfDl+XkrEAzFGbqSOcNjLOXodr6GGufzRIokEqG1LetGLkplCMeLjHMfzRrIlJmA
+ Iti/Sg0kAn0LNvin8K2MK+AnecsdZP8Y2iZ20e5kK1sEVF2B0IbnDn6P2luWxJDN2BJX
+ jSgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793203488; x=1793808288;
+ d=1e100.net; s=20260707; t=1793203577; x=1793808377;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BATZNDQYJoLrMC1fMQI8aRV1vjz5BNw4x6hWVLbWsCU=;
- b=ydtd1yaScNt/XGV6luawgDgw2mMq3PQ+xj+nsPHwyiXcF/G1x0l0LZrqlAtyHW9lx+
- sTCSkS7u7EIiGp/j+Y8/dOIIaK8NUFOBnaTH3JrapQBzbrIJYZqHPH2+AJy4LD1TJ9G4
- kgmX9zAngbykJz+i5zEges2JNPHRYYdkq82ScVhft7ab7EGHfxJlE76Ji6e6j56KRIUV
- ytb2JuFP9rtNI/A17kjJVZNqLjsnE1zUnXhn1t0dRTm3vCtauMC1/Se2NfX4DdOd7+Tb
- Oi1J/sVI7tV3VtRyWWiQQYDedaApCohb1ex+lfxZJ3TV70IshCZcx0jOewZqkbISgXmI
- Hh9g==
+ bh=eDgPxF2vMsf0ZGmqcmz75ycsEOh/DZQhtVRMh8yAd+s=;
+ b=BnzXmMtBbAvbM0G8+PHTrglYhHyKlPBdq8iir6ZenXv8V0KgG6oQqjdiQT6QfB0o3o
+ hvEtBYZpMA2y253fzP8TUwwrrue/rynt8VhgJP62kiikSvXquYHH8Y3H31y2/CNHnX0F
+ 3w+OeanLhnxBDdsKiOdQ63vEEOL21CfngQ8pDZPefHtcdlPYaMLWtQcjK1uGa9ajyef8
+ KiJ7I8qGbNIQegcNxsDjTu5ALe7Z9sw64fhs7yjZ+dQ5LY+RfgjKFLb441zQteLg/ESk
+ iLiJc68Zzi9rlPtZ98xsp2Sl8OpkJ+rpi7+/ilKxDd3fc1DoFLYmUU/U4EmE16kvA2Cw
+ cqvQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvByaZ+yiVJiRuThZFo3kohUXz+VkDwqdsA8YB2P9fEENJ9AbmuPoKLEZVHxu6vcplxlfRoAhbvQAmheD@nongnu.org
-X-Gm-Message-State: AFq9FYIB0vo2Z8WQtjMhcYx7emo739CAYj9e+RCCCyfQNY8skIjpCk4F
- SXaJHcY+BbBjypRO+e2eTHNq2OCybCoIBqa8MX+FtwM4BSwztEvINUd0/vR5lQufy68=
-X-Gm-Gg: AYBFou1aJQ/oEn2/C4UFZ/PU7ucexzgMRXENdhjsm49axWUcT73eGHnsIlAWJsH0ajf
- BKajaoWoerSVjaCymqU1NxtzxbY6BO7Cfz4r66lclQUyRo1v6oiLpmv4IJ4VKPgwxLEDA1BxTOg
- TVdJO2V3HC/nQkg0i63N4yPhq/s//ieyFaq7nPbmBOH8YiwfNd2unHm096uzUQPfAZYlFe5jRQ7
- v0X7S6z4YBv6JD3QQncbPsPA67kLqv70ynDR6lF0jorcTFZlY9sv3IjXMtDpYjZzcEatm+VPRNo
- 9nRw9iUivzBf64wwTN23+7vNhYuCkkReY/nWkqGaymmLuvnuiI46/uYRtCdrl7EGQiejPVIRBgn
- i/D4zSEwjEFb91H8tz0q3rP1kC7ZEkj0eprTJRXlqDnTlmg6tDVLKSTEPu7kXyRTJlUmZhHYYju
- Gs/9FEFwj6LMR3gH+35gyd7XBhIg8JLBVjOufX7OH1owwVKl8lCQcj7i7NQKfqTelAGtIPwC/36
- SDnbtS0lqUO9vUnjeJ6AiqJ3WI6BUcVp/vU1etyAbj2FfFFHeDej/jKnrx04YRWBaffp73dGgoP
- RPE6d8ySPqCGMCVTWUSavXdelPbAvwcVy9N+R2+YDLYMXocYHfrjqpGpqGtZomLvjdc1C0uOrB0
- G+PVEFxiZThDOyeEuSwFcKS116s3w+KXU
-X-Received: by 2002:a05:6830:4393:b0:7fa:5c68:d04d with SMTP id
- 46e09a7af769-85ac0ce9632mr2337208a34.23.1793203488372; 
- Wed, 28 Oct 2026 09:04:48 -0700 (PDT)
+ AKwUvBw/YOFirIwsRY1CruAgrZAUPMhMDhA0ggwY5/KKm8kTUi3gKFHHWTr4lEnPG3VRNmyotcX/z+2VuPCD@nongnu.org
+X-Gm-Message-State: AFq9FYJFt71D3UoDJMzCgnjw5oQtlTT8t1Fk536pazCy6+UX/y1XBSXE
+ XnE5vJUluwuqkTq6MgpjVW25sLKNhmecRHvfQ0Da+/UqOvExSzKk7h8+yEmyMB4upWM=
+X-Gm-Gg: AYBFou3KED9qsH/tVnIyv/LMsNy0rzS6UYFX71T5p6yw6AHFOd4Jo6I47YO1Ef5Gq1+
+ 0BJmT8iJoA12wMuntzZIw3B55MtsAnU2Kl2z94GZgbJxeR6joNpdG3zUC7UXupo0vDXhzqMuJih
+ zYM3GaZC9zeM55O9oXDwmQ+zEeNEFe3Dr9yrmVl1xFoY8tkdGjgtXn4fARShk1iNSrffwGj9FdK
+ JZQ+QJJncQSBl/SSbgLZ606xBRR03BgL99aeATZ6V/Ns+AHAAACdwtBBMUSjTvJQS81hs9KixAu
+ ZON6rUpe/JUE1Mhw48DVF/S0T/XDFNIq/7a72DmE7LaCGz2xrnCuP52bNXUwglHlUqNIp91xCHA
+ sx+Tbr3zRnvhvKzHHNg3f7FJZxr1so6mtnyvI1iGd4EuOe38BKuhzEFaZaJNTl3sAOn3OHFtoV7
+ wkIbHlpchHbWTQoMJEArkKUPGhg+WqgaJdn9diotTVpxDZ+DA6gicoUtMPuL88fqvjTuHFWS0X+
+ CEGcuhJ5OHcz5LSguVmEp0S+Dkp4QSC65EOeGzlomliOfgE8x+5t2gtkI44gzbLy30jVRK7JESS
+ rBCcTF6m807IX9+66v6w5rJJAx6ZHcYjV8msNLF/RWMA0v9ZPYHsI8iTYgxe5kUtApmx5ZPf0aB
+ 2qU9usPtavFM=
+X-Received: by 2002:a05:690e:441a:b0:67a:551f:920b with SMTP id
+ 956f58d0204a3-67a7bcea72fmr1980907d50.23.1793203576577; 
+ Wed, 28 Oct 2026 09:06:16 -0700 (PDT)
 Received: from ?IPV6:2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6?
  ([2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85b1fd3170dsm2076793a34.16.2026.10.28.09.04.47
+ 956f58d0204a3-67a7a165a95sm1986764d50.19.2026.10.28.09.06.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 09:04:48 -0700 (PDT)
-Message-ID: <1a80111a-431c-4ff6-a3ee-74d91065f7b9@linaro.org>
-Date: Wed, 28 Oct 2026 11:04:45 -0500
+ Wed, 28 Oct 2026 09:06:16 -0700 (PDT)
+Message-ID: <36de0be2-5bb4-4fc8-b9a3-9eac3a719671@linaro.org>
+Date: Wed, 28 Oct 2026 11:06:14 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/14] target/mips: Introduce decode tree bindings for
- MIPS16e ASE
+Subject: Re: [PATCH v4 04/14] target/mips: Determine microMIPS insn size
+ before delay slot check
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
 References: <20261026162034.32711-1-philmd@oss.qualcomm.com>
- <20261026162034.32711-4-philmd@oss.qualcomm.com>
+ <20261026162034.32711-5-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261026162034.32711-4-philmd@oss.qualcomm.com>
+In-Reply-To: <20261026162034.32711-5-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,32 +108,27 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/26/26 11:20, Philippe Mathieu-Daudé wrote:
-> From: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Compute whether the instruction is 16-bit or 32-bit unconditionally,
+> then use the result for the delay slot size check. The default case
+> is unreachable. No functional change.
 > 
-> Introduce the MIPS16e decodetree configs for the 16-bit
-> and 32-bit instructions.
+> The size will be used to select the 16-bit or 32-bit decodetree
+> decoder in the next commit.
 > 
-> EXTEND-prefixed and JAL/JALX instructions are 32-bit, all
-> others are 16-bit. Call the matching decoder, loading the
-> second halfword only for 32-bit instructions. Unmatched
-> opcodes fall back to the legacy decoder.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
-> Since v3:
-> - Only call the 32-bit decoder for EXTEND-prefixed opcodes,
->    loading the second halfword only then (rth)
-> - Treat JAL/JALX as 32-bit instructions
-> ---
+>   target/mips/tcg/micromips_translate.c.inc | 59 ++++++++++++-----------
+>   1 file changed, 30 insertions(+), 29 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
