@@ -1,98 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84E3606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D48B4606A326
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HeeRKQ61;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=A8wiHs3W
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RY3HDwSz;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=mBI4Hlnu
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Hp-0004yH-Tb; Wed, 28 Oct 2026 13:18:06 -0400
+	id 1xM7Ik-0007rB-1x; Wed, 28 Oct 2026 13:19:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GM-0000z4-Ms
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HW-0003wj-3u
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GI-0003ts-JL
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HT-00044O-Lr
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207788;
+ s=mimecast20190719; t=1793207863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l+GuvKRsV+a6+GbEa+CNhmAoLlvqUeipOH4q8uieDCU=;
- b=HeeRKQ61aZhh3/0x5/YZvm8dSkMnWRewhsyoPRcNcrsPCkBCjkAB2NaiK7g8XFG9ml3WeC
- dtb+xn/diXieSGfTuMZJkx5127CCse23r6igVQqEIqRWcJd8168ABT/mRyF7VSzmQRhbGK
- L3smRoni6ZfzyhoqRtfcXdkZK/O0aR8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
+ b=RY3HDwSzMSHGdsyDsD0kWjx9qRoAwrjlCIT/v9DaOMkEl22xdZEvzvMAV737/Mu3SzulJ9
+ E9MduxbHoXiGJn6uRO84SB8r6QLsePcbnfaWfdGlrjUD+9eAblP3OOvcaCDzh9sFKQh/VL
+ 5hiA6TRmNlpab9pa5rPzeKYKn/lL6Tw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-xSmWH1zEP3iJrGMDM6YKRg-1; Wed, 28 Oct 2026 13:16:27 -0400
-X-MC-Unique: xSmWH1zEP3iJrGMDM6YKRg-1
-X-Mimecast-MFC-AGG-ID: xSmWH1zEP3iJrGMDM6YKRg_1793207786
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48e0c896d05so1008692f8f.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:26 -0700 (PDT)
+ us-mta-498-hAaxDm8IP6mvcndFSV00jg-1; Wed, 28 Oct 2026 13:17:41 -0400
+X-MC-Unique: hAaxDm8IP6mvcndFSV00jg-1
+X-Mimecast-MFC-AGG-ID: hAaxDm8IP6mvcndFSV00jg_1793207860
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48e1d839ddaso799786f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207786; x=1793812586; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207860; x=1793812660; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=l+GuvKRsV+a6+GbEa+CNhmAoLlvqUeipOH4q8uieDCU=;
- b=A8wiHs3W+xCnH6eT0BNtce1CM9UDc3uPluDglHfn39iebGUXoQvLH0vPflMlRj4XxD
- Zc7a63utiEohjxlSOjBn0TuLgz67Q58wjQ60ZZ3gwpmTPk1PeOXaZtj2Leg5dJgwjp+8
- sTK5EV2+mLBZO/Lsgobae2ZZ7s2Q/kG6K1oNucxy1POydSRrTRc+e6ZEafAJefmXa2JN
- wUsUdfT0STPgezlRG6l7m4zMVIlAfTddljnjgqpq16MjXiZKNwAELTBHykJ3yILPf9fN
- 1oiuB0qjLWHmR65gZM62HNeymp4lj4mfK+H/7JjsajZKT6KqtfwCpygWsdwL958G6CUN
- 41eQ==
+ bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
+ b=mBI4HlnuDn4qMDGy1q7bdcdAVeIWOTN6Wp3y+ZU7d2ekU1YF9Sb3rmL6RZZj9pIT8e
+ E/LiBBtaoiOfiUobgnOjKD0yFfr6ZsbMo6YJRK51W/S9+zPJkc3jyXNe9aIeKx4BuyNp
+ qe/bsQkVB5M2RYId2V2g/zMRg/W85AwovCXuALFUCBkDJDkY8emryhM7TXbR5Zu7Mv1Y
+ /J4C5rsUi6PTlf9kQXDInNemiLd4szP9RQxL5NEO2I2y5mT1yFY9bw7lxaRbIVQBHbx/
+ aSZKWlHGdB/KXdCJbM8LYP+H2uyZ6PWAN74iJc2TbJqie8ri974RchvfO59JG2T1x9ok
+ YylA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207786; x=1793812586;
+ d=1e100.net; s=20260707; t=1793207860; x=1793812660;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :content-type:mime-version:references:message-id:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=l+GuvKRsV+a6+GbEa+CNhmAoLlvqUeipOH4q8uieDCU=;
- b=nk6+VNk4Im2IBTOxmzYkkAXml2aKlUDcdLvAT4DSGICygpgVaiI03zXdSRAKTgEhwf
- 7xCbgLWRMNuxHchcw3hR8tjhqL4T9QTaHACr6lq+hbspGcNHBcxVaKDBXBknVjrdbANs
- G45ocTAVPvkth360OBM0qOnm88R2YEAAbeASqvMqMeCAzvJDCVa6Pjkf9/bLGNYI9nTN
- 2cP/Hej2D9kdMxOAXTDUFeVS6W00SpUZoV9qYB9i+SjcdGlMwylcUVR1G7zCspAognU6
- M0fL82HU7B7df+2W6+CzFNo9QUekIU9G9WR/53Z4GS1S9/YEXpUnNPfElMzFpf0V4HvG
- W5Kg==
-X-Gm-Message-State: AFq9FYJrvtHkrZ8ikCXG/+FjjGWwN/ZaHobC6pgDT4yxePL0o67Nt8By
- E4AK95q83Zb5jTY0qMLhkHyMVAsbwGyL3CeOoMqU4rYSaYeuDTaOJs7XxgpF30WFIfmVoD94Pp+
- GHdaIaExt+UzNZ6Bzpv9nCsnGlKCsNCaXbmg18TmCDIO0908CSl/kyAlmQydAJivYs4pKlhnt4i
- OBkfJUlg/9tqLPDE2jG/8+DeliEP6hhTzexQ==
-X-Gm-Gg: AYBFou1RnCFiUypqk5khY7Xd20QItktG9AexWYWbGGF/fBByoSOtSXUC0/hnsxig1BL
- Paih+5qFqAsMMvDXBDvE1NEjR31zA9qP/WzUrw5URvPJL/2o2+4cvtYYNqSCIviU6iVulCcseZJ
- wT/IYMdiV46hP35AmMN+ctP11MeGAWQ3M6rO8b7Qcny2rWxQHILvGspzQKG1c3DYDL31Jke3XP7
- 3QmRXZmBBMAoWu6CtUDltpzgkgI5aL3spQeMG4vsqG91Xrfqk48A7OwFnaGL3iwSwFE63ZrbCHa
- 8ZSnQbK6Q150iDZQ/TxSvwX+jB8X8OioG+1XZoQ3o1Qg/YxDWwB1g5WgT+1MYPngQff+Y/62OIh
- WbF16Og6lelh14h54GqlCvX8PjE+l8vj739C10Xef
-X-Received: by 2002:a5d:5f85:0:b0:48e:bf0:35c with SMTP id
- ffacd0b85a97d-48e5d2e749cmr8031927f8f.13.1793207785543; 
- Wed, 28 Oct 2026 10:16:25 -0700 (PDT)
-X-Received: by 2002:a5d:5f85:0:b0:48e:bf0:35c with SMTP id
- ffacd0b85a97d-48e5d2e749cmr8031790f8f.13.1793207784676; 
- Wed, 28 Oct 2026 10:16:24 -0700 (PDT)
+ bh=1kyZtg6045VLnXwsU/EbaSQUHp0u8UfFjoHPpYs775Y=;
+ b=IUyPlZ9vPa3fCcsoNcqtenKo0bWDI7W24FDvcLnv6oH+WoIJaEIV/W8N6D69LVHqTQ
+ 3VOSmZr13/wFEUdmxdBJXk+ZrETDkss0FsmVWZt4jP13/CB58buOLdH/HYIbDauUyw28
+ IEzIDqCt3WRj67IAjcZb6WkMgdajqHz7oVM+U284WuUYBCKBAwplYBPpFOW/NLXJAfQU
+ SbActMN4VRMQg4tTE4M1xxe5222jgoIY1e0vsy5GsRuc2IA73BaMFjb2B4mULRR3hUmU
+ nAKZUUv6Nq4gL2F19kk3ujTzNwL34aJgNxF2lvktYFNwyTTTx5cz9XyxFAx1Ou4gznRC
+ x3DQ==
+X-Gm-Message-State: AFq9FYJEaj8bedlOTxbazY/2wz5fw5fVcPvQjrP3FtNPTYDhXtNHxuaW
+ ogwn7r1ST70t49Er+eoz02++Dp5GciYSv2OvK2CJJF2V1dDOJWyCCaPzMsz7GB6WDFeB23HNFUw
+ ELqlG0gQNJF1GI8zwzfnzqitkLoL+/aBsus5geHH1SMtoXLQibmzpAf3bWGMtun8l/AQCXT+nkE
+ EG39crGAMZaU7dSKcAfoUapBOPdg4WBgqqJA==
+X-Gm-Gg: AYBFou0sAwsQz1u6mYYM9j1nGNyk4fOJGX+uS/QiRSdewwJqAiKFlZ9Zw/6MvqZ7HXw
+ YETwH45azezlwcsargG2R+tUIc5tyAP9VsfPOzmJcOeHS2klwJMpdUqWjUW7rAIdLBBhin+Z/qO
+ 1cfZsX4u1lvKrP+TY99Pb5mGzLSBO+ZiUUL84MKm4KNInBQJ6trO2fg7+TWhIipmgidj/8yaPvd
+ ctmihXi6QWuLPmLfWFukSCDobTajAtF8gnPdjaD9rXkGF7Ats6DOZ7kZHXBfIE0HZKm9k+dYZlF
+ FONs5tqx6/CeM836ADOs93EcetPGioAJFOqktuC2xitvSzvJC1BN84gq69Irhj0Q2VT1mwvvTA2
+ 5NYs4vY1TCNOBkozE42soem5QmnVdU2bmk+x20TQ7
+X-Received: by 2002:a05:6000:981:b0:48e:63fc:25d9 with SMTP id
+ ffacd0b85a97d-48e63fc2670mr1508366f8f.38.1793207859999; 
+ Wed, 28 Oct 2026 10:17:39 -0700 (PDT)
+X-Received: by 2002:a05:6000:981:b0:48e:63fc:25d9 with SMTP id
+ ffacd0b85a97d-48e63fc2670mr1508264f8f.38.1793207859263; 
+ Wed, 28 Oct 2026 10:17:39 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebcb99esm28759276f8f.23.2026.10.28.10.16.21
+ ffacd0b85a97d-48e3ecd37f4sm35268435f8f.44.2026.10.28.10.17.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:21 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:20 -0400
+ Wed, 28 Oct 2026 10:17:38 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:17:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-arm@nongnu.org
-Subject: [PULL 55/78] hw/arm: remove pci-bridge/pci_expander_bridge.h from
- virt.c
-Message-ID: <2011fb7a587da19e6e9f64e39ce0647698985f64.1793207602.git.mst@redhat.com>
+ Nariman Sayed <narimansayed28@gmail.com>,
+ Aniket Sahu <asahu1x@linux.ibm.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PULL 78/78] virtio-net: add mtu-from-tap property for automatic MTU
+ detection
+Message-ID: <c155e7e9e025b60ce17e26a7c382d86f3f9c9fee.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -102,14 +103,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,37 +126,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Nariman Sayed <narimansayed28@gmail.com>
 
-This include is redundant as the function is declares is not
-referenced.
+Currently, exposing the host tap device's MTU to the guest via
+VIRTIO_NET_F_MTU requires manually specifying host_mtu= on the
+virtio-net-pci device, duplicating the MTU already configured on
+the host's tap interface.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Add a new mtu-from-tap boolean property (default off, preserving
+existing behavior). When enabled, the netdev peer's MTU is queried
+via the generic qemu_get_mtu() and used to set net_conf.mtu and
+enable VIRTIO_NET_F_MTU, regardless of the backend's type.
+
+This detection must happen in virtio_net_device_realize(), before
+virtio_net_set_config_size() computes the virtio config space
+size from host_features. Performing the detection later (e.g. in
+the get_features_ex() callback, which runs after the NIC and its
+config space are already sized) results in the mtu config field
+falling outside the sized config space, and the guest reading
+back an unmapped garbage value (0xffff) instead of the intended
+MTU.
+
+Since qemu_new_nic() has not yet been called at this point in
+realize(), the peer is accessed via n->nic_conf.peers.ncs[0]
+(populated during property parsing, before realize() runs, via
+the netdev= property) rather than through n->nic.
+
+Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
+Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260928095646.3555447-2-berrange@redhat.com>
+Message-ID: <20261007050718.926-4-narimansayed28@gmail.com>
 ---
- hw/arm/virt.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/hw/virtio/virtio-net.h |  1 +
+ hw/net/virtio-net.c            | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0d56197dac..3ab3ad8c3b 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -58,7 +58,6 @@
- #include "qemu/module.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/pci-host/gpex.h"
--#include "hw/pci-bridge/pci_expander_bridge.h"
- #include "hw/virtio/virtio-pci.h"
- #include "hw/core/sysbus-fdt.h"
- #include "hw/core/platform-bus.h"
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 8c967760c2..fed37245be 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -52,6 +52,7 @@ typedef struct virtio_net_conf
+     uint16_t rx_queue_size;
+     uint16_t tx_queue_size;
+     uint16_t mtu;
++    bool mtu_from_tap;
+     int32_t speed;
+     char *duplex_str;
+     uint8_t duplex;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 4794496b96..54e42cfec9 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -4006,6 +4006,15 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+         n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
+     }
+ 
++    if (n->net_conf.mtu_from_tap) {
++        NetClientState *peer = n->nic_conf.peers.ncs[0];
++        int mtu = qemu_get_mtu(peer);
++        if (mtu > 0) {
++            n->net_conf.mtu = mtu;
++            n->host_features |= (1ULL << VIRTIO_NET_F_MTU);
++        }
++    }
++
+     if (n->net_conf.duplex_str) {
+         if (strncmp(n->net_conf.duplex_str, "half", 5) == 0) {
+             n->net_conf.duplex = DUPLEX_HALF;
+@@ -4386,6 +4395,7 @@ static const Property virtio_net_properties[] = {
+     DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_size,
+                        VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
+     DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
++    DEFINE_PROP_BOOL("mtu-from-tap", VirtIONet, net_conf.mtu_from_tap, false),
+     DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
+     DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
+     DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
 -- 
 MST
 
