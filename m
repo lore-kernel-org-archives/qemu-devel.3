@@ -1,103 +1,101 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132E1606A31F
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45D0606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ByLU8HYe;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=cm1hM0rg
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CTcZfOO4;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=lZCo/CKi
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7IV-0006kt-5z; Wed, 28 Oct 2026 13:18:48 -0400
+	id 1xM7FE-0006Ma-3I; Wed, 28 Oct 2026 13:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HZ-00043S-Cs
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Eg-00055U-7E
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HX-000455-M7
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ee-0003VG-HB
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207866;
+ s=mimecast20190719; t=1793207687;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rq27nGz6U59cZ8z/MigVLWJ0iHvfYau8t3QgSo7dDnM=;
- b=ByLU8HYesnEQaHfd15GyEH8rJ7AQwu0lw8wbnqnb4cjraALEZ9+FlV6m2Jt5T7mBOsHUGF
- Q1UODzqubWCAvTdqgvzRu04vtgdvhbrAwGKhuG5rxsbXgeZDN7g5TyAwl0YnBDQNEDji8i
- nH1qZb1/RtZVkRKmVgxzU6cyItGnu7k=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
+ b=CTcZfOO4o5h+zJh7HnxXrLKd0Npqy5iCQD+iO7Se03jDowaBLTe0ncj17RDRBzg6+49wMS
+ X3AqKopZ6VYM5n1ggBB1W6WMLlzaDhf/5XiaD8A6Pdu3sKVM+Ki/pNEXaIRRYA1/YN+OMd
+ pB54Lg7Au6WqY/mYdjHjhgAFUBwua2g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-XgIJhmSgOsSPMN9_2YhEvw-1; Wed, 28 Oct 2026 13:17:39 -0400
-X-MC-Unique: XgIJhmSgOsSPMN9_2YhEvw-1
-X-Mimecast-MFC-AGG-ID: XgIJhmSgOsSPMN9_2YhEvw_1793207858
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a2065a2ef9so11368845e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:38 -0700 (PDT)
+ us-mta-459-dGEWCgYLPT63kMv1l2z6Fg-1; Wed, 28 Oct 2026 13:14:42 -0400
+X-MC-Unique: dGEWCgYLPT63kMv1l2z6Fg-1
+X-Mimecast-MFC-AGG-ID: dGEWCgYLPT63kMv1l2z6Fg_1793207681
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48e29c25101so711219f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207858; x=1793812658; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rq27nGz6U59cZ8z/MigVLWJ0iHvfYau8t3QgSo7dDnM=;
- b=cm1hM0rgR+4z9zY9xeI7cGPNUBh/EE221zfA9bZQ+195M72qSg4Wvmez2qAkCu/7nf
- aa+fwb1vjkNOwVlBgY5SZP98vHxsZL9Afk3NVovVjdjJVsG1EzXQPfjmozfZ9bnbHvPe
- PeW2GXTOTI+2eOvje3RkRo5mq8fk5I/WKOnJrfDT0JAV2TTv7XALdfw7BejRdJ8dx2r0
- hxubwRgr9gbeElZcajOAzoNL4VmiFiL7QA0DpOGo3cXsRkHgRwOOscoN6FSBkftASZxs
- g0H0bzT865biy6co96QZI9hnazEyznQhfy9ub+GJHlPFBK6E6nxY374f5SoobR+nvMU+
- tDFw==
+ d=redhat.com; s=google; t=1793207681; x=1793812481; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
+ b=lZCo/CKiRyju5947tMLAbpuYZdBdRGb2mt3RtE3Pz6dVFZt/KY/xxedq+C8eDIwh9m
+ OEdWh5SUpKPo19JvNV9Z9/Z5yEm6h8GgdZsgzRWQKGtWc71RLmLReHbsOAbvyxEf3dZz
+ KWZ46dy/iVrOiDrcDx85AaCWev6+SvVjEFGvn4j2o1622zqpAp+mgnE06L+NVn/2Z7+A
+ fI7eIHJApjrk1kFxlYPDoEwNWweyOnil9mYnZzKL2Apj82cnbSyU41XxcVl086iYDQ1I
+ B3ZMgk616raNdqfUxpVz2mVetp0YBoIaA9GUUsV4OCXrJe2dCPLuV8MHmHPo9cBuFT2Q
+ Cu2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207858; x=1793812658;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=rq27nGz6U59cZ8z/MigVLWJ0iHvfYau8t3QgSo7dDnM=;
- b=PX5ZWEhRFdnZ6w+p5+3q8NWSp171sNMBDx70RaVfbn1RISWP3D22nZBFmZfX+KQ/1Y
- jmI0iSRfce1BGrQumtulgI8LPMlSPV4HYlLHbP61EIJfN6qwxID+Ss8WMW2kASFdrqFV
- 4UNSrMOT3okWQCHaZy/4O9ljtxBdEAzNocis6FepdlYIYej7KM2Xp3LuYv3b6+Tvk8c2
- o9sNebhDJ+cUASvxSo0XBYVI/acqXEwATFLcSwocbytlaJ9XgER4mR1Lz5n5VDpsAZLR
- MOGDcmVv91yjXPFiKRPTwYTN6vRhiNh1rtDWU+6bzGpJY83NEcjPeFrz7IXgVgN3B7jP
- c8Cw==
-X-Gm-Message-State: AFq9FYJT0FoY3fbyTlqsg1YJAG6RZsxlxJnsSKAroK0xi43N3+GA+REK
- r4pnnDe3Jv4Tj1+Z7EyvBCS4gj5IYGVerUI01Dkr3tv/WIVnbjaz/wO2TRGC5Q3+fMcw9ISua54
- cYayEbkveao4JZ74zx8/o7MMLkbscIfMerPIz3Pftt0i2YO+G6tj17lIlBcDkZOMo9rdCEq9oGY
- CPo11goVwNCAad5l1da0eih/SeDF7CDVEIoQ==
-X-Gm-Gg: AYBFou0Fn1m9zzNG8P9nf4XF3T4X6xxr8RW+i6v5GDOIFRaWepOeKJ5e8I9HX2+lWEC
- C9u0IrOq0m7ip2VsFrLnNmZ6PbDg7gK1jdIhE6gFN3V8CAmKjVCdW+aTGTn65ohAyOmzSuh31Vq
- qLWoR9M3PgzxAHuGe4Uu81XJffUjYeweeTzqy0TQ1ICtAOjV8QBO1hop+dcQWfoGvoiXFUxNfvi
- E64UAgPghUs+NhTnVjgvCPs8LVp4hNRhTec54uiVmpsRyRsrV34lqo3PmRrMkQJcKQuoGKGi4sL
- HFHdScPjQnFM/nraj8NYTimoPpvjsup7vMEc+Fjlx9Nc4XecA8gHg8QAkLdAHo5tgvfP8ZsDWb4
- BYAKR7ZqPZ89uC3p2dAtyY42OVhorMLbKU+LLBT6C
-X-Received: by 2002:a05:600c:4ece:b0:4a2:1960:6db with SMTP id
- 5b1f17b1804b1-4a9677ca10emr69467035e9.26.1793207857678; 
- Wed, 28 Oct 2026 10:17:37 -0700 (PDT)
-X-Received: by 2002:a05:600c:4ece:b0:4a2:1960:6db with SMTP id
- 5b1f17b1804b1-4a9677ca10emr69465475e9.26.1793207856377; 
- Wed, 28 Oct 2026 10:17:36 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207681; x=1793812481;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
+ b=YWIvpOaWy0y03GNAW9h0rP32eeSdUDZ9voBx2/F7cV1feozRrznN/vzEvH2u3yL4ay
+ e0iYj9JohvCCkGmDQqay6JTkb39GPQ/5BxUv/nppxBRZ2a+ChNTJH1Yc76dKCMaer47X
+ 0mvuPM6lGpiaFRbanGFPv1tC+JHOgr0CdCduZb/WAKxsEOSVgo5Gj4liSnauSig5g/1p
+ F0jYwUZ2jIXLeA2dZGyckoWA0dadF5Cr3Vam0uWtxPiuFhRUHyxpr+WxEtQVU0UR+xwS
+ yMTcwVK3TRxfHKyARt7DO8aarbzhKZ9oOxBIXFYB+kSuQQOG4RQwr6loZrjw4XnPsUaC
+ BHsg==
+X-Gm-Message-State: AFq9FYK5Up4CCr7S4TZRIWJM7v641b/9nmwd1q4Bu/lNmn7TY3PUNfJN
+ CQjpqIh2ja+wu7gMQlAVaJRKJcpO16Xq2y50A0PTATs+93TslFFJTrARdUT118opADbd8JXk6vm
+ OYTFTImQYE7i1/BYd0X9RUkPGz8+KU9RWMU7VgetakVDVNbmCN27d7XnN8VvWtowsEKbe/qSFu3
+ FxzKh5UFkuRBioakUvMvN4yKfQ//lk9chGGA==
+X-Gm-Gg: AYBFou2hmHyTPyG/+S5rcGC7Z0P5Gpg8rhZNaxmtFnKV+lFbHtSI9F7CGhUozZuURwU
+ YcoxK/c2DP81CWaDuivftvL1RqHbmqg6nOpnPzXUPeIduK8N+aMlpOgiheEUUUqXP3JhxnERux6
+ ANJ724jnzgEu1JB7JPXzEr5s8M/aF5Rk7w44CY293PMQ9LwTwGbR8Og68ziRqKl+QGx7Ce4HN/2
+ JxVf6JYyv2wrT1wLiH5RD+3BldpYI+enSTFRetbHn8jQtzhVeTzPdw6uHt8py/nH+Hu8g006Hgt
+ SeHqHKNGCXvsHip0MNqo2JQ+Wgs9yMIZbZfIu0MroUS/uN6YEO2VyZCbG8v4nH54ks5cjfIyUT0
+ hH0LR9ZDts8FDo4HdbxKqIeeiTsTmQJ+kjs7OQYbT
+X-Received: by 2002:a5d:5f88:0:b0:48d:eb44:650c with SMTP id
+ ffacd0b85a97d-48e5d5d13cfmr7657740f8f.40.1793207680981; 
+ Wed, 28 Oct 2026 10:14:40 -0700 (PDT)
+X-Received: by 2002:a5d:5f88:0:b0:48d:eb44:650c with SMTP id
+ ffacd0b85a97d-48e5d5d13cfmr7657559f8f.40.1793207679750; 
+ Wed, 28 Oct 2026 10:14:39 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa820492cesm5656565e9.13.2026.10.28.10.17.35
+ ffacd0b85a97d-48e3ecd3c32sm30643224f8f.47.2026.10.28.10.14.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:17:35 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:17:34 -0400
+ Wed, 28 Oct 2026 10:14:39 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:14:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nariman Sayed <narimansayed28@gmail.com>,
- Eugenio Perez Martin <eperezma@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PULL 77/78] net: add generic get_mtu NetClientInfo callback
-Message-ID: <d3c5277cc401ff656d2ddf81779b15b171044a66.1793207602.git.mst@redhat.com>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 17/78] vhost-vsock: don't reset connections during CPR
+Message-ID: <4d206dd0ff6e949cedde265bc487e0e350edd1a2.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -128,107 +126,69 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Nariman Sayed <narimansayed28@gmail.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Add a get_mtu callback to NetClientInfo, along with a qemu_get_mtu()
-wrapper following the existing qemu_has_ufo()-style pattern, so that
-device models can query a netdev backend's host MTU generically
-without needing to know or check its backend type.
+Migration target with a vhost-vsock device in the .post_load() hook issues
+VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
+the guest tearing down all its vsock connections.  That reset exists
+because after a normal migration the cid may change.
 
-Wire this up for the tap backend via tap_get_mtu(), which is now
-static and only referenced through net_tap_info.get_mtu, matching
-the existing pattern used by tap_has_ufo() and similar callbacks.
+However it's not true for CPR-style migration.  In this case cid remains
+the same, and we want the connections to persist.  Thus, let's customize
+the .post_load() hook to skip the common transport reset part in this case.
 
-This allows other backends (e.g. vhost-user, vhost-vdpa) to
-implement get_mtu in the future without requiring changes to any
-code that calls qemu_get_mtu().
-
-Suggested-by: Eugenio Perez Martin <eperezma@redhat.com>
-Signed-off-by: Nariman Sayed <narimansayed28@gmail.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261007050718.926-3-narimansayed28@gmail.com>
+Message-ID: <20261012-up-vsock-vhost-v5-v16-8-36c38bd15ffc@virtuozzo.com>
 ---
- include/net/net.h | 3 +++
- net/net.c         | 9 +++++++++
- net/tap.c         | 8 ++++++++
- 3 files changed, 20 insertions(+)
+ hw/virtio/vhost-vsock.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/net.h b/include/net/net.h
-index fdf6a2ddd4..de4f03c301 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -73,6 +73,7 @@ typedef bool (HasVnetHdr)(NetClientState *);
- typedef bool (HasVnetHdrLen)(NetClientState *, int);
- typedef void (SetOffload)(NetClientState *, const NetOffloads *);
- typedef int (GetVnetHdrLen)(NetClientState *);
-+typedef int (GetMtu)(NetClientState *);
- typedef void (SetVnetHdrLen)(NetClientState *, int);
- typedef bool (GetVnetHashSupportedTypes)(NetClientState *, uint32_t *);
- typedef int (SetVnetLE)(NetClientState *, bool);
-@@ -113,6 +114,7 @@ typedef struct NetClientInfo {
-     NetCheckPeerType *check_peer_type;
-     IsWaitIncoming *is_wait_incoming;
-     GetVHostNet *get_vhost_net;
-+    GetMtu *get_mtu;
- } NetClientInfo;
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 503d248a61..c582ac9fcc 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -20,6 +20,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "hw/virtio/vhost-vsock.h"
+ #include "monitor/monitor.h"
++#include "migration/cpr.h"
+ #include "migration/blocker.h"
+ #include "migration/misc.h"
  
- struct NetClientState {
-@@ -214,6 +216,7 @@ bool qemu_has_uso(NetClientState *nc);
- bool qemu_has_tunnel(NetClientState *nc);
- bool qemu_has_vnet_hdr(NetClientState *nc);
- bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
-+int qemu_get_mtu(NetClientState *nc);
- void qemu_set_offload(NetClientState *nc, const NetOffloads *ol);
- int qemu_get_vnet_hdr_len(NetClientState *nc);
- void qemu_set_vnet_hdr_len(NetClientState *nc, int len);
-diff --git a/net/net.c b/net/net.c
-index d7fa637ce5..bf7e5d9b12 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -514,6 +514,15 @@ bool qemu_has_ufo(NetClientState *nc)
-     return nc->info->has_ufo(nc);
+@@ -110,6 +111,20 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+     return vhost_vsock_common_get_features(vdev, requested_features, errp);
  }
  
-+int qemu_get_mtu(NetClientState *nc)
++static int vhost_vsock_post_load(void *opaque, int version_id)
 +{
-+    if (!nc || !nc->info->get_mtu) {
-+        return -1;
++    /*
++     * Only reset vsock connections for non-CPR migration.  For CPR the
++     * guest cid is unchanged, and the cid-change reset would otherwise
++     * tear the vsock connections down.
++     */
++    if (!cpr_is_incoming()) {
++        return vhost_vsock_common_post_load(opaque, version_id);
 +    }
 +
-+    return nc->info->get_mtu(nc);
++    return 0;
 +}
 +
- bool qemu_has_uso(NetClientState *nc)
- {
-     if (!nc || !nc->info->has_uso) {
-diff --git a/net/tap.c b/net/tap.c
-index acccabca56..665dee800d 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -446,6 +446,13 @@ int tap_get_fd(NetClientState *nc)
-     return s->fd;
- }
- 
-+static int tap_get_mtu(NetClientState *nc)
-+{
-+    TAPState *s = container_of(nc, TAPState, nc);
-+    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-+    return tap_fd_get_mtu(s->fd);
-+}
-+
- /*
-  * tap_get_vhost_net() can return NULL if a tap net-device backend is
-  * created with 'vhost=off' option, 'vhostforce=off' or no vhost or
-@@ -607,6 +614,7 @@ static NetClientInfo net_tap_info = {
-     .set_steering_ebpf = tap_set_steering_ebpf,
-     .is_wait_incoming = tap_is_wait_incoming,
-     .get_vhost_net = tap_get_vhost_net,
-+    .get_mtu = tap_get_mtu,
+ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+     .name = "virtio-vhost_vsock",
+     .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
+@@ -119,7 +134,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+         VMSTATE_END_OF_LIST()
+     },
+     .pre_save = vhost_vsock_common_pre_save,
+-    .post_load = vhost_vsock_common_post_load,
++    .post_load = vhost_vsock_post_load,
  };
  
- static TAPState *new_tap(NetClientState *peer,
+ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
 -- 
 MST
 
