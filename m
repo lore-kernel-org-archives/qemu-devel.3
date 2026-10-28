@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF5D606A322
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 15:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1D5606AB24
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 15:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Xwb1lzrU
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PxulUTtC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM5UT-000839-DP; Wed, 28 Oct 2026 11:23:01 -0400
+	id 1xM5VK-0008TE-DT; Wed, 28 Oct 2026 11:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM5UR-00082R-LJ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 11:22:59 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ id 1xM5VB-0008Qh-Ho
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 11:23:45 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xM5UQ-0000xY-06
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 11:22:59 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-4a755bbe158so614447fac.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 08:22:57 -0700 (PDT)
+ id 1xM5VA-00010V-4D
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 11:23:45 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-705cb6ceebaso739965eaf.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 08:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793200976; x=1793805776; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793201022; x=1793805822; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hPiLF9jaOk6ebsSerdata/HHRra8R+w4M1Vwl3XDxUE=;
- b=Xwb1lzrUreS1hYQOYkaYS1aV2l7xkUNrJjjfRjdLMoKoJp9sxusw+A7wTV+RFiWDqp
- 1UoqMB4xB8raVztSPD1OX4dUlvnymTbYyA/premvLWVYLBdTkqQuY4n1GaA7GJlTuOO8
- SitIcA5d+LanHaUy5lLId8fMkidDeYs1xtQzayEiQ80Z/Syl1L83rNylkQvIn1oN3uXo
- kAJVH4zob1dKrgdXTXGfrugcW54QCtPUwGTQK2zITEa3V+fW46oOCPH+441aDvPRhir3
- jA16SHZY4ye7LLEYm0+qYWr8cFEupKrIxNSez6NMdp5r0/7uA5H8Cd+ssGj/183iYDPI
- hm1A==
+ bh=3i6bxbRZova5Zt4s8yFQ50r5ZezgAwsOEKYhJpXWDuQ=;
+ b=PxulUTtCYec3GQnME0WafPHkZD+ZI5292whjLruS+dCi2ppbuYW7XZfCIJHtcDmDju
+ F/4+nuV5pYBYzO6xHxsymmw5rJ95Qka+98wjefIFMcBIvD9tImzqjbDisOBQ4/i5kQKG
+ hLWrIX1n8khvVI8f2C/AodcxJpYXEYAgZq/eFxfG4T8u0MT7ypmFA53sGIAxGMAf9NNB
+ CoyFUDSWogdZl0AdM7w2+Pl84NtBMVTFmgR4CUHS8OlifnGOE8+nIPeoI2PSynsikHVg
+ J222asAK6HTKq9m+9sWG9fHCTWWHv0OproQL9DVrG8u7s79SLR4YcIvo70jiS2imvYSP
+ g9QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793200976; x=1793805776;
+ d=1e100.net; s=20260707; t=1793201022; x=1793805822;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=hPiLF9jaOk6ebsSerdata/HHRra8R+w4M1Vwl3XDxUE=;
- b=TREc1dNhioSag7xCz2Vk9cLRWNyOgUB5y7rFRFKuqW8gmB8fSk/Tyq8ekkFRGyM3Oo
- e2i+7K4n9jKei9p6+aM8XDlDzATohaUALBFRjiJw1OTqaa30RIUfuu9HM+Gh45WVuL0c
- AVa9lx65HjjdkGf3MINx3eG8RBUWixTjXD2NCfKJgxpoP6Y/lzAnX7NntSpLPJKl68ep
- bX4+m+WFZ+7bFolQJDjqoinnN+ncw/viTyobuHJPYTn5pi3BwFBlA9bw/fbub9jjP4E6
- gCX/VcmbEO6te0JGjeKDK8q8eCoRmPJcG0Kj8w9WOXQwD+w+gjpyis3FG22ZjCckWUaV
- DJSA==
+ bh=3i6bxbRZova5Zt4s8yFQ50r5ZezgAwsOEKYhJpXWDuQ=;
+ b=LZDoaB3o1IqmM/IRt02GrPIz7NJAOb8A/UuSmXC96sy56Ul2i4/vHftF2h8S/XwvTH
+ XLmnRZntwsLKKdh5nYtQZsCSgUQyBkA7Qx1Y54KwRUUVji/8+PzrY4bDkc61OIL1hTsT
+ CXx4gN8fdQKEYSymhhtzBaWa3BWlAX8xpXNWjsQeE9rKMbe4UgIfhcxApn+tur03qWJ9
+ NW4Y4snnKOyFBVWUcIAB7hiFgcUd5A+97sq63YEx35aYqrhP5UCbTvH2OE0+H72DNoX7
+ mIaCu/WkvvYKClauiw1ryHjm+BOUx21mqvzr3pIKCdAz7+8mZpNlgb+Z64+1J++dCXrs
+ g9gQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwwajDIedhOY03K3eaUNaFlETstpion3I4RtLxFZlmiZnfVKBPMNaol59ER9zIy0oRklP06JYCvHK1/@nongnu.org
-X-Gm-Message-State: AFq9FYLaNLW/m7Zo2wLs6TAXqCZw/XyBKcpbKxMYp1JSWVroxqVIqwLY
- IpDAhBlSeqe8JOMnDbNprxlWVvkfUqtPlW0ii8V0/t0Vc9wk35I0HH7WvaEBDj7ShVo=
-X-Gm-Gg: AYBFou1NHFPFb4JblQyBvZb8QPPmug9HMl8PaWUGbnBr6HznQXcz97whKUyxu4DkPFG
- 2F5A0rmymA+6XqxfGgl/Ic/6pcga4ks7lD3ke6WUoL5UFA+t6LdVNZ9Ph83ZE+6I/KxMBOcX9ry
- j1mxm0ubuOuEOdpXdLbvzAE+mwSR6DwUA7YCqpP6ZwgHCxtlsLWwxCZK7hE4rSv13mz+lVe/aDl
- P9Tu6Skg1Tz9FiTN72JcB4+0FdmlAab6GMLCXrIRQxknsa5RV44irGdrDon6MM1NuVnzHUA81AV
- ev4tdFWOyvDrUwNeeDeqyo7/p3m1vMM51uflUwshBRTklW8bf8ikaCiaUGuahy4QGPMSTwFiBdb
- cz91K7ku7w/BAo9uyA5jTta7/G6TpIpoNj5FcTjYJHLwbEFgoagZGkRjAyXgNtQeWy1iDUqGVp+
- N6l9Af3hmBZ5UR+nDsnuIg1Ih5xqyInXGR5QrcyuSignEaGepwVggo6A7xQzoh8G5UKvfKbvEQt
- 1HaKjGC7THiUlxJrLBnGws94cwudw9H2SGH0CVICyJV5lrm6tGjqfqHX+kvf4Qps92/o3tVD6Ro
- kNG6pK0hs1kUjmAdGnRqySEIRjS55KyvRkvtW3gZmQnymqrY7OBKSgT4jcq8lqLYc8//Sxzk4hS
- QBhIL4wi7NBp4qlJsdnyKyOk0ow0xGYQq
-X-Received: by 2002:a05:6870:2102:b0:457:f4e1:a1e3 with SMTP id
- 586e51a60fabf-4a89b77e246mr3278174fac.7.1793200976070; 
- Wed, 28 Oct 2026 08:22:56 -0700 (PDT)
+ AKwUvBxX5PbWmT+XUeEpO2QEuszBfuecAGrkBCaqJ6A9vVSQh5RJSCJd3TYQhle6kkp4jZfWjaBybE8mfrcO@nongnu.org
+X-Gm-Message-State: AFq9FYJcK3dvR37EowwYM9b0YNADJGIfNH/BapHicH9wdpBgNe27+9ZI
+ S1oesN3VpbMFnepDRVbaWLpJ3WVEVDuWctgv7JJv7rpcEW9WhT2BlR3G+IinNEJnxRU=
+X-Gm-Gg: AYBFou34Zo5iyMUyhs9oQWGKzL5LZPOSK975ByNiAXMCCiwc+OFDab43lq7iuFFwg0t
+ N9LFGWC3kCs4Fwg+0EqjeMZnhl5uuKRa3CKtvUJQoc7Zbf1MzksaBYj7v3P3puf1araW7MlfqX9
+ RqMDnBvdVB4QUPU+8z7STATuKwph66HfZakgeqgKL0Hrk7981biHCbuZ2yhTzOtH+tPwLLMmZW7
+ ve7mjYKNBO8k4+w/Am6NLUYhUQ6IY1LWqehTEFaV6b2q7kzNEDZZ93iV4nfbpYVbt6bKTY4Y5vf
+ mItz9doYi/lLMCdUhoS4zhZ+CVI/7pej7nweWJcdHyiCf9B0o3b41X8kUYgg6oF1wEJzp7DMuEr
+ 46Jf7Hz0fziPnEw3wN5EoQjoQOFoA21EaP0o2A6V5IZj7EHSWYcYx4IQuHnJaLiIdf3D5BDpjqE
+ G7EGMZgnuZfnyJnDRaYbSRi/agvaJzgYxrQv/nrO+mOhfgS25m6AUzMClXPNKUO/BzQgkyMC+bJ
+ 2xpqdbcNywnfuzTHfkKrFOslnxIoF5WtrSwo4z7NDT3h4cGdk5PgzwCVaU/UIYjCokykQZzXNNy
+ 9CqLelnfs0Qx1Lgg8cxxImL8FnH1ZUE2qAfEtuH/TDvgeP4pMnvoCFhFUrdvVBXKyodIjgGejtY
+ mdHVOwdW9lQQ=
+X-Received: by 2002:a05:6820:82a:b0:713:e433:81e1 with SMTP id
+ 006d021491bc7-713ef924474mr1576186eaf.53.1793201022337; 
+ Wed, 28 Oct 2026 08:23:42 -0700 (PDT)
 Received: from ?IPV6:2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6?
  ([2607:fb91:2c2e:8a8c:60fa:827:925e:3bb6])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4a8b7830d1bsm2732139fac.7.2026.10.28.08.22.55
+ 46e09a7af769-85b2021857csm2007499a34.23.2026.10.28.08.23.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 08:22:55 -0700 (PDT)
-Message-ID: <d2097319-c942-434a-8914-2e7ca3bb9935@linaro.org>
-Date: Wed, 28 Oct 2026 10:22:52 -0500
+ Wed, 28 Oct 2026 08:23:42 -0700 (PDT)
+Message-ID: <586c8c7a-9251-4d6e-aab0-c5e2accaa387@linaro.org>
+Date: Wed, 28 Oct 2026 10:23:40 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/86] hw/intc/arm_gicv5: Ignore low bits in
- IRS_IST_BASER.ADDR
+Subject: Re: [PATCH 03/86] hw/intc/arm_gicv5: Ignore low bits in
+ L1_ISTE.L2_ADDR
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20261013083933.1024405-1-peter.maydell@linaro.org>
- <20261013083933.1024405-3-peter.maydell@linaro.org>
+ <20261013083933.1024405-4-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261013083933.1024405-3-peter.maydell@linaro.org>
+In-Reply-To: <20261013083933.1024405-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,41 +115,23 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/13/26 03:38, Peter Maydell wrote:
-> The IRS_IST_BASER.ADDR documentation says:
+> The GICv5 spec defines that an L2 IST is always aligned to its size,
+> by stating that bits [N:0] of the address are 0 where
+>      N = 11 + (2 * L2SZ)
 > 
-> For IRS_IST_CFGR.STRUCTURE = 0:
->   Bits[N:0] of the resulting address are 0 where N depends on the ISTSZ
->   and LPI_ID_BITS fields in IRS_IST_CFGR as follows:
->      N = Max(5, (ISTSZ + 1) + LPI_ID_BITS)
-> For IRS_IST_CFGR.STRUCTURE = 1:
+> We were missing this check, and only aligning by applying
+> R_L1_ISTE_L2_ADDR_MASK, so we would only enforce 4K alignment even if
+> the L2 IST was 16K or 64K.
 > 
->   Bits[N:0] of the resulting address are 0 where N depends on L2SZ,
->   ISTSZ, and LPI_ID_BITS in IRS_IST_CFGR as follows:
->      N = Max(5, LPI_ID_BITS - ((10 - ISTSZ) + (2 * L2SZ)) + 2)
-> 
-> This enforces that the IST is aligned to the size of the IST table,
-> or to a 64-byte boundary if the table is smaller than 64 bytes, even
-> if the guest programs the low bits in the ADDR field to specify an
-> insufficiently aligned address.
-> 
-> We were missing this check, and instead trusted the guest-provided
-> address to be sufficiently aligned already; add the alignment
-> enforcement.
-> 
-> The GICv5 spec defines the masking to be used with the expressions
-> quoted above, which work with the raw field values from the
-> IRS_IST_CFGR register; these simplify down to some straightforward
-> expressions based on the sanitized values we've already extracted
-> form those fields.  You can get to the expressions we use here either
-> by working through the simplification of the GIC spec expressions, or
-> from first principles (the number of bits needed for the size of the
-> table in bytes is the number of bits that index it plus the number of
-> bits specifying the size of an individual table entry).
+> Add the missing masking of low bits.  We already needed to calculate
+> the number of bits needed to index each byte in the L2 table, so add
+> it to the GICv5ISTConfig to save having to re-calculate it later.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/intc/arm_gicv5.c | 28 ++++++++++++++++++++++++++++
->   1 file changed, 28 insertions(+)
+>   hw/intc/arm_gicv5.c         | 6 ++++++
+>   include/hw/intc/arm_gicv5.h | 1 +
+>   2 files changed, 7 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
