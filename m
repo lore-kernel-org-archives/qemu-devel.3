@@ -1,102 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A57C606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15AC606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Z9lV5xVH;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LB/5Lsjr
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=OUXVXksn;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Iod9A7Yk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMAho-0006jt-PG; Wed, 28 Oct 2026 16:57:08 -0400
+	id 1xMAiP-0007uo-U6; Wed, 28 Oct 2026 16:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMAhZ-0006ai-Bg
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:56:59 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xMAiO-0007r5-4Y
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:57:44 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMAhX-0006JE-FR
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:56:53 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xMAiM-0006MX-4b
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:57:43 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69SIPC9G2969603
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:56:50 GMT
+ 69SIQECI1581355
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:57:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hWYsdfBUBiupeyoRh6a+368mcsTHFLGdO3OnlEUj2eY=; b=Z9lV5xVHlYohQgfy
- HaXvWqZjypyHunxBfwlFQTTpU5GNQrLTKBWyPmupw9QG15M6eeW+uv+mwqYNG9Dz
- huc2lcH6HclZxk1u1X+3CUsf9H+83OXMDvEuLeRpxsD3D+PPsVKLIjR9UDggPjmC
- BYCPC5K+FcGNqM5oUSgswCfHaiN9oFQ78UVEOrAHojiPBsfjTWLaHHxpgH2+cWIj
- rDlztPiu9yfrZ++0RkkyUlDNkHX7z2NYjBXohs5vGP7h/K+Wj1mcSWwBvQeEQGKp
- xcshe3KBipB+X5ZVUpQJqTNplwrA8a0n0tJ0Y9rpdxS6htqUNVKs8B0ZtH7+ye8D
- TDpI2g==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkkehsfdp-1
+ EOpEFWSisjrT5c6fkFMdm8vPVVb4c31jg+avCBk0qvo=; b=OUXVXksndQnUd2h9
+ jnjZI6zKKWvZpOyRGVeaJ3xqPyJxYGG4U8J/3oFAknX9kvsaMLB1Yu4O/XwBwtWq
+ kkm4zWAWe6Td0n0hGwTv4xFqloSXW5CBlxFCJKbkwgt1XOBziznsGtVOOY/wuvZf
+ ZwEC0cZaHCAE2U3DQhMvi1D7gwQ7pfjymxUsw76n+PhVLfNAVJ+xHkMct+bp4wMg
+ O/QgWQl5ULZ5xYawB4NZqYlw37OlahIerRX5ZN8JRz467iY5lr5beOsKzTRhM00E
+ l5UG98tSCnGFn2ile3KiJWWINaIwLcwiptzP3XztgYGUJUHIrtAQEvQ8afYEE2zt
+ J4ECvA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hknkp8qmk-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:56:49 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-3662e7a9299so5506688eec.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:56:49 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:57:40 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-351788121cfso27861eec.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793221009; x=1793825809; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793221060; x=1793825860; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=hWYsdfBUBiupeyoRh6a+368mcsTHFLGdO3OnlEUj2eY=;
- b=LB/5Lsjr0jwmjDJPd9Mi+qDLAV8GtVChherzBjv3/qjs1iYNwRd+qdM9rD6mjHftyv
- 9sBnAkIio6bOh3NmmILSPj/OyLQ/zXz1H0x8o7bLeMgMMcRV5rLdd2F2H+tMlyc4YeZC
- cLC6ZRkrS+eh404pGmACNGUbou8GVFK0aQPGmBwDPVKPGgpNSvtX+C9Sh6mrk9+vbaIX
- i8TgRDkpfWzGJlA/6b7HEifO3km9ZDEwwtSHpdjw2wp3nbQQaVV/trl7sidbHkWuy9cH
- TrUKvCNXTvblXyW8MWuYT1eONV+zhJLC8NP4ODFflBGqdSDUWrDJvxFy0G8B+GzoMpCK
- TgGw==
+ bh=EOpEFWSisjrT5c6fkFMdm8vPVVb4c31jg+avCBk0qvo=;
+ b=Iod9A7YkwgpLyV++U0lr0jPPn9ZbgxEUiFXw897RhVV3du3slVWJbZYgCjqyuLSccO
+ zqV5c52j3wIvXlaEtaLsaEYxqvpQclzZKQjgweZZHR3V4EaXI2r2fbWizugLT9smfhGJ
+ XOKXZwl0lT2m/u0cygVu5MxaJvsHCt4rhdZnkyxvLk/kV2SjdIocdpKg7bwBvtC6EE06
+ ms+5YtrJraSJIhHaP8bdBGtsutdeeRFsL7wTHA2W/Q2f2fZQClz5C1J0v9sh61X+qtLO
+ bCT3WadiQWtzrFr6tuWf06XXy5o8xLidJxipPg4fYvv6nWi8lfigQCbQkvB9FmTrtlK5
+ Fsdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793221009; x=1793825809;
+ d=1e100.net; s=20260707; t=1793221060; x=1793825860;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hWYsdfBUBiupeyoRh6a+368mcsTHFLGdO3OnlEUj2eY=;
- b=0fHuwLKfbdQhkCm6/6+nb5whG783agGNMwa31UceNRaPA4aqb+cyvAq1laYQWiSPiE
- DoDtV9z0RPTGGvlw8w0U+L+jsHsv2Rvijh7rNZmudxPfw0hUsqBLZYTPZ9vlR4yWH3Jf
- QgbI5zvBNe3QpE++0Lke0bYkXOJQsUetMLfJ1F1sn0ftnkxu5QndCKKL2QkemaYj3SeB
- QEOoCmCyk6wU37hK+mz+fDk2l8s/bCVsJrpY1EBpnIbKvWZ+D12pkASEzKdpW5yYXI/Z
- izuTcZ0Gnec+64tEH1+Qc25C5l5S5dUitSRr2cPaCVchgC4kXC8r6Rh3dqDzSDFHGzL1
- zqMA==
+ bh=EOpEFWSisjrT5c6fkFMdm8vPVVb4c31jg+avCBk0qvo=;
+ b=M2arkqiO7Ioo1W+LtDGBQCF8ebrm0qi7kzYOVuPoDbaN0i0pMRgt9BFO5y1DKF74j9
+ MxJ3o+tlCxs1n9NtS2qEomZdzzSOq5XT10hDpz6/E07PHJRbgVbjA4ug40iPsqpp2UZA
+ 7F4kzZa5d64E2fnPIc3NZkovJLXO9lZl6W0jh+Lul+dHi87xiQKQgtU5m0to45mb3Wg2
+ s486EBobmgi6Y+A2aMm+Bwjv7Ccbck18fi5Elov9ckqPRyRJ69P/jKAwetXn3u+Fe3Lt
+ y02iqMo5/ZJ1pLCr0HujZcPXZR/V3bLCN4ag7pASuc/e+OberZIAXPKZMGtO9yzJ3kkG
+ ojDg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzNwG29DSw1O7df7pwdqpPErjngm9lI05VzFY4d4r1rCjiZH8E/CcZJByroL7Hf3++R7li3RTml8F4F@nongnu.org
-X-Gm-Message-State: AFq9FYKUzjxanNiUCMYgRInrRy6gkCCGzq0st4A2WlZZu+G7U0I6nKR9
- 54NWsD6BkEXjCTwUpzdDvm8fizQl7EqlZqIWsZI0YAt/vz6zDILK4VWmqPZPPLWMbvZRbMpWn+x
- OskwuBPHtxXLywRPqnQ1KJ7oXMbusWEjHx8sNnxShPmn5UWbDsnLiwwqupg==
-X-Gm-Gg: AYBFou1Ofi3HUBn9fo7vNv3irEQtxaC7+xKknZsAeoNihMt4LpvxYMaZSpCK1c+nB2E
- MmNNvPRjFRpa0QjacuepHnC1Kj6i4MFQqhs2e1RwwWD6LCSF9tF1kH20Ow0MyVpd7OzUYh7GTpY
- URa0iGPoLQNbJ9p6yl7B+WCGsJhJyooMSoUl8n5N4B7ElKF1QiaEeqvbJz/p/gpRW//0tX0Azzf
- 9XE+/MQJZU3svy15VPL1D1mk70lmms28boBISUhXOBIY3YTQ0X+wp+U9mDC/E9M7LR6/hx3XWGA
- Ic8W7rnEhLoQqCoONnZqS6GaMwE5RsN3ZVVKAlafYZPCoxVV59sKymmv2hlzQ+jnm76OjbUsIEQ
- 13GyHBwPd96KQOAnf2/i9625AyhI1Fp2julWJyqJviXn2dc4Kk+dNxJIIDeYtg6tihpKuqclXtp
- gEq1eycLsOG/vZsWRsguCe9unNioLwPCBaNupVe1ow3lg=
-X-Received: by 2002:a05:693c:4196:20b0:35c:85fa:5a68 with SMTP id
- 5a478bee46e88-36a2043f09emr5604192eec.31.1793221009089; 
- Wed, 28 Oct 2026 13:56:49 -0700 (PDT)
-X-Received: by 2002:a05:693c:4196:20b0:35c:85fa:5a68 with SMTP id
- 5a478bee46e88-36a2043f09emr5604140eec.31.1793221008340; 
- Wed, 28 Oct 2026 13:56:48 -0700 (PDT)
+ AKwUvBwCGLGizpr3PU86lRjJ+qg9qQEmOX7rg3myYHXOTcejdpQVMgbQD+vBkT41EGwyxIYjTvnuBUfEgxL5@nongnu.org
+X-Gm-Message-State: AFq9FYLnU8wqsBChR+y4UWUV9/GEu1kA6812HBdAV18m6ocM2cvWjm4i
+ bGw1XvHjKNrLZbslkMa+LikWsv5llA+fW0llfphfkam0OKJ0RdLqyu3TeKbG559wZp8wp9O7nxQ
+ TgWL2tkVm0o6k52xgmGjNCPd6EcgUkc5JdsDUvFE1Lsxm2qybT4/D15yRQQ==
+X-Gm-Gg: AYBFou0P5lgNcAPNPLGpzFW4SkRkW5c2WYYmODcS0tZDpAsF1r1GTNf8Z3bmEli7KOn
+ S+fyU+w87Mxaai6KDdPF/ScVxsnNUjZWX5Ll2/DE/4MdFdsg78a+rEhxOugCMEMX7ykPt/mUeN2
+ gGNqGBK2DhCdI/TEYY6gWLm6uOz0AyxpDT/gKguJKSCmQmfkAfSyWfsA7vJHikCab8xaixqsk3z
+ I8z9MozErNuam1vk04bhVuUioLgrYKmdwzDHZ430lf0YR/2+aW8BGbbagjLEFTDWB+3Nmy/USdd
+ gIsW1vvre/BkkxXmhyEIE73Z8Yj3ONFAFZBA7yWZjlyDq7573NsxrwCSL9ZX1PdK6so59XUdmPa
+ 8joIl/pBpeIyHVLtgTfr/gdDamViD6wXISrOCdzz/FSwIET1tXFvqw1wax3qC6Ix0XkaK576fSW
+ k1KVCwOQmyN/7naYk8xSFwrS+ZF5gY/8IHIQtpTqZnWMU=
+X-Received: by 2002:a05:7301:188d:b0:369:f3e3:4277 with SMTP id
+ 5a478bee46e88-36a204bf28cmr4897794eec.38.1793221059596; 
+ Wed, 28 Oct 2026 13:57:39 -0700 (PDT)
+X-Received: by 2002:a05:7301:188d:b0:369:f3e3:4277 with SMTP id
+ 5a478bee46e88-36a204bf28cmr4897749eec.38.1793221058889; 
+ Wed, 28 Oct 2026 13:57:38 -0700 (PDT)
 Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
  [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a239644efsm14525270eec.23.2026.10.28.13.56.46
+ 5a478bee46e88-36a238dc80dsm10533122eec.9.2026.10.28.13.57.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 13:56:47 -0700 (PDT)
-Message-ID: <0c372e45-eb39-4917-9b71-20658dbd3b6f@oss.qualcomm.com>
-Date: Wed, 28 Oct 2026 12:56:46 -0800
+ Wed, 28 Oct 2026 13:57:38 -0700 (PDT)
+Message-ID: <18efc198-f211-4219-b6c9-9ff34dc94e3b@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 12:57:37 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/12] target-info: add target_base_i386() and
- target_not_base_i386()
+Subject: Re: [PATCH 11/12] hw/virtio/virtio-mem: register legacy-guest variant
+ with is_available
 To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
@@ -110,42 +110,43 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20261028201557.2688-1-luoyonggang@gmail.com>
- <20261028201557.2688-11-luoyonggang@gmail.com>
+ <20261028201557.2688-12-luoyonggang@gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20261028201557.2688-11-luoyonggang@gmail.com>
+In-Reply-To: <20261028201557.2688-12-luoyonggang@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: UgMf_fp0rNosNNeS-M1j-kWocZnmn-FO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4MyBTYWx0ZWRfXzPQmVHBArYdY
- BEqssz2u1s+CSj5QF70ovaWFbjWdQZczIjVvzG5Dlih4Zcw7EGI3YWY1Rzj5n36tS3+tIrcjlm2
- mNVWvjvFCVbFvcUZNieTJ1aIO0DRvUPIIDwU2vAmEs4m97s+syZoaYA+uXibEo9ueex266vtx5t
- 7znYGdrMrYnEUXljwfrmkjNUlz22DQCFIke+ytWUSZzMmSSAILJ5xYfEyc5OUdJy6dTgQSDLzLd
- rzqmdh59fr0XKUCjfjbnDFYPHG7yzJR+HoMZS/XKWXD/S0UtQIkbyBX4jxl+FDl1uSHWDwfnW4T
- 9rGdJOkGz7nWvN3bVWLfUc+ql84dZRHISW+FkgkiE663HfiTTyfDvXl831D2JjjDB66xpdzRC9O
- UOKvmN43s/FuvE1CWr8nrO0IlsKJP+XbOpyRbwLpjSosqrQ29Mp1YeZcBKJVYb3Ul8qQVviIiyO
- +AO+9T95rcXMix0hPLg==
-X-Proofpoint-GUID: UgMf_fp0rNosNNeS-M1j-kWocZnmn-FO
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4MyBTYWx0ZWRfXxsPpYtxqClt2
- SEDGQ+te/fzWE2dBsVQ5hZSlttzX7DdgMtPBOd9SSQUoS2f4fFaIAPCE1CD+wLvHjE1xL2jnAa8
- wU/38WnXkBeUe9/PQ9wrCl0qEdQhERw=
-X-Authority-Analysis: v=2.4 cv=bYv+w+PB c=1 sm=1 tr=0 ts=6ae26191 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+X-Authority-Analysis: v=2.4 cv=Ju9kP84C c=1 sm=1 tr=0 ts=6ae261c4 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=pGLkceISAAAA:8 a=yzYXBvia8gfhOsAmHUQA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=pGLkceISAAAA:8 a=sjczGJGRD0jTwJJuDEAA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: PnVUxF2rUoz0a1p2Jk7JA8xWhOvp6WS7
+X-Proofpoint-GUID: PnVUxF2rUoz0a1p2Jk7JA8xWhOvp6WS7
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4MyBTYWx0ZWRfXw1CZUp6vLw/s
+ FiF75op+/DdIZFASGEFhAza8kJsfbkU77QRJ30s3KMk1Qo27YYEg2fpxXbbZ0yzUbeDtgZZsMvL
+ EDbq2c7JBY9F7eFB1AiSjW6P2DiGCqw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4MyBTYWx0ZWRfX0s+9DylUJDeQ
+ oVw+tWE8qcSryFd5+djBWbLHChlT8Os7Vzjet1rCh4NfLkEmqY+SK13u9k50LA94MByzRD7exaK
+ EH8lAH63t35t0AMQPhPxb4mKlXCjM9od2BWrqot4NVtthuSkc4z6yA6ZRb6Yoph6ENbHgHbPTxp
+ y4w29nf7b7XghJDaFWFFjzmKoEt33CeCnNUiPREFzXye953tgohzvLJk5DLSE0SYjZJe7/k3q49
+ XG4655pXxQj0EuvO0kOOm84pfM5LCa8DVxxOLAb7WPD7dNf2Ir6c0BOpNsAtZ002Iw1CJj/+pEl
+ r/MhspJwUHOngbpiaUXJoUvHsJU8wIX2MHLCV0iS/4ZLZtYTcJwKV7NiXbc6txJQvpIANM/OR3+
+ VyH8IhQJ0LV5+xyfrc03P+7DiV8+1KvFg6ww1YCRRgxbvzyKkwJCT7TQGRY0SSvv57ZxGP/gCmo
+ AK4wAuosbT3J74cUSpA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280083
-Received-SPF: pass client-ip=205.220.168.131;
+ impostorscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610280083
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -173,68 +174,134 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/28/2026 12:15 PM, Yonggang Luo wrote:
-> target_base_arm(), target_base_ppc() and target_base_riscv() report
-> whether the selected target belongs to a CPU family. Add the same
-> predicate for i386 and x86_64, and target_not_base_i386() as its negation.
+> virtio-mem decided in class_init and realize whether x86 guests can
+> leave unplugged memory accessible. Register a second virtio-mem type
+> that adds virtio_mem_legacy_guests_properties and sets
+> VirtIOMEMClass.has_legacy_guests. Select the two with
+> target_base_i386() and target_not_base_i386().
 > 
 > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > ---
->  include/qemu/target-info.h | 14 ++++++++++++++
->  target-info.c              | 16 ++++++++++++++++
->  2 files changed, 30 insertions(+)
+>  hw/virtio/virtio-mem.c         | 47 +++++++++++++++++++---------------
+>  include/hw/virtio/virtio-mem.h |  2 ++
+>  2 files changed, 29 insertions(+), 20 deletions(-)
 > 
-> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-> index 4bc25789d8d..48206d01ba9 100644
-> --- a/include/qemu/target-info.h
-> +++ b/include/qemu/target-info.h
-> @@ -57,6 +57,20 @@ bool target_heterogeneous(void);
->   */
->  bool target_base_arm(void);
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index 7130ed852d9..bf241a3112b 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -15,6 +15,7 @@
+>  #include "qemu/cutils.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/units.h"
+> +#include "qemu/target-info.h"
+>  #include "qemu/target-info-qapi.h"
+>  #include "system/memory.h"
+>  #include "system/numa.h"
+> @@ -35,22 +36,6 @@
 >  
-> +/**
-> + * target_base_i386:
-> + *
-> + * Returns whether the target architecture is i386 or x86_64.
-> + */
-> +bool target_base_i386(void);
-> +
-> +/**
-> + * target_not_base_i386:
-> + *
-> + * Returns whether the target architecture is not i386 or x86_64.
-> + */
-> +bool target_not_base_i386(void);
-> +
->  /**
->   * target_arm:
->   *
-> diff --git a/target-info.c b/target-info.c
-> index d9e15c939d6..32ba85691b7 100644
-> --- a/target-info.c
-> +++ b/target-info.c
-> @@ -59,6 +59,22 @@ bool target_base_arm(void)
->      }
+>  static const VMStateDescription vmstate_virtio_mem_device_early;
+>  
+> -static bool virtio_mem_has_legacy_guests(void)
+> -{
+> -    /*
+> -     * We only had legacy x86 guests that did not support
+> -     * VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE. Other targets don't have
+> -     * legacy guests.
+> -     */
+> -    switch (target_arch()) {
+> -    case SYS_EMU_TARGET_I386:
+> -    case SYS_EMU_TARGET_X86_64:
+> -        return true;
+> -    default:
+> -        return false;
+> -    }
+> -}
+> -
+>  /*
+>   * Let's not allow blocks smaller than 1 MiB, for example, to keep the tracking
+>   * bitmap small.
+> @@ -859,7 +844,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+>      rb = vmem->memdev->mr.ram_block;
+>      page_size = qemu_ram_pagesize(rb);
+>  
+> -    if (virtio_mem_has_legacy_guests()) {
+> +    if (VIRTIO_MEM_GET_CLASS(vmem)->has_legacy_guests) {
+>          switch (vmem->unplugged_inaccessible) {
+>          case ON_OFF_AUTO_AUTO:
+>              if (virtio_mem_has_shared_zeropage(rb)) {
+> @@ -1635,9 +1620,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+>      RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_CLASS(klass);
+>  
+>      device_class_set_props(dc, virtio_mem_properties);
+> -    if (virtio_mem_has_legacy_guests()) {
+> -        device_class_set_props(dc, virtio_mem_legacy_guests_properties);
+> -    }
+>      dc->vmsd = &vmstate_virtio_mem;
+>  
+>      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> @@ -1660,6 +1642,14 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+>      rdsc->is_populated = virtio_mem_rds_is_populated;
 >  }
 >  
-> +bool target_base_i386(void)
+> +static void virtio_mem_legacy_class_init(ObjectClass *klass, const void *data)
 > +{
-> +    switch (target_arch()) {
-> +    case SYS_EMU_TARGET_I386:
-> +    case SYS_EMU_TARGET_X86_64:
-> +        return true;
-> +    default:
-> +        return false;
-> +    }
+> +    virtio_mem_class_init(klass, data);
+> +    device_class_set_props(DEVICE_CLASS(klass),
+> +                           virtio_mem_legacy_guests_properties);
+> +    VIRTIO_MEM_CLASS(klass)->has_legacy_guests = true;
 > +}
 > +
-> +bool target_not_base_i386(void)
-> +{
-> +    return !target_base_i386();
-> +}
+>  static const TypeInfo virtio_mem_info = {
+>      .name = TYPE_VIRTIO_MEM,
+>      .parent = TYPE_VIRTIO_DEVICE,
+> @@ -1668,6 +1658,22 @@ static const TypeInfo virtio_mem_info = {
+>      .instance_finalize = virtio_mem_instance_finalize,
+>      .class_init = virtio_mem_class_init,
+>      .class_size = sizeof(VirtIOMEMClass),
+> +    .is_available = target_not_base_i386,
+> +    .interfaces = (const InterfaceInfo[]) {
+> +        { TYPE_RAM_DISCARD_SOURCE },
+> +        { }
+> +    },
+> +};
 > +
->  bool target_arm(void)
+> +static const TypeInfo virtio_mem_legacy_info = {
+> +    .name = TYPE_VIRTIO_MEM,
+> +    .parent = TYPE_VIRTIO_DEVICE,
+> +    .instance_size = sizeof(VirtIOMEM),
+> +    .instance_init = virtio_mem_instance_init,
+> +    .instance_finalize = virtio_mem_instance_finalize,
+> +    .class_init = virtio_mem_legacy_class_init,
+> +    .class_size = sizeof(VirtIOMEMClass),
+> +    .is_available = target_base_i386,
+>      .interfaces = (const InterfaceInfo[]) {
+>          { TYPE_RAM_DISCARD_SOURCE },
+>          { }
+> @@ -1677,6 +1683,7 @@ static const TypeInfo virtio_mem_info = {
+>  static void virtio_register_types(void)
 >  {
->      return target_arch() == SYS_EMU_TARGET_ARM;
+>      type_register_static(&virtio_mem_info);
+> +    type_register_static(&virtio_mem_legacy_info);
+>  }
+>  
+>  type_init(virtio_register_types)
+> diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+> index 5d1d19c6bec..f367959ecb0 100644
+> --- a/include/hw/virtio/virtio-mem.h
+> +++ b/include/hw/virtio/virtio-mem.h
+> @@ -134,6 +134,8 @@ struct VirtIOMEMClass {
+>      VirtioDeviceClass parent_class;
+>  
+>      /* public */
+> +    bool has_legacy_guests;
+> +
+>      void (*fill_device_info)(const VirtIOMEM *vmen, VirtioMEMDeviceInfo *vi);
+>      MemoryRegion *(*get_memory_region)(VirtIOMEM *vmem, Error **errp);
+>      void (*decide_memslots)(VirtIOMEM *vmem, unsigned int limit);
 
-Same comment than for target_not_s390x, keep it local where needed.
+Fine for me, let's see what virtio maintainers think about it.
+
+Regards,
+Pierrick
 
