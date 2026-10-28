@@ -1,96 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9DF606A31F
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C5F606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CYD+XOeW;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=l5Vk/kdZ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HSG99Rjk;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=hMASPbQy
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7F4-0005rD-8F; Wed, 28 Oct 2026 13:15:14 -0400
+	id 1xM7IN-0005rm-Uo; Wed, 28 Oct 2026 13:18:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EQ-0004wh-KU
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HO-0003QJ-Ml
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EO-0003Tb-Cq
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HM-00043B-I5
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207671;
+ s=mimecast20190719; t=1793207855;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ee1m00EDlWr0jEW8segC8pNIiaqTy3X6Sj5HozOvh4k=;
- b=CYD+XOeWT8VMw0cZTKW+aImKB0R20NImmQu38B13rzbQ2Bznuw5nxRKG2mZq94JTuW2C1+
- fIvSca+pbs/p1HPk92aNtyzRbBOsHqP3WgCcDt6ULXE/8PuF2YYyZ+qvxsr/VpsQJPC02i
- CPvZP7XnmqcbEekjJCEPuFFw2SWvKjU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
+ b=HSG99RjkouZR0ICMKeaU2h9n8SozE3bIe1rfB9WMCwPB+sJDiRsTKt/jtDo6HNKdmk7+V3
+ XPjA6mwewucTaPddqFFfJ9Sr+XC0UFOKj2AICogfkbCGVPHLU9OrXRoVhRLNpHhOGViLSK
+ 7Osk1fe4eGjEML/0hVKwxuce/qjqd3c=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-dGiiNs-pMPGt6RJ9uAPmpA-1; Wed, 28 Oct 2026 13:14:29 -0400
-X-MC-Unique: dGiiNs-pMPGt6RJ9uAPmpA-1
-X-Mimecast-MFC-AGG-ID: dGiiNs-pMPGt6RJ9uAPmpA_1793207669
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a1fdde384cso8403715e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:29 -0700 (PDT)
+ us-mta-695-Cu074L3cMmi4gRJ3vNvqQQ-1; Wed, 28 Oct 2026 13:17:34 -0400
+X-MC-Unique: Cu074L3cMmi4gRJ3vNvqQQ-1
+X-Mimecast-MFC-AGG-ID: Cu074L3cMmi4gRJ3vNvqQQ_1793207852
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a35e1d2dddso11376025e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207668; x=1793812468; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207852; x=1793812652; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Ee1m00EDlWr0jEW8segC8pNIiaqTy3X6Sj5HozOvh4k=;
- b=l5Vk/kdZKDuQsfcb24JzR1HJZyTQ5Wvntj/f6161hniG2I718JP33D5clc/tyq5l1A
- r2PQD8UgUnooLPs2iC7SQ8AD3nq1loXOM2zk3V9hErtYQSb0ZMveB6sCWEA3nbmR+yQh
- T/Nf9y2wUjpP344ifdd+kM5oZVafEQe67iJjNsvk8KCjmv5ZemCB3YOo4HHUAdadjCTt
- kp8iNRDfHFGuUO/OxNtVZ+UL4nSKX/ToiiOVJ+FEbBWIHlZ4WP2+1v3f9B0ERrcF7XSf
- Riy9kXLnfa5ULR0q/SiPceITcjchgaLuzOfB3fDYyi/sA6wexIH4kVqafI5mDT8VozaJ
- emOw==
+ bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
+ b=hMASPbQyoxOg2YSe9Nkb7p6ull4rV/xOzs69gpFCbpht88oJY92VpB05noi/vbEAiR
+ fpayAKa9kmqI7H7hYxPRZevdPPH1T8nrr6Sr2tk/dJD3uF+MQguDgbhGHoNp0iQovupY
+ dNa/+fKzhrA5/D24aa1UV0x8dvp/tpJnynt5AtP3xZnzv2p4r3CKD/GGI8eRSv+2B6cZ
+ I9EGJaJ4wFOkyRM9EafUijzAzBseB+Yz4WUxpTf5WVqXY0UY+Yavp0zwXCSLi+qg6CGy
+ 7uepn/rFUIULX+DrGPIIYJd9ZvwFilXdkzRs/KctprJRM/DfQV+SFd7ETD1o2kz1+42q
+ mgHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207668; x=1793812468;
+ d=1e100.net; s=20260707; t=1793207852; x=1793812652;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Ee1m00EDlWr0jEW8segC8pNIiaqTy3X6Sj5HozOvh4k=;
- b=y/pTDcGbvE5BOMJrbHeiirpHXJbRRJrSVinAnMvc1izC3MK5Hna4PAStKYdg4vcc33
- hwtr/VuVrdXF8tfcyLSQ0G/o08NfPtlO/0wWGQUgxucOpLHyd8+2E/HTScrttDf9U46j
- CM4TY8D1OnjWRF5FYbh1R1Ze7SdxSo4+7QXPDVk57xCTZpI+Jp1wnptgHXSeHwT8m5TR
- VKnkOatDifu3R3rjv5NZINg5jXSgX6uRsoPyOGYkTHeKPmHUAno0RICs/BY/sFBZXzT5
- 69rTvq+SS/na1WW1V9IEXQY4TkpBbF4MMF+rWjFT8bk6T3xp4UN9NlliMjECXhvXu1Ud
- XT4w==
-X-Gm-Message-State: AFq9FYJG6VpIOF+3dRU3kF57yqcAuxt7Uuoy/HZMO67i3qsspvPEc8eX
- TNmZUZOdNKp/JAXLGsO3CDU0wQAfJcgmXoFOTIVCPsXuT9XMbxXRxr1LwXs1enmEmQHoUcxCSt6
- exXFWMLPBi/xSN5unvcrSsgmoTYHiOwbXD8XbXxyNiuzSw6/NOyzt8mZvxzthHU9wbdltGTPfXH
- j6m04qBqIwiOnHTPLv8UYjDQPEBH9nz59f0A==
-X-Gm-Gg: AYBFou36TAkmPJPZUjyFuFekkYBzGEnP7jdGRwWfVcjTNoYn00/WeyCGBLmMa+Htcgr
- UDBuDHPK3QvxDRHndA2kbf2D0e2VtKW30xjk4qoOkhutchyUjfjWD5v7Xar/I9kdqoilMJED12R
- NKn4vLHLwoZZo7x6rrg5XhftT5CJTZAnNUQNnjPyunXFqIOSD9yuwn4kDMvUC27o2RFvyvh6kZi
- 5eJ26ry0KFoSK3UBzXUFa5kjpbuksBV8gcoJZ2QTqXVLynxN+wHltFJ6CH/sHlTAvJv3AZEYIRy
- YPdSv5jHjdIkwUmDlAvDI439BjE9LZSG6KMRFRSk3fy+QECBG8r4RprB4CRgu35Tn1cVhE0XUzO
- m/WgBGm5P+evrW1XhCHVtbeL6Pugs9DB4s7LDVqdN
-X-Received: by 2002:a05:600c:154a:b0:4a0:1efa:c74a with SMTP id
- 5b1f17b1804b1-4a9678c26dfmr64048435e9.20.1793207668461; 
- Wed, 28 Oct 2026 10:14:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:154a:b0:4a0:1efa:c74a with SMTP id
- 5b1f17b1804b1-4a9678c26dfmr64047335e9.20.1793207667775; 
- Wed, 28 Oct 2026 10:14:27 -0700 (PDT)
+ bh=MNJVsBWmCkJO0pPrgSkqSm3MElOoW69IWkAogG/MGWw=;
+ b=bHbeeqM2hJa8OQn3uPE93AAEjKuV0tHIEyRQ8Z/NMNrRUbYDrDyoUhZgrI0LjMA8b3
+ 2vjYwK05Iu8rsa4T24cdcZ0hCG4Ze8pve7ntw8iEqWeRDWUm7uAVhjijwIjj4eocYTUz
+ jW2GfsOiQH9OfZ1OmJYY1AwkxfmjFMQvg2OmklDS0cD9C/gCafAkfINIaIVzgDtqI7lm
+ Vyp7/vjWzE56a6v3w7iE+OlfRFilOE31EI4r9TsiBL/ztEScJ1dYBfq0HnjLS7hRosEo
+ Smu8XzbPe0eU3X3xx6a2GMANbsu98/krQcJ7ZLx+86CGJ1lvqhHa5LSvu5KK8l3+YK3B
+ 68uQ==
+X-Gm-Message-State: AFq9FYLFKOhjtAKt9UO/vhLFETHV64/S6h0yfa+AmADR62lJrQfHmxG0
+ cKlaacrRZgwFYAUg0xdR7J4u04ZAWfe9X0GddBYTbXzEnO34igiz4Dc3bymhEbrKBBF35XNSwTa
+ 1L/7eaAtIm0yCKEsojwB8W7h34lvilFGCj4PWK4+R/f5h70auZtpG+1x0J6VaL69nTYDQ5MhmGJ
+ eAC8q/Vj+XdJJXebxa8oiw/wByVEDoo2qCrg==
+X-Gm-Gg: AYBFou2RLe2oqV4/b6AZJIRIEcS4nRSJRpe24Q7N9tmECMjaIw7IgeW/k6gLx0GadVG
+ Ov5/zg7D0+zZyJFL2Mr8wuR03It1LCKm5MQQfB3EnhXX6YvxUJZvKhX7kVyupoi8SF+sM4VLXeU
+ P6wKDeHjCXXe0XOjOJkZzXB3EiLCUV0EvLB75tztE0NiNHW0zsWRVvZdy4AFMLv/n8OaUOF4McA
+ FQ2zAxGWYIkJ2cUG9+8FaQVD7z4hMGVCYzBD5/2b3fZly3q0Jx+Dkcjmy99pq+XgG1s1f4vWwWC
+ o4nn6BkKPVlkQw7SztIPb+EUJMTQAgq/qlNbINlKMMNMRkxJzdulH6Bw0Mw/O9cmcMXmV/GlAae
+ 0/sTOMPMo1+su4qTtpCNfTdcH3KfkpgwZDtk0oXip
+X-Received: by 2002:a05:600c:37c3:b0:4a2:1867:10e8 with SMTP id
+ 5b1f17b1804b1-4a96701830cmr66182545e9.25.1793207852188; 
+ Wed, 28 Oct 2026 10:17:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:37c3:b0:4a2:1867:10e8 with SMTP id
+ 5b1f17b1804b1-4a96701830cmr66181835e9.25.1793207851556; 
+ Wed, 28 Oct 2026 10:17:31 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa80285b88sm6378075e9.14.2026.10.28.10.14.26
+ 5b1f17b1804b1-4aa7f418afbsm6877935e9.6.2026.10.28.10.17.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:14:27 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:14:25 -0400
+ Wed, 28 Oct 2026 10:17:30 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:17:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 12/78] migration: forbid snapshots in CPR migration modes
-Message-ID: <7d806e21fb37cb5c573e62218b9238391a78807d.1793207602.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
+ David Hildenbrand <david@kernel.org>
+Subject: [PULL 75/78] hw/virtio/virtio-mem: Fix error message on invalid NUMA
+ node
+Message-ID: <3650cf4f7c7cdd013bb801d5945e57899da195d4.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -126,52 +125,38 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Gavin Shan <gshan@redhat.com>
 
-The savevm/loadvm operation doesn't make any sense in any of the CPR
-modes.  Saving VM state implies saving its RAM entirely, while the whole
-point of CPR is avoiding that: in cpr-transfer and cpr-exec modes RAM is
-preserved in place and never put into the migration stream (see
-migrate_ram_is_ignored() in migration/ram.c).  As a result, a snapshot
-taken with such a mode set has no RAM in it, and loading a snapshot with
-such a mode set fails in the RAM loader.
+Add space as the separator between "exceeds" and "the number of numa
+nodes:". Otherwise, we will see error message with twisted format like
+below.
 
-Currently nothing stops these operations from firing with a CPR mode
-still set, e.g. after an earlier CPR attempt.  Reject them early in
-migrate_can_snapshot(), which guards 'savevm'/'loadvm' HMP commands as
-well as 'snapshot-save'/'snapshot-load' QMP commands.
+  qemu-system-aarch64: -device virtio-mem-pci,id=vmem1,bus=pcie.3, \
+  memdev=virtio-mem1-mem,requested-size=0,node=1: 'node' property  \
+  has value '1', which exceedsthe number of numa nodes: 1
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: David Hildenbrand <david@kernel.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261012-up-vsock-vhost-v5-v16-3-36c38bd15ffc@virtuozzo.com>
+Message-ID: <20261020012404.191329-1-gshan@redhat.com>
 ---
- migration/options.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/virtio/virtio-mem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 46d040fc3f..92eda90114 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -560,8 +560,15 @@ static bool migrate_incoming_started(void)
- bool migrate_can_snapshot(Error **errp)
- {
-     MigrationState *s = migrate_get_current();
-+    MigMode mode = migrate_mode();
-     int i;
- 
-+    if (mode != MIG_MODE_NORMAL) {
-+        error_setg(errp, "Snapshots are not compatible with migration mode %s",
-+                   MigMode_str(mode));
-+        return false;
-+    }
-+
-     for (i = 0; i < check_caps_savevm.size; i++) {
-         int incomp_cap = check_caps_savevm.caps[i];
- 
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 7130ed852d..ee6a0c206a 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -846,7 +846,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     if ((nb_numa_nodes && vmem->node >= nb_numa_nodes) ||
+         (!nb_numa_nodes && vmem->node)) {
+         error_setg(errp, "'%s' property has value '%" PRIu32 "', which exceeds"
+-                   "the number of numa nodes: %d", VIRTIO_MEM_NODE_PROP,
++                   " the number of numa nodes: %d", VIRTIO_MEM_NODE_PROP,
+                    vmem->node, nb_numa_nodes ? nb_numa_nodes : 1);
+         return;
+     }
 -- 
 MST
 
