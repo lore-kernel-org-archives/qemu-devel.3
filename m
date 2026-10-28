@@ -1,97 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22348606A33E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A394660A2604
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=RRoT+0Ip;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ZZOm/wF/
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FeG4HTs4;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=PxX7ATpW
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7FC-0006Id-J4; Wed, 28 Oct 2026 13:15:22 -0400
+	id 1xM7F6-0005xJ-44; Wed, 28 Oct 2026 13:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7F6-00062O-Te
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7En-0005Da-Re
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7F3-0003jo-Vi
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:15:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7El-0003W0-Jh
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207713;
+ s=mimecast20190719; t=1793207695;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Pa/+WgI35gvoVbMnP+MVomV3WWlRrtK6Sx0Os9RhTP4=;
- b=RRoT+0IpSC7rhIrX9VEoqPzmpV47FL3GiK77mBmW/lbIUIbej5b3P/Jp9vKtwcNvJFfieg
- m+TylYwTZEwu5dTlhlsO/NAvrD5txSSsukw5Fvolpp89ARHYQDQLaRtZYAqKpSseWrYNZ3
- q35H31I5+F5dv7TwV+xGsGS79fbbSUc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tN4e6i3WOisIPWKmdrnGmFzSpxDoQJwX2FraaPsaVxE=;
+ b=FeG4HTs4pwcQoSyAt8ABtE5uKRLvIGo61INYkW8vPDcqTvUxgY+pkLmsnaXD8NeRP7hjUE
+ GXzpaAjkdd0w3Wko8OXp2bnljb6MAmLxmPXs2WxHhnNQ2nkBQguh20ffLT52tlNnxri8Et
+ 7JNO5702a941xhDuyCIbPH7h/pAiHbg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-DP-vSA0sMmqC21YkToUemQ-1; Wed, 28 Oct 2026 13:15:10 -0400
-X-MC-Unique: DP-vSA0sMmqC21YkToUemQ-1
-X-Mimecast-MFC-AGG-ID: DP-vSA0sMmqC21YkToUemQ_1793207709
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-48e0fc747a7so1000160f8f.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:15:10 -0700 (PDT)
+ us-mta-671-E8oWxosvNMCPYx8SSpteLw-1; Wed, 28 Oct 2026 13:14:53 -0400
+X-MC-Unique: E8oWxosvNMCPYx8SSpteLw-1
+X-Mimecast-MFC-AGG-ID: E8oWxosvNMCPYx8SSpteLw_1793207692
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49953abe51fso8991475e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207709; x=1793812509; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207692; x=1793812492; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Pa/+WgI35gvoVbMnP+MVomV3WWlRrtK6Sx0Os9RhTP4=;
- b=ZZOm/wF/3VXwbnE2jj1IlchqouuAa1mDqsTCpi/2O/GOooGTtaN/YwvkRme8DPS+Z4
- zzZzVoZ+H8SNn0kX/yp23yWBoxYoKb8Bcmp91C0PpGvywbGbgdgqkRmI7xlFCzxXGAc+
- E1QwcBRsVsjwWZPc9hA4nhCOZA2Xoqaap1xOA8SwkjOgDrOZ3dtgJ4HJZjtx3AKnGIUu
- sSqzmnXgDAE5HP9gB+8QXaG0LSjH3w7QvntG3e9ruWEd45d+Pv9qg8uomHdoO96lE6Ug
- qcWH00NqC6u2Gc5f3CtxcBJkB2XZV3XDnwiVzUis1TG6zFVUDBVgOtF8ZS5dEN6STWna
- bBXQ==
+ bh=tN4e6i3WOisIPWKmdrnGmFzSpxDoQJwX2FraaPsaVxE=;
+ b=PxX7ATpWmrogHZFrYw0fldMjtBQdLtMXEDJRnMzHbfBDa34ptoEFBZpjM+uwuoK/to
+ lIM6JrNE18KkZTIcOQil4H3mzZqIK4Ucl/QQw2Qg1RC45pXNgQ6C0fsmyAq7ZJnDDd86
+ FfbXF+FvpPtZhK+jKu/OS20eMHL393QQutm5mtzXaZ0/p0SWnDaMe5xzZ/iXdAgrE6tx
+ zTLYD0ztQgfjGYP2WOChX/bRZj1t0kkejVkXkJ2D25eP0SE/ZK8gUSgRze5ziAuXYdat
+ Gr3ynEkqiTasWCEe7TgHaH5+9Ykj0pjUN3ZJqg4yc5XJreuPPWGtJ15ZfxcJpb+UTejf
+ GB9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207709; x=1793812509;
+ d=1e100.net; s=20260707; t=1793207692; x=1793812492;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Pa/+WgI35gvoVbMnP+MVomV3WWlRrtK6Sx0Os9RhTP4=;
- b=C9wNm9QRhKlaKRVDtmrv5JXIYMVjFEE5qKB3nxXkzzq8xpPxSb388ulIcXJA20F1ce
- kJy1egrHCpC8SOk2v4JEkV2jt2cYT5xGq+Uw2a6OT268tKz4RhxfJTSM9h0/rihslwwc
- tLZADD0Z6YADlrJhZlbDdbWVHXtrqJAHXebQNBrAT6h+OW47zIhd5rxoMBolNWG6XvS7
- eLW5Rm/yUj7H1vBt8lHdtM5e8ZLZvx5g6HRCPEu8nP+MP5r7O+SW68sSCTfknkSRFJ20
- /LPyKbn7JyRlIJItQFols/Lr5iQVnywbgJyvufYtRhA79+0JL3aJlEN+sMvkgEurO571
- KH7Q==
-X-Gm-Message-State: AFq9FYJ49O87MqGQ01vie14hVKDhvbwZOaFDWXJLrPADofnsxTWvKrk0
- Ammiz65aD66lIwZyOWxih4k8rq4aZfn2PM+xaMJTdndhrY+SvNbrG3/xvSheu1p+r/+1Ya25Ta9
- voiNGJPHIhufJoWPosdpXHhLqsgrKWXpmHEwEDTr1lP3p8KaThAkghdMv/G4iS84Xy1NhkMHroE
- CwaKbhLORORP4bE0YPJvW4NTM02i+DjyMHuQ==
-X-Gm-Gg: AYBFou3XJuZTSq6RAlLMgDRKfM34bnIeAIDhaCXKd76v2o8RIpCExMYGME094R4xNxB
- 1CcN5qvarGjKOMW0FMUEqG8Q4b18A6BB1j1zKPjsFrlvS6Qe6aPO+6HtPZgBWQhXaExkrDhy7Tz
- 4rvptuu6tMHeDy67OusGuaS8KANmhrdEYBvHgsJ3zOM4OX2V9cYByAam+s84chTfJEuvR0ka4mX
- eaON4GgIsQLHadWeu/fCIVr5UdjuNM2qaUFYN0HcVfHgYn0xgTlcpwB3i6qETyirKido+fJqopz
- kL9ZW/OSRcj+HgTUlOZPUMuiRpjUVz0M2OC4oZCKuFuEmlJyZVxKDGYm1PBetQtNBAln1ipDAc6
- gCV9GG/wAqrBqoDAqTe0UznDAZcfE9Wslm+gDh7KK
-X-Received: by 2002:a05:600c:19c8:b0:4a1:df52:3e36 with SMTP id
- 5b1f17b1804b1-4a967201e9dmr68826625e9.27.1793207709107; 
- Wed, 28 Oct 2026 10:15:09 -0700 (PDT)
-X-Received: by 2002:a05:600c:19c8:b0:4a1:df52:3e36 with SMTP id
- 5b1f17b1804b1-4a967201e9dmr68825685e9.27.1793207708412; 
- Wed, 28 Oct 2026 10:15:08 -0700 (PDT)
+ bh=tN4e6i3WOisIPWKmdrnGmFzSpxDoQJwX2FraaPsaVxE=;
+ b=TW1hZthZ/sxgz4HUnGTBHw1BOlNtNzlg5JpqTkYfi0NHOtbLflG3F9sEJ0RZxPH4CH
+ qGYtCpePrUhIjIJJqaXKC/AEm4rV+2UTAd6yKeaHXCRpCd00CDJcn0fCmBXNnq9U8FSe
+ ezpvIVbxDFZlR5VqfqtnJf2P835yTFVZC+eDGjKcInqd4yKolR2cJ2g/iitICbXhN2vs
+ x7BidzKB6aZPPZhzR7ihEfxADj9Bp6rLFg/Ygmx+ulqPbouQyz1JlKQ+VgjxPnwFFgU0
+ qAUvzjeev5QYz4YE2uS6Yt8a18HalQYRSnt1OHTXziNkrMv0wszJ3/YyHw7DBZ2OpkJJ
+ U5Jg==
+X-Gm-Message-State: AFq9FYIDkP4DXq3EtqG8zjrHsu6TjVFHFSCv9k1H2HTuojvA0TmUpCer
+ ke55n/d+oMoT0gPyC+z+t/Xy5WOV2hr8y48TZzw86NrgAABn+cn9cm8WPI9HrKPjkEqOvWJX0vr
+ VqYkfEbgqLvU4zTWE2nlE3AiomI9ONS6lMt3QcRzxhqdxc2C4laIvWuHsSBfE5jxdE6F8BMwQ4p
+ Igg+o06Z1jzV/PZWkGothPyChjUQlQI7Ss+g==
+X-Gm-Gg: AYBFou33RrUVl8sCQohqUwU3Uu9FRTKjOxYckoTbKDHLfyRLW0A2qEuDV6nxduL0QEs
+ Sw3jtWsPkuM6JvuTfxneAoXhC47nUZKIS2Z96kltEK5cqTCW00JSZgdlSTioHAIyhDDP/pYHGbv
+ oYNq2ixmlX54fm32bcIdz4rnoQae2zE3vUEUhrYtDNV7BQ9ySPM78+GevPLBnYzBiOY/ZK1cE7v
+ ZyfolQpJhj2ZDDjeSCtUB0GBZfN/wsJZEMH29qq8enshmJlOVjaQXN2tDyjPvL87LT3CW/T9mfh
+ VHquL+nRsGZrEplXkPBqcWDQoRBofHsnmX6BUkiKEsSlh2VF/K1wRgkECvl6jRWBWEGs3eyREYT
+ FdddAj0ky3lUHB8G0JrjNJjfE/vPzdYXhMRjcI6Oa
+X-Received: by 2002:a05:600c:a103:b0:4a1:ddca:8b66 with SMTP id
+ 5b1f17b1804b1-4a9672f98b9mr50334585e9.31.1793207692308; 
+ Wed, 28 Oct 2026 10:14:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:a103:b0:4a1:ddca:8b66 with SMTP id
+ 5b1f17b1804b1-4a9672f98b9mr50333725e9.31.1793207691661; 
+ Wed, 28 Oct 2026 10:14:51 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa81b7fe80sm6267875e9.11.2026.10.28.10.15.07
+ 5b1f17b1804b1-4aa80286fc6sm6219015e9.15.2026.10.28.10.14.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:15:07 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:15:06 -0400
+ Wed, 28 Oct 2026 10:14:49 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:14:46 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 26/78] vhost: release ownership when the incoming migration
- fails
-Message-ID: <7db39afff601ec66d92ba692441901067f96b6f1.1793207602.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 20/78] vhost: factor out vhost_dev_init_backend()
+Message-ID: <0d3f5df94f23ea2858793abe054af09b38527b22.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -100,14 +99,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,115 +128,123 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-A CPR target that has taken the device ownership in post_load() doesn't
-always reach vhost_dev_cleanup(): a subsequent load error, e.g. a
-truncated migration stream footer, makes QEMU exit() right away, and the
-ownership stays with the dead process.  The source still holds the FD,
-so the kernel never releases the device, and the source can't take it
-back after being resumed -> SET_OWNER fails with EBUSY.
+Split the first part of vhost_dev_init(): selecting the backend, calling
+its .vhost_init() and reading the supported features - into a new
+vhost_dev_init_backend() helper, and call it from vhost_dev_init().
 
-Releasing the ownership at exit isn't enough either: with the
-return-path capability the target reports the failure to the source
-before exiting, and the source resumes right away, racing with the
-target's exit for the ownership.  And with exit-on-error=false the
-target doesn't exit at all.
+This is in preparation for CPR restore of vhost-vsock, which needs to learn
+the backend's features at realize time to negotiate them when loading the
+incoming virtio state, but also must defer taking ownership of the device
+to post_load.  vhost_dev_init_backend() does exactly the pre-ownership part.
 
-Add a migration notifier to each vhost_dev, registered for its lifetime
-for the CPR modes, that releases the ownership if still held on
-MIG_EVENT_INCOMING_FAILED.  It runs before the failure is published in
-any way.
+As a result VHOST_SET_OWNER now follows the feature query rather than
+precedes it.  This should be safe, as no backend requires ownership before
+VHOST_GET_FEATURES - the kernel and vdpa backends do not check ownership
+for it, and vhost-user already does query features from its .vhost_init()
+before set_owner().
 
-Reported-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261012-up-vsock-vhost-v5-v16-17-36c38bd15ffc@virtuozzo.com>
+Message-ID: <20261012-up-vsock-vhost-v5-v16-11-36c38bd15ffc@virtuozzo.com>
 ---
- include/hw/virtio/vhost.h |  6 ++++++
- hw/virtio/vhost.c         | 23 +++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ include/hw/virtio/vhost.h | 22 ++++++++++++++++++++++
+ hw/virtio/vhost.c         | 33 +++++++++++++++++++++++----------
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
 diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index efe1eed260..3b9ef86bac 100644
+index 0a322efec1..b2b644c0d1 100644
 --- a/include/hw/virtio/vhost.h
 +++ b/include/hw/virtio/vhost.h
-@@ -3,6 +3,7 @@
+@@ -156,6 +156,28 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type,
+                    uint32_t busyloop_timeout, Error **errp);
  
- #include "net/vhost_net.h"
- #include "hw/virtio/vhost-backend.h"
-+#include "qemu/notify.h"
- #include "hw/virtio/virtio.h"
- #include "system/memory.h"
- 
-@@ -122,6 +123,11 @@ struct vhost_dev {
-      * when this vhost_dev goes away.  Set by the device.
-      */
-     bool owner_handed_over;
-+    /*
-+     * @migration_notifier: releases the ownership when an incoming
-+     * migration fails, vhost_migration_notify()
-+     */
-+    NotifierWithReturn migration_notifier;
-     bool log_enabled;
-     uint64_t log_size;
-     Error *migration_blocker;
++/**
++ * vhost_dev_init_backend() - set up the backend and query its features
++ * @hdev: the common vhost_dev structure
++ * @opaque: opaque ptr passed to backend (vhost/vhost-user/vdpa)
++ * @backend_type: type of backend
++ * @errp: error handle
++ *
++ * Select the backend, initialise the backend instance and read its supported
++ * features into @hdev, without issuing VHOST_SET_OWNER, setting up the
++ * virtqueues or registering the memory listener.  This is the part of
++ * vhost_dev_init() that precedes taking ownership; it can be used on its own
++ * so feature negotiation can happen before ownership is acquired (e.g. by CPR
++ * restore).
++ *
++ * On failure the backend may be left partially initialised; the caller must
++ * still call vhost_dev_cleanup() to release it.
++ *
++ * Return: 0 on success, non-zero on error while setting errp.
++ */
++int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
++                           VhostBackendType backend_type, Error **errp);
++
+ /**
+  * vhost_dev_cleanup() - tear down and cleanup vhost interface
+  * @hdev: the common vhost_dev structure
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 085e2ef6f1..7fd2883504 100644
+index 68a8e40481..99561ac586 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -26,6 +26,7 @@
- #include "hw/virtio/vhost-user.h"
- #include "hw/mem/memory-device.h"
- #include "migration/blocker.h"
-+#include "migration/misc.h"
- #include "migration/qemu-file-types.h"
- #include "system/dma.h"
- #include "system/memory.h"
-@@ -72,6 +73,23 @@ static void vhost_dev_try_release_owner(struct vhost_dev *hdev,
-     }
+@@ -1681,6 +1681,28 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
+     return r;
  }
  
-+/*
-+ * A CPR target takes the device ownership in post_load().  If the load
-+ * fails afterwards, release it before the source learns about the failure
-+ * and resumes, so that the source can take the device back.
-+ */
-+static int vhost_migration_notify(NotifierWithReturn *notifier,
-+                                  MigrationEvent *e, Error **errp)
++int vhost_dev_init_backend(struct vhost_dev *hdev, void *opaque,
++                           VhostBackendType backend_type, Error **errp)
 +{
-+    struct vhost_dev *hdev = container_of(notifier, struct vhost_dev,
-+                                          migration_notifier);
++    int r;
 +
-+    if (e->type == MIG_EVENT_INCOMING_FAILED) {
-+        vhost_dev_try_release_owner(hdev, "incoming migration failure");
++    r = vhost_set_backend_type(hdev, backend_type);
++    assert(r >= 0);
++
++    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
++    if (r < 0) {
++        return r;
 +    }
++
++    r = vhost_dev_init_features(hdev);
++    if (r < 0) {
++        error_setg_errno(errp, -r, "vhost_init_features failed");
++        return r;
++    }
++
 +    return 0;
 +}
 +
- unsigned int vhost_get_max_memslots(void)
- {
-     unsigned int max = UINT_MAX;
-@@ -1842,6 +1860,10 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-     hdev->log_enabled = false;
-     hdev->started = false;
-     memory_listener_register(&hdev->memory_listener, &address_space_memory);
-+    migration_add_notifier_modes(&hdev->migration_notifier,
-+                                 vhost_migration_notify,
-+                                 BIT(MIG_MODE_CPR_TRANSFER) |
-+                                 BIT(MIG_MODE_CPR_EXEC));
-     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+@@ -1693,10 +1715,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     hdev->vdev = NULL;
+     hdev->migration_blocker = NULL;
  
-     /*
-@@ -1891,6 +1913,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-         memory_listener_unregister(&hdev->memory_listener);
-         QLIST_REMOVE(hdev, entry);
+-    r = vhost_set_backend_type(hdev, backend_type);
+-    assert(r >= 0);
+-
+-    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
++    r = vhost_dev_init_backend(hdev, opaque, backend_type, errp);
+     if (r < 0) {
+         goto fail;
      }
-+    migration_remove_notifier(&hdev->migration_notifier);
-     migrate_del_blocker(&hdev->migration_blocker);
-     g_free(hdev->mem);
-     g_free(hdev->mem_sections);
+@@ -1707,12 +1726,6 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+         goto fail;
+     }
+ 
+-    r = vhost_dev_init_features(hdev);
+-    if (r < 0) {
+-        error_setg_errno(errp, -r, "vhost_init_features failed");
+-        goto fail;
+-    }
+-
+     limit = hdev->vhost_ops->vhost_memslots_limit(hdev);
+     if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
+         memory_devices_memslot_auto_decision_active()) {
 -- 
 MST
 
