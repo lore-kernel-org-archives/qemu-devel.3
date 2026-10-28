@@ -1,96 +1,99 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F4D606A33A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E44606A330
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=jD3opyXv;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=PxFpOalU
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FGT/B7WR;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=fu2XXPJs
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7F3-0005p7-Kq; Wed, 28 Oct 2026 13:15:13 -0400
+	id 1xM7Er-0005K2-Nz; Wed, 28 Oct 2026 13:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EJ-0004tl-O1
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EQ-0004wk-SD
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EF-0003SW-UG
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EO-0003TW-Cb
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207663;
+ s=mimecast20190719; t=1793207670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YAvj+CCpvxp4VUmJlVii+rObiQbYixK68MIAnNv3rxg=;
- b=jD3opyXvRcYWGRhvbufQ7jlArlObDSUQ4jojf1d/xuByzhnnIQbRPBeenDGcNgMw7SJrZd
- czxxIiWFRMGEQ1nWgox/P0TCuR3J3s7NKzvzhy5j6EgEJr29ZU4ipRNj3vQd8XbxkMIw6X
- ssvyCC1wOaUHAgOY+MtZsC7uF87QQqM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
+ b=FGT/B7WRkjHfFKSIr6GcSev3EAPVEbWJrzUwsrPpi+O6bN8cKduTdTAaShAZVGkALnQMe0
+ BnIxSR9RsB3MRx2sTGwpQ3P9SH2CE+3aHs+NNrXaccdY7LNRLvhK3RFAys/6mnRI/vO8wu
+ djosnHP/tUHES1ZLlPCq9lR1KIsXAD0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386-q77w1yPSMbOCUvo4A3ggJw-1; Wed, 28 Oct 2026 13:14:20 -0400
-X-MC-Unique: q77w1yPSMbOCUvo4A3ggJw-1
-X-Mimecast-MFC-AGG-ID: q77w1yPSMbOCUvo4A3ggJw_1793207659
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48af5a07314so811920f8f.2
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:20 -0700 (PDT)
+ us-mta-111--_jUiW54NNSWB8Wrk2YOPw-1; Wed, 28 Oct 2026 13:14:27 -0400
+X-MC-Unique: -_jUiW54NNSWB8Wrk2YOPw-1
+X-Mimecast-MFC-AGG-ID: -_jUiW54NNSWB8Wrk2YOPw_1793207666
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48e0fc747a7so999617f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207659; x=1793812459; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207666; x=1793812466; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=YAvj+CCpvxp4VUmJlVii+rObiQbYixK68MIAnNv3rxg=;
- b=PxFpOalU/E/hOpZo+SrwRN6kSWN6+gjNUrm3NXQHKs+VAGiV8fC3elrWYwZgIT8jD0
- T6MhaoEx+qt2+01QEXGdkZRrZMxdq5dd7n2J+wB+49MzF2JPXqokf42hFlM9rF8jhF4J
- QCT7/4v9cM4Q77AY3BuSyEZHem+NgCMrYB6iBKBsO8lKKgnZQKTImWCjXSSwHjp+UiHV
- deyNI3Tvv/AA/mohM0FIvktwCDZrTrP2W5vRaQRYCQ/6kKfVutQF+DtFtyoKZ6l6G+WJ
- MVYQtse3Fs/zAlmqfM3vvD86kDvAXzUMe73gsFGD1/9awZmMesAeod+UhtueWYMJLxxr
- vcew==
+ bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
+ b=fu2XXPJsFH7GwVmLl7nOZgOC64o1M0j/VngmGcegAGfpSkG544hp/5w4RFQSyLWAQ8
+ NHGURX7qkn9SVIqjnLlLecAmGOrhJTlgdNwRJDsPoVLK+dnSeW9ebc2b4tpzjih3elHQ
+ MBQOURzz9auYIG78zYNf2W1qakNmY4FAGP52fXXlVrab5yH2xQK8hvzbEzjX58hX81Ee
+ HpizURRfmsfoqo68h69KlR/cTFv+BXeXYyLFyO4+4QfKbsAu9alehE70NsW3VwG+u/11
+ NVQ7FU9gUGtOSSC4kuUsMlXy5sAcMAIFj4ev5H07M6UlArhZm3UOkeHQz5YAWhyzmU3H
+ IpLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207659; x=1793812459;
+ d=1e100.net; s=20260707; t=1793207666; x=1793812466;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=YAvj+CCpvxp4VUmJlVii+rObiQbYixK68MIAnNv3rxg=;
- b=SC7o/p3uhlBbmYxBJHfGGeJk9GJ3ZC8SSk7JULm6Q7kOj41i+LOJuR7D6mQNrBccAx
- EaJvp8iOvEP48RC1EpdnOO68rmMuR41ItXBOSi17kH17v3zlzGBLEuJ0NGBqgXxNKpC6
- 8qm/hSP2UFY4RQzXV6I2ZYg/VyCqXx1437kPu3qDWWBu6vz95AfLeQQdtOjQZ1PUGfnG
- 9MY7y259u9TYX+vvC6wR+l+LfRsgYrleSP8SXsZ/Mzpqltx0Fq1+/XltBnwhRSe4B9KY
- x/ZGI7JEEVoVS+n7+7ukhdeCpedvyp7P4fDaIxUNOEWrxceZP/tRqV2J+oX6HlimBkFY
- 7WMw==
-X-Gm-Message-State: AFq9FYIuTSPqPY+9WKPa1GiyqPDlCUlljta3VcS+fscnpZaMCEfD2E3r
- I50rmsMBAIZnfUK0+kigu6Ye8MytJWH1JUvOvU9OOns+nN0cA2eWy4ozjl0Sub++nytp0LTPid5
- Awj9PmoOPdx8rrZXszQBDSv+Kl/nvkPmLJ8V6Fk3ppZ5xtISZ4gGUZSA2MGva462O/hbcg8NXlm
- vATewy0cGirMxBueom74XIgWEHtKGfhDY3Eg==
-X-Gm-Gg: AYBFou1FVREhWTDV1+fEmxbtGslIYtkymDKJv6RO8x5170mVOGT+CbxZkyXS+lIjmjh
- ffJtG4dAolrnSQI+hZcORRIDPFf4wLHESa6fi152WS0FGzSiOO0R7gD7FhjtmQDOlNQLHpSzuto
- zFCgfU7x2A5DdFSH9+jrOIHQfnfCJwtcxS+CLLqRLk/s1rgpopo7lAZOv0F7aIe97XPa8esXjem
- V/WJFQPR1lcEj2yKycq1/ogTPEfd79FdObY8Yp34/Xd+rXrj1gA5OC75BcCJmIRHVYNl0YYf8Jk
- GFosnealVjeIZlmbttPEarkjI4JMRyKX8VzuHELYxfAaYpFX4FnDd405GWvqvXFROToJBdWxSdj
- bbiXeTHCPYpjzMWrxz03lxRaPGy8vRRXD5VSOmd1H
-X-Received: by 2002:a05:6000:46da:b0:48e:64cb:1673 with SMTP id
- ffacd0b85a97d-48e64cb1727mr217724f8f.45.1793207655165; 
- Wed, 28 Oct 2026 10:14:15 -0700 (PDT)
-X-Received: by 2002:a05:6000:46da:b0:48e:64cb:1673 with SMTP id
- ffacd0b85a97d-48e64cb1727mr217150f8f.45.1793207645667; 
- Wed, 28 Oct 2026 10:14:05 -0700 (PDT)
+ bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
+ b=wtm267ikl7ZzG4nBCS3iilFgD3r8WogxgvzcTNiUI/fqyJFzWRBKvF+V0U0t5n6Ngb
+ uXT9xQ93GMFjkI2UY49ssYG6Kf6EFFNOzsDF83c9XF3pU5iKhYiJhobh/xreRhlNYbjP
+ bKAK5kBynpEjfIKmeLBU1z7lhRPkQlBGrRMp9O+6Lq9gjtHP+IBIMPh9IiY8MEqaGKJA
+ nqcpLWTJ6viqVootdefZvHbcEFEvdKPOu05d/xHAqeQYl36/+3ufPByZux89jPPRGNYg
+ NZ8moLR9C+OqKqbeE6SG2mjmVIjELRRbCdENuOqWTLW00qZW1/aRgMVyq9tbw8pLD8jn
+ Se6A==
+X-Gm-Message-State: AFq9FYJYBYWknUBifc5pe3/mz/CVOHGE3gUrjhbbb9/u8+3n5RvUchxj
+ 5DFW6Vljqn3AuyLaI12F+Tdz3nqR1n6F36iRKjPeRT4OTMnqE8sk8Gy+xX6KYaYCpNdW7LUeTXJ
+ Mdr5305/qTRjtwsDoX4R18jWh8f/GaN82JcPWfcdKpeKtT3fAfFj9/saEFox44WSe74E6Z1cKwX
+ 7jQwyzIwYRr6BppP1DGudsEps9zZtbDF/uMg==
+X-Gm-Gg: AYBFou16iSX3oGQ3vgYW/4G1uKFBBTK27J4ENbQUKwKSbXBLOnifPWTurerMJr6hB3d
+ K8XN1EWH2o7klRayj8q2tw4sq1kn+UKkDBmYpt8vmSi0B4sE5F0WmN05wma3Qf/NxSkw+3of5KL
+ kpQEm4R4WlEknMybhitFVYSoMR1Pxm5xQ+2U/0r4Av2tsIxK9Bz0Sm/pXDg/rSOmz/7IU9NMNio
+ klqUmJCPAjlIr+4vtU3EjBdO8/aVh3onrpXgp2yU3EBNpDdtSy/NARlPc7Gmklw3cP4OQCNQFbS
+ bvFIF94voK49ykjBMmKlkoXzQZ44CIZHmJOTejsYzKTHGEU8pbSk8VzVX+g4jHKIcMEZrM00wzs
+ RILTmLvUEvIxkD/CFogTzJzKQ+zk3zu6/tlyElZQ+
+X-Received: by 2002:a5d:6d22:0:b0:48e:4f1e:5e24 with SMTP id
+ ffacd0b85a97d-48e5d59097cmr5485811f8f.14.1793207666103; 
+ Wed, 28 Oct 2026 10:14:26 -0700 (PDT)
+X-Received: by 2002:a5d:6d22:0:b0:48e:4f1e:5e24 with SMTP id
+ ffacd0b85a97d-48e5d59097cmr5485744f8f.14.1793207665431; 
+ Wed, 28 Oct 2026 10:14:25 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd37f4sm35244460f8f.44.2026.10.28.10.14.04
+ ffacd0b85a97d-48e3ecd8ddasm32208402f8f.48.2026.10.28.10.14.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:14:04 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:14:03 -0400
+ Wed, 28 Oct 2026 10:14:24 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:14:23 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 04/78] tests/functional: add test_tap_migration
-Message-ID: <5464efb40194a7ba887363307693e203f9fd8b9d.1793207602.git.mst@redhat.com>
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 11/78] tests/unit: add test for duplicate keys in CPR FD table
+Message-ID: <9d3a7aff6fd014b58cbdd4506596c1ee336bb5af.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -99,14 +102,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,463 +129,140 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-Add test for a new local-migration migration of virtio-net/tap, with fd
-passing through UNIX socket.
+cpr_save_fd() now refuses to register an FD under a (name, id) key which
+is already taken.  Add a test which checks that 2nd registration fails
+with an error while the 1st one is left intact, that different names
+or ids don't clash, and that the key can be reused once deleted.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260914175351.393680-2-vsementsov@yandex-team.ru>
+Message-ID: <20261012-up-vsock-vhost-v5-v16-2-36c38bd15ffc@virtuozzo.com>
 ---
- tests/functional/x86_64/meson.build           |   1 +
- tests/functional/x86_64/test_tap_migration.py | 425 ++++++++++++++++++
- 2 files changed, 426 insertions(+)
- create mode 100755 tests/functional/x86_64/test_tap_migration.py
+ tests/unit/test-cpr.c  | 98 ++++++++++++++++++++++++++++++++++++++++++
+ tests/unit/meson.build |  1 +
+ 2 files changed, 99 insertions(+)
+ create mode 100644 tests/unit/test-cpr.c
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index 0353b2af8e..6254149239 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -51,4 +51,5 @@ tests_x86_64_system_thorough = [
-   'virtio_balloon',
-   'virtio_gpu',
-   'rebuild_vmfd',
-+  'tap_migration',
- ]
-diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
-new file mode 100755
-index 0000000000..a34bd94fd2
+diff --git a/tests/unit/test-cpr.c b/tests/unit/test-cpr.c
+new file mode 100644
+index 0000000000..dfc6b1f2ec
 --- /dev/null
-+++ b/tests/functional/x86_64/test_tap_migration.py
-@@ -0,0 +1,425 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that tests TAP local migration
-+# with fd passing
-+#
-+# Copyright (c) Yandex Technologies LLC, 2026
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import time
-+import subprocess
-+from subprocess import run
-+import signal
-+import ctypes
-+import ctypes.util
-+import unittest
-+from contextlib import contextmanager, ExitStack
-+
-+from qemu_test import (
-+    LinuxKernelTest,
-+    Asset,
-+    exec_command_and_wait_for_pattern,
-+    skipIfMissingCommands,
-+)
-+from qemu_test.decorators import skipWithoutSudo
-+
-+
-+GUEST_IP = "192.168.100.2"
-+GUEST_IP_MASK = f"{GUEST_IP}/24"
-+GUEST_MAC = "d6:0d:75:f8:0f:b7"
-+HOST_IP = "192.168.100.1"
-+HOST_IP_MASK = f"{HOST_IP}/24"
-+TAP_ID = "tap0"
-+TAP_ID2 = "tap1"
-+TAP_MAC = "e6:1d:44:b5:03:5d"
-+NETNS = f"qemu_test_ns_{os.getpid()}"
-+
-+
-+def ip(args, check=True) -> None:
-+    """Run ip command with sudo"""
-+    run(["sudo", "ip"] + args, check=check)
-+
-+
-+@contextmanager
-+def switch_netns(netns_name):
-+    libc = ctypes.CDLL(ctypes.util.find_library("c"))
-+    netns_path = f"/var/run/netns/{netns_name}"
-+
-+    def switch_to_fd(fd, check: bool = False):
-+        """Switch to netns by file descriptor"""
-+        sys_setns = 308
-+        clone_newnet = 0x40000000
-+        ret = libc.syscall(sys_setns, fd, clone_newnet)
-+        if check and ret != 0:
-+            raise RuntimeError("syscall SETNS failed")
-+
-+    with ExitStack() as stack:
-+        original_netns_fd = os.open("/proc/self/ns/net", os.O_RDONLY)
-+        stack.callback(os.close, original_netns_fd)
-+
-+        ip(["netns", "add", netns_name])
-+        stack.callback(ip, ["netns", "del", netns_name], check=False)
-+
-+        new_netns_fd = os.open(netns_path, os.O_RDONLY)
-+        stack.callback(os.close, new_netns_fd)
-+
-+        switch_to_fd(new_netns_fd)
-+        stack.callback(switch_to_fd, original_netns_fd, check=False)
-+
-+        yield
-+
-+
-+def del_tap(tap_name: str = TAP_ID) -> None:
-+    ip(["tuntap", "del", tap_name, "mode", "tap", "multi_queue"], check=False)
-+
-+
-+def init_tap(tap_name: str = TAP_ID, with_ip: bool = True) -> None:
-+    ip(["tuntap", "add", "dev", tap_name, "mode", "tap", "multi_queue"])
-+    if with_ip:
-+        ip(["link", "set", "dev", tap_name, "address", TAP_MAC])
-+        ip(["addr", "add", HOST_IP_MASK, "dev", tap_name])
-+    ip(["link", "set", tap_name, "up"])
-+
-+
-+def switch_network_to_tap2() -> None:
-+    ip(["link", "set", TAP_ID2, "down"])
-+    ip(["link", "set", TAP_ID, "down"])
-+    ip(["addr", "delete", HOST_IP_MASK, "dev", TAP_ID])
-+    ip(["link", "set", "dev", TAP_ID2, "address", TAP_MAC])
-+    ip(["addr", "add", HOST_IP_MASK, "dev", TAP_ID2])
-+    ip(["link", "set", TAP_ID2, "up"])
-+
-+
-+def parse_ping_line(line: str) -> float:
-+    # suspect lines like
-+    # [1748524876.590509] 64 bytes from 94.245.155.3 \
-+    #      (94.245.155.3): icmp_seq=1 ttl=250 time=101 ms
-+    spl = line.split()
-+    return float(spl[0][1:-1])
-+
-+
-+def parse_ping_output(out) -> float:
-+    lines = [x for x in out.split("\n") if x.startswith("[")]
-+
-+    max_gap = 0.0
-+    prev_timestamp = None
-+
-+    for line in lines:
-+        if "no ans" not in line:
-+            # This is a successful ping line
-+            try:
-+                timestamp = parse_ping_line(line)
-+                if prev_timestamp is not None:
-+                    gap = timestamp - prev_timestamp
-+                    if gap > max_gap:
-+                        max_gap = gap
-+                prev_timestamp = timestamp
-+            except (IndexError, ValueError):
-+                # Skip malformed lines
-+                continue
-+
-+    assert prev_timestamp is not None, "No successful pings found"
-+    assert max_gap > 0.0, "Need at least two successful pings to calculate gap"
-+
-+    return max_gap
-+
-+
-+def wait_migration_finish(source_vm, target_vm):
-+    migr_events = (
-+        ("MIGRATION", {"data": {"status": "completed"}}),
-+        ("MIGRATION", {"data": {"status": "failed"}}),
-+    )
-+
-+    source_e = source_vm.events_wait(migr_events)["data"]
-+    target_e = target_vm.events_wait(migr_events)["data"]
-+
-+    source_s = source_vm.cmd("query-status")["status"]
-+    target_s = target_vm.cmd("query-status")["status"]
-+
-+    assert (
-+        source_e["status"] == "completed"
-+        and target_e["status"] == "completed"
-+        and source_s == "postmigrate"
-+        and target_s == "paused"
-+    ), f"""Migration failed:
-+    SRC status: {source_s}
-+    SRC event: {source_e}
-+    TGT status: {target_s}
-+    TGT event:{target_e}"""
-+
-+
-+@skipIfMissingCommands("ip", "ping")
-+@skipWithoutSudo()
-+class TAPFdMigration(LinuxKernelTest):
-+    ASSET_ALPINE_ISO = Asset(
-+        (
-+            "https://dl-cdn.alpinelinux.org/"
-+            "alpine/v3.22/releases/x86_64/alpine-standard-3.22.1-x86_64.iso"
-+        ),
-+        "96d1b44ea1b8a5a884f193526d92edb4676054e9fa903ad2f016441a0fe13089",
-+    )
-+
-+    @classmethod
-+    def setUpClass(cls):
-+        super().setUpClass()
-+
-+        # The test namespace has no external connectivity.
-+        cls.ASSET_ALPINE_ISO.fetch()
-+
-+        try:
-+            cls.netns_context = switch_netns(NETNS)
-+            cls.netns_context.__enter__()
-+        except (OSError, subprocess.CalledProcessError) as e:
-+            raise unittest.SkipTest(f"can't switch network namespace: {e}")
-+
-+    @classmethod
-+    def tearDownClass(cls):
-+        if hasattr(cls, "netns_context"):
-+            cls.netns_context.__exit__(None, None, None)
-+        super().tearDownClass()
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        self.require_accelerator("kvm")
-+        self.set_machine("q35")
-+
-+        self.setup_shared_memory()
-+
-+        init_tap()
-+
-+        self.outer_ping_proc = None
-+
-+    def tearDown(self):
-+        with ExitStack() as stack:
-+            stack.callback(super().tearDown)
-+
-+            if self.shm_path:
-+                stack.callback(lambda p: (os.unlink(p) if os.path.exists(p)
-+                                         else None),
-+                               self.shm_path)
-+                self.shm_path = None
-+
-+            stack.callback(del_tap, TAP_ID2)
-+            stack.callback(del_tap, TAP_ID)
-+
-+            if self.outer_ping_proc:
-+                self.stop_outer_ping()
-+
-+    def start_outer_ping(self) -> None:
-+        assert self.outer_ping_proc is None
-+        self.outer_ping_log = self.scratch_file("ping.log")
-+        with open(self.outer_ping_log, "w", encoding="utf-8") as f:
-+            self.outer_ping_proc = subprocess.Popen(
-+                ["sudo", "ping", "-i", "0", "-O", "-D", GUEST_IP],
-+                text=True,
-+                stdout=f,
-+            )
-+
-+    def stop_outer_ping(self) -> str:
-+        assert self.outer_ping_proc
-+        self.outer_ping_proc.send_signal(signal.SIGINT)
-+
-+        self.outer_ping_proc.communicate(timeout=5)
-+        self.outer_ping_proc = None
-+
-+        with open(self.outer_ping_log, encoding="utf-8") as f:
-+            return f.read()
-+
-+    def stop_ping_and_check(self):
-+        ping_res = self.stop_outer_ping()
-+
-+        disconnect_time = parse_ping_output(ping_res)
-+        if disconnect_time > 0.5:
-+            self.fail(f"long disconnect time: {disconnect_time}")
-+
-+    def one_ping_from_guest(self, vm) -> None:
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ping -c 1 -W 1 {HOST_IP}",
-+            "1 packets transmitted, 1 packets received",
-+            "1 packets transmitted, 0 packets received",
-+            vm=vm,
-+        )
-+        self.wait_for_console_pattern("# ", vm=vm)
-+
-+    def one_ping_from_host(self) -> None:
-+        run(
-+            ["ping", "-c", "1", "-W", "1", GUEST_IP],
-+            stdout=subprocess.DEVNULL,
-+            check=True,
-+        )
-+
-+    def setup_shared_memory(self):
-+        self.shm_path = f"/dev/shm/qemu_test_{os.getpid()}"
-+
-+        try:
-+            with open(self.shm_path, "wb") as f:
-+                f.write(b"\0" * (1024 * 1024 * 1024))  # 1GB
-+        except OSError as e:
-+            self.fail(f"Failed to create shared memory file: {e}")
-+
-+    def prepare_vm(self, vm, shm_path, incoming):
-+        if not vm:
-+            vm = self.vm
-+
-+        vm.set_console()
-+        vm.add_args("-accel", "kvm")
-+        vm.add_args("-device", "pcie-pci-bridge,id=pci.1,bus=pcie.0")
-+        vm.add_args("-m", "1G")
-+        vm.add_args("-net", "none")
-+
-+        vm.add_args(
-+            "-object",
-+            f"memory-backend-file,id=ram0,size=1G,mem-path={shm_path},share=on",
-+        )
-+        vm.add_args("-machine", "memory-backend=ram0")
-+
-+        vm.add_args(
-+            "-drive",
-+            f"file={self.ASSET_ALPINE_ISO.fetch()},media=cdrom,format=raw",
-+        )
-+
-+        vm.add_args("-S")
-+
-+        if incoming:
-+            vm.add_args("-incoming", "defer")
-+
-+    def add_virtio_net(
-+        self, vm, vhost: bool, tap_name: str, local: bool, incoming: bool
-+    ):
-+        netdev_params = {
-+            "id": "netdev.1",
-+            "vhost": vhost,
-+            "type": "tap",
-+            "queues": 4,
-+            "script": "no",
-+            "downscript": "no",
-+            "x-permit-local-migration": local,
-+        }
-+
-+        if not (local and incoming):
-+            netdev_params["vnet_hdr"] = True
-+            netdev_params["ifname"] = tap_name
-+
-+        vm.cmd("netdev_add", netdev_params)
-+
-+        vm.cmd(
-+            "device_add",
-+            driver="virtio-net-pci",
-+            romfile="",
-+            id="vnet.1",
-+            netdev="netdev.1",
-+            mq=True,
-+            vectors=18,
-+            bus="pci.1",
-+            mac=GUEST_MAC,
-+            disable_legacy="off",
-+        )
-+
-+    def set_migration_capabilities(self, vm, local):
-+        vm.cmd(
-+            "migrate-set-capabilities",
-+            {
-+                "capabilities": [
-+                    {"capability": "events", "state": True},
-+                    {"capability": "x-ignore-shared", "state": True},
-+                ]
-+            },
-+        )
-+        vm.cmd("migrate-set-parameters", {"local": local})
-+
-+    def setup_guest_network(self) -> None:
-+        exec_command_and_wait_for_pattern(self, "ip addr", "# ")
-+        exec_command_and_wait_for_pattern(
-+            self,
-+            f"ip addr add {GUEST_IP_MASK} dev eth0 && "
-+            "ip link set eth0 up && echo OK",
-+            "OK",
-+        )
-+        self.wait_for_console_pattern("# ")
-+
-+    def migrate(self, vm, mig_sock):
-+        vm.cmd("migrate", uri=f"unix:{mig_sock}")
-+
-+    def do_test_tap_fd_migration(self, vhost, local=True):
-+        socket_dir = self.socket_dir()
-+        mig_sock = os.path.join(socket_dir.name, "mig.sock")
-+
-+        # Setup second TAP if needed
-+        if not local:
-+            del_tap(TAP_ID2)
-+            init_tap(TAP_ID2, with_ip=False)
-+
-+        self.prepare_vm(self.vm, self.shm_path, False)
-+        self.vm.launch()
-+        self.set_migration_capabilities(self.vm, local=local)
-+        self.add_virtio_net(self.vm, vhost, TAP_ID, local, incoming=False)
-+
-+        self.vm.cmd("cont")
-+        self.wait_for_console_pattern("login:")
-+        exec_command_and_wait_for_pattern(self, "root", "# ")
-+
-+        self.setup_guest_network()
-+
-+        self.one_ping_from_guest(self.vm)
-+        self.one_ping_from_host()
-+        self.start_outer_ping()
-+
-+        # Get some successful pings before migration
-+        time.sleep(0.5)
-+
-+        target_vm = self.get_vm(name="target")
-+        self.prepare_vm(target_vm, self.shm_path, True)
-+
-+        target_vm.launch()
-+        if not local:
-+            tap_name = TAP_ID2
-+        else:
-+            tap_name = TAP_ID
-+        self.set_migration_capabilities(target_vm, local=local)
-+        self.add_virtio_net(target_vm, vhost, tap_name, local, incoming=True)
-+
-+        target_vm.cmd("migrate-incoming", {"uri": f"unix:{mig_sock}"})
-+
-+        self.log.info("Starting migration")
-+        self.migrate(self.vm, mig_sock)
-+
-+        self.log.info("Waiting for migration completion")
-+        wait_migration_finish(self.vm, target_vm)
-+
-+        # Switch network to tap1 if not using local-migration
-+        if not local:
-+            switch_network_to_tap2()
-+
-+        target_vm.cmd("cont")
-+
-+        self.log.info("Verifying PING on target VM after migration")
-+
-+        # Keep the stopped source alive while checking the target.
-+        time.sleep(0.3)
-+        self.stop_ping_and_check()
-+
-+        self.one_ping_from_guest(target_vm)
-+        self.one_ping_from_host()
-+
-+        self.vm.shutdown()
-+        target_vm.shutdown()
-+
-+    def test_tap_fd_migration(self):
-+        self.do_test_tap_fd_migration(False)
-+
-+    def test_tap_fd_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True)
-+
-+    def test_tap_new_tap_migration(self):
-+        self.do_test_tap_fd_migration(False, local=False)
-+
-+    def test_tap_new_tap_migration_vhost(self):
-+        self.do_test_tap_fd_migration(True, local=False)
-+
-+
-+if __name__ == "__main__":
-+    LinuxKernelTest.main()
++++ b/tests/unit/test-cpr.c
+@@ -0,0 +1,98 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Unit tests for the CPR fd table
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "migration/cpr.h"
++#include "migration/vmstate.h"
++#include "monitor/monitor.h"
++#include "hw/vfio/vfio-cpr.h"
++
++/* Stubs for the parts of migration/cpr.c that these tests don't exercise */
++
++const VMStateDescription vmstate_cpr_vfio_devices = {
++    .name = "cpr vfio devices",
++    .fields = (const VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_exec_output(Error **errp)
++{
++    g_assert_not_reached();
++}
++
++QEMUFile *cpr_exec_input(Error **errp)
++{
++    g_assert_not_reached();
++}
++
++bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++bool cpr_exec_has_state(void)
++{
++    return false;
++}
++
++void cpr_exec_unpreserve_fds(void)
++{
++}
++
++int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++static void test_cpr_fd_duplicate(void)
++{
++    Error *err = NULL;
++
++    g_assert_true(cpr_save_fd("dup", 0, 10, &error_abort));
++
++    /* A second registration of the same (name, id) key must be refused */
++    g_assert_false(cpr_save_fd("dup", 0, 11, &err));
++    g_assert_nonnull(err);
++    g_assert_nonnull(strstr(error_get_pretty(err), "already registered"));
++    error_free(err);
++
++    /* and the first registration must be left intact */
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 10);
++
++    /* A different id or name is a different key */
++    g_assert_true(cpr_save_fd("dup", 1, 12, &error_abort));
++    g_assert_true(cpr_save_fd("other", 0, 13, &error_abort));
++    g_assert_cmpint(cpr_find_fd("dup", 1), ==, 12);
++    g_assert_cmpint(cpr_find_fd("other", 0), ==, 13);
++
++    /* Once deleted, the key can be registered again */
++    cpr_delete_fd("dup", 0);
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, -1);
++    g_assert_true(cpr_save_fd("dup", 0, 14, &error_abort));
++    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 14);
++
++    cpr_delete_fd("dup", 0);
++    cpr_delete_fd("dup", 1);
++    cpr_delete_fd("other", 0);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    g_test_add_func("/cpr/fd/duplicate", test_cpr_fd_duplicate);
++    return g_test_run();
++}
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index d17435c187..5d2b413fca 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -140,6 +140,7 @@ if have_system
+     'test-bufferiszero': [],
+     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
+     'test-vmstate': [migration, io],
++    'test-cpr': [migration, io, meson.project_source_root() / 'migration/cpr.c'],
+     'test-yank': ['socket-helpers.c', qom, io, chardev],
+     'test-ram-discard-manager': [
+       'test-ram-discard-manager.c',
 -- 
 MST
 
