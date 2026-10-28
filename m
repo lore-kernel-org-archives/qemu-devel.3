@@ -1,71 +1,70 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B998606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E062606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TG11WZBC
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=cZ4jjTLO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLzvd-0006tA-Eb; Wed, 28 Oct 2026 05:26:41 -0400
+	id 1xLzw3-0007G4-IT; Wed, 28 Oct 2026 05:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xLzvb-0006sX-4W
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:40 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1xLzw1-00079v-J1
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:27:05 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xLzvZ-0006fR-Dl
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:38 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2e812e2b31bso3883645ad.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 02:26:36 -0700 (PDT)
+ id 1xLzvz-0006iG-R7
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:27:05 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2eac4877accso2443345ad.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 02:27:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793179595; x=1793784395; darn=nongnu.org;
+ d=gmail.com; s=20260707; t=1793179622; x=1793784422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=rIUTlELGNNNkAoHqgdJyqZqXtRy4dZzDoVcLYBQBIBU=;
- b=TG11WZBC+IWee9ofRVJfX9/TldRBu2LLalWRPxH0rvkACvPEpOTdRHdJOBWKJAK5+D
- 0RCkVhMpwzwqhkknWvOdED9gmJTC2PKxv0eEc+hiC443ZecnFgeHVWhYEzhmNZ7A/DKi
- rRIQ7HLx8L6YG6HGOlqFzgv0682a8lF4XDqmowtiWngt85g87oJhreVteGVfW9cegfp9
- xto0MseiQsnLj4Gd13t1P3hY2MUGO9TmvVkWyges2PFl3ZmNMOSMd+7byEkV+qYKdBPC
- 9jHrRNZkLfNLjr4QP27Qs6tIB/AXgGC9SZ9qyYekyfbhyMnSWRK/HT6gEWc3iir7F4nU
- Rg/w==
+ bh=LDLbm7e0Y1nuSgmu6jeUNW1v4Qmthty4+pDhPxrnq+c=;
+ b=cZ4jjTLOmxnsS9W/AC5FyMo0kVxwR5LZvjlgysjZM7r5pPJBr1lht/v/dDZxFKCBJe
+ 5U1Dv7RPJUfuZ+Kl5kwhfmh5TQSeSemagZ9/3RDNtSsZS+rao6g0kW4NHQtrnzja6vVN
+ tQYyoviGFLLhaDO7iUDCQPu9X9rFJoMFAMmVVT6uDyb8pzwoCz2JvgG+1wIgJZsvkxMD
+ FsmQazuEnu2bAPwopHnfvA9UnezYp8JqtEMNoxtwcoVmS1t8CHa6rnUXsrhUBYzeYcYl
+ Fb8yYqoTkFRcdbpnbjWiNxunYuD3Hq0ekOA4TTO9J1RIAawMkrOc6jF0ru9ttBbttp8R
+ d3iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793179595; x=1793784395;
+ d=1e100.net; s=20260707; t=1793179622; x=1793784422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=rIUTlELGNNNkAoHqgdJyqZqXtRy4dZzDoVcLYBQBIBU=;
- b=EUT5lBU4lAghoNycQ3wmVCi0S5H64YCSu0B58MntHhm9UOPpHSV9aD0f0Z5tXBhp76
- K+QG2TWe5pbfkvHbsmQXAQt7R3/zLz0HaOB4LZzhrIGfL9bXXDtptIvMafsGVD0M8r2Q
- 9s5lw2nF98BBs3/ehedkQsJ+pz6XzmtwH7bczR3zaYRSdxtiv1izP5f6WQrkJ7Gr+SWI
- vGyIbT+Dg1eFiZ/FlRpVl5U/Nc19ONqAmPBnqhzFhfMhO67RDNu/FSD0RPSfoRmPIbuc
- jlP0H1KG35bSWy6q195PtZBGQijMLYfrolb9LXYfSMieWIdp1JxYZpwKdb4PE90iHwmh
- WM3w==
-X-Gm-Message-State: AFq9FYL/LCCFb2l7qfkKwIsmyLui1/Jq1jwo18h6GI2nVsXgJT67QAlD
- OAWJ5qGiTUsAKskYlzHXvlsA/LqoWYjpfqBa9fkSAU8WI7KuKjMzUHU8FEN3YkL7
-X-Gm-Gg: AYBFou0Utrt0T1YxGpPr2HBTy25Ly3m0IfSCE64EqQPxtWoBIUd5AFeNY8uqSGvn3yP
- xghiProBXKg+G0/orh/6Jc4Ja4oB/K+10zd96Ibc7IL0z5gamIH77sx7WpZC30hNOWDAMQyJY/1
- vGEJsUdR7MkGUzNnFKlO/YiDMd7l71kiVE3ZWrfeLvgS3+lsB9wkZKturBptqyjn+YDH1B4d7j4
- X3zBp87KIwih7OEW3Mc6IKLqv/zYOetFjp9klQlhTaGv/6uuBKtQ0vlO3jL/lZoiDVIWvFBWO/A
- 0yyPLjWcBoZp9l0Dx0u6WmT4LS/Vcp7PYx2+EOx5Rgn2M7544i/uy2EQlayiyhU+wY8uy68yg0/
- zmnff980pS86KOXs7BFi7aVFX/Y/rWKBG673z3q8zd7l2CMd0Vg040TRlo3DOApkjbX+fpLNRfu
- URPSaVWn23KidacBep6QmtRB4RNzOARVsvdJHRjQ4QCmVjbMYihisFHoXa6IDSmdHlkymrmVyGD
- mlT07kE3uuhxUsHWPaQX7mpsUFRnI1tYmeqhDY2FWTWIh9aWi+yp+7ll3yC2lK/hfyCNkgvVRrD
- qUAPQrlmPkZAfMDEvfP4Zk1TFXD8j8/XfB4qG+wsd00+pTbTt/JHKosse/dMEJt2PjkJhC9JCmr
- kf3Fj
-X-Received: by 2002:a17:902:f707:b0:2ea:fcdf:9260 with SMTP id
- d9443c01a7336-2eb0042efb8mr18677135ad.53.1793179594916; 
- Wed, 28 Oct 2026 02:26:34 -0700 (PDT)
+ bh=LDLbm7e0Y1nuSgmu6jeUNW1v4Qmthty4+pDhPxrnq+c=;
+ b=gPi+H6wkT4iADs4lHmsS4P9FqzNkWznRA8CUFnhbTi9waIfUvfHaOJJh9PvsAerjFs
+ Swrv/fqbzZB2Wdlqocp5L7mMzRMWkRg2TT5xI1itxDYeLqbVo11LePLlnP02fZNbWyM0
+ iVVUDwjVL6AxmHq2+ltBkVXejg+DsWmcOXtITsNWNYeNls9px3mHUkdPai6+ue+hkJ2v
+ B0uZaP9vaEq8CT8lhIU5SIscGcIB60LEv7KNZSECoUk9jIk5RKg/Jl5qfddSIPGHSWsb
+ V3aNMPXxfysxhePWkiw7LyLIiNNrROq+cM210cyqh1S1nSnqLaZJlINpDdsbrndVRZNj
+ Q4NA==
+X-Gm-Message-State: AFq9FYI93JIoSH207Qyf6SOCEs4oYKr7gSQpJTPKPOlBDidGAT+/vCcp
+ 6uoulcykZqgLK0lJlufEU284WuwsnUnOaygQu5Ou/TKgmXRP+4NyUHkSYX75Apn1
+X-Gm-Gg: AYBFou3LDUBsuT21xFCuuyOqNbyNStKiiyPNCMNclj08BfKg43CJ9B0CMAeIYIh2RoE
+ IpGhlERELevQ0UEoSmLx7UOLTK9JX4bd5AeADYAMKspwYa+TJR1C++pqPc6NZkOuUnUdXIzylIU
+ sEolbvxmUg4FLA2PKf5CxrOn5LW0V8V5SowqCHVAvMFXQCyZXlUYtPzAPOLxV9zF5NRztP5lD/t
+ OXDeR53YPeR6Lh3ZCs6pYHKYPZ6tCQLQiM8YraosiLpjMJlNSW1u/CXIDgVWFt5TMfUNB7XDk9W
+ AEml5O5Tbj9TyTfiUry4b3S7yDgcVhAuP3Feq+Nyf3DISoEMnKBExiWIktR+g3RkJqtD776d49m
+ vsvG2gd8Kxu6bewDEiicwj7p6t67CbVsMkpYnhwAlIlExJpYK1VQMoVk3RbBOyKq5PGrTWkEzrU
+ DfQz3gWIyHvtTNZQVIxgmWDdkFwmLa8Kov7k3j3Va4YzaFFN60mXdJjloLNsTyzJ9cCWUN4GipD
+ 1m3ZiFKNqw4BRlWYcJ4qxOqHXwsoOhKfLXtZfNf7Y6DFge/j+whiiBy/cY01iA4HDbmHYXZSehU
+ HMz+6CINtuCvLAwUpZ2/ufxf/Ibz8KKbNyM4Ng8vqGpCKuoPbgDjfqK9Fic=
+X-Received: by 2002:a17:902:ecc1:b0:2e6:13b1:e196 with SMTP id
+ d9443c01a7336-2eb00577e95mr14035555ad.74.1793179622296; 
+ Wed, 28 Oct 2026 02:27:02 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2eae6b7a691sm19481635ad.26.2026.10.28.02.26.31
+ d9443c01a7336-2eae6b7a691sm19481635ad.26.2026.10.28.02.26.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 02:26:34 -0700 (PDT)
+ Wed, 28 Oct 2026 02:27:01 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -74,17 +73,18 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V19 02/14] iothread: add holder-aware AioContext accessors
-Date: Wed, 28 Oct 2026 17:26:07 +0800
-Message-ID: <20261028092619.1654474-3-zhangckid@gmail.com>
+Subject: [PATCH V19 09/14] vfio-user/proxy: Update tracking iothread users
+ with device QOM paths
+Date: Wed, 28 Oct 2026 17:26:14 +0800
+Message-ID: <20261028092619.1654474-10-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261028092619.1654474-1-zhangckid@gmail.com>
 References: <20261028092619.1654474-1-zhangckid@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,116 +111,119 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Introduce iothread_ref_and_get_aio_context() with a holder argument
-and its counterpart iothread_unref_and_put_aio_context().
+Use the holder-aware AioContext APIs to track each proxy's reference
+to the shared IOThread, using the owning PCI device's canonical QOM
+path as the holder identity. Because the IOChannel has no QOM parent
+and therefore cannot provide a canonical path.
 
-Previously, users of an IOThread AioContext did not explicitly record
-their identity, making it difficult to debug which devices or
-subsystems were pinning an IOThread. These new helpers provide the
-infrastructure for callers to register their identity. Subsequent
-patches convert existing users to the new helpers.
-
-Registering a holder takes an IOThread object reference so that the
-IOThread and its AioContext stay alive until the matching put
-operation. Document the ownership and BQL requirements.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/system/iothread.h | 22 ++++++++++++++++++++++
- iothread.c                | 24 +++++++++++++++++++++++-
- 2 files changed, 45 insertions(+), 1 deletion(-)
+ hw/vfio-user/pci.c   |  2 +-
+ hw/vfio-user/proxy.c | 20 ++++++++++++++++++--
+ hw/vfio-user/proxy.h |  4 +++-
+ 3 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index b8aeb32b0e..f6c5f95dd9 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -67,6 +67,28 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
- char *iothread_get_id(IOThread *iothread);
- IOThread *iothread_by_id(const char *id);
- AioContext *iothread_get_aio_context(IOThread *iothread);
-+
-+/*
-+ * Register @holder and return @iothread's AioContext.  The holder is copied,
-+ * and a reference is taken on @iothread so that both the IOThread and its
-+ * AioContext remain alive.
-+ *
-+ * The caller must eventually call iothread_unref_and_put_aio_context() with an
-+ * equivalent holder.  This function is not thread-safe and must be called
-+ * under the Big QEMU Lock (BQL).
-+ */
-+AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-+                                             const IOThreadHolder *holder);
-+
-+/*
-+ * Unregister @holder and release the corresponding reference on @iothread.
-+ * Calling this function without a matching
-+ * iothread_ref_and_get_aio_context() call is a programming error.
-+ *
-+ * This function is not thread-safe and must be called under the BQL.
-+ */
-+void iothread_unref_and_put_aio_context(IOThread *iothread,
-+                                        const IOThreadHolder *holder);
- GMainContext *iothread_get_g_main_context(IOThread *iothread);
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index 983e1d4ad4..59b18f4d11 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -278,7 +278,7 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+     memset(&addr, 0, sizeof(addr));
+     addr.type = SOCKET_ADDRESS_TYPE_UNIX;
+     addr.u.q_unix.path = (char *)sock_name;
+-    proxy = vfio_user_connect_dev(&addr, errp);
++    proxy = vfio_user_connect_dev(&addr, OBJECT(pdev), errp);
+     if (!proxy) {
+         return;
+     }
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 197aee07bf..e48873c0fb 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -892,7 +892,8 @@ vfio_user_disable_posted_writes(VFIOUserProxy *proxy)
+ static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
+     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
  
- /*
-diff --git a/iothread.c b/iothread.c
-index 6b0a7c557a..5a4291a2f0 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -33,6 +33,11 @@ void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
-     assert(holder);
- 
-     QAPI_LIST_PREPEND(iothread->holders, QAPI_CLONE(IOThreadHolder, holder));
-+    /*
-+     * This guarantees that the IOThread and its AioContext remain alive
-+     * as long as there is a holder.
-+     */
-+    object_ref(OBJECT(iothread));
- }
- 
- static int iothread_holder_compare(const IOThreadHolder *holder_a,
-@@ -78,6 +83,7 @@ void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
-             *prev = curr->next;
-             curr->next = NULL;
-             qapi_free_IOThreadHolderList(curr);
-+            object_unref(OBJECT(iothread));
-             return;
-         }
-         prev = &curr->next;
-@@ -199,7 +205,7 @@ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
-     g_autofree char *name = g_strdup_printf("%s aio-context", thread_name);
- 
-     iothread->worker_context = g_main_context_new();
--    source = aio_get_g_source(iothread_get_aio_context(iothread));
-+    source = aio_get_g_source(iothread->ctx);
-     g_source_set_name(source, name);
-     g_source_attach(source, iothread->worker_context);
-     g_source_unref(source);
-@@ -421,6 +427,22 @@ AioContext *iothread_get_aio_context(IOThread *iothread)
-     return iothread->ctx;
- }
- 
-+AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-+                                             const IOThreadHolder *holder)
-+{
-+    /* Add IOThreadHolder to the list */
-+    iothread_ref(iothread, holder);
-+
-+    return iothread->ctx;
-+}
-+
-+void iothread_unref_and_put_aio_context(IOThread *iothread,
-+                                        const IOThreadHolder *holder)
-+{
-+    /* Delete IOThreadHolder from the list */
-+    iothread_unref(iothread, holder);
-+}
-+
- static int query_one_iothread(Object *object, void *opaque)
+-VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Object *owner,
++                                   Error **errp)
  {
-     IOThreadInfoList ***tail = opaque;
+     VFIOUserProxy *proxy;
+     QIOChannelSocket *sioc;
+@@ -917,6 +918,13 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     proxy = g_malloc0(sizeof(VFIOUserProxy));
+     proxy->sockname = g_strdup_printf("unix:%s", sockname);
+     proxy->ioc = ioc;
++    /* The device may be unparented before disconnect releases the holder. */
++    proxy->qom_path = object_get_canonical_path(owner);
++    assert(proxy->qom_path);
++    const IOThreadHolder io_holder = {
++        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++        .u.qom_object.qom_path = proxy->qom_path,
++    };
+ 
+     /* init defaults */
+     proxy->max_xfer_size = VFIO_USER_DEF_MAX_XFER;
+@@ -936,7 +944,8 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+         vfio_user_iothread = iothread_create("vfio-user", errp);
+     }
+ 
+-    proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
++    proxy->ctx = iothread_ref_and_get_aio_context(vfio_user_iothread,
++                                                &io_holder);
+     proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
+ 
+     QTAILQ_INIT(&proxy->outgoing);
+@@ -967,6 +976,10 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
+ void vfio_user_disconnect(VFIOUserProxy *proxy)
+ {
+     VFIOUserMsg *r1, *r2;
++    const IOThreadHolder io_holder = {
++        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++        .u.qom_object.qom_path = proxy->qom_path,
++    };
+ 
+     qemu_mutex_lock(&proxy->lock);
+ 
+@@ -1021,12 +1034,15 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+     qemu_cond_destroy(&proxy->close_cv);
+     qemu_mutex_destroy(&proxy->lock);
+ 
++    iothread_unref_and_put_aio_context(vfio_user_iothread, &io_holder);
++
+     QLIST_REMOVE(proxy, next);
+     if (QLIST_EMPTY(&vfio_user_sockets)) {
+         iothread_destroy(vfio_user_iothread);
+         vfio_user_iothread = NULL;
+     }
+ 
++    g_free(proxy->qom_path);
+     g_free(proxy->sockname);
+     g_free(proxy);
+ }
+diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
+index 7b97460cc5..dbdbcfabcb 100644
+--- a/hw/vfio-user/proxy.h
++++ b/hw/vfio-user/proxy.h
+@@ -70,6 +70,7 @@ typedef struct VFIOUserProxy {
+     uint32_t wait_time;
+     QemuCond close_cv;
+     AioContext *ctx;
++    char *qom_path;
+     QEMUBH *req_bh;
+     bool async_ops;
+ 
+@@ -102,7 +103,8 @@ typedef struct VFIOUserProxy {
+ 
+ typedef struct VFIODevice VFIODevice;
+ 
+-VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp);
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Object *owner,
++                                   Error **errp);
+ void vfio_user_disconnect(VFIOUserProxy *proxy);
+ void vfio_user_set_handler(VFIODevice *vbasedev,
+                            void (*handler)(void *opaque, VFIOUserMsg *msg),
 -- 
 2.53.0
 
