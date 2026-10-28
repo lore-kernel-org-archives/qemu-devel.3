@@ -1,96 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6243606A32D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DD0606A31E
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=temperror header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cjT9tBG6;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=uJzEtVLi
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=EAfUeJop;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=cvve6VNp
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Ia-0007Ny-HF; Wed, 28 Oct 2026 13:18:52 -0400
+	id 1xM7IH-0005P4-5f; Wed, 28 Oct 2026 13:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Fz-00081P-Jz
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HA-0001yh-Sf
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Fw-0003qv-Cn
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7H8-00041H-LB
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207767;
+ s=mimecast20190719; t=1793207841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xBWKgfobmEcqgD+9yoV91HmhMCEslSgbSj5OOY42Dm4=;
- b=cjT9tBG6KF1Fx589kYUivyQ5XHE/uT3E4tKYfqlsiOKFeFI6xUpwV3LsKEHSqvnxDuYbmR
- hTV34R9Btu8fzSWNgCkq1N7cmKTEva46WvbIIsGrkt3fgoK71U8SB8+VfBf24twWCi3h91
- nhrDlYYonB4YSlGVkWt+WCrR0nF+hYg=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=V/oKjMzr8Rc7yu06F2y0n510k9UPr1g4Or92VUQbyVk=;
+ b=EAfUeJopTD8+gwCyzVfyD+aTyroCI8T2KkzCa1n/6P/EL97ayQdWCBeu1svGNagSgak5yk
+ bJAL4SwB8jtOtEBaDIYMDfQy5WRQ9ajeuNlLKy/kFxkg7AWjbV4Y2W61cP1gB4u0nBbaMI
+ 7E2U5AgvV7j+HOQjRfMFee06g/uPplQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-7e_3Mt2dPMSDNCHcKhSd8A-1; Wed, 28 Oct 2026 13:16:00 -0400
-X-MC-Unique: 7e_3Mt2dPMSDNCHcKhSd8A-1
-X-Mimecast-MFC-AGG-ID: 7e_3Mt2dPMSDNCHcKhSd8A_1793207759
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6b3f6d9827eso1105391a12.2
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:00 -0700 (PDT)
+ us-mta-606-wKzpqdczOECoVLDTScHCHQ-1; Wed, 28 Oct 2026 13:17:20 -0400
+X-MC-Unique: wKzpqdczOECoVLDTScHCHQ-1
+X-Mimecast-MFC-AGG-ID: wKzpqdczOECoVLDTScHCHQ_1793207839
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a16dc2323cso11075675e9.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207759; x=1793812559; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207838; x=1793812638; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xBWKgfobmEcqgD+9yoV91HmhMCEslSgbSj5OOY42Dm4=;
- b=uJzEtVLiqXqP/nXllpJQSWPSAjvEgkLWPZ2FUqnLhnFbyRE+xXWfwGmgvS3kLaCavp
- ACoav2qcwdf+J3HYwc0cMh0dOUzZl9coYDIqUweiMBYApAI848KXDe+PeiwzWRnMNJbs
- wVGWJ1v9xJkP1N2Eb8eqIvIUtcsb9egWX9zDol88dlvZktDpUnVXv43M8181+G7Z40/P
- ckuGHRrKSeBOtwhJf7kNhaKHFRPQr+MtqyWt1FN/WYDvhKzu0bKVwR/6Ql+5NMGD0wIE
- +q22nAd9+oFG4WwcNQeeA+uGVb9wNQVdjNjKxsXfkD7tX0aopEKPmbjNJSU7jskNZbkz
- hRSg==
+ bh=V/oKjMzr8Rc7yu06F2y0n510k9UPr1g4Or92VUQbyVk=;
+ b=cvve6VNpu7EzIi30WMADKWyqxveDvPtdPjhHzR9Y50Fifg9cFLtf/JuKi1hJWlz/4q
+ /VxKl4HcgH4DHC8BhQAo5G0e5m0WQ+olgEUtn8GxlkNZ6DzApg3VYFzBWwp2bgoVb7hD
+ wwlcw3ubFDj31d/g2ohOo4GpQdcQioICD2Ewqry+8Pi3mx1RP0Fe8Fiz55tDWC/klnqO
+ Sv4z/lzsZraHTZZ0xtkPf/6HdI7y1HHecQMLfFgxd9MDaHFm1GJ4A+kF/ZVuKW6OJx4A
+ 8jT0ux3p7Er1M5BzysRll+uShIFXOf8ml7jog7afG23YSPn54lUNjBmjF7g2mfrQ/xmB
+ sU3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207759; x=1793812559;
+ d=1e100.net; s=20260707; t=1793207838; x=1793812638;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xBWKgfobmEcqgD+9yoV91HmhMCEslSgbSj5OOY42Dm4=;
- b=U46R12U1bD3UaFoe/SPKHiUycfCMkMO0zZPPTToEivOfpW3Hcg6MqLtfAsAnC7JUwr
- 4DTzvn4VD7WYB6BF9DzbfbYuBGYcRJl1JEujwyUemU2jVjPG31lFPdRZZZrzhK2zFnIw
- cadUkNsXZiKIpZEcsGlrh5n1dPb3tnDvzmlRM09FFHJjhi6DgXghIuZtt12UbLTJgH/7
- RD3/nJTKlWkhLxjj4+NT5+OqtxpE2MLhJ133VtXPMcjsrPi2rtm2KiyTv923TqB2Xs4E
- MdBdO+/DNC2NzQxwT2PDF61dG5e1j3B7HCjtBaIWXG7KNKrLx0WeBiF8XcitV/2tBPK0
- +j/g==
-X-Gm-Message-State: AFq9FYKlsD0iE5UIX5fNSipGNN0xXFbRu1gnYfSsTmlbXT3lPsezS5tB
- em4bMQ5TJXLuoxC5UTE7gLp99RxwQQ9XdDiOpS66ltAhM32OsFBi/TIF+xv0jSoxEQA6/4x3jVd
- j1ntQAj/bR8eegX2YwP/vtzGkHC1T00pu98n35szSSiyX3D48Z6Yzlu5MtDFJVn76Ccm1APL76d
- mTVZEk/d89zX44z44mV5BSOUZHNyQYgbOb6g==
-X-Gm-Gg: AYBFou0KaHynUsWYpDtPZk4GnNBWLzfzVGk6pCdIj4u5g7O1uQHhkXn2MQTsMLUiVCj
- pDXJ8IOSocMaOh8gwCSC5kzEzGfdwt+w6o6oaCDicD+/OrbyJFnzCTcT1KjOvjaD8x5Spi3gu8j
- 8pI97VvfPXjhxKqZrG41MVhAbV9rDCxdF/dV6QZNT4mWMcACWolRgOakHSnvDE6keTEmPCxfnIZ
- Wc01lJEimwkwv0l5ofTVAt84gRtlRiGv1xt1A1cHudASduW/a0q4yhSmO1udIr/nQLy7aN4cRzI
- +5UnFQdeRuVPRQ6ZhfUwXy5YRgF7pzpdJ+xsL5FObQG3CmM7IBfjBaIV5l4LG9VhMoL6LFf9P7c
- rDZn9GGwYJh6wXZlCC6VDMRR4HNIM9qtViF2kzgFG
-X-Received: by 2002:a05:6402:2353:b0:6b4:5fe3:11a2 with SMTP id
- 4fb4d7f45d1cf-6b49caba2fbmr2228366a12.0.1793207758869; 
- Wed, 28 Oct 2026 10:15:58 -0700 (PDT)
-X-Received: by 2002:a05:6402:2353:b0:6b4:5fe3:11a2 with SMTP id
- 4fb4d7f45d1cf-6b49caba2fbmr2228319a12.0.1793207758089; 
- Wed, 28 Oct 2026 10:15:58 -0700 (PDT)
+ bh=V/oKjMzr8Rc7yu06F2y0n510k9UPr1g4Or92VUQbyVk=;
+ b=Sk/qEV/SQYWi4j58k/80bGjHJfcjwMKMNJT22YkNrR3qS8yvX8pbCGWzNdTUWMJaLy
+ oUau2wgaBlhOJdFdqQCfUpN/16gAZnaLUntqxzB8V4yjWbGM7nFxF5cjmfymtnjSAnNd
+ eW/L88pI/rt6a+lSQr7DrAQ1DvJxs9LKp5LvWA/LLX5XgfjYnqBS+a7zGSN20T8sgruy
+ L74rcmz9a4JB3kiZS9F3OaZUAYvNOT6erVIGVwvrsniijA1MP/cLrOwGVNPpcBXmk0dt
+ udedLqJCkQsS8CtsndaNHCNG9dkS7pCjMcqYphkdxs1/wdSVm/SOl1SxkcArkZCV89PA
+ odCA==
+X-Gm-Message-State: AFq9FYLiOKjl+c8a9P7pBF3Y6WUkWNV9DqqJ3pD3/0ZQuycvsfIEV9bf
+ PEqcWjp3UuJRPJifmKM1cN9NaVRXRawp2IOu+fA/rvTLKTxWKH0XIMnOLKbviWGjhHVtzJKr3pj
+ 3uY7hOsE7d8PkwLPmhja2F0NQLVQ0JVeXxKvG2zGj6CEzjMhvTTrkARSfaHwTCMx+gtdnMNSjSy
+ sh+zJQ0gsxVjRBYKcH2OA1rdZzvleKsmiWjg==
+X-Gm-Gg: AYBFou3xKoQVxWT/O/89hh+bnX+nrcqdH69M7+gRtizJiJQQu82sQtGsbb+mnMhHN3N
+ wZxEyH/LKcUqlb0u/mSpGzXMXMgMjj4rue71voiFT9epasMCuaaEIDT+R5Zz6/T/eq9l25XPFDt
+ bbdFQU6r8m7CW3v5ti9rQNpwUdM4hRTTDGN21zF9pK4pzkFjgx17Q6lhn/Op5PjjpNVm9ByoyeO
+ e7fhgDX0/D1yKoPrJhjbADKtljm6gA30xhK4Ei5YOAelWoUa7HTjfLjyR7qrmpa6RKDu3kf7zCx
+ VknD83UUV9LIeXjq1Obw2nZCP9BuJFhcVbxLCagjEDXBAlal85b9fZAkNf8dKLFQ3Guijrktnvs
+ Ccirbne1a4Uug6rUfFwiBVLwIGh+rKfIq/SxT04Kf
+X-Received: by 2002:a05:600c:3516:b0:4a8:cb23:f71b with SMTP id
+ 5b1f17b1804b1-4a966c4175cmr66999765e9.18.1793207838469; 
+ Wed, 28 Oct 2026 10:17:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:3516:b0:4a8:cb23:f71b with SMTP id
+ 5b1f17b1804b1-4a966c4175cmr66998825e9.18.1793207837805; 
+ Wed, 28 Oct 2026 10:17:17 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ece14a1sm30736345f8f.57.2026.10.28.10.15.56
+ 5b1f17b1804b1-4aa82516a45sm6021505e9.15.2026.10.28.10.17.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:15:57 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:15:55 -0400
+ Wed, 28 Oct 2026 10:17:17 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:17:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Li Zhaoxin <lizhaoxin04@baidu.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 45/78] vdpa-dev: implement guest_notifier_mask/pending
-Message-ID: <3cacd08dccf2cdefb23cb75b182fa653bcd66323.1793207602.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Yi Liu <yi.l.liu@intel.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Xudong Hao <xudong.hao@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-arm@nongnu.org
+Subject: [PULL 71/78] backends/iommufd: Extend iommufd_backend_alloc_hwpt()
+ with fault_id
+Message-ID: <1ea8e7ec0d6e27154ac8d2147623860d6a11efba.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -99,14 +105,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,80 +128,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Li Zhaoxin <lizhaoxin04@baidu.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Forward guest notifier masking to the vhost layer via
-VHOST_SET_VRING_CALL, so the KVM irqfd stays installed across
-MSI-X mask/unmask cycles instead of being torn down and re-added
-each time.
+We should set flags IOMMU_HWPT_FAULT_ID_VALID when pass in a fault
+object id in the caller.
 
-Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260909155042.34186-1-lizhaoxin04@baidu.com>
+Message-ID: <20261020091955.1607161-4-zhenzhong.duan@intel.com>
 ---
- hw/virtio/vdpa-dev.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ include/system/iommufd.h    | 4 ++--
+ backends/iommufd.c          | 7 ++++---
+ hw/arm/smmuv3-accel.c       | 6 +++---
+ hw/i386/intel_iommu_accel.c | 2 +-
+ hw/vfio/iommufd.c           | 2 +-
+ backends/trace-events       | 2 +-
+ 6 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 7e5cc040e9..cd7ce2e381 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -267,11 +267,7 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
-     }
-     s->started = true;
- 
--    /*
--     * guest_notifier_mask/pending not used yet, so just unmask
--     * everything here. virtio-pci will do the right thing by
--     * enabling/disabling irqfd.
--     */
-+    /* Point every vring call fd at its guest notifier. */
-     for (i = 0; i < s->dev.nvqs; i++) {
-         vhost_virtqueue_mask(&s->dev, vdev, i, false);
-     }
-@@ -285,6 +281,28 @@ err_host_notifiers:
-     return ret;
- }
- 
-+static void vhost_vdpa_device_guest_notifier_mask(VirtIODevice *vdev, int idx,
-+                                                   bool mask)
-+{
-+    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-+
-+    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
-+        return;
-+    }
-+    vhost_virtqueue_mask(&s->dev, vdev, idx, mask);
-+}
-+
-+static bool vhost_vdpa_device_guest_notifier_pending(VirtIODevice *vdev,
-+                                                    int idx)
-+{
-+    VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-+
-+    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
-+        return false;
-+    }
-+    return vhost_virtqueue_pending(&s->dev, idx);
-+}
-+
- static void vhost_vdpa_device_stop(VirtIODevice *vdev)
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 36b34b4899..79b8dabfb6 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -90,8 +90,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 uint32_t pt_id, uint32_t flags,
+                                 uint32_t data_type, uint32_t data_len,
+-                                void *data_ptr, uint32_t *out_hwpt,
+-                                Error **errp);
++                                void *data_ptr, uint32_t fault_id,
++                                uint32_t *out_hwpt, Error **errp);
+ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
+                                   void *data_ptr, uint32_t data_len,
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 457b74a558..ecf4caee1a 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -317,8 +317,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 uint32_t pt_id, uint32_t flags,
+                                 uint32_t data_type, uint32_t data_len,
+-                                void *data_ptr, uint32_t *out_hwpt,
+-                                Error **errp)
++                                void *data_ptr, uint32_t fault_id,
++                                uint32_t *out_hwpt, Error **errp)
  {
-     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
-@@ -376,6 +394,8 @@ static void vhost_vdpa_device_class_init(ObjectClass *klass, const void *data)
-     vdc->get_features = vhost_vdpa_device_get_features;
-     vdc->set_status = vhost_vdpa_device_set_status;
-     vdc->get_vhost = vhost_vdpa_device_get_vhost;
-+    vdc->guest_notifier_mask = vhost_vdpa_device_guest_notifier_mask;
-+    vdc->guest_notifier_pending = vhost_vdpa_device_guest_notifier_pending;
+     int ret, fd = be->fd;
+     struct iommu_hwpt_alloc alloc_hwpt = {
+@@ -329,11 +329,12 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+         .data_type = data_type,
+         .data_len = data_len,
+         .data_uptr = (uintptr_t)data_ptr,
++        .fault_id = fault_id,
+     };
+ 
+     ret = ioctl(fd, IOMMU_HWPT_ALLOC, &alloc_hwpt);
+     trace_iommufd_backend_alloc_hwpt(fd, dev_id, pt_id, flags, data_type,
+-                                     data_len, (uintptr_t)data_ptr,
++                                     data_len, (uintptr_t)data_ptr, fault_id,
+                                      alloc_hwpt.out_hwpt_id, ret);
+     if (ret) {
+         error_setg_errno(errp, errno, "Failed to allocate hwpt");
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 91aca1aa14..66e6a5011a 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -268,7 +268,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
+                                     accel->viommu->viommu_id, flags,
+                                     IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(nested_data), &nested_data,
+-                                    &hwpt_id, errp)) {
++                                    0, &hwpt_id, errp)) {
+             return NULL;
+     }
+ 
+@@ -632,14 +632,14 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(abort_data), &abort_data,
+-                                    &accel->abort_hwpt_id, errp)) {
++                                    0, &accel->abort_hwpt_id, errp)) {
+         goto free_viommu;
+     }
+ 
+     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(bypass_data), &bypass_data,
+-                                    &accel->bypass_hwpt_id, errp)) {
++                                    0, &accel->bypass_hwpt_id, errp)) {
+         goto free_abort_hwpt;
+     }
+ 
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index c3677775e9..c8f2835204 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -100,7 +100,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+     return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+                                       hiodi->hwpt_id, flags,
+                                       IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
+-                                      fs_hwpt_id, errp);
++                                      0, fs_hwpt_id, errp);
  }
  
- static void vhost_vdpa_device_instance_init(Object *obj)
+ static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index de482128bf..90ddb54f4c 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -486,7 +486,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
+                                     container->ioas_id, flags,
+                                     IOMMU_HWPT_DATA_NONE, 0, NULL,
+-                                    &hwpt_id, errp)) {
++                                    0, &hwpt_id, errp)) {
+         return false;
+     }
+ 
+diff --git a/backends/trace-events b/backends/trace-events
+index b1c1d89dd8..2f242feb78 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -16,7 +16,7 @@ iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t
+ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+-iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
++iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t fault_id, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" fault_id=%u out_hwpt=%u (%d)"
+ iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
+ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
 -- 
 MST
 
