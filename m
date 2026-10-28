@@ -1,46 +1,46 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F87606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 22:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C7E606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 22:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OKPf4J/t
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=W3UhUFIZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMCRa-0001vC-Ht; Wed, 28 Oct 2026 18:48:30 -0400
+	id 1xMCRX-0001uH-CU; Wed, 28 Oct 2026 18:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRX-0001uJ-TU
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:28 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRW-0001u8-Dq
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:26 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRW-0007d6-C0
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:27 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xMCRU-0007cr-Pb
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 18:48:26 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 745CA435D3;
- Wed, 28 Oct 2026 22:48:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0151F01825;
- Wed, 28 Oct 2026 22:48:24 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D513B42E9D;
+ Wed, 28 Oct 2026 22:48:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBE11F01825;
+ Wed, 28 Oct 2026 22:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793227705;
- bh=zf5ppi2teIHh97kn4uw3WTJifd4Yq00Q4xRpdEtBweI=;
+ s=k20260515; t=1793227703;
+ bh=18S4xiqd0zh/+ecdsNiuR0/WNpS+taOR9QWxO/S66Jo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=OKPf4J/tp2W4MD2O1WIlRIUh1pSjo8CiA08GA/0I1rJ42Wc+iupX6VSDDR7NVi3dc
- cgy9upnDyZW0XVwrbcuTfVLn/zdnOuqeoV6sBJKyw8UH5b2kmtgD3l4H5cjK/Mv9Q4
- r0xs7/2cSiqrpDn+pEceQp3lbBa8KbNpsNrWO6R4J+6g4jLgp5yjuZcVfYkg/upAyL
- qruKLzqSB4nyLF9heBW1VHaRMHsM7VIWJq+YliPJ7Yl+K3BQM1K6FpZBa1oVo8Vzjh
- OaRCCtLIOKWvVP48vZL9c5Os4c+DVASvOSSheVxQ5cz95ZRo+j1ppclQSziA/l3dPS
- lB+tzdzF/qzlw==
+ b=W3UhUFIZdwhgBdrwZjLCHyWCuztDvetbV954De5X8+EEKJh1L9NMeQ+ZKhVwg6tv2
+ +T6uvdMWPgu1zl9OA+rvBkYgaLP2WgZGzUC/HYZB1u4SEWYfLYra5cilJ7aM/vOmhR
+ qSks4b/0wbRJhXVavLkJz4QP546zdq2csMO5bE3+BJSYJ5hPVT4N6I0KoqHvcXJrDE
+ qXG8vx/KhqfjPQH/xSMf49AXi1dggd/tStk2Jlc8hW2ZyXo243pO0OCZY0JNf3TU0r
+ BbkW55ZXZbgtMFUlId906VEJkhxnG/IRzMwQuiOB+Ze5eYrs8UPfMIDPuzM8lAo5HR
+ f36vgInpm2tOg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Keith Monahan <keith@techtravels.org>, Gerd Hoffmann <kraxel@redhat.com>,
  Helge Deller <deller@gmx.de>
-Subject: [PATCH 4/4] hw/misc: Harmony sound registers now handled by harmony
- driver
-Date: Wed, 28 Oct 2026 23:48:15 +0100
-Message-ID: <20261028224815.32502-5-deller@kernel.org>
+Subject: [PATCH 3/4] hw/hppa: Add harmony sound card to HP 715 and B160L
+ machines
+Date: Wed, 28 Oct 2026 23:48:14 +0100
+Message-ID: <20261028224815.32502-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261028224815.32502-1-deller@kernel.org>
 References: <20261028224815.32502-1-deller@kernel.org>
@@ -74,45 +74,94 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Helge Deller <deller@gmx.de>
+From: Keith Monahan <keith@techtravels.org>
 
-No need to handle the LASI AUDIO registers here.
-
+Signed-off-by: Keith Monahan <keith@techtravels.org
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/misc/lasi.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ hw/hppa/Kconfig   |  1 +
+ hw/hppa/machine.c | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/hw/misc/lasi.c b/hw/misc/lasi.c
-index 76029804e1..d4ef832af1 100644
---- a/hw/misc/lasi.c
-+++ b/hw/misc/lasi.c
-@@ -86,13 +86,7 @@ static MemTxResult lasi_chip_read_with_attrs(void *opaque, hwaddr addr,
-         val = s->iar;
-         break;
+diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+index 9ede4d1140..d00d7ca040 100644
+--- a/hw/hppa/Kconfig
++++ b/hw/hppa/Kconfig
+@@ -19,3 +19,4 @@ config HPPA_B160L
+     select LSI_SCSI_PCI
+     select PARALLEL
+     select ARTIST
++    select HARMONY
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index f23936fc5b..940bf2c72e 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -32,6 +32,7 @@
+ #include "hw/misc/lasi.h"
+ #include "hw/scsi/ncr53c710.h"
+ #include "hw/scsi/lasi_ncr710.h"
++#include "hw/audio/harmony.h"
+ #include "hppa_hardware.h"
+ #include "qemu/units.h"
+ #include "qapi/error.h"
+@@ -271,6 +272,21 @@ static LasiState *lasi_init(void)
+     return LASI_CHIP(dev);
+ }
  
--    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
--        /*
--         * Harmony audio not yet emulated.  DIAG (0x3c) reports a running
--         * sample clock, which HP-UX 9 checks before using the beeper.
--         */
--        val = (addr == LASI_AUDIO + 0x3c);
--        break;
-+    case LASI_AUDIO:    /* handled by harmony audio driver */
-     case LASI_LPT:
-     case LASI_UART:
-     case LASI_LAN:
-@@ -164,8 +158,8 @@ static MemTxResult lasi_chip_write_with_attrs(void *opaque, hwaddr addr,
-     case LASI_LPT:
-         /* XXX: reset parallel port */
-         break;
--    case LASI_AUDIO ... LASI_AUDIO + 0xFF:
--        /* XXX: Harmony audio is not emulated */
-+    case LASI_AUDIO:
-+        /* handled by harmony audio driver */
-         break;
-     case LASI_UART:
-         /* XXX: reset serial port */
++/* Harmony audio, inside the LASI register block at LASI + 0x4000 */
++static void harmony_create(MachineState *machine, hwaddr addr, qemu_irq irq)
++{
++    DeviceState *dev = qdev_new(TYPE_HARMONY);
++
++    if (machine->audiodev) {
++        qdev_prop_set_string(dev, "audiodev", machine->audiodev);
++    }
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
++    memory_region_add_subregion_overlap(get_system_memory(), addr,
++                                        sysbus_mmio_get_region(
++                                            SYS_BUS_DEVICE(dev), 0), 1);
++}
++
+ static DinoState *dino_init(MemoryRegion *addr_space)
+ {
+     DeviceState *dev;
+@@ -699,6 +715,9 @@ static void machine_HP_715_init(MachineState *machine)
+                                     sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+     }
+ 
++    harmony_create(machine, translate(NULL, LASI_HPA_715 + LASI_AUDIO),
++                   qdev_get_gpio_in(lasi_dev, LASI_IRQ_AUDIO_HPA));
++
+     /* Add NICs, graphics & load firmware */
+     machine_HP_common_init_tail(machine, NULL, translate, false);
+ }
+@@ -778,6 +797,9 @@ static void machine_HP_B160L_init(MachineState *machine)
+         lsi53c8xx_handle_legacy_cmdline(dev);
+     }
+ 
++    harmony_create(machine, translate(NULL, LASI_HPA + LASI_AUDIO),
++                   qdev_get_gpio_in(lasi_dev, LASI_IRQ_AUDIO_HPA));
++
+     /* Add NICs, graphics & load firmware */
+     machine_HP_common_init_tail(machine, pci_bus, translate, false);
+ }
+@@ -985,6 +1007,7 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+     mc->default_ram_size = 512 * MiB;
++    machine_add_audiodev_property(mc);
+ }
+ 
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+@@ -1036,6 +1059,7 @@ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+     mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
++    machine_add_audiodev_property(mc);
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+     mc->max_cpus = MIN_CONST(HPPA_MAX_CPUS, 8);
+     mc->default_ram_size = 256 * MiB;
 -- 
 2.54.0
 
