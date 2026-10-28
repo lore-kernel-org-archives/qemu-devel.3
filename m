@@ -1,54 +1,54 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FB7606AB02
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F2D606B7D1
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FVYrz07P
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=R1fr7nMD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM8za-00009e-7H; Wed, 28 Oct 2026 15:07:23 -0400
+	id 1xM8zn-0000Nr-Hd; Wed, 28 Oct 2026 15:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zT-0008UE-Ew
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:15 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zZ-0000A9-7u
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:22 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zR-0004Kj-Tx
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:15 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zX-0004LN-1x
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:20 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 0513341941;
- Wed, 28 Oct 2026 19:07:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30A41F01825;
- Wed, 28 Oct 2026 19:07:11 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 2E1094041B;
+ Wed, 28 Oct 2026 19:07:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7771F01825;
+ Wed, 28 Oct 2026 19:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793214432;
- bh=bTBTtjYW8t5JMYhZRolyj7KJl2yanea6gt+IEaYH3eM=;
+ s=k20260515; t=1793214438;
+ bh=dTZCJTYWVWJqF6kvOj5k8Dq8jE2tqLp4YrotU+lPUFg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FVYrz07P2LHlrpMVJay5/8yfgj6sUDxbTRw+rvk1bcx5BULyE9INukrYA5eWsQYN7
- kiFHJ/+2TgXg2A4Q3fs7Cx7wHfoWrpj9+1M8aEXP3IY+pK0DptY9tN6zJddVQBeXF4
- 11Wsy6dC0aEwUFdyKD5ap7nPWBYm7BN7v8AJO+KfE48VlSSRI4BrGwshHkjJ2pje9w
- Y6qbMUL5zk5qY/UJFSLHBMcGR7GXMbk7MtL6tzTB37JZfKlrGXcAedDkM6d477mS2U
- QfNVtbny5ejgGaoa5MJm7kDYZSR3Dy7DADkmJ+fxnivpJ6QMJy2FEe5RZnRGLmWxDU
- VFYLSs8l8/hdg==
+ b=R1fr7nMD2vNomDfzKErL+nKTZC4sGUlTKC2OIMSCb9FlPkQeWgmEL+4hhe8qJNUhp
+ ZmVdbv1IH9IBMOwU7NqNpAMmIFFfMXDIYC7xkEIAR6HJvn6QnXe+gE6I2umdxaSfDb
+ 5/7/g8bIytYItxqOmmEAXPLyH0ewpPJOB800axwEz4nLXh1bfpgiS0AxLLUDmqssEQ
+ kIKz8br+/bpmL66BKwnTumIiTUd5VmVfi9Xc1nHdGjpcdp2SqKI3vaQ6m9mNdyXjb7
+ npGmjnwn5JBDTvYLlYwWHNRYrJ5tbdqq6xGWqmBzpG+tqz4NYaqfz899b8WM6nIDMo
+ YMtclncikCK7A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PULL v2 5/9] target/hppa: Preload I/O-space BTLB entries for LASI
- and the central bus
-Date: Wed, 28 Oct 2026 20:06:57 +0100
-Message-ID: <20261028190701.17272-6-deller@kernel.org>
+Subject: [PULL v2 8/9] target/hppa: Map CPUs at same addresses as on physical
+ machines
+Date: Wed, 28 Oct 2026 20:07:00 +0100
+Message-ID: <20261028190701.17272-9-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261028190701.17272-1-deller@kernel.org>
 References: <20261028190701.17272-1-deller@kernel.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -74,60 +74,131 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Keith Monahan <keith@techtravels.org>
+From: Helge Deller <deller@gmx.de>
 
-Set up the BTLB to allow operating systems to access LASI and central
-bus addresses.
+SeaBIOS version 26 allows to use random addresses for CPU_HPA, so drop
+the hardcoded CPU_HPA which was used until now for all machines, and use
+individual addresses which correspond to the CPU HPA on the physical
+machines.
 
-Signed-off-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/hppa/machine.c | 23 +++++++++++++----------
+ target/hppa/cpu.h |  1 +
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 8d378385b2..e403ae5fc9 100644
+index e403ae5fc9..f23936fc5b 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -896,6 +896,38 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
-         cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
+@@ -241,11 +241,11 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/power-button-addr",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+-    val = cpu_to_le64(CPU_HPA + 16);
++    val = cpu_to_le64(cpu[0]->env.cpu_hpa + 16);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/rtc-addr",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+-    val = cpu_to_le64(CPU_HPA + 24);
++    val = cpu_to_le64(cpu[0]->env.cpu_hpa + 24);
+     fw_cfg_add_file(fw_cfg, "/etc/hppa/DebugOutputPort",
+                     g_memdup2(&val, sizeof(val)), sizeof(val));
+ 
+@@ -286,7 +286,8 @@ static DinoState *dino_init(MemoryRegion *addr_space)
+ /*
+  * Step 1: Create CPUs and Memory
+  */
+-static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
++static TranslateFn *machine_HP_common_init_cpus(MachineState *machine,
++                        target_ulong initial_cpu_hpa)
+ {
+     MemoryRegion *addr_space = get_system_memory();
+     unsigned int smp_cpus = machine->smp.cpus;
+@@ -299,6 +300,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+     /* Create CPUs.  */
+     for (unsigned int i = 0; i < smp_cpus; i++) {
+         cpu[i] = HPPA_CPU(cpu_create(machine->cpu_type));
++        cpu[i]->env.cpu_hpa = initial_cpu_hpa + i * 0x1000;
      }
  
-+    /*
-+     * BTLB equivalence maps for the I/O ranges HP-UX 9 uses
-+     * without creating page directory entries: the LASI block and the
-+     * central bus (CPU HPA, broadcast).  Must not cover other I/O space, as
-+     * HP-UX probes with LPA and skips pdir setup for already mapped pages.
-+     */
-+    if (!hppa_is_pa20(&cpu[0]->env)) {
-+        static const struct { uint32_t start, last; } io_btlb[] = {
-+            { 0xf0100000, 0xf01fffff },     /* LASI */
-+            { 0xfff80000, 0xffffffff },     /* central bus */
-+        };
-+        CPUHPPAState *env = &cpu[0]->env;
-+
-+        for (i = 0; i < ARRAY_SIZE(io_btlb); i++) {
-+            HPPATLBEntry *ent = &env->tlb[HPPA_BTLB_ENTRIES(env) - 1 - i];
-+
-+            ent->itree.start = io_btlb[i].start;
-+            ent->itree.last = io_btlb[i].last;
-+            ent->pa = io_btlb[i].start;
-+            ent->access_id = 0;
-+            ent->u = 1;
-+            ent->ar_pl2 = 0;
-+            ent->ar_pl1 = 0;
-+            ent->ar_type = 1;
-+            ent->b = 0;
-+            ent->d = 1;
-+            ent->t = 0;
-+            ent->entry_valid = 1;
-+            interval_tree_insert(&ent->itree, &env->tlb_root);
-+        }
-+    }
-+
-     cpu[0]->env.gr[26] = ms->ram_size;
-     cpu[0]->env.gr[25] = cpu[0]->env.kernel_entry;
-     cpu[0]->env.gr[24] = cpu[0]->env.cmdline_or_bootorder;
+     /* Initialize memory */
+@@ -321,7 +323,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+         memory_region_init_io(cpu_region, OBJECT(cpu[i]), &hppa_io_eir_ops,
+                               cpu[i], name, 4);
+         memory_region_add_subregion(addr_space,
+-                                    translate(NULL, CPU_HPA + i * 0x1000),
++                                    translate(NULL, cpu[i]->env.cpu_hpa),
+                                     cpu_region);
+ 
+         if (!hppa_is_pa20(&cpu[0]->env)) {
+@@ -339,7 +341,7 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+         memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
+                               NULL, cflush_name, 4);
+         memory_region_add_subregion(addr_space,
+-                              translate(NULL, CPU_HPA + i * 0x1000 + 0x500),
++                              translate(NULL, cpu[i]->env.cpu_hpa + 0x500),
+                               cflush);
+     }
+ 
+@@ -347,7 +349,8 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+     cpu_region = g_new(MemoryRegion, 1);
+     memory_region_init_io(cpu_region, OBJECT(cpu[0]), &hppa_io_helper_ops,
+                           cpu[0], "cpu0-io-rtc", 2 * sizeof(uint64_t));
+-    memory_region_add_subregion(addr_space, translate(NULL, CPU_HPA + 16),
++    memory_region_add_subregion(addr_space,
++                                translate(NULL, cpu[0]->env.cpu_hpa + 16),
+                                 cpu_region);
+ 
+     /* Main memory region. */
+@@ -626,7 +629,7 @@ static void machine_HP_715_init(MachineState *machine)
+     ISABus *isa_bus;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfffbe000);
+ 
+     if (hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP 715/64 workstation requires a 32-bit "
+@@ -713,7 +716,7 @@ static void machine_HP_B160L_init(MachineState *machine)
+     PCIBus *pci_bus;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfff10000);
+ 
+     if (hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP B160L workstation requires a 32-bit "
+@@ -810,7 +813,7 @@ static void machine_HP_C3700_init(MachineState *machine)
+     bool is_C3700 = strcmp(mc->name, "C3700") == 0;
+ 
+     /* Create CPUs and RAM.  */
+-    translate = machine_HP_common_init_cpus(machine);
++    translate = machine_HP_common_init_cpus(machine, 0xfffa0000);
+ 
+     if (!hppa_is_pa20(&cpu[0]->env)) {
+         error_report("The HP C3000 workstation requires a 64-bit CPU. "
+@@ -893,7 +896,7 @@ static void hppa_machine_reset(MachineState *ms, ResetType type)
+         cpu[i]->env.psw = PSW_Q;
+         /* Firmware uses FP registers before configuring CCR. */
+         cpu[i]->env.cr[CR_SCRCCR] = 0xc0;
+-        cpu[i]->env.gr[5] = CPU_HPA + i * 0x1000;
++        cpu[i]->env.gr[5] = cpu[i]->env.cpu_hpa;
+     }
+ 
+     /*
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index da48a78569..7b708a564b 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -272,6 +272,7 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
++    target_ulong cpu_hpa;      /* HPA of this CPU */
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
 -- 
 2.54.0
 
