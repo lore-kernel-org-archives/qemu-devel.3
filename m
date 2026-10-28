@@ -1,73 +1,110 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6205F606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50898606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HINXr5jg
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=f4vZsOtk
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7OZ-0005Q8-Ub; Wed, 28 Oct 2026 13:25:04 -0400
+	id 1xM7Q6-00074h-RB; Wed, 28 Oct 2026 13:26:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xM7Nb-0004qS-3R
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:24:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xM7NY-0004zz-3K
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:24:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793208239;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PFcAr6/aE50M+7rVT8l3cEh7YIP/JkjqUfA1WCLxqFY=;
- b=HINXr5jgyTL7LsnqB5WpUrJ5mDj7rQSQvIKXFFhmINU38yOkMsMyEpVk0honZjAZkK8B5u
- 7+v+SenMfUJfotQJGIHes5ElPRRffRh01UblDtiuLefWFLeebc6YDDEw+LWQCSG7s7qpMA
- fU8pOkEBMuhGMuausQ/5SeKwFyRhvXo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-8TKwqKiqMs2m8bjFoFi9uw-1; Wed,
- 28 Oct 2026 13:23:51 -0400
-X-MC-Unique: 8TKwqKiqMs2m8bjFoFi9uw-1
-X-Mimecast-MFC-AGG-ID: 8TKwqKiqMs2m8bjFoFi9uw_1793208230
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DF771800597; Wed, 28 Oct 2026 17:23:50 +0000 (UTC)
-Received: from Kostiantyns-MacBook-Pro.redhat.com (unknown [10.44.32.20])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 09137195608D; Wed, 28 Oct 2026 17:23:48 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 2/2] qga/vss: fix provider handling of snapshots
-Date: Wed, 28 Oct 2026 19:23:42 +0200
-Message-ID: <20261028172342.96036-3-kkostiuk@redhat.com>
-In-Reply-To: <20261028172342.96036-1-kkostiuk@redhat.com>
-References: <20261028172342.96036-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1xM7Q5-00074P-0l
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:26:37 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1xM7Q2-0005M8-HX
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:26:36 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-5412af497c2so45261cf.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:26:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793208393; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IZrr7NwQou/e+PFeN0ZQu1c90MQx4O8U+ziYPztsJeXU7A4PrcvGVdaGfOYlQUtm3h
+ HfK8EpF8iNT5EdvqrJrsDCzZRlnvBc9cOeFouiZVi9uLBn0fH8W3fvMkAfbBoG2K2RyW
+ 3A+8BBkPOMpaXEPbymr083gnrbg3JKOcDEpNMQPYyi+zRyEcSYeUWY9voV2wJKVZgBEV
+ tmO0uk7IkQo+SJpqbqzuRiUdgf2G7ZKBjun9/888oagfORbJhc7SnbhLKfPSpuQEKP9i
+ XD0hsemcBEUTxPOiyeNwqAcObJwZ5Xe/wNOI90Nvq4Ai18JupsrAOwlfNvVVhvH2oq/S
+ EmPg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=AhwAT6bRmhp0EKumNfH2dznxuMCuij7gmGMOCmP8Ryg=;
+ fh=S5hUlmj9BqKVfguZkvkkD0j/A7iWpZcdEsor6pQMcTU=;
+ b=AQwlYpyWTkHMtm9O5KpJr908NvzIvNxKDKy1uJ4wQcnOapvHFaOkdfalBs+31PKVSf
+ JGLCdWf36RzG97lP4sOq4Ad6n2A3+UIu5OhmycPk9QECu07PtrWF4rWz8igNg/6Zz9Hj
+ p+EzkEbuoqLwD+fdYpgLzJDGKSR/SPJttpJyasaiaSqTtWk9HdOcsfyocCQ/+o8bl8bA
+ 6ZG5jZjAMWaUTZpBfbrAS6/o16EoBTCYfvmdfOIK8AgNKAY2Bf0XOXeBMlR/LgC8JMNk
+ Eob88XjtantDtb4iylRB8bLGXoGibwSOopyZLzSsemRCGtVTTA6FcG9T5gdYa0P1z8lI
+ gfjg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793208393; x=1793813193; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=AhwAT6bRmhp0EKumNfH2dznxuMCuij7gmGMOCmP8Ryg=;
+ b=f4vZsOtkj+XLG5hhggR5M7tJS9ZxvlkhDjY+C1wlyA9tQislwy5zQgy5Ibxb5PNbFy
+ XVF1IXuGxy/J43ILWcl4ibZPorsuxSiMKDBYYKQiIDml33PF25ri73BmuU52oR3SOdCX
+ Ykr64wYSMOzlJnSxdGBbDtBLJ8Zoz+j4vA2Zb+bm07xtlu28bEldJZCPGmo5rdM/XvD2
+ G+8tGdoLkGO5DhtQexkkenm2vdTvDOKAxQ8DaMDTNWv7oo0/2c9sWZeRFfXG5VYbU/9g
+ yYp8nrRAyrQVUSXtSH/n2Hyfh7wmvz78woTkxHD2wnQjebJvr5cULD8xerA+bSRdkLrV
+ j6WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793208393; x=1793813193;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=AhwAT6bRmhp0EKumNfH2dznxuMCuij7gmGMOCmP8Ryg=;
+ b=Ll3U5n27RF03JQdBafvE4RNzfJx5baeoAfooH24ZmcF6NFeGtna3KMfVYuz1ANAAo/
+ N21SR3o3tB3RYf762dA2H50X1snmcRGIz7L2/hrciB6kD5siqTRLBqzQs99OV7y74G+g
+ jSFJEeZH9tFszJ8vN8Mh8EgF5oHK0NOUkmDp874y6nRqomh/XyC0GtsqOIH957k7fevT
+ cIqVGTwaAAvBR420/0/HKItnN3sTFFIvMXF+DvqgEJvDMCLjTVRbYcluWkzWDB4KkY0j
+ 9qBMtBcJXuUBg8TZ6c3SkxuH0ShBouwuyABXI7mD/HzKNQWfobKgjR53nW+7wFO4pH7O
+ /piA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzdTpfEouCoeFS8sVhkO/oaKXHsr6XTZkj/LupluLLvP9ZmumRXUK/jS0TV+1gzdeTGLK9udsHuyQw6@nongnu.org
+X-Gm-Message-State: AFq9FYJUl8rk4ez8awaAianBN5EymQJg0OxEX9tIrLXD2y718jl5+7yV
+ KbPY/HwUGVtoTyYau7IwuwFLgdCkPwWkmA5WF+r5N8O7Joy0F4ReTUEWNamk1HWMRLDc4Zhorxg
+ RKJ5IjvGtn60f1NmzSmDP/0pwQu7pi7GV2w==
+X-Gm-Gg: AYBFou3D450raI6cie0Ui94mjeWP88+XItgtd25kRC/v3548eyomi3dTcbF3VZGNd3V
+ UiIx9zqd+b6n/QPCS6lJ4mbkwcSyEavbiSnr0mO/3jiyujPtbELTIsJ6/hTRm1Hv9wmr71F0jlC
+ x7u2Z1nYoW4tFjmKRWmdWWsoW0iQETP7f9kI4RPaWqjxSI71nTic4gms1nyK0InigTYyLsQ/BcF
+ PStr7+0e8DIbnTKHLAwfb01WbDZerzbryo8149v88pKl/kYObSq6/zdM2pDaNo41O2cIsI5T408
+ 5ybJxoDFlwQzAo4nctsimnvoMXUTT1QmJg9hjltIWniIDLKJgF9fkBeaMKIHSziY/f2lWiKBcc+
+ ETJshgxwvRd5D2jKKH9h8/xyYJ2chtPnSVJmjIyDV6wQ/eJS+W34ZdoTlV+0UfE1ZHeGyWI6G8s
+ pa5M+zojA2ovxxiQXgTimD0aXKx/A=
+X-Received: by 2002:a05:6214:411b:b0:91c:715d:dec4 with SMTP id
+ 6a1803df08f44-91c7cba287amr67524056d6.0.1793208393083; Wed, 28 Oct 2026
+ 10:26:33 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260905122924.53813-1-danielpaziyski@gmail.com>
+ <20261028074508-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20261028074508-mutt-send-email-mst@kernel.org>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+Date: Wed, 28 Oct 2026 18:26:20 +0100
+X-Gm-Features: AclHuK_QJWmnNyLUle9g1JFmLDUNOzbeIOwWXMK1nmedSA2WpdWqOXuVeJzYy5E
+Message-ID: <CANukVxvHLKxTr1KJ5ZWVfo_iOOQL-Adw_GVyaOzNRjeViZRGWA@mail.gmail.com>
+Subject: Re: [PATCH] pcie_sriov: register user created virtual function before
+ realizing it
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-stable@nongnu.org, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,387 +116,264 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Wed, 28 Oct 2026 at 12:51, Michael S. Tsirkin <mst@redhat.com> wrote:
+>
+> On Sat, Sep 05, 2026 at 02:29:24PM +0200, Daniel Paziyski wrote:
+> > There are two ways of creating virtual functions: by using the sriov-pf device
+> > parameter (this way, creating a user created VF and binding it to a PF), or
+> > by using a device specific parameter, where the device manually creates a given
+> > amount of VFs.
+> >
+> > When a PCI device is realized, the device specific realize function is called
+> > first, and then the pcie_sriov_register_device function is called, which checks
+> > whether the device that has been created is a user created VF, and if it is the
+> > case and the device allows this kind of VFs, it inserts it into a hashmap, with
+> > the key being the ID of the PF, and the items being arrays of VFs.
+> >
+> > User created VFs are instantiated independently, and later, when the PF calls
+> > pcie_sriov_pf_init_from_user_created_vfs, it discovers its VFs from the hashmap
+> > mentioned previously, and sets up in their PCIDevice.ex.sriov_pf structure
+> > the pointer to the PF. This means that, during realization, VFs have no access
+> > to the PF.
+> >
+> > Device created VFs are instantiated during or after PF realization using the
+> > pcie_sriov_pf_init function, which sets up for the VFs the pointer to the PF
+> > before their realization, so when they're realized, they can access the PF
+> > with no issues.
+> >
+> > The problem here is that pcie_sriov_register_device is called after the
+> > realization, and not before. This means that when a user created VF is created
+> > for a device which does not support user created VFs, but supports device
+> > created VFs, the realize function will notice that a VF is being created, and
+> > may try to access the PF, causing a null pointer dereference fault.
+> >
+> > Fix this by placing the user created VF check and registering before the
+> > realization. This way, incorrectly created user created VFs will be noticed,
+> > and device creation will be aborted.
+> >
+> > Additionally, remove from the pcie_sriov_register_device function the top
+> > check. It seems that this check is done to error out if the PF failed for some
+> > reason to initialize its list of user created VFs. However, in such situations,
+> > the pcie_sriov_pf_init_from_user_created_vfs function will error during
+> > realization, and it will be caught before the check is done at all. Moreover,
+> > since now pcie_sriov_register_device is called before realization, the check
+> > will always fail for PFs with user created VFs, because the list will be
+> > populated during realization.
+> >
+> > The rest of the function though, correctly errors out if a user created VF
+> > is created for an unsupported device type, if a VF is created for a non-PCIe
+> > device, or if the PF is already instantiated, with now the advantage being
+> > that the check is done before the VF instantiation.
+> >
+> > Moreover, move the unregistering of a device's acpi-index and the removal
+> > of a VF from its PF list from pci_qdev_unrealize to do_pci_unregister_device.
+> > We do the former so that the acpi-index is unclaimed on user created VF
+> > creation error, and the latter to not have extra code on the device specific
+> > realization error path.
+> >
+> > When instantiating a user created VF for a NVME controller:
+> >
+> > Command line:
+> >
+> >     qemu-system-x86_64 -device nvme-subsys,id=subsys0 \
+> >     -device nvme,id=vctrl0,sriov-pf=ctrl0,subsys=subsys0 \
+> >     -device nvme,id=ctrl0,subsys=subsys0,serial=s
+> >
+> > ASAN splat:
+> >
+> > ../hw/nvme/ctrl.c:9613:28: runtime error: member access within null pointer of type 'struct NvmeCtrl'
+> > AddressSanitizer:DEADLYSIGNAL
+> > =================================================================
+> > ==91050==ERROR: AddressSanitizer: SEGV on unknown address 0x000000001cf0 (pc 0x7f79a8573dcd bp 0x7ffd622c1bc0 sp 0x7ffd622c1b68 T0)
+> > ==91050==The signal is caused by a READ memory access.
+> >     #0 0x7f79a8573dcd  (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >     #1 0x5644c6c0266e in nvme_realize ../hw/nvme/ctrl.c:9613
+> >     #2 0x5644c6c67213 in pci_qdev_realize ../hw/pci/pci.c:2316
+> >     #3 0x5644c7a2cfc1 in device_set_realized ../hw/core/qdev.c:514
+> >     #4 0x5644c7a4f767 in property_set_bool ../qom/object.c:2484
+> >     #5 0x5644c7a48d0b in object_property_set ../qom/object.c:1548
+> >     #6 0x5644c7a568a5 in object_property_set_qobject ../qom/qom-qobject.c:28
+> >     #7 0x5644c7a49385 in object_property_set_bool ../qom/object.c:1618
+> >     #8 0x5644c7a2aeb0 in qdev_realize ../hw/core/qdev.c:277
+> >     #9 0x5644c735f29f in qdev_device_add_from_qdict ../system/qdev-monitor.c:740
+> >     #10 0x5644c735f3ab in qdev_device_add ../system/qdev-monitor.c:758
+> >     #11 0x5644c72b1901 in device_init_func ../system/vl.c:1217
+> >     #12 0x5644c829d4a3 in qemu_opts_foreach ../util/qemu-option.c:1148
+> >     #13 0x5644c72bc33e in qemu_create_cli_devices ../system/vl.c:2762
+> >     #14 0x5644c72bcaa1 in qmp_x_exit_preconfig ../system/vl.c:2822
+> >     #15 0x5644c72c3241 in qemu_init ../system/vl.c:3862
+> >     #16 0x5644c801abf8 in main ../system/main.c:71
+> >     #17 0x7f79a8427780  (/usr/lib/libc.so.6+0x27780) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >     #18 0x7f79a84278b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> >     #19 0x5644c5f0a1f4 in _start (BuildId: 8483f952216d9e345c3744300d0aefa38feb50d7)
+> >
+> > ==91050==Register values:
+> > rax = 0x00007e49988640f0  rbx = 0x00007e49988640f0  rcx = 0x00000fc9b3104828  rdx = 0x0000000000000058
+> > rdi = 0x00007e49988640f0  rsi = 0x0000000000001cf0  rbp = 0x00007ffd622c1bc0  rsp = 0x00007ffd622c1b68
+> >  r8 = 0x00000fc9b3104829   r9 = 0x00000fc9b3104828  r10 = 0x00000fc9b310481e  r11 = 0x00000fc9b310481e
+> > r12 = 0x0000000000001cf0  r13 = 0x00000f6f32e78578  r14 = 0x00000000ffffffff  r15 = 0x00007ffd622c1c10
+> > AddressSanitizer can not provide additional info.
+> > SUMMARY: AddressSanitizer: SEGV (/usr/lib/libc.so.6+0x173dcd) (BuildId: 1fa174a830cef40a5b2388add4318ee2795f573e)
+> > ==91050==ABORTING
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 19e55471d4e8 ("pcie_sriov: Allow user to create SR-IOV device")
+> > Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+>
+> /scm/qemu/build/qemu-system-x86_64 -nodefaults -machine q35 -device
+> e1000e,addr=0.0 -device e1000e,addr=0.0
+>
+> crashes with this:
+>
+> - With the patch: SIGSEGV (exit 139), backtrace at hw/pci/pci.c:2334 in pci_qdev_realize.
+> - Without the patch: exit 1: PCI: slot 0 function 0 not available for e1000e, in use by mch,id=(null).
+>
+>
+>
+> > ---
+> >
+> > This patch is the same as
+> > https://lore.kernel.org/qemu-devel/20260901153721.10292-1-danielpaziyski@gmail.com/
+> > , which improves the original patch by releasing the acpi-index on failure, as
+> > pointed out by Michael S. Tsirkin <mst@redhat.com> on the replies of
+> > https://lore.kernel.org/qemu-devel/20260805124519.30054-4-danielpaziyski@gmail.com/
+> > ("[PATCH 3/3] pcie_sriov: register user created virtual function before realizing it")
+> > posted on the series
+> > https://lore.kernel.org/qemu-devel/20260805124519.30054-1-danielpaziyski@gmail.com/
+> > ("[PATCH 0/3] NVMe hotunplug and PCI SR-IOV fixes").
+> >
+> > I am sending this as a patch separate from the series, since imo it was a mistake
+> > for me to mix unrelated patches on the same series.
+> >
+> >  hw/pci/pci.c        | 42 ++++++++++++++++++++++++------------------
+> >  hw/pci/pcie_sriov.c |  6 ------
+> >  2 files changed, 24 insertions(+), 24 deletions(-)
+> >
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index c15f2b9f08..06c432292f 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -1223,6 +1223,19 @@ static void pci_config_free(PCIDevice *pci_dev)
+> >      g_free(pci_dev->used);
+> >  }
+> >
+> > +static void pci_unregister_acpi_index(PCIDevice *pci_dev)
+> > +{
+> > +    if (pci_dev->acpi_index) {
+> > +        GSequence *used_indexes = pci_acpi_index_list();
+> > +
+> > +        g_sequence_remove(g_sequence_lookup(used_indexes,
+> > +                          GINT_TO_POINTER(pci_dev->acpi_index),
+> > +                          g_cmp_uint32, NULL));
+> > +
+> > +        pci_dev->acpi_index = 0;
+> > +    }
+> > +}
+> > +
+> >  static void do_pci_unregister_device(PCIDevice *pci_dev)
+> >  {
+> >      pci_get_bus(pci_dev)->devices[pci_dev->devfn] = NULL;
+> > @@ -1236,6 +1249,9 @@ static void do_pci_unregister_device(PCIDevice *pci_dev)
+> >                                      &pci_dev->bus_master_enable_region);
+> >      }
+> >      address_space_destroy(&pci_dev->bus_master_as);
+> > +
+> > +    pcie_sriov_unregister_device(pci_dev);
+> > +    pci_unregister_acpi_index(pci_dev);
+> >  }
+> >
+> >  /* Extract PCIReqIDCache into BDF format */
+> > @@ -1487,7 +1503,6 @@ static void pci_qdev_unrealize(DeviceState *dev)
+> >
+> >      pci_unregister_io_regions(pci_dev);
+> >      pci_del_option_rom(pci_dev);
+> > -    pcie_sriov_unregister_device(pci_dev);
+> >
+> >      if (pc->exit) {
+> >          pc->exit(pci_dev);
+> > @@ -1497,17 +1512,6 @@ static void pci_qdev_unrealize(DeviceState *dev)
+> >      do_pci_unregister_device(pci_dev);
+> >
+> >      pci_dev->msi_trigger = NULL;
+> > -
+> > -    /*
+> > -     * clean up acpi-index so it could reused by another device
+> > -     */
+> > -    if (pci_dev->acpi_index) {
+> > -        GSequence *used_indexes = pci_acpi_index_list();
+> > -
+> > -        g_sequence_remove(g_sequence_lookup(used_indexes,
+> > -                          GINT_TO_POINTER(pci_dev->acpi_index),
+> > -                          g_cmp_uint32, NULL));
+> > -    }
+> >  }
+> >
+> >  void pci_register_bar(PCIDevice *pci_dev, int region_num,
+> > @@ -2318,8 +2322,15 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> >      pci_dev = do_pci_register_device(pci_dev,
+> >                                       object_get_typename(OBJECT(qdev)),
+> >                                       pci_dev->devfn, errp);
+> > -    if (pci_dev == NULL)
+> > +    if (pci_dev == NULL) {
+> > +        pci_unregister_acpi_index(pci_dev);
+>
+> So this passes NULL to pci_unregister_acpi_index.
+>
 
-Since commit 374f4676788c, the provider's GetSnapshotProperties()
-returns S_OK for any snapshot ID without filling in the properties.  VSS
-consults every registered provider when a requester looks up a snapshot,
-so lookups of snapshots owned by other providers now succeed with an
-all-zero VSS_SNAPSHOT_PROP. Backup software relying on it fails, e.g.
-Veeam: "Original volume name is not specified for the shadow (shadow
-volume id: '{00000000-0000-0000-0000-000000000000}')".
+Ouch! This is embarrassing. Will send a V2 soon.
 
-Simply reverting is not an option: 374f4676788c switched to S_OK because
-returning VSS_E_OBJECT_NOT_FOUND unconditionally broke qemu-ga's own
-snapshot sets. The provider must answer for its own snapshots only. It
-does not create real shadow copies, but it does take part in the
-snapshot set during qemu-ga fsfreeze cycles. Remember the snapshot IDs
-received in BeginPrepareSnapshot(), return their required properties,
-and return VSS_E_OBJECT_NOT_FOUND for anything else. Fill every required
-VSS_SNAPSHOT_PROP member except the exposed name and path, which are
-optional. The snapshot device object is an empty string because the
-host-side snapshot has no guest-visible device.
+Daniel
 
-Entries are dropped when VSS deletes the snapshots or the set, or when
-the set is aborted (AbortSnapshots()).
-
-COM+ may hand out several CQGAVssProvider instances (and serve several
-client processes), so this registry is module-global. It is per-process
-by design and safe because the COM+ application is hosted by a single NT
-service (see CreateServiceForApplication() in install.cpp): COM+ forbids
-pooling and recycling for service-hosted applications, so exactly one
-surrogate process ever hosts the provider.
-
-On the requester side, the snapshot set is created in the persistent
-VSS_CTX_APP_ROLLBACK context, so VSS keeps it after the freeze/thaw
-cycle and may keep querying providers about it. The provider registry
-does not outlive the cycle (requester_thaw() stops the hosting service,
-and the provider process with it), so later queries would get "not
-found" for a set VSS still believes exists. Make requester_thaw() delete
-the snapshot set explicitly at the end of the cycle, whatever its
-outcome (including BackupComplete() failure and aborted snapshot sets).
-A failure to delete is only logged, since the guest filesystems have
-already been thawed.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4584
-Buglink: https://redhat.atlassian.net/browse/RHEL-250662
-Fixes: 374f4676788c ("qga: Fix VSS provider GetSnapshotProperties return value")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20261027160606.2668607-2-marcandre.lureau@redhat.com
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/vss-win32/install.cpp   |   1 +
- qga/vss-win32/provider.cpp  | 200 +++++++++++++++++++++++++++++++++++-
- qga/vss-win32/requester.cpp |  26 +++++
- 3 files changed, 226 insertions(+), 1 deletion(-)
-
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-index 431fcd1cbe..df00588c92 100644
---- a/qga/vss-win32/install.cpp
-+++ b/qga/vss-win32/install.cpp
-@@ -422,6 +422,7 @@ STDAPI COMRegister(void)
-     chk(put_Value(pObj, L"Authentication",                 short(6)));
-     chk(put_Value(pObj, L"AuthenticationCapability",       short(2)));
-     chk(put_Value(pObj, L"ImpersonationLevel",             short(2)));
-+    /* NT-service-hosted apps have ConcurrentApps=1 enforced */
-     chk(pApps->SaveChanges(&n));
- 
-     /* The app should be deleted if something fails after SaveChanges */
-diff --git a/qga/vss-win32/provider.cpp b/qga/vss-win32/provider.cpp
-index 1c8eb236e5..bbc30dd57d 100644
---- a/qga/vss-win32/provider.cpp
-+++ b/qga/vss-win32/provider.cpp
-@@ -11,6 +11,11 @@
-  */
- 
- #include "qemu/osdep.h"
-+
-+#include <vector>
-+#include <algorithm>
-+#include <string>
-+
- #include "vss-common.h"
- #include "vss-debug.h"
- #ifdef HAVE_VSS_SDK
-@@ -138,6 +143,170 @@ STDMETHODIMP CQGAVSSEnumObject::Clone(IVssEnumObject **ppenum)
-     return E_NOTIMPL;
- }
- 
-+static VSS_PWSZ qga_vss_strdup(const WCHAR *value)
-+{
-+    size_t len = (wcslen(value) + 1) * sizeof(WCHAR);
-+    VSS_PWSZ str = (VSS_PWSZ)CoTaskMemAlloc(len);
-+
-+    if (str) {
-+        memcpy(str, value, len);
-+    }
-+    return str;
-+}
-+
-+static VSS_PWSZ qga_vss_strdup(const std::wstring &value)
-+{
-+    return qga_vss_strdup(value.c_str());
-+}
-+
-+static VSS_TIMESTAMP qga_vss_timestamp(void)
-+{
-+    FILETIME ft;
-+    ULARGE_INTEGER value;
-+
-+    GetSystemTimeAsFileTime(&ft);
-+    value.LowPart = ft.dwLowDateTime;
-+    value.HighPart = ft.dwHighDateTime;
-+    return value.QuadPart;
-+}
-+
-+/* Registry of the snapshot IDs for this provider */
-+class QGAVssSnapshotRegistry
-+{
-+public:
-+    bool Track(VSS_ID set_id, VSS_ID snapshot_id,
-+               VSS_PWSZ volume_name, LONG context);
-+    HRESULT GetProperties(VSS_ID snapshot_id, VSS_SNAPSHOT_PROP *prop) const;
-+    LONG RemoveSet(VSS_ID set_id); /* returns how many were removed */
-+    bool Remove(VSS_ID snapshot_id);
-+
-+private:
-+    struct Entry {
-+        VSS_ID set_id;
-+        VSS_ID snapshot_id;
-+        std::wstring volume_name;
-+        LONG context;
-+        VSS_TIMESTAMP timestamp;
-+    };
-+
-+    std::vector<Entry> m_entries;
-+    mutable SRWLOCK m_lock = SRWLOCK_INIT;
-+};
-+
-+static QGAVssSnapshotRegistry qga_vss_registry;
-+
-+bool QGAVssSnapshotRegistry::Track(VSS_ID set_id, VSS_ID snapshot_id,
-+                                   VSS_PWSZ volume_name, LONG context)
-+{
-+    bool ok;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    try {
-+        m_entries.push_back(Entry { set_id, snapshot_id, volume_name,
-+                                    context, qga_vss_timestamp() });
-+        ok = true;
-+    } catch (...) {
-+        ok = false;
-+    }
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return ok;
-+}
-+
-+HRESULT QGAVssSnapshotRegistry::GetProperties(VSS_ID snapshot_id,
-+                                              VSS_SNAPSHOT_PROP *prop) const
-+{
-+    HRESULT hr = S_OK;
-+    VSS_PWSZ device = NULL, original = NULL;
-+    VSS_PWSZ originating = NULL, service = NULL;
-+
-+    AcquireSRWLockShared(&m_lock);
-+    auto it = std::find_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.snapshot_id, snapshot_id);
-+        });
-+    if (it == m_entries.end()) {
-+        hr = VSS_E_OBJECT_NOT_FOUND;
-+        goto out;
-+    }
-+
-+    {
-+        const Entry &e = *it;
-+        WCHAR machine[256] = L"";
-+        DWORD machine_size = ARRAYSIZE(machine);
-+
-+        if (!GetComputerNameExW(ComputerNameDnsFullyQualified, machine,
-+                               &machine_size)) {
-+            *machine = L'\0';
-+        }
-+
-+        device = qga_vss_strdup(L"");
-+        original = qga_vss_strdup(e.volume_name);
-+        originating = qga_vss_strdup(machine);
-+        service = qga_vss_strdup(machine);
-+        if (!device || !original || !originating || !service) {
-+            hr = E_OUTOFMEMORY;
-+            goto out;
-+        }
-+
-+        memset(prop, 0, sizeof(*prop));
-+        prop->m_SnapshotId = e.snapshot_id;
-+        prop->m_SnapshotSetId = e.set_id;
-+        prop->m_lSnapshotsCount = std::count_if(m_entries.begin(),
-+            m_entries.end(), [&](const Entry &o) {
-+                return IsEqualGUID(o.set_id, e.set_id);
-+            });
-+        prop->m_pwszSnapshotDeviceObject = device;
-+        prop->m_pwszOriginalVolumeName = original;
-+        prop->m_pwszOriginatingMachine = originating;
-+        prop->m_pwszServiceMachine = service;
-+        prop->m_ProviderId = g_gProviderId;
-+        prop->m_lSnapshotAttributes = e.context;
-+        prop->m_tsCreationTimestamp = e.timestamp;
-+        prop->m_eStatus = VSS_SS_CREATED;
-+
-+        device = original = originating = service = NULL;
-+    }
-+
-+out:
-+    CoTaskMemFree(device);
-+    CoTaskMemFree(original);
-+    CoTaskMemFree(originating);
-+    CoTaskMemFree(service);
-+    ReleaseSRWLockShared(&m_lock);
-+    return hr;
-+}
-+
-+LONG QGAVssSnapshotRegistry::RemoveSet(VSS_ID set_id)
-+{
-+    LONG removed;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    auto it = std::remove_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.set_id, set_id);
-+        });
-+    removed = m_entries.end() - it;
-+    m_entries.erase(it, m_entries.end());
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return removed;
-+}
-+
-+bool QGAVssSnapshotRegistry::Remove(VSS_ID snapshot_id)
-+{
-+    bool found;
-+
-+    AcquireSRWLockExclusive(&m_lock);
-+    auto it = std::find_if(m_entries.begin(), m_entries.end(),
-+        [&](const Entry &e) {
-+            return IsEqualGUID(e.snapshot_id, snapshot_id);
-+        });
-+    found = it != m_entries.end();
-+    if (found) {
-+        m_entries.erase(it);
-+    }
-+    ReleaseSRWLockExclusive(&m_lock);
-+    return found;
-+}
- 
- /* QGAVssProvider */
- 
-@@ -266,7 +435,7 @@ STDMETHODIMP CQGAVssProvider::SetContext(LONG lContext)
- STDMETHODIMP CQGAVssProvider::GetSnapshotProperties(
-     VSS_ID SnapshotId, VSS_SNAPSHOT_PROP *pProp)
- {
--    return S_OK;
-+    return qga_vss_registry.GetProperties(SnapshotId, pProp);
- }
- 
- STDMETHODIMP CQGAVssProvider::Query(
-@@ -286,6 +455,27 @@ STDMETHODIMP CQGAVssProvider::DeleteSnapshots(
-     VSS_ID SourceObjectId, VSS_OBJECT_TYPE eSourceObjectType,
-     BOOL bForceDelete, LONG *plDeletedSnapshots, VSS_ID *pNondeletedSnapshotID)
- {
-+    LONG deleted = 0;
-+
-+    switch (eSourceObjectType) {
-+    case VSS_OBJECT_SNAPSHOT:
-+        if (qga_vss_registry.Remove(SourceObjectId)) {
-+            deleted = 1;
-+        }
-+        break;
-+    case VSS_OBJECT_SNAPSHOT_SET:
-+        deleted = qga_vss_registry.RemoveSet(SourceObjectId);
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    if (deleted > 0) {
-+        *plDeletedSnapshots = deleted;
-+        *pNondeletedSnapshotID = GUID_NULL;
-+        return S_OK;
-+    }
-+
-     *plDeletedSnapshots = 0;
-     *pNondeletedSnapshotID = SourceObjectId;
-     return S_OK;
-@@ -295,6 +485,13 @@ STDMETHODIMP CQGAVssProvider::BeginPrepareSnapshot(
-     VSS_ID SnapshotSetId, VSS_ID SnapshotId,
-     VSS_PWSZ pwszVolumeName, LONG lNewContext)
- {
-+    if (!pwszVolumeName) {
-+        return E_INVALIDARG;
-+    }
-+    if (!qga_vss_registry.Track(SnapshotSetId, SnapshotId,
-+                                pwszVolumeName, lNewContext)) {
-+        return E_OUTOFMEMORY;
-+    }
-     return S_OK;
- }
- 
-@@ -411,6 +608,7 @@ STDMETHODIMP CQGAVssProvider::PostFinalCommitSnapshots(VSS_ID SnapshotSetId)
- 
- STDMETHODIMP CQGAVssProvider::AbortSnapshots(VSS_ID SnapshotSetId)
- {
-+    qga_vss_registry.RemoveSet(SnapshotSetId);
-     return S_OK;
- }
- 
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 1b0155c691..565eefcfb2 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -52,6 +52,7 @@ static t_VssFreeSnapshotProperties pVssFreeSnapshotProperties;
- static struct QGAVSSContext {
-     IVssBackupComponents *pVssbc;  /* VSS requester interface */
-     IVssAsync *pAsyncSnapshot;     /* async info of VSS snapshot operation */
-+    VSS_ID idSnapshotSet;          /* snapshot set created for this cycle */
-     HANDLE hEventFrozen;           /* notify fs/writer freeze from provider */
-     HANDLE hEventThaw;             /* request provider to thaw */
-     HANDLE hEventTimeout;          /* notify timeout in provider */
-@@ -116,6 +117,7 @@ static void requester_cleanup(void)
-         vss_ctx.pVssbc->Release();
-         vss_ctx.pVssbc = NULL;
-     }
-+    vss_ctx.idSnapshotSet = GUID_NULL;
-     vss_ctx.cFrozenVols = 0;
-     qga_debug_end;
- }
-@@ -446,6 +448,7 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-         err_set(errset, hr, "failed to start snapshot set");
-         goto out;
-     }
-+    vss_ctx.idSnapshotSet = guidSnapshotSet;
- 
-     if (mountpoints) {
-         PWCHAR volume_name_wchar;
-@@ -680,6 +683,29 @@ void requester_thaw(int *num_vols, void *mountpints, ErrorSet *errset)
-         err_set(errset, hr, "failed to do snapshot set");
-     }
- 
-+    /*
-+     * The snapshot set is created in VSS_CTX_APP_ROLLBACK context, so
-+     * it is persistent: if it was committed, VSS keeps it (and keeps
-+     * querying providers about it) until it is explicitly deleted. The
-+     * freeze/thaw cycle is over whatever the outcome above, so delete
-+     * it now. Failure is not fatal here, only log it.
-+     */
-+    {
-+        LONG lDeletedSnapshots = 0;
-+        VSS_ID idNonDeletedSnapshot;
-+        HRESULT hrDelete;
-+
-+        hrDelete = vss_ctx.pVssbc->DeleteSnapshots(vss_ctx.idSnapshotSet,
-+                                                   VSS_OBJECT_SNAPSHOT_SET,
-+                                                   TRUE,
-+                                                   &lDeletedSnapshots,
-+                                                   &idNonDeletedSnapshot);
-+        if (FAILED(hrDelete)) {
-+            qga_debug("failed to delete snapshot set after thaw,"
-+                      " hr=0x%08lx", hrDelete);
-+        }
-+    }
-+
-     if (err_is_set(errset)) {
-         vss_ctx.pVssbc->AbortBackup();
-     }
--- 
-2.54.0 (Apple Git-157)
-
+>
+>
+> >          return;
+> > +    }
+> > +
+> > +    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> > +        do_pci_unregister_device(pci_dev);
+> > +        return;
+> > +    }
+> >
+> >      if (pc->realize) {
+> >          pc->realize(pci_dev, &local_err);
+> > @@ -2330,11 +2341,6 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+> >          }
+> >      }
+> >
+> > -    if (!pcie_sriov_register_device(pci_dev, errp)) {
+> > -        pci_qdev_unrealize(DEVICE(pci_dev));
+> > -        return;
+> > -    }
+> > -
+> >      /*
+> >       * A PCIe Downstream Port that do not have ARI Forwarding enabled must
+> >       * associate only Device 0 with the device attached to the bus
+> > diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> > index c41ac95bee..69930c7b8c 100644
+> > --- a/hw/pci/pcie_sriov.c
+> > +++ b/hw/pci/pcie_sriov.c
+> > @@ -357,12 +357,6 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
+> >
+> >  bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
+> >  {
+> > -    if (!dev->exp.sriov_pf.vf && dev->qdev.id &&
+> > -        pfs && g_hash_table_contains(pfs, dev->qdev.id)) {
+> > -        error_setg(errp, "attaching user-created SR-IOV VF unsupported");
+> > -        return false;
+> > -    }
+> > -
+> >      if (dev->sriov_pf) {
+> >          PCIDevice *pci_pf;
+> >          GPtrArray *pf;
+> > --
+> > 2.55.0
+>
 
