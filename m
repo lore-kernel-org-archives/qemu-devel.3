@@ -1,86 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4556606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C53606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OkIelfBG
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=MGejUptv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM1nU-0004WB-Lh; Wed, 28 Oct 2026 07:26:24 -0400
+	id 1xM1rx-0005Sv-SH; Wed, 28 Oct 2026 07:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM1nS-0004Vv-Gc
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:26:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xM1rT-0005Nz-7Z; Wed, 28 Oct 2026 07:30:34 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM1nP-0003AX-U1
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:26:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793186779;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=q7i8Qu2BoNOSPeWtDoLQBADn0s0VZeapD4dpwrvau+8=;
- b=OkIelfBG+Nx7CUX97eJnj9rXZ0OfZA0lwui6FSMwnejEDN10eO0JLxO9qbVJtL0RHVPoNR
- OtbBFsY7PkfXaKGim7XNHoullglphnpPOJFgxqWHQOngHpS/iSlH7Ew6aivD1kbds6b5T5
- OuLzDqU+kME1g/7yHoKTvbeQnFXp2qk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-znzOgLP_PHaRL1emKlylmQ-1; Wed,
- 28 Oct 2026 07:26:15 -0400
-X-MC-Unique: znzOgLP_PHaRL1emKlylmQ-1
-X-Mimecast-MFC-AGG-ID: znzOgLP_PHaRL1emKlylmQ_1793186774
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62B731955BC6; Wed, 28 Oct 2026 11:26:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A07EA362; Wed, 28 Oct 2026 11:26:12 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5557321E6A04; Wed, 28 Oct 2026 12:26:10 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Timur Maksimov <gessingate@gmail.com>,  qemu-devel@nongnu.org,  Paolo
- Bonzini <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,  Kane Chen
- <kane_chen@aspeedtech.com>,  qemu-arm@nongnu.org,  Fabiano Rosas
- <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,  Corey Minyard
- <cminyard@mvista.com>
-Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
-In-Reply-To: <4b33dabe-5c37-4819-84bb-f6db7331462b@kaod.org>
- (=?utf-8?Q?=22C=C3=A9dric?= Le
- Goater"'s message of "Wed, 28 Oct 2026 12:04:56 +0100")
-References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
- <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
- <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
- <874ie6ku2u.fsf@pond.sub.org>
- <4b33dabe-5c37-4819-84bb-f6db7331462b@kaod.org>
-Date: Wed, 28 Oct 2026 12:26:10 +0100
-Message-ID: <87wlr2jcbx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xM1rQ-0003WK-Gi; Wed, 28 Oct 2026 07:30:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793187024; bh=tNCub5uQRRuJTGutJAedxmxpnH8qHDzbOf7I7VtZ1ec=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=MGejUptvbN2rb2BXZOhjdGE6ksVc43qZvlbIGfSxlfgbqSOoeFw1vUd9MKTbLbCNA
+ qS/TBjfMdSWuX/JyCi3NFPKGk6VCErvOuB/pcJrEAcsBNKD7dcnHJAWHRh/dV/jz4S
+ /U9ez5wrdeyw1dhczCCqFuTMLLlwLjDk5S4FjAtm4PGuH/jIGjeDPVyZkH1CauuX1A
+ vKzfsG8ofJr51VMvzBIBl1ujaVbjoGPuNBs5AlWnvjC+9ILQArOp8+HvCDOo8xc1Uj
+ LW2i+ZUWHz6Bf8d4M2hoTVcV91bR7m22jj10xQrfyYoeMx7zavhTU+vCnxmzvxjwJ/
+ XwZEs34gvtiUA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 231201E1E34;
+ Wed, 28 Oct 2026 14:30:24 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0D4E044D6AC;
+ Wed, 28 Oct 2026 14:30:24 +0300 (MSK)
+Message-ID: <37c0e689-115a-42ba-bcfb-0993e1dbd2cc@tls.msk.ru>
+Date: Wed, 28 Oct 2026 14:30:23 +0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] target/s390x: externalize feat dependency array
+To: Collin Walling <walling@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: Hendrik Brueckner <brueckner@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-stable@nongnu.org
+References: <20261009185559.144750-1-walling@linux.ibm.com>
+ <20261009185559.144750-2-walling@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20261009185559.144750-2-walling@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,29 +72,71 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-C=C3=A9dric Le Goater <clg@kaod.org> writes:
+On 10/9/26 21:55, Collin Walling wrote:
+> Move the feature dependency array (dep[][2]) from cpu_models.c to
+> cpu_features.c, rename the array to s390_feat_deps, and externalize
+> its length.
+> 
+> This will allow the array to be used between both files.
+> 
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+> ---
+>   target/s390x/cpu_features.c | 126 ++++++++++++++++++++++++++++++++++
+>   target/s390x/cpu_features.h |   4 ++
+>   target/s390x/cpu_models.c   | 133 ++----------------------------------
+>   3 files changed, 135 insertions(+), 128 deletions(-)
+> 
+> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+> index c634e741236..20f9947c7be 100644
+> --- a/target/s390x/cpu_features.c
+> +++ b/target/s390x/cpu_features.c
+> @@ -223,6 +223,132 @@ void s390_feat_bitmap_to_ascii(const S390FeatBitmap features, void *opaque,
+>       };
+>   }
+>   
+> +const int s390_feat_deps[][2] = {
+> +    { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
+...
+> +    { S390_FEAT_SIE_ASTFLEIE2, S390_FEAT_STFLE },
+> +};
+>   static void check_consistency(const S390CPUModel *model)
+>   {
+> -    static int dep[][2] = {
+> -        { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
+...
+> -    };
 
->> The commit message tells us this is a "Simple I2C device with QOM
->> properties to access transmit and receive buffers [...] for testing or
->> prototyping."  It doesn't tell us how it could be used, and I can't see
->> any documentation, either.  So let's start right there: please show us
->> how this device could be used.  This should help me understand what the
->> properties are for.  Only then can I advise on proper QOM usage.
->> [...]
->
-> sorry, I should have added the link to the test case where these
-> properties are used :
->
->   https://lore.kernel.org/qemu-devel/20261027-aspeed-i2c-nonpkt-fix-v2-6-=
-07deed1dff60@gmail.com/
+This change moves whole dep[][2] array elsewhere.  When back-porting
+it to the older qemu releases, there's always a merge conflict, because
+some deps were added later and are not present in the earlier releases.
 
-Uh, that's a bit much for me to read.  Timur, please answer my question.
+How these should be hanlded when back-porting?
 
+For example:
+
+  v11.1.0-588-g66deb271528 s390x/diag: Introduce DIAG 320 for Certificate Store Facility
+    introduced { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
+
+  v11.1.0-602-gd6de77dab6e s390x: Guest support for Secure-IPL Facility
+    introduced { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
+
+and so on.
+
+I guess I should take actual dep[][] arrray in check_consistency() from
+the version I'm back-porting things to.
+
+FWIW,
+
+Thanks,
+
+/mjt
 
