@@ -1,35 +1,35 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF11606A329
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6308B606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ZgZxP7xb
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=K5nI6ki4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM39n-0001Gb-Rj; Wed, 28 Oct 2026 08:53:31 -0400
+	id 1xM39h-0001EG-0A; Wed, 28 Oct 2026 08:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xM39m-0001GF-L0
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:30 -0400
+ id 1xM39f-0001DW-75
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:23 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xM39l-0003NZ-2I
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:30 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xM39d-0003MS-O8
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:22 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c09f4.dip0.t-ipconnect.de
  [62.156.9.244])
- by linux.microsoft.com (Postfix) with ESMTPSA id 439CD20B716A;
- Wed, 28 Oct 2026 05:53:13 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 439CD20B716A
+ by linux.microsoft.com (Postfix) with ESMTPSA id 6A8E720B7168;
+ Wed, 28 Oct 2026 05:53:06 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6A8E720B7168
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1793191995;
- bh=LI/6qZq71tt5xJqVIMNONpxnKeLBczut589IV+eWx2o=;
+ s=default; t=1793191988;
+ bh=VHZV6Y1ILH+FySY+U2WVfcUnldyMs55Rrz1vvnu181Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZgZxP7xbj6ARzGOmOvD9nbr2ABosQMukaS2CnvY21o5IDPXeyIoajrVdsp3i5Q2IL
- aqgcJr3xsW//BzwvbCUvToTqTqamr+gXajXETi4TAr8MRpMUBxzjiFRfyq68fJeJ/1
- yXyjjd93TlkJvEZT/pvtjOP6gZgO3+/F8k4WsBG8=
+ b=K5nI6ki418onpaVXqTnx1uT7cc6exj0dWG1zQHfG4CWQ4JOdPmM3nO0bmdA6eIHAf
+ si7qjhFaYdS0rcnxLkdI5kRvSbBvaPhJAlCfpQUFM+MIqpo/N4RbxHs54jlWdjGl+2
+ EiofPuDgL1pKNxsQ/rgM/4prREa115kx18TqLIl8=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
@@ -43,9 +43,9 @@ Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 4/4] accel/mshv: do not coalesce vCPU kicks
-Date: Wed, 28 Oct 2026 13:53:08 +0100
-Message-Id: <20261028125308.147630-5-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 2/4] accel/mshv: stop VM on vCPU execution errors
+Date: Wed, 28 Oct 2026 13:53:06 +0100
+Message-Id: <20261028125308.147630-3-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
 References: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
@@ -78,60 +78,41 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-MSHV today lacks an immediate-exit API. QEMU tehre kicks a vCPU by
-sending SIG_IPI to interrupt an active MSHV_VP_RUN ioctl invocation.
-
-The generic kick path suppresses repeat signals using
-CPUState::thread_kicked, which is cleared when we return to the the
-outer vCPU loop (in mshv_vcpu_thread()). MSHV cannot guarantee that a
-signal will cause sucha  return:  it may be handled between MSHV_VP_RUN
-calls or MSHV_RUN_VP may return an unrelated intercept instead of EINTR.
-
-Hence we install an MSHV-specific kick impl that sends SIG_IPI for every
-requested vCPU kick.
+Currently we abort the process immediately if the ioctl returns an
+error, so the error handling routine outside the loop cannot be reached.
+We also enumerate the enum variants explicitly to make it obvious how
+every exit reason is being handled.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- accel/mshv/mshv-all.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ accel/mshv/mshv-all.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 7289c8d1c2..0f733cac9d 100644
+index d820a67b95..7289c8d1c2 100644
 --- a/accel/mshv/mshv-all.c
 +++ b/accel/mshv/mshv-all.c
-@@ -888,6 +888,24 @@ static void mshv_start_vcpu_thread(CPUState *cpu)
-                        QEMU_THREAD_JOINABLE);
- }
+@@ -778,8 +778,8 @@ static int mshv_cpu_exec(CPUState *cpu)
  
-+static void mshv_kick_vcpu_thread(CPUState *cpu)
-+{
-+    int err;
-+
-+    /* don't kick ourselves, we are already running */
-+    if (qemu_cpu_is_self(cpu)) {
-+        return;
-+    }
-+
-+    err = pthread_kill(cpu->thread->thread, SIG_IPI);
-+    /* in case the vcpu thread has been torn down we don't want to abort */
-+    if (err && err != ESRCH) {
-+        error_report("failed to kick MSHV vCPU %d: %s",
-+                     cpu->cpu_index, strerror(err));
-+        abort();
-+    }
-+}
-+
- static void do_mshv_cpu_synchronize_post_init(CPUState *cpu,
-                                               run_on_cpu_data arg)
- {
-@@ -996,6 +1014,7 @@ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
+         ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
+         if (ret < 0) {
+-            error_report("Failed to run on vcpu %d", cpu->cpu_index);
+-            abort();
++            error_report("Failed to run on vCPU %d", cpu->cpu_index);
++            break;
+         }
  
-     ops->create_vcpu_thread = mshv_start_vcpu_thread;
-+    ops->kick_vcpu_thread = mshv_kick_vcpu_thread;
-     ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
-     ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
-     ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
+         switch (exit_reason) {
+@@ -788,7 +788,8 @@ static int mshv_cpu_exec(CPUState *cpu)
+         case MshvVmExitDebug:
+             ret = EXCP_DEBUG;
+             break;
+-        default:
++        case MshvVmExitSpecial:
++        case MshvVmExitShutdown:
+             ret = EXCP_INTERRUPT;
+             break;
+         }
 -- 
 2.34.1
 
