@@ -1,35 +1,35 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A751B606A324
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF11606A329
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=Ow+t051+
+	dkim=pass (1024-bit key, unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ZgZxP7xb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM39e-0001Ct-Tf; Wed, 28 Oct 2026 08:53:22 -0400
+	id 1xM39n-0001Gb-Rj; Wed, 28 Oct 2026 08:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1xM39c-0001B2-Q5
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:20 -0400
+ id 1xM39m-0001GF-L0
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:30 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1xM39a-0003LE-T9
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:20 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1xM39l-0003NZ-2I
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:53:30 -0400
 Received: from DESKTOP-TUU1E5L.fritz.box (p3e9c09f4.dip0.t-ipconnect.de
  [62.156.9.244])
- by linux.microsoft.com (Postfix) with ESMTPSA id 43B3520B7167;
- Wed, 28 Oct 2026 05:53:03 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 43B3520B7167
+ by linux.microsoft.com (Postfix) with ESMTPSA id 439CD20B716A;
+ Wed, 28 Oct 2026 05:53:13 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 439CD20B716A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1793191985;
- bh=rd9gswxwnBAs0JOrlNb83sBtN0BQsFy29vi+l+Usd08=;
+ s=default; t=1793191995;
+ bh=LI/6qZq71tt5xJqVIMNONpxnKeLBczut589IV+eWx2o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Ow+t051+naD6wd4acZXMjYGgx1JAXVE7ZyJip76LdKkv3Rc7k4UWkFNhhf3nD9zx5
- 0MpkG+xUxTHCXwrrZdwX/piIclC0fdYxFCl17uUASdVR4zuvaGIA64w2AHuaTzrPjB
- quGlOJUHvuCFQJsh1UdevSICrwGYzCMfqu8etj6U=
+ b=ZgZxP7xbj6ARzGOmOvD9nbr2ABosQMukaS2CnvY21o5IDPXeyIoajrVdsp3i5Q2IL
+ aqgcJr3xsW//BzwvbCUvToTqTqamr+gXajXETi4TAr8MRpMUBxzjiFRfyq68fJeJ/1
+ yXyjjd93TlkJvEZT/pvtjOP6gZgO3+/F8k4WsBG8=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Wei Liu <wei.liu@kernel.org>,
@@ -43,9 +43,9 @@ Cc: Wei Liu <wei.liu@kernel.org>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 1/4] target/i386/mshv: fix vCPU run result contract
-Date: Wed, 28 Oct 2026 13:53:05 +0100
-Message-Id: <20261028125308.147630-2-magnuskulke@linux.microsoft.com>
+Subject: [PATCH 4/4] accel/mshv: do not coalesce vCPU kicks
+Date: Wed, 28 Oct 2026 13:53:08 +0100
+Message-Id: <20261028125308.147630-5-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
 References: <20261028125308.147630-1-magnuskulke@linux.microsoft.com>
@@ -78,89 +78,60 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Currently the return semantics of mshv_run_vcpu() are broken. They
-return a mix of int and exit_reason, ignoring the out param *exit.
+MSHV today lacks an immediate-exit API. QEMU tehre kicks a vCPU by
+sending SIG_IPI to interrupt an active MSHV_VP_RUN ioctl invocation.
 
-This change propagates errno's to the call site and sets the *exit value
-accordingly. We also consider the case when an ioctl has return due to a
-qemu-requested interruption of the call, this is a legitimate condition
-that should not produce an error.
+The generic kick path suppresses repeat signals using
+CPUState::thread_kicked, which is cleared when we return to the the
+outer vCPU loop (in mshv_vcpu_thread()). MSHV cannot guarantee that a
+signal will cause sucha  return:  it may be handled between MSHV_VP_RUN
+calls or MSHV_RUN_VP may return an unrelated intercept instead of EINTR.
 
-Fixes: 6dec60528c4 (target/i386/mshv: Implement mshv_vcpu_run())
+Hence we install an MSHV-specific kick impl that sends SIG_IPI for every
+requested vCPU kick.
+
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ accel/mshv/mshv-all.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4df73bb497..e3c155da2e 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -2124,7 +2124,6 @@ static int arch_set_single_step(CPUState *cpu, bool enable)
- int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 7289c8d1c2..0f733cac9d 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -888,6 +888,24 @@ static void mshv_start_vcpu_thread(CPUState *cpu)
+                        QEMU_THREAD_JOINABLE);
+ }
+ 
++static void mshv_kick_vcpu_thread(CPUState *cpu)
++{
++    int err;
++
++    /* don't kick ourselves, we are already running */
++    if (qemu_cpu_is_self(cpu)) {
++        return;
++    }
++
++    err = pthread_kill(cpu->thread->thread, SIG_IPI);
++    /* in case the vcpu thread has been torn down we don't want to abort */
++    if (err && err != ESRCH) {
++        error_report("failed to kick MSHV vCPU %d: %s",
++                     cpu->cpu_index, strerror(err));
++        abort();
++    }
++}
++
+ static void do_mshv_cpu_synchronize_post_init(CPUState *cpu,
+                                               run_on_cpu_data arg)
  {
-     int ret;
--    enum MshvVmExit exit_reason;
-     int cpu_fd = mshv_vcpufd(cpu);
-     bool single_step;
+@@ -996,6 +1014,7 @@ static void mshv_accel_ops_class_init(ObjectClass *oc, const void *data)
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
  
-@@ -2142,7 +2141,12 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
-     ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
-     if (ret < 0) {
--        return MshvVmExitShutdown;
-+        if (errno == EINTR) {
-+            *exit = MshvVmExitSpecial;
-+            return 0;
-+        }
-+        error_report("failed to run vCPU: %s", strerror(errno));
-+        return -errno;
-     }
- 
-     /* disable single stepping by flipping RFLAGS.TF */
-@@ -2154,31 +2158,33 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
- 
-     switch (msg->header.message_type) {
-     case HVMSG_UNRECOVERABLE_EXCEPTION:
--        return MshvVmExitShutdown;
-+        *exit = MshvVmExitShutdown;
-+        return 0;
-     case HVMSG_UNMAPPED_GPA:
-     case HVMSG_GPA_INTERCEPT:
--        ret = handle_mmio(cpu, msg, &exit_reason);
-+        ret = handle_mmio(cpu, msg, exit);
-         if (ret < 0) {
-             error_report("failed to handle mmio");
--            return -1;
-+            return ret;
-         }
--        return exit_reason;
-+        return 0;
-     case HVMSG_X64_IO_PORT_INTERCEPT:
-         ret = handle_pio(cpu, msg);
-         if (ret < 0) {
--            return MshvVmExitSpecial;
-+            error_report("failed to handle PIO");
-+            return ret;
-         }
--        return MshvVmExitIgnore;
-+        *exit = MshvVmExitIgnore;
-+        return 0;
-     case HVMSG_X64_EXCEPTION_INTERCEPT:
-         bql_lock();
--        ret = handle_exception_interrupt(cpu, msg, &exit_reason);
-+        ret = handle_exception_interrupt(cpu, msg, exit);
-         bql_unlock();
-         if (ret < 0) {
-             error_report("failed to handle exception intercept");
-             return -1;
-         }
--        *exit = exit_reason;
--        return exit_reason;
-+        return 0;
-     default:
-         break;
-     }
+     ops->create_vcpu_thread = mshv_start_vcpu_thread;
++    ops->kick_vcpu_thread = mshv_kick_vcpu_thread;
+     ops->cpu_thread_is_idle = mshv_vcpu_thread_is_idle;
+     ops->synchronize_post_init = mshv_cpu_synchronize_post_init;
+     ops->synchronize_post_reset = mshv_cpu_synchronize_post_reset;
 -- 
 2.34.1
 
