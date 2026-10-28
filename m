@@ -1,156 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347A8606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407A1606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=MH7Rx2Tz;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=kTZ9w1mc
+	dkim=pass (2048-bit key, unprotected) header.d=theorem-dev.20260707.gappssmtp.com header.i=@theorem-dev.20260707.gappssmtp.com header.a=rsa-sha256 header.s=20260707 header.b=tksf7pNm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM9oF-0000y7-6G; Wed, 28 Oct 2026 15:59:43 -0400
+	id 1xM9qb-0001d1-1h; Wed, 28 Oct 2026 16:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xM9oB-0000wU-8G
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:59:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xM9o8-0000WA-70
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:59:38 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69SIPjmV848564
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:59:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gMzvjR8asBcUnu8BI/zhu68U5fL5XTnOpItUHF2C3WI=; b=MH7Rx2TzIW1qTzU/
- x4OxMWmJTJTozyiuZ3I5Yf2IsRRkX2XkMZUuJm5unolrdWpUurgaQOP23s2RcHki
- HA+P/GRGX+Kk/dKpD2jhfiIX206UCxB14ZKnpRseRerDaQmkemiA/42Ecc85+Zdb
- U/uAQIVU6mL+I3pP6+/TNezP0sCl/HloNJT88uT0NXvbP4eVeiqWgJ+ZvkKFRxSX
- 5chCYuRD71ZHtVgXrJbBO6j1X9eRvavT/oHdHJZdruhKxh5Ss7kgzS43wGZ5tpKF
- 4cyjAJuWgPm4UBOL5gWADY3Kdu1EYNSKCwhjaudMnbwVUsRdwPE/N7hARyakZ21m
- QI5vrg==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkdsp2ppm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:59:34 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-36a1e2485fdso2937297eec.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 12:59:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xM9qI-0001Yx-QM
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:02:02 -0400
+Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tewaro@theorem.dev>)
+ id 1xM9qG-0000qP-BF
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:01:50 -0400
+Received: by mail-dl1-x122c.google.com with SMTP id
+ a92af1059eb24-18cdcfc05ffso1991060c88.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793217573; x=1793822373; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=gMzvjR8asBcUnu8BI/zhu68U5fL5XTnOpItUHF2C3WI=;
- b=kTZ9w1mcw2d6jFdSgDFzCc2oJ/vmMIGYVAp4xr5kMV7bN5OsmYAq1BMDGta+urNSQo
- 5fwrL3AOIwT36yC13Mc5c+ScYmEpMZo+exu5VykMHjpapNQZ+b9WSyueL3cNmqFD2TeD
- bFwS4OuStctN+xrWVeMdrvWdHWCGueWcTY94aAVlMTBxT56pbR138kd/Nr8TSaiOLVaj
- DEQAab61dLH6xI2UZE+c6uWqpoL9rapzW2wMVYRXU3KlYVe3UjQt6ExeTJ6dVjkT5jhR
- usDdJiigJN9l4GrwT0ykfIa2yj+zTqGFNcfRuINL0GjKriJb+hAaQz8/B5H4loNjXHJl
- LzfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793217573; x=1793822373;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=theorem-dev.20260707.gappssmtp.com; s=20260707; t=1793217705; x=1793822505;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=gMzvjR8asBcUnu8BI/zhu68U5fL5XTnOpItUHF2C3WI=;
- b=yloC+OmmJ/11EjuUqLjmTPdNEsaNANZsuEzR1NSDjst5gqlI2fNo+z/4U9b6sK2yjH
- Dugu0HkivGPycv8syFS0kU+NlWqCUiLX1ez6tStuZ3dj+dynGlmGZvJbHrrALA6eD0fh
- POLmCepeneoJa5q1h/qVnO5gHMu5Cnr3a9JvcL6awXeHW3J6ldnEMHNGkoVTbT9tSrUP
- JB9w+LvRJdUcvcbdiR7GEON4yBivtkCEoknAMtM7ZZi55bqWegmubP4C+ue3NgKE68U4
- V9ggFYyGV9sO4mnFDhRQeuQK6iWGgVm+DK7YatpzMdDXv15VkzItUHgRK0n1dvztWv42
- RKVQ==
-X-Gm-Message-State: AFq9FYL2tKDXRDt4nkUrOfS5LZwTax9SDq/nPnb2GLqPjbqOvq5/E1p6
- fE5Y8Ewm/tZy86c/RXt3BHMa45mjKIlke+uHegjSuP5nuXB81poUCFBI/MQTb6RreECUiFJiBRw
- c/9mFKZ0kdCHDp8Q7gvqBZvgprx3rToDaEv1iXLb/tp8BbXdhCPVBCdHj+Q==
-X-Gm-Gg: AYBFou1Qzlc20h1Os+bTWH/AzZjoUfxJDS6VWcayetGAya2IG0ygPs/kr0ZeaAifL4M
- oZd2kt2qOVhzE9xa4FbqEOf8ZPeOa9kCABUVUCiFnXSn6oYjr939DOyo5TQCgy1VTi0EE41qol2
- tS1iHl5b2/EwRH7+4aX9qxgKgqDrgpZLIYmYQGQfo0RAauY6snY19N4qUkj69MgMl/yi8/ooDXb
- qANjzo7NYfuhIljWTG9lCnaIFV6hDG6cInynG7m1aJongWbWp6bWmQ4LybW2s/tVd9+TdEyI/qM
- +/T2p87v32A4UqKSXH3nMreOJcli97SvtdAMtnh/U4Cy0YIe4YVCDwfmySOQvXNawi6IR2D617A
- e9/tsoNpScr/khmAfiOF8FrhoAtTTzGpThj2VwZ86Kv5a2QcOng4ONg1mrWTKIwD0XbBbahL3eD
- KnTfXTofp4VpEM8U8G/28xH1rO51JxHnwJ2hsopXDn3uY=
-X-Received: by 2002:a05:7300:7a8d:b0:369:d84e:eba5 with SMTP id
- 5a478bee46e88-36a20391cf7mr4150279eec.11.1793217573209; 
- Wed, 28 Oct 2026 12:59:33 -0700 (PDT)
-X-Received: by 2002:a05:7300:7a8d:b0:369:d84e:eba5 with SMTP id
- 5a478bee46e88-36a20391cf7mr4150212eec.11.1793217572225; 
- Wed, 28 Oct 2026 12:59:32 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a23641e78sm9864920eec.0.2026.10.28.12.59.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Oct 2026 12:59:31 -0700 (PDT)
-Message-ID: <f4cc75c8-c947-48dc-a1cd-93b03e3af157@oss.qualcomm.com>
-Date: Wed, 28 Oct 2026 11:59:30 -0800
+ bh=XFu5zti7tL4VDp3C7aZKO6im+z/DBesDhXTe4RzRUoo=;
+ b=tksf7pNmyvb4zdiPDmup44I9tE5kHKRTW6L4qdpF26YnQQ3LcoR870vWfV8O4BFqL/
+ aRM7q6YfJwhI2D9XFVTPGs02bFzkrTcEZmIflY0RJVdh5Qbcg706W/ntfIz1J3ni05yF
+ oryMM+7ln+jbFWsQpPUHWQrA7VIoTZ9au0IMKmU83Zi3U7OgEbOsc5o1GR1dbdL0Y0C2
+ +pAe9TP9TdvQKMu9eDvxmeT2R0OpjA6vWnnp6C3fbqAokfUa21pSCQPbcRvid/K2FhF/
+ xvy5EuMllbq/MTp7Qd8LDIJ+r1PXhM0Jll9YM1Dcm4EVS8T/4+wQ1WnwOzAW96JmWPp9
+ Xj6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793217705; x=1793822505;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=XFu5zti7tL4VDp3C7aZKO6im+z/DBesDhXTe4RzRUoo=;
+ b=ft0CwD2vAnOF76xNlbrAqu71dcFml70/FiYVTJAFZ5/kUsREsvoK2gFb38VuyDuPjE
+ Dnj9RWsLa0YyVX84h8WoptcL0qDQiypM4HjD2iODSW9PKpjcVNxdGFYOa1guyehqkCc5
+ ix5jGeJ/YovBNKvMDP74YOyEicxGbe/2+lXvgMBXqilL/fL9XiqabCO9IdzYRF4kVEyB
+ ooIrp4yFmDX5k1T18iwWbw2hApujqY6HQ/26Yw7LgAPJh8D9USBixXlHhF6AEE/FmMg4
+ 4BBl8w5dQmpp7sQ8uIDTt6jbud64B0k6w13PHNWwanRYWhMjFR5rVRdXFBrrqureT9ag
+ 2LfA==
+X-Gm-Message-State: AFq9FYKcLrYnAMrjkTdb2jBt+K30FP+Mt3qUXtnBax8JPOME7ndpFBk5
+ LRJ4743TMXVuf1Q5kauM0h/QJbG8/CrD7Wo4J84y1/h/BleZ50FbxgnfyXxnlynNeD+eCZrNL2+
+ qUz1x
+X-Gm-Gg: AYBFou3HMk2j+YU139OIQg13kQygDB+Rm7eBi3X53f5mLnqdu00YyN8N6QI1SwPLAKm
+ TkmeuGfdCSMinfVEMvlr50MQQto3yHIcCuQsZrk27VKr33muqnN9tQs9x0JJom5/fhJrpkkOvvj
+ iVWm9w8QaIZEIkugsSnBh2Cn3/bAqudI62+13fN1/FTb5NY5dU5gI9fFXsNUiPrwi6QeFjtP364
+ XXh73/B3+xRriYRw1Ndt8bFVJrU5nxhUQ06+H42xrczdbkpTXiUg1fnIf8IiLqpbRKF169KtmFL
+ s04uSq/2EfOUHgA4VMJW7Qmy/ONDy1Vng1e1T27tDKtlad8PvyuTfmUlkTPjgFS5PsxlmJOmZoo
+ 6YFUmC1FMZBxhEhU4emY/jxoWOaBr28+KNjCYOwFww4SnuFtreZBVnZCOBcyaUPaF3FdYLJkviT
+ Qfo7px9TkJqHRgkVQ6s1Rh6zBVbo8s5d+c2umb6oUldkbStL78d8CfNtGP6f4TsaegRCWsSKzxu
+ Q7o7TTRevCU/RdA9J8UbJ74txXfN8jlVxJnornfk9QUkhpSBK8JPN3SFCCmm7s7hSkWEWZ2XXFv
+ 8amNo0pj4Ud2sD58WK3RlMInbYkXoORdTD/hTRr+1rMiqRjX7pH87iZDLwUXvg==
+X-Received: by 2002:a05:7022:618:b0:19f:527d:96da with SMTP id
+ a92af1059eb24-1a6cdd3e006mr5991045c88.33.1793217704961; 
+ Wed, 28 Oct 2026 13:01:44 -0700 (PDT)
+Received: from tewaros-mbp.localdomain ([209.249.241.138])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1a75f7fb28csm9913160c88.18.2026.10.28.13.01.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Oct 2026 13:01:44 -0700 (PDT)
+From: tewaro <tewaro@theorem.dev>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ disclosures@theorem.dev, tewaro@tewaro.org, tewaro <tewaro@theorem.dev>
+Subject: [PATCH v2 2/2] tests/tcg/riscv64: add test for mret to S-mode with no
+ PMP entry
+Date: Wed, 28 Oct 2026 13:01:23 -0700
+Message-ID: <e6710bc2fb2759f2272ba037a6019374293f7aa9.1793217528.git.tewaro@theorem.dev>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <cover.1793217528.git.tewaro@theorem.dev>
+References: <cover.1793217528.git.tewaro@theorem.dev>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] accel: register CPU parent for each target
-To: luoyonggang@gmail.com
-Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu@processmission.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Philippe Mathieu-Daude <philmd@mailo.com>, Weiwei Li <liwei1518@gmail.com>
-References: <20261028063049.2530-1-luoyonggang@gmail.com>
- <20261028063049.2530-2-luoyonggang@gmail.com>
- <bc5bad6e-fbc2-44e1-a4b4-41bdfd41d33a@oss.qualcomm.com>
- <CAE2XoE_r3gZXzS+TFUd+GRs-8ZtCTajsJK0wJpTHNoXx_Cf3dA@mail.gmail.com>
- <7bd5d577-63db-4356-a19e-4b7e030d58d9@oss.qualcomm.com>
- <CAE2XoE-0zECt6yYURkTbUDBWfG63r_6Dr1oxc5XUcUXr9Wk61g@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <CAE2XoE-0zECt6yYURkTbUDBWfG63r_6Dr1oxc5XUcUXr9Wk61g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: JIFdd4raBP3w4rh2lEANk3z2T8rZmaZ7
-X-Proofpoint-ORIG-GUID: JIFdd4raBP3w4rh2lEANk3z2T8rZmaZ7
-X-Authority-Analysis: v=2.4 cv=Cssq4X4D c=1 sm=1 tr=0 ts=6ae25426 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=hdkVIfFkLkAALpxKQBQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA3OSBTYWx0ZWRfX+GNem8+2/rdv
- rq4S9GiKQH8BUiOMOi7CywTBuOc501X+e4YY2nl+c6gU/pTGf5WlhR/qokokr7/YS13ud0ngIcm
- oY1Zqslk7PnrGOnmIN8aZAWP42aDjqlzVcjgi+ltsY1NvXxVkkiPCBuTaTo8Fe/Pjgw1+nkuTB5
- INOLYRXobueKh/sicUe9mRjsvtcFOrwLTsdU7MMbNocZkFhzDlxaHqRwttCz004Ej7Pe1lL1W6w
- lBG62wRI4KM1To49Yu6xEMhHNWS6ysvMzrTLfulCiuMFpqMB2m62oZUGz/ka+TjIjakEoZ7RjJB
- +BH3APaseuqKcmS01TitoZUsu6f3QNWmOwyvcahf7xEYvZ7PyUrVg8cSSVE/VVvNodj1rJn+4wr
- +Ah37ksNwHGm6VQy/YLN0LClFO+IjA0oyqI9SNo5fIrfcFBKPB6LXBvHfXXUDl6MR7yhFEazJDL
- EvtsFBhG88R9eGXJHtQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA3OSBTYWx0ZWRfX44f8L5foDdxT
- wHRqTeYaK1sx89ROAvRRL9XNygsmiUpqYoog7hhkULYKSX2LdditpkjPcPwXsHq5dLcYr9RBKvv
- KLNsrL2ChPAHc74ANGfRlG/DAlUF+X8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 clxscore=1015
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610280079
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
+ envelope-from=tewaro@theorem.dev; helo=mail-dl1-x122c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,127 +102,150 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/2026 11:18 AM, Yonggang Luo wrote:
-> On Thu, Oct 29, 2026 at 3:06 AM Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>
->> On 10/28/2026 11:02 AM, Yonggang Luo wrote:
->>> On Thu, Oct 29, 2026 at 2:25 AM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>
->>>> On 10/27/2026 10:30 PM, Yonggang Luo wrote:
->>>>> A multi-target binary registers one accel-$cpu_type parent per linked
->>>>> target. accel-target.c is compiled once per target and calls
->>>>> accel_register_cpu_type() with that target's target_arch and
->>>>> CPU_RESOLVING_TYPE. A bool array keyed by SysEmuTarget records which
->>>>> arch already registered. Targets that share one CPU_RESOLVING_TYPE
->>>>> reuse the parent from the earlier arch.
->>>>>
->>>>> test-multi-target checks that each target's accel parent exists after
->>>>> QOM init.
->>>>>
->>>>> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
->>>>> ---
->>>>>  accel/accel-common.c           | 31 ++++++++++++++++++++++++++++---
->>>>>  accel/accel-internal.h         |  2 ++
->>>>>  accel/accel-target.c           | 21 +++++++++++++++++++++
->>>>>  accel/meson.build              |  1 +
->>>>>  tests/unit/test-multi-target.c | 22 ++++++++++++++++++++++
->>>>>  5 files changed, 74 insertions(+), 3 deletions(-)
->>>>>  create mode 100644 accel/accel-target.c
->>>>>
->>>>> diff --git a/accel/accel-common.c b/accel/accel-common.c
->>>>> index 00a400243f0..0d04b8c5749 100644
->>>>> --- a/accel/accel-common.c
->>>>> +++ b/accel/accel-common.c
->>>>> @@ -130,9 +130,9 @@ static const TypeInfo accel_types[] = {
->>>>>
->>>>>  DEFINE_TYPES(accel_types)
->>>>>
->>>>> -static void register_accel_target_type(void)
->>>>> +static void register_accel_target_type(const char *cpu_type)
->>>>>  {
->>>>> -    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
->>>>> +    g_autofree char *name = g_strconcat("accel-", cpu_type, NULL);
->>>>>      const TypeInfo accel_cpu_type = {
->>>>>          .name = name,
->>>>>          .parent = TYPE_OBJECT,
->>>>> @@ -143,4 +143,29 @@ static void register_accel_target_type(void)
->>>>>      type_register_static(&accel_cpu_type);
->>>>>  }
->>>>>
->>>>> -type_init(register_accel_target_type);
->>>>> +void accel_register_cpu_type(SysEmuTarget arch, const char *cpu_type)
->>>>> +{
->>>>> +    static bool accel_cpu_registered[SYS_EMU_TARGET__MAX];
->>>>> +    static const char *accel_cpu_types[SYS_EMU_TARGET__MAX];
->>>>> +
->>>>> +    if (accel_cpu_registered[arch]) {
->>>>> +        return;
->>>>> +    }
->>>>> +
->>>>> +    /*
->>>>> +     * Keyed by target_arch. Targets that share CPU_RESOLVING_TYPE already
->>>>> +     * have a parent from an earlier target_arch.
->>>>> +     */
->>>>> +    for (int i = 0; i < SYS_EMU_TARGET__MAX; i++) {
->>>>> +        if (accel_cpu_registered[i] &&
->>>>> +            g_str_equal(accel_cpu_types[i], cpu_type)) {
->>>>> +            accel_cpu_registered[arch] = true;
->>>>> +            accel_cpu_types[arch] = cpu_type;
->>>>> +            return;
->>>>> +        }
->>>>> +    }
->>>>> +
->>>>> +    accel_cpu_registered[arch] = true;
->>>>> +    accel_cpu_types[arch] = cpu_type;
->>>>> +    register_accel_target_type(cpu_type);
->>>>> +}
->>>>
->>>> No need to do this, just move the whole type registration in
->>>> accel-target.c and type will be present at runtime for all present targets.
->>>
->>> The issue is that CPU_RESOLVING_TYPE is not unique for each
->>> target_arch, you may not realize it.
->>> for example:
->>> arm/aarch64 sharing same
->>> ```
->>> #define TYPE_ARM_CPU "arm-cpu"
->>> #define CPU_RESOLVING_TYPE TYPE_ARM_CPU
->>> ```
->>>
->>
->> Oh right. In this case, the accel-target has to be added once per base
->> architecture (in each target/*/).
-> 
-> So you mean call register_accel_target_type at each target/$base/cpu.c?
-> too much duplicated code scattered.
->
+Regression test for the previous commit. With PMP implemented and no
+entry configured, the test executes mret to S-mode and checks in the
+M-mode trap handler that the fault is an instruction access fault
+taken from S-mode on the mret target, with mcause 1, mepc and mtval
+equal to the target and MPP equal to S. It exits with 0 on success or
+the number of the failed check.
 
-You may need a new file as cpu.c will run for each variant.
+Signed-off-by: tewaro <tewaro@theorem.dev>
+---
+v2: rebased onto current master; the meson.build entry moved to sit
+between the tests added since v1. No other change.
 
->>
->>> And the same name can not be registered twice, that's why this
->>> accel_register_cpu_type should be
->>> in a global shared place. We need accel_cpu_registered/accel_cpu_types
->>> for deduplication.
->>>
->>>>
->>>> Regards,
->>>> Pierrick
->>>
->>>
->>>
->>
-> 
-> 
+ tests/tcg/riscv64/system/meson.build |   1 +
+ tests/tcg/riscv64/test-mret-nopmp.S  | 100 +++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-mret-nopmp.S
+
+diff --git a/tests/tcg/riscv64/system/meson.build b/tests/tcg/riscv64/system/meson.build
+index 3c8b018d9e..f7410c6a65 100644
+--- a/tests/tcg/riscv64/system/meson.build
++++ b/tests/tcg/riscv64/system/meson.build
+@@ -25,6 +25,7 @@ tests += {
+   'test-minstret-ecall.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+   'test-minstret-wfi.S': setup + {'qemu_args': ['-icount', 'shift=1', qemu_args]},
+   'test-misa-w.S': setup + {'qemu_args': ['-cpu', 'rv64,x-misa-w=true,c=true,v=true', qemu_args]},
++  'test-mret-nopmp.S': setup + {'qemu_args': ['-cpu', 'rv64,pmp=true', qemu_args]},
+   'test-zvabd.S': setup + {'qemu_args': ['-cpu', 'rv64,v=true,vlen=256,x-zvabd=true', qemu_args]},
+   'test-vsepc-masking.S': setup + {
+     'test_name': 'test-vsepc-masking-c',
+diff --git a/tests/tcg/riscv64/test-mret-nopmp.S b/tests/tcg/riscv64/test-mret-nopmp.S
+new file mode 100644
+index 0000000000..df20f35bc8
+--- /dev/null
++++ b/tests/tcg/riscv64/test-mret-nopmp.S
+@@ -0,0 +1,100 @@
++/*
++ * Test mret to S-mode when PMP is implemented but no PMP entry is
++ * configured.
++ *
++ * The mret must succeed and the first S-mode fetch must fail [1][2].
++ * The trap is therefore taken from S-mode, with mcause 1, mepc and
++ * mtval equal to the mret target [3][4] and mstatus.MPP equal to S
++ * [5].
++ *
++ * Exit code is 0 on success, otherwise the number of the failed check.
++ *
++ * [1] Privileged ISA v1.12, 3.7.1 "Physical Memory Protection CSRs",
++ *     Priority and Matching Logic
++ * [2] Privileged ISA v1.12, 3.3.2 "Trap-Return Instructions"
++ * [3] Privileged ISA v1.12, 3.1.14 "Machine Exception Program Counter"
++ * [4] Privileged ISA v1.12, 3.1.16 "Machine Trap Value Register"
++ * [5] Privileged ISA v1.12, 3.1.6.1 "Privilege and Global
++ *     Interrupt-Enable Stack in mstatus register"
++ *
++ * Privileged ISA v1.12 (ratified, 2021-12-03):
++ * https://github.com/riscv/riscv-isa-manual/releases/tag/Priv-v1.12
++ * Current source, same wording:
++ * https://github.com/riscv/riscv-isa-manual/blob/4877e41a/src/priv/machine.adoc
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++	.option	norvc
++
++	.text
++	.global _start
++_start:
++	/* Set up machine trap vector, handle everything in M-mode */
++	lla	t0, machine_trap_handler
++	csrw	mtvec, t0
++	csrw	medeleg, zero
++
++	/* mstatus.MPP = S */
++	li	t0, 0x1800
++	csrc	mstatus, t0
++	li	t0, 0x0800
++	csrs	mstatus, t0
++
++	/* Return to S-mode at `target` with no PMP entry configured */
++	lla	t0, target
++	csrw	mepc, t0
++	mret
++
++target:
++	/* Should be unreachable with no PMP */
++	li	a0, 5
++	j	_exit
++
++machine_trap_handler:
++	/* 1: mcause is instruction access fault */
++	li	a0, 1
++	csrr	t0, mcause
++	li	t1, 1
++	bne	t0, t1, _exit
++
++	/* 2: mepc == target, not mret in _start */
++	li	a0, 2
++	csrr	t0, mepc
++	lla	t1, target
++	bne	t0, t1, _exit
++
++	/* 3: mtval == target because aligned instructions */
++	li	a0, 3
++	csrr	t0, mtval
++	bne	t0, t1, _exit
++
++	/* 4: trap from S-mode */
++	li	a0, 4
++	csrr	t0, mstatus
++	srli	t0, t0, 11
++	andi	t0, t0, 3
++	li	t1, 1
++	bne	t0, t1, _exit
++
++	li	a0, 0
++	j	_exit
++
++/* Exit with semihosting */
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence */
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	8
++semiargs:
++	.space	16
+-- 
+2.54.0 (Apple Git-157)
 
 
