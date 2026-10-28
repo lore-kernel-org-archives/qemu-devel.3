@@ -1,45 +1,45 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DEF606B7D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1BF606B7DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Cm/7htwS
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nhJsRRaH
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM8zl-0000N6-Fd; Wed, 28 Oct 2026 15:07:33 -0400
+	id 1xM8zq-0000TP-Pa; Wed, 28 Oct 2026 15:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zR-0008Sg-UA
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:13 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zU-000054-Ru
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:17 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zQ-0004KZ-9i
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:13 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1xM8zT-0004Ky-Fn
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:07:16 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 7CCC16022C;
- Wed, 28 Oct 2026 19:07:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE361F01825;
- Wed, 28 Oct 2026 19:07:09 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id DE4036022B;
+ Wed, 28 Oct 2026 19:07:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591E21F01825;
+ Wed, 28 Oct 2026 19:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1793214431;
- bh=M6khnN4p2EYxNVrIWHFbBZ9IyWZpUi0pUO8tKjJnifI=;
+ s=k20260515; t=1793214434;
+ bh=+gnzdvy0CCdCGT8bLxvlqtrh/ZI6VuK7vXYb6nUotf4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Cm/7htwScuhBa7vWWM6L8Q8tVTEjbym5BeeznMqZEdNc6D4LganVFSStVd46xicaU
- MWKy7iIYv202NVvgwyFtwb26e5ut96AVEE5X9lHE4qtmB7YUxj9Sqak2gaC/xDm80p
- 9GLNOwuqB6cx6wx5unkProrf7E83rbjBwT31JE7h+iLi2uGCHTpt+m/jVgbZwpa91G
- uqCSY4SF0WU/bKMTcTOEzwGmGZ/9HfB0hORSLjI0aNh6QxfDtt1whpQch2NrKDeCZ+
- p+DS0OzkQtlo9COUgZ2eDI7DP+j+rMbiJ4/6fXoSPVX7I8l47VkvzIV4tLNAKEXYK4
- Y3Ozl8NLVI0cA==
+ b=nhJsRRaHg2nbAaoLD7Z8RR2T6kZJ+2YUlB0AjXzoNN2KpEJfIL3Id3nFSldjUgKVg
+ 4Tom8/d0oGp2BSpThCfYQyCdOqr/t7GDgbs1rWT2xbLTA9Qewy/C/g/QTZx1+Rk6Bb
+ qswrBPXpwnHo2pOU4XDZ1UIT4GgR7F+3o8f5gFqtgbbZL9/no4lxVdxE+OPWHS46Bg
+ 8/Vc1ajrizSMjdq0Xmo3h+UgI9QqkNuC3YVxngWaE5lhnM1Tcq/Jw6eDlmFi8Tn/Q9
+ WZBNoDpKww7/WCiRIYT5X4LUNxg0jY+9ixkHpmM1OF4RVZdwEpupjtWzI/LGJ0oT+d
+ MFIEY+fCKCBCQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Keith Monahan <keith@techtravels.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, "Kirill A . Korinsky" <kirill@korins.ky>
-Subject: [PULL v2 4/9] target/hppa: Implement local broadcast I/O space
-Date: Wed, 28 Oct 2026 20:06:56 +0100
-Message-ID: <20261028190701.17272-5-deller@kernel.org>
+Subject: [PULL v2 6/9] artist: Redraw screen on colormap changes
+Date: Wed, 28 Oct 2026 20:06:58 +0100
+Message-ID: <20261028190701.17272-7-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261028190701.17272-1-deller@kernel.org>
 References: <20261028190701.17272-1-deller@kernel.org>
@@ -75,83 +75,32 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Keith Monahan <keith@techtravels.org>
 
-The local broadcast I/O space is used by older operating systems like HP-UX 9.05
-to send an interrupt to all CPUs, or to issue a system reset.
-Wire it up on the emulated 715 machine to allow HP-UX 9.05 to run.
+Invalidate screen on colormap change, as it affects every pixel on screen.
+This fixes VUE GUI on HP-UX 9.05.
 
 Signed-off-by: Keith Monahan <keith@techtravels.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ hw/display/artist.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 96d57b9b0f..8d378385b2 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -573,6 +573,47 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     cpu[0]->env.kernel_entry = kernel_entry;
+diff --git a/hw/display/artist.c b/hw/display/artist.c
+index 288d466ec6..300ad40e72 100644
+--- a/hw/display/artist.c
++++ b/hw/display/artist.c
+@@ -855,6 +855,12 @@ static int vram_bit_write(ARTISTState *s, uint32_t pos, int posy,
+         vram_write_bufidx(s) == ARTIST_BUFFER_CURSOR2) {
+         artist_invalidate_cursor(s);
+     }
++
++    if (vram_write_bufidx(s) == ARTIST_BUFFER_CMAP) {
++        /* A colormap change affects every pixel on screen. */
++        artist_invalidate(s);
++    }
++
+     return pos;
  }
  
-+/*
-+ * Local broadcast I/O space: a write to IO_EIR (offset 0) posts an external
-+ * interrupt on all processors, CMD_RESET (5) written to IO_COMMAND (0x30)
-+ * resets the system.  HP-UX 9 reboots through the latter.
-+ */
-+#define HPPA_BROADCAST_HPA      0xfffc0000
-+#define HPPA_IO_COMMAND         0x30
-+#define HPPA_CMD_RESET          5
-+
-+static uint64_t hppa_broadcast_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void hppa_broadcast_write(void *opaque, hwaddr addr, uint64_t val,
-+                                 unsigned size)
-+{
-+    unsigned int i;
-+
-+    switch (addr) {
-+    case 0:
-+        for (i = 0; i < current_machine->smp.cpus; i++) {
-+            hppa_io_eir_ops.write(cpu[i], 0, val, 4);
-+        }
-+        break;
-+    case HPPA_IO_COMMAND:
-+        if (val == HPPA_CMD_RESET) {
-+            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+        }
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps hppa_broadcast_ops = {
-+    .read = hppa_broadcast_read,
-+    .write = hppa_broadcast_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
- /*
-  * Create HP 715/64 workstation
-  */
-@@ -597,6 +638,14 @@ static void machine_HP_715_init(MachineState *machine)
-     isa_bus = hppa_isa_bus(translate(NULL, IDE_HPA));
-     assert(isa_bus);
- 
-+    /* Local broadcast I/O space */
-+    MemoryRegion *dev_mr_bcast = g_new(MemoryRegion, 1);
-+    memory_region_init_io(dev_mr_bcast, NULL, &hppa_broadcast_ops, NULL,
-+                          "local-broadcast", 0x1000);
-+    memory_region_add_subregion(addr_space,
-+                                translate(NULL, HPPA_BROADCAST_HPA),
-+                                dev_mr_bcast);
-+
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-     hpm->lasi_dev = lasi_dev;
 -- 
 2.54.0
 
