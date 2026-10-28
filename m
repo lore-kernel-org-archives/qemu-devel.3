@@ -1,99 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E44606A330
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC6606A322
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FGT/B7WR;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=fu2XXPJs
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I7R51/Wu;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=nx7ibRgK
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Er-0005K2-Nz; Wed, 28 Oct 2026 13:15:01 -0400
+	id 1xM7Er-0005KJ-Nk; Wed, 28 Oct 2026 13:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EQ-0004wk-SD
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ek-000595-6f
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7EO-0003TW-Cb
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Eg-0003Vj-P8
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207670;
+ s=mimecast20190719; t=1793207690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
- b=FGT/B7WRkjHfFKSIr6GcSev3EAPVEbWJrzUwsrPpi+O6bN8cKduTdTAaShAZVGkALnQMe0
- BnIxSR9RsB3MRx2sTGwpQ3P9SH2CE+3aHs+NNrXaccdY7LNRLvhK3RFAys/6mnRI/vO8wu
- djosnHP/tUHES1ZLlPCq9lR1KIsXAD0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ghv1nTWJY7Dt8HsvO7G1W2t/rsV0hlpxSqspVzCCAn8=;
+ b=I7R51/WuqarrWBYvCaGTGUNFTcCS2d6uhrvSZZN47nQqjWQXYdBeVeDj+lASgG6ID/RkxS
+ Cxn54rjL9++GitR50yn9UvLimZAXiN9aemQxR8OzlnFotIg4JoE02vxHDGy0oaVcWOcGsD
+ DQfjVaRBGcx0gkpoW/ztoThWmITNtSc=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111--_jUiW54NNSWB8Wrk2YOPw-1; Wed, 28 Oct 2026 13:14:27 -0400
-X-MC-Unique: -_jUiW54NNSWB8Wrk2YOPw-1
-X-Mimecast-MFC-AGG-ID: -_jUiW54NNSWB8Wrk2YOPw_1793207666
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48e0fc747a7so999617f8f.1
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:27 -0700 (PDT)
+ us-mta-595-C35oSIwGPtG1ZUbNCu90FQ-1; Wed, 28 Oct 2026 13:14:48 -0400
+X-MC-Unique: C35oSIwGPtG1ZUbNCu90FQ-1
+X-Mimecast-MFC-AGG-ID: C35oSIwGPtG1ZUbNCu90FQ_1793207688
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4a2b0669946so9864625e9.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207666; x=1793812466; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207687; x=1793812487; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
- b=fu2XXPJsFH7GwVmLl7nOZgOC64o1M0j/VngmGcegAGfpSkG544hp/5w4RFQSyLWAQ8
- NHGURX7qkn9SVIqjnLlLecAmGOrhJTlgdNwRJDsPoVLK+dnSeW9ebc2b4tpzjih3elHQ
- MBQOURzz9auYIG78zYNf2W1qakNmY4FAGP52fXXlVrab5yH2xQK8hvzbEzjX58hX81Ee
- HpizURRfmsfoqo68h69KlR/cTFv+BXeXYyLFyO4+4QfKbsAu9alehE70NsW3VwG+u/11
- NVQ7FU9gUGtOSSC4kuUsMlXy5sAcMAIFj4ev5H07M6UlArhZm3UOkeHQz5YAWhyzmU3H
- IpLA==
+ bh=Ghv1nTWJY7Dt8HsvO7G1W2t/rsV0hlpxSqspVzCCAn8=;
+ b=nx7ibRgK3kTr2BF+4U6RLRS0/dlFUve91fmiVqRu7qkzwTbdetVjUGOgVa9WRTFz6A
+ RWn/FCp/ZIPQSTOFWBxsksiHqAU6P4MATGJX6ZCCZQ8O1siqEo+37trmHl4AfaMEvDQ2
+ tB34iWk2rRuSC1Rhm9PS7DX0d4hK5sQEtBGtlR+rAwPoAxkXw8rAX94dWEA4QU7cTdUQ
+ ZH/1s4SobQE13TO4wZAJgR3j8cpAiVq34BE8SbBpJpAvzBwzZO3245hN7UuBuqUIYZsx
+ UYLbffgjh3vxjQPzfqyMtePBkRqaIuFWpWCK5VJBeLfJvnKIkEODxuDWCdFbMYlvJdQy
+ ZShw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207666; x=1793812466;
+ d=1e100.net; s=20260707; t=1793207687; x=1793812487;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=qytJW0iqt2yD4JxOmmbyNbw3L3GEuMcZae8wZpG4qY0=;
- b=wtm267ikl7ZzG4nBCS3iilFgD3r8WogxgvzcTNiUI/fqyJFzWRBKvF+V0U0t5n6Ngb
- uXT9xQ93GMFjkI2UY49ssYG6Kf6EFFNOzsDF83c9XF3pU5iKhYiJhobh/xreRhlNYbjP
- bKAK5kBynpEjfIKmeLBU1z7lhRPkQlBGrRMp9O+6Lq9gjtHP+IBIMPh9IiY8MEqaGKJA
- nqcpLWTJ6viqVootdefZvHbcEFEvdKPOu05d/xHAqeQYl36/+3ufPByZux89jPPRGNYg
- NZ8moLR9C+OqKqbeE6SG2mjmVIjELRRbCdENuOqWTLW00qZW1/aRgMVyq9tbw8pLD8jn
- Se6A==
-X-Gm-Message-State: AFq9FYJYBYWknUBifc5pe3/mz/CVOHGE3gUrjhbbb9/u8+3n5RvUchxj
- 5DFW6Vljqn3AuyLaI12F+Tdz3nqR1n6F36iRKjPeRT4OTMnqE8sk8Gy+xX6KYaYCpNdW7LUeTXJ
- Mdr5305/qTRjtwsDoX4R18jWh8f/GaN82JcPWfcdKpeKtT3fAfFj9/saEFox44WSe74E6Z1cKwX
- 7jQwyzIwYRr6BppP1DGudsEps9zZtbDF/uMg==
-X-Gm-Gg: AYBFou16iSX3oGQ3vgYW/4G1uKFBBTK27J4ENbQUKwKSbXBLOnifPWTurerMJr6hB3d
- K8XN1EWH2o7klRayj8q2tw4sq1kn+UKkDBmYpt8vmSi0B4sE5F0WmN05wma3Qf/NxSkw+3of5KL
- kpQEm4R4WlEknMybhitFVYSoMR1Pxm5xQ+2U/0r4Av2tsIxK9Bz0Sm/pXDg/rSOmz/7IU9NMNio
- klqUmJCPAjlIr+4vtU3EjBdO8/aVh3onrpXgp2yU3EBNpDdtSy/NARlPc7Gmklw3cP4OQCNQFbS
- bvFIF94voK49ykjBMmKlkoXzQZ44CIZHmJOTejsYzKTHGEU8pbSk8VzVX+g4jHKIcMEZrM00wzs
- RILTmLvUEvIxkD/CFogTzJzKQ+zk3zu6/tlyElZQ+
-X-Received: by 2002:a5d:6d22:0:b0:48e:4f1e:5e24 with SMTP id
- ffacd0b85a97d-48e5d59097cmr5485811f8f.14.1793207666103; 
- Wed, 28 Oct 2026 10:14:26 -0700 (PDT)
-X-Received: by 2002:a5d:6d22:0:b0:48e:4f1e:5e24 with SMTP id
- ffacd0b85a97d-48e5d59097cmr5485744f8f.14.1793207665431; 
- Wed, 28 Oct 2026 10:14:25 -0700 (PDT)
+ bh=Ghv1nTWJY7Dt8HsvO7G1W2t/rsV0hlpxSqspVzCCAn8=;
+ b=0uBxG+xxWPTNevrlsAhPWKlNaZwjda9TL1JgSe7KjdWne+O8Foy1J033FV0UTiqhVp
+ Zvfr6zknJM+aWrdBNdw2tdKC5fPvZGlojpTrYt8sXsgBCAgh+bo6b0NL1x4idW1bCDl/
+ weVpPMGUxjjhPU0M3/I9ucMd79nCST4bgcSgjUVRddjxZ7UXjFhdI/hHyL6wphe6+RXO
+ jvouru+eCHZ0Y45qNI3gKdbx/7kYiyaHfN3cgIIbf5DzxZwhH8yOo6QGSYrdZj5ETgKx
+ K2V6CB6mikZU1Imx5TemBNYsZU71AocdZXGizIbs9SgHwqEa8tgnDLXPJuduHq5B60UY
+ dO1g==
+X-Gm-Message-State: AFq9FYK0+/rRcoDqOhUhxFmFGeIfuTaOqbIKoaY73fD7W6HznocjDJcT
+ SdxiGNNPzfrQQDRQS0LDvbuPZp+Td5c/q/8Em/4ePk7ZWlm+Unvr80Flk5QxTrLVavl8Cw5Z2fp
+ ZJwxz1zNWu5ExFEg70o+9tjEuhBfCDv9X6QM1apZ4wkjj9plFYKlzwSY8oc0q4IMdX2UgXRvayj
+ Btcrv77Zl/s58ML4o0KiSueisseWAokRbjDQ==
+X-Gm-Gg: AYBFou3hvmZZ/tc2y76kdFaYTdez1KfSSxwMABsZSwm1zPzl3MUt/sbP+gFpYbMbfNb
+ eUoiW6z2Qw6N4zVVRZWPgvUe2itERat6kuMnC6DSnhQi1gZlf36a39h+muLWCdcdSZUSznoUsCI
+ LjslPNXamLGx8Sw0cRtACPfnJQnJPaFy/jVRDipA4/VT6qNtxZwn44oz36TdJsKUSnI4H/0qlWC
+ FWD/i74R4fMnfq28e9cLvbXhOSVad3aSVghEH2RB9oj7WDhJtsZ9gmidFzFmXIaMTULxUEVlQTl
+ QfFMhEX5XdfQcYPgRlGrlze7htlEv7HrRw8aw6GxR7zWvEckxqUDfGMD2+o2vdi422P6RhtYouj
+ t7RwI3U8DkqouHTvuw30NCDVAyj9m1qozcnMh+7Rs
+X-Received: by 2002:a05:600c:4e03:b0:4a7:7d22:c50c with SMTP id
+ 5b1f17b1804b1-4a963ffcf87mr65724635e9.2.1793207687257; 
+ Wed, 28 Oct 2026 10:14:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e03:b0:4a7:7d22:c50c with SMTP id
+ 5b1f17b1804b1-4a963ffcf87mr65723695e9.2.1793207686635; 
+ Wed, 28 Oct 2026 10:14:46 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd8ddasm32208402f8f.48.2026.10.28.10.14.23
+ 5b1f17b1804b1-4aa7f7f50d3sm9259945e9.8.2026.10.28.10.14.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:14:24 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:14:23 -0400
+ Wed, 28 Oct 2026 10:14:45 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:14:42 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 11/78] tests/unit: add test for duplicate keys in CPR FD table
-Message-ID: <9d3a7aff6fd014b58cbdd4506596c1ee336bb5af.1793207602.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 19/78] vhost-vsock: preserve vhost FD during CPR
+Message-ID: <194a0afc851d071eae6b783d4e344bd6b2da5e63.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -131,138 +128,126 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 
-cpr_save_fd() now refuses to register an FD under a (name, id) key which
-is already taken.  Add a test which checks that 2nd registration fails
-with an error while the 1st one is left intact, that different names
-or ids don't clash, and that the key can be reused once deleted.
+During CPR (checkpoint-restore) migration the guest keeps running on the
+same host, so instead of reopening /dev/vhost-vsock on the destination,
+we should reuse the FD from the source.  The FD is saved in the CPR
+namespace (hash table) with cpr_save_fd() and then reclaimed on the
+target via cpr_find_fd().
 
+Use the (suffixed) device path as the key in CPR hash table.  Device
+path is obtained with qdev_get_dev_path() and is essentially the
+device's address on the underlying bus.  As any vhost-vsock device is
+attached to a virtio bus, whose .get_dev_path() forwards to the proxy
+device, and every proxy bus (PCI, MMIO, CCW) implements it, we should
+always be getting a unique non-empty path with qdev_get_dev_path().
+
+vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
+Deferring the ownership handoff to pre_save/post_load is done in a
+following patch.  Until then CPR remains blocked, so the restore path
+added here is not reachable yet.
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261012-up-vsock-vhost-v5-v16-2-36c38bd15ffc@virtuozzo.com>
+Message-ID: <20261012-up-vsock-vhost-v5-v16-10-36c38bd15ffc@virtuozzo.com>
 ---
- tests/unit/test-cpr.c  | 98 ++++++++++++++++++++++++++++++++++++++++++
- tests/unit/meson.build |  1 +
- 2 files changed, 99 insertions(+)
- create mode 100644 tests/unit/test-cpr.c
+ hw/virtio/vhost-vsock.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/tests/unit/test-cpr.c b/tests/unit/test-cpr.c
-new file mode 100644
-index 0000000000..dfc6b1f2ec
---- /dev/null
-+++ b/tests/unit/test-cpr.c
-@@ -0,0 +1,98 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 3ec20d8760..6e89007b2c 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -69,6 +69,18 @@ static int vhost_vsock_set_running(VirtIODevice *vdev, int start)
+     return 0;
+ }
+ 
 +/*
-+ * Unit tests for the CPR fd table
++ * Any vhost-vsock device is attached to a virtio bus, whose .get_dev_path()
++ * forwards to the proxy device, and every proxy bus (PCI, MMIO, CCW)
++ * implements it.  Thus qdev_get_dev_path() always returns a non-empty string,
++ * which guarantees us a unique CPR name.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "migration/cpr.h"
-+#include "migration/vmstate.h"
-+#include "monitor/monitor.h"
-+#include "hw/vfio/vfio-cpr.h"
-+
-+/* Stubs for the parts of migration/cpr.c that these tests don't exercise */
-+
-+const VMStateDescription vmstate_cpr_vfio_devices = {
-+    .name = "cpr vfio devices",
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
++static char *vhost_vsock_cpr_name(DeviceState *dev)
++{
++    g_autofree char *path = qdev_get_dev_path(dev);
++    g_assert(path && path[0]);
++    return g_strdup_printf("%s/vhost-vsock", path);
++}
+ 
+ static int vhost_vsock_set_status(VirtIODevice *vdev, uint8_t status)
+ {
+@@ -143,6 +155,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
++    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
++    bool cpr_incoming = cpr_is_incoming();
+     int vhostfd;
+     int ret;
+ 
+@@ -170,7 +184,14 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (vsock->conf.vhostfd) {
++    if (cpr_incoming) {
++        /* Reuse the fd handed over from the source QEMU */
++        vhostfd = cpr_find_fd(cpr_name, 0);
++        if (vhostfd < 0) {
++            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
++            goto err_blocker;
++        }
++    } else if (vsock->conf.vhostfd) {
+         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+         if (vhostfd == -1) {
+             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+@@ -186,6 +207,9 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+ 
+     if (!qemu_set_blocking(vhostfd, false, errp)) {
+         close(vhostfd);
++        if (cpr_incoming) {
++            cpr_delete_fd(cpr_name, 0);
++        }
+         goto err_blocker;
+     }
+ 
+@@ -207,11 +231,20 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+         goto err_vhost_dev;
+     }
+ 
++    /* Register the fd for a future CPR after a fully successful realize */
++    if (!cpr_incoming && !cpr_save_fd(cpr_name, 0, vhostfd, errp)) {
++        goto err_vhost_dev;
 +    }
-+};
 +
-+QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+QEMUFile *cpr_exec_output(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+QEMUFile *cpr_exec_input(Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_persist_state(QEMUFile *f, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+bool cpr_exec_has_state(void)
-+{
-+    return false;
-+}
-+
-+void cpr_exec_unpreserve_fds(void)
-+{
-+}
-+
-+int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+static void test_cpr_fd_duplicate(void)
-+{
-+    Error *err = NULL;
-+
-+    g_assert_true(cpr_save_fd("dup", 0, 10, &error_abort));
-+
-+    /* A second registration of the same (name, id) key must be refused */
-+    g_assert_false(cpr_save_fd("dup", 0, 11, &err));
-+    g_assert_nonnull(err);
-+    g_assert_nonnull(strstr(error_get_pretty(err), "already registered"));
-+    error_free(err);
-+
-+    /* and the first registration must be left intact */
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 10);
-+
-+    /* A different id or name is a different key */
-+    g_assert_true(cpr_save_fd("dup", 1, 12, &error_abort));
-+    g_assert_true(cpr_save_fd("other", 0, 13, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 1), ==, 12);
-+    g_assert_cmpint(cpr_find_fd("other", 0), ==, 13);
-+
-+    /* Once deleted, the key can be registered again */
-+    cpr_delete_fd("dup", 0);
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, -1);
-+    g_assert_true(cpr_save_fd("dup", 0, 14, &error_abort));
-+    g_assert_cmpint(cpr_find_fd("dup", 0), ==, 14);
-+
-+    cpr_delete_fd("dup", 0);
-+    cpr_delete_fd("dup", 1);
-+    cpr_delete_fd("other", 0);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_add_func("/cpr/fd/duplicate", test_cpr_fd_duplicate);
-+    return g_test_run();
-+}
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index d17435c187..5d2b413fca 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -140,6 +140,7 @@ if have_system
-     'test-bufferiszero': [],
-     'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
-     'test-vmstate': [migration, io],
-+    'test-cpr': [migration, io, meson.project_source_root() / 'migration/cpr.c'],
-     'test-yank': ['socket-helpers.c', qom, io, chardev],
-     'test-ram-discard-manager': [
-       'test-ram-discard-manager.c',
+     return;
+ 
+ err_vhost_dev:
+     /* vhost_dev_cleanup() closes the vhostfd passed to vhost_dev_init() */
+     vhost_dev_cleanup(&vvc->vhost_dev);
++    if (cpr_incoming) {
++        /* The fd came from cpr_find_fd() and is closed now, drop the entry */
++        cpr_delete_fd(cpr_name, 0);
++    }
+ err_virtio:
+     vhost_vsock_common_unrealize(vdev);
+ err_blocker:
+@@ -223,10 +256,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
++    g_autofree char *cpr_name = vhost_vsock_cpr_name(dev);
+ 
+     /* This will stop vhost backend if appropriate. */
+     vhost_vsock_set_status(vdev, 0);
+ 
++    cpr_delete_fd(cpr_name, 0);
+     migrate_del_blocker(&vsock->migration_blocker);
+     vhost_dev_cleanup(&vvc->vhost_dev);
+     vhost_vsock_common_unrealize(vdev);
 -- 
 MST
 
