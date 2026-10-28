@@ -1,67 +1,66 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85DD606A31A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E930E606A31C
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 14:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=BJZk61ga
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=I80EzzOo
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM4pm-00014R-0O; Wed, 28 Oct 2026 10:40:59 -0400
+	id 1xM4pw-0001BV-Ud; Wed, 28 Oct 2026 10:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM4pS-0000vU-68
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM4pS-0000vZ-Js
  for qemu-devel@nongnu.org; Wed, 28 Oct 2026 10:40:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM4pQ-00058L-FN
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 10:40:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM4pR-00058b-4z
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 10:40:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793198434;
+ s=mimecast20190719; t=1793198436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YEpz2whmTL5yKb0TqnFntBh6OgUNhPMri1a1VPAjiXQ=;
- b=BJZk61gaY3vAo1HYqy/O7uYa/djxKcGxfnuhENxhLL+qqFE7bi3LnEo08EI0zwgu0PP7ml
- ZukKW1kr2JaZKV/bCjSqmEHqHV8FPKphrGpN7yW0deTDQZJfMmxghArVCuIHD8UBkljrLS
- C67Wumi2iHNl0iNwD5DeAMKGus0dbi4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=L7r3pYMNuK9gIARB/b8Klmne4oT9/3HKWNdTb63UUYQ=;
+ b=I80EzzOoTjVt2sOhvKsvOtjeqef1x2FiJ+Hq1a1o59YGHhUDFyQR+ymkVT8YvFiQ5Ssv97
+ paipLG5psCe7n2bvLRVEbwnWkYwo3z8I99bFOZxYnPob5H1Xqp3G9LRTHmv0C+NLNIw5dj
+ 7jn2UJgh09VSHRH3lweytdhJzpUIuV0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-zGYRY4Q_ObSqW-wSm8SUEA-1; Wed,
- 28 Oct 2026 10:40:32 -0400
-X-MC-Unique: zGYRY4Q_ObSqW-wSm8SUEA-1
-X-Mimecast-MFC-AGG-ID: zGYRY4Q_ObSqW-wSm8SUEA_1793198432
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-240-q4FyNl-PO2yvTWIGBPYibw-1; Wed,
+ 28 Oct 2026 10:40:35 -0400
+X-MC-Unique: q4FyNl-PO2yvTWIGBPYibw-1
+X-Mimecast-MFC-AGG-ID: q4FyNl-PO2yvTWIGBPYibw_1793198434
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9827195605E
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:40:31 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6109319560AD
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:40:34 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 912E21956087
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:40:31 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21DFF1956040
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 14:40:34 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DC14021E6880; Wed, 28 Oct 2026 15:40:28 +0100 (CET)
+ id 059FB21E6888; Wed, 28 Oct 2026 15:40:29 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: eblake@redhat.com,
 	berrange@redhat.com
-Subject: [PATCH 2/4] qapi: Fix inaccurate comment on pragma
- member-name-exceptions
-Date: Wed, 28 Oct 2026 15:40:21 +0100
-Message-ID: <20261028144028.771869-3-armbru@redhat.com>
+Subject: [PATCH 4/4] qapi/compat: Fix "only syntactic aspects of QMP" note
+Date: Wed, 28 Oct 2026 15:40:28 +0100
+Message-ID: <20261028144028.771869-10-armbru@redhat.com>
 In-Reply-To: <20261028144028.771869-1-armbru@redhat.com>
 References: <20261028144028.771869-1-armbru@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
@@ -90,24 +89,51 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+"Covers only syntactic aspects of QMP" was initially accurate, but we
+we neglected to update it when we added @insecure-types.  Do that now.
+
+While there, move the limitation notes below the enum value
+descriptions to avoid forward references, and mark up an existing
+reference properly.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/pragma.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qapi/compat.json | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 342cedc42e..73807abc6a 100644
---- a/qapi/pragma.json
-+++ b/qapi/pragma.json
-@@ -80,7 +80,7 @@
-         'XDbgBlockGraph',
-         'YankInstanceType',
-         'blockdev-reopen' ],
--    # Externally visible types whose member names may use uppercase
-+    # Externally visible types whose member names may use uppercase or '_'
-     'member-name-exceptions': [     # visible in:
-         'ACPISlotType',             # query-acpi-ospm-status
-         'AcpiTableOptions',         # -acpitable
+diff --git a/qapi/compat.json b/qapi/compat.json
+index f6bc93904f..d1fb74abf7 100644
+--- a/qapi/compat.json
++++ b/qapi/compat.json
+@@ -57,13 +57,6 @@
+ #
+ #     This is intended for testing users of the management interfaces.
+ #
+-# Limitation: covers only syntactic aspects of QMP, i.e. stuff tagged
+-# with feature 'deprecated' or 'unstable'.  We may want to extend it
+-# to cover semantic aspects and CLI.
+-#
+-# Limitation: deprecated-output policy @hide is not implemented for
+-# enumeration values.  They behave the same as with policy @accept.
+-#
+ # @deprecated-input: how to handle deprecated input (default 'accept')
+ #
+ # @deprecated-output: how to handle deprecated output (default
+@@ -78,6 +71,14 @@
+ # @insecure-types: how to handle types that are not declared secure
+ #     (default 'accept') (since 11.2)
+ #
++# Limitation: @deprecated-input, @deprecated-output, @unstable-input,
++# and @unstable-output cover only syntactic aspects of QMP, i.e. stuff
++# tagged with feature 'deprecated' or 'unstable'.  We may want to
++# extend it to cover semantic aspects and CLI.
++#
++# Limitation: @deprecated-output policy @hide is not implemented for
++# enumeration values.  They behave the same as with policy @accept.
++#
+ # Since: 6.0
+ ##
+ { 'struct': 'CompatPolicy',
 -- 
 2.55.0
 
