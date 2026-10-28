@@ -1,66 +1,87 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C53606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064B5606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=MGejUptv
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XzU/G3BF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM1rx-0005Sv-SH; Wed, 28 Oct 2026 07:31:02 -0400
+	id 1xM1vC-0006BN-7l; Wed, 28 Oct 2026 07:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xM1rT-0005Nz-7Z; Wed, 28 Oct 2026 07:30:34 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
+ id 1xM1vA-0006B4-Bi
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:34:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xM1rQ-0003WK-Gi; Wed, 28 Oct 2026 07:30:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793187024; bh=tNCub5uQRRuJTGutJAedxmxpnH8qHDzbOf7I7VtZ1ec=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=MGejUptvbN2rb2BXZOhjdGE6ksVc43qZvlbIGfSxlfgbqSOoeFw1vUd9MKTbLbCNA
- qS/TBjfMdSWuX/JyCi3NFPKGk6VCErvOuB/pcJrEAcsBNKD7dcnHJAWHRh/dV/jz4S
- /U9ez5wrdeyw1dhczCCqFuTMLLlwLjDk5S4FjAtm4PGuH/jIGjeDPVyZkH1CauuX1A
- vKzfsG8ofJr51VMvzBIBl1ujaVbjoGPuNBs5AlWnvjC+9ILQArOp8+HvCDOo8xc1Uj
- LW2i+ZUWHz6Bf8d4M2hoTVcV91bR7m22jj10xQrfyYoeMx7zavhTU+vCnxmzvxjwJ/
- XwZEs34gvtiUA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 231201E1E34;
- Wed, 28 Oct 2026 14:30:24 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0D4E044D6AC;
- Wed, 28 Oct 2026 14:30:24 +0300 (MSK)
-Message-ID: <37c0e689-115a-42ba-bcfb-0993e1dbd2cc@tls.msk.ru>
-Date: Wed, 28 Oct 2026 14:30:23 +0300
+ (Exim 4.90_1) (envelope-from <ghoffman@redhat.com>)
+ id 1xM1v8-0003nH-Tu
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:34:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793187256;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2ux2XPEVz3m/5A+gQ9z59VW6uobTkNcY59atDctKFLM=;
+ b=XzU/G3BFegfJ3S2uEYqImK/QpOcI+5gP0OT56iamqAvmPSsmGjMaqAXtjezwLZroX410JW
+ uIUPHLCI2Wd7cnGbJXam9ZwGnhhsQcCZmFEuXC0wA/kxCCCeYkDJIPrGO95KWlHss10sbg
+ CgyFQauXBaSaoVcOtsg/gm1stHkophY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-uFzqJYO6OveUirYnuyXACA-1; Wed,
+ 28 Oct 2026 07:34:13 -0400
+X-MC-Unique: uFzqJYO6OveUirYnuyXACA-1
+X-Mimecast-MFC-AGG-ID: uFzqJYO6OveUirYnuyXACA_1793187251
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29B8818052EF; Wed, 28 Oct 2026 11:34:11 +0000 (UTC)
+Received: from nucbdw.ghoffman.csb.home.kraxel.org
+ (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4BCF830002CD; Wed, 28 Oct 2026 11:34:10 +0000 (UTC)
+Received: by nucbdw.ghoffman.csb.home.kraxel.org (Postfix, from userid 11758)
+ id 3F86240D3AE1; Wed, 28 Oct 2026 12:34:08 +0100 (CET)
+Date: Wed, 28 Oct 2026 12:34:07 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: "junjie.cao@linux.dev" <junjie.cao@linux.dev>, 
+ "junjie.cao@intel.com" <junjie.cao@intel.com>,
+ "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Kane Chen <kane_chen@aspeedtech.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>
+Subject: Re: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
+ insertion
+Message-ID: <auHbnlQQ7KZecdYE@nucbdw.ghoffman.csb.home.kraxel.org>
+References: <20261019092448.278079-1-jamin_lin@aspeedtech.com>
+ <20261019092448.278079-2-jamin_lin@aspeedtech.com>
+ <atXr2J5oxn3BBgb-@nucbdw.ghoffman.csb.home.kraxel.org>
+ <TYZPR06MB7373C4DABEAE16D546241853FC602@TYZPR06MB7373.apcprd06.prod.outlook.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/s390x: externalize feat dependency array
-To: Collin Walling <walling@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- qemu-stable@nongnu.org
-References: <20261009185559.144750-1-walling@linux.ibm.com>
- <20261009185559.144750-2-walling@linux.ibm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <20261009185559.144750-2-walling@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <TYZPR06MB7373C4DABEAE16D546241853FC602@TYZPR06MB7373.apcprd06.prod.outlook.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ghoffman@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,71 +93,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/9/26 21:55, Collin Walling wrote:
-> Move the feature dependency array (dep[][2]) from cpu_models.c to
-> cpu_features.c, rename the array to s390_feat_deps, and externalize
-> its length.
+  Hi,
+
+> > Alternative idea would be to add the config option, but only enable the
+> > automatic hub logic for actual usb 1.1 controllers (ohci / uhci), where it does
+> > not matter much for devices whenever they are plugged into an root port or
+> > hub port.
 > 
-> This will allow the array to be used between both files.
+> Sorry for the late reply.
 > 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-> ---
->   target/s390x/cpu_features.c | 126 ++++++++++++++++++++++++++++++++++
->   target/s390x/cpu_features.h |   4 ++
->   target/s390x/cpu_models.c   | 133 ++----------------------------------
->   3 files changed, 135 insertions(+), 128 deletions(-)
+> Yes, it gets in the way. usbredir carries one device per connection, so
+> our bus has one port. Plugging that device in adds a hub, and the device
+> ends up behind it. That is why I added the flag.
 > 
-> diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-> index c634e741236..20f9947c7be 100644
-> --- a/target/s390x/cpu_features.c
-> +++ b/target/s390x/cpu_features.c
-> @@ -223,6 +223,132 @@ void s390_feat_bitmap_to_ascii(const S390FeatBitmap features, void *opaque,
->       };
->   }
->   
-> +const int s390_feat_deps[][2] = {
-> +    { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
-...
-> +    { S390_FEAT_SIE_ASTFLEIE2, S390_FEAT_STFLE },
-> +};
->   static void check_consistency(const S390CPUModel *model)
->   {
-> -    static int dep[][2] = {
-> -        { S390_FEAT_IPTE_RANGE, S390_FEAT_DAT_ENH },
-...
-> -    };
+> If you would rather do one of these, tell me and I will send it:
+> 
+>  1. Remove the automatic hub.
+>  2. Keep it, but only for the USB 1.1 controllers, ohci and uhci.
 
-This change moves whole dep[][2] array elsewhere.  When back-porting
-it to the older qemu releases, there's always a merge conflict, because
-some deps were added later and are not present in the earlier releases.
+I think it is better to keep the logic for now and add an config option
+for it.  This way we can tweak things easily if needed.  Set the option
+to "no automatic hub" for your controller and also ehci + xhci, best as
+separate patch for each controller.
 
-How these should be hanlded when back-porting?
+take care,
+  Gerd
 
-For example:
-
-  v11.1.0-588-g66deb271528 s390x/diag: Introduce DIAG 320 for Certificate Store Facility
-    introduced { S390_FEAT_CERT_STORE, S390_FEAT_EXTENDED_LENGTH_SCCB },
-
-  v11.1.0-602-gd6de77dab6e s390x: Guest support for Secure-IPL Facility
-    introduced { S390_FEAT_SIPL, S390_FEAT_EXTENDED_LENGTH_SCCB },
-
-and so on.
-
-I guess I should take actual dep[][] arrray in check_consistency() from
-the version I'm back-porting things to.
-
-FWIW,
-
-Thanks,
-
-/mjt
 
