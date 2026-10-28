@@ -1,122 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C0C606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1091606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=fccxrBHm
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nvQqRq+w
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM1VF-0007L2-5L; Wed, 28 Oct 2026 07:07:33 -0400
+	id 1xM1Ux-0007H0-7k; Wed, 28 Oct 2026 07:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1VC-0007JV-G5
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:30 -0400
-Received: from 10.mo528.mail-out.ovh.net ([46.105.37.93])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1VA-0001LU-OX
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:30 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4jF4MK18dkz6WdR;
- Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.223])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jF4MJ3YHcz1xq7; Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 75C1A203209; 
- Wed, 28 Oct 2026 11:07:23 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-103G005ea6cb01b-f243-4ff1-8738-d43319637bdf,
- E08929C5676352A1F51837021B168DD299C323AB) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.66.77.115
-Message-ID: <19d8e389-295b-4045-8d91-51a89adc4fa0@kaod.org>
-Date: Wed, 28 Oct 2026 12:07:22 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xM1Ur-0007Gc-AB
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:11 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xM1Uo-0001Km-3Z
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:08 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-84e513874f8so549171a34.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 04:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793185624; x=1793790424; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HJejtr/3eRL/l22r9vqPt9cJkW1gl1rsWFtYSIu2rT0=;
+ b=nvQqRq+wMkW/cjanDurdScA8zdJoWzkJqHVKxWmQ5yWmax1SAknncNe+RqVKK08WvO
+ bk+UR2NlPSbD6WQsDhJ7PVIbCKUEHjlPfwwn9JERrRglxz+OyRoithSuYEgYysNLEKSi
+ lmzq2QHPsuzpNt1VfmCdOH+Onnu9H8q+Ofbkw0sEq3EldWo8FJ5uH//rERRrLWQ8BqHG
+ U2Np7pNBiSKfjXQeTR1YQ53kNZz3vvI7T6Dbec6MKQty+IdPbvRcKlKt/O194b5EhiSp
+ mUU1t5NiZDYNYbWa6MueeX6S8yqNqIN0exSe61o++Sioy6mfmkdofqKQpRzvB67rVTk9
+ JiCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793185624; x=1793790424;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=HJejtr/3eRL/l22r9vqPt9cJkW1gl1rsWFtYSIu2rT0=;
+ b=OZHChT3+Rktpa0AVScxF09vhuNp2uKMdn33FtTT1sQgLdZIFp4caZ1FjbT8SeGujJL
+ V9/kJchHlHL4bj4tpPhYB/jurb7KNvhVUCYCaty3yqjMRb1/H1iQSQoBeDnnbReNwQVO
+ cJg+X92T9ul3hveAT2kDp2Bmr7wceS3nLfGqzJ1uKAjZnXfjTrJsBk01trkpQCENfgaZ
+ M5o+wE6Ink49PW4Vnu6PGX5IsoHZ49yA/K6Ugk+5Ny+RoeyuOKhoGxTkUp0YU1AlqPYN
+ PWyAbRELDf9zwtp7dzt/cGuLS2B+p+ZVnuaDjPFgysntKRDqZWJAg7n7+v26NiRMmvZn
+ soCQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxRYg+4OjVfxIPW5H6eX/Fh0wmFucpV9oMQUccWV5+Sl46PAq4wR24zcilYHv58+5XMY4UpeOkAz6WL@nongnu.org
+X-Gm-Message-State: AFq9FYLhjdgw/nUQ7WN54pwXHZ3vgopIFKYjUsVwkz5L9fIXlehee4UP
+ OPqEhgoHQm054DtSOQy07xK4TfroYOsBOfCuFvXBoF5s49fDqFkWhsC6ydWydfdXo4g=
+X-Gm-Gg: AYBFou2jXLYxpIQHncWVDUGv3ruvk8gxVu7bdywNQd+z1Iw1+pj/0OQ3cYM7QxTSfb9
+ GdEbIw7MnzkqcSkPyCyMJUZC35LULByEGIfK4KXZ0EtxEa8w+sWaXS2id+ouoLg6Nz8Se/qOXOw
+ YYB/fDrCAvBBGD2QZK70O7QZ9SywUEFmnFMdfU5XcuflQhBlsLh4DGiIVbjGdYvsDzpq6fustsk
+ CMS+2hxy3a00mEHyACnmCDiptePfq7FMShVHkwlmlmKg/XHdSklt9M34NZ9Iew7JsSV93OWV20S
+ bbmnDkEUb0/9Cw8JwZMm73yuCcCFh2x8CdUfSQ6VbZvXG/5d+b6K21XdSvyZcNsp4hnln7vy6PI
+ +kTRxl1x5KyTapF4x1+JcbeUgch+eYJVv3s3dotIljS4PfynolZyBfI4KGjbBUPuSjY9wumzR68
+ 9ntI0Jm2NsbdTDD/mkNtrijyJCIOzj21RiiB9ZvyDJynNWJIEBtmknRF7zynJlq/XIZA3ntsCYz
+ EXi07TJ+Dbqw/n+lW5FmehUN03eu/MouR1J1eKHhLI8AelZFyyTCFyCWs66fc0oq3EWTgfi4KY2
+ zpb5/lNr6vKFQtWVMjqB3cb3qo4ou1JPt9epfP5q9QYg
+X-Received: by 2002:a05:6808:14c5:b0:4c3:6c2:4f29 with SMTP id
+ 5614622812f47-563821820e6mr1125075b6e.16.1793185623724; 
+ Wed, 28 Oct 2026 04:07:03 -0700 (PDT)
+Received: from [192.168.129.53] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-4a8b788a09csm2193636fac.10.2026.10.28.04.07.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Oct 2026 04:07:03 -0700 (PDT)
+Message-ID: <36b2a947-c00b-4ea2-805b-d755303f0923@linaro.org>
+Date: Wed, 28 Oct 2026 06:07:01 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] hw/i2c/aspeed: fix non-packet buffer and DMA
- transfer modes
-To: Timur Maksimov <gessingate@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+Subject: Re: [PATCH] target/arm: For linux-user, prioritize PC misalignment
+ fault over insn abort
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20261026140942.2768950-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261026140942.2768950-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 15522782018392927277
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFeEDdIsGv3P/8DCcjk3nyuKD3nQoRph8w1AsCVPIJW1iV26FbgX02jOU80z86J+5DVWiNc2M4gRi33E7z+a7Ec3MKiWJ8bOtVdIF24hTBg9/OzuFsLBKU69sKj5mFtJ9RNfTviXzdQzRADxgt8GxJX95HrfaTOwiRXQnpp8+0gPp2V7olvHgWMIdpOP50aksDiW+KrwV7lotwRDcPCxj2psfCUoXH2djUMNmXmhdR1983C3TbKxWFIfYc2c4Ll7SgrQiyOTBynwN6eJcvH1tdJp92I/G6WlLgFq3u3sSsTmM5HCfXq5p5wbvD/nKsl96T/AOQru/J/jdKSQxlmn+KLdVVhcq0gJPPbMgUQXINRno/C5Oz05o26W4F88kLNx4IfFVm5PnC0OJSiP6U33CkgJVm/QiJUnotGDtVSVBdyoyK/M/Gi99kwolFH1w+uChgQvCIGdVnvTZhzyABZYd/eCf8K6GxIFbRWBvo8zplC/Ck7y6cW+If0m+5atbgK5Gupb5Nle/q4HS+sDZ2AziqkMLJ6EzwvfQfXozQrWoTS1/nJLMY7nD8GhxMhXlx0iYDuF6lNTzen7/2Hp1/9+kCvp4Pu0Yx9SWINcNzil7WnGMaCy0DTJ8HBiEczs4bD9gdMwlrTVt8iP57MSr5p1LvrfZF7p32OICxhpKbvJDV1Nw
-DKIM-Signature: a=rsa-sha256; bh=uuvhANXmJAFkYxiEUb9SCrmLzmmyuRsFO6Ka814qwHg=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1793185645; v=1;
- b=fccxrBHm9wYmxxv3ZtKzNwpT7s4cLPbAkIVPdg7i5L/3wEG0tkqvGcHQpQDtEoZPBUa4nA3h
- SLfi/n4SJLZhR/1lkEqUywRAL/DJWG2wV3VBJx9EWeqp4qQrj/QnrZRgm888lbVxfv4WPzEL1+a
- wfWTFKFm5TVMzMW+8A9BFG4q9RC5bkaIQh2NOCgP2AjmVQFWk8OdqRfQFSDw739mOyXbAGz+eFX
- EX3oUSUpkqSB8LaC+S6bWag572m6goE9ZNeOtA6KNffp+fDJCZhryWoNfKJ7gRXQIX4r3n/tU1J
- sVY0NSL3F4DgTfVfu1HFs1TYxjbXGf6FIz+XzROBeUYLQ==
-Received-SPF: pass client-ip=46.105.37.93; envelope-from=clg@kaod.org;
- helo=10.mo528.mail-out.ovh.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,56 +103,57 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
-	version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Jamin,
-
-Could you please check the Fix changes, patch 2-5 ? They appear to be valid
-additions but I would like a second opinion.
-
-Thanks,
-
-C.
-
-On 10/27/26 20:50, Timur Maksimov wrote:
-> In non-packet mode, buffer and DMA modes are broken
-> in the Aspeed I2C controller,
-> probably because no available driver currently uses them.
-> This patch fixes them, so byte, buffer, and DMA transfer modes
-> now work correctly for both register modes, old and new ones.
-> Tests are provided to prevent possible regressions.
+On 10/26/26 09:09, Peter Maydell wrote:
+> The Arm architecture requires that for PC alignment fault exceptions
+> take precedence over Instruction Abort exceptions.  We get this wrong
+> for linux-user mode, because QEMU detects the lack of any backing
+> memory via probe_access_internal(), and calls
+> arm_cpu_record_sigsegv(), which always reports either a Translation
+> or Permission fault:
 > 
-> Signed-off-by: Timur Maksimov <gessingate@gmail.com>
+> #3  0x0000649548976b94 in arm_deliver_fault (cpu=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, mmu_idx=0, fi=0x7fff87e4c940)
+>      at ../../target/arm/tcg/tlb_helper.c:274
+> #4  0x0000649548976d69 in arm_cpu_record_sigsegv (cs=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, maperr=true, ra=0)
+>      at ../../target/arm/tcg/tlb_helper.c:421
+> #5  0x0000649548c97650 in cpu_loop_exit_sigsegv (cpu=0x649555ce5920, addr=1, access_type=MMU_INST_FETCH, maperr=true, ra=0)
+>      at ../../linux-user/signal.c:761
+> #6  0x00006495488f8235 in probe_access_internal (env=0x649555ce99a0, addr=1, fault_size=1, access_type=MMU_INST_FETCH, nonfault=false, ra=0)
+>      at ../../accel/tcg/user-exec.c:790
+> #7  0x00006495488f850d in get_page_addr_code_hostp (env=0x649555ce99a0, addr=1, hostp=0x7fff87e4ca70) at ../../accel/tcg/user-exec.c:828
+> #8  0x00006495488e5433 in get_page_addr_code (env=0x649555ce99a0, addr=1) at ../../accel/tcg/internal-common.h:116
+> #9  0x00006495488e56bd in tb_htable_lookup (cpu=0x649555ce5920, s=...) at ../../accel/tcg/cpu-exec.c:206
+> #10 0x00006495488e58c8 in tb_lookup (cpu=0x649555ce5920, s=...) at ../../accel/tcg/cpu-exec.c:251
+> #11 0x00006495488e5d2a in helper_lookup_tb_ptr (env=0x649555ce99a0) at ../../accel/tcg/cpu-exec.c:398
+> #12 0x00007d973c000270 in code_gen_buffer ()
+> 
+> Make arm_cpu_record_sigsegv() report a PC alignment fault for
+> MMU_INST_FETCH accesses to non-4-aligned addresses for A64 and A32,
+> matching the logic used in arm_cpu_tlb_fill_align() for system
+> emulation.  (Unaligned PC faults can't happen for Thumb.) This is
+> then passed to the guest binary as SIGBUS rather than SIGSEGV.
+> 
+> (The Fixes tag is for the commit that introduced this function, but
+> the bug was also present in the previous implementation.  It's an odd
+> corner case so it's not worth the effort to try to backport the fix
+> beyond that.)
+> 
+> Cc:qemu-stable@nongnu.org
+> Fixes: 9b12b6b44250c2 ("target/arm: Implement arm_cpu_record_sigsegv")
+> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/4699
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> Changes in v2:
-> - Fix commits description format. Some of them are reordered and clarified.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20261027-aspeed-i2c-nonpkt-fix-v1-0-076cdde514f8@gmail.com
-> 
-> ---
-> Timur Maksimov (6):
->        hw/i2c: add dummy device
->        hw/i2c/aspeed: fix BUSY status reading in new register mode
->        hw/i2c/aspeed: fix I2CD_CMD register reading
->        hw/i2c/aspeed: fix buffer transfer in non-packet mode
->        hw/i2c/aspeed: fix DMA transfer in non-packet mode
->        tests/qtest: Add cases for 32-bit Aspeed I2C controllers
-> 
->   hw/i2c/Kconfig                |   5 +
->   hw/i2c/aspeed_i2c.c           |  23 +-
->   hw/i2c/i2c-dummy-device.c     | 168 +++++++++
->   hw/i2c/meson.build            |   3 +-
->   tests/qtest/aspeed_i2c-test.c | 836 ++++++++++++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build       |   2 +
->   6 files changed, 1029 insertions(+), 8 deletions(-)
-> ---
-> base-commit: 9b77fa7a4fe86c80d1ff526769c61ada7d28666a
-> change-id: 20261025-aspeed-i2c-nonpkt-fix-89b852b5c84a
-> 
+>   target/arm/tcg/tlb_helper.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
