@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9B7606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF70606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dbn+LqnY;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=PBb3lk6p
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jfnwEtKT;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=IHkGddQq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM9IQ-0001ie-CF; Wed, 28 Oct 2026 15:26:50 -0400
+	id 1xM9IZ-0002Fz-0F; Wed, 28 Oct 2026 15:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xM9IL-0001NR-Jy
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:26:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xM9IV-00024S-Hu
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:26:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xM9IJ-0006Ed-It
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:26:45 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1xM9IQ-0006F5-I0
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:26:55 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69SIPj7E848557
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:26:41 GMT
+ 69SIPKrC1942049
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:26:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lBxgvbqkMWRbINx8X6/EZ+crGSfhZM2IgVCuySVP75I=; b=dbn+LqnY42PhLCJd
- dVYzrP78x9IAu0ezLz+XM2d1BhxAGhHNvrkbQP8c2R46qSEjNJimD4/VhM1L6ZYz
- TODoqquqBPuWFgQ52u/8zQLvqXbw+VFQ1y+H4ZxpXZsQKmUXHbBzYgjCuwY6SCnJ
- tTdvXOm7ckXtS+3Kwb+8vJI3/d25XoYaA6BqFBYdiysJ0/tqIrI4IUv3QHKmy4Bq
- 9jhpkkJIxC6bmZlUuh04ZrNA6eiF7sePs/NfF/SKgmEW8MaT5IG+VYRGpvNuSPEs
- nuWpjyMMsaNHFsY2XbYUNKQeeDfef2WW6mliH86z90vH+0r6pEuqxLqhyNoqFIOz
- Af8X8g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkdsp2jxj-1
+ 3OXiIwz3EsOLHTYtcrWZ7oYehUBMFD4b4I27qAIy7ec=; b=jfnwEtKTxmStj1Yp
+ WtdvDh1vU5omJpZMQQrSAMqKhXnDtmLvrIUCBVlVUp7lP8+dbxY0a36hHME7vBQC
+ RXJ38noUggpw8dmrdRNFqt2rsHb9myLB7tTEaffpj/dbkYiMYNvD/v9nuaD/YgYu
+ DLcQ6NXxF4VEL0qarfH+ABStq/qG8SmvHV1uyZtYj8bQZ6ezQ/d1hNXUcWWpFk5Z
+ +JZiTn+PzoBGd3Ne8muwAHEvUh9VBQ/NSYk2wd3TqKawquiV3/sYDfrfhciXjI3e
+ Xh2MelWAdYVgQCyIlgpB5GgWxCE7bVqcPVhwsoz/spmxtP+hW3gmH77WT0Pbm0/a
+ XpbkAA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkbhwb5hp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:26:41 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93f6f4fe531so235974685a.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 12:26:40 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 19:26:48 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93cb6391e89so272657785a.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 12:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793215600; x=1793820400; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793215608; x=1793820408; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=lBxgvbqkMWRbINx8X6/EZ+crGSfhZM2IgVCuySVP75I=;
- b=PBb3lk6p0lwTq/TRLrFd2EcedYOJEOeIb01wMJTclZTba5pbYoEqAv/BuEiTj/k2ht
- 7Zr8+Ygk86IYkIJG0elmcGZUt2j7/QmkSTXjTp/c+wy5eqqbOAE0rFyxqeUFpwFq+1ey
- CtUiQxs6KvGm6+YjDpapBzqrv/emOOXuUBkCb/aimwJNlhQFw1viSJqeBsQUthKv5QYC
- ZaN8QGCDJw6hhr2SVBi6ObCFqyER/O+ms/TPRD0YR+mJQMsqVZCOvETClRpXZdZ7h0E6
- 44SIpIPtGVFNhCxjVj3SQV49GU3eKRPK0aHDBhvF5if7OZSGA9cx8mLAYQdSGYLkLWS7
- J+Zw==
+ bh=3OXiIwz3EsOLHTYtcrWZ7oYehUBMFD4b4I27qAIy7ec=;
+ b=IHkGddQqTQ1WJyAQDpbo2bm3Iido0s4PshBy1rG7oG4EdD8dG7biEkzrOZI54whIPD
+ s00csmqc4FopoaVBrWbfOfDxretY+3NEetnwsJHfgR7xYxCgx4obFCoJxulX0C3swnFr
+ dRuWPaFUv/OyXAYBnGrjp8Rn+mSabQHcUz1RPVWHRsR9mYtw8fgQGDT9eAv20Fma6rRX
+ pYoAzkMiQjjpoG1d+hxF+Qh0l+otBi1piM5EG8W8W0TGPacKFTA8m+NelzkofoGm4sn0
+ U8JxUOPFzWRJ+VbXoPuo6j0+CPaA2V46PORHd7PLuyk+8S9v3/0vBJf5mKyzn+oAns1H
+ +Zkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793215600; x=1793820400;
+ d=1e100.net; s=20260707; t=1793215608; x=1793820408;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=lBxgvbqkMWRbINx8X6/EZ+crGSfhZM2IgVCuySVP75I=;
- b=NC3LL5rAKMLvB422PoVnxSD9yDhogAtW/Eipf65KudJPGdcx+YreVGjuxnTrz6rCU8
- tyDBV93Y3Y/te9gbAGZdDwHt/1Bgyoh+NfnxerUxfLLRbBV8eld3Cdm8me7u1+52pFJv
- epyKU9Jn6UEuf8Wayw4olB3DVKM0rP7pVTJj7boBFB81egr9xnzFKLKh6LooIfHRe9Ji
- RhcUl6KwjCdltlepp1Q7KHC6P3G4y398H8UjmEHCFDeCGiZQVwrhLfG4OI5dm6MkyjxJ
- z49oRPySIWk724NGyZSycbvxS7HbOXr0p+cxDCh9l/OjKkuw1e8101wWR9PksOMgrWa9
- dCEg==
-X-Gm-Message-State: AFq9FYKj1HtmgXAu363tqw8fsIxaCxmzP3e+1LPrNR5NslpzkMP4AXz5
- 9YInrwiHBzlDQtsJdrzyTIkcghOp9aODTQpoMGwtgrbEyMHUwYwGUieNhjWCkUS7YSTS57DQ+tF
- 6cz/H3AEEdfk9adZENMcZ8WITpvzTbBI/r+xejj5gaIXuhpdJlu0P/M5xUogM77DMzPfF
-X-Gm-Gg: AYBFou3Y28CpyQCbw57EOIz92d6UM/dnR9ok4ETTeh4/f9NaJeC03zhxXLGSVdWKKae
- HnWcWT5v/EfNjoRbf/AAdGI55w4VeNJQscI+iVPynsGKMSlmWHOUVt2nmWCzD42cmL9Em5wB4sX
- tB4a3IbfWswOu0n/b5DdYFzndIzQSDONdp94jDeBNFyjidOpHY7Kz69Jaedob+HnfkU0Orn+suY
- 2qSom35bv81bqTpCz5H0F5RlxyR4i0INew2r7PwSPZZw1zTYNds6PuLHqrJOLK3oiKYtYwtZ8W9
- 7d6ByysIXvg0RXg64A4uGz1nQvXIwhoI/aBAJfHTLGJ7n3r7Mop23CpfbZb76eUOi5ErFBuIOyo
- YbKtKmcGhs1c/wxzoNAMVdH9/scbScnktwdJAsoclytLWiX9qFCDFYfeubDgy3/XMNX72i/9k7g
- GITOH0wtjF+u3gdChtXJF52SkiGZVvpg==
-X-Received: by 2002:a05:620a:4509:b0:93f:c0d:40a4 with SMTP id
- af79cd13be357-94408d8ae61mr478526585a.75.1793215600222; 
- Wed, 28 Oct 2026 12:26:40 -0700 (PDT)
-X-Received: by 2002:a05:620a:4509:b0:93f:c0d:40a4 with SMTP id
- af79cd13be357-94408d8ae61mr478522485a.75.1793215599593; 
- Wed, 28 Oct 2026 12:26:39 -0700 (PDT)
+ bh=3OXiIwz3EsOLHTYtcrWZ7oYehUBMFD4b4I27qAIy7ec=;
+ b=w4t3/4J3IVcWPjf8enfmQixbJ/auXzQEgcqr3TBrdE2yd9ejnznD/8I9rdyiXvrYkM
+ 71RgZjlD+8wOhbhsOqCpGw1S7O+fpQV3doyC88YTSuRH8fbXXPEZ/gk0KUsdndXjID7E
+ CwbroiOl70QJCe8SgGllw1xtprZUiFOpbQhm+DD0hnZ4+Li9kE49MEjKsiMMwwWipwbe
+ PBWeR0jxwLZvIA+5PwA7XLAPJYnxmRU0bgDiFtUIF7K8bLflPzgsKSrxN3RP/Y79oAYk
+ RcM8Oju6vCvYEj29J5if3gTRaSM4FiAPmZ/AgEBibR5XgechRM2W0f70CPgujwZSYh4E
+ z+FQ==
+X-Gm-Message-State: AFq9FYI13xnRu949YErY4OVWmD/iBQtHPnY/rTiRNjSezffm4R174Z5b
+ qAygGLGfwIQoX+6Hg+vccwlFehCkTnQH6mDtyYhsr87ydYM665CCOPFOo3IHOsqvfmacvOiRVG9
+ tonEvccOVG8MRbjQxHN4ElqjISwzZ2ZZSMbxRRkBnxxBvtCzPQ0mzvGlkNPgor+UD64j4
+X-Gm-Gg: AYBFou3fpxXeAjMkP3LdxSh+ECNWywWPTSiaGJI2Ncmo2/51H2qgSix1WUadZSm9L7q
+ 4qyXNqzU8Huq6KT5K3whoUtX2RCt5OF4A/nTf9sxLbltciz/ck30YCBoxlUS7OfzIzW2dnVZjxa
+ vGPRo8l9kTyQZQBlhgvHnc1dVVoyp0JOyj6DPj15ZAkFstzrxb91/uDi27dVqF8L2g42xkWPosh
+ epEWIainwyeO1mGqtKTaRuK8Nis+NY1Z3y7wKn7GTBB1bqlzpMlOkDtXkW7sN+JBlbjmypPhbPu
+ qMPNwDmDUr7aiDQGOgmjFxQkiMBr8DwvT1Eo7eam/hMjuBv0ElMeaBC6i1Rfi0d0KgqF4ZS4vcc
+ 61LdYmEIX4q5x1nBr17E0tBRjAAkWqKweawlgtUDKAQh69aaQpfBdcN5NCeLbeZa5Hcuaj/t37Y
+ VVblqGHYrLoRqblSRBn1DJpSB0Ome0hQ==
+X-Received: by 2002:a05:620a:7108:b0:93e:c12c:43ff with SMTP id
+ af79cd13be357-94408d509f3mr488631685a.76.1793215607682; 
+ Wed, 28 Oct 2026 12:26:47 -0700 (PDT)
+X-Received: by 2002:a05:620a:7108:b0:93e:c12c:43ff with SMTP id
+ af79cd13be357-94408d509f3mr488625785a.76.1793215606965; 
+ Wed, 28 Oct 2026 12:26:46 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a96a8f28a1sm40606595e9.4.2026.10.28.12.26.38
+ 5b1f17b1804b1-4a93103e72dsm49386405e9.2.2026.10.28.12.26.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 28 Oct 2026 12:26:38 -0700 (PDT)
+ Wed, 28 Oct 2026 12:26:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
@@ -97,12 +97,11 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Fredrik Noring <noring@nocrew.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 8/9] target/mips: Expose R5900 registers to gdb
-Date: Wed, 28 Oct 2026 20:25:36 +0100
-Message-ID: <20261028192538.31600-9-philmd@oss.qualcomm.com>
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH v2 9/9] tests/tcg/mips64el: Add a TX79 instruction test in
+ system mode
+Date: Wed, 28 Oct 2026 20:25:37 +0100
+Message-ID: <20261028192538.31600-10-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261028192538.31600-1-philmd@oss.qualcomm.com>
 References: <20261028192538.31600-1-philmd@oss.qualcomm.com>
@@ -110,37 +109,35 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: dkstztW1BMuS51Ba4yDXQ_IeDvea1Adh
-X-Proofpoint-ORIG-GUID: dkstztW1BMuS51Ba4yDXQ_IeDvea1Adh
-X-Authority-Analysis: v=2.4 cv=Cssq4X4D c=1 sm=1 tr=0 ts=6ae24c71 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-GUID: 1J9s4qcK7AXIhXIRxgMkMy89xlhkZqtx
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA3NyBTYWx0ZWRfXwqUYH5rlAKME
+ IfFPLcrvUujroq5gF3UCkzZw77GoS+XgRwDhwjPrrsPMuhymuFNHXERPeW+NgiZdlayAJJgKjKR
+ ZgMqjxLx+mUvlWxeQH4nDnABXcO9KFk=
+X-Authority-Analysis: v=2.4 cv=V+joQuni c=1 sm=1 tr=0 ts=6ae24c79 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=Ixn1CAxRAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=PFyLnhpQ7rb4zKh9GroA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
- a=_0vDLAJOulx5KDpLVjVP:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA3NyBTYWx0ZWRfXxZJYZOnqxkfW
- 7A5hFt9xICRQCxVM0K5sI2VeV5ISMJcTemv/z+0emo39xhE7HTQyu18xyNLHnqQr3dY5PLxyB9E
- g59GMWbk3ZRDmVeSOWaARG0+klxV/oQWDa5hKpk/GV5yc95BlMcF7Q1USvN7EYfxyntT7Ikxc4v
- 2Xk6XPF7Ugyl9ftVAQUgcnW/zOzB+Aj3+0hfokfVsgY/ceqjHr/309YPBaQOrPXSQHZhJ3n+p5W
- ESbYYQ3QO6V12nLSckxsDMSjqxwYU4iVVQsTI+1aoWNManxsKqDGKidUJE3jc5X3Fwpcxt04fKD
- psBIkfwDkAxnhICGSymgCJsYPT+Nxlo2zejIDr5+LIlUNbDvWD+O8inOuacemzVBWuRzDsEx/eg
- qEKUo2vltodDY1g+IySORad42zZZMjbdQzrZNT7uqfkosp9zZh4HmB1KWDGgEUiSX0keGWlXI97
- zlkKjMY36JjPJ0COuJg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA3NyBTYWx0ZWRfX0xEwQv+5p72M
- NbDbveiHQJcHIQy6Y35jOP5bac10ORlmmYpwk9QIRZM5zqfvrbQWcrBSManwO8cRmJdCagV1JzD
- /g6TNu0CCPY/Uujxn+XOd5cWyT7oaa0=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=Exv68JOPKqC82kISgxAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: 1J9s4qcK7AXIhXIRxgMkMy89xlhkZqtx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA3NyBTYWx0ZWRfX+gqSgH2w27jz
+ gCTdzYjVWdXAjPedGTzMokZjf3CZtw5GVLm46Lz7AA+CtIgGVJfj22334qix2pOfUhKLrY8Um1l
+ QweKJOMKv+Q34B0javTbxUaR/wKrFxe5yzDwcWf8OY9PYIS6dDWSgPpdqjBJatbQ55jvjxPbOz8
+ XmtnWhvc1gEY83tQUDfpWNvwmB8f5g9HcRdFbQ1eK/eDLLWt2cgJWjWP4d/mLkoFVEcEcD1qElT
+ d3PscWuP5igO1oAPAdppjiqGBQifvF+byT5wD80H1p2PC1iMXIBV5XqSUOiPlX8XTias82bbX5m
+ 1k+s97Y0WzUuu9/tjN3Zk6UsqCdPEZmt1f6urYs4+4tRcSXZTgWDSSVOvTCdWK/WpGrzKkwlVYT
+ 2wygg9bK9wBhelKljZofhlHf9oiBCFCFn09lEZUETuMECqu7sjH/GZ0teycaMYOtEvf3XQqxsrR
+ qiX+JdgOMnBljGLYZTg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 clxscore=1015
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610280077
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280077
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -166,159 +163,524 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-GDB has no knowledge of the R5900 LO1/HI1 registers and of the
-upper halves of its 128-bit GPRs. Add a org.qemu.gdb.mips.r5900
-feature with lo1, hi1 and r0_hi..r31_hi, transferred as 64-bit.
+Exercise the instructions decoded by tx79.decode (parallel
+arithmetic/compare/logic/extend, PCPYH, PROT3W, HI1/LO1 moves, LQ/SQ).
+The instruction words are emitted directly, as the assembler does not
+know the TX79 mnemonics.
 
-Unfortunately we need to gate on TARGET_MIPS64 because the
-gpr_hi[] upper halves are only declared there.
+Build it with the n32 ABI, to move 64-bit values to HI1/LO1.
 
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+AI-used-for: tests
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- configs/targets/mips64-softmmu.mak   |  2 +-
- configs/targets/mips64el-softmmu.mak |  2 +-
- target/mips/gdbstub.c                | 46 +++++++++++++++++++++++++++
- gdbstub/gdb-xml/mips64-r5900.xml     | 47 ++++++++++++++++++++++++++++
- 4 files changed, 95 insertions(+), 2 deletions(-)
- create mode 100644 gdbstub/gdb-xml/mips64-r5900.xml
+ tests/tcg/mips64el/system/test_r5900_tx79.c | 477 ++++++++++++++++++++
+ tests/tcg/mips64el/system/meson.build       |   9 +
+ 2 files changed, 486 insertions(+)
+ create mode 100644 tests/tcg/mips64el/system/test_r5900_tx79.c
 
-diff --git a/configs/targets/mips64-softmmu.mak b/configs/targets/mips64-softmmu.mak
-index 03db5ef74abc..b96e91559c9a 100644
---- a/configs/targets/mips64-softmmu.mak
-+++ b/configs/targets/mips64-softmmu.mak
-@@ -3,4 +3,4 @@ TARGET_BASE_ARCH=mips
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
--TARGET_XML_FILES= mips64-cpu.xml mips64-cp0.xml mips64-fpu.xml
-+TARGET_XML_FILES= mips64-cpu.xml mips64-cp0.xml mips64-fpu.xml mips64-r5900.xml
-diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips64el-softmmu.mak
-index b3433d8cf7ab..089f2c0c7c43 100644
---- a/configs/targets/mips64el-softmmu.mak
-+++ b/configs/targets/mips64el-softmmu.mak
-@@ -2,4 +2,4 @@ TARGET_ARCH=mips64
- TARGET_BASE_ARCH=mips
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
--TARGET_XML_FILES= mips64-cpu.xml mips64-cp0.xml mips64-fpu.xml
-+TARGET_XML_FILES= mips64-cpu.xml mips64-cp0.xml mips64-fpu.xml mips64-r5900.xml
-diff --git a/target/mips/gdbstub.c b/target/mips/gdbstub.c
-index e21eb6f67fbd..3678f2c696c8 100644
---- a/target/mips/gdbstub.c
-+++ b/target/mips/gdbstub.c
-@@ -243,6 +243,45 @@ static int mips_gdb_write_fpu(CPUState *cs, uint8_t *buf, int n)
-                                        MIPS_GDB_FPU_LEGACY_BASE + n);
- }
- 
-+#if defined(TARGET_MIPS64)
-+/* org.qemu.gdb.mips.r5900: lo1, hi1, r0_hi..r31_hi */
-+static int r5900_gdb_read_regs(CPUState *cs, GByteArray *buf, int n)
-+{
-+    CPUMIPSState *env = cpu_env(cs);
-+
-+    switch (n) {
-+    case 0:
-+        return gdb_get_reg64(buf, env->active_tc.LO[1]);
-+    case 1:
-+        return gdb_get_reg64(buf, env->active_tc.HI[1]);
-+    default:
-+        return gdb_get_reg64(buf, env->active_tc.gpr_hi[n - 2]);
-+    }
-+}
-+
-+static int r5900_gdb_write_regs(CPUState *cs, uint8_t *buf, int n)
-+{
-+    CPUMIPSState *env = cpu_env(cs);
-+    uint64_t val = ldn_p(buf, 8);
-+
-+    switch (n) {
-+    case 0:
-+        env->active_tc.LO[1] = val;
-+        break;
-+    case 1:
-+        env->active_tc.HI[1] = val;
-+        break;
-+    case 2:
-+        /* r0 is hardwired to zero */
-+        break;
-+    default:
-+        env->active_tc.gpr_hi[n - 2] = val;
-+        break;
-+    }
-+    return 8;
-+}
-+#endif /* TARGET_MIPS64 */
-+
- void mips_cpu_gdb_class_init_xml(CPUClass *cc)
- {
-     cc->gdb_core_xml_file = target_long_bits() == 64 ? "mips64-cpu.xml"
-@@ -262,4 +301,11 @@ void mips_cpu_register_gdb_regs(CPUState *cs)
-                              gdb_find_static_feature(cp0_xml));
-     gdb_register_coprocessor(cs, mips_gdb_read_fpu, mips_gdb_write_fpu,
-                              gdb_find_static_feature(fpu_xml));
-+
-+#if defined(TARGET_MIPS64)
-+    if (MIPS_CPU_GET_CLASS(cs)->cpu_def->insn_flags & INSN_R5900) {
-+        gdb_register_coprocessor(cs, r5900_gdb_read_regs, r5900_gdb_write_regs,
-+                                 gdb_find_static_feature("mips64-r5900.xml"));
-+    }
-+#endif
- }
-diff --git a/gdbstub/gdb-xml/mips64-r5900.xml b/gdbstub/gdb-xml/mips64-r5900.xml
+diff --git a/tests/tcg/mips64el/system/test_r5900_tx79.c b/tests/tcg/mips64el/system/test_r5900_tx79.c
 new file mode 100644
-index 000000000000..6c03849824de
+index 000000000000..64b9b53b9440
 --- /dev/null
-+++ b/gdbstub/gdb-xml/mips64-r5900.xml
-@@ -0,0 +1,47 @@
-+<?xml version="1.0"?>
-+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
++++ b/tests/tcg/mips64el/system/test_r5900_tx79.c
+@@ -0,0 +1,477 @@
++/*
++ * Test the TX79 instructions decoded by target/mips/tcg/tx79.decode.
++ *
++ * The instruction words are emitted directly because the normal MIPS64
++ * assembler does not know the TX79 mnemonics.  LQ and SQ are used to move
++ * values into and out of the emulated 128-bit GPRs.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+<!--
-+     Toshiba R5900 specific registers:
-+     - LO1/HI1, the pipeline 1 multiply/divide unit results;
-+     - the upper 64 bits of the 128-bit general purpose registers.
-+-->
++#include <stdint.h>
++#include <stdio.h>
++#include <string.h>
 +
-+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-+<feature name="org.qemu.gdb.mips.r5900">
-+  <reg name="lo1" bitsize="64" type="int64"/>
-+  <reg name="hi1" bitsize="64" type="int64"/>
++typedef struct {
++    uint64_t lo;
++    uint64_t hi;
++} __attribute__((aligned(16))) tx79_qword;
 +
-+  <reg name="r0_hi" bitsize="64" type="uint64"/>
-+  <reg name="r1_hi" bitsize="64" type="uint64"/>
-+  <reg name="r2_hi" bitsize="64" type="uint64"/>
-+  <reg name="r3_hi" bitsize="64" type="uint64"/>
-+  <reg name="r4_hi" bitsize="64" type="uint64"/>
-+  <reg name="r5_hi" bitsize="64" type="uint64"/>
-+  <reg name="r6_hi" bitsize="64" type="uint64"/>
-+  <reg name="r7_hi" bitsize="64" type="uint64"/>
-+  <reg name="r8_hi" bitsize="64" type="uint64"/>
-+  <reg name="r9_hi" bitsize="64" type="uint64"/>
-+  <reg name="r10_hi" bitsize="64" type="uint64"/>
-+  <reg name="r11_hi" bitsize="64" type="uint64"/>
-+  <reg name="r12_hi" bitsize="64" type="uint64"/>
-+  <reg name="r13_hi" bitsize="64" type="uint64"/>
-+  <reg name="r14_hi" bitsize="64" type="uint64"/>
-+  <reg name="r15_hi" bitsize="64" type="uint64"/>
-+  <reg name="r16_hi" bitsize="64" type="uint64"/>
-+  <reg name="r17_hi" bitsize="64" type="uint64"/>
-+  <reg name="r18_hi" bitsize="64" type="uint64"/>
-+  <reg name="r19_hi" bitsize="64" type="uint64"/>
-+  <reg name="r20_hi" bitsize="64" type="uint64"/>
-+  <reg name="r21_hi" bitsize="64" type="uint64"/>
-+  <reg name="r22_hi" bitsize="64" type="uint64"/>
-+  <reg name="r23_hi" bitsize="64" type="uint64"/>
-+  <reg name="r24_hi" bitsize="64" type="uint64"/>
-+  <reg name="r25_hi" bitsize="64" type="uint64"/>
-+  <reg name="r26_hi" bitsize="64" type="uint64"/>
-+  <reg name="r27_hi" bitsize="64" type="uint64"/>
-+  <reg name="r28_hi" bitsize="64" type="uint64"/>
-+  <reg name="r29_hi" bitsize="64" type="uint64"/>
-+  <reg name="r30_hi" bitsize="64" type="uint64"/>
-+  <reg name="r31_hi" bitsize="64" type="uint64"/>
-+</feature>
++#define TX79_STR1(x) #x
++#define TX79_STR(x) TX79_STR1(x)
++
++#define TX79_R(rs, rt, rd, sub, func) \
++    ((0x1cU << 26) | ((rs) << 21) | ((rt) << 16) | ((rd) << 11) | \
++     ((sub) << 6) | (func))
++#define TX79_LDST(op, base, rt, offset) \
++    (((op) << 26) | ((base) << 21) | ((rt) << 16) | ((offset) & 0xffffU))
++
++#define TX79_BINOP_WORD(INSN, A, B)                                      \
++    ({                                                                   \
++        tx79_qword _result;                                              \
++        asm volatile(                                                     \
++            "move $7, %[a]\n"                                           \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 8, 0)) "\n"           \
++            "move $7, %[b]\n"                                           \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 9, 0)) "\n"           \
++            "move $7, %[a]\n"                                           \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 10, 0)) "\n"          \
++            ".word " TX79_STR(INSN) "\n"                                \
++            "move $7, %[result]\n"                                      \
++            ".word " TX79_STR(TX79_LDST(0x1f, 7, 10, 0)) "\n"          \
++            :                                                             \
++            : [a] "r" (A), [b] "r" (B), [result] "r" (&_result)        \
++            : "$7", "$8", "$9", "$10", "memory");                    \
++        _result;                                                          \
++    })
++
++#define TX79_UNARY_WORD(INSN, A)                                         \
++    ({                                                                   \
++        tx79_qword _result;                                              \
++        asm volatile(                                                     \
++            "move $7, %[a]\n"                                           \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 8, 0)) "\n"           \
++            ".word " TX79_STR(INSN) "\n"                                \
++            "move $7, %[result]\n"                                      \
++            ".word " TX79_STR(TX79_LDST(0x1f, 7, 10, 0)) "\n"          \
++            :                                                             \
++            : [a] "r" (A), [result] "r" (&_result)                      \
++            : "$7", "$8", "$10", "memory");                            \
++        _result;                                                          \
++    })
++
++#define TX79_LQ_OFFSET(OFFSET, BASE)                                     \
++    ({                                                                   \
++        tx79_qword _result;                                              \
++        asm volatile(                                                     \
++            "move $7, %[base]\n"                                        \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 8, OFFSET)) "\n"      \
++            "move $7, %[result]\n"                                      \
++            ".word " TX79_STR(TX79_LDST(0x1f, 7, 8, 0)) "\n"           \
++            :                                                             \
++            : [base] "r" (BASE), [result] "r" (&_result)                \
++            : "$7", "$8", "memory");                                   \
++        _result;                                                          \
++    })
++
++#define TX79_SQ_OFFSET(OFFSET, VALUE, BASE)                               \
++    do {                                                                   \
++        asm volatile(                                                       \
++            "move $7, %[value]\n"                                        \
++            ".word " TX79_STR(TX79_LDST(0x1e, 7, 8, 0)) "\n"            \
++            "move $7, %[base]\n"                                         \
++            ".word " TX79_STR(TX79_LDST(0x1f, 7, 8, OFFSET)) "\n"        \
++            :                                                               \
++            : [value] "r" (VALUE), [base] "r" (BASE)                     \
++            : "$7", "$8", "memory");                                    \
++    } while (0)
++
++static int check_qword(const char *name, tx79_qword got, tx79_qword expected)
++{
++    if (got.lo == expected.lo && got.hi == expected.hi) {
++        return 0;
++    }
++
++    fprintf(stderr, "%s: got %016llx:%016llx expected %016llx:%016llx\n",
++            name, (unsigned long long)got.hi, (unsigned long long)got.lo,
++            (unsigned long long)expected.hi,
++            (unsigned long long)expected.lo);
++    return 1;
++}
++
++static uint64_t lane_mask(unsigned bits)
++{
++    return (1ULL << bits) - 1;
++}
++
++static int64_t sign_extend_lane(uint64_t value, unsigned bits)
++{
++    uint64_t sign = 1ULL << (bits - 1);
++
++    value &= lane_mask(bits);
++    return (int64_t)((value ^ sign) - sign);
++}
++
++static tx79_qword ref_sub(tx79_qword a, tx79_qword b, unsigned bits)
++{
++    tx79_qword result = { 0, 0 };
++    uint64_t mask = lane_mask(bits);
++
++    for (unsigned half = 0; half < 2; half++) {
++        uint64_t av = half ? a.hi : a.lo;
++        uint64_t bv = half ? b.hi : b.lo;
++        uint64_t *dst = half ? &result.hi : &result.lo;
++
++        for (unsigned lane = 0; lane < 64 / bits; lane++) {
++            uint64_t shift = lane * bits;
++            *dst |= (((av >> shift) - (bv >> shift)) & mask) << shift;
++        }
++    }
++
++    return result;
++}
++
++static tx79_qword ref_compare(tx79_qword a, tx79_qword b, unsigned bits,
++                              int equal)
++{
++    tx79_qword result = { 0, 0 };
++    uint64_t mask = lane_mask(bits);
++
++    for (unsigned half = 0; half < 2; half++) {
++        uint64_t av = half ? a.hi : a.lo;
++        uint64_t bv = half ? b.hi : b.lo;
++        uint64_t *dst = half ? &result.hi : &result.lo;
++
++        for (unsigned lane = 0; lane < 64 / bits; lane++) {
++            uint64_t shift = lane * bits;
++            int64_t as = sign_extend_lane(av >> shift, bits);
++            int64_t bs = sign_extend_lane(bv >> shift, bits);
++            int match = equal ? as == bs : as > bs;
++
++            if (match) {
++                *dst |= mask << shift;
++            }
++        }
++    }
++
++    return result;
++}
++
++static tx79_qword ref_pext(tx79_qword a, tx79_qword b, unsigned bits,
++                           int upper)
++{
++    tx79_qword result = { 0, 0 };
++    uint64_t av = upper ? a.hi : a.lo;
++    uint64_t bv = upper ? b.hi : b.lo;
++
++    for (unsigned lane = 0; lane < 64 / (2 * bits); lane++) {
++        uint64_t shift = lane * bits;
++        uint64_t dst_shift = lane * 2 * bits;
++        uint64_t mask = lane_mask(bits);
++
++        result.lo |= ((bv >> shift) & mask) << dst_shift;
++        result.lo |= ((av >> shift) & mask) << (dst_shift + bits);
++        result.hi |= ((bv >> (shift + 32)) & mask) << dst_shift;
++        result.hi |= ((av >> (shift + 32)) & mask) << (dst_shift + bits);
++    }
++
++    return result;
++}
++
++static tx79_qword ref_logic(tx79_qword a, tx79_qword b, char op)
++{
++    tx79_qword result;
++
++    switch (op) {
++    case '&':
++        result.lo = a.lo & b.lo;
++        result.hi = a.hi & b.hi;
++        break;
++    case '|':
++        result.lo = a.lo | b.lo;
++        result.hi = a.hi | b.hi;
++        break;
++    case '^':
++        result.lo = a.lo ^ b.lo;
++        result.hi = a.hi ^ b.hi;
++        break;
++    default:
++        result.lo = ~(a.lo | b.lo);
++        result.hi = ~(a.hi | b.hi);
++        break;
++    }
++
++    return result;
++}
++
++static tx79_qword ref_pcpyh(tx79_qword a)
++{
++    uint64_t lo = a.lo & 0xffff;
++    uint64_t hi = a.hi & 0xffff;
++    tx79_qword result = {
++        lo * 0x0001000100010001ULL,
++        hi * 0x0001000100010001ULL,
++    };
++
++    return result;
++}
++
++static tx79_qword ref_prot3w(tx79_qword a)
++{
++    tx79_qword result = {
++        (a.lo >> 32) | ((a.hi & 0xffffffff) << 32),
++        (a.lo & 0xffffffff) | (a.hi & 0xffffffff00000000ULL),
++    };
++
++    return result;
++}
++
++static void tx79_set_hilo1(uint64_t hi, uint64_t lo)
++{
++    asm volatile(
++        "move $8, %[lo]\n"
++        ".word " TX79_STR(TX79_R(8, 0, 0, 0, 0x13)) "\n"
++        "move $8, %[hi]\n"
++        ".word " TX79_STR(TX79_R(8, 0, 0, 0, 0x11)) "\n"
++        :
++        : [lo] "r" (lo), [hi] "r" (hi)
++        : "$8");
++}
++
++static tx79_qword tx79_get_hilo1(void)
++{
++    tx79_qword result;
++
++    asm volatile(
++        ".word " TX79_STR(TX79_R(0, 0, 8, 0, 0x12)) "\n"
++        "move %[lo], $8\n"
++        ".word " TX79_STR(TX79_R(0, 0, 8, 0, 0x10)) "\n"
++        "move %[hi], $8\n"
++        : [lo] "=r" (result.lo), [hi] "=r" (result.hi)
++        :
++        : "$8");
++
++    return result;
++}
++
++static int test_hilo1(void)
++{
++    const uint64_t hi = 0x8899aabbccddeeffULL;
++    const uint64_t lo = 0x0011223344556677ULL;
++    tx79_qword got;
++
++    tx79_set_hilo1(hi, lo);
++    got = tx79_get_hilo1();
++    if (got.lo != lo || got.hi != hi) {
++        fprintf(stderr, "HI1/LO1 move instructions failed\n");
++        return 1;
++    }
++
++    return 0;
++}
++
++static int test_parallel(void)
++{
++    const tx79_qword a = {
++        0x800000007fffffffULL,
++        0xff0080007fff8000ULL,
++    };
++    const tx79_qword b = {
++        0x00000000ffffffffULL,
++        0x01008000ffff0001ULL,
++    };
++    tx79_qword got;
++
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 9, 8), &a, &b);
++    if (check_qword("PSUBB", got, ref_sub(a, b, 8))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 5, 8), &a, &b);
++    if (check_qword("PSUBH", got, ref_sub(a, b, 16))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 1, 8), &a, &b);
++    if (check_qword("PSUBW", got, ref_sub(a, b, 32))) {
++        return 1;
++    }
++
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 2, 8), &a, &b);
++    if (check_qword("PCGTW", got, ref_compare(a, b, 32, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 6, 8), &a, &b);
++    if (check_qword("PCGTH", got, ref_compare(a, b, 16, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 10, 8), &a, &b);
++    if (check_qword("PCGTB", got, ref_compare(a, b, 8, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 2, 40), &a, &b);
++    if (check_qword("PCEQW", got, ref_compare(a, b, 32, 1))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 6, 40), &a, &b);
++    if (check_qword("PCEQH", got, ref_compare(a, b, 16, 1))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 10, 40), &a, &b);
++    if (check_qword("PCEQB", got, ref_compare(a, b, 8, 1))) {
++        return 1;
++    }
++
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 18, 8), &a, &b);
++    if (check_qword("PEXTLW", got, ref_pext(a, b, 32, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 22, 8), &a, &b);
++    if (check_qword("PEXTLH", got, ref_pext(a, b, 16, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 26, 8), &a, &b);
++    if (check_qword("PEXTLB", got, ref_pext(a, b, 8, 0))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 18, 40), &a, &b);
++    if (check_qword("PEXTUW", got, ref_pext(a, b, 32, 1))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 19, 8), &a, &b);
++    if (check_qword("PPACW", got, (tx79_qword) {
++            (uint32_t)b.lo | ((uint64_t)(uint32_t)b.hi << 32),
++            (uint32_t)a.lo | ((uint64_t)(uint32_t)a.hi << 32),
++        })) {
++        return 1;
++    }
++
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 18, 9), &a, &b);
++    if (check_qword("PAND", got, ref_logic(a, b, '&'))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 19, 9), &a, &b);
++    if (check_qword("PXOR", got, ref_logic(a, b, '^'))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 18, 41), &a, &b);
++    if (check_qword("POR", got, ref_logic(a, b, '|'))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 19, 41), &a, &b);
++    if (check_qword("PNOR", got, ref_logic(a, b, 'n'))) {
++        return 1;
++    }
++
++    got = TX79_UNARY_WORD(TX79_R(0, 8, 10, 27, 41), &a);
++    if (check_qword("PCPYH", got, ref_pcpyh(a))) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 14, 9), &a, &b);
++    if (check_qword("PCPYLD", got, (tx79_qword) { b.lo, a.lo })) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 10, 14, 41), &a, &b);
++    if (check_qword("PCPYUD", got, (tx79_qword) { a.hi, b.hi })) {
++        return 1;
++    }
++    got = TX79_UNARY_WORD(TX79_R(0, 8, 10, 31, 9), &a);
++    if (check_qword("PROT3W", got, ref_prot3w(a))) {
++        return 1;
++    }
++
++    got = TX79_BINOP_WORD(TX79_R(0, 9, 10, 14, 9), &a, &b);
++    if (check_qword("PCPYLD rt-only", got, (tx79_qword) { b.lo, 0 })) {
++        return 1;
++    }
++    got = TX79_BINOP_WORD(TX79_R(8, 0, 10, 14, 41), &a, &b);
++    if (check_qword("PCPYUD rs-only", got, (tx79_qword) { a.hi, 0 })) {
++        return 1;
++    }
++    got = TX79_UNARY_WORD(TX79_R(0, 0, 10, 27, 41), &a);
++    if (check_qword("PCPYH zero", got, (tx79_qword) { 0, 0 })) {
++        return 1;
++    }
++
++    got = TX79_BINOP_WORD(TX79_R(8, 9, 0, 1, 8), &a, &b);
++    if (check_qword("rd zero", got, (tx79_qword) {
++            a.lo, a.hi,
++        })) {
++        return 1;
++    }
++
++    return 0;
++}
++
++static int test_quadword_memory(void)
++{
++    static uint8_t memory[65536 + 64] __attribute__((aligned(16)));
++    static const int offsets[] = { -32768, -1, 0, 1, 32767 };
++    const tx79_qword value = {
++        0x0123456789abcdefULL,
++        0xfedcba9876543210ULL,
++    };
++    uint8_t *base = memory + 32784;
++
++    for (unsigned i = 0; i < sizeof(offsets) / sizeof(offsets[0]); i++) {
++        int offset = offsets[i];
++        uintptr_t address = (uintptr_t)base + (intptr_t)offset;
++        uint8_t *aligned = (uint8_t *)(address & ~(uintptr_t)0xf);
++        tx79_qword got;
++
++        memset(memory, 0, sizeof(memory));
++        memcpy(aligned, &value, sizeof(value));
++        switch (offset) {
++        case -32768:
++            got = TX79_LQ_OFFSET(-32768, base);
++            break;
++        case -1:
++            got = TX79_LQ_OFFSET(-1, base);
++            break;
++        case 0:
++            got = TX79_LQ_OFFSET(0, base);
++            break;
++        case 1:
++            got = TX79_LQ_OFFSET(1, base);
++            break;
++        default:
++            got = TX79_LQ_OFFSET(32767, base);
++            break;
++        }
++        if (check_qword("LQ offset", got, value)) {
++            return 1;
++        }
++
++        memset(memory, 0, sizeof(memory));
++        switch (offset) {
++        case -32768:
++            TX79_SQ_OFFSET(-32768, &value, base);
++            break;
++        case -1:
++            TX79_SQ_OFFSET(-1, &value, base);
++            break;
++        case 0:
++            TX79_SQ_OFFSET(0, &value, base);
++            break;
++        case 1:
++            TX79_SQ_OFFSET(1, &value, base);
++            break;
++        default:
++            TX79_SQ_OFFSET(32767, &value, base);
++            break;
++        }
++        if (memcmp(aligned, &value, sizeof(value)) != 0) {
++            fprintf(stderr, "SQ offset %d failed\n", offset);
++            return 1;
++        }
++    }
++
++    return 0;
++}
++
++int main(void)
++{
++    if (test_hilo1() || test_parallel() || test_quadword_memory()) {
++        return 1;
++    }
++
++    return 0;
++}
+diff --git a/tests/tcg/mips64el/system/meson.build b/tests/tcg/mips64el/system/meson.build
+index fd5a759c20fa..66c3d61c3134 100644
+--- a/tests/tcg/mips64el/system/meson.build
++++ b/tests/tcg/mips64el/system/meson.build
+@@ -39,6 +39,15 @@ foreach t: [
+   }
+ endforeach
+ 
++# n32: 32-bit pointers, 64-bit GPRs are needed to move 64-bit values to HI1/LO1
++tests += {
++  'test_r5900_tx79.c': {
++    'cflags': cflags + ['-mabi=n32'],
++    'qemu_args': qemu_args,
++    'gdb_test': gdb_test,
++  }
++}
++
+ if 'qemu-system-mips64el' in emulators
+   tcg_tests += {
+     'mips64el-softmmu': {
 -- 
 2.55.0
 
