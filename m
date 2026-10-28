@@ -1,120 +1,128 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB92606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D303606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cRrZL4qx;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=alDLA0Hf
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=dtVzKPdy;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=lIlZbkXw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM2Em-0003pD-En; Wed, 28 Oct 2026 07:54:36 -0400
+	id 1xM2H4-0004Pq-9Y; Wed, 28 Oct 2026 07:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xM2El-0003p5-Rl
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:54:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1xM2H0-0004PO-9y
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:56:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1xM2Ej-0005qu-Vf
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:54:35 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1xM2Gy-00069n-RC
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:56:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793188472;
+ s=mimecast20190719; t=1793188611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kIP/JKm7+DezmLB2+AICK6egNR42rHvkONIZbvMP5bQ=;
- b=cRrZL4qx9npxJEneLyB9q2QI/bh0u4639g5ddf9vnhIrR8Zqmf1oTmpy4QY64UthwgWsd/
- mOlzML7a4f4ltdOt2e5NvXL8HXUukJwEdQS7ae5LUFII+lwMtonGnrSbsEWLCN2Fs57iaN
- L4AS5RHs6ALWFfSblDO06zDrmMWZads=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OBLVfl05Sz0/5z99L0MAE3gy8CXtzJ7Db/IRUSvMMSg=;
+ b=dtVzKPdyqOOO0ZfVgEn0XF4s0OsIQE8aQlXlhTgRzuC+b6fJ56w5rGUjCExOHl9ga+9+62
+ MwUF99wxuPOx0czaOYW9ENOFxUqUeruLiYY4YkIa/4HPqg0z3hqVnxxYL7cXAEXTsTffFd
+ QbchAHmTqUJQSOsEeSvquGtR4dIjc8c=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-_O_Jtg0-MSeulz_UtW6UJQ-1; Wed, 28 Oct 2026 07:54:31 -0400
-X-MC-Unique: _O_Jtg0-MSeulz_UtW6UJQ-1
-X-Mimecast-MFC-AGG-ID: _O_Jtg0-MSeulz_UtW6UJQ_1793188470
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-91c70349f65so20561406d6.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 04:54:31 -0700 (PDT)
+ us-mta-516-x3W5mjLOO9a3KmnRZq0PKQ-1; Wed, 28 Oct 2026 07:56:44 -0400
+X-MC-Unique: x3W5mjLOO9a3KmnRZq0PKQ-1
+X-Mimecast-MFC-AGG-ID: x3W5mjLOO9a3KmnRZq0PKQ_1793188604
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5338c215ed2so17209361cf.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 04:56:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793188604; cv=none;
+ d=google.com; s=arc-20260327;
+ b=pozc30U3RbbNUwkXOOM7Bgly+mucQxviLWT3qPWRobh/JobIDDO/gz6zZowLCbo9q+
+ XQyScTgcDyuQl/qdtH+LXhwAYS/oS554kFkpbuRuI0AYBYPYJqs7qVXeQ9q7ldsY2vhC
+ 0v/ABIyjntc7QRc8euGIg35qGBJxhn2MWrgMv/bf1D5/fyBhKvhxZEziTh7r0cu9oLdB
+ K7Y2LvZl9FnxQ6HyVUqhLr09U9ueav7loozNGI7Fd34SQH97EFpGiLM/rQbv2fb0ylpg
+ teG9rfkmiPEtg4uT1EpuCdrmZBc54QokXqy/1ENm9BEW+69v3TM3JD5OXdi7uBafnoaH
+ /X3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=OBLVfl05Sz0/5z99L0MAE3gy8CXtzJ7Db/IRUSvMMSg=;
+ fh=lJ3l5h8sU9OcQSbaOuYA9KlOiaqQMCXiQDGuHTun508=;
+ b=B9NoJD5R8SiuEagWiily6+uUbpptD7kpwzB2KVusHttKSPIC/wNCEmy6mczgEiQmGJ
+ e5StnxSBr+tbbuMN05ehJcLJA/eWoDoM8+tzk8HOOPM2XOamCSVmXOPnTKjaiUgTLazQ
+ L2t0nntAr4s8kBgGngbWGNyvY+yDPybChTaRNxl5pT8YVEzOEdbwGo9tfjE4o0UwA/e+
+ dyhHvKYvmP0zwXkFU6lTt1E+cMUkNFbizs258E2dyRsZ4Q9VUbbUZWjN1a2VyyYZlBzQ
+ bgffH0QLy2mbCm7EOense8GEaKwchyaCGw6vak/pPp1fKB3xBnwB5FISDnq7cqLlXI31
+ pqTQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793188470; x=1793793270; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kIP/JKm7+DezmLB2+AICK6egNR42rHvkONIZbvMP5bQ=;
- b=alDLA0HfcA/FSXjBxVsEqpMp31i8TONf29TejhNKcJjBbjwOsi3aO1zxMfQEOTnqir
- SLHHl1UsaF2mE1665dryqBZUwwsRZ8lz7j1zSmICj43GA5rSwW86DlksSYSQAmXCVTbl
- GAVW2C6qGzdIbAa/GsY++wbdHIUCZpExn0iz+PbgIB0MrsqSTijVXppN3q4dgXUPhEFI
- gdhjEoq0WsyYiP+yC17+CkOKsr5N6yaD07O6+GIspWhCVAMY1MYjnT10/MjGaetTlDcM
- HPp6UiizLQRG1jWMTXfla4D0GcsZ7x0lAIPa4ePtY5aeakH5/maUV7EwXItwGnTzoQyc
- hu9g==
+ d=redhat.com; s=google; t=1793188604; x=1793793404; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=OBLVfl05Sz0/5z99L0MAE3gy8CXtzJ7Db/IRUSvMMSg=;
+ b=lIlZbkXwzVr+DE5CwjHOSvgeR6FnouphqQ3YInQqf4d/UyibmUHKuq1tbqF+5rkvjp
+ 7fnu2sBnTluMEnlqL4+HjL7A9+QA381Dz8/F5RPnj28Ldr3nF1puA/MKv2PKFywVN7Wy
+ hxkkXViM7sP3dsUt5b7mlFaLJrkm3roWKI52B8lXB9N51b9/e5IkaMgHwsHkxDCFIE0W
+ dw4uRvBkP5O4ck7qHmP0SSkynNoKM8Fq4kSDRAUKjMVsF07hD7YqBDKbPtrBYycQJrCV
+ QUIPkiS9BYu+RwIBmlO91a8OQFpc8zDWKBbUVAheXoJfkGBH9fdvN5XNecGlXdDkZCXS
+ dMzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793188470; x=1793793270;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=kIP/JKm7+DezmLB2+AICK6egNR42rHvkONIZbvMP5bQ=;
- b=M7ZVEJnbuhcMxMsI9hB1OOCajkMDhd9DO+jh3DLLAnERpF55exyC0k8rVdQxLWwwzu
- ygpK+DHTJs/DmbJVXfA2nRbuyckky7hRI/uKVleBtbPMvR6FFi8Ahk5SdajMPpLGgjEw
- AqkHlpxH+7ib47vQAqh4dqZy51C88BHde/4Rbux3JyhstxD3YALMT5FbpA9rP0CTznLD
- qdpohgmZLl7jYvLrSHPMaZCG+OAxCJUlu4zEhK3eVRKWBzgpLMaPBkbUHb/PUJVbx0h3
- 1pypuVSOFeaoQRNCg1RLFq1Wa+deSHxDsmXENXvGt2GF/+wwM1467fKNoGlFnpVu8uFz
- ruPg==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwVL4xE5FGYZLAqo9anwNp61ZvoMYPpvqNazCOHRskZalAH14oMgHTV10Da32DYVe+DWcH3oaRaSMPA@nongnu.org
-X-Gm-Message-State: AFq9FYJdEEhcyhPGKAQ73zEOSemRKt66vRrVP/z2XJPQPHr6VCm8F3hW
- uFUTZYskptrrXXHMnKlzPfXDb4ZDHMQNCGDYCCRSF8n4I+avmlFqkDaRDWO7KXNJfJPPcrW4S0p
- 5VnKUH7BwYyTGks9e21NBEuIlHdJgz0fupkQjTw6LtpHp8eXEwZNVb1bC
-X-Gm-Gg: AYBFou19w2abBODqEdrlfmlboaYaoXRdLki+xu5lF2wHu9oRwexA+KissLXrhsXos//
- tTRtRVYm0locnuHjp4lHYQmJX85t5YoKbkqT+BCwN8LMNdAmXYdpJa+S5TpAFphjjcV++ZaYvTF
- HH5ufU1ayPE8pQy6OB/AIFo3KJgJAuKfwTk+c1K8xUy1sUX7ABbWcWfuepxnm7tG3/8CkzeThPN
- JPkVbrJurxRPihys2IorWKu+buN4DA3X4hZE6J+DQcS7mJQ7E8igFHqmBi8FTC0SZJu7L44Xx/t
- LVk1DFuOl1QbXQESjKE+d/iWojc0FAjkyYRbYe+1NobERGw3Ad7bQE9qG8u3NifxHCj0vd1DjzV
- Lx5s1HMdQnAg2pZy3NHz5Tv+OHzYW6l0RxbMhcwla8UVo
-X-Received: by 2002:a05:620a:3188:b0:93f:3163:3e37 with SMTP id
- af79cd13be357-94408a71d5fmr282668785a.28.1793188470391; 
- Wed, 28 Oct 2026 04:54:30 -0700 (PDT)
-X-Received: by 2002:a05:620a:3188:b0:93f:3163:3e37 with SMTP id
- af79cd13be357-94408a71d5fmr282665385a.28.1793188469758; 
- Wed, 28 Oct 2026 04:54:29 -0700 (PDT)
-Received: from localhost ([142.188.212.246]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-940f066629dsm1231039085a.7.2026.10.28.04.54.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 04:54:29 -0700 (PDT)
-Date: Wed, 28 Oct 2026 07:54:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PULL 51/59] system: Remove deprecated 'debug-threads' option
- for -name
-Message-ID: <auHidAzj6lX3Y0CN@zhexu-thinkpadt14gen5.rmtcaon.csb>
-References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
- <20261027192341.9197-52-philmd@oss.qualcomm.com>
- <0dab848f-426e-49af-a28e-8165591b9d03@linaro.org>
- <e84af371-8fce-466c-9df6-c74863c127a4@oss.qualcomm.com>
- <auHEv-AQmulcwaad@redhat.com>
+ d=1e100.net; s=20260707; t=1793188604; x=1793793404;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=OBLVfl05Sz0/5z99L0MAE3gy8CXtzJ7Db/IRUSvMMSg=;
+ b=aEKu1IeW/PwEQ7GefCHIW+nCGu1TQyDNa540WadFwj8A5GYdosHKxVL7dA5nSHl/8j
+ zoWrOFZvpYpuwN2wKJnQwpAF7GKezkwysEF4Bxc5FqQRfZCdPVGsD0yHlvii2VPju3Ge
+ O2eQ1Et7iQEuMG5EzrzmcAKVnBSY1RZLvmHN/lOFr2U1h+WcYuXDpChOItcuhLiqkc1s
+ zBt59s4bLu9RQ8sA8kMRsBqiM7z4YwOrUlhYE2f/IHd8wJzU26jLDZyVG89UDxp8hiDH
+ UWK7dyCeLgu3CsryGYGjJQLZq1IPnhreDlRz5biHNK2AoFxrBm/aV+jq+O1p4NqvmiVY
+ ePJA==
+X-Gm-Message-State: AFq9FYJC83yvfXP8AfF6et/A3S1yrcIQbgn+3j2NsQTBQQonM1YVIJf0
+ WQscu5q6EIemZU/tefQWwS0KJsHHV2Z+4PKaxHVIfBYfRFg1v6tK4CcQNCxDoD6V6ziM8y32n9l
+ lh4f844qY0U4xBrdpzssNDryAUCqSG+u6g97n7xm/zWCQxpMG8UNnhZSwxkybwD7eN5kt07e3xs
+ vf3EVu4umJV7hlKjz/mbFjO44sbagHPBQ=
+X-Gm-Gg: AYBFou3fryQ5CX8FZg5PbYU61029yAk4FB4hN7wNtMrhZq48/kRoLeU1TnpLpy97Ql+
+ DMlbaTzdg7/3FutxvONTTSa29PuskkD77l4yCOin3SJdDJXX3shpKuZbyYkJ3LdxWqaxcbatdau
+ AQdK1UYj6y0FmObe1IbuPmZkzPf8bLsZa4BU9hpSill36gHPytDYiG/XRPtGlYKoEJd80c432uo
+ G/0tC6I9ciY3AVsZkgWpg1nu3Uy1DsDkkWjK86MGyeu3aOmzhJluDSQYE0wAJL1WzPp7AsQPpEo
+X-Received: by 2002:a05:622a:999:b0:535:a5f9:7529 with SMTP id
+ d75a77b69052e-53fcd190e11mr32793671cf.72.1793188603836; 
+ Wed, 28 Oct 2026 04:56:43 -0700 (PDT)
+X-Received: by 2002:a05:622a:999:b0:535:a5f9:7529 with SMTP id
+ d75a77b69052e-53fcd190e11mr32793481cf.72.1793188603413; Wed, 28 Oct 2026
+ 04:56:43 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <auHEv-AQmulcwaad@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20261015173250.65942-1-bogorodskiy@gmail.com>
+ <20261015173250.65942-2-bogorodskiy@gmail.com>
+ <CAPMcbCos82eavn8oci6O+T+Qbw6Vt8UWPezwA0Fc9KDN1CLX0w@mail.gmail.com>
+ <auHhzRcOxIEZeMn6@tulp>
+In-Reply-To: <auHhzRcOxIEZeMn6@tulp>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Wed, 28 Oct 2026 13:56:31 +0200
+X-Gm-Features: AclHuK9NB3wSIBpTz7_GBON23ZdOVHZVfcy8tP8pNh8f--uCmQaAHn3klW5utPM
+Message-ID: <CAPMcbCo5=+nnXMr5GLXYrGhjHbsp2wY_UjZG3qX79+j6WS8G9g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] qga: fix build on illumos
+To: Roman Bogorodskiy <bogorodskiy@gmail.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, pierrick.bouvier@oss.qualcomm.com,
+ michael.roth@amd.com
+Content-Type: multipart/alternative; boundary="000000000000b8dee4065ee54158"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,102 +134,23 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	HTML_MESSAGE,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 28, 2026 at 09:47:43AM +0000, Daniel P. Berrangé wrote:
-> On Wed, Oct 28, 2026 at 08:32:20AM +0100, Philippe Mathieu-Daudé wrote:
-> > (Cc'ing migration compat and libvirt teams)
-> > 
-> > On 28/10/26 02:01, Richard Henderson wrote:
-> > > On 10/27/26 14:23, Philippe Mathieu-Daudé wrote:
-> > > > 'debug-threads' option for -name was deprecated in v11.0
-> > > > (commit 1b65aeed2a0 "system: unconditionally enable thread
-> > > > naming") thus can now be removed.
-> > > > 
-> > > > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> > > > Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> > > > Reviewed-by: Ján Tomko<jtomko@redhat.com>
-> > > > Reviewed-by: Dr. David Alan Gilbert<dave@treblig.org>
-> > > > Message-Id:<20261018232917.7716-1-philmd@oss.qualcomm.com>
-> > > > ---
-> > > >   docs/about/deprecated.rst             |  7 -------
-> > > >   docs/about/removed-features.rst       |  9 +++++++--
-> > > >   system/vl.c                           | 11 -----------
-> > > >   tests/qtest/migration/framework.c     |  4 ++--
-> > > >   tests/qtest/migration/precopy-tests.c |  2 +-
-> > > >   qemu-options.hx                       |  7 +++----
-> > > >   6 files changed, 13 insertions(+), 27 deletions(-)
-> > > 
-> > > You need to remove this from the testsuite as well:
-> > > 
-> > > https://gitlab.com/qemu-project/qemu/-/jobs/17523155796#L58
-> > 
-> > Hmm I was surprised because the pipeline in my fork passed, but then
-> > looking clearer this job is marked as "allow_failure: true" for me,
-> > why is it blocking on the mainstream repo?
-> 
-> It isn't blocking on upstream repo, it is allow_failure: true there
-> too. Manual inspection of the job shows it is a real bug though.
-> 
-> > Back to the test, this is the migration-compat-x86_64 job running
-> > previous release binary vs latest one, so I'd think this is the
-> > expected behavior, v11.0 and v11.1 have that deprecated option, and
-> > we can not test vs v11.2 which removed it.
-> > 
-> > If we want to change that workflow, then when deprecating on v11.0
-> > we also need to remove the tests coverage, so when we remove the
-> > feature at $deprecation_release+2 the migration-compat test does not
-> > break. Here the question is, do we want to keep testing deprecated
-> > features? Maybe yes in the case of unmaintained area when the
-> > deprecation process triggers new maintainers stepping in and the
-> > deprecation to be cancelled.
-> > 
-> > We could also mark the feature removed but keep it ignored and
-> > undocumented until the next release but we'll likely forget and
-> > miss that in workflow so I don't recommend that way.
-> > 
-> > Maybe there are another ways to resolve that but I'm not seeing
-> > them. Ideas?
-> 
-> 'debug-threads=on' has no relationship to live migration data
-> stream, it merely gives the threads names. Just remove this
-> option from the migration testsuite as it is irrelevant to
-> what is being tested.
+--000000000000b8dee4065ee54158
+Content-Type: text/plain; charset="UTF-8"
 
-We're testing with the old migration-test for compat, so Phil doesn't have
-an easy way to remove that part:
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-.migration-compat-common:
-    ...
-    # Use the migration-tests from the older QEMU tree. This avoids
-    # testing an old QEMU against new features/tests that it is not
-    # compatible with.
-    - cd build-previous
+--000000000000b8dee4065ee54158
+Content-Type: text/html; charset="UTF-8"
 
-Intentional to avoid new things not working with old QEMU binaries, but
-then this will be the case things break if we don't have protection of
-2-release deprecation (where we could have removed the usage in test cases
-2 releases in advance too when deprecating).
+<div dir="ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href="mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div>
 
-At least two options I see: (1) for this release, we lose compat
-protection, we'll need to manually guard it, or (2) we provide some way to
-script/patch on top of the build-previous/ build before it builds, in this
-case we only need to remove the string in that test alone.
-
-I prefer (2) but I'd apologize in advance I don't have almost any time
-upstream before forum (replied this one only because I want to raise the
-point of using old test, in case Fabiano's already in PTO), I'm not sure if
-someone thinks it worthwhile.
-
-Thanks,
-
--- 
-Peter Xu
+--000000000000b8dee4065ee54158--
 
 
