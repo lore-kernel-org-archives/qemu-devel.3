@@ -1,65 +1,148 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DABE606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676E6606A33A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 20:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=OE7Uaole
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hKxt8eYi;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=TnlRkCC5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM9uc-00031x-28; Wed, 28 Oct 2026 16:06:18 -0400
+	id 1xM9vj-0003ns-ME; Wed, 28 Oct 2026 16:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xM9uT-00030S-35; Wed, 28 Oct 2026 16:06:09 -0400
-Received: from forwardcorp1e.mail.yandex.net ([2a02:6b8:c32:0:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xM9vg-0003nQ-Ox
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:07:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1xM9uM-0001DH-Ak; Wed, 28 Oct 2026 16:06:06 -0400
-Received: from mail-nwsmtp-smtp-corp-main-63
- (mail-nwsmtp-smtp-corp-main-63.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:8a96:0:640:b39c:0])
- by forwardcorp1e.mail.yandex.net (postfix) with ESMTPS id 96FF0100328;
- Wed, 28 Oct 2026 23:05:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d7f::1:0]
- by mail-nwsmtp-smtp-corp-main-63 with ESMTPSA id r5pEm22ZcGk0-j7FAENPh;
- Wed, 28 Oct 2026 23:05:53 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1793217953;
- bh=t6CI4JoEZ4VSwMoYQRcH/ljW9k+QcHOm6tujiUtuNYI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=OE7Uaoledv7QBtFA9mCgOAtYyeQGANNctS5QDhSsjIoxodV5tnMLnzFvLC0LIgBTb
- qqtvwyU6ijBPE6NFPg2beFGk5tVVXQKJ1xJpK4TW0tRIIincUe58p1GMqCYQeS52o2
- 7zQh+achQcUoBgIZBrDCcRs25gMHAfwa1G4EcgGA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-63;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <23a4b45a-c545-43bd-abc5-c76d83ca0b0b@yandex-team.ru>
-Date: Wed, 28 Oct 2026 23:05:53 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xM9vU-0001S8-Aw
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 16:07:13 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69SIPq781395713
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:07:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ucSRWF12lnGJyZN7+noEh7KsB+kwIvYgDfypgnlLxe0=; b=hKxt8eYi5uSYGR+N
+ xQjpnIo3AJpd7O/7jZXZyxIyip/6hkfYz6EDWwQChE9aVXl0dLpnOIOAOd8NIWCb
+ 1zudHNnJGftSsn+7qyUWTegW0trY5+H+efWiClu5koYhdxufD3VKjyX7KeFMxMY5
+ boHUSNz4ewhsVeTo9amq1E3VHc+sdmnR1qdl+Ni7GTQEE6EamGq6+DL5gmVJvLWz
+ QhekIdpVpTjyG2KXEmPrDjnyO2Rl2cm09Cy9eH4mAQ/gTnEZ3JZ1hVl+BxRiO3J4
+ +qj2c1RKZgEasofYfqbb+UGl8N0T7DFmmnQqRLZWYKOvEMHSSE1izeEJZfi1mN1k
+ xR8EFA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkhtjhsmv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 20:07:10 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-3425098ae4bso84536eec.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 13:07:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793218030; x=1793822830; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ucSRWF12lnGJyZN7+noEh7KsB+kwIvYgDfypgnlLxe0=;
+ b=TnlRkCC5ywI7g0AzwNDgqkBHgRFZKvwXfZ42IydYv5HGPc6f9NmiqteprPf9kXZYPp
+ FBcWpLypLJ67w2DDeJhIhnCQNUrz7NBn/e8VwHNXodtyraBpVVVsrg6l2HZ5W2tkdLrt
+ J8JOmB0TarmW2gxQoz/Ym4SDuapISH1X3VAwrfPClaB+xUEawEado/jcI2/N/odDabGZ
+ 759zSaShDpHB6nj5IOjHdqrZi6ks+DwDJS0j9VilmR39JtykGiMpG1rXhBmNjuPyot06
+ Cg3h5GC5MOdgQoUzbZiiryMZju0nYwFHsoPusMCO2WMm7eZK9V2PGNdvcTP3eMGX+H/e
+ hDQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793218030; x=1793822830;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ucSRWF12lnGJyZN7+noEh7KsB+kwIvYgDfypgnlLxe0=;
+ b=IxDDSGz9ay1QwP/+NfgPhefHgpE5mYv9qPxPJRznNdhC8OK1fkoMDkhX6amEvsf/UF
+ 43EkcXK0J52anfnOCjVVJngZKy+4A3Cg8R8i7ly4ni88U9e/2rk25jb4ewhWT151221i
+ wgzDblO+WDHmDEHCJDwomQOj51DqkEGro9on4SoQ8U916csyqN30DdvSrNkZORzIe/FR
+ 28P8s+EOPFn6H2fFym8Wx2ZYzunMlg8ZuhrAqsxWWqq8c4+wLSduNrf/byau12g6PERV
+ rwr1aYEDjwq/pRuj2VPRdZlvF6Ja+CCvYx9OQxtUiT0T45hjRQjNGEPWgxLPsoO9uXJY
+ 14ng==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzbNe8k85FzlcJStwFHRLwNY3AAqpKPAskquYb/uVy4D3cfRT+hRVQ0rhroUfpOIRvliLM02bI9ArEI@nongnu.org
+X-Gm-Message-State: AFq9FYKzrxnHPC8NA0HVnF/utmCOQVFS4pRMMekOo4oD2U9Z9DO+JMDd
+ M6m7I+oL4DJUBBflV9TvwAx8TA5S24NLKmscHcUqz7dljjNtslIGslpzlkdWBacAlP3+6g1m/2n
+ +bvHfRFSeDKlKqomPMGcyOjCfc38FiveGXyhp9YDOn1aNHLxBFubTQo3Itw==
+X-Gm-Gg: AYBFou1ZzXC2Dwzkz3uJHRLuFzQfAlYod4wuHURQychsVQQU0PXSL26UYHBMfjXrkpA
+ yJlVlE5qckuU6/jXlQXRwWS2SzAjQVGJJYtzz2p7/u9FzCydebBmO+ce88QP5nje5wbRemXlXll
+ Wl15cKCiAR9XTMNh/AYCuDosgK4hQPobx56FDXaXwU8oLpq78M6G7IR0VqjSR1SA2/mDicmcLv6
+ FFgMxwVXQzz0bOK1Sw17cGLBJ4tXyjq3y3JpgweQQqD98Ck5UUccQj+2MqHGkv50nlMVzNCRTdk
+ CO734p/HOQ8UggFrJhdfTdsvomkrId4D6U5wUj9M9QgjToIOccoWfn7cOL6xy3BrAeCgy7voUhM
+ sK6T6kbQr8ZlP0s0CgzQrUeOf6+OsVEJbGaV+InNW28Zk7CqVdF/YINDv91/iYQDsSScLX0P51W
+ m8Iq8UuX/DUzsT9dZ+JVIaUfx6h+yL5qD/4EBiVHi+UQA=
+X-Received: by 2002:a05:7022:42b:b0:19e:3464:ce40 with SMTP id
+ a92af1059eb24-1a941feb674mr781697c88.1.1793218029483; 
+ Wed, 28 Oct 2026 13:07:09 -0700 (PDT)
+X-Received: by 2002:a05:7022:42b:b0:19e:3464:ce40 with SMTP id
+ a92af1059eb24-1a941feb674mr781648c88.1.1793218028791; 
+ Wed, 28 Oct 2026 13:07:08 -0700 (PDT)
+Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1a75ffac4a1sm7716970c88.20.2026.10.28.13.07.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Oct 2026 13:07:08 -0700 (PDT)
+Message-ID: <057696cb-8206-4d9c-8dae-41c39df6fdfb@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 12:07:07 -0800
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] tests/funtional: add test_virtio_status.py
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: eblake@redhat.com, armbru@redhat.com, th.huth+qemu@posteo.eu,
- philmd@oss.qualcomm.com, berrange@redhat.com, pbonzini@redhat.com,
- zhao1.liu@intel.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20260922213210.1429435-1-vsementsov@yandex-team.ru>
- <20260922213210.1429435-2-vsementsov@yandex-team.ru>
- <20261028122042-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH 0/4] tests/tcg: Massage MIPS tests for easier maintenance
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20261028192124.30941-1-philmd@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20261028122042-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c32:0:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1e.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20261028192124.30941-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI4MDA4MCBTYWx0ZWRfX9KAZO9WDAKiN
+ Tq/EcFnhUH6eO2xXTgCyUOddnUG8ApP3bUBV+mZI0EnAgw8rc7pAuMTSCwuOF8HSzaxEysPWOp9
+ 99M4MIzEY2tmC99Cu1WwDRTNvu97ah/Ea47NhvLJckng7iz+IYBsqYOS4mQY3otGX8B6oElmXFf
+ 45UF1TcZKjV10pPaGFQHesnIE8hRMkP/ytVu77ElFfWZKJ5Dkj+ZZthDRyXBOi8uk9hWfclsqDD
+ U/4Cp5m6eu0gf92fl0zIkASFVTR0lakVzyza31+FvMmSXiOa9glLgEJVnZMOmTt/cHhHdq4SZ3T
+ 7yh06QYlT2L9co1l9dEvj9MFXrwFolm+l4Kc1xvJFGp7rU2cTVMdz7Iz3NaeSK/mkv4OePhLcuE
+ kVHm+0/m6F4TicQiedf0ieP7hgzxiZbfeCvNjKYdCDUEdPC2ReMqU/eHCcnRqr2zShARnilmBiv
+ 2nugXvsQNUNzE7uT/Wg==
+X-Proofpoint-GUID: 0rCiSuXyXrxZHNo8oXzFQC5Lk9T4-cX5
+X-Proofpoint-ORIG-GUID: 0rCiSuXyXrxZHNo8oXzFQC5Lk9T4-cX5
+X-Authority-Analysis: v=2.4 cv=LdipeTfi c=1 sm=1 tr=0 ts=6ae255ee cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=ttNbwzGGGyJx_nAWgVkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI4MDA4MCBTYWx0ZWRfX2Ga/jKqsxxbt
+ TwZpZOPp7NkJrjlDzcItsyhKGPskGIJKZmaivaJmKO0Gry4iQ5xnv3Gt4PKhcmNLRY2tcPmdCoY
+ Y+D86WJwFwG7K9m7V9xfo08j1P758LQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-28_06,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 adultscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610280080
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,222 +155,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 28.10.26 19:21, Michael S. Tsirkin wrote:
-> Typo in the subject
+On 10/28/2026 11:21 AM, Philippe Mathieu-Daudé wrote:
+> I'm glad we have many MIPS tests but they are in too
+> many files, taking time to get compiled. In particular
+> on Aarch64 host via x86_64 docker image... Group the
+> test in order to reduce CI build time.
 > 
-> On Wed, Sep 23, 2026 at 12:32:08AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Add test that run x-query-virtio-status QMP command, and its
->> HMP analog.
->>
->> Now QEMU crashes in these scenarios due to bugs, so the test-cases
->> are skipped. You may run them by setting QEMU_FAILING_TESTS
->> environment variable.
->>
->> Following commits will fix bug and enable the test-cases.
->>
->> Wrap QEMU run by "unshare" to access vhost-net without sudo.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   MAINTAINERS                                   |  1 +
->>   tests/functional/qemu_test/testcase.py        |  9 +-
->>   tests/functional/x86_64/meson.build           |  2 +
->>   tests/functional/x86_64/test_virtio_status.py | 97 +++++++++++++++++++
->>   4 files changed, 105 insertions(+), 4 deletions(-)
->>   create mode 100755 tests/functional/x86_64/test_virtio_status.py
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 6be9c5725b9..8bd7c8472d9 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -2535,6 +2535,7 @@ F: include/hw/virtio/
->>   F: docs/devel/virtio*
->>   F: docs/devel/migration/virtio.rst
->>   F: tests/functional/x86_64/test_virtio_version.py
->> +F: tests/functional/x86_64/test_virtio_status.py
->>   
->>   virtio-balloon
->>   M: Michael S. Tsirkin <mst@redhat.com>
->> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
->> index bf2dc1dc101..d719b79eb1e 100644
->> --- a/tests/functional/qemu_test/testcase.py
->> +++ b/tests/functional/qemu_test/testcase.py
->> @@ -387,12 +387,13 @@ def require_device(self, devicename):
->>           if helptxt.find(devicename) < 0:
->>               self.skipTest('no support for device ' + devicename)
->>   
->> -    def _new_vm(self, name, monitor_address):
->> +    def _new_vm(self, name, monitor_address, wrapper):
->>           vm = QEMUMachine(self.qemu_bin,
->>                            name=name,
->>                            base_temp_dir=self.workdir,
->>                            log_dir=self.log_file(),
->> -                         monitor_address=monitor_address)
->> +                         monitor_address=monitor_address,
->> +                         wrapper=wrapper)
->>           self.log.debug('QEMUMachine "%s" created', name)
->>           self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
->>   
->> @@ -407,11 +408,11 @@ def _new_vm(self, name, monitor_address):
->>       def vm(self):
->>           return self.get_vm(name='default')
->>   
->> -    def get_vm(self, name=None, monitor_address=None):
->> +    def get_vm(self, name=None, monitor_address=None, wrapper=()):
->>           if not name:
->>               name = str(uuid.uuid4())
->>           if self._vms.get(name) is None:
->> -            self._vms[name] = self._new_vm(name, monitor_address)
->> +            self._vms[name] = self._new_vm(name, monitor_address, wrapper)
->>               if self.cpu is not None:
->>                   self._vms[name].add_args('-cpu', self.cpu)
->>               if self.machine is not None:
->> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
->> index 0353b2af8e1..62dedb2e203 100644
->> --- a/tests/functional/x86_64/meson.build
->> +++ b/tests/functional/x86_64/meson.build
->> @@ -7,6 +7,7 @@ test_x86_64_timeouts = {
->>     'netdev_ethtool' : 180,
->>     'replay' : 480,
->>     'virtio_balloon': 120,
->> +  'virtio_status': 120,
->>   }
->>   
->>   tests_x86_64_system_quick = [
->> @@ -50,5 +51,6 @@ tests_x86_64_system_thorough = [
->>     'vhost_user_bridge',
->>     'virtio_balloon',
->>     'virtio_gpu',
->> +  'virtio_status',
->>     'rebuild_vmfd',
->>   ]
->> diff --git a/tests/functional/x86_64/test_virtio_status.py b/tests/functional/x86_64/test_virtio_status.py
->> new file mode 100755
->> index 00000000000..c8cbdf7c42e
->> --- /dev/null
->> +++ b/tests/functional/x86_64/test_virtio_status.py
->> @@ -0,0 +1,97 @@
->> +#!/usr/bin/env python3
->> +#
->> +# SPDX-License-Identifier: MIT
-> 
-> QEMU uses GPL v2.0 or later.
+> Philippe Mathieu-Daudé (4):
+>   tests/tcg/mips: Clear DSPControl at start of DSP tests
+>   tests/tcg/mips: Group DSP tests
+>   tests/tcg/mips: Group Release 6 tests
+>   tests/tcg/mips: Group MSA tests
+>
 
-Hmm, but there are files with "SPDX-License-Identifier: MIT".. Is there a generic requirement somewhere?
+That's a good idea in itself, but this would need additional work to
+have a clear report per test. We can't trade usability for faster
+compilation.
 
-I just wanted to create less problems for people, after this https://lore.kernel.org/qemu-devel/f88e2d78-68c3-4c56-9d3b-4deba3c49b20@oracle.com/ story.
+Right now, a test will stop on the first assert() met, without going
+further.
 
-If you still prefer GPL v2.0, I don't care, let's switch. Should I resend this patch alone?
+Ideally, we can keep the list of tests in a static table, and perform
+the DSPControl clear before each, so patch 1 can be removed. Also,
+assert could be replaced with a proper return and print information per
+test.
 
-> 
->> +
->> +import os
->> +import subprocess
->> +
->> +from qemu_test import (
->> +    Asset,
->> +    LinuxKernelTest,
->> +    skipIfMissingCommands,
->> +    skipIfMissingEnv,
->> +)
->> +
->> +
->> +class VirtioStatus(LinuxKernelTest):
->> +    ASSET_KERNEL = Asset(
->> +        "https://dl-cdn.alpinelinux.org/alpine/v3.24/releases/x86_64/"
->> +        "netboot-3.24.2/vmlinuz-virt",
->> +        "be8ae7782de532d1a791c97fbf9ddc955b9de78349382ad097c83ffe9db857f4")
->> +    ASSET_INITRD = Asset(
->> +        "https://dl-cdn.alpinelinux.org/alpine/v3.24/releases/x86_64/"
->> +        "netboot-3.24.2/initramfs-virt",
->> +        "385418a99b17c0ef44947d88ea448d43b2df4a2c3343da72e724c6cf3b05e9f7")
->> +
->> +    VIRTIO_PATH = "/machine/peripheral/net0/virtio-backend"
->> +
->> +    def setUp(self):
->> +        super().setUp()
->> +        self.qemu_wrapper = []
->> +        self.require_accelerator("kvm")
->> +        self.require_device("virtio-net-pci")
->> +        self.set_machine("q35")
->> +
->> +    def has_hmp(self, vm):
->> +        commands = vm.cmd('query-commands')
->> +        return any(cmd['name'] == 'human-monitor-command' for cmd in commands)
->> +
->> +    def check_commands(self, vm):
->> +        if self.has_hmp(vm):
->> +            vm.cmd(
->> +                "human-monitor-command",
->> +                command_line="info virtio-status " + self.VIRTIO_PATH,
->> +            )
->> +        vm.cmd("x-query-virtio-status", path=self.VIRTIO_PATH)
->> +
->> +    @skipIfMissingCommands("unshare")
->> +    @skipIfMissingEnv("QEMU_FAILING_TESTS")
->> +    def test_vhost(self):
->> +        self.require_netdev("tap")
->> +        for device in ("/dev/net/tun", "/dev/vhost-net"):
->> +            if not os.access(device, os.R_OK | os.W_OK):
->> +                self.skipTest(f"Read/write access to {device} is required")
->> +
->> +        wrapper = ["unshare", "-Urn", "--"]
->> +        probe = subprocess.run(wrapper + ["true"],
->> +                               capture_output=True,
->> +                               text=True, check=False)
->> +        if probe.returncode:
->> +            self.skipTest("User/network namespaces unavailable: " +
->> +                          probe.stderr.strip())
->> +
->> +        vm = self.get_vm("wrapped", wrapper=wrapper)
->> +
->> +        kernel = self.ASSET_KERNEL.fetch()
->> +        initrd = self.ASSET_INITRD.fetch()
->> +
->> +        vm.set_console()
->> +        vm.add_args("-accel", "kvm")
->> +        vm.add_args("-kernel", kernel,
->> +                    "-initrd", initrd,
->> +                    "-append", "console=ttyS0 modules=virtio_net",
->> +                    "-netdev",
->> +                    "tap,id=net,script=,downscript=,vhost=on",
->> +                    "-device",
->> +                    "virtio-net-pci,id=net0,netdev=net,romfile=")
->> +        vm.launch()
->> +
->> +        # modules=virtio_net ensures the driver is loaded by this point
->> +        self.wait_for_console_pattern("Loading boot drivers: ok.", vm=vm)
->> +        vm.cmd(
->> +            "x-query-virtio-vhost-queue-status", path=self.VIRTIO_PATH, queue=0
->> +        )
->> +
->> +        self.check_commands(vm)
->> +
->> +    @skipIfMissingEnv("QEMU_FAILING_TESTS")
->> +    def test_no_vhost(self):
->> +        self.vm.add_args("-accel", "kvm",
->> +                         "-S", "-net", "none", "-device",
->> +                         "virtio-net-pci,id=net0,romfile=")
->> +        self.vm.launch()
->> +        self.check_commands(self.vm)
->> +
->> +
->> +if __name__ == "__main__":
->> +    LinuxKernelTest.main()
->> -- 
->> 2.43.0
-> 
-
-
--- 
-Best regards,
-Vladimir
+Regards,
+Pierrick
 
