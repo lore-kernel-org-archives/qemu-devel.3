@@ -1,102 +1,105 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70887606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3F0606A31A
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Ne52RAkE;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=YVwsOtEE
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=QW1jv3Hh;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=t+iVVFJO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Hd-000494-C6; Wed, 28 Oct 2026 13:17:55 -0400
+	id 1xM7Hh-0004D8-LE; Wed, 28 Oct 2026 13:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7H6-0001sK-VL
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GW-00019c-9j
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7H4-00040q-T8
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GQ-0003ub-DA
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207838;
+ s=mimecast20190719; t=1793207794;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8r7GpswjYliRUYMu308FD2l8ZVNNAemsFlYF1KvgFJQ=;
- b=Ne52RAkEuCA6G82ldIFcWL34xtEyNJmvGRJGS/eJV+aau6iw1zQlHen01QpxhqJ6Vk4ivv
- IkwrW7ybsQtIEU7qVAhx779G4sYARkCUSAHQj0QI+XmQzYoRUX0CIfnUB3aQeEych3IO3c
- r5bzN3Wg289uSGxDMKwuK5aGXPAkBnQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=266/aZuuZJj1dv13T/cRFg8LVOsF8F1fa7XWd/oESG4=;
+ b=QW1jv3HhbcOv1fFHhYpUBYda3CEc5TyAa/sXXUY2RMsBwdjBxnKGegTZsKbx3Ix7oR03pw
+ H3DX12nMfYZ/PAae/3ZewpwAqGus6emt/vtQo2ECCGxdG2NyM2oS5nJgSa5JlqXmfOU1+n
+ a/ulmM1feb1+93L7qDhaPmmyBE5phtU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-6b64YBC6ONaLcZHqVfZBhQ-1; Wed, 28 Oct 2026 13:17:17 -0400
-X-MC-Unique: 6b64YBC6ONaLcZHqVfZBhQ-1
-X-Mimecast-MFC-AGG-ID: 6b64YBC6ONaLcZHqVfZBhQ_1793207836
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-48b027578a4so954444f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:16 -0700 (PDT)
+ us-mta-27--NNue9VANRmW4pkid5uD-w-1; Wed, 28 Oct 2026 13:16:31 -0400
+X-MC-Unique: -NNue9VANRmW4pkid5uD-w-1
+X-Mimecast-MFC-AGG-ID: -NNue9VANRmW4pkid5uD-w_1793207789
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4a359c7f47bso10207165e9.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207835; x=1793812635; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8r7GpswjYliRUYMu308FD2l8ZVNNAemsFlYF1KvgFJQ=;
- b=YVwsOtEEnoasGIzRkil4WrmqY//bu3ezCAAtLkCYhm1wQRjEXYAFpNtCiCOa9tkNaE
- kppD62NYE4ktn+5/9yYH7tUzw9b6cRX/G1OuKP7oWdPV8eIlug6TCG/nrk4jHtDObEpS
- 4eJpfdO4uCbcI2LjPaBJ0wTENXVQm6jSTjY4pCjelg2EtD16JSsDPpq7mvUZ7MUMjNkx
- va6uSCAutnAQd++8HQJcHoMgTDSXqIaqrUvZhRWTpz+so2KXKSyZ2MJEp8z2wOSm3zm+
- RHdXNPgJ3faadF8/iIQfaerWW8/pttFvtzlljQnL8ehJEFtJms8hb9kIE2raF4wuzP/F
- oN+w==
+ d=redhat.com; s=google; t=1793207788; x=1793812588; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=266/aZuuZJj1dv13T/cRFg8LVOsF8F1fa7XWd/oESG4=;
+ b=t+iVVFJOrsh4VkNYHJTY/HLfDTqdBiveKwUP7qq8J4cjqERiYwlRZEnezSnW62iLnk
+ fJCXTyjujQi34IzCZEKx74ec1xTZ6+de+8FwJRkqwEOBr7XetxKHAMOksdODgOKq5aB1
+ iXxv4Y0bMIsy8mTFZN7yNjtu85Z6YtnutzFrbZanADq+HtOMfRgxppQabkBCus/yDwW0
+ 1e6h0dcCN+E93+9cq8g6vcglyxI5EjSHBDAMlBiRLZNyyA/tGC7wZ/2WpBpghKXlyhkT
+ r2qZVVgybunhlVxvgKVAWlwdP6PAQZVKGEMxah/U4al4B+YmDmVuL5Bkn8ARpujX/PCC
+ W1UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207835; x=1793812635;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8r7GpswjYliRUYMu308FD2l8ZVNNAemsFlYF1KvgFJQ=;
- b=axI9vlvBii5+JCVVCFcQkmQ858BV/0Nj8QZwvndooDBoRRP+3OKMhHiXM4ednf9Gst
- JOt32PE0IIC+npfzyY734LtPv9gWMqNeUD1cObpqkHhFvmd2WQebG8IWHsEd7bsC72Wo
- 50TBRlVOUys+HjF9NLMB1jIANnnJADCuGjd80XbO0jMAHq8En3bZBBzJCOADIa4tnwL6
- f6rpUrsIX+D3W1N8nGaMfrN7mwLcMzv1i//iQ6X+gh8nfDnQzMlLeUu5TPi8F/dT/JkL
- XhbTjQ3ySTkGRSuGNTYCxTy2p/tc50R6raDjYJp2FeN7MoKRQI+ACyniddvg9vd3PBE+
- ESug==
-X-Gm-Message-State: AFq9FYK7Or/g+K375QeiTMGHEcWMD81uwShQ4oQjuKOdEUSoI0dNwzmU
- wtUc0OfnKeBBzSRv/FOK+MThuxOx0GVxR0x+rA/9S1dfIm4ALOo8GndtorM6MqFbunhrhv3oMeJ
- ReOWpppK0gFcCvNc/bXX++EHbyXCtlRN5TAmAqXNtwlF4Lbjvd//5dRr3BW4nOMzUzFREG8JHoC
- NnEBsHoTQI7r3JYpg3W3y0Z8fKprsvsQT4VA==
-X-Gm-Gg: AYBFou0kZ+Mr3IBhPrOiuT9svxt/3GYeEFTS1fBX8G/MDT+YbK6yYzBaQ1RXeT3BeTs
- /JKDbAbQIjDPFXxDGR3NKLCdLVqPIl7lxSIBy//QMy+H5IN0XXP8mkoOo+RQTKu6DLIFZwFogea
- 3M7lt8gfbZBf8DTCXr8VGXxk83PUbgsAByvGsIvtMROtXWonmK7sk40rDBoixUcfVv1URoySgxq
- kEtYSN7rqU19jmSUalNHFvkHmBnm0OR2MEHisI9Q9NTzBhYo4YJ8EwAxl/h9JHa9Zj2vuYjhDbF
- Fy2wlFDER648lnOjL9EojPA5ekvifP30IWafmyiP6ff1ftZUf+vjlg+NUoNcaf3YBKQt2xeGwmS
- LgWVvRNYz9rT/mq7w9Vx+SfJLjLUFZG2ZA730FmS/
-X-Received: by 2002:a05:6000:1866:b0:488:7b66:140c with SMTP id
- ffacd0b85a97d-48e5d45a69amr7787599f8f.28.1793207835469; 
- Wed, 28 Oct 2026 10:17:15 -0700 (PDT)
-X-Received: by 2002:a05:6000:1866:b0:488:7b66:140c with SMTP id
- ffacd0b85a97d-48e5d45a69amr7787499f8f.28.1793207834832; 
- Wed, 28 Oct 2026 10:17:14 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207788; x=1793812588;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=266/aZuuZJj1dv13T/cRFg8LVOsF8F1fa7XWd/oESG4=;
+ b=EjJJPggEIBKeMMc9KYNJavQsUv/EIVxxIlSdQ7qzw3NnDQMVtFWJaxzuPD7PQp7ZXV
+ SXEqEYSN+G554X6M6lY3Arqwpq3bOE+grTfdR1Z1INaxpkqTynJgYT6cJk0oWFGeHL2e
+ byIk4NB1xGCqeHTK4ZZ3b9794a94v8FNlVJoqbvLwyXZXjKgFDhlPN+YVC7OEtDUFgqG
+ L5qzIFIvbjBwFuKXf+Tf4M5ebui2PGIEozjsUlLSk7YgTpXQ/8IE6Sc5gSYlHjvEpRb1
+ 2kcBdDTfABJRDVZhk1EKtMzx/Fc8vyd7grjQRzFnv7/sNLQTfUbP+T6hBN9oYtw+8KSh
+ yvmQ==
+X-Gm-Message-State: AFq9FYIYOIdxkdeYkuu2LF4Cwm229ynoaldF19BdQ0a+ewpPGdmX2nFk
+ D1MIEew4SMTD3aJyuS/dxOzOa+LW/DxmCgY/5O9KFfZF/rvWtzjA1v9D5ZrI1J/MrR7HLfMivqo
+ D6w1x1WIXT1j/fr2L5jIoZWFRV8xlu/cCiTx8dzEJvyunE383HDO8BuCByNP0dbANvLkvsEzN5v
+ krBlSXLe9iDSMmge5ALPRGK6xNjKCL+QwOiw==
+X-Gm-Gg: AYBFou27DJ6wJGgKk3cHLAtCtTYmZh5zeKal/aCH+wAPfOI67jGQIWE9PHcoFJCr1eY
+ MidwGzsCCgiizkXc9IaBdqqSMyZH02kzuTH0Ux8FgxkZnonY16AeElnxKMV5lFRhWb2+RilDxn8
+ CoqzDQalAC6pa/KZlhGtiTHdgcxLydYdLmvnZiqmZ2NMueOBoVuHjkjdtPrYWpvZ+KwKqVErb1T
+ j22ITLe0YiwEwmUlUPk2qXnbTGVe1zwg3z0PRpu885cfrl5tDerZ2RC6T8ev2o3GyJVRrTpp17C
+ l132Z9QTpBHYG1HhdYBeUKuSmtlU2Pn8oebtljykv8ENlJRmaj/K93fHmIyFTtEUpVC+61g9pQn
+ exTlLbmj3tnLaIobcD+fHqIxXPOt5KWrO57YhDVe8
+X-Received: by 2002:a05:600c:8183:b0:4a2:1a:a129 with SMTP id
+ 5b1f17b1804b1-4a9677c92d0mr54489285e9.35.1793207788102; 
+ Wed, 28 Oct 2026 10:16:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:8183:b0:4a2:1a:a129 with SMTP id
+ 5b1f17b1804b1-4a9677c92d0mr54488635e9.35.1793207787387; 
+ Wed, 28 Oct 2026 10:16:27 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebd49afsm29812183f8f.35.2026.10.28.10.17.13
+ ffacd0b85a97d-48e3eb8f248sm29239446f8f.6.2026.10.28.10.16.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:17:14 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:17:12 -0400
+ Wed, 28 Oct 2026 10:16:26 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Yi Liu <yi.l.liu@intel.com>, Nicolin Chen <nicolinc@nvidia.com>,
- Xudong Hao <xudong.hao@intel.com>, Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 70/78] backends/iommufd: Introduce iommufd_backend_alloc_faultq
-Message-ID: <fb57097733fb0b6198f908fc9c0753df054c6b5a.1793207602.git.mst@redhat.com>
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@linux.dev>, Anisa Su <anisa.su@samsung.com>,
+ linux-cxl@vger.kernel.org
+Subject: [PULL 56/78] hw/pci-bridge: split CXL PXB into separate file
+Message-ID: <e6b0101a30025ed22deb99f6c956be33d842be16.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -127,83 +130,620 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
-handling object which will be used in hwpt allocation.
+If CONFIG_CXL=n is added to the Kconfig, the build fails to link
+the PXB device:
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
+/usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_realize':
+/home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:202:(.text+0x330): undefined reference to `cxl_component_register_block_init'
+/usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o: in function `pxb_cxl_dev_reset':
+/home/berrange/src/virt/qemu/build/../hw/pci-bridge/pci_expander_bridge.c:309:(.text+0x768): undefined reference to `cxl_component_register_init_common'
+
+We cannot use CONFIG_CXL in pci_expander_bridge.c because the
+identifier is poisoned. Instead the CXL pieces must be split
+off into a separate source file which can be conditionally
+built.
+
+With this change, the stubs file is no longer required, since
+the code referencing the stub was already protected by CONFIG_CXL.
+
+Fixes: 6e4e3ae936e6 ("hw/cxl/component: Implement host bridge MMIO (8.2.5, table 142)")
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261020091955.1607161-3-zhenzhong.duan@intel.com>
+Message-ID: <20260928095646.3555447-3-berrange@redhat.com>
 ---
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 21 +++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 25 insertions(+)
+ hw/pci-bridge/pci_expander_bridge_common.h    |  28 +++
+ ...der_bridge.h => pci_expander_bridge_cxl.h} |   0
+ hw/cxl/cxl-host.c                             |   2 +-
+ hw/pci-bridge/pci_expander_bridge.c           | 194 +----------------
+ hw/pci-bridge/pci_expander_bridge_cxl.c       | 201 ++++++++++++++++++
+ hw/pci-bridge/pci_expander_bridge_stubs.c     |  14 --
+ hw/pci-bridge/meson.build                     |   2 +-
+ 7 files changed, 240 insertions(+), 201 deletions(-)
+ create mode 100644 hw/pci-bridge/pci_expander_bridge_common.h
+ rename include/hw/pci-bridge/{pci_expander_bridge.h => pci_expander_bridge_cxl.h} (100%)
+ create mode 100644 hw/pci-bridge/pci_expander_bridge_cxl.c
+ delete mode 100644 hw/pci-bridge/pci_expander_bridge_stubs.c
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 17bf1a3727..36b34b4899 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -106,6 +106,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-                                    uint32_t *out_veventq_id,
-                                    uint32_t *out_veventq_fd, Error **errp);
- 
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
-+                                  uint32_t *out_fault_fd, Error **errp);
+diff --git a/hw/pci-bridge/pci_expander_bridge_common.h b/hw/pci-bridge/pci_expander_bridge_common.h
+new file mode 100644
+index 0000000000..d894ed0add
+--- /dev/null
++++ b/hw/pci-bridge/pci_expander_bridge_common.h
+@@ -0,0 +1,28 @@
++/*
++ * PCI Expander Bridge Device Emulation Common Code
++ *
++ * Copyright (C) 2015 Red Hat Inc
++ *
++ * Authors:
++ *   Marcel Apfelbaum <marcel@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 45fd2e44c7..457b74a558 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -556,6 +556,27 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-     return true;
++enum BusType { PCI, PCIE, CXL };
++
++typedef struct PXBBus PXBBus;
++
++struct PXBBus {
++    /*< private >*/
++    PCIBus parent_obj;
++    /*< public >*/
++
++    char bus_path[8];
++};
++
++int pxb_bus_num(PCIBus *bus);
++void pxb_bus_class_init(ObjectClass *class, const void *data);
++bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
++                            Error **errp);
++void pxb_dev_exitfn(PCIDevice *pci_dev);
+diff --git a/include/hw/pci-bridge/pci_expander_bridge.h b/include/hw/pci-bridge/pci_expander_bridge_cxl.h
+similarity index 100%
+rename from include/hw/pci-bridge/pci_expander_bridge.h
+rename to include/hw/pci-bridge/pci_expander_bridge_cxl.h
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index e279ce5fe3..cda4dfed50 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -20,7 +20,7 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/pci/pci_host.h"
+ #include "hw/pci/pcie_port.h"
+-#include "hw/pci-bridge/pci_expander_bridge.h"
++#include "hw/pci-bridge/pci_expander_bridge_cxl.h"
+ 
+ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+                                            int index, Error **errp)
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 40ffbc4e08..2498df480b 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -18,57 +18,29 @@
+ #include "hw/pci/pcie_port.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/pci/pci_bridge.h"
+-#include "hw/pci-bridge/pci_expander_bridge.h"
+-#include "hw/cxl/cxl.h"
+ #include "qemu/range.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "system/numa.h"
+ #include "hw/core/boards.h"
+ #include "qom/object.h"
+-
+-enum BusType { PCI, PCIE, CXL };
++#include "pci_expander_bridge_common.h"
+ 
+ #define TYPE_PXB_BUS "pxb-bus"
+-typedef struct PXBBus PXBBus;
++
+ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
+                          TYPE_PXB_BUS)
+ 
+ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
+                          TYPE_PXB_PCIE_BUS)
+ 
+-DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
+-                         TYPE_PXB_CXL_BUS)
+-
+-struct PXBBus {
+-    /*< private >*/
+-    PCIBus parent_obj;
+-    /*< public >*/
+-
+-    char bus_path[8];
+-};
+-
+ OBJECT_DECLARE_SIMPLE_TYPE(PXBPCIEDev, PXB_PCIE_DEV)
+ 
+ static GList *pxb_dev_list;
+ 
+ #define TYPE_PXB_HOST "pxb-host"
+ 
+-CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb)
+-{
+-    CXLHost *host = PXB_CXL_HOST(hb);
+-
+-    return &host->cxl_cstate;
+-}
+-
+-bool cxl_get_hb_passthrough(PCIHostState *hb)
+-{
+-    CXLHost *host = PXB_CXL_HOST(hb);
+-
+-    return host->passthrough;
+-}
+-
+-static int pxb_bus_num(PCIBus *bus)
++int pxb_bus_num(PCIBus *bus)
+ {
+     PXBDev *pxb = PXB_DEV(bus->parent_dev);
+ 
+@@ -96,7 +68,7 @@ static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
+     visit_type_uint32(v, name, &uid, errp);
  }
  
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *out_fault_id,
-+                                  uint32_t *out_fault_fd, Error **errp)
+-static void pxb_bus_class_init(ObjectClass *class, const void *data)
++void pxb_bus_class_init(ObjectClass *class, const void *data)
+ {
+     PCIBusClass *pbc = PCI_BUS_CLASS(class);
+ 
+@@ -123,20 +95,11 @@ static const TypeInfo pxb_pcie_bus_info = {
+     .class_init    = pxb_bus_class_init,
+ };
+ 
+-static const TypeInfo pxb_cxl_bus_info = {
+-    .name          = TYPE_PXB_CXL_BUS,
+-    .parent        = TYPE_CXL_BUS,
+-    .instance_size = sizeof(PXBBus),
+-    .class_init    = pxb_bus_class_init,
+-};
+-
+ static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
+                                           PCIBus *rootbus)
+ {
+-    PXBBus *bus = pci_bus_is_cxl(rootbus) ?
+-                      PXB_CXL_BUS(rootbus) :
+-                      pci_bus_is_express(rootbus) ? PXB_PCIE_BUS(rootbus) :
+-                                                    PXB_BUS(rootbus);
++    PXBBus *bus = pci_bus_is_express(rootbus) ?
++        PXB_PCIE_BUS(rootbus) : PXB_BUS(rootbus);
+ 
+     snprintf(bus->bus_path, 8, "0000:%02x", pxb_bus_num(rootbus));
+     return bus->bus_path;
+@@ -192,64 +155,6 @@ static const TypeInfo pxb_host_info = {
+     .class_init    = pxb_host_class_init,
+ };
+ 
+-static void pxb_cxl_realize(DeviceState *dev, Error **errp)
+-{
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+-    CXLHost *cxl = PXB_CXL_HOST(dev);
+-    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
+-    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
+-
+-    cxl_component_register_block_init(OBJECT(dev), cxl_cstate,
+-                                      TYPE_PXB_CXL_HOST);
+-    sysbus_init_mmio(sbd, mr);
+-}
+-
+-/*
+- * Host bridge realization has no means of knowning state associated
+- * with a particular machine. As such, it is nececssary to delay
+- * final setup of the host bridge register space until later in the
+- * machine bring up.
+- */
+-void pxb_cxl_hook_up_registers(CXLState *cxl_state, PCIBus *bus, Error **errp)
+-{
+-    PXBCXLDev *pxb =  PXB_CXL_DEV(pci_bridge_get_device(bus));
+-    CXLHost *cxl = pxb->cxl_host_bridge;
+-    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
+-    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
+-    hwaddr offset;
+-
+-    offset = memory_region_size(mr) * cxl_state->next_mr_idx;
+-    if (offset > memory_region_size(&cxl_state->host_mr)) {
+-        error_setg(errp, "Insufficient space for pxb cxl host register space");
+-        return;
+-    }
+-
+-    memory_region_add_subregion(&cxl_state->host_mr, offset, mr);
+-    cxl_state->next_mr_idx++;
+-}
+-
+-static void pxb_cxl_host_class_init(ObjectClass *class, const void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(class);
+-    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
+-
+-    hc->root_bus_path = pxb_host_root_bus_path;
+-    dc->fw_name = "cxl";
+-    dc->realize = pxb_cxl_realize;
+-    /* Reason: Internal part of the pxb/pxb-pcie device, not usable by itself */
+-    dc->user_creatable = false;
+-}
+-
+-/*
+- * This is a device to handle the MMIO for a CXL host bridge. It does nothing
+- * else.
+- */
+-static const TypeInfo cxl_host_info = {
+-    .name          = TYPE_PXB_CXL_HOST,
+-    .parent        = TYPE_PCI_HOST_BRIDGE,
+-    .instance_size = sizeof(CXLHost),
+-    .class_init    = pxb_cxl_host_class_init,
+-};
+ 
+ /*
+  * Registers the PXB bus as a child of pci host root bus.
+@@ -297,34 +202,6 @@ static int pxb_map_irq_fn(PCIDevice *pci_dev, int pin)
+     return pin - PCI_SLOT(pxb->devfn);
+ }
+ 
+-static void pxb_cxl_dev_reset(DeviceState *dev)
+-{
+-    CXLHost *cxl = PXB_CXL_DEV(dev)->cxl_host_bridge;
+-    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
+-    PCIHostState *hb = PCI_HOST_BRIDGE(cxl);
+-    uint32_t *reg_state = cxl_cstate->crb.cache_mem_registers;
+-    uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
+-    int dsp_count = 0;
+-
+-    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false);
+-    /*
+-     * The CXL specification allows for host bridges with no HDM decoders
+-     * if they only have a single root port.
+-     */
+-    if (!PXB_CXL_DEV(dev)->hdm_for_passthrough) {
+-        dsp_count = pcie_count_ds_ports(hb->bus);
+-    }
+-    /* Initial reset will have 0 dsp so wait until > 0 */
+-    if (dsp_count == 1) {
+-        cxl->passthrough = true;
+-        /* Set Capability ID in header to NONE */
+-        ARRAY_FIELD_DP32(reg_state, CXL_HDM_CAPABILITY_HEADER, ID, 0);
+-    } else {
+-        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT,
+-                         8);
+-    }
+-}
+-
+ static gint pxb_compare(gconstpointer a, gconstpointer b)
+ {
+     const PXBDev *pxb_a = a, *pxb_b = b;
+@@ -334,8 +211,8 @@ static gint pxb_compare(gconstpointer a, gconstpointer b)
+            0;
+ }
+ 
+-static bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
+-                                   Error **errp)
++bool pxb_dev_realize_common(PCIDevice *dev, enum BusType type,
++                            Error **errp)
+ {
+     PXBDev *pxb = PXB_DEV(dev);
+     DeviceState *ds, *bds = NULL;
+@@ -417,7 +294,7 @@ static void pxb_dev_realize(PCIDevice *dev, Error **errp)
+     pxb_dev_realize_common(dev, PCI, errp);
+ }
+ 
+-static void pxb_dev_exitfn(PCIDevice *pci_dev)
++void pxb_dev_exitfn(PCIDevice *pci_dev)
+ {
+     PXBDev *pxb = PXB_DEV(pci_dev);
+ 
+@@ -496,67 +373,14 @@ static const TypeInfo pxb_pcie_dev_info = {
+     },
+ };
+ 
+-static void pxb_cxl_dev_realize(PCIDevice *dev, Error **errp)
+-{
+-    /* A CXL PXB's parent bus is still PCIe */
+-    if (!pci_bus_is_express(pci_get_bus(dev))) {
+-        error_setg(errp, "pxb-cxl devices cannot reside on a PCI bus");
+-        return;
+-    }
+-
+-    if (!pxb_dev_realize_common(dev, CXL, errp)) {
+-        return;
+-    }
+-    pxb_cxl_dev_reset(DEVICE(dev));
+-}
+-
+-static const Property pxb_cxl_dev_properties[] = {
+-    DEFINE_PROP_BOOL("hdm_for_passthrough", PXBCXLDev, hdm_for_passthrough, false),
+-};
+-
+-static void pxb_cxl_dev_class_init(ObjectClass *klass, const void *data)
+-{
+-    DeviceClass *dc   = DEVICE_CLASS(klass);
+-    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-
+-    k->realize             = pxb_cxl_dev_realize;
+-    k->exit                = pxb_dev_exitfn;
+-    /*
+-     * XXX: These types of bridges don't actually show up in the hierarchy so
+-     * vendor, device, class, etc. ids are intentionally left out.
+-     */
+-
+-    dc->desc = "CXL Host Bridge";
+-    device_class_set_props(dc, pxb_cxl_dev_properties);
+-    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+-
+-    /* Host bridges aren't hotpluggable. FIXME: spec reference */
+-    dc->hotpluggable = false;
+-    device_class_set_legacy_reset(dc, pxb_cxl_dev_reset);
+-}
+-
+-static const TypeInfo pxb_cxl_dev_info = {
+-    .name          = TYPE_PXB_CXL_DEV,
+-    .parent        = TYPE_PXB_PCIE_DEV,
+-    .instance_size = sizeof(PXBCXLDev),
+-    .class_init    = pxb_cxl_dev_class_init,
+-    .interfaces =
+-        (const InterfaceInfo[]){
+-            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-            {},
+-        },
+-};
+ 
+ static void pxb_register_types(void)
+ {
+     type_register_static(&pxb_bus_info);
+     type_register_static(&pxb_pcie_bus_info);
+-    type_register_static(&pxb_cxl_bus_info);
+     type_register_static(&pxb_host_info);
+-    type_register_static(&cxl_host_info);
+     type_register_static(&pxb_dev_info);
+     type_register_static(&pxb_pcie_dev_info);
+-    type_register_static(&pxb_cxl_dev_info);
+ }
+ 
+ type_init(pxb_register_types)
+diff --git a/hw/pci-bridge/pci_expander_bridge_cxl.c b/hw/pci-bridge/pci_expander_bridge_cxl.c
+new file mode 100644
+index 0000000000..ceb8928f8f
+--- /dev/null
++++ b/hw/pci-bridge/pci_expander_bridge_cxl.c
+@@ -0,0 +1,201 @@
++/*
++ * CXL PCI Expander Bridge Device Emulation
++ *
++ * Copyright (C) 2015 Red Hat Inc
++ *
++ * Authors:
++ *   Marcel Apfelbaum <marcel@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/pci/pci.h"
++#include "hw/pci/pci_bus.h"
++#include "hw/pci/pci_bridge.h"
++#include "hw/pci/pcie_port.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/pci-bridge/pci_expander_bridge_cxl.h"
++#include "qom/object.h"
++#include "pci_expander_bridge_common.h"
++
++DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
++                         TYPE_PXB_CXL_BUS)
++
++CXLComponentState *cxl_get_hb_cstate(PCIHostState *hb)
 +{
-+    int ret, fd = be->fd;
-+    struct iommu_fault_alloc cmd = {
-+        .size = sizeof(cmd),
-+    };
++    CXLHost *host = PXB_CXL_HOST(hb);
 +
-+    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
-+    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
-+                                       ret);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to allocate fault queue");
-+        return false;
-+    }
-+
-+    *out_fault_id = cmd.out_fault_id;
-+    *out_fault_fd = cmd.out_fault_fd;
-+    return true;
++    return &host->cxl_cstate;
 +}
 +
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/trace-events b/backends/trace-events
-index 9b7b9b7d68..b1c1d89dd8 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
- iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-+iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
++bool cxl_get_hb_passthrough(PCIHostState *hb)
++{
++    CXLHost *host = PXB_CXL_HOST(hb);
++
++    return host->passthrough;
++}
++
++static const char *pxb_cxl_host_root_bus_path(PCIHostState *host_bridge,
++                                              PCIBus *rootbus)
++{
++    PXBBus *bus = PXB_CXL_BUS(rootbus);
++    snprintf(bus->bus_path, 8, "0000:%02x", pxb_bus_num(rootbus));
++    return bus->bus_path;
++}
++
++
++static const TypeInfo pxb_cxl_bus_info = {
++    .name          = TYPE_PXB_CXL_BUS,
++    .parent        = TYPE_CXL_BUS,
++    .instance_size = sizeof(PXBBus),
++    .class_init    = pxb_bus_class_init,
++};
++
++static void pxb_cxl_realize(DeviceState *dev, Error **errp)
++{
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    CXLHost *cxl = PXB_CXL_HOST(dev);
++    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
++    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
++
++    cxl_component_register_block_init(OBJECT(dev), cxl_cstate,
++                                      TYPE_PXB_CXL_HOST);
++    sysbus_init_mmio(sbd, mr);
++}
++
++/*
++ * Host bridge realization has no means of knowning state associated
++ * with a particular machine. As such, it is nececssary to delay
++ * final setup of the host bridge register space until later in the
++ * machine bring up.
++ */
++void pxb_cxl_hook_up_registers(CXLState *cxl_state, PCIBus *bus, Error **errp)
++{
++    PXBCXLDev *pxb =  PXB_CXL_DEV(pci_bridge_get_device(bus));
++    CXLHost *cxl = pxb->cxl_host_bridge;
++    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
++    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
++    hwaddr offset;
++
++    offset = memory_region_size(mr) * cxl_state->next_mr_idx;
++    if (offset > memory_region_size(&cxl_state->host_mr)) {
++        error_setg(errp, "Insufficient space for pxb cxl host register space");
++        return;
++    }
++
++    memory_region_add_subregion(&cxl_state->host_mr, offset, mr);
++    cxl_state->next_mr_idx++;
++}
++
++static void pxb_cxl_host_class_init(ObjectClass *class, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(class);
++    PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
++
++    hc->root_bus_path = pxb_cxl_host_root_bus_path;
++    dc->fw_name = "cxl";
++    dc->realize = pxb_cxl_realize;
++    /* Reason: Internal part of the pxb/pxb-pcie device, not usable by itself */
++    dc->user_creatable = false;
++}
++
++/*
++ * This is a device to handle the MMIO for a CXL host bridge. It does nothing
++ * else.
++ */
++static const TypeInfo cxl_host_info = {
++    .name          = TYPE_PXB_CXL_HOST,
++    .parent        = TYPE_PCI_HOST_BRIDGE,
++    .instance_size = sizeof(CXLHost),
++    .class_init    = pxb_cxl_host_class_init,
++};
++
++static void pxb_cxl_dev_reset(DeviceState *dev)
++{
++    CXLHost *cxl = PXB_CXL_DEV(dev)->cxl_host_bridge;
++    CXLComponentState *cxl_cstate = &cxl->cxl_cstate;
++    PCIHostState *hb = PCI_HOST_BRIDGE(cxl);
++    uint32_t *reg_state = cxl_cstate->crb.cache_mem_registers;
++    uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
++    int dsp_count = 0;
++
++    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC, false);
++    /*
++     * The CXL specification allows for host bridges with no HDM decoders
++     * if they only have a single root port.
++     */
++    if (!PXB_CXL_DEV(dev)->hdm_for_passthrough) {
++        dsp_count = pcie_count_ds_ports(hb->bus);
++    }
++    /* Initial reset will have 0 dsp so wait until > 0 */
++    if (dsp_count == 1) {
++        cxl->passthrough = true;
++        /* Set Capability ID in header to NONE */
++        ARRAY_FIELD_DP32(reg_state, CXL_HDM_CAPABILITY_HEADER, ID, 0);
++    } else {
++        ARRAY_FIELD_DP32(reg_state, CXL_HDM_DECODER_CAPABILITY, TARGET_COUNT,
++                         8);
++    }
++}
++
++static void pxb_cxl_dev_realize(PCIDevice *dev, Error **errp)
++{
++    /* A CXL PXB's parent bus is still PCIe */
++    if (!pci_bus_is_express(pci_get_bus(dev))) {
++        error_setg(errp, "pxb-cxl devices cannot reside on a PCI bus");
++        return;
++    }
++
++    if (!pxb_dev_realize_common(dev, CXL, errp)) {
++        return;
++    }
++    pxb_cxl_dev_reset(DEVICE(dev));
++}
++
++static const Property pxb_cxl_dev_properties[] = {
++    DEFINE_PROP_BOOL("hdm_for_passthrough", PXBCXLDev,
++                     hdm_for_passthrough, false),
++};
++
++static void pxb_cxl_dev_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc   = DEVICE_CLASS(klass);
++    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
++
++    k->realize             = pxb_cxl_dev_realize;
++    k->exit                = pxb_dev_exitfn;
++    /*
++     * XXX: These types of bridges don't actually show up in the hierarchy so
++     * vendor, device, class, etc. ids are intentionally left out.
++     */
++
++    dc->desc = "CXL Host Bridge";
++    device_class_set_props(dc, pxb_cxl_dev_properties);
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
++
++    /* Host bridges aren't hotpluggable. FIXME: spec reference */
++    dc->hotpluggable = false;
++    device_class_set_legacy_reset(dc, pxb_cxl_dev_reset);
++}
++
++static const TypeInfo pxb_cxl_dev_info = {
++    .name          = TYPE_PXB_CXL_DEV,
++    .parent        = TYPE_PXB_PCIE_DEV,
++    .instance_size = sizeof(PXBCXLDev),
++    .class_init    = pxb_cxl_dev_class_init,
++    .interfaces =
++        (const InterfaceInfo[]){
++            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
++            {},
++        },
++};
++
++static void pxb_cxl_register_types(void)
++{
++    type_register_static(&pxb_cxl_bus_info);
++    type_register_static(&cxl_host_info);
++    type_register_static(&pxb_cxl_dev_info);
++}
++
++type_init(pxb_cxl_register_types)
+diff --git a/hw/pci-bridge/pci_expander_bridge_stubs.c b/hw/pci-bridge/pci_expander_bridge_stubs.c
+deleted file mode 100644
+index b35180311f..0000000000
+--- a/hw/pci-bridge/pci_expander_bridge_stubs.c
++++ /dev/null
+@@ -1,14 +0,0 @@
+-/*
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- *
+- * Stubs for calls made from machines to handle the case where CONFIG_PXB
+- * is not enabled.
+- */
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "hw/pci/pci.h"
+-#include "hw/pci/pci_bus.h"
+-#include "hw/pci-bridge/pci_expander_bridge.h"
+-#include "hw/cxl/cxl.h"
+-
+-void pxb_cxl_hook_up_registers(CXLState *state, PCIBus *bus, Error **errp) {};
+diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
+index aa9959df04..563d3f5147 100644
+--- a/hw/pci-bridge/meson.build
++++ b/hw/pci-bridge/meson.build
+@@ -6,7 +6,7 @@ pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('pcie_root_port.c', 'gen_pci
+                                                     'gen_pcie_upstream_port.c', 'gen_pcie_downstream_port.c'))
+ pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('pcie_pci_bridge.c'))
+ pci_ss.add(when: 'CONFIG_PXB', if_true: files('pci_expander_bridge.c'))
+-stub_ss.add(files('pci_expander_bridge_stubs.c'))
++pci_ss.add(when: 'CONFIG_CXL', if_true: files('pci_expander_bridge_cxl.c'))
+ pci_ss.add(when: 'CONFIG_XIO3130', if_true: files('xio3130_upstream.c', 'xio3130_downstream.c'))
+ pci_ss.add(when: 'CONFIG_CXL', if_true: files('cxl_root_port.c', 'cxl_upstream.c', 'cxl_downstream.c'))
+ 
 -- 
 MST
 
