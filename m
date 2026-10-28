@@ -1,111 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166B0606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 03:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D4E606A323
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 03:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=gjdyiQ+X
+	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=Fc/4pgP5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLu8l-0008QC-18; Tue, 27 Oct 2026 23:15:51 -0400
+	id 1xLuFw-0001VJ-V3; Tue, 27 Oct 2026 23:23:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLu8i-0008PQ-Uy
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:15:48 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1xLuFs-0001Ut-PR
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:13 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1xLu8h-0003Tf-3U
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:15:48 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-6acb9c018ffso768629a12.1
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 20:15:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793157345; cv=none;
- d=google.com; s=arc-20260327;
- b=Nz3Qp6LyDqYFLInQoflpKCKbRO8nBSScRtBdtptEid+njtlztoUgRc0EhpIlj33V83
- k3JZNYh6iTuPHUyldKP1kJPUfwyzH3wRWVYPh9mAEyY+d9t+fv5PQmq7gJzW0OjKMhxp
- S2IG/AIFiXaBtAaQk5jy3tohPm/t7fnCtsTdpmgA3uUxGt94BqasvirQopsHcpC5olJS
- 7HAaSfic/xW4syIr5hELIQTCWizEpEUZf8ZlPrBUP0wU/eZujFm95CHPK1xUyz6I3sDR
- xtjlg0jcHJpK/s8CofT5SiwJ64Dc8Aq0UlmFJz8L8pWsBx7OVuYqWjarZc0P/Nepxnjs
- x99w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :reply-to:in-reply-to:references:mime-version:dkim-signature;
- bh=MqATXC3g1C7B2A4jjbemUTKdSmHPGWY0cvAnc0DM8nY=;
- fh=46U1FE5Qw0fo7evi6utX9h5HLfzSsvyXi+QDnZDegHo=;
- b=cp9KYxhXN4NsJyKVURGY5pCkreQQns3EeS6/kmHiP3/agNBuDhD1v93vU4LEY9kgKn
- UZoBwqd3Vh5DUJb+67NoFE8PiS6BiAd4IHfaCbFlR+45ggOSKJbhvakaI3G8AQYug4YW
- ezAutJ5qLUWO4gwJD/VEJqi2+6zgteCmhqfz+yZv/CwCf9YPtJrh9KAdWi8Qd1l8KBKf
- q5SOKvHWpIIIP/qr3v4OGFtPCuaAoLfC93d8b8VNxWxKAFJ91bj7rZc6MJ9tSq+bk15d
- +x4gXSiec38p5cs1iSQjrbiF7SeAH8x3sf+aCDYEDAuNPAM5dyJYMkUUR7RDTqIAVn5w
- K74Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1xLuFr-00043a-1o
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:12 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-c418e215671so57452366b.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 20:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793157345; x=1793762145; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=MqATXC3g1C7B2A4jjbemUTKdSmHPGWY0cvAnc0DM8nY=;
- b=gjdyiQ+XuBUW/3c2xW0RWqJwpP7MNf3jybFZsOCUlX9aPWMHUngT2/76M1eeJ25pv3
- AqCBY3iXujvX3w423tWt88Lah56Mg+j7RoSwvIYDEf10NMsrs9Y11RT8gVUXUZflpSQe
- zEjzijRiBzQAOvyzuelRBZmuNlNGYnCBgZIFf/5xzKZHYtBY8lWylv1R0kdNfdf8QRfS
- 9jGYbMWeLRXtbY6acWWhZmr9dZ0gZA8qtS5zgybxZTn7qXHgcTCodv0iFRIFAwXQs/6i
- TM0Nv3QWjyDVE8E8+AL2CUdAmWSB6L0kU1OOhgdbhrLhens2Vg5W5FBOIPHMI/SwGNMr
- Jf/g==
+ d=sifive.com; s=google; t=1793157789; x=1793762589; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=mk3I4P3qvt9cpCXVVANHB7X1V9r2M3jD6i2IEfgksoA=;
+ b=Fc/4pgP5RRhxSHEyru4TxmAXUzj8qh3RKqEBSuaLVDKW/7Rn9YsR7QPX7AZNo1xpla
+ MeWIFgoVlnL7aaWsMPqeMl+9zHi+qrLH3wdpPo/Ih2SE1vB4uGUGrTTYaSS8kdlhLkIV
+ fG/TIu4bZbOLwpWGOH5so7lgyuP3o1q88nYduVm0JKYvK/kQ2umi6J8/L2zTepq1eYsp
+ yuyCkwh0uVTz8bQjRmKCON83sV+l9RH3SnzkGAhy8bvIASM08sqVutjwu/QbyCMiAbNp
+ v0pwjnhdUhYhR/gxK6zrDTqNP38FrqXBiGgu0P2cxf4vSpn1YgJtcEILTOWPBgGddXpI
+ oGDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793157345; x=1793762145;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:reply-to:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MqATXC3g1C7B2A4jjbemUTKdSmHPGWY0cvAnc0DM8nY=;
- b=LA1QAlpeCPpZ04CP1Ock/YzY/tEvgJGFpXtVPs6QBGUINPQTbhfVS9wXBs6Lu+V6Dt
- 5XLVrp5GGemRcS6X8zgRGiE+qSiba5b95hMfulzcJBZ2Kuge+Ta1y1hW6ZcQrCAB5Tg4
- Yhz91QaAFmDUaYG+LLKNUumialaKXzLPKQP4vFfp712p37RoaIqZ/bCFOMR4aJKGzNc7
- bgrzg4MI8G5sbYOYNWi1EpRRre1np5HDrCIu6As7Raldxg5e+2MIsCbURMfTzOeP2GkX
- Sg+xpxLSarcdTt5nPSdtx1/VcXCpED6ceWShhb6O8H/4tNYRr2JO0mPEDmCn+aP1+sj9
- l7IQ==
-X-Gm-Message-State: AFq9FYJHw84ldsQUALcB88O6gs+/Cqxyk/pIylWdWUq0Jma6D+dBFVM4
- x9Ica4J0AHchccFScIu4GxiQW9iDW29TNuClUoZlr4+eFErfPrHC/Tqf5fXmwyo1wWB68iKuKX1
- xIj0zZ3l8rFvpQT9Wp5+EWCEYLeNl+OO0nlUH5mA=
-X-Gm-Gg: AYBFou0zTJuqlJeeNzR5m+ufy3s/jAi7SFS3TQZPGZrPyEu6d8n/eK5jryVPINzcW4X
- gySGHnAj8ocYFd1WQTjbNVuJHwP+8DoCxiGXy/XXveOytx2scO8mmmVfW7cuAeyZaDLJNDnghXS
- 15r3n4JyJkYlAu2IukUd1j5a+4pN+1TQdlQHMFOWsN37q4n4Qhkk0B6w6bJzGPOo0IUlMwNFIZm
- r6qPExCvHmfKoVU+GXPi2zl/fk0Ap6aexRvrQhlQ9D2+cgJdVP9qMeGEmwxe9o1U22uZrUzvdVN
- fHoh6pzhyglmIX4XE2erLhvqW9dhc6CVBYWP7fAlRRB9HRcdqr6b6AFtZQ37Ga6Tlj64XHLnTrn
- eT2qvv1pD7McrJGAMUv73atFAxvKvbnXaAqQI
-X-Received: by 2002:aa7:d48c:0:b0:6b3:cfa0:77cb with SMTP id
- 4fb4d7f45d1cf-6b47bcb01dfmr2276972a12.10.1793157345307; Tue, 27 Oct 2026
- 20:15:45 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793157789; x=1793762589;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=mk3I4P3qvt9cpCXVVANHB7X1V9r2M3jD6i2IEfgksoA=;
+ b=lTBA5uArYlNNj8CCsTqkfAGUavZw+DCah1qTBIm3fl2tz+UYMVxuQfarYgS7KrMgsh
+ jcAD0L+Ac3dDD+MqjYoMwM/4Tp9XBxR9/+WIXC3soJAyPZa6Lq8mw025oVne2qdcB5Yk
+ pACkUAaMX3l9WUZaqcVu9zjBTot/s3Wit8y41+XFXWaV8NcG82Ul1rldSS2EiVyOJsyT
+ m/iFDSoM2NeSX6etP2W0qNZtTHinPYqoQQ+MjJPuCKzlcDRHnqBW5L9S3azFOLwGJG36
+ 5jHHeZq3jYWPbqkGAbvbNOrqOKtQ379KTi8qq7g+uEkmaZ6b2YjgAJ21gTKEzR/1OIhF
+ OJCg==
+X-Gm-Message-State: AFq9FYLrjYRhJHSsu5FQcU9QOgfusdOS1DwUsz94xDAbECl/PJZAtD+M
+ Tyrlm2r62JE7NKkaJg6W4mtfw/GC6idRTkNYklWHwwk4GmNJt1xP8YsMCi4/wZwQ2CIt8nYZ1F/
+ FLCdu++brl+jqoVBzlcJ/K/uUsSS67QkJOOJlvrziikQa66F1gMPAb4gVWovoFsUUTAy2l5xbXP
+ nGg8N3yxPhXhgnFdxmDnlOAsiXyLkL5QTtSJRe9eHxCxw=
+X-Gm-Gg: AYBFou2HeBApLg91ttWXIhcXK27k3MYS9cCAj/mDQKPiWpOKb1s1Kw4i3/8BX+u74aK
+ yEJ11i/lLvJeEmKSuoEN9Bq75IXtIS38oHmXIl6zkkR+yuTxZxa1y0Q1f43nLPhBqtjlwq6Z7UM
+ lX59GegTrec3erVa4GiqitP2eaD/vBOGD6W1TfVJE07e+MDE6kjlOi4I7sxPtxe2fqJ914d8DOs
+ 8/rt3wJSc/obsfB1vxLPDFNA1CKdUNpNow0PigM4NJD5pfoEoyvJTmlo/O2V92FIYc0lKNiPQ+M
+ gJA4nxS8C1prVERT7vmbzkRZqXdMDZ5fAEuGHQaI9Z0j1ZpIERAs4E/WkY0gYUbr8mEjQxQ6uux
+ J9A+wugVoTZuOsiQ9xnZAgrH4Vx9lypeXtZbJ3GL0DnDo3qT0RL9UwaU+BIys9Ma99LvfKv1GrM
+ 62afa2BpAgea5ZKwz7+tzoP9bVYiWC64QA0GgLQVhpzItGiLCodv6X/L09eD0iEsgCwAkzkKYjw
+ Yj4Le1F4aQEJiosygSKB4jsNV8lxwWJTYk69JND+GBsAMVi+wnUAYMc1fyQABCCqXq2AfEqOccE
+ PqAu5iq2G7S7CcuTDw==
+X-Received: by 2002:a17:907:2d09:b0:c3f:7270:10ab with SMTP id
+ a640c23a62f3a-c49c633bf32mr6792466b.14.1793157789218; 
+ Tue, 27 Oct 2026 20:23:09 -0700 (PDT)
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com.
+ [209.85.208.53]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c46bd5202d9sm544253266b.32.2026.10.27.20.23.06
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Oct 2026 20:23:06 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id
+ 4fb4d7f45d1cf-6b3dc272dcfso783151a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 20:23:06 -0700 (PDT)
+X-Received: by 2002:aa7:c6d5:0:b0:6b4:16be:4fa with SMTP id
+ 4fb4d7f45d1cf-6b49cbd6cd0mr385557a12.15.1793157785664; Tue, 27 Oct 2026
+ 20:23:05 -0700 (PDT)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261019212046.149572-1-pierrick.bouvier@oss.qualcomm.com>
- <CAE2XoE_4_kLo+p2k+3+JvD_pPLPjc5M9_HSX70_6ewqjg1HyEQ@mail.gmail.com>
- <cd06ea46-5935-40cc-9897-bf004c0983d7@oss.qualcomm.com>
- <CAE2XoE-xipsj_xNJ5tQ5GEkNV+sJE3VuoATxuHj8M9xyVW2u0Q@mail.gmail.com>
- <bade67ae-332a-4b51-aa4d-02c49867dd91@oss.qualcomm.com>
-In-Reply-To: <bade67ae-332a-4b51-aa4d-02c49867dd91@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Wed, 28 Oct 2026 11:15:32 +0800
-X-Gm-Features: AclHuK_I8EfdDco9vCALpRdZiOEsq8QEL_8DcXK_4aD3T1jAQ-xZsYlUS3R6K_I
-Message-ID: <CAE2XoE-iOCdGxPtg7MqydmahpnOTFM_15dR0eJKGMrQKxrgeQQ@mail.gmail.com>
-Subject: Re: [PATCH 00/26] multi-target: prefix helpers with target prefix
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-level <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=luoyonggang@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
+ <20261021231346.2452179-13-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20261021231346.2452179-13-daniel.barboza@oss.qualcomm.com>
+From: Jay Chang <jay.chang@sifive.com>
+Date: Wed, 28 Oct 2026 11:22:54 +0800
+X-Gmail-Original-Message-ID: <CAMXXpfZB8w_pJso4M4_ufOm99VbV6gfbUSKDNz4twFwfcTPgpw@mail.gmail.com>
+X-Gm-Features: AclHuK9QdqaG-U3lqaLxdAeYzqbWYte2s4CGaiaJf8-nn3ySE5RrbwA2I8B6HtE
+Message-ID: <CAMXXpfZB8w_pJso4M4_ufOm99VbV6gfbUSKDNz4twFwfcTPgpw@mail.gmail.com>
+Subject: Re: [PATCH v4 12/18] target/riscv, hw/riscv: send trace ppccd packets
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu@processmission.com, antikostya2@gmail.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>, frank.chang@sifive.com
+Content-Type: multipart/alternative; boundary="000000000000d741b4065ede1435"
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=jay.chang@sifive.com; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,89 +109,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Wed, Oct 28, 2026 at 1:40=E2=80=AFAM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 10/26/2026 9:57 PM, Yonggang Luo wrote:
-> >> I hope that through the recent series sent on multi target topic, you
-> >> can see better how to try to slice work in smaller pieces. I try to
-> >> focus on having a clear goal for each series, and each patch has a
-> >> unique purpose. Then wait for reviews, and iterate from here.
-> >
-> > I have learned much, I need more information or discussion about thow t=
-o
-> > avoid calling target_info() in class_init. You suggest me to use is_ava=
-ilable
-> > but I still did not get it, because for multi-target binary, the is_ava=
-ilable
-> > will not be called. so adding more things into is_available is
-> > useless(for my target).
-> > So I want a more clean explanation of how to do that. (I have already
-> > tried rename/duplicate
-> > the QOM name with is_available, too much changes and cumbersome)
-> >
->
-> First step is to create distinct duplicated types for every QOM type
-> concerned (like two cpu max, one for arm, one for aarch64), and select
-> the right one with is_available.
-
-I think this is easily implemented. So this is fine.
+--000000000000d741b4065ede1435
+Content-Type: text/plain; charset="UTF-8"
 
 >
-> Once we have all types correctly duplicated, and using is_available
-> everywhere, we can replace the callback approach with a declarative
-> approach (.targets), and register types in distinct buckets.
-
-Indeed, we can compute .targets from is_available, as we can create a
-constant mapping
-for those target_* is_available callbacks. So the prototype can leverage th=
-at.
-
-
-
-> Then we can have an automatic naming convention "arch-type" which hits
-> this bucket, or "type" which must exist uniquely among all buckets.
-
-
-So you mean use "<target-name>-<TypeInfo::name>" as the QOM name when
-registering?
-For example, most types are QEMU_ARCH_ALL, then they will be
-registered multiple times?
-Or for all type with QEMU_ARCH_ALL, will only be registered a single time, =
-with
-narrow QEMU_ARCH_*, emulate <target-name>=EF=BC=8C then register all
-"<target-name>-<TypeInfo::name>"
-at type_register_internal?
-
-
+> -- a/target/riscv/tcg/cpu_helper.c
+> +++ b/target/riscv/tcg/cpu_helper.c
+> @@ -943,11 +943,22 @@ void riscv_cpu_set_mode(CPURISCVState *env,
+> privilege_mode_t newpriv,
+>  {
+>      g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
 >
-> Yes it's a big change, and it can be done in parallel to current effort
-> to support multiple targets linked together, it's unrelated.
+> +    CPUState *cs = env_cpu(env);
+> +
+>      if (newpriv != env->priv || env->virt_enabled != virt_en) {
+>          if (icount_enabled()) {
+>              riscv_itrigger_update_priv(env);
+>          }
 >
-> Please note that the bucket idea is just an idea at this point, and I'm
-> not sure if this will be accepted. In all cases, the refactoring for
-> using is_available and have duplicated first is needed first, so lets
-> focus on that.
+> +        if (newpriv != env->priv) {
+> +            RISCVCPU *cpu = RISCV_CPU(cs);
+> +
+> +            if (cpu->trencoder &&
+> +                TRACE_ENCODER(cpu->trencoder)->trace_running) {
+> +                trencoder_trace_ppccd(cpu->trencoder, env->pc);
+> +            }
+> +        }
 >
-> Regards,
-> Pierrick
+On the trap-entry path, env->pc has already been updated to the handler
+address, but env->priv still holds the previous privilege level.
+Emitting a PPCCD sync packet here therefore pairs the handler PC with
+the old privilege level.
 
+--000000000000d741b4065ede1435
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">-- a/target/riscv/tcg/cpu_helper.c=
+<br>
++++ b/target/riscv/tcg/cpu_helper.c<br>
+@@ -943,11 +943,22 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege=
+_mode_t newpriv,<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0g_assert(newpriv &lt;=3D PRV_M &amp;&amp; newpriv !=3D =
+PRV_RESERVED);<br>
+<br>
++=C2=A0 =C2=A0 CPUState *cs =3D env_cpu(env);<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0if (newpriv !=3D env-&gt;priv || env-&gt;virt_enabled !=
+=3D virt_en) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (icount_enabled()) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0riscv_itrigger_update_priv(=
+env);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (newpriv !=3D env-&gt;priv) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RISCVCPU *cpu =3D RISCV_CPU(cs);=
+<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu-&gt;trencoder &amp;&amp;=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TRACE_ENCODER(cpu-=
+&gt;trencoder)-&gt;trace_running) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trencoder_trace_pp=
+ccd(cpu-&gt;trencoder, env-&gt;pc);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br></blockquote><div>On the trap-entry path,=
+ env-&gt;pc has already been updated to the handler<br>address, but env-&gt=
+;priv still holds the previous privilege level.<br>Emitting a PPCCD sync pa=
+cket here therefore pairs the handler PC with<br>the old privilege level.</=
+div><div>=C2=A0</div></div></div>
 
---=20
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
+--000000000000d741b4065ede1435--
 
