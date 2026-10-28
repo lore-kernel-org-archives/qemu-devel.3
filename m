@@ -1,112 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45D0606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4949606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CTcZfOO4;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=lZCo/CKi
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=gMQkcLC6;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=oQt9zhNE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7FE-0006Ma-3I; Wed, 28 Oct 2026 13:15:24 -0400
+	id 1xM7HL-0002uG-AS; Wed, 28 Oct 2026 13:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Eg-00055U-7E
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GE-0000sg-3P
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ee-0003VG-HB
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:14:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GC-0003tG-D6
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207687;
+ s=mimecast20190719; t=1793207783;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
- b=CTcZfOO4o5h+zJh7HnxXrLKd0Npqy5iCQD+iO7Se03jDowaBLTe0ncj17RDRBzg6+49wMS
- X3AqKopZ6VYM5n1ggBB1W6WMLlzaDhf/5XiaD8A6Pdu3sKVM+Ki/pNEXaIRRYA1/YN+OMd
- pB54Lg7Au6WqY/mYdjHjhgAFUBwua2g=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
+ b=gMQkcLC6aP8TUCT4karKKE+/m+zLt+yj3+Y2Ymd0WjWv+3LhPJJ9kQ5k/2KwZXdT58eYxT
+ YXnbhe3ceWWOwQwBL/52RIFOu4xu5BEOyY5eH/9pTrU7aSFw9TbBjrYDpdAD9KUsa7iif/
+ VuDXzosd/qD8D3Ocq/r2T+TuYH9UnUo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-dGEWCgYLPT63kMv1l2z6Fg-1; Wed, 28 Oct 2026 13:14:42 -0400
-X-MC-Unique: dGEWCgYLPT63kMv1l2z6Fg-1
-X-Mimecast-MFC-AGG-ID: dGEWCgYLPT63kMv1l2z6Fg_1793207681
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e29c25101so711219f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:14:42 -0700 (PDT)
+ us-mta-152-6nfarlJqOJml40iSw5pZkA-1; Wed, 28 Oct 2026 13:16:15 -0400
+X-MC-Unique: 6nfarlJqOJml40iSw5pZkA-1
+X-Mimecast-MFC-AGG-ID: 6nfarlJqOJml40iSw5pZkA_1793207774
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-48df5b058ddso814018f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207681; x=1793812481; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
- b=lZCo/CKiRyju5947tMLAbpuYZdBdRGb2mt3RtE3Pz6dVFZt/KY/xxedq+C8eDIwh9m
- OEdWh5SUpKPo19JvNV9Z9/Z5yEm6h8GgdZsgzRWQKGtWc71RLmLReHbsOAbvyxEf3dZz
- KWZ46dy/iVrOiDrcDx85AaCWev6+SvVjEFGvn4j2o1622zqpAp+mgnE06L+NVn/2Z7+A
- fI7eIHJApjrk1kFxlYPDoEwNWweyOnil9mYnZzKL2Apj82cnbSyU41XxcVl086iYDQ1I
- B3ZMgk616raNdqfUxpVz2mVetp0YBoIaA9GUUsV4OCXrJe2dCPLuV8MHmHPo9cBuFT2Q
- Cu2A==
+ d=redhat.com; s=google; t=1793207774; x=1793812574; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
+ b=oQt9zhNEcJxU7xJmdG6gQBymJazdm2n4Fc2DDTchmcF2rBN8bP9cZtCSprRwlzSKb8
+ jb+8If78zpYFAzs8C3pW8NBMx4sF2FwOo5nXUKLvHOIkc0TypuBjVERDEu/jI+GWnQ69
+ TPxsmASR+2TuMrYTpfLNQVs1BbBBrxhYHZQiOl1ZbIq/yMbZrm/gj3XZFbewm6orPyXq
+ QOJkMrX42dDjCbdCfIYqOYv9NjbKHcJwmmaM6TitmPsblnbVKoqFSqCumn++OuZv5Sf+
+ asYY8vJN9YQkr8K1a56DpDf18Fj387gMZCohpaiZzlE3LRi7UDUrCJePkE1BA4YKqb6J
+ KD4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207681; x=1793812481;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=bbUceoQZ1O//ngot+5pqF7/YK3XY7d9HXvofIJ4XA1U=;
- b=YWIvpOaWy0y03GNAW9h0rP32eeSdUDZ9voBx2/F7cV1feozRrznN/vzEvH2u3yL4ay
- e0iYj9JohvCCkGmDQqay6JTkb39GPQ/5BxUv/nppxBRZ2a+ChNTJH1Yc76dKCMaer47X
- 0mvuPM6lGpiaFRbanGFPv1tC+JHOgr0CdCduZb/WAKxsEOSVgo5Gj4liSnauSig5g/1p
- F0jYwUZ2jIXLeA2dZGyckoWA0dadF5Cr3Vam0uWtxPiuFhRUHyxpr+WxEtQVU0UR+xwS
- yMTcwVK3TRxfHKyARt7DO8aarbzhKZ9oOxBIXFYB+kSuQQOG4RQwr6loZrjw4XnPsUaC
- BHsg==
-X-Gm-Message-State: AFq9FYK5Up4CCr7S4TZRIWJM7v641b/9nmwd1q4Bu/lNmn7TY3PUNfJN
- CQjpqIh2ja+wu7gMQlAVaJRKJcpO16Xq2y50A0PTATs+93TslFFJTrARdUT118opADbd8JXk6vm
- OYTFTImQYE7i1/BYd0X9RUkPGz8+KU9RWMU7VgetakVDVNbmCN27d7XnN8VvWtowsEKbe/qSFu3
- FxzKh5UFkuRBioakUvMvN4yKfQ//lk9chGGA==
-X-Gm-Gg: AYBFou2hmHyTPyG/+S5rcGC7Z0P5Gpg8rhZNaxmtFnKV+lFbHtSI9F7CGhUozZuURwU
- YcoxK/c2DP81CWaDuivftvL1RqHbmqg6nOpnPzXUPeIduK8N+aMlpOgiheEUUUqXP3JhxnERux6
- ANJ724jnzgEu1JB7JPXzEr5s8M/aF5Rk7w44CY293PMQ9LwTwGbR8Og68ziRqKl+QGx7Ce4HN/2
- JxVf6JYyv2wrT1wLiH5RD+3BldpYI+enSTFRetbHn8jQtzhVeTzPdw6uHt8py/nH+Hu8g006Hgt
- SeHqHKNGCXvsHip0MNqo2JQ+Wgs9yMIZbZfIu0MroUS/uN6YEO2VyZCbG8v4nH54ks5cjfIyUT0
- hH0LR9ZDts8FDo4HdbxKqIeeiTsTmQJ+kjs7OQYbT
-X-Received: by 2002:a5d:5f88:0:b0:48d:eb44:650c with SMTP id
- ffacd0b85a97d-48e5d5d13cfmr7657740f8f.40.1793207680981; 
- Wed, 28 Oct 2026 10:14:40 -0700 (PDT)
-X-Received: by 2002:a5d:5f88:0:b0:48d:eb44:650c with SMTP id
- ffacd0b85a97d-48e5d5d13cfmr7657559f8f.40.1793207679750; 
- Wed, 28 Oct 2026 10:14:39 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207774; x=1793812574;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=BxO5VMZ1m2vRSXVUX+FNzDo8Rt/mF4GlBwZ8lP6HL3g=;
+ b=GyO4vFIHLXFkesBhUnLYx1mpYzrY2Ni4ROyqvO9601WoJUw0UV26vmJY2z0JkN8U6Z
+ sndmbPgmZ/dEE/0ghzNZTAGdNXGnl/zC20nFAxWVdTYFxWOYZus/yRGWZ1h7Qir1PdDp
+ fRLAjZO53cWEyPoom9sxtj2hjt4DlaNnOkoMya3fB0NcIQMRuVCvW4/isAOoql2f9nk+
+ RYM6tQCY3MObaZmL2LDc/B4r4B9RMHLxsbSTWXPloCmYP1fXPfiSlhG9hsi43V4cJfBx
+ XUAqLwEgGycPH6NFBZ2SsqzBSNPztKK4PVnPo2LlnDeBca86fIsbaGP8Qm7ulwbz21fz
+ 4gPA==
+X-Gm-Message-State: AFq9FYIAeGNYRLipNJM9TO/ONCyJ0ZgzaLwYQDhx8JMveKx6qR72adtp
+ WwwZcDHiTNOQmFzo3wDkxJc6PanUfW+DUjn8r76mrqr71sLeU3EAT3QPb/FnosctX1L1KyirqUt
+ C1F1RovlhT+Y6xyeZ3k2MGBf0/EPhHh/Dh5/heJROeVIFLyw9WebNdA8K7K+dpcZlt7j7z3coMI
+ o1opIM4v+t7aodLJgIt727UApQffWVCWdjAA==
+X-Gm-Gg: AYBFou2tzknBRYuAbcUT7ZFKyxhh+PpWgUjP8xHp0EFh7kDGsjfJr+DYm6kec82s0QF
+ tjTPVVNZbU++Bi1mur3mWkSjGNrpIGkR1P6Dtle2B36/nwdlk0eauX1EFZDOo1EDHWLmAv0+ULA
+ U8sSai2zki3IYO88OYLQDuqhqXGhNgDsAGZefIMcpoXlg+fvWuaO1hU2XXM3KGCG3OJ6HXUGD6P
+ dwnJsExMMhlp2RC/OdRXgY5tYgOq3OBoKZDPk7d3ivc/lWu0IGt1RBwZBP0V+60lAKtgizUUezZ
+ ultT9ZzcIlHjjLH/kf8BCMIiXoJRBG5Xhlx0XNxU1GDzsHVMkklEeG6G0ro9Ce61XNctmVeenU3
+ E2mj2XIg7GmUhPRDmonOTYUtz9ARtLRaJGx0mkn5o
+X-Received: by 2002:a05:6000:2207:b0:48e:61c9:4e32 with SMTP id
+ ffacd0b85a97d-48e61c94e5emr2679199f8f.32.1793207773914; 
+ Wed, 28 Oct 2026 10:16:13 -0700 (PDT)
+X-Received: by 2002:a05:6000:2207:b0:48e:61c9:4e32 with SMTP id
+ ffacd0b85a97d-48e61c94e5emr2679102f8f.32.1793207773145; 
+ Wed, 28 Oct 2026 10:16:13 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ecd3c32sm30643224f8f.47.2026.10.28.10.14.38
+ ffacd0b85a97d-48e3ebd4be6sm27065740f8f.37.2026.10.28.10.16.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:14:39 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:14:37 -0400
+ Wed, 28 Oct 2026 10:16:12 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 17/78] vhost-vsock: don't reset connections during CPR
-Message-ID: <4d206dd0ff6e949cedde265bc487e0e350edd1a2.1793207602.git.mst@redhat.com>
+ Yodel Eldar <yodel.eldar@yodel.dev>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 51/78] contrib/vhost-user-bridge: Use stderr for debug output
+Message-ID: <00c714b33b5ee1b0ced551ab72971191d8b928f6.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,69 +128,40 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+From: Yodel Eldar <yodel.eldar@yodel.dev>
 
-Migration target with a vhost-vsock device in the .post_load() hook issues
-VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
-the guest tearing down all its vsock connections.  That reset exists
-because after a normal migration the cid may change.
+Since vhost-user-bridge is solely used for testing, and
+logging to stderr ensures proper interleaving of debug
+output in automated testing, modify the DPRINT macro to
+write to stderr instead of stdout.
 
-However it's not true for CPR-style migration.  In this case cid remains
-the same, and we want the connections to persist.  Thus, let's customize
-the .post_load() hook to skip the common transport reset part in this case.
+Message ID of relevant thread:
+<20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261012-up-vsock-vhost-v5-v16-8-36c38bd15ffc@virtuozzo.com>
+Message-ID: <20260914165250.88382-2-yodel.eldar@yodel.dev>
 ---
- hw/virtio/vhost-vsock.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ contrib/vhost-user-bridge/vhost-user-bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index 503d248a61..c582ac9fcc 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -20,6 +20,7 @@
- #include "hw/core/qdev-properties.h"
- #include "hw/virtio/vhost-vsock.h"
- #include "monitor/monitor.h"
-+#include "migration/cpr.h"
- #include "migration/blocker.h"
- #include "migration/misc.h"
+diff --git a/contrib/vhost-user-bridge/vhost-user-bridge.c b/contrib/vhost-user-bridge/vhost-user-bridge.c
+index 3f0fd0fa49..a6f7ec226c 100644
+--- a/contrib/vhost-user-bridge/vhost-user-bridge.c
++++ b/contrib/vhost-user-bridge/vhost-user-bridge.c
+@@ -41,7 +41,7 @@
+ #define DPRINT(...) \
+     do { \
+         if (VHOST_USER_BRIDGE_DEBUG) { \
+-            printf(__VA_ARGS__); \
++            fprintf(stderr, __VA_ARGS__); \
+         } \
+     } while (0)
  
-@@ -110,6 +111,20 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
-     return vhost_vsock_common_get_features(vdev, requested_features, errp);
- }
- 
-+static int vhost_vsock_post_load(void *opaque, int version_id)
-+{
-+    /*
-+     * Only reset vsock connections for non-CPR migration.  For CPR the
-+     * guest cid is unchanged, and the cid-change reset would otherwise
-+     * tear the vsock connections down.
-+     */
-+    if (!cpr_is_incoming()) {
-+        return vhost_vsock_common_post_load(opaque, version_id);
-+    }
-+
-+    return 0;
-+}
-+
- static const VMStateDescription vmstate_virtio_vhost_vsock = {
-     .name = "virtio-vhost_vsock",
-     .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
-@@ -119,7 +134,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
-         VMSTATE_END_OF_LIST()
-     },
-     .pre_save = vhost_vsock_common_pre_save,
--    .post_load = vhost_vsock_common_post_load,
-+    .post_load = vhost_vsock_post_load,
- };
- 
- static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
 -- 
 MST
 
