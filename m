@@ -1,126 +1,127 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE8D606A31D
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294B6606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=bzSE85UU;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=kfEpOkOT
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=q6DeWMwT
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLzV8-0007U4-Gh; Wed, 28 Oct 2026 04:59:18 -0400
+	id 1xLzYm-0000Wj-WF; Wed, 28 Oct 2026 05:03:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xLzV6-0007SW-NK
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 04:59:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzYk-0000Vc-Il
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:02 -0400
+Received: from smtpout4.mo538.mail-out.ovh.net ([51.210.91.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1xLzV4-0002mX-Qq
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 04:59:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793177953;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wWpXYPPO30PaZcroQkr2VKF9/A3AwaF5AHG6wSn6di0=;
- b=bzSE85UUbcl9sId16xofxqQHH+1RYEM/TGg5pmivqfTZJRrbjrHZPeYWocMrfM7mfyI2Pu
- dZcyjCisKJueHTzHxZM2cLDCuFrBw5frzsGl58Ag68l4QtM3u51YEpUetfX/4Knhi0gkks
- +CmcqozJPPp+iB+MkPenfDMsY4kLEZ4=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-mSje6eSAP26joV3HDBh6rw-1; Wed, 28 Oct 2026 04:59:12 -0400
-X-MC-Unique: mSje6eSAP26joV3HDBh6rw-1
-X-Mimecast-MFC-AGG-ID: mSje6eSAP26joV3HDBh6rw_1793177951
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-91c70349f65so17342316d6.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 01:59:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793177951; cv=none;
- d=google.com; s=arc-20260327;
- b=AN63o8abU2mE+OcE+bPMfsE7Bv5M3BrKaTLdRuzZK7tRGIarZ7yd7YkFpxNjLAkRfZ
- wIJwj2yDy0U1zm8jcPcOuk9jd1vGYRoPFqWbQs5xEfcSDZWYAoUN/0odoFEnntZ4EqHs
- vg/bz3Heba04ReyvCt44gWocXyA+l4o/Q9HsepUgtybBo5BEfTk2S97EO2whjntfKQaV
- ZTyF+ImbYLsWvMraGSZPr/adpD/gHW1wJqtEezR80snzf0Gj13k6rzotRWQK/Bcu/WUA
- eiaPaNGTXRFb4m1Ahf42XBUOOVnVOgZDN5BVTsuvZ/sQL+/a240chC7KL8u29O8id116
- 5Qsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=wWpXYPPO30PaZcroQkr2VKF9/A3AwaF5AHG6wSn6di0=;
- fh=lJ3l5h8sU9OcQSbaOuYA9KlOiaqQMCXiQDGuHTun508=;
- b=Tsr89jXEIFJ7Sq008UIipSqSmD735zDnZFCDIWTu9F0qHMbFLwKimgkmmJS7fsDlSO
- j4OFTGxqWikZRVYa4OofMLtusrdm8scs7X2vmOiy4Luy9Xbj0V4DlD5jRwi0rhrBxanG
- 4yoolWNF1qwMXoOXCsKOdv0+qfxOFn9KZ7IqRm7BxEsNhedtlNkojJxkyZo8iKtPNTO0
- yPeF3/TTXWyqj25IGjW+VxfFIBDP/yS98kHKSb+idxc7bTHatFIXTOxMAkbpDT/9z13/
- 6pVUHiwl4WtQIugep6qOqU7Es3tSyrPfWMn7yy7PfM/EUfFjZFlTyI2HzgY2Xksb01+e
- hIhQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793177951; x=1793782751; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=wWpXYPPO30PaZcroQkr2VKF9/A3AwaF5AHG6wSn6di0=;
- b=kfEpOkOTbRHXK4xGp5FlypjPtmNV0RbUFzeOJxi3hfYHjgJ8iffiixS1xU2371cEXb
- T0M984EeWHKaImF8Rv8OdJMChYYekGa1XyPv8Xa2/yEWKBxeScbPkozSdEhohjGMzL8I
- 5B9iC8gDUx5GXkw2y1wFoJH6WSURjIku68c5oYj/+NKlxmncwy2Uxvs+/lWZaivvkwGl
- WmH0O4NMletIEurnDL5/E21GsBH+ux+I3q8MWHJwfcAHRIRghuA8WEw4T1wsAac3tXp8
- aRQuuK3CZBILBW4oMfAV3ZhNMJX4DgZsWIG5mRb6ccMLGO8MJ1WTmKcsqiKCUSyIVOll
- fzQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793177951; x=1793782751;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=wWpXYPPO30PaZcroQkr2VKF9/A3AwaF5AHG6wSn6di0=;
- b=q+oXiZsl0GPQe17T7BMOFHb7ykH7WLp3pjLpq6pyCmBiK5eTMGZpcvdWbmS7iAzS7m
- mgTcPFQe9GfbTioMWxrGj8EyM1fZTrdvJxfBl5mp81Kc+MaTPYEgmfIMU1CpLRDEbvPA
- icE5cAZ2nKjKcZpCejyV32zDV//OXSNPIxmubPjNwvf0jXIlTSTjYe9oXpa7f7B0BPCl
- hz56N9Mt2q6L0yEX9BHk+T79rwpXk/NqE1g1e0XVoVpX5+hqGNXLHDaHzhBQNKTrncP4
- E07GRLWa9TZtkhVpwttbLAPc2X2oOd0vqvOZ+pKxFHbWdVFPLDJOKZrWmUpFnjndwSdj
- FvOw==
-X-Gm-Message-State: AFq9FYI+xdRw1Zi1wvs/GtizWtvE+VK1LpoZeuFkmY51YfQTwn8MkvFE
- e3aW9RWZ8DpNPF/+7VwVLKlynozhyGTg3jo+MMe23bMLD32jLqqpq2pFhoaMtrfJMDo+GQidjXE
- UpUeXH0gaUJqTYrataaGXxhlHaDwA7XAn3mUSN6YAjkV9DQZCgXIQB4SV++2zQNGmSw7z/RiMBW
- 0/q+CJs1Obyqsoi4Uz8ZQXXShv+tHxA2Q=
-X-Gm-Gg: AYBFou1afkY84a/9NxtvXf4yQYCG4FhrSlKNtA+jPsc2GmRQBrrP532px5s5il3//y9
- pt8WAk8W/7y9aj5T/gOjKlvuWbje/UfPxGEhrF3ueOHy8yQ1geUF0rWrtw3dSCwkgXMLMWNBkn0
- 1gSfRq+2qM6FKOkonm1l5X6AYOL+2n5KY0IpyBFTqPZIFJ7PQG214klJkHBYaUhFQn9DJs+Y7cX
- ixiu8ocHQ5kiLHWB5Y=
-X-Received: by 2002:a05:6214:8617:b0:91c:711c:27f3 with SMTP id
- 6a1803df08f44-91c7cf4a0eemr25987736d6.21.1793177951364; 
- Wed, 28 Oct 2026 01:59:11 -0700 (PDT)
-X-Received: by 2002:a05:6214:8617:b0:91c:711c:27f3 with SMTP id
- 6a1803df08f44-91c7cf4a0eemr25987546d6.21.1793177950923; Wed, 28 Oct 2026
- 01:59:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xLzYi-0003av-GA
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:03:02 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4jF1bj2WgDz6DYN;
+ Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alistair@alistair23.me>; Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.53])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jF1bj18gxz1xqK; Wed, 28 Oct 2026 09:02:57 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 3E9B019231F4; Wed, 28 Oct 2026 09:02:55 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S00311948785-e9b5-4531-8901-b70805559acb,
+ E08929C5676352A1F51837021B168DD299C323AB) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.66.77.115
+Message-ID: <1db3970e-5e8c-40d1-9a6c-87aca288c6d8@kaod.org>
+Date: Wed, 28 Oct 2026 10:02:54 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261015173250.65942-1-bogorodskiy@gmail.com>
- <20261015173250.65942-2-bogorodskiy@gmail.com>
-In-Reply-To: <20261015173250.65942-2-bogorodskiy@gmail.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 28 Oct 2026 10:58:59 +0200
-X-Gm-Features: AclHuK9YDcPvjRkwZ7tCWk2Kl27czJlklP3WZhYbSRw-TVsBY3AicrjFRrjoynY
-Message-ID: <CAPMcbCos82eavn8oci6O+T+Qbw6Vt8UWPezwA0Fc9KDN1CLX0w@mail.gmail.com>
-Subject: Re: [PATCH 1/2] qga: fix build on illumos
-To: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com, 
- berrange@redhat.com, pierrick.bouvier@oss.qualcomm.com,
- michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000c8bffb065ee2c6a2"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/13] hw/arm/aspeed: Add AST1040 FMC/SPI controllers
+ and unimplemented devices
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20261028023154.48395-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 13421008368489573421
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF/cy3wNeUwtFnfXAjGNTzp/VwYaMb9X5uTwQ3AUMnoafam+VI4u9sLUndSLCWEf7UDSABYuJLMXxWAaybgfjDMbgteyLR10TRQEdnR4s4HMGOWOnX+6MRR7s3aW2suM2JjBDSGojnfWazZXqaUI33FnrwsZC2lbmBotzMwo63HsQ4Fy8Z+sKEGblreC+ejB3zmZu8rYOILUMC4PoHgp6LUWdSACf75L2IJ2/YXIq6njsBdtR+y1KsbP1v6jQU4SSZZkJ9FZBfj/KbsQ081XCLjTGunKJ+TuJLjXqM+pJo5gdsepXteqwcrqNtZa00HDfAi4Fk1VfMYIOdjYptB5m2OspXn+SK0Sgndj6iy8yFQfF6seM88YtBPlKKXURyfHktHpBUWXgBO8mtuUQsJobe+V7erGKMnBQ7hkLG8OQno3E+AM65FPIImh33jXKOkmM49YXII3MtBQjofczn5Vf83JzrNdB/tySF0Uy5QJAYsDSKIx5NGrH7HILPAyE8FmHSljc2aJWtzkBbMgEjUAs98WPOMuprqgTyACoO9SlOVQKcDpDPWceKTXcfqFoFEL7cDaxM1r7bB7Gf1rZJbyYYjZVdQOe0BMj9bVdRXaeqif6bhITJKy0sKEIkZvS9UpyR7jo3X1R/nrMih0Q8TubE31cPa1Hkp6h6K3ysnGP78nQ
+DKIM-Signature: a=rsa-sha256; bh=DVzxAO9HLlHPapkyUcxqJFhHiYiFnzprl3r9Jqc3pOA=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1793178178; v=1;
+ b=q6DeWMwTyZBRHAVv85AJJzgViiiw2k2mkH3+vKWqRnJkC1GouyayAq149XRjOb4/j+fVoC2y
+ GKIhmOi9+Q2kGGFm3/MZp+k/k/JjlEsZwkkVrwtkk3y3/cCGh00VuLJJTIdV/RfubY2rWIbEUEZ
+ QhvcpjeSkKiy910DONa1vM7MG5szFv9xkI/X5CcI6/7rQRkniTsW8RQSmTSF+58SXfe7Nm7xAm1
+ mFTaM9MNR9uziWozXRajIs5V3ZiyTyd7Z/oyJgmYKgJDEWg241+VF6S6yw9o8wHgOH8R7qNTEPf
+ tKcPLQBvsilD6BKYyd20GTkCpuqc1wHCMCfAr2y04O2zA==
+Received-SPF: pass client-ip=51.210.91.33; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo538.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,159 +133,65 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	HTML_MESSAGE,INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000c8bffb065ee2c6a2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/28/26 03:31, Jamin Lin wrote:
+> v1:
+>   1. Fix AST2700 segment end address decoding
+>   2. Fix AST2700 DMA flash address mask
+>   3. Rename w25q32dw to w25q33pw and add the SFDP table for the W25Q33PW,
+>   4. Correct the AST1040 A0 silicon revision ID
+>   5. Add FMC and SPI controllers
+>   6. Add the FMC/SPI filters, OTP, ATC, I3C and Caliptra register
+>      regions as unimplemented device
+>   7. Update the AST1040 functional test to use the official pre-built
+>      image from aspeed-mcu-fw-hub v01.00.
+> 
+> v2:
+>    1. Add w25q33pw as a separate flash model instead of renaming w25q32dw.
+>    2. Add the AST1040 SMC reset value table.
+> 
+> Jamin Lin (13):
+>    hw/ssi/aspeed_smc: Fix AST2700 segment end address decoding
+>    hw/ssi/aspeed_smc: Fix AST2700 DMA flash address mask
+>    hw/block/m25p80: Add Winbond W25Q33PW flash
+>    hw/misc/aspeed_scu: Correct AST1040 A0 revision ID
+>    hw/ssi/aspeed_smc: Add AST1040 FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI controllers
+>    hw/arm/aspeed_ast1040: Add FMC and SPI filters as unimplemented
+>      devices
+>    hw/arm/aspeed_ast1040: Add OTP as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Anti-Tamper Controller (ATC) as an
+>      unimplemented device
+>    hw/arm/aspeed_ast1040: Add I3C as an unimplemented device
+>    hw/arm/aspeed_ast1040: Add Caliptra as an unimplemented device
+>    tests/qtest/aspeed_smc: Add AST1040 SMC tests
+>    tests/functional/arm/test_aspeed_ast1040: Update AST1040 image to
+>      aspeed-mcu-fw-hub v01.00
+> 
+>   hw/block/m25p80_sfdp.h                      |   1 +
+>   include/hw/misc/aspeed_scu.h                |   2 +-
+>   hw/arm/aspeed_ast1040.c                     |  45 +++++++
+>   hw/block/m25p80.c                           |   2 +
+>   hw/block/m25p80_sfdp.c                      |  36 ++++++
+>   hw/ssi/aspeed_smc.c                         | 131 +++++++++++++++++++-
+>   tests/qtest/aspeed_smc-test.c               |  61 +++++++++
+>   tests/functional/arm/test_aspeed_ast1040.py |  12 +-
+>   8 files changed, 278 insertions(+), 12 deletions(-)
+> 
 
-On Thu, Oct 15, 2026 at 8:33=E2=80=AFPM Roman Bogorodskiy <bogorodskiy@gmai=
-l.com>
-wrote:
+Applied to
 
-> Currently, build fails on illumos with:
->
-> ../qga/commands-posix.c: In function 'qmp_guest_get_load':
-> ../qga/commands-posix.c:1408:9: error: implicit declaration of function
-> 'getloadavg' [-Wimplicit-function-declaration]
->  1408 |     if (getloadavg(loadavg, G_N_ELEMENTS(loadavg)) < 0) {
->       |         ^~~~~~~~~~
-> ../qga/commands-posix.c:1408:9: warning: nested extern declaration of
-> 'getloadavg' [-Wnested-externs]
->
-> This happens because including <sys/loadavg.h> which is needed
-> for getloadavg() on illumos is nested under the "#ifdef HAVE_GETIFADDRS"
-> block, and is not included when HAVE_GETIFADDRS is not defined.
->
-> As getloadavg() does not depend on HAVE_GETIFADDRS, include
-> <sys/loadavg.h> outside of the "#ifdef HAVE_GETIFADDRS".
->
-> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
-> ---
->  qga/commands-posix.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 837e285b6d..f58169b43e 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -16,6 +16,9 @@
->  #include <sys/utsname.h>
->  #include <sys/wait.h>
->  #include <dirent.h>
-> +#if defined(CONFIG_SOLARIS) && defined(CONFIG_GETLOADAVG)
-> +#include <sys/loadavg.h>
-> +#endif
->  #include "qga-qapi-commands.h"
->  #include "qapi/error.h"
->  #include "qemu/host-utils.h"
-> @@ -43,9 +46,6 @@
->  #include <net/ethernet.h>
->  #endif
->  #ifdef CONFIG_SOLARIS
-> -#ifdef CONFIG_GETLOADAVG
-> -#include <sys/loadavg.h>
-> -#endif
->
+     https://github.com/legoater/qemu aspeed-next
 
-What is the difference?
+Thanks,
 
-Before commit we check CONFIG_GETLOADAVG inside CONFIG_SOLARIS, so
-this is definitly the same that you change CONFIG_GETLOADAVG
-&& CONFIG_SOLARIS
-
-
-Best Regards,
-Kostiantyn Kostiuk.
-
-
-
->  #include <sys/sockio.h>
->  #endif
->  #endif
-> --
-> 2.55.0
->
->
-
---000000000000c8bffb065ee2c6a2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 15,=
- 2026 at 8:33=E2=80=AFPM Roman Bogorodskiy &lt;<a href=3D"mailto:bogorodski=
-y@gmail.com">bogorodskiy@gmail.com</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">Currently, build fails on illumos with:<b=
-r>
-<br>
-../qga/commands-posix.c: In function &#39;qmp_guest_get_load&#39;:<br>
-../qga/commands-posix.c:1408:9: error: implicit declaration of function &#3=
-9;getloadavg&#39; [-Wimplicit-function-declaration]<br>
-=C2=A01408 |=C2=A0 =C2=A0 =C2=A0if (getloadavg(loadavg, G_N_ELEMENTS(loadav=
-g)) &lt; 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~<br>
-../qga/commands-posix.c:1408:9: warning: nested extern declaration of &#39;=
-getloadavg&#39; [-Wnested-externs]<br>
-<br>
-This happens because including &lt;sys/loadavg.h&gt; which is needed<br>
-for getloadavg() on illumos is nested under the &quot;#ifdef HAVE_GETIFADDR=
-S&quot;<br>
-block, and is not included when HAVE_GETIFADDRS is not defined.<br>
-<br>
-As getloadavg() does not depend on HAVE_GETIFADDRS, include<br>
-&lt;sys/loadavg.h&gt; outside of the &quot;#ifdef HAVE_GETIFADDRS&quot;.<br=
->
-<br>
-Signed-off-by: Roman Bogorodskiy &lt;<a href=3D"mailto:bogorodskiy@gmail.co=
-m" target=3D"_blank">bogorodskiy@gmail.com</a>&gt;<br>
----<br>
-=C2=A0qga/commands-posix.c | 6 +++---<br>
-=C2=A01 file changed, 3 insertions(+), 3 deletions(-)<br>
-<br>
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c<br>
-index 837e285b6d..f58169b43e 100644<br>
---- a/qga/commands-posix.c<br>
-+++ b/qga/commands-posix.c<br>
-@@ -16,6 +16,9 @@<br>
-=C2=A0#include &lt;sys/utsname.h&gt;<br>
-=C2=A0#include &lt;sys/wait.h&gt;<br>
-=C2=A0#include &lt;dirent.h&gt;<br>
-+#if defined(CONFIG_SOLARIS) &amp;&amp; defined(CONFIG_GETLOADAVG)<br>
-+#include &lt;sys/loadavg.h&gt;<br>
-+#endif<br>
-=C2=A0#include &quot;qga-qapi-commands.h&quot;<br>
-=C2=A0#include &quot;qapi/error.h&quot;<br>
-=C2=A0#include &quot;qemu/host-utils.h&quot;<br>
-@@ -43,9 +46,6 @@<br>
-=C2=A0#include &lt;net/ethernet.h&gt;<br>
-=C2=A0#endif<br>
-=C2=A0#ifdef CONFIG_SOLARIS<br>
--#ifdef CONFIG_GETLOADAVG<br>
--#include &lt;sys/loadavg.h&gt;<br>
--#endif<br></blockquote><div><br></div><div>What is the difference?=C2=A0<b=
-r><br></div><div>Before commit we check=C2=A0CONFIG_GETLOADAVG inside=C2=A0=
-CONFIG_SOLARIS, so</div><div>this is definitly the same that you change=C2=
-=A0CONFIG_GETLOADAVG &amp;&amp;=C2=A0CONFIG_SOLARIS</div><div><br></div><di=
-v><div><br clear=3D"all"></div><div><div dir=3D"ltr" class=3D"gmail_signatu=
-re"><div dir=3D"ltr"><div>Best Regards,</div><div>Kostiantyn Kostiuk.</div>=
-</div></div></div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-=C2=A0#include &lt;sys/sockio.h&gt;<br>
-=C2=A0#endif<br>
-=C2=A0#endif<br>
--- <br>
-2.55.0<br>
-<br>
-</blockquote></div></div>
-
---000000000000c8bffb065ee2c6a2--
+C.
 
 
