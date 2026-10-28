@@ -1,100 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C5A606A31F
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7142B606A320
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=P7ij4gb8;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=KM+yXWDF
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iLdQHZ8q;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=ktuPo/DJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7HC-000227-V4; Wed, 28 Oct 2026 13:17:27 -0400
+	id 1xM7HN-00036B-31; Wed, 28 Oct 2026 13:17:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G5-00009y-6d
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ga-0001Dg-MO
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G3-0003ry-7T
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7GW-0003wN-NE
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207774;
+ s=mimecast20190719; t=1793207803;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
- b=P7ij4gb842rfx34TO+h9EHBp1Ws855zlPyjyrcwy9b8zggllWC8E8fhdpAcpFlgWeDcyUD
- 8D1E2xv2Q6svkCqqvzSopPcar67Gmc6VUMN0EdhPgRNDkRmiYyg4thi4amwHUOdCdkiedb
- 3BU7OYGBrr+tK8te8ObedmahLoYVdAE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dWpOsnChQtr3kRDdC1FT+mgnTXjmcTTbX2EopbWkNRs=;
+ b=iLdQHZ8qYMZp6dEEsMM+Wh3MTv1n9IjgZBsV11m1SzpZ0SKdZNqcYciH7SzgtjHx1fmd8h
+ s6F9VzdEuDO/TSxqRyCTsTo6kjOWkY6ZUz69jx95bNZqYGlIUTwb2FXVnAhr+TQKOcoWm8
+ vfeLmLPYO5b/T04/tPM/sCTwaeAVaG0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-KMn1TFVtM0WSAYheQ5jukw-1; Wed, 28 Oct 2026 13:16:12 -0400
-X-MC-Unique: KMn1TFVtM0WSAYheQ5jukw-1
-X-Mimecast-MFC-AGG-ID: KMn1TFVtM0WSAYheQ5jukw_1793207772
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-48e20ed362aso56047f8f.2
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:12 -0700 (PDT)
+ us-mta-539-QsgIKsVbPUSZgT0cTS-aVQ-1; Wed, 28 Oct 2026 13:16:40 -0400
+X-MC-Unique: QsgIKsVbPUSZgT0cTS-aVQ-1
+X-Mimecast-MFC-AGG-ID: QsgIKsVbPUSZgT0cTS-aVQ_1793207799
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-48e011829easo871100f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207771; x=1793812571; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
- b=KM+yXWDFka5JTd6t4w+YAmgHHhDZl3PtfummssPsiD/tmnDi/Ws116foCgMeKJJhVw
- 1ZBJ5n8EgaVnm4gI6S3VmhlTgg/kUCI7JpWWgGcXMVy/tIBeA9Fl3L5UEsCd+K13GJ26
- M7R1OaKxWY64sGQw8aD6cWkyTdu1RPUtmA7RXgqGTAsJ1XTkTWUiTOq3P+WxIk+VaKgR
- Gi1APZ8ptUJvf+C1GqaJEnse3FEwV9zkfDtvgnzhxEFrQ/zbzKRiekF7o5BqYAnnCRkj
- b/RTuWA4/0g9uRlxaGv8EYBci5lF0aLHO/rlKXddytT1QEjXVmyrEYmREwIvOh2PKGVu
- +XjA==
+ d=redhat.com; s=google; t=1793207799; x=1793812599; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=dWpOsnChQtr3kRDdC1FT+mgnTXjmcTTbX2EopbWkNRs=;
+ b=ktuPo/DJ42SfPoN/FirJ9AvXDVl7lrKc8eHI63JWzEy0pL4PsZCGbUNUU9M1YKcH0z
+ OJZdQ6KXdB+4MLO60LLg1yknFAIMl3s78vsNeajymyVtRtUw4g1XGZHUZj+BYyWQdt7M
+ EcfgRoleCfAsYYO8LJnPLpyopOg+HktUSSkdaOf/Zmf5gHlmoSq9iscgFEwIn2mcdYdp
+ R6Z2ofy29oglxAFac0gft1vFyGLjp5d/1CvBDYtiqUh5sM8x3cwQkHLMr2dwfTmHEGrh
+ 2H+JdBIwmMwplrS9wpvPUwUcSGAbbREI1UqGimvvtU96HeQE4TCdLSeVN9o/3ZWuRBvy
+ HOgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207771; x=1793812571;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
- b=iieZpN1CV1RerMx/EbTlcDc6+n5OtPBBoxSAPaDVSXdhNQcWzWb2Xt98PjjBOR1HyF
- 5PSZTrPkPJPH2hvAdujhWulHi407iZXdJfw8qI9SeTxE1ZlFQfzdicNKoCfJpugzOx1M
- Tft6Ecf9QIPcSBWkSYX/OThU69l7Bp0OnwzTRiy52Qz/5Qzwi9hIIyhZv0O7cHl+EsTF
- BEWG2jciNNixSZyBQo3WqRx/ct7PG7muyeNw8uwiHixFFvZzEUwenn8hqv/J7uZI9WZr
- t8tCSzBfsFL0bwwVZEJtpgkkd+lxaUhVcs0o6WFCc016330oD8Y45V5djgFhtf91zELC
- BuUw==
-X-Gm-Message-State: AFq9FYIhRyPfe6rMImbQjU7PqiEDsQFG2f/dRibF7Xc7kltHvrLPoesB
- McvRz+1knF0IlZHdJ82HpQhM6jm79k4UDNGTo8+sGSz4XI+Kshgnqr+I0GrIY3nt2KEpwdo242A
- 2m1xUY+7bvfUJagroSdj9DvHa+e786md46utJ37o0rq25kbP141GeAjOBVnTJ5xP1ok95RoOx2m
- UwN/hldYj3jHOFA+AzlzkFeHNMg+fMgMMKbQ==
-X-Gm-Gg: AYBFou2vaGYVTpaCIyHqB7vd7kIqVwH5jQNAjbC2c7T6oRI2hPGAiA1eB4SZhpC04OH
- 1OYWqvtPEXFvYNOzg9nnuf4puw86xTtn3UCwuAAdrNuoHVeixPDoLbrJS4v1dkU6DY2XOUV6hzW
- 0BSE9/qsDGVWX2KnihTEDYSdZ/H/7cRF7e0WOwtdxiw3mTKk5BoKFgKbt76Qbh7bEZob++MorsG
- 4sgOWvVH8cdVUfycQzJEjZ3DGkb5EJJXZh4BqIIEsvIqCCuhSnDTBk1Yk6m+eShRQVe/NtGadYa
- HJWeTsmoOo7Yp2fZaLBrmEkjWEXz+k3aqhrC8gxCfEaGAkqmiP+B1xMGcXpmY4O/3M3CT8jwMzY
- Nt4UQyuF1k3fPP3uMu3uXnAinGmVkhoxIYyLQIFBw
-X-Received: by 2002:a05:600c:608c:b0:4a1:dadf:9876 with SMTP id
- 5b1f17b1804b1-4a967016833mr64394455e9.23.1793207771486; 
- Wed, 28 Oct 2026 10:16:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:608c:b0:4a1:dadf:9876 with SMTP id
- 5b1f17b1804b1-4a967016833mr64393605e9.23.1793207770954; 
- Wed, 28 Oct 2026 10:16:10 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207799; x=1793812599;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=dWpOsnChQtr3kRDdC1FT+mgnTXjmcTTbX2EopbWkNRs=;
+ b=J2LsuvN+oQcTL5b36AMqbVVOeZseDSydDHo033eLnoyPCoz2z6GpV60lXonMoH7dVB
+ Gb7tS5Cgmt9cDAOi1aIDf6go/6AR36OakeD3VNocWmhKqivsey1hKsepEgwbF2j3ONjU
+ 8VnizPsEngElrkrT4P6Mt1YijT9e54Lvt5zpGAuy9uQvaE5jo6GZXd3YqFPZKgg2QAUb
+ F0E4LlnEspIQndJfzfkroNFeV8zgZ3IYcEadd4lxweYEmdFMpd2O8YEC3s5Xq1ew0wjY
+ BWWi15zq6zKHlrp3g9UDx/BfhCT5eWbtYck1qjB6CZ+F4LOyWFuArwwxu8xWjuDmjjA3
+ 4heA==
+X-Gm-Message-State: AFq9FYJ+sVKusOoX1AvysIJJhH6RvYqWbGWW476fQo3pfxs69M841OIo
+ Zxpyw2XYVzbX3hFZP/yqsM04bGgjXQtdifKM3f1ogxBD1sgJAPcxpTfiwe1mdo50I648GNldoyl
+ sRjz3ulqnRXTe7rlA+V9AZ7sJ9vu7jSDJuAXXWB6bjB8ptDo0MfG6zuqE5wbJ+YeQBJlRgZZVGH
+ NgwZHNiwyUkr9NyY0PERq2FryLkmv+H77Y2Q==
+X-Gm-Gg: AYBFou2jTJCPWqkIN9gD9tQGJCWLfjLWcC9QiMQVZ0oT4EuaSA3mFmZ6yTbw9U3qWOX
+ JkUnYSlKWS8Uf68eCQIb19ZVkj2H//hbHhgX9eOD8HADP4eLNDLZKmNOoc0g7Kb0M7Qak6ZBpfn
+ levGTgFgi89ONfUvF4wGjNxpZ15U2KILK2C89S9swkh+UO8nPvg6qEskrEn/n8dqsJ1NZtcxKQP
+ 2IsQ9Qwd2AA0zZmQoHJbj3yzwciPghbmUe5P4+pGrPLDQfgO6jXmV3+bAF8BgP4SMS93BhBQpnQ
+ 019CaXQnT5NZKQvs1Q71y7p47h27akWHwC+cz2mGLwbZ/vTXLwBNqtz0KHZvq5E45kTLYsoPzvD
+ qadSwqZvElpdLalv4oiAN6A6yjKvdAKt4o/IKSZTW
+X-Received: by 2002:a05:6000:4553:b0:48a:f0cd:8712 with SMTP id
+ ffacd0b85a97d-48e5d5e26a6mr5110949f8f.50.1793207799296; 
+ Wed, 28 Oct 2026 10:16:39 -0700 (PDT)
+X-Received: by 2002:a05:6000:4553:b0:48a:f0cd:8712 with SMTP id
+ ffacd0b85a97d-48e5d5e26a6mr5110895f8f.50.1793207798667; 
+ Wed, 28 Oct 2026 10:16:38 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a92de010bcsm55989725e9.0.2026.10.28.10.16.09
+ ffacd0b85a97d-48e3ebc4d76sm30009609f8f.12.2026.10.28.10.16.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:10 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:08 -0400
+ Wed, 28 Oct 2026 10:16:37 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:36 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Li RongQing <lirongqing@baidu.com>
-Subject: [PULL 50/78] virtio-qmp: Fix out-of-bounds vqs index in vhost queue
- status
-Message-ID: <95253c9a9e210c58ea8349644f173c807f2213c5.1793207602.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ vhost-user@lists.linux.dev
+Subject: [PULL 60/78] vhost-user: add dedicated mailing list
+Message-ID: <f5992d68d3dff73e17f65264d5e443ac40d546ad.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,67 +128,84 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-qmp_x_query_virtio_vhost_queue_status() validates the queue number
-against the vhost device's global range (queue < hdev->vq_index +
-hdev->nvqs), confirming that 'queue' is a global index.  But it then
-indexes hdev->vqs[] directly with that global index.
+During the "Virtio and Vhost-User Ecosystem for Production and
+Automotive Systems" BoF at LPC 2026 [1] we discussed and agreed on
+creating a new vhost-user mailing list, mainly for changes to the
+specification and discussions around the protocol.
 
-hdev->vqs is allocated as g_new0(struct vhost_virtqueue, hdev->nvqs),
-so valid local indices are 0..nvqs-1.  When hdev->vq_index > 0
-(multiqueue vhost-net queue pairs other than the first), every access
-hdev->vqs[queue] reads past the end of the array.
+The main reason is that the vhost-user specification is also used
+by other VMMs and implemented by several back-ends outside the QEMU
+repository, whose developers often do not follow qemu-devel.
 
-Use queue - hdev->vq_index to compute the local index, consistent with
-the rest of vhost.c (e.g. vhost_virtqueue_pending/mask).
+Add a paragraph in the specification about the new mailing list and
+a dedicated MAINTAINERS entry for the vhost-user protocol, covering
+the specification, the QEMU front-end and libvhost-user (back-end
+library).
 
-Fixes: 07536ddda73a ("qmp: add QMP commands for virtio/vhost queue-status")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
+[1] https://lpc.events/event/20/contributions/2365/
+
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260912042343.2362-1-lirongqing@baidu.com>
+Message-ID: <20261023162441.89450-1-sgarzare@redhat.com>
 ---
- hw/virtio/virtio-qmp.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ MAINTAINERS                 | 12 ++++++++++--
+ docs/interop/vhost-user.rst |  6 ++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 8b7cd7a310..8d190c4c70 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -789,6 +789,7 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d7ec12ac39..04842adba6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2544,19 +2544,27 @@ M: Michael S. Tsirkin <mst@redhat.com>
+ R: Stefano Garzarella <sgarzare@redhat.com>
+ S: Supported
+ F: hw/*/*vhost*
+-F: docs/interop/vhost-user*
+ F: docs/system/devices/virtio/vhost-user*
+ F: contrib/vhost-user-*/
+ F: backends/*vhost*
+ F: include/system/vhost-user-backend.h
+ F: include/hw/virtio/vhost*
+ F: include/*/vhost*
+-F: subprojects/libvhost-user/
+ F: block/export/vhost-user*
+ F: util/vhost-user-server.c
+ F: net/vhost*
+ F: tests/functional/x86_64/test_vhost_user_bridge.py
  
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
-     struct vhost_dev *hdev = vdc->get_vhost(vdev);
-+    int vq = queue - hdev->vq_index;
++vhost-user protocol
++M: Michael S. Tsirkin <mst@redhat.com>
++R: Stefano Garzarella <sgarzare@redhat.com>
++L: vhost-user@lists.linux.dev
++S: Supported
++F: docs/interop/vhost-user*
++F: hw/virtio/vhost-user.c
++F: include/hw/virtio/vhost-user.h
++F: subprojects/libvhost-user/
++
+ vhost-shadow-virtqueue
+ R: Eugenio Pérez <eperezma@redhat.com>
+ F: hw/virtio/vhost-shadow-virtqueue.*
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 488214a306..c31a75def3 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -38,6 +38,12 @@ conventions <backend_conventions>`.
+ The *front-end* and *back-end* can be either a client (i.e. connecting) or
+ server (listening) in the socket communication.
  
-     if (queue < hdev->vq_index || queue >= hdev->vq_index + hdev->nvqs) {
-         error_setg(errp, "Invalid vhost virtqueue number %d", queue);
-@@ -797,15 +798,15 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
++The protocol is developed and discussed on the `vhost-user mailing list
++<mailto:vhost-user@lists.linux.dev>`_, archived at
++https://lore.kernel.org/vhost-user/. Until October 2026, when this list
++was created, discussions took place on the qemu-devel mailing list,
++archived at https://lore.kernel.org/qemu-devel/.
++
+ Support for platforms other than Linux
+ --------------------------------------
  
-     status = g_new0(VirtVhostQueueStatus, 1);
-     status->name = g_strdup(vdev->name);
--    status->kick = hdev->vqs[queue].kick;
--    status->call = hdev->vqs[queue].call;
--    status->num = hdev->vqs[queue].num;
--    status->desc_phys = hdev->vqs[queue].desc_phys;
--    status->desc_size = hdev->vqs[queue].desc_size;
--    status->avail_phys = hdev->vqs[queue].avail_phys;
--    status->avail_size = hdev->vqs[queue].avail_size;
--    status->used_phys = hdev->vqs[queue].used_phys;
--    status->used_size = hdev->vqs[queue].used_size;
-+    status->kick = hdev->vqs[vq].kick;
-+    status->call = hdev->vqs[vq].call;
-+    status->num = hdev->vqs[vq].num;
-+    status->desc_phys = hdev->vqs[vq].desc_phys;
-+    status->desc_size = hdev->vqs[vq].desc_size;
-+    status->avail_phys = hdev->vqs[vq].avail_phys;
-+    status->avail_size = hdev->vqs[vq].avail_size;
-+    status->used_phys = hdev->vqs[vq].used_phys;
-+    status->used_size = hdev->vqs[vq].used_size;
- 
-     return status;
- }
 -- 
 MST
 
