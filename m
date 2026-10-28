@@ -1,69 +1,71 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB51606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF925606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 09:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=aQgCPowC
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=Oma58YCg
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLzva-0006sB-9L; Wed, 28 Oct 2026 05:26:40 -0400
+	id 1xLzvf-0006u4-NN; Wed, 28 Oct 2026 05:26:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xLzvW-0006rV-13
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:34 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1xLzvd-0006tD-UJ
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:42 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1xLzvR-0006eh-Ks
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:33 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2e977109392so3942915ad.0
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 02:26:29 -0700 (PDT)
+ id 1xLzvb-0006fq-Rr
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 05:26:41 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2e7e742a2c7so4972145ad.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 02:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20260707; t=1793179588; x=1793784388; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CkMbYpBli2SS8jt1QFY+f+uboqwvGK3ZAB9Oc/+IqV0=;
- b=aQgCPowCydo9RhkXyJCpALY9pHv1GOWjdCVXUTujJDvWax9sQhcLH/gH+YzVqKcnz5
- +7O16Q/+hZ6/iktTlJnQFbhtV28hATjF5O+xOc+ZO/WzPkEJACuPiy/JbNOudcgBK5UD
- jqQY82Q7PuYEZCpem9/ewt3RF7FaerLvKCxCgLWIkSWWPQli38kXh38FvP10FTQo2bxY
- CFv4T+5tJsz1eh942T+ILA0EaqGXqvfVoc8wUGIZ0+qmnzuffc2bsYmhgWKuCQLvpFCV
- 0hkAKudOaTIliv9HgUk3pCbkYvgAuw7lPuXDd15hZLqupg7amcXtw+0njpcKF+Jo91Sr
- Mkyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793179588; x=1793784388;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20260707; t=1793179598; x=1793784398; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CkMbYpBli2SS8jt1QFY+f+uboqwvGK3ZAB9Oc/+IqV0=;
- b=rqIhapvTevg1MkrjjHm+Kr6f8LUw5eHDxJ61fe755y07ZqyMgQh1AP2/brVmsdimc7
- 3Ane3N5VYnR9i52rRtcRprSoFO74vJMooykIKER8BaV0HqDDPjf+tBVXFDlx5hBoQg11
- A0hADbc41jwB5QstV+aKTT1De1unfx5U3FMnmwMxQx1vWJx7O/TLBXyH1VT3qXN7/isC
- eOSyUQS54qj+0Fc4hQxNbHBUSuYPMzO3YVvWUtnVFkkb7L50hA5JKBn+KRXX+qA1ZYcB
- 6tYRNM3b9OLHBYbEjg2X92/X842wIzyVGR6UGhdgIKSsWcc/stev1M7tf6/dIndfMqf/
- JHtA==
-X-Gm-Message-State: AFq9FYIRFr5dx+pPe6J7acX6zLT4K5OSwUvrvC5C7wYqS9s67ONY+CfE
- 8ZQbyntmhlUr7+2yOM57UR/EchGE6/uypQBo4arKmhL1atJHymVHH0tybeNHfBMM
-X-Gm-Gg: AYBFou0ob2HM/XOM0k+EmEcxvChW4HkbVsMl87SgVyCppeKNqkqEVJVe8kzI/r9eB3W
- 2CxN70lDqkfX5X42Vf8aQVlFOm1zz9TWfn+p/SE3dT572k/VR8rpLxxWIc9GLQRJIp3dGfJ8V3g
- t+LdY6ApLBellRnEHbfjOhOqDK5HaiBo2/sadMpS8sNFOTQl35coltyF6Gv7J3qHtipPJ8hMrC6
- HigRu7W8fhefSfHGb+yFVgHjc35S5zwE+HM6SBRHOQMrfPrh9gbX3whOcKtBFDx7pTHb43W8f61
- I45Wi1hjFAxuWNgskB3FZioESnkQrHoBdWsARlYA3XSypcn552SHBYxAF4dNZBInCb5RSawgq5e
- 0lUnjE9d0Y0oWKRF/tsqxa8ecsIERhur6WL+0MA8h23dv4BXt158W71vTfkvx6tNNvej3+p7owJ
- VRyiRJSeuqcK8/ZYna5dXpLpXyopRZECqcHCrUfTWfW8MG8IX01D8NMs/YVA10MPS5lUB/WXaD2
- yxA3RJdTWmy+nsPu3TZpNVe+kNLWmdZQOIMYVZA47hAP44dvvG/+LhdVCLiXpml40WZG6/eajBe
- IWDL0t/FnZ/3MViDJA1+I6IerlUg/ONp6AFzXcU/zt2qDW+Y4QIhZarSC2m6
-X-Received: by 2002:a17:902:ce81:b0:2e9:5714:6079 with SMTP id
- d9443c01a7336-2eb0049e2dbmr17960115ad.31.1793179587899; 
- Wed, 28 Oct 2026 02:26:27 -0700 (PDT)
+ bh=Z8x/Kjb3LFSKjH4X1E0LG5Wat9YzKYyvVsrKHxncOxM=;
+ b=Oma58YCgOhIU3j2ihpDbk1gQpjISe/K/J6JDlVhexGDurkKUiTX2QMCRHODZee8TCe
+ tw6TQeM57gPcuxzuBZrZcLhiT3rsgYAEXD0FXBpqHyzuXW2mPDTArjzz3bSijTWO8bfx
+ UaLr3sKsRPxLuM+hTthyS300JYKNStiTUeW6t4i53uXFLEbSodo9sDDC2bLD28iZWvju
+ Dsa0+lREpvo7d/2MxnFQuKYVhkHfe/tWxwmTddraPrErLfvsG0ufXDWRrRUaht335/qX
+ +tdlqzbhpzxXolSrIDNSNO+LCV2XRxuMPcLCLTfrU+rHOknpu5K4MGSbqCd9RzyJWots
+ FW5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793179598; x=1793784398;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Z8x/Kjb3LFSKjH4X1E0LG5Wat9YzKYyvVsrKHxncOxM=;
+ b=0kyjfYahiReJCOhKbm+qBhMq8pYBgTkZo4o5ypiptpPYh56VmSHfYumxMVtQU0dGcH
+ xtyBq0puvTL5j3f4XqDxmBBTW+qcerNRPrwkrX5LZxr6A2j5IWPpGHVhRLrT+5NrxdR+
+ CTnWth0oBlaFZxtAjxWmuVxhgFsU3zt9lFENbhM6xA/ai5QDlE+twv3EiL9XVDQMjvhD
+ N5lWkntA7vkZEDYXgrYcLR9n1VLlHc4roy8+dB7ijrgAoD6X8CbsqFYtWeBvaaRMEZuG
+ 1t6TEgG4f+2puArb+yZJQfi9Ev5Cd9c6eYHCmO8BRURuikfAbq2Zpb/CD4EGhl1mG5Yj
+ af2w==
+X-Gm-Message-State: AFq9FYLaFlBjAK/8b5R4wCKjR4cquhBiECxe+7qB48+M0BOGnoSGa9Qv
+ LhK+f4rswWq6LQdqMB/smHmVcsXcGOt+TFhEDiETTYo1C1/NRJSvDcFvbvudA/Rj
+X-Gm-Gg: AYBFou3UcO1LhEYbkXxmbcFKyhgWoqHDTFnPIULPm12zVzteD5d2n+pqk4RvvgKqb5K
+ rOZKmGPxhMDolI19i9fJPohAqQzlGFF5kLaKDRnUh9VsIvQIApFDNDst28p0HoprT2ngtcRnAhS
+ f1Taqxd1L1+L9mBAPK7yNUEmgeEHN3oxmgKRi4mywPfwglhRe0NC2omZXpDS6leCQAokKn2NSlS
+ BnOcUgaMicOUO9ZIPppkNfs85pqiVK3nCK7HtpnwioSH+lgKmcDV4Uikj8FRqiqh7n/WL2qtRkD
+ thkW2px4810CNIwExHsTHZzlBRuz75xrZHdPD5N+AdGbxahLHvXMFZs40tlVoVf0aBvVJO4eARZ
+ uBU3ETCnzA7OBklWLzjNjNO4zYw547YIRszNDKTWEqOinL9afYOOj3GOtvwKrN7PPL0V5057SE0
+ o1c2+brOldaiC0nMRlub5RJyTJ6/vvTUNb3SUfvmflR6gMRKfWd8RopqKq0YEVlVoXkotpGNRWq
+ 2Nt/MJAFJmVO7+oyDe3YjgSXZtwt4BA5P5ccOENDp7iXjZV7zx/hM47VApaohogcC7/ZYCZGABS
+ q+QZ/jBghWeWCGWYaoINlkYSrpoQekS1SY9bDd1Z4S4Ct+zS77ZDpICsPxP5+OHDK/9YxFrsvmc
+ et0G2
+X-Received: by 2002:a17:903:2446:b0:2dd:c053:b9cb with SMTP id
+ d9443c01a7336-2eb074e2b94mr5088905ad.28.1793179598134; 
+ Wed, 28 Oct 2026 02:26:38 -0700 (PDT)
 Received: from hades-NUC8i7HVK.taila0cd24.ts.net ([222.72.128.122])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2eae6b7a691sm19481635ad.26.2026.10.28.02.26.24
+ d9443c01a7336-2eae6b7a691sm19481635ad.26.2026.10.28.02.26.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 02:26:26 -0700 (PDT)
+ Wed, 28 Oct 2026 02:26:37 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
@@ -72,16 +74,17 @@ To: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?=27Daniel=20P=20=2E=20Berrang=C3=A9=27?= <berrange@redhat.com>,
  Jason Wang <jasowangio@gmail.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V19 00/14] iothread: Support tracking and querying IOThread
- holder
-Date: Wed, 28 Oct 2026 17:26:05 +0800
-Message-ID: <20261028092619.1654474-1-zhangckid@gmail.com>
+Subject: [PATCH V19 03/14] block/export: track IOThread references
+Date: Wed, 28 Oct 2026 17:26:08 +0800
+Message-ID: <20261028092619.1654474-4-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261028092619.1654474-1-zhangckid@gmail.com>
+References: <20261028092619.1654474-1-zhangckid@gmail.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,154 +103,186 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-### Motivation
-Currently, the relationship between IOThreads and the resources using them is
-opaque. From a management perspective, it is difficult to determine which
-devices or block exports are currently associated with a specific IOThread
-via QMP or HMP.
+Track the IOThreads used by a block export and identify the holder
+with the unique BlockExportOptions id.
 
-This series introduces a "holder" tracking mechanism based on QOM paths or
-block exports to significantly improve IOThread observability.
-In high-performance virtualization environments, users often pre-allocate
-a set of IOThreads to serve as a persistent thread pool. During device
-hotplug/unplug cycles, while IOThread objects remain persistent,
-their attachment state changes dynamically.
+Acquire holder-aware references during export creation and release
+them on error or export deletion.  Support both single- and
+multi-iothread exports.
 
-By tracking these "holders," administrators can use `query-iothreads` to
-monitor the real-time load distribution of the thread pool and identify which
-specific devices (e.g., virtio-blk, BlockExport) are attached to which thread.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+---
+ block/export/export.c  | 62 ++++++++++++++++++++++++++++++++++++------
+ include/block/export.h |  5 ++++
+ 2 files changed, 58 insertions(+), 9 deletions(-)
 
-### Technical Overview
-* Holder tracking
-
-  Add a QAPI holder list to each IOThread.  A holder identifies either
-  a QOM object by its canonical path or a block export by its unique
-  BlockExportOptions ID.
-
-* Explicit reference lifecycle
-
-  Add iothread_ref_and_get_aio_context() and the matching
-  iothread_unref_and_put_aio_context().  Acquiring an AioContext registers a
-  holder and keeps the IOThread alive until the matching put.
-
-  Legacy callers without a matching lifecycle use the explicitly named
-  iothread_unsafe_get_aio_context().  The ambiguous legacy
-  iothread_get_aio_context() is removed after all production callers
-  are migrated.
-
-* Subsystem integration
-
-  Track holders for block exports, monitors, virtio-blk, virtio-scsi,
-  virtio queue mappings, virtio balloon thread pinning, COLO compare,
-  vfio-user proxy, and xen-block.
-
-* Introspection
-
-  Extend IOThreadInfo with a holders array returned by
-  query-iothreads.  Display the same information with info iothreads.
-
-
-### V19 -> V18 Changelog
-  - Added new patch in the last:
-    docs/devel: document holder-aware IOThread AioContext APIs
-  - Rebased on upstream code.
-  - Added IOThread prepare_delete() to reject deletion while holders
-    remain, preventing NULL IOThread lookups during virtqueue mapping
-    cleanup.
-
-### V18 -> V17 Changelog
-  - Saved the COLO object's QOM path for finalization and guarded
-    holder cleanup against incomplete initialization.
-  - Used the owning PCI device's QOM path for vfio-user holders
-    and saved it for disconnect().
-  - Simplified the monitor QOM path field name and clarified
-    PATCH 12's commit message.
-  - Rebased on upstream and collected Reviewed-by tags.
-
-### V17 -> V16 Changelog
-  - Rebase code to resolve code conflicts for patch 8:
-    "virtio-balloon: Update tracking iothread users with holder".
-    This issue caused by latest merged patch "fdc3f9a83d".
-
-### V16 -> V15 Changelog
-  - Unified per-monitor IOThread checks and accesses through
-    mon->iothread after initialization.
-  - Simplified PATCH 13's commit message and clarified why blockdev
-    cannot use the holder-aware get/put APIs.
-  - Dropped the v15 Patch 1 in this series, It will be taken away
-    independently by trivial-patches tree.
-
-### V15 -> V14 Changelog
-  - Moved monitor IOThread cleanup from unparent() to monitor_finalize(),
-    pairing complete() with instance finalization.
-  - Squashed V14 PATCH 04 and PATCH 14 into PATCH 13 and clarified the
-    blockdev lifetime assumption. Since the additional changes are minimal,
-    PATCH 13 retains Stefan's Reviewed-by from V14 PATCH 04.
-  - Rebased and adapted info iothreads to the MonitorHMP interface.
-
-### V14 -> V13 Changelog
-  - Renamed patch 3 and clarified that it introduces holder-tracking
-    infrastructure, with users converted in subsequent patches.
-  - Documented that monitor holders are not visible to management
-    applications, while retaining the tracking for a consistent holder
-    and IOThread reference lifecycle.
-  - Rebased on the latest upstream.
-
-
-Zhang Chen (14):
-  iothread: introduce holder tracking
-  iothread: add holder-aware AioContext accessors
-  block/export: track IOThread references
-  monitor: track IOThread users with QOM paths
-  virtio-vq-mapping: track iothread-vq-mapping references using device
-    path
-  virtio: track IOThread references for thread pinning
-  net/colo: track IOThread references using path-based holder
-  virtio-balloon: Update tracking iothread users with holder
-  vfio-user/proxy: Update tracking iothread users with device QOM paths
-  xen-block: Update tracking iothread users with holder name
-  monitor/hmp: display IOThread holders
-  iothread: make legacy AioContext getter explicitly unsafe
-  tests/unit/iothread: update AioContext ref/put helpers
-  docs/devel: document holder-aware IOThread AioContext APIs
-
- block/export/export.c                   |  62 +++++++++++---
- blockdev.c                              |   9 ++-
- docs/devel/multiple-iothreads.rst       |  19 +++--
- hw/block/dataplane/xen-block.c          |  19 ++++-
- hw/block/virtio-blk.c                   |  21 +++--
- hw/scsi/virtio-scsi-dataplane.c         |  22 +++--
- hw/vfio-user/pci.c                      |   2 +-
- hw/vfio-user/proxy.c                    |  20 ++++-
- hw/vfio-user/proxy.h                    |   4 +-
- hw/virtio/iothread-vq-mapping.c         |  20 +++--
- hw/virtio/virtio-balloon.c              |  21 +++--
- include/block/export.h                  |   5 ++
- include/hw/virtio/iothread-vq-mapping.h |   6 +-
- include/hw/virtio/virtio-balloon.h      |   1 +
- include/system/iothread.h               |  38 ++++++++-
- iothread.c                              | 102 +++++++++++++++++++++++-
- monitor/hmp-cmds.c                      |  20 +++++
- monitor/monitor-internal.h              |   7 +-
- monitor/monitor.c                       |  36 ++++++---
- monitor/qmp.c                           |  14 ++--
- net/colo-compare.c                      |  36 ++++++---
- qapi/misc.json                          |  94 +++++++++++++++++++---
- tests/unit/iothread.c                   |  18 +++--
- tests/unit/iothread.h                   |   7 +-
- tests/unit/test-aio-multithread.c       |   5 +-
- tests/unit/test-bdrv-drain.c            |  18 +++--
- tests/unit/test-block-iothread.c        |  21 +++--
- 27 files changed, 535 insertions(+), 112 deletions(-)
-
+diff --git a/block/export/export.c b/block/export/export.c
+index b733f269f3..0e019545ef 100644
+--- a/block/export/export.c
++++ b/block/export/export.c
+@@ -15,7 +15,6 @@
+ 
+ #include "block/block.h"
+ #include "system/block-backend.h"
+-#include "system/iothread.h"
+ #include "block/export.h"
+ #include "block/fuse.h"
+ #include "block/nbd.h"
+@@ -72,6 +71,32 @@ static const BlockExportDriver *blk_exp_find_driver(BlockExportType type)
+     return NULL;
+ }
+ 
++static void init_iothreads(const char *holder_id, IOThread **iothreads,
++                           size_t num_iothreads, AioContext **aio_ctxs)
++{
++    const IOThreadHolder holder = {
++        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
++        .u.block_export.export_id = (char *)holder_id,
++    };
++
++    for (size_t i = 0; i < num_iothreads; i++) {
++        aio_ctxs[i] = iothread_ref_and_get_aio_context(iothreads[i], &holder);
++    }
++}
++
++static void cleanup_iothreads(const char *holder_id, IOThread **iothreads,
++                              size_t num_iothreads)
++{
++    const IOThreadHolder holder = {
++        .type = IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
++        .u.block_export.export_id = (char *)holder_id,
++    };
++
++    for (size_t i = 0; i < num_iothreads; i++) {
++        iothread_unref_and_put_aio_context(iothreads[i], &holder);
++    }
++}
++
+ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+ {
+     bool fixed_iothread = export->has_fixed_iothread && export->fixed_iothread;
+@@ -85,6 +110,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+     AioContext *ctx;
+     AioContext **multithread_ctxs = NULL;
+     size_t multithread_count = 0;
++    g_autofree IOThread **local_iothreads = NULL;
++    size_t iothread_count = 0;
+     uint64_t perm;
+     int ret;
+ 
+@@ -139,7 +166,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+             goto fail;
+         }
+ 
+-        new_ctx = iothread_get_aio_context(iothread);
++        local_iothreads = g_new0(IOThread *, 1);
++        local_iothreads[0] = iothread;
++        init_iothreads(export->id, local_iothreads, 1, &new_ctx);
++        iothread_count = 1;
+ 
+         /* Ignore errors with fixed-iothread=false */
+         set_context_errp = fixed_iothread ? errp : NULL;
+@@ -163,8 +193,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+             return NULL;
+         }
+ 
++        local_iothreads = g_new0(IOThread *, multithread_count);
+         multithread_ctxs = g_new(AioContext *, multithread_count);
+         i = 0;
++
+         for (strList *e = iothread_list; e; e = e->next) {
+             IOThread *iothread = iothread_by_id(e->value);
+ 
+@@ -172,9 +204,12 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+                 error_setg(errp, "iothread \"%s\" not found", e->value);
+                 goto fail;
+             }
+-            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
++            local_iothreads[i++] = iothread;
+         }
+         assert(i == multithread_count);
++        init_iothreads(export->id, local_iothreads, multithread_count,
++                       multithread_ctxs);
++        iothread_count = multithread_count;
+     }
+ 
+     bdrv_graph_rdlock_main_loop();
+@@ -225,12 +260,14 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+     assert(drv->instance_size >= sizeof(BlockExport));
+     exp = g_malloc0(drv->instance_size);
+     *exp = (BlockExport) {
+-        .drv        = drv,
+-        .refcount   = 1,
+-        .user_owned = true,
+-        .id         = g_strdup(export->id),
+-        .ctx        = ctx,
+-        .blk        = blk,
++        .drv                  = drv,
++        .refcount             = 1,
++        .user_owned           = true,
++        .id                   = g_strdup(export->id),
++        .ctx                  = ctx,
++        .blk                  = blk,
++        .iothreads            = g_steal_pointer(&local_iothreads),
++        .iothread_count       = iothread_count,
+     };
+ 
+     ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
+@@ -250,8 +287,12 @@ fail:
+         blk_unref(blk);
+     }
+     if (exp) {
++        cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
++        g_free(exp->iothreads);
+         g_free(exp->id);
+         g_free(exp);
++    } else {
++        cleanup_iothreads(export->id, local_iothreads, iothread_count);
+     }
+     g_free(multithread_ctxs);
+     return NULL;
+@@ -273,6 +314,9 @@ static void blk_exp_delete_bh(void *opaque)
+     exp->drv->delete(exp);
+     blk_set_dev_ops(exp->blk, NULL, NULL);
+     blk_unref(exp->blk);
++
++    cleanup_iothreads(exp->id, exp->iothreads, exp->iothread_count);
++    g_free(exp->iothreads);
+     qapi_event_send_block_export_deleted(exp->id);
+     g_free(exp->id);
+     g_free(exp);
+diff --git a/include/block/export.h b/include/block/export.h
+index ca45da928c..ce8e4eb604 100644
+--- a/include/block/export.h
++++ b/include/block/export.h
+@@ -16,6 +16,7 @@
+ 
+ #include "qapi/qapi-types-block-export.h"
+ #include "qemu/queue.h"
++#include "system/iothread.h"
+ 
+ typedef struct BlockExport BlockExport;
+ 
+@@ -89,6 +90,10 @@ struct BlockExport {
+ 
+     /* List entry for block_exports */
+     QLIST_ENTRY(BlockExport) next;
++
++    /* The IOThreads utilized by this specific block export */
++    IOThread **iothreads;
++    size_t iothread_count;
+ };
+ 
+ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
 -- 
 2.53.0
 
