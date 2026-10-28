@@ -1,96 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44808606A31E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D61E606A32C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OEnnegl0;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=gueMb+Ft
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=WJHdc0ie;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Lll8U9Xm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Hk-0004WN-SR; Wed, 28 Oct 2026 13:18:00 -0400
+	id 1xM7IR-0006Ki-V1; Wed, 28 Oct 2026 13:18:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Gc-0001IZ-T2
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HL-00031X-P4
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Ga-0003xA-DZ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7HJ-000430-OK
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207807;
+ s=mimecast20190719; t=1793207853;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=DeYR6cmLH+YXpclTXj2Vsh91hiC53G/x5OKIn5+J3qQ=;
- b=OEnnegl0o9OQLEHNxl6z2Bxff0gyiDP7NqqpdQyY8+SDHQ+VT6cJ7UZgtw6ZgE09bgcJig
- EByoE2cUg1uHkJYFrjG4omWjgXA1N8MIvS5kbeGU9leLoriWedRoAUUtH8WIZOMaa5jsLL
- dIv/6MwO53ql9YplRuUoQm8CZVP89X4=
+ bh=2wXbbb9QDEQpi3LDCkaV6Wh1NoMsGYl+QVOX1WHgrnQ=;
+ b=WJHdc0ie9yhOyqBbV2ge2wCu3Vp02qhzaB51YsVIIFn6bP5XpZBhwtdn+RKC2Fe0ohguAz
+ XWTZy7pgyXmUUBzsL/X0iv63i7iAYo0W9Q/2PDdlP9A1P8dTqhwToNnVbRDF3peKt4JIPq
+ RSVs40HOhdJzjvmVBROi2Qp544i7cG0=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-b_9ljd67PCW-uH3mUsBVvA-1; Wed, 28 Oct 2026 13:16:46 -0400
-X-MC-Unique: b_9ljd67PCW-uH3mUsBVvA-1
-X-Mimecast-MFC-AGG-ID: b_9ljd67PCW-uH3mUsBVvA_1793207805
+ us-mta-454-aqoC228zP4SbZhRqkrDzJg-1; Wed, 28 Oct 2026 13:17:31 -0400
+X-MC-Unique: aqoC228zP4SbZhRqkrDzJg-1
+X-Mimecast-MFC-AGG-ID: aqoC228zP4SbZhRqkrDzJg_1793207850
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4a4af69e06fso8928495e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:46 -0700 (PDT)
+ 5b1f17b1804b1-4a20fd059ddso9046185e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207805; x=1793812605; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207850; x=1793812650; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=DeYR6cmLH+YXpclTXj2Vsh91hiC53G/x5OKIn5+J3qQ=;
- b=gueMb+Ft8Qknw+4F0XHpFhQU/bSrhI5R9VcMHCyp6LehhTJc0y3VHMC0C+vGhUetvk
- 889g0JoWa91ULRaYs3mQQdzC56pgWslpF/DoUY1acKxK6hSmb7+ZOD62B9cTlr8E55qF
- jK0+xKke+JlFn4FH2k9ehdR7PKTljL4MAvjWK3hUv711/LRnZNcNZMr+XYLMCVAIiSYc
- RbcMJ8Mu6gUEiShrzx++EwmdyCeVDxOwfwPHmo8kFcNLbXRvVkVFyg731eh0W8wwN70a
- sFVVz5Lh0VXIefIhskYgAawBMfQaRDtsLfCxGa1LfNd46LlRn7HkRov/FcD7jd4Fy/ap
- +SnA==
+ bh=2wXbbb9QDEQpi3LDCkaV6Wh1NoMsGYl+QVOX1WHgrnQ=;
+ b=Lll8U9XmOHvsd7QnFwaOue0Vd6HsRliZsjrZgkpdqvuftD9M3tVzIMc8Mh0HJj5KM4
+ tAvM4FqAFrWtiUSNooW3maHT7z5HGn/DqUGRgm+d4cM8lMgkvDA36xTi7/YMFTuUN5qh
+ 3PSzq/7Z3X6OP5Jb1lL47hBnkMhdYPZvb1DndeTe/P0pD90wYJFsAfhTLUvIeoIIpKRl
+ WeOeatdQdH5TV1lZEq+hGXHh43zR7qyNRGNU+j3YJzPK/Z+EX7HU2k1q1ni8wKla2bTk
+ 0JCztjq6G9bmAaM/wMl+Hpg9+12gVPmIUe7TyH9Ry+9YgCBrqY9HgwU1o0TLZr7pBXnw
+ sHag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207805; x=1793812605;
+ d=1e100.net; s=20260707; t=1793207850; x=1793812650;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=DeYR6cmLH+YXpclTXj2Vsh91hiC53G/x5OKIn5+J3qQ=;
- b=dcYxe9bkNuBgjtgqM+Jc0lbuVJZU1qJEaIwUGS6ow5xk1CAwIr3sTGZvb/3vtotO0+
- 4tvnvSoHm6NKxEh9KUjh/B8Qd3uJln3HmNr0z/pGhw4iQJbnlMTspFVydE1Crp1nzSB4
- BA/kX8bBsjfxQHgyaEOiYuUhu1RZgBWagFSDpBZfs7H182uwhHFAKkcIZYxYOHXwJGUQ
- kHxQ+k2Wlg8pBrbBPYS/3X/ahbonp9AENIacd9xlGAg4y5iCg/7eHo9BSxGFdLnUvcsC
- /hC5mvIU38poF5hsgWLaCgdkI59DMYs9wRWqN0Z5O+1c2VevYwaTtE0I0zpEfw6FvQgA
- eFCw==
-X-Gm-Message-State: AFq9FYIAUn/7P6PkBpYVnBaBkXux0VT9DY3TaTstW9/fy/nWk10Po4Ll
- HYfwSMQ5gUIJrJmh1ISAlSsyIa653EuMHHZ2LbvTBEoOuwFZtBEJYtp1QeF0SPnpSva9jb3V7da
- 3wwgJF2akfU+1RHmi3oee1VK+9411NncBmXdYsmbdKCr7VrC+M8o9QIysLocZbLHLvxBMaxOVuM
- Jj/WGG1/y2n8oP0VueR8qomXQzt6bg9FOKrg==
-X-Gm-Gg: AYBFou3aUZTsiePrbkh6qXYHUB9ZPyenc1d7oyexZC+d1SGOB+cqr3OEM7cFTYqH2ja
- SqsoHUI++osI8lLwwpssxwp4vd4rw/G3n1f9cVNI+T8ypl/ccdRaGIWrAFmXvGm2NxRrbuE+hlM
- bQ0GBUjthVJKiTXavvH567X56lj9Ta6/gE80acdcPfl/0glgd2M6lhvQfwxn+Dsk2zOjSMa5xrJ
- x/8C+dIRf4Rwn+gzJ/esmLZuaFGSjUo0JlP+jpg12B9a+6dXcxCdFH1H4rsilRyvNiRP2jtss9S
- YZRk7P2bTeIPMn/KNSOOCXMq/yhdnRUuP9PzruTfbcOIiAtovvDLucsJciJ50JhH5xIBMjJ+trf
- DnMvrY6Ce0Q7C3AGU99rGccXYOa+KVN0MlgxPutDj
-X-Received: by 2002:a05:600d:16:b0:4a2:191f:7cb8 with SMTP id
- 5b1f17b1804b1-4a9672f819fmr55524565e9.17.1793207804983; 
- Wed, 28 Oct 2026 10:16:44 -0700 (PDT)
-X-Received: by 2002:a05:600d:16:b0:4a2:191f:7cb8 with SMTP id
- 5b1f17b1804b1-4a9672f819fmr55523475e9.17.1793207804214; 
- Wed, 28 Oct 2026 10:16:44 -0700 (PDT)
+ bh=2wXbbb9QDEQpi3LDCkaV6Wh1NoMsGYl+QVOX1WHgrnQ=;
+ b=qNLT1wDQltwzvrPhgo7h+p9wGGE0ctM/30hSW3Nj+hqxdsc6nFF/sxLOWNlUkLNyM0
+ lqU90EqxWO2zV/A58D8S4geC9yUFikvJtAYHOBPHeNn7Inv3XtAj8qbNlP9KgJnrBUYp
+ agcbZ3aH4ibyAPYpdGSYKtUwdNXn6a8w74X0ZaIZiJGzp0axD/6ZZgNw4IWqF2e2Bn9s
+ J49fTvB9V3vRl0fJAU9mbGTrkNvncExu2gT0OjukaeJQZ24OfT4IzHi1AiW7CPiq479S
+ S+5A1DGNe8kpZrTnFhXEvZ2A4gHMZyQ125vL5oLsBBn+d7T2/0WgR6/0G9ufPZQiHVEx
+ Ac8w==
+X-Gm-Message-State: AFq9FYI19wZZ7fcYUXM7nYmuBa4uqrvEyxXIULrNus47YPOebQHj03h7
+ PE20Mw4TqgfKQ5oqOrSF/DuSdjcsWhMCoSv1t1YMOphLcuFMpzJ+G9izWkn8yTVTNy2kby63skO
+ A6xHmBam1ViwxOzqBB2y1G5GimbP2rkGIQEIYILzSJ8G+w/OK8wKJ1jJIipt4+0KhRpmDzYaEtY
+ E5JAIK6mB5poHPITI4rSEHeCm3oGomHV/DoA==
+X-Gm-Gg: AYBFou1FFsrkgSXuawKUNY0u66KGLwYkn6wecCUupGoEu0sngz2Grt/CL3+hnuurnS+
+ NOf0A+GLi4g2V19THKD4qWyOyNyzYICAk76Qsmf9xhdi+90TOwva+rVW/0giIdH+7lm5ZTXAH4e
+ UO9HQHPe0WFZ69uO+tmDZhu81B43t/LrtE8t2a69TGZ6L/ppn5tFgaZez9P14YYrYEtiGE/5nBd
+ 4sptnQhMBziaz+WRa2PB2S80YJSzOLEJp4h3tyHcSerZwR2xGsRZDoIVOFnB5MVZ6MBxoshI5NF
+ SIfZBUlPLtmWi3dcqyXeJ4bUmi1GY/NpCPheU75MddN0mENiZstGnOPmZwdo7a1JasHxQm6D+nv
+ 4qV8ettRt6EB0KnPmyBX5ad/M3klvKt87TVvfryzK
+X-Received: by 2002:a05:600c:3b1e:b0:4a2:e0c:2b0a with SMTP id
+ 5b1f17b1804b1-4a966774f22mr74194405e9.16.1793207850230; 
+ Wed, 28 Oct 2026 10:17:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b1e:b0:4a2:e0c:2b0a with SMTP id
+ 5b1f17b1804b1-4a966774f22mr74193385e9.16.1793207849479; 
+ Wed, 28 Oct 2026 10:17:29 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7f7f4cdbsm6950265e9.7.2026.10.28.10.16.42
+ ffacd0b85a97d-48e3ebcb851sm25588034f8f.26.2026.10.28.10.17.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:43 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:42 -0400
+ Wed, 28 Oct 2026 10:17:25 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:17:23 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>,
+ Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Jason Wang <jasowangio@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 62/78] x86-iommu: Introduce x86_iommu_device_get() for
- x86-iommu retrieval
-Message-ID: <095eef807ad24a3d388a9c4cb2144657a0f71166.1793207602.git.mst@redhat.com>
+Subject: [PULL 74/78] intel_iommu_accel: Teardown FAULTQ resources in bottom
+ half
+Message-ID: <7ce51564c3365930d145ed31786ff2dac6f9b7be.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -126,121 +130,114 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-kvm_arch_fixup_msi_route() and kvm_arch_add_msi_route_post() use
-x86_iommu_get_default() whenever an IOMMU is present. This selects the
-correct unit only when a single IOMMU is attached to the system bus.
+When a PASID entry becomes invalid, all resources allocated for that entry,
+including the FAULTQ object and fault_fd, must be released.
 
-The following patches allow an IOMMU to attach to a different bus and
-isolate the subset of devices below it. Each IOMMU then serves only part
-of the PCI topology, so interrupt remapping must determine the IOMMU that
-actually serves a given device.
+Calling qemu_set_fd_handler() detaches the fault_fd I/O read handler and
+wakes up the main loop thread from poll(). However, a race window exists
+where iommufd_backend_free_id(fault_id) can be invoked before poll() exits
+and releases its reference to the fault_fd file. In this scenario, freeing
+the FAULTQ object returns -EBUSY because the opened fault_fd file still
+holds an active reference to the FAULTQ object.
 
-Add x86_iommu_device_get() to locate the IOMMU bus for a PCI device and
-retrieve its X86IOMMUState through a new get_x86_iommu callback.
+Defer FAULTQ resource teardown to a bottom half. This ensures poll() has
+fully exited and dropped the file reference before the fault_fd is closed
+and the FAULTQ object ID is freed. Additionally, keep the IOMMUFD backend
+FD open via iommufd_backend_connect() across the asynchronous bottom half
+execution to ensure FAULTQ object freed successfully.
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261014053433.24564-3-sarunkod@amd.com>
+Message-ID: <20261020091955.1607161-7-zhenzhong.duan@intel.com>
 ---
- include/hw/i386/x86-iommu.h |  6 ++++++
- include/hw/pci/pci.h        | 12 ++++++++++++
- hw/i386/x86-iommu-stub.c    |  5 +++++
- hw/i386/x86-iommu.c         | 16 ++++++++++++++++
- 4 files changed, 39 insertions(+)
+ hw/i386/intel_iommu_accel.c | 59 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/i386/x86-iommu.h b/include/hw/i386/x86-iommu.h
-index 0a1e1ba725..eb575271e9 100644
---- a/include/hw/i386/x86-iommu.h
-+++ b/include/hw/i386/x86-iommu.h
-@@ -134,6 +134,12 @@ struct X86IOMMU_MSIMessage {
-  */
- X86IOMMUState *x86_iommu_get_default(void);
- 
-+/**
-+ * x86_iommu_device_get - get IOMMU device for given PCI device
-+ * @return: pointer to default IOMMU device
-+ */
-+X86IOMMUState *x86_iommu_device_get(PCIDevice *dev);
-+
- /**
-  * x86_iommu_iec_register_notifier - register IEC (Interrupt Entry
-  *                                   Cache) notifiers
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 6520886855..359331102f 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -700,6 +700,18 @@ typedef struct PCIIOMMUOps {
-      * Returns: the guest physical address of the MSI doorbell.
-      */
-     uint64_t (*get_msi_direct_gpa)(PCIBus *bus, void *opaque, int devfn);
-+
-+    /**
-+     * @get_x86_iommu: get parent x86-iommu for given hardware (AMD/Intel)
-+     *
-+     * Callback is required if IOMMU defines x86->int_remap()
-+     *
-+     * @opaque: the data passed to pci_setup_iommu()
-+     *
-+     * @x86_iommu: A pointer to store the x86-iommu object
-+     */
-+    int (*get_x86_iommu)(void *opaque, void **x86_iommu);
-+
- } PCIIOMMUOps;
- 
- bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-diff --git a/hw/i386/x86-iommu-stub.c b/hw/i386/x86-iommu-stub.c
-index 781b5ff922..b0383d2290 100644
---- a/hw/i386/x86-iommu-stub.c
-+++ b/hw/i386/x86-iommu-stub.c
-@@ -32,6 +32,11 @@ X86IOMMUState *x86_iommu_get_default(void)
-     return NULL;
- }
- 
-+X86IOMMUState *x86_iommu_device_get(PCIDevice *dev)
-+{
-+    return NULL;
-+}
-+
- bool x86_iommu_ir_supported(X86IOMMUState *s)
- {
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 243501f137..7db8319ad4 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -271,17 +271,70 @@ free_faultq:
      return false;
-diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
-index a57445404e..601db5cfea 100644
---- a/hw/i386/x86-iommu.c
-+++ b/hw/i386/x86-iommu.c
-@@ -26,6 +26,7 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- #include "system/kvm.h"
-+#include "hw/pci/pci_bus.h"
- 
- void x86_iommu_iec_register_notifier(X86IOMMUState *iommu,
-                                      iec_notify_fn fn, void *data)
-@@ -90,6 +91,21 @@ X86IOMMUState *x86_iommu_get_default(void)
-     return NULL;
  }
  
-+X86IOMMUState *x86_iommu_device_get(PCIDevice *dev)
++typedef struct IOMMUFaultQueue {
++    IOMMUFDBackend *iommufd;
++    uint32_t id;
++    int fd;
++    QLIST_HEAD(, VTDPRQEntry) vtd_prq_list;
++} IOMMUFaultQueue;
++
++static void faultq_teardown_bh(void *opaque)
 +{
-+    PCIBus *iommu_bus;
-+    X86IOMMUState *iommu = NULL;
++    IOMMUFaultQueue *fq = opaque;
++    VTDPRQEntry *prqe, *next;
 +
-+    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
-+
-+    if (iommu_bus && iommu_bus->iommu_ops->get_x86_iommu) {
-+        iommu_bus->iommu_ops->get_x86_iommu(iommu_bus->iommu_opaque,
-+                                            (void **)&iommu);
++    QLIST_FOREACH_SAFE(prqe, &fq->vtd_prq_list, next, next) {
++        QLIST_REMOVE(prqe, next);
++        g_free(prqe);
 +    }
 +
-+    return iommu;
++    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
++    close(fq->fd);
++    iommufd_backend_free_id(fq->iommufd, fq->id);
++    iommufd_backend_disconnect(fq->iommufd);
++
++    g_free(fq);
 +}
 +
- static void x86_iommu_realize(DeviceState *dev, Error **errp)
+ static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
  {
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(dev);
++    HostIOMMUDeviceIOMMUFD *idev =
++        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
++    IOMMUFaultQueue *fq;
++
+     if (vtd_pce->fault_fd < 0) {
+         return;
+     }
+ 
+-    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
+-    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
+-                          vtd_pce->fault_fd);
++    fq = g_malloc(sizeof(*fq));
++    fq->iommufd = idev->iommufd;
++    fq->fd = vtd_pce->fault_fd;
++    fq->id = vtd_pce->fault_id;
+     vtd_pce->fault_id = 0;
+     vtd_pce->fault_fd = -1;
++    fq->vtd_prq_list.lh_first = vtd_pce->vtd_prq_list.lh_first;
++    QLIST_INIT(&vtd_pce->vtd_prq_list);
++
++    /*
++     * During a VFIO device hot-unplug, if this is the last device connected
++     * to the IOMMUFDBackend, the backend user count (iommufd->users) will
++     * drop to zero, triggering iommufd_backend_disconnect() which closes
++     * the backend's opened container FD.
++     *
++     * Since the teardown of this fault queue (faultq_teardown_bh) is
++     * scheduled asynchronously as a bottom half, we must temporarily
++     * increment the connection user count of the iommufd backend here.
++     * This guarantees the backend connection remains open and its opened
++     * FD remains active until the async BH completes.
++     *
++     * Incrementing the user count is guaranteed to succeed here because the
++     * VFIO device is still registered as an active user of the backend at
++     * this point in the teardown sequence.
++     */
++    iommufd_backend_connect(fq->iommufd, &error_abort);
++
++    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
++                            faultq_teardown_bh, fq);
+ }
+ 
+ static void vtd_setup_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce,
 -- 
 MST
 
