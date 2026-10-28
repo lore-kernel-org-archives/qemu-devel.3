@@ -1,57 +1,86 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184A8606A329
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4556606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=JnaL33IM
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OkIelfBG
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM1jQ-0003lO-Ee; Wed, 28 Oct 2026 07:22:12 -0400
+	id 1xM1nU-0004WB-Lh; Wed, 28 Oct 2026 07:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xM1jL-0003kw-R5
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:22:08 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM1nS-0004Vv-Gc
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:26:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>) id 1xM1jJ-0002oc-AJ
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:22:07 -0400
-Message-ID: <c968085fc1c6f5788bea0100792a7b33bd02b15f.camel@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1793186514;
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xM1nP-0003AX-U1
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:26:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793186779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ikKvpHiFjdXmf593ZxIu6PhIe/Sw9d+rHzPiFl6kEdA=;
- b=JnaL33IMQk0eoum0JkPhU137mZuaKEYXn8TCfUD5XjTbJYpUqb3NeV7JmNalJv8FkcfgGz
- r2D7pXyMpWFjL6yOn3dDqv5B8j8DEG3e/1fClJh724tM64Ibgfwim99UeA8SmYJl5SvyD3
- dyHgN+mGTcg7fxj8jNI6M2KSYSi7E0c=
-Subject: Re: [PATCH 1/2] target/sparc: Model block-initializing stores
-From: Stian Halseth <stian@itx.no>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
- <atar4qemu@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@oss.qualcomm.com>, Laurent Vivier <laurent@vivier.eu>, Helge Deller
- <deller@gmx.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, Eric
- Biggers <ebiggers@kernel.org>
-Date: Wed, 28 Oct 2026 12:21:52 +0100
-In-Reply-To: <c7703ab2-55c0-4279-81a5-961752f1ab94@linaro.org>
-References: <20261023114303.576319-1-stian@itx.no>
- <20261023114303.576319-2-stian@itx.no>
- <c7703ab2-55c0-4279-81a5-961752f1ab94@linaro.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
- protocol="application/pgp-signature"; boundary="=-/5JknJppk/wga+yPdFoh"
+ bh=q7i8Qu2BoNOSPeWtDoLQBADn0s0VZeapD4dpwrvau+8=;
+ b=OkIelfBG+Nx7CUX97eJnj9rXZ0OfZA0lwui6FSMwnejEDN10eO0JLxO9qbVJtL0RHVPoNR
+ OtbBFsY7PkfXaKGim7XNHoullglphnpPOJFgxqWHQOngHpS/iSlH7Ew6aivD1kbds6b5T5
+ OuLzDqU+kME1g/7yHoKTvbeQnFXp2qk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-znzOgLP_PHaRL1emKlylmQ-1; Wed,
+ 28 Oct 2026 07:26:15 -0400
+X-MC-Unique: znzOgLP_PHaRL1emKlylmQ-1
+X-Mimecast-MFC-AGG-ID: znzOgLP_PHaRL1emKlylmQ_1793186774
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62B731955BC6; Wed, 28 Oct 2026 11:26:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A07EA362; Wed, 28 Oct 2026 11:26:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5557321E6A04; Wed, 28 Oct 2026 12:26:10 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Timur Maksimov <gessingate@gmail.com>,  qemu-devel@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,  Kane Chen
+ <kane_chen@aspeedtech.com>,  qemu-arm@nongnu.org,  Fabiano Rosas
+ <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,  Corey Minyard
+ <cminyard@mvista.com>
+Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
+In-Reply-To: <4b33dabe-5c37-4819-84bb-f6db7331462b@kaod.org>
+ (=?utf-8?Q?=22C=C3=A9dric?= Le
+ Goater"'s message of "Wed, 28 Oct 2026 12:04:56 +0100")
+References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+ <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
+ <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
+ <874ie6ku2u.fsf@pond.sub.org>
+ <4b33dabe-5c37-4819-84bb-f6db7331462b@kaod.org>
+Date: Wed, 28 Oct 2026 12:26:10 +0100
+Message-ID: <87wlr2jcbx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,58 +92,29 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+C=C3=A9dric Le Goater <clg@kaod.org> writes:
 
---=-/5JknJppk/wga+yPdFoh
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
+>> The commit message tells us this is a "Simple I2C device with QOM
+>> properties to access transmit and receive buffers [...] for testing or
+>> prototyping."  It doesn't tell us how it could be used, and I can't see
+>> any documentation, either.  So let's start right there: please show us
+>> how this device could be used.  This should help me understand what the
+>> properties are for.  Only then can I advise on proper QOM usage.
+>> [...]
+>
+> sorry, I should have added the link to the test case where these
+> properties are used :
+>
+>   https://lore.kernel.org/qemu-devel/20261027-aspeed-i2c-nonpkt-fix-v2-6-=
+07deed1dff60@gmail.com/
 
-Hi Richard,
+Uh, that's a bit much for me to read.  Timur, please answer my question.
 
-On Wed, 2026-10-28 at 05:51 -0500, Richard Henderson wrote:
-
->=20
-> tcg_gen_brcondi_tl(TCG_COND_TSTNE, addr, 31, skip);
-
-Thanks, adopting in v2.
-
-> You don't need to store to offset 0, because...
-> ... that's done here.
-
-Yes, for stxa and stdfa, but stba/stha/stwa with the same ASIs also reach
-gen_blkinit_zero() through gen_st_asi().
-
-I tested on the T4, and those zero the rest of the first doubleword
-as well (v =3D stored byte, 0 =3D zeroed, one 32-byte block):
-
-  stba off=3D0:  v0000000000000000000000000000000
-  stha off=3D0:  vv000000000000000000000000000000
-  stwa off=3D0:  vvvv0000000000000000000000000000
-
-So v2 skips offset 0 only for 8-byte stores.
-
-Thanks for the review!
-
-/Stian
-
-
---=-/5JknJppk/wga+yPdFoh
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTK1ph9OaYoND1R57zoeAEuJe36VgUCauHa0AAKCRDoeAEuJe36
-VtjaAP0dqeXLagbY+FWwNtvGySixQNp/9ShgwvduPi8yhJ0vvwEAv6BXFvAKv86Y
-fuYzUowc6yqlW4lO7obJQ4iAYmnSQAk=
-=dN6O
------END PGP SIGNATURE-----
-
---=-/5JknJppk/wga+yPdFoh--
 
