@@ -1,98 +1,95 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F1606A31C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C5A606A31F
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NfCTGNvR;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=jPFvH2wZ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=P7ij4gb8;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=KM+yXWDF
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7IG-0005Ou-1t; Wed, 28 Oct 2026 13:18:35 -0400
+	id 1xM7HC-000227-V4; Wed, 28 Oct 2026 13:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Gx-0001eD-B7
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:12 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G5-00009y-6d
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Gv-0003zt-4c
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G3-0003ry-7T
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207826;
+ s=mimecast20190719; t=1793207774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
- b=NfCTGNvRbNi5MgxFIbqzU4rMX6syj/jvMyeT/ov5B6CwrMggDtLF5vtu0vkZHOeGoUqIem
- ALmBzOI+SbwFcOJAx722B7SVhgpJGXNzlUDnEw9rpMvIW+BQhwdC5NgY3l7Pa5Vr+GnL6u
- oC02bIyWlG4rx8pRQL3huTv6kJ3YJDo=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
+ b=P7ij4gb842rfx34TO+h9EHBp1Ws855zlPyjyrcwy9b8zggllWC8E8fhdpAcpFlgWeDcyUD
+ 8D1E2xv2Q6svkCqqvzSopPcar67Gmc6VUMN0EdhPgRNDkRmiYyg4thi4amwHUOdCdkiedb
+ 3BU7OYGBrr+tK8te8ObedmahLoYVdAE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-J2-1a37kPDezrgEId_kyJg-1; Wed, 28 Oct 2026 13:17:03 -0400
-X-MC-Unique: J2-1a37kPDezrgEId_kyJg-1
-X-Mimecast-MFC-AGG-ID: J2-1a37kPDezrgEId_kyJg_1793207822
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-c293e604f0eso131120166b.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:03 -0700 (PDT)
+ us-mta-653-KMn1TFVtM0WSAYheQ5jukw-1; Wed, 28 Oct 2026 13:16:12 -0400
+X-MC-Unique: KMn1TFVtM0WSAYheQ5jukw-1
+X-Mimecast-MFC-AGG-ID: KMn1TFVtM0WSAYheQ5jukw_1793207772
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-48e20ed362aso56047f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207822; x=1793812622; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793207771; x=1793812571; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
- b=jPFvH2wZZtM1eDQFtcv54aZrO4LuU8rVZB9x8Yg7CgF2gvVk533OWo5SwOLh0bwu7X
- 2JYCe+bL1zgbbSUumSVK+qtgTreAyewN3uvFQ3W3pNbKuIYH7wnWjg5lK9Qu/42QfTK9
- FVjCDD4DOnIiQBEEKLVsTLst+9JzWWjsHsRjF+5SROKbB/pmbHjAcGbZiGrYuvd/fGQF
- oaWZFvq+yYXAp3E3PnhC/jsYeOVuhbPSjaFX6ye5+2wAYSm85JpVbahSGtgkVXbm1ywl
- z7u/lDRFhbJHInWtvb1WtJ13Ke6x4/7SMk+JrlGGxo2+GJYQpAb0CVdgyq/5PEpXmJBG
- ze7g==
+ bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
+ b=KM+yXWDFka5JTd6t4w+YAmgHHhDZl3PtfummssPsiD/tmnDi/Ws116foCgMeKJJhVw
+ 1ZBJ5n8EgaVnm4gI6S3VmhlTgg/kUCI7JpWWgGcXMVy/tIBeA9Fl3L5UEsCd+K13GJ26
+ M7R1OaKxWY64sGQw8aD6cWkyTdu1RPUtmA7RXgqGTAsJ1XTkTWUiTOq3P+WxIk+VaKgR
+ Gi1APZ8ptUJvf+C1GqaJEnse3FEwV9zkfDtvgnzhxEFrQ/zbzKRiekF7o5BqYAnnCRkj
+ b/RTuWA4/0g9uRlxaGv8EYBci5lF0aLHO/rlKXddytT1QEjXVmyrEYmREwIvOh2PKGVu
+ +XjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207822; x=1793812622;
+ d=1e100.net; s=20260707; t=1793207771; x=1793812571;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
- b=z0JAI7xLhior+OU/4yeWGQd8VJWn5oq5JcTC7kz9Au+imDiuH5/NO+FEgao9uCIsio
- d+P0sG/OrLuMeT++C0FphEg6poJ//4c1p0rkYG2cw5Q5G7A+mizpcEhE89Mv8tYFLFr9
- oV8xVlbuYTN7t9wU2GOF4lf6q5z6Vat8iZgpesUY+L5pcmImPR8ocZhFYnTnPR8rXoUM
- 8N+RC37wgH5rjpvILvyP2DQwIHxXEU5ZhOYIIxf20b7l9wOpZZ4BYNUCco5DeebcnXja
- B+Jf+Tc8LES2Y0qMozZeut21EjBgexEK0LSgMcpON0d6KGMzA0ZND8xBjk3xbBlFy4PM
- 0iXw==
-X-Gm-Message-State: AFq9FYI/oKLRdSPjrWyGSj1BP0n3t2VzC6KTezdl7hJFQrXMlZ7+GUWS
- sRnrok0p41eOITXLRRqpwxNFq6x29nTE3wIsv0VZeP7PMaR9fs0GHiE54jxSaRGFQDjD9mixBCC
- e3zV3OAJikDpPV8KMCb0NXwZBuE4fv47Yk9Qv7oI4aGk2jSWswS+APTeYWXNLzQasWjKT5yX/Po
- FKNuqXgTBzq5P4lhOySinAlKMjUh6CAddgBQ==
-X-Gm-Gg: AYBFou0b4nzd9LHsb8nwn8FWtLrALdpEsY8ma5JN5QhWFmCOY91kosgOGPsG2Tg40hV
- isyjjd6PVNfXLjCpWpwPkTWUdmYlsVyaGoKGa/ioy0V5qAaXrlRI5ODYsB1eWoYjBBV5SDX178n
- Qc1d8fQ9dLyaA6WF6OSPqfMNCE3+1UDD0tejWyTHYDiYYCBA0NaTL59POT/jfiPWExJTyGBoGkp
- KsAFLaNKeaFve6FTxNukGAzP0KFW9Qg5iphzP7OO0Gyl/57WCcrcKLP1LtQkHdjGWodzHoxiN/Y
- 8/Za0kGGqB8gyvQXNpcZ+8zHpU3Oyq8MtnuXhztyRuO6Eq9r5bwLWrfVrtnP9QvdHURgZIolHMb
- f4nxENZULDtpk4AYphsPbye7K+BUS8apYupOOTnso
-X-Received: by 2002:a17:907:9349:b0:c41:e0c0:e6b7 with SMTP id
- a640c23a62f3a-c49bdf25521mr272854166b.12.1793207822065; 
- Wed, 28 Oct 2026 10:17:02 -0700 (PDT)
-X-Received: by 2002:a05:600c:609a:b0:4a2:9cda:57cb with SMTP id
- 5b1f17b1804b1-4a963ffb29amr63997515e9.1.1793207811365; 
- Wed, 28 Oct 2026 10:16:51 -0700 (PDT)
+ bh=CCV9MK2tJVwUFYE3aXNQOOiQRc9fHS1Oi59Xhr97czQ=;
+ b=iieZpN1CV1RerMx/EbTlcDc6+n5OtPBBoxSAPaDVSXdhNQcWzWb2Xt98PjjBOR1HyF
+ 5PSZTrPkPJPH2hvAdujhWulHi407iZXdJfw8qI9SeTxE1ZlFQfzdicNKoCfJpugzOx1M
+ Tft6Ecf9QIPcSBWkSYX/OThU69l7Bp0OnwzTRiy52Qz/5Qzwi9hIIyhZv0O7cHl+EsTF
+ BEWG2jciNNixSZyBQo3WqRx/ct7PG7muyeNw8uwiHixFFvZzEUwenn8hqv/J7uZI9WZr
+ t8tCSzBfsFL0bwwVZEJtpgkkd+lxaUhVcs0o6WFCc016330oD8Y45V5djgFhtf91zELC
+ BuUw==
+X-Gm-Message-State: AFq9FYIhRyPfe6rMImbQjU7PqiEDsQFG2f/dRibF7Xc7kltHvrLPoesB
+ McvRz+1knF0IlZHdJ82HpQhM6jm79k4UDNGTo8+sGSz4XI+Kshgnqr+I0GrIY3nt2KEpwdo242A
+ 2m1xUY+7bvfUJagroSdj9DvHa+e786md46utJ37o0rq25kbP141GeAjOBVnTJ5xP1ok95RoOx2m
+ UwN/hldYj3jHOFA+AzlzkFeHNMg+fMgMMKbQ==
+X-Gm-Gg: AYBFou2vaGYVTpaCIyHqB7vd7kIqVwH5jQNAjbC2c7T6oRI2hPGAiA1eB4SZhpC04OH
+ 1OYWqvtPEXFvYNOzg9nnuf4puw86xTtn3UCwuAAdrNuoHVeixPDoLbrJS4v1dkU6DY2XOUV6hzW
+ 0BSE9/qsDGVWX2KnihTEDYSdZ/H/7cRF7e0WOwtdxiw3mTKk5BoKFgKbt76Qbh7bEZob++MorsG
+ 4sgOWvVH8cdVUfycQzJEjZ3DGkb5EJJXZh4BqIIEsvIqCCuhSnDTBk1Yk6m+eShRQVe/NtGadYa
+ HJWeTsmoOo7Yp2fZaLBrmEkjWEXz+k3aqhrC8gxCfEaGAkqmiP+B1xMGcXpmY4O/3M3CT8jwMzY
+ Nt4UQyuF1k3fPP3uMu3uXnAinGmVkhoxIYyLQIFBw
+X-Received: by 2002:a05:600c:608c:b0:4a1:dadf:9876 with SMTP id
+ 5b1f17b1804b1-4a967016833mr64394455e9.23.1793207771486; 
+ Wed, 28 Oct 2026 10:16:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:608c:b0:4a1:dadf:9876 with SMTP id
+ 5b1f17b1804b1-4a967016833mr64393605e9.23.1793207770954; 
+ Wed, 28 Oct 2026 10:16:10 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7f418afbsm6825235e9.6.2026.10.28.10.16.47
+ 5b1f17b1804b1-4a92de010bcsm55989725e9.0.2026.10.28.10.16.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:48 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:47 -0400
+ Wed, 28 Oct 2026 10:16:10 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>,
- Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 64/78] intel_iommu: Add support for get_x86_iommu callback
-Message-ID: <637dfc409e1f0f5c33651e3d1f0d6a4a719fc50a.1793207602.git.mst@redhat.com>
+ Li RongQing <lirongqing@baidu.com>
+Subject: [PULL 50/78] virtio-qmp: Fix out-of-bounds vqs index in vhost queue
+ status
+Message-ID: <95253c9a9e210c58ea8349644f173c807f2213c5.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
@@ -128,45 +125,67 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-Return X86IOMMUState during get_x86_iommu callback.
+qmp_x_query_virtio_vhost_queue_status() validates the queue number
+against the vhost device's global range (queue < hdev->vq_index +
+hdev->nvqs), confirming that 'queue' is a global index.  But it then
+indexes hdev->vqs[] directly with that global index.
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+hdev->vqs is allocated as g_new0(struct vhost_virtqueue, hdev->nvqs),
+so valid local indices are 0..nvqs-1.  When hdev->vq_index > 0
+(multiqueue vhost-net queue pairs other than the first), every access
+hdev->vqs[queue] reads past the end of the array.
+
+Use queue - hdev->vq_index to compute the local index, consistent with
+the rest of vhost.c (e.g. vhost_virtqueue_pending/mask).
+
+Fixes: 07536ddda73a ("qmp: add QMP commands for virtio/vhost queue-status")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20261014053433.24564-5-sarunkod@amd.com>
+Message-ID: <20260912042343.2362-1-lirongqing@baidu.com>
 ---
- hw/i386/intel_iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/virtio/virtio-qmp.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 350d2b7753..3686ca8ba7 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -5485,6 +5485,13 @@ out:
-     return ret;
+diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+index 8b7cd7a310..8d190c4c70 100644
+--- a/hw/virtio/virtio-qmp.c
++++ b/hw/virtio/virtio-qmp.c
+@@ -789,6 +789,7 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
+ 
+     VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+     struct vhost_dev *hdev = vdc->get_vhost(vdev);
++    int vq = queue - hdev->vq_index;
+ 
+     if (queue < hdev->vq_index || queue >= hdev->vq_index + hdev->nvqs) {
+         error_setg(errp, "Invalid vhost virtqueue number %d", queue);
+@@ -797,15 +798,15 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
+ 
+     status = g_new0(VirtVhostQueueStatus, 1);
+     status->name = g_strdup(vdev->name);
+-    status->kick = hdev->vqs[queue].kick;
+-    status->call = hdev->vqs[queue].call;
+-    status->num = hdev->vqs[queue].num;
+-    status->desc_phys = hdev->vqs[queue].desc_phys;
+-    status->desc_size = hdev->vqs[queue].desc_size;
+-    status->avail_phys = hdev->vqs[queue].avail_phys;
+-    status->avail_size = hdev->vqs[queue].avail_size;
+-    status->used_phys = hdev->vqs[queue].used_phys;
+-    status->used_size = hdev->vqs[queue].used_size;
++    status->kick = hdev->vqs[vq].kick;
++    status->call = hdev->vqs[vq].call;
++    status->num = hdev->vqs[vq].num;
++    status->desc_phys = hdev->vqs[vq].desc_phys;
++    status->desc_size = hdev->vqs[vq].desc_size;
++    status->avail_phys = hdev->vqs[vq].avail_phys;
++    status->avail_size = hdev->vqs[vq].avail_size;
++    status->used_phys = hdev->vqs[vq].used_phys;
++    status->used_size = hdev->vqs[vq].used_size;
+ 
+     return status;
  }
- 
-+static int vtd_get_x86_iommu(void *opaque, void **x86_iommu)
-+{
-+    IntelIOMMUState *s = opaque;
-+    *x86_iommu = X86_IOMMU_DEVICE(s);
-+    return 0;
-+}
-+
- static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
-                                     IOMMUNotifier *n, IOMMUNotify fn,
-                                     void *user_opaque)
-@@ -5559,6 +5566,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
-     .pri_unregister_notifier = vtd_pri_unregister_notifier,
-     .pri_request_page = vtd_pri_request_page,
-     .get_viommu_flags = vtd_get_viommu_flags,
-+    .get_x86_iommu = vtd_get_x86_iommu,
- };
- 
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 MST
 
