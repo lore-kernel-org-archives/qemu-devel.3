@@ -1,52 +1,88 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DBB606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E8D606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 12:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=itx.no header.i=@itx.no header.a=rsa-sha256 header.s=mx.itx.no header.b=BARqDVLc
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cQ8SDkYZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM2Ms-0007cl-R2; Wed, 28 Oct 2026 08:02:58 -0400
+	id 1xM2Om-00005e-Q1; Wed, 28 Oct 2026 08:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>)
- id 1xM2Mo-0007Yw-Jz; Wed, 28 Oct 2026 08:02:54 -0400
-Received: from itx-kvm-14.itxnorge.no ([91.189.121.228] helo=mx.itxnorge.no)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xM2Ok-000053-Hm
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:04:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stian@itx.no>)
- id 1xM2Ml-0006xd-0J; Wed, 28 Oct 2026 08:02:54 -0400
-From: Stian Halseth <stian@itx.no>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=itx.no; s=mx.itx.no;
- t=1793188967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=33YIsvOM++XLj5sSgfhneEcEp7KVe8h4lRc912dPYkY=;
- b=BARqDVLch+YQ+iTEhO0g9KogIYbIpJ8LKbMEEgrQxHO1O4WEjoAwnOoIG1fgZ+ne4cNq93
- O+k2sGlRhMTyigr++t0DfwiP9V5TaUXlEs9AQBENh/74Yp6dLrIneAEvLKvbkh+0QCKaxU
- 99OoBedZ+2Dr60fTdDuc/uTxAPa4CT4=
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Matt Turner <mattst88@gmail.com>, Stian Halseth <stian@itx.no>,
- qemu-stable@nongnu.org
-Subject: [PATCH v3] accel/tcg: Do not flush and retry in place in tb_gen_code
-Date: Wed, 28 Oct 2026 13:02:33 +0100
-Message-ID: <20261028120233.1664444-1-stian@itx.no>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xM2Oi-0007Ep-8B
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 08:04:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793189089;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zect9sFuS8TiT9GDaR5PLrtYRW9vSR2DcxfVWz560II=;
+ b=cQ8SDkYZyXB3Xjlzw2pdKhX+ItbTfAOaAUaZzWbSqLBXvt6N0wc5hC9DfJ0fA7+JIWp8Qh
+ yJ7s0S36C66nBtTjaZSMGfuYuvHra/HPSIOKWLGI/3D/LuPU2M+XuAwstR0jD0m9nKJbe9
+ EP1XTKePz1U2YO0DrnvAGWaJjNm3mZQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-5hqsDSCvP_Wm9od5T2LHTg-1; Wed,
+ 28 Oct 2026 08:04:46 -0400
+X-MC-Unique: 5hqsDSCvP_Wm9od5T2LHTg-1
+X-Mimecast-MFC-AGG-ID: 5hqsDSCvP_Wm9od5T2LHTg_1793189085
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB04C18052D5; Wed, 28 Oct 2026 12:04:44 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D18930002CB; Wed, 28 Oct 2026 12:04:42 +0000 (UTC)
+Date: Wed, 28 Oct 2026 12:04:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PULL 51/59] system: Remove deprecated 'debug-threads' option
+ for -name
+Message-ID: <auHk1xWE-SXnCrPD@redhat.com>
+References: <20261027192341.9197-1-philmd@oss.qualcomm.com>
+ <20261027192341.9197-52-philmd@oss.qualcomm.com>
+ <0dab848f-426e-49af-a28e-8165591b9d03@linaro.org>
+ <e84af371-8fce-466c-9df6-c74863c127a4@oss.qualcomm.com>
+ <auHEv-AQmulcwaad@redhat.com>
+ <auHidAzj6lX3Y0CN@zhexu-thinkpadt14gen5.rmtcaon.csb>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=91.189.121.228; envelope-from=stian@itx.no;
- helo=mx.itxnorge.no
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <auHidAzj6lX3Y0CN@zhexu-thinkpadt14gen5.rmtcaon.csb>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -58,61 +94,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-When the code buffer is full in a serial context, tb_gen_code() flushes
-it and retries in place. cpu_exec_loop() then chains its last_tb, now
-freed, into the new TB. When that TB is invalidated, tb_jmp_unlink()
-follows the stale entry and qemu crashes inside its SIGSEGV handler.
+On Wed, Oct 28, 2026 at 07:54:28AM -0400, Peter Xu wrote:
+> On Wed, Oct 28, 2026 at 09:47:43AM +0000, Daniel P. Berrangé wrote:
+> > On Wed, Oct 28, 2026 at 08:32:20AM +0100, Philippe Mathieu-Daudé wrote:
+> > > (Cc'ing migration compat and libvirt teams)
+> > > 
+> > > On 28/10/26 02:01, Richard Henderson wrote:
+> > > > On 10/27/26 14:23, Philippe Mathieu-Daudé wrote:
+> > > > > 'debug-threads' option for -name was deprecated in v11.0
+> > > > > (commit 1b65aeed2a0 "system: unconditionally enable thread
+> > > > > naming") thus can now be removed.
+> > > > > 
+> > > > > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> > > > > Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> > > > > Reviewed-by: Ján Tomko<jtomko@redhat.com>
+> > > > > Reviewed-by: Dr. David Alan Gilbert<dave@treblig.org>
+> > > > > Message-Id:<20261018232917.7716-1-philmd@oss.qualcomm.com>
+> > > > > ---
+> > > > >   docs/about/deprecated.rst             |  7 -------
+> > > > >   docs/about/removed-features.rst       |  9 +++++++--
+> > > > >   system/vl.c                           | 11 -----------
+> > > > >   tests/qtest/migration/framework.c     |  4 ++--
+> > > > >   tests/qtest/migration/precopy-tests.c |  2 +-
+> > > > >   qemu-options.hx                       |  7 +++----
+> > > > >   6 files changed, 13 insertions(+), 27 deletions(-)
+> > > > 
+> > > > You need to remove this from the testsuite as well:
+> > > > 
+> > > > https://gitlab.com/qemu-project/qemu/-/jobs/17523155796#L58
+> > > 
+> > > Hmm I was surprised because the pipeline in my fork passed, but then
+> > > looking clearer this job is marked as "allow_failure: true" for me,
+> > > why is it blocking on the mainstream repo?
+> > 
+> > It isn't blocking on upstream repo, it is allow_failure: true there
+> > too. Manual inspection of the job shows it is a real bug though.
+> > 
+> > > Back to the test, this is the migration-compat-x86_64 job running
+> > > previous release binary vs latest one, so I'd think this is the
+> > > expected behavior, v11.0 and v11.1 have that deprecated option, and
+> > > we can not test vs v11.2 which removed it.
+> > > 
+> > > If we want to change that workflow, then when deprecating on v11.0
+> > > we also need to remove the tests coverage, so when we remove the
+> > > feature at $deprecation_release+2 the migration-compat test does not
+> > > break. Here the question is, do we want to keep testing deprecated
+> > > features? Maybe yes in the case of unmaintained area when the
+> > > deprecation process triggers new maintainers stepping in and the
+> > > deprecation to be cancelled.
+> > > 
+> > > We could also mark the feature removed but keep it ignored and
+> > > undocumented until the next release but we'll likely forget and
+> > > miss that in workflow so I don't recommend that way.
+> > > 
+> > > Maybe there are another ways to resolve that but I'm not seeing
+> > > them. Ideas?
+> > 
+> > 'debug-threads=on' has no relationship to live migration data
+> > stream, it merely gives the threads names. Just remove this
+> > option from the migration testsuite as it is irrelevant to
+> > what is being tested.
+> 
+> We're testing with the old migration-test for compat, so Phil doesn't have
+> an easy way to remove that part:
+> 
+> .migration-compat-common:
+>     ...
+>     # Use the migration-tests from the older QEMU tree. This avoids
+>     # testing an old QEMU against new features/tests that it is not
+>     # compatible with.
+>     - cd build-previous
+> 
+> Intentional to avoid new things not working with old QEMU binaries, but
+> then this will be the case things break if we don't have protection of
+> 2-release deprecation (where we could have removed the usage in test cases
+> 2 releases in advance too when deprecating).
+> 
+> At least two options I see: (1) for this release, we lose compat
+> protection, we'll need to manually guard it, or (2) we provide some way to
+> script/patch on top of the build-previous/ build before it builds, in this
+> case we only need to remove the string in that test alone.
 
-Always queue the flush and leave through cpu_loop_exit(), as before
-commit ebf7a5d294a3. This also brings back the cleanup in
-cpu_loop_exit() and cpu_exec_longjmp_cleanup() that the retry skipped.
+Or (3) push a change to -stable branches to remove debug-threads usage
+from old migration-test and use stable HEAD, not the tagged version.
 
-Since commit 25e5c6a320db ("accel/tcg: Allow cross-page goto_tb
-chaining in user-only builds"), user-only builds hit this easily,
-e.g. qemu-sparc64 -tb-size 1 on a program writing next to its PLT.
 
-Cc: qemu-stable@nongnu.org
-Fixes: ebf7a5d294a3 ("accel/tcg: Improve buffer overflow in tb_gen_code")
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Stian Halseth <stian@itx.no>
----
-v3:
-- Drop the in-place retry instead of clearing last_tb after it
-  (Alex, Richard)
-- Matt's Reviewed-by dropped, since the code changed
-
-v2: https://lore.kernel.org/qemu-devel/20261024070347.1202239-1-stian@itx.no/
-v1: https://lore.kernel.org/qemu-devel/20261023113245.562358-1-stian@itx.no/
-
- accel/tcg/translate-all.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
-
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 328d96aba3..531a4e6ffd 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -289,11 +289,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-     tb = tcg_tb_alloc(tcg_ctx);
-     if (unlikely(!tb)) {
-         /* flush must be done */
--        if (cpu_in_serial_context(cpu)) {
--            trace_tb_gen_code_buffer_overflow("tcg_tb_alloc");
--            tb_flush__exclusive_or_serial();
--            goto buffer_overflow;
--        }
-+        trace_tb_gen_code_buffer_overflow("tcg_tb_alloc");
-         queue_tb_flush(cpu);
-         mmap_unlock();
-         /* Make the execution loop process the flush as soon as possible.  */
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
