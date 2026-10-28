@@ -1,103 +1,64 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D4E606A323
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 03:23:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=sifive.com header.i=@sifive.com header.a=rsa-sha256 header.s=google header.b=Fc/4pgP5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FC6606A31D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 03:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xLuFw-0001VJ-V3; Tue, 27 Oct 2026 23:23:17 -0400
+	id 1xLuGL-0001aC-IJ; Tue, 27 Oct 2026 23:23:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLuFs-0001Ut-PR
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:13 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1xLuFr-00043a-1o
- for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:12 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c418e215671so57452366b.0
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 20:23:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1793157789; x=1793762589; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=mk3I4P3qvt9cpCXVVANHB7X1V9r2M3jD6i2IEfgksoA=;
- b=Fc/4pgP5RRhxSHEyru4TxmAXUzj8qh3RKqEBSuaLVDKW/7Rn9YsR7QPX7AZNo1xpla
- MeWIFgoVlnL7aaWsMPqeMl+9zHi+qrLH3wdpPo/Ih2SE1vB4uGUGrTTYaSS8kdlhLkIV
- fG/TIu4bZbOLwpWGOH5so7lgyuP3o1q88nYduVm0JKYvK/kQ2umi6J8/L2zTepq1eYsp
- yuyCkwh0uVTz8bQjRmKCON83sV+l9RH3SnzkGAhy8bvIASM08sqVutjwu/QbyCMiAbNp
- v0pwjnhdUhYhR/gxK6zrDTqNP38FrqXBiGgu0P2cxf4vSpn1YgJtcEILTOWPBgGddXpI
- oGDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793157789; x=1793762589;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=mk3I4P3qvt9cpCXVVANHB7X1V9r2M3jD6i2IEfgksoA=;
- b=lTBA5uArYlNNj8CCsTqkfAGUavZw+DCah1qTBIm3fl2tz+UYMVxuQfarYgS7KrMgsh
- jcAD0L+Ac3dDD+MqjYoMwM/4Tp9XBxR9/+WIXC3soJAyPZa6Lq8mw025oVne2qdcB5Yk
- pACkUAaMX3l9WUZaqcVu9zjBTot/s3Wit8y41+XFXWaV8NcG82Ul1rldSS2EiVyOJsyT
- m/iFDSoM2NeSX6etP2W0qNZtTHinPYqoQQ+MjJPuCKzlcDRHnqBW5L9S3azFOLwGJG36
- 5jHHeZq3jYWPbqkGAbvbNOrqOKtQ379KTi8qq7g+uEkmaZ6b2YjgAJ21gTKEzR/1OIhF
- OJCg==
-X-Gm-Message-State: AFq9FYLrjYRhJHSsu5FQcU9QOgfusdOS1DwUsz94xDAbECl/PJZAtD+M
- Tyrlm2r62JE7NKkaJg6W4mtfw/GC6idRTkNYklWHwwk4GmNJt1xP8YsMCi4/wZwQ2CIt8nYZ1F/
- FLCdu++brl+jqoVBzlcJ/K/uUsSS67QkJOOJlvrziikQa66F1gMPAb4gVWovoFsUUTAy2l5xbXP
- nGg8N3yxPhXhgnFdxmDnlOAsiXyLkL5QTtSJRe9eHxCxw=
-X-Gm-Gg: AYBFou2HeBApLg91ttWXIhcXK27k3MYS9cCAj/mDQKPiWpOKb1s1Kw4i3/8BX+u74aK
- yEJ11i/lLvJeEmKSuoEN9Bq75IXtIS38oHmXIl6zkkR+yuTxZxa1y0Q1f43nLPhBqtjlwq6Z7UM
- lX59GegTrec3erVa4GiqitP2eaD/vBOGD6W1TfVJE07e+MDE6kjlOi4I7sxPtxe2fqJ914d8DOs
- 8/rt3wJSc/obsfB1vxLPDFNA1CKdUNpNow0PigM4NJD5pfoEoyvJTmlo/O2V92FIYc0lKNiPQ+M
- gJA4nxS8C1prVERT7vmbzkRZqXdMDZ5fAEuGHQaI9Z0j1ZpIERAs4E/WkY0gYUbr8mEjQxQ6uux
- J9A+wugVoTZuOsiQ9xnZAgrH4Vx9lypeXtZbJ3GL0DnDo3qT0RL9UwaU+BIys9Ma99LvfKv1GrM
- 62afa2BpAgea5ZKwz7+tzoP9bVYiWC64QA0GgLQVhpzItGiLCodv6X/L09eD0iEsgCwAkzkKYjw
- Yj4Le1F4aQEJiosygSKB4jsNV8lxwWJTYk69JND+GBsAMVi+wnUAYMc1fyQABCCqXq2AfEqOccE
- PqAu5iq2G7S7CcuTDw==
-X-Received: by 2002:a17:907:2d09:b0:c3f:7270:10ab with SMTP id
- a640c23a62f3a-c49c633bf32mr6792466b.14.1793157789218; 
- Tue, 27 Oct 2026 20:23:09 -0700 (PDT)
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com.
- [209.85.208.53]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c46bd5202d9sm544253266b.32.2026.10.27.20.23.06
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Oct 2026 20:23:06 -0700 (PDT)
-Received: by mail-ed1-f53.google.com with SMTP id
- 4fb4d7f45d1cf-6b3dc272dcfso783151a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Oct 2026 20:23:06 -0700 (PDT)
-X-Received: by 2002:aa7:c6d5:0:b0:6b4:16be:4fa with SMTP id
- 4fb4d7f45d1cf-6b49cbd6cd0mr385557a12.15.1793157785664; Tue, 27 Oct 2026
- 20:23:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1xLuGI-0001ZI-VD
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:38 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1xLuGF-00047J-MU
+ for qemu-devel@nongnu.org; Tue, 27 Oct 2026 23:23:38 -0400
+Received: from loongson.cn (unknown [10.40.46.54])
+ by gateway (Coremail) with SMTP id _____8BxbdKwauFqxgEaAA--.11620S3;
+ Wed, 28 Oct 2026 11:23:28 +0800 (CST)
+Received: from fedora.loongson.cn (unknown [127.0.0.1])
+ by front1 (Coremail) with SMTP id qMiowJDxBc2vauFqFtQwAA--.8447S2;
+ Wed, 28 Oct 2026 11:23:27 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <17746591750@163.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] target/loongarch: Replace sys_state with vm_level
+Date: Wed, 28 Oct 2026 11:24:56 +0800
+Message-ID: <20261028032456.12884-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.54.0
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261021231346.2452179-1-daniel.barboza@oss.qualcomm.com>
- <20261021231346.2452179-13-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20261021231346.2452179-13-daniel.barboza@oss.qualcomm.com>
-From: Jay Chang <jay.chang@sifive.com>
-Date: Wed, 28 Oct 2026 11:22:54 +0800
-X-Gmail-Original-Message-ID: <CAMXXpfZB8w_pJso4M4_ufOm99VbV6gfbUSKDNz4twFwfcTPgpw@mail.gmail.com>
-X-Gm-Features: AclHuK9QdqaG-U3lqaLxdAeYzqbWYte2s4CGaiaJf8-nn3ySE5RrbwA2I8B6HtE
-Message-ID: <CAMXXpfZB8w_pJso4M4_ufOm99VbV6gfbUSKDNz4twFwfcTPgpw@mail.gmail.com>
-Subject: Re: [PATCH v4 12/18] target/riscv, hw/riscv: send trace ppccd packets
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu@processmission.com, antikostya2@gmail.com, 
- Palmer Dabbelt <palmer@dabbelt.com>, frank.chang@sifive.com
-Content-Type: multipart/alternative; boundary="000000000000d741b4065ede1435"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=jay.chang@sifive.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxBc2vauFqFtQwAA--.8447S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZFW8Xw18GryUXw1fWry5ZFc_yoW8WrW7pr
+ ZrZw4agr48GFZ2yanrJ3s8WFn8WrsrC3429a9Ikr9YyFs8Jry5WFnYy3yDCF4UJaykWFyf
+ Xa10yr1UJa12gacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUk0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
+ AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
+ r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6x
+ IIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAI
+ w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x
+ 0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzZ2-UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,85 +71,66 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
---000000000000d741b4065ede1435
-Content-Type: text/plain; charset="UTF-8"
+Int type vm_level is more meaningful than pointer type sys_state,
+and it is easy to get current mode from value of vm_level.
 
->
-> -- a/target/riscv/tcg/cpu_helper.c
-> +++ b/target/riscv/tcg/cpu_helper.c
-> @@ -943,11 +943,22 @@ void riscv_cpu_set_mode(CPURISCVState *env,
-> privilege_mode_t newpriv,
->  {
->      g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
->
-> +    CPUState *cs = env_cpu(env);
-> +
->      if (newpriv != env->priv || env->virt_enabled != virt_en) {
->          if (icount_enabled()) {
->              riscv_itrigger_update_priv(env);
->          }
->
-> +        if (newpriv != env->priv) {
-> +            RISCVCPU *cpu = RISCV_CPU(cs);
-> +
-> +            if (cpu->trencoder &&
-> +                TRACE_ENCODER(cpu->trencoder)->trace_running) {
-> +                trencoder_trace_ppccd(cpu->trencoder, env->pc);
-> +            }
-> +        }
->
-On the trap-entry path, env->pc has already been updated to the handler
-address, but env->priv still holds the previous privilege level.
-Emitting a PPCCD sync packet here therefore pairs the handler PC with
-the old privilege level.
+Here replace sys_state with vm_level, and use vm_level directly.
 
---000000000000d741b4065ede1435
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/loongarch/cpu.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">-- a/target/riscv/tcg/cpu_helper.c=
-<br>
-+++ b/target/riscv/tcg/cpu_helper.c<br>
-@@ -943,11 +943,22 @@ void riscv_cpu_set_mode(CPURISCVState *env, privilege=
-_mode_t newpriv,<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0g_assert(newpriv &lt;=3D PRV_M &amp;&amp; newpriv !=3D =
-PRV_RESERVED);<br>
-<br>
-+=C2=A0 =C2=A0 CPUState *cs =3D env_cpu(env);<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (newpriv !=3D env-&gt;priv || env-&gt;virt_enabled !=
-=3D virt_en) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (icount_enabled()) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0riscv_itrigger_update_priv(=
-env);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (newpriv !=3D env-&gt;priv) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RISCVCPU *cpu =3D RISCV_CPU(cs);=
-<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu-&gt;trencoder &amp;&amp;=
-<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TRACE_ENCODER(cpu-=
-&gt;trencoder)-&gt;trace_running) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trencoder_trace_pp=
-ccd(cpu-&gt;trencoder, env-&gt;pc);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br></blockquote><div>On the trap-entry path,=
- env-&gt;pc has already been updated to the handler<br>address, but env-&gt=
-;priv still holds the previous privilege level.<br>Emitting a PPCCD sync pa=
-cket here therefore pairs the handler PC with<br>the old privilege level.</=
-div><div>=C2=A0</div></div></div>
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 5cc2370da2..277fc4f475 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -429,7 +429,7 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
+-    CPUSysState sys_states[1];
++    CPUSysState sys_states[VM_LEVELS];
+     uint32_t cpucfg[21];
+     uint32_t pv_features;
+     uint64_t vendor_id;
+@@ -440,7 +440,7 @@ typedef struct CPUArchState {
+     AddressSpace *address_space_iocsr;
+     uint32_t mp_state;
+ #endif
+-    CPUSysState *sys_state;
++    int vm_level;
+     unsigned int irq_nr;
+ } CPULoongArchState;
+ 
+@@ -510,12 +510,14 @@ struct LoongArchCPUClass {
+ 
+ static inline CPUSysState *env_sys(CPULoongArchState *env)
+ {
+-    return env->sys_state;
++    return &env->sys_states[env->vm_level];
+ }
+ 
+ static inline void set_sys(CPULoongArchState *env, int vm_level)
+ {
+-    env->sys_state = &env->sys_states[vm_level];
++    if (vm_level >= 0 && vm_level <  VM_LEVELS) {
++        env->vm_level = vm_level;
++    }
+ }
+ 
+ static inline CPUTimerState *env_timer(CPULoongArchState *env)
 
---000000000000d741b4065ede1435--
+base-commit: d29412cca54899ba87d5ea5d61e8bad7643b15f0
+-- 
+2.54.0
+
 
