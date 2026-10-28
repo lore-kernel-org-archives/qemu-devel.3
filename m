@@ -1,105 +1,103 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A823606A327
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F1606A31C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 17:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=FsN3XutE;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=bLyGtCVL
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NfCTGNvR;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=jPFvH2wZ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM7Hk-0004Rb-6C; Wed, 28 Oct 2026 13:18:00 -0400
+	id 1xM7IG-0005Ou-1t; Wed, 28 Oct 2026 13:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G9-0000VW-6f
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Gx-0001eD-B7
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7G7-0003sS-GO
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:16:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1xM7Gv-0003zt-4c
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 13:17:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793207778;
+ s=mimecast20190719; t=1793207826;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F8zxRANqUP6bPzrOrYEanSEo5hHFO8eTLenk+d5cs5Q=;
- b=FsN3XutESQbyt3obdAHVkfIZRZAF4c8CcIh939l4ckTMAHc/ky0+RaXg7U5pvBbJGM8NYH
- yAdZTSD5pWKmqN8yfOhkGD21PhVURgvcDsU4tr4OGkUA8wIfdqrgWgLHflgCZOpSzW945s
- XoRiRg4lWXMK9I+L4lmpmopXQ86tqk8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
+ b=NfCTGNvRbNi5MgxFIbqzU4rMX6syj/jvMyeT/ov5B6CwrMggDtLF5vtu0vkZHOeGoUqIem
+ ALmBzOI+SbwFcOJAx722B7SVhgpJGXNzlUDnEw9rpMvIW+BQhwdC5NgY3l7Pa5Vr+GnL6u
+ oC02bIyWlG4rx8pRQL3huTv6kJ3YJDo=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-s58tUbOxM_mgQs1bm96DSw-1; Wed, 28 Oct 2026 13:16:17 -0400
-X-MC-Unique: s58tUbOxM_mgQs1bm96DSw-1
-X-Mimecast-MFC-AGG-ID: s58tUbOxM_mgQs1bm96DSw_1793207776
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-48e1d839ddaso798758f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:16:17 -0700 (PDT)
+ us-mta-439-J2-1a37kPDezrgEId_kyJg-1; Wed, 28 Oct 2026 13:17:03 -0400
+X-MC-Unique: J2-1a37kPDezrgEId_kyJg-1
+X-Mimecast-MFC-AGG-ID: J2-1a37kPDezrgEId_kyJg_1793207822
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c293e604f0eso131120166b.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 10:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793207776; x=1793812576; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=F8zxRANqUP6bPzrOrYEanSEo5hHFO8eTLenk+d5cs5Q=;
- b=bLyGtCVLF73iDIdun2ZXW8K2/Yc1H5EJFS3447Z0qEyrzTj2209bnO+yCWSM8gt6SS
- UV+udAjLM5wKkLnX5NcXE9S4PBCKb0NYCahCYKuKwWp3ZsMMNFLgeJf4s8xXqHFa8p8l
- wuXYKxRWkOdN36FlHu2q7nRm7rr0eoOHxNRwBKJHKJWdRdwKnIDSyKFwi3hgckVDDvN+
- pb1eMqgQDgzFsDU0izKXxQUxX3U66dSrCOSj0SE5LiSpcCQ5303q9TK1u0zhQK4zBn/j
- D+MHX8VEefMn0G0GU4Ym9T+U9jb+LpngyTN8HTqZ45nPqXRPTUhsAOhHKjvaE+vAfh6c
- hElA==
+ d=redhat.com; s=google; t=1793207822; x=1793812622; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
+ b=jPFvH2wZZtM1eDQFtcv54aZrO4LuU8rVZB9x8Yg7CgF2gvVk533OWo5SwOLh0bwu7X
+ 2JYCe+bL1zgbbSUumSVK+qtgTreAyewN3uvFQ3W3pNbKuIYH7wnWjg5lK9Qu/42QfTK9
+ FVjCDD4DOnIiQBEEKLVsTLst+9JzWWjsHsRjF+5SROKbB/pmbHjAcGbZiGrYuvd/fGQF
+ oaWZFvq+yYXAp3E3PnhC/jsYeOVuhbPSjaFX6ye5+2wAYSm85JpVbahSGtgkVXbm1ywl
+ z7u/lDRFhbJHInWtvb1WtJ13Ke6x4/7SMk+JrlGGxo2+GJYQpAb0CVdgyq/5PEpXmJBG
+ ze7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793207776; x=1793812576;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=F8zxRANqUP6bPzrOrYEanSEo5hHFO8eTLenk+d5cs5Q=;
- b=lHE2cU/qob2vZUumbeT1GR/XC332Y/Q/DzFHfxlKcnYC9xcLss/jgMTF4s0y+Yclew
- dz5NJE3CWlDiPGClgw2daLOfp2RrSNBGpij46Z35QdMtBaU5dCtOOK5DvBMHTOsgUiuP
- YAC/yvZ4mgGC+lgnzQJvArxkUy3i0NCVkEEI81RlkLfDkRrSokYPXrgUkJ2BJ4CHb2VQ
- MzwQ48M5dDKVtM7kzZhvPWFN9Nag9fhw2dRtY1DeOhHt7usQM5GcHqybDHY0Hp1z+V4C
- 3Cq5eBSZRiDWn2awfe8+xj1i72xnR0JnmU0KveqO958smGRhm0o7sxTGAPdMSMZdwHwt
- qOLw==
-X-Gm-Message-State: AFq9FYLVULwZYO5IhcEXiS/b8zWm9bI4eGKlli7sYzSUoCntrIv/u5Gi
- SRAPBpdaA8smzucoiyBwi6yq7oMQxWDaZNgs5BkhcYcq04ywda53noZHL8pa+Utj5deyzbxBRgm
- U1696MFmcrl6cGfKyQ7K3YoNNT5xoHBrUfsIA3xHXuT366kI4g1xn9KEhtyO288IcTiCQ4XX7AO
- DoUdf9dsNfLMiko3vyDAWb8T9Vw1QHxLyTVg==
-X-Gm-Gg: AYBFou0EDQvpHGjkW8L9SmVh3ZmvIt/FsZdnXtXUZziX9SDsrd+m8XOuxm/nX3soE7Y
- rK9dtq2ACAPrsHCLuXGNd4/UCEyl1CODbiKhjUZk/TMYJTcbHK5qSuFvSh35ZM7SZEeGANl6UEu
- QvE0UJOJ+75uXBEgLcgEAMLPL/XlmmR8WidujqpjfjX5m+ahSUN3W4b7ZngMQ9IqyIT8hxjK9ZD
- DtLXQlDdeckDqgyfkWd9RuOM2oTd7HmbsO9sZTZaat7ZCdvh7Mgmd/nEhTPW/+HfsL0ACqMUvDu
- 7kCtnODP9HExzWvOdyqhOMYbK27J6iu9Buip5BFS4UNZRgTydeg0aoaPGB63D0AccceYgOIdnOL
- 91zt7YXDSmIYhFl6URuNo/1Pd2eJ1+QZjusxdpJ7l
-X-Received: by 2002:a5d:5e92:0:b0:48e:412:37f4 with SMTP id
- ffacd0b85a97d-48e5d455071mr7195306f8f.1.1793207776083; 
- Wed, 28 Oct 2026 10:16:16 -0700 (PDT)
-X-Received: by 2002:a5d:5e92:0:b0:48e:412:37f4 with SMTP id
- ffacd0b85a97d-48e5d455071mr7195226f8f.1.1793207775513; 
- Wed, 28 Oct 2026 10:16:15 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793207822; x=1793812622;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pUht6RxDnl/zXalqSlPXdqFS4O7R1iyd+udLblyz8/g=;
+ b=z0JAI7xLhior+OU/4yeWGQd8VJWn5oq5JcTC7kz9Au+imDiuH5/NO+FEgao9uCIsio
+ d+P0sG/OrLuMeT++C0FphEg6poJ//4c1p0rkYG2cw5Q5G7A+mizpcEhE89Mv8tYFLFr9
+ oV8xVlbuYTN7t9wU2GOF4lf6q5z6Vat8iZgpesUY+L5pcmImPR8ocZhFYnTnPR8rXoUM
+ 8N+RC37wgH5rjpvILvyP2DQwIHxXEU5ZhOYIIxf20b7l9wOpZZ4BYNUCco5DeebcnXja
+ B+Jf+Tc8LES2Y0qMozZeut21EjBgexEK0LSgMcpON0d6KGMzA0ZND8xBjk3xbBlFy4PM
+ 0iXw==
+X-Gm-Message-State: AFq9FYI/oKLRdSPjrWyGSj1BP0n3t2VzC6KTezdl7hJFQrXMlZ7+GUWS
+ sRnrok0p41eOITXLRRqpwxNFq6x29nTE3wIsv0VZeP7PMaR9fs0GHiE54jxSaRGFQDjD9mixBCC
+ e3zV3OAJikDpPV8KMCb0NXwZBuE4fv47Yk9Qv7oI4aGk2jSWswS+APTeYWXNLzQasWjKT5yX/Po
+ FKNuqXgTBzq5P4lhOySinAlKMjUh6CAddgBQ==
+X-Gm-Gg: AYBFou0b4nzd9LHsb8nwn8FWtLrALdpEsY8ma5JN5QhWFmCOY91kosgOGPsG2Tg40hV
+ isyjjd6PVNfXLjCpWpwPkTWUdmYlsVyaGoKGa/ioy0V5qAaXrlRI5ODYsB1eWoYjBBV5SDX178n
+ Qc1d8fQ9dLyaA6WF6OSPqfMNCE3+1UDD0tejWyTHYDiYYCBA0NaTL59POT/jfiPWExJTyGBoGkp
+ KsAFLaNKeaFve6FTxNukGAzP0KFW9Qg5iphzP7OO0Gyl/57WCcrcKLP1LtQkHdjGWodzHoxiN/Y
+ 8/Za0kGGqB8gyvQXNpcZ+8zHpU3Oyq8MtnuXhztyRuO6Eq9r5bwLWrfVrtnP9QvdHURgZIolHMb
+ f4nxENZULDtpk4AYphsPbye7K+BUS8apYupOOTnso
+X-Received: by 2002:a17:907:9349:b0:c41:e0c0:e6b7 with SMTP id
+ a640c23a62f3a-c49bdf25521mr272854166b.12.1793207822065; 
+ Wed, 28 Oct 2026 10:17:02 -0700 (PDT)
+X-Received: by 2002:a05:600c:609a:b0:4a2:9cda:57cb with SMTP id
+ 5b1f17b1804b1-4a963ffb29amr63997515e9.1.1793207811365; 
+ Wed, 28 Oct 2026 10:16:51 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1536:fc00:b838:383:1c7:6e81])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebd4d8dsm30983799f8f.36.2026.10.28.10.16.14
+ 5b1f17b1804b1-4aa7f418afbsm6825235e9.6.2026.10.28.10.16.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Oct 2026 10:16:14 -0700 (PDT)
-Date: Wed, 28 Oct 2026 13:16:13 -0400
+ Wed, 28 Oct 2026 10:16:48 -0700 (PDT)
+Date: Wed, 28 Oct 2026 13:16:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 52/78] tests/functional/x86_64/test_vhost_user_bridge:
- Eliminate stdbuf usage
-Message-ID: <fe9cf95d2434342b6ded5e3a12569ec221b71c21.1793207602.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Jason Wang <jasowangio@gmail.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 64/78] intel_iommu: Add support for get_x86_iommu callback
+Message-ID: <637dfc409e1f0f5c33651e3d1f0d6a4a719fc50a.1793207602.git.mst@redhat.com>
 References: <cover.1793207602.git.mst@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1793207602.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -130,43 +128,45 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-Usage of stdbuf triggers a runtime error when vhost-user-bridge
-is built with ASAN. Now that vhost-user-bridge writes debug
-output to stderr, stdbuf is obviated; remove its invocation.
+Return X86IOMMUState during get_x86_iommu callback.
 
-Message ID of relevant thread:
-<20260906-nohmp-next-v1-2-2b21e63974f3@redhat.com>
-
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260914165250.88382-3-yodel.eldar@yodel.dev>
+Message-ID: <20261014053433.24564-5-sarunkod@amd.com>
 ---
- tests/functional/x86_64/test_vhost_user_bridge.py | 6 ------
- 1 file changed, 6 deletions(-)
+ hw/i386/intel_iommu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/tests/functional/x86_64/test_vhost_user_bridge.py
-index c36c625420..5e1db48884 100755
---- a/tests/functional/x86_64/test_vhost_user_bridge.py
-+++ b/tests/functional/x86_64/test_vhost_user_bridge.py
-@@ -76,12 +76,6 @@ def configure_vm(self, ud_socket_path, lport, rport, hostfwd_port, tftpdir):
-     def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, rport):
-         vubr_args = []
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 350d2b7753..3686ca8ba7 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -5485,6 +5485,13 @@ out:
+     return ret;
+ }
  
--        if (stdbuf_path := which("stdbuf")) is None:
--            self.log.info("Could not find stdbuf: vhost-user-bridge "
--                          "log lines may appear out of order")
--        else:
--            vubr_args += [stdbuf_path, "-o0", "-e0"]
--
-         vubr_args += [vubr_path, "-u", f"{ud_socket_path}",
-                       "-l", f"127.0.0.1:{lport}", "-r", f"127.0.0.1:{rport}"]
++static int vtd_get_x86_iommu(void *opaque, void **x86_iommu)
++{
++    IntelIOMMUState *s = opaque;
++    *x86_iommu = X86_IOMMU_DEVICE(s);
++    return 0;
++}
++
+ static void vtd_init_iotlb_notifier(PCIBus *bus, void *opaque, int devfn,
+                                     IOMMUNotifier *n, IOMMUNotify fn,
+                                     void *user_opaque)
+@@ -5559,6 +5566,7 @@ static PCIIOMMUOps vtd_iommu_ops = {
+     .pri_unregister_notifier = vtd_pri_unregister_notifier,
+     .pri_request_page = vtd_pri_request_page,
+     .get_viommu_flags = vtd_get_viommu_flags,
++    .get_x86_iommu = vtd_get_x86_iommu,
+ };
  
+ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
 -- 
 MST
 
