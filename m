@@ -1,38 +1,74 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17201606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E97B60A2608
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 19:50:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ExzQmKfU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM9Wg-0006Jk-4k; Wed, 28 Oct 2026 15:41:34 -0400
+	id 1xM9ew-0007id-3B; Wed, 28 Oct 2026 15:50:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zakinko@snowrabbit.org>)
- id 1xM9Wa-0006JK-PT; Wed, 28 Oct 2026 15:41:28 -0400
-Received: from bambi.snowrabbit.org ([182.48.54.220])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <zakinko@snowrabbit.org>)
- id 1xM9WW-0007LE-NJ; Wed, 28 Oct 2026 15:41:28 -0400
-Received: by bambi.snowrabbit.org (Postfix, from userid 3001)
- id C7B72C9296; Thu, 29 Oct 2026 04:41:20 +0900 (JST)
-From: Showta Ishizaki <zakinko@snowrabbit.org>
-Date: Thu, 29 Oct 2026 03:45:40 +0900
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Amit Machhiwal <amachhiw@linux.ibm.com>, zakinko@snowrabbit.org
-Subject: [PATCH] hw/ppc/spapr: Match the CAS PVR list terminator as PAPR
- requires
-Message-Id: <20261028194120.C7B72C9296@bambi.snowrabbit.org>
-Received-SPF: pass client-ip=182.48.54.220;
- envelope-from=zakinko@snowrabbit.org; helo=bambi.snowrabbit.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xM9ei-0007ho-Eh
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:49:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xM9ef-000815-U6
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 15:49:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793216987;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=N0cMEy+KelTuBn0HTkPgUzAp7/VJRkU49VWsN961/YE=;
+ b=ExzQmKfU0WKFPinkZFomZFOCZBqu0LLuOV+zyaVjVgBHLAUZAMkqKIz2rSEbUz26Vbn78i
+ UFfLP2QwjfaLqwekgodCblLbw+nTGH61CUa6VEdccwzmIY0wTWSeRhhgwK8K+GappQ9/+W
+ O69JMOnuLFHt9uB7yyRn9K8rf/svbqQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-Z3cEvb9OOzS8owORdBfPMg-1; Wed,
+ 28 Oct 2026 15:49:44 -0400
+X-MC-Unique: Z3cEvb9OOzS8owORdBfPMg-1
+X-Mimecast-MFC-AGG-ID: Z3cEvb9OOzS8owORdBfPMg_1793216983
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 578E2195605E; Wed, 28 Oct 2026 19:49:43 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B6F201800586; Wed, 28 Oct 2026 19:49:42 +0000 (UTC)
+Date: Wed, 28 Oct 2026 15:49:41 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, afaria@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] file-posix: Add 'accept-read-only-device' option
+Message-ID: <20261028194941.GA1346282@shajnocz.csb>
+References: <20261028171057.139326-1-kwolf@redhat.com>
+X-Archived-By: <archiver.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20261028171057.139326-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -44,76 +80,33 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
-X-Archived-By: <archiver.kernel.org>
 
-cas_check_pvr() stops at the first entry whose value has bits outside
-its mask, before comparing that entry with the processor's PVR.  PAPR
-has the PVR list processed "until either a List-entry allows the
-process to continue, or the Terminator-list-entry has been processed",
-and both of its "List-entry values of special interest", 0x00000000
-0xFFFFFFFF ("matches any PVR value") and 0xFF000000 0x0FFFFFFF, are
-terminators (B.6.2.3 in PAPR v10.60; the same text is in B.5.2.3 of
-LoPAR 2.9 and B.6.2.3 of LoPAPR 1.1).  The terminator takes part in
-the match like any other entry.
+On Wed, Oct 28, 2026 at 06:10:55PM +0100, Kevin Wolf wrote:
+> Kevin Wolf (2):
+>   file-posix: Add 'accept-read-only-device' option
+>   iotests: Add loop-accept-ro-dev test
+> 
+>  qapi/block-core.json                          | 19 +++-
+>  block/file-posix.c                            | 23 ++++-
+>  tests/qemu-iotests/tests/loop-accept-ro-dev   | 87 +++++++++++++++++++
+>  .../qemu-iotests/tests/loop-accept-ro-dev.out | 19 ++++
+>  4 files changed, 144 insertions(+), 4 deletions(-)
+>  create mode 100755 tests/qemu-iotests/tests/loop-accept-ro-dev
+>  create mode 100644 tests/qemu-iotests/tests/loop-accept-ro-dev.out
+> 
+> -- 
+> 2.56.0
+> 
 
-The check came after the comparison until commit 152ef803ceb1
-("pseries: Rewrite CAS PVR compatibility logic") moved it in front.
-That commit describes a change in how the compatibility mode is
-chosen, not this one.
+Modulo Eric's comment about /dev/loop1 being hardcoded in the test
+output:
 
-A client whose only entry for the processor is the terminator gets
-"Couldn't negotiate a suitable PVR during CAS" today.  NetBSD's
-ofwboot ends its list with 0xffff0000 0x0080ffff to cover Power10, and
-fails on -cpu power10 this way.
-
-Compare the entry first, and only then stop at a terminator.
-
-Linux ends its list with a logical PVR that doubles as the terminator:
-0xfffffffe 0x0f000001 (2.04 and earlier) in v6.1, and 0xfffffffd
-0x0f000002 (2.05) now.  That entry now counts towards best_compat too.
-Linux lists higher levels before it, so the result does not change:
-with a Debian 6.1 kernel, explicit_match and best_compat came out the
-same before and after on POWER8, POWER9 and Power10.
-
-Fixes: 152ef803ceb1 ("pseries: Rewrite CAS PVR compatibility logic")
-Signed-off-by: Showta Ishizaki <zakinko@snowrabbit.org>
----
- hw/ppc/spapr_hcall.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 708902934c..29b726b474 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -1151,10 +1151,6 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
-         pvr = ldl_be_phys(&address_space_memory, *addr + 4);
-         *addr += 8;
- 
--        if (~pvr_mask & pvr) {
--            break; /* Terminator record */
--        }
--
-         if ((cpu->env.spr[SPR_PVR] & pvr_mask) == (pvr & pvr_mask)) {
-             explicit_match = true;
-         } else {
-@@ -1162,6 +1158,10 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
-                 best_compat = pvr;
-             }
-         }
-+
-+        if (~pvr_mask & pvr) {
-+            break; /* Terminator record */
-+        }
-     }
- 
-     if (explicit_match && kvm_enabled()) {
--- 
-2.54.0 (Apple Git-157)
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
 
