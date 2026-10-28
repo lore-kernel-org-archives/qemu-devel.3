@@ -1,57 +1,55 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A080C606A31A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C0C606A31A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Oct 2026 11:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=Xg9xP/JO
+	dkim=pass (2048-bit key, unprotected) header.d=kaod.org header.i=@kaod.org header.a=rsa-sha256 header.s=ovhmo393970-selector1 header.b=fccxrBHm
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xM1T0-0006mU-9P; Wed, 28 Oct 2026 07:05:14 -0400
+	id 1xM1VF-0007L2-5L; Wed, 28 Oct 2026 07:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1Sz-0006mA-6D
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:05:13 -0400
-Received: from smtpout2.mo536.mail-out.ovh.net ([51.210.91.11])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1VC-0007JV-G5
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:30 -0400
+Received: from 10.mo528.mail-out.ovh.net ([46.105.37.93])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1Sw-0000qK-5Z
- for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:05:12 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4jF4JW0zf7z8BqF;
- Wed, 28 Oct 2026 11:04:58 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 28 Oct 2026 11:04:58 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.78])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4jF4JV38Fjz1yhv; Wed, 28 Oct 2026 11:04:58 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1xM1VA-0001LU-OX
+ for qemu-devel@nongnu.org; Wed, 28 Oct 2026 07:07:30 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4jF4MK18dkz6WdR;
+ Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.223])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4jF4MJ3YHcz1xq7; Wed, 28 Oct 2026 11:07:24 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 1E0191B431F5;
- Wed, 28 Oct 2026 11:04:57 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 75C1A203209; 
+ Wed, 28 Oct 2026 11:07:23 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R00433e11523-3d46-4eb1-b264-e2e246cd3618,
+ (GARM-103G005ea6cb01b-f243-4ff1-8738-d43319637bdf,
  E08929C5676352A1F51837021B168DD299C323AB) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <4b33dabe-5c37-4819-84bb-f6db7331462b@kaod.org>
-Date: Wed, 28 Oct 2026 12:04:56 +0100
+Message-ID: <19d8e389-295b-4045-8d91-51a89adc4fa0@kaod.org>
+Date: Wed, 28 Oct 2026 12:07:22 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Timur Maksimov <gessingate@gmail.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>, qemu-arm@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Corey Minyard <cminyard@mvista.com>
+Subject: Re: [PATCH v2 0/6] hw/i2c/aspeed: fix non-packet buffer and DMA
+ transfer modes
+To: Timur Maksimov <gessingate@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ qemu-arm@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
 References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
- <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
- <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org> <874ie6ku2u.fsf@pond.sub.org>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -96,30 +94,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <874ie6ku2u.fsf@pond.sub.org>
+In-Reply-To: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 15481686672513805357
+x-ovh-tracer-id: 15522782018392927277
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFSD/2X+h/ri4ydl+bAN15ImWHrcefgPt6o3JxJ9mGQEYpWI1U520JmJmD25uvXRKFgKpP5WZEmtJH+u5TjdzGCq8d87TUlFaDF2B7S7bAlrxgjtZIcnWGIlWmd/7I7IxguBgVZyovg+NT1vvftNIyIBiZuffCjioWNCmyUAm7a1sXO05TJYotNMB6bG82QL/CN+6HR3m34h+sBLIVYkzm52ZglKSUclLSH0dnhh52prDdgdtQI0QrjAh2tZBqt+ZNY13Q5+2+hkGX9VB3ByBnAn6wIhlsQm/eaEyKSqS/JwswykzDiSpRkAk8L8tNTBTYOrZHupXq/eprWQ0eKV49cXlYWYvh9edK6zPTTfONf33WlhvV9xx+sGd2k2ftlsd2U2B3RnLywIsR5ziLRPGoBDJJ7F+mvABkoQNWA0QkPqcCwK7nKHQHA+wcMNocFJVSoDdcHh5753H4p+t0Wyo3z1XEj7yuLHkPZdpMzF9/XraM+r1LfGWefy2D8ERkjFej9j27S+tPw7DYIdY8gTRd6I7ffy7e3nlMqHPnDnTk3RaLDM4kcxcA9QhidMof4lgK+KwnlwUGS5BWvjjD5BuX9YML80k4TJ91+pMC1kRDaPAykGrwM7B+aoZpsT0YSnCxl1ptknBZ7e6Hph4fsUaQfzQVGbhLlnkIbnJLohyJusw
-DKIM-Signature: a=rsa-sha256; bh=o4FVG3VkifS9ScMQ4UbC2bqkWuflLKU/PLLeAO5ioJc=; 
+X-VR-SPAMCAUSE: dmFkZTFeEDdIsGv3P/8DCcjk3nyuKD3nQoRph8w1AsCVPIJW1iV26FbgX02jOU80z86J+5DVWiNc2M4gRi33E7z+a7Ec3MKiWJ8bOtVdIF24hTBg9/OzuFsLBKU69sKj5mFtJ9RNfTviXzdQzRADxgt8GxJX95HrfaTOwiRXQnpp8+0gPp2V7olvHgWMIdpOP50aksDiW+KrwV7lotwRDcPCxj2psfCUoXH2djUMNmXmhdR1983C3TbKxWFIfYc2c4Ll7SgrQiyOTBynwN6eJcvH1tdJp92I/G6WlLgFq3u3sSsTmM5HCfXq5p5wbvD/nKsl96T/AOQru/J/jdKSQxlmn+KLdVVhcq0gJPPbMgUQXINRno/C5Oz05o26W4F88kLNx4IfFVm5PnC0OJSiP6U33CkgJVm/QiJUnotGDtVSVBdyoyK/M/Gi99kwolFH1w+uChgQvCIGdVnvTZhzyABZYd/eCf8K6GxIFbRWBvo8zplC/Ck7y6cW+If0m+5atbgK5Gupb5Nle/q4HS+sDZ2AziqkMLJ6EzwvfQfXozQrWoTS1/nJLMY7nD8GhxMhXlx0iYDuF6lNTzen7/2Hp1/9+kCvp4Pu0Yx9SWINcNzil7WnGMaCy0DTJ8HBiEczs4bD9gdMwlrTVt8iP57MSr5p1LvrfZF7p32OICxhpKbvJDV1Nw
+DKIM-Signature: a=rsa-sha256; bh=uuvhANXmJAFkYxiEUb9SCrmLzmmyuRsFO6Ka814qwHg=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1793185499; v=1;
- b=Xg9xP/JOcp2Bv1EBTbI7KzwKZ6aBupkIVwV1baKS4zGX+FDQQzIJFjjmwbJWyvEx2LSJS1hO
- 9qfIGHELkEn8qyzW6Q6gZEH9boIdgnNxOCpTHCbnC5yfX23fKxJZ+R2JKBInbqdJGD5+l7lLZkf
- wQPxrLERdgyPV7sxWozEuwdBvpIOhF3bdF3hTWoVOCqXHRlJSDutOSkILgCRO3uJR/yJvNMdQy7
- LHS6j8wmt3wEJcuZs/9aUHRbPw1Ssl4vOfRODAyORq0xVEhouZk5SIAHDtmqIRcmcX4A4Ox4umu
- CH1SJMweJGKRSkCIShU52vlf/1Vnxb83iBnfejK6l/hIw==
-Received-SPF: pass client-ip=51.210.91.11; envelope-from=clg@kaod.org;
- helo=smtpout2.mo536.mail-out.ovh.net
+ t=1793185645; v=1;
+ b=fccxrBHm9wYmxxv3ZtKzNwpT7s4cLPbAkIVPdg7i5L/3wEG0tkqvGcHQpQDtEoZPBUa4nA3h
+ SLfi/n4SJLZhR/1lkEqUywRAL/DJWG2wV3VBJx9EWeqp4qQrj/QnrZRgm888lbVxfv4WPzEL1+a
+ wfWTFKFm5TVMzMW+8A9BFG4q9RC5bkaIQh2NOCgP2AjmVQFWk8OdqRfQFSDw739mOyXbAGz+eFX
+ EX3oUSUpkqSB8LaC+S6bWag572m6goE9ZNeOtA6KNffp+fDJCZhryWoNfKJ7gRXQIX4r3n/tU1J
+ sVY0NSL3F4DgTfVfu1HFs1TYxjbXGf6FIz+XzROBeUYLQ==
+Received-SPF: pass client-ip=46.105.37.93; envelope-from=clg@kaod.org;
+ helo=10.mo528.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,28 +128,56 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-> The commit message tells us this is a "Simple I2C device with QOM
-> properties to access transmit and receive buffers [...] for testing or
-> prototyping."  It doesn't tell us how it could be used, and I can't see
-> any documentation, either.  So let's start right there: please show us
-> how this device could be used.  This should help me understand what the
-> properties are for.  Only then can I advise on proper QOM usage.
-> 
-> [...]
+Jamin,
 
-sorry, I should have added the link to the test case where these
-properties are used :
-
-   https://lore.kernel.org/qemu-devel/20261027-aspeed-i2c-nonpkt-fix-v2-6-07deed1dff60@gmail.com/
+Could you please check the Fix changes, patch 2-5 ? They appear to be valid
+additions but I would like a second opinion.
 
 Thanks,
 
 C.
+
+On 10/27/26 20:50, Timur Maksimov wrote:
+> In non-packet mode, buffer and DMA modes are broken
+> in the Aspeed I2C controller,
+> probably because no available driver currently uses them.
+> This patch fixes them, so byte, buffer, and DMA transfer modes
+> now work correctly for both register modes, old and new ones.
+> Tests are provided to prevent possible regressions.
+> 
+> Signed-off-by: Timur Maksimov <gessingate@gmail.com>
+> ---
+> Changes in v2:
+> - Fix commits description format. Some of them are reordered and clarified.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20261027-aspeed-i2c-nonpkt-fix-v1-0-076cdde514f8@gmail.com
+> 
+> ---
+> Timur Maksimov (6):
+>        hw/i2c: add dummy device
+>        hw/i2c/aspeed: fix BUSY status reading in new register mode
+>        hw/i2c/aspeed: fix I2CD_CMD register reading
+>        hw/i2c/aspeed: fix buffer transfer in non-packet mode
+>        hw/i2c/aspeed: fix DMA transfer in non-packet mode
+>        tests/qtest: Add cases for 32-bit Aspeed I2C controllers
+> 
+>   hw/i2c/Kconfig                |   5 +
+>   hw/i2c/aspeed_i2c.c           |  23 +-
+>   hw/i2c/i2c-dummy-device.c     | 168 +++++++++
+>   hw/i2c/meson.build            |   3 +-
+>   tests/qtest/aspeed_i2c-test.c | 836 ++++++++++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build       |   2 +
+>   6 files changed, 1029 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 9b77fa7a4fe86c80d1ff526769c61ada7d28666a
+> change-id: 20261025-aspeed-i2c-nonpkt-fix-89b852b5c84a
+> 
+
 
