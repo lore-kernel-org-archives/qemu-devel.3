@@ -1,105 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B0B60A2622
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B0360A2628
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 18:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=BMrfmpO8;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=v4/zaKch;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=BMrfmpO8;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=v4/zaKch
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=tFcH0FyI;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=XRxauJEd;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=vh8MCUug;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=Wy276cb/
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMV9n-0002ZV-BT; Thu, 29 Oct 2026 14:47:24 -0400
+	id 1xMV9w-0002cf-E1; Thu, 29 Oct 2026 14:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMV9d-0002W0-Ot
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMV9a-0002Vj-EN
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:47:15 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMV9c-00023e-1g
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:47:13 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMV9Y-000239-DX
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:47:09 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 274FA22222;
- Thu, 29 Oct 2026 18:47:09 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E60F821F08;
+ Thu, 29 Oct 2026 18:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793299629; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1793299627; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pPN03CRQU8TXN2+fdlS1/hfeqTcY6ydjhZLZkENKmf4=;
- b=BMrfmpO8bgJR8kWyBTnhOA3PVIFXE8J7N00RogfQf8/77Abxepg6eciPQt+b1kOMXYUH0h
- peaJNKd41Te4vTSYBMH0iNoyaSdg24U/xwC0dqAXrIVW2Vy+awz3jrCFcZtLAwQTr5+2rK
- Q4Q23GWubeoDoRq5eJl/de7Q+zff6E4=
+ bh=H7/4Xkm20p/oU4VFP0hd0PtiijgH6QX2s7YyYWNnDLs=;
+ b=tFcH0FyIbu9KujH8zdxJy/d2M7zLl2EAVI2kJ5mJDAH6nnmDfy0FUnN54GIbDQ2OfasxSh
+ gX1btkm39Kjn3nzq9xycfIbQNEUHEc9t6Rfl3nPku0zhB6+ajBEEup5nAbnxhVbxPQLqlP
+ FlVNplwkEQInCTHYpF8yMpdv/I82FWo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793299629;
+ s=susede2_ed25519; t=1793299627;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pPN03CRQU8TXN2+fdlS1/hfeqTcY6ydjhZLZkENKmf4=;
- b=v4/zaKchCVRUfmhTYiS1+cxJhVjaAR0ScJUTY2XGo6kMeSed8XBtIH8hX9j/ssgf3xtany
- Lr5hvLhwwVZctOAw==
+ bh=H7/4Xkm20p/oU4VFP0hd0PtiijgH6QX2s7YyYWNnDLs=;
+ b=XRxauJEd5w+0N/E/5ZbJ62ErM5Ti9kH+xX5y5i1MDPcBbU4mfk2AvmgVj7bSPNLU0u9aUN
+ HB5YiLnXeK1Xd/AA==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vh8MCUug;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="Wy276cb/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793299629; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1793299626; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pPN03CRQU8TXN2+fdlS1/hfeqTcY6ydjhZLZkENKmf4=;
- b=BMrfmpO8bgJR8kWyBTnhOA3PVIFXE8J7N00RogfQf8/77Abxepg6eciPQt+b1kOMXYUH0h
- peaJNKd41Te4vTSYBMH0iNoyaSdg24U/xwC0dqAXrIVW2Vy+awz3jrCFcZtLAwQTr5+2rK
- Q4Q23GWubeoDoRq5eJl/de7Q+zff6E4=
+ bh=H7/4Xkm20p/oU4VFP0hd0PtiijgH6QX2s7YyYWNnDLs=;
+ b=vh8MCUugKTLguJFsdmjpn+DcFkbuxBLRYWBvVCDcYTem63HKxkJv+MnNhElXCt2kIOc4IK
+ efjjkRDRspcoVwR+CY1zifs5lrGfTuGoNciDOifjvHMA6nMEeGrVvWK655VTRBMHquWg2y
+ r8yj91036hN5+qoXgLshvua0TY3Ombk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793299629;
+ s=susede2_ed25519; t=1793299626;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pPN03CRQU8TXN2+fdlS1/hfeqTcY6ydjhZLZkENKmf4=;
- b=v4/zaKchCVRUfmhTYiS1+cxJhVjaAR0ScJUTY2XGo6kMeSed8XBtIH8hX9j/ssgf3xtany
- Lr5hvLhwwVZctOAw==
+ bh=H7/4Xkm20p/oU4VFP0hd0PtiijgH6QX2s7YyYWNnDLs=;
+ b=Wy276cb/01taKqQO592FlPl8gEj7wkSkR5VU+gLSx/FDfH2aMFYE9+K0/f+szyiFkbWf0K
+ UJxpfQNlCTFV63Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4A2671342D;
- Thu, 29 Oct 2026 18:47:08 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D9D8B13419;
+ Thu, 29 Oct 2026 18:47:05 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cMnTJaOU42pwUgAAD6G6ig:T7
- (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 18:47:08 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cMnTJaOU42pwUgAAD6G6ig:T5
+ (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 18:47:05 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 6/8] migration: Dump type of channel in set_incoming_channel
- tracepoint
-Date: Thu, 29 Oct 2026 15:46:39 -0300
-Message-ID: <20261029184641.1973813-7-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 4/8] migration: Fix socket listen backlog
+Date: Thu, 29 Oct 2026 15:46:37 -0300
+Message-ID: <20261029184641.1973813-5-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261029184641.1973813-1-farosas@suse.de>
 References: <20261029184641.1973813-1-farosas@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-11.80 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+X-Rspamd-Queue-Id: E60F821F08
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-12.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
  BAYES_HAM(-3.00)[100.00%]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
- NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:email,imap1.dmz-prg2.suse.org:helo];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
  TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-X-Spam-Score: -11.80
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Spam-Score: -12.51
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -129,72 +139,75 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Peter Xu <peterx@redhat.com>
 
-Add this info to be crystal clear on what channel we're installing.
+QEMU incoming side may have set a wrong listen() backlog.  After the
+support of multifd + postcopy now we have four possibilities on setting the
+backlog, some of them are wrong:
 
+  Vanilla:            1 (correct)
+  Multifd:            N (wrong, should be N+1)
+  Preempt:            2 (correct)
+  Multifd+Preempt:    N (wrong, should be N+2)
+
+No real report for this, found by code observation only.  Logically the
+backlog (pending accept requests on destination on the listening sockets)
+needs to be the maximum of possible channels.  Otherwise if the accept
+queue full on destination, source QEMU may hit connection errors.
+
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: 0705e56496 ("multifd: Use number of channels as listen backlog")
+Fixes: e274188612 ("migration: enable multifd and postcopy together")
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/channel.c    | 10 +++++++++-
- migration/channel.h    |  3 ++-
- migration/trace-events |  2 +-
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ migration/socket.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/migration/channel.c b/migration/channel.c
-index 8407ea46cb8..b9065efd03f 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -34,6 +34,13 @@
- #include "trace.h"
- #include "yank_functions.h"
+diff --git a/migration/socket.c b/migration/socket.c
+index f57f1a8e7c6..31bfa1eeebb 100644
+--- a/migration/socket.c
++++ b/migration/socket.c
+@@ -139,21 +139,32 @@ socket_incoming_migration_end(void *opaque)
+     object_unref(OBJECT(listener));
+ }
  
-+static const char *const mig_channel_str[CH_NUM] = {
-+    [CH_NONE] = "NONE",
-+    [CH_MAIN] = "MAIN",
-+    [CH_MULTIFD] = "MULTIFD",
-+    [CH_POSTCOPY] = "PREEMPT",
-+};
++static int socket_get_max_channels(void)
++{
++    /* The main channel is always wanted */
++    int num = 1;
 +
- void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
-                                 Error **errp)
++    if (migrate_multifd()) {
++        num += migrate_multifd_channels();
++    }
++
++    if (migrate_postcopy_preempt()) {
++        /* The preempt channel */
++        num += 1;
++    }
++
++    return num;
++}
++
+ void socket_connect_incoming(SocketAddress *saddr, Error **errp)
  {
-@@ -219,7 +226,8 @@ static bool migration_incoming_channel_install(MigrationIncomingState *mis,
-     }
+     QIONetListener *listener = qio_net_listener_new();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     size_t i;
+-    int num = 1;
++    int num = socket_get_max_channels();
  
-     trace_migration_set_incoming_channel(ioc,
--                                         object_get_typename(OBJECT(ioc)));
-+                                         object_get_typename(OBJECT(ioc)),
-+                                         mig_channel_str[ch]);
-     migration_ioc_register_yank(ioc);
+     qio_net_listener_set_name(listener, "migration-socket-listener");
  
-     if (migration_incoming_setup(ioc, ch, errp)) {
-diff --git a/migration/channel.h b/migration/channel.h
-index a7d0d290586..678712f2919 100644
---- a/migration/channel.h
-+++ b/migration/channel.h
-@@ -24,7 +24,8 @@ typedef enum {
-     CH_NONE,
-     CH_MAIN,
-     CH_MULTIFD,
--    CH_POSTCOPY
-+    CH_POSTCOPY,
-+    CH_NUM,
- } MigChannelType;
- 
- void migration_channel_process_incoming(QIOChannel *ioc);
-diff --git a/migration/trace-events b/migration/trace-events
-index c93c9f9e750..8840d82f8dc 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -208,7 +208,7 @@ migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma)
- 
- # channel.c
- migration_channel_process_incoming(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
--migration_set_incoming_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
-+migration_set_incoming_channel(void *ioc, const char *ioctype, const char *type) "ioc=%p ioctype=%s type=%s"
- migration_set_outgoing_channel(void *ioc, const char *ioctype) "ioc=%p ioctype=%s"
- 
- # global_state.c
+-    if (migrate_multifd()) {
+-        num = migrate_multifd_channels();
+-    } else if (migrate_postcopy_preempt()) {
+-        num = RAM_CHANNEL_MAX;
+-    }
+-
+     if (qio_net_listener_open_sync(listener, saddr, num, errp) < 0) {
+         object_unref(OBJECT(listener));
+         return;
 -- 
 2.53.0
 
