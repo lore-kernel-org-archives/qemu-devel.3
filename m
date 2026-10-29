@@ -1,89 +1,108 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F21606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB3C606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=OiCzYPxk;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=mJgZuV+T
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=jSf+/clX
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMU8d-0003ZT-7W; Thu, 29 Oct 2026 13:42:07 -0400
+	id 1xMUC9-0000M2-JQ; Thu, 29 Oct 2026 13:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8W-0003Xs-A6
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:01 -0400
-Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
+ (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
+ id 1xMUBC-0006u6-M2
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8Q-0003HD-TU
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:41:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=nGjbx5C
- i4D1FlqCVBNbmP/DjExWe6lkmy3BlJc2S/gGma0Cu5rwiqa3ruGc7aKXxff/hsFgh4H59T
- PEIzSJfYD5699J6f6Fka3xMNzilLUwCPrLVWc4mr02Qg6AMIrYHmfrFgHvZoLS6opqt7NT
- x91if76sT56oOHNdaB+BNgwB4lDBcnMOUFENSzPXgHxL8y7rNc4IDpcQ553MHAEEldHUFB
- 0UBHdubzF4B+JaWhqnA9WMWK9IGGUKyXG+Wbh4bFflMqT01ZkE9SSMbGo6WBj54JB+Oz4P
- jTaXDjgS48sAMzZQYMx+xJ0sWqL/jTRs/wrFoG6qCexp5iReyA2LeRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=w
- rE8uhA873fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=;
- h=references:in-reply-to:
- date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=M4LJGIWRQkTmp9dqIUlJFHnumtTtHFrcfQ5n7VV/2hkvqUqyTgU/DumSDWwTr9FUBeXS
- h60cFrfI2PXfnPDskE01VMr3jkvoL37rA5VIE9OngpsSz6dQpMVlblT8q28Xxhkzn5ufiQ
- r5JjCC2q1HXEEqdvmt1GFpafOPZWEvJiUy+E97/ffj0FoEIc1RacyaNKRPjaQXYKSulv4q
- DCOnCQrdtj4GtB9GO/KMy9NxejTEW+P+cVUfQc3AhdF7+ZcV70DTQPxBZ8RJ2j6fCbdS1Y
- nnqMCmVc6uE4vhCka82/SesHELX+F4R9sb08mI5gNaqDujewMbwLB0ea+Z0bpbpA==
-ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
- header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=OiCzYPxk; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=mJgZuV+T;
- arc=none; iprev=pass; spf=none
- smtp.helo=postmaster@matebook.home.arpa; spf=softfail
- smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=wrE8uhA8
- 73fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=;
- h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=OiCzYPxkj3WzotVcSlWzdt/5/rJq1OgY5tP
- eSOxB4Zy7CNQYt1wOKR+7KNaryj1HkRgUga2rFSSpx7uvYheHn6T+P7RTwolCzC5fCuo9p
- 84Evx1WQh9TOgZgiufdYxrXRe0bFQgQXErJ7XiOZwC8UB+37Kp35UsLateu0LAwYk/PNTf
- hZq8nINAJ4lOsZ2fQd8laF0tEr/SIIvYhQKjLUqwTQwXYwF8G1sPJBouYm/fxX7iYj8IRs
- NqkbAfDJd3J/M7JuIZJlFBZaO5fmH0sHMK51O9+h4pJA9HMYekPQPekqtQo/czoPzpjIj5
- ZUZB7oAe84ivsTzsKaaMNGIuFyQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=wrE8uhA873fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=mJgZuV+TBz+m7ncbEb
- mkd6Odm25AwC3He+ENlAcgCA/wovIK4KtKp9jBNQF+rCWyVoT0SCb5XumBKY+FHOXKCw==
-Received: by mx1.catap.net (OpenSMTPD) id 3fc0701b;
- Thu, 29 Oct 2026 18:41:49 +0100 (CET)
-Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id c049d7c5;
- Thu, 29 Oct 2026 18:41:47 +0100 (CET)
-From: "Kirill A. Korinsky" <kirill@korins.ky>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
-Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v5 01/26] target/mips: make CP0 interrupt state atomic
-Date: Thu, 29 Oct 2026 18:36:01 +0100
-Message-ID: <20261029174139.44302-2-kirill@korins.ky>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261029174139.44302-1-kirill@korins.ky>
-References: <20261029174139.44302-1-kirill@korins.ky>
+ (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
+ id 1xMUB8-0003be-G2
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:46 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TGDXZH3234256; Thu, 29 Oct 2026 17:44:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=rESNXueu3Wb
+ 1frkCuEzcplEzDTtL5aj/Mc2cYQHQQBc=; b=jSf+/clXS8sqUAGdqVDiYO3r8Uz
+ L+y50qfQnrLeGo8AW+47Y9KCD2k6N6enWsA5s3tHfw+lCNeF/YFTMj3dJT2ZZQQz
+ rG0FHF2wjbdCJXZ0VYU3DVeOn2geNEQa5FzWo0zQjv84/uxT9NJQsFjRH9Yblb6e
+ tmKDxwoPIRqCuE1VgqzbbNTCs0hqriea+VixE7rW4v9JsxsMK9/+DvJ3NhFUbsQR
+ 60zxmqCvBzw2JNQijFyluU21OBhudcJXOSoTBfkjhNPDJT2Gm5/b/Cc4wdoNvPfx
+ mEVEQ01nblGx6F4zftgMJCewHNwlHdSDVNHYgF2HPPKuAF3pkHFOa2wG+1w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm31b28cv-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:44:15 +0000 (GMT)
+Received: from pps.filterd (nalasppmta05.qualcomm.com [127.0.0.1])
+ by NALASPPMTA05.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69THiEQN2516234; Thu, 29 Oct 2026 17:44:14 GMT
+Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
+ [10.81.81.31])
+ by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 69THiEaZ2516199
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:44:14 +0000 (GMT)
+Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
+ id 951F42583A; Thu, 29 Oct 2026 10:44:13 -0700 (PDT)
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>
+Subject: [PATCH 09/20] target/hexagon: add HLX compare and average gvec
+ operations
+Date: Thu, 29 Oct 2026 10:44:02 -0700
+Message-ID: <20261029174413.643130-10-marco.liebel@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
+References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
- envelope-from=kirill@korins.ky; helo=mx1.catap.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX1PwICpnw90NL
+ 72uTaTLmVZKL3nYHtJEevv44xWzFrXdeuzJV/FFncQuafToWmrbGedi1iDhm3qN3wq5YpgBUbEf
+ C+yx8vznhnepWyJYgUW0qxS67g/mk7c=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXxb9GcgnQLuQn
+ 4u0XPfsN9uDNbnZDIAvzX4psfVUsa3dJtMwLFvmFQKBI7cJ9bH2+pSyS0cwuV71E/JwI9V27YG+
+ hJCKB0bxMJQQPft6als+xm2VYYZlAunvSXwWDNMECvtgUXQ7EQM+2pSQsgIugCx6gdRbBz8izXu
+ zWfEMOmVIGQp9l0z13j+0LzJveLLV9zqiHgQxvxk7SmLSJaW23QzOJurzJByY4hOUd6TtSnfsnU
+ +9wyvkYsFj+ZFqQR5jDPpL59pM79WZdI+4HAO7kN8qt7gTvtZlPB+vXXnoL5FiXk+F0wnuN4bhh
+ H7jGjZx2HOmxVUJdSyLjL5LSrypwvu30KTW0LpSdIfx7iur7f+8Cx67Zu79galKO6cVcE2Zhe7L
+ AT0gGKFaZ+5tfW4nomtZdW1YkLBvg8XC89uiChRwqH/wyVKXA/+Q7N1M2z1lD3W6n2UWuuFixVG
+ Mj5X84mCBm47BfK0W+g==
+X-Authority-Analysis: v=2.4 cv=A8T5rKWG c=1 sm=1 tr=0 ts=6ae385ef cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8 a=nO8VWNwolxpQ2wceXOEA:9
+X-Proofpoint-GUID: Sud7t6GZqJSOfSpeXtEObZh37lOk4bVy
+X-Proofpoint-ORIG-GUID: Sud7t6GZqJSOfSpeXtEObZh37lOk4bVy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,409 +114,262 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-MTTCG lets interrupt inputs and timer callbacks update CP0_Cause,
-CP0_Status, and CP0_Count while a vCPU checks interrupt state.
+Add halfword greater-than compares and out-of-line helpers for
+truncating and rounding halfword averages.
 
-Use qatomic accessors for CP0 fields that participate in interrupt and
-timer decisions, and kick remote CPUs explicitly after raising a hard
-interrupt; MIPS interrupt line updates no longer depend on taking the
-BQL.
-
-Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- hw/mips/mips_int.c                      | 17 +++++++------
- target/mips/internal.h                  | 13 ++++++----
- target/mips/system/cp0.c                | 27 +++++++++++++--------
- target/mips/system/cp0_timer.c          | 32 ++++++++++++++-----------
- target/mips/tcg/system/special_helper.c | 17 +++++++------
- target/mips/tcg/system/tlb_helper.c     | 21 +++++++++-------
- 6 files changed, 75 insertions(+), 52 deletions(-)
+ target/hexagon/helper.h          |  10 +++
+ target/hexagon/hex_common.py     |  16 +++++
+ target/hexagon/hlx_gvec_tables.c | 105 +++++++++++++++++++++++++++++++
+ target/hexagon/hlx_gvec_tables.h |   5 ++
+ target/hexagon/hlx_helper.c      |  52 +++++++++++++++
+ 5 files changed, 188 insertions(+)
 
-diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
-index 26e7dd6d5f..537394c8fd 100644
---- a/hw/mips/mips_int.c
-+++ b/hw/mips/mips_int.c
-@@ -21,30 +21,33 @@
-  */
+diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
+index 471ef0903b..f42cb8d9b6 100644
+--- a/target/hexagon/helper.h
++++ b/target/hexagon/helper.h
+@@ -44,6 +44,16 @@ DEF_HELPER_FLAGS_4(hlx_gvec_ushsat_sub16, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(hlx_gvec_abs_uh_sat16, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
  
- #include "qemu/osdep.h"
--#include "qemu/main-loop.h"
- #include "hw/core/irq.h"
- #include "target/mips/cpu.h"
-+#include "target/mips/internal.h"
- 
- static void cpu_mips_irq_request(void *opaque, int irq, int level)
- {
-     MIPSCPU *cpu = opaque;
-     CPUMIPSState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-+    int32_t irq_bit;
- 
-     if (irq < 0 || irq > 7) {
-         return;
-     }
- 
--    BQL_LOCK_GUARD();
--
-+    irq_bit = 1 << (irq + CP0Ca_IP);
-     if (level) {
--        env->CP0_Cause |= 1 << (irq + CP0Ca_IP);
-+        qatomic_or(&env->CP0_Cause, irq_bit);
-     } else {
--        env->CP0_Cause &= ~(1 << (irq + CP0Ca_IP));
-+        qatomic_and(&env->CP0_Cause, ~irq_bit);
-     }
- 
--    if (env->CP0_Cause & CP0Ca_IP_mask) {
--        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-+    if (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) {
-+        cpu_set_interrupt(cs, CPU_INTERRUPT_HARD);
-+        if (!qemu_cpu_is_self(cs)) {
-+            qemu_cpu_kick(cs);
-+        }
-     } else {
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-     }
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index a302fc0c20..eb726bd5e3 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -8,6 +8,7 @@
- #ifndef MIPS_INTERNAL_H
- #define MIPS_INTERNAL_H
- 
-+#include "qemu/atomic.h"
- #include "exec/memattrs.h"
- #ifdef CONFIG_TCG
- #include "tcg/tcg-internal.h"
-@@ -168,9 +169,11 @@ extern const VMStateDescription vmstate_mips_cpu;
- 
- static inline bool cpu_mips_hw_interrupts_enabled(const CPUMIPSState *env)
- {
--    return (env->CP0_Status & (1 << CP0St_IE)) &&
--        !(env->CP0_Status & (1 << CP0St_EXL)) &&
--        !(env->CP0_Status & (1 << CP0St_ERL)) &&
-+    int32_t status = qatomic_read(&env->CP0_Status);
++/* GVec helpers for MO_16 averages. */
++DEF_HELPER_FLAGS_4(hlx_gvec_avg_sh16, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(hlx_gvec_avg_sh16_rnd, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16_rnd, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, i32)
 +
-+    return (status & (1 << CP0St_IE)) &&
-+        !(status & (1 << CP0St_EXL)) &&
-+        !(status & (1 << CP0St_ERL)) &&
-         !(env->hflags & MIPS_HFLAG_DM) &&
-         /*
-          * Note that the TCStatus IXMT field is initialized to zero,
-@@ -187,8 +190,8 @@ static inline bool cpu_mips_hw_interrupts_pending(const CPUMIPSState *env)
-     int32_t status;
-     bool r;
- 
--    pending = env->CP0_Cause & CP0Ca_IP_mask;
--    status = env->CP0_Status & CP0Ca_IP_mask;
-+    pending = qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask;
-+    status = qatomic_read(&env->CP0_Status) & CP0Ca_IP_mask;
- 
-     if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-         /*
-diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
-index ff7d3db00c..6f222ad586 100644
---- a/target/mips/system/cp0.c
-+++ b/target/mips/system/cp0.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "internal.h"
- #include "exec/cputlb.h"
-+#include "qemu/atomic.h"
- 
- /* Called for updates to CP0_Status.  */
- void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
-@@ -61,7 +62,8 @@ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
- void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- {
-     uint32_t mask = env->CP0_Status_rw_bitmask;
--    target_ulong old = env->CP0_Status;
-+    target_ulong old;
-+    target_ulong status;
- 
-     if (env->insn_flags & ISA_MIPS_R6) {
-         bool has_supervisor = extract32(mask, CP0St_KSU, 2) == 0x3;
-@@ -77,9 +79,11 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
-         mask &= ~(((1 << CP0St_SR) | (1 << CP0St_NMI)) & val);
-     }
- 
--    env->CP0_Status = (old & ~mask) | (val & mask);
-+    old = qatomic_read(&env->CP0_Status);
-+    status = (old & ~mask) | (val & mask);
-+    qatomic_set(&env->CP0_Status, status);
- #if defined(TARGET_MIPS64)
--    if ((env->CP0_Status ^ old) & (old & (7 << CP0St_UX))) {
-+    if ((status ^ old) & (old & (7 << CP0St_UX))) {
-         /* Access to at least one of the 64-bit segments has been disabled */
-         tlb_flush(env_cpu(env));
-     }
-@@ -93,8 +97,9 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- 
- void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- {
--    uint32_t mask = 0x00C00300;
--    uint32_t old = env->CP0_Cause;
-+    int32_t mask = 0x00C00300;
-+    int32_t old;
-+    int32_t cause;
-     int i;
- 
-     if (env->insn_flags & ISA_MIPS_R2) {
-@@ -104,10 +109,12 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
-         mask &= ~((1 << CP0Ca_WP) & val);
-     }
- 
--    env->CP0_Cause = (env->CP0_Cause & ~mask) | (val & mask);
-+    old = qatomic_fetch_and(&env->CP0_Cause, ~mask);
-+    qatomic_or(&env->CP0_Cause, (int32_t)(val & mask));
-+    cause = qatomic_read(&env->CP0_Cause);
- 
--    if ((old ^ env->CP0_Cause) & (1 << CP0Ca_DC)) {
--        if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if ((old ^ cause) & (1 << CP0Ca_DC)) {
-+        if (cause & (1 << CP0Ca_DC)) {
-             cpu_mips_stop_count(env);
-         } else {
-             cpu_mips_start_count(env);
-@@ -116,8 +123,8 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- 
-     /* Set/reset software interrupts */
-     for (i = 0 ; i < 2 ; i++) {
--        if ((old ^ env->CP0_Cause) & (1 << (CP0Ca_IP + i))) {
--            cpu_mips_soft_irq(env, i, env->CP0_Cause & (1 << (CP0Ca_IP + i)));
-+        if ((old ^ cause) & (1 << (CP0Ca_IP + i))) {
-+            cpu_mips_soft_irq(env, i, cause & (1 << (CP0Ca_IP + i)));
-         }
-     }
- }
-diff --git a/target/mips/system/cp0_timer.c b/target/mips/system/cp0_timer.c
-index 6aed5d3af2..622fee357d 100644
---- a/target/mips/system/cp0_timer.c
-+++ b/target/mips/system/cp0_timer.c
-@@ -23,6 +23,7 @@
- #include "qemu/osdep.h"
- #include "hw/core/irq.h"
- #include "qemu/timer.h"
-+#include "qemu/atomic.h"
- #include "internal.h"
- 
- /* MIPS R4K timer */
-@@ -31,7 +32,7 @@ static uint32_t cpu_mips_get_count_val(CPUMIPSState *env)
-     MIPSCPU *cpu = env_archcpu(env);
-     int64_t now_ns;
-     now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    return env->CP0_Count +
-+    return qatomic_read(&env->CP0_Count) +
-             (uint32_t)clock_ns_to_ticks(cpu->count_clock, now_ns);
+ /* Floating point */
+ DEF_HELPER_3(conv_sf2df, f64, env, f32, i32)
+ DEF_HELPER_3(conv_df2sf, f32, env, f64, i32)
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index 3f4d796a98..d0b36b8e06 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -388,6 +388,22 @@ def skip_qemu_helper(tag):
+                          "vece": "MO_16", "size": "2 * sizeof(HLXVector)"},
+     "LX_abs_uh_sat":    {"op": "gvec2", "table": "hlx_abs_uh_sat_op",
+                          "vece": "MO_16"},
++    "LX_cmp_gt_h":   {"op": "cmp",    "cond": "TCG_COND_GT",
++                      "vece": "MO_16"},
++    "LX_cmp_gt_uh":  {"op": "cmp",    "cond": "TCG_COND_GTU",
++                      "vece": "MO_16"},
++    "LX_cmp_gt_hp":  {"op": "cmp",    "cond": "TCG_COND_GT",
++                      "vece": "MO_16",   "size": "2 * sizeof(HLXVector)"},
++    "LX_cmp_gt_uhp": {"op": "cmp",    "cond": "TCG_COND_GTU",
++                      "vece": "MO_16",   "size": "2 * sizeof(HLXVector)"},
++    "LX_avg_h":         {"op": "gvec3", "table": "hlx_avg_sh_op",
++                         "vece": "MO_16"},
++    "LX_avg_h_rnd":     {"op": "gvec3", "table": "hlx_avg_sh_rnd_op",
++                         "vece": "MO_16"},
++    "LX_avg_uh":        {"op": "gvec3", "table": "hlx_avg_uh_op",
++                         "vece": "MO_16"},
++    "LX_avg_uh_rnd":    {"op": "gvec3", "table": "hlx_avg_uh_rnd_op",
++                         "vece": "MO_16"},
  }
  
-@@ -56,15 +57,15 @@ static void cpu_mips_timer_expire(CPUMIPSState *env)
- {
-     cpu_mips_timer_update(env);
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause |= 1 << CP0Ca_TI;
-+        qatomic_or(&env->CP0_Cause, 1 << CP0Ca_TI);
-     }
-     qemu_irq_raise(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- uint32_t cpu_mips_get_count(CPUMIPSState *env)
- {
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
--        return env->CP0_Count;
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-+        return qatomic_read(&env->CP0_Count);
-     } else {
-         uint64_t now_ns;
- 
-@@ -86,12 +87,13 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
-      * So env->timer may be NULL, so treat timer as disabled in that case.
-      */
-     MIPSCPU *cpu = env_archcpu(env);
--    if (env->CP0_Cause & (1 << CP0Ca_DC) || !env->timer) {
--        env->CP0_Count = count;
-+    if ((qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) || !env->timer) {
-+        qatomic_set(&env->CP0_Count, count);
-     } else {
-         /* Store new count register */
--        env->CP0_Count = count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-+        qatomic_set(&env->CP0_Count,
-+                    count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
-         /* Update timer timer */
-         cpu_mips_timer_update(env);
-     }
-@@ -100,26 +102,28 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
- void cpu_mips_store_compare(CPUMIPSState *env, uint32_t value)
- {
-     env->CP0_Compare = value;
--    if (!(env->CP0_Cause & (1 << CP0Ca_DC))) {
-+    if (!(qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC))) {
-         cpu_mips_timer_update(env);
-     }
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause &= ~(1 << CP0Ca_TI);
-+        qatomic_and(&env->CP0_Cause, ~(1 << CP0Ca_TI));
-     }
-     qemu_irq_lower(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- void cpu_mips_start_count(CPUMIPSState *env)
- {
--    cpu_mips_store_count(env, env->CP0_Count);
-+    cpu_mips_store_count(env, qatomic_read(&env->CP0_Count));
- }
- 
- void cpu_mips_stop_count(CPUMIPSState *env)
- {
-     /* Store the current value */
-     MIPSCPU *cpu = env_archcpu(env);
--    env->CP0_Count += (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+ def is_hlx_inline_tag(tag):
+diff --git a/target/hexagon/hlx_gvec_tables.c b/target/hexagon/hlx_gvec_tables.c
+index dd5aa788e0..a5d40e149c 100644
+--- a/target/hexagon/hlx_gvec_tables.c
++++ b/target/hexagon/hlx_gvec_tables.c
+@@ -111,3 +111,108 @@ const GVecGen2 hlx_abs_uh_sat_op = {
+     .fno     = gen_helper_hlx_gvec_abs_uh_sat16,
+     .vece    = MO_16,
+ };
 +
-+    qatomic_add(&env->CP0_Count,
-+                (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
- }
- 
- static void mips_timer_cb(void *opaque)
-@@ -128,7 +132,7 @@ static void mips_timer_cb(void *opaque)
- 
-     env = opaque;
- 
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-         return;
-     }
- 
-diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
-index cc46542806..fe3111fb54 100644
---- a/target/mips/tcg/system/special_helper.c
-+++ b/target/mips/tcg/system/special_helper.c
-@@ -24,21 +24,22 @@
- #include "exec/helper-proto.h"
- #include "exec/translation-block.h"
- #include "internal.h"
-+#include "qemu/atomic.h"
- 
- /* Specials */
- target_ulong HELPER(di)(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 & ~(1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 & ~(1 << CP0St_IE));
-     return t0;
- }
- 
- target_ulong HELPER(ei)(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 | (1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 | (1 << CP0St_IE));
-     return t0;
- }
- 
-@@ -103,13 +104,15 @@ bool mips_io_recompile_replay_branch(CPUState *cs, const TranslationBlock *tb)
- 
- static inline void exception_return(CPUMIPSState *env)
- {
-+    target_ulong status = qatomic_read(&env->CP0_Status);
++/* Halfword averages. The shift is arithmetic or logical by signedness. */
++static void hlx_fniv_avg_sh(unsigned vece, TCGv_vec r,
++                             TCGv_vec a, TCGv_vec b)
++{
++    TCGv_vec ta = tcg_temp_new_vec_matching(r);
++    TCGv_vec tb = tcg_temp_new_vec_matching(r);
++    tcg_gen_and_vec(vece, ta, a, b);
++    tcg_gen_xor_vec(vece, tb, a, b);
++    tcg_gen_sari_vec(vece, tb, tb, 1);
++    tcg_gen_add_vec(vece, r, ta, tb);
++}
 +
-     debug_pre_eret(env);
--    if (env->CP0_Status & (1 << CP0St_ERL)) {
-+    if (status & (1 << CP0St_ERL)) {
-         mips_env_set_pc(env, env->CP0_ErrorEPC);
--        env->CP0_Status &= ~(1 << CP0St_ERL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_ERL));
-     } else {
-         mips_env_set_pc(env, env->CP0_EPC);
--        env->CP0_Status &= ~(1 << CP0St_EXL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_EXL));
++static void hlx_fniv_avg_sh_rnd(unsigned vece, TCGv_vec r,
++                                 TCGv_vec a, TCGv_vec b)
++{
++    TCGv_vec ta = tcg_temp_new_vec_matching(r);
++    TCGv_vec tb = tcg_temp_new_vec_matching(r);
++    tcg_gen_or_vec(vece, ta, a, b);
++    tcg_gen_xor_vec(vece, tb, a, b);
++    tcg_gen_sari_vec(vece, tb, tb, 1);
++    tcg_gen_sub_vec(vece, r, ta, tb);
++}
++
++static void hlx_fniv_avg_uh(unsigned vece, TCGv_vec r,
++                             TCGv_vec a, TCGv_vec b)
++{
++    TCGv_vec ta = tcg_temp_new_vec_matching(r);
++    TCGv_vec tb = tcg_temp_new_vec_matching(r);
++    tcg_gen_and_vec(vece, ta, a, b);
++    tcg_gen_xor_vec(vece, tb, a, b);
++    tcg_gen_shri_vec(vece, tb, tb, 1);
++    tcg_gen_add_vec(vece, r, ta, tb);
++}
++
++static void hlx_fniv_avg_uh_rnd(unsigned vece, TCGv_vec r,
++                                  TCGv_vec a, TCGv_vec b)
++{
++    TCGv_vec ta = tcg_temp_new_vec_matching(r);
++    TCGv_vec tb = tcg_temp_new_vec_matching(r);
++    tcg_gen_or_vec(vece, ta, a, b);
++    tcg_gen_xor_vec(vece, tb, a, b);
++    tcg_gen_shri_vec(vece, tb, tb, 1);
++    tcg_gen_sub_vec(vece, r, ta, tb);
++}
++
++static const TCGOpcode hlx_vecop_avg_sh[] = {
++    INDEX_op_and_vec,
++    INDEX_op_xor_vec,
++    INDEX_op_sari_vec,
++    INDEX_op_add_vec,
++    0
++};
++
++static const TCGOpcode hlx_vecop_avg_sh_rnd[] = {
++    INDEX_op_or_vec,
++    INDEX_op_xor_vec,
++    INDEX_op_sari_vec,
++    INDEX_op_sub_vec,
++    0
++};
++
++static const TCGOpcode hlx_vecop_avg_uh[] = {
++    INDEX_op_and_vec,
++    INDEX_op_xor_vec,
++    INDEX_op_shri_vec,
++    INDEX_op_add_vec,
++    0
++};
++
++static const TCGOpcode hlx_vecop_avg_uh_rnd[] = {
++    INDEX_op_or_vec,
++    INDEX_op_xor_vec,
++    INDEX_op_shri_vec,
++    INDEX_op_sub_vec,
++    0
++};
++
++const GVecGen3 hlx_avg_sh_op = {
++    .fniv    = hlx_fniv_avg_sh,
++    .opt_opc = hlx_vecop_avg_sh,
++    .fno     = gen_helper_hlx_gvec_avg_sh16,
++    .vece    = MO_16,
++};
++
++const GVecGen3 hlx_avg_sh_rnd_op = {
++    .fniv    = hlx_fniv_avg_sh_rnd,
++    .opt_opc = hlx_vecop_avg_sh_rnd,
++    .fno     = gen_helper_hlx_gvec_avg_sh16_rnd,
++    .vece    = MO_16,
++};
++
++const GVecGen3 hlx_avg_uh_op = {
++    .fniv    = hlx_fniv_avg_uh,
++    .opt_opc = hlx_vecop_avg_uh,
++    .fno     = gen_helper_hlx_gvec_avg_uh16,
++    .vece    = MO_16,
++};
++
++const GVecGen3 hlx_avg_uh_rnd_op = {
++    .fniv    = hlx_fniv_avg_uh_rnd,
++    .opt_opc = hlx_vecop_avg_uh_rnd,
++    .fno     = gen_helper_hlx_gvec_avg_uh16_rnd,
++    .vece    = MO_16,
++};
+diff --git a/target/hexagon/hlx_gvec_tables.h b/target/hexagon/hlx_gvec_tables.h
+index 55ab6bb63f..e01c853eb1 100644
+--- a/target/hexagon/hlx_gvec_tables.h
++++ b/target/hexagon/hlx_gvec_tables.h
+@@ -12,4 +12,9 @@ extern const GVecGen3 hlx_ushsat_add_op;
+ extern const GVecGen3 hlx_ushsat_sub_op;
+ extern const GVecGen2 hlx_abs_uh_sat_op;
+ 
++extern const GVecGen3 hlx_avg_sh_op;
++extern const GVecGen3 hlx_avg_sh_rnd_op;
++extern const GVecGen3 hlx_avg_uh_op;
++extern const GVecGen3 hlx_avg_uh_rnd_op;
++
+ #endif /* HLX_GVEC_TABLES_H */
+diff --git a/target/hexagon/hlx_helper.c b/target/hexagon/hlx_helper.c
+index 906f31ba17..c624b66f83 100644
+--- a/target/hexagon/hlx_helper.c
++++ b/target/hexagon/hlx_helper.c
+@@ -143,3 +143,55 @@ void HELPER(hlx_gvec_abs_uh_sat16)(void *d, void *a, uint32_t desc)
+         *(int16_t *)((char *)d + i) = (int16_t)r;
      }
-     compute_hflags(env);
-     debug_post_eret(env);
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 0ff0c9c871..9e01c07609 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -1106,7 +1106,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         /* EJTAG probe trap enable is not implemented... */
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base + 0x480;
-         set_hflags_for_handler(env);
-@@ -1134,7 +1134,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags |= MIPS_HFLAG_CP0;
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base;
-         set_hflags_for_handler(env);
-@@ -1148,7 +1148,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 offset = 0x200;
-             } else {
-                 uint32_t vector = 0;
--                uint32_t pending = (env->CP0_Cause & CP0Ca_IP_mask) >> CP0Ca_IP;
-+                uint32_t pending =
-+                    (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) >>
-+                    CP0Ca_IP;
- 
-                 if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-                     /*
-@@ -1246,8 +1248,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-     case EXCP_CpU:
-         cause = 11;
-         update_badinstr = 1;
--        env->CP0_Cause = (env->CP0_Cause & ~(0x3 << CP0Ca_CE)) |
--                         (env->error_code << CP0Ca_CE);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x3U << CP0Ca_CE));
-+        qatomic_or(&env->CP0_Cause,
-+                   (int32_t)(env->error_code << CP0Ca_CE));
-         goto set_EPC;
-     case EXCP_OVERFLOW:
-         cause = 12;
-@@ -1305,9 +1308,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 set_badinstr_registers(env);
-             }
-             if (env->hflags & MIPS_HFLAG_BMASK) {
--                env->CP0_Cause |= (1U << CP0Ca_BD);
-+                qatomic_or(&env->CP0_Cause, (int32_t)(1U << CP0Ca_BD));
-             } else {
--                env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+                qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-             }
-             env->CP0_Status |= (1 << CP0St_EXL);
-             if (env->insn_flags & ISA_MIPS3) {
-@@ -1333,8 +1336,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
- 
-         env->active_tc.PC += offset;
-         set_hflags_for_handler(env);
--        env->CP0_Cause = (env->CP0_Cause & ~(0x1f << CP0Ca_EC)) |
--                         (cause << CP0Ca_EC);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x1f << CP0Ca_EC));
-+        qatomic_or(&env->CP0_Cause, cause << CP0Ca_EC);
-         break;
-     default:
-         abort();
+ }
++
++void HELPER(hlx_gvec_avg_sh16)(void *d, void *a, void *b, uint32_t desc)
++{
++    intptr_t oprsz = simd_oprsz(desc);
++    intptr_t i;
++
++    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
++        int16_t av = *(int16_t *)((char *)a + i);
++        int16_t bv = *(int16_t *)((char *)b + i);
++        int16_t r = (int16_t)((av & bv) + ((av ^ bv) >> 1));
++        *(int16_t *)((char *)d + i) = r;
++    }
++}
++
++void HELPER(hlx_gvec_avg_sh16_rnd)(void *d, void *a, void *b, uint32_t desc)
++{
++    intptr_t oprsz = simd_oprsz(desc);
++    intptr_t i;
++
++    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
++        int16_t av = *(int16_t *)((char *)a + i);
++        int16_t bv = *(int16_t *)((char *)b + i);
++        int16_t r = (int16_t)((av | bv) - ((av ^ bv) >> 1));
++        *(int16_t *)((char *)d + i) = r;
++    }
++}
++
++void HELPER(hlx_gvec_avg_uh16)(void *d, void *a, void *b, uint32_t desc)
++{
++    intptr_t oprsz = simd_oprsz(desc);
++    intptr_t i;
++
++    for (i = 0; i < oprsz; i += sizeof(uint16_t)) {
++        uint16_t av = *(uint16_t *)((char *)a + i);
++        uint16_t bv = *(uint16_t *)((char *)b + i);
++        uint16_t r = (uint16_t)((av & bv) + ((av ^ bv) >> 1));
++        *(uint16_t *)((char *)d + i) = r;
++    }
++}
++
++void HELPER(hlx_gvec_avg_uh16_rnd)(void *d, void *a, void *b, uint32_t desc)
++{
++    intptr_t oprsz = simd_oprsz(desc);
++    intptr_t i;
++
++    for (i = 0; i < oprsz; i += sizeof(uint16_t)) {
++        uint16_t av = *(uint16_t *)((char *)a + i);
++        uint16_t bv = *(uint16_t *)((char *)b + i);
++        uint16_t r = (uint16_t)((av | bv) - ((av ^ bv) >> 1));
++        *(uint16_t *)((char *)d + i) = r;
++    }
++}
 -- 
-2.56.0
+2.43.0
 
 
