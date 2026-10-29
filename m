@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D66606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E216F606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eoIQq8KW
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=YPFaHP3D
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQ1p-000108-Qn; Thu, 29 Oct 2026 09:18:51 -0400
+	id 1xMPzr-0003z1-L6; Thu, 29 Oct 2026 09:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPxH-0000R8-IR
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:14:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xMPwr-0008CM-0L
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPxF-0006XY-Qf
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:14:07 -0400
+ id 1xMPwo-0006Ll-Vv
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793279645;
+ s=mimecast20190719; t=1793279618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VvJoMCrjjh+JNQxFjC4E01KLefYCTWA2xdh1MqF6oTQ=;
- b=eoIQq8KWTUWfIo67ADUDnT1e3ski/Azj3Y8VER5TE3kG9YQcrE4RDH268EV36bZCHUTzRj
- yhMf7fthKOKrNHqyDOkMwNFMCrif7iegNzfsml2kBa+akzdtG/K4QpJEFA2dQJlAH9HccP
- 5vUYt+3XC5WgzY7cxgrPw6WLP6U4KSY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=sac7NGdnMMBR1Q6f6L7YYhfEEQxCaxgKw8+IBpt/+SI=;
+ b=YPFaHP3DqCmfAJKDs2XOkugBay+ftr1kywwslz9a/xnZsWW+cZHngF4ZJH1zkFRE2UvNHv
+ hL6HDbEBHF9dg3fxjLLrTb0Gb6nz2rNFVPumdSS3F+JIZa/Nmm9CCsDFB1+RVMO8RI8MC1
+ DrHmPWvqhGL2LGxCnWObfJ8S24lEBxI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-XEO0NqHOOZKGTGRqNHDOPw-1; Thu,
- 29 Oct 2026 09:13:59 -0400
-X-MC-Unique: XEO0NqHOOZKGTGRqNHDOPw-1
-X-Mimecast-MFC-AGG-ID: XEO0NqHOOZKGTGRqNHDOPw_1793279638
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-LFPH6I58PE2yyHNuXrcfrg-1; Thu,
+ 29 Oct 2026 09:13:29 -0400
+X-MC-Unique: LFPH6I58PE2yyHNuXrcfrg-1
+X-Mimecast-MFC-AGG-ID: LFPH6I58PE2yyHNuXrcfrg_1793279608
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 226441955EB6; Thu, 29 Oct 2026 13:13:58 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 492B91800651; Thu, 29 Oct 2026 13:13:28 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF5FA3000723; Thu, 29 Oct 2026 13:13:55 +0000 (UTC)
+ id EEB683000B7A; Thu, 29 Oct 2026 13:13:25 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -56,9 +56,9 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 26/28] hw/i386: mark vmmouse / vmport as secure
-Date: Thu, 29 Oct 2026 13:12:39 +0000
-Message-ID: <20261029131241.2275706-27-berrange@redhat.com>
+Subject: [PATCH v2 15/28] hw/display: mark bochs, ramfb and VGA as secure
+Date: Thu, 29 Oct 2026 13:12:28 +0000
+Message-ID: <20261029131241.2275706-16-berrange@redhat.com>
 In-Reply-To: <20261029131241.2275706-1-berrange@redhat.com>
 References: <20261029131241.2275706-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -66,16 +66,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,40 +93,63 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-These paravirtualized devices are relevant to virtualization
-use cases and used by the i440fx/q35 machine boards.
+Most of the display adapters are emulating old hardware which is not
+relevant to virtualization use cases.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+The clear exceptions are the generic, simple devices that should be
+considered secure: Bochs, RAMFB, VGA (PCI, not MMIO / ISA).
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/i386/vmmouse.c | 1 +
- hw/i386/vmport.c  | 1 +
- 2 files changed, 2 insertions(+)
+ hw/display/bochs-display.c    | 1 +
+ hw/display/ramfb-standalone.c | 1 +
+ hw/display/vga-pci.c          | 2 ++
+ 3 files changed, 4 insertions(+)
 
-diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
-index e289bce8e2e..612e7f7d3b6 100644
---- a/hw/i386/vmmouse.c
-+++ b/hw/i386/vmmouse.c
-@@ -390,6 +390,7 @@ static const TypeInfo vmmouse_info = {
-     .parent        = TYPE_ISA_DEVICE,
-     .instance_size = sizeof(VMMouseState),
-     .class_init    = vmmouse_class_initfn,
+diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
+index 64e669429c4..5f3ba80f990 100644
+--- a/hw/display/bochs-display.c
++++ b/hw/display/bochs-display.c
+@@ -374,6 +374,7 @@ static const TypeInfo bochs_display_type_info = {
+     .instance_size  = sizeof(BochsDisplayState),
+     .instance_init  = bochs_display_init,
+     .class_init     = bochs_display_class_init,
++    .secure         = true,
+     .interfaces     = (const InterfaceInfo[]) {
+         { INTERFACE_PCIE_DEVICE },
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
+index 8e8ba37514a..9427009acc8 100644
+--- a/hw/display/ramfb-standalone.c
++++ b/hw/display/ramfb-standalone.c
+@@ -85,6 +85,7 @@ static const TypeInfo ramfb_info = {
+     .parent        = TYPE_DYNAMIC_SYS_BUS_DEVICE,
+     .instance_size = sizeof(RAMFBStandaloneState),
+     .class_init    = ramfb_class_initfn,
 +    .secure        = true,
  };
  
- static void vmmouse_register_types(void)
-diff --git a/hw/i386/vmport.c b/hw/i386/vmport.c
-index 865e0e70db6..24c4fb27a33 100644
---- a/hw/i386/vmport.c
-+++ b/hw/i386/vmport.c
-@@ -301,6 +301,7 @@ static const TypeInfo vmport_info = {
-     .parent        = TYPE_ISA_DEVICE,
-     .instance_size = sizeof(VMPortState),
-     .class_init    = vmport_class_initfn,
+ static void ramfb_register_types(void)
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index d089847bdae..8559d7aa8f0 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -407,6 +407,7 @@ static const TypeInfo vga_info = {
+     .name          = "VGA",
+     .parent        = TYPE_PCI_VGA,
+     .class_init    = vga_class_init,
 +    .secure        = true,
  };
  
- static void vmport_register_types(void)
+ static const TypeInfo secondary_info = {
+@@ -414,6 +415,7 @@ static const TypeInfo secondary_info = {
+     .parent        = TYPE_PCI_VGA,
+     .instance_init = pci_secondary_vga_init,
+     .class_init    = secondary_class_init,
++    .secure        = true,
+ };
+ 
+ static void vga_register_types(void)
 -- 
 2.56.0
 
