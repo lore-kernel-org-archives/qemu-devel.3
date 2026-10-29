@@ -1,63 +1,63 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D5E606A322
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 20:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC396606A322
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 20:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=dP0ay18G;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=DFiMKizM
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=FnQpR7Kr;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=VwuhI55Y
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMX0w-00086e-DJ; Thu, 29 Oct 2026 16:46:22 -0400
+	id 1xMX1b-0000ec-1u; Thu, 29 Oct 2026 16:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX0u-00086G-Ol
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:20 -0400
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX10-0008Ao-FP
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:26 -0400
 Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX0s-0007TF-8X
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=L0VVu5w
- DAghKAtefE62fSzi/zsW1kofyEAoLXy3ST7oWneYM7tfEO6V1rqrdvpDnLZurIX8A7qaZK
- 3QRcnquKQmM668p7DfzmmrmoXjCCx2SquHmqv+bsga61gruHwWvwygcuhcOOKG8ATAthOc
- 3d1egENvj5UWeUfoaYSQYYCAJaqdcAD4Vb1F5g9xf1m5d4AtF8mw/oS0ywAi96TglImI0Q
- AzI2TqbtTd7JXdBJ9dSauK50o0wqFKy4xyoy/2HJgHY4lOU34DvuSHnmsue4VtQ3AJ3vJJ
- E3Ygb66EICe27MMPdXHPZk5/jnPmcaImqiiO92wPLXYteXOY4oy3mig==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=w
- rE8uhA873fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX0y-0007TF-1L
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=P0pDJTm
+ CC4NlQc9rKs+5AQelNJ3HH5bErP3p7mP9BU+klxjFw20mvi40PCVJAiw6t49ypi+n9YgHx
+ JNiugf6WVBefzeazqMlyOnOq62dFosLvoULwjnxtkvGpNAClxKuxexpxQtxHTqjNTDhcjb
+ izNkb5jMWcYHltm/1d+dK+/f2wZ3r/xwnF1MX0S2Uo+l9tg8flPH9J277bI7HsvV17dUJa
+ FdV8AIESG5Uz5sXf2Rp+oAIQ6wbGaJM4ifXr+jZRNULAhPqb+zErg1SNSV+LZj12s3jpHC
+ Ee/K9rpB5BQIBbec2ldFkDfMn1n1px69YqDt1w9SbiUUp2l1xtQQ3wQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=f
+ 3tdl1PVugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=j/6H4e7Q7afUzQ4mZcbMq/TYum3PCNFcTU+2qHM71lzBtEzqhPmJDDCy56y4BJKOGUuP
- xon2ZSrgQT2BvTM1VRDFqRqC0zYl7gB+y3fmdC/EP8OwGI0M3HGUAIVWhH1lrzwu5sy0cQ
- 2SpRoyqForIBano5XF+037cNjFSKUtTJTKcyr2lEEFP80gsGIaxq9FgUEMgvGngAecjqbB
- zVV3Dl4dEYtkmjisgbNKViGX6xNTvu6lcdcf1JPBqmfb2NlYBlcY7yCvKho8dRbQhu8XnR
- pRrocYPiOIsrVOip+HHNa0jIbSHwcFKrM1a9/gxMNs0mbrJWmw6NmEVDl/zAFWLg==
+ b=RzBqb7Bq3pDcFSIAbdrXtoePfZK/P6kVAtodmouOep1tdaFcfI4dGq/MLjHJDe7tPfW1
+ wyForbiPYxWg6DhEmNOtPpgEIvqpo1x6bhc1r+huSFyFVw8aLtZn/9u1TDhcYgWScR/x08
+ CSvbOXU3v8KysEQaMPlm7a/COP8KyKOmlJEaQHpuKyujgegBc8kfBwnwsIscvRtvKNvuaG
+ WyClpQFhKMaq0Ia9NDs2biQqO/nQiZAX1ThVTnYt2A3I+oZiEn3fAfx8XlkQoQA4g6biM4
+ VatrS62g3zkRDo3u2GFAOnhbRxyKvRJxRerrwZYtDCF0YtyGthm0TGjDXhOkyAVA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=dP0ay18G; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=DFiMKizM;
+ header.b=FnQpR7Kr; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=VwuhI55Y;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=wrE8uhA8
- 73fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=f3tdl1PV
+ ugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=dP0ay18GM8bvWzXX5OH8bLE+2mUThcaCON7
- BcqJ94IiVhVOZWicN8kkgD/D94XNb1p+xNew3CLBWxOQRmuxGwtjPVfOQxgfE3tsYzJDvT
- k0AQYKy1HlOR2uC5eJSGyx8kQHZASyyxqwZEVrRWW7NLMH12AFBpe5d3BnJ3tqo/yUIXq9
- eZ+G/Mg4O+VdXQwVPekIhpQGLvNRIYs+yBzR7bARkv9bh1YQw+/VqgOL/au6Gfcj0qlvQ5
- sfrLbwXWnfetSY6jJHmiag+nIELIF+6ea0qxzCyT6CJDRclWtskWWxIWqY1R+liCFRwn2Z
- mWwTw4wPQhB5/BeJliYpXtbBm2Q==
+ subject:cc:to:from; d=korins.ky; b=FnQpR7KrLU7ivgNLyOO02Jy0ljSgnrDncVE
+ 9lh8dKdFyNX9yy72zPMNEO0iFzoQioyVVmqPWDl0dfT+tYpftDiGlHfm420QYx6ArIzBl8
+ h4ylZtcQOaz2A/880pW5ZCwsDprnXBzYKXiM37jf/I+6iDyXviJRa38BXFZw6xDH4e5KRL
+ VtHmYyUcIajoPsMEGPfZffweSalSF7UKruV+DB45wv8qYyVK0OcL6rqC/4LEpb64Pf3lmR
+ Tn9HcOC4u2U1f2m2yZf5+fv5tcLXuusugk84lGRZU6S58V7Jv0MUr3uMuYpgBAb8OKf4Bj
+ rZbVXzrDopieYFTT232ZmcpdgtQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=wrE8uhA873fBXxD6A4Pqm0uVdETQPSaFbfMX+M902sA=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=DFiMKizMDJtqMz9kWl
- zIGl9akZ7o3W5Ma4UGBNNjnPwNEd62t6epyzBo92hndT9TP4Yk9pGUiNsLlenMubyJAA==
-Received: by mx1.catap.net (OpenSMTPD) id 83d3cbe5;
- Thu, 29 Oct 2026 21:46:14 +0100 (CET)
+ bh=f3tdl1PVugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=VwuhI55YuCPaspAkWm
+ tQIc5AcufB1SMg2KRyaCqywMtkxsAcCeSdj7SBqo+2kEW9bwxsUnEA0Yjhp++rvWRWCw==
+Received: by mx1.catap.net (OpenSMTPD) id 4e6492cf;
+ Thu, 29 Oct 2026 21:46:17 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id ae5bed09;
- Thu, 29 Oct 2026 21:46:12 +0100 (CET)
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id fb495bc4;
+ Thu, 29 Oct 2026 21:46:13 +0100 (CET)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -66,9 +66,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v5 01/26] target/mips: make CP0 interrupt state atomic
-Date: Thu, 29 Oct 2026 21:43:46 +0100
-Message-ID: <20261029204609.38989-2-kirill@korins.ky>
+Subject: [PATCH v5 10/26] hw/mips: add Octeon CPUs and boot memory
+Date: Thu, 29 Oct 2026 21:43:55 +0100
+Message-ID: <20261029204609.38989-11-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261029204609.38989-1-kirill@korins.ky>
 References: <20261029204609.38989-1-kirill@korins.ky>
@@ -102,401 +102,420 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-MTTCG lets interrupt inputs and timer callbacks update CP0_Cause,
-CP0_Status, and CP0_Count while a vCPU checks interrupt state.
-
-Use qatomic accessors for CP0 fields that participate in interrupt and
-timer decisions, and kick remote CPUs explicitly after raising a hard
-interrupt; MIPS interrupt line updates no longer depend on taking the
-BQL.
+Create the Octeon CPUs and clock, map the split DRAM layout and
+per-core CVMSEG storage, and provide the EBB7304 boot flash windows.
+Load firmware into the flash reset alias and restore the boot PC during
+machine reset.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/mips_int.c                      | 17 +++++++------
- target/mips/internal.h                  | 13 ++++++----
- target/mips/system/cp0.c                | 27 +++++++++++++--------
- target/mips/system/cp0_timer.c          | 32 ++++++++++++++-----------
- target/mips/tcg/system/special_helper.c | 17 +++++++------
- target/mips/tcg/system/tlb_helper.c     | 21 +++++++++-------
- 6 files changed, 75 insertions(+), 52 deletions(-)
+ hw/mips/Kconfig           |   1 +
+ hw/mips/octeon.c          | 308 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |  28 ++++
+ 3 files changed, 337 insertions(+)
 
-diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
-index 26e7dd6d5f..537394c8fd 100644
---- a/hw/mips/mips_int.c
-+++ b/hw/mips/mips_int.c
-@@ -21,30 +21,33 @@
-  */
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index 2e71e6dee6..cb6057fe38 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -71,6 +71,7 @@ config MIPS_OCTEON
+     bool
+     default y
+     depends on MIPS64 && TARGET_BIG_ENDIAN
++    select PFLASH_CFI02
+ 
+ config MIPS_CPS
+     bool
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 2ecc464579..0e02d3693d 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -8,30 +8,337 @@
  
  #include "qemu/osdep.h"
--#include "qemu/main-loop.h"
- #include "hw/core/irq.h"
+ #include "qemu/units.h"
++#include "qemu/datadir.h"
++#include "qapi/error.h"
++#include "hw/core/clock.h"
+ #include "hw/core/boards.h"
++#include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
++#include "hw/core/qdev-properties-system.h"
++#include "hw/core/sysbus.h"
++#include "hw/block/flash.h"
++#include "hw/mips/mips.h"
++#include "system/blockdev.h"
++#include "system/address-spaces.h"
++#include "system/memory.h"
++#include "system/reset.h"
++#include "qemu/error-report.h"
+ #include "hw/mips/octeon_internal.h"
  #include "target/mips/cpu.h"
-+#include "target/mips/internal.h"
  
- static void cpu_mips_irq_request(void *opaque, int irq, int level)
- {
-     MIPSCPU *cpu = opaque;
-     CPUMIPSState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-+    int32_t irq_bit;
+ #define TYPE_OCTEON_MACHINE MACHINE_TYPE_NAME("octeon3")
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonMachineState, OCTEON_MACHINE)
  
-     if (irq < 0 || irq > 7) {
-         return;
-     }
- 
--    BQL_LOCK_GUARD();
--
-+    irq_bit = 1 << (irq + CP0Ca_IP);
-     if (level) {
--        env->CP0_Cause |= 1 << (irq + CP0Ca_IP);
-+        qatomic_or(&env->CP0_Cause, irq_bit);
-     } else {
--        env->CP0_Cause &= ~(1 << (irq + CP0Ca_IP));
-+        qatomic_and(&env->CP0_Cause, ~irq_bit);
-     }
- 
--    if (env->CP0_Cause & CP0Ca_IP_mask) {
--        cpu_interrupt(cs, CPU_INTERRUPT_HARD);
-+    if (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) {
-+        cpu_set_interrupt(cs, CPU_INTERRUPT_HARD);
-+        if (!qemu_cpu_is_self(cs)) {
-+            qemu_cpu_kick(cs);
-+        }
-     } else {
-         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-     }
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index a302fc0c20..eb726bd5e3 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -8,6 +8,7 @@
- #ifndef MIPS_INTERNAL_H
- #define MIPS_INTERNAL_H
- 
-+#include "qemu/atomic.h"
- #include "exec/memattrs.h"
- #ifdef CONFIG_TCG
- #include "tcg/tcg-internal.h"
-@@ -168,9 +169,11 @@ extern const VMStateDescription vmstate_mips_cpu;
- 
- static inline bool cpu_mips_hw_interrupts_enabled(const CPUMIPSState *env)
- {
--    return (env->CP0_Status & (1 << CP0St_IE)) &&
--        !(env->CP0_Status & (1 << CP0St_EXL)) &&
--        !(env->CP0_Status & (1 << CP0St_ERL)) &&
-+    int32_t status = qatomic_read(&env->CP0_Status);
++/*
++ * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
++ * DDR follows the upstream EBB7304 U-Boot board default.
++ */
+ #define OCTEON_DEFAULT_CPU_HZ       1800000000
+ #define OCTEON_DEFAULT_REF_HZ       50000000
+ #define OCTEON_DEFAULT_IO_HZ        1000000000
+ #define OCTEON_DEFAULT_DDR_HZ       800000000
 +
-+    return (status & (1 << CP0St_IE)) &&
-+        !(status & (1 << CP0St_EXL)) &&
-+        !(status & (1 << CP0St_ERL)) &&
-         !(env->hflags & MIPS_HFLAG_DM) &&
-         /*
-          * Note that the TCStatus IXMT field is initialized to zero,
-@@ -187,8 +190,8 @@ static inline bool cpu_mips_hw_interrupts_pending(const CPUMIPSState *env)
-     int32_t status;
-     bool r;
- 
--    pending = env->CP0_Cause & CP0Ca_IP_mask;
--    status = env->CP0_Status & CP0Ca_IP_mask;
-+    pending = qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask;
-+    status = qatomic_read(&env->CP0_Status) & CP0Ca_IP_mask;
- 
-     if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-         /*
-diff --git a/target/mips/system/cp0.c b/target/mips/system/cp0.c
-index ff7d3db00c..6f222ad586 100644
---- a/target/mips/system/cp0.c
-+++ b/target/mips/system/cp0.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "internal.h"
- #include "exec/cputlb.h"
-+#include "qemu/atomic.h"
- 
- /* Called for updates to CP0_Status.  */
- void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
-@@ -61,7 +62,8 @@ void sync_c0_status(CPUMIPSState *env, CPUMIPSState *cpu, int tc)
- void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- {
-     uint32_t mask = env->CP0_Status_rw_bitmask;
--    target_ulong old = env->CP0_Status;
-+    target_ulong old;
-+    target_ulong status;
- 
-     if (env->insn_flags & ISA_MIPS_R6) {
-         bool has_supervisor = extract32(mask, CP0St_KSU, 2) == 0x3;
-@@ -77,9 +79,11 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
-         mask &= ~(((1 << CP0St_SR) | (1 << CP0St_NMI)) & val);
-     }
- 
--    env->CP0_Status = (old & ~mask) | (val & mask);
-+    old = qatomic_read(&env->CP0_Status);
-+    status = (old & ~mask) | (val & mask);
-+    qatomic_set(&env->CP0_Status, status);
- #if defined(TARGET_MIPS64)
--    if ((env->CP0_Status ^ old) & (old & (7 << CP0St_UX))) {
-+    if ((status ^ old) & (old & (7 << CP0St_UX))) {
-         /* Access to at least one of the 64-bit segments has been disabled */
-         tlb_flush(env_cpu(env));
-     }
-@@ -93,8 +97,9 @@ void cpu_mips_store_status(CPUMIPSState *env, target_ulong val)
- 
- void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- {
--    uint32_t mask = 0x00C00300;
--    uint32_t old = env->CP0_Cause;
-+    int32_t mask = 0x00C00300;
-+    int32_t old;
-+    int32_t cause;
-     int i;
- 
-     if (env->insn_flags & ISA_MIPS_R2) {
-@@ -104,10 +109,12 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
-         mask &= ~((1 << CP0Ca_WP) & val);
-     }
- 
--    env->CP0_Cause = (env->CP0_Cause & ~mask) | (val & mask);
-+    old = qatomic_fetch_and(&env->CP0_Cause, ~mask);
-+    qatomic_or(&env->CP0_Cause, (int32_t)(val & mask));
-+    cause = qatomic_read(&env->CP0_Cause);
- 
--    if ((old ^ env->CP0_Cause) & (1 << CP0Ca_DC)) {
--        if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if ((old ^ cause) & (1 << CP0Ca_DC)) {
-+        if (cause & (1 << CP0Ca_DC)) {
-             cpu_mips_stop_count(env);
-         } else {
-             cpu_mips_start_count(env);
-@@ -116,8 +123,8 @@ void cpu_mips_store_cause(CPUMIPSState *env, target_ulong val)
- 
-     /* Set/reset software interrupts */
-     for (i = 0 ; i < 2 ; i++) {
--        if ((old ^ env->CP0_Cause) & (1 << (CP0Ca_IP + i))) {
--            cpu_mips_soft_irq(env, i, env->CP0_Cause & (1 << (CP0Ca_IP + i)));
-+        if ((old ^ cause) & (1 << (CP0Ca_IP + i))) {
-+            cpu_mips_soft_irq(env, i, cause & (1 << (CP0Ca_IP + i)));
-         }
-     }
- }
-diff --git a/target/mips/system/cp0_timer.c b/target/mips/system/cp0_timer.c
-index 6aed5d3af2..622fee357d 100644
---- a/target/mips/system/cp0_timer.c
-+++ b/target/mips/system/cp0_timer.c
-@@ -23,6 +23,7 @@
- #include "qemu/osdep.h"
- #include "hw/core/irq.h"
- #include "qemu/timer.h"
-+#include "qemu/atomic.h"
- #include "internal.h"
- 
- /* MIPS R4K timer */
-@@ -31,7 +32,7 @@ static uint32_t cpu_mips_get_count_val(CPUMIPSState *env)
-     MIPSCPU *cpu = env_archcpu(env);
-     int64_t now_ns;
-     now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    return env->CP0_Count +
-+    return qatomic_read(&env->CP0_Count) +
-             (uint32_t)clock_ns_to_ticks(cpu->count_clock, now_ns);
- }
- 
-@@ -56,15 +57,15 @@ static void cpu_mips_timer_expire(CPUMIPSState *env)
- {
-     cpu_mips_timer_update(env);
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause |= 1 << CP0Ca_TI;
-+        qatomic_or(&env->CP0_Cause, 1 << CP0Ca_TI);
-     }
-     qemu_irq_raise(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- uint32_t cpu_mips_get_count(CPUMIPSState *env)
- {
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
--        return env->CP0_Count;
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-+        return qatomic_read(&env->CP0_Count);
-     } else {
-         uint64_t now_ns;
- 
-@@ -86,12 +87,13 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
-      * So env->timer may be NULL, so treat timer as disabled in that case.
-      */
-     MIPSCPU *cpu = env_archcpu(env);
--    if (env->CP0_Cause & (1 << CP0Ca_DC) || !env->timer) {
--        env->CP0_Count = count;
-+    if ((qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) || !env->timer) {
-+        qatomic_set(&env->CP0_Count, count);
-     } else {
-         /* Store new count register */
--        env->CP0_Count = count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-+        qatomic_set(&env->CP0_Count,
-+                    count - (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
-         /* Update timer timer */
-         cpu_mips_timer_update(env);
-     }
-@@ -100,26 +102,28 @@ void cpu_mips_store_count(CPUMIPSState *env, uint32_t count)
- void cpu_mips_store_compare(CPUMIPSState *env, uint32_t value)
- {
-     env->CP0_Compare = value;
--    if (!(env->CP0_Cause & (1 << CP0Ca_DC))) {
-+    if (!(qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC))) {
-         cpu_mips_timer_update(env);
-     }
-     if (env->insn_flags & ISA_MIPS_R2) {
--        env->CP0_Cause &= ~(1 << CP0Ca_TI);
-+        qatomic_and(&env->CP0_Cause, ~(1 << CP0Ca_TI));
-     }
-     qemu_irq_lower(env->irq[(env->CP0_IntCtl >> CP0IntCtl_IPTI) & 0x7]);
- }
- 
- void cpu_mips_start_count(CPUMIPSState *env)
- {
--    cpu_mips_store_count(env, env->CP0_Count);
-+    cpu_mips_store_count(env, qatomic_read(&env->CP0_Count));
- }
- 
- void cpu_mips_stop_count(CPUMIPSState *env)
- {
-     /* Store the current value */
-     MIPSCPU *cpu = env_archcpu(env);
--    env->CP0_Count += (uint32_t)clock_ns_to_ticks(cpu->count_clock,
--                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++/*
++ * The physical layout follows U-Boot's generic Octeon III
++ * OCTEON_MAX_PHY_MEM_SIZE value. Keep 1 GiB as the tested default.
++ */
+ #define OCTEON_DEFAULT_RAM_SIZE     (1 * GiB)
++#define OCTEON_MAX_PHY_MEM_SIZE     (512 * GiB)
 +
-+    qatomic_add(&env->CP0_Count,
-+                (uint32_t)clock_ns_to_ticks(cpu->count_clock,
-+                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)));
- }
- 
- static void mips_timer_cb(void *opaque)
-@@ -128,7 +132,7 @@ static void mips_timer_cb(void *opaque)
- 
-     env = opaque;
- 
--    if (env->CP0_Cause & (1 << CP0Ca_DC)) {
-+    if (qatomic_read(&env->CP0_Cause) & (1 << CP0Ca_DC)) {
-         return;
-     }
- 
-diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
-index cc46542806..fe3111fb54 100644
---- a/target/mips/tcg/system/special_helper.c
-+++ b/target/mips/tcg/system/special_helper.c
-@@ -24,21 +24,22 @@
- #include "exec/helper-proto.h"
- #include "exec/translation-block.h"
- #include "internal.h"
-+#include "qemu/atomic.h"
- 
- /* Specials */
- target_ulong HELPER(di)(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 & ~(1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 & ~(1 << CP0St_IE));
-     return t0;
- }
- 
- target_ulong HELPER(ei)(CPUMIPSState *env)
- {
--    target_ulong t0 = env->CP0_Status;
-+    target_ulong t0 = qatomic_read(&env->CP0_Status);
- 
--    env->CP0_Status = t0 | (1 << CP0St_IE);
-+    qatomic_set(&env->CP0_Status, t0 | (1 << CP0St_IE));
-     return t0;
- }
- 
-@@ -103,13 +104,15 @@ bool mips_io_recompile_replay_branch(CPUState *cs, const TranslationBlock *tb)
- 
- static inline void exception_return(CPUMIPSState *env)
- {
-+    target_ulong status = qatomic_read(&env->CP0_Status);
++/*
++ * The EBB7304 FDT exposes DRAM below and above the
++ * 0x10000000..0x1fffffff boot-bus/EJTAG hole.
++ */
++#define OCTEON_DR0_BASE             0x000000000ULL
++#define OCTEON_DR0_SIZE             (256 * MiB)
++#define OCTEON_DR1_BASE             0x020000000ULL
++#define OCTEON_DR1_SIZE             (OCTEON_MAX_PHY_MEM_SIZE - OCTEON_DR0_SIZE)
 +
-     debug_pre_eret(env);
--    if (env->CP0_Status & (1 << CP0St_ERL)) {
-+    if (status & (1 << CP0St_ERL)) {
-         mips_env_set_pc(env, env->CP0_ErrorEPC);
--        env->CP0_Status &= ~(1 << CP0St_ERL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_ERL));
-     } else {
-         mips_env_set_pc(env, env->CP0_EPC);
--        env->CP0_Status &= ~(1 << CP0St_EXL);
-+        qatomic_set(&env->CP0_Status, status & ~(1 << CP0St_EXL));
-     }
-     compute_hflags(env);
-     debug_post_eret(env);
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 0ff0c9c871..9e01c07609 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -1106,7 +1106,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         /* EJTAG probe trap enable is not implemented... */
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base + 0x480;
-         set_hflags_for_handler(env);
-@@ -1134,7 +1134,7 @@ void mips_cpu_do_interrupt(CPUState *cs)
-         env->hflags |= MIPS_HFLAG_CP0;
-         env->hflags &= ~(MIPS_HFLAG_KSU);
-         if (!(env->CP0_Status & (1 << CP0St_EXL))) {
--            env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+            qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-         }
-         env->active_tc.PC = env->exception_base;
-         set_hflags_for_handler(env);
-@@ -1148,7 +1148,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 offset = 0x200;
-             } else {
-                 uint32_t vector = 0;
--                uint32_t pending = (env->CP0_Cause & CP0Ca_IP_mask) >> CP0Ca_IP;
-+                uint32_t pending =
-+                    (qatomic_read(&env->CP0_Cause) & CP0Ca_IP_mask) >>
-+                    CP0Ca_IP;
++/*
++ * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
++ * the guest sees the virtual CVMSEG window, not this physical address.
++ */
++#define OCTEON_CVMSEG_BASE          0x10000000000ULL
++#define OCTEON_CVMSEG_SIZE          0x4000
++#define OCTEON_CVMSEG_TOTAL_SIZE    (OCTEON_MAX_CPUS * OCTEON_CVMSEG_SIZE)
++
++#define OCTEON_FLASH_BASE           0x1f400000ULL
++#define OCTEON_FLASH_RESET_BASE     0x1fc00000ULL
++#define OCTEON_FLASH_RESET_SIZE     (4 * MiB)
++#define OCTEON_FLASH_MAIN_SECTORS   127
++#define OCTEON_FLASH_MAIN_SECTOR_SIZE (64 * KiB)
++#define OCTEON_FLASH_ENV_SECTORS    8
++#define OCTEON_FLASH_ENV_SECTOR_SIZE 0x2000
++#define OCTEON_FLASH_SIZE           \
++    (OCTEON_FLASH_MAIN_SECTORS * OCTEON_FLASH_MAIN_SECTOR_SIZE + \
++     OCTEON_FLASH_ENV_SECTORS * OCTEON_FLASH_ENV_SECTOR_SIZE)
++#define OCTEON_FLASH_ENV_OFFSET     \
++    (OCTEON_FLASH_SIZE - OCTEON_FLASH_ENV_SECTOR_SIZE)
++#define OCTEON_FLASH_WIDTH          2
  
-                 if (env->CP0_Config3 & (1 << CP0C3_VEIC)) {
-                     /*
-@@ -1246,8 +1248,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-     case EXCP_CpU:
-         cause = 11;
-         update_badinstr = 1;
--        env->CP0_Cause = (env->CP0_Cause & ~(0x3 << CP0Ca_CE)) |
--                         (env->error_code << CP0Ca_CE);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x3U << CP0Ca_CE));
-+        qatomic_or(&env->CP0_Cause,
-+                   (int32_t)(env->error_code << CP0Ca_CE));
-         goto set_EPC;
-     case EXCP_OVERFLOW:
-         cause = 12;
-@@ -1305,9 +1308,9 @@ void mips_cpu_do_interrupt(CPUState *cs)
-                 set_badinstr_registers(env);
-             }
-             if (env->hflags & MIPS_HFLAG_BMASK) {
--                env->CP0_Cause |= (1U << CP0Ca_BD);
-+                qatomic_or(&env->CP0_Cause, (int32_t)(1U << CP0Ca_BD));
-             } else {
--                env->CP0_Cause &= ~(1U << CP0Ca_BD);
-+                qatomic_and(&env->CP0_Cause, (int32_t)~(1U << CP0Ca_BD));
-             }
-             env->CP0_Status |= (1 << CP0St_EXL);
-             if (env->insn_flags & ISA_MIPS3) {
-@@ -1333,8 +1336,8 @@ void mips_cpu_do_interrupt(CPUState *cs)
+ struct OcteonMachineState {
+     MachineState parent_obj;
++    OcteonState *board;
+     uint64_t cpu_hz;
+     uint64_t ref_hz;
+     uint64_t io_hz;
+     uint64_t ddr_hz;
+ };
  
-         env->active_tc.PC += offset;
-         set_hflags_for_handler(env);
--        env->CP0_Cause = (env->CP0_Cause & ~(0x1f << CP0Ca_EC)) |
--                         (cause << CP0Ca_EC);
-+        qatomic_and(&env->CP0_Cause, (int32_t)~(0x1f << CP0Ca_EC));
-+        qatomic_or(&env->CP0_Cause, cause << CP0Ca_EC);
-         break;
-     default:
-         abort();
++static void octeon_validate_clocks(OcteonMachineState *oms)
++{
++    if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
++        error_report("octeon3 clock frequencies must be non-zero");
++        exit(1);
++    }
++
++    if (oms->cpu_hz % oms->ref_hz || oms->io_hz % oms->ref_hz) {
++        error_report("octeon3 CPU and IO clocks must be multiples of "
++                     "ref-clock-hz");
++        exit(1);
++    }
++}
++
++static void octeon_cpu_after_reset(OcteonCPUState *cs)
++{
++    CPUMIPSState *env = &cs->cpu->env;
++
++    env->CP0_CvmMemCtl = 0x100;
++    env->CP0_CvmCtl = 0;
++
++    if (cs->boot_cpu && cs->board->firmware_entry) {
++        env->active_tc.PC = cs->board->firmware_entry;
++    }
++}
++
++static void octeon_create_cpus(OcteonState *s)
++{
++    unsigned int i;
++
++    s->cpuclk = clock_new(OBJECT(s->machine), "cpu-refclk");
++    clock_set_hz(s->cpuclk, s->cpu_hz);
++    s->cpu_count = s->machine->smp.cpus;
++    for (i = 0; i < s->cpu_count; i++) {
++        DeviceState *dev = qdev_new(s->machine->cpu_type);
++
++        s->cpu[i].board = s;
++        s->cpu[i].boot_cpu = i == 0;
++        object_property_set_bool(OBJECT(dev), "big-endian", TARGET_BIG_ENDIAN,
++                                 &error_abort);
++        object_property_set_bool(OBJECT(dev), "start-powered-off", i != 0,
++                                 &error_abort);
++        qdev_connect_clock_in(dev, "clk-in", s->cpuclk);
++        qdev_realize(dev, NULL, &error_abort);
++        s->cpu[i].cpu = MIPS_CPU(dev);
++
++        cpu_mips_irq_init_cpu(s->cpu[i].cpu);
++        cpu_mips_clock_init(s->cpu[i].cpu);
++        qemu_register_resettable(OBJECT(dev));
++    }
++}
++
++static uint64_t octeon_map_ram_alias(OcteonState *s, MemoryRegion *alias,
++                                     const char *name, hwaddr base,
++                                     uint64_t offset, uint64_t size)
++{
++    MemoryRegion *sysmem = get_system_memory();
++
++    if (!size) {
++        return offset;
++    }
++
++    memory_region_init_alias(alias, NULL, name, s->machine->ram, offset, size);
++    memory_region_add_subregion(sysmem, base, alias);
++    return offset + size;
++}
++
++static void octeon_map_ram(OcteonState *s)
++{
++    MemoryRegion *sysmem = get_system_memory();
++    uint64_t offset = 0;
++    uint64_t remaining = s->machine->ram_size;
++    uint64_t size;
++
++    size = MIN(remaining, (uint64_t)OCTEON_DR0_SIZE);
++    offset = octeon_map_ram_alias(s, &s->dr0, "octeon.dr0",
++                                  OCTEON_DR0_BASE, offset, size);
++    remaining -= size;
++
++    size = MIN(remaining, (uint64_t)OCTEON_DR1_SIZE);
++    octeon_map_ram_alias(s, &s->dr1, "octeon.dr1",
++                         OCTEON_DR1_BASE, offset, size);
++
++    memory_region_init_ram(&s->cvmseg, NULL, "octeon.cvmseg",
++                           OCTEON_CVMSEG_TOTAL_SIZE, &error_fatal);
++    memory_region_add_subregion(sysmem, OCTEON_CVMSEG_BASE, &s->cvmseg);
++}
++
++static void octeon_load_firmware(OcteonState *s)
++{
++    g_autofree char *filename = NULL;
++    g_autofree gchar *contents = NULL;
++    g_autoptr(GError) err = NULL;
++    gsize len;
++    uint8_t *flash;
++
++    if (!s->machine->firmware) {
++        return;
++    }
++    if (!s->flash) {
++        error_report("Octeon boot flash is not initialized");
++        exit(1);
++    }
++
++    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->machine->firmware);
++    if (!filename) {
++        error_report("Could not find Octeon firmware '%s'",
++                     s->machine->firmware);
++        exit(1);
++    }
++
++    if (!g_file_get_contents(filename, &contents, &len, &err)) {
++        error_report("Could not load Octeon firmware '%s': %s",
++                     filename, err->message);
++        exit(1);
++    }
++
++    if (len == 0 || len > OCTEON_FLASH_ENV_OFFSET) {
++        error_report("Octeon firmware '%s' has invalid size %" G_GSIZE_FORMAT,
++                     filename, len);
++        exit(1);
++    }
++
++    flash = memory_region_get_ram_ptr(s->flash);
++    memcpy(flash, contents, len);
++    s->firmware_entry = cpu_mips_phys_to_kseg1(NULL, OCTEON_FLASH_RESET_BASE);
++}
++
++static MemTxResult octeon_boot_flash_read(void *opaque, hwaddr addr,
++                                          uint64_t *data, unsigned size,
++                                          MemTxAttrs attrs)
++{
++    OcteonState *s = opaque;
++    uint8_t buf[8];
++    MemTxResult result = MEMTX_OK;
++    unsigned int i;
++
++    for (i = 0; i < size; i++) {
++        uint64_t value;
++
++        result |= memory_region_dispatch_read(s->flash, addr + i, &value,
++                                              MO_8, attrs);
++        buf[i] = value;
++    }
++    *data = ldn_be_p(buf, size);
++    return result;
++}
++
++static MemTxResult octeon_boot_flash_write(void *opaque, hwaddr addr,
++                                           uint64_t value, unsigned size,
++                                           MemTxAttrs attrs)
++{
++    OcteonState *s = opaque;
++    unsigned access_size = MIN(size, 4);
++
++    if (size > access_size) {
++        access_size = OCTEON_FLASH_WIDTH;
++    }
++    return memory_region_dispatch_write(s->flash, addr, value,
++                                        size_memop(access_size) | MO_BE,
++                                        attrs);
++}
++
++static const MemoryRegionOps octeon_boot_flash_ops = {
++    .read_with_attrs = octeon_boot_flash_read,
++    .write_with_attrs = octeon_boot_flash_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
++static void octeon_init_flash(OcteonState *s)
++{
++    DriveInfo *dinfo = drive_get(IF_PFLASH, 0, 0);
++    DeviceState *dev;
++    uint8_t *flash;
++
++    dev = qdev_new(TYPE_PFLASH_CFI02);
++    if (dinfo) {
++        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(dinfo));
++    }
++    qdev_prop_set_uint32(dev, "num-blocks0", OCTEON_FLASH_MAIN_SECTORS);
++    qdev_prop_set_uint32(dev, "sector-length0",
++                         OCTEON_FLASH_MAIN_SECTOR_SIZE);
++    qdev_prop_set_uint32(dev, "num-blocks1", OCTEON_FLASH_ENV_SECTORS);
++    qdev_prop_set_uint32(dev, "sector-length1",
++                         OCTEON_FLASH_ENV_SECTOR_SIZE);
++    qdev_prop_set_uint8(dev, "width", OCTEON_FLASH_WIDTH);
++    qdev_prop_set_uint8(dev, "mappings", 1);
++    qdev_prop_set_uint8(dev, "big-endian", TARGET_BIG_ENDIAN);
++    qdev_prop_set_uint16(dev, "id0", 0x01);
++    qdev_prop_set_uint16(dev, "id1", 0x7e);
++    qdev_prop_set_uint16(dev, "id2", 0x00);
++    qdev_prop_set_uint16(dev, "id3", 0x00);
++    qdev_prop_set_uint16(dev, "unlock-addr0", 0x555);
++    qdev_prop_set_uint16(dev, "unlock-addr1", 0x2aa);
++    qdev_prop_set_string(dev, "name", "octeon.bootbus-flash");
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    s->flash = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
++    if (!dinfo) {
++        flash = memory_region_get_ram_ptr(s->flash);
++        memset(flash, 0xff, OCTEON_FLASH_SIZE);
++    }
++    memory_region_init_io(&s->boot_flash, NULL, &octeon_boot_flash_ops, s,
++                          "octeon.bootbus-flash-window", OCTEON_FLASH_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_FLASH_BASE,
++                                &s->boot_flash);
++
++    memory_region_init_alias(&s->boot_flash_alias, NULL,
++                             "octeon.bootbus-flash-reset-alias",
++                             &s->boot_flash, 0, OCTEON_FLASH_RESET_SIZE);
++    memory_region_add_subregion(get_system_memory(), OCTEON_FLASH_RESET_BASE,
++                                &s->boot_flash_alias);
++}
++
+ static void mips_octeon_init(MachineState *machine)
+ {
++    OcteonMachineState *oms = OCTEON_MACHINE(machine);
++    OcteonState *s = g_new0(OcteonState, 1);
++
++    octeon_validate_clocks(oms);
++
++    oms->board = s;
++    s->machine = machine;
++    s->cpu_hz = oms->cpu_hz;
++    s->ref_hz = oms->ref_hz;
++    s->io_hz = oms->io_hz;
++    s->ddr_hz = oms->ddr_hz;
++
++    if (machine->kernel_filename) {
++        error_report("-kernel is not implemented for octeon3; "
++                     "boot via -bios and U-Boot");
++        exit(1);
++    }
++
++    octeon_map_ram(s);
++    octeon_init_flash(s);
++    octeon_load_firmware(s);
++    octeon_create_cpus(s);
++
++}
++
++static void octeon_machine_reset(MachineState *machine, ResetType type)
++{
++    OcteonState *s = OCTEON_MACHINE(machine)->board;
++    unsigned int i;
++
++    qemu_devices_reset(type);
++    for (i = 0; i < s->cpu_count; i++) {
++        octeon_cpu_after_reset(&s->cpu[i]);
++    }
+ }
+ 
+ static void octeon_machine_instance_init(Object *obj)
+@@ -70,6 +377,7 @@ static void octeon_machine_class_init(ObjectClass *oc, const void *data)
+ 
+     mc->desc = "Cavium Octeon III / EBB7304 EVK";
+     mc->init = mips_octeon_init;
++    mc->reset = octeon_machine_reset;
+     mc->default_cpu_type = MIPS_CPU_TYPE_NAME("OcteonCN73XX");
+     mc->default_ram_size = OCTEON_DEFAULT_RAM_SIZE;
+     mc->default_ram_id = "octeon.ram";
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index 7cab7790bd..2e568c29ea 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -10,7 +10,35 @@
+ #define HW_MIPS_OCTEON_INTERNAL_H
+ 
+ #include "qemu/typedefs.h"
++#include "system/memory.h"
++#include "target/mips/cpu.h"
+ 
+ #define OCTEON_MAX_CPUS             16
++typedef struct OcteonState OcteonState;
++
++typedef struct OcteonCPUState {
++    OcteonState *board;
++    MIPSCPU *cpu;
++    bool boot_cpu;
++} OcteonCPUState;
++
++struct OcteonState {
++    MachineState *machine;
++    Clock *cpuclk;
++    uint64_t cpu_hz;
++    uint64_t ref_hz;
++    uint64_t io_hz;
++    uint64_t ddr_hz;
++    OcteonCPUState cpu[OCTEON_MAX_CPUS];
++    unsigned int cpu_count;
++    uint64_t firmware_entry;
++
++    MemoryRegion dr0;
++    MemoryRegion dr1;
++    MemoryRegion *flash;
++    MemoryRegion boot_flash;
++    MemoryRegion boot_flash_alias;
++    MemoryRegion cvmseg;
++};
+ 
+ #endif
 -- 
 2.56.0
 
