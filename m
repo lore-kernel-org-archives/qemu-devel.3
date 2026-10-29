@@ -1,113 +1,104 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D2B606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 21:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88823606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 21:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=Sr9hWKvR;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=TJIUBro1;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=x9aNFlt8;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=nFNEXqOt
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IKFmCP15;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=eU2dOiXR;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=IKFmCP15;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=eU2dOiXR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMXJl-0002GY-NT; Thu, 29 Oct 2026 17:05:49 -0400
+	id 1xMXJm-0002H3-IF; Thu, 29 Oct 2026 17:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJk-0002GG-Fi
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJk-0002GN-OO
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 17:05:48 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJi-0001HM-Cw
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMXJi-0001HQ-W4
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 17:05:48 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 822DF1FC0E
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 21:05:43 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A6498222AD;
+ Thu, 29 Oct 2026 21:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793307944; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ch6VStuhKfuhlEeqfvz2q1mP35ZnCjnGwOIpUg+n9dU=;
- b=Sr9hWKvRBjfCkXz9vpMgX6YOqCk8mgs1sbMn5X5+V94DBjnudikR2kkHbe/EdLPFxxg1LT
- qPg0F7VkmSjnj4UVWUq6gaLjOiPhj+PSZ07DDp/9+xllgQKJlfxZsS7Z/e5AlK5w1tUc33
- pkOr7aShlf15qSY1BLXhETwU64iSqQk=
+ t=1793307945; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GFKsKG/+7eMbnSeIrUNwtWUFTYprAdIP0JDz9oY7qec=;
+ b=IKFmCP15nKX3FcoPqQKiHak9bbtGNmXmGQi0AJ9F822BydjCSvpOlEj8Pcw7h4QS91isSj
+ vOcYnO1lv+wo0T8F8x+7DKx0MtJpcyLOKwbaecpJjdQUAA36ZBvPgp7+T0k5f7+m19+jL3
+ i46Ta0bmTDxsx8Z1UJ3xDeypPmjRJ5w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793307944;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ch6VStuhKfuhlEeqfvz2q1mP35ZnCjnGwOIpUg+n9dU=;
- b=TJIUBro14qNz/HFYYyX7xrJ4JkBoUCkboKJ9COssIPHviFXrMzxQdqq+uN2410R7ORCNev
- rjWNnr+ZH6BRsjAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=x9aNFlt8;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nFNEXqOt
+ s=susede2_ed25519; t=1793307945;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GFKsKG/+7eMbnSeIrUNwtWUFTYprAdIP0JDz9oY7qec=;
+ b=eU2dOiXRLivZC0HQ89r9IjNkpLJqp24bNmGw4H2dIpm6xp36maRj3UCiESokBiAuT88lPt
+ +x05yg7QAdrpPADg==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793307943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ch6VStuhKfuhlEeqfvz2q1mP35ZnCjnGwOIpUg+n9dU=;
- b=x9aNFlt8i4u5P9AQ8GJb00/7k2qU+rxQtTzyf791pd6g1/Km9W22j+oWT+f0QPXpmHlrZs
- kvxYeNEkQtmn4ftGGOMhuD+fb4cB8CtonXclx2bIylFmAyzbWeQ9d0eIUmsUCoTwwCME1Q
- Sf30zP3Ye4yCRtLBLG3bEGNRmtwmN5A=
+ t=1793307945; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GFKsKG/+7eMbnSeIrUNwtWUFTYprAdIP0JDz9oY7qec=;
+ b=IKFmCP15nKX3FcoPqQKiHak9bbtGNmXmGQi0AJ9F822BydjCSvpOlEj8Pcw7h4QS91isSj
+ vOcYnO1lv+wo0T8F8x+7DKx0MtJpcyLOKwbaecpJjdQUAA36ZBvPgp7+T0k5f7+m19+jL3
+ i46Ta0bmTDxsx8Z1UJ3xDeypPmjRJ5w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793307943;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=ch6VStuhKfuhlEeqfvz2q1mP35ZnCjnGwOIpUg+n9dU=;
- b=nFNEXqOt5uV0raClNGAbt01BtuqaIwQYDoE8ESzpxIG9db9rOE7qsbL8hrfWm6IR2iHbsN
- TjLw0DI4EuCp+fDA==
+ s=susede2_ed25519; t=1793307945;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GFKsKG/+7eMbnSeIrUNwtWUFTYprAdIP0JDz9oY7qec=;
+ b=eU2dOiXRLivZC0HQ89r9IjNkpLJqp24bNmGw4H2dIpm6xp36maRj3UCiESokBiAuT88lPt
+ +x05yg7QAdrpPADg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C953D13419
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 21:05:42 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CBB5F1342F;
+ Thu, 29 Oct 2026 21:05:44 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id E1LmGia142qaYAAAD6G6ig
- (envelope-from <farosas@suse.de>)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 21:05:42 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id E1LmGia142qaYAAAD6G6ig:T3
+ (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 21:05:44 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/5] Qtest patches for 2026-10-29
-Date: Thu, 29 Oct 2026 18:05:31 -0300
-Message-ID: <20261029210536.2260016-1-farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 2/5] system/qtest: Check ngl->name for irq_intercept_in
+Date: Thu, 29 Oct 2026 18:05:33 -0300
+Message-ID: <20261029210536.2260016-3-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20261029210536.2260016-1-farosas@suse.de>
+References: <20261029210536.2260016-1-farosas@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 822DF1FC0E
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-12.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+X-Spamd-Result: default: False [-11.80 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
  BAYES_HAM(-3.00)[100.00%]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCPT_COUNT_ONE(0.00)[1];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.996]; MIME_GOOD(-0.10)[text/plain];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2]; RCVD_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url,suse.de:dkim];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MIME_TRACE(0.00)[0:+];
- TO_DN_NONE(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- PREVIOUSLY_DELIVERED(0.00)[qemu-devel@nongnu.org];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:dkim]
-X-Spam-Score: -12.51
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
+X-Spam-Score: -11.80
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,47 +116,83 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-23.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The following changes since commit 5624b266cdd513506fb333e9041778407b6d1ac4:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'qga-pull-2026-10-28-2' of https://github.com/kostyanf14/qemu into staging (2026-10-28 14:53:37 -0500)
+Currently we check the name of the NamedGPIOList when doing
+irq_intercept_out, but not for irq_intercept_in.  Even though we
+don't currently support irq_intercept_in on named GPIO lines, we
+still need to check the name, because otherwise we will install the
+observer on every set of GPIO inputs the device has, rather than only
+for the unnamed GPIO inputs.
 
-are available in the Git repository at:
+This doesn't currently affect any test cases, because of all the
+tests which use irq_intercept_in only tests/qtest-l2vic-test.c uses
+it on a device that creates named GPIO inputs.  That device has both
+unnamed GPIO inputs and a named GPIO input "reset".  The effect is
+that a change in the "reset" line state looks like a change in
+interrupt input line 0; but since the test doesn't cause "reset" to
+change this doesn't happen and there are no observable effects of the
+bug.
 
-  https://gitlab.com/farosas/qemu.git tags/qtest-20261029-pull-request
+Check the ngl->name against the specified one for both input
+and output interception. (Currently this will be equivalent to
+a check against NULL for input intercepts.) As we're now checking
+for an exact name match unconditionally, we can break out of the
+loop as soon as we've found it.
 
-for you to fetch changes up to d4a85ac217b653da355f256791d4abd15980022a:
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ system/qtest.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-  qtest: don't close listener socket in qtest_socket_accept (2026-10-29 15:55:29 -0300)
-
-----------------------------------------------------------------
-QTest pull request
-
-- Lift limit of 256 intercepted IRQs
-- Fixes to socket_accept
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (2):
-  qtest: multiple fixes to socket_accept()
-  qtest: don't close listener socket in qtest_socket_accept
-
-Peter Maydell (3):
-  system/qtest: Avoid fixed-size irq_levels array for IRQ intercept
-  system/qtest: Check ngl->name for irq_intercept_in
-  tests/qtest/libqtest: Use a GArray for QTestState::irq_level[]
-
- system/qtest.c         | 47 ++++++++++++++++++++++++++------------
- tests/qtest/libqtest.c | 52 ++++++++++++++++++++----------------------
- 2 files changed, 58 insertions(+), 41 deletions(-)
-
+diff --git a/system/qtest.c b/system/qtest.c
+index a3de815ce65..5ff3f9f27d8 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -422,23 +422,24 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
+         }
+ 
+         QLIST_FOREACH(ngl, &dev->gpios, node) {
+-            /* We don't support inbound interception of named GPIOs yet */
++            /* NULL is valid and matchable, for "unnamed GPIO" */
++            if (g_strcmp0(ngl->name, words[2]) != 0) {
++                continue;
++            }
++
+             if (is_outbound) {
+-                /* NULL is valid and matchable, for "unnamed GPIO" */
+-                if (g_strcmp0(ngl->name, words[2]) == 0) {
+-                    int i;
+-                    qtest_init_irq_intercept(ngl->num_out);
+-                    for (i = 0; i < ngl->num_out; ++i) {
+-                        qtest_install_gpio_out_intercept(dev, ngl->name, i);
+-                    }
+-                    interception_succeeded = true;
++                int i;
++                qtest_init_irq_intercept(ngl->num_out);
++                for (i = 0; i < ngl->num_out; ++i) {
++                    qtest_install_gpio_out_intercept(dev, ngl->name, i);
+                 }
+             } else {
+                 qtest_init_irq_intercept(ngl->num_in);
+                 qemu_irq_set_observer(ngl->in, qtest_irq_handler,
+                                       ngl->num_in);
+-                interception_succeeded = true;
+             }
++            interception_succeeded = true;
++            break;
+         }
+ 
+         if (interception_succeeded) {
 -- 
 2.53.0
 
