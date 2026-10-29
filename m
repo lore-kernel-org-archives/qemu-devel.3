@@ -1,51 +1,51 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F221D606A321
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 08:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19166606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 08:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Fahvm2F2
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=honzp6Gv
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMLVz-0002hz-Pr; Thu, 29 Oct 2026 04:29:39 -0400
+	id 1xMLc0-0004Sx-M0; Thu, 29 Oct 2026 04:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMLVy-0002hr-1e
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:29:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMLby-0004SX-Tc
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:35:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMLVw-0000Es-85
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:29:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMLbx-00012R-2r
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:35:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793262573;
+ s=mimecast20190719; t=1793262947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mKNcAJz3sISh+OBOhDJnM0A4M2G7581aRLKjwyVUh94=;
- b=Fahvm2F2oJY6MJbbgAQcABv9oG/11aLl5fryxnbnnHlvjI5s3ZLv+A1DRIExOdaWqsn+Ik
- D9PD/I2lodiYNMCe+t62pSvBzL7RfUGKw3TttOj1/aDQagepE+nfqvSXNB8uZF3UvVZXrO
- 7Y+xGyr1+nWcwgOwC1BN1UzkbovLb3I=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=WzIxPrIzP/DoNov39+WHtWPHDveERPeB+031I+j3LFw=;
+ b=honzp6Gv3u4w19gRvI+i3PQ5wdJfBQ6Ua67mHBGgqkXi8oxaKc4XylBYrnGG61C0aK/nZF
+ VwwUBxbRNyTkVDcM6Oek5Sdg9LCCnxe2WJEhBnH9sd7EGAZxdFNDv5mWuO3jwqsl8Z5AEc
+ Z7wIqvv1Uq615wXkN69wzdWc4JpFljs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-149-rB2iujWUMQ614rNQHGIexQ-1; Thu,
- 29 Oct 2026 04:29:31 -0400
-X-MC-Unique: rB2iujWUMQ614rNQHGIexQ-1
-X-Mimecast-MFC-AGG-ID: rB2iujWUMQ614rNQHGIexQ_1793262570
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-R6sewDbpMo6IFvRi7CTIwQ-1; Thu,
+ 29 Oct 2026 04:35:43 -0400
+X-MC-Unique: R6sewDbpMo6IFvRi7CTIwQ-1
+X-Mimecast-MFC-AGG-ID: R6sewDbpMo6IFvRi7CTIwQ_1793262942
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03589180059B; Thu, 29 Oct 2026 08:29:30 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DC161955F14; Thu, 29 Oct 2026 08:35:42 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 04CE930002CF; Thu, 29 Oct 2026 08:29:29 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F7C11800446; Thu, 29 Oct 2026 08:35:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A133221E6A04; Thu, 29 Oct 2026 09:29:26 +0100 (CET)
+ id EB30021E6A04; Thu, 29 Oct 2026 09:35:38 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
@@ -54,34 +54,35 @@ Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
  =?utf-8?Q?=C3=A9?=
  <philmd@oss.qualcomm.com>,  Fabiano Rosas <farosas@suse.de>,  Richard
  Henderson <richard.henderson@linaro.org>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Eric Blake
- <eblake@redhat.com>,  Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 07/21] util: introduce 'tldr', a system data recorder
- for crash handling
-In-Reply-To: <20261015112044.1999748-8-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 15 Oct 2026 12:20:30
+ <dave@treblig.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Markus
+ Armbruster <armbru@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Eric Blake <eblake@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH 08/21] qapi: add 'tldr-dump' command for on-demand data
+ recorder output
+In-Reply-To: <20261015112044.1999748-9-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 15 Oct 2026 12:20:31
  +0100")
 References: <20261015112044.1999748-1-berrange@redhat.com>
- <20261015112044.1999748-8-berrange@redhat.com>
-Date: Thu, 29 Oct 2026 09:29:26 +0100
-Message-ID: <87ecd8gba1.fsf@pond.sub.org>
+ <20261015112044.1999748-9-berrange@redhat.com>
+Date: Thu, 29 Oct 2026 09:35:38 +0100
+Message-ID: <87a4nwgazp.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,136 +104,160 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Introduce a new subsystem "tldr" aka "thrifty live data recorder"
-> that will be able to continuously collect certain information at
-> runtime and dump that in a crash report when QEMU exits abnormally.
-> As a second use case, it will support manual triggering on interesting
-> events such as guest OS panic.
-
-What's manual about that?
-
-> Initially the framework does nothing except print the signal
-> information. Later commits will introduce broader data collection.
-> This relies on the dummy siginfo_t struct for portability to Windows.
+> While the data recorder is designed to dump its contents in
+> response to various signals that result in a QEMU crash, it
+> is also interesting to explicitly request dump.
+>
+> This could be simply as an adhoc debugging activity, or could
+> be in response to a specific event like a guest OS panic
+> notification.
 >
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-
-[...]
-
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 49f222796ab..1c9031fba9a 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1233,6 +1233,19 @@
->    'data': { '*pretty': 'bool',
->              '*close-action': 'MonitorQMPCloseAction' } }
->=20=20
+> ---
+>  MAINTAINERS           |  1 +
+>  qapi/meson.build      |  1 +
+>  qapi/qapi-schema.json |  1 +
+>  qapi/tldr.json        | 28 ++++++++++++++++++++++++++++
+>  qemu-options.hx       |  2 ++
+>  util/tldr.c           | 32 ++++++++++++++++++++++++++++++++
+>  6 files changed, 65 insertions(+)
+>  create mode 100644 qapi/tldr.json
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4fa68810c1e..54265d987cb 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4780,3 +4780,4 @@ F: util/tldr.c
+>  F: util/tldr-internal.h
+>  F: include/qemu/tldr.h
+>  F: tests/unit/test-util-tldr.c
+> +F: qapi/tldr.json
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index a46269b5a0c..f8aecb61284 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -49,6 +49,7 @@ qapi_all_modules =3D [
+>    'run-state',
+>    'sockets',
+>    'stats',
+> +  'tldr',
+>    'trace',
+>    'transaction',
+>    'vfio',
+> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+> index b93dd68d94c..b36777970d1 100644
+> --- a/qapi/qapi-schema.json
+> +++ b/qapi/qapi-schema.json
+> @@ -76,3 +76,4 @@
+>  { 'include': 'cryptodev.json' }
+>  { 'include': 'cxl.json' }
+>  { 'include': 'uefi.json' }
+> +{ 'include': 'tldr.json' }
+> diff --git a/qapi/tldr.json b/qapi/tldr.json
+> new file mode 100644
+> index 00000000000..8e2b7cda324
+> --- /dev/null
+> +++ b/qapi/tldr.json
+> @@ -0,0 +1,28 @@
+> +# -*- Mode: Python -*-
+> +# vim: filetype=3Dpython
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
 > +##
-> +# @QTLDRConfigProperties:
-> +#     Configuration for data recorder
+> +# @QTLDRDumpOptions:
+> +#     Options for `tldr-dump`.
 > +#
-> +# @crash-target: fully qualified path to perserve data recorder
-> +#                contents on QEMU crash
+> +# @target: the fully qualified file path to dump
+> +#     the data recorder to
 
-What's a "fully qualified path"?
-
-Do you mean what POSIX calls "absolute pathname"?
-
-Please format member descriptions like this:
-
-   # @crash-target: fully qualified path to perserve data recorder
-   #     contents on QEMU crash
+We're not dumping the data recorder, we're dumping recorded data.
 
 > +#
 > +# Since: 11.2.0
 > +##
-> +{ 'struct': 'QTLDRConfigProperties',
-> +  'data': { '*crash-target': 'str' }
-> +}
+> +{ 'struct': 'QTLDRDumpOptions',
+> +  'data': { 'target': 'str' } }
 > +
->  ##
->  # @ObjectType:
->  #
-> @@ -1302,6 +1315,7 @@
->      's390-pv-guest',
->      'tdx-guest',
->      'throttle-group',
-> +    'tldr-config',
->      'tls-creds-anon',
->      'tls-creds-psk',
->      'tls-creds-x509',
-> @@ -1379,6 +1393,7 @@
->        'tdx-guest':                  'TdxGuestProperties',
->        'thread-context':             'ThreadContextProperties',
->        'throttle-group':             'ThrottleGroupProperties',
-> +      'tldr-config':                'QTLDRConfigProperties',
->        'tls-creds-anon':             'TlsCredsAnonProperties',
->        'tls-creds-psk':              'TlsCredsPskProperties',
->        'tls-creds-x509':             'TlsCredsX509Properties',
+> +##
+> +# @tldr-dump:
+> +#     Dump the data recorder to a file
+> +#
+> +# Since: 11.2.0
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "tldr-dump", "arguments": { "target": "/tmp/qemu.t=
+xt" } }
+> +#     <- { "return": {} }
+> +##
+> +{ 'command': 'tldr-dump', 'data': 'QTLDRDumpOptions' }
+
+Why do you use a separate type for the arguments?
+
 > diff --git a/qemu-options.hx b/qemu-options.hx
-> index 2f6863180b0..2f63d86b635 100644
+> index 2f63d86b635..5f96257cef0 100644
 > --- a/qemu-options.hx
 > +++ b/qemu-options.hx
-> @@ -6682,6 +6682,20 @@ SRST
->          ::
+> @@ -6692,6 +6692,8 @@ SRST
+>          recorder will be dumped to the stderr stream. If the
+>          ``crash-target`` parameter was given, that specifies a fully
+>          qualified file path to write the dump to instead of stderr.
+> +        The ``tldr-dump`` QMP command can also be used at any time to
+> +        save the captured data to an arbitrary file.
 >=20=20
->              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
+>          The ``tldr-config`` object can be added at initial startup
+>          or via QMP at runtime. Once created, however, it is not
+> diff --git a/util/tldr.c b/util/tldr.c
+> index 13e9881bc9b..ea7c26b8e9b 100644
+> --- a/util/tldr.c
+> +++ b/util/tldr.c
+> @@ -12,6 +12,7 @@
+>  #include "qom/object.h"
+>  #include "qom/object_interfaces.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qapi-commands-tldr.h"
+>=20=20
+>  struct QTLDRConfig {
+>      Object parent;
+> @@ -436,3 +437,34 @@ qtldr_crash_dump_signal(siginfo_t *si)
+>          close(fd);
+>      }
+>  }
 > +
 > +
-> +    ``-object tldr-config,id=3Did,crash-target=3Dpath``
-> +        Creating the ``tldr-config`` object enables the thrifty live data
-> +        recorder, which continuously captures important information about
-> +        the operation of the QEMU process. When a SIGSEGV, SIGBUS,
-> +        SIGILL, SIGFPE or SIGABRT are seen the contents of the data
-> +        recorder will be dumped to the stderr stream. If the
-> +        ``crash-target`` parameter was given, that specifies a fully
-> +        qualified file path to write the dump to instead of stderr.
-> +
-> +        The ``tldr-config`` object can be added at initial startup
-> +        or via QMP at runtime. Once created, however, it is not
-> +        permitted to disable it.
-
-Call the object "tldr"?
-
->  ERST
->=20=20
->=20=20
-
-[...]
-
-> diff --git a/util/tldr-internal.h b/util/tldr-internal.h
-> new file mode 100644
-> index 00000000000..193d8425eee
-> --- /dev/null
-> +++ b/util/tldr-internal.h
-> @@ -0,0 +1,21 @@
 > +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * TL;DR: Thrifty Live Data Recorder
-> + *
-> + * Copyright (C) 2026 Red Hat Inc.
+> + * WARNING: Code below this marker provides a QMP handler
+> + * WARNING: for use in normal execution. It calls into
+> + * WARNING: the common crash report outputting APIs, but
+> + * WARNING: this specific method is not restricted to async
+> + * WARNING: signal safe POSIX functions.
 > + */
-> +
-> +#ifndef QEMU_TLDR_INTERNAL_H__
-> +#define QEMU_TLDR_INTERNAL_H__
-> +
-> +#include "qemu/tldr.h"
-> +
-> +#define QTLDR_DUMP_LEADER "\n=F0=9F=9A=A8=F0=9F=9A=A8=F0=9F=9A=A8 QEMU D=
-ata Recorder Start =F0=9F=9A=A8=F0=9F=9A=A8=F0=9F=9A=A8\n"
-> +#define QTLDR_DUMP_TRAILER "\n=F0=9F=9A=A8=F0=9F=9A=A8=F0=9F=9A=A8 QEMU =
-Data Recorder End =F0=9F=9A=A8=F0=9F=9A=A8=F0=9F=9A=A8\n\n"
-> +#define QTLDR_DUMP_TRIGGER_PREFIX "\n=F0=9F=94=8D Trigger:"
-> +#define QTLDR_DUMP_OPEN_ERROR "=F0=9F=94=A5 Unable to dump to '"
 
-The emojis make the dump file UTF-8.  Fine, I guess?
+Why is this a WARNING WARNING WARNING?  Looks scary, then isn't.
+
+Put it elsewhere, so the comment isn't needed?
 
 > +
-> +void qtldr_crash_dump_internal(int fd, siginfo_t *si);
 > +
-> +#endif /* QEMU_TLDR_INTERNAL_H__ */
-
-[...]
+> +void
+> +qmp_tldr_dump(const char *target, Error **errp)
+> +{
+> +    int fd;
+> +
+> +    if (!qatomic_read(&qtldr_active)) {
+> +        error_setg(errp, "No 'tldr-config' object has been creted");
+> +        return;
+> +    }
+> +
+> +    fd =3D qemu_create(target, O_WRONLY | O_TRUNC, 0600, errp);
+> +    if (fd < 0) {
+> +        return;
+> +    }
+> +
+> +    qtldr_crash_dump_internal(fd, NULL);
+> +
+> +    qemu_fdatasync(fd);
+> +    close(fd);
+> +}
 
 
