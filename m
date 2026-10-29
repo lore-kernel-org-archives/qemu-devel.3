@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68069606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65B4606A32D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=KCNeQKwI;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=J1/BwM1e
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hcGBStxD;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RegXTwLQ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRpr-0005cl-M1; Thu, 29 Oct 2026 11:14:35 -0400
+	id 1xMRps-0005iC-S8; Thu, 29 Oct 2026 11:14:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRpV-0005Gx-K5
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:15 -0400
+ id 1xMRpb-0005Of-3D
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:21 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRpT-0002zo-3a
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:12 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1xMRpZ-00030G-3p
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:18 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TCe2Oa1176948
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:09 GMT
+ 69TDaDLn3521391
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=; b=KCNeQKwICRb7LUZd
- tGA4ecBKqZ035MO+2hOks90StvjszQBlqCrCAfLK6QXzABwS67wpL84/aaw1j3TF
- Vy6LPnZMzDEoG1bgFyZR7BjHu2hsDrFOhdgjO7Nt24nUJ1vWHUF+KC08jH52phM2
- t6zn1IdSnBInFH6J5tq05GxF0N6q0xMiSJDKR7axZ1ULgnMIn9PgETAVu7qcBIB+
- AFBxFsalzsrIqMPCFk9J8dcIhGHFL/hA1PdqE9OKTD/4HPxG/v5vtY6WgIH+GES4
- QmxcE8h53yRzGEJdtQDO93ooT77eEM50XuBCOLt1n0Lt30K/9D6W+tNh684RGDvk
- d9mXyA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm4a213bj-1
+ M0yWeTM3tJ7bvf+ZrbqduyFmuCUEtAi6dYtkCl7tFLU=; b=hcGBStxDKCki5ZMh
+ RXxIKD777FDH3FBhQ94hh4+ylnC5AOJDjiEauFujuggWMEdldz2xivQm3t4xSiAT
+ bFJlaJHV8THLFx8NVZsYix+xado6fDj2csKqRGxubrFe9mw8WUvduIkkAETSJf9J
+ Vx7cVaXsv2eTlgMd6BnMPT//pnHq5Su3tGzaOi28NeuC0KSbQXAAtEkuw6hJrVhN
+ PTTMjekfENXfZQAlMk0u3rjtURlqIKkzEX/L17gLszPrmjvVylDigrIdrXh3N0vV
+ lBFaRxAzOnLFRSWo3r//Il2cPrrgo+MhgRYyCTPaECjoB2iMGJpn0HJTyX7i2nRw
+ 1vpHYA==
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm7620dt5-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:09 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-93f1e62510cso538926585a.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:14:09 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:15 +0000 (GMT)
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-8ace1d95f5eso18059537b3.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793286849; x=1793891649; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793286854; x=1793891654; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=;
- b=J1/BwM1eaHOhhUqRC6riavNGontH/LBpnvziJI6WDXYj1Tz2BFkEeqq+MX3IfEbOD3
- ltEbiFd56xLXN7fnGsMbuXDHUSYUx9f9fawOH71X16LEuN6vluQczQBmDczoqD/LbWp7
- lwDsV1l73Cf6+n1GaRHyplGMwnkZDkNZbPrLwxoPa0DnTR6qbO36NryCeXI+OZXo4W2M
- ipR/KT+8Xz2UEu9YOG1+vxTocTg179O2/bx/xYK4KyDgXDuBiCsAgd9SJkfnjBqnpsYD
- WpnsslOwrCuxvNgBr1bPXs+hDFjJWowFD0t6pTJuYWhRXophtQ+BYZhnOWMaUJ7bgqZR
- BEpA==
+ bh=M0yWeTM3tJ7bvf+ZrbqduyFmuCUEtAi6dYtkCl7tFLU=;
+ b=RegXTwLQph7/6LVc4/2J/byiVwiUl3ouE1a0gZwfgXIrE2GPDSJV67GfYS3jH8dCh2
+ 94AxVZMpvl+6qlI/ETvNwElKWXHNBrJjZl3zYvo1l53DoUVtboifIIsRk0F2Bgr12TNO
+ yHA3cJZ7fL6NGJvGc0RC34vA5eW2G2cUyyqLKoixyyXR9VHzOxJWI087pd8pgDB9OB4U
+ RN3QZ4OGslNKIHppb+sbloAQqHbj2LiK65lSH8IEfsYqQ6XRWO+j5IEiUYpYpfk4uhis
+ oZ8y4pp6Q2FmnvQsxfQQ8TpQP14DN0QnZrJiJD0mtOUTRlzdnGUrLXZWRC5mrbi8iKEx
+ oNjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793286849; x=1793891649;
+ d=1e100.net; s=20260707; t=1793286854; x=1793891654;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=;
- b=EgOgLzPt4g0DZVyBCj3CBJwi5rtz2QeRwNDuLGmRUoFdFTS4zqDu8+IF07xFruUho/
- 6NOtoqacHr3DFwSCG8rFCp+7UrvouEj0JkQE6p7EL6qyHTWGsO5v+iIMRt7qZu8xcHDn
- K+5LtfcfY9VLf7g0n6/2l+sBSFEi7NHLC9b0abF2ov7c6bMOmAT64g1vUoRHvbRTSWh9
- solXVQckAd+yZwayz4drxJQzWL9pZwx3Cj9YQTQuCwNxH0zdtFHAz/V/MKCgWwk4CpTV
- KIPDbv28kk1rYbs1OV3lsSP3RjygRs9cBocYjrU8CNIWhBGfXrhs1tEGmTYp5nhUNGgY
- y34A==
-X-Gm-Message-State: AFq9FYKeJoFuaatC9cMgTu9vOYsvkfXmZ6XGIOTBFqlYrOZzVvwh1aZR
- yKGmeUnA4f1C8iKuU/1SEy9tUbwEQU6DGUoNy+/p4MOa4GPBELkcz9BzlIWaU5l774Q45omGk08
- lztYX2Tu1gypt5OaJBLrf8XGnTWWQ26PCTP0RXoyzX6oRIwUkYgkUL/QAlUfsG5fau99y
-X-Gm-Gg: AYBFou3Dl81Sjy083HToEzoiHwSHdImYqij5IAxy+nAOcrieyRgoKjlpiy9wRwD0muA
- rbGLpPJx7XqiWrllIr7NUhdYCtv7YVXNUazdhxjhUWvbA0PxREju/OIRX/zSWobpVvLNA701dcm
- nFDOegxxVLb6MFbgiqxEWeginrOjKiVYa2TlkS+mcLQlVDMMyckjP0uDY5OUTBCJSp99A6FNQqs
- tjiY+xl6lY19IwB0UAkuYNpY3bEPO6Q9LcD+BtWlUsRwOV1deDu93oxJgOa2oIBVM1uSleHIyTh
- jwUZH+HpEaQaSepLIzT5pR2kEt78cMU5OPqvJb0JbQIL5GuR8BCNHNSGZf3MgS/OW2V5IxnZppO
- /noMuR5g1JfyUJeliMWan3ua737IvfJLzVTrpbHpi8LbOupOBK0fzV6fToTINcLcv37+9hk8th9
- HZGx77KHzf6DOMzK6jPq31VKIxAvU3ug==
-X-Received: by 2002:a05:620a:4724:b0:93c:6417:f9c8 with SMTP id
- af79cd13be357-94408a71215mr910775885a.29.1793286848672; 
- Thu, 29 Oct 2026 08:14:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:4724:b0:93c:6417:f9c8 with SMTP id
- af79cd13be357-94408a71215mr910747985a.29.1793286846362; 
- Thu, 29 Oct 2026 08:14:06 -0700 (PDT)
+ bh=M0yWeTM3tJ7bvf+ZrbqduyFmuCUEtAi6dYtkCl7tFLU=;
+ b=OmAOo0Scg2Aqs4T6VJotu1ybpVqesPfwHurHEbGLF+ZElk+lgfcKpR9NTI84bhVtku
+ z154/lVZnCyK6mwtsmIRZxtMHJGf6Zalu9vXJ1Reg1g4QUMpUPQ/8UovjoDW4shrRefF
+ MVxSgzwNN94+lbFhcKTLY+PZmnq+G5jOVxZ6LQz0T4GTDYeIdZgqQ/GscjvwbGj+0Es+
+ Btq/Nc/syy1J9sbeEe2YcVVvDRQOMX9MaOzZk63wocS9KCdxt2SRuytTiScNkxxQ2W9H
+ reWZ4xE8IT0tVSqP7NdilyMVNPuhx+bfL6TaobeLe8IIAdJsMS8ygJrFrq4+vtBOriU2
+ 4upQ==
+X-Gm-Message-State: AFq9FYJZaqtTBFC86CXULSJplcXddytkMBz7/H+9LSaK+Jz6YG7R3TtX
+ ++uYqfgCo3uRaIyTSDgUSkVcjTW/Jbx4BFudnjhLGnWS4AOrzMg8sCQ1w7aozGW+i6yCaUuB8Br
+ nobrz1hwFW/Z3WaO6+ivucw4OMbf/AbjeRPK8zPkiXCt56w9soULFFAM+no7Uk0eVvIUL
+X-Gm-Gg: AYBFou2u6jXwx78Uh+ys2Hwy4xKA1/Wkm/7tFwPbNfhBvtOembW6uABWKLemMct181r
+ D9BXqXl2QKQ89E1fwypKW0E9CwDsaJIcyZsFN63i4nVv0RZ5R+BgvWMyGJwNL2MJXtwEHHFiK2P
+ SCno3/Ksqh29uv3c7sq3rQus/cPpj4NcRlcTbLC7kP6ME70PpsFN9uoAth0fP5aGLZoOkgHAwI5
+ dahzgAD+hg6sE+yivh3Y7uN4ZiRk9dy9recDPtK3A/PPlf0tJ7QvilSC1v9A+Ny0QbEgZKvR+FU
+ nkMmz4jiu3lZuwf7tcn6Mc/HZbqKuSvolTavAjVgL86oHmEwkAC2xDLveqsI9t/dkePIJJhfJxv
+ gNL/U8Zd9iZ7ib36XfOv3ZQoyjIKOakLXE96VIMHFkV4dVYkmNPFuCOxIZk1b5FKQn0louUWViK
+ OT9YERIL7w1FTgRa7AXAjFmLYCj/lZTA==
+X-Received: by 2002:a05:690e:43cf:b0:671:1b72:bd0f with SMTP id
+ 956f58d0204a3-67a7bc8610dmr3724648d50.58.1793286854335; 
+ Thu, 29 Oct 2026 08:14:14 -0700 (PDT)
+X-Received: by 2002:a05:690e:43cf:b0:671:1b72:bd0f with SMTP id
+ 956f58d0204a3-67a7bc8610dmr3724627d50.58.1793286853691; 
+ Thu, 29 Oct 2026 08:14:13 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a96a8f28a1sm84312785e9.4.2026.10.29.08.14.04
+ ffacd0b85a97d-48e3ebcb9cesm36921816f8f.27.2026.10.29.08.14.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Oct 2026 08:14:05 -0700 (PDT)
+ Thu, 29 Oct 2026 08:14:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -95,10 +95,13 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 5/6] target/mips: Convert MSA LD/ST.D (Doubleword Vector)
-Date: Thu, 29 Oct 2026 16:13:15 +0100
-Message-ID: <20261029151317.19170-6-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v6 6/6] accel/tcg: Remove non-explicit endian
+ cpu_ld/st*_data*() helpers
+Date: Thu, 29 Oct 2026 16:13:16 +0100
+Message-ID: <20261029151317.19170-7-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261029151317.19170-1-philmd@oss.qualcomm.com>
 References: <20261029151317.19170-1-philmd@oss.qualcomm.com>
@@ -106,34 +109,33 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX7vR5IabrTtW1
- CdTn1CHFH4sfDj48GuFMnQgH+4N17gLJ2mHmbAIl2SMeiGpAeWQpYipn1BQ54RQD4iB0Sq/0fDD
- oRzPVgrJXtbkW72byZ7Qv4Pa6HT+jzIBAZX+ti1Z37cIWMm19F0D1lEoJjgzD9/qidiCw5YJGYH
- SXXcM4xeuh2WrsDxniSZQn0aEa5j2lhxJtnQU/o1lHbmB1ngyLOeaKfiWUIhkRzZ3EKzkt96GbJ
- AeyFE7EcWdO0bSfCN0Q7tWJ1lV4y5DAAIS+Dviymv4t1vQgoogenKks63XoQqk8/BycNjpkAwRp
- 9DRIIasUYgxvlk5xEyHJlGZud0I4jlt/qTdHv2gg/ZqSsLAgCOdV4N1lidMeEpXxh2NFCbvU7ZG
- n6ribnQ/Sv3uj/fmR3FF5DwkSpNjXgZulhH6opNGGffETD9YuwIBVm6VxcBHjbtabxOoGkzhKDf
- Lp8S82jNc1x4/++3hOw==
-X-Authority-Analysis: v=2.4 cv=E8tYNqdl c=1 sm=1 tr=0 ts=6ae362c1 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-ORIG-GUID: 2PDSBSCzoxtNe_PDfy6C7tEcC73uGYzM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX92H+ey+s6frk
+ mLVWHTQNR6/Iru2wMUU6Ju2pu0W1HvTZBrIb4D9PqYRiRtQFbJPnUGEpVVzDPeYvT4r2cWvEbor
+ eqmMpw959kS96J7pi4ux2vs9hqvxz12wZJ+9DHPfxV5IhYeAd/48vhRJsIuqjqz6wEEkwJFaCG4
+ OyNN7g88bgzUNB/5nBPTghAHbpI/Db7XMtKrjEFdSp8rFuqo8UWAj6RjxsLzyJjkrszntZ5dfQT
+ VACk78H2pPuU5U+xuQpEk5caBSoDMS4s0rXHv89DgQEMYFjm8aK9bG/D8pbHONBuH6DjkR49wZo
+ FVd9f748NJ30N6b3fMeQUZhwzbecDGBr1qbM5+pzyYPM+Fx2xfBUn52AG45VWwNe2tRZR0XAtKj
+ reQgWdORpamWMWm6W+IbEeUkS52Nt4qghm8kxnggv4dw5BZUHB0l0LnlHVoe8uZ0ZOHDaCv/nBb
+ N9bbd5gPJEHUyttLPsA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfXxa7ATGx1x1pn
+ DAwR8v0UT+OLk42b0FQf1YiUGcJnFRxvIuCICIHh6A9jgXauyCD8Bu7GF4Y5wWRvKT5cdbPdxyZ
+ 6WXB79koO0A+POhX5nugBXSzXpV8n5k=
+X-Authority-Analysis: v=2.4 cv=Kv3YSmWN c=1 sm=1 tr=0 ts=6ae362c7 cx=c_pps
+ a=0mLRTIufkjop4KoA/9S1MA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=d8cwAk7nIhr6DB5JJpUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX9ooiQT0L573S
- 9swFai2PzZOWozfXgxOKYcvtKR0SvtzmgwrnfyCaRMtbMJsh3hVWc/YqsUDWZW1bz9TgcERuKxs
- avg2gYh3yE4VKxwXNW3JNSHlInpDas4=
-X-Proofpoint-ORIG-GUID: w_FQWkZ1zMqXGj4D7ABMdIZEzj0rr5dv
-X-Proofpoint-GUID: w_FQWkZ1zMqXGj4D7ABMdIZEzj0rr5dv
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=XTilkJpsIER5Kj8Md9AA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=WgItmB6HBUc_1uVUp3mg:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 2PDSBSCzoxtNe_PDfy6C7tEcC73uGYzM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610290059
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290059
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -163,174 +165,129 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Replace runtime helpers by translation.
-BE LD.D/ST.D now uses MO_BE with exchanged half handles;
-no explicit D swaps or store-copy temporaries.
-
-Replace the legacy cpu_ld/st*_data_ra() calls by tcg_gen_qemu_ld/st()
-which allow to respect atomicity.
-
-Remove the ensure_writable_pages() hack and MSALDST_PROTO macro.
+All uses were converted to the explicit cpu_ld/st*_{be,le}_data*()
+helpers, no need for the non-explicit versions anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/msa_helper.h.inc |  6 ---
- target/mips/tcg/msa_helper.c     | 63 --------------------------------
- target/mips/tcg/msa_translate.c  | 28 +++++---------
- 3 files changed, 10 insertions(+), 87 deletions(-)
+ docs/devel/loads-stores.rst  | 18 +++++++-------
+ include/accel/tcg/cpu-ldst.h | 48 ------------------------------------
+ 2 files changed, 9 insertions(+), 57 deletions(-)
 
-diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
-index f0d31ceef291..e994353056f7 100644
---- a/target/mips/tcg/msa_helper.h.inc
-+++ b/target/mips/tcg/msa_helper.h.inc
-@@ -432,9 +432,3 @@ DEF_HELPER_4(msa_ftint_s_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ftint_u_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ffint_s_df, void, env, i32, i32, i32)
- DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
--
--#define MSALDST_PROTO(type)                         \
--DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
--DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
--MSALDST_PROTO(d)
--#undef MSALDST_PROTO
-diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index afd9cca09604..9ef63b0e197e 100644
---- a/target/mips/tcg/msa_helper.c
-+++ b/target/mips/tcg/msa_helper.c
-@@ -21,11 +21,8 @@
- #include "cpu.h"
- #include "internal.h"
- #include "tcg/tcg.h"
--#include "accel/tcg/cpu-ldst.h"
--#include "accel/tcg/probe.h"
- #include "exec/helper-proto.h"
- #include "exec/memop.h"
--#include "exec/target_page.h"
- #include "fpu/softfloat.h"
- #include "fpu_helper.h"
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index 3aeb8bbe8ba6..eeef55347857 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -150,13 +150,13 @@ store: ``cpu_st{size}{end}_mmuidx_ra(env, ptr, val, mmuidx, retaddr)``
+  - ``q`` : 64 bits
  
-@@ -8219,63 +8216,3 @@ void HELPER(msa_ffint_u_df)(CPUMIPSState *env, uint32_t df, uint32_t wd,
+ ``end``
+- - (empty) : for target endian, or 8 bit sizes
++ - (empty) : for 8 bit sizes
+  - ``_be`` : big endian
+  - ``_le`` : little endian
  
-     msa_move_v(pwd, pwx);
+ Regexes for git grep:
+- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
+- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
++ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_mmuidx_ra\>``
++ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_mmuidx_ra\>``
+ 
+ ``cpu_{ld,st}*_data_ra``
+ ~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -188,13 +188,13 @@ store: ``cpu_st{size}{end}_data_ra(env, ptr, val, ra)``
+  - ``q`` : 64 bits
+ 
+ ``end``
+- - (empty) : for target endian, or 8 bit sizes
++ - (empty) : for 8 bit sizes
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+ Regexes for git grep:
+- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data_ra\>``
+- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data_ra\>``
++ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_data_ra\>``
++ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_data_ra\>``
+ 
+ ``cpu_{ld,st}*_data``
+ ~~~~~~~~~~~~~~~~~~~~~
+@@ -227,13 +227,13 @@ store: ``cpu_st{size}{end}_data(env, ptr, val)``
+  - ``q`` : 64 bits
+ 
+ ``end``
+- - (empty) : for target endian, or 8 bit sizes
++ - (empty) : for 8 bit sizes
+  - ``_be`` : big endian
+  - ``_le`` : little endian
+ 
+ Regexes for git grep:
+- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data\>``
+- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data\+\>``
++ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_data\>``
++ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_data\+\>``
+ 
+ ``cpu_ld*_code_mmu``
+ ~~~~~~~~~~~~~~~~~~~~
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index 1facabccb23a..bde3bd0425c9 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -423,52 +423,4 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
+     cpu_stq_le_data_ra(env, addr, val, 0);
  }
--
--/* Data format min and max values */
--#define DF_BITS(df) (1 << ((df) + 3))
--
--/* Element-by-element access macros */
--#define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
--
--void HELPER(msa_ld_d)(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    uintptr_t ra = GETPC();
--    uint64_t d0, d1;
--
--    if (mips_env_is_bigendian(env)) {
--        d0 = cpu_ldq_be_data_ra(env, addr + 0, ra);
--        d1 = cpu_ldq_be_data_ra(env, addr + 8, ra);
--    } else {
--        d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
--        d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
--    }
--    pwd->d[0] = d0;
--    pwd->d[1] = d1;
--}
--
--#define MSA_PAGESPAN(x) \
--        ((((x) & ~TARGET_PAGE_MASK) + MSA_WRLEN / 8 - 1) >= TARGET_PAGE_SIZE)
--
--static inline void ensure_writable_pages(CPUMIPSState *env,
--                                         target_ulong addr,
--                                         int mmu_idx,
--                                         uintptr_t retaddr)
--{
--    /* FIXME: Probe the actual accesses (pass and use a size) */
--    if (unlikely(MSA_PAGESPAN(addr))) {
--        /* first page */
--        probe_write(env, addr, 0, mmu_idx, retaddr);
--        /* second page */
--        addr = (addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
--        probe_write(env, addr, 0, mmu_idx, retaddr);
--    }
--}
--
--void HELPER(msa_st_d)(CPUMIPSState *env, uint32_t wd,
--                     target_ulong addr)
--{
--    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
--    int mmu_idx = mips_env_mmu_index(env);
--    uintptr_t ra = GETPC();
--
--    ensure_writable_pages(env, addr, mmu_idx, GETPC());
--
--    if (mips_env_is_bigendian(env)) {
--        cpu_stq_be_data_ra(env, addr + 0, pwd->d[0], ra);
--        cpu_stq_be_data_ra(env, addr + 8, pwd->d[1], ra);
--    } else {
--        cpu_stq_le_data_ra(env, addr + 0, pwd->d[0], ra);
--        cpu_stq_le_data_ra(env, addr + 8, pwd->d[1], ra);
--    }
--}
-diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 7a3c2390cfca..2d6f3d6070ba 100644
---- a/target/mips/tcg/msa_translate.c
-+++ b/target/mips/tcg/msa_translate.c
-@@ -785,8 +785,8 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
-         MO_ATOM_NONE,
-         MO_ATOM_SUBALIGN, /* Slightly stronger than required */
-         MO_ATOM_SUBALIGN, /* Slightly stronger than required */
-+        MO_ATOM_IFALIGN_PAIR
-     };
--    TCGv_i32 wd;
-     TCGv_i128 t16;
-     TCGv_va addr;
-     MemOp mop;
-@@ -801,33 +801,25 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
-     addr = tcgv_va_temp_new();
-     gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
  
--    wd = tcg_constant_i32(a->wd);
+-#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+-#if TARGET_BIG_ENDIAN
+-# define cpu_lduw_data        cpu_lduw_be_data
+-# define cpu_ldsw_data        cpu_ldsw_be_data
+-# define cpu_ldl_data         cpu_ldl_be_data
+-# define cpu_ldq_data         cpu_ldq_be_data
+-# define cpu_lduw_data_ra     cpu_lduw_be_data_ra
+-# define cpu_ldsw_data_ra     cpu_ldsw_be_data_ra
+-# define cpu_ldl_data_ra      cpu_ldl_be_data_ra
+-# define cpu_ldq_data_ra      cpu_ldq_be_data_ra
+-# define cpu_lduw_mmuidx_ra   cpu_lduw_be_mmuidx_ra
+-# define cpu_ldsw_mmuidx_ra   cpu_ldsw_be_mmuidx_ra
+-# define cpu_ldl_mmuidx_ra    cpu_ldl_be_mmuidx_ra
+-# define cpu_ldq_mmuidx_ra    cpu_ldq_be_mmuidx_ra
+-# define cpu_stw_data         cpu_stw_be_data
+-# define cpu_stl_data         cpu_stl_be_data
+-# define cpu_stq_data         cpu_stq_be_data
+-# define cpu_stw_data_ra      cpu_stw_be_data_ra
+-# define cpu_stl_data_ra      cpu_stl_be_data_ra
+-# define cpu_stq_data_ra      cpu_stq_be_data_ra
+-# define cpu_stw_mmuidx_ra    cpu_stw_be_mmuidx_ra
+-# define cpu_stl_mmuidx_ra    cpu_stl_be_mmuidx_ra
+-# define cpu_stq_mmuidx_ra    cpu_stq_be_mmuidx_ra
+-#else
+-# define cpu_lduw_data        cpu_lduw_le_data
+-# define cpu_ldsw_data        cpu_ldsw_le_data
+-# define cpu_ldl_data         cpu_ldl_le_data
+-# define cpu_ldq_data         cpu_ldq_le_data
+-# define cpu_lduw_data_ra     cpu_lduw_le_data_ra
+-# define cpu_ldsw_data_ra     cpu_ldsw_le_data_ra
+-# define cpu_ldl_data_ra      cpu_ldl_le_data_ra
+-# define cpu_ldq_data_ra      cpu_ldq_le_data_ra
+-# define cpu_lduw_mmuidx_ra   cpu_lduw_le_mmuidx_ra
+-# define cpu_ldsw_mmuidx_ra   cpu_ldsw_le_mmuidx_ra
+-# define cpu_ldl_mmuidx_ra    cpu_ldl_le_mmuidx_ra
+-# define cpu_ldq_mmuidx_ra    cpu_ldq_le_mmuidx_ra
+-# define cpu_stw_data         cpu_stw_le_data
+-# define cpu_stl_data         cpu_stl_le_data
+-# define cpu_stq_data         cpu_stq_le_data
+-# define cpu_stw_data_ra      cpu_stw_le_data_ra
+-# define cpu_stl_data_ra      cpu_stl_le_data_ra
+-# define cpu_stq_data_ra      cpu_stq_le_data_ra
+-# define cpu_stw_mmuidx_ra    cpu_stw_le_mmuidx_ra
+-# define cpu_stl_mmuidx_ra    cpu_stl_le_mmuidx_ra
+-# define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
+-#endif
+-#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
 -
--    if (is_load) {
--        switch (a->df) {
--        case 3:
--            gen_helper_msa_ld_d(tcg_env, wd, addr);
--            return true;
--        }
--    } else {
--        switch (a->df) {
--        case 3:
--            gen_helper_msa_st_d(tcg_env, wd, addr);
--            return true;
--        }
--    }
--
-     t16 = tcg_temp_new_i128();
- 
-     mop = MO_128 | MO_LE;
-     mop |= mo_atom_df[a->df];
- 
-+    if (a->df == 3 && mo_endian(ctx) != MO_LE) {
-+        TCGv_i64 saved_d0 = d0;
-+
-+        mop = (mop & ~MO_BSWAP) | MO_BE;
-+        d0 = d1;
-+        d1 = saved_d0;
-+    }
-+
-     if (is_load) {
-         tcg_gen_qemu_ld_i128(t16, addr, ctx->mem_idx, mop);
-         tcg_gen_extr_i128_i64(d0, d1, t16);
-     }
- 
--    if (mo_endian(ctx) != MO_LE) {
-+    if (mo_endian(ctx) != MO_LE && a->df != 3) {
-         if (!is_load) {
-             TCGv_i64 temp_d0 = tcg_temp_new_i64();
-             TCGv_i64 temp_d1 = tcg_temp_new_i64();
+ #endif /* ACCEL_TCG_CPU_LDST_H */
 -- 
 2.55.0
 
