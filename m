@@ -1,88 +1,91 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B73A606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DB3606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mFnMJmH/
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ECopUWzS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMSOP-0008Et-K5; Thu, 29 Oct 2026 11:50:17 -0400
+	id 1xMSPZ-0000Kp-KV; Thu, 29 Oct 2026 11:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMSOG-0008EX-2L
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:50:09 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1xMSPW-0000KX-Nb
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:51:26 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMSOE-0006fv-Gc
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:50:07 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-451a49abd8aso2013799fac.3
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:50:06 -0700 (PDT)
+ id 1xMSPV-0006wQ-7O
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:51:26 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-6faddda49e7so1943131eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793289005; x=1793893805; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793289084; x=1793893884; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZOR46rDQmNkZfMZuCEAOGS7UScTl7ncgVTDyvuBK6as=;
- b=mFnMJmH/4wtYEOtmGDPCHM2pLRmD/P6H0k9EH8+uAdrv+lBMxDJ+h4gtf8vmdB6hN7
- mb0DhXZ1ppMEJInTbpdyT9KnrANe3qCuk4eJ3BZ4ErWOHOFiP7YSh0AvS9nlTdQZ29KV
- TMhiA6eOpB0rHd6Sc+zWUXU4AKdyCte8aeE44daHxAOwtng5A0LZsqo7TvEvEo4A0fOw
- iZwnyypxfzcd6lBJLUjsIoPn3Prc7a38XdfTjKn5hhtYLjtAncJIWsFvtvDfoC85s4hb
- qlqKIWnHYY5UsftvuBkFiloFPkJosDP3iBpONOTxYsQBH7OAdqrJlxpuQ5eU5BxdQ3Eo
- uZNQ==
+ bh=UcuXW3Cgmu871W29YkLZapelAJdUZMFiMG4nwNHzO5A=;
+ b=ECopUWzSUIJUtCI7a+fLDf9Q85qu45O975iXNmDTOaKJwaJMH0J38V9sVctr+EQgmY
+ 8c0OxFkPIfxWrzEkdDLxxsVumIXIhPc+6n3Niz0S7IMoX+s36II68GTHxCoAfqAFcmeV
+ v2cXK61HlCUayDyFQ5bv2TE/HN4MWkWjRt3L4VcfS3swv6kBzofYS6HKyCJqalO7myZ6
+ k78tRy7okdZxKIclaluO26i5MutY3vzHy37QPxGjLVW+ARICB0TOuYWFyPxq3UOcnwLt
+ m/LiBQ15bsiwZfgECV3tGwL14vffQ618QANiCZwA7/iDqBjbFtRpH4DkI/HnAv3akbox
+ 8jSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793289005; x=1793893805;
+ d=1e100.net; s=20260707; t=1793289084; x=1793893884;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZOR46rDQmNkZfMZuCEAOGS7UScTl7ncgVTDyvuBK6as=;
- b=m9g/ta8W1kBjdWs4/e8Np03664mp+079fesmq7dZU/CI2UTFP8EGh9J/2f4HTtLZN2
- pQXcoF1H3a0qIzxf2O124rX3F7NcvJkLzbF8BzFsBkZN9/+U9T6UAgkOH0QytKdCxLWZ
- pnWlEiIeIjZel57EE7+ikQuIVMV/ALR9H48j3dAAdAFy+hqNCSL67ESUuKREiOkWeqnG
- hoRHIOSL7Ygu5SDrRDoV6oAmscJl0wciPaoQKpP4lY1hrqu+sYTMwpObuvmQoF3W72+X
- z8ckSDte/kMUBD1vsKZrcNbpVvjDFWvltlfeOW79hZHG6xB7BJHw+mPRvEEFtzASnSiR
- LvTA==
-X-Gm-Message-State: AFq9FYIvgpsyptr/641WYqkRLQHTY/7Xch8hgfnsUGAs3aeXnQOTQJv5
- Dk0JdNkxdphbqHGHex0WDaKMS5c+rJBHbNia2U6LJg43OvffAH1XJNaid1X3Vwb7rnA=
-X-Gm-Gg: AYBFou1mY4wKB2tuj224gk+zWG9X3EVQ7yiVDE8FYxSrZ10lr6RqQ5coo+FoySsgJtq
- ceDPvxwrSDeIj3d+a6cf4iS/CHHrze9gpOOf75Wg/luoWgHznOTMVIxTMGAXDWnB5P4VbvcgGGH
- M94kKmK78D9FvdTuQ9dd0EKeeu6PjCfcn4CWhova6t7DfOQjNV9CALtg6pnCTTFzo7pc72yVCv5
- ahGnx3s9E4fLkOqQfRiZ8kRJrVgjebh4y1y64RAlec12mpGG2RHoF6It6IQd+uHNZUvXknNe8lK
- 3DXZ3oltmrQT9uA3d2bAgpSE5wof3Hgh6y8dzuYHQ4BfvVyExJzdUbT1DpWY3kWNP6UIQg716nW
- bXV9qaeDlnnnz2kz74UWg1uR2C3DraQwpKYHxzeM14cIryyeYA2Qg7JjVjQJ07ZuzuZzqoz8KeM
- n4D5CJuir2QMT/O3J6GZJWzSS0OO857DneSVotVBZXz2N2mwZgeFk1DZ5FKRZwHECElV56g39My
- SugQRAOJajL+MtRZBZV9yda3ePZoofztGojUZmppkmbdD4AxpRr6QYkjVaj5JSvOl8Z/aWzAzvN
- VcUANuREr5V5v/SbCvJoH2LIoRPjWMSDMphTDGcZWGAa
-X-Received: by 2002:a05:6871:4318:b0:4a7:4a7a:1e27 with SMTP id
- 586e51a60fabf-4a8bb933039mr4287905fac.48.1793289004621; 
- Thu, 29 Oct 2026 08:50:04 -0700 (PDT)
+ bh=UcuXW3Cgmu871W29YkLZapelAJdUZMFiMG4nwNHzO5A=;
+ b=rjtiUsuttSvdStkVVcoaM0E454uHxgkUrZwVHrCaolk37J2L+bec+oR51QJnpIAFBx
+ CKpEmDf3I9GTFu3EoRWIsKEo3jAz/PlgmR5MzUP4HGGX91P2dgczraQy5tc6uryxlSOu
+ BkAOsOjG1vxo0KQa2JtXO5wPUaKxNHV7jxl1OJKDNcesVGIQ287jfRUbhhAv5O4nOqIn
+ UU8rxH1kYgOBGkWKbHKj9+FIicuc9YyJ8Wi9YevdiL8yoemHONj+ANPdxHZOmyZXqeRF
+ iWY9zjX5rLZhAk8U66whje2J1FROSOOXJciEN0+qR0yGfommk9jjaIoGax+hFSwuugBx
+ W4jg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwBLxGnn0/1Rf7sKUqvRKWZCccPM8bpF9U316fVfIa4eZ1/0/SJy89GhZiB+EQ2NtRvb1x0+PCCIUp3@nongnu.org
+X-Gm-Message-State: AFq9FYIqv8eezLBUqOnSHw1psnKxSTJNu3uO+ADgsHJHMW+Vcmxg932f
+ 86GBqJ8BE1SR63UJqh1kcAFR/LXmbmflBvc5nl1GbiZJIMc/o+eB9+il81xCDjWhszI=
+X-Gm-Gg: AYBFou0sJrUtWjORSykf8x0PUynEuS3brSM/pG+ILAYtpve9rm/QpHItrF5sGu5ZxuB
+ avlK20f8348A3bOfcct15qQ/892cCH9jx8DZgEnpzl8JFvtyOE7tieTvmlFZ0zdwa5xi0mRdmMk
+ E1ZkoVIvl8b9OX8h0d0aMOFoEsNIWuIvAHXWPRsulGBcjBJslFD5wddWvZtBHZ0PRClw3nSds+H
+ vekQLvPTXl64SPgObOkZR1G7Qwj9U6sS5VTLPz5gvb/pRFpZIEw9GOQKelOBOUdqQXSUO3Ar9AP
+ d3u4x+sRVbWQa+j9SzsL9Zhqt8vHvULuWl5Xmw+Htw4ONtKO54x2Z+ic4G8gvikm1dJ2BPvQtWX
+ +nvPzBMk7Qq6m37KXV364ft3Ojlz5BiT/YmdWDZGx0/r0P0nLJZUv+xTYxmIjFehzAiIdk3NGIv
+ 60PlSqOwAahB/6/WKmMoABlVz5CkZYtxExwHul4OCakmfSWCaH7+QurOdnLjo4fzHtRluudino2
+ AATlhA2/iXJeTRkJ/6VSfkMeALLiKgES+PAzFOH5tzZkdb4woTP2e1rhxztbJvduHMnZLduQY/L
+ Kz+nGqA3SqTVL18BU5R9ewWT7bHGxrQHt+ONjvAS+9Uk
+X-Received: by 2002:a05:6820:1381:b0:70e:78ba:11dc with SMTP id
+ 006d021491bc7-713f0bb00c5mr3240930eaf.17.1793289083759; 
+ Thu, 29 Oct 2026 08:51:23 -0700 (PDT)
 Received: from [192.168.129.53] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4a9021f9987sm99671fac.12.2026.10.29.08.50.00
+ 586e51a60fabf-4a901fe4bbesm111337fac.5.2026.10.29.08.51.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 08:50:01 -0700 (PDT)
-Message-ID: <7a9574a1-f82d-419f-ae6c-6dd635ce5f3a@linaro.org>
-Date: Thu, 29 Oct 2026 10:49:58 -0500
+ Thu, 29 Oct 2026 08:51:23 -0700 (PDT)
+Message-ID: <be52ccd2-f368-41a7-83f8-dfe5c4409c4f@linaro.org>
+Date: Thu, 29 Oct 2026 10:51:21 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/cpuinfo: Remove obsolete OpenBSD/aarch64 CPU
- detection
-To: Brad Smith <brad@comstyle.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <auLo2X1RwG96lPmu@humpty.home.comstyle.com>
+Subject: Re: [PATCH v3 02/16] tcg: Add tcg_gen_lea_{i32,i64,tl}
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+Cc: Matt Turner <mattst88@gmail.com>
+References: <20261028163245.1031673-1-richard.henderson@linaro.org>
+ <20261028163245.1031673-3-richard.henderson@linaro.org>
+ <e366030c-f780-4e96-ba2d-558359013969@ilande.co.uk>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <auLo2X1RwG96lPmu@humpty.home.comstyle.com>
+In-Reply-To: <e366030c-f780-4e96-ba2d-558359013969@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,79 +104,18 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/29/26 01:34, Brad Smith wrote:
-> util/cpuinfo: Remove obsolete OpenBSD/aarch64 CPU detection
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->   util/cpuinfo-aarch64.c | 35 -----------------------------------
->   1 file changed, 35 deletions(-)
+On 10/28/26 16:12, Mark Cave-Ayland wrote:
+> Does this also need a corresponding documentation update in docs/devel/ 
+> tcg-ops.rst?
+That's in patch 1.
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
-> 
-> diff --git a/util/cpuinfo-aarch64.c b/util/cpuinfo-aarch64.c
-> index e344676214..85df16ba5f 100644
-> --- a/util/cpuinfo-aarch64.c
-> +++ b/util/cpuinfo-aarch64.c
-> @@ -26,11 +26,6 @@
->   #ifdef CONFIG_DARWIN
->   # include <sys/sysctl.h>
->   #endif
-> -#if defined(__OpenBSD__) && !defined(CONFIG_ELF_AUX_INFO)
-> -# include <machine/armreg.h>
-> -# include <machine/cpu.h>
-> -# include <sys/sysctl.h>
-> -#endif
->   
->   unsigned cpuinfo;
->   
-> @@ -85,36 +80,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
->       info |= sysctl_for_bool("hw.optional.arm.FEAT_BTI") * CPUINFO_BTI;
->       info |= sysctl_for_bool("hw.optional.arm.FEAT_CSSC") * CPUINFO_CSSC;
->   #endif
-> -#if defined(__OpenBSD__) && !defined(CONFIG_ELF_AUX_INFO)
-> -    int mib[2];
-> -    uint64_t isar0;
-> -    uint64_t pfr1;
-> -    size_t len;
-> -
-> -    mib[0] = CTL_MACHDEP;
-> -    mib[1] = CPU_ID_AA64ISAR0;
-> -    len = sizeof(isar0);
-> -    if (sysctl(mib, 2, &isar0, &len, NULL, 0) != -1) {
-> -        if (ID_AA64ISAR0_ATOMIC(isar0) >= ID_AA64ISAR0_ATOMIC_IMPL) {
-> -            info |= CPUINFO_LSE;
-> -        }
-> -        if (ID_AA64ISAR0_AES(isar0) >= ID_AA64ISAR0_AES_BASE) {
-> -            info |= CPUINFO_AES;
-> -        }
-> -        if (ID_AA64ISAR0_AES(isar0) >= ID_AA64ISAR0_AES_PMULL) {
-> -            info |= CPUINFO_PMULL;
-> -        }
-> -    }
-> -
-> -    mib[0] = CTL_MACHDEP;
-> -    mib[1] = CPU_ID_AA64PFR1;
-> -    len = sizeof(pfr1);
-> -    if (sysctl(mib, 2, &pfr1, &len, NULL, 0) != -1) {
-> -        if (ID_AA64PFR1_BT(pfr1) >= ID_AA64PFR1_BT_IMPL) {
-> -            info |= CPUINFO_BTI;
-> -        }
-> -    }
-> -#endif
->   
->       cpuinfo = info;
->       return info;
-
 
