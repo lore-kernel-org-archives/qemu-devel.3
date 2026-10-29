@@ -1,96 +1,114 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1643B606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11C3606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=j//nqIL3
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=BMQ++dzx;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=F/ZFkdYE;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=kF5usCJA;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=wCL0Y/Vw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQAf-0003HF-Fk; Thu, 29 Oct 2026 09:27:57 -0400
+	id 1xMQCQ-0003t8-0Z; Thu, 29 Oct 2026 09:29:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMQAc-0003Gs-QH
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:27:55 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMQC9-0003rl-Nd
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:29:33 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMQAb-0000AR-3J
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:27:54 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-4a89b4a59a1so584987fac.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 06:27:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793280472; x=1793885272; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=wHOLNxsrKaAXrGZ+VEDd/EI2zN79FieEmK6HX0Aii2U=;
- b=j//nqIL3NxzILt5tuLCnVPHrtYQSH7jsSAL4AwGHmMS8WLzpvI3z3jkbljhgdn7AgH
- VfdW+guMU+quCKnVcullFSgQkMBcG8l+r9tV/h+DBcPTAQ3jngunquiX3MQR4y0OOqdi
- o1npn2HTig637lZmp5MCRWNZBteN49OnspJ0vvL5CbXaQ20+LxeRiDlvdD7KEn6QNA2z
- Cv7x8DKxGL4Vh/yzPJNaAWL1anZIAecXJeYLhuDI90Cvuu9lUkBbNtgkzbuTzsWcm4sR
- kp5RpxxiKKOg8US34S9S5XL/NglQnTvRkcwl1jbsVez2MGXFmCs3A2jZ35vZnknFS1gT
- u9zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793280472; x=1793885272;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=wHOLNxsrKaAXrGZ+VEDd/EI2zN79FieEmK6HX0Aii2U=;
- b=tdmvscttu6lnvsn6GedQk6VjGJQGO7+HPWgDvP036qjrOVJXYd4AKY/w/EA0ZvS1ff
- QCaPvTco/KlHVXSJhYk4AJB0Pbi/4FIluzsPvTvOap5qblVVfz+vX71P6FH3t2TDWzCW
- v+8foNWmFGY4F9P8C7GdCFa0HCYb6TXMWfvu4QEIJoxP8qbvPRydAaage5vlGrdJVwvH
- bfc7PDlpVmJYdAkjGzlNigayggrMqAwCvkquQhowtyzxpuLFZN3ENNQrGLKxYQHU35LN
- AlRYj4OHFWKUlH1ljSJyAZBskITz25UV8rSW0UFSzQa9xX9E/J4nRd9P17cHy7vxpE20
- BPZA==
-X-Gm-Message-State: AFq9FYIvyKPhYADSHJQ4Vk8PxFSmcXB41C8TpYmjXayy53iuI6fFHAqL
- 5KKFRVkJYV2xaTdCNgKsYqi+esUYizsARKgtojmt9OO1rbxIommu//JLxCBJFojAhw9KcFP34g8
- HyPga
-X-Gm-Gg: AYBFou1kNVG50AljpHp0CQFD/rrk9O/IArd7NhBUrh6AYejsCqXLlXbukqrdx59QJAX
- 7Hj1i8xsO+rc6MkLPYHQEbHsUBvbjwPXNYS8yYETw8dunPQK+fPPHnsnOwxqBRJNACiK881vkBV
- KyKTtzzGhlINef/hK9kJIFKpVEOQjvk6V26tak7Hpg+9bJWQ2fyUBklB8EYIhHSY3MI9fdpOnjU
- FAijjVSmO4oiyrL+yL/Iw/GgkYV+7X1nHAHmdY81o7ChpExv1WOIm8Ff9ow+rmbQGyxZ91uoxAX
- +D2J5NJANg9iS8LF1aUVlExmR9Ex/cHMk7VyrBipmaLcn4JP1NyU55r8DytJSyQa64Aymhil91j
- bg6w++ouFB6vlVMY5MDmDBuOA5KDeN+R7fDGgfrGMJRauldEQGTySpQf6VHMxEvYtVDJnvMOcnK
- IJ8rtVxndv0RphoC+dPKrYZwIhEF0qMnDuw0K5iy47z3qwAmvh4Bvl+mOMtWhAVNmRYInme6u+n
- z7/yBicMihNnWHUb4ju3Zx1gvDm9TGacS2uLoT/ADoMSLSU8Et4fPloij448LycWj/1dY2iqUAv
- j85U8M5/OHTO0CnjxjqJSpkmyQajBwr9AYYkK7CTKjkdQQKRqLHr9WISmUkhYsr2DA==
-X-Received: by 2002:a05:6808:6413:b0:4f4:e6eb:1283 with SMTP id
- 5614622812f47-563ef85367bmr1423572b6e.28.1793280471466; 
- Thu, 29 Oct 2026 06:27:51 -0700 (PDT)
-Received: from [192.168.129.53] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-563c654a22bsm3939408b6e.14.2026.10.29.06.27.50
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 06:27:51 -0700 (PDT)
-Message-ID: <d176c186-bcc8-4a6a-b3da-88d40b0e143d@linaro.org>
-Date: Thu, 29 Oct 2026 08:27:49 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMQC7-0000FY-Qm
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:29:29 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D5BBE1F800;
+ Thu, 29 Oct 2026 13:29:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793280565; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XkqM0fnucumndUp7WrIt0GhQpQL+Hz/GM8Eyc9zqU4E=;
+ b=BMQ++dzxxJcJV8io/qEgJJ/QIzTHMNj8IKDVeRelHzfRqmMS2ZcYAqUJ/a/f5kY+r4tjkF
+ 6voucV9C81IFgwZNDoTx2/C8qowwy9CgHOzwl6j96HqkHaaaFLzSt+cR32cel6zxf4CC+g
+ IeQqXmQ8N+XH6aqOxctLn8leNVpuG7M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793280565;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XkqM0fnucumndUp7WrIt0GhQpQL+Hz/GM8Eyc9zqU4E=;
+ b=F/ZFkdYE8p9oU8WtH6Kp1WTQ0OVoSyfH1bnky68TIRQJB58yU81GiahGQ5iziNnSBda6e2
+ da+cuuwzUR1IqXDw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793280564; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XkqM0fnucumndUp7WrIt0GhQpQL+Hz/GM8Eyc9zqU4E=;
+ b=kF5usCJAMdabFxZCLRUn6h2DTSpNiJnX2pqN9xvj8cfl0yHNa80gI7f5SodtboKyWljjQa
+ uhllx63/wD9KwCdQV9LL+oXyZijtVO243sU/ZyZnT5ArOakydHfgCxAKFglBDQKOY6ER5S
+ nPh3M1SLjRydwiqSdO8X4BuaHU4G2z4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793280564;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XkqM0fnucumndUp7WrIt0GhQpQL+Hz/GM8Eyc9zqU4E=;
+ b=wCL0Y/Vw3uBwYuEEa+2uYZI3qiYuEoCPuF0hemVPdNGyZsiHGWlEo2mmp+DISkCmX/AApQ
+ u7oQK+SUKnWgksBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5659C1339F;
+ Thu, 29 Oct 2026 13:29:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SnIQOzNK42qhAgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 13:29:24 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Alistair
+ <alistair@alistair23.me>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: QEMU Sashiko
+In-Reply-To: <de5dd85c-e486-40b3-a0ce-613cc102089d@oss.qualcomm.com>
+References: <bfacc761620e29347af03f3b613c6c877b4c1862.camel@alistair23.me>
+ <de5dd85c-e486-40b3-a0ce-613cc102089d@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 10:29:17 -0300
+Message-ID: <87se1oiqj6.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/33] target/arm: Register CPUClass::exception_name()
- handler
-To: qemu-devel@nongnu.org
-References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
- <20261022215115.19680-8-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261022215115.19680-8-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-13.30 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ URIBL_BLOCKED(0.00)[qualcomm.com:email,sashiko.dev:url,imap1.dmz-prg2.suse.org:helo];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[sashiko.dev:url, imap1.dmz-prg2.suse.org:helo,
+ qualcomm.com:email]
+X-Spam-Score: -13.30
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,29 +121,75 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/22/26 16:50, Philippe Mathieu-Daudé wrote:
-> Factor arm_exception_name() out of arm_log_exception() and
-> register it as the CPUClass::exception_name() handler, so
-> the common exception logging can resolve ARM exception codes
-> to names.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> ---
->   target/arm/cpu.h    |  4 ++-
->   target/arm/cpu.c    |  1 +
->   target/arm/helper.c | 77 ++++++++++++++++++++++-----------------------
->   3 files changed, 42 insertions(+), 40 deletions(-)
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> On 29/10/26 00:32, Alistair wrote:
+>> Hey,
+>>=20
+>> Sashiko just merged initial support for QEMU [1].
+>>=20
+>> For those who don't know, Sashiko is a LLM powered review bot used for
+>> the Linux kernel. When people send patches to LKML Sashiko reviews the
+>> patches and responds to the mailing list with any issue that it finds.
+>>=20
+>> Like all LLM tools, it is both useful, but also verbose, prone to
+>> hallucinations and misses things (like humans do to though). The
+>> general consensus in the kernel community is that it's a useful and
+>> valuable tool.
+>>=20
+>> Sashiko is just a Rust application and prompts, it doesn't include a
+>> LLM and you can use a range of different LLM backends.
+>>=20
+>> Google sponsors the development and runs a Linux instance. So you can
+>> see the hosted Linux instance here: https://sashiko.dev/ and it uses
+>> Gemini for the LLM which Google pays for. It seems like there is also a
+>> GCC one starting up.
+>>=20
+>> The cool thing about Sashiko though is you can run it locally as well,
+>> so you can use it to test your patches before sending them to LKML, as
+>> long as you have a LLM backend you can use.
+>>=20
+>> So, now that Sashiko also supports QEMU there are two exciting use
+>> cases:
+>>=20
+>> 1. Developers can run it locally to review their patches before sending
+>> them to the list. This can catch issues before sending patches
+>>=20
+>> 2. Maintainers can run an instance to review patches. How you set this
+>> up depends on the maintainer and how many tokens you have. Pointing it
+>> at the list directly and running it for all patches might be too much,
+>> but some combination of manually triggering it for certain patches
+>> seems to work well. The Settings.toml file can be setup based on what
+>> you want to do.
+>>=20
+>> The hope with this is to save maintainers time as Sashiko can catch
+>> issues without requiring much time from a maintainer.
+>>=20
+>> QEMU support in Sashiko is very new, so it will take some tweaking to
+>> improve things, but it is at least a good starting place.
+>>=20
+>> 1:
+>> https://github.com/sashiko-dev/sashiko/commit/e432036bba7ab10d4517385916=
+e6c834d8176f70
+>
+> I'm glad you added projects/qemu/ directory there; some time ago
+> Zhao and myself tried to leverage LLM to review QEMU and reduce
+> maintenance burden but there was little community interest and
+> some negative feedback so we didn't pursued on the list.
+> https://lore.kernel.org/qemu-devel/afxbDjQEWJZ6P9oe@redhat.com/
 
-r~
+Well, he had a point here^. There's things already outdated in this
+sashiko change which we are hearing about after it's merged.
+
+> https://lore.kernel.org/qemu-devel/arpINtziWCbjENeo@intel.com/
+
+
+
 
