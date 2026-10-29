@@ -1,72 +1,154 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708D9606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24F8606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=MoZhsg0B;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=RlveXNh2
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMJ0I-0007Eo-1j; Thu, 29 Oct 2026 01:48:46 -0400
+	id 1xMJ3L-0004hY-ED; Thu, 29 Oct 2026 01:51:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xMIzo-00074b-8t; Thu, 29 Oct 2026 01:48:17 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.34])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMJ3K-0004hB-1X
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 01:51:54 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xMIzl-0000fS-3X; Thu, 29 Oct 2026 01:48:16 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jFYDM5cQDz5PkH2;
- Thu, 29 Oct 2026 13:48:03 +0800 (CST)
-Received: from szxlzmapp03.zte.com.cn ([10.5.231.207])
- by mse-fl2.zte.com.cn with SMTP id 69T5ltiZ024159;
- Thu, 29 Oct 2026 13:47:55 +0800 (+08)
- (envelope-from gong.shuai@sanechips.com.cn)
-Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 29 Oct 2026 13:47:57 +0800
-X-Zmail-TransId: 3e816ae2de0c027-e638d
-X-Zmail-LocalSMTP: 1
-X-Zmail-RealSender: gong.shuai@sanechips.com.cn
-From: Gong Shuai <gong.shuai@sanechips.com.cn>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Wu Fei <wu.fei9@sanechips.com.cn>,
- Qingye Zhao <zhao.qingye@sanechips.com.cn>,
- Gong Shuai <gong.shuai@sanechips.com.cn>, Gong Shuai <gsh517025@gmail.com>
-Subject: [RFC PATCH v2 08/14] hw/riscv/riscv-iommu-accel: Restrict accelerated
- IOMMU to vfio-pci endpoints with iommufd
-Date: Thu, 29 Oct 2026 13:47:45 +0800
-Message-ID: <20261029054751.563493-9-gong.shuai@sanechips.com.cn>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261029054751.563493-1-gong.shuai@sanechips.com.cn>
-References: <20261029054751.563493-1-gong.shuai@sanechips.com.cn>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1xMJ3I-0001Cl-3J
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 01:51:53 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69T5Hsfq178767
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 05:51:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Ebfa5ckWBXEBj8MVhXu2Bl7EdkhG8Oe26xAbSNcP4Gg=; b=MoZhsg0B3dqWWop2
+ QXcq2puU/DlSMlGkRmk31E/qWsCUbyaH/1twiWEkk2SgIof0/sI4xf24N+UHDlB4
+ n/YkJhIjOPfTHTXeVfuG4jbYFf4iEng2QSGH83G/aouI2HTRI+gDO5R4y2X30aq/
+ HBzUx0nxQQr6XhKa6hbaRAO+C1ALGx0pQrZ1iDLVN7ue4lILLpkj/1eURkjR/gnj
+ RPrJa6BAiaK6rIuC+aFBl9wX8+LW59a2Sj4DcvgBy0YVrymODlhyDKvk4mx/PZfD
+ vzfxel5y2JkCcQ4hL+bShrXib8fASafmOvDDJwWbjanqm2ZWaZrTGv00AzODjYcZ
+ BFFX1w==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkkehu3sq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 05:51:49 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-cd67d4bbdffso1341327a12.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Oct 2026 22:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793253109; x=1793857909; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Ebfa5ckWBXEBj8MVhXu2Bl7EdkhG8Oe26xAbSNcP4Gg=;
+ b=RlveXNh2rr8wH6BRe9l6U1/Ykc/OUeXjYX+vCw+2pOXgDSz1yqIEAmYDiDoQbNxUo8
+ V52ZpDOoO26gGLkvGa991fNDtZS+9dXFHdo+udqFtpwCXtDBtuHXyJ8NOUhTATnVQgVU
+ X2REr9XeehunoA5sqqGmTfeIOO4ajK4Qn8GAWBKYc00pHGmCc3F42BwkMtI3asBacT7e
+ D9fTysbWqjg1ppDagMUAkAIWZG7bVZATfwtBn286OJm79h8ZtAkxYlysBd0ndkAIsBpZ
+ Lkk+0lzIHRqAUIfBukCviOy2qMvApf95trWq8+XssnIDNWvHaeji/VBfeR3rG4JRlwbb
+ RNaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793253109; x=1793857909;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Ebfa5ckWBXEBj8MVhXu2Bl7EdkhG8Oe26xAbSNcP4Gg=;
+ b=XUVmKKLUhEAIhGFk5c3eOLWfg9AStrcLY7dRnYoEDrXk2pvSTDalItpqCZmW6UYfT5
+ +y08t9+PLZQCm09da7tdIR3TX7vSSHZ4+Zptdptw0JbWyOEzdaxVxYlhH467iyRgDOQV
+ NtNvBAe1xrMmPE2Kc1TYpC9J8zpVOuMG41a0mWhb7666UTauMZeQsOWgrgDV0KiYkuUk
+ 4xZt/ToawlFAiQMiEx8/YuK1O25Gc8mpBN/NyfFQdhbKW9SAVPJeKcV0vUuglTYG4xzB
+ 6nvhrBkUPFXVYfm60+zE/qmIyyPdohZyu/V+SGilDo7ln7yhfo+gBpdEurdgjXfQOwEM
+ TDnw==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBwFj7rxfLtqiU2iJvBuH0ungA6VhnUgrauz84BG6cT6suWm8HqcJc2+dJdIx4yllKYtj0iCYr32EuaO@nongnu.org
+X-Gm-Message-State: AFq9FYKq1M66PtZLqO/wFyrNqFSUcAtj2+LxR8nSrelW1aI7+mwXEw/+
+ PI74TnEWjkADPFbQylPD5L5zEJzAv/OshcrSL4IjBadioNmtyZ4ntprxPgIYngtzRtxwEmIl3a5
+ LUvo4jA/iuCAEv3RYsnv4QPXXVhPcq4I56mM8+avJtsa9s33ynXw08nYnzA==
+X-Gm-Gg: AYBFou1NOsr6oK9ceTEzRbli6KdaN30kc97b4pjr1Zt8XG28afH96z2ZDhQ3tsSDiLo
+ BkCDe4XgA0QMLQt3+oZAl5gMjlwRN/EV8aNf2itWSYefjW82UJ3ZfIEUWjK7ZGxueL30l5ocSdj
+ sXXyx1QPE1dzTLnpIORpdtNX9FvQ3216ho+tVZ/ereuvEJ9leNGE9o6CeWjsSGGnDesgtdlANl1
+ VboIOof7IgK3eMFcya6U0xLWNE8USUJPte7aj/sQ7zBCU3Ppz4xvK1ZSkfykmIVxgDi3M5RgJsU
+ DmfSsYP0KBQo2WB/7emrPXIF35e43VH0m7pB4JMBTX2ssowW9HLF1OHWoOI3TezCQkUmdhsCKTq
+ ou4mj615xeRFhGXJPGo6wsHPoo6Hiu3PQYO/kDLr9c5IBGh1+KY/HuOs4+nG7XHUPaUKjIFOGrg
+ ReReuN4eaiSSyuu039fIsBMJSGUWPaOg==
+X-Received: by 2002:a17:90b:1c01:b0:3ac:53e0:4ed5 with SMTP id
+ 98e67ed59e1d1-3ae5829978emr3719141a91.39.1793253109288; 
+ Wed, 28 Oct 2026 22:51:49 -0700 (PDT)
+X-Received: by 2002:a17:90b:1c01:b0:3ac:53e0:4ed5 with SMTP id
+ 98e67ed59e1d1-3ae5829978emr3719116a91.39.1793253108807; 
+ Wed, 28 Oct 2026 22:51:48 -0700 (PDT)
+Received: from [192.168.1.169] (192-80-163-190.dyn.novuscom.net.
+ [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3ae6e7d429fsm2439940a91.2.2026.10.28.22.51.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Oct 2026 22:51:48 -0700 (PDT)
+Message-ID: <8628b8e5-7138-4f2c-bd32-ce8a8cb9acff@oss.qualcomm.com>
+Date: Wed, 28 Oct 2026 22:51:47 -0700
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] target/mips: Re-introduce the R5900 CPU (system) +
+ sort tcg tests
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Fredrik Noring <noring@nocrew.org>, Aurelien Jarno <aurelien@aurel32.net>,
+ Gustavo Romero <gromero@redhat.com>
+References: <20261028192538.31600-1-philmd@oss.qualcomm.com>
+ <28e90058-6b1d-40ad-9aed-590107f3f77f@oss.qualcomm.com>
+ <a3555348-c24c-4df5-95a4-b4ab0a7490c1@oss.qualcomm.com>
+ <4ef98888-b13d-4033-aa02-f48482fc0b7a@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <4ef98888-b13d-4033-aa02-f48482fc0b7a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl2.zte.com.cn 69T5ltiZ024159
-X-TLS: YES
-X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.133 unknown Thu, 29 Oct 2026 13:48:03 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AE2DE13.003/4jFYDM5cQDz5PkH2
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Proofpoint-ORIG-GUID: LUOzU4oQ1qApncv1g5IA_bi8W1gfzaTM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDAyMSBTYWx0ZWRfX494d6V62yXAE
+ RI0p7skrqYc2JvVL8MvXO6QnYVYlB13WY0xcCnDWbCmten4tBZaNPMXN3e500O6RXh/rBAceP87
+ nY5K+bpQLVZZk+jiHuE/VB4XMc6TZ19bYb+tVkh2Bq748HiH5XU1SZ+9rbaIpfMu1R9CiGQIS2L
+ hBpMfr8X0yY050vAQQJsMOijQGDwk/W+T/kC5c0mKXgggKFA/H/ZnP0FibOdS6LDjOOYj5OxkNA
+ PsBaPqx7TaZNHOz3L+gYck7ynx8W+Swcw9AdnODhF+5nUBNkYTHL8Nk72G8BaALez3Hs4B7jG4y
+ CeV/Yple0q24dXlJHHc5leY9jbg4OUasVBtISDY+qNbyRdGFWXKTr4VfKqsjtvDyomVTIWvhd7o
+ MaOLHN7+ItszvG12uCGgaJhNrYyutmwpNjC1e0sjqNgy7uDONdLMgK6SR7T7BMBl6WeIRJ5YqHL
+ y4Aa3Kr5ARFaN0UOdow==
+X-Proofpoint-GUID: LUOzU4oQ1qApncv1g5IA_bi8W1gfzaTM
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDAyMSBTYWx0ZWRfX8HqrTYevUf74
+ F1TKqLQmpLFWLQn8TmluR7Ba6eL8+cAGYKHWEBzJkWYBnYH9jtRhCE5pQPx4LTLHLysHsN2cnSz
+ u3yXoEJjVyj1tvLQFPo96Moo2NgTr8E=
+X-Authority-Analysis: v=2.4 cv=bYv+w+PB c=1 sm=1 tr=0 ts=6ae2def5 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=NEAV23lmAAAA:8 a=3Jz2w7hd-_ZXcnSlHZkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-29_02,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290021
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,197 +161,41 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_GIT
-	autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-From: Wu Fei <wu.fei9@sanechips.com.cn>
+On 10/28/26 10:46 PM, Philippe Mathieu-Daudé wrote:
+> On 29/10/26 06:39, Philippe Mathieu-DaudÃ© wrote:
+>> On 29/10/26 06:33, Pierrick Bouvier wrote:
+>>> On 10/28/26 12:25 PM, Philippe Mathieu-Daudé wrote:
+>>>> Add R5900 system tests, code is covered, CPU can come back,
+>>>> allowing to fix a bug on PCGT opcode.
+> 
+> 
+>>> See some test failures, related to gdb:
+>>> https://github.com/p-b-o/qemu-ci/actions/runs/40776744817/
+>>> job/123131480244
+>>
+>> Ah hmm I had similar failures due to too old gdb, I might have
+>> missed to check the version in that container image. IIRC
+>> Gustavo had similar problem with ARM I'll see how he fixed
+>> that (I suppose check gdb version and skip the tests).
+> 
+> Found it, this is 'gdb_feat_version' :)
+>
+That's the right way to deal with it indeed.
 
-The accelerated mode is only meaningful for devices that can use the
-host IOMMU in nested mode (S1+S2). Following the ARM SMMUv3 accel
-device, restrict it to vfio-pci endpoints using the iommufd backend,
-and to PCIe bridges/root ports so endpoints can sit downstream.
-vfio-pci endpoints get the shared system address space so the VFIO
-core builds the stage-2 mappings for the nesting parent HWPT; all
-other devices get the IOMMU address space.
+That said, the gdb used in this test (on GitHub) comes from debian 
+stable, which is fairly recent (16.3).
 
-Unlike ARM, where the SMMUv3 is a system device, the RISC-V IOMMU
-can also be exposed as a PCI device. It must stay usable in
-accelerated mode, so it is exempted from the restrictions and its
-address space lookup bypasses the IOMMU, returning the target
-address space as the default path does.
+Is a more recent version needed for complete mips support?
+If yes, I can update to the latest gdb so we can get full coverage on 
+GitHub. Meanwhile, you can find which minimum version is needed.
 
-Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
-Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
----
- hw/riscv/riscv-iommu-accel.c | 90 +++++++++++++++++++++++++++++++++++-
- hw/riscv/riscv-iommu.c       |  5 --
- hw/riscv/riscv-iommu.h       |  6 ++-
- 3 files changed, 94 insertions(+), 7 deletions(-)
-
-diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
-index a843cf9d01..7bb725d957 100644
---- a/hw/riscv/riscv-iommu-accel.c
-+++ b/hw/riscv/riscv-iommu-accel.c
-@@ -5,6 +5,11 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+
-+#include "hw/pci/pci_bridge.h"
-+#include "hw/pci-host/gpex.h"
-+#include "hw/vfio/pci.h"
- 
- #include "riscv-iommu.h"
- #include "riscv-iommu-accel.h"
-@@ -36,18 +41,101 @@ static RISCVIOMMUAccelDevice *riscv_iommu_accel_get_dev(RISCVIOMMUState *s,
-     return accel_dev;
- }
- 
-+/*
-+ * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
-+ * endpoints can sit downstream, and the RISC-V IOMMU PCI device
-+ * itself. Unlike ARM, the RISC-V IOMMU can be exposed as a PCI device;
-+ * it must stay usable in accelerated mode, but it is never translated
-+ * and is handed its target address space directly.
-+ * Accelerated IOMMU requires a vfio-pci endpoint using the iommufd
-+ * backend; all other device types are rejected. This avoids supporting
-+ * emulated endpoints, which would complicate IOTLB invalidation and
-+ * hurt performance.
-+ */
-+static bool riscv_iommu_accel_pdev_allowed(PCIDevice *pdev, bool *vfio_pci)
-+{
-+    if (object_dynamic_cast(OBJECT(pdev), TYPE_PCI_BRIDGE) ||
-+        object_dynamic_cast(OBJECT(pdev), TYPE_PXB_PCIE_DEV) ||
-+        object_dynamic_cast(OBJECT(pdev), TYPE_GPEX_ROOT_DEVICE) ||
-+        object_dynamic_cast(OBJECT(pdev), TYPE_RISCV_IOMMU_PCI)) {
-+        return true;
-+    } else if ((object_dynamic_cast(OBJECT(pdev), TYPE_VFIO_PCI))) {
-+        *vfio_pci = true;
-+        if (object_property_get_link(OBJECT(pdev), "iommufd", NULL)) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static bool riscv_iommu_accel_supports_as(PCIBus *bus, void *opaque, int devfn,
-+                                          Error **errp)
-+{
-+    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
-+    bool vfio_pci = false;
-+
-+    if (pdev && !riscv_iommu_accel_pdev_allowed(pdev, &vfio_pci)) {
-+        if (vfio_pci) {
-+            error_setg(errp, "vfio-pci endpoint devices without an iommufd "
-+                       "backend not allowed when using riscv_iommu accel=on");
-+        } else {
-+            error_setg(errp, "Emulated endpoint devices are not allowed when "
-+                       "using riscv_iommu accel=on");
-+        }
-+        return false;
-+    }
-+    return true;
-+}
-+
- static AddressSpace *riscv_iommu_accel_find_as(PCIBus *bus, void *opaque,
-                                                int devfn)
- {
-     RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
-+    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
-+
-+    /*
-+     * The riscv-iommu-pci itself is not a translated endpoint; hand out its
-+     * target address space as the default path does.
-+     */
-+    if (pdev && pci_is_iommu(pdev)) {
-+        return s->target_as;
-+    }
- 
-     RISCVIOMMUAccelDevice *accel_dev = riscv_iommu_accel_get_dev(s, bus, devfn);
-     RISCVIOMMUSpace *as = &accel_dev->as;
- 
--    return &as->iova_as;
-+    bool vfio_pci = false;
-+
-+    if (pdev && !riscv_iommu_accel_pdev_allowed(pdev, &vfio_pci)) {
-+        /* Should never be here: supports_address_space() filters these out */
-+        g_assert_not_reached();
-+    }
-+
-+    /*
-+     * In the accelerated mode, a vfio-pci device attached via the iommufd
-+     * backend must remain in the system address space. Such a device is
-+     * always translated by its physical IOMMU (using either stage-2-only
-+     * or nested S1+S2 translation), where the parent stage-2 page table
-+     * is allocated by the VFIO core to back the system address space.
-+     *
-+     * Return the shared_as_sysmem aliased to the global system memory in
-+     * this case. Sharing a single system address space also lets devices
-+     * behind different accelerated IOMMU instances in the same VM reuse a
-+     * single nesting parent HWPT in the VFIO core.
-+     *
-+     * For the remaining allowed devices, such as PCIe root ports and
-+     * bridges, which use the normal emulated translation path and software
-+     * IOTLBs, return the IOMMU address space.
-+     */
-+    if (vfio_pci) {
-+        return shared_as_sysmem;
-+    } else {
-+        return &as->iova_as;
-+    }
- }
- 
- static const PCIIOMMUOps riscv_iommu_accel_ops = {
-+    .supports_address_space = riscv_iommu_accel_supports_as,
-     .get_address_space = riscv_iommu_accel_find_as,
- };
- 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 762691c8ed..fbc7f72cb6 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2973,11 +2973,6 @@ static int riscv_iommu_memory_region_notify(
-     return 0;
- }
- 
--static inline bool pci_is_iommu(PCIDevice *pdev)
--{
--    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
--}
--
- static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
- {
-     RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 0bc096ba60..92eeb18386 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -24,7 +24,7 @@
- #include "system/dma.h"
- #include "hw/riscv/iommu.h"
- #include "hw/riscv/riscv-iommu-bits.h"
--#include "hw/pci/pci.h"
-+#include "hw/pci/pci_device.h"
- 
- typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
- 
-@@ -151,6 +151,10 @@ int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, unsigned devid,
-                           unsigned process_id, RISCVIOMMUContext *ctx);
- 
- /* private helpers */
-+static inline bool pci_is_iommu(PCIDevice *pdev)
-+{
-+    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
-+}
- 
- /* Register helper functions */
- static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
--- 
-2.53.0
-
+Regards,
+Pierrick
 
