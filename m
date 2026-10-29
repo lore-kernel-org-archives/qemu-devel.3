@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606BE606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68069606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=NTfbCRqm;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=EVxo1gcI
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=KCNeQKwI;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=J1/BwM1e
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRpp-0005R0-6V; Thu, 29 Oct 2026 11:14:35 -0400
+	id 1xMRpr-0005cl-M1; Thu, 29 Oct 2026 11:14:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRpN-0005C1-PP
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:09 -0400
+ id 1xMRpV-0005Gx-K5
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:15 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRpK-0002zF-HB
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:04 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1xMRpT-0002zo-3a
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:14:12 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TCdqDC1147348
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:00 GMT
+ 69TCe2Oa1176948
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gcAyAxCpNlk8DMy79yWMRsFPnBtIr58Iim7bIx9LPHo=; b=NTfbCRqmSceNdW6e
- ZxWzQDs09GFx56fOnNZb3xgkp3pJ5/vqOSgaMlHFNpT5jgCxO/A14rQ6jaWx46Dj
- VUbPClVJ11TYT12CmG2XRAv9saZ/9vGFZp53RV3fbjcV5VB+1Dk6/Oj1+rRvPinc
- 1QAAIVMyygju6zD29qtNvRrd3u6vjyp4fLKrEMZJdxaRv+yKxxB+0tIQkupHY0ed
- HvquK6ei1KoHuKESd/rM149wIT7VmtDZzxTaDS3VBboO3ZIGJwuQcMODLHMoS4cE
- l/tsKXoat5N1NPWXjGpBcO52OLDs38zxo5nXs1QYw/CQ1Yy0MGC1/wZwOEgSusDY
- 5bjhHg==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm44q94ke-1
+ ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=; b=KCNeQKwICRb7LUZd
+ tGA4ecBKqZ035MO+2hOks90StvjszQBlqCrCAfLK6QXzABwS67wpL84/aaw1j3TF
+ Vy6LPnZMzDEoG1bgFyZR7BjHu2hsDrFOhdgjO7Nt24nUJ1vWHUF+KC08jH52phM2
+ t6zn1IdSnBInFH6J5tq05GxF0N6q0xMiSJDKR7axZ1ULgnMIn9PgETAVu7qcBIB+
+ AFBxFsalzsrIqMPCFk9J8dcIhGHFL/hA1PdqE9OKTD/4HPxG/v5vtY6WgIH+GES4
+ QmxcE8h53yRzGEJdtQDO93ooT77eEM50XuBCOLt1n0Lt30K/9D6W+tNh684RGDvk
+ d9mXyA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm4a213bj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:00 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-99076c676cbso506636241.3
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:13:59 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:14:09 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93f1e62510cso538926585a.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793286839; x=1793891639; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793286849; x=1793891649; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=gcAyAxCpNlk8DMy79yWMRsFPnBtIr58Iim7bIx9LPHo=;
- b=EVxo1gcIIhCBPx3tI520HSlU+1wXiVUbc3WfIMHsAvqouzAvUXQIQd0ZDC19hldrlA
- xnSI+UJCxz/mfK6zFfKZImbvr9EG+yvnPoKvKZTm8qN2wyRAY/KoU9X49lQOtvEnRNIQ
- mkNXiE+GmC2CZy0cbdbwxZMP92eynGinq2m+l/AsldTDPU988o/8P0nDdlKWrLfZynvW
- 3P8Pcmyk3M8hLo+9EKWvjTNNHLj9th/z67bh1Sd5G1FfOUojRxcMhs8ae5VUxRYqPcCo
- Cuq27AqIsul2np73NCxk/Tk43OrYo/LseJB6IxsOg2hCddyeqFbEPr+Fb+BIoKCx5GQ2
- iUvg==
+ bh=ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=;
+ b=J1/BwM1eaHOhhUqRC6riavNGontH/LBpnvziJI6WDXYj1Tz2BFkEeqq+MX3IfEbOD3
+ ltEbiFd56xLXN7fnGsMbuXDHUSYUx9f9fawOH71X16LEuN6vluQczQBmDczoqD/LbWp7
+ lwDsV1l73Cf6+n1GaRHyplGMwnkZDkNZbPrLwxoPa0DnTR6qbO36NryCeXI+OZXo4W2M
+ ipR/KT+8Xz2UEu9YOG1+vxTocTg179O2/bx/xYK4KyDgXDuBiCsAgd9SJkfnjBqnpsYD
+ WpnsslOwrCuxvNgBr1bPXs+hDFjJWowFD0t6pTJuYWhRXophtQ+BYZhnOWMaUJ7bgqZR
+ BEpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793286839; x=1793891639;
+ d=1e100.net; s=20260707; t=1793286849; x=1793891649;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=gcAyAxCpNlk8DMy79yWMRsFPnBtIr58Iim7bIx9LPHo=;
- b=W0juHx5zYJfynkCg/jWvcodIaRiezkO4pujSR+efeH3MJfAF8nJQre78I3Jy6BFYJN
- lprJRF+buVfu0CsdJUXDtfip5RGgIQQrojB0grVv9Uhr+13GUgNU5vdHsmGcgRtYQxyK
- dPy4l5udMUEFf1j/24aqvZ3sHlLg0PIdqNKBFxi9gwR8Hg/cTf1KZQA6nXOfSNS4x3O/
- 3JfOWIW+Cf6t8nhXvfXFmLLw8dD1gy1J8w9NQinuKGh0W/wx5sy1gTS7ttbi6nOTGmv3
- 5yPQq4B20TC1EzXc4lsbFGdqDusdQy3xUsazCpB1cjcYahCAGJ+Ox8w1FypJceDdyw8J
- De7w==
-X-Gm-Message-State: AFq9FYJiHKrfru5KMbsdtsyU/RT/MNfZf6KRgiBpVndRAHn3noRE7uh0
- wV/9V7nprmLuPrerhdJs5vh8rCs5Fal3o7pMSldIQ7Rr6t+degwXbmaNHP+bpMittkbySSrGwH5
- UsanDuOs3vGPZM7LsAvMK/novBg4crhNsQQicz8qBBgrdaxJp0amE9xNZZVn5xFysKR8f
-X-Gm-Gg: AYBFou3WPaoR4kHnEcel1ZoZFJS7+pL6McUG0zJL+drMW3isNVVSVuZYoDiYm8PcIpy
- HcbJHUBqrz4hhy2BZ7fkCBKQfvl0YxqBbzJF0AW/mrOujpdQOCT3jIZnbQ+HShSsG52U1XR2h2O
- SXyvWs0v7ugaHp8vegW99C1v2RPycKIUEUNJxUcI9d+J0RMdyvJPGXOETbdwuC22rNTaMgb/6Ia
- MqHgaGCKWSLnA5Q2cjjPFxXeG5aYeo/c/PKE1+5rrJR7Yx1DN5Uz/FVqyN4aq/GBMOzeGk/D+Bs
- 0zjYC9IODl4E2kdYlJUZRkL/Z2OdoAdRawW6VqZhe43BXAdNRXNlNPB2QAd2mDvteeyeD+6HhGA
- 8TeHr3GS8VWTE8mmSIVo9vMZAkPpljEPBfyFgi5iaYumWDm+T3Ol7swXAh7eagIKri0AN17p531
- P1fOaf4D2eG+qBHeZ0hcHB7TVnOGd1UQ==
-X-Received: by 2002:a05:6102:5348:b0:7a7:1db6:c769 with SMTP id
- ada2fe7eead31-7d03a5aee1emr2542717137.22.1793286839069; 
- Thu, 29 Oct 2026 08:13:59 -0700 (PDT)
-X-Received: by 2002:a05:6102:5348:b0:7a7:1db6:c769 with SMTP id
- ada2fe7eead31-7d03a5aee1emr2542707137.22.1793286838602; 
- Thu, 29 Oct 2026 08:13:58 -0700 (PDT)
+ bh=ktOeY/JZlF6kNtycIZiL7JgIZNxaouon3Do+WObFDo0=;
+ b=EgOgLzPt4g0DZVyBCj3CBJwi5rtz2QeRwNDuLGmRUoFdFTS4zqDu8+IF07xFruUho/
+ 6NOtoqacHr3DFwSCG8rFCp+7UrvouEj0JkQE6p7EL6qyHTWGsO5v+iIMRt7qZu8xcHDn
+ K+5LtfcfY9VLf7g0n6/2l+sBSFEi7NHLC9b0abF2ov7c6bMOmAT64g1vUoRHvbRTSWh9
+ solXVQckAd+yZwayz4drxJQzWL9pZwx3Cj9YQTQuCwNxH0zdtFHAz/V/MKCgWwk4CpTV
+ KIPDbv28kk1rYbs1OV3lsSP3RjygRs9cBocYjrU8CNIWhBGfXrhs1tEGmTYp5nhUNGgY
+ y34A==
+X-Gm-Message-State: AFq9FYKeJoFuaatC9cMgTu9vOYsvkfXmZ6XGIOTBFqlYrOZzVvwh1aZR
+ yKGmeUnA4f1C8iKuU/1SEy9tUbwEQU6DGUoNy+/p4MOa4GPBELkcz9BzlIWaU5l774Q45omGk08
+ lztYX2Tu1gypt5OaJBLrf8XGnTWWQ26PCTP0RXoyzX6oRIwUkYgkUL/QAlUfsG5fau99y
+X-Gm-Gg: AYBFou3Dl81Sjy083HToEzoiHwSHdImYqij5IAxy+nAOcrieyRgoKjlpiy9wRwD0muA
+ rbGLpPJx7XqiWrllIr7NUhdYCtv7YVXNUazdhxjhUWvbA0PxREju/OIRX/zSWobpVvLNA701dcm
+ nFDOegxxVLb6MFbgiqxEWeginrOjKiVYa2TlkS+mcLQlVDMMyckjP0uDY5OUTBCJSp99A6FNQqs
+ tjiY+xl6lY19IwB0UAkuYNpY3bEPO6Q9LcD+BtWlUsRwOV1deDu93oxJgOa2oIBVM1uSleHIyTh
+ jwUZH+HpEaQaSepLIzT5pR2kEt78cMU5OPqvJb0JbQIL5GuR8BCNHNSGZf3MgS/OW2V5IxnZppO
+ /noMuR5g1JfyUJeliMWan3ua737IvfJLzVTrpbHpi8LbOupOBK0fzV6fToTINcLcv37+9hk8th9
+ HZGx77KHzf6DOMzK6jPq31VKIxAvU3ug==
+X-Received: by 2002:a05:620a:4724:b0:93c:6417:f9c8 with SMTP id
+ af79cd13be357-94408a71215mr910775885a.29.1793286848672; 
+ Thu, 29 Oct 2026 08:14:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:4724:b0:93c:6417:f9c8 with SMTP id
+ af79cd13be357-94408a71215mr910747985a.29.1793286846362; 
+ Thu, 29 Oct 2026 08:14:06 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4a930c5c1a8sm55554985e9.1.2026.10.29.08.13.57
+ 5b1f17b1804b1-4a96a8f28a1sm84312785e9.4.2026.10.29.08.14.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Oct 2026 08:13:57 -0700 (PDT)
+ Thu, 29 Oct 2026 08:14:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -96,9 +96,9 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 4/6] target/mips: Convert MSA LD/ST.W (Word Vector)
-Date: Thu, 29 Oct 2026 16:13:14 +0100
-Message-ID: <20261029151317.19170-5-philmd@oss.qualcomm.com>
+Subject: [PATCH v6 5/6] target/mips: Convert MSA LD/ST.D (Doubleword Vector)
+Date: Thu, 29 Oct 2026 16:13:15 +0100
+Message-ID: <20261029151317.19170-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261029151317.19170-1-philmd@oss.qualcomm.com>
 References: <20261029151317.19170-1-philmd@oss.qualcomm.com>
@@ -106,33 +106,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfXxVb3CYka6TvI
- 1vsL0qntKIMnnAWoUeEEPMIdhwnrMWt8a3v5eTkZDoL3kZQ5EEmDDBNiOFLbnbCodIXTszUXjVh
- 9BFe8+P6gJMK7ZhcmJ4ZeC0EUqZzcq8=
-X-Proofpoint-ORIG-GUID: Bx7UyUe8CHLKfEMg-OUOTp1Q9kEqawPr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX8D/GJXgjOx16
- SBA/mn7eU0csnbz1LwI5Q6Y+FOep2+54NkhmTbLffsegyNBlDnmgQlOHg2CxOVBif6QvjpQWnRo
- DH0GE9cqIxGbVqry/wz30w11WCCYuHGPC1MHTemfuO4zKW1BE8JS4UkBEbHzD/ZFbEKp5V+Jl3f
- IK+avArq/LjaQCob+2GsvSpzO2DyMQS3B/36aSxsTHOm9wuiXHU/CPKtWPmsbhbqE+BpW6/q6JS
- njisq4QMxfkPE6El4sw7+yIWoVZcGr2CaHyCWapyfw/MwPg7onH0CNzIYNfM3W5AAT+7wu4e890
- RY3SLwL/45gs1FJM4gniiwwS93m80OpVlDtKn99KJ5xC0sxetY4CZuAtuEexuYkuzPRolh2zA0b
- An497RKkMYvasA21Tbc6tfOPuSmkJk/DKWV1ha+5YPXNkLxCELT8o74trJsDZ4BtVpCGUYPNRn5
- to8EBLOPtnHs/iTd3Rw==
-X-Authority-Analysis: v=2.4 cv=CYmdd7rl c=1 sm=1 tr=0 ts=6ae362b8 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX7vR5IabrTtW1
+ CdTn1CHFH4sfDj48GuFMnQgH+4N17gLJ2mHmbAIl2SMeiGpAeWQpYipn1BQ54RQD4iB0Sq/0fDD
+ oRzPVgrJXtbkW72byZ7Qv4Pa6HT+jzIBAZX+ti1Z37cIWMm19F0D1lEoJjgzD9/qidiCw5YJGYH
+ SXXcM4xeuh2WrsDxniSZQn0aEa5j2lhxJtnQU/o1lHbmB1ngyLOeaKfiWUIhkRzZ3EKzkt96GbJ
+ AeyFE7EcWdO0bSfCN0Q7tWJ1lV4y5DAAIS+Dviymv4t1vQgoogenKks63XoQqk8/BycNjpkAwRp
+ 9DRIIasUYgxvlk5xEyHJlGZud0I4jlt/qTdHv2gg/ZqSsLAgCOdV4N1lidMeEpXxh2NFCbvU7ZG
+ n6ribnQ/Sv3uj/fmR3FF5DwkSpNjXgZulhH6opNGGffETD9YuwIBVm6VxcBHjbtabxOoGkzhKDf
+ Lp8S82jNc1x4/++3hOw==
+X-Authority-Analysis: v=2.4 cv=E8tYNqdl c=1 sm=1 tr=0 ts=6ae362c1 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=u8Rp_kE_ITEjY69SfUQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Bx7UyUe8CHLKfEMg-OUOTp1Q9kEqawPr
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=d8cwAk7nIhr6DB5JJpUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX9ooiQT0L573S
+ 9swFai2PzZOWozfXgxOKYcvtKR0SvtzmgwrnfyCaRMtbMJsh3hVWc/YqsUDWZW1bz9TgcERuKxs
+ avg2gYh3yE4VKxwXNW3JNSHlInpDas4=
+X-Proofpoint-ORIG-GUID: w_FQWkZ1zMqXGj4D7ABMdIZEzj0rr5dv
+X-Proofpoint-GUID: w_FQWkZ1zMqXGj4D7ABMdIZEzj0rr5dv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_04,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290059
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610290059
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -163,151 +164,173 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 Replace runtime helpers by translation.
+BE LD.D/ST.D now uses MO_BE with exchanged half handles;
+no explicit D swaps or store-copy temporaries.
 
-Replace the legacy cpu_ld/st*_data_ra() calls by
-tcg_gen_qemu_ld/st() which allow to respect atomicity.
+Replace the legacy cpu_ld/st*_data_ra() calls by tcg_gen_qemu_ld/st()
+which allow to respect atomicity.
+
+Remove the ensure_writable_pages() hack and MSALDST_PROTO macro.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/msa_helper.h.inc |  1 -
- target/mips/tcg/msa_helper.c     | 47 --------------------------------
- target/mips/tcg/msa_translate.c  | 20 ++++++++++----
- 3 files changed, 14 insertions(+), 54 deletions(-)
+ target/mips/tcg/msa_helper.h.inc |  6 ---
+ target/mips/tcg/msa_helper.c     | 63 --------------------------------
+ target/mips/tcg/msa_translate.c  | 28 +++++---------
+ 3 files changed, 10 insertions(+), 87 deletions(-)
 
 diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
-index 86a79bf804ce..f0d31ceef291 100644
+index f0d31ceef291..e994353056f7 100644
 --- a/target/mips/tcg/msa_helper.h.inc
 +++ b/target/mips/tcg/msa_helper.h.inc
-@@ -436,6 +436,5 @@ DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
- #define MSALDST_PROTO(type)                         \
- DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
- DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
--MSALDST_PROTO(w)
- MSALDST_PROTO(d)
- #undef MSALDST_PROTO
+@@ -432,9 +432,3 @@ DEF_HELPER_4(msa_ftint_s_df, void, env, i32, i32, i32)
+ DEF_HELPER_4(msa_ftint_u_df, void, env, i32, i32, i32)
+ DEF_HELPER_4(msa_ffint_s_df, void, env, i32, i32, i32)
+ DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
+-
+-#define MSALDST_PROTO(type)                         \
+-DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
+-DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
+-MSALDST_PROTO(d)
+-#undef MSALDST_PROTO
 diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index 08c900785f9e..afd9cca09604 100644
+index afd9cca09604..9ef63b0e197e 100644
 --- a/target/mips/tcg/msa_helper.c
 +++ b/target/mips/tcg/msa_helper.c
-@@ -8226,32 +8226,6 @@ void HELPER(msa_ffint_u_df)(CPUMIPSState *env, uint32_t df, uint32_t wd,
- /* Element-by-element access macros */
- #define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
+@@ -21,11 +21,8 @@
+ #include "cpu.h"
+ #include "internal.h"
+ #include "tcg/tcg.h"
+-#include "accel/tcg/cpu-ldst.h"
+-#include "accel/tcg/probe.h"
+ #include "exec/helper-proto.h"
+ #include "exec/memop.h"
+-#include "exec/target_page.h"
+ #include "fpu/softfloat.h"
+ #include "fpu_helper.h"
  
--static inline uint64_t bswap32x2(uint64_t x)
--{
--    return ror64(bswap64(x), 32);
--}
+@@ -8219,63 +8216,3 @@ void HELPER(msa_ffint_u_df)(CPUMIPSState *env, uint32_t df, uint32_t wd,
+ 
+     msa_move_v(pwd, pwx);
+ }
 -
--void HELPER(msa_ld_w)(CPUMIPSState *env, uint32_t wd,
+-/* Data format min and max values */
+-#define DF_BITS(df) (1 << ((df) + 3))
+-
+-/* Element-by-element access macros */
+-#define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
+-
+-void HELPER(msa_ld_d)(CPUMIPSState *env, uint32_t wd,
 -                     target_ulong addr)
 -{
 -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
 -    uintptr_t ra = GETPC();
 -    uint64_t d0, d1;
 -
--    /*
--     * Load 8 bytes at a time.  Use little-endian load, then for
--     * big-endian target, we must then bswap the two words.
--     */
--    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
--    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
 -    if (mips_env_is_bigendian(env)) {
--        d0 = bswap32x2(d0);
--        d1 = bswap32x2(d1);
+-        d0 = cpu_ldq_be_data_ra(env, addr + 0, ra);
+-        d1 = cpu_ldq_be_data_ra(env, addr + 8, ra);
+-    } else {
+-        d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
+-        d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
 -    }
 -    pwd->d[0] = d0;
 -    pwd->d[1] = d1;
 -}
 -
- void HELPER(msa_ld_d)(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
- {
-@@ -8288,27 +8262,6 @@ static inline void ensure_writable_pages(CPUMIPSState *env,
-     }
- }
- 
--void HELPER(msa_st_w)(CPUMIPSState *env, uint32_t wd,
+-#define MSA_PAGESPAN(x) \
+-        ((((x) & ~TARGET_PAGE_MASK) + MSA_WRLEN / 8 - 1) >= TARGET_PAGE_SIZE)
+-
+-static inline void ensure_writable_pages(CPUMIPSState *env,
+-                                         target_ulong addr,
+-                                         int mmu_idx,
+-                                         uintptr_t retaddr)
+-{
+-    /* FIXME: Probe the actual accesses (pass and use a size) */
+-    if (unlikely(MSA_PAGESPAN(addr))) {
+-        /* first page */
+-        probe_write(env, addr, 0, mmu_idx, retaddr);
+-        /* second page */
+-        addr = (addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE;
+-        probe_write(env, addr, 0, mmu_idx, retaddr);
+-    }
+-}
+-
+-void HELPER(msa_st_d)(CPUMIPSState *env, uint32_t wd,
 -                     target_ulong addr)
 -{
 -    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
 -    int mmu_idx = mips_env_mmu_index(env);
 -    uintptr_t ra = GETPC();
--    uint64_t d0, d1;
 -
--    ensure_writable_pages(env, addr, mmu_idx, ra);
+-    ensure_writable_pages(env, addr, mmu_idx, GETPC());
 -
--    /* Store 8 bytes at a time.  See helper_msa_ld_w. */
--    d0 = pwd->d[0];
--    d1 = pwd->d[1];
 -    if (mips_env_is_bigendian(env)) {
--        d0 = bswap32x2(d0);
--        d1 = bswap32x2(d1);
+-        cpu_stq_be_data_ra(env, addr + 0, pwd->d[0], ra);
+-        cpu_stq_be_data_ra(env, addr + 8, pwd->d[1], ra);
+-    } else {
+-        cpu_stq_le_data_ra(env, addr + 0, pwd->d[0], ra);
+-        cpu_stq_le_data_ra(env, addr + 8, pwd->d[1], ra);
 -    }
--    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
--    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
 -}
--
- void HELPER(msa_st_d)(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
- {
 diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 0c6c2f4551dc..7a3c2390cfca 100644
+index 7a3c2390cfca..2d6f3d6070ba 100644
 --- a/target/mips/tcg/msa_translate.c
 +++ b/target/mips/tcg/msa_translate.c
-@@ -770,11 +770,21 @@ static void gen_bswap16x4_i64(TCGv_i64 dst, TCGv_i64 src)
-     tcg_gen_or_i64(dst, t0, t1);        /* dst = badcfebg */
- }
- 
-+/*
-+ * Byte pattern: abcd.efgh -> dcba.hgfe
-+ */
-+static void gen_bswap32x2_i64(TCGv_i64 dst, TCGv_i64 src)
-+{
-+    tcg_gen_bswap64_i64(dst, src);
-+    tcg_gen_rotri_i64(dst, dst, 32);
-+}
-+
- static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
- {
-     static const MemOp mo_atom_df[4] = {
+@@ -785,8 +785,8 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
          MO_ATOM_NONE,
          MO_ATOM_SUBALIGN, /* Slightly stronger than required */
-+        MO_ATOM_SUBALIGN, /* Slightly stronger than required */
+         MO_ATOM_SUBALIGN, /* Slightly stronger than required */
++        MO_ATOM_IFALIGN_PAIR
      };
-     TCGv_i32 wd;
+-    TCGv_i32 wd;
      TCGv_i128 t16;
-@@ -795,18 +805,12 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+     TCGv_va addr;
+     MemOp mop;
+@@ -801,33 +801,25 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+     addr = tcgv_va_temp_new();
+     gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
  
+-    wd = tcg_constant_i32(a->wd);
+-
+-    if (is_load) {
+-        switch (a->df) {
+-        case 3:
+-            gen_helper_msa_ld_d(tcg_env, wd, addr);
+-            return true;
+-        }
+-    } else {
+-        switch (a->df) {
+-        case 3:
+-            gen_helper_msa_st_d(tcg_env, wd, addr);
+-            return true;
+-        }
+-    }
+-
+     t16 = tcg_temp_new_i128();
+ 
+     mop = MO_128 | MO_LE;
+     mop |= mo_atom_df[a->df];
+ 
++    if (a->df == 3 && mo_endian(ctx) != MO_LE) {
++        TCGv_i64 saved_d0 = d0;
++
++        mop = (mop & ~MO_BSWAP) | MO_BE;
++        d0 = d1;
++        d1 = saved_d0;
++    }
++
      if (is_load) {
-         switch (a->df) {
--        case 2:
--            gen_helper_msa_ld_w(tcg_env, wd, addr);
--            return true;
-         case 3:
-             gen_helper_msa_ld_d(tcg_env, wd, addr);
-             return true;
-         }
-     } else {
-         switch (a->df) {
--        case 2:
--            gen_helper_msa_st_w(tcg_env, wd, addr);
--            return true;
-         case 3:
-             gen_helper_msa_st_d(tcg_env, wd, addr);
-             return true;
-@@ -839,6 +843,10 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
-             gen_bswap16x4_i64(d0, d0);
-             gen_bswap16x4_i64(d1, d1);
-             break;
-+        case 2:
-+            gen_bswap32x2_i64(d0, d0);
-+            gen_bswap32x2_i64(d1, d1);
-+            break;
-         }
+         tcg_gen_qemu_ld_i128(t16, addr, ctx->mem_idx, mop);
+         tcg_gen_extr_i128_i64(d0, d1, t16);
      }
  
+-    if (mo_endian(ctx) != MO_LE) {
++    if (mo_endian(ctx) != MO_LE && a->df != 3) {
+         if (!is_load) {
+             TCGv_i64 temp_d0 = tcg_temp_new_i64();
+             TCGv_i64 temp_d1 = tcg_temp_new_i64();
 -- 
 2.55.0
 
