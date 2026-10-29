@@ -1,123 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB26606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 14:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DC2606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 14:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ovjKIKaK;
-	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=YHWDHa9m;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=ovjKIKaK;
-	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=YHWDHa9m
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=a2W/hXjC
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRLk-0003LU-0n; Thu, 29 Oct 2026 10:43:28 -0400
+	id 1xMRMZ-0003id-G5; Thu, 29 Oct 2026 10:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMRLi-0003LE-Cl
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:43:26 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMRLg-00084c-Ie
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:43:26 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMRMX-0003iS-Gg
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:44:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMRMV-00087j-8Z
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:44:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793285054;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DkarqvwLDyEO2/KUFbXosq2zlWvQV4x3XVi40EkEa1U=;
+ b=a2W/hXjC6tr685oFqkGvo17FFjeUDJPwpZ/uaVRJLcqzcsrh27IKjQJDJeKRULU8Un0rNU
+ HvcQmnewm44G+QJKgE+AOvFnkh9JXYJv6nVzsodLhmYsY4Cf8vAJpig7Ja5lDtFS6WRIkP
+ dsFXCglqR5pzkE/7nb4B2DfmTU4+fUQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-163-4Nd2JNKiPbCItdhXP0QPiA-1; Thu,
+ 29 Oct 2026 10:44:06 -0400
+X-MC-Unique: 4Nd2JNKiPbCItdhXP0QPiA-1
+X-Mimecast-MFC-AGG-ID: 4Nd2JNKiPbCItdhXP0QPiA_1793285045
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1E88A1F863;
- Thu, 29 Oct 2026 14:43:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793285003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kYugPvjJ2WVDlzrqItQHn+4Or1Bz4IfCofWykTqQyKM=;
- b=ovjKIKaKtkwqazheSEz/vpve4lGutj5JR7OOLosc+YT39NORIFOhq4VO63oLNsrR3POnxH
- Ln721tKUdX3FR2+rqjBMh+zt8XOuH0iZxAnn2L6gW4sgFrfNS/U21nGCZ39ZS9KNJnLcjh
- hZXNTEEQGWIgtrtoZXDsNV/iXuBm2uU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793285003;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kYugPvjJ2WVDlzrqItQHn+4Or1Bz4IfCofWykTqQyKM=;
- b=YHWDHa9mzFCvROtvuA13/Yrm3V+MeCNT6FCiooZ1XjAKQVim1OWV7oALrazY8hwkxQf+dl
- qYtHeiVVkVWEzCBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ovjKIKaK;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=YHWDHa9m
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1793285003; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kYugPvjJ2WVDlzrqItQHn+4Or1Bz4IfCofWykTqQyKM=;
- b=ovjKIKaKtkwqazheSEz/vpve4lGutj5JR7OOLosc+YT39NORIFOhq4VO63oLNsrR3POnxH
- Ln721tKUdX3FR2+rqjBMh+zt8XOuH0iZxAnn2L6gW4sgFrfNS/U21nGCZ39ZS9KNJnLcjh
- hZXNTEEQGWIgtrtoZXDsNV/iXuBm2uU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1793285003;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kYugPvjJ2WVDlzrqItQHn+4Or1Bz4IfCofWykTqQyKM=;
- b=YHWDHa9mzFCvROtvuA13/Yrm3V+MeCNT6FCiooZ1XjAKQVim1OWV7oALrazY8hwkxQf+dl
- qYtHeiVVkVWEzCBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 90A331339F;
- Thu, 29 Oct 2026 14:43:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 7B2TDYpb42p5UgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 14:43:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- peterx@redhat.com, mjt@tls.msk.ru,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Pierrick
- Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: Re: [PATCH v5 2/2] scripts: add build_release_container.sh
-In-Reply-To: <20261029000853.15166-3-pierrick.bouvier@oss.qualcomm.com>
-References: <20261029000853.15166-1-pierrick.bouvier@oss.qualcomm.com>
- <20261029000853.15166-3-pierrick.bouvier@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 11:43:16 -0300
-Message-ID: <87ik2kin3v.fsf@suse.de>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E68841800840
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 14:44:04 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C76D195608B; Thu, 29 Oct 2026 14:44:03 +0000 (UTC)
+Date: Thu, 29 Oct 2026 14:44:01 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 7/8] qemu-options: document -compat insecure-input
+ parameter
+Message-ID: <auNbsWoszxqqngPD@redhat.com>
+References: <20261028133603.1893289-1-berrange@redhat.com>
+ <20261028133603.1893289-8-berrange@redhat.com>
+ <871p99gfrf.fsf@pond.sub.org> <auMmXsaXkKTzy4Mj@redhat.com>
+ <87wlr0bnmo.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-13.51 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
- BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -13.51
-X-Rspamd-Queue-Id: 1E88A1F863
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87wlr0bnmo.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,110 +88,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+On Thu, Oct 29, 2026 at 03:13:51PM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Thu, Oct 29, 2026 at 07:52:36AM +0100, Markus Armbruster wrote:
+> >> Daniel P. Berrangé <berrange@redhat.com> writes:
+> >> 
+> >> > This adds documentation for the previously added 'insecure-input'
+> >> > parameter to -compat, which controls policy for insecure
+> >> > configuration requests.
+> >> >
+> >> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> >> > ---
+> >> >  qemu-options.hx | 22 +++++++++++++++++++++-
+> >> >  1 file changed, 21 insertions(+), 1 deletion(-)
 
-> This script allows to easily build a qemu release container, based on
-> dockerfile introduced in previous commit.
+> > If we put a check in qdev_realize(), then we need to add annotations
+> > for *all* types, before the -compat insecure-input=....  option is
+> > viable to use. That requires a much bigger effort to mark all types.
+> >
+> > In the 12.0 dev cycle, my intention is to
+> >
+> >  a) Expand ".secure = true" markers to all parents of leaf node types
+> >     marked secure, and enforce them.
+> >  b) Expand ".secure = true" markers to all built-in devices that are
+> >     indirectly created by a leaf node type marked secure, when
+> >     -nodefaults is present
+> >
+> > Once (b) is done, then qdev_realize() will likely be the better place
+> > to put the policy check.
+> 
+> Let's see whether I got this.
+> 
+> * A type can be known to be secure, known to be insecure, or unknown.
 >
-> It names image "qemu/$version" and automatically detects which ubuntu
-> version should be used to build it.
->
-> $ ./scripts/build_release_container.sh v3.1.0
-> $ podman run -it --rm qemu/v3.1.0 qemu-system-arm --version
-> QEMU emulator version 3.1.0 (-dirty)
-> Copyright (c) 2003-2018 Fabrice Bellard and the QEMU Project developers
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  scripts/build_release_container.sh | 63 ++++++++++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
->  create mode 100755 scripts/build_release_container.sh
->
-> diff --git a/scripts/build_release_container.sh b/scripts/build_release_c=
-ontainer.sh
-> new file mode 100755
-> index 00000000000..7dd477deea8
-> --- /dev/null
-> +++ b/scripts/build_release_container.sh
-> @@ -0,0 +1,63 @@
-> +#!/usr/bin/env bash
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +set -euo pipefail
-> +
-> +script_dir=3D$(dirname $(readlink -f $0))
-> +
-> +# The oldest buildable release we support is v3.1.0, as previous ones re=
-quire
-> +# additional tweaks in Dockerfile.
-> +# For building previous releases (down to v0.12.0),
-> +# see: 20261014005338.34657-1-pierrick.bouvier@oss.qualcomm.com
-> +oldest_release=3Dv3.1.0
-> +
-> +if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-> +    echo "usage: version [git_repo]"
-> +    echo
-> +    echo "- version: tag or sha-1 (>=3D v3.1.0)"
-> +    echo "- git_repo: (optional) QEMU repository URL"
-> +    exit 1
-> +fi
-> +version=3D$1;shift
-> +
-> +git_repo=3D"https://gitlab.com/qemu-project/qemu.git"
-> +if [ $# -eq 1 ]; then
-> +    git_repo=3D$1;shift
-> +fi
-> +
-> +year=3D$(date +%Y)
-> +month=3D$(date +%m)
-> +if git rev-parse $version >& /dev/null; then
-> +    year=3D$(git log -1 --format=3D'%cd' --date=3D'format:%Y' $version)
-> +    month=3D$(git log -1 --format=3D'%cd' --date=3D'format:%m' $version)
-> +fi
-> +
-> +# Ubuntu LTS are published every (even) two years in April.
-> +ubuntu=3D
-> +if [ $((year % 2)) -eq 1 ]; then
-> +    # pick latest LTS from previous year
-> +    ubuntu=3D$((year - 1))
-> +elif [ $month -gt 6 ]; then
-> +    # LTS published this year should work
-> +    ubuntu=3D$year
-> +else
-> +    # pick latest LTS from two years ago
-> +    ubuntu=3D$((year - 2))
-> +fi
-> +if [ $ubuntu -lt 2014 ]; then
-> +    # oldest ubuntu release available with containers is 14.04
-> +    ubuntu=3D2014
-> +fi
-> +ubuntu=3D$((ubuntu - 2000))
-> +ubuntu_version=3D$ubuntu.04
-> +
-> +dockerfile=3D$script_dir/../tests/docker/dockerfiles/release.docker
-> +docker=3D$($script_dir/../tests/docker/docker.py probe)
-> +
-> +set -x
-> +$docker build . \
-> +    -f $dockerfile \
-> +    --build-arg QEMU_VERSION=3D$version \
-> +    --build-arg UBUNTU_VERSION=3D$ubuntu_version \
-> +    --build-arg QEMU_REPO=3D"$git_repo" \
-> +    -t qemu/$version
+> * Exactly the types known to be secure are marked secure.  Thus, the
+>   policy check must treat known to be insecure and unknown the same,
+>   which makes sense.
 
-I have successfully tested the migration-next branch with this
-series. It's a great improvement over what I had before. Thank you for
-this work.
+Yes, we're explicitly not distinguishing 'insecure' vs 'unknown' either
+internally or externally. Something is either explicitly marked as secure,
+otherwise it is insecure.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> * We start with all types unknown.
+
+aka all types are insecure.
+
+> * To move a type from unknown to known, we need to examine it.
+>   Examining all types in time for the next release is infeasible.  Even
+>   examining all types usable with a useful set of machines is
+>   infeasible.  What is feasible is examining a useful set of types
+>   available with certain user interfaces, so that's what we did.
+
+Yes.
+
+> * We check the policy in these interfaces only.  This lets users
+>   restrict these interfaces to known secure types, which is useful.
+
+Yes.
+
+> * However, types created differently get a blanket exception.  Not
+>   ideal, but no worse than before, unless the new policy creates a false
+>   sense of security.  The best we can (and should) do about that is to
+>   clearly document the policy's current limitations.
+> 
+> Right?
+
+Yes.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
