@@ -1,147 +1,106 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A47606A31D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA254606A31A
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=hSUooM30;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=CuCEf7/d
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=dcN8sSHc
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMULg-00079J-2F; Thu, 29 Oct 2026 13:55:36 -0400
+	id 1xMUDO-0002R5-Du; Thu, 29 Oct 2026 13:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xMULV-0006zz-6o
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:55:26 -0400
+ (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
+ id 1xMUB9-0006pn-1E
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:48 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1xMULS-00059U-Rh
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:55:24 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
+ id 1xMUAr-0003c6-Jt
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:33 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGDHvx1654904
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:55:21 GMT
+ 69THDqGe182339; Thu, 29 Oct 2026 17:44:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- T4Mc+Fdl83qzfmlbsFfM7O3W4T+LwdkvYjEi+9qnibQ=; b=hSUooM303D8obxNI
- zRAtyHoR8JVN0P6ZVPHz/ppJ+oenuhCgTktDZtMrr3YKeawg81tAzePF2ul+Rg1p
- XqS8CPCvHgbOwnywce0abJPGgqDlQNu9GvEZvrXPl1zX2cCoYqX4755d3ahUJnzo
- 0vi1NTUpLZ/Oee3XY6+4m/6y8//SBI8x7ecuKO12UVciBUMA6NAGFCBitJADqAx8
- dD8Q4xrSvpMZ+WuQFwwC3QwkwPNIkAmT+I0nHkdrPKgD91MwxJmwhrbdcLdskDqY
- U2JB+M9anrduX59fRPgJngHmhSWRwgKpy08cpVs3Qpg+ZBBmrkp6AgCkg5jHaoR7
- NGsDZw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm4a21y8s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:55:21 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5376f1849bbso51947061cf.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793296520; x=1793901320; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=T4Mc+Fdl83qzfmlbsFfM7O3W4T+LwdkvYjEi+9qnibQ=;
- b=CuCEf7/dEd+sBfSGpeotmLxtrl9Ys4WoiSkSANiN9b2QHaieZYGrSgrJ0zuHeOExPq
- 9GHtZtHbVQVfeJC0ZWZNUpvh946L36faj5R522HjGs0mOifjfbSm1sy+cqYr1JLCfR35
- Dyt8HU8xEbytQk/Klt2TmXz8byNWwTCXtfZ6E3ONBfeXCqLDu2GmHagPHI2CktAzRJ5c
- ZpYa6Ml2X0t5w93eHzDfrrWc45Ndck9lsque72H/ckfKxJcntv0JwUxgq+WPVa12JNZ1
- 3mNd9bz8u+3+9FJf1z7+C1/5WNWxjwKqI/tpFHLtMP8yqUGn8noVRfEZt4JPM/ZaVGoq
- /1Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793296520; x=1793901320;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=T4Mc+Fdl83qzfmlbsFfM7O3W4T+LwdkvYjEi+9qnibQ=;
- b=go3umO/80WNZvRIleZUALYpULP3K/u1WnZHP47xSpZKg/iS540tevL81GeGOajeREM
- qW6K7BWzKeLnuJc4XvkVO7uWgrATD8o6cN42yTQHobeIlTdzDUD1TNs5krf5/DASARnp
- mx6xh2lj2q4jqy3iH6AKzFeHwc58t3UfDctdvkEITLdp0GopH1ellz/LD2JpYejBFMCS
- mapnqCulWINHwlsXDyyyO3mRvfiatdAUoL+sd9JSF3pHGbSRxMOBv8i++phL9Y+mVvzX
- N1bdv3rxXvdijc1x3c1AtaTNplI9dS/jkpsJaImIqA6QvgvRq8us4zj9nSL+MttJMuXh
- zoXA==
-X-Forwarded-Encrypted: i=1;
- AKwUvBxDO/eAQvxdl+bMWH3lStdswXbqH7X8O4nFHBegIGys+sAUlvxoBgRfIiCgKAewBiNtSFZihq+UnadM@nongnu.org
-X-Gm-Message-State: AFq9FYL51z906uNnvvxtdIkjhUj2GerfzSeNBXod576mPrT/Agg6Y5g+
- V82byd5sKKvlgAzieinYmQkoE+58yEfAN0rC0EdeJexsKkA9MQ1z+DQJt4PFXDEp4RRuxmwcVGM
- vPv1ZKNCjGjMnnRfVWyNmYf7PfedzTSRYc9MQyC+BeZSx0uViu/2cYwDOYA==
-X-Gm-Gg: AYBFou1ntPrhWSXdvGf/P2xlvBpkCrwpcdkdvXd9IiVggRvFlgcS9X5nxqo9P9wCoUO
- +kzIwyj5dim5SfyvRef3iifGBUZZrlRy+RbyOFY8wxJMBXwvCFE64bEM3JJ9UN3H3BMCGcqfbJV
- H9Lk6IrFe8/0ug8Dk6/Ln5mZohudMKVgCZlAajvgi1bjKP5zetvyTUoRiWWwkJYcS+ltKhR+kmC
- fqNug4/MJywxkgK7LkdvwHKv9UuMjlP2dReoh47Yjzu6/g1KS4TPtA8F8OLU0ow9uPbyq5fbMwI
- 9nSEPDmG0Sqt26FA3oMLgYcYSeORnvL7+q8aqjaeDm556QNFdWymd4EaqpjM/dE0v/e5BeKKQz7
- VCkDZfWztVG8ikgWDZlqigKmOT17qsKXXBP5q/lrRIISwnA5MmtZanbM8e4cWYf+OBxNZ0Cjctv
- hqCshq9v2VHg==
-X-Received: by 2002:ac8:610b:0:b0:537:dea7:d3f8 with SMTP id
- d75a77b69052e-53fcbbed61bmr102504711cf.30.1793296520098; 
- Thu, 29 Oct 2026 10:55:20 -0700 (PDT)
-X-Received: by 2002:ac8:610b:0:b0:537:dea7:d3f8 with SMTP id
- d75a77b69052e-53fcbbed61bmr102504301cf.30.1793296519478; 
- Thu, 29 Oct 2026 10:55:19 -0700 (PDT)
-Received: from [192.168.68.103] ([152.234.122.251])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5428c6d6569sm1934081cf.6.2026.10.29.10.55.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 10:55:18 -0700 (PDT)
-Message-ID: <4a3a147c-7000-4de5-9a20-33f2ffb77bee@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 14:55:16 -0300
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=Kod+58Vby6q
+ 7NC4kSTbczHyPa4Mj4DXm8ws6lLVYMUA=; b=dcN8sSHckWWIX+JxiI7y++p4qbj
+ NdFC8SCzzJbbcgNnXRW8eou/8VpoMQ9ke17fQGijphyoG/4KliOC++ujdzr9R3If
+ tMcCG8G6nC7Z8eX26JsZb/+HAgsNt9UHE0UxyLhugGEkZZgumSM+pf3Hua9a2KBv
+ doYeXQtikvZ6tuOObOiVVf9T7PvWHHhVN4M0Vryf536z8uAPVlJeYrQEPRdK4OTc
+ qmNccdidFSKh0UCBP44uTJXIb0DIrT9mNoxn8L+VhgAc0mJLZ6z+B4xQIq4c5aQ9
+ 0GEn9ctdulF/kSBTSRD3eHvEUpr8ZdwJ0ddndLF/VIzcIjd/6Ln6z+sP0jQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hmac0r5nj-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:44:15 +0000 (GMT)
+Received: from pps.filterd (nalasppmta05.qualcomm.com [127.0.0.1])
+ by NALASPPMTA05.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69THiEwi2516238; Thu, 29 Oct 2026 17:44:14 GMT
+Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
+ [10.81.81.31])
+ by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 69THiEND2516202
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:44:14 +0000 (GMT)
+Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
+ id A8EC325847; Thu, 29 Oct 2026 10:44:13 -0700 (PDT)
+From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Marco Liebel <marco.liebel@oss.qualcomm.com>
+Subject: [PATCH 13/20] target/hexagon: decode HLX packets and add load and
+ store
+Date: Thu, 29 Oct 2026 10:44:06 -0700
+Message-ID: <20261029174413.643130-14-marco.liebel@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
+References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/riscv: Honor Zama16b for Zalasr accesses
-To: GavinQin <qinzhengxiang@foxmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com
-References: <20261024120211.236223-1-qinzhengxiang@foxmail.com>
- <tencent_BF29702C3097A727E3F9206043AE923DB207@qq.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <tencent_BF29702C3097A727E3F9206043AE923DB207@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA3MCBTYWx0ZWRfXxFhbqKRtcKT0
- HRrLbxzg2zbp1v3fF57a7m+s6KU4vtynDYaRnQyleJv3EQpt4a3qOqPPgxf5h4Em+dR2rrw20Le
- NXnQ7XVWOOUxlOCdSdSaqk9f57TiHZSkjMEKRXzfKZNQT+vXadHqm8Ml20dM7heI6vC/GErQM9p
- IK5saOcoMel2WMerZfxcm6SPjP/ue3XseeyObnkJZhjuEpHwlfmQ4y1Jazl6ysLlQl6usu2Imm1
- 3PsND2bqjhz4Bpi3SAzT4R20uPl7fTzwBwjdkyLC1RhW9vGgL7tZ7hPxqJlwUQONw0QvrNaVggd
- EzLzk+TotJ2t3oQWm4MiTDkJ9OSl0VVvmLzgBhiBdJaQ3Te0uq50k1qmlmoXZV1q37Il2GvUO4w
- Qn7q+mBF59gJho2AUa1cwxBcCmg9z7WS78azsp6bgd2+djCa1yP+CUwMswmrnfM+r2GAVCk4ZNk
- zY28PQhdZ31DDaKnCUQ==
-X-Authority-Analysis: v=2.4 cv=E8tYNqdl c=1 sm=1 tr=0 ts=6ae38889 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=QOY8BskYDu05dfarAz2gNQ==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=p0WdMEafAAAA:8 a=bDN84i_9AAAA:8 a=EUspDBNiAAAA:8 a=rLo9y_UmEUpFpIU9TWgA:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=J2PsDwZO0S0EpbpLmD-j:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA3MCBTYWx0ZWRfXzCfVD3zcjCUq
- PZRnq/0SDmfqlj3fd22sG0KnneDmGyXqMgSVfQI6hfRNQFGDzBsa/8HiRNMBocqJnLRwKlG3PMb
- U3yMMbW4TPBIFirnmwV+NMu4siILbY8=
-X-Proofpoint-ORIG-GUID: vFID_0YfbQayiddA0asHsrKZWOUlC8QJ
-X-Proofpoint-GUID: vFID_0YfbQayiddA0asHsrKZWOUlC8QJ
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-ORIG-GUID: jHhmhyLIdTti3OGpgK-uUUP6QPND-5ev
+X-Proofpoint-GUID: jHhmhyLIdTti3OGpgK-uUUP6QPND-5ev
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX1Hr0E0QSuJUs
+ 2PlsCCbe0lbkTpDWM75DxqLBX9gfcPmeBpLUWy3l0jZ+/dRgTv1/ZsuDY5pMPQqkg8vbkRml/mz
+ djSMYYZARwvkZdDspk7/jvkzxt7LlIo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXxaLNpLnx3JZQ
+ r4WH54uTWAO2a8gc1IAPlNhR+cDq6+lDq8XYrrJu61qTxFg8qXKEPvjlEJ8pct+2d6iszyTw0Qc
+ W3Gl2Zmd58IYzIT55voHvz+yEjNqs7mrjUAEBXP/mmEJ99gPf97gNIdjlJynBobIbNdPgB6LsrK
+ R7GOzSZmrh0HL2A0IAE6SJJ70Rq12KL7p2F0Q/WHzp30UTuIBTbyhcK4pL47wHclHBUVwcqrqH0
+ oM7sgmP7ZhZ5f2IKb8tDtyxkppX2tVdrdNEgORrdBzMhgL1wace/XUp/JOYocAF4LUorrUTbgBv
+ PdziuEQUkHEsuEhzFBzVewbGwL/9zU0j+0nKHHVdvncHGT0dy1JEGClm5EAtH6fRYixUWEjhTEb
+ s8RAGzl1fZUyka59clWvj3y5KVRiYxazIX/QeDVFgwZhi2KumR2izWPp33y9McWwPMOpEmuU+/P
+ 2kfIu8sO6++TI0OOR9Q==
+X-Authority-Analysis: v=2.4 cv=I6/w19gg c=1 sm=1 tr=0 ts=6ae385ef cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8 a=nhzYkk8sF2EhqOTasQEA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610290070
+ malwarescore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,84 +114,598 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Generate the HLX decoder and apply its packet rules. Add HLX loads and
+stores, including .tmp load forwarding and .new store handling.
 
+HLX .new fields name the forwarded L register. A store without a
+producer writes zeroes.
 
-On 10/24/2026 9:02 AM, GavinQin wrote:
-> Zalasr loads and stores unconditionally request MO_ALIGN. Adding
-> MO_ATOM_WITHIN16 therefore does not relax their natural alignment
-> requirement when Zama16b is enabled.
-> 
-> Select MO_ATOM_WITHIN16 when Zama16b is enabled and retain MO_ALIGN
-> otherwise. Preserve the existing acquire and release barriers.
-> 
-> Signed-off-by: GavinQin <qinzhengxiang@foxmail.com>
-> ---
+Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+---
+ target/hexagon/attribs_def.h.inc           |   5 +
+ target/hexagon/decode.c                    | 118 ++++++++++++++++-----
+ target/hexagon/gen_dectree_import.c        |   9 +-
+ target/hexagon/gen_hlx_ext.py              |  25 +++++
+ target/hexagon/gen_idef_parser_funcs.py    |   3 +
+ target/hexagon/gen_tcg_funcs.py            |   3 +
+ target/hexagon/imported/allext.idef        |   6 ++
+ target/hexagon/imported/allextenc.def      |   4 +
+ target/hexagon/imported/hlx/encode_ext.def |  18 ++++
+ target/hexagon/imported/hlx_ext.idef       |  45 ++++++++
+ target/hexagon/insn.h                      |   1 +
+ target/hexagon/meson.build                 |  39 +++++++
+ target/hexagon/opcodes.h                   |   1 +
+ target/hexagon/translate.c                 |  12 +++
+ 14 files changed, 259 insertions(+), 30 deletions(-)
+ create mode 100755 target/hexagon/gen_hlx_ext.py
+ create mode 100644 target/hexagon/imported/hlx/encode_ext.def
+ create mode 100644 target/hexagon/imported/hlx_ext.idef
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-Also, this patch, when applied with the other 2 previous patches, fixes:
-
-
-https://gitlab.com/qemu-project/qemu/-/work_items/4101
-
-
-So I believe this patch needs a tag:
-
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4101
-
-
-
-Thanks,
-Daniel
-
-
-
->   target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc | 16 ++++++++++++----
->   1 file changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc b/target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc
-> index 79b0b2c63b..5bbd06a346 100644
-> --- a/target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc
-> +++ b/target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc
-> @@ -29,8 +29,12 @@ static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp memop)
->           return false;
->       }
->   
-> -    memop |= MO_ALIGN | ctx->mo_endianness;
-> -    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-> +    memop |= ctx->mo_endianness;
-> +    if (ctx->cfg_ptr->ext_zama16b) {
-> +        memop |= MO_ATOM_WITHIN16;
-> +    } else {
-> +        memop |= MO_ALIGN;
-> +    }
->   
->       tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
->       gen_set_gpr(ctx, a->rd, dest);
-> @@ -79,8 +83,12 @@ static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp memop)
->           return false;
->       }
->   
-> -    memop |= MO_ALIGN | ctx->mo_endianness;
-> -    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-> +    memop |= ctx->mo_endianness;
-> +    if (ctx->cfg_ptr->ext_zama16b) {
-> +        memop |= MO_ATOM_WITHIN16;
-> +    } else {
-> +        memop |= MO_ALIGN;
-> +    }
->   
->       /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
->       tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
+diff --git a/target/hexagon/attribs_def.h.inc b/target/hexagon/attribs_def.h.inc
+index a02261ee5e..e9779a33ee 100644
+--- a/target/hexagon/attribs_def.h.inc
++++ b/target/hexagon/attribs_def.h.inc
+@@ -19,6 +19,9 @@
+ DEF_ATTRIB(AA_DUMMY, "Dummy Zeroth Attribute", "", "")
+ 
+ /* Misc */
++DEF_ATTRIB(FAKEINSN, "Not a real instruction", "", "")
++DEF_ATTRIB(MAPPING, "Not real -- asm mapped", "", "")
++DEF_ATTRIB(CONDMAPPING, "Not real -- mapped based on values", "", "")
+ DEF_ATTRIB(EXTENSION, "Extension instruction", "", "")
+ 
+ DEF_ATTRIB(NA_NT, "Non-Allocating Non-Temporal instruction", "", "")
+@@ -228,5 +231,7 @@ DEF_ATTRIB(HVX_IEEE_FP_OUT_32, "HVX IEEE FP 32-bit output", "", "")
+ DEF_ATTRIB(CVI_VX_NO_TMP_LD, "HVX multiply without tmp load", "", "")
+ DEF_ATTRIB(HVX_FLT, "This a floating point HVX instruction.", "", "")
+ 
++DEF_ATTRIB(NO_IDEF_PARSER, "Skip idef-parser for this instruction", "", "")
++
+ /* Keep this as the last attribute: */
+ DEF_ATTRIB(ZZ_LASTATTRIB, "Last attribute in the file", "", "")
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+index 0ac87bbee0..0c3dc67e12 100644
+--- a/target/hexagon/decode.c
++++ b/target/hexagon/decode.c
+@@ -23,6 +23,7 @@
+ #include "insn.h"
+ #include "printinsn.h"
+ #include "mmvec/decode_ext_mmvec.h"
++#include "hlx/decode_ext_hlx.h"
+ 
+ #define fZXTN(N, M, VAL) ((VAL) & ((1LL << (N)) - 1))
+ 
+@@ -69,6 +70,7 @@ static int shift_left(DisasContext *ctx, int x, int n, int immno)
+ /* Include the generated decoder for 32 bit insn */
+ #include "decode_normal_generated.c.inc"
+ #include "decode_hvx_generated.c.inc"
++#include "decode_hlx_generated.c.inc"
+ 
+ /* Include the generated decoder for 16 bit insn */
+ #include "decode_subinsn_a_generated.c.inc"
+@@ -102,40 +104,77 @@ void decode_send_insn_to(Packet *packet, int start, int newloc)
+     }
+ }
+ 
+-/* Fill newvalue registers with the correct regno */
+-static void
++/* An HLX .new N-field names its producer register. */
++static int hlx_find_new_value_producer(Packet *packet, int consumer,
++                                       int lreg)
++{
++    for (int i = 0; i < packet->num_insns; i++) {
++        Insn *insn = &packet->insn[i];
++
++        if (i != consumer && GET_ATTRIB(insn->opcode, A_HLX) &&
++            insn->dest_idx != -1 && insn->regno[insn->dest_idx] == lreg) {
++            return i;
++        }
++    }
++    return -1;
++}
++
++/* Fill newvalue registers with the correct regno. */
++static bool
+ decode_fill_newvalue_regno(Packet *packet)
+ {
+     int i, use_regidx, offset, def_idx, dst_idx;
+ 
+-    for (i = 1; i < packet->num_insns; i++) {
++    for (i = 0; i < packet->num_insns; i++) {
+         if (GET_ATTRIB(packet->insn[i].opcode, A_DOTNEWVALUE) &&
+-            !GET_ATTRIB(packet->insn[i].opcode, A_EXTENSION)) {
++            (!GET_ATTRIB(packet->insn[i].opcode, A_EXTENSION) ||
++             GET_ATTRIB(packet->insn[i].opcode, A_HLX))) {
+ 
+-            g_assert(packet->insn[i].new_read_idx != -1);
++            if (i == 0 && !GET_ATTRIB(packet->insn[i].opcode, A_HLX)) {
++                continue;
++            }
++            if (packet->insn[i].new_read_idx == -1) {
++                return false;
++            }
+             use_regidx = packet->insn[i].new_read_idx;
+ 
+-            /*
+-             * What's encoded at the N-field is the offset to who's producing
+-             * the value.  Shift off the LSB which indicates odd/even register,
+-             * then walk backwards and skip over the constant extenders.
+-             */
+-            offset = packet->insn[i].regno[use_regidx] >> 1;
+-            def_idx = i - offset;
+-            for (int j = 0; j < offset; j++) {
+-                if (GET_ATTRIB(packet->insn[i - j - 1].opcode, A_IT_EXTENDER)) {
+-                    def_idx--;
++            if (GET_ATTRIB(packet->insn[i].opcode, A_HLX)) {
++                def_idx = hlx_find_new_value_producer(
++                    packet, i, packet->insn[i].regno[use_regidx]);
++                if (def_idx < 0) {
++                    /* No producer means a 2KB zero store. */
++                    packet->insn[i].hlx_new_zero = true;
++                    continue;
++                }
++            } else {
++                /*
++                 * What's encoded at the N-field is the offset to who's
++                 * producing the value.  Shift off the LSB which indicates
++                 * odd/even register, then walk backwards and skip over the
++                 * constant extenders.
++                 */
++                offset = packet->insn[i].regno[use_regidx] >> 1;
++                if (offset == 0 || offset > i) {
++                    return false;
++                }
++                def_idx = i - offset;
++                for (int j = 0; j < offset; j++) {
++                    if (GET_ATTRIB(packet->insn[i - j - 1].opcode,
++                                   A_IT_EXTENDER)) {
++                        def_idx--;
++                    }
+                 }
+-            }
+ 
+-            /*
+-             * Check for a badly encoded N-field which points to an instruction
+-             * out-of-range
+-             */
+-            g_assert(!((def_idx < 0) || (def_idx > (packet->num_insns - 1))));
++                /*
++                 * Check for a badly encoded N-field which points to an
++                 * instruction out-of-range
++                 */
++                if (def_idx < 0 || packet->insn[def_idx].dest_idx == -1) {
++                    return false;
++                }
++            }
+ 
+             /* Now patch up the consumer with the register number */
+-            g_assert(packet->insn[def_idx].dest_idx != -1);
+             dst_idx = packet->insn[def_idx].dest_idx;
+             packet->insn[i].regno[use_regidx] =
+                 packet->insn[def_idx].regno[dst_idx];
+@@ -147,6 +186,7 @@ decode_fill_newvalue_regno(Packet *packet)
+                 packet->insn[def_idx].slot;
+         }
+     }
++    return true;
+ }
+ 
+ /* Split CJ into a compare and a jump */
+@@ -422,7 +462,12 @@ static void decode_remove_extenders(Packet *packet)
+ static SlotMask get_valid_slots(const Packet *pkt, unsigned int slot)
+ {
+     if (GET_ATTRIB(pkt->insn[slot].opcode, A_EXTENSION)) {
+-        return mmvec_ext_decode_find_iclass_slots(pkt->insn[slot].opcode);
++        if (GET_ATTRIB(pkt->insn[slot].opcode, A_HLX)) {
++            return hlx_ext_decode_find_iclass_slots(
++                       pkt->insn[slot].opcode);
++        }
++        return mmvec_ext_decode_find_iclass_slots(
++                   pkt->insn[slot].opcode);
+     } else {
+         return find_iclass_slots(pkt->insn[slot].opcode,
+                                  pkt->insn[slot].iclass);
+@@ -491,7 +536,8 @@ decode_insns(DisasContext *ctx, Insn *insn, uint32_t encoding)
+ {
+     if (parse_bits(encoding) != 0) {
+         if (decode_normal(ctx, encoding) ||
+-            decode_hvx(ctx, encoding)) {
++            decode_hvx(ctx, encoding) ||
++            decode_hlx(ctx, encoding)) {
+             insn->generate = opcode_genptr[insn->opcode];
+             insn->iclass = iclass_bits(encoding);
+             return 1;
+@@ -614,8 +660,11 @@ decode_set_slot_number(Packet *pkt)
+         }
+     }
+ 
+-    /* Fix the exceptions - mem insns to slot 0,1 */
++    /* HLX instructions already have extension-assigned slots. */
+     for (i = pkt->num_insns - 1; i >= 0; i--) {
++        if (GET_ATTRIB(pkt->insn[i].opcode, A_HLX)) {
++            continue;
++        }
+         /* First memory instruction always goes to slot 0 */
+         if ((GET_ATTRIB(pkt->insn[i].opcode, A_MEMLIKE) ||
+              GET_ATTRIB(pkt->insn[i].opcode, A_MEMLIKE_PACKET_RULES)) &&
+@@ -671,8 +720,9 @@ decode_set_slot_number(Packet *pkt)
+         }
+     }
+     /* Is slot0 empty and slot1 used? */
+-    if ((!slot0_found) && slot1_found) {
+-        /* Then push it to slot0 */
++    if ((!slot0_found) && slot1_found &&
++        !GET_ATTRIB(pkt->insn[slot1_iidx].opcode, A_HLX)) {
++        /* Push it to slot 0. HLX loads remain in slot 1. */
+         pkt->insn[slot1_iidx].slot = 0;
+     }
+ 
+@@ -688,6 +738,10 @@ bool opcode_supported(uint16_t opcode, const HexagonCPUDef *hex_def)
+     if (hex_version == HEX_VER_ANY) {
+         return true;
+     }
++    /* HLX was added in V85. */
++    if (GET_ATTRIB(opcode, A_HLX) && hex_version < HEX_VER_V85) {
++        return false;
++    }
+     if ((info.introduced != HEX_VER_NONE && hex_version < info.introduced) ||
+         (info.removed != HEX_VER_NONE && hex_version >= info.removed)) {
+         return false;
+@@ -773,9 +827,12 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
+ 
+     pkt->encod_pkt_size_in_bytes = words_read * 4;
+     pkt->pkt_has_hvx = false;
++    pkt->pkt_has_hlx = false;
+     for (i = 0; i < num_insns; i++) {
+         pkt->pkt_has_hvx |=
+             GET_ATTRIB(pkt->insn[i].opcode, A_CVI);
++        pkt->pkt_has_hlx |=
++            GET_ATTRIB(pkt->insn[i].opcode, A_HLX);
+     }
+ 
+     /*
+@@ -808,11 +865,16 @@ int decode_packet(DisasContext *ctx, int max_words, const uint32_t *words,
+             return 0;
+         }
+     }
+-    decode_fill_newvalue_regno(pkt);
++    if (!decode_fill_newvalue_regno(pkt)) {
++        return 0;
++    }
+ 
+     if (pkt->pkt_has_hvx) {
+         mmvec_ext_decode_checks(pkt, disas_only);
+     }
++    if (pkt->pkt_has_hlx && !hlx_ext_decode_checks(pkt, disas_only)) {
++        return 0;
++    }
+ 
+     if (!disas_only) {
+         decode_shuffle_for_execution(pkt);
+diff --git a/target/hexagon/gen_dectree_import.c b/target/hexagon/gen_dectree_import.c
+index 87f20c14f1..8ed369f699 100644
+--- a/target/hexagon/gen_dectree_import.c
++++ b/target/hexagon/gen_dectree_import.c
+@@ -79,6 +79,7 @@ static const char * const opcode_enc_class_names[XX_LAST_ENC_CLASS] = {
+     "SUBINSN_S2",
+     "EXT_noext",
+     "EXT_mmvec",
++    "EXT_hlx",
+ };
+ 
+ static const char *get_opcode_enc(int opcode)
+@@ -94,11 +95,15 @@ static const char *get_opcode_enc_class(int opcode)
+ {
+     const char *tmp = opcode_encodings[opcode].encoding;
+     if (tmp == NULL) {
+-        const char *test = "V6_";        /* HVX */
++        const char *test_hvx = "V6_";
++        const char *test_hlx = "LX_";
+         const char *name = opcode_names[opcode];
+-        if (strncmp(name, test, strlen(test)) == 0) {
++        if (strncmp(name, test_hvx, strlen(test_hvx)) == 0) {
+             return "EXT_mmvec";
+         }
++        if (strncmp(name, test_hlx, strlen(test_hlx)) == 0) {
++            return "EXT_hlx";
++        }
+     }
+     return opcode_enc_class_names[opcode_encodings[opcode].enc_class];
+ }
+diff --git a/target/hexagon/gen_hlx_ext.py b/target/hexagon/gen_hlx_ext.py
+new file mode 100755
+index 0000000000..d0385c3ac7
+--- /dev/null
++++ b/target/hexagon/gen_hlx_ext.py
+@@ -0,0 +1,25 @@
++#!/usr/bin/env python3
++
++##
++##  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++##  SPDX-License-Identifier: GPL-2.0-or-later
++##
++
++"""Process HLX extension instruction definitions."""
++
++import sys
++
++def main():
++    """Copy preprocessed HLX instruction definitions."""
++    input_file = sys.argv[1]
++    output_file = sys.argv[2]
++
++    with open(input_file, "rt") as infile:
++        with open(output_file, "w") as outfile:
++            for line in infile:
++                # Skip preprocessor directives.
++                if not line.startswith("#"):
++                    outfile.write(line)
++
++if __name__ == "__main__":
++    main()
+diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
+index 9293be4c39..3f5879ce19 100644
+--- a/target/hexagon/gen_idef_parser_funcs.py
++++ b/target/hexagon/gen_idef_parser_funcs.py
+@@ -62,6 +62,9 @@ def main():
+         for tag in hex_common.tags:
+             if hex_common.tag_ignore(tag):
+                 continue
++            ## Skip instructions that explicitly request no idef-parser
++            if "A_NO_IDEF_PARSER" in hex_common.attribdict[tag]:
++                continue
+             ## Skip the priv instructions
+             if "A_PRIV" in hex_common.attribdict[tag]:
+                 continue
+diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
+index 4305eda996..eb2e5f3a7e 100755
+--- a/target/hexagon/gen_tcg_funcs.py
++++ b/target/hexagon/gen_tcg_funcs.py
+@@ -118,6 +118,9 @@ def gen_tcg_func(f, tag, regs, imms):
+         arguments = ", ".join(["ctx", "ctx->insn", "&ctx->pkt"] + declared)
+         f.write(f"    emit_{tag}({arguments});\n")
+ 
++    elif hex_common.is_hlx_inline_tag(tag):
++        hex_common.gen_hlx_inline(f, tag, regs)
++
+     elif hex_common.skip_qemu_helper(tag):
+         if "A_FPOP" in hex_common.attribdict[tag]:
+             f.write("    TCGv pkt_need_commit = ")
+diff --git a/target/hexagon/imported/allext.idef b/target/hexagon/imported/allext.idef
+index 9d4b23e9de..fa17b0de5d 100644
+--- a/target/hexagon/imported/allext.idef
++++ b/target/hexagon/imported/allext.idef
+@@ -23,3 +23,9 @@
+ #include "mmvec/ext.idef"
+ #undef EXTNAME
+ #undef EXTSTR
++
++#define EXTNAME hlx
++#define EXTSTR "hlx"
++#include "generated_hlx_ext.idef"
++#undef EXTNAME
++#undef EXTSTR
+diff --git a/target/hexagon/imported/allextenc.def b/target/hexagon/imported/allextenc.def
+index 39a3e93fad..c72807c4b1 100644
+--- a/target/hexagon/imported/allextenc.def
++++ b/target/hexagon/imported/allextenc.def
+@@ -18,3 +18,7 @@
+ #define EXTNAME mmvec
+ #include "mmvec/encode_ext.def"
+ #undef EXTNAME
++
++#define EXTNAME hlx
++#include "hlx/encode_ext.def"
++#undef EXTNAME
+diff --git a/target/hexagon/imported/hlx/encode_ext.def b/target/hexagon/imported/hlx/encode_ext.def
+new file mode 100644
+index 0000000000..10d13db376
+--- /dev/null
++++ b/target/hexagon/imported/hlx/encode_ext.def
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define CONCAT(A,B) A##B
++#define EXTEXTNAME(X) CONCAT(EXT_,X)
++#define DEF_ENC(TAG,STR) DEF_EXT_ENC(TAG,EXTEXTNAME(EXTNAME),STR)
++
++DEF_ENC(LX_L16b_tmp,"1001100----sssssPP-10----000dddd")
++DEF_ENC(LX_L16b_p_tmp,"1001100----sssssPP-10vv--100dddd")
++
++DEF_ENC(LX_S16b_new,"1010-1001--sssssPP000----000uuuu")
++DEF_ENC(LX_S16b_p_new,"1010-1001--sssssPP000vv--100uuuu")
++
++#undef DEF_ENC
++#undef EXTEXTNAME
++#undef CONCAT
+diff --git a/target/hexagon/imported/hlx_ext.idef b/target/hexagon/imported/hlx_ext.idef
+new file mode 100644
+index 0000000000..3685596e5e
+--- /dev/null
++++ b/target/hexagon/imported/hlx_ext.idef
+@@ -0,0 +1,45 @@
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef EXTINSN
++#define EXTINSN Q6INSN
++#define __SELF_DEF_EXTINSN 1
++#endif
++
++#ifndef NO_HLX
++
++/* HLX vectors hold 1024 halfwords or 512 words. */
++#define HLX_FOR_EACH_CODE(CODE) \
++{ \
++    fHIDE(int i;) \
++    fLVFOREACH(1024, i) { \
++        CODE ; \
++    } \
++}
++
++EXTINSN(LX_L16b_tmp,"Ld16.tmp=mem(Rs32)",ATTRIBS(A_HLX,A_EXTENSION,A_NO_IDEF_PARSER,A_NOTE_HLX_MEM,A_HLX_MEM,A_VTCM_ALLBANK_ACCESS,A_LOAD,A_RESTRICT_SLOT1ONLY,A_HLX_TMP),"Aligned HLX load",
++{ fEA_REG(RsV); fLOADMML(EA,LdV,false,false);})
++
++EXTINSN(LX_L16b_p_tmp,"if (Pv4) Ld16.tmp=mem(Rs32)",ATTRIBS(A_HLX,A_EXTENSION,A_NO_IDEF_PARSER,A_NOTE_HLX_MEM,A_HLX_MEM,A_VTCM_ALLBANK_ACCESS,A_LOAD,A_RESTRICT_SLOT1ONLY,A_HLX_TMP,A_CONDEXEC),"Aligned HLX load",
++{ fEA_REG(RsV); if(fLSBOLD(PvV)){fLOADMML(EA,LdV,false,false);} else {LOAD_CANCEL(EA);};})
++
++EXTINSN(LX_S16b_new,"mem(Rs32)=Ku16.new",ATTRIBS(A_HLX,A_EXTENSION,A_NO_IDEF_PARSER,A_NOTE_HLX_MEM,A_HLX_MEM,A_VTCM_ALLBANK_ACCESS,A_STORE,A_HLX_NEW,A_DOTNEWVALUE,A_RESTRICT_SLOT0ONLY),"Aligned HLX new halfword store",
++{ fEA_REG(RsV); fSTOREMML(EA,fNEWLREG(KuN),false,false);})
++
++EXTINSN(LX_S16b_p_new,"if (Pv4) mem(Rs32)=Ku16.new",ATTRIBS(A_HLX,A_EXTENSION,A_NO_IDEF_PARSER,A_NOTE_HLX_MEM,A_HLX_MEM,A_VTCM_ALLBANK_ACCESS,A_STORE,A_HLX_NEW,A_DOTNEWVALUE,A_RESTRICT_SLOT0ONLY,A_CONDEXEC),"Aligned HLX new halfword store",
++{ fEA_REG(RsV); if(fLSBOLD(PvV)){fSTOREMML(EA,fNEWLREG(KuN),false,false);} else {STORE_CANCEL(EA);};})
++
++Q6INSN(LX_LL16b_tmp,"Ldd16.tmp=mem(Rs32)",ATTRIBS(A_MAPPING,A_HLX,A_NO_IDEF_PARSER),"Mapping from Ldd16.tmp=mem(Rs32) to LWd.tmp=mem(R)",
++fASM_MAP("Ldd16.tmp=mem(Rs32)","LWd.tmp=mem(R)"))
++
++Q6INSN(LX_SS16b_new,"mem(Rs32)=Kuu16.new",ATTRIBS(A_MAPPING,A_HLX,A_NO_IDEF_PARSER),"Mapping from mem(Rs32)=Kuu16.new to mem(R)=KWnew",
++fASM_MAP("mem(Rs32)=Kuu16.new","mem(R)=KWnew"))
++
++#endif /* NO_HLX */
++
++#ifdef __SELF_DEF_EXTINSN
++#undef EXTINSN
++#undef __SELF_DEF_EXTINSN
++#endif
+diff --git a/target/hexagon/insn.h b/target/hexagon/insn.h
+index 5751c9ced9..cfd4072669 100644
+--- a/target/hexagon/insn.h
++++ b/target/hexagon/insn.h
+@@ -49,6 +49,7 @@ struct Instruction {
+                               */
+     bool extension_valid;   /* Has a constant extender attached */
+     bool is_endloop;   /* This is an end of loop */
++    bool hlx_new_zero; /* HLX .new store without a producer. */
+     int32_t immed[IMMEDS_MAX];    /* immediate field */
+ };
+ 
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index f9e820286e..3bffbef6c1 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -22,6 +22,26 @@ gen_tcg_h = meson.current_source_dir() / 'gen_tcg.h'
+ gen_tcg_hvx_h = meson.current_source_dir() / 'gen_tcg_hvx.h'
+ gen_tcg_sys_h = meson.current_source_dir() / 'gen_tcg_sys.h'
+ idef_parser_dir = meson.current_source_dir() / 'idef-parser'
++imported_dir = meson.current_source_dir() / 'imported'
++
++#
++# Create the HLX ext.idef.
++#
++preprocessed_hlx_ext = custom_target(
++    'hlx_ext.preprocessed.idef',
++    output: 'hlx_ext.preprocessed.idef',
++    input: imported_dir / 'hlx_ext.idef',
++    command: meson.get_compiler('c').cmd_array() +
++             ['-x', 'c', '-E', '-o', '@OUTPUT@', '@INPUT@']
++)
++generated_hlx_ext = custom_target(
++    'generated_hlx_ext.idef',
++    output: 'generated_hlx_ext.idef',
++    input: preprocessed_hlx_ext,
++    depend_files: [hex_common_py],
++    command: [python, files('gen_hlx_ext.py'), '@INPUT@', '@OUTPUT@'],
++)
++hexagon_ss.add(generated_hlx_ext)
+ 
+ #
+ #  Step 1
+@@ -30,6 +50,7 @@ idef_parser_dir = meson.current_source_dir() / 'idef-parser'
+ gen_semantics = executable(
+     'gen_semantics',
+     'gen_semantics.c',
++    sources: generated_hlx_ext,
+     native: true, build_by_default: false)
+ 
+ semantics_generated = custom_target(
+@@ -123,6 +144,15 @@ hvx_decode_generated = custom_target(
+ )
+ hexagon_ss.add(hvx_decode_generated)
+ 
++hlx_decode_generated = custom_target(
++    'hlx_decode_generated',
++    output: 'hlx_decode_generated',
++    depends: [iset_py, semantics_generated],
++    env: {'PYTHONPATH': meson.current_build_dir()},
++    command: [python, files('gen_decodetree.py'), semantics_generated, 'EXT_hlx', '@OUTPUT@'],
++)
++hexagon_ss.add(hlx_decode_generated)
++
+ subinsn_a_decode_generated = custom_target(
+     'subinsn_a_decode_generated',
+     output: 'subinsn_a_decode_generated',
+@@ -190,6 +220,15 @@ decode_hvx_generated = custom_target(
+ )
+ hexagon_ss.add(decode_hvx_generated)
+ 
++decode_hlx_generated = custom_target(
++    'decode_hlx_generated.c.inc',
++    output: 'decode_hlx_generated.c.inc',
++    input: hlx_decode_generated,
++    env: {'PYTHONPATH': meson.current_build_dir()},
++    command: [python, files(decodetree_py), hlx_decode_generated, '--static-decode=decode_hlx', '-o', '@OUTPUT@'],
++)
++hexagon_ss.add(decode_hlx_generated)
++
+ decode_subinsn_a_generated = custom_target(
+     'decode_subinsn_a_generated.c.inc',
+     output: 'decode_subinsn_a_generated.c.inc',
+diff --git a/target/hexagon/opcodes.h b/target/hexagon/opcodes.h
+index 0ee11bd445..d6bc2de21c 100644
+--- a/target/hexagon/opcodes.h
++++ b/target/hexagon/opcodes.h
+@@ -35,6 +35,7 @@ typedef enum {
+     SUBINSN_S2,
+     EXT_noext,
+     EXT_mmvec,
++    EXT_hlx,
+     XX_LAST_ENC_CLASS
+ } EncClass;
+ 
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index 41b7d3b0fb..ce0f215230 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -1264,6 +1264,15 @@ static void gen_commit_hvx(DisasContext *ctx)
+     }
+ }
+ 
++/* A .new store without a producer reads zeroed future_LRegs. */
++static void gen_hlx_new_zero(Insn *insn)
++{
++    int rnum = insn->regno[insn->new_read_idx];
++
++    tcg_gen_gvec_dup_imm(MO_64, offsetof(CPUHexagonState, future_LRegs[rnum]),
++                         sizeof(HLXVector), sizeof(HLXVector), 0);
++}
++
+ static void gen_commit_hlx(DisasContext *ctx)
+ {
+     int i;
+@@ -1490,6 +1499,9 @@ static void decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+                         continue;
+                     }
+                     ctx->insn = insn;
++                    if (insn->hlx_new_zero) {
++                        gen_hlx_new_zero(insn);
++                    }
+                     if (GET_ATTRIB(insn->opcode, A_HLX) &&
+                         trace_event_get_state_backends(
+                             TRACE_HEXAGON_HLX_OP)) {
+-- 
+2.43.0
 
 
