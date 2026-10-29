@@ -1,59 +1,60 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76196606A31F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0D5606A31A
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMPjY-00026L-QY; Thu, 29 Oct 2026 08:59:56 -0400
+	id 1xMPjY-000263-Pj; Thu, 29 Oct 2026 08:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1xMPjO-000257-TS
+ id 1xMPjP-000258-2f
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:59:48 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1xMPjL-0004GJ-Bb
+ (envelope-from <maobibo@loongson.cn>) id 1xMPjL-0004GL-JR
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 08:59:46 -0400
 Received: from loongson.cn (unknown [10.40.46.54])
- by gateway (Coremail) with SMTP id _____8AxHNI7Q+Nqh3UaAA--.11561S3;
+ by gateway (Coremail) with SMTP id _____8Cx+9E7Q+NqhnUaAA--.11525S3;
  Thu, 29 Oct 2026 20:59:39 +0800 (CST)
 Received: from fedora.loongson.cn (unknown [127.0.0.1])
- by front1 (Coremail) with SMTP id qMiowJCx9cw6Q+NqsDwxAA--.9638S3;
+ by front1 (Coremail) with SMTP id qMiowJCx9cw6Q+NqsDwxAA--.9638S4;
  Thu, 29 Oct 2026 20:59:39 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: Xianglai Li <lixianglai@loongson.cn>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] target/loongarch: Add asrtle_du()/asrtgt_du() helpers
-Date: Thu, 29 Oct 2026 21:01:08 +0800
-Message-ID: <20261029130109.185509-2-maobibo@loongson.cn>
+Subject: [PATCH 2/2] target/loongarch: Change asrtle_d()/asrtgt_d() for signed
+ integer comparison
+Date: Thu, 29 Oct 2026 21:01:09 +0800
+Message-ID: <20261029130109.185509-3-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20261029130109.185509-1-maobibo@loongson.cn>
 References: <20261029130109.185509-1-maobibo@loongson.cn>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx9cw6Q+NqsDwxAA--.9638S3
+X-CM-TRANSID: qMiowJCx9cw6Q+NqsDwxAA--.9638S4
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj97XoW5Ar4xZrW8WrWDAw47JF4fp5X_AFW8toW0kF
- 4UGwn3Gr1SkFnYkrs3Xw1xXF909rZ7A3sFk3Z5ua1xXry5KFyUAws8Za1xJFZagrykXa4I
- ga4DJas3Zr9rl-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3
- svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3UjIY
- CTnIWjp_UUUY87kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcI
- k0rVWrJVCq3wAFIxvE14AKwVWUAVWUZwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK
- 021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r
- 4j6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAF
- wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JMxAIw28IcxkI7V
- AKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCj
- r7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6x
- IIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAI
- w20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x
- 0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8SksDUUUUU==
+X-Coremail-Antispam: 1Uk129KBj9xXoWrZr1kAFW7ZFy3Kr4rCrWfJFc_yoWDKwc_ua
+ n7Xr1kuw4xWw12kFn0vr95A348WF1kKFs0yFWUXF4Ikry5JFZ3Xr4qgF97Ar18uFyrGrnx
+ Z39xtrnI9FnIvosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb28YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JF0_JFyl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jea0PUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,145 +80,36 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-According to the LoongArch manual, ldle/ldgt/stle/stgt and
-fldle/fldgt/fstle/fstgt perform unsigned address comparison, whereas
-asrtle/asrtgt perform signed address comparison.
-
-Add the asrtle_du() and asrtgt_du() helpers, and use them for the
-instructions that perform unsigned address comparison.
+Make the asrtle_d() and asrtgt_d() helpers perform signed integer
+comparison. These helpers are used by the asrtle/asrtgt instructions.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/tcg/helper.h                 |  2 ++
- .../tcg/insn_trans/trans_fmemory.c.inc        |  8 ++++----
- .../tcg/insn_trans/trans_memory.c.inc         |  8 ++++----
- target/loongarch/tcg/op_helper.c              | 20 +++++++++++++++++++
- 4 files changed, 30 insertions(+), 8 deletions(-)
+ target/loongarch/tcg/op_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index e76c73c775..7ee655b027 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -7,6 +7,8 @@ DEF_HELPER_2(raise_exception, noreturn, env, i32)
- 
- DEF_HELPER_FLAGS_3(asrtle_d, TCG_CALL_NO_WG, void, env, tl, tl)
- DEF_HELPER_FLAGS_3(asrtgt_d, TCG_CALL_NO_WG, void, env, tl, tl)
-+DEF_HELPER_FLAGS_3(asrtle_du, TCG_CALL_NO_WG, void, env, tl, tl)
-+DEF_HELPER_FLAGS_3(asrtgt_du, TCG_CALL_NO_WG, void, env, tl, tl)
- 
- DEF_HELPER_FLAGS_3(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl)
- DEF_HELPER_FLAGS_3(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl, tl)
-diff --git a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-index b863ba1dc2..b050436a77 100644
---- a/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_fmemory.c.inc
-@@ -81,7 +81,7 @@ static bool gen_fload_gt(DisasContext *ctx, arg_frr *a, MemOp mop)
- 
-     CHECK_FPE;
- 
--    gen_helper_asrtgt_d(tcg_env, src1, src2);
-+    gen_helper_asrtgt_du(tcg_env, src1, src2);
-     addr = make_address_x(ctx, src1, src2);
-     tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, mop);
-     maybe_nanbox_load(dest, mop);
-@@ -99,7 +99,7 @@ static bool gen_fstore_gt(DisasContext *ctx, arg_frr *a, MemOp mop)
- 
-     CHECK_FPE;
- 
--    gen_helper_asrtgt_d(tcg_env, src1, src2);
-+    gen_helper_asrtgt_du(tcg_env, src1, src2);
-     addr = make_address_x(ctx, src1, src2);
-     tcg_gen_qemu_st_tl(src3, addr, ctx->mem_idx, mop);
- 
-@@ -115,7 +115,7 @@ static bool gen_fload_le(DisasContext *ctx, arg_frr *a, MemOp mop)
- 
-     CHECK_FPE;
- 
--    gen_helper_asrtle_d(tcg_env, src1, src2);
-+    gen_helper_asrtle_du(tcg_env, src1, src2);
-     addr = make_address_x(ctx, src1, src2);
-     tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, mop);
-     maybe_nanbox_load(dest, mop);
-@@ -133,7 +133,7 @@ static bool gen_fstore_le(DisasContext *ctx, arg_frr *a, MemOp mop)
- 
-     CHECK_FPE;
- 
--    gen_helper_asrtle_d(tcg_env, src1, src2);
-+    gen_helper_asrtle_du(tcg_env, src1, src2);
-     addr = make_address_x(ctx, src1, src2);
-     tcg_gen_qemu_st_tl(src3, addr, ctx->mem_idx, mop);
- 
-diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-index dcecf02e54..ae2a0dbf30 100644
---- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-@@ -79,7 +79,7 @@ static bool gen_load_gt(DisasContext *ctx, arg_rrr *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv src2 = gpr_src(ctx, a->rk, EXT_NONE);
- 
--    gen_helper_asrtgt_d(tcg_env, src1, src2);
-+    gen_helper_asrtgt_du(tcg_env, src1, src2);
-     src1 = make_address_i(ctx, src1, 0);
-     tcg_gen_qemu_ld_tl(dest, src1, ctx->mem_idx, mop);
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -93,7 +93,7 @@ static bool gen_load_le(DisasContext *ctx, arg_rrr *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv src2 = gpr_src(ctx, a->rk, EXT_NONE);
- 
--    gen_helper_asrtle_d(tcg_env, src1, src2);
-+    gen_helper_asrtle_du(tcg_env, src1, src2);
-     src1 = make_address_i(ctx, src1, 0);
-     tcg_gen_qemu_ld_tl(dest, src1, ctx->mem_idx, mop);
-     gen_set_gpr(a->rd, dest, EXT_NONE);
-@@ -107,7 +107,7 @@ static bool gen_store_gt(DisasContext *ctx, arg_rrr *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv src2 = gpr_src(ctx, a->rk, EXT_NONE);
- 
--    gen_helper_asrtgt_d(tcg_env, src1, src2);
-+    gen_helper_asrtgt_du(tcg_env, src1, src2);
-     src1 = make_address_i(ctx, src1, 0);
-     tcg_gen_qemu_st_tl(data, src1, ctx->mem_idx, mop);
- 
-@@ -120,7 +120,7 @@ static bool gen_store_le(DisasContext *ctx, arg_rrr *a, MemOp mop)
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv src2 = gpr_src(ctx, a->rk, EXT_NONE);
- 
--    gen_helper_asrtle_d(tcg_env, src1, src2);
-+    gen_helper_asrtle_du(tcg_env, src1, src2);
-     src1 = make_address_i(ctx, src1, 0);
-     tcg_gen_qemu_st_tl(data, src1, ctx->mem_idx, mop);
- 
 diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
-index 44772d03a4..25ed328753 100644
+index 25ed328753..f8a91bed5d 100644
 --- a/target/loongarch/tcg/op_helper.c
 +++ b/target/loongarch/tcg/op_helper.c
-@@ -43,6 +43,26 @@ void HELPER(asrtgt_d)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-     }
- }
- 
-+void HELPER(asrtle_du)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-+{
-+    CPUSysState *sys = env_sys(env);
-+
-+    if (rj > rk) {
-+        sys->CSR_BADV = rj;
-+        do_raise_exception(env, EXCCODE_BCE, GETPC());
-+    }
-+}
-+
-+void HELPER(asrtgt_du)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
-+{
-+    CPUSysState *sys = env_sys(env);
-+
-+    if (rj <= rk) {
-+        sys->CSR_BADV = rj;
-+        do_raise_exception(env, EXCCODE_BCE, GETPC());
-+    }
-+}
-+
- target_ulong HELPER(crc32)(target_ulong val, target_ulong m, uint64_t sz)
+@@ -27,7 +27,7 @@ void HELPER(asrtle_d)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
  {
-     uint8_t buf[8];
+     CPUSysState *sys = env_sys(env);
+ 
+-    if (rj > rk) {
++    if ((target_long)rj > (target_long)rk) {
+         sys->CSR_BADV = rj;
+         do_raise_exception(env, EXCCODE_BCE, GETPC());
+     }
+@@ -37,7 +37,7 @@ void HELPER(asrtgt_d)(CPULoongArchState *env, target_ulong rj, target_ulong rk)
+ {
+     CPUSysState *sys = env_sys(env);
+ 
+-    if (rj <= rk) {
++    if ((target_long)rj <= (target_long)rk) {
+         sys->CSR_BADV = rj;
+         do_raise_exception(env, EXCCODE_BCE, GETPC());
+     }
 -- 
 2.54.0
 
