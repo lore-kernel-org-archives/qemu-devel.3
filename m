@@ -1,51 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF37606A320
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 09:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C553606A31D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 09:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Vx+MqASA
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Jh3jgwif
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMMM4-0006oG-47; Thu, 29 Oct 2026 05:23:28 -0400
+	id 1xMMM9-0006pN-Tl; Thu, 29 Oct 2026 05:23:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMMM1-0006nw-Nt
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:25 -0400
+ id 1xMMM6-0006oy-MS
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMMM0-0005iy-6f
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:25 -0400
+ id 1xMMM5-0005jQ-3i
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:23:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793265802;
+ s=mimecast20190719; t=1793265808;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=A6LseDyxckBxdzamRBE1SEr1KtGqYJt1j6azdGf+HcI=;
- b=Vx+MqASA2Mq00RHMB1IP00uToBugDc3uTG8u8aIhOjoWF4fXRGugdirOW0GbO4VpumWW6c
- ssKo1sJSzqsPTKpcqt9K+68G3w4twsAteCShCGY82PXHFq4axJ/Q5YNtCk8coKyXvMafOn
- cM2Vc1whoVySXYO5SMV5Kc5IyTfK/tk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Q09bIrHyMRfqhA+APYF83tIQQVVEpS67ZFlJfhAFQU=;
+ b=Jh3jgwifdtt3GSKeOd+zYdy1xmpjk1lCNFG/11Ur8+NHGNPncRB1xGLTo5hQrdPibX3sZt
+ 4WJkZvKjA6mNkYJFnqrHrv653y0+XaauzcyR7DeNiYGS3fQrCkOLKdIzk8NSAyrkuP0/hi
+ pxcgzxrw9RpIgsRjYoeSmUrqZiH4quc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-UIT6MYjnPhag-iMMJZbhyg-1; Thu,
- 29 Oct 2026 05:23:19 -0400
-X-MC-Unique: UIT6MYjnPhag-iMMJZbhyg-1
-X-Mimecast-MFC-AGG-ID: UIT6MYjnPhag-iMMJZbhyg_1793265797
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-471-Qxg1iQ3iPfGqNZDzeUMxMg-1; Thu,
+ 29 Oct 2026 05:23:24 -0400
+X-MC-Unique: Qxg1iQ3iPfGqNZDzeUMxMg-1
+X-Mimecast-MFC-AGG-ID: Qxg1iQ3iPfGqNZDzeUMxMg_1793265802
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 624AB1955DDA; Thu, 29 Oct 2026 09:23:16 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C266F1800578; Thu, 29 Oct 2026 09:23:21 +0000 (UTC)
 Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 29C743000723; Thu, 29 Oct 2026 09:23:10 +0000 (UTC)
+ id BD10230002CF; Thu, 29 Oct 2026 09:23:16 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
@@ -56,24 +57,25 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  milesg@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com
 Cc: armbru@redhat.com,
 	mbawa@redhat.com
-Subject: [PATCH for-11.2 0/9] kvm/arm: Some refactoring for custom KVM host
- model
-Date: Thu, 29 Oct 2026 10:20:12 +0100
-Message-ID: <20261029092307.281287-1-eric.auger@redhat.com>
+Subject: [PATCH for-11.2 1/9] target/arm/cpu-sysregs.h.inc: Sort by name
+ alphabetical order
+Date: Thu, 29 Oct 2026 10:20:13 +0100
+Message-ID: <20261029092307.281287-2-eric.auger@redhat.com>
+In-Reply-To: <20261029092307.281287-1-eric.auger@redhat.com>
+References: <20261029092307.281287-1-eric.auger@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,65 +87,106 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
-	autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This series contains some patches initially introduced in
-"kvm/arm: Introduce a customizable aarch64 KVM host model" series
+Sort by register name alphabetical order. This will allow to
+easily diff with the future content, automatically generated.
 
-1-4,9 are already reviewed
-5-6 deal with error handle passing, only impact target/arm
-7 also deals with error handling but impacts more archs
-8 is target/arm specific and is rather basic code refactoring
-9 is also virt-arm specific and msotly highlighy an issue with
-  CLIDR_EL1 and KVM mode
+No functional change intended.
 
-They are rather independent on the actual custom host model and can
-be considered as a separate dependency. Would be nice to get some of them
-in 11.2.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
 
-Eric Auger (9):
-  target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
-  target/arm: Move REVIDR into isar.idregs[] storage
-  target/arm: Move MIDR into isar.idregs[] storage
-  target/arm: Enforce MPIDR into isar.idregs[] storage
-  target/arm/kvm: Pass an error handle to
-    kvm_arm_create_scratch_host_vcpu
-  target/arm/kvm: Pass an error handle to kvm_arm_init_cpreg_list
-  target/kvm: Pass an Error handle to kvm_arch_init_vcpu
-  target/arm/kvm: Introduce kvm_arm_vcpu_prepare_init_features helper
-  hw/arm/virt: Make sure virt_get_caches() keeps on reading CLIDR_EL1 as
-    0
+---
+v5 -> v6:
+- v5 version conflicted because ID_AA64FPFR0_EL1 has been
+  added
 
- include/system/kvm.h         |  2 +-
- linux-user/arm/target_proc.h | 13 ++---
- target/arm/cpu.h             | 10 ++--
- target/arm/kvm_arm.h         |  3 +-
- target/arm/cpu-sysregs.h.inc | 49 ++++++++++---------
- accel/kvm/kvm-all.c          | 15 +++---
- hw/arm/virt.c                | 11 +++++
- hw/intc/armv7m_nvic.c        |  4 +-
- target/arm/cpu-max.c         |  4 +-
- target/arm/cpu.c             | 19 +++++++-
- target/arm/cpu64.c           |  4 +-
- target/arm/helper.c          | 29 ++++-------
- target/arm/hvf/hvf.c         |  6 +--
- target/arm/kvm.c             | 95 +++++++++++++++++++++++-------------
- target/arm/tcg/cpu-v7m.c     | 18 +++----
- target/arm/tcg/cpu32.c       | 37 +++++++-------
- target/arm/tcg/cpu64.c       | 42 ++++++++--------
- target/arm/whpx/whpx-all.c   |  6 +--
- target/i386/kvm/kvm.c        | 22 +++++----
- target/loongarch/kvm/kvm.c   | 27 ++++------
- target/ppc/kvm.c             | 10 ++--
- target/riscv/kvm/kvm-cpu.c   |  6 ++-
- target/s390x/kvm/kvm.c       |  2 +-
- 23 files changed, 245 insertions(+), 189 deletions(-)
+v4 -> v5:
+- remove spurious CCSIDR definition
+---
+ target/arm/cpu-sysregs.h.inc | 46 ++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 23 deletions(-)
 
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index d9e058a57e..b5c7970971 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -1,13 +1,13 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+-DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+-DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
+-DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+-DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
+-DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+-DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+-DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
++DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
++DEF(CTR_EL0, 3, 3, 0, 0, 1)
++DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+ DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
+ DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+ DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+ DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+ DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+@@ -17,30 +17,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+ DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+ DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
+ DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+-DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+-DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+-DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+ DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+-DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
+-DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
+-DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
+-DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+ DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
+ DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
+ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
+ DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
+ DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
+ DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
+-DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
+ DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
++DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
++DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
++DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
++DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
++DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+-DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+-DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+-DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+-DEF_MUX(CCSIDR_EL1, 3, 1, 0, 0, 0, 16)
+-DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+-DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+-DEF(CTR_EL0, 3, 3, 0, 0, 1)
+-DEF(DCZID_EL0, 3, 3, 0, 0, 7)
 -- 
 2.53.0
 
