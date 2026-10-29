@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E4E606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60B4606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=ZTmoivkn;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=YCQG2teN
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=PlPF697g;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=b+vuk9yb
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUEC-0003QD-Vm; Thu, 29 Oct 2026 13:47:55 -0400
+	id 1xMUDM-0002PH-KI; Thu, 29 Oct 2026 13:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMUBb-0007Cd-E5
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1xMUBU-000779-3d
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:11 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMUBY-0003hO-Lw
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:10 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1xMUBB-0003ga-Sr
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:59 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGCxjP3872933
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:44:52 GMT
+ 69TGDbr73689755
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:44:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xchSFkoLT7wQreEItSdHtwnzmQxPcqqOKW9v2LldNaY=; b=ZTmoivknOkwELyS+
- veBHNoOVrKdlvMHm/yMU9ffbT88dmB5nbv5HJINDOXpKkqqxcyyyFshfLFMJ6Eol
- rXEZp/MCg589KuEXw3v6MXxb1xzqp1HaR3tsGAO+v+fvz5RHgvTmqQzl7DXlundz
- 6LcMkFRxxOdrlIkUw1kLB2ToJiljPEkK/r84EMliNUs7rieixLmUosHiyK5fZCW0
- h/S0zcx6qnhuGcpdII2by+0fCsVQ3GTupJXG6NkK93/3fFGMYQ+SCmJDjN1LZzNh
- 70OwRYmVWyRdKHfCVXZg4OuZmZ1VEqOfKgG+XuBnsaLW6RAcGcWWhrhc9Jp25rfv
- Bx9Cdg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm76217tv-1
+ a0PaeL8Kq9xXQ68LcaL4C9LzPYWjngZnEBXFQqSQpZs=; b=PlPF697g6lzPQIbc
+ 35FHAnUwNHPZJ0PLH5GHY6xKyfpJm9RuzHYvFUOONTq/OSnDOVwV4EsVrrnd2Z4q
+ 8BDOMRqn2nMRLt4XdEay8cFCXxJNehLF3ZUvQtA6I+OGklzNLULlY5xlR1aFOR7+
+ LJI9jX1XpUhRvwA4Yi1p4oaXwr+LVHQlPkeTAq4dQFNXiBYGcR4MTQ/36Iyz/hNx
+ KN/mrH6bmOP1hFX6fiMqXhJSbtlkvqcRc2sZavdB4ozhX82bcP8coo8AfALOO2Dm
+ 5Hu+ELIY9AUpnYU+MYPKWYPZ0LYjLFcX+HwmfUrafvkghwfxd24r6o0rfc2e+oUY
+ h97wAg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hky5sbham-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:44:52 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93f5844e383so375687785a.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:44:52 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:44:44 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93caf7856ffso538693585a.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793295891; x=1793900691; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793295884; x=1793900684; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=xchSFkoLT7wQreEItSdHtwnzmQxPcqqOKW9v2LldNaY=;
- b=YCQG2teN4cgEc8J8wY60HapuqP+0NR/VEHeNX5ghvsHSjqKk/kPkE3K1mlbR9O3gd0
- qdai5gVuiHQAtMWcr/PMt9ClNaUOqKWnHht5MvJm8mrNRG0AzuuXEKHLyIT2TREOFbQW
- +U3IMOxlh3OVVun8OHl2/PI0jj0RYlYUslK/WNQ3WdGuhK+6gFcQ93AREsLGGAOTENDG
- 78akKcE5E2KBUiotl2VohnLU2OsDzQB3EBQ98NmlXV3ZKT4Mmgopf0WYjY/rVq9JIacS
- JxmMAddlhxVsMmUMNs3UW3R1r/IYxR7fmsjMB7WUEFAxqJryCtvxfg5v5aDLxAvF5yEm
- i9ZQ==
+ bh=a0PaeL8Kq9xXQ68LcaL4C9LzPYWjngZnEBXFQqSQpZs=;
+ b=b+vuk9ybUvj0I+GiKNPw+lPpJXXY1ZYmJfcwBRRuYhYqm1arN8GEzRSd647ys+JLMh
+ //EmC8UAV3fyg8EuiXXUZv1Np5s98/nyDFh7ezw0mKXnYGQ/Z6V/C8JyRFVptmVfouNx
+ GFFdx/N6R51zf7E/N9ioImOZmHUiQdQ+V41dJBjR1bnXDVcKW7wEY6hTlOmjN4m/XjOp
+ LAAguXjF/QvWqCT5GhmFgz7BaXaMZ6Tq+NvHOZpnwqkZvjMey4fBBe00iWZR/TNWV7vr
+ PaDraaIv7drFrkHjNT7gkxS6ryL7INQ+AtWzFEXjlDO/2qTmHyd4zzsXYCbeBUlunp9J
+ V/9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793295891; x=1793900691;
+ d=1e100.net; s=20260707; t=1793295884; x=1793900684;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xchSFkoLT7wQreEItSdHtwnzmQxPcqqOKW9v2LldNaY=;
- b=yVjLP1Q3QyLGnT9+cDkYcSQmXz+4Nf0I/RK6W0J/0bod6EI0E0PvtPqAiHtkMlUYHp
- /BUaoR9ALohP4gGKE7d97VGwegNJvDwvoqIW4rF4RdesDM+FnRwFuO4pnDUvbTT5HxhS
- msdpWP+Cwomx728mULdQCea8/4mj9L4aB+8y1oBjS+pfrTjsqxFaHcbJHDeSn979vBD5
- heg4l2oabnjXn2Fpg5ljeN9g/NSpugbAOHc+WpD9HzAHffXnWorRNNHqdJ/2gpgQY8bW
- m5t0jpvwv7v+K9BF+hAckPwufTn1T4h8Jfm9y8ERpdaGfswOmUF95BUGW/j3kdueuJ+O
- Sipw==
-X-Gm-Message-State: AFq9FYKuP6gDnzwMxGF4SQfiZCJCUJFjIlOCsYSwRLCq8Z51dhdoQ3ie
- I+O2zXXSJfY05X6gZxDCgFHLtiP3TcLHtqecOxZnCU2f8h/OF6c8q8ZcuVCy66egUInfISb647N
- OR8xoh4OlvszRTV4q7xsZnLUJ7trcVMzPZyzyKMxm+BvPNa45Atr4BFFvrwjGza1Vh5W1
-X-Gm-Gg: AYBFou1meayO1p5BcjuL1smcia8xnnHY1BEUsL37de4HIlLU2GhDphBdsG/68spABNj
- sogSVuMZuvXOzjlOineVeGyFvpTGLPT86o5UbiCfDFpfRTUC0xc9J26snokR1YDlZ4FL2XswmNw
- ZJfHIbZ8IyV0OLGGvGYsRatAj6WVhun5ypNN9k0ygbYrtlvcSHei8EGWqQ1J3ZVsHJHTojJDj71
- b5DI3no0S0lik/NtdfRaS1uzbvBOQBJ19iIZZzaQXv+jyXBIHjQGRiCd/NX3B1bRrg+DeRkya0P
- 19db1xg9iIeZlOu076XDW5lvT9YOGTYv35kRevPDB05qEnn17qNVlipUXuIiQHSMjSUbwgT5+NT
- KQK8gW2nT0Nai01Dngcble6iLickXXE1jljvzFSPvGqH53M/lhQ3cbyS9QoE4dJEofpEsAOvwKe
- Ql+scwbVK89TR34aW+yD5xCIedypkRAg==
-X-Received: by 2002:a05:620a:63c6:b0:93e:746e:235c with SMTP id
- af79cd13be357-94408a26905mr907434785a.15.1793295891054; 
- Thu, 29 Oct 2026 10:44:51 -0700 (PDT)
-X-Received: by 2002:a05:620a:63c6:b0:93e:746e:235c with SMTP id
- af79cd13be357-94408a26905mr907431185a.15.1793295890613; 
- Thu, 29 Oct 2026 10:44:50 -0700 (PDT)
+ bh=a0PaeL8Kq9xXQ68LcaL4C9LzPYWjngZnEBXFQqSQpZs=;
+ b=kaJ5sccgxMVDZOyaX6o1eG4dAwN38H446jxsG8xTqbV/hwGaEJEAPY1WJLqAEqMXiU
+ jNvm4/IUtKMeRSSXZ538Z+h7+WnMQj+DPMWZYh1Cy/BQptM0uyeMvh/A0GK4Q4u9/1xD
+ bg9KtGBL9HgFdMuS4a9+Zs8MvtmU4ytzdaUsweytBjLG3DNRzwuAz4kF2QXdpn1I3LHQ
+ kLkgZjhzIs81Qd7gBexuQfNDe4Zinc/f0R98kWFBjAVNv7yH3P0gPHly0ZTKPi3GOG4j
+ ZWlnswH9yqZLJkiGkxlStMPTP8ImUwS79q9/R3NZaGi9Uyzx4xMwZ2IDVHrWsLDPocMF
+ 1Gtw==
+X-Gm-Message-State: AFq9FYKbALiuqNYqrralAyiuFOLzeU9haFH7Ig29kaBVCQYxpyUxVYGt
+ 2lTsoQaAnAilii8kLL0O+tEh5yGECIEGali7t/m8MZaFeqB0qc/qPjYKBJny+qVPSHOZ4QknzMc
+ Z94TwHnalAl/YCwaq8vOrSNCLA46CGRtDYRZu5r9AQcTt0jU3Pwo33ZPKrYtrRhr+vl9W
+X-Gm-Gg: AYBFou02+NGu7R2d7ob1nahv8swAOEXs+Kfkwc+i08xhBCadTIVoubO5kgCvCv9mdZa
+ mSiMAtoV4A8a43O63W9m9Imj8Wvbjw1vWN7Su2ymJLKXeR2d+k+G91EktLcHxGP3N9G5BdWtccp
+ 22A60c7OfhB4rtg2NTR2aA2iPfbQJfKux8i9+xiysTG6+sFT0dtQ5y/jzXDcGvnVXH5K8zZb+wa
+ Fux3cO2b6LbQd/sC8dcdVgOBIBpzwXxorDPlQoZOuUeDwvvBKsf+vPvHC7vdrrj4zLi8euuYg3u
+ uFvTgnRrfPUKdceeLMYZcESSb9xyok/B7vxJFhgV3SjwNgAd+6EZ/8+85DBo7hiLNLfBN5u85cY
+ 8gMK/JyTKmHUBPWf/fy0y3EyqYOpyvwVeECObzLullJsIMPcKH7Obmsb9lCHT+iK18TrPbVNaOA
+ E29g4LSnXt9vuuXCY7+3z1SIqj3VVqfA==
+X-Received: by 2002:a05:620a:1999:b0:93f:2610:fb77 with SMTP id
+ af79cd13be357-94408cb0768mr958841585a.45.1793295883992; 
+ Thu, 29 Oct 2026 10:44:43 -0700 (PDT)
+X-Received: by 2002:a05:620a:1999:b0:93f:2610:fb77 with SMTP id
+ af79cd13be357-94408cb0768mr958837885a.45.1793295883432; 
+ Thu, 29 Oct 2026 10:44:43 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4abe770502fsm3870795e9.3.2026.10.29.10.44.49
+ 5b1f17b1804b1-4abeb77af8csm5432845e9.1.2026.10.29.10.44.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Oct 2026 10:44:49 -0700 (PDT)
+ Thu, 29 Oct 2026 10:44:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
@@ -95,14 +95,10 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 02/12] meson: Add the tcg_tests_cross_cc/cflags options for
- mips32r6el
-Date: Thu, 29 Oct 2026 18:44:23 +0100
-Message-ID: <20261029174434.27985-3-philmd@oss.qualcomm.com>
+Subject: [PATCH 01/12] tests/docker: Add the mips32r6el toolchain
+Date: Thu, 29 Oct 2026 18:44:22 +0100
+Message-ID: <20261029174434.27985-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261029174434.27985-1-philmd@oss.qualcomm.com>
 References: <20261029174434.27985-1-philmd@oss.qualcomm.com>
@@ -110,35 +106,34 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: sPPDpZiVJ6cSA8pXMdeXzBNC3qyNnJua
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX8re4Ku3VND64
- mBFKMhzwh1rp29TZ81DZZagVw8I6edh2wu2XkX1xVhF1jf9ILjLyStp5BvpaHZ1tiqIjh4RUuR3
- Vn7Lei0xkovZgW/noghJF15eRpRvp/rC/BTuPVHM8oAmfCVBkfMMo2+rrMscZNNzUm3TqCCWvEn
- ac+5d2PkFlclb2kz2pkdMGDhA9EKxcpoinYchLN+QGq0R64fz5adDTCmy96lPZJusFCIuLyuYor
- 9+NDfJZNY0f4d3kB6OISTV2MasGyfQciWJF7F9iYMhRR50/UBflu//17w+1+b47axiCUpaNAeRc
- M+k55qFerEFlQCG2RFHxf4F4Bv1VuNZP+wboxxSV3qQ8hi4PPcKl9wpJTx5OlvGNuw7hmRuiwaQ
- hPAGyFn8GmKbiFteHi8rUNrY7PEuluivqgLRESll86UZ7mURseg8uY3bEjoI2AMZQAamC78iwxI
- 20zPt9fggGetFv61cgQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXyidL+Tq0OvOq
- 8cUDqQ94De3UTUlW8zsMar3XhG9CgnwST0oi0fLdG2rgnu9sm3khVLWGSwkXEtYOrVnpp0T+LK+
- aFX7RZIAHYFrTcSdXS+evN7+Bu73Ggo=
-X-Authority-Analysis: v=2.4 cv=Kv3YSmWN c=1 sm=1 tr=0 ts=6ae38614 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX8Yc6LS+jKRuD
+ MjhyO0emXljvNFQ4czBcl5USw6+HDtlrKvR/FIApAVYSKo3BW9A4qAb3PiLBB3FzGAujEP7l7a2
+ 7a0woSwLsqyHO4XzfCIEFchQOTzC/90=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX3GzYHbD0m/29
+ joQiHEMcqPJqLduY3nX1G+8BHrysEEFwIPoMNT888sp2i6hnsEnD+ncxOASHXy+tvJWAAUnibIg
+ haBQhklMoW6Jxcjb5bU8knQDPnJWpLSWVz04XA8H/yETQWqH57WLrk+zKzJ1Q4k5r9YUbRUQP1t
+ EALe2d7Z8G93epl3uvxEfVpGFoWhYSm1QdVDEzLAj4XD65ctsIG+HksOw8n5W8Uu2RQng6gtNsN
+ tQsjy7pCFpELRVgwvORDQwZALo9hN+QBH8Dwqan4tTboGB7iUroIbBN6rqY6qky4y8rt1N/OH38
+ l8UmDmNwkF70VvMxkOakJ2VmPNEsZfNF0CQUBmMgY6BuJobpUxzsMHSkesWLzAjB7B6kUHyV+ko
+ Xy59l1/IvQSTDb7I8sQcT/bUg43blg==
+X-Proofpoint-ORIG-GUID: n8l8gbuqQl6CyFbBM2qU63N44PGcBlTh
+X-Authority-Analysis: v=2.4 cv=f/vdl+yM c=1 sm=1 tr=0 ts=6ae3860c cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=ClBwLX5JVu_AAdhY8JwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: sPPDpZiVJ6cSA8pXMdeXzBNC3qyNnJua
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=VbLNOaZG8fVy0AOA6ekA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: n8l8gbuqQl6CyFbBM2qU63N44PGcBlTh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
- malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ malwarescore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ phishscore=0 adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610290069
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -164,52 +159,39 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add meson tcg_tests_cross_cc/cflags options for mips32r6el,
-similarly of the previous mips32r5el commit c7b1a7bc9d33
-("tests/tcg/mipsel/mips32r5el: add msa tests"). This allows
-compiling TCG tests for the mips32r6el-linux-user targets.
+Similarly to commit eaba84a5e1c9 ("tests/docker/debian-all-test:
+add mips32r5 toolchain"), add the Bootlin mips32r6el glibc
+toolchain, renaming its mipsel-* binaries as mips32r6el-*.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- meson_options.txt             | 4 ++++
- scripts/meson-buildoptions.sh | 2 ++
- 2 files changed, 6 insertions(+)
+ .../docker/dockerfiles/debian-all-test-cross.docker | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/meson_options.txt b/meson_options.txt
-index 895c6e63c28a..9ae8e44ab54e 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -461,6 +461,10 @@ option('tcg_tests_cross_cc_mips32r5el', type: 'string',
-        description: 'cc for mips32r5el tcg tests')
- option('tcg_tests_cross_cflags_mips32r5el', type: 'string',
-        description: 'cflags for mips32r5el tcg tests')
-+option('tcg_tests_cross_cc_mips32r6el', type: 'string',
-+       description: 'cc for mips32r6el tcg tests')
-+option('tcg_tests_cross_cflags_mips32r6el', type: 'string',
-+       description: 'cflags for mips32r6el tcg tests')
- option('tcg_tests_cross_cc_or1k', type: 'string',
-        description: 'cc for or1k tcg tests')
- option('tcg_tests_cross_cflags_or1k', type: 'string',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 14990966d31d..0f8b56bd7f8c 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -539,6 +539,7 @@ _meson_option_parse() {
-     --tcg-tests-cross-cc-m68k=*) quote_sh "-Dtcg_tests_cross_cc_m68k=$2" ;;
-     --tcg-tests-cross-cc-mips=*) quote_sh "-Dtcg_tests_cross_cc_mips=$2" ;;
-     --tcg-tests-cross-cc-mips32r5el=*) quote_sh "-Dtcg_tests_cross_cc_mips32r5el=$2" ;;
-+    --tcg-tests-cross-cc-mips32r6el=*) quote_sh "-Dtcg_tests_cross_cc_mips32r6el=$2" ;;
-     --tcg-tests-cross-cc-mips64=*) quote_sh "-Dtcg_tests_cross_cc_mips64=$2" ;;
-     --tcg-tests-cross-cc-mips64el=*) quote_sh "-Dtcg_tests_cross_cc_mips64el=$2" ;;
-     --tcg-tests-cross-cc-mips64r6=*) quote_sh "-Dtcg_tests_cross_cc_mips64r6=$2" ;;
-@@ -566,6 +567,7 @@ _meson_option_parse() {
-     --tcg-tests-cross-cflags-m68k=*) quote_sh "-Dtcg_tests_cross_cflags_m68k=$2" ;;
-     --tcg-tests-cross-cflags-mips=*) quote_sh "-Dtcg_tests_cross_cflags_mips=$2" ;;
-     --tcg-tests-cross-cflags-mips32r5el=*) quote_sh "-Dtcg_tests_cross_cflags_mips32r5el=$2" ;;
-+    --tcg-tests-cross-cflags-mips32r6el=*) quote_sh "-Dtcg_tests_cross_cflags_mips32r6el=$2" ;;
-     --tcg-tests-cross-cflags-mips64=*) quote_sh "-Dtcg_tests_cross_cflags_mips64=$2" ;;
-     --tcg-tests-cross-cflags-mips64el=*) quote_sh "-Dtcg_tests_cross_cflags_mips64el=$2" ;;
-     --tcg-tests-cross-cflags-mips64r6=*) quote_sh "-Dtcg_tests_cross_cflags_mips64r6=$2" ;;
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index eefc03c49a4f..d0e59df84ebc 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -129,6 +129,19 @@ RUN apt update && \
+   rename 's/mipsel/mips32r5el/' mipsel*
+ ENV PATH="$PATH:/opt/mips32r5el/bin"
+ 
++# download mips32r6el toolchain from bootlin, and rename binaries who are simply
++# named mipsel-linux-gnu-*
++RUN apt update && \
++  mkdir -p /opt/mips32r6el/ && \
++  cd /opt/mips32r6el/ && \
++  wget -q https://toolchains.bootlin.com/downloads/releases/toolchains/mips32r6el/tarballs/mips32r6el--glibc--stable-2026.08-1.tar.xz && \
++  tar xvf *.tar.xz && \
++  rm *.tar.xz && \
++  mv mips32r6el--glibc--stable-2026.08-1/* . && \
++  cd bin && \
++  rename 's/mipsel/mips32r6el/' mipsel*
++ENV PATH="$PATH:/opt/mips32r6el/bin"
++
+ ENV QEMU_CONFIGURE_OPTS=--disable-docs
+ ENV DEF_TARGET_LIST=aarch64-linux-user,alpha-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sh4-linux-user,sparc64-linux-user
+ # As a final step configure the user (if env is defined)
 -- 
 2.55.0
 
