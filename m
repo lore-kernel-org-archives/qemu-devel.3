@@ -1,82 +1,116 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30540606A31F
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 14:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42EA606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 14:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=HotwKX4N
+	dkim=pass (1024-bit key, unprotected) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=DXWfwtZP;
+	dkim=pass header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KsX8J0oD;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.a=rsa-sha256 header.s=susede2_rsa header.b=DXWfwtZP;
+	dkim=neutral header.d=suse.de header.i=@suse.de header.a=ed25519-sha256 header.s=susede2_ed25519 header.b=KsX8J0oD
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRIA-0007YO-PH; Thu, 29 Oct 2026 10:39:47 -0400
+	id 1xMRKB-0002ex-44; Thu, 29 Oct 2026 10:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMRH5-0006Ta-JS
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:38:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1xMRH3-0007SG-8t
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:38:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793284716;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMRK7-0002eH-FM
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:41:47 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1xMRK5-0007uV-97
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 10:41:47 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 82C311F7BB;
+ Thu, 29 Oct 2026 14:41:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793284900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HkJT/5dYNgc2ms2zwUQgsRTz/8Dg25C7FJSeFoiGHbs=;
- b=HotwKX4NhZMaNE4zfBL+DNDdvaGoxZRdngBpQTmtpegXLkXvBwMtsYpX5ELAN6CyUM2t96
- JIiO979YPjGjiHKVH3Zbgtj/XPAq9pWmaMRbymyTjy/7mjpfXRb/UAY4ux4llhJPMtzQOv
- Ly1C6hQJqJyEis3o4AIdfySLkupNUfY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-OTjsnRnRPJqV6GH4eQauDQ-1; Thu,
- 29 Oct 2026 10:38:30 -0400
-X-MC-Unique: OTjsnRnRPJqV6GH4eQauDQ-1
-X-Mimecast-MFC-AGG-ID: OTjsnRnRPJqV6GH4eQauDQ_1793284708
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ bh=KhOFF+ZZo/HTyFRWWqIhdGMoCXdRcnHY+IFo/im4lAY=;
+ b=DXWfwtZPtVDYDdscPBK+8TdPFIqlbZXgcWgbcIBlUXBo/VH2Zs3fe5RFRtw8tO8g6g1e0N
+ dhrmZD4S0nT3XI9c0zUJIyTC0dvfmxgXGzEBaQ6nVYv7jRh8J+2sKLa6mCBSr9eaVsQj7c
+ okQf6HnUUIhXJ0h5MpUBhGUvQHLI/4g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793284900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KhOFF+ZZo/HTyFRWWqIhdGMoCXdRcnHY+IFo/im4lAY=;
+ b=KsX8J0oDVvzrJGcdOnLdWs6Pzzttj7uyhqeF8WOgUhBqxaXJZ2Gio6cbQ4tEk74ng5GPwq
+ GP0VJgJYKa7k59Bg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1793284900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KhOFF+ZZo/HTyFRWWqIhdGMoCXdRcnHY+IFo/im4lAY=;
+ b=DXWfwtZPtVDYDdscPBK+8TdPFIqlbZXgcWgbcIBlUXBo/VH2Zs3fe5RFRtw8tO8g6g1e0N
+ dhrmZD4S0nT3XI9c0zUJIyTC0dvfmxgXGzEBaQ6nVYv7jRh8J+2sKLa6mCBSr9eaVsQj7c
+ okQf6HnUUIhXJ0h5MpUBhGUvQHLI/4g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1793284900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KhOFF+ZZo/HTyFRWWqIhdGMoCXdRcnHY+IFo/im4lAY=;
+ b=KsX8J0oDVvzrJGcdOnLdWs6Pzzttj7uyhqeF8WOgUhBqxaXJZ2Gio6cbQ4tEk74ng5GPwq
+ GP0VJgJYKa7k59Bg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 57AD41800628; Thu, 29 Oct 2026 14:38:28 +0000 (UTC)
-Received: from laptop.redhat.corp (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D22F195608B; Thu, 29 Oct 2026 14:38:23 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
- khushit.shah@nutanix.com, richard.henderson@linaro.org,
- pbonzini@redhat.com, skolothumtho@nvidia.com, philmd@oss.qualcomm.com,
- 7746591750@163.com, maobibo@loongson.cn, harshpb@linux.ibm.com,
- amachhiw@linux.ibm.com, daniel.barboza@oss.qualcomm.com,
- milesg@linux.ibm.com, farman@linux.ibm.com, cohuck@redhat.com,
- alireza.sanaee@huawei.com
-Cc: armbru@redhat.com,
-	mbawa@redhat.com
-Subject: [PATCH v2 for-11.2 7/9] target/kvm: Pass an Error handle to
- kvm_arch_init_vcpu
-Date: Thu, 29 Oct 2026 15:36:54 +0100
-Message-ID: <20261029143742.294275-8-eric.auger@redhat.com>
-In-Reply-To: <20261029143742.294275-1-eric.auger@redhat.com>
-References: <20261029143742.294275-1-eric.auger@redhat.com>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 00BA21339F;
+ Thu, 29 Oct 2026 14:41:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CjUeJiNb42p4UAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Oct 2026 14:41:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ peterx@redhat.com, mjt@tls.msk.ru,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, Pierrick
+ Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v5 1/2] tests/docker/dockerfiles: add release.docker
+In-Reply-To: <20261029000853.15166-2-pierrick.bouvier@oss.qualcomm.com>
+References: <20261029000853.15166-1-pierrick.bouvier@oss.qualcomm.com>
+ <20261029000853.15166-2-pierrick.bouvier@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 11:41:33 -0300
+Message-ID: <87ld7gin6q.fsf@suse.de>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-13.30 / 50.00]; SUSE_INTERNAL_BYPASS(-9.00)[];
+ BAYES_HAM(-3.00)[100.00%]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ canonical.com:url, qualcomm.com:email, gitlab.com:url]
+X-Spam-Score: -13.30
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,437 +122,118 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The 2 callers of kvm_arch_init_vcpu(), namely kvm_rebind_vcpus()
-and kvm_init_vcpu() are passed an Error handle. So it is a pity
-not using it in kvm_arch_init_vcpu(). Also, in the future, the
-error handle could be passed to other functions called inside.
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Gustavo Romero <gromero@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
+> This new dockerfile allows to build a distroless image containing only
+> qemu stripped release binaries, their lib dependencies, and installed
+> artifacts (roms, keymap, ...). There is no shell, no python, nothing
+> else. This is achieved thanks to a multi-stage build, where we add qemu
+> binaries, artifacts and libraries in a new scratch image. Image has
+> the minimal size possible.
+>
+> This is based on Ubuntu, which has the advantage to have working
+> containers available down to 14.04. Debian old old stable have broken
+> apt sources for instance.
+>
+> This unique dockerfile works for all qemu versions >=3D 3.1.0 (2018).
+> We could build down to v0.12.0, but it would require more tweaks in the
+> dockerfile, so we keep it simple instead.
+>
+> To build the image, you need to provide a qemu and ubuntu version:
+> $ podman build -f release.Dockerfile --build-arg QEMU_VERSION=3Dv11.1.0 -=
+-build-arg UBUNTU_VERSION=3D24.04 -t qemu/v11.1.0
+>
+> To run it, as there is no shell, and no defined entrypoint, you need to
+> choose the binary you want explicitely:
+> $ podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  tests/docker/dockerfiles/release.docker | 48 +++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>  create mode 100644 tests/docker/dockerfiles/release.docker
+>
+> diff --git a/tests/docker/dockerfiles/release.docker b/tests/docker/docke=
+rfiles/release.docker
+> new file mode 100644
+> index 00000000000..ca6babde01e
+> --- /dev/null
+> +++ b/tests/docker/dockerfiles/release.docker
+> @@ -0,0 +1,48 @@
+> +ARG UBUNTU_VERSION=3D"UBUNTU_VERSION_build_arg_must_be_set"
+> +
+> +FROM ubuntu:$UBUNTU_VERSION AS build
+> +
+> +# add deb-src for apt build-dep
+> +RUN sed -e 's/Types: deb/Types: deb deb-src/' -i /etc/apt/sources.list.d=
+/* || true
+> +RUN sed -e 's/# deb-src/deb-src/' -i /etc/apt/sources.list
+> +# archive.canonical.com is not reachable anymore, and cause a long timeo=
+ut
+> +RUN sed -e '/archive.canonical.com/d' -i /etc/apt/sources.list
+> +
+> +# build dependencies
+> +RUN apt update && \
+> +env DEBIAN_FRONTEND=3Dnoninteractive apt install -y git build-essential =
+flex bison
+> +RUN apt update && \
+> +env DEBIAN_FRONTEND=3Dnoninteractive apt build-dep -y --arch-only qemu
+> +
+> +ARG QEMU_VERSION
+> +RUN echo "QEMU_VERSION=3D${QEMU_VERSION:?QEMU_VERSION build arg must be =
+set}"
+> +ARG QEMU_REPO=3D"https://gitlab.com/qemu-project/qemu.git"
+> +
+> +RUN cd /tmp && \
+> +mkdir qemu && cd qemu && git init && \
+> +git remote add origin "${QEMU_REPO}" && \
+> +git fetch origin "${QEMU_VERSION}" --depth 1 && \
+> +git checkout FETCH_HEAD && \
+> +./configure --prefix=3D/opt/qemu --disable-docs --disable-werror && \
+> +make install -j $(nproc) && \
+> +strip /opt/qemu/bin/* && \
 
----
+For the record, here I included a 'cp <list of bins> /opt/qemu/bin' line
+to make migration-test work from inside the container:
 
-v1 -> v2:
-- fixed comma in target/ppc/kvm.c
----
- include/system/kvm.h       |  2 +-
- accel/kvm/kvm-all.c        | 15 +++++++--------
- target/arm/kvm.c           | 26 +++++++++++++-------------
- target/i386/kvm/kvm.c      | 22 ++++++++++++----------
- target/loongarch/kvm/kvm.c | 27 +++++++++------------------
- target/ppc/kvm.c           | 10 +++++++---
- target/riscv/kvm/kvm-cpu.c |  6 +++++-
- target/s390x/kvm/kvm.c     |  2 +-
- 8 files changed, 55 insertions(+), 55 deletions(-)
+migration-test
+sh
+env
+docker (installed as docker.io up there)
+cat
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index d29624034c..26d55cc699 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -358,7 +358,7 @@ int kvm_arch_get_default_type(MachineState *ms);
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
--int kvm_arch_init_vcpu(CPUState *cpu);
-+int kvm_arch_init_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
- #ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index db8fba53f3..ddc82f9775 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -504,11 +504,11 @@ static int kvm_rebind_vcpus(Error **errp)
-             }
-         }
- 
--        ret = kvm_arch_init_vcpu(cpu);
-+        ret = kvm_arch_init_vcpu(cpu, errp);
-         if (ret < 0) {
--            error_setg_errno(errp, -ret,
--                             "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
--                             vcpu_id);
-+            error_prepend(errp,
-+                          "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-+                          vcpu_id);
-         }
- 
-         close(cpu->kvm_vcpu_stats_fd);
-@@ -751,11 +751,10 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
-         }
-     }
- 
--    ret = kvm_arch_init_vcpu(cpu);
-+    ret = kvm_arch_init_vcpu(cpu, errp);
-     if (ret < 0) {
--        error_setg_errno(errp, -ret,
--                         "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
--                         kvm_arch_vcpu_id(cpu));
-+        error_prepend(errp, "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-+                      kvm_arch_vcpu_id(cpu));
-     }
-     cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index d454346037..2d37c2bfb4 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2015,17 +2015,16 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     int ret;
-     uint64_t mpidr;
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
--    Error *local_err = NULL;
-     uint64_t psciver;
- 
-     if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
--        error_report("KVM is not supported for this guest CPU type");
-+        error_setg(errp, "KVM is not supported for this guest CPU type");
-         return -EINVAL;
-     }
- 
-@@ -2071,16 +2070,19 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     /* Do KVM_ARM_VCPU_INIT ioctl */
-     ret = kvm_arm_vcpu_init(cpu);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "failed kvm_arm_vcpu_init");
-         return ret;
-     }
- 
-     if (cpu_isar_feature(aa64_sve, cpu)) {
-         ret = kvm_arm_sve_set_vls(cpu);
-         if (ret) {
-+            error_setg_errno(errp, -ret, "failed kvm_arm_sve_set_vls");
-             return ret;
-         }
-         ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_SVE);
-         if (ret) {
-+            error_setg_errno(errp, -ret, "failed kvm_arm_vcpu_finalize");
-             return ret;
-         }
-     }
-@@ -2089,11 +2091,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         psciver = cpu->psci_version;
-         ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
-         if (ret) {
--            error_report("KVM in this kernel does not support PSCI version %d.%d",
--                         (int) PSCI_VERSION_MAJOR(psciver),
--                         (int) PSCI_VERSION_MINOR(psciver));
--            error_printf("Consider setting the kvm-psci-version property on the "
--                         "migration source.\n");
-+            error_setg_errno(errp, -ret,
-+                             "KVM in this kernel does not support PSCI version %d.%d",
-+                             (int) PSCI_VERSION_MAJOR(psciver),
-+                             (int) PSCI_VERSION_MINOR(psciver));
-+            error_append_hint(errp, "Consider setting the kvm-psci-version property "
-+                              "on the migration source.\n");
-             return ret;
-         }
-     }
-@@ -2115,16 +2118,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
-      */
-     ret = kvm_get_one_reg(cs, ARM64_SYS_REG(ARM_CPU_ID_MPIDR), &mpidr);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "failed retrieving MPIDR value");
-         return ret;
-     }
-     SET_IDREG(&cpu->isar, MPIDR, mpidr);
-     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
- 
--    ret = kvm_arm_init_cpreg_list(cpu, &local_err);
--    if (ret < 0) {
--        error_report_err(local_err);
--    }
--    return ret;
-+    return kvm_arm_init_cpreg_list(cpu, errp);
- }
- 
- int kvm_arch_destroy_vcpu(CPUState *cs)
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index da922f72d7..474322b073 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2218,7 +2218,7 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-     }
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     struct {
-         struct kvm_cpuid2 cpuid;
-@@ -2240,12 +2240,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     int kvm_base = KVM_CPUID_SIGNATURE;
-     int max_nested_state_len;
-     int r;
--    Error *local_err = NULL;
- 
-     if (current_machine->cgs) {
-         r = x86_confidential_guest_check_features(
-                 X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
-         if (r < 0) {
-+            error_setg(errp, "failed x86_confidential_guest_check_features (%d)", r);
-             return r;
-         }
-     }
-@@ -2258,6 +2258,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
- 
-     r = kvm_arch_set_tsc_khz(cs);
-     if (r < 0) {
-+        error_setg(errp, "failed setting tsc_khz (%d)", r);
-         return r;
-     }
- 
-@@ -2285,14 +2286,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
-      * can still proceed and check/expand Hyper-V enlightenments here so legacy
-      * behavior is preserved.
-      */
--    if (!kvm_hyperv_expand_features(cpu, &local_err)) {
--        error_report_err(local_err);
-+    if (!kvm_hyperv_expand_features(cpu, errp)) {
-         return -ENOSYS;
-     }
- 
-     if (hyperv_enabled(cpu)) {
-         r = hyperv_init_vcpu(cpu);
-         if (r) {
-+            error_setg_errno(errp, -r, "failed hyperv_init_vcpu");
-             return r;
-         }
- 
-@@ -2371,6 +2372,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
- 
-         r = kvm_xen_init_vcpu(cs);
-         if (r) {
-+            error_setg_errno(errp, -r, "failed kvm_xen_init_vcpu");
-             return r;
-         }
- 
-@@ -2419,12 +2421,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
- 
-         ret = kvm_get_mce_cap_supported(cs->kvm_state, &mcg_cap, &banks);
-         if (ret < 0) {
--            fprintf(stderr, "kvm_get_mce_cap_supported: %s", strerror(-ret));
-+            error_setg_errno(errp, -ret, "failed kvm_get_mce_cap_supported");
-             return ret;
-         }
- 
-         if (banks < (env->mcg_cap & MCG_CAP_BANKS_MASK)) {
--            error_report("kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
-+            error_setg(errp, "kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
-                          (int)(env->mcg_cap & MCG_CAP_BANKS_MASK), banks);
-             return -ENOTSUP;
-         }
-@@ -2432,7 +2434,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         unsupported_caps = env->mcg_cap & ~(mcg_cap | MCG_CAP_BANKS_MASK);
-         if (unsupported_caps) {
-             if (unsupported_caps & MCG_LMCE_P) {
--                error_report("kvm: LMCE not supported");
-+                error_setg(errp, "kvm: LMCE not supported");
-                 return -ENOTSUP;
-             }
-             warn_report("Unsupported MCG_CAP bits: 0x%" PRIx64,
-@@ -2442,7 +2444,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         env->mcg_cap &= mcg_cap | MCG_CAP_BANKS_MASK;
-         ret = kvm_vcpu_ioctl(cs, KVM_X86_SETUP_MCE, &env->mcg_cap);
-         if (ret < 0) {
--            fprintf(stderr, "KVM_X86_SETUP_MCE: %s", strerror(-ret));
-+            error_setg_errno(errp, -ret, "failed KVM_X86_SETUP_MCE");
-             return ret;
-         }
-     }
-@@ -2470,9 +2472,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
-             error_setg(&invtsc_mig_blocker,
-                        "State blocked by non-migratable CPU device"
-                        " (invtsc flag)");
--            r = migrate_add_blocker(&invtsc_mig_blocker, &local_err);
-+            r = migrate_add_blocker(&invtsc_mig_blocker, errp);
-             if (r < 0) {
--                error_report_err(local_err);
-                 return r;
-             }
-         }
-@@ -2501,6 +2502,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     cpuid_data.cpuid.padding = 0;
-     r = kvm_vcpu_ioctl(cs, KVM_SET_CPUID2, &cpuid_data);
-     if (r) {
-+        error_setg_errno(errp, -r, "failed KVM_SET_CPUID2");
-         goto fail;
-     }
-     kvm_init_xsave(env);
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 7ca95181a1..db39267375 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1320,11 +1320,10 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     uint64_t val;
-     int ret;
--    Error *local_err = NULL;
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
- 
-     cpu->vmsentry = qemu_add_vm_change_state_handler(
-@@ -1334,51 +1333,43 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         brk_insn = val;
-     }
- 
--    ret = kvm_cpu_check_lsx(cs, &local_err);
-+    ret = kvm_cpu_check_lsx(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_lasx(cs, &local_err);
-+    ret = kvm_cpu_check_lasx(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_lbt(cs, &local_err);
-+    ret = kvm_cpu_check_lbt(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_pmu(cs, &local_err);
-+    ret = kvm_cpu_check_pmu(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_pv_features(cs, &local_err);
-+    ret = kvm_cpu_check_pv_features(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_ptw(cs, &local_err);
-+    ret = kvm_cpu_check_ptw(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    ret = kvm_cpu_check_msgint(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
--    ret = kvm_cpu_check_misc_v1_1(cs, &local_err);
-+    ret = kvm_cpu_check_misc_v1_1(cs, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
-     }
- 
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 8e89a6c665..cd19f7a6fd 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -484,7 +484,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-     CPUPPCState *cenv = &cpu->env;
-@@ -493,9 +493,10 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     /* Synchronize sregs with kvm */
-     ret = kvm_arch_sync_sregs(cpu);
-     if (ret) {
-+        error_setg_errno(errp, -ret, "Register sync failed");
-         if (ret == -EINVAL) {
--            error_report("Register sync failed... If you're using kvm-hv.ko,"
--                         " only \"-cpu host\" is possible");
-+            error_append_hint(errp, "If you're using kvm-hv.ko,"
-+                              " only \"-cpu host\" is possible\n");
-         }
-         return ret;
-     }
-@@ -504,6 +505,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     case POWERPC_MMU_BOOKE206:
-         /* This target supports access to KVM's guest TLB */
-         ret = kvm_booke206_tlb_init(cpu);
-+        if (ret < 0) {
-+            error_setg_errno(errp, -ret, "failed kvm_booke206_tlb_init");
-+        }
-         break;
-     case POWERPC_MMU_2_07:
-         if (!cap_htm && !kvmppc_is_pr(cs->kvm_state)) {
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 5a82a63b82..523b515f2a 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1605,7 +1605,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     int ret = 0;
-     RISCVCPU *cpu = RISCV_CPU(cs);
-@@ -1615,6 +1615,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     if (!object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST)) {
-         ret = kvm_vcpu_set_machine_ids(cpu, cs);
-         if (ret != 0) {
-+            error_setg_errno(errp, -ret, "failed setting machine id");
-             return ret;
-         }
-     }
-@@ -1623,6 +1624,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     kvm_riscv_update_cpu_cfg_isa_ext(cpu, cs);
- 
-     ret = kvm_vcpu_enable_sbi_dbcn(cpu, cs);
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "failed kvm_vcpu_enable_sbi_dbcn");
-+    }
- 
-     return ret;
- }
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index dc67e84886..76dd1e67c0 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -403,7 +403,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
--int kvm_arch_init_vcpu(CPUState *cs)
-+int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
- {
-     unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
-     S390CPU *cpu = S390_CPU(cs);
--- 
-2.53.0
-
+> +rm -rf /tmp/*
+> +
+> +# retrieve runtime dependencies (libs)
+> +RUN ldd /opt/qemu/bin/* | grep '=3D>' | sed -e 's/.*=3D>//' -e 's/(.*//'=
+ | sort -u > /opt/qemu/libs
+> +# store them in /deps/lib
+> +RUN mkdir -p /deps/lib && cp --preserve --dereference $(cat /opt/qemu/li=
+bs) /deps/lib
+> +# copy loader (with its original path)
+> +RUN cp --preserve --parents --dereference /lib*/ld-linux* /deps/
+> +
+> +########################################################################=
+########
+> +FROM scratch
+> +
+> +COPY --from=3Dbuild /deps /
+> +# copy qemu and all associated artifacts (roms, ...)
+> +COPY --from=3Dbuild /opt/qemu /usr
+> +
+> +# build with:
+> +# podman build -f release.docker --build-arg QEMU_VERSION=3Dv11.1.0 --bu=
+ild-arg UBUNTU_VERSION=3D24.04 -t qemu/v11.1.0
+> +# run with:
+> +# podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
 
