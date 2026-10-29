@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C615606A321
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB79606A320
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=CFnBEcvq
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=OoWT/1xq
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQ0z-0006KF-D8; Thu, 29 Oct 2026 09:17:57 -0400
+	id 1xMQ09-0004Wc-3P; Thu, 29 Oct 2026 09:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPx0-0008Kn-Is
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:52 -0400
+ id 1xMPws-0008Ci-Ah
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPwy-0006Qx-BR
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:50 -0400
+ id 1xMPwp-0006Ly-Eh
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793279627;
+ s=mimecast20190719; t=1793279618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UGTyBdiqqssdvxui1jIZp1h53dhBzd+74oduvEHlCV0=;
- b=CFnBEcvq46HQ82ankD/Pcs9S1f3rvhE6swsLUL6DCZG0dm+QNnTxFKWLicYQblxtLT5iWi
- XFUmunCn1zVSY/Ir54Dvj9bQpnnLCYAsAHXM27j7r9pYgyvcXEpQVjVfjzmTdbi7uN4vD4
- 6AfPiQcl0wvV7JBDR1tgaW4jYc53hSo=
+ bh=C7p1LEeyLZSZL9FUD4D7rxbaV3PabPqRc8xm3XGeIkg=;
+ b=OoWT/1xqSwmcoKeKZGoVC6Bm4DLN4qKqDKnoEhF1luc5cHcFxQcSV33F2ilhF1o9EVWrbX
+ dnDroOuaCWc+vr0RDPxh/tsMcPyILUGVq0Lzeif4/LUHFc3NUT2ploa77UoZtEcpkyg8AQ
+ m89Nnz3Zlr6j11ZVcxdaqN7AwhNshvs=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-Ltbpkw55OQapaFjtxP0Ozg-1; Thu,
- 29 Oct 2026 09:13:43 -0400
-X-MC-Unique: Ltbpkw55OQapaFjtxP0Ozg-1
-X-Mimecast-MFC-AGG-ID: Ltbpkw55OQapaFjtxP0Ozg_1793279622
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-RpRC8drjNnuDDKwtDTmY0w-1; Thu,
+ 29 Oct 2026 09:13:32 -0400
+X-MC-Unique: RpRC8drjNnuDDKwtDTmY0w-1
+X-Mimecast-MFC-AGG-ID: RpRC8drjNnuDDKwtDTmY0w_1793279611
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E03851800679; Thu, 29 Oct 2026 13:13:41 +0000 (UTC)
+ id E8CF31800616; Thu, 29 Oct 2026 13:13:30 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 90AE13000735; Thu, 29 Oct 2026 13:13:39 +0000 (UTC)
+ id 9A0D23000723; Thu, 29 Oct 2026 13:13:28 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -56,10 +56,9 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 20/28] hw/mem: mark nvdimm,
- pc-dimm & spapr-nvdimm devices as secure
-Date: Thu, 29 Oct 2026 13:12:33 +0000
-Message-ID: <20261029131241.2275706-21-berrange@redhat.com>
+Subject: [PATCH v2 16/28] hw/tpm: mark all TPM implementations as secure
+Date: Thu, 29 Oct 2026 13:12:29 +0000
+Message-ID: <20261029131241.2275706-17-berrange@redhat.com>
 In-Reply-To: <20261029131241.2275706-1-berrange@redhat.com>
 References: <20261029131241.2275706-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -94,53 +93,92 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-These devices are used in virutalization scenarios to support memory
-hotplug and other uses cases.
+All of the TPM implementations are in scope of virtualization
+usage, so mark them all as secure.
 
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/mem/nvdimm.c       | 1 +
- hw/mem/pc-dimm.c      | 1 +
- hw/ppc/spapr_nvdimm.c | 1 +
- 3 files changed, 3 insertions(+)
+ hw/ppc/spapr_tpm_proxy.c | 1 +
+ hw/tpm/tpm_crb.c         | 1 +
+ hw/tpm/tpm_spapr.c       | 1 +
+ hw/tpm/tpm_tis_i2c.c     | 1 +
+ hw/tpm/tpm_tis_isa.c     | 1 +
+ hw/tpm/tpm_tis_sysbus.c  | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
-index cf8a4d8c5f2..9a575798452 100644
---- a/hw/mem/nvdimm.c
-+++ b/hw/mem/nvdimm.c
-@@ -275,6 +275,7 @@ static const TypeInfo nvdimm_info = {
-     .instance_size = sizeof(NVDIMMDevice),
-     .instance_init = nvdimm_init,
-     .instance_finalize = nvdimm_finalize,
+diff --git a/hw/ppc/spapr_tpm_proxy.c b/hw/ppc/spapr_tpm_proxy.c
+index 19889e80bc1..bb6efec20c9 100644
+--- a/hw/ppc/spapr_tpm_proxy.c
++++ b/hw/ppc/spapr_tpm_proxy.c
+@@ -166,6 +166,7 @@ static const TypeInfo spapr_tpm_proxy_info = {
+     .parent        = TYPE_DEVICE,
+     .instance_size = sizeof(SpaprTpmProxy),
+     .class_init    = spapr_tpm_proxy_class_init,
 +    .secure        = true,
  };
  
- static void nvdimm_register_types(void)
-diff --git a/hw/mem/pc-dimm.c b/hw/mem/pc-dimm.c
-index 68862926ee2..89fd06724ca 100644
---- a/hw/mem/pc-dimm.c
-+++ b/hw/mem/pc-dimm.c
-@@ -301,6 +301,7 @@ static const TypeInfo pc_dimm_info = {
-     .instance_init = pc_dimm_init,
-     .class_init    = pc_dimm_class_init,
-     .class_size    = sizeof(PCDIMMDeviceClass),
+ static void spapr_tpm_proxy_register_types(void)
+diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+index 78db2205207..ab6121ed9e6 100644
+--- a/hw/tpm/tpm_crb.c
++++ b/hw/tpm/tpm_crb.c
+@@ -558,6 +558,7 @@ static const TypeInfo tpm_crb_info = {
+     .parent = TYPE_DEVICE,
+     .instance_size = sizeof(CRBState),
+     .class_init  = tpm_crb_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { }
+diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
+index 19075d1f012..3957c5268b7 100644
+--- a/hw/tpm/tpm_spapr.c
++++ b/hw/tpm/tpm_spapr.c
+@@ -414,6 +414,7 @@ static const TypeInfo tpm_spapr_info = {
+     .parent        = TYPE_VIO_SPAPR_DEVICE,
+     .instance_size = sizeof(SpaprTpmState),
+     .class_init    = tpm_spapr_class_init,
 +    .secure        = true,
      .interfaces = (const InterfaceInfo[]) {
-         { TYPE_MEMORY_DEVICE },
+         { TYPE_TPM_IF },
          { }
-diff --git a/hw/ppc/spapr_nvdimm.c b/hw/ppc/spapr_nvdimm.c
-index 542ed79497a..ae270168500 100644
---- a/hw/ppc/spapr_nvdimm.c
-+++ b/hw/ppc/spapr_nvdimm.c
-@@ -916,6 +916,7 @@ static TypeInfo spapr_nvdimm_info = {
-     .class_size    = sizeof(SPAPRNVDIMMClass),
-     .instance_size = sizeof(SpaprNVDIMMDevice),
-     .instance_init = spapr_nvdimm_init,
+diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
+index b4f258c7bcb..302296affb6 100644
+--- a/hw/tpm/tpm_tis_i2c.c
++++ b/hw/tpm/tpm_tis_i2c.c
+@@ -551,6 +551,7 @@ static const TypeInfo tpm_tis_i2c_info = {
+     .name          = TYPE_TPM_TIS_I2C,
+     .parent        = TYPE_I2C_SLAVE,
+     .instance_size = sizeof(TPMStateI2C),
 +    .secure        = true,
- };
- 
- static void spapr_nvdimm_register_types(void)
+     .class_init    = tpm_tis_i2c_class_init,
+         .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
+index 2b1267133ac..da3a932b033 100644
+--- a/hw/tpm/tpm_tis_isa.c
++++ b/hw/tpm/tpm_tis_isa.c
+@@ -187,6 +187,7 @@ static const TypeInfo tpm_tis_isa_info = {
+     .instance_size = sizeof(TPMStateISA),
+     .instance_init = tpm_tis_isa_initfn,
+     .class_init  = tpm_tis_isa_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { TYPE_ACPI_DEV_AML_IF },
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index a7b0002d826..0afb52c3be3 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -167,6 +167,7 @@ static const TypeInfo tpm_tis_sysbus_info = {
+     .instance_init = tpm_tis_sysbus_initfn,
+     .instance_finalize = tpm_tis_sysbus_finalize,
+     .class_init  = tpm_tis_sysbus_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_TPM_IF },
+         { }
 -- 
 2.56.0
 
