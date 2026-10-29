@@ -1,85 +1,102 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69591606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103BD606A31A
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 07:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=XJ1agdOk
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=zTPapeXn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMKTT-0005ER-Vq; Thu, 29 Oct 2026 03:23:00 -0400
+	id 1xMKTj-0005G2-Lb; Thu, 29 Oct 2026 03:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMKTR-0005Dz-L5
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 03:22:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1xMKTQ-0000Nv-6k
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 03:22:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793258574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JhgCEKXSkIc5+vp1Ra85+bY7xSp4/WCjdoD7bU7k2T4=;
- b=XJ1agdOktUd11vi1MXEMe7nXN+V5JcVExqPfyBUEKXTvVR1JOIJiDnJyXg5gA5QiX+GVID
- Q4qqCn0r1LmdplHQgnD1o13HphnOWu588bFVL7u9pO0iQLypqW0BU6eqYdIygu5/+VUKgt
- T9nQTfn2GGld/RgbI5fQGFMGqJXbLTg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-GMPkkdeLPAmg0lkJ2RPI8g-1; Thu,
- 29 Oct 2026 03:22:42 -0400
-X-MC-Unique: GMPkkdeLPAmg0lkJ2RPI8g-1
-X-Mimecast-MFC-AGG-ID: GMPkkdeLPAmg0lkJ2RPI8g_1793258561
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F8191954124; Thu, 29 Oct 2026 07:22:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0EDCF3000B78; Thu, 29 Oct 2026 07:22:38 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 662E321E6A04; Thu, 29 Oct 2026 08:22:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Timur Maksimov <gessingate@gmail.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- qemu-devel@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Jamin
- Lin <jamin_lin@aspeedtech.com>,  Kane Chen <kane_chen@aspeedtech.com>,
- qemu-arm@nongnu.org,  Fabiano Rosas <farosas@suse.de>,  Laurent Vivier
- <lvivier@redhat.com>,  Corey Minyard <cminyard@mvista.com>
-Subject: Re: [PATCH v2 1/6] hw/i2c: add dummy device
-In-Reply-To: <5d219f231fb1f97c6d90cbef4068e82dff803a18.camel@gmail.com> (Timur
- Maksimov's message of "Wed, 28 Oct 2026 19:20:48 +0300")
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xMKTf-0005Ff-Eq
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 03:23:11 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gessingate@gmail.com>)
+ id 1xMKTd-0000P5-Ax
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 03:23:11 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4a208d93758so18244945e9.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 00:23:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793258587; x=1793863387; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=jZAFTthNhoufn3UF/BJMq8cQ8lVVnd0qTh1IEOPGtZQ=;
+ b=zTPapeXnFtPgWVbzmZ/ys4ZDSqBYlmFfZaGONbUuaSAoobRQLhYN6U9YgeGa9JdbVk
+ CKK6AuI9Y0UjI6bmWcpFS6Fch1NP3vrC9fqW9oVvQNXTj+qNXyzTe7cCdnZJac4dTRfi
+ q5fvTw003FZxAUa04/f035zSCzFpuNjIfwVqZPGKdo3yb4Txx3mg31RN7YwFj1Q/liDd
+ 7epKUHf3B18CXY2K799OurP43YQx2SrwzO3imQA6tyHhbtc/xA45jLz7uOK5xE4tiiKN
+ evbe6fus/LG8nDDzPJZv5pOx9+4/6nOaqLtMGmjZsVGEMGv01+VEABUWQ1JfE9g86oOk
+ hvhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793258587; x=1793863387;
+ h=mime-version:user-agent:content-transfer-encoding:content-type
+ :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jZAFTthNhoufn3UF/BJMq8cQ8lVVnd0qTh1IEOPGtZQ=;
+ b=1r5OE+EPyJ9OP/+xOS9y4O5jDiLpsK8Drs1A6x73tF6hHFRWQ9xoQbvQOLpZfPqVo1
+ vwn9RzhwTZgXEmcgUepc3ME/m5lZaoViXmj8yhhknLEDGotUNq8Db6WpANqwuwI//KmE
+ b6OKHTmlz59W68Fizg3SZtQ6VZ+vd6NhRYaUkgtt3mTLicq+WzBnV0vANHqWPYLgBnKw
+ tfeIWoGTskBYk4zyeMGbJqUovAc3ar2nAgCG7TFyEbgqQC7eHkLsO89unol3zTf443YY
+ DxbZjfYCoVVMRcnX0RIw/JhZt3EIs0Y2qiOhETiy5mHweG/lrwZ2akUx+uovv5Djl7ja
+ B1hA==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxmFLnrJb071A94PtAJaokCU7sYoBs+p0Zfb0BTRO+eKhFF8LYVT3Gb2cLXJyMa8IbJYDB578RP48kp@nongnu.org
+X-Gm-Message-State: AFq9FYKlesdJzxNVO2zqT3MFsD0kowbOyTBSrexZF4Bb0bLiu8E0qBfq
+ C0HlJKFCq7lmshl85BY0i3S3c4U6Qetad7lP30b5tCf7fSjrInUIzym0
+X-Gm-Gg: AYBFou1deKrIwGOyQVwoB/g1PSFUlVLfNto78dLZioUWzMsm7X/baOYP2LvJcqhs2OJ
+ UL61KFSt1Q6flWpeojRZIPdZYkKGYsRMcldPxXAuXxy29ME2ehZYiQn63DkT8K0sWd9AjP7DEe5
+ d2wjUZUD2nxRiUe3SPKgrduai21Fq4aUSei3jro1r/4kRC9k9lECE9aTfw+xe4c2OiUABrYAZua
+ oogzJYYnsmy9V9jmxt19PA3ci7UcxFWbSj7XB0atO48GG/DP5sT6JdiwOsmHNQUFjtkrAyUWapy
+ 1DhkNjFsqfygeCL0di6LaV2EPhceHeYDPxTclxF33A6aDfnm3/IZhqJ5KjRgc6oatLWGFYh+R2i
+ TtY+qX0MrTQOQRuG22uKTyCN5zdprt7rxG9Ci543otXZAlpCOArd4SwBDb12xW4DRJCau4jYhdd
+ nauFgotjVIGdf8s3hxiMbIja9isMbsH+T6cNx+MzcDSkqYVFlEIkBdqR8+m6gAdLfF5x5GZFolC
+ p6+rXhKkVXVaNJhWlFzm0SWalxIOxjHNkbOeVAzuy9UlEhgBbx+x7vUeEkP7iOA4rrelvxYfs3N
+ U+ycNUzOXOxZ8YWNivmGfCih6vMXa1MYOpay95PJt31sn51eqhHr8bQ4BDBLOPJ4IP0=
+X-Received: by 2002:a05:600c:1987:b0:4a1:e00b:a10b with SMTP id
+ 5b1f17b1804b1-4a965dd31e3mr94194945e9.7.1793258587392; 
+ Thu, 29 Oct 2026 00:23:07 -0700 (PDT)
+Received: from [192.168.1.89] (95-24-99-141.broadband.corbina.ru.
+ [95.24.99.141]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4a966a56abesm67839885e9.0.2026.10.29.00.23.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 00:23:06 -0700 (PDT)
+Message-ID: <15aa908814cfe5e3fd3d0ac4c7b3bd043b28df36.camel@gmail.com>
+Subject: Re: [PATCH v2 4/6] hw/i2c/aspeed: fix buffer transfer in non-packet
+ mode
+From: Timur Maksimov <gessingate@gmail.com>
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Kane Chen
+ <kane_chen@aspeedtech.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Date: Thu, 29 Oct 2026 10:23:03 +0300
+In-Reply-To: <SEZPR06MB736293095EFE3149F167A71DFC6E2@SEZPR06MB7362.apcprd06.prod.outlook.com>
 References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
- <20261027-aspeed-i2c-nonpkt-fix-v2-1-07deed1dff60@gmail.com>
- <2629ee8a-e817-4764-a1e3-72e0ccbb978b@kaod.org>
- <874ie6ku2u.fsf@pond.sub.org>
- <5d219f231fb1f97c6d90cbef4068e82dff803a18.camel@gmail.com>
-Date: Thu, 29 Oct 2026 08:22:36 +0100
-Message-ID: <87pkwtezsz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20261027-aspeed-i2c-nonpkt-fix-v2-4-07deed1dff60@gmail.com>
+ <SEZPR06MB736293095EFE3149F167A71DFC6E2@SEZPR06MB7362.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-9 
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=gessingate@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,46 +108,151 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=ham
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Timur Maksimov <gessingate@gmail.com> writes:
+Hi Jamin, you are right;  no driver uses those modes, and I can't
+verify their work at the moment.
+Do you suppose, that they don't work? Are there issues with them?
+We can exclude them from tests, but  buffer mode is important for old
+chips like AST2500.
 
-> Hi, thanks for the review.=C2=A0
->
-> It was my decision to use such API, I thought it would be okay for a
-> test device. I don't think there is a way to expose integer array as a
-> single QOM property.
-
-There are ways, but I need to know what you're trying to accomplish to
-be able to provide guidance.
-
-> Actually, we can go without this model. I suppose I will rewrite tests
-> so they don't use it.
-
-You haven't answered my question on code-provenance.rst.
-
-> On Wed, 2026-10-28 at 11:17 +0100, Markus Armbruster wrote:
->> C=C3=A9dric Le Goater <clg@kaod.org> writes:
->>=20
->> > + Corey for I2C feed back.
->> >=20
->> > + Markus for QOM
->> >=20
->> > The brute-force solution to expose the contents of the device array
->> > with 128 properties has a slight AI smell. I find it ugly but I am
->> > human :)
->>=20
->> Timur, have you read docs/devel/code-provenance.rst section "Use of
->> AI-generated content"?
->>=20
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 That said I don't kno=
-w if there are better alternatives.
-
-[...]
-
+On Thu, 2026-10-29 at 06:33 +0000, Jamin Lin wrote:
+> Hi Timur,
+>=20
+> As far as I can see, no ASPEED Linux driver uses non-packet buffer or
+> DMA mode for master transfers:
+> - i2c-aspeed.c (old register mode) only uses byte mode; the address
+> =C2=A0 is always written to the byte buffer register before START.
+> - i2c-ast2600.c in the ASPEED SDK kernel (new register mode) sets
+> =C2=A0 PKT_EN for every master transfer, and the address comes from
+> =C2=A0 PKT_ADDR.
+>=20
+> Have you verified this behavior on real hardware? Which firmware are
+> you running that uses non-packet buffer/DMA mode?
+>=20
+> Thanks,
+> Jamin
+>=20
+> > Subject: [PATCH v2 4/6] hw/i2c/aspeed: fix buffer transfer in non-
+> > packet mode
+> >=20
+> > In non-packet mode, the first byte of the tx buffer pool contains a
+> > device
+> > address, so avoid sending it as a data byte.
+> >=20
+> > Fixes: 961faf3ddbd8 ("hw/i2c/aspeed: Fix TXBUF transmission start
+> > position
+> > error")
+> > Signed-off-by: Timur Maksimov <gessingate@gmail.com>
+> > ---
+> > =C2=A0hw/i2c/aspeed_i2c.c | 11 +++++++----
+> > =C2=A01 file changed, 7 insertions(+), 4 deletions(-)
+> >=20
+> > diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c index
+> > ff6ef6d23a..510758fb7a 100644
+> > --- a/hw/i2c/aspeed_i2c.c
+> > +++ b/hw/i2c/aspeed_i2c.c
+> > @@ -382,7 +382,7 @@ static void
+> > aspeed_i2c_bus_recv_dma_pool(AspeedI2CBus *bus)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 SHARED_ARRAY_FIELD_DP32(bus->regs, reg_cmd, RX=
+_DMA_EN, 0);=C2=A0 }
+> >=20
+> > -static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
+> > +static int aspeed_i2c_bus_send(AspeedI2CBus *bus, bool send_addr)
+> > =C2=A0{
+> > =C2=A0=C2=A0=C2=A0=C2=A0 AspeedI2CClass *aic =3D ASPEED_I2C_GET_CLASS(b=
+us->controller);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 int ret =3D -1;
+> > @@ -391,11 +391,12 @@ static int aspeed_i2c_bus_send(AspeedI2CBus
+> > *bus)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_pool_ctrl =3D aspeed_i2c_bus_pool=
+_ctrl_offset(bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_byte_buf =3D aspeed_i2c_bus_byte_=
+buf_offset(bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_dma_len =3D aspeed_i2c_bus_dma_le=
+n_offset(bus);
+> > +=C2=A0=C2=A0=C2=A0 uint8_t pool_offset =3D send_addr ? 1 : 0;
+> > =C2=A0=C2=A0=C2=A0=C2=A0 int pool_tx_count =3D SHARED_ARRAY_FIELD_EX32(=
+bus->regs,
+> > reg_pool_ctrl,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TX_CO=
+UNT) + 1;
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd=
+, TX_BUFF_EN)) {
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < pool_tx_c=
+ount; i++) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (i =3D pool_offset; i <=
+ pool_tx_count; i++) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 uint8_t *pool_base =3D aic->bus_pool_base(bus);
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 trace_aspeed_i2c_bus_send("BUF", i + 1, pool_tx_count,
+> > @@
+> > -633,6 +634,7 @@ static void aspeed_i2c_bus_handle_cmd(AspeedI2CBus
+> > *bus, uint64_t value)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_intr_sts =3D aspeed_i2c_bus_intr_=
+sts_offset(bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_cmd =3D aspeed_i2c_bus_cmd_offset=
+(bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 uint32_t reg_dma_len =3D aspeed_i2c_bus_dma_le=
+n_offset(bus);
+> > +=C2=A0=C2=A0=C2=A0 bool start_cmd =3D SHARED_ARRAY_FIELD_EX32(bus->reg=
+s, reg_cmd,
+> > + M_START_CMD);
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 if (!aspeed_i2c_check_sram(bus)) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
+> > @@ -642,7 +644,7 @@ static void
+> > aspeed_i2c_bus_handle_cmd(AspeedI2CBus *bus, uint64_t value)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 aspeed_i2c_bus_cmd_dum=
+p(bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > -=C2=A0=C2=A0=C2=A0 if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd, M_S=
+TART_CMD))
+> > {
+> > +=C2=A0=C2=A0=C2=A0 if (start_cmd) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint8_t state =3D aspe=
+ed_i2c_get_state(bus) & I2CD_MACTIVE ?
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 I2CD_MSTARTR : I2CD_MSTART;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint8_t addr;
+> > @@ -686,7 +688,8 @@ static void
+> > aspeed_i2c_bus_handle_cmd(AspeedI2CBus *bus, uint64_t value)
+> >=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0 if (SHARED_ARRAY_FIELD_EX32(bus->regs, reg_cmd=
+, M_TX_CMD)) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 aspeed_i2c_set_state(b=
+us, I2CD_MTXD);
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (aspeed_i2c_bus_send(bus=
+)) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (aspeed_i2c_bus_send(bus=
+, start_cmd &&
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !a=
+speed_i2c_bus_pkt_mode_en
+> > (bus)))
+> > + {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 SHARED_ARRAY_FIELD_DP32(bus->regs, reg_intr_sts,
+> > TX_NAK,
+> > 1);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 i2c_end_transfer(bus->bus);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 } else {
+> >=20
+> > --
+> > 2.53.0
 
