@@ -1,74 +1,100 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A140606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2183606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=iap+090c
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oJD2crVw
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQ3w-0004Kv-6v; Thu, 29 Oct 2026 09:21:00 -0400
+	id 1xMQ4x-0006Ud-LO; Thu, 29 Oct 2026 09:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xMQ34-0003Ls-6q
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:20:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xMQ32-0007R7-Ff
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:20:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793280003;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=33YGeytEC/trZdxKWUvUe7w1pCawgF03JUTyBPUumUo=;
- b=iap+090cGdEIC+T21DwDDsyERlFsJ4djgewiZVscAgeQSAdbMILb85AbtPWwsL0vO+p3Ez
- MAg8XWSaVOPNMs4g6uSrBnCOkqU6k7DEqVIWhEhmFAsmBKOceMK+T79Tznowcg8bdl8V3i
- IZ08vv7lwkFeklHNAUrBRQXAI2TifFk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-7lVm-Io8MIi-b0MdvnwTJg-1; Thu,
- 29 Oct 2026 09:20:00 -0400
-X-MC-Unique: 7lVm-Io8MIi-b0MdvnwTJg-1
-X-Mimecast-MFC-AGG-ID: 7lVm-Io8MIi-b0MdvnwTJg_1793279999
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01FD11955E79; Thu, 29 Oct 2026 13:19:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.61])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC11B1956089; Thu, 29 Oct 2026 13:19:56 +0000 (UTC)
-Date: Thu, 29 Oct 2026 14:19:54 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, mst@redhat.com,
- devel@lists.libvirt.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 5/5] virtio-blk-test: Test truncated serial
-Message-ID: <auNH-taj7VUUbvfP@redhat.com>
-References: <20261028232400.222535-1-kwolf@redhat.com>
- <20261028232400.222535-6-kwolf@redhat.com>
- <20261029124249.GB1506267@shajnocz.csb>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xMQ4f-0006DX-75
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:21:47 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1xMQ4d-0007re-Ci
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:21:44 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-713e6ecf595so544815eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 06:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793280100; x=1793884900; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=X7AOxLq/tsoqZTYm40DROrzTxnJXmnaHbR3z1cHn+lo=;
+ b=oJD2crVwm9+ckIqWaCgeRHGG9+RmCUQn2PiXEvR9N/9d0rE4xYW8LxdVVJ73vNmsYW
+ 02zIDWl8SVO0MEAGscw8R6fSNoHULxaY6+Xp0WbdHNqbwzeyxtxK1/E8IbJD+Gm0ey5a
+ A4yo4ok8+il+TUoRbxLpAEr8BLoWedk7OuDDLw5wZdvnRchmcI5MqSvF9rWehm8Q4nQm
+ whUOCTwgEq7me4hppCNEbvkVenSRpL/DhkOK1n8TWyz6hcKv2t6jKmdH67qYbEUvG/Zs
+ Bx1WZ2BjkL4ZXfZxQwcKO2hQC2Zs5dT8KfsNku9R7OMQpK8erNNsXk5boXNEm7k8AyRZ
+ 5Kqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793280100; x=1793884900;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=X7AOxLq/tsoqZTYm40DROrzTxnJXmnaHbR3z1cHn+lo=;
+ b=kBU0Tn+cgX2rNbyhKatRb42jPAMogPQoi7WQ0MTO8pxumQ6/WWNaK+W4gf9AIax6Jb
+ /fFCJr7vAboo6wXZoqrKE3UbeEHVrdbjYRoiDp8UP7Ig/ZtYAeJqDcykfXcuzxQbFsVu
+ qcUatd7McgVLnE/AuQ49QJeNKMl7JSVEA1C7YgV3URXL00WehAyZJc1EhqVeo+ZQuLe+
+ 7RyJzc+3OeTbEO2IgKPMnpFAE4GxCIK5U3pbY/u6kCWCzmZQZLzj6yhrXTU3Uyf3tEiJ
+ WvAndz1MZEYNx+b4Ir+r+mTnhvQEjZ3o5GSbOqjIqFiQsmLkJoWD6IoNdYP2rdQzZCUA
+ j7Gg==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBzysn6nFhtC9lWPP19wDgHqBCYKXF3DR0006R1WDhi7tFGxxuPPU1mP58OUxtB1BxM/AfNOg0AWFpIJ@nongnu.org
+X-Gm-Message-State: AFq9FYJDBnWMK0yHBeaCIJdtn6s+bd1jXC9RJMlw8fNL/9VMTKGADsHs
+ 7x3hMJx6sUjMEptj3jEvKL4AhnG9W4JdehsUTyNPZAKCN9jLFC905XfXp3Mzu8Dm7Bo=
+X-Gm-Gg: AYBFou2BGwAjILCxHD7mRY8EAXzXZNATVxgSXQcLXZXVwzxyEd9f2W3C6WWk8jWlmJI
+ ol0X1ZVSySWLh5f5rtcYv1Xz0onBN+SaVMkMrQpiuzjTLdHv9DTqoq4dHTawhbZtwKXlclyDIzw
+ wHMO93wKSOpWNq8Trsvst1EvM5fxKs95pkZ+kSAP4z2KXYeKwfRWSQs/UcxouksOpB2D8ETXUL6
+ NGnwD+3Tyh0o3JYHeHhzYwSEfM6hc1Rz2LwGPAIyW3XaM9ZpIinGu2Zjjw9+rekzguTIk/cag9H
+ rUIZR5trEdQBkWOh7sZPdi1/qec10qO2GnTEAsQQ+IzkWx1L46piUP5R+yGASOd9+/KH0dPisOR
+ qJjzVQDoWQ1L4VQQ8YwITQ8g+gAQZtQbAVLK5BgBkIR+FLDho5fun9X4stwaS/5vtVqmgPjI+pM
+ c/Ufw8FMxCSW+JzZCZUGkWPr0IAvhVivmQDXv4HYm2Ed3KsK9PKwEpYizXe9iRZYH6mSSA7OVfC
+ R9Z395x/Eby5Cditsp5gRUY090OVMQkuo3ipEhLcMpmZNIj4wxpzHSWsTv6pxVPxbTEb81AzFO7
+ w1wUpy/vrYpH/wN9hTPHwelpSxYhUDiaUsqmwJeG2yYb
+X-Received: by 2002:a05:6820:610:b0:70b:867b:e7a1 with SMTP id
+ 006d021491bc7-714ddaeafcbmr1186262eaf.0.1793280100349; 
+ Thu, 29 Oct 2026 06:21:40 -0700 (PDT)
+Received: from [192.168.129.53] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-85b20219dc4sm4719719a34.22.2026.10.29.06.21.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Oct 2026 06:21:40 -0700 (PDT)
+Message-ID: <a853f289-ee22-43b4-999a-34c66ae439b5@linaro.org>
+Date: Thu, 29 Oct 2026 08:21:38 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261029124249.GB1506267@shajnocz.csb>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/33] cpus: Add helper to log raised exceptions with
+ '-d int'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
+ <20261022215115.19680-4-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20261022215115.19680-4-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,77 +106,19 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Am 29.10.2026 um 13:42 hat Stefan Hajnoczi geschrieben:
-> On Thu, Oct 29, 2026 at 12:24:00AM +0100, Kevin Wolf wrote:
-> > Only 20 bytes are written to the passed buffer and the returned string
-> > doesn't have a NUL terminator.
-> > 
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> >  tests/qtest/virtio-blk-test.c | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> > 
-> > diff --git a/tests/qtest/virtio-blk-test.c b/tests/qtest/virtio-blk-test.c
-> > index 14fadcb4009..99d785d9e1a 100644
-> > --- a/tests/qtest/virtio-blk-test.c
-> > +++ b/tests/qtest/virtio-blk-test.c
-> > @@ -835,6 +835,25 @@ static void get_id_serial_short(void *obj, void *data, QGuestAllocator *t_alloc)
-> >      qvirtqueue_cleanup(blk_if->vdev->bus, vq, t_alloc);
-> >  }
-> >  
-> > +static void get_id_serial_short_trunc(void *obj, void *data,
-> > +                                      QGuestAllocator *t_alloc)
-> > +{
-> > +    QVirtioBlk *blk_if = obj;
-> > +    QVirtioDevice *dev = blk_if->vdev;
-> > +    QVirtQueue *vq;
-> > +    uint8_t status;
-> > +    /* Everything after the 20 character maximum is untouched, no '\0' */
-> > +    const char expected[25] = "01234567890123456789\xa5\xa5\xa5\xa5\xa5";
-> 
-> get_id_request() also uses the 0xa5 byte pattern. How about using a
-> different pattern like 0x5a here to distinguish the two?
+On 10/22/26 16:50, Philippe Mathieu-Daudé wrote:
+> +    return STR_ARRAY_ELEM_OR_NULL(excp_name, excp) ?: "unknown";
 
-This string is used to verify that the 0xa5 pattern set by
-get_id_request() is still unchanged after the request, so the whole
-point is that it is the same.
+Why STR_ARRAY_ELEM_OR_NULL and not STR_ARRAY_ELEM_OR_VAL, supplying 
+"unknown"?
 
-Kevin
 
-> > +    char buf[25];
-> > +
-> > +    vq = get_id_setup(dev, t_alloc);
-> > +    status = get_id_request(dev, vq, buf, 25, t_alloc);
-> > +    g_assert_cmpint(status, ==, 0);
-> > +    g_assert_cmpmem(buf, 25, expected, sizeof(expected));
-> > +
-> > +    qvirtqueue_cleanup(blk_if->vdev->bus, vq, t_alloc);
-> > +}
-> > +
-> >  static void *virtio_blk_test_setup(GString *cmd_line, void *arg)
-> >  {
-> >      char *tmp_path = drive_create();
-> > @@ -871,6 +890,10 @@ static void register_virtio_blk_test(void)
-> >      opts.edge.extra_device_opts = "serial=abc";
-> >      qos_add_test("get_id/serial_short", "virtio-blk",
-> >                   get_id_serial_short, &opts);
-> > +
-> > +    opts.edge.extra_device_opts = "serial=012345678901234567890123456789";
-> > +    qos_add_test("get_id/serial_short_trunc", "virtio-blk",
-> > +                 get_id_serial_short_trunc, &opts);
-> >  }
-> >  
-> >  libqos_init(register_virtio_blk_test);
-> > -- 
-> > 2.56.0
-> > 
-> 
-
+r~
 
