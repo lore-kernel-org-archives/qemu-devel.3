@@ -1,143 +1,58 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4B2606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 02:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75476606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=S7sTXHwK
+	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Fo8UvvA0
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMFWC-0007e1-4a; Wed, 28 Oct 2026 22:05:28 -0400
+	id 1xMIYT-0002Nz-OY; Thu, 29 Oct 2026 01:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xMFW8-0007dG-GV; Wed, 28 Oct 2026 22:05:25 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xMIYS-0002Nc-Dc; Thu, 29 Oct 2026 01:20:00 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1xMFW6-0004bB-9m; Wed, 28 Oct 2026 22:05:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Bqt00ASuEd49QMKvWjU5p+SjLJq+/kTZmszjZ7YAjnYYJgak+iC/IDvQi6qkHHcdn0RJqkBZT8TUqyWJ/dxEKdyX4bTd8LwnK3ggZhGGqaH3bzDsytRBCH6LrC/rWMGz/BDXwAxCuNHh3fTQJbLnv+eQyS/XzLt6ubQ6GP1HhF08PNM5Y4XzAPMoNoBWgFTinZ72XNyEg60GJ4G1bsz5KFhwLTIY6Xbs2HLip+AATTA062HZwGwKKDgjiwo2Tgw+RtfutIjAq4kIKoPRbR4z8Uo/v1Sy9Z/oxyNFlW0q6hQuBaWSKotzDyY4X7u5wG/TJNp/Hgul4J/oXiDJEEzvag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=U6Wk1aDb/hiLKk8G7LurSieqN4zFXzqms7v0vt2ZqpI=;
- b=oScd1mC7W3vcS1XSJOEAjIDdI/b72Fsk2U0HGvu6utWd4GmxL7HFTrevkQwHpBI+XFt0Jo3OTIe05Fq2Z1hxT/csUuIcDxuRNK5axfHE6+ySuHhSy9oyGl8ydRIXTg8iOEdX908u83Aiqrah1PSQHNXLKsxI1aRF140Vt/ga+spY/yMN+Tgglk/Bm9mocruOA9Ln898fP7DDlGmaEpnwjnvB8ZwtOLjx0zs+Ty+I1Y5IEL8+VQ2W2PndAobNfTttARlPX0Eu9hG3qzcinpw1RRcPEmDWhJSToGZ3q64CDEdwPy2CbtGB/Fl2pEdXKl9CaxstD2aozem5Y2HRDcNG2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=U6Wk1aDb/hiLKk8G7LurSieqN4zFXzqms7v0vt2ZqpI=;
- b=S7sTXHwK/ka2DOQrUaJlC3AdJAGZVCEKbLiO/PSHHdNAFRaMLcT19wxJn106RbRbDiAQlDsSynQ790ag8BVWslANymr/jbDDFmDLSH+iqrqxxECBzIOfDgvtEcpcm/8V1kAwo1gmMqRsGu24D1KQKlq7mUgTzJ106RMzvof0uSx3KOjhXUV3c2nUnU7OtTEmZHz2wgwIECk6cYMPRyqdeXnqXXNZHWIE6E3sTQNUegJSpFf4k3EhkyObWk9ryM8laJxBruo3L7E5lJIYwZO8xW28zfmpIFB1sonAZTLXLMlROsuMETA+g7MvfRlL4HG/rjeCPWFsmu+ZyqeiLv1ddw==
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
- by SE2PPF5849BD80D.apcprd06.prod.outlook.com (2603:1096:108:1::7d2)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.5; Thu, 29 Oct
- 2026 02:05:13 +0000
-Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
- ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0569.007; Thu, 29 Oct 2026
- 02:05:13 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-CC: "junjie.cao@linux.dev" <junjie.cao@linux.dev>, "junjie.cao@intel.com"
- <junjie.cao@intel.com>, "marcandre.lureau@redhat.com"
- <marcandre.lureau@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Kane Chen
- <kane_chen@aspeedtech.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>, Troy Lee
- <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
- insertion
-Thread-Topic: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hub
- insertion
-Thread-Index: AQHdX6uxp6OpQ9yqq0CEeDiwsS34zbcEqZMAgAxB77CAAfWigIAA8rLw
-Date: Thu, 29 Oct 2026 02:05:13 +0000
-Message-ID: <SEZPR06MB7362D19357678C57AEE48D2FFC6E2@SEZPR06MB7362.apcprd06.prod.outlook.com>
-References: <20261019092448.278079-1-jamin_lin@aspeedtech.com>
- <20261019092448.278079-2-jamin_lin@aspeedtech.com>
- <atXr2J5oxn3BBgb-@nucbdw.ghoffman.csb.home.kraxel.org>
- <TYZPR06MB7373C4DABEAE16D546241853FC602@TYZPR06MB7373.apcprd06.prod.outlook.com>
- <auHbnlQQ7KZecdYE@nucbdw.ghoffman.csb.home.kraxel.org>
-In-Reply-To: <auHbnlQQ7KZecdYE@nucbdw.ghoffman.csb.home.kraxel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|SE2PPF5849BD80D:EE_
-x-ms-office365-filtering-correlation-id: 70051e59-37bb-4803-ad0c-08df356111c1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|23010399003|376014|1800799024|366016|22082099003|18002099003|10067099003|4143699003|56012099006|261021121427099003|261009223027099003|38070700021|261026121527099003;
-x-microsoft-antispam-message-info: ALZJdKSW3ySk6E21KD6IAHQcYMAfZ39Zj3GEpNqQ98OkAGTzOSzRFXpJ+2J4FTqYmc4lbISn9Q4LEsqbHKhTelJN6bKyH54gmrVwnFYoDPWcReaSgm/3mn1AwVmDiwyYjmOhEMHeYKFqyllADm1iV0lVODOxSVLqvwYQJJO4EJQK7F96GMrKave7+Y711N7c2J0UHI3qbbq/3TXdnjTiV4S6HSQzmfhbDDiqYhy6lw7DKYzndxuF+0rGZwX9avjvQ3tFAPpwHuRGuPWb/RN2z3/yzZKEdjgRoDI/ViMjQO6+KS5mEafZAvfLCHWXNCQ0RlZ32drY+k7nrORDzOaVKQkk7NdY8D3BSB99I3Lms5HZoHM4DIbbut8TwySKNh9cZV4/xJAHSYucqjejpTyFJeHALgWVWKCd+RU+y3UAaAKWNeGSzYzfKbvJuGJwdLah7W41Yq/DnzBUsg/sZZYLLwyir8gi4yKnFEN3+zBZBrcx8Y6HZGp8sNKrO7zDrqxSkuJ40opeRvBhn/vo/A9qZeVi/wQrwyjOH8y4dbE89blb2XRT1Q0EF0Yqanr8TByjeID2hbbCZsCupCYBvxfaoL8zfGgtvweeRou81Slc7QQIV8UOOVYu8d7CQBozZr1aS0rQQvPdLlYH6UPMStjX4P3yMtXCJjKRAzC2HCstsMo=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(22082099003)(18002099003)(10067099003)(4143699003)(56012099006)(261021121427099003)(261009223027099003)(38070700021)(261026121527099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?am8DXslOvTcxFGAOGDLvMZZsFq8tjXHs8nYHUElV8QXvzCV173W8hHDavT?=
- =?iso-8859-1?Q?OTwugaKc7fuGsraLu2hJIvtNRr5ney4nB6WCMZDGNtPcFjPEUz1A4iKXhB?=
- =?iso-8859-1?Q?WEyd39N8sZQFrSh3YMC3s+Snt9s/IgSwy0GjV8BdOCTPETLg42VIGjNA0U?=
- =?iso-8859-1?Q?8AFSkzWQgmSw2f2oLGphyd9N2/c91sBcU3gUEFICscJbXQwedXGfrYNc1Q?=
- =?iso-8859-1?Q?JfjdtNgFVsTbVN277Tf7mMdKXHG+PMvbNxBAxE4AfVeetLAY1wHsk2PHlV?=
- =?iso-8859-1?Q?WTQ3lElRxSpVi3e8oBYkb9j9InKPITpsdF7uDpeQdCS99z68NGtJJpQXjU?=
- =?iso-8859-1?Q?Nm7sm9ZAnYA2vPmGUb4Kqm1TnpggqWpesgGc8H1jxfHRKxyRf4VexXAL+R?=
- =?iso-8859-1?Q?P77rNweUTq5P/kWgg4mBLYN7gtoJOAs/m38sdPtZXZfqXDkid27flqp2+M?=
- =?iso-8859-1?Q?a+uNdv+VBVk0IojUjQqU/AthAhHN/o/FxH89mTUGKbQp0NEc2neFCANLVZ?=
- =?iso-8859-1?Q?09IMyl9Ich6lgDPFZSw00zKG6UGc63WI94MjymuEaf0CHskqO8UkG816K9?=
- =?iso-8859-1?Q?x0S3ZPBqjzmvAVdozeYAAk2L0oW7LlGpen6R12Y8vvXH6wm8afz4umkqs5?=
- =?iso-8859-1?Q?zzlgl1UuUSuibpoljbwDNWH7ap4gfshQ2Ax89bwLkI000AYKlf+q8dI4pn?=
- =?iso-8859-1?Q?uY//NjzmyvuQ42uDw+FieWcKO6yPEo3RUgRjf5j1lfJYOPfqk0a4wK6knm?=
- =?iso-8859-1?Q?kSCfWct1RifNjN1sbeJgOpPBiekt5+dRpk4SYiXHmtrS32J4lQVlT74Dkm?=
- =?iso-8859-1?Q?laDg9spFMEhLdHAggn9h8cE6D3t77G8s5w1F2FqPT10uZNoRlMH871TvqL?=
- =?iso-8859-1?Q?sIMU3PkMl4/TpHsmJiTAMAkI/ALx+zrSSJc9JSho+vmgFB/IMpSZXb9Noe?=
- =?iso-8859-1?Q?L62dbUib530/9OSl8y1Q+ZQ5wKPKyiuyfxIMCyJxrDYwaR4GsmUZk05XvH?=
- =?iso-8859-1?Q?FVTETFelJC4X4Qgd6QlopxeUWLRVlg2LvZpgqWecWKLAjg+2Uezjqqi2w+?=
- =?iso-8859-1?Q?v2v0m9v1qX4efq00BnrO1lP4OBTgz7BTc/JWlP4qCVC35UfxiywWatKQD1?=
- =?iso-8859-1?Q?6TNXwuwCzclKFY7e7wcle5N2oTJ0aHYhj6RoOmaf76mWRyXKU2nGM1vykg?=
- =?iso-8859-1?Q?KjrF1zKtm5Va8qCeuiPV3L6sxiZvDCWKtOYYN9/o72116a6VYBVA5OGmgr?=
- =?iso-8859-1?Q?HB7oUQyrUCj/thdGZTRbdLal4QkjxPV6slpF+w6nRETisMDZJwl/5R2/pR?=
- =?iso-8859-1?Q?z2axFg/gZg7piwpt/FKZLuLzuHt4gy1s5ZbyLGzzbeugEsbEpZcqxyWzGi?=
- =?iso-8859-1?Q?m4kRrExry4pZGec/VtqGX0uw3LIJVEM7evwwOTRIUAnAur6Uv+KzLmgTs+?=
- =?iso-8859-1?Q?32R6/eI8vtWacWwziPyKRs8XSMvr2bhUcWnLwubQ34c9yJvpBx1p2pzAad?=
- =?iso-8859-1?Q?Uz5cEBCZXndaLguIVVU5GkR+wkkg603fGZL+g7vgGk2Rxw+If8oiao3p3I?=
- =?iso-8859-1?Q?H+fUJ6nMj5CHl0EYMdwV7fVw9Fml7NCXlrfZRrZuG14DHlh83Ym6+jhmLD?=
- =?iso-8859-1?Q?/Gog6PG4gApSU8r2yNkLrOebEP8xW2pa/RazTOIfXdH34sE78XOZhh+1Ux?=
- =?iso-8859-1?Q?Uu+1lY6WjUOBdj+N+PJD7Uzom24PKL1bU4H0z08kCQYsGqT9Kbxo9JfgFf?=
- =?iso-8859-1?Q?N1bU5n1uf29hbArqDKSdBM+Ryfs2cwgiA4x6/nUPWR8c3bxWSTiVLsI97A?=
- =?iso-8859-1?Q?Johyf4gAXw=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1xMIYO-0006cI-Vl; Thu, 29 Oct 2026 01:19:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1793251184; bh=c1dp97AKFVkq/f0fb3FbCEj6eiCInDXdH2gTNFEieRM=;
+ h=From:To:Cc:Subject:Date;
+ b=Fo8UvvA0vWRa3hkiqFoOKpb5370Eoqv/GJJLDkJabRXC+gUT9QKesEFNqkeu083El
+ 7TSbVIfPKP74j3sB+rTc36sneAP8CDyb1UPk25y8CS7/lmaPchUpTO3RpNjUg/jexo
+ fsQpWaKCRWjcsIysYNjPih7iIODjVDJeVRz7dOTfPOvL7EYLEvAzSIyNujlT/zmOAz
+ D1nyEpg7Nr3Z9epLWYVE2oBUxvue+ItngdeZgSBh6J1+Q54erh9waVVD/7QBEQ4wlu
+ RvDlY5glOf94hYIElFCvSp8Od97NoE8zQHivqjQ65frTb/SDoVsG9NHi+9fCf7dznc
+ aBgOiJVcP3Uyw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 159961E219D;
+ Thu, 29 Oct 2026 08:19:44 +0300 (MSK)
+Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E3ECC44DF22;
+ Thu, 29 Oct 2026 08:19:43 +0300 (MSK)
+Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
+ id D8573A63E6; Thu, 29 Oct 2026 08:19:43 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-stable@nongnu.org
+Subject: [ANNOUNCE] QEMU 10.0.15 Stable released
+Date: Thu, 29 Oct 2026 08:19:21 +0300
+Message-ID: <20261029051934.1487878-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 70051e59-37bb-4803-ad0c-08df356111c1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Oct 2026 02:05:13.5445 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VvKrUyAIfH60wllwY6BjwMg8CsTW40iWJsjU+ktD9whL/bCtfwAmVPnesq2IWoXAP5vqf7XpsV9bCf7Qq9uCVoZI4y6dActNovBkzxd+lHo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE2PPF5849BD80D
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,55 +65,220 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi Gerd,
+Hi everyone,
 
-> Subject: Re: [PATCH v6 1/8] hw/usb/bus: Let a bus opt out of automatic hu=
-b
-> insertion
->=20
->   Hi,
->=20
-> > > Alternative idea would be to add the config option, but only enable
-> > > the automatic hub logic for actual usb 1.1 controllers (ohci /
-> > > uhci), where it does not matter much for devices whenever they are
-> > > plugged into an root port or hub port.
-> >
-> > Sorry for the late reply.
-> >
-> > Yes, it gets in the way. usbredir carries one device per connection,
-> > so our bus has one port. Plugging that device in adds a hub, and the
-> > device ends up behind it. That is why I added the flag.
-> >
-> > If you would rather do one of these, tell me and I will send it:
-> >
-> >  1. Remove the automatic hub.
-> >  2. Keep it, but only for the USB 1.1 controllers, ohci and uhci.
->=20
-> I think it is better to keep the logic for now and add an config option f=
-or it.
-> This way we can tweak things easily if needed.  Set the option to "no
-> automatic hub" for your controller and also ehci + xhci, best as separate=
- patch
-> for each controller.
->=20
-> take care,
->   Gerd
+The QEMU v10.0.15 stable release is now available.
 
-Thanks for the suggestion. I sent v7 yesterday, before I read this.
-https://patchwork.kernel.org/project/qemu-devel/cover/20261028034140.367393=
--1-jamin_lin@aspeedtech.com/
+You can grab the tarball from our download page here:
 
-I will send v8 with your suggested after Marc-Andr=E9 Lureau and Junjie hav=
-e commented.
+  https://www.qemu.org/download/#source
 
-Thanks,
-Jamin
+  https://download.qemu.org/qemu-10.0.15.tar.xz
+  https://download.qemu.org/qemu-10.0.15.tar.xz.sig (signature)
+
+v10.0.15 is now tagged in the official qemu.git repository, and the
+stable-10.0 branch has been updated accordingly:
+
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.0
+
+There are 91 changes since the previous v10.0.14 release.
+
+Thank you everyone who has been involved and helped with the stable series!
+
+/mjt
+
+Changelog (stable-10.0-hash master-hash Author Name: Commmit-Subject):
+
+c2cfbc6c121 Michael Tokarev:
+ Update version for 10.0.15 release
+a03f7a246fb fe0f4a5a57 Philippe Mathieu-Daudé:
+ target/ppc: Name the EBB exceptions
+1512e7081b1 ab6579bf73 Peter Maydell:
+ hw/intc/exynos4210_combiner: Fix group register range check
+d84c58726aa b6d36a1af7 Peter Maydell:
+ hw/intc/exynos4210_combiner: Avoid hw_error for guest errors
+fe555001f53 be67e61e29 Peter Maydell:
+ hw/misc/bcm2835_cprman: Treat invalid clock mux source select as GND
+bbe891ad260 cfa70f3a82 Thomas Huth:
+ hw/usb/hcd-xhci: More reentrancy guard fixes for the XHCI code
+47d9b40b21e 6ab4cd2f13 Tommaso Califano:
+ hw/usb/dev-mtp: Fix heap OOB read in usb_mtp_write_metadata()
+5e6592a696a 1ccf17e9dc Tommaso Califano:
+ hw/usb/dev-mtp: Fix assert crash on short CMD_SEND_OBJECT
+a9fd9d39e4b a86338565c Haotian Jiang:
+ usb-host: delete bottom halves during unrealize
+c4bb1e2ecf1 59cb510910 Haotian Jiang:
+ usb-host: free request on libusb submit failure
+47d21dd39d3 432f505fa6 Junjie Cao:
+ tests/qtest/usb-hcd-xhci: test interrupt pacing above 2^32
+90927e3ec39 322894eed3 Junjie Cao:
+ usb-host: free configuration descriptors on error paths
+a5ce15c94a8 e1b7f5e2a6 Junjie Cao:
+ usb-host: validate interface number before indexing altsetting
+30cb44b2ee3 46dcc681ea Junjie Cao:
+ tests/qtest: Cover OHCI endpoint type mismatches
+1492ccd15a3 9ad9a5a923 Peter Maydell:
+ hw/usb/hcd-ohci: Fail iso packets sent to non-iso endpoints and vice-versa
+f1141c7a483 7b1eba96ae Munkhbaatar Enkhbaatar:
+ hw/usb/hcd-ohci: Assert isochronous TDs are never deferred
+8ad945fcd76 b17205f23a Tommaso Califano:
+ hw/usb/dev-mtp: Fix assert crash on undersized BULK IN
+cf6d43b4c11 e90644eea1 Martin Pitt:
+ hw/uefi: fix ContentInfo detection in wrap_pkcs7()
+f15c9697dcd 12df325604 Christian Schoenebeck:
+ hw/9pfs: fix dirent stream protection for legacy (9p2000.u) Tread
+dcc8ced891f faa80b9847 Denis V. Lunev:
+ iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
+c3af9ee5dde 4d11088a08 Denis V. Lunev:
+ migration/block-dirty-bitmap: fix postcopy abort with bitmaps on several nodes
+6764b0482a0 319cd41f11 Denis V. Lunev:
+ migration: add QEMU_COUNTED_STRING_SIZE for counted string buffers
+ba67576e839 aea4af8c51 Marc-André Lureau:
+ migration: fix qemu_get_counted_string annotation
+72e4aaf50ce 901ac73874 Fiona Ebner:
+ qemu-img: convert: flush target image after copying
+7d2cd6ce36b c6c8bdc21a Fiona Ebner:
+ block: report flush error during bdrv_close()
+26cb31d844e 9d2cdc4d3b Fiona Ebner:
+ iotests.py: add filter_qemu()
+75d3c2c0495 90b5f6ca17 Fiona Ebner:
+ iotests: add test cases for failing flush after qemu-img convert
+6dab43cfc73 a567ef8655 Daniel P. Berrangé:
+ seccomp: really fix blocking of setns/execveat/unshare
+423790f470e f33fb19cab Daniel P. Berrangé:
+ seccomp: fix blocking of setns/execveat/unshare
+5adad78115d cb82463fa9 dodochicha:
+ target/riscv: Check Svnapot PTE before updating A/D bits
+9064b3c3a38 71041ce05c Rick Richard:
+ tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden reference
+33abdb05b81 ee23f530e9 Rick Richard:
+ hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
+f4f7454d35d ba280c3510 Rick Richard:
+ tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
+e7e31066a89 e52de6b65f Xie Bo:
+ target/riscv/kvm: Preserve FCSR across migration
+73cf2e46757 410166b550 Zephyr Li:
+ target/riscv: stop translating after WFI
+aec6fcff960 366b4fba0f imaginos:
+ target/riscv: check G-stage write permission for VS-stage A/D updates
+c632f939cdc 2579771a28 Fuad Tabba:
+ tests/tcg/aarch64: Test the TTBR layout with TCR.DS and a 48-bit OA
+83a28a4d68e 2c37211946 Fuad Tabba:
+ target/arm: Use the 52-bit TTBR base address layout when TCR.DS is set
+e3d2faa5b1f bb79850255 Fuad Tabba:
+ tests/tcg/aarch64: Add a test for a two-entry 52-bit TTBR table
+dc7d51d9499 0dedeff932 Fuad Tabba:
+ target/arm: Clear TTBR[5:0] from a 52-bit table base address
+52f320e75ef 306d9ab85f Aurelien Jarno:
+ tcg/riscv64: Remove vector min/max ops with immediates
+1df9ad99263 21b6c3e5bc Artemii Mashanov:
+ target/i386: fix immediate stack adjustment for RET and RETF
+bae874b7b8e 0dd9fb43ea Artemii Mashanov:
+ target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
+809dd797f53 f9ca6b19ac Dominic P:
+ tests/tcg: Add tests for sign extension after rotate
+dc6b1c4d187 d228536a51 Dominic P:
+ tcg/optimize: Do not derive s_mask from rotated s_mask
+b2ddd7f25f6 35164929cf Marc-André Lureau:
+ hw/display/vga: fix OOB writes after external surface resize
+4bd95de9c08 6728170d2d Stefan Berger:
+ tpm_emulator: Reject sending commands smaller than the request header
+70e4da2656b 99a8b5a0dd Daniel P. Berrangé:
+ io: cork TLS writes to avoid small TLS records
+042a9626f21 12916d64b7 Maxim Levitsky:
+ accel/kvm: coalesced mmio: check lenght of the MMIO write entry
+ef63d921cc2 c08b84cd6e Philippe Mathieu-Daudé:
+ accel/kvm: Replace legacy cpu_physical_memory_write() call
+2e24f41f227 cf4f672c11 Kevin Wolf:
+ block: Remove now redundant bdrv_wait_serialising_requests() calls
+e3477f56b4d 0bd5a1b3d6 Kevin Wolf:
+ block: Fix corruption from broken RMW atomicity
+49cdf02ec04 efe98c2a09 Denis V. Lunev:
+ block: reject a reopen of an unusable node instead of crashing
+f0ab78cc138 af28b65fae Denis V. Lunev:
+ qcow2: do not clear the dirty bit when reopening a read-only node
+2fb5b90bcb8 196a50b090 Stefan Hajnoczi:
+ file-posix: add statx(STATX_DIOALIGN) support
+cebdfa66441 8daaf8d3b1 Denis V. Lunev:
+ block: fix bdrv_next() skipping monitor-owned nodes
+c7911040464 2910b995f6 Denis V. Lunev:
+ iotests: cover inactivating a read-only node
+0988558e7ff 429bf66a1f Denis V. Lunev:
+ block/throttle-groups: fix crash when enabling I/O limits on a busy disk
+fddbc5808a0 4668899d66 Daniel P. Berrangé:
+ io: prevent unbounded read of websocket data from client
+8427571b7e9 d198957674 Tommaso Califano:
+ hw/usb: Fix USB MTP Use-After-Free in usb_mtp_deletefn List Iteration
+a0e8772ea98 a5b4837a25 Paolo Bonzini:
+ target/i386/tcg: ignore VEX.L for unary scalar instructions
+88f98d017f8 0f98b46846 Maxim Levitsky:
+ accel/kvm: protect kvm_resample_fd_list with a mutex
+70eb89a733a 6d5fb14d36 Simon Scherer:
+ target/i386: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
+2043b0a2ece 6802a4b239 Simon Scherer:
+ target/i386: clear C1 for all x87 compare instructions
+9ead086e94b 8d496d8f9f Jakub Lipový:
+ target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
+adc18430352 6ee626e349 Daniel Paziyski:
+ hw/nvme: fix memory leak on sr-iov capable nvme controller removal
+dcb58f52a81 90fcba23c5 Daniel Paziyski:
+ hw/nvme: fix assertion failure on sr-iov capable nvme controller removal
+b2d8b205bd0 cd3be3bd96 Denis V. Lunev:
+ block/nbd: clear reply.cookie under receive_mutex
+993baad5f7b 75b0a993da Denis V. Lunev:
+ block/nbd: never index requests[] with an unchecked cookie
+7d71a686a33 9998d225bb Denis V. Lunev:
+ block/nbd: clear reply.cookie when the reply is rejected
+cffb6ec5680 7e429d3624 Andrey Drobyshev:
+ hw/display/qxl: trace skipped stale loadvm commands
+5edee5b289f 95bc45193b Andrey Drobyshev:
+ hw/display/qxl: validate replayed commands in qxl_post_load
+51f2fccc3c3 050f5408bf Andrey Drobyshev:
+ hw/display/qxl: factor out qxl_guest_phys2virt()
+cd98d19283e 665494c3ac Marc-André Lureau:
+ hw/usb/dev-smartcard-reader: validate migrated fields in post_load
+44b4d537094 069dcc103b Marc-André Lureau:
+ hw/usb/dev-smartcard-reader: decode bulk-out length as little-endian
+d5b0c53ef65 d7f20657e7 Marc-André Lureau:
+ hw/usb/dev-smartcard-reader: fix assert on pending answers overflow
+74ee55b345c 49851e8595 Marc-André Lureau:
+ hw/usb/dev-smartcard-reader: fix OOB read from pending bulk-in ring
+b4db9809f87 1847dcd96d Marc-André Lureau:
+ hw/usb/dev-smartcard-reader: validate interrupt transfer length
+c237d816b57 d818e2b0e6 Matthew Rosato:
+ s390x/pci: Reject apertures beyond IOAT capacity in translation mode
+852545bdd9d 10a81449a2 Matthew Rosato:
+ s390x/pci: Use qemu_log_mask() for guest-triggered errors in reg_ioat()
+19d83f68378 e57ad36701 Matthew Rosato:
+ s390x/pci: Fix frame stepping in rpcit_service_call()
+a2800762474 119860f15c Eric Farman:
+ s390x/sclp: Reject short headers in PV case
+6c218591440 930a188edb Eric Farman:
+ s390x/css: Use datastream pointer for checking no-data CCWs
+f9a74e82c52 77cc481c23 Eric Farman:
+ hw/intc/s390x: Fix check after g_try_realloc
+33da8dcb96b 057ca01937 Eric Farman:
+ vfio/ap: Clear error object pointer after non-fatal errors
+2bf4137b190 bd5bc2861f Eric Farman:
+ virtio-ccw: Fix rc check in read configuration path
+b6685a19f01 13c7ba5e0f Eric Farman:
+ virtio-ccw: Do not overwrite existing indicators
+6a5c712efc5 92b935de27 Eric Farman:
+ virtio-ccw: Limit ISC to MAX_ISC
+f0ab9fa0b5c 89e653b773 Thomas Huth:
+ hw/usb/hcd-xhci: Limit DMA transfers to plain memory
+dbb787645c0 998b6db69e Fuad Tabba:
+ target/arm: Fix WFxT timeouts when the offset puts the count ahead
+6bc59d730cd 66d4ea65a0 Fuad Tabba:
+ target/arm: Fix next timer tick when the offset puts the count ahead
+655cc93e201 653b0c06c8 Jean-Francois Bortolotti:
+ target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
 
 
