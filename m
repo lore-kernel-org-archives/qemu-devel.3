@@ -1,62 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC396606A322
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 20:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3687D606A323
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 20:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=FnQpR7Kr;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=VwuhI55Y
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=myyEzIOJ;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=XoBUI9HR
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMX1b-0000ec-1u; Thu, 29 Oct 2026 16:47:03 -0400
+	id 1xMX1d-0000sv-Ht; Thu, 29 Oct 2026 16:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX10-0008Ao-FP
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:26 -0400
-Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX10-0008B5-UR
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:27 -0400
+Received: from mx2.catap.net ([2a01:4f9:3b:5410::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX0y-0007TF-1L
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMX0x-0007TX-Tj
  for qemu-devel@nongnu.org; Thu, 29 Oct 2026 16:46:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=P0pDJTm
- CC4NlQc9rKs+5AQelNJ3HH5bErP3p7mP9BU+klxjFw20mvi40PCVJAiw6t49ypi+n9YgHx
- JNiugf6WVBefzeazqMlyOnOq62dFosLvoULwjnxtkvGpNAClxKuxexpxQtxHTqjNTDhcjb
- izNkb5jMWcYHltm/1d+dK+/f2wZ3r/xwnF1MX0S2Uo+l9tg8flPH9J277bI7HsvV17dUJa
- FdV8AIESG5Uz5sXf2Rp+oAIQ6wbGaJM4ifXr+jZRNULAhPqb+zErg1SNSV+LZj12s3jpHC
- Ee/K9rpB5BQIBbec2ldFkDfMn1n1px69YqDt1w9SbiUUp2l1xtQQ3wQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=f
- 3tdl1PVugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=;
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=D+reLOR
+ pXR2+pFDn6RC0GG2T5RurYPZiDPQi46zXrz3zGwsEzRzT3a3QljY4xvWP/tWi+Mqzyp3eU
+ EYwSYjYyqelPSo9Ig6JttxxCIsMpRqL/2aiR/z3x6K7hZSrggIYz9HQBYdOHXDbTozJ0m2
+ 8UBYnWxHgM9HMr5IvUQcjRH2x+uNMERYc5jXoKGEObuvS47wMUVAHvk/zsgRvmjidHyxBG
+ ok+n8vjFLP2kG3r6BaF7MUMJ+xsgTkIBu1Ph9CQXjulu/Wh+0rSSK5z3n3uZD1io+sOy9y
+ 7birs//wvFE0lmtBrLHF3pdpYawBF02+vr2GOhhRLkuit0OqxkSj+EQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=J
+ qFfrLG0QCkUWMgxutuaM6H9oSFr18A2dsIfZ3JbRJs=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=RzBqb7Bq3pDcFSIAbdrXtoePfZK/P6kVAtodmouOep1tdaFcfI4dGq/MLjHJDe7tPfW1
- wyForbiPYxWg6DhEmNOtPpgEIvqpo1x6bhc1r+huSFyFVw8aLtZn/9u1TDhcYgWScR/x08
- CSvbOXU3v8KysEQaMPlm7a/COP8KyKOmlJEaQHpuKyujgegBc8kfBwnwsIscvRtvKNvuaG
- WyClpQFhKMaq0Ia9NDs2biQqO/nQiZAX1ThVTnYt2A3I+oZiEn3fAfx8XlkQoQA4g6biM4
- VatrS62g3zkRDo3u2GFAOnhbRxyKvRJxRerrwZYtDCF0YtyGthm0TGjDXhOkyAVA==
+ b=h55M7qIIHn7cv+sL3hUAVMgGUNupkrRwNws5lk4/4g3F/q19st5SWJlBbZyU/rjMwT+B
+ sTqbGn3tddlgshdvHMsZ50+KuyAOt4cIkEvfTKzTlQr78rmKzLvZDNRdfWO5PT168gziag
+ GQgimNl3y44HhyUb27elrLkbZ2RJ3O3Cb7S25/LcHFppk7Qcwo4LyrjU3L9MuWjaDXS9Ly
+ dYihR9X8Jhte6ACDyWBQqaoEgnlaaAmKz9t4Tt/r6eqzw9OcPtNAECifhQMrf+2n2ur/V9
+ R2j86dSBHXgGqIEA/0XpctT+dbcpSlvZSpfB3y0lsefgT1Bn7F+0P4W5FiucZEkA==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=FnQpR7Kr; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=VwuhI55Y;
+ header.b=myyEzIOJ; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=XoBUI9HR;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=f3tdl1PV
- ugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=JqFfrLG0
+ QCkUWMgxutuaM6H9oSFr18A2dsIfZ3JbRJs=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=FnQpR7KrLU7ivgNLyOO02Jy0ljSgnrDncVE
- 9lh8dKdFyNX9yy72zPMNEO0iFzoQioyVVmqPWDl0dfT+tYpftDiGlHfm420QYx6ArIzBl8
- h4ylZtcQOaz2A/880pW5ZCwsDprnXBzYKXiM37jf/I+6iDyXviJRa38BXFZw6xDH4e5KRL
- VtHmYyUcIajoPsMEGPfZffweSalSF7UKruV+DB45wv8qYyVK0OcL6rqC/4LEpb64Pf3lmR
- Tn9HcOC4u2U1f2m2yZf5+fv5tcLXuusugk84lGRZU6S58V7Jv0MUr3uMuYpgBAb8OKf4Bj
- rZbVXzrDopieYFTT232ZmcpdgtQ==
+ subject:cc:to:from; d=korins.ky; b=myyEzIOJafS4sE4rjRWW6EMZeqXfQI7lYQt
+ Ntq2ocUMk6DFKn99kaTG6WlV8zvsWQyJru9faErmQhNy5YPqFfalTVgWSpIgqTwom09hHx
+ k4qCG3tHjvmfOrZ7Us5zPZmdanbXo4f8y9cU3Opzbx1pl2r3BSOwQavhZ6+7eZPZFudmV+
+ /TZpzMGntVCp9QEakjYorT8uLftosUSbp02YXhWCz5VoQ8UNQfCMUF9h7U2BqZO4bnZPiJ
+ u+b+df1HO0aVCmlpZs03jmfz3nADV+44saJ/kMGMgtw3xJaj/TY7csUR8qSuT49iW8XJwH
+ 7gjLIHZQmYn/FOtJLsR+1xUwxHA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=f3tdl1PVugVpC4bNmdz1coH0m10N9GVed7nNgr5B9PA=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=VwuhI55YuCPaspAkWm
- tQIc5AcufB1SMg2KRyaCqywMtkxsAcCeSdj7SBqo+2kEW9bwxsUnEA0Yjhp++rvWRWCw==
-Received: by mx1.catap.net (OpenSMTPD) id 4e6492cf;
- Thu, 29 Oct 2026 21:46:17 +0100 (CET)
+ bh=JqFfrLG0QCkUWMgxutuaM6H9oSFr18A2dsIfZ3JbRJs=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=XoBUI9HROqFvq5w7nd
+ U7APex7jrxaHmP5zFuds5A6S2KEXDCZA5RUCz45067yAMRpDXlRFICesFxJmu2HRKyCQ==
+Received: by mx2.catap.net (OpenSMTPD) id b0ea02a2;
+ Thu, 29 Oct 2026 21:46:19 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id fb495bc4;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id c090ed17;
  Thu, 29 Oct 2026 21:46:13 +0100 (CET)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,24 +66,23 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v5 10/26] hw/mips: add Octeon CPUs and boot memory
-Date: Thu, 29 Oct 2026 21:43:55 +0100
-Message-ID: <20261029204609.38989-11-kirill@korins.ky>
+Subject: [PATCH v5 20/26] hw/mips: add Octeon EMM controller
+Date: Thu, 29 Oct 2026 21:44:05 +0100
+Message-ID: <20261029204609.38989-21-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261029204609.38989-1-kirill@korins.ky>
 References: <20261029204609.38989-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
- envelope-from=kirill@korins.ky; helo=mx1.catap.net
+Received-SPF: pass client-ip=2a01:4f9:3b:5410::2;
+ envelope-from=kirill@korins.ky; helo=mx2.catap.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,420 +101,662 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Create the Octeon CPUs and clock, map the split DRAM layout and
-per-core CVMSEG storage, and provide the EBB7304 boot flash windows.
-Load firmware into the flash reset alias and restore the boot PC during
-machine reset.
+Model the Octeon EMM command, DMA, switch and buffer registers needed
+by firmware MMC initialization. Give the controller its own reset state
+and route its registers through the shared CSR window.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/Kconfig           |   1 +
- hw/mips/octeon.c          | 308 ++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |  28 ++++
- 3 files changed, 337 insertions(+)
+ hw/mips/octeon.c          | 491 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |   3 +
+ 2 files changed, 494 insertions(+)
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index 2e71e6dee6..cb6057fe38 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -71,6 +71,7 @@ config MIPS_OCTEON
-     bool
-     default y
-     depends on MIPS64 && TARGET_BIG_ENDIAN
-+    select PFLASH_CFI02
- 
- config MIPS_CPS
-     bool
 diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 2ecc464579..0e02d3693d 100644
+index 9388bc005b..f3f8a74cbe 100644
 --- a/hw/mips/octeon.c
 +++ b/hw/mips/octeon.c
-@@ -8,30 +8,337 @@
- 
+@@ -9,6 +9,7 @@
  #include "qemu/osdep.h"
  #include "qemu/units.h"
-+#include "qemu/datadir.h"
-+#include "qapi/error.h"
-+#include "hw/core/clock.h"
- #include "hw/core/boards.h"
-+#include "hw/core/qdev-clock.h"
- #include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/block/flash.h"
-+#include "hw/mips/mips.h"
-+#include "system/blockdev.h"
-+#include "system/address-spaces.h"
-+#include "system/memory.h"
-+#include "system/reset.h"
-+#include "qemu/error-report.h"
- #include "hw/mips/octeon_internal.h"
- #include "target/mips/cpu.h"
+ #include "qemu/datadir.h"
++#include "qemu/host-utils.h"
+ #include "qapi/error.h"
+ #include "hw/char/serial-mm.h"
+ #include "hw/core/clock.h"
+@@ -42,6 +43,8 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
  
- #define TYPE_OCTEON_MACHINE MACHINE_TYPE_NAME("octeon3")
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonMachineState, OCTEON_MACHINE)
+ #define TYPE_OCTEON_MIO "octeon-mio"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonMioState, OCTEON_MIO)
++#define TYPE_OCTEON_EMM "octeon-emm"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonEmmState, OCTEON_EMM)
+ #define TYPE_OCTEON_RST "octeon-rst"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define TYPE_OCTEON_INTC "octeon-intc"
+@@ -52,6 +55,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_CSR_32BIT_SIZE       4
+ #define OCTEON_CSR_64BIT_SIZE       8
+ #define OCTEON_CSR_HI32_OFFSET      0
++#define OCTEON_CSR_LO32_OFFSET      4
  
-+/*
-+ * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-+ * DDR follows the upstream EBB7304 U-Boot board default.
-+ */
- #define OCTEON_DEFAULT_CPU_HZ       1800000000
- #define OCTEON_DEFAULT_REF_HZ       50000000
- #define OCTEON_DEFAULT_IO_HZ        1000000000
- #define OCTEON_DEFAULT_DDR_HZ       800000000
-+
-+/*
-+ * The physical layout follows U-Boot's generic Octeon III
-+ * OCTEON_MAX_PHY_MEM_SIZE value. Keep 1 GiB as the tested default.
-+ */
- #define OCTEON_DEFAULT_RAM_SIZE     (1 * GiB)
-+#define OCTEON_MAX_PHY_MEM_SIZE     (512 * GiB)
-+
-+/*
-+ * The EBB7304 FDT exposes DRAM below and above the
-+ * 0x10000000..0x1fffffff boot-bus/EJTAG hole.
-+ */
-+#define OCTEON_DR0_BASE             0x000000000ULL
-+#define OCTEON_DR0_SIZE             (256 * MiB)
-+#define OCTEON_DR1_BASE             0x020000000ULL
-+#define OCTEON_DR1_SIZE             (OCTEON_MAX_PHY_MEM_SIZE - OCTEON_DR0_SIZE)
-+
-+/*
-+ * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-+ * the guest sees the virtual CVMSEG window, not this physical address.
-+ */
-+#define OCTEON_CVMSEG_BASE          0x10000000000ULL
-+#define OCTEON_CVMSEG_SIZE          0x4000
-+#define OCTEON_CVMSEG_TOTAL_SIZE    (OCTEON_MAX_CPUS * OCTEON_CVMSEG_SIZE)
-+
-+#define OCTEON_FLASH_BASE           0x1f400000ULL
-+#define OCTEON_FLASH_RESET_BASE     0x1fc00000ULL
-+#define OCTEON_FLASH_RESET_SIZE     (4 * MiB)
-+#define OCTEON_FLASH_MAIN_SECTORS   127
-+#define OCTEON_FLASH_MAIN_SECTOR_SIZE (64 * KiB)
-+#define OCTEON_FLASH_ENV_SECTORS    8
-+#define OCTEON_FLASH_ENV_SECTOR_SIZE 0x2000
-+#define OCTEON_FLASH_SIZE           \
-+    (OCTEON_FLASH_MAIN_SECTORS * OCTEON_FLASH_MAIN_SECTOR_SIZE + \
-+     OCTEON_FLASH_ENV_SECTORS * OCTEON_FLASH_ENV_SECTOR_SIZE)
-+#define OCTEON_FLASH_ENV_OFFSET     \
-+    (OCTEON_FLASH_SIZE - OCTEON_FLASH_ENV_SECTOR_SIZE)
-+#define OCTEON_FLASH_WIDTH          2
- 
- struct OcteonMachineState {
-     MachineState parent_obj;
-+    OcteonState *board;
-     uint64_t cpu_hz;
-     uint64_t ref_hz;
-     uint64_t io_hz;
-     uint64_t ddr_hz;
+ /*
+  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
+@@ -153,6 +157,88 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ #define OCTEON_MIO_FUS_RCMD         0x0001500
+ #define OCTEON_MIO_FUS_RCMD_PEND    0x0000000000001000ULL
+ #define OCTEON_MIO_FUS_RCMD_DAT     0x0000000000ff0000ULL
++#define OCTEON_MIO_EMM_DMA_FIFO_CFG 0x0000160
++#define OCTEON_MIO_EMM_DMA_FIFO_ADR 0x0000170
++#define OCTEON_MIO_EMM_DMA_FIFO_CMD 0x0000178
++#define OCTEON_MIO_EMM_DMA_CFG      0x0000180
++#define OCTEON_MIO_EMM_DMA_ADR      0x0000188
++#define OCTEON_MIO_EMM_DMA_INT      0x0000190
++#define OCTEON_MIO_EMM_CFG          0x0002000
++#define OCTEON_MIO_EMM_MODEX(x) \
++    (0x0002008 + (x) * OCTEON_CSR_64BIT_SIZE)
++#define OCTEON_MIO_EMM_MODE_COUNT   4
++#define OCTEON_MIO_EMM_INT_EN_OLD   0x0002040
++#define OCTEON_MIO_EMM_SWITCH       0x0002048
++#define OCTEON_MIO_EMM_DMA          0x0002050
++#define OCTEON_MIO_EMM_CMD          0x0002058
++#define OCTEON_MIO_EMM_RSP_STS      0x0002060
++#define OCTEON_MIO_EMM_RSP_LO       0x0002068
++#define OCTEON_MIO_EMM_RSP_HI       0x0002070
++#define OCTEON_MIO_EMM_INT          0x0002078
++#define OCTEON_MIO_EMM_WDOG         0x0002088
++#define OCTEON_MIO_EMM_SAMPLE       0x0002090
++#define OCTEON_MIO_EMM_STS_MASK     0x0002098
++#define OCTEON_MIO_EMM_RCA          0x00020a0
++#define OCTEON_MIO_EMM_BUF_IDX      0x00020e0
++#define OCTEON_MIO_EMM_BUF_DAT      0x00020e8
++#define OCTEON_MIO_EMM_DEBUG        0x00020f8
++#define OCTEON_MIO_EMM_NODE_OFFSET  0x0002000
++#define OCTEON_MIO_EMM_CMD_VAL      (1ULL << 59)
++#define OCTEON_MIO_EMM_DMA_VAL      (1ULL << 59)
++#define OCTEON_MIO_EMM_DMA_BLOCK_CNT_SHIFT 32
++#define OCTEON_MIO_EMM_DMA_BLOCK_CNT_MASK \
++    (0xffffULL << OCTEON_MIO_EMM_DMA_BLOCK_CNT_SHIFT)
++#define OCTEON_MIO_EMM_SWITCH_EXE   (1ULL << 59)
++#define OCTEON_MIO_EMM_CMD_IDX_SHIFT 32
++#define OCTEON_MIO_EMM_CMD_IDX_BITS 6
++#define OCTEON_MIO_EMM_CMD_IDX_MASK \
++    ((1U << OCTEON_MIO_EMM_CMD_IDX_BITS) - 1)
++#define OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT 60
++#define OCTEON_MIO_EMM_BUS_ID_MASK  (OCTEON_MIO_EMM_MODE_COUNT - 1)
++#define OCTEON_MIO_EMM_RSP_STS_CMD_DONE (1ULL << 0)
++#define OCTEON_MIO_EMM_RSP_STS_CMD_IDX_SHIFT 1
++#define OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT (1ULL << 13)
++#define OCTEON_MIO_EMM_RSP_STS_DMA_VAL (1ULL << 57)
++#define OCTEON_MIO_EMM_RSP_STS_DMA_PEND (1ULL << 56)
++#define OCTEON_MIO_EMM_RSP_STS_BUS_ID_SHIFT 60
++#define OCTEON_MIO_EMM_DMA_INT_DONE (1ULL << 0)
++#define OCTEON_MIO_EMM_INT_CMD_DONE (1ULL << 1)
++#define OCTEON_MIO_EMM_INT_CMD_ERR  (1ULL << 3)
++#define OCTEON_MIO_EMM_INT_DMA_DONE (1ULL << 2)
++#define OCTEON_MIO_EMM_INT_DMA_ERR  (1ULL << 4)
++#define OCTEON_MIO_EMM_INT_SWITCH_DONE (1ULL << 5)
++#define OCTEON_MIO_EMM_INT_SWITCH_ERR  (1ULL << 6)
++#define OCTEON_MIO_EMM_SWITCH_MODE_MASK ((1ULL << 49) - 1)
++#define OCTEON_MIO_EMM_CFG_BUS_EN_MASK \
++    ((1ULL << OCTEON_MIO_EMM_MODE_COUNT) - 1)
++#define OCTEON_MIO_EMM_LOW_SPEED_HZ    400000
++#define OCTEON_MIO_EMM_MODE_CLK_LO_MASK 0x000000000000ffffULL
++#define OCTEON_MIO_EMM_MODE_CLK_HI_MASK 0x00000000ffff0000ULL
++#define OCTEON_MIO_EMM_MODE_CLK_HI_SHIFT 16
++#define OCTEON_MIO_EMM_BUF_IDX_INC  (1ULL << 16)
++#define OCTEON_MIO_EMM_BUF_WORD_SIZE OCTEON_CSR_64BIT_SIZE
++#define OCTEON_MIO_EMM_BUF_ENTRY_COUNT \
++    (OCTEON_MIO_EMM_BUF_SIZE / OCTEON_MIO_EMM_BUF_WORD_SIZE)
++#define OCTEON_MIO_EMM_BUF_IDX_OFF_MASK \
++    (OCTEON_MIO_EMM_BUF_ENTRY_COUNT - 1)
++#define OCTEON_MMC_CMD_GO_IDLE_STATE 0
++#define OCTEON_MMC_CMD_BUSTEST_R    14
++#define OCTEON_MMC_CMD_BUSTEST_W    19
++/* SD/MMC CMD19 request patterns and CMD14 response patterns. */
++#define OCTEON_MMC_BUSTEST_8_REQ0   0x55
++#define OCTEON_MMC_BUSTEST_8_REQ1   0xaa
++#define OCTEON_MMC_BUSTEST_8_RESP0  0xaa
++#define OCTEON_MMC_BUSTEST_8_RESP1  0x55
++#define OCTEON_MMC_BUSTEST_4_REQ0   0x5a
++#define OCTEON_MMC_BUSTEST_4_REQ4   0x99
++#define OCTEON_MMC_BUSTEST_4_REQ5   0x50
++#define OCTEON_MMC_BUSTEST_4_REQ6   0x0f
++#define OCTEON_MMC_BUSTEST_4_RESP0  0xa5
++#define OCTEON_MMC_BUSTEST_1_REQ0   0x80
++#define OCTEON_MMC_BUSTEST_1_REQ1   0x70
++#define OCTEON_MMC_BUSTEST_1_REQ2   0x78
++#define OCTEON_MMC_BUSTEST_1_REQ3   0x01
++#define OCTEON_MMC_BUSTEST_1_RESP0  0x40
+ #define OCTEON_RST_BOOT             0x6001600
+ #define OCTEON_RST_SOFT_RST         0x6001680
+ /* U-Boot uses the reset controller to park and release secondary cores. */
+@@ -226,6 +312,19 @@ struct OcteonMioState {
+     bool bootbus_led_mapped;
  };
  
-+static void octeon_validate_clocks(OcteonMachineState *oms)
-+{
-+    if (!oms->cpu_hz || !oms->ref_hz || !oms->io_hz || !oms->ddr_hz) {
-+        error_report("octeon3 clock frequencies must be non-zero");
-+        exit(1);
-+    }
-+
-+    if (oms->cpu_hz % oms->ref_hz || oms->io_hz % oms->ref_hz) {
-+        error_report("octeon3 CPU and IO clocks must be multiples of "
-+                     "ref-clock-hz");
-+        exit(1);
-+    }
-+}
-+
-+static void octeon_cpu_after_reset(OcteonCPUState *cs)
-+{
-+    CPUMIPSState *env = &cs->cpu->env;
-+
-+    env->CP0_CvmMemCtl = 0x100;
-+    env->CP0_CvmCtl = 0;
-+
-+    if (cs->boot_cpu && cs->board->firmware_entry) {
-+        env->active_tc.PC = cs->board->firmware_entry;
-+    }
-+}
-+
-+static void octeon_create_cpus(OcteonState *s)
-+{
-+    unsigned int i;
-+
-+    s->cpuclk = clock_new(OBJECT(s->machine), "cpu-refclk");
-+    clock_set_hz(s->cpuclk, s->cpu_hz);
-+    s->cpu_count = s->machine->smp.cpus;
-+    for (i = 0; i < s->cpu_count; i++) {
-+        DeviceState *dev = qdev_new(s->machine->cpu_type);
-+
-+        s->cpu[i].board = s;
-+        s->cpu[i].boot_cpu = i == 0;
-+        object_property_set_bool(OBJECT(dev), "big-endian", TARGET_BIG_ENDIAN,
-+                                 &error_abort);
-+        object_property_set_bool(OBJECT(dev), "start-powered-off", i != 0,
-+                                 &error_abort);
-+        qdev_connect_clock_in(dev, "clk-in", s->cpuclk);
-+        qdev_realize(dev, NULL, &error_abort);
-+        s->cpu[i].cpu = MIPS_CPU(dev);
-+
-+        cpu_mips_irq_init_cpu(s->cpu[i].cpu);
-+        cpu_mips_clock_init(s->cpu[i].cpu);
-+        qemu_register_resettable(OBJECT(dev));
-+    }
-+}
-+
-+static uint64_t octeon_map_ram_alias(OcteonState *s, MemoryRegion *alias,
-+                                     const char *name, hwaddr base,
-+                                     uint64_t offset, uint64_t size)
-+{
-+    MemoryRegion *sysmem = get_system_memory();
-+
-+    if (!size) {
-+        return offset;
-+    }
-+
-+    memory_region_init_alias(alias, NULL, name, s->machine->ram, offset, size);
-+    memory_region_add_subregion(sysmem, base, alias);
-+    return offset + size;
-+}
-+
-+static void octeon_map_ram(OcteonState *s)
-+{
-+    MemoryRegion *sysmem = get_system_memory();
-+    uint64_t offset = 0;
-+    uint64_t remaining = s->machine->ram_size;
-+    uint64_t size;
-+
-+    size = MIN(remaining, (uint64_t)OCTEON_DR0_SIZE);
-+    offset = octeon_map_ram_alias(s, &s->dr0, "octeon.dr0",
-+                                  OCTEON_DR0_BASE, offset, size);
-+    remaining -= size;
-+
-+    size = MIN(remaining, (uint64_t)OCTEON_DR1_SIZE);
-+    octeon_map_ram_alias(s, &s->dr1, "octeon.dr1",
-+                         OCTEON_DR1_BASE, offset, size);
-+
-+    memory_region_init_ram(&s->cvmseg, NULL, "octeon.cvmseg",
-+                           OCTEON_CVMSEG_TOTAL_SIZE, &error_fatal);
-+    memory_region_add_subregion(sysmem, OCTEON_CVMSEG_BASE, &s->cvmseg);
-+}
-+
-+static void octeon_load_firmware(OcteonState *s)
-+{
-+    g_autofree char *filename = NULL;
-+    g_autofree gchar *contents = NULL;
-+    g_autoptr(GError) err = NULL;
-+    gsize len;
-+    uint8_t *flash;
-+
-+    if (!s->machine->firmware) {
-+        return;
-+    }
-+    if (!s->flash) {
-+        error_report("Octeon boot flash is not initialized");
-+        exit(1);
-+    }
-+
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->machine->firmware);
-+    if (!filename) {
-+        error_report("Could not find Octeon firmware '%s'",
-+                     s->machine->firmware);
-+        exit(1);
-+    }
-+
-+    if (!g_file_get_contents(filename, &contents, &len, &err)) {
-+        error_report("Could not load Octeon firmware '%s': %s",
-+                     filename, err->message);
-+        exit(1);
-+    }
-+
-+    if (len == 0 || len > OCTEON_FLASH_ENV_OFFSET) {
-+        error_report("Octeon firmware '%s' has invalid size %" G_GSIZE_FORMAT,
-+                     filename, len);
-+        exit(1);
-+    }
-+
-+    flash = memory_region_get_ram_ptr(s->flash);
-+    memcpy(flash, contents, len);
-+    s->firmware_entry = cpu_mips_phys_to_kseg1(NULL, OCTEON_FLASH_RESET_BASE);
-+}
-+
-+static MemTxResult octeon_boot_flash_read(void *opaque, hwaddr addr,
-+                                          uint64_t *data, unsigned size,
-+                                          MemTxAttrs attrs)
-+{
-+    OcteonState *s = opaque;
-+    uint8_t buf[8];
-+    MemTxResult result = MEMTX_OK;
-+    unsigned int i;
-+
-+    for (i = 0; i < size; i++) {
-+        uint64_t value;
-+
-+        result |= memory_region_dispatch_read(s->flash, addr + i, &value,
-+                                              MO_8, attrs);
-+        buf[i] = value;
-+    }
-+    *data = ldn_be_p(buf, size);
-+    return result;
-+}
-+
-+static MemTxResult octeon_boot_flash_write(void *opaque, hwaddr addr,
-+                                           uint64_t value, unsigned size,
-+                                           MemTxAttrs attrs)
-+{
-+    OcteonState *s = opaque;
-+    unsigned access_size = MIN(size, 4);
-+
-+    if (size > access_size) {
-+        access_size = OCTEON_FLASH_WIDTH;
-+    }
-+    return memory_region_dispatch_write(s->flash, addr, value,
-+                                        size_memop(access_size) | MO_BE,
-+                                        attrs);
-+}
-+
-+static const MemoryRegionOps octeon_boot_flash_ops = {
-+    .read_with_attrs = octeon_boot_flash_read,
-+    .write_with_attrs = octeon_boot_flash_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
++struct OcteonEmmState {
++    OcteonPeripheralState parent_obj;
++    GHashTable *regs;
++    uint64_t mio_emm_rsp_sts;
++    uint64_t mio_emm_rsp_lo;
++    uint64_t mio_emm_rsp_hi;
++    uint64_t mio_emm_int;
++    uint64_t mio_emm_dma_int;
++    uint16_t mio_emm_buf_idx;
++    bool mio_emm_buf_inc;
++    uint8_t mio_emm_buf[OCTEON_MIO_EMM_BUF_SIZE];
 +};
 +
-+static void octeon_init_flash(OcteonState *s)
-+{
-+    DriveInfo *dinfo = drive_get(IF_PFLASH, 0, 0);
-+    DeviceState *dev;
-+    uint8_t *flash;
-+
-+    dev = qdev_new(TYPE_PFLASH_CFI02);
-+    if (dinfo) {
-+        qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(dinfo));
-+    }
-+    qdev_prop_set_uint32(dev, "num-blocks0", OCTEON_FLASH_MAIN_SECTORS);
-+    qdev_prop_set_uint32(dev, "sector-length0",
-+                         OCTEON_FLASH_MAIN_SECTOR_SIZE);
-+    qdev_prop_set_uint32(dev, "num-blocks1", OCTEON_FLASH_ENV_SECTORS);
-+    qdev_prop_set_uint32(dev, "sector-length1",
-+                         OCTEON_FLASH_ENV_SECTOR_SIZE);
-+    qdev_prop_set_uint8(dev, "width", OCTEON_FLASH_WIDTH);
-+    qdev_prop_set_uint8(dev, "mappings", 1);
-+    qdev_prop_set_uint8(dev, "big-endian", TARGET_BIG_ENDIAN);
-+    qdev_prop_set_uint16(dev, "id0", 0x01);
-+    qdev_prop_set_uint16(dev, "id1", 0x7e);
-+    qdev_prop_set_uint16(dev, "id2", 0x00);
-+    qdev_prop_set_uint16(dev, "id3", 0x00);
-+    qdev_prop_set_uint16(dev, "unlock-addr0", 0x555);
-+    qdev_prop_set_uint16(dev, "unlock-addr1", 0x2aa);
-+    qdev_prop_set_string(dev, "name", "octeon.bootbus-flash");
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    s->flash = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    if (!dinfo) {
-+        flash = memory_region_get_ram_ptr(s->flash);
-+        memset(flash, 0xff, OCTEON_FLASH_SIZE);
-+    }
-+    memory_region_init_io(&s->boot_flash, NULL, &octeon_boot_flash_ops, s,
-+                          "octeon.bootbus-flash-window", OCTEON_FLASH_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_FLASH_BASE,
-+                                &s->boot_flash);
-+
-+    memory_region_init_alias(&s->boot_flash_alias, NULL,
-+                             "octeon.bootbus-flash-reset-alias",
-+                             &s->boot_flash, 0, OCTEON_FLASH_RESET_SIZE);
-+    memory_region_add_subregion(get_system_memory(), OCTEON_FLASH_RESET_BASE,
-+                                &s->boot_flash_alias);
-+}
-+
- static void mips_octeon_init(MachineState *machine)
- {
-+    OcteonMachineState *oms = OCTEON_MACHINE(machine);
-+    OcteonState *s = g_new0(OcteonState, 1);
-+
-+    octeon_validate_clocks(oms);
-+
-+    oms->board = s;
-+    s->machine = machine;
-+    s->cpu_hz = oms->cpu_hz;
-+    s->ref_hz = oms->ref_hz;
-+    s->io_hz = oms->io_hz;
-+    s->ddr_hz = oms->ddr_hz;
-+
-+    if (machine->kernel_filename) {
-+        error_report("-kernel is not implemented for octeon3; "
-+                     "boot via -bios and U-Boot");
-+        exit(1);
-+    }
-+
-+    octeon_map_ram(s);
-+    octeon_init_flash(s);
-+    octeon_load_firmware(s);
-+    octeon_create_cpus(s);
-+
-+}
-+
-+static void octeon_machine_reset(MachineState *machine, ResetType type)
-+{
-+    OcteonState *s = OCTEON_MACHINE(machine)->board;
-+    unsigned int i;
-+
-+    qemu_devices_reset(type);
-+    for (i = 0; i < s->cpu_count; i++) {
-+        octeon_cpu_after_reset(&s->cpu[i]);
-+    }
+ struct OcteonRstState {
+     OcteonPeripheralState parent_obj;
+     GHashTable *regs;
+@@ -353,8 +452,15 @@ void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
+     g_hash_table_replace(regs, key, stored);
  }
  
- static void octeon_machine_instance_init(Object *obj)
-@@ -70,6 +377,7 @@ static void octeon_machine_class_init(ObjectClass *oc, const void *data)
++static bool octeon_mio_emm_decode(hwaddr reg, hwaddr *ereg);
++
+ bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
+ {
++    hwaddr ereg;
++
++    if (octeon_mio_emm_decode(reg, &ereg)) {
++        return octeon_reg_lookup(s->emm->regs, ereg, value);
++    }
+     if (reg == OCTEON_RST_SOFT_RST) {
+         return octeon_reg_lookup(s->rst->regs, reg, value);
+     }
+@@ -363,6 +469,12 @@ bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
  
-     mc->desc = "Cavium Octeon III / EBB7304 EVK";
-     mc->init = mips_octeon_init;
-+    mc->reset = octeon_machine_reset;
-     mc->default_cpu_type = MIPS_CPU_TYPE_NAME("OcteonCN73XX");
-     mc->default_ram_size = OCTEON_DEFAULT_RAM_SIZE;
-     mc->default_ram_id = "octeon.ram";
+ static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
+ {
++    hwaddr ereg;
++
++    if (octeon_mio_emm_decode(reg, &ereg)) {
++        octeon_reg_store(s->emm->regs, ereg, value);
++        return;
++    }
+     if (reg == OCTEON_RST_SOFT_RST) {
+         octeon_reg_store(s->rst->regs, reg, value);
+         return;
+@@ -453,6 +565,325 @@ static void octeon_mio_boot_loc_dat_write(OcteonState *s, hwaddr addr,
+         OCTEON_MIO_BOOT_LOC_ADR_MASK;
+ }
+ 
++static bool octeon_mio_emm_valid_reg(hwaddr reg)
++{
++    if (reg >= OCTEON_MIO_EMM_MODEX(0) &&
++        reg < OCTEON_MIO_EMM_MODEX(OCTEON_MIO_EMM_MODE_COUNT) &&
++        (reg & (OCTEON_CSR_64BIT_SIZE - 1)) == 0) {
++        return true;
++    }
++
++    switch (reg) {
++    case OCTEON_MIO_EMM_DMA_INT:
++    case OCTEON_MIO_EMM_CFG:
++    case OCTEON_MIO_EMM_SWITCH:
++    case OCTEON_MIO_EMM_DMA:
++    case OCTEON_MIO_EMM_CMD:
++    case OCTEON_MIO_EMM_RSP_STS:
++    case OCTEON_MIO_EMM_INT:
++    case OCTEON_MIO_EMM_DMA_FIFO_CFG:
++    case OCTEON_MIO_EMM_DMA_FIFO_ADR:
++    case OCTEON_MIO_EMM_DMA_FIFO_CMD:
++    case OCTEON_MIO_EMM_DMA_CFG:
++    case OCTEON_MIO_EMM_DMA_ADR:
++    case OCTEON_MIO_EMM_INT_EN_OLD:
++    case OCTEON_MIO_EMM_RSP_LO:
++    case OCTEON_MIO_EMM_RSP_HI:
++    case OCTEON_MIO_EMM_WDOG:
++    case OCTEON_MIO_EMM_SAMPLE:
++    case OCTEON_MIO_EMM_STS_MASK:
++    case OCTEON_MIO_EMM_RCA:
++    case OCTEON_MIO_EMM_BUF_IDX:
++    case OCTEON_MIO_EMM_BUF_DAT:
++    case OCTEON_MIO_EMM_DEBUG:
++        return true;
++    default:
++        return false;
++    }
++}
++
++static bool octeon_mio_emm_decode(hwaddr reg, hwaddr *ereg)
++{
++    if (octeon_mio_emm_valid_reg(reg)) {
++        *ereg = reg;
++        return true;
++    }
++
++    reg -= OCTEON_MIO_EMM_NODE_OFFSET;
++    if (octeon_mio_emm_valid_reg(reg)) {
++        *ereg = reg;
++        return true;
++    }
++
++    return false;
++}
++
++static bool octeon_mio_emm_execute_write(hwaddr addr, unsigned size)
++{
++    return size == OCTEON_CSR_64BIT_SIZE ||
++           (size == OCTEON_CSR_32BIT_SIZE &&
++            (addr & OCTEON_CSR_LO32_OFFSET));
++}
++
++static void octeon_mio_emm_set_low_speed_mode(OcteonState *s,
++                                               unsigned int bus_id)
++{
++    uint64_t period = DIV_ROUND_UP(s->io_hz, OCTEON_MIO_EMM_LOW_SPEED_HZ);
++    uint64_t value;
++
++    period = MIN(period, UINT16_MAX);
++    if (!octeon_csr_lookup(s, OCTEON_MIO_EMM_MODEX(bus_id), &value)) {
++        value = 0;
++    }
++
++    value &= ~(OCTEON_MIO_EMM_MODE_CLK_LO_MASK |
++               OCTEON_MIO_EMM_MODE_CLK_HI_MASK);
++    value |= period | (period << OCTEON_MIO_EMM_MODE_CLK_HI_SHIFT);
++    octeon_csr_store(s, OCTEON_MIO_EMM_MODEX(bus_id), value);
++}
++
++static void octeon_mio_emm_set_bustest(OcteonState *s)
++{
++    const uint8_t *buf = s->emm->mio_emm_buf;
++    bool bus8 = buf[0] == OCTEON_MMC_BUSTEST_8_REQ0 &&
++                buf[1] == OCTEON_MMC_BUSTEST_8_REQ1;
++    bool bus4 = buf[0] == OCTEON_MMC_BUSTEST_4_REQ0 &&
++                buf[4] == OCTEON_MMC_BUSTEST_4_REQ4 &&
++                buf[5] == OCTEON_MMC_BUSTEST_4_REQ5 &&
++                buf[6] == OCTEON_MMC_BUSTEST_4_REQ6;
++    bool bus1 = buf[0] == OCTEON_MMC_BUSTEST_1_REQ0 &&
++                buf[1] == OCTEON_MMC_BUSTEST_1_REQ1 &&
++                buf[2] == OCTEON_MMC_BUSTEST_1_REQ2 &&
++                buf[3] == OCTEON_MMC_BUSTEST_1_REQ3;
++
++    memset(s->emm->mio_emm_buf, 0, sizeof(s->emm->mio_emm_buf));
++    if (bus8) {
++        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_8_RESP0;
++        s->emm->mio_emm_buf[1] = OCTEON_MMC_BUSTEST_8_RESP1;
++    } else if (bus4) {
++        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_4_RESP0;
++    } else if (bus1) {
++        s->emm->mio_emm_buf[0] = OCTEON_MMC_BUSTEST_1_RESP0;
++    }
++}
++
++static void octeon_mio_emm_complete_dma(OcteonState *s, uint64_t dma)
++{
++    dma &= ~(OCTEON_MIO_EMM_DMA_VAL | OCTEON_MIO_EMM_DMA_BLOCK_CNT_MASK);
++    octeon_csr_store(s, OCTEON_MIO_EMM_DMA, dma);
++    s->emm->mio_emm_rsp_sts &= ~(OCTEON_MIO_EMM_RSP_STS_DMA_VAL |
++                            OCTEON_MIO_EMM_RSP_STS_DMA_PEND);
++    s->emm->mio_emm_dma_int |= OCTEON_MIO_EMM_DMA_INT_DONE;
++    s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_DMA_DONE;
++}
++
++static void octeon_mio_emm_command(OcteonState *s, uint64_t cmd)
++{
++    unsigned int cmd_idx = (cmd >> OCTEON_MIO_EMM_CMD_IDX_SHIFT) &
++                           OCTEON_MIO_EMM_CMD_IDX_MASK;
++    unsigned int bus_id = (cmd >> OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT) &
++                          OCTEON_MIO_EMM_BUS_ID_MASK;
++
++    s->emm->mio_emm_rsp_lo = 0;
++    s->emm->mio_emm_rsp_hi = 0;
++    s->emm->mio_emm_rsp_sts =
++        OCTEON_MIO_EMM_RSP_STS_CMD_DONE |
++        ((uint64_t)cmd_idx << OCTEON_MIO_EMM_RSP_STS_CMD_IDX_SHIFT) |
++        ((uint64_t)bus_id << OCTEON_MIO_EMM_RSP_STS_BUS_ID_SHIFT);
++
++    switch (cmd_idx) {
++    case OCTEON_MMC_CMD_GO_IDLE_STATE:
++    case OCTEON_MMC_CMD_BUSTEST_W:
++        break;
++    case OCTEON_MMC_CMD_BUSTEST_R:
++        octeon_mio_emm_set_bustest(s);
++        break;
++    default:
++        s->emm->mio_emm_rsp_sts |= OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT;
++        break;
++    }
++
++    s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_CMD_DONE;
++    if (s->emm->mio_emm_rsp_sts & OCTEON_MIO_EMM_RSP_STS_RSP_TIMEOUT) {
++        s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_CMD_ERR;
++    }
++}
++
++static uint64_t octeon_mio_emm_read(OcteonState *s, hwaddr reg,
++                                    hwaddr addr, unsigned size)
++{
++    uint64_t value;
++
++    switch (reg) {
++    case OCTEON_MIO_EMM_RSP_STS:
++        value = s->emm->mio_emm_rsp_sts;
++        break;
++    case OCTEON_MIO_EMM_RSP_LO:
++        value = s->emm->mio_emm_rsp_lo;
++        break;
++    case OCTEON_MIO_EMM_RSP_HI:
++        value = s->emm->mio_emm_rsp_hi;
++        break;
++    case OCTEON_MIO_EMM_BUF_DAT:
++        value = ldq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx);
++        if (s->emm->mio_emm_buf_inc) {
++            s->emm->mio_emm_buf_idx =
++                (s->emm->mio_emm_buf_idx + OCTEON_MIO_EMM_BUF_WORD_SIZE) %
++                OCTEON_MIO_EMM_BUF_SIZE;
++        }
++        break;
++    case OCTEON_MIO_EMM_INT:
++        value = s->emm->mio_emm_int;
++        break;
++    case OCTEON_MIO_EMM_DMA_INT:
++        value = s->emm->mio_emm_dma_int;
++        break;
++    case OCTEON_MIO_EMM_CMD:
++    case OCTEON_MIO_EMM_SWITCH:
++    case OCTEON_MIO_EMM_DMA:
++        if (!octeon_csr_lookup(s, reg, &value)) {
++            value = 0;
++        }
++        break;
++    case OCTEON_MIO_EMM_MODEX(0):
++    case OCTEON_MIO_EMM_MODEX(1):
++    case OCTEON_MIO_EMM_MODEX(2):
++    case OCTEON_MIO_EMM_MODEX(3):
++        if (!octeon_csr_lookup(s, reg, &value)) {
++            value = 0;
++        }
++        break;
++    default:
++        if (!octeon_csr_lookup(s, reg, &value)) {
++            value = 0;
++        }
++        break;
++    }
++
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_mio_emm_write(OcteonState *s, hwaddr reg,
++                                 hwaddr addr, uint64_t value, unsigned size)
++{
++    uint64_t old;
++    uint64_t clear;
++
++    switch (reg) {
++    case OCTEON_MIO_EMM_CMD:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        if (!(value & OCTEON_MIO_EMM_CMD_VAL)) {
++            return;
++        }
++        if (!octeon_mio_emm_execute_write(addr, size)) {
++            return;
++        }
++
++        octeon_csr_store(s, reg, value & ~OCTEON_MIO_EMM_CMD_VAL);
++        octeon_mio_emm_command(s, value);
++        return;
++    case OCTEON_MIO_EMM_SWITCH:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        if (!(value & OCTEON_MIO_EMM_SWITCH_EXE)) {
++            return;
++        }
++        if (!octeon_mio_emm_execute_write(addr, size)) {
++            return;
++        }
++        octeon_csr_store(s, reg, value & ~OCTEON_MIO_EMM_SWITCH_EXE);
++        octeon_csr_store(s, OCTEON_MIO_EMM_MODEX(
++                         (value >> OCTEON_MIO_EMM_CMD_BUS_ID_SHIFT) &
++                         OCTEON_MIO_EMM_BUS_ID_MASK),
++                         value & OCTEON_MIO_EMM_SWITCH_MODE_MASK);
++        s->emm->mio_emm_int |= OCTEON_MIO_EMM_INT_SWITCH_DONE;
++        return;
++    case OCTEON_MIO_EMM_DMA:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        if (!(value & OCTEON_MIO_EMM_DMA_VAL)) {
++            return;
++        }
++        if (!octeon_mio_emm_execute_write(addr, size)) {
++            return;
++        }
++        octeon_mio_emm_complete_dma(s, value);
++        return;
++    case OCTEON_MIO_EMM_INT:
++        clear = octeon_write64(0, addr, value, size);
++        s->emm->mio_emm_int &= ~clear;
++        return;
++    case OCTEON_MIO_EMM_DMA_INT:
++        clear = octeon_write64(0, addr, value, size);
++        s->emm->mio_emm_dma_int &= ~clear;
++        return;
++    case OCTEON_MIO_EMM_MODEX(0):
++    case OCTEON_MIO_EMM_MODEX(1):
++    case OCTEON_MIO_EMM_MODEX(2):
++    case OCTEON_MIO_EMM_MODEX(3):
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        return;
++    case OCTEON_MIO_EMM_CFG:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        if (octeon_mio_emm_execute_write(addr, size)) {
++            uint64_t enabled = (value & ~old) & OCTEON_MIO_EMM_CFG_BUS_EN_MASK;
++            unsigned int i;
++
++            for (i = 0; i < OCTEON_MIO_EMM_MODE_COUNT; i++) {
++                if (enabled & (1U << i)) {
++                    octeon_mio_emm_set_low_speed_mode(s, i);
++                }
++            }
++        }
++        return;
++    case OCTEON_MIO_EMM_BUF_IDX:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        s->emm->mio_emm_buf_idx = (value & OCTEON_MIO_EMM_BUF_IDX_OFF_MASK) *
++                             OCTEON_MIO_EMM_BUF_WORD_SIZE;
++        s->emm->mio_emm_buf_inc = value & OCTEON_MIO_EMM_BUF_IDX_INC;
++        return;
++    case OCTEON_MIO_EMM_BUF_DAT:
++        old = ldq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx);
++        value = octeon_write64(old, addr, value, size);
++        stq_be_p(s->emm->mio_emm_buf + s->emm->mio_emm_buf_idx, value);
++        if (s->emm->mio_emm_buf_inc) {
++            s->emm->mio_emm_buf_idx =
++                (s->emm->mio_emm_buf_idx + OCTEON_MIO_EMM_BUF_WORD_SIZE) %
++                OCTEON_MIO_EMM_BUF_SIZE;
++        }
++        return;
++    default:
++        if (!octeon_csr_lookup(s, reg, &old)) {
++            old = 0;
++        }
++        value = octeon_write64(old, addr, value, size);
++        octeon_csr_store(s, reg, value);
++        return;
++    }
++}
++
+ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+                                           unsigned int *source)
+ {
+@@ -1258,6 +1689,7 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     OcteonState *s = opaque;
+     hwaddr reg = addr & ~7ULL;
++    hwaddr ereg;
+     uint64_t value;
+ 
+     if (reg >= OCTEON_MIO_BOOT_REG_CFGX(0) &&
+@@ -1294,6 +1726,10 @@ static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+     }
+ 
++    if (octeon_mio_emm_decode(reg, &ereg)) {
++        return octeon_mio_emm_read(s, ereg, addr, size);
++    }
++
+     if (!octeon_csr_lookup(s, reg, &value)) {
+         value = 0;
+     }
+@@ -1305,8 +1741,14 @@ static void octeon_csr_write(void *opaque, hwaddr addr,
+ {
+     OcteonState *s = opaque;
+     hwaddr reg = addr & ~7ULL;
++    hwaddr ereg;
+     uint64_t old;
+ 
++    if (octeon_mio_emm_decode(reg, &ereg)) {
++        octeon_mio_emm_write(s, ereg, addr, value, size);
++        return;
++    }
++
+     if (reg == OCTEON_RST_SOFT_RST && value) {
+         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+         return;
+@@ -1707,6 +2149,26 @@ static void octeon_mio_reset_hold(Object *obj, ResetType type)
+     octeon_mio_boot_loc_update(s);
+ }
+ 
++static void octeon_emm_reset_hold(Object *obj, ResetType type)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
++    OcteonEmmState *emm = OCTEON_EMM(obj);
++
++    if (opc->parent_phases.hold) {
++        opc->parent_phases.hold(obj, type);
++    }
++
++    g_hash_table_remove_all(emm->regs);
++    emm->mio_emm_rsp_sts = 0;
++    emm->mio_emm_rsp_lo = 0;
++    emm->mio_emm_rsp_hi = 0;
++    emm->mio_emm_int = 0;
++    emm->mio_emm_dma_int = 0;
++    emm->mio_emm_buf_idx = 0;
++    emm->mio_emm_buf_inc = false;
++    memset(emm->mio_emm_buf, 0, sizeof(emm->mio_emm_buf));
++}
++
+ static void octeon_rst_reset_hold(Object *obj, ResetType type)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
+@@ -1774,6 +2236,16 @@ static GHashTable *octeon_reg_table_new(void)
+                                  g_free, g_free);
+ }
+ 
++static void octeon_emm_init(Object *obj)
++{
++    OCTEON_EMM(obj)->regs = octeon_reg_table_new();
++}
++
++static void octeon_emm_finalize(Object *obj)
++{
++    g_hash_table_destroy(OCTEON_EMM(obj)->regs);
++}
++
+ static void octeon_rst_init(Object *obj)
+ {
+     OCTEON_RST(obj)->regs = octeon_reg_table_new();
+@@ -1803,6 +2275,15 @@ static void octeon_mio_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &opc->parent_phases);
+ }
+ 
++static void octeon_emm_class_init(ObjectClass *klass, const void *data)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    resettable_class_set_parent_phases(rc, NULL, octeon_emm_reset_hold,
++                                       NULL, &opc->parent_phases);
++}
++
+ static void octeon_rst_class_init(ObjectClass *klass, const void *data)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
+@@ -1846,6 +2327,7 @@ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+ static void octeon_create_peripherals(OcteonState *s)
+ {
+     s->mio = OCTEON_MIO(octeon_new_peripheral(s, TYPE_OCTEON_MIO, 0));
++    s->emm = OCTEON_EMM(octeon_new_peripheral(s, TYPE_OCTEON_EMM, 0));
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
+     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
+     s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
+@@ -1862,6 +2344,7 @@ static void octeon_realize_peripherals(OcteonState *s)
+     octeon_realize_peripheral(&s->csr_bank->parent_obj);
+     octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
++    octeon_realize_peripheral(&s->emm->parent_obj);
+     octeon_realize_peripheral(&s->mio->parent_obj);
+ }
+ 
+@@ -1986,6 +2469,14 @@ static const TypeInfo octeon_machine_types[] = {
+         .instance_size = sizeof(OcteonMioState),
+         .class_init = octeon_mio_class_init,
+     },
++    {
++        .name = TYPE_OCTEON_EMM,
++        .parent = TYPE_OCTEON_PERIPHERAL,
++        .instance_size = sizeof(OcteonEmmState),
++        .instance_init = octeon_emm_init,
++        .instance_finalize = octeon_emm_finalize,
++        .class_init = octeon_emm_class_init,
++    },
+     {
+         .name = TYPE_OCTEON_RST,
+         .parent = TYPE_OCTEON_PERIPHERAL,
 diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 7cab7790bd..2e568c29ea 100644
+index e9826f1713..a262107b54 100644
 --- a/hw/mips/octeon_internal.h
 +++ b/hw/mips/octeon_internal.h
-@@ -10,7 +10,35 @@
- #define HW_MIPS_OCTEON_INTERNAL_H
+@@ -20,6 +20,7 @@
+ #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
+ #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
+ #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
++#define OCTEON_MIO_EMM_BUF_SIZE     512
+ #define OCTEON_TWSI_COUNT           2
+ #define OCTEON_TWSI_STAT_IDLE       0xf8
+ #define OCTEON_SPD_EEPROM_SIZE      139
+@@ -38,6 +39,7 @@ typedef enum OcteonCiu3Source {
  
- #include "qemu/typedefs.h"
-+#include "system/memory.h"
-+#include "target/mips/cpu.h"
- 
- #define OCTEON_MAX_CPUS             16
-+typedef struct OcteonState OcteonState;
-+
-+typedef struct OcteonCPUState {
-+    OcteonState *board;
-+    MIPSCPU *cpu;
-+    bool boot_cpu;
-+} OcteonCPUState;
-+
-+struct OcteonState {
-+    MachineState *machine;
-+    Clock *cpuclk;
-+    uint64_t cpu_hz;
-+    uint64_t ref_hz;
-+    uint64_t io_hz;
-+    uint64_t ddr_hz;
-+    OcteonCPUState cpu[OCTEON_MAX_CPUS];
-+    unsigned int cpu_count;
-+    uint64_t firmware_entry;
-+
-+    MemoryRegion dr0;
-+    MemoryRegion dr1;
-+    MemoryRegion *flash;
-+    MemoryRegion boot_flash;
-+    MemoryRegion boot_flash_alias;
-+    MemoryRegion cvmseg;
-+};
- 
- #endif
+ typedef struct OcteonState OcteonState;
+ typedef struct OcteonMioState OcteonMioState;
++typedef struct OcteonEmmState OcteonEmmState;
+ typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonIntcState OcteonIntcState;
+ typedef struct OcteonCsrBankState OcteonCsrBankState;
+@@ -68,6 +70,7 @@ struct OcteonState {
+     MemoryRegion boot_flash_alias;
+     MemoryRegion cvmseg;
+     OcteonMioState *mio;
++    OcteonEmmState *emm;
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
+     OcteonCsrBankState *csr_bank;
 -- 
 2.56.0
 
