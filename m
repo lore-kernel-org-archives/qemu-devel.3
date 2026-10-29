@@ -1,116 +1,163 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8A6606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 19:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2F4606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 19:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=uQv8+X+U
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=asT4gNTU
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMWF8-0005HA-8c; Thu, 29 Oct 2026 15:56:58 -0400
+	id 1xMWHD-0007E1-RD; Thu, 29 Oct 2026 15:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1xMWF7-0005Gy-5M
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:56:57 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xMWHC-0007De-6i; Thu, 29 Oct 2026 15:59:06 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1xMWF5-0001WT-4X
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:56:56 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sFEKAf9X9aJaP8mcnL1DnWgqU4QkBLL4a/P5yt5wWTtNn28hdy7qfP/QbVTcVJk/0q7WxzElxbLbEtBDSshlXl0zhcF9Z7nL602YtzHSU7MzPkTuBv066nWzxvDWz0KXfINB2zhxsg/y71f3qfS7bQ30rS7MFsgwoR81xFAqU/KBO9ml4EEJ4kRvO81cnrI5CRDqrSI6y8Y9VNTcMnMh49BaINnePdU0D/a4hBdqKc4tPe+idkRv8rem4SeVKd5HMBd8IO8Ln7EOdAOaoTYjXV1lqi8SjkmaIi37IJl05GQ0HObphQrC7TF60nWTNV/PijZz61EnhGSDQOICFvCfLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qjlbcxM82eJn5g3IWYz2vsib7h/e1q8R/FwhJwKizbo=;
- b=jEdR47bmo2oGDpvo6N7j2pn17ttf7/GMVVeIdmtaGr2gcLRqjANyBh75+6cA/3KIusYelEo2RuoXKfWYVr875Xt9efmBEK6kUhbJVSSCH966DKZhD5bO4phjwBegWvgS2kgBQbzJGNWlL7oY6Pau7akjwo4o2f/jq1iFwEnov+qh4RgRIr6tfYF0E+1xEwsb84Numq/xaYT8a618dyJPfShNPEIfnEVJX7xijk9xyiAB6f/4oA2Xj0m5REGKR2/IFmQxVrBAyB6fA9nFLpn9tTFsBDJGuhHSuSF1EGi4BQGSOxIqWWXrnVGdhjIfDKLcFYJfaqRVODWFmzpBrvVTnA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qjlbcxM82eJn5g3IWYz2vsib7h/e1q8R/FwhJwKizbo=;
- b=uQv8+X+Uc9woB9SlXtL0VlrQeYs+/H0D7e6Nl1W462w/faGj8OzctOLMjb5/AM7dKMw7tk68SbPCiyXvsUHy2qtEf/mJ1r3jSozjIt9NrybpgRyuPVgRPtZW1qcbIrL/xF81PZCR8seHanLQAC4+bKqWO9UF968BxcBKb2mtSDU=
-Received: from YT4PR01CA0031.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:fe::15)
- by PH7PR12MB9127.namprd12.prod.outlook.com (2603:10b6:510:2f6::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Thu, 29 Oct
- 2026 19:56:46 +0000
-Received: from BN2PEPF0000A992.namprd04.prod.outlook.com
- (2603:10b6:b01:fe:cafe::a8) by YT4PR01CA0031.outlook.office365.com
- (2603:10b6:b01:fe::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.546.22 via Frontend Transport; Thu,
- 29 Oct 2026 19:56:45 +0000
-X-MS-Exchange-Authentication-Results: mx.microsoft.com 1; spf=pass (sender IP
- is 165.204.84.17) smtp.mailfrom=amd.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN2PEPF0000A992.mail.protection.outlook.com (10.167.248.134) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.569.4 via Frontend Transport; Thu, 29 Oct 2026 19:56:45 +0000
-Received: from ausbcheatha02.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.53; Thu, 29 Oct
- 2026 14:56:41 -0500
-From: Ben Cheatham <Benjamin.Cheatham@amd.com>
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <shivansh.dhiman@amd.com>, 
- <babu.moger@amd.com>, Ben Cheatham <Benjamin.Cheatham@amd.com>
-Subject: [PATCH 6/6] target/i386: Add EPYC-Venice CPU model
-Date: Thu, 29 Oct 2026 14:56:23 -0500
-Message-ID: <20261029195623.2209-7-Benjamin.Cheatham@amd.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20261029195623.2209-1-Benjamin.Cheatham@amd.com>
-References: <20261029195623.2209-1-Benjamin.Cheatham@amd.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1xMWHA-0001fG-Bx; Thu, 29 Oct 2026 15:59:05 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TJk1KT3489922; Thu, 29 Oct 2026 19:59:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WzeR1t
+ iZ0qMF9LrhedjtUBrZB1Bc+yCI4jZ1UIVl2ys=; b=asT4gNTUaP6T71LQIT5QBx
+ fan639RwvcDUbVtHYEu2af6jo7yXZI9QD1j2sXjUk4YVHFh8Rbx1NGXuVuXuZ04B
+ k5rqeBzHKvyOqRElc+ELFVlxmuQxWk9MubOxkDI3Ov9+vBZHBNT/J2K2fAL8Cv5o
+ T+RODQK8Wau0zj+j0jbkfOPy/yI3vSjgWsiDeZTiql0NpiquQ3v3p2yG42pVlD/S
+ uhsKs0dQVgfjUZBXbFcJUSciogSstCxtMflxOa2vjZPtm8wmE9UY6OT/TZyfMi/t
+ GNbS3WyCWiCHO745X1DzGPBd8O4LzpgCBKjRrfZti2j0tgT0BCpv+EC8PxaPxFDg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmbtcf6s-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 19:59:00 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TJns5u3693344; Thu, 29 Oct 2026 19:58:59 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4hm6pb9q84-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 19:58:59 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69TJww5231457912
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Oct 2026 19:58:58 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3B86858055;
+ Thu, 29 Oct 2026 19:58:58 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1EC6A58043;
+ Thu, 29 Oct 2026 19:58:57 +0000 (GMT)
+Received: from [9.61.109.57] (unknown [9.61.109.57])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Oct 2026 19:58:56 +0000 (GMT)
+Message-ID: <0bcc6ac7-bf7a-432d-acaa-d04df9d378fe@linux.ibm.com>
+Date: Thu, 29 Oct 2026 15:58:56 -0400
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] s390x/pci: Change reset method from legacy to
+ resettable exit
+To: Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: cohuck@redhat.com, oelghoul@linux.ibm.com, qemu-stable@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20261028224611.240515-1-alifm@linux.ibm.com>
+ <20261028224611.240515-2-alifm@linux.ibm.com>
+ <956ae61c-281e-44c4-87ed-7a1cdfc70297@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <956ae61c-281e-44c4-87ed-7a1cdfc70297@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF0000A992:EE_|PH7PR12MB9127:EE_
-X-MS-Office365-Filtering-Correlation-Id: 223591fb-ac20-4e52-be6b-08df35f6c2ca
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|23010399003|376014|36860700016|82310400026|261028144727099003|261026121527099003|11063799006|261022105027099003|56012099006|261009223027099003|261021135927099003|261021121427099003|261021123027099003|10067099003|261026140227099003|261022075727099003|22082099003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info: YQvclFOSiZ0PdCnknWmhJXT7xGswhFbkLIH3Glc6/Mat7ocblBiDYMunN6epyRtkxJwMCCfy2j45MZ72yIN4zKmiYTjyLesdWpfv2Rq3wlPLCaB6yxP3iGYBoCB4CypPPF3zm51V6lc3Ymzf6t8kVNOFjipdC8BZrBxWOPaXV4E8DIBGUNW2biRAv/ZzLrzAqFPDnh0pkJXSSAtgWwe3xQ7B5To+x3IRZy/c2aIGfHKegknviZaznI+c+KfGVOFmGal5wxfsj3CMweDHelfJGYGZuum+qLD/CaPb6sy0Bf71WtIgOUpe/aIVFtnhB09a1T1aonxLydhQjGAxNcYY3cV+es+tj4BDU4BF1BrCVEId6fsZ7jdH7FLYF1O6ycbuXWEP2xcjqdokZWEQuqw4xtYfiZhIHoh202/VdgwXyBumQ4gQ9WsWBGc2u0GQ4jiwa8tCkvRFXTtDJAeh3viV+koCrUIY/sdsWPmfQO2STA35t6wipR6QTz3O0M7ev2IpXiZ83l593vL73NeruEu6QA0uIQ3WX+JW9dvnBNASpN0OwpP35FoPwCBEO+fG8cy8W9ucsR4Re2zN4eUTcYZcL7r8JEyDIMDeTB6MbhCQamWnEsk2Dxc0bl1LlHN4/JTOrg19Ef0nQOGOzOAMydBU8FMHTZgV8jcZJb4JYP7+LzaXfw+dsq27ibOELFaWLQYRsQPrA69mNuz6HCsrmjdhDw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(23010399003)(376014)(36860700016)(82310400026)(261028144727099003)(261026121527099003)(11063799006)(261022105027099003)(56012099006)(261009223027099003)(261021135927099003)(261021121427099003)(261021123027099003)(10067099003)(261026140227099003)(261022075727099003)(22082099003)(18002099003)(3023799007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 0ygqa60eJrEolSuz1vJMIbx9Xy8Xslh4Tn1Bie2ODKDhdzrgPNANWgDDJeTtS/QOAZs1xQcGC3xXszzJuEng+02rtHBmt6/l2l1/95MPGMi2eOqGbyZNt6+ePydi61Wbqi74Ve87K1lhKXFWaASXIGAAPVhiBRNby91EaavZW4kY37zvIf9Z/crm3uzuDz3jHQuZMw4ztcCI4EkE2aZdoLKUr2Kqix3b+TCJQ3VZ1Cowy25D8cZDuhnzuTO+Kd7mLq/7L2KagpV/Tb8NkUXNCulKutFNm2ZrcLD1fLC/dJ1hV7hCIi0SG8Q/2cnzll8H3Kou/JffGQb9LS5375msqc3dWFy+g2hgUlK7Cdx4tgnfuf5fKuN0VgfhNJMek7ZQ2u1+dGjhTwrZ8C2ZMtVv3/yi/Otnu/3/rurqxvfMjGuiWALVSeov3TmZGkfFVD3G
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2026 19:56:45.5750 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 223591fb-ac20-4e52-be6b-08df35f6c2ca
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF0000A992.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9127
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
- envelope-from=Benjamin.Cheatham@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA3NyBTYWx0ZWRfX/TdHkVqRHG1E
+ sq+b9/d4JWj1iJL/kubUx/FnhHERFUf6cp5D0KKKlvXcfGYmvbEFItM6VaUoirxlO3JSeJw0zRk
+ QkAKYl9gQ2jqRO4j9jB2t0NaeVC19jtAeVvicMItWCXDO0GLwd8BaCyRMNIRjh2LxzmwWQQtfcV
+ Jljsys9fAERzRz64s/hqghC2QFkIK3c4fm0OrUyT6XthdpvroD4LYWyJ81fGQKxFqkYvJiJbakd
+ jBG4mCV+5lMqy9fzRbznGzZNBfDON7HXxYD799QVanmoTlTq0DNH+Q+rhbvvqyD7VR0YplcmvWE
+ 25jevoPnqTXN9p12vYrEH71J1W7nnqzR6FeTMd9rBzKTGjXsmsNA/WLjl0WL7S8Gzp8ETCNZuPh
+ PysOCRGM7iygkSD2UUQBEOenkwAG9pva/j1w+tuv+irZ9SYqko4TdibJBvo2sLEwsqjVMQZsYRn
+ qOWbwRkAMbPLl76GXBw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA3NyBTYWx0ZWRfX+0WuGYSo3itx
+ U8aPaFZrp/lP9wILExlWqVH/kxazwlyFjoFXADaodH8poWMUKMFori3ROErHLWa0WIde09Mm1oP
+ oCQNgmZdw50pyPN97v1ZMO076kGFmDc=
+X-Proofpoint-ORIG-GUID: gfy4i8OEnKbZY9I5xctr58KO4DeyNkyD
+X-Proofpoint-GUID: gfy4i8OEnKbZY9I5xctr58KO4DeyNkyD
+X-Authority-Analysis: v=2.4 cv=CeKdd7rl c=1 sm=1 tr=0 ts=6ae3a584 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8
+ a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=gQrSqyyFBrI5X7rT36AA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
+ definitions=2026-10-29_06,2026-10-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610290077
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,199 +169,37 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UPPERCASE_50_75,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add support for AMD EPYC Zen 6 processors (EPYC-Venice). Add the
-following new feature bits on top of the feature bits from the previous
-generation EPYC model (Turin):
 
-avx512_fp16		: AVX512 FP16 instructions support
-avx_ifma		: AVX512 Integer Fused Mul-Add instructions support
-avx_ne_convert	: AVX NE-CONVERT instructions support
-avx_vnni_int8	: AVX VNNI INT8 instruction
-avx512_bmm		: AVX512 Bit Matrix Multiply instruction
-eraps			: Enhanced Return Address Prediction Security support
-				  (see also: rapsize)
-tsc_adjust		: Time Stamp Counter Adjustment support
-cet_ss			: Shadow Stack support
-bus_lock_detect : Bus Lock Detect support
-flush_l1d		: Support for flushing L1D in FLUSH_CMD MSR
 
-Signed-off-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
+On 10/29/26 1:56 PM, Matthew Rosato wrote:
+> On 10/28/26 6:46 PM, Farhan Ali wrote:
+>> On subsystem reset of the s390 PCI host bridge (TYPE_S390_PCI_HOST_BRIDGE),
+>> child buses S390PCIBus and PCIBus are reset in order. Because S390PCIBus
+>> devices are reset first via the legacy reset hook, IOMMU mappings are torn
+>> down before the PCI device itself is reset. For a PCI passthrough device
+>> this opens a window where the device may issue DMA to addresses that no
+>> longer have valid IOMMU mappings, causing an error (PEC 0x7) on the host.
+>>
+>> The QEMU reset documentation (docs/devel/reset.rst) specifies that IOMMUs
+>> should perform teardown in the resettable 'exit' phase, after all devices
+>> have completed their 'hold' phase. Move the S390PCIBusDevice reset logic
+>> from the legacy reset hook to the resettable exit phase to close this
+>> window.
+>>
+>> Fixes: 3e5cfba3ca0a ("s390x/pci: introduce S390PCIBusDevice qdev")
+>> Cc: qemu-stable@nongnu.org
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
+>> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> 
+> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Add bus-lock-detect and flush-l1d to Venice model
-
-Signed-off-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
----
- target/i386/cpu.c | 141 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 141 insertions(+)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 69f6bbb2e99b..531d3d8acbdd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -3049,6 +3049,59 @@ static const CPUCaches epyc_turin_cache_info = {
-     }
- };
- 
-+static const CPUCaches epyc_venice_cache_info = {
-+    .l1d_cache = &(CPUCacheInfo) {
-+        .type = DATA_CACHE,
-+        .level = 1,
-+        .size = 48 * KiB,
-+        .line_size = 64,
-+        .associativity = 12,
-+        .partitions = 1,
-+        .sets = 64,
-+        .lines_per_tag = 1,
-+        .self_init = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l1i_cache = &(CPUCacheInfo) {
-+        .type = INSTRUCTION_CACHE,
-+        .level = 1,
-+        .size = 32 * KiB,
-+        .line_size = 64,
-+        .associativity = 8,
-+        .partitions = 1,
-+        .sets = 64,
-+        .lines_per_tag = 1,
-+        .self_init = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l2_cache = &(CPUCacheInfo) {
-+        .type = UNIFIED_CACHE,
-+        .level = 2,
-+        .size = 1 * MiB,
-+        .line_size = 64,
-+        .associativity = 16,
-+        .partitions = 1,
-+        .sets = 1024,
-+        .lines_per_tag = 1,
-+        .self_init = true,
-+        .inclusive = true,
-+        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
-+    },
-+    .l3_cache = &(CPUCacheInfo) {
-+        .type = UNIFIED_CACHE,
-+        .level = 3,
-+        .size = 64 * MiB,
-+        .line_size = 64,
-+        .associativity = 16,
-+        .partitions = 1,
-+        .sets = 65536,
-+        .lines_per_tag = 1,
-+        .self_init = true,
-+        .no_invd_sharing = true,
-+        .complex_indexing = false,
-+        .share_level = CPU_TOPOLOGY_LEVEL_DIE,
-+    }
-+};
- static const CPUCaches xeon_spr_cache_info = {
-     .l1d_cache = &(CPUCacheInfo) {
-         /* CPUID 0x4.0x0.EAX */
-@@ -7322,6 +7375,94 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             { /* end of list */ }
-         }
-     },
-+    {
-+        .name = "EPYC-Venice",
-+        .level = 0xd,
-+        .vendor = CPUID_VENDOR_AMD,
-+        .family = 26,
-+        .model = 80,
-+        .stepping = 0,
-+        .features[FEAT_1_ECX] =
-+            CPUID_EXT_RDRAND | CPUID_EXT_F16C | CPUID_EXT_AVX |
-+            CPUID_EXT_XSAVE | CPUID_EXT_AES |  CPUID_EXT_POPCNT |
-+            CPUID_EXT_MOVBE | CPUID_EXT_SSE42 | CPUID_EXT_SSE41 |
-+            CPUID_EXT_PCID | CPUID_EXT_CX16 | CPUID_EXT_FMA |
-+            CPUID_EXT_SSSE3 | CPUID_EXT_MONITOR | CPUID_EXT_PCLMULQDQ |
-+            CPUID_EXT_SSE3,
-+        .features[FEAT_1_EDX] =
-+            CPUID_SSE2 | CPUID_SSE | CPUID_FXSR | CPUID_MMX | CPUID_CLFLUSH |
-+            CPUID_PSE36 | CPUID_PAT | CPUID_CMOV | CPUID_MCA | CPUID_PGE |
-+            CPUID_MTRR | CPUID_SEP | CPUID_APIC | CPUID_CX8 | CPUID_MCE |
-+            CPUID_PAE | CPUID_MSR | CPUID_TSC | CPUID_PSE | CPUID_DE |
-+            CPUID_VME | CPUID_FP87,
-+        .features[FEAT_6_EAX] =
-+            CPUID_6_EAX_ARAT,
-+        .features[FEAT_7_0_EBX] =
-+            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_TSC_ADJUST |
-+            CPUID_7_0_EBX_BMI1 | CPUID_7_0_EBX_AVX2 |
-+            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 | CPUID_7_0_EBX_ERMS |
-+            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_AVX512F |
-+            CPUID_7_0_EBX_AVX512DQ | CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_ADX |
-+            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_AVX512IFMA |
-+            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
-+            CPUID_7_0_EBX_AVX512CD | CPUID_7_0_EBX_SHA_NI |
-+            CPUID_7_0_EBX_AVX512BW | CPUID_7_0_EBX_AVX512VL,
-+        .features[FEAT_7_0_ECX] =
-+            CPUID_7_0_ECX_AVX512_VBMI | CPUID_7_0_ECX_UMIP | CPUID_7_0_ECX_PKU |
-+            CPUID_7_0_ECX_AVX512_VBMI2 | CPUID_7_0_ECX_CET_SHSTK |
-+            CPUID_7_0_ECX_GFNI | CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
-+            CPUID_7_0_ECX_AVX512VNNI | CPUID_7_0_ECX_AVX512BITALG |
-+            CPUID_7_0_ECX_AVX512_VPOPCNTDQ | CPUID_7_0_ECX_LA57 |
-+            CPUID_7_0_ECX_RDPID | CPUID_7_0_ECX_BUS_LOCK_DETECT |
-+            CPUID_7_0_ECX_MOVDIRI | CPUID_7_0_ECX_MOVDIR64B,
-+        .features[FEAT_7_0_EDX] =
-+            CPUID_7_0_EDX_FSRM | CPUID_7_0_EDX_AVX512_VP2INTERSECT |
-+            CPUID_7_0_EDX_AVX512_FP16 | CPUID_7_0_EDX_FLUSH_L1D,
-+        .features[FEAT_7_1_EAX] =
-+            CPUID_7_1_EAX_AVX512_BF16 | CPUID_7_1_EAX_AVX_IFMA,
-+        .features[FEAT_7_1_EDX] =
-+            CPUID_7_1_EDX_AVX_VNNI_INT8 | CPUID_7_1_EDX_AVX_NE_CONVERT,
-+        .features[FEAT_8000_0001_ECX] =
-+            CPUID_EXT3_OSVW | CPUID_EXT3_3DNOWPREFETCH |
-+            CPUID_EXT3_MISALIGNSSE | CPUID_EXT3_SSE4A | CPUID_EXT3_ABM |
-+            CPUID_EXT3_CR8LEG | CPUID_EXT3_SVM | CPUID_EXT3_LAHF_LM |
-+            CPUID_EXT3_TOPOEXT | CPUID_EXT3_PERFCORE,
-+        .features[FEAT_8000_0001_EDX] =
-+            CPUID_EXT2_LM | CPUID_EXT2_RDTSCP | CPUID_EXT2_PDPE1GB |
-+            CPUID_EXT2_FFXSR | CPUID_EXT2_MMXEXT | CPUID_EXT2_NX |
-+            CPUID_EXT2_SYSCALL,
-+        .features[FEAT_8000_0007_EBX] =
-+            CPUID_8000_0007_EBX_OVERFLOW_RECOV | CPUID_8000_0007_EBX_SUCCOR,
-+        .features[FEAT_8000_0008_EBX] =
-+            CPUID_8000_0008_EBX_CLZERO | CPUID_8000_0008_EBX_XSAVEERPTR |
-+            CPUID_8000_0008_EBX_WBNOINVD | CPUID_8000_0008_EBX_IBPB |
-+            CPUID_8000_0008_EBX_IBRS | CPUID_8000_0008_EBX_STIBP |
-+            CPUID_8000_0008_EBX_STIBP_ALWAYS_ON |
-+            CPUID_8000_0008_EBX_AMD_SSBD | CPUID_8000_0008_EBX_AMD_PSFD,
-+        .features[FEAT_8000_0021_EAX] =
-+            CPUID_8000_0021_EAX_NO_NESTED_DATA_BP |
-+            CPUID_8000_0021_EAX_FS_GS_BASE_NS |
-+            CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING |
-+            CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE |
-+            CPUID_8000_0021_EAX_AUTO_IBRS | CPUID_8000_0021_EAX_PREFETCHI |
-+            CPUID_8000_0021_EAX_AVX512_BMM | CPUID_8000_0021_EAX_ERAPS |
-+            CPUID_8000_0021_EAX_SBPB | CPUID_8000_0021_EAX_IBPB_BRTYPE |
-+            CPUID_8000_0021_EAX_SRSO_USER_KERNEL_NO,
-+        .features[FEAT_8000_0022_EAX] =
-+            CPUID_8000_0022_EAX_PERFMON_V2,
-+        .features[FEAT_XSAVE] =
-+            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
-+            CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
-+        .features[FEAT_SVM] =
-+            CPUID_SVM_NPT | CPUID_SVM_LBRV | CPUID_SVM_NRIPSAVE |
-+            CPUID_SVM_TSCSCALE | CPUID_SVM_VMCBCLEAN | CPUID_SVM_FLUSHASID |
-+            CPUID_SVM_PAUSEFILTER | CPUID_SVM_PFTHRESHOLD |
-+            CPUID_SVM_V_VMSAVE_VMLOAD | CPUID_SVM_VGIF |
-+            CPUID_SVM_VNMI | CPUID_SVM_SVME_ADDR_CHK,
-+        .xlevel = 0x80000022,
-+        .model_id = "AMD EPYC-Venice Processor",
-+        .cache_info = &epyc_venice_cache_info,
-+    },
- };
- 
- /*
--- 
-2.53.0
-
+Thanks! Applied both of these to the queue for 11.2.
 
