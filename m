@@ -1,52 +1,52 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAEE606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63040606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PldSJDxj
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=JibhmSYJ
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMPwm-00088V-MQ; Thu, 29 Oct 2026 09:13:36 -0400
+	id 1xMPxp-0000xb-5z; Thu, 29 Oct 2026 09:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPwP-0007qU-PR
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1xMPwj-000839-IV
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMPwM-0006AP-Fh
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:12 -0400
+ id 1xMPwf-0006If-Q6
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793279587;
+ s=mimecast20190719; t=1793279609;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aDWXGByOW2YWWxdxeUHw8JQ2wXKcqd61jfr/cBFrKF0=;
- b=PldSJDxj7yykJ1hCNbJxGQinHisjD6sEn4YubfCsBF01oqrvmYtBp6GrteY91QMkXlnndk
- t3A5BYa28p5dtbe/a78aYUstkCHAf34k3dueKShDFd65b7qw0FxO72msBbAmxWSxSmolir
- VxQBYyQhwHNhWE1kyvS0nBVfSH4ONAo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ZqvFAlHBBdzci0WB+ufjXYPcJTgtNRQmm5ybFSnF37s=;
+ b=JibhmSYJoW2wsbeS1kRKiPr1BHY4OOTeHrvCV8KKh2ZaASg4HfGemu7J3yIPrx5wf1DPcB
+ rjp31RQKCmGa4ux7Dy1vLLa98YIzOuHJa4sdUSm3oNIkEDa0skzLAnxdSBfmxRh0T+ubHl
+ vKBpMTHUHDw72/R82Yjt3I68ryCRIZI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-0TWUQCclOfGxETMIdUSAIA-1; Thu,
- 29 Oct 2026 09:13:04 -0400
-X-MC-Unique: 0TWUQCclOfGxETMIdUSAIA-1
-X-Mimecast-MFC-AGG-ID: 0TWUQCclOfGxETMIdUSAIA_1793279583
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-hWAsStChPaCgRIXLFxlqsw-1; Thu,
+ 29 Oct 2026 09:13:23 -0400
+X-MC-Unique: hWAsStChPaCgRIXLFxlqsw-1
+X-Mimecast-MFC-AGG-ID: hWAsStChPaCgRIXLFxlqsw_1793279602
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A0F21956041; Thu, 29 Oct 2026 13:13:03 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26A0F1955F44; Thu, 29 Oct 2026 13:13:22 +0000 (UTC)
 Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB18C3000723; Thu, 29 Oct 2026 13:13:00 +0000 (UTC)
+ id B50323000723; Thu, 29 Oct 2026 13:13:19 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -56,10 +56,9 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
  qemu-s390x@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 06/28] hw/xen: mark all Xen related object types as being
- secure
-Date: Thu, 29 Oct 2026 13:12:19 +0000
-Message-ID: <20261029131241.2275706-7-berrange@redhat.com>
+Subject: [PATCH v2 13/28] hw: define most common PCI types as secure
+Date: Thu, 29 Oct 2026 13:12:26 +0000
+Message-ID: <20261029131241.2275706-14-berrange@redhat.com>
 In-Reply-To: <20261029131241.2275706-1-berrange@redhat.com>
 References: <20261029131241.2275706-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
@@ -67,14 +66,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 5
 X-Spam_score: 0.5
 X-Spam_bar: /
 X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -95,163 +94,192 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-All Xen paravirtualized devices are intended to provide a host /
-guest security barrier, so mark all Xen object types as scure.
+Essentially all PCI infrastructure is in scope for the virtualization
+use case, aside from the niche simba bridge and the CXL related pieces.
 
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/block/xen-block.c        | 2 ++
- hw/char/xen_console.c       | 1 +
- hw/i386/xen/xen-hvm.c       | 1 +
- hw/i386/xen/xen_platform.c  | 1 +
- hw/i386/xen/xen_pvdevice.c  | 1 +
- hw/net/xen_nic.c            | 1 +
- hw/xen/xen-bus.c            | 2 ++
- hw/xen/xen-legacy-backend.c | 3 +++
- hw/xen/xen_pt.c             | 1 +
- 9 files changed, 13 insertions(+)
+ hw/pci-bridge/gen_pcie_root_port.c  | 1 +
+ hw/pci-bridge/i82801b11.c           | 1 +
+ hw/pci-bridge/ioh3420.c             | 1 +
+ hw/pci-bridge/pci_bridge_dev.c      | 2 ++
+ hw/pci-bridge/pci_expander_bridge.c | 5 +++++
+ hw/pci-bridge/pcie_pci_bridge.c     | 1 +
+ hw/pci-bridge/xio3130_downstream.c  | 1 +
+ hw/pci-bridge/xio3130_upstream.c    | 1 +
+ hw/pci/pci.c                        | 4 ++++
+ 9 files changed, 17 insertions(+)
 
-diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
-index 474c12fe4ac..6e5ae2b52d9 100644
---- a/hw/block/xen-block.c
-+++ b/hw/block/xen-block.c
-@@ -740,6 +740,7 @@ static const TypeInfo xen_disk_type_info = {
-     .parent = TYPE_XEN_BLOCK_DEVICE,
-     .instance_size = sizeof(XenDiskDevice),
-     .class_init = xen_disk_class_init,
-+    .secure = true,
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index 5434d693d92..65d29eab38e 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -161,6 +161,7 @@ static const TypeInfo gen_rp_dev_info = {
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .instance_size = sizeof(GenPCIERootPort),
+     .class_init    = gen_rp_dev_class_init,
++    .secure        = true,
  };
  
- static void xen_cdrom_unrealize(XenBlockDevice *blockdev)
-@@ -787,6 +788,7 @@ static const TypeInfo xen_cdrom_type_info = {
-     .parent = TYPE_XEN_BLOCK_DEVICE,
-     .instance_size = sizeof(XenCDRomDevice),
-     .class_init = xen_cdrom_class_init,
-+    .secure = true,
+  static void gen_rp_register_types(void)
+diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+index 1d73c14c1f8..f702b20bcd5 100644
+--- a/hw/pci-bridge/i82801b11.c
++++ b/hw/pci-bridge/i82801b11.c
+@@ -107,6 +107,7 @@ static const TypeInfo i82801b11_bridge_info = {
+     .parent        = TYPE_PCI_BRIDGE,
+     .instance_size = sizeof(I82801b11Bridge),
+     .class_init    = i82801b11_bridge_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/ioh3420.c b/hw/pci-bridge/ioh3420.c
+index bba640f495b..2c4882c4cf1 100644
+--- a/hw/pci-bridge/ioh3420.c
++++ b/hw/pci-bridge/ioh3420.c
+@@ -120,6 +120,7 @@ static const TypeInfo ioh3420_info = {
+     .name          = "ioh3420",
+     .parent        = TYPE_PCIE_ROOT_PORT,
+     .class_init    = ioh3420_class_init,
++    .secure        = true,
  };
  
- static void xen_block_register_types(void)
-diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
-index bdeb76dc870..df6a708494d 100644
---- a/hw/char/xen_console.c
-+++ b/hw/char/xen_console.c
-@@ -513,6 +513,7 @@ static const TypeInfo xen_console_type_info = {
-     .parent = TYPE_XEN_DEVICE,
-     .instance_size = sizeof(XenConsole),
-     .class_init = xen_console_class_init,
-+    .secure = true,
+ static void ioh3420_register_types(void)
+diff --git a/hw/pci-bridge/pci_bridge_dev.c b/hw/pci-bridge/pci_bridge_dev.c
+index bc53bcb69d8..86e8daaa068 100644
+--- a/hw/pci-bridge/pci_bridge_dev.c
++++ b/hw/pci-bridge/pci_bridge_dev.c
+@@ -268,6 +268,7 @@ static const TypeInfo pci_bridge_dev_info = {
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_class_init,
+     .instance_finalize = pci_bridge_dev_instance_finalize,
++    .secure            = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+@@ -294,6 +295,7 @@ static const TypeInfo pci_bridge_dev_seat_info = {
+     .parent            = TYPE_PCI_BRIDGE_DEV,
+     .instance_size     = sizeof(PCIBridgeDev),
+     .class_init        = pci_bridge_dev_seat_class_init,
++    .secure            = true,
  };
  
- static void xen_console_register_types(void)
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index b2378fe3f05..f7a154b8307 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -792,6 +792,7 @@ static const TypeInfo xen_i8259_type_infos[] = {
-         .name = TYPE_XEN_I8259_PIC,
-         .parent = TYPE_DEVICE,
-         .instance_init = xen_i8259_pic_init,
+ static void pci_bridge_dev_register(void)
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 40ffbc4e082..b6df3f89ca4 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -114,6 +114,7 @@ static const TypeInfo pxb_bus_info = {
+     .parent        = TYPE_PCI_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
+ 
+ static const TypeInfo pxb_pcie_bus_info = {
+@@ -121,6 +122,7 @@ static const TypeInfo pxb_pcie_bus_info = {
+     .parent        = TYPE_PCIE_BUS,
+     .instance_size = sizeof(PXBBus),
+     .class_init    = pxb_bus_class_init,
++    .secure        = true,
+ };
+ 
+ static const TypeInfo pxb_cxl_bus_info = {
+@@ -190,6 +192,7 @@ static const TypeInfo pxb_host_info = {
+     .name          = TYPE_PXB_HOST,
+     .parent        = TYPE_PCI_HOST_BRIDGE,
+     .class_init    = pxb_host_class_init,
++    .secure        = true,
+ };
+ 
+ static void pxb_cxl_realize(DeviceState *dev, Error **errp)
+@@ -453,6 +456,7 @@ static const TypeInfo pxb_dev_info = {
+     .parent        = TYPE_PCI_DEVICE,
+     .instance_size = sizeof(PXBDev),
+     .class_init    = pxb_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+@@ -490,6 +494,7 @@ static const TypeInfo pxb_pcie_dev_info = {
+     .parent        = TYPE_PXB_DEV,
+     .instance_size = sizeof(PXBPCIEDev),
+     .class_init    = pxb_pcie_dev_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { },
+diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
+index e826fb2829f..03b6b1c0f54 100644
+--- a/hw/pci-bridge/pcie_pci_bridge.c
++++ b/hw/pci-bridge/pcie_pci_bridge.c
+@@ -162,6 +162,7 @@ static const TypeInfo pcie_pci_bridge_info = {
+         .parent = TYPE_PCI_BRIDGE,
+         .instance_size = sizeof(PCIEPCIBridge),
+         .class_init = pcie_pci_bridge_class_init,
 +        .secure = true,
-     },
- };
- 
-diff --git a/hw/i386/xen/xen_platform.c b/hw/i386/xen/xen_platform.c
-index c8b852be0cc..ec0084d6fb8 100644
---- a/hw/i386/xen/xen_platform.c
-+++ b/hw/i386/xen/xen_platform.c
-@@ -604,6 +604,7 @@ static const TypeInfo xen_platform_info = {
-     .parent        = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(PCIXenPlatformState),
-     .class_init    = xen_platform_class_init,
+         .interfaces = (const InterfaceInfo[]) {
+             { TYPE_HOTPLUG_HANDLER },
+             { INTERFACE_PCIE_DEVICE },
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index 0c3fed3053b..ded948ebd0f 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -175,6 +175,7 @@ static const TypeInfo xio3130_downstream_info = {
+     .name          = TYPE_XIO3130_DOWNSTREAM,
+     .parent        = TYPE_PCIE_SLOT,
+     .class_init    = xio3130_downstream_class_init,
 +    .secure        = true,
      .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/i386/xen/xen_pvdevice.c b/hw/i386/xen/xen_pvdevice.c
-index fab26a06af1..74636046d0c 100644
---- a/hw/i386/xen/xen_pvdevice.c
-+++ b/hw/i386/xen/xen_pvdevice.c
-@@ -139,6 +139,7 @@ static const TypeInfo xen_pv_type_info = {
-     .parent        = TYPE_PCI_DEVICE,
-     .instance_size = sizeof(XenPVDevice),
-     .class_init    = xen_pv_class_init,
-+    .secure        = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-         { },
-diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-index f4d0b060130..e615303da6a 100644
---- a/hw/net/xen_nic.c
-+++ b/hw/net/xen_nic.c
-@@ -579,6 +579,7 @@ static const TypeInfo xen_net_type_info = {
-     .parent = TYPE_XEN_DEVICE,
-     .instance_size = sizeof(XenNetDev),
-     .class_init = xen_netdev_class_init,
-+    .secure = true,
- };
- 
- static void xen_net_register_types(void)
-diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
-index 8def3bb68bc..17bbbe2ea71 100644
---- a/hw/xen/xen-bus.c
-+++ b/hw/xen/xen-bus.c
-@@ -404,6 +404,7 @@ static const TypeInfo xen_bus_type_info = {
-     .instance_size = sizeof(XenBus),
-     .class_size = sizeof(XenBusClass),
-     .class_init = xen_bus_class_init,
-+    .secure = true,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_PCIE_DEVICE },
          { }
-@@ -1141,6 +1142,7 @@ static const TypeInfo xen_bridge_type_info = {
-     .name = TYPE_XEN_BRIDGE,
-     .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(XenBridge),
-+    .secure = true,
- };
- 
- static void xen_register_types(void)
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 7977b527127..75f8ac7efde 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -648,6 +648,7 @@ static const TypeInfo xendev_type_info = {
-     .parent        = TYPE_DYNAMIC_SYS_BUS_DEVICE,
-     .class_init    = xendev_class_init,
-     .instance_size = sizeof(XenLegacyDevice),
+diff --git a/hw/pci-bridge/xio3130_upstream.c b/hw/pci-bridge/xio3130_upstream.c
+index 40057b749bf..9d58105f8bd 100644
+--- a/hw/pci-bridge/xio3130_upstream.c
++++ b/hw/pci-bridge/xio3130_upstream.c
+@@ -144,6 +144,7 @@ static const TypeInfo xio3130_upstream_info = {
+     .name          = "x3130-upstream",
+     .parent        = TYPE_PCIE_PORT,
+     .class_init    = xio3130_upstream_class_init,
 +    .secure        = true,
- };
- 
- static void xen_sysbus_class_init(ObjectClass *klass, const void *data)
-@@ -661,6 +662,7 @@ static const TypeInfo xensysbus_info = {
-     .name       = TYPE_XENSYSBUS,
-     .parent     = TYPE_BUS,
-     .class_init = xen_sysbus_class_init,
-+    .secure     = true,
      .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_PCIE_DEVICE },
          { }
-@@ -670,6 +672,7 @@ static const TypeInfo xensysbus_info = {
- static const TypeInfo xensysdev_info = {
-     .name          = TYPE_XENSYSDEV,
-     .parent        = TYPE_SYS_BUS_DEVICE,
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 0efb4eb4bb0..f5af3e743d9 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -319,6 +319,7 @@ static const TypeInfo pci_bus_info = {
+     .instance_size = sizeof(PCIBus),
+     .class_size = sizeof(PCIBusClass),
+     .class_init = pci_bus_class_init,
++    .secure = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
+         { }
+@@ -333,11 +334,13 @@ static const TypeInfo cxl_interface_info = {
+ static const TypeInfo pcie_interface_info = {
+     .name          = INTERFACE_PCIE_DEVICE,
+     .parent        = TYPE_INTERFACE,
 +    .secure        = true,
  };
  
- static void xenbe_register_types(void)
-diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
-index 0fe9c0aada8..504c5593188 100644
---- a/hw/xen/xen_pt.c
-+++ b/hw/xen/xen_pt.c
-@@ -1079,6 +1079,7 @@ static const TypeInfo xen_pci_passthrough_info = {
-     .instance_finalize = xen_pci_passthrough_finalize,
-     .class_init = xen_pci_passthrough_class_init,
-     .class_size = sizeof(XenPTDeviceClass),
+ static const TypeInfo conventional_pci_interface_info = {
+     .name          = INTERFACE_CONVENTIONAL_PCI_DEVICE,
+     .parent        = TYPE_INTERFACE,
++    .secure        = true,
+ };
+ 
+ static void pcie_bus_class_init(ObjectClass *klass, const void *data)
+@@ -351,6 +354,7 @@ static const TypeInfo pcie_bus_info = {
+     .name = TYPE_PCIE_BUS,
+     .parent = TYPE_PCI_BUS,
+     .class_init = pcie_bus_class_init,
 +    .secure = true,
-     .instance_init = xen_pci_passthrough_instance_init,
-     .interfaces = (const InterfaceInfo[]) {
-         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+ };
+ 
+ static const TypeInfo cxl_bus_info = {
 -- 
 2.56.0
 
