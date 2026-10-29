@@ -1,72 +1,97 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA8A606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 16:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506E5606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=ehk9bJR1
+	dkim=pass (2048-bit key, unprotected) header.d=unpredictable.fr header.i=@unpredictable.fr header.a=rsa-sha256 header.s=sig1 header.b=AsGH6zl1
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMTGH-0003fw-QI; Thu, 29 Oct 2026 12:45:57 -0400
+	id 1xMTWw-0002Ps-8S; Thu, 29 Oct 2026 13:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xMTG1-0003dT-OV
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:45:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xMTWo-0002O0-OM
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:03:02 -0400
+Received: from mr-2005i-snip6-11.eps.apple.com ([2a01:b747:3000:206::5b]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1xMTFz-00049h-Ly
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:45:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793292338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4BqVDOX5JfZtkGquDbZqt9tF2cnAk2B9Y5xY0VvMXIo=;
- b=ehk9bJR1Xr9410rmV+ZXlX57bMuAwP6HVNGtf+G5NGAsBzpoJZFWDymqkVmtnXxVGlF34B
- 0ryik+FHJWeKRIeKHPlSgIaiY69sv4y23jNgiZzmONbseCP9GiADnEVP08yxNjgchY2Q7H
- TdbpltXMVRESHUjpOtYTkSoc3DNgnro=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-NXze_GmSPBKZHnALhuW0Qg-1; Thu,
- 29 Oct 2026 12:45:35 -0400
-X-MC-Unique: NXze_GmSPBKZHnALhuW0Qg-1
-X-Mimecast-MFC-AGG-ID: NXze_GmSPBKZHnALhuW0Qg_1793292335
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F393193E8BE; Thu, 29 Oct 2026 16:45:34 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.32.61])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B16BF18004D2; Thu, 29 Oct 2026 16:45:32 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, stefanha@redhat.com, afaria@redhat.com,
- eblake@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v2 1/2] file-posix: Add 'accept-read-only-device' option
-Date: Thu, 29 Oct 2026 17:45:21 +0100
-Message-ID: <20261029164522.103918-2-kwolf@redhat.com>
-In-Reply-To: <20261029164522.103918-1-kwolf@redhat.com>
-References: <20261029164522.103918-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1xMTWl-0006wp-EA
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:03:02 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-9 (Postfix) with ESMTPS id
+ 2C2E818014D1; Thu, 29 Oct 2026 17:02:53 +0000 (UTC)
+X-ICL-RepId: 01a1889d-5218-75e4-b6ad-8723dba82650
+X-ICL-Out-Info: HUtFAUMEWwJACUgATUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0NWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkEJSQUuAFt3XQE6Ai4aX3RDf1VyXA4uH0UAPAQsBy4ERnhLAC1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1793293375; x=1824829375;
+ bh=Td8hiwhed6UN72QWwL0iSGXMtTdqAbmPDmAVAaqwzVs=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=AsGH6zl1A8yBgOiatNtPRBLokad18dM0fK3x4LlnKKisYC7fcXhWSohGupaPrOLrmYZynjO4C56FTowbR10gPiy6oso5CIiQcGorC7SuMpBYumSKmypygz5MZbfgDbIJIj9qX91o5CM5wbYeqB5DV0AB3a/4mSH9PiE0eY8tz+zW8/IvYS2nM4yocjitjvAF3IdxzV23R2NB4c4MM6n5o8LlHn57t8bVajdvrd/zidaz+a8IyvdbuzfQ9vcvh+RRg8Gy/Vc6OpA2+VmLJZ/25ll9KkD845IsZLco7zbh4pRozh9E3mMz2PQ6J2Z6pOivAHoEXaHoSaY9dBRjlhaRfQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.200.36])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-9 (Postfix) with ESMTPSA id
+ D0FC31800EE2; Thu, 29 Oct 2026 17:02:52 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
 X-Archived-By: <archiver.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.200.71.1.16\))
+Subject: Re: [PATCH v2 0/6] hvf: arm: fixes for QEMU 11.2
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA-=bOxmonNOYC2_1MHDrdof6eciYrehJRDfWx_7kYsJmA@mail.gmail.com>
+Date: Thu, 29 Oct 2026 18:02:40 +0100
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1016C70E-8B1C-4F3F-A19E-59D7A0E66A33@unpredictable.fr>
+References: <20261027120135.53048-1-mohamed@unpredictable.fr>
+ <CAFEAcA-=bOxmonNOYC2_1MHDrdof6eciYrehJRDfWx_7kYsJmA@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3901.200.71.1.16)
+X-Authority-Info-Out: v=2.4 cv=S6fUAYsP c=1 sm=1 tr=0 ts=6ae37c3e
+ cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
+ a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=m0ZDXWi2_AsMy-86mYIA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: gyCz0kwM__JjVtKiQ5uatGBki5H8UnJx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2NiBTYWx0ZWRfX7eqryMMh8eJt
+ FUuUP/Hpd+KtmewW4T87XxdlIUj6QVmQx79lGoj6eZHhFw2ZpiPTDQRhsnvC7yvAqgp5tGBvmoZ
+ p4EECAVNts1Y7qNBKo/T3um7WiQEHju5HfhqhXQXGgLOBGKSYlaFbASCKuUs7EXwMkKZRyVtDo3
+ pB+fccwYbCtpo/sY0ZHAhHNZMVI4rC/V60FU0kdQblvG07Sjl7Th0TaJJLVWyKDL2Y3H0oaNtIL
+ tOfLC60HvAwOI7POKDRpJZ/24OYHAyrq74tAy++2uGlT7cgA7RpjE6AvdraRUWPmM4Ovnf2GX5y
+ gv6Ln8hjH1pqo+I9inNWPVSx/y0r/lc1FHb1Z+/NOfAQu3s9mB0wzTkPY8O8ec=
+X-Proofpoint-GUID: gyCz0kwM__JjVtKiQ5uatGBki5H8UnJx
+X-JNJ: AAAAAAABT+tEZRhFDE3YxcXBZVSug2kqagxuFQiJYMcwORfS6czaZ244ApajtQepV/Y/+o
+ MAlMPcGaFaor7rdAxEMoSNUfIvSco5SGPfP/g5Du+M4o0VePzr+6GQTUzKYjs4FlSFDa2g
+ knJkC0km2K99b4brWDyjDrTHU161VhYu8rZWFOKFe7cw4k0Q0GJ00tkLflltzQisf5w/EI
+ rK3b9yaW1VayzsCf5ICKLkuZ4lL56T9EBju6SSODfKg8pjgBl5r2E1khctym+j83t7Lxuk
+ Vxo8Ti9z/R0rWBTTcbBk2+wCOr41dnZVs7jgMCuaa8KD3moZiRp8y6wN0gEXRLnB8kG9oD
+ OxvVO8mXUnac8Za/3D41XwPVNN8pUtDsEnosnUhcYfHJfoaaPKqzvgJWRlw1eKIJ6ym3F2
+ QCb6BS9MwL4evC39/xvBiHqMiMZV7H3VvgtpdZtygVkxbt2UwlfUc1Pbyul/OVz3td3AeR
+ 0l0ovIGzWqQI7hD3FHUWbj7OjBpf75sJk8Xdq36da83rPu1vlREO7vSW7WB1JmY5hnfqQ0
+ e1f/XDCr0n452tiq74rwUl4ZGthu2onWra0k03/cWa7go+jQenXHNuPogrmdmLmrwQL4oy
+ aFXV8v5zDUbYh3Nf47aL45yA5Jg69tPFazREWVHqTjcF4JNkp+SuvWwhaCuaKviLVDaYVw
+ 0B6vL6SAmfD/3EUe/E6RJ0toSueTtDiBnlPIHH/ezF7jYJMr2yMfeSnhye4rIiYQcRmrx0
+ y+MHRoAumiGNjh4NlIjWaK6saEOeLDqZ9Ejc6gfBs4ErCLOVoXW8IVRqbtuWJ4hmkCvSLk
+ XNm+5S0kZ3cT4PchgOSkJYPurd6GKXT1tn0cQTABKS9v1M2T+kZ464N6uQB+6aW769Sj6y
+ GrWctcyi5G8EAT0qfoRYu7cineb5m8Npr/z+k66VEY1Z4QsAnn6M781xPk61qdkAjGH1ks
+ /TVqf4zPwANaRDJrlUSf6SDgj50gZ80Mv2XH+k8zYF3Ypb4bY/odiBG+uCGt0UCFOxDn1U
+ QFBBqV3vkpHUeBZP74/xi95nCCESv6y6iYnYFAhjF5Ut0kLadqY/rsDc+imABCbTnv8+Za
+ aeY0IRGHRFxpb6oiSIu+qkKTSCMsLIxzrwCaKTIsfXUyU604/l9k0z0gb9b+bGBAeU3cCS
+ r2WG0/7plI3/5X4Lk4Wy/aXBOJWwXBnpgcLvdnOvHXvsGO6YDmuoc9d+iiL3TGHstnLyWM
+ MQp6ZBqnkCvP+qDon9ylyU89yjYX9EGFWtf/XEIS5zn2XVERbQXBYuIea+WurWnQ5jsvzm
+ f+wtkxe4ShHo3yU37VjzXyXoOyRH8td5QTcJTTzJqLsgJH8j6CnkudCzqV3fS7XOKQqR3Y
+ IYtC59xZ8maGX9OsjuO5L27HIRx6nJ16ND+t4bXm5FowG23BsUj1eAGG
+Received-SPF: pass client-ip=2a01:b747:3000:206::5b;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,157 +103,50 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
+	autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-The host_device block driver refuses to open a block device read-write
-if the BLKROGET ioctl tells it that it's actually read-only. For such
-devices it's possible to open a read-write file descriptor, but any
-writes to the device would fail.
 
-There are valid use cases for which this check gets in the way, as
-explained in the bug report:
 
-    However, this behavior prevents a legitimate enterprise use case:
-    running VMs against storage replication target LUNs in a disaster
-    recovery configuration. Enterprise storage arrays (Dell Powermax,
-    Pure Storage) set the SCSI Write Protect bit on replication target
-    LUNs, causing the Linux kernel to mark them read-only via BLKROGET.
-    The VMs on the passive DR site need to start with these LUNs
-    attached - writes are expected to fail (the application middleware
-    knows it's on the passive side), and after a DR role swap the LUN
-    becomes writable and writes should succeed immediately without any
-    VM restart.
+> On 29. Oct 2026, at 15:27, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Tue, 27 Oct 2026 at 12:03, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>=20
+>> v2:
+>> - remove GIC_ISPENDR workaround: currently under further =
+investigation
+>> - simplify SME save/restore patch
+>> - rework the CPU reset strategy, with also taking care of the GIC CPU =
+interface registers.
+>>=20
+>> v1:
+>>=20
+>> - workaround for presumed Hypervisor.framework issue
+>> - save/restore SME state only when SME is on for the CPU
+>> - add ID_AA64PFR0_EL1.GIC sync to advertise the system register =
+interface
+>=20
+> I've applied patches 1-4 to target-arm.next; 5 and 6 I left comments =
+on.
+>=20
+> What's the status with the apple-gfx compile failures on macos 27?
+> (issue #4486)
 
-In order to allow such use cases in which a currently read-only device
-is deliberately opened read-write, add a new option to the host_device
-driver that allows the user to skip the check.
+Hi,
 
-Buglink: https://redhat.atlassian.net/browse/RHEL-186136
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- qapi/block-core.json | 19 ++++++++++++++++++-
- block/file-posix.c   | 23 ++++++++++++++++++++---
- 2 files changed, 38 insertions(+), 4 deletions(-)
+I think we should just disable building apple-gfx by default for now.=20
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 741c8165c06..80272b878c5 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3390,6 +3390,23 @@
-   'features': [ { 'name': 'dynamic-auto-read-only',
-                   'if': 'CONFIG_POSIX' } ] }
- 
-+##
-+# @BlockdevOptionsHostDevice:
-+#     Driver specific block device options for the host_device
-+#     backend.
-+#
-+# @accept-read-only-device: allow opening a read-only device as
-+#     read-write.  If this is false, opening a host device read-write
-+#     requires on Linux that the BLKROGET ioctl considers the device
-+#     writable.  If it is true, this check is skipped.  (since: 11.2,
-+#     default: false)
-+#
-+# Since: 11.2
-+##
-+{ 'struct': 'BlockdevOptionsHostDevice',
-+  'base': 'BlockdevOptionsFile',
-+  'data': { '*accept-read-only-device': 'bool' } }
-+
- ##
- # @BlockdevOptionsNull:
- #     Driver specific block device options for the null backend.
-@@ -4777,7 +4794,7 @@
-       'ftps':       'BlockdevOptionsCurlFtps',
-       'host_cdrom':  { 'type': 'BlockdevOptionsFile',
-                        'if': 'HAVE_HOST_BLOCK_DEVICE' },
--      'host_device': { 'type': 'BlockdevOptionsFile',
-+      'host_device': { 'type': 'BlockdevOptionsHostDevice',
-                        'if': 'HAVE_HOST_BLOCK_DEVICE' },
-       'http':       'BlockdevOptionsCurlHttp',
-       'https':      'BlockdevOptionsCurlHttps',
-diff --git a/block/file-posix.c b/block/file-posix.c
-index bad7ccdb733..3318912b5ac 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -177,6 +177,7 @@ typedef struct BDRVRawState {
-     bool has_laio_fdsync:1;
-     bool use_linux_io_uring:1;
-     bool use_mpath:1;
-+    bool accept_read_only_device:1;
-     int page_cache_inconsistent; /* errno from fdatasync failure */
-     bool has_fallocate;
-     bool needs_alignment;
-@@ -513,7 +514,7 @@ static void raw_probe_alignment(BlockDriverState *bs, int fd, Error **errp)
-     }
- }
- 
--static int check_hdev_writable(int fd)
-+static int check_hdev_writable(BlockDriverState *bs, int fd)
- {
- #if defined(BLKROGET)
-     /* Linux block devices can be configured "read-only" using blockdev(8).
-@@ -523,10 +524,19 @@ static int check_hdev_writable(int fd)
-      * bdrv_open() is supposed to fail if the disk is read-only.  Explicitly
-      * check for read-only block devices so that Linux block devices behave
-      * properly.
-+     *
-+     * Users can use the accept-read-only-device option to skip the check if
-+     * they deliberately open a read-only block device as writable, e.g. because
-+     * it may become read-write later.
-      */
-+    BDRVRawState *s = bs->opaque;
-     struct stat st;
-     int readonly = 0;
- 
-+    if (s->accept_read_only_device) {
-+        return 0;
-+    }
-+
-     if (fstat(fd, &st)) {
-         return -errno;
-     }
-@@ -620,6 +630,11 @@ static QemuOptsList raw_runtime_opts = {
-             .type = QEMU_OPT_BOOL,
-             .help = "check that page cache was dropped on live migration (default: off)"
-         },
-+        {
-+            .name = "accept-read-only-device",
-+            .type = QEMU_OPT_BOOL,
-+            .help = "allow opening a read-only device as read-write (default: off)"
-+        },
-         { /* end of list */ }
-     },
- };
-@@ -737,8 +752,10 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-     s->fd = fd;
- 
-     /* Check s->open_flags rather than bdrv_flags due to auto-read-only */
-+    s->accept_read_only_device =
-+        qemu_opt_get_bool(opts, "accept-read-only-device", false);
-     if (s->open_flags & O_RDWR) {
--        ret = check_hdev_writable(s->fd);
-+        ret = check_hdev_writable(bs, s->fd);
-         if (ret < 0) {
-             error_setg_errno(errp, -ret, "The device is not writable");
-             goto fail;
-@@ -1116,7 +1133,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-     }
- 
-     if (fd != -1 && (*open_flags & O_RDWR)) {
--        ret = check_hdev_writable(fd);
-+        ret = check_hdev_writable(bs, fd);
-         if (ret < 0) {
-             qemu_close(fd);
-             error_setg_errno(errp, -ret, "The device is not writable");
--- 
-2.56.0
+It=E2=80=99s private API as of macOS 27, and as long as a decision on =
+whether
+to keep that reverse-engineered device model isn=E2=80=99t made yet...
+>=20
+> thanks
+> -- PMM
 
 
