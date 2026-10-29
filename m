@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000BF606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11942606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=NBayxKcU
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oqAgA3Xe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQ8T-0002IA-Lk; Thu, 29 Oct 2026 09:25:41 -0400
+	id 1xMQ9X-0002ue-4o; Thu, 29 Oct 2026 09:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMQ8N-0002El-Mp
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:25:36 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1xMQ9S-0002uJ-U2
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:26:44 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMQ8M-0008SQ-95
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:25:35 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-83bbcfba0ffso1587179a34.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 06:25:33 -0700 (PDT)
+ id 1xMQ9R-00006u-1H
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:26:42 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-7037daaa820so979151eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 06:26:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793280332; x=1793885132; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793280400; x=1793885200; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=+EzB3Hc/0A+ZBlzofpaUhIZtlYxC/IYPuF+iEPnRPfE=;
- b=NBayxKcUSY+YSs6fJlVgH/2H+aqJwtkWdGvwSATUKzctU+Xm5TXQfvtcTgAG8+93D1
- 4hSvJOquqoBr1tQzVGBHxQHZPvP9DVwtX4OpO79CeDDR2mMzp11WPwux/FrflzU2qKsw
- ejn46iDKvo+9c0cnNLhfCvtpucn7tBKWsuOnbW7ZXtBlZldlJz37y5mFxQcdmXBQE/tP
- +71x4c5yS2wngW9HEtMY2VFLFImnUTKT7K5hIAkqmYnGAyF8s270LNL15bMbKDktkX0Q
- G5QwIwT0u0dwmdmXzBzokTgXk9+/oU+SNk4CNf8R5GJDKgmsNkxS4hLv9NHb7XplKp7R
- IcGw==
+ bh=JKx3TS4dtd/4+9huKymfOSTUCi20CAfUFi38vFAgqv4=;
+ b=oqAgA3Xe9338G4f6caap8d0HlKe+wH1fV6efu1zpnBQGKQmuhdcrGeB49dt72s6eW6
+ G2WFPWNPlehnByNy1mx/vxf7poBsji+F6HIYRAk+ByOQSNO720q7p6KQlpDwQzxApejK
+ rueGHMZgvJf0rnBXzt+AKMqX9ilh40ZMEjipsCIg75abD2+CSNW3grspMCt6V0t14NbG
+ 4lKsszwMszGnmLkDSsc5Qzq6nuJKu5E9RaN0+tsZHqcLVLjbnkYEOz4RJx2hpTXvxbxi
+ ohQc0NTumVwazYuH2qwI01LBMXD/GuNcDdQ9w7wEjsWv5B+wFxk655qIOiwfpOj1MREo
+ w2cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793280332; x=1793885132;
+ d=1e100.net; s=20260707; t=1793280400; x=1793885200;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=+EzB3Hc/0A+ZBlzofpaUhIZtlYxC/IYPuF+iEPnRPfE=;
- b=tYGSVbFcAAhWDIKPQ3jGTFf9vWqdIfeK0XHItCbKoP5S3L8JswzEhXxxPBl65U0QPR
- RnRaRBC5KCdeCuj828DE0tsg+DlJWgwzG/KAT6k2PNkDygximbaRLWhctu2cwTbtPt6f
- 4yQHHmvPvyE//OgUfN1+5sb0EF6fpwVNunScNAhwHQ03B2kJYFMlXLaXiy3T5KCoAoD1
- IsFIeqwhu1mNv51UjSBdInZmjez9UF/rSZF2qMye5ljFuiX1UAcZFa8uG12whLT893oc
- r68VENaYC5yxEVa4tzK4sks3lOOdlFVRTL0PF6r2cOkUlK8WREYY2d6TrDo/twZKYFUV
- gNNA==
+ bh=JKx3TS4dtd/4+9huKymfOSTUCi20CAfUFi38vFAgqv4=;
+ b=mQnvZ+QtdmUuxmZCb4KVqgtsQW73tiqeBpElx4OUbvrvYsI8wdA7yYto/c41YH4Nds
+ Qg3AffsWdPv5k1NwDAsbi/QqzJaTe506LaavHolaUJmvS60LutlwhWs6AAJtttFtB8EO
+ 8wDH1m3G2BLY54OBU6sIZ7ybmn4siOWsLzTjxtwmVrqxpMr/AXSI1eeHBuhDo61GzAJy
+ OBm5n7ZazxoxOjYewSsPL67mbmdSNIOe3tVP+6SO9Ju67kRQDPOrAseOxlh5YkXDDDCF
+ 3jSfg7V09ZYGWmfMlEYoFfthvSv1O6hGhk0A2V6QjqKMh2wHfbx+0s6GwdtAuP7aNbwK
+ AaQg==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzCqXlpqBvzvGDCtNkUiyGSbJ5JsaEM/Z4ukSkNyNl+1Ngi27j+pVcjNxpUYPOYdfFrt6CfXGSu+Hmp@nongnu.org
-X-Gm-Message-State: AFq9FYK9cK5Hzs8MuuWFSBQk4eIWA5E4JpLjk8sguJM2yuwgWWASjoiR
- hU7uliUhAlFTEUHgENXZbhf3A5lwvkwtSbUZ4NYkEVXv7VzQ/nOwqPLbOctFVgRPesKM4Tk9wq5
- Wqjm4
-X-Gm-Gg: AYBFou0UCDQ0nLqEwaIJOlPaz/QwaA5gdbQcHRwKdUfUSgNLXyJHqpwpXPo/FBewizp
- mSfBvkG9/ArICahnW0LO9rrumR6tz2LmNcGqrbEy3mBsgxuymFfg6WXYKqfRj9l9VBYgneBWxCw
- N9ZV+szPqwysA74rUwYgndtLPnW+XPsGpVng4kCcvfmgiH+Nj82VwVIjID2nEvyR3E4C/DDef77
- GUtL4riynPjYgOPaZPlovRgSz1McI+niY/kL5j145Y2VNVrEz3OcDFR2JSR3Vhkrnt3f9iRYhjo
- 9eHCegd6Fl5tQ/UducFbg2o66lJk1sa/s+YyLW03SzMajzDF0LnxwmysODnn1X/lBzrIImiG9eT
- T/i3amfixkDqS1eiUOhT/FKIylSUoFcKL7OLvGoC7U9IwbO7P3G/UTKEy9wTihKt5T4PhrDojYJ
- yppWEG7nI23srnLmX9hy9A9AIHW7EDwqKdnxdRfIIfIqnjL9AM1LaQIqo8YUYipb5Ym9GaiIbVF
- aPUQNqlNc25OYwdddmcKyecS/nS57ugo2BaPKrUV18Vm9fE1w8w9BbR4x2n3BdPAKCi0NCFrfMY
- pIGChkEx/Go79RrNouxV2dYlJcKP3ZMm1b5zeyRig6lt
-X-Received: by 2002:a05:6830:4413:b0:822:e9bf:6445 with SMTP id
- 46e09a7af769-85abcd3f332mr4383007a34.9.1793280332199; 
- Thu, 29 Oct 2026 06:25:32 -0700 (PDT)
+ AKwUvBwRY/JcBSz3ZUkqX3TS5HzKSnJLtEdrL88B3+D+uA6V9HA5vdAC90lN0fxg3oTo7ShQh3PEiJYkvbJT@nongnu.org
+X-Gm-Message-State: AFq9FYIvVceCS9SgajtzVtCsHwSb/i/9TnHroRHavQ4Xv5SM4AHiU02E
+ FqvATv6e/UItpPqE0HaJttG8qZ8/kW4qFa1gq7R0jnW9X4Tkit9l8ez9mQht7qPrdw08VvMH13l
+ renCr
+X-Gm-Gg: AYBFou257OqaYWGRzipbsWoasb0pteobdL7O7mVhiAG4Yov9E/HPAXMLyt7eyeUblhT
+ snaNr6kvWxaN8SS/exU5hb9HOTLl0zcGjoZH/++wM3CLE+5yINNNrlz0ON4tTNnST8wJoukbdQG
+ 6Y16HMxLOluyiHfo8AZXKw+c3tiW8a15v08UDl51MDwfO2fIOS+gRsDBLG/5QeF2NYHvH2g3gZ3
+ AHHvTzTRmpST6jjLnb6Di1wGHVfMNC7LVJFggXGIq8ubFPtzQrB8M7mhJyCydmMLkdF6bdP9Z2X
+ QNB4M5xbTa0LElx4CaVl/ShBwXS2zq27X3TMyvEfd+tGwGlRJbAe42+pPAUM/C1EtwLcb3KZp0Z
+ yqtmK4K18RgqpCx7LUZs/s/TWP/gnCSM8UxwT/TuEoBPYLIWjgiIIfgwIto97LXv8y/vQeU90HA
+ 0oVdHQ+b8vyA+GMdKaU73snw2Du9W3bJaI1RB8afH3kwJZStWaoNJOMac3vzohzx/8SbacRbnph
+ 00C52fVdy6vtF34PT9QFpwgB4ujvxV9ysBw3Zf+JGgUfBA9IrjuXm9wcgffYAYh/hvdKsoJ2A5r
+ 0JVw6yqVwcGJQiEWK8vI61HTt00mr+k9peeE70vZBEpE
+X-Received: by 2002:a05:6820:4606:b0:713:e789:8d5f with SMTP id
+ 006d021491bc7-713eeb55da5mr2426443eaf.49.1793280399717; 
+ Thu, 29 Oct 2026 06:26:39 -0700 (PDT)
 Received: from [192.168.129.53] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85b1fd30da7sm5345912a34.15.2026.10.29.06.25.31
+ 006d021491bc7-7142c7357a5sm4212429eaf.7.2026.10.29.06.26.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 06:25:31 -0700 (PDT)
-Message-ID: <21484da7-ef62-4ae3-b215-f3957d8cccf1@linaro.org>
-Date: Thu, 29 Oct 2026 08:25:29 -0500
+ Thu, 29 Oct 2026 06:26:39 -0700 (PDT)
+Message-ID: <63dd2100-a0ae-4369-b5d9-e1e51be570a4@linaro.org>
+Date: Thu, 29 Oct 2026 08:26:37 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/33] target/alpha: Register
- CPUClass::exception_name() handler
+Subject: Re: [PATCH v3 06/33] target/alpha: Use a static table in
+ alpha_exception_name()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20261022215115.19680-1-philmd@oss.qualcomm.com>
- <20261022215115.19680-6-philmd@oss.qualcomm.com>
+ <20261022215115.19680-7-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261022215115.19680-6-philmd@oss.qualcomm.com>
+In-Reply-To: <20261022215115.19680-7-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,28 +106,30 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/22/26 16:50, Philippe Mathieu-Daudé wrote:
-> +const char *alpha_exception_name(int excp)
-> +{
-> +    const char *name;
-> +
-> +    switch (excp) {
-> +    case EXCP_RESET:
-> +        name = "reset";
-> +        break;
+> Replace the switch statement with a static lookup table.
+> 
+> With '-d int', unlisted exception codes are now logged as
+> "unknown" instead of "<unknown>".
+> 
+> Suggested-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   target/alpha/helper.c | 55 ++++++++++++-------------------------------
+>   1 file changed, 15 insertions(+), 40 deletions(-)
 
-   return "reset";
+Oh, two patches.  Ok.
 
-etc, or pop them into an array.  The values come from an enumeration, so 
-these are dense.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
