@@ -1,87 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883AF606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C27606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=PyQfaJfO
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=fQdMlWN8;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=QwmSmdyt
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMU6Y-0002TT-B6; Thu, 29 Oct 2026 13:39:58 -0400
+	id 1xMU8c-0003ZE-Jb; Thu, 29 Oct 2026 13:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMU6R-0002TF-No
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:39:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8W-0003Xt-Af
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:01 -0400
+Received: from mx1.catap.net ([162.55.82.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1xMU6N-0002x8-Bq
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:39:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793295586;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HSAGoBpTxZNKdh7UlT4O7N5GtiG0beI2H0ayKi0e05Q=;
- b=PyQfaJfO3JLXDwOkOSWSnH49jxLd3yud04UGQHEopWXfGeBErM2X8JxHf96opKxHwzweZE
- KQ0Kys8L+6d3jwXhoOYU/clHaFGpAILWX2etrzSeOwNAmMZp8OK+Fsl+l4CjpwCboLXyHs
- /Hq3vL6rWCDdIodIfMCOuFb7R3GRywo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-rujL-2wFMzuVn6RIO5QhnA-1; Thu,
- 29 Oct 2026 13:39:44 -0400
-X-MC-Unique: rujL-2wFMzuVn6RIO5QhnA-1
-X-Mimecast-MFC-AGG-ID: rujL-2wFMzuVn6RIO5QhnA_1793295583
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A662180074A; Thu, 29 Oct 2026 17:39:43 +0000 (UTC)
-Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DECA6472; Thu, 29 Oct 2026 17:39:39 +0000 (UTC)
-Date: Thu, 29 Oct 2026 17:39:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH 00/21] system: introduce a live data recorder facility
-Message-ID: <auOE2HzQ_o1sq4d5@redhat.com>
-References: <20261015112044.1999748-1-berrange@redhat.com>
- <e965c91e-cf92-4647-bc18-d10ad39e2025@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8S-0003HJ-BM
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:41:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=yFam6hp
+ FnOGf3j/NXb5T6Nb2KVX+nnR/rfNAMJUCcIysWpz6p1X1pSAqb5/wqDjeRD++X42mgpVEl
+ 1BAmjMD/aWLStq1yWR5Hz2hznzQUaUAkLKx1LOGjiriCetBcigx2xwsEaU0BHStr8HrmaQ
+ dSluqSOnC+OoidBXMaBHswPffvlSYlmz65cJzVOJLK8xHLH6pGAm9oZwdqC64Vb5n7rCKe
+ IbCawBS7qgU6Xb5iDS2CVmkmc5ptgrWGVIKPglrB27MKOR165n403asxo3BYBFkafQIng6
+ uiBTPtdbt49QvbMz2kjFCk5DNjQacVwZMh06fuWV80BzR2zPTJH78Kg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=o
+ ZIhJ99tBnEm161PdQyhN93+GmDZtqEXkPIprVQL61k=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=uw+B+IoownzmGsgXqoqojP2/OKBi0f8wZs6ML0JYRmQtg/K5sA2v0WhZYS8lvlfhaJEg
+ TKJkQdDwa+lnovOPTbShR3sDNlRu1zfKyAhtJG5M/5WJ5G59piaTf2zn0gAoS09DWbC4kw
+ QdDF8OGZN/A/EA+umwA9di6Ob8nnirqCrtuFrAE1PhKJEoNQ53cWShapjK6AajWQP0+MXY
+ q/+umuer9nZgWDLskJq+syrBWWSPcRWHRTk7Heod8UOD1Lk7z9Kt+xJk1S4yKEyigdCwyT
+ LNTUMjG3LJ45cbmRCQmoji/yhdEmfGERPoK5MJjTF8nVFSG6Wt+Q+1AHgP3ltbKQ==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=fQdMlWN8; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=QwmSmdyt;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=oZIhJ99t
+ BnEm161PdQyhN93+GmDZtqEXkPIprVQL61k=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=fQdMlWN8OpWjG5um6dJvFMA9SoUXlZIckZV
+ jBBSD3TqNGeOC1tad1nuKXoEDcL2jhso5yFa95sdmFxHMnPNqePra9fBd2jv9gY/5+08UU
+ ROlh+nrOhhEaC8+lCODkBcZITVxtI/QRiN03EZKWSqdBpeFNt4s/ETOWBJtuKZt5zQgbox
+ FN/HVtjLYdR3u5ynF9ssms6Fkd4Yc92lSjo1I1rCacel9rh6UZ34+ab7CBg4j3/AL/PMlp
+ 0yLhwuNHvr5dkm3iAq5hRxW9kerRp9fKfIZmIw6G5uJkTZTcHO8Wtb7KArbBgiy+9lFk5R
+ 8bJqlaMcl6FuAusXbKIMRmGFh4g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=oZIhJ99tBnEm161PdQyhN93+GmDZtqEXkPIprVQL61k=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=QwmSmdytXw3Dvxlzrp
+ RIpqdCWKyO34SFANMfbiqKpvwLqOOZKtobFNeHXO7mdvU+mVKB7V+DG0wTpN6fQwFtAA==
+Received: by mx1.catap.net (OpenSMTPD) id 2c468090;
+ Thu, 29 Oct 2026 18:41:50 +0100 (CET)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 0cc079be;
+ Thu, 29 Oct 2026 18:41:47 +0100 (CET)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH v5 02/26] target/mips: fix MIPS64 segment access checks
+Date: Thu, 29 Oct 2026 18:36:02 +0100
+Message-ID: <20261029174139.44302-3-kirill@korins.ky>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261029174139.44302-1-kirill@korins.ky>
+References: <20261029174139.44302-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e965c91e-cf92-4647-bc18-d10ad39e2025@oss.qualcomm.com>
-User-Agent: Mutt/2.4.2 (2026-08-30)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,114 +94,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, Oct 15, 2026 at 10:34:14AM -0700, Pierrick Bouvier wrote:
-> Hi Daniel,
-> 
-> On 10/15/2026 4:20 AM, Daniel P. Berrangé wrote:
-> > This series introduces a new facility called 'tldr' which is a
-> > live data recorder. This is intended to aid support of production
-> > QEMU deployments, by providing a data collection facility that
-> > can be left "always on", such that in the event of a QEMU crash
-> > or guest OS crash, certain important information will be recorded.
-> > 
-> > The data recorder has to be enabled by adding a "tldr-config"
-> > object instance with -object / object_add.
-> > 
-> > With this series, the data recorder collects
-> > 
-> >  * error_report/warn_report/error_printf messages
-> >  * QMP events
-> >  * QMP errors
-> >  * QMP commands, which are not query-XXX/qom-list,
-> >    or any command associated with a QMP error.
-> >  * qemu_log output
-> > 
-> > The last item is intended primarily to be used in combination
-> > with tracing and its 'log' backend, to have continuous
-> > recording of certain interesting probes.
-> > 
-> > Each type of data is collected in a distinct circular
-> > buffer, such that high volumes of one type of data, does
-> > not result in overwriting other types of low volume data.
-> > 
-> > The data recorder is set to trigger on SIGBUS, SIGSEGV,
-> > SIGILL, SIGFPE and SIGABRT, or manually via QMP 'tldr-dump'.
-> > 
-> > There is a open question in one of the patches about SIGBUS
-> > handling, since that is already used for MCE capture and I'm
-> > unclear if I'm breaking something about KVM MCE reporting.
-> > 
-> > This series proposes using sigaltstack() to register an
-> > alternative signal handling stack. This would mainly be
-> > useful if we have a crash from a stack overflow, but the
-> > cost is that we have 8k extra per thread, and I'm not
-> > entirely convinced that's a beneficial tradeoff. Might
-> > be better to just accept stack overflows as a risk.
-> > 
-> > This series only captures text based info, but as a followup
-> > I would like to extend this to capture statistics data from
-> > relevant subsystems. For example, the BlockBackend has its
-> > own "always on" stats accounting code, which can be queried
-> > with QMP. Ideally I would like to figure out a way to dump
-> > all the BlockBackend stats in the data recorder output.
-> > Likewise perhaps capture NIC stats and/or KVM stats in an
-> > "always on" manner for some interesting baseline dataset.
-> > The challenge with that is making it safe to access the
-> > stats data without taking any mutex locks, since this must
-> > run from a signal handler.
-> > 
-> > A typical recommended usage would be:
-> > 
-> >  $QEMU  -object tldr-config,id=tldr
-> >         -d tldr
-> >         -trace events=/var/lib/libvirt/qemu/trace.txt
-> > 
-> > This leaves dumps to go to QEMU's stderr on crash, but
-> > to send them to a file
-> > 
-> >    -object tldr-config,id=tldr,crash-target=/some/path
-> > 
-> > The '-d tldr' flag redirects qemu_log() to the TLDR buffer
-> > instead of stdout, and the '-trace events' arg defines
-> > the "always on" tracepoints we want to capture.
-> >
-> 
-> if I understand correctly, the goal of this new object is to provide a
-> per-topic rotating log in memory that will be flushed on disk only when
-> we have a specific event (exit, or any signal). That's sounds like a
-> good idea!
-> 
-> Why not refactor exisiting trace/log and provide the same feature
-> directly there? This would be transparent, and user could decide to
-> either dump the full file (same than before) or benefit from rotating
-> memory buffered, with any custom size.
-> 
-> $QEMU -d category,size=4M -trace events=out,max-size=16M
+The xuseg and xsseg checks only tested UX and SX respectively; kernel
+and supervisor accesses must instead use the mode bit that applies to
+the current execution mode.
 
-The data recorder is intended to report more than just textual
-log messages. This series already captures signal info, and  as
-noted in the cover letter will also be extended to capture
-structured data items such as performance statistics. The text
-based messages are just the simple first step.
+Allow supervisor and kernel mode to use xuseg when SX or KX is set, and
+allow kernel mode to use xsseg when KX is set.
 
-That said I'll think about whether the split of responsibilities
-should adjust so that some of the logic is exposed more broadly
-into the log system.
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+---
+ target/mips/system/physaddr.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-With regards,
-Daniel
+diff --git a/target/mips/system/physaddr.c b/target/mips/system/physaddr.c
+index 6f11e70ba8..69968022cd 100644
+--- a/target/mips/system/physaddr.c
++++ b/target/mips/system/physaddr.c
+@@ -144,7 +144,9 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+ #if defined(TARGET_MIPS64)
+     } else if (address < 0x4000000000000000ULL) {
+         /* xuseg */
+-        if (UX && address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((user_mode && UX) || (supervisor_mode && SX) ||
++             (kernel_mode && KX)) &&
++            address <= (0x3FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
+@@ -152,8 +154,8 @@ int get_physical_address(CPUMIPSState *env, hwaddr *physical,
+         }
+     } else if (address < 0x8000000000000000ULL) {
+         /* xsseg */
+-        if ((supervisor_mode || kernel_mode) &&
+-            SX && address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
++        if (((supervisor_mode && SX) || (kernel_mode && KX)) &&
++            address <= (0x7FFFFFFFFFFFFFFFULL & env->SEGMask)) {
+             ret = env->tlb->map_address(env, physical, prot,
+                                         real_address, access_type);
+         } else {
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.56.0
 
 
