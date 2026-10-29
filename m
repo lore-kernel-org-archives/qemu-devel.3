@@ -1,139 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC22606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 08:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D9606A31E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 08:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=p89pw3MY;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=DXpGriat
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=LsWdcZxk;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=Eq4cWo8A
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xML9z-00056a-98; Thu, 29 Oct 2026 04:06:55 -0400
+	id 1xMLJl-00074E-KE; Thu, 29 Oct 2026 04:17:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xML9x-00056B-EG
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:06:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1xMLJk-000746-Cf
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:17:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xML9u-0005n7-OJ
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:06:53 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1xMLJi-0006jN-OG
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 04:17:00 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69T5Guj53829006
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:06:48 GMT
+ 69T5Gx1p2427217
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:16:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AqNmHeOGd6o6i+DDKa8GQUdsD6jyiIRnn6B9s6cZbDg=; b=p89pw3MY9H+bHox/
- 6NHNVHX9/9oV7nV7eoRy1079ZxyIr0GX6oilKRmsUYKAX4z1Sj3TkiRCq1xBYo+6
- mefVRvQfqXXu10sz85LB8kTLnwYs/v8Gj2wmnbyUO9ookQNC36dtrqHs4JfioFCo
- Ve+SlSicTv8axST0baz+bqrW9tY7hZ60+O3Jb8WZbCKFAX9UPuWAjADZXuAkf5wt
- b3ifJaUSbV7QMp1ebf/0tiDOmxsdz2uj5p88GmYCTO1mApPgWlUZBiaZ5FdcGg1l
- sTh7jYEIGV8/GqMdVH5pHOnQCjWGZS7r26QvfDe6pDDwtu6xlVBhM/BTzAkS9wzZ
- XcuG1g==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hktmp9med-1
+ GCrbmKZ3y4FJpgXmbkusZueZ1LXhw6lcSN3r7eEJyfo=; b=LsWdcZxkZVS9agih
+ mKEJ5ovSrDX3J396lxZeUUH+4STANI9BZE0Y2+khr58uLJP43wHcyCPLnDeJ5xp+
+ d6n8GPK8hAoYAOB/3HMJCGbkcdCnTiuus95fwzR4K/NhliQp+LvgJP8s7hBlEx6e
+ T5wKY1Q219IqFOKv00UvGLQUUq0kPZKxj1W8AMWMA4o0rbjjX6pDswFsQf018VnT
+ lq/7Nerl+/Pv09qJ0zwagIn83HEYt2ZZ9Ja417/PK9JxI4CqznUvUJimOiCza0+r
+ Z+ja/KXce4z7164cYZRXwhiRr3nIxNi42hd9pLFj2Zlc7zkLH0MRSsHadXSfCdF1
+ SIYwpw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hknb2b0jy-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:06:48 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-93c5ab5c136so282119685a.3
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 01:06:48 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:16:55 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93c5ab5c136so283100285a.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 01:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793261208; x=1793866008; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:cc:from
- :references:to:content-language:subject:user-agent:mime-version:date
+ d=oss.qualcomm.com; s=google; t=1793261814; x=1793866614; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=AqNmHeOGd6o6i+DDKa8GQUdsD6jyiIRnn6B9s6cZbDg=;
- b=DXpGriat6xJu34w/8qPC8qe2pwsB2XsvI8EcWAQ58KrxeGysfMvLaYm8Kry1aJAZRk
- b+T6RmJVXXROHx08Uosi0TACnEjlDiQDL7whgVX4zfyrKZmGHyTg6m1yUsTW2LHam3UG
- Dt7CdEuLF/oDIV3OoAO0mJ0hw/kLeCK7bNu3qRuDLmvMR5phqwNzv+qzSzGk1s84lxZq
- 3TbaKsxVammOIigEhl0emAcSB0xjuhSpsUApFX1itWonlIsRF8Jyd2jbY8Iw/sq1yztv
- 0hfCEqFcKMFtVvJzHxmLOEhBmuzy+dJwhD5D/bT7iXR/4ohNHO7d1TdUu9g0Tl7uHoQ9
- 40eA==
+ bh=GCrbmKZ3y4FJpgXmbkusZueZ1LXhw6lcSN3r7eEJyfo=;
+ b=Eq4cWo8AB9M8rgd8BgC608xgxt2Rsqfy42YyCD48pqk0F76zStrD2rD2Wp1U41jUZJ
+ ahdx3qMNPMbHYC/9sysNeV4q4Hgusf65bvXDOEc4XZPuURWogrm4Ee7AU+HeND6aFno7
+ 9+ATLizrDbBulvmdYAF9gosQ4rmAHQAPHkJD78+i8XKyXW0G+dPb6bNQg/VuY+KSem5P
+ cT/A909Q2hd0SUWJXOwvQ8lhgKwrl+zT4QT6veHUKLe+zEbPPrU7DPVerg4PVo4WtHbr
+ ZIyVPUwMXKm+5dnkNL2hnm/PFZaxi5i8o/1PuPioh5yhcKD+MYhhJaK+PWcL1Boq4G2S
+ pCEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793261208; x=1793866008;
- h=content-transfer-encoding:content-type:in-reply-to:cc:from
- :references:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20260707; t=1793261814; x=1793866614;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AqNmHeOGd6o6i+DDKa8GQUdsD6jyiIRnn6B9s6cZbDg=;
- b=H+xjz0pCXw8mfrI8EOeMeS90/17fjm/sA3OMPnN5otyfH810Y6GqtJycrsYeWV3CAZ
- l7nUHKLhoBq3ZLbX7FnKBHXi2OIkS45+QNIlJhb7j6ysHaBoEsBS22wuMfEEctbKHctU
- 7cIt3I8SbdJQE7DL9fpB3/say4Hmx2nrg+rHGUjJ/gaaUTZnTSdtJP+a9fe7vJx9SE8L
- I3mcNLkVk8YfPRI1SbfvjI2w56vQ2l/4WMzDBwMMnyoK2WKKHgdSVwY66w+ey34XN3GJ
- 1txfesvYETeA4QY5lwjbCK+1vbb28WWh4XOBFw8xiB7+JGrc1aSHjeWFTTvihk90T7OO
- fpTw==
+ bh=GCrbmKZ3y4FJpgXmbkusZueZ1LXhw6lcSN3r7eEJyfo=;
+ b=pwISXzTP8K/+KLdis2xKZYKmCCACjKH5wvvg9Kk6OldtgMT40h9UTGxFm5EOxcIDfM
+ QWwCNYZWp+NtNAqRsq93n0SDy+XxINP6z8QbxBLh0dvjJI9Z2WvG6jQFlMI+qghgcW/p
+ p+laRlQxFNOYvMCBLukZ9lu9thnGS/qc2WAz44G5SrZoLS47kMaOrSYz4p8oJXSkplJr
+ bPvnakeWX6XCXvQCZz+vU5HHqcX42KKrmPuK+CcMldEPgFbB90S7TOiwC5s5jlqulDwl
+ R8YZOkGYDKU6sHDy7q94LUZqmQGN9AyE/3btTIzR3hc1B811IHC1mnVVGTs/pKzjp/63
+ lGmA==
 X-Forwarded-Encrypted: i=1;
- AKwUvBzn7yZkryWv4p0PA8ZrEjp+VtSMqs/q444kdUHPKESC/fBDwRI356qNf6o/uJMaTCYbeqsJGYpLXqve@nongnu.org
-X-Gm-Message-State: AFq9FYJ4cz/zpS5yV8UuwMkbPv1DCZ1chGurqoUZnXSXxXFuI4ss4c6b
- hcoCY0ohbYTRx6gtQVC0u8Qs/vL4QY1KLv0r7agHiyEiYDDSMynbNElAwiNCPG4mGAadgLyeW3i
- yhpuVYMTuZL4XcS0c/m+5c+e1KqKbydu342OTCcW+5rzJ+RMidRovi3qk3g==
-X-Gm-Gg: AYBFou2plSktTCFTC0ICVef10o+9geS5gRCK34Hua1aj3xQWa/SanKlRvJZz4qVlsmC
- vS5RqndBSs121X2jGhp0pYAJ2nELMFQu+qPaLzi7iEZchHRGNcfWPWxJ+B3tNGaAZ6qb+Ao+gkS
- NmGBBz9hrCKpoEtD3nVXYb73tXWISGInqkUPN53Ph3WklKCF145M/J5Z+duIQIdZTe2MFXD8TjD
- pGvntwJp6vPr8O2doZro9yZ5GwZI5SAnnTexC+daNs/7jjLY2Q3UygwORUSGNO5Y4+zo9POrV7X
- wIGNS94DRiC/tzsc5Bbn6C2KXKhnOEloloY7I16C9+7Y7pjArpaKB+HJXeKuJnKlZ5GYDXhGz7W
- BkALFIvu03jnP0vtk4EVEQWMYZ14qzuadj0YT81wuMpBr/TKjqkRg7gjpolme+BoHd+Up0GIL1X
- MewoInVgJsCNyjL6f/RihyvXk=
-X-Received: by 2002:a05:620a:4111:b0:93f:5cc0:5978 with SMTP id
- af79cd13be357-94408cfee99mr696532585a.37.1793261207769; 
- Thu, 29 Oct 2026 01:06:47 -0700 (PDT)
-X-Received: by 2002:a05:620a:4111:b0:93f:5cc0:5978 with SMTP id
- af79cd13be357-94408cfee99mr696528685a.37.1793261207175; 
- Thu, 29 Oct 2026 01:06:47 -0700 (PDT)
+ AKwUvBw+XnZym/UHP6fIZSf4Zot9Uv7DtoMqS31PlI5fyrTSnmrai4HfB1Ixhxk1t8V+VxpU056q8e2j3cPT@nongnu.org
+X-Gm-Message-State: AFq9FYLpokK/DvZHIoBzlqPVJjcf5E90bCxJMTz2HNmgqhYgQuf2rAZB
+ MqOdAOThEVgLasb487WSo9Ho86bANIe86tsZcBqh/uC2KofB4FiRCAycKaJoQDMhJVk8s4Gvip8
+ GzEi70s7aCl2MBcoRCVXJQXjCDc6WZmeA7/vepXE350inLUHn5buTZe24AQ==
+X-Gm-Gg: AYBFou1CNtEAI+0TiKI8pmZPHjRQ0455GjeL6+AT5o9Djre8dlrTNOVSeVVSh4y1HkZ
+ c3ISuQzo1fBO56J7ZNNSZpEJ+gl6K4x7jGAMzZ/XoQQCzYIPoAhZzSzsqBOIJK80sgX7uoo364d
+ ay0MiQq7macapnB7bbcCatUBUzmRfPm573quhDOHBGCyNz6/mFCPg+4djQWpVc2yw8YjjU0p+s7
+ 99TrSHO1LuNadDBDaW9d4HW3X2dfVrgz7HF2tgiUJGaeKHX7fXxLmmtVE1bxkIzUTUhEevO+rhM
+ NnrrhZJtAzvV2W7e5wDcTKV073xvQsYpFn6M50vOMn/riuv3HXsu4z7BGAuAy+bNeB1dH15irZi
+ sQK6v+l2WwCfPI9t4jXM6+GMzegNuD5g8cDZhEL1sMNXsr/idEwcrULmwK67+bz+9jRecqkJh/9
+ 2MdaOJ4JSwQ277VvufSNxMWaQ=
+X-Received: by 2002:a05:620a:17a4:b0:93f:2ba5:1704 with SMTP id
+ af79cd13be357-94408cb5c48mr726712185a.18.1793261814646; 
+ Thu, 29 Oct 2026 01:16:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:17a4:b0:93f:2ba5:1704 with SMTP id
+ af79cd13be357-94408cb5c48mr726710385a.18.1793261814167; 
+ Thu, 29 Oct 2026 01:16:54 -0700 (PDT)
 Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc3dd7sm33141145f8f.15.2026.10.29.01.06.46
+ 5b1f17b1804b1-4a94eb8dc84sm41871905e9.2.2026.10.29.01.16.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 01:06:46 -0700 (PDT)
-Message-ID: <de5dd85c-e486-40b3-a0ce-613cc102089d@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 09:06:45 +0100
+ Thu, 29 Oct 2026 01:16:53 -0700 (PDT)
+Message-ID: <b5a48399-4a42-4f8d-9cb1-cab4d5b342f6@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 09:16:52 +0100
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU Sashiko
+Subject: Re: [PATCH 0/4] tests/tcg: Massage MIPS tests for easier maintenance
 Content-Language: en-US
-To: Alistair <alistair@alistair23.me>, qemu-devel@nongnu.org
-References: <bfacc761620e29347af03f3b613c6c877b4c1862.camel@alistair23.me>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20261028192124.30941-1-philmd@oss.qualcomm.com>
+ <057696cb-8206-4d9c-8dae-41c39df6fdfb@oss.qualcomm.com>
+ <32777ab5-3c29-49f4-9650-765fc6648aaf@oss.qualcomm.com>
+ <83462522-58d8-49ec-8e98-c164cbcab54a@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>
-In-Reply-To: <bfacc761620e29347af03f3b613c6c877b4c1862.camel@alistair23.me>
+In-Reply-To: <83462522-58d8-49ec-8e98-c164cbcab54a@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDAzMSBTYWx0ZWRfX3F/LQxxxqmwo
- gzQhq/9XjOQ2/upG22NEGSdzp+a+1EuZTbcVHDlF1twqJG1U7yFyiFRCcoLVKUPSW58oYe2mhKo
- rUp+HCMq6WBOqhmjitzuUfORQRS1rt3gvpoF94EttdqJg1rj0FNsoV/ualwngFbYJxFnepsL/fI
- xtqwVia1pwKvsyTO6IYViZ4z5cAvWXAMxCFVdJdcTc1hQ1OXnkp/iLqWsnSmrog0cyqzVwvBxb6
- 0uyYXO0LsT3ytJsUbKnvVSw68esOZzVzQmhwLM+k10PVctO4HFmnYJKY/aph1VHgHgC9WxOHxqf
- 9ZvM4OEVrytTHr3DAopsC3BuFJ1RRZ2W61s+xBilBiO4MHwdWrGBy9G6xq+8aOSClFHs7HTvszk
- OecqsHzPpNlo8ES+fjsKitxoQSNuIPxmnYOALqlsmGnyIoN/LD7PXmq+Dk6q0Mbpr3J8+BuE9F6
- YMArrI4dQ47djpm0Hqg==
-X-Authority-Analysis: v=2.4 cv=crYOAF4i c=1 sm=1 tr=0 ts=6ae2fe98 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Yu2a1IYX c=1 sm=1 tr=0 ts=6ae300f7 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=c92rfblmAAAA:8 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8
- a=QyXUC8HyAAAA:8 a=F15X_yQonrbWqZ1-Bc0A:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=GvGzcOZaWPEFPQC_NcjD:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDAzMSBTYWx0ZWRfX/Nt4uIdM7uuG
- 0fMiTccmprqs+wzDNRv9ZwoW7rrlx6mBAlXm+gOIOi83iPdB5GX4oRKMRgoox+btywo+5EqpOZ3
- imzANXItT8nSy8RDOg6nPLEXEf/eIfw=
-X-Proofpoint-GUID: APJO3FixjWWfSyFkCDsWhHT_r41ql_iX
-X-Proofpoint-ORIG-GUID: APJO3FixjWWfSyFkCDsWhHT_r41ql_iX
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=DIytO6QhXqaAQeevGK4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: LTobes6nNw6bhQo11T4ye_8fo8zwRVvr
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDAzMSBTYWx0ZWRfX5bovghyVaeA1
+ SqFjov48x+qphJCRdEno4XmrxSZYcrMpvAc/rovJzFwmVQxTYJjlQh4BgqHelbcrsaGG+q4Hs5F
+ kS6MaOvbIlRiaSk6x5FoQ7cPwrr5Mfo=
+X-Proofpoint-GUID: LTobes6nNw6bhQo11T4ye_8fo8zwRVvr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDAzMSBTYWx0ZWRfX13G4sT5oUGA9
+ yDxfI6FSoYiZ5cpzEgZFys2AIKfvskVJizUUmLiAIMc9NE3DPvLKGF0lzDZPOpsJr/hp2pmY8j+
+ xEL76rUiaPafR359CFx9oAFu8fGI13EpjFapqRyFJBKBomzpLodidLzJjSddT5N8XJXm9a8fpnw
+ YXkjCtRqpo/xUZopTZd2FYdJvqJGb2HSlgAMcRVZtHvaz59EtwZpT04vkqqEw9ybA3pJUa5ZKlj
+ /tjDTATpbHe3kzIdUJ65VvPliauvmeKd0R407bwyiIh7UlVfiBOD5DAyjj3oRzkcwRYbYq3fHR9
+ tgfcQIZCyxsEQBguKjNKhS8L1zqYnE3mxhdMfv0WPBxih3oGmTsTH9DEpKQ5qnl/MWZnvWAPzkZ
+ aT7hwPGl4sQsMmX0mbYesTLjW1NbXhoI+I/tRUIXD/vDik6VMvh3H1foR9io7dlWfVYaDdG+R+8
+ cKZ/j99xrWbep6b56qA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_02,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015
- adultscore=0 suspectscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290031
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610290031
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,66 +157,52 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 29/10/26 00:32, Alistair wrote:
-> Hey,
+On 29/10/26 08:47, Pierrick Bouvier wrote:
+> On 10/29/26 12:04 AM, Philippe Mathieu-Daudé wrote:
+>> On 28/10/26 21:07, Pierrick Bouvier wrote:
+>>> On 10/28/2026 11:21 AM, Philippe Mathieu-Daudé wrote:
+>>>> I'm glad we have many MIPS tests but they are in too
+>>>> many files, taking time to get compiled. In particular
+>>>> on Aarch64 host via x86_64 docker image... Group the
+>>>> test in order to reduce CI build time.
+>>>>
+>>>> Philippe Mathieu-Daudé (4):
+>>>>     tests/tcg/mips: Clear DSPControl at start of DSP tests
+>>>>     tests/tcg/mips: Group DSP tests
+>>>>     tests/tcg/mips: Group Release 6 tests
+>>>>     tests/tcg/mips: Group MSA tests
+>>>>
+>>>
+>>> That's a good idea in itself, but this would need additional work to
+>>> have a clear report per test. We can't trade usability for faster
+>>> compilation.
+>>>
+>>> Right now, a test will stop on the first assert() met, without going
+>>> further.
+>>>
+>>> Ideally, we can keep the list of tests in a static table, and perform
+>>> the DSPControl clear before each, so patch 1 can be removed. Also,
+>>> assert could be replaced with a proper return and print information per
+>>> test.
+>>
+>> IIUC the requested changes are only for the DSP tests, as the other
+>> groups (Rel6 and MSA) do not stop on the first assert() hit.
+>>
 > 
-> Sashiko just merged initial support for QEMU [1].
-> 
-> For those who don't know, Sashiko is a LLM powered review bot used for
-> the Linux kernel. When people send patches to LKML Sashiko reviews the
-> patches and responds to the mailing list with any issue that it finds.
-> 
-> Like all LLM tools, it is both useful, but also verbose, prone to
-> hallucinations and misses things (like humans do to though). The
-> general consensus in the kernel community is that it's a useful and
-> valuable tool.
-> 
-> Sashiko is just a Rust application and prompts, it doesn't include a
-> LLM and you can use a range of different LLM backends.
-> 
-> Google sponsors the development and runs a Linux instance. So you can
-> see the hosted Linux instance here: https://sashiko.dev/ and it uses
-> Gemini for the LLM which Google pays for. It seems like there is also a
-> GCC one starting up.
-> 
-> The cool thing about Sashiko though is you can run it locally as well,
-> so you can use it to test your patches before sending them to LKML, as
-> long as you have a LLM backend you can use.
-> 
-> So, now that Sashiko also supports QEMU there are two exciting use
-> cases:
-> 
-> 1. Developers can run it locally to review their patches before sending
-> them to the list. This can catch issues before sending patches
-> 
-> 2. Maintainers can run an instance to review patches. How you set this
-> up depends on the maintainer and how many tokens you have. Pointing it
-> at the list directly and running it for all patches might be too much,
-> but some combination of manually triggering it for certain patches
-> seems to work well. The Settings.toml file can be setup based on what
-> you want to do.
-> 
-> The hope with this is to save maintainers time as Sashiko can catch
-> issues without requiring much time from a maintainer.
-> 
-> QEMU support in Sashiko is very new, so it will take some tweaking to
-> improve things, but it is at least a good starting place.
-> 
-> 1:
-> https://github.com/sashiko-dev/sashiko/commit/e432036bba7ab10d4517385916e6c834d8176f70
+> Yes. Other patches still need to add some reporting on which test failed 
+> (a print with OK/FAIL is enough) instead of just a global return code.
 
-I'm glad you added projects/qemu/ directory there; some time ago
-Zhao and myself tried to leverage LLM to review QEMU and reduce
-maintenance burden but there was little community interest and
-some negative feedback so we didn't pursued on the list.
-https://lore.kernel.org/qemu-devel/afxbDjQEWJZ6P9oe@redhat.com/
-https://lore.kernel.org/qemu-devel/arpINtziWCbjENeo@intel.com/
+Right. I'll try to use TAP format so it better integrates with meson.
+
+>> I'll rework patch 2 (indeed 1 is then unnecessary) and respin, thanks.
+> 
+> 
 
 
