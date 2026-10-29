@@ -1,100 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C1A606A31C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F503606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 13:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Swr7YRaZ
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=AqOxk9+a
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMQ1L-000749-7y; Thu, 29 Oct 2026 09:18:19 -0400
+	id 1xMQ0z-0006JL-Ab; Thu, 29 Oct 2026 09:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMPyq-0001pL-Ot
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:15:45 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMPyo-0006v8-Ut
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:15:44 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-6dde81a6820so1659402eaf.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 06:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793279741; x=1793884541; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tfYpPWHFha7ZgGnJVfs3SmtYz4Dt6bskx2rd6eaT73M=;
- b=Swr7YRaZYR4Ka5Fd+jj/Utqu2J+yOM/cyW5YuICweN4sKNzZBC5o6jmuD6BDyGwq12
- dWpOXsCXK6WGtPu4zpsMbxKgTHxcFkzumuEs6TGNNwEnFewztuj2fq8Zoj4gaAVL07qE
- xZPXTRUzgZa1IGjSj2MvAGqHTimmgwUyLE6PbluutN00AkHx2//klvgQMXzyXcrFu8i5
- I0jhhIMoJ8KdYIE9+QcbVlgahJEwVN9rLckch8QKqMYwPe+KGZpnwZGtuovDmIRyUPxl
- Q69YWFkDzp0MxZ63c+BSZ8ATriK7+f/TVD1mB2mO5kReB37iUy+wKZ4085HHcAE1zFTq
- H3YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793279741; x=1793884541;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=tfYpPWHFha7ZgGnJVfs3SmtYz4Dt6bskx2rd6eaT73M=;
- b=d/94cmeF25BCKymA4C1+H2hlUVaVO28glX9weGUmw2qM3rEtA6WL0ejSGVh4F2Ojy5
- y4Ac8OpnlOaOb5CiaWKK4LGo+8yKvVmBtSNeNcbtuGvZFG8BM1gkHzGn9neHBydH1AAP
- jVvu6B7X3xara3Nv/pISEGY4Pa/w6AR73mzREm/qT22hK29+oNHvxzV/BtJFA8YRfXax
- 6BnfdqFIeSGpPQB19iPFXPsb50Iof+G0DXxaxRRNPbmuqf53ti3iveuG6zg3k/zGHc2O
- NNgcr7qO9o+TnG00Jzdb/nN4lld65ezp4wOxvmAiDH9xkPSTluu92GzxAbP7B4ksZ5tI
- D4iQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBw0MNrqTAykkGWCDBmoL6JdRI0lmrmZl7tyrGp6OunC8+074C0CaODWZR8YYWS15jIaFdj2i7ftEd5Y@nongnu.org
-X-Gm-Message-State: AFq9FYLA45mCm/RzdSq3J4pj7vxfz9wAUazKuQiWar2WKjmTmoWNM2gX
- bIWLGBPukZjBcV45qWLu89LXSyPF/QpRElSz5mPS6qz8liODGFtEV62zf2xCkLYLzoo=
-X-Gm-Gg: AYBFou02FspX0FZsphF49Cn80tJi5PDDwRBNadzYY6Ws9qRo8BTuvdPr0VIb9yWd/9D
- PqBRR8j8PY+AQLfW6qCVYSBODmowkLk3mnc74vW4OAejmDwIZPkQ1l+Xb4Z7dDxjLUVCCUggmhO
- mlgrCMv7wwYE1oxYQs+IXBptaEQTWTUYinKfGpD57BeObfcS/p08RCpjRRm/VnlE7akztfUTRK/
- boOJL9J4Wtfq3iCFFV4A/7rpXCmdNMmzN0fDSdEIv1lUJsxR9TwyEVAkJyNg5RG30m8BmO/1yJu
- 7JAwLcHaVI0wPbubtjXuqbqnGkasiH1MteyMIQQRCYc/oVyuGoD+V5PYr8KBfxCETHIXY7wihAs
- YbUYRLIS8a+5DBdU6z6shspMoDAXcUWuv8b+yQ29e3IUtykxNifrHVNH0pnm4Jx6Qfbr1YltUTM
- Ac6viVzT2tjr4qv9zHI6MkgjJZl3aBtbIN+pekadxGLmTWp5tJeoReThqFw2WXDjh75dsRHUkwz
- DJDz6+DlnvcQLquDwOK372brJwpdkG9OC0qt+l3IfWn74Pll1YqgmJlemmcwv9m8O5wRrvVo3aa
- VoBfc93THRiqjTMTnM53h8h3vnV3o6z47KrDRtg2XUCJ
-X-Received: by 2002:a05:6820:240b:b0:6b7:83d6:292c with SMTP id
- 006d021491bc7-713ef53341bmr2344521eaf.47.1793279741455; 
- Thu, 29 Oct 2026 06:15:41 -0700 (PDT)
-Received: from [192.168.129.53] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85b1fd3170dsm4680206a34.16.2026.10.29.06.15.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 06:15:41 -0700 (PDT)
-Message-ID: <edd1d26c-5dd0-4b38-8912-a57ecf421ba0@linaro.org>
-Date: Thu, 29 Oct 2026 08:15:39 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMPwz-0008JS-0b
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMPwx-0006QI-97
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 09:13:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793279626;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NZxw4M4gDY5tKHQioN+bGUmjv78GhfFNRK3LJmr5w4M=;
+ b=AqOxk9+ajhkUVyI+Y6Fr+TdSyzxiGtL6y83fz8TtBjAGZEbbGsXwxD1dIZrDCida6Su7te
+ 2l7swvrNpCn2wvN+ufS6SePFVIKFD2tpbc5Sz9o6VVlJfmSwQu1cfNSBJTDJH0UIC1R2BA
+ ZRLmRdcuu1uB3qKQtzuzEN2pafFQUXg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-JZDKrbBfOS6BoxhK62Whug-1; Thu,
+ 29 Oct 2026 09:13:35 -0400
+X-MC-Unique: JZDKrbBfOS6BoxhK62Whug-1
+X-Mimecast-MFC-AGG-ID: JZDKrbBfOS6BoxhK62Whug_1793279613
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C23DC180065C; Thu, 29 Oct 2026 13:13:33 +0000 (UTC)
+Received: from berrange.csb (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 464123000723; Thu, 29 Oct 2026 13:13:31 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 17/28] hw/misc: mark pvpanic, vmcoreinfo as secure
+Date: Thu, 29 Oct 2026 13:12:30 +0000
+Message-ID: <20261029131241.2275706-18-berrange@redhat.com>
+In-Reply-To: <20261029131241.2275706-1-berrange@redhat.com>
+References: <20261029131241.2275706-1-berrange@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] target/mips: Constify and remove TARGET_BIG_ENDIAN
- uses
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
-References: <20261028180040.22848-1-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20261028180040.22848-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,22 +86,74 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/28/26 13:00, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (5):
->    target/mips: Constify CPUMIPSTLBContext::map_address() handlers
->    target/mips: Constify get_physical_address()
->    target/mips: Constify read-only CPUMIPSState arguments
->    target/mips: Do not use TARGET_BIG_ENDIAN in cpu.c
->    target/mips: Use CPU endianness in MSA LD.D / ST.D helpers
+These devices are common debug aids for virtualized
+guests so must be marked secure.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ hw/misc/pvpanic-isa.c  | 1 +
+ hw/misc/pvpanic-mmio.c | 1 +
+ hw/misc/pvpanic-pci.c  | 1 +
+ hw/misc/vmcoreinfo.c   | 1 +
+ 4 files changed, 4 insertions(+)
 
-r~
+diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
+index 85fb7da5e5c..bb0a7ff6f8e 100644
+--- a/hw/misc/pvpanic-isa.c
++++ b/hw/misc/pvpanic-isa.c
+@@ -121,6 +121,7 @@ static const TypeInfo pvpanic_isa_info = {
+     .instance_size = sizeof(PVPanicISAState),
+     .instance_init = pvpanic_isa_initfn,
+     .class_init    = pvpanic_isa_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_ACPI_DEV_AML_IF },
+         { },
+diff --git a/hw/misc/pvpanic-mmio.c b/hw/misc/pvpanic-mmio.c
+index a173a1a9a58..161e8fc59b4 100644
+--- a/hw/misc/pvpanic-mmio.c
++++ b/hw/misc/pvpanic-mmio.c
+@@ -50,6 +50,7 @@ static const TypeInfo pvpanic_mmio_info = {
+     .instance_size = sizeof(PVPanicMMIOState),
+     .instance_init = pvpanic_mmio_initfn,
+     .class_init    = pvpanic_mmio_class_init,
++    .secure        = true,
+ };
+ 
+ static void pvpanic_register_types(void)
+diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
+index 5509f70a3e5..7d1f99d564b 100644
+--- a/hw/misc/pvpanic-pci.c
++++ b/hw/misc/pvpanic-pci.c
+@@ -80,6 +80,7 @@ static const TypeInfo pvpanic_pci_info = {
+     .parent        = TYPE_PCI_DEVICE,
+     .instance_size = sizeof(PVPanicPCIState),
+     .class_init    = pvpanic_pci_class_init,
++    .secure        = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+         { }
+diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
+index 9c2e9005ad3..90f361b05f1 100644
+--- a/hw/misc/vmcoreinfo.c
++++ b/hw/misc/vmcoreinfo.c
+@@ -101,6 +101,7 @@ static const TypeInfo vmcoreinfo_types[] = {
+         .parent         = TYPE_DEVICE,
+         .instance_size  = sizeof(VMCoreInfoState),
+         .class_init     = vmcoreinfo_device_class_init,
++        .secure         = true,
+     }
+ };
+ 
+-- 
+2.56.0
+
 
