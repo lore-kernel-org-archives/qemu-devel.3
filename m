@@ -1,93 +1,93 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5063B606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A491B606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=Yxjif2tN;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=cRCFfyjM
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=k/d8bA6f;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=UrOvMSTY
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRpG-0004yp-9E; Thu, 29 Oct 2026 11:13:58 -0400
+	id 1xMRpR-00059y-M7; Thu, 29 Oct 2026 11:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRp0-0004wS-HE
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:13:43 -0400
+ id 1xMRpG-00053p-9T
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:13:58 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMRoy-0002yH-AG
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:13:41 -0400
+ id 1xMRpC-0002yk-Q0
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:13:56 -0400
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TCeWVL120287
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:13:38 GMT
+ 69TCeXtl120324
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:13:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 10yc5qhRFxrDi8Aw6pkQwuyDjRz0WOyaTZSKASo9m3s=; b=Yxjif2tNZEDho0Bm
- ZwlR2P9be5gyLJqQ9Its/HG3+ne88ithkA3SYOmC2AFsYcwyQc7gpkTGBIR7PWdq
- sAl8kC4q2SaEGpolDnYRi3qkWdqd2KCpZMlgWE8cdFaWTv402pJSJXzbANzc8Ce+
- XT7vVfcIO7hedfJSyBfjcYzke4f16kuDtF8DZNlAgAsuMllkTJ1hcijM17pfgy9i
- L94qWdyM243auHS5lgTjoSh3EWt3HD0Gr1iUYVDZZbaJ7HKe8i4j4qg2hAiO4nNr
- fUOyTqjmXX8Jy7WgfbaH04UNtaH720vDsQBe9Mx72nEs1pK+28AdnCd7oqY5T7Gk
- rcfE1w==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkut3k017-1
+ NPOUBIbi4rGDqPDE1Rv7rlIDdJdRR+XbT+WTGtzAY0w=; b=k/d8bA6fqm7m/toX
+ 3pR81u3J8Eu9PL9tuZElikjYtJijzjx+0Ovo6ArQ9p6srlBrboaNoO/MabKQhFF4
+ LDc0XggUvRlrnaSf80PdN5VJ/hY/DVSNrFYRzes4COHKTcSpZe5XwrsxE4aOn7lg
+ bQPLf3WpYKrzbqf1IieoDgrC0UFm+KOAiO47rPvANP9HXQ1WegpzmSilOgSsEyoD
+ 9JZMrlcSrQYFe5MFLF1IEx8u8shb7HTREjyG08dS4xoAEtxY1XA0QqPCTRsEup9J
+ TfGSPf/d77eZMatscC23ZSkJ+1+2xwKucAdJszKfajV2C/HpoEy5xo8e/YW3md0i
+ D2U8Vg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkut3k02d-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:13:38 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-98a829c43f3so520560241.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:13:38 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 15:13:52 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9440b27c1feso342303985a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793286817; x=1793891617; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1793286832; x=1793891632; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=10yc5qhRFxrDi8Aw6pkQwuyDjRz0WOyaTZSKASo9m3s=;
- b=cRCFfyjMvwX37wgzgUqlqRCniQaPSEP8rqWPG38aL7TakswLfmTQa4fna2YiQ7bUy8
- ienhXTj0o1bh3cqXpDhUL+2KoidjxQSVqQ9xMpVCKP2x/rOhNPzYtGhIUCpUk+UzsnOh
- 8fmlNryhf6LReiiyYxRg2wcK7cG8mR7nnvgRJPlD29P1/ZMPtZoeGzFcjSySEFxuZACb
- tRkNFMN5FiaRHVZK6AA0XMC/T5l9IV+CYmPLLCzm5S0RTBQk4xRCQMy3rzZImt9A9G5T
- 24h59LGRok7e6qBjE92IeBFQcTSt7M4VJVYQdZJdbbtrPdGsJYg5GsN26kh7JFf07L45
- YchQ==
+ bh=NPOUBIbi4rGDqPDE1Rv7rlIDdJdRR+XbT+WTGtzAY0w=;
+ b=UrOvMSTYt9oeavKXXJKiZoqRdvdDjtKYMq9WSlJRpJ8+dJlHISc+bQq8AyInjMV2Gb
+ 9YXFL9KCigiBJrsZ++L17qbHgrpMXPSYxqKeakUYF6b1xHPRsv9fnBtRwlpacsZiIXtW
+ 9JkCbt0jRpbaiKuyOnB4GnjGc8z5B8BHKMr0d1IdADjdRXB458Ij4+MCPkKqn0W4rpPn
+ d+ENsfuJnOhF33kLvX2iykZEkqtJ0AEStkgP+PHg2mIKUlPSqdGqAeKZ6MspiJjZI56e
+ 6MP4VCminlfhbYiA6kkLf47g01XMW+DnHMH0G1Qkavi2MRFbX1uGhsxyqkSB1hb7Qfss
+ 7mwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793286817; x=1793891617;
+ d=1e100.net; s=20260707; t=1793286832; x=1793891632;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=10yc5qhRFxrDi8Aw6pkQwuyDjRz0WOyaTZSKASo9m3s=;
- b=GFnRSlpWR8CYMgFB2E5aYe2+ZR/ymKV6DLCIRIJ6KV5B4Lsr5zOwcft0Hct5w0xwHb
- mJW+mXutd6yIX41UJbyM5fghMnPeb8xlok74k5B9p0O5H6HfMAqidVZiYdc6p+A0slMi
- R3vg2SkcWewsLdfJFb1qXpbSE3kQYAu7QdbmRqa99A41hKF+eZYEG3p0qiWHaNYVGtM8
- /RV2/zTJ6uSkttK5uwfIrGKl77cDJiVaTp1CbXZN+xKZF+FvFNjIJDUtIC5jabT/qYGl
- ok0hXQA4rQ3efPUbKfd9J0JqFuuJe0af37LQThbguW3vwe55wDRITyN+NDNRuido3Mfm
- S6vw==
-X-Gm-Message-State: AFq9FYIZwTjlcSUOyP44NN11H3LfhAlsrHcLGKxjFTmZooivx8kHWCLA
- VUq2rw1ITcGEiGzaxhiEZEH7qT2AsmD/Wctpd+pUgWmyrsYq9ZzrowfvsdakP4Lyp5nmHSFAFMq
- P9+y9xR6mvO2zRLdRXA3LsVpc/RytRsUATHvGjD0jF3fBR6kBE6dnz3zjZMMALo+QG2og
-X-Gm-Gg: AYBFou217sSlppNNnb7cgpM6BUZGDHDymyEjB/WqpbwvLzyiF0QqVEIitRgixoXPQgf
- 6pChZo78mvKl5DIpS3fLW9UMDvArBxQD0w7X1WDofdICKPofXULTYPIDfzUx67POEj28tfCZLUH
- yuXG/tOZPKWLe8B7ShnVi53Uo5BSlRfZxaXEAiQpxAbDKPETV/JCVLF6TB1GSBGNjDnQac7ohc9
- qkaO8uAttcgaKq0awAt9yvSdgJr9Ci95hq62+bxrS7nAKK1eChjGXlpV+wElzMD7afIcYuCCMid
- PwvHMV1FotOJ1O2siyTfYmV5LiEgB2sqZK6j99x7pgZfOJIHuqZog+YJ43lor9H8Jp167QRhP5C
- NVVyCrdihzgXiqBv5S6YaTwopQZMPQRGcqb0WgC1CsRrbcvbo9C0TO7TTKPT59D0fMUa+tBmWk+
- Us+iYK9tw7XPLMKuSnG0p27A9qJ5yxtw==
-X-Received: by 2002:a05:6102:5698:b0:7bd:732e:c615 with SMTP id
- ada2fe7eead31-7d03a5b4865mr2366358137.26.1793286817506; 
- Thu, 29 Oct 2026 08:13:37 -0700 (PDT)
-X-Received: by 2002:a05:6102:5698:b0:7bd:732e:c615 with SMTP id
- ada2fe7eead31-7d03a5b4865mr2366344137.26.1793286817025; 
- Thu, 29 Oct 2026 08:13:37 -0700 (PDT)
+ bh=NPOUBIbi4rGDqPDE1Rv7rlIDdJdRR+XbT+WTGtzAY0w=;
+ b=jKrhcvG8//XKnHJoPAWH748Hv3XnVTynxFF6AV5D6alq8e7hrCmmdhVlr2y3OKzL5B
+ aX3ha8kkM0LxrV7tF3KAb64Kax31nrIZxXwxs0ycu3O5sTObeVkSjAcYXvy89VMoxaGW
+ Qgp8RnC7fzVC8dyD5Y6lJ586YMh6YgIYoRvwSjL3mqPNeW7yDpcZMvwIaXnQm63+y1AI
+ LleFP5ssUikXqR5Pbv56gDWI9h4tEZ9DQHLX1yNIjHH2aMNJKqKkMUG140Ho8S0/21Yj
+ GTDCfH3wg2I2pUDYpNbgRd7K1yR0Hl8F4D5tkY95NUZ+H8prRY2sZyWUnEjCpUOPFP/q
+ v+iQ==
+X-Gm-Message-State: AFq9FYLRVc5T8vmArYscQabGrcg5Lv4sm9vqab5FsiL2LcWxkKEmZo7X
+ 3rpQ/ALGIODziNoAC35zELfSl8VZNSgUIkP3ogPKo8cZaoEgD4/qbbuDscPXllc2EFZah8WvXb8
+ p2iWehlirBfgGdzRj1GLf+Z4+X5klLjB2F2cTATEjBSDwbXVtrrmOu2oKZuXwdqAQoSAG
+X-Gm-Gg: AYBFou32LLUmylt3ntjD7DxEE0zpVQFhrVHKpdSSUiHfAvqgYgDl/Cb8Agqs+tv6UDo
+ A86PKpyRibOCMhMNm+4GsanF0w1qYyVQWO9oLbEKr+ofe/rQ1dtDTbS9IgZ5o0XJaICfN2F/RLL
+ uRJladKYUdu4Do5aetRfXekKb15AnDtr27Q6/qaJkd+3zhT6+2xbF17aiEYufsrmM0q8MB08TeO
+ NqgznZ0qsZc/hSH9kjhHoafJ7DT9G7OHQvUCy9497oPXOhMRGyOYklA0lHC45/2446rMF8SaHY/
+ g9IKR1h3ZEAOgfiNxDb1I6NGIKB7a8wc8lA5GXCH22kHZjvUugEZzcY5HEo0hv/EGSlRJUdh+os
+ W5Q7cO4GQjx3F5VbMwQ1CKU4NqIUaLB+JauYD+AZDqJikcSsOYy2Oxzf5v07DOdoDNlTphaxcUd
+ yqUa7BDTkaClIzUrkIgOC1IJGDZ9c5ng==
+X-Received: by 2002:a05:620a:4008:b0:93f:35fc:5260 with SMTP id
+ af79cd13be357-94408c975e6mr831745585a.35.1793286831761; 
+ Thu, 29 Oct 2026 08:13:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:4008:b0:93f:35fc:5260 with SMTP id
+ af79cd13be357-94408c975e6mr831740085a.35.1793286831271; 
+ Thu, 29 Oct 2026 08:13:51 -0700 (PDT)
 Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
  [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-48e3ebc3a1csm35345891f8f.16.2026.10.29.08.13.31
+ 5b1f17b1804b1-4aa81a896ecsm75596245e9.9.2026.10.29.08.13.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Oct 2026 08:13:34 -0700 (PDT)
+ Thu, 29 Oct 2026 08:13:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
@@ -96,10 +96,9 @@ Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 1/6] target/mips: Expand TRANS_DF_iv() macro for MSA
- Load/Store
-Date: Thu, 29 Oct 2026 16:13:11 +0100
-Message-ID: <20261029151317.19170-2-philmd@oss.qualcomm.com>
+Subject: [PATCH v6 3/6] target/mips: Convert MSA LD/ST.H (Halfword Vector)
+Date: Thu, 29 Oct 2026 16:13:13 +0100
+Message-ID: <20261029151317.19170-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20261029151317.19170-1-philmd@oss.qualcomm.com>
 References: <20261029151317.19170-1-philmd@oss.qualcomm.com>
@@ -107,25 +106,25 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX789Wm06QbbAQ
- +4d6e1t+UADX2vNbqGhWoSkenwfpvTy3x+dA43r85XhxnE+Q2RRp+wY+FvvA95s9GhHkbRlUs5F
- 9R4plCtZAoBTqp7R10Y+KHGeWfxOC/8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX4prv7RMUTtZV
- d1fKAfbkSd/4Rp7nk5+kvMb0Wsd0CI0aJvMclhuJTyHdqNMThAIXrrFsGTN2IffVpac7p/EHxZ/
- HDAt7bL0WhFDxByzzrpPq70tecDS59r4/jLdqQQQcM7pVBi4nBAh4dGpg1r4gN4DThxBYoA0qoP
- xLIMVRXoj/h9cXUN2Ex4AHjL4XJjXgMUr8OaevRTR4ghsMGluSHbwlVeRYwfoqQGl8jF06wgkBX
- gTcns0zVzSzY6H+sYprZ1OmpdsjvOIPnwUKbSFMib99HaK2hvPO4s9ApnJDJI9Qug30yJzjtMEi
- I5UlE6yYmVj6fvn5v3IPLUArjEkJcHNgGXv9CxXUQ7jZ5ylaZmPJ/O8nQGxSyL4nBz21i97DdtN
- dNqajv397hpu4S3GTyQ15p2BAtfPfjtVEb+sBEjXsD3OoKSb4ci9QiNnFK/19eP9qwdS0+nhRCo
- XIqd0xOROKu0k01Oimg==
-X-Proofpoint-ORIG-GUID: 6kek2ScbAb9XkM7BffNzuEcRmrqJG50A
-X-Proofpoint-GUID: 6kek2ScbAb9XkM7BffNzuEcRmrqJG50A
-X-Authority-Analysis: v=2.4 cv=HYSB3SE8 c=1 sm=1 tr=0 ts=6ae362a2 cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX/0o7eamtCj/B
+ DhNB483RLV3ck1jREM1lwGL0QTFhaXsK8AVB2dhMYLLom4DKdgmG8CFj/uaMdm5kyJzQuTinA5a
+ 4086BtqTnvm52Wma4e1tJQqy/m6pHX4=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA1OSBTYWx0ZWRfX/kENVy9xop+l
+ qkK1BkKrVPpwFPbO0hyd6V4hUGe3d4vIMHeaZfhtth7KkdHI1lrxECENYJJa3szwI+Ra/8VyhOL
+ oz8s4jN8UcagAQHplsLw1Gb6Vp991+brhzN7mQxfSg3FfuqPhYqcgkV1FHjbDAg4jC6/nDM6I0G
+ FoX8XuId8A0x3Q9P53gt7lGU17SbAObDr+2GWEKRE1/JssTggrUnmjH4/ZHEQZI6DVmGPxIDqn+
+ fiV5BKIq3/vRKDk/7fGQzcUMeNHHQ29EklBKm9b6jmOXmjPXLHkoegHOKhyScuzg0kzD7gZTweP
+ +N2GlXS5uEWRhPjidGH5tmUajjfK9rk2uut9Ug03Rn1mOkooVvDte6/9cdzDVz0qu5Z3Plxk2hL
+ JErkse2zNVN1I6KWLS3/LxvoUkQQZxwLJ4KuOKQkdswP+KgLg+Ok1diI4JN2T2wW+qU2ZfT0qhp
+ Od6/F9KcOwCNc/D95+A==
+X-Proofpoint-ORIG-GUID: bTHkJDrvM4c5LaobLH1voQiM-wrchvGJ
+X-Proofpoint-GUID: bTHkJDrvM4c5LaobLH1voQiM-wrchvGJ
+X-Authority-Analysis: v=2.4 cv=HYSB3SE8 c=1 sm=1 tr=0 ts=6ae362b0 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
  a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=xxBBpw_d6xFnRPcyYRwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22 a=cvBusfyB2V15izCimMoJ:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=kRuTmu9MxYQILl8-v3AA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_04,2026-10-21_02,2025-10-01_01
@@ -163,111 +162,180 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In order to ease the conversion of MSA Load/Store runtime
-helpers to translated code, expand the TRANS_DF_iv() macro.
+Replace runtime helpers by translation.
+
+Replace the legacy cpu_ld/st*_data_ra() calls by
+tcg_gen_qemu_ld/st() which allow to respect atomicity.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/mips/tcg/msa_translate.c | 59 ++++++++++++++++++++++++++-------
- 1 file changed, 47 insertions(+), 12 deletions(-)
+ target/mips/tcg/msa_helper.h.inc |  1 -
+ target/mips/tcg/msa_helper.c     | 48 --------------------------------
+ target/mips/tcg/msa_translate.c  | 42 ++++++++++++++++++++++++----
+ 3 files changed, 36 insertions(+), 55 deletions(-)
 
-diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
-index 75cf80a20ed4..ab4b1998aa0b 100644
---- a/target/mips/tcg/msa_translate.c
-+++ b/target/mips/tcg/msa_translate.c
-@@ -164,7 +164,6 @@ static inline bool check_msa_enabled(DisasContext *ctx)
-     return true;
+diff --git a/target/mips/tcg/msa_helper.h.inc b/target/mips/tcg/msa_helper.h.inc
+index 50a2732e916a..86a79bf804ce 100644
+--- a/target/mips/tcg/msa_helper.h.inc
++++ b/target/mips/tcg/msa_helper.h.inc
+@@ -436,7 +436,6 @@ DEF_HELPER_4(msa_ffint_u_df, void, env, i32, i32, i32)
+ #define MSALDST_PROTO(type)                         \
+ DEF_HELPER_3(msa_ld_ ## type, void, env, i32, tl)   \
+ DEF_HELPER_3(msa_st_ ## type, void, env, i32, tl)
+-MSALDST_PROTO(h)
+ MSALDST_PROTO(w)
+ MSALDST_PROTO(d)
+ #undef MSALDST_PROTO
+diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
+index 70de98050cdc..08c900785f9e 100644
+--- a/target/mips/tcg/msa_helper.c
++++ b/target/mips/tcg/msa_helper.c
+@@ -8226,38 +8226,11 @@ void HELPER(msa_ffint_u_df)(CPUMIPSState *env, uint32_t df, uint32_t wd,
+ /* Element-by-element access macros */
+ #define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
+ 
+-static inline uint64_t bswap16x4(uint64_t x)
+-{
+-    uint64_t m = 0x00ff00ff00ff00ffull;
+-    return ((x & m) << 8) | ((x >> 8) & m);
+-}
+-
+ static inline uint64_t bswap32x2(uint64_t x)
+ {
+     return ror64(bswap64(x), 32);
  }
  
--typedef void gen_helper_piv(TCGv_ptr, TCGv_i32, TCGv);
- typedef void gen_helper_pii(TCGv_ptr, TCGv_i32, TCGv_i32);
- typedef void gen_helper_piii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32);
- typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
-@@ -175,9 +174,6 @@ typedef void gen_helper_piiii(TCGv_ptr, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
-     }; \
-     TRANS(NAME, trans_func, NAME##_tab[a->df])
- 
--#define TRANS_DF_iv(NAME, trans_func, gen_func) \
--    TRANS_DF_x(iv, NAME, trans_func, gen_func)
+-void HELPER(msa_ld_h)(CPUMIPSState *env, uint32_t wd,
+-                     target_ulong addr)
+-{
+-    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
+-    uintptr_t ra = GETPC();
+-    uint64_t d0, d1;
 -
- #define TRANS_DF_ii(NAME, trans_func, gen_func) \
-     TRANS_DF_x(ii, NAME, trans_func, gen_func)
+-    /*
+-     * Load 8 bytes at a time.  Use little-endian load, then for
+-     * big-endian target, we must then swap the four halfwords.
+-     */
+-    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
+-    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
+-    if (mips_env_is_bigendian(env)) {
+-        d0 = bswap16x4(d0);
+-        d1 = bswap16x4(d1);
+-    }
+-    pwd->d[0] = d0;
+-    pwd->d[1] = d1;
+-}
+-
+ void HELPER(msa_ld_w)(CPUMIPSState *env, uint32_t wd,
+                      target_ulong addr)
+ {
+@@ -8315,27 +8288,6 @@ static inline void ensure_writable_pages(CPUMIPSState *env,
+     }
+ }
  
-@@ -758,25 +754,64 @@ TRANS(FTINT_U,  trans_msa_2rf, gen_helper_msa_ftint_u_df);
+-void HELPER(msa_st_h)(CPUMIPSState *env, uint32_t wd,
+-                     target_ulong addr)
+-{
+-    wr_t *pwd = &(env->active_fpu.fpr[wd].wr);
+-    int mmu_idx = mips_env_mmu_index(env);
+-    uintptr_t ra = GETPC();
+-    uint64_t d0, d1;
+-
+-    ensure_writable_pages(env, addr, mmu_idx, ra);
+-
+-    /* Store 8 bytes at a time.  See helper_msa_ld_h. */
+-    d0 = pwd->d[0];
+-    d1 = pwd->d[1];
+-    if (mips_env_is_bigendian(env)) {
+-        d0 = bswap16x4(d0);
+-        d1 = bswap16x4(d1);
+-    }
+-    cpu_stq_le_data_ra(env, addr + 0, d0, ra);
+-    cpu_stq_le_data_ra(env, addr + 8, d1, ra);
+-}
+-
+ void HELPER(msa_st_w)(CPUMIPSState *env, uint32_t wd,
+                      target_ulong addr)
+ {
+diff --git a/target/mips/tcg/msa_translate.c b/target/mips/tcg/msa_translate.c
+index b7ca352d07b6..0c6c2f4551dc 100644
+--- a/target/mips/tcg/msa_translate.c
++++ b/target/mips/tcg/msa_translate.c
+@@ -754,10 +754,27 @@ TRANS(FTINT_U,  trans_msa_2rf, gen_helper_msa_ftint_u_df);
  TRANS(FFINT_S,  trans_msa_2rf, gen_helper_msa_ffint_s_df);
  TRANS(FFINT_U,  trans_msa_2rf, gen_helper_msa_ffint_u_df);
  
--static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a,
--                           gen_helper_piv *gen_msa_ldst)
-+static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
++/*
++ * Byte pattern: ab.cd.ef.gh -> ba.dc.fe.bg
++ */
++static void gen_bswap16x4_i64(TCGv_i64 dst, TCGv_i64 src)
++{
++    uint64_t m = 0x00ff00ff00ff00ffull;
++    TCGv_i64 t0 = tcg_temp_new_i64();
++    TCGv_i64 t1 = tcg_temp_new_i64();
++                                        /* src = abcdefgh */
++    tcg_gen_andi_i64(t0, src, m);       /*  t0 = .b.d.f.h */
++    tcg_gen_shli_i64(t0, t0, 8);        /*  t0 = b.d.f.h. */
++    tcg_gen_shri_i64(t1, src, 8);       /*  t1 = habcdefg */
++    tcg_gen_andi_i64(t1, t1, m);        /*  t1 = .a.c.e.g */
++    tcg_gen_or_i64(dst, t0, t1);        /* dst = badcfebg */
++}
++
+ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
  {
--    TCGv taddr;
-+    TCGv_i32 wd;
-+    TCGv_va addr;
+     static const MemOp mo_atom_df[4] = {
+         MO_ATOM_NONE,
++        MO_ATOM_SUBALIGN, /* Slightly stronger than required */
+     };
+     TCGv_i32 wd;
+     TCGv_i128 t16;
+@@ -778,9 +795,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
  
-     if (!check_msa_enabled(ctx)) {
-         return true;
+     if (is_load) {
+         switch (a->df) {
+-        case 1:
+-            gen_helper_msa_ld_h(tcg_env, wd, addr);
+-            return true;
+         case 2:
+             gen_helper_msa_ld_w(tcg_env, wd, addr);
+             return true;
+@@ -790,9 +804,6 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+         }
+     } else {
+         switch (a->df) {
+-        case 1:
+-            gen_helper_msa_st_h(tcg_env, wd, addr);
+-            return true;
+         case 2:
+             gen_helper_msa_st_w(tcg_env, wd, addr);
+             return true;
+@@ -812,6 +823,25 @@ static bool trans_msa_ldst(DisasContext *ctx, arg_msa_i *a, bool is_load)
+         tcg_gen_extr_i128_i64(d0, d1, t16);
      }
  
--    taddr = tcg_temp_new();
-+    addr = tcgv_va_temp_new();
-+    gen_base_offset_addr(ctx, addr, a->ws, a->sa << a->df);
- 
--    gen_base_offset_addr(ctx, taddr, a->ws, a->sa << a->df);
--    gen_msa_ldst(tcg_env, tcg_constant_i32(a->wd), taddr);
-+    wd = tcg_constant_i32(a->wd);
++    if (mo_endian(ctx) != MO_LE) {
++        if (!is_load) {
++            TCGv_i64 temp_d0 = tcg_temp_new_i64();
++            TCGv_i64 temp_d1 = tcg_temp_new_i64();
 +
-+    if (is_load) {
-+        switch (a->df) {
-+        case 0:
-+            gen_helper_msa_ld_b(tcg_env, wd, addr);
-+            return true;
-+        case 1:
-+            gen_helper_msa_ld_h(tcg_env, wd, addr);
-+            return true;
-+        case 2:
-+            gen_helper_msa_ld_w(tcg_env, wd, addr);
-+            return true;
-+        case 3:
-+            gen_helper_msa_ld_d(tcg_env, wd, addr);
-+            return true;
++            tcg_gen_mov_i64(temp_d0, d0);
++            tcg_gen_mov_i64(temp_d1, d1);
++            d0 = temp_d0;
++            d1 = temp_d1;
 +        }
-+    } else {
++
 +        switch (a->df) {
-+        case 0:
-+            gen_helper_msa_st_b(tcg_env, wd, addr);
-+            return true;
 +        case 1:
-+            gen_helper_msa_st_h(tcg_env, wd, addr);
-+            return true;
-+        case 2:
-+            gen_helper_msa_st_w(tcg_env, wd, addr);
-+            return true;
-+        case 3:
-+            gen_helper_msa_st_d(tcg_env, wd, addr);
-+            return true;
++            gen_bswap16x4_i64(d0, d0);
++            gen_bswap16x4_i64(d1, d1);
++            break;
 +        }
 +    }
- 
-     return true;
- }
- 
--TRANS_DF_iv(LD, trans_msa_ldst, gen_helper_msa_ld);
--TRANS_DF_iv(ST, trans_msa_ldst, gen_helper_msa_st);
-+static bool trans_LD(DisasContext *ctx, arg_msa_i *a)
-+{
-+    return trans_msa_ldst(ctx, a, true);
-+}
 +
-+static bool trans_ST(DisasContext *ctx, arg_msa_i *a)
-+{
-+    return trans_msa_ldst(ctx, a, false);
-+}
- 
- static bool trans_LSA(DisasContext *ctx, arg_r *a)
- {
+     if (!is_load) {
+         tcg_gen_concat_i64_i128(t16, d0, d1);
+         tcg_gen_qemu_st_i128(t16, addr, ctx->mem_idx, mop);
 -- 
 2.55.0
 
