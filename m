@@ -1,97 +1,157 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20830606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1257E606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=yTqORjXH
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=Xm56vkH9
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRhA-0000fJ-Ur; Thu, 29 Oct 2026 11:05:36 -0400
+	id 1xMRnq-00049m-QM; Thu, 29 Oct 2026 11:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xMRgt-0000UK-3O
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:05:22 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1xMRgr-0001wn-6F
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:05:18 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4a5087a5348so21291625e9.0
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793286314; x=1793891114; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=aWU+KmuTxw6Q1UdOOx6481SDPwTPcHwSSHFfUNV6Q8c=;
- b=yTqORjXHm/MgbvMcUJ8lIdHVW3uA7jai4OrPStORhktYT/GE6nW7w9W1vLnGtilw/8
- Zqa67RiO3dtjDkCFK3n7O8vU9+3bEGsDWCrkPCk2T13j6RcvrObfEgTlj9+KTscpTHit
- vmkPKchSDScoinzXtOBJkf3P3g7Wj/6l9wTGcrHU6soSYXs3W6mNkzEvyJoPlH3TUu7H
- AM/BaKc8D1dkXBzck5/RXrNGKiWKcZXOCZXVWxW+o8q8C51yzBhjlllvHn2sjDigYR8W
- rmVNxaD12f2gCf4NCEgGA4DLqyT7Nt3WhzJZt+ZBYIC6La6yXlB8UXwu473Pi7XUlzFu
- E7yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793286314; x=1793891114;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=aWU+KmuTxw6Q1UdOOx6481SDPwTPcHwSSHFfUNV6Q8c=;
- b=ZHZrvt0SxfJsKg4Xbpl89xAmFvEWh1Tzlpty9a8QMIVImT+JSbHXjVpX9yppRETg4c
- FIDexWRsUoiWb4Kv1o0Y5Rbzd1Myu/MnjVVeGsKXM0VFt6FqPtKEdKVILkqQCVOAxO51
- FNY9r4P/wac1Pyel/uhMJufOGjQ7tsWBGR20KmYAUeb2EJJ1si/ClBpk+DjZq1KxKQKr
- 7PlFOODfdjdl0sS0JN6pwHjpRpZs9l18DLu+52Cqvv1zlcdyF1TBdxV13yboJeBwDM+Y
- TUeKAtP1btwexmEF1aP2Npisr87PSFC7y97l1ApazaRMQ7NNA/ZKuu5Eh8RDXr1mNbq/
- Wl6w==
-X-Gm-Message-State: AFq9FYL3Dzj9LlJqRHK7FC7LQ/ADHrOb4pC2e4ZZBzzlAgWIxRqHctU7
- KndwASqsHgfpEPrauGpl2PDa+NV7Ecgps4k0SzCbMU+4JL0TDQBHUQrDCiBgQjDNzzY=
-X-Gm-Gg: AYBFou1FbdLXhiS3aYCvBC/rw5wPdruMZ3PQ9bOSLl1LLF4QlKNuB6Fc05voNHZbVGO
- TtbZ2h9nUHSZOI/7J9B6ueBthKM7F3NLN4jrlcNu7OBumynDqFZOYUdzuzXe5s59raJjmeGwNyR
- WJEvNdJhcDg1AvrvC7Np2AFjVhOtZyp3vnsxqdDQQ1lRFCokNI+QKuXwiN8B8ag7/39oWd80UKI
- vRu3/t3WmBvf+/dKuFXYEh2Q9EFcKyVP0LkkL8b0Mek2esUXCF9FgJ5rg4W3S++ojn1poAqQ/rw
- W8h0pFydEqfnKIU7c7UlLU3ZrR2AFnT12KG91H3f0EC+rlBgu656WDbTMIQHRyJHOQzWixGJz/L
- f4yeSjZXGUgAR9iI5Ors5Z6uLXbGlF19wkmQmBBL/SoABgXJb3SAUX9Duk12iWieJ3gzJAZtzMo
- /6qBQbudKLxlhTqvS9PtxLFl06MIxK02KAwe9/O1QC5bXQWyjbVvm4KojiP4N0T/EsZmbIhCDB3
- q/AVbYZaMLHP/G1sNSpOhxoY8pJiZVVLDxdNxv4B1peZTNYgAzueJb0Jafx2UGCbZ1kq4KBBUIj
- +zVyc/rAEftBimNXfVyBPKDlV3IoSuBZgkPCIvuU9cHlaEDZtJ7W9g==
-X-Received: by 2002:a05:600d:12:b0:4a1:d97e:cd60 with SMTP id
- 5b1f17b1804b1-4a9672f8166mr100861435e9.16.1793286314180; 
- Thu, 29 Oct 2026 08:05:14 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:6ea5:6074:196c:9c53])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7ee57589sm80999075e9.2.2026.10.29.08.05.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 08:05:13 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH 0/4] RME-DA capabilities for PCIe Root Port
-Date: Thu, 29 Oct 2026 15:05:09 +0000
-Message-Id: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMRnj-00048K-Sf
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:12:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1xMRnh-0002rc-3R
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:12:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793286739;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sy6RcJq7kWnzNPatcCz5vMju7T26X8KtMwEXCbitl90=;
+ b=Xm56vkH9ATMJMygfPZSg+6GK3F6dQs7YPsYUO98Xep2m+NG+NICizkX3sSRQ6aFxum1tFS
+ 2r5qzweZVvntR9s1vJ+llUI80AT507RpAf8Wam+f6LXJQP6VwleF7JeNpCHZ3Pdfknrstd
+ mi7fwEqZHv79SYuWjlc8dXp0RGQs8wo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-lR4E_uxDPxGRis0Bj7u-cg-1; Thu,
+ 29 Oct 2026 11:12:15 -0400
+X-MC-Unique: lR4E_uxDPxGRis0Bj7u-cg-1
+X-Mimecast-MFC-AGG-ID: lR4E_uxDPxGRis0Bj7u-cg_1793286731
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CA951956043; Thu, 29 Oct 2026 15:12:09 +0000 (UTC)
+Received: from redhat.com (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11F131955F08; Thu, 29 Oct 2026 15:11:43 +0000 (UTC)
+Date: Thu, 29 Oct 2026 15:11:41 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Jonathan Cameron <jic23@kernel.org>,
+ Junjie Cao <junjie.cao@intel.com>, Anisa Su <anisa.su@samsung.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-block@nongnu.org,
+ linux-cxl@vger.kernel.org, qemu-s390x@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, qemu-arm@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Alexander Graf <graf@amazon.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Ani Sinha <anisinha@redhat.com>,
+ Luc Michel <luc@lmichel.fr>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Samuel Tardieu <sam@rfc1149.net>, "Denis V. Lunev" <den@openvz.org>,
+ FangSheng Huang <FangSheng.Huang@amd.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Aditya Gupta <adityag@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Conor Dooley <conor@kernel.org>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Titus Rwantare <titusr@google.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ Peter Xu <peterx@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ xen-devel@lists.xenproject.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Fam Zheng <fam@euphon.net>,
+ Farhan Ali <alifm@linux.ibm.com>, Alex Williamson <alex@shazbot.org>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Jiri Pirko <jiri@resnulli.us>, Eric Auger <eric.auger@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v7 54/65] qdev: adjust PciDevfn declared type
+Message-ID: <auNiLX-dsm8XsFG-@redhat.com>
+References: <20261020-qom-qapi-v7-0-431a86b02b58@redhat.com>
+ <20261020-qom-qapi-v7-54-431a86b02b58@redhat.com>
+ <atsxLV5YZo8dr-8G@redhat.com>
+ <CAMxuvazd7G_NBOM_c6BxZn5PFSw=XQUHueHqBoQQfpzPPgi9qA@mail.gmail.com>
+ <87zevz5h4k.fsf@pond.sub.org> <auC-ilqUJq27neSR@redhat.com>
+ <87o6ce47rr.fsf@pond.sub.org>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKVg42oC/yXMQQqDMBBG4avIrDuQhLaCVyld6OS3jmCUjC2Ce
- PfGdvkt3tvJkBVGTbVTxkdN51TgLxXJ0KYXWGMxBRfu3oXA49QKL6LgPIGxrUhnYwzp5OZ8vMa
- 6p5IvGb1uv/Xj+be9uxGynj86ji8pIMgefAAAAA==
-X-Change-ID: 20261022-jmac-pcie-rme-extensions-ecbc501d4d7f
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Jim MacArthur <jim.macarthur@linaro.org>, 
- Jim MacArthur <"Jim MacArthur"@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.17-dev-6be7c
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87o6ce47rr.fsf@pond.sub.org>
+User-Agent: Mutt/2.4.2 (2026-08-30)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ GB_FAKE_RF=0.001, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +162,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-This adds optional capabilities for the PCIe Root Port device: the TEE
-flag in legacy config space and two extended capabilties:
-- IDE (Integrity & Data Encryption)
-- The RME-DA DVSEC capability.
+On Wed, Oct 28, 2026 at 08:13:44AM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Tue, Oct 27, 2026 at 03:54:03PM +0100, Markus Armbruster wrote:
+> >> Marc-André Lureau <marcandre.lureau@redhat.com> writes:
+> >> 
+> >> > Hi
+> >> >
+> >> > On Fri, Oct 23, 2026 at 2:04 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >> >>
+> >> >> On Tue, Oct 20, 2026 at 02:46:11PM +0400, Marc-André Lureau wrote:
+> >> >> > PciDevfn is a bit special, since it accepts integer and string as
+> >> >> > setter, but only output integer as getter.
+> >
+> > snip
+> >
+> >> >                                                       But I agree we
+> >> > could do better.
+> >> >
+> >> > There are multiple options. We could keep declaring the property as
+> >> > str instead. In this case, the getter should probably return a string
+> >> > for consistency and correctness. This might surprise some existing
+> >> > users though.
+> >> 
+> >> I.e. ditch numeric suppport for numeric addresses, right?
+> >> 
+> >> Incompatible change.  Do we care?
+> >> 
+> >> If we don't, we should be honest about it and mark qom-get unstable.
+> >> 
+> >> > We could introduce new properties like `devfn-str` and `devfn-int`
+> >> > that alias the same value.
+> >> 
+> >> Compatibility break.  If breaking compatibility is okay, I'd rather use
+> >> the opportunity to get rid of cleverness, and go with your first option.
+> >> 
+> >> > We could also introduce a new structured QAPI type.
+> >> 
+> >> What kind of type do you have in mind?
+> >
+> > IMHO the root cause design flaw here was to overload 'addr' as a
+> > way to set both the slot number and function number, as using
+> > one property for two pieces of data is a well known anti-pattern
+> > we caution against.
+> >
+> > IOW, we should have had 'slot' and 'function' as separate properties
+> > from the start.
+> 
+> Fair.
+> 
+> Our modeling of PCI is old and weird.
+> 
+> What we call "pci-device" isn't a device, it's a function, where
+> function 0 sort of stands in for the device.
 
-All changes are enabled by the rme-cap=on flag for the pcie-root-port
-device.
+Mmm, yes, interesting way of looking at it.
 
-This is a rearrangement of original work done by Pierrick Bouvier
-<pierrick.bouvier@linaro.org>.
+> Its "addr" isn't a PCI address, it's the address of the function on its
+> PCI bus, i.e. the tail of a PCI address.
+> 
+> > From a CLI POV, we could easily change 'addr' to mean only the slot
+> > number, since it is always parsed in string format without the
+> > magic (slot << 4) | function encoding. Then add a 'function' prop
+> 
+> In CLI, HMP and QMP string (not integer), value "5" is shorthand for
+> "5.0", and means device 5, function 0.
+> 
+> We could deprecate the .FN part in favor of a new property "function".
+> 
+> Once we drop support for .FN from "addr", its name becomes even more
+> misleading than it always was.
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
-Jim MacArthur (2):
-      hw/pci-bridge: Add pcie_add_dvsec_capability helper
-      hw/pci: More comments in pcie.c
+Yes.
 
-Pierrick Bouvier (2):
-      hw/pci: add IDE + TEE capability to PCIe root port
-      hw/pci: add DVSEC RMEDA capability to PCIe root port
+> > The challenge is the impact on QMP with strict typing, as ideally
+> > int format would soley represent the slot number, but today the
+> > int format is encoded (slot << 4) | function.  So anyone relying
+> > on int format in QMP would silently have a semantic change if we
+> > altered what 'addr' means. 
+> 
+> That's a no-go.
+> 
+> > Deprecating 'addr' entirely and adding brand new 'slot' and
+> > 'function' properties would be a significant disruption to
+> > a syntax which has been documented for years (decades).
+> 
+> What about this:
+> 
+> * No change to PCIDevice member @devfn: encodes slot and function as an
+>   integer.
+> 
+> * New "pci-device" properties "slot" and "function".  "slot" sets just
+>   the slot bits of @devfn, and "function" sets just the function bits.
+>   Both default to zero, so specifying just "slot" gives you
+>   PCI_DEVFN(slot, 0), which makes sense.
+> 
+> * Deprecate "pci-device" property "addr" for QMP.  We can keep it around
+>   for longer than the required grace period if that helps.
+> 
+> * Declare it legacy for CLI and HMP, with no intent to remove it.
 
- hw/pci-bridge/gen_pcie_root_port.c | 54 ++++++++++++++++++++++++++++++++++++++
- hw/pci/pcie.c                      | 49 ++++++++++++++++++++++++++++++++++
- include/hw/pci/pcie.h              |  7 +++++
- include/hw/pci/pcie_regs.h         |  8 ++++++
- 4 files changed, 118 insertions(+)
----
-base-commit: 5624b266cdd513506fb333e9041778407b6d1ac4
-change-id: 20261022-jmac-pcie-rme-extensions-ecbc501d4d7f
+We can't easily keep it in CLI/HMP, while removing from QMP can we ?
+As long as the property exists on the PCIDevice object, it will be
+accessible everywhere.
 
-Best regards,
---  
-Jim MacArthur <jim.macarthur@linaro.org>
+
+Perhaps keep it relatively simple and merely deprecate the string
+syntax of 'addr' in QMP. That's the place where it is really ugy.
+Force QMP over to only the integer syntax for 'addr', and leave
+CLI/HMP accepting the (optionally dotted) string syntax.
+
+Mgmt apps like libvirt will have to adapt. Tedious, but actually
+quite simple compared to most deprecations, as the integer syntax
+can already be used with all historical QEMU versions in QMP that
+mgmt apps ever need to deal with. They can unconditionally change
+their code to int syntax and not worry about old/new QEMUs at all.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
