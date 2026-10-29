@@ -1,68 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA88606A32C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 18:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A23E606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 18:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=aurel32.net header.i=@aurel32.net header.a=rsa-sha256 header.s=202004.hall header.b=FugtIJRn
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=WOTpTgr4
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUwZ-0005fM-Nk; Thu, 29 Oct 2026 14:33:44 -0400
+	id 1xMUxw-0006Um-Ij; Thu, 29 Oct 2026 14:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
- id 1xMUwR-0005cq-Lb; Thu, 29 Oct 2026 14:33:36 -0400
-Received: from hall.aurel32.net ([2001:bc8:30d7:100::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aurelien@aurel32.net>)
- id 1xMUwP-0000YS-Gr; Thu, 29 Oct 2026 14:33:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=aurel32.net
- ; s=202004.hall;
- h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:
- Subject:Content-ID:Content-Description:X-Debbugs-Cc;
- bh=gmF+Jq301LEauedsOElIktogKLgoxrmSqzjhPdXHagM=; b=FugtIJRnA8SmmMimqwxU9RRp4w
- spDk4U5X0t8mw+mRVayfrMqu9jASQ1SYszep3Kx6w8FycQh6tc7wQ9TeHo335GnaY/TuonO/yS4O3
- dHibEAhzv8T2SNivDtZVZjXx0JIWmX/2HNBjD19T5eZriYHCViL7lYW+e7CyCZdDe3b1En3R4bwEF
- BV9kz9SufSC1Cu8Jho2UfGpf+x6zW7CcVn7eNy4pIiTDgL5cn4ZGAjh1y6Sf5XOzo6tCkWpAwA8zE
- hJypgPNkeqDfVCMQCIrsfUHG2Rjj4wzHaKDg5JIMc9HPyf0iDbhTUJ5KXISwmjoWiK6pcvEpw/0RL
- l9NkF8IQ==;
-Received: from authenticated user by hall.aurel32.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.98.2)
- (envelope-from <aurelien@aurel32.net>) id 1xMUwL-00000006twJ-0Tu1;
- Thu, 29 Oct 2026 19:33:29 +0100
-Date: Thu, 29 Oct 2026 19:33:28 +0100
-From: Aurelien Jarno <aurelien@aurel32.net>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-arm@nongnu.org,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH v3 5/6] tcg/riscv64: Fix logical vector immediate
- matching and emission
-Message-ID: <auOReLXT3EK7ITyf@aurel32.net>
-References: <20261028143330.6518-1-philmd@oss.qualcomm.com>
- <20261028143330.6518-6-philmd@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <tristmd@gmail.com>) id 1xMUxp-0006U7-Nk
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:35:02 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tristmd@gmail.com>) id 1xMUxm-0000br-Mr
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 14:35:00 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4a5b2be99a8so20895905e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 11:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20260707; t=1793298895; x=1793903695; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=INKTEl25KXEWsfko0PR9TpXq2XvLVGJ9lTjKoiSeLf8=;
+ b=WOTpTgr40hsflznT39Y3NdjUU2Ftmu3BXvtKsmDEkvRyChQGqWbdoX5TCnvHCW0r/O
+ evjSm+vjuRrw6QO4qoFTi+J2VN8ukdaOrtmJqQob/9pyg6pCos0fHiM4MTvHA4HuZO7N
+ fnNSfWLpHjU1DI5TS8Pw2vzdWhtuqcpIT6elrXhp/zZi1o8HbL+SgPxzJKKbpwSeNmCS
+ ICB+PZWSmwI8cCTDfOQSe/GxHGho+Nar1xhmJbnPfyGGmRmvZhvPZ8orlQZOoLtrIY1a
+ FEvbiJvgGEiA1kwoLi6tUag9jM7jbcqrp9yGCsl8ys+GkFconsoFDncJ8IlUVI+C7W+D
+ YSgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793298895; x=1793903695;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=INKTEl25KXEWsfko0PR9TpXq2XvLVGJ9lTjKoiSeLf8=;
+ b=RLn2e7HSOQWdSEoYx6czowVowds3X9hR8IzZ42YM5hzLTpJy9wAsdZ8+PPN7+g4861
+ Ggv2txGbMtpNxJ7Fg7eOQhZ0hbbM/0CTkrOAS9ooIrZ2pO8WNM8RQO5Gi1Bvd73PYDtH
+ TfiJfif5jgEV5Etpl3XV30SZbRcKFURqeAmkOzYnP+I8j7ymqrom3devh9nrrOoW+5Oz
+ M5RmweWT3h6XKFPjecNiM55oz1cNK3KVTOd/KhFMmrj2PNqe527JdhhZusftng4ToefB
+ zs948UGtR6Nhi0WMgF07DB1QzH1uOZNKyePdMZL7Fr4V9R8Fzh1q7og6Et+9/BNaeQnK
+ ADKg==
+X-Gm-Message-State: AFq9FYLDg+ONDtswz/9R299PSkTOLMPh1SLV6xRFlQXiJHy+CFC8cJz3
+ +iEvauvyNp78PTzgTRzS1ApWFjuS6N5PPeHvtIbP3EG5m5svxLtpsqhUv14Z
+X-Gm-Gg: AYBFou0oV8eB20xl/LgDiA70cmHbABKWXPF5E6nw58wB7AsIa/jOzQSslRukkbJyjk2
+ 4axbLX1yliUUTk0CGEdgA38zLiXpl6XpuHuufZNQQMkwPUTjS//CRHWmu35nYlqkMamZuVqEZOm
+ wWK9AMLa/Y4pGq/G+3cY9OAj/f9bzP4h2uGVANQrLXjhgG7mozPrYyx+3X04lncqdMQLVIVEEi1
+ UQhsG4b7OOtwgO+rWENTFOpWUV+fe1s/KggfxP9o5mPAr8aLSHd3CO4lD2xkHNUZRRS6N3vkD1d
+ 7qmE+jaKxzAcByyyiEmSW4mUFBjAPCew0WAItSkRIWjrgD8Q31Dx4O+rDyKdL5CqlrtLcl449Nd
+ rlzYKX0wIbyw8amFDHFWk5HP3Ku8RPrzonbaPMjOuL1Tm86hOsH6mrCVCbGbdZgz/HKXKVFvheG
+ fLlgZHUJ3IkKayhHtHqdQT/xZGVBHh4I57t+OUiG88Wjy7TlzjQVaiWwUPf4ihBUcg5e6BjS3OK
+ 9mySJ0TyWIgtWd79pIOjpIMgjPWO+mGueEZBnj5LuQgHsL5ns+T2e7/ViaPAQ13vmjRJRd6s7di
+ ToFsJsd52FbVtuhSrF4=
+X-Received: by 2002:a05:600c:3b02:b0:4a2:167a:c946 with SMTP id
+ 5b1f17b1804b1-4a967202e72mr143948355e9.13.1793298895478; 
+ Thu, 29 Oct 2026 11:34:55 -0700 (PDT)
+Received: from debian.. ([2001:41d0:303:db6b::])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-48e6eb99bb0sm104772f8f.50.2026.10.29.11.34.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 11:34:54 -0700 (PDT)
+From: Tristan Madani <tristmd@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, qemu-stable@nongnu.org, balaton@eik.bme.hu,
+ pbonzini@redhat.com, kraxel@redhat.com, tristan@talencesecurity.com
+Subject: [PATCH v2] hw/display/ati: fix integer overflow in Rage128 2D blit
+ bounds check
+Date: Thu, 29 Oct 2026 18:34:52 +0000
+Message-ID: <20261029183452.1551287-1-tristmd@gmail.com>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20261028143330.6518-6-philmd@oss.qualcomm.com>
-User-Agent: Mutt/2.4.1 (2026-07-04)
-Received-SPF: pass client-ip=2001:bc8:30d7:100::1;
- envelope-from=aurelien@aurel32.net; helo=hall.aurel32.net
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, GB_FAKE_RF=0.001,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=tristmd@gmail.com; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,174 +95,89 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,UNPARSEABLE_RELAY,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 2026-10-28 15:33, Philippe Mathieu-Daud=C3=A9 wrote:
-> and/or/xor_vec always have VECE 0, yet their constant was matched
-> as a byte element and applied at the stale SEW of the previous op:
-> "bic v4.8h, #0xf0" became "vand.vi ..., 15".
->=20
-> Add the 'N' constraint: use the smallest element size at which the
-> constant replicates, if that element fits simm5, and switch SEW to
-> it. A wider element can't fit when the smallest doesn't: its upper
-> half repeats the smaller element, which would then be 0 or -1.
->=20
-> Cc: qemu-stable@nongnu.org
-> Fixes: 5a63f5998791 ("tcg/riscv: Add support for basic vector opcodes")
-> Reported-by: Aurelien Jarno <aurelien@aurel32.net>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> ---
->  tcg/riscv64/tcg-target-con-set.h |  1 +
->  tcg/riscv64/tcg-target-con-str.h |  1 +
->  tcg/riscv64/tcg-target.c.inc     | 53 +++++++++++++++++++++++++++-----
->  3 files changed, 48 insertions(+), 7 deletions(-)
->=20
-> diff --git a/tcg/riscv64/tcg-target-con-set.h b/tcg/riscv64/tcg-target-co=
-n-set.h
-> index 0fc26d3f98b4..9b4e219fac16 100644
-> --- a/tcg/riscv64/tcg-target-con-set.h
-> +++ b/tcg/riscv64/tcg-target-con-set.h
-> @@ -26,4 +26,5 @@ C_O1_I2(v, v, v)
->  C_O1_I2(v, vK, v)
->  C_O1_I2(v, v, vK)
->  C_O1_I2(v, v, vL)
-> +C_O1_I2(v, v, vN)
->  C_O1_I4(v, v, vL, vK, vK)
-> diff --git a/tcg/riscv64/tcg-target-con-str.h b/tcg/riscv64/tcg-target-co=
-n-str.h
-> index c04e15ddfa3c..d7e8b2ce4f2f 100644
-> --- a/tcg/riscv64/tcg-target-con-str.h
-> +++ b/tcg/riscv64/tcg-target-con-str.h
-> @@ -19,3 +19,4 @@ CONST('I', TCG_CT_CONST_S12)
->  CONST('K', TCG_CT_CONST_S5)
->  CONST('L', TCG_CT_CONST_CMP_VI)
->  CONST('M', TCG_CT_CONST_M12)
-> +CONST('N', TCG_CT_CONST_LOGICAL_VI)
-> diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-> index 168932711796..4faf7ff36e07 100644
-> --- a/tcg/riscv64/tcg-target.c.inc
-> +++ b/tcg/riscv64/tcg-target.c.inc
-> @@ -116,6 +116,7 @@ static TCGReg tcg_target_call_oarg_reg(TCGCallReturnK=
-ind kind, int slot)
->  #define TCG_CT_CONST_M12     0x200
->  #define TCG_CT_CONST_S5      0x400
->  #define TCG_CT_CONST_CMP_VI  0x800
-> +#define TCG_CT_CONST_LOGICAL_VI 0x1000
-> =20
->  #define ALL_GENERAL_REGS   MAKE_64BIT_MASK(0, 32)
->  #define ALL_VECTOR_REGS    MAKE_64BIT_MASK(32, 32)
-> @@ -384,6 +385,22 @@ static const struct {
->      [TCG_COND_GEU] =3D { OPC_VMSGTU_VI,   1, 16, true  },
->  };
-> =20
-> +/*
-> + * Return the element size at which VAL is a replicated simm5,
-> + * or -1 if there is none.  Used for vector logical ops, whose
-> + * VECE is not meaningful.
-> + */
-> +static int vec_logical_immediate_vece(int64_t val)
-> +{
-> +    for (int e =3D MO_8; e <=3D MO_64; e++) {
-> +        if (val =3D=3D dup_const(e, val)) {
-> +            int64_t x =3D sextract64(val, 0, 8 << e);
-> +            return x >=3D -0x10 && x <=3D 0x0f ? e : -1;
-> +        }
-> +    }
-> +    g_assert_not_reached();
-> +}
-> +
->  /* test if a constant matches the constraint */
->  static bool tcg_target_const_match(int64_t val, int ct,
->                                     TCGType type, TCGCond cond, int vece)
-> @@ -391,6 +408,10 @@ static bool tcg_target_const_match(int64_t val, int =
-ct,
->      if (ct & TCG_CT_CONST) {
->          return 1;
->      }
-> +    if ((ct & TCG_CT_CONST_LOGICAL_VI) &&
-> +        vec_logical_immediate_vece(val) >=3D 0) {
-> +        return true;
-> +    }
->      if (type >=3D TCG_TYPE_V64) {
->          /* Val is replicated by VECE; extract the highest element. */
->          val >>=3D (-8 << vece) & 63;
-> @@ -2769,6 +2790,23 @@ static const TCGOutOpStore outop_st =3D {
->  };
-> =20
-> =20
-> +static void tcg_out_opc_vv_vi_logical(TCGContext *s, TCGType type,
-> +                                      RISCVInsn o_vv, RISCVInsn o_vi,
-> +                                      TCGReg vd, TCGReg vs2,
-> +                                      TCGArg vi1, int c_vi1)
-> +{
-> +    if (c_vi1) {
-> +        int vece =3D vec_logical_immediate_vece(vi1);
-> +
-> +        tcg_debug_assert(vece >=3D 0);
-> +        set_vtype_len_sew(s, type, vece);
-> +        tcg_out_opc_vi(s, o_vi, vd, vs2, vec_imm(vi1, vece));
-> +    } else {
-> +        set_vtype_len(s, type);
-> +        tcg_out_opc_vv(s, o_vv, vd, vs2, vi1);
-> +    }
-> +}
-> +
->  static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
->                             unsigned vecl, unsigned vece,
->                             const TCGArg args[TCG_MAX_OP_ARGS],
-> @@ -2807,16 +2845,16 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpco=
-de opc,
->          }
->          break;
->      case INDEX_op_and_vec:
-> -        set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VAND_VV, OPC_VAND_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv_vi_logical(s, type, OPC_VAND_VV, OPC_VAND_VI,
-> +                                  a0, a1, a2, c2);
->          break;
->      case INDEX_op_or_vec:
-> -        set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VOR_VV, OPC_VOR_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv_vi_logical(s, type, OPC_VOR_VV, OPC_VOR_VI,
-> +                                  a0, a1, a2, c2);
->          break;
->      case INDEX_op_xor_vec:
-> -        set_vtype_len(s, type);
-> -        tcg_out_opc_vv_vi(s, OPC_VXOR_VV, OPC_VXOR_VI, a0, a1, a2, c2);
-> +        tcg_out_opc_vv_vi_logical(s, type, OPC_VXOR_VV, OPC_VXOR_VI,
-> +                                  a0, a1, a2, c2);
->          break;
->      case INDEX_op_not_vec:
->          set_vtype_len(s, type);
-> @@ -3008,10 +3046,11 @@ tcg_target_op_def(TCGOpcode op, TCGType type, uns=
-igned flags)
->      case INDEX_op_sari_vec:
->      case INDEX_op_rotli_vec:
->          return C_O1_I1(v, v);
-> -    case INDEX_op_add_vec:
->      case INDEX_op_and_vec:
->      case INDEX_op_or_vec:
->      case INDEX_op_xor_vec:
-> +        return C_O1_I2(v, v, vN);
-> +    case INDEX_op_add_vec:
->      case INDEX_op_ssadd_vec:
->      case INDEX_op_sssub_vec:
->      case INDEX_op_usadd_vec:
+From: Tristan Madani <tristan@talencesecurity.com>
 
-I am still wondering why not propagating VECE for logical ops at the TCG=20
-level, instead of recomputing it at the TCG target level. But this is=20
-how TCG is currently designed, so:
+The VRAM bounds check in ati_2d_do_blt() computes
+(dst.y + dst.height) * dst_stride using signed 32-bit arithmetic.
+On Rage128, setup_2d_blt_ctx() multiplies dst_stride by bpp (up to
+32), producing strides up to 524,256 bytes/row.  With large
+dst.y + dst.height values, the signed int multiplication overflows
+to a negative value, causing the bounds check to evaluate false
+when it should reject the operation.
 
-Reviewed-by: Aurelien Jarno <aurelien@aurel32.net>
+The subsequent blit loop uses unsigned arithmetic for the same index
+computation, producing large positive offsets that write past the
+VRAM allocation into host process memory.
 
---=20
-Aurelien Jarno                          GPG: 4096R/1DDD8C9B
-aurelien@aurel32.net                     http://aurel32.net
+The same overflow affects the source bounds check in the SRCCOPY
+path, where (vis_src.y + vis_dst.height) * src_stride can also
+overflow when the guest sets large pitch values.
+
+Fix both by pre-computing the end offsets as uint64_t, which
+prevents the signed overflow while keeping the existing bounds
+check logic.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4646
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+---
+v2:
+  - Actually use src_end for the source bounds check in the SRCCOPY path;
+    v1 declared it but never used it (Marc-André Lureau)
+  - Sent standalone; v1 was part of an 8-patch display series
+ hw/display/ati_2d.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 7a4a115..cfa4947 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -157,6 +157,7 @@ static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
+     QemuRect vis_src, vis_dst;
+     unsigned int x, y, i, j, bypp = ctx->bpp / 8;
+     const uint8_t *vram_end = ctx->vga->vram_ptr + ctx->vga->vram_size;
++    uint64_t dst_end;
+ 
+     if (!ctx->bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+@@ -166,9 +167,11 @@ static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
+         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
+         return false;
+     }
++    dst_end = (uint64_t)ctx->dst.x * bypp +
++              (uint64_t)(ctx->dst.y + ctx->dst.height) * ctx->dst_stride;
+     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff ||
+-        ctx->dst_bits >= vram_end - bypp || ctx->dst_bits + ctx->dst.x * bypp +
+-        (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= vram_end - bypp) {
++        ctx->dst_bits >= vram_end - bypp ||
++        ctx->dst_bits + dst_end >= vram_end - bypp) {
+         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+         return false;
+     }
+@@ -203,11 +206,12 @@ static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
+             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
+             return false;
+         }
++        uint64_t src_end = (uint64_t)vis_src.x * bypp +
++            (uint64_t)(vis_src.y + vis_dst.height) * ctx->src_stride;
+         if (!ctx->host_data_active &&
+             (vis_src.x > 0x3fff || vis_src.y > 0x3fff ||
+             ctx->src_bits >= vram_end - bypp ||
+-            ctx->src_bits + vis_src.x * bypp + (vis_src.y + vis_dst.height) *
+-            ctx->src_stride >= vram_end - bypp)) {
++            ctx->src_bits + src_end >= vram_end - bypp)) {
+             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+             return false;
+         }
+-- 
+2.47.3
+
 
