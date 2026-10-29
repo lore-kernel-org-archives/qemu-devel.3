@@ -1,79 +1,80 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D95D606A330
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 16:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA542606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 16:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=cgMlw9cb
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=cJdKf/84
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMSoy-0001OK-Ar; Thu, 29 Oct 2026 12:17:44 -0400
+	id 1xMSs5-0003Ln-5Y; Thu, 29 Oct 2026 12:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMSop-0001Da-FF
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:17:37 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1xMSqw-00030a-AZ
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:19:46 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1xMSon-000156-LD
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:17:35 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-8451a619da7so1613531a34.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 09:17:32 -0700 (PDT)
+ id 1xMSqt-0001DI-PN
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 12:19:46 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-833e671ee9fso2386425a34.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 09:19:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793290652; x=1793895452; darn=nongnu.org;
+ d=linaro.org; s=google; t=1793290782; x=1793895582; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=P5X4qZfnVS/TY2lC2As6mqHNcdxtEQ3uCFZzF8qH/Rw=;
- b=cgMlw9cbRgHBTxBTuOCxJcC873n4pF7vlnEhuCi+1IgZ7RuXkUCE9TOqQ6ur4ICHK1
- znagQUrgp/gOBdngzB2hoGwtutdgND5v+8c/Zoyxf6pYJ+spePEV8WC9L4Cj/ydudNEf
- sgR9r0ypAvdpD9migruMw+J3t+tDKVmEk8zNotcpMftx3Lw6QmQWMD4NUMOyMxPURf+x
- BYNCxbK9vdmuz4QYHj4tbz/r1LdZSzcdyV+IEHvu9BUIS4fyzGSXOXd/PoZjQfpzLgQ3
- YDX660y9rc57tr9szZlUYPlf9Yuw3GE5g460i0zHmXvKjUVe9TCKiDqdDGPxjKA2xkBG
- RbrQ==
+ bh=iyHT6CBjA4pdZ64fdU+8Wj9JA39EByJvBl8ugyjwMqU=;
+ b=cJdKf/84SIAzWOqutYsm4vjFS/0ylK409wvcv6iKSdhe42JV2C8yhTzbQlqGY2Fq0T
+ 0xoBjb8SflLuJ8B6xRk/ujndB4Nulc1bdAEt5gV/srMWLMDu/nRD1ufUcBb84O8qcdJW
+ eXzB/Ej8I+bTVt22z7qYWa/J7I9I7WkK0xgUoCzeqG1K69vtd/OfwrGTOdCqPlyAu0GT
+ EJ+CJ86+brNJ9Rbek0W84YnWZeALmcED2wy74K00RyNH5MnzMnGEPL1J2fkOJLl4hqW3
+ sTt3i9EyG914gEQc9mpsBKdN1pKt81IqYrVZZyz9stkwNElEXqFSi1WxjYdPpO8JIiTB
+ n5lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793290652; x=1793895452;
+ d=1e100.net; s=20260707; t=1793290782; x=1793895582;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=P5X4qZfnVS/TY2lC2As6mqHNcdxtEQ3uCFZzF8qH/Rw=;
- b=r12ZF2ImNA+KX5VcmJSsfuU7q8CB8Ew2NcHfJTzaplPChH8foSjQFuaYsEUrLgGcJ7
- DgXE7PI4uAJdn7Rl6XUq9Uvy/HcLd69BqWpqx2pSgxDX/boIQQRSAgsTq231VENwcO9q
- 4Aq7uJE9zdCq73GkqKKZpmKVn5yuT9bQrReeBMAjkXcflp9DwprLtYOXMt9/t95NJF6H
- qQfdwV3xysLV0cYieAI1cXvL+liOfSRAMkmoHURmRPtrCCAnIdqVcq4KeQDt5SnROwWD
- fbCVc3XFZYa5H++2wqTwwQfZ5d8Z3ArYxNjxIeT/smMTvn2ALtRp5g7sUfy1/mc2yVgt
- oH8Q==
+ bh=iyHT6CBjA4pdZ64fdU+8Wj9JA39EByJvBl8ugyjwMqU=;
+ b=wn/9XdvrZ7TNyy2DeRzv4XDFTcKKIwJIXRlyoH4k0V+ohH0Sv8JCHz2/PwmJukpxm8
+ 463gV6XWj2+VNVTmKH9HQT6nxNjhXDVu33k5LpAMDvbBq8MZO5VWn9xGFBsgwLp/lttV
+ LQT5VejNoeHebcIFjI1oNwiDbFG61+WG/uBSdv88u09In65vDc+fiyPr7Kub1CpsbYYN
+ eLsaUtoJNxP3aq5GOFmCJiZGjpEtTtl3BiXAGmhAhQYRbsbHVOEI9Wdt2tar6608nB+P
+ x4VNBAI7IkcHsya2CAiYiQQskHqwN0Nn+BJBoPEvNUFKYO0yBBJLpIbhZmFg0YPCygQ2
+ +yRQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwMkPtAbEmqB3mc7BeFQIJChVxdkY0yxhLuJJFEkQWWrBwuPMiN6/ZR/9bYJmBRWrz8I1a9+AKO7oMq@nongnu.org
-X-Gm-Message-State: AFq9FYI292l52H0k6zxN3S1hXwtMaNWofjijM2W78BDWc7jim/tXfmlL
- 5Co9iP77MqMqLxuPj5/+Ed2a7kgB0XWoIUHNupJ0xPCa29laSssyx1E5OKOf1um1Y40=
-X-Gm-Gg: AYBFou0EPTU4WDLkN7+ZBBPsVwxq2dVliJtL0KywAW9+khTagNpjBfip4vGP+WmZvqX
- 3jNLTElvXrhc7RWrwjH010MFArFuZ57jd8Nr04BkelCeKG6T4p/ySc/X0LiIIy3UtMoP0dZ6CO8
- iraELHeOKy+GBXDGu8fQfYseqrwEhRIDvoEPcJdL4w6hVNWRpYUFoBqpQuVLrFZn2sLIzM3GNME
- 1iyw8mKU07AyBxSofrVoZEyYPP0riaKO0Uyvuadvgo9UPThI3NXqF/K/UE9YuUdI+thvgFCkDX7
- NxFRat7OgU9EkFgxBHTtWCWIFkc73YIqEJshHMdMDDSevbTbfvF+YZZhUz/KUewptusH9YO7Dsx
- n+o5yCfaFK8OOrTfMTXZEANRu7VKfESsZhKseyNC0X6oilpx6b25mphGWePh6nysOYat4FS+sgk
- MgP4X5CKrbAb5Q3TLZa4HNcA5dKw5RwrMwBjOAc+tnwYPDWEg4yLg9YeAFC1OcN82iW02+Jyr8u
- WVWjX9B+Xjk1swaysCbCUdgAwX9q9x/+39HDvrxZFEM3NNOwDOgz+tBJ3UvrKQWxHXweOk0Vace
- cKev/rwGblHYF15LmrPglTHdH6n+UezSjS5CB8XEEyrD
-X-Received: by 2002:a05:6830:4ac5:b0:824:e29:e00e with SMTP id
- 46e09a7af769-85ab929b937mr5764081a34.20.1793290651815; 
- Thu, 29 Oct 2026 09:17:31 -0700 (PDT)
+ AKwUvBzl+WV8yTbwasPKeDguJoLSJYJTMFsAz1U7gcXe25wHAa5++pNp0yq5oJOexbtAGfH+NYnBCyu1ytIA@nongnu.org
+X-Gm-Message-State: AFq9FYLUnU537JwNh9AlxT+w8pKGFtWYDafvZCYD8I5VW3JTAQs8alHP
+ 8u9mgQpb6WWdfzsDl5tTwtPAqWXbismOxuj5QFTJ7HOEVbT+JLzJmbs/kQLabzPU4lA=
+X-Gm-Gg: AYBFou0FlCwXUVRvTJV65AaEY7tw80sn+izdcdCfJvYPf0KQpX1vGCrcmJJwrrr/Xt2
+ cbHG6GUizKj3rOgcjTGam7Jad2wVxnkx4pGvu3KpI0PX9IOo2Q9b9qtTRMSlNuajKZIvdxgvepr
+ QO6t0uvd3/GWWGfCbIK1t0tIOyULZq3JKK1bZs0jm7QgwWWaeyrdEtSrg5wTidVf3Kpd0F8SnwV
+ jE33c13ATe9gGPsrZ+SPBgTzD9DewNYdG4RfssF3U3VCdEteRT4vxNMMqshHkRSAiycstZBdPmj
+ K66Fe4+XIiA4v2Dbc/h7szoUrxhVCNy1D1/8N3FGAoVkQqQg0zWTxZJY+8/9p87eJZzWhQL90MZ
+ 4uBs666u169uesZGSNYYU3fLKJ0uPWS1BCO0R5eJYdl97tG9TCkuOAkrM8hiKbyILhsUay1GNnW
+ 1acOnB5AhR8i9rB/Ha/REe446NZxAcwKaCt/BMMPtOusY35RXydpCtbfuuqOjvlqi3q03nF64Np
+ iugc8VaxUGvktWyqDjCQ6Swij3EF96ccdfN6z2BSYWYEAv8okSzPpPBTMzBiOEdQkqOmrEWZVuI
+ hrok+y93lWaZakuK4QnpOZQw/Cv/c4EnhAK0F+45ti7D
+X-Received: by 2002:a05:6830:2b0c:b0:843:8982:9528 with SMTP id
+ 46e09a7af769-85ac070a97amr4730518a34.19.1793290781953; 
+ Thu, 29 Oct 2026 09:19:41 -0700 (PDT)
 Received: from [192.168.129.53] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-85d33e3696dsm303074a34.1.2026.10.29.09.17.30
+ 46e09a7af769-85d33f598absm302689a34.4.2026.10.29.09.19.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 09:17:31 -0700 (PDT)
-Message-ID: <5418c6dc-9de0-400a-bb0e-528d00ccb21f@linaro.org>
-Date: Thu, 29 Oct 2026 11:17:29 -0500
+ Thu, 29 Oct 2026 09:19:41 -0700 (PDT)
+Message-ID: <84ce5521-c0a9-4bbf-9483-91b981f8cb02@linaro.org>
+Date: Thu, 29 Oct 2026 11:19:37 -0500
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] target/arm: don't pass env to the sev helper
+Subject: Re: [PATCH 5/8] target/arm: simplify wfxt_timer_cb to only trigger
+ cpu_interrupt
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org,
@@ -87,14 +88,14 @@ Cc: qemu-s390x@nongnu.org,
  Hao Wu <wuhaotsh@google.com>, Halil Pasic <pasic@linux.ibm.com>,
  qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 References: <20261029161310.2065290-1-alex.bennee@linaro.org>
- <20261029161310.2065290-5-alex.bennee@linaro.org>
+ <20261029161310.2065290-6-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20261029161310.2065290-5-alex.bennee@linaro.org>
+In-Reply-To: <20261029161310.2065290-6-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,24 +117,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=unavailable autolearn_force=no
 	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
 On 10/29/26 11:13, Alex Bennée wrote:
-> It was pointed out during reviewing a recent fix that cs is only
-> needed as a loop variable for CPU_FOREACH so passing env is just
-> wasteful.
+> HALT_WFE will always be cleared when leaving halt via
+> arm_cpu_leaving_halt so we don't need to worry about atomic games in
+> the asynchronous timer callback. Furthermore, a WFET timeout or
+> event-stream expiration is not an event that sets the event register;
+> doing so causes a subsequent WFE to wake up immediately.
 > 
-> Fixes: d238858bff60 ("target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M")
+> As we only need CPUState to call cpu_interrupt we can also simplify
+> the user data and avoid needless casting to get to it.
+> 
+> Suggested-by: Paolo Bonzini<pbonzini@redhat.com>
+> Fixes: 01b223f895a7 ("target/arm: enable WFE sleeping for A-profile")
 > Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->   target/arm/tcg/helper-defs.h   | 2 +-
->   target/arm/tcg/op_helper.c     | 2 +-
->   target/arm/tcg/translate-a64.c | 2 +-
->   target/arm/tcg/translate.c     | 2 +-
->   4 files changed, 4 insertions(+), 4 deletions(-)
+>   target/arm/cpu.c | 20 +++-----------------
+>   1 file changed, 3 insertions(+), 17 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
