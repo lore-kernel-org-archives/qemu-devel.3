@@ -1,61 +1,94 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B38606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 14:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15001606A31C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 15:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=dupond.be header.i=@dupond.be header.a=rsa-sha256 header.s=dkim header.b=g0SGcF9o
+	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=oeMLHESS
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMRat-0007SZ-3o; Thu, 29 Oct 2026 10:59:07 -0400
+	id 1xMRh8-0000f3-Ol; Thu, 29 Oct 2026 11:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1xMRaX-0007MP-Ny; Thu, 29 Oct 2026 10:58:50 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1xMRaV-00016P-WA; Thu, 29 Oct 2026 10:58:45 -0400
-Received: from [IPV6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2] (unknown
- [IPv6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2])
- by apollo.dupie.be (Postfix) with ESMTPSA id F3FD61520D01;
- Thu, 29 Oct 2026 15:58:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1793285922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oDcf2A0g2G+s7KORsLrDiWDwV/0tHie2d+2gxpMUPto=;
- b=g0SGcF9orqD1jlYJfoNTCOD9ChkxzqpSvNeY3p3aTGaPAPjvPlUZjJVZK7JPVTX3Dgc7gq
- /98t1BKTxXM62JuAgmFWgb/+6y13CtqSzAk0oOm1H28bgrK5jfvVJ9twzZ3YzCivoAtIWe
- JExfwwxEIwdNpmzYd37IPCMw1Iv/sLZbsJ4YHN1xoOSImwqLXbbq6c/98WdaDw0b076ikw
- /nW9epM5rl+Mey6IbXbTznPOznyR4BlyVAaBLwRdLaLO+7GicSgKAAziaNKHFWSCph2e8i
- IrHL2c1EUyiMUkN0PjFXUgEQZRekyob2AB7pAkcfEJUYjJWkM9/6JhNgYn6bAg==
-Message-ID: <713e8c49-5a9c-4d42-9038-8b6f9cc70260@dupond.be>
-Date: Thu, 29 Oct 2026 15:58:41 +0100
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xMRgt-0000UJ-3H
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:05:21 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1xMRgr-0001wq-6G
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 11:05:18 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-48e0d885929so1734446f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 08:05:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1793286315; x=1793891115; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=d1SA0JPlAdLNkBQvS9ifeD/hIkFRCerT9UfASm4315E=;
+ b=oeMLHESSzPYJeBT9LWJHjdXRR10AcOwr7t1jGqk9g2heVa99uz32sROmf0eZObfngf
+ z9U3FSTNI9PmH3AFOHOV08Ulc0CBtw2Yd5Gc/GIX7sgiKUggTGZXIhyEZWqHQHJyMXdA
+ vtajzthZQZuHkMZE6iIoIBZfPn6UiS8MeSUu9hPNUYgufKfGmL0hTx6lfHP9ZHwyjWAS
+ J6OhOuOien9IlXc5bFPAdLGE4MiXHhRo4Jypnx9kTdIv8HcQL8d83x4dv5BDmDvC8XrY
+ WDqXKHZfILpYsoshgnCKQnkhQsi7tIiue67bFCi2fk0YkSWOzZ2StqdkRVsGHsMKds/1
+ mMRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793286315; x=1793891115;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=d1SA0JPlAdLNkBQvS9ifeD/hIkFRCerT9UfASm4315E=;
+ b=JwHz9STJQGN605FBW3aWaAgnFExbIn+PRTe4QHJxQjrIG284tLXIMXLDkBY7O+bWRl
+ A9yRSaa3Mj7IfUPMvc6TqzicLiDPhflsW8VuxpHJjyx9znnoC7j4K3vJxW7kc2SV3xKl
+ yI01q/MLQLEBFUD4+ZTw8HRbAu5EHH1XVmY15qZeIgtQARgOazbOPfqBX44GWICX9FWc
+ QNx3tponDcJF88thXEjnzIxzdYtQ+UAdow6/JNgmXG/Nj1b0t7gR95eUytMCUxOx/O6M
+ sMmpcDflmXAmlgiIc7dpmJPuwiSj6MLk+9APlxEc7fBb48rrr5nO2zC9Emhay0Rp5GSp
+ FI3A==
+X-Gm-Message-State: AFq9FYJurv1bft7vXvwfO1kNngZQdIdRcF5+Q40UTLVNgj3DMemw3r/t
+ eNqllYumNmoby7dPTpIMsnALXPaP6/iRJSJbo3MmNH2HlbVewdOQZr/nUHYuA3K6AYW3zj0KgZ9
+ CzWnnwKo=
+X-Gm-Gg: AYBFou18dRqwxNw2uxD2k0gEGz37Nyv1Z6n3GOr90EVL8AEVtyZd790gBgTKDI7LyEs
+ QLIixLZWIENzeru0etkSANsodn7JWMqJ1IT9aRjD8sN6b5+VVHMBW5u/I7EOM6FXL6U1C3ai08X
+ T/jRvUYM4TMKUnAw0ZV2n1dgF2maa93UROi6Q4LHrASiqvnFqFzofBPscRGOnMnacPqthSMM7nO
+ LMAdAofYZ4Pj055MVTzBocCF1LRWUJmNZs0dlSmwoPoPK0/ML4TjQk4bdxQUgte3gWjDcsYcTYL
+ +/53FrLn7zfYpb+66P1bmUQd8IAiqiiX43lz/fq1xYL6x0Ln6q2Qrb7QQk9wv+N8JysjTNUHVjc
+ U/8UTEgC9si73fDGhPZlnD2RC5umeQhwrrlnpxtMx9Y1hGVSLkdZ7YVhPGshXiYbTowD2QQ57HO
+ VtJU3L9gnt0bgPNI6xKiroKQ38G2QAgaZlzYoLgUJFlAnjexbDc+R71x/Zfh4Ag8XoxGxrNNIkO
+ nH4Ar9jne+TRpJo4VdP/Eb9tlD89tNQHh5nnHKftQctm4LlwK5ppmfxn26zvsDsHgJ616g0Xf51
+ xLCdk+hP9ENLyZ4TOlHHHyDb3kXQXYe5bw==
+X-Received: by 2002:a05:600c:1987:b0:4a1:e00b:a10b with SMTP id
+ 5b1f17b1804b1-4a965dd31e3mr124164935e9.7.1793286315026; 
+ Thu, 29 Oct 2026 08:05:15 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:6ea5:6074:196c:9c53])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4aa7ee57589sm80999075e9.2.2026.10.29.08.05.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 08:05:14 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Thu, 29 Oct 2026 15:05:10 +0000
+Subject: [PATCH 1/4] hw/pci-bridge: Add pcie_add_dvsec_capability helper
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] qcow2: fix snapshot data corruption with
- discard-no-unref=on
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, den@openvz.org
-References: <20261027104441.830212-1-andrey.drobyshev@virtuozzo.com>
- <20261027104441.830212-3-andrey.drobyshev@virtuozzo.com>
-Content-Language: en-US, en-GB, nl-BE
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <20261027104441.830212-3-andrey.drobyshev@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
+Message-Id: <20261029-jmac-pcie-rme-extensions-v1-1-212d2409563e@linaro.org>
+References: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
+In-Reply-To: <20261029-jmac-pcie-rme-extensions-v1-0-212d2409563e@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.17-dev-6be7c
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,66 +101,63 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ hw/pci/pcie.c         | 16 ++++++++++++++++
+ include/hw/pci/pcie.h |  4 ++++
+ 2 files changed, 20 insertions(+)
 
-On 27/10/2026 11:44, Andrey Drobyshev wrote:
-> Whenever option discard-no-unref=on is enabled, we bypass refcount
-> machinery and unconditionally punch hole in the data on 'discard' and
-> 'write -z -u' paths.  However, when this same cluster is also referenced
-> by an internal snapshot, such operations lead to problems.  The active L2
-> table is copied before it is changed, so the snapshot metadata stays
-> correct, but the host range under it is punched out and the snapshot reads
-> zeroes there afterwards. qemu-img check finds nothing wrong.
->
-> Fix this by guarding the 'keep_reference' flag by the presence of the
-> QCOW_OFLAG_COPIED bit.  I.e. only proceed with unconditional data
-> punching if we own this cluster exclusively.
->
-> Fixes: 42a2890a76f4 ("qcow2: add discard-no-unref option")
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->   block/qcow2-cluster.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-> index e02fae6a0c6..cc473c7c796 100644
-> --- a/block/qcow2-cluster.c
-> +++ b/block/qcow2-cluster.c
-> @@ -1953,6 +1953,7 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
->           QCow2ClusterType cluster_type =
->               qcow2_get_cluster_type(bs, old_l2_entry);
->           bool keep_reference = (cluster_type != QCOW2_CLUSTER_COMPRESSED) &&
-> +                              (old_l2_entry & QCOW_OFLAG_COPIED) &&
->                                 !full_discard &&
->                                 (s->discard_no_unref &&
->                                  type == QCOW2_DISCARD_REQUEST);
-Wouldn't it be better to gate only qcow2_discard_cluster when the 
-cluster is QCOW_OFLAG_COPIED?
-Cause with the above change, we fully clear/remove the offset of the 
-cluster, causing fragmentation again in the image afterwards.
-And that was just the goal for discard-no-unref :)
-> @@ -2097,8 +2098,9 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
->           QCow2ClusterType type = qcow2_get_cluster_type(bs, old_l2_entry);
->           bool unmap = (type == QCOW2_CLUSTER_COMPRESSED) ||
->               ((flags & BDRV_REQ_MAY_UNMAP) && qcow2_cluster_is_allocated(type));
-> -        bool keep_reference =
-> -            (s->discard_no_unref && type != QCOW2_CLUSTER_COMPRESSED);
-> +        bool keep_reference = s->discard_no_unref &&
-> +                              type != QCOW2_CLUSTER_COMPRESSED &&
-> +                              (old_l2_entry & QCOW_OFLAG_COPIED);
->           uint64_t new_l2_entry = old_l2_entry;
->           uint64_t new_l2_bitmap = old_l2_bitmap;
->   
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 42bcb9206d..42c4997b42 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -1157,6 +1157,22 @@ void pcie_add_capability(PCIDevice *dev,
+     memset(dev->cmask + offset, 0xFF, size);
+ }
+ 
++/*
++ * Add a DVSEC capability. As per pcie_add_capability, the caller must
++ * ensure (offset, size) does not overlap any other capability or extend
++ * past the extended configuration space.
++ */
++void pcie_add_dvsec_capability(PCIDevice *device, uint16_t capability_id,
++                               uint8_t version, uint32_t offset,
++                               uint16_t size_bytes, uint16_t vendor_id,
++                               uint8_t dvsec_version, uint16_t dvsec_id)
++{
++    const uint32_t header1 = size_bytes << 20 | version << 16 | vendor_id;
++    pcie_add_capability(device, capability_id, version, offset, size_bytes);
++    pci_set_long(device->config + offset + 0x4, header1);
++    pci_set_word(device->config + offset + 0x8, dvsec_id);
++}
++
+ /*
+  * Sync the PCIe Link Status negotiated speed and width of a bridge with the
+  * downstream device.  If downstream device is not present, re-write with the
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index ec25e7a7de..86c29f7d8b 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -133,6 +133,10 @@ uint16_t pcie_find_capability(PCIDevice *dev, uint16_t cap_id);
+ void pcie_add_capability(PCIDevice *dev,
+                          uint16_t cap_id, uint8_t cap_ver,
+                          uint16_t offset, uint16_t size);
++void pcie_add_dvsec_capability(PCIDevice *device, uint16_t capability_id,
++                               uint8_t version, uint32_t offset,
++                               uint16_t size_bytes, uint16_t vendor_id,
++                               uint8_t dvsec_version, uint16_t dvsec_id);
+ bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+                             uint16_t offset, uint16_t size);
+ void pcie_sync_bridge_lnk(PCIDevice *dev);
 
-And same here then.
+-- 
+2.43.0
 
-Thanks
-Jean-Louis
 
