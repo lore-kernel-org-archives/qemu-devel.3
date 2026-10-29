@@ -1,106 +1,144 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88BE606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E97606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=NM9fJicD
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mLmqXPca;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=WWwVKJmE
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUCx-0001D9-8U; Thu, 29 Oct 2026 13:46:35 -0400
+	id 1xMUCz-0001bw-3h; Thu, 29 Oct 2026 13:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xMUB9-0006qF-8W
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:48 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMUBu-0000E9-Sh
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:31 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xMUAr-0003bc-IR
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:30 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1xMUBs-0003wk-Bq
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:30 -0400
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGDPkN594481; Thu, 29 Oct 2026 17:44:15 GMT
+ 69TGDQVK594522
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:45:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=vgCRQvpoAoq
- lkRUju1N9d1ldLB0nSBmvwr+U7TyW2K4=; b=NM9fJicDZaqk7z8h945PFDmYlnk
- eIqw569bEzcqXzgHc7ilLBeND5FfRECvzFqmCXYLPQmCRyqPWjdtNhGOXsFGLOaZ
- Tdx4ZRC5qPf+YSBgeJnZv1vSA+6RQMFfuknxA0j9I5ZmS+YRsxr+SvgXxx+gcD4a
- SDqnEsdCGABx+t4N2OBZm867bhKH295TmQVid64mRwlJa+z3FL8KGmBHD2mWIKiC
- bt/xsv2BD78wYq3XEHFSDwk71z4rs03Xola0vWFuJRiPy8MBa1CJv7IlMy9ivOw4
- bJ0uPR2Xw5pwK7tyJ7DWv/ahUbR3ioyx9HTI8F/BWq67eDXYLDfXN6KsHCQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkut3kt8x-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 29 Oct 2026 17:44:15 +0000 (GMT)
-Received: from pps.filterd (nalasppmta05.qualcomm.com [127.0.0.1])
- by NALASPPMTA05.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69THiEo72516240; Thu, 29 Oct 2026 17:44:14 GMT
-Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
- [10.81.81.31])
- by NALASPPMTA05.qualcomm.com (PPS) with ESMTPS id 69THiEKi2516205
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 29 Oct 2026 17:44:14 +0000 (GMT)
-Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
- id 99EFD2583C; Thu, 29 Oct 2026 10:44:13 -0700 (PDT)
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ wOMSjhWVYPXTJ4Vg1kSzF+Z/jevAVj8TgmyiqQR4LQc=; b=mLmqXPcaTOtCZnhx
+ PfV2Th7K80KJbLU6EpobYLmKFv2aqQ0Ds02xMj9eDu8q/lcCUJTCKC/JGswMa9Iu
+ 0X89yPVtVp0EojPLT4jM7DylAjJiCrS2jsoX5q6ioEqF9q0t4rSDFPnJTdvMTux9
+ PCwnFzjz1KClEKCU8eGVFCTOOUXX9z93wu7ZQYYQJP4vRzGWC9VoIWbnnX2Qf5/O
+ +fffHwYxM4T4WO2lPab7LtjLSlUd/c9QNBYlf43Do0X0/FY3bcIm4TxRSqWFL9cx
+ pd4Ih4pg30UAPJUhZNn7DmQjKovzdQCvxT/2cZje5s9WPPM+h2/3zjzPRzRJ7efD
+ VRd46Q==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkut3ktgc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:45:26 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-93cbf2fd504so405447085a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:45:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1793295926; x=1793900726; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=wOMSjhWVYPXTJ4Vg1kSzF+Z/jevAVj8TgmyiqQR4LQc=;
+ b=WWwVKJmE7pNw0Zdj8GxTCxvN38rvELC+bNWfzt6lTBJkI5amqaJzrmhnE+MjtMfpeo
+ HaJZquQLsXTbfPNG36iafiamPvo8ADlQEwxtddmGrePZ3hr0mPIb/Huf1sz2ov5jfTp3
+ Lyp5FhzbS6jFTyeJj86g0bG1scRV3XYw23KaoHOMFykbjhMnT0ANtcDCBBG4CBjMcSl1
+ rlRoA0GHprWvPdDRX4IogDJrXUUGAGgRmpvelFR8EgpECCQ70lAtylsBh6ujk6mJSIlS
+ 5vKD1RnciAvSTq7zABa+o24qL/PKYUL7tH7lfgeb+Hd63nXkbUK3a0d9xZ8Of8/3aVgt
+ ypyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20260707; t=1793295926; x=1793900726;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=wOMSjhWVYPXTJ4Vg1kSzF+Z/jevAVj8TgmyiqQR4LQc=;
+ b=cdmLqPBq9LYgcfI/IyT3R5+nZLQ0OzkCyHL2CGjB2AOBQyDiY2/EcpPZxpb3srF3uH
+ f8HuaKv8Bw3N0alqLBVLhwmXiC0n/qCvcRY0DmFm1+QZ9jPNatak9AQmMW1G+CFIqwbs
+ IHzfGRslONXIAgWXQ7qaj1TtOOnTcbbydybjCTEruGmIXdo1EyPeoVNS5l+5LeJpEgTR
+ n3joPOhgUzVCnMc90YXpI6BaEtnkoEMxRoC+9beP2ufYY/iGZraPgWnKpW9qCCQFwnCP
+ 6iiUMiscRmOqj1IJbLSZK389O0z3TyFEA+Kd/qWju0ySpLRPEGAf0oKx3VXA/0eP+YmC
+ MOQQ==
+X-Gm-Message-State: AFq9FYKW1nHuZargjnBNNxlAECJHEkjxdAwZxRBQVUaXampld7GjNws1
+ jKRugOezPSHFmttDiZBKjUOrmEvFZorET8yFtKrz2LM4IgVpmg6kB9GUBxjgFcA4d+I1x2wXxgk
+ QziSp2qNNLlM15iP+PfRflnVQxkjrLW3LY81dKjCAmqCWTrtEsBUVdnjQJquoIgaPIg==
+X-Gm-Gg: AYBFou0K8/CYV2TSr/HjwrGK72+Ye0NouNGih0maHbLkQFxHc1IAU7Ws0+SScCYvyc/
+ orjFPSbHpcONfTYW14KtQpI3C4EQGPJgnGHNHdFkB6bc4KvQjXovb8mtvZo7NC35OPfffSsZ+Jf
+ BunGfPXgjlGfxq+0z6yqfSa87zNIKVUxyCdWiiO6dmX/uT03dDGCW7Nf8UCk5Iffd00p1TRN8+M
+ 0L7CmgoWTCCfT7oN85FNfE+uAE/QXuNrjigus/5cMDoB/GuLqGAUJiEbfeYYMavSujc2EidjsxQ
+ 52aXekfj9TsoJdU8ALS5s3vONc5MSMEoHDqXFM9oY5zEoC2P4A0XY7tHIoQc8DM/JwVP0x5/AE6
+ N3s2vzymqJdher1NP6eu9NQDWJqHu/Rlq88iq8d5AQq5XQ9q3gF5IbXBMnIwbG//4pZQGltpMgv
+ Wn7y4ofTKj8I6MaWkO0SS0HSRBH5wzTA==
+X-Received: by 2002:a05:620a:298c:b0:93f:38c7:70f4 with SMTP id
+ af79cd13be357-94408aa100cmr950002885a.26.1793295920605; 
+ Thu, 29 Oct 2026 10:45:20 -0700 (PDT)
+X-Received: by 2002:a05:620a:298c:b0:93f:38c7:70f4 with SMTP id
+ af79cd13be357-94408aa100cmr949998685a.26.1793295920165; 
+ Thu, 29 Oct 2026 10:45:20 -0700 (PDT)
+Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
+ [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4abf751c2d2sm714715e9.15.2026.10.29.10.45.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 29 Oct 2026 10:45:19 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>
-Subject: [PATCH 10/20] target/hexagon: add HLX absdiff and sign-fill gvec
- operations
-Date: Thu, 29 Oct 2026 10:44:03 -0700
-Message-ID: <20261029174413.643130-11-marco.liebel@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
-References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH 06/12] tests/tcg/mipsel: Add MIPS32R6 multiply tests
+Date: Thu, 29 Oct 2026 18:44:27 +0100
+Message-ID: <20261029174434.27985-7-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20261029174434.27985-1-philmd@oss.qualcomm.com>
+References: <20261029174434.27985-1-philmd@oss.qualcomm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXy8TQKBrj27lm
- hcUfjsPyH7Gij1r57AXvLNjCWATGrqME9zyxyJCdAkHw8Li6oi6vT7eTBjd2cgtJnDuKioSJA9H
- ARzTfskb3B134vdGXtcIhTHx3sVDuWc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXywVRJN+mB3fB
- uDhwnw7VWGaasTQM1xSxQcnY/PVWv8D4F0beR/XQHsuekA/FglabNQAKX46TWvdI+PwQOQMXdcz
- urhOGxg/tV8dzOTEB2gqOrKWufCu8BmJamJn/eRlfmJcDzEjMi1TJWypyCsIcjEp6/R6r50CpVt
- woxCC/yzCA3GMbSGooteWiVV3Z7I3XC8gxZTGWQBGO+HA4YRTVflQb/DpehG9VyK4wYh68yOFKZ
- MHx+SNdxNVER+Ke3brzkJ/QkDautDHw6XMvndjWEgc4veW+wZ3zZZ2oZ7VTmqpuFpz0hAWmVUPa
- WuzRazfJ+Hzj3ux5ROp9Zg9xntnlSoK7+mH5ARAtdnOQDpyYfqbxd8nzc1bKVa/nVC5/njAh6YG
- EzHHzeWnn6upVewhBNTJ2c0o8TH3voiuGrfYVcpX2BGXiQwtAMlPLwDvWLfJFWoQJ5szokZN/Ma
- kXBNhHZd1rzP9EzcUGA==
-X-Proofpoint-ORIG-GUID: 0PWfkQcECKE5nuYw6TRylmlZA2NRwYFb
-X-Proofpoint-GUID: 0PWfkQcECKE5nuYw6TRylmlZA2NRwYFb
-X-Authority-Analysis: v=2.4 cv=HYSB3SE8 c=1 sm=1 tr=0 ts=6ae385ef cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8 a=0GoE0hK8fztsA7g0gbMA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX1pwbgO1SdckJ
+ zJ+unjaEQuhjLtsz2Ezw03OSqlRBXlX0nkbCeLA0PoDppD6TMnbSuZR0rNrDlS7LRCp5V3e+O0V
+ diinCMmgnoNrlH4O7m+ldq0q7U6VGTI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfXxubbZE8+I1KX
+ yJ840vZWeDUKevA4s1Z6knwcjoc2JraAIXpjtQOLEuZFspv/ngBNrZi4r6o1yfTcBCGmZS53FWS
+ hPBLMFeAX2iLS+C+7bSuSzh7fgEiZc678doz60XdHpQz63oPkJWVTHQKtQctDQavjX+7OEprQ6H
+ CSkj3GsPHoNUsQqVFRJSe9In3xSPPqr8DICso1fpNLfIA3dwuR8D/7L+e+yBmT8nEm79t7i24cp
+ ZSfv6uuGO13X894LraHlkeftQXKrQzI/D881hr69nuWG1IMq73RieMcfpA9AyJPv96vRsWP4zAG
+ s+hWQAgRh5Gik2pLwGBWW+EgfAe11VyLSV8iOwpHpVAF+bK7P6LnolqqkSr3t7h8NLsuSCGF7rq
+ D7KW6wsWIkPAKcGJjJFXSrl1cfeXhJfq/QkH39wD54K8uEmlwKgTb2GJoQPPx9Bm7wwXfE/CGPf
+ +6+n5dfPpM9uk7hoIYA==
+X-Proofpoint-ORIG-GUID: yxYAiHI1DnEDGBtC7ffo0yaG1ZZDD7Nc
+X-Proofpoint-GUID: yxYAiHI1DnEDGBtC7ffo0yaG1ZZDD7Nc
+X-Authority-Analysis: v=2.4 cv=HYSB3SE8 c=1 sm=1 tr=0 ts=6ae38636 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=ZA5ZHMX5kH83y_G8ek8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1011
+ phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1015
  spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
 Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,204 +152,120 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add gvec helpers for halfword absolute difference and sign fill.
+Test MUL[U] and MUH[U].
 
-Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/hexagon/helper.h          |  9 +++++
- target/hexagon/hex_common.py     | 10 +++++
- target/hexagon/hlx_gvec_tables.c | 68 ++++++++++++++++++++++++++++++++
- target/hexagon/hlx_gvec_tables.h |  5 +++
- target/hexagon/hlx_helper.c      | 39 ++++++++++++++++++
- 5 files changed, 131 insertions(+)
+ tests/tcg/mipsel/test_mips32r6_multiply.c | 79 +++++++++++++++++++++++
+ tests/tcg/mipsel/meson.build              |  1 +
+ 2 files changed, 80 insertions(+)
+ create mode 100644 tests/tcg/mipsel/test_mips32r6_multiply.c
 
-diff --git a/target/hexagon/helper.h b/target/hexagon/helper.h
-index f42cb8d9b6..1ced8c5651 100644
---- a/target/hexagon/helper.h
-+++ b/target/hexagon/helper.h
-@@ -54,6 +54,15 @@ DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_4(hlx_gvec_avg_uh16_rnd, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, i32)
- 
-+/* GVec helpers for MO_16 absolute differences. */
-+DEF_HELPER_FLAGS_4(hlx_gvec_absdiff_sh16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(hlx_gvec_absdiff_uh16, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, i32)
+diff --git a/tests/tcg/mipsel/test_mips32r6_multiply.c b/tests/tcg/mipsel/test_mips32r6_multiply.c
+new file mode 100644
+index 000000000000..94c4a3426ba2
+--- /dev/null
++++ b/tests/tcg/mipsel/test_mips32r6_multiply.c
+@@ -0,0 +1,79 @@
++/*
++ * MIPS32R6 tests: multiply instructions
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+/* GVec helper for a halfword arithmetic shift by 15. */
-+DEF_HELPER_FLAGS_3(hlx_gvec_sari15_h16, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++#include <stdio.h>
++#include <stdint.h>
 +
- /* Floating point */
- DEF_HELPER_3(conv_sf2df, f64, env, f32, i32)
- DEF_HELPER_3(conv_df2sf, f32, env, f64, i32)
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index d0b36b8e06..fc6f69b411 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -404,6 +404,16 @@ def skip_qemu_helper(tag):
-                          "vece": "MO_16"},
-     "LX_avg_uh_rnd":    {"op": "gvec3", "table": "hlx_avg_uh_rnd_op",
-                          "vece": "MO_16"},
-+    "LX_absdiff_h":     {"op": "gvec3", "table": "hlx_absdiff_sh_op",
-+                         "vece": "MO_16"},
-+    "LX_absdiff_uh":    {"op": "gvec3", "table": "hlx_absdiff_uh_op",
-+                         "vece": "MO_16"},
++#include "../mips/include/wrappers_mips32r6.h"
++#include "../mips/include/test_inputs_32.h"
 +
-+    # These use one source register, not a pair destination.
-+    "LX_conv_uw_uh":    {"op": "conv_h_to_w_pair", "sign_extend": False,
-+                         "vece": "MO_16"},
-+    "LX_conv_w_h":      {"op": "conv_h_to_w_pair", "sign_extend": True,
-+                         "vece": "MO_16", "table": "hlx_sari15_h_op"},
- }
- 
- def is_hlx_inline_tag(tag):
-diff --git a/target/hexagon/hlx_gvec_tables.c b/target/hexagon/hlx_gvec_tables.c
-index a5d40e149c..f1e36bd20b 100644
---- a/target/hexagon/hlx_gvec_tables.c
-+++ b/target/hexagon/hlx_gvec_tables.c
-@@ -216,3 +216,71 @@ const GVecGen3 hlx_avg_uh_rnd_op = {
-     .fno     = gen_helper_hlx_gvec_avg_uh16_rnd,
-     .vece    = MO_16,
- };
++typedef void (*binary_op_32)(const uint32_t *, const uint32_t *, uint32_t *);
++typedef uint32_t (*ref_op_32)(uint32_t, uint32_t);
 +
-+/* Halfword absolute difference as uint16_t. */
-+static void hlx_fniv_absdiff_sh(unsigned vece, TCGv_vec r,
-+                                 TCGv_vec a, TCGv_vec b)
++static uint32_t ref_mul(uint32_t a, uint32_t b)
 +{
-+    TCGv_vec mx = tcg_temp_new_vec_matching(r);
-+    TCGv_vec mn = tcg_temp_new_vec_matching(r);
-+    tcg_gen_smax_vec(vece, mx, a, b);
-+    tcg_gen_smin_vec(vece, mn, a, b);
-+    tcg_gen_sub_vec(vece, r, mx, mn);
++    return (uint32_t)((int64_t)(int32_t)a * (int32_t)b);
 +}
 +
-+static void hlx_fniv_absdiff_uh(unsigned vece, TCGv_vec r,
-+                                 TCGv_vec a, TCGv_vec b)
++static uint32_t ref_muh(uint32_t a, uint32_t b)
 +{
-+    TCGv_vec mx = tcg_temp_new_vec_matching(r);
-+    TCGv_vec mn = tcg_temp_new_vec_matching(r);
-+    tcg_gen_umax_vec(vece, mx, a, b);
-+    tcg_gen_umin_vec(vece, mn, a, b);
-+    tcg_gen_sub_vec(vece, r, mx, mn);
++    return (uint32_t)(((int64_t)(int32_t)a * (int32_t)b) >> 32);
 +}
 +
-+static const TCGOpcode hlx_vecop_absdiff_sh[] = {
-+    INDEX_op_smax_vec,
-+    INDEX_op_smin_vec,
-+    INDEX_op_sub_vec,
-+    0
-+};
-+
-+static const TCGOpcode hlx_vecop_absdiff_uh[] = {
-+    INDEX_op_umax_vec,
-+    INDEX_op_umin_vec,
-+    INDEX_op_sub_vec,
-+    0
-+};
-+
-+const GVecGen3 hlx_absdiff_sh_op = {
-+    .fniv    = hlx_fniv_absdiff_sh,
-+    .opt_opc = hlx_vecop_absdiff_sh,
-+    .fno     = gen_helper_hlx_gvec_absdiff_sh16,
-+    .vece    = MO_16,
-+};
-+
-+const GVecGen3 hlx_absdiff_uh_op = {
-+    .fniv    = hlx_fniv_absdiff_uh,
-+    .opt_opc = hlx_vecop_absdiff_uh,
-+    .fno     = gen_helper_hlx_gvec_absdiff_uh16,
-+    .vece    = MO_16,
-+};
-+
-+/* Fill LX_conv_w_h's high register with sign bits. */
-+
-+static void hlx_fniv_sari15_h(unsigned vece, TCGv_vec r, TCGv_vec a)
++static uint32_t ref_mulu(uint32_t a, uint32_t b)
 +{
-+    tcg_gen_sari_vec(vece, r, a, 15);
++    return (uint32_t)((uint64_t)a * b);
 +}
 +
-+static const TCGOpcode hlx_vecop_sari15_h[] = {
-+    INDEX_op_sari_vec,
-+    0
-+};
-+
-+const GVecGen2 hlx_sari15_h_op = {
-+    .fniv    = hlx_fniv_sari15_h,
-+    .opt_opc = hlx_vecop_sari15_h,
-+    .fno     = gen_helper_hlx_gvec_sari15_h16,
-+    .vece    = MO_16,
-+};
-diff --git a/target/hexagon/hlx_gvec_tables.h b/target/hexagon/hlx_gvec_tables.h
-index e01c853eb1..4375bf3ff8 100644
---- a/target/hexagon/hlx_gvec_tables.h
-+++ b/target/hexagon/hlx_gvec_tables.h
-@@ -17,4 +17,9 @@ extern const GVecGen3 hlx_avg_sh_rnd_op;
- extern const GVecGen3 hlx_avg_uh_op;
- extern const GVecGen3 hlx_avg_uh_rnd_op;
- 
-+extern const GVecGen3 hlx_absdiff_sh_op;
-+extern const GVecGen3 hlx_absdiff_uh_op;
-+
-+extern const GVecGen2 hlx_sari15_h_op;
-+
- #endif /* HLX_GVEC_TABLES_H */
-diff --git a/target/hexagon/hlx_helper.c b/target/hexagon/hlx_helper.c
-index c624b66f83..c063706cfa 100644
---- a/target/hexagon/hlx_helper.c
-+++ b/target/hexagon/hlx_helper.c
-@@ -195,3 +195,42 @@ void HELPER(hlx_gvec_avg_uh16_rnd)(void *d, void *a, void *b, uint32_t desc)
-         *(uint16_t *)((char *)d + i) = r;
-     }
- }
-+
-+void HELPER(hlx_gvec_absdiff_sh16)(void *d, void *a, void *b, uint32_t desc)
++static uint32_t ref_muhu(uint32_t a, uint32_t b)
 +{
-+    intptr_t oprsz = simd_oprsz(desc);
-+    intptr_t i;
++    return (uint32_t)(((uint64_t)a * b) >> 32);
++}
 +
-+    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
-+        int16_t av = *(int16_t *)((char *)a + i);
-+        int16_t bv = *(int16_t *)((char *)b + i);
-+        int16_t mx = (av > bv) ? av : bv;
-+        int16_t mn = (av > bv) ? bv : av;
-+        *(uint16_t *)((char *)d + i) = (uint16_t)(mx - mn);
++static int check_op(const char *name, binary_op_32 op, ref_op_32 ref,
++                    const uint32_t *input, size_t count)
++{
++    int fail = 0;
++
++    for (size_t i = 0; i < count; i++) {
++        for (size_t j = 0; j < count; j++) {
++            uint32_t a = input[i], b = input[j], res = 0;
++
++            op(&a, &b, &res);
++            if (res != ref(a, b)) {
++                printf("# %s: %08x, %08x: got %08x expected %08x\n",
++                       name, a, b, res, ref(a, b));
++                fail = 1;
++            }
++        }
 +    }
++    return fail;
 +}
 +
-+void HELPER(hlx_gvec_absdiff_uh16)(void *d, void *a, void *b, uint32_t desc)
++static int run(const char *name, binary_op_32 op, ref_op_32 ref)
 +{
-+    intptr_t oprsz = simd_oprsz(desc);
-+    intptr_t i;
++    static int count;
++    int ret = 0;
 +
-+    for (i = 0; i < oprsz; i += sizeof(uint16_t)) {
-+        uint16_t av = *(uint16_t *)((char *)a + i);
-+        uint16_t bv = *(uint16_t *)((char *)b + i);
-+        uint16_t mx = (av > bv) ? av : bv;
-+        uint16_t mn = (av > bv) ? bv : av;
-+        *(uint16_t *)((char *)d + i) = mx - mn;
-+    }
++    ret |= check_op(name, op, ref, b32_pattern, PATTERN_INPUTS_32_COUNT);
++    ret |= check_op(name, op, ref, b32_random, RANDOM_INPUTS_32_COUNT);
++    printf("%s %d - MIPS32R6 multiply %s\n", ret ? "not ok" : "ok", ++count,
++           name);
++    return ret;
 +}
 +
-+void HELPER(hlx_gvec_sari15_h16)(void *d, void *a, uint32_t desc)
++int main(void)
 +{
-+    intptr_t oprsz = simd_oprsz(desc);
-+    intptr_t i;
++    int ret = 0;
 +
-+    for (i = 0; i < oprsz; i += sizeof(int16_t)) {
-+        int16_t av = *(int16_t *)((char *)a + i);
-+        *(uint16_t *)((char *)d + i) = (uint16_t)(av >> 15);
-+    }
++    printf("TAP version 14\n1..4\n");
++    ret |= run("MUL", do_mips32r6_MUL, ref_mul);
++    ret |= run("MUH", do_mips32r6_MUH, ref_muh);
++    ret |= run("MULU", do_mips32r6_MULU, ref_mulu);
++    ret |= run("MUHU", do_mips32r6_MUHU, ref_muhu);
++
++    return ret ? 1 : 0;
 +}
+diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
+index 837b26698e06..9d7cfcf1c6a0 100644
+--- a/tests/tcg/mipsel/meson.build
++++ b/tests/tcg/mipsel/meson.build
+@@ -90,6 +90,7 @@ tests = []
+ tests_mips32r6 = [
+   'test_mips32r6_bitops.c',
+   'test_mips32r6_logic.c',
++  'test_mips32r6_multiply.c',
+   'test_mips32r6_shift.c',
+ ]
+ 
 -- 
-2.43.0
+2.55.0
 
 
