@@ -1,90 +1,90 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECE0606A323
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 09:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD29E606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 09:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=eJKjvBdS;
-	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=sX+Tav6S
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=NKhYhVPV;
+	dkim=pass (2048-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=google header.b=Qlxk62r5
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMMcF-0005wI-0M; Thu, 29 Oct 2026 05:40:11 -0400
+	id 1xMMcg-0006Ld-W4; Thu, 29 Oct 2026 05:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
- id 1xMMcA-0005uS-UN
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:40:06 -0400
+ id 1xMMce-0006Kl-P5
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:40:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gromero@redhat.com>)
- id 1xMMc8-0007Kb-GK
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:40:06 -0400
+ id 1xMMcd-0007UB-6D
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 05:40:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1793266803;
+ s=mimecast20190719; t=1793266834;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vLHLHIbC5M07oi7Lxclk7p9lShgFbc17SsXPr4PRsv8=;
- b=eJKjvBdStDpQ0j8bPYt0WTdT4+LofRMQci1cLtyuNOWISW2g1FkXgLSjx/riJwkhE0XAsm
- UNSb2T5/767H++oLpnViRp7cIWqyuXIN2liAWWhQlBP1sPO7iodAPpUZTjn3nrVzgK7sai
- O9kkXZ0c4FtyprCjS3prA9WtBOXehGs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LwaPOvuylH4iynsuqQIDIgAPiysf4YjtFnJtH91GqsY=;
+ b=NKhYhVPVAcuh+EGIG5OahVIkWzmKj+bNY0noOnEsPBhiOcBEs5R3ouNs8IsNZi3nGyMfzw
+ km4urCj4kRciJiFz1WUUfGjENQOCQneiE9/ZA00HlW7wNYG7NYfSRgH1wT7kJKnBujkbvX
+ lTmtwfIE+IIlEvvwcWXa3mrmN5Vzk+w=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-Ox6PAkOtMum4kcsUHfEtyw-1; Thu, 29 Oct 2026 05:40:01 -0400
-X-MC-Unique: Ox6PAkOtMum4kcsUHfEtyw-1
-X-Mimecast-MFC-AGG-ID: Ox6PAkOtMum4kcsUHfEtyw_1793266800
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4a359c7f47bso15981475e9.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 02:40:01 -0700 (PDT)
+ us-mta-519-EWRPBsbJMxGKs_j4CR0C-Q-1; Thu, 29 Oct 2026 05:40:32 -0400
+X-MC-Unique: EWRPBsbJMxGKs_j4CR0C-Q-1
+X-Mimecast-MFC-AGG-ID: EWRPBsbJMxGKs_j4CR0C-Q_1793266832
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4a359b714f8so17771395e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 02:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1793266800; x=1793871600; darn=nongnu.org;
+ d=redhat.com; s=google; t=1793266832; x=1793871632; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=vLHLHIbC5M07oi7Lxclk7p9lShgFbc17SsXPr4PRsv8=;
- b=sX+Tav6S5RYeu2nURoZy+QjYCGUqEACdW1JmBSeJj+xQCzIZ2Fg657PXj4r7wWQAOF
- TgaJ9hsc9M96pQogtGidip3eyeAVmJeAFztHX2VscbOU35mOqjQg+7gxPsXsXXP8Qxin
- 8xkMYXKAo4+u7sRQ8Bf0/PYh5+3am1NMzi1ELHTZVdQhwR4YdC4kkyuJewlBYYnoTg/j
- U+1UCFSHUn85fmSTdVrf8W50EegbSDnET4UCvPygzgjWnLf1WWLEPQq/5QlFIzzUfsX6
- mFptygtFnDhXHTJPV1L/IDdYrkxT0l1RYJjPTMQRwogla3+mMPWur0LelrfQKs8K09Rw
- f4JQ==
+ bh=LwaPOvuylH4iynsuqQIDIgAPiysf4YjtFnJtH91GqsY=;
+ b=Qlxk62r5JXhL8dXwgD5oxi2dtfXAIeOWmE/I74GgmRuRHylUgfv4KxxXFDb/xMcVtL
+ s7tM4T3o2Kg2H+jrnZBk1RAIuYL1wELhPtFUhGU4dQcuIfbFrVMqRlNexFgckXWqUSIq
+ MkKzf89Lh52yQtL8fGBOLlFMwLfA9ysjU87tBfGOA/ZckbLnUd1xvpd6tI8Hn02lW3+m
+ hiASJ4pcMRsoM70pyhbrH5qGBL6rqEI6hkmdEkbjvLWfiqP8dWkosV8LDcoMH0AbM0y4
+ VCsGTi6uBs157CjGhGgCWF81hN63zCRCYhEMFy/heoojy/T0txYQ310EZXecKTmeJ44d
+ 8xnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793266800; x=1793871600;
+ d=1e100.net; s=20260707; t=1793266832; x=1793871632;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vLHLHIbC5M07oi7Lxclk7p9lShgFbc17SsXPr4PRsv8=;
- b=QFt5DHj0788yYIYJ8W1wN2+fXulDyWOyfvDSUfTYMx9Z+yFRvLOLT/EfVpPNfLxqg7
- /6lwjkADS0o9DcW9L41oPn65WmBgpERWc5w2bgK3E+vHQonUL7GOwPLarWxbsNOYsLEx
- tz11M7aL1c4YyubWJIxcSRbls6iijeNVZi82zH/bq9PtKQ9UD7z++gCo2fIJikOSkdwx
- fi+xLMdcLavj0DSDQoWDz9hvOklowGcWzeFpLIcufhqVwS5O6luTJAd6e7OpObh+NtSx
- ajWKV5+J/cZUSdTLXwUwkyFNXYSKtEnwTjJhfsHh0CcGx7ySYaganeIK1azUA0gStedA
- qryQ==
+ bh=LwaPOvuylH4iynsuqQIDIgAPiysf4YjtFnJtH91GqsY=;
+ b=X6Tpql5HqJT/UzZgX468A5FkipYfC2Y2uzU49nw9gQKGJhfuvdhqy8UVtPo2ttVIWt
+ Z2u3+gDmjVy2XEyI8z4eDbGf57BUjbdQdQ1enne1CtS9JKOLcDb70td5wh9n4aV3SUdX
+ rvJPeJm2vkEAPnxRb2t+4xtMDVCeKyZEsFJhyGpImq9vsL7Tai91tKnSXgFglXl+0KUT
+ apNOZsL4S0Pia4edw2U3wo4pFQ1DfN/8ySD+bFSWfhFOwx+F5iocfccnZx5oQKq4cKr2
+ ENmVqevWzWjdO3xYFqaIO+i17BZxsdOrXpf8cdwDIkn6DixtVJBqAZi8rGhB/LVnr+UX
+ k9bQ==
 X-Forwarded-Encrypted: i=1;
- AKwUvBwpJwTNetop7uUm3PKfjxkovQprB7E4VSUxXgEnn05hPLMuNr55v6PIGuNBM6an0dVS76lP6rd1Dm4z@nongnu.org
-X-Gm-Message-State: AFq9FYJ/+GBRGVhCBrWQZ0oePGcxhblxRAacE1dlWOerUcXxKlbnoByb
- qjDI3LxoW2MZ7vgUBLfQoVFUxHLKRmMrpnHdjTQP88DY3tfQfkEaLVtOlTkmH4H1WqBYUxqqWTx
- LBvrWeFdvxz8iVDmkdfud9oQI3rmTcVXLSVoofUy0m0tde6IXg+bCG73o
-X-Gm-Gg: AYBFou315dKs9NDH836XuDi0aESNDXZuPJ0P9szRRBCKI5QZmyyhMSigHZXplvt7q9u
- 7Z6gmUMNdcjFygY26FLMpsbK75gQd3nwtCTdl0DTsOWQlJC6LoR/bJfBWDQZD5krjG4/jPP4lsN
- 5ldhtxAotX3riKWZKxDnhNHar1Jx8PAqLNCRfrHpRCAkJ5CgOQKqOD8hX+alxYygNiGi7216Vzy
- EHNi8mCPwOLGdIda/n7WzIZQRegqZanOMi/3MLhUJR44l5ntcma4ncHn7HMf9eki7AmOkTsYdhi
- ccGgXu45yb5KpbEjV11U/lvMtRRGJvdV15o/dlE8HwnoThLxr/DEM6EJ0kYTsSw9MhnhvB5dOAT
- RSC544k1D8vWK52WiQLsqcafEGzx0XfKt6w==
-X-Received: by 2002:a05:600c:1387:b0:4a1:777b:8a12 with SMTP id
- 5b1f17b1804b1-4a966586ff2mr112141105e9.14.1793266800253; 
- Thu, 29 Oct 2026 02:40:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:1387:b0:4a1:777b:8a12 with SMTP id
- 5b1f17b1804b1-4a966586ff2mr112140525e9.14.1793266799783; 
- Thu, 29 Oct 2026 02:39:59 -0700 (PDT)
+ AKwUvBxPSXGzdv97xlzhn+eKb9f8aS+GC4+vsmOEyD/aP0AEDGcvk+pGm42eRDL6fhF9CQJCzt1taINTK21O@nongnu.org
+X-Gm-Message-State: AFq9FYKJ1Msx3sgjONyKykiUyxS2PAXQRHJ6OwVhTiiTkzh+zwspJ6WM
+ wCwbV2/CXL5NG0sg4L8EOFzi4iq78mXUGE25VyRGI/qUsRfBZFUiqjWhCim2REUBQYtBcJvqACg
+ Fx6p8bGmzMbAvwxhBI+sebOuHIoU1sZ8V8OvtA23Pf0mK8degMgMKOzuV
+X-Gm-Gg: AYBFou1hdNe4usmcANJ9ofKRddIovP6YUADnoPKUeCJFEWSH7Tk+Jl2QO82+bxGeqAK
+ GO3orBwoHjTFdbzqhR+AzXENOIAJENStzKdjWqxGJc0LoXlk3SDnixxw6JM6cHQn8E2jkv2fO+f
+ Li/cFEwlrbp5fik5VmSakteqczl5CXLwEV+XQs21jT1Gg+B7634EnIfFbQMStZQee1tBUkuzeEp
+ Buu52Km521MJn1is6rnL4O7A0+DrsnTU/L0I0lx7oYdAKQAOYA8KHig2e3WIyRWpDeFcv6K6WGo
+ qgEGuqJ2Rcp0/kUm05Ve3Lgt2bv4Hpy3Mr/teiAp6NScSefeFKYVGFfjKgL9R1GNTUdRdiF8gM6
+ 6nfUvZR++D5E1Kk4680wkuFXJXFnO4m9scQ==
+X-Received: by 2002:a05:600c:8718:b0:4a4:de70:2ad4 with SMTP id
+ 5b1f17b1804b1-4a9670165d0mr112486005e9.22.1793266831802; 
+ Thu, 29 Oct 2026 02:40:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:8718:b0:4a4:de70:2ad4 with SMTP id
+ 5b1f17b1804b1-4a9670165d0mr112485535e9.22.1793266831442; 
+ Thu, 29 Oct 2026 02:40:31 -0700 (PDT)
 Received: from x1 ([151.41.153.165]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7fead817sm53056335e9.12.2026.10.29.02.39.58
+ ffacd0b85a97d-48e3eb8f387sm33225612f8f.4.2026.10.29.02.40.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Oct 2026 02:39:59 -0700 (PDT)
-Date: Thu, 29 Oct 2026 10:39:55 +0100
+ Thu, 29 Oct 2026 02:40:30 -0700 (PDT)
+Date: Thu, 29 Oct 2026 10:40:27 +0100
 From: Gustavo Romero <gromero@redhat.com>
 To: Eric Auger <eric.auger@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
@@ -94,16 +94,16 @@ Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  harshpb@linux.ibm.com, 
  amachhiw@linux.ibm.com, daniel.barboza@oss.qualcomm.com, milesg@linux.ibm.com, 
  farman@linux.ibm.com, cohuck@redhat.com, armbru@redhat.com, mbawa@redhat.com
-Subject: Re: [PATCH for-11.2 7/9] target/kvm: Pass an Error handle to
- kvm_arch_init_vcpu
-Message-ID: <xpjsfrvdijg6stiwqlzgbsstvhfgxvsokprnjpx4sdewjiinmx@c2aagqeccdzp>
+Subject: Re: [PATCH for-11.2 8/9] target/arm/kvm: Introduce
+ kvm_arm_vcpu_prepare_init_features helper
+Message-ID: <ks6g4723u4i4t2qgc6a3pzg5gbxws32bpzmztk5z2uw2derhzj@ojxkez4mqqqb>
 References: <20261029092307.281287-1-eric.auger@redhat.com>
- <20261029092307.281287-8-eric.auger@redhat.com>
+ <20261029092307.281287-9-eric.auger@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261029092307.281287-8-eric.auger@redhat.com>
+In-Reply-To: <20261029092307.281287-9-eric.auger@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=gromero@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -112,7 +112,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,422 +133,95 @@ X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 
 Hi Eric,
 
-On Thu, Oct 29, 2026 at 10:20:19AM +0100, Eric Auger wrote:
-> The 2 callers of kvm_arch_init_vcpu(), namely kvm_rebind_vcpus()
-> and kvm_init_vcpu() are passed an Error handle. So it is a pity
-> not using it in kvm_arch_init_vcpu(). Also, in the future, the
-> error handle could be passed to other functions called inside.
+On Thu, Oct 29, 2026 at 10:20:20AM +0100, Eric Auger wrote:
+> Factorize the code that initializes the kvm init features from the
+> cpu settings in a helper. Use it kvm_arch_init_vcpu(). Soon it will
+> be used by another function.
+> 
+> The only change in the code relates to the check of kvm_state. The
+> future caller won't have the VM created when calling the helper and
+> for this caller it is OK ignoring PSCI version setting.
 > 
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
->  include/system/kvm.h       |  2 +-
->  accel/kvm/kvm-all.c        | 15 +++++++--------
->  target/arm/kvm.c           | 26 +++++++++++++-------------
->  target/i386/kvm/kvm.c      | 22 ++++++++++++----------
->  target/loongarch/kvm/kvm.c | 27 +++++++++------------------
->  target/ppc/kvm.c           | 10 +++++++---
->  target/riscv/kvm/kvm-cpu.c |  6 +++++-
->  target/s390x/kvm/kvm.c     |  2 +-
->  8 files changed, 55 insertions(+), 55 deletions(-)
+>  target/arm/kvm.c | 50 ++++++++++++++++++++++++++++--------------------
+>  1 file changed, 29 insertions(+), 21 deletions(-)
 > 
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index d29624034c..26d55cc699 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -358,7 +358,7 @@ int kvm_arch_get_default_type(MachineState *ms);
->  int kvm_arch_init(MachineState *ms, KVMState *s);
->  
->  int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
-> -int kvm_arch_init_vcpu(CPUState *cpu);
-> +int kvm_arch_init_vcpu(CPUState *cpu, Error **errp);
->  int kvm_arch_destroy_vcpu(CPUState *cpu);
->  
->  #ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index db8fba53f3..ddc82f9775 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -504,11 +504,11 @@ static int kvm_rebind_vcpus(Error **errp)
->              }
->          }
->  
-> -        ret = kvm_arch_init_vcpu(cpu);
-> +        ret = kvm_arch_init_vcpu(cpu, errp);
->          if (ret < 0) {
-> -            error_setg_errno(errp, -ret,
-> -                             "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-> -                             vcpu_id);
-> +            error_prepend(errp,
-> +                          "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-> +                          vcpu_id);
->          }
->  
->          close(cpu->kvm_vcpu_stats_fd);
-> @@ -751,11 +751,10 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
->          }
->      }
->  
-> -    ret = kvm_arch_init_vcpu(cpu);
-> +    ret = kvm_arch_init_vcpu(cpu, errp);
->      if (ret < 0) {
-> -        error_setg_errno(errp, -ret,
-> -                         "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-> -                         kvm_arch_vcpu_id(cpu));
-> +        error_prepend(errp, "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
-> +                      kvm_arch_vcpu_id(cpu));
->      }
->      cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
->  
 > diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index d454346037..2d37c2bfb4 100644
+> index 2d37c2bfb4..1c5be9ecf4 100644
 > --- a/target/arm/kvm.c
 > +++ b/target/arm/kvm.c
-> @@ -2015,17 +2015,16 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+> @@ -2015,34 +2015,18 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
 >      return 0;
 >  }
 >  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+> -int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+> +/* Determine init features for this CPU */
+> +static void kvm_arm_vcpu_prepare_init_features(ARMCPU *cpu)
 >  {
->      int ret;
->      uint64_t mpidr;
->      ARMCPU *cpu = ARM_CPU(cs);
+> -    int ret;
+> -    uint64_t mpidr;
+> -    ARMCPU *cpu = ARM_CPU(cs);
+> +    CPUState *cs = CPU(cpu);
 >      CPUARMState *env = &cpu->env;
-> -    Error *local_err = NULL;
->      uint64_t psciver;
+> -    uint64_t psciver;
 >  
->      if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-> -        error_report("KVM is not supported for this guest CPU type");
-> +        error_setg(errp, "KVM is not supported for this guest CPU type");
->          return -EINVAL;
+> -    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
+> -        error_setg(errp, "KVM is not supported for this guest CPU type");
+> -        return -EINVAL;
+> -    }
+> -
+> -    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
+> -        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
+> -        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
+> -                         "with KVM is deprecated. Use the max or host CPU "
+> -                         "types instead.");
+> -    }
+> -
+> -    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
+> -
+> -    /* Determine init features for this CPU */
+>      memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
+> +
+>      if (cs->start_powered_off) {
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
 >      }
+> -    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 &&
+> +    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 && cs->kvm_state &&
+>          kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
+>          /*
+>           * Versions >= v0.2 are backward compatible with v0.2
+> @@ -2066,6 +2050,30 @@ int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+>      if (cpu->has_el2 && kvm_arm_el2_supported()) {
+>          cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>      }
+> +}
+> +
+> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
+> +{
+> +    int ret;
+> +    uint64_t mpidr;
+> +    ARMCPU *cpu = ARM_CPU(cs);
+> +    uint64_t psciver;
+> +
+> +    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
+> +        error_setg(errp, "KVM is not supported for this guest CPU type");
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A53 ||
+> +        cpu->kvm_target == QEMU_KVM_ARM_TARGET_CORTEX_A57) {
+> +        warn_report_once("Using the cortex-a53 and cortex-a57 CPU types "
+> +                         "with KVM is deprecated. Use the max or host CPU "
+> +                         "types instead.");
+> +    }
+> +
+> +    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
+> +
+> +    kvm_arm_vcpu_prepare_init_features(cpu);
 >  
-> @@ -2071,16 +2070,19 @@ int kvm_arch_init_vcpu(CPUState *cs)
 >      /* Do KVM_ARM_VCPU_INIT ioctl */
 >      ret = kvm_arm_vcpu_init(cpu);
->      if (ret) {
-> +        error_setg_errno(errp, -ret, "failed kvm_arm_vcpu_init");
->          return ret;
->      }
->  
->      if (cpu_isar_feature(aa64_sve, cpu)) {
->          ret = kvm_arm_sve_set_vls(cpu);
->          if (ret) {
-> +            error_setg_errno(errp, -ret, "failed kvm_arm_sve_set_vls");
->              return ret;
->          }
->          ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_SVE);
->          if (ret) {
-> +            error_setg_errno(errp, -ret, "failed kvm_arm_vcpu_finalize");
->              return ret;
->          }
->      }
-> @@ -2089,11 +2091,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          psciver = cpu->psci_version;
->          ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
->          if (ret) {
-> -            error_report("KVM in this kernel does not support PSCI version %d.%d",
-> -                         (int) PSCI_VERSION_MAJOR(psciver),
-> -                         (int) PSCI_VERSION_MINOR(psciver));
-> -            error_printf("Consider setting the kvm-psci-version property on the "
-> -                         "migration source.\n");
-> +            error_setg_errno(errp, -ret,
-> +                             "KVM in this kernel does not support PSCI version %d.%d",
-> +                             (int) PSCI_VERSION_MAJOR(psciver),
-> +                             (int) PSCI_VERSION_MINOR(psciver));
-> +            error_append_hint(errp, "Consider setting the kvm-psci-version property "
-> +                              "on the migration source.\n");
->              return ret;
->          }
->      }
-> @@ -2115,16 +2118,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
->       */
->      ret = kvm_get_one_reg(cs, ARM64_SYS_REG(ARM_CPU_ID_MPIDR), &mpidr);
->      if (ret) {
-> +        error_setg_errno(errp, -ret, "failed retrieving MPIDR value");
->          return ret;
->      }
->      SET_IDREG(&cpu->isar, MPIDR, mpidr);
->      cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
->  
-> -    ret = kvm_arm_init_cpreg_list(cpu, &local_err);
-> -    if (ret < 0) {
-> -        error_report_err(local_err);
-> -    }
-> -    return ret;
-> +    return kvm_arm_init_cpreg_list(cpu, errp);
->  }
->  
->  int kvm_arch_destroy_vcpu(CPUState *cs)
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index da922f72d7..474322b073 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2218,7 +2218,7 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
->      }
->  }
->  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
->  {
->      struct {
->          struct kvm_cpuid2 cpuid;
-> @@ -2240,12 +2240,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      int kvm_base = KVM_CPUID_SIGNATURE;
->      int max_nested_state_len;
->      int r;
-> -    Error *local_err = NULL;
->  
->      if (current_machine->cgs) {
->          r = x86_confidential_guest_check_features(
->                  X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
->          if (r < 0) {
-> +            error_setg(errp, "failed x86_confidential_guest_check_features (%d)", r);
->              return r;
->          }
->      }
-> @@ -2258,6 +2258,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->  
->      r = kvm_arch_set_tsc_khz(cs);
->      if (r < 0) {
-> +        error_setg(errp, "failed setting tsc_khz (%d)", r);
->          return r;
->      }
->  
-> @@ -2285,14 +2286,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
->       * can still proceed and check/expand Hyper-V enlightenments here so legacy
->       * behavior is preserved.
->       */
-> -    if (!kvm_hyperv_expand_features(cpu, &local_err)) {
-> -        error_report_err(local_err);
-> +    if (!kvm_hyperv_expand_features(cpu, errp)) {
->          return -ENOSYS;
->      }
->  
->      if (hyperv_enabled(cpu)) {
->          r = hyperv_init_vcpu(cpu);
->          if (r) {
-> +            error_setg_errno(errp, -r, "failed hyperv_init_vcpu");
->              return r;
->          }
->  
-> @@ -2371,6 +2372,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->  
->          r = kvm_xen_init_vcpu(cs);
->          if (r) {
-> +            error_setg_errno(errp, -r, "failed kvm_xen_init_vcpu");
->              return r;
->          }
->  
-> @@ -2419,12 +2421,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->  
->          ret = kvm_get_mce_cap_supported(cs->kvm_state, &mcg_cap, &banks);
->          if (ret < 0) {
-> -            fprintf(stderr, "kvm_get_mce_cap_supported: %s", strerror(-ret));
-> +            error_setg_errno(errp, -ret, "failed kvm_get_mce_cap_supported");
->              return ret;
->          }
->  
->          if (banks < (env->mcg_cap & MCG_CAP_BANKS_MASK)) {
-> -            error_report("kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
-> +            error_setg(errp, "kvm: Unsupported MCE bank count (QEMU = %d, KVM = %d)",
->                           (int)(env->mcg_cap & MCG_CAP_BANKS_MASK), banks);
->              return -ENOTSUP;
->          }
-> @@ -2432,7 +2434,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          unsupported_caps = env->mcg_cap & ~(mcg_cap | MCG_CAP_BANKS_MASK);
->          if (unsupported_caps) {
->              if (unsupported_caps & MCG_LMCE_P) {
-> -                error_report("kvm: LMCE not supported");
-> +                error_setg(errp, "kvm: LMCE not supported");
->                  return -ENOTSUP;
->              }
->              warn_report("Unsupported MCG_CAP bits: 0x%" PRIx64,
-> @@ -2442,7 +2444,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          env->mcg_cap &= mcg_cap | MCG_CAP_BANKS_MASK;
->          ret = kvm_vcpu_ioctl(cs, KVM_X86_SETUP_MCE, &env->mcg_cap);
->          if (ret < 0) {
-> -            fprintf(stderr, "KVM_X86_SETUP_MCE: %s", strerror(-ret));
-> +            error_setg_errno(errp, -ret, "failed KVM_X86_SETUP_MCE");
->              return ret;
->          }
->      }
-> @@ -2470,9 +2472,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
->              error_setg(&invtsc_mig_blocker,
->                         "State blocked by non-migratable CPU device"
->                         " (invtsc flag)");
-> -            r = migrate_add_blocker(&invtsc_mig_blocker, &local_err);
-> +            r = migrate_add_blocker(&invtsc_mig_blocker, errp);
->              if (r < 0) {
-> -                error_report_err(local_err);
->                  return r;
->              }
->          }
-> @@ -2501,6 +2502,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      cpuid_data.cpuid.padding = 0;
->      r = kvm_vcpu_ioctl(cs, KVM_SET_CPUID2, &cpuid_data);
->      if (r) {
-> +        error_setg_errno(errp, -r, "failed KVM_SET_CPUID2");
->          goto fail;
->      }
->      kvm_init_xsave(env);
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index 7ca95181a1..db39267375 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -1320,11 +1320,10 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->      return 0;
->  }
->  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
->  {
->      uint64_t val;
->      int ret;
-> -    Error *local_err = NULL;
->      LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->  
->      cpu->vmsentry = qemu_add_vm_change_state_handler(
-> @@ -1334,51 +1333,43 @@ int kvm_arch_init_vcpu(CPUState *cs)
->          brk_insn = val;
->      }
->  
-> -    ret = kvm_cpu_check_lsx(cs, &local_err);
-> +    ret = kvm_cpu_check_lsx(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_lasx(cs, &local_err);
-> +    ret = kvm_cpu_check_lasx(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_lbt(cs, &local_err);
-> +    ret = kvm_cpu_check_lbt(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_pmu(cs, &local_err);
-> +    ret = kvm_cpu_check_pmu(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_pv_features(cs, &local_err);
-> +    ret = kvm_cpu_check_pv_features(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_ptw(cs, &local_err);
-> +    ret = kvm_cpu_check_ptw(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_msgint(cs, &local_err);
-> +    ret = kvm_cpu_check_msgint(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> -    ret = kvm_cpu_check_misc_v1_1(cs, &local_err);
-> +    ret = kvm_cpu_check_misc_v1_1(cs, errp);
->      if (ret < 0) {
-> -        error_report_err(local_err);
->          return ret;
->      }
->  
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 8e89a6c665..5d72cbd9fc 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -484,7 +484,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->      return 0;
->  }
->  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
->  {
->      PowerPCCPU *cpu = POWERPC_CPU(cs);
->      CPUPPCState *cenv = &cpu->env;
-> @@ -493,9 +493,10 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      /* Synchronize sregs with kvm */
->      ret = kvm_arch_sync_sregs(cpu);
->      if (ret) {
-> +        error_setg_errno(errp, -ret, "Register sync failed"),
->          if (ret == -EINVAL) {
-> -            error_report("Register sync failed... If you're using kvm-hv.ko,"
-> -                         " only \"-cpu host\" is possible");
-> +            error_append_hint(errp, "If you're using kvm-hv.ko,"
-> +                              " only \"-cpu host\" is possible\n");
->          }
->          return ret;
->      }
-> @@ -504,6 +505,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      case POWERPC_MMU_BOOKE206:
->          /* This target supports access to KVM's guest TLB */
->          ret = kvm_booke206_tlb_init(cpu);
-> +        if (ret < 0) {
-> +            error_setg_errno(errp, -ret, "failed kvm_booke206_tlb_init"),
-> +        }
->          break;
->      case POWERPC_MMU_2_07:
->          if (!cap_htm && !kvmppc_is_pr(cs->kvm_state)) {
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 5a82a63b82..523b515f2a 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1605,7 +1605,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->      return 0;
->  }
->  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
->  {
->      int ret = 0;
->      RISCVCPU *cpu = RISCV_CPU(cs);
-> @@ -1615,6 +1615,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      if (!object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST)) {
->          ret = kvm_vcpu_set_machine_ids(cpu, cs);
->          if (ret != 0) {
-> +            error_setg_errno(errp, -ret, "failed setting machine id");
->              return ret;
->          }
->      }
-> @@ -1623,6 +1624,9 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      kvm_riscv_update_cpu_cfg_isa_ext(cpu, cs);
->  
->      ret = kvm_vcpu_enable_sbi_dbcn(cpu, cs);
-> +    if (ret < 0) {
-> +        error_setg_errno(errp, -ret, "failed kvm_vcpu_enable_sbi_dbcn");
-> +    }
->  
->      return ret;
->  }
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index dc67e84886..76dd1e67c0 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -403,7 +403,7 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->      return 0;
->  }
->  
-> -int kvm_arch_init_vcpu(CPUState *cs)
-> +int kvm_arch_init_vcpu(CPUState *cs, Error **errp)
->  {
->      unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
->      S390CPU *cpu = S390_CPU(cs);
 > -- 
 > 2.53.0
 > 
