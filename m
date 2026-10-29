@@ -1,151 +1,115 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA41606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E0A606A31D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=gOuAZZ2d;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=j4yEiNCo
+	dkim=pass (2048-bit key, unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cQPmwf+l
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMTcO-0004tt-34; Thu, 29 Oct 2026 13:08:48 -0400
+	id 1xMTet-0006AC-K9; Thu, 29 Oct 2026 13:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMTcM-0004th-8N
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:08:46 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1xMTeq-00069M-ND; Thu, 29 Oct 2026 13:11:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1xMTcJ-0007V1-LO
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:08:46 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGDXR03234256
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:08:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SUlklgUjY0gU2CiCR1hEpaRyBJvNSjdFmUUIyce7xxk=; b=gOuAZZ2d7DNcsQ1Y
- 3AYa/apaPWPMkhdmn0XCN5B69DIMNSn0xT/Wj0MvwlpB88YGh4bVImDuwNhw44+t
- zYwjM+hfL5rzfWAlSC16IExNCWkt8ZXaDRtWRjLWyEMMzNmYzKGByM3n+08B+f5f
- Lm9KOSODeawfZp6Ves8tdoY9NLQfCOWJ9tNc847PU50Ppn8dOfFc7ZmhcwPw0yrk
- 2wy9z3IRqHmRU7WfzsUexh9+6RS1XM6yc0dT0K/qP8qzpU5ejmJ4wJvN7yJajoXQ
- gzMihyme7V1BqjZvEkqPTPnlgMdvhT3grPTJqwsHX43QXCmz1DTShf6UduPS40lI
- bfxIsw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm31b21vm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:08:41 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-3662e7a9299so9154226eec.1
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793293721; x=1793898521; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SUlklgUjY0gU2CiCR1hEpaRyBJvNSjdFmUUIyce7xxk=;
- b=j4yEiNCo01QifrSo3Jy1kf2yneiZPaLHtmV7MRwxnI8k1ERDSrxgbQfNoHVzh6NOre
- ATXgYOAC8f2hlG6yiWi/4CPlXVS2MsZONlkXz/+UqGaE+UClIkXd914HoslmYD0nkf1y
- MnHWU2vYEx5PXo36glkgFFaHvb0PLVkBGU50D8FW4heBeKnj51JQO7IImEvYrGqrrnnm
- B0fGPlsQZNPE+6EJs6sVi1zJniaYW6XExt9zQv97KTbcUbYNEfr6eYr51W3MmQs6hzWb
- zedkf6Wi7Fvn57wcflsLl0Iq07TOYinvhqDoOaxWvz1Kgrk2U0AZT243Xje1BgTvCl0r
- 1E7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793293721; x=1793898521;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=SUlklgUjY0gU2CiCR1hEpaRyBJvNSjdFmUUIyce7xxk=;
- b=GsGi91fjeCeBMD2mACPSa1rkdbp7mzHtV/UK686ZolC/GBH6eKRSkzSXsEtQaEKnp8
- gFFwyUTgrur7Nkz/20JehjWZdhLX++64e1agfHexFGG52zaj4zbN9hvRGRCWM2fthiuO
- YYftl4l+IdYa5Akej+tGVV+STz5Yv8IGd5SfuU8hC0KXanrYYwTzzH+shCZi2Wx7q4qG
- jrHJYQANbdtV4fhzMYkcQ7jKlPYc4EO3Qjtp9ZzC8im4AToKCb6o/7EFo3/IWvBnCAe6
- 98RpVRYLzw9ytkthuQNjZ7SxrnEcQfYwGRbrXswmD4jAlNjexQCxfmEOmU7EoliliUhf
- IpTQ==
-X-Forwarded-Encrypted: i=1;
- AKwUvBzFkabTQ2Gs/EAhl1ET4j5CDq8SBxPoPKJLQi7bNO2g+ZbaS6Mqw/KrwHsCh9uWTW66LRfOH3UJ7EOj@nongnu.org
-X-Gm-Message-State: AFq9FYK+M+bgCwmojbUfaeJGw+plhN9HT105eGoOTH6fA7+2MlWRTV5u
- QixEDphAm66KKTTVpZExdj62iQJ6n+IsG14XKFy7j9sXg4v9XJt2vAhVIabL80WKPYc1UyVVcXG
- OcqcPNpvK0M56BGjM50ZUDqhfUYqOr39infOJ8QwTyyWA+9YiLWMfVzp8TQ==
-X-Gm-Gg: AYBFou01xZMbMpaIIdplW249xfy6QEoNmwrANQH2zzmCr1g/qSHgy1lYc7c2zrmCxnM
- Ov4f5AIxSfYpNGNIlthD9VsZU+czeecJdBgpm3zc6QHqThdDPkl2re0opVEeNVII4EXv7mwBq+J
- RyMW6TXu5mwegUB9JwUl9m4DNpAxyx/v9F42SF7vbEy+sZTvTMJGLD6Ukgb8I68e1wyadVx89y8
- QJznWsqHrETVjUAnqcwM1sJMPVvoYeTtUvzkmSbmqMnWmDeq8oeLt3Rzb7mjMduDg+ExhHnXljV
- 1trH+JQDt7rV5RboqpSdGZslYj9kZeqKuHqeHWrwUXxFukzgRvPCnN5Cddva7JmcHWVyFVUz799
- Sc56osfsRMpY2mhkaAHIBIK/dS7m26x7Qc3rMY9ipl6/cFqSZqU+Z7Z7joO/2DI+Y8aw/s3ht09
- eVkO23mWLmBVoolEztHHo0GI0J7J/1NEXLNRTZzdhvHOI=
-X-Received: by 2002:a05:7300:4353:b0:369:fc93:eda5 with SMTP id
- 5a478bee46e88-36a42434630mr2819eec.39.1793293720556; 
- Thu, 29 Oct 2026 10:08:40 -0700 (PDT)
-X-Received: by 2002:a05:7300:4353:b0:369:fc93:eda5 with SMTP id
- 5a478bee46e88-36a42434630mr2772eec.39.1793293719922; 
- Thu, 29 Oct 2026 10:08:39 -0700 (PDT)
-Received: from [192.168.1.199] (192-80-163-190.dyn.novuscom.net.
- [192.80.163.190]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-36a40ee6c18sm531526eec.1.2026.10.29.10.08.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 10:08:39 -0700 (PDT)
-Message-ID: <7757e99b-0338-4508-b36f-9460d4efdb2f@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 09:08:38 -0800
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1xMTei-0007ym-H7; Thu, 29 Oct 2026 13:11:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TGE7Ag3038808; Thu, 29 Oct 2026 17:11:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=WmbANlbXIPv3cmqyJ
+ nMkVPE81OBygJ2+kdu5qHzrr3w=; b=cQPmwf+l61WNCp9L3yCILPtY+AcXDl9Q7
+ YKFs9VesAJTOysW7205aDFnRgKFQ2XbNXVmFyS+YnWmd6q8zl8SHh5fQZSpW8QOy
+ NCGbg1EpYOet5EaUn9wyjfUXuUP6QRjKFmjauKAp4vy67uOnYslaaXr0rVOA6gk0
+ WtV+6g04UiDRhQI/fGrXXUWeOiT4AxoC/u4z4gdKJxICLjtnaWH2IjbQDaa9nuXr
+ sc6gDCBe/rnBMF1EcsgVewxCEOd8hcvSLPKdnUSViUPToGb4V6FP8gjsjaHiAiYQ
+ Qiz8POVsX9G2IhXukofnWJSNTqXstgfgeLjJbW4wyXzGuElszPcoQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4hgmbtbqa8-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:11:02 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 69TGJuok2213642; Thu, 29 Oct 2026 17:11:01 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4hk010s8w5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2026 17:11:01 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 69THB0Fa32637478
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Oct 2026 17:11:00 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E6DF358045;
+ Thu, 29 Oct 2026 17:10:59 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 611D058050;
+ Thu, 29 Oct 2026 17:10:58 +0000 (GMT)
+Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Oct 2026 17:10:58 +0000 (GMT)
+From: Saif Abrar <saif.abrar@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
+ fbarrat@linux.ibm.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ cohuck@redhat.com, pbonzini@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
+ jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: [PATCH v7 RESEND 3/9] pnv/phb5: Implement sticky reset logic in PHB5
+Date: Thu, 29 Oct 2026 12:10:41 -0500
+Message-ID: <20261029171047.3862430-4-saif.abrar@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20261029171047.3862430-1-saif.abrar@linux.ibm.com>
+References: <20261029171047.3862430-1-saif.abrar@linux.ibm.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] tests/docker/dockerfiles: add release.docker
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, peterx@redhat.com, 
- mjt@tls.msk.ru, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@oss.qualcomm.com>
-References: <20261029000853.15166-1-pierrick.bouvier@oss.qualcomm.com>
- <20261029000853.15166-2-pierrick.bouvier@oss.qualcomm.com>
- <87ld7gin6q.fsf@suse.de>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <87ld7gin6q.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2NyBTYWx0ZWRfXxNRwJZT0Qk3u
- Ash1K89bHASVl5GZ/lILxMu1nshq/WBOtvxm/fIt92wjQOKiEzH8gQX81KT+mCOVzgvZBwPwKbf
- pN+ImtHS+h0j/Se4A0MkqnaMOMM+n5g=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2NyBTYWx0ZWRfX8mmxCejG5ivW
- oLPFiXkUjtxLyLXW2AN0EucaYIYCO0dF7A8g3ihqW5QZi+pd8HZDz96Y1JNmzpUkKOH73PLszE3
- isMIYtRKqSFbfgz1I4NxuEnXf/m3crRo0j+HqnN503S+2+MGqetdcqTjTPeIc/jVH0iRTaFQWwc
- vaZ/DW67zDGqpxaf3xZLy2teyOe1sYcrNEc20fLWPkvpE2fPUBtApoZycWHb4WfXcXwV5ifDwOf
- fFRvT1lWRinzCGj2ouR3SiG/xTDhi+UwUEWmVN05JnT7Ox44SgYolMzcNFn1XjSoW483eFssIRj
- Iw9ukX5qyx2ZEaFwS3gTVnMkkquB4QMddLNM5kZIRZScekpcc0QWxZcLD8DfxnRDaexfrXschV7
- cF8U/Ju+6ZIe7pCKLTfArPPg5MJOHNunp0b3dZQuzNqEfrgblzWNWIGPJE0K3N5lUEt/wGocxS4
- Z24BG5oilwX71Lgej6Q==
-X-Authority-Analysis: v=2.4 cv=A8T5rKWG c=1 sm=1 tr=0 ts=6ae37d99 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=9852oil1ID9t5xBSyQ/BEA==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=DfNHnWVPAAAA:8 a=sRQYoUIEv7qwtnaMGc8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
- a=rjTVMONInIDnV1a_A2c_:22
-X-Proofpoint-GUID: zIXMGVGiyhfimznakR_QFh7RSrZOdjx2
-X-Proofpoint-ORIG-GUID: zIXMGVGiyhfimznakR_QFh7RSrZOdjx2
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2NSBTYWx0ZWRfX6K+3CoycZkjX
+ fMp8kZfkHvBnVd12VgfUvzgTno74m3HkfhEN/By6Mz3tyxfd7R3O0fR0uWsaUwm0XYz1C2t8fxx
+ Cw4pkVYNG+KeWC56kNwwqZk8woML9N4KdVRSHdjio/VMrcE3owLnFOUbxOsbzxZfNFgCYA5kh8t
+ D+v65yqkDxRnpeA0MBFyZB/Wfe1StN0DMKEC7KExGG+NcQuE+PvU0yqDCOJbOI030OMIxxF/xGY
+ QaXw7ooUB5aKignWUbqba9AFPtlHuyNozcRFWXQSCF9juY2g3HvYYqu4qa3QSKjWR4Yid8s9P2Z
+ XBg16AGZFJS/9qA9W+v70fqAJQYS5nlcD4EWSC7SAu5kk0cWaWPq7r8KuhwARXGeDF7oktn7cie
+ 8BTZca3aFejgXtIwYdcus6ng3cDgMSDfgo1zvv1XM6XFKODDKUlgH2ZFfM8GQ+0ZmulGkfqu/RK
+ HGQ1+qR9+d+dx2s26pQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2NSBTYWx0ZWRfX964lO2X5GUGO
+ ehzdrJq/jGt1uhHa0P/kTR9lyPZMiRV/80QVQMIWB2iWk8590UB/XjHS8m9mxhU8TdBQ2rglCTH
+ ABOrwImXOdAyq7U95m5p4NrB1sjUHm4=
+X-Proofpoint-ORIG-GUID: uRCQTSocRHir-T6ytnY2TLbzDMS-lEEm
+X-Proofpoint-GUID: Kx9pWRzrXXt4adE82IBkXZaT1i7zNkKR
+X-Authority-Analysis: v=2.4 cv=CeKdd7rl c=1 sm=1 tr=0 ts=6ae37e26 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=_OqsxZwj8_jexw0pSn4A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290067
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ spamscore=0 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
+ definitions=main-2610290065
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,120 +121,394 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-22.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 10/29/2026 6:41 AM, Fabiano Rosas wrote:
-> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
-> 
->> This new dockerfile allows to build a distroless image containing only
->> qemu stripped release binaries, their lib dependencies, and installed
->> artifacts (roms, keymap, ...). There is no shell, no python, nothing
->> else. This is achieved thanks to a multi-stage build, where we add qemu
->> binaries, artifacts and libraries in a new scratch image. Image has
->> the minimal size possible.
->>
->> This is based on Ubuntu, which has the advantage to have working
->> containers available down to 14.04. Debian old old stable have broken
->> apt sources for instance.
->>
->> This unique dockerfile works for all qemu versions >= 3.1.0 (2018).
->> We could build down to v0.12.0, but it would require more tweaks in the
->> dockerfile, so we keep it simple instead.
->>
->> To build the image, you need to provide a qemu and ubuntu version:
->> $ podman build -f release.Dockerfile --build-arg QEMU_VERSION=v11.1.0 --build-arg UBUNTU_VERSION=24.04 -t qemu/v11.1.0
->>
->> To run it, as there is no shell, and no defined entrypoint, you need to
->> choose the binary you want explicitely:
->> $ podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>  tests/docker/dockerfiles/release.docker | 48 +++++++++++++++++++++++++
->>  1 file changed, 48 insertions(+)
->>  create mode 100644 tests/docker/dockerfiles/release.docker
->>
->> diff --git a/tests/docker/dockerfiles/release.docker b/tests/docker/dockerfiles/release.docker
->> new file mode 100644
->> index 00000000000..ca6babde01e
->> --- /dev/null
->> +++ b/tests/docker/dockerfiles/release.docker
->> @@ -0,0 +1,48 @@
->> +ARG UBUNTU_VERSION="UBUNTU_VERSION_build_arg_must_be_set"
->> +
->> +FROM ubuntu:$UBUNTU_VERSION AS build
->> +
->> +# add deb-src for apt build-dep
->> +RUN sed -e 's/Types: deb/Types: deb deb-src/' -i /etc/apt/sources.list.d/* || true
->> +RUN sed -e 's/# deb-src/deb-src/' -i /etc/apt/sources.list
->> +# archive.canonical.com is not reachable anymore, and cause a long timeout
->> +RUN sed -e '/archive.canonical.com/d' -i /etc/apt/sources.list
->> +
->> +# build dependencies
->> +RUN apt update && \
->> +env DEBIAN_FRONTEND=noninteractive apt install -y git build-essential flex bison
->> +RUN apt update && \
->> +env DEBIAN_FRONTEND=noninteractive apt build-dep -y --arch-only qemu
->> +
->> +ARG QEMU_VERSION
->> +RUN echo "QEMU_VERSION=${QEMU_VERSION:?QEMU_VERSION build arg must be set}"
->> +ARG QEMU_REPO="https://gitlab.com/qemu-project/qemu.git"
->> +
->> +RUN cd /tmp && \
->> +mkdir qemu && cd qemu && git init && \
->> +git remote add origin "${QEMU_REPO}" && \
->> +git fetch origin "${QEMU_VERSION}" --depth 1 && \
->> +git checkout FETCH_HEAD && \
->> +./configure --prefix=/opt/qemu --disable-docs --disable-werror && \
->> +make install -j $(nproc) && \
->> +strip /opt/qemu/bin/* && \
-> 
-> For the record, here I included a 'cp <list of bins> /opt/qemu/bin' line
-> to make migration-test work from inside the container:
-> 
-> migration-test
-> sh
-> env
-> docker (installed as docker.io up there)
-> cat
->
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-You mean by mounting current folder in the container?
+Sticky bits retain their values on reset and are not overwritten with
+the reset value.
+Added sticky reset logic for all required registers,
+i.e. CFG core, PBL core, PHB error registers, PCIE stack registers and
+REGB error registers.
 
-I'm not against it, but I feel that if we go this way, it's just easier
-to say "let's use the full base image", since it will become "I need to
-run python, and X, and Y, and Z".
+Tested by writing all 1's to the reg PHB_PBL_ERR_INJECT.
+This will set the bits in the reg PHB_PBL_ERR_STATUS.
+Reset the PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+Verify that the sticky bits in the PHB_PBL_ERR_STATUS reg are still set.
 
-What is missing to just use the container as a binary, instead of having
-to mount anything inside it?
+Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
+---
+ hw/pci-host/pnv_phb4.c              | 114 +++++++++++++++++++++++++++-
+ hw/pci-host/pnv_phb5.c              |  19 +++--
+ include/hw/pci-host/pnv_phb4.h      |  17 +++++
+ include/hw/pci-host/pnv_phb4_regs.h |  13 +++-
+ include/hw/pci-host/pnv_phb5.h      |   7 +-
+ tests/qtest/pnv-phb-test.c          |  41 ++++++++++
+ 6 files changed, 196 insertions(+), 15 deletions(-)
 
->> +rm -rf /tmp/*
->> +
->> +# retrieve runtime dependencies (libs)
->> +RUN ldd /opt/qemu/bin/* | grep '=>' | sed -e 's/.*=>//' -e 's/(.*//' | sort -u > /opt/qemu/libs
->> +# store them in /deps/lib
->> +RUN mkdir -p /deps/lib && cp --preserve --dereference $(cat /opt/qemu/libs) /deps/lib
->> +# copy loader (with its original path)
->> +RUN cp --preserve --parents --dereference /lib*/ld-linux* /deps/
->> +
->> +################################################################################
->> +FROM scratch
->> +
->> +COPY --from=build /deps /
->> +# copy qemu and all associated artifacts (roms, ...)
->> +COPY --from=build /opt/qemu /usr
->> +
->> +# build with:
->> +# podman build -f release.docker --build-arg QEMU_VERSION=v11.1.0 --build-arg UBUNTU_VERSION=24.04 -t qemu/v11.1.0
->> +# run with:
->> +# podman run -it --rm qemu/v11.1.0 qemu-system-aarch64 --version
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 12a5834f61..f2edbf9212 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -504,9 +504,17 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+     }
+ }
+ 
++uint32_t get_exp_offset(PCIDevice *pdev)
++{
++    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(pdev);
++
++    return rpc->exp_offset;
++}
++
+ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+ {
+     uint8_t *conf = d->config;
++    uint32_t exp_offset = get_exp_offset(d);
+ 
+     pci_byte_test_and_set_mask(conf + PCI_IO_BASE,
+                                PCI_IO_RANGE_MASK & 0xff);
+@@ -519,14 +527,51 @@ void pnv_phb4_cfg_core_reset(PCIDevice *d)
+     pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
+     pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
+     pci_config_set_interrupt_pin(conf, 0);
++
++    /* Sticky reset */
++    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
++                                          PCI_EXP_LNKCTL2_TLS_16_0GT, 0xFEFFBF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_UERR,      0,    0x1FF030);
++    RC_CONFIG_STICKY_RESET(PHB_AER_UERR_MASK, 0,    0x1FF030);
++    RC_CONFIG_STICKY_RESET(PHB_AER_CERR,      0,    0x11C1);
++    RC_CONFIG_STICKY_RESET(PHB_AER_ECAP + PCI_ERR_CAP, (PCI_ERR_CAP_ECRC_CHKC
++                                               | PCI_ERR_CAP_ECRC_GENC), 0x15F);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_1,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_2,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_3,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_HLOG_4,    0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_AER_RERR,      0,    0x7F);
++    RC_CONFIG_STICKY_RESET(PHB_AER_ESID,      0,    0xFFFFFFFF);
++    RC_CONFIG_STICKY_RESET(PHB_DLF_STAT,      0,    0x807FFFFF);
+ }
+ 
++/* Apply sticky-mask to the reset-value and write to the reg-address */
++#define STICKY_RST(addr, rst_val, sticky_mask) (phb->regs[addr >> 3] = \
++            ((phb->regs[addr >> 3] & sticky_mask) | (rst_val & ~sticky_mask)))
++
+ static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
+ {
+-    /* Zero all PBL registers initially */
++    /*
++     * Zero all PBL registers initially,
++     * with sticky reset of certain registers.
++     */
+     for (int i = PHB_PBL_CONTROL ; i <= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
+-        phb->regs[i >> 3] = 0x0;
++        switch (i) {
++        case PHB_PBL_ERR_STATUS:
++            break;
++        case PHB_PBL_ERR1_STATUS:
++        case PHB_PBL_ERR_LOG_0:
++        case PHB_PBL_ERR_LOG_1:
++        case PHB_PBL_ERR_STATUS_MASK:
++        case PHB_PBL_ERR1_STATUS_MASK:
++            STICKY_RST(i, 0, PPC_BITMASK(0, 63));
++            break;
++        default:
++            phb->regs[i >> 3] = 0x0;
++        }
+     }
++    STICKY_RST(PHB_PBL_ERR_STATUS, 0, \
++            (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
+ 
+     /* Set PHB4 specific register values */
+     phb->regs[PHB_PBL_CONTROL       >> 3] = 0xC00000000000000;
+@@ -665,6 +710,17 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         }
+         break;
+ 
++    /*
++     * Writing bits to a 1 in this register will inject the error corresponding
++     * to the bit that is written. The bits will automatically clear to 0 after
++     * the error is injected. The corresponding bit in the Error Status Reg
++     * should also be set automatically when the error occurs.
++     */
++    case PHB_PBL_ERR_INJECT:
++        phb->regs[PHB_PBL_ERR_STATUS >> 3] = phb->regs[off >> 3];
++        phb->regs[off >> 3] = 0;
++        break;
++
+     /* Silent simple writes */
+     case PHB_ASN_CMPM:
+     case PHB_CONFIG_ADDRESS:
+@@ -1590,11 +1646,65 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+     .get_address_space = pnv_phb4_dma_iommu,
+ };
+ 
++static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
++    STICKY_RST(PHB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_TXE_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_TXE_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_ARB_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_ARB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_MRG_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_MRG_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++
++    STICKY_RST(PHB_RXE_TCE_ERR_STATUS,       0, PPC_BITMASK(0, 35));
++    STICKY_RST(PHB_RXE_TCE_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_RXE_TCE_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++}
++
++static void pnv_phb4_pcie_stack_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_PCIE_CRESET, 0xE000000000000000, \
++                        (PHB_PCIE_CRESET_PERST_N | PHB_PCIE_CRESET_REFCLK_N));
++    STICKY_RST(PHB_PCIE_DLP_ERRLOG1,             0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_PCIE_DLP_ERRLOG2,             0, PPC_BITMASK(0, 31));
++    STICKY_RST(PHB_PCIE_DLP_ERR_STATUS,          0, PPC_BITMASK(0, 15));
++}
++
++static void pnv_phb4_regb_err_reg_reset(PnvPHB4 *phb)
++{
++    STICKY_RST(PHB_REGB_ERR_STATUS,       0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR1_STATUS,      0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_LOG_0,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_LOG_1,        0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR_STATUS_MASK,  0, PPC_BITMASK(0, 63));
++    STICKY_RST(PHB_REGB_ERR1_STATUS_MASK, 0, PPC_BITMASK(0, 63));
++}
++
+ static void pnv_phb4_reset(Object *obj, ResetType type)
+ {
+     PnvPHB4 *phb = PNV_PHB4(obj);
+ 
+     pnv_phb4_pbl_core_reset(phb);
++    pnv_phb4_err_reg_reset(phb);
++    pnv_phb4_pcie_stack_reg_reset(phb);
++    pnv_phb4_regb_err_reg_reset(phb);
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+diff --git a/hw/pci-host/pnv_phb5.c b/hw/pci-host/pnv_phb5.c
+index decfd2ba68..4906a82c6f 100644
+--- a/hw/pci-host/pnv_phb5.c
++++ b/hw/pci-host/pnv_phb5.c
+@@ -25,16 +25,6 @@
+ #include "trace.h"
+ #include "system/reset.h"
+ 
+-/*
+- * Get the PCI-E capability offset from the root-port
+- */
+-static uint32_t get_exp_offset(PCIDevice *pdev)
+-{
+-    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(pdev);
+-
+-    return rpc->exp_offset;
+-}
+-
+ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+ {
+     uint8_t *conf = d->config;
+@@ -81,6 +71,15 @@ void pnv_phb5_cfg_core_reset(PCIDevice *d)
+     pci_set_long(conf + P16_ECAP, 0x22410026);
+     pci_set_long(conf + P32_ECAP, 0x1002A);
+     pci_set_long(conf + P32_CAP,  0x103);
++
++    /* Sticky reset */
++    RC_CONFIG_STICKY_RESET(exp_offset + PCI_EXP_LNKCTL2,
++                                          PCI_EXP_LNKCTL2_TLS_32_0GT, 0xFEFFBF);
++    RC_CONFIG_STICKY_RESET(P16_STAT,          0,    0x1F);
++    RC_CONFIG_STICKY_RESET(P16_LDPM,          0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P16_FRDPM,         0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P16_SRDPM,         0,    0xFFFF);
++    RC_CONFIG_STICKY_RESET(P32_CTL,           0,    0x3);
+ }
+ 
+ static void pnv_phb5_pbl_core_reset(PnvPHB4 *phb)
+diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+index 0d558f0c55..95ba26db53 100644
+--- a/include/hw/pci-host/pnv_phb4.h
++++ b/include/hw/pci-host/pnv_phb4.h
+@@ -215,5 +215,22 @@ struct PnvPhb4PecClass {
+     const uint32_t *num_phbs;
+ };
+ 
++/*
++ * Get the PCI-E capability offset from the root-port
++ */
++uint32_t get_exp_offset(PCIDevice *pdev);
++
++/*
++ * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
++ * RC-config space values and masks are LE.
++ * Method pnv_phb4_rc_config_read() returns BE, hence convert to LE.
++ * Compute new value in LE domain.
++ * New value computation using sticky-mask is in LE.
++ * Convert the computed value from LE to BE before writing back.
++ */
++#define RC_CONFIG_STICKY_RESET(a, v, s) \
++    (pci_set_word(conf + (a), be16_to_cpu( \
++                     (be16_to_cpu(pci_get_word(conf + (a))) & (s)) | \
++                     ((v) & ~(s)))))
+ 
+ #endif /* PCI_HOST_PNV_PHB4_H */
+diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+index d756b6bb4f..59329068d3 100644
+--- a/include/hw/pci-host/pnv_phb4_regs.h
++++ b/include/hw/pci-host/pnv_phb4_regs.h
+@@ -344,13 +344,23 @@
+ #define   PHB_RC_CONFIG_SIZE                    0x800
+ 
+ #define PHB_AER_ECAP                            0x100
++#define PHB_AER_UERR                            0x104
++#define PHB_AER_UERR_MASK                       0x108
++#define PHB_AER_CERR                            0x110
+ #define PHB_AER_CAPCTRL                         0x118
++#define PHB_AER_HLOG_1                          0x11C
++#define PHB_AER_HLOG_2                          0x120
++#define PHB_AER_HLOG_3                          0x124
++#define PHB_AER_HLOG_4                          0x128
++#define PHB_AER_RERR                            0x130
++#define PHB_AER_ESID                            0x134
+ #define PHB_SEC_ECAP                            0x148
+ #define PHB_LMR_ECAP                            0x1A0
+ #define PHB_LMR_CTLSTA_2                        0x1AC
+ #define PHB_LMR_CTLSTA_16                       0x1E4
+ #define PHB_DLF_ECAP                            0x1E8
+ #define PHB_DLF_CAP                             0x1EC
++#define PHB_DLF_STAT                            0x1F0
+ 
+ /* PHB4 REGB registers */
+ 
+@@ -385,8 +395,7 @@
+ #define   PHB_PCIE_CRESET_PBL           PPC_BIT(2)
+ #define   PHB_PCIE_CRESET_PERST_N       PPC_BIT(3)
+ #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+-
+-
++#define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+ #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+ #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
+ 
+diff --git a/include/hw/pci-host/pnv_phb5.h b/include/hw/pci-host/pnv_phb5.h
+index a1d0b4d2b0..d76846068a 100644
+--- a/include/hw/pci-host/pnv_phb5.h
++++ b/include/hw/pci-host/pnv_phb5.h
+@@ -34,9 +34,14 @@ void pnv_phb5_cfg_core_reset(PCIDevice *d);
+ 
+ /* New registers in PHB5 from PHB4 */
+ #define P16_ECAP                                0x1F4
++#define P16_STAT                                0x200
++#define P16_LDPM                                0x204
++#define P16_FRDPM                               0x208
++#define P16_SRDPM                               0x20C
+ #define P32_ECAP                                0x224
+ #define P32_CAP                                 0x228
+-
++#define P32_CTL                                 0x22C
++#define P32_STAT                                0x230
+ #define PHB_PCIE_PHY_RXEQ_STAT_G3_00_03         0x1B40
+ #define PHB_PCIE_PHY_RXEQ_STAT_G5_12_15         0x1B98
+ 
+diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
+index 762046338b..7ceb08aff4 100644
+--- a/tests/qtest/pnv-phb-test.c
++++ b/tests/qtest/pnv-phb-test.c
+@@ -24,6 +24,19 @@
+ /* SCOM to PCBA address conversion */
+ #define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
+ 
++/*
++ * Indirect XSCOM write:
++ * - Write 'Indirect Address Register' with register-offset to write.
++ * - Write 'Indirect Data Register' with the value.
++ */
++static void pnv_phb_xscom_write(QTestState *qts, const PnvChip *chip,
++        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
++        uint64_t reg, uint64_t val)
++{
++    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_addr), reg);
++    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_data), val);
++}
++
+ /*
+  * Indirect XSCOM read::
+  * - Write 'Indirect Address Register' with register-offset to read.
+@@ -39,6 +52,11 @@ static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
+                                                               indirect_data)));
+ }
+ 
++#define PHB5_XSCOM_WRITE(a, v) pnv_phb_xscom_write(qts, \
++                                   &pnv_chips[PNV_P10_CHIP_INDEX], PHB5_XSCOM, \
++                                   PHB_SCOM_HV_IND_ADDR, PHB_SCOM_HV_IND_DATA, \
++                                   PPC_BIT(0) | (a), (v))
++
+ #define PHB5_XSCOM_READ(a) pnv_phb_xscom_read(qts, \
+                                    &pnv_chips[PNV_P10_CHIP_INDEX], PHB5_XSCOM, \
+                                    PHB_SCOM_HV_IND_ADDR, PHB_SCOM_HV_IND_DATA, \
+@@ -50,6 +68,26 @@ static void phb5_reset_test(QTestState *qts)
+     g_assert_cmpuint(PHB5_XSCOM_READ(PHB_PBL_CONTROL), ==, 0xC009000000000000);
+ }
+ 
++/* Check sticky-reset */
++static void phb5_sticky_rst_test(QTestState *qts)
++{
++    uint64_t val;
++
++    /*
++     * Sticky reset test of PHB_PBL_ERR_STATUS.
++     *
++     * Write all 1's to reg PHB_PBL_ERR_INJECT.
++     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
++     *
++     * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
++     * Verify the sticky bits are still set.
++     */
++    PHB5_XSCOM_WRITE(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
++    PHB5_XSCOM_WRITE(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
++    val = PHB5_XSCOM_READ(PHB_PBL_ERR_STATUS);
++    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
++}
++
+ static void phb5_tests(void)
+ {
+     QTestState *qts = NULL;
+@@ -59,6 +97,9 @@ static void phb5_tests(void)
+     /* Check reset value of a register */
+     phb5_reset_test(qts);
+ 
++    /* Check sticky reset of a register */
++    phb5_sticky_rst_test(qts);
++
+     qtest_quit(qts);
+ }
+ 
+-- 
+2.52.0
 
 
