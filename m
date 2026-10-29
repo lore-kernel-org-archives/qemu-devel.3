@@ -1,33 +1,33 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23AB606A31D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7206606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMJ0G-0007DP-Vh; Thu, 29 Oct 2026 01:48:45 -0400
+	id 1xMJ0H-0007Eh-Gr; Thu, 29 Oct 2026 01:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xMIzm-00073J-AW; Thu, 29 Oct 2026 01:48:14 -0400
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ id 1xMIzl-00073H-SO; Thu, 29 Oct 2026 01:48:14 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gong.shuai@sanechips.com.cn>)
- id 1xMIzh-0000eN-GP; Thu, 29 Oct 2026 01:48:14 -0400
+ id 1xMIzh-0000eV-Tq; Thu, 29 Oct 2026 01:48:13 -0400
 Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4jFYDM5sZ9z5B14p;
- Thu, 29 Oct 2026 13:48:03 +0800 (CST)
-Received: from szxl2zmapp05.zte.com.cn ([10.1.32.37])
- by mse-fl1.zte.com.cn with SMTP id 69T5lvgl079303;
- Thu, 29 Oct 2026 13:47:57 +0800 (+08)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4jFYDR174mz8Xrkn;
+ Thu, 29 Oct 2026 13:48:07 +0800 (CST)
+Received: from szxl2zmapp06.zte.com.cn ([10.1.32.108])
+ by mse-fl1.zte.com.cn with SMTP id 69T5lxsu079346;
+ Thu, 29 Oct 2026 13:47:59 +0800 (+08)
  (envelope-from gong.shuai@sanechips.com.cn)
 Received: from ubuntu-35-gs (unknown [10.230.214.35])
- by smtp (Zmail) with SMTP; Thu, 29 Oct 2026 13:47:59 +0800
-X-Zmail-TransId: 3e816ae2de0e027-e63bb
+ by smtp (Zmail) with SMTP; Thu, 29 Oct 2026 13:48:00 +0800
+X-Zmail-TransId: 3e816ae2de10027-e63e9
 X-Zmail-LocalSMTP: 1
 X-Zmail-RealSender: gong.shuai@sanechips.com.cn
 From: Gong Shuai <gong.shuai@sanechips.com.cn>
@@ -42,10 +42,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Cornelia Huck <cohuck@redhat.com>, Wu Fei <wu.fei9@sanechips.com.cn>,
  Qingye Zhao <zhao.qingye@sanechips.com.cn>,
  Gong Shuai <gong.shuai@sanechips.com.cn>, Gong Shuai <gsh517025@gmail.com>
-Subject: [RFC PATCH v2 11/14] hw/riscv/riscv-iommu-accel: Add nested vDC
- install/uninstall support
-Date: Thu, 29 Oct 2026 13:47:48 +0800
-Message-ID: <20261029054751.563493-12-gong.shuai@sanechips.com.cn>
+Subject: [RFC PATCH v2 14/14] hw/riscv/riscv-iommu-accel: Add accel property
+ for iommu device
+Date: Thu, 29 Oct 2026 13:47:51 +0800
+Message-ID: <20261029054751.563493-15-gong.shuai@sanechips.com.cn>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20261029054751.563493-1-gong.shuai@sanechips.com.cn>
 References: <20261029054751.563493-1-gong.shuai@sanechips.com.cn>
@@ -53,20 +53,20 @@ X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 X-ZMAIL-USEORIGINALEMLTOOUTBOUND: 1
 Content-Transfer-Encoding: 8bit
-X-MAIL: mse-fl1.zte.com.cn 69T5lvgl079303
+X-MAIL: mse-fl1.zte.com.cn 69T5lxsu079346
 X-TLS: YES
 X-ENVELOPE-SENDER: gong.shuai@sanechips.com.cn
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 29 Oct 2026 13:48:03 +0800
+X-SOURCE-IP: 10.5.228.132 unknown Thu, 29 Oct 2026 13:48:07 +0800
 X-CLEAN: YES
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6AE2DE13.003/4jFYDM5sZ9z5B14p
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=gong.shuai@sanechips.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Fangmail-MID-QID: 6AE2DE17.000/4jFYDR174mz8Xrkn
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=gong.shuai@sanechips.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,379 +86,129 @@ X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-A device behind an accelerated IOMMU must have a HWPT matching its
-guest device context, bypass, abort, or translate. The bypass and
-abort proxy HWPTs are pre-allocated; a translate HWPT needs a
-vDEVICE object first, which provides the virtual-to-physical devid
-mapping required for invalidations and event reporting.
+From: Wu Fei <wu.fei9@sanechips.com.cn>
 
-When the guest issues IODIR.INVAL_DDT, invalidate the context cache
-and re-install the HWPT matching the current DC. The DC is resolved
-straight from guest memory via riscv_iommu_ctx_fetch(), so a freshly
-written context always takes effect; a missing or invalid DC aborts
-the device's DMA. The translate HWPT is released when the device is
-detached.
+Add an "accel" property to enable the RISC-V IOMMU accelerator
+mode, following the ARM SMMUv3 accel device.
 
-This follows the approach of the ARM SMMUv3.
+Migration is not supported in accel mode, as the host-side vIOMMU
+and HWPT state cannot be migrated; a migration blocker is
+registered.
 
-Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 Signed-off-by: Wu Fei <wu.fei9@sanechips.com.cn>
+Signed-off-by: Gong Shuai <gong.shuai@sanechips.com.cn>
 ---
- hw/riscv/riscv-iommu-accel.c | 189 +++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu-accel.h |  18 ++++
- hw/riscv/riscv-iommu.c       |  34 ++++++-
- hw/riscv/riscv-iommu.h       |   3 +
- hw/riscv/trace-events        |   2 +
- 5 files changed, 241 insertions(+), 5 deletions(-)
+ hw/riscv/riscv-iommu.c | 57 ++++++++++++++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu.h |  1 +
+ 2 files changed, 58 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu-accel.c b/hw/riscv/riscv-iommu-accel.c
-index 7b8dee5090..f6cb2f77df 100644
---- a/hw/riscv/riscv-iommu-accel.c
-+++ b/hw/riscv/riscv-iommu-accel.c
-@@ -276,6 +276,7 @@ static void riscv_iommu_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-     HostIOMMUDeviceIOMMUFD *idev;
-     RISCVIOMMUAccelDevice *accel_dev;
-     RISCVIOMMUAccelState *accel;
-+    IOMMUFDVdev *vdev;
-     RISCVIOMMUSpace *as;
- 
-     as = riscv_iommu_get_space(s, bus, devfn);
-@@ -293,6 +294,20 @@ static void riscv_iommu_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-                      "0x%x", idev->devid);
-     }
- 
-+    if (accel_dev->s1_hwpt) {
-+        iommufd_backend_free_id(accel_dev->idev->iommufd,
-+                                accel_dev->s1_hwpt->hwpt_id);
-+        g_free(accel_dev->s1_hwpt);
-+        accel_dev->s1_hwpt = NULL;
-+    }
-+
-+    vdev = accel_dev->vdev;
-+    if (vdev) {
-+        iommufd_backend_free_id(accel->viommu->iommufd, vdev->vdevice_id);
-+        g_free(vdev);
-+        accel_dev->vdev = NULL;
-+    }
-+
-     accel_dev->idev = NULL;
-     accel_dev->accel = NULL;
-     QLIST_REMOVE(accel_dev, next);
-@@ -307,6 +322,180 @@ static void riscv_iommu_accel_unset_iommu_device(PCIBus *bus, void *opaque,
-     }
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 7fa6490888..4926a361f5 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -23,6 +23,7 @@
+ #include "hw/pci/pci_device.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "migration/blocker.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/timer.h"
+@@ -2731,12 +2732,63 @@ static void riscv_iommu_instance_finalize(Object *obj)
+     qemu_mutex_destroy(&s->iot_lock);
  }
  
-+static bool riscv_iommu_accel_alloc_vdev(RISCVIOMMUAccelDevice *accel_dev,
-+                                         int devid, Error **errp)
++static bool riscv_iommu_validate_property(RISCVIOMMUState *s, Error **errp)
 +{
-+    RISCVIOMMUAccelState *accel = accel_dev->accel;
-+    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-+    IOMMUFDVdev *vdev = accel_dev->vdev;
-+    uint32_t vdevice_id;
++#ifndef CONFIG_RISCV_IOMMU_ACCEL
++    if (s->accel) {
++        error_setg(errp, "accel=on support not compiled in");
++        return false;
++    }
++#endif
 +
-+    if (!idev || vdev) {
++    if (!s->accel) {
 +        return true;
 +    }
 +
-+    if (!iommufd_backend_alloc_vdev(idev->iommufd, idev->devid,
-+                                    accel->viommu->viommu_id, devid,
-+                                    &vdevice_id, errp)) {
++    if (!s->enable_s_stage) {
++        error_setg(errp,
++                   "Only stage-1 is supported for RISC-V IOMMU with accel=on");
 +        return false;
 +    }
 +
-+    vdev = g_new(IOMMUFDVdev, 1);
-+    vdev->vdevice_id = vdevice_id;
-+    vdev->virt_id = devid;
-+    accel_dev->vdev = vdev;
 +    return true;
 +}
 +
-+static RISCVIOMMUS1Hwpt *
-+riscv_iommu_accel_dev_alloc_translate(RISCVIOMMUAccelDevice *accel_dev,
-+                                      RISCVIOMMUContext *ctx, Error **errp)
-+{
-+    HostIOMMUDeviceIOMMUFD *idev = accel_dev->idev;
-+    RISCVIOMMUAccelState *accel = accel_dev->accel;
-+    struct iommu_hwpt_riscv nested_data = {
-+        .dc[0] = ctx->tc,
-+        .dc[1] = ctx->gatp,
-+        .dc[2] = ctx->ta,
-+        .dc[3] = ctx->satp,
-+    };
-+    uint32_t hwpt_id = 0, flags = 0;
-+    RISCVIOMMUS1Hwpt *s1_hwpt;
-+
-+    if (!iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid,
-+                                    accel->viommu->viommu_id, flags,
-+                                    IOMMU_HWPT_DATA_RISCV_S1,
-+                                    sizeof(nested_data), &nested_data,
-+                                    &hwpt_id, errp)) {
-+        return NULL;
-+    }
-+
-+    s1_hwpt = g_new0(RISCVIOMMUS1Hwpt, 1);
-+    s1_hwpt->hwpt_id = hwpt_id;
-+    trace_riscv_iommu_accel_translate_dc(accel_dev->vdev->virt_id, hwpt_id,
-+                                         ctx->tc, ctx->satp);
-+    return s1_hwpt;
-+}
-+
-+bool riscv_iommu_accel_install_dc(RISCVIOMMUState *s, int devid)
-+{
-+    RISCVIOMMUAccelState *accel = s->accel_state;
-+    RISCVIOMMUAccelDevice *accel_dev;
-+    HostIOMMUDeviceIOMMUFD *idev;
-+    uint32_t hwpt_id = 0;
-+    RISCVIOMMUS1Hwpt *s1_hwpt = NULL;
-+    const char *type;
-+    RISCVIOMMUContext ctx;
-+    RISCVIOMMUSpace *as;
-+    Error *local_err = NULL;
-+    Error **errp = &local_err;
-+
-+    /*
-+     * Nothing to install when accelerated mode is inactive, or when no
-+     * vIOMMU has been allocated yet.
-+     */
-+    if (!accel || !accel->viommu) {
-+        return true;
-+    }
-+
-+    as = riscv_iommu_get_space_from_devid(s, devid);
-+    if (!as) {
-+        return true;
-+    }
-+
-+    accel_dev = container_of(as, RISCVIOMMUAccelDevice, as);
-+    if (!accel_dev->accel) {
-+        return true;
-+    }
-+
-+    idev = accel_dev->idev;
-+    if (!riscv_iommu_accel_alloc_vdev(accel_dev, devid, errp)) {
-+        goto err;
-+    }
-+
-+    /*
-+     * Resolve the DC straight from guest memory so INVAL_DDT sees the
-+     * freshly written context. Abort the device's DMA if the DC is
-+     * missing or invalid.
-+     *
-+     * The vdev stays attached even if HWPT alloc/attach fails, since the
-+     * Guest-Host DEVID mapping remains valid.
-+     */
-+    if (riscv_iommu_ctx_fetch(s, devid, 0, &ctx)) {
-+        /* DC missing or invalid, abort all device DMA */
-+        hwpt_id = accel->abort_hwpt_id;
-+    } else if (get_field(ctx.satp, RISCV_IOMMU_DC_FSC_MODE) ==
-+               RISCV_IOMMU_DC_FSC_MODE_BARE) {
-+        hwpt_id = accel->bypass_hwpt_id;
-+    } else {
-+        s1_hwpt = riscv_iommu_accel_dev_alloc_translate(accel_dev, &ctx, errp);
-+        if (!s1_hwpt) {
-+            goto err;
-+        }
-+        hwpt_id = s1_hwpt->hwpt_id;
-+    }
-+
-+    if (!hwpt_id) {
-+        error_setg(errp, "Invalid DC for device 0x%x", devid);
-+        goto err;
-+    }
-+
-+    if (!host_iommu_device_iommufd_attach_hwpt(idev, IOMMU_NO_PASID, hwpt_id,
-+                                               errp)) {
-+        if (s1_hwpt) {
-+            iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
-+            g_free(s1_hwpt);
-+        }
-+        error_append_hint(errp, "fail to attach hwpt for device 0x%x", devid);
-+        goto err;
-+    }
-+
-+    /* Free the previous s1_hwpt */
-+    if (accel_dev->s1_hwpt) {
-+        iommufd_backend_free_id(idev->iommufd, accel_dev->s1_hwpt->hwpt_id);
-+        g_free(accel_dev->s1_hwpt);
-+    }
-+
-+    accel_dev->s1_hwpt = s1_hwpt;
-+    if (hwpt_id == accel->abort_hwpt_id) {
-+        type = "abort";
-+    } else if (hwpt_id == accel->bypass_hwpt_id) {
-+        type = "bypass";
-+    } else {
-+        type = "translate";
-+    }
-+
-+    trace_riscv_iommu_accel_install_dc(devid, type, hwpt_id);
-+    return true;
-+
-+err:
-+    if (local_err) {
-+        error_report_err(local_err);
-+    }
-+    return false;
-+}
-+
-+bool riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s)
-+{
-+    RISCVIOMMUAccelState *accel = s->accel_state;
-+    RISCVIOMMUAccelDevice *accel_dev;
-+    bool all_ok = true;
-+
-+    if (!accel || !accel->viommu) {
-+        return true;
-+    }
-+
-+    QLIST_FOREACH(accel_dev, &accel->device_list, next) {
-+        uint32_t devid = riscv_iommu_space_devid(&accel_dev->as);
-+        if (!riscv_iommu_accel_install_dc(s, devid)) {
-+            error_report("Device 0x%x: Failed to install DC", devid);
-+            all_ok = false;
-+        }
-+    }
-+
-+    return all_ok;
-+}
-+
- static const PCIIOMMUOps riscv_iommu_accel_ops = {
-     .supports_address_space = riscv_iommu_accel_supports_as,
-     .get_address_space = riscv_iommu_accel_find_as,
-diff --git a/hw/riscv/riscv-iommu-accel.h b/hw/riscv/riscv-iommu-accel.h
-index 49d022817c..85a1ab6d42 100644
---- a/hw/riscv/riscv-iommu-accel.h
-+++ b/hw/riscv/riscv-iommu-accel.h
-@@ -25,19 +25,37 @@ typedef struct RISCVIOMMUAccelState {
-     QLIST_HEAD(, RISCVIOMMUAccelDevice) device_list;
- } RISCVIOMMUAccelState;
- 
-+typedef struct RISCVIOMMUS1Hwpt {
-+    uint32_t hwpt_id;
-+} RISCVIOMMUS1Hwpt;
-+
- typedef struct RISCVIOMMUAccelDevice {
-     RISCVIOMMUSpace as;
-     HostIOMMUDeviceIOMMUFD *idev;
-+    RISCVIOMMUS1Hwpt *s1_hwpt;
-+    IOMMUFDVdev *vdev;
-     QLIST_ENTRY(RISCVIOMMUAccelDevice) next;
-     RISCVIOMMUAccelState *accel;
- } RISCVIOMMUAccelDevice;
- 
- #ifdef CONFIG_RISCV_IOMMU_ACCEL
- void riscv_iommu_accel_init(RISCVIOMMUState *s);
-+bool riscv_iommu_accel_install_dc(RISCVIOMMUState *s, int devid);
-+bool riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s);
- #else
- static inline void riscv_iommu_accel_init(RISCVIOMMUState *s)
+ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
  {
- }
-+static inline bool
-+riscv_iommu_accel_install_dc(RISCVIOMMUState *s, int devid)
-+{
-+    return true;
-+}
-+static inline bool
-+riscv_iommu_accel_install_dc_all(RISCVIOMMUState *s)
-+{
-+    return true;
-+}
- #endif
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
  
- #endif /* HW_RISCV_RISCV_IOMMU_ACCEL_H */
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index fbc7f72cb6..fa751d566f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -65,7 +65,7 @@ struct RISCVIOMMUEntry {
- /* IOMMU index for transactions without process_id specified. */
- #define RISCV_IOMMU_NOPROCID 0
- 
--static uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
-+uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
- {
-     uint32_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
- 
-@@ -1555,6 +1555,19 @@ RISCVIOMMUSpace *riscv_iommu_get_space(RISCVIOMMUState *s, PCIBus *bus, int devf
-     return as;
- }
- 
-+RISCVIOMMUSpace *riscv_iommu_get_space_from_devid(RISCVIOMMUState *s,
-+                                                  uint32_t devid)
-+{
-+    RISCVIOMMUSpace *as;
-+    QLIST_FOREACH(as, &s->spaces, list) {
-+        if (riscv_iommu_space_devid(as) == devid) {
-+            break;
-+        }
++    if (!riscv_iommu_validate_property(s, errp)) {
++        return;
 +    }
 +
-+    return as;
-+}
-+
- /* Find or allocate address space for a given device */
- AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus, int devfn)
+     if (s->accel) {
+         riscv_iommu_accel_init(s);
++        /*
++        * With accel=on, MSI remapping is done by the host IOMMU. Disable
++        * the emulated MSI capability so the guest's MSI message address
++        * is a plain GPA translated on the host side; the guest then sees
++        * no MSI capability bits and uses the base device context format.
++        */
++        s->enable_msi = false;
++        /* G-stage is managed by the host (VFIO) in accel mode */
++        s->enable_g_stage = false;
++        /*
++         * No ATS.INVAL path exists for the vIOMMU in accel mode now,
++         * vfio-pci devices are not notifiers of the emulated IOMMU and
++         * guest ATS.INVAL commands are not forwarded to the host, so hide
++         * ATS/PRI capabilities.
++         */
++        s->enable_ats = false;
++        /*
++         * Per-PASID contexts and PDT inval for vIOMMU are unimplemented,
++         * hide the process-directory capabilities.
++         */
++        s->cap &= ~(RISCV_IOMMU_CAP_PD8 | RISCV_IOMMU_CAP_PD17 |
++                    RISCV_IOMMU_CAP_PD20);
++        error_setg(&s->migration_blocker, "Migration not supported with "
++                   "RISC-V IOMMU accel=on");
++        migrate_add_blocker(&s->migration_blocker, errp);
+     }
+ 
+     /* Report QEMU target physical address space limits. */
+@@ -2860,6 +2912,10 @@ static void riscv_iommu_unrealize(DeviceState *dev)
  {
-@@ -2083,19 +2096,30 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
  
-         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
-                              RISCV_IOMMU_CMD_IODIR_OPCODE):
-+        {
-+            uint32_t devid = get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID);
++    if (s->migration_blocker) {
++        migrate_del_blocker(&s->migration_blocker);
++    }
 +
-             if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
--                /* invalidate all device context cache mappings */
-+                /* DV=0, invalidate and re-install every accelerated device */
-                 ctx_func = riscv_iommu_ctx_inval_all;
-+                riscv_iommu_ctx_inval(s, ctx_func, devid, 0);
-+                if (!riscv_iommu_accel_install_dc_all(s)) {
-+                    goto cmd_ill;
-+                }
-             } else {
--                /* invalidate all device context matching DID */
-+                /* DV=1, invalidate and re-install device matching DID */
-                 ctx_func = riscv_iommu_ctx_inval_devid;
-+                riscv_iommu_ctx_inval(s, ctx_func, devid, 0);
-+                if (!riscv_iommu_accel_install_dc(s, devid)) {
-+                    goto cmd_ill;
-+                }
-             }
--            riscv_iommu_ctx_inval(s, ctx_func,
--                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID), 0);
-             break;
-+        }
+     if (s->cap & RISCV_IOMMU_CAP_HPM) {
+         g_hash_table_unref(s->hpm_event_ctr_map);
+         timer_free(s->hpm_timer);
+@@ -2920,6 +2976,7 @@ static const Property riscv_iommu_properties[] = {
+         TYPE_MEMORY_REGION, MemoryRegion *),
+     DEFINE_PROP_UINT8("hpm-counters", RISCVIOMMUState, hpm_cntrs,
+                       RISCV_IOMMU_IOCOUNT_NUM),
++    DEFINE_PROP_BOOL("accel", RISCVIOMMUState, accel, FALSE),
+ };
  
-         case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_PDT,
-                              RISCV_IOMMU_CMD_IODIR_OPCODE):
-+            /* FIXME: add support for PDT inval for vIOMMU */
-             if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
-                 /* illegal command arguments IODIR_PDT & DV == 0 */
-                 goto cmd_ill;
+ static void riscv_iommu_class_init(ObjectClass *klass, const void *data)
 diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index 3262213093..ddd339aed1 100644
+index ddd339aed1..cffff83411 100644
 --- a/hw/riscv/riscv-iommu.h
 +++ b/hw/riscv/riscv-iommu.h
-@@ -131,6 +131,9 @@ void riscv_iommu_init_space(RISCVIOMMUState *s, RISCVIOMMUSpace *as,
-                             PCIBus *bus, int devfn);
- AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus, int devfn);
- RISCVIOMMUSpace *riscv_iommu_get_space(RISCVIOMMUState *s, PCIBus *bus, int devfn);
-+RISCVIOMMUSpace *riscv_iommu_get_space_from_devid(RISCVIOMMUState *s,
-+                                                  uint32_t devid);
-+uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as);
+@@ -115,6 +115,7 @@ struct RISCVIOMMUState {
+     /* nested iommu support */
+     bool accel;
+     struct RISCVIOMMUAccelState *accel_state;
++    Error *migration_blocker;
+ };
  
- typedef struct RISCVIOMMUContext RISCVIOMMUContext;
- /* Device translation context state. */
-diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-index 9834f108b9..55f7d1f0f3 100644
---- a/hw/riscv/trace-events
-+++ b/hw/riscv/trace-events
-@@ -28,3 +28,5 @@ riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) "ctr_idx
- #riscv-iommu-accel.c
- riscv_iommu_accel_set_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
- riscv_iommu_accel_unset_iommu_device(int devfn, uint32_t devid) "devfn=0x%x (idev devid=0x%x)"
-+riscv_iommu_accel_translate_dc(uint32_t vsid, uint32_t hwpt_id, uint64_t tc, uint64_t iosatp) "vSID=0x%x hwpt_id=0x%x dc=%"PRIx64":%"PRIx64
-+riscv_iommu_accel_install_dc(uint32_t vsid, const char * type, uint32_t hwpt_id) "vSID=0x%x dc type=%s hwpt_id=0x%x"
+ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
 -- 
 2.53.0
 
