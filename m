@@ -1,62 +1,62 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648BB606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDBD606A320
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=MamNQtxH;
-	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=M3YOEYsH
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=HDlD5cin;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=lzceuyjI
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMU9H-0004Bp-AT; Thu, 29 Oct 2026 13:42:47 -0400
+	id 1xMUAh-0006bv-JB; Thu, 29 Oct 2026 13:44:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8i-0003aX-Rz
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:17 -0400
-Received: from mx2.catap.net ([2a01:4f9:3b:5410::2])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8n-0003cB-Di
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:21 -0400
+Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8d-0003Hr-TT
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=dspBPwB
- Nu636JTvDzH8yZBOXTjVEQr86JXt+xLXlYBd0EshHsilAFQ7iE2Hzv7+nnmi/60IUluNkL
- Nh1UkpG+YHMhY2Fop5Kyl6RYylqgqStuKE2MYjNT9d6kLNC/PzmR/69fhU8Um5qX/U36ED
- Wkr0ZSO18aJZLaP+fIyQPhYGQnmEICeOuYxoJB2JaDiv3/IyXtGrPOwDlhMlDzp7St+MoG
- d802URafTwSi7nCqO5qW/mpKLVhs8h8BZT1JDKvIhmeR5snyYP/hha+j5fqtUE0R7YwNJo
- CSt6cNeU9kl8AuVS5xiiFqWcABS8LtRzFKhedqWCiBGRBr5Vg8EH0Bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=S
- b+KbjYfZ+D0rAjYFTvxzPZMk1M6qGYHrlNtmkCjhSg=;
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8i-0003HD-S2
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Q7UyNrz
+ akYP8TfrXZAKSmYRVmddg/MAmk41PwgN/bNi8nUjYIsaOOq6QC8xSLfJWKjsc26PBboxJC
+ 5MI482nHsAbMMn8uJ+x2eHcGs0gl/r43H8eXFIEjlpucd23Bw/HNMlDrotyKfq3fPczOjY
+ 6O7Wsnc+hmU97zoBp5V5bybEYI9N6sglJC1ywm75QQPTNWKGhG2AVQckH+72b/d6E5Nyur
+ +vLVVwiWOd/q4qksLcQ7Fi+BIMqx86eMaNpayndlqrGRrHfh4n5vmkFDjQVoaP+6yK4X3H
+ Jy52UWtJNRzkcfaFRUg0V+J8868sHl10PCTXHrfPYKc+kgeW3XYBsbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=F
+ 9sWNgwVO8Muz9mx0m4MzCPI30uddM9trowxcxNom0w=;
  h=references:in-reply-to:
  date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
- b=Sgf5AZa3aXqGqSrPoYQZwNfi/Dwcur6TTVb1YT2UQBsvotHNbTDLyZT8cPmYEM3XkttR
- KmgvPkRW1WuF+Efdw+trCd4dgmhe6g4lTcIA8MyxQH7LAsTSloehq6xquxVaBez2tKBybO
- uXhwb/iyB4Ee1bmd7USxszww7FASqy23BzMr35Z3HykTwx1lUqhMgFl+xFYWqfqc2V2VAK
- NPuoLYVgQ7iFVqo+ZS9diQAWLrrs63HrqfZNiSJymJJf9x2fevNbbEBjPVUbImtMhLSYnZ
- YTeTXanDPlbolkCxQvIjLBnfFV9Y26LkOPgVzXE8bY4t29eWam89RGeUlXn52QkA==
+ b=xwBx4Bseiy4UNhh+vINkpw3L6U7Hsh//scMRgScRVfomgsRvfXKiWLrpM/aA4XAWt7bp
+ 2rr6sIOkUT6ybhjTwbdYZZKN+aQByRBSz7rCxe+ePGY+7qruE2OhLSMcHNyXgxUmBjavHF
+ /RwSv6mu6y34MjK3xpLRm77Gldu48U/1eeeciPArpjLrIJsUxWxvuYRWUS8EyvjpM4ZpL5
+ F4QXC1kzFt4rOVk+YMnD3xqU3AoDaceJaXaBz3dv80qIZOrgeVEoVKCW4ckWhqO4Zt1e27
+ krhDfpEe2wNhNiHKZ8xcQR5mLFV7LKEh9mq3gk6BgnlZUcMJ/LOiUtkZNEDEYYHQ==
 ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
  header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
- header.b=MamNQtxH; dkim=pass header.s=20240125ed25519 
- header.d=korins.ky header.a=ed25519-sha256 header.b=M3YOEYsH;
+ header.b=HDlD5cin; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=lzceuyjI;
  arc=none; iprev=pass; spf=none
  smtp.helo=postmaster@matebook.home.arpa; spf=softfail
  smtp.mailfrom=kirill@korins.ky
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=Sb+KbjYf
- Z+D0rAjYFTvxzPZMk1M6qGYHrlNtmkCjhSg=;
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=F9sWNgwV
+ O8Muz9mx0m4MzCPI30uddM9trowxcxNom0w=;
  h=references:in-reply-to:date:
- subject:cc:to:from; d=korins.ky; b=MamNQtxHGgozODriigmJOF0uW1ZNN0Zrs8Z
- LMk22hjCK2A/nbnyAqy3/5iukfnLLZnA4VIsSQXt2MGjhcxuaiVVc/Qj50y8An+LULyW8v
- Y8ecxoaKXGSHalf4U9C1lUPQkaCE4YHGO0CE+AemNyOslDvxyxz057n7uBDXamVF/4xGCF
- xizztu4PBIGf3H0j+CgNl4uHFq7jG4GuKQHunTp1LMVhX7EDXi+KUuFXoxmjtHP41eosdh
- VMwzEvXuWk90RM0p3bVGCsvzz1juelrGM1wY4HnkGZYcEw9mAUzcDsTVAh0DIIWOnru1IA
- M2p+6B3e/5781xoFeFfZJ+wcfgw==
+ subject:cc:to:from; d=korins.ky; b=HDlD5cinhplQrk1k2EJexPpBSKXP8VPA4DT
+ F6WzFCZIH9MzDT3DkYKOuazsRULepDJf12ssTTxS0Or5LfOBFaaztllGc/+f69obFfB4ue
+ sYpdc7//yE433ZyHb4cYfS4XmoLXaXPJgW6wrnaP8I3vl3mrWUPKHY3I7V8TwxsSRnnZZE
+ NnJvfiwbFD0sWnqdewRIAjw9czLjhsHfY/NM2fo5M9DSZW4GL1aF/WNoh/Y0w4/TdV1BhF
+ YFmgSnwttmlfPJK2TdW+wGjjBbO74P1RVHVetcV8s3bEAVTPGXLX0o4ZmfLhIlsk+1uPBp
+ TRtwTLskZy9K6dtqdL2znuu8khQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
- bh=Sb+KbjYfZ+D0rAjYFTvxzPZMk1M6qGYHrlNtmkCjhSg=; h=references:
- in-reply-to:date:subject:cc:to:from; d=korins.ky; b=M3YOEYsHTAIkumpbA3
- N3FZV0eCwUUwN4jlETxpMUxfeZOF9Y58515z1OxXilp/eYJp3vtFsl9/8hezGQ58eKBg==
-Received: by mx2.catap.net (OpenSMTPD) id ac157e23;
+ bh=F9sWNgwVO8Muz9mx0m4MzCPI30uddM9trowxcxNom0w=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=lzceuyjITGyeFQMA4/
+ Gb+5jATKlhhN/Rz6qJaW9F4Rp0SHgVk/8eoDl4cVYA0swwyA8mxk0R9SO3xKi3NXlpCA==
+Received: by mx1.catap.net (OpenSMTPD) id 4d7f0fc9;
  Thu, 29 Oct 2026 18:41:55 +0100 (CET)
 Received: from localhost (matebook.home.arpa [local])
- by matebook.home.arpa (OpenSMTPD) with ESMTPA id 6bf95550;
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id 72ba04a3;
  Thu, 29 Oct 2026 18:41:48 +0100 (CET)
 From: "Kirill A. Korinsky" <kirill@korins.ky>
 To: Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,23 +66,24 @@ To: Paolo Bonzini <pbonzini@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
 Cc: "Kirill A. Korinsky" <kirill@korins.ky>
-Subject: [PATCH v5 18/26] hw/mips: wire the Octeon UART
-Date: Thu, 29 Oct 2026 18:36:18 +0100
-Message-ID: <20261029174139.44302-19-kirill@korins.ky>
+Subject: [PATCH v5 19/26] hw/i2c: add Octeon TWSI controller
+Date: Thu, 29 Oct 2026 18:36:19 +0100
+Message-ID: <20261029174139.44302-20-kirill@korins.ky>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261029174139.44302-1-kirill@korins.ky>
 References: <20261029174139.44302-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f9:3b:5410::2;
- envelope-from=kirill@korins.ky; helo=mx2.catap.net
+Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
+ envelope-from=kirill@korins.ky; helo=mx1.catap.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,161 +102,665 @@ X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Wire the Octeon UART and its alias to the existing serial-mm device.
-Provide the special transmit register window and connect the UART
-interrupt to CIU and CIU3.
+Add the two Octeon TWSI controllers and a synthesized DDR4 SPD
+EEPROM. Derive the SPD geometry and timing from the configured RAM size
+and DDR clock, then wire both controller windows into the machine.
 
 Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- hw/mips/Kconfig           |  1 +
- hw/mips/octeon.c          | 69 +++++++++++++++++++++++++++++++++++++++
- hw/mips/octeon_internal.h |  5 +++
- 3 files changed, 75 insertions(+)
+ hw/i2c/meson.build        |   5 +
+ hw/i2c/octeon_twsi.c      | 553 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon.c          |   8 +-
+ hw/mips/octeon_internal.h |  11 +
+ 4 files changed, 576 insertions(+), 1 deletion(-)
+ create mode 100644 hw/i2c/octeon_twsi.c
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index cb6057fe38..5fe5f885e3 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -72,6 +72,7 @@ config MIPS_OCTEON
-     default y
-     depends on MIPS64 && TARGET_BIG_ENDIAN
-     select PFLASH_CFI02
-+    select SERIAL_MM
- 
- config MIPS_CPS
-     bool
-diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
-index 59754cb741..133b3636a0 100644
---- a/hw/mips/octeon.c
-+++ b/hw/mips/octeon.c
-@@ -10,6 +10,7 @@
- #include "qemu/units.h"
- #include "qemu/datadir.h"
- #include "qapi/error.h"
-+#include "hw/char/serial-mm.h"
- #include "hw/core/clock.h"
- #include "hw/core/irq.h"
- #include "hw/core/boards.h"
-@@ -48,7 +49,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
- #define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
- OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- 
-+#define OCTEON_CSR_32BIT_SIZE       4
- #define OCTEON_CSR_64BIT_SIZE       8
-+#define OCTEON_CSR_HI32_OFFSET      0
- 
- /*
-  * Clock defaults follow a Ubiquiti E1000 EBB7304 U-Boot banner.
-@@ -155,6 +158,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
- #define OCTEON_RST_BOOT_C_MUL_SHIFT 30
- #define OCTEON_RST_BOOT_PNR_MUL_SHIFT 24
- 
-+#define OCTEON_UART0_BASE           0x1180000000800ULL
-+#define OCTEON_UART0_ALIAS_BASE     0x1180000000c00ULL
-+#define OCTEON_UART_TX_REG          0x40
-+#define OCTEON_UART_TX_HI32_OFFSET  OCTEON_CSR_HI32_OFFSET
-+#define OCTEON_UART_TX_SIZE         OCTEON_CSR_64BIT_SIZE
+diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+index 88aea35662..1c744768e4 100644
+--- a/hw/i2c/meson.build
++++ b/hw/i2c/meson.build
+@@ -20,3 +20,8 @@ i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
+ i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
+ i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
+ system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
 +
- /*
-  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
-  * the guest sees the virtual CVMSEG window, not this physical address.
-@@ -1613,6 +1622,65 @@ static void octeon_init_mio_boot_loc(OcteonState *s)
- }
- 
- 
-+static uint64_t octeon_uart_tx_read(void *opaque, hwaddr addr, unsigned size)
++if 'CONFIG_TCG' in config_all_accel
++  mips_ss.add(when: 'CONFIG_MIPS_OCTEON',
++              if_true: files('octeon_twsi.c'))
++endif
+diff --git a/hw/i2c/octeon_twsi.c b/hw/i2c/octeon_twsi.c
+new file mode 100644
+index 0000000000..3bc8bf7bcd
+--- /dev/null
++++ b/hw/i2c/octeon_twsi.c
+@@ -0,0 +1,553 @@
++/*
++ * QEMU Cavium Octeon TWSI controller model.
++ *
++ * Copyright (c) 2026 Kirill A. Korinsky
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qemu/host-utils.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "hw/core/boards.h"
++#include "hw/core/resettable.h"
++#include "hw/core/sysbus.h"
++#include "hw/mips/octeon_internal.h"
++#include "qemu/module.h"
++
++#define OCTEON_TWSI_SIZE            0x200
++#define OCTEON_TWSI0_BASE           0x1180000001000ULL
++#define OCTEON_TWSI1_BASE           0x1180000001200ULL
++#define OCTEON_TWSI_SW_TWSI         0x00
++#define OCTEON_TWSI_INT             0x10
++#define OCTEON_TWSI_SW_DATA_MASK    0xffffffffULL
++#define OCTEON_TWSI_SW_EOP_IA_SHIFT 32
++#define OCTEON_TWSI_SW_R            (1ULL << 56)
++#define OCTEON_TWSI_SW_OP_SHIFT     57
++#define OCTEON_TWSI_SW_V            (1ULL << 63)
++#define OCTEON_TWSI_OP_EOP_IA       6
++#define OCTEON_TWSI_EOP_DATA        1
++#define OCTEON_TWSI_EOP_CTL         2
++#define OCTEON_TWSI_EOP_STAT        3
++#define OCTEON_TWSI_CTL_AAK         0x04
++#define OCTEON_TWSI_CTL_IFLG        0x08
++#define OCTEON_TWSI_CTL_STP         0x10
++#define OCTEON_TWSI_CTL_STA         0x20
++#define OCTEON_TWSI_STAT_START      0x08
++#define OCTEON_TWSI_STAT_TXADDR_ACK 0x18
++#define OCTEON_TWSI_STAT_TXADDR_NAK 0x20
++#define OCTEON_TWSI_STAT_TXDATA_ACK 0x28
++#define OCTEON_TWSI_STAT_TXDATA_NAK 0x30
++#define OCTEON_TWSI_STAT_RXADDR_ACK 0x40
++#define OCTEON_TWSI_STAT_RXADDR_NAK 0x48
++#define OCTEON_TWSI_STAT_RXDATA_ACK 0x50
++#define OCTEON_TWSI_STAT_RXDATA_NAK 0x58
++#define OCTEON_SPD_BUS              1
++#define OCTEON_SPD_ADDR             0x50
++#define OCTEON_SPD_MIN_ROW_BITS     12
++#define OCTEON_SPD_MAX_ROW_BITS     18
++#define OCTEON_SPD_MIN_COL_BITS     9
++#define OCTEON_SPD_MAX_COL_BITS     10
++#define OCTEON_SPD_BANK_BITS        4
++#define OCTEON_SPD_MIN_RAM_SIZE     \
++    (1ULL << (OCTEON_SPD_MIN_ROW_BITS + OCTEON_SPD_MIN_COL_BITS + \
++              OCTEON_SPD_BANK_BITS + 3))
++#define OCTEON_SPD_MAX_RAM_SIZE     \
++    (1ULL << (OCTEON_SPD_MAX_ROW_BITS + OCTEON_SPD_MAX_COL_BITS + \
++              OCTEON_SPD_BANK_BITS + 3))
++#define OCTEON_SPD_DDR4_TCKMIN      18
++#define OCTEON_SPD_DDR4_FINE_TCKMIN 125
++#define OCTEON_SPD_DDR4_MTB_PS      125
++#define OCTEON_SPD_DDR4_FTB_PS      1
++
++#define TYPE_OCTEON_TWSI "octeon-twsi"
++OBJECT_DECLARE_TYPE(OcteonTWSIState, OcteonTWSIClass, OCTEON_TWSI)
++
++#define TYPE_OCTEON_SPD_EEPROM "octeon-spd-eeprom"
++OBJECT_DECLARE_TYPE(OcteonSpdEepromState, OcteonSpdEepromClass,
++                    OCTEON_SPD_EEPROM)
++
++struct OcteonTWSIState {
++    SysBusDevice parent_obj;
++    OcteonState *board;
++    MemoryRegion mmio;
++    unsigned int bus;
++    uint64_t sw_twsi;
++    uint64_t int_reg;
++    uint8_t ctl;
++    uint8_t stat;
++    uint8_t data;
++    uint8_t slave_addr;
++    uint8_t write_buf[2];
++    unsigned int write_len;
++    bool have_slave;
++    bool read_transfer;
++    bool addr_phase;
++};
++
++struct OcteonTWSIClass {
++    SysBusDeviceClass parent_class;
++    ResettablePhases parent_phases;
++};
++
++struct OcteonSpdEepromState {
++    SysBusDevice parent_obj;
++    unsigned int bus;
++    uint8_t addr;
++    uint16_t offset;
++    uint8_t data[OCTEON_SPD_EEPROM_SIZE];
++};
++
++struct OcteonSpdEepromClass {
++    SysBusDeviceClass parent_class;
++    ResettablePhases parent_phases;
++};
++
++static const uint8_t octeon_spd_eeprom_template[OCTEON_SPD_EEPROM_SIZE] = {
++    [0] = 0x23, [1] = 0x11, [2] = 0x0c, [3] = 0x02,
++    [4] = 0x82, [5] = 0x19, [11] = 0x03, [12] = 0x01,
++    [13] = 0x03, [18] = 0x0a, [19] = 0x20, [20] = 0x78,
++    [24] = 0x6e, [25] = 0x6e, [26] = 0x6e, [27] = 0x11,
++    [29] = 0x6e, [31] = 0x05, [32] = 0x70, [33] = 0x03,
++    [34] = 0xd0, [35] = 0x02, [37] = 0xa8, [38] = 0x20,
++    [39] = 0x27, [40] = 0x28, [126] = 0x16, [127] = 0x2f,
++};
++
++static uint16_t octeon_spd_crc16(const uint8_t *ptr, int count)
 +{
-+    return 0;
++    int crc = 0;
++    int i;
++
++    while (--count >= 0) {
++        crc ^= *ptr++ << 8;
++        for (i = 0; i < 8; i++) {
++            if (crc & 0x8000) {
++                crc = (crc << 1) ^ 0x1021;
++            } else {
++                crc <<= 1;
++            }
++        }
++    }
++
++    return crc & 0xffff;
 +}
 +
-+static void octeon_uart_tx_write(void *opaque, hwaddr addr,
-+                                 uint64_t value, unsigned size)
++static bool octeon_spd_geometry(uint64_t ram_size, int *row_bits,
++                                int *col_bits, int *density_code)
 +{
-+    OcteonState *s = opaque;
++    uint64_t ram_mb;
++    int pbank_lsb;
++    int row_col_bits;
++    int col;
++    int row;
++    int density;
 +
-+    if (size == OCTEON_CSR_32BIT_SIZE &&
-+        addr == OCTEON_UART_TX_HI32_OFFSET) {
++    if (ram_size < OCTEON_SPD_MIN_RAM_SIZE ||
++        ram_size > OCTEON_SPD_MAX_RAM_SIZE ||
++        !is_power_of_2(ram_size)) {
++        return false;
++    }
++
++    ram_mb = ram_size / MiB;
++    pbank_lsb = ctz64(ram_size);
++    row_col_bits = pbank_lsb - 3 - OCTEON_SPD_BANK_BITS;
++
++    col = MIN(OCTEON_SPD_MAX_COL_BITS,
++              row_col_bits - OCTEON_SPD_MIN_ROW_BITS);
++    col = MAX(OCTEON_SPD_MIN_COL_BITS, col);
++    row = row_col_bits - col;
++    density = ctz64(ram_mb) - 8;
++
++    if (row < OCTEON_SPD_MIN_ROW_BITS ||
++        row > OCTEON_SPD_MAX_ROW_BITS ||
++        density < 0 || density > 7) {
++        return false;
++    }
++
++    if (row_bits) {
++        *row_bits = row;
++    }
++    if (col_bits) {
++        *col_bits = col;
++    }
++    if (density_code) {
++        *density_code = density;
++    }
++    return true;
++}
++
++void octeon_validate_ram_size(uint64_t ram_size)
++{
++    if (!octeon_spd_geometry(ram_size, NULL, NULL, NULL)) {
++        error_report("octeon3 RAM size must be a power of two from "
++                     "%" PRIu64 " MB to %" PRIu64 " GB",
++                     (uint64_t)OCTEON_SPD_MIN_RAM_SIZE / MiB,
++                     (uint64_t)OCTEON_SPD_MAX_RAM_SIZE / GiB);
++        exit(1);
++    }
++}
++
++static void octeon_spd_set_tckmin(OcteonState *s, uint8_t *spd)
++{
++    uint64_t tck_ps = (1000000000000ULL + s->ddr_hz - 1) / s->ddr_hz;
++    uint64_t mtb = tck_ps / OCTEON_SPD_DDR4_MTB_PS;
++    uint64_t fine = tck_ps % OCTEON_SPD_DDR4_MTB_PS;
++
++    if (mtb == 0 || mtb > UINT8_MAX || fine > INT8_MAX) {
++        error_report("octeon3 DDR clock cannot be represented in DDR4 SPD");
++        exit(1);
++    }
++
++    spd[OCTEON_SPD_DDR4_TCKMIN] = mtb;
++    spd[OCTEON_SPD_DDR4_FINE_TCKMIN] = fine / OCTEON_SPD_DDR4_FTB_PS;
++}
++
++void octeon_init_spd(OcteonState *s)
++{
++    DeviceState *dev = qdev_new(TYPE_OCTEON_SPD_EEPROM);
++    OcteonSpdEepromState *eeprom = OCTEON_SPD_EEPROM(dev);
++    uint64_t ram_size = s->machine->ram_size;
++    int col_bits;
++    int row_bits;
++    int density_code;
++    uint16_t crc;
++
++    s->spd[0] = eeprom;
++    eeprom->bus = OCTEON_SPD_BUS;
++    eeprom->addr = OCTEON_SPD_ADDR;
++    memcpy(eeprom->data, octeon_spd_eeprom_template,
++           sizeof(eeprom->data));
++
++    g_assert(octeon_spd_geometry(ram_size, &row_bits, &col_bits,
++                                 &density_code));
++
++    eeprom->data[4] = 0x80 | density_code;
++    eeprom->data[5] = ((row_bits - OCTEON_SPD_MIN_ROW_BITS) << 3) |
++                      (col_bits - OCTEON_SPD_MIN_COL_BITS);
++    octeon_spd_set_tckmin(s, eeprom->data);
++
++    crc = octeon_spd_crc16(eeprom->data,
++                           (eeprom->data[0] & 0x80) ? 117 : 126);
++    eeprom->data[126] = crc & 0xff;
++    eeprom->data[127] = crc >> 8;
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++}
++
++static OcteonSpdEepromState *octeon_twsi_find_spd(OcteonTWSIState *t)
++{
++    OcteonState *s = t->board;
++    unsigned int i;
++
++    for (i = 0; i < OCTEON_SPD_EEPROM_COUNT; i++) {
++        if (s->spd[i]->bus == t->bus &&
++            s->spd[i]->addr == t->slave_addr) {
++            return s->spd[i];
++        }
++    }
++
++    return NULL;
++}
++
++static uint8_t octeon_spd_eeprom_read(OcteonSpdEepromState *eeprom)
++{
++    uint8_t value = 0xff;
++
++    if (eeprom->offset < sizeof(eeprom->data)) {
++        value = eeprom->data[eeprom->offset];
++    }
++    eeprom->offset++;
++    return value;
++}
++
++static void octeon_twsi_write_ctl(OcteonTWSIState *t, uint8_t value)
++{
++    OcteonSpdEepromState *eeprom;
++
++    t->ctl = value | OCTEON_TWSI_CTL_IFLG;
++
++    if (value & OCTEON_TWSI_CTL_STA) {
++        t->have_slave = false;
++        t->addr_phase = false;
++        t->write_len = 0;
++        t->stat = OCTEON_TWSI_STAT_START;
++    } else if (value & OCTEON_TWSI_CTL_STP) {
++        t->have_slave = false;
++        t->addr_phase = false;
++        t->stat = OCTEON_TWSI_STAT_IDLE;
++    } else if (t->addr_phase) {
++        eeprom = octeon_twsi_find_spd(t);
++        t->addr_phase = false;
++        if (eeprom) {
++            t->stat = t->read_transfer ? OCTEON_TWSI_STAT_RXADDR_ACK :
++                                         OCTEON_TWSI_STAT_TXADDR_ACK;
++        } else {
++            t->stat = t->read_transfer ? OCTEON_TWSI_STAT_RXADDR_NAK :
++                                         OCTEON_TWSI_STAT_TXADDR_NAK;
++        }
++    } else if (t->read_transfer) {
++        t->stat = (value & OCTEON_TWSI_CTL_AAK) ?
++                  OCTEON_TWSI_STAT_RXDATA_ACK : OCTEON_TWSI_STAT_RXDATA_NAK;
++    } else {
++        t->stat = octeon_twsi_find_spd(t) ? OCTEON_TWSI_STAT_TXDATA_ACK :
++                                            OCTEON_TWSI_STAT_TXDATA_NAK;
++    }
++}
++
++static void octeon_twsi_write_data(OcteonTWSIState *t, uint8_t value)
++{
++    OcteonSpdEepromState *eeprom;
++
++    t->data = value;
++
++    if (!t->have_slave) {
++        t->slave_addr = value >> 1;
++        t->read_transfer = value & 1;
++        t->have_slave = true;
++        t->addr_phase = true;
++        t->write_len = 0;
 +        return;
 +    }
 +
-+    serial_io_ops.write(&s->uart->serial, 0, value & 0xff, 1);
++    if (!t->read_transfer && t->write_len < ARRAY_SIZE(t->write_buf)) {
++        t->write_buf[t->write_len++] = value;
++        eeprom = octeon_twsi_find_spd(t);
++        if (eeprom) {
++            if (t->write_len == 1) {
++                eeprom->offset = value;
++            } else if (t->write_len == ARRAY_SIZE(t->write_buf)) {
++                eeprom->offset = (t->write_buf[0] << 8) | t->write_buf[1];
++            }
++        }
++    }
 +}
 +
-+static const MemoryRegionOps octeon_uart_tx_ops = {
-+    .read = octeon_uart_tx_read,
-+    .write = octeon_uart_tx_write,
++static uint8_t octeon_twsi_read_reg(OcteonTWSIState *t, unsigned int reg)
++{
++    switch (reg) {
++    case OCTEON_TWSI_EOP_DATA:
++        if (t->read_transfer) {
++            OcteonSpdEepromState *eeprom = octeon_twsi_find_spd(t);
++
++            t->data = eeprom ? octeon_spd_eeprom_read(eeprom) : 0xff;
++        }
++        return t->data;
++    case OCTEON_TWSI_EOP_CTL:
++        return t->ctl;
++    case OCTEON_TWSI_EOP_STAT:
++        return t->stat;
++    default:
++        return 0;
++    }
++}
++
++static void octeon_twsi_write_reg(OcteonTWSIState *t, unsigned int reg,
++                                  uint8_t value)
++{
++    switch (reg) {
++    case OCTEON_TWSI_EOP_DATA:
++        octeon_twsi_write_data(t, value);
++        break;
++    case OCTEON_TWSI_EOP_CTL:
++        octeon_twsi_write_ctl(t, value);
++        break;
++    default:
++        break;
++    }
++}
++
++static uint64_t octeon_twsi_exec(OcteonTWSIState *t, uint64_t value)
++{
++    unsigned int op = (value >> OCTEON_TWSI_SW_OP_SHIFT) & 0xf;
++    unsigned int reg = (value >> OCTEON_TWSI_SW_EOP_IA_SHIFT) & 0x7;
++
++    if (!(value & OCTEON_TWSI_SW_V)) {
++        return value;
++    }
++
++    if (op == OCTEON_TWSI_OP_EOP_IA) {
++        if (value & OCTEON_TWSI_SW_R) {
++            value &= ~OCTEON_TWSI_SW_DATA_MASK;
++            value |= octeon_twsi_read_reg(t, reg);
++        } else {
++            octeon_twsi_write_reg(t, reg, value & 0xff);
++        }
++    }
++
++    return value & ~OCTEON_TWSI_SW_V;
++}
++
++static uint64_t octeon_twsi_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonTWSIState *t = opaque;
++    hwaddr reg = addr & ~7ULL;
++
++    switch (reg) {
++    case OCTEON_TWSI_SW_TWSI:
++        return octeon_read64(t->sw_twsi, addr, size);
++    case OCTEON_TWSI_INT:
++        return octeon_read64(t->int_reg, addr, size);
++    default:
++        return 0;
++    }
++}
++
++static void octeon_twsi_write(void *opaque, hwaddr addr,
++                              uint64_t value, unsigned size)
++{
++    OcteonTWSIState *t = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t old = 0;
++
++    switch (reg) {
++    case OCTEON_TWSI_SW_TWSI:
++        old = t->sw_twsi;
++        value = octeon_write64(old, addr, value, size);
++        if (size == 4 && !(addr & 4)) {
++            t->sw_twsi = value;
++        } else {
++            t->sw_twsi = octeon_twsi_exec(t, value);
++        }
++        break;
++    case OCTEON_TWSI_INT:
++        old = t->int_reg;
++        t->int_reg = octeon_write64(old, addr, value, size);
++        break;
++    default:
++        break;
++    }
++}
++
++static const MemoryRegionOps octeon_twsi_ops = {
++    .read = octeon_twsi_read,
++    .write = octeon_twsi_write,
 +    .endianness = DEVICE_BIG_ENDIAN,
 +    .valid = {
-+        .min_access_size = 1,
++        .min_access_size = 4,
 +        .max_access_size = 8,
 +    },
 +};
 +
-+static void octeon_init_uart(OcteonState *s)
++static void octeon_twsi_reset_hold(Object *obj, ResetType type)
 +{
-+    SerialMM *uart;
-+    qemu_irq uart_irq;
-+    MemoryRegion *uart_mmio;
-+    int baudbase = s->io_hz / 16;
++    OcteonTWSIState *t = OCTEON_TWSI(obj);
++    OcteonTWSIClass *otc = OCTEON_TWSI_GET_CLASS(obj);
 +
-+    uart_irq = qemu_allocate_irq(octeon_irq_set, s, OCTEON_IRQ_UART);
-+    uart = serial_mm_init(get_system_memory(), OCTEON_UART0_BASE, 3, uart_irq,
-+                          baudbase, serial_hd(0), DEVICE_BIG_ENDIAN);
-+    s->uart = uart;
++    if (otc->parent_phases.hold) {
++        otc->parent_phases.hold(obj, type);
++    }
 +
-+    uart_mmio = sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0);
-+    memory_region_init_alias(&s->uart_alias, NULL, "octeon.uart0-alias",
-+                             uart_mmio, 0, memory_region_size(uart_mmio));
-+    memory_region_add_subregion(get_system_memory(), OCTEON_UART0_ALIAS_BASE,
-+                                &s->uart_alias);
-+
-+    memory_region_init_io(&s->uart_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_tx);
-+    memory_region_init_io(&s->uart_alias_tx, NULL, &octeon_uart_tx_ops, s,
-+                          "octeon.uart0-alias-tx", OCTEON_UART_TX_SIZE);
-+    memory_region_add_subregion(get_system_memory(),
-+                                OCTEON_UART0_ALIAS_BASE + OCTEON_UART_TX_REG,
-+                                &s->uart_alias_tx);
++    t->sw_twsi = 0;
++    t->int_reg = 0;
++    t->ctl = 0;
++    t->stat = OCTEON_TWSI_STAT_IDLE;
++    t->data = 0;
++    t->slave_addr = 0;
++    t->write_len = 0;
++    t->have_slave = false;
++    t->read_transfer = false;
++    t->addr_phase = false;
++    memset(t->write_buf, 0, sizeof(t->write_buf));
 +}
 +
++static void octeon_spd_eeprom_reset_hold(Object *obj, ResetType type)
++{
++    OcteonSpdEepromState *eeprom = OCTEON_SPD_EEPROM(obj);
++    OcteonSpdEepromClass *osec = OCTEON_SPD_EEPROM_GET_CLASS(obj);
 +
- static void octeon_mio_reset_hold(Object *obj, ResetType type)
- {
-     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
-@@ -1833,6 +1901,7 @@ static void mips_octeon_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
++    if (osec->parent_phases.hold) {
++        osec->parent_phases.hold(obj, type);
++    }
++
++    eeprom->offset = 0;
++}
++
++static void octeon_twsi_realize(DeviceState *dev, Error **errp)
++{
++    static const char *const name[OCTEON_TWSI_COUNT] = {
++        "octeon.twsi0",
++        "octeon.twsi1",
++    };
++    OcteonTWSIState *t = OCTEON_TWSI(dev);
++
++    memory_region_init_io(&t->mmio, OBJECT(dev), &octeon_twsi_ops, t,
++                          name[t->bus], OCTEON_TWSI_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &t->mmio);
++}
++
++static void octeon_twsi_init(Object *obj)
++{
++    OcteonTWSIState *t = OCTEON_TWSI(obj);
++
++    t->stat = OCTEON_TWSI_STAT_IDLE;
++}
++
++static void octeon_twsi_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    OcteonTWSIClass *otc = OCTEON_TWSI_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->realize = octeon_twsi_realize;
++    dc->user_creatable = false;
++    resettable_class_set_parent_phases(rc, NULL, octeon_twsi_reset_hold, NULL,
++                                       &otc->parent_phases);
++}
++
++static void octeon_spd_eeprom_class_init(ObjectClass *klass,
++                                          const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    OcteonSpdEepromClass *osec = OCTEON_SPD_EEPROM_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    dc->user_creatable = false;
++    resettable_class_set_parent_phases(rc, NULL,
++                                       octeon_spd_eeprom_reset_hold, NULL,
++                                       &osec->parent_phases);
++}
++
++static const TypeInfo octeon_twsi_type_info = {
++    .name = TYPE_OCTEON_TWSI,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(OcteonTWSIState),
++    .instance_init = octeon_twsi_init,
++    .class_size = sizeof(OcteonTWSIClass),
++    .class_init = octeon_twsi_class_init,
++};
++
++static const TypeInfo octeon_spd_eeprom_type_info = {
++    .name = TYPE_OCTEON_SPD_EEPROM,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(OcteonSpdEepromState),
++    .class_size = sizeof(OcteonSpdEepromClass),
++    .class_init = octeon_spd_eeprom_class_init,
++};
++
++static void octeon_twsi_register_types(void)
++{
++    type_register_static(&octeon_twsi_type_info);
++    type_register_static(&octeon_spd_eeprom_type_info);
++}
++
++type_init(octeon_twsi_register_types)
++
++void octeon_init_twsi(OcteonState *s)
++{
++    static const uint64_t base[OCTEON_TWSI_COUNT] = {
++        OCTEON_TWSI0_BASE,
++        OCTEON_TWSI1_BASE,
++    };
++    unsigned int i;
++
++    for (i = 0; i < OCTEON_TWSI_COUNT; i++) {
++        DeviceState *dev = qdev_new(TYPE_OCTEON_TWSI);
++        OcteonTWSIState *t = OCTEON_TWSI(dev);
++
++        t->board = s;
++        t->bus = i;
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base[i]);
++    }
++}
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 133b3636a0..9388bc005b 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -64,7 +64,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
+ 
+ /*
+  * The physical layout follows U-Boot's generic Octeon III
+- * OCTEON_MAX_PHY_MEM_SIZE value. Keep 1 GiB as the tested default.
++ * OCTEON_MAX_PHY_MEM_SIZE value. The synthesized DDR4 SPD below accepts
++ * power-of-two RAM sizes from 256 MiB through 32 GiB. Keep 1 GiB as the
++ * tested default.
+  */
+ #define OCTEON_DEFAULT_RAM_SIZE     (1 * GiB)
+ #define OCTEON_MAX_PHY_MEM_SIZE     (512 * GiB)
+@@ -1884,6 +1886,8 @@ static void mips_octeon_init(MachineState *machine)
+         exit(1);
+     }
+ 
++    octeon_validate_ram_size(machine->ram_size);
++    octeon_init_spd(s);
+     octeon_map_ram(s);
+     octeon_init_flash(s);
+     octeon_init_mio_boot_loc(s);
+@@ -1902,6 +1906,8 @@ static void mips_octeon_init(MachineState *machine)
                                  &s->intc->ciu3);
  
-+    octeon_init_uart(s);
+     octeon_init_uart(s);
++    octeon_init_twsi(s);
++
      memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
                            &octeon_csr_ops, s,
                            "octeon.csr", OCTEON_CSR_SIZE);
 diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
-index 7b45daba10..fbe4875d66 100644
+index fbe4875d66..e9826f1713 100644
 --- a/hw/mips/octeon_internal.h
 +++ b/hw/mips/octeon_internal.h
-@@ -10,6 +10,7 @@
- #define HW_MIPS_OCTEON_INTERNAL_H
+@@ -20,6 +20,10 @@
+ #define OCTEON_CIU3_IDT_COUNT       (OCTEON_MAX_CPUS * 4)
+ #define OCTEON_MIO_BOOT_REG_CFG_COUNT 8
+ #define OCTEON_MIO_BOOT_LOC_SIZE    0x100
++#define OCTEON_TWSI_COUNT           2
++#define OCTEON_TWSI_STAT_IDLE       0xf8
++#define OCTEON_SPD_EEPROM_SIZE      139
++#define OCTEON_SPD_EEPROM_COUNT     1
  
- #include "qemu/typedefs.h"
-+#include "hw/char/serial-mm.h"
- #include "system/memory.h"
- #include "target/mips/cpu.h"
+ typedef enum OcteonIRQ {
+     OCTEON_IRQ_UART,
+@@ -44,6 +48,8 @@ typedef struct OcteonCPUState {
+     bool boot_cpu;
+ } OcteonCPUState;
  
-@@ -64,6 +65,10 @@ struct OcteonState {
++typedef struct OcteonSpdEepromState OcteonSpdEepromState;
++
+ struct OcteonState {
+     MachineState *machine;
+     Clock *cpuclk;
+@@ -65,6 +71,7 @@ struct OcteonState {
      OcteonRstState *rst;
      OcteonIntcState *intc;
      OcteonCsrBankState *csr_bank;
-+    SerialMM *uart;
-+    MemoryRegion uart_alias;
-+    MemoryRegion uart_tx;
-+    MemoryRegion uart_alias_tx;
- };
++    OcteonSpdEepromState *spd[OCTEON_SPD_EEPROM_COUNT];
+     SerialMM *uart;
+     MemoryRegion uart_alias;
+     MemoryRegion uart_tx;
+@@ -81,4 +88,8 @@ void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value);
+ bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value);
+ void octeon_irq_set(void *opaque, int irq, int level);
  
- guint octeon_uint64_hash(gconstpointer v);
++void octeon_validate_ram_size(uint64_t ram_size);
++void octeon_init_spd(OcteonState *s);
++void octeon_init_twsi(OcteonState *s);
++
+ #endif
 -- 
 2.56.0
 
