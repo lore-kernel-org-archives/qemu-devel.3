@@ -1,113 +1,96 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA65606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 19:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E819C606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 19:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qkI4wql6
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=TOat7BGe
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMVZK-0006c7-Tj; Thu, 29 Oct 2026 15:13:46 -0400
+	id 1xMVbr-0007gS-GE; Thu, 29 Oct 2026 15:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xMVZH-0006bg-86
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:13:43 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <tristmd@gmail.com>) id 1xMVbC-0007ay-Ra
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:15:57 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1xMVZD-000530-FC
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:13:41 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-8b056d58f2aso24956427b3.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 12:13:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1793301218; cv=none;
- d=google.com; s=arc-20260327;
- b=DmUzhm/xO6nMXKhM3nzLKKTLfmEOsHFbjU4JaT+hxsjW/T15lSRJQBYo6rQ3Vgn52m
- MwtxCzdoGKxzp/dEmFD8QTxEWpacZk7ibp2d+o142KvWL9SkSZ1QZTX0Dky9nv9YY0kA
- DohzZ5J3ZrRGp9O7TmOA465UTz3J2DHYXyL5VS7sKMfkpoG7NShhS/mFkW/PIS1LEkcX
- NyH8++SoOmNRptJofihsz74X53cggt0AGJdhN2XVhiil4gNYGI5GCqF0dhICOJOSn135
- OMu8KuXCoCf/0S+Tm3KGgFTdJA78JYj/FswCmzDSw+kLwXUignbH2Hf6IXBKBjtLyz+A
- Cf9g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=SZEu8mV7OojmVUJlqjYu6aT+DwSudMCQUB6YEP4qbfs=;
- fh=Ooov+i9AeS1BcC1vonK1zlp0+cy8hPMIIb5HY6/nc/g=;
- b=Jf/onY3DwRsd7nB8d2spYXg6mtQ45c7a60SnQsTu7Ao49tQglSoxwxoJQfcxpS9I4P
- T0l2U6C3qp6z8iIIPRC+UU0InsAtGl14rnmKMdv9pkFNs01c7al7w9T3I4O5WFhfSZJ3
- ZKPwpV5STP9WZ3U464f7Ca4/w6e0HG0L3flXHosAGZyrRD0VYsVFAxKx+CKzaC9fm8GU
- 5RJyKQcNHfP6rg8thK1ut4tmh12bpCTv5fKuFf/tEJiN/xBUlBVKTtjhU+0QKVwUwTFy
- 5GeCcmQ1+R15rskHopMxpmVGo92ffO1MCDKZCso4Rk8JPkDM7wqvfpt1AQD3dFG1i4+r
- 4s6g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <tristmd@gmail.com>) id 1xMVb9-0005Hw-EP
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 15:15:41 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4a5087a5348so23765625e9.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 12:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1793301218; x=1793906018; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=SZEu8mV7OojmVUJlqjYu6aT+DwSudMCQUB6YEP4qbfs=;
- b=qkI4wql6xRsrqEwtMjbhS4k+OqD/PSH3SoipQ72F2ok20eyhhu5PbfJWDa+aDhursL
- beXT3zazwM1w15iPIZ0+oW5BN8s9K9orv1mvQdo1FvWLgwGi+zpZm0SlfyhE3lAM2i09
- 4OgbFv2gdE/pEdDCcrCEQ6+Ec5ISIh2Akyl9GFiT3w9oIGkUOz5GigLFfj+E5afM043H
- R+dSMxcW4pU+uoj3qEQhiZQxcqZ9BN2TcIr+YNUhTTD8RCJSmz5K6VPMcgaIrurisn2N
- 875N88bSjVmqw1BVvXAPG+7PO0HjD5tjRLm7I3ZaL50o/6ojizaYweexL5Qy3jylWafw
- mLrg==
+ d=gmail.com; s=20260707; t=1793301337; x=1793906137; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=OOR8UafeZCZoNLAGO+5s54/UmhxQAMi7zOQSXFFedD4=;
+ b=TOat7BGeqW3vMkGsTi4J5kqwdIiU0RwKyQ61kKd6obMKk/LxkhRrB+ogQ/CU7409RE
+ m3QG0wsNzWPcGJVEmajG2gE3d1tqxEwSteniAop0VJJGyzbZEC8GUPOjFZSOhoiEBd5G
+ +qpmeARXL65wiGxk+JW94QvlTH73VJQ4crn1fME9nkdXaiHeYoBuwuOIzSu0GQDGRU3v
+ FtuHg271wkUmF9vcd3FNtUjwvmy9y2jPryayncLar8QLy/3FQZ9ZUHtxP1sgtHn6YQ6J
+ gfkxNe3ZRzJuMCz48g4IDGZPYMSK4jFXz7nghk0kOeEjv21ZArQBFxz7Rfsv2vZ2ccUp
+ aBWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793301218; x=1793906018;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=SZEu8mV7OojmVUJlqjYu6aT+DwSudMCQUB6YEP4qbfs=;
- b=srOtLucpcnbwMAPxEsEGxHzQhWdyem1PVo778AHU01/GeWwWOEw/iW9J5JHWn2nHNH
- xD9XGw5wAZ9ZbXSGKGIgPHl3NaX3LYqDOkVNW5CcBbHyhXYNFjtBWev9/KXQkHeKR8Wt
- 1cXnB0UkykOPSzctyAU3yarFXJcr/qbJfIW2OWTa85Yh8/A6jLN0bTRCAxOibtffrHLe
- GSuPi4Erk12Yf5X444u52CAumkt5FjHBJn1v/xyI1HNgKUgc8sFuKZsS5vgOjvbBOTow
- cuwZCZDFrSIznmKrpomUP+ZQGuhMK7p2L0RYa393pGlPohJy17rAWHpG4YeoOxuu/79X
- N0iQ==
-X-Gm-Message-State: AFq9FYLeDSOXuOj3t+T6VQLLeMWoJEtPOerk7oTuI9ed78ver7n8QIJJ
- pXmA+sXCnpv+M/9i5bBA34bo7nDdcXthR+cKkKaxKgE+AONla9T9a6NCZAvex5XNCDqPgPc/k1/
- LHHKVAtOOVTnb4bEyhiCaR5VSbzxnO2IX0S7ZdzOI8g==
-X-Gm-Gg: AYBFou3dTgmICmbGPCAww0h02e91oTO7zfN4zDz0ollmKFRQvE/QTAy+mgEihradZa9
- NL0aMw5sgAf7c/nI683ix+uUEvij7zIj0jCGEmOYwTHpwrCN88dhTSxxf2ODpHYLN1ZE8jQbfVc
- 9dpnFIEX1a/ETEBnBtSEx4mZie9ew33y/J5AMegeXI20w3r8p1/i+Q7DX9tNkwmI3X+hBAGMwkr
- JtGzZ3u25J6q7zXuKE/3oxppI9597lYUZaW9HxBLLxFQI0l/ckue9EDSa1aRVi6+40w0H7EJ/Ui
- yM++AZRsFNCU3e2e582UNIJeRWy/g7HYYcmPJbOmHQnS//8venn6/TgOUUHEBsKpHjl85wTXYSp
- xAS2k0wqVfnFvdTfTdv5Upx7DBrxFPu2A1cPpr28Vx/eukAtIqgRZwU/s0U29I31XLqC+iNndXt
- ZMU+LoRDKJV2eUSjvByC5D
-X-Received: by 2002:a05:690c:660d:b0:8af:e4ee:a91c with SMTP id
- 00721157ae682-8b1b5bf6460mr35119367b3.41.1793301217835; Thu, 29 Oct 2026
- 12:13:37 -0700 (PDT)
+ d=1e100.net; s=20260707; t=1793301337; x=1793906137;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=OOR8UafeZCZoNLAGO+5s54/UmhxQAMi7zOQSXFFedD4=;
+ b=pxzgSkiIDE/KDCi9RZ7IkRHqczTIf8JrYioxQRkuGMogebVrP1teiKdgKBNDYCgfrs
+ BMwTF5Q1neOl9u5CRRGy6zUSPDepfPZfMKFVky5BgW+lKBnxn0DQTrhaDfgLRAzgYtF1
+ 866xLATBI+NtmlcAa9libaRmMgX1r4FY47lKoREm7ebEGgPTdaI1UaT8dEcdpAnh/ps9
+ q+b0itvRRUZdDhLnyWuDsQeTBspjrtkuZ2wPHZMj8WsIq2GycqBSk2UX/2w10x/qFnlG
+ nsLivJWYkuIEk1W6REApF7eOw2VhxL+VZYQFs1s7BtN58iszEDcB4UmLgVHolufYsj7I
+ d59Q==
+X-Gm-Message-State: AFq9FYLCOP9e1ofEsthza5+Vz+sBL9zgrekKVfIeJa9iJHvs1Q2Y8m7D
+ ojKdOkmYyePdhQz2dl1yrTFQmnxhk5N6nasutkIbQRhkzwDLZxkHvsE=
+X-Gm-Gg: AYBFou2r9sGdFWYfSPs9LyXrAvunQGczzpc1t404IQ5zEBfxWggPMDWAS+JzlUO/nH1
+ fdqQVbUzrjtu2Cwi1PFwfZii8brqFkchtO8VsEtsXWxnWp43IaATYuaqoYtTGmc2L6fIqjwnJb0
+ 5nCTqkoyoUM2AWS4r6ktE47PYb1LBn7MM1eZUT6jZp48cK39AE7xhJke7qQHKzbZtlowaLw9Gjc
+ p4eg6Ysht7ilr790PxroJZrtT+ZoCT3rFybDdS4SZaVYeCxdo48bSWfCEEv9No364zQDp7xHYc5
+ R+BP14oe8J6reCN2N9gDE9KKFdHcapjgQpz48p1NuShamaAhLl9BIJE1L4mjl3M34KftnChpv+q
+ VznZ3wfhhQe5MKEyKH8VNyI3C4mQ2iaE0YEcVD7MgtiHf7rDvnVcG1Jpc+fZIeD1pbZDK1LXwF0
+ cDpe2w0JBFZSIQPill/6Jf1DujkuKEDlVTn8Y5QaVe2OZRm80eGHsihMVB4Pvuhn6pWHmjoHr+w
+ tO1VciYqlj3ftSGW4Tfz2BDAz9HftoXkbSdMDalfT27pTqukqHnsw5HJki67YIcU3bLqAGTOg==
+X-Received: by 2002:a05:600c:1c0f:b0:4ab:cc03:7f60 with SMTP id
+ 5b1f17b1804b1-4abcc038122mr18563335e9.18.1793301337479; 
+ Thu, 29 Oct 2026 12:15:37 -0700 (PDT)
+Received: from debian.. ([2001:41d0:303:db6b::])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4aa813d2950sm82576845e9.8.2026.10.29.12.15.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Oct 2026 12:15:36 -0700 (PDT)
+From: Tristan Madani <tristmd@gmail.com>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Aurelien Jarno <arikalo@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-ppc@nongnu.org, Helge Deller <deller@gmx.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Tristan Madani <tristan@talencesecurity.com>
+Subject: [PATCH v2] hw/display/g364fb: validate display window against VRAM
+ size
+Date: Thu, 29 Oct 2026 19:15:35 +0000
+Message-ID: <20261029191535.3849290-1-tristmd@gmail.com>
+X-Mailer: git-send-email 2.47.3
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-References: <20261027120135.53048-1-mohamed@unpredictable.fr>
- <CAFEAcA-=bOxmonNOYC2_1MHDrdof6eciYrehJRDfWx_7kYsJmA@mail.gmail.com>
- <1016C70E-8B1C-4F3F-A19E-59D7A0E66A33@unpredictable.fr>
- <CAFEAcA8Ywq6MZxO5jt4AKay8wjWGLQYxnJ1rMkFjzoF1ppUJ3w@mail.gmail.com>
- <49C40F6F-EE09-4237-83B8-1CE18292DE3C@unpredictable.fr>
-In-Reply-To: <49C40F6F-EE09-4237-83B8-1CE18292DE3C@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Oct 2026 19:13:26 +0000
-X-Gm-Features: AclHuK_ukK5xHPQhT3re5FDOimXNL34x7bT0bR_4OnbyOJLBgKNV4MEce3dgtog
-Message-ID: <CAFEAcA9sXa2DvJqP8VViesX72viaVa2bBqMekG1ZwFswnJ9UvA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] hvf: arm: fixes for QEMU 11.2
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=tristmd@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,37 +102,64 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS autolearn=no
-	autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On Thu, 29 Oct 2026 at 17:33, Mohamed Mediouni <mohamed@unpredictable.fr> w=
-rote:
-> On 29. Oct 2026, at 18:13, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
-> > Do you think we should deprecate the "vmapple" machine type, or do
-> > you hope to resurrect it still?
+From: Tristan Madani <tristan@talencesecurity.com>
 
-> I do hope to get it resurrected as an optional feature still, but
-> the issue is that it=E2=80=99ll stay (by design) a reverse-engineered mod=
-el.
->
-> I need to spin a new revision of the patches for that though.
->
-> It will break from time to time and cannot come with an expectation
-> of short-term (as in, anything past 6 months) stability/build-ability.
+The G364 framebuffer allows a guest to set top_of_screen to any
+32-bit value without validation against the VRAM size. The display
+update function g364fb_draw_graphic8() computes its read pointer as
+memory_region_get_ram_ptr() + top_of_screen, reading past the
+allocated VRAM buffer when top_of_screen exceeds vram_size.
 
-Hmm. If it's going to break every six months or so then I'm not
-sure it's really a good fit for upstream QEMU. As we've seen,
-we haven't really in practice been able to get updates to it
-into the tree particularly quickly, and most downstreams will
-be operating on a slower cadence. If we had a larger group of
-people interested in cooperating on maintaining it upstream
-then that would help, but we don't really seem to have that.
+The developers flagged this exact issue with an inline XXX comment
+("XXX: out of range in vram?") but never added the check.
 
-thanks
--- PMM
+Validate the full display window (top_of_screen + width * height)
+against vram_size in g364fb_draw_graphic8(), using 64-bit arithmetic
+since all three values are guest-controlled 32-bit registers. This
+covers changes to any of the three parameters regardless of the
+order the guest programs them.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4648
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+---
+Changes in v2:
+- Validate full display window (top_of_screen + width * height),
+  not just the base address, per Marc-André Lureau
+- Use 64-bit arithmetic to prevent overflow of guest-controlled
+  values
+- Move validation to draw function where all three parameters
+  are known, dropping the insufficient write-handler clamp
+
+ hw/display/g364fb.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/hw/display/g364fb.c b/hw/display/g364fb.c
+index af54f1f..cc5b31d 100644
+--- a/hw/display/g364fb.c
++++ b/hw/display/g364fb.c
+@@ -126,7 +126,11 @@ static void g364fb_draw_graphic8(G364State *s)
+     }
+ 
+     vram = memory_region_get_ram_ptr(&s->mem_vram) + s->top_of_screen;
+-    /* XXX: out of range in vram? */
++    if ((uint64_t)s->top_of_screen +
++        (uint64_t)s->width * s->height > s->vram_size) {
++        return;
++    }
++
+     data_display = dd = surface_data(surface);
+     snap = memory_region_snapshot_and_clear_dirty(&s->mem_vram, 0, s->vram_size,
+                                                   DIRTY_MEMORY_VGA);
+-- 
+2.47.3
+
 
