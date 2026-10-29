@@ -1,60 +1,147 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920FA606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDAB606A321
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 05:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=tls.msk.ru header.i=@tls.msk.ru header.a=rsa-sha256 header.s=202602 header.b=Leue3II0
+	dkim=pass (2048-bit key, unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=puZlPsyO
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMIYU-0002Ol-Ay; Thu, 29 Oct 2026 01:20:02 -0400
+	id 1xMIZs-0002xR-30; Thu, 29 Oct 2026 01:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xMIYS-0002Nd-HM; Thu, 29 Oct 2026 01:20:00 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xMIZo-0002v0-PH; Thu, 29 Oct 2026 01:21:24 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1xMIYO-0006cS-VK; Thu, 29 Oct 2026 01:20:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1793251187; bh=SFcNEWIz8KI/37q1wegHIISNo7ICiREo50lWcLEEHXw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Leue3II0ozBErxIhtaMbur2xnlIzGVIMQYKi5XHMg8OLmY8NGYGOhilC/0COn1QP8
- lVwu9+IbEB5MnZaDKBylbTWkfURuMYCj9VCGmKXWDn4JX7NEsbwt3lygnyGRWncl0p
- CezqoP0sZll/aq+Q45ADIovzq7bXavBcUYpRXOkPI9kBy00Nazjz/Tv1sZVm3L3qiH
- vVN3+8NbYoLNiMmxY1nWpiwvFzii8XN/VNMivZz0UmxNold8eYrTh3rlRieNo4N7DF
- gTbJ8cIuTY1KW4HbgnXm0z/5tKwBjk+cDJuvLkho+1PgcexSX0+Mf2CuMleiMh1KeS
- 8YI/M0O55Rgow==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 781221E219E;
- Thu, 29 Oct 2026 08:19:47 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 756E544DF23;
- Thu, 29 Oct 2026 08:19:47 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 70CD3A63E8; Thu, 29 Oct 2026 08:19:47 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-stable@nongnu.org
-Subject: [ANNOUNCE] QEMU 11.1.3 Stable released
-Date: Thu, 29 Oct 2026 08:19:22 +0300
-Message-ID: <20261029051934.1487878-2-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261029051934.1487878-1-mjt@tls.msk.ru>
-References: <20261029051934.1487878-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1xMIZm-0006ua-Hr; Thu, 29 Oct 2026 01:21:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LBi7yEh/q/JmngqGgzqS1PjIqH5GfFPzLY/9wNGp+1YLocnA/61zZUKrIAPRD48RNWjHjsZvp/r+q4VfbuTuhSFZp5jrU+rAkxwqt6yA5VvD2OUb1Dy9iWZ5izpy0wojsaqv72eOR3GvB1r7eHtaaTvo5/mpjWB5FmmHohC3LdNxza5ZMmaR5TjismxaoEREEc+j9CkDaRFu2hKkNxn001M9wE1GlkMMJ2zbHgOm2e/If6Azu5EJ9DDBUDZ/OeSwkMdh5GfI8YRRyX9G/4IqNclKei1oBKZoc3DhNMbLMgpFzfKF6z3qolqZmbbkl/zKev8f1klBI6aCGcBpqUIoqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s+kWPXhVzzxEoNRHZ5iOTfT1ZVb3S9G0ClAf6kKCtIE=;
+ b=I18nwWMPpeYhEZm7X7HuGoyoRaQUVbZp1JUFpjxPIa0NS+9W5MaEptfD4kVloS0QPUuFlsedBjg/H940nKN23UIzmwJqzUrH9iZwYiXuZxvn99RT+IRA6wfv0qgPRW2NrGycWVEy2opSlymGLbY3cb2zl1g8gCNPc/1z156AQVNMS8E+sUQZnQcqUDV/GUBxN/JihL01WZ1K2T5rCRxizJ6swTvgqUL4cHeZcPn5NV2jBq0DTyuNzmn6zNUNQ9dUkI2WLTfkXI2pLe/EpaqAZ9CNluMS49FS/NkkgmISlwUTP/w0roaS5FPTJz/O41VmUuZCwUcceZpXQ0VgTbtQWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s+kWPXhVzzxEoNRHZ5iOTfT1ZVb3S9G0ClAf6kKCtIE=;
+ b=puZlPsyOALUKump9PijshC3JF1HjW73yjV2+TXnSzBMW32seJLqoJydgX0o1OCwAuONHDu4vc8eBtepU6k21BCuNCeHqFHBJ+597yuFnDJJCNn3bDRMh6oqNFzE6aBOinhQNVhqx0yNLCBFvkEdqcXrmkIoIoDc0+CkkpzMraQQOw/wI83+obdfFn4UddQDRtD8M60krp8c+Gp8UXLbLe0n1wrLLfBX7A7OiVnkBbkY/XqElvGDSJubDXdb7tJt9AJB3pQZcJJ6DZQ3/FZVMtUZ76TuCxGqJCkIzo0UBlqVaanPbMTbFbtRxRNlr+bGLV0Iavwc+tcCusvGHthdkbA==
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com (2603:1096:101:253::10)
+ by TYZPR06MB6699.apcprd06.prod.outlook.com (2603:1096:400:45b::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.569.8; Thu, 29 Oct
+ 2026 05:21:12 +0000
+Received: from SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6]) by SEZPR06MB7362.apcprd06.prod.outlook.com
+ ([fe80::cd2d:35d2:a702:1de6%4]) with mapi id 15.21.0569.007; Thu, 29 Oct 2026
+ 05:21:12 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Timur Maksimov <gessingate@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Kane Chen
+ <kane_chen@aspeedtech.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: RE: [PATCH v2 2/6] hw/i2c/aspeed: fix BUSY status reading in new
+ register mode
+Thread-Topic: [PATCH v2 2/6] hw/i2c/aspeed: fix BUSY status reading in new
+ register mode
+Thread-Index: AQHdZky0yUoy3KUSwUW2OSnfMSEetrcT/bCw
+Date: Thu, 29 Oct 2026 05:21:11 +0000
+Message-ID: <SEZPR06MB73620B13B2B6D5C316DE409AFC6E2@SEZPR06MB7362.apcprd06.prod.outlook.com>
+References: <20261027-aspeed-i2c-nonpkt-fix-v2-0-07deed1dff60@gmail.com>
+ <20261027-aspeed-i2c-nonpkt-fix-v2-2-07deed1dff60@gmail.com>
+In-Reply-To: <20261027-aspeed-i2c-nonpkt-fix-v2-2-07deed1dff60@gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB7362:EE_|TYZPR06MB6699:EE_
+x-ms-office365-filtering-correlation-id: 68128c7d-e707-4ece-a0be-08df357c7250
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|23010399003|38070700021|4143699003|56012099006|261021123027099003|261021121427099003|10067099003|18002099003|22082099003;
+x-microsoft-antispam-message-info: IGRGs+2/EUb5to2vU4qrJ03puW0iKrZdpuHdNOdaEw4eEZ4qHJw+YYE1PfGRYUPxrg3oytSVWt4w3v5RkuK/FGzMcf9R/ApvOaQ4yWJqKRMCjCGc0XJBy3nnjINOC+AmCLw1xhWgWI4OG4rY73LVYSTy0EmUvD1HApDPkXJpC3ueq3dbsxC7SiyOI+fCD3e3ohtEcRXfpPSACu0Y8zvKnghmYLOzMSuNwjp3nsScIq0LZMCSX3V03jo0bHTvJKKfQuZAVGcS2/FLNegrcRzjVxsWdEm9YVL9FPhThP0jYKX5q0RSxPo8J2IM3eZ+QECj8fdCW0uzw0+ARbG0U03zJDy0quLxAsZJmMe/8qaQZohwbbWPoldc/DPnVBzMfPY3+XUvjgQzVGSkiFeVSVehlaXKCLdki/wcEqIEMl+eWH4eq5dQdd8G2WJNLDw7y9iLoHbFMEe89YjeUQ7PbMrYu/Dl0V4ShD5Bt6NYNZGoXSkSKtr0Aeu28giKOsBptHweWUjmioIHrTMKdNe5kWD3U857KuvxZ95daKRNO+I+DGgagmJiL9ZV4UiwFaW1auVqFqJq75c8N7DrU8bkdvyQsdEOFXUkmfTXhi+9xoZceVglXF+M/Nlmwa2nb4Nugiy9IjO0vP/qYY4zCG/c7OeBEV4UHby8sn7ujyy9n081Hev47K/f3ML3wfI65pCKU1QaGqv9qFp87H02RYQuNmo2SCWGMmfdTzZg9CFOh9YhiJ8=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SEZPR06MB7362.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(23010399003)(38070700021)(4143699003)(56012099006)(261021123027099003)(261021121427099003)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WEIxRWxiR1E2RzFMaE5JaFgyTkxoNlQ1QldUbWFNSkxKTEhucVl4NmNPRUhR?=
+ =?utf-8?B?aTJ1M0pNbEdoVC9wZDAzRXJ4MVVQRzBYYkRtVjM1UlRVRWE4UXpIOEdPZjcr?=
+ =?utf-8?B?NlNmdTBpbFZrQ0RSTmxBYTQwK3FWL21LVnZjLzRUZ3J3MmhGTWtCWFJaUEFB?=
+ =?utf-8?B?Z0dmVE01UEozbVdrb2l2UGJDb0Q0VnhNZDlBS3A2TXZHWDVWSW9kdXhBQjdQ?=
+ =?utf-8?B?b2FnaUxjOFNSZEtsbVc3UjZxZjV0bGUxZFpEL0x2Wk9RQUNnWFNycWxDV1k2?=
+ =?utf-8?B?NnVZVlBiWXl3dkVCbzMwdnJkaGhFdEsxOTJ6RDMwY1ZzVE9YQlp2YS9aN3pY?=
+ =?utf-8?B?dklhTkRCQm5hRmxsK2pqTXZZMFlOKzFzMEgrengwb0ErdjFnRUg5Z251K29D?=
+ =?utf-8?B?UTNVSFczR1J6OEVCclhqMk9odEVvd3ZpR3paZnZ1dEFWTUdzVVJjNHpzVnhi?=
+ =?utf-8?B?NkpWQ2R3VjA5N002bmZ5SkNRN2xJcmRDR0tkSDFzellOS1oydGhtTTg3ZFZS?=
+ =?utf-8?B?ZG9DbXVuM1hBQUtIZmlyNjN2cXZzWkp0SEtBeVBaY0xXUFdhMWFaRWc2d3lp?=
+ =?utf-8?B?cUEwMTNIU1dRTXFqOEl5MGh0MUxwbkE2Q0J0cmxTRVNVNmNpSmpra0pqWTd4?=
+ =?utf-8?B?aTFlVlJITVY3djRzbGxyWWhGd0RiNHpVY0Q1VU9JRjJGaUMxaDkvYytmeVFK?=
+ =?utf-8?B?aFlSYUwydnhrMVc3K29LVURTd0RqbGtML1BFalZPN3Q3R3lxV0JmUmtpamRM?=
+ =?utf-8?B?OWFTejZGVWIwRVhBa0pqR0c4VWNrUEswWWg4dkxLU1hLQTl4NXgzNVRIMGV1?=
+ =?utf-8?B?Uit0QkdSMWVNcmI4SE5ZM1NNWS9zL0ZrZGlUb0x3STlTL0pRN3ZjSTlzK3Av?=
+ =?utf-8?B?cVdBaXAzamMxZmFEQWRqQ2U3aVJFL1JONjU4eEViM2NuMEdrWFRPeEV2NXNX?=
+ =?utf-8?B?QWtVOUQzcmJXV1NjUitTVzUyeGhJQXBoQWlwRUoyVlY3NS9BN2N0cjQ1UnZS?=
+ =?utf-8?B?bEhWUUVMbktLeDN2cEtRMDJCajl0SGRZVktac1ZCc2luVDdKbHl3dzREUGcw?=
+ =?utf-8?B?VGdKWDVZbmszL1NTSllobktwK1RUbTZhTE52aEc5eUhGbjZjUWtuYXZTZlpX?=
+ =?utf-8?B?bmhXTXhYSEVoRUtkcjFBMnREbE4ybmlEcWN6dUovV20ranZmcXBXNzJHd2l5?=
+ =?utf-8?B?WjJHOHU2MDVCUHFXQ0tvUGdqRjVZYkNrNnhYdGJTaGxDeXM4STcrKzVmYjN3?=
+ =?utf-8?B?aGFrcWJLUXZ1dmtwOFpuK2VkTmk0bThpYjlaZ29MekVXZEs2NVlrQ3RYTHpx?=
+ =?utf-8?B?aXg4MjlrSHU2SFJKTXZtZTZaelVxQm5WK2FjT1J0QndWYWMvWE1UVERMamgw?=
+ =?utf-8?B?bkpscjhvNVhBWXZPVmFxSWtzeHBEdUpRTFFiTlFhb2U4R0tuNDl1M1p1SWRY?=
+ =?utf-8?B?T1ppejJTQmpFWHc2enRWMXpLa0Fkbnh4L2ZBNDNuSVl3NGwwa1dDcU9VV0Fa?=
+ =?utf-8?B?TE1nc2daeU1mMkJiSHV6K2wyTzFILzU2R0x6VXNaNFZkK1dQVk5ycmlTSUlE?=
+ =?utf-8?B?UlVEWjd4eEZsb2F2eG10aXh0NkJtREdzZEg3cnV2Qnc3cWtOdVFDY0FhRGJw?=
+ =?utf-8?B?cW95T3B2STJCaklRVDZyTVhWSm0yaW5BR280THlNalZkZTA1ZSt5L05uak5W?=
+ =?utf-8?B?eW40bXdnUy9TR0dVT0JNSDdCakpzYjlMdTh4bEpZTDhKWnIwYk5QR0IySllX?=
+ =?utf-8?B?UnNvTUJtS1p0cVRsc2lDVTB0ZUNldlNWalRaSStLSDVEeng2N1NsdFV6QVRl?=
+ =?utf-8?B?OWdsQk0rbHllbFJDVjVwdEtMNVFFRzVVSXVtNWJNMStUNG5WN050TlV1bFhq?=
+ =?utf-8?B?MkRyMlFJYW9ta1NTTkVuWldHaGZxd0dVMU1rNEtlMTZCRFhkZHpKK3ZxNG1l?=
+ =?utf-8?B?WkFVQ2FqSUF3UWV6dFM5QWtQM20wekNEY2cxbWc1cWlvTFpnNHdub1ljTEN5?=
+ =?utf-8?B?aGwwOE9WM0l1NkFnM0p5VEVDWnpjaU5KbVRRS3E4QzF0SmdlWkg4OExqYkFN?=
+ =?utf-8?B?N0dlRnY0dUZFV3ZqQkFIdzg3WGpFK2dQMjJNWW5kTEMwN2p3dVg4U0dJbmU2?=
+ =?utf-8?B?YTdOL285L3RlZGhkeGlJcVM2TmxHT1JwYkVvdzE1WHVYb0lrM09jMi9GYnU0?=
+ =?utf-8?B?TXQxMjhFRTVqM2I1ekw0Rys2Zi9SYTZiQXFWMUx5cjFRQTJWWXpMNnArek4r?=
+ =?utf-8?B?WkdndHhOWnlwTk9oR0JKVDBhQ1ZrTi9KL1VPY2FSd3ZIeVdHZ0lhdXk3N0Zy?=
+ =?utf-8?B?Ym0rUFNEUlQwdXBOeWZ4S3pHOXdjRm5yeTdrNmsxUXFhdjVFNCtnUT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-Exchange-RoutingPolicyChecked: F2DZalOtOVZdnyLn4CiHCsD9YSqX5OdFJuDs73kv5HWrzePZEQfO6s807ioI7OMdlEyUluCqkGEZjv4BVTkx/FHQn2nop+KwJ332xokG7z2ZBCZgU7T3YwAccMdho4DBdpchT+vZawkbKuqMqKsXTOdXlrhghn8wxn0yfyfkTi+TfVoiGQBhK+XpSFONi+V12JMgOtj+64IEyp9ftRi3RSJFMZYaxj3u7qDjS/HRQBgLmZUBvHFfqx/yp561xHZGaHq+O+G7LSnptf0Diwk7LF/XN56z/Aes8JJDS8NlJzSkoydzRTe8joSwAaAo6lZrYk/MdU77FJXSOkl1BrcPnQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB7362.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68128c7d-e707-4ece-a0be-08df357c7250
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Oct 2026 05:21:11.9489 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CYnOUjb9IEABYCvIH0en3eavTTVOQ/XgP9qKtg+TEetT4NfU5cfx4QW6827uXCe9o88iAq8BwtqCqxUjI64C1VDGfNiLbRy4yZB03xrZppw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6699
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,234 +154,38 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
+	SPF_PASS autolearn=unavailable autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Hi everyone,
-
-The QEMU v11.1.3 stable release is now available.
-
-You can grab the tarball from our download page here:
-
-  https://www.qemu.org/download/#source
-
-  https://download.qemu.org/qemu-11.1.3.tar.xz
-  https://download.qemu.org/qemu-11.1.3.tar.xz.sig (signature)
-
-v11.1.3 is now tagged in the official qemu.git repository, and the
-stable-11.1 branch has been updated accordingly:
-
-  https://gitlab.com/qemu-project/qemu/-/commits/stable-11.1
-
-There are 98 changes since the previous v11.1.2 release.
-
-Thank you everyone who has been involved and helped with the stable series!
-
-/mjt
-
-Changelog (stable-11.1-hash master-hash Author Name: Commmit-Subject):
-
-005c61c0ef6 Michael Tokarev:
- Update version for 11.1.3 release
-8bee8b3dffa fe0f4a5a57 Philippe Mathieu-Daudé:
- target/ppc: Name the EBB exceptions
-23b370b21cc ab6579bf73 Peter Maydell:
- hw/intc/exynos4210_combiner: Fix group register range check
-b8eb59ff60a be67e61e29 Peter Maydell:
- hw/misc/bcm2835_cprman: Treat invalid clock mux source select as GND
-d8cc56e9a28 cfa70f3a82 Thomas Huth:
- hw/usb/hcd-xhci: More reentrancy guard fixes for the XHCI code
-6700316248a 6ab4cd2f13 Tommaso Califano:
- hw/usb/dev-mtp: Fix heap OOB read in usb_mtp_write_metadata()
-1c3e688b183 1ccf17e9dc Tommaso Califano:
- hw/usb/dev-mtp: Fix assert crash on short CMD_SEND_OBJECT
-2aba176fe2d a86338565c Haotian Jiang:
- usb-host: delete bottom halves during unrealize
-dc73ad78128 59cb510910 Haotian Jiang:
- usb-host: free request on libusb submit failure
-3f0eeebc803 432f505fa6 Junjie Cao:
- tests/qtest/usb-hcd-xhci: test interrupt pacing above 2^32
-36f13dafeb2 322894eed3 Junjie Cao:
- usb-host: free configuration descriptors on error paths
-a2a1a954907 e1b7f5e2a6 Junjie Cao:
- usb-host: validate interface number before indexing altsetting
-9369434a30a 46dcc681ea Junjie Cao:
- tests/qtest: Cover OHCI endpoint type mismatches
-e118248d9c9 9ad9a5a923 Peter Maydell:
- hw/usb/hcd-ohci: Fail iso packets sent to non-iso endpoints and vice-versa
-483db5ddb1a b17205f23a Tommaso Califano:
- hw/usb/dev-mtp: Fix assert crash on undersized BULK IN
-5a7758d6d2c e90644eea1 Martin Pitt:
- hw/uefi: fix ContentInfo detection in wrap_pkcs7()
-31e4c99baf5 12df325604 Christian Schoenebeck:
- hw/9pfs: fix dirent stream protection for legacy (9p2000.u) Tread
-2d494acdbb5 faa80b9847 Denis V. Lunev:
- iotests/migrate-bitmaps-postcopy-test: add a bitmap on a second node
-62f725bd36d 4d11088a08 Denis V. Lunev:
- migration/block-dirty-bitmap: fix postcopy abort with bitmaps on several nodes
-1b4a4019914 319cd41f11 Denis V. Lunev:
- migration: add QEMU_COUNTED_STRING_SIZE for counted string buffers
-b66ab958d9c 901ac73874 Fiona Ebner:
- qemu-img: convert: flush target image after copying
-630d9dc82d6 c6c8bdc21a Fiona Ebner:
- block: report flush error during bdrv_close()
-34d8b6d8709 9d2cdc4d3b Fiona Ebner:
- iotests.py: add filter_qemu()
-7819c7705c2 90b5f6ca17 Fiona Ebner:
- iotests: add test cases for failing flush after qemu-img convert
-7450360e8cc a567ef8655 Daniel P. Berrangé:
- seccomp: really fix blocking of setns/execveat/unshare
-8a9f2a0b584 f33fb19cab Daniel P. Berrangé:
- seccomp: fix blocking of setns/execveat/unshare
-f207638c13d cb82463fa9 dodochicha:
- target/riscv: Check Svnapot PTE before updating A/D bits
-37fe6b6ad95 71041ce05c Rick Richard:
- tests/qtest/bios-tables-test: Update riscv64 virt SPCR golden reference
-278e3552ef5 ee23f530e9 Rick Richard:
- hw/riscv/virt-acpi-build: Fix the UART register width in SPCR
-1af8e99822a ba280c3510 Rick Richard:
- tests/qtest/bios-tables-test: Allow changes to riscv64 virt SPCR
-55dd6122c13 f20acdba2a Xie Bo:
- target/riscv/kvm: Preserve VCSR across migration
-249e18c8752 0f9adcab46 Xie Bo:
- target/riscv/kvm: Reject migration with a different timer frequency
-fb280414430 e52de6b65f Xie Bo:
- target/riscv/kvm: Preserve FCSR across migration
-6b6a519e4d2 55a3524a89 Christian S. Lima:
- targetriscv: svinval instructions raise virtual instruction exception
-963eb3cb855 410166b550 Zephyr Li:
- target/riscv: stop translating after WFI
-75213859c7f 7f9ab1dc6c Mayuresh Chitale:
- target/riscv: Restore LCOFI handling in interrupt CSRs
-ddf01610169 366b4fba0f imaginos:
- target/riscv: check G-stage write permission for VS-stage A/D updates
-e89003d149e 37f2ab5593 Peter Maydell:
- hw/intc/arm_gicv5: Make IRS_IDR0 reads return actual value, not 0
-d2dd4bce25f 2579771a28 Fuad Tabba:
- tests/tcg/aarch64: Test the TTBR layout with TCR.DS and a 48-bit OA
-cfadd7fdf5a 2c37211946 Fuad Tabba:
- target/arm: Use the 52-bit TTBR base address layout when TCR.DS is set
-31fbb602c54 bb79850255 Fuad Tabba:
- tests/tcg/aarch64: Add a test for a two-entry 52-bit TTBR table
-3c4032504ff 0dedeff932 Fuad Tabba:
- target/arm: Clear TTBR[5:0] from a 52-bit table base address
-b77e3908697 306d9ab85f Aurelien Jarno:
- tcg/riscv64: Remove vector min/max ops with immediates
-dc0b14e4741 21b6c3e5bc Artemii Mashanov:
- target/i386: fix immediate stack adjustment for RET and RETF
-621f9b0e991 0dd9fb43ea Artemii Mashanov:
- target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
-ae1a7e175be f9ca6b19ac Dominic P:
- tests/tcg: Add tests for sign extension after rotate
-3edfef095ff d228536a51 Dominic P:
- tcg/optimize: Do not derive s_mask from rotated s_mask
-64c20eeb996 35164929cf Marc-André Lureau:
- hw/display/vga: fix OOB writes after external surface resize
-770b7d41839 9b206e5265 Stefan Berger:
- hw/tpm: crb: Do not clear internal buffers when backend is busy
-04fb445f8e0 6728170d2d Stefan Berger:
- tpm_emulator: Reject sending commands smaller than the request header
-8bd96336c66 99a8b5a0dd Daniel P. Berrangé:
- io: cork TLS writes to avoid small TLS records
-c33ab7340ed cf4f672c11 Kevin Wolf:
- block: Remove now redundant bdrv_wait_serialising_requests() calls
-7e6a8d069ff 0bd5a1b3d6 Kevin Wolf:
- block: Fix corruption from broken RMW atomicity
-4675afbab68 efe98c2a09 Denis V. Lunev:
- block: reject a reopen of an unusable node instead of crashing
-b2d517fd064 af28b65fae Denis V. Lunev:
- qcow2: do not clear the dirty bit when reopening a read-only node
-4fac279346f 196a50b090 Stefan Hajnoczi:
- file-posix: add statx(STATX_DIOALIGN) support
-ef1dbcfe6ea 8daaf8d3b1 Denis V. Lunev:
- block: fix bdrv_next() skipping monitor-owned nodes
-318b3644736 2910b995f6 Denis V. Lunev:
- iotests: cover inactivating a read-only node
-3247ea72389 429bf66a1f Denis V. Lunev:
- block/throttle-groups: fix crash when enabling I/O limits on a busy disk
-68df2cefcfe 4668899d66 Daniel P. Berrangé:
- io: prevent unbounded read of websocket data from client
-6b85309dde4 d198957674 Tommaso Califano:
- hw/usb: Fix USB MTP Use-After-Free in usb_mtp_deletefn List Iteration
-b8d45ea45c1 a5b4837a25 Paolo Bonzini:
- target/i386/tcg: ignore VEX.L for unary scalar instructions
-6cc067b1d97 12916d64b7 Maxim Levitsky:
- accel/kvm: coalesced mmio: check lenght of the MMIO write entry
-fac3798546c 0f98b46846 Maxim Levitsky:
- accel/kvm: protect kvm_resample_fd_list with a mutex
-3cbe6da76c5 b7f51182c0 Maxim Levitsky:
- system: fix buffer overflow in tdx_parse_panic_message
-07a6c20669b 6d5fb14d36 Simon Scherer:
- target/i386: Don't clear C1 for FCOMI/FCOMIP/FUCOMI/FUCOMIP
-cea26d6f834 6802a4b239 Simon Scherer:
- target/i386: clear C1 for all x87 compare instructions
-8230b4093f0 fb024800d6 Yanfei Xu:
- target/i386: Migrate error code only with an exception
-5af7f730e7f 8d496d8f9f Jakub Lipový:
- target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
-53b291c4db2 46a8b8b378 y zhou:
- plugins: fix register handle encoding to reserve NULL as invalid
-7c5695d0e80 6ee626e349 Daniel Paziyski:
- hw/nvme: fix memory leak on sr-iov capable nvme controller removal
-7818b0d11fd 90fcba23c5 Daniel Paziyski:
- hw/nvme: fix assertion failure on sr-iov capable nvme controller removal
-0024528af5a cd3be3bd96 Denis V. Lunev:
- block/nbd: clear reply.cookie under receive_mutex
-ac398d68a2b 75b0a993da Denis V. Lunev:
- block/nbd: never index requests[] with an unchecked cookie
-519986cdb5e 9998d225bb Denis V. Lunev:
- block/nbd: clear reply.cookie when the reply is rejected
-dd4b12f00fe 7e429d3624 Andrey Drobyshev:
- hw/display/qxl: trace skipped stale loadvm commands
-8c3e766357a 95bc45193b Andrey Drobyshev:
- hw/display/qxl: validate replayed commands in qxl_post_load
-13ec3962425 050f5408bf Andrey Drobyshev:
- hw/display/qxl: factor out qxl_guest_phys2virt()
-422e508cf9b f9f70b50e3 Fabiano Rosas:
- migration: Introduce VMStateStructMember
-5f3dbb56bf3 3ece85b53c Marc-André Lureau:
- virtio-gpu: disable blob scanouts on mapping cleanup
-58486a587f5 665494c3ac Marc-André Lureau:
- hw/usb/dev-smartcard-reader: validate migrated fields in post_load
-bf66c153acb 069dcc103b Marc-André Lureau:
- hw/usb/dev-smartcard-reader: decode bulk-out length as little-endian
-67cd05f4bb6 d7f20657e7 Marc-André Lureau:
- hw/usb/dev-smartcard-reader: fix assert on pending answers overflow
-43a624d2753 49851e8595 Marc-André Lureau:
- hw/usb/dev-smartcard-reader: fix OOB read from pending bulk-in ring
-4823a3093b3 1847dcd96d Marc-André Lureau:
- hw/usb/dev-smartcard-reader: validate interrupt transfer length
-c9267a193b0 d818e2b0e6 Matthew Rosato:
- s390x/pci: Reject apertures beyond IOAT capacity in translation mode
-eb77a720b2e 10a81449a2 Matthew Rosato:
- s390x/pci: Use qemu_log_mask() for guest-triggered errors in reg_ioat()
-049f614dcb6 e57ad36701 Matthew Rosato:
- s390x/pci: Fix frame stepping in rpcit_service_call()
-4f66512c345 119860f15c Eric Farman:
- s390x/sclp: Reject short headers in PV case
-8c33176cf20 930a188edb Eric Farman:
- s390x/css: Use datastream pointer for checking no-data CCWs
-c8766cac231 77cc481c23 Eric Farman:
- hw/intc/s390x: Fix check after g_try_realloc
-ac7504ad5e4 057ca01937 Eric Farman:
- vfio/ap: Clear error object pointer after non-fatal errors
-41d9159113c bd5bc2861f Eric Farman:
- virtio-ccw: Fix rc check in read configuration path
-0cb9e2c7dd4 13c7ba5e0f Eric Farman:
- virtio-ccw: Do not overwrite existing indicators
-163e73e175c 92b935de27 Eric Farman:
- virtio-ccw: Limit ISC to MAX_ISC
-65edcf1172a 89e653b773 Thomas Huth:
- hw/usb/hcd-xhci: Limit DMA transfers to plain memory
-54d855918e5 998b6db69e Fuad Tabba:
- target/arm: Fix WFxT timeouts when the offset puts the count ahead
-6c3dceb7318 66d4ea65a0 Fuad Tabba:
- target/arm: Fix next timer tick when the offset puts the count ahead
-6e974869877 653b0c06c8 Jean-Francois Bortolotti:
- target/arm: Fix PMSAv8 shareability decode for R-profile MPU regions
-
+PiBTdWJqZWN0OiBbUEFUQ0ggdjIgMi82XSBody9pMmMvYXNwZWVkOiBmaXggQlVTWSBzdGF0dXMg
+cmVhZGluZyBpbiBuZXcgcmVnaXN0ZXINCj4gbW9kZQ0KPiANCj4gSW4gbmV3IHJlZ2lzdGVyIG1v
+ZGUsIEJVU19CVVNZX1NUUyBpcyBiaXQgMTYgb2YgSTJDQ19NU19UWFJYX0JZVEVfQlVGOw0KPiBi
+aXQgMTYgb2YgSTJDTV9DTUQgaXMgUEtUX09QX0VOLiBSZXBvcnQgdGhlIGJ1cyBidXN5IHN0YXRl
+IGluIHRoZSBjb3JyZWN0DQo+IHJlZ2lzdGVyLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogVGltdXIg
+TWFrc2ltb3YgPGdlc3NpbmdhdGVAZ21haWwuY29tPg0KPiAtLS0NCj4gIGh3L2kyYy9hc3BlZWRf
+aTJjLmMgfCA1ICsrKy0tDQo+ICAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCAyIGRl
+bGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2h3L2kyYy9hc3BlZWRfaTJjLmMgYi9ody9p
+MmMvYXNwZWVkX2kyYy5jIGluZGV4DQo+IDBiYzRiYjZmYmUuLmZiNmQxOWMzN2IgMTAwNjQ0DQo+
+IC0tLSBhL2h3L2kyYy9hc3BlZWRfaTJjLmMNCj4gKysrIGIvaHcvaTJjL2FzcGVlZF9pMmMuYw0K
+PiBAQCAtMTQ2LDcgKzE0Niw3IEBAIHN0YXRpYyB1aW50NjRfdA0KPiBhc3BlZWRfaTJjX2J1c19u
+ZXdfcmVhZChBc3BlZWRJMkNCdXMgKmJ1cywgaHdhZGRyIG9mZnNldCwNCj4gICAgICBjYXNlIEFf
+STJDQ19QT09MX0NUUkw6DQo+ICAgICAgY2FzZSBBX0kyQ01fSU5UUl9DVFJMOg0KPiAgICAgIGNh
+c2UgQV9JMkNNX0lOVFJfU1RTOg0KPiAtICAgIGNhc2UgQV9JMkNDX01TX1RYUlhfQllURV9CVUY6
+DQo+ICsgICAgY2FzZSBBX0kyQ01fQ01EOg0KPiAgICAgIGNhc2UgQV9JMkNNX0RNQV9MRU46DQo+
+ICAgICAgY2FzZSBBX0kyQ01fRE1BX1RYX0FERFI6DQo+ICAgICAgY2FzZSBBX0kyQ01fRE1BX1JY
+X0FERFI6DQo+IEBAIC0xNjYsNyArMTY2LDggQEAgc3RhdGljIHVpbnQ2NF90DQo+IGFzcGVlZF9p
+MmNfYnVzX25ld19yZWFkKEFzcGVlZEkyQ0J1cyAqYnVzLCBod2FkZHIgb2Zmc2V0LA0KPiAgICAg
+IGNhc2UgQV9JMkNDX0RNQV9BRERSOg0KPiAgICAgICAgICB2YWx1ZSA9IGV4dHJhY3Q2NChidXMt
+PmRtYV9kcmFtX29mZnNldCwgMCwgMzIpOw0KPiAgICAgICAgICBicmVhazsNCj4gLSAgICBjYXNl
+IEFfSTJDTV9DTUQ6DQo+ICsgICAgY2FzZSBBX0kyQ0NfTVNfVFhSWF9CWVRFX0JVRjoNCj4gKyAg
+ICAgICAgdmFsdWUgPSBidXMtPnJlZ3Nbb2Zmc2V0IC8gc2l6ZW9mKCpidXMtPnJlZ3MpXTsNCj4g
+ICAgICAgICAgdmFsdWUgPSBTSEFSRURfRklFTERfRFAzMih2YWx1ZSwgQlVTX0JVU1lfU1RTLA0K
+PiBpMmNfYnVzX2J1c3koYnVzLT5idXMpKTsNCj4gICAgICAgICAgYnJlYWs7DQo+ICAgICAgY2Fz
+ZSBBX0kyQ01fRE1BX1RYX0FERFJfSEk6DQo+IA0KPiAtLQ0KPiAyLjUzLjANCg0KUmV2aWV3ZWQt
+Ynk6IEphbWluIExpbiA8amFtaW5fbGluQGFzcGVlZHRlY2guY29tPg0KDQpUaGFua3MsDQpKYW1p
+bg0K
 
