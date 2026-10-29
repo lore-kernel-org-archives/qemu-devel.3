@@ -1,139 +1,139 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C2C606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EF1606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BXjGWXN/;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=LJXIMdc0
+	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=BJ5nYVa9;
+	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=W8waei82
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUDw-0002kC-8l; Thu, 29 Oct 2026 13:47:36 -0400
+	id 1xMUFY-0005Nc-9G; Thu, 29 Oct 2026 13:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMUBd-0007Fo-6m
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xMUFR-00054F-7e
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:49:11 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMUBZ-0003k7-5j
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:45:12 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1xMUFP-0004BD-Is
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:49:09 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69THDjKA182196
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:45:07 GMT
+ 69TGDIRq227450
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:49:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- PuhLkghWWpUfBAEQxJAhMyMHK9cr78T+0H1BmdUqTlg=; b=BXjGWXN/XnvROmBY
- bCO32Y+m7PcL4Mq7hWd4Tiar/x2I229PaS25nUFOamvtRJg3gZIsCnGaFfv8ShrL
- 2zTny7Ay6BY2VKdHMfEB21dZJHQ/gFGrZHEZ/IE7HYfrg6wJuvYmBkBIf+ihr+U/
- 35qJcOckG1O9z5v+jxSt0UDG1hvBLBRdzT5KDrkXnKylEVRkowFrWj4CdFUmg7VT
- edt+W6EoCLX+lgvH7x0Bs00uMyYZ0ygiY19I28rvm6CRVZvZP50fLjzFkY0kQgZk
- 50qYacPRKqzOdQXhTQWvGD0Mrsj3xOqIcQ1rzvK3ph1a0BPhl+DlqWoTXcspt1p+
- kW1ixA==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hmac0r5t2-1
+ cHbtURLlpwMmkNshmZKhwV0pzhPmlNhIdtdUA6h5gkw=; b=BJ5nYVa9oLkjHtFt
+ p+LXvw4Kp2bawv0jk193jZBjUXve8KmtUZa1+bhlB0/tzkMG+f7xFtWotT3z4Et/
+ +VbDzyXtZAFGqAPlsBKdOIhIe4HljstYMeJvm9NKc/ILp7adc/y6WhBBzzUuhzBn
+ 4/G9mRKtNuQq73eRrSYFWjiEZK7vFObUMjHyrtAzqAKdZy9qaFtCTt6Q6zKLJ5vH
+ fMbPgaMS5DYvUM9rJwvMDD+IaAxmw6MM7nEAO+/CCdDCuM86/t7IqgfjSTCOjToZ
+ CfTYrHW/zkM3UxgonWOwANJkY2EJ2BLCWu9GG6Xr+K9JBeSGKt6rqCnrEynLbBWX
+ HvIE/A==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hm42fjmvv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:45:07 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93cb71b1443so502914285a.2
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:45:07 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 17:49:04 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-91c920517b3so20282046d6.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 10:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793295906; x=1793900706; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=PuhLkghWWpUfBAEQxJAhMyMHK9cr78T+0H1BmdUqTlg=;
- b=LJXIMdc0GkFXQb/UtxjlO3tODD45xTUtwrJWleNzoEnoCgcBF+oIYUtAkV1KqAAR1X
- CjGtmvSR0suSFWWDVw/c5txz115DgY9ruTvyRlRIV6TXA2hqaXpJxa/PuMw0WabRTcmN
- EhJSJ9r37HpC0/Wib4ZGCUZPqjd57bdg/EeNcKn3EQ/TED3B9g3V1rx8bjaDBrwvKRPS
- 2FayD9vGDj5Uwb8n3Ie2ZyGCjYu8uqEx4b6N//61FLpsB1/OOJoqhBr0g0Ufp5UDb2iz
- LsG1Fi19xikz1KgAGqNeXG4Hg+v+aZXDlvf2uG/NlqDBItloFu3dKNa8R0ZihF1krl+t
- hFpg==
+ d=oss.qualcomm.com; s=google; t=1793296144; x=1793900944; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cHbtURLlpwMmkNshmZKhwV0pzhPmlNhIdtdUA6h5gkw=;
+ b=W8waei82xVkCB31HDgEeoNaD2azcy70/XfT3ALCfKqmc4D8n9xhGbtPf7fWgvVI9Gc
+ P3NwyXkNQlef3mgs4UGpGL6J57sQvMkUmq7UBysvM8TSmJHYcpWeYVzd82WmYHUZiJqP
+ ZuoemayMIuC/BXDyfbtRD8+9jiX2Evf3xWz+sy9Z15fQV33nz+80XcwDA1rqGaDVTLfA
+ nil4p8YuUPCELhGFigyVJcK0+6S76yJnbHLPnLwBKf2Vr5VnT47qzxPiO6RZaQOB/Z7I
+ GpsqCP6CKEG3/BUOMX0YMcFY2M+ayOPpFBXCxMGEv86ZWuhTv8Fxy1oR+PIjCP0dIkOS
+ KSyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793295906; x=1793900706;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=PuhLkghWWpUfBAEQxJAhMyMHK9cr78T+0H1BmdUqTlg=;
- b=y3iTqgil0zBkAytZDpxNJSP1S3uJW/6MhK1T6j37yM0tUa9/m7GvOWz8+kuSm2U/Nx
- fns5czx5FGw6XyXYZC2IUoT3Suc1lXnArFLv4hlZ9V2B97vsBK03OhG9bY0suMqw2ML1
- X0W9kfx6DqJdlzO67bmtF/2yJqIcVLNQY6IiQAKDwt9OqCByMcQi4dhsVhom72i6f0mL
- d6b4y91RwGjzvHBHCcDkcCmdAzGixcIixH0D/lgiH+oBlnyxJm8nteTS8delABbl618g
- yZ5hiFMnTtrYF4ts4uIN9GkzeFHggZOqIbO8kSTqP43fkv72eI5FFNEVkEJXlaWdSFPh
- ZZDw==
-X-Gm-Message-State: AFq9FYIFMLf7ncZ0dDZ2woMfFrOB8yx1gcFYzT1kGDFHiHKAi4ToLbpa
- SdwHf2BOHhF//Vcfaw9BULbaDNj5PA9hVAsim2jDC0tsCwr/pr0Ni5SrfNQhpyoUyLmx+g51gTo
- ZQ8H1GK/sWhjns0Q48oSXJCUNjZ2IdWZrbEj4sqo40bzANHdqg1PoyZgbLjL8XIBe3196
-X-Gm-Gg: AYBFou0aYq7NyL70v9d8jnIw0luFrqa1VukQmo+OhDMI+mM9YqkrBg+EaR/i42QdcEO
- knn9Gnl0RbQmIC3Wqavrc0zU3MedOy5/0EsUveFJWu8dXmJjqYmHMl5BMdNCjal3hESJxgERNyb
- 0RVaK4sL5PAFXa0JzNwcrQSidMVzO9E36RAEFrK3KB/vfK7g1Ft7+WAqDoJeSk3csdt60ybLqkm
- DJM2J1cyY79kUJvU+nDpIOQn/+YSN/+UjDNVPzHfRGKbqSQZ7Uz0x3Iu6Q01oDaQdHHanRvBRrf
- gTZXNaR/6EzbUU84gEmD1Gn+HSNWz5UmnL4sU961T/4J4APE2N8ZHz24QTloevY1AbWUOiN3Mng
- rY28nn68yrN3oZoSY9A6CNIwVSIfvZKlHaWXeUIlyt3GquGJOYuWEjrAnAtpZiBBGhw17h1A6YZ
- qx/HStGQNFDZL9XMK6/RRBMSKSKTCk0w==
-X-Received: by 2002:a05:620a:4453:b0:93e:4e27:359b with SMTP id
- af79cd13be357-94408a5f7e4mr994803085a.24.1793295906034; 
- Thu, 29 Oct 2026 10:45:06 -0700 (PDT)
-X-Received: by 2002:a05:620a:4453:b0:93e:4e27:359b with SMTP id
- af79cd13be357-94408a5f7e4mr994797785a.24.1793295905440; 
- Thu, 29 Oct 2026 10:45:05 -0700 (PDT)
-Received: from localhost.localdomain (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4abeb77c132sm2307335e9.1.2026.10.29.10.45.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Oct 2026 10:45:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 04/12] tests/tcg/mipsel: Add MIPS32R6 shift tests
-Date: Thu, 29 Oct 2026 18:44:25 +0100
-Message-ID: <20261029174434.27985-5-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20261029174434.27985-1-philmd@oss.qualcomm.com>
-References: <20261029174434.27985-1-philmd@oss.qualcomm.com>
+ d=1e100.net; s=20260707; t=1793296144; x=1793900944;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=cHbtURLlpwMmkNshmZKhwV0pzhPmlNhIdtdUA6h5gkw=;
+ b=sC8udyq0yuZ1JWo+Z5i3a+GAYq4TgF+zfj6wDLRdXUCp1CbD+b8YYij5eulrp4KbTU
+ ar3Oo3WKEZcXlvAlTuOaTLfo6x8Q48EIB+S+sG7gUjetg2wwrq9kL6KrtEBlz8yfRqe5
+ 2bZClCPtdPPVLcGbszMZuBsb4kEv09QIsIr+aXZyPCb5DvjjYIluv8ArZdz77WOpviBY
+ yfSxszw13TgrkZlmxV7D5wahKio9n3LTvlwZP69qo2SXoT5trfxCcdkSQMlZMRS0CEKC
+ LHPq79UDxat0NvrIusmkfO6bEMyQPtsTw5gyivlhT4aWHo2JZevQR8Fgb7WgO9GiZi/K
+ 1xSQ==
+X-Forwarded-Encrypted: i=1;
+ AKwUvBxO/hDIq4GeCxYivh2h+Zfp0DvnkOv5996u/jHeOaMKnMfz5otLKv+53A3Z/4S2gfM0LNs9Jeg9DQmQ@nongnu.org
+X-Gm-Message-State: AFq9FYId/gb+U/3+8bPi2Kl2q+2lL5kh0I9NoWm9bQ6n+Qd02VtP6+XU
+ 9DWumggG3jTGa+kx+iLN43ODLUwuWNiTCFd0ute2Ulc6gwYo7psespdZxQ6CCET94KGseHNlGi1
+ OmUqchzhwKsYcAB4lqYZ9Nzj+qdwMaFkl4esNlyMA+mC4qnPtarpxntSm8w==
+X-Gm-Gg: AYBFou04BdxBCeZJQXcFHIvIgghzanfOcMgxLsEOb4pZ9chQLb/hs5Q7Hs/bD4vwqwH
+ Cgwldml29TEJrOoQFTsfO38MaVLgf9djA7rP6knjEtO2HIJ+7db8eUxD0tuYaZxQFitx7PmIcVH
+ RN+M7rje2DUjiyPWNZyLNJhsqT11DQ3u9mtUvVK85+De66CpbfiKj3SSloJsxI2JPHhObzvwGsd
+ wKMs8u2Ba4slaqQtCkGp7cM6qERmaIZYTcAJPBCmMK+w+zge9Pl5CrxIWAvzcUuHfTwHHu2pRlx
+ 7dC9P8eMkxr5HyTu9lxpDoD3it4BifOA4g+qZYO1Bj6n8OPMztnKPnmvyfCtHEsMzF/zFibc8aT
+ nH1GTR478KhWdCGX2c6hz2Ed5Fyj+P3RevH7CtTTQhOvWw64O0Jb1nelLcxRxpifpG1cccA4trA
+ Iv4zYruvKGwQ==
+X-Received: by 2002:ad4:5cad:0:b0:91b:8724:8a28 with SMTP id
+ 6a1803df08f44-91c7d1b1484mr91387186d6.34.1793296144103; 
+ Thu, 29 Oct 2026 10:49:04 -0700 (PDT)
+X-Received: by 2002:ad4:5cad:0:b0:91b:8724:8a28 with SMTP id
+ 6a1803df08f44-91c7d1b1484mr91386786d6.34.1793296143424; 
+ Thu, 29 Oct 2026 10:49:03 -0700 (PDT)
+Received: from [192.168.68.103] ([152.234.122.251])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-91ca2fb5c9bsm2293746d6.4.2026.10.29.10.49.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Oct 2026 10:49:02 -0700 (PDT)
+Message-ID: <54728202-684c-4559-a3f6-8e2d6594342a@oss.qualcomm.com>
+Date: Thu, 29 Oct 2026 14:49:00 -0300
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: QnuBZJoOCA6Rz9bBhreYWSbicr0nNM3W
-X-Proofpoint-GUID: QnuBZJoOCA6Rz9bBhreYWSbicr0nNM3W
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX9BmcKPlg/CfR
- /pDMV5exGl9Rljapz0oVofZSHGi318qDFid/v/p83UcBU4XqVHn8lAJRFQ+7UMyCG6Gu3fHneUa
- 2czY7fdx+suEQafVPDkpu+l9iCe5iOU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX3o3I4dWZGPO8
- 78s54PoXFmn5dy8Es8W7Lbj2Jp+CwHIAZJO5Bz6p+ov2wrW8KKIP75+pGiPpxsdn9bTag1SjJzV
- 2xhg1Jle+vfebhsvjrF00zReEnBC5PblVHpoRm/PavbgDr81n8AK2b4WMCeKcPXu0AxnF7ggNxT
- NF60Z95U1SaHgIllVdn0UElqJgqjuocJs4gxkS/x8ZFN8+rn/yhHofye9aFt9c1BYpVVMxbAI+y
- ZgAL+eSNm8owWyH2HdlXX3FB8O00uwT1MkUcl90Hay/bWEI/XN6V9jLzLrjM2vssIY8lQ+073Yy
- oIoDay67Tf1etPuICpy0vXggO2iLTBYm1Lukm7uQs4KQsQrGMFp8g1P6RBzioKCeJbzrw7TOgKU
- uJEDUHqACjGJ2egf0WGYv4qJ6pblC2xN38rzRvk0peJP5MAgUBMlku1LImkkZv8CV6WMK+e4faZ
- xKp1vCW/vsiwQ1ZJVyw==
-X-Authority-Analysis: v=2.4 cv=I6/w19gg c=1 sm=1 tr=0 ts=6ae38623 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=uLWhfN5tPcu-BnL75HQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/riscv: Honor Zama16b for halfword AMOs
+To: GavinQin <qinzhengxiang@foxmail.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu@processmission.com
+References: <tencent_7F0BF077B0C2A71AE38EA05BC3F112773207@qq.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <tencent_7F0BF077B0C2A71AE38EA05BC3F112773207@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX7anPRC7ezXKL
+ ASOjCnmFd6BHB/2fqE5RIJ/+qMQe/rzeLYxlfJm0BcliHj+AZdnxbc/0QW0I3eCX2Lg2ur50634
+ q8slt5xM/VS4+LUKY5AQXKuGNNHwHcTC2ZS7AGqSGitTyj7/GlnCGhR1g2kMrJK/ekeBVsAU4B2
+ gARYIlcBb5M+Rr4vF25A3kgKkjEyzxZdC0oltErwnwuWnAFHItsY49fjLmcryGMGVn9osWrumGO
+ vDkJt+X3lf19Pt5wbRhksW7ZCJZeJdE2fX0QBF3NxuxEiVRqtsVCsAg5/HFMz/ytEK6Kev1Qnpi
+ lUKlsP2/Dbt2ol54Y/4WhlNyABvE7+ai4H920VuYuzK5wRKYuxRYajVzIgCDuAwfhVvTc7j/EZN
+ FJVbrOcPsinA6ItHJhr/npj48PTqAA==
+X-Proofpoint-GUID: _zGJzycRThVmQ6_ZWuIp4bnFXnYEzdfj
+X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX72vJDlmrmV+C
+ JiVbliLcLMsd94x2EH2tk2HrVnvzaSR00F7/3pPdx14luum3f9osdVzbp9c4/ysL2Ij8YXJg8o1
+ /J+fccQiBK1VUj4nZZwwwe+iPy2DnXI=
+X-Authority-Analysis: v=2.4 cv=UN9Ijyfy c=1 sm=1 tr=0 ts=6ae38710 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=QOY8BskYDu05dfarAz2gNQ==:17
+ a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=bDN84i_9AAAA:8 a=EUspDBNiAAAA:8 a=bbsZSauHe3uP5S6po8IA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22 a=J2PsDwZO0S0EpbpLmD-j:22
+X-Proofpoint-ORIG-GUID: _zGJzycRThVmQ6_ZWuIp4bnFXnYEzdfj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
  definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
- spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ phishscore=0 malwarescore=0 spamscore=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2610190000 definitions=main-2610290069
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -152,115 +152,44 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Test SLLV, SRLV and SRAV.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- tests/tcg/mipsel/test_mips32r6_shift.c | 74 ++++++++++++++++++++++++++
- tests/tcg/mipsel/meson.build           |  1 +
- 2 files changed, 75 insertions(+)
- create mode 100644 tests/tcg/mipsel/test_mips32r6_shift.c
 
-diff --git a/tests/tcg/mipsel/test_mips32r6_shift.c b/tests/tcg/mipsel/test_mips32r6_shift.c
-new file mode 100644
-index 000000000000..c4389b5d232a
---- /dev/null
-+++ b/tests/tcg/mipsel/test_mips32r6_shift.c
-@@ -0,0 +1,74 @@
-+/*
-+ * MIPS32R6 tests: shift instructions
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdio.h>
-+#include <stdint.h>
-+
-+#include "../mips/include/wrappers_mips32r6.h"
-+#include "../mips/include/test_inputs_32.h"
-+
-+typedef void (*binary_op_32)(const uint32_t *, const uint32_t *, uint32_t *);
-+typedef uint32_t (*ref_op_32)(uint32_t, uint32_t);
-+
-+/* Only the low 5 bits of the shift amount (rs) are used. */
-+static uint32_t ref_sllv(uint32_t a, uint32_t b) { return a << (b & 31); }
-+static uint32_t ref_srlv(uint32_t a, uint32_t b) { return a >> (b & 31); }
-+static uint32_t ref_srav(uint32_t a, uint32_t b)
-+{
-+    return (uint32_t)((int32_t)a >> (b & 31));
-+}
-+
-+static int check_one(const char *name, binary_op_32 op, ref_op_32 ref,
-+                     uint32_t a, uint32_t b)
-+{
-+    uint32_t res = 0;
-+
-+    op(&a, &b, &res);
-+    if (res != ref(a, b)) {
-+        printf("# %s: %08x, %08x: got %08x expected %08x\n",
-+               name, a, b, res, ref(a, b));
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+static int run(const char *name, binary_op_32 op, ref_op_32 ref)
-+{
-+    static int count;
-+    int ret = 0;
-+
-+    /* Value/amount pairs from the input tables. */
-+    for (size_t i = 0; i < PATTERN_INPUTS_32_SHORT_COUNT; i++) {
-+        for (size_t j = 0; j < PATTERN_INPUTS_32_SHORT_COUNT; j++) {
-+            ret |= check_one(name, op, ref, b32_pattern[i], b32_pattern[j]);
-+        }
-+    }
-+    for (size_t i = 0; i < RANDOM_INPUTS_32_SHORT_COUNT; i++) {
-+        for (size_t j = 0; j < RANDOM_INPUTS_32_SHORT_COUNT; j++) {
-+            ret |= check_one(name, op, ref, b32_random[i], b32_random[j]);
-+        }
-+    }
-+    /* Every shift amount (including ones with ignored high bits). */
-+    for (size_t i = 0; i < PATTERN_INPUTS_32_SHORT_COUNT; i++) {
-+        for (uint32_t sa = 0; sa < 64; sa++) {
-+            ret |= check_one(name, op, ref, b32_pattern[i], sa);
-+        }
-+    }
-+    printf("%s %d - MIPS32R6 shift %s\n", ret ? "not ok" : "ok", ++count, name);
-+    return ret;
-+}
-+
-+int main(void)
-+{
-+    int ret = 0;
-+
-+    printf("TAP version 14\n1..3\n");
-+    ret |= run("SLLV", do_mips32r6_SLLV, ref_sllv);
-+    ret |= run("SRLV", do_mips32r6_SRLV, ref_srlv);
-+    ret |= run("SRAV", do_mips32r6_SRAV, ref_srav);
-+
-+    return ret ? 1 : 0;
-+}
-diff --git a/tests/tcg/mipsel/meson.build b/tests/tcg/mipsel/meson.build
-index 5553ae33aec0..7a6dff32cbf4 100644
---- a/tests/tcg/mipsel/meson.build
-+++ b/tests/tcg/mipsel/meson.build
-@@ -89,6 +89,7 @@ tests = []
- 
- tests_mips32r6 = [
-   'test_mips32r6_logic.c',
-+  'test_mips32r6_shift.c',
- ]
- 
- foreach src: tests_mips32r6
--- 
-2.55.0
+On 10/24/2026 9:02 AM, GavinQin wrote:
+> gen_amo() only applies the Zama16b atomicity requirement to accesses
+> of at least 32 bits. Halfword AMOs therefore retain MO_ALIGN and
+> raise an address-misaligned exception even when the access is
+> contained within a naturally aligned 16-byte granule.
+> 
+> Include halfword accesses in the existing Zama16b handling.
+> 
+> Signed-off-by: GavinQin <qinzhengxiang@foxmail.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   target/riscv/tcg/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/tcg/translate.c b/target/riscv/tcg/translate.c
+> index ede9c2563f..70c1088338 100644
+> --- a/target/riscv/tcg/translate.c
+> +++ b/target/riscv/tcg/translate.c
+> @@ -1159,7 +1159,7 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+>       MemOp size = mop & MO_SIZE;
+>   
+>       mop |= ctx->mo_endianness;
+> -    if (ctx->cfg_ptr->ext_zama16b && size >= MO_32) {
+> +    if (ctx->cfg_ptr->ext_zama16b && size >= MO_16) {
+>           mop |= MO_ATOM_WITHIN16;
+>       } else {
+>           mop |= MO_ALIGN;
 
 
