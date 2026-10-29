@@ -1,148 +1,82 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EFA606A324
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 11:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A2F606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 11:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=mPA0Hinj;
-	dkim=pass (2048-bit key, unprotected) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.a=rsa-sha256 header.s=google header.b=D3xaM1b6
+	dkim=pass (1024-bit key, unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=cT9y1PHf
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMOg0-0006NT-9B; Thu, 29 Oct 2026 07:52:12 -0400
+	id 1xMOjU-0007Ic-28; Thu, 29 Oct 2026 07:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMOfx-0006NG-0i
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 07:52:09 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xMOjM-0007Hc-I4
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 07:55:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1xMOfv-0005rx-1p
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 07:52:08 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69T8vCUM2912438
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 11:52:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rUWrSWFRRwrzwwP7XR2j308k8VdiOEXOGO7IzPr+ozk=; b=mPA0HinjEgON3B4E
- LzZAh0T9UV0SEg8jQqis3yCHpazPXtcqYXoCyyAVTM1353qoqFAmWNW8VjM2EizU
- Zt7TrzeSy0oWh9iAJHerxOx8TpeI3V2WJ8FZw1b2aWGvutk5uHZQueDdByQ7GCgw
- 0Po5gwCMt6EGmG92OcI+i3EFhI4Kf9M8pF2ZeXUXZttJBt9lKetwp1fYdkHgt5fy
- hjVRZiB65B5yRvT3gxs06jwge06AxiP4iSTivN4TUHn+FPAmmaQvn6/V88Qc8oGV
- 6Ne49/Glr+0eo87ymbHEln/UDdn18NlV7exaQuySxziY3F6IU5L6JHs3kjqIoFki
- 4Mgmpg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hknb2bske-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 11:52:04 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-93caf7856ffso462319485a.3
- for <qemu-devel@nongnu.org>; Thu, 29 Oct 2026 04:52:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1793274724; x=1793879524; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rUWrSWFRRwrzwwP7XR2j308k8VdiOEXOGO7IzPr+ozk=;
- b=D3xaM1b623odyga/pwYtthAA/fzXe09Ge/HSIdbF/gheL0phBQgK3wokWtV3rhBWWj
- tdiUTS94BFtDTuKDjqj8kvK6yS/nhZPYUli8tD9tXFTvE1HrBYiMdfffSch91xDJWg3R
- s2keP4vEnd8w3pPu3i67lYTnFgEP1aiWnAhuYXuCtkw84l3l2WWE6xvjVp83TeFaIgSh
- P74ckQohkXX9Sp/M5syPbbqJYuM7pMj/0oHjrgcr0v0cDD2DoZ8p1j6TDu6KsDIOsXfP
- rnY/3XBVxHKGDD6uELslt6q9Kpn0P4yMg73lM9lGMXepxSJgUXox3e3l9ol8TqE191sJ
- 1u0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20260707; t=1793274724; x=1793879524;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rUWrSWFRRwrzwwP7XR2j308k8VdiOEXOGO7IzPr+ozk=;
- b=YDMBPwO9s7O6HftkYuGDjEI3h3pOi34NWAmm8F/TKJB7qQvR8b6iWt3QrHAiSi/hkc
- VaX6VV0UeimwK4zPgK6KiMMKUvsjf/4asfgaN17jKHmVRBTYqrO9Lqvtf5ebivLCVMpE
- o9gyzF2GtHG6ikEgvaXX/7AC5vfhJlBXmi+BJx6odRuw/ZnseSUKQbQ6I4s5UGOfzNbr
- yHSgR4KI+1Hbf4zcv83CPBgQucOS2DFdLALt5fTmymbbzs8QkilL2lKJNtysjurbxFDw
- C755I+4uSMa7VIVQdXD75d9KEA/6DaLptqauKbavFE4TO8d5Wbatrm4UayP9UQ7nM5Z4
- hTog==
-X-Forwarded-Encrypted: i=1;
- AKwUvBwMV3t0OrMm0zdZxi9EYeReQYhXbjZd2PpUEAnjC5RLWueyHXW6gqwqxJ+ombC88Uv49hnoryaT6VGd@nongnu.org
-X-Gm-Message-State: AFq9FYLxQnEVMWoimQxjwUcQ1NFy2uaY5yoq1Sf8E4IEWEAT3SSxOze8
- vhMblTxqI46wXBjJSkpw075DuGJ3CRUjeJu9bIIySixCVxrHgRqwIPipBn8Fm1zuAF9nR2mHoqy
- XPP9nxsQQv81rTKB/D7qU8WRi+t3yQLmqUzLtBALpjqRgHYqSwxB2VHrLAg==
-X-Gm-Gg: AYBFou14G8t0nvJ8hLLArkXcoK2vnmfg5kkjWZCGadkW0qapHcCKWOZe5Uy96WWWuB2
- 7iPFeYd1RRDOqPy29s+/ZOD0/y/D9ahcshIa6NN7Qdjki6eIQbeUHdMRXKS7dehJa5uODnnpQSH
- 7Qrw1xubomE/CvibVn28JM8ipAWL7bZ4/p/qBH73ky/q1R0ZW86BB3gs0FWgVfpGyPSOZ4N/KIF
- tSTGBiFYdFynAzFyQh1eUXnTSzXcOqixjIkxiWrlziz95JgtoHR7l288OoZqTY0J7D9rm/YgTXi
- O7Uzs3jbUSZrPcBLTiU1S/XXKD47/0mCWOpIWk9mlF6PzJbHc3xe9ti+ScWQCpRHOE27D47rF6b
- YhliedTCP4fIIQUThgsYrYi5PsGB79Vme38H7XTptsWYVESq0Tf0Qs5tWDkSUlj1P1wRqZQofsf
- XKFcBESDoLndEwaHowahavbtE=
-X-Received: by 2002:a05:620a:2a03:b0:93f:25c7:a4e1 with SMTP id
- af79cd13be357-94408a5f806mr807364785a.26.1793274723559; 
- Thu, 29 Oct 2026 04:52:03 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a03:b0:93f:25c7:a4e1 with SMTP id
- af79cd13be357-94408a5f806mr807360885a.26.1793274723023; 
- Thu, 29 Oct 2026 04:52:03 -0700 (PDT)
-Received: from [192.168.69.229] (82-67-153-177.subs.proxad.net.
- [82.67.153.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4aa7ee57589sm68733605e9.2.2026.10.29.04.52.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Oct 2026 04:52:02 -0700 (PDT)
-Message-ID: <8edbe136-24ea-4066-81e6-b2820b9f3de3@oss.qualcomm.com>
-Date: Thu, 29 Oct 2026 12:52:01 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1xMOjJ-0006F5-Oa
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 07:55:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1793274936;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NHdIpqvMMAsA80YZfJe72DfDYFD5zb5YjVD+x3Q9yCY=;
+ b=cT9y1PHfT4ty/QqO3/+7A7UC9RJDaX4I0T3yu0yc9SZV02HeT4En83/PIuqNmy7J+MNELG
+ h3WkSuwjd9DpLF6DWaFMdvpEl4ubTwHD1rjDaSr4KdhQXcB080+jmnzDsBVmzqDj76OysK
+ 1iOaKm8uv7wNM33tDryb4jB4yj+QAAw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-kMa1NsCoMRCsX4wWKVOdrQ-1; Thu,
+ 29 Oct 2026 07:55:34 -0400
+X-MC-Unique: kMa1NsCoMRCsX4wWKVOdrQ-1
+X-Mimecast-MFC-AGG-ID: kMa1NsCoMRCsX4wWKVOdrQ_1793274933
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D6411956061; Thu, 29 Oct 2026 11:55:32 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7EA1C472; Thu, 29 Oct 2026 11:55:31 +0000 (UTC)
+Date: Thu, 29 Oct 2026 07:55:30 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 0/4] docs/devel, AGENTS.md: a completely new policy on
+ AI-generated contributions
+Message-ID: <20261029115530.GA1505075@shajnocz.csb>
+References: <20260930085433.830743-1-pbonzini@redhat.com>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/loongarch: Replace kvm_cpu_has_msgint() with
- cpu_has_msgint()
-Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20261029085654.78806-1-maobibo@loongson.cn>
- <20261029085654.78806-2-maobibo@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20261029085654.78806-2-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Yu2a1IYX c=1 sm=1 tr=0 ts=6ae33364 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=nz36NW0qrpeEijYxj/H2Ew==:17
- a=IkcTkHD0fZMA:10 a=660iZSQnnn4A:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=tdkB5wmZ504VIhczwYgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: 1Wj4Cw7LwD3mxZAfjwI2dtq_ObE8Iyfb
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA0NiBTYWx0ZWRfX6UcHQHE/HNU7
- G6S06vqorouF9fipcChVnMsKD4fG+ZwXUPm0wnk+3eJgDq7dS+gJuad/OSUAKWZXAxSIHsd7Vg1
- yocmwSLyLCYTbxCYQRibegWhs13z1i8=
-X-Proofpoint-GUID: 1Wj4Cw7LwD3mxZAfjwI2dtq_ObE8Iyfb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA0NiBTYWx0ZWRfX1ONy4p+H+K3E
- /mVqFEYgUi4gJ5zMHYb6pQCGjScRg9En62HuP53t7ZhWsz/82jkGSCQNnInG0CBQDo8y5RMbHoY
- aIsD/dt5/Yd4GtwhP/VEA531GV4tsAFcudCeG9FpoebaGS8dfGCSZctyoCzdcNRSPGW5isV2UA8
- /GbPH4xFrrvUWXI1OmRmZb8hXGQ3ovLzqlOLufzKgPFb8valTPmF8TKvWqNJ6npdY1VuZjnud6x
- tUwVvYspjsQXk6y8bdzkoNIGKT596xKohHZh9s6pROA2r3/USgQfD9N1gWp3IGzbRuDcewYTgdh
- bSOftvYyTPw/7kTxNMsXCrnckL4vh1EQlDOgTOH74zlYSVfDvSC+r8Q6aP1bteBSqssb3JtjOz/
- 44ZwpZZxLEcK2ueILgEVL8T42AwJ5oEKh89h8OmpXCG+UD1/JlZRlUQaclU5/O+3bN4W4Ew0tQs
- Q04xEOKnY7+SjogJ3Dw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-29_03,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 malwarescore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 phishscore=0 impostorscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2610190000
- definitions=main-2610290046
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260930085433.830743-1-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,29 +88,113 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=4.0.1
+	SPF_PASS autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-On 29/10/26 09:56, Bibo Mao wrote:
-> target/loongarch: Use cpu_has_msgint() and FIELD_EX32 for cpucfg
+On Wed, Sep 30, 2026 at 10:54:29AM +0200, Paolo Bonzini wrote:
+> Based on the previous discussions, I am finally attempting a non-RFC
+> version of the new AI policy.  Discussion on v3 introduced interesting
+> points on attestation and I think a consensus is forming.
 > 
-> cpu_has_msgint() is more generic and can be used in TCG mode, so use it
-> instead of the KVM-specific feature check.
+> Why review the policy?  The blanket ban no longer reflects reality, since
+> contributors have been posting AI-generated patches or even larger series.
+> This was done most likely in good faith, as these submissions predated
+> the introduction of an AGENTS.md file, and it shows that AI can be used
+> for useful and creative work on QEMU.
 > 
-> The cpucfg register is 32 bits wide; use FIELD_EX32() rather than
-> FIELD_EX64() when extracting its fields.
+> Rather than expecting maintainers to police these contributors, the new
+> policy seeks to ensure that AI usage helps us produce better code rather
+> than simply move faster and flood us with dubious work.  In the words
+> of Warner Losh, we want to avoid "free as in puppy" contributions[1]
+> that increase the load of present and future maintainers by adding
+> technical debt.
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu.h     |  6 ++++++
->   target/loongarch/kvm/kvm.c | 11 ++---------
->   target/loongarch/machine.c |  2 +-
->   3 files changed, 9 insertions(+), 10 deletions(-)
+> This is not a free-for-all.  To avoid maintainer burnout, AI
+> contributions must be grounded in respect for maintainers and in the
+> existing contribution process.  Large, heavily AI-assisted contributions
+> require pre-arrangement with the relevant subsystem maintainers, and
+> will be held to a higher standard.
+> 
+> One of the reasons for the old policy was the issue of code provenance
+> and the impossibility to certify the originality of code created by
+> AI/LLM tools.  The new policy tries to adopt a "Swiss cheese"
+> approach to mitigating the risks implicit in accepting AI-generated code
+> in three ways:
+> 
+> 1) by requiring pre-arrangement for larger contributions, and making
+> maintainers free to apply their own considerations (see [2] for a good
+> list).  Maintainers' preferences bring experience and creative thought
+> into the process, and contributors must take them into account.
+> 
+> 2) by introducing agent instructions that help the contributor drive
+> the design and understand the code produced by the LLM;
+> 
+> 3) by introducing an "AI-used-for" trailer that scopes areas where
+> Signed-off-by cannot guarantee full control of provenance.
+> 
+> This series reflects feedback from earlier requests for comments, and
+> even earlier discussions with members of the QEMU community.  Thanks to
+> everyone who provided feedback on earlier drafts.
+> 
+> Paolo
+> 
+> v3->v4:
+> - rework opening text [Daniel]
+> - exempt "official project agents" from not being able to post to
+>   GitLab [Alex]
+> - explicitly forbid clean room reimplementation [Kevin/Daniel]
+> - remove "The DCO still certifies that the contributor has the legal
+>   right to submit code in general" paragraph, replace with a note
+>   that "AI-used-for" attests respecting the policies and is considered
+>   enough for DCO [Daniel, Kevin]
+> - make the requirement to "understand and explain your changes"
+>   more prominent
+> - small edits for grammar and clarity
+> 
+> v2->v3:
+> - remove parser example, replace with "adaptations of existing code"
+> - when LLMs are used for boilerplate, "highly recommend" disclosure
+>   for "non-trivial, functional code".  The idea here is to avoid
+>   having to disclose using AI to apply e.g. changes related to
+>   automatic code review, and leaving people some leeway.
+> - clarify split between DCO (legal right to submit code in general)
+>   and AI-used-for acknowledging that the submitter cannot audit LLM
+>   output against e.g. the training data.
+> - clarify the defense-in-depth/swiss-cheese approach to limit the
+>   risk of copyright violations from LLM output
+> - mention that pre-arrangement is not an entirely new concept
+> - mention that maintainers can demand larger changes than for human-written code
+> - do not mention inclusion of the prompt
+> - add checkpatch.pl hunk, changing the phrasing of "no AI" lint
+> - rebase AGENTS.md on top of existing file, split
+> - drop CLAUDE.md/GEMINI.md symlinks, already done via .claude/.gemini
+> 
+> [1] https://lore.kernel.org/qemu-devel/CANCZdfrTwfrK0wnuL2cPVF_9W2-8PXtJeHkgkTP+Uv2sT8s0Ng@mail.gmail.com/
+> [2] https://lore.kernel.org/qemu-devel/CAFEAcA860fF_+ffk=cXiYyFoQo0wCSUJ6b=7nVLLCwKhP6Nwxw@mail.gmail.com/
+> 
+> Paolo Bonzini (4):
+>   docs/devel: relax policy on AI-generated contributions
+>   AGENTS.md: add final instructions
+>   AGENTS.md: let agents know what the participation rules are
+>   AGENTS.md: make the human part of the design process
+> 
+>  docs/devel/code-provenance.rst |  71 +----------
+>  docs/devel/index-process.rst   |   1 +
+>  docs/devel/llm-usage.rst       | 213 +++++++++++++++++++++++++++++++++
+>  AGENTS.md                      | 137 +++++++++++++++++++--
+>  scripts/checkpatch.pl          |   5 +-
+>  5 files changed, 347 insertions(+), 80 deletions(-)
+>  create mode 100644 docs/devel/llm-usage.rst
+> 
+> -- 
+> 2.55.0
+> 
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
 
