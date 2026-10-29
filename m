@@ -1,108 +1,89 @@
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F873606A31A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509BF606A31A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Oct 2026 17:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=qualcomm.com header.i=@qualcomm.com header.a=rsa-sha256 header.s=qcppdkim1 header.b=eucrxfDz
+	dkim=fail reason="signature verification failed" (2048-bit key, unprotected) header.d=korins.ky header.i=@korins.ky header.a=rsa-sha256 header.s=20240125rsa header.b=U7rnPjaF;
+	dkim=fail reason="signature verification failed" header.d=korins.ky header.i=@korins.ky header.a=ed25519-sha256 header.s=20240125ed25519 header.b=5H+psVfn
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1xMUBo-0008L3-FT; Thu, 29 Oct 2026 13:45:25 -0400
+	id 1xMU9j-0004vE-Ft; Thu, 29 Oct 2026 13:43:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xMUB9-0006qG-8e
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:48 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8i-0003aS-F0
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:17 -0400
+Received: from mx1.catap.net ([2a01:4f8:271:125e::2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mliebel@qualcomm.com>)
- id 1xMUAr-0003bp-Mi
- for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:44:35 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69TGDPN6594499; Thu, 29 Oct 2026 17:44:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=CXHgyny/ELk
- /Y6GulanFGtvOh+TwarN6zI5O2GcxFJo=; b=eucrxfDzyrJz/oowjdLmmOIJLoj
- isgCtfcTra8T0MdSyMDeg2sET0FfID0pXf0/mIHoftTeq0ctb+h9PEJ5i1cmYG+j
- 3qr9DeGc7GcxvXNyr3yDSrCmG+15M2x3UfSyLPSUgKx1jWCEZ3nIHEyKhjPJzAwL
- gO4z0jNMzQVSHSZmtwd0yYNZQFcPpjEw7Cirld7x2+NoviT+UCZyRnYOJZbPY4ks
- caKzCTySsvio3NFmu7qH2Or7e1ZqUAyBOKvLcF+U8N0dwXCJyTEXY3BjNkk/v+rT
- nTgS2Jo5kHLjKCDZ/FA9e4a7MUa11bK1hbVd44cVz5ieRMeiD1TR1z4QKFQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4hkut3kt91-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 29 Oct 2026 17:44:15 +0000 (GMT)
-Received: from pps.filterd (nalasppmta04.qualcomm.com [127.0.0.1])
- by NALASPPMTA04.qualcomm.com (8.18.1.11/8.18.1.11) with ESMTP id
- 69THiF3i2549285; Thu, 29 Oct 2026 17:44:15 GMT
-Received: from hu-devc-lv-u24-a.qualcomm.com (hu-mliebel-lv.qualcomm.com
- [10.81.81.31])
- by NALASPPMTA04.qualcomm.com (PPS) with ESMTPS id 69THiEfl2549264
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Thu, 29 Oct 2026 17:44:14 +0000 (GMT)
-Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 4282937)
- id C1EF325851; Thu, 29 Oct 2026 10:44:13 -0700 (PDT)
-From: Marco Liebel <marco.liebel@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Marco Liebel <marco.liebel@oss.qualcomm.com>
-Subject: [PATCH 18/20] target/hexagon: expose HLX registers through the gdbstub
-Date: Thu, 29 Oct 2026 10:44:11 -0700
-Message-ID: <20261029174413.643130-19-marco.liebel@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
-References: <20261029174413.643130-1-marco.liebel@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>) id 1xMU8c-0003HD-D6
+ for qemu-devel@nongnu.org; Thu, 29 Oct 2026 13:42:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Kyi7+Lb
+ rusdaI3d9CR0ipFSuy/Z/lLDCu7SPijQkOrxVuqrFi3Jpy8PlEo5Bd/X2fNi+R21PPOBfo
+ VdvQHiJ8TZthdXKPycKjJBZoRafbpD7mDA3Z8JGoT0vaSMbtw1oSmFsBhDGlDWhRc0iqfd
+ pj5cMjC4ZN1QZB94kK0zfUOvmDQEeyJ6n/leGppvON/dEQPMpA0g/J1/oTmUXxH+5mfkrz
+ Cu3aq7O5M7cdyjso6QoWDc14hH577X5CB++T8D0vY0Wtf9T2o9IE/KGE8A+kpU4dW6h7ZC
+ 0McD57xjL8qCwCPw2Ge17U8Ze+bGc4kCopUj983ATE2FVrWVMs8ZdUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=+
+ HXg0ZkTW5fvTDj9En9rifQ7KSTeAyiK9bLOK3tK8gA=;
+ h=references:in-reply-to:
+ date:subject:cc:to:from:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=qmLspoWAbhYTwB3h63ofxogbJKh1TCfp/aXJGOoOLdIeEQoCWF4BqFe5PE6oYQKVkDCn
+ n3MYLDCoB3TvOvXW19ZpQpVV3XU3bUyyhDuWiwsN7pnXey/I1JgkffrQivK5RHCPhb74iZ
+ jIhA0+exYP3GflcrTix2p3fjwJhoQDYwTWBSzHQ+9lBt9hRyeFcF3/wRX1gaMzpIVurnjN
+ 6iVNTKuBHT568P5gTgzGfUFzgAZ6qovgy9CWp0yD0ko6CRJQ/FYDzsdmj12gzfEU++lgWk
+ AWNP0MX0hj69ELUSITTc9GUlSlqflwu/IhsKZsu/iLcdDma48UU6O55ABdgXF2lg==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=U7rnPjaF; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=5H+psVfn;
+ arc=none; iprev=pass; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=+HXg0ZkT
+ W5fvTDj9En9rifQ7KSTeAyiK9bLOK3tK8gA=;
+ h=references:in-reply-to:date:
+ subject:cc:to:from; d=korins.ky; b=U7rnPjaF66HAsnyTCe1gUP9f6uG8Coxpttl
+ 7a0RtAGoEi8rLUO03XVCbhk4s3NOqwQZtOjyLrm6XqrfcrguvVob4j/j1dXi9400nHevPf
+ 0p1pxySylGdCb9fcZfzXsfIYv8ClXaeGLoZNWH+C3YWY555HEiTgPfb6UCBl/zjLMlPTRU
+ ydUSAULOgYXRcNq85mbvHU7g8wyBhl2QnZB6H0c0s/T1gLy8hV6TANlQC9Y3RJJUbLj39a
+ xN4S++g2B0Rk/UqegrhZtB1X7MXlHoKzge+U/QsJKQTDWyh9AgIRbmubiU+EAq49BEJSFb
+ RXmJHxy1wM/0GTw4btZELjC5EUA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=+HXg0ZkTW5fvTDj9En9rifQ7KSTeAyiK9bLOK3tK8gA=; h=references:
+ in-reply-to:date:subject:cc:to:from; d=korins.ky; b=5H+psVfnunPVUhNz3G
+ RR76W8f9UGGelPlQLApIHj7J5zgDxNFUw+gsebzbLVKo9LGEc3UrtxB6E72oWeLCMsCw==
+Received: by mx1.catap.net (OpenSMTPD) id 42ff5f44;
+ Thu, 29 Oct 2026 18:41:54 +0100 (CET)
+Received: from localhost (matebook.home.arpa [local])
+ by matebook.home.arpa (OpenSMTPD) with ESMTPA id a8ec8464;
+ Thu, 29 Oct 2026 18:41:48 +0100 (CET)
+From: "Kirill A. Korinsky" <kirill@korins.ky>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, qemu-devel@nongnu.org
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>
+Subject: [PATCH v5 15/26] hw/mips: add Octeon CSR window
+Date: Thu, 29 Oct 2026 18:36:15 +0100
+Message-ID: <20261029174139.44302-16-kirill@korins.ky>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261029174139.44302-1-kirill@korins.ky>
+References: <20261029174139.44302-1-kirill@korins.ky>
 X-Archived-By: <archiver.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Info: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX3bWrnAR3Xw89
- 3SyknniITu6m7pfZCf4RfYxM49Z63XlPc1+UjHkEVvg+tvvq1WGt9/mbGQlMJkmWO9xJXUWLcvO
- 1Dvqp20mVfyyLmTJrPN3EkOzJ+cHQgc=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYxMDI5MDA2OSBTYWx0ZWRfX8R9vJfQtlqMe
- u75QUd3+X7dpQmLF+8RkC/scSBihSqXM0dl59gBBvaPpwuwgUv9FkHQYPSgW657keI7q4DbOlU8
- JidZLMNw80JWtGPWkknfnABX+Ce5ErdsyItbBQ7Awak8aFHi+3+gg9C7gN3y19WgA/H+MF6VIkG
- MM9iXY2SUym1r4HfD8JZlLYFyEgJ+x609EUuZ7sByxwibagc8SAdzzabGkQfi9A3z2B1Xp7Eie+
- v0KsOHAVLdqykL5dUrMVx/VIW5itwGMCp8JuzSHQj6pxF0KzjMDbl63cqns8U0YO42LER52INn8
- gHtWCuLD2BlDWCxdAPxo2aMcJJnwbU+nmL+A8C1RRwKVLQ+oFR8+dV+6h5J9/9REoL0nPgGrAmC
- afLq2lZTCvxf0f9Pje2QI0V+n6KW+GS+p29nPzuLjHMdUM0MyfWRFCCrDAj0jpWzJVgqMX48BTl
- 7ORpJt+E81QvBWz8J1A==
-X-Proofpoint-ORIG-GUID: BST9VnUJfiOAKxSouvQYFwY9bQcFb41O
-X-Proofpoint-GUID: BST9VnUJfiOAKxSouvQYFwY9bQcFb41O
-X-Authority-Analysis: v=2.4 cv=HYSB3SE8 c=1 sm=1 tr=0 ts=6ae385ef cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=660iZSQnnn4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yOCtJkima9RkubShWh1s:22 a=eU0e3LhYAAAA:20 a=EUspDBNiAAAA:8
- a=QDXhLjxQveKjMNXUhXgA:9 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.138,FMLib:17.12.100.49
- definitions=2026-10-29_05,2026-10-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0 clxscore=1015
- spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2610190000 definitions=main-2610290069
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=mliebel@qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a01:4f8:271:125e::2;
+ envelope-from=kirill@korins.ky; helo=mx1.catap.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, KHOP_DYNAMIC=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,212 +95,288 @@ List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-X-Spam-Status: No, score=-21.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_PASS,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
+X-Spam-Status: No, score=-16.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_PASS,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=4.0.1
 X-Spam-Checker-Version: SpamAssassin 4.0.1 (2024-03-26) on
 	aws-us-west-2-korg-listserv-alma10-1
 
-Add GDB register access for the active HLX context and register the
-feature for V85 CPUs with HLX support.
+Add the shared CSR window and backing register storage. Keep mutable
+state in a resettable CSR bank device so later controllers can route
+their registers through it.
 
-Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 ---
- configs/targets/hexagon-linux-user.mak |  2 +-
- configs/targets/hexagon-softmmu.mak    |  2 +-
- gdbstub/gdb-xml/hexagon-hlx.xml        | 51 ++++++++++++++++++++++++++
- target/hexagon/cpu.c                   | 18 +++++++++
- target/hexagon/gdbstub.c               | 46 +++++++++++++++++++++++
- target/hexagon/internal.h              |  2 +
- 6 files changed, 119 insertions(+), 2 deletions(-)
- create mode 100644 gdbstub/gdb-xml/hexagon-hlx.xml
+ hw/mips/octeon.c          | 146 ++++++++++++++++++++++++++++++++++++++
+ hw/mips/octeon_internal.h |   7 ++
+ 2 files changed, 153 insertions(+)
 
-diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexagon-linux-user.mak
-index 51fde5d60e..10ae1943a5 100644
---- a/configs/targets/hexagon-linux-user.mak
-+++ b/configs/targets/hexagon-linux-user.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=hexagon
--TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml
-+TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml hexagon-hlx.xml
- TARGET_SYSTBL=syscall.tbl
- TARGET_SYSTBL_ABI=common,32,hexagon,time32,stat64,rlimit,renameat
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/hexagon-softmmu.mak b/configs/targets/hexagon-softmmu.mak
-index 1ba6420d20..8c3a9cd4b1 100644
---- a/configs/targets/hexagon-softmmu.mak
-+++ b/configs/targets/hexagon-softmmu.mak
-@@ -1,7 +1,7 @@
- # Default configuration for hexagon-softmmu
+diff --git a/hw/mips/octeon.c b/hw/mips/octeon.c
+index 638d96559f..0caf088adf 100644
+--- a/hw/mips/octeon.c
++++ b/hw/mips/octeon.c
+@@ -41,6 +41,8 @@ OBJECT_DECLARE_TYPE(OcteonPeripheralState, OcteonPeripheralClass,
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonRstState, OCTEON_RST)
+ #define TYPE_OCTEON_INTC "octeon-intc"
+ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
++#define TYPE_OCTEON_CSR_BANK "octeon-csr-bank"
++OBJECT_DECLARE_SIMPLE_TYPE(OcteonCsrBankState, OCTEON_CSR_BANK)
  
- TARGET_ARCH=hexagon
--TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml hexagon-sys.xml
-+TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml hexagon-sys.xml hexagon-hlx.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/gdbstub/gdb-xml/hexagon-hlx.xml b/gdbstub/gdb-xml/hexagon-hlx.xml
-new file mode 100644
-index 0000000000..91040762ea
---- /dev/null
-+++ b/gdbstub/gdb-xml/hexagon-hlx.xml
-@@ -0,0 +1,51 @@
-+<?xml version="1.0"?>
-+<!--
-+  Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+  SPDX-License-Identifier: GPL-2.0-or-later
+ #define OCTEON_CSR_64BIT_SIZE       8
+ 
+@@ -120,6 +122,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(OcteonIntcState, OCTEON_INTC)
+ #define OCTEON_CIU3_ISC_SIZE        (OCTEON_CIU3_NINTSN * 8)
+ #define OCTEON_CIU3_MBOX_INTSN(cpu) ((cpu) + 0x4000U)
+ #define OCTEON_CIU3_UART0_INTSN     0x8000
++#define OCTEON_CSR_BASE             0x1180000000000ULL
++#define OCTEON_CSR_SIZE             0x100000000ULL
+ /*
+  * QEMU-only backing for per-core CVMSEG. Keep it outside guest DRAM;
+  * the guest sees the virtual CVMSEG window, not this physical address.
+@@ -187,6 +191,24 @@ struct OcteonIntcState {
+     uint8_t ciu3_irq_line[OCTEON_MAX_CPUS][OCTEON_CIU3_CP0_IRQ_COUNT];
+ };
+ 
++struct OcteonCsrBankState {
++    OcteonPeripheralState parent_obj;
++    MemoryRegion csr;
++    GHashTable *values;
++};
 +
-+  LLDB uses fields that GDB can ignore. See:
-+  https://github.com/llvm/llvm-project/blob/287aa6c4536408413b860e61fca0318a27214cf3/lldb/docs/lldb-gdb-remote.txt#L738-L860
-+-->
++guint octeon_uint64_hash(gconstpointer v)
++{
++    uint64_t value = *(const uint64_t *)v;
 +
-+<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-+<feature name="org.gnu.gdb.hexagon.hlx">
++    return value ^ (value >> 32);
++}
 +
-+  <!-- Sixteen 2048-byte HLX L-registers. -->
-+  <vector id="hlx_ud" type="uint64" count="256"/>
-+  <vector id="hlx_d"  type="int64"  count="256"/>
-+  <vector id="hlx_uw" type="uint32" count="512"/>
-+  <vector id="hlx_w"  type="int32"  count="512"/>
-+  <vector id="hlx_uh" type="uint16" count="1024"/>
-+  <vector id="hlx_h"  type="int16"  count="1024"/>
-+  <vector id="hlx_ub" type="uint8"  count="2048"/>
-+  <vector id="hlx_b"  type="int8"   count="2048"/>
-+  <union id="hlx_vec">
-+    <field name="ud" type="hlx_ud"/>
-+    <field name="d"  type="hlx_d"/>
-+    <field name="uw" type="hlx_uw"/>
-+    <field name="w"  type="hlx_w"/>
-+    <field name="uh" type="hlx_uh"/>
-+    <field name="h"  type="hlx_h"/>
-+    <field name="ub" type="hlx_ub"/>
-+    <field name="b"  type="hlx_b"/>
-+  </union>
++gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b)
++{
++    return *(const uint64_t *)a == *(const uint64_t *)b;
++}
 +
-+  <!-- dwarf_regnums 124-139 follow HVX q0-q3. -->
-+  <reg name="l0"  bitsize="16384" offset="0"     encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="124"/>
-+  <reg name="l1"  bitsize="16384" offset="2048"  encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="125"/>
-+  <reg name="l2"  bitsize="16384" offset="4096"  encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="126"/>
-+  <reg name="l3"  bitsize="16384" offset="6144"  encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="127"/>
-+  <reg name="l4"  bitsize="16384" offset="8192"  encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="128"/>
-+  <reg name="l5"  bitsize="16384" offset="10240" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="129"/>
-+  <reg name="l6"  bitsize="16384" offset="12288" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="130"/>
-+  <reg name="l7"  bitsize="16384" offset="14336" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="131"/>
-+  <reg name="l8"  bitsize="16384" offset="16384" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="132"/>
-+  <reg name="l9"  bitsize="16384" offset="18432" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="133"/>
-+  <reg name="l10" bitsize="16384" offset="20480" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="134"/>
-+  <reg name="l11" bitsize="16384" offset="22528" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="135"/>
-+  <reg name="l12" bitsize="16384" offset="24576" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="136"/>
-+  <reg name="l13" bitsize="16384" offset="26624" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="137"/>
-+  <reg name="l14" bitsize="16384" offset="28672" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="138"/>
-+  <reg name="l15" bitsize="16384" offset="30720" encoding="vector" format="hex" group="HLX Vector Registers" dwarf_regnum="139"/>
-+
-+</feature>
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index c3930ab4e4..dfa9e1d3af 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -540,6 +540,18 @@ static void hexagon_cpu_disas_set_info(const CPUState *cs,
-     info->target_info = &cpu->cfg;
+ uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size)
+ {
+     if (size == 4) {
+@@ -248,6 +270,38 @@ static void octeon_validate_clocks(OcteonMachineState *oms)
+     }
  }
  
-+static bool hexagon_cpu_has_hlx(HexagonCPU *cpu)
++bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value)
 +{
-+    if (cpu->cfg.hex_def->hex_version < HEX_VER_V85) {
++    uint64_t *stored = g_hash_table_lookup(regs, &reg);
++
++    if (!stored) {
 +        return false;
 +    }
-+#ifdef CONFIG_USER_ONLY
++
++    *value = *stored;
 +    return true;
-+#else
-+    return cpu->hlx && cpu->hlx->num_contexts > 0;
-+#endif
 +}
 +
- static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
++void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value)
++{
++    uint64_t *key = g_new(uint64_t, 1);
++    uint64_t *stored = g_new(uint64_t, 1);
++
++    *key = reg;
++    *stored = value;
++    g_hash_table_replace(regs, key, stored);
++}
++
++bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value)
++{
++    return octeon_reg_lookup(s->csr_bank->values, reg, value);
++}
++
++static void octeon_csr_store(OcteonState *s, uint64_t reg, uint64_t value)
++{
++    octeon_reg_store(s->csr_bank->values, reg, value);
++}
++
+ static bool octeon_ciu3_source_from_intsn(uint32_t intsn,
+                                           unsigned int *source)
  {
-     CPUState *cs = CPU(dev);
-@@ -559,6 +571,12 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
-                              hexagon_hvx_gdb_write_register,
-                              gdb_find_static_feature("hexagon-hvx.xml"));
+@@ -1022,6 +1076,42 @@ static const MemoryRegionOps octeon_ciu3_ops = {
+     },
+ };
  
-+    if (hexagon_cpu_has_hlx(cpu)) {
-+        gdb_register_coprocessor(cs, hexagon_hlx_gdb_read_register,
-+                                 hexagon_hlx_gdb_write_register,
-+                                 gdb_find_static_feature("hexagon-hlx.xml"));
-+    }
++static uint64_t octeon_csr_read(void *opaque, hwaddr addr, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t value;
 +
- #ifndef CONFIG_USER_ONLY
-     gdb_register_coprocessor(cs, hexagon_sys_gdb_read_register,
-                              hexagon_sys_gdb_write_register,
-diff --git a/target/hexagon/gdbstub.c b/target/hexagon/gdbstub.c
-index 5b79e42c4d..1065f3a826 100644
---- a/target/hexagon/gdbstub.c
-+++ b/target/hexagon/gdbstub.c
-@@ -217,3 +217,49 @@ int hexagon_hvx_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- 
-     g_assert_not_reached();
++    if (!octeon_csr_lookup(s, reg, &value)) {
++        value = 0;
++    }
++    return octeon_read64(value, addr, size);
++}
++
++static void octeon_csr_write(void *opaque, hwaddr addr,
++                             uint64_t value, unsigned size)
++{
++    OcteonState *s = opaque;
++    hwaddr reg = addr & ~7ULL;
++    uint64_t old;
++
++    if (!octeon_csr_lookup(s, reg, &old)) {
++        old = 0;
++    }
++    value = octeon_write64(old, addr, value, size);
++    octeon_csr_store(s, reg, value);
++}
++
++static const MemoryRegionOps octeon_csr_ops = {
++    .read = octeon_csr_read,
++    .write = octeon_csr_write,
++    .endianness = DEVICE_BIG_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++};
++
+ void octeon_irq_set(void *opaque, int irq, int level)
+ {
+     OcteonState *s = opaque;
+@@ -1294,6 +1384,18 @@ static void octeon_intc_reset_hold(Object *obj, ResetType type)
+     octeon_intc_update_all_cpus(s);
  }
-+
-+int hexagon_hlx_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ 
++static void octeon_csr_bank_reset_hold(Object *obj, ResetType type)
 +{
-+    CPUHexagonState *env = cpu_env(cs);
-+    int total = 0;
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_GET_CLASS(obj);
++    OcteonCsrBankState *bank = OCTEON_CSR_BANK(obj);
 +
-+    BQL_LOCK_GUARD();
-+
-+    if (n < 0 || n >= NUM_LREGS) {
-+        g_assert_not_reached();
++    if (opc->parent_phases.hold) {
++        opc->parent_phases.hold(obj, type);
 +    }
 +
-+    /* Return zeroes when no HLX context is active. */
-+    if (env->hlx_ctx == NULL) {
-+        for (int i = 0; i < HLX_VEC_SIZE_BYTES; i++) {
-+            g_byte_array_append(mem_buf, (const guint8 *)"\0", 1);
-+        }
-+        return HLX_VEC_SIZE_BYTES;
-+    }
-+
-+    for (int i = 0; i < (int)ARRAY_SIZE(env->hlx_ctx->LRegs[n].uw); i++) {
-+        total += gdb_get_reg32(mem_buf, env->hlx_ctx->LRegs[n].uw[i]);
-+    }
-+    return total;
++    g_hash_table_remove_all(bank->values);
 +}
 +
-+int hexagon_hlx_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ static void octeon_peripheral_class_init(ObjectClass *klass,
+                                           const void *data)
+ {
+@@ -1302,6 +1404,23 @@ static void octeon_peripheral_class_init(ObjectClass *klass,
+     dc->user_creatable = false;
+ }
+ 
++static GHashTable *octeon_reg_table_new(void)
 +{
-+    CPUHexagonState *env = cpu_env(cs);
-+    BQL_LOCK_GUARD();
-+
-+    if (n < 0 || n >= NUM_LREGS) {
-+        g_assert_not_reached();
-+    }
-+
-+    /* Ignore writes without an active context. */
-+    if (env->hlx_ctx == NULL) {
-+        return HLX_VEC_SIZE_BYTES;
-+    }
-+
-+    for (int i = 0; i < (int)ARRAY_SIZE(env->hlx_ctx->LRegs[n].uw); i++) {
-+        env->hlx_ctx->LRegs[n].uw[i] = ldl_le_p(mem_buf);
-+        mem_buf += 4;
-+    }
-+    return HLX_VEC_SIZE_BYTES;
++    return g_hash_table_new_full(octeon_uint64_hash,
++                                 octeon_uint64_equal,
++                                 g_free, g_free);
 +}
-diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-index 073de10284..6def331a83 100644
---- a/target/hexagon/internal.h
-+++ b/target/hexagon/internal.h
-@@ -24,6 +24,8 @@ int hexagon_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int hexagon_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- int hexagon_hvx_gdb_read_register(CPUState *env, GByteArray *mem_buf, int n);
- int hexagon_hvx_gdb_write_register(CPUState *env, uint8_t *mem_buf, int n);
-+int hexagon_hlx_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n);
-+int hexagon_hlx_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n);
- #ifndef CONFIG_USER_ONLY
- int hexagon_sys_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n);
- int hexagon_sys_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n);
++
++static void octeon_csr_bank_init(Object *obj)
++{
++    OCTEON_CSR_BANK(obj)->values = octeon_reg_table_new();
++}
++
++static void octeon_csr_bank_finalize(Object *obj)
++{
++    g_hash_table_destroy(OCTEON_CSR_BANK(obj)->values);
++}
++
+ static void octeon_rst_class_init(ObjectClass *klass, const void *data)
+ {
+     OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
+@@ -1320,6 +1439,16 @@ static void octeon_intc_class_init(ObjectClass *klass, const void *data)
+                                        NULL, &opc->parent_phases);
+ }
+ 
++static void octeon_csr_bank_class_init(ObjectClass *klass, const void *data)
++{
++    OcteonPeripheralClass *opc = OCTEON_PERIPHERAL_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    resettable_class_set_parent_phases(rc, NULL,
++                                       octeon_csr_bank_reset_hold, NULL,
++                                       &opc->parent_phases);
++}
++
+ static OcteonPeripheralState *octeon_new_peripheral(OcteonState *s,
+                                                      const char *type,
+                                                      unsigned int index)
+@@ -1336,6 +1465,8 @@ static void octeon_create_peripherals(OcteonState *s)
+ {
+     s->rst = OCTEON_RST(octeon_new_peripheral(s, TYPE_OCTEON_RST, 0));
+     s->intc = OCTEON_INTC(octeon_new_peripheral(s, TYPE_OCTEON_INTC, 0));
++    s->csr_bank = OCTEON_CSR_BANK(octeon_new_peripheral(
++        s, TYPE_OCTEON_CSR_BANK, 0));
+ }
+ 
+ static void octeon_realize_peripheral(OcteonPeripheralState *dev)
+@@ -1347,6 +1478,7 @@ static void octeon_realize_peripherals(OcteonState *s)
+ {
+     octeon_realize_peripheral(&s->intc->parent_obj);
+     octeon_realize_peripheral(&s->rst->parent_obj);
++    octeon_realize_peripheral(&s->csr_bank->parent_obj);
+ }
+ 
+ static void mips_octeon_init(MachineState *machine)
+@@ -1386,6 +1518,12 @@ static void mips_octeon_init(MachineState *machine)
+     memory_region_add_subregion(get_system_memory(), OCTEON_CIU3_BASE,
+                                 &s->intc->ciu3);
+ 
++    memory_region_init_io(&s->csr_bank->csr, OBJECT(s->csr_bank),
++                          &octeon_csr_ops, s,
++                          "octeon.csr", OCTEON_CSR_SIZE);
++    memory_region_add_subregion_overlap(get_system_memory(), OCTEON_CSR_BASE,
++                                        &s->csr_bank->csr, -1);
++
+     octeon_realize_peripherals(s);
+ }
+ 
+@@ -1464,6 +1602,14 @@ static const TypeInfo octeon_machine_types[] = {
+         .instance_size = sizeof(OcteonIntcState),
+         .class_init = octeon_intc_class_init,
+     },
++    {
++        .name = TYPE_OCTEON_CSR_BANK,
++        .parent = TYPE_OCTEON_PERIPHERAL,
++        .instance_size = sizeof(OcteonCsrBankState),
++        .instance_init = octeon_csr_bank_init,
++        .instance_finalize = octeon_csr_bank_finalize,
++        .class_init = octeon_csr_bank_class_init,
++    },
+     {
+         .name = TYPE_OCTEON_MACHINE,
+         .parent = TYPE_MACHINE,
+diff --git a/hw/mips/octeon_internal.h b/hw/mips/octeon_internal.h
+index cd810f3dd5..6327103f52 100644
+--- a/hw/mips/octeon_internal.h
++++ b/hw/mips/octeon_internal.h
+@@ -32,6 +32,7 @@ typedef enum OcteonCiu3Source {
+ typedef struct OcteonState OcteonState;
+ typedef struct OcteonRstState OcteonRstState;
+ typedef struct OcteonIntcState OcteonIntcState;
++typedef struct OcteonCsrBankState OcteonCsrBankState;
+ 
+ typedef struct OcteonCPUState {
+     OcteonState *board;
+@@ -58,11 +59,17 @@ struct OcteonState {
+     MemoryRegion cvmseg;
+     OcteonRstState *rst;
+     OcteonIntcState *intc;
++    OcteonCsrBankState *csr_bank;
+ };
+ 
++guint octeon_uint64_hash(gconstpointer v);
++gboolean octeon_uint64_equal(gconstpointer a, gconstpointer b);
+ uint64_t octeon_read64(uint64_t value, hwaddr addr, unsigned size);
+ uint64_t octeon_write64(uint64_t old, hwaddr addr,
+                         uint64_t value, unsigned size);
++bool octeon_reg_lookup(GHashTable *regs, uint64_t reg, uint64_t *value);
++void octeon_reg_store(GHashTable *regs, uint64_t reg, uint64_t value);
++bool octeon_csr_lookup(OcteonState *s, uint64_t reg, uint64_t *value);
+ void octeon_irq_set(void *opaque, int irq, int level);
+ 
+ #endif
 -- 
-2.43.0
+2.56.0
 
 
